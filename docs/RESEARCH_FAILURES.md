@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P8-A exact-once prevention note — fresh test 不用于方法选择
+
+- 20 scenes 在读取任何 Actor repair/hazard/Chamfer 结果前按 metadata-only rule 冻结，并排除 P4 全部角色；正式 read 后
+  禁止换 scene、删难例、重训 P6-C、重新 calibration 或移动 threshold。
+- P8-A 只做 frozen P6-C/P4 同 row 比较；AV2 fresh final 仍由另一个已冻结 exact-once runner 消费，不因 P8-A 结果改变。
+- 若 scientific gate 失败即保留 negative result；资源/入口失败与 scientific rejection 分开登记。当前无新增 failure，下一可用
+  编号仍为 `V7-F15`。
+
 ### Paper layout note — P7-B 后第 7 页仅 references continuation
 
 - official-template compile=7 pages；第 7 页没有 orphan figure/table 或正文断裂，仅 bibliography continuation。

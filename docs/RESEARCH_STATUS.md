@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P8-A fresh nuScenes exact-once frozen（2026-09-02）
+
+Active=`WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01 / WS-V7-H-P8-001`。从 P4 未使用的 `106` 个可用
+nuScenes trainval scenes 中，仅按 official scene index 与本地文件可用性排序，以
+`round(linspace(0,105,20))` 冻结 `20` 个 final scenes；冻结前未读 Actor quality，之后禁止换 scene。
+
+P6-C selector、P4 baseline/hazard head、standardizer、threshold、compiler 与 Actor policy 全部引用 canonical artifact，
+不训练、不校准、不调阈值。正式 read 只报告同一 fresh rows 上 P6-C/P4 的 repair AUROC、coverage、false-repair、
+selective Chamfer、hazard metrics 与 calibration-score shift；四个预注册判据为 P6-C AUROC 不低于 P4 `-.02`、coverage
+`>=.10`、false-repair 低于 always-repair failure、selective Chamfer 不差于 clean query。该结果仅是 in-domain empirical
+generalization；AV2 fresh 20-log exact-once 仍由已冻结 P6-C external runner 独立等待下载完成。
+
 ## WorldSim V7 CVPR paper integrated through P7-B（2026-09-02）
 
 Paper now includes deterministic geometry-to-cost inequality、575,596-row perturbation result、三轴分离结论与 uniform-shift

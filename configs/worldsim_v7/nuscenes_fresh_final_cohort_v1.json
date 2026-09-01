@@ -1,0 +1,33 @@
+{
+  "schema_version": "worldsim_v7.nuscenes_fresh_final_cohort.v1",
+  "dataset": "nuScenes trainval",
+  "role": "fresh_final_test",
+  "selection_frozen_at": "2026-09-02T20:00:00+08:00",
+  "selection_rule": "Exclude every P4 train, calibration, and test scene; retain scenes with official metadata and the existing processed instances_info interface; sort the 106 eligible scenes by official scene index; select 20 positions from round(linspace(0, 105, 20)).",
+  "selection_inputs": "official scene identity and local file availability only",
+  "quality_read_before_freeze": false,
+  "scene_replacement_after_read": false,
+  "eligible_pool_size": 106,
+  "scenes": [
+    {"official_index": 2, "scene_name": "scene-0003"},
+    {"official_index": 17, "scene_name": "scene-0018"},
+    {"official_index": 75, "scene_name": "scene-0093"},
+    {"official_index": 121, "scene_name": "scene-0161"},
+    {"official_index": 215, "scene_name": "scene-0269"},
+    {"official_index": 225, "scene_name": "scene-0283"},
+    {"official_index": 263, "scene_name": "scene-0346"},
+    {"official_index": 371, "scene_name": "scene-0457"},
+    {"official_index": 416, "scene_name": "scene-0526"},
+    {"official_index": 444, "scene_name": "scene-0560"},
+    {"official_index": 484, "scene_name": "scene-0629"},
+    {"official_index": 608, "scene_name": "scene-0786"},
+    {"official_index": 616, "scene_name": "scene-0796"},
+    {"official_index": 690, "scene_name": "scene-0904"},
+    {"official_index": 705, "scene_name": "scene-0920"},
+    {"official_index": 713, "scene_name": "scene-0928"},
+    {"official_index": 732, "scene_name": "scene-0967"},
+    {"official_index": 753, "scene_name": "scene-0995"},
+    {"official_index": 800, "scene_name": "scene-1060"},
+    {"official_index": 809, "scene_name": "scene-1069"}
+  ]
+}

@@ -1,0 +1,21 @@
+task_id: WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01
+hypothesis_id: WS-V7-H-P8-001
+runs_root: /root/autodl-tmp/runs
+source_p4_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+source_p6c_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+p6c_config: configs/worldsim_v7/p6c_sparsity_consistent_selector_v1.yaml
+cohort: configs/worldsim_v7/nuscenes_fresh_final_cohort_v1.json
+device: cuda
+claim_boundary: >-
+  This is the one formal quality read of 20 metadata-only frozen nuScenes scenes
+  excluded from every P4 train, calibration, and test role. The P6-C selector,
+  P4 baseline, standardizers, thresholds, compiler, and Actor policy are frozen.
+  No scene may be replaced and no result may tune a model or threshold. The test
+  estimates empirical in-domain generalization only; it is not a conformal,
+  road-safety, or downstream trajectory-authority guarantee.
+gates:
+  maximum_candidate_auroc_degradation_from_p4: 0.02
+  minimum_candidate_coverage: 0.10
+verdict_on_pass: supported_fresh_nuscenes_exact_once_selector
+verdict_on_failure: rejected_fresh_nuscenes_exact_once_selector

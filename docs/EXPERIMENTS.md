@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V7-P8A fresh nuScenes exact-once freeze（2026-09-02）
+
+- cohort：P4 train/calibration/test 全排除后的 `106` scenes；official-index 等距冻结 `20` scenes，metadata/file-availability
+  only，quality unread；config=`nuscenes_fresh_final_cohort_v1.json`。
+- frozen artifacts：P6-C `20260902T173000Z__sparsity-consistent-s70602-r1` 与 P4
+  `20260902T161000Z__selective-factor-s70401-r2`；model/standardizer/threshold/compiler/Actor policy 均不变。
+- protocol：one formal quality read；不换 scene、不 refit、不 recalibrate、不根据结果改 threshold；P6-C/P4 同 row 比较。
+- preregistered gates：repair AUROC degradation `<=.02`、coverage `>=.10`、false-repair below always-repair failure、
+  selective Chamfer no worse than query；其余 hazard/shift/per-scene counts descriptive。
+- claim boundary：fresh in-domain selector evaluation；非 conformal、road-safety 或 trajectory-authority guarantee。
+
 ## CVPR paper P7-B integration check（2026-09-02）
 
 - added：geometry-to-cost inequality、full-source/P5 perturbation result、three-axis interpretation、uniform-shift limitation。

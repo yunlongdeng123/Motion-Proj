@@ -1024,6 +1024,18 @@ clipping。P6-C fresh external 前不根据该解析 audit 改 selector 或 thre
 
 ## V7-P8：Final exact-once evaluation
 
+### P8-A fresh nuScenes freeze（2026-09-02）
+
+- 排除 P4 train/calibration/test 后剩余 106 个本地可用 trainval scenes；只按 official scene index 与文件可用性排序，
+  用 `round(linspace(0,105,20))` 冻结 20 scenes，冻结前 quality unread。
+- frozen candidate=P6-C source sparsity-consistent selector；baseline/hazard=P4 factorized model；standardizer、threshold、
+  compiler 与 Actor policy 均不变。
+- one formal read；同 rows 报告 repair/hazard、coverage、false-repair、selective Chamfer 与 score shift；不换 scene、
+  不 refit/recalibrate/调阈值。
+- core gates：candidate repair AUROC 不低于 P4 `-.02`、coverage `>=.10`、false-repair 低于 always-repair failure、
+  selective Chamfer 不差于 clean query。失败即保留 negative result。
+- AV2 fresh 20-log 部分继续由 P6-C frozen external runner等待单实例下载完成；P8-A 结果不得改变 AV2 candidate/protocol。
+
 所有 architecture、threshold、surface operation、density model、calibration 和 adapter 冻结后，建立：
 
 ```text
