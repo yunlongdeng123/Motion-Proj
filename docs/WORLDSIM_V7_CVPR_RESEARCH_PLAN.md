@@ -421,6 +421,17 @@ motion_proj/worldsim_v7/
 
 ## V7-P1：四象限物理—危险证据图谱
 
+### P1 执行冻结（2026-09-02）
+
+- Formal task：`WS-V7-P1-AV2-FACTORIAL-ATLAS-01`；冻结 AV2 quantitative 20 logs，zero-shot only。
+- 使用官方 AV2 ego-frame LiDAR/cuboid 合同，在 GPU 上完成 Actor-local 入盒、坐标变换、`0.12m` surfel fusion
+  和 held-out surface evaluation；固定 2/3 build、1/3 held-out，不按质量换帧或 Actor。
+- 迁移 NeuRAD/SplatAD 的 Actor-local point seeding 边界，但禁止其 mirrored seed augmentation 进入物理层。
+- 每个真实 surfel 产生 clean 与 paired artifact probes，Actor ID、轨迹、尺寸和 hazard 不变；Validity/Hazard
+  输入严格隔离。配置与 gates 在 formal quality read 前提交并推送。
+- 首次 verdict 后按冻结停止条件决定：surface 指标支持则进入 P2 四动作真实几何编译，否则直接进入 P2 canonical
+  surface 表示修复，不在 P1 扫 voxel/threshold/cohort。
+
 ### 数据构造
 
 建立四象限：

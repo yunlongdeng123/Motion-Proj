@@ -1,5 +1,23 @@
 # Experiments
 
+## WS-V7-P1 AV2 factorial atlas（2026-09-02）
+
+### WS-V7-P1-AV2-FACTORIAL-ATLAS-01 freeze
+
+- 状态：`frozen / implementation ready / formal quality read=false`；hypothesis=`WS-V7-H-P1-001`。
+- cohort：冻结 AV2 quantitative 20 logs；禁止 fine-tune、calibration、threshold selection、failed-log/Actor deletion。
+- surface：annotation/LiDAR 共用 ego frame；每 Actor 按 frame index 固定 2/3 build、1/3 held-out；`0.12m`
+  voxel，temporal support `>=2`，与固定 single-first-frame surface 比较 target distance/recall。
+- atlas：每 Actor 最多 32 个按 voxel key 排序均匀取得的 probes；clean/ghost/duplicate/flicker/hole 五臂，
+  `KEEP/PROJECT/UNKNOWN/UNKNOWN/COMPLETE` 事前固定；危险标签仅由轨迹侧固定 TTC/clearance/closing/
+  hard-brake/crossing 规则生成。
+- gates：eligible Actors `>=64`、hazard Actors `>=8`、artifact recall/action accuracy `>=.95`、clean-hazard
+  false-artifact `<=.05`、Actor/hazard retention `=1`、ghost FREE-violation reduction `>=.95`、paired leakage
+  `<=1e-8`、fusion distance ratio `<=1`、recall delta `>=0`；10-gate AND verdict。
+- implementation：`motion_proj/worldsim_v7/av2_canonical_surface.py`、
+  `scripts/run_worldsim_v7_p1_av2_factorial_atlas.py`、`configs/worldsim_v7/p1_av2_factorial_atlas_v1.yaml`。
+- literature/open-source migration：NeuRAD/SplatAD Actor-local point seeding；明确禁用其 mirrored actor seed augmentation。
+
 ## WS-V7-P1 coordinate-contract recovery（2026-09-02）
 
 ### WS-V7-P1-AV2-COORDINATE-CONTRACT-01

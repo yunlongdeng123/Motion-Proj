@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P1 freeze prevention note — 不把外观补点当物理证据
+
+- NeuRAD/SplatAD 官方实现会在 Actor-local seed 初始化中镜像一份点以帮助外观重建；该策略适合可渲染先验，
+  但镜像点没有独立射线或多帧 provenance，不能进入 V7 collision surface。
+- V7 只迁移其 Actor cuboid 入盒和 `ego/world→box` canonical transform；不镜像、不神经补全、不把 box shell
+  当占据真值。远侧缺证据仍为 `UNKNOWN`，只有真实多视角支持的预注册 hole probe 才允许 `COMPLETE`。
+- 本项为 formal run 前的方法边界，不是新 failure；下一可用编号仍为 `V7-F04`。
+
 ### V7-F03 — 非登录 shell 的定向 pytest 未包含仓库 import path
 
 - symptom：首次运行单个坐标合同测试时，collection 阶段报 `ModuleNotFoundError: motion_proj`。

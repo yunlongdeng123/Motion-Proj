@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P1 AV2 factorial atlas frozen / GPU run next（2026-09-02）
+
+Active=`WS-V7-P1-AV2-FACTORIAL-ATLAS-01 / WS-V7-H-P1-001`。在冻结 20 个 quantitative AV2 logs 上直接执行
+ego-frame LiDAR 入盒、Actor-local 变换、2/3 帧体素 surfel fusion 与 1/3 帧 held-out surface evaluation；点云
+入盒、变换、融合和距离计算都在 RTX 3090 上执行，Feather 只用单 worker 预取。实现迁移 NeuRAD/SplatAD 官方
+开源中的 `points_in_box → world/ego-to-box → Actor-local seed points` 思路，但不使用其左右镜像补点，因为 V7
+physical surface 不能把对称先验冒充传感器证据。
+
+P1 atlas 对每个真实 surfel 固定构造 clean、observed-FREE ghost、duplicate shell、temporal flicker 与有真实
+多视角支持时的 surface-hole probes；所有 corruption 保持 Actor ID、city trajectory、size 与 hazard features 不变。
+Validity 只读射线/表面/时序/provenance，Hazard 只读 TTC/clearance/closing/hard-brake/crossing。配置、20-log
+cohort、阈值和 10 个 gates 已在任何 P1 method-quality read 前冻结；不训练、不校准、不扫阈值、不按结果删 Actor/log。
+
 ## WorldSim V7 P1 coordinate contract repaired / GPU surface extraction next（2026-09-02）
 
 `WS-V7-P1-AV2-COORDINATE-CONTRACT-01` 在首次读取 AV2 LiDAR/annotation schema 时发现 P0 SceneIR adapter

@@ -1,0 +1,77 @@
+task_id: WS-V7-P1-AV2-FACTORIAL-ATLAS-01
+hypothesis_id: WS-V7-H-P1-001
+runs_root: /root/autodl-tmp/runs
+dataset_root: /root/autodl-tmp/data/av2/sensor/val
+cohort_config: configs/worldsim_v7/av2_zero_shot_cohort_v1.json
+cohort_role: quantitative
+device: cuda
+claim_boundary: >-
+  Frozen AV2 quantitative-cohort evidence that ego-frame multi-sweep Actor surfels improve
+  held-out surface support over a single-frame surface, while paired synthetic physical
+  corruptions are separated from unchanged trajectory hazard. This is not AV2 adaptation,
+  learned completion, appearance repair, planning, closed-loop, or safety evidence.
+actors:
+  categories:
+    - REGULAR_VEHICLE
+    - BUS
+    - BOX_TRUCK
+    - TRUCK
+    - VEHICULAR_TRAILER
+    - SCHOOL_BUS
+    - ARTICULATED_BUS
+    - LARGE_VEHICLE
+    - MOTORCYCLE
+    - BICYCLIST
+  minimum_track_states: 8
+  actor_batch_size: 16
+  box_padding_m: 0.10
+surface:
+  voxel_size_m: 0.12
+  evaluation_stride: 3
+  minimum_build_frames: 4
+  minimum_evaluation_frames: 2
+  minimum_build_points: 32
+  minimum_evaluation_points: 12
+  minimum_temporal_support: 2
+  minimum_stable_surfels: 12
+  maximum_points_per_actor_frame: 4096
+  maximum_metric_points: 4096
+  distance_chunk_size: 1024
+  recall_distance_m: 0.20
+hazard:
+  ego_radius_m: 1.20
+  maximum_ttc_s: 30.0
+  minimum_closing_speed_mps: 0.50
+  hazard_ttc_s: 3.0
+  hazard_clearance_m: 2.0
+  hard_brake_reference_mps2: 4.0
+  hazard_hard_brake_score: 0.75
+  hard_brake_interaction_range_m: 15.0
+  crossing_forward_window_m: 20.0
+  crossing_interaction_range_m: 5.0
+compiler_thresholds:
+  minimum_sensor_hits: 1
+  minimum_temporal_support: 2
+  minimum_completion_views: 2
+  maximum_project_distance_m: 0.25
+  minimum_free_space_violation_m: 0.02
+  minimum_hole_radius_m: 0.15
+  minimum_normal_alignment: 0.25
+atlas:
+  maximum_probes_per_actor: 32
+  ghost_offset_m: 0.15
+  duplicate_shell_offset_m: 0.30
+  hole_radius_m: 0.20
+gates:
+  minimum_eligible_actor_count: 64
+  minimum_hazard_actor_count: 8
+  minimum_artifact_detection_recall: 0.95
+  maximum_clean_hazard_false_artifact_rate: 0.05
+  minimum_action_accuracy: 0.95
+  minimum_actor_hazard_retention: 1.0
+  minimum_ghost_free_space_violation_reduction: 0.95
+  maximum_validity_hazard_leakage: 1.0e-8
+  maximum_fused_target_distance_ratio: 1.0
+  minimum_mean_recall_delta: 0.0
+verdict_on_pass: supported_zero_shot_av2_actor_surface_factorial_atlas
+verdict_on_failure: rejected_zero_shot_av2_actor_surface_factorial_atlas
