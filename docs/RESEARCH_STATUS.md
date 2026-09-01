@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7 P6-C external resume ready / waiting complete IO（2026-09-02）
+
+External runner 已绑定 P6-C frozen fit artifact、fresh cohort、download `.complete` markers、P4 compiler 与同-row baseline。
+它只在 20/20 markers 存在且 2/2 fit gates 为真时执行，输出 candidate/P4 identical-row metrics、calibration→fresh
+Wasserstein、Actor scores 与最终六门；缺任一日志会在写 running status 和质量读取前退出。单次 syntax compile 通过。
+
+当前不启动 external，也不做 partial-log smoke；下载完成前继续其他 nuScenes/P5 对齐研究。该 operational marker check
+只防止 partial-cohort quality leakage，不是新增科学 gate。
+
 ## WorldSim V7 P6-C source fit passed 2/2 / fresh external pending（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；

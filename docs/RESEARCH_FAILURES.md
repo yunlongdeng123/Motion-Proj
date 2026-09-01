@@ -27,6 +27,8 @@
   `V7-F13`。
 - formal fit 随后以 AUROC `.63239>=.62908`、shift ratio `.10668<=.70` 通过 2/2；这只解锁 fresh external read，
   不把 source intervention robustness 升级为 external guarantee，也不改变下一 failure 编号。
+- external runner 仅增加 20/20 `.complete` operational precondition；partial cohort 不编译/打分，防止 IO 顺序变成隐式
+  target development。它不增加质量 gate。本项仍非 failure，下一可用编号仍为 `V7-F13`。
 
 ### P6 recovery prevention note — consumed AV2 不参与机会归一化选择
 

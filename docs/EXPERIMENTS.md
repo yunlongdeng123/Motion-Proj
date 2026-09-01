@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V7-P6C external resume ready（2026-09-02）
+
+- binding：same canonical run/model/threshold；fresh 20-log cohort；P4 compiler；candidate and frozen-P4 scores on identical rows。
+- precondition：fit gates 2/2 and download `.complete` 20/20；failure exits before external running status/quality read。
+- outputs：fresh Actor rows/scores、candidate/P4 operating metrics/distributions、calibration Wasserstein、six frozen gates、resources。
+- one syntax compile passed；partial cohort is not used as smoke or development。
+
 ## WS-V7-P6C source fit result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
