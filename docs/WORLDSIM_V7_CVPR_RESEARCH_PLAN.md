@@ -578,6 +578,19 @@ T_{sensor}
 
 ---
 
+## V7 reviewer-facing 补强主线（2026-09-02）
+
+1. **视觉与几何硬证据**：V7 必须从 feature filtering 推进到 ray/depth/surface/collision 的真实三维自洽；失败时优先
+   修物理 provenance 或表示，而不是增加后处理规则。
+2. **外部泛化降维打击**：模型训练/选择限定 nuScenes，AV2 为冻结 zero-shot 主外域；资源允许时再加入 Waymo 第二外域，
+   但不以扩大数据面替代 AV2 深证据。
+3. **理论边界与工程极致**：将 sensor opportunity、`UNKNOWN`、immutable Actor/hazard state、可修复/不可修复条件和
+   runtime/resource 明确暴露，提供可解释边界；禁止包装成 road-safety formal guarantee。
+
+后续 auto-research 聚焦这三条，不横向堆叠与论文主张无关的模块。
+
+---
+
 ## V7-P3：三维硬证据与视觉结果
 
 ### P3-A formal freeze（2026-09-02）
@@ -588,6 +601,9 @@ T_{sensor}
   temporal jitter 是 build-frame-to-canonical residual 的跨帧标准差。paired free-space/ghost component 明确为合成合同。
 - qualitative 10 logs 不删；每 log 词法序前三 eligible Actor。main 固定前 8 logs 首 Actor，supplement 固定全部 30；
   首阶段产出 point/surface/ray panel，P3-B 再接 frozen camera RGB/depth/video，不按结果换案例。
+- r1 30/30 完成但两 role 均 6/8；任意 compiled-surface Euclidean residual 破坏逐 primitive ray provenance，
+  free-space/ghost 两门无效且总 verdict rejected（`V7-F07`）。r2 仅迁移 NeuRAD/SplatAD/LiDAR-RT 的最小
+  `ray_o/ray_d + hit + aligned output` 边界；不改案例、动作、阈值、gates 或其余六项指标。
 
 ### 必须补齐的几何指标
 

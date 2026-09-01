@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7 focus tightened / P3 r1 rejected, ray-provenance r2 recovery next（2026-09-02）
+
+V7 相对 V6.x 的 reviewer-facing 主线收紧为三条：一是三维 ray/depth/surface 硬自洽而非 feature filtering；二是
+nuScenes-only train/select 后 AV2 zero-shot external test（Waymo 作为资源允许时的第二外域，不稀释 AV2 深挖）；三是
+把 `UNKNOWN`、sensor opportunity、immutable Actor state 和不可修复条件写成可解释安全边界。后续不以横向堆模块替代深证据。
+
+P3 r1=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T133000Z__hard-evidence-s0-r1` 完成
+30/30 logs 与固定 8 main + 30 supplement panels，但 verdict=`rejected_zero_shot_av2_hard_physical_evidence`，两 role
+均 6/8。有效硬证据为 quantitative depth error `.2067→.1452m`、ray termination `.5694→.6685`、zero-level
+error `.1400→.0425m`（ratio `.3034`）、mean temporal jitter `.0424m`、Chamfer ratio `.6607`、Actor/hazard
+state shift=`0`；qualitative 同方向。
+
+失败两门不是放宽目标：r1 用 ghost 到任意 compiled surface 的 Euclidean 邻居代替同一 primitive ray，导致合法邻面
+被算成提前 termination（`V7-F07`）。参考 NeuRAD/SplatAD/LiDAR-RT 的明确 `ray_o/ray_d + depth/mask` 边界，r2
+保存每个 ghost 的 ray、真实 hit 与对齐 output，只统计同一 beam tube 内的提前终止；cohort、动作、阈值、gates、
+案例与其他六项 metric 全不变。r1 总 verdict 保持 rejected，不拿六门通过包装成支持。
+
 ## WorldSim V7 P3 hard evidence and deterministic panels frozen / formal run next（2026-09-02）
 
 Active=`WS-V7-P3-AV2-HARD-EVIDENCE-01 / WS-V7-H-P3-001`，只引用 P2 canonical config/run，不复制

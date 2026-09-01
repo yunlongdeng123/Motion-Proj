@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V7-P3 ray-provenance recovery（2026-09-02）
+
+### WS-V7-P3-AV2-HARD-EVIDENCE-01 r1
+
+- canonical attempt：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T133000Z__hard-evidence-s0-r1`。
+- status/verdict：`done / rejected_zero_shot_av2_hard_physical_evidence`；quantitative/qualitative=`6/8`、`6/8`；
+  visual gates=`3/3`，30/30 logs，8 main + 30 supplement deterministic panels。
+- supported descriptive axes：quantitative LiDAR depth `.206731→.145237m`、ray termination `.569444→.668462`、
+  SDF zero-level `.140003→.042477m`、mean jitter `.042402m`、Chamfer `.254369→.168063m`、Actor-state shifts=0；
+  qualitative 分别 `.216718→.152650m`、`.538437→.656728`、`.145743→.043710m`、`.040629m`、
+  `.267530→.173570m`、0。
+- rejected axes：free-space rate after quantitative/qualitative=`.677673/.649254`，ghost-component ratio=
+  `.454247/.456496`；failure=`V7-F07`，不得作为 P3 support。
+- recovery freeze：不改 gates/threshold/cohort/action/panels；仅把任意-surface Euclidean 残留改为逐 ghost
+  `ray_o/ray_d + observed hit + aligned output` 的同 beam-tube early-termination，UNKNOWN 保持无输出。新 run id r2。
+
 ## WS-V7-P3 hard physical evidence and deterministic panels（2026-09-02）
 
 ### WS-V7-P3-AV2-HARD-EVIDENCE-01 freeze

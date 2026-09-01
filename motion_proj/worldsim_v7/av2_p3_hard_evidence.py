@@ -117,18 +117,32 @@ def compile_hard_evidence(
     sdf_before = _zero_level_error(baseline, canonical, config, device)
     sdf_after = _zero_level_error(compiled, canonical, config, device)
 
-    ghost_distance, _ = _nearest(
-        ghost,
-        compiled,
-        device,
-        int(config["distance_chunk_size"]),
-    )
+    ghost_hit = diagnostics["ghost_hit"]
+    ghost_ray = diagnostics["ghost_ray"]
+    projected_aligned = diagnostics["projected_aligned"]
+    query_origin = diagnostics["query_sensor_origin"]
     ghost_offset = float(config["ghost_offset_m"])
     free_threshold = float(config["minimum_free_space_violation_m"])
-    residual_depth = np.maximum(ghost_offset - ghost_distance, 0.0)
-    residual_ghost = ghost[
-        ghost_distance <= float(config["ghost_residual_radius_m"])
-    ]
+    has_projected_output = np.all(np.isfinite(projected_aligned), axis=1)
+    hit_depth = np.linalg.norm(ghost_hit - query_origin[None, :], axis=1)
+    output_vectors = np.zeros_like(projected_aligned)
+    output_vectors[has_projected_output] = (
+        projected_aligned[has_projected_output] - query_origin[None, :]
+    )
+    output_depth = np.sum(output_vectors * ghost_ray, axis=1)
+    output_lateral = np.linalg.norm(
+        output_vectors - output_depth[:, None] * ghost_ray,
+        axis=1,
+    )
+    same_ray_output = has_projected_output & (
+        output_lateral <= float(config["ray_lateral_tolerance_m"])
+    )
+    residual_depth = np.zeros(len(ghost), dtype=np.float32)
+    residual_depth[same_ray_output] = np.maximum(
+        hit_depth[same_ray_output] - output_depth[same_ray_output],
+        0.0,
+    )
+    residual_ghost = ghost[residual_depth > free_threshold]
 
     frame_means = []
     for points in diagnostics["build_frame_points"]:

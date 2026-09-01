@@ -2,6 +2,24 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F07 — P3 ghost residual 评价丢失逐 primitive 射线 provenance
+
+- run：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T133000Z__hard-evidence-s0-r1`；30/30 logs、
+  30 frozen panels 正常完成，但两个 role 均只有 6/8 gates。
+- symptom：quantitative/qualitative 的 free-space after=`.6777/.6493`、ghost-component ratio=`.4542/.4565`，与
+  ghost PROJECT=`.9934/.9911` 及 SDF ratio=`.3034/.2999` 同时出现。
+- root cause：r1 用 ghost 到“任意 compiled point”的 Euclidean 最近邻判断残留；Actor 曲面上邻近但不属于该 ghost
+  primitive 的合法 surface 会被错误计作同一 LiDAR ray 上的提前 termination，破坏了 P3 要证明的 provenance 边界。
+- literature/open-source response：CVPR 2024 NeuRAD 显式建模 LiDAR rays/beam/ray drop；CVPR 2025 SplatAD 同时使用
+  depth、line-of-sight 与 ray-drop 对象；CVPR 2025 LiDAR-RT 官方实现从 `ray_o, ray_d` 产生 range-ray depth/mask。
+  V7 迁移其最小共同边界：保存每个 ghost 的 `ray_o/ray_d`、真实 hit 与对齐 PROJECT output，只在同一 beam tube
+  内统计提前 termination；UNKNOWN 无输出，不允许用附近无关 surface 代替该 primitive。
+- resolution/impact：r1=`implementation_rejected/no_valid_free_space_or_ghost_verdict`；depth/ray/SDF/jitter/Chamfer/
+  Actor-state 六门和冻结 panels 可保留为 descriptive evidence，但 P3 总 verdict 维持 rejected。r2 不改 cohort、案例、
+  compiler action、阈值或 gates，只修 metric provenance；状态=`recovery_prepared_before_scientific_trial`。
+
+下一可用编号：`V7-F08`。
+
 ### P3 freeze prevention note — visual selection 不读取质量排序
 
 - P3 继续使用冻结 30 logs；每个 qualitative log 只取按 UUID 词法序排列的前三个 eligible Actor，不按 Chamfer、
@@ -10,7 +28,7 @@
 - 新硬证据只复用 P2 已冻结配置；P3 overlay 通过 `p2_config` 引用，避免再次复制 Actor/hazard 参数。target ray
   仅做评价，仍不参与 action。8 个 role gates 是非退化/物理边界，不扩成 smoke/regression 矩阵。
 - paired ghost component/free-space 仍是合成合同；Actor trajectory/speed/acceleration/TTC 零 shift 来自 compiler-external
-  state immutable，不冒充感知或预测准确率。本项不是新 failure；下一可用编号仍为 `V7-F07`。
+  state immutable，不冒充感知或预测准确率。本项不是新 failure；后续已使用 `V7-F07`，下一可用编号为 `V7-F08`。
 
 ### V7-F06 — P2 配置遗漏复用模块所需的冻结 hazard 段
 
@@ -32,7 +50,7 @@
 - resolution：终止精确识别的悬挂 git 进程，读取当前 LocalTUN session 的 remote proxy 后仅为该次 git command 设置
   `HTTP(S)_PROXY`，push 成功；没有启动第二个研究 run，0 scientific impact。LocalTUN 端口是 session-specific，后续不硬编码复用。
 
-下一可用编号：`V7-F07`。
+后续已使用 `V7-F07`；下一可用编号：`V7-F08`。
 
 ### P2 freeze prevention note — completion 不读取 held-out target
 
@@ -41,7 +59,7 @@
 - `COMPLETE` 候选只由 build surface 的 temporal/view support 与 query-space hole 产生；target 只在全部坐标编译完成后
   计算 support/recall/precision/Chamfer。禁止用 target 删除 completion、调 hole radius 或换 Actor。
 - quantitative 20 logs 与 qualitative 10 logs 在同一冻结实现中一次执行，避免 development 结果后再修改 confirmation。
-- 本项不是新 failure；后续已使用 `V7-F05`、`V7-F06`，下一可用编号为 `V7-F07`。
+- 本项不是新 failure；后续已使用 `V7-F05`--`V7-F07`，下一可用编号为 `V7-F08`。
 
 ### V7-F04 — background launcher 将准备链与训练命令一起放入 subshell，PID sidecar 未写出
 
@@ -54,7 +72,7 @@
 - resolution/impact：没有重启或并发启动第二个 run；用 `pgrep` 与 canonical `status/summary` 只读监控原进程。
   20/20 logs、summary 与 10/10 gates 正常完成；仅 monitoring sidecar 缺失，0 scientific impact。
 
-后续已使用 `V7-F05`、`V7-F06`；下一可用编号：`V7-F07`。
+后续已使用 `V7-F05`--`V7-F07`；下一可用编号：`V7-F08`。
 
 ### P1 freeze prevention note — 不把外观补点当物理证据
 
@@ -62,7 +80,7 @@
   但镜像点没有独立射线或多帧 provenance，不能进入 V7 collision surface。
 - V7 只迁移其 Actor cuboid 入盒和 `ego/world→box` canonical transform；不镜像、不神经补全、不把 box shell
   当占据真值。远侧缺证据仍为 `UNKNOWN`，只有真实多视角支持的预注册 hole probe 才允许 `COMPLETE`。
-- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`--`V7-F06`，当前下一可用编号为 `V7-F07`。
+- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`--`V7-F07`，当前下一可用编号为 `V7-F08`。
 
 ### V7-F03 — 非登录 shell 的定向 pytest 未包含仓库 import path
 
@@ -72,7 +90,7 @@
   坐标读取得到合理 ego range。
 - claim impact：纯入口环境失败，0 scientific quality read，不增加 smoke/regression 矩阵。
 
-后续已使用 `V7-F04`--`V7-F06`；当前下一可用编号：`V7-F07`。
+后续已使用 `V7-F04`--`V7-F07`；当前下一可用编号：`V7-F08`。
 
 ### V7-F02 — AV2 annotation frame 被误标为 city frame
 
@@ -86,7 +104,7 @@
   `center_ego_m` 固定为 cuboid ego translation；冻结 cohort 与 scientific protocol 不变。
 - exposure/claim impact：在任何 V7 method-quality、artifact/hazard 或 surface metric read 前发现；不产生科学负结果。
 
-后续已使用 `V7-F03`--`V7-F06`；当前下一可用编号：`V7-F07`。
+后续已使用 `V7-F03`--`V7-F07`；当前下一可用编号：`V7-F08`。
 
 ## WorldSim V7 P0 failures（2026-09-01）
 
@@ -102,7 +120,7 @@
 - impact：status=`resolved_by_local_staging_route`；不形成 scientific read，不改变 20 quantitative + 10 qualitative
 frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
 
-后续已使用 `V7-F02`--`V7-F06`；当前下一可用编号：`V7-F07`。
+后续已使用 `V7-F02`--`V7-F07`；当前下一可用编号：`V7-F08`。
 
 ## V6.7 P269/P270 latest failures（2026-08-31）
 

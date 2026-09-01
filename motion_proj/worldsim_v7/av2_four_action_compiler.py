@@ -158,6 +158,8 @@ def _compile_actor(
     input_counts["observed_free_ghost"] += len(ghost)
     ghost_distance, ghost_nearest = _nearest(ghost, canonical, device, chunk)
     projected = []
+    projected_aligned = np.full(ghost.shape, np.nan, dtype=np.float32)
+    ghost_actions = []
     for index, (distance, nearest) in enumerate(zip(ghost_distance, ghost_nearest)):
         decision = compiler.compile(
             PhysicalEvidence(
@@ -172,8 +174,11 @@ def _compile_actor(
             )
         )
         action_counts[decision.action.value] += 1
+        ghost_actions.append(decision.action.value)
         if decision.action.value == "PROJECT":
-            projected.append(canonical[nearest])
+            projected_point = canonical[nearest]
+            projected.append(projected_point)
+            projected_aligned[index] = projected_point
     if projected:
         compiled_parts.append(np.asarray(projected, dtype=np.float32))
 
@@ -330,8 +335,12 @@ def _compile_actor(
             "compiled": compiled,
             "kept": query[keep],
             "unknown_query": query[~keep],
+            "ghost_hit": selected_query,
+            "ghost_ray": ray,
             "ghost": ghost,
             "projected": np.asarray(projected, dtype=np.float32).reshape(-1, 3),
+            "projected_aligned": projected_aligned,
+            "ghost_actions": tuple(ghost_actions),
             "duplicate": duplicate,
             "flicker": flicker,
             "completed": completed_points,
