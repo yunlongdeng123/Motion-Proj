@@ -1,5 +1,30 @@
 # Research Status
 
+## WorldSim V7 P0 paper/code/data 收敛（2026-09-01）
+
+`WS-V7-P0-PAPER-CODE-CONVERGENCE-01` 已从 V6.7 `d97c3f2` 建立
+`research/worldsim-v7-harp3d-cvpr`。paper-facing 最终链位于 `motion_proj/worldsim_v7/`：物理编译明确使用
+`KEEP/PROJECT/COMPLETE/UNKNOWN` 且 Actor identity/trajectory/size 为不可变状态；validity 与 hazard 使用不相交输入；
+Actor residual 解析投影到 trajectory boundary；`log1p(cost)` mixture 与 horizon/budget 单调 runtime surface 分离。
+定向测试 `tests/test_worldsim_v7_p0.py` 为 `5 passed`，未执行训练或 repo-wide regression。
+
+匿名论文骨架位于 `paper/`，固定 `cvpr-org/author-kit@2917585`；`main.pdf` 4 页、`supplement.pdf` 1 页均编译
+成功并经逐页 PNG 检查。主结果全部经 `results/results_macros.tex` 保持 `TBD`，没有把历史代理指标填成 V7 结果；
+架构图与一页 contribution map 已落盘。
+
+`WS-V7-P0-AV2-ZEROSHOT-DATA-01` 在任何方法/质量 read 前，将 AV2 Sensor val 的 150 个 UUID 排序并按 index
+`0,5,...,145` 冻结 30 logs，前 20 quantitative、后 10 qualitative；配置为
+`configs/worldsim_v7/av2_zero_shot_cohort_v1.json`。用户给出的 sample UUID 实际属于 train；修正后远端测速约
+`0.58 MiB/s`，本地约 `2.86 MiB/s`，因此按预案转为 `D:\datasets\av2` 单进程串行续传。首个完整 val log 已通过
+metadata-only SceneIR smoke：`2671` ego poses、`11` sensors、`59` Actors、`5337` states。AV2 不用于 fine-tune、
+post-hoc calibration、threshold selection 或 quality-based deletion；本轮无训练。资源/协议事件见 `V7-F01`。
+
+`WS-V7-P0-STORAGE-CLEANUP-01` 依据 `docs/ARTIFACT_RETENTION.md` 保留全部 V4/V5/V6/V6.7 canonical runs、
+nuScenes 数据与研究记录，只删除 V6.1 Hunyuan3D 两组可重下权重、V3.2 Harmonizer 可重下权重和 AV2 测速残片，
+共 `23,027,117,355 bytes`（`21.446 GiB`）。`/root/autodl-tmp` 从 `462G used / 139G available / 77%`
+变为 `440G used / 161G available / 74%`；恢复 revision 与逐路径审计见
+`docs/archive/2026-09/worldsim-v7-p0-cleanup/CLEANUP_MANIFEST.md`。
+
 ## WorldSim V6.7 P269/P270 progressive risk allocation（2026-08-31）
 
 P269 r1 已在单 RTX 3090 完成 12,000-step fixed-group dual 训练，训练中 normalized-log-price L1 从

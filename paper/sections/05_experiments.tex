@@ -1,0 +1,15 @@
+\section{Experiments}
+
+\paragraph{Data and protocol.}
+We train and select models only on nuScenes. Argoverse~2 Sensor validation logs form a zero-shot external test. Before reading any method output, we sort the 150 validation UUIDs and select every fifth log, yielding 20 quantitative and 10 qualitative logs. No AV2 fine-tuning, post-hoc calibration, threshold selection, or failed-scene deletion is allowed. Final nuScenes and AV2 cohorts are evaluated exactly once after the method freezes.
+
+\paragraph{Baselines.}
+For physical compilation we compare naive reconstruction, a legacy validity filter, V6.7 inward-ray repair, and \method. For factorization we compare a shared encoder, a two-head shared trunk, independent encoders, and paired factorization. Reliability baselines include a scalar confidence, independent horizon classifiers, a continuous marginal density, and the full joint multi-horizon surface.
+
+\paragraph{Metrics.}
+Physical metrics include free-space violation, ray termination, point-to-surface error, LiDAR depth consistency, temporal jitter, ghost components, and surface completeness. Hazard preservation reports Actor/ID/lifecycle retention, trajectory and TTC shift, and event-count change. Factorization reports artifact/hazard AUROC and AUPRC, clean-hazard false-artifact rate, paired prediction shift, and cross-probe leakage. Reliability reports log likelihood, integrated Brier score, calibration error, Spearman correlation, monotonic violations, and runtime.
+
+\input{tables/main_results}
+
+\paragraph{Qualitative protocol.}
+Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.

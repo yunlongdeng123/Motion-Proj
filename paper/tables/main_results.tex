@@ -1,0 +1,16 @@
+\begin{table*}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{5pt}
+    \begin{tabular}{lcccccc}
+        \toprule
+        Method & Free-space $\downarrow$ & Surface error $\downarrow$ & Actor retention $\uparrow$ & Clean-hazard FA $\downarrow$ & Brier $\downarrow$ & AV2 zero-shot $\uparrow$ \\
+        \midrule
+        Naive reconstruction & \NaiveFreeSpace & \NaiveSurfaceError & \NaiveActorRetention & \NaiveHazardFA & \NaiveBrier & \NaiveAVTwo \\
+        V6.7 inward-ray & \VSevenFreeSpace & \VSevenSurfaceError & \VSevenActorRetention & \VSevenHazardFA & \VSevenBrier & \VSevenAVTwo \\
+        \method & \HarpFreeSpace & \HarpSurfaceError & \HarpActorRetention & \HarpHazardFA & \HarpBrier & \HarpAVTwo \\
+        \bottomrule
+    \end{tabular}
+    \caption{Paper-facing result contract. Values remain \textsc{TBD} until the corresponding frozen milestone completes. Metrics will be split into full physical, factorization, and reliability tables in the results draft.}
+    \label{tab:main-results}
+\end{table*}

@@ -1,0 +1,10 @@
+\section{Related Work}
+
+\paragraph{Driving-world reconstruction.}
+Multi-sensor driving datasets such as nuScenes~\cite{caesar2020nuscenes} and Argoverse~2~\cite{wilson2021argoverse2} provide calibrated imagery, LiDAR, ego pose, maps, and tracked Actors. Neural scene graphs model dynamic objects explicitly~\cite{ost2021neural}, while 3D Gaussian Splatting provides a high-quality appearance representation~\cite{kerbl2023gaussians}. Our work does not reinterpret Gaussian opacity as collision occupancy. It adds a separate, queryable physical surface with sensor provenance.
+
+\paragraph{Uncertainty and reliability.}
+Deep ensembles expose useful empirical predictive disagreement~\cite{lakshminarayanan2017deep}, and conformalized quantile methods can turn residuals into calibrated marginal intervals under appropriate assumptions~\cite{romano2019conformalized}. Driving logs violate many simple exchangeability assumptions through scene correlation and domain shift. We therefore report empirical calibration explicitly, preserve claim boundaries, and use monotone structure only for runtime consistency---not as a formal road-safety guarantee.
+
+\paragraph{Our distinction.}
+Prior confidence, occupancy, and reconstruction-quality signals often mix physical invalidity, visibility, and behavioral difficulty. \method instead defines separate evidence inputs, paired interventions, and failure denominators so that an improvement cannot be obtained by deleting hazardous Actors or relabeling unknown space as free.

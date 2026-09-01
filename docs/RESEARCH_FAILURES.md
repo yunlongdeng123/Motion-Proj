@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 P0 latest failures（2026-09-01）
+
+### V7-F01 — AV2 sample split 路径错误且 AutoDL 小文件吞吐不足
+
+- symptom：参考命令把 UUID `00a6ffc1-6ce9-3bc3-a060-6006e9893a1a` 放在 `sensor/val`，但 S3 listing 证实该
+  UUID 属于 `sensor/train`；修正 split 后该 log 为 `1,263,003,345` bytes / `3035` objects。AutoDL 在
+  `--numworkers 16` 下约 68 秒仅取得 `41,437,778` bytes，约 `0.58 MiB/s`。
+- root cause：第一层是静态 split/UUID 不匹配；第二层是当前 AutoDL 到公开 S3 的多小对象链路吞吐，不是磁盘、GPU、
+  模型或科学方法失败。测速未读取方法输出，也未选择数据质量。
+- response：先列出官方 val 全 150 UUID，只按排序位置 every-fifth 冻结 30 logs；再用同版 `s5cmd v2.3.0` 在本地
+  D 盘测速约 `2.86 MiB/s`，按用户预案切换为本地单进程串行下载。远端 40 MiB 残片列入清理 manifest 并删除。
+- impact：status=`resolved_by_local_staging_route`；不形成 scientific read，不改变 20 quantitative + 10 qualitative
+  frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
+
+下一可用编号：`V7-F02`。
+
 ## V6.7 P269/P270 latest failures（2026-08-31）
 
 ### V67-F194 — P269 训练完成后的 final-reliability shortfall 轴切片错误

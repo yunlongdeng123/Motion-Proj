@@ -1,0 +1,22 @@
+\section{Introduction}
+
+Reconstructed driving worlds are increasingly used for perception analysis, counterfactual replay, and planning evaluation. Their geometry, however, is rarely a literal collision model. A rendered Gaussian may explain image appearance while occupying free space, duplicating an Actor shell, or flickering across time. Conversely, a perfectly valid Actor may be difficult because it cuts in, brakes hard, or crosses the Ego path. A useful world compiler must distinguish these cases: \emph{world validity is not world difficulty}.
+
+This distinction matters because a generic confidence filter has an easy but scientifically undesirable failure mode. It can improve aggregate collision proxies by suppressing uncertain or nearby Actors. Such a world looks safer because legitimate hazards disappeared, not because its physical state became more faithful. We instead ask whether evidence-inconsistent geometry can be repaired while identity, lifecycle, trajectory, size, time-to-collision, and hazard events remain fixed.
+
+We propose \method, a physical compilation layer between a reconstructed scene and downstream task queries. It represents a world as
+\begin{equation}
+\world_t=(\appearance_t,\surface_t,\actors_t,\provenance_t,\validity_t),
+\end{equation}
+where appearance Gaussians and physical collision surfaces have separate semantics. The compiler uses multi-frame Actor alignment, ray free/occupied evidence, temporal support, and source provenance to select one of four local actions. Unsupported regions become \textsc{unknown}, never free by default, while Actors remain in the scene.
+
+Our second component factorizes validity from hazard with paired counterfactuals. Changing a clean Actor from ordinary driving to a legal near-miss should not change its artifact score; injecting a duplicate shell or temporal pop should not change its hazard score. Our third component links physical state quality to downstream reliability. An Actor residual distribution is projected onto a candidate trajectory boundary, yielding a continuous cost whose conditional density supports arbitrary budgets and multiple horizons.
+
+Our contributions are:
+\begin{itemize}
+    \item a hazard-preserving physical compiler with explicit \textsc{keep/project/complete/unknown} semantics and separate appearance/collision state;
+    \item a paired validity--hazard factorization protocol that measures cross-task leakage rather than relying on global decorrelation;
+    \item a continuous task-cost density and monotone multi-horizon reliability interface, evaluated under a frozen nuScenes-to-Argoverse~2 zero-shot protocol.
+\end{itemize}
+
+\input{figures/architecture}

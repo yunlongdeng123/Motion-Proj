@@ -1,0 +1,30 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[review]{cvpr}
+\input{preamble}
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+\def\paperID{*****}
+\def\confName{CVPR}
+\def\confYear{2027}
+\title{Validity Is Not Difficulty: Supplementary Material}
+\author{Anonymous Authors}
+\begin{document}
+\maketitle
+\appendix
+\section{SceneIR Schema and Coordinate Conventions}
+The released SceneIR records explicit $T_{\mathrm{city}\leftarrow\mathrm{ego}}$, $T_{\mathrm{ego}\leftarrow\mathrm{sensor}}$, and $T_{\mathrm{city}\leftarrow\mathrm{actor}}$ transforms. Physical queries use Actor-local surfaces and known/unknown masks; appearance primitives are referenced only by attachment provenance.
+
+\section{Frozen Evaluation Protocol}
+The AV2 cohort contains 30 metadata-only selected validation logs. Quantitative logs, qualitative logs, all thresholds, and all category mappings are frozen before method outputs are read. Resource failures remain in the denominator and are reported separately from scientific failures.
+
+\section{Failure Ledger Template}
+For every failed case we record the failure layer (sensor opportunity, coordinate/interface, representation, density calibration, or Actor dynamics), the first violated invariant, whether the Actor and hazard event were retained, and the exact non-destructive recovery condition. No failed log may be replaced after quality is read.
+
+\section{Additional Results}
+Full per-category physical metrics, paired counterfactuals, reliability curves, and 20+ qualitative panels will be inserted after the corresponding frozen milestones.
+
+{\small
+\bibliographystyle{ieeenat_fullname}
+\bibliography{bibliography}
+}
+\end{document}

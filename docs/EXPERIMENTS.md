@@ -1,5 +1,40 @@
 # Experiments
 
+## WS-V7-P0 paper/code/data convergence（2026-09-01）
+
+### WS-V7-P0-PAPER-CODE-CONVERGENCE-01
+
+- base/branch：`d97c3f2` / `research/worldsim-v7-harp3d-cvpr`；对象仅为 P0 工程收敛与匿名论文 Draft 0，不形成
+  scientific verdict。
+- implementation：`motion_proj/worldsim_v7/` 六个 paper-facing 模块、冻结 action semantics、输入因子化、解析
+  boundary cost、连续 density、单调 surface 与 SceneIR；历史 Pxxx 不重构。
+- paper：官方 author-kit commit=`291758547e923160eb4d37079b7b9f0dfce82355`；主稿/补充材料编译通过，结果宏均为
+  `TBD`，视觉检查修复了初版 architecture box overlap。
+- validation：`pytest -q tests/test_worldsim_v7_p0.py` => `5 passed`；未做 repo-wide regression，未训练。
+- failure_ledger_refs：`V66-F01`、`V66-F02`、`V67-F232`--`V67-F236`、`V7-F01`。
+
+### WS-V7-P0-AV2-ZEROSHOT-DATA-01
+
+- cohort：AV2 Sensor val 全 150 UUID metadata sort 后固定 every-fifth，共 30 logs；indices `<100` 的 20 logs 为
+  quantitative，indices `>=100` 的 10 logs 为 qualitative。冻结在方法输出/质量 read 之前。
+- transfer audit：corrected sample remote=`0.58 MiB/s`，local D=`2.86 MiB/s`；选择本地
+  `D:\datasets\av2` 串行 `s5cmd sync` 后人工上传，AutoDL 不运行并发下载。
+- adapter smoke：首个完整 log `02678d04-cc9f-3148-9f95-1ba66347dff9` => ego poses/sensors/Actors/states=
+  `2671/11/59/5337`；只读取 feather metadata，不加载全段图像/LiDAR payload。
+- protocol：zero-shot only；禁止 AV2 fine-tune、recalibration、threshold selection、failed-scene deletion 或按质量挑图；
+  本轮无训练、无 scientific verdict。
+- failure_ledger_refs：`V7-F01`。
+
+### WS-V7-P0-STORAGE-CLEANUP-01
+
+- retention audit：V4 canonical runs/checkpoints 仍被后续配置链引用，全部保留；V5/V6/V6.7 runs、nuScenes 数据、
+  repo history 和当前模型亦不动。
+- deleted：V6.1-only Hunyuan3D-Omni/Hunyuan3D-2.1 weights、V3.2/V3.3-only Harmonizer weights、AV2 speed-test
+  fragment；四个绝对路径合计 `23,027,117,355 bytes`，均有公开仓库/revision 恢复路径。
+- result：filesystem available `139G -> 161G`，utilization `77% -> 74%`；manifest=
+  `docs/archive/2026-09/worldsim-v7-p0-cleanup/CLEANUP_MANIFEST.md`。
+- type：resource maintenance only；无训练、无 scientific read。
+
 ## WS-V67-P269/P270 tail-risk allocation progression（2026-08-31）
 
 ### WS-V67-P269-RELIABILITY-FLOOR-GROUP-DUAL-01
