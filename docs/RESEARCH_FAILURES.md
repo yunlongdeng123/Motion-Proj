@@ -2,13 +2,33 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F15 — sparsity-consistent candidate 在 fresh nuScenes 未保持 global repair ranking
+
+- run：`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`；
+  frozen 20/20 scenes、123 Actors、quality read=1、scene replacement=0、model/threshold update=0。
+- symptom：P6-C/P4 repair AUROC=`.747253/.782280`，candidate degradation=`.035027` 超过 preregistered `.02`；其余
+  coverage/false-repair/selective-Chamfer gates 通过，AND verdict 仍必须 rejected。
+- retained support：candidate coverage=`26.83%`、false-repair=`2.44%`、selective Chamfer=`.19689m < .23441m query`；
+  这些是 frozen operating-point utility，不能覆盖 global-ranking regression。
+- literature/open-source response：CVPR 2023 DGLSS 的 sparsity-invariant consistency 是 source-only LiDAR DG 机制，不保证
+  本任务 selector ranking；ICML 2025 AURC 将 selective system 作为全 risk--coverage ranking 评估。已保留 scores 的
+  descriptive AURC=`.12643` (P6-C) vs `.10563` (P4, lower better)，25% coverage risk=`.06452/0`，确认 failure 不只是
+  threshold mismatch。sources：`https://openaccess.thecvf.com/content/CVPR2023/html/Kim_Single_Domain_Generalization_for_LiDAR_Semantic_Segmentation_CVPR_2023_paper.html`、
+  `https://proceedings.mlr.press/v267/zhou25y.html`。
+- resolution：P6-C 不晋升为 primary selector；P4 保持 paper-facing frozen selector。不换 scene、不调 gate/threshold、不
+  训练 recovery head。已冻结 fresh AV2 exact-once 仍执行，但只作 external evidence/negative ablation，不反向选择方法。
+- claim impact：可主张 sparsity intervention score-shift 降低和当前 operating-point utility，不能主张 selector 全局非劣或
+  已被 fresh in-domain final test 支持。
+
+下一可用编号：`V7-F16`。
+
 ### P8-A exact-once prevention note — fresh test 不用于方法选择
 
 - 20 scenes 在读取任何 Actor repair/hazard/Chamfer 结果前按 metadata-only rule 冻结，并排除 P4 全部角色；正式 read 后
   禁止换 scene、删难例、重训 P6-C、重新 calibration 或移动 threshold。
 - P8-A 只做 frozen P6-C/P4 同 row 比较；AV2 fresh final 仍由另一个已冻结 exact-once runner 消费，不因 P8-A 结果改变。
-- 若 scientific gate 失败即保留 negative result；资源/入口失败与 scientific rejection 分开登记。当前无新增 failure，下一可用
-  编号仍为 `V7-F15`。
+- scientific gate 已因 `V7-F15` 失败并保留 negative result；资源/入口失败与 scientific rejection 分开登记。下一可用编号
+  为 `V7-F16`。
 
 ### Paper layout note — P7-B 后第 7 页仅 references continuation
 

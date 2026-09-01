@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P8A fresh nuScenes exact-once result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`；
+  exact-once=`20/20 scenes, 123 Actors, 1 read, 0 replacement/update`。
+- labels：repairable=`91/123`，hazard=`59/123`；candidate/P4 repair AUROC=`.747253/.782280`、AUPRC=
+  `.891159/.917038`，degradation=`.035027`，AUROC gate fail。
+- candidate/P4 coverage=`.26829/.05691`；false-repair=`.02439/0`；selective failure=`.09091/0`；candidate
+  selective/query/always Chamfer=`.196891/.234408/.190650m`。
+- hazard head unchanged：AUROC/AUPRC=`.905985/.908004`；retention=`1/1`。
+- descriptive retained-score risk--coverage：candidate/P4 AURC=`.126429/.105633` (lower better)；25% coverage risk=
+  `.064516/0`。该 posthoc metric 不改 gate/verdict。
+- gates=`3/4`；verdict=`rejected_fresh_nuscenes_exact_once_selector`。resources：RTX 3090 peak GPU/RSS=
+  `.0469/1.1168GiB`，wall=`139.98s`。
+
 ## WS-V7-P8A fresh nuScenes exact-once freeze（2026-09-02）
 
 - cohort：P4 train/calibration/test 全排除后的 `106` scenes；official-index 等距冻结 `20` scenes，metadata/file-availability

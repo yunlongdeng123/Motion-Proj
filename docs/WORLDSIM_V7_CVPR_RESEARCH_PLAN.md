@@ -1036,6 +1036,15 @@ clipping。P6-C fresh external 前不根据该解析 audit 改 selector 或 thre
   selective Chamfer 不差于 clean query。失败即保留 negative result。
 - AV2 fresh 20-log 部分继续由 P6-C frozen external runner等待单实例下载完成；P8-A 结果不得改变 AV2 candidate/protocol。
 
+### P8-A exact-once result（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`。
+20/20 scenes、123 Actors、one read、0 replacement/update。P6-C/P4 repair AUROC=`.747253/.782280`，退化
+`.035027 > .02`，因此 3/4 gates、verdict rejected（`V7-F15`）。P6-C coverage=`.26829`、false-repair=`.02439`、
+selective/query Chamfer=`.196891/.234408m` 的 operating-point support 保留，但 descriptive AURC=`.126429` vs P4
+`.105633` 也确认 global ranking 较弱。P6-C 不晋升；P4 保持 paper primary selector。禁止 recovery fit/threshold/scene
+replacement；fresh AV2 formal read 仍按既定 frozen protocol 执行并独立报告。
+
 所有 architecture、threshold、surface operation、density model、calibration 和 adapter 冻结后，建立：
 
 ```text

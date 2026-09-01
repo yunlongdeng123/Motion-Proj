@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7 P8-A fresh nuScenes exact-once rejected（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200000Z__fresh-nuscenes-final-s0-r1`。
+20/20 frozen scenes 产生 `123` Actors（repairable=`91`、hazard=`59`），one read、0 replacement、0 model/threshold update。
+P6-C vs P4 repair AUROC=`.747253/.782280`，退化 `.035027 > .02`，因此按 preregistered AND rule 拒绝并登记
+`V7-F15`；不换 scene、不重新训练或移动 threshold。
+
+其余 operating-point 结果保留但不能覆盖 ranking failure：P6-C coverage=`26.83%` vs P4 `5.69%`，false-repair=
+`2.44%` vs `0%`，selective Chamfer=`.19689m` vs query `.23441m`（P4=`.21382m`）；hazard AUROC=`.90599`。
+受 ICML 2025 AURC characterization 启发，仅用已保留 scores 做 descriptive common-coverage audit：P6-C/P4 empirical
+AURC=`.12643/.10563`（lower better），在 25% coverage risk=`.06452/0`，确认不是只由两个冻结 threshold 不同造成。
+结论：sparsity consistency 改善 score-shift 与冻结 operating-point coverage，但未保持 fresh global repair ranking；P6-C 不
+晋升为 paper primary selector，P4 保持 paper-facing frozen selector。AV2 exact-once 仍按事前冻结协议完成，结果只作 external
+evidence/negative ablation，不得反向修改 P8-A。RTX 3090 peak GPU/RSS=`.0469/1.1168GiB`，wall=`139.98s`。
+
 ## WorldSim V7 P8-A fresh nuScenes exact-once frozen（2026-09-02）
 
 Active=`WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01 / WS-V7-H-P8-001`。从 P4 未使用的 `106` 个可用
