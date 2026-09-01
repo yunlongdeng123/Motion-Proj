@@ -8,6 +8,8 @@
   选择更多 feature、seed、threshold 或 gate。
 - fresh 20 logs 由 150-log metadata 排序、排除 v1 multiples-of-five indices、对 complement 固定 every-sixth 得到；冻结时
   method output/quality read=false。下载完成后只允许一次 external read。
+- runner 强制拆为 nuScenes-only `fit` 与 fresh-only `external`；fit artifact/status=`model_frozen_waiting_fresh_av2`，
+  防止 IO 未完成时误读部分 fresh cohort 或用逐日志结果修改模型。
 - P6 即使通过也仍是 empirical transfer；factorized cross-task derivative zero 与 sensor-domain invariance 是两个不同命题。
   本项不是新 failure；下一可用编号仍为 `V7-F12`。
 

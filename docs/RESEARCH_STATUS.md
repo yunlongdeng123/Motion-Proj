@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P6 implementation ready / nuScenes-only fit next（2026-09-02）
+
+`opportunity_invariant_selector.py` 已实现 12 维无量纲 validity representation、固定机会干预、单头训练/推理；
+`run_worldsim_v7_p6_opportunity_invariant_selector.py` 明确拆成 `fit` 与 `external` 两 phase。fit 只复用 P4 retained
+nuScenes rows，在 GPU 训练、校准并冻结 model；external 只有 fresh 20 logs 全部 IO 完成后才允许恢复同一 run，编译
+Actor rows 并一次读取质量。旧 30 AV2 rows 不在任一 fit 输入中。
+
+单次 `py_compile` 通过，不扩 smoke/regression。fresh downloader 已由 lock 持有且在第 1/20 log；磁盘起始余量
+`128GiB`。下一动作先提交实现，再执行一次 formal nuScenes fit；不等待 AV2 IO，也不并发启动第二下载器。
+
 ## WorldSim V7 P6 opportunity-invariant recovery frozen / fresh AV2 IO next（2026-09-02）
 
 Active=`WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01 / WS-V7-H-P6-001`。针对 `V7-F11` 只做一次表示恢复：移除 raw

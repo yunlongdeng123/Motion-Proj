@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V7-P6 implementation ready（2026-09-02）
+
+- module：12D opportunity-normalized features；raw frame count removed；fixed `.5x/2x` transform acts jointly on frame,
+  surfel, temporal-support, and view-support opportunity before ratios。
+- runner：`fit` phase reads only P4 nuScenes train/calibration/test retained rows and freezes model/threshold；`external` phase
+  later compiles only fresh 20 logs and compares candidate with frozen P4 on identical rows。
+- execution boundary：same run id resumes across phases；consumed AV2 v1 rows are not loaded；fresh quality remains unread。
+- one syntax compile passed；no additional smoke/regression matrix。
+
 ## WS-V7-P6 opportunity-invariant recovery freeze（2026-09-02）
 
 - hypothesis：`WS-V7-H-P6-001`；single recovery of `V7-F11`。
