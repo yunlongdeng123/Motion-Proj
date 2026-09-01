@@ -608,6 +608,14 @@ T_{sensor}
   operator 的真实物理失败（`V7-F08`）。r3 冻结为 ray-certified PROJECT：有 direct observed hit provenance 才投回
   hit，无 matched hit 则 UNKNOWN；不调门/案例/target isolation，不把 zero-level 最近点冒充 line-of-sight 证据。
 
+### P3-A 执行结果（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3`；
+两 role 各 8/8、视觉 3/3。Quantitative free-space=`1→0`、ghost components=`10983→0`、target depth=
+`.2067→.1541m`、ray termination=`.5694→.6438`、zero-level=`.1400→.0583m`、Chamfer=`.2544→.1753m`，
+Actor/hazard state shift=0。相较 rejected nearest-surface r2 的 `.1681m` Chamfer，r3 明确选择约 7.2mm 的拟合代价
+换 matched-ray free-space 安全边界。P3-A 关闭，进入 P3-B RGB/camera-depth/video，不扫 tolerance。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

@@ -26,13 +26,15 @@ scores verify the deterministic compiler contract and input separation; they are
 
 \paragraph{Four-action physical compilation.}
 We next freeze one single-frame query per Actor and reserve all later held-out frames as target-only geometry. The compiler
-reads only the build surface and query evidence. Across \PtwoActors{} quantitative Actors (\PtwoHazardActors{} hazardous),
-compilation raises target recall from \PtwoRecallBefore{}\% to \PtwoRecallAfter{}\%, raises surface precision from
-\PtwoPrecisionBefore{}\% to \PtwoPrecisionAfter{}\%, and reduces symmetric Chamfer from \PtwoChamferBefore{},m to
-\PtwoChamferAfter{},m (Table~\ref{tab:p2-four-action}). Actor identity, trajectory, extent, and hazard labels are retained
-for \PtwoActorRetention{}\% of Actors. Frozen paired interventions obtain \PtwoGhostProject{}\% observed-free ghost projection
-and \PtwoCompletionSupport{}\% independent-target support for completed points; these rates verify the action contract rather
-than natural-artifact generalization.
+reads only the build surface and query evidence. A nearest-canonical projection initially reduces Chamfer to
+\PtwoChamferAfter{}\,m, but ray-specific evaluation reveals \PthreeFreeNearest{}\% early terminations in the paired observed-free
+interval. Our final operator is ray-certified: a primitive with direct LiDAR provenance projects to its matched observed
+termination; without one it becomes \textsc{unknown}. Across \PtwoActors{} quantitative Actors (\PtwoHazardActors{} hazardous),
+this reduces paired free-space violations from \PthreeFreeBefore{}\% to \PthreeFreeAfter{}\%, target depth error from
+\PthreeDepthBefore{}\,m to \PthreeDepthAfter{}\,m, and Chamfer from \PtwoChamferBefore{}\,m to \PthreeChamferAfter{}\,m,
+while raising ray-termination consistency from \PthreeRayBefore{}\% to \PthreeRayAfter{}\% (Table~\ref{tab:p2-four-action}).
+Actor identity, trajectory, extent, and hazard labels are retained for \PtwoActorRetention{}\% of Actors. The zero free-space
+rate is a paired contract result; depth, ray termination, and Chamfer use independent target-only LiDAR.
 
 \input{tables/p2_four_action}
 

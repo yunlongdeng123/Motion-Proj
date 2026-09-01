@@ -1,5 +1,26 @@
 # Experiments
 
+## WS-V7-P3 ray-certified hard physical evidence result（2026-09-02）
+
+### WS-V7-P3-AV2-HARD-EVIDENCE-01 r3
+
+- canonical：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3`。
+- status/verdict：`done / supported_zero_shot_av2_hard_physical_evidence`；quantitative/qualitative=`8/8`,`8/8`；
+  visual=`3/3`，30/30 logs，8 main + 30 supplement cases。
+- quantitative：433 Actors（147 hazard）；free-space `1→0`、ghost components `10983→0`；depth error
+  `.206731→.154107m`、ray termination `.569444→.643795`、zero-level `.140003→.058331m`、mean jitter
+  `.042402m`、recall `.533573→.595594`、precision `.795861→.974935`、Chamfer `.254369→.175268m`。
+- qualitative：201 Actors（83 hazard）；free-space `1→0`、components `5080→0`；depth `.216718→.162004m`、
+  ray `.538437→.632761`、zero-level `.145743→.059975m`、jitter `.040629m`、Chamfer `.267530→.180854m`。
+- preservation：Actor/ID/lifecycle retention=1；trajectory/speed/acceleration/TTC shifts=0；hazard label retention=1，
+  event count change=0。该项是 immutable compiler interface，不评价 upstream perception/prediction accuracy。
+- trade-off：r2 nearest-canonical Chamfer `.168063m` 优于 r3 `.175268m`，但 r2 matched-ray free-space violation
+  `.849111`；r3 明确优先 line-of-sight boundary，不调 gate/tolerance。
+- resources：wall=`99.011s`；GPU peak=`.06924GiB`；RSS=`1.2111GiB`；run=`5.1MiB`。
+- paper：abstract/Experiments/物理表已改为 ray-certified 主结果，并显式保留 nearest-surface 的 `.168m`/84.91%
+  trade-off；TeX Live `latexmk` 成功，5 pages / 199,432 bytes，无新增 overfull box。
+- next：P3-B 只做冻结 camera RGB/depth/video evidence；P3-A 参数族关闭。
+
 ## WS-V7-P3 ray-certified projection candidate（2026-09-02）
 
 ### WS-V7-P3-AV2-HARD-EVIDENCE-01 r2 result / r3 freeze

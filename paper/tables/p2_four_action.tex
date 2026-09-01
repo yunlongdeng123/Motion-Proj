@@ -1,16 +1,17 @@
 \begin{table}[t]
     \centering
     \small
-    \setlength{\tabcolsep}{3pt}
+    \setlength{\tabcolsep}{3.5pt}
     \begin{tabular}{lccc}
         \toprule
-        Surface & Recall (\%) $\uparrow$ & Prec. (\%) $\uparrow$ & CD (m) $\downarrow$ \\
+        Surface & Free (\%) $\downarrow$ & Recall (\%) $\uparrow$ & CD (m) $\downarrow$ \\
         \midrule
-        Single-frame input & \PtwoRecallBefore & \PtwoPrecisionBefore & \PtwoChamferBefore \\
-        Four-action compile & \textbf{\PtwoRecallAfter} & \textbf{\PtwoPrecisionAfter} & \textbf{\PtwoChamferAfter} \\
+        Single-frame input & \PthreeFreeBefore & \PtwoRecallBefore & \PtwoChamferBefore \\
+        Nearest canonical & \PthreeFreeNearest & \textbf{\PtwoRecallAfter} & \textbf{\PtwoChamferAfter} \\
+        Ray-certified & \textbf{\PthreeFreeAfter} & \PthreeRecallAfter & \PthreeChamferAfter \\
         \bottomrule
     \end{tabular}
-    \caption{Frozen zero-shot AV2 quantitative result. Actions read only build-side canonical support and the query;
-    later held-out frames are used exclusively as target geometry. Actor and hazard-state retention is \PtwoActorRetention{}\%.}
+    \caption{Frozen zero-shot AV2 quantitative result. Nearest-surface projection fits geometry best but violates matched-ray
+    free space; ray-certified projection accepts a small Chamfer cost. Later held-out frames are target-only.}
     \label{tab:p2-four-action}
 \end{table}

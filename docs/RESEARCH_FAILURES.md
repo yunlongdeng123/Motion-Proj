@@ -14,8 +14,9 @@
 - literature/open-source response：NeuRAD/SplatAD 将 LiDAR depth/line-of-sight/ray-drop 与显式 ray 绑定，LiDAR-RT
   通过 range rays 渲染 depth/mask。V7 新候选据此只允许有 direct observed-hit provenance 的 ghost 投回同 ray
   实测 termination；没有 matched hit 的 primitive 必须 `UNKNOWN`，禁止投向附近 surface。
-- resolution boundary：r2 verdict 永久保持 rejected；新 hypothesis `WS-V7-H-P3-002` 使用 r3 新 run id，保留
-  30 logs、8 gates、视觉案例、target isolation 和除 PROJECT output 外的全部实现。状态=`scientific_rejection_with_frozen_repair_candidate`。
+- resolution boundary：r2 verdict 永久保持 rejected；新 hypothesis `WS-V7-H-P3-002` 的 r3=
+  `20260902T143000Z__ray-certified-s0-r3` 保留 30 logs、8 gates、视觉案例、target isolation 和除 PROJECT
+  output 外的全部实现，最终 quantitative/qualitative=`8/8`、`8/8`。状态=`resolved_by_ray_certified_projection`。
 
 下一可用编号：`V7-F09`。
 
@@ -33,7 +34,7 @@
   内统计提前 termination；UNKNOWN 无输出，不允许用附近无关 surface 代替该 primitive。
 - resolution/impact：r1=`implementation_rejected/no_valid_free_space_or_ghost_verdict`；depth/ray/SDF/jitter/Chamfer/
   Actor-state 六门和冻结 panels 可保留为 descriptive evidence，但 P3 总 verdict 维持 rejected。r2 不改 cohort、案例、
-  compiler action、阈值或 gates，只修 metric provenance；状态=`recovery_prepared_before_scientific_trial`。
+  compiler action、阈值或 gates，只修 metric provenance；r2 有效暴露 V7-F08，状态=`resolved_by_ray_provenance_metric`。
 
 后续已使用 `V7-F08`；下一可用编号：`V7-F09`。
 

@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7 P3 ray-certified hard evidence supported / RGB-depth P3-B next（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T143000Z__ray-certified-s0-r3`；
+verdict=`supported_zero_shot_av2_hard_physical_evidence`，quantitative/qualitative 各 `8/8`，visual=`3/3`。
+冻结 30/30 AV2 zero-shot logs；8 main + 30 supplement point/surface/ray cases 全由 metadata/log/Actor UUID 顺序决定。
+
+Quantitative 433 Actors（147 hazard）：paired ghost free-space violation=`1→0`、components=`10983→0`；真实 target
+LiDAR depth error=`.206731→.154107m`，ray termination consistency=`.569444→.643795`，zero-level error=
+`.140003→.058331m`，mean temporal jitter=`.042402m`，recall=`.533573→.595594`，precision=
+`.795861→.974935`，Chamfer=`.254369→.175268m`（ratio `.689030`）。Actor/ID/lifecycle/trajectory/speed/
+acceleration/TTC/hazard event 全保留，shift=0。Qualitative 201 Actors（83 hazard）亦 8/8，方向一致。
+
+关键 trade-off 明示：被拒绝的 nearest-canonical r2 Chamfer 更低（`.168063m`），但 free-space violation=
+`.849111`；ray-certified r3 用约 `7.2mm` Chamfer 代价换取 matched-ray early termination 清零。paired ghost 是
+合成合同；真实证据来自 target-only depth/ray/surface。下一步只补 P3-B 冻结 RGB/camera-depth/video panels，随后进入
+validity--hazard factorization；不回扫 r3 tolerance，不把 immutable state 包装成 upstream correctness 或 safety guarantee。
+CVPR abstract/Experiments/物理表已切换到 ray-certified 主结果并保留 rejected nearest-surface trade-off；TeX Live
+构建通过（5 pages / 199,432 bytes，无新增 overfull box）。
+
 ## WorldSim V7 P3 nearest-surface scientifically rejected / ray-certified candidate frozen（2026-09-02）
 
 P3 r2=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T140000Z__hard-evidence-s0-r2`
