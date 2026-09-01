@@ -1,0 +1,41 @@
+task_id: WS-V7-P3-AV2-HARD-EVIDENCE-01
+hypothesis_id: WS-V7-H-P3-001
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+source_p2_run: >-
+  run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T125000Z__four-action-s0-r2
+cohort_roles: [quantitative, qualitative]
+device: cuda
+claim_boundary: >-
+  Frozen zero-shot AV2 evidence for target-ray depth consistency, canonical zero-level
+  consistency, temporal residual jitter, paired ghost components, collision-shell support,
+  and exact preservation of compiler-external Actor state. Visual cases are fixed by metadata
+  log order and lexical eligible Actor order. Paired ghosts remain synthetic; zero state shift
+  follows an immutable interface and is not a perception, prediction, planning, closed-loop,
+  or safety guarantee.
+hard_evidence:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20
+  ghost_offset_m: 0.12
+  minimum_free_space_violation_m: 0.02
+  ghost_residual_radius_m: 0.06
+  ghost_component_voxel_m: 0.12
+visuals:
+  actors_per_log: 3
+  main_log_count: 8
+  point_limit_per_layer: 2000
+  minimum_main_cases: 8
+  minimum_supplement_cases: 20
+gates:
+  quantitative: &role_gates
+    maximum_free_space_violation_rate_after: 0.05
+    maximum_sdf_zero_level_ratio: 0.90
+    maximum_ghost_component_ratio: 0.05
+    maximum_chamfer_ratio: 0.90
+    maximum_mean_temporal_surface_jitter_m: 0.12
+    maximum_state_shift: 1.0e-8
+  qualitative:
+    <<: *role_gates
+verdict_on_pass: supported_zero_shot_av2_hard_physical_evidence
+verdict_on_failure: rejected_zero_shot_av2_hard_physical_evidence

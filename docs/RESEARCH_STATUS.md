@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P3 hard evidence and deterministic panels frozen / formal run next（2026-09-02）
+
+Active=`WS-V7-P3-AV2-HARD-EVIDENCE-01 / WS-V7-H-P3-001`，只引用 P2 canonical config/run，不复制
+Actor/hazard 参数。冻结 30 logs 同时评价 target-ray LiDAR depth、ray termination、canonical zero-level residual、
+temporal surface jitter、paired ghost connected components、completeness/collision-shell consistency，以及 Actor/ID/lifecycle/
+trajectory/speed/acceleration/TTC/hazard event 保留。每个 role 只设 8 个非退化/物理 gates，不加回归矩阵。
+
+视觉规则在任何 P3 metric read 前固定：10 qualitative logs 全保留；每 log 按词法序取前三个 eligible Actor，主文取
+前 8 logs 的首 Actor（8 cases），supplement 保留全部（目标 30 cases）。当前 panel 先包含 query+paired artifacts、
+四动作 surface、target-only LiDAR；不按质量或观感挑图。RGB/camera-depth/video 是随后 P3-B 合成，不把当前 top-down
+panel 冒充完整视觉终稿。Claim boundary 明确：target-only 只评价；paired ghost 是合成合同；零 Actor-state shift 是
+immutable interface，不是 perception/prediction/planning/closed-loop/safety 保证。
+
 ## WorldSim V7 P2 supported / P3 hard evidence and frozen visuals next（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T125000Z__four-action-s0-r2`；

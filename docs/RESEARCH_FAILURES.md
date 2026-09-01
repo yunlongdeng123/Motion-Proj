@@ -2,6 +2,16 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P3 freeze prevention note — visual selection 不读取质量排序
+
+- P3 继续使用冻结 30 logs；每个 qualitative log 只取按 UUID 词法序排列的前三个 eligible Actor，不按 Chamfer、
+  hazard、action 成功率或视觉观感排名。主文固定为前 8 个 qualitative logs 的首 Actor；supplement 固定保留
+  10 logs 的全部前三 Actor，预计 30 cases。
+- 新硬证据只复用 P2 已冻结配置；P3 overlay 通过 `p2_config` 引用，避免再次复制 Actor/hazard 参数。target ray
+  仅做评价，仍不参与 action。8 个 role gates 是非退化/物理边界，不扩成 smoke/regression 矩阵。
+- paired ghost component/free-space 仍是合成合同；Actor trajectory/speed/acceleration/TTC 零 shift 来自 compiler-external
+  state immutable，不冒充感知或预测准确率。本项不是新 failure；下一可用编号仍为 `V7-F07`。
+
 ### V7-F06 — P2 配置遗漏复用模块所需的冻结 hazard 段
 
 - run：`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T120000Z__four-action-s0-r1`。

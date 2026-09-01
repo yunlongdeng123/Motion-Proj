@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V7-P3 hard physical evidence and deterministic panels（2026-09-02）
+
+### WS-V7-P3-AV2-HARD-EVIDENCE-01 freeze
+
+- source：P2 canonical r2 与 `p2_av2_four_action_compile_v1.yaml`；不复制 Actor/hazard config，不重跑 P2 参数选择。
+- cohort：冻结 20 quantitative + 10 qualitative logs；target-only frames 只评价，禁止 result-based log/Actor deletion。
+- hard evidence：free-space violation、target-ray depth/termination、zero-level residual、temporal jitter、ghost components、
+  target completeness、collision-shell precision/Chamfer；Actor/ID/lifecycle 与 trajectory/speed/acceleration/TTC/event shifts。
+- gates：每 role 8 项；free-space after `<=.05`、ray/depth 非退化、SDF ratio `<=.90`、ghost component ratio
+  `<=.05`、Chamfer ratio `<=.90`、mean jitter `<=.12m`、Actor/hazard state exact retention。
+- visuals：每 qualitative log 词法序前三 eligible Actor；main=前 8 logs 首 Actor；supplement=全部 30；无 metric/
+  hazard/观感排序。首阶段输出 point/surface/ray panels，RGB/depth/video 留给 P3-B。
+- implementation：`motion_proj/worldsim_v7/av2_p3_hard_evidence.py`、
+  `scripts/run_worldsim_v7_p3_av2_hard_evidence.py`、`configs/worldsim_v7/p3_av2_hard_evidence_v1.yaml`。
+
 ## WS-V7-P2 real-coordinate four-action compiler result（2026-09-02）
 
 ### WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 r2

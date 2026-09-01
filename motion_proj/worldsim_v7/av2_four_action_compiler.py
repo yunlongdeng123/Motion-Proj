@@ -89,6 +89,7 @@ def _compile_actor(
     records: list[dict[str, Any]],
     config: Mapping[str, Any],
     device: torch.device,
+    include_diagnostics: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]] | None:
     surface_config = config["surface"]
     stride = int(surface_config["evaluation_stride"])
@@ -104,10 +105,10 @@ def _compile_actor(
         return None
     maximum_points = int(config["compiler_geometry"]["maximum_metric_points"])
     query = _deterministic_limit(heldout_records[0]["points"], maximum_points)
-    target = _deterministic_limit(
-        np.concatenate([item["points"] for item in heldout_records[1:]], axis=0),
-        maximum_points,
+    target_all = np.concatenate(
+        [item["points"] for item in heldout_records[1:]], axis=0
     )
+    target = _deterministic_limit(target_all, maximum_points)
     if (
         len(query) < int(config["compiler_geometry"]["minimum_query_points"])
         or len(target) < int(config["compiler_geometry"]["minimum_target_points"])
@@ -305,6 +306,36 @@ def _compile_actor(
         "action_counts": dict(action_counts),
         "input_counts": dict(input_counts),
     }
+    if include_diagnostics:
+        target_origins_all = np.concatenate(
+            [
+                np.repeat(item["sensor_origin"][None, :], len(item["points"]), axis=0)
+                for item in heldout_records[1:]
+            ],
+            axis=0,
+        )
+        target_indices = _limit_indices(np.arange(len(target_all)), maximum_points)
+        package["diagnostics"] = {
+            "track": track,
+            "build_frame_points": [
+                _deterministic_limit(item["points"], maximum_points)
+                for item in build_records
+            ],
+            "query": query,
+            "query_sensor_origin": sensor_origin,
+            "target": target,
+            "target_sensor_origins": target_origins_all[target_indices],
+            "canonical": canonical,
+            "baseline": baseline,
+            "compiled": compiled,
+            "kept": query[keep],
+            "unknown_query": query[~keep],
+            "ghost": ghost,
+            "projected": np.asarray(projected, dtype=np.float32).reshape(-1, 3),
+            "duplicate": duplicate,
+            "flicker": flicker,
+            "completed": completed_points,
+        }
     return row, package
 
 
@@ -312,6 +343,7 @@ def compile_log(
     log_dir: Path,
     config: Mapping[str, Any],
     device: torch.device,
+    include_diagnostics: bool = False,
 ) -> dict[str, Any]:
     annotations = pd.read_feather(log_dir / "annotations.feather")
     poses = pd.read_feather(log_dir / "city_SE3_egovehicle.feather")
@@ -343,6 +375,7 @@ def compile_log(
                 points, grouped[int(path.stem)], frame_ranks, records, config, device
             )
     actor_rows, packages = [], []
+    diagnostics: dict[str, dict[str, Any]] = {}
     offsets = [0]
     actor_ids = []
     for track_id in sorted(tracks):
@@ -351,6 +384,7 @@ def compile_log(
             sorted(records.get(track_id, []), key=lambda item: item["frame_rank"]),
             config,
             device,
+            include_diagnostics=include_diagnostics,
         )
         if compiled is None:
             continue
@@ -359,6 +393,8 @@ def compile_log(
         packages.append(package["points"])
         offsets.append(offsets[-1] + len(package["points"]))
         actor_ids.append(track_id)
+        if include_diagnostics:
+            diagnostics[track_id] = package["diagnostics"]
     return {
         "log_id": log_dir.name,
         "actor_rows": actor_rows,
@@ -368,6 +404,7 @@ def compile_log(
             else np.empty((0, 3), dtype=np.float32),
             "offsets": np.asarray(offsets, dtype=np.int64),
             "actor_ids": actor_ids,
+            "diagnostics": diagnostics,
         },
         "metadata_tracks": len(tracks),
         "sweeps_read": len(sweep_paths),

@@ -580,6 +580,15 @@ T_{sensor}
 
 ## V7-P3：三维硬证据与视觉结果
 
+### P3-A formal freeze（2026-09-02）
+
+- Formal task=`WS-V7-P3-AV2-HARD-EVIDENCE-01`，冻结 30 logs 与 P2 canonical config；新 overlay 只定义硬指标、
+  8-gate non-regression rule 和 renderer，不复制 Actor/hazard 参数。
+- target-ray depth/termination 使用各 target LiDAR point 原始 Actor-local sensor origin，target 仍不参与 action；
+  temporal jitter 是 build-frame-to-canonical residual 的跨帧标准差。paired free-space/ghost component 明确为合成合同。
+- qualitative 10 logs 不删；每 log 词法序前三 eligible Actor。main 固定前 8 logs 首 Actor，supplement 固定全部 30；
+  首阶段产出 point/surface/ray panel，P3-B 再接 frozen camera RGB/depth/video，不按结果换案例。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；
