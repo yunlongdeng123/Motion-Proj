@@ -37,6 +37,15 @@ p_\theta(y\mid z^{\mathrm{val}},z^{\mathrm{haz}},\tau,H)=\sum_k\pi_k\mathcal{N}(
 \end{equation}
 which exposes a closed-form marginal CDF for any budget. A low-rank, input-conditioned dependence model combines the frozen marginals across horizons. This factorization separates learned Actor uncertainty from analytic task geometry.
 
+The analytic boundary also exposes deterministic geometry sensitivity. Let $a_j=|n_j^\top e_j|$ and
+$m_j=\max(d_j,\epsilon)$. For $C(d)=\max_j a_j/m_j$ and a uniform signed-clearance shift $d'=d+\delta$,
+\begin{equation}
+|C(d')-C(d)|\leq\max_j\frac{a_j|\delta|}{m_jm'_j}
+\leq\frac{a_{\max}|\delta|}{\epsilon^2}.
+\end{equation}
+This follows from the max operator and clipped denominator being 1-Lipschitz; it is an error-propagation bound, not a
+distributional safety statement.
+
 \subsection{Monotone Runtime Surface and SceneIR}
 
 The final runtime object is a frozen grid over horizon and cost budget with monotone interpolation. Budget CDF values are non-decreasing; prefix-horizon reliability is non-increasing. Groupwise isotonic maps may calibrate predefined conditions on a disjoint source fold, but do not change these structural constraints.

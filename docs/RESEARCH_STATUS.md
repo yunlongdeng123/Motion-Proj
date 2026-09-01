@@ -1,5 +1,11 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P7-B（2026-09-02）
+
+Paper now includes deterministic geometry-to-cost inequality、575,596-row perturbation result、三轴分离结论与 uniform-shift
+claim boundary。Official-template compile=`7 pages/1,148,575 bytes`；pages 3/6/7 visual check 无 clipping/overlap，page 7
+仅 bibliography continuation。未新增图表或把 algebraic pass 写成 safety certificate。
+
 ## WorldSim V7 P7-B geometry-to-cost boundary supported（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T191500Z__geometry-cost-sensitivity-s0-r2`。
@@ -29,9 +35,9 @@ GPU vectorized、无训练/fit/calibration/threshold/model selection/new sensor 
 
 ## WorldSim V7 CVPR paper integrated through P5-B（2026-09-02）
 
-Official CVPR draft now includes the composed-authority equation `repair gate ≠ trajectory authority`、P5 exact-identity result
-table、abstract/contribution/limitations/conclusion claim update。Local full compile=`6 pages/1,144,718 bytes`；pages 2--6
-visual check 无 clipping、overlap 或 orphan float。Paper 数字来自 canonical P5-B，未把 retained-source zero events 写成保证。
+Official CVPR draft includes the composed-authority equation `repair gate ≠ trajectory authority`、P5 exact-identity result
+table、abstract/contribution/limitations/conclusion claim update。P5-only compile=`6 pages/1,144,718 bytes`；后续 P7-B 版本见
+最新状态。Paper 数字来自 canonical P5-B，未把 retained-source zero events 写成保证。
 
 ## WorldSim V7 P5-B physical--reliability boundary completed（2026-09-02）
 

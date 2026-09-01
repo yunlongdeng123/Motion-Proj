@@ -1,5 +1,11 @@
 # Experiments
 
+## CVPR paper P7-B integration check（2026-09-02）
+
+- added：geometry-to-cost inequality、full-source/P5 perturbation result、three-axis interpretation、uniform-shift limitation。
+- compile：official template `main.pdf`，7 pages，1,148,575 bytes。
+- visual：pages 3/6/7 inspected；no clipping/overlap，page 7=bibliography continuation only。
+
 ## WS-V7-P7B geometry-to-cost sensitivity result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T191500Z__geometry-cost-sensitivity-s0-r2`。

@@ -1017,6 +1017,9 @@ P7-B r2 canonical=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/2026
 `.02922/.14501`，仅 `.8409%` sign crossing；P5 selected mean shift=`.000847` vs abstained `.004560` 且 0 crossing。
 结合 P5-B selected motion error 更大，结论固定为 geometry sensitivity、repairability、motion uncertainty 三轴分离。
 
+CVPR draft 已同步 P7-B theorem/result/limitation，official template=`7 pages`；page 7 仅 references continuation，无 float/
+clipping。P6-C fresh external 前不根据该解析 audit 改 selector 或 threshold。
+
 ---
 
 ## V7-P8：Final exact-once evaluation

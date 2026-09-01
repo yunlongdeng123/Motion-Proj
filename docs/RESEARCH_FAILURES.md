@@ -2,6 +2,11 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper layout note — P7-B 后第 7 页仅 references continuation
+
+- official-template compile=7 pages；第 7 页没有 orphan figure/table 或正文断裂，仅 bibliography continuation。
+- 当前未为压回 6 页删科学边界；CVPR 主文预算仍有余量。无新增 failure id。
+
 ### V7-F14 — FP32 roundoff 造成解析 geometry-cost bound 假超差
 
 - r1：`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T190000Z__geometry-cost-sensitivity-s0-r1`。
