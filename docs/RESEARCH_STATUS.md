@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P7-B geometry-to-cost boundary supported（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T191500Z__geometry-cost-sensitivity-s0-r2`。
+FP64 在 575,596 rows×6 shifts×fixed strata 上为 0 violation，max `shift-bound=1.42e-14`；`V7-F14` 在不改
+tolerance/delta/floor/rows/groups 下关闭。
+
+最大 inward `-.20m`：full-source mean/q99 shift=`.02922/.14501`，sign/floor crossing=`.8409/.8798%`；rare crossing
+使 mean/q99 bound=`.70064/10.02198` 很松。P5 selected vs abstained mean shift=`.000847/.004560`（selected `5.38x`
+更稳），selected crossing=`0`；同时 selected motion q90 error 更大。几何敏感性、repairability、motion uncertainty
+三者不可压成同一 confidence。非 sensor distribution/causal repair/safety certificate。
+
 ## WorldSim V7 P7-B FP64 correction after numerical rejection（2026-09-02）
 
 P7-B r1=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T190000Z__geometry-cost-sensitivity-s0-r1`

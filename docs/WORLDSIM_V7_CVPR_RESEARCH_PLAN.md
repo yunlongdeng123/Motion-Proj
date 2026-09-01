@@ -1012,6 +1012,11 @@ P5 test strata 上评估 `±.05/±.10/±.20m`、`epsilon=.05m` 的 shift/bound/t
 P7-B r1 的 FP32 maximum `shift-bound=3.8147e-6` 超过 frozen `1e-6`，登记 `V7-F14`；P5 strata 为 0 violation。
 只把 algebra compute 改 FP64，deltas/floor/tolerance/groups/rows 均不变后 r2，不放宽判据。
 
+P7-B r2 canonical=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T191500Z__geometry-cost-sensitivity-s0-r2`：
+575,596 rows×6 shifts 为 0 violation，max overage=`1.42e-14`。`-.20m` full-source mean/q99 cost shift=
+`.02922/.14501`，仅 `.8409%` sign crossing；P5 selected mean shift=`.000847` vs abstained `.004560` 且 0 crossing。
+结合 P5-B selected motion error 更大，结论固定为 geometry sensitivity、repairability、motion uncertainty 三轴分离。
+
 ---
 
 ## V7-P8：Final exact-once evaluation

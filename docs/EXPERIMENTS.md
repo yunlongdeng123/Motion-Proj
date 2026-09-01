@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V7-P7B geometry-to-cost sensitivity result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T191500Z__geometry-cost-sensitivity-s0-r2`。
+- FP64：0 violations；maximum `shift-bound=1.4211e-14`；575,596 rows，6 fixed shifts。
+- full source `-.20m`：mean/q99 shift=`.029218/.145007`，mean/q99 bound=`.700640/10.021975`，
+  sign/floor crossing=`.8409/.8798%`。
+- P5 selected vs abstained `-.20m` mean shift=`.000847/.004560`，q99=`.005664/.019125`；selected crossing=`0/0`。
+- resources：RTX 3090，peak GPU/RSS=`.0608/.8780 GiB`，wall=`2.19s`。
+
 ## WS-V7-P7B r1 numerical rejection（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T190000Z__geometry-cost-sensitivity-s0-r1`。

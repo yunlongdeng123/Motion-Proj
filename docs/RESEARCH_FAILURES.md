@@ -9,6 +9,8 @@
   0 violation，且 tightness 约 1，符合 subtract/divide roundoff 特征。
 - 对策：解析计算改 FP64，保持 source rows、deltas、clearance floor、groups、tolerance 全部不变后 r2；禁止通过放宽
   tolerance 把 r1 改写为通过。
+- outcome：r2=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T191500Z__geometry-cost-sensitivity-s0-r2`
+  为 0 violation，maximum overage=`1.42e-14`；failure 已关闭但保留 r1 provenance。
 
 ### P7-B prevention note — 确定性 Lipschitz bound 不等于扰动概率或安全证书
 
