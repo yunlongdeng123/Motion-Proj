@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P5-B safety-boundary note — physical repair authority 不是 trajectory authority
+
+- canonical：`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。
+- 无新增 failure id：5 个 selected Actors 的 `1,781` retained rows 为 `0` false-safe、`0` decision flip，且 23 个
+  geometric-harm Actors 全部 abstained。
+- 必须保留的边界：selected q90 state error=`1.577m`，是 abstained `.693m` 的 `2.28x`；3.0s 达 `4.246m`。
+  因此禁止把 P4 selection 当成 C3/规划控制 authority。该零事件小样本也不构成 formal guarantee。
+
 ### V7-F13 — P4 train 与 V6.7 source 的 exact Actor overlap 不足以联合轻训
 
 - canonical：`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。

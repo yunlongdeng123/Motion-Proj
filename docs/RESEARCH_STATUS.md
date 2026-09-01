@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P5-B physical--reliability boundary completed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。
+P4 test exact-match=`88 Actors/14 scenes/39,285 rows`；frozen selector 放行 `5` Actors。全部 `23` 个 geometric-harm
+Actors 被拒绝，selected-and-harmful=`0`；selected `1,781` rows 的 false-safe/decision-flip 均为 `0`。
+
+但 selected 对象比 abstained 更难：mean/q90 cost=`.1225/.2833` vs `.0464/.1016`，mean/q90 Actor state error=
+`.6960/1.5772m` vs `.2704/.6932m`；selected 的 3.0s q90 error=`4.2456m`。结论：physical-repair authority 与
+trajectory-reliability authority 必须串联但分离，不能把“可修复”解释为下游安全授权。P346 未执行，非因果/非保证。
+
 ## WorldSim V7 P5-B frozen physical--reliability interface frozen（2026-09-02）
 
 Active=`WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01 / WS-V7-H-P5-002`。Primary=P4 test exact-match

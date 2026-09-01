@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V7-P5B frozen physical--reliability interface result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。
+- test exact-match=`88 Actors/14 scenes/39,285 rows`；selected=`5 Actors/1,781 rows`。
+- geometric harm=`23/88`，全部 abstained；selected-and-harmful=`0`；selected false-safe/flip=`0/0`。
+- selected vs abstained mean cost=`.12250/.04643`，q90 cost=`.28330/.10157`，mean error=`.69605/.27043m`，
+  q90 error=`1.57719/.69323m`；selected 3.0s q90 error=`4.24558m`。
+- verdict=`descriptive_interface_completed`；physical repair gate 不能替代 downstream reliability authority。
+
 ## WS-V7-P5B frozen physical--reliability interface freeze（2026-09-02）
 
 - primary：P4 test exact-match 88 Actors；calibration 25 Actors=context；train excluded after `V7-F13`。

@@ -788,6 +788,11 @@ P5-B 固定使用 calibration/test `25/88` exact-match Actors，比较 frozen P4
 helpful/harmful、selected-and-harmful 在 retained V6.7 `.8/1.5/2.5/3.0s` cost/state-error/decision-flip/
 false-safe 的分层。无 fit、threshold、gate 或 P346 execution；只给共现安全边界，不做因果改善声明。
 
+P5-B canonical=`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。
+test `88 Actors/39,285 rows` 中 selected=`5/1,781`，false-safe/flip=`0/0`，23 个 geometric-harm Actors 全部
+abstained；但 selected q90 state error=`1.577m` vs abstained `.693m`，3.0s=`4.246m`。因此 paper graph 固定为
+physical repair gate 与 downstream multi-horizon reliability authority 分离；零事件小样本不升级为 safety guarantee。
+
 ### 保留模块
 
 - V6.7 已支持的 Actor residual distribution；
