@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V7-P7B r1 numerical rejection（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T190000Z__geometry-cost-sensitivity-s0-r1`。
+- FP32 maximum `shift-bound=3.8147e-6`，超过 frozen `1e-6`；reported-group count=`41`，来自 all-source 的重复 strata
+  计数；P5 test all/selected/abstained 均 0。
+- correction：FP64 重算；deltas/floor/tolerance/groups/rows 全不变，不放宽 gate。
+
 ## WS-V7-P7B geometry-to-cost sensitivity freeze（2026-09-02）
 
 - theorem：`|C(d')-C(d)| <= max_j a_j|delta|/(m_j m'_j) <= a_max|delta|/epsilon^2`。

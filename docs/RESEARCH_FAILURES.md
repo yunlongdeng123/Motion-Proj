@@ -2,12 +2,20 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F14 — FP32 roundoff 造成解析 geometry-cost bound 假超差
+
+- r1：`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T190000Z__geometry-cost-sensitivity-s0-r1`。
+- all-source maximum `shift-bound=3.8147e-6`，frozen tolerance=`1e-6`；P5 exact-match strata 在所有 6 个 shifts 为
+  0 violation，且 tightness 约 1，符合 subtract/divide roundoff 特征。
+- 对策：解析计算改 FP64，保持 source rows、deltas、clearance floor、groups、tolerance 全部不变后 r2；禁止通过放宽
+  tolerance 把 r1 改写为通过。
+
 ### P7-B prevention note — 确定性 Lipschitz bound 不等于扰动概率或安全证书
 
 - frozen stress 只对 retained profile 的 uniform signed-clearance shift 验证代数上界与紧致性。
 - 禁止把 bound satisfaction 写成 sensor error distribution、physical repair causal effect、closed-loop collision bound 或
   real-road safety guarantee；bound 很松时必须如实报告 tightness 与 clearance-floor crossing。
-- 本项不是新 failure；下一可用编号仍为 `V7-F14`。
+- r1 数值实现失败已登记 `V7-F14`；下一可用编号为 `V7-F15`。
 
 ### Paper claim-boundary note — P5-B 零事件不写成安全保证
 

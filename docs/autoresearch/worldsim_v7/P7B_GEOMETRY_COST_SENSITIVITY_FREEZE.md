@@ -25,6 +25,8 @@ constant.
 - Fixed uniform signed clearance shifts: $\pm0.05,\pm0.10,\pm0.20$ m; $\epsilon=0.05$ m.
 - Report absolute cost shift, local-bound tightness, clipped-denominator/sign crossings, and bound violations.
 - One GPU-vectorized pass per shift; no training, fitting, calibration, threshold, sweep, or model selection.
+- Algebraic terms use FP64. The frozen `1e-6` bound tolerance is unchanged after FP32 roundoff produced a `3.81e-6` false
+  overage in r1; this is an implementation-precision correction, not a relaxed decision boundary.
 
 This numerical audit is motivated by signed-distance representations for driving geometry and safety-aware motion prediction, but
 its theorem is algebraic and self-contained:

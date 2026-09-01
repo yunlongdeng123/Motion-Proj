@@ -115,6 +115,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         tolerance = float(config["bound_tolerance"])
         chunk_size = int(config["chunk_size"])
         device = torch.device("cuda")
+        dtype = torch.float64 if config["compute_dtype"] == "float64" else torch.float32
         torch.cuda.reset_peak_memory_stats(device)
         perturbation_results: dict[str, Any] = {}
         total_violations = 0
@@ -129,10 +130,14 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             sign_change_parts: list[np.ndarray] = []
             for start in range(0, len(scene_index), chunk_size):
                 stop = min(start + chunk_size, len(scene_index))
-                error = torch.from_numpy(error_vector[start:stop]).to(device)
-                normal = torch.from_numpy(boundary_normal[start:stop]).to(device)
-                separation = torch.from_numpy(predicted_separation[start:stop]).to(device)
-                radius = torch.from_numpy(interaction_radius[start:stop]).to(device)[:, None]
+                error = torch.from_numpy(error_vector[start:stop]).to(device=device, dtype=dtype)
+                normal = torch.from_numpy(boundary_normal[start:stop]).to(device=device, dtype=dtype)
+                separation = torch.from_numpy(predicted_separation[start:stop]).to(
+                    device=device, dtype=dtype
+                )
+                radius = torch.from_numpy(interaction_radius[start:stop]).to(
+                    device=device, dtype=dtype
+                )[:, None]
                 projection = torch.abs(torch.sum(error * normal, dim=2))
                 clearance = separation - radius
                 perturbed_clearance = clearance + delta
@@ -188,6 +193,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             ),
             "claim_boundary": config["claim_boundary"],
             "clearance_floor_m": epsilon,
+            "compute_dtype": config["compute_dtype"],
             "source_row_count": int(len(scene_index)),
             "p5_test_actor_count": len(actor_rows),
             "p5_selected_actor_count": int(sum(bool(row["factorized_selected"]) for row in actor_rows)),

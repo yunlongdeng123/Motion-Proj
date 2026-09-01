@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 P7-B FP64 correction after numerical rejection（2026-09-02）
+
+P7-B r1=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/20260902T190000Z__geometry-cost-sensitivity-s0-r1`
+在 FP32 下产生 41 个 across-reported-groups 超差（同一 all-source rows 被 strata 重计），最大仅 `3.8147e-6`；P5
+test all/selected/abstained 全部 6 shifts 均 0 violation。`V7-F14` 定位为数值精度，不放宽 frozen `1e-6` tolerance；
+implementation 改 FP64 后 r2。
+
 ## WorldSim V7 P7-B geometry-to-cost sensitivity frozen（2026-09-02）
 
 Active=`WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01 / WS-V7-H-P7-002`。对 paper boundary cost

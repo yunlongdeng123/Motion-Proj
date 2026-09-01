@@ -1009,6 +1009,9 @@ L_sd(\hat S,S^*)
 P5 test strata 上评估 `±.05/±.10/±.20m`、`epsilon=.05m` 的 shift/bound/tightness/clearance crossing；无训练、
 校准、阈值或新传感器读取。只解释误差传播，不能称扰动概率或 safety certificate。
 
+P7-B r1 的 FP32 maximum `shift-bound=3.8147e-6` 超过 frozen `1e-6`，登记 `V7-F14`；P5 strata 为 0 violation。
+只把 algebra compute 改 FP64，deltas/floor/tolerance/groups/rows 均不变后 r2，不放宽判据。
+
 ---
 
 ## V7-P8：Final exact-once evaluation
