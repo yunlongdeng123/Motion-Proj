@@ -1,0 +1,49 @@
+task_id: WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01
+hypothesis_id: WS-V7-H-P6-001
+runs_root: /root/autodl-tmp/runs
+source_p4_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+fresh_av2_cohort: configs/worldsim_v7/av2_zero_shot_recovery_cohort_v1.json
+device: cuda
+claim_boundary: >-
+  A single recovery of V7-F11. Model design, fitting, standardization, and repair-threshold
+  calibration use nuScenes only. The consumed 30-log AV2 cohort is unavailable for candidate
+  selection and thresholding. External recovery quality is read exactly once on the frozen,
+  previously unused 20-log AV2 cohort. No formal cross-domain risk or road-safety guarantee.
+validity_representation:
+  feature_names:
+    - log_query_points
+    - log_canonical_surfels_per_observation
+    - query_surface_mean_m
+    - query_surface_p95_m
+    - clean_keep_fraction
+    - unknown_query_fraction
+    - temporal_support_fraction_mean
+    - temporal_support_fraction_p10
+    - view_support_fraction_mean
+    - completion_candidate_fraction
+    - compiled_to_query_ratio
+    - sensor_range_m
+  remove_raw_observation_frame_count: true
+  count_ratio_floor: 1.0
+model:
+  seed: 70601
+  hidden_dim: 32
+  epochs: 80
+  batch_size: 256
+  learning_rate: 0.002
+  weight_decay: 0.0001
+selective_risk:
+  false_repair_alpha: 0.05
+  threshold_source: nuScenes calibration only
+opportunity_intervention:
+  scale_factors: [0.5, 2.0]
+  maximum_transformed_feature_shift: 1.0e-6
+gates:
+  maximum_nuscenes_test_auroc_degradation_from_p4: 0.02
+  minimum_fresh_av2_coverage: 0.10
+  require_fresh_false_repair_below_always_repair: true
+  require_fresh_selective_chamfer_no_worse_than_query: true
+  require_fresh_score_wasserstein_below_p4_baseline: true
+verdict_on_pass: supported_opportunity_invariant_nuscenes_to_fresh_av2_selector
+verdict_on_failure: rejected_opportunity_invariant_nuscenes_to_fresh_av2_selector

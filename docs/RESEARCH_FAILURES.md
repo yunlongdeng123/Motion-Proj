@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P6 recovery prevention note — consumed AV2 不参与机会归一化选择
+
+- P7 已精确暴露 `observation_frame_count` shortcut，因此 P6 只能删除/归一化该机会变量，不能借 30 个 consumed AV2 logs
+  选择更多 feature、seed、threshold 或 gate。
+- fresh 20 logs 由 150-log metadata 排序、排除 v1 multiples-of-five indices、对 complement 固定 every-sixth 得到；冻结时
+  method output/quality read=false。下载完成后只允许一次 external read。
+- P6 即使通过也仍是 empirical transfer；factorized cross-task derivative zero 与 sensor-domain invariance 是两个不同命题。
+  本项不是新 failure；下一可用编号仍为 `V7-F12`。
+
 ### V7-F11 — factorized validity head 依赖跨域不稳定的 sensor-opportunity shortcut
 
 - run：`run://worldsim_v7/WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01/20260902T163000Z__safety-envelope-s0-r1`；

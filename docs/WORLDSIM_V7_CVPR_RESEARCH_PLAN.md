@@ -806,6 +806,17 @@ V7 模型必须相对 shared encoder：
 
 ## V7-P6：nuScenes → Argoverse 2 零样本迁移
 
+### P6-B sensor-opportunity recovery freeze（2026-09-02）
+
+P7 的 `V7-F11` 将失败层级定位为 `sensor opportunity shift`。唯一恢复候选删除 raw observation-frame count，并将
+canonical surfels、temporal/view support 变为 per-observation dimensionless ratios；只用 nuScenes train/calibration 训练与
+定阈值，hazard head 和 structural factorization 不变。模型固定为 hidden32/seed70601/80 epochs，无 feature/model sweep。
+
+External recovery cohort 不复用已消费 30 logs：对 150 个 AV2 val UUID 排序，排除 v1 indices `0,5,...,145`，再从
+120-log complement 每隔 6 个取一个，共 20 fresh logs。元数据选择在任何 recovery score/quality 前冻结。通过条件只包括
+nuScenes non-inferiority、机会变换不变性、fresh coverage/false-repair/Chamfer，以及相对 frozen P4 的 fresh score-shift
+改善；不得在 fresh read 后调 threshold。通过也不产生 formal cross-domain risk guarantee。
+
 ### 主域
 
 - 训练、模型选择和校准：仅 nuScenes；

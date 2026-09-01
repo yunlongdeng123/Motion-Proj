@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7 P6 opportunity-invariant recovery frozen / fresh AV2 IO next（2026-09-02）
+
+Active=`WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01 / WS-V7-H-P6-001`。针对 `V7-F11` 只做一次表示恢复：移除 raw
+`observation_frame_count`，把 canonical surfels、temporal support、view support 改为 per-observation dimensionless ratios；
+query-frame density、物理 residual/fraction/ratio 保留。单一 MLP=`hidden32/seed70601/80 epochs`，标准化和 threshold
+仍只读 nuScenes train/calibration；hazard head 与 exact disjoint interface 复用 P4，不做 feature/model/seed sweep。
+
+新 external cohort 在任何 recovery output 前按 metadata 冻结：150 个 AV2 val UUID 排序，排除 v1 已消费 indices
+`0,5,...,145`，在 120-log complement 中每隔 6 个取一个，共 20 个从未使用日志（original indices=`1,8,16,...,143`）。
+已消费 30 logs 不参与候选选择或阈值。下一步启动单下载器顺序 IO；同时可先完成 nuScenes-only 实现/训练，不等待 IO。
+
+唯一 gates：nuScenes test AUROC 相对 P4 不退化超过 `.02`、`.5x/2x` opportunity transform invariance、fresh AV2 coverage
+`>=10%`、false repair 优于 always repair、selective Chamfer 不差于 query、score Wasserstein 优于同 fresh rows 上冻结 P4。
+通过也只支持 opportunity-normalized empirical transfer；失败不在 fresh cohort 上调 threshold。
+
 ## WorldSim V7 P7 complete / sensor-opportunity shortcut exposed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01/20260902T163000Z__safety-envelope-s0-r1`；

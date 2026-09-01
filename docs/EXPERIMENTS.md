@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P6 opportunity-invariant recovery freeze（2026-09-02）
+
+- hypothesis：`WS-V7-H-P6-001`；single recovery of `V7-F11`。
+- representation：remove raw observation frame count；use canonical surfels/observation、temporal support/observation、view
+  support/observation；retain query density, physical residual/fraction/ratio, completion fraction, and sensor range。
+- model：validity-only MLP hidden=`32`、seed=`70601`、epochs=`80`；nuScenes train standardizer/model、calibration-only
+  `.05` threshold；P4 hazard head/interface unchanged；no sweep。
+- fresh external cohort：20 unused AV2 val logs；sort 150、remove consumed multiples-of-five indices、take every sixth from
+  complement；quality/model read before freeze=false。Consumed 30 logs unavailable for recovery selection。
+- gates：nuScenes test AUROC degradation `<=.02`；fixed opportunity transform shift `<=1e-6`；fresh coverage `>=.10`；
+  fresh false repair below always repair；selective CD no worse than query；score Wasserstein below frozen P4 on same fresh rows。
+- IO：`download_worldsim_v7_av2_recovery.sh` uses one lock-owning downloader, sequential logs, resumable `.complete` markers,
+  and stops below 50GiB free space；no checksum/hash/fingerprint。
+
 ## WS-V7-P7 interpretable safety envelope result（2026-09-02）
 
 ### WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01 r1
