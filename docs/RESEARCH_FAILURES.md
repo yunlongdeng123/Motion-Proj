@@ -2,6 +2,22 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F09 — aggregate hard-geometry gates 掩盖 per-Actor repair degradation
+
+- exposure：P3-B 不挑图的第 8 main case 显示 Chamfer `.527→.967m`。对 P3-A 全 634 Actors 作一次全量 tail read，
+  `109/634=17.19%` individual Chamfer worsened；depth error 与 ray termination 分别有 `271/253` Actors 方向变差。
+  P3-A role mean 与预冻结 gates 仍有效，但不能解释为每个 Actor 都被安全修复。
+- root cause：aggregate mean gate 允许收益大的 Actor 抵消长尾退化；ray-certified PROJECT 只证明 paired matched-ray
+  free interval，不为 KEEP/COMPLETE/UNKNOWN 组合后的 target geometry 提供 per-Actor non-worsening certificate。
+- literature/open-source response：ICML 2019 SelectiveNet 把 reject option 明确为 risk--coverage 问题；ICLR 2024
+  Conformal Risk Control 对 monotone loss 提供校准风险控制。V7 迁移“repair or abstain”接口，但 calibration/train 只允许
+  nuScenes；nuScenes→AV2 未知 shift 不满足 exchangeability，因此 AV2 只报告 zero-shot risk--coverage，不包装成 formal guarantee。
+- resolution plan：下一 candidate 用 method-visible geometry/provenance 特征学习低容量 repairability score，并与 hazard
+  encoder 输入隔离；label/threshold 仅来自 nuScenes build/query/target split。AV2 全 30 logs exact frozen evaluation，
+  失败 Actor 不删除。status=`open_p4_selective_certificate_required`。
+
+下一可用编号：`V7-F10`。
+
 ### P3-B freeze prevention note — camera/crop 不读取 RGB 外观或结果质量
 
 - P3-B 逐项复用 P3-A 冻结 `VISUAL_CASES.jsonl`，没有新的案例 admission。相机只按 official AV2 calibration 下
@@ -9,7 +25,8 @@
 - crop 仅由同一 query projection 的包围盒和固定 padding/minimum size 决定；不按画面美观、遮挡、hazard、Chamfer、
   free-space 或 action 成功率调整。全部 30 cases 都写 panel/video，不删除难例。
 - paired ghost/duplicate/flicker 仍是 synthetic contract overlay；真实主张来自 P3-A target-only LiDAR depth/ray/surface。
-  P3-B 明示不是 photorealistic reconstruction。本项不是新 failure；下一可用编号仍为 `V7-F09`。
+  P3-B 明示不是 photorealistic reconstruction。本项本身不是新 failure；formal tail read 随后暴露 `V7-F09`，
+  下一可用编号为 `V7-F10`。
 
 ### V7-F08 — ray-correct 评价确认 nearest-canonical PROJECT 违反 observed-free interval
 

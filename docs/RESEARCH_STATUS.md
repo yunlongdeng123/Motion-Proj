@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7 P3-B camera evidence supported / per-Actor boundary exposed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3B-AV2-CAMERA-EVIDENCE-01/20260902T150000Z__camera-evidence-s0-r1`；
+10/10 logs、30/30 frozen cases、8 main panels、30 supplement panels 与 30 MP4 全部生成，case selection 未改变。
+camera visibility query points min/median=`14/82`，visibility fraction min/median=`.7278/1.0`，每 crop 稀疏深度点
+最少 `870`。8/8 main 人工检查可读，不因遮挡、质量或结果替换；camera 分布由 visibility-only rule 自动产生。
+wall=`43.38s`、GPU peak=`.0663GiB`、RSS=`1.339GiB`、run=`46MiB`，磁盘余量约 `128GiB`。
+
+冻结第 8 main case 明示 Chamfer `.527→.967m`，未隐藏。全量 634 P3 Actors 中 `525/634=82.81%` Chamfer
+non-worse，`109/634=17.19%` worsened；ray termination 与 depth 也分别有 `39.91%/42.74%` Actor-level worsening，
+尽管 role mean 改善。登记 `V7-F09`：P3 的 aggregate gates 不能升级为 per-Actor repair certificate。下一步迁移
+SelectiveNet 的 risk--coverage/reject 边界与 Conformal Risk Control 的 calibration 思路，训练/校准只用 nuScenes；
+AV2 因未知 cross-dataset shift 只作 zero-shot risk--coverage evaluation，不声称 exchangeable conformal guarantee。
+CVPR 主稿已加入首个冻结四联图与 Actor-tail boundary；LaTeX/PDF 复核为 5 pages / 928,786 bytes，跨栏图位于
+Experiments 结果页且先于 References，无 overlap/clipping。
+
 ## WorldSim V7 P3-B frozen camera evidence / formal generation next（2026-09-02）
 
 Active=`WS-V7-P3B-AV2-CAMERA-EVIDENCE-01 / WS-V7-H-P3B-001`。案例严格复用 P3-A 已登记的 8 main +

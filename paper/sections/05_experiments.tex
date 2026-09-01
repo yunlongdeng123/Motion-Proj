@@ -1,5 +1,14 @@
 \section{Experiments}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/p3b_av2_camera_evidence.png}
+  \caption{The first metadata-frozen AV2 main case. From left: synchronized RGB with observed Actor returns, paired synthetic
+  artifacts, the four-action ray-certified output, and motion-compensated sparse camera depth. Camera/crop selection does not
+  read RGB appearance or method quality. This is a calibrated evidence overlay, not photorealistic reconstruction.}
+  \label{fig:p3b-camera}
+\end{figure*}
+
 \paragraph{Data and protocol.}
 We train and select models only on nuScenes. Argoverse~2 Sensor validation logs form a zero-shot external test. Before reading any method output, we sort the 150 validation UUIDs and select every fifth log, yielding 20 quantitative and 10 qualitative logs. No AV2 fine-tuning, post-hoc calibration, threshold selection, or failed-scene deletion is allowed. Final nuScenes and AV2 cohorts are evaluated exactly once after the method freezes.
 
@@ -37,6 +46,16 @@ Actor identity, trajectory, extent, and hazard labels are retained for \PtwoActo
 rate is a paired contract result; depth, ray termination, and Chamfer use independent target-only LiDAR.
 
 \input{tables/p2_four_action}
+
+\paragraph{Frozen camera evidence and an exposed boundary.}
+We project each pre-registered qualitative Actor back into synchronized AV2 ring-camera frames using the official calibration
+and motion compensation. Camera identity maximizes only the number of visible query LiDAR returns, with a fixed camera-order
+tie break; RGB is decoded afterward and every case is retained. All \PthreeBCases{} cases have calibrated RGB, sparse depth,
+four-action, and before/after video evidence; the median/minimum visible query counts are
+\PthreeBMedianVisible{}/\PthreeBMinimumVisible{} (Fig.~\ref{fig:p3b-camera}). Importantly, the frozen set exposes a limit:
+although mean Chamfer improves, \PthreeActorWorse{}\% of all 634 Actors worsen individually. Thus P3 establishes aggregate
+zero-shot geometry, not a per-Actor repair certificate; this motivates a selective ``repair or abstain'' validity head trained
+and calibrated only on nuScenes.
 
 \input{tables/main_results}
 

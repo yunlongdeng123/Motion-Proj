@@ -627,6 +627,18 @@ Actor/hazard state shift=0。相较 rejected nearest-surface r2 的 `.1681m` Cha
 - paired ghost/duplicate/flicker 与视频闪烁是 synthetic contract evidence；RGB panel 是 calibrated evidence overlay，
   不是 photorealistic reconstruction。真实几何结论继续由 P3-A target-only LiDAR depth/ray/surface 承担。
 
+### P3-B 执行结果（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3B-AV2-CAMERA-EVIDENCE-01/20260902T150000Z__camera-evidence-s0-r1`；
+10/10 logs 与 30/30 frozen cases 完成，8 main + 30 supplement panels、30 MP4。query visibility points min/median=
+`14/82`，minimum visibility fraction=`.7278`，zero-visible=0；8 main 人工检查均可读且未换图。wall=`43.38s`、
+GPU=`.0663GiB`、RSS=`1.339GiB`、run=`46MiB`。
+
+不挑图同时暴露 `V7-F09`：全 634 Actors 的 aggregate Chamfer 改善下仍有 `109/634=17.19%` individual worsening，
+depth/ray 方向变差分别为 `271/253` Actors。故 P3 只支持 aggregate zero-shot geometry，不支持 per-Actor universal
+repair certificate。P4 必须把 validity head 改成 nuScenes-only selective repairability/risk--coverage，并保持 hazard 输入
+独立；AV2 未知 shift 下只做 zero-shot evaluation，不声称 conformal exchangeability guarantee。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

@@ -1,5 +1,24 @@
 # Experiments
 
+## WS-V7-P3B AV2 camera evidence result / actor-tail read（2026-09-02）
+
+### WS-V7-P3B-AV2-CAMERA-EVIDENCE-01 r1
+
+- canonical：`run://worldsim_v7/WS-V7-P3B-AV2-CAMERA-EVIDENCE-01/20260902T150000Z__camera-evidence-s0-r1`；
+  verdict=`supported_frozen_av2_camera_evidence_package`。
+- outputs：10/10 logs；30/30 frozen panels；8 main；30/30 MP4（32 frames, 8fps）；case/camera/crop 无 quality selection。
+- coverage：visible query points min/median=`14/82`；visibility fraction min/median=`.727829/1.0`；minimum sparse
+  depth points/crop=`870`；zero-visible=`0`。
+- manual QA：8 main panels 均可读；包括 hazard/safe、近距密集与远距 14-point case。第 8 main 的
+  Chamfer `.527→.967m` 明确保留，未换图。
+- all-Actor descriptive tail：P3 的 634 Actors 中 Chamfer non-worse/worse=`525/109`（`82.81/17.19%`）；
+  ratio median/p90/p95/max=`.7569/1.0795/1.2034/1.8725`；depth worse=`271/634`，ray consistency worse=`253/634`。
+  该 secondary read 不改变 P3-A frozen aggregate verdict，只否定 per-Actor universal improvement 解释（`V7-F09`）。
+- resources：wall=`43.380s`；GPU peak=`.066319GiB`；RSS=`1.339GiB`；run=`46MiB`；free disk=`128GiB`。
+- paper：新增首个 frozen four-panel Figure 2 与 `17.19%` Actor-tail boundary；TeX Live 构建 5 pages /
+  928,786 bytes，PDF 全页复核无 overlap/clipping，figure 在 References 前。
+- next：nuScenes-only selective repairability/abstention + independent hazard branch；AV2 不训练、不校准、不选阈值。
+
 ## WS-V7-P3B frozen AV2 RGB/camera-depth/video evidence（2026-09-02）
 
 ### WS-V7-P3B-AV2-CAMERA-EVIDENCE-01 freeze
