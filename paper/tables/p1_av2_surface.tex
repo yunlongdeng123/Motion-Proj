@@ -1,0 +1,17 @@
+\begin{table}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{lcc}
+        \toprule
+        AV2 Actor surface & Dist. (m) $\downarrow$ & Recall (\%) $\uparrow$ \\
+        \midrule
+        Single observed frame & \PoneSingleDistance & \PoneSingleRecall \\
+        Multi-frame canonical surfels & \textbf{\PoneFusedDistance} & \textbf{\PoneFusedRecall} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Zero-shot held-out LiDAR support on the frozen 20-log AV2 quantitative cohort
+    (\PoneActors{} Actors, including \PoneHazardActors{} hazardous Actors). The comparison uses real sensor points;
+    paired synthetic corruptions are evaluated separately as a compiler contract.}
+    \label{tab:p1-av2-surface}
+\end{table}

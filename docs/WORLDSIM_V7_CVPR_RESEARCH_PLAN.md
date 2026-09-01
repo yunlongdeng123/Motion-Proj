@@ -432,6 +432,13 @@ motion_proj/worldsim_v7/
 - 首次 verdict 后按冻结停止条件决定：surface 指标支持则进入 P2 四动作真实几何编译，否则直接进入 P2 canonical
   surface 表示修复，不在 P1 扫 voxel/threshold/cohort。
 
+### P1 执行结果（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P1-AV2-FACTORIAL-ATLAS-01/20260902T104500Z__av2-factorial-s0-r1`；10/10 gates，
+1,046 Actors（241 hazard）、1.075M surfels、134,914 paired probes。真实 held-out LiDAR target distance
+`0.864→0.131m`，recall `26.16%→85.72%`；Actor/hazard retention=100%。paired synthetic corruption 的 action/
+artifact score=100%、clean-hazard false-artifact=0，只登记为接口合同证据。P1 参数族关闭，进入 P2。
+
 ### 数据构造
 
 建立四象限：

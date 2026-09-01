@@ -2,13 +2,26 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F04 — background launcher 将准备链与训练命令一起放入 subshell，PID sidecar 未写出
+
+- symptom：formal P1 进程已正常启动，但父 shell 在 background subshell 创建 `launch_logs/` 前写 PID 文件，报告
+  `No such file or directory`；实际 Python PID=`3035`，log 与 canonical run 均持续正常写入。
+- root cause：Bash `&` 与 `;` 的 list 结合使前置 `cd && mkdir && nohup ...` 作为异步 list 在 subshell 执行；父 shell
+  的 sidecar write 与目录创建发生竞争，同时 PowerShell/SSH 转义让显示 PID 不可信。
+- literature/open-source response：GNU Bash Reference Manual 规定以 `&` 终止的 list 在 subshell 异步执行，且 `;`/`&`
+  具有相同的低优先级；后续 launcher 必须先同步创建目录，再只对圆括号分组后的 Python command 后台化。
+- resolution/impact：没有重启或并发启动第二个 run；用 `pgrep` 与 canonical `status/summary` 只读监控原进程。
+  20/20 logs、summary 与 10/10 gates 正常完成；仅 monitoring sidecar 缺失，0 scientific impact。
+
+下一可用编号：`V7-F05`。
+
 ### P1 freeze prevention note — 不把外观补点当物理证据
 
 - NeuRAD/SplatAD 官方实现会在 Actor-local seed 初始化中镜像一份点以帮助外观重建；该策略适合可渲染先验，
   但镜像点没有独立射线或多帧 provenance，不能进入 V7 collision surface。
 - V7 只迁移其 Actor cuboid 入盒和 `ego/world→box` canonical transform；不镜像、不神经补全、不把 box shell
   当占据真值。远侧缺证据仍为 `UNKNOWN`，只有真实多视角支持的预注册 hole probe 才允许 `COMPLETE`。
-- 本项为 formal run 前的方法边界，不是新 failure；下一可用编号仍为 `V7-F04`。
+- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`，当前下一可用编号为 `V7-F05`。
 
 ### V7-F03 — 非登录 shell 的定向 pytest 未包含仓库 import path
 
@@ -18,7 +31,7 @@
   坐标读取得到合理 ego range。
 - claim impact：纯入口环境失败，0 scientific quality read，不增加 smoke/regression 矩阵。
 
-下一可用编号：`V7-F04`。
+后续已使用 `V7-F04`；当前下一可用编号：`V7-F05`。
 
 ### V7-F02 — AV2 annotation frame 被误标为 city frame
 
@@ -32,7 +45,7 @@
   `center_ego_m` 固定为 cuboid ego translation；冻结 cohort 与 scientific protocol 不变。
 - exposure/claim impact：在任何 V7 method-quality、artifact/hazard 或 surface metric read 前发现；不产生科学负结果。
 
-后续已使用 `V7-F03`；当前下一可用编号：`V7-F04`。
+后续已使用 `V7-F03`、`V7-F04`；当前下一可用编号：`V7-F05`。
 
 ## WorldSim V7 P0 failures（2026-09-01）
 
@@ -48,7 +61,7 @@
 - impact：status=`resolved_by_local_staging_route`；不形成 scientific read，不改变 20 quantitative + 10 qualitative
 frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
 
-后续已使用 `V7-F02`；当前下一可用编号：`V7-F03`。
+后续已使用 `V7-F02`--`V7-F04`；当前下一可用编号：`V7-F05`。
 
 ## V6.7 P269/P270 latest failures（2026-08-31）
 

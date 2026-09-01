@@ -2,6 +2,25 @@
 
 ## WS-V7-P1 AV2 factorial atlas（2026-09-02）
 
+### WS-V7-P1-AV2-FACTORIAL-ATLAS-01 formal result
+
+- Canonical：`run://worldsim_v7/WS-V7-P1-AV2-FACTORIAL-ATLAS-01/20260902T104500Z__av2-factorial-s0-r1`。
+- status/verdict：`done / supported_zero_shot_av2_actor_surface_factorial_atlas`；10/10 gates。
+- support：20 logs；1,046 Actors（241 hazard）；1,074,935 surfels；134,914 probes；四象限
+  valid-safe/hazard=`24,196/7,712`、artifact-safe/hazard=`75,800/27,206`。
+- real geometry：single/fused mean target distance=`0.864454/0.130623m`；ratio=`0.151105`；recall
+  `0.261650/0.857224`，delta=`+0.595575`。
+- paired contract：action accuracy/artifact recall/precision=`1/1/1`；clean 与 clean-hazard false-artifact=`0/0`；
+  ghost FREE violation=`0.15→0m`；Actor/trajectory/size/hazard retention=`1`；两项 paired leakage=`0`。
+- descriptive strata：hazard fused distance/recall=`0.0703m/0.9664`；safe=`0.1487m/0.8245`；全量报告，
+  不作为 gate 或“hazard 更易修复”结论。
+- resources：wall=`43.1906s`；GPU peak=`0.06924GiB`；RSS=`1.4177GiB`；run=`78MiB`。
+- paper：新增 `tables/p1_av2_surface.tex`、P1 结果宏和 NeuRAD 引用；CVPR anonymous main 以 TeX Live
+  `latexmk` 编译成功，4 pages / 195,280 bytes。
+- boundary：真实结论限 AV2 held-out Actor surface support；paired corruption 的满分是接口合同证据，不是 natural artifact
+  detector benchmark。无 training/calibration/threshold sweep/cohort deletion。
+- next：P2 query-surface coordinate compiler；P1 参数族关闭。
+
 ### WS-V7-P1-AV2-FACTORIAL-ATLAS-01 freeze
 
 - 状态：`frozen / implementation ready / formal quality read=false`；hypothesis=`WS-V7-H-P1-001`。

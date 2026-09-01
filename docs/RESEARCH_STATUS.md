@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7 P1 supported / P2 four-action physical compile next（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P1-AV2-FACTORIAL-ATLAS-01/20260902T104500Z__av2-factorial-s0-r1`；
+verdict=`supported_zero_shot_av2_actor_surface_factorial_atlas`，10/10 frozen gates pass。20/20 quantitative AV2 logs
+产生 1,046 个 eligible Actors（241 hazard / 805 safe）、1,074,935 个 stable surfels 与 134,914 个 paired probes。
+
+真实 held-out geometry 上，固定 single-first-frame baseline 的 mean target distance=`0.864454m`，多帧 Actor-local
+fusion=`0.130623m`（ratio=`0.151105`）；surface recall=`0.261650→0.857224`（`+0.595575`）。四象限覆盖
+valid-safe/hazard=`24,196/7,712`、artifact-safe/hazard=`75,800/27,206`。配对 corruption 合同得到 action accuracy/
+artifact recall=`1/1`、clean-hazard false-artifact=`0`、ghost FREE violation `0.15→0m`、Actor/trajectory/size/hazard
+retention=`1`、双向 leakage=`0`。
+
+严格 claim boundary：held-out geometry 是真实 AV2 LiDAR 证据；100% action/recall/leakage 来自冻结配对合成
+corruption，只证明编译接口与危险输入隔离，不证明自然伪影泛化。hazard Actors 的 fused distance/recall=
+`0.0703m/0.9664`，safe=`0.1487m/0.8245`，作为全量描述报告，不解释成危险样本更容易或更有效。run wall=
+`43.19s`、peak GPU=`0.0693GiB`、RSS=`1.418GiB`、artifact size=`78MiB`。下一步不扫 P1 参数，直接进入 P2
+真实 query→canonical surface 的 `KEEP/PROJECT/COMPLETE/UNKNOWN` 坐标编译与 before/after 硬几何指标。CVPR 主稿已
+新增 P1 real-surface 表与严格 synthetic-contract 边界，并用 TeX Live `latexmk` 成功编译为 4 页 PDF。
+
 ## WorldSim V7 P1 AV2 factorial atlas frozen / GPU run next（2026-09-02）
 
 Active=`WS-V7-P1-AV2-FACTORIAL-ATLAS-01 / WS-V7-H-P1-001`。在冻结 20 个 quantitative AV2 logs 上直接执行

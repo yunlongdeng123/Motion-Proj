@@ -9,6 +9,21 @@ For physical compilation we compare naive reconstruction, a legacy validity filt
 \paragraph{Metrics.}
 Physical metrics include free-space violation, ray termination, point-to-surface error, LiDAR depth consistency, temporal jitter, ghost components, and surface completeness. Hazard preservation reports Actor/ID/lifecycle retention, trajectory and TTC shift, and event-count change. Factorization reports artifact/hazard AUROC and AUPRC, clean-hazard false-artifact rate, paired prediction shift, and cross-probe leakage. Reliability reports log likelihood, integrated Brier score, calibration error, Spearman correlation, monotonic violations, and runtime.
 
+\paragraph{Zero-shot Actor-local surface evidence.}
+Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
+LiDAR points inside each annotated cuboid into its Actor frame. Unlike appearance-oriented seed initialization, we never mirror
+points: every collision surfel must retain sensor and temporal support. We fuse two of every three frames at $0.12$\,m and reserve
+the remaining frames as unseen target geometry. Across \PoneActors{} Actors and \PoneSurfels{} stable surfels, fusion reduces the
+mean target-to-surface distance from \PoneSingleDistance{}\,m to \PoneFusedDistance{}\,m and raises recall at $0.20$\,m from
+\PoneSingleRecall{}\% to \PoneFusedRecall{}\% (Table~\ref{tab:p1-av2-surface}).
+
+The paired corruption atlas contains clean, observed-free ghost, duplicate-shell, temporal-flicker, and supported-hole probes
+without changing Actor identity, trajectory, size, or hazard. It yields \PoneArtifactRecall{}\% artifact recall,
+\PoneHazardFA{}\% clean-hazard false-artifact rate, and \PoneActorRetention{}\% Actor/hazard retention. These perfect paired
+scores verify the deterministic compiler contract and input separation; they are not reported as natural-artifact generalization.
+
+\input{tables/p1_av2_surface}
+
 \input{tables/main_results}
 
 \paragraph{Qualitative protocol.}
