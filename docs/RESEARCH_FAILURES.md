@@ -18,6 +18,13 @@
 
 下一可用编号：`V7-F13`。
 
+### P6-C freeze prevention note — source sparsity consistency 不读取 fresh target
+
+- P6-C 由 `V7-F12` 的 source-domain failure 和 CVPR 2023/2024 source-augmentation evidence 提出，不读取 fresh AV2。
+- `.5x/.75x`、consistency weight=`1`、seed=`70602` 与两项 fit gates 已固定；不因 fit 或未来 external 结果扫描。
+- 只有 nuScenes non-inferiority 与相对 P4 intervention shift 两门通过，runner 才允许 external phase；否则 fresh quality
+  保持 unread。本项不是新 failure；下一可用编号仍为 `V7-F13`。
+
 ### P6 recovery prevention note — consumed AV2 不参与机会归一化选择
 
 - P7 已精确暴露 `observation_frame_count` shortcut，因此 P6 只能删除/归一化该机会变量，不能借 30 个 consumed AV2 logs

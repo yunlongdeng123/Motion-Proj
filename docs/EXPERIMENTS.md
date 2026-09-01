@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V7-P6C source sparsity-consistent selector freeze（2026-09-02）
+
+- hypothesis：`WS-V7-H-P6-002`；new source-only family after `V7-F12`，fresh AV2 quality unread。
+- augmentation：original P4 13D validity inputs plus fixed `.5x/.75x` opportunity views；jointly scale observation frames,
+  canonical surfels, temporal support, and view support；labels/physical residuals/hazard unchanged。
+- objective：BCE on original+two augmented views + weight-1 probability consistency；hidden32/seed70602/80 epochs；combined
+  source-train standardizer；original-view nuScenes calibration only；no sweep。
+- pre-external gates：nuScenes repair AUROC degradation `<=.02` and intervention-score shift ratio to frozen P4 `<=.70`。
+- external gates：fresh coverage `>=.10`、false repair below always repair、selective CD no worse than query、score Wasserstein
+  below frozen P4 on same fresh rows；no fresh threshold selection。
+
 ## WS-V7-P6 ratio normalization fit result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`；

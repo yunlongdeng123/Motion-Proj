@@ -1,0 +1,43 @@
+task_id: WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01
+hypothesis_id: WS-V7-H-P6-002
+runs_root: /root/autodl-tmp/runs
+source_p4_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+fresh_av2_cohort: configs/worldsim_v7/av2_zero_shot_recovery_cohort_v1.json
+device: cuda
+claim_boundary: >-
+  A source-only sparsity-consistency candidate motivated by LiDAR single-domain
+  generalization. It retains the interpretable P4 validity inputs, trains on fixed
+  opportunity-subsampled nuScenes views, and penalizes repair-score disagreement.
+  The consumed AV2 cohort is unavailable. The fresh 20-log cohort is read once only
+  after nuScenes non-inferiority and source intervention gates pass. Passing remains
+  empirical transfer without a formal cross-domain risk or road-safety guarantee.
+opportunity_augmentation:
+  scale_factors: [0.5, 0.75]
+  scaled_features:
+    - log_canonical_surfels
+    - temporal_support_mean
+    - temporal_support_p10
+    - view_support_mean
+    - observation_frame_count
+  consistency_weight: 1.0
+model:
+  seed: 70602
+  hidden_dim: 32
+  epochs: 80
+  batch_size: 256
+  learning_rate: 0.002
+  weight_decay: 0.0001
+selective_risk:
+  false_repair_alpha: 0.05
+  threshold_source: nuScenes calibration original views only
+fit_gates:
+  maximum_nuscenes_test_auroc_degradation_from_p4: 0.02
+  maximum_intervention_shift_ratio_to_p4: 0.70
+external_gates:
+  minimum_fresh_av2_coverage: 0.10
+  require_fresh_false_repair_below_always_repair: true
+  require_fresh_selective_chamfer_no_worse_than_query: true
+  require_fresh_score_wasserstein_below_p4_baseline: true
+verdict_on_pass: supported_source_sparsity_consistent_nuscenes_to_fresh_av2_selector
+verdict_on_failure: rejected_source_sparsity_consistent_nuscenes_to_fresh_av2_selector

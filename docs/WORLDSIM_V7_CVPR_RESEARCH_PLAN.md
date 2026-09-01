@@ -827,6 +827,10 @@ fixed opportunity shift=`0`，但 nuScenes-test repair AUROC=`.60728`，低于 P
 训练时构造固定下采样机会视图并约束 repair score 一致。P6-C 必须在读取 fresh AV2 前独立冻结 model/seed/loss/gates；
 不得根据 ratio candidate 或未来 fresh 结果扫描 consistency weight。
 
+P6-C 已冻结为原始 13D validity inputs + `.5x/.75x` joint opportunity subsampling，BCE(original+augmented)+weight-1
+probability consistency，hidden32/seed70602/80 epochs。fresh 前两门固定为 nuScenes AUROC non-inferiority `.02` 与
+intervention-score shift 相对 P4 `<=.70x`；通过后外域仍沿用 coverage/false-repair/Chamfer/Wasserstein 四门，不调阈值。
+
 ### 主域
 
 - 训练、模型选择和校准：仅 nuScenes；

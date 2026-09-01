@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P6-C source sparsity consistency frozen（2026-09-02）
+
+Active=`WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01 / WS-V7-H-P6-002`。参考 CVPR 2023 DGLSS 与 CVPR 2024
+LiDAR unseen-domain study，P6-C 保留 P4 的 13 个可解释 validity features，不再删除 evidence amount；nuScenes train
+每个 Actor 固定构造 `.5x/.75x` opportunity views，联合缩放 frame/surfel/temporal/view support，训练 original+augmented
+BCE 与 weight=`1` repair-probability consistency。hidden=`32`、seed=`70602`、80 epochs，无 factor/weight/model sweep。
+
+Fresh read 前只有两门：nuScenes test AUROC 相对 P4 退化 `<=.02`；同 `.5x/.75x` 干预下 mean score shift 不超过
+冻结 P4 的 `.70x`。两门通过才恢复同一 run 的 external phase；否则 fresh cohort 继续未消费。calibration 只用 original
+nuScenes rows；旧 30 AV2 不加载。下载器可继续 IO，但不构成质量读取。
+
 ## WorldSim V7 P6 ratio normalization rejected before external read（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`；
