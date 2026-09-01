@@ -94,5 +94,18 @@ nuScenes test but 49.53\% on AV2 (Fig.~\ref{fig:p7-envelope}). Structural cross-
 factorization prevents hazard leakage, but does not make validity inputs sensor invariant. We therefore preserve the empirical
 P4 result while rejecting the stronger interpretation of a domain-invariant selector.
 
+\input{tables/p5_dual_authority}
+
+\paragraph{Physical repair is not trajectory authority.}
+We exact-join P4 identities to retained V6.7 multi-horizon outcome rows through the official nuScenes scene order and
+DriveStudio instance tokens. Only 5 P4-train Actors from two scenes align, so we reject joint fitting rather than recycle
+calibration/test Actors. The frozen descriptive audit instead contains \PfiveActors{} test Actors and 39,285 rows
+(Table~\ref{tab:p5-dual-authority}). P4 selects \PfiveSelectedActors{} Actors and abstains on all \PfiveHarmActors{} whose
+compiled Chamfer is worse than the query; selected-and-harmful is therefore zero. Its \PfiveSelectedRows{} selected rows contain
+no false-safe or decision-flip events. Nevertheless, selected q90 motion error is \PfiveSelectedQError{}\,m versus
+\PfiveAbstainedQError{}\,m for abstained Actors (\PfiveErrorRatio{}$\times$), reaching \PfiveThreeSecondQError{}\,m at 3\,s.
+The physical gate protects representation quality but cannot replace the downstream reliability authority. These are retained
+source outcomes, not a causal effect of repair or an execution of the reliability model.
+
 \paragraph{Qualitative protocol.}
 Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.

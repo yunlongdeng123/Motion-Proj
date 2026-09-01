@@ -1,0 +1,17 @@
+\begin{table}[t]
+  \centering
+  \caption{Frozen physical--trajectory interface on exact-match nuScenes test Actors. Cost and error are row-level 90th
+  percentiles over retained V6.7 outcomes; FS/flip gives event counts. Physical selection is not trajectory authority.}
+  \label{tab:p5-dual-authority}
+  \small
+  \setlength{\tabcolsep}{3.6pt}
+  \begin{tabular}{lrrrr}
+    \toprule
+    P4 group & Actors & q90 cost $\downarrow$ & q90 error $\downarrow$ & FS / flip $\downarrow$ \\
+    \midrule
+    selected & 5 & 0.283 & 1.577 & 0 / 0 \\
+    abstained & 83 & 0.102 & 0.693 & 7 / 47 \\
+    geometric harm & 23 & 0.076 & 0.543 & 0 / 4 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

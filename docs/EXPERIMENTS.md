@@ -1,5 +1,11 @@
 # Experiments
 
+## CVPR paper P5-B integration check（2026-09-02）
+
+- added：composed-authority equation、P5 exact-match table、source-only/non-causal claim boundary。
+- compile：official template `main.pdf`，6 pages，1,144,718 bytes。
+- visual：pages 2--6 inspected；no clipping/overlap/orphan float。无额外 research gate 或 regression matrix。
+
 ## WS-V7-P5B frozen physical--reliability interface result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。

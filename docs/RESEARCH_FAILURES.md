@@ -2,6 +2,13 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper claim-boundary note — P5-B 零事件不写成安全保证
+
+- P5-B table 保留 `0/1,781` false-safe/flip 观测，同时正文明确它只有 5 个 selected Actors、来自 retained source
+  outcomes、未执行 P346、非 causal effect/confidence bound。
+- method 固定 `g_i=1 \not\Rightarrow a_{i,t}(c)=1`，避免把 physical selection 误写成 planning/control certificate。
+- 无新增 failure id；该限制已同步 abstract、method、experiments、limitations、conclusion。
+
 ### P5-B safety-boundary note — physical repair authority 不是 trajectory authority
 
 - canonical：`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。

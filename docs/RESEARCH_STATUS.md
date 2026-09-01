@@ -1,5 +1,11 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P5-B（2026-09-02）
+
+Official CVPR draft now includes the composed-authority equation `repair gate ≠ trajectory authority`、P5 exact-identity result
+table、abstract/contribution/limitations/conclusion claim update。Local full compile=`6 pages/1,144,718 bytes`；pages 2--6
+visual check 无 clipping、overlap 或 orphan float。Paper 数字来自 canonical P5-B，未把 retained-source zero events 写成保证。
+
 ## WorldSim V7 P5-B physical--reliability boundary completed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1`。

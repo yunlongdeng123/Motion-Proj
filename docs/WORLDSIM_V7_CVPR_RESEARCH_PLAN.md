@@ -793,6 +793,9 @@ test `88 Actors/39,285 rows` 中 selected=`5/1,781`，false-safe/flip=`0/0`，23
 abstained；但 selected q90 state error=`1.577m` vs abstained `.693m`，3.0s=`4.246m`。因此 paper graph 固定为
 physical repair gate 与 downstream multi-horizon reliability authority 分离；零事件小样本不升级为 safety guarantee。
 
+CVPR draft 已把该边界写入 composed-authority equation、P5 table、abstract/limitations/conclusion；official template full
+compile=`6 pages`，pages 2--6 visual check 通过。后续 P6-C fresh external 结果出来前不改现有 P5/P7 claim。
+
 ### 保留模块
 
 - V6.7 已支持的 Actor residual distribution；

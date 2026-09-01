@@ -41,4 +41,12 @@ which exposes a closed-form marginal CDF for any budget. A low-rank, input-condi
 
 The final runtime object is a frozen grid over horizon and cost budget with monotone interpolation. Budget CDF values are non-decreasing; prefix-horizon reliability is non-increasing. Groupwise isotonic maps may calibrate predefined conditions on a disjoint source fold, but do not change these structural constraints.
 
+The two authorities compose without implication. The repair gate first chooses the surface representation,
+\begin{equation}
+\widetilde S_i=g_i S_i^{\mathrm{comp}}+(1-g_i)S_i^{\mathrm{query}},\qquad g_i=\mathbf 1[s_i^{\mathrm{rep}}\ge q].
+\end{equation}
+The downstream task separately grants authority only if its multi-horizon reliability satisfies the requested budget,
+$a_{i,t}(c)=\mathbf 1[R_i(t,c\mid\widetilde S_i,\tau)\ge\rho]$. In particular, $g_i=1\not\Rightarrow a_{i,t}(c)=1$:
+evidence can support a physical repair while Actor motion remains uncertain.
+
 SceneIR stores Actor identities and transforms, physical surfaces, known/unknown masks, provenance, and validity fields. The AV2 adapter performs only coordinate, unit, timestamp, category, and sensor-opportunity normalization. It does not fine-tune, recalibrate, or change thresholds using AV2 quality.
