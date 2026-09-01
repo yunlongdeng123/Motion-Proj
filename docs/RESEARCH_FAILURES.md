@@ -11,8 +11,9 @@
 - literature/open-source response：Hydra 官方 Structured Config schema/Defaults List 建议以共享 schema 组合必需字段并用 mandatory
   value 阻止缺字段运行；本阶段不扩框架，只恢复与 P1 完全相同的已冻结 10 项 hazard 配置，避免改变 P2 动作阈值、
   cohort、seed、gates 或 claim boundary。
-- resolution：r1 状态明确写为 failed；同一合同用新 run id r2 恢复。后续配置族应复用公共 Actor/hazard defaults，
-  但不为本次恢复增加校验矩阵。status=`recovery_prepared_before_scientific_trial`。
+- resolution：r1 状态明确写为 failed；同一合同 r2=`20260902T125000Z__four-action-s0-r2` 在 30/30 logs 上完成，
+  quantitative/qualitative 各 13/13 gates 通过。后续配置族应复用公共 Actor/hazard defaults，但不为本次恢复增加
+  校验矩阵。status=`resolved_before_scientific_trial`。
 
 ### V7-F05 — GitHub 直连 git operations 挂起
 

@@ -24,6 +24,18 @@ scores verify the deterministic compiler contract and input separation; they are
 
 \input{tables/p1_av2_surface}
 
+\paragraph{Four-action physical compilation.}
+We next freeze one single-frame query per Actor and reserve all later held-out frames as target-only geometry. The compiler
+reads only the build surface and query evidence. Across \PtwoActors{} quantitative Actors (\PtwoHazardActors{} hazardous),
+compilation raises target recall from \PtwoRecallBefore{}\% to \PtwoRecallAfter{}\%, raises surface precision from
+\PtwoPrecisionBefore{}\% to \PtwoPrecisionAfter{}\%, and reduces symmetric Chamfer from \PtwoChamferBefore{},m to
+\PtwoChamferAfter{},m (Table~\ref{tab:p2-four-action}). Actor identity, trajectory, extent, and hazard labels are retained
+for \PtwoActorRetention{}\% of Actors. Frozen paired interventions obtain \PtwoGhostProject{}\% observed-free ghost projection
+and \PtwoCompletionSupport{}\% independent-target support for completed points; these rates verify the action contract rather
+than natural-artifact generalization.
+
+\input{tables/p2_four_action}
+
 \input{tables/main_results}
 
 \paragraph{Qualitative protocol.}

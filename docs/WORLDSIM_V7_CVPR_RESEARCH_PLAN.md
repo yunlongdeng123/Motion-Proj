@@ -506,6 +506,13 @@ artifact score=100%、clean-hazard false-artifact=0，只登记为接口合同�
 - r1 仅在首 log metadata 后因漏配复用的冻结 hazard 段退出，未进入 point/surface/action/metric；r2 只恢复 P1
   同一 hazard 段并保持上述合同不变，不把工程入口失败计作科学 trial。
 
+### P2 执行结果（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T125000Z__four-action-s0-r2`；
+30/30 logs，quantitative/qualitative 各 13/13 gates。Quantitative 433 Actors（147 hazard），真实 target-only
+recall=`.5336→.6260`、precision=`.7959→.9767`、Chamfer=`.2544→.1681m`；Actor/hazard retention=`1/1`。
+paired action rates 只作 deterministic contract 证据。P2 参数族关闭，不回扫，进入 P3 硬证据与预冻结视觉结果。
+
 ### P2-A：多帧 Actor 对齐
 
 将每个 Actor 的多帧 LiDAR / point / primitive 转换到 canonical Actor frame：

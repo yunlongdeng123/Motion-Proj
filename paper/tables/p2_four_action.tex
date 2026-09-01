@@ -1,0 +1,16 @@
+\begin{table}[t]
+    \centering
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{lccc}
+        \toprule
+        Surface & Recall (\%) $\uparrow$ & Prec. (\%) $\uparrow$ & CD (m) $\downarrow$ \\
+        \midrule
+        Single-frame input & \PtwoRecallBefore & \PtwoPrecisionBefore & \PtwoChamferBefore \\
+        Four-action compile & \textbf{\PtwoRecallAfter} & \textbf{\PtwoPrecisionAfter} & \textbf{\PtwoChamferAfter} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Frozen zero-shot AV2 quantitative result. Actions read only build-side canonical support and the query;
+    later held-out frames are used exclusively as target geometry. Actor and hazard-state retention is \PtwoActorRetention{}\%.}
+    \label{tab:p2-four-action}
+\end{table}

@@ -1,5 +1,27 @@
 # Experiments
 
+## WS-V7-P2 real-coordinate four-action compiler result（2026-09-02）
+
+### WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 r2
+
+- Canonical：`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T125000Z__four-action-s0-r2`。
+- status/verdict：`done / supported_zero_shot_av2_four_action_physical_compile`；quantitative/qualitative=
+  `13/13`、`13/13` gates；30/30 logs。
+- quantitative support：433 Actors（147 hazard）；action KEEP/PROJECT/COMPLETE/UNKNOWN=
+  `143633/20313/15004/47376`。
+- real target-only geometry：recall=`.533573→.625960`（`+.092387`）；precision=`.795861→.976750`
+  （`+.180889`）；symmetric Chamfer=`.254369→.168063m`（ratio=`.660706`）。
+- action contract：clean KEEP=`.957694`；ghost PROJECT=`.993398`；duplicate/flicker UNKNOWN=`1`；completion
+  decision/independent-target support=`1/.986004`；artifact repair-or-reject=`.997799`。
+- preservation：Actor identity/trajectory/size=`1`；hazard label=`1`。qualitative 201 Actors（83 hazard）亦 13/13，
+  recall delta=`+.109040`、precision delta=`+.188967`、Chamfer ratio=`.648788`。
+- resources：wall=`56.228s`；GPU peak=`.06924GiB`；RSS=`1.1939GiB`；artifact=`3.2MiB`。
+- paper：P2 macros、abstract、Experiments 与 `tables/p2_four_action.tex` 已写入；TeX Live `latexmk` 成功，
+  5 pages / 199,061 bytes，P2 表格无 overfull box。
+- boundary：真实几何指标是 zero-shot AV2 证据；paired corruption 只验证 deterministic compiler contract，不是
+  natural artifact generalization、learned completion、appearance repair、planning、closed-loop 或 safety 证据。
+- next：P2 关闭；P3 补齐 ray/depth/jitter/components/collision-shell 与危险保真指标，并渲染预冻结 10-log qualitative 全量案例。
+
 ## WS-V7-P2 launch recovery（2026-09-02）
 
 ### WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 r1

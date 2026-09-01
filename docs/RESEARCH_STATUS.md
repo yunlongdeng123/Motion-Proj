@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V7 P2 supported / P3 hard evidence and frozen visuals next（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T125000Z__four-action-s0-r2`；
+verdict=`supported_zero_shot_av2_four_action_physical_compile`。冻结 30/30 AV2 logs 一次完成，quantitative 与
+qualitative 各 13/13 gates 全通过；无 fine-tune、threshold selection、failed-log deletion 或 target-conditioned action。
+
+Quantitative 20 logs 覆盖 433 Actors（147 hazard / 286 safe）与 226,326 个 action outputs：KEEP/PROJECT/
+COMPLETE/UNKNOWN=`143,633/20,313/15,004/47,376`。真实 target-only 几何的 recall=`0.533573→0.625960`
+（`+0.092387`）、surface precision=`0.795861→0.976750`（`+0.180889`）、symmetric Chamfer=
+`0.254369→0.168063m`（ratio=`0.660706`）。clean KEEP=`0.957694`、ghost PROJECT=`0.993398`、unsupported
+artifact UNKNOWN=`1.0`、completion target support=`0.986004`、repair-or-reject=`0.997799`；Actor identity/
+trajectory/size 与 hazard label retention=`1/1`。
+
+Qualitative 10 logs 全量 confirmation 覆盖 201 Actors（83 hazard），recall=`0.502263→0.611304`、precision=
+`0.781215→0.970182`、Chamfer ratio=`0.648788`，同样 13/13。严格边界：真实 before/after geometry 支持 C1；
+ghost/duplicate/flicker/hole 是冻结 paired interventions，只验证动作合同，不是 natural artifact benchmark、learned completion、
+planning、closed-loop 或 safety 证据。wall=`56.23s`、peak GPU=`0.0692GiB`、RSS=`1.194GiB`、run=`3.2MiB`。
+P2 数值已进入 CVPR abstract、Experiments 与独立表格；TeX Live 构建通过（5 pages / 199,061 bytes，新增表无
+overfull box）。P2 参数族关闭；下一步按权威计划进入 P3 额外硬几何/危险保真指标与预冻结 qualitative rendering，
+不回扫 P2。
+
 ## WorldSim V7 P2 r1 pre-quality failure / same-contract r2 recovery（2026-09-02）
 
 P2 r1=`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T120000Z__four-action-s0-r1`
