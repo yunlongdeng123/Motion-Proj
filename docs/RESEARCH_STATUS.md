@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7 P7-B geometry-to-cost sensitivity frozen（2026-09-02）
+
+Active=`WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01 / WS-V7-H-P7-002`。对 paper boundary cost
+`C=max_j |n^Te|/max(d,epsilon)` 固定推导 row-local clearance perturbation bound，并在全部 575,596 P109 source rows 与
+P5 test selected/abstained strata 上评估 `±.05/±.10/±.20m`；`epsilon=.05m`。
+
+GPU vectorized、无训练/fit/calibration/threshold/model selection/new sensor read。只验证确定性误差传播及 tightness；扰动
+分布非现实传感器模型，结果不能升级为 closed-loop/road-safety guarantee。
+
 ## WorldSim V7 CVPR paper integrated through P5-B（2026-09-02）
 
 Official CVPR draft now includes the composed-authority equation `repair gate ≠ trajectory authority`、P5 exact-identity result

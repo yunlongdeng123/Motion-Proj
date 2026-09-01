@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V7-P7B geometry-to-cost sensitivity freeze（2026-09-02）
+
+- theorem：`|C(d')-C(d)| <= max_j a_j|delta|/(m_j m'_j) <= a_max|delta|/epsilon^2`。
+- source：575,596 P109 rows；fixed P5 test all/selected/abstained strata。
+- perturbations=`±.05/±.10/±.20m`，clearance floor=`.05m`；report shift/bound/tightness/clip and sign crossing。
+- one GPU-vectorized evaluation；no fit/calibration/sweep/new read。
+
 ## CVPR paper P5-B integration check（2026-09-02）
 
 - added：composed-authority equation、P5 exact-match table、source-only/non-causal claim boundary。

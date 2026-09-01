@@ -2,6 +2,13 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P7-B prevention note — 确定性 Lipschitz bound 不等于扰动概率或安全证书
+
+- frozen stress 只对 retained profile 的 uniform signed-clearance shift 验证代数上界与紧致性。
+- 禁止把 bound satisfaction 写成 sensor error distribution、physical repair causal effect、closed-loop collision bound 或
+  real-road safety guarantee；bound 很松时必须如实报告 tightness 与 clearance-floor crossing。
+- 本项不是新 failure；下一可用编号仍为 `V7-F14`。
+
 ### Paper claim-boundary note — P5-B 零事件不写成安全保证
 
 - P5-B table 保留 `0/1,781` false-safe/flip 观测，同时正文明确它只有 5 个 selected Actors、来自 retained source

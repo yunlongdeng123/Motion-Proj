@@ -1,0 +1,25 @@
+task_id: WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01
+hypothesis_id: WS-V7-H-P7-002
+runs_root: /root/autodl-tmp/runs
+source_rows: /root/autodl-tmp/runs/worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1/SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+p5b_actor_rows: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01/20260902T183000Z__frozen-physical-reliability-interface-s0-r1/ACTOR_INTERFACE_ROWS.jsonl
+clearance_floor_m: 0.05
+signed_clearance_perturbations_m:
+  - -0.20
+  - -0.10
+  - -0.05
+  - 0.05
+  - 0.10
+  - 0.20
+chunk_size: 65536
+bound_tolerance: 1.0e-6
+fixed_groups:
+  - all_source
+  - p5_test_all
+  - p5_test_selected
+  - p5_test_abstained
+claim_boundary: >-
+  Deterministic sensitivity of the paper-defined boundary cost to uniform signed
+  clearance perturbations on retained source profiles. It is not a learned
+  calibration result, a sensor-error distribution, a causal effect of physical
+  repair, a closed-loop planner result, or a road-safety guarantee.

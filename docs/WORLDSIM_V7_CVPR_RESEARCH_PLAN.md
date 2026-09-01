@@ -1002,6 +1002,13 @@ L_sd(\hat S,S^*)
 - reliability surface；
 -跨数据集失效分解。
 
+### P7-B geometry-to-cost sensitivity freeze（2026-09-02）
+
+对 `C(d)=max_j |n_j^Te_j|/max(d_j,epsilon)` 使用 max 1-Lipschitz 与 clipped reciprocal 推导
+`|Delta C| <= max_j a_j|delta|/(m_jm'_j) <= a_max|delta|/epsilon^2`。固定在 575,596 retained P109 rows 与
+P5 test strata 上评估 `±.05/±.10/±.20m`、`epsilon=.05m` 的 shift/bound/tightness/clearance crossing；无训练、
+校准、阈值或新传感器读取。只解释误差传播，不能称扰动概率或 safety certificate。
+
 ---
 
 ## V7-P8：Final exact-once evaluation
