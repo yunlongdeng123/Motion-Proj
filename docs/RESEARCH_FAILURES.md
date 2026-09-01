@@ -23,7 +23,8 @@
 - P6-C 由 `V7-F12` 的 source-domain failure 和 CVPR 2023/2024 source-augmentation evidence 提出，不读取 fresh AV2。
 - `.5x/.75x`、consistency weight=`1`、seed=`70602` 与两项 fit gates 已固定；不因 fit 或未来 external 结果扫描。
 - 只有 nuScenes non-inferiority 与相对 P4 intervention shift 两门通过，runner 才允许 external phase；否则 fresh quality
-  保持 unread。本项不是新 failure；下一可用编号仍为 `V7-F13`。
+  保持 unread。实现只提供 formal fit，未用部分下载日志做 adapter smoke。本项不是新 failure；下一可用编号仍为
+  `V7-F13`。
 
 ### P6 recovery prevention note — consumed AV2 不参与机会归一化选择
 

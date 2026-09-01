@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7 P6-C implementation ready / formal fit next（2026-09-02）
+
+`sparsity_consistent_selector.py` 已实现固定 opportunity views、combined source-view standardizer、original+augmented
+supervised BCE、pair probability consistency 与 intervention score-shift；formal fit runner 只读 P4 retained nuScenes rows，
+同时在相同 test rows 上计算 frozen P4 shift denominator。fresh AV2 adapter 未调用，quality read 仍为 0。
+
+单次 syntax compile 通过；下一动作提交实现并在 3090 上执行一次 fixed fit。fit 失败即写
+`fit_rejected_external_not_read`；通过才补 external phase，不用部分下载日志做 smoke。
+
 ## WorldSim V7 P6-C source sparsity consistency frozen（2026-09-02）
 
 Active=`WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01 / WS-V7-H-P6-002`。参考 CVPR 2023 DGLSS 与 CVPR 2024

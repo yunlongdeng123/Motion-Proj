@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V7-P6C implementation ready（2026-09-02）
+
+- implementation：fixed opportunity feature intervention；source-view standardization；supervised + probability-consistency
+  training；candidate/P4 paired intervention score-shift on identical nuScenes test rows。
+- fit runner：writes frozen candidate/threshold only when executed；status directly closes external on either fit-gate failure。
+- one syntax compile passed；fresh AV2 compiled/scored remains `0/0`，no partial-cohort smoke。
+
 ## WS-V7-P6C source sparsity-consistent selector freeze（2026-09-02）
 
 - hypothesis：`WS-V7-H-P6-002`；new source-only family after `V7-F12`，fresh AV2 quality unread。
