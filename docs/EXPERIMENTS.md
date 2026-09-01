@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V7-P3 ray-certified projection candidate（2026-09-02）
+
+### WS-V7-P3-AV2-HARD-EVIDENCE-01 r2 result / r3 freeze
+
+- r2：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T140000Z__hard-evidence-s0-r2`；
+  `rejected_zero_shot_av2_hard_physical_evidence`，两 role 均 `6/8`，视觉 `3/3`。
+- valid failure：ray-specific free-space after quantitative/qualitative=`.849111/.828770`；ghost component ratio=
+  `.916598/.900591`；mean early termination depth=`.091783/.088809m`。failure=`V7-F08`。
+- interpretation：nearest canonical 只保证 3D distance，不保证 matched beam 上的 depth ordering；这是 PROJECT operator
+  的科学失败，不是 metric bug，r2 verdict 不撤销。
+- r3 candidate：`projection_output=observed_lidar_hit`，仅适用于 paired primitive 已带 direct hit provenance；无 hit
+  必须 UNKNOWN。hypothesis=`WS-V7-H-P3-002`；其余 config、8 gates、30 logs、8 main/30 supplement cases 不变。
+
 ## WS-V7-P3 ray-provenance recovery（2026-09-02）
 
 ### WS-V7-P3-AV2-HARD-EVIDENCE-01 r1

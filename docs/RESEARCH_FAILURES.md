@@ -2,6 +2,23 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F08 — ray-correct 评价确认 nearest-canonical PROJECT 违反 observed-free interval
+
+- run：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T140000Z__hard-evidence-s0-r2`；
+  r2 修复 V7-F07 后仍为 quantitative/qualitative `6/8`。
+- scientific result：逐 primitive ray 评价得到 free-space after=`.849111/.828770`、ghost-component ratio=
+  `.916598/.900591`；PROJECT 输出平均仍在 observed hit 前 `.09178/.08881m`。因此 P2 的 Euclidean
+  nearest-canonical PROJECT 在 zero-level/Chamfer 上改善，却不满足同 ray line-of-sight 物理约束。
+- root cause：三维最近点不保序；canonical surfel 可在欧氏距离很近、但沿对应 beam 位于真实 termination 之前。
+  这不是调 metric/gate 能解决的评测问题，而是 projection operator 的真实表示边界。
+- literature/open-source response：NeuRAD/SplatAD 将 LiDAR depth/line-of-sight/ray-drop 与显式 ray 绑定，LiDAR-RT
+  通过 range rays 渲染 depth/mask。V7 新候选据此只允许有 direct observed-hit provenance 的 ghost 投回同 ray
+  实测 termination；没有 matched hit 的 primitive 必须 `UNKNOWN`，禁止投向附近 surface。
+- resolution boundary：r2 verdict 永久保持 rejected；新 hypothesis `WS-V7-H-P3-002` 使用 r3 新 run id，保留
+  30 logs、8 gates、视觉案例、target isolation 和除 PROJECT output 外的全部实现。状态=`scientific_rejection_with_frozen_repair_candidate`。
+
+下一可用编号：`V7-F09`。
+
 ### V7-F07 — P3 ghost residual 评价丢失逐 primitive 射线 provenance
 
 - run：`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T133000Z__hard-evidence-s0-r1`；30/30 logs、
@@ -18,7 +35,7 @@
   Actor-state 六门和冻结 panels 可保留为 descriptive evidence，但 P3 总 verdict 维持 rejected。r2 不改 cohort、案例、
   compiler action、阈值或 gates，只修 metric provenance；状态=`recovery_prepared_before_scientific_trial`。
 
-下一可用编号：`V7-F08`。
+后续已使用 `V7-F08`；下一可用编号：`V7-F09`。
 
 ### P3 freeze prevention note — visual selection 不读取质量排序
 
@@ -28,7 +45,7 @@
 - 新硬证据只复用 P2 已冻结配置；P3 overlay 通过 `p2_config` 引用，避免再次复制 Actor/hazard 参数。target ray
   仅做评价，仍不参与 action。8 个 role gates 是非退化/物理边界，不扩成 smoke/regression 矩阵。
 - paired ghost component/free-space 仍是合成合同；Actor trajectory/speed/acceleration/TTC 零 shift 来自 compiler-external
-  state immutable，不冒充感知或预测准确率。本项不是新 failure；后续已使用 `V7-F07`，下一可用编号为 `V7-F08`。
+  state immutable，不冒充感知或预测准确率。本项不是新 failure；后续已使用 `V7-F07`、`V7-F08`，下一可用编号为 `V7-F09`。
 
 ### V7-F06 — P2 配置遗漏复用模块所需的冻结 hazard 段
 
@@ -50,7 +67,7 @@
 - resolution：终止精确识别的悬挂 git 进程，读取当前 LocalTUN session 的 remote proxy 后仅为该次 git command 设置
   `HTTP(S)_PROXY`，push 成功；没有启动第二个研究 run，0 scientific impact。LocalTUN 端口是 session-specific，后续不硬编码复用。
 
-后续已使用 `V7-F07`；下一可用编号：`V7-F08`。
+后续已使用 `V7-F07`、`V7-F08`；下一可用编号：`V7-F09`。
 
 ### P2 freeze prevention note — completion 不读取 held-out target
 
@@ -59,7 +76,7 @@
 - `COMPLETE` 候选只由 build surface 的 temporal/view support 与 query-space hole 产生；target 只在全部坐标编译完成后
   计算 support/recall/precision/Chamfer。禁止用 target 删除 completion、调 hole radius 或换 Actor。
 - quantitative 20 logs 与 qualitative 10 logs 在同一冻结实现中一次执行，避免 development 结果后再修改 confirmation。
-- 本项不是新 failure；后续已使用 `V7-F05`--`V7-F07`，下一可用编号为 `V7-F08`。
+- 本项不是新 failure；后续已使用 `V7-F05`--`V7-F08`，下一可用编号为 `V7-F09`。
 
 ### V7-F04 — background launcher 将准备链与训练命令一起放入 subshell，PID sidecar 未写出
 
@@ -72,7 +89,7 @@
 - resolution/impact：没有重启或并发启动第二个 run；用 `pgrep` 与 canonical `status/summary` 只读监控原进程。
   20/20 logs、summary 与 10/10 gates 正常完成；仅 monitoring sidecar 缺失，0 scientific impact。
 
-后续已使用 `V7-F05`--`V7-F07`；下一可用编号：`V7-F08`。
+后续已使用 `V7-F05`--`V7-F08`；下一可用编号：`V7-F09`。
 
 ### P1 freeze prevention note — 不把外观补点当物理证据
 
@@ -80,7 +97,7 @@
   但镜像点没有独立射线或多帧 provenance，不能进入 V7 collision surface。
 - V7 只迁移其 Actor cuboid 入盒和 `ego/world→box` canonical transform；不镜像、不神经补全、不把 box shell
   当占据真值。远侧缺证据仍为 `UNKNOWN`，只有真实多视角支持的预注册 hole probe 才允许 `COMPLETE`。
-- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`--`V7-F07`，当前下一可用编号为 `V7-F08`。
+- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`--`V7-F08`，当前下一可用编号为 `V7-F09`。
 
 ### V7-F03 — 非登录 shell 的定向 pytest 未包含仓库 import path
 
@@ -90,7 +107,7 @@
   坐标读取得到合理 ego range。
 - claim impact：纯入口环境失败，0 scientific quality read，不增加 smoke/regression 矩阵。
 
-后续已使用 `V7-F04`--`V7-F07`；当前下一可用编号：`V7-F08`。
+后续已使用 `V7-F04`--`V7-F08`；当前下一可用编号：`V7-F09`。
 
 ### V7-F02 — AV2 annotation frame 被误标为 city frame
 
@@ -104,7 +121,7 @@
   `center_ego_m` 固定为 cuboid ego translation；冻结 cohort 与 scientific protocol 不变。
 - exposure/claim impact：在任何 V7 method-quality、artifact/hazard 或 surface metric read 前发现；不产生科学负结果。
 
-后续已使用 `V7-F03`--`V7-F07`；当前下一可用编号：`V7-F08`。
+后续已使用 `V7-F03`--`V7-F08`；当前下一可用编号：`V7-F09`。
 
 ## WorldSim V7 P0 failures（2026-09-01）
 
@@ -120,7 +137,7 @@
 - impact：status=`resolved_by_local_staging_route`；不形成 scientific read，不改变 20 quantitative + 10 qualitative
 frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
 
-后续已使用 `V7-F02`--`V7-F07`；当前下一可用编号：`V7-F08`。
+后续已使用 `V7-F02`--`V7-F08`；当前下一可用编号：`V7-F09`。
 
 ## V6.7 P269/P270 latest failures（2026-08-31）
 

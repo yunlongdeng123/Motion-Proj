@@ -1,5 +1,5 @@
 task_id: WS-V7-P3-AV2-HARD-EVIDENCE-01
-hypothesis_id: WS-V7-H-P3-001
+hypothesis_id: WS-V7-H-P3-002
 runs_root: /root/autodl-tmp/runs
 p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
 source_p2_run: >-
@@ -7,12 +7,14 @@ source_p2_run: >-
 cohort_roles: [quantitative, qualitative]
 device: cuda
 claim_boundary: >-
-  Frozen zero-shot AV2 evidence for target-ray depth consistency, canonical zero-level
+  Frozen zero-shot AV2 evidence for ray-certified target depth consistency, canonical zero-level
   consistency, temporal residual jitter, paired ghost components, collision-shell support,
   and exact preservation of compiler-external Actor state. Visual cases are fixed by metadata
   log order and lexical eligible Actor order. Paired ghosts remain synthetic; zero state shift
   follows an immutable interface and is not a perception, prediction, planning, closed-loop,
   or safety guarantee.
+compiler_overrides:
+  projection_output: observed_lidar_hit
 hard_evidence:
   distance_chunk_size: 1024
   ray_lateral_tolerance_m: 0.20

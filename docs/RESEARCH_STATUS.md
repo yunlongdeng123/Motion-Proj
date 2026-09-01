@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P3 nearest-surface scientifically rejected / ray-certified candidate frozen（2026-09-02）
+
+P3 r2=`run://worldsim_v7/WS-V7-P3-AV2-HARD-EVIDENCE-01/20260902T140000Z__hard-evidence-s0-r2`
+在逐 primitive ray 正确评价后仍为 quantitative/qualitative `6/8`。free-space after=`.849111/.828770`、
+ghost component ratio=`.916598/.900591`，PROJECT surface 沿匹配 ray 平均早于真实 hit `.09178/.08881m`。
+因此 nearest-canonical PROJECT 被确认为真实物理失败（`V7-F08`）；P2 的几何 improvement 不再足以支持完整 C1。
+
+新 hypothesis=`WS-V7-H-P3-002`：当 artifact primitive 带 direct LiDAR termination provenance 时，PROJECT 只能
+回到同一 observed hit；没有 matched hit 就 `UNKNOWN`，不得借附近 canonical 面猜测。该 rule 是可解释的工程/
+安全边界，也对应 NeuRAD/SplatAD/LiDAR-RT 的 ray-depth 对象。r3 保留 cohort、query/target isolation、action
+decision、8 gates、38 个登记视觉位以及所有非 PROJECT 实现；不调 gate、不扫 tolerance、不删除失败 Actor。
+
 ## WorldSim V7 focus tightened / P3 r1 rejected, ray-provenance r2 recovery next（2026-09-02）
 
 V7 相对 V6.x 的 reviewer-facing 主线收紧为三条：一是三维 ray/depth/surface 硬自洽而非 feature filtering；二是

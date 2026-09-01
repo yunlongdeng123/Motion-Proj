@@ -604,6 +604,9 @@ T_{sensor}
 - r1 30/30 完成但两 role 均 6/8；任意 compiled-surface Euclidean residual 破坏逐 primitive ray provenance，
   free-space/ghost 两门无效且总 verdict rejected（`V7-F07`）。r2 仅迁移 NeuRAD/SplatAD/LiDAR-RT 的最小
   `ray_o/ray_d + hit + aligned output` 边界；不改案例、动作、阈值、gates 或其余六项指标。
+- r2 的正确 ray metric 仍为 6/8：nearest-canonical 输出沿 matched beam 平均早于 hit 约 9cm，确认 PROJECT
+  operator 的真实物理失败（`V7-F08`）。r3 冻结为 ray-certified PROJECT：有 direct observed hit provenance 才投回
+  hit，无 matched hit 则 UNKNOWN；不调门/案例/target isolation，不把 zero-level 最近点冒充 line-of-sight 证据。
 
 ### 必须补齐的几何指标
 

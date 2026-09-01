@@ -79,6 +79,7 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
     p2_config = yaml.safe_load(
         (repo_root / str(config["p2_config"])).read_text(encoding="utf-8")
     )
+    p2_config["compiler_geometry"].update(config.get("compiler_overrides", {}))
     run_dir = (
         Path(config["runs_root"]) / "worldsim_v7" / str(config["task_id"]) / run_id
     )

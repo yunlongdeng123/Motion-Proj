@@ -176,7 +176,17 @@ def _compile_actor(
         action_counts[decision.action.value] += 1
         ghost_actions.append(decision.action.value)
         if decision.action.value == "PROJECT":
-            projected_point = canonical[nearest]
+            projection_output = str(
+                config["compiler_geometry"].get(
+                    "projection_output", "canonical_nearest"
+                )
+            )
+            if projection_output == "canonical_nearest":
+                projected_point = canonical[nearest]
+            elif projection_output == "observed_lidar_hit":
+                projected_point = selected_query[index]
+            else:
+                raise ValueError(f"unsupported projection_output={projection_output}")
             projected.append(projected_point)
             projected_aligned[index] = projected_point
     if projected:
