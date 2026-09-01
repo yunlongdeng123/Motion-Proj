@@ -1,5 +1,28 @@
 # Experiments
 
+## WS-V7-P7 interpretable safety envelope result（2026-09-02）
+
+### WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01 r1
+
+- canonical：`run://worldsim_v7/WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01/20260902T163000Z__safety-envelope-s0-r1`；
+  conclusion=`frozen_descriptive_interpretable_safety_envelope`。
+- frozen operating point：factorized threshold=`.999436`；calibration/test/AV2 coverage=`8.93/3.95/75.55%`；AV2
+  population false repair=`8.99%`、conditional selected failure=`11.90%`、hazard coverage=`92.17%`、selective Chamfer=
+  `.182073m`。risk/geometry identity residual `<=1.5e-8`。
+- score shift：factorized calibration/test/AV2 mean=`.7614/.8283/.9783`，median=`.9453/.9792/.999992`；
+  calibration→test Wasserstein/KS=`.06794/.16949`，calibration→AV2=`.21702/.70415`。
+- 64-step IG：nuScenes test top=`canonical_surfels 20.91%`、`observation_frame_count 18.25%`、
+  `completion_candidate_fraction 11.62%`；AV2 top=`observation_frame_count 49.53%`、`canonical_surfels 14.06%`、
+  `sensor_range 7.38%`。mean absolute completeness residual=`.00211/.01286`。
+- interpretation：factorized cross-task leakage 精确为 0，但 validity inputs 仍可编码 sensor opportunity；AV2 score
+  saturation 与 observation-window attribution 共同暴露 `V7-F11`。P4 的 empirical zero-shot 改善保留，不升级为
+  domain-invariant selector、conformal certificate 或 road-safety guarantee。
+- resources：0 training/refit/recalibration/adaptation；wall=`1.564s`、GPU=`.0173GiB`、RSS=`.815GiB`、run=`348KiB`。
+- paper：新增 P7 三联跨栏 Figure 3、IG citation 与 abstract/limitations/conclusion 边界；TeX Live=`6 pages / 1,140,181
+  bytes`，pages 4--6 人工视觉检查无 clipping/overlap/orphan float。
+- next：在 nuScenes-only development 冻结 dimensionless sensor-opportunity normalization；已消费的 30 AV2 logs 不用于
+  恢复模型选择或阈值，下一外部 read 必须使用预冻结新 cohort 或 Waymo。
+
 ## WS-V7-P7 interpretable safety envelope freeze（2026-09-02）
 
 - source：P4 r2 `MODEL.pt`、nuScenes calibration/test Actor rows、AV2 634 Actor rows；不重跑 P4 compiler。

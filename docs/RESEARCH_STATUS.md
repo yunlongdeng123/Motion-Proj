@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7 P7 complete / sensor-opportunity shortcut exposed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01/20260902T163000Z__safety-envelope-s0-r1`；
+conclusion=`frozen_descriptive_interpretable_safety_envelope`。P7 复用 P4 r2 的 model/standardizer/threshold/retained rows，
+0 training/refit/recalibration/AV2 adaptation。21-point curves 保持 frozen operating point；factorized risk/geometry identities
+残差 `<=1.5e-8`，validity--hazard cross-input derivative 因 disjoint graph 精确为 0。
+
+关键诊断不是重选 threshold：factorized repair score calibration/test/AV2 mean=`.7614/.8283/.9783`，AV2 median=
+`.999992`；calibration→AV2 Wasserstein=`.2170`、KS=`.7041`。64-step IG 中 `observation_frame_count` 的 normalized
+absolute attribution 从 nuScenes test `18.25%` 增到 AV2 `49.53%`，而 canonical surfels 为 `20.91%→14.06%`。
+因此登记 `V7-F11`：P4 的 AV2 false-repair/Chamfer 改善保留为 empirical zero-shot operating point，但当前 validity head
+不是 domain-invariant selector，也不提供 external formal risk guarantee。
+
+恢复不得在已消费 30 logs 上事后改阈值。下一 candidate 只用 nuScenes development 将 raw observation opportunity 改为
+dimensionless density/support，外部结论必须读取 metadata-frozen 的新 AV2 cohort 或 Waymo。P5 trajectory integration 继续
+等待充分 scene/Actor 对齐，避免把同一 shortcut 带入 reliability retraining。P7 wall=`1.564s`、GPU=`.0173GiB`、
+RSS=`.815GiB`、run=`348KiB`；论文已加入 safety-envelope figure 与收窄后的 claim boundary，官方 CVPR 模板
+TeX Live 编译为 6 pages / 1,140,181 bytes，pages 4--6 视觉复核无 clipping、overlap 或 orphan float。
+
 ## WorldSim V7 P7 interpretable safety envelope frozen / retained-row run next（2026-09-02）
 
 Active=`WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01 / WS-V7-H-P7-001`。P4 单 operating point 已支持，但

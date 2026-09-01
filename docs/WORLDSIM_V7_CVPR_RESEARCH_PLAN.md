@@ -878,6 +878,18 @@ V7 主实验不允许通过 AV2 fine-tuning 救结果；可以在 supplement 增
 - P5 C3 integration 暂缓到 physical Actor 与 V6.7 trajectory-density row 建立充分、scene-disjoint 对齐之后；当前少量
   overlap 不足以把轻量重训解释成可靠性改善。
 
+### P7-A 结果与边界（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01/20260902T163000Z__safety-envelope-s0-r1`。
+在不训练/重校准/适配的条件下，P7 保留 P4 empirical zero-shot operating point 和 factorized exact-zero cross-input
+derivative，但暴露 validity head 的 sensor-opportunity shortcut：calibration→AV2 score Wasserstein=`.2170`、KS=`.7041`，
+AV2 median score=`.999992`；`observation_frame_count` 的 IG attribution 从 nuScenes test `18.25%` 增到 AV2 `49.53%`。
+
+因此 `V7-F11` 把主张边界收窄为“nuScenes-trained empirical AV2 repair-or-abstain transfer”，不得称 domain-invariant
+selection 或外域 formal risk guarantee。恢复只允许在 nuScenes development 中把 raw observation opportunity 替换为
+dimensionless density/support 或施加 sparsity invariance；已消费 30 AV2 logs 不允许参与后验 feature/threshold 选择。
+任何恢复后的 external claim 必须使用 metadata-frozen 的新 AV2 cohort 或 Waymo。
+
 ### 命题 1：危险保真
 
 若 physical compiler 不改变 Actor identity、trajectory 和尺寸：

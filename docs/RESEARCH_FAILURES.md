@@ -2,6 +2,25 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F11 — factorized validity head 依赖跨域不稳定的 sensor-opportunity shortcut
+
+- run：`run://worldsim_v7/WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01/20260902T163000Z__safety-envelope-s0-r1`；
+  P7 不训练、不重校准，只解释冻结 P4 r2 model/rows/threshold。
+- symptom：factorized score calibration→AV2 mean=`.7614→.9783`、median=`.9453→.999992`，Wasserstein=`.2170`、
+  KS=`.7041`；相同 threshold 的 coverage 从 `8.93%` 跳到 `75.55%`。64-step IG 中 observation frame count 的
+  normalized attribution 从 nuScenes test `18.25%` 增到 AV2 `49.53%`。
+- root cause：head 虽不读 hazard inputs，却直接读取 raw observation-frame count；不同数据集的序列长度、传感频率与
+  Actor 可见窗口改变该量，模型把 sensor opportunity 当作 repairability。结构因子化消除了 cross-task leakage，但没有
+  自动获得 sensor-domain invariance。
+- literature response：Integrated Gradients 用于明确模型敏感度而非因果；LiDAR domain-generalization/adaptation 工作反复
+  指出 density/sensor pattern shift。V7 恢复只允许 nuScenes development 上的 dimensionless support/density normalization
+  或显式 sparsity-invariance，不在 AV2 consumed rows 上调 threshold。
+- impact：P4 7/7 gates 和 AV2 false-repair/Chamfer 数值仍是有效 empirical zero-shot read；删除的是“域不变 selector”
+  或 external formal risk guarantee 的解释。30 个 AV2 logs 已消费；恢复需 metadata-frozen 新 AV2 cohort 或 Waymo。
+  status=`open_sensor_opportunity_normalization_and_fresh_external_confirmation`。
+
+下一可用编号：`V7-F12`。
+
 ### P7 freeze prevention note — attribution 不冒充因果，曲线不用于重选 AV2 threshold
 
 - P7 只在固定 coverage grid 上描述已完成 P4 score ordering；star 始终是 nuScenes calibration 已冻结 threshold，不能从
@@ -9,7 +28,7 @@
 - Integrated Gradients baseline 固定为 nuScenes-train standardized mean；其 completeness 只验证 path attribution 数值，
   feature magnitude 仍不是 sensor causality、物理充分性或跨域稳定性证明。
 - factorized zero leakage 来自输入图不连通，不依赖 IG/相关性；shared leakage 仍按 P4 paired swaps 报告。
-- 本项不是新 failure；下一可用编号仍为 `V7-F11`。
+- 本项不是新 failure；随后正式读取暴露 `V7-F11`，下一可用编号为 `V7-F12`。
 
 ### P4 outcome note — 支持 empirical selective transfer，不恢复跨域 formal guarantee
 

@@ -11,6 +11,16 @@
 
 \input{tables/p4_selective_factorization}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/p7_interpretable_safety_envelope.png}
+  \caption{Frozen P7 safety envelope. Left and center: risk--coverage and geometry--coverage curves; stars mark the unchanged
+  nuScenes-calibrated thresholds and never select an AV2 operating point. Right: Integrated Gradients relative to the
+  nuScenes-training mean~\cite{sundararajan2017axiomatic}. AV2 reliance on observation-frame count exposes a sensor-opportunity
+  shortcut. Curves and attributions are descriptive rather than a cross-domain certificate.}
+  \label{fig:p7-envelope}
+\end{figure*}
+
 \paragraph{Data and protocol.}
 We train and select models only on nuScenes. Argoverse~2 Sensor validation logs form a zero-shot external test. Before reading any method output, we sort the 150 validation UUIDs and select every fifth log, yielding 20 quantitative and 10 qualitative logs. No AV2 fine-tuning, post-hoc calibration, threshold selection, or failed-scene deletion is allowed. Final nuScenes and AV2 cohorts are evaluated exactly once after the method freezes.
 
@@ -74,6 +84,15 @@ relative to always-repair while nearly halving false repairs. Hazard AUROC is \P
 \PfourAVHazardCoverage{}\%, and factorized cross-input shift remains zero. However, coverage changes from
 \PfourCalibrationCoverage{}\% on nuScenes calibration to \PfourAVFactorCoverage{}\% on AV2; Table~\ref{tab:p4-selective}
 therefore supports empirical transfer, not a cross-domain conformal guarantee.
+
+\paragraph{Interpretable safety envelope.}
+We retain the model, standardizer, thresholds, and all Actor rows and evaluate 21 fixed coverage levels without refitting or
+recalibration. The factorized score shifts from mean/median $.761/.945$ on nuScenes calibration to $.978/.999992$ on AV2
+(Wasserstein $.217$, KS $.704$), explaining the operating-point coverage jump. Integrated Gradients~\cite{sundararajan2017axiomatic}
+relative to the nuScenes-training mean attributes 18.25\% of absolute validity sensitivity to observation-frame count on
+nuScenes test but 49.53\% on AV2 (Fig.~\ref{fig:p7-envelope}). Structural cross-input derivatives remain exactly zero: task
+factorization prevents hazard leakage, but does not make validity inputs sensor invariant. We therefore preserve the empirical
+P4 result while rejecting the stronger interpretation of a domain-invariant selector.
 
 \paragraph{Qualitative protocol.}
 Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.
