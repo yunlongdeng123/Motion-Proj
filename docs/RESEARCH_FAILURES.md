@@ -1,6 +1,32 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-## WorldSim V7 P0 latest failures（2026-09-01）
+## WorldSim V7 latest failures（2026-09-02）
+
+### V7-F03 — 非登录 shell 的定向 pytest 未包含仓库 import path
+
+- symptom：首次运行单个坐标合同测试时，collection 阶段报 `ModuleNotFoundError: motion_proj`。
+- root cause：远端非登录 shell 激活环境后未把仓库根加入 Python module search path；测试与任何数据读取均未开始。
+- response：不改代码和测试合同，仅按项目既有入口约定设置 `PYTHONPATH=.` 原样重跑，结果 `1 passed`；实际首 log
+  坐标读取得到合理 ego range。
+- claim impact：纯入口环境失败，0 scientific quality read，不增加 smoke/regression 矩阵。
+
+下一可用编号：`V7-F04`。
+
+### V7-F02 — AV2 annotation frame 被误标为 city frame
+
+- symptom：P0 adapter 将 `annotations.feather` 的 cuboid pose 直接命名为 `city_se3_actor`，再用
+  `ego_se3_city` 计算 `center_ego_m`；首个冻结 log 会产生公里级 Actor center 错位。
+- root cause：混淆 AV2 的 `egovehicle_SE3_actor` annotation 与独立的 `city_SE3_egovehicle` pose；P0 metadata
+  smoke 只统计 Actor/state 数量，没有检查物理位置。
+- literature/open-source response：AV2 官方 Sensor Dataset 文档与官方 API 均规定 cuboid pose 位于 ego frame，
+  LiDAR return 也已 egomotion-compensated 到 ego reference timestamp。
+- resolution：显式存储 ego-frame Actor pose，以 city/ego pose composition 派生 city-frame pose，并把
+  `center_ego_m` 固定为 cuboid ego translation；冻结 cohort 与 scientific protocol 不变。
+- exposure/claim impact：在任何 V7 method-quality、artifact/hazard 或 surface metric read 前发现；不产生科学负结果。
+
+后续已使用 `V7-F03`；当前下一可用编号：`V7-F04`。
+
+## WorldSim V7 P0 failures（2026-09-01）
 
 ### V7-F01 — AV2 sample split 路径错误且 AutoDL 小文件吞吐不足
 
@@ -12,9 +38,9 @@
 - response：先列出官方 val 全 150 UUID，只按排序位置 every-fifth 冻结 30 logs；再用同版 `s5cmd v2.3.0` 在本地
   D 盘测速约 `2.86 MiB/s`，按用户预案切换为本地单进程串行下载。远端 40 MiB 残片列入清理 manifest 并删除。
 - impact：status=`resolved_by_local_staging_route`；不形成 scientific read，不改变 20 quantitative + 10 qualitative
-  frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
+frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
 
-下一可用编号：`V7-F02`。
+后续已使用 `V7-F02`；当前下一可用编号：`V7-F03`。
 
 ## V6.7 P269/P270 latest failures（2026-08-31）
 

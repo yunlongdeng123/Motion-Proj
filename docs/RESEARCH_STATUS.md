@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7 P1 coordinate contract repaired / GPU surface extraction next（2026-09-02）
+
+`WS-V7-P1-AV2-COORDINATE-CONTRACT-01` 在首次读取 AV2 LiDAR/annotation schema 时发现 P0 SceneIR adapter
+将官方 ego-frame cuboid pose 误当作 city-frame pose。AV2 官方 Sensor 文档明确 annotation pose 位于
+egovehicle reference frame，LiDAR sweep 也已补偿到同一 ego frame；首个 log 的实值审计同样显示 annotation
+平移约 `(128, 5)`、ego city 平移约 `(6769, 1590)`，旧变换会造成公里级 Actor 错位。
+
+adapter 现显式保留 `egovehicle_se3_actor`，并仅通过
+`city_SE3_egovehicle.compose(egovehicle_SE3_actor)` 派生 `city_se3_actor`；`center_ego_m` 直接读取 ego-frame
+cuboid center。该修复不改变冻结 30-log cohort、不读取方法质量、不做校准或阈值选择。下一步直接以修复后的
+ego-frame LiDAR/cuboid 合同构建 P1 四象限证据与 P2 motion-compensated Actor canonical surface。唯一坐标
+定向测试在显式 `PYTHONPATH=.` 后 `1 passed`；实际首 log 的 5,337 states 得到 median/max ego range
+`84.22/215.37m`，不再出现公里级错位。首次未设置仓库 import path 的入口失败记为 `V7-F03`。
+
 ## WorldSim V7 P0 paper/code/data 收敛（2026-09-01）
 
 `WS-V7-P0-PAPER-CODE-CONVERGENCE-01` 已从 V6.7 `d97c3f2` 建立

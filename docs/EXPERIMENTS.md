@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P1 coordinate-contract recovery（2026-09-02）
+
+### WS-V7-P1-AV2-COORDINATE-CONTRACT-01
+
+- 状态：`done / engineering recovery before quality read`；failure=`V7-F02 resolved`。
+- evidence：AV2 官方 Sensor Dataset 规定 cuboid annotation pose 和 motion-compensated LiDAR sweep 均在
+  egovehicle frame；首个冻结 log 的 annotation/ego-city 数值尺度独立复核该合同。
+- correction：新增显式 `egovehicle_se3_actor`；`city_se3_actor = city_se3_egovehicle ∘ egovehicle_se3_actor`；
+  `center_ego_m` 不再错误应用 `ego_se3_city`。
+- exposure：读取 feather schema 与头部数值；未计算 artifact/hazard/surface 指标，未训练、校准、选阈值或换 cohort。
+- validation：显式 `PYTHONPATH=.` 后一个坐标组合定向测试 `1 passed`；首 log 5,337 states 的 ego range
+  median/max=`84.22/215.37m`；首次入口 import failure 见 `V7-F03`。不运行 repo-wide smoke/regression。
+- next：`WS-V7-P1-AV2-FACTORIAL-ATLAS-01` 与 Actor canonical surfel extraction。
+
 ## WS-V7-P0 paper/code/data convergence（2026-09-01）
 
 ### WS-V7-P0-PAPER-CODE-CONVERGENCE-01

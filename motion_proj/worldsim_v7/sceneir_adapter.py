@@ -81,6 +81,7 @@ class SensorCalibration:
 @dataclass(frozen=True)
 class ActorStateSample:
     timestamp_ns: int
+    egovehicle_se3_actor: SE3
     city_se3_actor: SE3
     center_ego_m: tuple[float, float, float]
     size_lwh_m: tuple[float, float, float]
@@ -176,12 +177,18 @@ class AV2SceneIRAdapter:
                     raise ValueError(
                         f"AV2 track {track_id} has no ego pose near timestamp {timestamp}"
                     )
-                city_se3_actor = self._row_se3(row)
-                ego_se3_city = poses[pose_index].city_se3_egovehicle.inverse()
-                center_ego = ego_se3_city.transform_points(city_se3_actor.translation_m)
+                # AV2 annotations store egovehicle_SE3_actor, while pose rows store
+                # city_SE3_egovehicle.  Keep both transforms explicit so canonical
+                # Actor fusion never treats an ego-frame cuboid as a city-frame pose.
+                egovehicle_se3_actor = self._row_se3(row)
+                city_se3_actor = poses[pose_index].city_se3_egovehicle.compose(
+                    egovehicle_se3_actor
+                )
+                center_ego = egovehicle_se3_actor.translation_m
                 states.append(
                     ActorStateSample(
                         timestamp_ns=timestamp,
+                        egovehicle_se3_actor=egovehicle_se3_actor,
                         city_se3_actor=city_se3_actor,
                         center_ego_m=tuple(float(value) for value in center_ego),
                         size_lwh_m=(float(row.length_m), float(row.width_m), float(row.height_m)),
@@ -237,6 +244,9 @@ def scene_ir_to_dict(scene: SceneIR) -> dict[str, Any]:
                 "states": [
                     {
                         "timestamp_ns": state.timestamp_ns,
+                        "egovehicle_se3_actor": se3_payload(
+                            state.egovehicle_se3_actor
+                        ),
                         "city_se3_actor": se3_payload(state.city_se3_actor),
                         "center_ego_m": list(state.center_ego_m),
                         "size_lwh_m": list(state.size_lwh_m),

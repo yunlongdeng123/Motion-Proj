@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from motion_proj.worldsim_v7.actor_reliability import ActorResidualDistribution
 from motion_proj.worldsim_v7.boundary_cost_density import (
@@ -19,7 +20,7 @@ from motion_proj.worldsim_v7.runtime_surface import (
     apply_binary_isotonic_map,
     fit_binary_isotonic_map,
 )
-from motion_proj.worldsim_v7.sceneir_adapter import SE3
+from motion_proj.worldsim_v7.sceneir_adapter import AV2SceneIRAdapter, SE3
 from motion_proj.worldsim_v7.validity_hazard import (
     HazardFeatures,
     ValidityFeatures,
@@ -123,3 +124,33 @@ def test_frozen_av2_cohort_enforces_zero_shot_contract():
     cohort = json.loads(config_path.read_text(encoding="utf-8"))
     assert validate_cohort(cohort) is cohort
     assert [row["index"] for row in cohort["logs"]] == list(range(0, 150, 5))
+
+
+def test_av2_annotation_pose_is_egovehicle_frame(monkeypatch, tmp_path):
+    pose = pd.DataFrame(
+        [{"timestamp_ns": 7, "qw": 1.0, "qx": 0.0, "qy": 0.0, "qz": 0.0,
+          "tx_m": 100.0, "ty_m": 50.0, "tz_m": 0.0}]
+    )
+    calibration = pd.DataFrame(
+        [{"sensor_name": "up_lidar", "qw": 1.0, "qx": 0.0, "qy": 0.0, "qz": 0.0,
+          "tx_m": 1.0, "ty_m": 0.0, "tz_m": 1.0}]
+    )
+    annotations = pd.DataFrame(
+        [{"timestamp_ns": 7, "track_uuid": "actor", "category": "REGULAR_VEHICLE",
+          "length_m": 4.0, "width_m": 2.0, "height_m": 1.5,
+          "qw": 1.0, "qx": 0.0, "qy": 0.0, "qz": 0.0,
+          "tx_m": 4.0, "ty_m": 2.0, "tz_m": 0.0, "num_interior_pts": 9}]
+    )
+    frames = {
+        "city_SE3_egovehicle.feather": pose,
+        "egovehicle_SE3_sensor.feather": calibration,
+        "annotations.feather": annotations,
+    }
+    adapter = AV2SceneIRAdapter()
+    monkeypatch.setattr(adapter, "validate_log", lambda _: None)
+    monkeypatch.setattr(adapter, "_read_feather", lambda path: frames[path.name])
+    scene = adapter.build_scene_ir(tmp_path)
+    state = scene.actors[0].states[0]
+    assert np.allclose(state.center_ego_m, [4.0, 2.0, 0.0])
+    assert np.allclose(state.egovehicle_se3_actor.translation_m, [4.0, 2.0, 0.0])
+    assert np.allclose(state.city_se3_actor.translation_m, [104.0, 52.0, 0.0])
