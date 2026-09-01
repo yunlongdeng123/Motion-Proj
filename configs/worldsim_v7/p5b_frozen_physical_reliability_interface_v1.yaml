@@ -1,0 +1,23 @@
+task_id: WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01
+hypothesis_id: WS-V7-H-P5-002
+runs_root: /root/autodl-tmp/runs
+alignment_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1
+p4_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+v67_source_rows: /root/autodl-tmp/runs/worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1/SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+frozen_v67_reliability_run: /root/autodl-tmp/runs/worldsim_v67/WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01/20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r2
+roles:
+  - calibration
+  - test
+primary_role: test
+fixed_groups:
+  - all
+  - factorized_selected
+  - factorized_abstained
+  - geometric_repair_helpful
+  - geometric_repair_harmful
+  - selected_and_harmful
+claim_boundary: >-
+  Descriptive exact-identity interface between frozen P4 physical-repair decisions
+  and retained V6.7 multi-horizon outcomes. It does not fit, refit, calibrate, tune
+  thresholds, execute P346, or establish that P4 repair changes downstream motion
+  reliability. P4 and P346 weights remain unchanged.

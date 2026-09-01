@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P5-B frozen physical--reliability interface frozen（2026-09-02）
+
+Active=`WS-V7-P5B-FROZEN-PHYSICAL-RELIABILITY-INTERFACE-01 / WS-V7-H-P5-002`。Primary=P4 test exact-match
+88 Actors；calibration 25 Actors 仅作 context，train 因 `V7-F13` 排除。固定比较 P4 selected/abstained、geometric
+helpful/harmful 与 selected-and-harmful，在 `.8/1.5/2.5/3.0s` retained V6.7 rows 报 cost/state-error/
+decision-flip/false-safe。
+
+本项无 fit/calibration/threshold/gate/AV2 read，P4/P346 权重不变且不执行 P346；只定位 physical failure 与 C3
+outcome failure 的共现边界，不能宣称 causal reliability improvement。
+
 ## WorldSim V7 P5 direct joint fit rejected / frozen-interface audit next（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。

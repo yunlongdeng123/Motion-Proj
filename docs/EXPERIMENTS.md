@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V7-P5B frozen physical--reliability interface freeze（2026-09-02）
+
+- primary：P4 test exact-match 88 Actors；calibration 25 Actors=context；train excluded after `V7-F13`。
+- fixed groups：all、P4 selected/abstained、geometric helpful/harmful、selected-and-harmful。
+- outcomes：retained V6.7 `.8/1.5/2.5/3.0s` cost、Actor state error、decision flip、false safe。
+- descriptive only；no fit/refit/calibration/threshold/gate/P346 execution/AV2 read。
+
 ## WS-V7-P5 physical--reliability alignment audit result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。

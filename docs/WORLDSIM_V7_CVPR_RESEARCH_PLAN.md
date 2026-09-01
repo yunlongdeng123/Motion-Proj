@@ -784,6 +784,10 @@ Alignment canonical=`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-A
 P4 train/cal/test 对齐=`2/5/14 scenes`、`5/25/88 Actors`、`1,320/7,645/39,285 rows`；train 未达
 `3/20`，因此 `V7-F13` 拒绝 direct joint fit。P5 后续只允许冻结 P4/P346 的 descriptive multi-horizon interface audit。
 
+P5-B 固定使用 calibration/test `25/88` exact-match Actors，比较 frozen P4 selected/abstained、geometric
+helpful/harmful、selected-and-harmful 在 retained V6.7 `.8/1.5/2.5/3.0s` cost/state-error/decision-flip/
+false-safe 的分层。无 fit、threshold、gate 或 P346 execution；只给共现安全边界，不做因果改善声明。
+
 ### 保留模块
 
 - V6.7 已支持的 Actor residual distribution；
