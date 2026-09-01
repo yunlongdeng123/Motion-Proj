@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P5 alignment prevention note — 不用稀疏 scene overlap 强行联合轻训
+
+- P4 与 V6.7 identity namespace 不同，必须经 official scene ordering 与 DriveStudio instance id 映射，不能按类别/空间
+  最近邻猜 Actor 对应。
+- direct joint fit 只在 P4 train 至少 3 scenes/20 Actors 对齐时允许；否则 cal/test 角色不能回流训练，避免 scene identity
+  shortcut 与 role leakage。
+- audit 只读 retained rows/metadata；未通过不触发 training rescue。本项不是新 failure；下一可用编号仍为 `V7-F13`。
+
 ### V7-F12 — ratio-only opportunity invariance 丢失 nuScenes repairability ordering
 
 - run：`run://worldsim_v7/WS-V7-P6-OPPORTUNITY-INVARIANT-SELECTOR-01/20260902T170000Z__opportunity-invariant-s70601-r1`；

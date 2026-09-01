@@ -774,6 +774,12 @@ V7 模型必须相对 shared encoder：
 
 ## V7-P5：C3 论文整合与轻量重训
 
+### P5-A alignment audit freeze（2026-09-02）
+
+P4 `scene_name/instance_token` 与 V6.7 `scene_index/numeric_actor_id` 只允许通过 nuScenes official scene ordering 和
+DriveStudio `instances_info[id]` exact join。Direct joint fit 需 P4 train 对齐 `>=3 scenes/20 Actors`，否则无法建立非平凡
+scene-heldout split，禁止用 calibration/test Actors 回流补样本；仅执行 frozen descriptive interface audit。
+
 ### 保留模块
 
 - V6.7 已支持的 Actor residual distribution；

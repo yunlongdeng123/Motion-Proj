@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P5 physical--reliability alignment audit frozen（2026-09-02）
+
+Active=`WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01 / WS-V7-H-P5-001`。Join 固定为 raw nuScenes
+scene-table index + DriveStudio `instances_info[id]`，连接 P4 `scene_name/track_id` 与 V6.7 P109/P346
+`scene_index/actor_id`。只读 retained rows/metadata，不读 LiDAR/AV2 quality、不训练。
+
+Direct P5 light fit 最低条件固定为 P4 train `>=3` aligned scenes 且 `>=20` aligned Actors；否则不能构造非平凡
+scene-heldout split，只允许冻结模型上的 descriptive interface audit。该边界参考 autonomous-driving domain generalization
+对 scene/sensor shift 的结论与 spurious-group ERM 风险；不通过放宽角色或混用 P4 cal/test 训练恢复。
+
 ## WorldSim V7 P6-C external resume ready / waiting complete IO（2026-09-02）
 
 External runner 已绑定 P6-C frozen fit artifact、fresh cohort、download `.complete` markers、P4 compiler 与同-row baseline。

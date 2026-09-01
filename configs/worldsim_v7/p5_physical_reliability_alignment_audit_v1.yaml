@@ -1,0 +1,20 @@
+task_id: WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01
+hypothesis_id: WS-V7-H-P5-001
+runs_root: /root/autodl-tmp/runs
+p4_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+v67_source_rows: /root/autodl-tmp/runs/worldsim_v67/WS-V67-P109-DIRECTIONAL-ACTOR-UNCERTAINTY-PREP-01/20260830T062000Z__directional-actor-uncertainty-prep-s0-r1/SOURCE_DIRECTIONAL_ACTOR_UNCERTAINTY_ROWS.npz
+v67_reliability_run: /root/autodl-tmp/runs/worldsim_v67/WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01/20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r2
+nuscenes_scene_json: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval/scene.json
+processed_roots:
+  - /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  - /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  - /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+direct_joint_fit_minimums:
+  aligned_p4_train_scenes: 3
+  aligned_p4_train_actors: 20
+fallback_on_failure: frozen_interface_descriptive_audit_only
+claim_boundary: >-
+  Read-only identity and row-coverage audit. It does not train, refit, calibrate,
+  alter geometry, or score AV2. Direct P5 joint fitting is allowed only if P4
+  train Actors align to at least three source scenes and twenty Actors; otherwise
+  only a frozen descriptive interface analysis may be executed.

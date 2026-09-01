@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V7-P5 physical--reliability alignment audit freeze（2026-09-02）
+
+- join：nuScenes scene table `scene_name→index`；DriveStudio `instances_info id→numeric actor_id`；V6.7 P109 source
+  `(scene_index,actor_id)`；processed-root order fixed V6.7→V5→V4。
+- output：P4 role-level scene/Actor coverage、aligned V6.7 row count、horizons and existing scene folds。
+- direct-fit boundary：P4 train aligned scenes `>=3` and Actors `>=20`；else descriptive frozen-interface audit only。
+- read only；no training/calibration/AV2/geometry change/hash/checksum/fingerprint。
+
 ## WS-V7-P6C external resume ready（2026-09-02）
 
 - binding：same canonical run/model/threshold；fresh 20-log cohort；P4 compiler；candidate and frozen-P4 scores on identical rows。
