@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V7-P2 launch recovery（2026-09-02）
+
+### WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 r1
+
+- run：`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T120000Z__four-action-s0-r1`。
+- status：`implementation_failed_before_quality_read/no_verdict`；failure=`V7-F06`。
+- exposure：首 log annotation/pose metadata 后、point association/surface/action/target metric 前报缺失 `hazard` 配置；
+  不产生任何 scientific quality read。
+- recovery：只恢复 P1 已冻结的同一 hazard 参数段；不改 cohort、split、action thresholds、gates、seed 或 claim；
+  新 run id r2，禁止覆盖或把 r1 包装成正式结果。
+
 ## WS-V7-P2 real-coordinate four-action compiler（2026-09-02）
 
 ### WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01 freeze

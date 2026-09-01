@@ -2,6 +2,27 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F06 — P2 配置遗漏复用模块所需的冻结 hazard 段
+
+- run：`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T120000Z__four-action-s0-r1`。
+- symptom/exposure：首个 log 的 annotation/pose metadata 加载后，`_track_geometries` 访问 `config["hazard"]`
+  报 `KeyError`；点云关联、canonical surface、action decision、target metric 与任何 gate 均未发生，r1=`implementation_failed_before_quality_read/no_verdict`。
+- root cause：P2 复用 P1 Actor/hazard extraction，却在独立 YAML 中漏复制冻结的 hazard 参数组；入口只做了解析/import，未执行重复 smoke/regression。
+- literature/open-source response：Hydra 官方 Structured Config schema/Defaults List 建议以共享 schema 组合必需字段并用 mandatory
+  value 阻止缺字段运行；本阶段不扩框架，只恢复与 P1 完全相同的已冻结 10 项 hazard 配置，避免改变 P2 动作阈值、
+  cohort、seed、gates 或 claim boundary。
+- resolution：r1 状态明确写为 failed；同一合同用新 run id r2 恢复。后续配置族应复用公共 Actor/hazard defaults，
+  但不为本次恢复增加校验矩阵。status=`recovery_prepared_before_scientific_trial`。
+
+### V7-F05 — GitHub 直连 git operations 挂起
+
+- symptom：提交 `e985e59` 后，远端 `git push` 与 `git ls-remote` 均长时间无返回；没有改写 commit、branch 或工作树。
+- diagnosis：GitHub 官方状态页显示 Git Operations operational；故障限于当前 AutoDL 出口路由，而非仓库或 GitHub 服务端事故。
+- resolution：终止精确识别的悬挂 git 进程，读取当前 LocalTUN session 的 remote proxy 后仅为该次 git command 设置
+  `HTTP(S)_PROXY`，push 成功；没有启动第二个研究 run，0 scientific impact。LocalTUN 端口是 session-specific，后续不硬编码复用。
+
+下一可用编号：`V7-F07`。
+
 ### P2 freeze prevention note — completion 不读取 held-out target
 
 - P1 已证明 build-side canonical surfel support，但 paired hole 的满分不能直接当真实 completion 质量；P2 因此把
@@ -9,7 +30,7 @@
 - `COMPLETE` 候选只由 build surface 的 temporal/view support 与 query-space hole 产生；target 只在全部坐标编译完成后
   计算 support/recall/precision/Chamfer。禁止用 target 删除 completion、调 hole radius 或换 Actor。
 - quantitative 20 logs 与 qualitative 10 logs 在同一冻结实现中一次执行，避免 development 结果后再修改 confirmation。
-- 本项不是新 failure；下一可用编号仍为 `V7-F05`。
+- 本项不是新 failure；后续已使用 `V7-F05`、`V7-F06`，下一可用编号为 `V7-F07`。
 
 ### V7-F04 — background launcher 将准备链与训练命令一起放入 subshell，PID sidecar 未写出
 
@@ -22,7 +43,7 @@
 - resolution/impact：没有重启或并发启动第二个 run；用 `pgrep` 与 canonical `status/summary` 只读监控原进程。
   20/20 logs、summary 与 10/10 gates 正常完成；仅 monitoring sidecar 缺失，0 scientific impact。
 
-下一可用编号：`V7-F05`。
+后续已使用 `V7-F05`、`V7-F06`；下一可用编号：`V7-F07`。
 
 ### P1 freeze prevention note — 不把外观补点当物理证据
 
@@ -30,7 +51,7 @@
   但镜像点没有独立射线或多帧 provenance，不能进入 V7 collision surface。
 - V7 只迁移其 Actor cuboid 入盒和 `ego/world→box` canonical transform；不镜像、不神经补全、不把 box shell
   当占据真值。远侧缺证据仍为 `UNKNOWN`，只有真实多视角支持的预注册 hole probe 才允许 `COMPLETE`。
-- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`，当前下一可用编号为 `V7-F05`。
+- 本项为 formal run 前的方法边界，不是新 failure；后续已使用 `V7-F04`--`V7-F06`，当前下一可用编号为 `V7-F07`。
 
 ### V7-F03 — 非登录 shell 的定向 pytest 未包含仓库 import path
 
@@ -40,7 +61,7 @@
   坐标读取得到合理 ego range。
 - claim impact：纯入口环境失败，0 scientific quality read，不增加 smoke/regression 矩阵。
 
-后续已使用 `V7-F04`；当前下一可用编号：`V7-F05`。
+后续已使用 `V7-F04`--`V7-F06`；当前下一可用编号：`V7-F07`。
 
 ### V7-F02 — AV2 annotation frame 被误标为 city frame
 
@@ -54,7 +75,7 @@
   `center_ego_m` 固定为 cuboid ego translation；冻结 cohort 与 scientific protocol 不变。
 - exposure/claim impact：在任何 V7 method-quality、artifact/hazard 或 surface metric read 前发现；不产生科学负结果。
 
-后续已使用 `V7-F03`、`V7-F04`；当前下一可用编号：`V7-F05`。
+后续已使用 `V7-F03`--`V7-F06`；当前下一可用编号：`V7-F07`。
 
 ## WorldSim V7 P0 failures（2026-09-01）
 
@@ -70,7 +91,7 @@
 - impact：status=`resolved_by_local_staging_route`；不形成 scientific read，不改变 20 quantitative + 10 qualitative
 frozen cohort，不允许 AV2 fine-tune/calibration/threshold/failed-scene selection。
 
-后续已使用 `V7-F02`--`V7-F04`；当前下一可用编号：`V7-F05`。
+后续已使用 `V7-F02`--`V7-F06`；当前下一可用编号：`V7-F07`。
 
 ## V6.7 P269/P270 latest failures（2026-08-31）
 

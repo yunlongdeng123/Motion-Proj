@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P2 r1 pre-quality failure / same-contract r2 recovery（2026-09-02）
+
+P2 r1=`run://worldsim_v7/WS-V7-P2-AV2-FOUR-ACTION-COMPILE-01/20260902T120000Z__four-action-s0-r1`
+在首 log metadata load 后因配置漏掉复用的 P1 `hazard` 段退出。点云关联、canonical surface、四动作、target metric
+和 gates 均未发生，状态=`implementation_failed_before_quality_read/no_verdict`，不得解读为 P2 科学结果（`V7-F06`）。
+
+恢复只补回与 P1 完全一致的 10 项冻结 hazard 参数；30-log cohort、build/query/target split、动作阈值、13 gates、
+seed 与 claim boundary 不变，新 run id 使用 r2。此前 `e985e59` 的 GitHub push 因 AutoDL 直连路由挂起，已通过
+现有 LocalTUN session 恢复并成功推送（`V7-F05`），不影响代码或研究状态。当前单卡与 128GiB 可用磁盘足够，
+无需多卡或关机。
+
 ## WorldSim V7 P2 real-coordinate compiler frozen / formal 30-log GPU run next（2026-09-02）
 
 分支合同再次核验：`research/worldsim-v7-harp3d-cvpr` 直接从

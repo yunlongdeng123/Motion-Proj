@@ -26,6 +26,17 @@ actors:
   minimum_track_states: 8
   actor_batch_size: 16
   box_padding_m: 0.10
+hazard:
+  ego_radius_m: 1.20
+  maximum_ttc_s: 30.0
+  minimum_closing_speed_mps: 0.50
+  hazard_ttc_s: 3.0
+  hazard_clearance_m: 2.0
+  hard_brake_reference_mps2: 4.0
+  hazard_hard_brake_score: 0.75
+  hard_brake_interaction_range_m: 15.0
+  crossing_forward_window_m: 20.0
+  crossing_interaction_range_m: 5.0
 surface:
   voxel_size_m: 0.12
   evaluation_stride: 3

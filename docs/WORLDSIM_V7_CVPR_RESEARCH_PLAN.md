@@ -503,6 +503,8 @@ artifact score=100%、clean-hazard false-artifact=0，只登记为接口合同�
   只用于最终 before/after 评价。
 - `KEEP/PROJECT/COMPLETE/UNKNOWN` 均产生真实坐标 surface；completion 必须有 build-side `>=3` temporal 与 `>=2`
   view support。13-gate AND rule 在 formal read 前提交。
+- r1 仅在首 log metadata 后因漏配复用的冻结 hazard 段退出，未进入 point/surface/action/metric；r2 只恢复 P1
+  同一 hazard 段并保持上述合同不变，不把工程入口失败计作科学 trial。
 
 ### P2-A：多帧 Actor 对齐
 
