@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V7-P7 interpretable safety envelope freeze（2026-09-02）
+
+- source：P4 r2 `MODEL.pt`、nuScenes calibration/test Actor rows、AV2 634 Actor rows；不重跑 P4 compiler。
+- curves：coverage grid=`0:.05:1`，shared/factorized，nuScenes test/AV2；report population false repair、conditional
+  failure、hazard coverage、selective Chamfer/gain；frozen P4 operating point only marked, not selected again。
+- attribution：factorized repair probability，64-step Integrated Gradients，baseline=train-standardized zero；分别报告
+  nuScenes test/AV2 mean absolute attribution 与 completeness residual；只作 sensitivity，不作 causality。
+- shift：factorized score calibration→nuScenes test/AV2 Wasserstein + KS，descriptive only。
+- exact structure：repair head 无 hazard-input path、hazard head 无 validity-input path，因此 cross derivative=0；不以统计
+  correlation 代替结构命题。
+- no gates/training/refit/recalibration/hash/checksum/fingerprint；formal P4 verdict/threshold 不变。
+
 ## WS-V7-P4 selective factorization formal result（2026-09-02）
 
 ### WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01 r2

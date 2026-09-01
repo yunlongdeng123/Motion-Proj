@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P7 interpretable safety envelope frozen / retained-row run next（2026-09-02）
+
+Active=`WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01 / WS-V7-H-P7-001`。P4 单 operating point 已支持，但
+nuScenes calibration→AV2 coverage=`8.93%→75.55%`，需完整展示 risk/geometry/hazard coverage envelope 与输入依据。
+P7 固定复用 P4 r2 model/standardizer/threshold/rows；0 training/refit/recalibration/AV2 adaptation，新分析不产生 threshold。
+
+输出冻结为 shared/factorized × nuScenes test/AV2 的 21-point coverage curves、P4 threshold 标记、population 与
+conditional risk 分解、selective Chamfer、hazard coverage、score-distribution shift，以及 factorized validity head 相对
+nuScenes-train mean 的 64-step Integrated Gradients。IG 只解释模型敏感度，不作因果结论；disjoint graph 的 cross-input
+derivative 才是 exact zero 结构结论。P5 暂缓：P4 physical Actors 与 frozen V6.7 trajectory rows 仅少量对齐，直接轻训易
+形成 scene/Actor shortcut。当前只执行一次 retained-row GPU analysis，无新 IO 或训练。
+
 ## WorldSim V7 P4 supported / external guarantee gap exposed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2`；

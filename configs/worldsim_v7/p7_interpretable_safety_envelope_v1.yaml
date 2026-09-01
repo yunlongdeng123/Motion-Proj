@@ -1,0 +1,16 @@
+task_id: WS-V7-P7-INTERPRETABLE-SAFETY-ENVELOPE-01
+hypothesis_id: WS-V7-H-P7-001
+runs_root: /root/autodl-tmp/runs
+source_p4_run: >-
+  /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+device: cuda
+coverage_grid: [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50,
+                0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0]
+integrated_gradients_steps: 64
+attribution_top_features: 8
+claim_boundary: >-
+  Frozen descriptive analysis of the completed P4 models and retained Actor rows. Risk--coverage,
+  geometry, hazard coverage, score shift, and integrated gradients use no refit, recalibration,
+  threshold selection, or AV2 adaptation. Integrated gradients are model sensitivity relative to
+  the nuScenes-train standardized mean, not causal evidence. Cross-domain curves are empirical and
+  do not create a conformal, collision, planning, closed-loop, or road-safety guarantee.

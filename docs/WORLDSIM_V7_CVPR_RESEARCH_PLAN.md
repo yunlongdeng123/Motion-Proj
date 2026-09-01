@@ -869,6 +869,15 @@ V7 主实验不允许通过 AV2 fine-tuning 救结果；可以在 supplement 增
 
 ## V7-P7：理论边界与可解释性
 
+### P7-A 执行冻结（2026-09-02）
+
+- 先解释 P4 frozen selector：21-point risk--coverage/geometry/hazard envelope、固定 threshold 标记、跨域 score shift，
+  以及 factorized validity head 的 Integrated Gradients；不重训、不重校准、不从 AV2 曲线重选 operating point。
+- exact proposition：factorized repair/hazard heads 的输入计算图不连通，故 cross-input derivative=`0`；IG 仅解释各自
+  合法输入内的模型敏感度，不主张 causality。
+- P5 C3 integration 暂缓到 physical Actor 与 V6.7 trajectory-density row 建立充分、scene-disjoint 对齐之后；当前少量
+  overlap 不足以把轻量重训解释成可靠性改善。
+
 ### 命题 1：危险保真
 
 若 physical compiler 不改变 Actor identity、trajectory 和尺寸：

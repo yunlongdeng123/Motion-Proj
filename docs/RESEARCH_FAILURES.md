@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P7 freeze prevention note — attribution 不冒充因果，曲线不用于重选 AV2 threshold
+
+- P7 只在固定 coverage grid 上描述已完成 P4 score ordering；star 始终是 nuScenes calibration 已冻结 threshold，不能从
+  AV2 curve 选择更好 operating point。
+- Integrated Gradients baseline 固定为 nuScenes-train standardized mean；其 completeness 只验证 path attribution 数值，
+  feature magnitude 仍不是 sensor causality、物理充分性或跨域稳定性证明。
+- factorized zero leakage 来自输入图不连通，不依赖 IG/相关性；shared leakage 仍按 P4 paired swaps 报告。
+- 本项不是新 failure；下一可用编号仍为 `V7-F11`。
+
 ### P4 outcome note — 支持 empirical selective transfer，不恢复跨域 formal guarantee
 
 - r2 7/7 gates，但 nuScenes calibration 与 AV2 coverage=`8.93%/75.55%`；该 shift 不是可忽略的 calibration noise，
