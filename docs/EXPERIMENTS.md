@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V7-P5 physical--reliability alignment audit result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。
+- P4 train/cal/test exact source alignment：`2/5/14` scenes，`5/25/88` Actors，
+  `1,320/7,645/39,285` retained rows。
+- direct-fit minimum=`3 scenes/20 Actors` on train；observed=`2/5`，因此 direct joint fit=`false`。
+- decision：`frozen_interface_descriptive_audit_only`；无 training/refit/calibration/AV2 read。
+
 ## WS-V7-P5 physical--reliability alignment audit freeze（2026-09-02）
 
 - join：nuScenes scene table `scene_name→index`；DriveStudio `instances_info id→numeric actor_id`；V6.7 P109 source

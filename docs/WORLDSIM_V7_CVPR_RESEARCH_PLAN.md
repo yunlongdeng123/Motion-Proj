@@ -780,6 +780,10 @@ P4 `scene_name/instance_token` 与 V6.7 `scene_index/numeric_actor_id` 只允许
 DriveStudio `instances_info[id]` exact join。Direct joint fit 需 P4 train 对齐 `>=3 scenes/20 Actors`，否则无法建立非平凡
 scene-heldout split，禁止用 calibration/test Actors 回流补样本；仅执行 frozen descriptive interface audit。
 
+Alignment canonical=`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。
+P4 train/cal/test 对齐=`2/5/14 scenes`、`5/25/88 Actors`、`1,320/7,645/39,285 rows`；train 未达
+`3/20`，因此 `V7-F13` 拒绝 direct joint fit。P5 后续只允许冻结 P4/P346 的 descriptive multi-horizon interface audit。
+
 ### 保留模块
 
 - V6.7 已支持的 Actor residual distribution；

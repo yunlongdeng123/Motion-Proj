@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P5 direct joint fit rejected / frozen-interface audit next（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。
+Exact identity join 覆盖 P4 train/cal/test=`5/25/88` Actors、`2/5/14` scenes 与 V6.7 source
+`1,320/7,645/39,285` rows。Train 仅 `2 scenes/5 Actors`，未达 frozen `3/20`，decision=
+`frozen_interface_descriptive_audit_only`；没有训练、refit、calibration 或 role 回流。
+
+P5 下一步只在 118 个 exact-match Actors 上连接 frozen P4 decision 与 retained V6.7 multi-horizon cost/false-safe outcome，
+检查二者共同失效边界；P4/P346 权重均保持不变。`V7-F13` 已登记为 identity-coverage boundary。
+
 ## WorldSim V7 P5 physical--reliability alignment audit frozen（2026-09-02）
 
 Active=`WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01 / WS-V7-H-P5-001`。Join 固定为 raw nuScenes

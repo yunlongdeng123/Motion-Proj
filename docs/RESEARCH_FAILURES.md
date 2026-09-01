@@ -2,13 +2,23 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F13 — P4 train 与 V6.7 source 的 exact Actor overlap 不足以联合轻训
+
+- canonical：`run://worldsim_v7/WS-V7-P5-PHYSICAL-RELIABILITY-ALIGNMENT-AUDIT-01/20260902T180000Z__physical-reliability-alignment-s0-r1`。
+- exact join 后 P4 train 仅 `2 scenes/5 Actors/1,320 rows`，低于 frozen `3 scenes/20 Actors`；不能构造非平凡
+  train-side scene holdout。
+- 拒绝手段：不放宽 identity join，不把 calibration/test Actors 回流训练，不按类别/空间近邻猜 identity，不做 scene
+  shortcut joint fit。
+- 对策：P4 与 P346 权重不变，只在 118 个 exact-match Actors 上做 descriptive multi-horizon interface audit。本失败是
+  source identity coverage 边界，不是算力/工程失败。
+
 ### P5 alignment prevention note — 不用稀疏 scene overlap 强行联合轻训
 
 - P4 与 V6.7 identity namespace 不同，必须经 official scene ordering 与 DriveStudio instance id 映射，不能按类别/空间
   最近邻猜 Actor 对应。
 - direct joint fit 只在 P4 train 至少 3 scenes/20 Actors 对齐时允许；否则 cal/test 角色不能回流训练，避免 scene identity
   shortcut 与 role leakage。
-- audit 只读 retained rows/metadata；未通过不触发 training rescue。本项不是新 failure；下一可用编号仍为 `V7-F13`。
+- audit 只读 retained rows/metadata；未通过不触发 training rescue。正式结果已登记为 `V7-F13`。
 
 ### V7-F12 — ratio-only opportunity invariance 丢失 nuScenes repairability ordering
 
