@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P17 joint ray-set completion frozen
+
+针对`V7-F24`，P17只保留11维pre-target feature作控制变量，把prediction object改为整条ray的first-return set。
+依据CVPR 2024 SelfOcc、official OccFlowNet与OpenOcc ray metric，用`T_i=product(1-alpha_j)`、`w_i=T_i alpha_i`
+联合渲染candidate depth；固定KEEP/PROJECT为fallback，禁止通过删除core获益。
+
+Exact=`64-64-1 / seed71701 / 160 epochs / Actor batch8 / max1024 rays / hard .5 forward / straight-through sigmoid /
+Smooth-L1 depth / AdamW .001,.0001`。Source双Pareto通过才允许第三批AV2 exact-once；否则登记`V7-F25`并保持
+external unread，不扫loss/threshold/temperature/ray budget。
+
 ## 2026-09-02 P16 source fit rejected, external preserved
 
 P16 r2 canonical=`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/

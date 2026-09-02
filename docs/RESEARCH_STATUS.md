@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7 P17 joint ray-set completion frozen（2026-09-02）
+
+状态=`p17_ray_set_completion_frozen`。按`V7-F24`不再用point label CE；迁移SelfOcc/OccFlowNet/OpenOcc的
+`T_i alpha_i` first-return rendering。模型固定11维输入、`64-64-1`、seed71701、160 epochs、Actor batch8、每Actor
+最多1024 deterministic influential rays、hard `.5` forward + straight-through sigmoid、唯一Smooth-L1 depth loss。
+
+Source仍为nuScenes train+calibration，test disjoint；只有hazard new-early严格下降且population Chamfer不差于baseline才
+允许一次fresh AV2 read。第三批下载保持串行，P17训练期间不读其payload；下一failure=`V7-F25`。
+
 ## WorldSim V7 P16 source fit rejected before external read（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/

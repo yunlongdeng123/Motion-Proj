@@ -1,5 +1,14 @@
 # Experiments
 
+## P17 joint ray-set completion freeze（2026-09-02）
+
+- task/hypothesis：`WS-V7-P17-RAY-SET-COMPLETION-FIT-01 / WS-V7-H-P17`。
+- model：P16 11 features，`64-64-1` ReLU，seed71701，160 epochs，Actor batch8，AdamW `.001/.0001`。
+- rendering：每Actor最多1024 influential target rays；hard sigmoid `.5` selection、straight-through backward；固定
+  KEEP/PROJECT fallback，loss=mean Actor Smooth-L1 first-return depth。
+- source decision：hazard new-early严格下降且population Chamfer不差于always-COMPLETE；否则0 external read。
+- external：仅source pass且10/10下载完成后，冻结checkpoint exact-once读取第三批AV2；无post-read sweep/deletion。
+
 ## P16 source fit result — rejected, no external read（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/

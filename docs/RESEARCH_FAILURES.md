@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P17 prevention note — joint ray loss, not another point-label rescue（2026-09-02）
+
+- P17复用feature仅为控制变量；prediction object由独立三态label改为同ray candidate set的first-return depth。
+- 固定core KEEP/PROJECT作为ray fallback，completion只竞争其前方位置；不得让模型删除KEEP/PROJECT来伪造改善。
+- hard `.5` selection、straight-through gradient、1024 rays与Smooth-L1均在source execution前冻结，不扫温度/阈值/loss。
+- source双Pareto失败即关闭，不以classification accuracy或soft rendered loss授权fresh AV2 read；下一failure=`V7-F25`。
+
 ## V7-F24 — independent completion-candidate classification is non-compositional
 
 - canonical=`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/
