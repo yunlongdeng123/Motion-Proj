@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F21 — no-COMPLETE provenance witness反向富集稀疏Actor并摧毁hazard authority
+
+- canonical：`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
+  20260903T001500Z__provenance-authority-s0-r1`；523 Actors/20 logs、status=`done`。
+- symptom：P4∧provenance coverage=`23.71%`，visible violation=`79.84%`（95% upper=`85.10%`），高于P4的
+  `63.61%`；Chamfer-worsening=`43.55%`高于P4 `14.60%`；hazard coverage=`3.52%`。
+- mechanism：completion-count unsafe-visible AUROC=`.411`；`COMPLETE==0`不是“少做少错”，而主要选择multi-view
+  opportunity不足的Actors。能completion的Actors反而有更多观测支持和更好的held-out evidence。
+- retained theorem boundary：KEEP/PROJECT output各有observed termination witness仍为真，但这是point-provenance命题，
+  不能推出cross-ray/future-view completeness，也不能用低hazard coverage冒充safety。
+- resolution：关闭completion deletion、no-COMPLETE conjunction、completion-count threshold sweep；保持P3-D conclusion与
+  P4/P3-C分权。Negative result已进入main/supplement/macros/contribution map；main=`9 pages/1,761,885 bytes`、supp=
+  `8 pages/7,224,489 bytes`且目标页视觉QA通过，未用低coverage或排版隐藏失败。下一可用failure id=`V7-F22`。
+
 ## WorldSim V7 P11 prevention note — observed-ray provenance不得偷换future-view completeness（2026-09-02）
 
 - `COMPLETE==0`给出每个输出点的KEEP/PROJECT measurement witness，但只覆盖already observed terminations；它不先验

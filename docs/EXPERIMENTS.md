@@ -1,5 +1,16 @@
 # Experiments
 
+## P11 provenance-conditioned dual-authority result（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
+  20260903T001500Z__provenance-authority-s0-r1` / `done`；523 Actors、20 logs。
+- provenance-only：193 Actors/`36.90%`，visible=`72.02%`、Chamfer-worse=`48.19%`、hazard Actors=`6`。
+- P4 AND provenance：124/`23.71%`，visible=`79.84%`、95% upper=`85.10%`、Chamfer-worse=`43.55%`、mean gain=
+  `-.00370m`、hazard coverage=`3.52%`；completion-count unsafe-visible AUROC=`.411`。
+- gates=`false/false/false/true/false`；登记`V7-F21`，关闭provenance/count threshold recovery。
+- paper/QA：main=`9 pages/1,761,885 bytes`、supplement=`8 pages/7,224,489 bytes`；main 6/8/9、supp 2视觉通过，
+  唯一warning为既有Table 1 `6.03pt` non-clipping overfull。下一=`V7-F22`。
+
 ## P11 provenance-conditioned dual-authority freeze（2026-09-02）
 
 - literature migration：CVPR 2016 viewing-ray visibility constraint + ICML 2019 selective-risk target；DGLSS-style

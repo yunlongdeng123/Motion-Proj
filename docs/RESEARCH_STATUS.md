@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P11 rejects provenance gating as future-view authority（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
+20260903T001500Z__provenance-authority-s0-r1`；523 Actors/20 logs、status=`done`。No-COMPLETE provenance-only coverage=
+`36.90%`，visible violation=`72.02%`、Chamfer-worsening=`48.19%`。与P4取交集后coverage=`23.71%`，visible=
+`79.84%`、95% upper=`85.10%`、Chamfer-worsening=`43.55%`，hazard coverage仅`3.52%`；五门仅overall coverage通过。
+
+Verdict=`provenance_witness_does_not_certify_future_visibility`，登记`V7-F21`并关闭completion-count/provenance gate
+recovery。No-COMPLETE主要标记sparse/low-support Actors；observed-ray witness仍成立，但不能外推future views。
+0 training/target fit/threshold scan/compiler change。结果已进入main/supplement/macros/contribution map；main=
+`9 pages/1,761,885 bytes`、supplement=`8 pages/7,224,489 bytes`，main 6/8/9与supp 2视觉QA通过。唯一warning仍为
+既有Table 1 `6.03pt` non-clipping overfull；下一failure id=`V7-F22`。
+
 ## WorldSim V7 P11 provenance-authority contract frozen after literature migration（2026-09-02）
 
 P10失败后已检索CVPR ray-potential visibility、ICML SelectiveNet与CVPR DGLSS。P11不再把同一feature confidence

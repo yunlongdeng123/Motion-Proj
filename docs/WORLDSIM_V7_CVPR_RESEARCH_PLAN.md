@@ -1,5 +1,16 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P11 provenance-conditioned authority result
+
+Canonical=`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
+20260903T001500Z__provenance-authority-s0-r1`。P4∧no-COMPLETE在523 Actors上coverage=`23.71%`，却有visible=
+`79.84%`、Chamfer-worse=`43.55%`、hazard coverage=`3.52%`；五门仅coverage通过，登记`V7-F21`。原因固定为
+no-COMPLETE反向选择low-opportunity Actors，observed point provenance不能推出future-view completeness。
+
+关闭completion-count/provenance gate family，不删completion、不扫threshold。结果进入paper boundary；下一failure=
+`V7-F22`。Final compile main=`9 pages/1,761,885 bytes`、supplement=`8 pages/7,224,489 bytes`；main 6/8/9与
+supplement 2视觉QA通过，唯一warning为既有Table 1 `6.03pt` non-clipping overfull。
+
 ## 2026-09-02 P11 provenance-conditioned authority contract
 
 在检索CVPR ray visibility、SelectiveNet selective risk与DGLSS source consistency后，P11冻结一个更硬且可解释的
