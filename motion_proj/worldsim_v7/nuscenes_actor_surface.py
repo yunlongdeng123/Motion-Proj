@@ -329,7 +329,8 @@ def compile_nuscenes_scene(
     config: Mapping[str, Any],
     compiler_config: Mapping[str, Any],
     device: torch.device,
-) -> list[dict[str, Any]]:
+    include_diagnostics: bool = False,
+) -> list[dict[str, Any]] | tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
     frame_by_sample = {str(frame["sample_token"]): frame for frame in frames}
     annotations_by_instance: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for frame in frames:
@@ -367,13 +368,14 @@ def compile_nuscenes_scene(
         )
 
     rows = []
+    diagnostics: dict[str, dict[str, Any]] = {}
     for track_id in sorted(tracks):
         compiled = _compile_actor(
             tracks[track_id],
             sorted(records.get(track_id, []), key=lambda item: item["frame_rank"]),
             compiler_config,
             device,
-            include_diagnostics=False,
+            include_diagnostics=include_diagnostics,
         )
         if compiled is None:
             continue
@@ -390,4 +392,8 @@ def compile_nuscenes_scene(
             - row["query_only"]["symmetric_chamfer_m"]
         )
         rows.append(row)
+        if include_diagnostics:
+            diagnostics[track_id] = package["diagnostics"]
+    if include_diagnostics:
+        return rows, diagnostics
     return rows

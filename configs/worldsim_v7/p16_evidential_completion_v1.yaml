@@ -1,0 +1,40 @@
+hypothesis_id: WS-V7-H-P16
+fit_task_id: WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01
+external_task_id: WS-V7-P16-EVIDENTIAL-COMPLETION-EXTERNAL-01
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+fresh_av2_cohort: configs/worldsim_v7/av2_evicomp_fresh_cohort_v1.json
+fresh_download_state: /root/autodl-tmp/data/av2/v7_p16_download_state
+device: cuda
+claim_boundary: >-
+  One candidate-level three-state responsibility model is trained on nuScenes
+  train+calibration only and evaluated without adaptation on disjoint nuScenes test and
+  a metadata-frozen fresh AV2 cohort. FREE/OCCUPIED/UNKNOWN labels use held-out LiDAR
+  rays; only argmax OCCUPIED emits COMPLETE. Scores are not calibrated probabilities,
+  formal uncertainty, causal interventions, collision certificates, or road-safety guarantees.
+source_roles:
+  fit: [train, calibration]
+  test: [test]
+model:
+  seed: 71601
+  hidden_dim: 64
+  epochs: 120
+  batch_size: 512
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  loss: source_class_balanced_cross_entropy
+  class_weight_rule: inverse_sqrt_source_frequency_mean_one
+  selection_rule: argmax_occupied_only
+attribution:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20
+decision:
+  primary:
+    - hazard_new_early_strictly_lower
+    - population_chamfer_no_worse_than_frozen_baseline
+  no_threshold_or_tolerance_sweep: true
+  no_failed_log_or_actor_deletion: true
+verdict_on_pass: supported_source_trained_evidential_completion_pareto_transfer
+verdict_on_failure: rejected_source_trained_evidential_completion_pareto_transfer

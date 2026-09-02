@@ -17,11 +17,16 @@ import a camera backbone, a scene-scale occupancy grid, or an uncertainty/safety
 
 ## Frozen research direction
 
-Train one small candidate-level network on nuScenes train only. Inputs must be available before the held-out target read and describe
+Train one small candidate-level network on nuScenes train+calibration only, retaining the previous nuScenes test role as disjoint
+source evaluation. Inputs must be available before the held-out target read and describe
 object-local position, query-hole geometry, reflection support, temporal support, and view diversity. Labels come from disjoint
 held-out nuScenes LiDAR rays: OCCUPIED for target-supported and non-early candidates, FREE for contradicted early-return candidates,
 and UNKNOWN otherwise. The action rule has no target-tuned threshold: only argmax OCCUPIED emits COMPLETE; FREE/UNKNOWN retain
 UNKNOWN. KEEP and PROJECT remain exactly frozen.
+
+The network is fixed before source execution: 11 dimensionless/source-observable features; a `64-64-3` ReLU MLP; seed `71601`;
+120 epochs; batch 512; AdamW learning rate `.001`, weight decay `.0001`; and inverse-square-root source-frequency cross-entropy
+weights normalized to mean one. This is a single candidate, not a seed/architecture/loss/feature sweep.
 
 The model family, features, source split, loss, seed, and epoch count must be committed before the new AV2 cohort is evaluated.
 Existing 30-log and 20-log AV2 cohorts are unavailable for fit, feature selection, thresholds, or candidate recovery. This is an
@@ -38,5 +43,6 @@ historical footprint implies roughly 11 GiB for this cohort, within the current 
 
 The primary comparison is the unchanged always-COMPLETE compiler versus P16 on the same fresh candidate set. Report composite
 Chamfer gain, target-hit gain, new-early rate, first-return depth error, hazard/clear decomposition, COMPLETE coverage, and explicit
-UNKNOWN mass. Support requires lower hazardous new-early rate without worse population composite Chamfer than query-only; all
+UNKNOWN mass. Support requires lower hazardous new-early rate without worse population composite Chamfer than the frozen
+always-COMPLETE baseline; all
 other outcomes narrow the mechanism claim. No threshold, tolerance, feature, or policy sweep is allowed after any fresh AV2 read.

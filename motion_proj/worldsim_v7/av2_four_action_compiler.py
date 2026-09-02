@@ -27,6 +27,21 @@ from motion_proj.worldsim_v7.physical_compiler import (
 )
 
 
+COMPLETION_FEATURE_NAMES = (
+    "local_x_over_half_length",
+    "local_y_over_half_width",
+    "local_z_over_half_height",
+    "temporal_support_fraction",
+    "view_support_fraction",
+    "log_hits_per_supported_frame",
+    "query_hole_distance_over_actor_diagonal",
+    "candidate_range_over_actor_diagonal",
+    "nearest_query_ray_cosine",
+    "actor_width_over_length",
+    "actor_height_over_length",
+)
+
+
 def _nearest(
     query: np.ndarray,
     reference: np.ndarray,
@@ -61,6 +76,54 @@ def _voxel_unique(points: np.ndarray, voxel_size_m: float) -> np.ndarray:
     keys = np.floor(points / float(voxel_size_m)).astype(np.int32)
     _, indices = np.unique(keys, axis=0, return_index=True)
     return np.asarray(points[np.sort(indices)], dtype=np.float32)
+
+
+def _completion_features(
+    track: TrackGeometry,
+    candidates: np.ndarray,
+    candidate_indices: np.ndarray,
+    surface: Mapping[str, np.ndarray],
+    query: np.ndarray,
+    query_sensor_origin: np.ndarray,
+    build_frame_count: int,
+    device: torch.device,
+    chunk_size: int,
+) -> np.ndarray:
+    if not len(candidates):
+        return np.empty((0, len(COMPLETION_FEATURE_NAMES)), dtype=np.float32)
+    size = np.asarray(track.size_lwh_m, dtype=np.float64)
+    half_size = np.maximum(size * 0.5, 1.0e-6)
+    diagonal = max(float(np.linalg.norm(size)), 1.0e-6)
+    query_distance, query_indices = _nearest(candidates, query, device, chunk_size)
+    nearest_query = query[query_indices].astype(np.float64, copy=False)
+    origin = np.asarray(query_sensor_origin, dtype=np.float64)
+    candidate_vectors = candidates.astype(np.float64, copy=False) - origin[None, :]
+    query_vectors = nearest_query - origin[None, :]
+    candidate_range = np.linalg.norm(candidate_vectors, axis=1)
+    query_range = np.linalg.norm(query_vectors, axis=1)
+    cosine = np.sum(candidate_vectors * query_vectors, axis=1) / np.maximum(
+        candidate_range * query_range, 1.0e-9
+    )
+    support = np.asarray(surface["temporal_support"], dtype=np.float64)[candidate_indices]
+    views = np.asarray(surface["view_support"], dtype=np.float64)[candidate_indices]
+    hits = np.asarray(surface["hit_count"], dtype=np.float64)[candidate_indices]
+    local = candidates.astype(np.float64, copy=False) / half_size[None, :]
+    features = np.column_stack(
+        [
+            local[:, 0],
+            local[:, 1],
+            local[:, 2],
+            support / max(int(build_frame_count), 1),
+            views / 8.0,
+            np.log1p(hits / np.maximum(support, 1.0)),
+            query_distance.astype(np.float64) / diagonal,
+            candidate_range / diagonal,
+            np.clip(cosine, -1.0, 1.0),
+            np.full(len(candidates), size[1] / max(size[0], 1.0e-6)),
+            np.full(len(candidates), size[2] / max(size[0], 1.0e-6)),
+        ]
+    )
+    return np.asarray(features, dtype=np.float32)
 
 
 def _quality(
@@ -254,6 +317,20 @@ def _compile_actor(
         np.flatnonzero(completion_mask),
         int(config["compiler_geometry"]["maximum_completion_probes_per_actor"]),
     )
+    completion_candidates = np.asarray(
+        canonical[completion_indices], dtype=np.float32
+    ).reshape(-1, 3)
+    completion_features = _completion_features(
+        track,
+        completion_candidates,
+        completion_indices,
+        surface,
+        query,
+        sensor_origin,
+        len(build_records),
+        device,
+        chunk,
+    )
     completed = []
     for index, surface_index in enumerate(completion_indices):
         decision = compiler.compile(
@@ -386,6 +463,9 @@ def _compile_actor(
             "duplicate": duplicate,
             "flicker": flicker,
             "completed": completed_points,
+            "completion_candidates": completion_candidates,
+            "completion_features": completion_features,
+            "completion_feature_names": COMPLETION_FEATURE_NAMES,
         }
     return row, package
 
