@@ -94,6 +94,14 @@ non-new-visible-violation is \PtenSelectedVisibleRisk{}\% versus \PtenAlwaysVisi
 only \PtenVisibleCapture{}\% of visible failures. This fixed negative audit preserves the intended semantics: P4 authorizes
 Chamfer-nonworsening repair; it does not certify bidirectional visibility consistency.
 
+\paragraph{Why a stricter provenance rule fails.}
+If authority additionally requires zero \textsc{complete} outputs, every retained point has a \textsc{keep} or matched-hit
+\textsc{project} witness. Provenance-only coverage is \PelevenProvenanceCoverage{}\%; after conjunction with P4 it is
+\PelevenDualCoverage{}\%. Nevertheless, dual visible violation is \PelevenDualVisibleRisk{}\% (one-sided 95\% upper
+\PelevenDualVisibleUpper{}\%), Chamfer worsening is \PelevenDualChamferWorse{}\%, and hazardous-Actor coverage is only
+\PelevenDualHazardCoverage{}\%. Completion-count unsafe-visible AUROC is \PelevenCompletionUnsafeAUROC{}. Thus absence of
+completion is primarily a sparse-opportunity marker; a valid witness for observed output provenance cannot certify unseen views.
+
 \section{Frozen Cohorts and Exact-Once Rules}
 
 \begin{table*}[t]

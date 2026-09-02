@@ -134,6 +134,10 @@ changing either score or threshold. P4 selects \PtenPfourCoverage{}\%; its Chamf
 of \PtenSelectedVisibleUpper{}\%. Safe-visible AUROC is only \PtenVisibleSafeAUROC{}, and abstention captures
 \PtenVisibleCapture{}\% of visible failures. Thus the nuScenes-trained head controls its frozen Chamfer target but is not an
 Actor-level physical certificate; repair authority and visibility evidence remain separate.
+A stricter analytic witness does not repair this gap: requiring no \textsc{complete} output and conjoining with P4 covers
+\PelevenDualCoverage{}\%, but raises visible violation to \PelevenDualVisibleRisk{}\% and Chamfer worsening to
+\PelevenDualChamferWorse{}\%, while hazard coverage collapses to \PelevenDualHazardCoverage{}\%. No-completion identifies
+sparse, low-support Actors rather than future-view safety, so we retain completion and keep the two authorities separate.
 
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,
