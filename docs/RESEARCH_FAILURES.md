@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F25 — ray-only first-return objective trades away 3D surface utility
+
+- canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/
+  20260903T084500Z__ray-set-fit-s71701-r1`；0 fresh AV2 read。
+- success channel：hazard new-early `1.4362→1.3760%`，clear `.4425→.3925%`，P16 non-compositionality被joint ray loss修复。
+- failure channel：coverage=`71.43%`，Chamfer `.1945868→.1994111m`，new hits `39,255→34,242`；ray-only没有完整
+  surface responsibility。
+- prevention：不扫`.5` threshold/ray budget/epoch/seed；不得只报告early下降隐藏Chamfer/hit损失。
+- one recovery：同模型同ray loss加入expected bidirectional Chamfer，两个loss各除以always-COMPLETE source reference，
+  固定1:1 dimensionless sum；下一failure=`V7-F26`。
+
 ## P17 prevention note — joint ray loss, not another point-label rescue（2026-09-02）
 
 - P17复用feature仅为控制变量；prediction object由独立三态label改为同ray candidate set的first-return depth。

@@ -1,5 +1,14 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P17 partial result and single hybrid recovery
+
+P17 canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/
+20260903T084500Z__ray-set-fit-s71701-r1`。Joint ray loss把hazard new-early从`1.4362%`降到`1.3760%`，但
+Chamfer从`.1945868m`退到`.1994111m`、new hits少5,013，登记`V7-F25`并保持fresh AV2 unread。
+
+按OccFlowNet“rendering + 3D supervision”迁移唯一P17R：架构/feature/seed/epoch/ray renderer全不变，只加入expected
+bidirectional Chamfer；ray与Chamfer分别除以always-COMPLETE source reference后固定1:1相加，不扫mix weight。
+
 ## 2026-09-02 P17 joint ray-set completion frozen
 
 针对`V7-F24`，P17只保留11维pre-target feature作控制变量，把prediction object改为整条ray的first-return set。

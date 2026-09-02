@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P17 ray-set source fit partial/rejected（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/
+20260903T084500Z__ray-set-fit-s71701-r1`；51 influential fit Actors，loss=`.08538→.06184`。Source test completion
+coverage=`71.43%`；total/hazard/clear new-early=`.9662→.9108% / 1.4362→1.3760% / .4425→.3925%`，证明joint
+ray objective方向有效。
+
+但Chamfer=`.1945868→.1994111m`、new hits=`39,255→34,242`，第二Pareto失败，登记`V7-F25`并保持external unread。
+唯一P17R按OccFlowNet hybrid supervision加入expected bidirectional Chamfer，以always-COMPLETE ray/Chamfer值分别归一化，
+不扫混合权重；下一failure=`V7-F26`。
+
 ## WorldSim V7 P17 joint ray-set completion frozen（2026-09-02）
 
 状态=`p17_ray_set_completion_frozen`。按`V7-F24`不再用point label CE；迁移SelfOcc/OccFlowNet/OpenOcc的

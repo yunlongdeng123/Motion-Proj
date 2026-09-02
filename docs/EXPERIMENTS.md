@@ -1,5 +1,14 @@
 # Experiments
 
+## P17 ray-set source fit result（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/
+  20260903T084500Z__ray-set-fit-s71701-r1` / done；wall=`418.81s`、peak GPU/RSS=`.1717/1.437GiB`。
+- fit：51 influential Actors；loss=`.08538→.06184`；test Actors/candidates=`228/3325`，completion coverage=`71.43%`。
+- baseline→P17：new-early=`.9662→.9108%`，hazard=`1.4362→1.3760%`，clear=`.4425→.3925%`。
+- utility loss：Chamfer=`.1945868→.1994111m`，gain=`.0567090→.0518848m`，new hits=`39,255→34,242`。
+- verdict=`source_rejected_external_unread`，`V7-F25`；P17R仅加dimensionless expected-Chamfer term。
+
 ## P17 joint ray-set completion freeze（2026-09-02）
 
 - task/hypothesis：`WS-V7-P17-RAY-SET-COMPLETION-FIT-01 / WS-V7-H-P17`。
