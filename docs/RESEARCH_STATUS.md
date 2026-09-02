@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P7-C（2026-09-02）
+
+主稿已加入 P7-C actor-level interval paragraph、`stable decision != correct repair` boundary、标准化 stress-box 限制，
+并在 related work 补充 LiDAR 2.5D visibility 与 robust-OOD interval 文献。Experiments/limitations/conclusion 与结果 macros
+同步；未把 47 个 stable false repairs 隐去，也未将 IBP 写成 sensor/geometry/safety certificate。
+
+Official-template compile=`8 pages/1,164,284 bytes`；pages 5--8 visual check 无 clipping/overlap，page 8 仅 references
+continuation。唯一 layout warning 仍为既有 Table 1 `6.03pt` overfull；无新 scientific run/gate/threshold/cohort/quality read。
+下一可用 failure id 保持 `V7-F18`。
+
 ## WorldSim V7 P7-C validity interval certificate completed / stable-error boundary（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`。

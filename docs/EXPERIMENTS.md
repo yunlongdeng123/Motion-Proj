@@ -1,5 +1,13 @@
 # Experiments
 
+## CVPR paper P7-C integration check（2026-09-02）
+
+- added：P7-C actor-level interval result、AV2 stable-error boundary、sensor-opportunity interval explanation；related work adds
+  visibility-aware LiDAR and robust-OOD interval context。
+- compile：official template `main.pdf`，8 pages，1,164,284 bytes。
+- visual：pages 5/6/7/8 inspected；new paragraph、limitations、conclusion 与 bibliography 无 clipping/overlap；page 8 only refs。
+- warnings：仅既有 Table 1 `6.03pt` overfull；无新增 layout/scientific failure，未改变任何 run/model/data/threshold。
+
 ## WS-V7-P7C validity interval certificate result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`。

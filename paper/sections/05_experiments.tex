@@ -94,6 +94,14 @@ nuScenes test but 49.53\% on AV2 (Fig.~\ref{fig:p7-envelope}). Structural cross-
 factorization prevents hazard leakage, but does not make validity inputs sensor invariant. We therefore preserve the empirical
 P4 result while rejecting the stronger interpretation of a domain-invariant selector.
 
+We then propagate fixed $0.10$ nuScenes-training-standard-deviation feature boxes through the frozen validity MLP in FP64.
+Only \PsevenCTestCertified{}\% of nominal nuScenes-test selections are robust to the full box, versus
+\PsevenCAVCertified{}\% on consumed AV2. Yet \PsevenCAVStableFalse{}\% of those AV2 robust selections are target false repairs:
+local threshold invariance can stably preserve a domain-shifted error. Sensor-opportunity perturbations create mean logit widths
+of \PsevenCTestOpportunityWidth{}/\PsevenCAVOpportunityWidth{} on nuScenes/AV2, and query-point count is the largest
+single-feature interval source for \PsevenCTestQueryTop{}/\PsevenCAVQueryTop{}\% of Actors. This actor-level certificate makes
+the shortcut inspectable, while explicitly separating network stability from repair correctness.
+
 \paragraph{Fresh exact-once selector boundary.}
 Before this read, we exclude every P4 train/calibration/test scene and freeze 20 of the remaining 106 locally available scenes
 by equally spaced official scene index. The 20 scenes yield \PeightActors{} Actors and are read once, with no replacement or

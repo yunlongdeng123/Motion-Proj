@@ -2,6 +2,13 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper layout note — P7-C boundary integrated without new failure
+
+- official-template=`8 pages/1,164,284 bytes`；pages 5--8 visual audit 无 clipping/overlap，page 8 仅 bibliography continuation。
+- 正文如实保留 AV2 robust-select 中 `10.76%` false repair，并明确 standardized box不是 calibrated sensor noise；没有把
+  network stability包装为 correctness/safety certificate。
+- 只有既有 Table 1 `6.03pt` overfull warning，无新增 warning/failure id；下一可用编号仍为 `V7-F18`。
+
 ### V7-F17 — 跨域 feature-box 稳健性没有排除稳定的错误修复
 
 - run：`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`；

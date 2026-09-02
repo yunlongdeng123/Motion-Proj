@@ -1038,6 +1038,9 @@ P7-C canonical=`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/202
 Actors 的 top-1 sensitivity。该结果只支持 deterministic network-decision interval与可解释 failure localization，明确否定
 “stable decision即correct/safe repair”。
 
+CVPR main 已同步 P7-C actor-level interval、stable-error boundary 与 LiDAR visibility/robust-OOD references。Official-template=
+`8 pages/1,164,284 bytes`；pages 5--8 visually valid，page 8 仅 references continuation，无新增 layout/scientific failure。
+
 ---
 
 ## V7-P8：Final exact-once evaluation
