@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 conference/arXiv handoff ready, external metadata pending（2026-09-02）
+
+官方复核确认latest public author-kit仍为CVPR2026且CVPR2027 kit尚未发布；现有provisional 2027匿名稿继续使用官方
+style，不采纳第三方模板。新增`paper/SUBMISSION_CHECKLIST.md`，固定conference review mode与arXiv non-anonymous
+mode的切换步骤、自包含约束、科学内容一致性及2027 kit发布后的最小迁移路径。
+
+Main保持8 content + 1 references、supplement 10页，科学数字仍全部由results macros驱动。外部待补只有真实作者/
+单位/联系信息、arXiv category/license/acknowledgement、paper ID和未来official kit；不虚构、不因等待这些字段复开实验。
+V7 method/evaluation/data处理终态不变，下一failure ID=`V7-F30`。
+
 ## WorldSim V7 P23 fresh boundary integrated into CVPR paper（2026-09-02）
 
 P23 fresh AV2已进入abstract/main experiments/limitations/supplement/result macros/contribution map/asset index。主文用

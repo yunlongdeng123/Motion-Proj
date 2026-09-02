@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Submission-boundary note — external metadata is not a research failure（2026-09-02）
+
+- official CVPR2027 kit尚未发布；保持CVPR2026 official style的provisional匿名稿，不使用第三方模板或猜测2027规则；
+- 作者顺序/单位/联系信息、arXiv category/license/acknowledgement与conference paper ID必须来自真实外部输入，禁止虚构；
+- 等待这些字段时不得复开test cohort、训练、threshold sweep或method branch来“继续优化”已冻结结论；
+- anonymous与arXiv版本必须共享同一sections/tables/figures/result macros，只允许身份、发布模式和届时official style差异；
+- 这不是scientific failure，不消耗ID；下一可用仍为`V7-F30`。
+
 ## P23 paper claim audit — fresh measurement transfer kept separate from model transfer（2026-09-02）
 
 - 摘要/正文/补充材料都以P23 `14.817%`/`8.29x`作为fresh metric confirmation，同时把P22保留为consumed correction；

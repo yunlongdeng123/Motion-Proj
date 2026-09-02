@@ -1,6 +1,8 @@
 # HARP-3D paper draft
 
 The manuscript uses the official `cvpr-org/author-kit` style pinned in `TEMPLATE_PROVENANCE.md`.
+The exact external inputs and mode switches for anonymous conference and non-anonymous arXiv packages are tracked in
+`SUBMISSION_CHECKLIST.md`.
 
 Build from this directory with a TeX Live installation:
 

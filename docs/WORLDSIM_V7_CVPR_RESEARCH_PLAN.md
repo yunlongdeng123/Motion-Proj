@@ -1,5 +1,16 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 conference/arXiv submission handoff milestone
+
+仅核对官方来源：`cvpr-org/author-kit` latest release仍为CVPR2026，CVPR 2026官方规则仍是8页正文并允许额外
+references-only pages；尚无官方CVPR2027 kit。因此保留已固定official style与`review`匿名稿，不迁移第三方模板。
+新增`paper/SUBMISSION_CHECKLIST.md`，把anonymous conference、non-anonymous arXiv两条发布路径和禁止科学漂移的
+边界写死。
+
+当前main为8 content + 1 references、supplement为10页；结果继续只从`results_macros.tex`进入。尚缺作者顺序/单位/
+联系信息、arXiv类别与license、conference paper ID以及未来official 2027 kit，这些均属不可推断的外部元数据，不得
+虚构。V7科学与数据处理已终止扩展，不启动新训练、test read、AV2 holdout或方法分支；下一failure仍为`V7-F30`。
+
 ## 2026-09-02 P23 fresh first-return paper integration completed
 
 P23已完成从canonical summary到论文宏、主文、supplement、跨传感器图与贡献归属的闭环。最终摘要以fresh AV2

@@ -1,5 +1,13 @@
 # Experiments
 
+## CVPR/arXiv submission handoff audit（2026-09-02）
+
+- official state：latest public `cvpr-org/author-kit` release仍为CVPR2026；未发现official CVPR2027 kit；
+- manuscript state：anonymous main=8 content + 1 references，supplement=10 pages，macro-driven results不变；
+- handoff：新增`paper/SUBMISSION_CHECKLIST.md`，分离conference review与non-anonymous arXiv入口、真实元数据和未来kit迁移；
+- external-only blockers：authors/affiliations/contact、arXiv category/license/acknowledgement、paper ID、official 2027 kit；
+- no experiment：0 training、0 dataset/model read、0 threshold/cohort/policy change、0新增smoke/regression。
+
 ## P23 paper integration and final compile（2026-09-02）
 
 - macros：P23 10 logs/233 Actors/650,145 rays、三strata proxy/literal rates、ratio、70,220 early、86,883 hits、
