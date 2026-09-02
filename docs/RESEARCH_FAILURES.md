@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## arXiv identity-boundary note — shared science, isolated author metadata（2026-09-02）
+
+- conference与arXiv入口共享同一title/body/sections/tables/figures/macros/bibliography，禁止分别复制后产生claim漂移；
+- 真实作者块只能进入Git忽略的`paper/arxiv_author_metadata.tex`，不得写入anonymous `main.tex`或commit history；
+- 本地临时匿名metadata只用于证明新入口可编译，不上传、不称为non-anonymous arXiv deliverable、不发布dummy PDF；
+- 缺真实authors/affiliations/category/license不是scientific failure，也不授权继续读test或改结果；下一ID=`V7-F30`。
+
 ## Final-audit boundary — science complete does not fabricate publication metadata（2026-09-02）
 
 - 29/29 paper registry runs与P1/P2落盘，60/60 AV2 cohort目录、30 panels/30 videos存在；未发现需要恢复的科学资产；

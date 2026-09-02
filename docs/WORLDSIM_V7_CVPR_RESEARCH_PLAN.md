@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 arXiv source-entry convergence milestone
+
+新增`paper/arxiv.tex`，以official kit的`pagenumbers` final-style路径构建非匿名入口；`main.tex`与`arxiv.tex`共享
+`manuscript_metadata.tex`、`manuscript_body.tex`及全部sections/tables/figures/macros/bibliography。唯一身份文件
+`paper/arxiv_author_metadata.tex`被`.gitignore`精确排除，避免真实作者信息进入匿名源或Git历史。
+
+本地TeX Live定向编译：重构后的anonymous main仍为`9 pages/1,925,628 bytes`；arXiv入口用仅在临时目录存在的匿名
+作者块通过9页构建，临时metadata与PDF均不上传/不发布。Releasable arXiv仍只等真实作者/单位/联系信息、category/
+license/acknowledgement；0 scientific text/result change、0 data/model read，下一failure=`V7-F30`。
+
 ## 2026-09-02 final completion audit milestone
 
 新增`docs/autoresearch/worldsim_v7/V7_FINAL_COMPLETION_AUDIT.md`，按plan第11/12节逐项核对branch authority、四项停止

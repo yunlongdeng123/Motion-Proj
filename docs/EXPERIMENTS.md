@@ -1,5 +1,13 @@
 # Experiments
 
+## Shared conference/arXiv source-entry audit（2026-09-02）
+
+- source：`main.tex`/`arxiv.tex`共享`manuscript_metadata.tex`与`manuscript_body.tex`及全部scientific assets；
+- privacy：真实`arxiv_author_metadata.tex`为唯一identity-bearing source并被Git精确忽略；
+- compile：anonymous main=`9 pages/1,925,628 bytes`；arXiv entry用仅限本地scratch的匿名metadata完成9页构建；
+- publication boundary：不上传临时metadata或dummy arXiv PDF；真实authors/affiliations/category/license后再发布；
+- no experiment：0 data/model read、0 result/claim/macro/threshold/cohort/policy change。
+
 ## V7 final completion evidence audit（2026-09-02）
 
 - branch：merge-base精确等于V6.7 branch tip、ancestor=true、ahead/behind=`122/0`；

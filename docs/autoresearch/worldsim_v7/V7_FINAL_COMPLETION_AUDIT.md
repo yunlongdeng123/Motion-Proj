@@ -62,7 +62,8 @@ also present. Rejected P6/P8/deletion/router paths remain recorded rather than b
 | Continuous reliability / cross-dataset / downstream presentation | complete as Tables 1 and 4--6; not duplicated as a fifth main figure under the 8-page limit |
 | Condensed failure appendix | complete in the supplement |
 | Project-page/video asset inventory | complete in `paper/PROJECT_PAGE_ASSET_INDEX.md` |
-| Non-anonymous arXiv package | externally pending author/affiliation/contact, category, license, and acknowledgement metadata |
+| Non-anonymous arXiv source entry | complete as `paper/arxiv.tex`, sharing all scientific content with `main.tex`; private author file is ignored by Git |
+| Releasable non-anonymous arXiv PDF/package | externally pending author/affiliation/contact, category, license, and acknowledgement metadata |
 | Final CVPR 2027 package | externally pending the official 2027 kit/policy and assigned paper ID |
 
 The five originally planned visual roles were consolidated rather than silently dropped: the two main floats plus six main tables

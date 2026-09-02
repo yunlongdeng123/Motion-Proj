@@ -4,6 +4,8 @@
 
 - Branch: `research/worldsim-v7-harp3d-cvpr`, based on the terminal V6.7 research branch.
 - Anonymous review source: `main.tex` with `\usepackage[review]{cvpr}` and `Anonymous Authors`.
+- Non-anonymous source entry: `arxiv.tex`; it shares `manuscript_metadata.tex` and `manuscript_body.tex` with `main.tex` and
+  requires the intentionally untracked `arxiv_author_metadata.tex`.
 - Main PDF: eight content pages plus one references-only page.
 - Supplement PDF: ten pages.
 - Results are macro-driven from `results/results_macros.tex`; scientific values must not be copied or edited by hand.
@@ -25,9 +27,9 @@ in the anonymous review source.
 
 ## arXiv release procedure
 
-1. Create a non-anonymous entry point from the same frozen sections, bibliography, figures, tables, and result macros.
-2. Use the official final-style path with page numbers (`\usepackage[pagenumbers]{cvpr}` for the currently pinned kit), replace
-   `Anonymous Authors` with the supplied author block, and remove the review-only paper-ID contract.
+1. Create the ignored `arxiv_author_metadata.tex` with the supplied real `\author{...}` block; do not edit the anonymous entry.
+2. Build `arxiv.tex`, which already uses the official final-style path with page numbers (`\usepackage[pagenumbers]{cvpr}` for
+   the currently pinned kit) and has no review-only paper-ID contract.
 3. Keep the title, abstract, method, main results, limitations, and supplement scientifically identical to the anonymous version.
 4. Compile the main paper and supplement; confirm that all cited figures/tables and bibliography files are included in the source
    package. Do not add project-page or video links until their public release and anonymity status are explicitly decided.

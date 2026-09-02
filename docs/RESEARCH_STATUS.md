@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 shared anonymous/arXiv source ready（2026-09-02）
+
+`paper/arxiv.tex`已建立，使用`pagenumbers`模式并与anonymous `main.tex`共享title/body、所有章节、图表、结果宏和
+bibliography。真实`arxiv_author_metadata.tex`被Git精确忽略，conference匿名入口继续只含`Anonymous Authors`，从
+源结构上阻断身份误泄漏和两个版本的科学内容漂移。
+
+重构后main定向编译仍=`9 pages/1,925,628 bytes`；arXiv入口用本地临时匿名metadata成功完成9页语法/引用构建，但
+临时metadata和PDF不进入远端或交付物。待真实作者/arXiv元数据后才能生成releasable非匿名包；不复开实验，下一ID=
+`V7-F30`。
+
 ## WorldSim V7 plan-level completion audit recorded（2026-09-02）
 
 终局审计文件=`docs/autoresearch/worldsim_v7/V7_FINAL_COMPLETION_AUDIT.md`。当前分支merge-base精确等于V6.7 branch tip，
