@@ -131,13 +131,19 @@ def _train(
     threshold = float(config["model"]["forward_selection_threshold"])
     actor_batch = int(config["model"]["actor_batch_size"])
     history = []
+    hybrid_chamfer = str(config["model"]["loss"]) == "normalized_ray_plus_expected_bidirectional_chamfer"
     for epoch in range(int(config["model"]["epochs"])):
         permutation = torch.randperm(len(packages)).cpu().tolist()
         total_loss = 0.0
         for start in range(0, len(permutation), actor_batch):
             batch = permutation[start : start + actor_batch]
             loss = torch.stack(
-                [rendered_actor_loss(model, packages[index], threshold) for index in batch]
+                [
+                    rendered_actor_loss(
+                        model, packages[index], threshold, hybrid_chamfer=hybrid_chamfer
+                    )
+                    for index in batch
+                ]
             ).mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()

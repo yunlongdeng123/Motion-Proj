@@ -1,0 +1,39 @@
+hypothesis_id: WS-V7-H-P17R
+fit_task_id: WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01
+external_task_id: WS-V7-P17R-HYBRID-RAY-CHAMFER-EXTERNAL-01
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+fresh_av2_cohort: configs/worldsim_v7/av2_evicomp_fresh_cohort_v1.json
+fresh_download_state: /root/autodl-tmp/data/av2/v7_p16_download_state
+device: cuda
+claim_boundary: >-
+  The sole P17 recovery keeps the frozen ray renderer, representation, architecture,
+  seed, threshold, and training schedule while adding expected bidirectional Chamfer.
+  Ray and Chamfer terms are normalized by their always-COMPLETE source references and
+  summed one-to-one. Fresh AV2 remains unread unless both source Pareto directions pass.
+model:
+  seed: 71701
+  hidden_dim: 64
+  epochs: 160
+  actor_batch_size: 8
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  maximum_training_rays_per_actor: 1024
+  forward_selection_threshold: 0.5
+  forward_selection: hard
+  backward_gradient: straight_through_sigmoid
+  loss: normalized_ray_plus_expected_bidirectional_chamfer
+  loss_mixture: equal_after_always_complete_reference_normalization
+attribution:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20
+source_decision:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+external_decision:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+verdict_on_pass: supported_source_trained_hybrid_ray_chamfer_completion_transfer
+verdict_on_failure: rejected_source_trained_hybrid_ray_chamfer_completion_transfer

@@ -8,7 +8,10 @@ import numpy as np
 import torch
 from torch import nn
 
-from motion_proj.worldsim_v7.av2_four_action_compiler import COMPLETION_FEATURE_NAMES
+from motion_proj.worldsim_v7.av2_four_action_compiler import (
+    COMPLETION_FEATURE_NAMES,
+    _nearest,
+)
 from motion_proj.worldsim_v7.completion_responsibility import (
     FREE,
     OCCUPIED,
@@ -111,6 +114,40 @@ def build_ray_package(
     order = np.argsort(np.where(valid, depths, np.inf), axis=1, kind="stable")
     sorted_depths = np.take_along_axis(depths, order, axis=1)
     sorted_valid = np.take_along_axis(valid, order, axis=1)
+    distance_chunk = int(attribution_config["distance_chunk_size"])
+    core_to_target, _ = _nearest(core, target, device, distance_chunk)
+    candidate_to_target, _ = _nearest(candidates, target, device, distance_chunk)
+    target_to_core, _ = _nearest(target, core, device, distance_chunk)
+    target_candidate_chunks = []
+    candidate_tensor = torch.as_tensor(candidates, dtype=torch.float32, device=device)
+    with torch.inference_mode():
+        for start in range(0, len(target), distance_chunk):
+            target_tensor = torch.as_tensor(
+                target[start : start + distance_chunk], dtype=torch.float32, device=device
+            )
+            target_candidate_chunks.append(torch.cdist(target_tensor, candidate_tensor).cpu())
+    target_candidate = torch.cat(target_candidate_chunks).numpy()
+    target_candidate_valid = target_candidate < target_to_core[:, None]
+    target_candidate_order = np.argsort(
+        np.where(target_candidate_valid, target_candidate, np.inf), axis=1, kind="stable"
+    )
+    target_candidate_sorted = np.take_along_axis(
+        target_candidate, target_candidate_order, axis=1
+    )
+    target_candidate_valid_sorted = np.take_along_axis(
+        target_candidate_valid, target_candidate_order, axis=1
+    )
+    baseline_ray_depth = np.min(np.where(sorted_valid, sorted_depths, np.inf), axis=1)
+    ray_error = np.abs(baseline_ray_depth - target_depth[influential])
+    baseline_ray_loss = float(np.mean(np.where(ray_error < 1.0, 0.5 * ray_error**2, ray_error - 0.5)))
+    baseline_surface_distance = float(
+        (np.sum(core_to_target) + np.sum(candidate_to_target))
+        / max(len(core_to_target) + len(candidate_to_target), 1)
+    )
+    baseline_target_distance = float(
+        np.mean(np.minimum(target_to_core, np.min(target_candidate, axis=1)))
+    )
+    baseline_chamfer = 0.5 * (baseline_surface_distance + baseline_target_distance)
     return {
         "features": features,
         "order": order.astype(np.int64),
@@ -118,6 +155,17 @@ def build_ray_package(
         "candidate_valid": sorted_valid.astype(np.bool_),
         "fixed_depth": fixed_depth[influential].astype(np.float32),
         "target_depth": target_depth[influential].astype(np.float32),
+        "core_to_target_distance_sum": np.asarray(np.sum(core_to_target), dtype=np.float32),
+        "core_point_count": np.asarray(len(core_to_target), dtype=np.float32),
+        "candidate_to_target_distance": candidate_to_target.astype(np.float32),
+        "target_candidate_order": target_candidate_order.astype(np.int64),
+        "target_candidate_distance": np.where(
+            target_candidate_valid_sorted, target_candidate_sorted, 0.0
+        ).astype(np.float32),
+        "target_candidate_valid": target_candidate_valid_sorted.astype(np.bool_),
+        "target_core_distance": target_to_core.astype(np.float32),
+        "baseline_ray_loss": np.asarray(max(baseline_ray_loss, 1.0e-4), dtype=np.float32),
+        "baseline_chamfer": np.asarray(max(baseline_chamfer, 1.0e-4), dtype=np.float32),
     }
 
 
@@ -143,6 +191,33 @@ def package_to_device(
         "target_depth": torch.as_tensor(
             package["target_depth"], dtype=torch.float32, device=device
         ),
+        "core_to_target_distance_sum": torch.as_tensor(
+            package["core_to_target_distance_sum"], dtype=torch.float32, device=device
+        ),
+        "core_point_count": torch.as_tensor(
+            package["core_point_count"], dtype=torch.float32, device=device
+        ),
+        "candidate_to_target_distance": torch.as_tensor(
+            package["candidate_to_target_distance"], dtype=torch.float32, device=device
+        ),
+        "target_candidate_order": torch.as_tensor(
+            package["target_candidate_order"], dtype=torch.long, device=device
+        ),
+        "target_candidate_distance": torch.as_tensor(
+            package["target_candidate_distance"], dtype=torch.float32, device=device
+        ),
+        "target_candidate_valid": torch.as_tensor(
+            package["target_candidate_valid"], dtype=torch.bool, device=device
+        ),
+        "target_core_distance": torch.as_tensor(
+            package["target_core_distance"], dtype=torch.float32, device=device
+        ),
+        "baseline_ray_loss": torch.as_tensor(
+            package["baseline_ray_loss"], dtype=torch.float32, device=device
+        ),
+        "baseline_chamfer": torch.as_tensor(
+            package["baseline_chamfer"], dtype=torch.float32, device=device
+        ),
     }
 
 
@@ -150,6 +225,7 @@ def rendered_actor_loss(
     model: RaySetCompletionMLP,
     package: Mapping[str, torch.Tensor],
     threshold: float,
+    hybrid_chamfer: bool = False,
 ) -> torch.Tensor:
     soft = torch.sigmoid(model(package["features"]))
     hard = (soft >= float(threshold)).to(soft.dtype)
@@ -172,9 +248,36 @@ def rendered_actor_loss(
     rendered_depth = torch.sum(
         point_weights * package["candidate_depth"], dim=1
     ) + transmittance[:, -1] * package["fixed_depth"]
-    return torch.nn.functional.smooth_l1_loss(
+    ray_loss = torch.nn.functional.smooth_l1_loss(
         rendered_depth, package["target_depth"], reduction="mean"
     )
+    if not hybrid_chamfer:
+        return ray_loss
+    surface_to_target = (
+        package["core_to_target_distance_sum"]
+        + torch.sum(alpha * package["candidate_to_target_distance"])
+    ) / (package["core_point_count"] + torch.sum(alpha)).clamp_min(1.0)
+    target_alpha = alpha[package["target_candidate_order"]]
+    target_alpha = torch.where(
+        package["target_candidate_valid"], target_alpha, torch.zeros_like(target_alpha)
+    )
+    target_transmittance = torch.cumprod(
+        torch.cat(
+            [
+                torch.ones((len(target_alpha), 1), device=target_alpha.device),
+                1.0 - target_alpha,
+            ],
+            dim=1,
+        ),
+        dim=1,
+    )
+    target_weights = target_transmittance[:, :-1] * target_alpha
+    target_to_surface = torch.mean(
+        torch.sum(target_weights * package["target_candidate_distance"], dim=1)
+        + target_transmittance[:, -1] * package["target_core_distance"]
+    )
+    expected_chamfer = 0.5 * (surface_to_target + target_to_surface)
+    return ray_loss / package["baseline_ray_loss"] + expected_chamfer / package["baseline_chamfer"]
 
 
 def predict_ray_set(
