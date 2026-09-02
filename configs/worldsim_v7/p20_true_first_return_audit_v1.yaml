@@ -1,0 +1,28 @@
+hypothesis_id: WS-V7-H-P20
+task_id: WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+device: cuda
+claim_boundary: >-
+  Re-audit frozen source policies with a literal first-return ray operator. The
+  consumed nuScenes test role is diagnostic only and no fresh AV2 payload is read.
+attribution:
+  ray_operator: minimum_positive_depth_within_lateral_tolerance
+  query_reference: identical_true_first_return_operator
+  depth_tolerance_source: configs/worldsim_v7/p17_ray_set_completion_v1.yaml
+  distance_chunk_size_source: configs/worldsim_v7/p17_ray_set_completion_v1.yaml
+variants:
+  p17:
+    config: configs/worldsim_v7/p17_ray_set_completion_v1.yaml
+    fit_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/20260903T084500Z__ray-set-fit-s71701-r1
+  p17r:
+    config: configs/worldsim_v7/p17r_hybrid_ray_chamfer_completion_v1.yaml
+    fit_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/20260903T094500Z__hybrid-ray-chamfer-s71701-r1
+  p19:
+    score_expert: p17r
+    policy_config: configs/worldsim_v7/p19_sparse_hazard_veto_v1.yaml
+decision_per_variant:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+next_failure: V7-F29

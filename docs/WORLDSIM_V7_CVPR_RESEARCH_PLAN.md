@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P19 rejected, P20 true first-return correction frozen
+
+P19只veto 35/3325 candidates就把hazard early降34 events，但Chamfer退`.0000919m`且少136 new hits，登记
+`V7-F28`并关闭veto sweep。代码审查同时发现legacy visible-failure是target-nearest point proxy，不是literal
+first-return，这正是视觉/几何“硬证据”必须修正的评估边界。
+
+按CVPR 2024 evidential occupancy raw-ray depth evaluation，P20固定每ray lateral tolerance内minimum positive depth，query/
+compiled同算子。一次审计冻结P17/P17R/P19；checkpoint、policy、`.5`、tolerance、Chamfer、scene全不变，fresh AV2
+不读。若三者均无true-ray Pareto，登记`V7-F29`并把安全--表面utility冲突写成明确边界。
+
 ## 2026-09-02 P18 rejected, P19 sparse hazard veto frozen
 
 P18的P17R-dominant support只有fit `3/85`、consumed test `2/228`；router在test全选baseline，hazard early与Chamfer

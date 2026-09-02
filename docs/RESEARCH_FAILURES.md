@@ -1,5 +1,22 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F28 — one-slot hazard veto reduces early returns but still pays surface utility
+
+- canonical=`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/
+  20260903T114000Z__sparse-hazard-veto-s71701-r1`；fresh AV2未读。
+- action：35/79 hazard Actors各veto一个candidate，总计`35/3325`，coverage=`98.947%`；clear Actors完全不变。
+- benefit：hazard new-early `2336→2302`（`1.43622→1.41532%`），total `2982→2948`。
+- cost：Chamfer `.1945868→.1946787m`，new hits `39255→39119`；严格Pareto第二项false。
+- prevention：关闭score-ranked candidate veto top-k/threshold/stratum/ranking变体，不以34 events收益放宽Chamfer门。
+- audit response：legacy attribution先取target的Euclidean-nearest surface再检查ray，并非literal first return。P20只做一次
+  frozen P17/P17R/P19 true-first-return审计，不改policy；下一failure=`V7-F29`。
+
+## P20 prevention note — correct the ray operator, not the policy（2026-09-02）
+
+- 每条held-out ray在lateral tolerance内取minimum positive depth；query/compiled同算子、同冻结depth tolerance。
+- P17/P17R checkpoint、P19 action、Chamfer、scene均固定；不得在corrected result后选择tolerance/operator或重训。
+- consumed source只作诊断，fresh AV2保持未读；P20本身不冒充独立confirmation。
+
 ## V7-F27 — rare Pareto-positive support collapses Actor routing to the baseline
 
 - canonical=`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/

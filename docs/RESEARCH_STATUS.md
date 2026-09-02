@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P19 rejected / P20 true first-return audit frozen（2026-09-02）
+
+P19 canonical=`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/
+20260903T114000Z__sparse-hazard-veto-s71701-r1`。35个hazard Actor各veto一个candidate，hazard early=
+`2336→2302`，但Chamfer=`.1945868→.1946787m`、new hits=`39255→39119`；登记`V7-F28`、target unread。
+
+代码审查发现legacy visible-failure attribution不是literal first return，而是target-nearest point再做ray test。按CVPR 2024
+evidential occupancy raw-ray evaluation，P20冻结minimum-positive-depth true first-return；一次审计冻结P17/P17R/P19，
+query/compiled同算子、tolerance不变、Chamfer不变，不训练、不读fresh AV2。状态=`p20_frozen_implementation_next`。
+
 ## WorldSim V7 P18 rejected / P19 sparse hazard veto frozen（2026-09-02）
 
 P18 canonical=`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/

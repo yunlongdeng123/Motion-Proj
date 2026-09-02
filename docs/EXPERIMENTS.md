@@ -1,5 +1,15 @@
 # Experiments
 
+## P19 result / P20 true first-return audit freeze（2026-09-02）
+
+- P19 canonical/status：`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/
+  20260903T114000Z__sparse-hazard-veto-s71701-r1` / done；wall=`258.97s`、peak GPU/RSS=`.0428/1.153GiB`。
+- action/result：veto Actors/candidates=`35/35`，coverage=`.98947`；hazard early `2336→2302`，total `2982→2948`；
+  Chamfer `.1945868→.1946787m`，new hits `39255→39119`。
+- verdict=`source_development_rejected_external_unread`、`V7-F28`、target read=`false`；不做veto sweep。
+- P20：冻结true first-return=min positive depth within lateral tolerance；同算子处理query/compiled；审计冻结P17/P17R/P19，
+  source test consumed-diagnostic，0 external read，下一failure=`V7-F29`。
+
 ## P18 result / P19 sparse hazard veto freeze（2026-09-02）
 
 - P18 canonical/status：`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/
