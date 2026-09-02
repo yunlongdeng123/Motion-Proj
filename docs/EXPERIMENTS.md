@@ -1,5 +1,13 @@
 # Experiments
 
+## Paper legacy-TBD source convergence（2026-09-02）
+
+- removed：未被任何 source `\input` 的 `paper/tables/main_results.tex`、其唯一依赖的18个 placeholder result macros、
+  `preamble.tex` 的 `\todoresult`。
+- retained：所有 P1--P9/P7-C真实结果 macros、五张当前表、main/supplement prose与 figures。
+- compile：main=`8 pages/1,165,317 bytes`；supplement=`6 pages/7,219,027 bytes`；均成功。
+- warnings：main只有既有 Table 1 `6.03pt` overfull；supplement无 warning。无 scientific run/quality read或 numeric change。
+
 ## V7 corrected-base lineage audit（2026-09-02）
 
 - V7 branch：`research/worldsim-v7-harp3d-cvpr`；required base：`research/worldsim-v6.7-anisotropic-surface`。

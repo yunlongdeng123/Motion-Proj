@@ -2,6 +2,13 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper source-convergence note — legacy TBD contract移除，无新failure
+
+- `main_results.tex` 是早期未引用表，18个 TBD macros只由该表引用；main/supplement PDF均未渲染 TBD；
+- 删除范围仅为该 dead table、18个 dead macros 与 `\todoresult` wrapper，Git可恢复；真实 P1--P9 numbers/tables未动；
+- main/supplement重编译保持8/6页和原文件大小，warning集合未增加；
+- source-only cleanup，不创建 failure id；下一可用仍为 `V7-F18`。
+
 ### V7 branch-base audit note — corrected V6.7 ancestry成立，无新failure
 
 - `research/worldsim-v6.7-anisotropic-surface` terminal=`d97c3f2`，同时是当前 V7 的 exact merge-base；ancestor=true、

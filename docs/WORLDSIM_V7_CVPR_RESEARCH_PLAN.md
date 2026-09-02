@@ -1,5 +1,11 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 paper source-convergence milestone
+
+最终 source package已移除从未被 `\input` 的 legacy `main_results.tex`、18个 placeholder macros及 `\todoresult`；
+所有真实 P1--P9/P7-C result macros与五张当前表保留。TeX Live compile保持 main 8页、supplement 6页，warning不增加。
+该里程碑清除误导性 TBD source，不改变 scientific result；fresh AV2仍由单实例 watcher等待。
+
 ## 2026-09-02 corrected V6.7 branch-base audit
 
 当前 `research/worldsim-v7-harp3d-cvpr` 的 exact merge-base 为用户指定的

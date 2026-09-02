@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 paper source package cleared of legacy TBD contract（2026-09-02）
+
+确认 `paper/tables/main_results.tex` 从未被 main/supplement `\input`，其中18个 Naive/V6.7/HARP placeholder macros也
+只在该 legacy table 内使用；两个已渲染 PDF 均无 `TBD`。现已删除未引用 table、18个 `\todoresult` wrapper macros与
+preamble中的 `\todoresult`，避免最终匿名/arXiv source package携带误导性未完成合同。真实 P1--P9 macros与表格不变。
+
+TeX Live重新编译 main/supplement成功，仍为 `8 pages/1,165,317 bytes` 与 `6 pages/7,219,027 bytes`；supplement无
+warning，main仅保留既有 Table 1 `6.03pt` overfull。该项是 source convergence，不改变任何 scientific number/run/
+verdict，也不读取 fresh AV2 quality。
+
 ## WorldSim V7 branch ancestry audited against corrected V6.7 base（2026-09-02）
 
 当前分支=`research/worldsim-v7-harp3d-cvpr`；用户指定 base=`research/worldsim-v6.7-anisotropic-surface`。
