@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Figure-convergence note — hard evidence promoted without claim promotion（2026-09-02）
+
+- main Figure 2把literal correction、set-deletion direction/utility cost和sensor-opportunity sensitivity并列，不能据此升级
+  为collision、closed-loop、policy、domain-invariant或road-safety guarantee；
+- 完整P7 coverage curves保留在supplement，主文裁剪只改变版式，不改变threshold、point、metric或结果；
+- 首次版式把PNG pixel误作TeX point导致右面板不可见；视觉检查后改用真实自然尺寸的`700bp`裁剪，未提交坏PDF；
+- Conclusion一度跨入page 9，随后通过删重复文字恢复references-only page，不缩字体/间距；
+- 均为提交前layout repair，不是scientific failure，不消耗ID；下一可用仍为`V7-F30`。
+
 ## Submission-boundary note — external metadata is not a research failure（2026-09-02）
 
 - official CVPR2027 kit尚未发布；保持CVPR2026 official style的provisional匿名稿，不使用第三方模板或猜测2027规则；

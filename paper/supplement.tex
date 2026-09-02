@@ -233,6 +233,16 @@ The fresh AV2 read contains \PsixFreshActors{} Actors. P6-C/P4 repair AUROC is
 \PsixFreshCandidateFalseRepair{}\% versus \PsixFreshPfourFalseRepair{}\%, and P6-C independently loses fresh-nuScenes
 AUROC and AURC. The complete evidence therefore retains P4 and rejects a domain-invariant sparsity-consistency claim.
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=.96\textwidth]{figures/p7_interpretable_safety_envelope.png}
+  \caption{Complete frozen P7 explanation. Left and center: risk--coverage and geometry--coverage curves; stars mark the
+  unchanged nuScenes-calibrated thresholds and never select an AV2 operating point. Right: Integrated Gradients relative to the
+  nuScenes-training mean. The AV2 shift toward observation-frame count exposes sensor-opportunity dependence. The curves and
+  attributions are descriptive, not a cross-domain certificate.}
+  \label{fig:supp-p7-envelope}
+\end{figure*}
+
 \section{Actor-Level Decision Intervals}
 
 For the frozen ReLU validity MLP, an input box $[\ell,u]$ is propagated through each affine layer using

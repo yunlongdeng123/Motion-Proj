@@ -4,12 +4,13 @@
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/p7_interpretable_safety_envelope.png}
-  \caption{Frozen P7 safety envelope. Left and center: risk--coverage and geometry--coverage curves; stars mark the unchanged
-  nuScenes-calibrated thresholds and never select an AV2 operating point. Right: Integrated Gradients relative to the
-  nuScenes-training mean~\cite{sundararajan2017axiomatic}. AV2 reliance on observation-frame count exposes a sensor-opportunity
-  shortcut. Curves and attributions are descriptive rather than a cross-domain certificate.}
-  \label{fig:p7-envelope}
+  \includegraphics[width=.71\textwidth]{figures/supplement/p21_first_return_boundary.png}\hfill
+  \includegraphics[width=.25\textwidth,trim=700 0 0 0,clip]{figures/p7_interpretable_safety_envelope.png}
+  \caption{Physical hard evidence and boundaries. Left: target-nearest proximity undercounts literal first-return exposure on
+  source, consumed AV2 (AV2-C), and disjoint exact-once AV2 (AV2-F). Center: deletion certifies non-increasing early returns, but
+  every frozen policy loses hits and worsens Chamfer. Right: attribution localizes the AV2 sensor-opportunity shortcut. These are
+  measurement, structural-direction, and model-sensitivity results---not collision or road-safety certificates.}
+  \label{fig:hard-evidence-boundary}
 \end{figure*}
 
 \paragraph{Data and protocol.}
@@ -98,9 +99,10 @@ We retain the model, standardizer, thresholds, and all Actor rows and evaluate 2
 recalibration. The factorized score shifts from mean/median $.761/.945$ on nuScenes calibration to $.978/.999992$ on AV2
 (Wasserstein $.217$, KS $.704$), explaining the operating-point coverage jump. Integrated Gradients~\cite{sundararajan2017axiomatic}
 relative to the nuScenes-training mean attributes 18.25\% of absolute validity sensitivity to observation-frame count on
-nuScenes test but 49.53\% on AV2 (Fig.~\ref{fig:p7-envelope}). Structural cross-input derivatives remain exactly zero: task
-factorization prevents hazard leakage, but does not make validity inputs sensor invariant. We therefore preserve the empirical
-P4 result while rejecting the stronger interpretation of a domain-invariant selector.
+nuScenes test but 49.53\% on AV2 (Fig.~\ref{fig:hard-evidence-boundary}, right). The complete fixed-threshold risk--coverage and
+geometry--coverage curves remain in the supplement. Structural cross-input derivatives remain exactly zero: task factorization
+prevents hazard leakage, but does not make validity inputs sensor invariant. We therefore preserve the empirical P4 result while
+rejecting the stronger interpretation of a domain-invariant selector.
 
 We then propagate fixed $0.10$ nuScenes-training-standard-deviation feature boxes through the frozen validity MLP in FP64.
 Only \PsevenCTestCertified{}\% of nominal nuScenes-test selections are robust to the full box, versus
@@ -180,7 +182,8 @@ Consumed AV2 first shows hazard exposure \PtwentytwoProxyHazardEarly{}$\rightarr
 \PtwentythreeTrueTotalEarly{}/\PtwentythreeTrueHazardEarly{}\% (\PtwentythreeTotalRatio{}/\PtwentythreeHazardRatio{}$\times$).
 All \PtwentythreeTrueNewEarly{} fresh literal new-early rays are \textsc{complete}; completion supplies
 \PtwentythreeCompleteNewHitShare{}\% of \PtwentythreeTrueNewHits{} new hits, only \PtwentythreeHitEarlyRatio{} hits/early.
-This transfers metric failure and provenance, not model, policy, collision, or road-safety validity.
+Figure~\ref{fig:hard-evidence-boundary} (left and center) visualizes both findings. They transfer metric failure and provenance,
+not model, policy, collision, or road-safety validity.
 
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,

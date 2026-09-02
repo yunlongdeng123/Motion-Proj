@@ -1,5 +1,17 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 reviewer-facing hard-evidence figure convergence
+
+为避免三维硬证据只停留在正文数字，主文Figure 2重组为三联图：source/AV2-C/独立AV2-F的target-nearest
+proxy→literal first-return纠偏、冻结删除策略的exact directional/nonzero-utility frontier、以及AV2 validity head的
+sensor-opportunity attribution。原完整risk--coverage/geometry--coverage/IG图迁入supplement，不丢失threshold与跨域
+解释证据，不新增data/model read。
+
+TeX Live final main=`9 pages/1,925,628 bytes`，pages 1--8 content且page 9仅references；supplement=
+`10 pages/7,596,557 bytes`。Main p5/p8/p9与supplement p4/p5视觉检查无裁切/重叠；一次TeX-point裁剪错误在提交前被发现
+并固定为`.71/.25`宽度与`700bp`裁剪。唯一既有warning仍为Table 1 `6.03pt` non-clipping overfull。Conclusion保持
+三权分离、literal undercount与deletion非道路安全保证的终局边界；0 scientific change，下一failure=`V7-F30`。
+
 ## 2026-09-02 conference/arXiv submission handoff milestone
 
 仅核对官方来源：`cvpr-org/author-kit` latest release仍为CVPR2026，CVPR 2026官方规则仍是8页正文并允许额外

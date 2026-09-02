@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 reviewer-facing physical evidence converged（2026-09-02）
+
+Main Figure 2现在直接并列三类可审计证据：跨传感器proxy→literal首回波纠偏、删除点的exact early-direction及其
+hit/Chamfer代价、validity head的sensor-opportunity sensitivity。完整P7 risk/geometry coverage曲线移入supplement，
+主文不再用单一风险曲线取代用户要求的三维硬证据。Conclusion同步收敛到validity/hazard/task-authority分权和明确
+non-guarantee。
+
+Final main=`9 pages/1,925,628 bytes`（8 content + references），supplement=`10 pages/7,596,557 bytes`；变动页视觉QA
+通过，undefined citation/reference=0，仅既有Table 1 `6.03pt` non-clipping overfull。未读取数据或模型，未改变macro、
+cohort、threshold、policy或verdict；下一failure ID=`V7-F30`。
+
 ## WorldSim V7 conference/arXiv handoff ready, external metadata pending（2026-09-02）
 
 官方复核确认latest public author-kit仍为CVPR2026且CVPR2027 kit尚未发布；现有provisional 2027匿名稿继续使用官方

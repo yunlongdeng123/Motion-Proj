@@ -1,5 +1,14 @@
 # Experiments
 
+## Reviewer-facing hard-evidence figure and boundary handoff（2026-09-02）
+
+- main Figure 2：复用冻结P20/P21/P22/P23图与P7 attribution，呈现source/AV2-C/AV2-F literal correction、deletion
+  utility frontier和sensor-opportunity shortcut；
+- supplement：保留完整21-point risk--coverage/geometry--coverage curves和IG，不重算metric、不重选AV2 operating point；
+- compile：main=`9 pages/1,925,628 bytes`（page 9 references-only），supplement=`10 pages/7,596,557 bytes`；
+- QA：main p5/p8/p9、supp p4/p5无裁切/重叠；初始像素/TeX-point裁剪误用在commit前修正，未产生科学输出；
+- no experiment：0 dataset/model read、0 training/refit/recalibration、0 macro/threshold/cohort/policy change。
+
 ## CVPR/arXiv submission handoff audit（2026-09-02）
 
 - official state：latest public `cvpr-org/author-kit` release仍为CVPR2026；未发现official CVPR2027 kit；
