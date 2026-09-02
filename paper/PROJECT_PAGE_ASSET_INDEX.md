@@ -29,6 +29,20 @@ Machine-readable sources are `CAMERA_CASES.jsonl`, `MAIN_CAMERA_PANELS.json`, an
 - Videos are before/after temporal diagnostics with synchronized RGB and sparse depth, not photorealistic world renders.
 - Actor identity, hazard label, log, camera, and path are immutable. Failed or visually weak cases remain in the package.
 
+## Figure 1 four-quadrant teaser contract
+
+- The `valid--safe` / `artifact--safe` pair is the first non-hazardous main-paper case, `q01-a0`:
+  log `bf360aeb-1bbd-3c1e-b143-09cf83e4f2e4`, Actor `0e0562b6-0a44-4b8e-8a4d-685efcc4e9e1`,
+  camera `ring_rear_left`, panel `panels/q01_a0_0e0562b6.png`.
+- The `valid--hazard` / `artifact--hazard` pair is the first hazardous main-paper case, `q00-a0`:
+  log `b87683ae-14c5-321f-8af3-623e7bafc3a7`, Actor `1f197615-ba7e-4e13-9301-1dcf39cc6839`,
+  camera `ring_front_center`, panel `panels/q00_a0_1f197615.png`.
+- “First” is evaluated in the already frozen `q00`--`q07` main-case order using only the stored hazard metadata. No RGB,
+  depth, Chamfer, visibility, artifact severity, or rendering-quality choice was made for the teaser.
+- Each left/right pair is a clipped view of the same frozen panel. Only the paired synthetic artifact overlay changes;
+  Actor identity, trajectory, extent, camera, and hazard label remain fixed. The four crops are evidence overlays rather
+  than photorealistic reconstructions, and no new binary rendering is introduced.
+
 ## Package summary
 
 | Item | Value |

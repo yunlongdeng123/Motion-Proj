@@ -1,5 +1,25 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 user-directed V7 focus lock
+
+后续auto-research聚焦三条主线并做深：（1）视觉/几何硬证据必须落到可观测三维ray、surface、visibility与
+Actor-level反例，不把feature filtering或overlay写成物理证明；（2）以nuScenes-only训练、AV2/Waymo direct test为
+核心跨域合同，不用target refit/recalibration掩盖sensor shift；（3）把可解释性绑定到确定性物理对象、Actor-level
+decision interval、risk--coverage与明确UNKNOWN/abstention安全边界。优先复用单卡GPU并与IO串行/错峰；只有任务确实
+需要多卡时才按用户约束shutdown等待。减少P0/smoke/regression，不增加hash/checksum/fingerprint或过度gate。
+
+## 2026-09-02 metadata-locked four-quadrant teaser milestone
+
+Figure 1已用冻结P3-B metadata组成`valid-safe / artifact-safe / valid-hazard / artifact-hazard`四象限：first
+non-hazardous main=`q01-a0`、first hazardous main=`q00-a0`。每个clean/artifact pair保持Actor、trajectory、extent、
+camera、hazard完全一致，只改变canonical panel内的synthetic-artifact overlay；不按视觉质量或metric选case，不新增
+render/scientific read。图下保留HARP-3D五步pipeline，并明确overlay不是photorealistic reconstruction或complete
+unseen-world proof。
+
+Final main compile=`9 pages/1,760,570 bytes`，pages 1--8 content、page 9 references-only；Figure 1 page 3 at 160 dpi
+visual QA通过，无裁切/重叠，唯一warning为既有Table 1 `6.03pt` non-clipping overfull。资产索引、contribution map、
+status/experiments/failures同步完成；无新failure，下一可用=`V7-F20`。
+
 ## 2026-09-02 P5/C3 direct reliability paper-evidence milestone
 
 按原计划Table 3要求补齐C3 direct evidence，但不违反final-test后冻结：复用V6.7 canonical而不重训/重读target。

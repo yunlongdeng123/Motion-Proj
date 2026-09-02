@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 Figure 1 teaser provenance audit（2026-09-02）
+
+- four-quadrant teaser只使用冻结P3-B的`q01-a0` non-hazard与`q00-a0` hazard main cases；选择规则是metadata-only
+  first-match，不按图像外观、深度密度、Chamfer、visibility或artifact severity择优。
+- 同一valid/artifact pair保持Actor、trajectory、extent、camera和hazard不变；synthetic artifact是诊断overlay，
+  不能写成photorealistic reconstruction、unseen-surface completeness或单Actor物理certificate。
+- page 3 visual QA通过，原standalone camera figure已移除以避免同一证据重复展示；没有scientific failure delta。
+  `V7-F18/V7-F19`仍开放，下一可用failure id保持`V7-F20`。
+
 ## WorldSim V7 C3 paper-evidence audit（2026-09-02）
 
 - documentation gap：Method 4.3--4.4保留C3 density/joint-H对象，但此前主文只报告P5/P9接口审计，缺少冻结

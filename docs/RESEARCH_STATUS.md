@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 metadata-locked four-quadrant teaser integrated（2026-09-02）
+
+CVPR Figure 1现为`valid-safe / artifact-safe / valid-hazard / artifact-hazard`四象限证据图加HARP-3D流水线。
+选择完全由冻结P3-B metadata决定：first non-hazardous main=`q01-a0`，first hazardous main=`q00-a0`；每个
+valid/artifact pair保持相同Actor、trajectory、extent、camera与hazard，只改变已冻结synthetic-artifact overlay。
+没有新render、quality selection、scientific read、训练、threshold或cohort修改。
+
+TeX Live main compile=`9 pages/1,760,570 bytes`；pages 1--8为content、page 9仅references。Figure 1位于page 3，
+160 dpi逐页QA确认四crop、标题、pipeline与caption无裁切/重叠；唯一warning仍为既有Table 1 `6.03pt` non-clipping
+overfull。该图仅作可审计camera/depth evidence overlay，不主张photorealistic reconstruction或unseen-surface
+completeness。无新failure，下一可用仍为`V7-F20`。
+
 ## WorldSim V7 C3 direct reliability evidence restored to paper（2026-09-02）
 
 Plan/table audit发现Method仍主张连续代价密度与joint-H reliability，但主文只报告P5/P9接口结果。未重训或重读target，

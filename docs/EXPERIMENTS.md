@@ -1,5 +1,18 @@
 # Experiments
 
+## CVPR Figure 1 metadata-locked teaser integration（2026-09-02）
+
+- source：冻结P3-B canonical `20260902T150000Z__camera-evidence-s0-r1`；只复用现有
+  `q01_a0_0e0562b6.png`与`q00_a0_1f197615.png`，不生成新bitmap。
+- selection：按frozen main order选first non-hazardous=`q01-a0`和first hazardous=`q00-a0`；未读取RGB/depth/
+  Chamfer/visibility/artifact severity/video quality作选择。
+- pairing：每个valid/artifact crop来自同一panel和Actor；identity、trajectory、extent、camera、hazard固定，只有
+  paired synthetic artifact变化。
+- paper action：把四象限与原method strip合并为Figure 1，删除重复的standalone camera figure，但保留正文
+  `Fig. 1`证据引用；新增asset-index和claim-map provenance。
+- QA：main=`9 pages/1,760,570 bytes`，pages 1--8 content、page 9 references-only；page 3视觉QA通过，唯一既有
+  Table 1 `6.03pt` overfull不裁切。0 training、0 scientific read、0新failure；下一可用=`V7-F20`。
+
 ## CVPR C3 inherited-reliability evidence integration（2026-09-02）
 
 - gap：V7 Method保留continuous log-cost density、joint-H dependence与runtime authority，但此前主文无直接proper-score/
