@@ -109,6 +109,14 @@ A frozen nuScenes-only head reaches safe-visible AUROC \PtwelveSourceSafeAUROC{}
 \PtwelveDualVisibleUpper{}\%) but only \PtwelveDualCoverage{}\% coverage, \PtwelveDualChamferWorse{}\% Chamfer worsening,
 and \PtwelveDualHazardCoverage{}\% hazard coverage. The ranking transfers; the authority does not.
 
+\paragraph{Defer-to-query changes the unit of risk.}
+Every abstained Actor retains its query surface, so Actor and hazard semantics remain \PthirteenActorRetention{}\%. P4's
+population introduced-visible failure/composite Chamfer gain is \PthirteenPfourPopulationVisible{}\%/
+\PthirteenPfourGain{}\,m; P6-C is \PthirteenPsixPopulationVisible{}\%/\PthirteenPsixGain{}\,m; and P4-and-visibility is
+\PthirteenDualPopulationVisible{}\%/\PthirteenDualGain{}\,m. The provenance policy is
+\PthirteenProvenancePopulationVisible{}\%/\PthirteenProvenanceGain{}\,m and is strictly dominated by query-only. Thus low
+conditional risk can coexist with a worse fallback world.
+
 \section{Frozen Cohorts and Exact-Once Rules}
 
 \begin{table*}[t]
@@ -179,6 +187,10 @@ V7-F16 & Freeze prose mislabeled the P346 held-out horizon. & Executable artifac
 V7-F17 & 47 AV2 false repairs remain robust-select at radius $0.10$. & Network stability is not correctness, calibration, or a safety certificate. \\
 V7-F18 & Pooled ray physics improves, but consumed/fresh nonnew-visible rates are only \PthreeCNonnewActors{}/\PthreeFreshNonnewActors{}\%. & Retain aggregate C1 evidence and the completion gain--tail trade-off; reject a universal Actor certificate and do not tune the ray tolerance. \\
 V7-F19 & P6-C loses fresh-nuScenes ranking but improves fresh-AV2 AUROC while raising false repair. & Report the domain reversal; an external gate pass neither overrides the source rejection nor promotes P6-C over P4. \\
+V7-F20 & P4 visible risk is 36.39\%, but its 40.40\% upper bound exceeds the 37.28\% baseline. & Repairability does not confidence-separate visibility risk. \\
+V7-F21 & Provenance lowers visible risk but raises Chamfer worsening to \PelevenDualChamferWorse{}\% and hazard-repair coverage falls to \PelevenDualHazardCoverage{}\%. & Observed provenance is one-axis evidence, not joint authority. \\
+V7-F22 & The source visibility head transfers ranking, but dual coverage/gain are negligible and hazard-repair coverage is \PtwelveDualHazardCoverage{}\%. & Reject the head family rather than sweep target thresholds. \\
+V7-F23 & Provenance defer has \PthirteenProvenanceGain{}\,m composite gain with nonzero introduced failure. & Query-only strictly dominates it; conditional risk is not fallback-system utility. \\
 \bottomrule
 \end{tabular}
 \label{tab:supp-failures}

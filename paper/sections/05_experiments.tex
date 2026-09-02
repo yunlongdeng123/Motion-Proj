@@ -145,6 +145,14 @@ A dedicated nuScenes-only visibility head confirms this mismatch rather than sol
 Chamfer-worsening is \PtwelveDualChamferWorse{}\% and hazard coverage is \PtwelveDualHazardCoverage{}\%. We reject the head:
 low target-specific risk obtained by losing geometry and hazardous Actors is not a safety authority.
 
+The complete defer-to-query system preserves \PthirteenActorRetention{}\% of Actors and separates conditional risk from
+population utility. P4 has \PthirteenPfourPopulationVisible{}\% population introduced-visible failure with
+\PthirteenPfourGain{}\,m composite Chamfer gain; P6-C has \PthirteenPsixPopulationVisible{}\% and
+\PthirteenPsixGain{}\,m, remaining an AV2-only frontier point because its fresh-nuScenes ranking reverses. P4-and-visibility
+has only \PthirteenDualPopulationVisible{}\% introduced failure but \PthirteenDualGain{}\,m gain. In contrast, the provenance
+policy has \PthirteenProvenancePopulationVisible{}\% introduced failure and \PthirteenProvenanceGain{}\,m gain, so query-only
+strictly dominates it. Low selected risk alone therefore does not establish fallback-system utility.
+
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,
 the five-component log-cost density reduces mean integrated Brier and marginal calibration error by
