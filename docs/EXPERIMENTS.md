@@ -2,11 +2,11 @@
 
 ## CVPR paper integration through P3-C/P3-D（2026-09-02）
 
-- main：新增 visibility-conditioned target-ray/surface证据、pooled四指标、64.04% Actor boundary与 completion
-  `14.96×` gain--tail；limitations拒绝 universal certificate/post-hoc carving。
+- main：abstract/method/experiments新增 bidirectional target-ray/surface状态、pooled四指标、64.04% Actor boundary与
+  completion `14.96×` gain--tail；limitations拒绝 universal certificate/post-hoc carving。
 - supplement：新增 bidirectional partition、query/baseline/HARP三行表、provenance结果、V7-F18；不隐藏 Actor tail。
 - evidence map：P3-C/P3-D canonical URI、code interface、supported/prohibited claim与 ownership已同步。
-- compile：TeX Live main=`8 pages/1,166,490 bytes`；supplement=`7 pages/7,221,609 bytes`。main仅既有 Table 1
+- compile：TeX Live main=`8 pages/1,167,975 bytes`；supplement=`7 pages/7,221,609 bytes`。main仅既有 Table 1
   `6.03pt` overfull，supplement无 warning。
 - visual QA：main pages 4--8与supplement pages 1--3/7无 clipping/overlap/broken table；P7-C float移到 one-column
   failure ledger后，supplement从首次8页收敛到7页，不删 evidence。

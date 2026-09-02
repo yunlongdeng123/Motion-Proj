@@ -15,6 +15,12 @@ The fused representation stores surface support, observed-free intervals, tempor
 \end{itemize}
 Unknown is a first-class state and never silently becomes free. All four actions preserve $(ID_i,X_{i,0:H},D_i)$. Appearance primitives may attach to the repaired surface using center distance, covariance-normal alignment, depth, and visibility, but physical queries do not read Gaussian opacity.
 
+The physical certificate is visibility-conditioned. For a held-out ray $r=(o,v,d)$ and surface $S$, the target-facing state
+$\zeta(r,S)$ is one of early, hit, late, or unmatched. In the reverse direction, an output point's state $\eta(x,r)$ is
+contradicted, supported, occluded, or off-ray unknown. Only the contradicted state places $x$ in observed free space; occluded and
+off-ray regions remain non-falsified rather than becoming occupied or free. This bidirectional partition makes the failure object
+inspectable while explicitly withholding a completeness certificate for unseen surface.
+
 \subsection{Validity--Hazard Factorization}
 
 The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. Its label is whether the frozen compiler's target Chamfer is no worse than that of the untouched clean query. The hazard encoder receives only TTC, clearance, closing speed, braking, and crossing geometry. Our factorized model uses two structurally disjoint low-capacity heads; a shared-input two-head network is the learned baseline:
