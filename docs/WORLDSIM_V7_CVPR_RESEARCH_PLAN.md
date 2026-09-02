@@ -10,6 +10,9 @@ P21形式化`S' subset S => d_{S'}(r)>=d_S(r)`，从而true first-return early�
 只从P20 summary计算events removed per hit/mm，不重编译、不训练、不选policy；用于可解释性与安全边界章节，并关闭
 deletion-only sweep。
 
+实现输出`summary.json + BOUNDARY.md`，同时固化premise、corollary与non-guarantees；zero denominator保留null。当前
+`p21_ready`，执行后直接进入论文安全边界整合。
+
 ## 2026-09-02 P19 rejected, P20 true first-return correction frozen
 
 P19只veto 35/3325 candidates就把hazard early降34 events，但Chamfer退`.0000919m`且少136 new hits，登记

@@ -17,6 +17,7 @@
 - 只从P20 summary派生；不重编译、不以ratio重新选policy、不增加epsilon/smoothing。
 - set-inclusion只保证early非增，不保证hit或Chamfer；不得扩写成collision-free或road-safety guarantee。
 - P19高效率是consumed source描述，不是fresh transfer evidence。
+- artifact同时保存定理premise/result/non-guarantees与frontier；ratio零分母明确为null，不伪造有限效率。
 
 ## V7-F28 — one-slot hazard veto reduces early returns but still pays surface utility
 

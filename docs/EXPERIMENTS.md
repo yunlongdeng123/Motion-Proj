@@ -9,6 +9,7 @@
   `.1994111/.1957160/.1946787m` vs `.1945869m`；三者均1/2、`V7-F29`。
 - new hits baseline/P17/P17R/P19=`32575/29191/31620/32504`；P19以71 hits和`.0919mm`换131 hazard events。
 - P21只读summary计算events/hit与events/mm，并形式化deletion true-ray early monotonicity；0 data/model read。
+- P21 implementation=`ready`：输出machine-readable summary与paper-ready Markdown table；zero denominator=`null`，无epsilon。
 
 ## P19 result / P20 true first-return audit freeze（2026-09-02）
 

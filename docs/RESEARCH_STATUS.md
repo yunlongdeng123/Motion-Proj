@@ -8,7 +8,7 @@ P20 canonical=`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/
 
 P17/P17R/P19均降低true-ray hazard early，但Chamfer均回退，Pareto variants=`[]`，登记`V7-F29`、target unread。
 P21已冻结set-deletion单调性定理与经验frontier：只读P20 summary，给出events/mm与events/hit，不重编译、不训练、
-不选择policy，不把cohort ratio包装为road-safety guarantee。状态=`p21_frozen_implementation_next`。
+不选择policy，不把cohort ratio包装为road-safety guarantee。实现已就绪，零分母保持undefined；状态=`p21_ready`。
 
 ## WorldSim V7 P19 rejected / P20 true first-return audit frozen（2026-09-02）
 
