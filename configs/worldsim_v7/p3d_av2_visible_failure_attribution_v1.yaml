@@ -1,0 +1,21 @@
+task_id: WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01
+hypothesis_id: WS-V7-H-P3-004
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+cohort_config: configs/worldsim_v7/av2_zero_shot_cohort_v1.json
+cohort_roles: [quantitative, qualitative]
+expected_log_count: 30
+device: cuda
+verdict: descriptive_all_actor_output_provenance_attribution
+claim_boundary: >-
+  Post-result mechanism attribution over every Actor and target ray in the consumed 30-log cohort.
+  It attributes compiled early returns, new early returns, hits, and visible surface contradictions
+  to KEEP, PROJECT, or COMPLETE without changing an operator, tolerance, Actor, or scene. The
+  attribution diagnoses nearest-ray matching versus inserted-surface mechanisms; it is not an
+  independent confirmation, causal intervention, collision certificate, or road-safety guarantee.
+compiler_overrides:
+  projection_output: observed_lidar_hit
+attribution:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20

@@ -2,6 +2,16 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P3-D prevention note — 不把 nearest-ray assignment尾部误判成 completion物理冲突
+
+- P3-C 的 target→surface nearest ray与 surface→target nearest ray不是同一个匹配；前者新增 early count不能直接推出
+  compiler插入了新自由空间冲突。
+- P3-D 覆盖全部634 Actors与全部 target rays，只把既有输出点按 compiler原始 KEEP/PROJECT/COMPLETE provenance计数；
+  不挑 top failures、不改 tolerance、不新增 gate。
+- 只有 COMPLETE 同时主导 new early与surface contradiction时，才允许 source-ray space carving；KEEP/PROJECT主导则
+  说明问题主要是稀疏覆盖/nearest assignment边界，禁止用表面删除“修复”指标。
+- 当前为 post-result diagnostic freeze，无新 scientific verdict；下一可用 failure id保持 `V7-F19`。
+
 ### V7-F18 — pooled visibility physics改善没有形成逐 Actor 通用证书
 
 - run：`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`；

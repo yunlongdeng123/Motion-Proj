@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P3-D all-Actor visible-failure attribution frozen（2026-09-02）
+
+Active=`WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01 / WS-V7-H-P3-004`。`V7-F18` 后只做一次
+mechanism audit：在 consumed 30 logs 的全部634 Actors/target rays上，把 compiled/new early return、new hit与 surface
+contradiction逐项归因到 `KEEP/PROJECT/COMPLETE`。provenance 直接复现 compiler 的 concat→`.06m` voxel-first语义，不
+依据失败大小挑 Actor；`.20m` ray/depth tolerance与 observed-hit PROJECT不变。
+
+若新增 early主要来自 KEEP/PROJECT 中已有 query点，则优先解释为覆盖变化下的 nearest-ray assignment，不应盲目
+space-carve surface；若明确集中于 COMPLETE 且同时增加 surface contradiction，才允许后续冻结 target-independent
+source-ray carving。该项是 consumed-cohort post-result diagnostic，不是 independent confirmation，不产生 recovery gate，
+也不改变 fresh 20-log exact-once合同。冻结实现提交并推送后才执行。
+
 ## WorldSim V7 P3-C consumed-cohort visibility audit completed / V7-F18（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`。

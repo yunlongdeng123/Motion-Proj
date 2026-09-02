@@ -718,6 +718,16 @@ per-Actor universal certificate；fresh 20-log合同不变。下一步只允许�
 nearest-ray matching/KEEP coverage与 PROJECT/COMPLETE 实体新增；不扫描容差、不按 failure挑 Actor。只有 source-only
 provenance明确指向 completion free-space conflict时，才允许冻结 source-ray space-carving operator。
 
+### P3-D all-Actor visible-failure attribution freeze（2026-09-02）
+
+- consumed 30 logs 的全部 Actors/target rays参与，不按 `V7-F18` 大小、hazard、category或 Chamfer选择案例。
+- compiled/new early return、compiled/new hit、surface contradiction逐项归因到 `KEEP/PROJECT/COMPLETE`；point provenance
+  精确复现 compiler concat顺序和 `.06m` voxel-first output。
+- `.20m` lateral/depth tolerance、observed-hit PROJECT、Actor policy和 fresh 20-log合同保持不变；这是 post-result
+  mechanism diagnostic，不是 independent confirmation或 recovery gate。
+- 只有 COMPLETE 同时主导 new early与surface contradiction，才允许冻结 target-independent source-ray carving；若
+  KEEP/PROJECT主导，则将 failure定位为 coverage下的 nearest-ray assignment边界，不通过删除表面优化指标。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

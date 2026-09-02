@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V7-P3D all-Actor output-provenance attribution freeze（2026-09-02）
+
+- hypothesis：`WS-V7-H-P3-004`；对象是 `V7-F18` 的机制，不是新 operator/model。
+- cohort：consumed 30 logs 的全部 Actors/target rays；不按 failure magnitude、hazard、category或 Chamfer挑样本。
+- attribution：compiled/new early、compiled/new hit、surface contradiction分别计入 `KEEP/PROJECT/COMPLETE`；compiled
+  provenance严格复现 `.06m` voxel-first output顺序。
+- locks：P3 `.20m` lateral/depth tolerance、observed-hit PROJECT、Actor policy和cohort全部不变；不读 fresh 20 logs。
+- decision boundary：只有新增 early与surface contradiction同时指向 COMPLETE，才允许未来 source-only ray carving；若
+  主要来自 KEEP/PROJECT nearest assignment，则关闭表面修复路径，只修正/解释 evaluator边界。
+- status：implementation frozen；提交推送后单次 descriptive GPU run。
+
 ## WS-V7-P3C consumed-cohort visibility certificate result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`。
