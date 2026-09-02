@@ -1,5 +1,16 @@
 # Experiments
 
+## P22 consumed AV2 literal first-return correction freeze（2026-09-02）
+
+- task/run：`WS-V7-P22-AV2-TRUE-FIRST-RETURN-CORRECTION-01` /
+  `20260903T160000Z__consumed-av2-true-first-return-s0-r1`；
+- cohort：已消费P15 recovery 20 logs，expected Actors由冻结compiler决定；failed-log deletion=false；
+- comparator：P15 canonical target-nearest `ACTOR_PROVENANCE_ATTRIBUTION.jsonl`；
+- operator：minimum positive depth within `.20m` lateral tube；hit/early depth tolerance `.20m`；
+- outputs：all/hazard/clear proxy/literal counts、rates、ratio、new hits与literal action attribution；
+- locks：0 model/checkpoint/training/refit/threshold/tolerance/action/policy/cohort change；第三批10 logs不读；
+- interpretation：consumed external metric correction，不是fresh confirmation、collision/planning/safety claim。
+
 ## P21 monotone first-return safety boundary / paper handoff（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/

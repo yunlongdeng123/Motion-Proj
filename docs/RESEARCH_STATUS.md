@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P22 consumed-AV2 literal first-return correction frozen（2026-09-02）
+
+状态=`p22_ready`。P20已证明source legacy target-nearest proxy低估literal first-return约6倍；P22把同一冻结
+minimum-positive-depth算子迁到已消费P15的20-log AV2 cohort，属于第11节允许的metric纠错，不扩展方法族。
+
+P2 compiler、observed-hit PROJECT、20 logs/全部Actors、`.20m` lateral/depth tolerance与legacy P15 comparator全部
+锁定；只报告all/hazard/clear proxy→literal rate、new hits及KEEP/PROJECT/COMPLETE来源。0 training/refit/threshold/
+policy/cohort change；第三批10-log AV2保持unread。Run ID固定为
+`20260903T160000Z__consumed-av2-true-first-return-s0-r1`。
+
 ## WorldSim V7 P21 monotone boundary supported / CVPR paper integrated（2026-09-02）
 
 P21 canonical=`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/

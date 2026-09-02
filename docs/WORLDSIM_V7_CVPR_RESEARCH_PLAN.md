@@ -1,5 +1,14 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P22 consumed-AV2 literal first-return metric correction frozen
+
+P22是停止方法扩展后的合法metric纠错：复用P20 minimum-positive-depth operator，在已消费P15的20-log AV2上
+重测always-COMPLETE，不训练或选择新policy。它回答source约6倍proxy低估是否也出现在外部传感器，并同步纠正
+KEEP/PROJECT/COMPLETE首回波来源；结果只能标记`consumed_external_diagnostic`。
+
+配置固定20 logs、P2 observed-hit compiler、P15 legacy rows、`.20m` lateral/depth tolerance和唯一run ID；失败log不删，
+结果后不扫operator/tolerance/policy。第三批未读10 logs不参与，P22也不授权其quality read。
+
 ## 2026-09-02 P21 supported and CVPR safety-boundary integration completed
 
 P21 canonical=`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/

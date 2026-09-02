@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P22 prevention note — external operator correction without target reuse promotion（2026-09-02）
+
+- P22只纠正P15已消费20-log AV2的ray operator；不得把结果包装为第二次fresh test或用来选P17/P17R/P19；
+- legacy comparator、Actor identities、compiler surface、PROJECT rule与`.20m` tolerances全部冻结；每个log保留；
+- 第三批10-log payload保持unread；P22结果无论方向如何均不触发policy/threshold/tolerance/recovery sweep；
+- 若实现入口在metric前失败，只允许同合同窄修复；scientific negative的下一可用id保持`V7-F30`。
+
 ## P21 outcome note — exact directional theorem supported, no policy promotion（2026-09-02）
 
 - canonical=`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/
