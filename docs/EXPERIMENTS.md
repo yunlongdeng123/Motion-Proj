@@ -8,7 +8,8 @@
 - locks：same 20 fresh logs、same `.20m` lateral/depth tolerance、same observed-hit PROJECT、same descriptive schema；
   P6-C verdict不参与任何 branch/threshold/operator选择。
 - duplicate policy：existing P3-C run path causes stop, not retry/second read。
-- current：download 15/20；P6-C/P3-C summary absent；fresh visibility metric unread。
+- launch result：commit=`b775807`；watcher PID=`33968`，dedicated lock acquired；first log reports download 16/20、
+  P6-C/P3-C summary absent；fresh visibility metric unread。
 
 ## CVPR paper integration through P3-C/P3-D（2026-09-02）
 

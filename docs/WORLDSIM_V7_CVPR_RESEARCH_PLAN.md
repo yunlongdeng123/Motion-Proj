@@ -5,7 +5,8 @@
 P3-C fresh canonical run预定为 `20260902T231500Z__fresh-visibility-s0-r1`；单实例 watcher等待20/20下载、
 `ALL_COMPLETE`、P6-C canonical summary/status与 evaluator退出后才串行exec，不并发GPU、不启动第二下载器。
 P6-C verdict不作为分支条件，P3-C仍使用已冻结20 logs、`.20m` ray/depth tolerance和 observed-hit PROJECT。
-existing run path直接停止而非第二次读取。当前15/20，P6-C/P3-C summary均未产生。
+existing run path直接停止而非第二次读取。启动前为15/20，P6-C/P3-C summary均未产生。
+Watcher已由commit `b775807` 启动为PID `33968`；首次日志确认16/20、P6-C/P3-C summary均未产生，保持等待。
 
 ## 2026-09-02 P3-C/P3-D paper integration milestone
 

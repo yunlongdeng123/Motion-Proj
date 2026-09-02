@@ -8,6 +8,7 @@
   fresh visibility read，避免结果条件分支。
 - 20/20 marker、ALL_COMPLETE与P6-C evaluator退出后才exec；dedicated flock和existing-run-path stop防止双实例。
 - watcher不下载、不训练、不改 config/tolerance/operator/cohort；P3-C runner仍是唯一指标读取者。
+- commit=`b775807` 后 watcher PID=`33968` 正常取得lock并在16/20状态等待；未启动 evaluator或第二下载器。
 - 当前为launch orchestration，无新failure id；下一可用仍为 `V7-F19`。
 
 ### Paper layout note — P3-C/P3-D integration visual QA通过，无新failure
