@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P23 paper claim audit — fresh measurement transfer kept separate from model transfer（2026-09-02）
+
+- 摘要/正文/补充材料都以P23 `14.817%`/`8.29x`作为fresh metric confirmation，同时把P22保留为consumed correction；
+- AV2-C/AV2-F在图中显式区分；P3/P15继续只拥有target-nearest proxy，P20/P22/P23拥有literal measurements，
+  P21只拥有deletion theorem；
+- 禁止把fresh measurement/provenance复现表述为P16/P4 model generalization、policy validation、collision或road safety；
+- 8页正文与引用/视觉检查通过；没有为排版删除failure、cohort、负结果或non-guarantee；
+- P23完成后关闭新AV2 cohort与first-return方法扩展；无新failure，下一ID=`V7-F30`。
+
 ## P23 outcome note — fresh cohort confirms the first-return metric failure（2026-09-02）
 
 - fresh all/hazard/clear literal exposure=`10.801/14.817/6.750%`，分别为proxy的`7.89/8.29/7.12x`；预冻结两门全过；

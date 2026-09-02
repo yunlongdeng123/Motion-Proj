@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P23 fresh first-return paper integration completed
+
+P23已完成从canonical summary到论文宏、主文、supplement、跨传感器图与贡献归属的闭环。最终摘要以fresh AV2
+hazard literal=`14.817%`（proxy `1.788%`，`8.29x`）补强“硬三维物理证据”；source/P22/P23三组证据分别标注
+source consumed、AV2 consumed correction、AV2 fresh exact-once confirmation，不混淆measurement与model transfer。
+
+Final main=8 content pages + 1 references page（1,779,528 bytes），supplement=10 pages（7,392,690 bytes）；引用与关键
+页面视觉QA通过。V7 stop conditions全部满足，后续不再扩展method/first-return/AV2 holdout；只允许最终代码/论文收敛、
+arXiv元数据准备和外部不可控信息补齐。Failure下一ID保持`V7-F30`。
+
 ## 2026-09-02 P23 fresh AV2 literal first-return confirmation supported
 
 P23在10个此前quality-unread AV2 logs上exact-once完成，233 Actors/650,145 rays。All/hazard/clear literal new-early=

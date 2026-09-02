@@ -142,7 +142,7 @@ collapse under KEEP-first voxel deduplication; this is not a causal zero-effect 
 
 The frozen AV2 attribution above selects the Euclidean-nearest output to each target point and then checks its projected depth. It
 is a target-aligned proximity diagnostic, not literal ray termination. Following raw-LiDAR occupancy evaluation
-~\cite{kalble2024accurate}, P20/P22 instead take the minimum positive projected depth among every surface point inside the same frozen
+~\cite{kalble2024accurate}, P20/P22/P23 instead take the minimum positive projected depth among every surface point inside the same frozen
 beam tube. Query and compiled surfaces use the identical operator.
 
 \begin{equation}
@@ -167,13 +167,21 @@ P22 applies the identical frozen operator to the already consumed AV2 cohort rat
 \PtwentytwoCompleteNewHitShare{}\% of literal new hits, yielding only \PtwentytwoHitEarlyRatio{} hits per early return.
 This corrects, rather than confirms, the larger target-nearest efficiency ratio reported above.
 
+P23 prospectively freezes the same comparison on a disjoint \PtwentythreeLogs{}-log AV2 cohort before any quality read. Across
+\PtwentythreeActors{} Actors and \PtwentythreeRays{} rays, all/hazard/clear rates change from
+\PtwentythreeProxyTotalEarly{}/\PtwentythreeProxyHazardEarly{}/\PtwentythreeProxyClearEarly{}\% to
+\PtwentythreeTrueTotalEarly{}/\PtwentythreeTrueHazardEarly{}/\PtwentythreeTrueClearEarly{}\%, or
+\PtwentythreeTotalRatio{}/\PtwentythreeHazardRatio{}/\PtwentythreeClearRatio{}$\times$. All
+\PtwentythreeTrueNewEarly{} literal new-early returns are \textsc{complete}, and the hit/early ratio remains only
+\PtwentythreeHitEarlyRatio{}. This is fresh confirmation of metric undercounting and provenance, not of a model or policy.
+
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.96\textwidth]{figures/supplement/p21_first_return_boundary.png}
 \caption{Frozen literal first-return boundary. (a) The target-nearest proxy understates total and hazardous-Actor
-new-early exposure on both source and AV2. (b) Deleting points is directionally safe for early returns, but every frozen source policy
+new-early exposure on source, consumed AV2 (AV2-C), and exact-once fresh AV2 (AV2-F). (b) Deleting points is directionally safe for early returns, but every frozen source policy
 loses matched hits and worsens Chamfer. Bubble area scales with the Chamfer penalty. Ratios are consumed-source
-or consumed-AV2 diagnostics, not fresh transfer or road-safety bounds.}
+diagnostics; fresh AV2 transfers the metric failure only, not a model, policy, or road-safety bound.}
 \label{fig:supp-first-return-boundary}
 \end{figure*}
 
@@ -207,6 +215,7 @@ Cohort & Size & Frozen rule \\
 \midrule
 AV2 consumed external & 30 logs & Sort all 150 Sensor-val UUIDs; take indices $0,5,\ldots,145$. First 20 are quantitative and final 10 qualitative. \\
 AV2 fresh exact-once & 20 logs & Remove the consumed indices; from the 120-log complement take positions $0,6,\ldots,114$. \\
+AV2 fresh metric exact-once & 10 logs & Remove both prior AV2 cohorts; from the 100-log complement take positions $0,10,\ldots,90$, frozen before P22. \\
 nuScenes fresh exact-once & 20 scenes & Exclude every P4 train/calibration/test scene; sort the remaining 106 available scenes by official index and take rounded equally spaced positions. \\
 \bottomrule
 \end{tabular}

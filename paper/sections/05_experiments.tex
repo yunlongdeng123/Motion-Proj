@@ -172,14 +172,15 @@ evaluation~\cite{kalble2024accurate}, we separately re-audit fixed source and co
 source total/hazard proxy rates \PtwentyLegacyTotalEarly{}/\PtwentyLegacyHazardEarly{}\% rise to
 \PtwentyTrueTotalEarly{}/\PtwentyTrueHazardEarly{}\%. P17/P17R/P19 reduce hazard exposure to
 \PtwentyPseventeenHazardEarly{}/\PtwentyPseventeenRHazardEarly{}/\PtwentyPnineteenHazardEarly{}\%, but each worsens Chamfer.
-P19 removes \PtwentyPnineteenHazardRemoved{} events for \PtwentyPnineteenHitsLost{} hits and
-\PtwentyPnineteenPenaltyMM{}\,mm mean Chamfer. Thus the certified early direction has nonzero surface cost.
+Thus the certified early direction has nonzero surface cost.
 
-On consumed AV2 (\PtwentytwoActors{} Actors; \PtwentytwoRays{} rays), total/hazard exposure similarly changes from
-\PtwentytwoProxyTotalEarly{}/\PtwentytwoProxyHazardEarly{}\% to \PtwentytwoTrueTotalEarly{}/\PtwentytwoTrueHazardEarly{}\%
-(hazard \PtwentytwoHazardRatio{}$\times$). All \PtwentytwoTrueNewEarly{} literal new-early rays are \textsc{complete}; completion
-also supplies \PtwentytwoCompleteNewHitShare{}\% of \PtwentytwoTrueNewHits{} new hits, only \PtwentytwoHitEarlyRatio{} hits/early.
-This corrects the proxy efficiency claim; it is not fresh transfer, policy, collision, or road-safety evidence.
+Consumed AV2 first shows hazard exposure \PtwentytwoProxyHazardEarly{}$\rightarrow$\PtwentytwoTrueHazardEarly{}\%
+(\PtwentytwoHazardRatio{}$\times$). A disjoint exact-once \PtwentythreeLogs{}-log read then independently confirms all/hazard
+\PtwentythreeProxyTotalEarly{}/\PtwentythreeProxyHazardEarly{}$\rightarrow$
+\PtwentythreeTrueTotalEarly{}/\PtwentythreeTrueHazardEarly{}\% (\PtwentythreeTotalRatio{}/\PtwentythreeHazardRatio{}$\times$).
+All \PtwentythreeTrueNewEarly{} fresh literal new-early rays are \textsc{complete}; completion supplies
+\PtwentythreeCompleteNewHitShare{}\% of \PtwentythreeTrueNewHits{} new hits, only \PtwentythreeHitEarlyRatio{} hits/early.
+This transfers metric failure and provenance, not model, policy, collision, or road-safety validity.
 
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,

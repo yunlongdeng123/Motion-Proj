@@ -1,4 +1,4 @@
-"""Render the frozen P20/P21/P22 literal first-return boundary for the paper."""
+"""Render the frozen P20/P21/P22/P23 first-return boundary for the paper."""
 
 from __future__ import annotations
 
@@ -31,6 +31,7 @@ def render(
     p20_summary: Path,
     p21_summary: Path,
     p22_summary: Path,
+    p23_summary: Path,
     output_stem: Path,
     legacy_total_percent: float,
     legacy_hazard_percent: float,
@@ -38,23 +39,28 @@ def render(
     p20 = _read_json(p20_summary)
     p21 = _read_json(p21_summary)
     p22 = _read_json(p22_summary)
+    p23 = _read_json(p23_summary)
     baseline = p20["policies"]["p17"]
     literal_total = 100.0 * float(baseline["baseline"]["new_early_rate"])
     literal_hazard = 100.0 * float(baseline["hazard"]["baseline"]["new_early_rate"])
 
-    figure, axes = plt.subplots(1, 2, figsize=(9.2, 3.05))
+    figure, axes = plt.subplots(1, 2, figsize=(10.4, 3.10))
     figure.patch.set_facecolor("white")
 
-    groups = np.arange(4)
+    groups = np.arange(6)
     width = 0.32
     p22_all = p22["proxy_vs_literal"]["all"]
     p22_hazard = p22["proxy_vs_literal"]["hazard"]
+    p23_all = p23["proxy_vs_literal"]["all"]
+    p23_hazard = p23["proxy_vs_literal"]["hazard"]
     proxy = np.asarray(
         [
             legacy_total_percent,
             legacy_hazard_percent,
             100.0 * float(p22_all["proxy_new_early_rate"]),
             100.0 * float(p22_hazard["proxy_new_early_rate"]),
+            100.0 * float(p23_all["proxy_new_early_rate"]),
+            100.0 * float(p23_hazard["proxy_new_early_rate"]),
         ]
     )
     literal = np.asarray(
@@ -63,6 +69,8 @@ def render(
             literal_hazard,
             100.0 * float(p22_all["literal_new_early_rate"]),
             100.0 * float(p22_hazard["literal_new_early_rate"]),
+            100.0 * float(p23_all["literal_new_early_rate"]),
+            100.0 * float(p23_hazard["literal_new_early_rate"]),
         ]
     )
     left = axes[0]
@@ -83,7 +91,17 @@ def render(
             fontweight="bold",
             color="#991b1b",
         )
-    left.set_xticks(groups, ["Source\nall", "Source\nhazard", "AV2\nall", "AV2\nhazard"])
+    left.set_xticks(
+        groups,
+        [
+            "Source\nall",
+            "Source\nhazard",
+            "AV2-C\nall",
+            "AV2-C\nhazard",
+            "AV2-F\nall",
+            "AV2-F\nhazard",
+        ],
+    )
     left.set_ylabel("New-early returns (%)")
     left.set_ylim(0.0, max(literal) * 1.28)
     left.set_title("(a) Proxy underestimates across sensors", loc="left", fontweight="bold")
@@ -164,6 +182,7 @@ def main() -> None:
     parser.add_argument("--p20-summary", type=Path, required=True)
     parser.add_argument("--p21-summary", type=Path, required=True)
     parser.add_argument("--p22-summary", type=Path, required=True)
+    parser.add_argument("--p23-summary", type=Path, required=True)
     parser.add_argument("--output-stem", type=Path, required=True)
     parser.add_argument("--legacy-total-percent", type=float, required=True)
     parser.add_argument("--legacy-hazard-percent", type=float, required=True)
@@ -172,6 +191,7 @@ def main() -> None:
         args.p20_summary,
         args.p21_summary,
         args.p22_summary,
+        args.p23_summary,
         args.output_stem,
         args.legacy_total_percent,
         args.legacy_hazard_percent,

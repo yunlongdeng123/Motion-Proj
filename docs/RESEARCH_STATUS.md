@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P23 fresh boundary integrated into CVPR paper（2026-09-02）
+
+P23 fresh AV2已进入abstract/main experiments/limitations/supplement/result macros/contribution map/asset index。主文用
+fresh hazard=`14.817%`与`8.29x` proxy undercount作为独立外域硬证据；同时明确这是metric/provenance transfer，不能
+升级为learned model或policy generalization。Supplement Figure 1现在含source、AV2-C consumed与AV2-F fresh六组柱，
+cohort table增加P23 metadata-only 10-log规则。
+
+Final main=`9 pages/1,779,528 bytes`（8 content + 1 references），supplement=`10 pages/7,392,690 bytes`；
+undefined citation/reference=`0`，主文第8/9页与supplement第4/5页视觉QA无裁切/重叠/断表。仅既有Table 1
+`6.03pt` non-clipping overfull。论文与数据处理状态已收敛，下一failure仍为`V7-F30`。
+
 ## WorldSim V7 P23 fresh AV2 first-return confirmation supported（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01/

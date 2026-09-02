@@ -1,5 +1,16 @@
 # Experiments
 
+## P23 paper integration and final compile（2026-09-02）
+
+- macros：P23 10 logs/233 Actors/650,145 rays、三strata proxy/literal rates、ratio、70,220 early、86,883 hits、
+  COMPLETE shares全部由canonical summary导出；
+- main：abstract报告fresh AV2 hazard=`14.817%`/`8.29x`；experiment同时保留P22 consumed纠错与P23 independent
+  confirmation，并限制为metric/provenance transfer；
+- supplement：Figure 1新增AV2-F all/hazard柱，caption解释AV2-C/F；cohort table登记第三批10-log metadata rule；
+- compile：main=`9 pages/1,779,528 bytes`（8 content + references），supplement=`10 pages/7,392,690 bytes`；
+  undefined references=0，关键页视觉QA通过，既有Table 1 overfull不截断；
+- no extra experiment：0 retraining/refit/threshold/tolerance/policy change；P23 family闭合，不再建立AV2 holdout。
+
 ## P23 fresh AV2 literal first-return confirmation result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01/

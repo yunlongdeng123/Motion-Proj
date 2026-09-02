@@ -4,11 +4,11 @@
 
 - Paper asset: `paper/figures/supplement/p21_first_return_boundary.png` and vector PDF counterpart.
 - Renderer: `scripts/plot_worldsim_v7_p21_safety_boundary.py`.
-- Inputs: frozen P20/P21/P22 canonical `summary.json` files plus the already reported source proxy rates
+- Inputs: frozen P20/P21/P22/P23 canonical `summary.json` files plus the already reported source proxy rates
   `0.9662%/1.4362%`; no dataset, model, checkpoint, threshold, or policy is read.
-- Left panel owns only the source/AV2 metric-correction comparison; right panel owns the consumed-source deletion frontier.
+- Left panel owns only the source/consumed-AV2/fresh-AV2 metric comparison; right panel owns the consumed-source deletion frontier.
   Marker area encodes Chamfer penalty, and the dashed line marks one hazardous early event removed per matched hit lost.
-- The AV2 bars are an already-consumed diagnostic, not fresh transfer, collision evidence, or a road-safety bound.
+- The AV2-C bars are consumed diagnostics; AV2-F confirms only metric/provenance transfer, not model, policy, collision, or road safety.
 
 This index resolves the frozen qualitative evidence package without duplicating the 46 MiB binary bundle in Git.
 
