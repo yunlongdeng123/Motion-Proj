@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 physical-simulation literature boundary converged（2026-09-02）
+
+Related Work现以CVF官方论文页核对并补入CVPR 2023 UniSim、CVPR 2024 LiDAR4D与CVPR 2024 DyNFL。定位明确区分
+closed-loop sensor rendering / space--time LiDAR synthesis / dynamic re-simulation与HARP-3D的正交问题：编辑Actor是否拥有
+可查询、first-return-consistent、显式保留unknown space的碰撞表面。论文不把Gaussian opacity、渲染逼真度或LiDAR
+novel-view quality升级为collision occupancy或道路安全证据。
+
+压缩重复叙述后anonymous main=`9 pages/1,926,602 bytes`，正文和Conclusion均在前8页，page 9仅references；
+supplement=`10 pages/7,596,557 bytes`。共享arXiv入口以本地临时匿名author block完成`9 pages/1,905,274 bytes`
+构建，但该metadata/PDF不上传。0 dataset/model read、0 training/refit、0 result/claim/cohort/threshold/policy change；
+下一failure ID仍为`V7-F30`。
+
 ## WorldSim V7 shared anonymous/arXiv source ready（2026-09-02）
 
 `paper/arxiv.tex`已建立，使用`pagenumbers`模式并与anonymous `main.tex`共享title/body、所有章节、图表、结果宏和

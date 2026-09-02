@@ -1,5 +1,19 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 physical-simulation literature convergence milestone
+
+按“视觉/几何硬证据”补强方向，仅从CVF官方页加入三项最直接的对照：
+[UniSim](https://openaccess.thecvf.com/content/CVPR2023/html/Yang_UniSim_A_Neural_Closed-Loop_Sensor_Simulator_CVPR_2023_paper.html)、
+[LiDAR4D](https://openaccess.thecvf.com/content/CVPR2024/html/Zheng_LiDAR4D_Dynamic_Neural_Fields_for_Novel_Space-time_View_LiDAR_Synthesis_CVPR_2024_paper.html)与
+[DyNFL](https://openaccess.thecvf.com/content/CVPR2024/html/Wu_Dynamic_LiDAR_Re-simulation_using_Compositional_Neural_Fields_CVPR_2024_paper.html)。
+Related Work现在明确：前者解决闭环sensor rendering或动态LiDAR synthesis/re-simulation；V7解决编辑Actor的
+first-return-consistent queryable collision surface、unknown-space语义和sensor provenance。渲染逼真不等于碰撞自洽，
+该边界不新增或扩大实验claim。
+
+最终anonymous main=`9 pages/1,926,602 bytes`，正文含Conclusion止于page 8、page 9仅references；supplement=
+`10 pages/7,596,557 bytes`。共享arXiv入口本地临时构建通过且不发布。未读数据/模型、未训练、未改变结果宏/cohort/
+threshold/policy/verdict；V7第11节停止方法扩展继续生效，下一failure=`V7-F30`。
+
 ## 2026-09-02 arXiv source-entry convergence milestone
 
 新增`paper/arxiv.tex`，以official kit的`pagenumbers` final-style路径构建非匿名入口；`main.tex`与`arxiv.tex`共享

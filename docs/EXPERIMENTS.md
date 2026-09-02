@@ -1,5 +1,15 @@
 # Experiments
 
+## Physical-simulation literature and page-budget audit（2026-09-02）
+
+- primary sources：CVF official UniSim（CVPR 2023）、LiDAR4D与DyNFL（CVPR 2024）论文页；只迁移任务边界和BibTeX元数据；
+- paper change：将sensor rendering / LiDAR synthesis与queryable first-return collision semantics显式区分，保持
+  `Gaussian opacity != collision occupancy`与unknown-space边界；
+- compile：anonymous main=`9 pages/1,926,602 bytes`，content/Conclusion均止于page 8且page 9纯references；
+  supplement=`10 pages/7,596,557 bytes`；临时匿名arXiv build=`9 pages/1,905,274 bytes`且不发布；
+- QA：Related Work与page 8视觉无裁切/重叠，undefined citation/reference=0；唯一overfull仍为既有Table 1 `6.03pt`；
+- no experiment：0 data/model read、0 training、0 metric/claim/macro/cohort/threshold/policy change。
+
 ## Shared conference/arXiv source-entry audit（2026-09-02）
 
 - source：`main.tex`/`arxiv.tex`共享`manuscript_metadata.tex`与`manuscript_body.tex`及全部scientific assets；

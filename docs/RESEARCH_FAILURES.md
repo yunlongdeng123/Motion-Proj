@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Literature-layout note — stronger positioning without losing the 8-page boundary（2026-09-02）
+
+- CVF官方UniSim/LiDAR4D/DyNFL只用于界定sensor realism与physical collision semantics，不得借引用扩大HARP-3D claim；
+- 首版较长Related Work使四行Conclusion进入page 9；在上传/提交前删除重复措辞并恢复全部正文止于page 8，未缩字体、
+  行距、图表或安全边界；
+- final page 9仅references；新增三项引用均已解析，原Table 1 `6.03pt` non-clipping overfull不变；
+- 这是未发布的layout recovery，0 scientific exposure/experiment，不消耗failure ID；下一可用仍为`V7-F30`。
+
 ## arXiv identity-boundary note — shared science, isolated author metadata（2026-09-02）
 
 - conference与arXiv入口共享同一title/body/sections/tables/figures/macros/bibliography，禁止分别复制后产生claim漂移；
