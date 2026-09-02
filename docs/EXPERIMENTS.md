@@ -9,6 +9,8 @@
 - verdict=`source_development_rejected_external_unread`、`V7-F28`、target read=`false`；不做veto sweep。
 - P20：冻结true first-return=min positive depth within lateral tolerance；同算子处理query/compiled；审计冻结P17/P17R/P19，
   source test consumed-diagnostic，0 external read，下一failure=`V7-F29`。
+- implementation=`audit_ready`：逐ray chunked GPU min-depth；三policy共享baseline attribution；输出三份Actor rows与variant
+  Pareto decisions；无optimizer、无fresh payload access。
 
 ## P18 result / P19 sparse hazard veto freeze（2026-09-02）
 

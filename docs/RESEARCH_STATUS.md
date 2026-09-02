@@ -8,7 +8,8 @@ P19 canonical=`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/
 
 代码审查发现legacy visible-failure attribution不是literal first return，而是target-nearest point再做ray test。按CVPR 2024
 evidential occupancy raw-ray evaluation，P20冻结minimum-positive-depth true first-return；一次审计冻结P17/P17R/P19，
-query/compiled同算子、tolerance不变、Chamfer不变，不训练、不读fresh AV2。状态=`p20_frozen_implementation_next`。
+query/compiled同算子、tolerance不变、Chamfer不变，不训练、不读fresh AV2。实现已就绪并共享每Actor baseline ray
+partition以控制开销；状态=`p20_audit_ready`。
 
 ## WorldSim V7 P18 rejected / P19 sparse hazard veto frozen（2026-09-02）
 

@@ -16,6 +16,8 @@
 - 每条held-out ray在lateral tolerance内取minimum positive depth；query/compiled同算子、同冻结depth tolerance。
 - P17/P17R checkpoint、P19 action、Chamfer、scene均固定；不得在corrected result后选择tolerance/operator或重训。
 - consumed source只作诊断，fresh AV2保持未读；P20本身不冒充独立confirmation。
+- implementation只做chunked GPU `min(where(valid, depth, inf))`；不得回退target-nearest、改为soft rendering或增加
+  morphology后处理。
 
 ## V7-F27 — rare Pareto-positive support collapses Actor routing to the baseline
 

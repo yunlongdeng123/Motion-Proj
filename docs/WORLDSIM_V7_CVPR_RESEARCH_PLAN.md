@@ -10,6 +10,9 @@ first-return，这正是视觉/几何“硬证据”必须修正的评估边界�
 compiled同算子。一次审计冻结P17/P17R/P19；checkpoint、policy、`.5`、tolerance、Chamfer、scene全不变，fresh AV2
 不读。若三者均无true-ray Pareto，登记`V7-F29`并把安全--表面utility冲突写成明确边界。
 
+实现使用chunked GPU `minimum positive depth`并在三policy间共享Actor baseline attribution；输出逐Actor审计rows与三组
+独立Pareto decision。当前`audit_ready`，无optimizer、无target access。
+
 ## 2026-09-02 P18 rejected, P19 sparse hazard veto frozen
 
 P18的P17R-dominant support只有fit `3/85`、consumed test `2/228`；router在test全选baseline，hazard early与Chamfer
