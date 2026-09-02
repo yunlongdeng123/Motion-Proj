@@ -9,6 +9,7 @@ import torch
 from torch import nn
 
 from motion_proj.worldsim_v7.completion_responsibility import COMPLETION_STATES
+from motion_proj.worldsim_v7.completion_responsibility import OCCUPIED, UNKNOWN
 from motion_proj.worldsim_v7.selective_validity_hazard import (
     HAZARD_FEATURE_NAMES,
     VALIDITY_FEATURE_NAMES,
@@ -144,3 +145,22 @@ def routing_metrics(labels: np.ndarray, predictions: np.ndarray) -> dict[str, An
         },
         "confusion_true_rows_predicted_columns": confusion.tolist(),
     }
+
+
+def sparse_hazard_veto_states(
+    p17r_scores: np.ndarray,
+    hazardous: bool,
+    p17r_threshold: float,
+) -> tuple[np.ndarray, np.ndarray, int | None]:
+    """Return a one-slot deterministic UNKNOWN veto over otherwise occupied candidates."""
+    scores = np.asarray(p17r_scores, dtype=np.float32)
+    states = np.full(len(scores), OCCUPIED, dtype=np.int64)
+    probabilities = np.zeros((len(scores), len(COMPLETION_STATES)), dtype=np.float32)
+    probabilities[:, OCCUPIED] = 1.0
+    veto_index = None
+    if hazardous and len(scores) and float(np.min(scores)) < float(p17r_threshold):
+        veto_index = int(np.argmin(scores))
+        states[veto_index] = UNKNOWN
+        probabilities[veto_index, OCCUPIED] = float(scores[veto_index])
+        probabilities[veto_index, UNKNOWN] = 1.0 - float(scores[veto_index])
+    return states, probabilities, veto_index

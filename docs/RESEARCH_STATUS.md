@@ -9,7 +9,7 @@ P18 canonical=`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/
 
 检索SparseOcc/EvOcc后，P19冻结hazard-only sparse veto：存在P17R score `<.5`时，仅minimum-score candidate标
 UNKNOWN，每Actor最多一个；clear Actor恒always-COMPLETE，不训练、不扫容量/阈值。nuScenes仍仅development，fresh
-AV2才可支持transfer；状态=`p19_frozen_implementation_next`。
+AV2才可支持transfer。实现已就绪，source只重编译consumed test角色，external逐log执行；状态=`p19_source_ready`。
 
 ## WorldSim V7 P17R rejected / P18 two-expert routing frozen（2026-09-02）
 

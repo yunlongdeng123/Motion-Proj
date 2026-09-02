@@ -18,6 +18,7 @@
 - 仅hazard Actor可veto；若存在冻结P17R score `<.5`，只把minimum-score一个candidate标UNKNOWN，其余完整保留。
 - clear Actor恒always-COMPLETE；KEEP/PROJECT不可删除；不得以oracle test label直接选Actor。
 - source双Pareto失败即关闭score-ranked veto，不扫top-k/threshold/strata/ranking；fresh AV2仍须source通过才可读。
+- implementation直接以`np.argmin`固定首个tie，输出one-slot UNKNOWN/其余OCCUPIED；不得借实现错误扩大veto容量。
 
 ## V7-F26 — normalized hybrid supervision narrows but does not close the Pareto gap
 

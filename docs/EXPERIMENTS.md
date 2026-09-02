@@ -11,6 +11,8 @@
   ceiling诊断，不作为method claim。
 - P19 freeze：hazard Actor内score `<.5`才veto minimum一个candidate；clear恒baseline；source双Pareto、下一failure=
   `V7-F28`；不扫capacity/threshold/ranking。
+- implementation=`source_ready`：复用冻结P17R checkpoint；test-only source compiler；每Actor deterministic argmin；
+  external在完整下载且source pass前不可创建run/read payload。
 
 ## P17R result / P18 router freeze（2026-09-02）
 

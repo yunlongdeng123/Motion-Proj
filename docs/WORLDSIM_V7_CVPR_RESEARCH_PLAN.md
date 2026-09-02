@@ -10,6 +10,9 @@ P18的P17R-dominant support只有fit `3/85`、consumed test `2/228`；router在t
 若有冻结P17R score `<.5`，仅minimum-score一个candidate标UNKNOWN；clear Actor恒always-COMPLETE。无训练、无新阈值，
 source双Pareto失败即`V7-F28`，通过才允许fresh AV2 exact-once。
 
+实现固定复用P17R checkpoint；source只编译consumed test，external在10/10 marker和source pass前拒绝创建run。当前
+`source_ready`，直接执行一次source development，不做policy sweep。
+
 ## 2026-09-02 P17R rejected, P18 fixed-expert router frozen
 
 P17R把coverage恢复到`88.96%`并保留hazard early下降，但Chamfer仍`.1945868→.1957160m`，登记`V7-F26`，
