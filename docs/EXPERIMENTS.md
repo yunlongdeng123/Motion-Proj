@@ -11,6 +11,8 @@
 - P6-C：hazard coverage=`99.30%`、risk=`46.81%`；66 hazard failures完全不减，34个总体reduction全来自clear。
 - P4∧visibility：hazard coverage=`3.52%`、observed hazard failure=`0`、total gain=`.00122m`；不恢复P12 family。
 - verdict：状态/Actor保留不是hazard visibility-risk guarantee；无既有claim冲突，不登记`V7-F24`。
+- paper/QA：main=`10 pages/1,770,484 bytes`（pages 1--8 content、9--10 references），supplement=
+  `8 pages/7,227,451 bytes`；main 2--3/7--8及supp 2无裁切/重叠/断式。唯一warning为既有Table 1 `6.03pt` overfull。
 
 ## P14 hazard-stratified defer-to-query freeze（2026-09-02）
 

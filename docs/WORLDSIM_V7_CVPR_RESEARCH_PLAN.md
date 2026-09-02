@@ -14,6 +14,9 @@ P4∧visibility的0 hazard failure建立在仅`3.52%` hazard coverage与`.00122m
 结论：Actor/hazard字段100%保留不等于hazard-stratum visibility安全；aggregate改善主要由clear stratum驱动，低risk
 方案则几乎不修hazard。该结果未与既有“hazard-preserving只指状态不变”的claim冲突，不登记`V7-F24`。0 dataset/
 training/fit/calibration/threshold/gate change；完整result=`P14_HAZARD_STRATIFIED_DEFER_RESULT.md`。
+Paper integration完成：新增selective/defer相关工作、Method exact decomposition及main/supp hazard-stratum evidence。
+TeX Live main=`10 pages/1,770,484 bytes`（content 1--8、references 9--10），supplement=`8 pages/7,227,451 bytes`；
+main 2--3/7--8与supp 2视觉QA无裁切、重叠或断式，唯一既有warning为Table 1 `6.03pt` overfull。
 
 ## 2026-09-02 P14 hazard-stratified defer contract frozen
 

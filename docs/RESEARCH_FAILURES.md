@@ -12,6 +12,8 @@
   hazard-stratum visibility证据，也不得以近零hazard coverage包装safety。
 - classification：既有V7明确把hazard-preserving限定为状态不变并拒绝road-safety claim，故本结果是descriptive boundary，
   不登记`V7-F24`；下一可用failure id仍为`V7-F24`。
+- paper audit：exact decomposition与hazard boundary已进入main/supp；main 8 content pages、2 reference pages，相关页视觉QA
+  无裁切/重叠。负边界未因聚合数字、近零hazard coverage或排版被隐藏。
 
 ## P14 prevention note — aggregate composite改善不得掩盖hazard-stratum代价（2026-09-02）
 

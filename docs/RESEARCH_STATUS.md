@@ -13,6 +13,9 @@ amplification=`1.578x`，同时贡献`56.42%` gain。P6-C 34个failure reduction
 
 Verdict=`hazard_stratified_composite_boundary`：状态保留不等于hazard visible-risk改善；既有论文claim未冲突，因此不登记
 `V7-F24`。0 dataset/training/fit/calibration/threshold/policy search；单卡资源充足，下一步同步paper explanation。
+Paper已同步Related Work、Method exact identities、Experiments、Limitations、supplement与contribution registry。
+Final main=`10 pages/1,770,484 bytes`（8 content + 2 references），supplement=`8 pages/7,227,451 bytes`；main
+2--3/7--8、supp 2视觉QA通过。仅保留既有Table 1 `6.03pt` non-clipping overfull。
 
 ## WorldSim V7 P14 hazard-stratified composite audit frozen（2026-09-02）
 
