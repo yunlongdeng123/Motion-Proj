@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7 P15 fresh hazard-by-action mechanism completed（2026-09-02）
+
+Raw=`20260903T043000Z__fresh-hazard-action-raw-s0-r1`、audit=
+`20260903T044500Z__fresh-hazard-action-audit-s0-r1`；均done。523 Actors/20 logs/1,435,391 rays；raw wall=
+`46.70s`、peak GPU/RSS=`.0996/1.186GiB`，analysis=`.021s`。
+
+Always hazard/clear new-early rate=`1.912/.980%`（`1.951x`）；P4 selected=`1.922/.968%`（`1.985x`），其hazard
+rate相对always=`1.0055x`；P6-C=`1.0010x`。COMPLETE占hazard/clear new early=`98.52/89.82%`，但KEEP占surface
+contradictions=`95.45/96.18%`。COMPLETE hazard/clear new-hit-to-new-early=`13.67/17.62`，hazard收益/early代价更差。
+
+Verdict=`descriptive_fresh_hazard_action_mechanism_boundary`：selector未滤除hazard completion mechanism，且early/
+contradiction是双通道。PROJECT零计数仅是dedup precedence；不是action causal proof。0训练/fit/threshold/action change，
+不登记`V7-F24`。下一步同步paper hard-evidence explanation。
+
 ## WorldSim V7 P15 fresh hazard-by-action attribution frozen（2026-09-02）
 
 状态=`p15_fresh_hazard_action_frozen`。下一项直接解释P14而不训练新visibility head：对已消费fresh 20 logs执行一次

@@ -1,5 +1,21 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P15 fresh hazard-by-action mechanism result
+
+Raw/audit canonical分别为`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01/
+20260903T043000Z__fresh-hazard-action-raw-s0-r1`与`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01/
+20260903T044500Z__fresh-hazard-action-audit-s0-r1`。20 logs/523 Actors/1,435,391 target rays；raw单3090 wall=
+`46.70s`、peak GPU/RSS=`.0996/1.186GiB`，均status=`done`。
+
+Aggregate new-early=`19,354/1.348%`，new hit=`280,889`，ratio=`14.51`。COMPLETE解释`94.70%` new early与
+`99.94%` new hits；KEEP却解释`95.68%` surface contradictions，证明early termination与surface contradiction是两个
+不同物理失败通道。Hazard/clear new-early=`1.912/.980%`（`1.951x`）；P4 selected=`1.922/.968%`（`1.985x`），
+hazard rate为always的`1.0055x`；P6-C为`1.0010x`。
+
+结论：P4/P6-C没有过滤hazard中的completion-driven early-return机制；hazard COMPLETE hit/early也低于clear
+`13.67 vs 17.62`。PROJECT=0来自KEEP-first voxel dedup，不是0 causal harm。该结果与既有claim不冲突，不登记
+`V7-F24`；0 training/fit/threshold/action/cohort change。完整result=`P15_FRESH_HAZARD_ACTION_ATTRIBUTION_RESULT.md`。
+
 ## 2026-09-02 P15 fresh hazard-by-action mechanism audit frozen
 
 P14暴露hazard-stratum risk未降后，P15冻结为机制追踪而非新head：在已消费20-log fresh AV2上以原P2 compiler、

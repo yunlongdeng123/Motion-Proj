@@ -1,5 +1,19 @@
 # Experiments
 
+## P15 fresh hazard-by-action mechanism result（2026-09-02）
+
+- canonicals：raw=`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01/
+  20260903T043000Z__fresh-hazard-action-raw-s0-r1`；audit=`run://worldsim_v7/
+  WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01/20260903T044500Z__fresh-hazard-action-audit-s0-r1`；均done。
+- resource/denominator：20 logs、523 Actors、1,435,391 rays；raw=`46.70s/.0996GiB GPU/1.186GiB RSS`。
+- aggregate：new early=`19,354/1.348%`、new hit=`280,889`、hit/early=`14.51`；COMPLETE share=
+  `94.70/99.94%`，KEEP surface-contradiction share=`95.68%`。
+- always hazard/clear：new-early=`1.912/.980%`、ratio=`1.951x`；COMPLETE share=`98.52/89.82%`；COMPLETE
+  hit/early=`13.67/17.62`。
+- P4 selected：133 hazard/271 clear Actors，new-early=`1.922/.968%`、H/C=`1.985x`、hazard/always=`1.0055x`。
+- P6-C selected：141 hazard/298 clear，hazard/always=`1.0010x`；selector未压低hazard mechanism。
+- boundary：PROJECT=0为KEEP-first dedup；0 training/fit/threshold/action/search，no `V7-F24`。
+
 ## P15 fresh hazard-by-action mechanism freeze（2026-09-02）
 
 - tasks：raw=`WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01`，audit=

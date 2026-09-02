@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P15 result boundary — hazard early-return负担由COMPLETE主导，selector未过滤（2026-09-02）
+
+- canonical audit=`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01/
+  20260903T044500Z__fresh-hazard-action-audit-s0-r1`；523 Actors/20 consumed-fresh logs exact join。
+- mechanism split：COMPLETE占all new early/new hits=`94.70/99.94%`；KEEP占surface contradictions=`95.68%`。不得
+  用任一metric替代另一metric，也不得把nearest provenance写成action ablation。
+- hazard burden：always hazard/clear new-early=`1.912/.980%`；hazard是`1.951x`。COMPLETE hit/early=
+  `13.67/17.62`，hazard每个new-early换得的new-hit更少。
+- selector boundary：P4/P6-C selected hazard new-early rate分别是always hazard的`1.0055x/1.0010x`，未滤除该机制；
+  这与P14 hazard visible-risk未降一致，但不推翻P4 Chamfer target。
+- PROJECT prevention：0 output来自KEEP-first voxel dedup provenance collapse，不是PROJECT零risk/zero effect。
+- classification：现有论文已分离hazard-state preservation、visibility与causal safety，故为descriptive hard-evidence
+  boundary，不登记`V7-F24`；禁止调completion/tolerance/selector在本cohort recovery。
+
 ## P15 prevention note — nearest-output provenance不是action intervention（2026-09-02）
 
 - P15以target ray的nearest compiled output给new early/hit/contradiction归因，只回答“当前输出最接近哪个action来源”，不回答
