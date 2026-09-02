@@ -1,5 +1,15 @@
 # WorldSim V7 Project-Page and Video Asset Index
 
+## Literal first-return boundary asset
+
+- Paper asset: `paper/figures/supplement/p21_first_return_boundary.png` and vector PDF counterpart.
+- Renderer: `scripts/plot_worldsim_v7_p21_safety_boundary.py`.
+- Inputs: frozen P20/P21 canonical `summary.json` files plus the already reported legacy proxy rates
+  `0.9662%/1.4362%`; no dataset, model, checkpoint, threshold, or policy is read.
+- Left panel owns only the metric-correction comparison; right panel owns the consumed-source deletion frontier.
+  Marker area encodes Chamfer penalty, and the dashed line marks one hazardous early event removed per matched hit lost.
+- The plot is not fresh transfer, collision evidence, or a road-safety bound.
+
 This index resolves the frozen qualitative evidence package without duplicating the 46 MiB binary bundle in Git.
 
 Canonical run:

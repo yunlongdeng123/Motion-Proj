@@ -14,7 +14,8 @@
 - decision：P19在冻结points中效率最高但Chamfer仍退化，0 policy selection/refit，deletion-only family关闭；
 - exposure/resource：只读P20 summary；0新data/model/checkpoint/threshold/fresh AV2 read；target_data_read=false；
 - paper：main=`9 pages/1,779,602 bytes`（8 content + 1 references），supplement=
-  `9 pages/7,244,607 bytes`；无undefined引用，关键页视觉QA通过，仅既有Table 1 `6.03pt` non-clipping overfull。
+  `9 pages/7,368,644 bytes`；新增P21 proxy-vs-literal + deletion-frontier双面板，renderer只读冻结summary；
+  无undefined引用，supplement page 4视觉QA通过，仅既有Table 1 `6.03pt` non-clipping overfull。
 
 ## P20 result / P21 monotone safety boundary freeze（2026-09-02）
 

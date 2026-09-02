@@ -55,6 +55,7 @@ claim remains the separately frozen nuScenes-to-AV2 empirical evidence.
 
 P21 wall time was analysis-only; peak GPU allocation and data exposure are zero beyond reading the P20 summary. The result was
 integrated into the CVPR abstract, related work, method, experiments, limitations, conclusion, supplement, bibliography, result
-macros, and contribution registry. Final compilation is 8 content pages plus 1 references page for the main paper and 9 pages
-for the supplement; there are no undefined references or citations. The sole retained layout warning is the pre-existing,
-non-clipping 6.03 pt overfull box in Table 1.
+macros, and contribution registry. A frozen two-panel supplement figure visualizes the proxy correction and deletion frontier;
+its renderer reads only the P20/P21 summaries and performs no fit or selection. Final compilation is 8 content pages plus 1
+references page for the main paper and 9 pages for the supplement; there are no undefined references or citations. The sole
+retained layout warning is the pre-existing, non-clipping 6.03 pt overfull box in Table 1.

@@ -13,8 +13,9 @@ promote。P21只读P20 summary，0新dataset/model/checkpoint/threshold/policy/f
 
 P20/P21已进入CVPR abstract/related work/method/experiments/limitations/conclusion/supplement、结果宏和贡献索引。
 最终TeX Live main=`9 pages/1,779,602 bytes`（8页正文+1页references），supplement=
-`9 pages/7,244,607 bytes`；无undefined citation/reference。主文第1/8/9页及supplement第3/4页视觉QA无裁切、
-重叠或断表；仅保留既有Table 1 `6.03pt` non-clipping overfull。完整结果见
+`9 pages/7,368,644 bytes`；新增冻结P21双面板图同时展示proxy约6倍低估与events/hit/Chamfer交换率。
+无undefined citation/reference；主文第1/8/9页及supplement第3/4页视觉QA无裁切、重叠或断表；仅保留既有
+Table 1 `6.03pt` non-clipping overfull。完整结果见
 `docs/autoresearch/worldsim_v7/P21_MONOTONE_SAFETY_BOUNDARY_RESULT.md`。
 
 ## WorldSim V7 P20 hard-evidence correction supported / P21 boundary frozen（2026-09-02）

@@ -30,6 +30,8 @@ P20 corrects the later source audit from target-nearest proximity to literal min
 `analyze_worldsim_v7_p21_monotone_safety_boundary.py`. The supported claim is narrow: deletion cannot increase the literal early
 predicate for fixed rays. It does not guarantee hit retention, Chamfer, collision freedom, road safety, or fresh transfer. The prior
 AV2 P3/P15 metrics retain ownership as frozen target-nearest diagnostics and are not retroactively relabeled first-return evidence.
+Supplement Figure~1 is rendered by `plot_worldsim_v7_p21_safety_boundary.py` from the frozen P20/P21 summaries. Its proxy bars
+use the already reported P20 legacy rates; it performs no fit, policy selection, or new data read.
 
 ## Canonical evidence registry
 

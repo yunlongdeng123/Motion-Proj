@@ -11,7 +11,9 @@
   collision、policy或road-safety guarantee；
 - exposure：只读P20 summary，0 data recompilation/training/refit/target read；`V7-F29`保持准确，下一可用failure
   id=`V7-F30`；
-- paper audit：8页正文边界恢复，第9页仅references；无新failure。
+- paper audit：8页正文边界恢复，第9页仅references；supplement新增冻结边界图且仍为9页，无新failure。
+- plotting recovery：本地bundled Python缺Matplotlib后未安装新依赖，改用已被P7验证的远端项目环境单进程绘图；
+  失败发生在import阶段、0 output/metric/data read，不占科学failure id。
 
 ## V7-F29 — true first-return exposes larger risk but all deletion policies pay Chamfer
 
