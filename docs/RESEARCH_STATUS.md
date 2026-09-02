@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 fresh visibility exact-once serial watcher armed（2026-09-02）
+
+P3-C fresh run固定为 `run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/
+20260902T231500Z__fresh-visibility-s0-r1`。新增单实例 watcher只等待 canonical P6-C external `summary.json`、
+`status=done`、P6-C evaluator退出、20/20 `.complete` 与 `ALL_COMPLETE`；随后 `exec` 已冻结 P3-C runner。它不启动
+下载、不并发占 GPU、不读取 P6-C verdict作方法选择，任何 P6-C科学正/负结果后都运行同一 fresh visibility合同。
+
+若 P3-C run path已存在，watcher拒绝自动第二次读取并退出；独立 flock防止重复 watcher。当前下载仍为15/20，
+P6-C summary不存在，fresh visibility quality未读。提交推送并启动后只读检查 PID/log；不做 smoke/regression或新 gate。
+
 ## WorldSim V7 CVPR paper integrated through P3-C/P3-D（2026-09-02）
 
 主稿 abstract/method/experiments新增 visibility-conditioned physical evidence：双向可证伪状态、pooled

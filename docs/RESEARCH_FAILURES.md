@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P3-C fresh orchestration prevention note — P6-C后串行启动，不抢GPU或重复读取
+
+- watcher不检查 P6-C scientific verdict，只要求 canonical summary/status正常收尾；正/负结果均进入同一个预冻结 P3-C
+  fresh visibility read，避免结果条件分支。
+- 20/20 marker、ALL_COMPLETE与P6-C evaluator退出后才exec；dedicated flock和existing-run-path stop防止双实例。
+- watcher不下载、不训练、不改 config/tolerance/operator/cohort；P3-C runner仍是唯一指标读取者。
+- 当前为launch orchestration，无新failure id；下一可用仍为 `V7-F19`。
+
 ### Paper layout note — P3-C/P3-D integration visual QA通过，无新failure
 
 - main保持8页，新增visibility段后 pages 4--8无 clipping/overlap/orphan float；唯一 warning仍为既有 Table 1

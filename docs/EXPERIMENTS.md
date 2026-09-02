@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V7-P3C fresh exact-once serial launch orchestration（2026-09-02）
+
+- frozen run：`WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/20260902T231500Z__fresh-visibility-s0-r1`。
+- prerequisites：20 `.complete`、`ALL_COMPLETE`、P6-C canonical `summary.json`、`status=done`、P6-C evaluator exited。
+- serialization：dedicated flock；watcher `exec`s P3-C runner only after P6-C，不能并发GPU或启动第二 downloader。
+- locks：same 20 fresh logs、same `.20m` lateral/depth tolerance、same observed-hit PROJECT、same descriptive schema；
+  P6-C verdict不参与任何 branch/threshold/operator选择。
+- duplicate policy：existing P3-C run path causes stop, not retry/second read。
+- current：download 15/20；P6-C/P3-C summary absent；fresh visibility metric unread。
+
 ## CVPR paper integration through P3-C/P3-D（2026-09-02）
 
 - main：abstract/method/experiments新增 bidirectional target-ray/surface状态、pooled四指标、64.04% Actor boundary与
