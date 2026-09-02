@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 P12 prevention note — dedicated visibility label仍不得使用AV2 development调模型（2026-09-02）
+
+- P12修复的是P10 label mismatch，不是用AV2重命名P4：architecture/seed/epochs/features/source split与25% calibration
+  coverage在重新生成source labels前固定。
+- 已消费AV2只做一次development read；任何positive都必须另冻untouched cohort，任何negative都不能改coverage/seed/
+  feature或再训candidate。
+- 七门包含hazard coverage，避免像P11一样靠删除危险/稀疏Actors获得表面risk改善。失败使用`V7-F22`并关闭family。
+
 ## V7-F21 — no-COMPLETE provenance witness反向富集稀疏Actor并摧毁hazard authority
 
 - canonical：`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/

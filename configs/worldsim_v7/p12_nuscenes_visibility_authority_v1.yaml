@@ -1,0 +1,34 @@
+schema_version: worldsim_v7.p12_nuscenes_visibility_authority_config.v1
+task_id: WS-V7-P12-NUSCENES-VISIBILITY-AUTHORITY-01
+hypothesis_id: H-V7-P12
+runs_root: /root/autodl-tmp/runs
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+p3_config: configs/worldsim_v7/p3_av2_hard_evidence_v1.yaml
+p3c_config: configs/worldsim_v7/p3c_av2_visibility_certificate_fresh_v1.yaml
+p4_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+p3c_fresh_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/20260902T231500Z__fresh-visibility-s0-r1
+p6c_fresh_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1
+device: cuda
+model:
+  seed: 71201
+  hidden_dim: 16
+  epochs: 80
+  learning_rate: 0.002
+  weight_decay: 0.0001
+calibration:
+  target_visibility_coverage: 0.25
+fixed_gates:
+  minimum_source_test_safe_visible_auroc: 0.55
+  require_source_selected_visible_risk_below_always: true
+  require_external_dual_visible_risk_below_p4: true
+  require_external_dual_visible_upper_below_p4_point_risk: true
+  require_external_dual_chamfer_worsening_not_above_p4: true
+  minimum_external_dual_coverage: 0.10
+  minimum_external_dual_hazard_coverage: 0.50
+claim_boundary: >-
+  One source-only visibility-risk head trained on the frozen nuScenes train scenes and
+  calibrated to a fixed score coverage on disjoint nuScenes calibration scenes. AV2
+  inputs, visibility labels, P4 decisions, and gates do not affect fitting or threshold.
+  The existing 20-log AV2 cohort is consumed development evidence; even a pass requires
+  a new untouched cohort and does not provide conformal, cross-domain, per-Actor, collision,
+  planning, or road-safety guarantees. No architecture, seed, feature, coverage, or gate sweep.

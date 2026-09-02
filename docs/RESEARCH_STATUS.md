@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 P12 source-only visibility-targeted recovery frozen（2026-09-02）
+
+在`V7-F20/F21`后只允许一次learned mechanism升级：用原P4 nuScenes train/calibration/test split重新生成相同`.20m`
+bidirectional ray label，训练单个13→16 low-capacity visibility head；seed=`71201`、80 epochs。Threshold只取source
+calibration score top-25% coverage；最终authority=`P4 AND visibility`。七门在source label前冻结，AV2只用已消费
+20-log development join且不参与fit/calibration。失败关闭head family；执行前下一failure=`V7-F22`。
+
 ## WorldSim V7 P11 rejects provenance gating as future-view authority（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/

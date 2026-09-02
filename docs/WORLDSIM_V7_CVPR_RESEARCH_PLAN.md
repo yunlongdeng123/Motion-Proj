@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P12 nuScenes-only visibility authority contract
+
+P10证明Chamfer label mismatch、P11关闭rule gate后，唯一learned recovery冻结为source-only visibility head：P4原
+nuScenes split、相同P3-C ray label、13→16 MLP、seed71201/80 epochs，source calibration top25% score定threshold。
+最终dual=`P4 AND visibility`，七门同时约束source ranking、external visible risk/upper、Chamfer、coverage与hazard
+coverage。AV2 consumed development不参与fit；失败即`V7-F22`并关闭family，positive也须新untouched cohort。
+
 ## 2026-09-02 P11 provenance-conditioned authority result
 
 Canonical=`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/

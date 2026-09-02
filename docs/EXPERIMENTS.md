@@ -1,5 +1,14 @@
 # Experiments
 
+## P12 nuScenes-only visibility authority freeze（2026-09-02）
+
+- source：P4原11/14/38 nuScenes train/calibration/test scenes；同compiler与P3-C `.20m` ray/depth tolerance重新生成
+  `nonnew_visible_violation` label。
+- model：13 inputs、hidden16、seed71201、80 epochs；threshold=source calibration score top25% fixed coverage。
+- evaluation：source test + consumed 20-log/523-Actor AV2 development；dual=`P4 AND visibility-head`。
+- gates：source AUROC>=.55/source risk改善；external dual risk+95% upper改善、Chamfer nonregression、coverage>=10%、
+  hazard coverage>=50%。0 AV2 fit/sweep；失败关闭family，下一=`V7-F22`。
+
 ## P11 provenance-conditioned dual-authority result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
