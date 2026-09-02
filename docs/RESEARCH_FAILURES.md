@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Final-audit boundary — science complete does not fabricate publication metadata（2026-09-02）
+
+- 29/29 paper registry runs与P1/P2落盘，60/60 AV2 cohort目录、30 panels/30 videos存在；未发现需要恢复的科学资产；
+- 原计划五类visual role被明确合并为2张main figures+6张main tables，完整曲线留在supplement；这是8页布局适配，
+  不能写成字面“主图1--5均独立存在”；
+- non-anonymous arXiv和final CVPR2027 package仍缺真实作者/单位/联系信息、category/license/acknowledgement、paper ID及
+  尚未发布的official kit；禁止虚构或以继续读test来填补等待；
+- 终局审计不新增训练、数据读取、门或scientific verdict，不消耗failure ID；下一可用仍为`V7-F30`。
+
 ## Figure-convergence note — hard evidence promoted without claim promotion（2026-09-02）
 
 - main Figure 2把literal correction、set-deletion direction/utility cost和sensor-opportunity sensitivity并列，不能据此升级

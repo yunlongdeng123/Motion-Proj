@@ -1,5 +1,16 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 final completion audit milestone
+
+新增`docs/autoresearch/worldsim_v7/V7_FINAL_COMPLETION_AUDIT.md`，按plan第11/12节逐项核对branch authority、四项停止
+条件、八类research assets、三套AV2 cohort、29个paper-owning canonical runs、qualitative bundle与论文交付物。
+实盘结果：merge-base精确等于V6.7 branch tip且ancestor=true；29/29 registry run均有非空status/summary且status=`done`；
+AV2 cohort union=`60`且60/60目录存在、`66,481,709,102 bytes`；P3-B=`30 PNG + 30 MP4`。
+
+科学/数据/匿名论文/supplement满足V7 stop contract；计划原五类visual role明确合并进2张main figures与6张main tables，
+完整coverage曲线留在supplement，不隐瞒为“原样五图完成”。尚未完成的只有不可推断外部项：真实作者/单位/联系信息、
+arXiv category/license/acknowledgement、paper ID和official CVPR2027 kit/policy。它们不授权新实验；下一failure=`V7-F30`。
+
 ## 2026-09-02 reviewer-facing hard-evidence figure convergence
 
 为避免三维硬证据只停留在正文数字，主文Figure 2重组为三联图：source/AV2-C/独立AV2-F的target-nearest

@@ -1,5 +1,14 @@
 # Experiments
 
+## V7 final completion evidence audit（2026-09-02）
+
+- branch：merge-base精确等于V6.7 branch tip、ancestor=true、ahead/behind=`122/0`；
+- run registry：29/29 paper-owning URIs有nonempty `status.json`/`summary.json`且status=`done`；P1/P2另有done summary；
+- data：AV2 cohorts=`30/20/10`，union=`60`、missing directories=`0`、Sensor-val bytes=`66,481,709,102`；
+- qualitative：P3-B canonical=`30 PNG/30 MP4/47,495,050 bytes`；
+- storage：P0精确释放`23,027,117,355 bytes`，当前free约`98GiB`，不再删除仍被依赖的历史资产；
+- outcome：C1/C2/C3/final exact-once/P9和八类final research assets有直接证据；0 new experiment/data read/test sweep。
+
 ## Reviewer-facing hard-evidence figure and boundary handoff（2026-09-02）
 
 - main Figure 2：复用冻结P20/P21/P22/P23图与P7 attribution，呈现source/AV2-C/AV2-F literal correction、deletion
