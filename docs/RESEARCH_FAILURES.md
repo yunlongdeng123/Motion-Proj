@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper layout note — P9 后第 8 页仅 references continuation
+
+- official-template compile=`8 pages/1,162,514 bytes`；pages 6/7/8 visual audit 无 clipping、overlap 或 orphan float，
+  第 8 页只有 bibliography continuation。
+- P9 Table 5、retained-source limitation 与 `2.5s` heldout label 均可见；未把 authority conditioning 写成 causal
+  planning/closed-loop/collision/safety improvement。
+- 编译无新增 warning；既有 Table 1 `6.03pt` overfull 仍视觉有效。不通过改数字、删限制或缩小不可读字体压缩。
+- documentation-only paper integration 不创建新 failure id；下一可用编号仍为 `V7-F17`。
+
 ### V7-F16 — P9 冻结说明误标 P346 heldout horizon
 
 - affected run：`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。

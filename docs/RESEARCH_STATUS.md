@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P9（2026-09-02）
+
+主稿已把 P9 写成“物理表面 × 任务权限”的分权组合证据：新增 2×2 non-interference 定义、retained-source
+fixed-lattice Table 5、authority coverage/cost/unsafe 数值，并同步 abstract、experiments、limitations、conclusion 与
+bibliography。正文明确该结果只证明 selective interface utility，不构成 causal planning、closed-loop、collision 或道路安全
+改进；P346 的真实 heldout horizon 固定为 `2.5s`。
+
+Official-template compile=`8 pages/1,162,514 bytes`；pages 6/7/8 visual check 无 clipping/overlap，page 8 仅 references
+continuation。编译仍只有既有 Table 1 `6.03pt` overfull warning，无新增 layout failure；未为压页或美化结果删除限制、修改
+科学数值或增加实验 gate。下一可用 failure id 保持 `V7-F17`。
+
 ## WorldSim V7 P9 composed authority supported（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。

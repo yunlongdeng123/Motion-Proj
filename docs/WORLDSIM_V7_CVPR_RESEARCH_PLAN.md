@@ -1092,6 +1092,9 @@ surface CD `.229314→.223253m`，Actor/hazard retention=`1/1`，5/5 gates。B0/
 证明分权 non-interference。旧 freeze 文字将 artifact heldout 误标为 3.0s，`V7-F16` 更正为实际 2.5s；executable
 contract 与 canonical summary 一直正确，故不改代码、不重跑。
 
+CVPR 主稿已同步 P9 2×2 定义、Table 5、retained-source utility 与 open-loop/causal safety 边界。Official-template=
+`8 pages/1,162,514 bytes`；pages 6/7/8 visually valid，page 8 仅 references continuation，无新增 layout failure。
+
 RL 不再是主线，也不阻断论文。
 
 下游只回答：

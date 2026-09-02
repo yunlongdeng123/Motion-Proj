@@ -125,5 +125,18 @@ abstained mean shift is \PsevenBSelectedShift{}/\PsevenBAbstainedShift{} (\Pseve
 no selected crossings. Selected Actors can therefore be motion-difficult yet geometrically stable, further separating the three
 axes of repairability, geometry sensitivity, and trajectory uncertainty.
 
+\input{tables/p9_composed_authority}
+
+\paragraph{Minimal composed-authority utility.}
+Task-relevant monitoring should propagate prediction error to the queried planning cost~\cite{farid2023task}, rather than
+treat all prediction errors alike. We therefore form a retained-source $2\times2$ audit over query/HARP-3D surfaces and
+no-task/frozen-P346 authority. The \PnineActors{} exact Actors (\PnineHazards{} hazardous) yield \PnineSets{} fixed two-action
+sets at the P346 artifact's held-out 2.5\,s horizon. Frozen 90\% requested reliability authorizes
+\PnineAuthorityCoverage{}\% of sets, reducing conditional mean actual cost from \PnineAllCost{} to
+\PnineAuthorizedCost{} (\PnineCostReduction{}\%) and unsafe-set rate from \PnineAllUnsafe{}\% to
+\PnineAuthorizedUnsafe{}\%. Independently, selective HARP-3D lowers mean surface Chamfer from \PnineQueryChamfer{} to
+\PnineHarpChamfer{}\,m with all Actors and hazards retained (Table~\ref{tab:p9-composed}). Physical branches have identical
+action outcomes by construction: this validates interface composition, not closed-loop benefit from repair.
+
 \paragraph{Qualitative protocol.}
 Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.

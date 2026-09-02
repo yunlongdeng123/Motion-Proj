@@ -1,5 +1,14 @@
 # Experiments
 
+## CVPR paper P9 integration check（2026-09-02）
+
+- added：P9 2×2 composed-authority definition、fixed-lattice Table 5、non-interference result、retained-source/open-loop claim boundary。
+- compile：official template `main.pdf`，8 pages，1,162,514 bytes。
+- visual：pages 6/7/8 inspected；P9 paragraph/Table 5、limitations、conclusion 与 bibliography continuation 无 clipping/overlap；
+  page 8 仅 references continuation。
+- warning：仅保留既有 Table 1 `6.03pt` tabular overfull；P9 未引入新 warning。该阶段无新 scientific run、gate、
+  threshold、cohort 或 quality read。
+
 ## WS-V7-P9 composed fixed-lattice authority result（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P9-COMPOSED-AUTHORITY-FIXED-LATTICE-01/20260902T213000Z__composed-authority-s0-r1`。
