@@ -1,0 +1,32 @@
+task_id: WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01
+hypothesis_id: WS-V7-H-P7-003
+runs_root: /root/autodl-tmp/runs
+source_p4_run: >-
+  /root/autodl-tmp/runs/worldsim_v7/WS-V7-P4-NUSCENES-SELECTIVE-FACTORIZE-01/20260902T161000Z__selective-factor-s70401-r2
+device: cuda
+standardized_radii: [0.05, 0.10, 0.20]
+explanation_radius: 0.10
+feature_groups:
+  sensor_opportunity:
+    - log_query_points
+    - log_canonical_surfels
+    - temporal_support_mean
+    - temporal_support_p10
+    - view_support_mean
+    - sensor_range_m
+    - observation_frame_count
+  physical_surface:
+    - query_surface_mean_m
+    - query_surface_p95_m
+    - clean_keep_fraction
+    - unknown_query_fraction
+    - completion_candidate_fraction
+    - compiled_to_query_ratio
+claim_boundary: >-
+  Deterministic interval-bound propagation through the frozen P4 factorized validity MLP under
+  axis-aligned perturbations measured in nuScenes-train standard deviations. The boxes are stress
+  sets, not a calibrated sensor-noise distribution. A robust-select state certifies only that the
+  frozen network decision does not cross its frozen threshold inside the stated box; it does not
+  certify geometric correctness, cross-domain exchangeability, collision avoidance, planning,
+  closed-loop behavior, or road safety. All target outcomes are retained-data descriptions and do
+  not tune the model, threshold, radii, or feature groups.

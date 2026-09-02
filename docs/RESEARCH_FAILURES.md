@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P7-C prevention note — feature-box certificate 不越权为现实安全保证
+
+- P7-C 的 `.05/.10/.20` 是 nuScenes-train standardized stress radii，不来自 AV2/nuScenes sensor-noise calibration；禁止
+  将 interval state 解释为真实扰动概率、coverage confidence 或跨域 exchangeability。
+- `robust_select` 只表示 frozen P4 network score 在整个 box 内保持高于 frozen threshold；错误且稳定的网络决策仍可能是
+  target false repair，因此 retained target failure 必须单独报告。
+- feature groups、radii、threshold 与 explanation radius 在结果读取前冻结；fresh AV2 recovery rows不读，不以 consumed
+  AV2 target反向调 box。无新 failure id，下一可用编号仍为 `V7-F17`。
+
 ### Paper layout note — P9 后第 8 页仅 references continuation
 
 - official-template compile=`8 pages/1,162,514 bytes`；pages 6/7/8 visual audit 无 clipping、overlap 或 orphan float，

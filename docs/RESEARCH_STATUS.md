@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P7-C frozen validity interval certificate（2026-09-02）
+
+Active=`WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01 / WS-V7-H-P7-003`。针对用户要求的“可解释性与安全边界”，
+冻结 P4 factorized validity MLP、nuScenes-train standardizer 与 probability threshold，不训练/refit/recalibrate。对 13D
+standardized validity inputs 固定 `0.05/0.10/0.20` 轴对齐 stress boxes，用 FP64 layerwise interval-bound propagation 将
+每个 Actor 分类为 `robust_select / interval_unresolved / robust_abstain`。
+
+解释半径固定为 `.10` train std；同时分别扰动 `sensor_opportunity` 与 `physical_surface` 两组，并用 13 个单特征区间宽度
+给出每 Actor top-3 sensitivity explanation。nuScenes calibration/test 与已消费的 30-log AV2 只作冻结审计；fresh AV2
+20-log cohort不读。Target 只在证书生成后描述 robust-selected false repair，不进入 state、radius、group 或 threshold。
+该证书仅保证 frozen network decision 在指定 feature box 内不跨 threshold，不保证 geometry correctness、exchangeability、
+collision/planning/closed-loop/road safety。正式运行前只允许一次 Python syntax check，不增加 scientific gates。
+
 ## WorldSim V7 CVPR paper integrated through P9（2026-09-02）
 
 主稿已把 P9 写成“物理表面 × 任务权限”的分权组合证据：新增 2×2 non-interference 定义、retained-source

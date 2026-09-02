@@ -1,5 +1,22 @@
 # Experiments
 
+## WS-V7-P7C validity interval certificate freeze（2026-09-02）
+
+- source：P4 canonical `MODEL.pt`、nuScenes calibration/test rows 与 consumed 30-log AV2 rows；fresh recovery cohort完全不读。
+- frozen model/interface：factorized 13D validity MLP、nuScenes-train mean/scale、probability threshold=`.9994364381`。
+- stress sets：all-feature standardized radii `0.05/0.10/0.20`；explanation radius=`0.10`；feature groups=
+  `sensor_opportunity` 与 `physical_surface`，其并集恰为 13D inputs。
+- outputs：每 domain/radius/group 的 robust-select/unresolved/robust-abstain、logit width、robust-selected retained target
+  failure；每 Actor 的 probability interval、group state 与 top-3 one-feature interval-width explanation。
+- protocol：FP64 layerwise interval-bound propagation；0 fit/refit/recalibration/threshold/radius/group sweep；无 scientific
+  success gate。Target 不参与 certificate state。
+- boundary：box radius 是 nuScenes-train standard-deviation stress，不是 calibrated sensor noise；network robustness 不等于
+  repair correctness 或道路安全证书。
+
+References：`https://openaccess.thecvf.com/content_CVPR_2020/html/Hu_What_You_See_is_What_You_Get_Exploiting_Visibility_for_CVPR_2020_paper.html`、
+`https://openaccess.thecvf.com/content/CVPR2023/html/Zins_Multi-View_Reconstruction_Using_Signed_Ray_Distance_Functions_SRDF_CVPR_2023_paper.html`、
+`https://openaccess.thecvf.com/content/CVPR2023/html/Boulch_ALSO_Automotive_Lidar_Self-Supervision_by_Occupancy_Estimation_CVPR_2023_paper.html`。
+
 ## CVPR paper P9 integration check（2026-09-02）
 
 - added：P9 2×2 composed-authority definition、fixed-lattice Table 5、non-interference result、retained-source/open-loop claim boundary。

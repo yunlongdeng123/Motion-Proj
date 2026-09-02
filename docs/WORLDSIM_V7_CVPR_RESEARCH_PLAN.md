@@ -1020,6 +1020,17 @@ P7-B r2 canonical=`run://worldsim_v7/WS-V7-P7B-GEOMETRY-COST-SENSITIVITY-01/2026
 CVPR draft 已同步 P7-B theorem/result/limitation，official template=`7 pages`；page 7 仅 references continuation，无 float/
 clipping。P6-C fresh external 前不根据该解析 audit 改 selector 或 threshold。
 
+### P7-C explainable interval certificate freeze（2026-09-02）
+
+为补齐“可解释性与安全边界”，固定对 P4 factorized validity MLP 做一次 descriptive FP64 interval-bound audit。模型、
+standardizer、threshold不变；在 nuScenes-train standardized feature space 固定 `.05/.10/.20` stress boxes，`.10` 为逐 Actor
+解释半径。输出 robust-select/unresolved/robust-abstain，并分解 `sensor_opportunity` 与 `physical_surface` 两组以及 top-3
+单特征区间宽度。Target 不参与证书 state，只在结果后描述错误且稳定的决策。
+
+本项不读 fresh AV2、不训练/refit/recalibrate、不扫描 radius/group，也不增加 scientific pass/fail gate。证书只回答 frozen
+network threshold decision 是否对指定 feature box 稳定，不等于几何正确、跨域 exchangeability、collision/planning/
+closed-loop 或道路安全保证。
+
 ---
 
 ## V7-P8：Final exact-once evaluation
