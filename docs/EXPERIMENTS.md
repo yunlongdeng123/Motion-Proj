@@ -9,6 +9,8 @@
 - P18：always/P17R two experts；23 input、`32` hidden、seed71801、120 epochs、batch32、AdamW `.001/.0001`。
 - label：P17R only if per-Actor Chamfer/new-early both nonworse and one strict；otherwise baseline；argmax/no threshold。
 - source test是router development；双Pareto通过后才exact-once fresh AV2，下一failure=`V7-F27`。
+- implementation=`fit_ready`：router只保存23维standardizer/weights与冻结expert引用；external逐log编译/路由，避免累积
+  十个log的diagnostics；未启动external、target read=`0`。
 
 ## P17 ray-set source fit result（2026-09-02）
 

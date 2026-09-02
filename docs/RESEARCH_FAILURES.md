@@ -15,6 +15,8 @@
 - P17R label只在Actor Chamfer/new-early双不退且至少一项严格改善时成立，否则明确回退baseline。
 - nuScenes test已被base expert消费，只是router development；不得包装为新source confirmation。
 - source aggregate双Pareto通过才允许fresh AV2；不扫router feature/width/seed/class weight；下一failure=`V7-F27`。
+- implementation保持完整expert原子性：baseline action直接恢复always-COMPLETE质量/attribution，P17R action原样保留；不得
+  在路由后重新混合两者点集。checkpoint引用而不复制/微调P17R。
 
 ## V7-F25 — ray-only first-return objective trades away 3D surface utility
 

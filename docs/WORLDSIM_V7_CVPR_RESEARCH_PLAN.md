@@ -9,6 +9,9 @@ P18按ICML 2025 two-stage expert routing迁移系统动作：冻结always-COMPLE
 epochs/batch32/AdamW .001,.0001/inverse-sqrt CE`只路由完整expert。P17R label=逐Actor Chamfer与new-early双不退且
 一项严格改善，否则baseline；argmax无threshold。Source gate通过才读取第三批AV2，下一failure=`V7-F27`。
 
+P18实现已固定：router checkpoint只引用冻结P17R；always-COMPLETE action恢复完整baseline actor结果；AV2 external按log
+串行编译以适应2GB无卡下载期内存。当前`fit_ready/target unread`，下一步直接执行单卡source fit。
+
 ## 2026-09-02 P17 partial result and single hybrid recovery
 
 P17 canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/

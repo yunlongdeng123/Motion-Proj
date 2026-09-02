@@ -10,6 +10,9 @@ P18迁移two-stage learning-to-defer：冻结always-COMPLETE/P17R两个expert，
 `23-32-2`、seed71801、120 epochs、batch32、AdamW `.001/.0001`、inverse-sqrt CE；只有P17R逐Actor双指标支配才
 标P17R，否则baseline，inference argmax。nuScenes test仅router-development，独立transfer只由unread AV2给出。
 
+实现已落到`completion_expert_router.py`与`run_worldsim_v7_p18_two_expert_router.py`：checkpoint只保存router并引用冻结
+P17R，baseline路由恢复完整always-COMPLETE actor输出；fresh AV2逐log编译以限制2GB无卡主机内存。状态=`fit_ready`。
+
 ## WorldSim V7 P17 ray-set source fit partial/rejected（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/
