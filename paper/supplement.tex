@@ -1,6 +1,7 @@
 \documentclass[10pt,twocolumn,letterpaper]{article}
 \usepackage[review]{cvpr}
 \input{preamble}
+\input{results/results_macros}
 \definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
 \usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
 \def\paperID{*****}
@@ -8,20 +9,196 @@
 \def\confYear{2027}
 \title{Validity Is Not Difficulty: Supplementary Material}
 \author{Anonymous Authors}
+
 \begin{document}
 \maketitle
 \appendix
+
 \section{SceneIR Schema and Coordinate Conventions}
-The released SceneIR records explicit $T_{\mathrm{city}\leftarrow\mathrm{ego}}$, $T_{\mathrm{ego}\leftarrow\mathrm{sensor}}$, and $T_{\mathrm{city}\leftarrow\mathrm{actor}}$ transforms. Physical queries use Actor-local surfaces and known/unknown masks; appearance primitives are referenced only by attachment provenance.
 
-\section{Frozen Evaluation Protocol}
-The AV2 cohort contains 30 metadata-only selected validation logs. Quantitative logs, qualitative logs, all thresholds, and all category mappings are frozen before method outputs are read. Resource failures remain in the denominator and are reported separately from scientific failures.
+SceneIR records explicit $T_{\mathrm{city}\leftarrow\mathrm{ego}}$,
+$T_{\mathrm{ego}\leftarrow\mathrm{sensor}}$, and
+$T_{\mathrm{city}\leftarrow\mathrm{actor}}$ transforms. A return $x_{s,t}$ is fused in Actor coordinates as
+\begin{equation}
+x_i = T^{-1}_{\mathrm{city}\leftarrow\mathrm{actor},t}
+      T_{\mathrm{city}\leftarrow\mathrm{ego},t}
+      T_{\mathrm{ego}\leftarrow\mathrm{sensor},t} x_{s,t}.
+\end{equation}
+The physical layer stores Actor-local surfels, known/unknown masks, normals, temporal and view support, matched rays, and source
+timestamps. Appearance primitives are referenced only through attachment provenance; Gaussian opacity is never read as collision
+occupancy. Actor identity, category, extent, trajectory, lifecycle, and analytic hazard fields are immutable across compiler actions.
 
-\section{Failure Ledger Template}
-For every failed case we record the failure layer (sensor opportunity, coordinate/interface, representation, density calibration, or Actor dynamics), the first violated invariant, whether the Actor and hazard event were retained, and the exact non-destructive recovery condition. No failed log may be replaced after quality is read.
+\paragraph{Four actions.}
+\textsc{Keep} preserves supported query evidence. \textsc{Project} moves an artifact only to its matched observed termination.
+\textsc{Complete} adds a canonical surfel only when temporal and view support satisfy the frozen contract. \textsc{Unknown} is the
+fallback when evidence is insufficient; it never becomes free.
 
-\section{Additional Results}
-Full per-category physical metrics, paired counterfactuals, reliability curves, and 20+ qualitative panels will be inserted after the corresponding frozen milestones.
+\section{Matched-Ray Physical Certificate}
+
+Automotive LiDAR is 2.5D ray evidence, not merely an unordered 3D point set~\cite{hu2020visibility}. For origin $o$, direction
+$v$, and observed termination $d$, the measured free interval is
+\begin{equation}
+\mathcal F(o,v,d)=\{o+sv\mid 0\leq s<d-\epsilon\}.
+\end{equation}
+A provenance-bearing \textsc{Project} candidate is placed at the same ray's termination $o+dv$. It therefore cannot lie in
+$\mathcal F$. A candidate without an exact ray is marked \textsc{Unknown}; nearest-surface projection is not substituted. This is
+the source of the paired zero-free-space result. It is a deterministic contract for matched rays, not a completeness proof for the
+whole Actor surface or a probabilistic sensor-noise guarantee.
+
+The held-out targets are later frames excluded from both canonical fusion and query compilation. Depth, ray-termination, Chamfer,
+precision, and recall are computed against these target-only returns. This separation explains why zero paired free-space violation
+can coexist with the observed \PthreeActorWorse{}\% per-Actor Chamfer tail.
+
+\section{Frozen Cohorts and Exact-Once Rules}
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Cohort construction is metadata-only. No quality, model score, RGB appearance, or target metric is read before freezing.}
+\begin{tabular}{p{0.20\textwidth}p{0.19\textwidth}p{0.48\textwidth}}
+\toprule
+Cohort & Size & Frozen rule \\
+\midrule
+AV2 consumed external & 30 logs & Sort all 150 Sensor-val UUIDs; take indices $0,5,\ldots,145$. First 20 are quantitative and final 10 qualitative. \\
+AV2 fresh exact-once & 20 logs & Remove the consumed indices; from the 120-log complement take positions $0,6,\ldots,114$. \\
+nuScenes fresh exact-once & 20 scenes & Exclude every P4 train/calibration/test scene; sort the remaining 106 available scenes by official index and take rounded equally spaced positions. \\
+\bottomrule
+\end{tabular}
+\label{tab:supp-cohorts}
+\end{table*}
+
+After a quality read, scenes/logs cannot be replaced, failed cases remain in the denominator, and no threshold, radius, feature group,
+or checkpoint may change. Download/resource failures are reported separately from scientific failures. The fresh AV2 protocol is bound
+to the already frozen P6-C/P4 artifacts and is not changed by the rejected fresh nuScenes result.
+
+\section{Actor-Level Decision Intervals}
+
+For the frozen ReLU validity MLP, an input box $[\ell,u]$ is propagated through each affine layer using
+\begin{align}
+\ell' &= W^+\ell + W^-u + b, &
+u' &= W^+u + W^-\ell + b,
+\end{align}
+followed by endpoint-wise ReLU. Here $W^+=\max(W,0)$ and $W^-=\min(W,0)$. The resulting logit interval is mapped through the
+sigmoid. An Actor is \emph{robust-select} if its lower probability is above the frozen P4 threshold, \emph{robust-abstain} if its
+upper probability is below threshold, and unresolved otherwise. This is deterministic interval-bound propagation over a specified
+box, related to robust-OOD certification~\cite{bitterwolf2020certifiably}; it does not assert that the box describes an unseen sensor.
+
+We fix radii $0.05/0.10/0.20$ in nuScenes-training standard deviations. The sensor-opportunity group contains point/surfel counts,
+temporal/view support, range, and frame count; the physical-surface group contains surface residuals, keep/unknown fractions,
+completion fraction, and compiled/query ratio. Their union is exactly the 13D validity input.
+
+At radius $0.10$, \PsevenCTestCertified{}\% of nominal nuScenes-test selections and \PsevenCAVCertified{}\% of consumed-AV2
+selections are robust-select. Nevertheless, \PsevenCAVStableFalse{}\% of the latter are retained target false repairs. Query-point
+count is the largest one-feature interval source for \PsevenCTestQueryTop{}\%/\PsevenCAVQueryTop{}\% of nuScenes/AV2 Actors.
+Thus a shifted model can be confidently and locally stable while wrong.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=.98\textwidth]{figures/supplement/p7c_validity_interval_certificate.png}
+  \caption{Frozen P7-C interval audit. Left/center: robust-select coverage and unresolved fraction across pre-registered radii.
+  Right: sensor-opportunity boxes induce wider logit intervals than physical-surface boxes. The high AV2 certified coverage does not
+  erase the 47 stable false repairs.}
+  \label{fig:supp-p7c}
+\end{figure*}
+
+\clearpage
+\onecolumn
+\section{Failure Ledger and Claim Corrections}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Paper-facing failures are retained as boundaries rather than hidden by replacement experiments.}
+\begin{tabular}{p{0.09\textwidth}p{0.31\textwidth}p{0.49\textwidth}}
+\toprule
+ID & Observation & Resulting boundary or correction \\
+\midrule
+V7-F09 & Aggregate geometry hides \PthreeActorWorse{}\% Actor-level Chamfer worsening. & P3 is aggregate hard evidence; P4 adds repair-or-abstain and preserves all Actors. \\
+V7-F11 & AV2 validity attribution is dominated by sensor opportunity. & Zero hazard leakage does not imply domain-invariant validity. \\
+V7-F13 & Exact P4-train overlap is only two scenes/five Actors. & Reject joint fitting; audit the frozen physical/reliability interface only. \\
+V7-F14 & FP32 exceeds the analytic tolerance by $3.8\times10^{-6}$. & Recompute the same bound in FP64; do not loosen the tolerance or alter rows. \\
+V7-F15 & Fresh P6-C repair AUROC loses 3.50 points to P4. & Reject recovery despite higher operating-point coverage; P4 remains primary. \\
+V7-F16 & Freeze prose mislabeled the P346 held-out horizon. & Executable artifact is 2.5\,s; correct documentation without rerunning. \\
+V7-F17 & 47 AV2 false repairs remain robust-select at radius $0.10$. & Network stability is not correctness, calibration, or a safety certificate. \\
+\bottomrule
+\end{tabular}
+\label{tab:supp-failures}
+\end{table}
+
+\section{Frozen AV2 Camera-Evidence Gallery}
+
+The following ten cases are the actor-rank-0 case from each qualitative log in the pre-registered order, not a metric or appearance
+ranking. Every panel shows synchronized RGB, the paired synthetic artifact probe, the four-action physical output, and sparse camera
+depth. The full package contains 30 panels and 30 before/after videos (three lexically first eligible Actors per log). Videos diagnose
+temporal behavior but are not photorealistic renders.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q00_a0_1f197615.png}
+\caption{Frozen case q00, hazardous Actor 1f197615, ring-front-center; 251 visible query returns and 2,287 sparse-depth points in crop.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q01_a0_0e0562b6.png}
+\caption{Frozen case q01, non-hazardous Actor 0e0562b6, ring-rear-left; 137 visible query returns and 1,770 sparse-depth points.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q02_a0_08fc423e.png}
+\caption{Frozen case q02, non-hazardous Actor 08fc423e, ring-side-right; 85 visible query returns and 2,476 sparse-depth points.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q03_a0_05cccb41.png}
+\caption{Frozen case q03, hazardous Actor 05cccb41, ring-side-left; 2,456 visible query returns and 17,286 sparse-depth points.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q04_a0_036844e3.png}
+\caption{Frozen case q04, hazardous Actor 036844e3, ring-front-right; 292 visible query returns and 2,358 sparse-depth points.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q05_a0_07695d24.png}
+\caption{Frozen case q05, hazardous far/sparse Actor 07695d24, ring-front-center; all 14 query returns remain visible.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q06_a0_08515e0d.png}
+\caption{Frozen case q06, non-hazardous Actor 08515e0d, ring-front-right; 79 visible query returns and 2,757 sparse-depth points.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q07_a0_076c9103.png}
+\caption{Frozen case q07, non-hazardous Actor 076c9103, ring-front-center. This unfiltered case exposes Chamfer worsening and is retained.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q08_a0_08432e5c.png}
+\caption{Frozen case q08, hazardous Actor 08432e5c, ring-front-center; 231 visible query returns and 2,101 sparse-depth points.}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.98\textwidth]{figures/supplement/q09_a0_6d55ff95.png}
+\caption{Frozen case q09, non-hazardous Actor 6d55ff95, ring-front-center; 38 visible query returns and 1,630 sparse-depth points.}
+\end{figure}
+
+\clearpage
+\section{Resource and Reproducibility Boundary}
+
+All V7 scientific runs use one RTX~3090. The largest paper-facing GPU allocation is below 1.5\,GiB, while P7-C uses 9.2\,MiB and
+1.37\,s. Download and preprocessing are sequential on the low-memory host. Artifacts are identified by task/run paths and immutable
+cohort/config files; the protocol intentionally does not add hashes, checksums, fingerprints, repeated smoke matrices, or post-hoc
+quality gates.
 
 {\small
 \bibliographystyle{ieeenat_fullname}

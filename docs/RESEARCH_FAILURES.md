@@ -2,6 +2,16 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Supplement layout note — evidence gallery收敛且无新failure
+
+- 初版双栏 float 使 failure heading/table 与 gallery intro 分离并产生近空白页；这是未提交的排版中间态，未改变任何
+  scientific artifact、case identity、数值或 claim。
+- resolution：在 failure ledger 起切换为单栏，表与十个 frozen gallery panels 使用正常浮动顺序；official-template
+  最终为 `6 pages/7,219,027 bytes`，pages 1--6 逐页检查无 blank page、float reorder、clipping 或 overlap。
+- gallery 固定每个 qualitative log 的 actor-rank-0，共10例；未按视觉效果或 metric 重选，且保留 q07 Chamfer
+  worsening case。P7-C stable false repairs 与标准化 stress-box 限制也完整保留。
+- 本阶段是 documentation/layout work，不创建新 failure id；下一可用编号仍为 `V7-F18`。
+
 ### Paper layout note — P7-C boundary integrated without new failure
 
 - official-template=`8 pages/1,164,284 bytes`；pages 5--8 visual audit 无 clipping/overlap，page 8 仅 bibliography continuation。

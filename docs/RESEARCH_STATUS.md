@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 evidence-rich CVPR supplement completed（2026-09-02）
+
+官方模板补充材料已由 1 页骨架扩展为 6 页可投稿稿件，覆盖 SceneIR 坐标/动作合同、matched-ray 三维物理证书、
+冻结 cohort 与 exact-once 规则、P7-C actor-level interval 推导、V7-F09/F11/F13--F17 失败边界、10 个预注册顺序的
+AV2 camera-evidence panels，以及资源与可复现性边界。定稿保留跨域 stable false repairs、Chamfer worsening case 和
+UNKNOWN/abstention 语义，不把网络区间稳定性包装成现实安全证书。
+
+Official-template compile=`6 pages/7,219,027 bytes`；pages 1--6 已逐页渲染检查，无空白页、float 乱序、裁切或重叠。
+10 个 gallery cases 按 qualitative log 顺序固定为 actor-rank-0，未按观感或 metric 挑选；完整 30-panel/30-video 包仍由
+P3-B canonical artifact 承担。本阶段仅写作与版式收敛，不新增科学 run、gate、threshold、cohort 或 quality read；下一可用
+failure id 保持 `V7-F18`。
+
 ## WorldSim V7 CVPR paper integrated through P7-C（2026-09-02）
 
 主稿已加入 P7-C actor-level interval paragraph、`stable decision != correct repair` boundary、标准化 stress-box 限制，

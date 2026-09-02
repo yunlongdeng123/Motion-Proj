@@ -1,5 +1,18 @@
 # Experiments
 
+## CVPR evidence-rich supplement integration check（2026-09-02）
+
+- scope：documentation-only；`supplement.tex` 从 1 页骨架扩展为 6 页，不创建 scientific run 或读取新 quality。
+- methods：SceneIR coordinate/action contract、matched-ray free-space certificate、frozen cohort/exact-once protocol、
+  FP64 actor-level interval equations及适用边界。
+- evidence：P7-C validity-interval plot；10 个 P3-B frozen actor-rank-0 AV2 camera panels，按 10 个 qualitative logs 的
+  预注册顺序呈现；完整 30 panels/30 MP4 仍留在 canonical package。
+- failures：supplement table 明示 V7-F09/F11/F13/F14/F15/F16/F17，不删除 Chamfer worsening case 或 stable false repair。
+- compile：official template `supplement.pdf`，6 pages，7,219,027 bytes；pages 1--6 rendered and visually inspected，
+  无 blank page、float reorder、clipping 或 overlap。
+- locks：无 model/data/cohort/threshold/gate 变化；无 hash/checksum/fingerprint；不把 feature-box IBP 写成 calibrated
+  sensor/geometry/road-safety certificate。
+
 ## CVPR paper P7-C integration check（2026-09-02）
 
 - added：P7-C actor-level interval result、AV2 stable-error boundary、sensor-opportunity interval explanation；related work adds

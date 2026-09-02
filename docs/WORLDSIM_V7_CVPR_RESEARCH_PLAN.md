@@ -1,5 +1,13 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 supplement evidence milestone
+
+`paper/supplement.tex/.pdf` 已从模板骨架扩展为 6 页 evidence-rich supplement：SceneIR/四动作合同、matched-ray
+physical certificate、冻结 cohort/exact-once、P7-C actor-level interval、V7-F09/F11/F13--F17 failure ledger、
+10 个预注册顺序的 AV2 camera-evidence panels 与 resource/reproducibility boundary。官方模板编译为
+`6 pages/7,219,027 bytes`，逐页 QA 无空白页、float 乱序、裁切或重叠。该里程碑只收敛论文资产，不改变任何科学
+run、cohort、threshold 或 gate；完整 30-panel/30-video 证据包继续由 P3-B canonical artifact 提供。
+
 ## HARP-3D：危险保真、伪影修复的三维物理世界编译器
 
 > **Hazard-Preserving, Artifact-Repairing Physical 3D World Compiler**
