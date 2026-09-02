@@ -1,14 +1,17 @@
 # WorldSim V7 研究计划
 
-## 2026-09-02 P13 defer-to-query composite world contract
+## 2026-09-02 P13 defer-to-query composite world result
 
-P13采用selective prediction/learning-to-defer的完整系统语义，不再训练P12 family：repair set使用既有compiled surface，
-abstained set保留query，所有Actor/hazard语义保留。固定比较query/always/P4/P6-C/P11 provenance/P12 visibility/
-P4∧visibility；只报告conditional risk、population introduced-visible mass、composite Chamfer gain、repair/hazard-repair
-coverage与二维Pareto front。Exact join既有523 rows，0 dataset read/fit/recalibration/threshold/gate/policy sweep。
+Canonical=`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/
+20260903T023000Z__defer-to-query-s0-r1`。完整fallback policy下，P4/P6-C/P4∧visibility的population introduced-visible /
+composite Chamfer gain分别为`28.11%/.08311m`、`30.78%/.08895m`、`.76%/.00122m`，形成repair-policy Pareto front。
+P11 provenance=`4.78%/-.00088m`，被query-only=`0/0`严格支配；visibility-only也被P4∧visibility支配，登记`V7-F23`。
 
-Waymo v2.0.1 modular component是资源允许时第二外域；当前official GCS匿名HEAD=`403`，不使用mirror或绕license。
-因此该项不是Waymo evidence，先完成AV2组合权威解释；新scientific contradiction才使用`V7-F23`。
+结论：selected conditional risk必须与fallback composite utility共同报告；P6-C只保留AV2 frontier地位，P12 dual只保留
+低risk/近零gain边界，均不推翻既有跨域/coverage rejection。0 dataset/model/threshold/gate change。Waymo official GCS
+仍403且不绕license；下一failure=`V7-F24`。
+Paper integration完成：main=`9 pages/1,762,749 bytes`、supplement=`8 pages/7,226,250 bytes`；main 7--8、supp 4--5
+视觉QA通过。Failure ledger已补齐V7-F20--F23，P13 result与claim boundary可回溯。
 
 ## 2026-09-02 P10/P11 predicate-semantics correction completed
 

@@ -9,6 +9,21 @@
 - Waymo official GCS probe=`403`是license/session access condition；不登记scientific failure、不用非官方镜像替代。
 - 若结果暴露新的claim错误，使用下一`V7-F23`；否则保持descriptive boundary，不为凑编号造failure。
 
+## V7-F23 — provenance低conditional risk在defer-to-query系统中仍被query-only支配
+
+- canonical：`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/
+  20260903T023000Z__defer-to-query-s0-r1`；523 Actors/20 logs，0 dataset read/training/update。
+- symptom：P11 P4∧provenance selected risk=`20.16%`看似显著优于P4，但完整policy只修124 Actors，仍给全体引入
+  `25/523=4.78%` visible failures，且composite mean Chamfer gain=`-.000877m`。
+- dominance：query-only保留同一523 Actors、introduced failure=`0`、gain=`0`，在risk/gain二维上严格支配provenance；
+  P12 visibility-only也被P4∧visibility以更低risk和更高gain支配。
+- retained frontier：P4=`28.11%/.08311m`、P6-C=`30.78%/.08895m`、P4∧visibility=`.76%/.00122m`均非支配；
+  这只是consumed AV2 trade-off，不升级P6-C或恢复P12 family。
+- resolution：关闭provenance policy作为系统级repair action；保留其point-witness解释。后续必须同时报告conditional risk
+  与fallback-composite utility，禁止以低coverage selected risk单独包装safety。下一可用failure id=`V7-F24`。
+- paper audit：main=`9 pages/1,762,749 bytes`、supplement=`8 pages/7,226,250 bytes`；V7-F20--F23 ledger与P13主文
+  段均可读，无裁切/重叠，negative result未被低coverage或排版隐藏。
+
 ## P10/P11 analysis-semantics defect — corrected without data reread（2026-09-02）
 
 - defect：字段名`nonnew_visible_violation`易歧义，但生成器定义True为safe conjunction：compiled early<=query early且

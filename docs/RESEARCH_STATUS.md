@@ -1,15 +1,17 @@
 # Research Status
 
-## WorldSim V7 P13 defer-to-query composite world frozen（2026-09-02）
+## WorldSim V7 P13 defer-to-query composite frontier completed（2026-09-02）
 
-P13不训练新head，而把P10--P12既有selector解释为完整action：selected使用compiled surface，abstained保留原query；
-Actor/trajectory/extent/hazard语义始终100%保留。固定exact join 20 AV2 logs/523 Actors，比较query/always/P4/P6-C/
-P11 provenance/P12 visibility/P4∧visibility，报告conditional risk、population introduced-visible mass、composite
-Chamfer gain、repair/hazard-repair coverage与二维Pareto frontier。0 dataset read/model/fit/threshold/gate change。
+Canonical=`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/
+20260903T023000Z__defer-to-query-s0-r1`；20 AV2 logs/523 Actors、wall=`.0177s`、status=`done`。所有policy Actor/hazard
+retention=`100%`。P4 composite introduced-visible/gain=`28.11%/.08311m`；P6-C=`30.78%/.08895m`；P4∧visibility=
+`.76%/.00122m`，三者为repair-policy二维Pareto frontier，但不改变P6-C/P12既有rejection。
 
-官方Waymo v2.0.1 modular LiDAR为首选第二外域，但AutoDL对官方GCS对象的只读HEAD返回HTTP 403（缺accepted Waymo/
-Google session）。不使用非官方镜像或credential workaround；这是resource/access note而非scientific failure。P13执行前
-下一可用failure id=`V7-F23`。
+P11 provenance=`4.78%/-.00088m`，被query-only的`0/0`严格支配；visibility-only也被P4∧visibility支配。登记
+`V7-F23`：低selected conditional risk不保证accept-or-defer系统改善fallback world。0 dataset read/model/fit/threshold/
+gate change。Waymo official GCS仍因accepted session缺失返回403，本结果不冒充Waymo evidence；下一failure=`V7-F24`。
+Paper final main=`9 pages/1,762,749 bytes`、supplement=`8 pages/7,226,250 bytes`；main 7--8、supp 4--5视觉QA
+无裁切/重叠。Warning仅既有Table 1 `6.03pt` overfull与gallery page 5 only-floats（页面内容完整）。
 
 ## WorldSim V7 P10/P11 predicate-semantics correction completed（2026-09-02）
 

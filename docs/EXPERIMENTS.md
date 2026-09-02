@@ -1,13 +1,17 @@
 # Experiments
 
-## P13 defer-to-query composite world freeze（2026-09-02）
+## P13 defer-to-query composite world result（2026-09-02）
 
-- input：P10 r2/P11 r2/P12 r1 compact JSONL exact join；20 logs/523 Actors；不读AV2 dataset。
-- fixed policies：query-only、always-repair、P4、P6-C、P4∧no-COMPLETE、visibility-only、P4∧visibility。
-- semantics：selected→existing compiled surface；abstained→original query；Actor/hazard semantics retention=`100%`。
-- outputs：conditional visible/Chamfer risk、population introduced-visible/Chamfer-worse mass、composite mean Chamfer gain、
-  repair/hazard-repair coverage、risk--gain Pareto frontier。无新gate/training/threshold/policy search。
-- Waymo：official v2.0.1 validation LiDAR HEAD=`HTTP 403` without accepted session；不绕过license、不用mirror，单列resource note。
+- canonical/status：`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/
+  20260903T023000Z__defer-to-query-s0-r1` / `done`；523 Actors、20 logs、wall=`.0177s`。
+- query/always：population introduced-visible=`0/37.28%`，composite gain=`0/.08838m`。
+- P4：coverage/hazard-repair=`77.25/93.66%`，introduced-visible=`28.11%`，gain=`.08311m`。
+- P6-C：`83.94/99.30%`，introduced-visible=`30.78%`，gain=`.08895m`；仅AV2 frontier，不覆盖fresh-nuScenes rejection。
+- provenance：coverage=`23.71%`，introduced-visible=`4.78%`，gain=`-.00088m`；被query-only严格支配，登记`V7-F23`。
+- visibility/P4∧visibility：前者被后者支配；dual coverage=`7.46%`、introduced-visible=`.76%`、gain=`.00122m`。
+- frontier including query=`query/P4/P6-C/P4∧visibility`；0 dataset/model/fit/threshold/gate/policy search。
+- paper/QA：main=`9 pages/1,762,749 bytes`、supplement=`8 pages/7,226,250 bytes`；main 7--8与supp 4--5
+  无裁切/重叠；supp page5为完整gallery float page。
 
 ## P10/P11 visible-failure predicate correction result（2026-09-02）
 
