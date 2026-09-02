@@ -379,7 +379,7 @@ def compile_nuscenes_scene(
         )
         if compiled is None:
             continue
-        row, _ = compiled
+        row, package = compiled
         row["dataset"] = "nuScenes"
         row["scene_name"] = scene_name
         row["role"] = str(frames[0]["role"])
