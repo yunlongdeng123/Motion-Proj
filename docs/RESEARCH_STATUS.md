@@ -1,31 +1,36 @@
 # Research Status
 
-## WorldSim V7 P10/P11 predicate-semantics correction frozen（2026-09-02）
+## WorldSim V7 P10/P11 predicate-semantics correction completed（2026-09-02）
 
-P12的独立实现发现P3-C `nonnew_visible_violation=true`语义是“compiled未新增early/contradicted”（safe），而P10/P11
-r1错误把True计为failure。两项r1立即撤销canonical资格但保留run供审计；修复只把failure定义改为`not nonnew`，所有
-identity、group、gate、Wilson、cohort和P4 decision不变。修复提交后创建r2，只读既有JSONL，不重读AV2、不训练。
-在r2完成前，paper中P10/P11数字视为待纠正，不启动任何新研究。
+修复提交=`d8bf0df`；P3-C `nonnew_visible_violation=true`明确为safe predicate，P10/P11 failure统一为`not nonnew`。
+r1保留审计但superseded；r2只读既有JSONL，未重读AV2、未训练、未改identity/group/selection/gate/Wilson/cohort。
+P10 r2=`20260903T010000Z__physical-authority-s0-r2`，P11 r2=`20260903T011500Z__provenance-authority-s0-r2`；二者
+均status=`done`并成为唯一canonical。所有后续paper/docs数字只引用r2；下一可用failure id=`V7-F23`。
+最终TeX Live main=`9 pages/1,762,273 bytes`、supplement=`8 pages/7,225,029 bytes`；main 6--8与supp 2--3视觉QA
+无裁切/重叠，supp 3保留可读的full-width cohort float page；唯一warning仍为既有Table 1 `6.03pt` overfull。
 
-## WorldSim V7 P12 source-only visibility-targeted recovery frozen（2026-09-02）
+## WorldSim V7 P12 source-only visibility authority transfers ranking but is rejected（2026-09-02）
 
-在`V7-F20/F21`后只允许一次learned mechanism升级：用原P4 nuScenes train/calibration/test split重新生成相同`.20m`
-bidirectional ray label，训练单个13→16 low-capacity visibility head；seed=`71201`、80 epochs。Threshold只取source
-calibration score top-25% coverage；最终authority=`P4 AND visibility`。七门在source label前冻结，AV2只用已消费
-20-log development join且不参与fit/calibration。失败关闭head family；执行前下一failure=`V7-F22`。
+Canonical=`run://worldsim_v7/WS-V7-P12-NUSCENES-VISIBILITY-AUTHORITY-01/
+20260903T004500Z__visibility-authority-s71201-r1`。Source 29/56/228 Actors，safe-visible test AUROC=`.753`；source
+selected risk=`19.44%`。0 AV2 fit/calibration下，consumed AV2 safe AUROC=`.625`；visibility-only coverage/risk/upper/
+Chamfer-worse=`8.22/11.63/22.02/37.21%`。P4 dual=`7.46/10.26/20.98/35.90%`，hazard coverage仅`3.52%`。
 
-## WorldSim V7 P11 rejects provenance gating as future-view authority（2026-09-02）
+七门中source ranking/risk与external risk/upper通过，Chamfer nonregression、10% coverage、50% hazard coverage失败。
+Verdict=`rejected_visibility_targeted_source_head`，登记`V7-F22`并关闭该head family：ranking确实nuScenes→AV2迁移，
+但不能靠牺牲几何和危险Actor取得表面安全。0后验seed/architecture/feature/coverage/target-threshold sweep。
+
+## WorldSim V7 P11 visibility gain conflicts with geometry and hazard authority（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
-20260903T001500Z__provenance-authority-s0-r1`；523 Actors/20 logs、status=`done`。No-COMPLETE provenance-only coverage=
-`36.90%`，visible violation=`72.02%`、Chamfer-worsening=`48.19%`。与P4取交集后coverage=`23.71%`，visible=
-`79.84%`、95% upper=`85.10%`、Chamfer-worsening=`43.55%`，hazard coverage仅`3.52%`；五门仅overall coverage通过。
+20260903T011500Z__provenance-authority-s0-r2`；523 Actors/20 logs、status=`done`。No-COMPLETE provenance-only coverage=
+`36.90%`，visible failure=`27.98%`、upper=`33.57%`、Chamfer-worsening=`48.19%`。与P4取交集后coverage=`23.71%`，
+visible failure=`20.16%`、95% upper=`26.70%`、Chamfer-worsening=`43.55%`，hazard coverage=`3.52%`；五门为
+`pass/pass/fail/pass/fail`，completion-count unsafe-visible AUROC=`.589`。
 
-Verdict=`provenance_witness_does_not_certify_future_visibility`，登记`V7-F21`并关闭completion-count/provenance gate
-recovery。No-COMPLETE主要标记sparse/low-support Actors；observed-ray witness仍成立，但不能外推future views。
-0 training/target fit/threshold scan/compiler change。结果已进入main/supplement/macros/contribution map；main=
-`9 pages/1,761,885 bytes`、supplement=`8 pages/7,224,489 bytes`，main 6/8/9与supp 2视觉QA通过。唯一warning仍为
-既有Table 1 `6.03pt` non-clipping overfull；下一failure id=`V7-F22`。
+Verdict=`provenance_witness_does_not_certify_future_visibility`，保留`V7-F21`并关闭provenance gate recovery。Observed-ray
+witness显著改善可见风险，但无法同时保持Chamfer和危险Actor权威，不能外推joint/future-view safety。0 training/target
+fit/threshold scan/compiler change；r1仅保留审计且不再引用。
 
 ## WorldSim V7 P11 provenance-authority contract frozen after literature migration（2026-09-02）
 
@@ -34,20 +39,17 @@ P10失败后已检索CVPR ray-potential visibility、ICML SelectiveNet与CVPR DG
 selection取AND。固定比较always/P4/provenance/dual，并预冻结visible risk、Wilson upper、Chamfer、coverage、hazard
 coverage五门。只读已消费523-Actor join，0 training/target fit/threshold scan。执行前下一failure id=`V7-F21`。
 
-## WorldSim V7 P10 proves repair authority is not a visibility certificate（2026-09-02）
+## WorldSim V7 P10 exposes weak visibility ranking and no confidence separation（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
-20260902T234500Z__physical-authority-s0-r1`；20 fresh AV2 logs、523 Actors exact join、status=`done`。P4 selected=
-404/523=`77.25%`。Chamfer-worsening从always `19.50%`降到selected `14.60%`，但nonnew-visible violation从
-always `62.72%`变为selected `63.61%`，selected一侧95% Wilson upper=`67.45%`，safe-visible AUROC=`.467`，
-abstention只捕获`21.65%` visible failures。三项冻结门仅Chamfer通过。
+20260903T010000Z__physical-authority-s0-r2`；20 fresh AV2 logs、523 Actors exact join、status=`done`。P4 selected=
+404/523=`77.25%`。Chamfer-worsening从always `19.50%`降到selected `14.60%`；visible failure从`37.28%`轻微降至
+`36.39%`，但selected一侧95% Wilson upper=`40.40%`仍高于always point risk。Safe-visible AUROC=`.533`，abstention
+捕获`24.62%` visible failures；三门为`pass/fail/pass`。
 
-Verdict=`p4_not_a_physical_safety_certificate`，登记`V7-F20`。这不否定P4原Chamfer-target repair-or-abstain结果，
-而是把authority target解释清楚：validity score不能替代bidirectional physical certificate。0 training、0 target reread、
-0 refit/recalibration/threshold scan/recovery。结果已进入main/supplement/macros/contribution map；TeX Live main=
-`9 pages/1,761,273 bytes`（pages 1--8 content、page 9 references-only），supplement=`8 pages/7,223,706 bytes`。
-Main pages 6/8/9与supplement pages 1/7/8视觉QA通过；唯一warning仍为既有Table 1 `6.03pt` non-clipping overfull。
-下一failure id=`V7-F21`。
+Verdict=`p4_not_a_physical_safety_certificate`，保留`V7-F20`。正确边界不是point risk反向，而是ranking弱且有限样本
+置信区间无法与always分离；P4原Chamfer repair-or-abstain结论继续成立。0 training、0 target reread、0 refit/
+recalibration/threshold scan/recovery；r1仅保留审计且不再引用。
 
 ## WorldSim V7 P10 frozen physical-authority audit contract（2026-09-02）
 

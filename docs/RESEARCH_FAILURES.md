@@ -1,12 +1,27 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-## P10/P11 analysis-semantics defect — r1 superseded, scientific boundary待r2重述（2026-09-02）
+## P10/P11 analysis-semantics defect — corrected without data reread（2026-09-02）
 
 - defect：字段名`nonnew_visible_violation`易歧义，但生成器定义True为safe conjunction：compiled early<=query early且
   compiled contradicted<=query contradicted。P10/P11 r1把True累计为failure。
 - impact：r1 visible rates、safe AUROC/AURC、Wilson与相关gate方向无效；Chamfer、coverage、hazard、identity不受影响。
-- resolution：不覆盖/删除r1，不手改summary；提交最小predicate fix后生成r2 canonical，并同步paper所有数字。
+- resolution：不覆盖/删除r1，不手改summary；`d8bf0df`最小predicate fix后生成P10/P11 r2 canonical并同步全部数字。
 - prevention：后续JSON字段必须同时对照生成predicate与summary prose；不新增hash/checksum/额外gate。
+- paper audit：main=`9 pages/1,762,273 bytes`、supplement=`8 pages/7,225,029 bytes`；受影响页无裁切/重叠，
+  negative boundaries未因排版被删除；唯一warning仍为既有Table 1 `6.03pt` overfull。
+
+## V7-F22 — visibility-targeted source head迁移风险ranking但无法形成联合authority
+
+- canonical：`run://worldsim_v7/WS-V7-P12-NUSCENES-VISIBILITY-AUTHORITY-01/
+  20260903T004500Z__visibility-authority-s71201-r1`；source 29/56/228 Actors，AV2 523 Actors、status=`done`。
+- retained positive：source-test safe-visible AUROC=`.753`、selected visible failure=`19.44%`；0 target fit下AV2 AUROC=
+  `.625`，visibility-only risk/upper=`11.63/22.02%`，P4 dual=`10.26/20.98%`。
+- failure：visibility-only/dual coverage=`8.22/7.46%`；Chamfer-worsening=`37.21/35.90%`；dual hazard coverage=
+  `3.52%`。七门中Chamfer、10% coverage、50% hazard coverage失败。
+- mechanism：单一visibility label能跨传感器迁移ranking，却把低risk建立在几何退化与危险Actor拒绝上；这是
+  target-specific selective ranking，不是joint physical/safety authority。
+- resolution：verdict=`rejected_visibility_targeted_source_head`；关闭seed/architecture/feature/source-coverage/
+  AV2-threshold sweep，不复用consumed cohort作positive confirmation。下一可用failure id=`V7-F23`。
 
 ## WorldSim V7 P12 prevention note — dedicated visibility label仍不得使用AV2 development调模型（2026-09-02）
 
@@ -16,19 +31,18 @@
   feature或再训candidate。
 - 七门包含hazard coverage，避免像P11一样靠删除危险/稀疏Actors获得表面risk改善。失败使用`V7-F22`并关闭family。
 
-## V7-F21 — no-COMPLETE provenance witness反向富集稀疏Actor并摧毁hazard authority
+## V7-F21 — observed provenance改善visibility但摧毁Chamfer与hazard authority
 
 - canonical：`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
-  20260903T001500Z__provenance-authority-s0-r1`；523 Actors/20 logs、status=`done`。
-- symptom：P4∧provenance coverage=`23.71%`，visible violation=`79.84%`（95% upper=`85.10%`），高于P4的
-  `63.61%`；Chamfer-worsening=`43.55%`高于P4 `14.60%`；hazard coverage=`3.52%`。
-- mechanism：completion-count unsafe-visible AUROC=`.411`；`COMPLETE==0`不是“少做少错”，而主要选择multi-view
-  opportunity不足的Actors。能completion的Actors反而有更多观测支持和更好的held-out evidence。
+  20260903T011500Z__provenance-authority-s0-r2`；523 Actors/20 logs、status=`done`；r1 visible数字superseded。
+- symptom：P4∧provenance coverage=`23.71%`，visible failure=`20.16%`（95% upper=`26.70%`），优于P4的
+  `36.39%`；但Chamfer-worsening=`43.55%`高于P4 `14.60%`，hazard coverage仅`3.52%`。
+- mechanism：completion-count unsafe-visible AUROC=`.589`，观测provenance确实提供visibility信号；问题不是方向反转，
+  而是no-COMPLETE选择与repair geometry/hazard retention严重不兼容。
 - retained theorem boundary：KEEP/PROJECT output各有observed termination witness仍为真，但这是point-provenance命题，
   不能推出cross-ray/future-view completeness，也不能用低hazard coverage冒充safety。
 - resolution：关闭completion deletion、no-COMPLETE conjunction、completion-count threshold sweep；保持P3-D conclusion与
-  P4/P3-C分权。Negative result已进入main/supplement/macros/contribution map；main=`9 pages/1,761,885 bytes`、supp=
-  `8 pages/7,224,489 bytes`且目标页视觉QA通过，未用低coverage或排版隐藏失败。下一可用failure id=`V7-F22`。
+  P4/P3-C分权。不能用visibility point-risk改善覆盖Chamfer/hazard失败，也不能靠过滤危险Actor包装safety。
 
 ## WorldSim V7 P11 prevention note — observed-ray provenance不得偷换future-view completeness（2026-09-02）
 
@@ -38,19 +52,18 @@
 - 若dual仍无法降低visible risk或coverage/hazard authority坍缩，登记`V7-F21`并停止provenance-gate recovery，而不是
   把低coverage写成safety proof。
 
-## V7-F20 — nuScenes-trained repair authority不能隔离fresh AV2 visible physical violations
+## V7-F20 — nuScenes-trained repair authority对fresh AV2 visibility无置信分离
 
 - canonical：`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
-  20260902T234500Z__physical-authority-s0-r1`；523 Actors/20 logs exact frozen join、status=`done`。
-- symptom：P4 selected visible violation=`257/404=63.61%`，高于always-repair `328/523=62.72%`；one-sided 95%
-  Wilson upper=`67.45%`，safe-visible AUROC=`.467`，abstention只捕获`21.65%` visible failures。
+  20260903T010000Z__physical-authority-s0-r2`；523 Actors/20 logs exact frozen join、status=`done`；r1 superseded。
+- symptom：P4 selected visible failure=`147/404=36.39%`，略低于always-repair `195/523=37.28%`；但one-sided 95%
+  Wilson upper=`40.40%`不低于always point risk，safe-visible AUROC=`.533`，abstention只捕获`24.62%` failures。
 - retained positive：selected Chamfer-worsening=`14.60%`低于always `19.50%`，Chamfer-nonworse AUROC=`.655`；说明
   P4学到了冻结target Chamfer repairability，但这个label不是bidirectional visibility consistency。
 - boundary：structural hazard separation、cross-domain repair AUROC或local score stability均不能升级为physical
-  certificate。P6-C在同一join也有selected visible risk=`63.33%`、safe AUROC=`.463`，不能作为recovery。
+  certificate。P6-C在同一join也只有selected risk=`36.67%`、safe AUROC=`.537`，不能作为confidence recovery。
 - resolution：保留P4 primary与P3-C visible certificate为两个独立authority objects；不在该cohort refit/recalibrate/
-  scan threshold或删case。负边界已进入main/supplement/macros/contribution map；main=`9 pages/1,761,273 bytes`、
-  supplement=`8 pages/7,223,706 bytes`且目标页视觉QA通过，未用排版删除negative result。下一可用failure id=`V7-F21`。
+  scan threshold或删case。正确负边界是weak ranking/no confidence separation，不是selected point risk反向。
 
 ## WorldSim V7 P10 prevention note — validity score不得先验称为物理certificate（2026-09-02）
 

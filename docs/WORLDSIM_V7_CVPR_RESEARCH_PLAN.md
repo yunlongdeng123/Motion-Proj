@@ -1,28 +1,31 @@
 # WorldSim V7 研究计划
 
-## 2026-09-02 P10/P11 predicate-semantics correction
+## 2026-09-02 P10/P11 predicate-semantics correction completed
 
-P12独立统计暴露P10/P11 r1把safe predicate `nonnew_visible_violation=true`反向计成failure。立即暂停新research；r1保留
-审计但不再canonical。唯一修复是failure=`not nonnew`，随后r2只读现有JSONL；不重读数据、不训练、不改selection/gate。
-完成后全面重写V7-F20/F21、paper macros/prose与contribution map，再解释P12结果。
+P12独立统计暴露P10/P11 r1把safe predicate `nonnew_visible_violation=true`反向计成failure。`d8bf0df`已最小修复为
+failure=`not nonnew`；r1保留审计但不再canonical。P10/P11 r2只读现有JSONL并均正常完成，不重读数据、不训练、
+不改selection/gate/cohort。Canonical分别为`20260903T010000Z__physical-authority-s0-r2`与
+`20260903T011500Z__provenance-authority-s0-r2`；V7-F20/F21与paper全部按正确方向重述。
+Final TeX Live main=`9 pages/1,762,273 bytes`、supplement=`8 pages/7,225,029 bytes`；main 6--8与supp 2--3视觉QA
+无裁切/重叠。此纠错里程碑完成后才允许进入下一项research；下一failure id=`V7-F23`。
 
-## 2026-09-02 P12 nuScenes-only visibility authority contract
+## 2026-09-02 P12 nuScenes-only visibility authority result
 
-P10证明Chamfer label mismatch、P11关闭rule gate后，唯一learned recovery冻结为source-only visibility head：P4原
-nuScenes split、相同P3-C ray label、13→16 MLP、seed71201/80 epochs，source calibration top25% score定threshold。
-最终dual=`P4 AND visibility`，七门同时约束source ranking、external visible risk/upper、Chamfer、coverage与hazard
-coverage。AV2 consumed development不参与fit；失败即`V7-F22`并关闭family，positive也须新untouched cohort。
+Canonical=`run://worldsim_v7/WS-V7-P12-NUSCENES-VISIBILITY-AUTHORITY-01/
+20260903T004500Z__visibility-authority-s71201-r1`。Source safe AUROC=`.753`，AV2 safe AUROC=`.625`，证明target-specific
+visibility ranking可nuScenes→AV2 zero-shot迁移。Visibility-only AV2 coverage/risk/upper/Chamfer-worse=
+`8.22/11.63/22.02/37.21%`；P4 dual=`7.46/10.26/20.98/35.90%`，hazard coverage=`3.52%`。
 
-## 2026-09-02 P11 provenance-conditioned authority result
+七门前三类visibility目标通过，但Chamfer、minimum coverage与hazard coverage失败；登记`V7-F22`，关闭head family。
+不扫seed/architecture/feature/source coverage/AV2 threshold；下一可用failure=`V7-F23`。
+
+## 2026-09-02 P11 provenance-conditioned authority corrected result
 
 Canonical=`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
-20260903T001500Z__provenance-authority-s0-r1`。P4∧no-COMPLETE在523 Actors上coverage=`23.71%`，却有visible=
-`79.84%`、Chamfer-worse=`43.55%`、hazard coverage=`3.52%`；五门仅coverage通过，登记`V7-F21`。原因固定为
-no-COMPLETE反向选择low-opportunity Actors，observed point provenance不能推出future-view completeness。
-
-关闭completion-count/provenance gate family，不删completion、不扫threshold。结果进入paper boundary；下一failure=
-`V7-F22`。Final compile main=`9 pages/1,761,885 bytes`、supplement=`8 pages/7,224,489 bytes`；main 6/8/9与
-supplement 2视觉QA通过，唯一warning为既有Table 1 `6.03pt` non-clipping overfull。
+20260903T011500Z__provenance-authority-s0-r2`。P4∧no-COMPLETE在523 Actors上coverage=`23.71%`，visible failure=
+`20.16%`、upper=`26.70%`，但Chamfer-worse=`43.55%`、hazard coverage=`3.52%`；五门=
+`pass/pass/fail/pass/fail`，保留`V7-F21`。正确结论是observed provenance改善visibility，却不能形成joint
+geometry/hazard/future-view authority；关闭completion-count/provenance gate family，不删completion、不扫threshold。
 
 ## 2026-09-02 P11 provenance-conditioned authority contract
 
@@ -31,17 +34,13 @@ supplement 2视觉QA通过，唯一warning为既有Table 1 `6.03pt` non-clipping
 取交集。固定五门为visible risk、Wilson upper、Chamfer tail、10% coverage、50% hazard coverage；只读已消费fresh
 AV2 join，不训练/调threshold/改compiler。Observed-ray witness不等于future-view completeness，失败即`V7-F21`。
 
-## 2026-09-02 P10 frozen physical-authority audit result
+## 2026-09-02 P10 frozen physical-authority corrected result
 
 Canonical=`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
-20260902T234500Z__physical-authority-s0-r1`。523 fresh AV2 Actors上，P4 coverage=`77.25%`并把Chamfer-worsening从
-`19.50%`降到`14.60%`；但selected visible violation=`63.61%`高于always=`62.72%`，95% upper=`67.45%`，
-safe-visible AUROC=`.467`，capture=`21.65%`。三门=`fail/fail/pass`，登记`V7-F20`并禁止本cohort recovery。
-
-论文主张据此收窄：P4只授予frozen Chamfer-nonworsening repair authority，P3-C才定义bidirectional visibility evidence；
-两者不能互相替代。结果已进入main/supplement/macros/contribution map；main=`9 pages/1,761,273 bytes`、supplement=
-`8 pages/7,223,706 bytes`，main 6/8/9与supp 1/7/8视觉QA通过。0 training、0 target reread/refit/recalibration/
-threshold change；下一failure id=`V7-F21`。
+20260903T010000Z__physical-authority-s0-r2`。523 fresh AV2 Actors上，P4 coverage=`77.25%`并把Chamfer-worsening从
+`19.50%`降到`14.60%`；selected visible failure也从`37.28%`轻微降到`36.39%`，但95% upper=`40.40%`仍高于
+always point risk，safe-visible AUROC=`.533`、capture=`24.62%`。三门=`pass/fail/pass`，保留`V7-F20`并禁止
+本cohort recovery。论文主张收窄为：P4只授予frozen Chamfer authority，不能提供visibility confidence separation。
 
 ## 2026-09-02 P10 frozen physical-authority audit contract
 

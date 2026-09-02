@@ -1,30 +1,36 @@
 # Experiments
 
-## P10/P11 visible-failure predicate correction contract（2026-09-02）
+## P10/P11 visible-failure predicate correction result（2026-09-02）
 
-- bug：P3-C `nonnew_visible_violation`是safe predicate；P10/P11 r1误当failure，导致rate/AUROC/AURC/Wilson方向错误。
-- fix：failure=`not nonnew_visible_violation`；其余input、join、selection、gate和统计公式完全不变。
-- protocol：r1保留但superseded；r2只读canonical JSONL，不读dataset/不训练/不改threshold。P12实现方向正确，不重跑。
+- bug/fix：P3-C `nonnew_visible_violation`是safe predicate；P10/P11 r1误当failure。提交`d8bf0df`统一为
+  failure=`not nonnew_visible_violation`；其余input/join/selection/gate/统计公式不变。
+- canonical：P10 r2=`20260903T010000Z__physical-authority-s0-r2`；P11 r2=
+  `20260903T011500Z__provenance-authority-s0-r2`；均只读canonical JSONL、status=`done`。
+- audit：r1保留但superseded，不覆盖summary；0 dataset read/training/threshold/cohort change。P12方向正确，不重跑。
+- paper/QA：main=`9 pages/1,762,273 bytes`、supplement=`8 pages/7,225,029 bytes`；main 6--8、supp 2--3可读且
+  无裁切/重叠，唯一warning为既有Table 1 `6.03pt` overfull。
 
-## P12 nuScenes-only visibility authority freeze（2026-09-02）
+## P12 nuScenes-only visibility authority result（2026-09-02）
 
-- source：P4原11/14/38 nuScenes train/calibration/test scenes；同compiler与P3-C `.20m` ray/depth tolerance重新生成
-  `nonnew_visible_violation` label。
-- model：13 inputs、hidden16、seed71201、80 epochs；threshold=source calibration score top25% fixed coverage。
-- evaluation：source test + consumed 20-log/523-Actor AV2 development；dual=`P4 AND visibility-head`。
-- gates：source AUROC>=.55/source risk改善；external dual risk+95% upper改善、Chamfer nonregression、coverage>=10%、
-  hazard coverage>=50%。0 AV2 fit/sweep；失败关闭family，下一=`V7-F22`。
+- canonical/status：`run://worldsim_v7/WS-V7-P12-NUSCENES-VISIBILITY-AUTHORITY-01/
+  20260903T004500Z__visibility-authority-s71201-r1` / `done`；wall=`381.575s`、GPU/RSS peak=`.04273/1.31414GiB`。
+- source：29/56/228 Actors；13→16、seed71201、80 epochs；test safe AUROC=`.75256`，selected=
+  `108/228=47.37%`，visible failure=`19.44%`、upper=`26.42%`（always=`36.40%`）。
+- AV2 visibility-only：43/523=`8.22%` coverage，risk/upper/Chamfer-worse=`11.63/22.02/37.21%`，hazard Actors=`5`，
+  safe AUROC=`.62494`。
+- AV2 P4 AND head：39/523=`7.46%`，risk/upper/Chamfer-worse=`10.26/20.98/35.90%`，hazard coverage=`3.52%`。
+- gates=`pass/pass/pass/pass/fail/fail/fail`；verdict=`rejected_visibility_targeted_source_head`，登记`V7-F22`并关闭
+  head family。0 AV2 fit/sweep；下一可用=`V7-F23`。
 
-## P11 provenance-conditioned dual-authority result（2026-09-02）
+## P11 provenance-conditioned dual-authority corrected result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/
-  20260903T001500Z__provenance-authority-s0-r1` / `done`；523 Actors、20 logs。
-- provenance-only：193 Actors/`36.90%`，visible=`72.02%`、Chamfer-worse=`48.19%`、hazard Actors=`6`。
-- P4 AND provenance：124/`23.71%`，visible=`79.84%`、95% upper=`85.10%`、Chamfer-worse=`43.55%`、mean gain=
-  `-.00370m`、hazard coverage=`3.52%`；completion-count unsafe-visible AUROC=`.411`。
-- gates=`false/false/false/true/false`；登记`V7-F21`，关闭provenance/count threshold recovery。
-- paper/QA：main=`9 pages/1,761,885 bytes`、supplement=`8 pages/7,224,489 bytes`；main 6/8/9、supp 2视觉通过，
-  唯一warning为既有Table 1 `6.03pt` non-clipping overfull。下一=`V7-F22`。
+  20260903T011500Z__provenance-authority-s0-r2` / `done`；523 Actors、20 logs。
+- provenance-only：193 Actors/`36.90%`，visible failure/upper=`27.98/33.57%`、Chamfer-worse=`48.19%`。
+- P4 AND provenance：124/`23.71%`，visible failure/upper=`20.16/26.70%`、Chamfer-worse=`43.55%`、mean gain=
+  `-.00370m`、hazard coverage=`3.52%`；completion-count unsafe-visible AUROC=`.589`。
+- gates=`true/true/false/true/false`；`V7-F21`修正为“visibility改善但joint geometry/hazard authority失败”，关闭
+  provenance/count threshold recovery。r1 visible数字superseded。
 
 ## P11 provenance-conditioned dual-authority freeze（2026-09-02）
 
@@ -35,18 +41,16 @@
 - fixed gates：dual visible risk < P4、dual 95% upper < P4 point risk、dual Chamfer-worsening <= P4、coverage>=10%、
   hazard coverage>=50%。0 threshold/count sweep、0 target fit、0 compiler change；下一可用=`V7-F21`。
 
-## P10 frozen physical-authority audit result（2026-09-02）
+## P10 frozen physical-authority corrected result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
-  20260902T234500Z__physical-authority-s0-r1` / `done`；20 logs、523 exact-joined Actors。
-- P4 selected/coverage=`404/77.25%`；visible violation always/selected/abstained=`62.72/63.61/59.66%`；selected one-sided
-  95% Wilson upper=`67.45%`；safe-visible AUROC=`.467`、AURC=`.640`、abstention capture=`21.65%`。
+  20260903T010000Z__physical-authority-s0-r2` / `done`；20 logs、523 exact-joined Actors。
+- P4 selected/coverage=`404/77.25%`；visible failure always/selected/abstained=`37.28/36.39/40.34%`；selected one-sided
+  95% Wilson upper=`40.40%`；safe-visible AUROC=`.533`、AURC=`.360`、abstention capture=`24.62%`。
 - Chamfer-worsening always/selected/abstained=`19.50/14.60/36.13%`，Chamfer-nonworse AUROC=`.655`；hazard/nonhazard
   coverage=`93.66/71.13%`。
-- gates=`false/false/true`，verdict=`p4_not_a_physical_safety_certificate`，登记`V7-F20`。P6-C context呈同一
-  visible separation failure；不用于覆盖P4 verdict。0 recovery或threshold scan。
-- paper integration/QA：main=`9 pages/1,761,273 bytes`、supplement=`8 pages/7,223,706 bytes`；main 6/8/9与supp
-  1/7/8视觉无裁切/重叠/断页，唯一warning为既有Table 1 `6.03pt` overfull。下一可用=`V7-F21`。
+- gates=`true/false/true`，verdict=`p4_not_a_physical_safety_certificate`，`V7-F20`修正为“point risk略降但95%上界
+  不与always point risk分离”；P6-C context risk=`36.67%`/safe AUROC=`.537`。0 recovery/threshold scan；r1 superseded。
 
 ## P10 frozen physical-authority audit pre-execution contract（2026-09-02）
 
