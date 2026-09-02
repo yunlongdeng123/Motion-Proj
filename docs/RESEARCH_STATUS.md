@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 project-page/video asset index completed（2026-09-02）
+
+新增 `paper/PROJECT_PAGE_ASSET_INDEX.md`，把 P3-B canonical 10 logs/30 frozen Actors 的全部 panel/video 路径、
+log/Actor identity、category、hazard、camera、可见 query returns、crop depth 与 main/supplement role 显式索引。包内
+13 hazardous + 17 non-hazardous Actors，8 main panels、10 compact-supplement panels、30 full panels 与 30 MP4；panel/video
+payload=`20,861,149/26,519,039` bytes。索引只引用 canonical 46MiB bundle，不把完整二进制再次复制进 Git。
+
+选择合同仍为 metadata/log/Actor UUID 顺序与 query-point visibility camera rule，RGB 在 camera 选择后才解码；所有弱可见性、
+failure 与 q07 Chamfer-worsening case 均保留。该里程碑补齐 plan 的“项目页与视频素材清单”，不创建 scientific run、
+不改 case/metric/claim，也不读取 fresh AV2 quality。
+
 ## WorldSim V7 cross-sensor LiDAR related-work boundary integrated（2026-09-02）
 
 主稿 Related Work 新增 cross-sensor LiDAR generalization 段，将 P6-C 的 source-only subsampling consistency 放回

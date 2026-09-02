@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 project-page/video asset milestone
+
+`paper/PROJECT_PAGE_ASSET_INDEX.md` 已索引 P3-B canonical 的 10 logs/30 Actors、30 panels 与30 MP4，包含完整
+log/Actor identity、hazard、camera、query visibility、crop depth及 main/supplement role。8 main、10 compact supplement、
+30 full-package cases均保持预注册身份，弱可见性和 Chamfer-worsening failures不删；46MiB bundle只保留 canonical run
+一份，不在Git重复存储。计划交付物“项目页与视频素材清单”完成，fresh AV2 quality仍未读。
+
 ## 2026-09-02 cross-sensor LiDAR literature boundary
 
 CVPR main Related Work 已补充 DGLSS（CVPR 2023）与 3DLabelProp（ICCV 2023）：source subsampling consistency和

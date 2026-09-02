@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Project-page asset-index note — 完整失败案例保留且无新failure
+
+- 索引覆盖 P3-B canonical 30/30 panels 与 30/30 MP4，并保留 13 hazardous Actors、低可见性 q05/q06 cases 与
+  q07 Chamfer-worsening case；不因项目页展示目的重选素材；
+- main/compact-supplement/full roles分别固定为8/10/30，camera仍按 query-point visibility选择，RGB不参与选择；
+- 46MiB binary bundle不重复写入Git，索引只保存 canonical run与相对路径；不新增 hash/checksum/fingerprint；
+- documentation-only，不创建新failure id；下一可用仍为 `V7-F18`。
+
 ### Paper literature note — cross-sensor motivation不越权为P6-C证书
 
 - CVPR 2023 DGLSS 的 source subsampling consistency与 ICCV 2023 3DLabelProp 的 sequence/geometry common

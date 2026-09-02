@@ -1,5 +1,15 @@
 # Experiments
 
+## P3-B project-page/video asset indexing（2026-09-02）
+
+- source：P3-B canonical `CAMERA_CASES.jsonl`、`MAIN_CAMERA_PANELS.json`、`SUPPLEMENT_CAMERA_PANELS.json`；
+  10 logs、30 Actors、30 panels、30 MP4。
+- composition：13 hazard/17 non-hazard；main=8、compact supplement=10、full package=30；visible query returns
+  min/median/max=`14/82/4096`，crop-depth points=`870/2358/17286`。
+- payload：panels=`20,861,149` bytes，videos=`26,519,039` bytes；Git只新增路径/身份索引，不复制 46MiB bundle。
+- contract：case selection仅读 metadata/log/Actor UUID，camera selection仅读 query visibility，RGB afterward；无 metric/
+  target/appearance ranking，无 scientific quality read、model、threshold、cohort 或 gate 变化。
+
 ## CVPR cross-sensor LiDAR related-work integration check（2026-09-02）
 
 - added：sensor/scene/appearance shift distinction；source-only LiDAR subsampling consistency；partial accumulation的
