@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P22 AV2 literal first-return correction completed
+
+P22 canonical在523 Actors/1,435,391 rays上把all/hazard/clear new-early从proxy
+`1.3483/1.9115/.9797%`纠正为literal `9.8943/13.9261/7.2556%`，放大约`7.3x`。全部142,022
+literal new-early由COMPLETE首占用；literal new-hit/new-early仅`1.194`，因此P15的proxy `14.51`不能继续承担
+first-return物理效用论证。
+
+该结果与P20 source约6倍低估方向一致，形成跨传感器metric-failure硬证据，但P22 cohort已消费，不能升级为新的
+zero-shot/fresh confirmation。后续只修正论文claim、宏与图，不开启deletion或selector方法；第三批10 logs保持unread。
+
 ## 2026-09-02 P22 consumed-AV2 literal first-return metric correction frozen
 
 P22是停止方法扩展后的合法metric纠错：复用P20 minimum-positive-depth operator，在已消费P15的20-log AV2上

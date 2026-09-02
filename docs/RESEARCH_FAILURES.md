@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P22 outcome note — AV2 confirms proxy failure; paper claim correction required（2026-09-02）
+
+- canonical P22把AV2 all/hazard/clear new-early从proxy `1.348/1.912/.980%`纠正为literal
+  `9.894/13.926/7.256%`，约`7.34/7.29/7.41x`；
+- 142,022 literal new-early全部由COMPLETE首占用，new-hit/early=`1.194`，所以P15基于target-nearest的`14.51`
+  只能保留为proxy diagnostic，必须从first-return收益叙事撤回；
+- 这不是方法失败ID：surface/policy未变，错误在metric语义；P3/P15数值保留但claim ownership收窄，P20/P22拥有literal operator；
+- prevention：不以P22已消费AV2选择deletion/threshold/tolerance，不重跑第二cohort，不把约7.3倍写成fresh transfer或
+  road-safety bound；下一可用scientific failure仍为`V7-F30`。
+
 ## P22 prevention note — external operator correction without target reuse promotion（2026-09-02）
 
 - P22只纠正P15已消费20-log AV2的ray operator；不得把结果包装为第二次fresh test或用来选P17/P17R/P19；

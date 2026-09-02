@@ -1,5 +1,18 @@
 # Experiments
 
+## P22 consumed AV2 literal first-return correction result（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P22-AV2-TRUE-FIRST-RETURN-CORRECTION-01/
+  20260903T160000Z__consumed-av2-true-first-return-s0-r1` / done；
+- cohort：20 consumed AV2 logs，523 Actors（hazard/clear=`142/381`），1,435,391 target rays；
+- all proxy/literal count=`19,354/142,022`，rate=`1.3483/9.8943%`，ratio=`7.338x`；
+- hazard count=`10,854/79,074`，rate=`1.9115/13.9261%`，ratio=`7.285x`；
+- clear count=`8,500/62,948`，rate=`.9797/7.2556%`，ratio=`7.406x`；
+- literal new-early provenance KEEP/PROJECT/COMPLETE=`0/0/142,022`；new-hit=`3,658/0/165,923`；
+- proxy/literal new hits=`280,889/169,581`；literal hit/early=`1.194`，proxy ratio=`14.51`不再代表first return；
+- resources：wall=`46.3186s`、peak GPU=`.18436GiB`、RSS=`1.22553GiB`；0 training/refit/policy change；
+- verdict：consumed external metric correction；fresh third cohort read=false。
+
 ## P22 consumed AV2 literal first-return correction freeze（2026-09-02）
 
 - task/run：`WS-V7-P22-AV2-TRUE-FIRST-RETURN-CORRECTION-01` /

@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7 P22 AV2 literal first-return correction completed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P22-AV2-TRUE-FIRST-RETURN-CORRECTION-01/
+20260903T160000Z__consumed-av2-true-first-return-s0-r1`。523 Actors/20 consumed AV2 logs/1,435,391 rays在唯一
+单3090 run完成；wall=`46.32s`、peak GPU/RSS=`.1844/1.2255GiB`，第三批10 logs未读。
+
+All/hazard/clear proxy→literal new-early=`1.3483→9.8943% / 1.9115→13.9261% /
+.9797→7.2556%`，放大=`7.338/7.285/7.406x`。142,022 literal new-early全部来自COMPLETE；literal new hits=
+169,581（COMPLETE 165,923），因此first-return hit/early ratio=`1.194`，不能继续用proxy的`14.51`解释物理收益。
+
+Verdict=`descriptive_consumed_av2_literal_first_return_metric_correction`：source约6倍低估在AV2同样出现，但cohort已消费，
+只支持measurement-failure跨传感器一致性，不是新zero-shot confirmation。下一步立即纠正paper P3/P15措辞和图表；
+不训练、不选deletion policy、不授权fresh cohort。
+
 ## WorldSim V7 P22 consumed-AV2 literal first-return correction frozen（2026-09-02）
 
 状态=`p22_ready`。P20已证明source legacy target-nearest proxy低估literal first-return约6倍；P22把同一冻结
