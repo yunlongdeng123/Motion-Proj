@@ -1,18 +1,33 @@
 \begin{figure*}[t]
-    \centering
-    \setlength{\fboxsep}{4pt}
-    \footnotesize
-    \begin{tabular}{@{}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{}}
-        \fbox{\parbox[c][1.15cm][c]{0.145\textwidth}{\centering Multi-frame Actor alignment\\ray FREE/OCC evidence}}
-        & $\rightarrow$ &
-        \fbox{\parbox[c][1.15cm][c]{0.145\textwidth}{\centering Physical compiler\\KEEP / PROJECT\\COMPLETE / UNKNOWN}}
-        & $\rightarrow$ &
-        \fbox{\parbox[c][1.15cm][c]{0.145\textwidth}{\centering Validity--hazard\\paired factorization}}
-        & $\rightarrow$ &
-        \fbox{\parbox[c][1.15cm][c]{0.145\textwidth}{\centering Actor residuals\\analytic task query}}
-        & $\rightarrow$ &
-        \fbox{\parbox[c][1.15cm][c]{0.145\textwidth}{\centering Cost density\\monotone reliability}}
-    \end{tabular}
-    \caption{\method compiles sensor evidence into an Actor-preserving physical world, separates validity from hazard, and exposes task-conditioned reliability. Appearance Gaussians never serve directly as collision occupancy.}
-    \label{fig:architecture}
+  \centering
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabular}{@{}cccc@{}}
+    \textbf{valid--safe} & \textbf{artifact--safe} & \textbf{valid--hazard} & \textbf{artifact--hazard} \\
+    \includegraphics[width=.238\textwidth,trim=0 58 1500 0,clip]{figures/supplement/q01_a0_0e0562b6.png} &
+    \includegraphics[width=.238\textwidth,trim=500 58 1000 0,clip]{figures/supplement/q01_a0_0e0562b6.png} &
+    \includegraphics[width=.238\textwidth,trim=0 58 1500 0,clip]{figures/supplement/q00_a0_1f197615.png} &
+    \includegraphics[width=.238\textwidth,trim=500 58 1000 0,clip]{figures/supplement/q00_a0_1f197615.png}
+  \end{tabular}
+
+  \vspace{2pt}
+  \setlength{\fboxsep}{3pt}
+  \footnotesize
+  \begin{tabular}{@{}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{\hspace{2pt}}c@{}}
+    \fbox{\parbox[c][.82cm][c]{.145\textwidth}{\centering Actor alignment\\ray FREE/OCC}}
+    & $\rightarrow$ &
+    \fbox{\parbox[c][.82cm][c]{.145\textwidth}{\centering Physical compiler\\four local actions}}
+    & $\rightarrow$ &
+    \fbox{\parbox[c][.82cm][c]{.145\textwidth}{\centering Validity--hazard\\factorization}}
+    & $\rightarrow$ &
+    \fbox{\parbox[c][.82cm][c]{.145\textwidth}{\centering Analytic query\\Actor residuals}}
+    & $\rightarrow$ &
+    \fbox{\parbox[c][.82cm][c]{.145\textwidth}{\centering Cost density\\task reliability}}
+  \end{tabular}
+  \caption{Validity is not difficulty. Top: a metadata-locked $2\times2$ teaser built from the first non-hazardous
+  (q01-a0) and hazardous (q00-a0) frozen main cases. Within each Actor pair, only the paired synthetic artifact changes;
+  identity, trajectory, extent, camera, and hazard label remain fixed. Bottom: \method compiles sensor evidence into an
+  Actor-preserving physical world before granting separate task authority. These are calibrated evidence overlays, not
+  photorealistic reconstructions.}
+  \label{fig:architecture}
+  \label{fig:p3b-camera}
 \end{figure*}
