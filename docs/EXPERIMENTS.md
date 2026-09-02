@@ -1,5 +1,15 @@
 # Experiments
 
+## P15 fresh hazard-by-action mechanism freeze（2026-09-02）
+
+- tasks：raw=`WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01`，audit=
+  `WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01 / H-V7-P15`。
+- raw：既有20-log fresh AV2、P2 compiler、observed-hit PROJECT、`.20m/.20m` lateral/depth tolerance；单3090一次。
+- join：exact Actor identity对齐P6-C fresh score；固定always/P4/P6-C selected/abstained与hazard/clear。
+- metrics：target-ray分母上的new early/new hit/resolved early、hit-to-early ratio、surface contradiction，以及三action来源。
+- boundary：0 training/fit/threshold/search/gate；PROJECT=0可能是KEEP-first voxel dedup，不能作causal claim；下一failure=
+  `V7-F24`。
+
 ## P14 hazard-stratified defer-to-query result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/

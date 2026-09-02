@@ -1,0 +1,22 @@
+task_id: WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01
+hypothesis_id: H-V7-P15
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+cohort_config: configs/worldsim_v7/av2_zero_shot_recovery_cohort_v1.json
+cohort_roles: [fresh_external_confirmation]
+expected_log_count: 20
+device: cuda
+verdict: descriptive_fresh_hazard_action_attribution
+claim_boundary: >-
+  Mechanism attribution on the already consumed 20-log fresh AV2 cohort. Target
+  rays are re-evaluated with the frozen compiler and existing 0.20 m tolerances,
+  then each nearest output is attributed to KEEP, PROJECT, or COMPLETE. No Actor,
+  compiler action, tolerance, policy, model, threshold, or cohort may change. This
+  is a descriptive ray/provenance audit, not an independent confirmation, causal
+  intervention, collision certificate, planner result, or road-safety guarantee.
+compiler_overrides:
+  projection_output: observed_lidar_hit
+attribution:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20

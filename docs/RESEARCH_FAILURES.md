@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P15 prevention note — nearest-output provenance不是action intervention（2026-09-02）
+
+- P15以target ray的nearest compiled output给new early/hit/contradiction归因，只回答“当前输出最接近哪个action来源”，不回答
+  “删除该action会怎样”；禁止使用causal、ablation或safety intervention措辞。
+- PROJECT使用observed LiDAR hit，且KEEP在concatenate/dedup中优先；同voxel PROJECT会显示为KEEP。0 PROJECT count不是
+  PROJECT零风险或零贡献证明，也不授权修改dedup precedence重跑。
+- fresh 20-log cohort已被P3-C/P6-C消费；P15是mechanism follow-up，不是新的independent confirmation，不扫tolerance。
+- hazard/clear差异必须以target-ray denominator与action share共同报告，不能只用Actor count或absolute ray count。
+- 只有结果实质推翻既有claim才登记`V7-F24`；否则保留descriptive hard-evidence boundary。
+
 ## P14 result boundary — hazard preservation不是hazard-stratum visible-risk降低（2026-09-02）
 
 - canonical：`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/

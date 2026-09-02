@@ -1,0 +1,24 @@
+schema_version: worldsim_v7.p15_fresh_hazard_action_audit_config.v1
+task_id: WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01
+hypothesis_id: H-V7-P15
+runs_root: /root/autodl-tmp/runs
+raw_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01/20260903T043000Z__fresh-hazard-action-raw-s0-r1
+p6c_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1
+scopes:
+  - always_repair
+  - p4_selected
+  - p4_abstained
+  - p6c_selected
+  - p6c_abstained
+actions:
+  - KEEP
+  - PROJECT
+  - COMPLETE
+claim_boundary: >-
+  Frozen action-by-hazard accounting over the consumed fresh AV2 cohort. The
+  audit joins exact Actor identities to existing P4/P6-C selections and reports
+  ray termination and surface-contradiction provenance without changing a score,
+  threshold, compiler action, tolerance, or cohort. PROJECT can collapse under
+  voxel deduplication because KEEP is concatenated first; a zero PROJECT count is
+  not causal evidence of zero PROJECT harm. Hazard is the existing deterministic
+  proxy, not collision ground truth or a real-road safety label.

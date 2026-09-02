@@ -1,5 +1,17 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P15 fresh hazard-by-action mechanism audit frozen
+
+P14暴露hazard-stratum risk未降后，P15冻结为机制追踪而非新head：在已消费20-log fresh AV2上以原P2 compiler、
+`.20m` ray/depth tolerance和observed-hit PROJECT复跑一次CUDA P3-D attribution，再exact join既有P4/P6-C scores。
+固定报告always/P4/P6-C selected与abstained在hazard/clear的new-early、new-hit、resolved-early、surface contradiction
+及KEEP/PROJECT/COMPLETE来源，不改模型/threshold/action/cohort。
+
+迁移CVPR 2016 ray visibility constraint、CVPR 2025 EvOcc first-occupied ray evaluation与ICCV 2021 early/late occupancy
+asymmetry；不迁移planning/safety claim。PROJECT可能因KEEP-first voxel dedup归并为KEEP，0计数不能解释为0 causal harm。
+一次单3090 raw run + CPU join，无训练/fit/gate；freeze=`P15_FRESH_HAZARD_ACTION_ATTRIBUTION_FREEZE.md`，下一failure=
+`V7-F24`。
+
 ## 2026-09-02 P14 hazard-stratified defer result
 
 Canonical=`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/

@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P15 fresh hazard-by-action attribution frozen（2026-09-02）
+
+状态=`p15_fresh_hazard_action_frozen`。下一项直接解释P14而不训练新visibility head：对已消费fresh 20 logs执行一次
+原P3-D GPU ray/provenance attribution，然后与P4/P6-C fresh score做Actor exact join；denominator由formal产物原样确定。
+固定scope=`always/P4 selected/P4 abstained/P6-C selected/P6-C abstained`，stratum=`hazard/clear`，action=
+`KEEP/PROJECT/COMPLETE`。
+
+Literature migration来自Savinov CVPR 2016 ray visibility、EvOcc CVPR 2025 first-occupied ray depth及ICCV 2021
+early/late occupancy asymmetry。0 training/fit/calibration/threshold/policy search；单3090足够，raw预计分钟内。PROJECT的
+KEEP-first dedup collapse显式写入claim boundary。下一动作提交/push freeze后运行唯一raw与CPU audit；下一failure=`V7-F24`。
+
 ## WorldSim V7 P14 hazard-stratified composite boundary completed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/
