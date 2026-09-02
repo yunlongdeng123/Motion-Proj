@@ -1,5 +1,11 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 official-template provenance recheck
+
+官方 `cvpr-org/author-kit` main HEAD仍为已固定 `2917585`，latest release仍为 CVPR2026，尚无 CVPR2027 kit。
+因此保持现有官方 `cvpr.sty`/BibTeX style，不采纳第三方模板；`TEMPLATE_PROVENANCE.md` 已记录复核。正式 2027 kit
+发布后才允许迁移并重新检查 page limit。
+
 ## 2026-09-02 paper source-convergence milestone
 
 最终 source package已移除从未被 `\input` 的 legacy `main_results.tex`、18个 placeholder macros及 `\todoresult`；

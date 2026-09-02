@@ -1,5 +1,12 @@
 # Experiments
 
+## Official CVPR author-kit provenance recheck（2026-09-02）
+
+- official source：`https://github.com/cvpr-org/author-kit` only。
+- `refs/heads/main=291758547e923160eb4d37079b7b9f0dfce82355`，与 paper pinned commit完全一致。
+- latest official release=CVPR2026；CVPR2027 kit尚未发布，因此不替换 style files、不使用第三方模板。
+- documentation-only provenance update；无 LaTeX/source/style/scientific change或 quality read。
+
 ## Paper legacy-TBD source convergence（2026-09-02）
 
 - removed：未被任何 source `\input` 的 `paper/tables/main_results.tex`、其唯一依赖的18个 placeholder result macros、

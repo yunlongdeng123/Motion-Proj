@@ -4,6 +4,8 @@
 - Commit: `291758547e923160eb4d37079b7b9f0dfce82355`
 - Upstream commit date: 2026-05-27
 - Pulled: 2026-09-01
+- Reverified against official GitHub on 2026-09-02: `refs/heads/main` still resolves to the pinned commit above; the latest
+  official release remains CVPR2026 and no CVPR2027 author kit is published.
 - Included official files: `cvpr.sty`, `ieeenat_fullname.bst`
 - Current upstream template label: CVPR 2026
 

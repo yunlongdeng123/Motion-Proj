@@ -2,6 +2,12 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Official-template provenance note — pinned author kit仍为官方HEAD，无新failure
+
+- official GitHub `cvpr-org/author-kit` main HEAD仍是 pinned `2917585`，latest release仍为 CVPR2026；
+- 不从搜索结果、Overleaf或第三方仓库引入所谓 CVPR2027 template；当前 draft只设置 `confYear=2027`；
+- style files未改、无需重编或新增 layout gate；等官方 2027 kit发布后再迁移。无failure id，下一可用仍为 `V7-F18`。
+
 ### Paper source-convergence note — legacy TBD contract移除，无新failure
 
 - `main_results.tex` 是早期未引用表，18个 TBD macros只由该表引用；main/supplement PDF均未渲染 TBD；

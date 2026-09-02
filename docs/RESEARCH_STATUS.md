@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 official CVPR template provenance reverified（2026-09-02）
+
+只查官方 `cvpr-org/author-kit`：`refs/heads/main` 仍解析为已固定的
+`291758547e923160eb4d37079b7b9f0dfce82355`，latest official release仍为 CVPR2026，未发布 CVPR2027 kit。
+因此当前 `cvpr.sty`/`ieeenat_fullname.bst` 无需迁移，`confYear=2027` 继续作为 research draft label；等官方 2027 kit
+出现后再做一次样式/page-limit迁移。`paper/TEMPLATE_PROVENANCE.md` 已记录复核日期与结果，无 source/style变更。
+
 ## WorldSim V7 paper source package cleared of legacy TBD contract（2026-09-02）
 
 确认 `paper/tables/main_results.tex` 从未被 main/supplement `\input`，其中18个 Naive/V6.7/HARP placeholder macros也
