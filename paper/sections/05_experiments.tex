@@ -135,6 +135,19 @@ On \PsixFreshActors{} exact-once AV2 Actors, the order reverses: candidate/P4 AU
 \PsixFreshCandidateFalseRepair{}/\PsixFreshPfourFalseRepair{}\%. External gates pass, yet this source/external reversal is
 cohort-dependent rather than universal; P4 remains primary.
 
+\paragraph{Frozen continuous and joint reliability.}
+We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,
+the five-component log-cost density reduces mean integrated Brier and marginal calibration error by
+\PrelMarginalBrierGain{}\% and \PrelMarginalCalibGain{}\% relative to the frozen monotone-CDF control. A conditional
+four-horizon copula improves joint-event Brier by \PrelJointDevBrierGain{}\% on source-held-out trajectories and by
+\PrelJointFreshBrierGain{}\% on an independently frozen \PrelJointFreshLogs{}-log cohort; calibration-error reductions are
+\PrelJointDevCalibGain{}\% and \PrelJointFreshCalibGain{}\% (Table~\ref{tab:c3-reliability}). The downstream P346 authority
+reaches \PrelAuthorityFreshCoverage{}\% q90 coverage at \PrelAuthorityFreshUnsafe{}\% unsafe rate on that consumed fresh
+cohort, but source held-out-horizon risk rises to \PrelAuthorityHeldoutUnsafe{}\%. We therefore treat density, dependence,
+and task authority as separate inherited evidence, not as a V7 repair effect or a formal cross-domain calibration claim.
+
+\input{tables/c3_reliability_transfer}
+
 \input{tables/p5_dual_authority}
 
 \paragraph{Physical repair is not trajectory authority.}

@@ -1,19 +1,19 @@
-\begin{table*}[t]
+\begin{table}[t]
   \centering
-  \caption{Retained-source $2\times2$ composition on exact-match P5 Actors. Authority coverage is the accepted fraction of
-  fixed two-action sets; cost and unsafe rate are measured over accepted sets (all sets for ``none''). Identical B0/B1 and
-  B2/B3 action metrics are the intended physical/task non-interference contract, not a causal planning effect.}
+  \caption{Retained-source $2\times2$ composition on 88 exact P5 Actors (32 hazardous), all retained. Coverage/cost/unsafe
+  are over fixed two-action sets (all sets for ``none''). Equal B0/B1 and B2/B3 action metrics are the intended
+  physical/task non-interference contract, not a causal planning effect.}
   \label{tab:p9-composed}
-  \small
-  \setlength{\tabcolsep}{7pt}
-  \begin{tabular}{llrrrrr}
+  \scriptsize
+  \setlength{\tabcolsep}{2.4pt}
+  \begin{tabular}{lrrrr}
     \toprule
-    & & Surface CD $\downarrow$ & Authority cov. (\%) $\uparrow$ & Actual cost $\downarrow$ & Unsafe (\%) $\downarrow$ & Actor/hazard retention \\
+    Arm (surface / authority) & CD $\downarrow$ & cov. $\uparrow$ & cost $\downarrow$ & unsafe $\downarrow$ \\
     \midrule
-    B0 & query + none & 0.229 & 100.00 & 0.1497 & 16.45 & 88/32 \\
-    B1 & HARP-3D + none & \textbf{0.223} & 100.00 & 0.1497 & 16.45 & 88/32 \\
-    B2 & query + P346 & 0.229 & 49.43 & \textbf{0.0279} & \textbf{1.15} & 88/32 \\
-    B3 & HARP-3D + P346 & \textbf{0.223} & 49.43 & \textbf{0.0279} & \textbf{1.15} & 88/32 \\
+    B0 query / none & 0.229 & 100.00 & 0.1497 & 16.45 \\
+    B1 HARP-3D / none & \textbf{0.223} & 100.00 & 0.1497 & 16.45 \\
+    B2 query / P346 & 0.229 & 49.43 & \textbf{0.0279} & \textbf{1.15} \\
+    B3 HARP-3D / P346 & \textbf{0.223} & 49.43 & \textbf{0.0279} & \textbf{1.15} \\
     \bottomrule
   \end{tabular}
-\end{table*}
+\end{table}

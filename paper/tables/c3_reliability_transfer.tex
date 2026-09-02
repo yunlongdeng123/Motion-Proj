@@ -1,0 +1,21 @@
+\begin{table}[t]
+  \centering
+  \caption{Frozen V6.7 reliability evidence inherited without V7 refitting. P183 has \PrelMarginalFreshLogs{} fresh logs;
+  source held-out has \PrelJointDevTrajectories{} trajectories; P201 has \PrelJointFreshTrajectories{} trajectories from
+  \PrelJointFreshLogs{} fresh logs. $\Delta$B/$\Delta$E are Brier/calibration-error reductions. P346 reuses P201 and remains
+  development evidence.}
+  \label{tab:c3-reliability}
+  \scriptsize
+  \setlength{\tabcolsep}{2.1pt}
+  \begin{tabular}{llrrr}
+    \toprule
+    Object & Split & $\Delta$B $\uparrow$ & $\Delta$E $\uparrow$ & cov./unsafe $\uparrow\!\downarrow$ \\
+    \midrule
+    density & P183 fresh & \PrelMarginalBrierGain{} & \PrelMarginalCalibGain{} & -- \\
+    joint & source held-out & \PrelJointDevBrierGain{} & \PrelJointDevCalibGain{} & -- \\
+    joint & P201 fresh & \PrelJointFreshBrierGain{} & \PrelJointFreshCalibGain{} & -- \\
+    P346 & P201 reused & -- & -- & \PrelAuthorityFreshCoverage{}/\PrelAuthorityFreshUnsafe{} \\
+    P346 & source held-out $H$ & -- & -- & \PrelAuthorityHeldoutCoverage{}/\PrelAuthorityHeldoutUnsafe{} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
