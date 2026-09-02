@@ -75,7 +75,7 @@ def _aurc(scores: list[float], failures: list[bool]) -> float:
 
 def _group(rows: list[dict[str, Any]], confidence: float, total: int) -> dict[str, Any]:
     count = len(rows)
-    visible_failures = int(sum(bool(row["nonnew_visible_violation"]) for row in rows))
+    visible_failures = int(sum(not bool(row["nonnew_visible_violation"]) for row in rows))
     chamfer_failures = int(sum(bool(row["chamfer_worsened_vs_query"]) for row in rows))
     exact_zero = int(sum(bool(row["exact_no_visible_contradiction"]) for row in rows))
     gains = [float(row["query_chamfer_m"]) - float(row["compiled_chamfer_m"]) for row in rows]
@@ -100,8 +100,8 @@ def _method_summary(
 ) -> dict[str, Any]:
     selected = [row for row in rows if bool(row[selected_field])]
     abstained = [row for row in rows if not bool(row[selected_field])]
-    total_visible_failures = int(sum(bool(row["nonnew_visible_violation"]) for row in rows))
-    abstained_visible_failures = int(sum(bool(row["nonnew_visible_violation"]) for row in abstained))
+    total_visible_failures = int(sum(not bool(row["nonnew_visible_violation"]) for row in rows))
+    abstained_visible_failures = int(sum(not bool(row["nonnew_visible_violation"]) for row in abstained))
     hazardous = [row for row in rows if bool(row["hazardous"])]
     nonhazardous = [row for row in rows if not bool(row["hazardous"])]
     scores = [float(row[score_field]) for row in rows]
@@ -112,13 +112,13 @@ def _method_summary(
             abstained_visible_failures / total_visible_failures if total_visible_failures else None
         ),
         "safe_visible_auroc": _auroc(
-            scores, [not bool(row["nonnew_visible_violation"]) for row in rows]
+            scores, [bool(row["nonnew_visible_violation"]) for row in rows]
         ),
         "chamfer_nonworse_auroc": _auroc(
             scores, [not bool(row["chamfer_worsened_vs_query"]) for row in rows]
         ),
         "nonnew_visible_aurc": _aurc(
-            scores, [bool(row["nonnew_visible_violation"]) for row in rows]
+            scores, [not bool(row["nonnew_visible_violation"]) for row in rows]
         ),
         "hazard_coverage": (
             sum(bool(row[selected_field]) for row in hazardous) / len(hazardous) if hazardous else None

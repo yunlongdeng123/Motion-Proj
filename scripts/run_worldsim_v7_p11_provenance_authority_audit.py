@@ -65,7 +65,7 @@ def _auroc(scores: list[float], positive: list[bool]) -> float | None:
 
 def _group(rows: list[dict[str, Any]], total: int, confidence: float) -> dict[str, Any]:
     count = len(rows)
-    visible = int(sum(bool(row["nonnew_visible_violation"]) for row in rows))
+    visible = int(sum(not bool(row["nonnew_visible_violation"]) for row in rows))
     chamfer = int(sum(bool(row["chamfer_worsened_vs_query"]) for row in rows))
     hazards = int(sum(bool(row["hazardous"]) for row in rows))
     gains = [float(row["query_chamfer_m"]) - float(row["compiled_chamfer_m"]) for row in rows]
@@ -179,7 +179,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "dual_hazard_coverage": dual_hazard_coverage,
             "completion_count_unsafe_visible_auroc": _auroc(
                 [float(row["completion_decision_count"]) for row in rows],
-                [bool(row["nonnew_visible_violation"]) for row in rows],
+                [not bool(row["nonnew_visible_violation"]) for row in rows],
             ),
             "fixed_gates": gates,
             "claim_boundary": config["claim_boundary"],

@@ -1,5 +1,11 @@
 # Experiments
 
+## P10/P11 visible-failure predicate correction contract（2026-09-02）
+
+- bug：P3-C `nonnew_visible_violation`是safe predicate；P10/P11 r1误当failure，导致rate/AUROC/AURC/Wilson方向错误。
+- fix：failure=`not nonnew_visible_violation`；其余input、join、selection、gate和统计公式完全不变。
+- protocol：r1保留但superseded；r2只读canonical JSONL，不读dataset/不训练/不改threshold。P12实现方向正确，不重跑。
+
 ## P12 nuScenes-only visibility authority freeze（2026-09-02）
 
 - source：P4原11/14/38 nuScenes train/calibration/test scenes；同compiler与P3-C `.20m` ray/depth tolerance重新生成

@@ -1,5 +1,11 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P10/P11 predicate-semantics correction
+
+P12独立统计暴露P10/P11 r1把safe predicate `nonnew_visible_violation=true`反向计成failure。立即暂停新research；r1保留
+审计但不再canonical。唯一修复是failure=`not nonnew`，随后r2只读现有JSONL；不重读数据、不训练、不改selection/gate。
+完成后全面重写V7-F20/F21、paper macros/prose与contribution map，再解释P12结果。
+
 ## 2026-09-02 P12 nuScenes-only visibility authority contract
 
 P10证明Chamfer label mismatch、P11关闭rule gate后，唯一learned recovery冻结为source-only visibility head：P4原

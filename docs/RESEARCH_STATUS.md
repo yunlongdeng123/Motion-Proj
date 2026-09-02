@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 P10/P11 predicate-semantics correction frozen（2026-09-02）
+
+P12的独立实现发现P3-C `nonnew_visible_violation=true`语义是“compiled未新增early/contradicted”（safe），而P10/P11
+r1错误把True计为failure。两项r1立即撤销canonical资格但保留run供审计；修复只把failure定义改为`not nonnew`，所有
+identity、group、gate、Wilson、cohort和P4 decision不变。修复提交后创建r2，只读既有JSONL，不重读AV2、不训练。
+在r2完成前，paper中P10/P11数字视为待纠正，不启动任何新研究。
+
 ## WorldSim V7 P12 source-only visibility-targeted recovery frozen（2026-09-02）
 
 在`V7-F20/F21`后只允许一次learned mechanism升级：用原P4 nuScenes train/calibration/test split重新生成相同`.20m`

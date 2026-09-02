@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P10/P11 analysis-semantics defect — r1 superseded, scientific boundary待r2重述（2026-09-02）
+
+- defect：字段名`nonnew_visible_violation`易歧义，但生成器定义True为safe conjunction：compiled early<=query early且
+  compiled contradicted<=query contradicted。P10/P11 r1把True累计为failure。
+- impact：r1 visible rates、safe AUROC/AURC、Wilson与相关gate方向无效；Chamfer、coverage、hazard、identity不受影响。
+- resolution：不覆盖/删除r1，不手改summary；提交最小predicate fix后生成r2 canonical，并同步paper所有数字。
+- prevention：后续JSON字段必须同时对照生成predicate与summary prose；不新增hash/checksum/额外gate。
+
 ## WorldSim V7 P12 prevention note — dedicated visibility label仍不得使用AV2 development调模型（2026-09-02）
 
 - P12修复的是P10 label mismatch，不是用AV2重命名P4：architecture/seed/epochs/features/source split与25% calibration
