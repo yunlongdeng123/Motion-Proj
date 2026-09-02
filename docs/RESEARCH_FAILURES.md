@@ -1,5 +1,24 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F27 — rare Pareto-positive support collapses Actor routing to the baseline
+
+- canonical=`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/
+  20260903T104500Z__two-expert-router-s71801-r1`；fresh AV2未读。
+- support：train+calibration仅`3/85` P17R-dominant，consumed test仅`2/228`；router在test选择P17R=`0`、
+  always-COMPLETE=`228`，accuracy=`99.12%`是majority解而不是有效authority。
+- result：hazard new-early与Chamfer均精确等于baseline，第一门false、第二门true；loss `.69615→.04729`不能弥补
+  runtime features对稀有dominance缺乏可迁移分离。
+- oracle boundary：post-verdict两Actor oracle仅减少1个hazard early、mean Chamfer改善约`6.1e-6m`，当前expert family
+  的可用增益本就极窄。关闭Actor router/class-weight/width/threshold sweep。
+- response：P19把动作单位降到hazard Actor内固定一个UNKNOWN slot；不学习router、不改`.5`、不扫capacity；下一failure=
+  `V7-F28`。
+
+## P19 prevention note — fixed one-slot candidate veto（2026-09-02）
+
+- 仅hazard Actor可veto；若存在冻结P17R score `<.5`，只把minimum-score一个candidate标UNKNOWN，其余完整保留。
+- clear Actor恒always-COMPLETE；KEEP/PROJECT不可删除；不得以oracle test label直接选Actor。
+- source双Pareto失败即关闭score-ranked veto，不扫top-k/threshold/strata/ranking；fresh AV2仍须source通过才可读。
+
 ## V7-F26 — normalized hybrid supervision narrows but does not close the Pareto gap
 
 - canonical=`run://worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/

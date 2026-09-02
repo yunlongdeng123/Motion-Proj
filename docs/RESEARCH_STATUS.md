@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P18 rejected / P19 sparse hazard veto frozen（2026-09-02）
+
+P18 canonical=`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/
+20260903T104500Z__two-expert-router-s71801-r1`。Fit label仅`3/85` P17R-dominant；test label=`2/228`，router却
+`228/228`选always-COMPLETE。结果hazard new-early=`1.4362216→1.4362216%`、Chamfer=
+`.1945868→.1945868m`，登记`V7-F27`，target read=`false`。
+
+检索SparseOcc/EvOcc后，P19冻结hazard-only sparse veto：存在P17R score `<.5`时，仅minimum-score candidate标
+UNKNOWN，每Actor最多一个；clear Actor恒always-COMPLETE，不训练、不扫容量/阈值。nuScenes仍仅development，fresh
+AV2才可支持transfer；状态=`p19_frozen_implementation_next`。
+
 ## WorldSim V7 P17R rejected / P18 two-expert routing frozen（2026-09-02）
 
 P17R canonical=`run://worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/

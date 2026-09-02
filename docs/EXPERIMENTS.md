@@ -1,5 +1,17 @@
 # Experiments
 
+## P18 result / P19 sparse hazard veto freeze（2026-09-02）
+
+- P18 canonical/status：`run://worldsim_v7/WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01/
+  20260903T104500Z__two-expert-router-s71801-r1` / done；wall=`399.09s`、peak GPU/RSS=`.0428/1.293GiB`。
+- labels：fit always/P17R=`82/3`；test=`226/2`；test predictions=`228/0`，accuracy=`.99123`。
+- result：hazard new-early不变`1.4362216%`，Chamfer不变`.1945868m`，1/2 false；
+  verdict=`source_development_rejected_external_unread`、`V7-F27`、target read=`false`。
+- post-verdict oracle：2/228 Actor，veto 2/3325 candidates，hazard early `-1`、mean Chamfer `-6.1e-6m`；仅作family
+  ceiling诊断，不作为method claim。
+- P19 freeze：hazard Actor内score `<.5`才veto minimum一个candidate；clear恒baseline；source双Pareto、下一failure=
+  `V7-F28`；不扫capacity/threshold/ranking。
+
 ## P17R result / P18 router freeze（2026-09-02）
 
 - P17R canonical/status：`run://worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/

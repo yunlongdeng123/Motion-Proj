@@ -1,0 +1,31 @@
+hypothesis_id: WS-V7-H-P19
+source_task_id: WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01
+external_task_id: WS-V7-P19-SPARSE-HAZARD-VETO-EXTERNAL-01
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+base_expert_config: configs/worldsim_v7/p17r_hybrid_ray_chamfer_completion_v1.yaml
+base_expert_fit_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/20260903T094500Z__hybrid-ray-chamfer-s71701-r1
+fresh_av2_cohort: configs/worldsim_v7/av2_evicomp_fresh_cohort_v1.json
+fresh_download_state: /root/autodl-tmp/data/av2/v7_p16_download_state
+device: cuda
+claim_boundary: >-
+  A deterministic one-slot UNKNOWN veto uses the frozen P17R score only for
+  hazardous Actors. Source test is consumed development; only an exactly-once
+  fresh AV2 evaluation can support transfer.
+policy:
+  hazardous_actors_only: true
+  maximum_unknown_candidates_per_actor: 1
+  ranking: minimum_frozen_p17r_occupancy_score
+  eligibility: score_strictly_below_frozen_p17r_selection_threshold
+  threshold_source: base_expert_config.model.forward_selection_threshold
+  tie_break: first_candidate_index
+  clear_actor_action: always_complete
+source_decision:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+external_decision:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+verdict_on_pass: supported_sparse_hazard_veto_zero_shot_transfer
+verdict_on_failure: rejected_sparse_hazard_veto_zero_shot_transfer

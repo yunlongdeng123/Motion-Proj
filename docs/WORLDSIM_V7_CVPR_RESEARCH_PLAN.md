@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P18 rejected, P19 sparse hazard veto frozen
+
+P18的P17R-dominant support只有fit `3/85`、consumed test `2/228`；router在test全选baseline，hazard early与Chamfer
+均不变。登记`V7-F27`、fresh AV2未读，关闭Actor routing。post-verdict oracle只显示2 candidates/1 hazard event的
+极窄上限，不能支撑继续调router。
+
+按CVPR 2024 SparseOcc“稀疏避免empty-space hallucination”和CVPR 2025 EvOcc UNKNOWN/first-return迁移P19：hazard Actor
+若有冻结P17R score `<.5`，仅minimum-score一个candidate标UNKNOWN；clear Actor恒always-COMPLETE。无训练、无新阈值，
+source双Pareto失败即`V7-F28`，通过才允许fresh AV2 exact-once。
+
 ## 2026-09-02 P17R rejected, P18 fixed-expert router frozen
 
 P17R把coverage恢复到`88.96%`并保留hazard early下降，但Chamfer仍`.1945868→.1957160m`，登记`V7-F26`，
