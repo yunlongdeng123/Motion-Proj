@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P23 fresh AV2 literal first-return confirmation supported
+
+P23在10个此前quality-unread AV2 logs上exact-once完成，233 Actors/650,145 rays。All/hazard/clear literal new-early=
+`10.8007/14.8172/6.7504%`，为target-nearest proxy的`7.885/8.286/7.123x`；两项预冻结确认门全部通过。
+全部70,220 literal new-early来自COMPLETE，literal new-hit/new-early=`1.237`，独立复现P22 consumed纠偏与机制方向。
+
+该结果完成V7“硬三维物理证据”的fresh外域确认，但只属于measurement/provenance transfer；不授权P16--P19或selector
+promotion，不是collision/planning/road-safety结果。Downloader/P23均正常退出，第三批数据处理完成；不再创建新AV2
+holdout或重跑。下一步限定为把P23进入主文/补充图/贡献归属并重新编译8页稿件。
+
 ## 2026-09-02 P23 fresh AV2 literal first-return confirmation frozen
 
 P22已消费AV2不能提供独立确认；按CVPR 2024/2025 evidential occupancy的raw-ray/UNKNOWN评测边界，P23在第三批

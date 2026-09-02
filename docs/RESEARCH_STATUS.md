@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P23 fresh AV2 first-return confirmation supported（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01/
+20260903T183000Z__fresh-av2-literal-first-return-s0-r1`；10/10 previously unread logs、233 Actors（hazard=81）、
+650,145 rays exact-once完成。All/hazard/clear proxy→literal=`1.3697→10.8007% / 1.7881→14.8172% /
+.9478→6.7504%`，ratio=`7.885/8.286/7.123x`，两项核心门全部true。
+
+70,220 literal new-early全部来自COMPLETE；86,883 literal new hits中85,491来自COMPLETE（98.398%），hit/early=
+`1.237`。该结果独立确认P22 measurement failure与completion provenance，但不验证或选择model/policy。Failure ID未消耗，
+下一仍为`V7-F30`。Run wall=`23.42s`、peak GPU/RSS=`.1838/1.2103GiB`；下载器记录`all_complete logs=10`，
+下载器与P23均正常退出，定时automation已删除，磁盘约`98GiB`可用。
+
 ## WorldSim V7 P23 fresh AV2 literal confirmation frozen（2026-09-02）
 
 状态=`waiting_for_10_of_10_downloads`；当前`.complete=6/10`，唯一下载器继续串行。P23在任何第三批quality/model output

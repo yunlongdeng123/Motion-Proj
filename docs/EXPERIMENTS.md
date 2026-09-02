@@ -1,5 +1,17 @@
 # Experiments
 
+## P23 fresh AV2 literal first-return confirmation result（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01/
+  20260903T183000Z__fresh-av2-literal-first-return-s0-r1` / done/supported；
+- cohort：10 exact-once logs，233 Actors（81 hazard/152 clear），650,145 rays，0 replacement/deletion；
+- all proxy/literal=`8,905/70,220`，rate=`1.3697/10.8007%`，ratio=`7.885x`；
+- hazard=`5,837/48,368`，rate=`1.7881/14.8172%`，ratio=`8.286x`；
+- clear=`3,068/21,852`，rate=`.9478/6.7504%`，ratio=`7.123x`；
+- literal new-early KEEP/PROJECT/COMPLETE=`0/0/70,220`；new-hit=`1,392/0/85,491`，total=`86,883`；
+- literal hit/early=`1.237`，COMPLETE new-hit share=`98.398%`；all provenance aligned=true；
+- gates=`2/2 true`；wall=`23.4176s`、peak GPU/RSS=`.18382/1.21025GiB`；0 training/refit/policy/tolerance change。
+
 ## P23 fresh AV2 literal first-return confirmation freeze（2026-09-02）
 
 - task/run：`WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01` /

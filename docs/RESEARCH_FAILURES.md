@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P23 outcome note — fresh cohort confirms the first-return metric failure（2026-09-02）
+
+- fresh all/hazard/clear literal exposure=`10.801/14.817/6.750%`，分别为proxy的`7.89/8.29/7.12x`；预冻结两门全过；
+- 70,220 literal new-early全部COMPLETE；fresh hit/early=`1.237`复现P22 consumed `1.194`附近的低效率，而非proxy高比；
+- 该正结果只升级“target-nearest严重低估literal first return”与“COMPLETE拥有新提前终止”的证据等级；不升级
+  P16/P17/P17R/P19或P4 selector，不把measurement transfer称为model/policy transfer；
+- downloader与唯一P23进程正常退出，10 logs无retry；不重跑、不扫tolerance、不再建立新AV2 holdout；
+- 无scientific failure，`V7-F30`保持下一可用ID。论文必须以P23 fresh数字作为外域独立确认，并保留P22 consumed纠错。
+
 ## P23 prevention note — prospective metric confirmation, not target reuse（2026-09-02）
 
 - 第三批10 logs在P22前已按metadata冻结，P23 freeze时quality/model output仍未读；允许一次新的prospective metric
