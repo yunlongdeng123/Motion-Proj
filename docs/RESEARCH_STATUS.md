@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P3-C/P3-D（2026-09-02）
+
+主稿新增 visibility-conditioned physical evidence：pooled hit/early/visible-precision/F-score、64.04% Actor boundary与
+completion `14.96×` gain--tail；limitations明确拒绝 universal surface certificate和 post-hoc completion deletion。
+Supplement新增双向 ray/surface partition、三行证据表、全 Actor provenance解释及 `V7-F18` failure ledger；
+`CONTRIBUTION_MAP.md` 已登记 P3-C/P3-D canonical ownership、代码接口和禁止主张。
+
+按 `latex-compile` 使用 TeX Live 编译成功：main=`8 pages/1,166,490 bytes`，supplement=`7 pages/7,221,609 bytes`。
+main仅保留既有 Table 1 `6.03pt` overfull；supplement无 warning。按 `pdf` skill 渲染检查 main pages 4--8、supplement
+pages 1--3/7，无裁切、重叠、断表或不可读文本；P7-C图从独占浮动页移到单栏 failure ledger 后，supplement由首次
+8页收敛到7页且未删内容。该里程碑不改科学数值、模型、cohort、operator或 fresh 协议；下一可用failure id保持
+`V7-F19`。
+
 ## WorldSim V7 P3-D visible-failure attribution completed / carving closed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01/20260902T224500Z__visible-failure-attribution-s0-r1`。

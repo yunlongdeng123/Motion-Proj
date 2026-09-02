@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper layout note — P3-C/P3-D integration visual QA通过，无新failure
+
+- main保持8页，新增visibility段后 pages 4--8无 clipping/overlap/orphan float；唯一 warning仍为既有 Table 1
+  `6.03pt` overfull且视觉未裁切。
+- supplement首次编译为8页，P7-C双栏float独占一页；只把同一图移到one-column failure ledger后，不改图、表、数字或
+  prose，最终7页且无 warning。
+- V7-F18 row、visibility table、completion gain--tail与最后references页均可读；没有通过删 negative boundary压页。
+- paper-only integration不创建failure id；下一可用仍为 `V7-F19`。
+
 ### P3-D outcome note — completion tail不触发 source-ray carving
 
 - run：`run://worldsim_v7/WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01/20260902T224500Z__visible-failure-attribution-s0-r1`；

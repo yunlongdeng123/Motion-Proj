@@ -1,5 +1,13 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P3-C/P3-D paper integration milestone
+
+CVPR main已加入 visibility-conditioned pooled hard evidence、per-Actor `V7-F18` boundary与 completion
+`14.96×` hit/early gain；supplement加入双向ray/surface partition、三行表、全Actor provenance与failure ledger。
+Contribution map同步 P3-C/P3-D canonical ownership。TeX Live final compile main=`8 pages/1,166,490 bytes`、supplement=
+`7 pages/7,221,609 bytes`；PDF visual QA无裁切/重叠/断表，main只保留既有 Table 1 `6.03pt` non-clipping warning。
+本里程碑不改变任何科学run/claim boundary/fresh exact-once合同。
+
 ## 2026-09-02 official-template provenance recheck
 
 官方 `cvpr-org/author-kit` main HEAD仍为已固定 `2917585`，latest release仍为 CVPR2026，尚无 CVPR2027 kit。

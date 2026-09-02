@@ -69,6 +69,18 @@ although mean Chamfer improves, \PthreeActorWorse{}\% of all 634 Actors worsen i
 zero-shot geometry, not a per-Actor repair certificate; this motivates a selective ``repair or abstain'' validity head trained
 and calibrated only on nuScenes.
 
+\paragraph{Visibility-conditioned physical evidence.}
+We further partition target-only LiDAR evidence into early termination, matched hit, late return, and unmatched ray; reverse
+surface evidence is supported, contradicted by observed free space, occluded, or off-ray unknown. Unknown is never counted as
+free. On all \PthreeCActors{} Actors, query-to-compiled hit recall rises from \PthreeCQueryHit{}\% to
+\PthreeCCompiledHit{}\%, early termination falls from \PthreeCQueryEarly{}\% to \PthreeCCompiledEarly{}\%, and visible-surface
+precision rises from \PthreeCQueryPrecision{}\% to \PthreeCCompiledPrecision{}\% (F-score
+\PthreeCQueryFscore{}$\rightarrow$\PthreeCCompiledFscore{}). Yet only \PthreeCNonnewActors{}\% of Actors add no visible
+violation. Provenance attribution explains the trade-off: completion supplies \PthreeDCompletionNewEarly{}\% of new early rays
+but \PthreeDCompletionGain{} new hits per such ray, while only \PthreeDCompletionContradiction{}\% of contradicted output points
+come from completion. We therefore retain the net \PthreeDNetEarlyReduction{}-ray reduction, reject a universal certificate,
+and route Actor-level authority through abstention rather than delete completion.
+
 \paragraph{nuScenes-to-AV2 selective factorization.}
 The strict multi-frame surface contract yields 29/56/\PfourNuActors{} Actors for nuScenes train/calibration/test; we retain the
 small training set rather than loosen admissibility. On nuScenes test, factorization is non-inferior to the shared head for

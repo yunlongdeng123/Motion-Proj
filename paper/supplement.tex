@@ -49,6 +49,36 @@ The held-out targets are later frames excluded from both canonical fusion and qu
 precision, and recall are computed against these target-only returns. This separation explains why zero paired free-space violation
 can coexist with the observed \PthreeActorWorse{}\% per-Actor Chamfer tail.
 
+\paragraph{Bidirectional visibility partition.}
+For each held-out target ray, the nearest output within the frozen $0.20$\,m beam tube is classified as early, hit, or late;
+otherwise it is unmatched. In the reverse direction, an output point is supported at the first return, contradicted if it lies in
+the observed free interval, occluded if it is behind the return, and unknown when off ray. Occluded and unknown points are not
+penalized as free-space violations, preventing unseen Actor backs from being conflated with measurable contradictions.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Visibility-conditioned target-only evidence on the consumed 30-log AV2 cohort (634 Actors). Higher hit/precision/F-score
+is better; lower early termination is better. The audit was frozen before these metrics were read.}
+\begin{tabular}{lrrrr}
+\toprule
+Surface & Target-hit recall (\%) & Early termination (\%) & Visible precision (\%) & Visibility F-score \\
+\midrule
+Clean query & \PthreeCQueryHit{} & \PthreeCQueryEarly{} & \PthreeCQueryPrecision{} & \PthreeCQueryFscore{} \\
+Paired corrupted baseline & 55.61 & 3.589 & 98.38 & 0.711 \\
+HARP-3D compiled & \PthreeCCompiledHit{} & \PthreeCCompiledEarly{} & \PthreeCCompiledPrecision{} & \PthreeCCompiledFscore{} \\
+\bottomrule
+\end{tabular}
+\label{tab:supp-visibility}
+\end{table*}
+
+The pooled result does not imply Actor-wise dominance: \PthreeCNonnewActors{}\% add no early/visible contradiction and only
+\PthreeCZeroActors{}\% have absolute zero visible contradictions. All-Actor output attribution assigns
+\PthreeDCompletionNewEarly{}\% of new early rays to \textsc{Complete}, but each costs against \PthreeDCompletionGain{} new matched
+hits; target early returns fall by \PthreeDNetEarlyReduction{} overall. Moreover, only \PthreeDCompletionContradiction{}\% of
+contradicted output points are completion points, so source-ray carving cannot selectively remove the observed tail. We retain
+completion and require the independent repair-or-abstain head for Actor-level authority.
+
 \section{Frozen Cohorts and Exact-Once Rules}
 
 \begin{table*}[t]
@@ -92,16 +122,6 @@ selections are robust-select. Nevertheless, \PsevenCAVStableFalse{}\% of the lat
 count is the largest one-feature interval source for \PsevenCTestQueryTop{}\%/\PsevenCAVQueryTop{}\% of nuScenes/AV2 Actors.
 Thus a shifted model can be confidently and locally stable while wrong.
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=.98\textwidth]{figures/supplement/p7c_validity_interval_certificate.png}
-  \caption{Frozen P7-C interval audit. Left/center: robust-select coverage and unresolved fraction across pre-registered radii.
-  Right: sensor-opportunity boxes induce wider logit intervals than physical-surface boxes. The high AV2 certified coverage does not
-  erase the 47 stable false repairs.}
-  \label{fig:supp-p7c}
-\end{figure*}
-
-\clearpage
 \onecolumn
 \section{Failure Ledger and Claim Corrections}
 
@@ -120,10 +140,20 @@ V7-F14 & FP32 exceeds the analytic tolerance by $3.8\times10^{-6}$. & Recompute 
 V7-F15 & Fresh P6-C repair AUROC loses 3.50 points to P4. & Reject recovery despite higher operating-point coverage; P4 remains primary. \\
 V7-F16 & Freeze prose mislabeled the P346 held-out horizon. & Executable artifact is 2.5\,s; correct documentation without rerunning. \\
 V7-F17 & 47 AV2 false repairs remain robust-select at radius $0.10$. & Network stability is not correctness, calibration, or a safety certificate. \\
+V7-F18 & Pooled ray physics improves, but only \PthreeCNonnewActors{}\% of Actors add no visible violation. & Retain aggregate C1 evidence and the completion gain--tail trade-off; reject a universal Actor certificate and do not tune the ray tolerance. \\
 \bottomrule
 \end{tabular}
 \label{tab:supp-failures}
 \end{table}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.84\textwidth]{figures/supplement/p7c_validity_interval_certificate.png}
+  \caption{Frozen P7-C interval audit. Left/center: robust-select coverage and unresolved fraction across pre-registered radii.
+  Right: sensor-opportunity boxes induce wider logit intervals than physical-surface boxes. The high AV2 certified coverage does not
+  erase the 47 stable false repairs.}
+  \label{fig:supp-p7c}
+\end{figure}
 
 \section{Frozen AV2 Camera-Evidence Gallery}
 
