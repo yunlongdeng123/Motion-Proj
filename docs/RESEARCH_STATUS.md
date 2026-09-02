@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P6-C fresh AV2 exact-once auto-launch armed（2026-09-02）
+
+P6-C external runner静态核对完成：只复用 canonical fit run
+`20260902T173000Z__sparsity-consistent-s70602-r1`，读取冻结 model/standardizer/threshold，并要求 recovery cohort 的
+20 个 `.complete` 全部存在。新增单锁低资源 watcher，只在 `ALL_COMPLETE + 20/20` 后启动一次正式 CUDA evaluator；
+下载未完成时不编译 Actor、不读 target quality，下载器异常退出则 watcher 直接失败而不越权补数据或换 cohort。
+
+启动时 recovery download=`11/20`，唯一 downloader/s5cmd 正常，AV2 目录约 `44G`，磁盘剩余 `117G`，无 error/retry。
+Watcher 每 60 秒只读一次 marker、每 10 分钟写一条状态，不增加第二下载器、训练、smoke/regression、hash/checksum/
+fingerprint。正式 external verdict 尚未读取。
+
 ## WorldSim V7 evidence-rich CVPR supplement completed（2026-09-02）
 
 官方模板补充材料已由 1 页骨架扩展为 6 页可投稿稿件，覆盖 SceneIR 坐标/动作合同、matched-ray 三维物理证书、

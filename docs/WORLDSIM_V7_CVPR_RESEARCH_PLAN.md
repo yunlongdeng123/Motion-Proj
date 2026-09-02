@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P6-C fresh AV2 auto-launch contract
+
+已加入单锁低资源 watcher：只在冻结 recovery cohort 的 `20/20 .complete` 与 `ALL_COMPLETE` 同时成立后，原样执行
+P6-C canonical run 的一次 CUDA external read；等待期间不 compile/score、不读取 target quality。重复 watcher、非 waiting
+status 或下载器提前退出均停止，不启动第二下载器、不换 log、不修改 model/standardizer/threshold/gate。启动时下载
+`11/20`、剩余磁盘 `117G`、无 error/retry；formal external result仍未读。
+
 ## 2026-09-02 supplement evidence milestone
 
 `paper/supplement.tex/.pdf` 已从模板骨架扩展为 6 页 evidence-rich supplement：SceneIR/四动作合同、matched-ray

@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V7-P6C fresh AV2 exact-once launch orchestration（2026-09-02）
+
+- scientific state：formal external quality read=false；fit run仍为 `model_frozen_waiting_fresh_av2`，2/2 source gates passed。
+- readiness：必须同时满足 recovery state `20` 个 `.complete` 与 `ALL_COMPLETE`；当前 `11/20`，不提前 compile/score。
+- execution：单 `flock` watcher；下载器存活时每60秒只读 marker，ready 后 `exec` 固定 Python/CUDA runner与 canonical
+  run ID；status非 waiting、重复 watcher 或下载器提前退出均拒绝启动。
+- resources：watcher是单 shell sleep loop；不并发第二个 downloader，不进行 model/threshold/cohort/gate 变更，也不增加
+  hash/checksum/fingerprint 或 smoke matrix。
+
 ## CVPR evidence-rich supplement integration check（2026-09-02）
 
 - scope：documentation-only；`supplement.tex` 从 1 页骨架扩展为 6 页，不创建 scientific run 或读取新 quality。

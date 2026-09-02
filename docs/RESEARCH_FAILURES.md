@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P6-C external auto-launch prevention note — 无新failure
+
+- watcher 只在 `ALL_COMPLETE + 20/20 .complete` 后进入 frozen external runner，未完成阶段不读 Actor target quality；
+- 单 `flock` 保证不会与人工或重复 watcher 并发启动同一 exact-once evaluator；status必须仍为
+  `model_frozen_waiting_fresh_av2`，否则拒绝执行；
+- 下载器若在 readiness 前退出，watcher报告资源/下载异常并停止，不删除、不补换 log、不修改 cohort/model/threshold/gate；
+- 当前下载 `11/20` 且无 error/retry，本项仅 orchestration，不创建新 scientific failure id；下一可用仍为 `V7-F18`。
+
 ### Supplement layout note — evidence gallery收敛且无新failure
 
 - 初版双栏 float 使 failure heading/table 与 gallery intro 分离并产生近空白页；这是未提交的排版中间态，未改变任何
