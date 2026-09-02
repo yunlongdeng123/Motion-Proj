@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 branch ancestry audited against corrected V6.7 base（2026-09-02）
+
+当前分支=`research/worldsim-v7-harp3d-cvpr`；用户指定 base=`research/worldsim-v6.7-anisotropic-surface`。
+V6.7 terminal=`d97c3f2412c23bac570607d05d53ae67004fda89`，`git merge-base(V7,V6.7)` 与该 terminal 完全相同，
+`merge-base --is-ancestor`=true；V7 relative ahead/behind=`50/0`（审计时 HEAD=`849ffb3`）。因此当前 V7 确实从
+V6.7 terminal分叉，不是从 main、V6.4 或 V6.5 建立。该项为 read-only lineage audit，无代码/实验状态变化。
+
 ## WorldSim V7 contribution/evidence map synchronized to current paper（2026-09-02）
 
 `paper/CONTRIBUTION_MAP.md` 已从早期三项骨架更新为当前 C1 physical compilation、C2 factorized zero-shot repair、

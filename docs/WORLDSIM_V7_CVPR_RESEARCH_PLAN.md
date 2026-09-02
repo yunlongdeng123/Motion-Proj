@@ -1,5 +1,11 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 corrected V6.7 branch-base audit
+
+当前 `research/worldsim-v7-harp3d-cvpr` 的 exact merge-base 为用户指定的
+`research/worldsim-v6.7-anisotropic-surface` terminal `d97c3f2`；ancestor=true，审计时 ahead/behind=`50/0`。
+因此本计划严格从 V6.7 继续，不使用 main、V6.4 或 V6.5 base。该项只读，不改变 Git graph 或 scientific state。
+
 ## 2026-09-02 contribution/evidence-map synchronization
 
 `paper/CONTRIBUTION_MAP.md` 已同步当前4项贡献、Method 4.1--4.4/Experiments位置、实际 V7 code interface、P3至P9

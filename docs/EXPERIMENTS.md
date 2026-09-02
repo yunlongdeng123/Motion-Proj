@@ -1,5 +1,12 @@
 # Experiments
 
+## V7 corrected-base lineage audit（2026-09-02）
+
+- V7 branch：`research/worldsim-v7-harp3d-cvpr`；required base：`research/worldsim-v6.7-anisotropic-surface`。
+- V6.7 terminal/merge-base：`d97c3f2412c23bac570607d05d53ae67004fda89`；ancestor=true。
+- audit-time ahead/behind=`50/0` at V7 HEAD `849ffb3`；证明完整继承 V6.7 terminal且无 base commit缺失。
+- read-only Git graph audit；无 checkout/rebase/merge、scientific run、quality read或文件删除。
+
 ## Paper contribution/evidence ownership synchronization（2026-09-02）
 
 - corrected stale map：Sec. 3.x旧编号、早期接口与“P8 owns all final numbers”被替换为当前 Method 4.1--4.4、实际

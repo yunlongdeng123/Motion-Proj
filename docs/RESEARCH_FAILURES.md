@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7 branch-base audit note — corrected V6.7 ancestry成立，无新failure
+
+- `research/worldsim-v6.7-anisotropic-surface` terminal=`d97c3f2`，同时是当前 V7 的 exact merge-base；ancestor=true、
+  V7 relative ahead/behind=`50/0`；
+- 内部旧续跑描述中的 V6.4→V6.5 路线不是当前用户目标，也未被执行；当前唯一 active branch仍是 corrected V7；
+- read-only Git audit，不执行 rebase/merge/checkout，不影响下载、watcher、canonical runs或论文；无failure id，下一可用
+  仍为 `V7-F18`。
+
 ### Contribution-map drift note — 早期ownership已修正，无新failure
 
 - 旧 `CONTRIBUTION_MAP.md` 仍指向 Sec. 3.1--3.4、早期文件名，并笼统写“P8 owns final exact-once numbers”；这与
