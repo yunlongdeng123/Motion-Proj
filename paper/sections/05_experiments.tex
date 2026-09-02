@@ -153,16 +153,17 @@ has only \PthirteenDualPopulationVisible{}\% introduced failure but \PthirteenDu
 policy has \PthirteenProvenancePopulationVisible{}\% introduced failure and \PthirteenProvenanceGain{}\,m gain, so query-only
 strictly dominates it. Low selected risk alone therefore does not establish fallback-system utility.
 
-The exact hazard-stratified decomposition exposes where this utility is obtained. Hazardous Actors are
-\PfourteenHazardActorShare{}\% of the cohort. P4 repairs \PfourteenPfourHazardCoverage{}\%/\PfourteenPfourClearCoverage{}\%
-of hazardous/clear Actors, whose selected visible risks are \PfourteenPfourHazardRisk{}\%/\PfourteenPfourClearRisk{}\%
-versus \PfourteenAlwaysHazardRisk{}\%/\PfourteenAlwaysClearRisk{}\% under always-repair. Thus only
-\PfourteenPfourHazardFailureReduction{} of P4's 48 removed failures are hazardous, while
-\PfourteenPfourClearFailureReduction{} are clear. Hazardous Actors carry \PfourteenPfourHazardFailureShare{}\% of P4's
-introduced failures (\PfourteenPfourHazardBurden{}$\times$ their population share) and contribute
-\PfourteenPfourHazardGainShare{}\% of its gain. P6-C repairs \PfourteenPsixHazardCoverage{}\% of hazardous Actors at
-\PfourteenPsixHazardRisk{}\% risk; P4-and-visibility reaches zero observed hazardous failure only at
-\PfourteenDualHazardCoverage{}\% hazard coverage. State preservation therefore does not imply hazard-stratum risk reduction.
+Exact stratification exposes where this utility is obtained. Hazardous Actors are \PfourteenHazardActorShare{}\% of the cohort;
+P4 selected visible risk is \PfourteenPfourHazardRisk{}\%/\PfourteenPfourClearRisk{}\% on hazardous/clear Actors versus
+\PfourteenAlwaysHazardRisk{}\%/\PfourteenAlwaysClearRisk{}\% under always-repair. Only
+\PfourteenPfourHazardFailureReduction{} of its 48 removed failures are hazardous, yet they carry
+\PfourteenPfourHazardFailureShare{}\% of introduced failures and \PfourteenPfourHazardGainShare{}\% of gain. Fresh
+action attribution localizes the mismatch: hazardous/clear new-early target-ray rates are
+\PfifteenHazardNewEarlyRate{}\%/\PfifteenClearNewEarlyRate{}\% (\PfifteenHazardClearRatio{}$\times$); COMPLETE causes
+\PfifteenCompleteNewEarlyShare{}\% of new early returns and \PfifteenCompleteNewHitShare{}\% of new hits, whereas KEEP causes
+\PfifteenKeepContradictionShare{}\% of surface contradictions. P4's hazardous rate is \PfifteenPfourHazardNewEarlyRate{}\%
+(\PfifteenPfourHazardVsAlways{}$\times$ always), and P6-C is \PfifteenPsixHazardVsAlways{}$\times$. State preservation
+therefore does not imply hazard-stratum risk reduction or suppression of its completion-driven mechanism.
 
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,
