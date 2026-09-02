@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 intended-use and deployment boundary added（2026-09-02）
+
+Supplement新增独立`Intended Use and Safety Boundary`：允许用途限定为offline reconstruction audit、Actor-preserving paired
+repair比较和独立empirical task reliability；每个consumer必须保留unknown/provenance并defer，physical repair不得隐式授权
+trajectory/control。明确禁止把系统当production collision map、closed-loop certificate/controller或real-road safety-case
+evidence，并列出false repair、sensor shift和hazard-coverage masking三类失效后果及部署前置条件。
+
+该段压缩并放入two-column page 3，failure ledger/table/interval figure在page 5完整同页，gallery从page 6开始。Final
+supplement=`9 pages/7,615,606 bytes`，无overfull/undefined citation/reference；main仍为`9 pages/1,926,625 bytes`。
+0 scientific/data/model change，下一failure ID仍为`V7-F30`。
+
 ## WorldSim V7 bibliography source convergence（2026-09-02）
 
 修复`kalble2024accurate`作者名中缺失反斜杠的BibTeX变音转义，并用局部花括号保护nuScenes、Argoverse 2、

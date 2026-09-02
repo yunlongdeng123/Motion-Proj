@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Safety-section layout note — deployment boundary kept readable（2026-09-02）
+
+- 首版较长deployment段落跨two-column/one-column float boundary，造成page 4底部孤立续文；在上传前压缩重复措辞并移到
+  Actor-level interval之后，使完整安全段落落在page 3、failure table/figure同在page 5；
+- 未缩字体、图或表，未删除false-repair/sensor-shift/hazard-coverage风险及production/closed-loop/safety-case禁用边界；
+- final supplement为9页且无overfull/undefined引用；这是未发布的writing/layout recovery，不消耗failure ID；
+  下一可用仍为`V7-F30`。
+
 ## Bibliography-rendering note — source typo fixed before release（2026-09-02）
 
 - `kalble2024accurate`原作者字段为`K{"a}lble`的缺反斜杠变体，且若干method/sensor专名未防BibTeX sentence-case；

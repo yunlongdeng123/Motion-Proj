@@ -279,7 +279,17 @@ selections are robust-select. Nevertheless, \PsevenCAVStableFalse{}\% of the lat
 count is the largest one-feature interval source for \PsevenCTestQueryTop{}\%/\PsevenCAVQueryTop{}\% of nuScenes/AV2 Actors.
 Thus a shifted model can be confidently and locally stable while wrong.
 
+\section{Intended Use and Safety Boundary}
+
+\method is intended for offline reconstruction audits: expose ray contradictions, compare Actor-preserving repairs, and report
+separate empirical task reliability. Consumers must retain unknown/provenance state and defer; repair never authorizes control. It is
+not a production collision map, closed-loop certificate or controller, or safety-case evidence. False repair can change collision
+support, sensor shift can cause confident errors, and selection can hide hazardous-Actor coverage. Deployment requires measured
+sensor errors, independent map/dynamics checks, closed-loop evaluation, and a domain-specific safety process. The interfaces expose,
+but do not remove, residual risk.
+
 \onecolumn
+\clearpage
 \section{Failure Ledger and Claim Corrections}
 
 \begin{table}[h]

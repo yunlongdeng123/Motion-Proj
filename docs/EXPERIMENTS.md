@@ -1,5 +1,14 @@
 # Experiments
 
+## Intended-use / misuse boundary integration（2026-09-02）
+
+- supported use：offline ray-contradiction audit、Actor-preserving paired repair comparison、separate empirical task reliability；
+- required behavior：保留known/unknown mask与provenance，证据不足时defer，repair不能授权trajectory/control；
+- prohibited promotion：production collision map、closed-loop certificate/controller、real-road safety-case evidence；
+- residual risks：false repair改变collision support、sensor shift产生stable false repair、selection隐藏hazard coverage；
+- compile/layout：supplement=`9 pages/7,615,606 bytes`，safety boundary在page 3完整呈现，failure ledger在page 5完整，
+  无overfull/undefined引用；0 data/model/quality read或scientific decision变化。
+
 ## Bibliography rendering convergence（2026-09-02）
 
 - source fix：`K{\"a}lble`转义与10类dataset/method/sensor acronym大小写保护；不改bibliographic identity；

@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 intended-use and safety-boundary milestone
+
+为补齐“理论边界与工程极致”的可解释部署语义，supplement加入独立安全边界：V7仅用于offline reconstruction audit、
+Actor-preserving repair comparison与独立empirical reliability；unknown/provenance必须保留，repair不授权control。禁止将其
+表述为production collision map、closed-loop certificate/controller或real-road safety evidence；部署还需要measured
+sensor-error sets、独立map/dynamics检查、closed-loop evaluation和domain safety process。
+
+版面收敛后该段完整位于page 3，failure ledger在page 5，gallery从page 6开始；supplement=
+`9 pages/7,615,606 bytes`且无overfull/undefined引用。0新实验/数据/模型/claim promotion，下一failure=`V7-F30`。
+
 ## 2026-09-02 bibliography source convergence milestone
 
 完成release-facing bibliography收敛：修正`kalble2024accurate`作者变音转义，保护dataset/method/sensor专名不被BibTeX
