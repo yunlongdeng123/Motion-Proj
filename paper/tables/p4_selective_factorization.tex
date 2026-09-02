@@ -2,8 +2,8 @@
   \centering
   \caption{nuScenes-only selective repair and AV2 zero-shot transfer. False repair is measured over all Actors; coverage is
   the accepted fraction. Chamfer is for the repair-or-clean-query output. Leak is the maximum mean prediction shift under a
-  paired swap of the other task's input. Each threshold is reused unchanged; ``fresh'' is the metadata-frozen exact-once
-  nuScenes cohort.}
+  paired swap of the other task's input. Each threshold is reused unchanged; ``fresh'' denotes independently metadata-frozen
+  exact-once cohorts.}
   \label{tab:p4-selective}
   \small
   \setlength{\tabcolsep}{4.2pt}
@@ -17,6 +17,8 @@
     AV2 zero-shot & factorized & 69.96 & \textbf{98.05} & \textbf{75.55} & 8.99 & \textbf{0.182} & \textbf{0.00} \\
     nuScenes fresh & factorized & \textbf{78.23} & \textbf{90.60} & 5.69 & \textbf{0.00} & 0.214 & \textbf{0.00} \\
     nuScenes fresh & sparsity-consistent & 74.73 & \textbf{90.60} & \textbf{26.83} & 2.44 & \textbf{0.197} & \textbf{0.00} \\
+    AV2 fresh & factorized & 65.48 & \textbf{98.50} & 77.25 & \textbf{11.28} & 0.184 & \textbf{0.00} \\
+    AV2 fresh & sparsity-consistent & \textbf{67.62} & \textbf{98.50} & \textbf{83.94} & 12.43 & \textbf{0.178} & \textbf{0.00} \\
     \bottomrule
   \end{tabular}
 \end{table*}

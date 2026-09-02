@@ -76,7 +76,11 @@ free. On all \PthreeCActors{} Actors, query-to-compiled hit recall rises from \P
 \PthreeCCompiledHit{}\%, early termination falls from \PthreeCQueryEarly{}\% to \PthreeCCompiledEarly{}\%, and visible-surface
 precision rises from \PthreeCQueryPrecision{}\% to \PthreeCCompiledPrecision{}\% (F-score
 \PthreeCQueryFscore{}$\rightarrow$\PthreeCCompiledFscore{}). Yet only \PthreeCNonnewActors{}\% of Actors add no visible
-violation. Provenance attribution explains the trade-off: completion supplies \PthreeDCompletionNewEarly{}\% of new early rays
+violation. An independent 20-log read reproduces hit
+\PthreeFreshQueryHit{}$\rightarrow$\PthreeFreshCompiledHit{}\%, early
+\PthreeFreshQueryEarly{}$\rightarrow$\PthreeFreshCompiledEarly{}\%, and F-score
+\PthreeFreshQueryFscore{}$\rightarrow$\PthreeFreshCompiledFscore{}, while only \PthreeFreshNonnewActors{}\% add no visible
+violation and \PthreeFreshChamferWorse{}\% worsen in Chamfer. Provenance attribution explains the trade-off: completion supplies \PthreeDCompletionNewEarly{}\% of new early rays
 but \PthreeDCompletionGain{} new hits per such ray, while only \PthreeDCompletionContradiction{}\% of contradicted output points
 come from completion. We therefore retain the net \PthreeDNetEarlyReduction{}-ray reduction, reject a universal certificate,
 and route Actor-level authority through abstention rather than delete completion.
@@ -124,6 +128,12 @@ coverage from \PeightPfourCoverage{}\% to \PeightCandidateCoverage{}\% and impro
 (Table~\ref{tab:p4-selective}). A descriptive common-coverage audit follows the selective-classification AURC formulation
 of Zhou \etal~\cite{zhou2025aurc}: candidate/P4 AURC is \PeightCandidateAURC{}/\PeightPfourAURC{} (lower is better), confirming
 global ranking loss rather than only threshold mismatch. We retain the P4 selector; the recovery remains a negative ablation.
+
+On \PsixFreshActors{} exact-once AV2 Actors, the order reverses: candidate/P4 AUROC is
+\PsixFreshCandidateRepairAUROC{}/\PsixFreshPfourRepairAUROC{} and Chamfer
+\PsixFreshCandidateChamfer{}/\PsixFreshPfourChamfer{}\,m, but false repair is
+\PsixFreshCandidateFalseRepair{}/\PsixFreshPfourFalseRepair{}\%. External gates pass, yet this source/external reversal is
+cohort-dependent rather than universal; P4 remains primary.
 
 \input{tables/p5_dual_authority}
 

@@ -58,15 +58,17 @@ penalized as free-space violations, preventing unseen Actor backs from being con
 \begin{table*}[t]
 \centering
 \small
-\caption{Visibility-conditioned target-only evidence on the consumed 30-log AV2 cohort (634 Actors). Higher hit/precision/F-score
-is better; lower early termination is better. The audit was frozen before these metrics were read.}
+\caption{Visibility-conditioned target-only evidence on consumed and independently frozen fresh AV2 cohorts. Higher
+hit/precision/F-score is better; lower early termination is better. Each audit was frozen before its metrics were read.}
 \begin{tabular}{lrrrr}
 \toprule
 Surface & Target-hit recall (\%) & Early termination (\%) & Visible precision (\%) & Visibility F-score \\
 \midrule
-Clean query & \PthreeCQueryHit{} & \PthreeCQueryEarly{} & \PthreeCQueryPrecision{} & \PthreeCQueryFscore{} \\
-Paired corrupted baseline & 55.61 & 3.589 & 98.38 & 0.711 \\
-HARP-3D compiled & \PthreeCCompiledHit{} & \PthreeCCompiledEarly{} & \PthreeCCompiledPrecision{} & \PthreeCCompiledFscore{} \\
+Consumed clean query & \PthreeCQueryHit{} & \PthreeCQueryEarly{} & \PthreeCQueryPrecision{} & \PthreeCQueryFscore{} \\
+Consumed corrupted baseline & 55.61 & 3.589 & 98.38 & 0.711 \\
+Consumed HARP-3D & \PthreeCCompiledHit{} & \PthreeCCompiledEarly{} & \PthreeCCompiledPrecision{} & \PthreeCCompiledFscore{} \\
+Fresh clean query & \PthreeFreshQueryHit{} & \PthreeFreshQueryEarly{} & \PthreeFreshQueryPrecision{} & \PthreeFreshQueryFscore{} \\
+Fresh HARP-3D & \PthreeFreshCompiledHit{} & \PthreeFreshCompiledEarly{} & \PthreeFreshCompiledPrecision{} & \PthreeFreshCompiledFscore{} \\
 \bottomrule
 \end{tabular}
 \label{tab:supp-visibility}
@@ -78,6 +80,11 @@ The pooled result does not imply Actor-wise dominance: \PthreeCNonnewActors{}\% 
 hits; target early returns fall by \PthreeDNetEarlyReduction{} overall. Moreover, only \PthreeDCompletionContradiction{}\% of
 contradicted output points are completion points, so source-ray carving cannot selectively remove the observed tail. We retain
 completion and require the independent repair-or-abstain head for Actor-level authority.
+
+The exact-once fresh cohort independently preserves this boundary: only \PthreeFreshNonnewActors{}\% add no visible
+violation, \PthreeFreshZeroActors{}\% have exact zero visible contradiction, and \PthreeFreshChamferWorse{}\% worsen in
+Chamfer. Among the latter, just \PthreeFreshWorseFscoreNoninferior{}\% retain a non-inferior visibility F-score. Fresh
+confirmation therefore strengthens pooled three-dimensional evidence while continuing to reject a universal Actor certificate.
 
 \section{Frozen Cohorts and Exact-Once Rules}
 
@@ -100,6 +107,13 @@ nuScenes fresh exact-once & 20 scenes & Exclude every P4 train/calibration/test 
 After a quality read, scenes/logs cannot be replaced, failed cases remain in the denominator, and no threshold, radius, feature group,
 or checkpoint may change. Download/resource failures are reported separately from scientific failures. The fresh AV2 protocol is bound
 to the already frozen P6-C/P4 artifacts and is not changed by the rejected fresh nuScenes result.
+
+The fresh AV2 read contains \PsixFreshActors{} Actors. P6-C/P4 repair AUROC is
+\PsixFreshCandidateRepairAUROC{}/\PsixFreshPfourRepairAUROC{}, coverage is
+\PsixFreshCandidateCoverage{}/\PsixFreshPfourCoverage{}\%, and selective Chamfer is
+\PsixFreshCandidateChamfer{}/\PsixFreshPfourChamfer{}\,m. This external reversal does not dominate P4: false repair is
+\PsixFreshCandidateFalseRepair{}\% versus \PsixFreshPfourFalseRepair{}\%, and P6-C independently loses fresh-nuScenes
+AUROC and AURC. The complete evidence therefore retains P4 and rejects a domain-invariant sparsity-consistency claim.
 
 \section{Actor-Level Decision Intervals}
 
@@ -140,7 +154,8 @@ V7-F14 & FP32 exceeds the analytic tolerance by $3.8\times10^{-6}$. & Recompute 
 V7-F15 & Fresh P6-C repair AUROC loses 3.50 points to P4. & Reject recovery despite higher operating-point coverage; P4 remains primary. \\
 V7-F16 & Freeze prose mislabeled the P346 held-out horizon. & Executable artifact is 2.5\,s; correct documentation without rerunning. \\
 V7-F17 & 47 AV2 false repairs remain robust-select at radius $0.10$. & Network stability is not correctness, calibration, or a safety certificate. \\
-V7-F18 & Pooled ray physics improves, but only \PthreeCNonnewActors{}\% of Actors add no visible violation. & Retain aggregate C1 evidence and the completion gain--tail trade-off; reject a universal Actor certificate and do not tune the ray tolerance. \\
+V7-F18 & Pooled ray physics improves, but consumed/fresh nonnew-visible rates are only \PthreeCNonnewActors{}/\PthreeFreshNonnewActors{}\%. & Retain aggregate C1 evidence and the completion gain--tail trade-off; reject a universal Actor certificate and do not tune the ray tolerance. \\
+V7-F19 & P6-C loses fresh-nuScenes ranking but improves fresh-AV2 AUROC while raising false repair. & Report the domain reversal; an external gate pass neither overrides the source rejection nor promotes P6-C over P4. \\
 \bottomrule
 \end{tabular}
 \label{tab:supp-failures}
