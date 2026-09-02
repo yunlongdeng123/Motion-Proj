@@ -1,0 +1,28 @@
+{
+  "schema_version": "worldsim_v7.av2_evicomp_fresh_cohort.v1",
+  "source_dataset": "Argoverse 2 Sensor Dataset",
+  "source_split": "val",
+  "selection_policy": "Sort all 150 val log UUIDs lexicographically, remove the 30 consumed v1 logs and 20 consumed recovery logs, then select positions 0,10,...,90 from the 100-log complement. This metadata-only policy yields 10 previously unread logs before any P16 model output or quality metric is read.",
+  "parent_consumed_cohorts": [
+    "configs/worldsim_v7/av2_zero_shot_cohort_v1.json",
+    "configs/worldsim_v7/av2_zero_shot_recovery_cohort_v1.json"
+  ],
+  "quality_read_before_freeze": false,
+  "model_output_read_before_freeze": false,
+  "fine_tuning_allowed": false,
+  "post_hoc_calibration_allowed": false,
+  "threshold_selection_allowed": false,
+  "failed_scene_deletion_allowed": false,
+  "logs": [
+    {"position": 0, "index": 2, "log_id": "04994d08-156c-3018-9717-ba0e29be8153", "role": "fresh_evicomp_confirmation"},
+    {"position": 10, "index": 17, "log_id": "1da4a0aa-22ae-3958-856d-05303de1f576", "role": "fresh_evicomp_confirmation"},
+    {"position": 20, "index": 32, "log_id": "2e3f2ae7-9ab9-3aef-a3ce-a0a97a0cb1ab", "role": "fresh_evicomp_confirmation"},
+    {"position": 30, "index": 47, "log_id": "52071780-5758-3ed4-8835-0d64ecdc5575", "role": "fresh_evicomp_confirmation"},
+    {"position": 40, "index": 62, "log_id": "72cf3ca1-1a9e-3254-bca0-29c62521e454", "role": "fresh_evicomp_confirmation"},
+    {"position": 50, "index": 77, "log_id": "88f47a10-87b4-3ea8-a0c7-a07d825b647d", "role": "fresh_evicomp_confirmation"},
+    {"position": 60, "index": 92, "log_id": "b19f3c1a-a84a-3a2d-8d1b-8a4ae201020b", "role": "fresh_evicomp_confirmation"},
+    {"position": 70, "index": 107, "log_id": "c222c78d-b574-4b9d-82e1-96a4f3f8bb27", "role": "fresh_evicomp_confirmation"},
+    {"position": 80, "index": 122, "log_id": "da036982-92bf-36a8-b880-4ccf4e20b74e", "role": "fresh_evicomp_confirmation"},
+    {"position": 90, "index": 137, "log_id": "e8c9fd64-fdd2-422d-a2a2-6f47500d1d12", "role": "fresh_evicomp_confirmation"}
+  ]
+}
