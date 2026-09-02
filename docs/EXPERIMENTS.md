@@ -1,5 +1,14 @@
 # Experiments
 
+## CVPR cross-sensor LiDAR related-work integration check（2026-09-02）
+
+- added：sensor/scene/appearance shift distinction；source-only LiDAR subsampling consistency；partial accumulation的
+  geometry/sequence common representation；明确二者只 motivate P6-C，不提供 repair certificate。
+- primary references：CVPR 2023 DGLSS；ICCV 2023 3DLabelProp（CVF official proceedings）。
+- compile：official template `main.pdf`，8 pages，1,165,317 bytes；pages 2/7/8 inspected，无 clipping/overlap。
+- scientific state：fresh AV2 quality仍未读；无 model/data/threshold/gate/cohort 变化。唯一 warning仍为既有 Table 1
+  `6.03pt` overfull。
+
 ## WS-V7-P6C fresh AV2 exact-once launch orchestration（2026-09-02）
 
 - scientific state：formal external quality read=false；fit run仍为 `model_frozen_waiting_fresh_av2`，2/2 source gates passed。

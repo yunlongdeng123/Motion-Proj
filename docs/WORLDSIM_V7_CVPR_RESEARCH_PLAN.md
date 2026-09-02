@@ -1,5 +1,11 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 cross-sensor LiDAR literature boundary
+
+CVPR main Related Work 已补充 DGLSS（CVPR 2023）与 3DLabelProp（ICCV 2023）：source subsampling consistency和
+sequence/geometry common representation可缓解 LiDAR sensor shift，但不能替代 actor-level repair 的 exact-once
+source/external evidence。官方模板仍为 `8 pages/1,165,317 bytes`，pages 2/7/8 QA通过；fresh AV2 verdict保持未读。
+
 ## 2026-09-02 P6-C fresh AV2 auto-launch contract
 
 已加入单锁低资源 watcher：只在冻结 recovery cohort 的 `20/20 .complete` 与 `ALL_COMPLETE` 同时成立后，原样执行

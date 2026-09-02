@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 cross-sensor LiDAR related-work boundary integrated（2026-09-02）
+
+主稿 Related Work 新增 cross-sensor LiDAR generalization 段，将 P6-C 的 source-only subsampling consistency 放回
+CVPR 2023 DGLSS 与 ICCV 2023 3DLabelProp 的正确语境：传感器采样、场景与外观 shift 可由 source augmentation 或
+sequence/geometry common representation 缓解，但 source consistency 不是 actor-level repair correctness certificate。
+该表述与 P7/P7-C 的 sensor-opportunity shortcut 和 exact-once protocol 对齐，不把尚未读取的 fresh AV2 结果写成成功。
+
+Official-template compile=`8 pages/1,165,317 bytes`；pages 2/7/8 visual check 无 clipping/overlap，page 8 为 references
+continuation。仍仅有既有 Table 1 `6.03pt` overfull warning；无新 scientific run、metric、gate 或 quality read。
+
 ## WorldSim V7 P6-C fresh AV2 exact-once auto-launch armed（2026-09-02）
 
 P6-C external runner静态核对完成：只复用 canonical fit run

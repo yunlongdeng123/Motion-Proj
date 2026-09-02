@@ -2,6 +2,14 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Paper literature note — cross-sensor motivation不越权为P6-C证书
+
+- CVPR 2023 DGLSS 的 source subsampling consistency与 ICCV 2023 3DLabelProp 的 sequence/geometry common
+  representation被用于说明已知 LiDAR sensor shift 对策；它们不直接验证本项目的 Actor repair selector；
+- 主稿明确保留 exact-once source/external evaluation，不由相关工作推断 fresh AV2 verdict，也不改变 P6-C candidate；
+- compile仍为8页，pages 2/7/8无裁切或重叠，只有既有 Table 1 `6.03pt` overfull；无新failure id，下一可用仍为
+  `V7-F18`。
+
 ### P6-C external auto-launch prevention note — 无新failure
 
 - watcher 只在 `ALL_COMPLETE + 20/20 .complete` 后进入 frozen external runner，未完成阶段不读 Actor target quality；
