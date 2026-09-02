@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 P10 frozen physical-authority audit contract（2026-09-02）
+
+下一项已冻结为P10：exact join P3-C fresh visibility与P6-C fresh score的523 Actors，只用已产生的JSONL，不重读
+AV2或训练。P4是唯一primary；固定报告selected/abstained visible-failure与Chamfer-worsening、abstention capture、
+ranking和selected visible-risk一侧95% Wilson upper bound。三门在看aggregate前冻结；P6-C只作context，不能覆盖P4
+verdict。失败不触发本cohort recovery/threshold scan。执行前无新failure，下一可用=`V7-F20`。
+
 ## WorldSim V7 metadata-locked four-quadrant teaser integrated（2026-09-02）
 
 CVPR Figure 1现为`valid-safe / artifact-safe / valid-hazard / artifact-hazard`四象限证据图加HARP-3D流水线。

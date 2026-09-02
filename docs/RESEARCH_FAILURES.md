@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 P10 prevention note — validity score不得先验称为物理certificate（2026-09-02）
+
+- P4训练目标是nuScenes repairability，并非fresh AV2的bidirectional visible-ray certificate；零结构leakage或高
+  repair AUROC不能推出selected Actors没有可见三维违例。
+- P10在读取aggregate前冻结exact join、两种failure、三项gate与Wilson upper；P6-C positive AV2 context不能覆盖
+  P4 negative outcome，P3-C Actor tail也不能按score/threshold事后删改。
+- 执行前failure delta=`none`；若strong containment任一gate失败，登记下一`V7-F20`而不是启动target recovery。
+
 ## WorldSim V7 Figure 1 teaser provenance audit（2026-09-02）
 
 - four-quadrant teaser只使用冻结P3-B的`q01-a0` non-hazard与`q00-a0` hazard main cases；选择规则是metadata-only

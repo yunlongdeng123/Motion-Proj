@@ -1,0 +1,17 @@
+schema_version: worldsim_v7.p10_frozen_physical_authority_audit_config.v1
+task_id: WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01
+hypothesis_id: H-V7-P10
+runs_root: /root/autodl-tmp/runs
+p3c_fresh_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/20260902T231500Z__fresh-visibility-s0-r1
+p6c_fresh_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1
+primary_selector: p4
+context_selector: p6c
+confidence_level: 0.95
+fixed_gates:
+  selected_visible_risk_below_always_repair: true
+  selected_visible_wilson_upper_below_always_repair_point_risk: true
+  selected_chamfer_worsening_not_above_always_repair: true
+claim_boundary: >-
+  Frozen-output empirical AV2 authority audit only. No training, target refit, recalibration,
+  threshold selection, conformal/exchangeability guarantee, per-Actor certificate, or formal
+  deployment safety claim. P6-C context cannot replace the P4 primary verdict.

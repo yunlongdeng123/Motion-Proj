@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P10 frozen physical-authority audit contract
+
+为把三维硬证据与可解释安全边界直接连接，P10只join冻结P3-C fresh visibility与P6-C/P4 fresh scores，不训练、
+不重读AV2、不调threshold。P4 stored selection为primary，固定衡量selected/abstained visible violation、Chamfer tail、
+abstention capture、AUROC/AURC、hazard coverage与selected risk一侧95% Wilson upper。Strong empirical containment三门
+在aggregate前冻结；失败即形成`V7-F20`边界，不能在同cohort恢复。P6-C只作context，不能替换P4论文主模型。
+
 ## 2026-09-02 user-directed V7 focus lock
 
 后续auto-research聚焦三条主线并做深：（1）视觉/几何硬证据必须落到可观测三维ray、surface、visibility与

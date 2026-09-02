@@ -1,5 +1,16 @@
 # Experiments
 
+## P10 frozen physical-authority audit pre-execution contract（2026-09-02）
+
+- inputs：P3-C fresh `ACTOR_VISIBILITY_CERTIFICATES.jsonl` + P6-C fresh `FRESH_AV2_SCORES.jsonl`，exact
+  `(log_id, track_id)` join；不重读dataset。
+- primary/secondary failure：`nonnew_visible_violation` / `chamfer_worsened_vs_query`；P4 stored selection是primary，
+  P6-C context-only。
+- fixed outputs：coverage、selected/abstained risk、failure capture、safe AUROC/AURC、hazard coverage、selected visible
+  risk one-sided 95% Wilson upper bound。
+- fixed strong-evidence gates：P4 selected visible risk低于always repair、Wilson upper也低于always point risk、selected
+  Chamfer-worsening不高于always。任何失败均保留，不做recovery/sweep/refit。下一可用failure id=`V7-F20`。
+
 ## CVPR Figure 1 metadata-locked teaser integration（2026-09-02）
 
 - source：冻结P3-B canonical `20260902T150000Z__camera-evidence-s0-r1`；只复用现有
