@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P14 result boundary — hazard preservation不是hazard-stratum visible-risk降低（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/
+  20260903T031500Z__hazard-stratified-s0-r1`；523 Actors中142 hazard，0 dataset/model/fit/threshold change。
+- P4 hazard selected risk=`47.37%`，高于always=`46.48%`；clear为`31.00%`，低于always=`33.86%`。总体少48个
+  introduced failures中hazard仅少3、clear少45，说明aggregate改善不能外推hazard risk改善。
+- P6-C hazard risk=`46.81%`且66个hazard failures不减；其34个总体reduction全部来自clear。
+- apparent-safe边界：P4∧visibility观察到0 hazard failure，但只修`5/142=3.52%` hazard Actors且总gain仅`.00122m`。
+- prevention：后续同时写hazard/clear coverage与risk；不得用Actor/hazard字段保留、hazard AUROC或总体risk reduction替代
+  hazard-stratum visibility证据，也不得以近零hazard coverage包装safety。
+- classification：既有V7明确把hazard-preserving限定为状态不变并拒绝road-safety claim，故本结果是descriptive boundary，
+  不登记`V7-F24`；下一可用failure id仍为`V7-F24`。
+
 ## P14 prevention note — aggregate composite改善不得掩盖hazard-stratum代价（2026-09-02）
 
 - P13 population risk/gain仍是hazard/clear mixture；Actor/hazard state保留100%不等于hazard stratum的visible risk降低。

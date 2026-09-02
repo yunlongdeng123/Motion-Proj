@@ -1,5 +1,20 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P14 hazard-stratified defer result
+
+Canonical=`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/
+20260903T031500Z__hazard-stratified-s0-r1`；20 logs/523 Actors，其中hazard=`142/27.15%`。两条finite-sample
+accounting identity最大残差=`5.55e-17`。P4 hazard/clear coverage=`93.66/71.13%`，selected visible risk=
+`47.37/31.00%`；相对always的`46.48/33.86%`，hazard反而`+0.89pp`、clear=`-2.86pp`。
+
+P4总体少48个introduced failure，但hazard只少3个、clear少45个；hazard仅占Actors `27.15%`，却占P4 failures
+`42.86%`（burden amplification=`1.578x`）并贡献`56.42%` Chamfer gain。P6-C 34个failure reduction全部来自clear；
+P4∧visibility的0 hazard failure建立在仅`3.52%` hazard coverage与`.00122m`总gain上。
+
+结论：Actor/hazard字段100%保留不等于hazard-stratum visibility安全；aggregate改善主要由clear stratum驱动，低risk
+方案则几乎不修hazard。该结果未与既有“hazard-preserving只指状态不变”的claim冲突，不登记`V7-F24`。0 dataset/
+training/fit/calibration/threshold/gate change；完整result=`P14_HAZARD_STRATIFIED_DEFER_RESULT.md`。
+
 ## 2026-09-02 P14 hazard-stratified defer contract frozen
 
 P14冻结为P13完整fallback world的hazard/clear精确分层审计。对每个既有policy只计算两条有限样本恒等式：

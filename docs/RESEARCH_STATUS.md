@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7 P14 hazard-stratified composite boundary completed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/
+20260903T031500Z__hazard-stratified-s0-r1`；status=`done`，523 Actors/20 logs，hazard=`142`，wall=`.0101s`。
+Exact gain/failure identities最大残差=`5.55e-17`，只验证解析accounting，不是distributional guarantee。
+
+P4 hazard/clear coverage=`93.66/71.13%`，selected visible risk=`47.37/31.00%`；always=`46.48/33.86%`。
+总体195→147少48 failures中仅3个hazard、45个clear；hazard failure share=`42.86%`相对Actor share=`27.15%`，
+amplification=`1.578x`，同时贡献`56.42%` gain。P6-C 34个failure reduction全来自clear。P4∧visibility只有
+`3.52%` hazard coverage和`.00122m`总gain，不能恢复P12。
+
+Verdict=`hazard_stratified_composite_boundary`：状态保留不等于hazard visible-risk改善；既有论文claim未冲突，因此不登记
+`V7-F24`。0 dataset/training/fit/calibration/threshold/policy search；单卡资源充足，下一步同步paper explanation。
+
 ## WorldSim V7 P14 hazard-stratified composite audit frozen（2026-09-02）
 
 状态=`p14_hazard_stratified_defer_frozen`。P13已证明conditional risk与fallback utility必须分开；P14进一步按冻结

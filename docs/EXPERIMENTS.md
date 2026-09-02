@@ -1,5 +1,17 @@
 # Experiments
 
+## P14 hazard-stratified defer-to-query result（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/
+  20260903T031500Z__hazard-stratified-s0-r1` / `done`；523 Actors、142 hazard、20 logs、wall=`.0101s`。
+- exactness：两条group accounting identity最大绝对残差=`5.55e-17`；0 dataset/training/fit/threshold/search。
+- always：hazard/clear selected visible risk=`46.48/33.86%`；hazard failure share=`33.85%`，gain share=`56.38%`。
+- P4：hazard/clear coverage=`93.66/71.13%`，risk=`47.37/31.00%`；hazard burden=`42.86%/1.578x`，gain share=
+  `56.42%`。195→147的48个failure reduction中hazard=3、clear=45。
+- P6-C：hazard coverage=`99.30%`、risk=`46.81%`；66 hazard failures完全不减，34个总体reduction全来自clear。
+- P4∧visibility：hazard coverage=`3.52%`、observed hazard failure=`0`、total gain=`.00122m`；不恢复P12 family。
+- verdict：状态/Actor保留不是hazard visibility-risk guarantee；无既有claim冲突，不登记`V7-F24`。
+
 ## P14 hazard-stratified defer-to-query freeze（2026-09-02）
 
 - task/hypothesis：`WS-V7-P14-HAZARD-STRATIFIED-DEFER-01 / H-V7-P14`。
