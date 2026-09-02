@@ -1,5 +1,12 @@
 # Experiments
 
+## Submission-inventory consistency audit（2026-09-02）
+
+- corrected current-state docs：`SUBMISSION_CHECKLIST.md`与`V7_FINAL_COMPLETION_AUDIT.md`统一为9-page supplement；
+- inventory：audit row增加literal proof与intended-use boundary，原exact-once/failure/interval/gallery资产不变；
+- historical entries：保留各里程碑当时真实页数，不机械改写；
+- no experiment：仅交付元数据同步，0 build/data/model/quality read或scientific decision change。
+
 ## Intended-use / misuse boundary integration（2026-09-02）
 
 - supported use：offline ray-contradiction audit、Actor-preserving paired repair comparison、separate empirical task reliability；

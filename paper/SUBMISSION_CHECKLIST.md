@@ -7,7 +7,7 @@
 - Non-anonymous source entry: `arxiv.tex`; it shares `manuscript_metadata.tex` and `manuscript_body.tex` with `main.tex` and
   requires the intentionally untracked `arxiv_author_metadata.tex`.
 - Main PDF: eight content pages plus one references-only page.
-- Supplement PDF: ten pages.
+- Supplement PDF: nine pages.
 - Results are macro-driven from `results/results_macros.tex`; scientific values must not be copied or edited by hand.
 - The latest official public template is CVPR 2026. `TEMPLATE_PROVENANCE.md` records why this is a provisional CVPR 2027 draft.
 - V7 method and evaluation expansion is closed. Only submission metadata, an official-kit migration, formatting repair, or a

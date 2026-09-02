@@ -56,7 +56,7 @@ also present. Rejected P6/P8/deletion/router paths remain recorded rather than b
 | Required paper asset | Audit state |
 | --- | --- |
 | `paper/main.tex` / anonymous PDF | complete under the latest official public CVPR kit; 8 content pages + 1 references-only page |
-| `paper/supplement.tex` / PDF | complete; 10 pages with exact-once protocol, literal audit, failure ledger, intervals, and frozen gallery |
+| `paper/supplement.tex` / PDF | complete; 9 pages with exact-once protocol, literal audit/proof, intended-use boundary, failure ledger, intervals, and frozen gallery |
 | `paper/results/results_macros.tex` | complete and remains the sole manuscript numeric interface |
 | Main visual roles | adapted: Figure 1 combines teaser and architecture; Figure 2 combines physical mechanism, cross-sensor literal evidence, monotone utility boundary, and factorized sensitivity |
 | Continuous reliability / cross-dataset / downstream presentation | complete as Tables 1 and 4--6; not duplicated as a fifth main figure under the 8-page limit |

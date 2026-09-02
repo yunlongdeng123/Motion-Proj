@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Submission-inventory note — current page count overrides historical milestones（2026-09-02）
+
+- safety-boundary reflow把当前supplement从10页收敛为9页，checklist/final audit一度仍写10页；现已同步；
+- 早期status/experiment条目中的10页是当时真实构建记录，不应批量改成9页，否则会破坏研究时间线；
+- 这是documentation consistency fix，不是scientific failure，不消耗ID；下一可用仍为`V7-F30`。
+
 ## Safety-section layout note — deployment boundary kept readable（2026-09-02）
 
 - 首版较长deployment段落跨two-column/one-column float boundary，造成page 4底部孤立续文；在上传前压缩重复措辞并移到

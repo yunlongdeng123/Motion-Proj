@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 submission-inventory synchronization milestone
+
+将current-state `SUBMISSION_CHECKLIST.md`与`V7_FINAL_COMPLETION_AUDIT.md`同步到最终
+`main 9 pages/1,926,625 bytes + supplement 9 pages/7,615,606 bytes`，并登记supplement现包含literal proof与
+intended-use boundary。历史里程碑继续保留其当时页数。该变动只消除交付元数据矛盾，不改变科学内容或重开实验；
+下一failure=`V7-F30`。
+
 ## 2026-09-02 intended-use and safety-boundary milestone
 
 为补齐“理论边界与工程极致”的可解释部署语义，supplement加入独立安全边界：V7仅用于offline reconstruction audit、

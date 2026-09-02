@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 submission inventory synchronized（2026-09-02）
+
+`paper/SUBMISSION_CHECKLIST.md`与`V7_FINAL_COMPLETION_AUDIT.md`已从历史10页状态同步到当前9页supplement，并将
+literal proof与intended-use boundary列入最终交付内容。历史实验条目保留其当时页数，不回写时间线。Current frozen
+package=`main 9 pages/1,926,625 bytes + supplement 9 pages/7,615,606 bytes`；0 scientific change，下一failure仍为
+`V7-F30`。
+
 ## WorldSim V7 intended-use and deployment boundary added（2026-09-02）
 
 Supplement新增独立`Intended Use and Safety Boundary`：允许用途限定为offline reconstruction audit、Actor-preserving paired
