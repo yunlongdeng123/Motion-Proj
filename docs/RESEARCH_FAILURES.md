@@ -2,6 +2,26 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F18 — pooled visibility physics改善没有形成逐 Actor 通用证书
+
+- run：`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`；
+  consumed 30-log descriptive cohort，visibility definitions在指标读取前提交并推送。
+- retained aggregate：query→compiled target-hit recall `.49691→.69831`、early termination `.03395→.02868`、visible
+  precision `.99606→.99765`、F-score `.66304→.82156`，surface contradicted points `856→415`。
+- symptom：只有 `406/634` Actors 不新增 target-early 或 surface-contradiction count；absolute-zero仅 `10/634`。
+  `214` Actors early count上升，`34` Actors surface contradiction上升；其中 `20` 同时上升。
+- failure concentration：hazardous Actors nonnew=`135/230`，added-early positive mass=`5,062`，高于 non-hazard的
+  `2,586`；query-relative Chamfer-worse 105 Actors里只有24个 visibility F-score non-inferior。
+- literature response：NeuRAD要求显式 ray/sensor model；ICCV 2023 LiDAR domain-gap study强调 paired real/sim sensor
+  evaluation；CVPR 2025 EvOcc 通过 first-return ray casting区分 free/occupied。它们共同支持保留 ray partition，而不支持
+  用 pooled Chamfer/precision覆盖 Actor tail。
+- resolution：不调 `.20m` tolerance、不删 Actor、不改 fresh cohort/operator。下一步仅做全 Actor nearest-output provenance
+  attribution；若失败主要来自 target-ray nearest matching，则修 evaluator；若来自 COMPLETE 的 source-ray free-space
+  violation，才允许预冻结 source-ray space carving。fresh exact-once仍按原合同运行。
+- claim impact：可主张 aggregate zero-shot observed-ray 物理改善；不可主张每个 Actor 的完整表面/碰撞/安全 certificate。
+
+下一可用编号：`V7-F19`。
+
 ### P3-C prevention note — visibility certificate 不把遮挡/未观测空间冒充自由空间
 
 - Chamfer 对不可见背面和实际可证伪的 early return 混为一个距离，不能单独承担三维物理 certificate；P3-C 不删除
@@ -10,8 +30,8 @@
   free-space contradiction可否定表面，occluded/off-ray 永远保持 UNKNOWN。
 - `.20m` lateral/depth tolerance沿用 P3，不根据30-log descriptive结果或fresh 20-log结果修改；fresh cohort不参与模型、
   threshold、operator、Actor或scene选择。
-- 本项不把“无可见冲突”包装成完整表面正确、碰撞规避、规划、闭环或道路安全保证。当前为 preregistration/implementation
-  freeze，无新failure id；下一可用仍为 `V7-F18`。
+- 本项不把“无可见冲突”包装成完整表面正确、碰撞规避、规划、闭环或道路安全保证。正式 descriptive 结果随后登记
+  `V7-F18`；下一可用为 `V7-F19`。
 
 ### Official-template provenance note — pinned author kit仍为官方HEAD，无新failure
 

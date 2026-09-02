@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7 P3-C consumed-cohort visibility audit completed / V7-F18（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`。
+30/30 logs、634 Actors、230 hazardous Actors，3/3 protocol checks；wall=`58.37s`、GPU=`.0692GiB`、RSS=`1.197GiB`。
+相对 clean query，compiled 的 pooled target-hit recall=`.49691→.69831`、early termination=`.03395→.02868`、visible
+surface precision=`.99606→.99765`、visibility F-score=`.66304→.82156`；说明 C1 的 aggregate 改善确实发生在三维
+observed-ray physics，而不只是 feature filtering。
+
+但逐 Actor 只有 `406/634=64.04%` 不新增 early/visible contradiction，absolute-zero visible contradiction 仅
+`10/634=1.58%`；`214` Actors 的 early count上升（positive median=`14`），`34` Actors 增加 surface contradiction且每个最多
+`2` 点。相对 query Chamfer worsening stratum=`105` Actors，其中 `63/105` 不新增 visible violation，只有 `24/105`
+visibility F-score non-inferior。登记 `V7-F18`：保留 pooled hard-geometry证据，但拒绝 per-Actor universal physical
+certificate。fresh 20-log配置、阈值与 operator 均不变；下一步只做全 Actor output-provenance attribution，先区分真实
+COMPLETE/PROJECT新增表面与 nearest-ray matching/KEEP coverage效应，再决定是否有物理修复空间。
+
 ## WorldSim V7 P3-C visibility-conditioned ray certificate frozen（2026-09-02）
 
 Active=`WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV/FRESH-01 / WS-V7-H-P3-003`。针对用户要求的三维

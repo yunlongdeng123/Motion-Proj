@@ -705,6 +705,19 @@ repair certificate。P4 必须把 validity head 改成 nuScenes-only selective r
 - 物理解释借鉴 NeuRAD 的显式 LiDAR ray/sensor model；DGLSS 的 source-only sparsity consistency与 3DLabelProp 的时序
   几何只限定跨传感器边界。证书只覆盖 observed ray set，不证明不可见背面、collision/planning/closed-loop/road safety。
 
+### P3-C consumed-cohort result / per-Actor boundary（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`。
+30 logs/634 Actors 上，query→compiled pooled target-hit recall=`.49691→.69831`、early termination=`.03395→.02868`、
+visible precision=`.99606→.99765`、visibility F-score=`.66304→.82156`、surface contradiction=`856→415`。这把 C1 的
+aggregate geometry improvement从 Chamfer推进到可证伪 observed-ray physics。
+
+逐 Actor only `406/634` nonnew visible violation、`10/634` exact-zero；214 Actors early count增加，34 Actors surface
+contradiction增加。query-relative Chamfer-worse 105 Actors中只有24个 F-score non-inferior。故 `V7-F18` 明确关闭
+per-Actor universal certificate；fresh 20-log合同不变。下一步只允许一次全 Actor output-provenance attribution，区分
+nearest-ray matching/KEEP coverage与 PROJECT/COMPLETE 实体新增；不扫描容差、不按 failure挑 Actor。只有 source-only
+provenance明确指向 completion free-space conflict时，才允许冻结 source-ray space-carving operator。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

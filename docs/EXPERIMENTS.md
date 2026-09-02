@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P3C consumed-cohort visibility certificate result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01/20260902T223000Z__visibility-audit-s0-r1`。
+- execution：30/30 logs，634 Actors / 230 hazardous；3/3 protocol checks；GPU `.0692GiB`，RSS `1.197GiB`，wall `58.37s`。
+- pooled query→compiled：target-hit recall `.49691→.69831`；early termination `.03395→.02868`；visible precision
+  `.99606→.99765`；visibility F-score `.66304→.82156`；surface contradicted count `856→415`。
+- Actor certificate：nonnew visible violation `406/634=64.04%`；exact-zero contradiction `10/634=1.58%`；target-hit/
+  F-score non-inferior=`482/634` / `491/634`。
+- tail：query-relative Chamfer worsened=`105` Actors；其中 nonnew visible violation=`63/105`，F-score non-inferior=
+  `24/105`。added early positive=`214` Actors，positive median/p90/max=`14/103.7/204`；added surface contradiction
+  positive=`34` Actors，median/p90/max=`1/2/2`。
+- verdict：`descriptive_consumed_cohort_visibility_certificate`；保留 aggregate observed-ray evidence，登记 `V7-F18` 并
+  拒绝 per-Actor universal certificate。fresh config仍 unread，不据此调 tolerance/operator/cohort。
+
 ## WS-V7-P3C visibility-conditioned ray certificate freeze（2026-09-02）
 
 - hypothesis：`WS-V7-H-P3-003`；不新增 repair model/operator，只增加 target-only 可证伪物理读数。
