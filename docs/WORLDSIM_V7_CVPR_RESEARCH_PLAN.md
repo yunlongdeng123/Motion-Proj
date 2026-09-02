@@ -7,6 +7,10 @@ occupancy、CVPR 2025 EvOcc与NeurIPS 2024 object-centric temporal completion迁
 把candidate标为FREE/OCCUPIED/UNKNOWN；one fixed small network只在source train学习，argmax OCCUPIED才发
 COMPLETE，其余UNKNOWN。KEEP/PROJECT、Actor状态、surface geometry与tolerance全部冻结。
 
+Exact implementation=`11 features / 64-64-3 ReLU / seed71601 / 120 epochs / batch512 / AdamW .001,.0001 / source
+inverse-sqrt class weights`；fit合并既有nuScenes train+calibration，test保持disjoint。唯一fresh decision为hazard new-early
+严格降低且population Chamfer不差于frozen always-COMPLETE，不以query-only trivial fallback冒充支持。
+
 新的10-log AV2 cohort在任何P16输出/quality read前按metadata冻结：150 UUID排序移除已消费50 logs，对剩余100 logs
 取positions `0,10,...,90`。串行下载预计约11GiB，当前108GiB足够，75GiB free-space floor；IO期间并行推进单3090
 source corpus/training。Fresh read后禁止threshold/feature/loss/seed/tolerance sweep或删失败样本；结论限定经验三维

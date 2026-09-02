@@ -4,6 +4,7 @@
 
 - P15证明Actor-level P4/P6-C未压低hazard COMPLETE channel；P16不得再包装另一个Actor score或低coverage conjunction。
 - labels固定为held-out ray FREE/OCCUPIED/UNKNOWN；只有argmax OCCUPIED可发COMPLETE，FREE/UNKNOWN不被强制二值化。
+- 模型固定11维features、`64-64-3`、seed71601与single cross-entropy objective；source test结果不得触发第二candidate。
 - 既有50个AV2 logs全部consumed，不得用于feature/loss/seed/epoch/action选择；第三批10 logs在任何model/quality read前冻结。
 - 不把softmax/Dirichlet/evidence mass写成formal uncertainty、calibration或safety guarantee；评价仍是首占用深度、new early与
   composite geometry。

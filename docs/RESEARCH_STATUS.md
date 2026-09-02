@@ -7,9 +7,13 @@
 允许COMPLETE，KEEP/PROJECT不变，无target threshold。迁移OccupancyM3D、evidential occupancy/EvOcc与object-centric
 temporal completion的物理接口，不声明EDL或道路安全保证。
 
+实现合同已固定为11维dimensionless/source-observable candidate features、`64-64-3` ReLU、seed=`71601`、120 epochs、
+batch=512、AdamW `.001/.0001`与source inverse-sqrt class weights；fit使用nuScenes train+calibration，原test保持disjoint。
+唯一external decision为hazard new-early严格降低且population Chamfer不差于frozen always-COMPLETE baseline。
+
 第三批fresh AV2 10 logs已metadata-only冻结：从150 UUID排序中移除前50 consumed，再取100-log complement positions
 `0,10,...,90`。下载串行、单log内部8 workers、free space低于75GiB自动停止；预计约11GiB，当前108GiB充足。
-下一动作提交/push freeze后启动唯一下载器，并在IO期间完成源域candidate corpus与单3090训练。
+唯一下载器已启动；在IO期间提交实现并完成源域candidate corpus与单3090训练。
 
 ## WorldSim V7 CVPR paper integrated through P15（2026-09-02）
 
