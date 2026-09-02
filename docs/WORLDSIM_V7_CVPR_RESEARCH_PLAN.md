@@ -1,5 +1,37 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 fresh exact-once paper-integration milestone
+
+P3-C fresh visibility与P6-C fresh AV2/fresh-nuScenes reversal已完整进入CVPR main、supplement、结果宏、主表和
+contribution map；P4保持primary，`V7-F18/V7-F19`不被外域pass覆盖。Final compile main=
+`8 pages/1,169,034 bytes`、supplement=`7 pages/7,222,572 bytes`；main pages 4--8及supplement pages 2--4
+逐页QA通过，无裁切/重叠/断表，唯一既有Table 1 `6.03pt` overfull视觉未裁切。此里程碑完成，不触发后验
+refit/recalibration/threshold/cohort/claim修改；无新failure，下一可用=`V7-F20`。
+
+## 2026-09-02 P3-C fresh visibility exact-once result
+
+Canonical=`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/
+20260902T231500Z__fresh-visibility-s0-r1`。P6-C正常退出后，同一预冻结runner在20 fresh logs/523 Actors上串行
+exact-once执行。query→compiled hit recall=`.497233→.689919`、early=`.034478→.029314`、visible precision=
+`.995141→.996813`、F-score=`.663127→.815447`、surface contradictions=`912→509`；20/20 partitions与Actor/hazard
+retention通过。
+
+Actor-level nonnew-visible=`.627151`、exact-zero=`.022945`、Chamfer-worsened=`.195029`，worsened stratum的F-score
+noninferior仅`.166667`。故fresh cohort独立确认aggregate ray/depth/surface physics与`V7-F18`边界，不升级为universal
+certificate，不调`.20m` tolerance/operator，不删除completion或失败Actor。下一failure id保持`V7-F20`。
+
+## 2026-09-02 P6-C fresh AV2 exact-once result / cross-fresh boundary
+
+Canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/
+20260902T173000Z__sparsity-consistent-s70602-r1`。20/20 recovery logs与`ALL_COMPLETE`后，frozen P6-C/P4在523 Actors
+上exact-once读取：candidate/P4 repair AUROC=`.676168/.654837`、coverage=`.839388/.772467`、false-repair=
+`.124283/.112811`、selective Chamfer=`.178291/.184133m`、score-shift Wasserstein=`.203971/.207216`；外域四门通过。
+
+但 P8-A fresh nuScenes 已显示 candidate/P4 AUROC=`.747253/.782280`、AURC=`.126429/.105633`，方向相反；且fresh AV2
+candidate false-repair比P4高`1.15pp`。故`V7-F19`固定结论为“外域支持、跨fresh域不稳定”，P6-C不晋升为全局或paper
+primary selector，P4保持主模型。禁止以AV2 pass回写模型、threshold、gate或P8-A结论。P3-C fresh继续按原合同串行执行，
+不读取该verdict作方法分支。
+
 ## 2026-09-02 fresh P3-C serial auto-launch contract
 
 P3-C fresh canonical run预定为 `20260902T231500Z__fresh-visibility-s0-r1`；单实例 watcher等待20/20下载、
@@ -7,6 +39,7 @@ P3-C fresh canonical run预定为 `20260902T231500Z__fresh-visibility-s0-r1`；�
 P6-C verdict不作为分支条件，P3-C仍使用已冻结20 logs、`.20m` ray/depth tolerance和 observed-hit PROJECT。
 existing run path直接停止而非第二次读取。启动前为15/20，P6-C/P3-C summary均未产生。
 Watcher已由commit `b775807` 启动为PID `33968`；首次日志确认16/20、P6-C/P3-C summary均未产生，保持等待。
+最终20/20与`ALL_COMPLETE`后，P6-C和P3-C按合同串行完成、均status=`done`且进程正常退出；无重复read。
 
 ## 2026-09-02 P3-C/P3-D paper integration milestone
 
@@ -26,7 +59,8 @@ ledger。Contribution map同步 P3-C/P3-D canonical ownership。TeX Live final c
 
 最终 source package已移除从未被 `\input` 的 legacy `main_results.tex`、18个 placeholder macros及 `\todoresult`；
 所有真实 P1--P9/P7-C result macros与五张当前表保留。TeX Live compile保持 main 8页、supplement 6页，warning不增加。
-该里程碑清除误导性 TBD source，不改变 scientific result；fresh AV2仍由单实例 watcher等待。
+该里程碑清除误导性 TBD source，不改变 scientific result；该时点fresh AV2仍由单实例watcher等待，后续已20/20
+完成并按顶部里程碑集成。
 
 ## 2026-09-02 corrected V6.7 branch-base audit
 
@@ -37,16 +71,16 @@ ledger。Contribution map同步 P3-C/P3-D canonical ownership。TeX Live final c
 ## 2026-09-02 contribution/evidence-map synchronization
 
 `paper/CONTRIBUTION_MAP.md` 已同步当前4项贡献、Method 4.1--4.4/Experiments位置、实际 V7 code interface、P3至P9
-canonical registry、V7-F09/F11--F17 与 allowed/prohibited claims。结果 ownership固定为 P4 primary selector、P8-A
-fresh nuScenes rejection、P6-C pending fresh AV2 only；pending external result不得覆盖既有模型、阈值、cohort、gate或
-verdict。该里程碑修正文档漂移，不新增 scientific read。
+canonical registry、V7-F09/F11--F17 与 allowed/prohibited claims。该时点ownership固定为 P4 primary selector、P8-A
+fresh nuScenes rejection、P6-C仅等待fresh AV2；后续external结果已完成并登记`V7-F19`，仍未覆盖既有模型、阈值、
+cohort、gate或verdict。该里程碑修正文档漂移，不新增 scientific read。
 
 ## 2026-09-02 project-page/video asset milestone
 
 `paper/PROJECT_PAGE_ASSET_INDEX.md` 已索引 P3-B canonical 的 10 logs/30 Actors、30 panels 与30 MP4，包含完整
 log/Actor identity、hazard、camera、query visibility、crop depth及 main/supplement role。8 main、10 compact supplement、
 30 full-package cases均保持预注册身份，弱可见性和 Chamfer-worsening failures不删；46MiB bundle只保留 canonical run
-一份，不在Git重复存储。计划交付物“项目页与视频素材清单”完成，fresh AV2 quality仍未读。
+一份，不在Git重复存储。计划交付物“项目页与视频素材清单”完成；该时点fresh AV2 quality未读，后续已exact-once完成。
 
 ## 2026-09-02 cross-sensor LiDAR literature boundary
 
@@ -972,7 +1006,9 @@ intervention-score shift 相对 P4 `<=.70x`；通过后外域仍沿用 coverage/
 
 P6-C fit canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
 nuScenes AUROC=`.63239>=.62908`，candidate/P4 intervention shift=`.019526/.183026`、ratio=`.10668`，2/2 通过。
-model/standardizer/threshold 已冻结；fresh AV2 仍未编译/打分，external 四门保持未读。
+model/standardizer/threshold 已冻结。fresh AV2 exact-once 523 Actors的 candidate/P4 AUROC=`.676168/.654837`、
+coverage=`.839388/.772467`、false-repair=`.124283/.112811`、selective Chamfer=`.178291/.184133m`、score-shift=
+`.203971/.207216`，external四门通过；但与P8-A fresh nuScenes rejection方向相反，按`V7-F19`不晋升，P4保持primary。
 
 ### 主域
 
@@ -1172,7 +1208,8 @@ CVPR main 已同步 P7-C actor-level interval、stable-error boundary 与 LiDAR 
   不 refit/recalibrate/调阈值。
 - core gates：candidate repair AUROC 不低于 P4 `-.02`、coverage `>=.10`、false-repair 低于 always-repair failure、
   selective Chamfer 不差于 clean query。失败即保留 negative result。
-- AV2 fresh 20-log 部分继续由 P6-C frozen external runner等待单实例下载完成；P8-A 结果不得改变 AV2 candidate/protocol。
+- 该冻结时点AV2 fresh 20-log由P6-C frozen external runner等待单实例下载；后续已20/20 exact-once完成，且P8-A结果
+  未改变AV2 candidate/protocol。
 
 ### P8-A exact-once result（2026-09-02）
 
@@ -1181,7 +1218,9 @@ Canonical=`run://worldsim_v7/WS-V7-P8A-FRESH-NUSCENES-EXACT-ONCE-01/20260902T200
 `.035027 > .02`，因此 3/4 gates、verdict rejected（`V7-F15`）。P6-C coverage=`.26829`、false-repair=`.02439`、
 selective/query Chamfer=`.196891/.234408m` 的 operating-point support 保留，但 descriptive AURC=`.126429` vs P4
 `.105633` 也确认 global ranking 较弱。P6-C 不晋升；P4 保持 paper primary selector。禁止 recovery fit/threshold/scene
-replacement；fresh AV2 formal read 仍按既定 frozen protocol 执行并独立报告。
+replacement。随后独立完成的 fresh AV2 read 得到 P6-C/P4 AUROC=`.676168/.654837`，但false-repair=
+`.124283/.112811`；external gate pass与fresh nuScenes rejection共同形成`V7-F19` cross-fresh reversal，不推翻P8-A或
+P4 primary decision。
 
 CVPR main 已同步 P8-A two-row table、negative recovery、AURC boundary 与 P4 retention；official-template=`7 pages`，
 pages 4/6/7 visually valid。该 paper update 不新增 metric gate/model/cohort 或第二次 test read。

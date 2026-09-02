@@ -1,5 +1,46 @@
 # Research Status
 
+## WorldSim V7 fresh exact-once evidence integrated into CVPR paper（2026-09-02）
+
+P3-C fresh visibility与P6-C fresh AV2 cross-domain reversal均已写入main/supplement、结果宏、主表和
+`paper/CONTRIBUTION_MAP.md`；P4保持paper primary，`V7-F18/V7-F19`边界不变。TeX Live final compile：
+main=`8 pages/1,169,034 bytes`，supplement=`7 pages/7,222,572 bytes`。Main pages 4--8与supplement pages 2--4
+逐页visual QA无裁切、重叠、断表或孤立末页；唯一warning仍是既有Table 1 `6.03pt` overfull，视觉未裁切。
+无新failure，下一可用=`V7-F20`。
+
+## WorldSim V7 P3-C fresh visibility exact-once confirms aggregate physics / Actor boundary（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/
+20260902T231500Z__fresh-visibility-s0-r1`。P6-C正常退出后，单实例 watcher对同一20 fresh logs自动串行执行；523
+Actors（142 hazardous）、status=`done`、wall=`45.80s`、peak GPU/RSS=`.0996/1.1735GiB`，20/20 partitions与
+Actor/trajectory/hazard retention=`1`。
+
+query→compiled pooled fresh：target-hit recall=`.497233→.689919`、early termination=`.034478→.029314`、visible
+surface precision=`.995141→.996813`、visibility F-score=`.663127→.815447`、surface contradictions=`912→509`。
+方向与 consumed 30-log P3-C 完全一致，独立确认 ray/depth/surface 三维硬证据。
+
+Actor boundary同样复现：nonnew-visible=`.627151`、exact-zero=`.022945`、hit/F-score noninferior=
+`.722753/.739962`，Chamfer-worsened=`.195029`；102个worsened Actors里只有`.166667` F-score noninferior。
+因此 fresh 结果加强 aggregate C1 证据，但不改变`V7-F18`：拒绝 universal per-Actor certificate、post-hoc operator/tolerance
+调整或失败Actor删除。无新 failure id，下一可用=`V7-F20`。
+
+## WorldSim V7 P6-C fresh AV2 exact-once supported externally / globally not promoted（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/
+20260902T173000Z__sparsity-consistent-s70602-r1`。20/20 metadata-frozen fresh AV2 logs在 `ALL_COMPLETE` 后只读取一次，
+产生523 Actors（421 repairable、142 hazardous）；下载器先退出，单实例 evaluator wall=`41.97s`、peak GPU/RSS=
+`.0996/1.2268GiB`，status=`done`。
+
+P6-C/P4 在 identical fresh AV2 rows 上 repair AUROC=`.676168/.654837`、coverage=`.839388/.772467`、selective
+Chamfer=`.178291/.184133m`、calibration-score Wasserstein=`.203971/.207216`，外域预注册 gates 全过；但
+false-repair=`.124283/.112811`，P6-C 比 P4 高 `1.15pp`。结合 P8-A fresh nuScenes 上 P6-C/P4 AUROC=
+`.747253/.782280` 与 AURC=`.126429/.105633`，登记 `V7-F19`：sparsity consistency产生fresh-domain reversal，
+不能由单一 AV2 pass 推断 domain-invariant/general selector。P4 继续是 paper primary；P6-C只保留为外域支持、源域
+拒绝的边界，不 refit/recalibrate/调 threshold或更换 cohort。
+
+P3-C fresh watcher不读取该科学 verdict作分支；它只在 P6-C summary/status与 evaluator退出后执行同一预冻结
+visibility合同，并已按该合同完成、正常退出。
+
 ## WorldSim V7 fresh visibility exact-once serial watcher armed/live（2026-09-02）
 
 P3-C fresh run固定为 `run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/
@@ -9,7 +50,8 @@ P3-C fresh run固定为 `run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-
 
 若 P3-C run path已存在，watcher拒绝自动第二次读取并退出；独立 flock防止重复 watcher。提交=`b775807`，watcher
 PID=`33968`；首次日志在 `2026-09-02T09:49:05+08:00` 报告下载16/20、current=`d89f80be-...`，P6-C summary
-不存在，fresh visibility quality未读。启动后只做PID/log检查；不做 smoke/regression或新 gate。
+不存在，fresh visibility quality未读。最终20/20后按合同先完成P6-C，再完成P3-C，两个evaluator均正常退出；结果见上。
+期间未做 smoke/regression、新gate、第二下载器或第二read。
 
 ## WorldSim V7 CVPR paper integrated through P3-C/P3-D（2026-09-02）
 
@@ -271,7 +313,8 @@ P6-C selector、P4 baseline/hazard head、standardizer、threshold、compiler �
 不训练、不校准、不调阈值。正式 read 只报告同一 fresh rows 上 P6-C/P4 的 repair AUROC、coverage、false-repair、
 selective Chamfer、hazard metrics 与 calibration-score shift；四个预注册判据为 P6-C AUROC 不低于 P4 `-.02`、coverage
 `>=.10`、false-repair 低于 always-repair failure、selective Chamfer 不差于 clean query。该结果仅是 in-domain empirical
-generalization；AV2 fresh 20-log exact-once 仍由已冻结 P6-C external runner 独立等待下载完成。
+generalization；该冻结时点AV2 fresh 20-log exact-once由已冻结P6-C external runner独立等待，后续已完成并登记
+`V7-F19`，未反向修改P8-A。
 
 ## WorldSim V7 CVPR paper integrated through P7-B（2026-09-02）
 
@@ -361,7 +404,7 @@ Wasserstein、Actor scores 与最终六门；缺任一日志会在写 running st
 当前不启动 external，也不做 partial-log smoke；下载完成前继续其他 nuScenes/P5 对齐研究。该 operational marker check
 只防止 partial-cohort quality leakage，不是新增科学 gate。
 
-## WorldSim V7 P6-C source fit passed 2/2 / fresh external pending（2026-09-02）
+## WorldSim V7 P6-C source fit passed 2/2 / fresh external frozen（历史冻结点，2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
 status=`model_frozen_waiting_fresh_av2`。nuScenes test repair AUROC/AUPRC/Brier=`.63239/.75872/.22203`；P4 AUROC=
@@ -370,8 +413,8 @@ ratio=`.10668<=.70`，干预敏感度降低 `89.33%`，2/2 fit gates。
 
 nuScenes-only threshold=`.998561`；calibration coverage=`19.64%`、adjusted risk=`.03509`；test coverage=`24.12%`、
 population false repair=`6.14%`、conditional failure=`25.45%`、query/always/selective CD=`.25130/.20471/.22195m`。
-model/standardizer/threshold 已冻结；fresh AV2 compiled/scored=`0/0`，下一步只实现 external resume，等 20/20 下载后一次执行。
-wall=`1.375s`、GPU=`.01694GiB`、RSS=`.9720GiB`。
+model/standardizer/threshold 已冻结；该时点fresh AV2 compiled/scored=`0/0`，合同是等20/20下载后一次执行。
+wall=`1.375s`、GPU=`.01694GiB`、RSS=`.9720GiB`；后续已按合同完成，最终结果见顶部P6-C条目。
 
 ## WorldSim V7 P6-C implementation ready / formal fit next（2026-09-02）
 

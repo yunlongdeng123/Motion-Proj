@@ -1,6 +1,40 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 latest paper-integration audit（2026-09-02）
+
+- fresh P3-C/P6-C结果与`V7-F18/V7-F19`已进入main、supplement、主表、结果宏和contribution map；没有因外域正结果
+  隐去fresh-nuScenes rejection，P4保持primary。
+- final compile main=`8 pages/1,169,034 bytes`、supplement=`7 pages/7,222,572 bytes`；main pages 4--8与supplement
+  pages 2--4逐页QA无裁切/重叠/断表，唯一既有`6.03pt` overfull视觉无害。
+- 此审计未发现新failure；`V7-F18/V7-F19`继续开放为论文边界，下一可用failure id=`V7-F20`。
+
 ## WorldSim V7 latest failures（2026-09-02）
+
+### P3-C fresh confirmation note — V7-F18独立复现，不新增failure
+
+- run：`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/
+  20260902T231500Z__fresh-visibility-s0-r1`；20 previously unused AV2 logs、523 Actors、exact-once、status=`done`。
+- aggregate fresh：query→compiled hit=`.497233→.689919`、early=`.034478→.029314`、visible precision=
+  `.995141→.996813`、F-score=`.663127→.815447`、surface contradictions=`912→509`；与consumed方向完全一致。
+- retained tail：nonnew-visible=`62.72%`、exact-zero=`2.29%`、Chamfer-worsened=`19.50%`；102个worsened Actors中
+  F-score noninferior仅`16.67%`。
+- resolution：fresh read提高`V7-F18`外部可信度但不消除其Actor-level failure；继续拒绝universal certificate、
+  post-hoc completion deletion、tolerance/operator scan。无新failure，下一可用=`V7-F20`。
+
+### V7-F19 — sparsity-consistent selector在两个fresh域发生ranking reversal
+
+- canonical external run：`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/
+  20260902T173000Z__sparsity-consistent-s70602-r1`；20 fresh AV2 logs、523 Actors、exact-once、status=`done`。
+- fresh AV2 symptom：P6-C/P4 repair AUROC=`.676168/.654837`，P6-C改善`2.13pp`；coverage=`.839388/.772467`、
+  selective Chamfer=`.178291/.184133m`，外域预注册 gates通过。
+- retained cost：P6-C/P4 false-repair=`.124283/.112811`，P6-C高`1.15pp`；原gate只要求低于always-repair，不能
+  把“gate pass”重写成所有风险维度支配。
+- independent contradiction：P8-A fresh nuScenes P6-C/P4 AUROC=`.747253/.782280`（`-3.50pp`），AURC=
+  `.126429/.105633`（higher worse），已由`V7-F15`拒绝。
+- boundary：source-only sparsity consistency改善机会扰动敏感度并能在fresh AV2提升ranking，但没有形成跨fresh域
+  单调generalization；不得称domain invariant、universal或formal risk guarantee。
+- resolution：不按AV2 positive result推翻P8-A，不refit/recalibrate/换threshold/cohort；P4保持paper primary，P6-C作为
+  mixed-domain negative/positive ablation完整报告。下一可用failure id=`V7-F20`。
 
 ### P3-C fresh orchestration prevention note — P6-C后串行启动，不抢GPU或重复读取
 
@@ -9,7 +43,7 @@
 - 20/20 marker、ALL_COMPLETE与P6-C evaluator退出后才exec；dedicated flock和existing-run-path stop防止双实例。
 - watcher不下载、不训练、不改 config/tolerance/operator/cohort；P3-C runner仍是唯一指标读取者。
 - commit=`b775807` 后 watcher PID=`33968` 正常取得lock并在16/20状态等待；未启动 evaluator或第二下载器。
-- 当前为launch orchestration，无新failure id；下一可用仍为 `V7-F19`。
+- 当前为launch orchestration；P6-C结果已登记`V7-F19`，下一可用为 `V7-F20`。
 
 ### Paper layout note — P3-C/P3-D integration visual QA通过，无新failure
 
@@ -97,11 +131,11 @@
 ### Contribution-map drift note — 早期ownership已修正，无新failure
 
 - 旧 `CONTRIBUTION_MAP.md` 仍指向 Sec. 3.1--3.4、早期文件名，并笼统写“P8 owns final exact-once numbers”；这与
-  当前 P8-A fresh nuScenes rejection、P6-C pending fresh AV2 和 P9/P7-C completion不一致；
+  该审计时点P8-A fresh nuScenes rejection、P6-C等待fresh AV2和P9/P7-C completion不一致；
 - resolution：重写为4项当前贡献、11个 canonical stages、failure boundary与 final claim checklist；明确 P4 primary、
-  P8-A source exact-once only、P6-C future external only；
-- exposure：论文正文与 canonical summaries未受影响，fresh AV2 quality仍未读；属于 documentation drift，不创建
-  scientific failure id。下一可用仍为 `V7-F18`。
+  P8-A source exact-once only、P6-C external-only ownership；后续external已完成并以`V7-F19`补齐；
+- exposure：论文正文与 canonical summaries未受影响；属于 documentation drift，不创建scientific failure id。当前下一
+  可用已由后续账本推进到`V7-F20`。
 
 ### Project-page asset-index note — 完整失败案例保留且无新failure
 

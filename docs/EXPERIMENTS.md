@@ -1,5 +1,42 @@
 # Experiments
 
+## CVPR paper integration of fresh exact-once evidence（2026-09-02）
+
+- integrated：P3-C fresh visibility、P6-C fresh AV2与fresh-nuScenes reversal、`V7-F18/V7-F19`均进入
+  main/supplement、result macros、主表与contribution map；P4仍为paper primary。
+- final compile：main=`8 pages/1,169,034 bytes`；supplement=`7 pages/7,222,572 bytes`；两者exit=`0`。
+- visual QA：main pages 4--8、supplement pages 2--4无clipping/overlap/broken table/orphan reference page；唯一warning为
+  既有Table 1 `6.03pt` overfull且视觉未裁切。
+- decision：不因排版或fresh reversal触发新实验、后验调参或claim升级；无新failure，下一可用=`V7-F20`。
+
+## WS-V7-P3C fresh AV2 visibility exact-once result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/20260902T231500Z__fresh-visibility-s0-r1`；
+  status=`done`、20 logs、523 Actors、142 hazardous、wall=`45.802s`、peak GPU=`.099554GiB`、RSS=`1.173512GiB`。
+- serial protocol：20/20 `.complete`、`ALL_COMPLETE`、P6-C summary/status与evaluator退出后由唯一watcher `exec`；0
+  overlap、0 second read、0 model/operator/tolerance/cohort change。
+- query→compiled target rays：hit recall=`.497233→.689919`、early=`.034478→.029314`、F-score=
+  `.663127→.815447`；visible precision=`.995141→.996813`。
+- query→compiled surfaces：contradicted=`912→509`；UNKNOWN/occluded不重标free/occupied；partition complete=true。
+- Actor rates：nonnew-visible=`.627151`、exact-zero=`.022945`、hit noninferior=`.722753`、F-score noninferior=
+  `.739962`、Chamfer-worsened=`.195029`；worsened stratum=`102` Actors，F-score noninferior=`.166667`。
+- decision：fresh cohort独立确认aggregate hard evidence与`V7-F18` Actor tail；不新建failure，不删除completion、不调
+  `.20m` tolerance，不新增operator。下一failure id=`V7-F20`。
+
+## WS-V7-P6C fresh AV2 exact-once external result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1`；
+  status=`done`，fresh phase wall=`41.966s`、peak GPU=`.099589GiB`、RSS=`1.226795GiB`。
+- protocol：20/20 frozen recovery logs、523 Actors、one read；fit model/standardizer/threshold、P4 baseline/hazard head、
+  compiler和Actor policy均不变；0 replacement/refit/recalibration/threshold update。
+- candidate/P4：repair AUROC=`.676168/.654837`、coverage=`.839388/.772467`、false-repair=
+  `.124283/.112811`、selective Chamfer=`.178291/.184133m`、score-shift Wasserstein=`.203971/.207216`。
+- hazard：AUROC=`.985010`；candidate/P4 hazard coverage=`.992958/.936620`，Actor/hazard retention=`1/1`。
+- external gates：coverage、false-repair-vs-always-repair、selective-Chamfer-vs-query、score-shift-vs-P4均通过；该
+  gate合同没有要求 candidate false-repair不高于P4，因此如实保留 `+1.15pp` trade-off。
+- cross-fresh decision：fresh AV2 ranking改善 `+2.13pp`，但 P8-A fresh nuScenes ranking退化 `-3.50pp` 且AURC更差；
+  登记`V7-F19`，P6-C不晋升为全局/paper primary，P4保持主模型。无后验 recovery。
+
 ## WS-V7-P3C fresh exact-once serial launch orchestration（2026-09-02）
 
 - frozen run：`WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/20260902T231500Z__fresh-visibility-s0-r1`。
@@ -9,7 +46,7 @@
   P6-C verdict不参与任何 branch/threshold/operator选择。
 - duplicate policy：existing P3-C run path causes stop, not retry/second read。
 - launch result：commit=`b775807`；watcher PID=`33968`，dedicated lock acquired；first log reports download 16/20、
-  P6-C/P3-C summary absent；fresh visibility metric unread。
+  P6-C/P3-C summary absent；最终20/20后按合同串行完成两项formal read，0 overlap/duplicate，结果见上。
 
 ## CVPR paper integration through P3-C/P3-D（2026-09-02）
 
@@ -104,8 +141,8 @@
   V7 modules/scripts及stage-specific ownership。
 - registry：P3/P3-B/P4/P5/P5-B/P6-C/P7/P7-B/P7-C/P8-A/P9 canonical URI全部列出，并映射 V7-F09/
   F11--F17 boundary。
-- locks：P4=primary selector；P8-A=fresh nuScenes candidate rejection；pending P6-C=fresh AV2 only。任何 negative
-  exact-once result不得换scene/log/seed/threshold/feature/checkpoint。
+- locks：该同步时点P4=primary selector、P8-A=fresh nuScenes candidate rejection、P6-C仅等待fresh AV2；后续P6-C
+  external已完成并登记`V7-F19`，仍未换scene/log/seed/threshold/feature/checkpoint，P4保持primary。
 - status：documentation-only；无 scientific run、quality read、model/data/cohort/threshold/gate 变化。
 
 ## P3-B project-page/video asset indexing（2026-09-02）
