@@ -1,5 +1,23 @@
 # Experiments
 
+## CVPR C3 inherited-reliability evidence integration（2026-09-02）
+
+- gap：V7 Method保留continuous log-cost density、joint-H dependence与runtime authority，但此前主文无直接proper-score/
+  calibration表，P5/P9只能证明接口分权。
+- marginal canonical：P182=`20260830T150500Z__log-cost-mixture-density-s0-r1`；P183 fresh=
+  `20260830T152500Z__log-cost-density-confirmation-s0-r1`。10 logs上mean Brier/calibration-error reduction vs P173=
+  `28.48%/69.38%`。
+- joint canonical：P199=`20260830T181000Z__joint-horizon-reliability-copula-s0-r2`；source-heldout 3,742 trajectories
+  improvement=`16.97%/71.85%`。P201 fresh=`20260830T184500Z__joint-horizon-copula-confirmation-s0-r2`；10 logs/
+  1,846 trajectories improvement=`17.52%/53.37%`。
+- authority boundary：P346 reused-P201 q90 coverage/unsafe=`32.84%/9.09%`；source held-out-H=
+  `29.42%/26.71%`。前者不冒充independent confirmation，后者在主文limitations保留。
+- action：新增唯一macro-driven C3 table、Experiments段和contribution registry；0 training、0 new quality read、0 threshold/
+  calibration/cohort/gate change。无新failure，下一可用=`V7-F20`。
+- paper QA：main=`9 pages/1,171,711 bytes`，pages 1--8为content、page 9只含references；supplement=
+  `7 pages/7,222,572 bytes`。CVPR 2026 official guideline允许references-only additional pages；main pages 6--9 visual QA
+  通过，唯一warning仍为既有Table 1 `6.03pt` non-clipping overfull。
+
 ## CVPR paper integration of fresh exact-once evidence（2026-09-02）
 
 - integrated：P3-C fresh visibility、P6-C fresh AV2与fresh-nuScenes reversal、`V7-F18/V7-F19`均进入

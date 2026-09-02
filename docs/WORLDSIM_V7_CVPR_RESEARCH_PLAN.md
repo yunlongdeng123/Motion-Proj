@@ -1,5 +1,21 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P5/C3 direct reliability paper-evidence milestone
+
+按原计划Table 3要求补齐C3 direct evidence，但不违反final-test后冻结：复用V6.7 canonical而不重训/重读target。
+P182/P183在独立10-log fresh scene-level cohort相对P173的mean integrated-Brier/calibration reduction=
+`28.48%/69.38%`；P199 source-heldout 3,742 trajectories=`16.97%/71.85%`，P201独立10-log/1,846-trajectory
+fresh confirmation=`17.52%/53.37%`。P346仅作边界：reused P201 q90 coverage/unsafe=`32.84%/9.09%`，source
+held-out-H=`29.42%/26.71%`。
+
+新增macro-driven C3主表、Experiments段、limitations与contribution registry；明确P183/P201是scene-level fresh，P346
+是reused development。不得称V7 physical repair effect、AV2 reliability transfer、cross-horizon stability或formal
+calibration/safety guarantee。无新run/failure，下一可用=`V7-F20`。
+
+Final compile main=`9 pages/1,171,711 bytes`：pages 1--8为全部content，page 9仅cited references；CVPR 2026 official
+guideline明确references-only additional pages不计8-page limit。Supplement=`7 pages/7,222,572 bytes`。Main pages 6--9
+visual QA通过，无裁切/重叠/断表，唯一warning仍为既有Table 1 `6.03pt` non-clipping overfull。
+
 ## 2026-09-02 fresh exact-once paper-integration milestone
 
 P3-C fresh visibility与P6-C fresh AV2/fresh-nuScenes reversal已完整进入CVPR main、supplement、结果宏、主表和
@@ -945,7 +961,8 @@ abstained；但 selected q90 state error=`1.577m` vs abstained `.693m`，3.0s=`4
 physical repair gate 与 downstream multi-horizon reliability authority 分离；零事件小样本不升级为 safety guarantee。
 
 CVPR draft 已把该边界写入 composed-authority equation、P5 table、abstract/limitations/conclusion；official template full
-compile=`6 pages`，pages 2--6 visual check 通过。后续 P6-C fresh external 结果出来前不改现有 P5/P7 claim。
+compile=`6 pages`，pages 2--6 visual check 通过。后续已补入冻结P182/P183/P199/P201 direct C3 evidence table，同时保持
+P346 held-out-H limitation；未改现有P5/P7 claim或执行joint fit。
 
 ### 保留模块
 

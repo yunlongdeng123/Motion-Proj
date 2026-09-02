@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 C3 paper-evidence audit（2026-09-02）
+
+- documentation gap：Method 4.3--4.4保留C3 density/joint-H对象，但此前主文只报告P5/P9接口审计，缺少冻结
+  P182/P183/P199/P201 proper-score与calibration evidence；这不是新的scientific failure。
+- resolution：只恢复V6.7 canonical结果到macro-driven主表，不重训、不重读target、不改变P4/P346或任何gate。
+- retained boundary：P346 reused-P201 q90 unsafe=`9.09%`，但source held-out-H=`26.71%`；禁止formal multicalibration、
+  cross-horizon stability、V7 repair-effect或AV2-transfer claim。
+- layout：main pages 1--8包含全部content，page 9只含references，符合当前official CVPR references exclusion；不缩小
+  bibliography字号或破坏模板。Pages 6--9 visual QA通过，既有Table 1 `6.03pt` warning无裁切。
+- failure delta=`none`；V6.7既有失败账本不重编号，V7下一可用仍为`V7-F20`。
+
 ## WorldSim V7 latest paper-integration audit（2026-09-02）
 
 - fresh P3-C/P6-C结果与`V7-F18/V7-F19`已进入main、supplement、主表、结果宏和contribution map；没有因外域正结果

@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7 C3 direct reliability evidence restored to paper（2026-09-02）
+
+Plan/table audit发现Method仍主张连续代价密度与joint-H reliability，但主文只报告P5/P9接口结果。未重训或重读target，
+而是把V6.7已冻结且由V7继承的canonical C3证据恢复为独立主表：P182在P183的10个previously-unread logs上相对P173
+mean integrated-Brier/calibration-error reduction=`28.48%/69.38%`；P199在source-heldout 3,742 trajectories为
+`16.97%/71.85%`，并在独立P201 10-log/1,846-trajectory fresh read复现`17.52%/53.37%`。
+
+P346只作为task-authority boundary：reused P201 q90 coverage/unsafe=`32.84%/9.09%`，但source held-out-H=
+`29.42%/26.71%`。论文明确区分P183/P201 fresh scene-level evidence与P346 reused development，禁止把C3写成V7
+repair effect、AV2 transfer、cross-horizon stability或formal calibration/safety guarantee。无新scientific run或failure；
+下一可用仍为`V7-F20`。
+
+TeX Live final compile main=`9 pages/1,171,711 bytes`，其中pages 1--8包含全部正文/图/表，page 9只含cited references；
+supplement=`7 pages/7,222,572 bytes`。官方CVPR 2026 guideline明确允许additional references-only pages。Main pages 6--9
+逐页visual QA无裁切、重叠或断表；只保留既有Table 1 `6.03pt`视觉无害overfull。
+
 ## WorldSim V7 fresh exact-once evidence integrated into CVPR paper（2026-09-02）
 
 P3-C fresh visibility与P6-C fresh AV2 cross-domain reversal均已写入main/supplement、结果宏、主表和
