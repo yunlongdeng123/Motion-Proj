@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7 P11 provenance-authority contract frozen after literature migration（2026-09-02）
+
+P10失败后已检索CVPR ray-potential visibility、ICML SelectiveNet与CVPR DGLSS。P11不再把同一feature confidence
+换阈值，而冻结物理witness：`COMPLETE==0`时输出只含sensor-supported KEEP与matched-hit PROJECT；再与P4 stored
+selection取AND。固定比较always/P4/provenance/dual，并预冻结visible risk、Wilson upper、Chamfer、coverage、hazard
+coverage五门。只读已消费523-Actor join，0 training/target fit/threshold scan。执行前下一failure id=`V7-F21`。
+
 ## WorldSim V7 P10 proves repair authority is not a visibility certificate（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/

@@ -1,5 +1,14 @@
 # Experiments
 
+## P11 provenance-conditioned dual-authority freeze（2026-09-02）
+
+- literature migration：CVPR 2016 viewing-ray visibility constraint + ICML 2019 selective-risk target；DGLSS-style
+  feature consistency不重复，因为`V7-F19`已证明跨fresh域reversal。
+- certificate：`completion_decision_count==action_counts.COMPLETE==0`；compiled output只含KEEP或exact matched-hit
+  PROJECT，UNKNOWN不进入surface。dual=`p4_selected AND provenance_certified`。
+- fixed gates：dual visible risk < P4、dual 95% upper < P4 point risk、dual Chamfer-worsening <= P4、coverage>=10%、
+  hazard coverage>=50%。0 threshold/count sweep、0 target fit、0 compiler change；下一可用=`V7-F21`。
+
 ## P10 frozen physical-authority audit result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/

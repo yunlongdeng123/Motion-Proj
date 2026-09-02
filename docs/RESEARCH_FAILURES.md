@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7 P11 prevention note — observed-ray provenance不得偷换future-view completeness（2026-09-02）
+
+- `COMPLETE==0`给出每个输出点的KEEP/PROJECT measurement witness，但只覆盖already observed terminations；它不先验
+  排除另一个held-out ray下的early return或cross-ray contradiction。
+- 五项gate在aggregate前固定，不能按completion count、coverage或hazard stratum扫阈值；P6-C不能覆盖结果。
+- 若dual仍无法降低visible risk或coverage/hazard authority坍缩，登记`V7-F21`并停止provenance-gate recovery，而不是
+  把低coverage写成safety proof。
+
 ## V7-F20 — nuScenes-trained repair authority不能隔离fresh AV2 visible physical violations
 
 - canonical：`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/

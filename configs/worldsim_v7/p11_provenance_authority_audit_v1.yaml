@@ -1,0 +1,16 @@
+schema_version: worldsim_v7.p11_provenance_authority_audit_config.v1
+task_id: WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01
+hypothesis_id: H-V7-P11
+runs_root: /root/autodl-tmp/runs
+p3c_fresh_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-FRESH-01/20260902T231500Z__fresh-visibility-s0-r1
+p6c_fresh_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P6C-SPARSITY-CONSISTENT-SELECTOR-01/20260902T173000Z__sparsity-consistent-s70602-r1
+confidence_level: 0.95
+minimum_dual_coverage: 0.10
+minimum_dual_hazard_coverage: 0.50
+provenance_rule: no_complete_output
+claim_boundary: >-
+  Frozen-output development audit on already consumed fresh AV2 rows. The no-COMPLETE
+  rule certifies that retained output points arise only from sensor-supported KEEP or
+  matched-termination PROJECT actions. It does not certify unseen surfaces, future views,
+  cross-ray consistency, sensor noise, collision, planning, or road safety. No target
+  fit, calibration, threshold scan, case removal, or compiler change is permitted.

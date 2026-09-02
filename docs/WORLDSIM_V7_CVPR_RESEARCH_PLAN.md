@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P11 provenance-conditioned authority contract
+
+在检索CVPR ray visibility、SelectiveNet selective risk与DGLSS source consistency后，P11冻结一个更硬且可解释的
+迁移：只在`COMPLETE==0`时认定compiled output全部由KEEP或matched-hit PROJECT观测见证，并与P4 stored authority
+取交集。固定五门为visible risk、Wilson upper、Chamfer tail、10% coverage、50% hazard coverage；只读已消费fresh
+AV2 join，不训练/调threshold/改compiler。Observed-ray witness不等于future-view completeness，失败即`V7-F21`。
+
 ## 2026-09-02 P10 frozen physical-authority audit result
 
 Canonical=`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
