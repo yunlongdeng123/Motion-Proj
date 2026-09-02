@@ -6,6 +6,11 @@ Multi-sensor driving datasets such as nuScenes~\cite{caesar2020nuscenes} and Arg
 \paragraph{Uncertainty and reliability.}
 Deep ensembles expose useful empirical predictive disagreement~\cite{lakshminarayanan2017deep}, and conformalized quantile methods can turn residuals into calibrated marginal intervals under appropriate assumptions~\cite{romano2019conformalized}. Interval-bound methods can certify a network over a specified input box, including for robust OOD detection~\cite{bitterwolf2020certifiably}; they do not certify that the box models an unseen sensor domain. Driving logs violate many simple exchangeability assumptions through scene correlation and domain shift. We therefore report empirical calibration explicitly, preserve claim boundaries, and use monotone structure only for runtime consistency---not as a formal road-safety guarantee.
 
+Selective prediction couples conditional risk to coverage~\cite{geifman2019selectivenet}, while learning to defer evaluates the
+downstream fallback as part of the system~\cite{madras2018defer}. Moreover, abstention can improve aggregate regression yet
+worsen a predefined subgroup~\cite{shah2022selective}. We therefore report both selected and fallback-composite outcomes and
+decompose them over the frozen physical hazard stratum; this is descriptive accounting, not subgroup calibration.
+
 \paragraph{Cross-sensor LiDAR generalization.}
 LiDAR domain shift includes sensor sampling as well as scene and appearance shift. Source-only subsampling consistency can improve
 transfer across scan densities~\cite{kim2023dglss}, while partially accumulated geometry and sequence cues provide a complementary

@@ -33,6 +33,17 @@ We fit features and weights on nuScenes train only. On a disjoint calibration fo
 \end{equation}
 Accepted Actors use the compiled surface; abstained Actors retain the clean query. Paired input swaps measure whether either score reads the other task's variables. The finite-sample interpretation requires exchangeability; AV2 uses the frozen $q$ only for empirical zero-shot evaluation.
 
+For a frozen stratum $z$, selector $s_i$, query/compiled Chamfer $(q_i,c_i)$, and introduced visible-failure indicator $v_i$,
+the complete defer-to-query system admits an exact accounting decomposition:
+\begin{equation}
+\begin{aligned}
+G_z&=\mathbb{E}_z[s_i(q_i-c_i)]=C_z\mathbb{E}_z[q_i-c_i\mid s_i=1],\\
+M_z&=\mathbb{E}_z[s_iv_i]=C_z\mathbb{E}_z[v_i\mid s_i=1].
+\end{aligned}
+\end{equation}
+where $C_z=\mathbb{E}_z[s_i]$ is repair coverage. Population gain and introduced-failure mass are the stratum-share-weighted
+sums of $G_z$ and $M_z$. Hence Actor-state preservation, conditional risk, and complete-system utility are distinct claims.
+
 \subsection{Actor Residuals and Boundary-Cost Density}
 
 For Actor $i$ and horizon $t$, a low-capacity head predicts a 2D residual distribution $(\mu_{i,t},\Sigma_{i,t})$. Analytic projection onto $n_{\tau,t}$ gives mean $n^\top\mu$ and variance $n^\top\Sigma n$. Equation~\ref{eq:boundary-cost} converts these residuals and deterministic clearance into a continuous trajectory cost.
