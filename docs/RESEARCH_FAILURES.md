@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F26 — normalized hybrid supervision narrows but does not close the Pareto gap
+
+- canonical=`run://worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/
+  20260903T094500Z__hybrid-ray-chamfer-s71701-r1`；fresh AV2未读。
+- recovery：coverage `71.43→88.96%`；P17 Chamfer regression约76.6%被收回；hazard early仍降`1.4362→1.4153%`。
+- remaining failure：Chamfer `.1945868→.1957160m`，new hits `39,255→37,518`，严格Pareto第二项false。
+- resolution：关闭ray loss/Chamfer mixture/threshold family，不以近似通过放宽边界。下一方向是固定experts的two-stage
+  Actor routing，label仅用逐Actordominance，不引入utility weight；下一failure=`V7-F27`。
+
+## P18 prevention note — router选择完整expert，不重开surface threshold（2026-09-02）
+
+- experts固定为always-COMPLETE和P17R；router不得混合点集、改`.5` threshold或删除KEEP/PROJECT。
+- P17R label只在Actor Chamfer/new-early双不退且至少一项严格改善时成立，否则明确回退baseline。
+- nuScenes test已被base expert消费，只是router development；不得包装为新source confirmation。
+- source aggregate双Pareto通过才允许fresh AV2；不扫router feature/width/seed/class weight；下一failure=`V7-F27`。
+
 ## V7-F25 — ray-only first-return objective trades away 3D surface utility
 
 - canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/

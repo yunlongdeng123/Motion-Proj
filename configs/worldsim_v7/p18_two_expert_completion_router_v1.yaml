@@ -1,0 +1,39 @@
+hypothesis_id: WS-V7-H-P18
+fit_task_id: WS-V7-P18-TWO-EXPERT-ROUTER-FIT-01
+external_task_id: WS-V7-P18-TWO-EXPERT-ROUTER-EXTERNAL-01
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+base_expert_config: configs/worldsim_v7/p17r_hybrid_ray_chamfer_completion_v1.yaml
+base_expert_fit_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/20260903T094500Z__hybrid-ray-chamfer-s71701-r1
+fresh_av2_cohort: configs/worldsim_v7/av2_evicomp_fresh_cohort_v1.json
+fresh_download_state: /root/autodl-tmp/data/av2/v7_p16_download_state
+device: cuda
+claim_boundary: >-
+  A two-stage router chooses between frozen always-COMPLETE and frozen P17R per
+  Actor. It is trained on nuScenes train+calibration dominance labels and evaluated
+  on the P17R-consumed nuScenes test role as prospective router development, not a
+  new independent source cohort. Only a one-read fresh AV2 pass can support transfer.
+router:
+  seed: 71801
+  hidden_dim: 32
+  epochs: 120
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  loss: inverse_sqrt_source_frequency_cross_entropy
+  actions: [always_complete, p17r]
+  label_rule: p17r_only_if_actor_chamfer_and_new_early_both_no_worse_with_one_strict
+  decision_rule: argmax
+features:
+  runtime_validity_features: 13
+  analytic_hazard_features: 5
+  frozen_p17r_score_statistics: [completion_fraction, mean, standard_deviation, minimum, maximum]
+source_decision:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+external_decision:
+  - hazard_new_early_strictly_lower
+  - population_chamfer_no_worse_than_frozen_baseline
+verdict_on_pass: supported_two_expert_completion_router_zero_shot_transfer
+verdict_on_failure: rejected_two_expert_completion_router_zero_shot_transfer

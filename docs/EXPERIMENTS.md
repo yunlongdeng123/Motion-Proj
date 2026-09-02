@@ -1,5 +1,15 @@
 # Experiments
 
+## P17R result / P18 router freeze（2026-09-02）
+
+- P17R canonical/status：`run://worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/
+  20260903T094500Z__hybrid-ray-chamfer-s71701-r1` / done；wall=`442.37s`、peak GPU/RSS=`.2206/1.466GiB`。
+- P17R：coverage=`88.96%`，new-early=`.9662→.9484%`，hazard=`1.4362→1.4153%`，Chamfer=
+  `.1945868→.1957160m`，new hits=`39,255→37,518`；rejected、`V7-F26`、0 external read。
+- P18：always/P17R two experts；23 input、`32` hidden、seed71801、120 epochs、batch32、AdamW `.001/.0001`。
+- label：P17R only if per-Actor Chamfer/new-early both nonworse and one strict；otherwise baseline；argmax/no threshold。
+- source test是router development；双Pareto通过后才exact-once fresh AV2，下一failure=`V7-F27`。
+
 ## P17 ray-set source fit result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/

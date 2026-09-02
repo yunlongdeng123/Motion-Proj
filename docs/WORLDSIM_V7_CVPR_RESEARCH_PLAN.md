@@ -1,5 +1,14 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P17R rejected, P18 fixed-expert router frozen
+
+P17R把coverage恢复到`88.96%`并保留hazard early下降，但Chamfer仍`.1945868→.1957160m`，登记`V7-F26`，
+不放宽Pareto、不读fresh AV2。关闭继续调ray/Chamfer objective。
+
+P18按ICML 2025 two-stage expert routing迁移系统动作：冻结always-COMPLETE与P17R，`23-32-2/seed71801/120
+epochs/batch32/AdamW .001,.0001/inverse-sqrt CE`只路由完整expert。P17R label=逐Actor Chamfer与new-early双不退且
+一项严格改善，否则baseline；argmax无threshold。Source gate通过才读取第三批AV2，下一failure=`V7-F27`。
+
 ## 2026-09-02 P17 partial result and single hybrid recovery
 
 P17 canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/

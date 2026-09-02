@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P17R rejected / P18 two-expert routing frozen（2026-09-02）
+
+P17R canonical=`run://worldsim_v7/WS-V7-P17R-HYBRID-RAY-CHAMFER-FIT-01/
+20260903T094500Z__hybrid-ray-chamfer-s71701-r1`。Coverage=`88.96%`，hazard new-early=`1.4362→1.4153%`，但
+Chamfer=`.1945868→.1957160m`，第二Pareto仍失败；登记`V7-F26`、0 fresh AV2 read、关闭ray-loss recovery。
+
+P18迁移two-stage learning-to-defer：冻结always-COMPLETE/P17R两个expert，只学Actor router。固定23维输入、
+`23-32-2`、seed71801、120 epochs、batch32、AdamW `.001/.0001`、inverse-sqrt CE；只有P17R逐Actor双指标支配才
+标P17R，否则baseline，inference argmax。nuScenes test仅router-development，独立transfer只由unread AV2给出。
+
 ## WorldSim V7 P17 ray-set source fit partial/rejected（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P17-RAY-SET-COMPLETION-FIT-01/
