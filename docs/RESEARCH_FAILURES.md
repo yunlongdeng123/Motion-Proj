@@ -2,6 +2,18 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P3-D outcome note — completion tail不触发 source-ray carving
+
+- run：`run://worldsim_v7/WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01/20260902T224500Z__visible-failure-attribution-s0-r1`；
+  all 634 Actors、all target rays、all provenance aligned。
+- COMPLETE产生 `24,445/25,698` new early，但同时产生 `365,634` new hits（`14.96×` gain/cost）；总体 early相比
+  query仍净减少 `9,439`。
+- observable surface contradictions中 COMPLETE只有 `56/415=13.49%`，KEEP为 `359/415=86.51%`；因此 completion
+  并不同时主导两种物理失败，预冻结 carving解锁条件不成立。
+- resolution：关闭 source-ray carving与新 operator；不以 target-only结果删除 completion，不调 ray tolerance。保留
+  `V7-F18` actor-tail，P4 select/abstain继续承担逐 Actor authority，fresh P3-C只作原合同确认。
+- 本诊断没有新 failure id；下一可用仍为 `V7-F19`。
+
 ### P3-D prevention note — 不把 nearest-ray assignment尾部误判成 completion物理冲突
 
 - P3-C 的 target→surface nearest ray与 surface→target nearest ray不是同一个匹配；前者新增 early count不能直接推出

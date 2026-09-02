@@ -728,6 +728,18 @@ provenance明确指向 completion free-space conflict时，才允许冻结 sourc
 - 只有 COMPLETE 同时主导 new early与surface contradiction，才允许冻结 target-independent source-ray carving；若
   KEEP/PROJECT主导，则将 failure定位为 coverage下的 nearest-ray assignment边界，不通过删除表面优化指标。
 
+### P3-D result / source-ray carving closed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01/20260902T224500Z__visible-failure-attribution-s0-r1`。
+COMPLETE占 new early `24,445/25,698=95.12%`，同时贡献 `365,634` new hits（`14.96×` hit/early）；全局 early
+`60,779→51,340`，净减少 `9,439`。surface contradictions中 KEEP/COMPLETE=`359/56`，COMPLETE只占`13.49%`；
+observed-hit PROJECT与 clean query在`.06m` voxel内重合，因此按原 concat-first语义无独立 output point。
+
+预冻结的 carving条件要求 COMPLETE 同时主导 new early与surface contradiction，当前不成立。关闭 source-ray carving、
+completion删除与任何 tolerance/operator scan。C1 结论收敛为 aggregate observed-ray physics improvement加明确
+completion gain--tail trade-off；`V7-F18` per-Actor边界保留，逐 Actor authority交给 P4 select/abstain。下一步只做
+paper integration与已冻结 fresh 20-log confirmation。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

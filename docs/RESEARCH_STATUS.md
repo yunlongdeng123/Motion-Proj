@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7 P3-D visible-failure attribution completed / carving closed（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01/20260902T224500Z__visible-failure-attribution-s0-r1`。
+30/30 logs、634 Actors、all provenance aligned；wall=`58.78s`、GPU=`.0692GiB`、RSS=`1.169GiB`。compiled early
+`51,340` 中 KEEP/COMPLETE=`25,796/25,544`；相对 query 的 new early=`25,698`，其中 COMPLETE=
+`24,445=95.12%`，但 COMPLETE 同时产生 `365,634` new hits，约 `14.96` hits/new-early。全局 query→compiled early
+仍从 `60,779` 降到 `51,340`（净 `-9,439`）。
+
+真正的 compiled surface contradictions=`415`，KEEP/COMPLETE=`359/56`，即 COMPLETE 只占 `13.49%`；PROJECT 在
+`.06m` voxel-first 后没有独立点，因为 observed-hit projection与 clean query重合并由先到的 KEEP取得 provenance。故
+预冻结的“COMPLETE 同时主导 new early 与 surface contradiction”条件不成立，source-ray carving 路线关闭；不删除
+completion、不扫容差、不新开 operator。P3-C/P3-D 的 paper-facing结论固定为：aggregate observed-ray physics显著改善，
+completion以可量化的 tail换取约15× hit gain，逐 Actor authority必须继续由 P4 select/abstain承担。fresh 20-log
+P3-C/P6-C协议不变，下一可用 failure id保持 `V7-F19`。
+
 ## WorldSim V7 P3-D all-Actor visible-failure attribution frozen（2026-09-02）
 
 Active=`WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01 / WS-V7-H-P3-004`。`V7-F18` 后只做一次

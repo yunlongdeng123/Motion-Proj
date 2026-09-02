@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P3D all-Actor output-provenance attribution result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P3D-AV2-VISIBLE-FAILURE-ATTRIBUTION-01/20260902T224500Z__visible-failure-attribution-s0-r1`。
+- execution：30 logs / 634 Actors / 230 hazardous；all compiled provenance aligned；wall `58.78s`，GPU `.0692GiB`，
+  RSS `1.169GiB`。
+- compiled output points：KEEP `157,741`，PROJECT `0`，COMPLETE `22,476`；PROJECT与 clean query同 voxel，按原始
+  concat-first语义归入 KEEP，不是未执行 PROJECT。
+- new early by provenance：KEEP `1,253`，COMPLETE `24,445`（`95.12%`）；new hit：KEEP `288`，COMPLETE
+  `365,634`。COMPLETE gain/cost=`14.96` new hits per new early；all-source=`14.24`。
+- net ray effect：query/compiled early=`60,779/51,340`（`-9,439`）；resolved query early=`35,137`，new early=`25,698`。
+- surface contradiction provenance：KEEP `359/415=86.51%`，COMPLETE `56/415=13.49%`，PROJECT `0`。
+- decision：预冻结 carving条件不成立，关闭 source-ray carving/operator recovery；保留 completion的高覆盖收益与
+  `V7-F18` per-Actor tail，进入论文整合与 fresh exact-once confirmation。
+
 ## WS-V7-P3D all-Actor output-provenance attribution freeze（2026-09-02）
 
 - hypothesis：`WS-V7-H-P3-004`；对象是 `V7-F18` 的机制，不是新 operator/model。
