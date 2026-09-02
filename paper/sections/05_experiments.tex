@@ -126,6 +126,15 @@ On \PsixFreshActors{} exact-once AV2 Actors, the order reverses: candidate/P4 AU
 \PsixFreshCandidateFalseRepair{}/\PsixFreshPfourFalseRepair{}\%. External gates pass, yet this source/external reversal is
 cohort-dependent rather than universal; P4 remains primary.
 
+\paragraph{Physical authority is not a visibility certificate.}
+We exact-join the same \PtenActors{} fresh AV2 Actors to the independently frozen bidirectional visibility audit, without
+changing either score or threshold. P4 selects \PtenPfourCoverage{}\%; its Chamfer-worsening rate falls from
+\PtenAlwaysChamferWorse{}\% under always-repair to \PtenSelectedChamferWorse{}\%. However, selected visible-violation risk is
+\PtenSelectedVisibleRisk{}\%, versus \PtenAlwaysVisibleRisk{}\% for always-repair, with a one-sided 95\% Wilson upper bound
+of \PtenSelectedVisibleUpper{}\%. Safe-visible AUROC is only \PtenVisibleSafeAUROC{}, and abstention captures
+\PtenVisibleCapture{}\% of visible failures. Thus the nuScenes-trained head controls its frozen Chamfer target but is not an
+Actor-level physical certificate; repair authority and visibility evidence remain separate.
+
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,
 the five-component log-cost density reduces mean integrated Brier and marginal calibration error by
