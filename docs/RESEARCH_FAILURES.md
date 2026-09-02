@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F24 — independent completion-candidate classification is non-compositional
+
+- canonical=`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/
+  20260903T073500Z__completion-fit-s71601-r2`；fresh AV2未读。
+- imbalance：source fit三态=`6/1739/25`；test=`6/3295/24`。P16 test FREE recall=`0`、UNKNOWN F1=`.0619`，
+  occupied-prior accuracy `.9693`不可写成三态学习成功。
+- physical symptom：completion coverage仍`.9765`，但hazard new-early从`1.4362%`升至`1.4811%`，Chamfer从
+  `.1945868m`升至`.1950206m`，new hits少899；源域即双退化。
+- mechanism：删除一个candidate会暴露同ray上另一更早的KEEP/PROJECT/COMPLETE点；单点label在first-return composition
+  下不封闭，candidate classification不是正确prediction object。
+- resolution：关闭P16 external，不扫class weight/features/threshold/seed；下一候选必须jointly optimize ray/set
+  transmittance或first-return depth。第三批AV2可继续下载但保持unread。
+- next failure id=`V7-F25`。
+
 ## P16 fit r1 engineering failure — diagnostics package未解包（2026-09-02）
 
 - run=`20260903T071500Z__completion-fit-s71601-r1`；首个nuScenes source scene完成后在写diagnostics时NameError。

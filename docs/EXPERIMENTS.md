@@ -1,5 +1,15 @@
 # Experiments
 
+## P16 source fit result — rejected, no external read（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/
+  20260903T073500Z__completion-fit-s71601-r2` / `done`；wall=`397.03s`、peak GPU/RSS=`.0427/1.281GiB`。
+- fit：85 Actors、1,770 candidates，FREE/OCCUPIED/UNKNOWN=`6/1739/25`；loss=`1.14369→.10535`。
+- source test：228 Actors、3,325 candidates；accuracy/macro-F1=`.9693/.3488`；FREE recall=`0`、UNKNOWN F1=`.0619`。
+- baseline→P16：Chamfer=`.1945868→.1950206m`；new-early=`.9662→.9889%`；hazard=`1.4362→1.4811%`；
+  new hits=`39,255→38,356`；completion coverage=`97.65%`。
+- verdict=`rejected_source_independent_completion_responsibility`，`V7-F24`；0 fresh AV2 read，external phase未运行。
+
 ## P16 fit r1 failed before training（2026-09-02）
 
 - run=`20260903T071500Z__completion-fit-s71601-r1`；error=`NameError: package is not defined`。

@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P16 source fit rejected before external read（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/
+20260903T073500Z__completion-fit-s71601-r2`；85 fit Actors/1,770 candidates，class=`FREE/OCCUPIED/UNKNOWN=6/1739/25`；
+228 disjoint test Actors/3,325 candidates。Accuracy=`.9693`但macro-F1=`.3488`，FREE recall=`0`、UNKNOWN F1=`.0619`。
+
+Source physical policy同样失败：hazard new-early=`1.4362→1.4811%`，population Chamfer=`.1945868→.1950206m`，
+new hits=`39,255→38,356`；两个Pareto方向均退化。登记`V7-F24`并关闭independent candidate classifier，不调class
+weight/feature/threshold。Fresh AV2 0 read，第三批下载继续但保持未消费；下一方向改为joint ray/set first-return objective。
+
 ## WorldSim V7 P16 fit r1 pre-training implementation failure corrected（2026-09-02）
 
 Fit r1=`20260903T071500Z__completion-fit-s71601-r1`在首个source scene后因diagnostics解包变量`package`未定义终止；

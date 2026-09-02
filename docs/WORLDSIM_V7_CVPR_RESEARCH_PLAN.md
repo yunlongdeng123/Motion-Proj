@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P16 source fit rejected, external preserved
+
+P16 r2 canonical=`run://worldsim_v7/WS-V7-P16-EVIDENTIAL-COMPLETION-FIT-01/
+20260903T073500Z__completion-fit-s71601-r2`。Source test FREE recall=`0`、UNKNOWN F1=`.0619`；更重要的是hazard
+new-early=`1.4362→1.4811%`且Chamfer=`.1945868→.1950206m`，源域两个primary方向均退化，登记`V7-F24`。
+
+根因不是继续调class weight即可解决：first-return由整条ray上的point set共同决定，移除独立candidate会暴露另一个更早
+return。关闭P16 independent-point family，不运行external、不读取fresh AV2、不扫feature/threshold/seed；下一阶段只允许
+joint ray/set transmittance或differentiable first-return depth模型。第三批10 logs继续下载但保持unread。
+
 ## 2026-09-02 P16 fit r1 implementation correction
 
 `20260903T071500Z__completion-fit-s71601-r1`在首个source scene后因`package`解包NameError终止，发生于训练/checkpoint/
