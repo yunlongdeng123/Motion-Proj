@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P16 evidential completion responsibility frozen（2026-09-02）
+
+状态=`p16_evidential_completion_frozen_io_pending`。P15已把hazard burden定位到candidate-level COMPLETE，P16因此不再
+训练Actor selector，而在nuScenes train上用held-out LiDAR ray监督FREE/OCCUPIED/UNKNOWN三态；仅argmax OCCUPIED
+允许COMPLETE，KEEP/PROJECT不变，无target threshold。迁移OccupancyM3D、evidential occupancy/EvOcc与object-centric
+temporal completion的物理接口，不声明EDL或道路安全保证。
+
+第三批fresh AV2 10 logs已metadata-only冻结：从150 UUID排序中移除前50 consumed，再取100-log complement positions
+`0,10,...,90`。下载串行、单log内部8 workers、free space低于75GiB自动停止；预计约11GiB，当前108GiB充足。
+下一动作提交/push freeze后启动唯一下载器，并在IO期间完成源域candidate corpus与单3090训练。
+
 ## WorldSim V7 CVPR paper integrated through P15（2026-09-02）
 
 P15 action attribution已进入Related Work、Experiments、Limitations、supplement、结果宏与contribution registry。论文明确

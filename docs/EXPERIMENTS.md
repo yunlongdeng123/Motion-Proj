@@ -1,5 +1,15 @@
 # Experiments
 
+## P16 evidential completion freeze and fresh IO（2026-09-02）
+
+- hypothesis/task：`WS-V7-H-P16 / WS-V7-P16-EVIDENTIAL-COMPLETION-01`。
+- source：nuScenes train candidate-level FREE/OCCUPIED/UNKNOWN held-out-ray labels；one fixed small network，single seed。
+- action：argmax OCCUPIED→COMPLETE；FREE/UNKNOWN→UNKNOWN；KEEP/PROJECT与geometry tolerances冻结。
+- external：`av2_evicomp_fresh_cohort_v1.json`，10 previously unread logs，metadata positions `0,10,...,90` after removing
+  50 consumed logs；0 fit/calibration/threshold on AV2。
+- resource：serial log download、8 intra-log workers、75GiB stop floor；single RTX 3090 source training while IO continues。
+- primary metrics：hazard new-early、population composite Chamfer、target hits、first-return depth、COMPLETE/UNKNOWN coverage。
+
 ## P15 CVPR paper integration and QA（2026-09-02）
 
 - integrated：`paper/sections/02_related.tex`、`05_experiments.tex`、`06_limitations.tex`、

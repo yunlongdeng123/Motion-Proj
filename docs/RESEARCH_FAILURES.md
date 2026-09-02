@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P16 prevention note — completion责任必须在candidate层学习（2026-09-02）
+
+- P15证明Actor-level P4/P6-C未压低hazard COMPLETE channel；P16不得再包装另一个Actor score或低coverage conjunction。
+- labels固定为held-out ray FREE/OCCUPIED/UNKNOWN；只有argmax OCCUPIED可发COMPLETE，FREE/UNKNOWN不被强制二值化。
+- 既有50个AV2 logs全部consumed，不得用于feature/loss/seed/epoch/action选择；第三批10 logs在任何model/quality read前冻结。
+- 不把softmax/Dirichlet/evidence mass写成formal uncertainty、calibration或safety guarantee；评价仍是首占用深度、new early与
+  composite geometry。
+- 禁止fresh read后扫threshold/tolerance/features或删除失败log/Actor；下一可用failure id=`V7-F24`。
+
 ## P15 paper audit — action attribution不得越界为action ablation（2026-09-02）
 
 - main/supp已同时陈述COMPLETE主导new early/new hit、KEEP主导surface contradiction，以及P4/P6-C未压低hazard

@@ -1,5 +1,17 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P16 evidential completion responsibility frozen
+
+P16直接处理P15暴露的candidate-level COMPLETE机制，不再迭代Actor selector。按CVPR 2024 OccupancyM3D/evidential
+occupancy、CVPR 2025 EvOcc与NeurIPS 2024 object-centric temporal completion迁移三态物理接口：nuScenes held-out ray
+把candidate标为FREE/OCCUPIED/UNKNOWN；one fixed small network只在source train学习，argmax OCCUPIED才发
+COMPLETE，其余UNKNOWN。KEEP/PROJECT、Actor状态、surface geometry与tolerance全部冻结。
+
+新的10-log AV2 cohort在任何P16输出/quality read前按metadata冻结：150 UUID排序移除已消费50 logs，对剩余100 logs
+取positions `0,10,...,90`。串行下载预计约11GiB，当前108GiB足够，75GiB free-space floor；IO期间并行推进单3090
+source corpus/training。Fresh read后禁止threshold/feature/loss/seed/tolerance sweep或删失败样本；结论限定经验三维
+自洽与nuScenes→AV2 transfer，不升级为calibration/causal/road-safety guarantee。
+
 ## 2026-09-02 P15 paper integration completed
 
 P15 fresh hazard-by-action mechanism已进入CVPR main/supplement、结果宏、bibliography与contribution map。Main将
