@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P20 hard-evidence correction supported / P21 boundary frozen（2026-09-02）
+
+P20 canonical=`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/
+20260903T124500Z__true-first-return-audit-r1`。True first-return把always-COMPLETE total/hazard early从legacy
+`.9662/1.4362%`修正为`5.9561/8.7421%`，约6倍暴露；这是V7视觉/几何硬证据的重要正结果。
+
+P17/P17R/P19均降低true-ray hazard early，但Chamfer均回退，Pareto variants=`[]`，登记`V7-F29`、target unread。
+P21已冻结set-deletion单调性定理与经验frontier：只读P20 summary，给出events/mm与events/hit，不重编译、不训练、
+不选择policy，不把cohort ratio包装为road-safety guarantee。状态=`p21_frozen_implementation_next`。
+
 ## WorldSim V7 P19 rejected / P20 true first-return audit frozen（2026-09-02）
 
 P19 canonical=`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/

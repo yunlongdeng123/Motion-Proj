@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P20 hard-evidence correction supported, P21 safety boundary frozen
+
+P20 true first-return揭示always-COMPLETE total/hazard early=`5.9561/8.7421%`，约为legacy proxy六倍。P17/P17R/P19
+分别减少hazard events `1570/833/131`，但三者Chamfer都高于`.1945869m`，登记`V7-F29`。因此hard evidence修正
+成立，但所有deletion policy仍非Pareto，fresh AV2未读。
+
+P21形式化`S' subset S => d_{S'}(r)>=d_S(r)`，从而true first-return early对删除单调非增；hit/Chamfer无该保证。
+只从P20 summary计算events removed per hit/mm，不重编译、不训练、不选policy；用于可解释性与安全边界章节，并关闭
+deletion-only sweep。
+
 ## 2026-09-02 P19 rejected, P20 true first-return correction frozen
 
 P19只veto 35/3325 candidates就把hazard early降34 events，但Chamfer退`.0000919m`且少136 new hits，登记

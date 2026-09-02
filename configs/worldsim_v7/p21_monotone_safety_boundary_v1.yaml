@@ -1,0 +1,18 @@
+hypothesis_id: WS-V7-H-P21
+task_id: WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01
+runs_root: /root/autodl-tmp/runs
+input_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/20260903T124500Z__true-first-return-audit-r1
+policies: [p17, p17r, p19]
+reference_policy: always_complete
+ray_operator: minimum_positive_depth_within_lateral_tolerance
+analysis:
+  - hazard_events_removed
+  - total_events_removed
+  - new_hits_lost
+  - mean_chamfer_penalty_m
+  - hazard_events_removed_per_new_hit_lost
+  - hazard_events_removed_per_chamfer_millimeter
+claim_boundary: >-
+  Point deletion has a certified monotone direction for literal first-return early
+  events, but neither hit retention nor bidirectional Chamfer is monotone. Empirical
+  ratios describe this consumed source cohort and are not formal road-safety bounds.

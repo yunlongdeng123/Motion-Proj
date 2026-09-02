@@ -1,5 +1,23 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F29 — true first-return exposes larger risk but all deletion policies pay Chamfer
+
+- canonical=`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/
+  20260903T124500Z__true-first-return-audit-r1`；fresh AV2未读。
+- metric correction：always-COMPLETE total/hazard new-early由legacy `.9662/1.4362%`变为true-ray
+  `5.9561/8.7421%`，说明target-nearest proxy低估首返回风险约6倍。
+- P17/P17R/P19 hazard events分别`14219→12649/13386/14088`，第一门全true；Chamfer分别
+  `.1994111/.1957160/.1946787m > .1945869m`，第二门全false。
+- interpretation：deletion对true first-return early有集合单调性，但对hit与bidirectional Chamfer没有；这不是再调
+  threshold/coverage能消除的评估噪声。
+- response：关闭deletion-only policy sweep；P21形式化单调安全定理与经验交换率，不训练、不选policy、不读target。
+
+## P21 prevention note — theorem exact, empirical frontier bounded（2026-09-02）
+
+- 只从P20 summary派生；不重编译、不以ratio重新选policy、不增加epsilon/smoothing。
+- set-inclusion只保证early非增，不保证hit或Chamfer；不得扩写成collision-free或road-safety guarantee。
+- P19高效率是consumed source描述，不是fresh transfer evidence。
+
 ## V7-F28 — one-slot hazard veto reduces early returns but still pays surface utility
 
 - canonical=`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/

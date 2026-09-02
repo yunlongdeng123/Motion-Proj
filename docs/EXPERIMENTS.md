@@ -1,5 +1,15 @@
 # Experiments
 
+## P20 result / P21 monotone safety boundary freeze（2026-09-02）
+
+- P20 canonical/status：`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/
+  20260903T124500Z__true-first-return-audit-r1` / done；wall=`257.19s`、peak GPU/RSS=`.1839/1.177GiB`。
+- baseline legacy→true total/hazard early=`.9662→5.9561% / 1.4362→8.7421%`；hard-evidence correction supported。
+- true-ray P17/P17R/P19 hazard events=`12649/13386/14088` vs baseline `14219`；Chamfer=
+  `.1994111/.1957160/.1946787m` vs `.1945869m`；三者均1/2、`V7-F29`。
+- new hits baseline/P17/P17R/P19=`32575/29191/31620/32504`；P19以71 hits和`.0919mm`换131 hazard events。
+- P21只读summary计算events/hit与events/mm，并形式化deletion true-ray early monotonicity；0 data/model read。
+
 ## P19 result / P20 true first-return audit freeze（2026-09-02）
 
 - P19 canonical/status：`run://worldsim_v7/WS-V7-P19-SPARSE-HAZARD-VETO-SOURCE-01/
