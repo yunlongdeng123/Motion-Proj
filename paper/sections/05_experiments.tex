@@ -129,15 +129,21 @@ cohort-dependent rather than universal; P4 remains primary.
 \paragraph{Physical authority is not a visibility certificate.}
 We exact-join the same \PtenActors{} fresh AV2 Actors to the independently frozen bidirectional visibility audit, without
 changing either score or threshold. P4 selects \PtenPfourCoverage{}\%; its Chamfer-worsening rate falls from
-\PtenAlwaysChamferWorse{}\% under always-repair to \PtenSelectedChamferWorse{}\%. However, selected visible-violation risk is
-\PtenSelectedVisibleRisk{}\%, versus \PtenAlwaysVisibleRisk{}\% for always-repair, with a one-sided 95\% Wilson upper bound
-of \PtenSelectedVisibleUpper{}\%. Safe-visible AUROC is only \PtenVisibleSafeAUROC{}, and abstention captures
-\PtenVisibleCapture{}\% of visible failures. Thus the nuScenes-trained head controls its frozen Chamfer target but is not an
-Actor-level physical certificate; repair authority and visibility evidence remain separate.
-A stricter analytic witness does not repair this gap: requiring no \textsc{complete} output and conjoining with P4 covers
-\PelevenDualCoverage{}\%, but raises visible violation to \PelevenDualVisibleRisk{}\% and Chamfer worsening to
-\PelevenDualChamferWorse{}\%, while hazard coverage collapses to \PelevenDualHazardCoverage{}\%. No-completion identifies
-sparse, low-support Actors rather than future-view safety, so we retain completion and keep the two authorities separate.
+\PtenAlwaysChamferWorse{}\% under always-repair to \PtenSelectedChamferWorse{}\%. Selected visible-failure risk changes only
+from \PtenAlwaysVisibleRisk{}\% to \PtenSelectedVisibleRisk{}\%, and its one-sided 95\% Wilson upper bound
+\PtenSelectedVisibleUpper{}\% remains above the always-repair point risk. Safe-visible AUROC is \PtenVisibleSafeAUROC{}, and
+abstention captures \PtenVisibleCapture{}\% of visible failures. Thus P4 controls its Chamfer target but does not
+confidence-separate visibility risk. Requiring no \textsc{complete} output and conjoining with P4 lowers visible failure to
+\PelevenDualVisibleRisk{}\% at \PelevenDualCoverage{}\% coverage, but Chamfer worsening rises to
+\PelevenDualChamferWorse{}\% and hazard coverage collapses to \PelevenDualHazardCoverage{}\%; observed provenance is therefore
+visibility evidence, not jointly valid repair authority.
+
+A dedicated nuScenes-only visibility head confirms this mismatch rather than solving it. Safe-visible AUROC is
+\PtwelveSourceSafeAUROC{} on source test and \PtwelveExternalSafeAUROC{} on AV2. Visibility-only selection reaches
+\PtwelveVisibilityRisk{}\% AV2 visible risk at \PtwelveVisibilityCoverage{}\% coverage; conjunction with P4 reaches
+\PtwelveDualVisibleRisk{}\% (95\% upper \PtwelveDualVisibleUpper{}\%) at \PtwelveDualCoverage{}\% coverage. Yet dual
+Chamfer-worsening is \PtwelveDualChamferWorse{}\% and hazard coverage is \PtwelveDualHazardCoverage{}\%. We reject the head:
+low target-specific risk obtained by losing geometry and hazardous Actors is not a safety authority.
 
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,

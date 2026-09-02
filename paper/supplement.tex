@@ -55,7 +55,7 @@ otherwise it is unmatched. In the reverse direction, an output point is supporte
 the observed free interval, occluded if it is behind the return, and unknown when off ray. Occluded and unknown points are not
 penalized as free-space violations, preventing unseen Actor backs from being conflated with measurable contradictions.
 
-\begin{table*}[t]
+\begin{table*}[!t]
 \centering
 \small
 \caption{Visibility-conditioned target-only evidence on consumed and independently frozen fresh AV2 cohorts. Higher
@@ -89,18 +89,25 @@ confirmation therefore strengthens pooled three-dimensional evidence while conti
 \paragraph{Frozen authority--certificate alignment.}
 An exact identity join to the frozen P4 decisions shows why abstention must name its target. At \PtenPfourCoverage{}\%
 coverage, selected Chamfer-worsening falls from \PtenAlwaysChamferWorse{}\% to \PtenSelectedChamferWorse{}\%, yet selected
-non-new-visible-violation is \PtenSelectedVisibleRisk{}\% versus \PtenAlwaysVisibleRisk{}\% for always-repair. Its one-sided
-95\% Wilson upper bound is \PtenSelectedVisibleUpper{}\%, safe-visible AUROC is \PtenVisibleSafeAUROC{}, and abstention captures
-only \PtenVisibleCapture{}\% of visible failures. This fixed negative audit preserves the intended semantics: P4 authorizes
-Chamfer-nonworsening repair; it does not certify bidirectional visibility consistency.
+visible-failure risk is \PtenSelectedVisibleRisk{}\% versus \PtenAlwaysVisibleRisk{}\% for always-repair. Its one-sided
+95\% Wilson upper bound is \PtenSelectedVisibleUpper{}\%, which remains above the baseline point risk; safe-visible AUROC is
+\PtenVisibleSafeAUROC{}, and abstention captures \PtenVisibleCapture{}\% of visible failures. P4 authorizes
+Chamfer-nonworsening repair but provides no finite-cohort confidence separation for bidirectional visibility.
 
 \paragraph{Why a stricter provenance rule fails.}
 If authority additionally requires zero \textsc{complete} outputs, every retained point has a \textsc{keep} or matched-hit
 \textsc{project} witness. Provenance-only coverage is \PelevenProvenanceCoverage{}\%; after conjunction with P4 it is
-\PelevenDualCoverage{}\%. Nevertheless, dual visible violation is \PelevenDualVisibleRisk{}\% (one-sided 95\% upper
-\PelevenDualVisibleUpper{}\%), Chamfer worsening is \PelevenDualChamferWorse{}\%, and hazardous-Actor coverage is only
-\PelevenDualHazardCoverage{}\%. Completion-count unsafe-visible AUROC is \PelevenCompletionUnsafeAUROC{}. Thus absence of
-completion is primarily a sparse-opportunity marker; a valid witness for observed output provenance cannot certify unseen views.
+\PelevenDualCoverage{}\%. Dual visible failure falls to \PelevenDualVisibleRisk{}\% (one-sided 95\% upper
+\PelevenDualVisibleUpper{}\%), but Chamfer worsening rises to \PelevenDualChamferWorse{}\% and hazardous-Actor coverage is only
+\PelevenDualHazardCoverage{}\%. Completion-count unsafe-visible AUROC is \PelevenCompletionUnsafeAUROC{}. Thus observed
+provenance improves one physical axis while failing joint geometry and hazard authority; it cannot certify unseen views.
+
+\paragraph{A targeted visibility head still fails joint authority.}
+A frozen nuScenes-only head reaches safe-visible AUROC \PtwelveSourceSafeAUROC{} on source test and
+\PtwelveExternalSafeAUROC{} on AV2. Visibility-only AV2 selection has \PtwelveVisibilityRisk{}\% risk at
+\PtwelveVisibilityCoverage{}\% coverage. Its P4 conjunction has \PtwelveDualVisibleRisk{}\% risk (95\% upper
+\PtwelveDualVisibleUpper{}\%) but only \PtwelveDualCoverage{}\% coverage, \PtwelveDualChamferWorse{}\% Chamfer worsening,
+and \PtwelveDualHazardCoverage{}\% hazard coverage. The ranking transfers; the authority does not.
 
 \section{Frozen Cohorts and Exact-Once Rules}
 
