@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P14 prevention note — aggregate composite改善不得掩盖hazard-stratum代价（2026-09-02）
+
+- P13 population risk/gain仍是hazard/clear mixture；Actor/hazard state保留100%不等于hazard stratum的visible risk降低。
+- P14只用exact identity把coverage、conditional outcome和stratum share展开，不训练新head、不扫policy或utility weight。
+- ICML 2022 subgroup selective-regression只提供“abstention可能放大分组退化”的方法警告；`hazardous`不是人口属性，
+  本审计不作fairness、collision、planning或现实安全声明。
+- CRC需要的风险控制/交换性不由本consumed AV2审计提供；禁止把identity residual为零写成distributional guarantee。
+- 只有与既有claim发生实质矛盾才登记`V7-F24`，否则保留descriptive boundary，不为凑编号造failure。
+
 ## P13 prevention note — abstention不是Actor删除，conditional risk不是population risk（2026-09-02）
 
 - P10--P12的selected risk条件在repair set上；实际policy对abstained Actors回退原query surface，不删除Actor或hazard。

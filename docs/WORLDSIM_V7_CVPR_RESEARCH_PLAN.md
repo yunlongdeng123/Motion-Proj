@@ -1,5 +1,16 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P14 hazard-stratified defer contract frozen
+
+P14冻结为P13完整fallback world的hazard/clear精确分层审计。对每个既有policy只计算两条有限样本恒等式：
+`composite gain=coverage*selected gain`，`introduced-visible mass=coverage*selected risk`，总体量再按stratum Actor
+占比加权。额外报告hazard failure burden与gain contribution，直接解释aggregate trade-off是否掩盖危险Actor代价。
+
+迁移NeurIPS 2018 learning-to-defer的完整系统视角、ICML 2019 selective risk--coverage与ICML 2022 subgroup
+selective-regression警告；不套用ICLR 2024 conformal risk control，因为不选阈值且不声明跨域exchangeability。
+只读P13 canonical JSONL，0 dataset/checkpoint/model/fit/calibration/threshold/policy search，0新增gate；下一failure保持
+`V7-F24`。冻结合同=`docs/autoresearch/worldsim_v7/P14_HAZARD_STRATIFIED_DEFER_FREEZE.md`。
+
 ## 2026-09-02 P13 defer-to-query composite world result
 
 Canonical=`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/

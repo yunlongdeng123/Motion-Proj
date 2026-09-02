@@ -1,5 +1,15 @@
 # Experiments
 
+## P14 hazard-stratified defer-to-query freeze（2026-09-02）
+
+- task/hypothesis：`WS-V7-P14-HAZARD-STRATIFIED-DEFER-01 / H-V7-P14`。
+- input：只读P13 canonical `COMPOSITE_POLICY_ROWS.jsonl`与`summary.json`；不读AV2/nuScenes raw或processed。
+- exact accounting：每个hazard/clear stratum报告`gain=coverage*selected gain`与
+  `introduced-visible=coverage*selected risk`，再以Actor share组成population结果。
+- explanation：报告hazard repair coverage、conditional visible risk、failure burden amplification及gain contribution；
+  `hazardous`仅为既有物理proxy，不外推collision/planning/road safety。
+- execution：一次CPU analytic run，0 fit/calibration/threshold/policy search，0新增gate；下一可用failure=`V7-F24`。
+
 ## P13 defer-to-query composite world result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/

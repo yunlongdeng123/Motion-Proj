@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 P14 hazard-stratified composite audit frozen（2026-09-02）
+
+状态=`p14_hazard_stratified_defer_frozen`。P13已证明conditional risk与fallback utility必须分开；P14进一步按冻结
+`hazardous/clear`拆解coverage、selected risk、introduced failure mass与composite Chamfer gain。核心不是新selector，
+而是两条exact finite-sample identity及hazard burden/gain share，防止aggregate改善掩盖危险Actor退化。
+
+文献迁移限定为SelectiveNet、learning-to-defer与ICML 2022 subgroup selective regression；CRC只作为未满足的正式
+保证边界，不做target calibration。输入仅P13 canonical产物；0 dataset/model/checkpoint/threshold/gate change，单卡资源
+足够且本阶段CPU-only。下一动作一次formal analytic run；下一failure=`V7-F24`。
+
 ## WorldSim V7 P13 defer-to-query composite frontier completed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/
