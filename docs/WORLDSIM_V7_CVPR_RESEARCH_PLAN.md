@@ -692,6 +692,19 @@ depth/ray 方向变差分别为 `271/253` Actors。故 P3 只支持 aggregate ze
 repair certificate。P4 必须把 validity head 改成 nuScenes-only selective repairability/risk--coverage，并保持 hazard 输入
 独立；AV2 未知 shift 下只做 zero-shot evaluation，不声称 conformal exchangeability guarantee。
 
+### P3-C visibility-conditioned ray certificate freeze（2026-09-02）
+
+- 为避免 Chamfer 把不可见背面补全与真实自由空间冲突混为一谈，冻结双向 observed-ray partition：target ray=
+  `early/hit/late/unmatched`；surface primitive=`contradicted/supported/occluded/UNKNOWN`。UNKNOWN 绝不并入 free/occupied。
+- 直接复用 P3 的 `.20m` ray lateral/depth tolerance 与 ray-certified observed-hit PROJECT，不扫 tolerance、metric weight、
+  operator 或 Actor subset。target仍只在 action完成后进入 evaluator。
+- 逐 Actor 报告相对 clean query 的新增 early count、新增 visible contradiction count、exact-zero contradiction、target-hit 与
+  visibility-F-score non-inferiority；`V7-F09` 的 Chamfer-worsened stratum必须完整单列，不能用 aggregate mean覆盖。
+- consumed 30 logs只作 descriptive implementation audit；fresh 20 recovery logs在任何新 visibility metric read 前已由
+  metadata冻结，下载完成后 exact-once confirmation。不得用 fresh 结果训练/校准/选 threshold/改 operator/换 scene。
+- 物理解释借鉴 NeuRAD 的显式 LiDAR ray/sensor model；DGLSS 的 source-only sparsity consistency与 3DLabelProp 的时序
+  几何只限定跨传感器边界。证书只覆盖 observed ray set，不证明不可见背面、collision/planning/closed-loop/road safety。
+
 ### 必须补齐的几何指标
 
 - free-space violation rate；

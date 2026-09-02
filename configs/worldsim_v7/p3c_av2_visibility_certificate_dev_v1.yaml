@@ -1,0 +1,22 @@
+task_id: WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV-01
+hypothesis_id: WS-V7-H-P3-003
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+cohort_config: configs/worldsim_v7/av2_zero_shot_cohort_v1.json
+cohort_roles: [quantitative, qualitative]
+expected_log_count: 30
+source_cohort_previously_consumed: true
+device: cuda
+verdict: descriptive_consumed_cohort_visibility_certificate
+claim_boundary: >-
+  A descriptive visibility-conditioned audit on the consumed 30-log AV2 cohort. Target-only
+  LiDAR rays partition output into observed-free contradiction, observed-hit support, and
+  occluded/off-ray UNKNOWN. UNKNOWN is never relabelled as free or occupied. The audit does
+  not select an operator, threshold, Actor, or scene and is not an independent confirmation,
+  rendering guarantee, collision certificate, planning result, closed-loop result, or road-safety guarantee.
+compiler_overrides:
+  projection_output: observed_lidar_hit
+visibility_certificate:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20

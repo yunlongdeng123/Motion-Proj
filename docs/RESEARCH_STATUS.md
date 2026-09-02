@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7 P3-C visibility-conditioned ray certificate frozen（2026-09-02）
+
+Active=`WS-V7-P3C-AV2-VISIBILITY-CERTIFICATE-DEV/FRESH-01 / WS-V7-H-P3-003`。针对用户要求的三维
+硬证据，已把 P3 的单一 Chamfer 分解为两组 target-only LiDAR 射线分区：target ray 的
+`early/hit/late/unmatched`，以及 surface primitive 的 `contradicted/supported/occluded/UNKNOWN`。后两类不会被偷换成
+free/occupied；Actor 证书直接报告相对 clean query 是否新增 early termination 或 visible free-space contradiction。
+
+定义完全复用 P3 已冻结的 `.20m` lateral/depth tolerance、ray-certified PROJECT 与 metadata cohort，不扫阈值、不训练
+模型。已消费 30 logs 只作 descriptive implementation audit；另一个配置在任何新 visibility metric read 前冻结到未消费的
+20-log recovery cohort，等待下载完成后 exact-once 执行。该证书只覆盖观测射线，不证明不可见背面、碰撞、规划、闭环或
+道路安全。NeuRAD 的显式 LiDAR ray/sensor modeling、DGLSS 的 source-only sparsity consistency 与 3DLabelProp 的时序几何
+共同限定迁移方向；下一步先提交冻结合同，再用空闲 3090 运行一次 consumed-cohort descriptive audit。
+
 ## WorldSim V7 official CVPR template provenance reverified（2026-09-02）
 
 只查官方 `cvpr-org/author-kit`：`refs/heads/main` 仍解析为已固定的

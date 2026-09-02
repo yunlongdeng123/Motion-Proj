@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V7-P3C visibility-conditioned ray certificate freeze（2026-09-02）
+
+- hypothesis：`WS-V7-H-P3-003`；不新增 repair model/operator，只增加 target-only 可证伪物理读数。
+- target-ray partition：`early/hit/late/unmatched`；surface partition：`contradicted/supported/occluded/UNKNOWN`；两分区均为
+  exact count identity，UNKNOWN 不并入 free/occupied。
+- physical reuse：P3 ray lateral/depth tolerance均固定 `.20m`，PROJECT 仍为 matched observed hit；无 tolerance/metric scan。
+- Actor report：相对 clean query 的 added early-return count、added visible contradiction count、exact-zero contradiction、
+  target-hit/visibility-F-score non-inferiority，并单列 Chamfer-worsened stratum，不能以 aggregate mean删除失败 Actor。
+- development：原 30-log cohort已被 P3 消费，只允许 descriptive audit，不称 independent confirmation。
+- fresh confirmation：metadata-frozen 20 recovery logs；当前 visibility metrics unread；下载完成后 exact-once，无 AV2 fit、
+  calibration、threshold selection、operator change、scene replacement或 failed-log deletion。
+- boundary：只证书化 observed ray set；occluded/off-ray保持 UNKNOWN，不主张完整物体真值、collision/planning/closed-loop/
+  road-safety guarantee。
+
 ## Official CVPR author-kit provenance recheck（2026-09-02）
 
 - official source：`https://github.com/cvpr-org/author-kit` only。

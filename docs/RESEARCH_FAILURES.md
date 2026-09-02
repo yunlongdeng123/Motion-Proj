@@ -2,6 +2,17 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### P3-C prevention note — visibility certificate 不把遮挡/未观测空间冒充自由空间
+
+- Chamfer 对不可见背面和实际可证伪的 early return 混为一个距离，不能单独承担三维物理 certificate；P3-C 不删除
+  `V7-F09` 的109个 Actor-level worsening，而是单列其 observed-ray contradiction状态。
+- target rays固定分为 early/hit/late/unmatched，surface固定分为 contradicted/supported/occluded/UNKNOWN；只有 observed
+  free-space contradiction可否定表面，occluded/off-ray 永远保持 UNKNOWN。
+- `.20m` lateral/depth tolerance沿用 P3，不根据30-log descriptive结果或fresh 20-log结果修改；fresh cohort不参与模型、
+  threshold、operator、Actor或scene选择。
+- 本项不把“无可见冲突”包装成完整表面正确、碰撞规避、规划、闭环或道路安全保证。当前为 preregistration/implementation
+  freeze，无新failure id；下一可用仍为 `V7-F18`。
+
 ### Official-template provenance note — pinned author kit仍为官方HEAD，无新failure
 
 - official GitHub `cvpr-org/author-kit` main HEAD仍是 pinned `2917585`，latest release仍为 CVPR2026；
