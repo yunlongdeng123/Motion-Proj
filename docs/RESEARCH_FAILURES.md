@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P15 paper audit — action attribution不得越界为action ablation（2026-09-02）
+
+- main/supp已同时陈述COMPLETE主导new early/new hit、KEEP主导surface contradiction，以及P4/P6-C未压低hazard
+  completion channel；不得只保留收益数字或aggregate hazard/clear ratio。
+- `nearest compiled output`只提供输出来源归属，不提供移除KEEP/PROJECT/COMPLETE后的反事实；论文已使用
+  `localizes/attributes`，禁止使用`causes/prevents`等action-ablation措辞。
+- PROJECT零计数的KEEP-first dedup解释已同时进入main、supp与limitations，禁止据此声明PROJECT零风险。
+- final main=`10 pages/1,771,543 bytes`（8 content + 2 references），supplement=`8 pages/7,228,331 bytes`；
+  main 7/supp 2视觉QA通过，仅既有Table 1 `6.03pt` non-clipping overfull。
+
 ## P15 result boundary — hazard early-return负担由COMPLETE主导，selector未过滤（2026-09-02）
 
 - canonical audit=`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01/

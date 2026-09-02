@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 CVPR paper integrated through P15（2026-09-02）
+
+P15 action attribution已进入Related Work、Experiments、Limitations、supplement、结果宏与contribution registry。论文明确
+区分nearest-output provenance与action intervention，并保留PROJECT被KEEP-first voxel dedup折叠的解释边界；不把
+`94.70%` COMPLETE new-early share写成因果消融或现实道路安全证明。
+
+TeX Live final compile：main=`10 pages/1,771,543 bytes`（8 content + 2 references），supplement=
+`8 pages/7,228,331 bytes`。main page 7与supplement page 2视觉QA无裁切、重叠、断表或不可读文本；仅保留既有
+Table 1 `6.03pt` non-clipping overfull。P15 paper integration完成，负结论与可解释边界均可从账本回溯。
+
 ## WorldSim V7 P15 fresh hazard-by-action mechanism completed（2026-09-02）
 
 Raw=`20260903T043000Z__fresh-hazard-action-raw-s0-r1`、audit=

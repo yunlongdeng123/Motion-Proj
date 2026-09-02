@@ -1,5 +1,13 @@
 # Experiments
 
+## P15 CVPR paper integration and QA（2026-09-02）
+
+- integrated：`paper/sections/02_related.tex`、`05_experiments.tex`、`06_limitations.tex`、
+  `paper/results/results_macros.tex`、`paper/supplement.tex`、`paper/CONTRIBUTION_MAP.md`与bibliography。
+- claim boundary：nearest-output provenance非action intervention；PROJECT=0为KEEP-first voxel dedup，不作causal/safety claim。
+- TeX Live：main=`10 pages/1,771,543 bytes`（8 content + 2 references），supplement=`8 pages/7,228,331 bytes`。
+- visual QA：main page 7、supplement page 2无裁切/重叠/断式；仅既有Table 1 `6.03pt` non-clipping overfull。
+
 ## P15 fresh hazard-by-action mechanism result（2026-09-02）
 
 - canonicals：raw=`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01/

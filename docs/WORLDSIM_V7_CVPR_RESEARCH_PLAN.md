@@ -1,5 +1,16 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P15 paper integration completed
+
+P15 fresh hazard-by-action mechanism已进入CVPR main/supplement、结果宏、bibliography与contribution map。Main将
+`COMPLETE=94.70% new early / 99.94% new hits`与`KEEP=95.68% contradictions`解释为两个并存的物理失败通道，
+并报告P4/P6-C hazard rate相对always=`1.0055x/1.0010x`，不再把aggregate修复包装为hazard-risk改善。
+
+Limitations固定nearest-output provenance非action counterfactual、PROJECT被KEEP-first voxel dedup折叠的边界。
+Final main=`10 pages/1,771,543 bytes`（8 content + 2 references），supplement=`8 pages/7,228,331 bytes`；main 7与
+supp 2视觉QA通过，唯一warning仍为既有Table 1 `6.03pt` overfull。P15全部完成，下一研究只接受能改变三维物理
+机制、独立跨域证据或安全边界的新信息，不继续同cohort无穷描述审计。
+
 ## 2026-09-02 P15 fresh hazard-by-action mechanism result
 
 Raw/audit canonical分别为`run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-ATTRIBUTION-01/
