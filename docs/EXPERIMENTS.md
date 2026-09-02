@@ -1,5 +1,14 @@
 # Experiments
 
+## One-sided first-return certificate formalization（2026-09-02）
+
+- statement：固定`r/epsilon/d*/tau/Q`，`S' subseteq S`蕴含`d_{S'}(r)>=d_S(r)`及`e_Q(S';r)<=e_Q(S;r)`；
+- proof：删除只缩小beam tube内可行正深度集合；`min(empty)=infinity`覆盖删空情形，固定阈值与query因子保持次序；
+- non-guarantees：projection/completion/motion、operator变化、unobserved collision、hit retention、symmetric Chamfer、
+  policy/road safety均不由命题保证；
+- compile：supplement=`10 pages/7,615,325 bytes`，Proposition/Proof完整位于page 3，无overfull/undefined引用；
+- no experiment：仅数学阐释和版式收敛，0 data/model/quality read，0结果或decision变化。
+
 ## Physical-simulation literature and page-budget audit（2026-09-02）
 
 - primary sources：CVF official UniSim（CVPR 2023）、LiDAR4D与DyNFL（CVPR 2024）论文页；只迁移任务边界和BibTeX元数据；

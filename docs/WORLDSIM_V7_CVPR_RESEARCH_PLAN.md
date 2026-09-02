@@ -1,5 +1,16 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 one-sided first-return certificate milestone
+
+在supplement中把P21边界从一句set-inclusion说明提升为可审计Proposition 1。固定ray、tube、target depth/tolerance和query
+surface后，`S' subseteq S`使beam内可行正深度集合只缩不增，故minimum positive depth不减，early与new-early相对固定
+query单调非增。证明显式处理空集为infinity。
+
+边界同时列出：PROJECT/COMPLETE/点移动不满足subset前提；ray/tolerance变化不是同一operator；hit retention、symmetric
+Chamfer、unobserved collision、policy与road safety均不受保证。Final supplement=`10 pages/7,615,325 bytes`，命题与
+proof完整位于page 3且无overfull/undefined引用；main不变。该里程碑只深化第1/3补强方向的解释，不复开方法或实验，
+下一failure=`V7-F30`。
+
 ## 2026-09-02 physical-simulation literature convergence milestone
 
 按“视觉/几何硬证据”补强方向，仅从CVF官方页加入三项最直接的对照：

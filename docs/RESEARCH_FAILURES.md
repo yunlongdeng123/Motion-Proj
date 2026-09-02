@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Certificate-layout note — formal proof without a hidden broader guarantee（2026-09-02）
+
+- 初版单行`e_Q`公式产生70.33pt overfull，改为aligned两行；Proposition最初跨page 2/3，随后整体移至page 3；
+- 两项均在本地提交前发现，final supplement无overfull/undefined引用，未缩字体、间距或删除non-guarantee；
+- 命题只能用于`S' subseteq S`的纯删除，不得外推到PROJECT/COMPLETE、collision-free、closed-loop或road safety；
+- 这是未发布的writing/layout recovery，0 scientific exposure，不消耗failure ID；下一可用仍为`V7-F30`。
+
 ## Literature-layout note — stronger positioning without losing the 8-page boundary（2026-09-02）
 
 - CVF官方UniSim/LiDAR4D/DyNFL只用于界定sensor realism与physical collision semantics，不得借引用扩大HARP-3D claim；

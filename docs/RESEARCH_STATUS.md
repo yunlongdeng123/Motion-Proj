@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 one-sided safety certificate formalized（2026-09-02）
+
+Supplement现在给出显式Proposition 1：固定ray、beam tube、target depth/tolerance与query surface时，若
+`S' subseteq S`，可行正深度集合收缩，因此`d_{S'}(r)>=d_S(r)`，early及相对固定query的new-early指标均不能增加。
+证明同时把适用域限制为纯删除；PROJECT/COMPLETE/点移动、ray或tolerance变化、unobserved collision query均在前提外，
+hit与双向Chamfer也无同向保证。
+
+形式化段落与证明集中排在supplement page 3；最终supplement=`10 pages/7,615,325 bytes`，无overfull或undefined
+citation/reference。Main保持`9 pages/1,926,602 bytes`和8页正文边界。0新实验、0 data/model read、0 policy/metric/
+threshold/cohort/verdict change；下一failure仍为`V7-F30`。
+
 ## WorldSim V7 physical-simulation literature boundary converged（2026-09-02）
 
 Related Work现以CVF官方论文页核对并补入CVPR 2023 UniSim、CVPR 2024 LiDAR4D与CVPR 2024 DyNFL。定位明确区分

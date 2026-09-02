@@ -150,10 +150,25 @@ d_S(r)=\min\{s>0:o+sv\in S_{\epsilon}\},\qquad \min\varnothing=\infty.
 \label{eq:supp-first-return}
 \end{equation}
 
-For any $S'\subseteq S$, Eq.~\ref{eq:supp-first-return} gives $d_{S'}(r)\ge d_S(r)$, so deletion cannot increase the early predicate or
-new-early relative to a fixed query. There is no corresponding guarantee for hits or symmetric Chamfer. Table~\ref{tab:supp-true-ray}
-shows exactly this boundary on the consumed nuScenes source-development cohort: all three frozen deletion policies reduce hazardous
-early returns, yet all pay surface utility. P19 is most efficient, removing \PtwentyPnineteenHazardRemoved{} hazardous events for
+\newpage
+\paragraph{Proposition 1 (one-sided deletion certificate).}
+Fix ray $r$, tube radius $\epsilon$, target depth $d^\star$, tolerance $\tau$, and query surface $Q$. If $S'\subseteq S$, then
+$d_{S'}(r)\ge d_S(r)$. Consequently, both the early indicator and new-early relative to $Q$ are non-increasing:
+\begin{equation}
+\begin{aligned}
+e_Q(S;r)&=\mathbf 1[d_S(r)<d^\star-\tau]\,\mathbf 1[d_Q(r)\ge d^\star-\tau],\\
+e_Q(S';r)&\le e_Q(S;r).
+\end{aligned}
+\end{equation}
+\emph{Proof.} The feasible positive depths in $S'$ are a subset of those in $S$; the minimum therefore cannot decrease, including
+the empty-set case $\min\varnothing=\infty$. Thresholding by the fixed $d^\star-\tau$ preserves the order, and the query factor is
+constant. \hfill$\square$
+
+The premise covers deletion only. Projection, completion, point motion, ray/tolerance changes, and unobserved collision queries lie
+outside it. Even under deletion, the sole point supporting a target-depth hit may be removed, while the two directed terms of
+symmetric Chamfer need not share a direction. Table~\ref{tab:supp-true-ray} shows this exact boundary on the consumed nuScenes
+source-development cohort: all three frozen deletion policies reduce hazardous early returns, yet all pay surface utility. P19 is
+most efficient, removing \PtwentyPnineteenHazardRemoved{} hazardous events for
 \PtwentyPnineteenHitsLost{} hits and \PtwentyPnineteenPenaltyMM{}\,mm mean Chamfer
 (\PtwentyPnineteenEventsPerHit{} events/hit; \PtwentyPnineteenEventsPerMM{} events/mm). These ratios are descriptive, not
 collision or road-safety guarantees.
