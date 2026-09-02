@@ -1,5 +1,16 @@
 # Experiments
 
+## P23 fresh AV2 literal first-return confirmation freeze（2026-09-02）
+
+- task/run：`WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01` /
+  `20260903T183000Z__fresh-av2-literal-first-return-s0-r1`；
+- cohort：`av2_evicomp_fresh_cohort_v1.json`的10个metadata-frozen logs；P23 freeze时quality unread、下载6/10；
+- comparator/operator：同一compile内target-nearest proxy vs minimum-positive-depth literal first return；lateral/depth
+  tolerance=`.20/.20m`，query/compiled同算子；
+- gates：all literal rate > proxy，hazard literal rate > proxy；只此两门，不门控provenance或ratio；
+- locks：P2 surface/PROJECT、cohort、log顺序、run ID、device、tolerance全锁；0 model/threshold/policy/fitting；
+- launch：仅10/10 `.complete`后单RTX3090 exact-once；不启动第二下载器或提前读取部分log。
+
 ## P22 CVPR claim-correction and figure handoff（2026-09-02）
 
 - numeric interface：新增P22 20 logs/523 Actors/1,435,391 rays、proxy/literal rates、`7.29x` hazard ratio、

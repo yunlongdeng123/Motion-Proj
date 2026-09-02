@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7 P23 fresh AV2 literal confirmation frozen（2026-09-02）
+
+状态=`waiting_for_10_of_10_downloads`；当前`.complete=6/10`，唯一下载器继续串行。P23在任何第三批quality/model output
+read前冻结：复用P2 compiler与P20/P22 minimum-positive-depth operator，对metadata-frozen 10 logs同时计算target-nearest
+proxy和literal first return。Run固定为
+`run://worldsim_v7/WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01/
+20260903T183000Z__fresh-av2-literal-first-return-s0-r1`。
+
+核心门仅all与hazard `literal_rate > proxy_rate`；provenance/hit比只描述。0 training/refit/threshold/tolerance/policy/cohort
+change，失败log不删；P23不能promote任何P16--P19方法。P22的consumed身份不变，P23提供独立exact-once metric
+confirmation。若门失败登记`V7-F30`，通过则下一failure仍为`V7-F30`。
+
 ## WorldSim V7 P22 paper claim correction integrated / QA complete（2026-09-02）
 
 P22已进入CVPR abstract/experiments/limitations/conclusion/supplement、结果宏、贡献图谱与project-page资产索引。原P3/P15

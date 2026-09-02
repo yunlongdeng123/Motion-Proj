@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P23 prevention note — prospective metric confirmation, not target reuse（2026-09-02）
+
+- 第三批10 logs在P22前已按metadata冻结，P23 freeze时quality/model output仍未读；允许一次新的prospective metric
+  confirmation，不回写P22 consumed verdict；
+- proxy与literal在同一compile、同一Actor/ray上计算；`.20m` lateral/depth tolerance、P2 surface与PROJECT不可变；
+- 只设all/hazard literal rate高于proxy两门；不得按结果换log、删失败log、扫tolerance、增加stratum门或重跑；
+- 无论结果都不得选择或promote P16/P17/P17R/P19/selector；只能确认或否定metric undercounting；
+- 两门任一失败登记`V7-F30`；全部通过则不消耗failure ID，下一可用仍为`V7-F30`。
+
 ## P22 paper correction outcome — proxy claim retired without hiding the metric failure（2026-09-02）
 
 - main/supplement现在逐处区分target-nearest proximity与literal minimum-positive-depth first return；P3/P15原数值保留为

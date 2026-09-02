@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P23 fresh AV2 literal first-return confirmation frozen
+
+P22已消费AV2不能提供独立确认；按CVPR 2024/2025 evidential occupancy的raw-ray/UNKNOWN评测边界，P23在第三批
+10-log cohort仍quality-unread时prospectively冻结一次exact-once metric confirmation。它复用P2 compiler、observed-hit
+PROJECT与`.20m` lateral/depth tolerance，在同一compile计算target-nearest proxy和minimum-positive-depth literal first return。
+
+核心只检查all/hazard两层`literal > proxy`；action provenance与hit/early ratio只描述，不加门。P23不训练、不调
+model/threshold/tolerance/policy、不替换失败log，也不promote已关闭方法族。下载当前6/10；仅10/10 `.complete`后由
+单RTX3090执行固定run `20260903T183000Z__fresh-av2-literal-first-return-s0-r1`，不读取部分payload。
+
 ## 2026-09-02 P22 CVPR claim correction and cross-sensor boundary integrated
 
 P22 paper handoff完成：摘要与正文以source `8.742%`、consumed AV2 `13.926%` hazard literal exposure为硬证据，

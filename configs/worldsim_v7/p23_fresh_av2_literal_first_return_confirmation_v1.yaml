@@ -1,0 +1,26 @@
+task_id: WS-V7-P23-FRESH-AV2-FIRST-RETURN-CONFIRMATION-01
+hypothesis_id: H-V7-P23
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+cohort_config: configs/worldsim_v7/av2_evicomp_fresh_cohort_v1.json
+cohort_roles: [fresh_evicomp_confirmation]
+expected_log_count: 10
+download_state_dir: /root/autodl-tmp/data/av2/v7_p16_download_state
+device: cuda
+confirmation_failure_id: V7-F30
+claim_boundary: >-
+  Exact-once confirmation of target-nearest proxy undercounting using ten AV2
+  Sensor-val logs frozen by metadata before P22 and unread when P23 was frozen.
+  Query, compiler, surface, projection, 0.20 m lateral tolerance, and 0.20 m
+  depth tolerance are unchanged. The read can confirm a measurement failure and
+  completion provenance across a disjoint external cohort; it cannot select a
+  model, threshold, tolerance, completion policy, collision rule, or safety claim.
+compiler_overrides:
+  projection_output: observed_lidar_hit
+attribution:
+  distance_chunk_size: 1024
+  ray_lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20
+confirmation_gates:
+  literal_total_rate_gt_proxy: true
+  literal_hazard_rate_gt_proxy: true
