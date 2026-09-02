@@ -1,5 +1,18 @@
 # Experiments
 
+## P10 frozen physical-authority audit result（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
+  20260902T234500Z__physical-authority-s0-r1` / `done`；20 logs、523 exact-joined Actors。
+- P4 selected/coverage=`404/77.25%`；visible violation always/selected/abstained=`62.72/63.61/59.66%`；selected one-sided
+  95% Wilson upper=`67.45%`；safe-visible AUROC=`.467`、AURC=`.640`、abstention capture=`21.65%`。
+- Chamfer-worsening always/selected/abstained=`19.50/14.60/36.13%`，Chamfer-nonworse AUROC=`.655`；hazard/nonhazard
+  coverage=`93.66/71.13%`。
+- gates=`false/false/true`，verdict=`p4_not_a_physical_safety_certificate`，登记`V7-F20`。P6-C context呈同一
+  visible separation failure；不用于覆盖P4 verdict。0 recovery或threshold scan。
+- paper integration/QA：main=`9 pages/1,761,273 bytes`、supplement=`8 pages/7,223,706 bytes`；main 6/8/9与supp
+  1/7/8视觉无裁切/重叠/断页，唯一warning为既有Table 1 `6.03pt` overfull。下一可用=`V7-F21`。
+
 ## P10 frozen physical-authority audit pre-execution contract（2026-09-02）
 
 - inputs：P3-C fresh `ACTOR_VISIBILITY_CERTIFICATES.jsonl` + P6-C fresh `FRESH_AV2_SCORES.jsonl`，exact

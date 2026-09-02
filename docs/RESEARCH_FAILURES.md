@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7-F20 — nuScenes-trained repair authority不能隔离fresh AV2 visible physical violations
+
+- canonical：`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
+  20260902T234500Z__physical-authority-s0-r1`；523 Actors/20 logs exact frozen join、status=`done`。
+- symptom：P4 selected visible violation=`257/404=63.61%`，高于always-repair `328/523=62.72%`；one-sided 95%
+  Wilson upper=`67.45%`，safe-visible AUROC=`.467`，abstention只捕获`21.65%` visible failures。
+- retained positive：selected Chamfer-worsening=`14.60%`低于always `19.50%`，Chamfer-nonworse AUROC=`.655`；说明
+  P4学到了冻结target Chamfer repairability，但这个label不是bidirectional visibility consistency。
+- boundary：structural hazard separation、cross-domain repair AUROC或local score stability均不能升级为physical
+  certificate。P6-C在同一join也有selected visible risk=`63.33%`、safe AUROC=`.463`，不能作为recovery。
+- resolution：保留P4 primary与P3-C visible certificate为两个独立authority objects；不在该cohort refit/recalibrate/
+  scan threshold或删case。负边界已进入main/supplement/macros/contribution map；main=`9 pages/1,761,273 bytes`、
+  supplement=`8 pages/7,223,706 bytes`且目标页视觉QA通过，未用排版删除negative result。下一可用failure id=`V7-F21`。
+
 ## WorldSim V7 P10 prevention note — validity score不得先验称为物理certificate（2026-09-02）
 
 - P4训练目标是nuScenes repairability，并非fresh AV2的bidirectional visible-ray certificate；零结构leakage或高

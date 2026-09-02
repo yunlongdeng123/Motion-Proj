@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7 P10 proves repair authority is not a visibility certificate（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
+20260902T234500Z__physical-authority-s0-r1`；20 fresh AV2 logs、523 Actors exact join、status=`done`。P4 selected=
+404/523=`77.25%`。Chamfer-worsening从always `19.50%`降到selected `14.60%`，但nonnew-visible violation从
+always `62.72%`变为selected `63.61%`，selected一侧95% Wilson upper=`67.45%`，safe-visible AUROC=`.467`，
+abstention只捕获`21.65%` visible failures。三项冻结门仅Chamfer通过。
+
+Verdict=`p4_not_a_physical_safety_certificate`，登记`V7-F20`。这不否定P4原Chamfer-target repair-or-abstain结果，
+而是把authority target解释清楚：validity score不能替代bidirectional physical certificate。0 training、0 target reread、
+0 refit/recalibration/threshold scan/recovery。结果已进入main/supplement/macros/contribution map；TeX Live main=
+`9 pages/1,761,273 bytes`（pages 1--8 content、page 9 references-only），supplement=`8 pages/7,223,706 bytes`。
+Main pages 6/8/9与supplement pages 1/7/8视觉QA通过；唯一warning仍为既有Table 1 `6.03pt` non-clipping overfull。
+下一failure id=`V7-F21`。
+
 ## WorldSim V7 P10 frozen physical-authority audit contract（2026-09-02）
 
 下一项已冻结为P10：exact join P3-C fresh visibility与P6-C fresh score的523 Actors，只用已产生的JSONL，不重读

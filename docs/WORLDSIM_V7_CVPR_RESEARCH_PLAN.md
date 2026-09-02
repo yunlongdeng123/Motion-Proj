@@ -1,5 +1,17 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P10 frozen physical-authority audit result
+
+Canonical=`run://worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/
+20260902T234500Z__physical-authority-s0-r1`。523 fresh AV2 Actors上，P4 coverage=`77.25%`并把Chamfer-worsening从
+`19.50%`降到`14.60%`；但selected visible violation=`63.61%`高于always=`62.72%`，95% upper=`67.45%`，
+safe-visible AUROC=`.467`，capture=`21.65%`。三门=`fail/fail/pass`，登记`V7-F20`并禁止本cohort recovery。
+
+论文主张据此收窄：P4只授予frozen Chamfer-nonworsening repair authority，P3-C才定义bidirectional visibility evidence；
+两者不能互相替代。结果已进入main/supplement/macros/contribution map；main=`9 pages/1,761,273 bytes`、supplement=
+`8 pages/7,223,706 bytes`，main 6/8/9与supp 1/7/8视觉QA通过。0 training、0 target reread/refit/recalibration/
+threshold change；下一failure id=`V7-F21`。
+
 ## 2026-09-02 P10 frozen physical-authority audit contract
 
 为把三维硬证据与可解释安全边界直接连接，P10只join冻结P3-C fresh visibility与P6-C/P4 fresh scores，不训练、
