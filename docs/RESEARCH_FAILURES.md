@@ -2,6 +2,23 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### V7-F17 — 跨域 feature-box 稳健性没有排除稳定的错误修复
+
+- run：`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`；
+  frozen P4 network/threshold、FP64 interval propagation、target-independent certificate state。
+- symptom：`.10` train-std all-feature box 下，consumed AV2 的 479 个 nominal-selected Actors 有 437 个仍 robust-select，
+  但其中 47 个 target false repair（`10.76%`）；nuScenes test 仅 `3/9` nominal decisions robust-select 且 0 false repair。
+- interpretation：AV2 score saturation 不只是 threshold 附近脆弱性；错误决定可在较宽 feature box 内稳定。网络的局部
+  threshold invariance不能推出表面修复正确、domain calibration、collision avoidance 或 road safety。
+- mechanism：`.10` sensor-opportunity box 的 mean logit width 在 test/AV2=`1.5496/1.2850`，均高于 physical-surface
+  `1.1329/.9836`；`log_query_points` 是 test `190/228`、AV2 `603/634` 的 top-1 interval-width feature，与 P7 的
+  observation-opportunity attribution相互印证。
+- resolution：保留 P4 的 empirical risk--coverage/geometry结果，但论文新增“stable decision != correct repair”边界；不把
+  IBP state作为新 safety gate，不据此删 Actor、调 threshold/radius/group、适配 AV2 或改 P6-C fresh protocol。
+- claim impact：可主张逐 Actor deterministic network-decision interval与机会特征解释；不可主张 physical/sensor/safety certificate。
+
+下一可用编号：`V7-F18`。
+
 ### P7-C prevention note — feature-box certificate 不越权为现实安全保证
 
 - P7-C 的 `.05/.10/.20` 是 nuScenes-train standardized stress radii，不来自 AV2/nuScenes sensor-noise calibration；禁止
@@ -9,7 +26,7 @@
 - `robust_select` 只表示 frozen P4 network score 在整个 box 内保持高于 frozen threshold；错误且稳定的网络决策仍可能是
   target false repair，因此 retained target failure 必须单独报告。
 - feature groups、radii、threshold 与 explanation radius 在结果读取前冻结；fresh AV2 recovery rows不读，不以 consumed
-  AV2 target反向调 box。无新 failure id，下一可用编号仍为 `V7-F17`。
+  AV2 target反向调 box。正式结果随后登记 `V7-F17`；下一可用编号为 `V7-F18`。
 
 ### Paper layout note — P9 后第 8 页仅 references continuation
 

@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V7-P7C validity interval certificate result（2026-09-02）
+
+- canonical：`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`。
+- audit：nuScenes calibration/test/consumed AV2=`56/228/634` Actors；threshold probability/logit=
+  `.9994364381/7.480670`；FP64 nominal containment error=`0`。
+- all-feature `.05/.10/.20` robust-select counts：nuScenes test=`6/3/0`（nominal selected=`9`）；AV2=
+  `449/437/393`（nominal selected=`479`）。`.10` unresolved=`21/89`。
+- `.10` robust-select retained target failures：nuScenes test=`0/3`；AV2=`47/437=10.76%`。Feature-box stability therefore
+  does not certify repair correctness under domain shift。
+- `.10` sensor-opportunity vs physical-surface mean logit width：nuScenes test=`1.5496/1.1329`；AV2=`1.2850/.9836`。
+- top-1 one-feature interval width：`log_query_points` dominates nuScenes test `190/228` and AV2 `603/634` Actors；AV2
+  top-3 also frequently includes `completion_candidate_fraction` (`590/634`) and `view_support_mean` (`432/634`)。
+- outputs：988KiB run；`ACTOR_INTERVAL_CERTIFICATES.jsonl`、PNG/PDF、summary/status。RTX 3090 peak GPU=
+  `.0092GiB`，RSS=`.7620GiB`，wall=`1.37s`；fresh AV2 rows=`0`。
+- verdict=`descriptive_frozen_validity_interval_certificate`；scientific boundary=`V7-F17`。
+
 ## WS-V7-P7C validity interval certificate freeze（2026-09-02）
 
 - source：P4 canonical `MODEL.pt`、nuScenes calibration/test rows 与 consumed 30-log AV2 rows；fresh recovery cohort完全不读。

@@ -1031,6 +1031,13 @@ standardizer、threshold不变；在 nuScenes-train standardized feature space �
 network threshold decision 是否对指定 feature box 稳定，不等于几何正确、跨域 exchangeability、collision/planning/
 closed-loop 或道路安全保证。
 
+P7-C canonical=`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`。
+`.10` all-feature box 下，nuScenes test nominal/robust-select=`9/3`，AV2=`479/437`；但 AV2 robust-select 仍含
+`47/437=10.76%` target false repair，登记 `V7-F17`。Sensor-opportunity group 的 mean logit width 在 test/AV2=
+`1.5496/1.2850`，高于 physical-surface `1.1329/.9836`；`log_query_points` 为 test `190/228`、AV2 `603/634`
+Actors 的 top-1 sensitivity。该结果只支持 deterministic network-decision interval与可解释 failure localization，明确否定
+“stable decision即correct/safe repair”。
+
 ---
 
 ## V7-P8：Final exact-once evaluation

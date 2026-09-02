@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7 P7-C validity interval certificate completed / stable-error boundary（2026-09-02）
+
+Canonical=`run://worldsim_v7/WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01/20260902T220000Z__validity-interval-s0-r1`。
+FP64 layerwise IBP 对 calibration/test/consumed-AV2=`56/228/634` Actors 的 nominal-logit containment error=`0`；frozen
+threshold=`.999436`（logit=`7.48067`），model/threshold/target-independent state 均未改变。
+
+在 `.10` train-std all-feature box，nuScenes test nominal selected=`9`，robust-select=`3`（nominal retention=`33.33%`）、
+unresolved=`21`；consumed AV2 nominal selected=`479`，robust-select=`437`（retention=`91.23%`）、unresolved=`89`。
+但 AV2 robust-select 中仍有 `47/437=10.76%` target false repairs，而 nuScenes test 为 `0/3`。因此“network decision
+stable”不等于“repair correct”，跨域 saturation 可把错误决定也稳定锁定，登记 `V7-F17`。
+
+`.10` box 的 sensor-opportunity/physical-surface mean logit width 在 nuScenes test=`1.5496/1.1329`、AV2=
+`1.2850/.9836`；逐 Actor top-1 区间宽度由 `log_query_points` 主导：nuScenes test `190/228`、AV2 `603/634`。
+All-feature robust coverage 在 `.05/.10/.20` 上为 nuScenes test `2.63/1.32/0%`、AV2 `70.82/68.93/61.99%`。
+该结果把 P7 的 opportunity shortcut 从平均 IG 推进到逐 Actor deterministic decision interval，但不是 calibrated sensor
+noise 或 geometry/safety certificate。RTX 3090 peak GPU/RSS=`.0092/.7620GiB`，wall=`1.37s`；fresh AV2 未读。
+
 ## WorldSim V7 P7-C frozen validity interval certificate（2026-09-02）
 
 Active=`WS-V7-P7C-VALIDITY-INTERVAL-CERTIFICATE-01 / WS-V7-H-P7-003`。针对用户要求的“可解释性与安全边界”，
