@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7 P22 paper claim correction integrated / QA complete（2026-09-02）
+
+P22已进入CVPR abstract/experiments/limitations/conclusion/supplement、结果宏、贡献图谱与project-page资产索引。原P3/P15
+early/hit数统一降格为`target-nearest proximity proxy`；literal first return只由P20/P22拥有，P21只拥有set-deletion
+monotonicity theorem。主文明确报告source hazard=`8.742%`、AV2 hazard=`13.926%`及AV2 `7.29x`低估；补充图同时
+展示source与AV2 proxy→literal纠偏及冻结source deletion frontier。
+
+TeX Live最终main=`9 pages/1,779,519 bytes`（8页正文+第9页纯references），supplement=`10 pages/7,377,015 bytes`。
+undefined citation/reference=`0`；主文第8/9页、supplement第4/5页视觉QA无裁切、重叠或断表；仅既有Table 1
+`6.03pt` non-clipping overfull。未新增scientific failure，下一可用ID保持`V7-F30`。
+
+第三批冻结AV2下载检查点=`4/10`，当前log=`72cf3ca1-1a9e-3254-bca0-29c62521e454`；唯一PID `52119`存活、
+无error/retry，`/root/autodl-tmp`约`103GiB`可用。payload保持未读且未启动第二下载器。
+
 ## WorldSim V7 P22 AV2 literal first-return correction completed（2026-09-02）
 
 Canonical=`run://worldsim_v7/WS-V7-P22-AV2-TRUE-FIRST-RETURN-CORRECTION-01/

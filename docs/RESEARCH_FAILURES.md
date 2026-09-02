@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P22 paper correction outcome — proxy claim retired without hiding the metric failure（2026-09-02）
+
+- main/supplement现在逐处区分target-nearest proximity与literal minimum-positive-depth first return；P3/P15原数值保留为
+  proxy diagnostic，不再承担first-return、visibility certificate或高hit/early物理效用论证；
+- P20/P22拥有source/consumed-AV2 literal measurement，P21只拥有deletion early单调性；图表显式展示source约6倍与
+  AV2约7.3倍低估，不把外域已消费纠偏包装成fresh transfer；
+- AV2 literal hit/early=`1.194`且142,022 new-early全部来自COMPLETE，原proxy `14.51`叙事已撤回；
+- 论文仍为8页正文，第9页纯references；supplement扩为10页，无undefined citation/reference或视觉裁切；
+- 这是claim/metric语义修复，不新增scientific failure；禁止用P22选择deletion/tolerance/policy，下一ID仍为`V7-F30`。
+
 ## P22 outcome note — AV2 confirms proxy failure; paper claim correction required（2026-09-02）
 
 - canonical P22把AV2 all/hazard/clear new-early从proxy `1.348/1.912/.980%`纠正为literal

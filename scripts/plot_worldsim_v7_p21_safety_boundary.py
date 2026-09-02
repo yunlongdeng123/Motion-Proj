@@ -1,4 +1,4 @@
-"""Render the frozen P20/P21 literal first-return boundary for the paper."""
+"""Render the frozen P20/P21/P22 literal first-return boundary for the paper."""
 
 from __future__ import annotations
 
@@ -30,12 +30,14 @@ def _read_json(path: Path) -> dict[str, Any]:
 def render(
     p20_summary: Path,
     p21_summary: Path,
+    p22_summary: Path,
     output_stem: Path,
     legacy_total_percent: float,
     legacy_hazard_percent: float,
 ) -> None:
     p20 = _read_json(p20_summary)
     p21 = _read_json(p21_summary)
+    p22 = _read_json(p22_summary)
     baseline = p20["policies"]["p17"]
     literal_total = 100.0 * float(baseline["baseline"]["new_early_rate"])
     literal_hazard = 100.0 * float(baseline["hazard"]["baseline"]["new_early_rate"])
@@ -43,10 +45,26 @@ def render(
     figure, axes = plt.subplots(1, 2, figsize=(9.2, 3.05))
     figure.patch.set_facecolor("white")
 
-    groups = np.arange(2)
+    groups = np.arange(4)
     width = 0.32
-    proxy = np.asarray([legacy_total_percent, legacy_hazard_percent])
-    literal = np.asarray([literal_total, literal_hazard])
+    p22_all = p22["proxy_vs_literal"]["all"]
+    p22_hazard = p22["proxy_vs_literal"]["hazard"]
+    proxy = np.asarray(
+        [
+            legacy_total_percent,
+            legacy_hazard_percent,
+            100.0 * float(p22_all["proxy_new_early_rate"]),
+            100.0 * float(p22_hazard["proxy_new_early_rate"]),
+        ]
+    )
+    literal = np.asarray(
+        [
+            literal_total,
+            literal_hazard,
+            100.0 * float(p22_all["literal_new_early_rate"]),
+            100.0 * float(p22_hazard["literal_new_early_rate"]),
+        ]
+    )
     left = axes[0]
     left.bar(groups - width / 2, proxy, width, color=COLORS["proxy"], label="Target-nearest proxy")
     left.bar(groups + width / 2, literal, width, color=COLORS["literal"], label="Literal first return")
@@ -65,10 +83,10 @@ def render(
             fontweight="bold",
             color="#991b1b",
         )
-    left.set_xticks(groups, ["All Actor rays", "Hazardous-Actor rays"])
+    left.set_xticks(groups, ["Source\nall", "Source\nhazard", "AV2\nall", "AV2\nhazard"])
     left.set_ylabel("New-early returns (%)")
     left.set_ylim(0.0, max(literal) * 1.28)
-    left.set_title("(a) Proxy underestimates exposure", loc="left", fontweight="bold")
+    left.set_title("(a) Proxy underestimates across sensors", loc="left", fontweight="bold")
     left.grid(axis="y", alpha=0.22, linewidth=0.7)
     left.legend(frameon=False, fontsize=7.5, loc="upper left")
 
@@ -145,6 +163,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--p20-summary", type=Path, required=True)
     parser.add_argument("--p21-summary", type=Path, required=True)
+    parser.add_argument("--p22-summary", type=Path, required=True)
     parser.add_argument("--output-stem", type=Path, required=True)
     parser.add_argument("--legacy-total-percent", type=float, required=True)
     parser.add_argument("--legacy-hazard-percent", type=float, required=True)
@@ -152,6 +171,7 @@ def main() -> None:
     render(
         args.p20_summary,
         args.p21_summary,
+        args.p22_summary,
         args.output_stem,
         args.legacy_total_percent,
         args.legacy_hazard_percent,

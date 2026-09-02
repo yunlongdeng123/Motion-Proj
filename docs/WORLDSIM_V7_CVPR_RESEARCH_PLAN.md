@@ -1,5 +1,18 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P22 CVPR claim correction and cross-sensor boundary integrated
+
+P22 paper handoff完成：摘要与正文以source `8.742%`、consumed AV2 `13.926%` hazard literal exposure为硬证据，
+明确AV2 target-nearest proxy低估`7.29x`。P3/P15只保留proximity/action-attribution ownership；P20/P22拥有literal
+measurement，P21拥有exact deletion monotonicity及其hit/Chamfer/road-safety非保证边界。
+
+Supplement Figure 1现同时显示source/AV2 proxy→literal与source deletion frontier；所有数字由结果宏指向冻结summary。
+Final main=8 content pages + 1 references page（1,779,519 bytes），supplement=10 pages（7,377,015 bytes）；关键页视觉
+QA与引用检查通过。停止条件不变：不再扩展已失败deletion/router/head族，不以P22消费数据调policy/tolerance。
+
+第三批10-log AV2继续由唯一下载器串行下载，当前4/10、约103GiB剩余、无error/retry；在没有冻结source-passing
+candidate前保持payload unread。后续auto-research只允许聚焦fresh external evidence、现有边界的论文深化或合法纠错。
+
 ## 2026-09-02 P22 AV2 literal first-return correction completed
 
 P22 canonical在523 Actors/1,435,391 rays上把all/hazard/clear new-early从proxy

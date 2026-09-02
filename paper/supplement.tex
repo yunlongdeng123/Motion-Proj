@@ -58,7 +58,7 @@ penalized as free-space violations, preventing unseen Actor backs from being con
 \begin{table*}[!t]
 \centering
 \small
-\caption{Visibility-conditioned target-only evidence on consumed and independently frozen fresh AV2 cohorts. Higher
+\caption{Target-nearest proximity evidence on consumed and independently frozen fresh AV2 cohorts. Higher
 hit/precision/F-score is better; lower early termination is better. Each audit was frozen before its metrics were read.}
 \begin{tabular}{lrrrr}
 \toprule
@@ -127,11 +127,11 @@ and \PfourteenPfourHazardGainShare{}\% of its Chamfer gain. P4 hazard risk is \P
 zero observed hazardous failure covers only \PfourteenDualHazardCoverage{}\% of hazardous Actors. Thus hazard-state retention
 is not a hazard-stratum visibility certificate.
 
-\paragraph{Fresh action provenance separates two failure channels.}
-Across \PfifteenFreshRays{} target rays, the compiled surface adds \PfifteenNewEarlyRate{}\% new early returns and yields
-\PfifteenNewHitEarlyRatio{} new hits per new early return. COMPLETE accounts for \PfifteenCompleteNewEarlyShare{}\% of new
-early returns and \PfifteenCompleteNewHitShare{}\% of new hits, whereas KEEP accounts for
-\PfifteenKeepContradictionShare{}\% of emitted-surface contradictions. Hazardous/clear new-early rates are
+\paragraph{Fresh target-nearest action provenance separates two failure channels.}
+Across \PfifteenFreshRays{} target rays, the compiled surface adds \PfifteenNewEarlyRate{}\% proxy new-early returns and yields
+\PfifteenNewHitEarlyRatio{} proxy new hits per proxy new-early return. COMPLETE accounts for \PfifteenCompleteNewEarlyShare{}\% of proxy new
+early returns and \PfifteenCompleteNewHitShare{}\% of proxy new hits, whereas KEEP accounts for
+\PfifteenKeepContradictionShare{}\% of emitted-surface contradictions. Hazardous/clear proxy new-early rates are
 \PfifteenHazardNewEarlyRate{}\%/\PfifteenClearNewEarlyRate{}\%; their COMPLETE hit-to-early ratios are
 \PfifteenHazardCompleteHitEarly{}/\PfifteenClearCompleteHitEarly{}. P4 and P6-C hazardous rates remain
 \PfifteenPfourHazardVsAlways{}$\times$/\PfifteenPsixHazardVsAlways{}$\times$ always-repair. Thus the selectors do not
@@ -142,7 +142,7 @@ collapse under KEEP-first voxel deduplication; this is not a causal zero-effect 
 
 The frozen AV2 attribution above selects the Euclidean-nearest output to each target point and then checks its projected depth. It
 is a target-aligned proximity diagnostic, not literal ray termination. Following raw-LiDAR occupancy evaluation
-~\cite{kalble2024accurate}, P20 instead takes the minimum positive projected depth among every surface point inside the same frozen
+~\cite{kalble2024accurate}, P20/P22 instead take the minimum positive projected depth among every surface point inside the same frozen
 beam tube. Query and compiled surfaces use the identical operator.
 
 \begin{equation}
@@ -158,13 +158,22 @@ early returns, yet all pay surface utility. P19 is most efficient, removing \Ptw
 (\PtwentyPnineteenEventsPerHit{} events/hit; \PtwentyPnineteenEventsPerMM{} events/mm). These ratios are descriptive, not
 collision or road-safety guarantees.
 
+P22 applies the identical frozen operator to the already consumed AV2 cohort rather than relabeling the proxy. Across
+\PtwentytwoActors{} Actors and \PtwentytwoRays{} target rays, all/hazard/clear new-early rates change from
+\PtwentytwoProxyTotalEarly{}/\PtwentytwoProxyHazardEarly{}/\PtwentytwoProxyClearEarly{}\% to
+\PtwentytwoTrueTotalEarly{}/\PtwentytwoTrueHazardEarly{}/\PtwentytwoTrueClearEarly{}\%, or
+\PtwentytwoTotalRatio{}/\PtwentytwoHazardRatio{}/\PtwentytwoClearRatio{}$\times$. Every one of the
+\PtwentytwoTrueNewEarly{} literal new-early returns has \textsc{complete} provenance; completion also supplies
+\PtwentytwoCompleteNewHitShare{}\% of literal new hits, yielding only \PtwentytwoHitEarlyRatio{} hits per early return.
+This corrects, rather than confirms, the larger target-nearest efficiency ratio reported above.
+
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.96\textwidth]{figures/supplement/p21_first_return_boundary.png}
 \caption{Frozen literal first-return boundary. (a) The target-nearest proxy understates total and hazardous-Actor
-new-early exposure by about sixfold. (b) Deleting points is directionally safe for early returns, but every frozen policy
+new-early exposure on both source and AV2. (b) Deleting points is directionally safe for early returns, but every frozen source policy
 loses matched hits and worsens Chamfer. Bubble area scales with the Chamfer penalty. Ratios are consumed-source
-diagnostics, not transfer or road-safety bounds.}
+or consumed-AV2 diagnostics, not fresh transfer or road-safety bounds.}
 \label{fig:supp-first-return-boundary}
 \end{figure*}
 

@@ -61,7 +61,7 @@ zero-shot geometry, not a per-Actor repair certificate; this motivates a selecti
 and calibrated only on nuScenes.
 
 \paragraph{Visibility-conditioned physical evidence.}
-We further partition target-only LiDAR evidence into early termination, matched hit, late return, and unmatched ray; reverse
+We further partition target-only LiDAR evidence with a target-nearest proximity operator into early, matched hit, late, and unmatched; reverse
 surface evidence is supported, contradicted by observed free space, occluded, or off-ray unknown. Unknown is never counted as
 free. On all \PthreeCActors{} Actors, query-to-compiled hit recall rises from \PthreeCQueryHit{}\% to
 \PthreeCCompiledHit{}\%, early termination falls from \PthreeCQueryEarly{}\% to \PthreeCCompiledEarly{}\%, and visible-surface
@@ -74,7 +74,8 @@ violation. An independent 20-log read reproduces hit
 violation and \PthreeFreshChamferWorse{}\% worsen in Chamfer. Provenance attribution explains the trade-off: completion supplies \PthreeDCompletionNewEarly{}\% of new early rays
 but \PthreeDCompletionGain{} new hits per such ray, while only \PthreeDCompletionContradiction{}\% of contradicted output points
 come from completion. We therefore retain the net \PthreeDNetEarlyReduction{}-ray reduction, reject a universal certificate,
-and route Actor-level authority through abstention rather than delete completion.
+and route Actor-level authority through abstention rather than delete completion. These frozen values localize errors around each
+target return; they are not literal first-return rates, which are audited below over every candidate surface point in the beam tube.
 
 \paragraph{nuScenes-to-AV2 selective factorization.}
 The strict multi-frame surface contract yields 29/56/\PfourNuActors{} Actors for nuScenes train/calibration/test; we retain the
@@ -158,7 +159,7 @@ P4 selected visible risk is \PfourteenPfourHazardRisk{}\%/\PfourteenPfourClearRi
 \PfourteenAlwaysHazardRisk{}\%/\PfourteenAlwaysClearRisk{}\% under always-repair. Only
 \PfourteenPfourHazardFailureReduction{} of its 48 removed failures are hazardous, yet they carry
 \PfourteenPfourHazardFailureShare{}\% of introduced failures and \PfourteenPfourHazardGainShare{}\% of gain. Fresh
-action attribution localizes the mismatch: hazardous/clear new-early target-ray rates are
+target-nearest action attribution localizes the mismatch: hazardous/clear proxy new-early rates are
 \PfifteenHazardNewEarlyRate{}\%/\PfifteenClearNewEarlyRate{}\% (\PfifteenHazardClearRatio{}$\times$); COMPLETE causes
 \PfifteenCompleteNewEarlyShare{}\% of new early returns and \PfifteenCompleteNewHitShare{}\% of new hits, whereas KEEP causes
 \PfifteenKeepContradictionShare{}\% of surface contradictions. P4's hazardous rate is \PfifteenPfourHazardNewEarlyRate{}\%
@@ -167,15 +168,18 @@ therefore does not imply hazard-stratum risk reduction or suppression of its com
 
 \paragraph{Literal first-return correction and safety--surface boundary.}
 The preceding frozen action audit uses the target-nearest point as a proximity attribution. Following raw-ray occupancy
-evaluation~\cite{kalble2024accurate}, we separately re-audit the fixed source surfaces with Eq.~\ref{eq:first-return}. The
-always-complete total/hazard new-early rates rise from \PtwentyLegacyTotalEarly{}/\PtwentyLegacyHazardEarly{}\% under the proxy
-to \PtwentyTrueTotalEarly{}/\PtwentyTrueHazardEarly{}\%, exposing roughly six times more literal first-return risk. P17,
-P17R, and the one-slot sparse veto reduce hazardous rates to \PtwentyPseventeenHazardEarly{},
-\PtwentyPseventeenRHazardEarly{}, and \PtwentyPnineteenHazardEarly{}\%, respectively, but all exceed the
-\PtwentyBaselineChamfer{}\,m baseline Chamfer. The sparse veto removes \PtwentyPnineteenHazardRemoved{} hazardous early events
-for \PtwentyPnineteenHitsLost{} hits and \PtwentyPnineteenPenaltyMM{}\,mm mean Chamfer, or
-\PtwentyPnineteenEventsPerHit{} events per hit lost. Thus the monotone early direction is certified, while zero-cost surface
-utility is empirically rejected. This is a consumed-source diagnostic, not fresh transfer or road-safety evidence.
+evaluation~\cite{kalble2024accurate}, we separately re-audit fixed source and consumed AV2 surfaces with Eq.~\ref{eq:first-return}. The
+source total/hazard proxy rates \PtwentyLegacyTotalEarly{}/\PtwentyLegacyHazardEarly{}\% rise to
+\PtwentyTrueTotalEarly{}/\PtwentyTrueHazardEarly{}\%. P17/P17R/P19 reduce hazard exposure to
+\PtwentyPseventeenHazardEarly{}/\PtwentyPseventeenRHazardEarly{}/\PtwentyPnineteenHazardEarly{}\%, but each worsens Chamfer.
+P19 removes \PtwentyPnineteenHazardRemoved{} events for \PtwentyPnineteenHitsLost{} hits and
+\PtwentyPnineteenPenaltyMM{}\,mm mean Chamfer. Thus the certified early direction has nonzero surface cost.
+
+On consumed AV2 (\PtwentytwoActors{} Actors; \PtwentytwoRays{} rays), total/hazard exposure similarly changes from
+\PtwentytwoProxyTotalEarly{}/\PtwentytwoProxyHazardEarly{}\% to \PtwentytwoTrueTotalEarly{}/\PtwentytwoTrueHazardEarly{}\%
+(hazard \PtwentytwoHazardRatio{}$\times$). All \PtwentytwoTrueNewEarly{} literal new-early rays are \textsc{complete}; completion
+also supplies \PtwentytwoCompleteNewHitShare{}\% of \PtwentytwoTrueNewHits{} new hits, only \PtwentytwoHitEarlyRatio{} hits/early.
+This corrects the proxy efficiency claim; it is not fresh transfer, policy, collision, or road-safety evidence.
 
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,

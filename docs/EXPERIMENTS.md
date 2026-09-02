@@ -1,5 +1,16 @@
 # Experiments
 
+## P22 CVPR claim-correction and figure handoff（2026-09-02）
+
+- numeric interface：新增P22 20 logs/523 Actors/1,435,391 rays、proxy/literal rates、`7.29x` hazard ratio、
+  142,022 new-early、169,581 new-hit及COMPLETE来源宏；数值只来自canonical `summary.json`；
+- main claim：P3/P15改称target-nearest proximity；P20 source与P22 consumed AV2独占literal first-return measurement；
+- figure：P21双面板左侧扩展为source all/hazard + AV2 all/hazard，右侧deletion frontier不变；renderer新增
+  `--p22-summary`，不读取dataset/model/checkpoint；
+- compile：main=`9 pages/1,779,519 bytes`（8 content + references），supplement=`10 pages/7,377,015 bytes`；
+  undefined citation/reference=0，关键页视觉QA通过，既有Table 1 overfull不截断；
+- scientific state：measurement correction完成，0新训练/refit/threshold/policy/fresh-target read；下一failure=`V7-F30`。
+
 ## P22 consumed AV2 literal first-return correction result（2026-09-02）
 
 - canonical/status：`run://worldsim_v7/WS-V7-P22-AV2-TRUE-FIRST-RETURN-CORRECTION-01/
