@@ -138,6 +138,44 @@ early returns and \PfifteenCompleteNewHitShare{}\% of new hits, whereas KEEP acc
 suppress the completion-driven hazardous-ray mechanism. PROJECT has zero emitted provenance because observed-hit projections
 collapse under KEEP-first voxel deduplication; this is not a causal zero-effect result.
 
+\section{Literal First-Return Correction and Monotone Boundary}
+
+The frozen AV2 attribution above selects the Euclidean-nearest output to each target point and then checks its projected depth. It
+is a target-aligned proximity diagnostic, not literal ray termination. Following raw-LiDAR occupancy evaluation
+~\cite{kalble2024accurate}, P20 instead takes the minimum positive projected depth among every surface point inside the same frozen
+beam tube. Query and compiled surfaces use the identical operator.
+
+\begin{equation}
+d_S(r)=\min\{s>0:o+sv\in S_{\epsilon}\},\qquad \min\varnothing=\infty.
+\label{eq:supp-first-return}
+\end{equation}
+
+For any $S'\subseteq S$, Eq.~\ref{eq:supp-first-return} gives $d_{S'}(r)\ge d_S(r)$, so deletion cannot increase the early predicate or
+new-early relative to a fixed query. There is no corresponding guarantee for hits or symmetric Chamfer. Table~\ref{tab:supp-true-ray}
+shows exactly this boundary on the consumed nuScenes source-development cohort: all three frozen deletion policies reduce hazardous
+early returns, yet all pay surface utility. P19 is most efficient, removing \PtwentyPnineteenHazardRemoved{} hazardous events for
+\PtwentyPnineteenHitsLost{} hits and \PtwentyPnineteenPenaltyMM{}\,mm mean Chamfer
+(\PtwentyPnineteenEventsPerHit{} events/hit; \PtwentyPnineteenEventsPerMM{} events/mm). These ratios are descriptive, not
+collision or road-safety guarantees.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Literal first-return source audit. Hazard early is the fraction of held-out hazardous-Actor rays newly terminated before
+the target. Chamfer and new hits use the same frozen surfaces; no policy is refit.}
+\begin{tabular}{lrrrr}
+\toprule
+Surface policy & Completion coverage (\%) & Hazard new-early (\%) & Mean Chamfer (m) & New hits \\
+\midrule
+Always-complete & 100.00 & \PtwentyTrueHazardEarly{} & \PtwentyBaselineChamfer{} & \PtwentyBaselineHits{} \\
+P17 ray-only & \PtwentyPseventeenCoverage{} & \PtwentyPseventeenHazardEarly{} & \PtwentyPseventeenChamfer{} & \PtwentyPseventeenHits{} \\
+P17R ray+Chamfer & \PtwentyPseventeenRCoverage{} & \PtwentyPseventeenRHazardEarly{} & \PtwentyPseventeenRChamfer{} & \PtwentyPseventeenRHits{} \\
+P19 one-slot veto & \PtwentyPnineteenCoverage{} & \PtwentyPnineteenHazardEarly{} & \PtwentyPnineteenChamfer{} & \PtwentyPnineteenHits{} \\
+\bottomrule
+\end{tabular}
+\label{tab:supp-true-ray}
+\end{table*}
+
 \section{Frozen Cohorts and Exact-Once Rules}
 
 \begin{table*}[t]
@@ -212,6 +250,7 @@ V7-F20 & P4 visible risk is 36.39\%, but its 40.40\% upper bound exceeds the 37.
 V7-F21 & Provenance lowers visible risk but raises Chamfer worsening to \PelevenDualChamferWorse{}\% and hazard-repair coverage falls to \PelevenDualHazardCoverage{}\%. & Observed provenance is one-axis evidence, not joint authority. \\
 V7-F22 & The source visibility head transfers ranking, but dual coverage/gain are negligible and hazard-repair coverage is \PtwelveDualHazardCoverage{}\%. & Reject the head family rather than sweep target thresholds. \\
 V7-F23 & Provenance defer has \PthirteenProvenanceGain{}\,m composite gain with nonzero introduced failure. & Query-only strictly dominates it; conditional risk is not fallback-system utility. \\
+V7-F29 & Literal first-return raises baseline hazard exposure to \PtwentyTrueHazardEarly{}\%; P17/P17R/P19 all lower it but worsen Chamfer. & Point deletion has a certified early-return direction, not hit, Chamfer, collision, or policy safety. \\
 \bottomrule
 \end{tabular}
 \label{tab:supp-failures}

@@ -1,5 +1,22 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P21 supported and CVPR safety-boundary integration completed
+
+P21 canonical=`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/
+20260903T134500Z__monotone-safety-boundary-r1`。集合包含关系精确给出
+`S' subset S => d_{S'}(r)>=d_S(r)`：删除点的literal first-return early风险单调非增；matched hits、Chamfer、
+collision与policy不在保证内。P17/P17R/P19经验交换率只作冻结source frontier，P19不因效率最高而被事后选择。
+
+P20/P21已进入CVPR主文和supplement。Final main=8 content pages + 1 references page，supplement=9 pages；
+undefined citation/reference=0，关键页视觉QA通过。V7三条补强方向现有可写证据为：
+
+1. 三维硬证据：literal first return把hazard exposure从proxy `1.4362%`纠正到`8.7421%`；
+2. 跨域：nuScenes-only P4在冻结AV2上保留经验zero-shot结论，但明确sensor-opportunity与rank-reversal边界；
+3. 理论/工程：set-deletion单调方向可解释，hit/Chamfer/closed-loop安全边界明确。
+
+按第11节停止条件，不再扩展deletion/router/head方法族。允许的后续工作限定为论文写作、图表、代码收敛、
+supplement与合法metric纠错；第三批10-log AV2继续下载但保持未读，除非已有冻结source-passing候选按原合同授权。
+
 ## 2026-09-02 P20 hard-evidence correction supported, P21 safety boundary frozen
 
 P20 true first-return揭示always-COMPLETE total/hazard early=`5.9561/8.7421%`，约为legacy proxy六倍。P17/P17R/P19

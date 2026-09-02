@@ -23,6 +23,14 @@ physical artifact repair
 | C3. Explainable reliability and explicit safety boundaries | Method 4.3--4.4; Experiments “Interpretable safety envelope”, “Frozen continuous and joint reliability”, “Physical repair is not trajectory authority”; C3 reliability table; supplement D--E | `actor_reliability.py`, `boundary_cost_density.py`, `runtime_surface.py`, `analyze_worldsim_v7_p7_interpretable_safety_envelope.py`, `run_worldsim_v7_p7b_geometry_cost_sensitivity.py`, `run_worldsim_v7_p7c_validity_interval_certificate.py` | Frozen V6.7 P182/P183 marginal density, P199/P201 joint-horizon confirmation, P346 authority boundary; P7/P7-B/P7-C explanation; P5/P5-B exact-identity interface | Frozen marginal and joint reliability objects improve proper-score/calibration metrics on distinct fresh scene-level cohorts; sensor-opportunity dependence, analytic clearance sensitivity, and decision intervals remain Actor-specific; physical repairability, geometry sensitivity, and motion uncertainty are distinct | Inherited C3 evidence is not a V7 repair effect; P346 reuses P201 and fails source held-out-H risk, so it is not a cross-horizon or formal calibration guarantee; Integrated Gradients is sensitivity, not causality; P5 retained rows are descriptive, not causal |
 | C4. Minimal composed-authority interface | Experiments “Minimal composed-authority utility”; P9 table | `run_worldsim_v7_p9_composed_authority_fixed_lattice.py` | P9 retained-source 2x2 query/HARP-3D x none/P346 audit | Physical surface choice and frozen task authority compose without changing Actor, hazard, or action denominators; authorized retained sets have lower conditional cost/risk | No executed planner, policy learning, closed loop, collision intervention, or causal benefit from physical repair |
 
+### P20/P21 hard-evidence addendum
+
+P20 corrects the later source audit from target-nearest proximity to literal minimum-positive-depth first return, using
+`true_first_return_attribution.py`; P21 derives the exact deletion-monotonicity theorem and descriptive safety--surface frontier using
+`analyze_worldsim_v7_p21_monotone_safety_boundary.py`. The supported claim is narrow: deletion cannot increase the literal early
+predicate for fixed rays. It does not guarantee hit retention, Chamfer, collision freedom, road safety, or fresh transfer. The prior
+AV2 P3/P15 metrics retain ownership as frozen target-nearest diagnostics and are not retroactively relabeled first-return evidence.
+
 ## Canonical evidence registry
 
 | Stage | Canonical run | Paper ownership | Failure/boundary ownership |
@@ -47,6 +55,8 @@ physical artifact repair
 | P13 | `run://worldsim_v7/WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01/20260903T023000Z__defer-to-query-s0-r1` | Frozen accept-or-defer composite-world frontier | V7-F23: provenance defer is dominated by query-only; conditional selected risk is not fallback-system utility |
 | P14 | `run://worldsim_v7/WS-V7-P14-HAZARD-STRATIFIED-DEFER-01/20260903T031500Z__hazard-stratified-s0-r1` | Exact hazard/clear decomposition of defer-to-query utility and introduced failures | Hazard-state preservation is not hazard-stratum visible-risk reduction; descriptive consumed-AV2 boundary, no new failure ID |
 | P15 | `run://worldsim_v7/WS-V7-P15-FRESH-HAZARD-ACTION-AUDIT-01/20260903T044500Z__fresh-hazard-action-audit-s0-r1` | Fresh hazard/clear target-ray and compiler-action mechanism attribution | COMPLETE dominates new early returns; KEEP dominates surface contradictions; selector does not suppress hazardous completion mechanism; no causal ablation claim |
+| P20 | `run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/20260903T124500Z__true-first-return-audit-r1` | Literal source first-return correction across frozen P17/P17R/P19 | Baseline hazard exposure is 8.742%; all deletion policies reduce early events but fail Chamfer; consumed diagnostic only |
+| P21 | `run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/20260903T134500Z__monotone-safety-boundary-r1` | Set-inclusion theorem and events-per-hit/mm frontier | Exact early monotonicity; empirical ratios are not formal safety or transfer bounds |
 | V6.7 P182/P183 | `run://worldsim_v67/WS-V67-P182-LOG-COST-MIXTURE-DENSITY-01/20260830T150500Z__log-cost-mixture-density-s0-r1`; `run://worldsim_v67/WS-V67-P183-LOG-COST-DENSITY-CONFIRMATION-01/20260830T152500Z__log-cost-density-confirmation-s0-r1` | Inherited marginal log-cost density and disjoint 10-log fresh confirmation | Fresh Brier/calibration gains are scene-level empirical support, not formal probability calibration or a physical-repair effect |
 | V6.7 P199/P201 | `run://worldsim_v67/WS-V67-P199-JOINT-HORIZON-RELIABILITY-COPULA-01/20260830T181000Z__joint-horizon-reliability-copula-s0-r2`; `run://worldsim_v67/WS-V67-P201-JOINT-HORIZON-COPULA-CONFIRMATION-01/20260830T184500Z__joint-horizon-copula-confirmation-s0-r2` | Inherited joint-horizon dependence and disjoint 10-log fresh confirmation | Joint-event gains are scene-level only; no session/population, collision, or safety guarantee |
 | V6.7 P346 | `run://worldsim_v67/WS-V67-P346-ISOTONIC-MULTICALIBRATED-VISITED-RELIABILITY-01/20260901T134500Z__isotonic-multicalibrated-visited-reliability-s0-r2` | Frozen P9 task authority and q90 development boundary | Reused P201 q90 support coexists with source held-out-H risk 26.71%; not formal multicalibration or cross-horizon stability |
@@ -72,6 +82,8 @@ physical artifact repair
   or reinterpret the deterministic hazard proxy as collision, planning, causal, or real-road safety evidence.
 - P15 owns only nearest-output action provenance on the already consumed fresh cohort. It cannot be cited as a blind confirmation,
   action ablation, or proof that zero emitted PROJECT provenance means zero PROJECT effect.
+- P20/P21 own the literal source first-return correction and deletion theorem. They do not replace P3/P15 frozen AV2 metrics,
+  authorize a failed policy, or establish target transfer, hit/Chamfer monotonicity, collision freedom, or closed-loop safety.
 - A negative exact-once result remains in the denominator and paper. It is never replaced by another scene/log, seed, threshold,
   feature group, or checkpoint.
 
@@ -89,3 +101,4 @@ physical artifact repair
 - Repair-or-abstain is always scoped to frozen Chamfer non-worsening; it is never called a bidirectional visibility certificate.
 - Inherited V6.7 P183/P201 rows are labeled scene-level fresh evidence, while P346 is labeled reused development; none is
   described as a V7 repair effect, AV2 transfer, cross-horizon stability, or formal calibration guarantee.
+- Target-nearest proximity and literal first-return are named separately; only P20/P21 own the latter operator and theorem.

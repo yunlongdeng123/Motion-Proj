@@ -1,5 +1,21 @@
 # Experiments
 
+## P21 monotone first-return safety boundary / paper handoff（2026-09-02）
+
+- canonical/status：`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/
+  20260903T134500Z__monotone-safety-boundary-r1` / done/supported；
+- exact result：`S' subset S => d_{S'}(r)>=d_S(r)`；deletion下literal new-early单调非增；
+- explicit non-guarantees：matched-hit retention、symmetric Chamfer、collision freedom、planning/policy、closed-loop
+  或road safety均不由该集合定理推出；
+- P17：hazard events removed=`1570`，hits lost=`3384`，penalty=`4.82425mm`，
+  events/hit=`.463948`，events/mm=`325.439`；
+- P17R：`833/955/1.129153mm/.872251/737.721`；
+- P19：`131/71/.0918622mm/1.84507/1426.05`；
+- decision：P19在冻结points中效率最高但Chamfer仍退化，0 policy selection/refit，deletion-only family关闭；
+- exposure/resource：只读P20 summary；0新data/model/checkpoint/threshold/fresh AV2 read；target_data_read=false；
+- paper：main=`9 pages/1,779,602 bytes`（8 content + 1 references），supplement=
+  `9 pages/7,244,607 bytes`；无undefined引用，关键页视觉QA通过，仅既有Table 1 `6.03pt` non-clipping overfull。
+
 ## P20 result / P21 monotone safety boundary freeze（2026-09-02）
 
 - P20 canonical/status：`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/

@@ -21,6 +21,16 @@ contradicted, supported, occluded, or off-ray unknown. Only the contradicted sta
 off-ray regions remain non-falsified rather than becoming occupied or free. This bidirectional partition makes the failure object
 inspectable while explicitly withholding a completeness certificate for unseen surface.
 
+For the literal safety audit, define the first valid positive depth within the frozen beam tube as
+\begin{equation}
+d_S(r)=\min\{s>0:o+sv\in S_{\epsilon}\},\qquad \min\varnothing=\infty.
+\label{eq:first-return}
+\end{equation}
+If a policy only deletes points, $S'\subseteq S$ implies $d_{S'}(r)\ge d_S(r)$. Hence the early predicate
+$\mathbf 1[d_S(r)<d^\star-\tau]$ is monotone non-increasing under deletion, as is new-early relative to a fixed query surface.
+Hit retention and symmetric Chamfer are not monotone under this order: deletion may expose or remove a hit, and it can move the two
+directed Chamfer terms in opposite directions. This is a geometric certificate for one predicate, not a collision guarantee.
+
 \subsection{Validity--Hazard Factorization}
 
 The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. Its label is whether the frozen compiler's target Chamfer is no worse than that of the untouched clean query. The hazard encoder receives only TTC, clearance, closing speed, braking, and crossing geometry. Our factorized model uses two structurally disjoint low-capacity heads; a shared-input two-head network is the learned baseline:

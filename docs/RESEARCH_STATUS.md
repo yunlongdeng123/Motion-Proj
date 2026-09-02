@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7 P21 monotone boundary supported / CVPR paper integrated（2026-09-02）
+
+P21 canonical=`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/
+20260903T134500Z__monotone-safety-boundary-r1`，verdict=`supported_monotone_first_return_safety_boundary`。
+对固定ray，若 `S' subset S`，则minimum-positive-depth `d_{S'}(r)>=d_S(r)`；所以删除compiled points不可能
+新造更早literal first return。该定理不保证hit retention、Chamfer、collision freedom、policy或road safety。
+
+冻结经验frontier中，P17/P17R/P19分别移除hazard early `1570/833/131`，损失hits
+`3384/955/71`，Chamfer代价为 `4.82425/1.129153/.0918622mm`；P19效率最高但仍未过Chamfer gate，未被
+promote。P21只读P20 summary，0新dataset/model/checkpoint/threshold/policy/fresh-AV2 read。
+
+P20/P21已进入CVPR abstract/related work/method/experiments/limitations/conclusion/supplement、结果宏和贡献索引。
+最终TeX Live main=`9 pages/1,779,602 bytes`（8页正文+1页references），supplement=
+`9 pages/7,244,607 bytes`；无undefined citation/reference。主文第1/8/9页及supplement第3/4页视觉QA无裁切、
+重叠或断表；仅保留既有Table 1 `6.03pt` non-clipping overfull。完整结果见
+`docs/autoresearch/worldsim_v7/P21_MONOTONE_SAFETY_BOUNDARY_RESULT.md`。
+
 ## WorldSim V7 P20 hard-evidence correction supported / P21 boundary frozen（2026-09-02）
 
 P20 canonical=`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/

@@ -165,6 +165,18 @@ action attribution localizes the mismatch: hazardous/clear new-early target-ray 
 (\PfifteenPfourHazardVsAlways{}$\times$ always), and P6-C is \PfifteenPsixHazardVsAlways{}$\times$. State preservation
 therefore does not imply hazard-stratum risk reduction or suppression of its completion-driven mechanism.
 
+\paragraph{Literal first-return correction and safety--surface boundary.}
+The preceding frozen action audit uses the target-nearest point as a proximity attribution. Following raw-ray occupancy
+evaluation~\cite{kalble2024accurate}, we separately re-audit the fixed source surfaces with Eq.~\ref{eq:first-return}. The
+always-complete total/hazard new-early rates rise from \PtwentyLegacyTotalEarly{}/\PtwentyLegacyHazardEarly{}\% under the proxy
+to \PtwentyTrueTotalEarly{}/\PtwentyTrueHazardEarly{}\%, exposing roughly six times more literal first-return risk. P17,
+P17R, and the one-slot sparse veto reduce hazardous rates to \PtwentyPseventeenHazardEarly{},
+\PtwentyPseventeenRHazardEarly{}, and \PtwentyPnineteenHazardEarly{}\%, respectively, but all exceed the
+\PtwentyBaselineChamfer{}\,m baseline Chamfer. The sparse veto removes \PtwentyPnineteenHazardRemoved{} hazardous early events
+for \PtwentyPnineteenHitsLost{} hits and \PtwentyPnineteenPenaltyMM{}\,mm mean Chamfer, or
+\PtwentyPnineteenEventsPerHit{} events per hit lost. Thus the monotone early direction is certified, while zero-cost surface
+utility is empirically rejected. This is a consumed-source diagnostic, not fresh transfer or road-safety evidence.
+
 \paragraph{Frozen continuous and joint reliability.}
 We inherit the V6.7 reliability objects without V7 refitting. On \PrelMarginalFreshLogs{} previously unread nuScenes logs,
 the five-component log-cost density reduces mean integrated Brier and marginal calibration error by

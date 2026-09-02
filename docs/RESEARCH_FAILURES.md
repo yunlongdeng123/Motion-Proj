@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P21 outcome note — exact directional theorem supported, no policy promotion（2026-09-02）
+
+- canonical=`run://worldsim_v7/WS-V7-P21-MONOTONE-SAFETY-BOUNDARY-01/
+  20260903T134500Z__monotone-safety-boundary-r1`；
+- support：`S' subset S => d_{S'}(r)>=d_S(r)`精确成立，删除不会新增literal first-return early；
+- bounded frontier：P19以71 hits和`.0918622mm`换131个hazard events，是冻结三点中最高效率，但仍违反
+  non-worsening-Chamfer，故不替换baseline、不授权fresh target read；
+- prevention：不把events/hit或events/mm当新objective，不扫deletion capacity/tolerance/threshold，不从定理外推
+  collision、policy或road-safety guarantee；
+- exposure：只读P20 summary，0 data recompilation/training/refit/target read；`V7-F29`保持准确，下一可用failure
+  id=`V7-F30`；
+- paper audit：8页正文边界恢复，第9页仅references；无新failure。
+
 ## V7-F29 — true first-return exposes larger risk but all deletion policies pay Chamfer
 
 - canonical=`run://worldsim_v7/WS-V7-P20-TRUE-FIRST-RETURN-AUDIT-01/

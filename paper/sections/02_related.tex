@@ -2,9 +2,9 @@
 
 \paragraph{Driving-world reconstruction.}
 Multi-sensor driving datasets such as nuScenes~\cite{caesar2020nuscenes} and Argoverse~2~\cite{wilson2021argoverse2} provide calibrated imagery, LiDAR, ego pose, maps, and tracked Actors. LiDAR is 2.5D ray evidence whose free-space intervals are lost by an unordered point-only view~\cite{hu2020visibility}. Neural scene graphs model dynamic objects explicitly~\cite{ost2021neural}, while 3D Gaussian Splatting provides a high-quality appearance representation~\cite{kerbl2023gaussians}. Our work does not reinterpret Gaussian opacity as collision occupancy. It adds a separate, queryable physical surface with sensor provenance.
-Ray-potential reconstruction treats visibility as a viewing-ray constraint~\cite{savinov2016ray}, while EvOcc evaluates the
-first predicted occupied termination along each LiDAR ray~\cite{kalble2025evocc}. We retain this ordered evidence and additionally
-attribute the frozen output termination to its compiler action.
+Ray-potential reconstruction treats visibility as a viewing-ray constraint~\cite{savinov2016ray}. Evidential occupancy work
+renders the first predicted occupied intersection back to raw LiDAR depth~\cite{kalble2024accurate,kalble2025evocc}. We distinguish
+that literal first return from a target-nearest proximity proxy and state exactly which operator owns each audit.
 
 \paragraph{Uncertainty and reliability.}
 Deep ensembles expose useful empirical predictive disagreement~\cite{lakshminarayanan2017deep}, and conformalized quantile methods can turn residuals into calibrated marginal intervals under appropriate assumptions~\cite{romano2019conformalized}. Interval-bound methods can certify a network over a specified input box, including for robust OOD detection~\cite{bitterwolf2020certifiably}; they do not certify that the box models an unseen sensor domain. Driving logs violate many simple exchangeability assumptions through scene correlation and domain shift. We therefore report empirical calibration explicitly, preserve claim boundaries, and use monotone structure only for runtime consistency---not as a formal road-safety guarantee.
