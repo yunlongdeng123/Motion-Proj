@@ -1,5 +1,11 @@
 # Research Status
 
+## WorldSim V7 P16 fit r1 pre-training implementation failure corrected（2026-09-02）
+
+Fit r1=`20260903T071500Z__completion-fit-s71601-r1`在首个source scene后因diagnostics解包变量`package`未定义终止；
+尚未训练/保存模型，fresh AV2 0 read。单行改为`row, package = compiled`，不改feature/model/seed/loss/decision；
+r1保留failed审计，下一次固定r2。
+
 ## WorldSim V7 P16 evidential completion responsibility frozen（2026-09-02）
 
 状态=`p16_evidential_completion_frozen_io_pending`。P15已把hazard burden定位到candidate-level COMPLETE，P16因此不再

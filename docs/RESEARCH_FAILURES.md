@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P16 fit r1 engineering failure — diagnostics package未解包（2026-09-02）
+
+- run=`20260903T071500Z__completion-fit-s71601-r1`；首个nuScenes source scene完成后在写diagnostics时NameError。
+- root cause：`compile_nuscenes_scene`仍以`row, _`解包，但新增路径访问`package["diagnostics"]`。
+- resolution：单行恢复`row, package`，r1保留failed；0 model training/checkpoint、0 source result、0 fresh AV2 read。
+- classification：纯实现故障，不登记`V7-F24`，也不授权改变P16冻结features/model/loss/seed/decision。
+
 ## P16 prevention note — completion责任必须在candidate层学习（2026-09-02）
 
 - P15证明Actor-level P4/P6-C未压低hazard COMPLETE channel；P16不得再包装另一个Actor score或低coverage conjunction。

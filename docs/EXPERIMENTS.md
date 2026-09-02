@@ -1,5 +1,11 @@
 # Experiments
 
+## P16 fit r1 failed before training（2026-09-02）
+
+- run=`20260903T071500Z__completion-fit-s71601-r1`；error=`NameError: package is not defined`。
+- stage：first source scene diagnostics materialization；0 training/checkpoint/fresh AV2 read。
+- correction：`row, _`→`row, package` only；P16 contract不变，r2重启。
+
 ## P16 evidential completion freeze and fresh IO（2026-09-02）
 
 - hypothesis/task：`WS-V7-H-P16 / WS-V7-P16-EVIDENTIAL-COMPLETION-01`。

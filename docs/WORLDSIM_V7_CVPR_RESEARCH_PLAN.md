@@ -1,5 +1,10 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P16 fit r1 implementation correction
+
+`20260903T071500Z__completion-fit-s71601-r1`在首个source scene后因`package`解包NameError终止，发生于训练/checkpoint/
+fresh AV2 read之前。只修复`row, package`局部变量并以r2重启；11维features、网络、seed、loss、cohort与decision全部不变。
+
 ## 2026-09-02 P16 evidential completion responsibility frozen
 
 P16直接处理P15暴露的candidate-level COMPLETE机制，不再迭代Actor selector。按CVPR 2024 OccupancyM3D/evidential
