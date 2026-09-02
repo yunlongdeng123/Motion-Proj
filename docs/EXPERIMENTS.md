@@ -1,5 +1,15 @@
 # Experiments
 
+## Paper contribution/evidence ownership synchronization（2026-09-02）
+
+- corrected stale map：Sec. 3.x旧编号、早期接口与“P8 owns all final numbers”被替换为当前 Method 4.1--4.4、实际
+  V7 modules/scripts及stage-specific ownership。
+- registry：P3/P3-B/P4/P5/P5-B/P6-C/P7/P7-B/P7-C/P8-A/P9 canonical URI全部列出，并映射 V7-F09/
+  F11--F17 boundary。
+- locks：P4=primary selector；P8-A=fresh nuScenes candidate rejection；pending P6-C=fresh AV2 only。任何 negative
+  exact-once result不得换scene/log/seed/threshold/feature/checkpoint。
+- status：documentation-only；无 scientific run、quality read、model/data/cohort/threshold/gate 变化。
+
 ## P3-B project-page/video asset indexing（2026-09-02）
 
 - source：P3-B canonical `CAMERA_CASES.jsonl`、`MAIN_CAMERA_PANELS.json`、`SUPPLEMENT_CAMERA_PANELS.json`；

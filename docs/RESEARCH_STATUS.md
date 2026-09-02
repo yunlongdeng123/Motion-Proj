@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 contribution/evidence map synchronized to current paper（2026-09-02）
+
+`paper/CONTRIBUTION_MAP.md` 已从早期三项骨架更新为当前 C1 physical compilation、C2 factorized zero-shot repair、
+C3 explainable reliability/safety boundaries、C4 minimal composed authority。章节位置、实际 V7 code interface、P3/P3-B/
+P4/P5/P5-B/P6-C/P7/P7-B/P7-C/P8-A/P9 canonical runs、V7-F09/F11--F17 与 allowed/prohibited claims 均已对齐。
+
+旧文本“P8 owns final exact-once numbers”被拆成准确 ownership：P8-A 只拥有 fresh nuScenes rejection，P4仍是 primary
+selector；P6-C fresh AV2 只有 canonical `summary.json` 存在且 evaluator正常退出后才可新增 external row，不能回写旧
+model/threshold/cohort/gate/verdict。该文档是 claim audit 资产，不创建新实验或读取 pending quality。
+
 ## WorldSim V7 project-page/video asset index completed（2026-09-02）
 
 新增 `paper/PROJECT_PAGE_ASSET_INDEX.md`，把 P3-B canonical 10 logs/30 frozen Actors 的全部 panel/video 路径、

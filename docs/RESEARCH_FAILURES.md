@@ -2,6 +2,15 @@
 
 ## WorldSim V7 latest failures（2026-09-02）
 
+### Contribution-map drift note — 早期ownership已修正，无新failure
+
+- 旧 `CONTRIBUTION_MAP.md` 仍指向 Sec. 3.1--3.4、早期文件名，并笼统写“P8 owns final exact-once numbers”；这与
+  当前 P8-A fresh nuScenes rejection、P6-C pending fresh AV2 和 P9/P7-C completion不一致；
+- resolution：重写为4项当前贡献、11个 canonical stages、failure boundary与 final claim checklist；明确 P4 primary、
+  P8-A source exact-once only、P6-C future external only；
+- exposure：论文正文与 canonical summaries未受影响，fresh AV2 quality仍未读；属于 documentation drift，不创建
+  scientific failure id。下一可用仍为 `V7-F18`。
+
 ### Project-page asset-index note — 完整失败案例保留且无新failure
 
 - 索引覆盖 P3-B canonical 30/30 panels 与 30/30 MP4，并保留 13 hazardous Actors、低可见性 q05/q06 cases 与

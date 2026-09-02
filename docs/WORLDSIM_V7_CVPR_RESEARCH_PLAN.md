@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 contribution/evidence-map synchronization
+
+`paper/CONTRIBUTION_MAP.md` 已同步当前4项贡献、Method 4.1--4.4/Experiments位置、实际 V7 code interface、P3至P9
+canonical registry、V7-F09/F11--F17 与 allowed/prohibited claims。结果 ownership固定为 P4 primary selector、P8-A
+fresh nuScenes rejection、P6-C pending fresh AV2 only；pending external result不得覆盖既有模型、阈值、cohort、gate或
+verdict。该里程碑修正文档漂移，不新增 scientific read。
+
 ## 2026-09-02 project-page/video asset milestone
 
 `paper/PROJECT_PAGE_ASSET_INDEX.md` 已索引 P3-B canonical 的 10 logs/30 Actors、30 panels 与30 MP4，包含完整
