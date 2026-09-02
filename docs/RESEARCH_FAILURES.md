@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## Bibliography-rendering note — source typo fixed before release（2026-09-02）
+
+- `kalble2024accurate`原作者字段为`K{"a}lble`的缺反斜杠变体，且若干method/sensor专名未防BibTeX sentence-case；
+- 只修转义并保护正式大小写，未改变引用对象、作者身份、venue、year、pages或scientific text；
+- 三个入口重新构建，最终references视觉正确且无undefined引用；这是publication source fix，不消耗failure ID；
+  下一可用仍为`V7-F30`。
+
 ## Certificate-layout note — formal proof without a hidden broader guarantee（2026-09-02）
 
 - 初版单行`e_Q`公式产生70.33pt overfull，改为aligned两行；Proposition最初跨page 2/3，随后整体移至page 3；

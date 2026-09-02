@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7 bibliography source convergence（2026-09-02）
+
+修复`kalble2024accurate`作者名中缺失反斜杠的BibTeX变音转义，并用局部花括号保护nuScenes、Argoverse 2、
+NeuRAD、UniSim、LiDAR4D、LiDAR、3D、AURC、SelectiveNet与EvOcc的正式大小写；作者、标题文字、venue、年份和
+页码均未改写。最终references视觉确认专名与`K{\"a}lble`正确。
+
+Anonymous main=`9 pages/1,926,625 bytes`，supplement=`10 pages/7,615,314 bytes`，临时匿名arXiv build=
+`9 pages/1,905,307 bytes`且不上传。Undefined citation/reference=0；main仅保留既有Table 1 `6.03pt` overfull，
+supplement无overfull。0 scientific/data/model change，下一failure仍为`V7-F30`。
+
 ## WorldSim V7 one-sided safety certificate formalized（2026-09-02）
 
 Supplement现在给出显式Proposition 1：固定ray、beam tube、target depth/tolerance与query surface时，若

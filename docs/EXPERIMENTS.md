@@ -1,5 +1,13 @@
 # Experiments
 
+## Bibliography rendering convergence（2026-09-02）
+
+- source fix：`K{\"a}lble`转义与10类dataset/method/sensor acronym大小写保护；不改bibliographic identity；
+- compile：main=`9 pages/1,926,625 bytes`，supplement=`10 pages/7,615,314 bytes`，本地临时arXiv=
+  `9 pages/1,905,307 bytes`；
+- rendering：references page专名/变音正确，undefined citation/reference=0；supplement无overfull；
+- no experiment：0 data/model read、0 training、0 scientific result/claim/decision change。
+
 ## One-sided first-return certificate formalization（2026-09-02）
 
 - statement：固定`r/epsilon/d*/tau/Q`，`S' subseteq S`蕴含`d_{S'}(r)>=d_S(r)`及`e_Q(S';r)<=e_Q(S;r)`；

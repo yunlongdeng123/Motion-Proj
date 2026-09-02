@@ -1,5 +1,12 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 bibliography source convergence milestone
+
+完成release-facing bibliography收敛：修正`kalble2024accurate`作者变音转义，保护dataset/method/sensor专名不被BibTeX
+sentence-case错误降格。引用身份和scientific content不变。Final main=`9 pages/1,926,625 bytes`，supplement=
+`10 pages/7,615,314 bytes`；本地临时arXiv入口也通过，真实作者文件/PDF仍不上传。该合法source fix不复开实验或
+扩大claim，下一failure=`V7-F30`。
+
 ## 2026-09-02 one-sided first-return certificate milestone
 
 在supplement中把P21边界从一句set-inclusion说明提升为可审计Proposition 1。固定ray、tube、target depth/tolerance和query
