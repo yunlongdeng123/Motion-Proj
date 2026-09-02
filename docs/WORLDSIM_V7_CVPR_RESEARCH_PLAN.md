@@ -1,5 +1,15 @@
 # WorldSim V7 研究计划
 
+## 2026-09-02 P13 defer-to-query composite world contract
+
+P13采用selective prediction/learning-to-defer的完整系统语义，不再训练P12 family：repair set使用既有compiled surface，
+abstained set保留query，所有Actor/hazard语义保留。固定比较query/always/P4/P6-C/P11 provenance/P12 visibility/
+P4∧visibility；只报告conditional risk、population introduced-visible mass、composite Chamfer gain、repair/hazard-repair
+coverage与二维Pareto front。Exact join既有523 rows，0 dataset read/fit/recalibration/threshold/gate/policy sweep。
+
+Waymo v2.0.1 modular component是资源允许时第二外域；当前official GCS匿名HEAD=`403`，不使用mirror或绕license。
+因此该项不是Waymo evidence，先完成AV2组合权威解释；新scientific contradiction才使用`V7-F23`。
+
 ## 2026-09-02 P10/P11 predicate-semantics correction completed
 
 P12独立统计暴露P10/P11 r1把safe predicate `nonnew_visible_violation=true`反向计成failure。`d8bf0df`已最小修复为

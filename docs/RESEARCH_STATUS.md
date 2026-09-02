@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7 P13 defer-to-query composite world frozen（2026-09-02）
+
+P13不训练新head，而把P10--P12既有selector解释为完整action：selected使用compiled surface，abstained保留原query；
+Actor/trajectory/extent/hazard语义始终100%保留。固定exact join 20 AV2 logs/523 Actors，比较query/always/P4/P6-C/
+P11 provenance/P12 visibility/P4∧visibility，报告conditional risk、population introduced-visible mass、composite
+Chamfer gain、repair/hazard-repair coverage与二维Pareto frontier。0 dataset read/model/fit/threshold/gate change。
+
+官方Waymo v2.0.1 modular LiDAR为首选第二外域，但AutoDL对官方GCS对象的只读HEAD返回HTTP 403（缺accepted Waymo/
+Google session）。不使用非官方镜像或credential workaround；这是resource/access note而非scientific failure。P13执行前
+下一可用failure id=`V7-F23`。
+
 ## WorldSim V7 P10/P11 predicate-semantics correction completed（2026-09-02）
 
 修复提交=`d8bf0df`；P3-C `nonnew_visible_violation=true`明确为safe predicate，P10/P11 failure统一为`not nonnew`。

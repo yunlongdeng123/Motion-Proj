@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## P13 prevention note — abstention不是Actor删除，conditional risk不是population risk（2026-09-02）
+
+- P10--P12的selected risk条件在repair set上；实际policy对abstained Actors回退原query surface，不删除Actor或hazard。
+- P13固定同时报告conditional failure与全523 Actors的introduced-failure mass，并以composite Chamfer gain暴露“低risk只因
+  低coverage”或“修复集合实际使query变差”的情形；不新增后验utility weight/gate。
+- query-only的introduced-visible failure按定义为0，只表示没有由compiler新增，不得写成query没有pre-existing violation。
+- Waymo official GCS probe=`403`是license/session access condition；不登记scientific failure、不用非官方镜像替代。
+- 若结果暴露新的claim错误，使用下一`V7-F23`；否则保持descriptive boundary，不为凑编号造failure。
+
 ## P10/P11 analysis-semantics defect — corrected without data reread（2026-09-02）
 
 - defect：字段名`nonnew_visible_violation`易歧义，但生成器定义True为safe conjunction：compiled early<=query early且

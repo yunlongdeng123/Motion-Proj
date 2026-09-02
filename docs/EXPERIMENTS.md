@@ -1,5 +1,14 @@
 # Experiments
 
+## P13 defer-to-query composite world freeze（2026-09-02）
+
+- input：P10 r2/P11 r2/P12 r1 compact JSONL exact join；20 logs/523 Actors；不读AV2 dataset。
+- fixed policies：query-only、always-repair、P4、P6-C、P4∧no-COMPLETE、visibility-only、P4∧visibility。
+- semantics：selected→existing compiled surface；abstained→original query；Actor/hazard semantics retention=`100%`。
+- outputs：conditional visible/Chamfer risk、population introduced-visible/Chamfer-worse mass、composite mean Chamfer gain、
+  repair/hazard-repair coverage、risk--gain Pareto frontier。无新gate/training/threshold/policy search。
+- Waymo：official v2.0.1 validation LiDAR HEAD=`HTTP 403` without accepted session；不绕过license、不用mirror，单列resource note。
+
 ## P10/P11 visible-failure predicate correction result（2026-09-02）
 
 - bug/fix：P3-C `nonnew_visible_violation`是safe predicate；P10/P11 r1误当failure。提交`d8bf0df`统一为

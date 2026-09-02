@@ -1,0 +1,23 @@
+schema_version: worldsim_v7.p13_defer_to_query_composite_config.v1
+task_id: WS-V7-P13-DEFER-TO-QUERY-COMPOSITE-01
+hypothesis_id: H-V7-P13
+runs_root: /root/autodl-tmp/runs
+p10_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P10-FROZEN-PHYSICAL-AUTHORITY-AUDIT-01/20260903T010000Z__physical-authority-s0-r2
+p11_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P11-PROVENANCE-AUTHORITY-AUDIT-01/20260903T011500Z__provenance-authority-s0-r2
+p12_run: /root/autodl-tmp/runs/worldsim_v7/WS-V7-P12-NUSCENES-VISIBILITY-AUTHORITY-01/20260903T004500Z__visibility-authority-s71201-r1
+policies:
+  - query_only
+  - always_repair
+  - p4_defer
+  - p6c_defer
+  - provenance_defer
+  - visibility_defer
+  - p4_visibility_defer
+claim_boundary: >-
+  Frozen consumed-AV2 policy-composition audit only. Selected Actors receive the
+  already compiled surface; abstained Actors retain the original query surface.
+  Actor identity, trajectory, extent, and hazard semantics are never removed.
+  Population introduced-visible-failure mass is distinct from conditional selective
+  risk and from pre-existing query contradictions. No training, dataset read, target
+  fit, recalibration, threshold change, policy search, collision, planning, closed-loop,
+  conformal, or deployment-safety claim.
