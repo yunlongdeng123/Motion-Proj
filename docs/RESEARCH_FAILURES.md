@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 S1 outcome note — 连续位移形成hazard/surface Pareto（2026-09-03）
+
+- canonical=`run://worldsim_v71/WS-V71-S1-DISPLACEMENT-ORACLE-01/
+  20260903T101000Z__s1-displacement-oracle-r1`；64 Actors，oracle-check rays=`36,101`；
+- D1：hazard literal early相对下降=`5.802%>=5%`，Chamfer delta=`-3.778mm<=0.5mm`，Actor/hazard retention=
+  `100/100%`；candidate displacement action space feasible；
+- 与V7-F24--F29区别：所有COMPLETE candidate数量保持不变，仅学习`Delta d_ray/Delta d_normal`；KEEP与matched PROJECT
+  为冻结anchor，因此不是删除/UNKNOWN/threshold/router路线的变体；
+- remaining boundary：clear literal early相对恶化`4.009%`，M0必须在source selection同时报告hazard/clear/all，不能把D1
+  的hazard门升级为全stratum保证；
+- decision：执行S2与M0，跳过S1-B；M1只在M0无法逼近该oracle且证据表明candidate support受限时解锁；
+- failure_ledger_delta=`none`，下一V7.1 failure ID仍为`V71-F02`。
+
 ## WorldSim V7.1 failure ledger 启动（2026-09-03）
 
 ### V71-F01 — 独立 V7.1 runner 未自举仓库根目录

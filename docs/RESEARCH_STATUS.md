@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 S1 displacement action space feasible / M0 unlocked（2026-09-03）
+
+状态：`v71_s1_displacement_feasible_s2_m0_unlocked`；canonical=`run://worldsim_v71/
+WS-V71-S1-DISPLACEMENT-ORACLE-01/20260903T101000Z__s1-displacement-oracle-r1`。64 train Actors（hazard/clear=
+31/33）、12 scenes、36,101条oracle-check rays在唯一3090 run完成；oracle-fit与oracle-check按held-out index交替，
+selection/source-final/AV2均未读。
+
+Hazard literal early=`18.635%→17.553%`，相对下降=`5.802%`；population mean Chamfer=
+`.269673→.265895m`，delta=`-3.778mm`；hit recall=`41.916→44.184%`，delta=`+2.269pp`；Actor/hazard state
+retention=`100/100%`。D1四项全部true，因此candidate displacement action space可行，V7.1进入M0，不执行S1-B/M1。
+边界：clear early=`15.371→15.988%`（相对恶化`4.009%`），必须在M0 selection显式报告，不能只展示hazard收益。
+
+Run wall=`191.03s`、peak GPU/RSS=`1.756/1.567GiB`，无error/retry；failure_ledger_delta=`none`，下一V7.1
+failure仍为`V71-F02`。下一步并行化为低内存CPU Actor corpus producer与单GPU M0 consumer；不等待120-scene语料全部完成，
+不读取selection/source-final/AV2来选模型。
+
 ## WorldSim V7.1 S0 branch / continuous-surface implementation ready（2026-09-03）
 
 状态：`v71_s0_done_s1_displacement_oracle_ready`；branch=`research/worldsim-v7.1-learned-evidential-surface`，base=

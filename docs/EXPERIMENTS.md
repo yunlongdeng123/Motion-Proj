@@ -1,5 +1,22 @@
 # Experiments
 
+## WS-V71-S1-DISPLACEMENT-ORACLE-01 — canonical result（2026-09-03）
+
+- run=`20260903T101000Z__s1-displacement-oracle-r1`；status=`done`；verdict=
+  `displacement_action_space_feasible`；failure_ledger_refs=`V7-F24--V7-F29`；failure_ledger_delta=`none`；
+- data=`nuScenes train only`，12/120 scenes、64 Actors（31 hazard/33 clear）；frame roles=`mod3 0,1 build / 2 target`，
+  target再按index偶/奇拆oracle-fit/check；selection/source-final/AV2 read=false；
+- fixed action：每个COMPLETE candidate输出bounded`Delta d_ray/Delta d_normal`，KEEP/matched PROJECT不动；60 Adam steps，
+  differentiable alpha first-return + bidirectional Chamfer + anchor/smooth；无loss/seed/threshold sweep；
+- check metrics：all early=`17.578→17.047%`（relative `-3.026%`），hazard=`18.635→17.553%`
+  （relative `-5.802%`），clear=`15.371→15.988%`（relative `+4.009%`）；
+- surface/hit：mean symmetric Chamfer=`269.673→265.895mm`，delta=`-3.778mm`；hit recall=
+  `41.916→44.184%`，delta=`+2.269pp`；retention=`100%`；
+- decisions=`4/4 true`；wall=`191.034s`、peak GPU=`1.7559GiB`、peak RSS=`1.5667GiB`；
+- artifacts=`summary.json/status.json/resolved.yaml/ORACLE_ACTORS.jsonl/ORACLE_DISPLACEMENTS.pt`；按用户约束不生成
+  hash/checksum/fingerprint；
+- next=`S2 compact Actor corpus producer + M0 consumer`；S1-B/M1保持locked。
+
 ## WS-V71-S0-IMPLEMENTATION-01 — branch / source split / surface-field skeleton（2026-09-03）
 
 - status=`done`；branch=`research/worldsim-v7.1-learned-evidential-surface`，source=
