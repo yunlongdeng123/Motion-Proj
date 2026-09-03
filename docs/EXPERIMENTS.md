@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01 r3 — canonical negative result（2026-09-03）
+
+- run=`20260903T111000Z__m0-ray-displacement-s71101-r3`；status=`done`；verdict=
+  `m0_source_selection_rejected`；failure=`V71-F04`；
+- training=`1004 corpus / 659 candidate-bearing Actors`；distill loss=`0.070885→0.065920`；physical loss=
+  `2.065807→2.020741`；seed=`71101`，未复用r2权重；
+- Selection=`20 scenes / 88 Actors / 36 hazard / 126,088 rays`，exact-once read=true；source-final/AV2 read=false；
+- literal early relative reduction=`17.338% all / 19.435% hazard / 8.651% clear`，hazard gate pass；
+- surface=`Chamfer +48.745mm`（fail `<=+0.5mm`），hit recall=`-10.819pp`（fail `>=-1pp`），Actor/hazard
+  retention=`100/100%`；3/5 gates；
+- collapse audit=`1710/2295=74.51% UNKNOWN`，hazard/clear=`79.39/65.33%`，all-UNKNOWN Actors=`9`，mean
+  displacement=`0.0673m`；
+- resources=`391.394s`、peak GPU=`0.23399GiB`、peak RSS=`1.73968GiB`；无engineering error；
+- decision=`M0 closed`；不调threshold/loss/seed、不做PCGrad after Selection；conditional M1 unlocked，B4 mandatory。
+
 ## WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01 — canonical result（2026-09-03）
 
 - run=`20260903T110000Z__processed-corpus-recovery-r1`；status=`done`；verdict=

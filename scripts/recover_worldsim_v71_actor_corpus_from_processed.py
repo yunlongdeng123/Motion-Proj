@@ -210,6 +210,8 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             {
                 **summary,
                 "schema_version": "worldsim_v71.corpus_manifest.v2",
+                "verdict": "train_corpus_target_met" if passed else summary["verdict"],
+                "recovery_verdict": summary["verdict"],
                 "processed_completed_scenes": completed_scenes,
             },
         )

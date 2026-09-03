@@ -22,6 +22,16 @@ For physical compilation we compare naive reconstruction, a legacy validity filt
 \paragraph{Metrics.}
 Physical metrics include free-space violation, ray termination, point-to-surface error, LiDAR depth consistency, temporal jitter, ghost components, and surface completeness. Hazard preservation reports Actor/ID/lifecycle retention, trajectory and TTC shift, and event-count change. Factorization reports artifact/hazard AUROC and AUPRC, clean-hazard false-artifact rate, paired prediction shift, and cross-probe leakage. Reliability reports log likelihood, integrated Brier score, calibration error, Spearman correlation, monotonic violations, and runtime.
 
+\paragraph{Continuous geometry oracle and learned displacement.}
+On train-only Actors, a bounded ray/normal displacement oracle reduces hazardous literal early returns by
+\VSevenOneSOneHazardEarlyReduction{} while changing mean Chamfer by \VSevenOneSOneChamferDeltaMm{}\,mm and retaining all
+Actor states. This establishes a feasible continuous action space without deleting completion candidates. The fixed M0 residual
+model does not reproduce that Pareto point on the \VSevenOneMZeroSelectionActors{}-Actor source selection set. Hazardous early
+returns fall by \VSevenOneMZeroHazardEarlyReduction{}, but Chamfer changes by \VSevenOneMZeroChamferDeltaMm{}\,mm and hit
+recall by \VSevenOneMZeroHitRecallDeltaPp{} percentage points. It labels \VSevenOneMZeroUnknownFraction{} of completion
+candidates unknown, so the apparent ray benefit is principally abstention rather than learned relocation. We therefore
+\VSevenOneMZeroVerdict{} M0 under the pre-registered Pareto rule and evaluate the conditionally specified implicit field next.
+
 \paragraph{Zero-shot Actor-local surface evidence.}
 Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
 LiDAR points inside each annotated cuboid into its Actor frame. Unlike appearance-oriented seed initialization, we never mirror

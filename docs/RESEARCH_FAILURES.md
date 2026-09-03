@@ -1,5 +1,22 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F04 — M0以UNKNOWN collapse换取首返回下降，surface Pareto失败
+
+- 分类/状态：scientific / terminal for M0；canonical=`run://worldsim_v71/
+  WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/20260903T111000Z__m0-ray-displacement-s71101-r3`；
+- 观察：88 Selection Actors（36 hazard）、126,088 rays上，hazard/all/clear literal early相对下降
+  `19.435/17.338/8.651%`，但Chamfer `0.245436→0.294181m`（`+48.745mm`），hit recall
+  `43.935→33.117%`（`-10.819pp`）；retention两项100%，仅3/5 gates通过；
+- mechanism：2,295个COMPLETE candidates中1,710个（74.51%）被判UNKNOWN，hazard/clear分别79.39/65.33%，
+  9个Actor全候选消失；mean displacement仅`0.0673m`。M0主要重现delete/abstain，不是S1 oracle的surface relocation；
+- literature/open-source response：NeurIPS 2020 PCGrad只在任务梯度负内积时投影冲突梯度；CVPR 2024 SelfOcc通过
+  SDF-induced ray weights联合几何与深度；NeurIPS 2024 object-centric occupancy completion用长轨迹与implicit shape
+  decoder生成动态尺寸占据。这里主故障是UNKNOWN collapse，且Selection已读，不能据结果追加PCGrad或调threshold/loss；
+- decision：关闭M0，不复用其Selection调参或二次M0。S1连续几何oracle已可行而M0无法逼近，按预注册条件只解锁一次
+  M1 Actor-local evidential implicit field；B4 TSDF baseline仍必须实现；source-final/AV2保持未读；
+- artifact boundary：MODEL.pt保留为被拒candidate，不能称frozen主模型；canonical summary旧F02 placeholder由本条覆盖；
+  下一可用failure ID=`V71-F05`。
+
 ## V71-F03 — 已在盘raw train/reserve语料不足1000条冻结门槛
 
 - 分类/状态：data capability / resolved by role-disjoint processed recovery；canonical S2=`run://worldsim_v71/

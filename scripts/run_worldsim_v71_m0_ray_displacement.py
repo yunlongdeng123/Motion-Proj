@@ -446,7 +446,7 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             "source_final_read": False,
             "external_read": False,
             "failure_ledger_refs": config["failure_ledger_refs"],
-            "failure_ledger_delta": "none" if passed else "V71-F02-required-at-closeout",
+            "failure_ledger_delta": "none" if passed else "failure-id-required-at-closeout",
             "resources": {
                 "device": str(device),
                 "peak_gpu_memory_gib": torch.cuda.max_memory_allocated(device) / (1024**3),

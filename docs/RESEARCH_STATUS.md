@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M0 rejected / M1 implicit field unlocked（2026-09-03）
+
+Canonical M0=`run://worldsim_v71/WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/
+20260903T111000Z__m0-ray-displacement-s71101-r3`。1004条corpus中659条有非空candidate并完成40轮oracle distill +
+24轮physical train；唯一20-scene Source Selection产生88 Actors（36 hazard）、126,088 rays。Hazard literal early相对
+下降`19.435%`，但Chamfer恶化`+48.745mm`、hit recall下降`10.819pp`，3/5 gates，verdict=
+`m0_source_selection_rejected`。Actor/hazard retention均100%。
+
+机制审计显示UNKNOWN=`1710/2295=74.51%`，hazard更高达79.39%，9 Actors全部COMPLETE候选消失；平均位移只有
+`0.0673m`。因此首返回收益来自删除式collapse，不是S1已证明的surface relocation。登记`V71-F04`并永久关闭M0；
+不在已消费Selection上调unknown threshold、loss、PCGrad、seed或再跑第二M0。
+
+按计划条件“S1 oracle可行 + M0无法逼近”解锁固定128D encoder、4x128 implicit SCF/evidence M1；B4非学习
+Actor-local evidential TSDF同步实现。source-final/AV2均保持未读，下一failure ID=`V71-F05`。
+
 ## WorldSim V7.1 S2 processed recovery passed / M0 r3 unlocked（2026-09-03）
 
 Canonical recovery=`run://worldsim_v71/WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01/
