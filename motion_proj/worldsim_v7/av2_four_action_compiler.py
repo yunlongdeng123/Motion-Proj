@@ -156,8 +156,13 @@ def _compile_actor(
 ) -> tuple[dict[str, Any], dict[str, Any]] | None:
     surface_config = config["surface"]
     stride = int(surface_config["evaluation_stride"])
-    build_records = [item for item in records if item["frame_rank"] % stride != 0]
-    heldout_records = [item for item in records if item["frame_rank"] % stride == 0]
+    heldout_modulo = int(surface_config.get("heldout_modulo_value", 0))
+    build_records = [
+        item for item in records if item["frame_rank"] % stride != heldout_modulo
+    ]
+    heldout_records = [
+        item for item in records if item["frame_rank"] % stride == heldout_modulo
+    ]
     if (
         len(build_records) < int(surface_config["minimum_build_frames"])
         or len(heldout_records) < int(surface_config["minimum_heldout_frames"])

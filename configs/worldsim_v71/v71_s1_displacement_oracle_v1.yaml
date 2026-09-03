@@ -1,0 +1,84 @@
+task_id: WS-V71-S1-DISPLACEMENT-ORACLE-01
+hypothesis_id: WS-V71-H-S1-CONTINUOUS-DISPLACEMENT
+runs_root: /root/autodl-tmp/runs
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+p4_config: configs/worldsim_v7/p4_nuscenes_selective_factorization_v1.yaml
+source_split: configs/worldsim_v71/source_split_v1.json
+device: cuda
+failure_ledger_refs:
+  - V7-F24
+  - V7-F25
+  - V7-F26
+  - V7-F27
+  - V7-F28
+  - V7-F29
+claim_boundary: >-
+  Per-Actor train-tracklet oracle only. It moves COMPLETE candidates while KEEP,
+  matched PROJECT, Actor identity, trajectory, extent and hazard state stay fixed.
+  Oracle-fit rays receive gradients and disjoint oracle-check rays own the result.
+source:
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  train_scene_count: 120
+  selection_scene_count: 20
+  final_scene_count: 20
+  minimum_lidar_frames: 9
+  maximum_oracle_actors: 64
+actors:
+  minimum_track_states: 9
+  actor_batch_size: 32
+  box_padding_m: 0.15
+  maximum_points_per_actor_frame: 4096
+  hazard:
+    ego_radius_m: 1.20
+    maximum_ttc_s: 30.0
+    minimum_closing_speed_mps: 0.50
+    hazard_ttc_s: 3.0
+    hazard_clearance_m: 2.0
+    hard_brake_reference_mps2: 4.0
+    hazard_hard_brake_score: 0.75
+    hard_brake_interaction_range_m: 15.0
+    crossing_forward_window_m: 20.0
+    crossing_interaction_range_m: 5.0
+compiler_overrides:
+  surface:
+    evaluation_stride: 3
+    heldout_modulo_value: 2
+    minimum_build_frames: 4
+    minimum_heldout_frames: 3
+  actors:
+    categories:
+      - REGULAR_VEHICLE
+      - BUS
+      - BOX_TRUCK
+      - TRUCK
+      - VEHICULAR_TRAILER
+      - SCHOOL_BUS
+      - ARTICULATED_BUS
+      - LARGE_VEHICLE
+oracle:
+  steps: 60
+  learning_rate: 0.02
+  maximum_ray_displacement_m: 0.30
+  maximum_normal_displacement_m: 0.20
+  cuboid_padding_m: 0.15
+  normal_neighbors: 8
+  smooth_neighbors: 4
+  anchor_weight: 0.05
+  smooth_weight: 0.05
+  maximum_total_rays: 2048
+  output_voxel_size_m: 0.06
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+  renderer:
+    sample_count: 64
+    surface_sigma_m: 0.08
+    density_scale: 2.0
+    fallback_margin_m: 0.50
+    ray_chunk_size: 128
+    point_chunk_size: 256
+decision:
+  minimum_hazard_literal_relative_reduction: 0.05
+  maximum_chamfer_delta_m: 0.0005
+  required_actor_state_retention: 1.0
+  required_hazard_state_retention: 1.0

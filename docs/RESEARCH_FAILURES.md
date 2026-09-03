@@ -1,5 +1,27 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## WorldSim V7.1 failure ledger 启动（2026-09-03）
+
+### V71-F01 — 独立 V7.1 runner 未自举仓库根目录
+
+- 分类/状态：engineering / resolved；发生于`freeze_worldsim_v71_source_split.py`首次入口，数据与quality尚未读取；
+- 观察：在repo root直接执行脚本时`ModuleNotFoundError: motion_proj`，与历史`V6-F66`同类；
+- 根因：Python把`scripts/`而非仓库根目录放在`sys.path[0]`；新入口遗漏既有防复发合同；
+- 修复：source-split与S1 runner都从`Path(__file__).parents[1]`绑定repo root，随后metadata split成功冻结且V7.1定向
+  测试`6 passed`；
+- 防重复：后续V7.1独立入口沿用同一自举段；不得靠调用者临时`PYTHONPATH`掩盖正式入口缺陷；
+- 证据：task=`WS-V71-S0-IMPLEMENTATION-01`，branch=`research/worldsim-v7.1-learned-evidential-surface`，commit=
+  本逻辑提交；failure_ledger_delta=`V71-F01 resolved`。下一可用V7.1 failure ID=`V71-F02`。
+
+### V7-F24--V7-F29 migration note — V7.1 改变表面位置而非复开删除族
+
+- V7-F24证明独立点级三态分类在首返回组合下不闭合；V7-F25/F26证明ray-only与hybrid keep/delete都以Chamfer/hit为代价；
+- V7-F27/F28关闭Actor router和one-slot veto；V7-F29把删除族边界限定为early单调而非surface Pareto；
+- V7.1唯一新假设是连续`Delta d_ray/Delta d_normal`或条件SDF/SCF能移动/生成表面。它不调旧threshold、不改变Actor/
+  hazard状态，也不以UNKNOWN删除冒充表面修复；
+- S1必须先在oracle-check rays同时验证hazard literal early相对下降`>=5%`与Chamfer delta`<=0.5mm`。若candidate
+  displacement不可行，只允许一次sparse field oracle；A/B均失败即停止learned C1。
+
 ## Submission-inventory note — current page count overrides historical milestones（2026-09-02）
 
 - safety-boundary reflow把当前supplement从10页收敛为9页，checklist/final audit一度仍写10页；现已同步；

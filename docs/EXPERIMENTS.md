@@ -1,5 +1,23 @@
 # Experiments
 
+## WS-V71-S0-IMPLEMENTATION-01 — branch / source split / surface-field skeleton（2026-09-03）
+
+- status=`done`；branch=`research/worldsim-v7.1-learned-evidential-surface`，source=
+  `research/worldsim-v7-harp3d-cvpr@4d5819f`；plan=`docs/WORLDSIM_V7_1_LEARNED_EVIDENTIAL_ACTOR_SURFACE_FIELD_PLAN.md`；
+- failure_ledger_refs=`V7-F24,V7-F25,V7-F26,V7-F27,V7-F28,V7-F29,V6-F66`；failure_ledger_delta=
+  `V71-F01 resolved`；
+- source split=`configs/worldsim_v71/source_split_v1.json`：120/20/20 scenes，roles disjoint=true，selection/final从V7未用
+  scene冻结，quality_read=false；frame role=`0,1 build / 2 target`；rigid vehicle only；
+- implementation=`actor_canonical/evidence_volume/first_return_renderer/surface_oracle/ray_displacement/actor_surface_field/
+  surface_extract/evaluate_surface/dataset_nuscenes/dataset_av2/av2_adapter`；observed KEEP/matched PROJECT为硬anchor，UNKNOWN
+  不进入collision surface，Actor/trajectory/extent/hazard immutable；
+- paper=`Draft 0`：HARP-Field占位、三项learned-geometry related work、C3 Eq.11输入纠正、V7 immutable main baseline、
+  V7.1 result placeholders；
+- validation=`PYTHONPATH=. pytest -q tests/test_worldsim_v71_surface_field.py` → `6 passed in 2.15s`；仅覆盖计划要求的
+  6个合同，不扩展smoke/regression；
+- provenance policy：按用户约束不生成hash/checksum/fingerprint；run ID、resolved config、JSONL/summary与checkpoint仍保留；
+- next=`WS-V71-S1-DISPLACEMENT-ORACLE-01`唯一GPU run，train内fit/check交替，selection/source-final/AV2 unread。
+
 ## Submission-inventory consistency audit（2026-09-02）
 
 - corrected current-state docs：`SUBMISSION_CHECKLIST.md`与`V7_FINAL_COMPLETION_AUDIT.md`统一为9-page supplement；

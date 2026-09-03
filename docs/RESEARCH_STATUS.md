@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7.1 S0 branch / continuous-surface implementation ready（2026-09-03）
+
+状态：`v71_s0_done_s1_displacement_oracle_ready`；branch=`research/worldsim-v7.1-learned-evidential-surface`，base=
+`research/worldsim-v7-harp3d-cvpr@4d5819f`。新增`motion_proj/worldsim_v71/`连续几何接口：Actor canonical
+坐标、FREE/OCCUPIED/UNKNOWN opportunity-normalized evidence、可微首返回渲染、literal beam-tube evaluator、S1
+candidate displacement oracle、M0 PointNet residual、条件M1 evidential anisotropic SCF、zero-crossing extraction及
+nuScenes/AV2 adapter。历史V7编译器仅增加默认值为0的`heldout_modulo_value`兼容项；V7.1固定`mod 3={0,1}`构证据、
+`mod 3=2`作为held-out。
+
+metadata-only source split已冻结为`120 train / 20 selection / 20 source_final`，三角色互斥；selection/final从V7未使用
+scene中按官方metadata顺序选取，quality read=false。当前仅授权S1读取train的oracle-fit/oracle-check；selection、
+source_final与AV2 V7.1 target均未读。S1配置=`configs/worldsim_v71/v71_s1_displacement_oracle_v1.yaml`，直接引用
+`V7-F24--V7-F29`，不复开分类、keep/delete、router、veto或threshold sweep。
+
+论文Draft 0已加入HARP-Field占位、SelfOcc/Object-Centric Occupancy Completion/SparseOcc++机制边界，C3 density输入已
+纠正为`p(y|s_actor,H,d_clearance)`；V7 main PDF保存为immutable baseline。定向最小测试=`6 passed`；无hash、checksum、
+fingerprint或仓库级回归矩阵。已解决入口工程失败`V71-F01`。下一步直接执行唯一S1-A oracle；若连续candidate支撑不足，
+按D1进入sparse field oracle，而不是回到selector。
+
 ## WorldSim V7 submission inventory synchronized（2026-09-02）
 
 `paper/SUBMISSION_CHECKLIST.md`与`V7_FINAL_COMPLETION_AUDIT.md`已从历史10页状态同步到当前9页supplement，并将
