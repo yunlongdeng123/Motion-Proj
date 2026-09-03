@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V71-S2-ACTOR-CORPUS-01 result / processed recovery freeze（2026-09-03）
+
+- canonical S2=`20260903T102000Z__actor-corpus-r1`；status=`done`；verdict=
+  `train_corpus_exhausted_below_target`；133 scenes、721 Actors、319 hazard、64 oracle target、20,022,368 cache bytes；
+  wall=`72.40s`、peak RSS=`0.751GiB`；Selection/source-final/AV2 read=false；
+- M0 r2=`20260903T102500Z__m0-ray-displacement-s71101-r2`：40 distill epochs、24 physical epochs、457 eligible Actors，
+  physical loss=`2.066132→2.015480`；随后因721<1000在Selection前按设计失败，0 frozen model/Selection metric；
+- failure=`V71-F03`；旧S2 summary的F02 closeout placeholder不改写canonical artifact，由ledger明确覆盖；
+- processed audit=`96` role-disjoint scenes / `2,794` metadata-eligible rigid tracklets；scene identity只按官方`scene.json`
+  index映射，尚未读取这些场景的surface quality；
+- recovery task=`WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01`：processed-root优先级v67→v5→v4；实际novel资产位于v4；
+  10 Hz annotations按stride 5取2 Hz keyframes，LiDAR width=4；Actor minimum states=9、mod3 build/target、compiler/evidence/
+  cache合同均与S2相同；总数达到1000即停止追加；
+- locks：排除原120 train、13 reserve及20/20 Selection/Final；protected quality unread；不降1000门槛、不改M0 config，
+  不增加hash/checksum/fingerprint或额外回归矩阵。
+
 ## WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01 r1 failed / r2 recovery（2026-09-03）
 
 - r1=`20260903T102200Z__m0-ray-displacement-s71101-r1`；status=`failed before training`；error=

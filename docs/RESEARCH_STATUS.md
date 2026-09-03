@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 S2 raw corpus exhausted / processed recovery implemented（2026-09-03）
+
+状态：`v71_s2_processed_recovery_ready`。Canonical S2在120 train + 13可用reserve、133 scenes上得到721 Actors
+（319 hazard、64带S1 oracle target），低于冻结`>=1000`；登记`V71-F03`。Selection/source-final/AV2 read均为false。
+M0 r2完成40轮distill与24轮physical train（457条非空candidate Actor，loss=`2.0661→2.0155`）后按门槛停止，
+没有冻结checkpoint或读取Selection，因此只是train-only开发证据。
+
+本机现有DriveStudio处理资产metadata-only审计发现96个不与当前Train/Selection/Final重叠的scene，按stride 5恢复
+2 Hz keyframe后有2,794条刚体候选。新增`dataset_drivestudio.py`与processed recovery runner：用原始4-float LiDAR、
+`lidar_pose`和`obj_to_world`回到同一Actor-local坐标，继续固定`mod3={0,1}` build、`mod3=2` target；仍使用原编译器、
+evidential mass与per-Actor cache schema，不读取protected quality，不加入hash/checksum/fingerprint。
+
+恢复只追加纯train Actor直至总数达1000，不移动20/20 Selection/Final、不降低minimum states/门槛。达到目标后从头启动
+同一seed71101 M0 r3；当前下一failure ID=`V71-F04`。
+
 ## WorldSim V7.1 M0 r1 pre-training cache-enumeration failure / r2 ready（2026-09-03）
 
 M0 r1=`run://worldsim_v71/WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/

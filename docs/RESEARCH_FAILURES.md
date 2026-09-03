@@ -1,5 +1,22 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F03 — 已在盘raw train/reserve语料不足1000条冻结门槛
+
+- 分类/状态：data capability / recovery in progress；canonical S2=`run://worldsim_v71/
+  WS-V71-S2-ACTOR-CORPUS-01/20260903T102000Z__actor-corpus-r1`；
+- 观察：120个主train加13个实际可索引reserve共133 scenes只产出721条合格刚体Actor（319 hazard、64 oracle target），
+  低于冻结`>=1000`；wall=`72.40s`、cache=`20,022,368 bytes`；
+- exposure：仅train读取；Selection/source-final/AV2均未读。M0 r2完成40轮oracle distill与24轮physical train后在同一
+  manifest门槛处停止，未保存冻结模型、未读Selection；
+- 根因：本机`drivestudio_raw_trainval`只保留174个左右有keyframe LiDAR的场景，当前split已经耗尽其中可用train，
+  不是模型、显存或下载器失败；S2旧summary中的`V71-F02-required-at-closeout`占位由本条实际编号取代；
+- literature/open-source response：nuScenes官方devkit要求full trainval经条款页面取得全部数据包；本机同时已有
+  DriveStudio标准`instances_info/lidar/lidar_pose`处理资产，因此先复用同数据集现存资产，避免下载阻塞GPU研究；
+- recovery：保持1000门槛和20/20 Selection/Final不动；只从96个与所有冻结角色不重叠的processed scenes按stride 5
+  取2 Hz关键帧，以同一三模帧角色、Actor编译器和evidence物化合同补语料。metadata审计得到2,794条候选刚体轨迹；
+- 防重复：不得把Selection/Final搬入train、降低minimum states/tracklet target，或把M0 r2 train-only曲线包装为模型结果；
+  processed recovery达标后从头运行同一M0配置。下一可用failure ID=`V71-F04`。
+
 ## V71-F02 — consumer把producer临时NPZ误当成完整Actor cache
 
 - 分类/状态：engineering / resolved；canonical failed run=`run://worldsim_v71/

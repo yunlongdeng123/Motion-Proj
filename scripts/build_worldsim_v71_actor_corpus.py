@@ -107,7 +107,7 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             "source_final_read": False,
             "external_read": False,
             "failure_ledger_refs": config["failure_ledger_refs"],
-            "failure_ledger_delta": "none" if len(rows) >= minimum else "V71-F02-required-at-closeout",
+            "failure_ledger_delta": "none" if len(rows) >= minimum else "failure-id-required-at-closeout",
             "resources": {
                 "device": str(device),
                 "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / (1024**2),
@@ -117,7 +117,8 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
         _write_json(run_dir / "summary.json", summary)
         _write_json(run_dir / "ACTOR_INDEX.json", rows)
         _write_json(cache_root / "manifest.json", {**summary, "completed_scenes": completed_scenes})
-        (cache_root / "TRAIN_COMPLETE").write_text("done\n", encoding="utf-8")
+        marker = "TRAIN_COMPLETE" if len(rows) >= minimum else "TRAIN_INCOMPLETE_BELOW_TARGET"
+        (cache_root / marker).write_text("done\n", encoding="utf-8")
         _write_json(run_dir / "status.json", {"status": "done", "phase": "train_corpus", "completed_at_utc": datetime.now(timezone.utc).isoformat()})
         return {"run_dir": str(run_dir), "verdict": summary["verdict"], "actor_count": len(rows)}
     except Exception as error:
