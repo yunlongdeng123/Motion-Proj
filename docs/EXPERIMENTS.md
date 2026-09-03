@@ -1,5 +1,22 @@
 # Experiments
 
+## WS-V71-S2-ACTOR-CORPUS-01 / WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01 — preregistration（2026-09-03）
+
+- S2 source=`120 train scenes + 14 metadata-only reserves if needed`；target=`>=1000 rigid tracklets`；output=per-Actor compact
+  NPZ + manifest/index/summary；producer=`CPU, OMP/MKL 8 threads`；hazard仅写入分层metadata，不进入features；
+- cache fields=`canonical/anchors/candidates/base features/build evidential masses/opportunity counts/size/trajectory/target rays/
+  target surface/S1 oracle displacement when available`；frame role=`0,1 build / 2 target`；
+- M0 start=`>=64 complete actor NPZ`，随后动态吸收新增train cache；architecture=`25-128-128 + Actor max-pool context ->
+  ray displacement, normal displacement, unknown logit`；seed=`71101`，distill/physical epochs=`40/24`，Actor batch=`4`；
+- losses=`S1 displacement distill`后固定等权normalized differentiable first-return + bidirectional surface，另加`.05/.05/.10`
+  anchor/smooth/evidence；无loss-weight sweep；observed anchors冻结；
+- source Selection decision=`hazard literal relative reduction>=5% AND Chamfer delta<=0.5mm AND hit recall delta>=-1pp AND
+  Actor/hazard retention=100%`；all/clear同时描述但不事后增加门；
+- data boundary：corpus不足1000即Selection unread stop；checkpoint在corpus complete后冻结，20-scene Selection exact-once；
+  source-final/AV2 unread；
+- failure_ledger_refs=`V7-F24--V7-F29`；failure_ledger_delta=`none` at freeze；按用户约束无hash/checksum/fingerprint；
+- implementation check=`py_compile` + `tests/test_worldsim_v71_surface_field.py` → `6 passed in 1.77s`；下一步正式启动。
+
 ## WS-V71-S1-DISPLACEMENT-ORACLE-01 — canonical result（2026-09-03）
 
 - run=`20260903T101000Z__s1-displacement-oracle-r1`；status=`done`；verdict=

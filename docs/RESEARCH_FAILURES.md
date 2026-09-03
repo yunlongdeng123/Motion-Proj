@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 S2/M0 prevention note — I/O并行不放宽语料与Selection边界（2026-09-03）
+
+- S2可以在M0训练期间继续物化，但每个Actor NPZ先写临时文件再原子rename；consumer只读取完整`.npz`；
+- 120-scene主train若不足1000 tracklets，只允许读取metadata冻结的14个`train_reserve`；不得移动selection/final、删除难Actor
+  或降低1000门槛；所有available train仍不足时登记`V71-F02`并在Selection前停止；
+- M0固定25维非hazard输入、128D residual、seed71101、oracle-distill→physical fine-tune两阶段；不得用Selection选择
+  hidden/loss/seed/unknown threshold；
+- physical training可动态吸收producer新增Actor，但checkpoint必须在corpus complete后冻结；Selection只读一次，source-final/
+  AV2保持未读；
+- 本里程碑只有实现与定向测试，无新failure，下一ID仍为`V71-F02`。
+
 ## V7.1 S1 outcome note — 连续位移形成hazard/surface Pareto（2026-09-03）
 
 - canonical=`run://worldsim_v71/WS-V71-S1-DISPLACEMENT-ORACLE-01/

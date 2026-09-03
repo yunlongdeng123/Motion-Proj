@@ -61,12 +61,14 @@ def freeze_source_split(
     train = [name for name in available if name not in reserved][:train_count]
     if len(train) < train_count:
         raise RuntimeError("可用 scene 不足以冻结 V7.1 train")
+    train_reserve = [name for name in available if name not in reserved and name not in set(train)]
     return {
         "schema_version": "worldsim_v71.source_split.v1",
         "selection_rule": "official_scene_order_available_lidar_prior_v7_excluded_from_selection_final",
         "dataset_root": str(dataset_root),
         "minimum_lidar_frames": int(minimum_lidar_frames),
         "roles": {"train": train, "selection": selection, "source_final": final},
+        "train_reserve": train_reserve,
         "role_counts": {"train": len(train), "selection": len(selection), "source_final": len(final)},
         "roles_disjoint": len(set(train) | set(selection) | set(final)) == len(train) + len(selection) + len(final),
         "quality_read": False,

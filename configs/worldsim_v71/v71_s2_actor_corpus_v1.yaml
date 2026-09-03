@@ -1,0 +1,40 @@
+task_id: WS-V71-S2-ACTOR-CORPUS-01
+runs_root: /root/autodl-tmp/runs
+source_split: configs/worldsim_v71/source_split_v1.json
+s1_oracle_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-S1-DISPLACEMENT-ORACLE-01/20260903T101000Z__s1-displacement-oracle-r1
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+device: cpu
+failure_ledger_refs: [V7-F24, V7-F25, V7-F26, V7-F27, V7-F28, V7-F29]
+source:
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  minimum_tracklet_count: 1000
+actors:
+  minimum_track_states: 9
+  actor_batch_size: 16
+  box_padding_m: 0.15
+  maximum_points_per_actor_frame: 4096
+  hazard:
+    ego_radius_m: 1.20
+    maximum_ttc_s: 30.0
+    minimum_closing_speed_mps: 0.50
+    hazard_ttc_s: 3.0
+    hazard_clearance_m: 2.0
+    hard_brake_reference_mps2: 4.0
+    hazard_hard_brake_score: 0.75
+    hard_brake_interaction_range_m: 15.0
+    crossing_forward_window_m: 20.0
+    crossing_interaction_range_m: 5.0
+compiler_overrides:
+  surface:
+    evaluation_stride: 3
+    heldout_modulo_value: 2
+    minimum_build_frames: 4
+    minimum_heldout_frames: 3
+corpus:
+  maximum_input_surfels: 4096
+  maximum_build_evidence_points: 16384
+  maximum_target_rays: 4096
+  beam_radius_m: 0.20
+  endpoint_radius_m: 0.12
+  query_chunk_size: 256

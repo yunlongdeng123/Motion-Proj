@@ -450,6 +450,10 @@ def _compile_actor(
                 _deterministic_limit(item["points"], maximum_points)
                 for item in build_records
             ],
+            "build_sensor_origins": [
+                np.asarray(item["sensor_origin"], dtype=np.float32)
+                for item in build_records
+            ],
             "query": query,
             "query_sensor_origin": sensor_origin,
             "target": target,

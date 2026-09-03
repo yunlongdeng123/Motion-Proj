@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 S2 corpus / M0 streaming implementation ready（2026-09-03）
+
+状态：`v71_s2_m0_streaming_ready`。S2按Actor原子写入`/root/autodl-tmp/data/worldsim_v71/corpus_v1/train/<scene>/<track>.npz`，
+内容包含build-only canonical/anchors/evidence mass、target rays/surface、Actor尺寸/trajectory以及可用的S1 oracle displacement；
+FREE/OCCUPIED/UNKNOWN只由build frame endpoints和ray transmission产生，不读取hazard作为模型输入。Source split额外冻结
+14个`train_reserve` scenes；仅当120-scene train不足1000 tracklets时扩充，selection/source-final不动。
+
+M0 consumer在首批64 Actor落盘后立即启动oracle distillation，physical epochs逐轮发现新NPZ并吸收，避免等待全部I/O；
+producer固定CPU/8 threads，consumer固定单RTX3090。只有S2达到`>=1000` train tracklets且写出`TRAIN_COMPLETE`，M0才会
+冻结checkpoint并exact-once读取20-scene Selection；不足时在Selection前停止，不放宽规模。模型固定25维输入、128D
+PointNet residual、seed71101、一个`.5` unknown threshold、无hidden/loss/seed sweep。
+
+实现定向`py_compile`通过，六项V7.1合同测试=`6 passed in 1.77s`。当前train corpus、Selection、source-final、AV2均尚未
+启动/读取；failure_ledger_delta=`none`，下一步提交并push后同时启动唯一S2 producer与唯一M0 GPU consumer。
+
 ## WorldSim V7.1 S1 displacement action space feasible / M0 unlocked（2026-09-03）
 
 状态：`v71_s1_displacement_feasible_s2_m0_unlocked`；canonical=`run://worldsim_v71/
