@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M1 prevention note — 条件field不复用Selection调参（2026-09-03）
+
+- `V71-F04`只触发计划中预注册的M1分支；17D输入、128D latent、4x128 decoder、seed71102、20+10 epochs、
+  SCF band与三态定义在M1 Selection读取前一次冻结；
+- PCGrad不执行：M0失败由74.51% UNKNOWN collapse主导，并无预训练gradient-conflict证据；Selection后补做PCGrad会成为
+  outcome-guided M0 recovery；
+- LoRA保持锁定：只有M1 train也无法逼近oracle且field/optimizer无异常才允许一次；不得用Selection失败直接触发；
+- B4 TSDF完全非学习、只读build rays，不选择M1参数；M1失败则关闭learned C1，不追加field/grid/threshold sweep；
+- source-final/AV2在M1冻结前保持未读，下一可用failure ID仍为`V71-F05`。
+
 ## V71-F04 — M0以UNKNOWN collapse换取首返回下降，surface Pareto失败
 
 - 分类/状态：scientific / terminal for M0；canonical=`run://worldsim_v71/

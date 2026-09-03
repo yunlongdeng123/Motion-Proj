@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import torch.nn.functional as F
 from torch import nn
 
 
@@ -39,10 +40,21 @@ class EvidentialActorSurfaceField(nn.Module):
         query_normalized_xyz: torch.Tensor,
         actor_size_lwh_m: torch.Tensor,
     ) -> tuple[torch.Tensor, torch.Tensor]:
-        latent = self.encode(evidence_features).reshape(1, -1).expand(len(query_normalized_xyz), -1)
+        return self.decode(
+            self.encode(evidence_features), query_normalized_xyz, actor_size_lwh_m
+        )
+
+    def decode(
+        self,
+        latent: torch.Tensor,
+        query_normalized_xyz: torch.Tensor,
+        actor_size_lwh_m: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        latent = latent.reshape(1, -1).expand(len(query_normalized_xyz), -1)
         size = actor_size_lwh_m.reshape(1, 3).expand(len(query_normalized_xyz), -1)
         output = self.decoder(torch.cat([latent, query_normalized_xyz, size], dim=-1))
-        return output[:, :2], output[:, 2:]
+        # SCF两个分量是非负的planar/vertical boundary distance。
+        return F.softplus(output[:, :2]), output[:, 2:]
 
 
 def anisotropic_scf_distance(scf: torch.Tensor) -> torch.Tensor:

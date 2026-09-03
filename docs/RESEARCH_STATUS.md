@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M1/B4 implementation ready（2026-09-03）
+
+状态：`v71_m1_b4_implementation_ready`。M1严格按`V71-F04`条件解锁：17D Actor-local evidence/surface输入，
+128D PointNet latent，4x128 implicit decoder输出非负planar/vertical SCF与FREE/OCCUPIED/UNKNOWN logits；seed71102，
+20轮geometry/evidence pretrain后10轮SDF-induced first-return fine-tune。训练监督只来自target-only endpoint、近端FREE
+ray samples与未观测UNKNOWN；KEEP/PROJECT anchors在抽取后硬合并，不输入hazard/TTC。
+
+Surface extraction固定0.12m Actor-size-aware grid、planar/vertical band=`0.12/0.10m`，UNKNOWN不进入surface；20-scene
+Selection沿用条件协议，不调hidden/loss/seed/band/threshold。若M1仍失败，learned C1按计划关闭，不追加LoRA（当前没有
+证据表明encoder容量是失败原因）。
+
+B4同步实现为Actor-local evidential TSDF：沿真实build rays在0.36m窄截断带融合，只有双侧有观测权重的cell间提取
+zero crossing，再与hard anchors合并；未观测cell保持UNKNOWN。它是非学习外部基线，不参与M1选择。source-final/AV2
+仍未读；下一failure ID=`V71-F05`。
+
 ## WorldSim V7.1 M0 rejected / M1 implicit field unlocked（2026-09-03）
 
 Canonical M0=`run://worldsim_v71/WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/

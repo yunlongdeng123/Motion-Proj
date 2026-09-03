@@ -1,0 +1,86 @@
+task_id: WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01
+hypothesis_id: WS-V71-H-M1-IMPLICIT-EVIDENTIAL-FIELD
+runs_root: /root/autodl-tmp/runs
+source_split: configs/worldsim_v71/source_split_v1.json
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+m0_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/20260903T111000Z__m0-ray-displacement-s71101-r3
+device: cuda
+failure_ledger_refs: [V71-F04, V7-F24, V7-F25, V7-F26, V7-F27, V7-F28, V7-F29]
+source:
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+actors:
+  minimum_track_states: 9
+  actor_batch_size: 32
+  box_padding_m: 0.15
+  maximum_points_per_actor_frame: 4096
+  hazard:
+    ego_radius_m: 1.20
+    maximum_ttc_s: 30.0
+    minimum_closing_speed_mps: 0.50
+    hazard_ttc_s: 3.0
+    hazard_clearance_m: 2.0
+    hard_brake_reference_mps2: 4.0
+    hazard_hard_brake_score: 0.75
+    hard_brake_interaction_range_m: 15.0
+    crossing_forward_window_m: 20.0
+    crossing_interaction_range_m: 5.0
+compiler_overrides:
+  surface:
+    evaluation_stride: 3
+    heldout_modulo_value: 2
+    minimum_build_frames: 4
+    minimum_heldout_frames: 3
+evidence:
+  maximum_build_evidence_points: 16384
+  beam_radius_m: 0.20
+  endpoint_radius_m: 0.12
+  query_chunk_size: 256
+model:
+  seed: 71102
+  latent_dim: 128
+  hidden_dim: 128
+  geometry_epochs: 20
+  physical_epochs: 10
+  actor_batch_size: 4
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  maximum_training_actors: 1024
+  maximum_evidence_points: 2048
+  maximum_target_points: 256
+  maximum_anchor_points: 128
+  maximum_free_rays: 128
+  free_offsets_m: [0.12, 0.24, 0.36, 0.48]
+  unknown_points: 256
+  cuboid_padding_m: 0.15
+  planar_scf_scale_m: 0.36
+  vertical_scf_scale_m: 0.24
+  evidence_loss_weight: 1.0
+  scf_loss_weight: 1.0
+  first_return_loss_weight: 1.0
+  maximum_render_rays: 64
+  render_samples: 24
+  render_back_m: 0.48
+  render_front_m: 0.48
+  render_planar_sigma_m: 0.12
+  render_vertical_sigma_m: 0.10
+  render_density_scale: 2.0
+  first_return_scale_m: 0.20
+extraction:
+  cuboid_padding_m: 0.15
+  extraction_voxel_size_m: 0.12
+  maximum_extraction_points: 16384
+  extraction_chunk_size: 4096
+  planar_band_m: 0.12
+  vertical_band_m: 0.10
+  output_voxel_size_m: 0.06
+evaluation:
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+decision:
+  minimum_hazard_literal_relative_reduction: 0.05
+  maximum_chamfer_delta_m: 0.0005
+  minimum_hit_recall_delta: -0.01
+  required_actor_state_retention: 1.0
+  required_hazard_state_retention: 1.0

@@ -1,5 +1,22 @@
 # Experiments
 
+## WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01 / B4 — preregistration（2026-09-03）
+
+- unlock=`S1 displacement oracle feasible + M0 cannot approximate oracle`；M0 Selection只决定预注册条件分支，不用于
+  M1超参；
+- M1 input=`11D normalized completion evidence + Actor-normalized xyz + FREE/OCCUPIED/UNKNOWN masses`，并加入build
+  canonical/query anchors作为occupied evidence；hazard/TTC/label不进入模型；
+- architecture=`17→128 PointNet max pool + (latent, xyz, size)→4x128→2D SCF + 3 evidence logits`；seed=`71102`；
+- supervision=`target surface + target ray近端FREE offsets .12/.24/.36/.48m + uniform UNKNOWN`；Stage A=
+  evidence+normalized anisotropic SCF，20 epochs；Stage B额外加入SDF-induced differentiable first-return，10 epochs；
+- extraction=`0.12m adaptive cuboid grid, <=16384 queries, planar/vertical band .12/.10m`；UNKNOWN excluded；hard anchors
+  exact merged；
+- M1 Selection gates与M0相同：hazard early relative reduction>=5%、Chamfer<=+0.5mm、hit recall>=-1pp、两项retention=100%；
+  one fixed run；若失败关闭learned C1，不做threshold/loss/seed/grid sweep；
+- B4=`0.12m Actor-local TSDF / 0.36m truncation / min weight2`，只在观测双侧zero crossing生成surface并保留anchors；
+  非学习且不参与model selection；
+- validation budget=`py_compile + existing six V7.1 contracts only`；无hash/checksum/fingerprint或仓库级回归。
+
 ## WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01 r3 — canonical negative result（2026-09-03）
 
 - run=`20260903T111000Z__m0-ray-displacement-s71101-r3`；status=`done`；verdict=
