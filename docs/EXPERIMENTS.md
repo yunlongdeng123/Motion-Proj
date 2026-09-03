@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01 — canonical negative result（2026-09-03）
+
+- run=`20260903T113000Z__m1-evidential-field-s71102-r1`；status=`done`；verdict=
+  `m1_source_selection_rejected`；failure=`V71-F05`；
+- training=`659/1004 Actors`；geometry loss=`1.376633→0.897483`（20 epochs），physical loss=
+  `1.150254→0.922079`（10 epochs）；seed=`71102`；
+- Selection=`20 scenes / 88 Actors / 36 hazard / 126,088 rays`；conditional protocol read，source-final/AV2 unread；
+- literal early relative reduction=`26.740% all / 28.485% hazard / 19.514% clear`；hazard gate pass；
+- surface=`Chamfer +120.674mm`、hit recall=`-14.366pp`，两门fail；retention=`100/100%`；3/5 gates；
+- extraction=`0 learned field points on 88/88 Selection Actors`；frozen train diagnostic=`0 nonzero on first 64 Actors`；
+  output等于hard anchors，不构成learned completion；
+- resources=`290.988s`、peak GPU=`0.11879GiB`、peak RSS=`1.58123GiB`；无engineering error；
+- decision=`learned C1 terminal`；no LoRA/band/top-k/threshold/loss/seed recovery；B4 descriptive baseline only。
+
 ## WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01 / B4 — preregistration（2026-09-03）
 
 - unlock=`S1 displacement oracle feasible + M0 cannot approximate oracle`；M0 Selection只决定预注册条件分支，不用于

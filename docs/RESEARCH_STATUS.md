@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M1 rejected / learned C1 terminal（2026-09-03）
+
+Canonical M1=`run://worldsim_v71/WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01/
+20260903T113000Z__m1-evidential-field-s71102-r1`。659 Actors完成20轮geometry/evidence + 10轮physical训练，唯一条件
+Source Selection仍为88 Actors/36 hazard。Hazard literal early相对下降`28.485%`，但Chamfer恶化`+120.674mm`、
+hit recall下降`14.366pp`，3/5 gates，verdict=`m1_source_selection_rejected`；retention=`100/100%`。
+
+88/88 Selection Actors新增field points=0；冻结checkpoint在前64个train Actors同样0/64可抽取，模型只留下hard anchors。
+登记`V71-F05`。由于失败位于field parameterization/extraction而非已隔离的encoder容量瓶颈，不执行LoRA；也不调band、
+top-k、evidence threshold、loss或第二seed。按stop rule关闭learned C1，不读Source Final/AV2。
+
+当前仅剩计划强制的B4非学习TSDF在已消费Selection上做一次描述性baseline，然后把oracle可行但两个learned model均无法
+泛化为surface Pareto的边界写入CVPR论文。下一failure ID=`V71-F06`。
+
 ## WorldSim V7.1 M1/B4 implementation ready（2026-09-03）
 
 状态：`v71_m1_b4_implementation_ready`。M1严格按`V71-F04`条件解锁：17D Actor-local evidence/surface输入，

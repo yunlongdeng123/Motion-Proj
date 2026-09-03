@@ -1,5 +1,22 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F05 — M1未生成任何可抽取field surface，learned C1终止
+
+- 分类/状态：scientific + representation / terminal for learned C1；canonical=`run://worldsim_v71/
+  WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01/20260903T113000Z__m1-evidential-field-s71102-r1`；
+- 观察：88 Selection Actors上hazard/all/clear literal early相对下降`28.485/26.740/19.514%`，但Chamfer
+  `0.245436→0.366110m`（`+120.674mm`），hit recall `43.935→29.569%`（`-14.366pp`）；3/5 gates；
+- mechanism：88/88 Selection Actors的implicit field新增点为0，输出全部退化成hard anchors；冻结checkpoint在前64个
+  train Actors的只读抽取同样`0/64`非零，说明不是单纯domain generalization，而是当前field/extraction未学成；
+- training：659 Actors，geometry/evidence loss=`1.37663→0.89748`，physical=`1.15025→0.92208`，数值/GPU正常；
+  loss下降不能替代可抽取surface合同；
+- literature/open-source response：SelfOcc以SDF-induced连续ray weights监督几何，Object-Centric Occupancy Completion用
+  implicit decoder生成动态尺寸shape；当前固定M1虽迁移二者机制，仍未把三态证据转成zero-crossing surface；
+- decision：不调SCF band/top-k/evidence threshold，不做第二M1；不触发LoRA，因为失败首先位于field parameterization/
+  extraction而非已证实的encoder容量瓶颈。Source final与AV2不读，避免用终测救source失败；
+- closeout：learned C1停止，不回到selector/delete；只完成预注册B4非学习baseline并把负结果写入论文。下一可用failure
+  ID=`V71-F06`。
+
 ## V7.1 M1 prevention note — 条件field不复用Selection调参（2026-09-03）
 
 - `V71-F04`只触发计划中预注册的M1分支；17D输入、128D latent、4x128 decoder、seed71102、20+10 epochs、
