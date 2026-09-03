@@ -85,7 +85,7 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
         raise RuntimeError("Actor corpus已达到冻结门槛，不应启动recovery")
     stale_marker = cache_root / "TRAIN_COMPLETE"
     if stale_marker.is_file():
-        stale_marker.replace(cache_root / "TRAIN_INCOMPLETE_BELOW_TARGET")
+        stale_marker.replace(cache_root / "RAW_TRAIN_INCOMPLETE_BELOW_TARGET")
 
     protected = {
         str(name)
@@ -216,7 +216,7 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
         if passed:
             (cache_root / "TRAIN_COMPLETE").write_text("done\n", encoding="utf-8")
         else:
-            (cache_root / "TRAIN_INCOMPLETE_BELOW_TARGET").write_text(
+            (cache_root / "PROCESSED_TRAIN_INCOMPLETE_BELOW_TARGET").write_text(
                 "processed recovery exhausted\n", encoding="utf-8"
             )
         _write_json(

@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01 — canonical result（2026-09-03）
+
+- run=`20260903T110000Z__processed-corpus-recovery-r1`；status=`done`；verdict=
+  `train_corpus_target_met_with_processed_recovery`；
+- corpus=`721 raw + 283 processed = 1004 Actors`，processed scenes=`42/96 candidates`；达到1000即在完整scene边界停止；
+- coordinate/cadence=`obj_to_world + lidar_pose -> Actor local`，10 Hz annotations按stride 5取2 Hz keyframe；
+  frame roles=`mod3 0,1 build / 2 target`，复用同一compiler/evidential cache；
+- exposure=`train only`；Selection/source-final/AV2 read=false；failure recovery=`V71-F03 resolved`；
+- resources=`18.038s`、peak GPU=`0.04779GiB`、peak RSS=`1.09103GiB`；无error/retry；
+- output=`1004 finalized Actor NPZ + corpus manifest v2 + TRAIN_COMPLETE`；不生成hash/checksum/fingerprint；
+- next=`M0 r3 from scratch`，同一seed/architecture/loss/epochs/Selection gates；r2 train-only权重不复用。
+
 ## WS-V71-S2-ACTOR-CORPUS-01 result / processed recovery freeze（2026-09-03）
 
 - canonical S2=`20260903T102000Z__actor-corpus-r1`；status=`done`；verdict=

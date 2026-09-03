@@ -2,7 +2,7 @@
 
 ## V71-F03 — 已在盘raw train/reserve语料不足1000条冻结门槛
 
-- 分类/状态：data capability / recovery in progress；canonical S2=`run://worldsim_v71/
+- 分类/状态：data capability / resolved by role-disjoint processed recovery；canonical S2=`run://worldsim_v71/
   WS-V71-S2-ACTOR-CORPUS-01/20260903T102000Z__actor-corpus-r1`；
 - 观察：120个主train加13个实际可索引reserve共133 scenes只产出721条合格刚体Actor（319 hazard、64 oracle target），
   低于冻结`>=1000`；wall=`72.40s`、cache=`20,022,368 bytes`；
@@ -14,6 +14,9 @@
   DriveStudio标准`instances_info/lidar/lidar_pose`处理资产，因此先复用同数据集现存资产，避免下载阻塞GPU研究；
 - recovery：保持1000门槛和20/20 Selection/Final不动；只从96个与所有冻结角色不重叠的processed scenes按stride 5
   取2 Hz关键帧，以同一三模帧角色、Actor编译器和evidence物化合同补语料。metadata审计得到2,794条候选刚体轨迹；
+- resolution：canonical recovery=`run://worldsim_v71/WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01/
+  20260903T110000Z__processed-corpus-recovery-r1`；42 scenes新增283 Actors，总数1004，Selection/Final/AV2 read=false；
+  wall=`18.04s`、peak GPU/RSS=`0.0478/1.091GiB`；
 - 防重复：不得把Selection/Final搬入train、降低minimum states/tracklet target，或把M0 r2 train-only曲线包装为模型结果；
   processed recovery达标后从头运行同一M0配置。下一可用failure ID=`V71-F04`。
 

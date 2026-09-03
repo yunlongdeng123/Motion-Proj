@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 S2 processed recovery passed / M0 r3 unlocked（2026-09-03）
+
+Canonical recovery=`run://worldsim_v71/WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01/
+20260903T110000Z__processed-corpus-recovery-r1`：42个role-disjoint processed scenes新增283 Actors，corpus从721增至
+1004，达到冻结`>=1000`。状态=`train_corpus_target_met_with_processed_recovery`；wall=`18.04s`、peak GPU/RSS=
+`0.0478/1.091GiB`，无error/retry。Selection/source-final/AV2 read保持false。
+
+`TRAIN_COMPLETE`与v2 manifest现已指向1004条完整NPZ；原始raw不足事实保留为`RAW_TRAIN_INCOMPLETE_BELOW_TARGET`
+历史标记，不与当前完成状态混用。`V71-F03`已恢复，未改变split、minimum states、frame roles、evidence、compiler或M0
+科学配置。下一步从头启动M0 r3并执行唯一Source Selection；下一failure ID=`V71-F04`。
+
 ## WorldSim V7.1 S2 raw corpus exhausted / processed recovery implemented（2026-09-03）
 
 状态：`v71_s2_processed_recovery_ready`。Canonical S2在120 train + 13可用reserve、133 scenes上得到721 Actors
