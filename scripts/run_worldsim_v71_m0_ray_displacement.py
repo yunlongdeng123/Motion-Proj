@@ -60,7 +60,12 @@ def _deep_update(base: dict[str, Any], updates: Mapping[str, Any]) -> dict[str, 
 
 
 def _paths(cache_root: Path, maximum: int) -> list[Path]:
-    return sorted((cache_root / "train").glob("*/*.npz"))[: int(maximum)]
+    complete = [
+        path
+        for path in (cache_root / "train").glob("*/*.npz")
+        if not path.name.endswith(".tmp.npz")
+    ]
+    return sorted(complete)[: int(maximum)]
 
 
 def _wait_for_corpus(cache_root: Path, minimum: int, timeout_seconds: int) -> list[Path]:

@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M0 r1 pre-training cache-enumeration failure / r2 ready（2026-09-03）
+
+M0 r1=`run://worldsim_v71/WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/
+20260903T102200Z__m0-ray-displacement-s71101-r1`在初始cache枚举阶段失败：`*.npz`同时匹配producer尚未rename的
+`*.tmp.npz`，列表建立后临时路径消失而触发`FileNotFoundError`。失败发生在standardizer/model创建、optimizer、training及
+Selection read之前；S2 producer不受影响并继续运行。
+
+恢复只让consumer排除`.tmp.npz`，不改architecture/seed/loss/epoch/data/decision。登记`V71-F02`；相同合同r2=
+`20260903T102500Z__m0-ray-displacement-s71101-r2`可直接启动。下一failure ID=`V71-F03`。
+
 ## WorldSim V7.1 S2 corpus / M0 streaming implementation ready（2026-09-03）
 
 状态：`v71_s2_m0_streaming_ready`。S2按Actor原子写入`/root/autodl-tmp/data/worldsim_v71/corpus_v1/train/<scene>/<track>.npz`，

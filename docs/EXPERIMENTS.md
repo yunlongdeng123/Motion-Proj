@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01 r1 failed / r2 recovery（2026-09-03）
+
+- r1=`20260903T102200Z__m0-ray-displacement-s71101-r1`；status=`failed before training`；error=
+  `FileNotFoundError: <track>.tmp.npz`；failure_ledger_delta=`V71-F02 resolved`；
+- stage=`initial cache enumeration`；producer与consumer并行时，glob捕获尚未atomic rename的临时NPZ；
+- scientific exposure=`0 model/optimizer/training/Selection/source-final/AV2 read`；r1不拥有任何model verdict；
+- correction=`exclude *.tmp.npz from complete cache paths` only；不改seed71101、25D输入、128D模型、loss、epoch、数据或门；
+- recovery run=`20260903T102500Z__m0-ray-displacement-s71101-r2`，使用同一S2 producer/cache与科学合同。
+
 ## WS-V71-S2-ACTOR-CORPUS-01 / WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01 — preregistration（2026-09-03）
 
 - S2 source=`120 train scenes + 14 metadata-only reserves if needed`；target=`>=1000 rigid tracklets`；output=per-Actor compact
