@@ -8,6 +8,13 @@
 
 **论文关系：** V7.1 直接更新现有 CVPR/ICCV 论文，不另起一篇完全不同的故事。C2「有效性—危险性结构解耦」和 C3「连续任务代价密度」冻结为继承模块；V7.1 的主要研究预算全部用于把 C1 从“物理审计 + 局部规则修复”升级成“可训练的连续几何修复”。
 
+> **执行终态（2026-09-03）：** `v71_research_complete_negative_boundary_paper_ready`。S1 train-only oracle证明
+> 连续位移动作空间存在联合改善点；固定M0在Source Selection以74.51% UNKNOWN collapse换取early下降，M1在train与
+> Selection都没有抽取出learned field points，强制B4则改善Chamfer/recall但使hazard early恶化106.53%。因此计划内
+> learned C1没有形成ray-safety与surface-completeness的Pareto解，按stop rule终止；Source Final和V7.1 AV2 target
+> 保持未读，不做outcome-guided恢复。完整证据见
+> `docs/autoresearch/worldsim_v71/V71_RESEARCH_CLOSEOUT.md`。
+
 ---
 
 # 1. 当前事实与 V7.1 的研究问题

@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 terminal note — B4揭示相反端点，不新增failure（2026-09-03）
+
+- canonical=`run://worldsim_v71/WS-V71-B4-EVIDENTIAL-TSDF-01/
+  20260903T120000Z__b4-evidential-tsdf-r1`；121 Selection Actors、41 hazard、137,940 rays；
+- B4向120 Actors加入103,240个TSDF surface points，Chamfer改善`-83.961mm`、hit recall增加`4.786pp`，但hazard
+  literal early相对恶化`106.530%`；它证明surface completeness可恢复，却不是同时满足ray safety的Pareto解；
+- 与`V71-F04`（M0 UNKNOWN collapse）和`V71-F05`（M1 zero learned points）合并后，learned C1已穷尽计划内固定分支；
+  该baseline正常完成，不登记`V71-F06`；
+- prevention：不把B4当作候选、不在已消费Selection上混合/调权，不读Source Final/AV2救失败，不复开delete/selector；
+  下一可用failure ID仍为`V71-F06`，当前无active hypothesis。
+
 ## V71-F05 — M1未生成任何可抽取field surface，learned C1终止
 
 - 分类/状态：scientific + representation / terminal for learned C1；canonical=`run://worldsim_v71/

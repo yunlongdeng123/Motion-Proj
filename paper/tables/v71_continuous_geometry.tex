@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Frozen V7.1 continuous-geometry evidence. Early is relative hazardous literal first-return reduction (higher is better); CD and hit are changes from each method's query surface. S1 is a train-only oracle. B4 naturally covers 121 Actors versus 88 for learned models because it does not require a candidate-bearing Actor.}
+\label{tab:v71-continuous-geometry}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrrl}
+\toprule
+Method & Early $\uparrow$ & $\Delta$CD (mm) $\downarrow$ & $\Delta$hit (pp) $\uparrow$ & Decision \\
+\midrule
+S1 displacement oracle & \VSevenOneSOneHazardEarlyReduction & \VSevenOneSOneChamferDeltaMm & \VSevenOneSOneHitRecallDeltaPp & feasible \\
+M0 learned displacement & \VSevenOneMZeroHazardEarlyReduction & \VSevenOneMZeroChamferDeltaMm & \VSevenOneMZeroHitRecallDeltaPp & reject \\
+M1 evidential field & \VSevenOneMOneHazardEarlyReduction & \VSevenOneMOneChamferDeltaMm & \VSevenOneMOneHitRecallDeltaPp & reject \\
+B4 evidential TSDF & \VSevenOneBFourHazardEarlyReduction & \VSevenOneBFourChamferDeltaMm & \VSevenOneBFourHitRecallDeltaPp & opposite frontier \\
+\bottomrule
+\end{tabular}}
+\end{table}

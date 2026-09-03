@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7.1 terminal / learned surface Pareto rejected（2026-09-03）
+
+状态：`v71_research_complete_negative_boundary_paper_ready`。Mandatory B4 canonical=`run://worldsim_v71/
+WS-V71-B4-EVIDENTIAL-TSDF-01/20260903T120000Z__b4-evidential-tsdf-r1`在已消费Selection的121 Actors（41 hazard）、
+137,940 rays完成。它向120 Actors加入103,240个TSDF points，使Chamfer `0.229595→0.145634m`
+（`-83.961mm`）、hit recall `44.735→49.522%`（`+4.786pp`），但hazard early `25.691→53.060%`
+（相对恶化`106.530%`）；这是M0/M1相反的surface-completeness端点，不是Pareto解。
+
+V7.1终态证据为：S1 train-only oracle可同时改善hazard early与Chamfer；M0在Selection以74.51% UNKNOWN collapse
+换early；M1在train/Selection均抽取0 learned points；B4恢复surface却将hazard early翻倍。按冻结stop rule不运行
+Source Final与AV2 V7.1 target，不用终测调参；不做PCGrad、LoRA、第二seed、band/top-k/threshold sweep，也不回到
+selector/delete。C1保留为physical evaluation/boundary claim，C2/C3继承不变。
+
+代码、配置、canonical runs、三份账本、closeout与CVPR主表/正文已更新；官方style主文编译为`11 pages / 1,936,223 bytes`，
+无undefined citation/reference，仅保留既有Table 1 `6.03pt` overfull。无active V7.1训练；
+下一可用failure ID=`V71-F06`，但当前无active hypothesis。
+
 ## WorldSim V7.1 M1 rejected / learned C1 terminal（2026-09-03）
 
 Canonical M1=`run://worldsim_v71/WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01/

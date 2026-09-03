@@ -36,6 +36,14 @@ The field further reduces hazardous early returns by \VSevenOneMOneHazardEarlyRe
 \VSevenOneMOneFieldPoints{} learned surface points on every selection Actor and therefore degenerates to observed hard anchors.
 We \VSevenOneMOneVerdict{} the field, do not tune extraction after selection, and withhold source-final and AV2 claims.
 
+The non-learned B4 evidential TSDF exposes the opposite endpoint on \VSevenOneBFourActors{} selection Actors. It adds
+\VSevenOneBFourAddedPoints{} surface points, changes Chamfer by \VSevenOneBFourChamferDeltaMm{}\,mm and hit recall by
+\VSevenOneBFourHitRecallDeltaPp{} points, but hazardous early-return reduction is
+\VSevenOneBFourHazardEarlyReduction{}---i.e., exposure more than doubles. Table~\ref{tab:v71-continuous-geometry} therefore
+shows a two-sided failure boundary rather than a winning learned surface model.
+
+\input{tables/v71_continuous_geometry}
+
 \paragraph{Zero-shot Actor-local surface evidence.}
 Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
 LiDAR points inside each annotated cuboid into its Actor frame. Unlike appearance-oriented seed initialization, we never mirror

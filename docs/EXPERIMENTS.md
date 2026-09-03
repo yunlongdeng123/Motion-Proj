@@ -1,5 +1,22 @@
 # Experiments
 
+## WS-V71-B4-EVIDENTIAL-TSDF-01 — mandatory non-learned baseline（2026-09-03）
+
+- run=`20260903T120000Z__b4-evidential-tsdf-r1`；status=`done`；verdict=
+  `b4_nonlearned_baseline_measured`；无新增failure；
+- protocol=`20 consumed Selection scenes / 121 Actors / 41 hazard / 137,940 rays`；B4不依赖learned candidate，故自然覆盖
+  多于M0/M1的88 Actors；source-final/AV2 unread；
+- construction=`0.12m Actor-local evidential TSDF / 0.36m truncation / min weight 2`；向120/121 Actors加入
+  `103,240` points，UNKNOWN cell不作free；
+- literal early relative reduction=`-102.720% all / -106.530% hazard / -88.952% clear`，负号表示early恶化；
+- surface=`Chamfer 0.229595→0.145634m (-83.961mm)`、hit recall=`44.735→49.522% (+4.786pp)`；
+  Actor/hazard retention=`100/100%`；
+- resources=`168.923s`、peak GPU=`0.052596GiB`、peak RSS=`1.22639GiB`；无error/retry；
+- decision=`opposite surface-completeness frontier, not Pareto`。与M0/M1共同关闭learned C1；不运行Source Final或AV2，
+  不用终测恢复模型。
+- paper=`11 pages / 1,936,223 bytes`；新continuous-geometry table与negative-boundary narrative编译通过；仅既有
+  Table 1 `6.03pt` overfull，无undefined citation/reference。
+
 ## WS-V71-M1-EVIDENTIAL-SURFACE-FIELD-01 — canonical negative result（2026-09-03）
 
 - run=`20260903T113000Z__m1-evidential-field-s71102-r1`；status=`done`；verdict=
