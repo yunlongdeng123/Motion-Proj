@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M5 fresh AV2 evaluator ready（2026-09-04）
+
+状态：`v71_m5_fresh_av2_waiting_download`。新增scene-ready外测runner：加载冻结M5 checkpoint/standardizer；每个新log
+仅在对应`.complete`出现后编译，使用与source相同`mod3=2` held-out、rigid AV2类别映射、Actor canonical与
+sensor-opportunity evidence；UNKNOWN固定为非动作，surface始终为anchors加全部relocated candidates。输出逐log Actor
+rows和aggregate/per-log physical metrics。
+
+External verdict严格使用计划三项：hazard literal early相对下降`>=5%`、Chamfer delta `<=1mm`、Actor/hazard
+retention均100%；hit recall完整报告但不新增事后gate。20 logs全部保留，0-Actor log也不替换；禁止fine-tune、calibration、
+threshold或tolerance调整。runner与单下载器并行等待/消费，定向`py_compile`后启动；下一failure ID=`V71-F10`。
+
 ## WorldSim V7.1 AV2 downloader entry recovery（2026-09-04）
 
 首次V7.1 downloader入口引用不存在的`/root/miniconda3/envs/motionproj/bin/python`；Bash process substitution失败

@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M5-FRESH-AV2-ZERO-SHOT-01 — frozen execution protocol（2026-09-04）
+
+- model=canonical M5 checkpoint + training standardizer，no adaptation；surface=`anchors + all relocated candidates`；
+- compiler=V7 AV2 Actor compiler，rigid categories，fixed build/heldout modulo=`{0,1}/2`；
+- scheduler=single evaluator waits per-log `.complete` and immediately consumes it，overlaps network I/O；
+- outputs=all/per-log early-return、Chamfer、hit recall、retention；all 20 logs retained regardless of Actor count；
+- verdict=hazard early `>=5%` AND Chamfer `<=+1mm` AND Actor/hazard retention=`100%`；hit descriptive；
+- no fine-tune/calibration/threshold/tolerance/log replacement；validation=`py_compile only`。
+
 ## WS-V71-M5-FRESH-AV2-ZERO-SHOT-01 — pre-read downloader recovery（2026-09-04）
 
 - first entry=wrong Python prefix caused empty cohort array and false `ALL_COMPLETE 0 logs`；failure=`V71-F09`；

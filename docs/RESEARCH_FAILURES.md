@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 AV2 execution prevention note — scene-ready不改变exact-once合同（2026-09-04）
+
+- evaluator只在下载器写出对应`.complete`后读取该log，I/O重叠不允许看部分log结果后改变后续模型或日志；
+- checkpoint、standardizer、类别、modulo、tolerance和verdict已在首个fresh log前冻结；
+- 所有20 logs按cohort顺序执行，0-Actor/困难log不替换；partial JSONL只用于进度恢复，不作为模型选择信号；
+- external失败即`V71-F10`，不进行target adaptation或第二cohort恢复。
+
 ## V71-F09 — V7.1 AV2 downloader解释器路径不存在并误写0-log完成标记
 
 - 分类/状态：engineering / recovered before external read；入口=`scripts/download_worldsim_v71_av2.sh`；
