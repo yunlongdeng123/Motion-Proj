@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M29-GT-TAIL-SURFACE-TUBE-01 — frozen protocol（2026-09-05）
+
+- init=M8 r2；representation=immutable anchors + all 4-child generated surface；
+- target=Actor-canonical GT endpoints, deterministic max64 rays per target frame；
+- loss=M8 geometry+temporal + `0.25 * mean(normalized CVaR.9 T->S, normalized CVaR.9 S->T)`；
+- physics=M8 literal first-return/free-before-hit unchanged；PCGrad unchanged；
+- optimization=593 train Actors / seed71126 / 4 epochs / lr5e-5 / one run / no sweep；
+- comparison=66 pretrained-exposed holdout Actors, paired against frozen M8；development mechanism only；
+- exit=both tail deltas <0, hazard early rate <=M8, Chamfer delta <=0.5mm, hit delta >=-1pp；
+- no image/motion/hazard input, UNKNOWN mask, deployment filter, hash/checksum/fingerprint, or M21 partial quality read；
+  pre-run nested `python -c` quoting failed before data load (`V71-F30`)；single `py_compile` recovery passed；
+  next failure=`V71-F31`。
+
 ## WS-V71-M28-TYPED-AUTHORITY-NON-INTERFERENCE-01 — implementation complete（2026-09-05）
 
 - code=`motion_proj/worldsim_v71/authority_contract.py` + public exports；`py_compile` passed；

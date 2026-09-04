@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M29 GT tail surface tube frozen（2026-09-05）
+
+状态=`v71_m29_gt_tail_surface_tube_frozen`，详见
+[`WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md`](WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md)。
+M29从M8 r2出发，在593 source Actors上使用frame-balanced GT target与双向top-10% nearest-distance mean
+直接约束最终physical surface；M8的set/plane/scale/frame与literal first-return/free-space losses全部保留。
+
+协议=seed71126/4 epochs/lr5e-5/tail weight0.25/each-frame max64 rays/one run/no sweep。唯一退出要求
+双向tail严格下降且M8 hazard early不恶化，Chamfer/hit只允许0.5mm/1pp容差。
+66 holdout已暴露，只作development mechanism；无M21 partial read。首次预运行的嵌套
+`python -c` YAML check因PowerShell/SSH引号拆分失败，0 dataset/optimizer/quality，登记`V71-F30`；
+改为单一`py_compile`已通过。下一failure ID=`V71-F31`。
+
 ## WorldSim V7.1 M28 typed authority complete（2026-09-05）
 
 M28已将“几何、运动、外观分开”从运行约定升级为代码函数依赖与论文命题：

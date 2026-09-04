@@ -1,5 +1,23 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F30: M29 pre-run YAML check command quoting failure（2026-09-05）
+
+- stage=远端pre-run最小验证；0 dataset load、0 optimizer step、0 quality/metric exposure；
+- symptom=PowerShell到SSH的嵌套`python -c` quotation被本地shell拆分，远端收到缺失表达式的
+  `import`，本地又误将`open(...)`当作cmdlet；
+- root cause=命令传输层引号，与M29代码、YAML内容、GPU、数值或数据无关；
+- recovery=去掉内嵌Python expression，只运行无二次引号的`python -m py_compile`，已通过；
+- unchanged=tail fraction/weight、seed、epochs、lr、data split、decision、run ID均未变；
+- next failure ID=`V71-F31`。
+
+## V7.1 M29 pre-registration note — mean geometry不是worst-tail bound（2026-09-05）
+
+M8的mean Chamfer/plane/frame/first-return只约束平均误差，不能推出worst-case clearance边界；
+hard Hausdorff又易被单个LiDAR/annotation outlier主导。M29冻结双向最差10%距离均值作为
+GT-supervised tail tube，且必须与M8 hazard early/Chamfer/hit同时构成Pareto改善。
+禁止把这个可解释尾部目标写成deterministic safety certificate；无论结果如何均不扫参。
+预注册时尚未触发failure；随后pre-run引号失败已登记为`V71-F30`，当前下一ID=`V71-F31`。
+
 ## V7.1 M28 outcome note — 权限边界已进入代码与论文（2026-09-05）
 
 `authority_contract.py`已以三个兄弟类型和无visual参数的pure physical API实现；
