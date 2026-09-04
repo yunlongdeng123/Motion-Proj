@@ -118,6 +118,54 @@ class LocalAnchorSignedField(nn.Module):
         return torch.sum(weights * local_field, dim=1)
 
 
+class CompactLocalOccupancyField(LocalAnchorSignedField):
+    """Union compact half-ball patches so unanchored space remains explicitly free."""
+
+    def forward(
+        self,
+        features: torch.Tensor,
+        child_centers: torch.Tensor,
+        child_scales: torch.Tensor,
+        parent_normals: torch.Tensor,
+        parent_ray_directions: torch.Tensor,
+        queries: torch.Tensor,
+    ) -> torch.Tensor:
+        child_latents = self.child_features(features)
+        child_normals = self.outward_child_normals(
+            parent_normals, parent_ray_directions
+        )
+        child_scales = child_scales.reshape(-1).clamp_min(1.0e-4)
+        if not (
+            len(child_centers)
+            == len(child_scales)
+            == len(child_normals)
+            == len(child_latents)
+        ):
+            raise ValueError("Compact-field child attributes must align")
+        count = min(max(self.neighbor_count, 1), len(child_centers))
+        metric_distance = torch.cdist(queries, child_centers)
+        normalized_distance = metric_distance / child_scales[None, :]
+        _, indices = normalized_distance.topk(count, largest=False)
+        centers = child_centers[indices]
+        scales = child_scales[indices]
+        normals = child_normals[indices]
+        latents = child_latents[indices]
+        relative_metric = queries[:, None, :] - centers
+        relative = relative_metric / scales[:, :, None]
+        plane = torch.sum(relative_metric * normals, dim=-1)
+        decoder_input = torch.cat(
+            [latents, relative, (plane / scales)[:, :, None]], dim=-1
+        )
+        residual = (
+            torch.tanh(self.query_decoder(decoder_input).squeeze(-1))
+            * scales
+            * self.maximum_residual_fraction
+        )
+        radial_support = torch.linalg.vector_norm(relative_metric, dim=-1) - scales
+        local_patch = torch.maximum(plane + residual, radial_support)
+        return local_patch.min(dim=1).values
+
+
 def initialize_local_field_from_expansion(
     model: LocalAnchorSignedField, expansion: GaussianSeedExpansionMLP
 ) -> None:

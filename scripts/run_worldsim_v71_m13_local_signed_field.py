@@ -35,6 +35,7 @@ from motion_proj.worldsim_v71.gaussian_anchor_relocation import (
     build_gaussian_anchor_targets,
 )
 from motion_proj.worldsim_v71.local_signed_field import (
+    CompactLocalOccupancyField,
     LocalAnchorSignedField,
     initialize_local_field_from_expansion,
 )
@@ -395,7 +396,13 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         m8_model.load_state_dict(checkpoint["state_dict"])
         m8_model.eval()
         m8_model.requires_grad_(False)
-        model = LocalAnchorSignedField(
+        field_class = (
+            CompactLocalOccupancyField
+            if str(config["model"].get("field_variant", "blended_plane"))
+            == "compact_occupancy_union"
+            else LocalAnchorSignedField
+        )
+        model = field_class(
             int(checkpoint["input_dim"]),
             hidden_dim=int(config["model"]["hidden_dim"]),
             branch_factor=int(config["model"]["branch_factor"]),
@@ -457,7 +464,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 "seed": int(config["model"]["seed"]),
                 "m5_run": str(m5_run),
                 "m8_run": str(m8_run),
-                "field": "query_local_signed_m8_guided",
+                "field": str(
+                    config["model"].get("field_variant", "blended_plane")
+                ),
             },
             run_dir / "MODEL.pt",
         )
@@ -533,12 +542,19 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         )
         passed = all(decisions.values())
         m6_runner._write_jsonl(run_dir / "TRAIN_HOLDOUT_LOCAL_FIELD.jsonl", rows)
+        result_label = str(config.get("result_label", "m13"))
         summary = {
-            "schema_version": "worldsim_v71.m13_local_signed_field.v1",
+            "schema_version": str(
+                config.get(
+                    "schema_version", "worldsim_v71.m13_local_signed_field.v1"
+                )
+            ),
             "task_id": config["task_id"],
             "hypothesis_id": config["hypothesis_id"],
             "status": "done",
-            "verdict": "m13_development_passed" if passed else "m13_development_rejected",
+            "verdict": f"{result_label}_development_passed"
+            if passed
+            else f"{result_label}_development_rejected",
             "training_actor_count": len(train_actors),
             "holdout_actor_count": len(holdout_actors),
             "pretrained_holdout_exposure": True,
