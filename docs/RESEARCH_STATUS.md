@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M22 SE(3) dynamic/static composition protocol frozen（2026-09-04）
+
+状态=`v71_m22_se3_dynamic_static_composition_frozen`，详见
+[`WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md`](WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md)。
+M22不新增训练：冻结M8的GT-supervised canonical anchors/children/scales与M21 analytic energy，只由StreetGS
+`instances_trans/quats`把Actor物理场搬到world frame；Background、SH、opacity不进入物理查询。
+
+一次性审计固定为`scene-0230`现有12个identity-matched Actors、每Actor首/中/末最多3个有效trajectory frames；只判定
+SE(3) energy/distance等变、存在moving Actor和只读authority，不把恒等式包装成几何增益。M21 AV2继续独立等待，未读
+partial quality。下一failure ID仍为`V71-F25`。
+
 ## WorldSim V7.1 CVPR manuscript M19--M21 failure-directed update（2026-09-04）
 
 论文已加入M19 auxiliary-field compensation、M20 isotropic-scale shortcut与M21 frozen analytic energy的完整链条；

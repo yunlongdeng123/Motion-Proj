@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — frozen protocol（2026-09-04）
+
+- source=canonical M8 checkpoint + M21 analytic energy + read-only StreetGS scene-0230 trajectory；no training；
+- cohort=现有12个identity-matched Actors；all valid frames用于motion统计，首/中/末最多3帧用于等变审计；
+- representation=`E_world(x,t)=E_actor(T_t^{-1}x)`；anchor scale=`0.08m`，child scales固定M8输出；
+- static=`Background`不读写；appearance SH/opacity/image不进入physics；trajectory/time/velocity不进入geometry head；
+- minimal decisions=12 identity matches、moving Actor存在、energy residual `<=1e-4`、distance residual `<=1e-5m`；
+- no checkpoint/writeback/deformation/render-filter/parameter sweep；M21 external partial quality仍未读。
+
 ## WorldSim V7.1 CVPR manuscript M19--M21 milestone（2026-09-04）
 
 - method=新增decoder-free actor-canonical Gaussian energy公式及冻结M8的失败驱动选择；

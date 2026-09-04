@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M22 prevention note — motion只能搬运canonical physics（2026-09-04）
+
+- M8逐帧GT coverage已经进入训练目标；M22只审计部署组合，不以post-hoc trajectory变换冒充新的物理监督；
+- Actor energy固定为M8 anchors/children/scales，world energy仅通过只读SE(3) inverse query定义；
+- Background完全不参与Actor query，SH/opacity/image不进入physics；trajectory也不回流geometry head；
+- 固定12个现有identity match和首/中/末最多3帧，不筛Actor、不扫frame/query/容差；
+- 若SE(3)不变量失败则登记`V71-F25`并修正坐标/变换约定，不以learned deformation或appearance补偿。
+
+下一可用编号仍为：`V71-F25`。
+
 ## V7.1 paper prevention note — 相对field增益必须绑定绝对anchor reference（2026-09-04）
 
 - M19必须报告point surface反转与field绝对early，不能只报告field-vs-degraded-point相对改善；
