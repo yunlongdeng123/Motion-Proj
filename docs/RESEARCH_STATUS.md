@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M19 joint geometry--first-return protocol frozen（2026-09-04）
+
+状态=`v71_m19_joint_geometry_first_return_frozen`，详见
+[`WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md`](WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md)。
+M19从canonical M8/M18初始化，每步先生成可学习children/scales，再用同一children计算M18 categorical first-return；
+因此GT ray proper loss第一次直接约束completed anchors，同时M7/M8的symmetric set、local plane/scale和逐帧GT coverage
+持续回传。
+
+这不是把geometry、physics与motion混成一个指标：geometry/physics保持两个loss与两组报告，仅在共享3D anchors处通过
+PCGrad耦合；trajectory仍为只读刚体authority，static world独立，image/semantic/time/velocity/hazard均隔离。单seed
+`71121`固定4轮，不扫权重/bin/阈值/epoch。开发集仅作机制筛选；下一failure ID=`V71-F23`。
+
 ## WorldSim V7.1 CVPR manuscript M18 supervision milestone（2026-09-04）
 
 论文已把M13--M18从local primitive、one-sided support、full-ray query、monotone survival到categorical

@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M19-JOINT-GEOMETRY-FIRST-RETURN-01 — frozen protocol（2026-09-04）
+
+- initialization=canonical M8 surface head + canonical M18 actor-canonical query field；both trainable；
+- GT geometry=symmetric set Chamfer + local plane/scale + frame-balanced endpoint coverage；observed anchors immutable；
+- GT physics=32-bin full-AABB ray categorical one-hot return + fixed expected-depth L1；same CDF-median deployment；
+- coupling=current children/scales feed field without detach；geometry-vs-physics PCGrad over both heads；
+- isolation=no image/semantic/trajectory/time/velocity/hazard/ray-drop input；static world separate；
+- one seed=`71121` / 4 epochs；no loss/bin/threshold/epoch/seed/branch sweep；development exposure=true；
+- minimum decisions=retention100%，Chamfer vs M8 `<=+1mm`，field hazard early `>=5%`，field all hit `>=-1pp`；
+- sources=Gau-Occ CVPR26 audit、GaussRender ICCV25、ShelfOcc CVPR26、GaussianFormer-2 CVPR25。
+
 ## WorldSim V7.1 CVPR manuscript M18 milestone（2026-09-04）
 
 - artifact=`paper/main.pdf`，本地TinyTeX编译成功，13页、无fatal LaTeX error；

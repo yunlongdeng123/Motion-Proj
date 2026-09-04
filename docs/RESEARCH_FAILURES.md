@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M19 prevention note — 联合训练必须持续保留原生3D监督（2026-09-04）
+
+- M19允许first-return loss回传到completed children，但不得移除symmetric set、point-to-plane/scale和逐帧coverage；
+- field logit只读actor-canonical query/build evidence，不输入target ray direction，避免退化为逐ray记忆；
+- observed anchors不可学习，部署保留全部children；禁止UNKNOWN mask、surface filter、threshold或Actor deletion；
+- geometry与physics分别报告，只在共享anchors处用PCGrad耦合；trajectory/static/image/hazard不混入；
+- 若M8 Chamfer恶化超过1mm或M18式early/hit任一失败，登记`V71-F23`并关闭joint路线，不扫loss权重恢复。
+
+下一可用编号仍为：`V71-F23`。
+
 ## V7.1 paper claim prevention note — 监督证据不得退化为后处理叙事（2026-09-04）
 
 - M18改善只能归因于native GT LiDAR first-return one-hot target、全ray categorical proper loss以及同分布部署；
