@@ -1,0 +1,59 @@
+task_id: WS-V71-M17-MONOTONE-RAY-SURVIVAL-01
+hypothesis_id: WS-V71-H-M17-MONOTONE-TERMINATION
+schema_version: worldsim_v71.m17_monotone_ray_survival.v1
+result_label: m17
+surface_supervision: gt_lidar_return_step_cdf_and_termination_depth
+runs_root: /root/autodl-tmp/runs
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+m8_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2
+device: cuda
+model:
+  field_variant: ray_survival_density
+  training_stage: m17_monotone_ray_survival
+  seed: 71119
+  hidden_dim: 128
+  latent_dim: 64
+  branch_factor: 4
+  slot_dim: 16
+  neighbor_count: 4
+  maximum_residual_fraction: 0.25
+  density_scale_per_m: 1.0
+  initial_density_bias: -2.0
+  survival_train_samples: 32
+  survival_depth_weight: 0.10
+  training_cuboid_padding_m: 0.15
+  fine_tune_epochs: 6
+  actor_batch_size: 4
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  holdout_stride: 10
+  maximum_training_actors: 1024
+  maximum_training_rays: 128
+  target_neighbors: 8
+  minimum_scale_m: 0.02
+  maximum_scale_m: 0.40
+  front_offsets_m: [0.20, 0.10]
+  back_offsets_m: [0.05, 0.10]
+  signed_regression_weight: 1.0
+  hit_weight: 1.0
+  normal_weight: 0.10
+  normal_probe_offset_m: 0.05
+  physics_weight: 1.0
+  sign_temperature_m: 0.05
+evaluation:
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+  output_voxel_size_m: 0.06
+  field_sample_count: 64
+  ray_chunk_size: 64
+  cuboid_padding_m: 0.15
+  survival_median_threshold: 0.50
+decision:
+  minimum_hazard_literal_relative_reduction: 0.05
+  maximum_chamfer_delta_m: 0.0005
+  minimum_hit_recall_delta: -0.01
+  required_actor_state_retention: 1.0
+  required_hazard_state_retention: 1.0
+  minimum_field_hazard_relative_reduction: 0.05
+  minimum_field_hit_recall_delta: -0.01

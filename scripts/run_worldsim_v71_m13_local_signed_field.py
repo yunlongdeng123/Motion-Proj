@@ -39,6 +39,7 @@ from motion_proj.worldsim_v71.local_signed_field import (
     DirectQuerySignedField,
     LocalAnchorSignedField,
     OneSidedLocalOccupancyField,
+    RaySurvivalDensityField,
     initialize_local_field_from_expansion,
 )
 from motion_proj.worldsim_v71.ray_displacement import RaySurfaceRelocationMLP
@@ -228,12 +229,137 @@ def _full_ray_free_training_points(
     return queries[valid].reshape(-1, 3), labels[valid].reshape(-1)
 
 
+def _ray_survival_values(
+    model: RaySurvivalDensityField,
+    actor: Mapping[str, Any],
+    config: Mapping[str, Any],
+    device: torch.device,
+    sample_count: int,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    targets, origins = m6_runner._limit_target(
+        actor, int(config["maximum_training_rays"]), device
+    )
+    target_depth = torch.linalg.vector_norm(targets - origins, dim=1).clamp_min(1.0e-6)
+    directions = (targets - origins) / target_depth[:, None]
+    bounds = actor["size_t"] * 0.5 + float(config["training_cuboid_padding_m"])
+    entry, exit_depth, valid_box = _ray_box_intervals(origins, directions, bounds)
+    valid = valid_box & (target_depth >= entry) & (target_depth <= exit_depth)
+    fractions = torch.linspace(
+        0.0, 1.0, sample_count, dtype=targets.dtype, device=device
+    )
+    depths = entry[valid, None] + (
+        exit_depth[valid] - entry[valid]
+    )[:, None] * fractions[None, :]
+    queries = (
+        origins[valid, None, :]
+        + depths[:, :, None] * directions[valid, None, :]
+    )
+    density = _field(model, actor, queries.reshape(-1, 3)).reshape(
+        len(depths), sample_count
+    )
+    spacing = (exit_depth[valid] - entry[valid]).clamp_min(1.0e-4) / max(
+        sample_count - 1, 1
+    )
+    optical_thickness = density * spacing[:, None]
+    cumulative = torch.cumsum(optical_thickness, dim=1)
+    cdf = 1.0 - torch.exp(-cumulative)
+    transmittance_before = torch.exp(-cumulative + optical_thickness)
+    weights = (1.0 - torch.exp(-optical_thickness)) * transmittance_before
+    return depths, target_depth[valid], cdf, weights, density
+
+
+def _survival_losses(
+    model: RaySurvivalDensityField,
+    actor: Mapping[str, Any],
+    config: Mapping[str, Any],
+) -> dict[str, torch.Tensor]:
+    depths, target_depth, cdf, weights, density = _ray_survival_values(
+        model,
+        actor,
+        config,
+        actor["features"].device,
+        int(config["survival_train_samples"]),
+    )
+    epsilon = 1.0e-6
+    before = depths < target_depth[:, None]
+    after = ~before
+    free_survival = -torch.log((1.0 - cdf).clamp_min(epsilon))[before].mean()
+    hit_termination = -torch.log(cdf.clamp_min(epsilon))[after].mean()
+    normalized_weights = weights / weights.sum(dim=1, keepdim=True).clamp_min(epsilon)
+    expected_depth = torch.sum(normalized_weights * depths, dim=1)
+    depth_l1 = torch.abs(expected_depth - target_depth).mean()
+    loss = (
+        free_survival
+        + hit_termination
+        + float(config["survival_depth_weight"]) * depth_l1
+    )
+    return {
+        "loss": loss,
+        "free_survival": free_survival,
+        "hit_termination": hit_termination,
+        "depth_l1": depth_l1,
+        "mean_density": density.mean(),
+        "terminal_opacity": cdf[:, -1].mean(),
+    }
+
+
+def _train_survival(
+    model: RaySurvivalDensityField,
+    actors: list[dict[str, Any]],
+    config: Mapping[str, Any],
+    optimizer: torch.optim.Optimizer,
+) -> list[dict[str, float | int]]:
+    names = (
+        "loss",
+        "free_survival",
+        "hit_termination",
+        "depth_l1",
+        "mean_density",
+        "terminal_opacity",
+    )
+    history: list[dict[str, float | int]] = []
+    batch_size = int(config["actor_batch_size"])
+    for epoch in range(int(config["fine_tune_epochs"])):
+        totals = {name: 0.0 for name in names}
+        permutation = torch.randperm(len(actors)).tolist()
+        for start in range(0, len(permutation), batch_size):
+            indices = permutation[start : start + batch_size]
+            items = [_survival_losses(model, actors[index], config) for index in indices]
+            means = {
+                name: torch.stack([item[name] for item in items]).mean()
+                for name in names
+            }
+            optimizer.zero_grad(set_to_none=True)
+            means["loss"].backward()
+            optimizer.step()
+            for name in names:
+                totals[name] += float(means[name].detach()) * len(indices)
+        row: dict[str, float | int] = {
+            "epoch": epoch + 1,
+            **{name: value / len(actors) for name, value in totals.items()},
+        }
+        history.append(row)
+        print(
+            json.dumps(
+                {
+                    "stage": str(config["training_stage"]),
+                    "actors": len(actors),
+                    **row,
+                }
+            ),
+            flush=True,
+        )
+    return history
+
+
 def _train(
     model: LocalAnchorSignedField,
     actors: list[dict[str, Any]],
     config: Mapping[str, Any],
     optimizer: torch.optim.Optimizer,
 ) -> list[dict[str, float | int]]:
+    if isinstance(model, RaySurvivalDensityField):
+        return _train_survival(model, actors, config, optimizer)
     history: list[dict[str, float | int]] = []
     names = (
         "geometry",
@@ -396,6 +522,94 @@ def _field_first_return_partition(
     }
 
 
+def _survival_first_return_partition(
+    model: RaySurvivalDensityField,
+    actor: Mapping[str, Any],
+    evaluation: Mapping[str, Any],
+    device: torch.device,
+) -> dict[str, np.ndarray]:
+    targets = torch.as_tensor(actor["target"], dtype=torch.float32, device=device)
+    origins = torch.as_tensor(
+        actor["target_sensor_origins"], dtype=torch.float32, device=device
+    )
+    target_depth = torch.linalg.vector_norm(targets - origins, dim=1).clamp_min(1.0e-6)
+    directions = (targets - origins) / target_depth[:, None]
+    bounds = actor["size_t"] * 0.5 + float(evaluation["cuboid_padding_m"])
+    entry, exit_depth, valid_box = _ray_box_intervals(origins, directions, bounds)
+    fractions = torch.linspace(
+        0.0,
+        1.0,
+        int(evaluation["field_sample_count"]),
+        dtype=targets.dtype,
+        device=device,
+    )
+    first_depths = []
+    observables = []
+    ray_chunk = int(evaluation["ray_chunk_size"])
+    threshold = float(evaluation["survival_median_threshold"])
+    with torch.inference_mode():
+        for start in range(0, len(targets), ray_chunk):
+            local_entry = entry[start : start + ray_chunk]
+            local_exit = exit_depth[start : start + ray_chunk]
+            local_valid = valid_box[start : start + ray_chunk]
+            depths = local_entry[:, None] + (
+                local_exit - local_entry
+            )[:, None] * fractions[None, :]
+            queries = (
+                origins[start : start + ray_chunk, None, :]
+                + depths[:, :, None] * directions[start : start + ray_chunk, None, :]
+            )
+            density = _field(model, actor, queries.reshape(-1, 3)).reshape(
+                len(local_entry), -1
+            )
+            spacing = (local_exit - local_entry).clamp_min(1.0e-4) / max(
+                density.shape[1] - 1, 1
+            )
+            cdf = 1.0 - torch.exp(
+                -torch.cumsum(density * spacing[:, None], dim=1)
+            )
+            reached = cdf >= threshold
+            has_termination = reached.any(dim=1)
+            indices = reached.to(torch.int64).argmax(dim=1)
+            previous_indices = (indices - 1).clamp_min(0)
+            right_cdf = cdf.gather(1, indices[:, None]).squeeze(1)
+            gathered_left_cdf = cdf.gather(
+                1, previous_indices[:, None]
+            ).squeeze(1)
+            left_cdf = torch.where(
+                indices > 0, gathered_left_cdf, torch.zeros_like(gathered_left_cdf)
+            )
+            right_depth = depths.gather(1, indices[:, None]).squeeze(1)
+            gathered_left_depth = depths.gather(
+                1, previous_indices[:, None]
+            ).squeeze(1)
+            left_depth = torch.where(
+                indices > 0, gathered_left_depth, local_entry
+            )
+            ratio = (threshold - left_cdf) / (right_cdf - left_cdf).clamp_min(1.0e-6)
+            selected = left_depth + ratio.clamp(0.0, 1.0) * (
+                right_depth - left_depth
+            )
+            observable = local_valid & has_termination
+            first_depths.append(
+                torch.where(
+                    observable, selected, torch.full_like(selected, torch.inf)
+                ).cpu()
+            )
+            observables.append(observable.cpu())
+    first_depth = torch.cat(first_depths).numpy()
+    observable = torch.cat(observables).numpy().astype(bool)
+    target_depth_np = target_depth.cpu().numpy()
+    tolerance = float(evaluation["literal_depth_tolerance_m"])
+    return {
+        "first_depth": first_depth.astype(np.float32),
+        "target_depth": target_depth_np.astype(np.float32),
+        "observable": observable,
+        "early": observable & (first_depth < target_depth_np - tolerance),
+        "hit": observable & (np.abs(first_depth - target_depth_np) <= tolerance),
+    }
+
+
 def _field_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def stratum(selected: list[dict[str, Any]]) -> dict[str, Any]:
         rays = sum(int(row["target_ray_count"]) for row in selected)
@@ -490,6 +704,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             field_class = OneSidedLocalOccupancyField
         elif field_variant == "direct_query_signed":
             field_class = DirectQuerySignedField
+        elif field_variant == "ray_survival_density":
+            field_class = RaySurvivalDensityField
         else:
             field_class = LocalAnchorSignedField
         field_kwargs: dict[str, Any] = {}
@@ -508,6 +724,15 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                     config["model"]["maximum_field_distance_m"]
                 )
             )
+        elif field_class is RaySurvivalDensityField:
+            field_kwargs.update(
+                density_scale_per_m=float(
+                    config["model"]["density_scale_per_m"]
+                ),
+                initial_density_bias=float(
+                    config["model"]["initial_density_bias"]
+                ),
+            )
         model = field_class(
             int(checkpoint["input_dim"]),
             hidden_dim=int(config["model"]["hidden_dim"]),
@@ -521,6 +746,11 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             **field_kwargs,
         ).to(device)
         initialize_local_field_from_expansion(model, m8_model)
+        if isinstance(model, RaySurvivalDensityField):
+            with torch.no_grad():
+                model.query_decoder[-1].bias.fill_(
+                    float(config["model"]["initial_density_bias"])
+                )
         paths = m0_runner._paths(
             Path(config["cache_root"]), int(config["model"]["maximum_training_actors"])
         )
@@ -583,6 +813,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 "maximum_field_distance_m": config["model"].get(
                     "maximum_field_distance_m"
                 ),
+                "density_scale_per_m": config["model"].get(
+                    "density_scale_per_m"
+                ),
+                "initial_density_bias": config["model"].get(
+                    "initial_density_bias"
+                ),
             },
             run_dir / "MODEL.pt",
         )
@@ -616,9 +852,14 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                         config["evaluation"]["distance_chunk_size"]
                     ),
                 )
-                partition = _field_first_return_partition(
-                    model, actor, config["evaluation"], device
-                )
+                if isinstance(model, RaySurvivalDensityField):
+                    partition = _survival_first_return_partition(
+                        model, actor, config["evaluation"], device
+                    )
+                else:
+                    partition = _field_first_return_partition(
+                        model, actor, config["evaluation"], device
+                    )
                 row.update(
                     {
                         "scene_name": str(actor["scene_name"]),
@@ -683,6 +924,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "training_history": history,
             "m8_point_surface": metrics,
             "local_signed_field": field_metrics,
+            "ray_survival": field_metrics
+            if isinstance(model, RaySurvivalDensityField)
+            else None,
             "decisions": decisions,
             "m8_guidance_frozen": True,
             "field_inputs": "query_local_build_geometry_no_trajectory_time_hazard_image",
