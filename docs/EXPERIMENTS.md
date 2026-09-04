@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01 — frozen（2026-09-05）
+
+- representation=M41 conserved anchor/child surface measure；init=M35/M38；frozen M8 geometry；
+- ray loss=`-log P(depth>=d_gt-0.20m) - log P(abs(depth-d_gt)<=0.20m)`；no point-bin CE/expected-depth；
+- GT anchor/child F/O/U CE retained；4 epochs、seed71142；32 train / 64 deploy bins；same CDF median；
+- decisions=all+hazard+clear early nonincrease、hit delta≥-1pp、two occupied correlations≥0.25；
+- no event-weight/tolerance/bin/median/total/scale/seed sweep，no threshold/delete/filter；no external/M21 partial read；
+  next failure=`V71-F42`。
+
 ## WS-V71-M41-CONSERVED-SURFACE-MEASURE-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T080000Z__m41-conserved-measure-s71141-r1`；593 train / 66 holdout；4 epochs；

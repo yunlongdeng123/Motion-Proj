@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M42 pre-registration note — safety event is defined by GT, not a deployment gate（2026-09-05）
+
+M42的0.20m直接沿用literal GT evaluator tolerance，训练前冻结；它定义not-early/hit supervision，不在推理时删点
+或拒绝case。若五门任一失败登记`V71-F42`，不调event weight/tolerance/bin/median/epoch/seed。下一failure ID=
+`V71-F42`。
+
 ## V71-F41: M41 conserved family measure still optimizes the wrong CDF event（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M41-CONSERVED-SURFACE-MEASURE-01/20260905T080000Z__m41-conserved-measure-s71141-r1`；

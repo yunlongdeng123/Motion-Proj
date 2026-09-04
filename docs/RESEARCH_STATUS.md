@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M42 GT interval-event CDF supervision frozen（2026-09-05）
+
+状态=`v71_m42_interval_event_supervision_frozen`，详见
+[`WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md`](WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md)。
+保留M41分族守恒表示与M35/M38初始化，只把point-bin CE/depth代理替换为GT定义的`-log P(not early)`和
+`-log P(hit ±0.20m)`，两者等权；anchor/child F/O/U CE持续保留。固定4 epochs/seed71142，无tolerance/
+weight/bin/median/total/scale sweep，无threshold/delete/filter。沿用五项判定；无external/M21 partial read。
+下一failure ID=`V71-F42`。
+
 ## WorldSim V7.1 M41 rejected / point-bin CE does not control deployed CDF event（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M41-CONSERVED-SURFACE-MEASURE-01/
