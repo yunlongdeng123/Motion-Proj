@@ -21,6 +21,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import run_worldsim_v71_m0_ray_displacement as m0_runner
+import run_worldsim_v71_m5_pcgrad_relocation as m5_runner
 import run_worldsim_v71_m6_gt_supervised_gaussian_relocation as m6_runner
 import run_worldsim_v71_m7_gt_supervised_seed_expansion as m7_runner
 import run_worldsim_v71_m8_temporal_frame_coverage as m8_runner
@@ -34,6 +35,7 @@ from motion_proj.worldsim_v71.first_return_renderer import (
     differentiable_first_return_depth,
 )
 from motion_proj.worldsim_v71.gaussian_anchor_relocation import GaussianSeedExpansionMLP
+from motion_proj.worldsim_v71.ray_displacement import RaySurfaceRelocationMLP
 
 
 def _prepare_frame_actor(
@@ -334,6 +336,19 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         checkpoint = torch.load(m8_run / "MODEL.pt", map_location=device, weights_only=False)
         m8_config = yaml.safe_load((m8_run / "resolved.yaml").read_text(encoding="utf-8"))
         standardizer = FeatureStandardizer.from_payload(checkpoint["standardizer"])
+        m5_run = Path(checkpoint["m5_run"])
+        m5_checkpoint = torch.load(
+            m5_run / "MODEL.pt", map_location=device, weights_only=False
+        )
+        m5_config = yaml.safe_load(
+            (m5_run / "resolved.yaml").read_text(encoding="utf-8")
+        )
+        base = RaySurfaceRelocationMLP(
+            int(m5_checkpoint["input_dim"]), int(m5_checkpoint["hidden_dim"])
+        ).to(device)
+        base.load_state_dict(m5_checkpoint["state_dict"])
+        base.eval()
+        base.requires_grad_(False)
         model = GaussianSeedExpansionMLP(
             int(checkpoint["input_dim"]),
             int(checkpoint["hidden_dim"]),
@@ -352,6 +367,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         model.eval()
         with torch.inference_mode():
             for actor in actors:
+                _, centers = m5_runner._move(base, actor, m5_config["model"])
+                actor["m5_centers_t"] = centers.detach()
                 children, _, _ = m7_runner._predict(model, actor, m8_config["model"])
                 actor["m8_reference_children_t"] = children.detach().clone()
         for actor in actors:
@@ -471,6 +488,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 "slot_dim": int(checkpoint["slot_dim"]),
                 "seed": int(config["model"]["seed"]),
                 "m8_run": str(m8_run),
+                "m5_run": str(m5_run),
                 "shape_inputs": "build_geometry_only",
                 "trajectory_authority": "read_only_rigid_pose",
             },

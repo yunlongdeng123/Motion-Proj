@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F48: M50 loader omitted frozen M5 runtime centers（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/20260905T054500Z__m50-frame-balanced-first-s71150-r1`；
+- symptom=reference-child reconstruction raised `KeyError: m5_centers_t`；
+- cause=M8 checkpoint stores the frozen M5 run path, while prepared corpus actors do not persist M5 runtime tensors；M50 loaded
+  the child head but omitted the same frozen-base reconstruction used by M8；
+- exposure=failed before optimizer/training/holdout/metric; external/M43 quality read=false；
+- resolution=load checkpoint-declared M5 model read-only and recreate `m5_centers_t` before M8 child prediction；same config,
+  loss, frame groups, seed and decisions；r2 is the sole scientific trial；
+- anti-repeat=all future M7/M8-derived loaders must reconstruct their declared parent coordinate base before `_predict`。
+
+下一可用编号：`V71-F49`。
+
 ## V7.1 M50 pre-registration — temporal balance is GT supervision, not a motion/visibility head（2026-09-05）
 
 M50只改变target-frame physical loss的采样测度，不增加time、velocity、moving/static、hazard、category、image或

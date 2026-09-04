@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7.1 M50 r1 pre-training dependency failure / same-protocol recovery（2026-09-05）
+
+r1=`20260905T054500Z__m50-frame-balanced-first-s71150-r1`在重建冻结M8 reference children前因actor缺少
+`m5_centers_t`抛`KeyError`；M8 child head的坐标基座仍是冻结M5 relocation，checkpoint保存路径但语料不会持久化
+该运行时tensor。失败发生在train/holdout/metric之前，0 scientific exposure。修复只按M8原加载路径恢复M5只读
+model并重建centers，不改M50 config、loss、seed、frame group或decision；登记`V71-F48`，r2为唯一科学run。
+
 ## WorldSim V7.1 M50 frame-balanced physical supervision frozen（2026-09-05）
 
 状态=`v71_m50_frame_balanced_first_return_frozen`，详见

@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01 — r1 engineering interruption（2026-09-05）
+
+- run=`20260905T054500Z__m50-frame-balanced-first-s71150-r1`；phase=loading；training/metric/external read=false；
+- failure=`KeyError: m5_centers_t` while reconstructing M8 reference children；
+- resolution=load checkpoint-declared frozen M5 base and recreate runtime centers exactly as M8；no protocol change；
+- disposition=r1 non-scientific；r2 retains seed71150/config/decisions；failure=`V71-F48`。
+
 ## WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01 — frozen（2026-09-05）
 
 - base=frozen M8；same 593/66 split、four-child geometry、immutable anchors、GT geometry/frame coverage；
