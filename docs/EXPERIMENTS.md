@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M3-RAY-SIGNED-LEVEL-SET-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T102101Z__m3-ray-signed-level-set-s71104-r1`；status=`done`；verdict=
+  `m3_train_holdout_rejected`；failure=`V71-F07`；
+- training=`593 Actors / 24 epochs`；total=`0.1830476→0.1225908`，SDF=`0.1194031→0.1115238`，
+  Eikonal=`0.5294753→0.0560632`，first-return=`0.0743415→0.0165275`；
+- holdout=`66 Actors / 41 hazard / 99,208 rays`；surface extraction=`0/66`；grid SDF global range=
+  `[+0.118864,+0.321228]m`，严格single-sign；
+- physical=`28.609% hazard early reduction / +136.343mm Chamfer / -17.760pp hit / 100% retention`；3/6；
+- resources=`335.314s`、peak GPU=`0.19473GiB`、RSS=`1.27309GiB`；无数值/工程异常；
+- decision=M3 closed，no offset/Eikonal/seed recovery，no external read；转balanced occupancy boundary。
+
 ## WS-V71-M3-RAY-SIGNED-LEVEL-SET-01 — frozen protocol（2026-09-04）
 
 - representation=`single conditional SDF`；PointNet evidence encoder + Fourier xyz/size decoder；surface=`SDF zero crossing`；

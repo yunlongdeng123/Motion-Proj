@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M3 rejected / balanced occupancy boundary next（2026-09-04）
+
+Canonical M3=`run://worldsim_v71/WS-V71-M3-RAY-SIGNED-LEVEL-SET-01/
+20260904T102101Z__m3-ray-signed-level-set-s71104-r1`。593 train Actors完成24轮，total/SDF/Eikonal/first-return=
+`0.18305→0.12259 / 0.11940→0.11152 / 0.52948→0.05606 / 0.07434→0.01653`。固定66-Actor
+train-role holdout（41 hazard、99,208 rays）却0/66有zero crossing；全体grid SDF范围保持正值，global min/max=
+`0.11886/0.32123m`。输出退化为anchors，hazard early虽下降28.609%，但Chamfer `+136.343mm`、hit
+`-17.760pp`，3/6 stage gates。
+
+登记`V71-F07`并关闭signed regression；不改offset/Eikonal/initialization/seed重跑。检索IGR/SAL确认level-set需要避免
+坏的单符号解，而Occupancy Networks直接以平衡BCE学习decision boundary。下一M4使用同一scalar occupancy logit：
+等量front FREE/back OCCUPIED、hit/anchor logit=0，zero-logit同时驱动render与edge extraction；不再回归有量纲SDF。
+Selection/Source Final/AV2均不读，下一failure ID=`V71-F08`。
+
 ## WorldSim V7.1 M3 ray-signed level-set ready（2026-09-04）
 
 状态：`v71_m3_train_holdout_ready`。M3以17D build-only Actor evidence经PointNet编码，Fourier coordinate decoder只输出

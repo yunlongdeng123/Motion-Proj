@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F07 — M3 signed regression收敛到无zero crossing的单符号场
+
+- 分类/状态：scientific + implicit initialization / terminal for M3；canonical=`run://worldsim_v71/
+  WS-V71-M3-RAY-SIGNED-LEVEL-SET-01/20260904T102101Z__m3-ray-signed-level-set-s71104-r1`；
+- 观察：训练四项loss均稳定下降，Eikonal降至`0.0561`，但66 holdout Actors的grid SDF全部为正，global range
+  `[0.11886,0.32123]m`，zero crossing=`0/66`；
+- consequence：输出只有hard anchors，hazard early以表面缺失下降28.609%，Chamfer/hit恶化`+136.343mm/-17.760pp`；
+- mechanism：有量纲smooth-L1在surface-zero、ray正负和abs-SDF rendering共同作用下选择了坏的单符号局部解；Eikonal
+  约束梯度范数但不保证符号两侧或zero-set存在；
+- literature response：IGR/SAL强调几何初始化以避免坏level-set解；当前不补做M3初始化/offset sweep，而采用Occupancy
+  Networks式平衡二分类decision boundary，显式保证front/back两类竞争；
+- decision：M3关闭、external unread；下一可用failure ID=`V71-F08`。
+
 ## V7.1 M3 prevention note — signed scalar同时承担监督、render与抽取（2026-09-04）
 
 - 禁止恢复M1的unsigned SCF + evidence class双head；M3只有一个signed scalar，zero crossing就是部署surface；
