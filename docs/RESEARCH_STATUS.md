@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M50 frame-balanced physical supervision frozen（2026-09-05）
+
+状态=`v71_m50_frame_balanced_first_return_frozen`，详见
+[`WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md`](WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md)。
+M8虽已按target frame平衡coverage，但literal first-return/free-before-hit仍从pooled rays采样。M50从冻结M8单次
+fine-tune，按canonicalized sensor origin分帧并等权平均GT first-return物理损失；四child、immutable anchors、
+set/plane/scale/frame coverage、PCGrad均不变。shape输入继续排除time/velocity/trajectory/hazard/category/image/
+visibility，rigid pose只读。Primary=Actor-mean worst-frame early改善；另一个aggregate Pareto guard限制hazard early
+`+0.1pp`、all hit `-0.5pp`、Chamfer `+0.5mm`。4 epochs/one seed/one run，无sweep；不读M43 partial。
+
 ## WorldSim V7.1 CVPR main/supplement evidence split complete（2026-09-05）
 
 CVPR稿已从旧V7 validity/reliability长链中抽离，标题更新为`Physical Consistency Starts at Supervision:

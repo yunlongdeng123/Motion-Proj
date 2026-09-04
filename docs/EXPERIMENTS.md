@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01 — frozen（2026-09-05）
+
+- base=frozen M8；same 593/66 split、four-child geometry、immutable anchors、GT geometry/frame coverage；
+- intervention=target rays按canonical sensor origin分帧，per-frame literal first-return/free-before-hit等权后训练；
+- factorization=shape build-only；rigid pose read-only；no time/velocity/hazard/category/image/visibility input；
+- literature migration=DynamicVGGT/DeGO支持显式motion factorization；当前无non-rigid GT，故不加deformation/teacher；
+- decisions=worst-frame early improvement + one combined aggregate Pareto guard；4 epochs、seed71150、no sweep；
+- external=false；M43 candidate/cohort不变，partial quality read=false。
+
 ## WorldSim V7.1 CVPR main/supplement split（2026-09-05）
 
 - scope=paper restructuring only；无新scientific trial或quality read；

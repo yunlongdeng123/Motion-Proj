@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M50 pre-registration — temporal balance is GT supervision, not a motion/visibility head（2026-09-05）
+
+M50只改变target-frame physical loss的采样测度，不增加time、velocity、moving/static、hazard、category、image或
+visibility输入；rigid trajectory保持read-only transform。禁止把per-frame结果用于删frame/Actor，禁止在结果后改
+frame grouping、loss weight、margin、seed或epoch。若worst-frame primary与aggregate Pareto guard不能同时成立，关闭
+该方向；不得用M50替换冻结M39→M43 external candidate。当前next failure ID仍=`V71-F48`。
+
 ## V7.1 paper structure boundary — legacy V7 evidence is supplement-only（2026-09-05）
 
 旧validity/hazard/reliability与P1--P22长链不得重新混入V7.1主贡献，避免把post-hoc selection、nonlearned AV2
