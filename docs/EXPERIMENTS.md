@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — frozen protocol（2026-09-05）
+
+- cohort=same M30 sorted first-1024 eligible corpus / every-10th holdout；expected 66 exposed Actors；
+- source recovery=frozen S2 nuScenes split + Actor rules + P2 compiler，only selected source scenes recompiled；
+- surfaces=raw query / UNKNOWN query / KEEP / PROJECT / ordered KEEP+PROJECT anchors；no point removed；
+- metric=shared literal beam-tube first return，lateral/depth tolerance=`0.20/0.20m`；
+- attribution=union first-return index；strata=target-frame ordinal、hazard/clear、moving/quasi-static、category；
+- execution=one descriptive read，no training/checkpoint/threshold/seed/source/evaluator sweep，no M21 partial read；
+- claim=locate upstream supervision contradiction only；no causal correction/external/safety claim；next failure=`V71-F31`。
+
 ## WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01 — canonical structural positive / utility boundary（2026-09-05）
 
 - run=`20260904T203000Z__m30-evidential-return-interval-r1`；status=`done`；Actors=`66`；rays=`99,208`；

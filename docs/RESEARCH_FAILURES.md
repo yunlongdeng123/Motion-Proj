@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M31 pre-registration note — provenance diagnosis is not post-hoc repair（2026-09-05）
+
+M30已证明learned completion之前的immutable anchors也有`19.58%` early contradiction。M31只恢复S2编译器
+已有的query/KEEP/PROJECT provenance，并用完全相同的literal ray operator归因；不会按结果删点、改label、调
+tolerance或生成checkpoint。SCPNet指出多帧moving traces可污染completion label，DualAD强调显式ego/object motion
+compensation，但两者在本阶段只支持“先定位supervision producer”的决策。若后续修正，必须在GT/supervision端
+独立冻结并经过训练，禁止包装为推理后处理。下一failure ID=`V71-F31`。
+
 ## V7.1 M30 outcome note — interval semantics supported, utility sharply bounded（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01/

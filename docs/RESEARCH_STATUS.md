@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M31 anchor contradiction attribution frozen（2026-09-05）
+
+状态=`v71_m31_anchor_contradiction_attribution_frozen`，详见
+[`WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md`](WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md)。
+M31针对M30的anchors-only early=`19.58%`，复编译同一66个exposed development Actors，使用共享literal
+first-return直接区分raw query、UNKNOWN query、KEEP、PROJECT及其ordered union。
+
+按union first-return index归因early来源，并按target-frame ordinal、hazard、moving与category分层；不训练、不删点、
+不调阈值，也不把诊断转为deployment filter。SCPNet/DualAD/SCOOP只用于提出上游moving-trace、动静分表征和
+correspondence诊断方向。任何修正必须另立GT/supervision构造并重新训练。M21 partial quality仍不读取；
+下一failure ID=`V71-F31`。
+
 ## WorldSim V7.1 M30 set-order supported / interval utility bounded（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01/
