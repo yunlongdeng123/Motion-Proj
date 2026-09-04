@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7.1 M39 supported / evidential categorical surface-return composition（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01/
+20260905T070000Z__m39-categorical-authority-r1`；training=false，66 exposed holdout / 99,208 rays，主candidate
+为事前固定的M38 authority categorical composition，verdict=`m39_categorical_composition_supported`，3/3
+decisions。
+
+相对原unit-energy baseline，M38 categorical all early=`18.187→17.666%`（`-0.521pp`）、hit=
+`62.283→64.455%`（`+2.172pp`）；hazard early/hit=`-0.621/+2.318pp`，clear=`-0.030/+1.455pp`。
+M37 descriptive arm为all early/hit `17.611/62.887%`；M34 anchor+unit-child为`18.006/59.958%`，说明
+child supervision是恢复hit的必要增量。M38相对M37多`0.054pp` early但多`1.568pp` hit；未根据该描述
+回选M37。
+
+该结果把M35--M38的矛盾闭合为composition边界：连续F/O/U authority在direct categorical surface-return
+distribution中有效，但不应解释为可跨密集primitive相加的体光学厚度。geometry/scale/trajectory全冻结，无
+threshold/delete/filter/no-return conditioning。当前仍是development-exposed机制结果；下一步只在20-log AV2
+完整且adapter可构造同源producer evidence时冻结一次zero-shot confirmation，否则先补数据接口、不读partial质量。
+GPU=`0.223GiB`、RSS=`1.171GiB`、wall=`9.32s`；无新failure，下一failure ID仍=`V71-F40`。
+
 ## WorldSim V7.1 M39 categorical authority composition frozen（2026-09-05）
 
 状态=`v71_m39_categorical_authority_composition_frozen`，详见

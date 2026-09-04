@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M39 outcome note — authority is surface-return evidence, not additive volume density（2026-09-05）
+
+M39无新failure。事前固定M38主candidate在categorical composition下all/hazard/clear early均不增且all hit保留，
+3/3通过；相对baseline分别`-0.521/-0.621/-0.030pp` early与`+2.172pp` all hit。不得因M37 descriptive
+early略低而结果后回选M37。后续只确认冻结M38 categorical表示，不重开transmittance opacity/scale/margin/bin/
+median sweep；下一failure ID仍=`V71-F40`。
+
 ## V7.1 M39 pre-registration note — composition audit is not model selection（2026-09-05）
 
 M39主candidate在quality read前固定为M38 categorical composition；M37只作配对描述，不能看到结果后择优。若M38

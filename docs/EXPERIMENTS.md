@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01 — canonical supported（2026-09-05）
+
+- run=`20260905T070000Z__m39-categorical-authority-r1`；66 exposed holdout / 99,208 rays；training=false；
+  verdict=`m39_categorical_composition_supported`；decisions=`3/3`；
+- baseline all early/hit=`18.1870/62.2833%`；M34 anchor+unit-child=`18.0056/59.9579%`；
+  M37 categorical=`17.6115/62.8871%`；primary M38 categorical=`17.6659/64.4555%`；
+- M38-vs-baseline all=`-0.5211/+2.1722pp` early/hit；hazard=`-0.6210/+2.3179pp`；
+  clear=`-0.0298/+1.4555pp`；worst-stratum early delta=`-0.0298pp`；
+- M38-vs-M37 all early/hit=`+0.0544/+1.5684pp`；M37 descriptive only，未回选；child occupied correlations
+  M37/M38=`0.4306/0.3990`；
+- interpretation=continuous evidential authority is compatible with direct categorical surface-return probability but
+  not dense additive optical thickness；frozen geometry/scale/trajectory；no threshold/delete/filter；
+- GPU=`0.223GiB`，RSS=`1.171GiB`，wall=`9.32s`；development exposed；no external/M21 partial read；no new
+  failure，next failure=`V71-F40`。
+
 ## WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01 — frozen（2026-09-05）
 
 - frozen M8 geometry/trajectory + M35 anchor + M37/M38 child heads；same 66 exposed holdout；training=false；
