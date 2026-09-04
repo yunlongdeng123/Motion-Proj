@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M35 analytic transmittance authority frozen（2026-09-05）
+
+状态=`v71_m35_transmittance_anchor_authority_frozen`，详见
+[`WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md`](WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md)。
+根据Vol3DGS（CVPR 2025）与GaussRender（ICCV 2025），M35用解析Gaussian segment积分与前缀
+transmittance $T_k(1-e^{-\tau_k})$替换M34空间energy softmax。冻结M8 geometry/trajectory、children unit，
+M33输入到anchor F/O/U；GT soft mass与ordered first-return共同训练。固定32/64 train/eval segments、无光学
+scale学习、无阈值/删除/filter、单seed 71135。相对原unit-energy baseline沿用四项decision并额外报告unit
+transmittance；无selection/final/external/M21 partial read。下一failure ID=`V71-F37`。
+
 ## WorldSim V7.1 M34 rejected / ray-composition boundary（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01/

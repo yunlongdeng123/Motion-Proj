@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01 — frozen（2026-09-05）
+
+- literature=Vol3DGS CVPR 2025 analytic Gaussian integration；GaussRender ICCV 2025 $T_i\alpha_i$ occupancy/depth
+  supervision；
+- representation=per-segment analytic optical thickness + prefix transmittance conditional first-return；report residual
+  no-return mass；
+- frozen M8 geometry/trajectory + unit children；M33 input；anchor continuous F/O/U；32/64 train/eval segments；
+- 593 train / 66 exposed holdout、6 epochs、seed 71135；no scale/segment/seed sweep，no threshold/delete/filter；
+- decisions=same four as M34 versus original unit-energy baseline；unit-transmittance diagnostic separately reported；
+  no selection/final/external/M21 partial read；next failure=`V71-F37`。
+
 ## WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T043000Z__m34-producer-anchor-authority-s71134-r1`；593 train / 66 holdout；6 epochs；

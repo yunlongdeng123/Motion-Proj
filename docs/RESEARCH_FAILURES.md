@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M35 pre-registration note — replace normalization, not supervision（2026-09-05）
+
+M35保留M33 evidence/GT与M34 anchor-only隔离，只替换ray composition为解析Gaussian积分+prefix transmittance。
+unit-transmittance单独报告；条件return分布不冒充no-return建模。若失败，不调segment count、opacity scale、
+Gaussian scale、seed或阈值，登记`V71-F37`。下一failure ID=`V71-F37`。
+
 ## V71-F36: M34 identifiable anchor mass fails under normalized Gaussian-energy returns（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01/20260905T043000Z__m34-producer-anchor-authority-s71134-r1`；
