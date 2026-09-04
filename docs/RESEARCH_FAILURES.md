@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M28 outcome note — 权限边界已进入代码与论文（2026-09-05）
+
+`authority_contract.py`已以三个兄弟类型和无visual参数的pure physical API实现；
+`py_compile`通过。论文Method已补入GT-supervision origin、appearance non-interference proposition、
+SE(3) corollary与明确non-claims，完整TinyTeX/latexmk编译成功（15页、2,331,081 bytes）。
+没有通过数值post-hoc对比冒充证明，没有读取M21 partial quality，也没有新增训练、阈值或过滤。
+未触发新failure；下一failure ID仍为`V71-F30`。
+
 ## V7.1 M28 mechanism boundary — non-interference不替代GT几何正确性（2026-09-05）
 
 M28选择typed physical/pose/visual sibling states和无visual参数的纯physical query，不新增

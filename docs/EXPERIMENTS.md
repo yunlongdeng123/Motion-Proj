@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M28-TYPED-AUTHORITY-NON-INTERFERENCE-01 — implementation complete（2026-09-05）
+
+- code=`motion_proj/worldsim_v71/authority_contract.py` + public exports；`py_compile` passed；
+- dependency=physical query reads only `PhysicalActorField` and matching read-only `ActorPose`；visual sibling absent from signature；
+- supervision=paper binds physical geometry to GT set/plane/scale/frame/first-return objectives before deployment；
+- theorem=appearance-only non-interference by functional dependency；SE(3) equivariance by inverse rigid query；
+- paper=Method updated with Proposition 1 and explicit non-claims；TinyTeX full compile success；15 pages /
+  2,331,081 bytes；refs resolved；no fatal/new overfull warning；
+- no numeric post-hoc proof, training, threshold/filter, physical metric, or M21 partial quality read；next failure=`V71-F30`。
+
 ## WS-V71-M28-TYPED-AUTHORITY-NON-INTERFERENCE-01 — frozen protocol（2026-09-05）
 
 - physical=`PhysicalActorField(actor_id, canonical centers, isotropic scales)`；supervision remains GT

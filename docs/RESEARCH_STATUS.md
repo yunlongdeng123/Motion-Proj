@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M28 typed authority complete（2026-09-05）
+
+M28已将“几何、运动、外观分开”从运行约定升级为代码函数依赖与论文命题：
+`PhysicalActorField`+只读`ActorPose`是physical query的完整输入，`VisualActorLayer`是render-only
+兄弟状态。因此appearance-only update对物理能量结构不可达；物理正确性则继续由
+GT set/plane/scale/frame/first-return训练目标与M21外测负责。
+
+最小`py_compile`通过。论文Method已加入Proposition 1、SE(3) corollary与不保证边界；
+TinyTeX/latexmk完整编译`paper/main.pdf`成功（15页、2,331,081 bytes），引用已解析，
+无fatal或新增overfull warning。无训练、无M21 partial quality read；下一failure ID=`V71-F30`。
+
 ## WorldSim V7.1 M28 typed authority protocol frozen（2026-09-05）
 
 状态=`v71_m28_typed_authority_non_interference_frozen`，详见

@@ -85,6 +85,19 @@ e_{it}^{\mathrm{world}}(x)=e_i\!\left(R_{it}^{\top}(x-t_{it})\right).
 \end{equation}
 Thus trajectory changes where an Actor field is queried but cannot deform its canonical centers or scales. We evaluate this expression by inverse-transforming world queries, avoiding loss of local precision in large world coordinates. Static Background Gaussians are a separate scene component; neither they nor dynamic SH, opacity, or image features enter the physical query. This deployment factorization preserves the frame-balanced GT supervision used to learn $e_i$ rather than introducing a per-frame post-hoc filter.
 
+We make this ownership boundary explicit rather than infer it from an output audit. Inspired by object-transform factorization in scene graphs and neural simulators~\cite{ost2021neural,yang2023unisim}, let the physical state be $P_i=(\{c_{ij},s_{ij}\}_j)$, the read-only pose be $T_{it}$, and the sibling visual state $V_i$ contain render geometry, SH, and opacity. Geometry is optimized by the GT set, local-plane, scale, frame-coverage, and first-return losses above. Image optimization instead receives $\operatorname{sg}(P_i)$ and updates only $V_i$, where $\operatorname{sg}$ denotes stop-gradient. The deployed physical API is
+\begin{equation}
+Q_{it}(x;P_i,T_{it})=\log\sum_j\exp\!\left[-\frac{\|R_{it}^{\top}(x-t_{it})-c_{ij}\|_2^2}{2s_{ij}^2}\right],
+\label{eq:authority-query}
+\end{equation}
+and has no visual argument.
+
+\noindent\textbf{Proposition 1 (appearance non-interference).}
+For fixed $(P_i,T_{it})$ and any visual-only update $\Delta V_i$,
+$Q_{it}(x;P_i,T_{it},V_i+\Delta V_i)=Q_{it}(x;P_i,T_{it})$ and
+$\partial Q_{it}/\partial V_i=0$.
+This follows directly from the dependency set of Eq.~\ref{eq:authority-query}, not from a measured post-hoc correlation. Moreover, for a common rigid world transform $g$, inverse querying gives $Q_{gT}(gx)=Q_T(x)$; rigid motion relocates but cannot deform the canonical field. These are ownership and equivariance guarantees, not guarantees that the GT is complete, learned geometry or trajectory is correct, Background collision is modeled, or the resulting scene is safe.
+
 For the appearance interface, each frozen physical center receives only the SH coefficients and opacity logit of its nearest image-trained StreetGS Gaussian with the same Actor identity. The association is computed in canonical coordinates and has no geometry gradient. Appearance center, covariance, and rotation are never copied, so visual support cannot move, resize, delete, or accept a physical primitive. The resulting sidecar is an attribute carrier rather than an image-conditioned geometry model.
 
 \subsection{Validity--Hazard Factorization}
