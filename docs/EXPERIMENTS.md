@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M12-FINITE-PLANAR-CHART-01 — r1 pre-step recovery（2026-09-04）
+
+- r1=`20260904T233000Z__m12-finite-chart-s71114-r1`；status=`failed_pre_step`；failure=`V71-F16`；
+- failure point=first batch before optimizer；inference-created frozen scale could not be saved for normal-gradient backward；
+- exposure=`0 epochs / 0 holdout / 0 scientific metrics`；
+- fix=clone frozen M8 children/scales and build-only anchor normals outside inference mode；
+- r2 changes only run-id and tensor materialization；frozen M12 scientific protocol unchanged。
+
 ## WS-V71-M12-FINITE-PLANAR-CHART-01 — frozen protocol（2026-09-04）
 
 - representation=canonical M8 center/tangent radius as finite zero-thickness disc + learned unit normal；

@@ -386,6 +386,10 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 actor["m8_children_t"] = children.detach().clone()
                 actor["m8_scales_t"] = scales.detach().clone()
                 _prepare_anchor_normals(actor, config["model"])
+        for actor in actors:
+            actor["m8_children_t"] = actor["m8_children_t"].clone()
+            actor["m8_scales_t"] = actor["m8_scales_t"].clone()
+            actor["anchor_normals_t"] = actor["anchor_normals_t"].clone()
         stride = int(config["model"]["holdout_stride"])
         train_actors = [actor for index, actor in enumerate(actors) if index % stride != 0]
         holdout_actors = [actor for index, actor in enumerate(actors) if index % stride == 0]

@@ -1,14 +1,27 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F16 — M12冻结scale仍携带inference-tensor属性（2026-09-04）
+
+- 分类/状态：engineering pre-step / recovered；run=`20260904T233000Z__m12-finite-chart-s71114-r1`；
+- 症状：首个batch的`in_radius=tangent/scales`在backward前抛`Inference tensors cannot be saved for backward`；
+- exposure：0 epoch、0 optimizer step、0 holdout metric、0 scientific result；AV2/protected external未读；
+- root cause：M8 children/scales在`torch.inference_mode()`中物化，虽冻结但参与含可学习normal的表达式，autograd需要保存
+  scale用于反向；
+- resolution：离开inference mode后clone children/scales/anchor normals为普通tensor；不改模型、loss、seed、cohort、
+  gate或训练长度；新run-id原样重跑；
+- prevention：任何冻结reference只要进入含trainable operand的计算图，都必须在inference block外物化；不增加全局检查门。
+
+下一可用编号：`V71-F17`。
+
 ## V7.1 M12 prevention note — Gaussian appearance体不等于物理surface（2026-09-04）
 
 - M12部署primitive是zero-thickness finite disc chart，不能再以任意`σ` ellipsoid解释碰撞边界；
 - center/tangent radius逐值冻结M8，只有normal head可学习，point/temporal surface不得被chart physics改写；
 - GT normal、point-to-plane、in-radius coverage与exact disc first/free均在训练内，不能只在输出后把Gaussian压扁；
 - 所有charts保留，无opacity threshold、filter、mask或按hazard删除；结论仅限可见surface first-return；
-- 若hazard early或hit失败，登记`V71-F16`并关闭finite-chart family，不扫radius倍数/loss/seed/epoch。
+- 若hazard early或hit失败，登记`V71-F17`并关闭finite-chart family，不扫radius倍数/loss/seed/epoch。
 
-下一可用编号仍为：`V71-F16`。
+下一可用编号仍为：`V71-F17`。
 
 ## V71-F15 — exact ellipsoid监督保住hit但无法降低earliest collision（2026-09-04）
 

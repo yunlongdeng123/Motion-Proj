@@ -60,5 +60,6 @@ FREE loss处罚`target_depth-0.20m`之前的交点。无交点使用有限fallba
 3. all chart hit delta `>=-1pp`；
 4. Actor/hazard retention=`100%`；所有charts保留。
 
-任一失败登记`V71-F16`并关闭finite-chart family，不做第二seed或radius恢复。通过才冻结fresh AV2 external evaluator。
+任一科学门失败登记`V71-F17`并关闭finite-chart family，不做第二seed或radius恢复。`V71-F16`仅记录r1在0 step的
+inference-tensor工程恢复。通过才冻结fresh AV2 external evaluator。
 即使通过，claim只限“由GT监督的可见surface first-return”，不声称watertight occupancy、内部/外部符号或实体碰撞体积。

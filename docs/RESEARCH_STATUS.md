@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7.1 M12 pre-step tensor recovery（2026-09-04）
+
+M12 r1=`20260904T233000Z__m12-finite-chart-s71114-r1`在首个optimizer step前失败：inference-mode生成的冻结
+M8 scale进入`in_radius` autograd并需save-for-backward，PyTorch拒绝。0 epoch、0 holdout、0 scientific exposure，登记
+`V71-F16`。修复仅在退出inference mode后clone冻结children/scales/anchor normals为普通tensor；协议、seed、loss、
+cohort与门槛不变，r2使用新run-id。下一科学failure ID=`V71-F17`。
+
 ## WorldSim V7.1 M12 finite planar chart protocol frozen（2026-09-04）
 
 状态=`v71_m12_finite_planar_chart_frozen`，详见
