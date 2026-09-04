@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V7.1 CVPR manuscript — M23 milestone（2026-09-05）
+
+- related=Feature 3DGS + Neural Shell Texture Splatting作为独立visual-attribute carrier依据；
+- method=same-Actor canonical nearest SH/opacity association with no geometry gradient/copy；
+- results=5791/5791 association、0.127m mean及Chamfer/hit正向与early负向完整并列；
+- limitations=no rendered novel-view/photorealism/semantic claim；
+- compile=TinyTeX/latexmk完整成功，14页、引用已解析、无fatal error或新增overfull warning。
+
 ## WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01 — canonical interface supported（2026-09-05）
 
 - run=`20260904T163000Z__m23-geometry-locked-appearance-r1`；verdict=`interface supported 3/3`；

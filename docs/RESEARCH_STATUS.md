@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 CVPR manuscript M23 appearance boundary update（2026-09-05）
+
+论文related/method已加入Feature 3DGS、Neural Shell Texture Splatting与geometry-locked attribute carrier；results同时
+报告5791/5791附着和scene-specific early反向，limitations明确无rendered novel-view/photorealism/semantic claim。
+M23不被写成image-conditioned geometry，也不以Chamfer/hit改善掩盖hazard early恶化。待完整TinyTeX编译后提交。
+下一failure ID仍为`V71-F26`。
+
+本地TinyTeX/latexmk完整编译成功，`paper/main.pdf`为14页、引用已解析、无fatal error或新增overfull warning。
+
 ## WorldSim V7.1 M23 geometry-locked appearance carrier supported / physics mixed（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01/

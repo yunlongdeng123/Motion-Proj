@@ -85,6 +85,8 @@ e_{it}^{\mathrm{world}}(x)=e_i\!\left(R_{it}^{\top}(x-t_{it})\right).
 \end{equation}
 Thus trajectory changes where an Actor field is queried but cannot deform its canonical centers or scales. We evaluate this expression by inverse-transforming world queries, avoiding loss of local precision in large world coordinates. Static Background Gaussians are a separate scene component; neither they nor dynamic SH, opacity, or image features enter the physical query. This deployment factorization preserves the frame-balanced GT supervision used to learn $e_i$ rather than introducing a per-frame post-hoc filter.
 
+For the appearance interface, each frozen physical center receives only the SH coefficients and opacity logit of its nearest image-trained StreetGS Gaussian with the same Actor identity. The association is computed in canonical coordinates and has no geometry gradient. Appearance center, covariance, and rotation are never copied, so visual support cannot move, resize, delete, or accept a physical primitive. The resulting sidecar is an attribute carrier rather than an image-conditioned geometry model.
+
 \subsection{Validity--Hazard Factorization}
 
 The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. Its label is whether the frozen compiler's target Chamfer is no worse than that of the untouched clean query. The hazard encoder receives only TTC, clearance, closing speed, braking, and crossing geometry. Our factorized model uses two structurally disjoint low-capacity heads; a shared-input two-head network is the learned baseline:

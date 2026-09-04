@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M23 paper prevention note — attribute carrier不是render或geometry正结果（2026-09-05）
+
+- related work只迁移visual attribute field与geometry/texture分层，不声称复现Feature 3DGS或Neural Shell训练；
+- results显式保留all/hazard early恶化`1.60/0.60%`，不得仅报告Chamfer/hit改善；
+- limitations写明没有对新sidecar做novel-view rendering，不能获得photorealism或semantic fidelity；
+- M23仍不影响M21物理external判定，SH/opacity不进入ray energy。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M23 outcome note — 安全附着不隐去单场景physics反向（2026-09-05）
 
 - 3/3 interface decisions通过：5791/5791 physical Gaussians均获同Actor SH/opacity，geometry与checkpoint只读；
