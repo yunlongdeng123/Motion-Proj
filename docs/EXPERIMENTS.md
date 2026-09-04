@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M19-JOINT-GEOMETRY-FIRST-RETURN-01 — gate pass, mechanism rejected（2026-09-04）
+
+- run=`20260904T150000Z__m19-joint-geometry-return-s71121-r1`；technical verdict=`5/5 pass`；
+  scientific verdict=`auxiliary field compensation, V71-F23`；
+- training=593 Actors/4 epochs；categorical NLL=`2.943→2.903`，depth L1=`0.440→0.432m`，GT-bin
+  probability=`7.303→7.757%`，geometry=`1.243→1.226`；conflict约`47.7→52.3%`；
+- geometry vs M8=Chamfer `-2.424mm`，frame coverage all/moving/quasi-static=`-2.472/-2.738/-1.858mm`，
+  mean child shift=`24.708mm`；
+- point absolute vs baseline=hazard/all early=`-4.102/-4.768%`，hit=`+1.887pp`；M8分别为
+  `+5.123/+3.901%`和`+2.759pp`；anchors的physical direction反转；
+- field vs current point=hazard/all early=`+15.556/+12.433%`，hit=`+8.800/+7.131pp`，但该reference已恶化；
+- field absolute hazard early=`24.435%` vs frozen M18 `24.361%`，即没有绝对early增益；field hit=
+  `58.472%` vs M18 `57.236%`；
+- decision=no M19 AV2 evaluator，no weight/lr/epoch recovery；next=decoder-free anchor-distance categorical ray energy。
+
 ## WS-V71-M19-JOINT-GEOMETRY-FIRST-RETURN-01 — frozen protocol（2026-09-04）
 
 - initialization=canonical M8 surface head + canonical M18 actor-canonical query field；both trainable；

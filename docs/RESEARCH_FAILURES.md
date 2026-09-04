@@ -1,5 +1,23 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F23 — 可学习field补偿了恶化的completed anchors（2026-09-04）
+
+- 分类/状态：auxiliary-decoder compensation / terminal for jointly trainable surface+field；canonical=
+  `20260904T150000Z__m19-joint-geometry-return-s71121-r1`；
+- 表面判定：预注册5/5通过；Chamfer相对M8=`-2.424mm`，field相对当前point reference的hazard early=
+  `+15.556%`、all hit=`+7.131pp`；
+- 反事实审计：point hazard early相对baseline由M8的`+5.123%`反转为M19的`-4.102%`；point hit由
+  `+2.759pp`降为`+1.887pp`；joint field绝对hazard early=`24.435%`，冻结M18=`24.361%`；
+- root cause：surface和field同时可学习时，categorical loss可由query decoder吸收；“field相对当前surface”的门又把
+  已恶化surface作为分母，形成合法但不支持anchor物理一致性的补偿解；
+- optimization evidence：children平均移动`24.708mm`、frame coverage `-2.472mm`、NLL和depth均下降，无资源或
+  数值失败；所以不是没训练，而是可辨识性错误；
+- resolution：M19保留为技术gate-pass/科学claim-reject，不启动external、不扫loss/lr/epoch；下一路线移除trainable
+  decoder，用anchors+scale直接定义ray categorical energy，使physics gradient无法绕开geometry；
+- claim impact：M19支持“联合优化能改善surface coverage和field hit”，不支持“completed anchors本身物理自洽”。
+
+下一可用编号：`V71-F24`。
+
 ## V7.1 M19 prevention note — 联合训练必须持续保留原生3D监督（2026-09-04）
 
 - M19允许first-return loss回传到completed children，但不得移除symmetric set、point-to-plane/scale和逐帧coverage；

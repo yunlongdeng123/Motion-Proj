@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M19 gate-pass / physical-anchor claim rejected（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M19-JOINT-GEOMETRY-FIRST-RETURN-01/
+20260904T150000Z__m19-joint-geometry-return-s71121-r1`。预注册最小判定技术上5/5：retention=`100/100%`，
+Chamfer相对M8再改善`2.424mm`，field相对当前joint point surface的hazard early降低`15.556%`、all hit提升
+`7.131pp`。训练NLL=`2.943→2.903`、depth L1=`0.440→0.432m`，无NaN/OOM。
+
+但更强的“first-return梯度使completed anchors物理自洽”假设被反证：children平均移动`24.708mm`，逐帧coverage改善
+`2.472mm`，可point surface的hazard early却从M8相对baseline `+5.123%`反转为`-4.102%`，point hit也由
+`+2.759pp`降至`+1.887pp`。joint field的绝对hazard early=`24.435%`，还略差于冻结M18的`24.361%`；较大的
+`15.556%`只因其reference point surface先恶化。登记`V71-F23`，不启动M19 AV2外测、不调loss恢复。
+
+下一步必须移除可学习field的补偿自由度：由completed anchors及其GT-supervised scale直接定义ray categorical energy，
+让同一one-hot first-return loss只能移动几何，且绝对point/ray early分别报告。
+
 ## WorldSim V7.1 M19 joint geometry--first-return protocol frozen（2026-09-04）
 
 状态=`v71_m19_joint_geometry_first_return_frozen`，详见
