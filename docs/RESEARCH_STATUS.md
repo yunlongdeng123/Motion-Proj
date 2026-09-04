@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 M36 optical contribution decomposition frozen（2026-09-05）
+
+状态=`v71_m36_optical_contribution_decomposition_frozen`，详见
+[`WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md`](WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md)。
+冻结M35 model、M8 geometry与同一66 holdout，不训练地比较anchors unit/learned only、children unit only、
+all unit/learned五个transmittance arm，定位M35过度光学厚度的来源。无scale/segment/threshold调整，无性能
+candidate，不读external/M21 partial。下一failure ID=`V71-F38`。
+
 ## WorldSim V7.1 M35 rejected / optical-thickness calibration boundary（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01/

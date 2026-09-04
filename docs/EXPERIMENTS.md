@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V71-M36-OPTICAL-CONTRIBUTION-DECOMPOSITION-01 — frozen（2026-09-05）
+
+- frozen M35/M8/66 holdout；training=false；
+- arms=anchors-unit、anchors-learned、children-unit、all-unit、all-learned transmittance；reference=unit energy；
+- purpose=attribute excessive optical thickness before any calibrated successor；
+- no scale/segment/threshold/model update；no external/M21 partial read；next failure=`V71-F38`。
+
 ## WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T050000Z__m35-transmittance-anchor-s71135-r1`；593 train / 66 holdout；6 epochs；

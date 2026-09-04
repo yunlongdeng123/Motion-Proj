@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M36 pre-registration note — optical attribution before calibration（2026-09-05）
+
+M36不拟合任何opacity，只冻结分解anchor/child/all optical contribution。它防止看到M35高early后直接手调
+全局scale；若adapter/checkpoint/decomposition失败登记`V71-F38`，否则结果只定位下一监督对象。
+下一failure ID=`V71-F38`。
+
 ## V71-F37: M35 unit Gaussian optical thickness over-terminates near surfaces（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01/20260905T050000Z__m35-transmittance-anchor-s71135-r1`；
