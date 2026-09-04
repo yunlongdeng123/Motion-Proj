@@ -40,6 +40,42 @@ class GaussianAnchorResidualMLP(nn.Module):
         return self.head(torch.cat([encoded, pooled], dim=-1))
 
 
+class GaussianSeedExpansionMLP(nn.Module):
+    """Expand every build-conditioned M5 seed into a fixed set of child centers."""
+
+    def __init__(
+        self,
+        input_dim: int,
+        hidden_dim: int = 128,
+        branch_factor: int = 4,
+        slot_dim: int = 16,
+    ) -> None:
+        super().__init__()
+        self.branch_factor = int(branch_factor)
+        self.point_encoder = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+        )
+        self.slot_embeddings = nn.Parameter(
+            torch.randn(self.branch_factor, int(slot_dim)) * 0.02
+        )
+        self.head = nn.Sequential(
+            nn.Linear(hidden_dim * 2 + int(slot_dim), hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 4),
+        )
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        encoded = self.point_encoder(features)
+        pooled = encoded.max(dim=0, keepdim=True).values.expand_as(encoded)
+        parent = torch.cat([encoded, pooled], dim=-1)
+        parent = parent[:, None, :].expand(-1, self.branch_factor, -1)
+        slots = self.slot_embeddings[None, :, :].expand(len(features), -1, -1)
+        return self.head(torch.cat([parent, slots], dim=-1))
+
+
 def initialize_from_relocation(
     model: GaussianAnchorResidualMLP,
     relocation: nn.Module,
@@ -61,6 +97,30 @@ def initialize_from_relocation(
         model.head[2].weight.zero_()
         model.head[2].bias.zero_()
         model.head[2].bias[3] = scale_bias
+
+
+def initialize_expansion_from_relocation(
+    model: GaussianSeedExpansionMLP,
+    relocation: nn.Module,
+    *,
+    minimum_scale_m: float,
+    maximum_scale_m: float,
+    initial_scale_m: float,
+) -> None:
+    """Reuse M5 features and start all child coordinates exactly at their parent."""
+
+    model.point_encoder.load_state_dict(relocation.point_encoder.state_dict())
+    source_weight = relocation.head[0].weight
+    with torch.no_grad():
+        model.head[0].weight[:, : source_weight.shape[1]].copy_(source_weight)
+        model.head[0].bias.copy_(relocation.head[0].bias)
+        model.head[2].weight.zero_()
+        model.head[2].bias.zero_()
+        low = math.log(float(minimum_scale_m))
+        high = math.log(float(maximum_scale_m))
+        fraction = (math.log(float(initial_scale_m)) - low) / max(high - low, 1.0e-8)
+        fraction = min(max(fraction, 1.0e-4), 1.0 - 1.0e-4)
+        model.head[2].bias[3] = math.log(fraction / (1.0 - fraction))
 
 
 def apply_gaussian_anchor_residual(
@@ -89,6 +149,39 @@ def apply_gaussian_anchor_residual(
         log_maximum - log_minimum
     )
     return centers, residual, log_scale.exp()
+
+
+def apply_gaussian_seed_expansion(
+    base_centers: torch.Tensor,
+    raw_prediction: torch.Tensor,
+    *,
+    maximum_residual_xyz_m: Sequence[float],
+    actor_half_size_m: torch.Tensor,
+    cuboid_padding_m: float,
+    minimum_scale_m: float,
+    maximum_scale_m: float,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    if raw_prediction.ndim != 3 or raw_prediction.shape[-1] != 4:
+        raise ValueError("Seed expansion prediction must be [parent, child, xyz+scale]")
+    maximum = torch.as_tensor(
+        maximum_residual_xyz_m,
+        dtype=base_centers.dtype,
+        device=base_centers.device,
+    ).reshape(1, 1, 3)
+    residual = torch.tanh(raw_prediction[..., :3]) * maximum
+    children = base_centers[:, None, :] + residual
+    bounds = actor_half_size_m.reshape(1, 1, 3) + float(cuboid_padding_m)
+    children = torch.maximum(torch.minimum(children, bounds), -bounds)
+    log_minimum = math.log(float(minimum_scale_m))
+    log_maximum = math.log(float(maximum_scale_m))
+    log_scale = log_minimum + torch.sigmoid(raw_prediction[..., 3]) * (
+        log_maximum - log_minimum
+    )
+    return (
+        children.reshape(-1, 3),
+        residual.reshape(-1, 3),
+        log_scale.exp().reshape(-1),
+    )
 
 
 def build_gaussian_anchor_targets(
