@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M23 outcome note — 安全附着不隐去单场景physics反向（2026-09-05）
+
+- 3/3 interface decisions通过：5791/5791 physical Gaussians均获同Actor SH/opacity，geometry与checkpoint只读；
+- scene-0230描述性physical结果为Chamfer `-7.160mm`、hit `+3.186pp`，但all/hazard early相对baseline
+  `-1.604/-0.599%`（负号表示恶化）；
+- M23协议未把物理改善设为attribute-carrier gate，因此不新增failure ID，但该场景禁止进入“appearance bridge同时减少
+  ghost”的正例；
+- assignment max `1.006m`仅报告，不以阈值删点/Actor，也不允许借视觉属性反向移动geometry修复early。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M23 implementation note — association不是geometry correction（2026-09-04）
 
 - 最近邻只选择同Actor的visual attribute row；其距离不用于移动、缩放、删除或拒绝physical Gaussian；

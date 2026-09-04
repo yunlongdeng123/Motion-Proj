@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01 — canonical interface supported（2026-09-05）
+
+- run=`20260904T163000Z__m23-geometry-locked-appearance-r1`；verdict=`interface supported 3/3`；
+- cohort=`12 Actors / 7 hazard`；physical=`5791`；visual source=`106807` Actor-owned StreetGS Gaussians；
+- assignment=`5791/5791`；Actor-mean distance=`0.1270065m`；max=`1.0056270m`；
+- physical descriptive=Chamfer delta `-7.1598mm`、hit `+3.1858pp`、all/hazard/clear early reduction=
+  `-1.604/-0.599/-7.123%`；
+- isolation=geometry locked、appearance-to-geometry gradient false、appearance geometry copied none、Background false、
+  trajectory/checkpoint untouched；
+- claim=attribute carrier only；not ghost reduction/render quality/geometry gain；no failure ID consumed。
+
 ## WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01 — implementation ready（2026-09-04）
 
 - runner=`scripts/run_worldsim_v71_m23_geometry_locked_appearance.py`；

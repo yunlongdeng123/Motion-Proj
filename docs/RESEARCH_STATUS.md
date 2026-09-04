@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M23 geometry-locked appearance carrier supported / physics mixed（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01/
+20260904T163000Z__m23-geometry-locked-appearance-r1`，3/3 interface decisions通过。12个identity-matched Actors
+的`5791`个冻结M8 physical Gaussians全部获得同Actor StreetGS SH/opacity；Actor-mean assignment distance=
+`0.1270m`、最大=`1.0056m`。无appearance-to-geometry gradient、appearance geometry copy、Background使用、trajectory/
+checkpoint写入或训练。
+
+必须保留scene-specific负结果：M8 carrier相对baseline Chamfer改善`7.160mm`、hit提升`3.186pp`，但all/hazard/clear
+early分别恶化`1.604/0.599/7.123%`。因此M23只支持visual attribute carrier接口，不能作ghost reduction、photorealism
+或geometry improvement证据；M21 external仍独立未决。下一failure ID仍为`V71-F26`。
+
 ## WorldSim V7.1 M23 geometry-locked appearance implementation ready（2026-09-04）
 
 新增runner=`scripts/run_worldsim_v71_m23_geometry_locked_appearance.py`与配置=
