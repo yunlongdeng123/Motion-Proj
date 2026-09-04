@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01 — canonical development pass（2026-09-04）
+
+- run=`20260904T202000Z__m8-temporal-frame-s71110-r2`；verdict=`m8_development_passed`；6/6 gates；
+- training=593 Actors / 6 epochs；normalized temporal=`0.997232→0.986740`，union Chamfer=
+  `0.979474→0.973658`，first=`0.991294→0.987198`，free-space=`1.077556→1.048147`；
+- development=66 Actors / 41 hazard / 99,208 rays；hazard/all/clear early reduction=`5.123/3.901/-3.845%`；
+- geometry=Chamfer `0.237668→0.231461m`（`-6.207mm`），hit=`47.672→50.430%`（`+2.759pp`），
+  retention=`100/100%`；
+- frame coverage vs M7=all `-5.965mm`，moving 46 Actors `-7.014mm`，quasi-static 20 Actors `-3.552mm`；
+- M7 same-holdout=hazard/all/clear=`10.220/8.714/-0.830%`，Chamfer=`-2.902mm`，hit=`+2.173pp`；
+- interpretation=M8 is a geometry/temporal-coverage Pareto point, not a strict domination of M7 because hazard improvement fell to
+  `5.123%`；
+- resources=`106.992s/0.5695GiB GPU/1.3667GiB RSS`；development exposure=true；no protected/external quality read。
+
 ## WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01 — pre-step recovery（2026-09-04）
 
 - failed run=`20260904T201000Z__m8-temporal-frame-s71110-r1`；failure=`V71-F12`；

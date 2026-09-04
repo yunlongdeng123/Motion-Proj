@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M8 temporal factorisation passed / external freeze next（2026-09-04）
+
+M8 canonical=`run://worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/
+20260904T202000Z__m8-temporal-frame-s71110-r2`。593 Actors从M7单次fine-tune 6轮；normalized temporal coverage
+`0.9972→0.9867`，union Chamfer `0.9795→0.9737`，first/free-space `0.9913/1.0776→0.9872/1.0481`。
+66-Actor development的frame-balanced endpoint distance相对M7下降`5.965mm`；moving 46 Actors下降`7.014mm`，
+quasi-static 20 Actors下降`3.552mm`，说明同一不含motion输入的canonical shape head对两组均改善。
+
+相对baseline，M8 hazard/all early下降=`5.123/3.901%`，Chamfer改善`6.207mm`、hit增加`2.759pp`、retention=
+`100/100%`，六项全过。与M7相比，M8把Chamfer/逐帧覆盖推到更优Pareto点，但hazard early由`10.220%`回落到
+`5.123%`，只刚过冻结门槛；不宣称全面支配M7。下一步在读取任何partial AV2物理值前冻结M8同一20-log evaluator，
+并保留M7/M8两条预注册外域结果。下一failure ID=`V71-F13`。
+
 ## WorldSim V7.1 M8 pre-step tensor recovery（2026-09-04）
 
 首次M8入口在第一个optimizer step前终止：`frame_targets_t`于`torch.inference_mode()`内创建，`torch.cdist`反传拒绝保存

@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M8 outcome note — 逐帧监督形成新Pareto点且不新增failure（2026-09-04）
+
+- canonical=`20260904T202000Z__m8-temporal-frame-s71110-r2`；frame-balanced distance在moving/quasi-static均改善，
+  原五项physical contract与新增mechanism gate共6/6通过；
+- M8没有motion/time/hazard/image输入，moving分层只用于结果解释，支持shape/trajectory authority显式拆分；
+- hazard early改善从M7的`10.220%`降到`5.123%`，故M8不能写成全面替代；其优势是Chamfer `-6.207mm`与
+  frame coverage `-5.965mm`，M7仍是更强hazard point；
+- 不用事后loss weight、epoch、seed或M7/M8混合恢复trade-off；两者按各自冻结表示进入同一fresh AV2 cohort；
+- 下一可用failure ID仍为`V71-F13`。
+
+下一可用编号仍为：`V71-F13`。
+
 ## V71-F12 — M8帧target在inference上下文创建导致首步autograd拒绝（2026-09-04）
 
 - 分类/状态：engineering / recovered before optimizer step；run=`20260904T201000Z__m8-temporal-frame-s71110-r1`；
