@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M5 prevention note — PCGrad只改冲突梯度，不改变部署表面（2026-09-04）
+
+- Diagnostic C直接观测全模型`72.7%`、encoder`81.8%` minibatches负内积，因此M5不是事后loss-weight sweep；
+- 对两个物理任务使用对称projection；无冲突batch精确保留原task梯度，三个auxiliary只按原权重相加；
+- UNKNOWN action/mask不恢复，训练、development与部署都使用anchors加全部moved candidates；
+- 66-Actor development曾进入M0预训练，只可筛选方法，不得包装为独立confirmation；失败即`V71-F09`，不改seed/lr/
+  epoch/teacher weight恢复。
+
 ## V7.1 diagnostic C prevention note — 不把PCGrad当作默认补丁（2026-09-04）
 
 - PCGrad只在任务梯度内积为负时投影；因此先在冻结M2的原始minibatch合同上测量，而不是因两个指标不同就假定冲突；

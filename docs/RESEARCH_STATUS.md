@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 diagnostic C confirms conflict / M5 PCGrad ready（2026-09-04）
+
+Diagnostic C canonical=`run://worldsim_v71/WS-V71-DIAG-C-M2-GRADIENT-CONFLICT-01/
+20260904T104200Z__diag-c-m2-gradient-conflict-r1`。42个有效train Actors组成11个minibatches；全模型first-return/
+surface梯度余弦mean/median=`-0.297/-0.409`、负内积比例=`72.7%`，encoder为`-0.262/-0.321`与`81.8%`，head为
+`-0.333/-0.509`与`72.7%`。first/surface梯度范数比中位数=`1.203`，不存在单边近零假冲突。Selection/Source
+Final/AV2均未读。
+
+该证据解锁M5：沿用M0 encoder/两维位移初始化、相同surface/render/auxiliary，只对每个train minibatch的first-return
+与Chamfer梯度在内积为负时做对称PCGrad，非冲突batch保持原梯度；12 epochs、seed71107、one run。train-role固定
+593/66 development split已被旧预训练暴露，明确不称confirmation；只有五项物理合同全部通过才允许冻结读取AV2，失败
+则登记`V71-F09`并关闭多目标优化路线。
+
 ## WorldSim V7.1 diagnostic C gradient-conflict ready（2026-09-04）
 
 状态：`v71_diag_c_ready`。加载冻结M2 checkpoint，在train corpus等距取64 Actors、16个4-Actor minibatches，完全复用

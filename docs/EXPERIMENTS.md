@@ -1,5 +1,26 @@
 # Experiments
 
+## WS-V71-M5-PCGRAD-RELOCATION-01 — frozen development protocol（2026-09-04）
+
+- trigger=Diagnostic C all/encoder/head负梯度比例=`72.7/81.8/72.7%`，PCGrad具有直接机制依据；
+- model=M0共享encoder与前两维位移初始化，删除UNKNOWN；surface始终=`anchors + all moved candidates`；
+- optimization=first-return与normalized Chamfer两任务对称PCGrad，仅`dot<0`时投影；anchor/smooth/teacher作为
+  auxiliary原梯度相加；其余lr/epoch/batch/renderer与M2一致；
+- data=eligible train-role固定stride10得到593 train/66 development；旧M0预训练已暴露development，结果只作
+  method development而非confirmation；
+- gate=原五项物理合同全过才冻结读取30-log AV2一次，否则M5终止；不读Selection/Source Final、不扫参数；
+- validation=`py_compile only`；无smoke/regression/hash/checksum/fingerprint。
+
+## WS-V71-DIAG-C-M2-GRADIENT-CONFLICT-01 — canonical diagnostic result（2026-09-04）
+
+- run=`20260904T104200Z__diag-c-m2-gradient-conflict-r1`；status=`done`；42有效Actors、11 minibatches；
+- all cosine mean/median/min/max=`-0.297/-0.409/-0.787/+0.355`，negative=`8/11 (72.7%)`；
+- encoder cosine mean/median=`-0.262/-0.321`，negative=`9/11 (81.8%)`；head=`-0.333/-0.509`，negative=
+  `8/11 (72.7%)`；
+- all first/surface norm-ratio median=`1.203`，两任务均有非零梯度；resources=`1.222s / 0.2217GiB GPU /
+  1.1370GiB RSS`；
+- decision=gradient-conflict hypothesis supported，M5 PCGrad解锁；no protected/external read。
+
 ## WS-V71-DIAG-C-M2-GRADIENT-CONFLICT-01 — frozen diagnostic protocol（2026-09-04）
 
 - checkpoint=canonical M2；input=train corpus only，等距64 Actors、batch=4、seed71106；

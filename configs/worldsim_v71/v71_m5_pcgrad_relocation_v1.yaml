@@ -1,0 +1,42 @@
+task_id: WS-V71-M5-PCGRAD-RELOCATION-01
+hypothesis_id: WS-V71-H-M5-CONFLICT-PROJECTED-RELOCATION
+runs_root: /root/autodl-tmp/runs
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+m0_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M0-RAY-SURFACE-DISPLACEMENT-01/20260903T111000Z__m0-ray-displacement-s71101-r3
+diagnostic_c_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-DIAG-C-M2-GRADIENT-CONFLICT-01/20260904T104200Z__diag-c-m2-gradient-conflict-r1
+device: cuda
+model:
+  seed: 71107
+  hidden_dim: 128
+  epochs: 12
+  actor_batch_size: 4
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  holdout_stride: 10
+  maximum_training_actors: 1024
+  maximum_training_rays: 256
+  maximum_training_anchors: 512
+  maximum_ray_displacement_m: 0.30
+  maximum_normal_displacement_m: 0.20
+  cuboid_padding_m: 0.15
+  anchor_loss_weight: 0.05
+  smooth_loss_weight: 0.05
+  teacher_consistency_weight: 0.25
+  renderer:
+    sample_count: 48
+    surface_sigma_m: 0.08
+    density_scale: 2.0
+    fallback_margin_m: 0.50
+    ray_chunk_size: 128
+    point_chunk_size: 256
+evaluation:
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+  output_voxel_size_m: 0.06
+decision:
+  minimum_hazard_literal_relative_reduction: 0.05
+  maximum_chamfer_delta_m: 0.0005
+  minimum_hit_recall_delta: -0.01
+  required_actor_state_retention: 1.0
+  required_hazard_state_retention: 1.0
