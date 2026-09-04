@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## 2026-09-05: V7.1 storage cleanup completed without research-state loss
+
+精确删除仅包含旧实验产物的`/root/autodl-tmp/runs/worldsim_v3`、`worldsim_v32`与
+`worldsim_v33`（删除前合计约4.9GiB）。删除前已确认三个目标的resolved path严格位于
+`/root/autodl-tmp/runs/`，无运行进程占用，且V7/V7.1 configs、scripts与paper无路径引用。
+当前仍被M22--M27使用的V4 StreetGS checkpoint、config、render与Actor registry全部保留。
+磁盘可用空间从约92GiB回升至约96GiB；删除不可恢复。未触发research failure，下一failure ID仍为`V71-F30`。
+
 ## V7.1 M27 outcome note — 分层visual residual恢复development视角一致性（2026-09-05）
 
 - canonical r2完成320/320 steps，4/4 decisions通过；相对冻结M25，6/6 held-out views全部为正，delta中位数

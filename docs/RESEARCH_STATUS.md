@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7.1 old-run storage cleanup complete（2026-09-05）
+
+删除无V7/V7.1路径引用、无运行进程占用的旧`worldsim_v3`、`worldsim_v32`、`worldsim_v33`
+run产物，合计约4.9GiB；空间从约92GiB回升到约96GiB。V4不做整目录清理，因为M22--M27仍
+显式复用其scene-0230 StreetGS checkpoint/config/render与Actor registry。AV2数据、V7/V7.1 runs、当前分支
+和任何运行进程未修改。删除不可恢复；下一failure ID仍为`V71-F30`。
+
 ## WorldSim V7.1 M27 hierarchy mechanism supported / appearance track closed（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01/

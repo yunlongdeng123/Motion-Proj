@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-OPS-OLD-RUN-CLEANUP-01 — completed（2026-09-05）
+
+- removed=`/root/autodl-tmp/runs/worldsim_v3`, `worldsim_v32`, `worldsim_v33`；total before deletion=`~4.9GiB`；
+- preconditions=all resolved paths inside `/root/autodl-tmp/runs/`；no active process；no V7/V7.1 config/script/paper reference；
+- retained=all V4 assets，especially scene-0230 StreetGS checkpoint/config/render and Actor registry used by M22--M27；
+- disk free=`~92GiB -> ~96GiB`；deletion is not recoverable；
+- untouched=AV2 data/downloader/evaluator, V7/V7.1 runs, branch code and research outcomes；no failure ID consumed。
+
 ## WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01 — canonical mechanism supported（2026-09-05）
 
 - run=`20260904T194000Z__m27-hierarchical-visual-residual-r2`；status=`done`；steps=`320/320`；decisions=`4/4`；
