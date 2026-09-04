@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — r1 environment failure（2026-09-05）
+
+- run=`20260904T170000Z__m24-geometry-locked-render-r1`；failure=`V71-F26`；
+- stage=DriveStudio import；error=motionproj env missing `pytorch3d`；renders=`0`；quality exposure=`0`；
+- existing compatible env=drivestudio Python3.9 / torch2.1.2+cu118 / PyTorch3D0.7.5 / gsplat1.3.0；
+- recovery=r2 switches interpreter and removes cross-experiment import；no install、no protocol/data/view changes。
+
 ## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — implementation ready（2026-09-05）
 
 - runner=`scripts/run_worldsim_v71_m24_geometry_locked_render.py`；config=`v71_m24_geometry_locked_render_v1.yaml`；

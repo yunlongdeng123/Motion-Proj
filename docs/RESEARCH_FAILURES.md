@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F26 — M24误用缺少PyTorch3D的motionproj环境（2026-09-05）
+
+- 分类/状态：environment entry / resolved before data or metric exposure；run=
+  `20260904T170000Z__m24-geometry-locked-render-r1`；
+- symptom：DriveStudio import在`pytorch3d.transforms`报`ModuleNotFoundError`；0 renders、0 quality rows；
+- root cause：M24沿用V7.1几何脚本的motionproj Python3.10/torch2.4.1环境，但真实StreetGS checkpoint运行时属于
+  独立drivestudio Python3.9/torch2.1.2+cu118/PyTorch3D0.7.5/gsplat1.3.0环境；
+- literature/action：PyTorch3D官方要求与PyTorch/CUDA匹配安装或源码构建；服务器已有原生兼容环境，故不重复安装；
+- resolution：r2使用`/root/autodl-tmp/envs/drivestudio/bin/python`，并移除对M22 runner的跨环境import；固定
+  Actor/frame/camera/sidecar不变；
+- claim impact：r1没有科学信息，不计render或quality failure。
+
+下一可用编号：`V71-F27`。
+
 ## V7.1 M24 implementation note — 只在内存替换目标Actor（2026-09-05）
 
 - 每个variant先从同一checkpoint恢复；geometry-locked只替换rigid index12的Gaussian parameter对象，hidden只置低其opacity；

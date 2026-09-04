@@ -23,8 +23,23 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-import run_worldsim_v71_m22_se3_dynamic_static_composition as m22_runner
 from motion_proj.dynamic_editing_v2.pilot_metrics import counterfactual_effect_mask
+
+
+def _write_json(path: Path, payload: Any) -> None:
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _write_jsonl(path: Path, rows: list[Mapping[str, Any]]) -> None:
+    path.write_text(
+        "".join(
+            json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in rows
+        ),
+        encoding="utf-8",
+    )
 
 
 def _to_device(value: Any, device: torch.device) -> Any:
@@ -212,7 +227,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     run_dir = Path(config["runs_root"]) / "worldsim_v71" / config["task_id"] / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
-    m22_runner._write_json(
+    _write_json(
         run_dir / "status.json", {"status": "running", "phase": "loading_runtime"}
     )
     (run_dir / "resolved.yaml").write_text(
@@ -326,7 +341,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "actor_visible_in_at_least_one_fixed_camera": visible_camera_count > 0,
         }
         passed = all(decisions.values())
-        m22_runner._write_jsonl(run_dir / "RENDER_ROWS.jsonl", rows)
+        _write_jsonl(run_dir / "RENDER_ROWS.jsonl", rows)
         summary = {
             "schema_version": "worldsim_v71.m24_geometry_locked_render.v1",
             "task_id": config["task_id"],
@@ -379,8 +394,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 "wall_seconds": time.monotonic() - started,
             },
         }
-        m22_runner._write_json(run_dir / "summary.json", summary)
-        m22_runner._write_json(
+        _write_json(run_dir / "summary.json", summary)
+        _write_json(
             run_dir / "status.json",
             {
                 "status": "done",
@@ -390,7 +405,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         )
         return summary
     except Exception as error:
-        m22_runner._write_json(
+        _write_json(
             run_dir / "status.json",
             {
                 "status": "failed",
@@ -411,4 +426,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

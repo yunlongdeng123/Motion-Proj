@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M24 r1 environment failure / native renderer env recovery（2026-09-05）
+
+r1=`20260904T170000Z__m24-geometry-locked-render-r1`在import `pytorch3d`时终止：motionproj Python3.10/
+torch2.4.1+cu121环境没有PyTorch3D，0 view、0 image quality暴露，登记`V71-F26`。官方安装文档要求PyTorch/CUDA兼容
+构建；服务器已有checkpoint原生drivestudio Python3.9/torch2.1.2+cu118/PyTorch3D0.7.5/gsplat1.3.0环境，因此不下载、
+不编译、不污染motionproj env。
+
+r2改用现有drivestudio env，并移除runner对M22实验脚本的非必要import，只保留本地JSON writer与渲染依赖；protocol、
+Actor/frame/cameras/carrier均不变。下一failure ID=`V71-F27`。
+
 ## WorldSim V7.1 M24 fixed real-render implementation ready（2026-09-05）
 
 新增runner=`scripts/run_worldsim_v71_m24_geometry_locked_render.py`与配置=
