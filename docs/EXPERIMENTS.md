@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M41-CONSERVED-SURFACE-MEASURE-01 — frozen（2026-09-05）
+
+- init=last-supported M35 anchor + M38 child；reference totals=frozen per-Actor anchor/child occupied sums；
+- trainable raw F/O/U probabilities keep GT evidential CE；renderer normalizes within each family and restores frozen
+  reference total；same mapping in 32-bin train / 64-bin deployment；
+- frozen M8 centers/scales/trajectory；4 epochs、seed71141；same M40 proper-return/depth/evidential weights；
+- decisions=all+hazard+clear early nonincrease、hit delta≥-1pp、two occupied correlations≥0.25；
+- no total/loss/bin/scale/median/seed sweep，no threshold/delete/filter；no external/M21 partial read；next failure=
+  `V71-F41`。
+
 ## WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T073000Z__m40-joint-categorical-s71140-r1`；593 train / 66 holdout；4 epochs；

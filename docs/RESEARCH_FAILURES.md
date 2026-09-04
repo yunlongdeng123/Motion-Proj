@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M41 pre-registration note — conserved measure is not an opacity threshold（2026-09-05）
+
+M41冻结的是由M39 GT-supervised heads给出的每Actor两族总measure，不是按M40错误ray或holdout结果设置的阈值；
+所有primitive保留，F/O/U probability连续且受GT CE。若五门任一失败登记`V71-F41`，不调family total、归一化、
+loss或seed。下一failure ID=`V71-F41`。
+
 ## V71-F40: M40 categorical fine-tuning shifts total authority into the dense child family（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01/20260905T073000Z__m40-joint-categorical-s71140-r1`；

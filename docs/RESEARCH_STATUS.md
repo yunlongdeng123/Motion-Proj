@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M41 conserved evidential surface measure frozen（2026-09-05）
+
+状态=`v71_m41_conserved_surface_measure_frozen`，详见
+[`WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md`](WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md)。
+从最后通过的M39组成初始化，不复用失败M40。M35/M38 reference分别冻结每Actor anchor/child family总occupied
+surface measure；trainable F/O/U heads只在族内重分配，同时继续接受GT evidential CE。训练/部署共用同一
+categorical measure；M8 geometry/scale/trajectory冻结。固定4 epochs/seed71141，无total/loss/bin/scale/median
+sweep，无threshold/delete/filter。沿用五项判定；无external/M21 partial read。下一failure ID=`V71-F41`。
+
 ## WorldSim V7.1 M40 rejected / dense-child family-mass shortcut isolated（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01/
