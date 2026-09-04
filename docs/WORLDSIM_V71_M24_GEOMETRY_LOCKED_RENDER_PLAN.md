@@ -12,7 +12,11 @@ M23已生成冻结M8 physical centers/scales与同Actor StreetGS SH/opacity组�
 - Actor：`43fb20f67dbb4b149e9715f93a49e8ad`，RigidNodes index `12`，hazard construction vehicle；
 - 选择理由：M5/M23既有账本中appearance support最大（32522 Gaussians），且M23 association max仅`0.426m`；这是接口
   可见性选择，不是质量选择；
-- frame：完整196帧trajectory的固定中间帧`98`；
+- frame：r1/r2原冻结完整196帧trajectory的中间帧`98`，但r2确认该帧目标Actor不在三个相机视锥内，无法形成
+  视觉评价区域；r3在读取任何非零footprint或quality之前，以冻结dataset extrinsics/intrinsics与GT Actor pose投影中心，
+  得到前三视相机可见帧并集`[0,84]`，固定其中位帧`42`；
+- frame修正规则只使用3D视锥可见性，不读取StreetGS/carrier PSNR，不改变Actor、camera或representation；r2零footprint
+  失败永久保留为`V71-F27`；
 - cameras：训练配置中的`[0,1,2]`全部保留，不挑camera。
 
 ## 三个只读变体
@@ -42,4 +46,3 @@ M23已生成冻结M8 physical centers/scales与同Actor StreetGS SH/opacity组�
 - no checkpoint/background/trajectory write；
 - no post-hoc image filter；hidden mask只定义评价区域；
 - 单卡串行渲染，不启动多卡任务，不影响唯一AV2 downloader。
-

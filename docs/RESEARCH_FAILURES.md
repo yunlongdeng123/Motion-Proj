@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F27 — M24冻结中间帧不在目标Actor相机视锥内（2026-09-05）
+
+- 分类/状态：evaluation support / resolved before any nonzero-footprint quality exposure；run=
+  `20260904T171000Z__m24-geometry-locked-render-r2`；
+- symptom：真实rasterizer完成3 variants x 3 cameras，但original、geometry-locked与actor-hidden逐像素相同，
+  `visible_camera_count=0`、footprint/carrier changed pixels均为0，故verdict=`geometry_locked_render_interface_rejected`；
+- root cause：Actor 12在checkpoint的196帧`instances_fv`均有效，但冻结frame98时已离开camera0/1/2视锥；使用冻结
+  dataset extrinsics/intrinsics与GT Actor pose投影中心，前三视相机可见帧并集为`[0,84]`；
+- literature/action：Street Gaussians/DriveStudio按逐帧刚体pose组合动态实例，实例时域有效不等于进入当前相机视锥；
+  r3在读取任何非零footprint/PSNR前固定可见帧并集的中位数frame42；
+- resolution：Actor、rigid index、全部3 cameras、checkpoint和M23 carrier不变；frame修正仅依赖3D相机几何，
+  不按render quality挑帧，也不调scale/opacity；
+- claim impact：r2没有可解释视觉质量，不能写成carrier正/负结果；保留9次成功render作为入口事实，但接口仍未判定。
+
+下一可用编号：`V71-F28`。
+
 ## V71-F26 — M24误用缺少PyTorch3D的motionproj环境（2026-09-05）
 
 - 分类/状态：environment entry / resolved before data or metric exposure；run=

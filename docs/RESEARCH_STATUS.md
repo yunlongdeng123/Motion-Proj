@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M24 r2 zero-footprint rejection / geometry-only view recovery（2026-09-05）
+
+r2=`20260904T171000Z__m24-geometry-locked-render-r2`在原生DriveStudio环境完成3 variants x 3 cameras，峰值显存
+`0.900GiB`、RSS `7.990GiB`、85.6秒；但三个camera的original/hidden/carrier完全相同，footprint与changed pixels均为0，
+因此接口判定拒绝并登记`V71-F27`，没有产生可解释PSNR结论。
+
+只读诊断确认Actor 12在checkpoint全部196帧有效；失败来自frame98时Actor已离开camera0/1/2视锥。冻结原始相机几何与
+GT Actor pose得到中心可见帧并集`[0,84]`，在读取任何非零footprint或quality前固定其中位frame42作为r3；Actor、三相机、
+checkpoint、M23 carrier均不变，不按PSNR挑帧、不调scale/opacity。下一failure ID=`V71-F28`。
+
 ## WorldSim V7.1 M24 r1 environment failure / native renderer env recovery（2026-09-05）
 
 r1=`20260904T170000Z__m24-geometry-locked-render-r1`在import `pytorch3d`时终止：motionproj Python3.10/

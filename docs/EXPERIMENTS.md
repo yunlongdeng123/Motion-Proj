@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — r2 zero-footprint rejection（2026-09-05）
+
+- run=`20260904T171000Z__m24-geometry-locked-render-r2`；failure=`V71-F27`；
+- runtime=3 variants x 3 cameras rendered；peak GPU=`0.900GiB`；peak RSS=`7.990GiB`；wall=`85.6s`；
+- result=`visible cameras 0/3`、footprint=`0 px`、carrier changed=`0 px`；three variants pixel-identical；
+- diagnosis=Actor valid in `196/196` model frames but frame98 outside camera0/1/2 frusta；no nonzero-footprint quality exposed；
+- recovery=frozen camera/GT-pose center projection gives visible-frame union `[0,84]`；r3 fixes its median frame42 before quality read；
+- unchanged=Actor/rigid index/cameras/checkpoint/M23 carrier/metrics；no PSNR selection、scale/opacity tuning或training。
+
+## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — r3 geometry-visible view frozen（2026-09-05）
+
+- fixed frame=`42`，即前三视相机Actor-center frustum-visible并集`[0,84]`的中位数；
+- selection inputs=frozen dataset extrinsics/intrinsics + GT Actor pose only；quality read=false at selection；
+- cameras=`[0,1,2]` all；零footprint camera仍保留；至少一camera非零footprint仍是唯一visibility decision；
+- no actor/view quality sweep、filter、training、checkpoint write或physical/external metric read；next failure=`V71-F28`。
+
 ## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — r1 environment failure（2026-09-05）
 
 - run=`20260904T170000Z__m24-geometry-locked-render-r1`；failure=`V71-F26`；

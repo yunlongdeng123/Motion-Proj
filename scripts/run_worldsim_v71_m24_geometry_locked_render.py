@@ -357,6 +357,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "rigid_model_index": int(config["rigid_model_index"]),
             "hazardous": bool(config["hazardous"]),
             "frame": int(config["frame"]),
+            "frame_selection": dict(config.get("frame_selection", {})),
             "cameras": [int(value) for value in config["cameras"]],
             "visible_camera_count": visible_camera_count,
             "physical_carrier_gaussian_count": int(len(carrier["centers"])),

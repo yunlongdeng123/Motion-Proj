@@ -9,10 +9,14 @@ scene_name: scene-0230
 actor_token: 43fb20f67dbb4b149e9715f93a49e8ad
 rigid_model_index: 12
 hazardous: true
-frame: 98
+frame: 42
+frame_selection:
+  method: median_frame_of_actor_center_frustum_visible_union
+  source: frozen_dataset_extrinsics_intrinsics_and_gt_actor_pose
+  visible_frame_union: [0, 84]
+  selected_before_quality_read: true
 cameras: [0, 1, 2]
 device: cuda:0
 evaluation:
   footprint_threshold_uint8: 2
   footprint_dilation_radius: 2
-
