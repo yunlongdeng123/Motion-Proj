@@ -1,5 +1,28 @@
 # Experiments
 
+## WS-V71-M13-LOCAL-SIGNED-FIELD-01 — frozen protocol（2026-09-04）
+
+- representation=query-specific signed field anchored by frozen M8 children/scales，not a primitive union/global Actor latent；
+- initialization=outward-oriented build PCA local plane + zero learned residual；
+- local condition=nearest 4 child latents + normalized relative xyz/base plane distance；
+- GT rays=front `0.20/0.10m` positive，hit zero，back `0.05/0.10m` negative；hit field-gradient aligned to GT 8NN normal；
+- deployment=first positive-to-negative zero crossing of same field sampled in Actor AABB；zero threshold fixed by supervision；
+- optimization=hit/distance/normal geometry vs front/back physics PCGrad；single seed `71115` / 6 epochs；
+- gates=M8 point five contracts retained + field hazard early reduction vs M8 point `>=5%` + field hit delta `>=-1pp`；
+- no global latent/grid threshold/UNKNOWN mask/filter/temperature/loss/seed/epoch sweep；no motion/image/hazard input；
+- sources=ARO-Net (CVPR 2023), Local Implicit Grid/IF-Net/LDIF (CVPR 2020), Iso-Points (CVPR 2021)。
+
+## WS-V71-M12-FINITE-PLANAR-CHART-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T234000Z__m12-finite-chart-s71114-r2`；verdict=`m12_development_rejected`；6/7 gates；
+- frozen M8 point metrics=hazard/all early=`5.123/3.901%`，Chamfer=`-6.207mm`，hit=`+2.759pp`；
+- chart early relative change vs parent-normal M8 chart all/hazard/clear=`-0.428/-0.598/+0.868%`；hazard fails；
+- chart hit delta all/hazard/clear=`+0.128/+0.166/-0.060pp`；hit passes；
+- training normal/plane/in-radius final=`0.9903/0.9966/0.6525`，exact first/free=`0.9993/0.7118`；
+- mechanism=local chart geometry learns，independent primitive union does not identify global earliest visibility；
+- decision=close primitive-union family；next=M8-guided query-specific local signed field；failure=`V71-F17`；
+- resources=`81.754s / 0.1222GiB GPU / 1.3483GiB RSS`；no protected/external read。
+
 ## WS-V71-M12-FINITE-PLANAR-CHART-01 — r1 pre-step recovery（2026-09-04）
 
 - r1=`20260904T233000Z__m12-finite-chart-s71114-r1`；status=`failed_pre_step`；failure=`V71-F16`；

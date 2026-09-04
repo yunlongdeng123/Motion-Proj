@@ -1,5 +1,28 @@
 # Research Status
 
+## WorldSim V7.1 M13 M8-guided local signed field frozen（2026-09-04）
+
+状态=`v71_m13_local_signed_field_frozen`，详见
+[`WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md`](WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md)。M12已关闭
+primitive-union surface family；M13保留M8显式中心作为iso-point guidance，但物理边界改为query-specific local signed
+field。它与M3/M4的关键区别是每个query读取nearest M8 child的局部build feature/relative coordinate，不再压成单个Actor
+global latent，且零面从M8局部平面初始化。
+
+GT沿ray只监督`front(+)/hit(0)/5–10cm back(-)`窄带，并在hit上约束field gradient与GT 8NN normal；部署在Actor
+AABB内采样同一field的首个正到负zero crossing，无UNKNOWN mask或后处理filter。M8 point/temporal surface只读保留。
+单seed 6轮；field hazard early相对M8 point下降`>=5%`且hit下降不超过`1pp`。下一failure ID=`V71-F18`。
+
+## WorldSim V7.1 M12 rejected / primitive-union family closed（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M12-FINITE-PLANAR-CHART-01/
+20260904T234000Z__m12-finite-chart-s71114-r2`。point五门保持M8；chart hit all/hazard=`+0.128/+0.166pp`，
+但chart early all/hazard=`-0.428/-0.598%`（负值为恶化），最终6/7，登记`V71-F17`。local normal/plane/in-radius
+相对损失到`0.990/0.997/0.652`，但exact physics=`1.349→1.355`，不是数值或资源故障。
+
+这使sphere、oblate ellipsoid、finite disc三个union primitive族都得到同一边界：局部几何属性可学，跨primitive earliest
+visibility不可由独立primitive参数辨识。依据ARO-Net与Local Implicit Grid/IF-Net/LDIF，下一步转query-specific local
+implicit field，以M8 children作为局部引导点并沿GT ray直接定义符号；不恢复M3/M4 global Actor latent。
+
 ## WorldSim V7.1 M12 pre-step tensor recovery（2026-09-04）
 
 M12 r1=`20260904T233000Z__m12-finite-chart-s71114-r1`在首个optimizer step前失败：inference-mode生成的冻结

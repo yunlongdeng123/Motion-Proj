@@ -1,5 +1,33 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M13 prevention note — local implicit不是M3/M4 global latent复跑（2026-09-04）
+
+- 每个query必须读取nearest M8 child feature、relative coordinate、scale与oriented build normal；禁止单个Actor pooled latent；
+- field以M8 local plane的signed distance初始化，避免M3单符号场；learned residual初始为0；
+- GT符号只来自ray front/hit/窄`5–10cm` back band，禁止把远端behind-surface空间全标occupied；
+- zero level同时用于训练hit与AABB ray deployment，不加UNKNOWN/opacity/occupancy threshold或输出filter；
+- M8 point/temporal representation只读，不因field loss移动；若field合同失败登记`V71-F18`并关闭当前local-field形式。
+
+下一可用编号仍为：`V71-F18`。
+
+## V71-F17 — finite chart局部几何改善但earliest visibility不改善（2026-09-04）
+
+- 分类/状态：representation aggregation / terminal for independent finite planar chart union；canonical=
+  `20260904T234000Z__m12-finite-chart-s71114-r2`；
+- 观察：M8 point五门保持；chart hit all/hazard=`+0.128/+0.166pp`，但early all/hazard相对变化=
+  `-0.428/-0.598%`，hazard门失败，最终6/7；
+- 优化审计：normal=`0.995→0.990`、point-to-plane=`1.000→0.997`、in-radius=`0.685→0.652`，而exact
+  first=`0.9991→0.9993`、free=`0.7000→0.7118`；无NaN/OOM；
+- root cause：zero-thickness消除了normal volume，仍未解决多个独立charts之间的global earliest visibility；局部normal调整
+  改善几何标签但无法稳定改变ray上的first valid primitive；
+- literature/open-source response：CVPR 2023 ARO-Net与CVPR 2020 Local Implicit Grid/IF-Net/LDIF使用query-specific
+  local features而非单一global code，提高局部可辨识性；Iso-Points以显式点引导隐式面。迁移为M8-guided local field；
+- resolution：关闭sphere/ellipsoid/disc primitive-union物理族；M13用nearest M8 child局部特征初始化signed field，沿GT
+  ray窄带监督同一zero level；不调M12 radius/loss/seed/epoch；
+- claim impact：M8 point/temporal保留，explicit primitive collision/surface-support claim关闭。下一可用ID=`V71-F18`。
+
+下一可用编号：`V71-F18`。
+
 ## V71-F16 — M12冻结scale仍携带inference-tensor属性（2026-09-04）
 
 - 分类/状态：engineering pre-step / recovered；run=`20260904T233000Z__m12-finite-chart-s71114-r1`；
