@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T114500Z__m48-child-visibility-s71148-r1`；593/66 Actors、4 epochs；verdict=
+  `m48_visibility_measure_rejected`；decisions=`1/3`；
+- train loss/safe-NLL=`5.5090→5.4895 / 2.1406→2.1227`，但early/hit probability=
+  `0.2374→0.2396 / 0.5695→0.5622`；mean visibility train-final/holdout=`0.740/0.598`；
+- M48-vs-M39 all/hazard/clear early=`+0.347/+0.483/-0.322pp`；all hit=`+1.914pp`；
+- M48-vs-M45 all early/hit=`+0.366/-1.953pp`；bounded child attenuation worsens both relative to oriented geometry；
+- conclusion=visibility inside supervision is still insufficient under normalized categorical composition；close visibility-head
+  family without sweep；next=exact sign/safety-boundary audit；GPU=`0.747GiB`、RSS=`1.330GiB`、wall=`37.67s`；
+  failure=`V71-F47`，M43 partial read=false。
+
 ## WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01 — frozen（2026-09-05）
 
 - frozen geometry=M8 center/tangent + M11 GT normal/thickness；frozen authority=M35/M38；

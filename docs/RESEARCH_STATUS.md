@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M48 rejected / bounded visibility still transfers hazard risk（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01/
+20260905T114500Z__m48-child-visibility-s71148-r1`；593 train / 66 exposed holdout，4 epochs，verdict=
+`m48_visibility_measure_rejected`，decisions=`1/3`。训练loss=`5.5090→5.4895`、safe NLL=`2.1406→2.1227`，
+但mean early probability=`0.2374→0.2396`、hit probability=`0.5695→0.5622`；优化将visibility压到train末轮均值
+`0.740`、holdout均值`0.598`。
+
+相对M39，all/hazard/clear early=`+0.347/+0.483/-0.322pp`，all hit=`+1.914pp`；相对冻结M45，all early
+`+0.366pp`且hit=`-1.953pp`。连续attenuation虽不是filter，仍因categorical normalization把child measure从
+hazard搬到clear；登记`V71-F47`，严格关闭plan已禁止的visibility-head后续，不调identity/initial/lr/seed。
+下一步只做M49解析安全边界：推导component attenuation对pre-boundary CDF的符号条件并在冻结rays上核验，形成
+可解释性/安全边界，不再训练renderer。GPU=`0.747GiB`、RSS=`1.330GiB`、wall=`37.67s`；无M43 partial read。
+
 ## WorldSim V7.1 M48 supervised child visibility frozen（2026-09-05）
 
 状态=`v71_m48_supervised_child_visibility_measure_frozen`，详见

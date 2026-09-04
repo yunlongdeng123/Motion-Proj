@@ -434,6 +434,15 @@ local support is being asked to represent canonical shape, visibility, and termi
 representation makes visibility an explicitly supervised factor of the joint return measure; temporal deformation remains
 a separate trajectory-supervised problem.
 
+M48 tests that separation once by freezing M11 geometry and learning only a bounded child-visibility factor inside the
+same GT-supervised return measure. It fails more strongly: relative to M39, all/hazard early returns rise by 0.347/0.483
+points, while clear rays improve by 0.322 points; hit recall rises by only 1.91 points and remains 1.95 points below the
+unweighted oriented M45 model. Training safe NLL decreases, yet predicted early probability increases and mean held-out
+visibility falls to 0.598. Thus merely moving attenuation inside the supervised renderer does not make it safe. Because
+the categorical distribution is normalized jointly, suppressing a component can move the boundary CDF in either
+direction depending on that component's depth profile. We close visibility learning and next state this sign boundary
+analytically rather than tuning another head.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

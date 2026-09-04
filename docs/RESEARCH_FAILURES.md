@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F47: supervised bounded child visibility transfers risk under categorical normalization（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01/20260905T114500Z__m48-child-visibility-s71148-r1`；
+- evidence=safe NLL下降但early probability上升、hit probability下降；holdout visibility=`0.598`；相对M39
+  all/hazard early=`+0.347/+0.483pp`，仅clear=`-0.322pp`，decisions=`1/3`；相对M45又损失`1.953pp` hit；
+- root cause=即便visibility在训练/部署同一joint measure内且只能连续attenuate，归一化CDF的响应符号仍取决于
+  被衰减component自身pre-boundary mass相对全局CDF的位置；统一物理descriptor无法保证每条ray同向安全；
+- anti-repeat=V7.1 plan明确关闭`visibility head v2`，此后禁止调identity、initial visibility、hidden、lr、epoch、
+  seed或加入hazard/motion/category输入；禁止把continuous visibility阈值化为filter；
+- next=M49只推导并核验attenuation derivative的解析符号边界，不训练新renderer。下一failure ID=`V71-F48`。
+
 ## V7.1 M48 pre-registration note — visibility is supervised renderer state, not a filter（2026-09-05）
 
 M48只允许completion child的ray-conditioned visibility进入训练和部署完全相同的joint measure；M8/M11 geometry与
