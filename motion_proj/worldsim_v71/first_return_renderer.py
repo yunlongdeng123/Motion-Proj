@@ -128,6 +128,89 @@ def differentiable_scaled_first_return_depth(
     return torch.cat(outputs, dim=0)
 
 
+def differentiable_oriented_first_return_depth(
+    centers: torch.Tensor,
+    normals: torch.Tensor,
+    tangent_scales: torch.Tensor,
+    normal_thickness: torch.Tensor,
+    origins: torch.Tensor,
+    targets: torch.Tensor,
+    *,
+    sample_count: int = 64,
+    density_scale: float = 2.0,
+    fallback_margin_m: float = 0.50,
+    ray_chunk_size: int = 256,
+    point_chunk_size: int = 256,
+) -> torch.Tensor:
+    """Alpha-compose an anisotropic density whose thin axis is the surface normal."""
+    if centers.ndim != 2 or centers.shape[-1] != 3:
+        raise ValueError("centers must be [N,3]")
+    normals = torch.nn.functional.normalize(normals.reshape(-1, 3), dim=1, eps=1.0e-6)
+    tangent_scales = tangent_scales.reshape(-1)
+    normal_thickness = normal_thickness.reshape(-1)
+    if not (
+        len(centers)
+        == len(normals)
+        == len(tangent_scales)
+        == len(normal_thickness)
+    ):
+        raise ValueError("Oriented Gaussian attributes must align")
+    if len(centers) == 0:
+        target_depth, _ = _ray_geometry(origins, targets)
+        return target_depth + float(fallback_margin_m)
+    fractions = torch.linspace(
+        1.0 / sample_count,
+        1.0,
+        steps=sample_count,
+        dtype=centers.dtype,
+        device=centers.device,
+    )
+    outputs = []
+    for start in range(0, len(targets), int(ray_chunk_size)):
+        chunk_origins = origins[start : start + ray_chunk_size]
+        chunk_targets = targets[start : start + ray_chunk_size]
+        target_depth, directions = _ray_geometry(chunk_origins, chunk_targets)
+        fallback = target_depth + float(fallback_margin_m)
+        sample_depth = fallback[:, None] * fractions[None, :]
+        samples = (
+            chunk_origins[:, None, :]
+            + sample_depth[:, :, None] * directions[:, None, :]
+        ).reshape(-1, 3)
+        density = torch.zeros(len(samples), dtype=centers.dtype, device=centers.device)
+        for point_start in range(0, len(centers), int(point_chunk_size)):
+            points = centers[point_start : point_start + point_chunk_size]
+            local_normals = normals[point_start : point_start + point_chunk_size]
+            tangent = tangent_scales[point_start : point_start + point_chunk_size].clamp_min(
+                1.0e-4
+            )
+            thickness = normal_thickness[
+                point_start : point_start + point_chunk_size
+            ].clamp_min(1.0e-4)
+            displacement = samples[:, None, :] - points[None, :, :]
+            normal_coordinate = torch.sum(
+                displacement * local_normals[None, :, :], dim=-1
+            )
+            tangent_sq = (
+                torch.sum(displacement.square(), dim=-1) - normal_coordinate.square()
+            ).clamp_min(0.0)
+            exponent = -0.5 * (
+                tangent_sq / tangent.square().reshape(1, -1)
+                + normal_coordinate.square() / thickness.square().reshape(1, -1)
+            )
+            density = density + torch.exp(exponent).sum(dim=1)
+        density = density.reshape(len(chunk_targets), sample_count)
+        alpha = 1.0 - torch.exp(-float(density_scale) * density)
+        survival = torch.cumprod(
+            torch.cat([torch.ones_like(alpha[:, :1]), 1.0 - alpha + 1.0e-7], dim=1),
+            dim=1,
+        )
+        weights = survival[:, :-1] * alpha
+        outputs.append(
+            (weights * sample_depth).sum(dim=1) + survival[:, -1] * fallback
+        )
+    return torch.cat(outputs, dim=0)
+
+
 def literal_spherical_first_return_partition(
     centers: np.ndarray | torch.Tensor,
     scales: np.ndarray | torch.Tensor,
@@ -174,6 +257,122 @@ def literal_spherical_first_return_partition(
                 near = projected - torch.sqrt(discriminant.clamp_min(0.0))
                 valid = (discriminant >= 0.0) & (near > 0.0)
                 local = torch.where(valid, near, torch.full_like(near, torch.inf)).min(dim=1).values
+                best_depth = torch.minimum(best_depth, local)
+            first_depths.append(best_depth.cpu())
+            target_depths.append(target_depth.cpu())
+    first_depth = (
+        torch.cat(first_depths).numpy()
+        if first_depths
+        else np.empty(0, dtype=np.float32)
+    )
+    target_depth = (
+        torch.cat(target_depths).numpy()
+        if target_depths
+        else np.empty(0, dtype=np.float32)
+    )
+    observable = np.isfinite(first_depth)
+    return {
+        "first_depth": first_depth.astype(np.float32),
+        "target_depth": target_depth.astype(np.float32),
+        "early": observable
+        & (first_depth < target_depth - float(depth_tolerance_m)),
+        "hit": observable
+        & (np.abs(first_depth - target_depth) <= float(depth_tolerance_m)),
+        "observable": observable,
+    }
+
+
+def literal_oriented_first_return_partition(
+    centers: np.ndarray | torch.Tensor,
+    normals: np.ndarray | torch.Tensor,
+    tangent_scales: np.ndarray | torch.Tensor,
+    normal_thickness: np.ndarray | torch.Tensor,
+    targets: np.ndarray | torch.Tensor,
+    origins: np.ndarray | torch.Tensor,
+    *,
+    depth_tolerance_m: float,
+    device: torch.device,
+    ray_chunk_size: int = 512,
+    point_chunk_size: int = 2048,
+) -> dict[str, np.ndarray]:
+    """Exact first positive ray intersection with oriented oblate ellipsoids."""
+    center_tensor = torch.as_tensor(centers, dtype=torch.float32, device=device).reshape(
+        -1, 3
+    )
+    normal_tensor = torch.nn.functional.normalize(
+        torch.as_tensor(normals, dtype=torch.float32, device=device).reshape(-1, 3),
+        dim=1,
+        eps=1.0e-6,
+    )
+    tangent_tensor = torch.as_tensor(
+        tangent_scales, dtype=torch.float32, device=device
+    ).reshape(-1)
+    thickness_tensor = torch.as_tensor(
+        normal_thickness, dtype=torch.float32, device=device
+    ).reshape(-1)
+    target_tensor = torch.as_tensor(targets, dtype=torch.float32, device=device).reshape(
+        -1, 3
+    )
+    origin_tensor = torch.as_tensor(origins, dtype=torch.float32, device=device).reshape(
+        -1, 3
+    )
+    if not (
+        len(center_tensor)
+        == len(normal_tensor)
+        == len(tangent_tensor)
+        == len(thickness_tensor)
+    ):
+        raise ValueError("Oriented Gaussian attributes must align")
+    if len(target_tensor) != len(origin_tensor):
+        raise ValueError("targets and origins must align")
+    first_depths = []
+    target_depths = []
+    with torch.inference_mode():
+        for start in range(0, len(target_tensor), int(ray_chunk_size)):
+            chunk_targets = target_tensor[start : start + ray_chunk_size]
+            chunk_origins = origin_tensor[start : start + ray_chunk_size]
+            target_depth, directions = _ray_geometry(chunk_origins, chunk_targets)
+            best_depth = torch.full_like(target_depth, torch.inf)
+            for point_start in range(0, len(center_tensor), int(point_chunk_size)):
+                points = center_tensor[point_start : point_start + point_chunk_size]
+                local_normals = normal_tensor[point_start : point_start + point_chunk_size]
+                tangent = tangent_tensor[
+                    point_start : point_start + point_chunk_size
+                ].clamp_min(1.0e-4)
+                thickness = thickness_tensor[
+                    point_start : point_start + point_chunk_size
+                ].clamp_min(1.0e-4)
+                q = chunk_origins[:, None, :] - points[None, :, :]
+                qn = torch.sum(q * local_normals[None, :, :], dim=-1)
+                dn = torch.sum(
+                    directions[:, None, :] * local_normals[None, :, :], dim=-1
+                )
+                inverse_tangent_sq = tangent.square().reciprocal().reshape(1, -1)
+                inverse_thickness_sq = thickness.square().reciprocal().reshape(1, -1)
+                q_dot_d = torch.sum(q * directions[:, None, :], dim=-1)
+                q_sq = torch.sum(q.square(), dim=-1)
+                coefficient_a = (
+                    (1.0 - dn.square()) * inverse_tangent_sq
+                    + dn.square() * inverse_thickness_sq
+                )
+                coefficient_b = (
+                    (q_dot_d - qn * dn) * inverse_tangent_sq
+                    + qn * dn * inverse_thickness_sq
+                )
+                coefficient_c = (
+                    (q_sq - qn.square()) * inverse_tangent_sq
+                    + qn.square() * inverse_thickness_sq
+                    - 1.0
+                )
+                discriminant = coefficient_b.square() - coefficient_a * coefficient_c
+                root = torch.sqrt(discriminant.clamp_min(0.0))
+                near = (-coefficient_b - root) / coefficient_a.clamp_min(1.0e-8)
+                far = (-coefficient_b + root) / coefficient_a.clamp_min(1.0e-8)
+                positive = torch.where(near > 0.0, near, far)
+                valid = (discriminant >= 0.0) & (positive > 0.0)
+                local = torch.where(
+                    valid, positive, torch.full_like(positive, torch.inf)
+                ).min(dim=1).values
                 best_depth = torch.minimum(best_depth, local)
             first_depths.append(best_depth.cpu())
             target_depths.append(target_depth.cpu())

@@ -76,6 +76,42 @@ class GaussianSeedExpansionMLP(nn.Module):
         return self.head(torch.cat([parent, slots], dim=-1))
 
 
+class OrientedGaussianSeedExpansionMLP(nn.Module):
+    """Expand each seed into an oriented oblate Gaussian surface primitive."""
+
+    def __init__(
+        self,
+        input_dim: int,
+        hidden_dim: int = 128,
+        branch_factor: int = 4,
+        slot_dim: int = 16,
+    ) -> None:
+        super().__init__()
+        self.branch_factor = int(branch_factor)
+        self.point_encoder = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+        )
+        self.slot_embeddings = nn.Parameter(
+            torch.randn(self.branch_factor, int(slot_dim)) * 0.02
+        )
+        self.head = nn.Sequential(
+            nn.Linear(hidden_dim * 2 + int(slot_dim), hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 8),
+        )
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        encoded = self.point_encoder(features)
+        pooled = encoded.max(dim=0, keepdim=True).values.expand_as(encoded)
+        parent = torch.cat([encoded, pooled], dim=-1)
+        parent = parent[:, None, :].expand(-1, self.branch_factor, -1)
+        slots = self.slot_embeddings[None, :, :].expand(len(features), -1, -1)
+        return self.head(torch.cat([parent, slots], dim=-1))
+
+
 def initialize_from_relocation(
     model: GaussianAnchorResidualMLP,
     relocation: nn.Module,
@@ -121,6 +157,31 @@ def initialize_expansion_from_relocation(
         fraction = (math.log(float(initial_scale_m)) - low) / max(high - low, 1.0e-8)
         fraction = min(max(fraction, 1.0e-4), 1.0 - 1.0e-4)
         model.head[2].bias[3] = math.log(fraction / (1.0 - fraction))
+
+
+def initialize_oriented_from_expansion(
+    model: OrientedGaussianSeedExpansionMLP,
+    expansion: GaussianSeedExpansionMLP,
+    *,
+    minimum_thickness_m: float,
+    maximum_thickness_m: float,
+    initial_thickness_m: float,
+) -> None:
+    """Preserve M8 centers/scales and initialize normals from parent PCA evidence."""
+
+    model.point_encoder.load_state_dict(expansion.point_encoder.state_dict())
+    model.slot_embeddings.data.copy_(expansion.slot_embeddings.data)
+    model.head[0].load_state_dict(expansion.head[0].state_dict())
+    low = math.log(float(minimum_thickness_m))
+    high = math.log(float(maximum_thickness_m))
+    fraction = (math.log(float(initial_thickness_m)) - low) / max(high - low, 1.0e-8)
+    fraction = min(max(fraction, 1.0e-4), 1.0 - 1.0e-4)
+    with torch.no_grad():
+        model.head[2].weight.zero_()
+        model.head[2].bias.zero_()
+        model.head[2].weight[:4].copy_(expansion.head[2].weight)
+        model.head[2].bias[:4].copy_(expansion.head[2].bias)
+        model.head[2].bias[7] = math.log(fraction / (1.0 - fraction))
 
 
 def apply_gaussian_anchor_residual(
@@ -181,6 +242,59 @@ def apply_gaussian_seed_expansion(
         children.reshape(-1, 3),
         residual.reshape(-1, 3),
         log_scale.exp().reshape(-1),
+    )
+
+
+def apply_oriented_gaussian_seed_expansion(
+    base_centers: torch.Tensor,
+    parent_normals: torch.Tensor,
+    raw_prediction: torch.Tensor,
+    *,
+    maximum_residual_xyz_m: Sequence[float],
+    normal_residual_bound: float,
+    actor_half_size_m: torch.Tensor,
+    cuboid_padding_m: float,
+    minimum_scale_m: float,
+    maximum_scale_m: float,
+    minimum_thickness_m: float,
+    maximum_thickness_m: float,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    if raw_prediction.ndim != 3 or raw_prediction.shape[-1] != 8:
+        raise ValueError(
+            "Oriented expansion must be [parent, child, xyz+scale+normal+thickness]"
+        )
+    if len(parent_normals) != len(base_centers):
+        raise ValueError("Parent centers and normals must align")
+    maximum = torch.as_tensor(
+        maximum_residual_xyz_m,
+        dtype=base_centers.dtype,
+        device=base_centers.device,
+    ).reshape(1, 1, 3)
+    residual = torch.tanh(raw_prediction[..., :3]) * maximum
+    children = base_centers[:, None, :] + residual
+    bounds = actor_half_size_m.reshape(1, 1, 3) + float(cuboid_padding_m)
+    children = torch.maximum(torch.minimum(children, bounds), -bounds)
+
+    scale_low = math.log(float(minimum_scale_m))
+    scale_high = math.log(float(maximum_scale_m))
+    log_scale = scale_low + torch.sigmoid(raw_prediction[..., 3]) * (
+        scale_high - scale_low
+    )
+    normal_delta = torch.tanh(raw_prediction[..., 4:7]) * float(normal_residual_bound)
+    normals = torch.nn.functional.normalize(
+        parent_normals[:, None, :] + normal_delta, dim=-1, eps=1.0e-6
+    )
+    thickness_low = math.log(float(minimum_thickness_m))
+    thickness_high = math.log(float(maximum_thickness_m))
+    log_thickness = thickness_low + torch.sigmoid(raw_prediction[..., 7]) * (
+        thickness_high - thickness_low
+    )
+    return (
+        children.reshape(-1, 3),
+        residual.reshape(-1, 3),
+        log_scale.exp().reshape(-1),
+        normals.reshape(-1, 3),
+        log_thickness.exp().reshape(-1),
     )
 
 
