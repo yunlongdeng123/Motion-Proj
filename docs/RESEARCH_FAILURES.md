@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M37 pre-registration note — child authority is a separate supervision problem（2026-09-05）
+
+M37冻结已定位的anchor head，只给completion child独立输入/GT/head；不得让共享context用anchor标签代替child
+可辨识性，也不得让geometry/scale吸收ray loss。若任一decision失败不调seed/epochs/loss/opacity，登记
+`V71-F38`并关闭此参数化。下一failure ID=`V71-F38`。
+
 ## V7.1 M36 outcome note — unit completion opacity is the dominant transmittance error（2026-09-05）
 
 M36无工程失败。learned anchors-only early=`18.386%`接近unit-energy baseline=`18.187%`，children-only unit

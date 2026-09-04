@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M37 supervised child transmittance frozen（2026-09-05）
+
+状态=`v71_m37_supervised_child_transmittance_frozen`，详见
+[`WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md`](WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md)。
+M37冻结M35 anchor head与M8 geometry/trajectory，只训练独立child F/O/U head。输入为parent build-only特征与
+child slot/residual/scale；held-out LiDAR构造child soft GT，并与ordered first-return共同训练。固定单seed
+71137/6 epochs，无scale学习/阈值/删除/filter。相对原baseline沿用三项ray判定并要求child occupied相关≥
+0.25；另报告相对M35 unit-child。无external/M21 partial read。下一failure ID=`V71-F38`。
+
 ## WorldSim V7.1 M36 completed / completion-child opacity isolated（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M36-OPTICAL-CONTRIBUTION-DECOMPOSITION-01/

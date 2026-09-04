@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01 — frozen（2026-09-05）
+
+- frozen=M35 anchor authority + M8 child centers/scales + trajectory；train=separate child evidential head only；
+- child input=parent build feature/evidence + local child/scale/residual/slot；GT=held-out LiDAR child F/O/U + ordered
+  first return；
+- protocol=593 train / 66 exposed holdout、6 epochs、seed 71137；no scale/threshold/delete/filter；
+- decisions=all+hazard+clear early nonincrease、hit delta≥-1pp、child occupied correlation≥0.25；report M35
+  unit-child reference；no external/M21 partial read；next failure=`V71-F38`。
+
 ## WS-V71-M36-OPTICAL-CONTRIBUTION-DECOMPOSITION-01 — canonical completed（2026-09-05）
 
 - run=`20260905T053000Z__m36-optical-contribution-r1`；66 Actors / 99,208 rays；training=false；
