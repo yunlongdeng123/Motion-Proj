@@ -29,10 +29,11 @@ def primitive_authority_features(
 class EvidentialGaussianAuthority(nn.Module):
     """PointNet-style primitive scorer with FREE/OCCUPIED/UNKNOWN output masses."""
 
-    def __init__(self, hidden_dim: int = 64) -> None:
+    def __init__(self, hidden_dim: int = 64, input_dim: int = 12) -> None:
         super().__init__()
+        self.input_dim = int(input_dim)
         self.primitive_encoder = nn.Sequential(
-            nn.Linear(12, hidden_dim),
+            nn.Linear(self.input_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),

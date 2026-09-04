@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M34 producer-evidential anchor authority frozen（2026-09-05）
+
+状态=`v71_m34_producer_evidential_anchor_authority_frozen`，详见
+[`WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md`](WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md)。
+M34冻结M8 center/scale/trajectory，只让anchor读取M33 `input_*`并预测连续F/O/U；completion children固定unit
+authority。held-out `supervision_*` soft mass和32-bin GT first-return共同训练，occupied mass连续加权Gaussian
+energy；无阈值、删除、移动或scale路径。固定M32容量/6 epochs/loss权重、单seed 71134。四项判定为all及
+hazard/clear early不增、hit最多降1pp、predicted-vs-GT occupied相关≥0.25。无external/M21 partial read；
+下一failure ID=`V71-F36`。
+
 ## WorldSim V7.1 M33 anchor evidence sidecar completed（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M33-ANCHOR-EVIDENCE-SIDECAR-01/

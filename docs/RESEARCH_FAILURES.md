@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M34 pre-registration note — isolate anchor evidence from completion（2026-09-05）
+
+M34只训练anchor authority，M8 geometry/trajectory冻结，children保持unit，避免把anchor矛盾、completion几何与
+动态建模再次混合。若性能通过但predicted-vs-GT occupied相关低于0.25，仍视为全局降权捷径而拒绝；任一
+冻结decision失败不调epochs/loss/seed，登记`V71-F36`并关闭该family。下一failure ID=`V71-F36`。
+
 ## V7.1 M33 outcome note — hard provenance labels remain invalid（2026-09-05）
 
 M33精确物化1004 Actor/297,535 anchors，无工程失败。PROJECT仅占13.75%，但其held-out occupied mass均值

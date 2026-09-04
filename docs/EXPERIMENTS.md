@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01 — frozen（2026-09-05）
+
+- representation=frozen M8 centers/scales/trajectory；anchor predicted continuous F/O/U；children unit authority；
+- input=M33 producer `input_*` only；target=held-out `supervision_*` + 32-bin native first return；no hazard/image；
+- deploy=occupied mass weighted Gaussian energy；no threshold/delete/filter/geometry update；
+- protocol=593 train / 66 exposed holdout、6 epochs、seed 71134、M32 loss weights；one run；
+- decisions=all+hazard+clear early nonincrease、all hit delta≥-1pp、anchor occupied correlation≥0.25；
+  no selection/final/external/M21 partial read；next failure=`V71-F36`。
+
 ## WS-V71-M33-ANCHOR-EVIDENCE-SIDECAR-01 — canonical completed（2026-09-05）
 
 - run=`20260905T040000Z__m33-anchor-evidence-sidecar-r1`；verdict=
