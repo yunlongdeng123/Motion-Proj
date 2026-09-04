@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01 — canonical mechanism supported（2026-09-05）
+
+- run=`20260904T194000Z__m27-hierarchical-visual-residual-r2`；status=`done`；steps=`320/320`；decisions=`4/4`；
+- representation=309 coarse + 2781 fine=`3090` visual primitives；physical carrier remains `309`；
+- own training=train pooled `17.2565→17.8787dB`；held-out pooled `17.1855→17.7305dB`；
+- vs M25 held-out=pooled `+0.7871dB`；positive=`6/6`；median=`+0.4731dB`；range=
+  `[+0.2383,+1.0730]dB`；
+- vs M26 pooled=`+0.1580dB`；vs original gap=`7.6222dB`；
+- exposure=all six views previously exposed；development mechanism only；no fresh/generalization claim；
+- isolation=all geometry/trajectory/background frozen、visual excluded from physical query、no checkpoint/physical/external read；
+- resources=peak GPU `1.039GiB` / RSS `8.340GiB` / wall `119.0s`；sidecar written；
+- verdict=`hierarchical_visual_residual_view_uniform_supported`；appearance branch closed；next failure=`V71-F30`。
+- manuscript=experiments/limitations updated with 6/6 development-view positive, exposure boundary and `7.6222dB`
+  residual gap；TinyTeX full compile success；15 pages / 2,327,851 bytes；refs resolved；no fatal/new overfull warning。
+
 ## WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01 — r1 config-path failure（2026-09-05）
 
 - run=`20260904T193000Z__m27-hierarchical-visual-residual-r1`；failure=`V71-F29`；

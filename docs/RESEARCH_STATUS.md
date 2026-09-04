@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 M27 hierarchy mechanism supported / appearance track closed（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01/
+20260904T194000Z__m27-hierarchical-visual-residual-r2`，320/320 steps与4/4 decisions通过。相对M25，6/6
+development views全部改善：median=`+0.4731dB`、min=`+0.2383dB`、max=`+1.0730dB`；pooled final=
+`17.7305dB`，相对M25/M26分别`+0.7871/+0.1580dB`，相对original仍差`7.6222dB`。峰值GPU=
+`1.039GiB`、RSS=`8.340GiB`、wall=`119.0s`。
+
+结论仅支持coarse+fine frozen-geometry hierarchy在暴露开发视图上修复M26的单尺度偏置。因views已暴露且只有一个Actor，
+不产生appearance generalization/photorealism claim。309个M8 physical carriers、trajectory、Background与M21均未改变。
+按冻结退出规则关闭单Actor appearance调参，后续转向physical external和可解释authority边界。下一failure ID=`V71-F30`。
+
+论文experiments/limitations已同步M27的6/6开发视图改善、暴露边界与`7.6222dB`剩余差距；
+TinyTeX/latexmk完整编译`paper/main.pdf`成功（15页、2,327,851 bytes），引用已解析，无fatal或
+新增overfull warning。
+
 ## WorldSim V7.1 M27 r1 config-path failure / same-protocol recovery（2026-09-05）
 
 r1=`20260904T193000Z__m27-hierarchical-visual-residual-r1`在`OmegaConf.load`前置路径解析终止：配置漏写canonical

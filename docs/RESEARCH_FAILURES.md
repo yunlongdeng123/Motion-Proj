@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M27 outcome note — 分层visual residual恢复development视角一致性（2026-09-05）
+
+- canonical r2完成320/320 steps，4/4 decisions通过；相对冻结M25，6/6 held-out views全部为正，delta中位数
+  `+0.4731dB`、最小`+0.2383dB`、最大`+1.0730dB`；
+- pooled held-out=`17.7305dB`，相对M25 `+0.7871dB`、相对M26 `+0.1580dB`；相对原StreetGS仍差
+  `7.6222dB`；
+- interpretation：coarse parent与fine surface-derived surfels共同渲染，能修复M26只偏向最大footprint视图的问题；
+  但3090 vs 32522 primitives和单Actor开发设置仍有显著容量缺口；
+- exposure boundary：六个views在M27设计前已暴露，结果只支持representation mechanism diagnosis，不支持新held-out、
+  cross-scene、photorealism或generalization claim；
+- closure：单Actor appearance分支停在M27，不继续调opacity split、steps、geometry或view；后续回到physical external与
+  authority/safety boundary；
+- no new failure：`V71-F29`仅为已解决入口路径错误。
+
+下一可用编号仍为：`V71-F30`。
+
 ## V71-F29 — M27 StreetGS配置路径转录遗漏（2026-09-05）
 
 - 分类/状态：configuration path / resolved before data or metric exposure；run=

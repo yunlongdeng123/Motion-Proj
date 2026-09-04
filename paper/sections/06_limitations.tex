@@ -28,6 +28,7 @@ Likewise, nearest same-Actor SH/opacity transfer preserves the carrier by constr
 recovers 1.08\,dB on six held-out views while leaving an 8.41\,dB gap to the original Actor. This separates an available learning
 signal from insufficient one-carrier capacity; it does not establish photorealism, semantic fidelity, or cross-scene appearance
 generalization. A supervision-derived nine-surfel visual layer improves pooled PSNR by another 0.63\,dB, but only one of six
-held-out views improves over the one-carrier model and the original-Actor gap remains 7.78\,dB. This is an aggregate capacity gain,
-not view-uniform fidelity. A learned visual residual shell would still require training-time 3D support constraints before it
-could be claimed geometry-consistent. The scene-specific early-return direction is also negative.
+held-out views improves over the one-carrier model. A fixed coarse--fine hierarchy makes all six directions positive, yet those
+views were already exposed before hierarchy design and the original-Actor gap remains 7.62\,dB. This is a representation mechanism
+diagnostic, not fresh view-uniform fidelity. A learned visual residual shell would still require training-time 3D support constraints
+before it could be claimed geometry-consistent. The scene-specific early-return direction is also negative.
