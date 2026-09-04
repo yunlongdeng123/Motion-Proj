@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M7 supervision-native geometry passed / AV2 freeze next（2026-09-04）
+
+M7 canonical=`run://worldsim_v71/WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01/
+20260904T121000Z__m7-gt-seed-expansion-s71109-r1`。593 Actors训练完成；Stage G set Chamfer从`0.9864`降至
+`0.9723`，Stage P在持续geometry supervision下最终Chamfer/first/free-space=`0.9807/0.9941/1.1087`，冲突batch
+`81.9%`。66-Actor development上hazard/all early相对baseline下降=`10.220/8.714%`，clear仅恶化`0.830%`；
+Chamfer改善`2.902mm`、hit增加`2.173pp`、Actor/hazard retention=`100/100%`，五项全部通过。
+
+相同holdout上的M5参考为hazard/all=`5.852/4.455%`、Chamfer=`-1.635mm`、hit=`+1.429pp`，说明提升来自
+训练内set-to-set child generation而非部署过滤。最终surface始终=`immutable observed anchors + all generated children`，
+UNKNOWN不删除；image/semantic/motion/hazard均未进入模型。由于holdout曾被M0/M5预训练暴露，本结果只冻结M7 candidate。
+下一步用已冻结但尚未读取quality的20-log fresh AV2 cohort做同一零样本外测；不得使用M5逐日志输出修改M7。下一failure
+ID仍为`V71-F12`。
+
 ## WorldSim V7.1 M6 rejected / M7 set-to-set seed expansion冻结（2026-09-04）
 
 M6 canonical=`run://worldsim_v71/WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01/

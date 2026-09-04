@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01 — canonical development pass（2026-09-04）
+
+- run=`20260904T121000Z__m7-gt-seed-expansion-s71109-r1`；verdict=`m7_development_passed`；
+- training=593 Actors；Stage G Chamfer=`0.986443→0.972309`，plane=`1.0256→0.9146`，scale=`0.7686→0.4578`；
+- Stage P final=Chamfer/first/free-space=`0.980661/0.994123/1.108710`，conflict=`81.879%`；
+- development=66 Actors/41 hazard/99,208 rays；hazard/all/clear early reduction=`10.220/8.714/-0.830%`；
+- geometry=Chamfer `0.237668→0.234766m`（`-2.902mm`），hit=`47.672→49.845%`（`+2.173pp`），
+  retention=`100/100%`；5/5 gates；
+- M5 same-holdout reference=hazard/all/clear=`5.852/4.455/-4.398%`、Chamfer=`-1.635mm`、hit=`+1.429pp`；
+- representation=`immutable anchors + all generated children`；no inference mask/filter，no image/semantic/motion/hazard input；
+- caveat=pretrained holdout exposure=true，development only；resources=`157.842s/0.5427GiB GPU/1.3589GiB RSS`；
+- no Selection/Source Final/AV2 quality read；next=frozen fresh AV2 zero-shot evaluator。
+
 ## WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01 — frozen protocol（2026-09-04）
 
 - trigger=M6 direct center/plane/scale可学但Chamfer比约`1.002`、hazard gate失败；nonempty Actor的candidate/target

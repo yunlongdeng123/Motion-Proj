@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M7 outcome note — set-to-set child surface通过且不新增failure（2026-09-04）
+
+- canonical=`run://worldsim_v71/WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01/
+  20260904T121000Z__m7-gt-seed-expansion-s71109-r1`；五门全过，hazard early=`10.220%`、Chamfer=`-2.902mm`、
+  hit=`+2.173pp`、retention=`100/100%`；
+- 与`V71-F11`不同，四children在训练图内接收target set与ray physics supervision；部署不增加mask/filter/threshold，
+  因此结果支持candidate support是M6关键瓶颈；
+- free-space differentiable proxy最终仍为M5 reference的`1.109`，而literal heldout early显著改善；二者算子差异如实保留，
+  不据此追加proxy gate或重训；
+- holdout有历史pretraining exposure，故不升级为泛化结论；进入冻结fresh AV2外测，下一可用failure ID仍为`V71-F12`。
+
+下一可用编号仍为：`V71-F12`。
+
 ## V71-F11 — 一候选一最近GT点可学但不能形成集合级危险表面覆盖
 
 - 分类/状态：representation + target assignment / terminal for one-to-one anchor correction；canonical=`run://worldsim_v71/
