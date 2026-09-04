@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 M30 set-order supported / interval utility bounded（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01/
+20260904T203000Z__m30-evidential-return-interval-r1`，status=`done`，verdict=`set_order_interval_supported`。
+66 Actors/99,208 rays上ordering violation=`0`；bracketing=`56.69%`，unbounded known upper=`47.03%`；
+finite width actor-mean median/q90=`0.023/0.326m`。hazard bracketing=`57.14%`，unbounded=`47.46%`，
+q90=`0.343m`。GPU=`0.059GiB`、RSS=`1.028GiB`、wall=`3.76s`。
+
+M30成功把UNKNOWN保留为可解释区间，但不可作安全上界：anchors-only early=`19.58%`，
+说明canonical build supervision本身已有跨帧物理矛盾。下一研究应分解anchor early的same-frame/
+cross-frame、pose residual、category/track来源，而非继续调completion。无训练、无M21 partial read。
+
+论文Method已增加set-valued first-return公式与coverage assumption，experiments/limitations已记录完整边界；
+TinyTeX/latexmk完整编译成功（16页、2,335,996 bytes），引用已解析，无fatal或新增
+overfull warning。下一failure ID=`V71-F31`。
+
 ## WorldSim V7.1 M30 evidential return interval frozen（2026-09-05）
 
 状态=`v71_m30_evidential_return_interval_frozen`，详见

@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M30 outcome note — interval semantics supported, utility sharply bounded（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01/
+20260904T203000Z__m30-evidential-return-interval-r1`。99,208 rays上set-order violation=`0`，因此
+`d_possible <= d_known`的结构实现正确。但GT empirical bracketing仅`56.69%`，`47.03%`射线
+的known upper endpoint为无穷，有限区间Actor-mean q90=`0.326m`（hazard=`0.343m`）。
+
+更重要的负边界是immutable observed anchors本身仍产生`19.58%` early returns，表明矛盾早于
+completion children：canonical multi-frame fusion、pose/box annotation、rigid-shape假设或visibility可能已将build
+endpoint置于held-out free-before-hit。因此M30只支持“保留epistemic interval”，不支持紧致
+collision/safety certificate。无新工程failure ID；下一ID仍`V71-F31`。
+
 ## V7.1 M30 pre-registration note — interval coverage assumption is not a certificate（2026-09-05）
 
 M30以`S_known subset S_possible`的代码构造确保`d_possible <= d_known`，但

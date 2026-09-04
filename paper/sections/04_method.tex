@@ -31,6 +31,13 @@ $\mathbf 1[d_S(r)<d^\star-\tau]$ is monotone non-increasing under deletion, as i
 Hit retention and symmetric Chamfer are not monotone under this order: deletion may expose or remove a hit, and it can move the two
 directed Chamfer terms in opposite directions. This is a geometric certificate for one predicate, not a collision guarantee.
 
+Rather than collapse unknown completion to occupied or free, we can retain a set-valued first return. Let $S_i^K$ contain only build-endpoint anchors and $S_i^P$ additionally contain every GT-supervised completion proposal. Under the explicit coverage assumption $S_i^K\subseteq S_i^\star\subseteq S_i^P$, deletion monotonicity gives
+\begin{equation}
+d_{S_i^P}(r)\le d_{S_i^\star}(r)\le d_{S_i^K}(r).
+\label{eq:return-interval}
+\end{equation}
+The endpoints represent possible and known-supported returns and are not thresholded to a single depth. Crucially, $S_i^\star\subseteq S_i^P$ is an empirical completion assumption, not a consequence of the set order; we therefore report target bracketing and unbounded intervals rather than call Eq.~\ref{eq:return-interval} a safety certificate.
+
 \subsection{Learned Evidential Actor Surface Field}
 
 V7.1 replaces binary keep/delete on completed primitives with a supervision-native Actor-local geometry action. Every sweep is

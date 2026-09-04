@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01 — canonical structural positive / utility boundary（2026-09-05）
+
+- run=`20260904T203000Z__m30-evidential-return-interval-r1`；status=`done`；Actors=`66`；rays=`99,208`；
+- set order=known anchors subset possible anchors+M8 children；ordering violations=`0`；
+- all=bracketed `56.694%`；finite `52.965%`；unbounded upper `47.035%`；finite width actor-mean
+  median/q90=`0.023/0.326m`；
+- hazard=bracketed `57.139%`；unbounded `47.458%`；finite q90=`0.343m`；
+- possible early/hit=`25.995/50.278%`；known anchors-only early/hit=`19.579/29.793%`；
+- interpretation=UNKNOWN interval preserved, but completion coverage assumption weak and anchor surface already target-inconsistent；
+- resources=peak GPU `0.059GiB` / RSS `1.028GiB` / wall `3.76s`；no training/checkpoint/external read；
+- manuscript=method/experiments/limitations updated；TinyTeX full compile success；16 pages / 2,335,996 bytes；
+  refs resolved；no fatal/new overfull warning；next failure=`V71-F31`。
+
 ## WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01 — frozen protocol（2026-09-05）
 
 - source=M8 r2, same 66 pretrained-exposed holdout Actors；M29 checkpoint excluded；
