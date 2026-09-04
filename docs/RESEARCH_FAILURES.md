@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M28 mechanism boundary — non-interference不替代GT几何正确性（2026-09-05）
+
+M28选择typed physical/pose/visual sibling states和无visual参数的纯physical query，不新增
+post-hoc filter、selector或阈值。该结构可证`dQ_phy/dV=0`与刚体组合的SE(3) equivariance，
+但不能证明GT完整、learned geometry/trajectory正确、background collision完备或closed-loop safety。
+几何仍必须由GT set/plane/scale/frame/first-return losses在训练期直接约束，M21 fresh AV2 20/20仍是
+必须等待的外部边界。这是claim边界而非feature failure；下一failure ID仍为`V71-F30`。
+
 ## 2026-09-05: V7.1 storage cleanup completed without research-state loss
 
 精确删除仅包含旧实验产物的`/root/autodl-tmp/runs/worldsim_v3`、`worldsim_v32`与

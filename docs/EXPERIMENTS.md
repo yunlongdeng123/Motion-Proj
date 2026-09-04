@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M28-TYPED-AUTHORITY-NON-INTERFERENCE-01 — frozen protocol（2026-09-05）
+
+- physical=`PhysicalActorField(actor_id, canonical centers, isotropic scales)`；supervision remains GT
+  set/plane/scale/frame/literal-first-return；
+- dynamics=`ActorPose(actor_id, R_world_from_actor, t_world_from_actor)`；read-only rigid authority；
+- visual=`VisualActorLayer(render geometry, SH, opacity)`；sibling type, never accepted by physical query；
+- proposition=for fixed physical+pose, any visual-only update leaves `Q_phy` unchanged and `dQ_phy/dV=0`；
+- equivariance=common rigid transform obeys `Q_{gT}(gx)=Q_T(x)` through inverse query；
+- non-claims=GT/geometry/trajectory correctness, background collision, no-return/occlusion completeness, photorealism, safety；
+- execution=no training, no threshold/filter/hash/checksum/fingerprint, no M21 partial quality read；next failure=`V71-F30`。
+
 ## WS-V71-OPS-OLD-RUN-CLEANUP-01 — completed（2026-09-05）
 
 - removed=`/root/autodl-tmp/runs/worldsim_v3`, `worldsim_v32`, `worldsim_v33`；total before deletion=`~4.9GiB`；

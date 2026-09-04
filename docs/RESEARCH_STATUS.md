@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M28 typed authority protocol frozen（2026-09-05）
+
+状态=`v71_m28_typed_authority_non_interference_frozen`，详见
+[`WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md`](WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md)。
+新`authority_contract.py`将GT-supervised `PhysicalActorField`、read-only `ActorPose`与render-only
+`VisualActorLayer`分为兄弟类型；world physical query的参数只有field+pose，不接受image/SH/opacity/
+visual geometry。
+
+该选择只迁移Neural Scene Graphs/UniSim/EmerNeRF的object-transform与static--dynamic分层，不迁移
+image-only geometry或safety claim。精确结论是appearance non-interference与SE(3) equivariance；几何正确性
+仍来自训练期GT losses与外部测试。无训练、无M21 partial quality read；下一failure ID=`V71-F30`。
+
 ## WorldSim V7.1 old-run storage cleanup complete（2026-09-05）
 
 删除无V7/V7.1路径引用、无运行进程占用的旧`worldsim_v3`、`worldsim_v32`、`worldsim_v33`
