@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 M29 rejected / completion--free-space split sharpened（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M29-GT-TAIL-SURFACE-TUBE-01/
+20260904T200000Z__m29-gt-tail-surface-tube-s71126-r1`，状态=`done`，verdict=`m29_development_rejected`。
+target tail/frame mean/Chamfer相对M8改善`0.924/0.843/0.418mm`，但surface tail恶化`0.362mm`，
+hazard early rate恶化`+0.3190pp`，hit recall `-0.0222pp`。decisions=`3/5`，峰值GPU=`0.521GiB`、
+RSS=`1.381GiB`、wall=`74.4s`。
+
+结论：双向symmetric CVaR-like supervision仍把“覆盖GT未观测面”和“不在free-before-hit生成表面”
+混在同一表面移动中；高频负gradient cosine确认这是目标权限冲突，不是数值优化失败。
+按退出规则不调参、不进入AV2；下一范式必须分开completion support与free-space authority。
+
+论文experiments/limitations已同步正反两个方向；TinyTeX/latexmk完整编译成功（15页、
+2,332,293 bytes），引用已解析，无fatal或新增overfull warning。M21 partial quality未读；
+下一failure ID=`V71-F31`。
+
 ## WorldSim V7.1 M29 GT tail surface tube frozen（2026-09-05）
 
 状态=`v71_m29_gt_tail_surface_tube_frozen`，详见

@@ -23,6 +23,8 @@ partial AV2 results to choose branch count, bins, thresholds, losses, seeds, res
 safety claims remain withheld until the frozen 20-log aggregate completes. The current model covers rigid annotated vehicles;
 deformable objects and image-conditioned geometry remain open. Exact SE(3) energy equivariance validates coordinate plumbing only:
 it does not establish trajectory accuracy, static/dynamic discovery, occlusion correctness, collision freedom, or improved geometry.
+The M29 GT tail loss improves target coverage and mean Chamfer but worsens the reverse surface tail and hazardous early returns;
+therefore neither mean distance nor a symmetric top-tail surrogate supplies a worst-case clearance certificate.
 Likewise, nearest same-Actor SH/opacity transfer preserves the carrier by construction, but a frozen native-rasterizer view loses
 11.37\,dB footprint PSNR when 32,522 visual primitives are replaced by 309 physical carriers. Attribute-only image supervision
 recovers 1.08\,dB on six held-out views while leaving an 8.41\,dB gap to the original Actor. This separates an available learning

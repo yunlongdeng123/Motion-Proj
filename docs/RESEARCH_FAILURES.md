@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M29 outcome note — symmetric GT tail objective rejected（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M29-GT-TAIL-SURFACE-TUBE-01/
+20260904T200000Z__m29-gt-tail-surface-tube-s71126-r1`。4 epochs正常完成，无NaN/OOM。相对M8：
+
+- target-to-surface top-10% tail改善`0.924mm`，frame-mean改善`0.843mm`，Chamfer改善`0.418mm`；
+- surface-to-target top-10% tail恶化`0.362mm`，hazard early rate由`26.3718%`升至`26.6908%`
+  （`+0.3190pp`），hit recall微降`0.0222pp`；
+- 5项预注册decision仅3项通过；几何与射线梯度冲突占`86.6--90.6%` batches，
+  mean pre-projection cosine约`-0.38-- -0.42`。
+
+这是核心科学负结果：对称tail loss仍可通过增加GT coverage而将少量generated surface推入
+unsupported/free-before-hit区域，不能同时解决completion与physical false return。按预注册停止该分支，
+不扫tail fraction/weight/seed，M29 checkpoint不升格为external candidate。无新工程failure ID；下一ID仍
+=`V71-F31`。
+
 ## V71-F30: M29 pre-run YAML check command quoting failure（2026-09-05）
 
 - stage=远端pre-run最小验证；0 dataset load、0 optimizer step、0 quality/metric exposure；

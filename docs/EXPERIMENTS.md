@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V71-M29-GT-TAIL-SURFACE-TUBE-01 — canonical rejected（2026-09-05）
+
+- run=`20260904T200000Z__m29-gt-tail-surface-tube-s71126-r1`；status=`done`；verdict=`rejected`；
+- training=593 Actors / 4 epochs / no NaN/OOM；conflict fraction=`0.866--0.906`；mean cosine=`~-0.40`；
+- holdout=66 exposed development Actors；paired reference=M8 r2；
+- target tail=`1.240132 -> 1.239208m` (`-0.924mm`)；surface tail=`0.368804 -> 0.369166m`
+  (`+0.362mm`)；
+- frame mean delta=`-0.843mm`；mean Chamfer=`0.231461 -> 0.231043m` (`-0.418mm`)；
+- hazard early=`0.263718 -> 0.266908` (`+0.3190pp`)；hit=`0.504304 -> 0.504082`
+  (`-0.0222pp`)；
+- decisions=target tail pass, surface tail fail, hazard early fail, Chamfer pass, hit pass (`3/5`)；
+- resources=peak GPU `0.521GiB` / RSS `1.381GiB` / wall `74.4s`；
+- action=stop tail branch, no fraction/weight/seed sweep, checkpoint not external candidate, no M21 partial read；
+- manuscript=experiments/limitations updated；TinyTeX full compile success；15 pages / 2,332,293 bytes；
+  refs resolved；no fatal/new overfull warning；next failure=`V71-F31`。
+
 ## WS-V71-M29-GT-TAIL-SURFACE-TUBE-01 — frozen protocol（2026-09-05）
 
 - init=M8 r2；representation=immutable anchors + all 4-child generated surface；
