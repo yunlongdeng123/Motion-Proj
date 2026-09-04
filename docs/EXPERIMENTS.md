@@ -1,5 +1,27 @@
 # Experiments
 
+## WS-V71-M17-MONOTONE-RAY-SURVIVAL-01 — frozen protocol（2026-09-04）
+
+- representation=M8-local query network predicts non-negative 3D density；ray transmittance `T=exp(-cumsum(sigma*delta))`；
+- termination CDF=`1-T` is monotone by construction；GT target is a native step-CDF at the LiDAR return；
+- training=balanced pre-hit survival NLL + at/after-hit termination NLL + expected-depth L1；single joint objective；
+- deployment=first CDF crossing of intrinsic median `0.5` over the same Actor-AABB ray samples；no signed zero crossing/filter；
+- M8 frozen；no image/trajectory/hazard/ray-drop/dynamic-static route；
+- gates=M8 point five + ray hazard early `>=5%` reduction + ray all hit delta `>=-1pp`；
+- one seed `71119` / 6 epochs / 32 train samples / 64 evaluation samples；no threshold/density/samples/loss/seed/epoch sweep；
+- sources=[NeuRAD, CVPR 2024](https://github.com/georghess/neurad-studio) and
+  [Neural LiDAR Fields, ICCV 2023](https://research.nvidia.com/labs/toronto-ai/nfl/)。
+
+## WS-V71-M16-FULL-RAY-DIRECT-QUERY-01 — canonical negative result（2026-09-04）
+
+- run=`20260905T013000Z__m16-full-ray-query-s71118-r1`；verdict=`m16_development_rejected`；6/7 gates；
+- field early relative change vs M8 all/hazard/clear=`-21.611/-11.981/-77.384%`；early gate fails；
+- field hit delta all/hazard/clear=`+0.642/+2.072/-6.389pp`；observable=`93.59/93.51/93.96%`；hit gate passes；
+- training full-ray FREE=`0.675→0.513`、back occupied=`0.696→0.580`、hit=`0.0039→0.0277m`；
+- mechanism=native full-ray supervision recovers coverage but unconstrained signed queries can create multiple sign changes before GT hit；
+- decision=close arbitrary direct signed field；next=monotone ray survival density；failure=`V71-F21`；
+- resources=`104.839s / 0.2612GiB GPU / 1.4246GiB RSS`；no protected/external read。
+
 ## WS-V71-M16-FULL-RAY-DIRECT-QUERY-01 — frozen protocol（2026-09-04）
 
 - representation=M8-local query-conditioned signed decoder with learned neighbor attention；no analytic primitive support；

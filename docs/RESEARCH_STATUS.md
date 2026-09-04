@@ -1,5 +1,28 @@
 # Research Status
 
+## WorldSim V7.1 M17 monotone LiDAR survival field frozen（2026-09-04）
+
+状态=`v71_m17_monotone_ray_survival_frozen`，详见
+[`WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md`](WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md)。M16证明完整
+FREE-ray监督恢复hit/observable，却因无约束signed scalar沿ray多次变号而增加early。M17不再用zero crossing：local network仅预测
+非负3D density，沿ray通过`T_i=exp(-sum sigma*delta)`与`CDF=1-T`构造单调termination distribution；GT return直接监督
+step-CDF，部署取同一CDF的中位首交。
+
+该表示把“首交只有一个、FREE survival不可逆、occupied evidence只能累积”写入数学边界，而不是输出过滤。M8 geometry冻结；
+image、trajectory、hazard、ray-drop head与dynamic/static routing均隔离。单seed 6轮、固定32 samples，不扫描CDF阈值、density
+scale、samples、loss、seed或epoch。下一failure ID=`V71-F22`。
+
+## WorldSim V7.1 M16 rejected / ray-order representation required（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M16-FULL-RAY-DIRECT-QUERY-01/
+20260905T013000Z__m16-full-ray-query-s71118-r1`。field hit all/hazard=`+0.642/+2.072pp`、observable约`93.6/93.5%`，
+但early all/hazard相对M8恶化`21.611/11.981%`，最终6/7，登记`V71-F21`。完整FREE ray成功关闭M15的coverage
+缺口，但arbitrary signed decoder形成额外早期crossings。
+
+训练full-ray FREE=`0.675→0.513`、back occupied=`0.696→0.580`，同时hit=`0.0039→0.0277m`且后期约48% batch
+发生geometry/physics冲突。根因不是数据无监督，而是表示不保证沿ray的单调survival/唯一first return。依据NeuRAD与Neural
+LiDAR Fields，M17转为non-negative density + transmittance CDF；不增加FREE samples或后处理删除早期surface。
+
 ## WorldSim V7.1 M16 full-ray direct query field frozen（2026-09-04）
 
 状态=`v71_m16_full_ray_direct_query_frozen`，详见

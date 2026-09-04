@@ -1,5 +1,34 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M17 prevention note — first return由单调survival定义（2026-09-04）
+
+- 网络只预测非负metric density；沿有序ray samples计算transmittance与termination CDF，CDF按构造单调；
+- GT return监督完整step-CDF与termination depth，不把FREE/hit拆成相互冲突的两个scalar目标；
+- 部署首交是同一CDF首次达到固定中位概率`0.5`，不是调优occupancy threshold或删除早期surface；
+- M8 point geometry冻结；不加ray-drop、image、trajectory、hazard或dynamic/static混合变量；
+- 若early/hit合同失败登记`V71-F22`并关闭当前survival field，不扫CDF阈值/density scale/samples/loss/seed/epoch。
+
+下一可用编号仍为：`V71-F22`。
+
+## V71-F21 — 完整FREE-ray监督保住hit但任意signed field产生多重早交（2026-09-04）
+
+- 分类/状态：ray-order underconstraint / terminal for unconstrained direct signed query field；canonical=
+  `20260905T013000Z__m16-full-ray-query-s71118-r1`；
+- 观察：hit all/hazard=`+0.642/+2.072pp`、observable=`93.59/93.51%`，但early all/hazard相对M8恶化
+  `21.611/11.981%`，最终6/7；
+- 机制增量：相较M15，native full-ray queries把missing-surface问题基本消除，证明GT construction有效；失败已转为同一ray上
+  arbitrary scalar多次变号/过早首交；
+- 优化审计：full-ray FREE=`0.675→0.513`、back occupied=`0.696→0.580`均下降，但hit从`0.0039`升到
+  `0.0277m`；后期gradient conflict约`48%`，无NaN/OOM；
+- literature/open-source response：NeuRAD以非负opacity和累积transmittance定义LiDAR expected depth；Neural LiDAR Fields用
+  physically motivated two-way transmittance与peak/volume rendering得到first return。迁移为M17单调termination CDF，不复制
+  ray-drop/intensity支线；
+- resolution：关闭arbitrary signed decoder，不增加FREE sample或阈值；保留M16 native full-ray GT target，改成单一survival
+  proper objective与同分布部署；
+- claim impact：M16支持“native ray supervision恢复coverage”，不支持3D physical consistency claim。下一可用ID=`V71-F22`。
+
+下一可用编号：`V71-F22`。
+
 ## V7.1 M16 prevention note — 先补全GT FREE ray再学习query field（2026-09-04）
 
 - 每条target ray的FREE监督覆盖Actor AABB entry到return前方，不再只采`0.10/0.20m`局部front；
