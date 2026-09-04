@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Failure-directed coupling diagnostic on the exposed nuScenes development fold. Point early is hazardous relative reduction versus the original completion (negative is worse). Energy columns are absolute hazardous early rate and hit recall. M21 reuses frozen M8 geometry and was selected by this diagnostic; it is not an external result.}
+\label{tab:v71-joint-energy}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+ID & Representation & Point early $\uparrow$ & Energy early $\downarrow$ & Energy hit $\uparrow$ \\
+\midrule
+M18 & frozen M8 + learned field & $+5.12\%$ & $24.36\%$ & $57.24\%$ \\
+M19 & joint geometry + learned field & $-4.10\%$ & $24.43\%$ & $58.47\%$ \\
+M20 & joint geometry + analytic energy & $-3.25\%$ & $19.88\%$ & $57.33\%$ \\
+M21 & frozen M8 + analytic energy & $+5.12\%$ & $17.42\%$ & $62.07\%$ \\
+\bottomrule
+\end{tabular}}
+\end{table}

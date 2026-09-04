@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 paper prevention note — 相对field增益必须绑定绝对anchor reference（2026-09-04）
+
+- M19必须报告point surface反转与field绝对early，不能只报告field-vs-degraded-point相对改善；
+- M20必须报告M8-initial energy反事实与scale膨胀，不能只与M18比较后称joint training有效；
+- M21必须标注development-selected、AV2 pending，且Gaussian scale不解释为校准occupancy概率；
+- 论文已同时保留native-3D监督、ray监督、轨迹只读与image隔离边界；13页PDF编译成功。
+
+下一可用编号仍为：`V71-F25`。
+
 ## V7.1 M21 launch note — 只读进度、不读partial quality（2026-09-04）
 
 - evaluator PID=`25098`，当前`5/20 logs / 129 Actors`，等待第6个log；

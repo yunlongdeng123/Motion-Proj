@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 CVPR manuscript M19--M21 failure-directed update（2026-09-04）
+
+论文已加入M19 auxiliary-field compensation、M20 isotropic-scale shortcut与M21 frozen analytic energy的完整链条；
+method明确energy只依赖actor-canonical Gaussian参数，results新增四行coupling diagnostic，limitations明确M21为
+development-selected且scale不是calibrated occupancy probability。本地TinyTeX完整编译成功，`paper/main.pdf`为13页。
+
+正文不把M19技术gate-pass写成科学成功，也不把M21开发集`17.42%` hazard early / `62.07%` hit写成跨域结论；
+fresh AV2 aggregate仍pending。下一failure ID仍为`V71-F25`。
+
 ## WorldSim V7.1 M21 fresh AV2 evaluator active（2026-09-04）
 
 状态=`v71_m21_frozen_gaussian_energy_av2_running`。Evaluator PID=`25098`，已处理`5/20`完整logs、`129` Actor

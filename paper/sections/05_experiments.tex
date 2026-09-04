@@ -73,6 +73,12 @@ The categorical model (M18) is the only frozen development candidate satisfying 
 
 \input{tables/v71_query_representations}
 
+Joint training exposes a stricter identifiability boundary (Table~\ref{tab:v71-joint-energy}). M19 lets the learned field update completed children: Chamfer improves by $2.42$\,mm versus M8, but the point-surface hazardous early direction reverses from a $5.12\%$ reduction to a $4.10\%$ increase. Its apparently larger field-over-point gain therefore compensates for a degraded reference; absolute field early rate is slightly worse than M18. M20 removes the field decoder, yet predicted scale expands from $0.162$ to $0.313$\,m on average. Its categorical NLL falls while point early returns and the analytic energy both worsen relative to their M8 initialization. We reject both fine-tuning paths.
+
+The diagnostic nevertheless identifies a simpler candidate: frozen M8 geometry followed by the same decoder-free energy gives $17.42\%$ hazardous early rate and $62.07\%$ hit recall, without modifying a Gaussian after its native-3D supervision. This M21 row is selected on the exposed development fold, so it is not an independent result. We freeze its representation and the existing 20-log AV2 cohort before reading any partial quality; zero-shot claims remain pending.
+
+\input{tables/v71_joint_energy_diagnostics}
+
 \paragraph{Zero-shot Actor-local surface evidence.}
 Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
 LiDAR points inside each annotated cuboid into its Actor frame. Unlike appearance-oriented seed initialization, we never mirror

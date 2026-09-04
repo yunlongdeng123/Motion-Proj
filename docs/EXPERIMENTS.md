@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V7.1 CVPR manuscript M19--M21 milestone（2026-09-04）
+
+- method=新增decoder-free actor-canonical Gaussian energy公式及冻结M8的失败驱动选择；
+- results=新增M18/M19/M20/M21 point-vs-energy诊断表，显式报告compensation与scale shortcut；
+- related=加入GaussianFormer-2、GaussRender、ShelfOcc一手引用；
+- limitations=M21 is development-selected / AV2 pending / scale not calibrated occupancy probability；
+- artifact=`paper/main.pdf`，TinyTeX/latexmk完整编译成功，13页、无fatal error；
+- external=M21仍5/20时未读partial quality；论文不作M21 zero-shot claim。
+
 ## WS-V71-M21-FROZEN-GAUSSIAN-ENERGY-AV2-01 — active（2026-09-04）
 
 - run=`20260904T154000Z__m21-frozen-gaussian-energy-av2-r1`；PID=`25098`；
