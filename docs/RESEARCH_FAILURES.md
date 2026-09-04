@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F33: M32 frozen features retained inference-tensor identity（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/20260905T024000Z__m32-evidential-gaussian-authority-s71132-r1`；
+- symptom=first train batch的Linear forward报`Inference tensors cannot be saved for backward`；
+- exposure=659 cache Actors/M8 frozen geometry和593 train primitive evidence targets已构造；0 optimizer step、0
+  training history、0 holdout metric/decision；
+- root cause=geometry/features分配于`torch.inference_mode()`，即使requires-grad=false也不能被autograd保存用于
+  trainable weight gradient；
+- literature/open-source response=PyTorch官方Gradient Modes与`SavedVariable`源码明确要求在InferenceMode外clone
+  后再参与autograd；
+- recovery=只clone frozen child center/scale和authority feature；不解冻、不改数值/GT/model/protocol；
+- claim impact=纯tensor lifecycle错误，不是科学负结果。下一failure ID=`V71-F34`。
+
 ## V7.1 M32 pre-registration note — authority mass cannot move geometry（2026-09-05）
 
 M19允许field decoder补偿geometry，M20允许center/scale吸收ray loss并出现scale inflation；M32将两条路径都冻结。

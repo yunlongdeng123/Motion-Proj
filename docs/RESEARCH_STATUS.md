@@ -12,6 +12,11 @@ M32不重复M16--M20：冻结M8全部center/scale和只读trajectory，只训练
 三项相对unit-authority M21 energy的变化。失败即关闭amplitude family，不调loss/pseudocount/scale/bin/width/seed。
 M21 partial quality不读取；下一failure ID=`V71-F33`。
 
+Formal r1在第一个authority forward、0 optimizer step处触发`V71-F33`：冻结M8 geometry/features在
+`torch.inference_mode()`中物化，trainable Linear需要保存input做backward，PyTorch拒绝保存inference tensor。
+按官方gradient-mode语义，r2只在离开inference context后clone这些冻结张量为普通read-only tensor；数据、GT、
+model、seed、loss和run decisions不变。下一failure ID=`V71-F34`。
+
 ## WorldSim V7.1 M31 completed / hard-anchor authority rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/

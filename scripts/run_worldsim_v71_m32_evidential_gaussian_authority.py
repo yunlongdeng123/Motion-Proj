@@ -367,6 +367,15 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 actor["authority_scales_t"] = primitive_scales
                 actor["authority_is_anchor_t"] = is_anchor
                 actor["authority_features_t"] = features
+        for actor in actors:
+            for name in (
+                "m8_children_t",
+                "m8_scales_t",
+                "authority_centers_t",
+                "authority_scales_t",
+                "authority_features_t",
+            ):
+                actor[name] = actor[name].clone()
         stride = int(config["model"]["holdout_stride"])
         train_actors = [actor for index, actor in enumerate(actors) if index % stride != 0]
         holdout_actors = [actor for index, actor in enumerate(actors) if index % stride == 0]

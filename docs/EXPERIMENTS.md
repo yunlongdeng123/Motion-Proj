@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — r1 tensor entry failure / V71-F33（2026-09-05）
+
+- run=`20260905T024000Z__m32-evidential-gaussian-authority-s71132-r1`；failed at first train forward；
+- exposure=659 frozen geometry loaded + train evidence targets materialized；0 optimizer step/holdout metric/decision；
+- fix=clone inference-created frozen tensors outside InferenceMode；no numerical/scientific contract change；
+- no M21 partial quality read；next failure=`V71-F34`。
+
 ## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — frozen protocol（2026-09-05）
 
 - representation=frozen M8 anchor/child centers+scales；trainable per-primitive FREE/OCCUPIED/UNKNOWN soft authority；
