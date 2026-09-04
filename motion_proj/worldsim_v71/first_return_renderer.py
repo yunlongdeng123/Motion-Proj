@@ -479,6 +479,171 @@ def differentiable_oriented_first_intersection_depth(
     return torch.cat(outputs, dim=0)
 
 
+def differentiable_planar_disc_first_intersection_depth(
+    centers: torch.Tensor,
+    normals: torch.Tensor,
+    radii: torch.Tensor,
+    origins: torch.Tensor,
+    targets: torch.Tensor,
+    *,
+    fallback_margin_m: float = 0.50,
+    ray_chunk_size: int = 256,
+    point_chunk_size: int = 512,
+) -> torch.Tensor:
+    """Return the exact first ray intersection with finite zero-thickness discs."""
+    if centers.ndim != 2 or centers.shape[-1] != 3:
+        raise ValueError("centers must be [N,3]")
+    normals = torch.nn.functional.normalize(normals.reshape(-1, 3), dim=1, eps=1.0e-6)
+    radii = radii.reshape(-1)
+    if not (len(centers) == len(normals) == len(radii)):
+        raise ValueError("Planar chart attributes must align")
+    target_depths, _ = _ray_geometry(origins, targets)
+    if len(centers) == 0:
+        return target_depths + float(fallback_margin_m)
+    outputs = []
+    for start in range(0, len(targets), int(ray_chunk_size)):
+        chunk_origins = origins[start : start + ray_chunk_size]
+        chunk_targets = targets[start : start + ray_chunk_size]
+        target_depth, directions = _ray_geometry(chunk_origins, chunk_targets)
+        best_depth = torch.full_like(target_depth, torch.inf)
+        for point_start in range(0, len(centers), int(point_chunk_size)):
+            points = centers[point_start : point_start + point_chunk_size]
+            local_normals = normals[point_start : point_start + point_chunk_size]
+            local_radii = radii[point_start : point_start + point_chunk_size].clamp_min(
+                1.0e-4
+            )
+            denominator = torch.sum(
+                directions[:, None, :] * local_normals[None, :, :], dim=-1
+            )
+            numerator = torch.sum(
+                (points[None, :, :] - chunk_origins[:, None, :])
+                * local_normals[None, :, :],
+                dim=-1,
+            )
+            non_parallel = denominator.abs() > 1.0e-6
+            safe_denominator = torch.where(
+                non_parallel, denominator, torch.ones_like(denominator)
+            )
+            depth = numerator / safe_denominator
+            intersection = (
+                chunk_origins[:, None, :]
+                + depth[:, :, None] * directions[:, None, :]
+            )
+            radial_sq = torch.sum(
+                (intersection - points[None, :, :]).square(), dim=-1
+            )
+            valid = (
+                non_parallel
+                & (depth > 0.0)
+                & (radial_sq <= local_radii.square().reshape(1, -1))
+            )
+            local = torch.where(
+                valid, depth, torch.full_like(depth, torch.inf)
+            ).min(dim=1).values
+            best_depth = torch.minimum(best_depth, local)
+        fallback = target_depth + float(fallback_margin_m)
+        outputs.append(torch.where(torch.isfinite(best_depth), best_depth, fallback))
+    return torch.cat(outputs, dim=0)
+
+
+def literal_planar_disc_first_return_partition(
+    centers: np.ndarray | torch.Tensor,
+    normals: np.ndarray | torch.Tensor,
+    radii: np.ndarray | torch.Tensor,
+    targets: np.ndarray | torch.Tensor,
+    origins: np.ndarray | torch.Tensor,
+    *,
+    depth_tolerance_m: float,
+    device: torch.device,
+    ray_chunk_size: int = 512,
+    point_chunk_size: int = 2048,
+) -> dict[str, np.ndarray]:
+    """Exact minimum positive ray intersection with finite planar charts."""
+    center_tensor = torch.as_tensor(centers, dtype=torch.float32, device=device).reshape(
+        -1, 3
+    )
+    normal_tensor = torch.nn.functional.normalize(
+        torch.as_tensor(normals, dtype=torch.float32, device=device).reshape(-1, 3),
+        dim=1,
+        eps=1.0e-6,
+    )
+    radius_tensor = torch.as_tensor(radii, dtype=torch.float32, device=device).reshape(-1)
+    target_tensor = torch.as_tensor(targets, dtype=torch.float32, device=device).reshape(
+        -1, 3
+    )
+    origin_tensor = torch.as_tensor(origins, dtype=torch.float32, device=device).reshape(
+        -1, 3
+    )
+    if not (len(center_tensor) == len(normal_tensor) == len(radius_tensor)):
+        raise ValueError("Planar chart attributes must align")
+    if len(target_tensor) != len(origin_tensor):
+        raise ValueError("targets and origins must align")
+    first_depths = []
+    target_depths = []
+    with torch.inference_mode():
+        for start in range(0, len(target_tensor), int(ray_chunk_size)):
+            chunk_targets = target_tensor[start : start + ray_chunk_size]
+            chunk_origins = origin_tensor[start : start + ray_chunk_size]
+            target_depth, directions = _ray_geometry(chunk_origins, chunk_targets)
+            best_depth = torch.full_like(target_depth, torch.inf)
+            for point_start in range(0, len(center_tensor), int(point_chunk_size)):
+                points = center_tensor[point_start : point_start + point_chunk_size]
+                local_normals = normal_tensor[point_start : point_start + point_chunk_size]
+                local_radii = radius_tensor[
+                    point_start : point_start + point_chunk_size
+                ].clamp_min(1.0e-4)
+                denominator = torch.sum(
+                    directions[:, None, :] * local_normals[None, :, :], dim=-1
+                )
+                numerator = torch.sum(
+                    (points[None, :, :] - chunk_origins[:, None, :])
+                    * local_normals[None, :, :],
+                    dim=-1,
+                )
+                non_parallel = denominator.abs() > 1.0e-6
+                depth = numerator / torch.where(
+                    non_parallel, denominator, torch.ones_like(denominator)
+                )
+                intersection = (
+                    chunk_origins[:, None, :]
+                    + depth[:, :, None] * directions[:, None, :]
+                )
+                radial_sq = torch.sum(
+                    (intersection - points[None, :, :]).square(), dim=-1
+                )
+                valid = (
+                    non_parallel
+                    & (depth > 0.0)
+                    & (radial_sq <= local_radii.square().reshape(1, -1))
+                )
+                local = torch.where(
+                    valid, depth, torch.full_like(depth, torch.inf)
+                ).min(dim=1).values
+                best_depth = torch.minimum(best_depth, local)
+            first_depths.append(best_depth.cpu())
+            target_depths.append(target_depth.cpu())
+    first_depth = (
+        torch.cat(first_depths).numpy()
+        if first_depths
+        else np.empty(0, dtype=np.float32)
+    )
+    target_depth = (
+        torch.cat(target_depths).numpy()
+        if target_depths
+        else np.empty(0, dtype=np.float32)
+    )
+    observable = np.isfinite(first_depth)
+    return {
+        "first_depth": first_depth.astype(np.float32),
+        "target_depth": target_depth.astype(np.float32),
+        "early": observable
+        & (first_depth < target_depth - float(depth_tolerance_m)),
+        "hit": observable
+        & (np.abs(first_depth - target_depth) <= float(depth_tolerance_m)),
+        "observable": observable,
+    }
+
+
 def literal_first_return_partition(
     surface: np.ndarray | torch.Tensor,
     targets: np.ndarray | torch.Tensor,
