@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 paper literature boundary — related mechanism is not implemented evidence（2026-09-05）
+
+主稿不得因引用DynamicVGGT/DeGO/SelfOccFlow而声称当前模型具有scene-flow、non-rigid deformation或future
+forecasting；不得因Gau-Occ两阶段联合优化而推断未公开的completion梯度路径。相关工作只用于支持状态拆分和
+supervision-first设计，当前实证仍限M8/M39/M49/M51与pending M43。纯写作压缩无新failure；next ID仍=`V71-F50`。
+
 ## V7.1 M51 outcome note — soft error improvement cannot certify hard support（2026-09-05）
 
 M51在相同support上确认：新增hard early rays中`38.03%`的smooth absolute depth error反而改善；加入正式

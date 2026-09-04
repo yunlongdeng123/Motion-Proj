@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V7.1 CVPR related-work compression（2026-09-05）
+
+- scope=documentation-only；旧selective confidence/reliability内容留在legacy supplement，不再占V7.1主稿；
+- retained axes=physical LiDAR returns、supervision-native completion/evidence、dynamic/static/appearance factorization、
+  cross-sensor evaluation；
+- literature boundary=不虚构Gau-Occ code/gradient；不声称当前实现DynamicVGGT/DeGO scene-flow/deformation；
+- compile=main 8 pages (`378,803` bytes)，references start page 7；0 warning/reference/citation issue；
+- no model/metric/cohort/gate/external read change。
+
 ## WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01 — canonical（2026-09-05）
 
 - run=`20260905T063000Z__m51-soft-hard-first-return-r1`；66 Actors / 99,208 rays；training/gate=false；

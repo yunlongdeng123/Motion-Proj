@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 CVPR related-work focus complete（2026-09-05）
+
+主稿related work已从旧V7 selective prediction/reliability叙事收束为四条直接相关证据链：visual reconstruction→
+physical first return、target-first completion/evidential occupancy、rigid/non-rigid/static/appearance factorization、以及
+nuScenes→AV2 cross-sensor protocol。DynamicVGGT/DeGO/SelfOccFlow只支持“独立motion state需要独立监督”，不被
+包装成当前方法实现；Gau-Occ只迁移target/set思想，不声称其未公开梯度路径。主稿重编译8页、`378,803` bytes，
+正文在page 7左栏结束、references从page 7开始；0 overfull/undefined/duplicate/citation warning。无新实验或M43 read。
+
 ## WorldSim V7.1 M51 completed / smooth-to-hard non-implication confirmed（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01/

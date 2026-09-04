@@ -1,42 +1,43 @@
 \section{Related Work}
 
-\paragraph{Driving-world reconstruction.}
-nuScenes~\cite{caesar2020nuscenes} and Argoverse~2~\cite{wilson2021argoverse2} provide calibrated multi-sensor trajectories. LiDAR is 2.5D ray evidence: points discard free-space intervals~\cite{hu2020visibility}. Scene graphs model Actors~\cite{ost2021neural}, while 3D Gaussian Splatting models appearance~\cite{kerbl2023gaussians}. UniSim targets closed-loop neural sensor rendering~\cite{yang2023unisim}; LiDAR4D and DyNFL target space--time LiDAR synthesis and re-simulation~\cite{zheng2024lidar4d,wu2024dynfl}. These optimize observations, not collision semantics. We ask whether an edited Actor owns a queryable, first-return-consistent surface with explicit unknown space; Gaussian opacity is not occupancy, and our surface preserves provenance.
+\paragraph{From visual reconstruction to physical returns.}
+3D Gaussian Splatting represents appearance efficiently~\cite{kerbl2023gaussians}, and driving simulators such as
+UniSim, LiDAR4D, and DyNFL optimize visual or LiDAR observations over time~\cite{yang2023unisim,zheng2024lidar4d,wu2024dynfl}.
+Gaussian opacity, however, is not automatically occupancy or collision geometry. Automotive LiDAR supplies both endpoints
+and measured free-space intervals~\cite{hu2020visibility}. Neural LiDAR Fields models first returns with a ray-weight
+distribution~\cite{huang2023nlf}; categorical depth networks learn a metric depth mode~\cite{reading2021caddn}; QueryOcc
+directly samples positive and negative continuous queries~\cite{lilja2026queryocc}. We retain their relevant boundary:
+native rays supervise the physical representation, while an Actor-local surface and its termination distribution remain
+different typed objects.
 
-Neural LiDAR Fields models first returns through a physically motivated ray-weight distribution~\cite{huang2023nlf}, while categorical depth supervision encourages a sharp metric depth mode~\cite{reading2021caddn}. QueryOcc instead samples positive and negative LiDAR queries directly in continuous space~\cite{lilja2026queryocc}. We combine their relevant boundary conditions: native GT rays define supervision, but an Actor-local 3D score is normalized only when answering a ray. This separates learned geometry evidence from the sensor termination distribution and keeps image, motion, and hazard variables outside the geometry head.
-Ray potentials constrain visibility~\cite{savinov2016ray}, while evidential occupancy renders its first occupied hit back to LiDAR depth~\cite{kalble2024accurate,kalble2025evocc}. We separate that literal hit from a target-nearest proxy and name the operator used by every audit.
-ALSO derives occupied and free supervision directly from the LiDAR sensor origin~\cite{boulch2023also}, while SCPNet shows that
-multi-frame completion labels can contain moving-object traces~\cite{xia2023scpnet}. DualAD instead carries static and dynamic
-state in separate streams with explicit ego/object-motion compensation~\cite{doll2024dualad}. We use these observations to
-audit the producer of Actor-local targets and to supervise a continuous physical field; they do not justify deleting an
-inconsistent point after inference.
+\paragraph{Completion and evidential occupancy.}
+Object-centric occupancy completion canonicalizes long LiDAR tracklets before implicit decoding~\cite{zheng2024objectcentric},
+while SelfOcc and SparseOcc++ learn continuous geometry fields~\cite{huang2024selfocc,tang2026sparseoccplusplus}.
+PoinTr translates point sets and SnowflakeNet grows child points from parent seeds~\cite{yu2021pointr,xiang2021snowflakenet}.
+Gau-Occ initializes Gaussians from diffusion-completed LiDAR, but its multimodal occupancy head may still update center,
+scale, and rotation~\cite{lv2026gauocc}. We borrow target/set completion, not unconstrained image-conditioned geometry:
+dynamic sweeps are Actor-motion compensated, observed anchors are immutable, and geometry/ray losses remain active throughout.
 
-Recent 4D formulations make motion a first-class factor rather than a geometry residual. DynamicVGGT equips Gaussians
-with velocity under scene-flow supervision~\cite{he2026dynamicvggt}; DeGO separates rigid offsets from non-rigid
-deformation~\cite{gao2026dego}; and SelfOccFlow predicts separate static/dynamic signed-distance fields before flow-warped
-temporal aggregation~\cite{timoneda2026selfoccflow}. These works motivate our separation boundary, not a visual-teacher
-shortcut: canonical surface, visibility, and temporal deformation must receive distinct physical supervision.
+ALSO and evidential occupancy derive FREE/OCCUPIED supervision from the sensor origin~\cite{boulch2023also,kalble2024accurate,kalble2025evocc}.
+GaussianFormer-2 and GaussRender connect Gaussian representations to occupancy and projective supervision
+~\cite{huang2025gaussianformer2,chambon2025gaussrender}; Vol3DGS analytically integrates Gaussians into transmittance
+~\cite{talegaonkar2025vol3dgs}. Our negative optical ablations expose a complementary issue: additive thickness changes
+with primitive density. We instead use producer evidence as categorical surface-return authority and state exactly what its
+normalized CDF can and cannot guarantee.
 
-\paragraph{Learned geometry completion.}
-SelfOcc treats the reconstructed volume as a continuous signed-distance field and closes training through differentiable rendering~\cite{huang2024selfocc}. Object-centric occupancy completion instead canonicalizes long LiDAR tracklets and queries an implicit decoder at Actor-relative coordinates~\cite{zheng2024objectcentric}. SparseOcc++ separates geometric completion from semantics by regressing an anisotropic scene-completion field on sparse anchors~\cite{tang2026sparseoccplusplus}. Gau-Occ initializes semantic Gaussians from a diffusion-completed LiDAR cloud, but its final multimodal head may still update center, scale, and rotation under occupancy supervision~\cite{lv2026gauocc}. PoinTr formulates completion as set-to-set translation, while SnowflakeNet grows child points from parent seeds~\cite{yu2021pointr,xiang2021snowflakenet}. We combine only these target/set principles: dynamic sweeps are aligned per Actor, observed anchors are immutable, image features cannot update geometry, and ray/surface losses remain active. Our target is not occupancy mIoU: it is the joint reduction of literal early returns without degrading held-out Actor surface distance.
+\paragraph{Dynamic factorization and appearance ownership.}
+Multi-frame completion labels can contain moving-object traces~\cite{xia2023scpnet}. DualAD separates static and dynamic
+streams with ego/object-motion compensation~\cite{doll2024dualad}; DynamicVGGT predicts Gaussian velocity under scene-flow
+supervision~\cite{he2026dynamicvggt}; DeGO separates rigid offsets and non-rigid deformation~\cite{gao2026dego}; and
+SelfOccFlow maintains separate static/dynamic signed-distance fields~\cite{timoneda2026selfoccflow}. These works motivate
+our refusal to hide motion inside a canonical shape head. We use annotated rigid pose only as a read-only transform; non-rigid
+evolution remains unsupported without its own target. Likewise, Feature 3DGS and Neural Shell Texture Splatting show how
+visual attributes can live on geometry~\cite{zhou2024feature3dgs,zhang2025shelltexture}. Our stricter ownership contract gives
+image gradients a sibling visual state and no path to physical center or scale.
 
-GaussianFormer-2 interprets sparse Gaussians as occupied-region probability distributions~\cite{huang2025gaussianformer2}, while GaussRender adds projective depth and semantic losses alongside native 3D occupancy supervision~\cite{chambon2025gaussrender}. Vol3DGS analytically integrates 3D Gaussians to obtain volumetrically consistent transmittance~\cite{talegaonkar2025vol3dgs}. ShelfOcc likewise argues that metrically consistent native-3D targets are essential in dynamic driving scenes~\cite{boeder2026shelfocc}. These results motivate our Gaussian energy, but not unconstrained end-to-end geometry: we keep motion-compensated Actor targets and audit whether ray gradients alter centers or merely inflate support.
-
-Feature 3DGS attaches image-distilled descriptors to Gaussian carriers~\cite{zhou2024feature3dgs}, while Neural Shell Texture Splatting explicitly separates surface geometry from a sampled texture field~\cite{zhang2025shelltexture}. We use the same narrow separation principle, not their visual objective: image-trained SH and opacity can be associated with a frozen physical carrier, but cannot update its center or scale.
-
-\paragraph{Uncertainty and reliability.}
-Deep ensembles expose useful empirical predictive disagreement~\cite{lakshminarayanan2017deep}, and conformalized quantile methods can turn residuals into calibrated marginal intervals under appropriate assumptions~\cite{romano2019conformalized}. Interval-bound methods can certify a network over a specified input box, including for robust OOD detection~\cite{bitterwolf2020certifiably}; they do not certify that the box models an unseen sensor domain. Driving logs violate many simple exchangeability assumptions through scene correlation and domain shift. We therefore report empirical calibration explicitly, preserve claim boundaries, and use monotone structure only for runtime consistency---not as a formal road-safety guarantee.
-
-Selective prediction couples conditional risk to coverage~\cite{geifman2019selectivenet}, while learning to defer evaluates the
-downstream fallback as part of the system~\cite{madras2018defer}. Moreover, abstention can improve aggregate regression yet
-worsen a predefined subgroup~\cite{shah2022selective}. We therefore report both selected and fallback-composite outcomes and
-decompose them over the frozen physical hazard stratum; this is descriptive accounting, not subgroup calibration.
-
-\paragraph{Cross-sensor LiDAR generalization.}
-LiDAR domain shift includes sensor sampling as well as scene and appearance shift. Source-only subsampling consistency can improve
-transfer across scan densities~\cite{kim2023dglss}, while partially accumulated geometry and sequence cues provide a complementary
-common representation~\cite{sanchez2023labelprop}. These results motivate our frozen sparsity intervention, but do not make
-source consistency a certificate for actor-level repair selection; we therefore retain exact-once source and external evaluations.
-
-\paragraph{Our distinction.}
-Prior confidence, occupancy, and reconstruction-quality signals often mix physical invalidity, visibility, and behavioral difficulty. \method instead defines separate evidence inputs, paired interventions, and failure denominators so that an improvement cannot be obtained by deleting hazardous Actors or relabeling unknown space as free.
+\paragraph{Cross-sensor evaluation.}
+nuScenes and Argoverse~2 provide calibrated but materially different multi-sensor trajectories
+~\cite{caesar2020nuscenes,wilson2021argoverse2}. LiDAR domain shift includes sampling pattern as well as scene statistics;
+source-only density consistency and accumulated sequence geometry can improve transfer
+~\cite{kim2023dglss,sanchez2023labelprop}. They do not certify Actor-level physical transfer. We therefore freeze one AV2
+cohort before reading any learned output and prohibit target adaptation, calibration, or failed-log deletion.
