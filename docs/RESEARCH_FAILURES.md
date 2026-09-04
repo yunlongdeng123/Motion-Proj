@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F25 — world-frame float32 cdist消减伪造刚体不一致（2026-09-04）
+
+- 分类/状态：numeric coordinate implementation / resolved before scientific interpretation；run=
+  `20260904T160000Z__m22-se3-composition-r1`；
+- symptom：12/12 identity和11个moving Actors通过，但最大energy residual=`0.0617554`、pairwise residual=
+  `0.03125m`，故verdict=`se3_composition_implementation_rejected`；
+- root cause：最大Actor translation约`126m`，默认float32 `torch.cdist`在点数大于25时使用Euclidean MM路径，
+  大平方范数相减对厘米级局部距离产生catastrophic cancellation；这不是canonical geometry或trajectory authority失败；
+- evidence：PyTorch官方`torch.cdist`文档明确给出默认MM切换条件与`donot_use_mm_for_euclid_dist`模式；
+- resolution：部署定义直接执行`E_world(x,t)=E_actor(T_t^{-1}x)`，避免在大world坐标上构造距离；数值审计使用
+  float64 direct Euclidean kernel。M8/M21参数、12 Actors、36 audited frames、query数和冻结容差均不变；
+- claim impact：r1只作为失败实现保留，禁止把其残差写成动静解耦科学反例。
+
+下一可用编号：`V71-F26`。
+
 ## V7.1 M22 implementation note — 不以快照比对替代只读数据流（2026-09-04）
 
 - runner代码路径不包含checkpoint写回、Background更新或trajectory tensor赋值；只生成run目录summary/rows/status；

@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — r1 numeric failure（2026-09-04）
+
+- run=`20260904T160000Z__m22-se3-composition-r1`；verdict=`implementation_rejected 2/4`；failure=`V71-F25`；
+- aligned=`12 Actors / 7 hazard / 1677 valid frames / 36 audited frames`；moving=`11`；
+- composition=`5791` M8 physical Gaussians + `106807` identity-owned appearance Gaussians；static Background=
+  `1140862` Gaussians and untouched；
+- observed residual=energy `0.0617554`、pairwise `0.03125m` at max translation `126.276m`；
+- diagnosis=default float32 Euclidean MM cdist cancellation on large world coordinates；not a scientific geometry failure；
+- r2=unchanged cohort/protocol，inverse-transform query to canonical，float64 direct cdist；no retraining/tuning。
+
 ## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — implementation ready（2026-09-04）
 
 - runner=`scripts/run_worldsim_v71_m22_se3_dynamic_static_composition.py`；

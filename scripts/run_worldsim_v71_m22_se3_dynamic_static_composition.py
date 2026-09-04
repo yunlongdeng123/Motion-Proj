@@ -82,7 +82,12 @@ def _select_rows(values: torch.Tensor, maximum: int) -> torch.Tensor:
 def _gaussian_energy(
     queries: torch.Tensor, centers: torch.Tensor, scales: torch.Tensor
 ) -> torch.Tensor:
-    normalized_distance = torch.cdist(queries, centers) / scales.reshape(1, -1)
+    normalized_distance = torch.cdist(
+        queries,
+        centers,
+        p=2.0,
+        compute_mode="donot_use_mm_for_euclid_dist",
+    ) / scales.reshape(1, -1)
     return torch.logsumexp(-0.5 * normalized_distance.square(), dim=1)
 
 
@@ -197,14 +202,23 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                     ],
                     dim=0,
                 )
+                audit_centers = centers.to(dtype=torch.float64)
+                audit_scales = scales.to(dtype=torch.float64)
                 queries = _select_rows(
-                    centers, int(audit["maximum_query_count"])
+                    audit_centers, int(audit["maximum_query_count"])
                 )
                 pairwise_points = _select_rows(
-                    centers, int(audit["maximum_pairwise_points"])
+                    audit_centers, int(audit["maximum_pairwise_points"])
                 )
-                canonical_energy = _gaussian_energy(queries, centers, scales)
-                canonical_distances = torch.cdist(pairwise_points, pairwise_points)
+                canonical_energy = _gaussian_energy(
+                    queries, audit_centers, audit_scales
+                )
+                canonical_distances = torch.cdist(
+                    pairwise_points,
+                    pairwise_points,
+                    p=2.0,
+                    compute_mode="donot_use_mm_for_euclid_dist",
+                )
 
                 selected_frames = _select_frames(
                     valid_frames, int(audit["frames_per_actor"])
@@ -214,17 +228,19 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 for frame in selected_frames:
                     rotation = torch.as_tensor(
                         _quaternion_wxyz_to_matrix(quaternions[frame, rigid_index]),
-                        dtype=centers.dtype,
+                        dtype=torch.float64,
                         device=device,
                     )
                     translation = torch.as_tensor(
                         translations[frame, rigid_index],
-                        dtype=centers.dtype,
+                        dtype=torch.float64,
                         device=device,
                     )
-                    world_centers = centers @ rotation.T + translation
                     world_queries = queries @ rotation.T + translation
-                    world_energy = _gaussian_energy(world_queries, world_centers, scales)
+                    recovered_queries = (world_queries - translation) @ rotation
+                    world_energy = _gaussian_energy(
+                        recovered_queries, audit_centers, audit_scales
+                    )
                     world_pairwise = pairwise_points @ rotation.T + translation
                     energy_residuals.append(
                         float(torch.max(torch.abs(world_energy - canonical_energy)))
@@ -233,7 +249,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                         float(
                             torch.max(
                                 torch.abs(
-                                    torch.cdist(world_pairwise, world_pairwise)
+                                    torch.cdist(
+                                        world_pairwise,
+                                        world_pairwise,
+                                        p=2.0,
+                                        compute_mode="donot_use_mm_for_euclid_dist",
+                                    )
                                     - canonical_distances
                                 )
                             )
@@ -394,4 +415,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

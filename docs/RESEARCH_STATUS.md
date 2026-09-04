@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M22 r1 numerical failure diagnosed / inverse-query fix ready（2026-09-04）
+
+首次run=`20260904T160000Z__m22-se3-composition-r1`对齐`12` Actors、`1677`有效trajectory frames、`11`
+moving Actors，但默认float32 `torch.cdist`在最大约`126m`的world translation上给出energy残差`0.06176`和距离
+残差`0.03125m`，2/4 implementation decisions失败，登记`V71-F25`。
+
+PyTorch官方API说明Euclidean `cdist`在点数超过25时默认切换matrix-multiplication路径；r1因此把大世界坐标的平方范数
+消减误当成SE(3)不一致。r2严格按冻结公式先用只读SE(3) inverse-transform world query回Actor canonical frame，再以
+float64 direct-distance审计；未改M8/M21表示、Actor、frame、query或容差。下一failure ID=`V71-F26`。
+
 ## WorldSim V7.1 M22 SE(3) audit implementation ready（2026-09-04）
 
 实现=`scripts/run_worldsim_v71_m22_se3_dynamic_static_composition.py`，配置=
