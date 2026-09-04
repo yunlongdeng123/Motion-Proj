@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M33 pre-registration note — provenance/evidence is a data-interface repair（2026-09-05）
+
+M31/M32把失败定位到anchor输入可辨识性，故M33只补producer-side sidecar，不把held-out监督伪装为输入，
+不靠UNKNOWN mask或surface filter制造一致性。若精确1004-Actor replay、anchor顺序或source adapter失败，
+登记`V71-F36`；M33没有模型性能decision，sidecar完成也不构成物理改善claim。下一failure ID=`V71-F36`。
+
 ## V71-F35: M32 build-geometry-only evidential authority worsens every early-return stratum（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/20260905T030000Z__m32-evidential-gaussian-authority-s71132-r3`；

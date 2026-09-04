@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M33 producer-side anchor evidence frozen（2026-09-05）
+
+状态=`v71_m33_anchor_evidence_sidecar_frozen`，详见
+[`WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md`](WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md)。
+M33不再调整M32 mass family，而是精确重放当前1004个corpus Actor并旁路保存每anchor的KEEP/PROJECT、
+source query frame/ray、canonical build hit/temporal/view support和build LiDAR F/O/U证据；held-out LiDAR仅写
+`supervision_*`，不进入`input_*`。原cache不改写；不训练、不读selection/final/external/M21 partial；无
+post-hoc过滤、无sweep。完成条件仅为1004个Actor一一对齐物化。下一failure ID=`V71-F36`。
+
 ## WorldSim V7.1 M32 rejected / authority identifiability boundary（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/

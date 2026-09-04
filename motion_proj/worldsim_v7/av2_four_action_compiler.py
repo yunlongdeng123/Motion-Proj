@@ -227,6 +227,8 @@ def _compile_actor(
     ghost_distance, ghost_nearest = _nearest(ghost, canonical, device, chunk)
     projected = []
     projected_aligned = np.full(ghost.shape, np.nan, dtype=np.float32)
+    projected_query_indices = []
+    projected_surface_indices = []
     ghost_actions = []
     for index, (distance, nearest) in enumerate(zip(ghost_distance, ghost_nearest)):
         decision = compiler.compile(
@@ -256,6 +258,8 @@ def _compile_actor(
             else:
                 raise ValueError(f"unsupported projection_output={projection_output}")
             projected.append(projected_point)
+            projected_query_indices.append(int(probe_indices[index]))
+            projected_surface_indices.append(int(nearest))
             projected_aligned[index] = projected_point
     if projected:
         compiled_parts.append(np.asarray(projected, dtype=np.float32))
@@ -440,6 +444,7 @@ def _compile_actor(
         package["diagnostics"] = {
             "track": track,
             "query_timestamp_ns": int(heldout_records[0]["timestamp_ns"]),
+            "query_frame_rank": int(heldout_records[0]["frame_rank"]),
             "query_actor_center_ego": np.asarray(
                 heldout_records[0]["actor_center_ego"], dtype=np.float32
             ),
@@ -459,14 +464,28 @@ def _compile_actor(
             "target": target,
             "target_sensor_origins": target_origins_all[target_indices],
             "canonical": canonical,
+            "canonical_hit_count": np.asarray(surface["hit_count"], dtype=np.int32),
+            "canonical_temporal_support": support,
+            "canonical_view_support": views,
+            "canonical_sensor_origins": np.asarray(
+                surface["sensor_origins"], dtype=np.float32
+            ),
             "baseline": baseline,
             "compiled": compiled,
             "kept": query[keep],
+            "kept_query_indices": stable_query_indices,
+            "kept_surface_indices": query_nearest[keep],
             "unknown_query": query[~keep],
             "ghost_hit": selected_query,
             "ghost_ray": ray,
             "ghost": ghost,
             "projected": np.asarray(projected, dtype=np.float32).reshape(-1, 3),
+            "projected_query_indices": np.asarray(
+                projected_query_indices, dtype=np.int64
+            ),
+            "projected_surface_indices": np.asarray(
+                projected_surface_indices, dtype=np.int64
+            ),
             "projected_aligned": projected_aligned,
             "ghost_actions": tuple(ghost_actions),
             "duplicate": duplicate,

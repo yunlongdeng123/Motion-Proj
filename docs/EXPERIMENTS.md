@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M33-ANCHOR-EVIDENCE-SIDECAR-01 — frozen（2026-09-05）
+
+- hypothesis=补齐每anchor producer provenance/source frame/build F/O/U后，下一阶段authority才有辨识具体
+  跨帧矛盾的输入；
+- data=当前1004 cache Actor精确重放（721 raw + 283 processed recovery），不替换、不重写原cache；
+- output=`/root/autodl-tmp/data/worldsim_v71/anchor_evidence_v1`，输入统一`input_*`，held-out GT统一
+  `supervision_*`；
+- M33=data processing only；no train/checkpoint/sweep/filter；no selection/final/external/M21 partial read；
+  next failure=`V71-F36`。
+
 ## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T030000Z__m32-evidential-gaussian-authority-s71132-r3`；status=`done`；verdict=
