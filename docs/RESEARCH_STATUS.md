@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M48 supervised child visibility frozen（2026-09-05）
+
+状态=`v71_m48_supervised_child_visibility_measure_frozen`，详见
+[`WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md`](WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md)。
+M48响应`V71-F46`，不再改变local geometry：冻结M8 center/tangent、M11 GT normal/thickness与M35/M38 authority，
+仅以ray--child的`|ray·normal|`、lateral miss、longitudinal depth、anisotropy和occupied mass预测`(0,1)`可见性，
+作为`q(k,j|r)∝o_j v_rj κ_kj`的一部分接受GT not-early/hit-band监督。593/66、4 epochs、seed71148；
+head不看target depth/point、hazard/motion/category/image/external，不删Gaussian、不做post-hoc filter。三门仅与M39比较；
+M48 development-only，M43仍为唯一external candidate且不读partial quality。
+
 ## WorldSim V7.1 M47 completed / single-factor local-support explanation rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01/

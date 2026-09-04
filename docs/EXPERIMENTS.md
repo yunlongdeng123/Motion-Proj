@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01 — frozen（2026-09-05）
+
+- frozen geometry=M8 center/tangent + M11 GT normal/thickness；frozen authority=M35/M38；
+- trainable=5--32--1 bounded child visibility in joint categorical return measure；inputs=ray/component physical geometry +
+  occupied mass only；no target/hazard/motion/category/image/external input；
+- loss=GT not-early NLL + hit-band NLL + `0.05×` identity；593/66、4 epochs、seed71148、256 rays、32/64 bins；
+- compare=M39 + frozen M45；decision=all/hazard/clear early non-increase vs M39 and all hit delta `>=-1pp`；no sweep；
+- development-only，posthoc/filter/delete=false，M43 partial quality read=false。
+
 ## WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01 — canonical（2026-09-05）
 
 - run=`20260905T111500Z__m47-physical-factor-diagnosis-r1`；66/66 matched；99,208 rays；verdict=

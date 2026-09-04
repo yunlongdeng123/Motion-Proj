@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M48 pre-registration note — visibility is supervised renderer state, not a filter（2026-09-05）
+
+M48只允许completion child的ray-conditioned visibility进入训练和部署完全相同的joint measure；M8/M11 geometry与
+M35/M38 authority固定。visibility只能连续衰减、不能删除primitive，且不读取GT endpoint/depth、hazard、motion、
+category或image。GT只通过not-early/hit区间loss监督。禁止把M47 incidence区间用作rule，禁止loss/seed/hidden/
+identity/initial visibility sweep。若三strata不能同时改善，登记`V71-F47`并关闭局部visibility支线。
+
 ## V71-F46: local oriented support causes heterogeneous ray-label transport（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01/20260905T111500Z__m47-physical-factor-diagnosis-r1`；
