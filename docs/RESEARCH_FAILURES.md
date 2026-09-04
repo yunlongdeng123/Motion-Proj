@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F39: M38 pre-hit survival cannot decouple endpoint evidence from Gaussian front tail（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01/20260905T063000Z__m38-prehit-survival-s71138-r1`；
+- evidence=holdout pre-hit child optical mass `0.1870→0.1272`；相对M37 early=`-2.409pp`、hit=`+1.330pp`，
+  但相对baseline all/hazard/clear early仍`+3.319/+3.676/+1.563pp`，decisions=`2/4`；
+- supervision health=child occupied correlation=`0.3990`，训练全程无NaN/OOM；因此不是输入不可辨识或free loss无梯度；
+- root cause=一个非负scalar occupied mass同时缩放endpoint surface evidence和isotropic Gaussian在endpoint前的体密度
+  尾部；free survival继续下降时，GT F/O/U CE从`0.9336`恶化至`1.0583`，显示目标角色耦合；
+- literature response=NeuS与VolSDF（NeurIPS 2021）都指出generic volume density会产生surface geometry bias，并把
+  rendering density绑定到显式surface/SDF；M39先用已有M18式categorical surface-return分布做冻结归因，不直接重开
+  已失败的M10--M18 field/primitive sweep；
+- anti-repeat=不调M38 weight/margin/epoch/seed，不缩Gaussian scale、不删除child；下一步只比较同一authority在
+  additive transmittance与sampling-density-invariant categorical return composition中的行为；
+- claim impact=M38不进external；GT pre-hit supervision的方向性成立，当前scalar optical parameterization拒绝。
+  下一failure ID=`V71-F40`。
+
 ## V7.1 M38 pre-registration note — observed FREE interval is training supervision（2026-09-05）
 
 M38只在loss中加入native LiDAR pre-hit survival，不根据M37 early ray删除或重标任何primitive。固定margin=0.20m、

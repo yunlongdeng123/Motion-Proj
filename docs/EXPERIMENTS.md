@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T063000Z__m38-prehit-survival-s71138-r1`；593 train / 66 holdout；4 continuation epochs；
+  verdict=`m38_development_rejected`；decisions=`2/4`；
+- train loss=`4.363062→4.349358`；categorical NLL=`3.716384→3.712473`；pre-hit child survival NLL=
+  `0.110465→0.106528`；holdout M37/new pre-hit mass=`0.187016/0.127181`；
+- M37→M38 all early/hit=`23.9154/65.5875%→21.5063/66.9170%`（`-2.4091/+1.3295pp`）；
+  hazard early/hit=`-2.6697/+1.5053pp`；clear=`-1.1274/+0.4653pp`；
+- M38-vs-baseline all/hazard/clear early=`+3.3193/+3.6764/+1.5629pp`；all hit=`+4.6337pp`；
+- occupied correlation=`0.399006`；GT-mass CE=`1.058303`；mean F/O/U=`0.1958/0.3826/0.4216`；
+  no-return M37/M38=`0.4746/0.5201`；
+- conclusion=native FREE interval improves both early and hit but scalar occupied mass couples endpoint evidence to
+  Gaussian front-tail hazard；stop weight/margin recovery；next=frozen categorical surface-return composition audit；
+- GPU=`1.177GiB`，RSS=`1.336GiB`，wall=`40.88s`；no external/M21 partial read；next failure=`V71-F40`。
+
 ## WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01 — frozen（2026-09-05）
 
 - init=M37 child checkpoint；frozen=M35 anchor + M8 center/scale/trajectory；same 593/66 exposed split；

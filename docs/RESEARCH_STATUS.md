@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7.1 M38 rejected / pre-hit supervision effective but scalar optical mass remains coupled（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01/
+20260905T063000Z__m38-prehit-survival-s71138-r1`；从M37初始化并训练4 epochs，verdict=
+`m38_development_rejected`，decisions=`2/4`。train pre-hit child survival NLL=`0.1105→0.1065`；holdout paired
+值从M37 `0.1870`降至`0.1272`（`-32.0%`）。
+
+物理方向继续成立：相对M37，all/hazard/clear early降低`-2.409/-2.670/-1.127pp`，all/hazard/clear hit提高
+`+1.330/+1.505/+0.465pp`。但相对原unit-energy baseline，early仍为`+3.319/+3.676/+1.563pp`；all hit=
+`+4.634pp`。child occupied correlation仍为`0.3990`，但GT F/O/U CE从M37 `0.9336`恶化到`1.0583`，预测
+occupied均值`0.481→0.383`、UNKNOWN `0.351→0.422`。
+
+结论：native pre-hit supervision不是无效损失；它同时改善early与hit。剩余结构冲突来自同一scalar occupied mass
+既承担surface endpoint termination、又通过isotropic Gaussian前翼在FREE区累积hazard。停止M38 weight/margin/
+epoch恢复。下一步M39不训练地把M35 anchor与M37/M38 child continuous authority置入M18式直接categorical
+Gaussian surface-return分布，检查去除additive optical-thickness累积后是否保留改善；若无效则关闭该authority组合。
+GPU=`1.177GiB`、RSS=`1.336GiB`、wall=`40.88s`；无external/M21 partial read。登记`V71-F39`；下一failure
+ID=`V71-F40`。
+
 ## WorldSim V7.1 M38 native pre-hit free-space survival frozen（2026-09-05）
 
 状态=`v71_m38_prehit_free_space_survival_frozen`，详见
