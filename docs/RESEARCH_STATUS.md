@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 diagnostic C gradient-conflict ready（2026-09-04）
+
+状态：`v71_diag_c_ready`。加载冻结M2 checkpoint，在train corpus等距取64 Actors、16个4-Actor minibatches，完全复用
+M2的归一化first-return与symmetric Chamfer目标，分别计算共享encoder、relocation head和全模型梯度余弦/范数比。诊断
+不训练、不改模型、不读取Selection/Source Final/AV2，也不以旧Source Final结果选择参数。
+
+决策只回答一个问题：M2剩余`+1.581mm` Chamfer是否来自surface与first-return的直接负梯度冲突。PCGrad仅在训练
+minibatch确有负余弦时才有机制依据；若梯度同向，则停止多目标优化器路线，转向ray-local evidence/geometry条件化。
+本诊断无pass gate、无参数扫描，下一failure ID仍为`V71-F09`。
+
 ## WorldSim V7.1 M4 rejected / local-identifiability diagnosis next（2026-09-04）
 
 Canonical M4=`run://worldsim_v71/WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01/

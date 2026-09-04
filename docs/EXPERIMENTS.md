@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-DIAG-C-M2-GRADIENT-CONFLICT-01 — frozen diagnostic protocol（2026-09-04）
+
+- checkpoint=canonical M2；input=train corpus only，等距64 Actors、batch=4、seed71106；
+- objectives=原M2 normalized first-return与normalized symmetric Chamfer，模型/renderer/anchors/rays不变；
+- readout=每batch的all/encoder/head gradient cosine、dot product与first-to-surface norm ratio；
+- action=只有实际负余弦才允许下一步PCGrad；同向则关闭loss-conflict假设；
+- exposure=no training、no optimizer step、Selection/Source Final/AV2 read=false；validation=`py_compile only`。
+
 ## WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01 — canonical negative result（2026-09-04）
 
 - run=`20260904T103259Z__m4-balanced-occupancy-boundary-s71105-r1`；status=`done`；verdict=

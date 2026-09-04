@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 diagnostic C prevention note — 不把PCGrad当作默认补丁（2026-09-04）
+
+- PCGrad只在任务梯度内积为负时投影；因此先在冻结M2的原始minibatch合同上测量，而不是因两个指标不同就假定冲突；
+- 诊断只读train corpus与M2权重，不训练、不读取已消费Source Final明细、不访问AV2；
+- 若all/encoder/head梯度主要同向，后续不得使用PCGrad、GradNorm或loss-weight sweep掩盖表示可辨识性问题；
+- 本阶段不产生failure编号，下一可用仍为`V71-F09`。
+
 ## V71-F08 — M4平衡占据边界可抽取但定位到错误表面
 
 - 分类/状态：scientific + identifiability / terminal for global-latent implicit field；canonical=`run://worldsim_v71/
