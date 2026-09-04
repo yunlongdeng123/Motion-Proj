@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M25 outcome note — 外观梯度有效但309-carrier容量不足（2026-09-05）
+
+- canonical r2在显式model-tree冻结后完成320/320 steps，6/6 held-out views均有非零Actor footprint，三项decision通过；
+- pooled held-out Actor PSNR由M23初始化`15.8597`升至`16.9434dB`（`+1.0837dB`）；6个单视图全部改善，范围
+  `+0.4856`至`+2.4501dB`；
+- 同一held-out集合的原StreetGS Actor为`25.3527dB`，故优化后仍有`8.4093dB`缺口；train pooled仅
+  `15.3677→17.0601dB`，不是只发生在held-out的统计偶然；
+- interpretation：GT图像loss能穿过真实rasterizer训练冻结geometry上的attributes，排除“没有学习信号”；剩余主因是
+  309个isotropic one-carrier primitives无法承载原32522个visual primitives的遮挡、轮廓与局部外观容量；
+- boundary：不得为补画质移动M8 centers/scales、开放trajectory/Background，或把visual residual加入physical query；
+  下一步若扩容，只允许由训练内3D surface support生成的独立visual children/surfels，图像仍只训练appearance；
+- no new failure：M25预注册唯一学习判定通过，`V71-F28`保持为已解决实现失败。
+
+下一可用编号仍为：`V71-F29`。
+
 ## V71-F28 — M25外层冻结未覆盖DriveStudio普通dict子模型（2026-09-05）
 
 - 分类/状态：autograd ownership / resolved before post-training quality exposure；run=

@@ -24,7 +24,8 @@ safety claims remain withheld until the frozen 20-log aggregate completes. The c
 deformable objects and image-conditioned geometry remain open. Exact SE(3) energy equivariance validates coordinate plumbing only:
 it does not establish trajectory accuracy, static/dynamic discovery, occlusion correctness, collision freedom, or improved geometry.
 Likewise, nearest same-Actor SH/opacity transfer preserves the carrier by construction, but a frozen native-rasterizer view loses
-11.37\,dB footprint PSNR when 32,522 visual primitives are replaced by 309 physical carriers. This rejects naive one-carrier
-appearance parity; a separate visual residual shell would still require training-time 3D support constraints before it could be
-claimed geometry-consistent. The scene-specific early-return direction is also negative, and neither result establishes
-photorealism or semantic fidelity.
+11.37\,dB footprint PSNR when 32,522 visual primitives are replaced by 309 physical carriers. Attribute-only image supervision
+recovers 1.08\,dB on six held-out views while leaving an 8.41\,dB gap to the original Actor. This separates an available learning
+signal from insufficient one-carrier capacity; it does not establish photorealism, semantic fidelity, or cross-scene appearance
+generalization. A separate visual residual shell would still require training-time 3D support constraints before it could be
+claimed geometry-consistent. The scene-specific early-return direction is also negative.

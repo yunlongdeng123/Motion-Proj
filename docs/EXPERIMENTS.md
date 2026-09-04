@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01 — canonical learning supported / capacity negative（2026-09-05）
+
+- run=`20260904T183000Z__m25-geometry-locked-attribute-opt-r2`；status=`done`；decisions=`3/3`；steps=`320/320`；
+- fixed unit=scene-0230 / Actor `43fb...` / rigid12 / 309 carrier / original 32522 visual Gaussians；
+- train=8 views，pooled Actor PSNR `15.3677→17.0601dB`（`+1.6925dB`）；
+- held-out=6/6 nonzero footprints，pooled `15.8597→16.9434dB`（`+1.0837dB`）；individual delta range=
+  `[+0.4856,+2.4501]dB`；
+- capacity boundary=original held-out `25.3527dB`，final仍差`8.4093dB`；
+- isolation=geometry optimizer params 0、trajectory/background false、other-Actor gradient masked、no checkpoint、no physical/
+  external metric read；sidecar=`OPTIMIZED_APPEARANCE_SIDECAR.npz`（50,619 bytes）；
+- resources=peak GPU `1.035GiB` / RSS `8.341GiB` / wall `113.7s`；
+- verdict=`appearance_only_training_signal_supported`；no new failure；next failure=`V71-F29`。
+- manuscript=experiments/limitations updated；TinyTeX full compile success；15 pages / 2,326,460 bytes；refs resolved；
+  no fatal/new overfull warning。
+
 ## WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01 — r1 autograd ownership failure（2026-09-05）
 
 - run=`20260904T181000Z__m25-geometry-locked-attribute-opt-r1`；failure=`V71-F28`；

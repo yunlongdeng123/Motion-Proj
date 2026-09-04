@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M25 appearance learning supported / one-carrier parity rejected（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01/
+20260904T183000Z__m25-geometry-locked-attribute-opt-r2`，320/320 steps完成，3/3 decisions通过。6/6固定held-out
+views有Actor footprint，pooled Actor PSNR=`15.8597→16.9434dB`（`+1.0837dB`）；每个held-out view均改善。
+train pooled=`15.3677→17.0601dB`。峰值GPU=`1.035GiB`、RSS=`8.341GiB`、wall=`113.7s`。
+
+但held-out原StreetGS为`25.3527dB`，优化后仍差`8.4093dB`。因此M25支持“GT image supervision可只更新冻结
+physical geometry上的appearance attributes”，同时否定“309个one-carrier attributes足以恢复appearance parity”。
+物理center/scale/rotation、trajectory、Background、其他Actor和M21均未改变；下一研究只扩独立visual capacity，且其
+3D support必须来自训练内supervised surface，不允许图像loss移动physical carrier。下一failure ID=`V71-F29`。
+
+论文experiments/limitations已同步M25的`+1.0837dB`学习正例与`8.4093dB`剩余容量负例；TinyTeX/latexmk完整编译
+`paper/main.pdf`成功（15页、2,326,460 bytes），引用已解析，无fatal或新增overfull warning。
+
 ## WorldSim V7.1 M25 r1 autograd ownership failure / explicit model-tree freeze（2026-09-05）
 
 r1=`20260904T181000Z__m25-geometry-locked-attribute-opt-r1`在第1次backward终止，0 optimizer step、0 final或held-out
