@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01 — frozen（2026-09-05）
+
+- frozen M8 geometry/trajectory + M35 anchor + M37/M38 child heads；same 66 exposed holdout；training=false；
+- primary=M38 continuous authority weighted Gaussian energy softmax over 64 depth bins；same CDF median deployment；
+- descriptive=M37 same composition、M34 anchor+unit-child、original unit-energy baseline；no post-read model selection；
+- decisions=M38 all+hazard+clear early nonincrease and all hit delta≥-1pp versus baseline；
+- no scale/bin/threshold/delete/filter/sweep；no external/M21 partial read；next failure=`V71-F40`。
+
 ## WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T063000Z__m38-prehit-survival-s71138-r1`；593 train / 66 holdout；4 continuation epochs；

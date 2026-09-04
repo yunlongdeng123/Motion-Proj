@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M39 pre-registration note — composition audit is not model selection（2026-09-05）
+
+M39主candidate在quality read前固定为M38 categorical composition；M37只作配对描述，不能看到结果后择优。若M38
+三门任一失败，登记`V71-F40`并关闭scalar authority + isotropic categorical energy，不调bin/median/scale或回选
+M37。下一failure ID=`V71-F40`。
+
 ## V71-F39: M38 pre-hit survival cannot decouple endpoint evidence from Gaussian front tail（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01/20260905T063000Z__m38-prehit-survival-s71138-r1`；

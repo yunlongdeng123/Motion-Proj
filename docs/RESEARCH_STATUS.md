@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M39 categorical authority composition frozen（2026-09-05）
+
+状态=`v71_m39_categorical_authority_composition_frozen`，详见
+[`WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md`](WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md)。
+同一66 exposed holdout上冻结M8/M35/M37/M38，主candidate固定为M38 authority weighted categorical Gaussian
+surface-return distribution；M37只作描述，另报M34 anchor+unit-child与原baseline。无训练、additive optical
+thickness、no-return conditioning、threshold/delete/filter或参数扫描。三项判定为all及hazard/clear early不增、all
+hit delta≥-1pp；无external/M21 partial read。下一failure ID=`V71-F40`。
+
 ## WorldSim V7.1 M38 rejected / pre-hit supervision effective but scalar optical mass remains coupled（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01/
