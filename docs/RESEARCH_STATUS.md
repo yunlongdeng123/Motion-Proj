@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M4 rejected / local-identifiability diagnosis next（2026-09-04）
+
+Canonical M4=`run://worldsim_v71/WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01/
+20260904T103259Z__m4-balanced-occupancy-boundary-s71105-r1`。593 train Actors完成24轮，total/occupancy/boundary/
+first-return=`1.29595→0.83620 / 0.64391→0.49581 / 0.09556→0.17738 / 1.20851→0.50341`。固定66-Actor
+train-role holdout全部形成zero-logit surface，说明M3的single-sign/extraction缺陷已经解除；但surface位置错误：hazard
+early相对恶化`97.766%`、Chamfer `+53.482mm`、hit recall `-2.073pp`，仅surface extraction与两项retention通过。
+
+登记`V71-F08`并关闭global-latent implicit field；不在已消费holdout上调整BCE/boundary/first-return权重、offset或seed，
+不读取AV2。当前证据把问题定位到build-only全局Actor latent无法辨识各条ray的正确front boundary，而非数值收敛、符号
+或grid抽取。下一步回到最接近可行边界的显式relocation，在train-only Actor上诊断surface与first-return目标的梯度
+方向；仅当负余弦冲突被直接观察到才采用PCGrad，否则转局部ray-conditioned表示。下一failure ID=`V71-F09`。
+
 ## WorldSim V7.1 M4 balanced occupancy boundary ready（2026-09-04）
 
 状态：`v71_m4_development_ready`。M4保留M3的build-only PointNet/Fourier条件结构，但输出改为单一无界occupancy

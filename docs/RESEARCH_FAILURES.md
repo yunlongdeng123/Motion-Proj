@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F08 — M4平衡占据边界可抽取但定位到错误表面
+
+- 分类/状态：scientific + identifiability / terminal for global-latent implicit field；canonical=`run://worldsim_v71/
+  WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01/20260904T103259Z__m4-balanced-occupancy-boundary-s71105-r1`；
+- 观察：66/66 holdout Actors形成zero-logit surface，排除M3 single-sign与M1 post-hoc AND extraction问题；但hazard/all
+  early均约翻倍，Chamfer恶化`+53.482mm`、hit recall下降`2.073pp`；
+- mechanism：共享Actor latent能学到front/back分类并形成闭合边界，却没有足够的ray-local build evidence确定真实首表面位置；
+  loss下降和完整抽取因此不能代表三维物理自洽；
+- literature response：Occupancy Networks支持单一decision boundary，但它不消除partial observation下的条件歧义；下一步
+  依据PCGrad的负梯度冲突定义先直接测量surface/first-return梯度，而不是事后套用多任务优化器；
+- decision：关闭M4/global-latent implicit，不扫loss weight/offset/seed，不读AV2；下一可用failure ID=`V71-F09`。
+
 ## V7.1 M4 prevention note — 平衡decision boundary不是M3超参恢复（2026-09-04）
 
 - M4改变监督类型：从有量纲SDF regression转为显式平衡occupancy BCE；这是一种新表示，不回写M3 offset或初始化；

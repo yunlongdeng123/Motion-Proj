@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T103259Z__m4-balanced-occupancy-boundary-s71105-r1`；status=`done`；verdict=
+  `m4_development_rejected`；failure=`V71-F08`；
+- training=`593 Actors / 24 epochs`；total=`1.295954→0.836203`，occupancy=`0.643913→0.495809`，
+  boundary=`0.095558→0.177380`，first-return=`1.208514→0.503409`；
+- holdout=`66 Actors / 41 hazard / 99,208 rays`；zero-logit surface extraction=`66/66 (100%)`；
+- physical=hazard/all/clear early reduction=`-97.766/-101.647/-126.252%`，Chamfer=`+53.482mm`，
+  hit recall=`-2.073pp`，Actor/hazard retention=`100/100%`；3/6；
+- resources=`160.464s`、peak GPU=`0.19163GiB`、RSS=`1.2170GiB`；无NaN/OOM/工程异常；
+- decision=M4及global-latent implicit field关闭；不调权重/offset/seed，不读AV2；下一步仅做train-only梯度冲突诊断。
+
 ## WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01 — frozen protocol（2026-09-04）
 
 - model=`single unbounded occupancy logit`；surface=zero decision boundary，不增加第二head；
