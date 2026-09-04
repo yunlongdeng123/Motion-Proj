@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01 — frozen protocol（2026-09-04）
+
+- hypothesis=union target可被稠密帧支配；逐帧等权GT coverage可改善跨时刻几何而不把motion写进shape；
+- initialization=canonical M7，branch factor/slots/anchors/standardizer全部不变；one seed，Stage-P 6 epochs；
+- frame target=按已有`target_sensor_origins`恢复held-out帧组；每帧确定性限256 rays；
+- loss=原M7 geometry + normalized mean per-frame one-sided endpoint→surface distance；原first/free-space physics保留；
+- optimization=temporal项属于geometry task；geometry-vs-physics继续同一symmetric PCGrad；
+- factorisation=geometry input excludes trajectory/velocity/time/hazard/image；trajectory只作canonical-to-world rigid authority；
+- evaluation=原五项physical contract + frame-balanced distance vs frozen M7；moving(`max displacement>0.5m`)与quasi-static
+  只作描述；
+- no filter/delete/sweep；development exposure=true；external partial metric read=false。
+
 ## WS-V71-PAPER-M7-SUPERVISION-NATIVE-EVIDENCE — frozen paper milestone（2026-09-04）
 
 - causal claim=geometry consistency is defined by actor-canonical GT states and losses, not a post-hoc mask/filter；

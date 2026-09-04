@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M8 temporal factorisation protocol frozen（2026-09-04）
+
+状态=`v71_m8_temporal_factorisation_frozen`，详见
+[`WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md`](WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md)。M7只解决
+actor-canonical shape completion；M8把trajectory/static world分成只读authority，不给geometry head输入velocity、time、
+hazard或image。训练新增的唯一信号是held-out各帧等权的GT endpoint→surface coverage，原union-set geometry与ray physics
+持续保留，部署仍输出immutable anchors加全部4-child。
+
+依据DrivingGaussian的static/object graph、4D-GS的canonical-to-world表述及其appearance伪形变限制、DeSiRe-GS的
+temporal geometry监督，只迁移显式因子化与训练内跨时刻约束；已有3D Actor GT使2D motion-mask discovery与可学习4D
+deformation没有必要。M8固定从canonical M7单次6轮fine-tune，原五项合同必须继续通过且frame-balanced distance需下降；
+moving/quasi-static只分层报告。AV2 partial physical metrics仍未读；下一failure ID=`V71-F12`。
+
 ## WorldSim V7.1 supervision-native geometry paper evidence frozen（2026-09-04）
 
 状态=`v71_m7_paper_evidence_frozen`。论文已把物理一致性的因果位置从部署后filter改为训练监督：actor-canonical

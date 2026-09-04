@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M8 prevention note — 不让trajectory或appearance替geometry解释误差（2026-09-04）
+
+- M8 geometry head沿用M7输入，明确排除trajectory、velocity、timestamp、hazard与image；不能靠给动态Actor单独容量通过；
+- 各帧仅提供actor-canonical endpoint coverage；canonical-to-world始终是只读GT rigid transform，不学习形变补偿标签误差；
+- 单帧partial observation不适合symmetric Chamfer，故只用target→surface；完整surface仍由原union target双向set loss约束；
+- moving/quasi-static阈值只分层报告，不能作为训练采样、loss weight或failure过滤条件；
+- M8若不能降低frame-balanced distance并保留原physical合同，登记`V71-F12`并关闭当前fine-tune，不扫超参恢复。
+
+下一可用编号仍为：`V71-F12`。
+
 ## V7.1 M7 paper-evidence note — development机制证据不升级为外域结论（2026-09-04）
 
 - 证据图按baseline危险率中位数事前规则选Actor，不按M7改善量挑最好案例；图中保留anchors与全部children，不隐藏坏点；
