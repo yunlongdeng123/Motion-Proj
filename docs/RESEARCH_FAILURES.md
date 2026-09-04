@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M46 pre-registration note — only support orientation may absorb CDF supervision（2026-09-05）
+
+M46不允许M40式authority family-mass shortcut或M8 geometry/scale compensation：point encoder、slots、hidden head、
+center、tangent、两套F/O/U head全部冻结，只有M11 final normal/thickness输出行可更新。GT直接定义not-early与hit
+interval，hazard标签不进模型。若任一三门失败登记`V71-F45`，不调loss权重、event tolerance、thickness bound、
+epoch/seed/bin/median；不得替换已运行M43 candidate。
+
 ## V71-F44: frozen M11 orientation does not preserve hazard early safety under M39 composition（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01/20260905T100000Z__m45-oriented-categorical-r1`；

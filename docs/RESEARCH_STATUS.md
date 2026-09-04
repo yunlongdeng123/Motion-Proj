@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M46 CDF-supervised oriented support frozen（2026-09-05）
+
+状态=`v71_m46_cdf_supervised_oriented_support_frozen`，详见
+[`WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md`](WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md)。
+从M11初始化，但冻结M8 center/tangent、M39 anchor/child authority、point encoder/slots/hidden head；仅normal/
+thickness输出行接受与部署同构的GT not-early/hit-band CDF supervision，并保留0.25× GT normal/boundary/thickness
+loss。593/66、4 epochs、seed71146、32 train/64 deploy bins；无hazard/image/motion input、参数扫描、filter/delete
+或M43 partial read；M43候选不变。失败登记`V71-F45`。
+
 ## WorldSim V7.1 M45 rejected / oriented child kernel improves hit but misses hazard safety（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01/

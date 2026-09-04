@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01 — frozen（2026-09-05）
+
+- init=M11 normal/thickness；trainable=final output rows only；frozen=M8 center/tangent + M35/M38 authority + encoder；
+- loss=oriented categorical `-log P(not early)-log P(hit ±0.20m)` + `0.25×` native GT normal/boundary/thickness；
+- 593 train / 66 exposed holdout、4 epochs、seed71146、32 train/64 deploy bins；
+- decisions vs M39=all early≤0、hazard+clear early≤0、all hit delta≥-1pp；
+- no hazard/image/motion input、event/loss/thickness/bin/median/seed sweep、filter/delete或M43 partial read；failure=
+  `V71-F45`；M43 remains frozen。
+
 ## WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T100000Z__m45-oriented-categorical-r1`；66 exposed holdout / 99,208 rays；training=false；
