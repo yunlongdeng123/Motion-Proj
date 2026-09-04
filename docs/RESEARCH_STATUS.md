@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M9 Gaussian support protocol frozen（2026-09-04）
+
+状态=`v71_m9_gaussian_support_frozen`，详见
+[`WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md`](WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md)。当前核心缺口是
+M7/M8的predicted scale没有进入literal ray physics；中心点通过不能证明Gaussian covariance support不侵入FREE空间。
+M9从canonical M8初始化，把固定`1σ`等值面作为明确collision sphere：scale-aware first/free-space在训练内反传center/
+scale，评价用exact ray--sphere first intersection；所有anchors/children保留，不作filter。
+
+依据2DGS/SuGaR/DN-Splatter/PGSR，只迁移“primitive support必须直接受depth/normal/surface约束”的原则；本轮不同时
+增加orientation/appearance/motion。原M8 geometry/frame/point physics保持，support physics等权加入；单seed 6轮。原五项
+point合同需继续通过，唯一新gate为hazard `1σ` support early相对M8下降`>=5%`。下一failure ID=`V71-F13`。
+
 ## WorldSim V7.1 M8 fresh AV2 evaluator active（2026-09-04）
 
 状态=`v71_m8_fresh_av2_running`。generic scene-ready evaluator已兼容checkpoint label，现有M7运行进程不受文件更新影响；

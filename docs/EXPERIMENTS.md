@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M9-GAUSSIAN-SUPPORT-PHYSICS-01 — frozen protocol（2026-09-04）
+
+- gap=M7/M8 scale supervised but absent from literal/free-space physics；point center validity is insufficient for Gaussian volume；
+- representation=predicted isotropic child scale as `1σ` collision sphere；observed anchor scale fixed `0.02m`；
+- initialization=canonical M8；same centers/scales/slots/build-only inputs；one seed / 6 epochs；
+- training=retain M8 union+frame geometry and point first/free；add scaled-density first/free and average the two physics tasks；
+- optimization=geometry-vs-combined-physics symmetric PCGrad；no sigma multiplier/loss/seed sweep；
+- exact audit=analytic minimum positive ray--sphere intersection，same `0.20m` depth tolerance；
+- gates=original five point contracts + hazardous sphere-support early relative reduction vs M8 `>=5%`；support hit/all/clear
+  descriptive；
+- all primitives retained；no mask/filter/delete；no trajectory/hazard/time/image inputs；no partial AV2 physical read。
+
 ## WS-V71-M8-FRESH-AV2-ZERO-SHOT-01 — active execution（2026-09-04）
 
 - run=`20260904T203000Z__m8-fresh-av2-zero-shot-r1`；single evaluator PID initially=`13514`；

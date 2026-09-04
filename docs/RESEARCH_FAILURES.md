@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M9 prevention note — center通过不能替Gaussian support通过（2026-09-04）
+
+- M7/M8现有point renderer/evaluator不读取predicted scale，因此不得把其结果表述为3D Gaussian体的FREE一致；
+- M9固定报告`1σ` collision iso-surface并用exact intersection评价；不能在结果后改为0.5σ或按scale删点；
+- local-scale标签、scale-aware ray physics和部署scale是同一模型输出，避免训练一个对象、评价另一个对象；
+- 本轮不引入normal/orientation，以便support失败可明确归因isotropic volume；失败后才转向2D/oriented Gaussian；
+- 若原point合同或hazard support gate失败，登记`V71-F13`，不调support cutoff、loss weight、seed或epoch恢复。
+
+下一可用编号仍为：`V71-F13`。
+
 ## V7.1 M8 external execution note — scene-ready入口正常（2026-09-04）
 
 - M8 evaluator已按`.complete`处理4/20 logs与78 Actors，M5/M7/M8均等待相同第5项；
