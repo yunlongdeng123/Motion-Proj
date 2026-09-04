@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M10 prevention note — tangent radius与normal thickness必须分权（2026-09-04）
+
+- M10不能复用单个isotropic scale；tangent radius只负责沿GT plane覆盖，normal thickness只负责表面带宽/free-space；
+- normal由build PCA初始化但必须接受GT local-plane loss；推理不读取GT normal，所有输出来自build-only feature；
+- exact support evaluator同时报告early与hit，禁止只展示M9式early改善而隐藏ray hit损失；
+- M8 oriented initializer事前固定，不按M10输出换reference；所有children无条件保留；
+- 若7项任一失败，登记`V71-F14`并关闭当前oriented head，不调thickness、sigma、loss、seed或epoch恢复。
+
+下一可用编号仍为：`V71-F14`。
+
 ## V71-F13 — isotropic Gaussian support靠缩scale降early但损失surface hit（2026-09-04）
 
 - 分类/状态：representation parameterisation / terminal for isotropic collision sphere；canonical=

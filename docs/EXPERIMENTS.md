@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M10-ORIENTED-PLANAR-GAUSSIAN-01 — frozen protocol（2026-09-04）
+
+- representation=4-child oblate Gaussian `(center, unit normal, tangent radius, normal thickness)`；
+- initialization=M8 center/scale，parent candidate PCA normal，thickness=`0.02m`；normal/thickness residual heads start neutral；
+- GT=actor-canonical union/frame endpoints + 8NN local plane/median radius + fixed surface-band thickness；
+- physics=retain point first/free + anisotropic-density first/free；geometry-vs-combined-physics PCGrad；
+- exact audit=analytic ray--oblate-ellipsoid minimum positive intersection；reference=frozen M8 oriented initializer；
+- gates=original five point contracts + hazard support early `>=5%` improvement + support hit delta `>=-1pp`；
+- one seed / 6 epochs；all primitives retained；no mask/filter/delete/sigma/loss/thickness sweep；no motion/image/hazard input；
+- development exposure=true；partial AV2 physical metric read=false。
+
 ## WS-V71-M9-GAUSSIAN-SUPPORT-PHYSICS-01 — canonical negative result（2026-09-04）
 
 - run=`20260904T205000Z__m9-gaussian-support-s71111-r1`；verdict=`m9_development_rejected`；5/6 gates；

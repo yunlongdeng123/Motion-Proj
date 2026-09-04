@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M10 oriented planar Gaussian protocol frozen（2026-09-04）
+
+状态=`v71_m10_oriented_planar_gaussian_frozen`，详见
+[`WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md`](WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md)。
+M9的isotropic scale把tangent coverage与normal thickness耦合；M10从M8初始化并显式预测center、unit normal、tangent
+radius、normal thickness。normal/scale来自actor-canonical GT 8NN plane，thickness固定监督为`0.02m`；point与
+anisotropic ray physics同时训练。trajectory/hazard/time/image仍完全隔离。
+
+评价以exact ray--oblate-ellipsoid intersection为准，reference为冻结M8 center/scale + parent normal +固定thickness。
+原五项point合同、hazard support early `>=5%`改善及support hit下降不超过`1pp`共7项；不改sigma倍数、branch、loss、
+seed或epoch。下一failure ID=`V71-F14`。
+
 ## WorldSim V7.1 M9 rejected / oriented planar support next（2026-09-04）
 
 M9 canonical=`run://worldsim_v71/WS-V71-M9-GAUSSIAN-SUPPORT-PHYSICS-01/
