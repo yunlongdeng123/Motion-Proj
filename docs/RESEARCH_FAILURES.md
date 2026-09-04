@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M24 prevention note — render footprint不是physical supervision（2026-09-05）
+
+- original-vs-hidden mask只定位目标Actor像素，不能用来删physical Gaussian、调scale/opacity或证明first-return；
+- Actor/frame/camera在新render quality读取前固定；全部3 camera保留，零footprint也不删除；
+- PSNR没有pass阈值，下降即作为geometry-locked carrier的真实视觉限制写入；
+- runner不得新增hash/checksum/fingerprint，不写checkpoint；若rasterizer入口失败才登记`V71-F26`。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M23 paper prevention note — attribute carrier不是render或geometry正结果（2026-09-05）
 
 - related work只迁移visual attribute field与geometry/texture分层，不声称复现Feature 3DGS或Neural Shell训练；

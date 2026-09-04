@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M24 geometry-locked real-render protocol frozen（2026-09-05）
+
+状态=`v71_m24_geometry_locked_render_frozen`，详见
+[`WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md`](WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md)。固定
+scene-0230 Actor `43fb...`/rigid index12、frame98与camera0/1/2；渲染original、M23 geometry-locked carrier和仅用于
+footprint定位的actor-hidden三变体。Actor因既有最大appearance support预选，不按新图像quality选择。
+
+PSNR/footprint全部描述性报告，无画质gate、无scale/opacity调整、无训练或checkpoint写回；M24只回答真实rasterizer接口和
+visual consequence，不给M8/M21物理claim扩权。下一failure ID仍为`V71-F26`。
+
 ## WorldSim V7.1 CVPR manuscript M23 appearance boundary update（2026-09-05）
 
 论文related/method已加入Feature 3DGS、Neural Shell Texture Splatting与geometry-locked attribute carrier；results同时

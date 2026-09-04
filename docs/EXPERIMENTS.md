@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — frozen protocol（2026-09-05）
+
+- source=M23 sidecar + frozen StreetGS checkpoint/config/runtime；
+- fixed unit=scene-0230 / Actor `43fb...` / rigid12 / frame98 / cameras `[0,1,2]` all；
+- variants=original / geometry_locked / actor_hidden-for-footprint-only；
+- outputs=GT/original/carrier/hidden/footprint PNGs + descriptive rows/summary；no checkpoint/model；
+- metrics=footprint pixels、Actor/full PSNR、carrier-vs-original changed pixels；no PSNR gate；
+- no tuning/filter/hash/checksum/fingerprint/external read；minimal decision=render success + any visible camera。
+
 ## WorldSim V7.1 CVPR manuscript — M23 milestone（2026-09-05）
 
 - related=Feature 3DGS + Neural Shell Texture Splatting作为独立visual-attribute carrier依据；
