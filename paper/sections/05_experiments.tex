@@ -313,6 +313,15 @@ existing evidence rule changes raw-query early returns from 18.25\% to 17.62\%; 
 nor motion alone explains the hard-anchor contradiction. We close post-hoc anchor filtering and instead treat free/occupied/
 unknown ray evidence as supervision of physical authority.
 
+We next freeze every M8 center and scale and train only a continuous FREE/OCCUPIED/UNKNOWN mass per Gaussian from primitive
+ray votes and the same whole-ray categorical target. This removes both M19's decoder compensation and M20's scale shortcut,
+and occupied mass weights Gaussian energy continuously without thresholding or deletion. The model reduces evidential
+cross-entropy from 0.963 to 0.913, but changes categorical NLL by only 0.003. Relative to unit authority, all/hazard/clear
+early returns worsen by 0.336/0.338/0.322 points; hit recall improves by 0.487 points. Predicted mean anchor mass is
+$(m_F,m_O,m_U)=(0.127,0.504,0.369)$, indicating a learned global prior rather than primitive-specific contradiction
+resolution. We reject this geometry-only authority head without tuning. M31's missing source-frame and multiview evidence
+must be retained by the corpus producer before authority can be identifiable from build-time inputs.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

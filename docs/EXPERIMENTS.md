@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T030000Z__m32-evidential-gaussian-authority-s71132-r3`；status=`done`；verdict=
+  `m32_development_rejected`；593 train / 66 exposed holdout；6 epochs；
+- train loss=`7.233830→7.205647`；categorical NLL=`6.715669→6.712575`；evidential CE=
+  `0.962756→0.912903`；target probability≈`0.149`；
+- unit-authority→learned all early=`18.1870→18.5227%` (`+0.3357pp`)；hit=`62.2833→62.7701%`
+  (`+0.4869pp`)；
+- hazard early=`17.4215→17.7599%` (`+0.3384pp`)；clear=`21.9518→22.2739%` (`+0.3221pp`)；
+- predicted mean F/O/U anchor=`0.1275/0.5040/0.3686`；child=`0.1006/0.6118/0.2877`；
+- decisions=`1/3`；close geometry-only amplitude family；checkpoint not external candidate；
+- next=producer-side per-anchor build provenance/evidence sidecar then separately frozen authority model；
+- resources=GPU `0.376GiB` / RSS `1.338GiB` / wall `31.07s`；no M21 partial read；
+  manuscript updated + TinyTeX full compile success（16 pages / 2,340,614 bytes；refs resolved；
+  no fatal/new warning）；next failure=`V71-F36`。
+
 ## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — r2 target-tensor entry failure / V71-F34（2026-09-05）
 
 - run=`20260905T025000Z__m32-evidential-gaussian-authority-s71132-r2`；first batch/0 optimizer step；

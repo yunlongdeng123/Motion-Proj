@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F35: M32 build-geometry-only evidential authority worsens every early-return stratum（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/20260905T030000Z__m32-evidential-gaussian-authority-s71132-r3`；
+- outcome=all/hazard/clear early delta=`+0.3357/+0.3384/+0.3221pp`，all hit=`+0.4869pp`，1/3 decisions；
+- optimization=loss与evidential CE正常下降，无NaN/OOM；categorical NLL只改善`0.0031`，非数值失败；
+- diagnosis=canonical position/scale/type/Actor-size只足以学习anchor/child全局mass，不包含M31已暴露的source-frame、
+  KEEP/PROJECT、temporal/view support或build-ray contradiction evidence，单primitive authority不可辨识；
+- prevention=不调evidence loss weight、unknown pseudocount、width、epoch、anchor scale、bins、median、seed；
+- next=在corpus producer端保留per-anchor build evidence/provenance，以held-out GT为supervision重新训练；禁止按M31
+  heldout contradiction做deployment filter；
+- claim impact=连续mass本身不构成物理改善；M32 checkpoint不进入external。下一failure ID=`V71-F36`。
+
 ## V71-F34: M32 evidential target mass also retained inference identity（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/20260905T025000Z__m32-evidential-gaussian-authority-s71132-r2`；

@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 M32 rejected / authority identifiability boundary（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/
+20260905T030000Z__m32-evidential-gaussian-authority-s71132-r3`。593 Actors/6 epochs正常训练；loss
+`7.2338→7.2056`、evidential CE `0.9628→0.9129`，无NaN/OOM。相对unit-authority M21 energy，
+all/hazard/clear early均恶化`+0.3357/+0.3384/+0.3221pp`；all hit改善`+0.4869pp`，decisions=`1/3`。
+
+holdout预测平均F/O/U：anchors=`0.127/0.504/0.369`，children=`0.101/0.612/0.288`。模型学到全局软先验，
+但categorical NLL `6.7157→6.7126`、target probability约`0.149`近乎不动；仅canonical center/scale/type/size
+无法辨识具体跨帧矛盾。按冻结合同关闭无provenance amplitude family，不调loss/伪计数/容量/seed。
+
+下一步转为数据/监督修复：重建每anchor source-frame、KEEP/PROJECT、temporal/view support及build-ray
+FREE/OCCUPIED/UNKNOWN evidence，held-out ray只作target；再冻结新模型。M32 geometry/trajectory/state均冻结，
+无external/M21 partial read；GPU=`0.376GiB`、RSS=`1.338GiB`、wall=`31.07s`。论文同步更新并由TinyTeX
+完整编译成功（16页 / 2,340,614 bytes；引用已解析；无fatal/new warning）。下一failure ID=`V71-F36`。
+
 ## WorldSim V7.1 M32 GT-supervised Gaussian authority frozen（2026-09-05）
 
 状态=`v71_m32_evidential_gaussian_authority_frozen`，详见
