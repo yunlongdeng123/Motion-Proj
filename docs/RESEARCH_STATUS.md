@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 CVPR main/supplement evidence split complete（2026-09-05）
+
+CVPR稿已从旧V7 validity/reliability长链中抽离，标题更新为`Physical Consistency Starts at Supervision:
+Evidential Actor Surface Fields for Dynamic Driving Worlds`。主方法只保留canonical GT target、四child surface与
+持续physical loss、producer-evidential categorical return measure、typed SE(3)/static/appearance ownership和M49
+finite attenuation boundary；主实验只保留冻结nonlearned AV2 operator、M8、M39、M43 protocol、M49及M22/M28。
+
+原471行实验与完整旧接口未删除，分别归档为`04_method_appendix.tex`、`05_experiments_appendix.tex`，并由独立
+`supplement.tex`编译；原V7 supplement正文另存为`supplement_v7_legacy.tex`，避免结构压缩丢证据。主稿=9页
+（正文7页+参考文献2页），`384,394` bytes，TeX Live编译无overfull、undefined
+reference或duplicate label；supplement=14页、`2,334,446` bytes，无undefined reference，只有既存的method公式
+`53.85pt`与旧表`6.03pt` overfull。该里程碑不改模型/结果/threshold/cohort；M43仍只读14/20、未读partial metric。
+
 ## WorldSim V7.1 CVPR claim surface refreshed（2026-09-05）
 
 论文摘要、引言和结论已按当前可复现证据重写：主结果只保留M8 supervision-native canonical geometry、M39

@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 paper structure boundary — legacy V7 evidence is supplement-only（2026-09-05）
+
+旧validity/hazard/reliability与P1--P22长链不得重新混入V7.1主贡献，避免把post-hoc selection、nonlearned AV2
+operator或早期M18/M21 development candidate包装成M39 learned transfer。完整材料保存在可编译supplement，不等于
+被删除或否认；主稿只保留与“GT supervision→geometry、producer evidence→termination、typed ownership、M49 boundary”
+直接相关的证据。原V7 supplement正文必须保留于`supplement_v7_legacy.tex`，不得因新driver覆盖而遗失。
+M43完成前仍禁止补写external方向。纯结构调整无新failure，next ID仍=`V71-F48`。
+
 ## V7.1 paper anti-overclaim refresh — M43完成前不预写泛化结论（2026-09-05）
 
 摘要、引言、结论已删除过时的M18/M21 learned-external叙事，只陈述M8/M39 source-domain结果、M22/M28

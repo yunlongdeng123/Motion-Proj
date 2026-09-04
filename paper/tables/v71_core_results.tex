@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Core source-domain results on the frozen, exposed nuScenes development fold. Negative early-return and Chamfer
+changes are favorable; positive hit changes are favorable. Comparisons differ by panel and are stated explicitly.}
+\label{tab:v71-core-results}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llr}
+\toprule
+Stage & Metric & Change \\
+\midrule
+\multicolumn{3}{l}{\emph{Geometry: M8 vs. original completion}} \\
+& hazardous early returns (relative) & $-\VSevenOneMEightHazardEarlyReduction$ \\
+& symmetric Chamfer & $\VSevenOneMEightChamferDeltaMm$\,mm \\
+& hit recall & $\VSevenOneMEightHitRecallDeltaPp$\,pp \\
+\midrule
+\multicolumn{3}{l}{\emph{Return measure: M39 vs. unit categorical energy}} \\
+& early returns (all / hazard / clear) & $-0.52/-0.62/-0.03$\,pp \\
+& hit recall (all / hazard / clear) & $+2.17/+2.32/+1.46$\,pp \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

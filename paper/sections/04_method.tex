@@ -1,213 +1,98 @@
 \section{Method}
 
-\subsection{Actor-Preserving Physical Compilation}
+\subsection{Canonical Evidence and Immutable Actor State}
 
-For each Actor, we transform LiDAR endpoints, rays, and associated primitives into a canonical Actor frame,
+For Actor $i$ at time $t$, annotated sensor, ego, and Actor poses map a LiDAR endpoint into a canonical coordinate system,
 \begin{equation}
-x_{i,t}^{\mathrm{actor}}=T_{\mathrm{actor},t}^{-1}T_{\mathrm{ego},t}T_{\mathrm{sensor}}x_t^{\mathrm{sensor}}.
+x_{i,t}=T_{i,t}^{-1}T_{\mathrm{ego},t}T_{\mathrm{sensor}}x_t^{\mathrm{sensor}}.
 \end{equation}
-The fused representation stores surface support, observed-free intervals, temporal counts, local normals, viewing-direction diversity, and provenance. Compilation is deterministic and local:
-\begin{itemize}
-    \item \textsc{keep}: stable sensor-supported surface;
-    \item \textsc{project}: a near-surface primitive contradicts observed free space and is projected to supported geometry;
-    \item \textsc{complete}: a local hole has sufficient multi-frame and multi-view support;
-    \item \textsc{unknown}: evidence is missing, contradictory, or insufficient.
-\end{itemize}
-Unknown is a first-class state and never silently becomes free. All four actions preserve $(ID_i,X_{i,0:H},D_i)$. Appearance primitives may attach to the repaired surface using center distance, covariance-normal alignment, depth, and visibility, but physical queries do not read Gaussian opacity.
+Build sweeps provide model input; disjoint held-out sweeps construct the target $T_i$ and are never input features. Directly
+observed and matched projected endpoints form an immutable anchor set $A_i$. Actor identity, trajectory, extent, lifecycle,
+and hazard label are immutable interfaces rather than prediction targets.
 
-The physical certificate is visibility-conditioned. For a held-out ray $r=(o,v,d)$ and surface $S$, the target-facing state
-$\zeta(r,S)$ is one of early, hit, late, or unmatched. In the reverse direction, an output point's state $\eta(x,r)$ is
-contradicted, supported, occluded, or off-ray unknown. Only the contradicted state places $x$ in observed free space; occluded and
-off-ray regions remain non-falsified rather than becoming occupied or free. This bidirectional partition makes the failure object
-inspectable while explicitly withholding a completeness certificate for unseen surface.
-
-For the literal safety audit, define the first valid positive depth within the frozen beam tube as
+For a held-out ray $r=(o,v,d^\star)$ and physical surface $S$, the literal first return is
 \begin{equation}
-d_S(r)=\min\{s>0:o+sv\in S_{\epsilon}\},\qquad \min\varnothing=\infty.
+d_S(r)=\min\{s>0:o+sv\in S_\epsilon\},\qquad \min\varnothing=\infty.
 \label{eq:first-return}
 \end{equation}
-If a policy only deletes points, $S'\subseteq S$ implies $d_{S'}(r)\ge d_S(r)$. Hence the early predicate
-$\mathbf 1[d_S(r)<d^\star-\tau]$ is monotone non-increasing under deletion, as is new-early relative to a fixed query surface.
-Hit retention and symmetric Chamfer are not monotone under this order: deletion may expose or remove a hit, and it can move the two
-directed Chamfer terms in opposite directions. This is a geometric certificate for one predicate, not a collision guarantee.
+An early return satisfies $d_S(r)<d^\star-\epsilon$. Deletion can only make this predicate non-increasing, but may destroy
+hits and surface coverage. We therefore do not treat a lower early-return rate as sufficient evidence of consistency.
 
-Rather than collapse unknown completion to occupied or free, we can retain a set-valued first return. Let $S_i^K$ contain only build-endpoint anchors and $S_i^P$ additionally contain every GT-supervised completion proposal. Under the explicit coverage assumption $S_i^K\subseteq S_i^\star\subseteq S_i^P$, deletion monotonicity gives
+\subsection{Supervision-Native Child Surfaces}
+
+One completion seed cannot cover a dense target surface. Each seed $x_j$ predicts four bounded Actor-frame residuals and
+positive support scales,
 \begin{equation}
-d_{S_i^P}(r)\le d_{S_i^\star}(r)\le d_{S_i^K}(r).
-\label{eq:return-interval}
+x'_{jk}=x_j+\Delta x_{jk}(E_i),\qquad
+S_i^\theta=A_i\cup\{(x'_{jk},s_{jk})\}_{j,k=1}^{4},
+\label{eq:child-surface}
 \end{equation}
-The endpoints represent possible and known-supported returns and are not thresholded to a single depth. Crucially, $S_i^\star\subseteq S_i^P$ is an empirical completion assumption, not a consequence of the set order; we therefore report target bracketing and unbounded intervals rather than call Eq.~\ref{eq:return-interval} a safety certificate.
-
-\subsection{Learned Evidential Actor Surface Field}
-
-V7.1 replaces binary keep/delete on completed primitives with a supervision-native Actor-local geometry action. Every sweep is
-transformed by its annotated Actor pose before fusion. Build endpoints and ray-transmission intervals define occupied, free, and
-unknown evidence; held-out target rays never enter the input and only construct the training target $T_i$. Observed \textsc{keep}
-and matched \textsc{project} points form an immutable anchor set $A_i$.
-
-A deployment-consistent parent model first relocates each completion seed. Because one seed per hole cannot cover a dense target,
-the point model attaches \VSevenOneMSevenBranchFactor{} learned slots to each parent and predicts bounded Actor-frame center
-residuals and isotropic support scales. The physical point surface used by both training and evaluation is
+where $E_i$ contains build-only geometric and ray evidence. Geometry pretraining combines bidirectional set distance,
+target-local point-to-plane distance, and a target-spacing scale loss. Physical fine-tuning keeps these terms active and adds
+frame-balanced target coverage, differentiable literal first return, and observed free-before-hit supervision:
 \begin{equation}
-\begin{aligned}
-x'_{jk}&=x^{\mathrm{parent}}_j+\Delta x_{jk}(E_i),\quad k=1,\ldots,\VSevenOneMSevenBranchFactor{},\\
-S_i^\theta&=A_i\cup\{x'_{jk}\}_{j,k}.
-\end{aligned}
+\mathcal L_{\mathrm{phys}}=
+\mathcal L_{\mathrm{set}}+.25\mathcal L_{\mathrm{plane}}+.1\mathcal L_{\mathrm{scale}}
++\mathcal L_{\mathrm{frame}}+\mathcal L_{\mathrm{first}}+.5\mathcal L_{\mathrm{free}}.
+\label{eq:physical-loss}
 \end{equation}
-Geometry pretraining applies bidirectional Chamfer to $S_i^\theta$ and $T_i$, target-local point-to-plane distance, and a scale
-target from the target surface's local eight-neighbor spacing. Physical fine-tuning keeps every geometry term active and adds the
-differentiable first return plus an explicit free-before-hit penalty,
-\begin{equation}
-\mathcal L_G=\mathcal L_{\mathrm{CD}}+.25\mathcal L_{\mathrm{p2n}}+.1\mathcal L_s,
-\qquad
-\mathcal L_P=\mathcal L_G+\mathcal L_{\mathrm{first}}+.5\mathcal L_{\mathrm{free}}.
-\end{equation}
-Measured negative task gradients are projected only during this second stage. Space behind a held-out first hit is not labeled
-free; unknown is never a deployment deletion mask. Actor identity, trajectory, extent, and hazard state remain immutable interfaces.
-Image, semantic, motion, and hazard features are absent from the geometry model; a later appearance bridge may update semantics
-only, with stop-gradient on physical center and scale.
+Space behind the first hit is not labeled free. Every child remains in $S_i^\theta$ at deployment; UNKNOWN is evidence state,
+not a mask. Thus an improvement must arise through the supervised representation rather than selective output removal.
 
-The final development representation separates point geometry from ray termination. Four Actor-local child centers and tangent scales per completion seed are supervised directly by target points, local point-to-plane structure, literal first return, full free-ray intervals, and frame-balanced target coverage. These losses act during training; no predicted child is deleted at deployment. Given an ordered set of query depths $d_1,\ldots,d_K$ inside the Actor box, a shared 3D decoder reads the nearest child latents and relative canonical coordinates to produce logits $a_k$. We define
-\begin{equation}
-p_k=\frac{\exp a_k}{\sum_j\exp a_j},\quad F_k=\sum_{j\le k}p_j,\quad
-\widehat d=\min\{d_k:F_k\ge\tfrac12\},
-\end{equation}
-and supervise the native LiDAR return with
-\begin{equation}
-\mathcal L_{\mathrm{return}}=-\log p_{k^\star}
-+\lambda_d\left|\sum_k p_kd_k-d^\star\right|,qquad
-k^\star=\arg\min_k|d_k-d^\star|.
-\end{equation}
-The one-hot target is built from GT before training, the decoder sees build evidence only, and the same categorical distribution is used at deployment. Normalization makes $F_k$ monotone with unit mass and prevents multiple zero crossings; it is a representation constraint rather than a post-hoc surface filter. The present protocol assumes a return inside the Actor box and therefore does not claim no-return modeling.
+\subsection{Producer-Evidential Return Authority}
 
-To test whether the ray objective constrains the completed geometry itself, we also remove the query decoder. For immutable anchors and predicted children $S_i=\{(c_j,s_j)\}$, we define a shared Actor-canonical Gaussian energy
-\begin{equation}
-e_i(x)=\log\sum_j\exp\left(-\frac{\lVert x-c_j\rVert_2^2}{2s_j^2}\right).
-\end{equation}
-The ray distribution is the softmax of $e_i(o+d_kv)$ over the same metric bins and receives the same one-hot return loss. Hence its only trainable path is through child center and scale; no visibility head can compensate for incorrect anchors. Crucially, native set, plane, scale, and frame losses remain active. The failure-directed final candidate freezes the M8 geometry before applying this energy, because joint ray fine-tuning increases scale while degrading both literal point returns and the energy's own first returns. Observed anchors use a fixed $0.08$\,m support. This is a development-selected representation whose external evaluation is frozen but pending.
+Surface support and sensor termination are distinct. For each anchor or child $j$, the build descriptor $e_j$ retains source
+ray/frame identity, construction provenance, projection displacement, canonical hit count, temporal/view support, and
+continuous build evidence $m_j^{\mathrm{build}}=(m_F,m_O,m_U)$. Disjoint target rays construct
+$m_j^{\mathrm{GT}}$ from free evidence before a return, occupied evidence near it, and unknown evidence behind it or outside
+ray support. A bounded head predicts $m_j=f_\phi(e_j)$ and is supervised by soft three-state cross-entropy. Completion children
+also receive the GT free-before-hit event loss used by the deployed ray objective. Geometry is frozen during this authority stage.
 
-After the geometry-only authority ablation exposes an input-identifiability failure, we retain producer evidence per observed
-anchor rather than infer a deletion rule from its output. For anchor $j$, the build input stores construction provenance,
-the source query ray and frame, projection displacement, canonical hit count, temporal and view support, and continuous
-$m^{\mathrm{build}}_j=(m_F,m_O,m_U)$. Disjoint held-out LiDAR rays construct
-$m^{\mathrm{GT}}_j$ with free evidence before the endpoint, occupied evidence near the endpoint, and unknown evidence
-behind the endpoint or without ray support. Field names and optimization paths separate build inputs from GT targets.
-Neither provenance nor unknown mass is a hard keep/delete decision.
-
-For the order-aware ablation, we replace normalization of pointwise energy by analytic Gaussian transmittance, following
-the volumetric construction of Vol3DGS~\cite{talegaonkar2025vol3dgs}. Integrating the normalized line section of each
-isotropic Gaussian over ray segment $[d_k,d_{k+1}]$ gives optical thickness $\tau_k$. We then form
-$T_k=\exp(-\sum_{\ell<k}\tau_\ell)$ and termination weight $w_k=T_k(1-\exp(-\tau_k))$, as in the ordered
-alpha-compositing used for occupancy supervision by GaussRender~\cite{chambon2025gaussrender}. Because the frozen corpus
-contains a target return inside the Actor box, this ablation conditions $w_k$ on a box return and reports the residual
-no-return mass separately; it does not claim no-return modeling.
-
-Rigid motion is a separate authority. For annotated pose $T_{it}=(R_{it},t_{it})$, the deployed field is
-\begin{equation}
-e_{it}^{\mathrm{world}}(x)=e_i\!\left(R_{it}^{\top}(x-t_{it})\right).
-\end{equation}
-Thus trajectory changes where an Actor field is queried but cannot deform its canonical centers or scales. We evaluate this expression by inverse-transforming world queries, avoiding loss of local precision in large world coordinates. Static Background Gaussians are a separate scene component; neither they nor dynamic SH, opacity, or image features enter the physical query. This deployment factorization preserves the frame-balanced GT supervision used to learn $e_i$ rather than introducing a per-frame post-hoc filter.
-
-We make this ownership boundary explicit rather than infer it from an output audit. Inspired by object-transform factorization in scene graphs and neural simulators~\cite{ost2021neural,yang2023unisim}, let the physical state be $P_i=(\{c_{ij},s_{ij}\}_j)$, the read-only pose be $T_{it}$, and the sibling visual state $V_i$ contain render geometry, SH, and opacity. Geometry is optimized by the GT set, local-plane, scale, frame-coverage, and first-return losses above. Image optimization instead receives $\operatorname{sg}(P_i)$ and updates only $V_i$, where $\operatorname{sg}$ denotes stop-gradient. The deployed physical API is
-\begin{equation}
-Q_{it}(x;P_i,T_{it})=\log\sum_j\exp\!\left[-\frac{\|R_{it}^{\top}(x-t_{it})-c_{ij}\|_2^2}{2s_{ij}^2}\right],
-\label{eq:authority-query}
-\end{equation}
-and has no visual argument.
-
-\noindent\textbf{Proposition 1 (appearance non-interference).}
-For fixed $(P_i,T_{it})$ and any visual-only update $\Delta V_i$,
-$Q_{it}(x;P_i,T_{it},V_i+\Delta V_i)=Q_{it}(x;P_i,T_{it})$ and
-$\partial Q_{it}/\partial V_i=0$.
-This follows directly from the dependency set of Eq.~\ref{eq:authority-query}, not from a measured post-hoc correlation. Moreover, for a common rigid world transform $g$, inverse querying gives $Q_{gT}(gx)=Q_T(x)$; rigid motion relocates but cannot deform the canonical field. These are ownership and equivariance guarantees, not guarantees that the GT is complete, learned geometry or trajectory is correct, Background collision is modeled, or the resulting scene is safe.
-
-For the appearance interface, each frozen physical center receives only the SH coefficients and opacity logit of its nearest image-trained StreetGS Gaussian with the same Actor identity. The association is computed in canonical coordinates and has no geometry gradient. Appearance center, covariance, and rotation are never copied, so visual support cannot move, resize, delete, or accept a physical primitive. The resulting sidecar is an attribute carrier rather than an image-conditioned geometry model.
-
-For the final evidential surface measure, the categorical logit is induced directly by supervised Gaussian authority. With
-occupied mass $o_j$ and kernel $\kappa_{kj}$ at depth sample $d_k$, define
+Let $o_j$ be predicted occupied mass and $\kappa_{kj}$ the frozen Gaussian support of primitive $j$ at ordered depth $d_k$.
+Instead of adding $o_j\kappa_{kj}$ as density-dependent opacity, we define one joint categorical return measure,
 \begin{equation}
 q(k,j)=\frac{o_j\kappa_{kj}}{\sum_{a,b}o_b\kappa_{ab}},\qquad
-p_k=\sum_jq(k,j).
+p_k=\sum_jq(k,j),\quad F_k=\sum_{\ell\le k}p_\ell.
+\label{eq:categorical-return}
 \end{equation}
-This joint measure is invariant to whether responsibility is marginalized over depth or over primitive family. In particular,
-for the literal safety boundary $b=d_{\mathrm{gt}}-\epsilon$ and the same piecewise-linear CDF used by the renderer,
+The deployed return is the median, $\widehat d=\min\{d_k:F_k\ge1/2\}$. Training and deployment use the same ordered
+distribution. Normalization guarantees non-negative unit mass and a monotone CDF, but does not turn $o_j$ into occupancy or
+collision probability. The current protocol conditions on one return inside the Actor box and does not model ray drop.
+
+For boundary $b=d^\star-\epsilon$, piecewise-linear interpolation gives the exact deployed decision
 \begin{equation}
 \widehat d<b\quad\Longleftrightarrow\quad F(b)>\tfrac12,\qquad
 F(b)=F_{\mathrm{anchor}}(b)+F_{\mathrm{child}}(b).
 \label{eq:categorical-safety-boundary}
 \end{equation}
-Equation~\ref{eq:categorical-safety-boundary} is an exact explanation of the deployed decision, not an abstention rule:
-$F(b)$ is never thresholded to delete primitives or cases.
+This decomposition explains responsibility but is never used to delete a primitive or case.
 
-The same measure exposes why learned attenuation is not monotone-safe. Let $D_j=\sum_k\kappa_{kj}$,
-$N_j=\sum_{d_k<b}\kappa_{kj}$ (with the renderer's boundary interpolation), $C_j=N_j/D_j$, and
-$r_j=o_jD_j/\sum_a o_aD_a$. Direct differentiation yields
+\subsection{Typed Motion and Appearance Ownership}
+
+Rigid pose is a separate read-only authority. With $T_{it}=(R_{it},t_{it})$, the physical query is
+\begin{equation}
+Q_{it}(x;P_i,T_{it})=
+\log\sum_j\exp\!\left[-\frac{\|R_{it}^{\top}(x-t_{it})-c_{ij}\|_2^2}{2s_{ij}^2}\right],
+\label{eq:authority-query}
+\end{equation}
+where $P_i=\{(c_{ij},s_{ij})\}_j$ is canonical physical state. Static Background is a separate scene component. Visual state
+$V_i$ contains render geometry, SH, and opacity; image optimization receives $\operatorname{sg}(P_i)$ and updates only $V_i$.
+Consequently $\partial Q_{it}/\partial V_i=0$, and for a common rigid transform $g$, inverse querying yields
+$Q_{gT}(gx)=Q_T(x)$. These are ownership and equivariance guarantees, not guarantees that pose or geometry is correct.
+
+\subsection{Finite Attenuation Boundary}
+
+The normalized measure also identifies when learned visibility is unsafe. For primitive $j$, let
+$D_j=\sum_k\kappa_{kj}$, $N_j=\sum_{d_k<b}\kappa_{kj}$ with boundary interpolation,
+$C_j=N_j/D_j$, and $r_j=o_jD_j/\sum_a o_aD_a$. Direct differentiation gives
 \begin{equation}
 \frac{\partial F(b)}{\partial\log o_j}=r_j\bigl(C_j-F(b)\bigr).
 \label{eq:attenuation-sign-boundary}
 \end{equation}
-For any finite attenuation $v\in(0,1]$ applied to that component (or to a family treated as one component), the exact
-change is
+For any finite attenuation $v\in(0,1]$ applied to the component, or to a family treated as one component,
 \begin{equation}
 F_v(b)-F(b)=\frac{(1-v)r_j\bigl(F(b)-C_j\bigr)}{1-(1-v)r_j}.
 \label{eq:finite-attenuation-boundary}
 \end{equation}
-Consequently, decreasing authority lowers the pre-boundary CDF only if $C_j>F(b)$; attenuation of a later-than-mixture
-component increases it, and changing the attenuation magnitude cannot reverse the sign. This is a safety boundary of
-normalized return mixtures, not permission to use the GT-dependent sign as a deployment gate.
-
-\subsection{Validity--Hazard Factorization}
-
-The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. Its label is whether the frozen compiler's target Chamfer is no worse than that of the untouched clean query. The hazard encoder receives only TTC, clearance, closing speed, braking, and crossing geometry. Our factorized model uses two structurally disjoint low-capacity heads; a shared-input two-head network is the learned baseline:
-\begin{equation}
-\mathcal{L}=\mathrm{BCE}(s_{\mathrm{rep}},y_{\mathrm{rep}})+\mathrm{BCE}(s_{\mathrm{haz}},y_{\mathrm{haz}}).
-\end{equation}
-We fit features and weights on nuScenes train only. On a disjoint calibration fold, threshold $q$ is the maximum-coverage value satisfying the population false-repair bound
-\begin{equation}
-\widehat R^+(q)=\frac{1+\sum_{i=1}^{n}\mathbf{1}[s_i\ge q,\,y_i=0]}{n+1}\le\alpha.
-\end{equation}
-Accepted Actors use the compiled surface; abstained Actors retain the clean query. Paired input swaps measure whether either score reads the other task's variables. The finite-sample interpretation requires exchangeability; AV2 uses the frozen $q$ only for empirical zero-shot evaluation.
-
-For a frozen stratum $z$, selector $s_i$, query/compiled Chamfer $(q_i,c_i)$, and introduced visible-failure indicator $v_i$,
-the complete defer-to-query system admits an exact accounting decomposition:
-\begin{equation}
-\begin{aligned}
-G_z&=\mathbb{E}_z[s_i(q_i-c_i)]=C_z\mathbb{E}_z[q_i-c_i\mid s_i=1],\\
-M_z&=\mathbb{E}_z[s_iv_i]=C_z\mathbb{E}_z[v_i\mid s_i=1].
-\end{aligned}
-\end{equation}
-where $C_z=\mathbb{E}_z[s_i]$ is repair coverage. Population gain and introduced-failure mass are the stratum-share-weighted
-sums of $G_z$ and $M_z$. Hence Actor-state preservation, conditional risk, and complete-system utility are distinct claims.
-
-\subsection{Actor Residuals and Boundary-Cost Density}
-
-For Actor $i$ and horizon $t$, a low-capacity head predicts a 2D residual distribution $(\mu_{i,t},\Sigma_{i,t})$. Analytic projection onto $n_{\tau,t}$ gives mean $n^\top\mu$ and variance $n^\top\Sigma n$. Equation~\ref{eq:boundary-cost} converts these residuals and deterministic clearance into a continuous trajectory cost.
-
-We model $y=\log(1+C)$ with the frozen P182 conditional Gaussian mixture. Its implemented inputs are the Actor residual state $s_{\mathrm{actor}}$, horizon $H$, and deterministic clearance $d_{\mathrm{clearance}}$,
-\begin{equation}
-p_\theta(y\mid s_{\mathrm{actor}},H,d_{\mathrm{clearance}})=\sum_k\pi_k\mathcal{N}(y;\mu_k,\sigma_k^2),
-\end{equation}
-which exposes a closed-form marginal CDF for any budget. A low-rank, input-conditioned dependence model combines the frozen marginals across horizons. This factorization separates learned Actor uncertainty from analytic task geometry.
-
-The analytic boundary also exposes deterministic geometry sensitivity. Let $a_j=|n_j^\top e_j|$ and
-$m_j=\max(d_j,\epsilon)$. For $C(d)=\max_j a_j/m_j$ and a uniform signed-clearance shift $d'=d+\delta$,
-\begin{equation}
-|C(d')-C(d)|\leq\max_j\frac{a_j|\delta|}{m_jm'_j}
-\leq\frac{a_{\max}|\delta|}{\epsilon^2}.
-\end{equation}
-This follows from the max operator and clipped denominator being 1-Lipschitz; it is an error-propagation bound, not a
-distributional safety statement.
-
-\subsection{Monotone Runtime Surface and SceneIR}
-
-The final runtime object is a frozen grid over horizon and cost budget with monotone interpolation. Budget CDF values are non-decreasing; prefix-horizon reliability is non-increasing. Groupwise isotonic maps may calibrate predefined conditions on a disjoint source fold, but do not change these structural constraints.
-
-The two authorities compose without implication. The repair gate first chooses the surface representation,
-\begin{equation}
-\widetilde S_i=g_i S_i^{\mathrm{comp}}+(1-g_i)S_i^{\mathrm{query}},\qquad g_i=\mathbf 1[s_i^{\mathrm{rep}}\ge q].
-\end{equation}
-The downstream task separately grants authority only if its multi-horizon reliability satisfies the requested budget,
-$a_{i,t}(c)=\mathbf 1[R_i(t,c\mid\widetilde S_i,\tau)\ge\rho]$. In particular, $g_i=1\not\Rightarrow a_{i,t}(c)=1$:
-evidence can support a physical repair while Actor motion remains uncertain.
-
-SceneIR stores Actor identities and transforms, physical surfaces, known/unknown masks, provenance, and validity fields. The AV2 adapter performs only coordinate, unit, timestamp, category, and sensor-opportunity normalization. It does not fine-tune, recalibrate, or change thresholds using AV2 quality.
+Attenuation lowers the pre-boundary CDF iff $C_j>F(b)$; changing its magnitude cannot reverse the sign. Because $b$ uses
+target depth, this is an explanation and model-design boundary, not a deployable oracle gate.

@@ -1,5 +1,17 @@
 # Experiments
 
+## WorldSim V7.1 CVPR main/supplement split（2026-09-05）
+
+- scope=paper restructuring only；无新scientific trial或quality read；
+- main method=GT-defined child geometry + evidential categorical return + typed ownership + M49 exact boundary；
+- main evidence=nonlearned frozen AV2 operator、M8、M39、pending M43 protocol、M49、M22/M28；
+- archived evidence=`sections/04_method_appendix.tex` + `sections/05_experiments_appendix.tex`；由`supplement.tex`保留
+  完整failure-directed chain和旧V7 interface；原supplement另存`supplement_v7_legacy.tex`，未删除可回溯内容；
+- main compile=9 pages (`384,394` bytes)，正文止于page 7、references pages 8--9，0 layout/reference warning；
+- supplement compile=14 pages (`2,334,446` bytes)，0 undefined reference；两处既有overfull；
+- stale architecture teaser从主稿移入supplement；标题、intro、limitations均与M8/M39/M49证据边界对齐；
+- M43 status-only=14/20；no partial metric、no AV2 adaptation、no target-dependent paper selection。
+
 ## WorldSim V7.1 CVPR current-evidence claim refresh（2026-09-05）
 
 - scope=documentation-only；更新`paper/sections/00_abstract.tex`、`01_intro.tex`、`07_conclusion.tex`；
