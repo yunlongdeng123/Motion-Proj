@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01 — frozen（2026-09-05）
+
+- representation=frozen M39 normalized joint categorical measure over 64 depth bins × all anchor/child primitives；
+- exact audit=`median early iff CDF(d_gt-0.20m)>0.5` under deployment interpolation；
+- responsibility=boundary CDF decomposed into observed-anchor and completion-child probability masses；paired unit-energy
+  baseline reports which family changes pre-boundary risk；
+- same 66 exposed holdout；training=false；no gate/sweep/filter/delete/model selection/external/M43 partial read；next
+  failure remains `V71-F43`。
+
 ## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — frozen（2026-09-05）
 
 - source=M39：M8 geometry + M35 anchor F/O/U + M38 child F/O/U + direct categorical Gaussian measure；

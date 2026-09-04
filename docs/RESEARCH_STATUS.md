@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M44 categorical safety responsibility frozen（2026-09-05）
+
+状态=`v71_m44_categorical_safety_responsibility_frozen`，详见
+[`WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md`](WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md)。
+固定M39联合measure `q(depth,primitive)`，解析验证median early当且仅当`CDF(d_gt-0.20m)>0.5`，并把该
+boundary CDF精确分解为observed-anchor与completion-child质量；同时与unit-energy baseline配对。仅用同一66
+exposed holdout作解释，无训练、参数扫描、filter/delete、model selection或external/M43 partial read。
+它不作为新物理证明或部署门控；下一failure ID仍=`V71-F43`。
+
 ## WorldSim V7.1 M43 M39→AV2 zero-shot confirmation frozen（2026-09-05）
 
 状态=`v71_m43_m39_av2_zero_shot_frozen`，详见

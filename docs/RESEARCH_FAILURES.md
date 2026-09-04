@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M44 interpretation note — safety accounting is not post-hoc consistency（2026-09-05）
+
+M44只解释由M35/M38 GT F/O/U supervision得到的M39 surface measure：early boundary由pre-GT CDF是否超过0.5
+精确定义，并解析归因到anchor/child family。不得把低/高risk margin变成删点、拒绝case或新阈值，也不得以该
+exposed audit回选checkpoint。物理改善仍须来自supervision/representation，M44只补足可解释性与显式安全边界；
+下一failure ID仍=`V71-F43`。
+
 ## V7.1 M43 pre-registration note — AV2 build evidence is input, AV2 target is evaluation only（2026-09-05）
 
 M43冻结M39全部checkpoint、metric evidence radii、31/39维feature contract、64-bin CDF median及三项判定。跨传感器
