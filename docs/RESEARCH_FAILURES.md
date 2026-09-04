@@ -1,5 +1,24 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F28 — M25外层冻结未覆盖DriveStudio普通dict子模型（2026-09-05）
+
+- 分类/状态：autograd ownership / resolved before post-training quality exposure；run=
+  `20260904T181000Z__m25-geometry-locked-attribute-opt-r1`；
+- symptom：第1步`total.backward()`触发PyTorch version-counter错误，涉及`[24,4]`的`IndexPutBackward0`；0 optimizer
+  step、0 final/held-out quality exposure；
+- root cause：DriveStudio `BaseTrainer.__init__`以普通`self.models = {}`持有RigidNodes/Background/CamPose/Affine，
+  `trainer.parameters()`不会递归这些模型；因此旧冻结逻辑没有关闭RigidNodes trajectory quaternion梯度，而其
+  `interpolate_quats`包含原地index assignment，进入颜色反传图后触发版本冲突；
+- literature/action：PyTorch autograd官方文档说明原地写会维护version counter并在反传所需张量被修改时抛错；
+  `requires_grad_(False)`应在forward前排除冻结子图。r2显式遍历`trainer.models.values()`冻结完整模型树，再只开放
+  目标Actor的SH DC/rest与opacity；
+- protocol isolation：不改carrier、view split、GT ROI、seed、320 steps、loss权重或学习率；不以`detach`掩盖未知图，
+  不修改DriveStudio依赖源码；
+- prevention：任何依赖外部trainer的属性优化必须核对模型容器是否为注册的`ModuleDict`；冻结声明以实际owner参数树为准；
+- claim impact：r1是纯实现失败，不计appearance capacity结果，也不影响M8/M21 physical claim。
+
+下一可用编号：`V71-F29`。
+
 ## V7.1 M25 prevention note — 图像监督只更新appearance attributes（2026-09-05）
 
 - 309个M8/M23 centers/scales与identity rotations不加入optimizer；trajectory、Background和其他Actor参数全部冻结；
@@ -9,7 +28,7 @@
 - 固定320 steps/seed71123/lr/loss，不扫参数；只写轻量appearance sidecar，不写StreetGS checkpoint；
 - 唯一学习判定为pooled held-out footprint PSNR是否高于M23-nearest初始化；相对original剩余gap无论方向都报告。
 
-下一可用编号仍为：`V71-F28`。
+下一可用编号仍为：`V71-F29`。
 
 ## V7.1 M24 paper prevention note — 视觉负例不得反向污染physical claim（2026-09-05）
 

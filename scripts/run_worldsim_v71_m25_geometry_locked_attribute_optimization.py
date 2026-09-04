@@ -252,14 +252,18 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         )
 
         m24._restore_checkpoint(trainer, Path(config["streetgs_checkpoint"]), device)
-        for parameter in trainer.parameters():
-            parameter.requires_grad_(False)
         rigid = trainer.models["RigidNodes"]
         removed, inserted = m24._replace_actor(
             rigid, int(config["rigid_model_index"]), carrier
         )
-        for parameter in (rigid._means, rigid._scales, rigid._quats):
+        # DriveStudio keeps its child modules in a plain dict, so they are not
+        # reached by trainer.parameters().  Freeze that model tree explicitly
+        # before reopening only the target actor's appearance tensors.
+        for parameter in trainer.parameters():
             parameter.requires_grad_(False)
+        for model in trainer.models.values():
+            for parameter in model.parameters():
+                parameter.requires_grad_(False)
         for parameter in (rigid._features_dc, rigid._features_rest, rigid._opacities):
             parameter.requires_grad_(True)
 

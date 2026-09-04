@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M25 r1 autograd ownership failure / explicit model-tree freeze（2026-09-05）
+
+r1=`20260904T181000Z__m25-geometry-locked-attribute-opt-r1`在第1次backward终止，0 optimizer step、0 final或held-out
+quality暴露，登记`V71-F28`。根因不是优化数值：DriveStudio以普通`dict`保存`trainer.models`，因此原
+`trainer.parameters()`冻结没有覆盖RigidNodes trajectory等子模型参数；四元数插值的原地index assignment进入颜色反传图，
+触发PyTorch version-counter保护。
+
+r2在同一冻结协议下显式遍历所有`trainer.models.values()`关闭完整参数树的梯度，再且仅再开放目标Actor的SH DC/rest与
+opacity。carrier、8/6 views、GT ROI、seed71123、320 steps、loss/lr均不变，不修改DriveStudio源码。下一failure ID=
+`V71-F29`。
+
 ## WorldSim V7.1 M25 fixed-support appearance optimization frozen（2026-09-05）
 
 状态=`v71_m25_geometry_locked_attribute_optimization_frozen`，详见
@@ -9,7 +20,7 @@ Background和其他Actor全部没有有效梯度或optimizer更新。
 
 基于冻结3D视锥可见并集`[0,84]`，已在读取M25 quality前固定8 train / 6 held-out view pairs；图像GT监督只作用于
 original-vs-hidden appearance ROI，ROI不参与physical query。固定seed71123/320 steps/单卡一次run，不做sweep；唯一判定是
-held-out footprint PSNR是否优于M23初始化，同时完整报告相对32522-Gaussian original的gap。下一failure ID=`V71-F28`。
+held-out footprint PSNR是否优于M23初始化，同时完整报告相对32522-Gaussian original的gap。下一failure ID=`V71-F29`。
 
 ## WorldSim V7.1 CVPR manuscript M24 native-render boundary（2026-09-05）
 

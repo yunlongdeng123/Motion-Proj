@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01 — r1 autograd ownership failure（2026-09-05）
+
+- run=`20260904T181000Z__m25-geometry-locked-attribute-opt-r1`；failure=`V71-F28`；
+- stage=first backward；optimizer steps=`0`；post-training/held-out quality exposure=`0`；
+- error=PyTorch inplace version-counter mismatch，tensor shape=`[24,4]`，producer=`IndexPutBackward0`；
+- root cause=`BaseTrainer.models`是普通dict，`trainer.parameters()`未覆盖RigidNodes trajectory quaternion及其他子模型；
+- recovery=显式冻结每个`trainer.models.values()`参数，再仅开放目标Actor SH DC/rest/opacity；
+- unchanged=309 carrier、train8/heldout6、GT ROI、seed71123、320 steps、loss/lr、single-run protocol；
+- verification=`py_compile`后直接同协议r2；next failure=`V71-F29`。
+
 ## WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01 — frozen protocol（2026-09-05）
 
 - representation=M23/M24 same 309 physical centers/scales + identity rotations；trajectory read-only；
@@ -10,7 +20,7 @@
 - fixed=seed71123 / 320 steps / single GPU / no sweep；
 - report=pooled train/held-out original-vs-initial-vs-final footprint PSNR and original-final gap；
 - decision=held-out final > initial plus nonzero frozen views and optimizer geometry exclusion；no physical/external read；
-- artifacts=small attribute sidecar、held-out PNG/rows/summary；no hash/checksum/fingerprint；next failure=`V71-F28`。
+- artifacts=small attribute sidecar、held-out PNG/rows/summary；no hash/checksum/fingerprint；next failure=`V71-F29`。
 
 ## WorldSim V7.1 CVPR manuscript — M24 milestone（2026-09-05）
 
