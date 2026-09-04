@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 diagnostic prevention note — 冻结重放不升级为调参（2026-09-04）
+
+- A不得改变位移、weight、feature或compiler，只比较UNKNOWN mask on/off；结果不能用于回写旧M0 threshold；
+- B不得扫band/grid/evidence threshold，只分解固定输出；oracle-grid只判断extraction几何是否具备可抽取点，不是模型结果；
+- 两项不读Source Final/AV2、不生成新selector或gate；下一训练假设必须在结果后单独冻结；
+- runner实现阶段无failure，不占用`V71-F06`。
+
 ## V7.1 repository prevention note — terminal wrapper归档，不动复现资产（2026-09-04）
 
 - 归档对象仅为6个已关闭阶段的一次性shell wrapper；实际runner/config/corpus/canonical artifact仍是active evidence；

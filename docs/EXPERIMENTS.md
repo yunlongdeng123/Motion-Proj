@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-DIAG-A/B — frozen diagnostic preregistration（2026-09-04）
+
+- A=`M0 MODEL.pt + original Selection compiler + threshold 1.01`；所有moved candidates保留，仅移除UNKNOWN hard mask；
+- B=`M1 MODEL.pt + first 64 eligible train Actors`；分别报告grid/known-surface上的SCF raw/softplus分布、band-only、
+  occupied-only、joint extract及oracle-distance band；
+- 两项均为descriptive frozen replay，不训练、不改weights/displacement/grid/band，不建立新gate；
+- protected roles：A只重放已消费Selection；B train-only；source-final/external均false；
+- validation budget=`one py_compile`，不运行smoke/regression；无hash/checksum/fingerprint。
+
 ## WS-V71-REPO-SLIM-01 — recoverable maintenance milestone（2026-09-04）
 
 - scope=`repository-only`；0 dataset/model/quality read，0 training，0 metric/threshold/verdict change；

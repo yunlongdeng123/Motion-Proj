@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 frozen diagnostic runner ready（2026-09-04）
+
+状态：`v71_frozen_diagnostics_ready`。新增单一诊断runner，A加载canonical M0 checkpoint与standardizer，在已消费
+Selection上保持位移完全不变、只关闭UNKNOWN部署mask；B加载canonical M1 checkpoint，在64个train Actors上分开统计
+raw decoder、softplus SCF band、evidence argmax、联合extract与oracle-grid band。两者均不训练、不拟合参数、不读
+Source Final/AV2，也不改变M0/M1旧verdict。
+
+只执行一次`py_compile`后依次运行A/B；诊断不设置新pass gate，其输出只用于选择下一条训练—部署一致假设。下一可用
+failure ID=`V71-F06`。
+
 ## WorldSim V7.1 repository slim / diagnostics A-B active（2026-09-04）
 
 状态：`v71_repo_slim_diagnostics_active`。只归档已终止S1/S2/recovery/M0/M1/B4的6个一次性shell launcher到
