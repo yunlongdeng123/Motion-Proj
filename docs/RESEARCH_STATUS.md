@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M22 SE(3) dynamic/static composition supported（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01/
+20260904T161000Z__m22-se3-composition-r2`，4/4 minimal implementation decisions通过。冻结`scene-0230`的12个
+identity-matched Actors（7 hazard、11 moving）共有`1677`有效trajectory frames；首/中/末共36个Actor-frame审计上，
+inverse-query Gaussian energy最大残差=`3.397e-14`，pairwise distance最大残差=`1.243e-14m`。
+
+`5791`个M8 physical Gaussians只由StreetGS只读SE(3)轨迹搬运；`106807`个appearance Gaussians和`1140862`
+个Background Gaussians不进入physics，checkpoint/trajectory/static均未写入。该结果与M8训练内逐帧GT supervision共同支持
+shape--motion--static factorisation，但M22本身不提供新几何增益或跨域证据。下一failure ID=`V71-F26`。
+
 ## WorldSim V7.1 M22 r1 numerical failure diagnosed / inverse-query fix ready（2026-09-04）
 
 首次run=`20260904T160000Z__m22-se3-composition-r1`对齐`12` Actors、`1677`有效trajectory frames、`11`

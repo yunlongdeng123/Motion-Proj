@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — canonical supported（2026-09-04）
+
+- run=`20260904T161000Z__m22-se3-composition-r2`；verdict=`supported 4/4`；
+- cohort=`12 Actors / 7 hazard / 11 moving / 1 quasi-static / 1677 valid frames / 36 audited Actor-frames`；
+- representation=`5791` frozen M8 physical Gaussians；motion=read-only StreetGS rigid SE(3)；
+- energy residual max=`3.397282455352979e-14`；pairwise residual max=`1.2434497875801753e-14m`；
+- trajectory max translation=`126.2763m`；world centroid max displacement=`126.2667m`；
+- isolated appearance=`106807` owned Gaussians；static Background=`1140862` Gaussians untouched；
+- no training/checkpoint/render/filter/external read；claim=deployment factorisation only, not geometry improvement。
+
 ## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — r1 numeric failure（2026-09-04）
 
 - run=`20260904T160000Z__m22-se3-composition-r1`；verdict=`implementation_rejected 2/4`；failure=`V71-F25`；

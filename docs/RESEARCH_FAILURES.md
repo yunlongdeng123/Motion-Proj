@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M22 outcome note — 等变通过不等于几何性能通过（2026-09-04）
+
+- r2在原12 Actors/36 Actor-frames上以inverse-query得到energy residual=`3.397e-14`、distance residual=
+  `1.243e-14m`，4/4 numerical/dataflow decisions通过；
+- checkpoint、trajectory与Background均未写入，SH/opacity/image未进入physics，未生成新模型；
+- 该结果只关闭M8/M21 canonical physics到world frame的部署组合缺口；几何质量仍由M8 native-3D/逐帧GT loss及
+  M21 fresh AV2独立判定；
+- 不允许把SE(3)恒等式写成新的Chamfer/occupancy/safety增益，也不据此提前读取M21 partial quality。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V71-F25 — world-frame float32 cdist消减伪造刚体不一致（2026-09-04）
 
 - 分类/状态：numeric coordinate implementation / resolved before scientific interpretation；run=
