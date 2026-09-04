@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M22 implementation note — 不以快照比对替代只读数据流（2026-09-04）
+
+- runner代码路径不包含checkpoint写回、Background更新或trajectory tensor赋值；只生成run目录summary/rows/status；
+- 不新增hash、checksum、fingerprint，也不复制百万级Background tensor做形式化前后比对；
+- energy与pairwise数值残差只验证坐标实现，科学依据仍是M8训练内逐帧GT supervision；
+- 若数值容差失败才登记`V71-F25`，不扩大为smoke/regression矩阵。
+
+下一可用编号仍为：`V71-F25`。
+
 ## V7.1 M22 prevention note — motion只能搬运canonical physics（2026-09-04）
 
 - M8逐帧GT coverage已经进入训练目标；M22只审计部署组合，不以post-hoc trajectory变换冒充新的物理监督；

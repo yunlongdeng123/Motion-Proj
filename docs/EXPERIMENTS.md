@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — implementation ready（2026-09-04）
+
+- runner=`scripts/run_worldsim_v71_m22_se3_dynamic_static_composition.py`；
+- config=`configs/worldsim_v71/v71_m22_se3_dynamic_static_composition_v1.yaml`；
+- loads=frozen M8/M5 heads、Actor cache、StreetGS RigidNodes transforms、Background count only；
+- outputs=`DYNAMIC_COMPOSITION_ROWS.jsonl`、`summary.json`、`status.json`；no model/checkpoint；
+- verification=`py_compile` only before one canonical CUDA audit；no broad smoke/regression。
+
 ## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — frozen protocol（2026-09-04）
 
 - source=canonical M8 checkpoint + M21 analytic energy + read-only StreetGS scene-0230 trajectory；no training；

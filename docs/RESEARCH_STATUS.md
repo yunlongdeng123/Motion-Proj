@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M22 SE(3) audit implementation ready（2026-09-04）
+
+实现=`scripts/run_worldsim_v71_m22_se3_dynamic_static_composition.py`，配置=
+`configs/worldsim_v71/v71_m22_se3_dynamic_static_composition_v1.yaml`。Runner只加载冻结M8/M5 surface head和
+StreetGS几何/trajectory authority；物理query由centers/scales的metric energy直接计算，不读取SH/opacity/image，
+不修改Background、trajectory或checkpoint。
+
+逐Actor输出有效轨迹帧、运动分层、canonical/world energy残差和pairwise-distance残差；无训练、渲染、filter或参数扫描。
+仅执行`py_compile`入口检查后启动一次canonical audit。下一failure ID仍为`V71-F25`。
+
 ## WorldSim V7.1 M22 SE(3) dynamic/static composition protocol frozen（2026-09-04）
 
 状态=`v71_m22_se3_dynamic_static_composition_frozen`，详见

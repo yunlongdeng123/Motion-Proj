@@ -1,0 +1,22 @@
+task_id: WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01
+hypothesis_id: WS-V71-H-M22-CANONICAL-PHYSICS-RIGID-MOTION
+runs_root: /root/autodl-tmp/runs
+m8_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2
+scene_name: scene-0230
+actor_cache_dir: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train/scene-0230
+streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+actor_registry: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T053124Z__v33-scene0230-actor-registry-s0-r71/artifacts/actor_registry.json
+device: cuda
+energy:
+  anchor_scale_m: 0.08
+audit:
+  frames_per_actor: 3
+  maximum_query_count: 64
+  maximum_pairwise_points: 32
+  moving_translation_m: 0.50
+decision:
+  required_identity_matches: 12
+  minimum_moving_actor_count: 1
+  maximum_energy_absolute_residual: 0.0001
+  maximum_pairwise_distance_residual_m: 0.00001
+
