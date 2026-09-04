@@ -1,5 +1,21 @@
 # Experiments
 
+## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — canonical result（2026-09-05）
+
+- run=`20260905T020000Z__m31-anchor-contradiction-attribution-r3`；status=`done`；verdict=
+  `anchor_contradiction_attributed`；66/66 Actors，63 scenes（43 raw + 20 processed），99,208 rays，missing=0；
+- early rates=raw query `18.251%` / UNKNOWN-only `1.290%` / KEEP `17.622%` / PROJECT-only `11.586%` /
+  anchors `19.579%`；anchors hit=`29.793%`；
+- anchor first-early provenance=KEEP `12,955 (66.70%)` / PROJECT `6,469 (33.30%)`；
+  PROJECT point share=`2,685/20,098=13.36%`，early overrepresentation=`2.49x`；
+- strata=hazard/clear early `20.016/17.430%`；moving/quasi-static `19.632/19.263%`；frame ordinal trend non-monotonic；
+- interpretation=PROJECT aggravates but hard KEEP endpoints dominate；UNKNOWN filtering yields only `0.629pp` raw-to-KEEP
+  improvement；close post-hoc filter branch；
+- next=continuous Gaussian occupancy/evidence learned directly from cross-frame GT FREE/OCCUPIED/UNKNOWN ray states；
+- resources=GPU `0.052GiB` / RSS `1.181GiB` / wall `386.49s`；no training/checkpoint/external/M21 partial read；
+  manuscript updated + TinyTeX full compile success（16 pages / 2,338,950 bytes；refs resolved；no fatal/new warning）；
+  next failure=`V71-F33`。
+
 ## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — r2 source-adapter failure / V71-F32（2026-09-05）
 
 - run=`20260905T014500Z__m31-anchor-contradiction-attribution-r2`；status=`failed` before scene compilation；

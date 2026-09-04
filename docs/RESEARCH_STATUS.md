@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V7.1 M31 completed / hard-anchor authority rejected（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/
+20260905T020000Z__m31-anchor-contradiction-attribution-r3`，66/66 Actors、63 scenes、99,208 rays全部匹配；
+43 raw + 20 processed-recovery scenes，missing=0。anchors early=`19.579%`精确复现M30；raw query/KEEP/
+PROJECT-only early=`18.251/17.622/11.586%`，UNKNOWN-query-only=`1.290%`。
+
+19,424个anchor early中KEEP首返回=`12,955 (66.70%)`，PROJECT=`6,469 (33.30%)`。PROJECT只占
+`2,685/20,098=13.36%` anchors却承担33.30% early，约`2.49x`过度贡献；但KEEP仍是多数根因。
+hazard/clear=`20.016/17.430%`，moving/quasi-static=`19.632/19.263%`，target-frame ordinal不单调，故不能
+把失败单因归结为动态拖影或PROJECT。
+
+结论：现有UNKNOWN filter只把raw query early降低`0.629pp`，调filter无前景；同时把所有endpoint设为永久
+hard surface也不成立。下一步转向GT ray直接监督的连续Gaussian occupancy/evidence authority：跨帧FREE/OCCUPIED/
+UNKNOWN进入loss，endpoint不再自动成为硬表面，推理不阈值删点。M31无训练/checkpoint/external/M21 partial read；
+GPU=`0.052GiB`、RSS=`1.181GiB`、wall=`386.49s`。下一failure ID=`V71-F33`。
+
+论文Related Work/Experiments/Limitations已同步ALSO/SCPNet/DualAD动机、M31完整归因与不可因果化边界；
+TinyTeX/latexmk完整编译成功（16页、2,338,950 bytes），引用已解析；仅保留既有53.85pt公式与6.03pt表格
+overfull warning，无fatal或新增warning。
+
 ## WorldSim V7.1 M31 anchor contradiction attribution frozen（2026-09-05）
 
 状态=`v71_m31_anchor_contradiction_attribution_frozen`，详见

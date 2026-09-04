@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M31 outcome note — contradiction is mixed, PROJECT is overrepresented（2026-09-05）
+
+Canonical r3完整匹配66/66 Actors；anchors early=`19.579%`。first-return provenance为KEEP
+`12,955/19,424=66.70%`、PROJECT `6,469/19,424=33.30%`；PROJECT只占13.36% anchor points，因此
+相对点占比过度贡献约2.49倍，但删除PROJECT仍不能解决KEEP多数矛盾。raw-query到KEEP只改善`0.629pp`，
+UNKNOWN-query自身early仅`1.290%`；不能把失败归因于UNKNOWN mask。
+
+moving/quasi-static差异仅`+0.369pp`，target-frame ordinal既有早期峰值也有后期小样本上升，不支持单调pose-drift
+解释。下一阶段禁止按M31结果做post-hoc provenance/time filter；应把cross-frame GT ray的occupied/free/unknown
+状态直接写入连续field supervision，使endpoint authority可学习且UNKNOWN保留。r3无新failure；下一ID仍
+=`V71-F33`。
+
 ## V71-F32: M31 treated processed-recovery scenes as raw LiDAR scenes（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/20260905T014500Z__m31-anchor-contradiction-attribution-r2`；

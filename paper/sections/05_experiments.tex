@@ -303,6 +303,16 @@ We also test whether average geometry losses hide safety-relevant tails. Startin
 
 M30 then preserves this conflict as the return interval in Eq.~\ref{eq:return-interval}: immutable build anchors define the known-supported endpoint and anchors plus all M8 children define the possible endpoint. Set ordering has zero violations over 99,208 rays. Yet only 56.69\% of GT returns are empirically bracketed, 47.03\% of upper endpoints are unbounded, and the Actor-mean finite-width q90 is 0.326\,m (0.343\,m for hazardous Actors). More fundamentally, anchor-only queries already produce 19.58\% early returns. The interval is therefore an honest epistemic interface, but not yet a tight collision certificate; the residual failure precedes completion and points to cross-frame canonical supervision or pose/visibility inconsistency.
 
+M31 replays the exact 66 Actors through their original raw or processed producer and labels every anchor first return by
+construction provenance. It exactly recovers the 19.58\% anchor early-return rate. Of 19,424 early rays, 66.70\% terminate
+first on a kept query endpoint and 33.30\% on a projected endpoint. Projected points form only 13.36\% of anchors, so they
+are overrepresented among contradictions by a factor of 2.49, but removing them cannot address the kept majority. The
+existing evidence rule changes raw-query early returns from 18.25\% to 17.62\%; rejected query points alone account for only
+1.29\% of rays. Hazardous versus clear rates are 20.02\% versus 17.43\%, while moving versus quasi-static rates are
+19.63\% versus 19.26\%, and the target-frame trend is non-monotonic. Thus neither completion, projection, UNKNOWN filtering,
+nor motion alone explains the hard-anchor contradiction. We close post-hoc anchor filtering and instead treat free/occupied/
+unknown ray evidence as supervision of physical authority.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}
