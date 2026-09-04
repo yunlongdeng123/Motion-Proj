@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M8 external execution note — scene-ready入口正常（2026-09-04）
+
+- M8 evaluator已按`.complete`处理4/20 logs与78 Actors，M5/M7/M8均等待相同第5项；
+- 三个evaluator只重复只读编译/推理，不修改下载log、不启动第二下载器，当前资源充足；
+- 未读任何partial physical aggregate；当前无新增engineering/scientific failure，下一可用ID保持`V71-F13`。
+
+下一可用编号仍为：`V71-F13`。
+
 ## V7.1 M8 external prevention note — paired cohort不是事后模型选择（2026-09-04）
 
 - M8 external checkpoint/gates在任何M5/M7 partial physical aggregate读取前冻结；只知道下载/Actor进度；

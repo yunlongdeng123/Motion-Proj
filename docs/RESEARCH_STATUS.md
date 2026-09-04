@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7.1 M8 fresh AV2 evaluator active（2026-09-04）
+
+状态=`v71_m8_fresh_av2_running`。generic scene-ready evaluator已兼容checkpoint label，现有M7运行进程不受文件更新影响；
+M8独立进程已处理`4/20`完整logs、78 Actor rows，当前与M5/M7共同等待第5项
+`27c03d98-6ac3-38a3-ba5e-102b184d01ef`。三者只读同一唯一下载器的`.complete`数据，均未读取partial physical
+metrics；剩余磁盘约94GiB，资源正常。下一failure ID=`V71-F13`。
+
 ## WorldSim V7.1 M8 fresh AV2 protocol frozen（2026-09-04）
 
 状态=`v71_m8_fresh_av2_evaluator_next`。在读取任何M5/M7 AV2 partial physical metric前，冻结M8 checkpoint、M5 base、

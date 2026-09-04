@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M8-FRESH-AV2-ZERO-SHOT-01 — active execution（2026-09-04）
+
+- run=`20260904T203000Z__m8-fresh-av2-zero-shot-r1`；single evaluator PID initially=`13514`；
+- progress=`4/20 logs / 78 Actor rows`，waiting log 5；M5/M7/M8 status aligned；
+- implementation=generic checkpoint-labelled scene-ready evaluator + thin M8 entry；directed `py_compile` pass；
+- concurrency=one downloader + three frozen read-only evaluators；no training/adaptation/second downloader；
+- partial physical metric read=false；disk free=`~94GiB`；failure delta=none。
+
 ## WS-V71-M8-FRESH-AV2-ZERO-SHOT-01 — frozen execution protocol（2026-09-04）
 
 - model=canonical M8 + frozen M5 base + train standardizer；no adaptation；
