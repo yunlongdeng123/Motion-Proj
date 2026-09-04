@@ -1,0 +1,19 @@
+task_id: WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01
+hypothesis_id: WS-V71-H-M5-IDENTITY-COUPLED-APPEARANCE-PHYSICS
+runs_root: /root/autodl-tmp/runs
+m5_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M5-PCGRAD-RELOCATION-01/20260904T104700Z__m5-pcgrad-relocation-s71107-r1
+scene_name: scene-0230
+actor_cache_dir: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train/scene-0230
+streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+actor_registry: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T053124Z__v33-scene0230-actor-registry-s0-r71/artifacts/actor_registry.json
+rendered_asset: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/images/step_30000_rgbs.png
+device: cuda
+model:
+  maximum_ray_displacement_m: 0.30
+  maximum_normal_displacement_m: 0.20
+  cuboid_padding_m: 0.15
+evaluation:
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+  output_voxel_size_m: 0.06

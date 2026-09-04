@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01 — frozen protocol（2026-09-04）
+
+- source=`scene-0230` frozen StreetGS 30k checkpoint/render + data-level Actor registry + V7.1 Actor caches；
+- identity=nuScenes instance token → RigidNodes model index → checkpoint `points_ids` owned Gaussians；
+- appearance=means/scale/quaternion/SH/opacity与instances trajectory只读，checkpoint write=false；
+- physics=M5生成独立Actor-keyed collision surface NPZ，原五项surface evaluator作同场描述；
+- gates=owned Gaussian>0、surface changed、hazard present/retained、hazard early strictly reduced、appearance/trajectory
+  read-only；
+- boundary=train-scene interface evidence only，not source/external confirmation；validation=`py_compile only`；no hashes。
+
 ## WS-V71-M5-FRESH-AV2-ZERO-SHOT-01 — frozen execution protocol（2026-09-04）
 
 - model=canonical M5 checkpoint + training standardizer，no adaptation；surface=`anchors + all relocated candidates`；

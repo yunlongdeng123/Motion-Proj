@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 appearance-bridge prevention note — 不修改GS checkpoint冒充外观提升（2026-09-04）
+
+- Street Gaussians/DrivingGaussian支持Actor-composed appearance ownership，但不保证其Gaussian means是安全collision
+  surface；因此M5 physical surface作为同identity sidecar，而非覆盖appearance geometry；
+- checkpoint所有外观/轨迹tensor只读，不重新render后声称RGB指标提升，不训练GS或颜色；
+- bridge只要求已有rendered asset、Actor identity、物理surface改变与hazard early方向，不把train scene称为泛化；
+- 若同场hazard early不降，登记`V71-F10`并保留结构接口但不作physical bridge positive claim。
+
 ## V7.1 AV2 execution prevention note — scene-ready不改变exact-once合同（2026-09-04）
 
 - evaluator只在下载器写出对应`.complete`后读取该log，I/O重叠不允许看部分log结果后改变后续模型或日志；

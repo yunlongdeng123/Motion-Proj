@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M5 StreetGS appearance bridge ready（2026-09-04）
+
+状态：`v71_m5_streetgs_bridge_ready`。选择已有`scene-0230` StreetGS 30k重建与真实rendered asset；数据级
+instance token把V7.1 Actor cache连接到RigidNodes `points_ids/rigid_model_index`。StreetGS checkpoint中的means、SH
+features、opacity、scale、rotation与196-frame Actor trajectory全程只读；M5只另写Actor-keyed physical surface sidecar，
+不把LiDAR surface伪装为RGB Gaussian，也不重训GS。
+
+当前有13个registry/cache identity交集，实际run只使用其中非空candidate且拥有Gaussian的Actors。bridge必须同时满足：
+identity-owned Gaussians非空、physical surface确实改变、hazard Actor存在且保留、hazard literal early下降、appearance/
+trajectory只读。该阶段只证明representation/interface与同场物理方向，不作泛化确认；AV2下载/evaluator继续并行。
+定向`py_compile`后单次执行；下一failure ID=`V71-F10`。
+
 ## WorldSim V7.1 M5 fresh AV2 evaluator ready（2026-09-04）
 
 状态：`v71_m5_fresh_av2_waiting_download`。新增scene-ready外测runner：加载冻结M5 checkpoint/standardizer；每个新log
