@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 M7 fresh AV2 evaluator active（2026-09-04）
+
+状态=`v71_m7_fresh_av2_running`。新增scene-ready M7 evaluator，加载冻结M7/M5/standardizer，对每个`.complete` log
+重建build-only evidence并输出anchors加全部4-child surface；代码定向`py_compile`后启动单进程。当前下载/M7均完成
+`3/20` logs，M7累计62 Actor rows，正在等待第4项`20dd185d-b4eb-3024-a17a-b4e5d8b15b65`；剩余磁盘约95GiB。
+只读取progress/Actor count，没有读取partial physical metrics；唯一下载器、M5 evaluator与M7 evaluator均存活。下一failure
+ID=`V71-F12`。
+
 ## WorldSim V7.1 M7 fresh AV2 zero-shot protocol frozen（2026-09-04）
 
 状态=`v71_m7_fresh_av2_evaluator_next`。M7 checkpoint、4-child representation、standardizer、M5 base、compiler、

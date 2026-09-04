@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M7-FRESH-AV2-ZERO-SHOT-01 — active execution（2026-09-04）
+
+- run=`20260904T122000Z__m7-fresh-av2-zero-shot-r1`；single evaluator PID initially=`10549`；
+- implementation=`scripts/run_worldsim_v71_m7_av2_zero_shot.py`，syntax pass；M7/M5 weights与train standardizer只读；
+- progress=`3/20 logs / 62 Actor rows`，waiting log 4；partial metric read=false；
+- concurrency=one downloader + frozen M5 evaluator + frozen M7 evaluator；no second downloader/training/adaptation；
+- disk free=`~95GiB`；status normal；failure delta=none。
+
 ## WS-V71-M7-FRESH-AV2-ZERO-SHOT-01 — frozen execution protocol（2026-09-04）
 
 - checkpoint=canonical M7 residual/slot weights + frozen M5 base + train standardizer；branch factor=4；

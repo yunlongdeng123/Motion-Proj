@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M7 external execution note — scene-ready入口正常（2026-09-04）
+
+- evaluator已按`.complete`处理3/20 logs与62 Actors，权重/standardizer/compiler均冻结，未读partial physical aggregate；
+- 与M5 evaluator并行只会重复只读编译/推理，不启动第二下载器、不修改log；当前无工程或科学failure；
+- 下一可用failure ID保持`V71-F12`。
+
+下一可用编号仍为：`V71-F12`。
+
 ## V7.1 M7 external prevention note — 同一fresh cohort比较不反馈M5局部结果（2026-09-04）
 
 - M7方法/checkpoint/external合同在读取任何M5 AV2 physical metric前冻结；此前监控只看log/Actor计数和进程状态；
