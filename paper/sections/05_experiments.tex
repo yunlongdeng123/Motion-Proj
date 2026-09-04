@@ -346,6 +346,12 @@ not ordering: summing unit line integrals over a dense, overlapping primitive se
 We reject the current transmittance field and next separate anchor and completion-child optical contributions before defining
 a GT-calibrated surface measure.
 
+The frozen M36 decomposition localizes that measure error. Learned anchors alone yield 18.39\% early returns, only
+0.20 points above the original baseline, whereas unit-opacity completion children alone yield 37.46\%. Combining those
+children with learned anchors raises early returns to 35.27\%. Thus a global optical scale or further anchor tuning would
+target the wrong component: the immediate missing supervision is completion-child FREE/OCCUPIED/UNKNOWN authority from
+its parent build evidence, kept separate from the observed-anchor head.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

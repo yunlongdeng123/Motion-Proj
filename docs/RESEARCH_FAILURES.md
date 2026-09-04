@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M36 outcome note — unit completion opacity is the dominant transmittance error（2026-09-05）
+
+M36无工程失败。learned anchors-only early=`18.386%`接近unit-energy baseline=`18.187%`，children-only unit
+却为`37.465%`；all learned=`35.266%`。因此不得继续调anchor head或全局scale；下一监督对象是每个M8
+completion child的opacity/F/O/U，输入只能来自parent candidate build evidence与child geometry，且保持与anchor
+head解耦。下一failure ID=`V71-F38`。
+
 ## V7.1 M36 pre-registration note — optical attribution before calibration（2026-09-05）
 
 M36不拟合任何opacity，只冻结分解anchor/child/all optical contribution。它防止看到M35高early后直接手调

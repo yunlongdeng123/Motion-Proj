@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7.1 M36 completed / completion-child opacity isolated（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M36-OPTICAL-CONTRIBUTION-DECOMPOSITION-01/
+20260905T053000Z__m36-optical-contribution-r1`；66 Actors/99,208 rays，training=false，状态=
+`optical_contribution_decomposed`。原unit-energy early/hit=`18.187/62.283%`；transmittance arms：
+
+- anchors unit=`26.314/44.703%`，no-return=`0.645`；
+- anchors learned=`18.386/50.580%`，no-return=`0.779`；
+- children unit=`37.465/43.012%`，no-return=`0.539`；
+- all unit=`42.294/50.939%`；all learned=`35.266/56.707%`。
+
+learned anchor-only early已距baseline仅`+0.199pp`，而unit children-only仍`+19.278pp`；completion-child unit
+opacity是M35 over-termination主因。下一步M37冻结geometry与已验证anchor输入，给children建立parent-candidate
+build evidence + child geometry输入及held-out F/O/U supervision，使用分离双头而非共享混淆。GPU=
+`0.296GiB`、RSS=`1.167GiB`、wall=`11.11s`；无external/M21 partial read。论文同步并由TinyTeX完整编译
+成功（17页 / 2,348,060 bytes；引用已解析；无fatal/new warning）。下一failure ID=`V71-F38`。
+
 ## WorldSim V7.1 M36 optical contribution decomposition frozen（2026-09-05）
 
 状态=`v71_m36_optical_contribution_decomposition_frozen`，详见

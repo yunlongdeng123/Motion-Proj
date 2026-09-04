@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M36-OPTICAL-CONTRIBUTION-DECOMPOSITION-01 — canonical completed（2026-09-05）
+
+- run=`20260905T053000Z__m36-optical-contribution-r1`；66 Actors / 99,208 rays；training=false；
+- unit-energy reference early/hit=`18.1870/62.2833%`；
+- anchors-unit=`26.3144/44.7030%`；anchors-learned=`18.3856/50.5796%`；
+- children-unit=`37.4647/43.0117%`；all-unit=`42.2940/50.9394%`；all-learned=
+  `35.2663/56.7071%`；
+- mean no-return anchors unit/learned=`0.6446/0.7794`；children unit=`0.5386`；all unit/learned=
+  `0.3196/0.3987`；
+- conclusion=unit completion-child opacity dominates M35 error；next=separate supervised child authority，not anchor or
+  global-scale tuning；GPU=`0.296GiB`，RSS=`1.167GiB`，wall=`11.11s`；no external/M21 partial read；next
+  failure=`V71-F38`；manuscript updated + TinyTeX full compile success（17 pages / 2,348,060 bytes；refs resolved；
+  no fatal/new warning）。
+
 ## WS-V71-M36-OPTICAL-CONTRIBUTION-DECOMPOSITION-01 — frozen（2026-09-05）
 
 - frozen M35/M8/66 holdout；training=false；
