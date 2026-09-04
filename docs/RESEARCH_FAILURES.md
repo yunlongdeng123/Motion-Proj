@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M43 pre-registration note — AV2 build evidence is input, AV2 target is evaluation only（2026-09-05）
+
+M43冻结M39全部checkpoint、metric evidence radii、31/39维feature contract、64-bin CDF median及三项判定。跨传感器
+adapter只把AV2编译器已有query/build/canonical/provenance转换为source-domain同构输入；不得用target sweep拟合
+normalization、authority、阈值或log选择。DGLSS（CVPR 2023）证明LiDAR配置/稀疏度本身构成显著domain gap，故
+该差异必须由冻结zero-shot结果诚实暴露，不能在目标域校准。任一判定失败登记`V71-F43`且关闭AV2 tuning；下一
+failure ID=`V71-F43`。
+
 ## V71-F42: M42 global interval events do not resolve stratum-dependent CDF safety（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01/20260905T083000Z__m42-interval-event-s71142-r1`；

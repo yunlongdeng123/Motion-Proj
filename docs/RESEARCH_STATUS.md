@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M43 M39→AV2 zero-shot confirmation frozen（2026-09-05）
+
+状态=`v71_m43_m39_av2_zero_shot_frozen`，详见
+[`WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md`](WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md)。
+冻结M8 geometry、M35 anchor head、M38 child head及M39 direct categorical composition；AV2 adapter只由query/build
+sweeps重建M33 31维anchor输入与M37 child输入，target sweep只用于20 logs全部完成后的最终评估。无fine-tune、
+pseudo-label、target normalization、calibration、threshold/log选择或失败case删除；不读取partial质量。三项判定=
+all early不增、hazard和clear worst-stratum early均不增、all hit delta≥-1pp。若失败登记`V71-F43`且不在AV2
+调参；下一failure ID=`V71-F43`。
+
 ## WorldSim V7.1 M42 rejected / interval loss recovers aggregate safety but not clear-stratum safety（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01/

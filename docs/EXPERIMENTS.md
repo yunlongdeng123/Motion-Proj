@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — frozen（2026-09-05）
+
+- source=M39：M8 geometry + M35 anchor F/O/U + M38 child F/O/U + direct categorical Gaussian measure；
+- target=冻结20-log AV2 Sensor val；adapter input严格为query/build sweeps、canonical support和producer provenance；
+  target sweeps只作最终label；
+- baseline=同一M8的unit-energy categorical readout；64 bins、CDF median=0.5、literal tolerance=±0.20m；
+- decisions=all early delta≤0、hazard和clear early delta≤0、all hit delta≥-1pp；point metrics仅描述；
+- no fine-tune/pseudo-label/target normalization/calibration/threshold/log selection/deletion；no partial quality read；
+  failure on any gate=`V71-F43`，禁止在AV2恢复调参。
+
 ## WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T083000Z__m42-interval-event-s71142-r1`；593 train / 66 exposed holdout；4 epochs；
