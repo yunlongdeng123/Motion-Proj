@@ -255,17 +255,15 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             (_scalar_text(actor["scene_name"]), _scalar_text(actor["track_id"])): actor
             for actor in selected
         }
-        split = json.loads((repo_root / config["source_split"]).read_text(encoding="utf-8"))
         compiler = yaml.safe_load((repo_root / config["p2_config"]).read_text(encoding="utf-8"))
         _deep_update(compiler, config["compiler_overrides"])
-        index_split = dict(split)
-        index_split["roles"] = {
-            "train": list(split["roles"]["train"]) + list(split.get("train_reserve", []))
-        }
-        index = build_v71_index(Path(config["source"]["dataset_root"]), index_split)
         rows: list[dict[str, Any]] = []
         matched: set[tuple[str, str]] = set()
         scenes = sorted({scene for scene, _ in desired})
+        index = build_v71_index(
+            Path(config["source"]["dataset_root"]),
+            {"roles": {"train": scenes}},
+        )
         _write_json(
             run_dir / "status.json",
             {"status": "running", "phase": "attribution", "selected_actors": len(desired), "source_scenes": len(scenes)},

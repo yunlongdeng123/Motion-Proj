@@ -12,6 +12,11 @@ first-return直接区分raw query、UNKNOWN query、KEEP、PROJECT及其ordered 
 correspondence诊断方向。任何修正必须另立GT/supervision构造并重新训练。M21 partial quality仍不读取；
 下一failure ID=`V71-F31`。
 
+Formal r1在0几何评价时暴露索引入口错误：66个缓存holdout横跨63 scenes，其中20 scenes来自S2 manifest明确记录的
+processed-corpus recovery、不在旧raw train/reserve split；train-only index因而对首个`scene-0001`抛`KeyError`。
+已登记`V71-F31`。遵循input lineage，r2只用缓存Actor携带的63个scene names构造read-only source index；Actor IDs、
+编译器、metric与所有科学合同不变。下一failure ID=`V71-F32`。
+
 ## WorldSim V7.1 M30 set-order supported / interval utility bounded（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01/

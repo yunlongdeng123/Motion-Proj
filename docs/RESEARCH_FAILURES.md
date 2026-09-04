@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F31: M31 source index omitted processed-recovery scenes（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/20260905T013000Z__m31-anchor-contradiction-attribution-r1`；
+- symptom=首个selected `scene-0001`在`compile_source_scene`入口抛`KeyError`；
+- exposure=0 scene compiled、0 Actor geometry row、0 literal first-return metric；只有缓存Actor ID/scene metadata被读取；
+- root cause=M31沿用了raw S2 builder的train+reserve index，但当前corpus manifest是
+  `train_corpus_target_met_with_processed_recovery`；66个holdout横跨63 scenes，其中20个scene来自processed recovery，
+  不在旧raw split；
+- literature/open-source response=MLflow/Kedro均将实际dataset source/catalog作为run input lineage；本项目采用现有
+  cache Actor的scene names作为只读locator，不引入dataset hash、checksum或fingerprint；
+- recovery=r2按exact selected cache scenes构造index；不替换Actor，不改P2 compiler、tolerance、strata或metric；
+- claim impact=纯入口失败，不是科学负结果。下一failure ID=`V71-F32`。
+
 ## V7.1 M31 pre-registration note — provenance diagnosis is not post-hoc repair（2026-09-05）
 
 M30已证明learned completion之前的immutable anchors也有`19.58%` early contradiction。M31只恢复S2编译器

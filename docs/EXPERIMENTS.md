@@ -1,9 +1,17 @@
 # Experiments
 
+## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — r1 entry failure / V71-F31（2026-09-05）
+
+- run=`20260905T013000Z__m31-anchor-contradiction-attribution-r1`；status=`failed` before scene compilation；
+- error=train+reserve-only source index omitted `scene-0001` and 19 other processed-recovery holdout scenes；
+- exposure=66 cache Actor metadata selected；0 source scene compiled、0 geometry/first-return metric row；
+- recovery=r2 indexes the exact 63 cache-carried scene names；no Actor substitution or scientific contract change；
+- no M21 partial quality read；next failure=`V71-F32`。
+
 ## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — frozen protocol（2026-09-05）
 
 - cohort=same M30 sorted first-1024 eligible corpus / every-10th holdout；expected 66 exposed Actors；
-- source recovery=frozen S2 nuScenes split + Actor rules + P2 compiler，only selected source scenes recompiled；
+- source recovery=exact cache-carried scene names + frozen S2 Actor rules + P2 compiler，only selected scenes recompiled；
 - surfaces=raw query / UNKNOWN query / KEEP / PROJECT / ordered KEEP+PROJECT anchors；no point removed；
 - metric=shared literal beam-tube first return，lateral/depth tolerance=`0.20/0.20m`；
 - attribution=union first-return index；strata=target-frame ordinal、hazard/clear、moving/quasi-static、category；
