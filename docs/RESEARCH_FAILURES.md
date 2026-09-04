@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 diagnostic closure — F04/F05根因完成分解，不新增failure（2026-09-04）
+
+- A证明`V71-F04`主要来自部署UNKNOWN mask：相同冻结位移取消mask后，hazard early仍下降5.924%，且Chamfer/hit变为
+  `+0.445mm/+0.723pp`；禁止将post-hoc replay改写为旧M0通过，禁止继续扫unknown threshold；
+- B证明`V71-F05`不是grid/band空：885,574 grid上band-only 57,323、occupied-only 107,830但joint=0，oracle band
+  33,280；known surface probes同样joint=0；
+- prevention：下一模型只能用单一部署surface对象训练；UNKNOWN可作为输入证据但不能作为未进入physical loss的硬删除
+  action。若研究implicit field，surface必须是一个signed/occupancy decision boundary，不能再把unsigned distance与
+  evidence argmax作后验AND；
+- 两项诊断正常完成，不占用`V71-F06`。M2 frozen前Source Final/AV2保持未读。
+
 ## V7.1 diagnostic prevention note — 冻结重放不升级为调参（2026-09-04）
 
 - A不得改变位移、weight、feature或compiler，只比较UNKNOWN mask on/off；结果不能用于回写旧M0 threshold；

@@ -1,5 +1,30 @@
 # Experiments
 
+## WS-V71-DIAG-A-M0-NO-UNKNOWN-MASK-01 — canonical frozen replay（2026-09-04）
+
+- run=`20260904T100054Z__diag-a-m0-no-unknown-mask-r1`；status=`done`；verdict=
+  `descriptive_frozen_replay_only`；
+- invariant=`same MODEL.pt / standardizer / compiler / displacement / 20 consumed Selection scenes`；唯一变化是接受全部
+  unknown probabilities；88 Actors（36 hazard）、126,088 rays；
+- no-mask literal early relative reduction=`5.213% all / 5.924% hazard / 2.267% clear`；
+- no-mask surface=`Chamfer +0.445mm`、hit recall=`+0.723pp`、retention=`100/100%`；原冻结门槛数值上5/5；
+- mask-on reference=`19.435% hazard early / +48.745mm / -10.819pp`；确认UNKNOWN硬删除而非位移是原表面退化主因；
+- resources=`141.163s`、peak GPU=`0.04948GiB`、RSS=`1.3773GiB`；source-final/external=false；
+- boundary=诊断由失败触发，不回写M0 verdict、不以此选择threshold。
+
+## WS-V71-DIAG-B-M1-FIELD-EXTRACTION-01 — canonical train decomposition（2026-09-04）
+
+- run=`20260904T100346Z__diag-b-m1-field-extraction-r1`；status=`done`；verdict=
+  `descriptive_train_field_decomposition_only`；64 eligible train Actors；
+- grid=`885,574 points`：band-only=`57,323 (6.47%)`，occupied-only=`107,830 (12.18%)`，joint=`0`；
+  oracle-distance band=`33,280`，证明grid/band不是空；
+- known surface probes=`19,582`：band-only=`138`，occupied-only=`11,210`，joint=`0`；geometry/evidence heads即使在
+  train target/anchor上也没有共同表面；
+- grid class=`23.03% FREE / 12.18% OCCUPIED / 64.79% UNKNOWN`；SCF planar/vertical median=
+  `0.1968/0.0896m`；
+- resources=`0.857s`、peak GPU=`0.01933GiB`、RSS=`0.8635GiB`；selection/source-final/external=false；
+- decision=关闭M1双head恢复，不扫band/grid/threshold；采用单一surface decision variable的新表示。
+
 ## WS-V71-DIAG-A/B — frozen diagnostic preregistration（2026-09-04）
 
 - A=`M0 MODEL.pt + original Selection compiler + threshold 1.01`；所有moved candidates保留，仅移除UNKNOWN hard mask；

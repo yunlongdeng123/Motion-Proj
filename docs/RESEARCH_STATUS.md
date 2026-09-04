@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7.1 diagnostics A/B complete / deploy-consistent displacement unlocked（2026-09-04）
+
+状态：`v71_diagnostics_complete_m2_unlocked`。A canonical=`run://worldsim_v71/
+WS-V71-DIAG-A-M0-NO-UNKNOWN-MASK-01/20260904T100054Z__diag-a-m0-no-unknown-mask-r1`：冻结M0位移不变、仅移除
+UNKNOWN hard mask后，88 Selection Actors的hazard early相对下降`5.924%`，Chamfer仅`+0.445mm`，hit recall
+`+0.723pp`，retention=`100/100%`；按原五项阈值数值上5/5，但该结果是failure-driven诊断，不回写旧verdict或冒充
+预注册confirmation。原mask-on结果为hazard early `19.435%`、Chamfer `+48.745mm`、hit `-10.819pp`。
+
+B canonical=`run://worldsim_v71/WS-V71-DIAG-B-M1-FIELD-EXTRACTION-01/
+20260904T100346Z__diag-b-m1-field-extraction-r1`：64 train Actors的885,574 grid points中，SCF band-only=`57,323`、
+occupied-only=`107,830`，joint extract=`0`；同grid oracle band=`33,280`。19,582个已知target/anchor probe中band-only=
+`138`、occupied-only=`11,210`、joint=`0`。因此grid/band可抽取，失败是SCF与evidence head的严格错位，不是单纯
+Selection泛化或grid分辨率。
+
+结合Occupancy Networks的单一decision-boundary、NeuS/Neural-Pull的signed zero-level set机制，下一主线冻结为M2
+deploy-consistent displacement-only：移除UNKNOWN action head/BCE与推理mask，训练和部署始终保留全部moved candidates；
+M1双head线关闭，不做band/threshold sweep。先完成M2 train-only训练，再对未读Source Final exact-once确认；AV2仍锁定。
+下一可用failure ID=`V71-F06`。
+
 ## WorldSim V7.1 frozen diagnostic runner ready（2026-09-04）
 
 状态：`v71_frozen_diagnostics_ready`。新增单一诊断runner，A加载canonical M0 checkpoint与standardizer，在已消费
