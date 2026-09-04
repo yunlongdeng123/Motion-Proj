@@ -22,6 +22,10 @@ if str(REPO_ROOT) not in sys.path:
 
 import run_worldsim_v71_m0_ray_displacement as m0_runner
 from motion_proj.worldsim_v71.actor_corpus import load_actor_cache
+from motion_proj.worldsim_v71.dataset_drivestudio import (
+    compile_processed_scene,
+    discover_processed_train_scenes,
+)
 from motion_proj.worldsim_v71.dataset_nuscenes import build_v71_index, compile_source_scene
 from motion_proj.worldsim_v71.first_return_renderer import literal_first_return_partition
 
@@ -105,6 +109,7 @@ def _counts(partition: Mapping[str, np.ndarray], point_count: int) -> dict[str, 
 
 def _actor_row(
     scene_name: str,
+    source_mode: str,
     bundle: Mapping[str, Any],
     cache_actor: Mapping[str, Any],
     config: Mapping[str, Any],
@@ -148,6 +153,7 @@ def _actor_row(
     row = bundle["row"]
     return {
         "scene_name": scene_name,
+        "source_mode": source_mode,
         "track_id": str(row["track_id"]),
         "category": str(row["category"]),
         "hazardous": bool(row["hazardous"]),
@@ -260,22 +266,59 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
         rows: list[dict[str, Any]] = []
         matched: set[tuple[str, str]] = set()
         scenes = sorted({scene for scene, _ in desired})
-        index = build_v71_index(
-            Path(config["source"]["dataset_root"]),
-            {"roles": {"train": scenes}},
+        manifest = json.loads(
+            (Path(config["cache_root"]) / "manifest.json").read_text(encoding="utf-8")
+        )
+        processed_scenes = set(str(value) for value in manifest["processed_completed_scenes"])
+        recovery = yaml.safe_load(
+            (repo_root / config["processed_recovery_config"]).read_text(encoding="utf-8")
+        )
+        processed_lookup = {
+            str(row["scene_name"]): Path(row["scene_root"])
+            for row in discover_processed_train_scenes(
+                [Path(value) for value in recovery["source"]["processed_roots"]],
+                Path(recovery["source"]["scene_metadata_path"]),
+                [],
+            )
+        }
+        raw_scenes = [scene for scene in scenes if scene not in processed_scenes]
+        raw_index = build_v71_index(
+            Path(config["source"]["dataset_root"]), {"roles": {"train": raw_scenes}}
         )
         _write_json(
             run_dir / "status.json",
             {"status": "running", "phase": "attribution", "selected_actors": len(desired), "source_scenes": len(scenes)},
         )
         for scene_index, scene_name in enumerate(scenes):
-            bundles = compile_source_scene(scene_name, index, config["actors"], compiler, device)
+            if scene_name in processed_scenes:
+                bundles = compile_processed_scene(
+                    scene_name,
+                    processed_lookup[scene_name],
+                    config["actors"],
+                    compiler,
+                    device,
+                    keyframe_stride=int(recovery["source"]["keyframe_stride"]),
+                    lidar_record_width=int(recovery["source"]["lidar_record_width"]),
+                )
+                source_mode = "processed_recovery"
+            else:
+                bundles = compile_source_scene(
+                    scene_name, raw_index, config["actors"], compiler, device
+                )
+                source_mode = "raw_s2"
             for bundle in bundles:
                 key = (scene_name, str(bundle["row"]["track_id"]))
                 if key not in desired:
                     continue
                 rows.append(
-                    _actor_row(scene_name, bundle, desired[key], config["evaluation"], device)
+                    _actor_row(
+                        scene_name,
+                        source_mode,
+                        bundle,
+                        desired[key],
+                        config["evaluation"],
+                        device,
+                    )
                 )
                 matched.add(key)
             print(
@@ -304,6 +347,8 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             "missing_actor_count": len(missing),
             "missing_actors": missing,
             "source_scene_count": len(scenes),
+            "raw_source_scene_count": len(raw_scenes),
+            "processed_recovery_scene_count": len(scenes) - len(raw_scenes),
             "metrics": metrics,
             "training": False,
             "checkpoint_written": False,

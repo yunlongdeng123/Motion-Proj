@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F32: M31 treated processed-recovery scenes as raw LiDAR scenes（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/20260905T014500Z__m31-anchor-contradiction-attribution-r2`；
+- symptom=`scene-0001`进入raw compiler后缺少已清理的`.pcd.bin`，抛`FileNotFoundError`；
+- exposure=0 scene compiled、0 Actor geometry/metric row；只读了cache manifest/IDs和nuScenes metadata；
+- root cause=r2修复scene locator但未恢复S2的per-scene producer lineage；processed-added Actors来自
+  `compile_processed_scene`，不是raw `compile_source_scene`；
+- literature/open-source response=MLflow dataset lineage要求把实际dataset source连接到run input；r3直接复用S2
+  canonical recovery config与adapter，不下载/重建另一份数据，也不加入hash/checksum/fingerprint；
+- recovery=manifest中processed scenes走DriveStudio processed adapter，其余走raw adapter；Actor/geometry/compiler/
+  metric全部保持；
+- claim impact=纯入口失败，不是科学负结果。下一failure ID=`V71-F33`。
+
 ## V71-F31: M31 source index omitted processed-recovery scenes（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/20260905T013000Z__m31-anchor-contradiction-attribution-r1`；

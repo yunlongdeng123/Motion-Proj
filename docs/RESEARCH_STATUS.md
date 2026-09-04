@@ -17,6 +17,12 @@ processed-corpus recovery、不在旧raw train/reserve split；train-only index�
 已登记`V71-F31`。遵循input lineage，r2只用缓存Actor携带的63个scene names构造read-only source index；Actor IDs、
 编译器、metric与所有科学合同不变。下一failure ID=`V71-F32`。
 
+r2按exact scenes建立了索引，但首个processed-recovery scene的raw `.pcd.bin`并不存在，在0 scene/0 metric时
+`FileNotFoundError`，登记`V71-F32`。S2 manifest与canonical recovery代码明确表明这42 scenes本来就通过保留的
+DriveStudio `lidar/instances/lidar_pose`资产生成；r3因此按manifest逐scene路由到原始raw adapter或完全相同的
+processed adapter，而不是要求不存在的raw文件。缓存Actor、source geometry、compiler和metric不变；
+下一failure ID=`V71-F33`。
+
 ## WorldSim V7.1 M30 set-order supported / interval utility bounded（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01/

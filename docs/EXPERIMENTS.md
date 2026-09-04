@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — r2 source-adapter failure / V71-F32（2026-09-05）
+
+- run=`20260905T014500Z__m31-anchor-contradiction-attribution-r2`；status=`failed` before scene compilation；
+- error=processed-recovery `scene-0001`被错误送入raw adapter，所需raw `.pcd.bin`本就未保留；
+- exposure=0 source scene compiled、0 Actor geometry/first-return metric row；
+- recovery=r3按S2 manifest复用raw或processed canonical producer；no data/Actor substitution；
+- no M21 partial quality read；next failure=`V71-F33`。
+
 ## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — r1 entry failure / V71-F31（2026-09-05）
 
 - run=`20260905T013000Z__m31-anchor-contradiction-attribution-r1`；status=`failed` before scene compilation；

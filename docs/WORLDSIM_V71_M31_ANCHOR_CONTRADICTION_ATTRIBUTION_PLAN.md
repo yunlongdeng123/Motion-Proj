@@ -20,8 +20,9 @@ This is diagnosis of the GT/supervision producer, not a post-hoc filter and not 
 
 - Cohort: the same sorted first-1,024 corpus eligibility and every-tenth holdout rule used by M30; expected 66 Actors.
 - Recovery: compile only the exact scene names carried by those cached Actors, with the frozen S2 Actor rules and P2
-  compiler. The S2 manifest records a processed-corpus recovery whose additions are not restricted to the original raw
-  train/reserve scene list, so the cached Actor list—not the older split file—is the input-lineage source of truth.
+  compiler. The S2 manifest determines whether each scene is replayed through the original raw adapter or the exact
+  DriveStudio processed-recovery adapter. The latter is necessary because its raw LiDAR was intentionally not retained.
+  The cached Actor list—not the older split file—is the input-lineage source of truth.
 - Operator: shared literal minimum positive depth inside a `0.20m` beam tube; early/hit tolerance `0.20m`.
 - Surfaces: raw query, rejected/unknown query, KEEP-only, PROJECT-only and ordered `KEEP+PROJECT` anchors.
 - Attribution: use the union first-return index, not nearest-point assignment, to label each early return KEEP or PROJECT.
