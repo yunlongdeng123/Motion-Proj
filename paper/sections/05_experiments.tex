@@ -416,6 +416,13 @@ worst-stratum criterion rejects M45. This isolates a train--renderer mismatch ra
 normals were learned for earliest hard intersection, while M45 uses them inside a global categorical CDF. We do not tune
 thickness; any successor must supervise orientation through that deployed CDF while freezing geometry and authority.
 
+M46 does so, updating only the normal/thickness output rows with GT not-early and hit-band events. Training safe and hit
+NLL both decrease, and relative to M39 the final model lowers all/clear early returns by 0.05/0.59 points while adding
+4.32 points of hit recall. Hazardous early returns instead increase by 0.062 points---more than the frozen M45 increase.
+We therefore reject and close oriented-support training. Renderer alignment is not sufficient when a local support degree
+of freedom must also absorb motion-, pose-, or incidence-dependent global ordering; the next analysis keeps these factors
+separate rather than feeding the hazard label to geometry.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

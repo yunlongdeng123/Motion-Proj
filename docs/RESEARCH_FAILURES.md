@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F45: CDF-supervised orientation improves clear rays but transfers risk to hazard rays（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01/20260905T104500Z__m46-cdf-oriented-s71146-r2`；
+- evidence=相对M39 all/clear early=`-0.048/-0.591pp`、all hit=`+4.320pp`，但hazard early=`+0.062pp`，
+  decisions=`2/3`；且hazard退化超过未训练M45的`+0.034pp`；
+- optimization=safe/hit NLL均下降，early probability下降、hit probability上升，无NaN/OOM；不是train--renderer
+  mismatch、梯度或资源失败；
+- root cause=统一GT interval loss在固定center/tangent/authority、仅normal/thickness可动时仍产生stratum-dependent
+  redistribution；local planar support无法单独解释hazard ray的global ordering，可能还含motion/pose/incidence差异；
+- anti-repeat=不调event/geometry权重、thickness bound、normal residual、epoch/seed/bin/median，不向surface head加入
+  hazard标签；冻结诊断motion/provenance/incidence后再决定是否需要显式dynamic/static层；
+- claim impact=M46不进external，M43仍是唯一冻结cross-domain candidate；oriented支线关闭。下一failure ID=
+  `V71-F46`。
+
 ## V7.1 M46 engineering note — missing fixed branch factor before training（2026-09-05）
 
 M46 r1在任何optimizer step/quality read前因config缺少M11 helper所需`branch_factor`退出；该值由M8/M11架构固定

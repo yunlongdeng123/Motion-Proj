@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T104500Z__m46-cdf-oriented-s71146-r2`；593 train / 66 holdout；4 epochs；verdict=
+  `m46_cdf_supervised_oriented_support_rejected`；decisions=`2/3`；
+- train safe/hit NLL=`2.133604→2.106216 / 3.350515→3.318745`；early/hit probability=
+  `0.236820→0.234746 / 0.570804→0.573459`；
+- M46-vs-M39 all early/hit=`-0.0484/+4.3202pp`；hazard=`+0.0619/+4.8045pp`；clear=
+  `-0.5906/+1.9387pp`；hazard gate fails；
+- M46-vs-unit baseline all early/hit=`-0.5695/+6.4924pp`；mean thickness=`0.020472m`；anisotropy=`7.908×`；
+- conclusion=renderer-aligned interval supervision strengthens clear/hit but worsens hazard split；close support training，next=
+  physical motion/provenance/incidence diagnosis；
+- GPU=`0.510GiB`，RSS=`1.370GiB`，wall=`63.80s`；no external/M43 partial read；failure=`V71-F45`。
+
 ## WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01 — r1 invalid / fixed（2026-09-05）
 
 - invalid run=`20260905T103000Z__m46-cdf-oriented-s71146-r1`；在optimizer step前`KeyError: branch_factor`；

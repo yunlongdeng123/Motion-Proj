@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M46 rejected / CDF-aligned support training amplifies hazard split（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01/
+20260905T104500Z__m46-cdf-oriented-s71146-r2`；593 train / 66 exposed holdout、4 epochs，verdict=
+`m46_cdf_supervised_oriented_support_rejected`，decisions=`2/3`。train safe NLL=`2.1336→2.1062`、hit NLL=
+`3.3505→3.3187`，early probability=`0.23682→0.23475`，优化正常。
+
+相对M39，all early=`-0.048pp`、clear=`-0.591pp`、all hit=`+4.320pp`，但hazard early=`+0.062pp`，
+比未微调M45的`+0.034pp`更差；相对unit baseline仍为all early=`-0.570pp`、hit=`+6.492pp`。mean thickness=
+`0.02047m`、anisotropy=`7.91×`。这证明train--renderer同构并非缺失的唯一条件：统一GT interval在仅support
+自由度下仍对不同物理ray分布产生相反迁移。关闭oriented-support training，不调event/geometry权重或thickness。
+下一步只做motion/provenance/incidence的冻结诊断，区分动静/pose误差与local support误差，不向模型输入hazard。
+无external/M43 partial read；登记`V71-F45`；下一failure ID=`V71-F46`。
+
 ## WorldSim V7.1 M46 r1 engineering interruption resolved（2026-09-05）
 
 无效run=`20260905T103000Z__m46-cdf-oriented-s71146-r1`在optimizer step前因resolved config漏写既有
