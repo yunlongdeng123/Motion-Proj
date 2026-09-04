@@ -37,3 +37,11 @@ post-result selection.
 
 The run is development-exposed and cannot replace M39 or alter the frozen M43 external candidate. It never reads partial AV2
 quality. If rejected, frame-balanced physical fine-tuning closes without changing ray groups, loss weights, seed, or epochs.
+
+## Outcome
+
+Canonical r2 completed in 103.45 s and was rejected (`0/2`). Actor-mean worst-frame early rate regressed by 1.135 points
+overall and 1.286 points for hazardous Actors; aggregate hazardous early rate regressed by 0.590 points. Chamfer improved by
+0.871 mm and all-ray hit recall changed by only +0.023 points. The 83.2--86.6% gradient-conflict rate and the simultaneous
+geometry/physical split show that equal-frame sampling is not a substitute for an explicit motion state or a hard-event-aligned
+geometry objective. The direction is closed without a retry; see `V71-F49`.

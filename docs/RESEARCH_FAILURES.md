@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F49: frame-balanced smooth first-return worsens hard temporal boundary（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/20260905T060000Z__m50-frame-balanced-first-s71150-r2`；
+- symptom=按target frame等权后，worst-frame early all/hazard/clear恶化`1.135/1.286/0.887pp`，aggregate hazard
+  early恶化`0.590pp`，两个冻结decision均失败；
+- retained evidence=Chamfer改善`0.871mm`、all hit `+0.023pp`，说明optimizer能移动surface，但不是physical Pareto；
+- mechanism=frame reweighting修正采样测度，却没有消除smooth differentiable depth与hard earliest-return event的
+  surrogate gap；geometry/physics gradients在`83.2--86.6%` batches冲突，且free loss最终略升；
+- literature response=DynamicVGGT/DeGO依靠显式scene-flow或rigid/non-rigid state supervision；当前vehicle corpus无
+  non-rigid target，不能用新deformation capacity掩盖该surrogate failure；
+- resolution=关闭frame-balance fine-tuning，不调frame cap、weight、margin、seed或epoch；不加motion/hazard/visibility
+  input，不替换M39/M43；未来若研究temporal evolution，必须有独立trajectory/scene-flow target和状态；
+- claim impact=M8 frame-balanced coverage仍成立，但不升级为per-frame hard-return consistency。
+
+下一可用编号：`V71-F50`。
+
 ## V71-F48: M50 loader omitted frozen M5 runtime centers（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/20260905T054500Z__m50-frame-balanced-first-s71150-r1`；

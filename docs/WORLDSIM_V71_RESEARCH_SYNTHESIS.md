@@ -54,6 +54,12 @@ Claim forbidden: using the GT-dependent derivative sign as a deployment gate, re
 
 M47 shows M46's hazard regression is not a reusable moving/static, KEEP/PROJECT, or incidence split. Hazard-moving rays slightly improve while hazard-quasi-static rays regress; five actor-level physical correlations have magnitude at most 0.100. M48 then shows that a supervised, bounded ray-conditioned visibility factor still transfers risk between hazard and clear strata. The visibility-head family is closed.
 
+M50 separately tests whether M8's pooled physical rays merely underweight sparse target frames. Equal-frame GT first-return
+training is rejected: actor-mean worst-frame early rate rises by 1.135 points overall and 1.286 points for hazardous Actors,
+while aggregate hazardous early rate rises by 0.590 points. Chamfer improves by 0.871 mm, so the failure is not lack of
+optimization; frame reweighting does not close the smooth-depth versus hard earliest-return surrogate gap. Temporal balancing
+is therefore closed as a substitute for explicit motion state.
+
 If future work predicts temporal evolution, canonical shape and deformation must be separate states: rigid motion should receive trajectory/scene-flow supervision; non-rigid deformation requires its own capacity and labels. Hazard is never a geometry or motion label.
 
 ## Cross-domain state

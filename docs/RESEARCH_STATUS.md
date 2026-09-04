@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M50 rejected / frame balance does not close hard first-return（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/
+20260905T060000Z__m50-frame-balanced-first-s71150-r2`；593/66 Actors、4 epochs，verdict=
+`m50_frame_balanced_physics_rejected`，decisions=`0/2`。训练normalized first loss仅`0.999885→0.998808`，
+free-space=`0.813654→0.814692`；梯度冲突=`83.2--86.6%`、cosine约`-0.38`。
+
+相对冻结M8，Actor-mean worst-frame early在all/hazard/clear上分别恶化`+1.135/+1.286/+0.887pp`，mean-frame
+early=`+0.451/+0.558/+0.276pp`；聚合all/hazard/clear early=`+0.545/+0.590/+0.328pp`。Chamfer改善
+`0.871mm`且all hit仅`+0.023pp`，不足以抵消physical regression。登记`V71-F49`；不调整frame grouping、
+loss/seed/epoch，不再把temporal balance当成motion解决方案。shape/motion仍分离，M39/M43不变、partial external未读。
+完整negative result已加入supplement；重编译15页、`2,335,999` bytes，无undefined reference，仍仅两处既有overfull。
+
 ## WorldSim V7.1 M50 r1 pre-training dependency failure / same-protocol recovery（2026-09-05）
 
 r1=`20260905T054500Z__m50-frame-balanced-first-s71150-r1`在重建冻结M8 reference children前因actor缺少

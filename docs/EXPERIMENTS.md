@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T060000Z__m50-frame-balanced-first-s71150-r2`；593 train / 66 exposed holdout；4 epochs；
+- normalized first=`0.999885→0.998808`，free=`0.813654→0.814692`；gradient conflict=`83.2--86.6%`；
+- actor-mean worst-frame early delta all/hazard/clear=`+1.135/+1.286/+0.887pp`；mean-frame=
+  `+0.451/+0.558/+0.276pp`；primary=false；
+- aggregate M50-vs-M8 early all/hazard/clear=`+0.545/+0.590/+0.328pp`；all hit=`+0.023pp`，
+  Actor-mean Chamfer=`-0.871mm`；Pareto guard=false；
+- verdict=`m50_frame_balanced_physics_rejected` (`0/2`)；failure=`V71-F49`；no retry/sweep；
+- resource=GPU `0.975GiB`、RSS `1.370GiB`、wall `103.45s`；external/M43 partial read=false。
+- paper=supplement新增M50段落并重编译为15页；0 undefined reference，两处既有overfull。
+
 ## WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01 — r1 engineering interruption（2026-09-05）
 
 - run=`20260905T054500Z__m50-frame-balanced-first-s71150-r1`；phase=loading；training/metric/external read=false；

@@ -451,6 +451,15 @@ exact/linear changes of $+0.00513/+0.00295$. The observed 0.366-point early regr
 between 1.258 points of newly early and 0.892 points of repaired rays. This converts a negative ablation into a reusable
 boundary: component attenuation cannot provide a universal safety guarantee in a jointly normalized return measure.
 
+M50 asks whether temporal physical consistency instead fails because pooled ray sampling underweights sparse target frames.
+Starting from frozen M8, it keeps the same canonical geometry and losses but averages literal first-return and free-before-hit
+equally over target sensor origins. The four-epoch run improves Chamfer by 0.871\,mm and changes all-ray hit recall by only
+$+0.023$ points, yet actor-mean worst-frame early rate rises by 1.135 points overall and 1.286 points for hazardous Actors.
+Aggregate all/hazard/clear early rates rise by $0.545/0.590/0.328$ points. Geometry and physical gradients conflict in
+83.2--86.6\% of batches. We reject the single run without changing frame groups or weights: balancing GT frames changes the
+sampling measure but does not close the smooth-depth versus hard earliest-return surrogate gap, and it is not evidence for a
+motion or visibility head.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m49_attenuation_sign_boundary.pdf}
