@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M40 train--deploy aligned joint authority frozen（2026-09-05）
+
+状态=`v71_m40_joint_categorical_evidential_authority_frozen`，详见
+[`WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md`](WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md)。
+初始化M35 anchor/M38 child heads并冻结M8 geometry/scale/trajectory；训练与部署统一为continuous-authority
+weighted Gaussian categorical surface-return distribution。GT one-hot first-return直接监督所有bins，anchor/child
+held-out F/O/U soft CE持续保留。固定4 epochs/seed71140，无geometry/scale/bin/median/loss sweep，无threshold/
+delete/filter。五项判定含三项ray与两项authority identifiability；无external/M21 partial read。下一failure ID=
+`V71-F40`。
+
 ## WorldSim V7.1 M39 supported / evidential categorical surface-return composition（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01/

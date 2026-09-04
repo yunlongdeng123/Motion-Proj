@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M40 pre-registration note — direct return loss cannot erase evidential semantics（2026-09-05）
+
+M40联合更新anchor/child head但冻结全部几何；categorical first-return与部署同构，同时持续保留两套GT F/O/U soft
+CE。若ray改善而任一occupied correlation低于0.25，仍视为不可解释global reweighting并登记`V71-F40`；失败后
+不调loss/epoch/seed/bin/median。下一failure ID=`V71-F40`。
+
 ## V7.1 M39 outcome note — authority is surface-return evidence, not additive volume density（2026-09-05）
 
 M39无新failure。事前固定M38主candidate在categorical composition下all/hazard/clear early均不增且all hit保留，

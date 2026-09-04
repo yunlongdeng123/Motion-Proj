@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01 — frozen（2026-09-05）
+
+- init=M35 anchor + M38 child heads；frozen M8 centers/scales/trajectory；same 593/66 exposed split；
+- train/deploy=continuous-authority weighted Gaussian categorical surface-return distribution；32 train / 64 eval bins；
+- losses=native one-hot first-return CE + depth L1 + anchor/child GT F/O/U soft CE；4 epochs、seed71140；
+- decisions=all+hazard+clear early nonincrease、all hit delta≥-1pp、anchor/child occupied correlation≥0.25；
+- no geometry/scale/bin/median/loss/seed sweep，no threshold/delete/filter；no external/M21 partial read；next
+  failure=`V71-F40`。
+
 ## WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01 — canonical supported（2026-09-05）
 
 - run=`20260905T070000Z__m39-categorical-authority-r1`；66 exposed holdout / 99,208 rays；training=false；
