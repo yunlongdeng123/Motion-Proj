@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M23 prevention note — 视觉属性不得反向改写物理carrier（2026-09-04）
+
+- Gau-Occ式joint FFN不能作为geometry preservation证据；M23只复制同Actor SH/opacity，不复制appearance几何；
+- physical center/scale由冻结M8/GT supervision唯一决定，appearance assignment没有梯度、loss或checkpoint写回；
+- Background、trajectory、image pixels与semantic/hazard不进入M21 physics；
+- assignment距离只描述visual support稀疏性，不作为删除、拒绝或几何移动阈值；所有12 Actors保留；
+- 若identity/attribute覆盖失败则登记`V71-F26`，不通过跨Actor匹配或扩大搜索半径补偿。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M22 paper prevention note — SE(3)恒等式不得扩权（2026-09-04）
 
 - method将motion写成inverse-query composition，不称per-frame learned geometry或post-hoc correction；

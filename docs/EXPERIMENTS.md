@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01 — frozen protocol（2026-09-04）
+
+- cohort=M22 same 12 identity-matched scene-0230 Actors；no selection；
+- carrier=frozen M8 centers/scales；anchors=`0.08m`；
+- attributes=same-Actor nearest StreetGS `_features_dc/_features_rest/_opacities` only；
+- forbidden=no appearance center/scale/rotation copy、no image-to-geometry gradient、no checkpoint/background/trajectory write；
+- artifact=geometry-locked appearance sidecar + read-only rendered reference；
+- decisions=12 identity matches、100% attribute assignment、Actor/hazard retention100%；assignment distance descriptive only；
+- no training/render filter/sweep/external read；next failure=`V71-F26`。
+
 ## WorldSim V7.1 CVPR manuscript — M22 milestone（2026-09-04）
 
 - method=新增Actor-canonical energy经只读SE(3) inverse-query搬运公式；

@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M23 geometry-locked appearance protocol frozen（2026-09-04）
+
+状态=`v71_m23_geometry_locked_appearance_frozen`，详见
+[`WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md`](WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md)。
+依据Gau-Occ反边界、Feature 3DGS与Neural Shell Texture Splatting，M23不让image feature预测或更新center/scale；
+冻结M8 physical Gaussians，仅在同Actor canonical frame复制最近StreetGS Gaussian的SH/opacity属性。
+
+固定M22同一12-Actor cohort，输出geometry-locked sidecar与原rendered appearance reference；只报告assignment距离和原M8
+physical指标，不把属性附着包装成几何/渲染性能。M21仍5/20等待第6个log，唯一downloader/evaluator存活、剩余93GiB，
+partial quality未读。下一failure ID仍为`V71-F26`。
+
 ## WorldSim V7.1 CVPR manuscript M22 factorisation update（2026-09-04）
 
 论文method已加入`E_world(x,t)=E_actor(R_t^T(x-t_t))`的inverse-query部署定义，明确trajectory只搬运M8/M21
