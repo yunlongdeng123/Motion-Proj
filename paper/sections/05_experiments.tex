@@ -392,13 +392,22 @@ not directly control whether the deployed CDF median crosses the early-return bo
 ordered probability events used by the physical evaluation itself.
 
 M42 consequently optimizes two GT-defined interval events under the same conserved representation: survival before
-$d_{\mathrm{gt}}-0.20$,m and return within $\pm0.20$,m of the observed endpoint. Aggregate early returns are 0.05 points
+$d_{\mathrm{gt}}-0.20$\,m and return within $\pm0.20$\,m of the observed endpoint. Aggregate early returns are 0.05 points
 below the unit-energy reference and hit recall is 2.54 points higher; hazardous early returns also improve by 0.11 points.
 However, clear-stratum early returns increase by 0.22 points, and the predicted early-event probability itself rises
 slightly during training while only the hit-band likelihood improves. We reject M42 under the frozen worst-stratum rule.
 This negative result is informative: defining physical consistency from GT events is necessary, but a global interval
 objective does not by itself remove stratum-dependent ambiguity in a fixed geometry and surface measure. We therefore stop
 development-set loss tuning and retain the simpler frozen M39 representation for one cross-domain evaluation.
+
+M44 then applies the exact accounting in Eq.~\ref{eq:categorical-safety-boundary}. Across all 99,208 rays, the CDF
+condition and rendered early decision agree exactly, and anchor--child decomposition has maximum residual
+$2.98\times10^{-7}$. M39 lowers mean pre-boundary mass by 0.331 points relative to unit energy: observed anchors contribute
+$-0.346$ points, whereas completion children contribute $+0.016$ points. For clear Actors, child mass instead rises by
+0.163 points and cancels much of the 0.265-point anchor reduction. Thus the supported aggregate change is not a completion
+filter: it is driven by supervised anchor authority, while the remaining clear-stratum sensitivity is localized to child
+surface measure. Early and non-early rays have mean boundary CDF 0.827 and 0.114, respectively, furnishing a direct
+explanation of safety margin without creating a new deployment gate.
 
 \begin{figure}[t]
   \centering

@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M44 completed / exact safety boundary attributes M39 gain to anchors（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01/
+20260905T093000Z__m44-categorical-safety-responsibility-r1`；66 exposed holdout / 99,208 rays，training=false，
+verdict=`m44_exact_categorical_safety_responsibility_completed`。部署median early与
+`CDF(d_gt-0.20m)>0.5`等价率=`100%`，anchor+child boundary质量分解最大残差=`2.98e-7`。
+
+M39相对unit baseline的mean boundary CDF从`0.24344→0.24013`（`-0.331pp`）；其中anchor pre-boundary
+质量=`-0.346pp`，child=`+0.016pp`，故整体`-0.521pp` early改善几乎完全来自GT-supervised observed-anchor
+authority，而不是completion后处理。hazard anchor/child=`-0.363/-0.014pp`；clear=`-0.265/+0.163pp`，
+后者揭示child前方质量抵消anchor改善，是M42 clear-stratum失效的表示级解释。M39 early/non-early ray的
+boundary CDF均值=`0.8275/0.1141`，安全margin可直接解释但不得转为删点/拒绝门控。无external/M43 partial
+read；无新failure，下一failure ID=`V71-F43`。
+
 ## WorldSim V7.1 M44 categorical safety responsibility frozen（2026-09-05）
 
 状态=`v71_m44_categorical_safety_responsibility_frozen`，详见

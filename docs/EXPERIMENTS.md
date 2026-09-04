@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01 — canonical completed（2026-09-05）
+
+- run=`20260905T093000Z__m44-categorical-safety-responsibility-r1`；66 exposed holdout / 99,208 rays；
+  verdict=`m44_exact_categorical_safety_responsibility_completed`；training=false；
+- median-early / boundary-CDF equivalence=`1.0` for baseline and M39；maximum anchor+child decomposition residual=
+  `2.98e-7`；
+- baseline/M39 boundary CDF mean=`0.243437/0.240128`（`-0.003309`）；anchor pre-boundary delta=
+  `-0.003465`，child=`+0.000155`；
+- hazard anchor/child pre-boundary delta=`-0.003631/-0.000144`；clear=`-0.002646/+0.001629`；
+  M39 early/safe boundary CDF mean=`0.827462/0.114107`；
+- interpretation=M39 early改善由observed-anchor authority主导；clear completion前方质量抵消大部分改善；
+  explanation only，no filter/gate/model selection/external/M43 partial read；GPU=`0.389GiB`，RSS=`1.171GiB`，
+  wall=`14.56s`；no new failure，next=`V71-F43`。
+
 ## WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01 — frozen（2026-09-05）
 
 - representation=frozen M39 normalized joint categorical measure over 64 depth bins × all anchor/child primitives；

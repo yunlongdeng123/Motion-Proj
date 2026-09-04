@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M44 outcome note — completion risk is now isolated, not filtered（2026-09-05）
+
+M44无新failure。99,208 rays上median early与boundary CDF条件100%等价，family分解残差=`2.98e-7`。
+M39整体pre-boundary CDF下降`0.331pp`由anchor `-0.346pp`贡献，child反而`+0.016pp`；clear中child增量
+`+0.163pp`抵消anchor `-0.265pp`。因此后续若external失败，应研究child-specific supervision/representation
+的跨域稳定性，不得把CDF margin变成threshold、UNKNOWN mask、删child或case rejection，也不得继续调M42全局
+loss。下一failure ID仍=`V71-F43`。
+
 ## V7.1 M44 interpretation note — safety accounting is not post-hoc consistency（2026-09-05）
 
 M44只解释由M35/M38 GT F/O/U supervision得到的M39 surface measure：early boundary由pre-GT CDF是否超过0.5
