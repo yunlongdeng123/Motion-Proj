@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7.1 M41 rejected / point-bin CE does not control deployed CDF event（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M41-CONSERVED-SURFACE-MEASURE-01/
+20260905T080000Z__m41-conserved-measure-s71141-r1`；593 train / 66 exposed holdout、4 epochs，verdict=
+`m41_development_rejected`，decisions=`3/5`。family total最大数值残差仅`1.53e-5`，故守恒实现生效；
+categorical NLL=`6.6924→6.6830`，anchor/child CE=`0.9420→0.9118 / 0.7802→0.7472`。
+
+relative authority仍可辨识：anchor/child occupied correlation=`0.5236/0.6128`。但相对baseline，all/hazard/
+clear early=`+0.763/+0.773/+0.716pp`，all hit=`+3.239pp`；相对M39为early `+1.284pp`、hit
+`+1.066pp`。这排除family总量漂移作为唯一根因：族内重分配也能提高单GT-bin概率/命中，却把部署0.5-CDF
+中位数推过early边界。
+
+M42改为与验收同构的GT interval likelihood：直接最大化`P(not early)`与`P(hit within ±0.20m)`，保留M41
+分族守恒和两项F/O/U CE，删除point-bin CE/expected-depth代理。依据LidaRF的LiDAR sight/CDF监督与ordinal
+depth原则，顺序风险必须进入loss。GPU=`0.411GiB`、RSS=`1.341GiB`、wall=`37.89s`；无external/M21
+partial read。登记`V71-F41`；下一failure ID=`V71-F42`。
+
 ## WorldSim V7.1 M41 conserved evidential surface measure frozen（2026-09-05）
 
 状态=`v71_m41_conserved_surface_measure_frozen`，详见

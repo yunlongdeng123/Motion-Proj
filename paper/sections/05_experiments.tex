@@ -385,6 +385,12 @@ Thus the ray objective exploits a family-amplitude degree of freedom: it transfe
 completion family. We reject the checkpoint despite its better evidential ranking and next conserve the separately
 supervised anchor and child measure before allowing within-family redistribution.
 
+M41 enforces that conservation to within $1.53\times10^{-5}$ per Actor, yet fine-tuning still raises early returns by
+1.28 points over M39 while adding 1.07 points of hit recall. Anchor/child evidence correlations improve to 0.524/0.613.
+The remaining mismatch is therefore not total measure or identifiability: maximizing a nominal target-bin likelihood does
+not directly control whether the deployed CDF median crosses the early-return boundary. This motivates supervision on the
+ordered probability events used by the physical evaluation itself.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

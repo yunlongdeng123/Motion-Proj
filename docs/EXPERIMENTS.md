@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M41-CONSERVED-SURFACE-MEASURE-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T080000Z__m41-conserved-measure-s71141-r1`；593 train / 66 holdout；4 epochs；
+  verdict=`m41_development_rejected`；decisions=`3/5`；
+- categorical NLL=`6.692411→6.682990`；anchor CE=`0.941952→0.911801`；child CE=
+  `0.780187→0.747169`；anchor/child occupied correlation=`0.523621/0.612779`；
+- family total maximum residual=`1.53e-5`；M41-vs-baseline all early/hit=`+0.7630/+3.2387pp`；
+  hazard=`+0.7726/+3.6073pp`；clear=`+0.7158/+1.4257pp`；
+- M41-vs-M39 all early/hit=`+1.2842/+1.0664pp`；conservation removes family amplitude shortcut but
+  point-bin CE still moves the deployed median across early boundary；
+- next=GT interval likelihood on `not early` and `hit ±0.20m` under same conserved measure；
+- GPU=`0.411GiB`，RSS=`1.341GiB`，wall=`37.89s`；no external/M21 partial read；next failure=`V71-F42`。
+
 ## WS-V71-M41-CONSERVED-SURFACE-MEASURE-01 — frozen（2026-09-05）
 
 - init=last-supported M35 anchor + M38 child；reference totals=frozen per-Actor anchor/child occupied sums；

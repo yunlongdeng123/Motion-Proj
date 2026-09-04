@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F41: M41 conserved family measure still optimizes the wrong CDF event（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M41-CONSERVED-SURFACE-MEASURE-01/20260905T080000Z__m41-conserved-measure-s71141-r1`；
+- evidence=family-total residual=`1.53e-5`且anchor/child correlation=`0.5236/0.6128`，但all/hazard/clear
+  early=`+0.763/+0.773/+0.716pp`；all hit=`+3.239pp`，decisions=`3/5`；
+- optimization=NLL与两项CE持续下降，无NaN/OOM；不是measure守恒失效或可辨识性不足；
+- root cause=单GT-bin CE只提高该bin相对概率，不约束`CDF(d_gt-0.20)<0.5`这一部署median safety event；族内
+  redistribution可同时增加hit和early；
+- literature response=LidaRF（CVPR 2024）用LiDAR sight loss约束GT depth附近的ray-weight distribution并通过
+  CDF计算；ordinal depth文献明确指出nominal CE忽略顺序。M42直接训练not-early和hit-band区间概率；
+- anti-repeat=不调M41 conservation/epoch/seed/bin/median或evidential weight；保留分族measure，替换错误的
+  point-bin/depth代理为验收同构interval likelihood；
+- claim impact=M41不进external；sampling-density total shortcut已排除，剩余是loss-to-decision mismatch。
+  下一failure ID=`V71-F42`。
+
 ## V7.1 M41 pre-registration note — conserved measure is not an opacity threshold（2026-09-05）
 
 M41冻结的是由M39 GT-supervised heads给出的每Actor两族总measure，不是按M40错误ray或holdout结果设置的阈值；
