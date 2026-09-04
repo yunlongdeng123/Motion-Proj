@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M21 fresh AV2 evaluator active（2026-09-04）
+
+状态=`v71_m21_frozen_gaussian_energy_av2_running`。Evaluator PID=`25098`，已处理`5/20`完整logs、`129` Actor
+rows，正在等待第6项`36aec72e-5086-376c-b109-295b128e77e1`；唯一s5cmd downloader PID=`21975`存活，
+剩余磁盘约`93GiB`。只读取status/progress/Actor count，未读取`EXTERNAL_ACTORS.partial.jsonl`或任何partial quality。
+
+M21与既有M5/M7/M8/M18 evaluator只读同一`.complete`数据，不启动第二下载器；20/20前不作外域方法选择。下一failure
+ID仍为`V71-F25`。
+
 ## WorldSim V7.1 M21 frozen M8 Gaussian energy external protocol（2026-09-04）
 
 状态=`v71_m21_frozen_gaussian_energy_external_frozen`，详见

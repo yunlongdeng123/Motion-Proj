@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M21-FROZEN-GAUSSIAN-ENERGY-AV2-01 — active（2026-09-04）
+
+- run=`20260904T154000Z__m21-frozen-gaussian-energy-av2-r1`；PID=`25098`；
+- progress=`5/20 logs / 129 Actor rows`；waiting=`36aec72e-5086-376c-b109-295b128e77e1`；
+- downloader=`single PID 21975`；disk free=`~93GiB`；
+- partial quality read=false；only progress/count/process state observed；
+- no training/adaptation/calibration/filter/threshold/second downloader；final aggregate only at20/20。
+
 ## WS-V71-M21-FROZEN-GAUSSIAN-ENERGY-AV2-01 — frozen protocol（2026-09-04）
 
 - source=canonical M8 checkpoint；no additional training；development-selected candidate；

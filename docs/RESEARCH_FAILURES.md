@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M21 launch note — 只读进度、不读partial quality（2026-09-04）
+
+- evaluator PID=`25098`，当前`5/20 logs / 129 Actors`，等待第6个log；
+- 唯一downloader PID=`21975`，没有并发第二下载器；剩余磁盘约`93GiB`；
+- 已读取字段仅为status、log id、Actor row count和进程状态；partial metric/row未读；
+- M21完成前不得用M5/M7/M8/M18/M21任一partial quality修改checkpoint、scale、bin、threshold或cohort。
+
+下一可用编号仍为：`V71-F25`。
+
 ## V7.1 M21 prevention note — development-selected energy只能由fresh AV2确认（2026-09-04）
 
 - M21固定canonical M8 checkpoint、M8 children scale、anchor scale `0.08m`、64 bins和CDF median；无训练；
