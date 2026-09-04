@@ -1,5 +1,29 @@
 # Experiments
 
+## WS-V71-M12-FINITE-PLANAR-CHART-01 — frozen protocol（2026-09-04）
+
+- representation=canonical M8 center/tangent radius as finite zero-thickness disc + learned unit normal；
+- decomposition=center/radius/point/trajectory frozen；normal head only changes surface chart orientation；
+- GT=8NN sign-invariant local normal + point-to-plane + in-radius endpoint coverage；
+- physics=analytic differentiable ray--disc first entrance/free-space，identical train/deployment operator；
+- evaluation=exact minimum positive ray--disc intersection；all charts retained；no ellipsoid support/opacity/filter；
+- gates=canonical M8 point five contracts + hazard chart early `>=5%` + chart hit delta `>=-1pp`；
+- one seed `71114` / 6 epochs；no radius multiplier/loss/seed/epoch sweep；no motion/image/hazard input；
+- claim boundary=visible surface first-return only，no watertight occupancy/interior/collision-volume claim；
+- sources=Geometry Field Splatting and MAtCha Gaussians (CVPR 2025), 2D Gaussian Splatting surface primitive principle。
+
+## WS-V71-M11-EXACT-SUPPORT-SUPERVISION-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T230000Z__m11-exact-support-s71113-r1`；verdict=`m11_development_rejected`；6/7 gates；
+- frozen M8 point metrics=hazard/all early=`5.123/3.901%`，Chamfer=`-6.207mm`，hit=`+2.759pp`，retention 100%；
+- exact support early relative change vs M8 all/hazard/clear=`-1.012/-1.213/+0.539%`；hazard gate fails；
+- support hit delta all/hazard/clear=`+0.026/+0.097/-0.322pp`；hit gate passes；
+- training exact first=`0.99950→0.99932`、free=`0.76388→0.76340`、boundary=`0.98455→0.94704`；
+- mechanism=forward-model mismatch removed，but normal/thickness alone cannot alter fixed-center/tangent earliest collision without
+  reintroducing the support tradeoff；
+- decision=close ellipsoid support head；next=finite zero-thickness surface chart；failure=`V71-F15`；
+- resources=`99.936s / 0.1311GiB GPU / 1.3686GiB RSS`；no protected/external read。
+
 ## WS-V71-M11-EXACT-SUPPORT-SUPERVISION-01 — frozen protocol（2026-09-04）
 
 - representation=frozen canonical M8 centers/tangent radii + learned unit normal/normal thickness；

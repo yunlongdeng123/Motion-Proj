@@ -1,5 +1,27 @@
 # Research Status
 
+## WorldSim V7.1 M12 finite planar chart protocol frozen（2026-09-04）
+
+状态=`v71_m12_finite_planar_chart_frozen`，详见
+[`WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md`](WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md)。M9--M11表明
+ellipsoid作为碰撞实体始终需要在FREE precision与surface hit之间折中；M12不再把Gaussian `1σ`体积冒充物理边界，
+而将canonical M8 center/tangent radius解释为有限2D surface chart，显式学习GT normal。
+
+center/radius/trajectory仍冻结，训练和部署共用analytic ray--finite-disc intersection；GT local plane/normal/半径内覆盖与
+ray first/free共同监督normal head。该方案只主张显式可见表面，不主张watertight occupancy或物体内部。单seed 6轮，原M8
+point指标保持，hazard chart early改善`>=5%`且hit下降不超过`1pp`；下一failure ID=`V71-F16`。
+
+## WorldSim V7.1 M11 rejected / finite surface chart next（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M11-EXACT-SUPPORT-SUPERVISION-01/
+20260904T230000Z__m11-exact-support-s71113-r1`。冻结M8 center/tangent后，point五门全部按预期保持；exact support hit
+all/hazard=`+0.026/+0.097pp`，但support early all/hazard反而=`-1.012/-1.213%`（负值为恶化），最终6/7，登记
+`V71-F15`。训练exact first相对值停在`0.9993`，boundary降至`0.9470`，normal升至`1.0565`；无数值/资源故障。
+
+该结果排除M10的proxy mismatch后，进一步定位为ellipsoid support的结构边界：固定center/tangent时，normal/thickness
+局部调整能保hit但不能移除由primitive体积与遮挡竞争产生的earliest collision。依据CVPR 2025 Geometry Field Splatting与
+MAtCha Gaussians，下一步把碰撞语义从有厚度ellipsoid切换为zero-thickness finite surface chart；不调M11厚度/loss/seed。
+
 ## WorldSim V7.1 M11 exact support supervision frozen（2026-09-04）
 
 状态=`v71_m11_exact_support_supervision_frozen`，详见

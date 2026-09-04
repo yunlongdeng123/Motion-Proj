@@ -1,5 +1,33 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M12 prevention note — Gaussian appearance体不等于物理surface（2026-09-04）
+
+- M12部署primitive是zero-thickness finite disc chart，不能再以任意`σ` ellipsoid解释碰撞边界；
+- center/tangent radius逐值冻结M8，只有normal head可学习，point/temporal surface不得被chart physics改写；
+- GT normal、point-to-plane、in-radius coverage与exact disc first/free均在训练内，不能只在输出后把Gaussian压扁；
+- 所有charts保留，无opacity threshold、filter、mask或按hazard删除；结论仅限可见surface first-return；
+- 若hazard early或hit失败，登记`V71-F16`并关闭finite-chart family，不扫radius倍数/loss/seed/epoch。
+
+下一可用编号仍为：`V71-F16`。
+
+## V71-F15 — exact ellipsoid监督保住hit但无法降低earliest collision（2026-09-04）
+
+- 分类/状态：representation support identifiability / terminal for learned normal-thickness ellipsoid；canonical=
+  `20260904T230000Z__m11-exact-support-s71113-r1`；
+- 观察：M8 point surface被逐值冻结并通过原五门；exact support hit all/hazard=`+0.026/+0.097pp`，但early all/hazard
+  相对变化=`-1.012/-1.213%`，hazard `>=5%`门失败，最终6/7；
+- 优化审计：exact first=`0.9995→0.9993`基本不动，free=`0.7639→0.7634`，boundary=`0.9845→0.9470`，normal
+  `0.9967→1.0565`；梯度冲突约`46%–62%`，无NaN/OOM；
+- root cause：当center/tangent coverage冻结时，有限normal/thickness自由度只能改变有厚度ellipsoid体积，不能同时重排多
+  primitive earliest intersection并保持所有target intersections；解析forward同构排除了M10的采样代理解释；
+- literature/open-source response：CVPR 2025 Geometry Field Splatting明确以surface geometry field而非普通volume建模
+  opaque boundary；MAtCha将2D Gaussian surfel绑定到surface charts。迁移为finite zero-thickness chart，不复刻RGB渲染；
+- resolution：关闭M11 normal/thickness ellipsoid head，不调thickness/loss/seed/epoch；M12冻结M8 center/radius，学习GT
+  normal并直接训练/评价analytic ray--disc intersection；
+- claim impact：M8 point/temporal成立，Gaussian ellipsoid collision-support claim关闭。下一可用ID=`V71-F16`。
+
+下一可用编号：`V71-F16`。
+
 ## V7.1 M11 prevention note — 物理forward model与部署边界必须同构（2026-09-04）
 
 - M11训练和验收都使用同一analytic ray--oblate-ellipsoid entrance depth，禁止sampled alpha或sphere proxy；
