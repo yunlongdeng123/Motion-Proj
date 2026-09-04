@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 repository slim / diagnostics A-B active（2026-09-04）
+
+状态：`v71_repo_slim_diagnostics_active`。只归档已终止S1/S2/recovery/M0/M1/B4的6个一次性shell launcher到
+`scripts/archive/worldsim_v71_terminal/`；Python runner、冻结配置、1004-Actor corpus与canonical runs均保留，
+不会丢失负结果复现能力。Git reachable objects经repack由约`498MiB`压缩到`39MiB`，整个worktree由约`560MiB`
+降至`63MiB`；V7.1 data/run仅约`30MiB`，未删除。
+
+下一研究阶段直接执行两个train/Selection只读诊断：A=冻结M0 checkpoint取消UNKNOWN硬mask后重放，分离目标函数与
+部署策略；B=冻结M1 checkpoint分别审计SCF sign/range、evidence logits、grid sampling与zero-crossing extraction，定位
+0-point failure。两项不训练、不读取Source Final/AV2、不更改旧verdict；诊断后只选择一条训练—部署一致的新GPU研究线。
+无active failure；下一可用ID=`V71-F06`。
+
 ## WorldSim V7.1 terminal / learned surface Pareto rejected（2026-09-03）
 
 状态：`v71_research_complete_negative_boundary_paper_ready`。Mandatory B4 canonical=`run://worldsim_v71/

@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 repository prevention note — terminal wrapper归档，不动复现资产（2026-09-04）
+
+- 归档对象仅为6个已关闭阶段的一次性shell wrapper；实际runner/config/corpus/canonical artifact仍是active evidence；
+- Git repack只压缩可达对象，`.git`从约498MiB降至39MiB；不以删除历史、数据或权重换空间；
+- 后续不得从归档launcher误复开M0/M1或重读终测；诊断与新假设必须使用新run ID和独立runner；
+- 本阶段无scientific/engineering failure，不占用`V71-F06`。
+
 ## V7.1 terminal note — B4揭示相反端点，不新增failure（2026-09-03）
 
 - canonical=`run://worldsim_v71/WS-V71-B4-EVIDENTIAL-TSDF-01/

@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-REPO-SLIM-01 — recoverable maintenance milestone（2026-09-04）
+
+- scope=`repository-only`；0 dataset/model/quality read，0 training，0 metric/threshold/verdict change；
+- archived=`6 terminal shell launchers`；核心Python runner、configs、corpus和canonical run全部保留；
+- Git object database=`~498MiB → 39MiB`，worktree=`~560MiB → 63MiB`；只压缩reachable objects，没有删除研究数据；
+- V7.1 data/run=`~29MiB/~1.3MiB`，不具备值得冒险清理的空间收益；
+- validation=`git status + archive target inventory`；不运行smoke/regression；无hash/checksum/fingerprint；
+- next=`WS-V71-DIAG-A-M0-NO-UNKNOWN-MASK-01`与`WS-V71-DIAG-B-M1-FIELD-EXTRACTION-01`。
+
 ## WS-V71-B4-EVIDENTIAL-TSDF-01 — mandatory non-learned baseline（2026-09-03）
 
 - run=`20260903T120000Z__b4-evidential-tsdf-r1`；status=`done`；verdict=
