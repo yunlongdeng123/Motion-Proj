@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01 — frozen protocol（2026-09-04）
+
+- initialization=`canonical M0 encoder + first two displacement rows`；third UNKNOWN output不进入M2结构；
+- train surface=deploy surface=`anchors + all moved candidates`；loss=`normalized literal first-return + symmetric Chamfer
+  + 0.05 displacement + 0.05 local smooth + 0.25 frozen-teacher consistency`；无UNKNOWN BCE；
+- train=`up to 1004 corpus / candidate-bearing subset`；seed=`71103`，12 epochs，AdamW lr=`3e-4`；one run；
+- confirmation=`20 untouched source_final scenes exact-once`；五项门槛沿用M0，不调参；Selection不再读取；
+- external=`locked until all five source-final gates pass`；无hash/checksum/fingerprint；
+- validation budget=`py_compile only`，不做smoke/regression。
+
 ## WS-V71-DIAG-A-M0-NO-UNKNOWN-MASK-01 — canonical frozen replay（2026-09-04）
 
 - run=`20260904T100054Z__diag-a-m0-no-unknown-mask-r1`；status=`done`；verdict=

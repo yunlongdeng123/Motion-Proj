@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M2 deploy-consistent relocation ready（2026-09-04）
+
+状态：`v71_m2_ready_source_final_locked`。M2用canonical M0共享encoder和前两个位移输出初始化，结构上删除第三个
+UNKNOWN action logit；12轮train-only physical fine-tune始终以`anchors + all moved candidates`同时计算first-return与
+Chamfer，部署使用完全相同surface。保留0.25 teacher consistency只防止已证实位移突变，不再有evidence BCE、UNKNOWN
+threshold或hard mask。
+
+这一设计迁移Occupancy Networks的“surface=单一decision boundary”和NeuS/Neural-Pull的“训练对象即zero-level
+surface”原则，但优先利用A已证明可行的显式relocation，不立即扩张到新implicit field。固定seed71103、12 epochs、
+lr3e-4；不扫weight/epoch/seed。训练完成后直接一次读取20-scene Source Final；只有全部五项冻结合同通过才允许AV2
+zero-shot，否则登记`V71-F06`并转向单一signed/occupancy field。当前Source Final/AV2仍未读。
+
 ## WorldSim V7.1 diagnostics A/B complete / deploy-consistent displacement unlocked（2026-09-04）
 
 状态：`v71_diagnostics_complete_m2_unlocked`。A canonical=`run://worldsim_v71/

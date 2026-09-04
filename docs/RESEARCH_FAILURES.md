@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M2 prevention note — 一个surface贯穿训练与部署（2026-09-04）
+
+- M2不允许UNKNOWN action/output/threshold；UNKNOWN只保留在输入evidence mass中，不能删点；
+- checkpoint迁移只复制共享encoder和ray/normal两行，第三行显式丢弃；训练loss与部署都使用全部moved candidates；
+- 不因Source Final结果调teacher weight、epoch、lr或seed；五项任一失败即`V71-F06`并关闭M2；
+- 只有Source Final五项全过才读取AV2；实现阶段无failure。
+
 ## V7.1 diagnostic closure — F04/F05根因完成分解，不新增failure（2026-09-04）
 
 - A证明`V71-F04`主要来自部署UNKNOWN mask：相同冻结位移取消mask后，hazard early仍下降5.924%，且Chamfer/hit变为

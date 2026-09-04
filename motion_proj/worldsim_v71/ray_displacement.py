@@ -111,6 +111,62 @@ class RaySurfaceDisplacementMLP(nn.Module):
         return self.head(torch.cat([encoded, pooled], dim=-1))
 
 
+class RaySurfaceRelocationMLP(nn.Module):
+    """只输出ray/normal位移；训练与部署都保留全部candidate。"""
+
+    def __init__(self, input_dim: int, hidden_dim: int = 128) -> None:
+        super().__init__()
+        self.point_encoder = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+        )
+        self.head = nn.Sequential(
+            nn.Linear(hidden_dim * 2, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 2),
+        )
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        encoded = self.point_encoder(features)
+        pooled = encoded.max(dim=0, keepdim=True).values.expand_as(encoded)
+        return self.head(torch.cat([encoded, pooled], dim=-1))
+
+
+def initialize_relocation_from_m0(
+    relocation: RaySurfaceRelocationMLP,
+    source: RaySurfaceDisplacementMLP,
+) -> None:
+    """复制M0共享表示与两个位移输出，明确丢弃UNKNOWN logit。"""
+
+    relocation.point_encoder.load_state_dict(source.point_encoder.state_dict())
+    relocation.head[0].load_state_dict(source.head[0].state_dict())
+    with torch.no_grad():
+        relocation.head[2].weight.copy_(source.head[2].weight[:2])
+        relocation.head[2].bias.copy_(source.head[2].bias[:2])
+
+
+def apply_predicted_relocation(
+    candidates: torch.Tensor,
+    ray_directions: torch.Tensor,
+    normals: torch.Tensor,
+    prediction: torch.Tensor,
+    *,
+    maximum_ray_displacement_m: float,
+    maximum_normal_displacement_m: float,
+    actor_half_size_m: torch.Tensor,
+    cuboid_padding_m: float,
+) -> torch.Tensor:
+    if prediction.shape[-1] != 2:
+        raise ValueError("relocation prediction必须只有ray/normal两个分量")
+    ray_delta = torch.tanh(prediction[:, 0]) * float(maximum_ray_displacement_m)
+    normal_delta = torch.tanh(prediction[:, 1]) * float(maximum_normal_displacement_m)
+    moved = candidates + ray_delta[:, None] * ray_directions + normal_delta[:, None] * normals
+    bounds = actor_half_size_m.reshape(1, 3) + float(cuboid_padding_m)
+    return torch.maximum(torch.minimum(moved, bounds), -bounds)
+
+
 def apply_predicted_displacement(
     candidates: torch.Tensor,
     ray_directions: torch.Tensor,
