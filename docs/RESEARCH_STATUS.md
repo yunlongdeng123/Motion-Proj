@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7.1 M8 pre-step tensor recovery（2026-09-04）
+
+首次M8入口在第一个optimizer step前终止：`frame_targets_t`于`torch.inference_mode()`内创建，`torch.cdist`反传拒绝保存
+inference tensor。无optimizer update、无holdout/external quality read，登记`V71-F12`。修复仅将已有target tensor创建移出
+inference上下文；M7/M5初始化、frame grouping、loss、seed、epoch、split、gate均不变，使用新run-id执行。下一failure
+ID=`V71-F13`。
+
 ## WorldSim V7.1 M8 temporal factorisation protocol frozen（2026-09-04）
 
 状态=`v71_m8_temporal_factorisation_frozen`，详见

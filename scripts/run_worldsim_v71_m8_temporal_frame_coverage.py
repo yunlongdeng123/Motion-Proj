@@ -280,7 +280,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 actor["m5_centers_t"] = centers.detach()
                 children, _, _ = m7_runner._predict(model, actor, m7_config["model"])
                 actor["m7_children_t"] = children.detach().clone()
-                _prepare_temporal_actor(actor, config["model"], device)
+        for actor in actors:
+            _prepare_temporal_actor(actor, config["model"], device)
         stride = int(config["model"]["holdout_stride"])
         train_actors = [actor for index, actor in enumerate(actors) if index % stride != 0]
         holdout_actors = [actor for index, actor in enumerate(actors) if index % stride == 0]
@@ -460,4 +461,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

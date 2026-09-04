@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01 — pre-step recovery（2026-09-04）
+
+- failed run=`20260904T201000Z__m8-temporal-frame-s71110-r1`；failure=`V71-F12`；
+- phase=first training minibatch before backward/optimizer step；error=inference-created target tensor cannot be saved by
+  autograd through `torch.cdist`；
+- exposure=0 updates，0 holdout metrics，0 Selection/Source Final/AV2 quality read；
+- repair=create frame target tensors outside `torch.inference_mode()`；all scientific fields/config remain unchanged；
+- rerun=new run-id only；next failure ID=`V71-F13`。
+
 ## WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01 — frozen protocol（2026-09-04）
 
 - hypothesis=union target可被稠密帧支配；逐帧等权GT coverage可改善跨时刻几何而不把motion写进shape；

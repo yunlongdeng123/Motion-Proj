@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F12 — M8帧target在inference上下文创建导致首步autograd拒绝（2026-09-04）
+
+- 分类/状态：engineering / recovered before optimizer step；run=`20260904T201000Z__m8-temporal-frame-s71110-r1`；
+- 观察：首个minibatch的`torch.cdist`报`Inference tensors cannot be saved for backward`；
+- root cause：加载冻结M5/M7输出与构造帧target共用了同一个`torch.inference_mode()`块；后者随后参与M8梯度图；
+- exposure：0 backward/optimizer update、0 holdout/Selection/Source Final/external quality read，不产生科学trial；
+- resolution：只把`_prepare_temporal_actor`移到inference块外；target内容、帧组、loss、模型、seed、split和gate不变；
+- prevention：冻结模型推理tensor与训练监督tensor分阶段构造；不为此增加全套回归测试；
+- claim impact：无；新run-id恢复，下一可用failure ID=`V71-F13`。
+
+下一可用编号：`V71-F13`。
+
 ## V7.1 M8 prevention note — 不让trajectory或appearance替geometry解释误差（2026-09-04）
 
 - M8 geometry head沿用M7输入，明确排除trajectory、velocity、timestamp、hazard与image；不能靠给动态Actor单独容量通过；
