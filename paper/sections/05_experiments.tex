@@ -409,6 +409,13 @@ filter: it is driven by supervised anchor authority, while the remaining clear-s
 surface measure. Early and non-early rays have mean boundary CDF 0.827 and 0.114, respectively, furnishing a direct
 explanation of safety margin without creating a new deployment gate.
 
+Finally, M45 replaces only the completion-child isotropic kernel by the frozen M11 GT-supervised oblate kernel. Relative
+to M39, all and clear early returns fall by 0.02 and 0.28 points, and hit recall rises by 3.87 points; the mean anisotropy
+is 8.10 with 0.020,m normal thickness. Hazardous early returns nevertheless rise by 0.034 points, so the frozen
+worst-stratum criterion rejects M45. This isolates a train--renderer mismatch rather than refuting planar support: M11
+normals were learned for earliest hard intersection, while M45 uses them inside a global categorical CDF. We do not tune
+thickness; any successor must supervise orientation through that deployed CDF while freezing geometry and authority.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

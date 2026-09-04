@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T100000Z__m45-oriented-categorical-r1`；66 exposed holdout / 99,208 rays；training=false；
+  verdict=`m45_oriented_categorical_rejected`；decisions=`2/3`；
+- oriented-vs-M39 all early/hit=`-0.0192/+3.8676pp`；hazard=`+0.0340/+4.3132pp`；clear=
+  `-0.2804/+1.6762pp`；hazard early nonincrease fails；
+- oriented-vs-unit baseline all early/hit=`-0.5403/+6.0398pp`；mean thickness=`0.020010m`；mean anisotropy=
+  `8.096×`；
+- conclusion=GT planar support sharply improves categorical hit and clear safety, but frozen M11 hard-intersection normals do
+  not control hazard global ordering；no thickness/normal/scale sweep；
+- GPU=`0.164GiB`，RSS=`1.170GiB`，wall=`11.55s`；no external/M43 partial read；failure=`V71-F44`；next=
+  train-only categorical interval supervision of normal/thickness, with geometry/authority frozen。
+
 ## WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01 — frozen（2026-09-05）
 
 - frozen=M8 centers/tangent scales + M11 GT normal/thickness + M35 anchor/M38 child occupied authority；

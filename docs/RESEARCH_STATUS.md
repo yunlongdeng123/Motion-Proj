@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M45 rejected / oriented child kernel improves hit but misses hazard safety（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01/
+20260905T100000Z__m45-oriented-categorical-r1`；66 exposed holdout / 99,208 rays，training=false，verdict=
+`m45_oriented_categorical_rejected`，decisions=`2/3`。相对M39，all early=`-0.019pp`、clear early=
+`-0.280pp`、all hit=`+3.868pp`，但hazard early=`+0.034pp`触发冻结worst-stratum拒绝；相对unit baseline
+仍为all early=`-0.540pp`、hit=`+6.040pp`。
+
+M11 GT normal/thickness进入categorical measure后产生`8.10×`平均各向异性、厚度`0.0200m`，说明planar
+child kernel能在不动center/tangent/authority时显著集中endpoint概率；剩余失败来自local oriented support仍不控制
+hazard ray上的global multi-primitive ordering。停止thickness/normal/scale/bin sweep。下一步若继续，只允许在train split
+对normal/thickness使用与部署同构的GT interval CDF supervision，并保持M8 geometry与M39 authority冻结；M43
+candidate保持不变、无partial read。登记`V71-F44`；下一可用failure ID=`V71-F45`。
+
 ## WorldSim V7.1 M45 oriented categorical surface measure frozen（2026-09-05）
 
 状态=`v71_m45_oriented_categorical_surface_measure_frozen`，详见

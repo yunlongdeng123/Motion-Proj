@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F44: frozen M11 orientation does not preserve hazard early safety under M39 composition（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01/20260905T100000Z__m45-oriented-categorical-r1`；
+- evidence=相对M39 all/clear early=`-0.019/-0.280pp`且all hit=`+3.868pp`，但hazard early=`+0.034pp`，
+  decisions=`2/3`；
+- representation health=normal thickness=`0.0200m`、anisotropy=`8.10×`，相对unit baseline hit=`+6.040pp`，无
+  数值/资源问题；planar support对endpoint集中有效；
+- root cause=M11 normal/thickness是按earliest hard intersection训练，迁移到categorical measure后虽改善local
+  endpoint likelihood，却未被该部署分布的global multi-primitive CDF ordering直接约束；hazard ray仍有轻微前移；
+- literature response=Geometry Field Splatting（CVPR 2025）支持planar Gaussian geometry field，但kernel形状必须
+  与实际renderer同构优化。后续只可在train split用GT not-early/hit interval训练normal/thickness，M8 centers/tangent
+  与M39 authority冻结；
+- anti-repeat=不调M11 thickness、normal residual、scale、bin、median或seed，不因巨大hit增益放宽worst-stratum
+  gate；M45不替换已冻结M43；
+- claim impact=oriented categorical是有价值但尚未安全通过的next-gen表示；下一failure ID=`V71-F45`。
+
 ## V7.1 M45 pre-registration note — oriented probability is not hard collision support（2026-09-05）
 
 M10--M11拒绝的是learned oblate ellipsoid的earliest hard intersection；M45不复开该范式，而把既有GT normal/
