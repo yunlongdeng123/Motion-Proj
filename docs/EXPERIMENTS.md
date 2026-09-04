@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M7-FRESH-AV2-ZERO-SHOT-01 — frozen execution protocol（2026-09-04）
+
+- checkpoint=canonical M7 residual/slot weights + frozen M5 base + train standardizer；branch factor=4；
+- cohort/compiler=与M5相同的事前fresh 20 logs、rigid categories、`mod3={0,1}/2` actor-canonical frame roles；
+- surface=`immutable anchors + all generated children`；scale仅报告，不作filter；UNKNOWN无部署动作；
+- scheduler=single M7 evaluator按`.complete`逐log消费，可与唯一下载器及M5 evaluator等待阶段重叠；
+- verdict=hazard early reduction `>=5%` AND Chamfer delta `<=+1mm` AND Actor/hazard retention=`100%`；hit descriptive；
+- freeze boundary=此前只读M5 evaluator的completed-log/Actor-row进度，未读任何external physical metric；
+- prohibited=no target fine-tune/calibration/threshold/tolerance/log replacement/second downloader；validation=`py_compile only`。
+
 ## WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01 — canonical development pass（2026-09-04）
 
 - run=`20260904T121000Z__m7-gt-seed-expansion-s71109-r1`；verdict=`m7_development_passed`；

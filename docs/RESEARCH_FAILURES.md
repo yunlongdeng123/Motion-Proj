@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M7 external prevention note — 同一fresh cohort比较不反馈M5局部结果（2026-09-04）
+
+- M7方法/checkpoint/external合同在读取任何M5 AV2 physical metric前冻结；此前监控只看log/Actor计数和进程状态；
+- M7与M5可在同一事前冻结20-log cohort上作paired model comparison，但各自保留完整20-log aggregate，不删困难log；
+- M5输出不得用于M7选择；M7 external失败即登记`V71-F12`，不以M5差值、hit或per-log子集改写primary verdict。
+
+下一可用编号仍为：`V71-F12`。
+
 ## V7.1 M7 outcome note — set-to-set child surface通过且不新增failure（2026-09-04）
 
 - canonical=`run://worldsim_v71/WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01/

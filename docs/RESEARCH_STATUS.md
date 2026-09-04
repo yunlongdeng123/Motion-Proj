@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 M7 fresh AV2 zero-shot protocol frozen（2026-09-04）
+
+状态=`v71_m7_fresh_av2_evaluator_next`。M7 checkpoint、4-child representation、standardizer、M5 base、compiler、
+20-log cohort与external gates已经冻结；冻结发生在读取任何M5/M7 AV2 physical metric之前。只读过下载完成数、当前log与
+Actor row进度，不读取early/Chamfer/hit。M7将对同一fresh cohort独立执行，surface固定为immutable anchors加全部children；
+无target fine-tune、calibration、threshold、log替换。External primary仍为hazard early `>=5%`、Chamfer `<=+1mm`、
+Actor/hazard retention 100%；hit完整报告但不新增gate。下一failure ID=`V71-F12`。
+
 ## WorldSim V7.1 M7 supervision-native geometry passed / AV2 freeze next（2026-09-04）
 
 M7 canonical=`run://worldsim_v71/WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01/
