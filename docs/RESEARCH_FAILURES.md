@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F36: M34 identifiable anchor mass fails under normalized Gaussian-energy returns（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01/20260905T043000Z__m34-producer-anchor-authority-s71134-r1`；
+- evidence=occupied correlation=`0.4624`通过，证明producer evidence能辨识GT；但all/hazard/clear early分别
+  `+0.223/+0.177/+0.447pp`，all hit=`-0.753pp`；decisions=`2/4`；
+- root cause=当前部署把空间Gaussian energy做沿射线softmax；这个全局归一化不是按深度有序的
+  transmittance/first-hit概率，局部mass变化没有return单调性；
+- anti-repeat=不调M34 seed/epoch/loss/capacity，不按provenance或UNKNOWN硬删；迁移按bin alpha与前缀
+  transmittance构造termination distribution；
+- claim impact=M34 checkpoint不进入external；可辨识性修复成立，但amplitude composition被拒绝。
+  下一failure ID=`V71-F37`。
+
 ## V7.1 M34 pre-registration note — isolate anchor evidence from completion（2026-09-05）
 
 M34只训练anchor authority，M8 geometry/trajectory冻结，children保持unit，避免把anchor矛盾、completion几何与

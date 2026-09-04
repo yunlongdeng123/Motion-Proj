@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T043000Z__m34-producer-anchor-authority-s71134-r1`；593 train / 66 holdout；6 epochs；
+  verdict=`m34_development_rejected`；decisions=`2/4`；
+- train loss=`7.268777→7.203745`；evidential CE=`1.014209→0.909443`；holdout GT-mass CE=`0.921856`；
+  predicted-vs-GT occupied correlation=`0.462399`（identifiability pass）；
+- unit→learned all early=`18.1870→18.4098%` (`+0.2228pp`)；hit=`62.2833→61.5303%`
+  (`-0.7530pp`)；
+- hazard early=`17.4215→17.5986%` (`+0.1771pp`)；clear=`21.9518→22.3992%` (`+0.4474pp`)；
+- conclusion=producer input有效，normalized spatial-energy ray composition无first-hit单调性；stop M34 tuning，
+  next=order-aware alpha/transmittance termination；
+- frozen geometry/trajectory，unit children，无threshold/delete/filter；GPU=`0.409GiB`，RSS=`1.340GiB`，
+  wall=`33.92s`；no external/M21 partial read；manuscript updated + TinyTeX full compile success（17 pages /
+  2,344,645 bytes；refs resolved；no fatal/new warning）；next failure=`V71-F37`。
+
 ## WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01 — frozen（2026-09-05）
 
 - representation=frozen M8 centers/scales/trajectory；anchor predicted continuous F/O/U；children unit authority；

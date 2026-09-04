@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7.1 M34 rejected / ray-composition boundary（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M34-PRODUCER-EVIDENTIAL-ANCHOR-AUTHORITY-01/
+20260905T043000Z__m34-producer-anchor-authority-s71134-r1`；verdict=`m34_development_rejected`，decisions=`2/4`。
+593 train / 66 holdout、6 epochs正常完成；loss=`7.2688→7.2037`，evidential CE=`1.0142→0.9094`。
+
+M33输入确实修复了可辨识性：holdout predicted-vs-GT occupied相关=`0.4624`（通过≥0.25），GT soft-mass
+CE=`0.9219`。但相对unit M21 Gaussian energy，all/hazard/clear early从`18.187/17.422/21.952%`恶化到
+`18.410/17.599/22.399%`（`+0.223/+0.177/+0.447pp`）；all hit `62.283→61.530%`（`-0.753pp`，仅保留
+门槛通过）。geometry/trajectory完全冻结，children unit，无threshold/delete/filter。
+
+结论：数据/监督不再是当前首要瓶颈；把occupied mass乘进空间Gaussian energy后再沿射线softmax并取CDF中位数，
+不是有序首碰概率，连续权重可经全局归一化反直觉地把return向前移。关闭M34 amplitude调参；下一步迁移
+Vol3DGS/GaussRender式order-aware transmittance，直接以GT first-return训练每bin termination hazard。GPU=
+`0.409GiB`、RSS=`1.340GiB`、wall=`33.92s`；无external/M21 partial read。论文同步更新并由TinyTeX完整
+编译成功（17页 / 2,344,645 bytes；引用已解析；无fatal/new warning）。下一failure ID=`V71-F37`。
+
 ## WorldSim V7.1 M34 producer-evidential anchor authority frozen（2026-09-05）
 
 状态=`v71_m34_producer_evidential_anchor_authority_frozen`，详见
