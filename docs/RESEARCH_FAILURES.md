@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M38 pre-registration note — observed FREE interval is training supervision（2026-09-05）
+
+M38只在loss中加入native LiDAR pre-hit survival，不根据M37 early ray删除或重标任何primitive。固定margin=0.20m、
+weight=1.0、4 epochs/seed71138；若失败登记`V71-F39`并关闭当前additive child optical mass，不扫margin/weight/
+scale/seed。下一failure ID=`V71-F39`。
+
 ## V71-F38: M37 child authority improves unit-opacity completion but leaves pre-hit optical mass（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01/20260905T060000Z__m37-child-transmittance-s71137-r1`；

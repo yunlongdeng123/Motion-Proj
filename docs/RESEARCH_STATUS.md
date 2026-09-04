@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M38 native pre-hit free-space survival frozen（2026-09-05）
+
+状态=`v71_m38_prehit_free_space_survival_frozen`，详见
+[`WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md`](WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md)。
+从M37 checkpoint继续4 epochs，唯一新增目标是GT endpoint前0.20m之外completion-child累计optical thickness
+`-log T_child,pre`；权重1.0、seed71138。M35 anchor、M8 center/scale/trajectory、原categorical/depth/evidential
+目标均冻结；无threshold/delete/filter/scale或weight sweep。沿用四项baseline判定并报告相对M37变化；无
+external/M21 partial read。下一failure ID=`V71-F39`。
+
 ## WorldSim V7.1 M37 rejected / GT child evidence works but pre-hit survival is missing（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01/

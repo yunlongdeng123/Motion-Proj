@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01 — frozen（2026-09-05）
+
+- init=M37 child checkpoint；frozen=M35 anchor + M8 center/scale/trajectory；same 593/66 exposed split；
+- added training supervision=`sum tau_child` over native GT ray interval before `d_gt-0.20m`，equal to
+  `-log T_child,pre`；weight=1.0；retain categorical/depth/evidential losses；
+- protocol=4 continuation epochs、seed71138；no margin/weight/scale/segment/seed sweep，no threshold/delete/filter；
+- decisions=all+hazard+clear early nonincrease versus original baseline、hit delta≥-1pp、child occupied correlation≥0.25；
+  report paired M37 deltas；no external/M21 partial read；next failure=`V71-F39`。
+
 ## WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T060000Z__m37-child-transmittance-s71137-r1`；593 train / 66 holdout；6 epochs；
