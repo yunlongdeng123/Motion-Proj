@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V71-M5-FRESH-AV2-ZERO-SHOT-01 — pre-read downloader recovery（2026-09-04）
+
+- first entry=wrong Python prefix caused empty cohort array and false `ALL_COMPLETE 0 logs`；failure=`V71-F09`；
+- exposure=`0 logs / 0 files / 0 compiler calls / 0 model outputs`，s5cmd未启动；不是external result；
+- repair=只改为实际motionproj Python路径并断言20项；同一cohort/order/acquisition contract继续；
+- no hash/checksum/fingerprint，no model/config/gate change。
+
 ## WS-V71-M5-PCGRAD-RELOCATION-01 — canonical development pass（2026-09-04）
 
 - run=`20260904T104700Z__m5-pcgrad-relocation-s71107-r1`；verdict=`m5_development_passed`；

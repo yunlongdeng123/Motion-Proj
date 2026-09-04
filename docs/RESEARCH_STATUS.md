@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 AV2 downloader entry recovery（2026-09-04）
+
+首次V7.1 downloader入口引用不存在的`/root/miniconda3/envs/motionproj/bin/python`；Bash process substitution失败
+没有传播到`mapfile`，因此产生空数组并写出错误的`ALL_COMPLETE 0 logs`。登记`V71-F09`。暴露审计：0 log下载、
+0 annotations/LiDAR/model output/quality read，未启动s5cmd；不构成external trial。
+
+恢复仅将解释器定位到实际`/root/autodl-tmp/envs/motionproj/bin/python`，并在进入s5cmd前断言冻结cohort恰为20项。
+错误的0-log marker由同一脚本入口清除；cohort、顺序、workers、retry、模型与external gates全部不变。下一failure ID=
+`V71-F10`。
+
 ## WorldSim V7.1 M5 development passed / fresh AV2 download active（2026-09-04）
 
 M5 canonical=`run://worldsim_v71/WS-V71-M5-PCGRAD-RELOCATION-01/

@@ -10,8 +10,13 @@ readonly S5CMD=/root/autodl-tmp/bin/s5cmd
 
 mkdir -p "$DATA" "$STATE"
 rm -f "$STATE/ALL_COMPLETE"
-mapfile -t LOG_IDS < <(/root/miniconda3/envs/motionproj/bin/python -c \
+mapfile -t LOG_IDS < <(/root/autodl-tmp/envs/motionproj/bin/python -c \
   'import json,sys; print("\n".join(x["log_id"] for x in json.load(open(sys.argv[1]))["logs"]))' "$COHORT")
+if [[ "${#LOG_IDS[@]}" -ne 20 ]]; then
+  printf '[%s] ERROR expected 20 frozen logs, got %s\n' \
+    "$(date -u +%FT%TZ)" "${#LOG_IDS[@]}" >> "$LOG"
+  exit 2
+fi
 
 for log_id in "${LOG_IDS[@]}"; do
   if [[ -f "$STATE/$log_id.complete" ]]; then

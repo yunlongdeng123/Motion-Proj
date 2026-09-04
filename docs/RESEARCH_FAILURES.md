@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F09 — V7.1 AV2 downloader解释器路径不存在并误写0-log完成标记
+
+- 分类/状态：engineering / recovered before external read；入口=`scripts/download_worldsim_v71_av2.sh`；
+- 观察：写死的`/root/miniconda3/envs/motionproj/bin/python`不存在；process substitution失败未使`mapfile`退出，数组为空，
+  循环未执行却写出`ALL_COMPLETE 0 logs`；
+- exposure audit：s5cmd未启动、0 AV2 files/annotations/LiDAR/model output/quality read，故不消耗冻结external cohort；
+- root cause：motionproj环境实际位于高速盘`/root/autodl-tmp/envs/motionproj`，与conda base前缀不同；
+- resolution：只修Python绝对路径并断言冻结项数为20；cohort/顺序/workers/retry/model/gates不变；
+- claim impact：无科学结论；下一可用failure ID=`V71-F10`。
+
 ## V7.1 fresh AV2 prevention note — 不复用V7已消费的60 logs（2026-09-04）
 
 - 原30-log、20-log recovery与10-log EviComp cohorts均已被V7研究读取，不可作为M5 fresh confirmation；
