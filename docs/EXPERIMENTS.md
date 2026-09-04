@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — frozen protocol（2026-09-05）
+
+- representation=frozen M8 anchor/child centers+scales；trainable per-primitive FREE/OCCUPIED/UNKNOWN soft authority；
+- GT=primitive free-before-hit/endpoint/unsupported ray masses + whole-ray one-hot first-return categorical loss；
+- deployment=occupied-mass-weighted Gaussian energy，64-bin CDF median；no argmax/threshold/deletion；
+- split=593 train / 66 exposed holdout；seed71132；6 epochs；128 train rays；256 evidence rays；one run；
+- comparator=same frozen M8 Gaussian energy with unit authority (M21 development form)；
+- decisions=all early nonincrease；hazard+clear worst early nonincrease；all hit delta >=-1pp；
+- no geometry/trajectory/image/hazard input update，no sweep，no external/M21 partial read；next failure=`V71-F33`。
+
 ## WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01 — canonical result（2026-09-05）
 
 - run=`20260905T020000Z__m31-anchor-contradiction-attribution-r3`；status=`done`；verdict=

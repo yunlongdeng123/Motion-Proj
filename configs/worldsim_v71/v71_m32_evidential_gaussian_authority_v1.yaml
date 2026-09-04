@@ -1,0 +1,37 @@
+task_id: WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01
+hypothesis_id: WS-V71-H-M32-GT-RAY-CONTINUOUS-AUTHORITY
+schema_version: worldsim_v71.m32_evidential_gaussian_authority.v1
+runs_root: /root/autodl-tmp/runs
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+m8_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2
+device: cuda
+model:
+  seed: 71132
+  hidden_dim: 64
+  epochs: 6
+  actor_batch_size: 4
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  maximum_training_actors: 1024
+  holdout_stride: 10
+  maximum_training_rays: 128
+  evidence_maximum_rays: 256
+  categorical_train_bins: 32
+  categorical_depth_weight: 0.10
+  evidential_mass_weight: 0.50
+  unknown_pseudocount: 1.0
+  anchor_scale_m: 0.08
+  training_cuboid_padding_m: 0.15
+  lateral_tolerance_m: 0.20
+  depth_tolerance_m: 0.20
+  ray_chunk_size: 256
+evaluation:
+  literal_depth_tolerance_m: 0.20
+  field_sample_count: 64
+  ray_chunk_size: 64
+  cuboid_padding_m: 0.15
+  categorical_median_threshold: 0.50
+decision:
+  maximum_all_early_delta: 0.0
+  maximum_worst_stratum_early_delta: 0.0
+  minimum_all_hit_delta: -0.01

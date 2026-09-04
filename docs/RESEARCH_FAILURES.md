@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M32 pre-registration note — authority mass cannot move geometry（2026-09-05）
+
+M19允许field decoder补偿geometry，M20允许center/scale吸收ray loss并出现scale inflation；M32将两条路径都冻结。
+唯一trainable变量是primitive `FREE/OCCUPIED/UNKNOWN` soft mass，GT primitive evidence CE与GT categorical return CE
+共同监督，部署只连续使用occupied mass。不存在argmax、hard UNKNOWN mask、surface filter或binary threshold。
+若任一hazard/clear early恶化或all hit下降超过1pp，按一次性合同关闭本family，不做权重/伪计数/容量恢复。
+下一failure ID=`V71-F33`。
+
 ## V7.1 M31 outcome note — contradiction is mixed, PROJECT is overrepresented（2026-09-05）
 
 Canonical r3完整匹配66/66 Actors；anchors early=`19.579%`。first-return provenance为KEEP

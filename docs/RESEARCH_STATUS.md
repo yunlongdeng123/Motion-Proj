@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M32 GT-supervised Gaussian authority frozen（2026-09-05）
+
+状态=`v71_m32_evidential_gaussian_authority_frozen`，详见
+[`WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md`](WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md)。
+M32不重复M16--M20：冻结M8全部center/scale和只读trajectory，只训练每primitive连续
+`FREE/OCCUPIED/UNKNOWN` mass。primitive target由GT ray的free-before-hit/endpoint/unsupported votes直接构造；
+同一occupied mass进入32-bin first-return categorical proper loss和64-bin部署CDF，无argmax、阈值或删点。
+
+固定593/66 train/exposed-holdout、seed71132、6 epochs、one run；只判定all early、hazard+clear worst early和all hit
+三项相对unit-authority M21 energy的变化。失败即关闭amplitude family，不调loss/pseudocount/scale/bin/width/seed。
+M21 partial quality不读取；下一failure ID=`V71-F33`。
+
 ## WorldSim V7.1 M31 completed / hard-anchor authority rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/
