@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T100928Z__m2-deploy-consistent-relocation-s71103-r1`；status=`done`；verdict=
+  `m2_source_final_rejected`；failure=`V71-F06`；
+- training=`659 Actors / 12 epochs`；loss=`1.953645→1.941944`；MODEL.pt=`relocation-only`；
+- Source Final=`20 scenes / 69 Actors / 44 hazard / 134,841 rays`；first exact-once read；Selection未重读，AV2 unread；
+- literal early relative reduction=`5.224% all / 5.262% hazard / 5.143% clear`；hazard gate pass；
+- surface=`Chamfer +1.581mm`（fail `<=+0.5mm`）、hit recall=`+1.205pp`；retention=`100/100%`；4/5 gates；
+- resources=`243.968s`、peak GPU=`0.24914GiB`、RSS=`1.65667GiB`；无NaN/OOM/engineering error；
+- decision=M2 closed，no Source-Final-guided tuning，external locked；转向single signed level-set。
+
 ## WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01 — frozen protocol（2026-09-04）
 
 - initialization=`canonical M0 encoder + first two displacement rows`；third UNKNOWN output不进入M2结构；

@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F06 — M2部署一致位移在Source Final仅Chamfer不达标
+
+- 分类/状态：scientific / terminal for M2；canonical=`run://worldsim_v71/
+  WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01/20260904T100928Z__m2-deploy-consistent-relocation-s71103-r1`；
+- 观察：69 Source Final Actors（44 hazard）上hazard early下降`5.262%`、hit recall增加`1.205pp`、retention 100%，
+  但Chamfer恶化`+1.581mm`，4/5；
+- mechanism：移除UNKNOWN action后F04的`+48.745mm/-10.819pp`大退化消失，说明训练—部署错位已修；剩余约1.1mm
+  gate gap来自低容量统一位移在early和双向surface距离之间仍有不可忽略折衷，不是删除collapse；
+- decision：M2拒绝且AV2不读；不得在已消费Source Final上调teacher weight、训练轮数、lr、seed或loss ratio；
+- response：采用Occupancy Networks/NeuS/Neural-Pull启发的单一signed decision variable，让训练ray surface、物理render与
+  extraction共享同一level-set；下一可用failure ID=`V71-F07`。
+
 ## V7.1 M2 prevention note — 一个surface贯穿训练与部署（2026-09-04）
 
 - M2不允许UNKNOWN action/output/threshold；UNKNOWN只保留在输入evidence mass中，不能删点；

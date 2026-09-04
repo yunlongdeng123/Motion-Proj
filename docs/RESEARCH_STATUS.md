@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M2 rejected on Source Final / signed level-set next（2026-09-04）
+
+Canonical M2=`run://worldsim_v71/WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01/
+20260904T100928Z__m2-deploy-consistent-relocation-s71103-r1`。659 train Actors完成唯一12轮部署一致fine-tune，loss
+`1.95365→1.94194`。此前未读20-scene Source Final exact-once得到69 Actors（44 hazard）、134,841 rays：hazard/all/
+clear early相对下降=`5.262/5.224/5.143%`，hit recall=`+1.205pp`，retention=`100/100%`，但Chamfer=`+1.581mm`
+超过冻结`+0.5mm`，4/5 gates，verdict=`m2_source_final_rejected`。
+
+登记`V71-F06`并关闭M2；不利用Source Final调整teacher weight、epoch、lr或seed，也不读取AV2。科学更新是：删除
+UNKNOWN action解决了F04的大退化，位移模型在独立source上仍有一致early/hit收益，但没有达到严格surface non-
+degradation。下一主线为单一ray-signed level-set：沿train target rays定义front-positive/surface-zero/back-negative SDF，
+同一scalar用于ray loss和zero-crossing extraction，UNKNOWN只作输入证据；不再使用双head AND。下一failure ID=`V71-F07`。
+
 ## WorldSim V7.1 M2 deploy-consistent relocation ready（2026-09-04）
 
 状态：`v71_m2_ready_source_final_locked`。M2用canonical M0共享encoder和前两个位移输出初始化，结构上删除第三个
