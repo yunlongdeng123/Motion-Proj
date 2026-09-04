@@ -253,6 +253,69 @@ class OneSidedLocalOccupancyField(LocalAnchorSignedField):
         return local_cell.min(dim=1).values
 
 
+class DirectQuerySignedField(LocalAnchorSignedField):
+    """Predict a metric signed value per query from local evidence without primitives."""
+
+    def __init__(
+        self,
+        *args: object,
+        maximum_field_distance_m: float = 0.50,
+        **kwargs: object,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.maximum_field_distance_m = float(maximum_field_distance_m)
+        latent_dim = int(self.child_encoder[2].out_features)
+        hidden_dim = int(self.query_decoder[0].out_features)
+        self.attention_decoder = nn.Sequential(
+            nn.Linear(latent_dim + 4, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 1),
+        )
+        with torch.no_grad():
+            self.attention_decoder[-1].weight.zero_()
+            self.attention_decoder[-1].bias.zero_()
+
+    def forward(
+        self,
+        features: torch.Tensor,
+        child_centers: torch.Tensor,
+        child_scales: torch.Tensor,
+        parent_normals: torch.Tensor,
+        parent_ray_directions: torch.Tensor,
+        queries: torch.Tensor,
+    ) -> torch.Tensor:
+        child_latents = self.child_features(features)
+        child_normals = self.outward_child_normals(
+            parent_normals, parent_ray_directions
+        )
+        child_scales = child_scales.reshape(-1).clamp_min(1.0e-4)
+        if not (
+            len(child_centers)
+            == len(child_scales)
+            == len(child_normals)
+            == len(child_latents)
+        ):
+            raise ValueError("Direct-query child attributes must align")
+        count = min(max(self.neighbor_count, 1), len(child_centers))
+        normalized_distance = torch.cdist(queries, child_centers) / child_scales[None, :]
+        distances, indices = normalized_distance.topk(count, largest=False)
+        centers = child_centers[indices]
+        scales = child_scales[indices]
+        normals = child_normals[indices]
+        latents = child_latents[indices]
+        relative = (queries[:, None, :] - centers) / scales[:, :, None]
+        normal_coordinate = torch.sum(relative * normals, dim=-1, keepdim=True)
+        decoder_input = torch.cat(
+            [latents, relative, normal_coordinate], dim=-1
+        )
+        local_values = self.maximum_field_distance_m * torch.tanh(
+            self.query_decoder(decoder_input).squeeze(-1)
+        )
+        attention_bias = self.attention_decoder(decoder_input).squeeze(-1)
+        weights = torch.softmax(-distances + attention_bias, dim=1)
+        return torch.sum(weights * local_values, dim=1)
+
+
 def initialize_local_field_from_expansion(
     model: LocalAnchorSignedField, expansion: GaussianSeedExpansionMLP
 ) -> None:

@@ -36,6 +36,7 @@ from motion_proj.worldsim_v71.gaussian_anchor_relocation import (
 )
 from motion_proj.worldsim_v71.local_signed_field import (
     CompactLocalOccupancyField,
+    DirectQuerySignedField,
     LocalAnchorSignedField,
     OneSidedLocalOccupancyField,
     initialize_local_field_from_expansion,
@@ -167,13 +168,29 @@ def _physics_losses(
     front_field = _field(model, actor, fronts)
     back_field = _field(model, actor, backs)
     hit_field = _field(model, actor, targets)
-    predictions = torch.cat([front_field, hit_field, back_field], dim=0)
+    free_fields = [front_field]
+    free_labels = [front_labels]
+    full_ray_free = front_field.new_zeros(())
+    if int(config.get("full_ray_free_samples", 0)) > 0:
+        full_queries, full_labels = _full_ray_free_training_points(
+            actor, config, actor["features"].device
+        )
+        if len(full_queries) > 0:
+            full_field = _field(model, actor, full_queries)
+            free_fields.append(full_field)
+            free_labels.append(full_labels)
+            full_ray_free = F.softplus(
+                -full_field / float(config["sign_temperature_m"])
+            ).mean()
+    combined_free_field = torch.cat(free_fields, dim=0)
+    combined_free_labels = torch.cat(free_labels, dim=0)
+    predictions = torch.cat([combined_free_field, hit_field, back_field], dim=0)
     labels = torch.cat(
-        [front_labels, torch.zeros_like(hit_field), back_labels], dim=0
+        [combined_free_labels, torch.zeros_like(hit_field), back_labels], dim=0
     )
     signed_regression = F.smooth_l1_loss(predictions, labels)
     temperature = float(config["sign_temperature_m"])
-    front_free = F.softplus(-front_field / temperature).mean()
+    front_free = F.softplus(-combined_free_field / temperature).mean()
     back_occupied = F.softplus(back_field / temperature).mean()
     physics = float(config["signed_regression_weight"]) * signed_regression + float(
         config["physics_weight"]
@@ -182,8 +199,33 @@ def _physics_losses(
         "physics": physics,
         "signed_regression": signed_regression,
         "front_free": front_free,
+        "full_ray_free": full_ray_free,
         "back_occupied": back_occupied,
     }
+
+
+def _full_ray_free_training_points(
+    actor: Mapping[str, Any], config: Mapping[str, Any], device: torch.device
+) -> tuple[torch.Tensor, torch.Tensor]:
+    targets, origins = m6_runner._limit_target(
+        actor, int(config["maximum_training_rays"]), device
+    )
+    target_depth = torch.linalg.vector_norm(targets - origins, dim=1).clamp_min(1.0e-6)
+    directions = (targets - origins) / target_depth[:, None]
+    bounds = actor["size_t"] * 0.5 + float(config["training_cuboid_padding_m"])
+    entry, _, valid_box = _ray_box_intervals(origins, directions, bounds)
+    free_end = target_depth - float(config["minimum_front_clearance_m"])
+    valid = valid_box & (free_end > entry + 1.0e-4)
+    sample_count = int(config["full_ray_free_samples"])
+    fractions = torch.linspace(
+        0.0, 1.0, sample_count, dtype=targets.dtype, device=device
+    )
+    depths = entry[:, None] + (free_end - entry)[:, None] * fractions[None, :]
+    queries = origins[:, None, :] + depths[:, :, None] * directions[:, None, :]
+    labels = (target_depth[:, None] - depths).clamp_max(
+        float(config["maximum_field_distance_m"])
+    )
+    return queries[valid].reshape(-1, 3), labels[valid].reshape(-1)
 
 
 def _train(
@@ -201,6 +243,7 @@ def _train(
         "physics",
         "signed_regression",
         "front_free",
+        "full_ray_free",
         "back_occupied",
     )
     batch_size = int(config["actor_batch_size"])
@@ -225,6 +268,7 @@ def _train(
                         "physics",
                         "signed_regression",
                         "front_free",
+                        "full_ray_free",
                         "back_occupied",
                     )
                 },
@@ -444,6 +488,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             field_class = CompactLocalOccupancyField
         elif field_variant == "one_sided_surface_cell":
             field_class = OneSidedLocalOccupancyField
+        elif field_variant == "direct_query_signed":
+            field_class = DirectQuerySignedField
         else:
             field_class = LocalAnchorSignedField
         field_kwargs: dict[str, Any] = {}
@@ -455,6 +501,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 back_support_depth_m=float(
                     config["model"]["back_support_depth_m"]
                 ),
+            )
+        elif field_class is DirectQuerySignedField:
+            field_kwargs.update(
+                maximum_field_distance_m=float(
+                    config["model"]["maximum_field_distance_m"]
+                )
             )
         model = field_class(
             int(checkpoint["input_dim"]),
@@ -527,6 +579,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 ),
                 "back_support_depth_m": config["model"].get(
                     "back_support_depth_m"
+                ),
+                "maximum_field_distance_m": config["model"].get(
+                    "maximum_field_distance_m"
                 ),
             },
             run_dir / "MODEL.pt",
