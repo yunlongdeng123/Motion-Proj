@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M49 outcome note — attenuation is not monotone-safe in a normalized mixture（2026-09-05）
+
+M49在99,208条冻结ray上确认`∂C/∂log w_j=r_j(C_j-C)`：uniform child attenuation有害/安全方向分别
+`58.85/30.96%`，M48实际adverse pressure在`65.45%`占优，finite CDF在`59.32%`上升；一阶符号预测
+exact change达`95.73%`。禁止把`C_j>C`转成primitive/ray选择器，因为该条件使用目标边界且只解释已暴露
+development ray；它是M48的anti-repeat定理，不是oracle filter。`V71-F47`关闭，next ID=`V71-F48`。
+
 ## V7.1 M49 pre-registration note — an analytic boundary, not a rescue gate（2026-09-05）
 
 M49只核验`∂C/∂log w_j=r_j(C_j-C)`与M48实际attenuation的CDF符号；不得根据结果选择primitive、ray、

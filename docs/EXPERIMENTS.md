@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01 — canonical（2026-09-05）
+
+- run=`20260905T121500Z__m49-visibility-sign-boundary-r1`；66 Actors / 99,208 rays；verdict=
+  `visibility_attenuation_sign_boundary_confirmed`；training/gate=false；
+- exact identity=`dC/dlog(w_j)=r_j(C_j-C)`；M48 finite change: CDF increase/decrease=`59.32/27.27%`；
+- uniform child attenuation adverse/safe=`58.85/30.96%`；adverse-pressure dominant all/hazard/clear=
+  `65.45/67.27/56.48%`；
+- linear/exact sign agreement=`95.73%`；mean exact/linear CDF delta=`+0.00513/+0.00295`；
+- added/removed early=`1.258/0.892%`（net M48-vs-M45=`+0.366pp`）；hazard=`1.292/0.843%`；
+- conclusion=visibility attenuation lacks monotone safety under normalized mixture；explanation only，never gate/filter；
+  GPU=`0.226GiB`、RSS=`1.095GiB`、wall=`13.13s`；no external/M43 partial read。
+
 ## WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01 — frozen（2026-09-05）
 
 - identity=`dC/dlog(w_j)=r_j(C_j-C)`；attenuation lowers pre-boundary CDF iff component `C_j>C`；

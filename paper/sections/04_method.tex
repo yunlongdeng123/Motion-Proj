@@ -139,6 +139,17 @@ F(b)=F_{\mathrm{anchor}}(b)+F_{\mathrm{child}}(b).
 Equation~\ref{eq:categorical-safety-boundary} is an exact explanation of the deployed decision, not an abstention rule:
 $F(b)$ is never thresholded to delete primitives or cases.
 
+The same measure exposes why learned attenuation is not monotone-safe. Let $D_j=\sum_k\kappa_{kj}$,
+$N_j=\sum_{d_k<b}\kappa_{kj}$ (with the renderer's boundary interpolation), $C_j=N_j/D_j$, and
+$r_j=o_jD_j/\sum_a o_aD_a$. Direct differentiation yields
+\begin{equation}
+\frac{\partial F(b)}{\partial\log o_j}=r_j\bigl(C_j-F(b)\bigr).
+\label{eq:attenuation-sign-boundary}
+\end{equation}
+Consequently, decreasing a component's authority lowers the pre-boundary CDF only if $C_j>F(b)$; attenuation of a
+later-than-mixture component increases it. This is a safety boundary of normalized return mixtures, not permission to use
+the GT-dependent sign as a deployment gate.
+
 \subsection{Validity--Hazard Factorization}
 
 The validity encoder receives ray contradiction, surface residual, temporal support, provenance, visibility, and local geometry. Its label is whether the frozen compiler's target Chamfer is no worse than that of the untouched clean query. The hazard encoder receives only TTC, clearance, closing speed, braking, and crossing geometry. Our factorized model uses two structurally disjoint low-capacity heads; a shared-input two-head network is the learned baseline:

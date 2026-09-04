@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M49 completed / exact attenuation safety boundary confirmed（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01/
+20260905T121500Z__m49-visibility-sign-boundary-r1`；66 Actors、99,208 rays，training/gate=false，解析identity
+`∂C/∂log w_j=r_j(C_j-C)`得到冻结核验。对M48实际attenuation，`59.32%` rays的boundary CDF上升，只有
+`27.27%`下降；uniform child attenuation在`58.85%` rays为有害方向，仅`30.96%`为安全方向，且`65.45%`
+rays的adverse pressure占优。hazard adverse-dominant=`67.27%`，clear=`56.48%`。
+
+一阶符号与exact finite change在`95.73%` rays一致；mean exact/linear CDF delta=`+0.00513/+0.00295`。
+M48-vs-M45由`1.258%`新增与`0.892%`消除early形成净`+0.366pp`，hazard新增/消除=`1.292/0.843%`。
+这给出可解释安全边界：归一化mixture中attenuation不是单调安全操作；只有component自己的`C_j>C`才可降
+pre-boundary CDF。该条件只作解释，绝不转为gate/filter；visibility支线永久关闭，无新failure，next ID仍
+`V71-F48`。GPU=`0.226GiB`、RSS=`1.095GiB`、wall=`13.13s`；无M43 partial read。
+
 ## WorldSim V7.1 M49 categorical attenuation sign boundary frozen（2026-09-05）
 
 状态=`v71_m49_visibility_sign_boundary_frozen`，详见

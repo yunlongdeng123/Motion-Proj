@@ -443,6 +443,14 @@ the categorical distribution is normalized jointly, suppressing a component can 
 direction depending on that component's depth profile. We close visibility learning and next state this sign boundary
 analytically rather than tuning another head.
 
+M49 verifies Eq.~\ref{eq:attenuation-sign-boundary} on all 99,208 development rays. Uniform child attenuation has the
+adverse sign on 58.85\% of rays and the safe sign on only 30.96\%; under M48's componentwise attenuation, adverse pressure
+dominates 65.45\% overall and 67.27\% for hazardous Actors. Accordingly, the exact boundary CDF rises on 59.32\% of rays
+and falls on 27.27\%. The first-order derivative predicts the sign of the finite change on 95.73\% of rays, with mean
+exact/linear changes of $+0.00513/+0.00295$. The observed 0.366-point early regression relative to M45 is the difference
+between 1.258 points of newly early and 0.892 points of repaired rays. This converts a negative ablation into a reusable
+boundary: component attenuation cannot provide a universal safety guarantee in a jointly normalized return measure.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}
