@@ -1140,7 +1140,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                     "gt_front_hit_narrow_back_and_hit_gradient_normal",
                 )
             ),
-            "deployment": "first_positive_to_nonpositive_zero_crossing_in_actor_aabb",
+            "deployment": str(
+                config.get(
+                    "deployment_description",
+                    "first_positive_to_nonpositive_zero_crossing_in_actor_aabb",
+                )
+            ),
             "selection_read": False,
             "source_final_read": False,
             "external_read": False,

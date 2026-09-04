@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M18 reporting correction — metric路径正确、deployment标签陈旧（2026-09-04）
+
+- canonical M18的ray metrics实际由`_categorical_first_return_partition`生成，使用softmax CDF median；
+- generic summary writer仍写入旧`first_positive_to_nonpositive_zero_crossing`字符串，仅为metadata描述错误，不影响计算；
+- 已将writer改为读取冻结config的`deployment_description`；不改写完成run、不重跑M18、不把该错误升级为科学failure；
+- AV2 evaluator必须显式读取checkpoint `field=categorical_first_return`，不得相信旧summary字符串选择推理路径。
+
+下一可用编号仍为：`V71-F23`。
+
 ## V7.1 M18 prevention note — first-return bins必须全ray竞争（2026-09-04）
 
 - 对Actor AABB ray上全部depth bins输出logits并用softmax归一化，总质量固定为1；

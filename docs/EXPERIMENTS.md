@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M18-CATEGORICAL-FIRST-RETURN-01 — canonical development positive（2026-09-04）
+
+- run=`20260905T023000Z__m18-categorical-return-s71120-r1`；verdict=`m18_development_passed`；7/7 gates；
+- categorical early reduction vs M8 all/hazard/clear=`4.546/7.626/-13.292%`；hazard gate passes；
+- categorical hit delta all/hazard/clear=`+5.035/+6.603/-2.678pp`；observable=`100/100/100%`；hit gate passes；
+- M8 point metrics remain Chamfer=`-6.207mm`、hit=`+2.759pp`、actor/hazard retention=`100/100%`；
+- training NLL=`3.381→2.964`、depth L1=`0.911→0.452m`、target probability=`3.47→6.99%`；
+- boundary=clear subgroup is negative；development holdout pretrained-exposed；no cross-domain/safety claim before frozen AV2；
+- metadata note=canonical summary deployment label is stale, actual evaluator path is categorical CDF median；writer fixed prospectively；
+- resources=`42.829s / 0.2219GiB GPU / 1.3882GiB RSS`；no Source Final/AV2 quality read。
+
 ## WS-V71-M18-CATEGORICAL-FIRST-RETURN-01 — frozen protocol（2026-09-04）
 
 - representation=query-local logits over all ordered Actor-AABB ray bins；softmax is one normalized first-return distribution；

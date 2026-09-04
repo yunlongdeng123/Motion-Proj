@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M18 development passed / AV2 confirmation locked（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M18-CATEGORICAL-FIRST-RETURN-01/
+20260905T023000Z__m18-categorical-return-s71120-r1`，7/7 gates。相对冻结M8 ray surface，categorical field的
+early all/hazard降低`4.546/7.626%`，hit all/hazard提升`5.035/6.603pp`，observable=`100%`；M8 point surface
+同时保持Chamfer `-6.207mm`、hit `+2.759pp`与100% state retention。
+
+训练categorical NLL=`3.381→2.964`、expected-depth L1=`0.911→0.452m`、target-bin probability=
+`3.47→6.99%`，无NaN/OOM。clear子组early恶化`13.292%`且hit下降`2.678pp`，必须保留为边界；当前只支持
+development mechanism，不作全面支配、安全或跨域claim。冻结20-log AV2 cohort仍为`4/20`，三个既有M5/M7/M8 evaluator
+只等待aggregate，M18 external尚未读取任何AV2质量。
+
+Canonical `summary.json` 的`deployment`字符串由旧generic runner继承成zero-crossing描述，但实际指标调用
+`_categorical_first_return_partition`；本里程碑已把未来artifact改为config-driven categorical-CDF描述，不改写已完成run。
+
 ## WorldSim V7.1 M18 categorical first-return field frozen（2026-09-04）
 
 状态=`v71_m18_categorical_first_return_frozen`，详见
