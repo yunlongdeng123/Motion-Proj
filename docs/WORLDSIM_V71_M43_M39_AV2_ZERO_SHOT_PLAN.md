@@ -34,3 +34,13 @@ and ±0.20m hit rates over the complete frozen cohort. The three preregistered d
 Point-surface metrics and authority mass means are descriptive. No partial AV2 quality is read. If any decision fails,
 register `V71-F43`, retain M39 only as a development-exposed mechanism result, and do not tune on AV2. If all pass, freeze
 the external confirmation and move to explanation/safety-bound synthesis rather than a second target-domain experiment.
+
+## Execution state at final V7.1 handoff（2026-09-05）
+
+- canonical run=`run://worldsim_v71/WS-V71-M43-M39-AV2-ZERO-SHOT-01/20260905T091500Z__m43-m39-av2-zero-shot-r1`；
+- state=`running/waiting_fresh_av2`, completed=`16/20` logs、276 Actors；current log=
+  `c85a88a8-c916-30a7-923c-0c66bd3ebbd3`；
+- one evaluator and one downloader were alive; recent execution log had no error/retry; AV2 data=`~79GiB`, disk free=`86GiB`；
+- final `summary.json` absent；partial Actor output and all partial quality remained unread；external verdict=`no_verdict`；
+- user-requested shutdown pauses this run after repository/paper push. Resume only the same frozen run/data with one
+  downloader; read quality once after 20/20 and normal evaluator exit. No target adaptation is authorized.

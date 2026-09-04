@@ -1,5 +1,20 @@
 # Experiments
 
+## WorldSim V7.1 final evidence ledger / M43 incomplete at shutdown handoff（2026-09-05）
+
+- branch=`research/worldsim-v7.1-learned-evidential-surface`；scientific head包含M8/M39/M49/M51与完整negative chain；
+- retained source results=M8 hazard early `-5.123%` relative、Chamfer `-6.207mm`、hit `+2.759pp`；M39-vs-unit
+  all/hazard/clear early `-0.521/-0.621/-0.030pp`、hit `+2.172/+2.318/+1.455pp`；
+- retained boundaries=M49 exact finite attenuation sign、M51 smooth expected-depth→hard minimum non-implication；
+- rejected=M50 frame balance（worst-frame all/hazard `+1.135/+1.286pp`）与M45--M48 orientation/visibility family；
+- M43 execution=`running/waiting_fresh_av2`, `16/20` logs、276 Actors；current log=
+  `c85a88a8-c916-30a7-923c-0c66bd3ebbd3`；one evaluator/one downloader alive、recent error/retry=false；
+- M43 aggregate/summary=false，partial quality read=false，external verdict=`no_verdict`；no AV2 tuning/calibration/
+  threshold/log replacement；user-requested shutdown pauses the frozen run without consuming its final exact-once read；
+- storage at handoff=AV2 about `79GiB`、`/root/autodl-tmp` available `86GiB`。
+- paper validation=main `8 pages / 376,428 bytes`, warning/reference/citation/duplicate=`0`；supplement
+  `15 pages / 2,336,842 bytes`, undefined=`0`, only inherited overfull=`53.85pt/6.03pt`；page 1/6 visual QA pass。
+
 ## WorldSim V7.1 CVPR problem-formulation replacement（2026-09-05）
 
 - main variables=`A_i` immutable Actor、`B_i` build evidence、`Y_i` disjoint GT、`P_i=(S_i,m_i)` physical state；

@@ -4,7 +4,7 @@ Date: 2026-09-05
 
 ## One-sentence result
 
-V7.1 establishes a supervision-native Actor-canonical geometry path and a learned evidential categorical return measure on nuScenes, proves strict ownership/equivariance and an attenuation safety boundary, and reserves cross-sensor generalization for the single frozen M39-to-AV2 read that is still running.
+V7.1 establishes a supervision-native Actor-canonical geometry path and a learned evidential categorical return measure on nuScenes, proves strict ownership/equivariance and an attenuation safety boundary, and withholds cross-sensor generalization because the single frozen M39-to-AV2 read remained incomplete at the shutdown handoff.
 
 ## Factorized scientific state
 
@@ -16,7 +16,7 @@ M8 adds equal per-frame endpoint coverage while keeping trajectory outside the s
 
 Claim allowed: training supervision changes the deployed geometry and produces a source-domain physical Pareto without post-hoc deletion.
 
-Claim forbidden: watertight reconstruction, collision freedom, unseen-category completion, or external generalization before M43.
+Claim forbidden: watertight reconstruction, collision freedom, unseen-category completion, or external generalization without a complete M43 aggregate.
 
 ### 2. Surface-return authority: M39 supported on exposed development
 
@@ -70,13 +70,13 @@ If future work predicts temporal evolution, canonical shape and deformation must
 
 ## Cross-domain state
 
-M43 is the only eligible frozen external candidate. It reconstructs all M8 geometry and M35/M38 authority inputs from AV2 build sweeps, then evaluates target sweeps once. No AV2 fine-tuning, normalization fit, calibration, threshold selection, log replacement, or partial quality read is permitted. Current status is 14/20 processed logs while the sole downloader continues; roughly 88 GB remains.
+M43 is the only eligible frozen external candidate. It reconstructs all M8 geometry and M35/M38 authority inputs from AV2 build sweeps, then evaluates target sweeps once. No AV2 fine-tuning, normalization fit, calibration, threshold selection, log replacement, or partial quality read is permitted. At the final handoff it had processed 16/20 logs and 276 Actors, was waiting for log `c85a88a8-c916-30a7-923c-0c66bd3ebbd3`, and had no final `summary.json`. The sole evaluator and downloader were healthy, the recent log contained no error or retry, and about 86 GiB remained. The user-requested shutdown intentionally pauses this frozen execution; no partial quality is admitted.
 
-Final branch:
+Current claim branch:
 
-- If M43 passes all three frozen criteria, the paper may claim a nuScenes-to-AV2 zero-shot direction for evidential Actor-local surface returns.
-- If M43 fails, no target adaptation follows. The paper claims source-domain supervision-native physical completion, exact ownership/equivariance, and the normalized-mixture safety boundary; cross-sensor transfer remains an observed limitation.
+- The present paper claims source-domain supervision-native physical completion, exact ownership/equivariance, and the normalized-mixture safety boundary; it makes no learned cross-sensor claim.
+- If the same frozen run is later resumed, only a complete 20/20 aggregate after normal evaluator exit can establish the pre-registered direction. Failure still permits no target adaptation.
 
 ## Paper compression priority
 
-The main paper should retain: the supervision-native target construction; M7/M8 geometry; M39 joint return measure; M43 external result; typed ownership/SE(3); and M49 safety theorem/figure. M0--M6, M9--M21, M23--M27, M29--M38, and M40--M48 are failure-directed evidence for the supplement except where one sentence is necessary to motivate a retained result. This preserves the causal story: GT geometry, return measure, state ownership, external test, safety boundary.
+The main paper should retain: the supervision-native target construction; M7/M8 geometry; M39 joint return measure; the M43 frozen protocol and explicit incomplete boundary; typed ownership/SE(3); and the M49 safety theorem/figure. M0--M6, M9--M21, M23--M27, M29--M38, and M40--M48 are failure-directed evidence for the supplement except where one sentence is necessary to motivate a retained result. This preserves the causal story: GT geometry, return measure, state ownership, honest external-test boundary, safety boundary.

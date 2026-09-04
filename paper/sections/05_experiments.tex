@@ -16,7 +16,8 @@ We train and make every representation choice on nuScenes. The geometry fold con
 as development-exposed because its parent representation had already been inspected. Argoverse~2 Sensor validation is a
 single frozen zero-shot evaluation: before any learned-method output is read, we sort the 150 log UUIDs and choose every
 fifth log, yielding 20 quantitative logs. We prohibit AV2 fine-tuning, calibration, threshold selection, and failed-log
-deletion. At the time of this draft the aggregate is still incomplete, so no partial learned-transfer metric appears below.
+deletion. At manuscript freeze the aggregate is incomplete and has no final summary, so no partial learned-transfer metric
+appears below and we make no learned cross-domain claim.
 
 Physical evaluation uses literal first-return error, hit recall within $0.20$\,m, symmetric Chamfer distance, and the same
 metrics stratified by a target-defined hazard label. Actor identity, trajectory, extent, and lifecycle are immutable. This
@@ -114,5 +115,6 @@ The source experiments support three separable statements: GT-defined losses imp
 deletion; producer evidence is useful when represented as categorical return authority; and normalized-mixture attenuation
 has a non-monotone, exactly characterizable boundary. Typed ownership keeps rigid motion, Background, appearance, and
 canonical geometry from silently compensating for one another. None of these statements certifies collision freedom,
-unobserved completion, trajectory accuracy, domain invariance, or real-road safety. The frozen AV2 aggregate will test only
-the learned return representation's cross-domain direction; its outcome cannot retroactively select or adapt the method.
+unobserved completion, trajectory accuracy, domain invariance, or real-road safety. The incomplete frozen AV2 protocol was
+designed to test only the learned return representation's cross-domain direction; without its full aggregate it supplies no
+result and cannot retroactively select or adapt the method.

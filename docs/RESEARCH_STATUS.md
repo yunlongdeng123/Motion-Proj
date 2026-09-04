@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V7.1 final documentation handoff / external claim withheld（2026-09-05）
+
+分支=`research/worldsim-v7.1-learned-evidential-surface`。当前可复现实证已收口为：M8的GT/set/ray/free-space
+supervision-native canonical geometry、M39的producer-evidential categorical return measure、M22/M28的typed
+ownership与SE(3) composition、M49的normalized-mixture有限衰减边界，以及M51的smooth expected depth不蕴含
+hard minimum first-return。M50 frame-balanced first-return与M45--M48局部orientation/visibility支线均按冻结判定
+rejected；没有通过后处理删除、UNKNOWN mask或target-domain调参恢复结果。
+
+唯一冻结外测M43在本次最终交接核对时为`running/waiting_fresh_av2`、`16/20` logs；已处理276 Actors，当前等待
+`c85a88a8-c916-30a7-923c-0c66bd3ebbd3`。唯一evaluator与唯一`s5cmd` downloader均存活，最近日志无
+error/exception/retry；AV2目录约`79GiB`，`/root/autodl-tmp`剩余`86GiB`。run尚无`summary.json`，因此
+`EXTERNAL_ACTORS.partial.jsonl`及任何partial quality均未读取，M43没有科学verdict，论文不声称nuScenes→AV2
+learned transfer。用户要求在文档与论文推送后关机；该生命周期中断不登记scientific failure。未来若恢复，必须
+复用同一frozen cohort/config/run与已有下载，只保持一个downloader，并在20/20和正常终止后一次性读取aggregate。
+
+CVPR full paper已把上述边界写入abstract/introduction/protocol/limitations/conclusion，旧supplement候选表述同步改为
+“external incomplete/claim withheld”。TinyTeX/latexmk验证：`paper/main.pdf`=`8 pages / 376,428 bytes`，0
+overfull/undefined reference/undefined citation/duplicate-label warning；`paper/supplement.pdf`=`15 pages /
+2,336,842 bytes`，无undefined reference/citation，仅保留两处既有overfull（method equation `53.85pt`、legacy table
+`6.03pt`）。主稿page 1与page 6可视检查无截断或版式破损。
+
 ## WorldSim V7.1 CVPR problem formulation aligned（2026-09-05）
 
 主稿Problem Formulation已从旧artifact/hazard classifier与task-reliability cost改为V7.1真实对象：immutable Actor

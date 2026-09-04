@@ -15,6 +15,12 @@
 > 保持未读，不做outcome-guided恢复。完整证据见
 > `docs/autoresearch/worldsim_v71/V71_RESEARCH_CLOSEOUT.md`。
 
+> **最终研究交接（2026-09-05）：** 后续failure-directed research在同一v7.1分支形成M8 supervision-native
+> geometry、M39 evidential categorical return measure、M49有限衰减安全边界与M51 smooth/hard非蕴含诊断；
+> M50及M45--M48按冻结判定rejected。M43是唯一learned external candidate，但用户要求关机时仅完成`16/20`
+> logs且没有final summary；未读取partial quality，故V7.1当前只拥有source-domain与解析边界结论，不拥有
+> nuScenes→AV2 learned-transfer结论。详见`WORLDSIM_V71_RESEARCH_SYNTHESIS.md`和三份核心账本。
+
 ---
 
 # 1. 当前事实与 V7.1 的研究问题

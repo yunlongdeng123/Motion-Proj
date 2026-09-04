@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 final handoff prevention note — incomplete M43 is not a scientific failure（2026-09-05）
+
+- M43 handoff state=`running/waiting_fresh_av2`, `16/20` logs、276 Actors；current log=
+  `c85a88a8-c916-30a7-923c-0c66bd3ebbd3`；唯一evaluator/downloader健康，最近日志无error/retry，磁盘余量
+  `86GiB`；
+- run没有`summary.json`，未读取`EXTERNAL_ACTORS.partial.jsonl`或任何partial quality；因此不得登记`V71-F43`、
+  不得把进度或Actor count解释成method quality，也不得用旧nonlearned AV2结果替代learned transfer；
+- 本次由用户明确要求在docs/paper推送后shutdown。该中断是资源生命周期动作，不是method/engineering failure，
+  next failure ID仍=`V71-F50`；
+- 合法恢复只允许复用同一cohort/config/run和已有下载、保持单一downloader；20/20且evaluator正常退出后才读取一次
+  aggregate。若三项冻结判定任一失败，届时登记`V71-F43`并关闭AV2 adaptation。
+
 ## V7.1 paper object boundary — classifier/reliability variables are legacy（2026-09-05）
 
 V7.1主问题不得重新以artifact probability、hazard classifier或task-reliability density替代GT surface与first-return
@@ -10,7 +22,8 @@ supervision。旧变量仅作supplement中的历史路径；主claim对象是sur
 
 主稿不得因引用DynamicVGGT/DeGO/SelfOccFlow而声称当前模型具有scene-flow、non-rigid deformation或future
 forecasting；不得因Gau-Occ两阶段联合优化而推断未公开的completion梯度路径。相关工作只用于支持状态拆分和
-supervision-first设计，当前实证仍限M8/M39/M49/M51与pending M43。纯写作压缩无新failure；next ID仍=`V71-F50`。
+supervision-first设计，当前实证仍限M8/M39/M49/M51；M43在handoff时incomplete/no-verdict。纯写作压缩无新
+failure；next ID仍=`V71-F50`。
 
 ## V7.1 M51 outcome note — soft error improvement cannot certify hard support（2026-09-05）
 
