@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M18 AV2 prevention note — 20/20前不读质量（2026-09-04）
+
+- cohort固定为`configs/worldsim_v71/av2_zero_shot_cohort_v1.json`的20个fresh logs；旧V7 30-log完成标记无效；
+- checkpoint固定M18 categorical与M8 point comparator；无fine-tune/calibration/threshold selection/failed-log deletion；
+- evaluator允许按`.complete`逐log写`EXTERNAL_ACTORS.partial.jsonl`，但20/20前禁止读取任何metric/row；
+- final aggregate同时报告M8 point五门与M18 categorical early/hit两门；任一失败不得删log或回调M18；
+- 下载器维持唯一现有进程，不启动第二个；空间不足才暂停external，不删除cohort数据。
+
+下一可用编号仍为：`V71-F23`。
+
 ## V7.1 M18 reporting correction — metric路径正确、deployment标签陈旧（2026-09-04）
 
 - canonical M18的ray metrics实际由`_categorical_first_return_partition`生成，使用softmax CDF median；

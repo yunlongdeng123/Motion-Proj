@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M18-FRESH-AV2-ZERO-SHOT-01 — frozen waiting protocol（2026-09-04）
+
+- source model=`20260905T023000Z__m18-categorical-return-s71120-r1`；no fine-tuning/calibration/threshold selection；
+- comparator=`20260904T202000Z__m8-temporal-frame-s71110-r2`；same compiled AV2 actor/rays；
+- cohort=20 frozen fresh Sensor-val logs；download state=`v71_download_state`；current=`4/20`；
+- outputs=M8 point-surface aggregate + M18 categorical-CDF median aggregate；no partial metric read；
+- gates=M8 external five + categorical hazard early reduction vs M8 `>=5%` + categorical all hit delta `>=-1pp`；
+- process may compile completed logs then wait on the sole downloader；final read only after20 `.complete` markers；
+- no clear-subgroup claim even on pass；no failed-log deletion or rerun。
+
 ## WS-V71-M18-CATEGORICAL-FIRST-RETURN-01 — canonical development positive（2026-09-04）
 
 - run=`20260905T023000Z__m18-categorical-return-s71120-r1`；verdict=`m18_development_passed`；7/7 gates；

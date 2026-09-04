@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M18 fresh AV2 zero-shot protocol frozen（2026-09-04）
+
+状态=`v71_m18_fresh_av2_zero_shot_waiting`，详见
+[`WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md`](WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md)。冻结M18 checkpoint、
+M8 comparator、20-log `av2_zero_shot_cohort_v1.json`与七门合同；不fine-tune、不校准、不选阈值、不删失败log。当前V7.1
+download state=`4/20`，current=`27c03d98-6ac3-38a3-ba5e-102b184d01ef`；旧V7 30-log `ALL_COMPLETE`不计入
+本cohort。
+
+Evaluator可按`.complete`逐log计算并只写partial artifact，但任何partial physical metric禁止读取；仅在20/20后聚合一次并读取。
+该external只验证nuScenes→AV2 geometry/first-return transfer，不解锁clear、安全、动态/静态或image claim。
+
 ## WorldSim V7.1 M18 development passed / AV2 confirmation locked（2026-09-04）
 
 Canonical=`run://worldsim_v71/WS-V71-M18-CATEGORICAL-FIRST-RETURN-01/
