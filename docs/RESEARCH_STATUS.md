@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.1 M6 rejected / M7 set-to-set seed expansion冻结（2026-09-04）
+
+M6 canonical=`run://worldsim_v71/WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01/
+20260904T120000Z__m6-gt-supervised-gaussian-s71108-r1`。593 Actors完成Stage G/P，direct center/plane/scale归一化损失
+分别由`0.981/1.011/0.990`降到`0.661/0.808/0.688`，说明actor-canonical GT监督可学习；free-space降到M5
+reference的`0.781`。但集合Chamfer训练比始终约`1.002`、first约`1.011`。66-Actor development上hazard early仅下降
+`3.670%<5%`，故4/5 gates并拒绝；Chamfer改善`1.391mm`、hit增加`1.077pp`、retention=`100/100%`。
+
+登记`V71-F11`。定向support audit显示659个非空candidate Actors中candidate/target中位数=`17/966`，单中心集合只相当于
+target的`1.64%`；M6最近点标签只约束candidate→target，不能生成target→surface覆盖。依据PoinTr的set-to-set completion与
+SnowflakeNet parent→children splitting，下一步冻结M7：每个M5 seed生成4个children，Stage G直接用完整actor-canonical
+target的symmetric set loss、local plane/scale监督，Stage P持续保留后再加入first/free-space。初始四children重合于M5 center，
+不引入UNKNOWN mask、image/semantic/motion/hazard输入或第二seed。下一failure ID=`V71-F12`。
+
 ## WorldSim V7.1 Gau-Occ审计完成 / M6 supervision-native geometry冻结（2026-09-04）
 
 Gau-Occ一手资料审计已完成，详见[`WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md`](WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md)。

@@ -1,5 +1,31 @@
 # Experiments
 
+## WS-V71-M7-GT-SUPERVISED-SEED-EXPANSION-01 — frozen protocol（2026-09-04）
+
+- trigger=M6 direct center/plane/scale可学但Chamfer比约`1.002`、hazard gate失败；nonempty Actor的candidate/target
+  median=`17/966`，one-to-one label不能提供set coverage；
+- literature=PoinTr (ICCV 2021)将completion表为set-to-set translation；SnowflakeNet (ICCV 2021)用parent-child point
+  splitting生成局部完整表面；只迁移最小seed expansion，不复制大Transformer；
+- input=build-only M5 feature与冻结M5 center；每个seed固定4个learned slot，输出4个bounded 3D child centers + scale；
+- initialization=四children初始均为parent M5 center，voxelized deployment surface起点与M5相同；
+- Stage G=完整actor-canonical target上的symmetric Chamfer + child-to-target local point-to-plane + local-scale supervision；
+- Stage P=Stage G持续回传，再加入literal first-return与FREE-before-hit violation；geometry/physics负梯度沿用已证明的PCGrad；
+- immutable=observed anchors原样并入surface；UNKNOWN-behind不标FREE、不作推理删除；
+- one seed/branch factor、fixed losses、train-role development、原五项gates；no image/semantic/motion/hazard/diffusion/sweep；
+- external=M5 AV2局部output仍不得用于M7选择；validation=`py_compile only`。
+
+## WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T120000Z__m6-gt-supervised-gaussian-s71108-r1`；verdict=`m6_development_rejected`；
+- training=593 Actors，Stage G/P各8 epochs；center=`0.981→0.661`、plane=`1.011→0.808`、scale=
+  `0.990→0.688`、free-space=`0.834→0.781`，但Chamfer=`1.000→1.002`、first=`1.014→1.011`；
+- development=66 Actors/41 hazard/99,208 rays；hazard/all/clear early reduction=`3.670/2.838/-2.434%`；
+- geometry=Chamfer `-1.391mm`、hit `+1.077pp`、retention=`100/100%`；4/5 gates，hazard gate fail；
+- M5 reference=hazard/all/clear=`5.852/4.455/-4.398%`、Chamfer=`-1.635mm`、hit=`+1.429pp`；
+- support audit=659 eligible Actors，candidate q10/median/q90=`1/17/64`，target=`117/966/4096`，median ratio=
+  `1.64%`；failure=`V71-F11`；
+- resources=`123.976s`、peak GPU=`0.2356GiB`、RSS=`1.3547GiB`；no Selection/Source Final/external read。
+
 ## WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01 — frozen protocol（2026-09-04）
 
 - evidence source=Gau-Occ CVPR 2026 main §3.1--3.4/Eq.(1)--(17) + supplement §7；官方代码未发布，未知梯度路径不补写；

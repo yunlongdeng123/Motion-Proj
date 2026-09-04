@@ -1,5 +1,28 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F11 — 一候选一最近GT点可学但不能形成集合级危险表面覆盖
+
+- 分类/状态：representation + target assignment / terminal for one-to-one anchor correction；canonical=`run://worldsim_v71/
+  WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01/20260904T120000Z__m6-gt-supervised-gaussian-s71108-r1`；
+- 观察：direct center/plane/scale与free-space均下降，但训练Chamfer比停在`~1.002`；development hazard early只降
+  `3.670%<5%`，其余Chamfer/hit/retention四门通过；相对M5，clear退化减轻但hazard收益被削弱；
+- root cause：659个nonempty Actors的candidate/target中位数仅`17/966`（`1.64%`）；nearest endpoint标签只优化
+  candidate→target精度且每个seed仍只能产生一个中心，无法优化target→generated-surface coverage；
+- literature response：PoinTr (ICCV 2021)明确把completion建模为set-to-set translation；SnowflakeNet (ICCV 2021)
+  通过parent-child splitting生成局部结构。迁移为固定4-child seed expansion和双向set supervision，而非换nearest metric；
+- resolution：关闭M6 one-to-one correction，不调loss/seed/residual bound；M7仍使用相同actor-canonical GT、hard anchors与
+  first/free-space，只改变输出支撑数及set supervision；
+- claim impact：M6证明GT supervision可优化局部几何标签，但不支持完整表面或hazard physical consistency claim；下一可用
+  failure ID=`V71-F12`。
+
+## V7.1 M7 prevention note — seed expansion必须由GT set训练而非部署增密
+
+- children在训练图内生成并直接接收完整target set、plane、scale、first/free-space loss；禁止训练后插值/复制点冒充completion；
+- observed anchors仍不可学习，四个child slot固定且初始重合于M5 center；不扫branch factor或slot count；
+- 若M7失败，登记`V71-F12`并关闭当前candidate-seed family，再考虑implicit/voxel生成；不回调M6最近点标签或追加mask。
+
+下一可用编号仍为：`V71-F12`。
+
 ## V7.1 M6 prevention note — target-first不等于Gau-Occ原样迁移（2026-09-04）
 
 - Gau-Occ的20-sweep target只声明ego-motion alignment，直接用于动态Actor会把物体运动写成completion geometry；V7.1必须
