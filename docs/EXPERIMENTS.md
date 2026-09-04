@@ -1,5 +1,26 @@
 # Experiments
 
+## WS-V71-M5-PCGRAD-RELOCATION-01 — canonical development pass（2026-09-04）
+
+- run=`20260904T104700Z__m5-pcgrad-relocation-s71107-r1`；verdict=`m5_development_passed`；
+- training=`593 Actors / 12 epochs`；first=`0.957198→0.946783`，surface=`0.993554→0.989274`，final conflict
+  fraction=`85.235%`、mean preprojection cosine=`-0.3326`；
+- development=`66 Actors / 41 hazard / 99,208 rays`；hazard/all/clear early reduction=
+  `5.852/4.455/-4.398%`；
+- geometry=Chamfer `0.237668→0.236033m`（`-1.635mm`），hit recall `47.672→49.101%`（`+1.429pp`），
+  retention=`100/100%`；5/5 gates；
+- caveat=development Actors曾进入M0初始化训练，不能称confirmation；
+- resources=`157.627s`、peak GPU=`0.3880GiB`、RSS=`1.3821GiB`；no Selection/Source Final/AV2 read。
+
+## WS-V71-M5-FRESH-AV2-ZERO-SHOT-01 — cohort/download freeze（2026-09-04）
+
+- cohort=`configs/worldsim_v71/av2_zero_shot_cohort_v1.json`，20 logs；冻结于任何M5 AV2 output之前；
+- policy=150 val UUID排序，排除V7已消费60，取90-log complement positions `0,4,...,76`；
+- allowed=coordinate/unit/category/timestamp/canonical/opportunity conversion only；禁止fine-tune/calibration/threshold/
+  log replacement；
+- acquisition=single sequential downloader、s5cmd 4 workers、20 retries、`.complete` resume；无hash/checksum/fingerprint；
+- external gate=hazard early reduction `>=5%`、Chamfer delta `<=1mm`、Actor/hazard retention=`100%`，并完整报告hit。
+
 ## WS-V71-M5-PCGRAD-RELOCATION-01 — frozen development protocol（2026-09-04）
 
 - trigger=Diagnostic C all/encoder/head负梯度比例=`72.7/81.8/72.7%`，PCGrad具有直接机制依据；

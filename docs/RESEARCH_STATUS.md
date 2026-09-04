@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M5 development passed / fresh AV2 download active（2026-09-04）
+
+M5 canonical=`run://worldsim_v71/WS-V71-M5-PCGRAD-RELOCATION-01/
+20260904T104700Z__m5-pcgrad-relocation-s71107-r1`。593 Actors训练12轮；first/surface=`0.95720→0.94678 /
+0.99355→0.98927`，冲突batch=`69.8→85.2%`。66-Actor development上hazard/all early相对下降=`5.852/4.455%`，
+Chamfer改善`1.635mm`，hit recall增加`1.429pp`，Actor/hazard retention=`100/100%`，五项全部通过。无数值或工程
+异常；因M0初始化曾见过这些Actors，本结果只冻结candidate，不作独立confirmation。
+
+在任何M5外域输出前，已从150个AV2 val UUID中排除V7三套已消费cohort共60 logs，并按剩余90 logs的排序位置
+`0,4,...,76` metadata-only冻结20个全新logs。下载器固定单进程、每对象4 workers、断点依赖`.complete`标记，
+不使用hash/checksum/fingerprint；下载与AV2 evaluator实现并行推进。M5权重、standardizer、renderer、tolerances和
+五项external合同全部冻结；不读旧30-log target替代新cohort。下一failure ID=`V71-F09`。
+
 ## WorldSim V7.1 diagnostic C confirms conflict / M5 PCGrad ready（2026-09-04）
 
 Diagnostic C canonical=`run://worldsim_v71/WS-V71-DIAG-C-M2-GRADIENT-CONFLICT-01/

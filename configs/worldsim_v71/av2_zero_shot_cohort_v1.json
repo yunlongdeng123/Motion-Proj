@@ -1,0 +1,39 @@
+{
+  "schema_version": "worldsim_v71.av2_zero_shot_cohort.v1",
+  "source_dataset": "Argoverse 2 Sensor Dataset",
+  "source_split": "val",
+  "selection_policy": "List all 150 Sensor-val log UUIDs before any M5 external output, remove the 60 logs consumed by the three V7 cohorts, then select zero-based positions 0,4,...,76 from the 90-log complement. This metadata-only policy yields 20 previously unread logs spread across the sorted complement.",
+  "parent_consumed_cohorts": [
+    "configs/worldsim_v7/av2_zero_shot_cohort_v1.json",
+    "configs/worldsim_v7/av2_zero_shot_recovery_cohort_v1.json",
+    "configs/worldsim_v7/av2_evicomp_fresh_cohort_v1.json"
+  ],
+  "quality_read_before_freeze": false,
+  "model_output_read_before_freeze": false,
+  "fine_tuning_allowed": false,
+  "post_hoc_calibration_allowed": false,
+  "threshold_selection_allowed": false,
+  "failed_scene_deletion_allowed": false,
+  "logs": [
+    {"index": 3, "complement_position": 0, "log_id": "05fa5048-f355-3274-b565-c0ddc547b315", "role": "fresh_v71_external"},
+    {"index": 9, "complement_position": 4, "log_id": "0c3bad78-9f1e-395d-a376-2eb7499229fd", "role": "fresh_v71_external"},
+    {"index": 14, "complement_position": 8, "log_id": "185d3943-dd15-397a-8b2e-69cd86628fb7", "role": "fresh_v71_external"},
+    {"index": 22, "complement_position": 12, "log_id": "20dd185d-b4eb-3024-a17a-b4e5d8b15b65", "role": "fresh_v71_external"},
+    {"index": 28, "complement_position": 16, "log_id": "27c03d98-6ac3-38a3-ba5e-102b184d01ef", "role": "fresh_v71_external"},
+    {"index": 36, "complement_position": 20, "log_id": "36aec72e-5086-376c-b109-295b128e77e1", "role": "fresh_v71_external"},
+    {"index": 42, "complement_position": 24, "log_id": "47286726-5dd4-4e26-bd2d-5324f429e445", "role": "fresh_v71_external"},
+    {"index": 49, "complement_position": 28, "log_id": "544a8102-0ef5-3044-921e-dc0544370376", "role": "fresh_v71_external"},
+    {"index": 56, "complement_position": 32, "log_id": "65387aee-4490-38b9-8f4f-1fc43bd4ac06", "role": "fresh_v71_external"},
+    {"index": 63, "complement_position": 36, "log_id": "7606de8d-486c-4916-9cbb-002ee966f834", "role": "fresh_v71_external"},
+    {"index": 69, "complement_position": 40, "log_id": "7a2c222d-addc-30b2-aac6-596cb65a22e3", "role": "fresh_v71_external"},
+    {"index": 74, "complement_position": 44, "log_id": "858d739b-a0ba-35aa-bafc-4f7988bcad17", "role": "fresh_v71_external"},
+    {"index": 82, "complement_position": 48, "log_id": "9a448a80-0e9a-3bf0-90f3-21750dfef55a", "role": "fresh_v71_external"},
+    {"index": 88, "complement_position": 52, "log_id": "a33a44fb-6008-3dc2-b7c5-2d27b70741e8", "role": "fresh_v71_external"},
+    {"index": 96, "complement_position": 56, "log_id": "b5a7ff7e-d74a-3be6-b95d-3fc0042215f6", "role": "fresh_v71_external"},
+    {"index": 102, "complement_position": 60, "log_id": "bbd19ca1-805a-3c22-8df3-cd7501aa06f3", "role": "fresh_v71_external"},
+    {"index": 109, "complement_position": 64, "log_id": "c85a88a8-c916-30a7-923c-0c66bd3ebbd3", "role": "fresh_v71_external"},
+    {"index": 116, "complement_position": 68, "log_id": "d3ca0450-2167-38fb-b34b-449741cb38f3", "role": "fresh_v71_external"},
+    {"index": 123, "complement_position": 72, "log_id": "dafe14f5-825c-4e7a-9009-6dfdfdd5b030", "role": "fresh_v71_external"},
+    {"index": 130, "complement_position": 76, "log_id": "dfc6d65f-20f5-389d-a5cd-81c1c7ecb11f", "role": "fresh_v71_external"}
+  ]
+}

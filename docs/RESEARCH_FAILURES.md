@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 fresh AV2 prevention note — 不复用V7已消费的60 logs（2026-09-04）
+
+- 原30-log、20-log recovery与10-log EviComp cohorts均已被V7研究读取，不可作为M5 fresh confirmation；
+- V7.1新20-log cohort在M5 external output前从其90-log补集metadata-only冻结，下载失败只能原log重试，不替换；
+- external读取后禁止fine-tune、calibration、threshold/tolerance/field scale调整或第二cohort救援；
+- 若冻结三项primary合同失败，登记`V71-F09`并把结论限制为source/train-domain，跨传感器迁移关闭。
+
 ## V7.1 M5 prevention note — PCGrad只改冲突梯度，不改变部署表面（2026-09-04）
 
 - Diagnostic C直接观测全模型`72.7%`、encoder`81.8%` minibatches负内积，因此M5不是事后loss-weight sweep；
