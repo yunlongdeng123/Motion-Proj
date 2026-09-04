@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M47 pre-registration note — separate physical factors before changing the paradigm（2026-09-05）
+
+M45/M46的hazard退化尚不能归因于“动态”或“入射角”。M47冻结两个renderer，复用M31的独立物理编译结果，
+只作motion/provenance/incidence描述性分解；禁止将hazard/moving/KEEP-PROJECT标签输入模型，禁止按诊断结果删点或调阈值，
+禁止把相关性写成因果。若moving集中，下一步显式分离rigid pose与local shape；若provenance集中，先修GT producer；
+若grazing集中，则把visibility/incidence写进supervision；否则升级为completion/scene-flow factorization。当前failure ID仍为
+`V71-F46`。
+
 ## V71-F45: CDF-supervised orientation improves clear rays but transfers risk to hazard rays（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01/20260905T104500Z__m46-cdf-oriented-s71146-r2`；

@@ -1,0 +1,27 @@
+task_id: WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01
+hypothesis_id: WS-V71-H-M47-LOCAL-SUPPORT-ERROR-FACTORS
+schema_version: worldsim_v71.m47_motion_provenance_incidence_diagnosis.v1
+runs_root: /root/autodl-tmp/runs
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+sidecar_root: /root/autodl-tmp/data/worldsim_v71/anchor_evidence_v1
+m8_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2
+m35_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01/20260905T050000Z__m35-transmittance-anchor-s71135-r1
+m38_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M38-PREHIT-FREE-SPACE-SURVIVAL-01/20260905T063000Z__m38-prehit-survival-s71138-r1
+m46_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01/20260905T104500Z__m46-cdf-oriented-s71146-r2
+m31_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/20260905T020000Z__m31-anchor-contradiction-attribution-r3
+device: cuda
+maximum_training_actors: 1024
+holdout_stride: 10
+anchor_scale_m: 0.08
+features:
+  maximum_build_evidence_points: 16384
+evaluation:
+  literal_depth_tolerance_m: 0.20
+  field_sample_count: 64
+  ray_chunk_size: 32
+  cuboid_padding_m: 0.15
+  categorical_median_threshold: 0.50
+diagnosis:
+  responsibility_chunk_size: 256
+  grazing_max_abs_cosine: 0.35
+  normal_min_abs_cosine: 0.70

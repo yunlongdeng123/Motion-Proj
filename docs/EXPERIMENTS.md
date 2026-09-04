@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01 — frozen（2026-09-05）
+
+- frozen=M39 categorical authority + M46 CDF-oriented support；same 66 exposed holdout；training/gate/model selection=false；
+- factors=M31 trajectory moving/quasi-static、KEEP/PROJECT anchor contradiction、GT-target child-responsibility-weighted
+  `|ray·normal|` fixed bins、target-frame ordinal；
+- reports=M46-vs-M39 early/hit、added/removed early与actor-level descriptive correlations；不作causal claim；
+- physical/hazard factors are diagnosis-only，绝不作为模型输入或post-hoc filter；no external/M43 partial read。
+
 ## WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T104500Z__m46-cdf-oriented-s71146-r2`；593 train / 66 holdout；4 epochs；verdict=

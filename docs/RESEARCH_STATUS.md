@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M47 motion/provenance/incidence diagnosis frozen（2026-09-05）
+
+状态=`v71_m47_motion_provenance_incidence_diagnosis_frozen`，详见
+[`WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md`](WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md)。
+M47不再优化M46：冻结M39 authority与M46 normal/thickness，在同一66个exposed holdout上逐ray比较，连接M31已复编译
+的trajectory displacement与KEEP/PROJECT矛盾归因，并按moving/quasi-static、hazard/clear交叉、固定入射角区间和target
+frame报告added/removed early。GT target处的入射角以categorical child responsibility加权；所有物理标签只用于诊断，
+不输入模型、不filter/reweight/delete，无训练、gate、参数选择或external/M43 partial read。结果将决定下一阶段是显式
+rigid dynamic层、修正producer supervision、监督visibility/incidence，还是转向completion/scene-flow因子化。
+
 ## WorldSim V7.1 M46 rejected / CDF-aligned support training amplifies hazard split（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01/
