@@ -1,5 +1,33 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M15 prevention note — surface support必须前后非对称（2026-09-04）
+
+- cell front boundary就是GT hit zero plane，normal support只向behind-return延伸`0.10m`，禁止向FREE侧对称膨胀；
+- tangent radius由GT 8NN maximum local extent直接监督，不能复用M8 median scale而不训练；
+- actor field仍为所有cells的CSG union，AABB外/所有cells外为FREE；无threshold/filter/mask；
+- depth=`0.10m`来自冻结narrow-back supervision终点，不扫描depth/radius multiplier；
+- 若early/hit合同失败登记`V71-F20`并关闭one-sided cell，不做第二seed或loss恢复。
+
+下一可用编号仍为：`V71-F20`。
+
+## V71-F19 — compact radial field清除FREE伪面但丢失真实surface coverage（2026-09-04）
+
+- 分类/状态：support geometry coupling / terminal for radial compact patch；canonical=
+  `20260905T003000Z__m14-compact-field-s71116-r1`；
+- 观察：early all/hazard相对M8下降`70.399/69.115%`，但hit下降`25.333/24.147pp`，observable仅
+  `37.53/39.89%`；最终6/7；
+- 训练机制：front FREE=`0.0958→0.1112`保持很低，back occupied=`15.513→15.437`几乎不可优化，说明不是
+  front false-positive而是compact support覆盖不足；
+- root cause：M8 scale由GT 8NN median tangent distance学习，M14却把它作为三维ball radius；ball同时限制切向coverage和
+  behind-surface depth，重现M9 scale角色耦合；
+- literature/open-source response：Ponder在GT depth附近使用可信near-surface SDF、远处单独FREE正则；QueryOcc强调直接
+  query supervision。迁移为one-sided local cell，front zero、tangent GT extent、behind slab分权；
+- resolution：关闭radial ball，不调radius multiplier；M15预测GT-supervised tangent radius，normal support固定只向后
+  `0.10m`，用同一CSG field训练/部署；
+- claim impact：compact field有FREE precision正证据但无coverage claim。下一可用ID=`V71-F20`。
+
+下一可用编号：`V71-F20`。
+
 ## V7.1 M14 prevention note — compact support是表示，不是事后gate（2026-09-04）
 
 - local patch值内生定义为plane half-space与M8-radius ball的CSG intersection，patch外FREE参与所有训练/部署query；

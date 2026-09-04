@@ -1,5 +1,28 @@
 # Research Status
 
+## WorldSim V7.1 M15 one-sided surface cell frozen（2026-09-04）
+
+状态=`v71_m15_one_sided_surface_cell_frozen`，详见
+[`WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md`](WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md)。M14证明
+compact field可消除FREE伪面，但radial ball再次把tangent extent和behind-surface depth耦合。M15定义非对称surface
+cell：front face固定在learned zero plane，切向radius接受GT 8NN coverage extent监督，occupied support只向ray-return后方
+延伸固定`0.10m`；FREE侧没有厚度。
+
+cell field是plane half-space、tangent cylinder与back slab的CSG intersection，所有约束均参与训练/部署，不是后处理。
+沿用M8 centers、query-local latent与GT front/hit/narrow-back；单seed 6轮，无radius/depth/loss扫描。下一failure ID=
+`V71-F20`。
+
+## WorldSim V7.1 M14 rejected / asymmetric support required（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M14-COMPACT-LOCAL-OCCUPANCY-01/
+20260905T003000Z__m14-compact-field-s71116-r1`。field early all/hazard相对M8下降`70.399/69.115%`，但hit下降
+`25.333/24.147pp`、observable仅`37.53/39.89%`，最终6/7，登记`V71-F19`。训练front FREE降到`0.111`，
+back occupied卡在`15.437`，精确显示compact ball清除了前方伪面、却覆盖不了真实表面后方窄带。
+
+根因是M8 scale只受切平面局部距离监督，却被M14当成三维radial ball；这重现M9的角色耦合。依据Ponder的near-surface
+SDF/free-space分权和QueryOcc的直接4D query supervision，M15改为one-sided finite cylinder/slab：切向extent由GT覆盖
+监督，法向support只向return后方延伸；不放大M14 ball radius恢复。
+
 ## WorldSim V7.1 M14 compact local occupancy field frozen（2026-09-04）
 
 状态=`v71_m14_compact_local_occupancy_frozen`，详见

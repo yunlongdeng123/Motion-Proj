@@ -1,5 +1,26 @@
 # Experiments
 
+## WS-V71-M15-ONE-SIDED-SURFACE-CELL-01 — frozen protocol（2026-09-04）
+
+- representation=local finite cylinder/slab cell：front zero plane + tangent radius + only-behind `0.10m` depth；
+- field per cell=`max(shifted_plane, tangent_distance-radius, -shifted_plane-back_depth)`；actor union=`min`；
+- center=M8 frozen；radius initialized M8 and directly supervised by GT 8NN maximum tangent extent；
+- GT/deployment=front/hit/narrow-back signed queries and AABB first zero crossing；normal probes retained；
+- no FREE-side thickness、radial ball、primitive filter、UNKNOWN mask；all cells retained；
+- gates=M8 point five + field hazard early `>=5%` + field hit delta `>=-1pp`；
+- one seed `71117` / 6 epochs；no radius/depth/neighbors/loss/sample/seed/epoch sweep；
+- sources=Ponder (ICCV 2023) near-surface/free-space split, QueryOcc (CVPR 2026) direct query supervision, POCO per-point latent。
+
+## WS-V71-M14-COMPACT-LOCAL-OCCUPANCY-01 — canonical negative result（2026-09-04）
+
+- run=`20260905T003000Z__m14-compact-field-s71116-r1`；verdict=`m14_development_rejected`；6/7 gates；
+- field early reduction vs M8 all/hazard/clear=`70.399/69.115/77.837%`；early gate passes；
+- field hit delta all/hazard/clear=`-25.333/-24.147/-31.162pp`；observable=`37.53/39.89/25.91%`；
+- training front FREE=`0.1112`，back occupied=`15.4372`，hit=`0.7659m`；
+- mechanism=compact support removes unanchored front zero sets but M8 median tangent scale is too small as a 3D ball support；
+- decision=close radial compact patch；next=GT extent + one-sided behind support；failure=`V71-F19`；
+- resources=`88.278s / 0.1421GiB GPU / 1.4193GiB RSS`；no protected/external read。
+
 ## WS-V71-M14-COMPACT-LOCAL-OCCUPANCY-01 — frozen protocol（2026-09-04）
 
 - representation=compact local implicit patch `max(oriented plane + learned residual, radial distance - M8 scale)`；
