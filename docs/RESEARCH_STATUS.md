@@ -1,5 +1,11 @@
 # Research Status
 
+## WorldSim V7.1 M46 r1 engineering interruption resolved（2026-09-05）
+
+无效run=`20260905T103000Z__m46-cdf-oriented-s71146-r1`在optimizer step前因resolved config漏写既有
+`branch_factor=4`触发`KeyError`；未产生history/holdout/quality，不登记科学failure。config仅补回M8/M11固定
+branch factor，所有预注册训练/判定参数不变；canonical重跑使用r2。
+
 ## WorldSim V7.1 M46 CDF-supervised oriented support frozen（2026-09-05）
 
 状态=`v71_m46_cdf_supervised_oriented_support_frozen`，详见

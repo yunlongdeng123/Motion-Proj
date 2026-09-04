@@ -1,5 +1,10 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M46 engineering note — missing fixed branch factor before training（2026-09-05）
+
+M46 r1在任何optimizer step/quality read前因config缺少M11 helper所需`branch_factor`退出；该值由M8/M11架构固定
+为4，不是可调参数。补齐后以r2重跑；r1不登记`V71-F45`，不得把它解释为模型失败。
+
 ## V7.1 M46 pre-registration note — only support orientation may absorb CDF supervision（2026-09-05）
 
 M46不允许M40式authority family-mass shortcut或M8 geometry/scale compensation：point encoder、slots、hidden head、

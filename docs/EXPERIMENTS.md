@@ -1,5 +1,10 @@
 # Experiments
 
+## WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01 — r1 invalid / fixed（2026-09-05）
+
+- invalid run=`20260905T103000Z__m46-cdf-oriented-s71146-r1`；在optimizer step前`KeyError: branch_factor`；
+- no history/holdout/quality；不是scientific failure；config补回既有fixed `branch_factor=4`，r2其余参数不变。
+
 ## WS-V71-M46-CDF-SUPERVISED-ORIENTED-SUPPORT-01 — frozen（2026-09-05）
 
 - init=M11 normal/thickness；trainable=final output rows only；frozen=M8 center/tangent + M35/M38 authority + encoder；
