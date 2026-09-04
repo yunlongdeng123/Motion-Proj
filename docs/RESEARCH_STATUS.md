@@ -1,5 +1,28 @@
 # Research Status
 
+## WorldSim V7.1 M18 categorical first-return field frozen（2026-09-04）
+
+状态=`v71_m18_categorical_first_return_frozen`，详见
+[`WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md`](WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md)。M17的
+non-negative density/CDF保证单调并降低early，却因累积density可在hit前弥散而丢失26.14pp hazard hit。M18保持整ray
+归一化与单一first-return distribution，但直接让所有depth bins以softmax竞争一个GT return bin；one-hot native LiDAR target
+经categorical proper loss强制sharp peak。
+
+部署读取同一分布的中位depth；CDF仍按构造单调且总质量为1，无opacity阈值、zero crossing或surface filter。M8与其他任务变量
+保持冻结/隔离。单seed 6轮、32 train/64 eval bins，不扫binning、温度、loss、threshold、seed或epoch。下一failure ID=
+`V71-F23`。
+
+## WorldSim V7.1 M17 rejected / diffuse density closed（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M17-MONOTONE-RAY-SURVIVAL-01/
+20260905T020000Z__m17-ray-survival-s71119-r1`。ray early all/hazard相对M8下降`22.247/26.520%`、observable
+`96.63/96.18%`，但hit all/hazard下降`26.443/26.140pp`，最终6/7，登记`V71-F22`。单调survival修复M16多重
+crossing，但density从`0.449→0.890/m`并沿free ray弥散，median termination过早。
+
+训练loss=`1.387→0.906`、depth L1=`0.754→0.535m`、terminal opacity=`0.584→0.878`，无数值失败；这是
+objective/parameterization允许“提前积少成多”的结构性偏差。依据Neural LiDAR Fields的GT range weight distribution与
+CaDDN的one-hot categorical depth supervision，M18改为整ray归一化first-return logits，不调CDF中位阈值或density scale。
+
 ## WorldSim V7.1 M17 monotone LiDAR survival field frozen（2026-09-04）
 
 状态=`v71_m17_monotone_ray_survival_frozen`，详见

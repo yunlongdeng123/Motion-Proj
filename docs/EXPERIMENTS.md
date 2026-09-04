@@ -1,5 +1,26 @@
 # Experiments
 
+## WS-V71-M18-CATEGORICAL-FIRST-RETURN-01 — frozen protocol（2026-09-04）
+
+- representation=query-local logits over all ordered Actor-AABB ray bins；softmax is one normalized first-return distribution；
+- GT=nearest depth bin to native LiDAR return, one-hot categorical target；loss=CE + `0.10` expected-depth L1；
+- deployment=first bin where the same categorical CDF reaches intrinsic median `0.5`；CDF monotone and total mass=1；
+- M8 frozen；no density accumulation/signed crossing/opacity threshold/filter/image/trajectory/hazard/ray-drop/router；
+- gates=M8 point five + ray hazard early `>=5%` reduction + ray all hit delta `>=-1pp`；
+- one seed `71120` / 6 epochs / 32 train bins / 64 eval bins；no binning/temperature/loss/threshold/seed/epoch sweep；
+- sources=[Neural LiDAR Fields supplement, ICCV 2023](https://openaccess.thecvf.com/content/ICCV2023/supplemental/Huang_Neural_LiDAR_Fields_ICCV_2023_supplemental.pdf) and
+  [CaDDN, CVPR 2021](https://openaccess.thecvf.com/content/CVPR2021/papers/Reading_Categorical_Depth_Distribution_Network_for_Monocular_3D_Object_Detection_CVPR_2021_paper.pdf)。
+
+## WS-V71-M17-MONOTONE-RAY-SURVIVAL-01 — canonical negative result（2026-09-04）
+
+- run=`20260905T020000Z__m17-ray-survival-s71119-r1`；verdict=`m17_development_rejected`；6/7 gates；
+- ray early reduction vs M8 all/hazard/clear=`22.247/26.520/-2.504%`；early gate passes；
+- ray hit delta all/hazard/clear=`-26.443/-26.140/-27.935pp`；observable=`96.63/96.18/98.85%`；hit gate fails；
+- training loss=`1.387→0.906`、depth L1=`0.754→0.535m`、density=`0.449→0.890/m`；
+- mechanism=monotone CDF removes multiple crossings, but diffuse pre-hit density accumulates to an early median termination；
+- decision=close independent-density survival；next=normalized categorical first-return mass；failure=`V71-F22`；
+- resources=`46.318s / 0.2222GiB GPU / 1.3737GiB RSS`；no protected/external read。
+
 ## WS-V71-M17-MONOTONE-RAY-SURVIVAL-01 — frozen protocol（2026-09-04）
 
 - representation=M8-local query network predicts non-negative 3D density；ray transmittance `T=exp(-cumsum(sigma*delta))`；

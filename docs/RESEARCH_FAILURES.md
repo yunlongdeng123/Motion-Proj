@@ -1,5 +1,33 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M18 prevention note — first-return bins必须全ray竞争（2026-09-04）
+
+- 对Actor AABB ray上全部depth bins输出logits并用softmax归一化，总质量固定为1；
+- GT return直接量化为唯一one-hot bin，categorical NLL为主目标，expected-depth L1只保留metric sub-bin方向；
+- 部署用同一分布CDF的固定中位depth，无opacity threshold、zero crossing、peak filter或事后校准；
+- M8 geometry冻结，不加image/trajectory/hazard/ray-drop/dynamic-static变量；
+- 若early/hit合同失败登记`V71-F23`并关闭categorical ray head，不扫binning/temperature/loss/threshold/seed/epoch。
+
+下一可用编号仍为：`V71-F23`。
+
+## V71-F22 — 单调density降低early但弥散积累使termination系统性提前（2026-09-04）
+
+- 分类/状态：diffuse volume density / terminal for independent-density accumulation；canonical=
+  `20260905T020000Z__m17-ray-survival-s71119-r1`；
+- 观察：early all/hazard相对M8下降`22.247/26.520%`、observable=`96.63/96.18%`，但hit下降
+  `26.443/26.140pp`，最终6/7；
+- 训练审计：loss=`1.387→0.906`、depth L1=`0.754→0.535m`、terminal opacity=`0.584→0.878`、mean
+  density=`0.449→0.890/m`；无NaN/OOM；
+- root cause：非负density使CDF单调，却允许多个hit前小density积累超过0.5；step-CDF balanced NLL的post-hit项可被提前
+  opacity满足，导致正确topology但错误surface localization；
+- literature/open-source response：Neural LiDAR Fields补充材料把GT range构造成沿ray的高斯weight distribution并做peak/range
+  重建；CaDDN以one-hot LiDAR depth bin监督sharp categorical distribution。迁移为M18全raysoftmax竞争唯一GT bin；
+- resolution：关闭独立density accumulation，不调threshold/density/loss；保留monotone CDF边界，改用归一化categorical
+  termination mass；
+- claim impact：M17只支持“单调表示降低early”的机制证据，不支持surface localization。下一可用ID=`V71-F23`。
+
+下一可用编号：`V71-F23`。
+
 ## V7.1 M17 prevention note — first return由单调survival定义（2026-09-04）
 
 - 网络只预测非负metric density；沿有序ray samples计算transmittance与termination CDF，CDF按构造单调；
