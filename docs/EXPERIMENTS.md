@@ -1,5 +1,14 @@
 # Experiments
 
+## WorldSim V7.1 CVPR manuscript M18 milestone（2026-09-04）
+
+- artifact=`paper/main.pdf`，本地TinyTeX编译成功，13页、无fatal LaTeX error；
+- method=补入归一化categorical first-return公式，明确GT one-hot target、proper loss与同分布CDF median部署；
+- results=新增M13--M18 query-representation失败链表，以及M8 point/M18 ray的开发集定量结果；
+- related work=补入Neural LiDAR Fields、CaDDN、QueryOcc，并保留Gau-Occ/PoinTr/Snowflake completion脉络；
+- boundary=clear early/hit均为负，fresh AV2 aggregate pending，禁止安全、全面支配和跨域claim；
+- research decision=冻结M18开发fold，不做threshold/binning/loss/seed sweep；下一步拆分completion、physical return与dynamic/static。
+
 ## WS-V71-M18-FRESH-AV2-ZERO-SHOT-01 — frozen waiting protocol（2026-09-04）
 
 - source model=`20260905T023000Z__m18-categorical-return-s71120-r1`；no fine-tuning/calibration/threshold selection；

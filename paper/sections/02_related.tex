@@ -2,6 +2,8 @@
 
 \paragraph{Driving-world reconstruction.}
 nuScenes~\cite{caesar2020nuscenes} and Argoverse~2~\cite{wilson2021argoverse2} provide calibrated multi-sensor trajectories. LiDAR is 2.5D ray evidence: points discard free-space intervals~\cite{hu2020visibility}. Scene graphs model Actors~\cite{ost2021neural}, while 3D Gaussian Splatting models appearance~\cite{kerbl2023gaussians}. UniSim targets closed-loop neural sensor rendering~\cite{yang2023unisim}; LiDAR4D and DyNFL target space--time LiDAR synthesis and re-simulation~\cite{zheng2024lidar4d,wu2024dynfl}. These optimize observations, not collision semantics. We ask whether an edited Actor owns a queryable, first-return-consistent surface with explicit unknown space; Gaussian opacity is not occupancy, and our surface preserves provenance.
+
+Neural LiDAR Fields models first returns through a physically motivated ray-weight distribution~\cite{huang2023nlf}, while categorical depth supervision encourages a sharp metric depth mode~\cite{reading2021caddn}. QueryOcc instead samples positive and negative LiDAR queries directly in continuous space~\cite{lilja2026queryocc}. We combine their relevant boundary conditions: native GT rays define supervision, but an Actor-local 3D score is normalized only when answering a ray. This separates learned geometry evidence from the sensor termination distribution and keeps image, motion, and hazard variables outside the geometry head.
 Ray potentials constrain visibility~\cite{savinov2016ray}, while evidential occupancy renders its first occupied hit back to LiDAR depth~\cite{kalble2024accurate,kalble2025evocc}. We separate that literal hit from a target-nearest proxy and name the operator used by every audit.
 
 \paragraph{Learned geometry completion.}

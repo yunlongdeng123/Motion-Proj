@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 CVPR manuscript M18 supervision milestone（2026-09-04）
+
+论文已把M13--M18从local primitive、one-sided support、full-ray query、monotone survival到categorical
+first-return的完整可证伪链写入method/results/limitations，并由本地TinyTeX成功编译为13页PDF。当前文字明确区分：
+M18的正结果来自native LiDAR one-hot first-return监督，训练与部署读取同一归一化分布；它不是UNKNOWN mask、surface
+filter或事后阈值带来的改善。
+
+开发集只解锁“ray-order supervised representation改善hazard first-return”的机制结论：hazard early降低
+`7.626%`、hit提升`6.603pp`。clear子组仍为负，20-log fresh AV2尚未聚合，image、动态/静态和安全边界均未解锁；
+摘要、表格及limitations保留这些边界。下一research阶段不继续调M18同一开发fold，而把geometry completion、physical
+first-return与dynamic/static routing拆成独立目标。
+
 ## WorldSim V7.1 M18 fresh AV2 zero-shot protocol frozen（2026-09-04）
 
 状态=`v71_m18_fresh_av2_zero_shot_waiting`，详见

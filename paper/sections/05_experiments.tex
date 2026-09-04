@@ -66,6 +66,13 @@ Chamfer distances are $294.3/278.8/273.6$\,mm. Gray points are held-out GT and n
 \label{fig:v71-m7-geometry}
 \end{figure*}
 
+\paragraph{Supervision-native geometry and first-return distribution.}
+We next keep every generated surface and supervise the representation itself. Frame-balanced Actor-canonical seed expansion (M8) reduces hazardous early returns by \VSevenOneMEightHazardEarlyReduction{}, changes Chamfer by \VSevenOneMEightChamferDeltaMm{}\,mm, and changes hit recall by \VSevenOneMEightHitRecallDeltaPp{} points. Analytic and implicit support variants then expose complementary failures (Table~\ref{tab:v71-query-representations}): compact support suppresses early returns but misses the surface, whereas an unconstrained direct field restores hits but creates earlier sign changes. Non-negative survival density restores monotonicity but accumulates diffuse pre-hit opacity.
+
+The categorical model (M18) is the only frozen development candidate satisfying all seven point/ray gates. Relative to M8 it reduces hazardous/all early returns by \VSevenOneMEighteenHazardEarlyReduction{}/\VSevenOneMEighteenAllEarlyReduction{} and raises hazardous/all hit recall by \VSevenOneMEighteenHazardHitDeltaPp{}/\VSevenOneMEighteenAllHitDeltaPp{} points, with 100\% observable rays. The clear subset remains negative (early \VSevenOneMEighteenClearEarlyReduction{}, hit \VSevenOneMEighteenClearHitDeltaPp{} points), so this is not a uniform dominance or safety result. The fold was exposed to the M8 predecessor; a separately frozen 20-log AV2 run is pending, and no partial external metric is used for model choice.
+
+\input{tables/v71_query_representations}
+
 \paragraph{Zero-shot Actor-local surface evidence.}
 Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
 LiDAR points inside each annotated cuboid into its Actor frame. Unlike appearance-oriented seed initialization, we never mirror

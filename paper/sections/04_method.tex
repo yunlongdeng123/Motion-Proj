@@ -39,8 +39,8 @@ unknown evidence; held-out target rays never enter the input and only construct 
 and matched \textsc{project} points form an immutable anchor set $A_i$.
 
 A deployment-consistent parent model first relocates each completion seed. Because one seed per hole cannot cover a dense target,
-the final model attaches \VSevenOneMSevenBranchFactor{} learned slots to each parent and predicts bounded Actor-frame center
-residuals and isotropic support scales. The physical surface used by both training and evaluation is
+the point model attaches \VSevenOneMSevenBranchFactor{} learned slots to each parent and predicts bounded Actor-frame center
+residuals and isotropic support scales. The physical point surface used by both training and evaluation is
 \begin{equation}
 \begin{aligned}
 x'_{jk}&=x^{\mathrm{parent}}_j+\Delta x_{jk}(E_i),\quad k=1,\ldots,\VSevenOneMSevenBranchFactor{},\\
@@ -59,6 +59,19 @@ Measured negative task gradients are projected only during this second stage. Sp
 free; unknown is never a deployment deletion mask. Actor identity, trajectory, extent, and hazard state remain immutable interfaces.
 Image, semantic, motion, and hazard features are absent from the geometry model; a later appearance bridge may update semantics
 only, with stop-gradient on physical center and scale.
+
+The final development representation separates point geometry from ray termination. Four Actor-local child centers and tangent scales per completion seed are supervised directly by target points, local point-to-plane structure, literal first return, full free-ray intervals, and frame-balanced target coverage. These losses act during training; no predicted child is deleted at deployment. Given an ordered set of query depths $d_1,\ldots,d_K$ inside the Actor box, a shared 3D decoder reads the nearest child latents and relative canonical coordinates to produce logits $a_k$. We define
+\begin{equation}
+p_k=\frac{\exp a_k}{\sum_j\exp a_j},\quad F_k=\sum_{j\le k}p_j,\quad
+\widehat d=\min\{d_k:F_k\ge\tfrac12\},
+\end{equation}
+and supervise the native LiDAR return with
+\begin{equation}
+\mathcal L_{\mathrm{return}}=-\log p_{k^\star}
++\lambda_d\left|\sum_k p_kd_k-d^\star\right|,qquad
+k^\star=\arg\min_k|d_k-d^\star|.
+\end{equation}
+The one-hot target is built from GT before training, the decoder sees build evidence only, and the same categorical distribution is used at deployment. Normalization makes $F_k$ monotone with unit mass and prevents multiple zero crossings; it is a representation constraint rather than a post-hoc surface filter. The present protocol assumes a return inside the Actor box and therefore does not claim no-return modeling.
 
 \subsection{Validity--Hazard Factorization}
 

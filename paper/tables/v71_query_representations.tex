@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Frozen query-representation ablation on the exposed nuScenes development fold. Early is hazardous relative reduction and hit is hazardous recall change, both versus M8. Only M18 satisfies the pre-registered early and hit gates; no row is an external result.}
+\label{tab:v71-query-representations}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+ID & Query representation & Early $\uparrow$ & $\Delta$hit (pp) $\uparrow$ & Obs. (\%) \\
+\midrule
+M13 & blended local planes & -76.68\% & -10.57 & 95.90 \\
+M14 & compact radial patches & +69.12\% & -24.15 & 39.89 \\
+M15 & one-sided surface cells & +35.11\% & -13.54 & 60.41 \\
+M16 & direct signed queries & -11.98\% & +2.07 & 93.51 \\
+M17 & monotone survival density & +26.52\% & -26.14 & 96.18 \\
+M18 & categorical first return & \textbf{+7.63\%} & \textbf{+6.60} & \textbf{100.0} \\
+\bottomrule
+\end{tabular}}
+\end{table}

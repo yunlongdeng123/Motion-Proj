@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 paper claim prevention note — 监督证据不得退化为后处理叙事（2026-09-04）
+
+- M18改善只能归因于native GT LiDAR first-return one-hot target、全ray categorical proper loss以及同分布部署；
+- UNKNOWN mask、surface deletion、调阈值、选择性可见性均不得作为3D physical consistency证据；
+- M13--M17负结果必须与M18共同报告，证明local support、任意signed crossing和diffuse density为何不足；
+- clear子组负结果与fresh AV2未完成必须保留，禁止使用“全面改善”“安全”或“跨域泛化”措辞；
+- image fusion、geometry completion与dynamic/static routing后续必须各自拥有GT/teacher target和独立消融，不能混入同一指标后归因。
+
+下一可用编号仍为：`V71-F23`。
+
 ## V7.1 M18 AV2 prevention note — 20/20前不读质量（2026-09-04）
 
 - cohort固定为`configs/worldsim_v71/av2_zero_shot_cohort_v1.json`的20个fresh logs；旧V7 30-log完成标记无效；
