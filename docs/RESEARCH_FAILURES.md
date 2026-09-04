@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M51 pre-registration — explanation is not a hard-event selector（2026-09-05）
+
+M51只量化smooth expected depth与hard minimum的非蕴含，不按soft/hard disagreement删除ray、primitive、Actor或
+frame，不改变0.20m beam/depth tolerance、0.06m voxel或renderer参数。即使精确解释`V71-F49`，M50 verdict仍为
+rejected，且不得由diagnostic选择M8/M50 mixture。当前next failure ID仍=`V71-F50`。
+
 ## V71-F49: frame-balanced smooth first-return worsens hard temporal boundary（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/20260905T060000Z__m50-frame-balanced-first-s71150-r2`；

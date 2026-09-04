@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M51 smooth/hard first-return diagnosis frozen（2026-09-05）
+
+状态=`v71_m51_soft_hard_first_return_diagnosis_frozen`，详见
+[`WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md`](WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md)。
+M51不训练/选模型，只对冻结M8与rejected M50的同一66 Actors做paired operator audit：一支在相同512-anchor+
+children support上比较alpha-composited smooth depth与literal beam-tube minimum；另一支加入正式full-anchor+0.06m
+voxel deployment realization。报告soft error、hard added/removed early、added中soft-improved比例、depth-delta相关和
+support-realization flip；all/hazard/clear/moving/quasi-static分层。无gate/filter/threshold change/external partial read。
+
 ## WorldSim V7.1 M50 rejected / frame balance does not close hard first-return（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/

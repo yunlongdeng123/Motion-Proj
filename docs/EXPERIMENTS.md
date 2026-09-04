@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01 — frozen（2026-09-05）
+
+- source=frozen M8 vs rejected M50；66 exposed holdout Actors；training/model-selection=false；
+- same-support=limited anchors+children, no voxel；smooth alpha expectation vs literal beam-tube minimum；
+- deployment=full anchors+children after frozen 0.06m voxel；
+- outputs=soft error change、hard added/removed early、added∩soft-improved、depth delta correlation、support flip；
+- strata=all/hazard/clear/moving/quasi-static；no gate/filter/tuning；M43 partial read=false。
+
 ## WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T060000Z__m50-frame-balanced-first-s71150-r2`；593 train / 66 exposed holdout；4 epochs；
