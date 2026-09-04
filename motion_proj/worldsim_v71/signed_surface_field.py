@@ -79,6 +79,42 @@ class RaySignedSurfaceField(nn.Module):
         )
 
 
+class RayOccupancyBoundaryField(RaySignedSurfaceField):
+    """以单一无界occupancy logit的零等值面表示surface。"""
+
+    def __init__(
+        self,
+        evidence_dim: int,
+        latent_dim: int = 128,
+        hidden_dim: int = 256,
+        frequency_count: int = 4,
+    ) -> None:
+        super().__init__(
+            evidence_dim,
+            latent_dim=latent_dim,
+            hidden_dim=hidden_dim,
+            frequency_count=frequency_count,
+            maximum_distance_m=1.0,
+        )
+
+    def decode(
+        self,
+        latent: torch.Tensor,
+        query_normalized_xyz: torch.Tensor,
+        actor_size_lwh_m: torch.Tensor,
+    ) -> torch.Tensor:
+        count = len(query_normalized_xyz)
+        features = torch.cat(
+            [
+                latent.reshape(1, -1).expand(count, -1),
+                self._position(query_normalized_xyz),
+                actor_size_lwh_m.reshape(1, 3).expand(count, -1),
+            ],
+            dim=1,
+        )
+        return self.decoder(features).squeeze(1)
+
+
 def extract_signed_zero_crossings(
     axes: tuple[np.ndarray, np.ndarray, np.ndarray],
     signed_distance: torch.Tensor,

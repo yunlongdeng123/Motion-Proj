@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01 — frozen protocol（2026-09-04）
+
+- model=`single unbounded occupancy logit`；surface=zero decision boundary，不增加第二head；
+- balanced labels=`front offsets [-.24,-.12,-.06]m FREE / back [.06,.12,.24]m OCCUPIED`；target+anchor
+  boundary logit=0；
+- loss=`BCE + 0.5 boundary + 0.5 same-logit first-return`；extraction=`0.10m grid edge zero interpolation`；
+- development=`same fixed 593 train / 66 holdout`，seed71105、24 epochs、one run；不得将重复holdout称为confirmation；
+- go external=六项stage合同全过后冻结读取30-log AV2一次；否则停止，不扫参数；
+- validation=`py_compile only`；无hash/checksum/fingerprint。
+
 ## WS-V71-M3-RAY-SIGNED-LEVEL-SET-01 — canonical negative result（2026-09-04）
 
 - run=`20260904T102101Z__m3-ray-signed-level-set-s71104-r1`；status=`done`；verdict=

@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M4 prevention note — 平衡decision boundary不是M3超参恢复（2026-09-04）
+
+- M4改变监督类型：从有量纲SDF regression转为显式平衡occupancy BCE；这是一种新表示，不回写M3 offset或初始化；
+- 只有一个logit，target/anchor零边界、ray render和edge extraction共享它；禁止追加evidence gate/UNKNOWN mask；
+- development holdout已被M3使用，只能筛除无surface模型；真正确认必须是冻结后的未读AV2；
+- M4失败即`V71-F08`并关闭global-latent implicit field，不扫temperature/weight/seed。
+
 ## V71-F07 — M3 signed regression收敛到无zero crossing的单符号场
 
 - 分类/状态：scientific + implicit initialization / terminal for M3；canonical=`run://worldsim_v71/

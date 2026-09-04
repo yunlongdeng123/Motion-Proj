@@ -1,0 +1,48 @@
+task_id: WS-V71-M4-BALANCED-OCCUPANCY-BOUNDARY-01
+hypothesis_id: WS-V71-H-M4-BALANCED-SINGLE-DECISION-BOUNDARY
+runs_root: /root/autodl-tmp/runs
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+device: cuda
+model:
+  seed: 71105
+  latent_dim: 128
+  hidden_dim: 256
+  frequency_count: 4
+  epochs: 24
+  actor_batch_size: 4
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  maximum_training_actors: 1024
+  holdout_stride: 10
+  maximum_evidence_points: 2048
+  maximum_target_rays: 128
+  maximum_boundary_points: 256
+  signed_offsets_m: [-0.24, -0.12, -0.06, 0.06, 0.12, 0.24]
+  cuboid_padding_m: 0.15
+  occupancy_loss_weight: 1.0
+  boundary_loss_weight: 0.5
+  first_return_loss_weight: 0.5
+  maximum_render_rays: 64
+  render_samples: 32
+  render_back_m: 0.36
+  render_front_m: 0.36
+  render_logit_temperature: 0.5
+  render_density_scale: 3.0
+  first_return_scale_m: 0.20
+extraction:
+  cuboid_padding_m: 0.15
+  extraction_voxel_size_m: 0.10
+  maximum_extraction_points: 24000
+  extraction_chunk_size: 4096
+  output_voxel_size_m: 0.06
+evaluation:
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+decision:
+  minimum_extraction_actor_fraction: 0.90
+  minimum_hazard_literal_relative_reduction: 0.05
+  maximum_chamfer_delta_m: 0.0005
+  minimum_hit_recall_delta: -0.01
+  required_actor_state_retention: 1.0
+  required_hazard_state_retention: 1.0

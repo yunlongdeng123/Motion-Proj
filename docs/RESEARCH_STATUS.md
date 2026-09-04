@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M4 balanced occupancy boundary ready（2026-09-04）
+
+状态：`v71_m4_development_ready`。M4保留M3的build-only PointNet/Fourier条件结构，但输出改为单一无界occupancy
+logit；每条train target ray等量采样3个front FREE与3个back OCCUPIED点，用BCE直接竞争符号，hit/anchor以logit=0
+约束边界。同一`abs(logit)`诱导first-return density，同一zero-logit用于grid edge插值，满足训练—render—extract一致。
+
+固定593/66 train-role development split、seed71105、24 epochs；M3 holdout已消费，因此M4结果只决定能否形成可部署
+surface，不作独立confirmation。若六项development合同全部通过，权重冻结后直接读取30-log AV2一次；否则登记
+`V71-F08`并停止global-latent implicit field，不做temperature/weight/offset/seed sweep。Selection/Source Final/AV2
+当前不读。
+
 ## WorldSim V7.1 M3 rejected / balanced occupancy boundary next（2026-09-04）
 
 Canonical M3=`run://worldsim_v71/WS-V71-M3-RAY-SIGNED-LEVEL-SET-01/
