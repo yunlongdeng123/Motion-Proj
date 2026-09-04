@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M21-FROZEN-GAUSSIAN-ENERGY-AV2-01 — frozen protocol（2026-09-04）
+
+- source=canonical M8 checkpoint；no additional training；development-selected candidate；
+- representation=M8 immutable anchors + all children/scales → decoder-free actor-canonical Gaussian energy；
+- deployment=64-bin Actor-AABB energy softmax CDF median；anchor scale fixed `0.08m`；
+- external=20 pre-frozen fresh AV2 logs，same build/target compiler，0-Actor/failed logs retained；
+- gates=energy hazard early vs baseline `>=5%`，energy all hit delta `>=-1pp`，M8 point Chamfer `<=+1mm`，
+  Actor/hazard retention100%；
+- no AV2 tune/calibration/threshold/filter/scale/bin/checkpoint/log replacement；partial metric read=false until20/20；
+- moving/static/image/semantic/hazard inputs remain isolated；next failure=`V71-F25`。
+
 ## WS-V71-M20-DECODER-FREE-GAUSSIAN-RAY-ENERGY-01 — canonical negative（2026-09-04）
 
 - run=`20260904T152000Z__m20-decoder-free-energy-s71122-r1`；verdict=`rejected 5/6`；failure=`V71-F24`；

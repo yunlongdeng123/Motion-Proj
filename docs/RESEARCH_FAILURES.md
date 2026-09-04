@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M21 prevention note — development-selected energy只能由fresh AV2确认（2026-09-04）
+
+- M21固定canonical M8 checkpoint、M8 children scale、anchor scale `0.08m`、64 bins和CDF median；无训练；
+- 20-log cohort在任何M21 external quality读取前冻结；允许逐log写partial，但20/20前禁止读取metric/row；
+- external gate直接比较energy与原始baseline的绝对early/hit，不使用可能恶化的current point作为相对分母；
+- M8 point Chamfer与Actor/hazard retention同时绑定；禁止filter、阈值、scale、bin、checkpoint或log替换；
+- 若失败登记`V71-F25`并关闭，不用M20 fine-tune或M18 decoder恢复。
+
+下一可用编号仍为：`V71-F25`。
+
 ## V71-F24 — decoder-free ray loss以尺度膨胀损害anchors与自身energy（2026-09-04）
 
 - 分类/状态：isotropic support-scale shortcut / terminal for joint energy fine-tuning；canonical=

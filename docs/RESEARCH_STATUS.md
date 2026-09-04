@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M21 frozen M8 Gaussian energy external protocol（2026-09-04）
+
+状态=`v71_m21_frozen_gaussian_energy_external_frozen`，详见
+[`WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md`](WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md)。
+M21不新增训练：直接把canonical M8的native-3D supervised children/scales解释为共享actor-canonical Gaussian
+energy，observed anchors固定`0.08m`，部署读取64-bin energy CDF median。
+
+该representation由已暴露development诊断选择，因此nuScenes数值只能说明候选来源；真正判定冻结在尚未读取任何
+quality的20-log fresh AV2 cohort。按`.complete`逐log消费但20/20前禁止读取partial metric；无fine-tune、calibration、
+threshold、filter或log替换。下一failure ID=`V71-F25`。
+
 ## WorldSim V7.1 M20 rejected / frozen-M8 energy candidate exposed（2026-09-04）
 
 Canonical=`run://worldsim_v71/WS-V71-M20-DECODER-FREE-GAUSSIAN-RAY-ENERGY-01/
