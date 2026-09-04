@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M20 prevention note — physics gradient不得绕开Gaussian geometry（2026-09-04）
+
+- 删除可学习field decoder；ray logit只能由immutable anchors与可学习children/scales的metric Gaussian energy产生；
+- native-3D set/plane/scale/frame监督持续存在，categorical first-return与geometry对同一surface head做PCGrad；
+- 评价point hazard early相对原始baseline，并把energy绝对hazard early/hit与冻结M18比较，不再只看field-vs-current；
+- anchor scale固定`0.08m`，32 bins/4 epochs/seed固定；禁止temperature/scale/loss/bin/epoch sweep；
+- 若point physical或M18绝对边界失败，登记`V71-F24`并关闭isotropic energy，不恢复learned compensator。
+
+下一可用编号仍为：`V71-F24`。
+
 ## V71-F23 — 可学习field补偿了恶化的completed anchors（2026-09-04）
 
 - 分类/状态：auxiliary-decoder compensation / terminal for jointly trainable surface+field；canonical=

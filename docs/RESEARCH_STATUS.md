@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M20 decoder-free Gaussian ray energy frozen（2026-09-04）
+
+状态=`v71_m20_decoder_free_gaussian_energy_frozen`，详见
+[`WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md`](WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md)。
+针对M19的auxiliary-decoder compensation，M20删除全部field MLP/attention，用immutable anchors与M8 children/scales
+直接构造actor-canonical Gaussian mixture energy；整ray softmax仍由GT LiDAR唯一return bin监督。
+
+categorical loss因此只能通过center/scale改变物理输出，且M8 native-3D set/plane/scale/frame losses持续回传。
+trajectory/static/image/hazard继续隔离。固定seed `71122`、4轮、32 bins、anchor scale `0.08m`，不扫任何参数；
+评价同时绑定point surface和energy的绝对指标，避免再以恶化的current reference制造相对改善。下一failure ID=`V71-F24`。
+
 ## WorldSim V7.1 M19 gate-pass / physical-anchor claim rejected（2026-09-04）
 
 Canonical=`run://worldsim_v71/WS-V71-M19-JOINT-GEOMETRY-FIRST-RETURN-01/

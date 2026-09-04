@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V71-M20-DECODER-FREE-GAUSSIAN-RAY-ENERGY-01 — frozen protocol（2026-09-04）
+
+- initialization=canonical M8 surface head；no field decoder/MLP/attention；
+- representation=`logsumexp(-||x-center||^2/(2 scale^2))` over immutable anchors + all children；
+- GT geometry=M8 set/plane/scale/frame losses；GT physics=32-bin categorical LiDAR first-return + depth L1；
+- optimization=two-task PCGrad on surface parameters only；same energy CDF-median at deployment；
+- fixed=seed `71122` / 4 epochs / anchor scale `0.08m`；no sweep/filter/mask/deletion；
+- decisions=retention100%，point hazard early `>=5%`，Chamfer vs M8 `<=+1mm`，energy absolute hazard early
+  `<=M18`，energy all hit `>=M18-1pp`；
+- isolation=trajectory read-only，static world separate，no image/semantic/time/velocity/hazard input。
+
 ## WS-V71-M19-JOINT-GEOMETRY-FIRST-RETURN-01 — gate pass, mechanism rejected（2026-09-04）
 
 - run=`20260904T150000Z__m19-joint-geometry-return-s71121-r1`；technical verdict=`5/5 pass`；
