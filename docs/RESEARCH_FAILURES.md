@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M24 implementation note — 只在内存替换目标Actor（2026-09-05）
+
+- 每个variant先从同一checkpoint恢复；geometry-locked只替换rigid index12的Gaussian parameter对象，hidden只置低其opacity；
+- Background、其他Actors和instances trajectory不赋值，runner没有checkpoint save路径；
+- 数据集preload置CPU避免与M21 waiting evaluator争用显存；三个camera串行；
+- 只做入口`py_compile`，不做额外render smoke或质量阈值回归。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M24 prevention note — render footprint不是physical supervision（2026-09-05）
 
 - original-vs-hidden mask只定位目标Actor像素，不能用来删physical Gaussian、调scale/opacity或证明first-return；

@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M24 fixed real-render implementation ready（2026-09-05）
+
+新增runner=`scripts/run_worldsim_v71_m24_geometry_locked_render.py`与配置=
+`configs/worldsim_v71/v71_m24_geometry_locked_render_v1.yaml`。Runner以CPU-preload数据集和单卡StreetGS真实rasterizer
+串行渲染3变体×3固定camera；geometry-locked变体仅在内存替换目标Actor为M23的309个carrier，保留其原trajectory。
+
+输出15张PNG、逐camera rows与summary；不使用hash/checksum/fingerprint，不写checkpoint。只做`py_compile`后一次run，
+画质不设gate。下一failure ID仍为`V71-F26`。
+
 ## WorldSim V7.1 M24 geometry-locked real-render protocol frozen（2026-09-05）
 
 状态=`v71_m24_geometry_locked_render_frozen`，详见

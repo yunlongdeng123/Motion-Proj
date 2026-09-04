@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — implementation ready（2026-09-05）
+
+- runner=`scripts/run_worldsim_v71_m24_geometry_locked_render.py`；config=`v71_m24_geometry_locked_render_v1.yaml`；
+- runtime=StreetGS real rasterizer、dataset CPU preload、single CUDA device；
+- fixed render=3 variants × frame98 cameras0/1/2；309-carrier target Actor；
+- output=15 PNG + `RENDER_ROWS.jsonl` + summary/status；no checkpoint/model/hash；
+- verify=`py_compile` only before one run；quality metrics descriptive。
+
 ## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — frozen protocol（2026-09-05）
 
 - source=M23 sidecar + frozen StreetGS checkpoint/config/runtime；
