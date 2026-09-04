@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M9-GAUSSIAN-SUPPORT-PHYSICS-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T205000Z__m9-gaussian-support-s71111-r1`；verdict=`m9_development_rejected`；5/6 gates；
+- training=593 Actors / 6 epochs；support first=`0.833062→0.774493`，support free=`0.363870→0.204291`；
+- mean child scale=`0.161958m (M8)→0.112266m (M9)`；local scale normalized loss rises to`0.834978`；
+- exact 1σ sphere hazard/all/clear early relative reduction vs M8=`64.854/63.943/56.780%`；
+- sphere support hit M8→M9: hazard=`31.766→25.218%`，all=`30.429→24.297%`；
+- point physical=hazard/all/clear early=`2.653/1.598/-5.090%`，Chamfer=`-7.626mm`，hit=`+2.874pp`，
+  retention=`100/100%`；hazard primary fails；
+- mechanism=isotropic scale couples tangent coverage and normal thickness；optimization shrinks support and loses ray hits；
+- decision=close isotropic sphere support，no sigma/loss/seed/epoch recovery；next=oriented planar support；failure=`V71-F13`；
+- resources=`137.278s/1.2278GiB GPU/1.3688GiB RSS`；no protected/external read。
+
 ## WS-V71-M9-GAUSSIAN-SUPPORT-PHYSICS-01 — frozen protocol（2026-09-04）
 
 - gap=M7/M8 scale supervised but absent from literal/free-space physics；point center validity is insufficient for Gaussian volume；

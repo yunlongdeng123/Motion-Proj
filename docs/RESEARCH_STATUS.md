@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 M9 rejected / oriented planar support next（2026-09-04）
+
+M9 canonical=`run://worldsim_v71/WS-V71-M9-GAUSSIAN-SUPPORT-PHYSICS-01/
+20260904T205000Z__m9-gaussian-support-s71111-r1`。593 Actors训练6轮，support first/free=`0.833/0.364→
+0.774/0.204`；但mean child scale从M8的`0.16196m`收缩到`0.11227m`。Exact `1σ` sphere audit上hazard/all/
+clear early相对M8下降=`64.854/63.943/56.780%`，同时hazard/all support hit下降=`6.547/6.132pp`，说明
+isotropic radius通过整体缩小体积降低早回波，却同时失去沿表面的覆盖。
+
+Point评价进一步确认不是有效终局：hazard/all early相对baseline只下降`2.653/1.598%`，hazard门失败；虽然Chamfer改善
+`7.626mm`、hit增加`2.874pp`、retention 100%，最终5/6并拒绝，登记`V71-F13`。根因是一个isotropic scale同时
+承担tangent coverage与normal thickness，两个物理角色不可辨识。下一步依据2DGS/PGSR转为oriented planar primitive：
+显式normal、tangent radius和独立normal thickness；不调sigma倍数或M9 loss恢复。下一failure ID=`V71-F14`。
+
 ## WorldSim V7.1 M9 Gaussian support protocol frozen（2026-09-04）
 
 状态=`v71_m9_gaussian_support_frozen`，详见

@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F13 — isotropic Gaussian support靠缩scale降early但损失surface hit（2026-09-04）
+
+- 分类/状态：representation parameterisation / terminal for isotropic collision sphere；canonical=
+  `20260904T205000Z__m9-gaussian-support-s71111-r1`；
+- 观察：exact `1σ` hazard support early相对M8下降`64.854%`，但support hit从`31.766%`降至`25.218%`；mean
+  scale由`0.16196m`缩至`0.11227m`，local-scale监督误差升至`0.835`；point hazard early仅降`2.653%<5%`；
+- 非优化失败：support first/free持续下降，Chamfer改善`7.626mm`、point hit增加`2.874pp`，无NaN/OOM；
+- root cause：单个isotropic radius既决定切平面覆盖范围又决定法向碰撞厚度；缩小它可清除free-space support，却必然漏掉
+  target rays，无法同时表达宽表面与薄法向；
+- resolution：关闭sphere-support family，不改0.5σ/2σ、loss/seed/epoch；下一表示拆为normal、tangent radius和normal
+  thickness，并用GT local plane与ray physics分别监督；
+- claim impact：M7/M8仍只支持center/point几何，尚无Gaussian covariance物理自洽claim；下一可用ID=`V71-F14`。
+
+下一可用编号：`V71-F14`。
+
 ## V7.1 M9 prevention note — center通过不能替Gaussian support通过（2026-09-04）
 
 - M7/M8现有point renderer/evaluator不读取predicted scale，因此不得把其结果表述为3D Gaussian体的FREE一致；
