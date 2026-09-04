@@ -1,5 +1,29 @@
 # Experiments
 
+## WS-V71-M16-FULL-RAY-DIRECT-QUERY-01 — frozen protocol（2026-09-04）
+
+- representation=M8-local query-conditioned signed decoder with learned neighbor attention；no analytic primitive support；
+- GT FREE queries=8 uniform metric samples from Actor-AABB ray entry to `hit-0.10m`；labels=positive distance-to-hit clipped
+  at`0.50m`；hit=`0`；back `0.05/0.10m`=negative metric labels；normal probes retained；
+- training/deployment=same signed scalar；deployment is first positive-to-nonpositive crossing in Actor AABB；
+- M8 centers/features/scales frozen；no image、trajectory、hazard label、UNKNOWN、opacity mask、post-hoc filter；
+- gates=M8 point five + field hazard early `>=5%` + field hit delta `>=-1pp`；
+- one seed `71118` / 6 epochs；no query-count/field-range/loss/capacity/seed/epoch sweep；
+- sources=[QueryOcc official](https://github.com/zenseact/queryocc) direct positive/negative ray queries，
+  [ShelfOcc](https://arxiv.org/abs/2511.15396) native metric 3D targets，
+  [GaussRender](https://github.com/valeoai/GaussRender) rendering only alongside 3D supervision。
+
+## WS-V71-M15-ONE-SIDED-SURFACE-CELL-01 — canonical negative result（2026-09-04）
+
+- run=`20260905T010000Z__m15-one-sided-cell-s71117-r1`；verdict=`m15_development_rejected`；6/7 gates；
+- field early reduction vs M8 all/hazard/clear=`37.425/35.107/50.852%`；early gate passes；
+- field hit delta all/hazard/clear=`-14.896/-13.540/-21.564pp`；observable=`57.39/60.41/42.50%`；
+- training hit=`0.694→0.636m`、back occupied=`14.029→12.857`、radius loss final=`0.0813`；
+- mechanism=asymmetric tangent/back support raises coverage substantially over M14 but finite M8-centered cells still miss the
+  complete visible target surface；
+- decision=close M10--M15 primitive-support family；next=full-ray native query supervision；failure=`V71-F20`；
+- resources=`104.566s / 0.1451GiB GPU / 1.4211GiB RSS`；no protected/external read。
+
 ## WS-V71-M15-ONE-SIDED-SURFACE-CELL-01 — frozen protocol（2026-09-04）
 
 - representation=local finite cylinder/slab cell：front zero plane + tangent radius + only-behind `0.10m` depth；

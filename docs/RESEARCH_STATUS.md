@@ -1,5 +1,29 @@
 # Research Status
 
+## WorldSim V7.1 M16 full-ray direct query field frozen（2026-09-04）
+
+状态=`v71_m16_full_ray_direct_query_frozen`，详见
+[`WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md`](WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md)。M13--M15
+说明局部primitive的support拓扑在FREE precision与surface coverage之间反复二选一；继续改radius、thickness或union不是新研究。
+M16转向QueryOcc式native 3D query supervision：对每条GT return ray，在Actor AABB内从entry到return前均匀采样FREE
+queries，同时监督hit zero与窄back occupied；不再只看return前`10/20cm`。
+
+表示改为M8 local evidence条件的query-specific signed decoder，query对nearest children做学习式attention；输出的同一signed
+scalar同时承担全ray监督与部署首个positive-to-nonpositive crossing。M8 point/temporal冻结，image、trajectory、hazard与
+dynamic/static router均不进入本实验。单seed 6轮，不扫描query数、field range、loss、capacity、seed或epoch。下一failure ID=
+`V71-F21`。
+
+## WorldSim V7.1 M15 rejected / primitive-support family closed（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M15-ONE-SIDED-SURFACE-CELL-01/
+20260905T010000Z__m15-one-sided-cell-s71117-r1`。M15保持M8 point五门，field early all/hazard下降
+`37.425/35.107%`，但hit all/hazard下降`14.896/13.540pp`，最终6/7，登记`V71-F20`。observable all/hazard从
+M14的`37.53/39.89%`恢复到`57.39/60.41%`，证明tangent/back support解耦有效，但仍不足以覆盖GT可见面。
+
+训练hit=`0.694→0.636m`、back occupied=`14.029→12.857`，不是NaN/OOM或完全无梯度；限制来自冻结M8局部anchors与
+有限primitive union的可表示coverage。关闭M10--M15 primitive-support family，不做radius/depth/neighbors/epoch恢复。
+依据QueryOcc的direct positive/negative ray queries与ShelfOcc的native-3D target原则，M16改造GT query构造与连续表示。
+
 ## WorldSim V7.1 M15 one-sided surface cell frozen（2026-09-04）
 
 状态=`v71_m15_one_sided_surface_cell_frozen`，详见

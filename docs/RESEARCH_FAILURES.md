@@ -1,5 +1,35 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M16 prevention note — 先补全GT FREE ray再学习query field（2026-09-04）
+
+- 每条target ray的FREE监督覆盖Actor AABB entry到return前方，不再只采`0.10/0.20m`局部front；
+- hit zero与`0.05/0.10m` back occupied保持native 3D metric标签，同一scalar直接部署首交；
+- decoder必须query-specific读取local M8 children，禁止退化为M3/M4 Actor-global latent；
+- 不再内置plane/ball/cylinder primitive support，也不允许UNKNOWN mask、surface filter或阈值校准；
+- 若early/hit合同失败登记`V71-F21`并关闭当前direct-query结构，不扫query数/field range/loss/capacity/seed/epoch。
+
+下一可用编号仍为：`V71-F21`。
+
+## V71-F20 — 单侧surface cell改善coverage但有限primitive仍漏失真实表面（2026-09-04）
+
+- 分类/状态：finite primitive coverage / terminal for M10--M15 primitive-support family；canonical=
+  `20260905T010000Z__m15-one-sided-cell-s71117-r1`；
+- 观察：field early all/hazard相对M8下降`37.425/35.107%`，但hit下降`14.896/13.540pp`，observable仅
+  `57.39/60.41%`；最终6/7；
+- 对M14的机制增量：observable all/hazard由`37.53/39.89%`升到`57.39/60.41%`，证明GT tangent extent与单侧
+  back depth拆分确实扩大覆盖，不是失败方向完全无效；
+- 优化审计：hit=`0.694→0.636m`、back occupied=`14.029→12.857`、radius loss约`0.08`；有稳定梯度且无
+  NaN/OOM，但有限M8-centered cells仍不能覆盖完整target first-return surface；
+- literature/open-source response：QueryOcc官方实现直接沿raw-LiDAR ray采positive/negative 4D queries且不依赖render loss；
+  ShelfOcc强调先生成native metric 3D supervision，GaussRender则只把rendering作为3D supervision的辅助项。迁移为M16
+  full-ray FREE + hit/back native query监督，不以render或primitive filter补救；
+- resolution：关闭M10--M15 primitive support，不扫radius/depth/neighbors/epoch；保留M8点表面正结论，M16只改变query
+  field与GT采样合同；
+- claim impact：单侧support的机制正证据可作ablation，但不能形成surface coverage或3D consistency claim。下一可用ID=
+  `V71-F21`。
+
+下一可用编号：`V71-F21`。
+
 ## V7.1 M15 prevention note — surface support必须前后非对称（2026-09-04）
 
 - cell front boundary就是GT hit zero plane，normal support只向behind-return延伸`0.10m`，禁止向FREE侧对称膨胀；
