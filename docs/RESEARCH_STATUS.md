@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 factorized research synthesis ready（2026-09-05）
+
+新增[`WORLDSIM_V71_RESEARCH_SYNTHESIS.md`](WORLDSIM_V71_RESEARCH_SYNTHESIS.md)，把最终论文证据拆成五层：
+M7/M8 canonical GT geometry、M39 evidential return measure、M22/M28 pose/static/appearance ownership、M49解析安全
+边界、以及明确未解决的motion/visibility。每层列出allowed/forbidden claim；M43仍是唯一external candidate，当前
+只读进度14/20、约88GiB可用，未读partial quality。论文压缩优先保留M7/M8/M39/M43/M22/M28/M49，其余失败链移
+supplement；外测失败时不做AV2 adaptation。
+
 ## WorldSim V7.1 M49 completed / exact attenuation safety boundary confirmed（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01/

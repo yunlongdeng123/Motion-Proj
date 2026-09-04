@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V7.1 paper-facing synthesis checkpoint（2026-09-05）
+
+- claim matrix=`docs/WORLDSIM_V71_RESEARCH_SYNTHESIS.md`；geometry/return/ownership/safety/generalization分层；
+- main evidence=M7/M8 source geometry + M39 source return + pending M43 AV2 + M22/M28 ownership + M49 theorem；
+- failure-directed experiments保留在supplement，不再据其开发结果选择external candidate；
+- M43 status-only=`14/20`，约`88GiB` free；partial quality未读；pass/fail都不允许AV2 adaptation。
+
 ## WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01 — canonical（2026-09-05）
 
 - run=`20260905T121500Z__m49-visibility-sign-boundary-r1`；66 Actors / 99,208 rays；verdict=

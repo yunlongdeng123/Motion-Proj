@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 synthesis boundary — do not recombine separated claims（2026-09-05）
+
+论文主张必须保持canonical geometry、ray termination、rigid pose、static Background、appearance和hazard authority分离。
+M22/M28的结构保证不等于几何正确，M39 source pass不等于opacity/collision probability，M49解释不等于deployment
+gate，M7/M8 source Pareto不等于AV2 generalization。M43完成前不得写cross-domain数值；若失败不得target-adapt救结果。
+详细矩阵见`WORLDSIM_V71_RESEARCH_SYNTHESIS.md`。next failure ID仍=`V71-F48`。
+
 ## V7.1 M49 outcome note — attenuation is not monotone-safe in a normalized mixture（2026-09-05）
 
 M49在99,208条冻结ray上确认`∂C/∂log w_j=r_j(C_j-C)`：uniform child attenuation有害/安全方向分别
