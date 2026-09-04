@@ -460,6 +460,14 @@ Aggregate all/hazard/clear early rates rise by $0.545/0.590/0.328$ points. Geome
 sampling measure but does not close the smooth-depth versus hard earliest-return surrogate gap, and it is not evidence for a
 motion or visibility head.
 
+M51 pairs every M8/M50 ray to localize that gap. Holdout smooth absolute depth error changes from 0.291706 to 0.292153\,m,
+but mean loss alone is not the key result. On exactly the limited-anchor, non-voxelized training support, hard early rate rises
+by 0.490 points; 38.03\% of newly early rays nevertheless improve smooth absolute depth error. On the formal full-anchor,
+0.06\,m voxelized surface, hard early rises by 0.545 points and the corresponding contradiction is 36.54\% (33.97\% for
+hazardous and 56.76\% for clear Actors). Smooth-error change and hard-depth change correlate only 0.038. Deployment support
+realization flips 1.280\% of events, but the same-support result proves that discretization is not the root cause. Expected
+depth and minimum supported depth require different guarantees; this pairing is explanatory and never used to select rays.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m49_attenuation_sign_boundary.pdf}

@@ -28,3 +28,11 @@ depth loss.
 - no target-dependent filter, gate, model selection, threshold change, training, or partial M43 read.
 
 This diagnosis may explain `V71-F49`; it cannot upgrade M50 or create a new external candidate.
+
+## Outcome
+
+Confirmed on 99,208 rays. Same-support hard early rises by 0.490 points; deployment hard early rises by 0.545 points.
+Among newly early rays, 38.03% (same support) and 36.54% (deployment) nevertheless improve smooth absolute depth error.
+Smooth-error delta versus hard-train depth delta has correlation 0.038, while full-anchor/voxel realization flips 1.280%
+of events. The non-implication therefore exists before deployment discretization, with an additional support-realization term.
+M51 closes `V71-F49` as an explained negative result and is never converted into a selector.

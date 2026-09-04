@@ -60,6 +60,12 @@ while aggregate hazardous early rate rises by 0.590 points. Chamfer improves by 
 optimization; frame reweighting does not close the smooth-depth versus hard earliest-return surrogate gap. Temporal balancing
 is therefore closed as a substitute for explicit motion state.
 
+M51 confirms the surrogate boundary without training. On identical limited-anchor support, hard early rate rises by 0.490
+points and 38.03% of newly early rays nevertheless improve smooth depth error. Under the full-anchor/voxel deployment surface,
+the corresponding values are 0.545 points and 36.54%; support realization flips another 1.280% of ray events. Smooth-error
+delta and hard-depth delta correlate only 0.038. Expected-depth improvement therefore cannot certify minimum-support safety
+without an explicit ordered support/CDF margin, and the GT-dependent disagreement is not a deployment selector.
+
 If future work predicts temporal evolution, canonical shape and deformation must be separate states: rigid motion should receive trajectory/scene-flow supervision; non-rigid deformation requires its own capacity and labels. Hazard is never a geometry or motion label.
 
 ## Cross-domain state

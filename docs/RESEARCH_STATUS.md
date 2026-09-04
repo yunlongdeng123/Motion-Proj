@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 M51 completed / smooth-to-hard non-implication confirmed（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01/
+20260905T063000Z__m51-soft-hard-first-return-r1`；66 Actors、99,208 rays，training/gate=false。M50 holdout smooth
+absolute depth error `0.291706→0.292153m`；即使限定soft-improved rays，same-support/deployment新增hard-early中仍有
+`38.03/36.54%`属于该集合。same-support added/removed=`0.594/0.104%`（net `+0.490pp`），deployment=
+`0.659/0.114%`（net `+0.545pp`）。smooth depth delta与hard train/deploy delta相关仅`0.237/0.283`，smooth
+error delta与hard-train depth delta相关`0.038`；support realization本身翻转`1.280%` rays（hazard `1.463%`）。
+
+结论：M50同时包含holdout soft regression和expected-depth→minimum-event的结构性非蕴含；后者在完全相同support
+上已成立，不能归因于voxelization。无显式support/CDF margin时，降低平均soft depth loss不保证hard earliest-return。
+该结论只作解释，不转为ray gate；`V71-F49`关闭，无新failure，next ID仍`V71-F50`。GPU=`0.056GiB`、
+RSS=`1.112GiB`、wall=`4.91s`；M43 partial未读。
+主稿/supplement已纳入non-implication并重编译为`9/15`页、`385,377/2,336,743` bytes；主稿0 warning，
+supplement仅两处既有overfull。
+
 ## WorldSim V7.1 M51 smooth/hard first-return diagnosis frozen（2026-09-05）
 
 状态=`v71_m51_soft_hard_first_return_diagnosis_frozen`，详见

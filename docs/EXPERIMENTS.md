@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01 — canonical（2026-09-05）
+
+- run=`20260905T063000Z__m51-soft-hard-first-return-r1`；66 Actors / 99,208 rays；training/gate=false；
+- holdout smooth abs error M8/M50=`0.291706/0.292153m`；soft improved/worsened=`28.754/35.480%`；
+- same-support early M8/M50=`24.838/25.328%`；added/removed=`0.594/0.104%`；added∩soft-improved=
+  `38.03%` of added；
+- deployment early M8/M50=`25.700/26.245%`；added/removed=`0.659/0.114%`；added∩soft-improved=
+  `36.54%` of added；hazard该比例=`33.97%`、clear=`56.76%`；
+- corr(smooth depth delta, hard depth delta) train/deploy=`0.237/0.283`；corr(smooth error delta,
+  hard-train depth delta)=`0.038`；current support-realization flip=`1.280%`（hazard=`1.463%`）；
+- verdict=`smooth_hard_first_return_nonimplication_confirmed`；no selector/model；GPU=`0.056GiB`、wall=`4.91s`；
+  external/M43 partial read=false。
+- paper=main/supplement加入M51 theorem evidence；compile=`9/15` pages，main 0 warning，supplement两处既有overfull。
+
 ## WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01 — frozen（2026-09-05）
 
 - source=frozen M8 vs rejected M50；66 exposed holdout Actors；training/model-selection=false；

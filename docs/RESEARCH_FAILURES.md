@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M51 outcome note — soft error improvement cannot certify hard support（2026-09-05）
+
+M51在相同support上确认：新增hard early rays中`38.03%`的smooth absolute depth error反而改善；加入正式
+full-anchor/voxel deployment后仍为`36.54%`。因此禁止再以更低smooth first-depth L1/Huber、更多samples或frame
+平均包装为literal safety；任何保证都必须直接约束ordered support/CDF margin并重新训练，而不能用M51的GT边界
+事后筛ray。M51精确解释并关闭`V71-F49`，无新failure；next ID仍=`V71-F50`。
+
 ## V7.1 M51 pre-registration — explanation is not a hard-event selector（2026-09-05）
 
 M51只量化smooth expected depth与hard minimum的非蕴含，不按soft/hard disagreement删除ray、primitive、Actor或

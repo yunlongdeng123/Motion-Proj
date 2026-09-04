@@ -96,3 +96,9 @@ F_v(b)-F(b)=\frac{(1-v)r_j\bigl(F(b)-C_j\bigr)}{1-(1-v)r_j}.
 \end{equation}
 Attenuation lowers the pre-boundary CDF iff $C_j>F(b)$; changing its magnitude cannot reverse the sign. Because $b$ uses
 target depth, this is an explanation and model-design boundary, not a deployable oracle gate.
+
+A distinct non-implication concerns the geometry surrogate. The differentiable renderer optimizes an alpha-composited
+expected depth, whereas Eq.~\ref{eq:first-return} is a minimum over beam-supported surface. An arbitrarily small shallow
+component can move the minimum across $b$ while perturbing the expectation arbitrarily little; with late residual mass, that
+perturbation may even move the expectation toward the target. Lower expected-depth error therefore cannot certify a safer
+literal first return without an explicit ordered support or CDF margin.

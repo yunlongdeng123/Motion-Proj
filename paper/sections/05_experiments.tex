@@ -80,6 +80,12 @@ component-wise attenuation, adverse pressure dominates 65.45\% overall and the e
 rays. The first-order sign agrees with the finite change on 95.73\% of rays. We use this identity only to explain the
 failure---never as an oracle gate or post-hoc selector.
 
+M51 tests the separate expected-depth/minimum boundary using M8 and rejected M50. On identical, non-voxelized support, hard
+early rate rises by 0.490 points; 38.03\% of the newly early rays nevertheless have lower smooth absolute depth error. Under
+the full-anchor, voxelized deployment surface, the values are 0.545 points and 36.54\%. Smooth-error and hard-depth changes
+have correlation 0.038, while support realization flips 1.28\% of ray events. The non-implication therefore precedes
+deployment discretization and is not repaired by better frame weighting.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m49_attenuation_sign_boundary.pdf}
