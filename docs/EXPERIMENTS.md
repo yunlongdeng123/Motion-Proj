@@ -1,5 +1,13 @@
 # Experiments
 
+## WorldSim V7.1 CVPR manuscript — M22 milestone（2026-09-04）
+
+- method=新增Actor-canonical energy经只读SE(3) inverse-query搬运公式；
+- results=新增12-Actor/1677-frame dynamic--static composition audit及V71-F25数值失败链；
+- isolation=appearance-owned/Background Gaussian counts仅作authority审计，不进入physics；
+- limitations=equivariance is plumbing evidence, not trajectory/occlusion/collision/geometry gain；
+- compile=TinyTeX/latexmk完整成功，`paper/main.pdf` 14页、无fatal error；M21 fresh AV2 pending。
+
 ## WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01 — canonical supported（2026-09-04）
 
 - run=`20260904T161000Z__m22-se3-composition-r2`；verdict=`supported 4/4`；

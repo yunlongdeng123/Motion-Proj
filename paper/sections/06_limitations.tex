@@ -21,4 +21,5 @@ view-independent in Actor coordinates and uses frozen GT-supervised geometry, bu
 its scale has no calibrated occupancy-probability meaning and its AV2 aggregate is pending. We do not use source-final or
 partial AV2 results to choose branch count, bins, thresholds, losses, seeds, residual bounds, or encoder adaptations; zero-shot and
 safety claims remain withheld until the frozen 20-log aggregate completes. The current model covers rigid annotated vehicles;
-deformable objects and image-conditioned geometry remain open.
+deformable objects and image-conditioned geometry remain open. Exact SE(3) energy equivariance validates coordinate plumbing only:
+it does not establish trajectory accuracy, static/dynamic discovery, occlusion correctness, collision freedom, or improved geometry.

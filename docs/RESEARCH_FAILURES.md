@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M22 paper prevention note — SE(3)恒等式不得扩权（2026-09-04）
+
+- method将motion写成inverse-query composition，不称per-frame learned geometry或post-hoc correction；
+- results同时报告r1的3.125cm float32假残差与r2 FP64 inverse-query结果，不能隐去实现失败；
+- limitations明确不获得trajectory accuracy、dynamic discovery、occlusion、collision或surface-improvement claim；
+- M21 fresh AV2仍是几何/物理跨域结论的独立未决条件。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M22 outcome note — 等变通过不等于几何性能通过（2026-09-04）
 
 - r2在原12 Actors/36 Actor-frames上以inverse-query得到energy residual=`3.397e-14`、distance residual=

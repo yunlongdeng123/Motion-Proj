@@ -288,5 +288,8 @@ sets at the P346 artifact's held-out 2.5\,s horizon. Frozen 90\% requested relia
 \PnineHarpChamfer{}\,m with all Actors and hazards retained (Table~\ref{tab:p9-composed}). Physical branches have identical
 action outcomes by construction: this validates interface composition, not closed-loop benefit from repair.
 
+\paragraph{Rigid dynamic--static composition audit.}
+We identity-match 12 scene-0230 Actors (7 hazardous) between the frozen physical model and a read-only StreetGS checkpoint. Eleven are moving, and the retained trajectories contain 1,677 valid frames. Across fixed first/middle/last samples (36 Actor--frames), 5,791 physical Gaussians are transported by the checkpoint SE(3) poses while 106,807 appearance-owned and 1,140,862 Background Gaussians remain outside the physical query. The maximum inverse-query energy residual is $3.40\times10^{-14}$ and the maximum pairwise-distance residual is $1.24\times10^{-14}$\,m, despite 126.28\,m maximum translation. A first implementation that formed float32 pairwise distances directly in world coordinates produced a spurious 3.125\,cm residual; we retain it as a numerical failure and use the mathematically equivalent inverse-query form, without changing geometry, cohort, or tolerance. This audit verifies deployment composition, not a new surface-accuracy or safety gain.
+
 \paragraph{Qualitative protocol.}
 Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.

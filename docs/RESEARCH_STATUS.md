@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 CVPR manuscript M22 factorisation update（2026-09-04）
+
+论文method已加入`E_world(x,t)=E_actor(R_t^T(x-t_t))`的inverse-query部署定义，明确trajectory只搬运M8/M21
+canonical physics，Background/SH/opacity/image不进入physical query。Experiments完整报告12 Actors、1677有效帧、
+36 Actor-frame、126.28m位移及r1 float32消减失败；limitations明确SE(3)恒等式只验证组合管线，不证明轨迹、遮挡、
+碰撞或几何性能。下一failure ID仍为`V71-F26`。
+
+本地TinyTeX/latexmk完整编译成功，`paper/main.pdf`为14页、无fatal error；新增内容未产生新的overfull warning。
+
 ## WorldSim V7.1 M22 SE(3) dynamic/static composition supported（2026-09-04）
 
 Canonical=`run://worldsim_v71/WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01/
