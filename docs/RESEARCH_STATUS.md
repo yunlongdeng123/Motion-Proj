@@ -1,5 +1,22 @@
 # Research Status
 
+## WorldSim V7.1 M40 rejected / dense-child family-mass shortcut isolated（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01/
+20260905T073000Z__m40-joint-categorical-s71140-r1`；593 train / 66 exposed holdout、4 epochs，verdict=
+`m40_development_rejected`，decisions=`3/5`。训练categorical NLL=`6.6952→6.6862`，anchor/child evidential
+CE=`0.9409→0.9121 / 0.7876→0.7522`，优化正常。
+
+可辨识性显著增强：holdout anchor/child occupied correlation=`0.4937/0.6163`。但相对baseline，all/hazard/
+clear early=`+0.609/+0.614/+0.585pp`；all hit=`+2.864pp`。相对M39，all early=`+1.130pp`、hit=
+`+0.691pp`。同时child mean occupied从M38的`0.383`膨胀至`0.663`，anchor为`0.481`；direct categorical
+loss通过把总surface mass转向四倍更密的completion family提高hit，也增加前方surface response。
+
+这不是退回transmittance或调loss的理由。下一步M41把每个Actor的anchor/child总surface measure分别守恒为M39
+GT-supervised初值，训练只允许族内重分配；F/O/U CE继续约束absolute semantic mass，部署使用同一守恒映射。
+GPU=`0.412GiB`、RSS=`1.341GiB`、wall=`35.65s`；无external/M21 partial read。登记`V71-F40`；下一failure
+ID=`V71-F41`。
+
 ## WorldSim V7.1 M40 train--deploy aligned joint authority frozen（2026-09-05）
 
 状态=`v71_m40_joint_categorical_evidential_authority_frozen`，详见

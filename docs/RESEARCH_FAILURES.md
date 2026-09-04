@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F40: M40 categorical fine-tuning shifts total authority into the dense child family（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01/20260905T073000Z__m40-joint-categorical-s71140-r1`；
+- evidence=anchor/child occupied correlation=`0.4937/0.6163`、all hit=`+2.864pp`，但all/hazard/clear early=
+  `+0.609/+0.614/+0.585pp`，decisions=`3/5`；
+- optimization=categorical NLL及两项evidential CE均下降，无NaN/OOM；失败不是监督缺失或数值不稳定；
+- root cause=child数量固定为parent的4倍；joint ray loss将child mean occupied从M38 `0.383`推到`0.663`，
+  以改变anchor/child family总surface mass换取hit，重现sampling-density-dependent amplitude shortcut；
+- literature response=Vol3DGS强调normalized Gaussian measure，RT-Splatting（CVPR 2026）也显式分离geometric
+  occupancy与optical opacity。M41迁移为anchor/child分族守恒measure，只让ray loss在族内分配；
+- anti-repeat=不调M40 loss/epoch/seed/bin/median，不缩scale或删除children；冻结M39每Actor两族总mass作为已监督
+  measure，训练/部署共用同一归一化；
+- claim impact=M40 checkpoint不进external；train--deploy同构本身成立，但unconstrained family amplitude拒绝。
+  下一failure ID=`V71-F41`。
+
 ## V7.1 M40 pre-registration note — direct return loss cannot erase evidential semantics（2026-09-05）
 
 M40联合更新anchor/child head但冻结全部几何；categorical first-return与部署同构，同时持续保留两套GT F/O/U soft

@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T073000Z__m40-joint-categorical-s71140-r1`；593 train / 66 holdout；4 epochs；
+  verdict=`m40_development_rejected`；decisions=`3/5`；
+- categorical NLL=`6.695174→6.686232`；anchor CE=`0.940863→0.912056`；child CE=
+  `0.787647→0.752193`；target probability=`0.15065→0.15205`；
+- M40-vs-baseline all early/hit=`+0.6088/+2.8637pp`；hazard=`+0.6137/+3.1900pp`；clear=
+  `+0.5846/+1.2586pp`；M40-vs-M39 all=`+1.1299/+0.6915pp`；
+- anchor/child occupied correlation=`0.493702/0.616290`；mean anchor F/O/U=`0.1706/0.4811/0.3483`；
+  child=`0.1173/0.6634/0.2193`；
+- conclusion=unconstrained categorical fine-tuning shifts total mass to 4x-dense children；next=per-Actor anchor/child
+  conserved surface measure, not loss/scale tuning；
+- GPU=`0.412GiB`，RSS=`1.341GiB`，wall=`35.65s`；no external/M21 partial read；next failure=`V71-F41`。
+
 ## WS-V71-M40-JOINT-CATEGORICAL-EVIDENTIAL-AUTHORITY-01 — frozen（2026-09-05）
 
 - init=M35 anchor + M38 child heads；frozen M8 centers/scales/trajectory；same 593/66 exposed split；
