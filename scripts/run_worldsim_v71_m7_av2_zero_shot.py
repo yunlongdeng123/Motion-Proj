@@ -148,6 +148,7 @@ def _evaluate_bundle(
 
 def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    model_label = str(config.get("model_label", "m7"))
     cohort = load_frozen_av2_cohort(repo_root / config["cohort_config"])
     if len(cohort["logs"]) != int(config["expected_log_count"]):
         raise RuntimeError("frozen V7.1 AV2 cohort count changed")
@@ -162,13 +163,15 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
     )
     device = torch.device(config["device"])
     if device.type != "cuda" or not torch.cuda.is_available():
-        raise RuntimeError("M7 AV2 zero-shot requires CUDA")
+        raise RuntimeError(f"{model_label.upper()} AV2 zero-shot requires CUDA")
     torch.cuda.reset_peak_memory_stats(device)
     started = time.monotonic()
     try:
-        m7_run = Path(config["m7_run"])
-        checkpoint = torch.load(m7_run / "MODEL.pt", map_location=device, weights_only=False)
-        m7_config = yaml.safe_load((m7_run / "resolved.yaml").read_text(encoding="utf-8"))
+        model_run = Path(
+            config["model_run"] if "model_run" in config else config["m7_run"]
+        )
+        checkpoint = torch.load(model_run / "MODEL.pt", map_location=device, weights_only=False)
+        m7_config = yaml.safe_load((model_run / "resolved.yaml").read_text(encoding="utf-8"))
         standardizer = FeatureStandardizer.from_payload(checkpoint["standardizer"])
         model = GaussianSeedExpansionMLP(
             int(checkpoint["input_dim"]),
@@ -241,7 +244,7 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             print(
                 json.dumps(
                     {
-                        "stage": "m7_fresh_av2",
+                        "stage": f"{model_label}_fresh_av2",
                         "progress": f"{position + 1}/{len(cohort['logs'])}",
                         "log_id": log_id,
                         "log_actors": log_rows,
@@ -262,13 +265,26 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
         passed = all(decisions.values())
         m5_external_runner._write_jsonl(run_dir / "EXTERNAL_ACTORS.jsonl", rows)
         summary = {
-            "schema_version": "worldsim_v71.m7_fresh_av2_zero_shot.v1",
+            "schema_version": str(
+                config.get(
+                    "summary_schema_version",
+                    "worldsim_v71.m7_fresh_av2_zero_shot.v1",
+                )
+            ),
             "task_id": config["task_id"],
             "hypothesis_id": config["hypothesis_id"],
             "status": "done",
-            "verdict": "zero_shot_supervision_native_transfer_supported"
-            if passed
-            else "source_only_supervision_native_geometry_cross_sensor_transfer_rejected",
+            "verdict": str(
+                config.get(
+                    "supported_verdict",
+                    "zero_shot_supervision_native_transfer_supported",
+                )
+                if passed
+                else config.get(
+                    "rejected_verdict",
+                    "source_only_supervision_native_geometry_cross_sensor_transfer_rejected",
+                )
+            ),
             "cohort_config": config["cohort_config"],
             "log_count": len(processed_logs),
             "actor_count": len(rows),
@@ -276,7 +292,9 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
             "external": metrics,
             "per_log": per_log,
             "decisions": decisions,
-            "m7_checkpoint": str(m7_run),
+            "model_label": model_label,
+            "model_checkpoint": str(model_run),
+            f"{model_label}_checkpoint": str(model_run),
             "m5_base_checkpoint": str(m5_run),
             "fine_tuning": False,
             "calibration": False,

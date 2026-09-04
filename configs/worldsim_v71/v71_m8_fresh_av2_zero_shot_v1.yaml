@@ -1,0 +1,42 @@
+task_id: WS-V71-M8-FRESH-AV2-ZERO-SHOT-01
+hypothesis_id: WS-V71-H-M8-NUSCENES-TO-AV2-TEMPORAL-FACTORISATION
+runs_root: /root/autodl-tmp/runs
+model_label: m8
+model_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2
+summary_schema_version: worldsim_v71.m8_fresh_av2_zero_shot.v1
+supported_verdict: zero_shot_temporal_factorisation_transfer_supported
+rejected_verdict: source_only_temporal_factorisation_cross_sensor_transfer_rejected
+cohort_config: configs/worldsim_v71/av2_zero_shot_cohort_v1.json
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+download_state: /root/autodl-tmp/data/av2/v71_download_state
+expected_log_count: 20
+poll_seconds: 30
+wait_timeout_seconds: 172800
+device: cuda
+compiler_overrides:
+  actors:
+    categories:
+      - REGULAR_VEHICLE
+      - BUS
+      - BOX_TRUCK
+      - TRUCK
+      - VEHICULAR_TRAILER
+      - SCHOOL_BUS
+      - ARTICULATED_BUS
+      - LARGE_VEHICLE
+  surface:
+    evaluation_stride: 3
+    heldout_modulo_value: 2
+    minimum_build_frames: 4
+    minimum_heldout_frames: 3
+evaluation:
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 512
+  output_voxel_size_m: 0.06
+decision:
+  minimum_hazard_literal_relative_reduction: 0.05
+  maximum_chamfer_delta_m: 0.001
+  required_actor_state_retention: 1.0
+  required_hazard_state_retention: 1.0
+
