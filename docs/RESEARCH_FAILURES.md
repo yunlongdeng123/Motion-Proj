@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M27 prevention note — hierarchy诊断不得冒充未暴露泛化（2026-09-05）
+
+- M27显式标记六个development views已在M25/M26暴露，只能解释机制，不形成新held-out/generalization claim；
+- 唯一representation判定为per-view delta中位数大于0，不以pooled像素权重决定；positive count/min/max完整报告；
+- coarse/fine两层geometry均冻结且均不进入physical query；RGB只更新attributes/opacity；
+- 两分支用固定half optical-depth初始化，不扫融合权重、steps、loss或seed；失败则关闭该hierarchy；
+- 迁移Octree-GS/LOD-GS的多尺度组织，不迁移其可学习geometry、selector或densification。
+
+下一可用编号仍为：`V71-F29`。
+
 ## V7.1 M26 outcome note — pooled容量改善但view-uniform不成立（2026-09-05）
 
 - canonical r1完成320/320 steps，4/4预注册decisions通过；held-out pooled Actor PSNR

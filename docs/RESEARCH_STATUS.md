@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M27 hierarchical visual residual frozen（2026-09-05）
+
+状态=`v71_m27_hierarchical_visual_residual_frozen`，详见
+[`WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md`](WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md)。
+M27共同渲染M25的309 coarse parents与M26的2781 fine surfels，两个已训练分支各取一半optical depth后，只继续训练
+SH/opacity；3090个visual geometry及所有physical/trajectory/background参数冻结。
+
+六个comparison views已在M26暴露，故明确为development-only。唯一hierarchy判定从pooled改为`M27-M25` per-view
+PSNR delta的中位数严格为正；同时报告positive count/min/max，不扫分支权重或超参。physical query仍为309个M8
+carriers，M21不读取。下一failure ID=`V71-F29`。
+
 ## WorldSim V7.1 M26 pooled visual capacity supported / per-view boundary exposed（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M26-SUPERVISION-NATIVE-VISUAL-SURFELS-01/
