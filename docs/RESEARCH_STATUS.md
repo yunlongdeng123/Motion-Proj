@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 supervision-native geometry paper evidence frozen（2026-09-04）
+
+状态=`v71_m7_paper_evidence_frozen`。论文已把物理一致性的因果位置从部署后filter改为训练监督：actor-canonical
+held-out endpoints构造完整target set，observed anchors不可学习，4-child surface在训练图内持续接收symmetric Chamfer、
+local point-to-plane/scale、literal first-return与FREE-before-hit约束；部署固定输出anchors加全部children。
+
+证据图采用与模型输出无关的选择规则：在66-Actor development中选hazard Actor的baseline literal-early中位样本，固定为
+`scene-0994/05ef20b72e154ef094eeded808f893a9`。该Actor有2869 target rays、46 anchors、47 candidates与188 M7
+children；baseline/M5/M7 early=`20.739/19.310/17.881%`，hit=`26.072/28.616/29.209%`，Chamfer=
+`294.25/278.77/273.58mm`。CVPR稿已加入Gau-Occ/PoinTr/SnowflakeNet边界、M6负结果、M7方法/表格/限制及证据图，
+本地TinyTeX/latexmk完整编译为12页。外测仍只读进度，不读取partial physical metrics；下一failure ID仍为`V71-F12`。
+
 ## WorldSim V7.1 M7 fresh AV2 evaluator active（2026-09-04）
 
 状态=`v71_m7_fresh_av2_running`。新增scene-ready M7 evaluator，加载冻结M7/M5/standardizer，对每个`.complete` log

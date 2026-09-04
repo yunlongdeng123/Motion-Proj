@@ -12,18 +12,20 @@ where appearance Gaussians and physical collision surfaces have separate semanti
 
 Our second component factorizes validity from hazard with disjoint inputs and paired counterfactual diagnostics. Changing a clean Actor from ordinary driving to a legal near-miss should not change its repair score; injecting a duplicate shell or temporal pop should not change its hazard score. A selective interface repairs an Actor only when nuScenes-calibrated runtime evidence supports it and otherwise returns the clean query. Our third component links physical state quality to downstream reliability. An Actor residual distribution is projected onto a candidate trajectory boundary, yielding a continuous cost whose conditional density supports arbitrary budgets and multiple horizons.
 
-We additionally test whether the discrete surface compiler can be replaced by a continuous Actor-local repair field. A train-only
-oracle shows that moving completion geometry can jointly reduce literal early returns and Chamfer. Yet a fixed learned displacement
-model and a fixed implicit evidential field fail source selection in opposite ways to a non-learned TSDF: the learned models reduce
-early returns by losing surface evidence, whereas the TSDF restores surface while more than doubling hazardous early exposure.
-We treat this two-sided result as an interpretable physical boundary and do not inspect source-final or external outcomes to rescue it.
+We additionally test whether the discrete surface compiler can be replaced by a supervision-native Actor-local completion model.
+A train-only oracle first shows that moving completion geometry can jointly reduce literal early returns and Chamfer. Deletion-style
+displacement, an implicit field, and a non-learned TSDF then expose opposite failure endpoints. Starting from the strongest
+deployment-consistent relocation, we define geometry from held-out Actor-canonical LiDAR targets: each completion seed produces a
+small set of Gaussian-compatible child centers trained by bidirectional surface and literal-ray losses. On an exposed development
+fold this changes hazardous early returns by \VSevenOneMSevenHazardEarlyReduction{} and Chamfer by
+\VSevenOneMSevenChamferDeltaMm{}\,mm without deleting any child or Actor; external results remain frozen and pending.
 
 Our contributions are:
 \begin{itemize}
     \item a hazard-preserving physical compiler with explicit \textsc{keep/project/complete/unknown} semantics, separate appearance/collision state, and a literal first-return audit with an exact deletion-monotonicity boundary;
     \item a nuScenes-only repair-or-abstain factorization protocol that measures cross-input leakage and reports its AV2 risk--coverage boundary;
     \item a continuous task-cost density and monotone multi-horizon reliability interface, with an exact-identity audit that keeps physical-repair and trajectory authority distinct.
-    \item a frozen continuous-geometry study that separates an achievable train oracle from learned and non-learned failure endpoints, exposing why first-return safety and surface completeness require a joint contract.
+    \item a supervision-native, set-to-set Actor surface model that turns sparse completion seeds into GT-supervised child centers while keeping first-return, free-space, and surface losses active through deployment-consistent training.
 \end{itemize}
 
 \input{figures/architecture}

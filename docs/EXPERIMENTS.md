@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-PAPER-M7-SUPERVISION-NATIVE-EVIDENCE — frozen paper milestone（2026-09-04）
+
+- causal claim=geometry consistency is defined by actor-canonical GT states and losses, not a post-hoc mask/filter；
+- representation=`46 immutable anchors + 47 parent candidates × 4 children` for the selected Actor；deployment includes all 188
+  children；
+- selection=hazardous development Actor at the median baseline literal-early rate, tie by track id；selection is output-independent；
+- actor=`scene-0994/05ef20b72e154ef094eeded808f893a9`，target rays=`2869`；
+- baseline/M5/M7 literal early=`20.739/19.310/17.881%`，hit=`26.072/28.616/29.209%`，Chamfer=
+  `294.25/278.77/273.58mm`；
+- artifacts=`paper/figures/v71_m7_supervision_native_geometry.{png,pdf,json}`；paper method/results/table/limitations/
+  abstract and bibliography updated；
+- compile=TinyTeX/latexmk success，12 pages；existing `6.03pt` overfull and font substitution warnings only；
+- claim boundary=66-Actor fold has historical pretraining exposure；fresh 20-log AV2 physical aggregate remains unread/pending。
+
 ## WS-V71-M7-FRESH-AV2-ZERO-SHOT-01 — active execution（2026-09-04）
 
 - run=`20260904T122000Z__m7-fresh-av2-zero-shot-r1`；single evaluator PID initially=`10549`；

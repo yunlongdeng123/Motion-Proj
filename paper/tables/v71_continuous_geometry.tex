@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{Frozen V7.1 continuous-geometry evidence. Early is relative hazardous literal first-return reduction (higher is better); CD and hit are changes from each method's query surface. S1 is a train-only oracle. B4 naturally covers 121 Actors versus 88 for learned models because it does not require a candidate-bearing Actor.}
+\caption{Frozen V7.1 continuous-geometry evidence. Early is relative hazardous literal first-return reduction (higher is better); CD and hit are changes from each method's query surface. S1 is a train-only oracle. M5--M7 use the same 66-Actor development fold with prior representation exposure and are not external confirmation.}
 \label{tab:v71-continuous-geometry}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lrrrl}
@@ -11,6 +11,10 @@ S1 displacement oracle & \VSevenOneSOneHazardEarlyReduction & \VSevenOneSOneCham
 M0 learned displacement & \VSevenOneMZeroHazardEarlyReduction & \VSevenOneMZeroChamferDeltaMm & \VSevenOneMZeroHitRecallDeltaPp & reject \\
 M1 evidential field & \VSevenOneMOneHazardEarlyReduction & \VSevenOneMOneChamferDeltaMm & \VSevenOneMOneHitRecallDeltaPp & reject \\
 B4 evidential TSDF & \VSevenOneBFourHazardEarlyReduction & \VSevenOneBFourChamferDeltaMm & \VSevenOneBFourHitRecallDeltaPp & opposite frontier \\
+\midrule
+M5 PCGrad relocation & \VSevenOneMFiveHazardEarlyReduction & \VSevenOneMFiveChamferDeltaMm & \VSevenOneMFiveHitRecallDeltaPp & dev pass \\
+M6 one-to-one GT center & \VSevenOneMSixHazardEarlyReduction & \VSevenOneMSixChamferDeltaMm & \VSevenOneMSixHitRecallDeltaPp & reject \\
+M7 GT set child surface & \VSevenOneMSevenHazardEarlyReduction & \VSevenOneMSevenChamferDeltaMm & \VSevenOneMSevenHitRecallDeltaPp & dev pass \\
 \bottomrule
 \end{tabular}}
 \end{table}

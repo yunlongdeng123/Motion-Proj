@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M7 paper-evidence note — development机制证据不升级为外域结论（2026-09-04）
+
+- 证据图按baseline危险率中位数事前规则选Actor，不按M7改善量挑最好案例；图中保留anchors与全部children，不隐藏坏点；
+- 论文明确M7 development曾被旧预训练暴露，仅证明监督/表示机制可行，不能称独立confirmation或zero-shot；
+- 冻结AV2完成前禁止读取partial物理指标、修改abstract数值、改模型或替换log；最终20-log aggregate一次性决定外域claim；
+- 本里程碑没有新增scientific/engineering failure；第一次本地复制后编译因文件可见时序失败，原样重试即通过，不占用
+  `V71-F12`。
+
+下一可用编号仍为：`V71-F12`。
+
 ## V7.1 M7 external execution note — scene-ready入口正常（2026-09-04）
 
 - evaluator已按`.complete`处理3/20 logs与62 Actors，权重/standardizer/compiler均冻结，未读partial physical aggregate；

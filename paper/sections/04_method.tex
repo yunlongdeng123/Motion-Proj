@@ -33,15 +33,32 @@ directed Chamfer terms in opposite directions. This is a geometric certificate f
 
 \subsection{Learned Evidential Actor Surface Field}
 
-V7.1 replaces the binary keep/delete action on completed primitives with a continuous Actor-local geometry action. Build-frame endpoints and ray-transmission intervals define occupied, free, and unknown evidence masses; target-frame rays are never part of the input. A low-capacity point model predicts ray and local-normal displacement for completion candidates while observed \textsc{keep} and matched \textsc{project} surfaces remain hard anchors. The field is trained through a differentiable first-return renderer and a bidirectional surface loss,
+V7.1 replaces binary keep/delete on completed primitives with a supervision-native Actor-local geometry action. Every sweep is
+transformed by its annotated Actor pose before fusion. Build endpoints and ray-transmission intervals define occupied, free, and
+unknown evidence; held-out target rays never enter the input and only construct the training target $T_i$. Observed \textsc{keep}
+and matched \textsc{project} points form an immutable anchor set $A_i$.
+
+A deployment-consistent parent model first relocates each completion seed. Because one seed per hole cannot cover a dense target,
+the final model attaches \VSevenOneMSevenBranchFactor{} learned slots to each parent and predicts bounded Actor-frame center
+residuals and isotropic support scales. The physical surface used by both training and evaluation is
 \begin{equation}
 \begin{aligned}
-x'_j&=x_j+\Delta d^{\mathrm{ray}}_jv_j+\Delta d^{\mathrm{normal}}_jn_j,\\
-\mathcal L&=\mathcal L_{\mathrm{first}}+\mathcal L_{\mathrm{surface}}
-+\mathcal L_{\mathrm{anchor}}+\mathcal L_{\mathrm{temporal}}.
+x'_{jk}&=x^{\mathrm{parent}}_j+\Delta x_{jk}(E_i),\quad k=1,\ldots,\VSevenOneMSevenBranchFactor{},\\
+S_i^\theta&=A_i\cup\{x'_{jk}\}_{j,k}.
 \end{aligned}
 \end{equation}
-Unknown remains an explicit evidential state and does not enter the collision surface. Actor identity, trajectory, extent, and hazard state are immutable interfaces rather than learned loss terms. The final implicit-field choice and source/external result macros remain placeholders until conditional model selection is frozen.
+Geometry pretraining applies bidirectional Chamfer to $S_i^\theta$ and $T_i$, target-local point-to-plane distance, and a scale
+target from the target surface's local eight-neighbor spacing. Physical fine-tuning keeps every geometry term active and adds the
+differentiable first return plus an explicit free-before-hit penalty,
+\begin{equation}
+\mathcal L_G=\mathcal L_{\mathrm{CD}}+.25\mathcal L_{\mathrm{p2n}}+.1\mathcal L_s,
+\qquad
+\mathcal L_P=\mathcal L_G+\mathcal L_{\mathrm{first}}+.5\mathcal L_{\mathrm{free}}.
+\end{equation}
+Measured negative task gradients are projected only during this second stage. Space behind a held-out first hit is not labeled
+free; unknown is never a deployment deletion mask. Actor identity, trajectory, extent, and hazard state remain immutable interfaces.
+Image, semantic, motion, and hazard features are absent from the geometry model; a later appearance bridge may update semantics
+only, with stop-gradient on physical center and scale.
 
 \subsection{Validity--Hazard Factorization}
 

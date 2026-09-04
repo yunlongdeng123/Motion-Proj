@@ -42,7 +42,29 @@ The non-learned B4 evidential TSDF exposes the opposite endpoint on \VSevenOneBF
 \VSevenOneBFourHazardEarlyReduction{}---i.e., exposure more than doubles. Table~\ref{tab:v71-continuous-geometry} therefore
 shows a two-sided failure boundary rather than a winning learned surface model.
 
+We then correct the training target rather than its deployed output. M5 removes the UNKNOWN action and projects the measured
+first-return/surface gradient conflict, passing all five development gates. Directly matching one Gaussian center to one nearest
+target point (M6) learns center, tangent-plane, and scale labels but misses the hazardous-ray gate: candidate-bearing Actors have
+only 17 completion seeds versus 966 target endpoints at the median. M7 instead performs fixed four-child set expansion. Its
+training Chamfer ratio falls from $0.986$ to $0.972$ before physical fine-tuning. On the same
+\VSevenOneMFiveDevelopmentActors{} exposed development Actors, it reduces hazardous/all early returns by
+\VSevenOneMSevenHazardEarlyReduction{}/\VSevenOneMSevenAllEarlyReduction{}, changes Chamfer by
+\VSevenOneMSevenChamferDeltaMm{}\,mm, and increases hit recall by \VSevenOneMSevenHitRecallDeltaPp{} points with complete
+Actor and hazard retention. M5 gives \VSevenOneMFiveHazardEarlyReduction{} and \VSevenOneMFiveChamferDeltaMm{}\,mm on this
+fold; M6 gives \VSevenOneMSixHazardEarlyReduction{} and is rejected. These are model-development results because the parent
+representation previously saw the fold; the frozen AV2 evaluation is reported only after all 20 logs complete.
+
 \input{tables/v71_continuous_geometry}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/v71_m7_supervision_native_geometry.pdf}
+\caption{Supervision-native geometry on a hazardous development Actor selected by median \emph{baseline} literal early-return
+rate, without consulting M7 output. Forty-seven completion seeds expand into 188 child centers while observed anchors remain fixed.
+For this output-independent case, baseline/M5/M7 early rates are $20.7/19.3/17.9\%$, hit rates are $26.1/28.6/29.2\%$, and
+Chamfer distances are $294.3/278.8/273.6$\,mm. Gray points are held-out GT and never model input.}
+\label{fig:v71-m7-geometry}
+\end{figure*}
 
 \paragraph{Zero-shot Actor-local surface evidence.}
 Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
