@@ -1,5 +1,28 @@
 # Experiments
 
+## WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01 — frozen protocol（2026-09-04）
+
+- evidence source=Gau-Occ CVPR 2026 main §3.1--3.4/Eq.(1)--(17) + supplement §7；官方代码未发布，未知梯度路径不补写；
+- decomposition=本阶段只解决GT-supervised geometry；image/semantic/motion/hazard均不进入模型或loss；
+- input=build-only M0/M5 features；base=冻结canonical M5；target=actor-canonical held-out endpoints，仅用于训练标签；
+- target construction=每个原始completion candidate确定性匹配最近target endpoint；该点8-NN中位距离作为isotropic
+  Gaussian scale target，局部8-NN PCA最小特征向量作为point-to-plane normal；
+- output=对M5 center的bounded 3D residual + log scale；final surface=`immutable observed anchors + all corrected centers`；
+- Stage G=`center Huber + point-to-plane + scale Huber + symmetric Chamfer`；Stage P持续保留Stage G，再加入literal
+  first-return/free-space；禁止仅在部署时加filter；
+- initialization=M5冻结base，residual center从0开始；one seed、one fixed weighting、no diffusion、no UNKNOWN hard mask；
+- development=与M5相同train-role stride-10，仅用于方法筛选且标注pretrained exposure；冻结五项physical gates不增加新门；
+- external boundary=M5 fresh AV2 evaluator独立运行；任何局部external输出不得反馈给M6 architecture/target/weights；
+- validation=`py_compile only`；无smoke/regression/hash/checksum/fingerprint。
+
+## WS-V71-H-M6-SUPERVISION-FIRST-COMPLETION — Gau-Occ audit result（2026-09-04）
+
+- LCD target=`K=20` ego-motion-aligned LiDAR sweeps，local-noise conditional diffusion；dynamic object motion未补偿；
+- Gaussian constraint=completed `P'`只作70% density/30% random center initialization，scale每轴随机`U[.2,1.0]`；
+- image=geometry-aligned token sampling后，FFN仍联合预测center residual/scale/rotation/semantics，无geometry stop-gradient；
+- end-to-end=仅能确认LCD预训练后joint optimization；LCD freeze、continued diffusion loss与sampling gradient均未公开；
+- decision=吸收target-first思想，拒绝把soft initialization或post-hoc filtering当作物理一致性；单卡先做确定性M6。
+
 ## WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01 — canonical structural result（2026-09-04）
 
 - run=`20260904T111000Z__m5-streetgs-bridge-r1`；12 matched Actors / 7 hazard / 106,807 owned Gaussians；

@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M6 prevention note — target-first不等于Gau-Occ原样迁移（2026-09-04）
+
+- Gau-Occ的20-sweep target只声明ego-motion alignment，直接用于动态Actor会把物体运动写成completion geometry；V7.1必须
+  逐帧用GT box/pose进入actor-canonical frame，现有compiler保持该合同；
+- completed cloud在Gau-Occ中是Gaussian initialization而非硬anchor，后续image fusion可改center/scale/rotation；因此不得
+  用该论文替post-hoc StreetGS sidecar升级claim；
+- M6首轮完全隔离image/semantic/motion，只让build evidence预测geometry；target endpoints只构造center/scale/plane标签，
+  GT geometry与literal first-return loss在Stage P仍持续回传；
+- observed anchors结构上不可学习，UNKNOWN不作部署硬删除；失败不得通过mask、threshold、第二seed或loss sweep恢复；
+- 若M6失败，登记`V71-F11`并判断是直接GT correspondence/candidate support问题，再决定生成式completion或新表示；不得
+  回到appearance bridge或PCGrad解释错误target。
+
+下一可用编号仍为：`V71-F11`。
+
 ## V71-F10 — StreetGS sidecar结构成立但不能证明训练内生物理一致
 
 - 分类/状态：claim-boundary + scientific decomposition / terminal for post-hoc proof；canonical=`run://worldsim_v71/

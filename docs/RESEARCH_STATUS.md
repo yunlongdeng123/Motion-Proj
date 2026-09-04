@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 Gau-Occ审计完成 / M6 supervision-native geometry冻结（2026-09-04）
+
+Gau-Occ一手资料审计已完成，详见[`WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md`](WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md)。
+LCD的dense target是20帧ego-aligned LiDAR累积、noise-MSE预训练；completed cloud只初始化Gaussian centers，scale随机，
+图像融合后的FFN仍可同时修改center/scale/rotation/semantic。论文没有anchor/free-space/surface loss，也没有公开官方代码
+可确认joint stage是否解冻LCD或保留diffusion loss。因此Gau-Occ支持“target-first completion”分层，不足以直接证明
+geometry preservation；对动态Actor仅做ego alignment还会引入拖影。
+
+M6冻结为`WS-V71-M6-GT-SUPERVISED-GAUSSIAN-RELOCATION-01`：现有nuScenes compiler已经把每帧GT-box内点与
+sensor origin变换到该帧actor-canonical frame，故target是motion-corrected held-out surface。冻结M5作为起点，M6只看
+build evidence，学习bounded 3D center residual与local scale；candidate的监督来自target endpoint最近表面匹配与8-NN局部
+尺度。Stage G直接优化center Huber、point-to-plane、scale和Chamfer；Stage P继续保留这些GT geometry loss并加入literal
+first-return/free-space。observed anchors不进入可学习head，UNKNOWN不作部署删除；首轮完全隔离image、semantic、hazard与
+motion head。只用train-role development，不读M5 AV2局部质量调参，不做seed/loss sweep。下一failure ID=`V71-F11`。
+
 ## WorldSim V7.1 StreetGS bridge complete / supervision-first correction（2026-09-04）
 
 Canonical bridge=`run://worldsim_v71/WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01/
