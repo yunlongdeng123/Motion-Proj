@@ -352,6 +352,15 @@ children with learned anchors raises early returns to 35.27\%. Thus a global opt
 target the wrong component: the immediate missing supervision is completion-child FREE/OCCUPIED/UNKNOWN authority from
 its parent build evidence, kept separate from the observed-anchor head.
 
+M37 supplies exactly that separate supervision while freezing every center, scale, trajectory, and the M35 anchor head.
+The child occupied mass correlates 0.431 with held-out ray evidence. Relative to unit-opacity children, learned child
+authority reduces early returns from 35.27\% to 23.92\% and increases hit recall from 56.71\% to 65.59\%. This is strong
+evidence that completion opacity is learnable from producer-side context rather than a post-hoc rule. It is not yet a
+physical pass: relative to the original unit-energy reference, all/hazard/clear early returns remain higher by
+5.73/6.35/2.69 points, even as hit recall improves by 3.30 points. The ordered categorical NLL is almost flat. We therefore
+reject M37 and identify a loss-level omission: the observed interval before a LiDAR first return must itself supervise
+survival, rather than being represented only indirectly by competition with the return bin.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

@@ -1,5 +1,23 @@
 # Research Status
 
+## WorldSim V7.1 M37 rejected / GT child evidence works but pre-hit survival is missing（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01/
+20260905T060000Z__m37-child-transmittance-s71137-r1`；593 train / 66 exposed holdout、6 epochs正常完成，
+verdict=`m37_development_rejected`，decisions=`2/4`。loss=`4.2858→4.2361`，child evidential CE=
+`0.9929→0.8998`；predicted-vs-GT occupied correlation=`0.4306`，证明parent build evidence与child geometry
+能够辨识held-out child authority。
+
+相对M35 unit-child，学习child authority把all early从`35.266%`降至`23.915%`（`-11.351pp`），同时
+hit从`56.707%`升至`65.587%`（`+8.880pp`）。但相对原unit-energy baseline，all/hazard/clear early仍
+增加`+5.728/+6.346/+2.690pp`；all hit增加`+3.304pp`。模型把部分late/no-return质量移回GT附近，同时仍
+允许GT之前累积过多hazard。当前whole-ray categorical NLL近乎不变（`3.7546→3.7516`），故下一步不是
+过滤children或调opacity，而是从原生GT ray显式监督首回波前的free interval：惩罚该区间累计光学厚度
+`-log T_pre`，保持几何、anchor head与连续F/O/U定义不变。
+
+GPU=`0.429GiB`、RSS=`1.335GiB`、wall=`45.45s`；无NaN/OOM、无external/M21 partial read。M37登记
+`V71-F38`；下一failure ID=`V71-F39`。
+
 ## WorldSim V7.1 M37 supervised child transmittance frozen（2026-09-05）
 
 状态=`v71_m37_supervised_child_transmittance_frozen`，详见

@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T060000Z__m37-child-transmittance-s71137-r1`；593 train / 66 holdout；6 epochs；
+  verdict=`m37_development_rejected`；decisions=`2/4`；
+- loss=`4.285808→4.236095`；categorical NLL=`3.754620→3.751624`；child evidential CE=
+  `0.992938→0.899812`；occupied correlation=`0.430601`；target-mass CE=`0.933569`；
+- original baseline early/hit=`18.1870/62.2833%`；M35 unit-child=`35.2663/56.7071%`；learned child=
+  `23.9154/65.5875%`；learned-vs-unit-child early=`-11.3509pp`，hit=`+8.8803pp`；
+- learned-vs-baseline all/hazard/clear early=`+5.7284/+6.3461/+2.6903pp`；all hit=`+3.3042pp`；
+  unit/learned no-return=`0.3987/0.4746`；
+- conclusion=GT child supervision repairs most unit-child over-opacity and is identifiable, but categorical return loss
+  does not explicitly enforce observed free-space survival before the GT endpoint；next=M38 native pre-hit
+  `-log T` supervision, no filter/scale/margin sweep；
+- GPU=`0.429GiB`，RSS=`1.335GiB`，wall=`45.45s`；no external/M21 partial read；next failure=`V71-F39`。
+
 ## WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01 — frozen（2026-09-05）
 
 - frozen=M35 anchor authority + M8 child centers/scales + trajectory；train=separate child evidential head only；

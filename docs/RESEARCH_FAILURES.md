@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F38: M37 child authority improves unit-opacity completion but leaves pre-hit optical mass（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M37-SUPERVISED-CHILD-TRANSMITTANCE-01/20260905T060000Z__m37-child-transmittance-s71137-r1`；
+- evidence=child occupied correlation=`0.4306`，learned-vs-unit-child early=`-11.351pp`且hit=`+8.880pp`；
+  但learned-vs-original baseline all/hazard/clear early=`+5.728/+6.346/+2.690pp`，decisions=`2/4`；
+- optimization=loss与evidential CE正常下降，无NaN/OOM；categorical NLL只从`3.7546`到`3.7516`，不是
+  数值或输入可辨识性失败；
+- root cause=当前categorical first-return目标对命中bin概率做整体竞争，却未把GT endpoint之前的已观测FREE
+  interval单独约束为survival；模型可同时提升hit并在前方保留过多累计hazard；
+- literature response=ALSO（CVPR 2023）直接从LiDAR sensor origin到return构造occupancy supervision；Neural
+  LiDAR Fields（ICCV 2023）将return/drop作为物理射线过程。迁移为训练期`-log T_pre`，不是部署过滤；
+- anti-repeat=不删child、不用UNKNOWN mask、不调Gaussian/opacity scale、epoch、seed或margin sweep；冻结M37
+  checkpoint并只增加GT pre-hit free-space survival项；
+- claim impact=M37不进入external；child evidence supervision与ordered composition的方向性成立，但当前目标函数拒绝。
+  下一failure ID=`V71-F39`。
+
 ## V7.1 M37 pre-registration note — child authority is a separate supervision problem（2026-09-05）
 
 M37冻结已定位的anchor head，只给completion child独立输入/GT/head；不得让共享context用anchor标签代替child
