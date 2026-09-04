@@ -37,6 +37,7 @@ from motion_proj.worldsim_v71.gaussian_anchor_relocation import (
 from motion_proj.worldsim_v71.local_signed_field import (
     CompactLocalOccupancyField,
     LocalAnchorSignedField,
+    OneSidedLocalOccupancyField,
     initialize_local_field_from_expansion,
 )
 from motion_proj.worldsim_v71.ray_displacement import RaySurfaceRelocationMLP
@@ -116,10 +117,43 @@ def _geometry_losses(
         F.smooth_l1_loss(outside_field, torch.full_like(outside_field, probe_offset))
         + F.smooth_l1_loss(inside_field, torch.full_like(inside_field, -probe_offset))
     )
+    radius = hit_field.new_zeros(())
+    if isinstance(model, OneSidedLocalOccupancyField):
+        predicted_radii = model.child_radii(
+            actor["features"], actor["m8_scales_t"]
+        )
+        with torch.no_grad():
+            child_normals = model.outward_child_normals(
+                actor["normals_t"], actor["ray_directions_t"]
+            )
+            child_centers = actor["m8_children_t"]
+            relative = targets[None, :, :] - child_centers[:, None, :]
+            neighbor_count = min(int(config["target_neighbors"]), len(targets))
+            indices = torch.linalg.vector_norm(relative, dim=-1).topk(
+                neighbor_count, dim=1, largest=False
+            ).indices
+            nearest = torch.gather(
+                relative,
+                1,
+                indices[:, :, None].expand(-1, -1, 3),
+            )
+            normal_coordinate = torch.sum(
+                nearest * child_normals[:, None, :], dim=-1, keepdim=True
+            )
+            tangent = nearest - normal_coordinate * child_normals[:, None, :]
+            target_radii = torch.linalg.vector_norm(tangent, dim=-1).max(dim=1).values
+            target_radii = target_radii.clamp(
+                min=float(config["minimum_scale_m"]),
+                max=float(config["maximum_radius_m"]),
+            )
+        radius = F.smooth_l1_loss(
+            predicted_radii / target_radii,
+            torch.ones_like(predicted_radii),
+        )
     geometry = float(config["hit_weight"]) * hit + float(
         config["normal_weight"]
-    ) * normal
-    return {"geometry": geometry, "hit": hit, "normal": normal}
+    ) * normal + float(config.get("radius_weight", 0.0)) * radius
+    return {"geometry": geometry, "hit": hit, "normal": normal, "radius": radius}
 
 
 def _physics_losses(
@@ -163,6 +197,7 @@ def _train(
         "geometry",
         "hit",
         "normal",
+        "radius",
         "physics",
         "signed_regression",
         "front_free",
@@ -182,7 +217,7 @@ def _train(
             means = {
                 **{
                     name: torch.stack([item[name] for item in geometry_items]).mean()
-                    for name in ("geometry", "hit", "normal")
+                    for name in ("geometry", "hit", "normal", "radius")
                 },
                 **{
                     name: torch.stack([item[name] for item in physics_items]).mean()
@@ -210,7 +245,13 @@ def _train(
         }
         history.append(row)
         print(
-            json.dumps({"stage": "m13_local_signed_field", "actors": len(actors), **row}),
+            json.dumps(
+                {
+                    "stage": str(config.get("training_stage", "m13_local_signed_field")),
+                    "actors": len(actors),
+                    **row,
+                }
+            ),
             flush=True,
         )
     return history
@@ -396,12 +437,25 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         m8_model.load_state_dict(checkpoint["state_dict"])
         m8_model.eval()
         m8_model.requires_grad_(False)
-        field_class = (
-            CompactLocalOccupancyField
-            if str(config["model"].get("field_variant", "blended_plane"))
-            == "compact_occupancy_union"
-            else LocalAnchorSignedField
+        field_variant = str(
+            config["model"].get("field_variant", "blended_plane")
         )
+        if field_variant == "compact_occupancy_union":
+            field_class = CompactLocalOccupancyField
+        elif field_variant == "one_sided_surface_cell":
+            field_class = OneSidedLocalOccupancyField
+        else:
+            field_class = LocalAnchorSignedField
+        field_kwargs: dict[str, Any] = {}
+        if field_class is OneSidedLocalOccupancyField:
+            field_kwargs.update(
+                maximum_log_radius_delta=float(
+                    config["model"]["maximum_log_radius_delta"]
+                ),
+                back_support_depth_m=float(
+                    config["model"]["back_support_depth_m"]
+                ),
+            )
         model = field_class(
             int(checkpoint["input_dim"]),
             hidden_dim=int(config["model"]["hidden_dim"]),
@@ -412,6 +466,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             maximum_residual_fraction=float(
                 config["model"]["maximum_residual_fraction"]
             ),
+            **field_kwargs,
         ).to(device)
         initialize_local_field_from_expansion(model, m8_model)
         paths = m0_runner._paths(
@@ -467,6 +522,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 "field": str(
                     config["model"].get("field_variant", "blended_plane")
                 ),
+                "maximum_log_radius_delta": config["model"].get(
+                    "maximum_log_radius_delta"
+                ),
+                "back_support_depth_m": config["model"].get(
+                    "back_support_depth_m"
+                ),
             },
             run_dir / "MODEL.pt",
         )
@@ -514,6 +575,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                         ),
                     }
                 )
+                if isinstance(model, OneSidedLocalOccupancyField):
+                    row["mean_field_radius_m"] = float(
+                        model.child_radii(
+                            actor["features"], actor["m8_scales_t"]
+                        ).mean()
+                    )
                 rows.append(row)
                 if (index + 1) % 10 == 0 or index + 1 == len(holdout_actors):
                     print(
@@ -564,7 +631,12 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "decisions": decisions,
             "m8_guidance_frozen": True,
             "field_inputs": "query_local_build_geometry_no_trajectory_time_hazard_image",
-            "surface_supervision": "gt_front_hit_narrow_back_and_hit_gradient_normal",
+            "surface_supervision": str(
+                config.get(
+                    "surface_supervision",
+                    "gt_front_hit_narrow_back_and_hit_gradient_normal",
+                )
+            ),
             "deployment": "first_positive_to_nonpositive_zero_crossing_in_actor_aabb",
             "selection_read": False,
             "source_final_read": False,

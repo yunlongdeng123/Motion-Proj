@@ -166,6 +166,93 @@ class CompactLocalOccupancyField(LocalAnchorSignedField):
         return local_patch.min(dim=1).values
 
 
+class OneSidedLocalOccupancyField(LocalAnchorSignedField):
+    """Union finite surface cells with no support thickness on the free side."""
+
+    def __init__(
+        self,
+        *args: object,
+        maximum_log_radius_delta: float = 0.6931471805599453,
+        back_support_depth_m: float = 0.10,
+        **kwargs: object,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.maximum_log_radius_delta = float(maximum_log_radius_delta)
+        self.back_support_depth_m = float(back_support_depth_m)
+        latent_dim = int(self.child_encoder[2].out_features)
+        self.radius_head = nn.Linear(latent_dim, 1)
+        with torch.no_grad():
+            self.radius_head.weight.zero_()
+            self.radius_head.bias.zero_()
+
+    def radii_from_latents(
+        self, child_latents: torch.Tensor, child_scales: torch.Tensor
+    ) -> torch.Tensor:
+        base = child_scales.reshape(-1).clamp_min(1.0e-4)
+        log_delta = self.maximum_log_radius_delta * torch.tanh(
+            self.radius_head(child_latents).squeeze(-1)
+        )
+        return base * torch.exp(log_delta)
+
+    def child_radii(
+        self, features: torch.Tensor, child_scales: torch.Tensor
+    ) -> torch.Tensor:
+        return self.radii_from_latents(self.child_features(features), child_scales)
+
+    def forward(
+        self,
+        features: torch.Tensor,
+        child_centers: torch.Tensor,
+        child_scales: torch.Tensor,
+        parent_normals: torch.Tensor,
+        parent_ray_directions: torch.Tensor,
+        queries: torch.Tensor,
+    ) -> torch.Tensor:
+        child_latents = self.child_features(features)
+        child_normals = self.outward_child_normals(
+            parent_normals, parent_ray_directions
+        )
+        child_scales = child_scales.reshape(-1).clamp_min(1.0e-4)
+        child_radii = self.radii_from_latents(child_latents, child_scales)
+        if not (
+            len(child_centers)
+            == len(child_scales)
+            == len(child_radii)
+            == len(child_normals)
+            == len(child_latents)
+        ):
+            raise ValueError("One-sided field child attributes must align")
+        count = min(max(self.neighbor_count, 1), len(child_centers))
+        normalized_distance = torch.cdist(queries, child_centers) / child_scales[None, :]
+        _, indices = normalized_distance.topk(count, largest=False)
+        centers = child_centers[indices]
+        scales = child_scales[indices]
+        radii = child_radii[indices]
+        normals = child_normals[indices]
+        latents = child_latents[indices]
+        relative_metric = queries[:, None, :] - centers
+        relative = relative_metric / scales[:, :, None]
+        plane = torch.sum(relative_metric * normals, dim=-1)
+        decoder_input = torch.cat(
+            [latents, relative, (plane / scales)[:, :, None]], dim=-1
+        )
+        residual = (
+            torch.tanh(self.query_decoder(decoder_input).squeeze(-1))
+            * scales
+            * self.maximum_residual_fraction
+        )
+        shifted_plane = plane + residual
+        tangent = torch.linalg.vector_norm(
+            relative_metric - plane[:, :, None] * normals, dim=-1
+        )
+        tangent_boundary = tangent - radii
+        back_boundary = -shifted_plane - self.back_support_depth_m
+        local_cell = torch.maximum(
+            torch.maximum(shifted_plane, tangent_boundary), back_boundary
+        )
+        return local_cell.min(dim=1).values
+
+
 def initialize_local_field_from_expansion(
     model: LocalAnchorSignedField, expansion: GaussianSeedExpansionMLP
 ) -> None:
