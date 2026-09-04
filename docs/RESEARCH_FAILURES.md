@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M26 prevention note — visual扩容不得成为第二套无监督物理几何（2026-09-05）
+
+- 309个M8 carriers继续是唯一physical query；2781个visual surfels不进入M21 energy、collision或surface评价；
+- visual center/scale/rotation只由冻结M8 center/scale的8NN PCA与固定3x3 tangent grid生成，并在RGB训练中冻结；
+- 只训练目标Actor SH/opacity；trajectory、Background、其他Actor和所有geometry均无梯度；
+- view split与M25逐值相同，M25 final `16.943422dB`在M26 quality前冻结为唯一capacity reference；
+- 若不超过M25，关闭该分支，不开放image-to-geometry gradient、不扫描grid/thickness/seed；
+- 来源边界：迁移Scaffold-GS anchor/local-Gaussian与2DGS surface-aligned primitive思想，不迁移其可学习几何。
+
+下一可用编号仍为：`V71-F29`。
+
 ## V7.1 M25 outcome note — 外观梯度有效但309-carrier容量不足（2026-09-05）
 
 - canonical r2在显式model-tree冻结后完成320/320 steps，6/6 held-out views均有非零Actor footprint，三项decision通过；

@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 M26 supervision-native visual surfels frozen（2026-09-05）
+
+状态=`v71_m26_supervision_native_visual_surfels_frozen`，详见
+[`WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md`](WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md)。
+M26将每个冻结M8 `(center,scale)`以8NN PCA构成surface frame，再生成固定3x3 tangent visual-only surfels，共
+`309→2781`个render primitives；tangent scale=`s/3`、normal thickness=`0.02m`。visual geometry不训练且不进入
+physical query，RGB只更新目标Actor SH/opacity。
+
+train8/held-out6、320 steps与loss/lr复用M25；seed71124；冻结M25 held-out final=`16.943422dB`为唯一capacity
+reference，不扫描任何结构或超参。来源仅迁移Scaffold-GS的anchor→local Gaussian和2DGS的surface-aligned primitive，
+不迁移image-driven geometry/densification。下一failure ID=`V71-F29`。
+
 ## WorldSim V7.1 M25 appearance learning supported / one-carrier parity rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01/

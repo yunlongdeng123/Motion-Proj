@@ -214,7 +214,11 @@ def _save_heldout_images(
         )
 
 
-def run(config_path: Path, run_id: str) -> dict[str, Any]:
+def run(
+    config_path: Path,
+    run_id: str,
+    carrier_transform: Any = None,
+) -> dict[str, Any]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     run_dir = Path(config["runs_root"]) / "worldsim_v71" / config["task_id"] / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -235,6 +239,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
 
     try:
         carrier = m24._load_actor_carrier(config)
+        carrier_metadata: dict[str, Any] = {}
+        if carrier_transform is not None:
+            carrier, carrier_metadata = carrier_transform(carrier, config)
         dataset, trainer = m24._load_runtime(config, device)
         train_views = list(config["train_views"])
         heldout_views = list(config["heldout_views"])
@@ -268,8 +275,14 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             parameter.requires_grad_(True)
 
         actor_mask = rigid.point_ids[..., 0] == int(config["rigid_model_index"])
-        if int(actor_mask.sum()) != int(config["physical_carrier_gaussian_count"]):
-            raise RuntimeError("physical carrier count changed before optimization")
+        expected_render_count = int(
+            config.get(
+                "render_carrier_gaussian_count",
+                config["physical_carrier_gaussian_count"],
+            )
+        )
+        if int(actor_mask.sum()) != expected_render_count:
+            raise RuntimeError("render carrier count changed before optimization")
         rigid._features_dc.register_hook(
             lambda gradient: gradient * actor_mask[:, None].to(gradient.dtype)
         )
@@ -410,6 +423,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         )
         np.savez_compressed(
             run_dir / "OPTIMIZED_APPEARANCE_SIDECAR.npz",
+            centers=rigid._means.detach()[actor_mask].cpu().numpy(),
+            scales_xyz=torch.exp(rigid._scales.detach()[actor_mask]).cpu().numpy(),
+            quaternions=rigid._quats.detach()[actor_mask].cpu().numpy(),
             features_dc=rigid._features_dc.detach()[actor_mask].cpu().numpy(),
             features_rest=rigid._features_rest.detach()[actor_mask].cpu().numpy(),
             opacity_logits=rigid._opacities.detach()[actor_mask].cpu().numpy(),
@@ -431,16 +447,30 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 for parameter in (rigid._means, rigid._scales, rigid._quats)
             ),
         }
+        reference_psnr = config.get("decision", {}).get(
+            "heldout_actor_psnr_reference_db"
+        )
+        if reference_psnr is not None:
+            decisions["heldout_actor_psnr_exceeds_frozen_reference"] = (
+                final_psnr is not None and final_psnr > float(reference_psnr)
+            )
         passed = all(decisions.values())
         summary = {
-            "schema_version": "worldsim_v71.m25_geometry_locked_attribute_optimization.v1",
+            "schema_version": config.get(
+                "summary_schema_version",
+                "worldsim_v71.m25_geometry_locked_attribute_optimization.v1",
+            ),
             "task_id": config["task_id"],
             "hypothesis_id": config["hypothesis_id"],
             "status": "done",
             "verdict": (
-                "appearance_only_training_signal_supported"
+                config.get(
+                    "success_verdict", "appearance_only_training_signal_supported"
+                )
                 if passed
-                else "appearance_only_capacity_rejected"
+                else config.get(
+                    "failure_verdict", "appearance_only_capacity_rejected"
+                )
             ),
             "scene_name": config["scene_name"],
             "actor_token": config["actor_token"],
@@ -453,7 +483,10 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "heldout_view_count": len(heldout_views),
             "heldout_nonzero_footprint_count": heldout_nonzero,
             "original_visual_gaussian_count": removed,
-            "physical_carrier_gaussian_count": inserted,
+            "physical_carrier_gaussian_count": int(
+                config["physical_carrier_gaussian_count"]
+            ),
+            "render_carrier_gaussian_count": inserted,
             "effective_trainable_attribute_count": int(actor_mask.sum())
             * (3 + int(rigid._features_rest.shape[1]) * 3 + 1),
             "optimization": dict(optim),
@@ -471,6 +504,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "attribute_sidecar_written": True,
             "physical_metric_read": False,
             "external_read": False,
+            "carrier_metadata": carrier_metadata,
             "resources": {
                 "device": str(device),
                 "peak_gpu_memory_gib": torch.cuda.max_memory_allocated(device)

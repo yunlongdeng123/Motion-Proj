@@ -119,10 +119,20 @@ def _replace_actor(
         raise RuntimeError("target Actor has no original StreetGS Gaussians")
     device, dtype = rigid._means.device, rigid._means.dtype
     centers = torch.as_tensor(carrier["centers"], dtype=dtype, device=device)
-    scalar_scales = torch.as_tensor(carrier["scales"], dtype=dtype, device=device)
-    scales = scalar_scales[:, None].expand(-1, 3)
-    quaternions = torch.zeros((len(centers), 4), dtype=dtype, device=device)
-    quaternions[:, 0] = 1.0
+    if "scales_xyz" in carrier:
+        scales = torch.as_tensor(carrier["scales_xyz"], dtype=dtype, device=device)
+    else:
+        scalar_scales = torch.as_tensor(
+            carrier["scales"], dtype=dtype, device=device
+        )
+        scales = scalar_scales[:, None].expand(-1, 3)
+    if "quaternions" in carrier:
+        quaternions = torch.as_tensor(
+            carrier["quaternions"], dtype=dtype, device=device
+        )
+    else:
+        quaternions = torch.zeros((len(centers), 4), dtype=dtype, device=device)
+        quaternions[:, 0] = 1.0
     features_dc = torch.as_tensor(
         carrier["features_dc"], dtype=rigid._features_dc.dtype, device=device
     )

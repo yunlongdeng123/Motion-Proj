@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M26-SUPERVISION-NATIVE-VISUAL-SURFELS-01 — frozen protocol（2026-09-05）
+
+- representation=309 frozen M8 physical carriers + deterministic 9-child tangent visual surfels=`2781` render primitives；
+- 3D source=carrier-only 8NN PCA、grid `[-0.5,0,0.5]^2`、tangent scale `s/3`、normal `0.02m`；
+- trainable=target Actor SH DC/rest + opacity only；visual/physical geometry、trajectory、Background、other Actors frozen；
+- physical isolation=visual surfels excluded from M21 energy/collision/surface evaluation；
+- views=exact M25 train8/heldout6；fixed before M25/M26 quality；
+- optimization=seed71124 / 320 steps / M25 lr+loss / one run / no sweep；
+- reference=M25 held-out final `16.943422dB`；capacity decision=M26 final strictly greater；original gap always reported；
+- artifacts=visual sidecar + held-out PNG/rows/summary；no checkpoint/hash/checksum/fingerprint/external read；
+- next failure=`V71-F29`。
+
 ## WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01 — canonical learning supported / capacity negative（2026-09-05）
 
 - run=`20260904T183000Z__m25-geometry-locked-attribute-opt-r2`；status=`done`；decisions=`3/3`；steps=`320/320`；
