@@ -1,5 +1,17 @@
 # Experiments
 
+## WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01 — frozen protocol（2026-09-05）
+
+- representation=M23/M24 same 309 physical centers/scales + identity rotations；trajectory read-only；
+- trainable=target Actor SH DC/rest + opacity rows only；effective attributes=`309 x 49=15141`；
+- frozen=all geometry、trajectory、Background、other Actor attributes；gradient-mask dataflow，no full checkpoint write；
+- views=3D-frustum-frozen train8 / held-out6；frame42 train-only；selected before M25 quality；
+- target=GT RGB inside original-vs-hidden appearance ROI + low-weight outside spill + opacity-anchor loss；
+- fixed=seed71123 / 320 steps / single GPU / no sweep；
+- report=pooled train/held-out original-vs-initial-vs-final footprint PSNR and original-final gap；
+- decision=held-out final > initial plus nonzero frozen views and optimizer geometry exclusion；no physical/external read；
+- artifacts=small attribute sidecar、held-out PNG/rows/summary；no hash/checksum/fingerprint；next failure=`V71-F28`。
+
 ## WorldSim V7.1 CVPR manuscript — M24 milestone（2026-09-05）
 
 - figure=`paper/figures/v71_m24_geometry_locked_render.png`，同裁剪GT/original/carrier三联图；

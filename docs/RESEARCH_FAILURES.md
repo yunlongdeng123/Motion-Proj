@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M25 prevention note — 图像监督只更新appearance attributes（2026-09-05）
+
+- 309个M8/M23 centers/scales与identity rotations不加入optimizer；trajectory、Background和其他Actor参数全部冻结；
+- 目标Actor SH/opacity虽与其他RigidNodes共用tensor，gradient hook仅允许该Actor 309行更新，Adam无weight decay；
+- original-vs-hidden footprint只定义图像loss/评价ROI，不删除、移动、接受physical primitive，也不进入M21 physics；
+- 8 train / 6 held-out frame-camera pairs由冻结3D视锥分层预选，M24已暴露frame42只放train；不按M25画质换view；
+- 固定320 steps/seed71123/lr/loss，不扫参数；只写轻量appearance sidecar，不写StreetGS checkpoint；
+- 唯一学习判定为pooled held-out footprint PSNR是否高于M23-nearest初始化；相对original剩余gap无论方向都报告。
+
+下一可用编号仍为：`V71-F28`。
+
 ## V7.1 M24 paper prevention note — 视觉负例不得反向污染physical claim（2026-09-05）
 
 - 主文同时给出GT/original/carrier同裁剪图和`-11.37dB` footprint PSNR，不以“renderer compatible”省略模糊/ghost；

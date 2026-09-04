@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M25 fixed-support appearance optimization frozen（2026-09-05）
+
+状态=`v71_m25_geometry_locked_attribute_optimization_frozen`，详见
+[`WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md`](WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md)。
+M25针对M24的`-11.37dB`容量负例，只训练同一309-carrier Actor的SH DC/rest与opacity；center/scale/rotation、trajectory、
+Background和其他Actor全部没有有效梯度或optimizer更新。
+
+基于冻结3D视锥可见并集`[0,84]`，已在读取M25 quality前固定8 train / 6 held-out view pairs；图像GT监督只作用于
+original-vs-hidden appearance ROI，ROI不参与physical query。固定seed71123/320 steps/单卡一次run，不做sweep；唯一判定是
+held-out footprint PSNR是否优于M23初始化，同时完整报告相对32522-Gaussian original的gap。下一failure ID=`V71-F28`。
+
 ## WorldSim V7.1 CVPR manuscript M24 native-render boundary（2026-09-05）
 
 论文experiments已加入M24真实StreetGS三联图及`28.59→17.22dB` footprint、`-3.99dB` full-image结果；limitations

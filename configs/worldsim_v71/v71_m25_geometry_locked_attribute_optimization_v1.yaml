@@ -1,0 +1,46 @@
+task_id: WS-V71-M25-GEOMETRY-LOCKED-ATTRIBUTE-OPTIMIZATION-01
+hypothesis_id: WS-V71-H-M25-FIXED-SUPPORT-APPEARANCE-CAPACITY
+runs_root: /root/autodl-tmp/runs
+streetgs_checkpoint: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/checkpoint_final.pth
+streetgs_config: /root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T112337Z__streetgs-scene0230-formal30k-s0-r17/work_dirs/worldsim_v4_streetgs/scene0230_formal_s0/config.yaml
+drivestudio_checkout: /root/autodl-tmp/third_party/drivestudio-worldsim-v4-b0
+m23_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01/20260904T163000Z__m23-geometry-locked-appearance-r1
+scene_name: scene-0230
+actor_token: 43fb20f67dbb4b149e9715f93a49e8ad
+rigid_model_index: 12
+hazardous: true
+physical_carrier_gaussian_count: 309
+view_selection:
+  method: fixed_stratified_pairs_from_actor_center_frustum_visible_union
+  source: frozen_dataset_extrinsics_intrinsics_and_gt_actor_pose
+  visible_frame_union: [0, 84]
+  selected_before_m25_quality_read: true
+train_views:
+  - {frame: 0, camera: 0}
+  - {frame: 14, camera: 0}
+  - {frame: 28, camera: 0}
+  - {frame: 42, camera: 0}
+  - {frame: 56, camera: 0}
+  - {frame: 56, camera: 2}
+  - {frame: 70, camera: 2}
+  - {frame: 84, camera: 2}
+heldout_views:
+  - {frame: 7, camera: 0}
+  - {frame: 21, camera: 0}
+  - {frame: 35, camera: 0}
+  - {frame: 49, camera: 0}
+  - {frame: 63, camera: 2}
+  - {frame: 77, camera: 2}
+optimization:
+  seed: 71123
+  steps: 320
+  sh_dc_lr: 0.01
+  sh_rest_lr: 0.002
+  opacity_lr: 0.01
+  spill_weight: 0.05
+  opacity_anchor_weight: 0.001
+  log_every: 40
+evaluation:
+  footprint_threshold_uint8: 2
+  footprint_dilation_radius: 2
+device: cuda:0
