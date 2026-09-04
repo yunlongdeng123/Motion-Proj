@@ -1,5 +1,32 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M14 prevention note — compact support是表示，不是事后gate（2026-09-04）
+
+- local patch值内生定义为plane half-space与M8-radius ball的CSG intersection，patch外FREE参与所有训练/部署query；
+- support radius固定为M8 GT-supervised tangent scale，不按M13/M14结果乘系数或裁剪primitive；
+- patch union使用occupancy `min`，禁止soft average异号planes；zero threshold仍为GT hit定义的0；
+- 前/hit/窄后方标签与AABB zero crossing合同不变，M8 point/temporal只读；
+- 若field合同失败登记`V71-F19`并关闭compact-patch field，不扫radius/neighbors/loss/seed/epoch。
+
+下一可用编号仍为：`V71-F19`。
+
+## V71-F18 — unbounded local-plane blending制造大量前方zero crossings（2026-09-04）
+
+- 分类/状态：implicit local-support parameterisation / terminal for soft-blended unbounded planes；canonical=
+  `20260905T000000Z__m13-local-field-s71115-r1`；
+- 观察：field early all/hazard=`46.408/46.593%`，相对M8恶化`80.577/76.676%`；hit下降`11.650/10.574pp`；
+  observable all/hazard=`94.28/95.90%`，说明错误是spurious front surface而不是missing surface；
+- 优化审计：hit=`0.509→0.480m`、physics=`10.163→9.685`，仍远离GT；冲突从0升到`69.1%`，无NaN/OOM；
+- root cause：每个oriented plane在AABB全域有效，nearest-4 soft averaging使异号planes在两者之间产生与任何M8 anchor
+  无关的zero set；bounded residual无法移除基础场的拓扑伪面；
+- literature/open-source response：LDIF以local spatial decomposition限制局部implicit function作用域，ARO-Net以anchor
+  visibility使occupancy query-specific；迁移为compact radial support与CSG occupancy union，不做阈值裁剪；
+- resolution：关闭M13 unbounded blend；M14用`max(plane, radial support)`定义每patch、用`min`聚合，radius固定M8 scale，
+  原GT窄带和zero-crossing部署不变；不扩大residual/loss/epoch；
+- claim impact：local implicit方向尚未成立；M8 point/temporal结论不变。下一可用ID=`V71-F19`。
+
+下一可用编号：`V71-F19`。
+
 ## V7.1 M13 prevention note — local implicit不是M3/M4 global latent复跑（2026-09-04）
 
 - 每个query必须读取nearest M8 child feature、relative coordinate、scale与oriented build normal；禁止单个Actor pooled latent；

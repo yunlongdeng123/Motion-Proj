@@ -1,5 +1,27 @@
 # Experiments
 
+## WS-V71-M14-COMPACT-LOCAL-OCCUPANCY-01 — frozen protocol（2026-09-04）
+
+- representation=compact local implicit patch `max(oriented plane + learned residual, radial distance - M8 scale)`；
+- aggregation=nearest-4 patch occupancy union by `min`，not signed-plane soft average；
+- initialization=M8 centers/scales + outward build normals + zero residual；outside all patches is positive FREE；
+- GT/deployment=same M13 front/hit/narrow-back supervision and Actor-AABB first zero crossing；
+- geometry/physics PCGrad；M8 point/temporal immutable；all local patches retained；
+- gates=M8 point five contracts + field hazard early reduction `>=5%` + field hit delta `>=-1pp`；
+- one seed `71116` / 6 epochs；no radius multiplier/neighbors/loss/sample/seed/epoch sweep；
+- sources=LDIF and Local Implicit Grid (CVPR 2020), ARO-Net anchor visibility (CVPR 2023)。
+
+## WS-V71-M13-LOCAL-SIGNED-FIELD-01 — canonical negative result（2026-09-04）
+
+- run=`20260905T000000Z__m13-local-field-s71115-r1`；verdict=`m13_development_rejected`；5/7 gates；
+- M8 point metrics retained；field early all/hazard/clear=`46.408/46.593/45.496%`；
+- early relative reduction vs M8 point=`-80.577/-76.676/-103.170%`；
+- field hit delta all/hazard/clear=`-11.650/-10.574/-16.941pp`；observable=`94.28/95.90/86.30%`；
+- training hit=`0.5092→0.4798m`，physics=`10.163→9.685`，conflict=`0→69.1%`；
+- mechanism=unbounded local planes and soft signed averaging create spurious zero sets throughout AABB；
+- decision=close unbounded blend；next=compact radial support + CSG occupancy union；failure=`V71-F18`；
+- resources=`86.163s / 0.1419GiB GPU / 1.4199GiB RSS`；no protected/external read。
+
 ## WS-V71-M13-LOCAL-SIGNED-FIELD-01 — frozen protocol（2026-09-04）
 
 - representation=query-specific signed field anchored by frozen M8 children/scales，not a primitive union/global Actor latent；

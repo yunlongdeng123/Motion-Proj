@@ -1,5 +1,28 @@
 # Research Status
 
+## WorldSim V7.1 M14 compact local occupancy field frozen（2026-09-04）
+
+状态=`v71_m14_compact_local_occupancy_frozen`，详见
+[`WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md`](WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md)。M13失败
+来自unbounded local planes在整个AABB外推并soft-average出虚假zero crossing。M14保持同一M8 guidance与GT窄带，但每个
+local field改为内生compact CSG patch：`max(oriented-plane field, radial-support field)`，patch外严格FREE；多个patch
+用`min`构成occupancy union，不再平均异号平面。
+
+support radius逐值使用M8 supervised scale，非后处理gate；zero level仍同时承担hit训练与部署首交。单seed 6轮，不扫描
+radius multiplier/neighbors/loss/sample count。M8 point五门保持；field hazard early相对M8下降`>=5%`、hit delta
+`>=-1pp`。下一failure ID=`V71-F19`。
+
+## WorldSim V7.1 M13 rejected / compact support next（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M13-LOCAL-SIGNED-FIELD-01/
+20260905T000000Z__m13-local-field-s71115-r1`。M8 point五门保持，但local field early all/hazard=`46.408/46.593%`，
+相对M8恶化`80.577/76.676%`；hit all/hazard下降`11.650/10.574pp`，两项field门均失败，登记`V71-F18`。
+field observable all/hazard=`94.28/95.90%`，说明不是无surface，而是surface过多且过早。
+
+训练hit仅`0.509→0.480m`，front/back sign损失下降但仍高，后期gradient conflict升至`69.1%`。根因是nearest local
+plane在空间上无support边界，soft average可在任何两张异号平面间制造zero level。依据LDIF的local spatial
+decomposition与ARO的anchor visibility，M14把compact support和union直接写入field函数；不扩大M13 residual或训练轮数。
+
 ## WorldSim V7.1 M13 M8-guided local signed field frozen（2026-09-04）
 
 状态=`v71_m13_local_signed_field_frozen`，详见
