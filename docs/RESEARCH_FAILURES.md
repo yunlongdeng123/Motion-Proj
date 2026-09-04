@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M8 external prevention note — paired cohort不是事后模型选择（2026-09-04）
+
+- M8 external checkpoint/gates在任何M5/M7 partial physical aggregate读取前冻结；只知道下载/Actor进度；
+- M7与M8是事前定义的两个Pareto点，各自对完整20 logs作独立verdict，不用跨模型差值删除log或修改claim门槛；
+- M8 external不计算moving/quasi-static标签，也不读取trajectory作为shape输入；外域只复用actor-canonical编译合同；
+- M8失败则登记`V71-F13`并限制形状—轨迹因子化的跨传感器claim，不回调fine-tune epoch/weight/seed。
+
+下一可用编号仍为：`V71-F13`。
+
 ## V7.1 M8 outcome note — 逐帧监督形成新Pareto点且不新增failure（2026-09-04）
 
 - canonical=`20260904T202000Z__m8-temporal-frame-s71110-r2`；frame-balanced distance在moving/quasi-static均改善，

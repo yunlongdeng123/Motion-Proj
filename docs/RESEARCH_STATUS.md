@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M8 fresh AV2 protocol frozen（2026-09-04）
+
+状态=`v71_m8_fresh_av2_evaluator_next`。在读取任何M5/M7 AV2 partial physical metric前，冻结M8 checkpoint、M5 base、
+standardizer、4-child surface、compiler、20-log cohort与三项external contract。M8将复用scene-ready generic evaluator，
+但产生独立run/status/Actor rows/aggregate；同一log全部保留。部署固定为immutable anchors加全部M8 children，不使用
+moving threshold、trajectory、target frame grouping或任何外域适配。
+
+External只回答nuScenes监督原生shape+trajectory factorisation能否跨到AV2：hazard early `>=5%`、Chamfer delta
+`<=+1mm`、Actor/hazard retention 100%；hit描述性报告。M7与M8都在同一事前cohort上独立判定，禁止依据任一路partial
+结果选择另一路。下一failure ID=`V71-F13`。
+
 ## WorldSim V7.1 M8 temporal factorisation passed / external freeze next（2026-09-04）
 
 M8 canonical=`run://worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/

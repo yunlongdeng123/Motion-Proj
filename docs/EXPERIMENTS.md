@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M8-FRESH-AV2-ZERO-SHOT-01 — frozen execution protocol（2026-09-04）
+
+- model=canonical M8 + frozen M5 base + train standardizer；no adaptation；
+- cohort/compiler=与M5/M7相同的事前fresh 20 logs、rigid categories、`mod3={0,1}/2` canonical roles；
+- surface=`immutable anchors + all M8 children`；trajectory/moving stratum不进入推理；
+- scheduler=独立single evaluator按`.complete`逐log消费，与唯一下载器重叠；
+- verdict=hazard early `>=5%` AND Chamfer `<=+1mm` AND Actor/hazard retention=`100%`；hit descriptive；
+- no target tune/calibration/threshold/tolerance/log replacement/M7-M8 selection；partial physical metric read=false；
+- implementation=把M7 scene-ready入口泛化为checkpoint-labelled evaluator，现有M7运行进程不变。
+
 ## WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01 — canonical development pass（2026-09-04）
 
 - run=`20260904T202000Z__m8-temporal-frame-s71110-r2`；verdict=`m8_development_passed`；6/6 gates；
