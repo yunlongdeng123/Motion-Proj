@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 CVPR problem formulation aligned（2026-09-05）
+
+主稿Problem Formulation已从旧artifact/hazard classifier与task-reliability cost改为V7.1真实对象：immutable Actor
+state、disjoint build evidence/GT target、physical state `(surface,evidential mass)`、read-only rigid pose、独立static/
+visual owner，以及不删surface的joint surface/return目标。旧公式完整保存在`03_problem_legacy.tex`并由supplement
+引用。主稿重编译8页、`376,310` bytes，0 warning/undefined/duplicate；supplement仍15页、仅两处既有overfull。
+无模型、指标、cohort或M43 read变化。
+
 ## WorldSim V7.1 CVPR related-work focus complete（2026-09-05）
 
 主稿related work已从旧V7 selective prediction/reliability叙事收束为四条直接相关证据链：visual reconstruction→

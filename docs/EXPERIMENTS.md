@@ -1,5 +1,12 @@
 # Experiments
 
+## WorldSim V7.1 CVPR problem-formulation replacement（2026-09-05）
+
+- main variables=`A_i` immutable Actor、`B_i` build evidence、`Y_i` disjoint GT、`P_i=(S_i,m_i)` physical state；
+- invariants=all generated surfaces queryable、Actor unchanged、visual state has no physical-query gradient path；
+- legacy artifact/hazard/reliability equations moved to `sections/03_problem_legacy.tex` and retained by supplement；
+- compile=main 8 pages (`376,310` bytes), 0 warning；no scientific/external change。
+
 ## WorldSim V7.1 CVPR related-work compression（2026-09-05）
 
 - scope=documentation-only；旧selective confidence/reliability内容留在legacy supplement，不再占V7.1主稿；

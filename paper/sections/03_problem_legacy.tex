@@ -1,0 +1,24 @@
+\section{Legacy Validity and Reliability Formulation}
+
+Let Actor $i$ have an immutable semantic state
+\begin{equation}
+A_i=(ID_i,X_{i,0:H},D_i),
+\end{equation}
+containing identity, trajectory, and dimensions. Appearance primitives may be associated with $A_i$, but collision queries consume only an Actor-local physical surface $S_i^{\mathrm{phys}}$ and its known/unknown mask.
+
+We separate two random variables. Artifactness $a_i$ depends on sensor and geometric evidence $E_i$, physical surface state, and provenance:
+\begin{equation}
+a_i=P(\mathrm{artifact}\mid E_i,S_i^{\mathrm{phys}},P_i).
+\end{equation}
+Hazardness $h_i$ depends on Actor dynamics, map context, and a candidate Ego trajectory $\tau$:
+\begin{equation}
+h_i=P(\mathrm{hazard}\mid X_{i,0:H},\tau,\mathcal{M}).
+\end{equation}
+The goal is paired conditional invariance, not unconditional statistical independence. For the same clean Actor, a legal safe-to-hazard intervention should preserve $a_i$. For the same behavior, a clean-to-artifact intervention should preserve $h_i$.
+
+For task reliability, let $n_{\tau,t}$ be the local boundary normal, $d_{i,t}(\tau)$ the signed Actor clearance, and $\epsilon_{i,t}$ the Actor residual. We define
+\begin{equation}
+C(\tau,H)=\max_{i,t\le H}\frac{|n_{\tau,t}^{\top}\epsilon_{i,t}|}{\max(|d_{i,t}(\tau)|,\varepsilon)}.
+\label{eq:boundary-cost}
+\end{equation}
+The runtime interface returns $R(\tau,H,b)=P(C\le b)$ and enforces $\partial R/\partial b\ge0$ and $\partial R/\partial H\le0$.

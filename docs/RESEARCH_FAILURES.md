@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 paper object boundary — classifier/reliability variables are legacy（2026-09-05）
+
+V7.1主问题不得重新以artifact probability、hazard classifier或task-reliability density替代GT surface与first-return
+supervision。旧变量仅作supplement中的历史路径；主claim对象是surface geometry、return evidence和typed state。
+纯写作重构无新failure；next ID仍=`V71-F50`。
+
 ## V7.1 paper literature boundary — related mechanism is not implemented evidence（2026-09-05）
 
 主稿不得因引用DynamicVGGT/DeGO/SelfOccFlow而声称当前模型具有scene-flow、non-rigid deformation或future
