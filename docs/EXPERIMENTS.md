@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M45-ORIENTED-CATEGORICAL-SURFACE-MEASURE-01 — frozen（2026-09-05）
+
+- frozen=M8 centers/tangent scales + M11 GT normal/thickness + M35 anchor/M38 child occupied authority；
+- candidate=direct categorical measure with isotropic anchors and oblate oriented child kernels；reference=M39 isotropic；
+- same 66 exposed holdout、64 bins/CDF median 0.5；decisions vs M39=all early≤0、hazard+clear early≤0、
+  all hit delta≥-1pp；
+- no training/thickness/normal/scale/bin/median sweep/filter/delete/model reselection；no external/M43 partial read；
+  M43 remains frozen regardless of M45 outcome；M45 failure=`V71-F44`。
+
 ## WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01 — canonical completed（2026-09-05）
 
 - run=`20260905T093000Z__m44-categorical-safety-responsibility-r1`；66 exposed holdout / 99,208 rays；

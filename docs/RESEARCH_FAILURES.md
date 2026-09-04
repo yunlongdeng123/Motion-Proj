@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M45 pre-registration note — oriented probability is not hard collision support（2026-09-05）
+
+M10--M11拒绝的是learned oblate ellipsoid的earliest hard intersection；M45不复开该范式，而把既有GT normal/
+thickness作为M39 categorical child kernel的metric。所有中心、tangent、authority和readout冻结，不调thickness/
+normal/scale。若失败，关闭oriented categorical重组，不以M11旧结果或M44 attribution选择case；M43 external
+candidate不变。M43失败保留`V71-F43`，M45失败使用`V71-F44`。
+
 ## V7.1 M44 outcome note — completion risk is now isolated, not filtered（2026-09-05）
 
 M44无新failure。99,208 rays上median early与boundary CDF条件100%等价，family分解残差=`2.98e-7`。

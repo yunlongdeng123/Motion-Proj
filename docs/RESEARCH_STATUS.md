@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M45 oriented categorical surface measure frozen（2026-09-05）
+
+状态=`v71_m45_oriented_categorical_surface_measure_frozen`，详见
+[`WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md`](WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md)。
+冻结M8 center/tangent scale、M11 GT-supervised normal/thickness、M35/M38 authority；只在M39 categorical
+measure中把child isotropic kernel换成oblate oriented kernel。与M11 hard-intersection范式不同，normal/thickness
+只塑造连续概率质量。固定66 exposed holdout和三项相对M39判定；无训练、参数扫描、filter/delete或external/M43
+partial read；不改变已运行M43 candidate。M43保留`V71-F43`，M45失败专用`V71-F44`。
+
 ## WorldSim V7.1 M44 completed / exact safety boundary attributes M39 gain to anchors（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01/
