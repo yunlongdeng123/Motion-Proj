@@ -1,5 +1,14 @@
 # Research Status
 
+## WorldSim V7.1 M23 geometry-locked appearance implementation ready（2026-09-04）
+
+新增runner=`scripts/run_worldsim_v71_m23_geometry_locked_appearance.py`与配置=
+`configs/worldsim_v71/v71_m23_geometry_locked_appearance_v1.yaml`。它生成冻结M8 center/scale + 同Actor最近StreetGS
+SH/opacity的轻量sidecar，并复制原StreetGS rendered asset作只读appearance reference；不写checkpoint，不读取或复制
+appearance center/scale/rotation到physical carrier。
+
+仅做`py_compile`后运行一次；assignment距离为描述性数据，不触发filter或geometry motion。下一failure ID仍为`V71-F26`。
+
 ## WorldSim V7.1 M23 geometry-locked appearance protocol frozen（2026-09-04）
 
 状态=`v71_m23_geometry_locked_appearance_frozen`，详见

@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M23 implementation note — association不是geometry correction（2026-09-04）
+
+- 最近邻只选择同Actor的visual attribute row；其距离不用于移动、缩放、删除或拒绝physical Gaussian；
+- sidecar分别存M8 centers/scales与StreetGS SH/opacity，显式不包含appearance-derived geometry；
+- 不增加assignment radius/quality gate，不因远距离匹配删Actor，避免appearance coverage变成隐式后处理；
+- 仅`py_compile`和一次canonical run，不扩展回归矩阵。
+
+下一可用编号仍为：`V71-F26`。
+
 ## V7.1 M23 prevention note — 视觉属性不得反向改写物理carrier（2026-09-04）
 
 - Gau-Occ式joint FFN不能作为geometry preservation证据；M23只复制同Actor SH/opacity，不复制appearance几何；

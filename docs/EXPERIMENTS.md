@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01 — implementation ready（2026-09-04）
+
+- runner=`scripts/run_worldsim_v71_m23_geometry_locked_appearance.py`；
+- config=`configs/worldsim_v71/v71_m23_geometry_locked_appearance_v1.yaml`；
+- CUDA operation=same-Actor chunked nearest visual-attribute association；
+- sidecar fields=M8 centers/scales + StreetGS SH DC/rest + opacity logits + Actor offsets/identity；
+- metrics=original M8 physical metrics + descriptive assignment distance；
+- verify=`py_compile` only；one canonical run；no training/sweep/filter/checkpoint write。
+
 ## WS-V71-M23-GEOMETRY-LOCKED-APPEARANCE-01 — frozen protocol（2026-09-04）
 
 - cohort=M22 same 12 identity-matched scene-0230 Actors；no selection；
