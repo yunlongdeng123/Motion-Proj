@@ -86,6 +86,14 @@ e_i(x)=\log\sum_j\exp\left(-\frac{\lVert x-c_j\rVert_2^2}{2s_j^2}\right).
 \end{equation}
 The ray distribution is the softmax of $e_i(o+d_kv)$ over the same metric bins and receives the same one-hot return loss. Hence its only trainable path is through child center and scale; no visibility head can compensate for incorrect anchors. Crucially, native set, plane, scale, and frame losses remain active. The failure-directed final candidate freezes the M8 geometry before applying this energy, because joint ray fine-tuning increases scale while degrading both literal point returns and the energy's own first returns. Observed anchors use a fixed $0.08$\,m support. This is a development-selected representation whose external evaluation is frozen but pending.
 
+After the geometry-only authority ablation exposes an input-identifiability failure, we retain producer evidence per observed
+anchor rather than infer a deletion rule from its output. For anchor $j$, the build input stores construction provenance,
+the source query ray and frame, projection displacement, canonical hit count, temporal and view support, and continuous
+$m^{\mathrm{build}}_j=(m_F,m_O,m_U)$. Disjoint held-out LiDAR rays construct
+$m^{\mathrm{GT}}_j$ with free evidence before the endpoint, occupied evidence near the endpoint, and unknown evidence
+behind the endpoint or without ray support. Field names and optimization paths separate build inputs from GT targets.
+Neither provenance nor unknown mass is a hard keep/delete decision.
+
 Rigid motion is a separate authority. For annotated pose $T_{it}=(R_{it},t_{it})$, the deployed field is
 \begin{equation}
 e_{it}^{\mathrm{world}}(x)=e_i\!\left(R_{it}^{\top}(x-t_{it})\right).

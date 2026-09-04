@@ -322,6 +322,13 @@ $(m_F,m_O,m_U)=(0.127,0.504,0.369)$, indicating a learned global prior rather th
 resolution. We reject this geometry-only authority head without tuning. M31's missing source-frame and multiview evidence
 must be retained by the corpus producer before authority can be identifiable from build-time inputs.
 
+M33 performs this producer-side repair without changing the existing corpus. Exact replay aligns all 1,004 Actors and
+297,535 anchors; 13.75\% are projected. Build and held-out occupied masses have correlation 0.514, while direct
+three-state argmax agreement is only 43.41\%, so build evidence is informative but is not itself an authority label.
+Moreover, 58.72\% of anchors receive both free and occupied held-out votes, and projected anchors have higher mean
+held-out occupied mass than kept anchors (0.466 versus 0.425). These data reject provenance deletion and motivate a
+supervised continuous mapping from producer evidence to frozen Gaussian authority.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

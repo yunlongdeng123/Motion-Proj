@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M33-ANCHOR-EVIDENCE-SIDECAR-01 — canonical completed（2026-09-05）
+
+- run=`20260905T040000Z__m33-anchor-evidence-sidecar-r1`；verdict=
+  `exact_anchor_evidence_sidecar_materialized`；1004/1004 Actors，164 scenes；
+- anchors=`297,535`；KEEP=`256,610`；PROJECT=`40,925` (`13.75%`)；raw/processed Actors=
+  `721/283`；sidecar=`25,686,125 bytes`；
+- build mean F/O/U=`0.224/0.205/0.571`；GT mean F/O/U=`0.171/0.431/0.399`；occupied correlation=
+  `0.514`；direct argmax agreement=`43.41%`；
+- GT unsupported=`14,605` (`4.91%`)；FREE+OCCUPIED conflicted=`174,707` (`58.72%`)；PROJECT/KEEP
+  GT occupied=`0.466/0.425`，故provenance hard delete无效；
+- no train/checkpoint/filter；no selection/final/external/M21 partial read；GPU=`0.208GiB`，RSS=`1.267GiB`，
+  wall=`930.36s`；manuscript updated + TinyTeX full compile success（16 pages / 2,342,974 bytes；refs resolved；
+  no fatal/new warning）；next=M34 supervised continuous anchor authority；next failure=`V71-F36`。
+
 ## WS-V71-M33-ANCHOR-EVIDENCE-SIDECAR-01 — frozen（2026-09-05）
 
 - hypothesis=补齐每anchor producer provenance/source frame/build F/O/U后，下一阶段authority才有辨识具体

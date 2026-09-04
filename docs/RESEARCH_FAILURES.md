@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M33 outcome note — hard provenance labels remain invalid（2026-09-05）
+
+M33精确物化1004 Actor/297,535 anchors，无工程失败。PROJECT仅占13.75%，但其held-out occupied mass均值
+`0.466`高于KEEP的`0.425`；因此PROJECT不是错误标签，KEEP也不是安全标签。监督中58.72% anchor同时含
+FREE/OCCUPIED票，后续必须学习连续evidential authority并保留UNKNOWN，禁止按provenance删除或阈值重标。
+build-vs-GT occupied相关`0.514`支持继续M34，但不构成性能claim。下一failure ID=`V71-F36`。
+
 ## V7.1 M33 pre-registration note — provenance/evidence is a data-interface repair（2026-09-05）
 
 M31/M32把失败定位到anchor输入可辨识性，故M33只补producer-side sidecar，不把held-out监督伪装为输入，

@@ -1,5 +1,21 @@
 # Research Status
 
+## WorldSim V7.1 M33 anchor evidence sidecar completed（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M33-ANCHOR-EVIDENCE-SIDECAR-01/
+20260905T040000Z__m33-anchor-evidence-sidecar-r1`，状态=`exact_anchor_evidence_sidecar_materialized`。
+现有1004/1004 Actor（721 raw + 283 processed）跨164场景精确重放并物化297,535 anchors：KEEP=256,610，
+PROJECT=40,925（13.75%）；sidecar=`25,686,125 bytes`，原corpus未改写。
+
+build输入平均F/O/U=`0.224/0.205/0.571`，held-out监督=`0.171/0.431/0.399`；build与GT occupied
+相关系数=`0.514`、直接argmax agreement仅`43.41%`，说明build证据有信息但不能直接当authority。
+GT unsupported=`14,605/297,535=4.91%`，FREE与OCCUPIED同时有票=`174,707/297,535=58.72%`，必须保留
+soft evidential target。PROJECT的GT occupied均值`0.466`高于KEEP的`0.425`，再次否定按provenance硬删。
+无selection/final/external/M21 partial read；GPU=`0.208GiB`、RSS=`1.267GiB`、wall=`930.36s`，剩余磁盘
+约`93GiB`。论文method/experiments同步并由TinyTeX完整编译成功（16页 / 2,342,974 bytes；引用已解析；
+无fatal/new warning）。下一步M34只以`input_*`预测`supervision_*`并连续加权冻结anchor能量；下一failure
+ID=`V71-F36`。
+
 ## WorldSim V7.1 M33 producer-side anchor evidence frozen（2026-09-05）
 
 状态=`v71_m33_anchor_evidence_sidecar_frozen`，详见
