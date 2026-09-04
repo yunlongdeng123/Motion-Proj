@@ -11,6 +11,7 @@
 - added/removed early=`1.258/0.892%`（net M48-vs-M45=`+0.366pp`）；hazard=`1.292/0.843%`；
 - conclusion=visibility attenuation lacks monotone safety under normalized mixture；explanation only，never gate/filter；
   GPU=`0.226GiB`、RSS=`1.095GiB`、wall=`13.13s`；no external/M43 partial read。
+- paper artifact=`paper/figures/v71_m49_attenuation_sign_boundary.pdf`，由canonical `summary.json`经固定plot脚本生成。
 
 ## WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01 — frozen（2026-09-05）
 

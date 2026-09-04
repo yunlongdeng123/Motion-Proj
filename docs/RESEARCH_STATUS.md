@@ -13,6 +13,7 @@ M48-vs-M45由`1.258%`新增与`0.892%`消除early形成净`+0.366pp`，hazard新
 这给出可解释安全边界：归一化mixture中attenuation不是单调安全操作；只有component自己的`C_j>C`才可降
 pre-boundary CDF。该条件只作解释，绝不转为gate/filter；visibility支线永久关闭，无新failure，next ID仍
 `V71-F48`。GPU=`0.226GiB`、RSS=`1.095GiB`、wall=`13.13s`；无M43 partial read。
+论文已加入Eq. attenuation-sign boundary及all/hazard/clear双面板可复现图，绘图脚本从canonical summary读取。
 
 ## WorldSim V7.1 M49 categorical attenuation sign boundary frozen（2026-09-05）
 
