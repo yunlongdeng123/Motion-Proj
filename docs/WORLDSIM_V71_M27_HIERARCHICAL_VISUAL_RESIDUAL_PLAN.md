@@ -42,4 +42,6 @@ image-driven covariance或新的MLP。
 - 同时报告pooled/min/max/positive count；不事后换view或加权；
 - 若失败，关闭coarse+fine opacity fusion，不调branch权重、不延长steps，visual分支停止在“capacity probe”边界。
 
-不写full checkpoint，不读M21 partial/external，不加hash/checksum/fingerprint或额外回归矩阵。下一failure ID=`V71-F29`。
+不写full checkpoint，不读M21 partial/external，不加hash/checksum/fingerprint或额外回归矩阵。r1在数据加载前因
+`streetgs_config`漏写既有`work_dirs/worldsim_v4_streetgs`路径层而终止，0 quality exposure，登记`V71-F29`；r2仅
+修正路径，协议不变。下一failure ID=`V71-F30`。

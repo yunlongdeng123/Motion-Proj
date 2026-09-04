@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01 — r1 config-path failure（2026-09-05）
+
+- run=`20260904T193000Z__m27-hierarchical-visual-residual-r1`；failure=`V71-F29`；
+- stage=StreetGS config resolution；dataset/render/optimizer/quality exposure=`0`；
+- root cause=absolute config path omitted canonical run suffix and `work_dirs/worldsim_v4_streetgs`；
+- recovery=copy exact M25 path；all scientific protocol fields unchanged；next failure=`V71-F30`。
+
 ## WS-V71-M27-HIERARCHICAL-VISUAL-RESIDUAL-01 — frozen development protocol（2026-09-05）
 
 - representation=309 M25 coarse parents + 2781 M26 fine surfels=`3090` visual primitives；physical=`309` unchanged；
@@ -8,7 +15,7 @@
 - views=exact M25/M26 train8/heldout6；heldout exposed before M27，development diagnostic only；
 - optimization=seed71125 / 320 steps / same loss+lr / one run / no branch-weight or hyperparameter sweep；
 - decision=median of six per-view final PSNR deltas vs frozen M25 strictly positive；pooled/count/min/max descriptive；
-- no checkpoint/physical/external/hash/checksum/fingerprint；next failure=`V71-F29`。
+- no checkpoint/physical/external/hash/checksum/fingerprint；next failure=`V71-F30`。
 
 ## WS-V71-M26-SUPERVISION-NATIVE-VISUAL-SURFELS-01 — canonical pooled positive / view-uniform negative（2026-09-05）
 

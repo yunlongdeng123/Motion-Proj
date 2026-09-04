@@ -1,5 +1,12 @@
 # Research Status
 
+## WorldSim V7.1 M27 r1 config-path failure / same-protocol recovery（2026-09-05）
+
+r1=`20260904T193000Z__m27-hierarchical-visual-residual-r1`在`OmegaConf.load`前置路径解析终止：配置漏写canonical
+StreetGS run后缀与`work_dirs/worldsim_v4_streetgs`层；0 dataset、0 render、0 optimizer step、0 quality exposure，
+登记`V71-F29`。r2仅逐值恢复M25使用的现有绝对路径；hierarchy、3090 visual primitives、views、seed71125、320 steps、
+loss/lr均不变。下一failure ID=`V71-F30`。
+
 ## WorldSim V7.1 M27 hierarchical visual residual frozen（2026-09-05）
 
 状态=`v71_m27_hierarchical_visual_residual_frozen`，详见
@@ -9,7 +16,7 @@ SH/opacity；3090个visual geometry及所有physical/trajectory/background参数
 
 六个comparison views已在M26暴露，故明确为development-only。唯一hierarchy判定从pooled改为`M27-M25` per-view
 PSNR delta的中位数严格为正；同时报告positive count/min/max，不扫分支权重或超参。physical query仍为309个M8
-carriers，M21不读取。下一failure ID=`V71-F29`。
+carriers，M21不读取。下一failure ID=`V71-F30`。
 
 ## WorldSim V7.1 M26 pooled visual capacity supported / per-view boundary exposed（2026-09-05）
 

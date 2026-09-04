@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F29 — M27 StreetGS配置路径转录遗漏（2026-09-05）
+
+- 分类/状态：configuration path / resolved before data or metric exposure；run=
+  `20260904T193000Z__m27-hierarchical-visual-residual-r1`；
+- symptom：`OmegaConf.load`报`FileNotFoundError`；0 dataset load、0 render、0 optimizer step、0 quality exposure；
+- root cause：从M25配置转录路径时漏掉run ID的`-formal30k-s0-r17`后缀及
+  `work_dirs/worldsim_v4_streetgs`层；文件与原生runtime均存在；
+- resolution：r2逐值复用M25 canonical `streetgs_config`绝对路径；不改表示、分支opacity、view、seed、steps、loss或lr；
+- prevention：后续派生真实renderer配置从canonical config逐值复用路径，不手写缩短；
+- claim impact：纯入口失败，不计hierarchy科学结果。
+
+下一可用编号：`V71-F30`。
+
 ## V7.1 M27 prevention note — hierarchy诊断不得冒充未暴露泛化（2026-09-05）
 
 - M27显式标记六个development views已在M25/M26暴露，只能解释机制，不形成新held-out/generalization claim；
@@ -8,7 +21,7 @@
 - 两分支用固定half optical-depth初始化，不扫融合权重、steps、loss或seed；失败则关闭该hierarchy；
 - 迁移Octree-GS/LOD-GS的多尺度组织，不迁移其可学习geometry、selector或densification。
 
-下一可用编号仍为：`V71-F29`。
+下一可用编号仍为：`V71-F30`。
 
 ## V7.1 M26 outcome note — pooled容量改善但view-uniform不成立（2026-09-05）
 
