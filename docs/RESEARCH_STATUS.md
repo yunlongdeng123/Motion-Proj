@@ -1,5 +1,29 @@
 # Research Status
 
+## WorldSim V7.1 M11 exact support supervision frozen（2026-09-04）
+
+状态=`v71_m11_exact_support_supervision_frozen`，详见
+[`WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md`](WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md)。
+M10已证明oriented oblate support能明显减少FREE侵入，但训练用sampled alpha-density、验收用analytic first
+intersection，forward model不一致导致hit损失。M11保留canonical M8的center/tangent scale不动，只学习GT-normal与
+normal thickness；几何中心/逐帧轨迹、Gaussian碰撞支撑两个子问题由参数块显式分离。
+
+训练直接使用与部署相同的analytic ray--oblate-ellipsoid first intersection，并用GT endpoint的ellipsoid boundary
+residual恢复no-hit射线梯度；不再通过采样density代理首交。原point表征必须逐值保持M8，support hazardous early改善
+`>=5%`且hit下降不超过`1pp`。单seed 6轮，不调temperature/sigma/thickness/loss/epoch；下一failure ID=`V71-F15`。
+
+## WorldSim V7.1 M10 rejected / exact forward-model alignment next（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M10-ORIENTED-PLANAR-GAUSSIAN-01/
+20260904T220000Z__m10-oriented-planar-s71112-r1`。593 Actors训练6轮，66 holdout。Exact oblate support相对冻结M8
+initializer的early下降=`18.146/18.451/15.799% (all/hazard/clear)`，说明normal/tangent/thickness分权有效；但support
+hit下降=`2.168/2.393/1.062pp`，违反`>=-1pp`合同。
+
+Point表征hazard/all early相对baseline仅改善`2.618/1.496%`，也低于hazard `5%`；M8 reference为`5.123/3.901%`。
+虽然Chamfer改善`7.413mm`、point hit增加`2.838pp`、retention 100%，最终5/7并拒绝，登记`V71-F14`。训练期
+sampled support free降到相对M8的`0.423`，但解析hit仍下降，根因锁定为sampled alpha proxy与部署解析首交不一致；
+不调M10权重/厚度，转M11 exact differentiable intersection且冻结M8中心几何。
+
 ## WorldSim V7.1 M10 oriented planar Gaussian protocol frozen（2026-09-04）
 
 状态=`v71_m10_oriented_planar_gaussian_frozen`，详见

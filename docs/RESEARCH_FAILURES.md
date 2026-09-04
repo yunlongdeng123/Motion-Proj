@@ -1,5 +1,36 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M11 prevention note — 物理forward model与部署边界必须同构（2026-09-04）
+
+- M11训练和验收都使用同一analytic ray--oblate-ellipsoid entrance depth，禁止sampled alpha或sphere proxy；
+- M8 center/tangent scale与point surface冻结，support任务只学习normal/thickness，禁止用物理损失破坏已通过的几何中心；
+- no-hit梯度只由GT endpoint boundary residual补充，FREE侧仍由GT ray在首返回前的解析入口约束；
+- reference固定为M8 center/scale + parent normal + `0.02m` thickness，不按M11结果改阈值或support level；
+- 若hazard early或hit合同失败，登记`V71-F15`并关闭本解析support head，不调loss/thickness/seed/epoch恢复。
+
+下一可用编号仍为：`V71-F15`。
+
+## V71-F14 — oriented support减少early但sampled训练代理损失解析hit（2026-09-04）
+
+- 分类/状态：training-deployment forward-model mismatch / terminal for sampled-density M10；canonical=
+  `20260904T220000Z__m10-oriented-planar-s71112-r1`；
+- 观察：exact hazardous support early相对M8下降`18.451%`，但support hit `30.837→28.444%`（`-2.393pp`）；
+  point hazardous early仅改善`2.618%<5%`，M8同一reference为`5.123%`；最终5/7；
+- 正证据：all/hazard/clear support early均改善，Chamfer=`-7.413mm`、point hit=`+2.838pp`、retention 100%；
+  oriented primitive本身有价值，失败不能归为表示容量不足；
+- 优化审计：sampled support free相对损失`0.520→0.423`、support first`1.002→0.990`，无NaN/OOM；约
+  `75%–83%` batches仍有geometry/physics conflict；
+- root cause：训练优化sampled Gaussian alpha-compositing depth，部署/门槛读取hard analytic `1σ` ellipsoid first hit；
+  前者可降低密度型FREE惩罚而不保证后者的target intersection，仍违反训练—部署同构；
+- literature/open-source response：WACV 2025 RayGauss与ICCV 2025 EVER均将Gaussian/ellipsoid直接置于ray-casting
+  forward model；RayGaussX进一步以scale regularization抑制false-positive intersections。迁移原则是训练物理算子必须与
+  primitive的部署相交语义一致，而不是复用其外观渲染目标；
+- resolution：关闭M10 sampled-density恢复路线；M11冻结M8 center/scale，只学习normal/thickness并直接反传解析首交，
+  加GT endpoint boundary residual处理no-hit；不调M10 sigma/loss/thickness/seed/epoch；
+- claim impact：尚不能声称Gaussian support物理自洽；M8 point/temporal结论保留。下一可用ID=`V71-F15`。
+
+下一可用编号：`V71-F15`。
+
 ## V7.1 M10 prevention note — tangent radius与normal thickness必须分权（2026-09-04）
 
 - M10不能复用单个isotropic scale；tangent radius只负责沿GT plane覆盖，normal thickness只负责表面带宽/free-space；

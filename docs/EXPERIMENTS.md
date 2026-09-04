@@ -1,5 +1,30 @@
 # Experiments
 
+## WS-V71-M11-EXACT-SUPPORT-SUPERVISION-01 — frozen protocol（2026-09-04）
+
+- representation=frozen canonical M8 centers/tangent radii + learned unit normal/normal thickness；
+- decomposition=point geometry/temporal surface fixed；support head alone receives GT local-plane and exact ray physics；
+- forward model=analytic differentiable ray--oblate-ellipsoid minimum positive entrance，identical to literal deployment audit；
+- no-hit recovery=GT endpoint minimum ellipsoid boundary residual；behind-return space remains unlabelled；
+- optimization=GT normal/boundary geometry vs exact first/free-space physics PCGrad；single seed `71113` / 6 epochs；
+- reference=M8 center/scale + parent PCA normal + fixed `0.02m` thickness；all primitives retained；
+- gates=point metrics equal M8 by construction + hazard support early `>=5%` + support hit delta `>=-1pp`；
+- no sampled density/sigma/temperature/threshold/loss/thickness/seed/epoch sweep；no motion/image/hazard input；
+- sources=RayGauss (WACV 2025), EVER (ICCV 2025), RayGaussX (ICCV 2025) direct Gaussian/ellipsoid ray casting。
+
+## WS-V71-M10-ORIENTED-PLANAR-GAUSSIAN-01 — canonical negative result（2026-09-04）
+
+- run=`20260904T220000Z__m10-oriented-planar-s71112-r1`；verdict=`m10_development_rejected`；5/7 gates；
+- training=`593 Actors / 6 epochs`；sampled support first=`1.00179→0.98991`，free=`0.51979→0.42262`；
+- exact support early reduction vs M8 all/hazard/clear=`18.146/18.451/15.799%`，hazard gate passes；
+- exact support hit delta all/hazard/clear=`-2.168/-2.393/-1.062pp`，retention gate fails；
+- point hazard/all/clear early=`2.618/1.496/-5.615%`，hazard primary fails；M8 hazard=`5.123%`；
+- point Chamfer=`-7.413mm`、hit=`+2.838pp`、Actor/hazard retention=`100/100%`；
+- mechanism=oriented support improves FREE precision，but sampled alpha training is not analytic deployment intersection and shared
+  center fine-tuning regresses the M8 hazard surface；
+- decision=close sampled-density M10；next=M11 freeze M8 center/scale and train exact analytic support only；failure=`V71-F14`；
+- resources=`142.295s / 2.5318GiB GPU / 1.3819GiB RSS`；no protected/external read。
+
 ## WS-V71-M10-ORIENTED-PLANAR-GAUSSIAN-01 — frozen protocol（2026-09-04）
 
 - representation=4-child oblate Gaussian `(center, unit normal, tangent radius, normal thickness)`；
