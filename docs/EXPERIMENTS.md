@@ -1,5 +1,20 @@
 # Experiments
 
+## WS-V71-M26-SUPERVISION-NATIVE-VISUAL-SURFELS-01 — canonical pooled positive / view-uniform negative（2026-09-05）
+
+- run=`20260904T190000Z__m26-supervision-native-visual-surfels-r1`；status=`done`；steps=`320/320`；decisions=`4/4`；
+- carrier=309 physical / 2781 visual-only surfels；effective appearance params=`136269`；original=`32522` Gaussians；
+- train pooled Actor PSNR=`16.5667→17.3446dB`；held-out=`16.9699→17.5725dB`（`+0.6026dB`）；
+- capacity comparator=M25 final `16.9434dB`，M26 final delta=`+0.6290dB`；original-final gap=`7.7802dB`；
+- per-view comparator vs M25=only f77/c2 positive `~+1.07dB`；other 5/6 regress `~0.10--0.31dB`；
+- isolation=visual geometry frozen、physical query unchanged at 309、trajectory/background false、no checkpoint/physical/
+  external read；sidecar=`413395 bytes`；
+- resources=peak GPU `1.036GiB` / RSS `8.328GiB` / wall `110.7s`；
+- verdict=`surface_bounded_visual_capacity_supported` at pooled level；view-uniform claim rejected；no new failure；
+  next failure=`V71-F29`。
+- manuscript=pooled positive + 5/6 per-view negative both included；TinyTeX full compile success；15 pages /
+  2,327,346 bytes；refs resolved；no fatal/new overfull warning。
+
 ## WS-V71-M26-SUPERVISION-NATIVE-VISUAL-SURFELS-01 — frozen protocol（2026-09-05）
 
 - representation=309 frozen M8 physical carriers + deterministic 9-child tangent visual surfels=`2781` render primitives；

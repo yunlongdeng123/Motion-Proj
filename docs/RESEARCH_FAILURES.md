@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M26 outcome note — pooled容量改善但view-uniform不成立（2026-09-05）
+
+- canonical r1完成320/320 steps，4/4预注册decisions通过；held-out pooled Actor PSNR
+  `16.9699→17.5725dB`，相对冻结M25 final=`16.9434dB`提高`0.6290dB`；
+- 相对原StreetGS `25.3527dB`仍差`7.7802dB`，2781 surfels只关闭M25原`8.4093dB`缺口的7.5%；
+- aggregate-to-view boundary：相对M25 final，f77/camera2提高约`1.07dB`，其余5/6 held-out views退化约
+  `0.10--0.31dB`；pooled gain由最大footprint视图主导，不能写成view-uniform改善；
+- interpretation：training-supervision-derived tangent surfels确实增加pixel-weighted visual capacity，且无需污染physical
+  carrier；但固定PCA frame/3x3 grid没有跨视角一致优势，仍不是photorealistic appearance solution；
+- prevention：下一步不得以只报pooled PSNR隐藏per-view方向，也不得事后换view/权重；若研究visual objective，只能在
+  事前定义的view-uniform风险上训练/评价，geometry继续冻结；
+- no new failure：预注册capacity gate通过，结果作为“aggregate supported / uniform rejected”保留。
+
+下一可用编号仍为：`V71-F29`。
+
 ## V7.1 M26 prevention note — visual扩容不得成为第二套无监督物理几何（2026-09-05）
 
 - 309个M8 carriers继续是唯一physical query；2781个visual surfels不进入M21 energy、collision或surface评价；

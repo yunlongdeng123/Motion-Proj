@@ -297,6 +297,8 @@ We then execute the bridge with the native StreetGS rasterizer on a view frozen 
 
 To separate a missing learning signal from insufficient carrier capacity, we next freeze every center, scale, rotation, trajectory, Background parameter, and non-target Actor attribute, and optimize only the selected Actor's SH coefficients and opacity for 320 steps on eight geometrically preselected views. On six disjoint held-out views, footprint PSNR rises from 15.86 to 16.94\,dB; all six views improve. The corresponding original StreetGS Actor reaches 25.35\,dB, leaving an 8.41\,dB gap. Thus image supervision can train attributes without changing physical geometry, but appearance-only optimization does not rescue the 309-primitive one-carrier representation. We do not convert this single-scene capacity probe into an appearance or generalization claim.
 
+We finally derive nine fixed tangent surfels per physical carrier using only an 8-neighbor PCA frame, the supervised carrier radius, and a 2\,cm normal thickness. These 2,781 visual-only primitives never enter the physical query and their geometry receives no image gradient. Held-out PSNR reaches 17.57\,dB, 0.63\,dB above the one-carrier result, but the gap to the original remains 7.78\,dB. Moreover, only the largest-footprint held-out view improves over the one-carrier model; the other five regress by 0.10--0.31\,dB. The representation therefore increases pixel-weighted capacity without establishing view-uniform fidelity.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

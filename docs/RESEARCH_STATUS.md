@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M26 pooled visual capacity supported / per-view boundary exposed（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M26-SUPERVISION-NATIVE-VISUAL-SURFELS-01/
+20260904T190000Z__m26-supervision-native-visual-surfels-r1`，320/320 steps与4/4 decisions通过。2781个固定surfels的
+held-out pooled Actor PSNR=`16.9699→17.5725dB`；相对M25 final=`16.9434dB`提高`0.6290dB`，相对original
+仍差`7.7802dB`。峰值GPU=`1.036GiB`、RSS=`8.328GiB`、wall=`110.7s`。
+
+该正例严格限于pixel-weighted aggregate：相对M25，只有最大footprint的f77/camera2提高约`1.07dB`，另外5/6
+held-out views退化`0.10--0.31dB`。因此结论是“supervision-native visual surfels增加pooled容量”，不是
+view-uniform improvement或photorealism。physical query仍为309个M8 carriers；visual geometry/trajectory/Background/
+其他Actor/M21逐值不变。下一failure ID=`V71-F29`。
+
+论文experiments/limitations已同步pooled正例与5/6 per-view反例；TinyTeX/latexmk完整编译`paper/main.pdf`成功
+（15页、2,327,346 bytes），引用已解析，无fatal或新增overfull warning。
+
 ## WorldSim V7.1 M26 supervision-native visual surfels frozen（2026-09-05）
 
 状态=`v71_m26_supervision_native_visual_surfels_frozen`，详见
