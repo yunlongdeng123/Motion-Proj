@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M30 pre-registration note — interval coverage assumption is not a certificate（2026-09-05）
+
+M30以`S_known subset S_possible`的代码构造确保`d_possible <= d_known`，但
+`S_true subset S_possible`是待检验的completion coverage assumption，不能从集序数学自动得出。
+因此empirical target bracketing、finite interval与width只是utility边界；禁止声称deterministic collision/safety
+certificate。M30不使用M29 rejected checkpoint，不硬删UNKNOWN，不扫区间阈值。下一failure ID=`V71-F31`。
+
 ## V7.1 M29 outcome note — symmetric GT tail objective rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M29-GT-TAIL-SURFACE-TUBE-01/

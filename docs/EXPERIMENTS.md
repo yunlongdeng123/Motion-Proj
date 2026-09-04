@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M30-EVIDENTIAL-RETURN-INTERVAL-01 — frozen protocol（2026-09-05）
+
+- source=M8 r2, same 66 pretrained-exposed holdout Actors；M29 checkpoint excluded；
+- known surface=immutable observed anchors；possible surface=anchors + all M8 generated children；
+- semantics=`d_possible <= d_true <= d_known` conditional on `S_known subset S_true subset S_possible`；
+- evaluator=literal point beam tube, lateral/depth tolerance both `0.20m`；
+- report=ordering, empirical bracketing, finite/unbounded rate, finite width median/q90, early/hit across five strata；
+- criterion=zero set-order violation only；utility metrics descriptive, no success threshold；
+- no training/checkpoint/filter/selector/hash/checksum/fingerprint/external partial quality read；next failure=`V71-F31`。
+
 ## WS-V71-M29-GT-TAIL-SURFACE-TUBE-01 — canonical rejected（2026-09-05）
 
 - run=`20260904T200000Z__m29-gt-tail-surface-tube-s71126-r1`；status=`done`；verdict=`rejected`；

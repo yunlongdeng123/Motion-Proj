@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M30 evidential return interval frozen（2026-09-05）
+
+状态=`v71_m30_evidential_return_interval_frozen`，详见
+[`WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md`](WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md)。
+M30使用M8 immutable observed anchors作为`S_known`，anchors+all generated children作为
+`S_possible`，通过first-return set monotonicity输出`[d_possible,d_known]`，不将UNKNOWN硬删或单值化。
+
+66 exposed development Actors上只运行冻结literal beam-tube GPU query；structural criterion仅为0 ordering
+violation，bracketing/finite/unbounded/width均descriptive。必须保留`S_true subset S_possible`是未证实假设。
+无训练、无M21 partial read；下一failure ID=`V71-F31`。
+
 ## WorldSim V7.1 M29 rejected / completion--free-space split sharpened（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M29-GT-TAIL-SURFACE-TUBE-01/
