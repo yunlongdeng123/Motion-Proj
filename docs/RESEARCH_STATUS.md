@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.1 CVPR claim surface refreshed（2026-09-05）
+
+论文摘要、引言和结论已按当前可复现证据重写：主结果只保留M8 supervision-native canonical geometry、M39
+categorical surface-return authority、M22/M28 typed ownership与SE(3) composition、以及M49 finite attenuation
+safety boundary。摘要明确给出M8 hazard early-return `-5.12%`、Chamfer `-6.21mm`、hit recall `+2.76pp`，
+M39 hazard early-return `-0.62pp`、hit recall `+2.32pp`，以及M49 `59.32%` rays在实际attenuation后CDF反而上升。
+
+M43保持为唯一冻结的20-log AV2 zero-shot aggregate，完成前不写cross-domain数字、方向或结论；旧的M18/M21
+external learned-result措辞已从front matter移除。结论明确这些证据不等于collision freedom、domain invariance或
+real-road safety。CVPR稿经TeX Live重编译成功，19页、`2,379,232` bytes，无新增warning；仍仅有既存的method
+公式`53.85pt`与表格`6.03pt` overfull。该里程碑不新增实验、gate或quality read。
+
 ## WorldSim V7.1 factorized research synthesis ready（2026-09-05）
 
 新增[`WORLDSIM_V71_RESEARCH_SYNTHESIS.md`](WORLDSIM_V71_RESEARCH_SYNTHESIS.md)，把最终论文证据拆成五层：

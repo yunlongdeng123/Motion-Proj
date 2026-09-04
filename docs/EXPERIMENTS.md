@@ -1,5 +1,16 @@
 # Experiments
 
+## WorldSim V7.1 CVPR current-evidence claim refresh（2026-09-05）
+
+- scope=documentation-only；更新`paper/sections/00_abstract.tex`、`01_intro.tex`、`07_conclusion.tex`；
+- retained source claims=M8 GT-supervised canonical surface (`-5.12%` hazard early、`-6.21mm` Chamfer、
+  `+2.76pp` hit) + M39 categorical return (`-0.62pp` hazard early、`+2.32pp` hit)；
+- retained theory/architecture=M49 exact finite attenuation boundary + M22/M28 typed ownership/SE(3) separation；
+- pending external claim=M43 frozen 20-log AV2 aggregate；no partial metric、no direction、no target adaptation；
+- removed stale framing=M18/M21不再作为pending learned external result出现在摘要/贡献/结论；
+- compile=TeX Live success，19 pages，2,379,232 bytes；only two pre-existing overfull warnings；
+- no new model、training、threshold、gate、cohort、checksum/fingerprint或regression matrix。
+
 ## WorldSim V7.1 paper-facing synthesis checkpoint（2026-09-05）
 
 - claim matrix=`docs/WORLDSIM_V71_RESEARCH_SYNTHESIS.md`；geometry/return/ownership/safety/generalization分层；

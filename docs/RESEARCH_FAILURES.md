@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 paper anti-overclaim refresh — M43完成前不预写泛化结论（2026-09-05）
+
+摘要、引言、结论已删除过时的M18/M21 learned-external叙事，只陈述M8/M39 source-domain结果、M22/M28
+factorization和M49解析边界。M43尚未完成时禁止引用partial metric、预写提升/退化方向，或将旧nonlearned compiler
+AV2结果冒充learned transfer；M43无论通过或失败都禁止用AV2 target adaptation补救。M49仅证明normalized-mixture
+attenuation的符号边界，不推出collision-free、domain-invariant或real-road-safe。此次纯写作同步无新failure；next
+failure ID仍=`V71-F48`。
+
 ## V7.1 synthesis boundary — do not recombine separated claims（2026-09-05）
 
 论文主张必须保持canonical geometry、ray termination、rigid pose、static Background、appearance和hazard authority分离。
