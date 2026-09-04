@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M20-DECODER-FREE-GAUSSIAN-RAY-ENERGY-01 — canonical negative（2026-09-04）
+
+- run=`20260904T152000Z__m20-decoder-free-energy-s71122-r1`；verdict=`rejected 5/6`；failure=`V71-F24`；
+- training=593 Actors/4 epochs；NLL=`5.725→4.226`，depth L1=`0.373→0.390m`，entropy=
+  `2.139→2.434`，GT-bin probability=`13.835→11.277%`，gradient conflict=`77.9--87.2%`；
+- point=hazard/all early relative baseline=`-3.247/-4.120%`，hit=`+2.025pp`；Chamfer vs M8=`-2.160mm`，
+  frame coverage=`-2.694mm`；direct point physical gate fails；
+- final energy=hazard/all early=`19.884/20.289%`，hit=`57.331/57.791%`；vs M18=`-4.477pp` hazard early、
+  `+2.325pp` all hit；
+- diagnostic M8-initial energy=hazard/all early=`17.422/18.187%`，hit=`62.068/62.283%`；M20 training degrades
+  its own energy by `+2.462/+2.102pp` early and `-4.737/-4.493pp` hit；
+- scale shortcut=mean/median `0.162/0.150→0.313/0.313m`，q90=`0.376m`；
+- decision=no external/no recovery；next=frozen M8 + decoder-free analytic energy external candidate。
+
 ## WS-V71-M20-DECODER-FREE-GAUSSIAN-RAY-ENERGY-01 — frozen protocol（2026-09-04）
 
 - initialization=canonical M8 surface head；no field decoder/MLP/attention；

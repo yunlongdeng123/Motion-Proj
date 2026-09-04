@@ -1,5 +1,24 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F24 — decoder-free ray loss以尺度膨胀损害anchors与自身energy（2026-09-04）
+
+- 分类/状态：isotropic support-scale shortcut / terminal for joint energy fine-tuning；canonical=
+  `20260904T152000Z__m20-decoder-free-energy-s71122-r1`；
+- formal result：5/6；Chamfer vs M8=`-2.160mm`、energy vs M18 hazard early=`-4.477pp`、all hit=
+  `+2.325pp`，但point hazard early相对baseline=`-3.247%`，直接物理门失败；
+- scale evidence：mean/median `0.162/0.150→0.313/0.313m`，q90=`0.376m`逼近`0.40m`上限，normalized
+  scale loss `0.583→2.395`；NLL下降但depth L1、entropy上升且GT-bin probability下降；
+- counterfactual：冻结M8使用同一energy已达all/hazard early=`18.187/17.422%`、hit=`62.283/62.068%`；
+  M20训练使early恶化`2.102/2.462pp`、hit下降`4.493/4.737pp`；
+- root cause：isotropic scale同时控制3D support与ray energy宽度，categorical objective可通过扩大support降低NLL，
+  PCGrad只能处理梯度方向，不能恢复参数角色可辨识性；
+- resolution：关闭M20 fine-tune，不扫scale/loss/PCGrad；保留冻结M8 + analytic energy为新的representation candidate，
+  必须在未读fresh AV2上事前冻结后确认；
+- claim impact：M20不能证明ray fine-tuning改善Gaussian geometry；诊断只支持冻结supervision-native geometry的
+  analytic energy具有开发集潜力。
+
+下一可用编号：`V71-F25`。
+
 ## V7.1 M20 prevention note — physics gradient不得绕开Gaussian geometry（2026-09-04）
 
 - 删除可学习field decoder；ray logit只能由immutable anchors与可学习children/scales的metric Gaussian energy产生；

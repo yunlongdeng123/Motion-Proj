@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M20 rejected / frozen-M8 energy candidate exposed（2026-09-04）
+
+Canonical=`run://worldsim_v71/WS-V71-M20-DECODER-FREE-GAUSSIAN-RAY-ENERGY-01/
+20260904T152000Z__m20-decoder-free-energy-s71122-r1`，5/6 gates，登记`V71-F24`。M20相对M8的Chamfer和frame
+coverage改善`2.160/2.694mm`，最终energy相对M18的hazard early再低`4.477pp`、all hit高`2.325pp`；但point
+hazard early相对baseline恶化`3.247%`，唯一直接anchor-physics门失败。
+
+定向只读诊断确认scale shortcut：child scale mean/median由M8的`0.162/0.150m`膨胀到`0.313/0.313m`，q90=
+`0.376m`接近`0.40m`上限；scale loss=`0.583→2.395`。冻结M8 geometry直接使用同一analytic energy时，
+all/hazard early=`18.187/17.422%`、hit=`62.283/62.068%`；M20训练后反而变成`20.289/19.884%`、
+`57.791/57.331%`。因此无解码器表示有效，但ray joint fine-tune经尺度膨胀同时损害point与自身energy。
+
+M20不外测、不调scale/loss恢复。下一候选只冻结M8的native-3D监督结果，并把analytic energy作为实际共享3D
+deployment representation；其选择明确来自开发集诊断，必须由尚未读取质量的fresh AV2预注册确认。
+
 ## WorldSim V7.1 M20 decoder-free Gaussian ray energy frozen（2026-09-04）
 
 状态=`v71_m20_decoder_free_gaussian_energy_frozen`，详见
