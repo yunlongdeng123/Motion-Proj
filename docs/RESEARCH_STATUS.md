@@ -1,5 +1,18 @@
 # Research Status
 
+## WorldSim V7.1 StreetGS bridge complete / supervision-first correction（2026-09-04）
+
+Canonical bridge=`run://worldsim_v71/WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01/
+20260904T111000Z__m5-streetgs-bridge-r1`。12个identity-matched Actors（7 hazard）连接106,807个只读StreetGS Actor
+Gaussians与独立M5 physical sidecar；checkpoint/SH/opacity/scale/rotation/means及trajectory均未写。M5 sidecar相对baseline
+Chamfer改善`2.113mm`、hit增加`0.525pp`，hazard early仅下降`0.798%`，但all/clear early恶化`1.309/12.877%`。
+
+因此结构接口成立，但该post-hoc sidecar不构成“learned representation物理一致”的证据；登记`V71-F10`并撤销任何更强
+表述。后续把问题拆为：(A) GT/supervision中的FREE-before-hit、surface-hit、UNKNOWN-behind与anchor约束；(B) completion
+表示及多目标优化；(C) appearance/Actor dynamics只读解耦。只有A+B在训练目标内生通过后，C才能作为bridge展示。
+已并行启动Gau-Occ论文/官方代码专项审计；下一训练范式在审计完成前不凭经验冻结。AV2 frozen M5 evaluator继续独立运行，
+其结果只回答M5跨域迁移，不替代supervision-first新范式。下一failure ID=`V71-F11`。
+
 ## WorldSim V7.1 M5 StreetGS appearance bridge ready（2026-09-04）
 
 状态：`v71_m5_streetgs_bridge_ready`。选择已有`scene-0230` StreetGS 30k重建与真实rendered asset；数据级

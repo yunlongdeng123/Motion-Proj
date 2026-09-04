@@ -1,5 +1,24 @@
 # Experiments
 
+## WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01 — canonical structural result（2026-09-04）
+
+- run=`20260904T111000Z__m5-streetgs-bridge-r1`；12 matched Actors / 7 hazard / 106,807 owned Gaussians；
+- immutable=StreetGS means/scale/quaternion/SH/opacity + 196-frame Actor trajectory，checkpoint write=false；
+- physical=hazard/all/clear early reduction=`0.798/-1.309/-12.877%`，Chamfer=`-2.113mm`，hit=`+0.525pp`，
+  retention=`100/100%`；
+- protocol gate technically passed because it only required strictly positive hazard direction, but this is insufficient for a physical-
+  consistency claim；failure/claim correction=`V71-F10`；
+- valid conclusion=Actor identity can couple an immutable appearance representation to a separate physical surface；
+- invalid conclusion=the sidecar proves supervision-native 3D physical consistency or improves RGB/3DGS geometry；no external read。
+
+## WS-V71-H-M6-SUPERVISION-FIRST-COMPLETION — problem decomposition（2026-09-04）
+
+- A/GT=held-out first-hit ray induces ordered `FREE → surface → UNKNOWN/occluded` states；build hits are immutable anchors；
+- B/model=completion must predict geometry under those states and receive the physical loss before extraction/deployment；
+- C/bridge=appearance Gaussian ownership and Actor trajectory remain separate/read-only；C cannot rescue A/B post hoc；
+- next evidence=Gau-Occ paper+official-code audit of diffuser target, Gaussian anchoring, image conditioning and end-to-end occupancy；
+- freeze rule=no new M6 architecture/target until the audit identifies which constraints are supervised versus only rendered/evaluated。
+
 ## WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01 — frozen protocol（2026-09-04）
 
 - source=`scene-0230` frozen StreetGS 30k checkpoint/render + data-level Actor registry + V7.1 Actor caches；

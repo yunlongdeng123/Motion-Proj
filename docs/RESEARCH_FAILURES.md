@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F10 — StreetGS sidecar结构成立但不能证明训练内生物理一致
+
+- 分类/状态：claim-boundary + scientific decomposition / terminal for post-hoc proof；canonical=`run://worldsim_v71/
+  WS-V71-M5-STREETGS-APPEARANCE-BRIDGE-01/20260904T111000Z__m5-streetgs-bridge-r1`；
+- 观察：12 Actors/106,807 appearance Gaussians可按identity无损连接，Chamfer/hit为`-2.113mm/+0.525pp`，但hazard early
+  只降`0.798%`且all/clear恶化`1.309/12.877%`；
+- root cause：bridge在冻结M5输出之后连接两种表示，只能证明ownership/immutability，不能把post-hoc physical sidecar升级为
+  由GT和supervision定义的geometry consistency；原strict-positive hazard gate过弱；
+- correction：不修改canonical run或事后加filter；把结论降为representation interface，并将GT state construction、
+  completion learning、appearance/dynamics coupling拆开；
+- literature/action：专项审计Gau-Occ completion diffuser target、Gaussian anchor约束、image conditioning与occupancy联合训练后，
+  才冻结下一supervision-first候选；
+- claim impact：无V7.1 GS geometry/RGB improvement claim；下一可用failure ID=`V71-F11`。
+
 ## V7.1 appearance-bridge prevention note — 不修改GS checkpoint冒充外观提升（2026-09-04）
 
 - Street Gaussians/DrivingGaussian支持Actor-composed appearance ownership，但不保证其Gaussian means是安全collision
