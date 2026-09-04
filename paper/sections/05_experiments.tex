@@ -293,5 +293,14 @@ We identity-match 12 scene-0230 Actors (7 hazardous) between the frozen physical
 
 The geometry-locked appearance bridge assigns same-Actor StreetGS SH/opacity to all 5,791 carriers (mean Actor-level association distance 0.127\,m) without copying visual geometry. Its physical surface improves Chamfer by 7.16\,mm and hit recall by 3.19 points in this scene, but worsens all/hazard early returns by 1.60/0.60\%. We therefore treat it strictly as evidence that image-trained attributes can be attached without changing geometry, not as a favorable appearance or physical example.
 
+We then execute the bridge with the native StreetGS rasterizer on a view frozen solely by 3D frustum visibility (Fig.~\ref{fig:m24-render}). Replacing the selected Actor's 32,522 visual primitives with 309 physical carriers preserves the renderer interface but reduces footprint PSNR from 28.59 to 17.22\,dB ($-11.37$\,dB) and full-image PSNR by 3.99\,dB. The blur and ghosting reject naive SH/opacity transfer as an appearance solution. We do not tune scale, opacity, primitive count, or view after observing this result, and the visual failure does not alter the GT-supervised physical carrier.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}
+  \caption{Frozen M24 view, cropped identically. Left to right: target image, original 32,522-primitive StreetGS Actor, and the 309-primitive geometry-locked carrier. Attribute transfer is rasterizer-compatible but loses appearance capacity; geometry is not moved to repair the image.}
+  \label{fig:m24-render}
+\end{figure}
+
 \paragraph{Qualitative protocol.}
 Main-paper and supplement scenes are frozen from metadata and registered failure strata before rendering method outputs. Panels show RGB, LiDAR, physical surface, ray evidence, compiler action, and the repaired world. We report all frozen cases, including failures, rather than selecting only visually favorable examples.

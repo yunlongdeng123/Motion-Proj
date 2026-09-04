@@ -1,5 +1,25 @@
 # Experiments
 
+## WorldSim V7.1 CVPR manuscript — M24 milestone（2026-09-05）
+
+- figure=`paper/figures/v71_m24_geometry_locked_render.png`，同裁剪GT/original/carrier三联图；
+- results=native rasterizer interface supported，同时完整报告Actor PSNR `-11.3696dB`与full-image `-3.9932dB`；
+- limitations=naive one-carrier appearance parity rejected；future visual shell must be physics-isolated and training-time 3D bounded；
+- claim isolation=M24 visual negative不修改或削弱M8/M21 physical definition；
+- compile=TinyTeX/latexmk full success；14 pages；2,325,220 bytes；references resolved；no fatal/new overfull warning。
+
+## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — canonical interface supported / visual negative（2026-09-05）
+
+- run=`20260904T173000Z__m24-geometry-locked-render-r3`；verdict=`geometry_locked_carrier_rasterized`；decisions=`2/2`；
+- fixed unit=scene-0230 / Actor `43fb...` / rigid12 / frame42 / cameras `[0,1,2]` all；
+- visibility=`1/3 cameras`，camera0 footprint=`18971 px`；camera1/2 zero-footprint retained；
+- capacity=original Actor `32522` Gaussians → geometry-locked carrier `309` Gaussians；carrier changed=`20546 px`；
+- Actor-footprint PSNR=`28.5923→17.2227dB`，delta=`-11.3696dB`；camera0 full-image=
+  `31.7410→27.7478dB`，delta=`-3.9932dB`；
+- camera1 unchanged；camera2 changed 4 pixels/full PSNR `-0.0015dB`，consistent with off-frustum support tail；
+- runtime=peak GPU `0.904GiB` / RSS `7.984GiB` / wall `80.3s`；no training/checkpoint/physical/external read；
+- decision=renderer compatibility supported；naive appearance parity rejected；no scale/opacity/view tuning and no new failure ID。
+
 ## WS-V71-M24-GEOMETRY-LOCKED-RENDER-01 — r2 zero-footprint rejection（2026-09-05）
 
 - run=`20260904T171000Z__m24-geometry-locked-render-r2`；failure=`V71-F27`；

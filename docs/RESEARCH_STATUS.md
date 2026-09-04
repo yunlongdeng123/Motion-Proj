@@ -1,5 +1,26 @@
 # Research Status
 
+## WorldSim V7.1 CVPR manuscript M24 native-render boundary（2026-09-05）
+
+论文experiments已加入M24真实StreetGS三联图及`28.59→17.22dB` footprint、`-3.99dB` full-image结果；limitations
+不再写“尚无render evaluation”，而明确naive one-carrier appearance parity被否定。正文同时冻结结论边界：外观失败不得
+回推GT-supervised centers/scales，尚未实现的visual residual shell仅列必要条件，不写成方法贡献。
+
+本地TinyTeX/latexmk完整编译成功，`paper/main.pdf`仍为14页、2,325,220 bytes；引用已解析，无fatal或新增
+overfull warning。下一failure ID仍为`V71-F28`。
+
+## WorldSim V7.1 M24 real render supported / naive appearance parity rejected（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M24-GEOMETRY-LOCKED-RENDER-01/
+20260904T173000Z__m24-geometry-locked-render-r3`，真实StreetGS rasterizer完成3 variants x 3 fixed cameras，2/2最小
+接口decision通过。camera0有`18971 px`目标Actor footprint；camera1/2的零footprint按冻结协议保留。峰值GPU
+`0.904GiB`、RSS `7.984GiB`、80.3秒；无训练、checkpoint写入、physical metric或external quality读取。
+
+视觉结果明确为负：原StreetGS 32522-Gaussian Actor的footprint PSNR=`28.592dB`，309-Gaussian geometry-locked carrier
+为`17.223dB`，下降`11.370dB`；camera0 full-image下降`3.993dB`并出现明显模糊/ghost。结论只支持“真实rasterizer可消费
+M23 carrier”，否定naive SH/opacity transfer的appearance parity。physical geometry不为画质回退，后续视觉容量若继续研究，
+必须是与GT-supervised physical query隔离且受3D surface约束的残差shell。下一failure ID仍为`V71-F28`。
+
 ## WorldSim V7.1 M24 r2 zero-footprint rejection / geometry-only view recovery（2026-09-05）
 
 r2=`20260904T171000Z__m24-geometry-locked-render-r2`在原生DriveStudio环境完成3 variants x 3 cameras，峰值显存

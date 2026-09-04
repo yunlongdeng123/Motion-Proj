@@ -1,5 +1,29 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M24 paper prevention note — 视觉负例不得反向污染physical claim（2026-09-05）
+
+- 主文同时给出GT/original/carrier同裁剪图和`-11.37dB` footprint PSNR，不以“renderer compatible”省略模糊/ghost；
+- limitations把M23旧“未渲染”边界替换为真实native-rasterizer负结果，不再暗示attribute attachment足以获得photorealism；
+- visual failure只约束appearance interface，不否定M8训练内GT surface supervision、M22 SE(3)组合或未决M21 external；
+- 论文不提出尚未实现的visual residual shell结果，只把“隔离且受训练内3D support约束”写成后续必要条件。
+
+下一可用编号仍为：`V71-F28`。
+
+## V7.1 M24 outcome note — 可渲染不等于视觉保真（2026-09-05）
+
+- r3以3D视锥规则冻结frame42后，3/3 camera与3/3 variants完成，visibility decisions 2/2通过；camera0形成
+  `18971 px` Actor footprint，故不新增implementation failure；
+- 309个GT-supervision-native physical Gaussians替换32522个StreetGS visual Gaussians后，Actor-footprint PSNR
+  `28.592→17.223dB`（`-11.370dB`），camera0 full-image PSNR下降`3.993dB`，视觉上出现强烈模糊/ghost；
+- 该负结果表明最近邻复制SH/opacity无法在大幅压缩视觉primitive后恢复方向性外观与细节；不得通过放宽footprint、
+  调scale/opacity或把visual centers复制回physical carrier修复；
+- representation结论：physical surface与appearance capacity必须分层。M8/M21 centers/scales继续由GT几何/first-return定义；
+  后续若建visual shell，只能作为不进入physical query的有界残差层，并需用训练内3D surface约束限制其支持；
+- claim impact：M23仅保留attribute-carrier接口结论，删除任何隐含photorealism暗示；M24不是geometry/physics失败，
+  但否定naive one-carrier appearance替换。
+
+下一可用编号仍为：`V71-F28`。
+
 ## V71-F27 — M24冻结中间帧不在目标Actor相机视锥内（2026-09-05）
 
 - 分类/状态：evaluation support / resolved before any nonzero-footprint quality exposure；run=
