@@ -386,6 +386,10 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                 )
                 actor["authority_target_masses_t"] = masses
                 actor["authority_target_stats"] = stats
+        for actor in train_actors:
+            actor["authority_target_masses_t"] = actor[
+                "authority_target_masses_t"
+            ].clone()
         authority = EvidentialGaussianAuthority(
             hidden_dim=int(config["model"]["hidden_dim"])
         ).to(device)

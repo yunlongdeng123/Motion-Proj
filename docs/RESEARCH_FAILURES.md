@@ -1,5 +1,14 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F34: M32 evidential target mass also retained inference identity（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/20260905T025000Z__m32-evidential-gaussian-authority-s71132-r2`；
+- symptom=first batch在`target_mass * log_softmax`报同一inference-tensor saved-for-backward错误；
+- exposure=与r1相同，0 optimizer/history/holdout metric；
+- root cause=r1只普通化了model inputs，遗漏单独InferenceMode中构造且需参与weight-gradient公式的soft target；
+- recovery=在context外clone `authority_target_masses_t`；PyTorch官方clone边界不变，科学合同完全不变；
+- claim impact=同源tensor lifecycle错误，不是独立科学尝试。下一failure ID=`V71-F35`。
+
 ## V71-F33: M32 frozen features retained inference-tensor identity（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01/20260905T024000Z__m32-evidential-gaussian-authority-s71132-r1`；

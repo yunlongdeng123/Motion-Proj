@@ -17,6 +17,10 @@ Formal r1在第一个authority forward、0 optimizer step处触发`V71-F33`：�
 按官方gradient-mode语义，r2只在离开inference context后clone这些冻结张量为普通read-only tensor；数据、GT、
 model、seed、loss和run decisions不变。下一failure ID=`V71-F34`。
 
+r2同样在first batch/0 optimizer处发现第二个同源tensor：primitive target masses也在单独的InferenceMode中构造，
+与trainable log-softmax相乘时需被autograd保存，登记`V71-F34`。r3把这个最后参与反传的cached target也在context外
+clone；无data/model/target/loss/seed/decision变化。下一failure ID=`V71-F35`。
+
 ## WorldSim V7.1 M31 completed / hard-anchor authority rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M31-ANCHOR-CONTRADICTION-ATTRIBUTION-01/

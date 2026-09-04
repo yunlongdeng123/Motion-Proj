@@ -1,5 +1,11 @@
 # Experiments
 
+## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — r2 target-tensor entry failure / V71-F34（2026-09-05）
+
+- run=`20260905T025000Z__m32-evidential-gaussian-authority-s71132-r2`；first batch/0 optimizer step；
+- same root as F33：soft target mass retained inference identity；clone outside context for r3；
+- no data/model/GT/loss/metric/decision change；no M21 partial read；next failure=`V71-F35`。
+
 ## WS-V71-M32-EVIDENTIAL-GAUSSIAN-AUTHORITY-01 — r1 tensor entry failure / V71-F33（2026-09-05）
 
 - run=`20260905T024000Z__m32-evidential-gaussian-authority-s71132-r1`；failed at first train forward；
