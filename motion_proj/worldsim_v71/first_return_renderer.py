@@ -398,6 +398,87 @@ def literal_oriented_first_return_partition(
     }
 
 
+def differentiable_oriented_first_intersection_depth(
+    centers: torch.Tensor,
+    normals: torch.Tensor,
+    tangent_scales: torch.Tensor,
+    normal_thickness: torch.Tensor,
+    origins: torch.Tensor,
+    targets: torch.Tensor,
+    *,
+    fallback_margin_m: float = 0.50,
+    ray_chunk_size: int = 256,
+    point_chunk_size: int = 512,
+) -> torch.Tensor:
+    """Return the exact ellipsoid entrance depth used by the literal deployment audit."""
+    if centers.ndim != 2 or centers.shape[-1] != 3:
+        raise ValueError("centers must be [N,3]")
+    normals = torch.nn.functional.normalize(normals.reshape(-1, 3), dim=1, eps=1.0e-6)
+    tangent_scales = tangent_scales.reshape(-1)
+    normal_thickness = normal_thickness.reshape(-1)
+    if not (
+        len(centers)
+        == len(normals)
+        == len(tangent_scales)
+        == len(normal_thickness)
+    ):
+        raise ValueError("Oriented Gaussian attributes must align")
+    target_depths, _ = _ray_geometry(origins, targets)
+    if len(centers) == 0:
+        return target_depths + float(fallback_margin_m)
+    outputs = []
+    for start in range(0, len(targets), int(ray_chunk_size)):
+        chunk_origins = origins[start : start + ray_chunk_size]
+        chunk_targets = targets[start : start + ray_chunk_size]
+        target_depth, directions = _ray_geometry(chunk_origins, chunk_targets)
+        best_depth = torch.full_like(target_depth, torch.inf)
+        for point_start in range(0, len(centers), int(point_chunk_size)):
+            points = centers[point_start : point_start + point_chunk_size]
+            local_normals = normals[point_start : point_start + point_chunk_size]
+            tangent = tangent_scales[
+                point_start : point_start + point_chunk_size
+            ].clamp_min(1.0e-4)
+            thickness = normal_thickness[
+                point_start : point_start + point_chunk_size
+            ].clamp_min(1.0e-4)
+            q = chunk_origins[:, None, :] - points[None, :, :]
+            qn = torch.sum(q * local_normals[None, :, :], dim=-1)
+            dn = torch.sum(
+                directions[:, None, :] * local_normals[None, :, :], dim=-1
+            )
+            inverse_tangent_sq = tangent.square().reciprocal().reshape(1, -1)
+            inverse_thickness_sq = thickness.square().reciprocal().reshape(1, -1)
+            q_dot_d = torch.sum(q * directions[:, None, :], dim=-1)
+            q_sq = torch.sum(q.square(), dim=-1)
+            coefficient_a = (
+                (1.0 - dn.square()) * inverse_tangent_sq
+                + dn.square() * inverse_thickness_sq
+            )
+            coefficient_b = (
+                (q_dot_d - qn * dn) * inverse_tangent_sq
+                + qn * dn * inverse_thickness_sq
+            )
+            coefficient_c = (
+                (q_sq - qn.square()) * inverse_tangent_sq
+                + qn.square() * inverse_thickness_sq
+                - 1.0
+            )
+            discriminant = coefficient_b.square() - coefficient_a * coefficient_c
+            root = torch.sqrt(discriminant.clamp_min(0.0) + 1.0e-10)
+            denominator = coefficient_a.clamp_min(1.0e-8)
+            near = (-coefficient_b - root) / denominator
+            far = (-coefficient_b + root) / denominator
+            positive = torch.where(near > 0.0, near, far)
+            valid = (discriminant >= 0.0) & (positive > 0.0)
+            local = torch.where(
+                valid, positive, torch.full_like(positive, torch.inf)
+            ).min(dim=1).values
+            best_depth = torch.minimum(best_depth, local)
+        fallback = target_depth + float(fallback_margin_m)
+        outputs.append(torch.where(torch.isfinite(best_depth), best_depth, fallback))
+    return torch.cat(outputs, dim=0)
+
+
 def literal_first_return_partition(
     surface: np.ndarray | torch.Tensor,
     targets: np.ndarray | torch.Tensor,
