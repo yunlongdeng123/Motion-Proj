@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01 — canonical（2026-09-05）
+
+- run=`20260905T111500Z__m47-physical-factor-diagnosis-r1`；66/66 matched；99,208 rays；verdict=
+  `m46_error_factors_diagnosed`；training/gate/model selection=false；
+- all M46-vs-M39 early/hit=`-0.048/+4.320pp`，但added/removed early=`+2.996/-3.044pp`；
+- hazard moving/quasi-static early=`-0.015/+0.809pp`；clear moving/quasi-static=`-0.496/-0.741pp`；hazard
+  quasi-static净退化主要来自单个trailer和单个truck（合计`+67`），6个car合计`-5`；
+- KEEP/projected-dominant=`-0.061/-0.028pp`；grazing/oblique/normal incidence=`-0.832/-0.483/+0.887pp`；
+- actor Pearson(displacement/projected/anchor-early/incidence/child-mass)=
+  `-0.009/-0.100/-0.082/+0.052/-0.009`；无单一motion/provenance/incidence解释；
+- conclusion=reject hard factor split/filter；close local oriented-support，move visibility into supervised joint return measure
+  or factor canonical geometry from temporal deformation；GPU=`0.164GiB`，RSS=`1.171GiB`，wall=`9.96s`；failure=`V71-F46`。
+
 ## WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01 — frozen（2026-09-05）
 
 - frozen=M39 categorical authority + M46 CDF-oriented support；same 66 exposed holdout；training/gate/model selection=false；

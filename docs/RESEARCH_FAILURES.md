@@ -1,5 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F46: local oriented support causes heterogeneous ray-label transport（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01/20260905T111500Z__m47-physical-factor-diagnosis-r1`；
+- evidence=all early净`-0.048pp`掩盖`2.996pp`新增与`3.044pp`消除；hazard moving改善`-0.015pp`，
+  quasi-static却`+0.809pp`；near-normal `+0.887pp`但grazing `-0.832pp`；KEEP/projected均改善；五个actor
+  correlation绝对值均`<=0.100`；
+- concentration=hazard quasi-static的净`+62`条early由1 trailer + 1 truck的`+67`主导，6 cars为`-5`；
+  不是可泛化的motion二分或单一incidence规律；
+- root cause=M46的局部normal/thickness改变全局categorical ordering，产生跨ray/类别的label transport；canonical
+  shape、visibility/termination与temporal deformation仍未在表示和supervision中独立；
+- anti-repeat=禁止按moving、hazard、KEEP/PROJECT、incidence或category后处理/删点；禁止继续调normal/thickness、
+  event权重、bin、seed。若继续Gaussian表示，可见性必须成为joint return measure中的训练变量；动态分支必须由
+  trajectory/scene-flow监督而非hazard标签定义；
+- claim impact=M45--M47均不进external，M43仍为唯一冻结candidate。下一failure ID=`V71-F47`。
+
 ## V7.1 M47 pre-registration note — separate physical factors before changing the paradigm（2026-09-05）
 
 M45/M46的hazard退化尚不能归因于“动态”或“入射角”。M47冻结两个renderer，复用M31的独立物理编译结果，

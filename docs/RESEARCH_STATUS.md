@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.1 M47 completed / single-factor local-support explanation rejected（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M47-MOTION-PROVENANCE-INCIDENCE-DIAGNOSIS-01/
+20260905T111500Z__m47-physical-factor-diagnosis-r1`；66/66 Actors、99,208 rays匹配，training/gate=false。
+M46-vs-M39的净all early虽为`-0.048pp`，但由`+2.996pp`新增与`-3.044pp`消除互相抵消，证明局部support
+引起大规模ray级标签迁移。hazard-moving=`-0.015pp`，退化反而集中在hazard-quasi-static=`+0.809pp`；
+其中6个quasi-static car净`-5`条early，而1个trailer与1个truck合计净`+67`，不是统一的motion效应。
+
+KEEP-dominant/projected-dominant均改善`-0.061/-0.028pp`；grazing/oblique改善`-0.832/-0.483pp`，near-normal
+却退化`+0.887pp`。actor-level early delta与displacement/projected fraction/anchor early/incidence/child responsibility
+的Pearson=`-0.009/-0.100/-0.082/+0.052/-0.009`，没有单因素主导。结论：不做motion hard split、provenance filter
+或incidence阈值；M45--M47关闭local oriented-support范式，登记`V71-F46`。下一步把可见性作为GT return measure内的
+独立监督因子，或进一步分离canonical geometry与temporal deformation；参考DynamicVGGT、DeGO、SelfOccFlow，
+但不引入visual teacher破坏3D监督。GPU=`0.164GiB`、RSS=`1.171GiB`、wall=`9.96s`；无M43 partial read。
+
 ## WorldSim V7.1 M47 motion/provenance/incidence diagnosis frozen（2026-09-05）
 
 状态=`v71_m47_motion_provenance_incidence_diagnosis_frozen`，详见

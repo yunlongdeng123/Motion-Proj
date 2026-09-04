@@ -11,6 +11,12 @@ state in separate streams with explicit ego/object-motion compensation~\cite{dol
 audit the producer of Actor-local targets and to supervise a continuous physical field; they do not justify deleting an
 inconsistent point after inference.
 
+Recent 4D formulations make motion a first-class factor rather than a geometry residual. DynamicVGGT equips Gaussians
+with velocity under scene-flow supervision~\cite{he2026dynamicvggt}; DeGO separates rigid offsets from non-rigid
+deformation~\cite{gao2026dego}; and SelfOccFlow predicts separate static/dynamic signed-distance fields before flow-warped
+temporal aggregation~\cite{timoneda2026selfoccflow}. These works motivate our separation boundary, not a visual-teacher
+shortcut: canonical surface, visibility, and temporal deformation must receive distinct physical supervision.
+
 \paragraph{Learned geometry completion.}
 SelfOcc treats the reconstructed volume as a continuous signed-distance field and closes training through differentiable rendering~\cite{huang2024selfocc}. Object-centric occupancy completion instead canonicalizes long LiDAR tracklets and queries an implicit decoder at Actor-relative coordinates~\cite{zheng2024objectcentric}. SparseOcc++ separates geometric completion from semantics by regressing an anisotropic scene-completion field on sparse anchors~\cite{tang2026sparseoccplusplus}. Gau-Occ initializes semantic Gaussians from a diffusion-completed LiDAR cloud, but its final multimodal head may still update center, scale, and rotation under occupancy supervision~\cite{lv2026gauocc}. PoinTr formulates completion as set-to-set translation, while SnowflakeNet grows child points from parent seeds~\cite{yu2021pointr,xiang2021snowflakenet}. We combine only these target/set principles: dynamic sweeps are aligned per Actor, observed anchors are immutable, image features cannot update geometry, and ray/surface losses remain active. Our target is not occupancy mIoU: it is the joint reduction of literal early returns without degrading held-out Actor surface distance.
 

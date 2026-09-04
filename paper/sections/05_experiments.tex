@@ -411,7 +411,7 @@ explanation of safety margin without creating a new deployment gate.
 
 Finally, M45 replaces only the completion-child isotropic kernel by the frozen M11 GT-supervised oblate kernel. Relative
 to M39, all and clear early returns fall by 0.02 and 0.28 points, and hit recall rises by 3.87 points; the mean anisotropy
-is 8.10 with 0.020,m normal thickness. Hazardous early returns nevertheless rise by 0.034 points, so the frozen
+is 8.10 with 0.020\,m normal thickness. Hazardous early returns nevertheless rise by 0.034 points, so the frozen
 worst-stratum criterion rejects M45. This isolates a train--renderer mismatch rather than refuting planar support: M11
 normals were learned for earliest hard intersection, while M45 uses them inside a global categorical CDF. We do not tune
 thickness; any successor must supervise orientation through that deployed CDF while freezing geometry and authority.
@@ -422,6 +422,17 @@ NLL both decrease, and relative to M39 the final model lowers all/clear early re
 We therefore reject and close oriented-support training. Renderer alignment is not sufficient when a local support degree
 of freedom must also absorb motion-, pose-, or incidence-dependent global ordering; the next analysis keeps these factors
 separate rather than feeding the hazard label to geometry.
+
+M47 separates those factors without further training. The small aggregate early reduction hides 2.996 points of newly
+early rays and 3.044 points of repaired rays. Motion is not the explanation: hazardous moving Actors improve by 0.015
+points, whereas hazardous quasi-static Actors regress by 0.809 points, largely from one trailer and one truck. Prior
+KEEP/PROJECT provenance does not split the failure. Grazing and oblique rays improve by 0.832/0.483 points, while
+near-normal rays regress by 0.887 points; nevertheless, actor-level correlation between incidence and the early delta is
+only 0.052, and all five tested physical associations have absolute correlation at most 0.100. We therefore reject
+motion masks, provenance filters, and incidence thresholds. M45--M47 instead expose heterogeneous ray-label transport:
+local support is being asked to represent canonical shape, visibility, and termination ordering simultaneously. The next
+representation makes visibility an explicitly supervised factor of the joint return measure; temporal deformation remains
+a separate trajectory-supervised problem.
 
 \begin{figure}[t]
   \centering
