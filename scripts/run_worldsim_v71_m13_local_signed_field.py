@@ -40,6 +40,7 @@ from motion_proj.worldsim_v71.local_signed_field import (
     LocalAnchorSignedField,
     OneSidedLocalOccupancyField,
     RaySurvivalDensityField,
+    RayTerminationLogitField,
     initialize_local_field_from_expansion,
 )
 from motion_proj.worldsim_v71.ray_displacement import RaySurfaceRelocationMLP
@@ -352,12 +353,125 @@ def _train_survival(
     return history
 
 
+def _ray_categorical_values(
+    model: RayTerminationLogitField,
+    actor: Mapping[str, Any],
+    config: Mapping[str, Any],
+    device: torch.device,
+    sample_count: int,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    targets, origins = m6_runner._limit_target(
+        actor, int(config["maximum_training_rays"]), device
+    )
+    target_depth = torch.linalg.vector_norm(targets - origins, dim=1).clamp_min(1.0e-6)
+    directions = (targets - origins) / target_depth[:, None]
+    bounds = actor["size_t"] * 0.5 + float(config["training_cuboid_padding_m"])
+    entry, exit_depth, valid_box = _ray_box_intervals(origins, directions, bounds)
+    valid = valid_box & (target_depth >= entry) & (target_depth <= exit_depth)
+    fractions = torch.linspace(
+        0.0, 1.0, sample_count, dtype=targets.dtype, device=device
+    )
+    depths = entry[valid, None] + (
+        exit_depth[valid] - entry[valid]
+    )[:, None] * fractions[None, :]
+    queries = (
+        origins[valid, None, :]
+        + depths[:, :, None] * directions[valid, None, :]
+    )
+    logits = _field(model, actor, queries.reshape(-1, 3)).reshape(
+        len(depths), sample_count
+    )
+    return depths, target_depth[valid], logits
+
+
+def _categorical_losses(
+    model: RayTerminationLogitField,
+    actor: Mapping[str, Any],
+    config: Mapping[str, Any],
+) -> dict[str, torch.Tensor]:
+    depths, target_depth, logits = _ray_categorical_values(
+        model,
+        actor,
+        config,
+        actor["features"].device,
+        int(config["categorical_train_bins"]),
+    )
+    target_bins = torch.abs(depths - target_depth[:, None]).argmin(dim=1)
+    categorical_nll = F.cross_entropy(logits, target_bins)
+    probabilities = torch.softmax(logits, dim=1)
+    expected_depth = torch.sum(probabilities * depths, dim=1)
+    depth_l1 = torch.abs(expected_depth - target_depth).mean()
+    entropy = -torch.sum(
+        probabilities * torch.log(probabilities.clamp_min(1.0e-8)), dim=1
+    ).mean()
+    loss = categorical_nll + float(config["categorical_depth_weight"]) * depth_l1
+    return {
+        "loss": loss,
+        "categorical_nll": categorical_nll,
+        "depth_l1": depth_l1,
+        "entropy": entropy,
+        "target_probability": probabilities.gather(
+            1, target_bins[:, None]
+        ).mean(),
+    }
+
+
+def _train_categorical(
+    model: RayTerminationLogitField,
+    actors: list[dict[str, Any]],
+    config: Mapping[str, Any],
+    optimizer: torch.optim.Optimizer,
+) -> list[dict[str, float | int]]:
+    names = (
+        "loss",
+        "categorical_nll",
+        "depth_l1",
+        "entropy",
+        "target_probability",
+    )
+    history: list[dict[str, float | int]] = []
+    batch_size = int(config["actor_batch_size"])
+    for epoch in range(int(config["fine_tune_epochs"])):
+        totals = {name: 0.0 for name in names}
+        permutation = torch.randperm(len(actors)).tolist()
+        for start in range(0, len(permutation), batch_size):
+            indices = permutation[start : start + batch_size]
+            items = [_categorical_losses(model, actors[index], config) for index in indices]
+            means = {
+                name: torch.stack([item[name] for item in items]).mean()
+                for name in names
+            }
+            optimizer.zero_grad(set_to_none=True)
+            means["loss"].backward()
+            optimizer.step()
+            for name in names:
+                totals[name] += float(means[name].detach()) * len(indices)
+        row: dict[str, float | int] = {
+            "epoch": epoch + 1,
+            **{name: value / len(actors) for name, value in totals.items()},
+        }
+        history.append(row)
+        print(
+            json.dumps(
+                {
+                    "stage": str(config["training_stage"]),
+                    "actors": len(actors),
+                    **row,
+                }
+            ),
+            flush=True,
+        )
+    return history
+
+
 def _train(
     model: LocalAnchorSignedField,
     actors: list[dict[str, Any]],
     config: Mapping[str, Any],
     optimizer: torch.optim.Optimizer,
 ) -> list[dict[str, float | int]]:
+    if isinstance(model, RayTerminationLogitField):
+        return _train_categorical(model, actors, config, optimizer)
     if isinstance(model, RaySurvivalDensityField):
         return _train_survival(model, actors, config, optimizer)
     history: list[dict[str, float | int]] = []
@@ -610,6 +724,87 @@ def _survival_first_return_partition(
     }
 
 
+def _categorical_first_return_partition(
+    model: RayTerminationLogitField,
+    actor: Mapping[str, Any],
+    evaluation: Mapping[str, Any],
+    device: torch.device,
+) -> dict[str, np.ndarray]:
+    targets = torch.as_tensor(actor["target"], dtype=torch.float32, device=device)
+    origins = torch.as_tensor(
+        actor["target_sensor_origins"], dtype=torch.float32, device=device
+    )
+    target_depth = torch.linalg.vector_norm(targets - origins, dim=1).clamp_min(1.0e-6)
+    directions = (targets - origins) / target_depth[:, None]
+    bounds = actor["size_t"] * 0.5 + float(evaluation["cuboid_padding_m"])
+    entry, exit_depth, valid_box = _ray_box_intervals(origins, directions, bounds)
+    fractions = torch.linspace(
+        0.0,
+        1.0,
+        int(evaluation["field_sample_count"]),
+        dtype=targets.dtype,
+        device=device,
+    )
+    first_depths = []
+    observables = []
+    ray_chunk = int(evaluation["ray_chunk_size"])
+    threshold = float(evaluation["categorical_median_threshold"])
+    with torch.inference_mode():
+        for start in range(0, len(targets), ray_chunk):
+            local_entry = entry[start : start + ray_chunk]
+            local_exit = exit_depth[start : start + ray_chunk]
+            local_valid = valid_box[start : start + ray_chunk]
+            depths = local_entry[:, None] + (
+                local_exit - local_entry
+            )[:, None] * fractions[None, :]
+            queries = (
+                origins[start : start + ray_chunk, None, :]
+                + depths[:, :, None] * directions[start : start + ray_chunk, None, :]
+            )
+            logits = _field(model, actor, queries.reshape(-1, 3)).reshape(
+                len(local_entry), -1
+            )
+            cdf = torch.softmax(logits, dim=1).cumsum(dim=1)
+            reached = cdf >= threshold
+            indices = reached.to(torch.int64).argmax(dim=1)
+            previous_indices = (indices - 1).clamp_min(0)
+            right_cdf = cdf.gather(1, indices[:, None]).squeeze(1)
+            gathered_left_cdf = cdf.gather(
+                1, previous_indices[:, None]
+            ).squeeze(1)
+            left_cdf = torch.where(
+                indices > 0, gathered_left_cdf, torch.zeros_like(gathered_left_cdf)
+            )
+            right_depth = depths.gather(1, indices[:, None]).squeeze(1)
+            gathered_left_depth = depths.gather(
+                1, previous_indices[:, None]
+            ).squeeze(1)
+            left_depth = torch.where(
+                indices > 0, gathered_left_depth, local_entry
+            )
+            ratio = (threshold - left_cdf) / (right_cdf - left_cdf).clamp_min(1.0e-6)
+            selected = left_depth + ratio.clamp(0.0, 1.0) * (
+                right_depth - left_depth
+            )
+            first_depths.append(
+                torch.where(
+                    local_valid, selected, torch.full_like(selected, torch.inf)
+                ).cpu()
+            )
+            observables.append(local_valid.cpu())
+    first_depth = torch.cat(first_depths).numpy()
+    observable = torch.cat(observables).numpy().astype(bool)
+    target_depth_np = target_depth.cpu().numpy()
+    tolerance = float(evaluation["literal_depth_tolerance_m"])
+    return {
+        "first_depth": first_depth.astype(np.float32),
+        "target_depth": target_depth_np.astype(np.float32),
+        "observable": observable,
+        "early": observable & (first_depth < target_depth_np - tolerance),
+        "hit": observable & (np.abs(first_depth - target_depth_np) <= tolerance),
+    }
+
+
 def _field_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def stratum(selected: list[dict[str, Any]]) -> dict[str, Any]:
         rays = sum(int(row["target_ray_count"]) for row in selected)
@@ -706,6 +901,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             field_class = DirectQuerySignedField
         elif field_variant == "ray_survival_density":
             field_class = RaySurvivalDensityField
+        elif field_variant == "categorical_first_return":
+            field_class = RayTerminationLogitField
         else:
             field_class = LocalAnchorSignedField
         field_kwargs: dict[str, Any] = {}
@@ -852,7 +1049,11 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                         config["evaluation"]["distance_chunk_size"]
                     ),
                 )
-                if isinstance(model, RaySurvivalDensityField):
+                if isinstance(model, RayTerminationLogitField):
+                    partition = _categorical_first_return_partition(
+                        model, actor, config["evaluation"], device
+                    )
+                elif isinstance(model, RaySurvivalDensityField):
                     partition = _survival_first_return_partition(
                         model, actor, config["evaluation"], device
                     )
@@ -926,6 +1127,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "local_signed_field": field_metrics,
             "ray_survival": field_metrics
             if isinstance(model, RaySurvivalDensityField)
+            else None,
+            "categorical_first_return": field_metrics
+            if isinstance(model, RayTerminationLogitField)
             else None,
             "decisions": decisions,
             "m8_guidance_frozen": True,
