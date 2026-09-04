@@ -1,5 +1,13 @@
 # Experiments
 
+## WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01 — frozen（2026-09-05）
+
+- identity=`dC/dlog(w_j)=r_j(C_j-C)`；attenuation lowers pre-boundary CDF iff component `C_j>C`；
+- audit=frozen M45 oriented measure + frozen M48 visibility on same 66 exposed holdout / 64 bins；
+- outputs=uniform child sign、per-component favorable/adverse attenuation pressure、exact/linear CDF delta、
+  added/removed early，all/hazard/clear；
+- training/gate/model-selection/filter/external=false；M43 partial quality read=false；explanation-only，cannot rescue M48。
+
 ## WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01 — canonical rejected（2026-09-05）
 
 - run=`20260905T114500Z__m48-child-visibility-s71148-r1`；593/66 Actors、4 epochs；verdict=

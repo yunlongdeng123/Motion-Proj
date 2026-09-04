@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M49 pre-registration note — an analytic boundary, not a rescue gate（2026-09-05）
+
+M49只核验`∂C/∂log w_j=r_j(C_j-C)`与M48实际attenuation的CDF符号；不得根据结果选择primitive、ray、
+Actor或stratum，不得把derivative正负变成部署gate，不得重训M48。即使线性分解精确解释失败，也只能形成
+安全边界和anti-repeat依据，不能把M48升级为supported。当前next failure ID仍为`V71-F48`。
+
 ## V71-F47: supervised bounded child visibility transfers risk under categorical normalization（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01/20260905T114500Z__m48-child-visibility-s71148-r1`；

@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.1 M49 categorical attenuation sign boundary frozen（2026-09-05）
+
+状态=`v71_m49_visibility_sign_boundary_frozen`，详见
+[`WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md`](WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md)。
+M49不再训练renderer，而对M45 joint measure推导解析边界：若primitive `j`的总mass/pre-boundary mass为
+`D_j/N_j`，`C_j=N_j/D_j`、responsibility=`r_j`且全局CDF=`C`，则
+`∂C/∂log w_j=r_j(C_j-C)`。因此attenuation只在`C_j>C`时降低安全边界CDF；`C_j<C`时反而增加。
+冻结加载M48，仅在同一66 holdout量化有利/有害pressure、exact-vs-linear CDF change与added/removed early；
+无训练、gate、选择、调参、filter或external/M43 partial read。该里程碑只建立可解释性和安全边界，不能救M48。
+
 ## WorldSim V7.1 M48 rejected / bounded visibility still transfers hazard risk（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M48-SUPERVISED-CHILD-VISIBILITY-MEASURE-01/
