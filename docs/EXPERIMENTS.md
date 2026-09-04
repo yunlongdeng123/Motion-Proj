@@ -1,5 +1,22 @@
 # Experiments
 
+## WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T050000Z__m35-transmittance-anchor-s71135-r1`；593 train / 66 holdout；6 epochs；
+  verdict=`m35_development_rejected`；decisions=`1/4`；
+- ordered NLL=`4.179232→4.135555`；evidential CE=`1.072208→0.991522`；occupied correlation=
+  `0.269036`；GT-mass CE=`1.014594`；
+- original baseline early/hit=`18.1870/62.2833%`；unit transmittance=`42.2940/50.9394%`；learned
+  transmittance=`35.2663/56.7071%`；learned-vs-unit=`-7.0277/+5.7677pp`，但learned-vs-baseline=
+  `+17.0793/-5.5762pp`；
+- hazard/clear learned-vs-baseline early=`+18.7655/+8.7867pp`；unit/learned no-return=
+  `0.3196/0.3987`；
+- conclusion=ordered authority有正确方向，unit per-primitive optical thickness缺少采样密度/重叠校准；
+  stop scale/segment/seed tuning；next=anchor/child contribution decomposition；
+- GPU=`0.406GiB`，RSS=`1.339GiB`，wall=`42.41s`；no external/M21 partial read；manuscript updated +
+  TinyTeX full compile success（17 pages / 2,347,606 bytes；refs resolved；no fatal/new warning）；next failure=
+  `V71-F38`。
+
 ## WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01 — frozen（2026-09-05）
 
 - literature=Vol3DGS CVPR 2025 analytic Gaussian integration；GaussRender ICCV 2025 $T_i\alpha_i$ occupancy/depth

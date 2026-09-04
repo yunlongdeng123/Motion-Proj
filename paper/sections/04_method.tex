@@ -94,6 +94,14 @@ $m^{\mathrm{GT}}_j$ with free evidence before the endpoint, occupied evidence ne
 behind the endpoint or without ray support. Field names and optimization paths separate build inputs from GT targets.
 Neither provenance nor unknown mass is a hard keep/delete decision.
 
+For the order-aware ablation, we replace normalization of pointwise energy by analytic Gaussian transmittance, following
+the volumetric construction of Vol3DGS~\cite{talegaonkar2025vol3dgs}. Integrating the normalized line section of each
+isotropic Gaussian over ray segment $[d_k,d_{k+1}]$ gives optical thickness $\tau_k$. We then form
+$T_k=\exp(-\sum_{\ell<k}\tau_\ell)$ and termination weight $w_k=T_k(1-\exp(-\tau_k))$, as in the ordered
+alpha-compositing used for occupancy supervision by GaussRender~\cite{chambon2025gaussrender}. Because the frozen corpus
+contains a target return inside the Actor box, this ablation conditions $w_k$ on a box return and reports the residual
+no-return mass separately; it does not claim no-return modeling.
+
 Rigid motion is a separate authority. For annotated pose $T_{it}=(R_{it},t_{it})$, the deployed field is
 \begin{equation}
 e_{it}^{\mathrm{world}}(x)=e_i\!\left(R_{it}^{\top}(x-t_{it})\right).

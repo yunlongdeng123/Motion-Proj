@@ -337,6 +337,15 @@ levels: the model can predict which anchors receive occupied evidence, but the n
 first-hit process. We reject M34 without tuning and replace this composition with prefix transmittance rather than changing
 the supervision or deleting anchors.
 
+M35 trains the same evidence head through analytic segment integration and prefix transmittance. Learned authority moves
+the ordered operator in the right direction: relative to unit transmittance, early returns fall from 42.29\% to 35.27\%
+and hits rise from 50.94\% to 56.71\%. However, both remain far behind the original unit-energy baseline of
+18.19\%/62.28\%; hazardous early returns are 18.77 points worse. Unit and learned residual no-return masses are
+0.320 and 0.399 despite conditioning evaluation on an Actor-box return. The failure is therefore optical parameterization,
+not ordering: summing unit line integrals over a dense, overlapping primitive set makes opacity depend on sampling density.
+We reject the current transmittance field and next separate anchor and completion-child optical contributions before defining
+a GT-calibrated surface measure.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

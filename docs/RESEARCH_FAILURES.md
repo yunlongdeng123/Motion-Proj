@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F37: M35 unit Gaussian optical thickness over-terminates near surfaces（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01/20260905T050000Z__m35-transmittance-anchor-s71135-r1`；
+- evidence=unit-transmittance early/hit=`42.294/50.939%`，learned=`35.266/56.707%`，原baseline=
+  `18.187/62.283%`；authority相对同算子方向正确，但绝对early仍`+17.079pp`；
+- root cause=每个密集/重叠primitive用unit line-integrated optical thickness，表示不具采样密度不变性；条件
+  hit分布还掩盖unit/learned `0.320/0.399` no-return mass；
+- anti-repeat=不调segments、Gaussian scale、seed或手工opacity；先归因anchor/child贡献，再从GT监督表面
+  measure或opacity calibration；
+- claim impact=M35不进入external；有序transmittance结构保留为候选，但当前密度参数化拒绝。
+  下一failure ID=`V71-F38`。
+
 ## V7.1 M35 pre-registration note — replace normalization, not supervision（2026-09-05）
 
 M35保留M33 evidence/GT与M34 anchor-only隔离，只替换ray composition为解析Gaussian积分+prefix transmittance。

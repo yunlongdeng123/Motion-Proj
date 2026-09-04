@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7.1 M35 rejected / optical-thickness calibration boundary（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M35-TRANSMITTANCE-ANCHOR-AUTHORITY-01/
+20260905T050000Z__m35-transmittance-anchor-s71135-r1`；verdict=`m35_development_rejected`，decisions=`1/4`。
+593 train / 66 holdout、6 epochs正常完成；ordered categorical NLL=`4.179→4.136`，evidential CE=
+`1.072→0.992`，occupied correlation=`0.269`（仅可辨识性通过）。
+
+相对原unit-energy baseline，learned transmittance all early=`35.266%` vs `18.187%`（`+17.079pp`），hit=
+`56.707%` vs `62.283%`（`-5.576pp`）；hazard/clear early分别`+18.765/+8.787pp`。但相对同一
+unit-transmittance，学习authority把all early `42.294→35.266%`（`-7.028pp`）且hit `50.939→56.707%`
+（`+5.768pp`），方向性有效。
+
+根因转为primitive optical calibration：单位密集/重叠Gaussians的积分厚度不可直接相加为表面opacity；unit与
+learned平均no-return仍为`0.320/0.399`，而当前评估条件在Actor-box hit。关闭segment/scale/seed调参；下一步
+先冻结分解anchors-only/children-only optical贡献，再决定是否采用coverage-normalized surface measure或显式
+GT opacity calibration。GPU=`0.406GiB`、RSS=`1.339GiB`、wall=`42.41s`；无external/M21 partial read。
+论文related/method/experiments同步并由TinyTeX完整编译成功（17页 / 2,347,606 bytes；引用已解析；无
+fatal/new warning）。下一failure ID=`V71-F38`。
+
 ## WorldSim V7.1 M35 analytic transmittance authority frozen（2026-09-05）
 
 状态=`v71_m35_transmittance_anchor_authority_frozen`，详见
