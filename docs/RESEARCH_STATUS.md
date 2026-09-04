@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M3 ray-signed level-set ready（2026-09-04）
+
+状态：`v71_m3_train_holdout_ready`。M3以17D build-only Actor evidence经PointNet编码，Fourier coordinate decoder只输出
+一个signed distance；沿target ray用`front positive / hit zero / back negative`监督，加入小权重Eikonal与同一SDF诱导的
+first-return rendering。抽取直接在线性grid edges上插值sign crossing，不再存在SCF band/evidence argmax后验AND。
+
+1004 corpus中全部eligible Actors按固定索引`mod10=0`留作train-role holdout，其余训练；seed71104、256 hidden、24
+epochs、one run。此阶段只要求验证surface可抽取及联合物理方向，不读取已消费Selection/Source Final/AV2。若train holdout
+没有形成可用level-set，登记`V71-F07`并停止该参数化；若通过，再冻结独立AV2 zero-shot runner。无threshold/grid/loss/
+seed sweep。
+
 ## WorldSim V7.1 M2 rejected on Source Final / signed level-set next（2026-09-04）
 
 Canonical M2=`run://worldsim_v71/WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01/

@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M3-RAY-SIGNED-LEVEL-SET-01 — frozen protocol（2026-09-04）
+
+- representation=`single conditional SDF`；PointNet evidence encoder + Fourier xyz/size decoder；surface=`SDF zero crossing`；
+- supervision=target rays在`[-.24,-.12,-.06,0,+.06,+.12]m`的signed distance、anchors=0、Eikonal、同一SDF
+  first-return rendering；UNKNOWN只作为输入mass；
+- extraction=`0.10m structured grid edge interpolation`；无band、occupied class、UNKNOWN action或post-hoc AND；
+- split=eligible train corpus固定`mod10=0` holdout，禁止训练读取；seed71104、24 epochs、one run；
+- stage gate=`>=90% Actors有zero crossing + 原五项物理合同`；本阶段不读Selection/Source Final/AV2；
+- validation budget=`py_compile only`；无smoke/regression/hash/checksum/fingerprint。
+
 ## WS-V71-M2-DEPLOY-CONSISTENT-RELOCATION-01 — canonical negative result（2026-09-04）
 
 - run=`20260904T100928Z__m2-deploy-consistent-relocation-s71103-r1`；status=`done`；verdict=

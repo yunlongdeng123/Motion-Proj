@@ -1,5 +1,12 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.1 M3 prevention note — signed scalar同时承担监督、render与抽取（2026-09-04）
+
+- 禁止恢复M1的unsigned SCF + evidence class双head；M3只有一个signed scalar，zero crossing就是部署surface；
+- front/back符号只由train target ray方向定义，heldout target不进入evidence encoder；UNKNOWN不产生监督标签或删点；
+- train-role holdout按固定索引冻结，不因结果更换；任一stage gate失败即`V71-F07`，不扫voxel/offset/Eikonal/seed；
+- 实现阶段无failure，Selection/Source Final/AV2均不读。
+
 ## V71-F06 — M2部署一致位移在Source Final仅Chamfer不达标
 
 - 分类/状态：scientific / terminal for M2；canonical=`run://worldsim_v71/
