@@ -12,6 +12,7 @@
 - conclusion=visibility attenuation lacks monotone safety under normalized mixture；explanation only，never gate/filter；
   GPU=`0.226GiB`、RSS=`1.095GiB`、wall=`13.13s`；no external/M43 partial read。
 - paper artifact=`paper/figures/v71_m49_attenuation_sign_boundary.pdf`，由canonical `summary.json`经固定plot脚本生成。
+- exact finite extension=`F_v-F=(1-v)r_j(F-C_j)/(1-(1-v)r_j)`；sign independent of attenuation magnitude。
 
 ## WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01 — frozen（2026-09-05）
 

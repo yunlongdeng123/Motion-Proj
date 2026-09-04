@@ -7,6 +7,7 @@ M49在99,208条冻结ray上确认`∂C/∂log w_j=r_j(C_j-C)`：uniform child at
 exact change达`95.73%`。禁止把`C_j>C`转成primitive/ray选择器，因为该条件使用目标边界且只解释已暴露
 development ray；它是M48的anti-repeat定理，不是oracle filter。`V71-F47`关闭，next ID=`V71-F48`。
 论文图只展示解析sign与实际finite change的总体比例；不得从图中读取阈值或用于选择case。
+有限衰减式证明同一component/family的错误符号不能由opacity/identity/temperature幅度修复，纳入anti-repeat边界。
 
 ## V7.1 M49 pre-registration note — an analytic boundary, not a rescue gate（2026-09-05）
 

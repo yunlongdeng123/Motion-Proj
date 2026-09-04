@@ -14,6 +14,8 @@ M48-vs-M45由`1.258%`新增与`0.892%`消除early形成净`+0.366pp`，hazard新
 pre-boundary CDF。该条件只作解释，绝不转为gate/filter；visibility支线永久关闭，无新failure，next ID仍
 `V71-F48`。GPU=`0.226GiB`、RSS=`1.095GiB`、wall=`13.13s`；无M43 partial read。
 论文已加入Eq. attenuation-sign boundary及all/hazard/clear双面板可复现图，绘图脚本从canonical summary读取。
+进一步给出有限衰减精确式`F_v-F=(1-v)r_j(F-C_j)/(1-(1-v)r_j)`：对单component或统一family缩放，
+变化符号与`v`大小无关，故不能靠调opacity/identity/temperature翻转有害方向。
 
 ## WorldSim V7.1 M49 categorical attenuation sign boundary frozen（2026-09-05）
 

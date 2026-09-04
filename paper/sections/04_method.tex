@@ -146,9 +146,15 @@ $r_j=o_jD_j/\sum_a o_aD_a$. Direct differentiation yields
 \frac{\partial F(b)}{\partial\log o_j}=r_j\bigl(C_j-F(b)\bigr).
 \label{eq:attenuation-sign-boundary}
 \end{equation}
-Consequently, decreasing a component's authority lowers the pre-boundary CDF only if $C_j>F(b)$; attenuation of a
-later-than-mixture component increases it. This is a safety boundary of normalized return mixtures, not permission to use
-the GT-dependent sign as a deployment gate.
+For any finite attenuation $v\in(0,1]$ applied to that component (or to a family treated as one component), the exact
+change is
+\begin{equation}
+F_v(b)-F(b)=\frac{(1-v)r_j\bigl(F(b)-C_j\bigr)}{1-(1-v)r_j}.
+\label{eq:finite-attenuation-boundary}
+\end{equation}
+Consequently, decreasing authority lowers the pre-boundary CDF only if $C_j>F(b)$; attenuation of a later-than-mixture
+component increases it, and changing the attenuation magnitude cannot reverse the sign. This is a safety boundary of
+normalized return mixtures, not permission to use the GT-dependent sign as a deployment gate.
 
 \subsection{Validity--Hazard Factorization}
 
