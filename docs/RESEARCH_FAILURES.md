@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F42: M42 global interval events do not resolve stratum-dependent CDF safety（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01/20260905T083000Z__m42-interval-event-s71142-r1`；
+- evidence=all/hazard early相对baseline为`-0.052/-0.108pp`且all hit=`+2.538pp`，但clear early=
+  `+0.221pp`；相对M39 all early=`+0.469pp`，decisions=`4/5`；
+- optimization=interval NLL下降，anchor/child correlation=`0.4818/0.5700`，family-total residual=
+  `1.53e-5`，无NaN/OOM；失败不是训练、可辨识性或守恒数值问题；
+- root cause=hit-band项持续改善，但not-early NLL不降且部署early probability微升；同一全局event loss在固定
+  geometry/measure上仍以增加GT附近概率为主，不能同时保证hazard和clear两种ray分布的CDF边界；
+- anti-repeat=不在同一66 Actors上调event权重、0.20m tolerance、epoch、seed、bin或median；不以clear标签
+  做部署门控。M40--M42微调支线关闭，冻结M39 categorical surface measure作一次cross-domain确认；
+- claim impact=M42不进external；结果支持“物理event必须从GT监督”但否定“全局interval objective本身足够”。
+  下一failure ID=`V71-F43`。
+
 ## V7.1 M42 pre-registration note — safety event is defined by GT, not a deployment gate（2026-09-05）
 
 M42的0.20m直接沿用literal GT evaluator tolerance，训练前冻结；它定义not-early/hit supervision，不在推理时删点

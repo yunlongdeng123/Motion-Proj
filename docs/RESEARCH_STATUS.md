@@ -1,5 +1,24 @@
 # Research Status
 
+## WorldSim V7.1 M42 rejected / interval loss recovers aggregate safety but not clear-stratum safety（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01/
+20260905T083000Z__m42-interval-event-s71142-r1`；593 train / 66 exposed holdout、4 epochs，verdict=
+`m42_development_rejected`，decisions=`4/5`。interval NLL=`3.9504→3.9458`，其中hit-band NLL改善，
+not-early NLL近乎不变；部署early probability反而从`0.26514`微升至`0.26592`，hit probability=
+`0.49494→0.49714`。
+
+相对baseline，all/hazard early=`-0.052/-0.108pp`且all hit=`+2.538pp`，但clear early=`+0.221pp`，
+唯一未通过项正是冻结的clear-stratum safety。相对M39，all early=`+0.469pp`、hit=`+0.366pp`；因此M42
+没有替代M39。anchor/child occupied correlation=`0.4818/0.5700`，family-total残差=`1.53e-5`，说明失败
+不是优化、可辨识性或守恒实现问题，而是同一固定几何/measure下全局not-early与hit事件仍存在stratum-dependent
+竞争。
+
+停止在已暴露66 Actors上继续调event权重、tolerance、epoch、seed或CDF读出；M40--M42开发微调支线关闭。
+冻结M39作为唯一external candidate，下一里程碑只构造AV2 build-only producer-evidence adapter，并在20-log
+cohort完整后一次性确认，不读取partial质量。GPU=`0.376GiB`、RSS=`1.326GiB`、wall=`39.06s`；登记
+`V71-F42`，下一failure ID=`V71-F43`。
+
 ## WorldSim V7.1 M42 GT interval-event CDF supervision frozen（2026-09-05）
 
 状态=`v71_m42_interval_event_supervision_frozen`，详见

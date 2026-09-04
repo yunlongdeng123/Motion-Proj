@@ -391,6 +391,15 @@ The remaining mismatch is therefore not total measure or identifiability: maximi
 not directly control whether the deployed CDF median crosses the early-return boundary. This motivates supervision on the
 ordered probability events used by the physical evaluation itself.
 
+M42 consequently optimizes two GT-defined interval events under the same conserved representation: survival before
+$d_{\mathrm{gt}}-0.20$,m and return within $\pm0.20$,m of the observed endpoint. Aggregate early returns are 0.05 points
+below the unit-energy reference and hit recall is 2.54 points higher; hazardous early returns also improve by 0.11 points.
+However, clear-stratum early returns increase by 0.22 points, and the predicted early-event probability itself rises
+slightly during training while only the hit-band likelihood improves. We reject M42 under the frozen worst-stratum rule.
+This negative result is informative: defining physical consistency from GT events is necessary, but a global interval
+objective does not by itself remove stratum-dependent ambiguity in a fixed geometry and surface measure. We therefore stop
+development-set loss tuning and retain the simpler frozen M39 representation for one cross-domain evaluation.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{figures/v71_m24_geometry_locked_render.png}

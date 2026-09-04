@@ -1,5 +1,19 @@
 # Experiments
 
+## WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01 — canonical rejected（2026-09-05）
+
+- run=`20260905T083000Z__m42-interval-event-s71142-r1`；593 train / 66 exposed holdout；4 epochs；
+  verdict=`m42_development_rejected`；decisions=`4/5`；
+- interval NLL=`3.950369→3.945810`；not-early NLL约`1.5405→1.5413`；hit-band NLL=
+  `2.4099→2.4045`；early/hit probability=`0.26514→0.26592 / 0.49494→0.49714`；
+- M42-vs-baseline all early/hit=`-0.0524/+2.5381pp`；hazard=`-0.1080/+2.7910pp`；clear=
+  `+0.2207/+1.2944pp`；唯一失败项=clear early nonincrease；
+- M42-vs-M39 all early/hit=`+0.4687/+0.3659pp`；anchor/child occupied correlation=
+  `0.481770/0.570020`；family-total maximum residual=`1.53e-5`；
+- conclusion=GT event loss主要增加hit-band质量，但不能在固定geometry/measure上同时控制clear-stratum CDF
+  safety；停止M40--M42 development tuning，external只保留冻结M39；
+- GPU=`0.376GiB`，RSS=`1.326GiB`，wall=`39.06s`；no external/M21 partial read；next failure=`V71-F43`。
+
 ## WS-V71-M42-INTERVAL-EVENT-SUPERVISION-01 — frozen（2026-09-05）
 
 - representation=M41 conserved anchor/child surface measure；init=M35/M38；frozen M8 geometry；
