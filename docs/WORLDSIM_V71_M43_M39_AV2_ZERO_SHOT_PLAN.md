@@ -52,3 +52,10 @@ final concatenation, skips the cohort prefix recorded by `status.completed_logs`
 aggregate or expose partial quality. The downloader independently skips existing `.complete` markers. Exactly one evaluator
 and one downloader may run. This is an execution recovery only: all checkpoints, features, metrics, decisions, and AV2
 prohibitions remain unchanged. The missing original resume path is recorded as `V71-F50` and resolved before new target reads.
+
+## Resume launch state（2026-09-05）
+
+Commit `82bc3fd7` is pushed. The canonical evaluator resumed as PID 1751, with one downloader (PID 1752) and one `s5cmd`
+child (PID 1759). It is waiting for log `c85a88a8-c916-30a7-923c-0c66bd3ebbd3` at 16/20 logs and 276 Actors;
+GPU allocation is about 258 MiB. No final summary or partial quality was read. A pre-launch self-matching process guard is
+recorded as `V71-F51`; it launched nothing and was resolved by separating the process audit from the single launch.

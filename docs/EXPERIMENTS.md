@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — resumed live（2026-09-05）
+
+- code commit=`82bc3fd7`；canonical run unchanged；launch=`--resume`；
+- evaluator/downloader/s5cmd PIDs=`1751/1752/1759`，single instance verified；
+- live state=`running/waiting_fresh_av2`, `16/20` logs、276 Actors；current=
+  `c85a88a8-c916-30a7-923c-0c66bd3ebbd3`；GPU=`258MiB` while waiting；
+- final summary=false、partial quality human read=false、recent traceback/error=false；
+- first combined process guard self-matched and launched nothing；separate empty-process audit followed by direct single
+  launch resolved it；failure=`V71-F51 resolved pre-launch`。
+
 ## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — exact-once resume recovery（2026-09-05）
 
 - canonical run=`20260905T091500Z__m43-m39-av2-zero-shot-r1`；pre-resume=`16/20` logs、276 Actors；

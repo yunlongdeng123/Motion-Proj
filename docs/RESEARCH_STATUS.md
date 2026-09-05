@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.1 M43 exact-once resume active（2026-09-05）
+
+恢复实现已由commit `82bc3fd7`推送到v7.1分支。canonical evaluator PID=`1751`以`--resume`运行，唯一downloader
+PID=`1752`、唯一`s5cmd` PID=`1759`；状态=`running/waiting_fresh_av2`、`16/20` logs、276 Actors，当前log=
+`c85a88a8-c916-30a7-923c-0c66bd3ebbd3`。evaluator已加载冻结checkpoint，GPU占用约`258MiB`并等待marker；
+日志无traceback/error。未产生final summary、未读取partial quality。一次all-in-one `pgrep`保护命令曾自匹配并在
+启动前拒绝，独立`ps`确认0进程后才各启动一个实例；该pre-launch guard问题登记`V71-F51`。
+
 ## WorldSim V7.1 M43 exact-once resume implementation ready（2026-09-05）
 
 AutoDL重启后只读确认canonical M43仍为`16/20` logs、276 Actors、无`summary.json`，原evaluator/downloader均未

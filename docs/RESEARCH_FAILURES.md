@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F51 — all-in-one单实例guard自匹配未来launch参数（2026-09-05）
+
+- symptom：将`pgrep -f`检查与nohup launch写在同一远端shell命令时，shell自身command line包含后半段runner/
+  downloader名称，guard误判“already running”并在启动前退出；
+- exposure：evaluator/downloader/s5cmd均未启动，M43仍`16/20`，0新target read、0partial quality、0状态覆盖；
+- resolution：用独立只读`ps`调用确认三类进程为空，再执行无内嵌字符串guard的单次launch；随后核对PID=
+  `1751/1752/1759`、status waiting、GPU `258MiB`、无traceback；
+- prevention：长命令中的`pgrep -f`会匹配同一shell后续参数；以后把read-only process audit与launch拆成两次调用，
+  不叠加脆弱门控。状态=`resolved_pre_launch`，next ID=`V71-F52`。
+
 ## V71-F50 — M43 runner缺少同run断点续跑入口（2026-09-05）
 
 - symptom：用户重新开机要求继续M43时，原进程已退出，而runner固定
