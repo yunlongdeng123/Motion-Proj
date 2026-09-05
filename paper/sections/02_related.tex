@@ -1,43 +1,32 @@
 \section{Related Work}
 
-\paragraph{From visual reconstruction to physical returns.}
-3D Gaussian Splatting represents appearance efficiently~\cite{kerbl2023gaussians}, and driving simulators such as
-UniSim, LiDAR4D, and DyNFL optimize visual or LiDAR observations over time~\cite{yang2023unisim,zheng2024lidar4d,wu2024dynfl}.
-Gaussian opacity, however, is not automatically occupancy or collision geometry. Automotive LiDAR supplies both endpoints
-and measured free-space intervals~\cite{hu2020visibility}. Neural LiDAR Fields models first returns with a ray-weight
-distribution~\cite{huang2023nlf}; categorical depth networks learn a metric depth mode~\cite{reading2021caddn}; QueryOcc
-directly samples positive and negative continuous queries~\cite{lilja2026queryocc}. We retain their relevant boundary:
-native rays supervise the physical representation, while an Actor-local surface and its termination distribution remain
-different typed objects.
+\paragraph{Driving reconstruction and sensor returns.}
+3D Gaussian Splatting provides an efficient appearance representation~\cite{kerbl2023gaussians}.
+UniSim, LiDAR4D, and DyNFL extend neural reconstruction to driving scenes and time-varying sensor observations
+\cite{yang2023unisim,zheng2024lidar4d,wu2024dynfl}. LiDAR additionally measures free-space intervals before
+its endpoints~\cite{hu2020visibility}. Neural LiDAR Fields learns a ray-weight distribution for returns
+\cite{huang2023nlf}, and CaDDN represents metric depth categorically~\cite{reading2021caddn}.
+Our focus is the relationship between an Actor's completed surface and the return distribution induced by
+that surface. We evaluate these two objects separately and connect them through primitive-level evidence.
 
-\paragraph{Completion and evidential occupancy.}
-Object-centric occupancy completion canonicalizes long LiDAR tracklets before implicit decoding~\cite{zheng2024objectcentric},
-while SelfOcc and SparseOcc++ learn continuous geometry fields~\cite{huang2024selfocc,tang2026sparseoccplusplus}.
-PoinTr translates point sets and SnowflakeNet grows child points from parent seeds~\cite{yu2021pointr,xiang2021snowflakenet}.
-Gau-Occ initializes Gaussians from diffusion-completed LiDAR, but its multimodal occupancy head may still update center,
-scale, and rotation~\cite{lv2026gauocc}. We borrow target/set completion, not unconstrained image-conditioned geometry:
-dynamic sweeps are Actor-motion compensated, observed anchors are immutable, and geometry/ray losses remain active throughout.
+\paragraph{Completion and evidential geometry.}
+Object-centric occupancy completion combines canonicalized LiDAR tracklets with implicit decoding
+\cite{zheng2024objectcentric}. PoinTr learns point-set completion, while SnowflakeNet recursively grows
+child points~\cite{yu2021pointr,xiang2021snowflakenet}. Gau-Occ uses completed LiDAR geometry to initialize
+a Gaussian occupancy representation~\cite{lv2026gauocc}. These approaches motivate our target-set construction
+and child-surface decoder. EAS further supervises canonical geometry with frame coverage and measured ray depth.
+ALSO and evidential occupancy methods use sensor observations to distinguish free, occupied, and unobserved
+space~\cite{boulch2023also,kalble2024accurate,kalble2025evocc}. GaussianFormer-2, GaussRender, and Vol3DGS
+relate Gaussian support to occupancy or ray transmittance
+\cite{huang2025gaussianformer2,chambon2025gaussrender,talegaonkar2025vol3dgs}.
+We study how continuous evidence should compose on a fixed surface, comparing additive transmittance with
+categorical return mass.
 
-ALSO and evidential occupancy derive FREE/OCCUPIED supervision from the sensor origin~\cite{boulch2023also,kalble2024accurate,kalble2025evocc}.
-GaussianFormer-2 and GaussRender connect Gaussian representations to occupancy and projective supervision
-~\cite{huang2025gaussianformer2,chambon2025gaussrender}; Vol3DGS analytically integrates Gaussians into transmittance
-~\cite{talegaonkar2025vol3dgs}. Our negative optical ablations expose a complementary issue: additive thickness changes
-with primitive density. We instead use producer evidence as categorical surface-return authority and state exactly what its
-normalized CDF can and cannot guarantee.
-
-\paragraph{Dynamic factorization and appearance ownership.}
-Multi-frame completion labels can contain moving-object traces~\cite{xia2023scpnet}. DualAD separates static and dynamic
-streams with ego/object-motion compensation~\cite{doll2024dualad}; DynamicVGGT predicts Gaussian velocity under scene-flow
-supervision~\cite{he2026dynamicvggt}; DeGO separates rigid offsets and non-rigid deformation~\cite{gao2026dego}; and
-SelfOccFlow maintains separate static/dynamic signed-distance fields~\cite{timoneda2026selfoccflow}. These works motivate
-our refusal to hide motion inside a canonical shape head. We use annotated rigid pose only as a read-only transform; non-rigid
-evolution remains unsupported without its own target. Likewise, Feature 3DGS and Neural Shell Texture Splatting show how
-visual attributes can live on geometry~\cite{zhou2024feature3dgs,zhang2025shelltexture}. Our stricter ownership contract gives
-image gradients a sibling visual state and no path to physical center or scale.
-
-\paragraph{Cross-sensor evaluation.}
-nuScenes and Argoverse~2 provide calibrated but materially different multi-sensor trajectories
-~\cite{caesar2020nuscenes,wilson2021argoverse2}. LiDAR domain shift includes sampling pattern as well as scene statistics;
-source-only density consistency and accumulated sequence geometry can improve transfer
-~\cite{kim2023dglss,sanchez2023labelprop}. They do not certify Actor-level physical transfer. We therefore freeze one AV2
-cohort before reading any learned output and prohibit target adaptation, calibration, or failed-log deletion.
+\paragraph{Motion and appearance factorization.}
+Motion compensation is essential when constructing targets from accumulated sweeps~\cite{xia2023scpnet}.
+DualAD separates static and dynamic streams~\cite{doll2024dualad}; DynamicVGGT predicts current and future
+point maps and supervises Gaussian motion with scene flow~\cite{he2026dynamicvggt}.
+Neural scene graphs provide object transforms for dynamic reconstruction~\cite{ost2021neural}.
+EAS uses annotated rigid motion to canonicalize evidence and relocate the learned surface.
+Its visual state follows the attribute-on-geometry principle explored by Feature 3DGS
+\cite{zhou2024feature3dgs}, with a stop-gradient physical carrier that gives appearance updates a separate owner.

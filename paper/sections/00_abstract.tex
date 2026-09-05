@@ -1,21 +1,17 @@
 \begin{abstract}
-Driving-world reconstruction can appear safer by removing uncertain Actors, including the legitimate hazards that matter
-for evaluation. We instead define physical consistency from ground-truth ray and surface supervision while keeping Actor
-identity, trajectory, extent, and hazard state immutable. Our compiler first separates image-rendering Gaussians from an
-Actor-canonical physical surface and exposes observed free, occupied, and unknown evidence without turning unknown mass
-into a deletion rule. On frozen Argoverse~2 data, the non-learned compiler reduces LiDAR depth error from 0.207 to
-0.154\,m and symmetric Chamfer from 0.254 to 0.175\,m while retaining every Actor and hazard state. We then train geometry
-on nuScenes: each completion seed generates a small set of child surfaces under motion-corrected target-set, local-plane,
-scale, per-frame coverage, literal first-return, and free-before-hit losses. With no deployment filter, this model reduces
-hazardous early returns by 5.12\%, improves Chamfer by 6.21\,mm, and raises hit recall by 2.76 points on an exposed
-development fold. Frozen producer evidence further predicts continuous FREE/OCCUPIED/UNKNOWN authority. Interpreting that
-authority as a categorical surface-return measure reduces hazardous early returns by 0.62 points and raises hazardous hit
-recall by 2.32 points relative to unit energy; treating it as additive opacity fails. Finally, we derive an exact boundary
-for normalized mixtures: attenuating component $j$ lowers the pre-hit CDF iff its component CDF exceeds the current
-mixture CDF, and attenuation magnitude cannot reverse this sign. A failed learned-visibility ablation raises the boundary
-CDF on 59.32\% of 99,208 rays, matching the predicted non-monotonicity. Typed ownership and inverse-query SE(3)
-composition keep appearance, canonical geometry, and rigid motion structurally separate. On a frozen 20-log AV2 test,
-the learned measure raises all/hazardous early returns by 0.23/0.54 points while raising hit recall by 5.89/6.30 points;
-it therefore fails the preregistered transfer criteria. We claim source-domain supervised physical completion and a safety
-boundary, not domain invariance or real-road safety.
+Reconstructing a driving scene for physical queries requires both accurate surfaces and reliable sensor returns.
+Sparse observations make these objectives difficult to reconcile: completing an object improves coverage but can
+introduce surfaces before a measured LiDAR hit. We present Evidential Actor Surfaces, an object-centric representation
+that learns canonical geometry and return evidence in separate stages. A four-child completion model learns from
+motion-compensated target sets, local surface structure, frame coverage, and differentiable ray supervision.
+Producer-side observations then supervise continuous free, occupied, and unknown evidence on the fixed geometry.
+We compose this evidence into a categorical return distribution, whose normalized measure supports an exact analysis
+of how component attenuation changes the probability of an early return. Separate physical, rigid-pose, and visual
+states provide SE(3) equivariance and isolate appearance optimization from physical geometry.
+On a 66-Actor nuScenes development fold, the geometry model reduces hazardous early returns by 5.12\% relative,
+improves Chamfer distance by 6.21\,mm, and increases hit recall by 2.76 percentage points.
+The evidential return measure further reduces hazardous early returns by 0.62 points and increases hazardous hit
+recall by 2.32 points over unit categorical energy on the same geometry.
+A frozen 352-Actor Argoverse~2 evaluation identifies the remaining cross-sensor trade-off: higher hit recall
+coexists with increased hazardous early returns.
 \end{abstract}

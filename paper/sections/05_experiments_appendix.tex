@@ -1,5 +1,7 @@
 \section{Extended Experiments and Failure-Directed Diagnostics}
 
+The V7 tables describe the historical HARP-3D compiler. V7.1 milestones are identified explicitly by M-number; source/external roles and operator definitions follow Sec.~\ref{sec:archive-repro}.
+
 \input{tables/p4_selective_factorization}
 
 \begin{figure*}[t]
@@ -13,14 +15,16 @@
   \label{fig:hard-evidence-boundary}
 \end{figure*}
 
-\paragraph{Data and protocol.}
-We train and select models only on nuScenes. Argoverse~2 Sensor validation logs form a zero-shot external test. Before reading any method output, we sort the 150 validation UUIDs and select every fifth log, yielding 20 quantitative and 10 qualitative logs. No AV2 fine-tuning, post-hoc calibration, threshold selection, or failed-scene deletion is allowed. Final nuScenes and AV2 cohorts are evaluated exactly once after the method freezes.
+\paragraph{Historical V7 data and protocol.}
+The initial V7 AV2 cohort uses every fifth UUID in the sorted list of 150 validation logs, yielding 20 quantitative and 10 qualitative logs. Training and model selection use nuScenes; the V7 AV2 evaluations use no target fine-tuning, calibration, or threshold selection. Later consumed-cohort diagnostics and disjoint confirmations retain their individual data roles, as detailed below. This initial cohort is not the V7.1 M43 cohort: M43 excludes all 60 previously consumed logs and samples 20 logs from the remaining 90 (Sec.~\ref{sec:archive-repro}).
 
 \paragraph{Baselines.}
 For physical compilation we compare naive reconstruction, a legacy validity filter, V6.7 inward-ray repair, and \method. For factorization we compare a shared encoder, a two-head shared trunk, independent encoders, and paired factorization. Reliability baselines include a scalar confidence, independent horizon classifiers, a continuous marginal density, and the full joint multi-horizon surface.
 
 \paragraph{Metrics.}
 Physical metrics include free-space violation, ray termination, point-to-surface error, LiDAR depth consistency, temporal jitter, ghost components, and surface completeness. Hazard preservation reports Actor/ID/lifecycle retention, trajectory and TTC shift, and event-count change. Factorization reports artifact/hazard AUROC and AUPRC, clean-hazard false-artifact rate, paired prediction shift, and cross-probe leakage. Reliability reports log likelihood, integrated Brier score, calibration error, Spearman correlation, monotonic violations, and runtime.
+
+\subsection{V7.1 Geometry and Query Operators}
 
 \paragraph{Continuous geometry oracle and learned displacement.}
 On train-only Actors, a bounded ray/normal displacement oracle reduces hazardous literal early returns by
@@ -43,7 +47,7 @@ The non-learned B4 evidential TSDF exposes the opposite endpoint on \VSevenOneBF
 shows a two-sided failure boundary rather than a winning learned surface model.
 
 We then correct the training target rather than its deployed output. M5 removes the UNKNOWN action and projects the measured
-first-return/surface gradient conflict, passing all five development gates. Directly matching one Gaussian center to one nearest
+smooth-ray/surface gradient conflict, passing all five development gates. Directly matching one Gaussian center to one nearest
 target point (M6) learns center, tangent-plane, and scale labels but misses the hazardous-ray gate: candidate-bearing Actors have
 only 17 completion seeds versus 966 target endpoints at the median. M7 instead performs fixed four-child set expansion. Its
 training Chamfer ratio falls from $0.986$ to $0.972$ before physical fine-tuning. On the same
@@ -78,6 +82,8 @@ Joint training exposes a stricter identifiability boundary (Table~\ref{tab:v71-j
 The diagnostic nevertheless identifies a simpler candidate: frozen M8 geometry followed by the same decoder-free energy gives $17.42\%$ hazardous early rate and $62.07\%$ hit recall, without modifying a Gaussian after its native-3D supervision. This M21 row is selected on the exposed development fold, so it is not an independent result. We freeze its representation and the existing 20-log AV2 cohort before reading any partial quality; the later M39 external run rejects zero-shot transfer without target adaptation.
 
 \input{tables/v71_joint_energy_diagnostics}
+
+\subsection{Historical V7 Compilation and Selective Interfaces}
 
 \paragraph{Zero-shot Actor-local surface evidence.}
 Following the dynamic-Actor canonicalization boundary used by NeuRAD~\cite{tonderski2024neurad}, we transform ego-frame AV2
@@ -288,6 +294,8 @@ sets at the P346 artifact's held-out 2.5\,s horizon. Frozen 90\% requested relia
 \PnineHarpChamfer{}\,m with all Actors and hazards retained (Table~\ref{tab:p9-composed}). Physical branches have identical
 action outcomes by construction: this validates interface composition, not closed-loop benefit from repair.
 
+\subsection{V7.1 State Composition and Evidential Learning}
+
 \paragraph{Rigid dynamic--static composition audit.}
 We identity-match 12 scene-0230 Actors (7 hazardous) between the frozen physical model and a read-only StreetGS checkpoint. Eleven are moving, and the retained trajectories contain 1,677 valid frames. Across fixed first/middle/last samples (36 Actor--frames), 5,791 physical Gaussians are transported by the checkpoint SE(3) poses while 106,807 appearance-owned and 1,140,862 Background Gaussians remain outside the physical query. The maximum inverse-query energy residual is $3.40\times10^{-14}$ and the maximum pairwise-distance residual is $1.24\times10^{-14}$\,m, despite 126.28\,m maximum translation. A first implementation that formed float32 pairwise distances directly in world coordinates produced a spurious 3.125\,cm residual; we retain it as a numerical failure and use the mathematically equivalent inverse-query form, without changing geometry, cohort, or tolerance. This audit verifies deployment composition, not a new surface-accuracy or safety gain.
 
@@ -299,7 +307,7 @@ To separate a missing learning signal from insufficient carrier capacity, we nex
 
 We finally derive nine fixed tangent surfels per physical carrier using only an 8-neighbor PCA frame, the supervised carrier radius, and a 2\,cm normal thickness. These 2,781 visual-only primitives never enter the physical query and their geometry receives no image gradient. Held-out PSNR reaches 17.57\,dB, 0.63\,dB above the one-carrier result, but the gap to the original remains 7.78\,dB. Moreover, only the largest-footprint held-out view improves over the one-carrier model; the other five regress by 0.10--0.31\,dB. A fixed coarse--fine hierarchy then combines the 309 parents and 2,781 surfels, assigning half the optical depth to each level before attribute-only refinement. It reaches 17.73\,dB and improves all six views over the one-carrier result (median $+0.47$\,dB, range $+0.24$ to $+1.07$\,dB). These views were exposed before designing the hierarchy, so this is mechanism evidence rather than a fresh appearance benchmark; the 7.62\,dB residual gap remains substantial.
 
-We also test whether average geometry losses hide safety-relevant tails. Starting from M8, M29 adds a GT-only bidirectional loss equal to the mean of the worst 10\% nearest-point distances, normalized per Actor, while retaining all set, plane, scale, frame, and literal first-return losses. On the 66 exposed development Actors, target-to-surface tail distance improves by 0.924\,mm, frame-mean distance by 0.843\,mm, and Chamfer by 0.418\,mm relative to M8. However, surface-to-target tail distance worsens by 0.362\,mm and hazardous early-return rate rises from 26.37\% to 26.69\%. The geometry and ray gradients conflict in 86.6--90.6\% of batches. This paired asymmetry rejects a single symmetric tail objective as a joint solution: increasing GT coverage can still move a small set of generated surfaces into unsupported free space. We stop without sweeping the tail fraction, weight, or seed.
+We also test whether average geometry losses hide safety-relevant tails. Starting from M8, M29 adds a GT-only bidirectional loss equal to the mean of the worst 10\% nearest-point distances, normalized per Actor, while retaining all set, plane, scale, frame, and smooth expected-depth losses. On the 66 exposed development Actors, target-to-surface tail distance improves by 0.924\,mm, frame-mean distance by 0.843\,mm, and Chamfer by 0.418\,mm relative to M8. However, surface-to-target tail distance worsens by 0.362\,mm and hazardous early-return rate rises from 26.37\% to 26.69\%. The geometry and ray gradients conflict in 86.6--90.6\% of batches. This paired asymmetry rejects a single symmetric tail objective as a joint solution: increasing GT coverage can still move a small set of generated surfaces into unsupported free space. We stop without sweeping the tail fraction, weight, or seed.
 
 M30 then preserves this conflict as the return interval in Eq.~\ref{eq:return-interval}: immutable build anchors define the known-supported endpoint and anchors plus all M8 children define the possible endpoint. Set ordering has zero violations over 99,208 rays. Yet only 56.69\% of GT returns are empirically bracketed, 47.03\% of upper endpoints are unbounded, and the Actor-mean finite-width q90 is 0.326\,m (0.343\,m for hazardous Actors). More fundamentally, anchor-only queries already produce 19.58\% early returns. The interval is therefore an honest epistemic interface, but not yet a tight collision certificate; the residual failure precedes completion and points to cross-frame canonical supervision or pose/visibility inconsistency.
 
@@ -402,6 +410,8 @@ development-set loss tuning and retain the simpler frozen M39 representation for
 rejects transfer: all/hazard/clear early returns change by $+0.23/+0.54/-0.04$ points while hit recall changes by
 $+5.89/+6.30/+5.54$ points over 352 Actors and 1,016,652 rays. Only the hit-retention gate passes; no AV2 adaptation follows.
 
+\subsection{Categorical Responsibility, Visibility, and Temporal Diagnostics}
+
 M44 then applies the exact accounting in Eq.~\ref{eq:categorical-safety-boundary}. Across all 99,208 rays, the CDF
 condition and rendered early decision agree exactly, and anchor--child decomposition has maximum residual
 $2.98\times10^{-7}$. M39 lowers mean pre-boundary mass by 0.331 points relative to unit energy: observed anchors contribute
@@ -454,7 +464,7 @@ between 1.258 points of newly early and 0.892 points of repaired rays. This conv
 boundary: component attenuation cannot provide a universal safety guarantee in a jointly normalized return measure.
 
 M50 asks whether temporal physical consistency instead fails because pooled ray sampling underweights sparse target frames.
-Starting from frozen M8, it keeps the same canonical geometry and losses but averages literal first-return and free-before-hit
+Starting from frozen M8, it keeps the same canonical geometry and losses but averages smooth expected-depth and pre-hit hinge
 equally over target sensor origins. The four-epoch run improves Chamfer by 0.871\,mm and changes all-ray hit recall by only
 $+0.023$ points, yet actor-mean worst-frame early rate rises by 1.135 points overall and 1.286 points for hazardous Actors.
 Aggregate all/hazard/clear early rates rise by $0.545/0.590/0.328$ points. Geometry and physical gradients conflict in

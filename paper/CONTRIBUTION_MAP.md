@@ -1,4 +1,23 @@
-# HARP-3D contribution, evidence, and claim map
+# EAS current contribution and evidence map
+
+Current writing snapshot: 2026-09-05, scientific base `1913ab0e`. The main paper is EAS; HARP-3D is retained in the local archive.
+
+| Contribution | Main location | Evidence | Interpretation |
+| --- | --- | --- | --- |
+| Actor-canonical target-set and frame-supervised surface | Method 4.1; geometry table and example | M7/M8; 593 training and 66 exposed development Actors | Better Chamfer/hit and hazardous early returns versus the original surface; clear early regression remains explicit. |
+| Producer-evidential categorical return measure | Method 4.2; categorical table | M33 producer, M35 anchor head, M38 child head, frozen M39 composition | Same-geometry early/hit gains across all source strata; heads were trained through optical composition, not categorical joint fine-tuning. |
+| Exact finite attenuation identity | Method 4.3; attenuation figure | M44/M49; full proof in archive | Direction determined by component versus mixture pre-boundary mass; arbitrary heterogeneous attenuation needs the exact aggregate calculation. |
+| Rigid physical--pose--visual ownership | Method 4.4; composition experiment | M22/M28 | SE(3) consistency and appearance non-interference; not learned motion or closed-loop safety. |
+| Frozen external boundary | Cross-sensor experiment | Complete M43: 20 logs, 352 Actors, 1,016,652 rays | Hit increases but all/hazard early rates worsen; no AV2 adaptation. Descriptive M8 mixed-operator early/hit deltas are excluded (V71-F52). |
+
+Reproducibility IDs, exact counts, historical successes and rejections are in `supplement.pdf` and `results/eas_evidence.json`.
+The archive is for local inspection only and is not an OpenReview supplement.
+
+---
+
+# Historical HARP-3D contribution, evidence, and claim map
+
+The section numbers, figures, cohort roles and submission constraints below belong to the earlier V7 paper, not the current EAS main paper.
 
 ## Central claim
 

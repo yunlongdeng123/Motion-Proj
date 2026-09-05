@@ -1,0 +1,82 @@
+\section{V7.1 Experiment Atlas}
+\label{sec:archive-atlas}
+
+The detailed narrative and tables below preserve the positive and negative experiments.
+This atlas supplies navigation across the stable milestone IDs and summarizes the role of each family.
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{p{.12\textwidth}p{.30\textwidth}p{.49\textwidth}}
+\toprule
+Milestones & Question / intervention & Result retained in the archive\\
+\midrule
+S1, M0--M1, B4 & Continuous relocation, implicit extraction, evidential TSDF &
+Oracle joint gain; learned UNKNOWN/extraction collapse; TSDF completeness improves while hazardous early returns worsen.\\
+M2--M5 & Loss conflict and deployment-aligned relocation &
+Controlled diagnoses lead to non-deletion PCGrad relocation; M5 supplies the parent coordinate base.\\
+M6--M8 & One-center versus set targets; equal-frame coverage &
+One-center supervision misses the hazardous-ray criterion; four-child sets and frame coverage give source geometry gains.\\
+M9--M12 & Gaussian, oriented, supervised thin, and finite planar support &
+Local support changes expose early/hit trade-offs; these support operators are not the final M8 point evaluation.\\
+M13--M18 & Local field, radial patch, cells, signed queries, survival, categorical decoder &
+M18 passes the frozen development gates; the other operators exchange early returns for missing hits or observability.\\
+M19--M21 & Joint decoder/geometry and decoder-free energy &
+Joint training permits geometry/scale compensation; frozen M8 energy is retained as the unit categorical comparator.\\
+M22--M28 & Rigid scene composition and appearance capacity &
+SE(3) and typed non-interference hold; appearance-only optimization improves views but leaves a gap to StreetGS.\\
+M29--M33 & Tail supervision, intervals, anchor provenance, evidence identifiability &
+Tail/interval changes miss utility gates; exact producer replay supplies informative contradictory anchor evidence.\\
+M34--M38 & Anchor/child authority and ordered transmittance &
+Evidence is predictable; additive optical thickness retains front-tail errors despite supervised improvements.\\
+M39--M42 & Frozen categorical composition, joint tuning, conserved family mass, interval losses &
+M39 improves all source strata; subsequent tuning transfers mass or error between families/strata.\\
+M43--M44 & Frozen AV2 evaluation and exact responsibility &
+AV2 hit gains coexist with hazardous early regression; CDF event and primitive accounting are verified.\\
+M45--M49 & Orientation, CDF supervision, incidence, visibility, attenuation analysis &
+Local support/visibility variants fail their criteria; the exact normalized-mixture sign explains attenuation response.\\
+M50--M51 & Equal-frame ray loss and smooth/minimum diagnosis &
+Worst-frame early rate regresses; same-support analysis proves that the surrogate and hard event can disagree.\\
+\bottomrule
+\end{tabular}
+\caption{V7.1 experiment families. IDs refer to canonical experiment records, not independent datasets.
+Unexecuted alternatives and pre-training engineering interruptions are excluded from scientific comparisons.}
+\end{table*}
+
+\paragraph{Early geometry diagnostics (M2--M4).}
+M2 retains every relocated point and is evaluated once on 20 source-final scenes (69 Actors; 134,841 rays).
+Hazardous early returns decrease by 5.26\% and hit recall increases by 1.21 points, but Chamfer worsens by
+1.58\,mm, exceeding its $.5$\,mm tolerance. M3's signed field then extracts no zero crossing for any of
+66 development Actors: its sampled SDF remains strictly positive. M4 restores zero-boundary extraction
+for all 66 Actors, but hazardous early returns worsen by 97.77\% relative and Chamfer by 53.48\,mm.
+The train-only gradient audit finds negative geometry/ray cosine in eight of eleven batches, with mean
+$-.297$, motivating M5's measured-conflict PCGrad intervention. These outcomes have distinct source-final,
+development, and train-diagnostic roles.
+
+\paragraph{Continuous support (M9--M12).}
+These studies explore Gaussian support, oriented planar Gaussians, explicitly supervised thickness, and finite
+planar charts. The later M13--M18 table continues this operator comparison.
+M9 shrinks mean child scale from $.162$ to $.112$\,m. Its analytic sphere hazardous early rate improves
+64.85\% relative, while hazardous hit recall falls from 31.77\% to 25.22\%.
+M10's oriented support reduces hazardous support early returns by 18.45\% but loses 2.39 points of
+hazardous support hit recall and regresses the M8 point-surface hazardous criterion.
+M11 freezes centers/scales and trains exact support; hazardous early relative improvement is $-1.21\%$.
+M12's finite planar charts similarly give $-.60\%$ hazardous early improvement despite a $.17$-point
+hit gain. Both miss their hazardous support criterion. These matched-operator results motivate the
+query-field alternatives and the later M45--M49 categorical analysis.
+
+\paragraph{Appearance capacity (M23--M27).}
+The geometry-locked physical carrier has 309 primitives in the audited Actor.
+SH/opacity fitting raises held-out footprint PSNR from 15.86 to 16.94\,dB.
+A supervised fine-surfel model reaches 17.57\,dB, and the coarse--fine hierarchy reaches 17.73\,dB,
+improving all six previously exposed held-out views over the single-carrier model.
+The hierarchy remains 7.62\,dB below the original visual Actor.
+These are informative positive capacity experiments and do not change the physical surface.
+
+\paragraph{Engineering versus scientific outcomes.}
+Formal records preserve pre-training failures separately: missing parent-coordinate state, native package/config
+binding, frozen tensor gradients, and M43 resume/single-instance issues.
+Their narrow recoveries do not create additional scientific replicates.
+The final M43 cohort completed 20/20 logs before its aggregate was read.
+The present authoring task reads existing records and performs no new model training, target-data evaluation,
+or target-domain adaptation.

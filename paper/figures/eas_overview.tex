@@ -1,0 +1,31 @@
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,
+box/.style={draw=black!45,rounded corners=2pt,align=center,minimum height=1.12cm,font=\small,inner sep=6pt},
+flow/.style={-{Latex[length=2mm]},thick,draw=black!65},
+sup/.style={flow,dashed,draw=orange!75!black}]
+\node[box,fill=blue!7,text width=2.5cm] (build) at (0,0) {Build LiDAR\\endpoints + ray history};
+\node[box,fill=blue!7,text width=2.6cm] (shape) at (3.8,0) {Canonical surface\\fixed anchors + 4 children};
+\node[box,fill=green!8,text width=2.7cm] (mass) at (7.8,0) {Frozen geometry\\learned F / O / U evidence};
+\node[box,fill=green!8,text width=2.4cm] (return) at (11.6,0) {Categorical measure\\interpolated ray return};
+\draw[flow] (build)--node[above,font=\scriptsize]{set decoder}(shape);
+\draw[flow] (shape)--node[above,font=\scriptsize]{evidence heads}(mass);
+\draw[flow] (mass)--node[above,font=\scriptsize]{normalize}(return);
+\node[box,fill=orange!8,text width=5.3cm,minimum height=.83cm] (target) at (3.8,-1.72)
+{Disjoint target sweeps: set / frame / ray supervision};
+\draw[sup] (target.north)--(shape.south);
+\draw[sup] (target.north east)--++(0,.25)-|(mass.south);
+\node[box,fill=purple!7,text width=3.0cm,minimum height=.83cm] (pose) at (9.1,-1.72)
+{Read-only SE(3) pose\\canonical $\leftrightarrow$ world};
+\draw[flow] (pose.east)-|(return.south);
+\node[font=\scriptsize,align=center,text=black!70] at (4.5,-2.65)
+{Physical state $P$ \quad $\xrightarrow{\;\mathrm{stop\mbox{-}gradient}\;}$ \quad visual state $V$ \quad $\xleftarrow{\;\mathrm{image\ loss}\;}$ \quad RGB};
+\node[font=\scriptsize,align=center,text=black!70] at (10.8,-2.65)
+{Separate static Background};
+\end{tikzpicture}
+\caption{Overview of Evidential Actor Surfaces. Motion-compensated build observations produce a canonical surface.
+Disjoint targets supervise geometry and continuous free/occupied/unknown (F/O/U) evidence in stages.
+Frozen evidence weights a categorical ray measure. Rigid pose and appearance have separate state ownership.
+Dashed arrows denote supervision.}
+\label{fig:eas-overview}
+\end{figure*}

@@ -1,104 +1,161 @@
 \section{Method}
+\label{sec:method}
+\input{figures/eas_overview}
 
-\subsection{Canonical Evidence and Immutable Actor State}
+\subsection{Motion-Compensated Surface Supervision}
 
-For Actor $i$ at time $t$, annotated sensor, ego, and Actor poses map a LiDAR endpoint into a canonical coordinate system,
+Annotated sensor, ego, and Actor poses map each endpoint into a canonical frame,
 \begin{equation}
-x_{i,t}=T_{i,t}^{-1}T_{\mathrm{ego},t}T_{\mathrm{sensor}}x_t^{\mathrm{sensor}}.
+x_{it}=T_{it}^{-1}T_{\mathrm{ego},t}T_{\mathrm{sensor}}x_t^{\mathrm{sensor}}.
 \end{equation}
-Build sweeps provide model input; disjoint held-out sweeps construct the target $T_i$ and are never input features. Directly
-observed and matched projected endpoints form an immutable anchor set $A_i$. Actor identity, trajectory, extent, lifecycle,
-and hazard label are immutable interfaces rather than prediction targets.
+We transform its sensor origin by the same chain. Build sweeps produce fixed observed anchors $\mathcal A_i$
+and completion seeds; separate sweeps produce the target set $\mathcal Y_i$.
+Observed anchors comprise retained endpoints and endpoints projected onto build-supported geometry.
 
-For a held-out ray $r=(o,v,d^\star)$ and physical surface $S$, the literal first return is
+A pretrained relocation model supplies parent center $\bar x_j$. A set decoder combines build features with
+four learned slot embeddings and predicts bounded residuals and isotropic scales:
 \begin{equation}
-d_S(r)=\min\{s>0:o+sv\in S_\epsilon\},\qquad \min\varnothing=\infty.
-\label{eq:first-return}
-\end{equation}
-An early return satisfies $d_S(r)<d^\star-\epsilon$. Deletion can only make this predicate non-increasing, but may destroy
-hits and surface coverage. We therefore do not treat a lower early-return rate as sufficient evidence of consistency.
-
-\subsection{Supervision-Native Child Surfaces}
-
-One completion seed cannot cover a dense target surface. Each seed $x_j$ predicts four bounded Actor-frame residuals and
-positive support scales,
-\begin{equation}
-x'_{jk}=x_j+\Delta x_{jk}(E_i),\qquad
-S_i^\theta=A_i\cup\{(x'_{jk},s_{jk})\}_{j,k=1}^{4},
+c_{jk}=\bar x_j+\Delta x_{jk},\quad
+S_i=\mathcal A_i\cup\{(c_{jk},s_{jk}):k=1,\ldots,4\}.
 \label{eq:child-surface}
 \end{equation}
-where $E_i$ contains build-only geometric and ray evidence. Geometry pretraining combines bidirectional set distance,
-target-local point-to-plane distance, and a target-spacing scale loss. Physical fine-tuning keeps these terms active and adds
-frame-balanced target coverage, differentiable literal first return, and observed free-before-hit supervision:
+Residuals are bounded by $0.25$\,m per coordinate and scales lie in $[0.02,0.40]$\,m.
+We write $\mathcal X_i$ for the centers of $S_i$.
+The decoder uses Actor dimensions and canonical geometric evidence. Its target is a set, allowing several
+children to cover distinct parts of a local surface.
+
+\paragraph{Geometry and frame coverage.}
+Let $\widetilde{\mathcal L}$ denote a loss normalized by its detached parent-reference value.
+We combine symmetric nearest-neighbor distance, local point-to-plane distance, and log-scale regression:
 \begin{equation}
-\mathcal L_{\mathrm{phys}}=
-\mathcal L_{\mathrm{set}}+.25\mathcal L_{\mathrm{plane}}+.1\mathcal L_{\mathrm{scale}}
-+\mathcal L_{\mathrm{frame}}+\mathcal L_{\mathrm{first}}+.5\mathcal L_{\mathrm{free}}.
+\mathcal L_G=\widetilde{\mathcal L}_{\mathrm{set}}
++.25\widetilde{\mathcal L}_{\mathrm{plane}}
++.10\widetilde{\mathcal L}_{\mathrm{scale}}
++\widetilde{\mathcal L}_{\mathrm{frame}}.
 \label{eq:physical-loss}
 \end{equation}
-Space behind the first hit is not labeled free. Every child remains in $S_i^\theta$ at deployment; UNKNOWN is evidence state,
-not a mask. Thus an improvement must arise through the supervised representation rather than selective output removal.
-
-\subsection{Producer-Evidential Return Authority}
-
-Surface support and sensor termination are distinct. For each anchor or child $j$, the build descriptor $e_j$ retains source
-ray/frame identity, construction provenance, projection displacement, canonical hit count, temporal/view support, and
-continuous build evidence $m_j^{\mathrm{build}}=(m_F,m_O,m_U)$. Disjoint target rays construct
-$m_j^{\mathrm{GT}}$ from free evidence before a return, occupied evidence near it, and unknown evidence behind it or outside
-ray support. A bounded head predicts $m_j=f_\phi(e_j)$ and is supervised by soft three-state cross-entropy. Completion children
-also receive the GT free-before-hit event loss used by the deployed ray objective. Geometry is frozen during this authority stage.
-
-Let $o_j$ be predicted occupied mass and $\kappa_{kj}$ the frozen Gaussian support of primitive $j$ at ordered depth $d_k$.
-Instead of adding $o_j\kappa_{kj}$ as density-dependent opacity, we define one joint categorical return measure,
+Local planes and scale targets come from eight target neighbors. The frame term averages directed
+target-to-surface distance equally over target frames,
 \begin{equation}
-q(k,j)=\frac{o_j\kappa_{kj}}{\sum_{a,b}o_b\kappa_{ab}},\qquad
-p_k=\sum_jq(k,j),\quad F_k=\sum_{\ell\le k}p_\ell.
+\mathcal L_{\mathrm{frame}}=
+\frac{1}{|\mathcal F_i|}\sum_{t\in\mathcal F_i}
+\frac{1}{|\mathcal Y_{it}|}\sum_{y\in\mathcal Y_{it}}\min_{x\in\mathcal X_i}\|y-x\|_2.
+\label{eq:frame-loss}
+\end{equation}
+This prevents densely sampled frames from dominating canonical coverage.
+
+\paragraph{Differentiable ray supervision.}
+We sample 48 depths along each training ray and alpha-compose Gaussian support into an expected depth
+$\bar d=\sum_k T_k\alpha_k d_k+T_{\mathrm{end}}d_{\mathrm{far}}$.
+Here $d_{\mathrm{far}}=d^\star+0.50$\,m supplies the residual no-hit depth.
+The ray objective is
+\begin{equation}
+\mathcal L_R=
+\widetilde{\operatorname{Huber}}(\bar d,d^\star)
++.5\,\widetilde{[d^\star-\tau-\bar d]_+}.
+\label{eq:smooth-ray-loss}
+\end{equation}
+The second term penalizes a predicted depth inside the measured pre-hit interval. This is a smooth
+depth surrogate; the literal beam-tube minimum is used for evaluation.
+During physical fine-tuning, PCGrad~\cite{yu2020pcgrad} projects conflicting geometry and ray gradients.
+All children are emitted at deployment, followed by a fixed $0.06$\,m voxel deduplication.
+
+\subsection{Producer-Evidential Return Measure}
+
+We next fix the geometry and learn how its primitives contribute to sensor termination.
+For each anchor, the producer retains source-frame and ray provenance, projection displacement,
+canonical hit count, temporal/view support, and continuous build evidence.
+Children inherit parent evidence together with their local geometry.
+Separate PointNet-style heads predict
+$m_j=(m_{F,j},m_{O,j},m_{U,j})$ by a three-way softmax.
+Target-ray votes supervise these masses with soft cross-entropy: observations before a hit contribute
+free evidence, endpoints contribute occupied evidence, and unsupported or occluded regions contribute unknown evidence.
+
+For a completion child, let $n_j$ count positive-depth ray opportunities inside the beam tube,
+and let $n_{F,j}$ and $n_{O,j}$ count pre-hit and endpoint votes. Its target is
+\begin{equation}
+m_j^\star=\left(\frac{n_{F,j}}{n_j},\frac{n_{O,j}}{n_j},
+1-\frac{n_{F,j}+n_{O,j}}{n_j}\right),\quad n_j>0,
+\label{eq:child-votes}
+\end{equation}
+with $(0,0,1)$ when no ray supports the child. Both free and occupied coordinates can be positive,
+preserving disagreement across observations. The evidence loss is
+$\mathcal L_E=-\sum_j\sum_{a\in\{F,O,U\}}m_{a,j}^\star\log m_{a,j}$,
+averaged over the supervised primitives.
+
+\paragraph{Staged evidence learning.}
+The anchor head is trained with evidential and ordered-transmittance return losses.
+With that head frozen, the child head is trained with the same objectives and then fine-tuned with
+a pre-hit survival term, the integrated child optical thickness before $d^\star-\tau$.
+These stages learn evidence on fixed centers and scales.
+We subsequently freeze both heads and change the return composition to a categorical measure.
+Thus the final composition is a frozen representation experiment; it does not require joint categorical fine-tuning.
+
+\paragraph{Categorical composition.}
+For 64 ordered samples $d_k$ inside the Actor box, define
+\begin{equation}
+\kappa_{kj}=\exp\!\left(-\frac{\|o+d_kv-c_j\|_2^2}{2s_j^2}\right),
+\qquad w_j=m_{O,j}.
+\end{equation}
+The joint depth--primitive distribution is
+\begin{equation}
+q_{kj}=\frac{w_j\kappa_{kj}}{\sum_{a,b}w_b\kappa_{ab}},
+\qquad p_k=\sum_jq_{kj},\quad F_k=\sum_{\ell\leq k}p_\ell.
 \label{eq:categorical-return}
 \end{equation}
-The deployed return is the median, $\widehat d=\min\{d_k:F_k\ge1/2\}$. Training and deployment use the same ordered
-distribution. Normalization guarantees non-negative unit mass and a monotone CDF, but does not turn $o_j$ into occupancy or
-collision probability. The current protocol conditions on one return inside the Actor box and does not model ray drop.
+We interpolate within the first CDF bin crossing $1/2$ to obtain the return $\widehat d$.
+The measure conditions on a return inside the annotated box.
+Multiplying all primitive weights by the same positive constant leaves $p_k$ unchanged.
+This removes a global optical-thickness degree of freedom; changing the relative mass of a primitive
+family still changes the distribution.
 
-For boundary $b=d^\star-\epsilon$, piecewise-linear interpolation gives the exact deployed decision
+\subsection{Component Responsibility and Attenuation}
+\label{sec:attenuation}
+
+For an evaluation boundary $b=d^\star-\tau$, interpolate $F(b)$ with the same bins as the median.
+At interior boundaries with positive bin mass,
 \begin{equation}
-\widehat d<b\quad\Longleftrightarrow\quad F(b)>\tfrac12,\qquad
-F(b)=F_{\mathrm{anchor}}(b)+F_{\mathrm{child}}(b).
+\widehat d<b\quad\Longleftrightarrow\quad F(b)>\tfrac12.
 \label{eq:categorical-safety-boundary}
 \end{equation}
-This decomposition explains responsibility but is never used to delete a primitive or case.
+Because the measure is additive over primitives,
+$F(b)=F_{\mathcal A}(b)+F_{\mathrm{child}}(b)$.
+This decomposes the deployed early event into observed-anchor and completion contributions.
 
-\subsection{Typed Motion and Appearance Ownership}
-
-Rigid pose is a separate read-only authority. With $T_{it}=(R_{it},t_{it})$, the physical query is
+Let $D_j=\sum_k\kappa_{kj}$, let $N_j(b)$ be the interpolated pre-boundary kernel mass, and define
+$C_j=N_j/D_j$ and $r_j=w_jD_j/\sum_a w_aD_a$.
+Then
 \begin{equation}
-Q_{it}(x;P_i,T_{it})=
-\log\sum_j\exp\!\left[-\frac{\|R_{it}^{\top}(x-t_{it})-c_{ij}\|_2^2}{2s_{ij}^2}\right],
-\label{eq:authority-query}
-\end{equation}
-where $P_i=\{(c_{ij},s_{ij})\}_j$ is canonical physical state. Static Background is a separate scene component. Visual state
-$V_i$ contains render geometry, SH, and opacity; image optimization receives $\operatorname{sg}(P_i)$ and updates only $V_i$.
-Consequently $\partial Q_{it}/\partial V_i=0$, and for a common rigid transform $g$, inverse querying yields
-$Q_{gT}(gx)=Q_T(x)$. These are ownership and equivariance guarantees, not guarantees that pose or geometry is correct.
-
-\subsection{Finite Attenuation Boundary}
-
-The normalized measure also identifies when learned visibility is unsafe. For primitive $j$, let
-$D_j=\sum_k\kappa_{kj}$, $N_j=\sum_{d_k<b}\kappa_{kj}$ with boundary interpolation,
-$C_j=N_j/D_j$, and $r_j=o_jD_j/\sum_a o_aD_a$. Direct differentiation gives
-\begin{equation}
-\frac{\partial F(b)}{\partial\log o_j}=r_j\bigl(C_j-F(b)\bigr).
+\frac{\partial F(b)}{\partial\log w_j}=r_j(C_j-F(b)).
 \label{eq:attenuation-sign-boundary}
 \end{equation}
-For any finite attenuation $v\in(0,1]$ applied to the component, or to a family treated as one component,
+For a finite attenuation $w_j\mapsto vw_j$, $0<v<1$,
 \begin{equation}
-F_v(b)-F(b)=\frac{(1-v)r_j\bigl(F(b)-C_j\bigr)}{1-(1-v)r_j}.
+F_v(b)-F(b)=
+\frac{(1-v)r_j\bigl(F(b)-C_j\bigr)}{1-(1-v)r_j}.
 \label{eq:finite-attenuation-boundary}
 \end{equation}
-Attenuation lowers the pre-boundary CDF iff $C_j>F(b)$; changing its magnitude cannot reverse the sign. Because $b$ uses
-target depth, this is an explanation and model-design boundary, not a deployable oracle gate.
+The denominator is positive. For a component of positive mass, attenuation decreases $F(b)$ exactly
+when $C_j>F(b)$; it increases $F(b)$ when $C_j<F(b)$.
+The same identity holds for uniform attenuation of a family after aggregating its mass.
+Its sign is independent of attenuation magnitude for that fixed component or family.
+Indeed, the attenuated measure is $F_v=(F-(1-v)r_jC_j)/(1-(1-v)r_j)$;
+subtracting $F$ gives Eq.~\ref{eq:finite-attenuation-boundary}.
+We use target-defined $b$ for analysis.
 
-A distinct non-implication concerns the geometry surrogate. The differentiable renderer optimizes an alpha-composited
-expected depth, whereas Eq.~\ref{eq:first-return} is a minimum over beam-supported surface. An arbitrarily small shallow
-component can move the minimum across $b$ while perturbing the expectation arbitrarily little; with late residual mass, that
-perturbation may even move the expectation toward the target. Lower expected-depth error therefore cannot certify a safer
-literal first return without an explicit ordered support or CDF margin.
+\subsection{Rigid Composition and Visual Ownership}
+
+The canonical energy $e_i(x)=\log\sum_j w_j\exp(-\|x-c_j\|^2/(2s_j^2))$ is placed in the world by
+\begin{equation}
+Q_{it}(x)=e_i\!\left(R_{it}^{\top}(x-t_{it})\right),
+\qquad T_{it}=(R_{it},t_{it}).
+\label{eq:authority-query}
+\end{equation}
+For a common rigid transform $g$, inverse querying gives $Q_{gT}(gx)=Q_T(x)$.
+Rigid pose changes location while preserving canonical pairwise distances.
+Static Background has a separate scene owner.
+
+The visual layer receives a detached physical carrier $\operatorname{sg}(P_i)$ and owns its render geometry,
+spherical harmonics, and opacity. Image losses update only this sibling state.
+Since the physical query reads $(P_i,T_{it})$, its derivative with respect to visual parameters is zero.
+This interface lets appearance capacity grow independently of the physical surface.

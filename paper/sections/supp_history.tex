@@ -1,0 +1,178 @@
+\section{Research Lineage: V6 through V6.7}
+\label{sec:archive-lineage}
+
+The earlier versions investigated several objects that are related to physical reconstruction but have distinct
+targets: reproducible editing, occupancy authority, conditional state selection, trajectory reliability,
+and local surface repair. This section retains their strongest results and terminal comparisons.
+The version closeouts and technical reports under \path{docs/autoresearch/worldsim_v6*} are the evidence sources.
+
+\subsection{V6: Typed World State and Exact Reuse}
+
+V6 established SceneIR ownership, deterministic world editing, provenance, lifecycle handling, and factorized
+verification. It separated exact reconstruction of a frozen output from the semantic or physical validity of an edit.
+Its final selector family studied when perception could be reused without changing the full pipeline's outputs.
+
+The R139 orthogonal confirmation reduced perception calls by 17.95\%, with zero false reuse and
+156 exact output hashes. R140 included shared sensor rendering in both full and selective costs:
+end-to-end reductions were 13.53\% for StreetGS, 11.14\% for AD-GS development, and 1.66\% for
+AD-GS confirmation, averaging 8.78\% across conditions with zero reconstruction errors.
+The difference between call-count and end-to-end savings shows the effect of shared rendering cost.
+
+The threshold-transfer alternatives remained negative: R134 had an AD-GS false negative and R136 a
+held-out conservative false positive. The identity-only guard was retained instead of a universal
+pixel-threshold claim. R140's first two closeouts failed through Python/JSON boolean handling;
+the third reproduced their scientific certificate and completed the engineering record.
+R141 was not run. This lineage contributes state ownership and exact operational reproducibility to
+the current method, while its selector is outside the EAS inference path.
+
+\subsection{V6.1: Occupancy as a Physical Evidence Source}
+
+The 28-case minimum experiment separated method-visible occupancy from hidden observed-FREE evaluation.
+Oracle occupancy accepted 10/28 cases with zero false-safe cases and 39.83\% mask yield.
+This established useful proposal support under the oracle.
+
+Hunyuan's generic generated surfaces accepted 0/6 cases in each tested arm and conflicted with measured free space.
+Two independent predicted-occupancy backends, GaussianWorld and IR-WM, each recovered the oracle's 10/28 support
+but produced 10/10 false-safe accepted cases.
+The result concerns the frozen uncalibrated argmax-occupancy interfaces, not occupancy learning in general.
+ME-4 was unexecuted after the terminal comparison.
+The retained lesson for EAS is to keep unknown and contradictory observations explicit in the supervised target.
+
+\subsection{V6.2--V6.3: Constraints and Surface Risk}
+
+V6.2 introduced a constraint-aware evidential state and a single evidence-dropout recovery.
+With $p=.5$ feature dropout and teacher consistency, source-valid UNKNOWN fell from 82.74\% to 63.85\%.
+The four accepted legacy cases nevertheless remained the same four false-safe cases.
+The recovered projection had zero hard violations over 939,206 queries and full safe-OCC retention.
+Thus satisfying known constraints and reducing abstention did not resolve hidden free-space errors.
+
+V6.3 moved to native surface and tail-risk supervision.
+Early objectives collapsed to infeasible states; a recovered checkpoint made the common comparison executable.
+On two development scenes, the B3 surface model increased pooled tail CVaR from .491496 to .608174
+while reducing emitted occupied points from 2,298,450 to 1,047,186.
+Both scene-level comparisons failed. Zero known hard violations and nonzero useful output coexisted
+with worse hidden-surface risk. Surface-Max, Surface-CVaR, and downstream authority arms remained unexecuted.
+These results motivate direct supervision of both the surface and the measured return event.
+
+\subsection{V6.4: Conditional Compilation at Fixed Opportunity}
+
+Native uncertainty features became useful after a full 273-dimensional risk head replaced the weaker
+PCA-16 representation. At nominal .4 coverage, independent calibration had zero failures and
+confirmation had one failure in 96 cases at .39994 realized coverage.
+A stratum-conditional map raised mean coverage to approximately .475 with zero failures on its
+separate 96-case confirmation cohort.
+
+The strongest route-aware result uses an untouched, fixed-opportunity 96-case denominator:
+M1 preserved M0 mean coverage .474970 while reducing worst-ten route-conflict CVaR
+from .020726 to .010821 and pooled conflict density from .004945 to .002001.
+M1 was lower/equal/higher in 18/78/0 paired cases.
+Earlier selected-count ratios were kept separate because they changed the evaluated opportunity set.
+
+The collision-critic extension failed. Initial unsafe-action recalls were .02174/0/.01087 for
+Real-only/naive/verified augmentation on 184 unsafe actions.
+Independent threshold recovery achieved .62044 recall for the verified arm and still produced two
+selected-policy false-safes; AUROC shifted from .71165 to .56274.
+The relative route-conflict result therefore remains an earlier positive experiment with its own target.
+It is not evidence of a learned collision controller.
+
+\subsection{V6.5: Visited-State Reliability}
+
+V6.5 changed the query to the reliability of world states visited by a given Ego trajectory over two seconds.
+Frozen Qmean transferred on fresh cohorts: P2V obtained Spearman .63396, unsafe AUROC .99415,
+and 49.25\% lower selected cost.
+A two-parameter monotone calibration map reduced MSE by 92.80\% and five-bin calibration error by
+88.31\% without changing ranking. P10V's fixed-action cohort retained Spearman .74023,
+AUROC .85878, and 33.26\% lower selected cost.
+
+The combined P10X confirmation passed five of six criteria, but selected cost decreased only 16.38\%
+against the frozen 25\% requirement. This was a terminal rejection of the direct action-selection benefit.
+The map, Actor false-safe, learned-admission, temporal, and smooth-tail branches remain recorded as
+unsuccessful alternatives. The retained positive is a trajectory-conditioned reliability evaluator.
+
+\subsection{V6.6: Actor Preservation and Local Repair}
+
+V6.6 separated Actor existence from local geometry validity.
+The frozen local geometry head reached AUROC/AUPRC .761644/.767165 on an independent consumed
+legacy cohort covering six scenes. A runtime package retained 127 Actors, 581 states, and 1.62 million
+primitives. Fixed-budget triage reduced untreated conflict exposure by 68.40\%.
+
+Natural surface repair remained a trade-off.
+Exact sensor support reduced conflicts by 84.77\% but retained only 39.57\% of clean geometry.
+One-voxel support retained 61.95\% of clean geometry but reduced conflicts by only 41.79\%.
+The single allowed recovery failed the joint criterion.
+Separately, a corrected bounded responder passed six synthetic lead-brake cases, reducing collision
+steps from 306 to zero with jerk at most six. This is a synthetic capability result.
+Natural repair and downstream learned control were not established by that demonstration.
+
+\subsection{V6.7: Uncertainty, Task Geometry, and Reliability Surfaces}
+
+V6.7 developed the earlier paper's reliability formulation through a long sequence of query objects.
+The central successful factorization predicts Actor residual uncertainty from source state and supplies
+candidate-trajectory clearance analytically.
+Endpoint prediction error itself is independent of which candidate trajectory queries it; task geometry
+determines the decision boundary and which errors matter.
+
+\paragraph{From endpoint summaries to directional uncertainty.}
+P81 reduced fixed-50\% unreliable events from 57 to 26 on ten fresh scenes.
+However, the P84--P94 summary, Deep Sets, attention, ordinal, continuous, Gaussian, BCE, and ensemble
+variants failed to stably improve trajectory-level visited-state objectives.
+Task-conditioned occupancy-flip classifiers also reversed across cohorts.
+The uncertainty-tube factorization reduced fixed-50\% flips from 35 to five on the fresh P108 cohort.
+Directional Gaussian projection strengthened ranking, while P111 exposed deterministic clearance as a strong
+comparator. Subsequent work therefore compared learned uncertainty directly with geometry.
+
+P147 confirmed a multi-horizon continuous-cost result on ten fresh scenes:
+all five horizons (.8/1.5/2.5/3.0/3.5 seconds) had higher rank correlation and lower selected cost.
+Macro Spearman increment was .17419 and selected-cost difference was $-.01777$.
+This is distinct from the earlier binary event and from an absolute probability estimate.
+
+\paragraph{Conditional density and joint horizons.}
+P182 modeled $\log(1+C)$ with a five-component conditional Gaussian mixture.
+P183's separate ten-scene confirmation reduced integrated Brier by 28.48\% and mean absolute
+reliability error by 69.38\% over P173.
+P199 then coupled aligned horizon marginals through input-conditioned Gaussian dependence.
+On 1,846 trajectories in the ten-scene P201 cohort, Brier improved by 17.52\% and calibration error
+by 53.37\% relative to independent marginals.
+The P203 beta map received same-read prospective secondary support, improving P199 Brier by 3.70\%
+and calibration error by 49.12\%.
+
+Alternative sampling, density, and dependence branches are retained as comparisons:
+bootstrap/DRO, condition smoothing, heavy-tailed density, spline flows, direct Brier optimization,
+scene-balanced sampling, mixtures, constant or low-rank copulas, Student-t copulas, direct maximum-cost
+density, prefix-survival density, cumulative exposure, and learned selection.
+Several improved development calibration or one cohort while regressing another.
+Their results did not replace the independently supported density/dependence stages.
+
+\paragraph{Monotone runtime distillation.}
+P227 distilled the frozen density/dependence teacher.
+P228's fresh 1,720-trajectory cohort had teacher MAE .007443, a .316\% Brier improvement,
+and a .000020 absolute calibration increase.
+Its measured batched student stage took .002905 seconds versus .111554 seconds for the teacher joint stage
+(38.4 times at that stage, excluding shared upstream work).
+P234's same-read secondary surface had MAE .007101 and zero budget/horizon monotonicity violations.
+Input-reduction and global continuous-family variants missed their fidelity criteria.
+Fixed-knot interpolation retained the discrete surface and its structural monotonicity.
+
+\paragraph{Terminal selective-authority family.}
+P346 retained a reused-development result: q90 mean coverage .328415 with maximum unsafe selected-set
+rate .090909 on P201 task conditions. Its source-held-out-horizon rate was .267108.
+The executable lattice's held-out horizon is 2.5 seconds; V7-F16 corrects the older prose label of 3.0 seconds.
+P358--P361 then trained all four fixed-grid horizons and tested shared calibration, horizon calibration,
+one-sided BCE, and pairwise ranking. Their P201 coverage/risk pairs were
+.306284/.112360, .293169/.105263, .342896/.107527, and .343169/.127660.
+None simultaneously met coverage at least .30 and risk at most .10.
+P346 therefore remains a reused-development positive; the terminal grid family remains negative.
+
+\subsection{Transition to V7 and the Current Surface Object}
+
+V7 combined Actor-preserving physical compilation, separate repair/hazard inputs, and the inherited reliability
+surface. The non-learned AV2 compiler improved depth and Chamfer while preserving Actor state.
+Selective repair transferred on some cohorts, but fresh ranking reversal, sensor-opportunity shortcuts,
+and confidently wrong interval-stable decisions exposed its limitations.
+The fixed-lattice downstream audit checked how repair and trajectory reliability compose as two independent
+decisions; it was an open-loop interface study.
+
+V7.1 moved the primary prediction object to supervised canonical surface geometry and return evidence.
+The current model inherits explicit state ownership and disciplined denominator accounting.
+The old selector, task-reliability density, and synthetic responder remain useful historical results in
+this archive, with their full V7 tables and proof record below. They are not hidden components of EAS.

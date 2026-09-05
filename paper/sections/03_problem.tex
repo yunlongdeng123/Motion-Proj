@@ -1,22 +1,20 @@
 \section{Problem Formulation}
+\label{sec:problem}
 
-Actor $i$ has immutable state $A_i=(ID_i,T_{i,0:H},D_i,C_i)$: identity, rigid pose trajectory, dimensions, and category.
-Build sweeps provide canonicalized endpoints and FREE/OCCUPIED/UNKNOWN ray evidence $B_i$; disjoint target sweeps provide
-GT surface and first-return supervision $Y_i$ but are never model inputs. The learned physical state is
-$P_i=(S_i,m_i)$, comprising an Actor-canonical surface and continuous primitive evidence. A read-only pose $T_{it}$ places
-$P_i$ in the world. Static Background and visual state $V_i$ have separate owners.
+For tracked Actor $i$, let $Z_i=(ID_i,T_{i,0:H},D_i,C_i)$ denote identity, rigid trajectory,
+dimensions, and category. Build observations $B_i$ contain LiDAR endpoints and their sensor origins.
+Disjoint target sweeps $Y_i$ supply surface and first-return labels.
+We learn a canonical physical state $P_i=(S_i,m_i)$, where $S_i$ contains primitive centers and support
+scales, and $m_i$ contains continuous evidence. The Actor state $Z_i$ is preserved during reconstruction.
 
-We seek parameters $(\theta,\phi)$ for geometry $S_i^\theta(B_i)$ and evidence $m_i^\phi(B_i)$ that jointly improve
-held-out surface distance and literal first-return behavior,
-\begin{equation}
-\min_{\theta,\phi}\ \mathbb E_i\!\left[
-\mathcal L_{\mathrm{surface}}(S_i^\theta,Y_i)+
-\mathcal L_{\mathrm{return}}(S_i^\theta,m_i^\phi,Y_i)
-\right],
-\label{eq:problem-objective}
-\end{equation}
-subject to three deployment invariants: every generated surface remains queryable; $A_i$ is unchanged; and the physical query
-has no argument or gradient path from $V_i$. A lower early-return rate alone is insufficient, because deleting a surface can
-reduce early events while degrading hit recall and Chamfer. We therefore require the source-domain direction to improve
-hazard-stratified early returns without sacrificing surface fidelity or Actor retention, and evaluate the frozen representation
-once on AV2 without target adaptation.
+For a target ray $r=(o,v,d^\star)$, a return $\widehat d$ is early when
+$\widehat d<d^\star-\tau$ and a hit when $|\widehat d-d^\star|\leq\tau$.
+We use $\tau=0.20$\,m. The literal point-surface operator takes the smallest positive projected depth of
+any center within a $0.20$\,m lateral beam tube; an empty tube has depth $\infty$.
+The categorical operator instead returns the interpolated median of the surface's depth distribution.
+Both are scored against the same measured endpoint.
+
+The learning objective combines surface reconstruction with ray agreement. Evaluation reports early rate,
+hit recall, and symmetric Chamfer together: each measures a distinct consequence of changing $S_i$.
+An Actor's hazard label is used only for stratified evaluation. A read-only pose places $P_i$ in world
+coordinates, and a separately parameterized visual state $V_i$ supplies appearance.

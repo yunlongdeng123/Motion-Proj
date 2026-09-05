@@ -1,5 +1,27 @@
 # Research Status
 
+## V7.1 论文重构与只读证据审计（2026-09-05）
+
+以 `1913ab0e` 为科学证据快照，将 main 重构为 Evidential Actor Surfaces，将 V6--V7.1 的历史正结果、
+失败路径、复现细节、完整证明与 V7 相机证据汇入仅供本地查看的 supplement；不提交 OpenReview。
+此次仅写作、证据核对与本地 CPU 编译，无新实验、GPU 调用、target 重读、阈值或模型修改。
+
+只读审计发现 M43 描述性 `m8_point_surface` 的 early/hit 基线被 categorical 计数覆盖（`V71-F52`）。
+该混算子差值不能归因为匹配的几何迁移失败；此前相应因果解释撤回。M43 正式 M39 vs unit categorical
+比较与 `m39_development_only_cross_sensor_rejected` 结论完全不变，Chamfer 配对也不受影响。
+canonical run 保持不可变；本次不修改 runner，未来复用前需隔离 literal/categorical 基线字段。
+
+同时校正写作口径：M8 用 alpha-composited expected-depth surrogate 而非可微 literal minimum；M39 冻结
+M35/M38 光学损失训练的 heads 后切换 categorical composition；AV2 从剔除 60 logs 后的 90-log 补集中
+取位置 `0,4,...,76`；历史 P346 held-out horizon 为 `2.5s`；保留的 P199 为 full Gaussian copula。
+旧状态中的 PDF 页数属于当时构建。本次最终输出：`paper/main.pdf=7 pages / 354,994 bytes`、
+`paper/supplement.pdf=32 pages / 8,159,955 bytes`。Windows TinyTeX/latexmk 串行编译通过；
+`python paper/scripts/verify_paper.py` 核对 39 个表值与分层计数，引用/重复标签/overfull 均为 0；
+两份 PDF 全页渲染检查通过。写作证据与改动索引见 `paper/REVISION_NOTES.md`。
+下一步：阅读已交付 PDF；任何新实验或 runner 修复均需单独任务授权，本次不启动。
+
+下一可用统一失败编号：`V71-F53`。
+
 ## WorldSim V7.1 M43 frozen AV2 complete / cross-sensor rejected（2026-09-05）
 
 Canonical=`run://worldsim_v71/WS-V71-M43-M39-AV2-ZERO-SHOT-01/20260905T091500Z__m43-m39-av2-zero-shot-r1`。
@@ -12,9 +34,9 @@ selection、failed-log deletion或partial-quality read。
 冻结三门仅hit-retention通过：all early nonincrease=false、hazard+clear early nonincrease=false、all hit retained=true，
 故verdict=`m39_development_only_cross_sensor_rejected`，登记`V71-F43`并关闭AV2 adaptation。
 
-描述性M8 point-surface基线进一步显示跨传感器几何失配：all/hazard early由`16.907/16.556%`升至
-`45.271/50.149%`；Chamfer仅变化`+0.162mm`，hit变化`+0.079pp`。这表明M39可恢复命中率，但不能消除由
-几何/传感器耦合引起的危险早返回。resume段wall=`9,323.04s`、peak GPU=`0.209GiB`、peak RSS=`1.334GiB`；
+更正（V71-F52）：描述性 M8 early/hit 汇总混用了 categorical 基线与 literal 输出，不能支持原先的
+几何/传感器耦合归因。其 Chamfer 配对仍为 `+0.162mm`。正式 M39 categorical 比较显示 hit--early
+跨域权衡，但不单独识别几何原因。resume段wall=`9,323.04s`、peak GPU=`0.209GiB`、peak RSS=`1.334GiB`；
 完成时磁盘剩余约`82GiB`。
 
 CVPR主稿/补充材料已同步完整负结果。TinyTeX/latexmk：`main.pdf=8 pages / 378,464 bytes`，无overfull、

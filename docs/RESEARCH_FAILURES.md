@@ -1,16 +1,34 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F52 — M43 描述性 point-surface 汇总覆盖了基线算子计数（2026-09-05）
+
+- category=`evaluation_operator_accounting`；代码与科学证据基线 commit=`1913ab0e`。
+- discovery：论文证据审计只读检查 `scripts/run_worldsim_v71_m43_m39_av2_zero_shot.py::_evaluate_bundle`
+  与已完成 canonical `20260905T091500Z__m43-m39-av2-zero-shot-r1/summary.json`；没有重评测或读取新 target。
+- root cause：`evaluate_actor_surface` 先产生 literal point-surface baseline/output；随后 `row.update`
+  用 unit categorical 的计数覆盖 `baseline_early_count` 和 `baseline_hit_count`，但保留 literal output 计数。
+  描述性 `m8_point_surface` 的 early/hit 差值因此不是同算子比较。
+- affected interpretation：原 all/hazard `16.907/16.556% -> 45.271/50.149%` 与 hit `+0.079pp`
+  不再作为几何迁移效果；撤回“这些差值已证明 geometry/sensor coupling”这一归因。原 artifact 不改写。
+- unaffected：M39 正式 categorical baseline/output 使用匹配算子，`+0.229/+0.542/-0.036pp` early、
+  `+5.888/+6.302/+5.537pp` hit 与既有拒绝结论不变；描述性 Chamfer `+0.162mm` 仍是合法配对。
+- resolution：main 移除混算子归因；本地 supplement 明示 erratum；同步 STATUS、EXPERIMENTS 与 synthesis。
+- remaining boundary：本次论文任务不修改 runner、不重读 target。未来复用 runner 前必须为 literal/categorical
+  分别命名 baseline/output 字段，并以固定合成计数测试聚合。当前状态=`documentation_corrected_runner_risk_open`。
+
+下一可用编号：`V71-F53`。下方历史条目中的 next-ID 属于当时状态。
+
 ## V71-F43 — M39 categorical authority does not preserve early-return direction across sensors（2026-09-05）
 
 - run=`run://worldsim_v71/WS-V71-M43-M39-AV2-ZERO-SHOT-01/20260905T091500Z__m43-m39-av2-zero-shot-r1`；
   complete=`20/20` logs、352 Actors、1,016,652 rays，final summary只在`ALL_COMPLETE`且三类进程退出后读取；
 - symptom=M39相对unit categorical baseline的all/hazard/clear early delta为`+0.229/+0.542/-0.036pp`，仅clear
   不增；hit delta为`+5.888/+6.302/+5.537pp`，因此冻结判定=`false/false/true`、仅1/3通过；
-- retained evidence=跨传感器上M39显著恢复hit，但最关键hazard early反而恶化；M8 point geometry的all/hazard
-  early也从`16.907/16.556%`升至`45.271/50.149%`，而Chamfer仅`+0.162mm`、hit仅`+0.079pp`；
-- root cause boundary=source-learned completion geometry与producer evidence依赖nuScenes采样/射线分布；categorical
-  composition消除density-count耦合，但不能自动消除sensor-conditioned support与危险前尾迁移。该结果拒绝
-  domain invariance，不否定source-domain M39 mechanism；
+- retained evidence=跨传感器上 M39 恢复 hit，但 hazard early 恶化；描述性 M8 early/hit 混算子差值不构成
+  几何迁移证据（更正见 V71-F52），其 Chamfer 配对仍为 `+0.162mm`；
+- root cause boundary=正式同算子比较拒绝 source-domain 改善方向的直接跨传感器迁移，但不能单独识别
+  几何、证据与传感器分布的因果贡献。categorical normalization 仅具有全局权重缩放不变性，不消除
+  不同 primitive family 相对数量或质量的影响；source-domain M39 mechanism 保留；
 - resolution=按事前协议保留M39为development-exposed mechanism result，停止AV2 fine-tuning、calibration、threshold/
   margin/bin/scale sweep、log replacement或回选descriptive arm；论文明确报告负迁移与hit--early trade-off；
 - integrity=no partial quality read、no target adaptation、no failed-log deletion；状态=`scientific_rejection`。

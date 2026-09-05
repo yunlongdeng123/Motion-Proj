@@ -1,45 +1,48 @@
 \section{Introduction}
 
-Reconstructed driving worlds are increasingly used for perception analysis, counterfactual replay, and planning evaluation.
-Their visual geometry, however, is rarely a literal physical model. A Gaussian can explain image appearance while occupying
-observed free space, duplicating an Actor shell, or flickering across time. Conversely, a valid nearby Actor can be uncertain
-precisely because it is partially observed. Deleting that Actor improves an early-collision proxy without making the world more
-faithful. Physical consistency must therefore be defined before inference---through targets, supervision, representation, and
-state ownership---rather than certified after inference by a confidence filter.
+Reconstructed driving scenes support sensor simulation, perception analysis, and counterfactual replay.
+Recent neural simulators represent complex appearance and moving objects with impressive fidelity
+\cite{yang2023unisim,zheng2024lidar4d,wu2024dynfl}. Physical queries impose an additional requirement:
+the reconstructed surface must agree with where a sensor first encounters an object.
+A visually plausible vehicle can still extend into measured free space, while a sparse but accurate point set
+can miss much of its surface. These errors affect different parts of the same ray and call for joint surface
+and return evaluation.
 
-We study this problem for dynamic annotated Actors. Multi-frame LiDAR is transformed into an Actor-canonical frame and split
-into build evidence and disjoint target sweeps. Actor identity, trajectory, extent, lifecycle, and hazard state remain immutable.
-Observed anchors are also fixed; each completion seed instead predicts a small set of child surfaces trained by target-set,
-local-plane, scale, per-frame coverage, literal first-return, and observed free-before-hit losses. Every child remains present at
-deployment. Thus early-return, hit-recall, and Chamfer improvements must come from the learned physical representation, not
-from UNKNOWN masking or Actor deletion.
+Two challenges arise in learning such a representation. First, multi-frame observations of moving Actors must
+be aligned before they become completion targets. A small collection of seeds also has insufficient capacity
+to cover a dense target surface. Second, a primitive's location and its contribution to a sensor return are
+different variables. The same anchor may receive occupied evidence in one view and free-space evidence in another.
+Assigning every overlapping Gaussian unit opacity makes the return depend on sampling density, while a single
+confidence score discards the structure of these observations.
 
-This construction exposes a second distinction: surface geometry and sensor termination are different physical variables.
-A well-placed Gaussian can still receive contradictory free and occupied evidence from different views. We retain that evidence
-at the data producer and supervise continuous FREE/OCCUPIED/UNKNOWN authority for anchors and completion children. Treating
-the occupied coordinate as additive opacity fails because total optical thickness depends on primitive density. We instead
-compose frozen geometry and learned authority into one normalized categorical surface-return measure. Its CDF is the deployed
-first-return distribution, so training and inference share the same object and no post-hoc threshold is needed.
+We address these challenges with \emph{Evidential Actor Surfaces} (EAS), illustrated in
+Fig.~\ref{fig:eas-overview}. Each tracked Actor has a canonical physical surface, continuous return evidence,
+and a separately owned rigid trajectory. We construct build inputs and disjoint supervision targets by
+transforming LiDAR sweeps into the Actor frame. A set decoder expands every completion seed into four child
+surfaces. Set distance, local-plane and scale targets, frame coverage, and ray losses jointly supervise the
+children while observed anchors stay fixed. This provides a direct route from measured geometry to the deployed surface.
 
-Dynamic motion, static context, and appearance are kept outside this geometry--termination coupling. Rigid Actor pose relocates
-the canonical field through inverse SE(3) querying but cannot deform it. Static Background has a different owner. Image gradients
-update only a sibling visual state through a stop-gradient physical carrier. These typed interfaces do not solve pose, visibility,
-or appearance; they prevent those variables from silently compensating for physical geometry during optimization.
+For sensor termination, we retain the observation history at the corpus producer and learn separate evidence
+heads for anchors and children. Their free, occupied, and unknown masses summarize multi-view support and
+contradiction. On the fixed surface, occupied mass weights a normalized categorical distribution over ray depth.
+This composition yields a useful first-return measure from the learned evidence. Its normalization also permits
+an exact component-wise analysis: decreasing a component's weight moves the pre-hit probability toward the
+remaining mixture. We derive the finite change, identifying the condition under which attenuation decreases
+early-return probability.
 
-Finally, the normalized return measure permits an exact safety analysis. Attenuating one primitive does not necessarily lower
-probability before a hazardous boundary: the sign depends on whether that primitive's own pre-boundary CDF lies above or below
-the mixture CDF. We derive the finite change and show that attenuation magnitude cannot reverse its sign. A failed learned-
-visibility experiment then becomes an interpretable boundary rather than motivation for another filter. We verify this effect on
-99,208 frozen rays and never use the target-dependent sign as a deployment gate.
+The dynamic scene interface follows the same separation of variables. A read-only SE(3) pose places the canonical
+surface in the world; a sibling visual state carries appearance. This makes rigid composition equivariant and
+prevents image optimization from moving the physical surface. The representation therefore combines learnable
+local geometry with explicit control over which state each observation may update.
 
-Our contributions are:
+Our experiments separate geometry learning, return composition, and coordinate ownership. On the nuScenes
+development fold, surface supervision improves hazardous early returns, hit recall, and Chamfer jointly.
+Categorical evidence improves early returns and hit recall across the all, hazardous, and clear strata on
+the same geometry. A frozen AV2 cohort measures cross-sensor behavior, and analytical and numerical audits
+connect the return measure to its attenuation response. We make three contributions:
 \begin{itemize}
-  \item supervision-native Actor completion whose GT set, ray, and free-space losses remain active through physical training,
-  with no UNKNOWN or confidence deletion at deployment;
-  \item producer-evidential FREE/OCCUPIED/UNKNOWN authority represented as a categorical surface-return measure rather than
-  density-dependent volumetric opacity;
-  \item typed canonical-geometry, rigid-pose, static-world, and appearance ownership with inverse-query SE(3) equivariance and
-  no image-gradient path to physical geometry;
-  \item an exact finite attenuation boundary for normalized mixtures and a frozen nuScenes-to-AV2 evaluation that exposes
-  a hit--early-return transfer trade-off without partial reading or target adaptation.
+\item an Actor-canonical completion representation trained with target-set, frame, and ray supervision;
+\item a producer-evidential categorical return measure with an exact finite attenuation identity;
+\item a factorized physical--pose--visual interface, evaluated through surface accuracy, first-return behavior,
+and SE(3) composition.
 \end{itemize}

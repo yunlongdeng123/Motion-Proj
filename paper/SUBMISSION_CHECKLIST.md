@@ -1,5 +1,9 @@
 # CVPR / arXiv submission handoff
 
+> Historical V7 checklist. The 2026-09-05 revision is an EAS local reading package based on V7.1 `1913ab0e`.
+> Current `main.tex` uses CVPR `pagenumbers` mode; `supplement.pdf` is a private V6--V7.1 research archive and must not be submitted to OpenReview.
+> The branch, page counts and frozen-package constraints below do not describe the current revision. See `README.md` for current build and QA steps.
+
 ## Current frozen package
 
 - Branch: `research/worldsim-v7-harp3d-cvpr`, based on the terminal V6.7 research branch.

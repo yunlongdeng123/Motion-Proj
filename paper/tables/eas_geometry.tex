@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Canonical geometry on 66 development Actors. Early and hit are ray percentages; CD is Actor-mean Chamfer in mm.
+All rows use literal point-surface returns and retain 100\% of Actor states.}
+\label{tab:eas-geometry}
+\begin{tabular}{lrrrrr}
+\toprule
+& \multicolumn{3}{c}{Early $\downarrow$} & CD $\downarrow$ & Hit $\uparrow$\\
+Method & All & Hazard & Clear & (mm) & (\%)\\
+\midrule
+Original & 26.74 & 27.80 & \textbf{21.56} & 237.67 & 47.67 \\
+Set expansion & \textbf{24.41} & \textbf{24.96} & 21.74 & 234.77 & 49.84 \\
++ frame coverage & 25.70 & 26.37 & 22.39 & \textbf{231.46} & \textbf{50.43} \\
+\bottomrule
+\end{tabular}
+\end{table}

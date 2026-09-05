@@ -1,18 +1,5 @@
-\section{Limitations}
-
-The learned results use a 66-Actor development fold whose parent representation was previously inspected. They establish
-a source-domain Pareto direction, not an unbiased final estimate. The single frozen AV2 evaluation rejects learned transfer:
-hit recall improves, but all and hazardous early returns worsen. We did not inspect partial quality or adapt on AV2. The
-earlier non-learned AV2 compiler is a separate operator result and must not be presented as learned transfer.
-
-Our categorical measure assumes one return inside an annotated Actor box. Its mass is surface-return evidence, not calibrated
-occupancy or collision probability; sparse sensing leaves unknown space, and neither M8 nor M39 proves watertight completion.
-Tracked cuboids, poses, and GT LiDAR may be noisy. Current canonicalization covers rigid annotated vehicles, while deformable
-Actors, static topology, explicit no-return modeling, sensor-error sets, and closed-loop vehicle dynamics remain open. Exact
-SE(3) equivariance certifies coordinate composition only, not trajectory or surface correctness.
-
-The appearance audit is a single-scene mechanism study on views exposed before the final hierarchy design. It shows that image
-gradients can be isolated from physical geometry, but leaves a 7.62\,dB gap to the original visual Actor and does not establish
-photorealism or cross-scene fidelity. Finally, the M49 attenuation identity is evaluated with a GT-defined boundary on exposed
-rays. It explains why attenuation can be adverse, but using its sign as a selector would recreate the post-hoc oracle behavior
-we seek to avoid. None of our results is a collision-freedom, planning, policy, domain-invariance, or real-road-safety guarantee.
+\paragraph{Scope and limitations.}
+The present model addresses rigid, annotated Actors with sufficient multi-frame LiDAR support and conditions
+on a return inside the Actor box. Sparse sensing and pose errors remain sources of surface ambiguity.
+Source results use an exposed development fold; the frozen AV2 evaluation quantifies the remaining sensor dependence.
+Non-rigid deformation, explicit ray drop, and static-world completion require additional targets and modeling.

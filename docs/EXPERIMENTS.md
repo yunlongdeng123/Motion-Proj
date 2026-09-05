@@ -1,5 +1,15 @@
 # Experiments
 
+## V7.1 paper evidence audit — writing only（2026-09-05）
+
+- scientific base=`1913ab0e`；new runs=0、new target reads=0、GPU=0；只读现有 docs、代码、canonical summaries。
+- main 聚焦 EAS 的几何、证据组合、有限衰减与所有权；supplement 完整归档 V6--V7.1，仅本地查看。
+- failure_delta=`V71-F52`：M43 descriptive M8 early/hit 使用混算子基线；移除该几何迁移归因，保留合法
+  Chamfer 配对与正式 M39 categorical 比较。原 run、frozen decision、模型与 cohort 均不变。
+- method corrections：M8 expected-depth surrogate；M39 optical-trained frozen heads；AV2 90-log complement
+  sampling；P199 full copula；P346 held-out `2.5s`。证明明确有限衰减前提与边界插值约定。
+- validation：本地串行构建 main/supplement、引用与 39 个表格数值检查、全页渲染检查；无新增科学评测。
+
 ## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — canonical complete / rejected（2026-09-05）
 
 - run=`20260905T091500Z__m43-m39-av2-zero-shot-r1`；status=`done`；20/20 logs、352 Actors、1,016,652 rays；
@@ -8,8 +18,8 @@
   hit all/hazard/clear=`+5.888/+6.302/+5.537pp`；observable=`100/100/100%`；
 - decisions=`false/false/true` for all-early nonincrease / hazard-and-clear early nonincrease / all-hit retained；
   pass=`1/3`；verdict=`m39_development_only_cross_sensor_rejected`；failure=`V71-F43`；
-- descriptive M8 point geometry vs original compiler: early all/hazard/clear=`16.907→45.271% / 16.556→50.149% /
-  17.205→41.133%`；Chamfer=`0.160581→0.160743m`（`+0.162mm`）；hit=`38.347→38.426%`（`+0.079pp`）；
+- corrected descriptive M8 record（V71-F52）：early/hit baseline 被 categorical counts 覆盖，不再作为 matched
+  point-geometry 比较；Chamfer 配对不受影响，`0.160581→0.160743m`（`+0.162mm`）；
 - protocol integrity: AV2 fine-tuning/calibration/threshold selection/failed-log deletion/partial metric read=`false`；
   source-final read=`false`；external-final read=`true` exactly after completion；no target adaptation follows；
 - resources: resume wall=`9,323.04s`、peak GPU=`0.209GiB`、peak RSS=`1.334GiB`、disk free=`~82GiB`。

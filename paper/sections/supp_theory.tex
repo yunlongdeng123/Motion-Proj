@@ -1,0 +1,164 @@
+\section{Proofs and Operator Boundaries}
+\label{sec:archive-proofs}
+
+\subsection{Finite Attenuation of a Normalized Measure}
+
+Fix a ray, its sample grid, and all primitive kernels.
+Let $D_j>0$ be the total kernel mass of primitive $j$, and $N_j(b)\in[0,D_j]$ its
+pre-boundary mass under the same linear interpolation as the deployed CDF.
+For positive weights $w_j$, put
+\begin{equation}
+\begin{gathered}
+D=\sum_jw_jD_j,\qquad N=\sum_jw_jN_j,\\
+F=N/D,\qquad r_j=w_jD_j/D,\qquad C_j=N_j/D_j.
+\end{gathered}
+\end{equation}
+Differentiating the quotient gives
+\begin{equation}
+\begin{aligned}
+\frac{\partial F}{\partial\log w_j}
+&=w_j\,\frac{N_jD-ND_j}{D^2}\\
+&=\frac{w_jD_j}{D}\left(\frac{N_j}{D_j}-\frac ND\right)
+=r_j(C_j-F).
+\end{aligned}
+\end{equation}
+After $w_j$ is replaced by $vw_j$, $0<v<1$, the numerator and denominator become
+$N_v=N-(1-v)w_jN_j$ and $D_v=D-(1-v)w_jD_j$.
+Hence
+\begin{equation}
+F_v=\frac{F-(1-v)r_jC_j}{1-(1-v)r_j},
+\end{equation}
+and subtraction yields
+\begin{equation}
+F_v-F=\frac{(1-v)r_j(F-C_j)}{1-(1-v)r_j}.
+\label{eq:archive-finite}
+\end{equation}
+The denominator is at least $v>0$.
+Consequently, attenuation decreases $F$ iff $C_j>F$, increases it iff $C_j<F$,
+and leaves it unchanged if $C_j=F$. At $v=1$ there is no change.
+A zero-mass component has no effect.
+
+For a family $\mathcal J$ uniformly scaled by $v$, replace $w_jD_j$ and $w_jN_j$ with
+$\sum_{j\in\mathcal J}w_jD_j$ and $\sum_{j\in\mathcal J}w_jN_j$.
+This proves the family identity with its own weighted conditional CDF.
+It does not assert magnitude-independent signs for arbitrary heterogeneous multi-component changes.
+Those changes can alter the balance between favorable and adverse components.
+
+\paragraph{A two-component example.}
+Take equal total contributions with $C_1=.8$ and $C_2=.2$.
+The mixture has $F=.5$. Halving the early component gives $F_v=.4$; halving the later component
+instead gives $F_v=.6$. Both operations reduce a positive weight.
+Their opposite effects follow from which part of the normalized measure is reduced.
+
+Uniformly duplicating every component leaves the normalized categorical distribution unchanged,
+whereas duplicating only one family generally changes its relative contribution.
+This is the remaining family-count dependence tested by M40/M41.
+Global scale invariance should therefore not be interpreted as arbitrary discretization invariance.
+
+\subsection{Median Decisions and Component Accounting}
+
+For ordered samples, let $p_k>0$ and $F_k=\sum_{\ell\leq k}p_\ell$.
+The implementation finds the first $k$ with $F_k\geq .5$ and linearly interpolates the crossing.
+Within an interior positive-mass segment, the CDF is strictly increasing, so
+\begin{equation}
+\widehat d<b\quad\Longleftrightarrow\quad F(b)>.5.
+\label{eq:archive-categorical-boundary}
+\end{equation}
+Boundary equality is not an early event.
+At or outside the box endpoints, the implementation's endpoint convention must be applied explicitly;
+a universal quantile identity for distributions with atoms or plateaus would need corresponding tie rules.
+
+Interpolation is linear in sample mass.
+Since $p_k=p_{k,\mathcal A}+p_{k,\mathrm{child}}$, it follows that
+$F(b)=F_{\mathcal A}(b)+F_{\mathrm{child}}(b)$ using exactly the same interpolation coefficient.
+M44 checks this accounting against the rendered early decision on all 99,208 valid source rays:
+event agreement is exact and the maximum numerical decomposition residual is $2.98\times10^{-7}$.
+
+\subsection{Why Expected Depth Does Not Control the Minimum}
+
+Consider target depth $d^\star=1$ and early boundary $b=.8$.
+A reference distribution puts all mass at $1+\delta$, with $\delta>0$.
+Its expected-depth error is $\delta$ and its hard minimum is not early.
+Construct a candidate with mass
+\begin{equation}
+\varepsilon=\frac{\delta}{.5+\delta}
+\end{equation}
+at depth $.5$ and the remaining mass at $1+\delta$.
+Its expected depth equals one exactly:
+$\varepsilon(.5)+(1-\varepsilon)(1+\delta)=1$.
+Expected-depth error improves to zero, yet the hard minimum becomes $.5<b$.
+As $\delta\to0$, the added early mass also tends to zero.
+Thus arbitrarily small changes in expectation can accompany a discontinuous change in the minimum event.
+
+This construction concerns a support-minimum operator, not the categorical median.
+A guarantee for a literal minimum requires a constraint on early support.
+A guarantee for a categorical median requires a margin on its ordered CDF.
+A mean smooth-loss improvement supplies neither condition by itself.
+
+\begin{table}[h]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{.48\linewidth}rr}
+\toprule
+M51: M50 versus M8 & Same support & Deployment\\
+\midrule
+Added early rays (\%) & .594 & .659\\
+Removed early rays (\%) & .104 & .114\\
+Net early change (pp) & +.490 & +.545\\
+Added rays with lower smooth error (\%) & 38.03 & 36.54\\
+\bottomrule
+\end{tabular}
+\caption{Smooth/minimum diagnosis on 99,208 rays. Same support uses limited anchors plus children without
+voxelization; deployment uses all anchors and the fixed $.06$\,m voxel realization.}
+\end{table}
+
+The mean smooth absolute error also changes from $.291706$ to $.292153$\,m,
+so M50 exhibits both aggregate smooth regression and per-ray operator non-implication.
+Smooth-error and same-support hard-depth changes correlate at $.038$.
+Support realization changes 1.280\% of current-model early events, but the disagreement already exists
+before that realization.
+
+\subsection{Rigid Equivariance and Appearance Non-Interference}
+
+Let $e_P$ depend only on canonical physical state $P$, and define $Q(P,T;x)=e_P(T^{-1}x)$.
+For any rigid transform $g$,
+\begin{equation}
+Q(P,gT;gx)=e_P((gT)^{-1}gx)=e_P(T^{-1}x)=Q(P,T;x).
+\end{equation}
+For two canonical centers, rigid placement also gives
+$\|Rc_j+t-(Rc_k+t)\|=\|c_j-c_k\|$ because $R^\top R=I$.
+These statements require a common transform and unchanged canonical state.
+
+Let visual parameters $\psi$ own $V_\psi$ and suppose the image optimizer receives only
+$\operatorname{sg}(P)$ and updates $\psi$.
+Since the physical query reads no component of $V_\psi$,
+\begin{equation}
+\frac{\partial Q(P,T;x)}{\partial\psi}=0.
+\end{equation}
+This is a structural property of the computation graph.
+It remains meaningful even when the physical geometry, supplied pose, or visual reconstruction is inaccurate.
+
+\subsection{Earlier Deletion and Reliability Identities}
+
+For point sets $X'\subseteq X$, Eq.~\ref{eq:archive-literal} gives
+$d_{X'}(r)\geq d_X(r)$, including the empty-set convention.
+The early indicator can therefore only decrease under deletion.
+Hit recall can either increase (an early occluder is removed) or decrease (the hit is removed).
+This was the V7 motivation for evaluating coverage and return fidelity together.
+
+For historical trajectory reliability, let
+$C_\tau=\max_j |n_{\tau j}^{\top}e_j|/\max(d_{\tau j},\epsilon)$.
+A uniform clearance change $\delta$ satisfies
+\begin{equation}
+|C_\tau(d+\delta)-C_\tau(d)|
+\leq\max_j\frac{|n_{\tau j}^{\top}e_j|\,|\delta|}
+{\max(d_j,\epsilon)\max(d_j+\delta,\epsilon)}.
+\end{equation}
+The result follows from the maximum operator and clipped denominator being 1-Lipschitz.
+It is a deterministic sensitivity bound.
+
+The earlier multi-horizon event $R(H,c)=
+\Pr(\max_{t\leq H}C_t\leq c)$ is nondecreasing in budget $c$ and nonincreasing in prefix horizon $H$.
+Convex interpolation between ordered budget knots preserves the first order; shared nonnegative interpolation
+weights across ordered horizon surfaces preserve the second.
+These structural orders are independent of probability calibration, which is evaluated on its own cohorts.

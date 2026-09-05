@@ -1,0 +1,66 @@
+\section{Reading Guide and Evidence Map}
+\label{sec:archive-guide}
+
+This document is a local research archive accompanying \emph{Evidential Actor Surfaces for Physically Consistent
+Driving Reconstruction}. It consolidates the experiments and theory developed from WorldSim V6 through V7.1.
+It is intended for private inspection and research continuity, not for OpenReview submission.
+The scientific snapshot is the V7.1 branch at commit \texttt{1913ab0e}, including the completed M43 AV2 evaluation.
+
+The main paper follows the current surface--evidence--return formulation. This archive also retains earlier
+successful interfaces, rejected alternatives, diagnostic experiments, and historical visualizations.
+A positive result retains its original data role: development, reused cohort, independent confirmation,
+and synthetic capability are different kinds of evidence.
+
+\begin{table}[h]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{.22\linewidth}p{.67\linewidth}}
+\toprule
+Evidence & Current role\\
+\midrule
+M7 / M8 & Target-set expansion and frame-supervised canonical geometry; exposed source development.\\
+M33--M39 & Producer evidence, separate anchor/child heads, and frozen categorical composition.\\
+M22 / M28 & Rigid coordinate composition and physical--visual non-interference.\\
+M44 / M49 & Exact CDF responsibility and finite attenuation identities.\\
+M50 / M51 & Frame-weighted ray-loss rejection and smooth/minimum operator diagnosis.\\
+M43 & Complete frozen AV2 comparison; hit improvement with early-return regression.\\
+V6--V7 & Earlier compilation, reliability, and selective-authority results; historical context.\\
+\bottomrule
+\end{tabular}
+\caption{How the retained evidence enters the revised paper.}
+\end{table}
+
+\paragraph{Notation and implementation IDs.}
+EAS set expansion corresponds to M7, the frame-supervised geometry to M8, and the final categorical
+measure to M39 using frozen M35 anchor and M38 child heads.
+The unit categorical comparator uses the same M8 centers and scales with unit weights.
+The original completion comparator in the geometry table is a point surface scored by the literal operator.
+These baselines are distinct. M18 is a learned query decoder; M21 is the earlier frozen unit-energy
+candidate; neither denotes the final evidential model.
+
+\paragraph{Corrections to the previous manuscript.}
+The revised method distinguishes the alpha-composited expected-depth surrogate from literal
+point-surface evaluation. M8's pre-hit term is a hinge on expected depth; M38 separately introduces
+integrated pre-hit child optical thickness. M39 freezes heads trained through transmittance and then
+changes composition, whereas direct categorical fine-tuning was tested later as M40.
+The AV2 cohort is sampled at positions $0,4,\ldots,76$ from the sorted 90-log complement after excluding
+60 previously consumed logs.
+
+A read-only implementation audit also identifies a naming collision in M43:
+\texttt{\_evaluate\_bundle} first constructs literal point-surface rows, then replaces
+\texttt{baseline\_early\_count} and \texttt{baseline\_hit\_count} with the unit categorical counts.
+The \texttt{m39\_surface\_return} comparison remains internally matched and supports the reported M43
+verdict. However, the \texttt{m8\_point\_surface} early/hit deltas compare a categorical baseline to a
+literal output. They cannot be interpreted as a matched geometry-transfer experiment.
+Its Chamfer pair is unaffected. We retain the immutable run and omit that mixed-operator causal attribution.
+
+\paragraph{Archive structure.}
+The next sections give reproducibility details, complete proofs, and the V6--V6.7 research lineage.
+They are followed by the extended V7.1/V7 method and experimental record, plus the restored V7 certificate,
+cohort, interval, and camera-evidence appendix.
+The separate source snapshot \texttt{supplement\_v7\_legacy.tex} is preserved in the repository.
+
+\clearpage
+\setcounter{tocdepth}{2}
+\tableofcontents
+\clearpage

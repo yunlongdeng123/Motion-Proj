@@ -1,0 +1,142 @@
+\section{Current Method: Reproducibility Details}
+\label{sec:archive-repro}
+
+\subsection{Data Roles and Denominators}
+
+The V7.1 corpus contains 1,004 Actors from raw and role-separated processed nuScenes producers.
+Candidate-bearing preparation supplies the 659 Actors used in the later geometry/evidence stages.
+The deterministic index-modulo-ten split yields 593 training and 66 development Actors.
+Parent-representation exposure predates the latter split, so the 66-Actor results are development evidence.
+The earlier S1 oracle uses 64 training Actors; M0/M1 use 88 source-selection Actors; B4 uses 121.
+The different eligibility conditions explain these different denominators.
+
+Build observations and target observations are separated by sweep role. Both sensor origins and endpoints
+are transformed into each Actor's canonical coordinates.
+Inputs retain only build-side evidence; disjoint target geometry supplies losses and evaluation labels.
+For AV2, the frozen compiler uses every third evaluation sweep with target modulo value two,
+at least four build frames and three target frames, and the eight configured rigid-vehicle categories.
+
+The frozen external cohort contains 116 hazardous and 236 clear Actors.
+Its 466,576 hazardous and 550,076 clear rays sum to 1,016,652.
+The source fold contains 82,444 hazardous and 16,764 clear rays.
+We aggregate ray counts before division, including unmatched rays in the denominator.
+Chamfer averages the per-Actor symmetric nearest-neighbor distance.
+Frame coverage averages target points within frame, frames within Actor, and Actors within the reported group.
+
+Hazard is a frozen Actor-level annotation derived from the supplied motion and ego interaction:
+short time to collision, small minimum clearance, interaction-range hard braking, or crossing.
+It is independent of the learned surface and is never an input or optimization target.
+The frozen criteria are TTC at most 3\,s, clearance at most 2\,m, normalized hard-brake score at least
+$.75$ within 15\,m, or crossing within 5\,m clearance and a 20\,m forward window.
+Hard braking is normalized by $4\,\mathrm{m/s^2}$; category mapping remains in the inherited compiler configuration.
+
+\subsection{Geometry Schedule}
+
+A frozen parent relocation model (M5) supplies the coordinate base.
+M7 expands each parent into four learned slots with ten geometry epochs followed by eight geometry/ray epochs
+(seed 71109, learning rate $3\times10^{-4}$).
+M8 initializes from M7 and adds equal-frame target coverage for six epochs.
+Its seed is 71110, hidden width 128, slot dimension 16, Actor batch size four, AdamW learning rate
+$10^{-4}$, and weight decay $10^{-4}$.
+Centers receive per-axis bounded $0.25$\,m residuals and are restricted by the configured padded cuboid.
+Scales are isotropic, bounded to $[0.02,0.40]$\,m, and initialized at $0.10$\,m.
+Eight nearest target points define local planes and spacing targets.
+
+Training uses at most 512 target rays and 512 anchors per Actor.
+Frame coverage samples at most 256 rays per target-origin group.
+The set, plane, scale, first-depth, and pre-hit hinge losses are divided by detached parent-reference
+values clamped below by $10^{-3}$; M8 frame distance is normalized by its frozen M7 reference.
+Geometry weights are $1,.25,.10$, and the frame term has weight one.
+Ray depth has weight one and the pre-hit hinge has weight $.5$.
+Two-task PCGrad operates on the geometry-plus-frame and ray gradients.
+
+The smooth renderer uses 48 depth samples, fixed $0.08$\,m support width, density multiplier two,
+and a residual depth $0.50$\,m behind the target.
+These fixed renderer widths differ from the learned primitive scales used by the categorical field.
+The training ray sampler depends on target depth as part of constructing the loss; inference samples
+the annotated Actor-box interval instead.
+Deployment emits all predicted children with all anchors and performs the fixed $0.06$\,m voxel deduplication.
+It applies no learned evidence threshold.
+
+\subsection{Evidence Schedule and Categorical Inference}
+
+M33's sidecar aligns 297,535 observed anchors by producer identity. The heads retain canonical geometry,
+construction provenance, source ray/frame descriptors, projection displacement, support counts, and
+build free/occupied/unknown evidence. Children inherit their parent's build evidence and child geometry.
+Each head uses a two-layer primitive encoder with ReLU, max-pooled Actor context, and a three-logit
+evidence output of hidden width 64.
+
+M35 trains the anchor head for six epochs (seed 71135). M37 trains a separate child head with the
+anchor head frozen, and M38 fine-tunes it for four epochs (seed 71138) with integrated pre-hit survival.
+Evidence stages use Actor batches of four, learning rate $5\times10^{-4}$, weight decay $10^{-4}$,
+at most 128 training rays, and 32 transmittance segments.
+The return objective combines segment negative log-likelihood, expected-depth L1 with weight $.10$,
+and soft evidence cross-entropy with weight $.50$.
+M38 adds child optical thickness before $d^\star-.20$\,m with weight one.
+Its fixed geometry and anchor head are unchanged.
+
+M39 performs no optimization. It loads M8, M35, and M38, evaluates occupied weights through the same
+Gaussian kernel, and normalizes joint depth--primitive mass.
+Evaluation uses 64 samples in the Actor box padded by $.15$\,m and a median level of $.50$.
+Observed anchors have fixed $.08$\,m scale; children use the learned M8 scale.
+A small positive weight floor is used for log-domain numerical stability.
+The median linearly interpolates between the previous and first crossing CDF samples; at the first
+sample the left depth is the box entry. All evaluated M39 rays are observable in both datasets.
+
+\subsection{Source Results and Operator Definitions}
+
+\input{tables/eas_geometry}
+\input{tables/eas_return}
+
+For finite point set $X$ and unit direction $v$, the literal evaluator computes
+\begin{equation}
+d_X(r)=\min_{\substack{x\in X,\;s_x>0\\
+\|x-o-s_xv\|\leq\epsilon}}s_x,\qquad
+s_x=(x-o)^\top v,
+\label{eq:archive-literal}
+\end{equation}
+with $\epsilon=.20$\,m and $\min\varnothing=\infty$.
+This is a minimum over projected centers within a cylindrical beam; it is not an analytic Gaussian
+entry depth or the first intersection with a sphere.
+The categorical operator weights continuous Gaussian support on sampled depths and interpolates its median.
+The shared event tolerance is $.20$\,m.
+
+The source M8 absolute early rates are 25.70/26.37/22.39\% for all/hazardous/clear Actors.
+Its clear-stratum regression is retained in the main table.
+The source M39 measure improves all three strata over unit energy, with 100\% observability.
+The two source comparisons evaluate different operators and different interventions:
+M8 changes centers; M39 changes weights on fixed centers and scales.
+
+\subsection{Canonical Evidence Paths}
+
+Run paths share the root \path{/root/autodl-tmp/runs/worldsim_v71/}.
+For each entry below, append \path{/summary.json} to read the canonical aggregate.
+Resolved configurations and checkpoint identities live in the same run directories.
+
+\begin{small}
+\noindent\textbf{M8:}\quad
+\path{WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2}
+
+\noindent\textbf{M39:}\quad
+\path{WS-V71-M39-CATEGORICAL-AUTHORITY-COMPOSITION-01/20260905T070000Z__m39-categorical-authority-r1}
+
+\noindent\textbf{M43:}\quad
+\path{WS-V71-M43-M39-AV2-ZERO-SHOT-01/20260905T091500Z__m43-m39-av2-zero-shot-r1}
+
+\noindent\textbf{M44:}\quad
+\path{WS-V71-M44-CATEGORICAL-SAFETY-RESPONSIBILITY-01/20260905T093000Z__m44-categorical-safety-responsibility-r1}
+
+\noindent\textbf{M49:}\quad
+\path{WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01/20260905T121500Z__m49-visibility-sign-boundary-r1}
+
+\noindent\textbf{M50:}\quad
+\path{WS-V71-M50-FRAME-BALANCED-FIRST-RETURN-01/20260905T060000Z__m50-frame-balanced-first-s71150-r2}
+
+\noindent\textbf{M51:}\quad
+\path{WS-V71-M51-SOFT-HARD-FIRST-RETURN-DIAGNOSIS-01/20260905T063000Z__m51-soft-hard-first-return-r1}
+\end{small}
+
+The manuscript-local \path{results/eas_evidence.json} retains exact numerical extracts and task IDs.
+The repository's \path{docs/EXPERIMENTS.md} and unified \path{docs/RESEARCH_FAILURES.md} provide the full
+task chronology and engineering/scientific disposition.
+Historical reports under \path{docs/autoresearch/} supply the version-level evidence cited next.
