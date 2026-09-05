@@ -1,5 +1,10 @@
 # WorldSim V7.1 研究计划
 
+> **冻结外测终态（2026-09-05）：** M43 canonical run完成`20/20` AV2 logs、352 Actors、1,016,652 rays。
+> M39相对unit categorical baseline的all/hazard/clear early delta=`+0.229/+0.542/-0.036pp`，hit delta=
+> `+5.888/+6.302/+5.537pp`；冻结判定仅1/3通过，verdict=`m39_development_only_cross_sensor_rejected`，
+> 登记`V71-F43`。无partial read或AV2适配；V7.1保留source-domain监督与理论边界结论，不声称domain invariance。
+
 ## HARP-Field：面向危险保真的可学习 Actor 物理表面场
 
 **版本定位：** V7.1 不是继续增加 selector、threshold 或 authority head，而是专门解决 V7 的 C1 剩余核心问题：`COMPLETE` 生成的未观测表面会造成 literal first-return ghost；现有模型只能保留、删除或转 UNKNOWN，不能把错误表面移动到正确位置。
@@ -15,7 +20,7 @@
 > 保持未读，不做outcome-guided恢复。完整证据见
 > `docs/autoresearch/worldsim_v71/V71_RESEARCH_CLOSEOUT.md`。
 
-> **最终研究交接（2026-09-05）：** 后续failure-directed research在同一v7.1分支形成M8 supervision-native
+> **中途关机交接（2026-09-05；已由上方冻结外测终态取代）：** 后续failure-directed research在同一v7.1分支形成M8 supervision-native
 > geometry、M39 evidential categorical return measure、M49有限衰减安全边界与M51 smooth/hard非蕴含诊断；
 > M50及M45--M48按冻结判定rejected。M43是唯一learned external candidate，但用户要求关机时仅完成`16/20`
 > logs且没有final summary；未读取partial quality，故V7.1当前只拥有source-domain与解析边界结论，不拥有

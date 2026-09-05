@@ -1,6 +1,27 @@
 # Research Status
 
-## WorldSim V7.1 M43 exact-once resume active（2026-09-05）
+## WorldSim V7.1 M43 frozen AV2 complete / cross-sensor rejected（2026-09-05）
+
+Canonical=`run://worldsim_v71/WS-V71-M43-M39-AV2-ZERO-SHOT-01/20260905T091500Z__m43-m39-av2-zero-shot-r1`。
+冻结20-log AV2 Sensor val cohort已完成：`20/20` logs、352 Actors、1,016,652 rays；`ALL_COMPLETE`与final
+`summary.json`存在，evaluator/downloader/s5cmd均正常退出。全程无AV2 fine-tuning、calibration、threshold
+selection、failed-log deletion或partial-quality read。
+
+相对冻结unit categorical-energy baseline，M39的all/hazard/clear early-return delta为
+`+0.229/+0.542/-0.036pp`，all/hazard/clear hit delta为`+5.888/+6.302/+5.537pp`，observable rate均为100%。
+冻结三门仅hit-retention通过：all early nonincrease=false、hazard+clear early nonincrease=false、all hit retained=true，
+故verdict=`m39_development_only_cross_sensor_rejected`，登记`V71-F43`并关闭AV2 adaptation。
+
+描述性M8 point-surface基线进一步显示跨传感器几何失配：all/hazard early由`16.907/16.556%`升至
+`45.271/50.149%`；Chamfer仅变化`+0.162mm`，hit变化`+0.079pp`。这表明M39可恢复命中率，但不能消除由
+几何/传感器耦合引起的危险早返回。resume段wall=`9,323.04s`、peak GPU=`0.209GiB`、peak RSS=`1.334GiB`；
+完成时磁盘剩余约`82GiB`。
+
+CVPR主稿/补充材料已同步完整负结果。TinyTeX/latexmk：`main.pdf=8 pages / 378,464 bytes`，无overfull、
+undefined reference/citation或duplicate-label warning；`supplement.pdf=15 pages / 2,337,132 bytes`，无undefined，
+仅两处既有overfull（`53.85pt/6.03pt`）。主稿含M43表格与段落的page 5可视检查无截断或重叠。
+
+## WorldSim V7.1 M43 exact-once resume active（2026-09-05；historical, now complete）
 
 恢复实现已由commit `82bc3fd7`推送到v7.1分支。canonical evaluator PID=`1751`以`--resume`运行，唯一downloader
 PID=`1752`、唯一`s5cmd` PID=`1759`；状态=`running/waiting_fresh_av2`、`16/20` logs、276 Actors，当前log=
@@ -19,7 +40,7 @@ cohort前缀跳过已完成16 logs，从第17个log继续；不汇总、不打�
 feature/metric、阈值、cohort或判定。downloader继续由`.complete`标记跳过16个已完成日志。恢复时只允许一个
 evaluator和一个downloader；20/20且正常退出后才读取final `summary.json`。
 
-## WorldSim V7.1 final documentation handoff / external claim withheld（2026-09-05）
+## WorldSim V7.1 shutdown handoff / external claim withheld（2026-09-05；historical, superseded）
 
 分支=`research/worldsim-v7.1-learned-evidential-surface`。当前可复现实证已收口为：M8的GT/set/ray/free-space
 supervision-native canonical geometry、M39的producer-evidential categorical return measure、M22/M28的typed

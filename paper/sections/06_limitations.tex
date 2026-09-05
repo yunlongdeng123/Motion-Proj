@@ -1,9 +1,9 @@
 \section{Limitations}
 
 The learned results use a 66-Actor development fold whose parent representation was previously inspected. They establish
-a source-domain Pareto direction, not an unbiased final estimate. The single frozen AV2 aggregate remains incomplete; we did
-not inspect partial quality or adapt on AV2, so it provides no learned-transfer result. The earlier non-learned AV2 compiler
-is a separate operator result and must not be presented as learned transfer.
+a source-domain Pareto direction, not an unbiased final estimate. The single frozen AV2 evaluation rejects learned transfer:
+hit recall improves, but all and hazardous early returns worsen. We did not inspect partial quality or adapt on AV2. The
+earlier non-learned AV2 compiler is a separate operator result and must not be presented as learned transfer.
 
 Our categorical measure assumes one return inside an annotated Actor box. Its mass is surface-return evidence, not calibrated
 occupancy or collision probability; sparse sensing leaves unknown space, and neither M8 nor M39 proves watertight completion.

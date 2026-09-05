@@ -4,7 +4,7 @@ Date: 2026-09-05
 
 ## One-sentence result
 
-V7.1 establishes a supervision-native Actor-canonical geometry path and a learned evidential categorical return measure on nuScenes, proves strict ownership/equivariance and an attenuation safety boundary, and withholds cross-sensor generalization because the single frozen M39-to-AV2 read remained incomplete at the shutdown handoff.
+V7.1 establishes a supervision-native Actor-canonical geometry path and a learned evidential categorical return measure on nuScenes, proves strict ownership/equivariance and an attenuation safety boundary, and rejects cross-sensor generalization after the single frozen M39-to-AV2 evaluation worsens all/hazard early returns despite improving hit recall.
 
 ## Factorized scientific state
 
@@ -16,7 +16,7 @@ M8 adds equal per-frame endpoint coverage while keeping trajectory outside the s
 
 Claim allowed: training supervision changes the deployed geometry and produces a source-domain physical Pareto without post-hoc deletion.
 
-Claim forbidden: watertight reconstruction, collision freedom, unseen-category completion, or external generalization without a complete M43 aggregate.
+Claim forbidden: watertight reconstruction, collision freedom, unseen-category completion, or cross-sensor generalization; the complete M43 aggregate rejects the latter.
 
 ### 2. Surface-return authority: M39 supported on exposed development
 
@@ -70,13 +70,15 @@ If future work predicts temporal evolution, canonical shape and deformation must
 
 ## Cross-domain state
 
-M43 is the only eligible frozen external candidate. It reconstructs all M8 geometry and M35/M38 authority inputs from AV2 build sweeps, then evaluates target sweeps once. No AV2 fine-tuning, normalization fit, calibration, threshold selection, log replacement, or partial quality read is permitted. At the final handoff it had processed 16/20 logs and 276 Actors, was waiting for log `c85a88a8-c916-30a7-923c-0c66bd3ebbd3`, and had no final `summary.json`. The sole evaluator and downloader were healthy, the recent log contained no error or retry, and about 86 GiB remained. The user-requested shutdown intentionally pauses this frozen execution; no partial quality is admitted.
+M43 is the only eligible frozen external candidate. It reconstructs all M8 geometry and M35/M38 authority inputs from AV2 build sweeps, then evaluates target sweeps once. The canonical run completed 20/20 logs, 352 Actors, and 1,016,652 rays; `ALL_COMPLETE`, final `summary.json`, and normal evaluator/downloader exit were confirmed before the single aggregate read. No AV2 fine-tuning, normalization fit, calibration, threshold selection, log replacement, failed-log deletion, or partial quality read occurred.
+
+Relative to the frozen unit categorical baseline, M39 changes all/hazard/clear early returns by +0.229/+0.542/-0.036 points and hit recall by +5.888/+6.302/+5.537 points. The all-early and worst-stratum gates fail while hit retention passes, so only 1/3 preregistered decisions pass and the verdict is `m39_development_only_cross_sensor_rejected` (`V71-F43`). Descriptively, M8 point geometry itself raises all/hazard early rates from 16.907/16.556% to 45.271/50.149%, showing that the external failure already appears in geometry/sensor coupling; categorical authority recovers hit recall but not the hazardous front tail.
 
 Current claim branch:
 
-- The present paper claims source-domain supervision-native physical completion, exact ownership/equivariance, and the normalized-mixture safety boundary; it makes no learned cross-sensor claim.
-- If the same frozen run is later resumed, only a complete 20/20 aggregate after normal evaluator exit can establish the pre-registered direction. Failure still permits no target adaptation.
+- The present paper claims source-domain supervision-native physical completion, exact ownership/equivariance, and the normalized-mixture safety boundary; it explicitly reports a rejected learned cross-sensor test and makes no domain-invariance claim.
+- M43 is closed. Its negative result permits no AV2 adaptation, threshold tuning, log replacement, or second target-domain experiment.
 
 ## Paper compression priority
 
-The main paper should retain: the supervision-native target construction; M7/M8 geometry; M39 joint return measure; the M43 frozen protocol and explicit incomplete boundary; typed ownership/SE(3); and the M49 safety theorem/figure. M0--M6, M9--M21, M23--M27, M29--M38, and M40--M48 are failure-directed evidence for the supplement except where one sentence is necessary to motivate a retained result. This preserves the causal story: GT geometry, return measure, state ownership, honest external-test boundary, safety boundary.
+The main paper should retain: the supervision-native target construction; M7/M8 geometry; M39 joint return measure; the M43 frozen negative transfer result; typed ownership/SE(3); and the M49 safety theorem/figure. M0--M6, M9--M21, M23--M27, M29--M38, and M40--M48 are failure-directed evidence for the supplement except where one sentence is necessary to motivate a retained result. This preserves the causal story: GT geometry, return measure, state ownership, honest external-test boundary, safety boundary.

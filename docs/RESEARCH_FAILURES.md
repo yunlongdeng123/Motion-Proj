@@ -1,5 +1,22 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F43 — M39 categorical authority does not preserve early-return direction across sensors（2026-09-05）
+
+- run=`run://worldsim_v71/WS-V71-M43-M39-AV2-ZERO-SHOT-01/20260905T091500Z__m43-m39-av2-zero-shot-r1`；
+  complete=`20/20` logs、352 Actors、1,016,652 rays，final summary只在`ALL_COMPLETE`且三类进程退出后读取；
+- symptom=M39相对unit categorical baseline的all/hazard/clear early delta为`+0.229/+0.542/-0.036pp`，仅clear
+  不增；hit delta为`+5.888/+6.302/+5.537pp`，因此冻结判定=`false/false/true`、仅1/3通过；
+- retained evidence=跨传感器上M39显著恢复hit，但最关键hazard early反而恶化；M8 point geometry的all/hazard
+  early也从`16.907/16.556%`升至`45.271/50.149%`，而Chamfer仅`+0.162mm`、hit仅`+0.079pp`；
+- root cause boundary=source-learned completion geometry与producer evidence依赖nuScenes采样/射线分布；categorical
+  composition消除density-count耦合，但不能自动消除sensor-conditioned support与危险前尾迁移。该结果拒绝
+  domain invariance，不否定source-domain M39 mechanism；
+- resolution=按事前协议保留M39为development-exposed mechanism result，停止AV2 fine-tuning、calibration、threshold/
+  margin/bin/scale sweep、log replacement或回选descriptive arm；论文明确报告负迁移与hit--early trade-off；
+- integrity=no partial quality read、no target adaptation、no failed-log deletion；状态=`scientific_rejection`。
+
+下一可用编号仍为：`V71-F52`。
+
 ## V71-F51 — all-in-one单实例guard自匹配未来launch参数（2026-09-05）
 
 - symptom：将`pgrep -f`检查与nohup launch写在同一远端shell命令时，shell自身command line包含后半段runner/

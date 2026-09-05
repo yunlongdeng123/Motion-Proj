@@ -1,6 +1,22 @@
 # Experiments
 
-## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — resumed live（2026-09-05）
+## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — canonical complete / rejected（2026-09-05）
+
+- run=`20260905T091500Z__m43-m39-av2-zero-shot-r1`；status=`done`；20/20 logs、352 Actors、1,016,652 rays；
+  `ALL_COMPLETE=true`、final summary=true、evaluator/downloader/s5cmd exited；
+- frozen M39 vs unit categorical energy, early all/hazard/clear=`+0.229/+0.542/-0.036pp`；
+  hit all/hazard/clear=`+5.888/+6.302/+5.537pp`；observable=`100/100/100%`；
+- decisions=`false/false/true` for all-early nonincrease / hazard-and-clear early nonincrease / all-hit retained；
+  pass=`1/3`；verdict=`m39_development_only_cross_sensor_rejected`；failure=`V71-F43`；
+- descriptive M8 point geometry vs original compiler: early all/hazard/clear=`16.907→45.271% / 16.556→50.149% /
+  17.205→41.133%`；Chamfer=`0.160581→0.160743m`（`+0.162mm`）；hit=`38.347→38.426%`（`+0.079pp`）；
+- protocol integrity: AV2 fine-tuning/calibration/threshold selection/failed-log deletion/partial metric read=`false`；
+  source-final read=`false`；external-final read=`true` exactly after completion；no target adaptation follows；
+- resources: resume wall=`9,323.04s`、peak GPU=`0.209GiB`、peak RSS=`1.334GiB`、disk free=`~82GiB`。
+- paper=main `8 pages / 378,464 bytes`、0 overfull/undefined；supplement `15 pages / 2,337,132 bytes`、0 undefined、
+  仅既有overfull `53.85pt/6.03pt`；main page 5 visual QA pass。
+
+## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — resumed live（2026-09-05；historical, now complete）
 
 - code commit=`82bc3fd7`；canonical run unchanged；launch=`--resume`；
 - evaluator/downloader/s5cmd PIDs=`1751/1752/1759`，single instance verified；
@@ -20,7 +36,7 @@
 - scientific contract/model/checkpoint/cohort/metric/decision change=`none`；failure=`V71-F50 resolved pre-quality`；
 - validation limited to Python syntax plus resume-state launch observation；no smoke/regression sweep。
 
-## WorldSim V7.1 final evidence ledger / M43 incomplete at shutdown handoff（2026-09-05）
+## WorldSim V7.1 shutdown evidence ledger / M43 incomplete（2026-09-05；historical, superseded）
 
 - branch=`research/worldsim-v7.1-learned-evidential-surface`；scientific head包含M8/M39/M49/M51与完整negative chain；
 - retained source results=M8 hazard early `-5.123%` relative、Chamfer `-6.207mm`、hit `+2.759pp`；M39-vs-unit

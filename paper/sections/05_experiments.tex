@@ -16,8 +16,7 @@ We train and make every representation choice on nuScenes. The geometry fold con
 as development-exposed because its parent representation had already been inspected. Argoverse~2 Sensor validation is a
 single frozen zero-shot evaluation: before any learned-method output is read, we sort the 150 log UUIDs and choose every
 fifth log, yielding 20 quantitative logs. We prohibit AV2 fine-tuning, calibration, threshold selection, and failed-log
-deletion. At manuscript freeze the aggregate is incomplete and has no final summary, so no partial learned-transfer metric
-appears below and we make no learned cross-domain claim.
+deletion. The run processes all 20 logs and 352 Actors before the single final aggregate read; no partial quality is used.
 
 Physical evaluation uses literal first-return error, hit recall within $0.20$\,m, symmetric Chamfer distance, and the same
 metrics stratified by a target-defined hazard label. Actor identity, trajectory, extent, and lifecycle are immutable. This
@@ -65,6 +64,15 @@ Failure-directed variants sharpen that conclusion. Joint ray fine-tuning transfe
 total family mass still optimizes target-bin likelihood without controlling the deployed boundary event. Directly
 supervising GT not-early and hit-band events recovers aggregate and hazardous directions but regresses the clear stratum.
 We therefore retain frozen M39 for the single AV2 test instead of tuning another development loss.
+
+\subsection{Frozen nuScenes-to-AV2 Result}
+
+M43 evaluates 352 Actors and 1,016,652 rays from the frozen 20-log cohort. Relative to unit categorical energy, M39 changes
+all/hazardous/clear early returns by $+0.23/+0.54/-0.04$ points and hit recall by $+5.89/+6.30/+5.54$ points, with 100\%
+observable rays. The all-early and worst-stratum gates fail while hit retention passes, so only one of three preregistered
+criteria passes and transfer is rejected. Descriptively, the M8 point surface itself raises all/hazardous early rates from
+$16.91/16.56\%$ to $45.27/50.15\%$, while Chamfer changes by only $+0.16$\,mm. Thus external failure already appears in
+geometry--sensor coupling: categorical authority recovers hits but not the hazardous front tail. We perform no AV2 adaptation.
 
 \subsection{An Exact Boundary for Learned Attenuation}
 
@@ -115,6 +123,6 @@ The source experiments support three separable statements: GT-defined losses imp
 deletion; producer evidence is useful when represented as categorical return authority; and normalized-mixture attenuation
 has a non-monotone, exactly characterizable boundary. Typed ownership keeps rigid motion, Background, appearance, and
 canonical geometry from silently compensating for one another. None of these statements certifies collision freedom,
-unobserved completion, trajectory accuracy, domain invariance, or real-road safety. The incomplete frozen AV2 protocol was
-designed to test only the learned return representation's cross-domain direction; without its full aggregate it supplies no
-result and cannot retroactively select or adapt the method.
+unobserved completion, trajectory accuracy, domain invariance, or real-road safety. The complete frozen AV2 test rejects the
+learned return representation's cross-domain direction: improved hit recall coexists with worse all and hazardous early
+returns. This result cannot retroactively select or adapt the method.
