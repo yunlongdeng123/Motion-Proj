@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F50 — M43 runner缺少同run断点续跑入口（2026-09-05）
+
+- symptom：用户重新开机要求继续M43时，原进程已退出，而runner固定
+  `run_dir.mkdir(parents=True, exist_ok=False)`；直接复用run ID会在加载模型/外测前报目录已存在，新run ID则会
+  重读前16个target logs并破坏exact-once语义；
+- exposure：恢复诊断只读`status.json`、进程、marker和日志计数；M43保持`16/20`、276 Actors、final summary=false、
+  partial quality human read=false；0新target evaluation、0模型/阈值/cohort/decision变化；
+- root cause：最初runner只覆盖不中断的一次性执行，没有把长IO与关机后的程序级continuation建模为合法状态；
+- resolution：增加显式`--resume`，从`status.completed_logs`恢复冻结cohort前缀，程序内部载入自产partial rows用于最终
+  拼接，并从下一log继续；既有summary存在时拒绝resume，row log只能属于已完成前缀；
+- prevention：长时exact-once external runner必须区分fresh launch与explicit resume；恢复不创建新run、不重算已完成log、
+  不输出partial aggregate，downloader/evaluator均保持单实例；状态=`resolved_pre_quality`，next ID=`V71-F51`。
+
 ## V7.1 final handoff prevention note — incomplete M43 is not a scientific failure（2026-09-05）
 
 - M43 handoff state=`running/waiting_fresh_av2`, `16/20` logs、276 Actors；current log=

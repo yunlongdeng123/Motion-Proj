@@ -47,6 +47,14 @@ def _limit(values: np.ndarray, maximum: int) -> tuple[np.ndarray, np.ndarray]:
     return values[indices], indices
 
 
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
 def _anchor_input_sidecar(
     bundle: Mapping[str, Any],
     actor: Mapping[str, Any],
@@ -311,7 +319,9 @@ def _surface_return_summary(rows: list[Mapping[str, Any]]) -> dict[str, Any]:
     }
 
 
-def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
+def run(
+    config_path: Path, repo_root: Path, run_id: str, *, resume: bool = False
+) -> dict[str, Any]:
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     cohort = load_frozen_av2_cohort(repo_root / config["cohort_config"])
     if len(cohort["logs"]) != int(config["expected_log_count"]):
@@ -319,14 +329,49 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
     compiler = yaml.safe_load((repo_root / config["p2_config"]).read_text(encoding="utf-8"))
     energy_runner.m0_runner._deep_update(compiler, config["compiler_overrides"])
     run_dir = Path(config["runs_root"]) / "worldsim_v71" / config["task_id"] / run_id
-    run_dir.mkdir(parents=True, exist_ok=False)
-    (run_dir / "resolved.yaml").write_text(
-        yaml.safe_dump(config, sort_keys=False), encoding="utf-8"
-    )
-    external_runner._write_json(
-        run_dir / "status.json",
-        {"status": "running", "phase": "waiting_fresh_av2", "completed_logs": 0},
-    )
+    rows: list[dict[str, Any]] = []
+    processed_logs: list[str] = []
+    resume_count = 0
+    if resume:
+        if not run_dir.is_dir():
+            raise RuntimeError(f"cannot resume missing run directory: {run_dir}")
+        if (run_dir / "summary.json").is_file():
+            raise RuntimeError("cannot resume completed M43 run")
+        status_path = run_dir / "status.json"
+        if not status_path.is_file():
+            raise RuntimeError("cannot resume M43 run without status.json")
+        prior_status = json.loads(status_path.read_text(encoding="utf-8"))
+        resume_count = int(prior_status.get("completed_logs", 0))
+        if not 0 <= resume_count <= len(cohort["logs"]):
+            raise RuntimeError("M43 resume completed-log count is outside the cohort")
+        partial_path = run_dir / "EXTERNAL_ACTORS.partial.jsonl"
+        if resume_count and not partial_path.is_file():
+            raise RuntimeError("cannot resume processed M43 logs without partial rows")
+        rows = _read_jsonl(partial_path) if partial_path.is_file() else []
+        processed_logs = [
+            str(row["log_id"]) for row in cohort["logs"][:resume_count]
+        ]
+        processed_set = set(processed_logs)
+        if any(str(row.get("log_id")) not in processed_set for row in rows):
+            raise RuntimeError("M43 partial rows are outside the completed cohort prefix")
+        external_runner._write_json(
+            status_path,
+            {
+                "status": "running",
+                "phase": "resuming_fresh_av2",
+                "completed_logs": resume_count,
+                "actor_rows": len(rows),
+            },
+        )
+    else:
+        run_dir.mkdir(parents=True, exist_ok=False)
+        (run_dir / "resolved.yaml").write_text(
+            yaml.safe_dump(config, sort_keys=False), encoding="utf-8"
+        )
+        external_runner._write_json(
+            run_dir / "status.json",
+            {"status": "running", "phase": "waiting_fresh_av2", "completed_logs": 0},
+        )
     device = torch.device(config["device"])
     if device.type != "cuda" or not torch.cuda.is_available():
         raise RuntimeError("M43 frozen AV2 evaluation requires CUDA")
@@ -378,10 +423,10 @@ def run(config_path: Path, repo_root: Path, run_id: str) -> dict[str, Any]:
         child_authority = authority_runner._load_authority(child_checkpoint, device)
         child_authority.eval().requires_grad_(False)
 
-        rows: list[dict[str, Any]] = []
-        processed_logs: list[str] = []
         state = Path(config["download_state"])
-        for position, cohort_row in enumerate(cohort["logs"]):
+        for position, cohort_row in enumerate(
+            cohort["logs"][resume_count:], start=resume_count
+        ):
             log_id = str(cohort_row["log_id"])
             marker = state / f"{log_id}.complete"
             wait_started = time.monotonic()
@@ -540,10 +585,16 @@ def main() -> None:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument("--run-id", required=True)
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     print(
         json.dumps(
-            run(args.config.resolve(), args.repo_root.resolve(), args.run_id),
+            run(
+                args.config.resolve(),
+                args.repo_root.resolve(),
+                args.run_id,
+                resume=args.resume,
+            ),
             ensure_ascii=False,
         ),
         flush=True,

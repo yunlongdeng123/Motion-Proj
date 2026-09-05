@@ -1,5 +1,16 @@
 # Research Status
 
+## WorldSim V7.1 M43 exact-once resume implementation ready（2026-09-05）
+
+AutoDL重启后只读确认canonical M43仍为`16/20` logs、276 Actors、无`summary.json`，原evaluator/downloader均未
+自动恢复；repo仍在`research/worldsim-v7.1-learned-evidential-surface@2ab362b4`且clean。原runner用
+`run_dir.mkdir(exist_ok=False)`，无法在保留run identity与已完成target reads的同时继续，登记`V71-F50`。
+
+runner现增加显式`--resume`：只读取自身`status.completed_logs`与程序自产生的partial rows用于最终拼接，按冻结
+cohort前缀跳过已完成16 logs，从第17个log继续；不汇总、不打印、不人工读取partial quality，不改模型、checkpoint、
+feature/metric、阈值、cohort或判定。downloader继续由`.complete`标记跳过16个已完成日志。恢复时只允许一个
+evaluator和一个downloader；20/20且正常退出后才读取final `summary.json`。
+
 ## WorldSim V7.1 final documentation handoff / external claim withheld（2026-09-05）
 
 分支=`research/worldsim-v7.1-learned-evidential-surface`。当前可复现实证已收口为：M8的GT/set/ray/free-space

@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V71-M43-M39-AV2-ZERO-SHOT-01 — exact-once resume recovery（2026-09-05）
+
+- canonical run=`20260905T091500Z__m43-m39-av2-zero-shot-r1`；pre-resume=`16/20` logs、276 Actors；
+- boot state=evaluator/downloader absent、final summary absent、partial quality human read=false；
+- recovery=`--resume` loads prior rows only inside evaluator, trusts `status.completed_logs=16`, skips frozen cohort prefix,
+  and continues at log 17；no completed log is reevaluated；
+- downloader recovery=same `download_worldsim_v71_av2.sh`, existing `.complete` markers skip 16 logs；single process only；
+- scientific contract/model/checkpoint/cohort/metric/decision change=`none`；failure=`V71-F50 resolved pre-quality`；
+- validation limited to Python syntax plus resume-state launch observation；no smoke/regression sweep。
+
 ## WorldSim V7.1 final evidence ledger / M43 incomplete at shutdown handoff（2026-09-05）
 
 - branch=`research/worldsim-v7.1-learned-evidential-surface`；scientific head包含M8/M39/M49/M51与完整negative chain；

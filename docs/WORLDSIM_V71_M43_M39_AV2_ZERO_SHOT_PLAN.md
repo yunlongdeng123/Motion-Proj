@@ -44,3 +44,11 @@ the external confirmation and move to explanation/safety-bound synthesis rather 
 - final `summary.json` absent；partial Actor output and all partial quality remained unread；external verdict=`no_verdict`；
 - user-requested shutdown pauses this run after repository/paper push. Resume only the same frozen run/data with one
   downloader; read quality once after 20/20 and normal evaluator exit. No target adaptation is authorized.
+
+## Exact-once resume protocol（2026-09-05）
+
+After the server restart, resume the same canonical run with `--resume`. The evaluator loads its own partial rows only for
+final concatenation, skips the cohort prefix recorded by `status.completed_logs`, and starts at the next log. It must not
+aggregate or expose partial quality. The downloader independently skips existing `.complete` markers. Exactly one evaluator
+and one downloader may run. This is an execution recovery only: all checkpoints, features, metrics, decisions, and AV2
+prohibitions remain unchanged. The missing original resume path is recorded as `V71-F50` and resolved before new target reads.
