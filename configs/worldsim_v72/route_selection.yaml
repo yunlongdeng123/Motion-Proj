@@ -1,5 +1,5 @@
 schema_version: worldsim_v72.route_selection.v1
-status: pending_clean_route_data_and_full_lidar_capability
+status: pending_clean_route_data
 decision: undecided
 preliminary_evidence:
   g0_run: run://worldsim_v72/WS-V72-D0-G0-RAW-FUSION-01/20260906T153519Z__g0-raw-fusion-cpu-r1
@@ -20,9 +20,10 @@ preliminary_evidence:
     - scalar_response_head_recovers_the_main_learned_weighting_gain
     - fou_structure_and_auxiliary_supervision_lack_cross_geometry_gain
     - d0_geometry_and_weight_matrix_complete_on_legacy_diagnostic
-    - clean_route_data_and_full_lidar_capability_remain_required
+    - lidar4d_full_scan_capability_complete_on_public_kitti360
+    - clean_route_data_remains_required
   route_decision_allowed: false
-allowed_evidence_roles: [dev, legacy_diagnostic]
+allowed_evidence_roles: [dev, legacy_diagnostic, external_public_capability]
 forbidden_evidence_roles: [source_test, external_test]
 criteria:
   - task_validity

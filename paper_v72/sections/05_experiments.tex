@@ -36,3 +36,14 @@ on G2. Fixed support and density/opportunity rules were likewise geometry depend
 Accordingly, the diagnostic evidence supports a narrower hit--early trade-off problem,
 while it does not support a general need for a three-state representation. Route selection
 still requires clean development data and a runnable full-LiDAR baseline.
+
+\paragraph{Full-LiDAR capability boundary.}
+We executed the official LiDAR4D pipeline on KITTI-360 sequence 00, frames
+4950--5000, including 30k nominal training iterations, the 1000-step ray-drop
+refinement, final evaluation, and scan export. On the four official held-out
+frames, the refined model obtained ray-drop F1 $0.9553$, depth RMSE $2.9472$~m,
+and point-cloud CD/F-score $0.1173/0.9208$. The run took 8791.6 seconds on one
+RTX~3090 and peaked at 22506~MiB. This establishes that the full-return route is
+executable with native data and CUDA operators. It is not a matched comparison
+with the actor-completion diagnostic, and therefore does not select the route;
+clean development data remain required.

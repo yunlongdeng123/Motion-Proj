@@ -407,7 +407,7 @@ D0 几何部分已在同一 66-Actor / 34-log `legacy_diagnostic` cohort 上完�
 
 第 9.2 节也已完成：G0/G2 使用同一 categorical reader 比较 W0 单位权重、W1 build support、W2 密度／采样机会归一化、W3 单标量、W4 三态 response-only 与 W4 三态辅助监督。W3 与 W4 response-only 基本等价；F/O/U 辅助只在 G0 小幅改善，在 G2 同时恶化 early 与 hit，未形成跨几何稳定增量。单标量在两种几何上都改善 hit／深度误差，但付出小幅 early 代价。完整结果见 `docs/WORLDSIM_V7_2_D0_WEIGHT_RESULTS.md`。
 
-因此 D0 的 legacy 机制筛选完成，原“普遍三态表征缺陷”主张关闭；更窄且仍有效的问题是观测约束下的 hit--early 权衡。该证据仍不触发 D1：干净 dev/route-select 数据和路线 B 的原生 capability 尚缺，`source_test` 与 `external_test` 保持未读。
+因此 D0 的 legacy 机制筛选完成，原“普遍三态表征缺陷”主张关闭；更窄且仍有效的问题是观测约束下的 hit--early 权衡。该证据仍不触发 D1：干净 dev/route-select 数据尚缺；路线 B 的 LiDAR4D 原生 capability 已完成，见第 10B.1 节。`source_test` 与 `external_test` 保持未读。
 
 ---
 
@@ -488,6 +488,13 @@ L_A=L_{\text{surface}}+\lambda_{\text{free}}L_{\text{known-free}}
 不要用 M39 的 Actor 框内条件中位数替代 B0。
 
 逐场景训练的已知轨迹／背景先验与我们方法对齐；官方基线会优化场景时，不能只让它零样本推理而让自己的方法拟合本场景。
+
+
+### 10B.1 B0 当前结果（2026-09-07）
+
+LiDAR4D 官方 KITTI-360 sequence 00 / frames 4950--5000 已完整执行。canonical=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2`；协议包含 30k nominal iterations、1000-step ray-drop refinement、最终 4 帧评测与扫描导出。最终 ray-drop F1=`0.95534`、depth RMSE=`2.94718m`、point CD/F-score=`0.11733/0.92081`；RTX 3090 wall=`8,791.62s`、峰值显存=`22,506MiB`。
+
+该结果解除“路线 B 无原生场景级 capability”的工程阻塞，只证明 full-return/depth/intensity/ray-drop 的完整方法可运行。KITTI-360 公共场景与 legacy Actor completion 不是同一任务／分母，不能横比绝对指标，也不能据此选择 B。D1 继续等待干净 dev/route-select 数据；Motion-Proj source/external final 未读。完整数据、I/O、指标与资源见 `docs/WORLDSIM_V7_2_B0_LIDAR4D_RESULTS.md`。
 
 ### B1：唯一首轮创新假设
 

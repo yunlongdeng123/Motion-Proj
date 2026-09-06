@@ -1,10 +1,12 @@
 # Research Status
 
-## WorldSim V7.2 B0 LiDAR4D 原生能力运行中（2026-09-07）
+## WorldSim V7.2 B0 LiDAR4D 原生能力完成（2026-09-07）
 
-KITTI-360 官方 drive 0000 frames 4950--5000 已按 HTTP Range 获取并预处理，保存 51 帧逐文件 SHA-256、标定、位姿、时间戳和 47/4 官方 split。隔离环境使用 Python 3.9、Torch 2.1.0+cu121、tiny-cuda-nn `749dd70` 的 sm86 build 与 Chamfer CUDA；RTX 3090 上 47 帧 FP16 预载、53,056,673 参数模型构造和 Chamfer forward 均通过。
+canonical=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2`。KITTI-360 官方 drive 0000 frames 4950--5000 已完成 30k nominal iterations（639 epochs / 30,033 steps）、1000-step ray-drop refinement、4 帧最终评测和结果导出。最终 ray-drop RMSE/accuracy/F1=`0.21857/0.93833/0.95534`，depth RMSE/MedAE/LPIPS/SSIM/PSNR=`2.94718m/0.03123m/0.07972/0.85348/28.67599`，point CD/F-score=`0.11733/0.92081`。
 
-r1=`20260906T192156Z__lidar4d-kitti360-f4950-s0-r1` 在 dataloader/训练前因 LPIPS AlexNet 权重的 Python 首次下载停滞而收口，见 `V71-F61`。同一官方 URL 的 244,408,911-byte 权重已按 SHA-256=`7be5be79...dee02` 预取；r2=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2` 已按官方 30k/seed 0/FP16/1024 rays 协议进入训练。该证据角色仅为 `external_public_capability`，不触发 D1 选路；Motion-Proj source/external final read=false。
+数据处理通过 HTTP Range 只获取所需 51 个官方 Velodyne 文件，共 `93,389,072` bytes，同时冻结 calibration/poses/timestamps 与逐帧 SHA-256；预处理生成 51 个 `66×1030×3` range view。环境为 Python 3.9、Torch 2.1.0+cu121、tiny-cuda-nn `749dd70` sm86 与 Chamfer CUDA。RTX 3090 wall=`8,791.62s`、平均 GPU utilization=`71.91%`、峰值显存=`22,506MiB`；两个 checkpoint 均保存 SHA-256。
+
+r1 的 LPIPS 权重传输失败见 `V71-F61`；r2 仅预取相同官方 checkpoint 后继续原协议，failure_ledger_delta=none。B0 现已证明 full neural LiDAR 路线可执行，但该公共场景能力结果不能与 legacy Actor completion 绝对横比，也不解锁 D1；当前唯一选路前置仍是干净 dev/route-select 数据。Motion-Proj source/external final read=false。详细结果=`docs/WORLDSIM_V7_2_B0_LIDAR4D_RESULTS.md`。
 
 ## WorldSim V7.2 D0 权重筛选完成：单标量解释主要收益，三态增量不跨几何（2026-09-07）
 

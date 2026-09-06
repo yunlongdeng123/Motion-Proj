@@ -1,12 +1,13 @@
 # Experiments
 
-## WS-V72-B0-LIDAR4D-CAPABILITY-01 — running（2026-09-07）
+## WS-V72-B0-LIDAR4D-CAPABILITY-01 — canonical completed（2026-09-07）
 
-- protocol=官方 LiDAR4D `4d6abbd`、KITTI-360 drive 0000 frames 4950--5000、47 train / 4 val-test、seed 0、30k iterations、FP16、1024 rays；Motion-Proj source/external final read=false；
-- data I/O=HTTP Range 只提取所需 51 个官方 Velodyne `.bin`，同时保存 calibration/poses/timestamps 和逐帧 SHA-256 manifest；预处理生成 51 个 `66x1030x3` range views；
-- environment=Python 3.9、Torch 2.1.0+cu121、tiny-cuda-nn `749dd70` sm86、Chamfer CUDA；RTX 3090 原生数据/model/Chamfer smoke 通过；
-- failed r1=`20260906T192156Z__lidar4d-kitti360-f4950-s0-r1`，LPIPS 权重 Python 传输停滞见 `V71-F61`；同一官方权重已预取；r2=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2` 已按相同协议进入训练；
-- failure_ledger_refs=`V71-F52,V71-F43,V71-F61`；canonical run/结果待 r2 完成。
+- canonical=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2`；官方 LiDAR4D `4d6abbd`；KITTI-360 drive 0000 frames 4950--5000；47 train / 4 val-test；seed 0；30k nominal iterations；639 epochs / 30,033 steps；FP16；1024 rays；
+- final ray-drop RMSE/Acc/F1=`.218567/.938331/.955338`；depth RMSE/MedAE/LPIPS/SSIM/PSNR=`2.94718m/.03123m/.07972/.85348/28.67599`；point CD/F=`.117326/.920806`；
+- data I/O=HTTP Range 提取 51 个官方 `.bin`（`93,389,072` bytes）与 calibration/poses/timestamps；51 个 `66x1030x3` range views；逐帧 SHA-256 manifest；
+- resources=RTX 3090；wall=`8,791.62s`；mean GPU=`71.91%`；peak GPU=`22,506MiB`；主/refined checkpoint SHA=`289e2953...34557f` / `a8d7b89f...e2a2a65`；
+- failed r1=`20260906T192156Z__lidar4d-kitti360-f4950-s0-r1` 见 `V71-F61`；r2 failure_ledger_delta=none；Motion-Proj source/external final read=false；route decision allowed=false；
+- evidence=`docs/WORLDSIM_V7_2_B0_LIDAR4D_RESULTS.md` 与完整 formal run artifacts。
 
 ## WS-V72-D0-W0-W4-G2-01 — canonical completed（2026-09-07）
 
