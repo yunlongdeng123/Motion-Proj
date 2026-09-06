@@ -252,11 +252,11 @@ def _read_lidar(path: Path) -> np.ndarray:
     scan = np.fromfile(path, dtype=np.float32)
     if len(scan) % 5:
         raise ValueError(f"invalid nuScenes lidar shape: {path}")
-    return scan.reshape(-1, 5)[:, :3].copy()
+    return scan.reshape(-1, 5).copy()
 
 
 def _associate_frame(
-    points_sensor: np.ndarray,
+    scan_sensor: np.ndarray,
     frame: Mapping[str, Any],
     eligible_tracks: Mapping[str, TrackGeometry],
     frame_ranks: Mapping[str, Mapping[str, int]],
@@ -264,6 +264,10 @@ def _associate_frame(
     config: Mapping[str, Any],
     device: torch.device,
 ) -> None:
+    scan_sensor = np.asarray(scan_sensor, dtype=np.float32)
+    points_sensor = scan_sensor[:, :3]
+    intensity_sensor = scan_sensor[:, 3]
+    ring_sensor = scan_sensor[:, 4].astype(np.int32)
     sensor_rotation = _rotation(frame["sensor_rotation_ego"])
     sensor_translation = np.asarray(frame["sensor_translation_ego"], dtype=np.float64)
     ego_rotation = _rotation(frame["ego_rotation_global"])
@@ -301,7 +305,8 @@ def _associate_frame(
                 rotations_np,
             )
             for offset, annotation in enumerate(batch):
-                selected = local[offset, inside[offset]]
+                selected_indices = torch.nonzero(inside[offset], as_tuple=False).reshape(-1)
+                selected = local[offset].index_select(0, selected_indices)
                 if selected.numel() == 0:
                     continue
                 if len(selected) > per_frame_limit:
@@ -309,13 +314,27 @@ def _associate_frame(
                         0, len(selected) - 1, steps=per_frame_limit, device=device
                     ).to(torch.long)
                     selected = selected.index_select(0, indices)
+                    selected_indices = selected_indices.index_select(0, indices)
+                selected_indices_np = selected_indices.cpu().numpy()
                 track_id = str(annotation["instance_token"])
+                world_from_sensor = np.eye(4, dtype=np.float64)
+                world_from_sensor[:3, :3] = ego_rotation @ sensor_rotation
+                world_from_sensor[:3, 3] = sensor_origin_global
+                world_from_actor = np.eye(4, dtype=np.float64)
+                world_from_actor[:3, :3] = rotations_np[offset]
+                world_from_actor[:3, 3] = centers_np[offset]
                 records[track_id].append(
                     {
+                        "frame_id": str(frame["sample_token"]),
+                        "sensor_id": "LIDAR_TOP",
                         "timestamp_ns": int(frame["timestamp_us"]) * 1000,
                         "frame_rank": int(frame_ranks[track_id][str(frame["sample_token"])]),
                         "points": selected.cpu().numpy(),
+                        "intensity": intensity_sensor[selected_indices_np].astype(np.float32),
+                        "beam_or_ring_id": ring_sensor[selected_indices_np].astype(np.int32),
                         "sensor_origin": origins_np[offset].astype(np.float32),
+                        "world_from_sensor": world_from_sensor,
+                        "world_from_actor": world_from_actor,
                         "actor_center_ego": np.zeros(3, dtype=np.float32),
                         "actor_rotation_ego": np.eye(3, dtype=np.float32),
                     }

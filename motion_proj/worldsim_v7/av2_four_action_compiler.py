@@ -441,6 +441,36 @@ def _compile_actor(
             axis=0,
         )
         target_indices = _limit_indices(np.arange(len(target_all)), maximum_points)
+        target_frame_ids_all = np.concatenate(
+            [
+                np.repeat(str(item.get("frame_id", item["frame_rank"])), len(item["points"]))
+                for item in heldout_records[1:]
+            ]
+        )
+        target_timestamps_all = np.concatenate(
+            [
+                np.repeat(int(item["timestamp_ns"]), len(item["points"]))
+                for item in heldout_records[1:]
+            ]
+        )
+        target_intensity_all = np.concatenate(
+            [
+                np.asarray(
+                    item.get("intensity", np.full(len(item["points"]), np.nan)),
+                    dtype=np.float32,
+                )
+                for item in heldout_records[1:]
+            ]
+        )
+        target_ring_all = np.concatenate(
+            [
+                np.asarray(
+                    item.get("beam_or_ring_id", np.full(len(item["points"]), -1)),
+                    dtype=np.int32,
+                )
+                for item in heldout_records[1:]
+            ]
+        )
         package["diagnostics"] = {
             "track": track,
             "query_timestamp_ns": int(heldout_records[0]["timestamp_ns"]),
@@ -459,10 +489,17 @@ def _compile_actor(
                 np.asarray(item["sensor_origin"], dtype=np.float32)
                 for item in build_records
             ],
+            "build_records": build_records,
+            "query_record": heldout_records[0],
+            "target_records": heldout_records[1:],
             "query": query,
             "query_sensor_origin": sensor_origin,
             "target": target,
             "target_sensor_origins": target_origins_all[target_indices],
+            "target_frame_ids": target_frame_ids_all[target_indices],
+            "target_timestamps_ns": target_timestamps_all[target_indices],
+            "target_intensity": target_intensity_all[target_indices],
+            "target_beam_or_ring_id": target_ring_all[target_indices],
             "canonical": canonical,
             "canonical_hit_count": np.asarray(surface["hit_count"], dtype=np.int32),
             "canonical_temporal_support": support,

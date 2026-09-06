@@ -1,0 +1,41 @@
+task_id: WS-V72-P2-CLEAN-ACTOR-DATA-01
+runs_root: /root/autodl-tmp/runs
+roles: configs/worldsim_v72/data_roles.json
+dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+compiler_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+output_root: /root/autodl-tmp/data/worldsim_v72/actor_bundle_v2
+device: cuda
+actors:
+  minimum_track_states: 9
+  actor_batch_size: 16
+  box_padding_m: 0.15
+  maximum_points_per_actor_frame: 4096
+  hazard:
+    ego_radius_m: 1.20
+    maximum_ttc_s: 30.0
+    minimum_closing_speed_mps: 0.50
+    hazard_ttc_s: 3.0
+    hazard_clearance_m: 2.0
+    hard_brake_reference_mps2: 4.0
+    hazard_hard_brake_score: 0.75
+    hard_brake_interaction_range_m: 15.0
+    crossing_forward_window_m: 20.0
+    crossing_interaction_range_m: 5.0
+compiler_overrides:
+  surface:
+    evaluation_stride: 3
+    heldout_modulo_value: 2
+    minimum_build_frames: 4
+    minimum_heldout_frames: 3
+cache:
+  maximum_build_evidence_points: 16384
+  maximum_input_surfels: 4096
+  input_point_count: 512
+  target_point_count: 4096
+  known_free_fraction: 0.5
+  sensor_tolerance_m: 0.12
+sensor_model_ref: nuscenes_v1_0_trainval_lidar_top_measured_returns
+source_test_read: false
+external_test_read: false
+failure_ledger_refs: [V71-F43, V71-F52]
+failure_ledger_delta: none
