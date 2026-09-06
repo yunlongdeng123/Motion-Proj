@@ -1,0 +1,49 @@
+task_id: WS-V72-D0-W0-W4-G2-01
+hypothesis_id: WS-V72-H-D0-RETURN-WEIGHT-SIMPLE-CONTROLS
+runs_root: /root/autodl-tmp/runs
+data_role: legacy_diagnostic
+geometry_source: g2
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1
+sidecar_root: /root/autodl-tmp/data/worldsim_v71/anchor_evidence_v1
+m8_run: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2
+cohort_rows: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2/TRAIN_HOLDOUT_TEMPORAL.jsonl
+scene_metadata: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval/scene.json
+maximum_source_actors: 1024
+holdout_stride: 10
+expected_actor_count: 66
+device: cuda
+seed: 7206
+geometry: {anchor_scale_m: 0.08}
+features:
+  maximum_build_opportunities: 16384
+  local_density_radius_m: 0.20
+  opportunity_prior: 8.0
+reader:
+  cuboid_padding_m: 0.15
+  median_threshold: 0.50
+training:
+  epochs: 12
+  actor_batch_size: 4
+  hidden_dim: 64
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  maximum_rays_per_actor: 64
+  categorical_samples: 32
+  depth_l1_weight: 0.10
+  fou_auxiliary_weight: 0.50
+auxiliary_evidence:
+  evidence_maximum_rays: 4096
+  evidence_beam_radius_m: 0.20
+  evidence_endpoint_radius_m: 0.20
+  evidence_ray_chunk_size: 256
+evaluation:
+  categorical_samples: 64
+  ray_chunk_size: 64
+  depth_tolerance_m: 0.20
+bootstrap: {seed: 7250, samples: 2000}
+pretrained_holdout_exposure: true
+source_test_read: false
+external_test_read: false
+route_decision_allowed: false
+failure_ledger_refs: [V71-F43, V71-F52, V71-F54]
+failure_ledger_delta: none
