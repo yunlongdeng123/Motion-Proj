@@ -1,0 +1,23 @@
+% ArXiv entry point. Keep the scientific content identical to main.tex.
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[preprint]{cvpr}
+\input{preamble}
+\input{results/results_macros}
+\usepackage[breaklinks,colorlinks,allcolors=blue]{hyperref}
+\title{Task-First Dynamic LiDAR World Simulation with Evidential Surfaces}
+\author{Anonymous Authors}
+\begin{document}
+\maketitle
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/02_related}
+\input{sections/03_task}
+\input{sections/04_method}
+\input{sections/05_experiments}
+\input{sections/06_limitations}
+\input{sections/07_conclusion}
+{\small
+\bibliographystyle{ieeenat_fullname}
+\bibliography{bibliography}
+}
+\end{document}

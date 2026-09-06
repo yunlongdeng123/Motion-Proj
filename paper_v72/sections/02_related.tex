@@ -1,0 +1,15 @@
+\section{Related Work}
+\paragraph{Point-cloud completion.}
+Object-level completion predicts a denser or more complete surface from partial points.
+It is a relevant baseline family only when inference remains independent of held-out
+targets and all methods share the same return operator.
+
+\paragraph{Occupancy completion.}
+Occupancy methods predict volumetric free/occupied structure. They are not directly
+equivalent to a point-surface representation and require volume supervision before an
+occupancy claim is justified.
+
+\paragraph{Neural LiDAR simulation.}
+Neural field and ray-tracing systems jointly model geometry, intensity, ray drop, and
+visibility. They provide a broader route, but typically require scene-specific training,
+tracked dynamic objects, compiled CUDA operators, and substantially more compute.

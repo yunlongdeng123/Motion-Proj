@@ -1,0 +1,16 @@
+\section{Method}
+\subsection{Evidence Bundle}
+The versioned actor bundle stores normalized build points, per-point evidence and
+provenance, actor transforms, and target-free query rays. Targets live in separate
+structures so code can enforce the inference boundary.
+
+\subsection{Shared Surface-to-Return Operator}
+Every object-level baseline outputs a candidate surface. A common operator intersects
+query rays with that surface, applies the same support and censoring rules, and exposes
+the same outcome vocabulary. This keeps the comparison focused on the predicted surface.
+
+\subsection{Candidate Research Routes}
+Route A learns an object-level evidential surface and uses the shared return operator.
+Route B learns the full scene return process, including background occlusion and
+no-return behavior. The preregistered D0 evidence selects the route before source and
+external test roles are opened.

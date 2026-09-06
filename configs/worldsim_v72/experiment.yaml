@@ -1,0 +1,37 @@
+version: worldsim_v72
+parent_branch: research/worldsim-v7.1-learned-evidential-surface
+parent_commit: 79910be13e1f4740dbcd793fbfd45ee6d66020f8
+
+research:
+  primary_route: undecided
+  candidate_routes: [object_completion, neural_lidar]
+  final_model_selection_source: dev
+  failure_ledger_refs: [V71-F43, V71-F49, V71-F52]
+
+data:
+  roles: configs/worldsim_v72/data_roles.json
+  inventory: configs/worldsim_v72/data_role_inventory.json
+  split_unit: driving_log
+  inference_target_access: false
+  legacy_m43_role: legacy_diagnostic
+  full_scan_required_for_lidar_claim: true
+  actor_cache_schema: worldsim_v72.actor_bundle.v2
+
+metrics:
+  separate_geometry_and_return: true
+  clustering_unit: driving_log
+  geometry_cd: l1_meters
+  point_beam_tube_diagnostic_m: 0.20
+  report_no_output_and_no_return: true
+
+resources:
+  current_mode: cpu_only_no_gpu
+  requested_gpu_for_p1: RTX3090_24GiB
+  downloader_instances: 1
+  preserve_benchmark_resolution: true
+
+paper:
+  root: paper_v72
+  format: cvpr_official
+  main_content_pages: 8
+  include_supplement: true

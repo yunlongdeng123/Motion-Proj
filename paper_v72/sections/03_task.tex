@@ -1,0 +1,11 @@
+\section{Task Definition}
+Let the build evidence for an actor be $E$, including observed points, sensor origins,
+frame provenance, and known free/occupied evidence. For a query ray $q=(o,d,r_{\min},
+r_{\max})$, a predictor may use only $(E,q)$ at inference. Held-out return depths and
+points are labels and never enter the forward path.
+
+The output state belongs to
+\{invalid, censored, no-return, background-occluded, actor-return, other\}.
+When an actor return is predicted, the model also reports a world depth and optional
+intensity. Scene composition selects the nearest valid actor or background surface by
+world depth. A valid no-return does not, by itself, certify the entire ray as free space.

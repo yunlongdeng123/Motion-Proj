@@ -1,19 +1,32 @@
 # Research Status
 
-## WorldSim V7.2 P0 已启动：算子勘误与任务优先基础设施（2026-09-06）
+## WorldSim V7.2 P0 完成：任务边界、数据角色与基线能力已审计（2026-09-06）
 
 分支=`research/worldsim-v7.2-task-first-completion-lidar`，父提交=`79910be1`，任务=
-`WS-V72-P0-OPERATOR-ERRATUM-01`。本轮获得新研究授权，但远端无 GPU；当前只进行 CPU／静态前期工作，
-不启动训练、正式 target 测试或 M43 重算。
+`WS-V72-P0-OPERATOR-ERRATUM-01`。本轮获得新研究授权，但远端无 GPU；P0 只进行 CPU／静态前期工作，
+未启动训练、正式 target 测试或 M43 重算。
 
 已确认 `V71-F52` 的根因：M43 runner 用 categorical baseline 覆盖 literal baseline 通用字段。修正将两类计数
 置于独立命名空间，并使 M43 Actor retention 由输入／输出 ID、轨迹、尺寸和 hazard 标签真实比较。canonical
 M43 artifact 保持不可变；已有 JSONL 缺失被覆盖前的 literal baseline，匹配算子重算登记为 GPU 恢复后的
 `legacy_diagnostic`，不阻塞 V7.2。M39 的 `V71-F43` 跨传感器拒绝完整保留。
 
-证据=`docs/M43_OPERATOR_ERRATUM.md`、`scripts/run_worldsim_v71_m43_m39_av2_zero_shot.py`、
-`motion_proj/worldsim_v71/actor_canonical.py`、`motion_proj/worldsim_v71/evaluate_surface.py`。下一步：完成 v2
-数据合同、日志级数据角色清单和四类微型语义检查，再进行外部强基线 capability 预检。
+P0 同时建立 target-free `ActorBundleV2/QueryRayBatch` 与分离的 target 结构、统一 return outcome vocabulary、
+world-depth 场景合成和日志级数据角色门控。实际恢复的 V7.1 corpus 覆盖 164 scenes / 54 logs；原声明角色间有
+10 个 log 重叠。合并所有历史 exposure 后，nuScenes 只剩 10 个 source candidate logs，另有 2 个 provenance
+不足的 `exposure_unknown` logs；本地 80 个 AV2 logs 全部已暴露，官方 val 尚有 70 个未物化候选。任何 final
+role 在冻结前由代码拒绝访问。
+
+外部能力预检固定官方源码快照：PoinTr/AdaPoinTr=`4603257`、Dynamic-LiDAR-Resimulation=`b6d03de`、
+LiDAR4D=`4d6abbd`；ObjectCentricOcc 与 LiDAR-RT 仅记录 remote HEAD，未安装。PoinTr 被登记为 D0 的 G3，
+DyNFL/LiDAR4D 只用于证明 full neural LiDAR 路线的能力与资源门槛。`paper_v72/` 已建立不含结果声明的独立稿件
+骨架，路线与数值宏保持 `PENDING`。
+
+证据=`docs/M43_OPERATOR_ERRATUM.md`、`docs/WORLDSIM_V7_2_TASK_FIRST_PLAN.md`、
+`docs/WORLDSIM_V7_2_BASELINE_CAPABILITY_AUDIT.md`、`configs/worldsim_v72/data_role_inventory.json`、
+`configs/worldsim_v72/baseline_map.yaml`。六项单元检查通过，涵盖算子命名空间、真实 Actor retention、target-free
+forward、no-return/free-space 区分、world-depth 合成和 v2 cache 隔离。下一步先在已暴露的 66-Actor M8 cohort
+运行低内存 G0 CPU 诊断，再等待 GPU 运行 G1--G3 matched D0；source/external final 继续冻结。
 
 ## 文档导航整理与中文稿归位（2026-09-06）
 

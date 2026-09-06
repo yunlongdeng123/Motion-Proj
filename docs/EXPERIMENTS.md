@@ -1,13 +1,34 @@
 # Experiments
 
-## WS-V72-P0-OPERATOR-ERRATUM-01 — running（2026-09-06）
+## WS-V72-P0-OPERATOR-ERRATUM-01 — completed（2026-09-06）
 
 - route=`shared/P0`；base=`79910be1`；branch=`research/worldsim-v7.2-task-first-completion-lidar`；
 - failure_ledger_refs=`V71-F52,V71-F43`；failure_ledger_delta=`V71-F52 runner risk resolving`；
 - scope=M43 literal/categorical 字段隔离、真实 Actor state retention、勘误文档与固定合成语义检查；
 - data role=`legacy_diagnostic`；canonical M43 run 不改写；new target read=false；training=false；GPU=false；
 - existing rows 缺少被覆盖前的 literal baseline，匹配算子重算等待 GPU，仅作历史描述性勘误；
-- evidence=`docs/M43_OPERATOR_ERRATUM.md`；正式 run ID 尚未创建。
+- result=runner 命名空间与 Actor retention 修复；canonical artifact 不改写；六项定向测试通过；
+- evidence=`docs/M43_OPERATOR_ERRATUM.md`；正式 run ID 未创建，因为该任务为代码/证据勘误而非重评测。
+
+## WS-V72-P0-DATA-CONTRACT-01 — completed（2026-09-06）
+
+- route=`shared/P0`；training/evaluation/GPU=false；target read=false；
+- contract=`ActorBundleV2 + target-free QueryRayBatch`，labels 独立为 `RayTargets/SurfaceTargets`；v1 cache 不覆盖；
+- return states=`invalid/censored/no_return/background_occlusion/actor_return/other`；valid no-return 不自动标成 free；
+- composition=Actor/Background 均按 world depth 取最近有效表面；final roles 在 freeze 前不可访问；
+- recovered exposure=nuScenes actual corpus `164 scenes/54 logs`，declared role overlap `10 logs`，candidate `10 logs`，
+  `exposure_unknown=2 logs`；本地 AV2 `80/80` logs 已暴露，未物化官方候选 `70 logs`；
+- validation=`6 passed` + role audit + source-candidate validate-only；failure_ledger_delta=none。
+
+## WS-V72-P0-BASELINE-CAPABILITY-AUDIT-01 — completed（2026-09-06）
+
+- route=`shared/P0`；network research/source fetch only；GPU/training/target read=false；
+- external completion=PoinTr/AdaPoinTr `4603257`，D0 baseline=`G3`，需要 CUDA Chamfer/PointNet++/kNN 与适配；
+- full neural LiDAR evidence=DyNFL `b6d03de`（Waymo/tracks/Nerfstudio/CUDA）与 LiDAR4D `4d6abbd`
+  （KITTI-360/tiny-cuda-nn/30k iterations）；只作 route capability，不假装已匹配运行；
+- deferred=ObjectCentricOcc 与 LiDAR-RT；route selection remains `pending_d0`；
+- evidence=`configs/worldsim_v72/baseline_map.yaml`、`configs/worldsim_v72/route_selection.yaml`、
+  `docs/WORLDSIM_V7_2_BASELINE_CAPABILITY_AUDIT.md`；failure_ledger_delta=none。
 
 ## 文档归档与中文阅读稿迁移 — docs only（2026-09-06）
 

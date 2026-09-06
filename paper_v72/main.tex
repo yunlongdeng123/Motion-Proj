@@ -1,0 +1,32 @@
+% V7.2 task-first manuscript entry point. All quantitative claims remain gated.
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage[pagenumbers]{cvpr}
+\input{preamble}
+\input{results/results_macros}
+
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+\def\paperID{Local draft}
+\def\confName{CVPR}
+\def\confYear{2027}
+
+\title{Task-First Dynamic LiDAR World Simulation with Evidential Surfaces}
+\author{Anonymous Authors}
+
+\begin{document}
+\maketitle
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/02_related}
+\input{sections/03_task}
+\input{sections/04_method}
+\input{sections/05_experiments}
+\input{sections/06_limitations}
+\input{sections/07_conclusion}
+{\small
+\bibliographystyle{ieeenat_fullname}
+\bibliography{bibliography}
+}
+\end{document}
