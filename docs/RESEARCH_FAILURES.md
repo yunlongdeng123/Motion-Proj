@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F62 — clean split 物化假定 metadata-only 日志的 keyframe 已在 raw root（2026-09-07）
+
+- category=`clean_data_io_availability`；status=`resolved_selective_official_archive_extraction`；task=`WS-V72-P2-CLEAN-ACTOR-DATA-01`。
+- failed run=`20260906T222000Z__clean-dev-actor-v2-s0-r1`；首个 dev scene 在读取第一个缺失的 `samples/LIDAR_TOP/*.pcd.bin` 时退出，0 Actor bundle、0 target artifact、0 metric。冻结角色与 metadata index 已读取，但没有打开任何点云质量；source/external final read=false。
+- root cause：P0 的 850-scene metadata 完整，而本地 raw root 只保留历史已消费 scene 的 LiDAR；metadata 可用不等于 candidate sensor payload 已物化。
+- resolution：保持冻结的 4 dev / 3 route-select / 3 unopened source-test candidate 不变，只从 `/root/autodl-pub` 官方十个 nuScenes trainval blob 分卷中选择性提取 dev/route 的 3,882 个 keyframe LiDAR；不提取 source-test candidates。成功 I/O 后以新 immutable run 重启 builder。
+- prevention：clean role 物化前先按 metadata 生成所需 member 清单并完成 payload availability gate；数据缺失不得换日志或解释为模型失败。
+
+下一可用统一失败编号：`V71-F63`。
+
 ## V71-F61 — LPIPS AlexNet 权重的 Python 首次下载连接停滞（2026-09-07）
 
 - category=`external_metric_checkpoint_transport`；status=`resolved_prefetched_same_upstream`；task=`WS-V72-B0-LIDAR4D-CAPABILITY-01`。
@@ -8,7 +18,7 @@
 - resolution：使用同一官方 `download.pytorch.org` URL 预取相同权重到冻结 `TORCH_HOME`，bytes=`244,408,911`、SHA-256=`7be5be79...dee02`；不修改 LiDAR4D、LPIPS、模型、数据、split、seed 或 30k 协议，r2 继续。
 - prevention：含第三方 metric checkpoint 的外部基线在正式 run 前记录 URL、bytes、SHA-256 并完成缓存；传输失败不得解释为模型能力失败。
 
-下一可用统一失败编号：`V71-F62`。
+下一可用统一失败编号（该段记录时）：`V71-F62`；当前编号以文首为准。
 
 ## V71-F60 — 单个截断 canonical 数组保留了截断前 sidecar 索引（2026-09-07）
 
