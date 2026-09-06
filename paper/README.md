@@ -5,6 +5,7 @@
 
 ## 阅读入口
 
+- [中文精翻 main 与阅读包](../docs/paper/README.md)：统一存放于 `docs/paper/`，对应 `ec9c2e08` 的英文主稿。
 - `main.pdf`：当前 EAS 主线。保留 M7/M8 几何、M39 同几何证据组合、有限衰减理论、刚体/视觉所有权，以及必要的分层与 AV2 负结果。
 - `supplement.pdf`：仅供本地查看的完整研究档案，不提交 OpenReview。含复现细节、证明、V6--V6.7 演进、V7.1 实验图谱、历史 V7 结果与完整相机证据。
 - `CONTRIBUTION_MAP.md`：当前贡献与证据对应；其后保留的 HARP-3D 映射仅为历史记录。

@@ -31,9 +31,9 @@ collision critic、closed-loop或safety authority。不得以第二confirmation�
 
 正式报告入口：
 
-- [`autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md`](autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md)
-- [`autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md`](autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md)
-- [`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)
+- [`autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md`](../../../../autoresearch/worldsim_v65/V65_ARXIV_TECHNICAL_REPORT.md)
+- [`autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md`](../../../../autoresearch/worldsim_v65/ARXIV_EVIDENCE_INDEX.md)
+- [`autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md`](../../../../autoresearch/worldsim_v65/V65_RESEARCH_CLOSEOUT.md)
 
 ---
 

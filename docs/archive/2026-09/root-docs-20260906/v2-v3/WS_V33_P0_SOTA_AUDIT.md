@@ -5,8 +5,8 @@
 - 状态：`done`
 - 项目基线：`a055fc6727dddacd194665d5c997a1fe47c2d2f4`
 - 分支：`research/worldsim-v3.3-object-maintenance`
-- 事实配置：[`../configs/worldsim_v33/p0_sources_v1.yaml`](../configs/worldsim_v33/p0_sources_v1.yaml)
-- 审计器：[`../scripts/audit_worldsim_v33_sources.py`](../scripts/audit_worldsim_v33_sources.py)
+- 事实配置：[`../configs/worldsim_v33/p0_sources_v1.yaml`](../../../../../configs/worldsim_v33/p0_sources_v1.yaml)
+- 审计器：[`../scripts/audit_worldsim_v33_sources.py`](../../../../../scripts/audit_worldsim_v33_sources.py)
 - canonical run：`20260810T171744Z__p0-source-audit-s0-r2`
 - config/summary/manifest/status SHA-256：
   `29c167fe050d074f626884c0eba7b67fd6fd56c8493adc4c6be0d390f09b9ae2` /

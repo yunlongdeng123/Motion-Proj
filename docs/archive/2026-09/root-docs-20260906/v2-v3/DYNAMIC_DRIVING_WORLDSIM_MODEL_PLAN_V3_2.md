@@ -381,7 +381,7 @@ envs/worldsim-v32-omni3dedit
 ## 6.5 S0 收口（2026-08-10）
 
 - 分支已切换到 `research/worldsim-v3.2-semantic-repair`；
-- 事实配置：[`../configs/worldsim_v32/s0_sources_v1.yaml`](../configs/worldsim_v32/s0_sources_v1.yaml)；
+- 事实配置：[`../configs/worldsim_v32/s0_sources_v1.yaml`](../../../../../configs/worldsim_v32/s0_sources_v1.yaml)；
 - 审计报告：[`WS_V32_S0_SOTA_AUDIT.md`](WS_V32_S0_SOTA_AUDIT.md)；
 - 11 个公开官方仓库的本地 commit 与审计时 upstream 默认分支 HEAD exact；MV-SAM 未找到可固定的官方代码/权重；
 - SAM2.1 Hiera Large 已通过 `hf-mirror.com` 下载并通过 bytes/SHA-256 校验；

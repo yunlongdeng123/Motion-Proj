@@ -1,5 +1,15 @@
 # Research Status
 
+## 文档导航整理与中文稿归位（2026-09-06）
+
+基线 commit=`ec9c2e08`。中文精翻、三张配图和便携 ZIP 统一放入 `docs/paper/`；英文源码与 PDF 保留 `paper/`。
+根层 77 份历史文档按版本移入 `docs/archive/2026-09/root-docs-20260906/`，根层 112 → 35 份。
+18 份代码/冻结配置兼容文件及 8 份链接依赖保持原路径和原字节；既有 archive、autoresearch、run_manifests 内容不变。
+迁移只修复 Markdown 导航，不改研究结论；路径映射与完整性证据见该归档目录的 `MANIFEST.json`。
+首页和 docs 索引不再使用已过期的 V6 / V5.2 当前授权表述；登记 `V71-F53`，状态 `resolved_navigation`。
+本次无新实验、GPU、target 读取、模型/配置/run 修改或证据删除。下一步：从 `docs/README.md` 阅读；
+新实验或 runner 修复仍需单独任务授权。下一可用统一失败编号：`V71-F54`。
+
 ## V7.1 论文重构与只读证据审计（2026-09-05）
 
 以 `1913ab0e` 为科学证据快照，将 main 重构为 Evidential Actor Surfaces，将 V6--V7.1 的历史正结果、
@@ -118,7 +128,7 @@ supplement仅两处既有overfull。
 ## WorldSim V7.1 M51 smooth/hard first-return diagnosis frozen（2026-09-05）
 
 状态=`v71_m51_soft_hard_first_return_diagnosis_frozen`，详见
-[`WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md`](WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md)。
+[`WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md)。
 M51不训练/选模型，只对冻结M8与rejected M50的同一66 Actors做paired operator audit：一支在相同512-anchor+
 children support上比较alpha-composited smooth depth与literal beam-tube minimum；另一支加入正式full-anchor+0.06m
 voxel deployment realization。报告soft error、hard added/removed early、added中soft-improved比例、depth-delta相关和
@@ -147,7 +157,7 @@ model并重建centers，不改M50 config、loss、seed、frame group或decision�
 ## WorldSim V7.1 M50 frame-balanced physical supervision frozen（2026-09-05）
 
 状态=`v71_m50_frame_balanced_first_return_frozen`，详见
-[`WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md`](WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md)。
+[`WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md)。
 M8虽已按target frame平衡coverage，但literal first-return/free-before-hit仍从pooled rays采样。M50从冻结M8单次
 fine-tune，按canonicalized sensor origin分帧并等权平均GT first-return物理损失；四child、immutable anchors、
 set/plane/scale/frame coverage、PCGrad均不变。shape输入继续排除time/velocity/trajectory/hazard/category/image/
@@ -207,7 +217,7 @@ pre-boundary CDF。该条件只作解释，绝不转为gate/filter；visibility�
 ## WorldSim V7.1 M49 categorical attenuation sign boundary frozen（2026-09-05）
 
 状态=`v71_m49_visibility_sign_boundary_frozen`，详见
-[`WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md`](WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md)。
+[`WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md)。
 M49不再训练renderer，而对M45 joint measure推导解析边界：若primitive `j`的总mass/pre-boundary mass为
 `D_j/N_j`，`C_j=N_j/D_j`、responsibility=`r_j`且全局CDF=`C`，则
 `∂C/∂log w_j=r_j(C_j-C)`。因此attenuation只在`C_j>C`时降低安全边界CDF；`C_j<C`时反而增加。
@@ -231,7 +241,7 @@ hazard搬到clear；登记`V71-F47`，严格关闭plan已禁止的visibility-hea
 ## WorldSim V7.1 M48 supervised child visibility frozen（2026-09-05）
 
 状态=`v71_m48_supervised_child_visibility_measure_frozen`，详见
-[`WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md`](WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md)。
+[`WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md)。
 M48响应`V71-F46`，不再改变local geometry：冻结M8 center/tangent、M11 GT normal/thickness与M35/M38 authority，
 仅以ray--child的`|ray·normal|`、lateral miss、longitudinal depth、anisotropy和occupied mass预测`(0,1)`可见性，
 作为`q(k,j|r)∝o_j v_rj κ_kj`的一部分接受GT not-early/hit-band监督。593/66、4 epochs、seed71148；
@@ -256,7 +266,7 @@ KEEP-dominant/projected-dominant均改善`-0.061/-0.028pp`；grazing/oblique改�
 ## WorldSim V7.1 M47 motion/provenance/incidence diagnosis frozen（2026-09-05）
 
 状态=`v71_m47_motion_provenance_incidence_diagnosis_frozen`，详见
-[`WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md`](WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md)。
+[`WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md)。
 M47不再优化M46：冻结M39 authority与M46 normal/thickness，在同一66个exposed holdout上逐ray比较，连接M31已复编译
 的trajectory displacement与KEEP/PROJECT矛盾归因，并按moving/quasi-static、hazard/clear交叉、固定入射角区间和target
 frame报告added/removed early。GT target处的入射角以categorical child responsibility加权；所有物理标签只用于诊断，
@@ -286,7 +296,7 @@ branch factor，所有预注册训练/判定参数不变；canonical重跑使用
 ## WorldSim V7.1 M46 CDF-supervised oriented support frozen（2026-09-05）
 
 状态=`v71_m46_cdf_supervised_oriented_support_frozen`，详见
-[`WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md`](WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md)。
+[`WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md)。
 从M11初始化，但冻结M8 center/tangent、M39 anchor/child authority、point encoder/slots/hidden head；仅normal/
 thickness输出行接受与部署同构的GT not-early/hit-band CDF supervision，并保留0.25× GT normal/boundary/thickness
 loss。593/66、4 epochs、seed71146、32 train/64 deploy bins；无hazard/image/motion input、参数扫描、filter/delete
@@ -309,7 +319,7 @@ candidate保持不变、无partial read。登记`V71-F44`；下一可用failure 
 ## WorldSim V7.1 M45 oriented categorical surface measure frozen（2026-09-05）
 
 状态=`v71_m45_oriented_categorical_surface_measure_frozen`，详见
-[`WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md`](WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md)。
+[`WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md)。
 冻结M8 center/tangent scale、M11 GT-supervised normal/thickness、M35/M38 authority；只在M39 categorical
 measure中把child isotropic kernel换成oblate oriented kernel。与M11 hard-intersection范式不同，normal/thickness
 只塑造连续概率质量。固定66 exposed holdout和三项相对M39判定；无训练、参数扫描、filter/delete或external/M43
@@ -332,7 +342,7 @@ read；无新failure，下一failure ID=`V71-F43`。
 ## WorldSim V7.1 M44 categorical safety responsibility frozen（2026-09-05）
 
 状态=`v71_m44_categorical_safety_responsibility_frozen`，详见
-[`WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md`](WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md)。
+[`WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md)。
 固定M39联合measure `q(depth,primitive)`，解析验证median early当且仅当`CDF(d_gt-0.20m)>0.5`，并把该
 boundary CDF精确分解为observed-anchor与completion-child质量；同时与unit-energy baseline配对。仅用同一66
 exposed holdout作解释，无训练、参数扫描、filter/delete、model selection或external/M43 partial read。
@@ -341,7 +351,7 @@ exposed holdout作解释，无训练、参数扫描、filter/delete、model sele
 ## WorldSim V7.1 M43 M39→AV2 zero-shot confirmation frozen（2026-09-05）
 
 状态=`v71_m43_m39_av2_zero_shot_frozen`，详见
-[`WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md`](WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md)。
+[`WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md)。
 冻结M8 geometry、M35 anchor head、M38 child head及M39 direct categorical composition；AV2 adapter只由query/build
 sweeps重建M33 31维anchor输入与M37 child输入，target sweep只用于20 logs全部完成后的最终评估。无fine-tune、
 pseudo-label、target normalization、calibration、threshold/log选择或失败case删除；不读取partial质量。三项判定=
@@ -370,7 +380,7 @@ cohort完整后一次性确认，不读取partial质量。GPU=`0.376GiB`、RSS=`
 ## WorldSim V7.1 M42 GT interval-event CDF supervision frozen（2026-09-05）
 
 状态=`v71_m42_interval_event_supervision_frozen`，详见
-[`WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md`](WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md)。
+[`WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md)。
 保留M41分族守恒表示与M35/M38初始化，只把point-bin CE/depth代理替换为GT定义的`-log P(not early)`和
 `-log P(hit ±0.20m)`，两者等权；anchor/child F/O/U CE持续保留。固定4 epochs/seed71142，无tolerance/
 weight/bin/median/total/scale sweep，无threshold/delete/filter。沿用五项判定；无external/M21 partial read。
@@ -396,7 +406,7 @@ partial read。登记`V71-F41`；下一failure ID=`V71-F42`。
 ## WorldSim V7.1 M41 conserved evidential surface measure frozen（2026-09-05）
 
 状态=`v71_m41_conserved_surface_measure_frozen`，详见
-[`WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md`](WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md)。
+[`WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md)。
 从最后通过的M39组成初始化，不复用失败M40。M35/M38 reference分别冻结每Actor anchor/child family总occupied
 surface measure；trainable F/O/U heads只在族内重分配，同时继续接受GT evidential CE。训练/部署共用同一
 categorical measure；M8 geometry/scale/trajectory冻结。固定4 epochs/seed71141，无total/loss/bin/scale/median
@@ -422,7 +432,7 @@ ID=`V71-F41`。
 ## WorldSim V7.1 M40 train--deploy aligned joint authority frozen（2026-09-05）
 
 状态=`v71_m40_joint_categorical_evidential_authority_frozen`，详见
-[`WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md`](WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md)。
+[`WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md)。
 初始化M35 anchor/M38 child heads并冻结M8 geometry/scale/trajectory；训练与部署统一为continuous-authority
 weighted Gaussian categorical surface-return distribution。GT one-hot first-return直接监督所有bins，anchor/child
 held-out F/O/U soft CE持续保留。固定4 epochs/seed71140，无geometry/scale/bin/median/loss sweep，无threshold/
@@ -451,7 +461,7 @@ GPU=`0.223GiB`、RSS=`1.171GiB`、wall=`9.32s`；无新failure，下一failure I
 ## WorldSim V7.1 M39 categorical authority composition frozen（2026-09-05）
 
 状态=`v71_m39_categorical_authority_composition_frozen`，详见
-[`WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md`](WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md)。
+[`WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md)。
 同一66 exposed holdout上冻结M8/M35/M37/M38，主candidate固定为M38 authority weighted categorical Gaussian
 surface-return distribution；M37只作描述，另报M34 anchor+unit-child与原baseline。无训练、additive optical
 thickness、no-return conditioning、threshold/delete/filter或参数扫描。三项判定为all及hazard/clear early不增、all
@@ -479,7 +489,7 @@ ID=`V71-F40`。
 ## WorldSim V7.1 M38 native pre-hit free-space survival frozen（2026-09-05）
 
 状态=`v71_m38_prehit_free_space_survival_frozen`，详见
-[`WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md`](WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md)。
+[`WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md)。
 从M37 checkpoint继续4 epochs，唯一新增目标是GT endpoint前0.20m之外completion-child累计optical thickness
 `-log T_child,pre`；权重1.0、seed71138。M35 anchor、M8 center/scale/trajectory、原categorical/depth/evidential
 目标均冻结；无threshold/delete/filter/scale或weight sweep。沿用四项baseline判定并报告相对M37变化；无
@@ -506,7 +516,7 @@ GPU=`0.429GiB`、RSS=`1.335GiB`、wall=`45.45s`；无NaN/OOM、无external/M21 p
 ## WorldSim V7.1 M37 supervised child transmittance frozen（2026-09-05）
 
 状态=`v71_m37_supervised_child_transmittance_frozen`，详见
-[`WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md`](WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md)。
+[`WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md)。
 M37冻结M35 anchor head与M8 geometry/trajectory，只训练独立child F/O/U head。输入为parent build-only特征与
 child slot/residual/scale；held-out LiDAR构造child soft GT，并与ordered first-return共同训练。固定单seed
 71137/6 epochs，无scale学习/阈值/删除/filter。相对原baseline沿用三项ray判定并要求child occupied相关≥
@@ -532,7 +542,7 @@ build evidence + child geometry输入及held-out F/O/U supervision，使用分�
 ## WorldSim V7.1 M36 optical contribution decomposition frozen（2026-09-05）
 
 状态=`v71_m36_optical_contribution_decomposition_frozen`，详见
-[`WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md`](WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md)。
+[`WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md)。
 冻结M35 model、M8 geometry与同一66 holdout，不训练地比较anchors unit/learned only、children unit only、
 all unit/learned五个transmittance arm，定位M35过度光学厚度的来源。无scale/segment/threshold调整，无性能
 candidate，不读external/M21 partial。下一failure ID=`V71-F38`。
@@ -559,7 +569,7 @@ fatal/new warning）。下一failure ID=`V71-F38`。
 ## WorldSim V7.1 M35 analytic transmittance authority frozen（2026-09-05）
 
 状态=`v71_m35_transmittance_anchor_authority_frozen`，详见
-[`WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md`](WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md)。
+[`WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md)。
 根据Vol3DGS（CVPR 2025）与GaussRender（ICCV 2025），M35用解析Gaussian segment积分与前缀
 transmittance $T_k(1-e^{-\tau_k})$替换M34空间energy softmax。冻结M8 geometry/trajectory、children unit，
 M33输入到anchor F/O/U；GT soft mass与ordered first-return共同训练。固定32/64 train/eval segments、无光学
@@ -586,7 +596,7 @@ Vol3DGS/GaussRender式order-aware transmittance，直接以GT first-return训练
 ## WorldSim V7.1 M34 producer-evidential anchor authority frozen（2026-09-05）
 
 状态=`v71_m34_producer_evidential_anchor_authority_frozen`，详见
-[`WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md`](WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md)。
+[`WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md)。
 M34冻结M8 center/scale/trajectory，只让anchor读取M33 `input_*`并预测连续F/O/U；completion children固定unit
 authority。held-out `supervision_*` soft mass和32-bin GT first-return共同训练，occupied mass连续加权Gaussian
 energy；无阈值、删除、移动或scale路径。固定M32容量/6 epochs/loss权重、单seed 71134。四项判定为all及
@@ -612,7 +622,7 @@ ID=`V71-F36`。
 ## WorldSim V7.1 M33 producer-side anchor evidence frozen（2026-09-05）
 
 状态=`v71_m33_anchor_evidence_sidecar_frozen`，详见
-[`WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md`](WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md)。
+[`WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md)。
 M33不再调整M32 mass family，而是精确重放当前1004个corpus Actor并旁路保存每anchor的KEEP/PROJECT、
 source query frame/ray、canonical build hit/temporal/view support和build LiDAR F/O/U证据；held-out LiDAR仅写
 `supervision_*`，不进入`input_*`。原cache不改写；不训练、不读selection/final/external/M21 partial；无
@@ -637,7 +647,7 @@ FREE/OCCUPIED/UNKNOWN evidence，held-out ray只作target；再冻结新模型�
 ## WorldSim V7.1 M32 GT-supervised Gaussian authority frozen（2026-09-05）
 
 状态=`v71_m32_evidential_gaussian_authority_frozen`，详见
-[`WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md`](WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md)。
+[`WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md)。
 M32不重复M16--M20：冻结M8全部center/scale和只读trajectory，只训练每primitive连续
 `FREE/OCCUPIED/UNKNOWN` mass。primitive target由GT ray的free-before-hit/endpoint/unsupported votes直接构造；
 同一occupied mass进入32-bin first-return categorical proper loss和64-bin部署CDF，无argmax、阈值或删点。
@@ -679,7 +689,7 @@ overfull warning，无fatal或新增warning。
 ## WorldSim V7.1 M31 anchor contradiction attribution frozen（2026-09-05）
 
 状态=`v71_m31_anchor_contradiction_attribution_frozen`，详见
-[`WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md`](WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md)。
+[`WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md)。
 M31针对M30的anchors-only early=`19.58%`，复编译同一66个exposed development Actors，使用共享literal
 first-return直接区分raw query、UNKNOWN query、KEEP、PROJECT及其ordered union。
 
@@ -718,7 +728,7 @@ overfull warning。下一failure ID=`V71-F31`。
 ## WorldSim V7.1 M30 evidential return interval frozen（2026-09-05）
 
 状态=`v71_m30_evidential_return_interval_frozen`，详见
-[`WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md`](WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md)。
+[`WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md)。
 M30使用M8 immutable observed anchors作为`S_known`，anchors+all generated children作为
 `S_possible`，通过first-return set monotonicity输出`[d_possible,d_known]`，不将UNKNOWN硬删或单值化。
 
@@ -745,7 +755,7 @@ RSS=`1.381GiB`、wall=`74.4s`。
 ## WorldSim V7.1 M29 GT tail surface tube frozen（2026-09-05）
 
 状态=`v71_m29_gt_tail_surface_tube_frozen`，详见
-[`WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md`](WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md)。
+[`WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md)。
 M29从M8 r2出发，在593 source Actors上使用frame-balanced GT target与双向top-10% nearest-distance mean
 直接约束最终physical surface；M8的set/plane/scale/frame与literal first-return/free-space losses全部保留。
 
@@ -769,7 +779,7 @@ TinyTeX/latexmk完整编译`paper/main.pdf`成功（15页、2,331,081 bytes）�
 ## WorldSim V7.1 M28 typed authority protocol frozen（2026-09-05）
 
 状态=`v71_m28_typed_authority_non_interference_frozen`，详见
-[`WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md`](WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md)。
+[`WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md)。
 新`authority_contract.py`将GT-supervised `PhysicalActorField`、read-only `ActorPose`与render-only
 `VisualActorLayer`分为兄弟类型；world physical query的参数只有field+pose，不接受image/SH/opacity/
 visual geometry。
@@ -811,7 +821,7 @@ loss/lr均不变。下一failure ID=`V71-F30`。
 ## WorldSim V7.1 M27 hierarchical visual residual frozen（2026-09-05）
 
 状态=`v71_m27_hierarchical_visual_residual_frozen`，详见
-[`WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md`](WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md)。
+[`WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md)。
 M27共同渲染M25的309 coarse parents与M26的2781 fine surfels，两个已训练分支各取一半optical depth后，只继续训练
 SH/opacity；3090个visual geometry及所有physical/trajectory/background参数冻结。
 
@@ -837,7 +847,7 @@ view-uniform improvement或photorealism。physical query仍为309个M8 carriers�
 ## WorldSim V7.1 M26 supervision-native visual surfels frozen（2026-09-05）
 
 状态=`v71_m26_supervision_native_visual_surfels_frozen`，详见
-[`WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md`](WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md)。
+[`WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md)。
 M26将每个冻结M8 `(center,scale)`以8NN PCA构成surface frame，再生成固定3x3 tangent visual-only surfels，共
 `309→2781`个render primitives；tangent scale=`s/3`、normal thickness=`0.02m`。visual geometry不训练且不进入
 physical query，RGB只更新目标Actor SH/opacity。
@@ -875,7 +885,7 @@ opacity。carrier、8/6 views、GT ROI、seed71123、320 steps、loss/lr均不�
 ## WorldSim V7.1 M25 fixed-support appearance optimization frozen（2026-09-05）
 
 状态=`v71_m25_geometry_locked_attribute_optimization_frozen`，详见
-[`WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md`](WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md)。
+[`WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md)。
 M25针对M24的`-11.37dB`容量负例，只训练同一309-carrier Actor的SH DC/rest与opacity；center/scale/rotation、trajectory、
 Background和其他Actor全部没有有效梯度或optimizer更新。
 
@@ -936,7 +946,7 @@ Actor/frame/cameras/carrier均不变。下一failure ID=`V71-F27`。
 ## WorldSim V7.1 M24 geometry-locked real-render protocol frozen（2026-09-05）
 
 状态=`v71_m24_geometry_locked_render_frozen`，详见
-[`WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md`](WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md)。固定
+[`WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md)。固定
 scene-0230 Actor `43fb...`/rigid index12、frame98与camera0/1/2；渲染original、M23 geometry-locked carrier和仅用于
 footprint定位的actor-hidden三变体。Actor因既有最大appearance support预选，不按新图像quality选择。
 
@@ -976,7 +986,7 @@ appearance center/scale/rotation到physical carrier。
 ## WorldSim V7.1 M23 geometry-locked appearance protocol frozen（2026-09-04）
 
 状态=`v71_m23_geometry_locked_appearance_frozen`，详见
-[`WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md`](WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md)。
+[`WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md)。
 依据Gau-Occ反边界、Feature 3DGS与Neural Shell Texture Splatting，M23不让image feature预测或更新center/scale；
 冻结M8 physical Gaussians，仅在同Actor canonical frame复制最近StreetGS Gaussian的SH/opacity属性。
 
@@ -1027,7 +1037,7 @@ StreetGS几何/trajectory authority；物理query由centers/scales的metric ener
 ## WorldSim V7.1 M22 SE(3) dynamic/static composition protocol frozen（2026-09-04）
 
 状态=`v71_m22_se3_dynamic_static_composition_frozen`，详见
-[`WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md`](WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md)。
+[`WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md)。
 M22不新增训练：冻结M8的GT-supervised canonical anchors/children/scales与M21 analytic energy，只由StreetGS
 `instances_trans/quats`把Actor物理场搬到world frame；Background、SH、opacity不进入物理查询。
 
@@ -1056,7 +1066,7 @@ ID仍为`V71-F25`。
 ## WorldSim V7.1 M21 frozen M8 Gaussian energy external protocol（2026-09-04）
 
 状态=`v71_m21_frozen_gaussian_energy_external_frozen`，详见
-[`WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md`](WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md)。
+[`WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md)。
 M21不新增训练：直接把canonical M8的native-3D supervised children/scales解释为共享actor-canonical Gaussian
 energy，observed anchors固定`0.08m`，部署读取64-bin energy CDF median。
 
@@ -1082,7 +1092,7 @@ deployment representation；其选择明确来自开发集诊断，必须由尚�
 ## WorldSim V7.1 M20 decoder-free Gaussian ray energy frozen（2026-09-04）
 
 状态=`v71_m20_decoder_free_gaussian_energy_frozen`，详见
-[`WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md`](WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md)。
+[`WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md)。
 针对M19的auxiliary-decoder compensation，M20删除全部field MLP/attention，用immutable anchors与M8 children/scales
 直接构造actor-canonical Gaussian mixture energy；整ray softmax仍由GT LiDAR唯一return bin监督。
 
@@ -1108,7 +1118,7 @@ Chamfer相对M8再改善`2.424mm`，field相对当前joint point surface的hazar
 ## WorldSim V7.1 M19 joint geometry--first-return protocol frozen（2026-09-04）
 
 状态=`v71_m19_joint_geometry_first_return_frozen`，详见
-[`WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md`](WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md)。
+[`WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md)。
 M19从canonical M8/M18初始化，每步先生成可学习children/scales，再用同一children计算M18 categorical first-return；
 因此GT ray proper loss第一次直接约束completed anchors，同时M7/M8的symmetric set、local plane/scale和逐帧GT coverage
 持续回传。
@@ -1132,7 +1142,7 @@ first-return与dynamic/static routing拆成独立目标。
 ## WorldSim V7.1 M18 fresh AV2 zero-shot protocol frozen（2026-09-04）
 
 状态=`v71_m18_fresh_av2_zero_shot_waiting`，详见
-[`WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md`](WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md)。冻结M18 checkpoint、
+[`WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md)。冻结M18 checkpoint、
 M8 comparator、20-log `av2_zero_shot_cohort_v1.json`与七门合同；不fine-tune、不校准、不选阈值、不删失败log。当前V7.1
 download state=`4/20`，current=`27c03d98-6ac3-38a3-ba5e-102b184d01ef`；旧V7 30-log `ALL_COMPLETE`不计入
 本cohort。
@@ -1158,7 +1168,7 @@ Canonical `summary.json` 的`deployment`字符串由旧generic runner继承成ze
 ## WorldSim V7.1 M18 categorical first-return field frozen（2026-09-04）
 
 状态=`v71_m18_categorical_first_return_frozen`，详见
-[`WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md`](WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md)。M17的
+[`WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md)。M17的
 non-negative density/CDF保证单调并降低early，却因累积density可在hit前弥散而丢失26.14pp hazard hit。M18保持整ray
 归一化与单一first-return distribution，但直接让所有depth bins以softmax竞争一个GT return bin；one-hot native LiDAR target
 经categorical proper loss强制sharp peak。
@@ -1181,7 +1191,7 @@ CaDDN的one-hot categorical depth supervision，M18改为整ray归一化first-re
 ## WorldSim V7.1 M17 monotone LiDAR survival field frozen（2026-09-04）
 
 状态=`v71_m17_monotone_ray_survival_frozen`，详见
-[`WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md`](WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md)。M16证明完整
+[`WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md)。M16证明完整
 FREE-ray监督恢复hit/observable，却因无约束signed scalar沿ray多次变号而增加early。M17不再用zero crossing：local network仅预测
 非负3D density，沿ray通过`T_i=exp(-sum sigma*delta)`与`CDF=1-T`构造单调termination distribution；GT return直接监督
 step-CDF，部署取同一CDF的中位首交。
@@ -1204,7 +1214,7 @@ LiDAR Fields，M17转为non-negative density + transmittance CDF；不增加FREE
 ## WorldSim V7.1 M16 full-ray direct query field frozen（2026-09-04）
 
 状态=`v71_m16_full_ray_direct_query_frozen`，详见
-[`WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md`](WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md)。M13--M15
+[`WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md)。M13--M15
 说明局部primitive的support拓扑在FREE precision与surface coverage之间反复二选一；继续改radius、thickness或union不是新研究。
 M16转向QueryOcc式native 3D query supervision：对每条GT return ray，在Actor AABB内从entry到return前均匀采样FREE
 queries，同时监督hit zero与窄back occupied；不再只看return前`10/20cm`。
@@ -1228,7 +1238,7 @@ M14的`37.53/39.89%`恢复到`57.39/60.41%`，证明tangent/back support解耦�
 ## WorldSim V7.1 M15 one-sided surface cell frozen（2026-09-04）
 
 状态=`v71_m15_one_sided_surface_cell_frozen`，详见
-[`WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md`](WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md)。M14证明
+[`WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md)。M14证明
 compact field可消除FREE伪面，但radial ball再次把tangent extent和behind-surface depth耦合。M15定义非对称surface
 cell：front face固定在learned zero plane，切向radius接受GT 8NN coverage extent监督，occupied support只向ray-return后方
 延伸固定`0.10m`；FREE侧没有厚度。
@@ -1251,7 +1261,7 @@ SDF/free-space分权和QueryOcc的直接4D query supervision，M15改为one-side
 ## WorldSim V7.1 M14 compact local occupancy field frozen（2026-09-04）
 
 状态=`v71_m14_compact_local_occupancy_frozen`，详见
-[`WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md`](WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md)。M13失败
+[`WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md)。M13失败
 来自unbounded local planes在整个AABB外推并soft-average出虚假zero crossing。M14保持同一M8 guidance与GT窄带，但每个
 local field改为内生compact CSG patch：`max(oriented-plane field, radial-support field)`，patch外严格FREE；多个patch
 用`min`构成occupancy union，不再平均异号平面。
@@ -1274,7 +1284,7 @@ decomposition与ARO的anchor visibility，M14把compact support和union直接写
 ## WorldSim V7.1 M13 M8-guided local signed field frozen（2026-09-04）
 
 状态=`v71_m13_local_signed_field_frozen`，详见
-[`WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md`](WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md)。M12已关闭
+[`WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md)。M12已关闭
 primitive-union surface family；M13保留M8显式中心作为iso-point guidance，但物理边界改为query-specific local signed
 field。它与M3/M4的关键区别是每个query读取nearest M8 child的局部build feature/relative coordinate，不再压成单个Actor
 global latent，且零面从M8局部平面初始化。
@@ -1304,7 +1314,7 @@ cohort与门槛不变，r2使用新run-id。下一科学failure ID=`V71-F17`。
 ## WorldSim V7.1 M12 finite planar chart protocol frozen（2026-09-04）
 
 状态=`v71_m12_finite_planar_chart_frozen`，详见
-[`WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md`](WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md)。M9--M11表明
+[`WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md)。M9--M11表明
 ellipsoid作为碰撞实体始终需要在FREE precision与surface hit之间折中；M12不再把Gaussian `1σ`体积冒充物理边界，
 而将canonical M8 center/tangent radius解释为有限2D surface chart，显式学习GT normal。
 
@@ -1326,7 +1336,7 @@ MAtCha Gaussians，下一步把碰撞语义从有厚度ellipsoid切换为zero-th
 ## WorldSim V7.1 M11 exact support supervision frozen（2026-09-04）
 
 状态=`v71_m11_exact_support_supervision_frozen`，详见
-[`WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md`](WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md)。
+[`WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md)。
 M10已证明oriented oblate support能明显减少FREE侵入，但训练用sampled alpha-density、验收用analytic first
 intersection，forward model不一致导致hit损失。M11保留canonical M8的center/tangent scale不动，只学习GT-normal与
 normal thickness；几何中心/逐帧轨迹、Gaussian碰撞支撑两个子问题由参数块显式分离。
@@ -1350,7 +1360,7 @@ sampled support free降到相对M8的`0.423`，但解析hit仍下降，根因锁
 ## WorldSim V7.1 M10 oriented planar Gaussian protocol frozen（2026-09-04）
 
 状态=`v71_m10_oriented_planar_gaussian_frozen`，详见
-[`WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md`](WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md)。
+[`WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md)。
 M9的isotropic scale把tangent coverage与normal thickness耦合；M10从M8初始化并显式预测center、unit normal、tangent
 radius、normal thickness。normal/scale来自actor-canonical GT 8NN plane，thickness固定监督为`0.02m`；point与
 anisotropic ray physics同时训练。trajectory/hazard/time/image仍完全隔离。
@@ -1375,7 +1385,7 @@ Point评价进一步确认不是有效终局：hazard/all early相对baseline只
 ## WorldSim V7.1 M9 Gaussian support protocol frozen（2026-09-04）
 
 状态=`v71_m9_gaussian_support_frozen`，详见
-[`WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md`](WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md)。当前核心缺口是
+[`WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md)。当前核心缺口是
 M7/M8的predicted scale没有进入literal ray physics；中心点通过不能证明Gaussian covariance support不侵入FREE空间。
 M9从canonical M8初始化，把固定`1σ`等值面作为明确collision sphere：scale-aware first/free-space在训练内反传center/
 scale，评价用exact ray--sphere first intersection；所有anchors/children保留，不作filter。
@@ -1425,7 +1435,7 @@ ID=`V71-F13`。
 ## WorldSim V7.1 M8 temporal factorisation protocol frozen（2026-09-04）
 
 状态=`v71_m8_temporal_factorisation_frozen`，详见
-[`WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md`](WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md)。M7只解决
+[`WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md)。M7只解决
 actor-canonical shape completion；M8把trajectory/static world分成只读authority，不给geometry head输入velocity、time、
 hazard或image。训练新增的唯一信号是held-out各帧等权的GT endpoint→surface coverage，原union-set geometry与ray physics
 持续保留，部署仍输出immutable anchors加全部4-child。
@@ -1493,7 +1503,7 @@ target的symmetric set loss、local plane/scale监督，Stage P持续保留后�
 
 ## WorldSim V7.1 Gau-Occ审计完成 / M6 supervision-native geometry冻结（2026-09-04）
 
-Gau-Occ一手资料审计已完成，详见[`WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md`](WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md)。
+Gau-Occ一手资料审计已完成，详见[`WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md`](archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md)。
 LCD的dense target是20帧ego-aligned LiDAR累积、noise-MSE预训练；completed cloud只初始化Gaussian centers，scale随机，
 图像融合后的FFN仍可同时修改center/scale/rotation/semantic。论文没有anchor/free-space/surface loss，也没有公开官方代码
 可确认joint stage是否解冻LCD或保留diffusion loss。因此Gau-Occ支持“target-first completion”分层，不足以直接证明
@@ -8078,7 +8088,7 @@ Artifacts：
 - Claim boundary 只覆盖 operational equivalence 与已观测 wall-time accounting；不声明 semantic、physics、planning 或 safety correctness。
 - 仓库收敛目标为唯一远端分支 `main`，指向本次 closeout。
 
-详见 [selector 研究族收口](autoresearch/worldsim_v6/SELECTOR_RESEARCH_FAMILY_CLOSEOUT.md)、[failure ledger](RESEARCH_FAILURES.md) 与 [V6 plan](WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md)。
+详见 [selector 研究族收口](autoresearch/worldsim_v6/SELECTOR_RESEARCH_FAMILY_CLOSEOUT.md)、[failure ledger](RESEARCH_FAILURES.md) 与 [V6 plan](archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md)。
 ## WorldSim V6.5 启动：TAC-Compiler 直接研究入口（2026-08-27）
 
 状态：`active_p1_signal_atlas`。

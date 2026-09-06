@@ -1,0 +1,648 @@
+{
+  "base_commit": "ec9c2e08",
+  "date": "2026-09-06",
+  "policy": "只移动历史文档并重定位 Markdown 链接；正文旧路径字符串保留。冻结兼容文件和既有凭证原字节保留。",
+  "retained_compatibility": {
+    "DR_V2_M0_SOURCE_AUDIT.md": [
+      "scripts/finalize_dr_v2_m0.py"
+    ],
+    "DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md": [
+      "configs/worldsim_v3/r0_integration_protocol_v1.yaml"
+    ],
+    "KITTI_LAYOUT_AUDIT.md": [
+      "scripts/audit_worldsim_v4_kitti.py"
+    ],
+    "KITTI_TRACKING_ADAPTER_SMOKE_V5.json": [
+      "tests/test_audit_worldsim_v5_kitti_adapter_smoke.py"
+    ],
+    "KITTI_TRACKING_ARCHIVE_METADATA_V5.json": [
+      "configs/worldsim_v5/kitti_adapter_smoke_v1.yaml",
+      "scripts/audit_worldsim_v5_kitti_adapter_smoke.py",
+      "scripts/audit_worldsim_v5_kitti_archives.py",
+      "scripts/extract_worldsim_v5_kitti_smoke.py",
+      "tests/test_worldsim_v5_kitti_smoke_extraction.py"
+    ],
+    "WORLDSIM_V4_EVIDELTA_GS_PLAN.md": [
+      "configs/worldsim_v4/p0_scope_v1.yaml",
+      "motion_proj/worldsim_v4/p0_contract.py",
+      "tests/test_worldsim_v4_p0_contract.py"
+    ],
+    "WORLDSIM_V5_1_M1_PLAN.md": [
+      "configs/worldsim_v51/p0_m1_scope_v1.yaml"
+    ],
+    "WORLDSIM_V5_1_M1_TOPCONF_PLAN.md": [
+      "configs/worldsim_v51/p0_m1_scope_v1.yaml",
+      "configs/worldsim_v51/stage_b_authorization_v1.yaml",
+      "configs/worldsim_v51/stage_d_progressive_preflight_v1.yaml",
+      "configs/worldsim_v51/stage_f_f0_source_preflight_v1.yaml"
+    ],
+    "WORLDSIM_V5_2_1_BADCASE_REPORT.md": [
+      "scripts/closeout_worldsim_v521.py"
+    ],
+    "WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md": [
+      "configs/worldsim_v521/p0_scope_freeze_v1.yaml"
+    ],
+    "WORLDSIM_V5_2_1_CLOSEOUT.md": [
+      "scripts/closeout_worldsim_v521.py"
+    ],
+    "WORLDSIM_V5_2_1_M123_REVIEW.md": [
+      "scripts/closeout_worldsim_v521.py"
+    ],
+    "WORLDSIM_V5_STRUCTDELTA_PLAN.md": [
+      "configs/worldsim_v5/p0_scope_v1.yaml",
+      "tests/test_worldsim_v5_p0_contract.py"
+    ],
+    "WORLDSIM_V6_1_OCCUPANCY_VERIFIED_WORLD_COMPILER_RESEARCH_PLAN.md": [
+      "configs/worldsim_v61/p0_scope_freeze_v1.yaml"
+    ],
+    "WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md": [
+      "configs/worldsim_v62/p0_scope_freeze_v1.yaml"
+    ],
+    "WS_V4_KITTI_AUDIT.md": [
+      "configs/worldsim_v4/kitti_adapter_v1.yaml"
+    ],
+    "WS_V5_M1_FAILURE_FORENSICS.md": [
+      "configs/worldsim_v5/p0_scope_v1.yaml",
+      "scripts/audit_worldsim_v5_p0.py",
+      "tests/test_worldsim_v5_p0_contract.py"
+    ],
+    "WS_V5_M2_GEOMETRY_FORENSICS.md": [
+      "configs/worldsim_v5/p0_scope_v1.yaml",
+      "scripts/audit_worldsim_v5_p0.py",
+      "tests/test_worldsim_v5_p0_contract.py"
+    ]
+  },
+  "retained_link_dependencies": [
+    "KITTI_TRACKING_ADAPTER_SMOKE_V5.md",
+    "KITTI_TRACKING_ARCHIVE_AUDIT_V5.md",
+    "WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md",
+    "WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md",
+    "WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md",
+    "WS_V5_M1_DEVELOPMENT_REPLICATION.md",
+    "WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md",
+    "WS_V5_M3_DEVELOPMENT.md"
+  ],
+  "moves": [
+    {
+      "old": "docs/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md",
+      "sha256": "8abee7e47895405f6b6c1b051e2ee77819bbbde1a7221574c64aa3628ff3eb53",
+      "archive_sha256": "8abee7e47895405f6b6c1b051e2ee77819bbbde1a7221574c64aa3628ff3eb53",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3.md",
+      "sha256": "87a31d37f02a4cd2a0f12a4d5803373d52b70cd5aa340b34eef86f779ae70c1d",
+      "archive_sha256": "a9897dbfce3f09287574818ddc0c612759431b4a42dbc3400d985f7bc0d2e714",
+      "markdown_links_relocated": true
+    },
+    {
+      "old": "docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md",
+      "sha256": "d40011dc38dc784a589255c414008aa18272211166ad7354fda60d87325d0b40",
+      "archive_sha256": "eb72dd47163c3b6345f123966019a8aaaf751ae100e72ddedeea5e142c54df01",
+      "markdown_links_relocated": true
+    },
+    {
+      "old": "docs/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md",
+      "sha256": "82cec545b849e3fc2ff76e8254d21874251403bfc31c8e413338416658067598",
+      "archive_sha256": "82cec545b849e3fc2ff76e8254d21874251403bfc31c8e413338416658067598",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/KITTI_TRACKING_ARCHIVES_V5.sha256",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/KITTI_TRACKING_ARCHIVES_V5.sha256",
+      "sha256": "264f8aea94d4b705efc06194edf0c885ff1f013a202777f83758bd21a62fd78d",
+      "archive_sha256": "264f8aea94d4b705efc06194edf0c885ff1f013a202777f83758bd21a62fd78d",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V6_3_NATIVE_SURFACE_TAIL_RISK_COMPILER_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_3_NATIVE_SURFACE_TAIL_RISK_COMPILER_PLAN.md",
+      "sha256": "981d413893f287e92850c056723bb5202fba893d5e1ae110511b2721a1e1f982",
+      "archive_sha256": "981d413893f287e92850c056723bb5202fba893d5e1ae110511b2721a1e1f982",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V6_4_UNCERTAINTY_NATIVE_CONDITIONAL_COMPILER_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_4_UNCERTAINTY_NATIVE_CONDITIONAL_COMPILER_PLAN.md",
+      "sha256": "494adc31d101f221b39cdca0828091c5581cfa3e71e5a1aa67e8ed93aba2e7e4",
+      "archive_sha256": "494adc31d101f221b39cdca0828091c5581cfa3e71e5a1aa67e8ed93aba2e7e4",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V6_5_TASK_CONDITIONED_DIFFERENTIABLE_AUTHORITY_COMPILER_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_5_TASK_CONDITIONED_DIFFERENTIABLE_AUTHORITY_COMPILER_PLAN.md",
+      "sha256": "9be0960bedbc774efbf5d400d7eac661860ca82c735a9e482a145810d39fb198",
+      "archive_sha256": "4719019adc2adb5569f13d578c4290b50ded93e63249972ec6590dd1d9292796",
+      "markdown_links_relocated": true
+    },
+    {
+      "old": "docs/WORLDSIM_V6_6_HARP_COMPILER_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_6_HARP_COMPILER_PLAN.md",
+      "sha256": "a33ce2a07721289fc18806131e833006d2707d788d6c27be36badb51a5649368",
+      "archive_sha256": "a33ce2a07721289fc18806131e833006d2707d788d6c27be36badb51a5649368",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V6_AUTORESEARCH_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_AUTORESEARCH_PLAN.md",
+      "sha256": "107a41bfb8c0ed7c4f860db9810e21608b2329a155d39ba89fb6db0d1ea2f5df",
+      "archive_sha256": "107a41bfb8c0ed7c4f860db9810e21608b2329a155d39ba89fb6db0d1ea2f5df",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v6-v6.6/WORLDSIM_V6_VERIFIABLE_WORLD_COMPILER_AUTORESEARCH_PLAN.md",
+      "sha256": "fa1510783c766630920c61c67ef2a8b736049d6628e3a8c6522d0ce113793dfe",
+      "archive_sha256": "fa1510783c766630920c61c67ef2a8b736049d6628e3a8c6522d0ce113793dfe",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_GAU_OCC_SUPERVISION_AUDIT.md",
+      "sha256": "f8f29b480bf2ee692aa2ac4f21e8b17c544bf7781a47ebfc2593b2a67e286727",
+      "archive_sha256": "f8f29b480bf2ee692aa2ac4f21e8b17c544bf7781a47ebfc2593b2a67e286727",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M10_ORIENTED_PLANAR_GAUSSIAN_PLAN.md",
+      "sha256": "93668be4becbc3e9fe2ebce51d6fbf427209445e377b271b2ca02aa9b18dd4c6",
+      "archive_sha256": "93668be4becbc3e9fe2ebce51d6fbf427209445e377b271b2ca02aa9b18dd4c6",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M11_EXACT_SUPPORT_SUPERVISION_PLAN.md",
+      "sha256": "b549b4898ad194220fb317bc53406e221e650fe060cc3852a706d56e94d60c92",
+      "archive_sha256": "b549b4898ad194220fb317bc53406e221e650fe060cc3852a706d56e94d60c92",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M12_FINITE_PLANAR_CHART_PLAN.md",
+      "sha256": "9a548ed035db2d87e6db2b635b32814bbc2f80ae79f0a3deb1046296e2ca87c2",
+      "archive_sha256": "9a548ed035db2d87e6db2b635b32814bbc2f80ae79f0a3deb1046296e2ca87c2",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M13_LOCAL_SIGNED_FIELD_PLAN.md",
+      "sha256": "fa29d7e1ca7dcdc1a18cc999735dc0b90bad6cd46b93733b7b901eb57dffe04d",
+      "archive_sha256": "fa29d7e1ca7dcdc1a18cc999735dc0b90bad6cd46b93733b7b901eb57dffe04d",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M14_COMPACT_LOCAL_OCCUPANCY_PLAN.md",
+      "sha256": "310a33482b6ba56c01165b7f6a8c9a5489e0e1480999b492d5a6c38bc729c928",
+      "archive_sha256": "310a33482b6ba56c01165b7f6a8c9a5489e0e1480999b492d5a6c38bc729c928",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M15_ONE_SIDED_SURFACE_CELL_PLAN.md",
+      "sha256": "7d646a5348e391072babfe61f4f897ea518e36e2512f1f578c84121794258aae",
+      "archive_sha256": "7d646a5348e391072babfe61f4f897ea518e36e2512f1f578c84121794258aae",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M16_FULL_RAY_DIRECT_QUERY_PLAN.md",
+      "sha256": "85177059d00460251dcd5148968371ebef64a00a417ecfdff67a87eadafe57ce",
+      "archive_sha256": "85177059d00460251dcd5148968371ebef64a00a417ecfdff67a87eadafe57ce",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M17_MONOTONE_RAY_SURVIVAL_PLAN.md",
+      "sha256": "472dd5faf6306ea2cc969d90ff8e45c04484a5d99e5b5c4a6e57c1291a4baa96",
+      "archive_sha256": "472dd5faf6306ea2cc969d90ff8e45c04484a5d99e5b5c4a6e57c1291a4baa96",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M18_AV2_ZERO_SHOT_PROTOCOL.md",
+      "sha256": "95f1e81c22d94e4da12129170aefc42ec2c6f8127f8e85bc588bdeaed2890b9d",
+      "archive_sha256": "95f1e81c22d94e4da12129170aefc42ec2c6f8127f8e85bc588bdeaed2890b9d",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M18_CATEGORICAL_FIRST_RETURN_PLAN.md",
+      "sha256": "744d0abfc38d941c120d846b3259f81ff4e2bc4e85053ef38e7da11f4fb6fbed",
+      "archive_sha256": "744d0abfc38d941c120d846b3259f81ff4e2bc4e85053ef38e7da11f4fb6fbed",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M19_JOINT_GEOMETRY_FIRST_RETURN_PLAN.md",
+      "sha256": "426d66187c4de3a711e40fc5ff334be1bdca0326925d8091ac477d28e7891ddb",
+      "archive_sha256": "426d66187c4de3a711e40fc5ff334be1bdca0326925d8091ac477d28e7891ddb",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M20_DECODER_FREE_GAUSSIAN_RAY_ENERGY_PLAN.md",
+      "sha256": "ac4c551614540e476d99eb3023d1ccd03f112840b71cabb95b97f20bf55e6ecd",
+      "archive_sha256": "ac4c551614540e476d99eb3023d1ccd03f112840b71cabb95b97f20bf55e6ecd",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M21_FROZEN_GAUSSIAN_ENERGY_AV2_PROTOCOL.md",
+      "sha256": "ebebb82370a5b45de3a68727d31f1bbd2b32d8d599f2ea76e4fc3f4024bb8650",
+      "archive_sha256": "ebebb82370a5b45de3a68727d31f1bbd2b32d8d599f2ea76e4fc3f4024bb8650",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M22_SE3_DYNAMIC_STATIC_COMPOSITION_PLAN.md",
+      "sha256": "656627d16e1526c8683ef1929fff21d06c4dacf5241b90aabb8997fc62fff3a9",
+      "archive_sha256": "656627d16e1526c8683ef1929fff21d06c4dacf5241b90aabb8997fc62fff3a9",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M23_GEOMETRY_LOCKED_APPEARANCE_PLAN.md",
+      "sha256": "67121a5f84972e91bb6451e6b54629732f7e756e1fab9c1bc0a8e148fb520425",
+      "archive_sha256": "67121a5f84972e91bb6451e6b54629732f7e756e1fab9c1bc0a8e148fb520425",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M24_GEOMETRY_LOCKED_RENDER_PLAN.md",
+      "sha256": "4f0d6f9414ea08821d8ea7f360c4714c89161a4693a258e486a51b10c697011e",
+      "archive_sha256": "4f0d6f9414ea08821d8ea7f360c4714c89161a4693a258e486a51b10c697011e",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M25_GEOMETRY_LOCKED_ATTRIBUTE_OPTIMIZATION_PLAN.md",
+      "sha256": "b5efd8da334a9f139a9fe5f61026870f69e400b361e5b1891fb268f31677c01f",
+      "archive_sha256": "b5efd8da334a9f139a9fe5f61026870f69e400b361e5b1891fb268f31677c01f",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M26_SUPERVISION_NATIVE_VISUAL_SURFELS_PLAN.md",
+      "sha256": "6727434a0e49775bc87ddfc2ea527f2a55f2277fae03028020af5f179206bc24",
+      "archive_sha256": "6727434a0e49775bc87ddfc2ea527f2a55f2277fae03028020af5f179206bc24",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M27_HIERARCHICAL_VISUAL_RESIDUAL_PLAN.md",
+      "sha256": "fb6a882a42626d040c52f9ac8e3b5253fbdb466a6f5a37f1fe9413da696fc414",
+      "archive_sha256": "fb6a882a42626d040c52f9ac8e3b5253fbdb466a6f5a37f1fe9413da696fc414",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M28_TYPED_AUTHORITY_NON_INTERFERENCE_PLAN.md",
+      "sha256": "1d7564c206519265e891e28c2b7d17296edd6e667b2d5db43ada384db8ff05b1",
+      "archive_sha256": "1d7564c206519265e891e28c2b7d17296edd6e667b2d5db43ada384db8ff05b1",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M29_GT_TAIL_SURFACE_TUBE_PLAN.md",
+      "sha256": "70e511f944636e66e5b30e0d15f58e754d02976a2112a0d6914979450c9e8b01",
+      "archive_sha256": "70e511f944636e66e5b30e0d15f58e754d02976a2112a0d6914979450c9e8b01",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M30_EVIDENTIAL_RETURN_INTERVAL_PLAN.md",
+      "sha256": "d250fcde11124dfc266c6746caf97a6607e00f3cbf4d77cc0730dbe0a41cbf82",
+      "archive_sha256": "d250fcde11124dfc266c6746caf97a6607e00f3cbf4d77cc0730dbe0a41cbf82",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M31_ANCHOR_CONTRADICTION_ATTRIBUTION_PLAN.md",
+      "sha256": "6d71f997efeb4c7b0e037e4582125413045ef4ba4c0aae28aab41c1205f81059",
+      "archive_sha256": "6d71f997efeb4c7b0e037e4582125413045ef4ba4c0aae28aab41c1205f81059",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M32_EVIDENTIAL_GAUSSIAN_AUTHORITY_PLAN.md",
+      "sha256": "a0631e00747a55f240d79ab5cb214199daad836c6cf1a127c1251fb3904e2a56",
+      "archive_sha256": "a0631e00747a55f240d79ab5cb214199daad836c6cf1a127c1251fb3904e2a56",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M33_ANCHOR_EVIDENCE_SIDECAR_PLAN.md",
+      "sha256": "f63951988204e5731d1ea9e5a3b6e4bac0b635d721095893a207bf1f67df80e8",
+      "archive_sha256": "f63951988204e5731d1ea9e5a3b6e4bac0b635d721095893a207bf1f67df80e8",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M34_PRODUCER_EVIDENTIAL_ANCHOR_AUTHORITY_PLAN.md",
+      "sha256": "ca1594ee671d82c034d6479e1529d8d7750584cd237cc75f2ea879866ce147a1",
+      "archive_sha256": "ca1594ee671d82c034d6479e1529d8d7750584cd237cc75f2ea879866ce147a1",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M35_TRANSMITTANCE_ANCHOR_AUTHORITY_PLAN.md",
+      "sha256": "44b82c486ece66df73807faab6bec4dcc6b27712922611f8a7a2b8813275d4ac",
+      "archive_sha256": "44b82c486ece66df73807faab6bec4dcc6b27712922611f8a7a2b8813275d4ac",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M36_OPTICAL_CONTRIBUTION_DECOMPOSITION_PLAN.md",
+      "sha256": "99e72444053bf752628669e4fe3159eb68886010b22de911274a4ec14f6c166c",
+      "archive_sha256": "99e72444053bf752628669e4fe3159eb68886010b22de911274a4ec14f6c166c",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M37_SUPERVISED_CHILD_TRANSMITTANCE_PLAN.md",
+      "sha256": "a37a0af7bf8ecad16ae3817477f815a7f06ad0c809a784066ef3756deebec5c8",
+      "archive_sha256": "a37a0af7bf8ecad16ae3817477f815a7f06ad0c809a784066ef3756deebec5c8",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M38_PREHIT_FREE_SPACE_SURVIVAL_PLAN.md",
+      "sha256": "b09d03fefe938bb3f6a55251d71c7fedc05ed3d08e51f3f245f49038e5e60469",
+      "archive_sha256": "b09d03fefe938bb3f6a55251d71c7fedc05ed3d08e51f3f245f49038e5e60469",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M39_CATEGORICAL_AUTHORITY_COMPOSITION_PLAN.md",
+      "sha256": "37ea2ba5d16258c2d46ad7564292b4d9fad84d4a4318a11a444b8a9622f70113",
+      "archive_sha256": "37ea2ba5d16258c2d46ad7564292b4d9fad84d4a4318a11a444b8a9622f70113",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M40_JOINT_CATEGORICAL_EVIDENTIAL_AUTHORITY_PLAN.md",
+      "sha256": "e990a800992094fada5e0951ce88569102facab307e3e3ad87589d8238d111a0",
+      "archive_sha256": "e990a800992094fada5e0951ce88569102facab307e3e3ad87589d8238d111a0",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M41_CONSERVED_SURFACE_MEASURE_PLAN.md",
+      "sha256": "b5e0868a75e1d3c4d4cece17682de62ed7475f1c927b806bd4faef524ad25b3c",
+      "archive_sha256": "b5e0868a75e1d3c4d4cece17682de62ed7475f1c927b806bd4faef524ad25b3c",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M42_INTERVAL_EVENT_SUPERVISION_PLAN.md",
+      "sha256": "334a66ecd9b58a4cc23a873df3c3d9ab40e0e29af2c4372c9433192c4c9092e4",
+      "archive_sha256": "334a66ecd9b58a4cc23a873df3c3d9ab40e0e29af2c4372c9433192c4c9092e4",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M43_M39_AV2_ZERO_SHOT_PLAN.md",
+      "sha256": "6bc866c0afc609d4d026e3fc81cee7447b5868e418be73c82617197f164fbc75",
+      "archive_sha256": "6bc866c0afc609d4d026e3fc81cee7447b5868e418be73c82617197f164fbc75",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M44_CATEGORICAL_SAFETY_RESPONSIBILITY_PLAN.md",
+      "sha256": "c2cae35b9d7fb4629b265324548928756d31f28db83479ecc4de1bb97f4a5dd5",
+      "archive_sha256": "c2cae35b9d7fb4629b265324548928756d31f28db83479ecc4de1bb97f4a5dd5",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M45_ORIENTED_CATEGORICAL_SURFACE_MEASURE_PLAN.md",
+      "sha256": "8287159617ae4ed41a3020974a56fb41df097e8f60b612eb87e47c2da7f4aa35",
+      "archive_sha256": "8287159617ae4ed41a3020974a56fb41df097e8f60b612eb87e47c2da7f4aa35",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M46_CDF_SUPERVISED_ORIENTED_SUPPORT_PLAN.md",
+      "sha256": "3562a333d8152dd8dd77035a8b838ab8e96f5b1929d37c6143c57b79a6859564",
+      "archive_sha256": "3562a333d8152dd8dd77035a8b838ab8e96f5b1929d37c6143c57b79a6859564",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M47_MOTION_PROVENANCE_INCIDENCE_DIAGNOSIS_PLAN.md",
+      "sha256": "13dfa29d241b7e23de48279d1a7cb5493e43f20a348796a570ae579349818af2",
+      "archive_sha256": "13dfa29d241b7e23de48279d1a7cb5493e43f20a348796a570ae579349818af2",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M48_SUPERVISED_CHILD_VISIBILITY_MEASURE_PLAN.md",
+      "sha256": "5ee571fb57fc4329d1df1f907a45f19a310e611e1cbbc3b21e9107eaff173f64",
+      "archive_sha256": "5ee571fb57fc4329d1df1f907a45f19a310e611e1cbbc3b21e9107eaff173f64",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M49_VISIBILITY_SIGN_BOUNDARY_PLAN.md",
+      "sha256": "a4d08236720d03519aebb3adb60342f384b3c9ca6740f07c7a008614d91541bc",
+      "archive_sha256": "a4d08236720d03519aebb3adb60342f384b3c9ca6740f07c7a008614d91541bc",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M50_FRAME_BALANCED_FIRST_RETURN_PLAN.md",
+      "sha256": "90bb0c302fc3a60a5236a87ff32a781d24d90aa5c6228d902efb6f4c0708cd93",
+      "archive_sha256": "90bb0c302fc3a60a5236a87ff32a781d24d90aa5c6228d902efb6f4c0708cd93",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M51_SOFT_HARD_FIRST_RETURN_DIAGNOSIS_PLAN.md",
+      "sha256": "fa56660cf844927cf1edbae4672b82053ac8e87e6543f3ce5aa7ea67adb702cb",
+      "archive_sha256": "fa56660cf844927cf1edbae4672b82053ac8e87e6543f3ce5aa7ea67adb702cb",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M8_TEMPORAL_FACTORISATION.md",
+      "sha256": "ad331f0daefe29d46f38be539d9dcf75cf64a0d5905b68c38a5f2ac93663bc77",
+      "archive_sha256": "ad331f0daefe29d46f38be539d9dcf75cf64a0d5905b68c38a5f2ac93663bc77",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V71_M9_GAUSSIAN_SUPPORT_PLAN.md",
+      "sha256": "bde3144c9490427b42c6b7bda23d919cdae7e9daabe01d3eb5db8de56fea6b71",
+      "archive_sha256": "bde3144c9490427b42c6b7bda23d919cdae7e9daabe01d3eb5db8de56fea6b71",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V7_1_LEARNED_EVIDENTIAL_ACTOR_SURFACE_FIELD_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7.1/WORLDSIM_V7_1_LEARNED_EVIDENTIAL_ACTOR_SURFACE_FIELD_PLAN.md",
+      "sha256": "278c0748c9112c20821ac293e06b5065e59ae7bacc9cd66ba1ce938a92d95151",
+      "archive_sha256": "278c0748c9112c20821ac293e06b5065e59ae7bacc9cd66ba1ce938a92d95151",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WORLDSIM_V7_CVPR_RESEARCH_PLAN.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v7/WORLDSIM_V7_CVPR_RESEARCH_PLAN.md",
+      "sha256": "113d93fdee90eb17887987dd5d77f811708d203dd77df0222facb8380ad0b69e",
+      "archive_sha256": "113d93fdee90eb17887987dd5d77f811708d203dd77df0222facb8380ad0b69e",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V32_S0_SOTA_AUDIT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V32_S0_SOTA_AUDIT.md",
+      "sha256": "b1957d77a035b6c9485f7febf52b848b1ed757883ed437b682f85510bb647f16",
+      "archive_sha256": "7a329227dab19dd981d2be2352efbf3f89a101f138719b14ccef159fb8d67ee2",
+      "markdown_links_relocated": true
+    },
+    {
+      "old": "docs/WS_V33_P0_SOTA_AUDIT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_P0_SOTA_AUDIT.md",
+      "sha256": "039af9ef85f94a0f562c6a1f38c2697261f6fc9e2a236901da54a87a64b3fdb3",
+      "archive_sha256": "b60333b7dd41326a64176c1ed6ae722191e12428bcff6da7780fdd3bcc272a8b",
+      "markdown_links_relocated": true
+    },
+    {
+      "old": "docs/WS_V33_R0_INTEGRATION.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_R0_INTEGRATION.md",
+      "sha256": "6bcc79caf4db4cbf351a7f28716edbd456800d605216df5ce5f9f2fce054e7d1",
+      "archive_sha256": "6bcc79caf4db4cbf351a7f28716edbd456800d605216df5ce5f9f2fce054e7d1",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V33_S1_OBJECT_AWARE_GS.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_S1_OBJECT_AWARE_GS.md",
+      "sha256": "d43a27d66e4954469719692c1b69203443235a8ff170ae66b5f6afca75d075f6",
+      "archive_sha256": "d43a27d66e4954469719692c1b69203443235a8ff170ae66b5f6afca75d075f6",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V33_S2_ROADPATCH_INPAINT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_S2_ROADPATCH_INPAINT.md",
+      "sha256": "1ebc665d0a7621960c5c6c72f9b5f50df7731d0b175709d1b24fb7e589752b45",
+      "archive_sha256": "1ebc665d0a7621960c5c6c72f9b5f50df7731d0b175709d1b24fb7e589752b45",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V33_S3_ASSET_VIEW_SELECTION.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_S3_ASSET_VIEW_SELECTION.md",
+      "sha256": "1ddff21e22e6f155571f5d88405b1a1fdfc4158fb46c567590acf36fc601f52c",
+      "archive_sha256": "1ddff21e22e6f155571f5d88405b1a1fdfc4158fb46c567590acf36fc601f52c",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V33_S4_SPATIAL_DELTA.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_S4_SPATIAL_DELTA.md",
+      "sha256": "c979d1956fe151c72333d1258843272de9f089068404ac40553ed2f841ce4bac",
+      "archive_sha256": "c979d1956fe151c72333d1258843272de9f089068404ac40553ed2f841ce4bac",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V33_S5_SEMANTIC_RENDER.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v2-v3/WS_V33_S5_SEMANTIC_RENDER.md",
+      "sha256": "43a56e50712d26c6dcaad3ae5f80bc7a33a8f634319e8f8673265ab51a1e182a",
+      "archive_sha256": "43a56e50712d26c6dcaad3ae5f80bc7a33a8f634319e8f8673265ab51a1e182a",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V4_B0_BASELINE_AUDIT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v4/WS_V4_B0_BASELINE_AUDIT.md",
+      "sha256": "8d797574f218c5073e53f41da3234a39f5e570f7d26a788a2dad02b8898d70de",
+      "archive_sha256": "8d797574f218c5073e53f41da3234a39f5e570f7d26a788a2dad02b8898d70de",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V4_D0_NUSCENES_COHORT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v4/WS_V4_D0_NUSCENES_COHORT.md",
+      "sha256": "8b4df6aa4d86ad841172d83a5fedddc6f88f198d16f14f9d045d1a358957d41e",
+      "archive_sha256": "8b4df6aa4d86ad841172d83a5fedddc6f88f198d16f14f9d045d1a358957d41e",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V4_LITERATURE_MATRIX.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v4/WS_V4_LITERATURE_MATRIX.md",
+      "sha256": "4b4e215533bf779b2ecfcf011fabaa37bb64761f7353022eb52fd070a66001df",
+      "archive_sha256": "4b4e215533bf779b2ecfcf011fabaa37bb64761f7353022eb52fd070a66001df",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V4_P0_SCOPE.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v4/WS_V4_P0_SCOPE.md",
+      "sha256": "72ced9b3dfdb540ce20e8ecb6d2382c12dc807fb49a207bbef2eac6119a47ab1",
+      "archive_sha256": "642b2e0765c4df762002dcec8d86753bb44932402278c0eeb04fd069482e1b89",
+      "markdown_links_relocated": true
+    },
+    {
+      "old": "docs/WS_V51_M1_UNARY_OBSERVABILITY.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/WS_V51_M1_UNARY_OBSERVABILITY.md",
+      "sha256": "998ba474b74895f039997afd1319e651ebb5c8d1a86498586719a816f4b53bb5",
+      "archive_sha256": "998ba474b74895f039997afd1319e651ebb5c8d1a86498586719a816f4b53bb5",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V51_P0_SCOPE_AND_ROLES.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/WS_V51_P0_SCOPE_AND_ROLES.md",
+      "sha256": "fd37a70358f12de9cd8285e256ca2585085296a06da5642cbeb362507b4590ed",
+      "archive_sha256": "fd37a70358f12de9cd8285e256ca2585085296a06da5642cbeb362507b4590ed",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V51_STAGE_A_SCREENING_FREEZE.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/WS_V51_STAGE_A_SCREENING_FREEZE.md",
+      "sha256": "425b8ff0f48b4ed53822d56bc767c8bd1d58be7225af50b105d8671904367c72",
+      "archive_sha256": "425b8ff0f48b4ed53822d56bc767c8bd1d58be7225af50b105d8671904367c72",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V51_STAGE_B_FREEZE_PROPOSAL.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/WS_V51_STAGE_B_FREEZE_PROPOSAL.md",
+      "sha256": "b3f32e32b9f7d90e46706635a50e1ffd3589d85c4f2264a211f3f9ce124bcef9",
+      "archive_sha256": "b3f32e32b9f7d90e46706635a50e1ffd3589d85c4f2264a211f3f9ce124bcef9",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V51_STAGE_B_PREFLIGHT.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/WS_V51_STAGE_B_PREFLIGHT.md",
+      "sha256": "03f850af982dd76924d9ddbba20781478303f1c92d5171733f7c3e5d2a812b1b",
+      "archive_sha256": "03f850af982dd76924d9ddbba20781478303f1c92d5171733f7c3e5d2a812b1b",
+      "markdown_links_relocated": false
+    },
+    {
+      "old": "docs/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md",
+      "new": "docs/archive/2026-09/root-docs-20260906/v5/WS_V5_M1_FORMAL_BASE_UNARY_DIAGNOSTIC.md",
+      "sha256": "a018a49010e3780daa2bac20fe0ca06a094cf9c5e9ce62cad329c29028bcc6b6",
+      "archive_sha256": "5e49b21664d017d2a5254087eecb9d7f8bc8160d2d0a1e33252a492104b6595f",
+      "markdown_links_relocated": true
+    }
+  ],
+  "translation": [
+    {
+      "new": "docs/paper/main_zh.md",
+      "sha256": "a459b9c938cd4f6a9dc086278348c43d59fca9805caa9f36d677e7fe078d4004"
+    },
+    {
+      "new": "docs/paper/main_zh_reading_package.zip",
+      "sha256": "7083fd074324eeca3271183045f9ae34574b73c06abb1653a8bb7893b35a16d5"
+    },
+    {
+      "new": "docs/paper/main_zh_assets/fig1_overview.png",
+      "sha256": "58351e4a9f77e2399f8a8c04f633376af864dd12eecdd1e967b40dfb00166c4a"
+    },
+    {
+      "new": "docs/paper/main_zh_assets/fig2_set_expansion.png",
+      "sha256": "9a6e6f333a0d2f917e8e0b876072d3e6632b8f5c8b4311db48ca4f984f35db26"
+    },
+    {
+      "new": "docs/paper/main_zh_assets/fig3_attenuation.png",
+      "sha256": "b45ebd25328d10398d0e5eb3ac2b3345921a479a606088f49d088d44da580f04"
+    }
+  ]
+}

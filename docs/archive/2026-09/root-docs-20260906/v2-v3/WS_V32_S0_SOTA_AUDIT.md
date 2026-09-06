@@ -5,7 +5,7 @@
 - 状态：`done`
 - 项目基线：`d91e80eea33a1bf8b6596d2357ee0ccf357691cc`
 - 当前分支：`research/worldsim-v3.2-semantic-repair`
-- 事实配置：[`../configs/worldsim_v32/s0_sources_v1.yaml`](../configs/worldsim_v32/s0_sources_v1.yaml)
+- 事实配置：[`../configs/worldsim_v32/s0_sources_v1.yaml`](../../../../../configs/worldsim_v32/s0_sources_v1.yaml)
 - 下一授权：仅 `WS-V32-S1-SEMANTIC-LIFT-01`
 
 ## 1. V3.1 冻结边界

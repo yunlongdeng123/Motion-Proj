@@ -398,9 +398,9 @@ registry；整数/低比特量化和 LOD 是在该最低集之上的独立实验
 清空上下文或换实例后，依次读取：
 
 1. `AGENTS.md`；
-2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)；
-3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；
-4. [`EXPERIMENTS.md`](EXPERIMENTS.md)；
+2. [`RESEARCH_STATUS.md`](../../../../RESEARCH_STATUS.md)；
+3. [`RESEARCH_FAILURES.md`](../../../../RESEARCH_FAILURES.md)；
+4. [`EXPERIMENTS.md`](../../../../EXPERIMENTS.md)；
 5. 本计划；
 6. 当前 task 的 formal run terminal、Git status 和资源状态。
 

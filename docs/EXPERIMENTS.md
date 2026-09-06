@@ -1,5 +1,13 @@
 # Experiments
 
+## 文档归档与中文阅读稿迁移 — docs only（2026-09-06）
+
+- base commit=`ec9c2e08`；new runs=0、new target reads=0、GPU=0。
+- 77 份历史根层文档归档，18 份机器引用兼容文件和 8 份链接依赖原位保留；冻结证据与旧归档不改写。
+- 中文 main、三张图和 ZIP 移至 `docs/paper/`，内容保持原字节；英文构建路径不变。
+- failure_ledger_delta=`V71-F53`：修正首页 V6 与 docs 索引 V5.2 的过期当前授权；无实验因此启动。
+- evidence=`docs/archive/2026-09/root-docs-20260906/MANIFEST.json`；仅调整导航，不改变实验结论。
+
 ## V7.1 paper evidence audit — writing only（2026-09-05）
 
 - scientific base=`1913ab0e`；new runs=0、new target reads=0、GPU=0；只读现有 docs、代码、canonical summaries。
@@ -11349,7 +11357,7 @@ P81共有9,559 rows/735 events，query vs Actor event reduction=`54.39%`且scene
 - 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
 - V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
-- V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](archive/2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
   [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 

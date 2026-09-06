@@ -1,91 +1,28 @@
 # Motion-Proj 文档导航
 
-- 更新时间：2026-08-20
-- 当前路线：`WorldSim V5.2 / M123 causal bridge + autoresearch`，分支=`research/worldsim-v5.2.1-base-badcase-census`
-- 当前授权：`WS-V52-R0..R7 pending`；允许按
-  [`WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md`](WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md) 单卡无人值守执行一晚，
-  但必须先通过 Base Validity/causal bridge，fresh validation/test/KITTI 与 Stage H/BKI 继续锁定
-- V5.2.1 人工归因：[`WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md`](WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md)，
-  `9 BASE_FAILURE + 8 M123_ELIGIBLE + 1 unresolved`，回测 manifest=`run_manifests/worldsim-v5.2.1-human-review-attribution-v1/`
-- V5.1 终局归档：[`archive/2026-08/worldsim-v51-m1-closeout/`](archive/2026-08/worldsim-v51-m1-closeout/README.md)
-- V5.1 执行登记：[`WORLDSIM_V5_1_M1_PLAN.md`](WORLDSIM_V5_1_M1_PLAN.md)
-- V5 计划：[`WORLDSIM_V5_STRUCTDELTA_PLAN.md`](WORLDSIM_V5_STRUCTDELTA_PLAN.md)
-- KITTI archive/adapter：[`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)、[`KITTI_TRACKING_ADAPTER_SMOKE_V5.md`](KITTI_TRACKING_ADAPTER_SMOKE_V5.md)，状态=`done`；0001 缺失 LiDAR `177–180` 以 abstain 保留
-- 最新关闭路线：`WorldSim V4 / EviDelta-GS`
-- V4 终态：`M1 rejected / M2 done with geometry caveat / M3 confirmed`
-- V4 当前执行授权：`none_v4_closed`
-- V4 终局归档：[`archive/2026-08/worldsim-v4-final/`](archive/2026-08/worldsim-v4-final/README.md)
-- 技术报告附录入口：[`archive/2026-08/worldsim-v4-final/TECHNICAL_REPORT_APPENDIX_INDEX.md`](archive/2026-08/worldsim-v4-final/TECHNICAL_REPORT_APPENDIX_INDEX.md)
-- V4 文档/临时产物清理登记：[`archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md`](archive/2026-08/worldsim-v4-cleanup-2026-08-17/CLEANUP_MANIFEST.md)
+更新：2026-09-06；整理基线：`ec9c2e08`。当前论文主线为 V7.1 EAS。
+研究状态与执行授权只以 [RESEARCH_STATUS.md](RESEARCH_STATUS.md) 为准；本页及历史计划不独立授权实验。
 
-## 恢复顺序
+## 日常阅读
 
-1. [`../AGENTS.md`](../AGENTS.md)：环境、研究连续性和 Git 约定；
-2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：唯一当前状态与执行授权入口；
-3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：跨路线失败、禁止重复项与复开条件；
-4. [`EXPERIMENTS.md`](EXPERIMENTS.md)：canonical run、hash、指标和任务终态；
-5. [`archive/2026-08/worldsim-v51-m1-closeout/`](archive/2026-08/worldsim-v51-m1-closeout/README.md)：V5.1 终局结论、Stage H disposition 与清理证据；
-6. [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：canonical run、冻结资产和数据保留边界；
-7. [`ENVIRONMENT.md`](ENVIRONMENT.md)、[`THIRD_PARTY.md`](THIRD_PARTY.md)、[`MACHINE_MIGRATION.md`](MACHINE_MIGRATION.md)：环境、依赖和恢复事实。
+- [论文阅读入口](paper/README.md)：中文主稿、配图、阅读包及英文 PDF。
+- [中文精翻 main](paper/main_zh.md)：对应 7 页英文主稿，不包含 supplement。
+- [当前研究状态](RESEARCH_STATUS.md)、[统一失败账本](RESEARCH_FAILURES.md)、[实验事实源](EXPERIMENTS.md)。
+- [V7.1 研究综合](WORLDSIM_V71_RESEARCH_SYNTHESIS.md)；论文口径与更正见 [REVISION_NOTES](../paper/REVISION_NOTES.md)。
 
-归档中的“当前任务”“下一步”和 agent 提示词只解释历史，不构成新执行授权。新路线必须先在 `RESEARCH_STATUS.md` 登记分支、task、split 和门禁。
+## 环境与维护
 
-## V4 最终结论
+- [环境说明](ENVIRONMENT.md)、[机器迁移](MACHINE_MIGRATION.md)、[第三方依赖](THIRD_PARTY.md)。
+- [资产保留合同](ARTIFACT_RETENTION.md)：保留历史约束，不视为新的清理授权。
 
-| 模块 | 终态 | 结论边界 |
-|---|---|---|
-| M1 | `rejected` | scene-disjoint validation=`3 evaluable + 3 abstain`，directional support=`0/6` |
-| M2 | `done` | selective routing 有效，但 hole geometry MAE 退化 `+3.3908096237 m` |
-| M3 | `confirmed` | exact-once test=`12 evaluable + 6 abstain`，仅覆盖冻结 nuScenes 18 scenes、三前向相机、2–4 s clips、单 RTX 3090 |
+## 历史材料
 
-V4 的 M2 selective 结论与 geometry caveat 必须成对引用；M3 时序正结果不得覆盖 M1 rejection 或 M2 geometry 失败。V4 已读取的 30 个 nuScenes scene 永久失去后续路线 confirmatory-test 身份。
+- [归档总索引](archive/README.md)：旧计划、审计、报告。
+- [本次归档及旧路径查询](archive/2026-09/root-docs-20260906/README.md)：77 份根层文档按版本归档。
+- [研究凭证说明](autoresearch/README.md)、[运行清单](run_manifests/README.md)：保留原有路径及内容。
 
-## 当前事实源
+根层文件从 112 份减至 35 份：9 份常用入口/基础文档，18 份被代码或冻结配置引用的兼容文件，
+以及 8 份被这些文件或历史索引链接的依赖。保留原位不代表路线仍在推进，详细清单见本次归档索引。
 
-- [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)：当前路线、授权、commit、证据路径和下一步；
-- [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)：仍约束后续路线的负结论；
-- [`EXPERIMENTS.md`](EXPERIMENTS.md)：完整实验台账；
-- [`WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md`](WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md)：V5.2 M1/M2/M3 因果桥、自动门禁与一晚调度；
-- [`WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md`](WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md)：18-case 人工问题归因、数据来源和回测合同；
-- [`archive/2026-08/worldsim-v51-m1-closeout/README.md`](archive/2026-08/worldsim-v51-m1-closeout/README.md)：V5.1 M1 终局结论、证据矩阵和 V5.2 复开门禁；
-- [`KITTI_TRACKING_ARCHIVE_AUDIT_V5.md`](KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)：V5 KITTI 压缩包、frame gate、存储预算和 adapter 阻塞结论；
-- [`KITTI_TRACKING_ARCHIVE_METADATA_V5.json`](KITTI_TRACKING_ARCHIVE_METADATA_V5.json)：逐 archive、split、sequence 和 class/track metadata；
-- [`KITTI_TRACKING_ARCHIVES_V5.sha256`](KITTI_TRACKING_ARCHIVES_V5.sha256)：7 个原始 ZIP 的标准 SHA-256 清单；
-- [`WS_V5_M1_FAILURE_FORENSICS.md`](WS_V5_M1_FAILURE_FORENSICS.md)：V4 M1 rejection 的 V5 retrospective 诊断与缺失证据边界；
-- [`WS_V5_M2_GEOMETRY_FORENSICS.md`](WS_V5_M2_GEOMETRY_FORENSICS.md)：V4 M2 `+3.3908 m` 的 risk saturation、oracle regret 与 denominator 分解；
-- [`WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`](WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md)：V5 M2 r001–r015、逐 actor request 修正、G0–G5 失败链、cross-view coverage 与正式 rejection；
-- [`WS_V5_M3_DEVELOPMENT.md`](WS_V5_M3_DEVELOPMENT.md)：V5 M3 r001–r006 协议、clip inventory、heading measurement 修正、insufficient-signal 与正式 rejection；
-- [`archive/2026-08/worldsim-v5-m2/APPENDIX_INDEX.md`](archive/2026-08/worldsim-v5-m2/APPENDIX_INDEX.md)：M2 技术报告附录与机器元数据入口；
-- [`../configs/worldsim_v5/p0_scope_v1.yaml`](../configs/worldsim_v5/p0_scope_v1.yaml)：V5 P0 科学范围、claim、门禁和授权；
-- [`../configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml`](../configs/worldsim_v5/nuscenes_fresh_cohort_v1.yaml)：fresh 8/8/20 结果前 cohort 合同，当前尚未选择 scenes；
-- [`ARTIFACT_RETENTION.md`](ARTIFACT_RETENTION.md)：驻留/非驻留边界；
-- [`archive/2026-08/worldsim-v4-final/SHA256SUMS`](archive/2026-08/worldsim-v4-final/SHA256SUMS)：V4 终局包完整性。
-
-## 根目录兼容文件
-
-V4 计划、P0/D0/B0/KITTI 审计和更早 V3/V2 计划继续保留在 `docs/` 根目录，原因是冻结 config、run manifest、source snapshot 和历史链接引用原路径。它们是 compatibility copies，不是当前任务入口。
-
-V5 P0、fresh cohort、KITTI archive audit/adapter smoke 与 M1/M2/M3 development 均已收口；M1/M2/M3 最终均为 `rejected`，fresh validation/test 从未读取。KITTI 7 个原始 ZIP、common-frame policy、calibration/OXTS 检查和 2-sequence smoke 均为 `done`，但 KITTI 方法调参从未授权。
-
-## 归档索引
-
-- [WorldSim V5.1 M1 收尾归档](archive/2026-08/worldsim-v51-m1-closeout/README.md)
-- [WorldSim V4 终局归档](archive/2026-08/worldsim-v4-final/README.md)
-- [WorldSim V3.2 终局归档](archive/2026-08/worldsim-v3.2/README.md)
-- [WorldSim V3.1 终局归档](archive/2026-08/worldsim-v3.1/README.md)
-- [2026-08 总归档](archive/2026-08/README.md)
-- [动态重建 V1 终态](archive/2026-07/dynamic-reconstruction-v1/README.md)
-- [2026-07 总归档](archive/2026-07/README.md)
-- [`run_manifests/`](run_manifests/README.md)：早期轻量 manifests。
-
-## 文档规则
-
-- 根目录只维护当前事实源、长期环境/资产文档和 hash/link compatibility copies；
-- 完成、阻塞或拒绝任务后同步更新 STATUS / EXPERIMENTS / FAILURES；
-- `RESEARCH_FAILURES.md` 是唯一活跃 failure ledger；按顶部版本总览和 failure ID 渐进式读取/写入，禁止另建按版本
-  拆分的 failure 事实源；archive 同名文件只作冻结快照；
-- task 状态只使用 `pending/running/blocked/done/rejected`；
-- `blocked`、`rejected`、`abstain` 和 `done` 必须分开，且完整 denominator 不得删除；
-- 正式 run 的 config、manifest、fingerprint、summary、source snapshot 和关键 SHA 必须可追溯；
-- `docs/` 下不保留 `*.bak`、`*.codexbak.*`、编辑器备份或 `codex-backups/` 目录；恢复依赖 Git 历史和 canonical 快照；
-- 人工 verdict 只能由用户或指定评审者填写。
+历史文档的“当前”“下一步”“允许执行”属于当时快照。正文中的旧路径字符串可用归档清单查询。
+本次不删除实验凭证，不改动模型、数据、冻结配置或 run。

@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F53 — 文档首页保留了过期的当前路线与授权（2026-09-06）
+
+- category=`documentation_navigation_stale_authorization`；status=`resolved_navigation`；base commit=`ec9c2e08`。
+- observation：根 README 仍以 V6 为当前路线，docs 索引仍将 V5.2 的旧执行许可写作当前授权，与 V7.1 状态不一致。
+- cause：研究状态已推进，入口索引未同步；历史计划与当前入口混放增加误读风险。
+- exposure：本次仅只读审计及文档整理，无实验启动、GPU 调用或 target 读取，研究结论不受影响。
+- resolution：重写两级导航，中文稿归位；77 份历史文档分类归档，保留 18 份机器兼容文件与 8 份链接依赖。
+- prevention：授权只读 `docs/RESEARCH_STATUS.md`，旧计划仅供追溯；未来移动文件先检查代码引用与冻结证据路径。
+- evidence：`docs/archive/2026-09/root-docs-20260906/MANIFEST.json`；task=`docs-reorganization-20260906`；new runs=0。
+
+下一可用编号：`V71-F54`。下方历史条目的 next-ID 属于当时状态。
+
 ## V71-F52 — M43 描述性 point-surface 汇总覆盖了基线算子计数（2026-09-05）
 
 - category=`evaluation_operator_accounting`；代码与科学证据基线 commit=`1913ab0e`。
