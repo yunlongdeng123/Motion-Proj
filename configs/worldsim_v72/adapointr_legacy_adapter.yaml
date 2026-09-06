@@ -1,0 +1,20 @@
+task_id: WS-V72-P0-G3-DATA-ADAPTER-01
+runs_root: /root/autodl-tmp/runs
+data_role: legacy_diagnostic
+cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train
+output_root: /root/autodl-tmp/data/worldsim_v72/adapointr_legacy_v1
+scene_metadata: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval/scene.json
+maximum_source_actors: 1024
+eligibility: nonempty_v71_completion_candidates
+holdout_stride: 10
+expected_train_actor_count: 593
+expected_holdout_actor_count: 66
+input_point_count: 512
+target_point_count: 4096
+normalization: actor_box_max_half_extent
+target_used_for_input_sampling: false
+pretrained_holdout_exposure: true
+source_test_read: false
+external_test_read: false
+failure_ledger_refs: [V71-F52, V71-F43]
+failure_ledger_delta: none
