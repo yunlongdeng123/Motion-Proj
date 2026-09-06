@@ -255,10 +255,35 @@ def _evaluate(
         scale = float(identity["scale_m"])
         methods = {"G0_raw": canonical, "G1_tsdf": tsdf}
         methods.update({name: values[index] * scale for name, values in predictions.items()})
+        methods["A1_anchored_surface"] = np.concatenate(
+            [tsdf, methods["A1_observation_constrained"]], axis=0
+        )
         moving, displacement = _moving(trajectory)
         for method, native_surface in methods.items():
             for budget in budgets:
-                surface = native_surface if budget is None else deterministic_farthest_point_sample(native_surface, budget)
+                if method == "A1_anchored_surface" and budget is not None:
+                    tsdf_count = int(
+                        round(
+                            float(config["anchored_surface"]["tsdf_fraction_at_matched_budget"])
+                            * budget
+                        )
+                    )
+                    completion_count = int(budget) - tsdf_count
+                    surface = np.concatenate(
+                        [
+                            deterministic_farthest_point_sample(tsdf, tsdf_count),
+                            deterministic_farthest_point_sample(
+                                methods["A1_observation_constrained"], completion_count
+                            ),
+                        ],
+                        axis=0,
+                    )
+                else:
+                    surface = (
+                        native_surface
+                        if budget is None
+                        else deterministic_farthest_point_sample(native_surface, budget)
+                    )
                 metrics = evaluate_point_surface(
                     surface,
                     target,
@@ -406,7 +431,7 @@ def run(config_path: Path, role: str, run_id: str, candidate_checkpoint: Path | 
             "candidate_checkpoint_sha256": _sha256(candidate_checkpoint),
             "actor_count": len(identities),
             "log_count": len({row["log_id"] for row in identities}),
-            "method_count": 4,
+            "method_count": 5,
             "density_budgets": [*config["density_budgets"], "native"],
             "final_train": history[-1] if history else None,
             "metrics": metrics,

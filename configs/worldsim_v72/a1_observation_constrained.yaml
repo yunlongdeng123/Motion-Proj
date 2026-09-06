@@ -28,6 +28,9 @@ ray_supervision:
   lambda_hit: 0.10
   lambda_known_free: 0.10
   rationale: one_initial_scale_relative_to_final_base_surface_loss_no_sweep
+anchored_surface:
+  tsdf_fraction_at_matched_budget: 0.75
+  rationale: preserve_three_quarters_measured_surface_and_reserve_one_quarter_for_completion
 checkpoint_every_epochs: 25
 console_every_epochs: 5
 seed: 7210
