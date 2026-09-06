@@ -1,6 +1,7 @@
 \section{Related Work}
 \paragraph{Point-cloud completion.}
-Object-level completion predicts a denser or more complete surface from partial points.
+Object-level completion predicts a denser or more complete surface from partial points;
+PoinTr provides a strong transformer baseline for this setting~\cite{yu2021pointr}.
 It is a relevant baseline family only when inference remains independent of held-out
 targets and all methods share the same return operator.
 
@@ -10,6 +11,6 @@ equivalent to a point-surface representation and require volume supervision befo
 occupancy claim is justified.
 
 \paragraph{Neural LiDAR simulation.}
-Neural field and ray-tracing systems jointly model geometry, intensity, ray drop, and
+Neural field and ray-tracing systems such as LiDAR4D~\cite{huang2023lidar4d} jointly model geometry, intensity, ray drop, and
 visibility. They provide a broader route, but typically require scene-specific training,
 tracked dynamic objects, compiled CUDA operators, and substantially more compute.

@@ -1,49 +1,55 @@
 \section{Experiments}
-The D0 matrix compares raw fusion, deterministic geometric completion, the legacy
-learned model, and an external point-completion model under matched input points,
-density budgets, query rays, return operator, and target-free inference. Geometry,
-conditional return, full return, system cost, and failure-state metrics are reported
-separately.
+\paragraph{Protocol.}
+Historically exposed Actors are used only for D0 diagnostics and training. Four
+dependency-chain-isolated nuScenes logs form development; three further logs are frozen
+for route selection and three remain unopened source-test candidates. We selectively
+extract 3,882 official keyframe scans and materialize 501 development Actors with
+641,930 held-out rays. All surface predictions are target-free. The D1 rule, fixed
+before development quality is read, requires either a 5\% relative CD reduction or a
+2-point F-score gain over the strongest baseline, an early-return increase no larger
+than one point, and a hit-recall loss no larger than one point.
 
-Data roles are disjoint at the log level wherever the available metadata permits. All
-historically exposed cohorts remain diagnostic. Source and external tests stay frozen
-until the route and configuration are locked. Table values are populated only from
-formal run artifacts; the current route decision is \RouteDecision.
+\paragraph{D0 baselines.}
+On the exposed diagnostic cohort, raw fusion and Actor-local TSDF form a non-dominated
+simple frontier. AdaPoinTr benefits substantially from official pretraining relative to
+training from scratch, but remains behind that frontier at every fixed 64--512 point
+budget. A scalar return-weight head recovers nearly all benefit of the capacity-matched
+F/O/U head, while F/O/U auxiliary supervision does not improve consistently across
+geometries. These results close the broad three-state representation claim and motivate
+only the narrower observation-constraint test.
 
-\paragraph{D0 geometry matrix.}
-On an exposed legacy cohort, increasing the raw-fusion surface density improved geometric
-coverage while substantially increasing literal early returns; hit recall reached a
-plateau before the native density. A matched Actor-local TSDF sweep traded geometry and
-return consistency against raw fusion: it improved CD and hit at 512 points with a small
-early-return increase, while at 256 points it reduced early returns and improved hit at a
-small CD cost. The two deterministic methods therefore form a non-dominated simple-baseline
-frontier. The legacy learned surface reduced early returns but paid a large geometry and
-hit-recall cost. AdaPoinTr transferred substantially better after 600-epoch adaptation than
-from scratch, while its official PCN checkpoint failed zero-shot under the driving-actor
-normalization. At every fixed 64--512 point budget, however, the adapted model remained
-behind the deterministic frontier; its best native CD used 4096 output points and therefore
-cannot substitute for the density-matched result. These diagnostic findings motivate the
-W0--W4 return-weight study, but do not select a route because the cohort is historically
-exposed and no source or external test has been read.
+\begin{table}[t]
+  \centering
+  \caption{Clean development results under the 512-point cap. Native surfaces with
+  fewer points are not duplicated; their mean realized size is reported.}
+  \label{tab:d1-dev}
+  \small
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{lrrrrr}
+    \toprule
+    Method & Pts. & CD$\downarrow$ & F$\uparrow$ & Early$\downarrow$ & Hit$\uparrow$ \\
+    \midrule
+    Raw fusion & 266 & .1857 & .7439 & .4091 & .5237 \\
+    Actor TSDF & 401 & \textbf{.1786} & \textbf{.7503} & .4115 & \textbf{.5497} \\
+    AdaPoinTr & 512 & .2292 & .6344 & .4332 & .4910 \\
+    Obs.-constrained & 512 & .2298 & .6326 & .4290 & .4929 \\
+    Anchored candidate & 449 & .1950 & .7145 & .4393 & .5222 \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
 
-\paragraph{D0 return-weight controls.}
-With G0 and G2 geometry frozen, a scalar weight head and an approximately
-capacity-matched F/O/U head produced nearly identical response-only results. The scalar
-head consistently improved hit recall and conditional depth error over unit weights, but
-also increased early returns. Adding F/O/U auxiliary supervision yielded a small joint
-early/hit improvement on G0 and degraded both metrics relative to the response-only head
-on G2. Fixed support and density/opportunity rules were likewise geometry dependent.
-Accordingly, the diagnostic evidence supports a narrower hit--early trade-off problem,
-while it does not support a general need for a three-state representation. Route selection
-still requires clean development data and a runnable full-LiDAR baseline.
+\paragraph{D1 result.}
+Table~\ref{tab:d1-dev} reports the clean gate. Relative to Actor TSDF, the anchored
+candidate changes CD by $+9.17\%$, F-score by $-3.58$ points, early returns by $+2.79$
+points, and hit recall by $-2.76$ points. Thus neither primary-effect path nor either
+side-effect guard passes. The unanchored candidate reduces early returns by only 0.43
+points and raises hit recall by 0.18 points relative to AdaPoinTr while slightly reducing
+geometric quality.
 
-\paragraph{Full-LiDAR capability boundary.}
-We executed the official LiDAR4D pipeline on KITTI-360 sequence 00, frames
-4950--5000, including 30k nominal training iterations, the 1000-step ray-drop
-refinement, final evaluation, and scan export. On the four official held-out
-frames, the refined model obtained ray-drop F1 $0.9553$, depth RMSE $2.9472$~m,
-and point-cloud CD/F-score $0.1173/0.9208$. The run took 8791.6 seconds on one
-RTX~3090 and peaked at 22506~MiB. This establishes that the full-return route is
-executable with native data and CUDA operators. It is not a matched comparison
-with the actor-completion diagnostic, and therefore does not select the route;
-clean development data remain required.
+\paragraph{Full-LiDAR boundary.}
+The official LiDAR4D run on KITTI-360 frames 4950--5000 completes 30k nominal training
+iterations, 1000 ray-drop refinement steps, evaluation, and scan export. It obtains
+ray-drop F1 .9553, depth RMSE 2.9472\,m, and point CD/F-score .1173/.9208 in 8791.6
+seconds on one RTX~3090. This supports complete-LiDAR capability but supplies no matched
+method gain for D1. The frozen decision is therefore \RouteDecision; route-selection and
+final roles remain unread.

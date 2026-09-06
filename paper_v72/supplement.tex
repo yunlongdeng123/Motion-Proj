@@ -3,19 +3,48 @@
 \input{preamble}
 \input{results/results_macros}
 \usepackage[breaklinks,colorlinks,allcolors=blue]{hyperref}
-\title{Task-First Dynamic LiDAR World Simulation: Supplementary Material}
+\title{A Task-First Audit of Dynamic LiDAR World Simulation: Supplementary Material}
 \author{Anonymous Authors}
 \begin{document}
 \maketitle
 \section{Data and Evaluation Protocol}
-The supplement is intentionally result-gated. It will document the frozen data roles,
-target-free inference contract, return-state definitions, baseline configurations, and
-failure-ledger references after the D0 route gate is completed.
+The clean split is selected from dependency-chain-unexposed nuScenes logs using metadata
+only: four development logs, three route-selection logs, and three unopened source-test
+candidates. Selective archive I/O materializes 3,882 development and route-selection
+keyframe scans (2,695,516,800 bytes). Only development is compiled and evaluated after
+the gate is frozen. It contains 65 scenes, 501 Actors, 2,059,365 build points, and
+641,930 held-out positive-return rays. Actor bundles preserve point/ray provenance,
+intensity, ring, time, and poses; target arrays are stored separately.
+
+\section{Formal Runs}
+The AdaPoinTr transfer baseline uses the official PCN checkpoint, followed by 600 epochs
+of legacy adaptation. A1 starts from that frozen checkpoint and runs 100 additional
+epochs with surface, hit, and known-free losses. Its checkpoint SHA-256 is
+\texttt{d489e2bb...e2d7}; the full digest is retained in the run manifest.
+The clean development evaluator compares raw fusion, Actor TSDF, adapted AdaPoinTr,
+unanchored A1, and the fixed anchored output at 64, 128, 256, 512, and native budgets.
+Every run records a resolved configuration, manifest, status, Actor and log rows,
+aggregate summary, resource use, data roles, and failure-ledger references.
+
+\section{D1 Gate}
+At the 512-point cap, Actor TSDF and the anchored candidate obtain CD
+.178599/.194976, F-score .750319/.714542, early rate .411462/.439344, and hit recall
+.549722/.522150. The candidate therefore misses both primary-effect alternatives and
+both side-effect limits. The mechanical result is
+\texttt{decision=close\_method\_claim}. Route selection, source test, and external test
+remain unread, and no P3/P4 experiment is authorized.
+
+\section{Failure and Scope Boundary}
+\texttt{V71-F62} records the recoverable clean-data payload assumption; selective
+official-archive extraction resolves it without changing the split. \texttt{V71-F63}
+records the scientific D1 rejection. The latter is not repaired with an anchor-fraction,
+loss-weight, density, or threshold sweep. LiDAR4D demonstrates full-scan capability on
+its native KITTI-360 protocol, but its absolute numbers are not compared with the Actor
+task.
+
 \section{Reproducibility Checklist}
-Every reported run must include a resolved configuration, manifest, fingerprint,
-machine-readable actor records, aggregate summary, and explicit data-role declaration.
-{\small
-\bibliographystyle{ieeenat_fullname}
-\bibliography{bibliography}
-}
+The final role state is: legacy diagnostic and clean development read; route selection,
+source test, and external test unread. Data, method, and metric artifacts are linked in
+\texttt{docs/WORLDSIM\_V7\_2\_D1\_NEGATIVE\_CLOSEOUT.md}. The main paper and this
+supplement describe a negative technical report rather than a submission-ready method.
 \end{document}

@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F63 — A1 观测约束补全未越过干净 dev 的 G1 TSDF 前沿（2026-09-07）
+
+- category=`scientific_route_rejection`；status=`closed_by_preregistered_d1_stop_rule`；task=`WS-V72-D1-A-DEV-GATE-01`。
+- run=`run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1`；data=4 个全依赖链隔离 dev logs、501 Actors、641,930 held-out rays；冻结 density cap=`512`。
+- observation：G1 TSDF 的 CD/F-score/early/hit=`.178599m/.750319/.411462/.549722`，A1 anchored=`.194976m/.714542/.439344/.522150`。候选的 relative CD reduction=`-9.169%`、absolute F gain=`-3.578pp`、early delta=`+2.788pp`、hit delta=`-2.757pp`；主效应与两项副作用均失败。纯 A1 相对 G3 只有 early `-.427pp`、hit `+.184pp` 的小变化，同时 CD/F-score 略退化。
+- cause boundary：观测 hit/free loss 在训练目标上收敛，但没有产生优于简单 build-only TSDF 的表面；75% TSDF anchor 能恢复部分几何，却仍同时损失完整性、early 和 hit。结果拒绝当前 A1 候选及其几何贡献，不证明所有对象补全或所有观测约束方法无效。
+- route consequence：路线 B 只有 LiDAR4D 公共场景 capability，没有冻结规则要求的 matched-protocol method gain，故 D1 route A/B 均不通过，decision=`close_method_claim`。route-select、source-test、external-test、P3、P4 不解锁。
+- prevention：不得在同一 dev 上扫描 anchor fraction、loss weight、密度、阈值或追加第三路线；任何新结构必须作为新版本重新定义问题并建立新的依赖链隔离证据，不能把本次称为“几乎通过”。
+- evidence=`.../D1_DEV_GATE.json`、`docs/WORLDSIM_V7_2_D1_NEGATIVE_CLOSEOUT.md`；source/external final read=false。
+
+下一可用统一失败编号：`V71-F64`。
+
 ## V71-F62 — clean split 物化假定 metadata-only 日志的 keyframe 已在 raw root（2026-09-07）
 
 - category=`clean_data_io_availability`；status=`resolved_selective_official_archive_extraction`；task=`WS-V72-P2-CLEAN-ACTOR-DATA-01`。

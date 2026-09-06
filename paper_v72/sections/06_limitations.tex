@@ -1,6 +1,9 @@
 \section{Limitations}
-The current source archive contains few unexposed logs, and all locally materialized AV2
-validation logs have prior experimental exposure. The first D0 results are therefore
-diagnostic rather than final. Object-level completion also cannot support volumetric
-occupancy claims without free/occupied volume supervision. Route B has a higher data and
-compute burden and may require scene-specific optimization.
+Only four fully isolated source logs are available for development, so uncertainty
+across driving domains is not resolved. We intentionally do not read the three
+route-selection logs or source-test candidates after the development failure. The
+object task contains positive held-out returns and measured pre-hit free samples, but it
+does not support a full volumetric occupancy claim. LiDAR4D is evaluated on its native
+KITTI-360 protocol; its absolute metrics are not comparable with the object table. The
+study therefore validates the audit, data, and baseline infrastructure while providing
+no competitive method, application, generalization, occupancy, or safety claim.

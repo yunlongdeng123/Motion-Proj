@@ -1,5 +1,17 @@
 # Research Status
 
+## WorldSim V7.2 D1 负向收口：当前方法主张关闭（2026-09-07）
+
+实现／冻结 commits=`1e496ca6,a05dbb2a`；正式证据 paths 见本节 run URI 与 `docs/WORLDSIM_V7_2_D1_NEGATIVE_CLOSEOUT.md`。
+
+V7.2 已完成任务定义、数据隔离、强简单基线、外部补全基线、完整 LiDAR4D 能力运行、干净 dev 数据物化与预注册 D1 判定。干净数据 I/O canonical=`run://worldsim_v72/WS-V72-P2-CLEAN-LIDAR-IO-01/20260906T222500Z__clean-dev-route-lidar-io-r1`，从官方十个 nuScenes blob 分卷选择性提取 4 dev + 3 route-select 日志所需的 3,882 个 keyframe LiDAR，共 `2,695,516,800` bytes；source-test candidates 未提取。dev builder canonical=`run://worldsim_v72/WS-V72-P2-CLEAN-ACTOR-DATA-01/20260906T225000Z__clean-dev-actor-v2-s0-r2`，物化 65 scenes / 501 Actors / 641,930 held-out rays，其中 246 hazardous Actors。输入 bundle、独立 targets、AdaPoinTr adapter 与 TSDF surface 均已落盘，source/external final read=false。
+
+A1 从冻结 AdaPoinTr transfer checkpoint 做 100 epochs 观测约束微调，canonical=`run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-TRAIN-01/20260906T223000Z__a1-observation-train-s7210-r1`，final loss/surface/hit/free=`.056209/.055098/.002022/.009084`，wall=`715.21s`、峰值 GPU=`5.94GiB`。冻结 checkpoint SHA-256=`d489e2bb...e2d7`。dev canonical=`run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1`，501 Actors 全部完成，wall=`1498.27s`。
+
+预注册 512-point-cap 比较中，最强简单基线 G1 TSDF 的 CD/F-score/early/hit=`.17860m/.75032/.41146/.54972`；主候选 A1 anchored 为 `.19498m/.71454/.43934/.52215`。候选相对 G1 的 CD reduction=`-9.17%`、F-score gain=`-3.58pp`、early delta=`+2.79pp`、hit delta=`-2.76pp`，主效应和两项副作用均未通过。纯 A1 相对 G3 只把 early 降低 `.43pp`、hit 提高 `.18pp`，同时 CD/F-score 略退化，不能构成几何贡献。D1 artifact=`.../D1_DEV_GATE.json` 给出 `decision=close_method_claim`。
+
+路线 B 的 LiDAR4D 只通过公共 KITTI-360 capability，不具备冻结规则要求的同协议方法增益，因此 `route_b_pass=false`。按预注册 both-fail stop rule，route-select、source-test、external-test、P3 与 P4 均不解锁；不再做结构 fallback、权重 sweep 或第三路线。V7.2 以可证伪诊断和基线技术报告结束，状态=`completed_negative_not_paper_ready`。详细收口=`docs/WORLDSIM_V7_2_D1_NEGATIVE_CLOSEOUT.md`；统一失败=`V71-F63`。TinyTeX 构建 main/supplement/arXiv=`3/1/3` pages、`110902/49107/110775` bytes，无 overfull、undefined reference/citation；4 页 main+supp 全页渲染检查通过。下一步仅做提交、clean-tree 检查与授权关机。
+
 ## WorldSim V7.2 clean dev / route-select 日志冻结（2026-09-07）
 
 `WS-V72-P2-CLEAN-SPLIT-FREEZE-01` 只依据 P0 metadata-only candidate pool，按日志 token 字典序冻结 nuScenes 的 4 个 dev 与 3 个 route-select 日志；余下 3 个仍只作为未打开的 source-test candidates。选择过程没有读取点云质量、Actor 数量或历史结果，相邻 scenes 不扩大独立分母。

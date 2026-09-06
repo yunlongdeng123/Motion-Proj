@@ -407,7 +407,7 @@ D0 几何部分已在同一 66-Actor / 34-log `legacy_diagnostic` cohort 上完�
 
 第 9.2 节也已完成：G0/G2 使用同一 categorical reader 比较 W0 单位权重、W1 build support、W2 密度／采样机会归一化、W3 单标量、W4 三态 response-only 与 W4 三态辅助监督。W3 与 W4 response-only 基本等价；F/O/U 辅助只在 G0 小幅改善，在 G2 同时恶化 early 与 hit，未形成跨几何稳定增量。单标量在两种几何上都改善 hit／深度误差，但付出小幅 early 代价。完整结果见 `docs/WORLDSIM_V7_2_D0_WEIGHT_RESULTS.md`。
 
-因此 D0 的 legacy 机制筛选完成，原“普遍三态表征缺陷”主张关闭；更窄且仍有效的问题是观测约束下的 hit--early 权衡。该证据仍不触发 D1：干净 dev/route-select 数据尚缺；路线 B 的 LiDAR4D 原生 capability 已完成，见第 10B.1 节。`source_test` 与 `external_test` 保持未读。
+因此 D0 的 legacy 机制筛选完成，原“普遍三态表征缺陷”主张关闭；更窄的问题是观测约束下的 hit--early 权衡。此后已完成干净 dev I/O、501-Actor 物化、A1 训练与 D1 评测。D1 没有支持 A1，最终状态见第 11.1 节；`route_select`、`source_test` 与 `external_test` 均保持未读。
 
 ---
 
@@ -476,6 +476,12 @@ L_A=L_{\text{surface}}+\lambda_{\text{free}}L_{\text{known-free}}
 ### A 若失败
 
 先问强基线是否有足够性能、标签是否可信、目标表面是否可辨识。只允许一项基于 D0 证据的结构替代（例如从点集换成有局部证据的公开占据基座）。不允许依次试全局 SDF、球体、圆盘、再路由到 UNKNOWN。
+
+### 10A.1 A1 当前结果（2026-09-07）
+
+A1 使用冻结的 AdaPoinTr transfer checkpoint、100 epochs 与单一 `lambda_hit=lambda_free=.1` 配方完成训练；主读出在读取 dev quality 前固定为 75% measured TSDF + 25% learned completion。clean dev 包含 4 个全依赖链隔离日志、65 scenes、501 Actors 与 641,930 held-out rays。
+
+在 512-point cap 下，G1 TSDF 的 CD/F-score/early/hit=`.17860m/.75032/.41146/.54972`，A1 anchored=`.19498m/.71454/.43934/.52215`。候选相对 G1 的 CD reduction=`-9.17%`、F-score gain=`-3.58pp`、early delta=`+2.79pp`、hit delta=`-2.76pp`，预注册主效应与副作用门均失败。纯 A1 相对 G3 只有很小的 early/hit 权衡，同时 CD/F-score 略退化。按停止线不执行结构 fallback，也不扫 anchor fraction、loss 或密度。完整结果见 `docs/WORLDSIM_V7_2_D1_NEGATIVE_CLOSEOUT.md`。
 
 ---
 
@@ -574,9 +580,17 @@ p(o,d,a\mid B,\xi)=p(o\mid B,\xi)\,p(d,a\mid o=1,B,\xi).
 
 **不能因为某方案在 5 个指标中 4 个过线就叫成功，也不能因一个次要指标少 0.001 就自动改出下一模型。** 主任务效果、重要副作用和不确定性整体判读；门槛不随 test 结果改动。
 
+## 11.1 D1 最终结果（2026-09-07）
+
+机械 gate artifact=`/root/autodl-tmp/runs/worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1/D1_DEV_GATE.json`，结果为 `dev_pass=false`、`route_a_pass=false`、`route_b_pass=false`、`decision=close_method_claim`。路线 A 的失败来自同协议干净 dev；路线 B 只有 LiDAR4D capability，没有规则要求的 matched-protocol method gain，不能借不同任务的绝对指标晋级。
+
+按事前 `both_fail` 分支，route-select、source-test、external-test、P3 与 P4 不解锁，当前方法主张关闭。V7.2 交付诊断基线技术报告，不继续第三路线或救援 sweep。统一失败条目=`V71-F63`。
+
 ---
 
 # 12. 阶段 P3：选定主路线后再做的核心消融
+
+**当前状态：未解锁。** D1 已在 clean dev 关闭方法主张，因此下列矩阵保留为未来版本设计，不在 V7.2 执行。
 
 只保留下列能解释最终方法的对照，不做全排列。
 
@@ -611,6 +625,8 @@ DynamicVGGT／Gau-Occ 输出可作为扩展，但不同模态、可用先验和�
 ---
 
 # 13. 阶段 P4：鲁棒性与完整应用，而不是堆新头
+
+**当前状态：未解锁。** 没有通过 D1 的主候选，故不消费 route/source final 证据来完成应用包装。
 
 ## 13.1 固定的三类压力测试
 
@@ -1065,6 +1081,12 @@ V7.2 只有满足下列证据条件，才叫“面向投稿的研究闭环”：
 不要求所有压力测试都赢、不要求未观测世界完美重建、不要求零样本全面成功。需要的是**所选任务中一个清楚、有竞争力、经独立验证的贡献**。
 
 如果这些条件未达成，照实交付技术报告和失败范围，不能用“所有任务都跑完了”替代 paper-ready。
+
+## 22.1 当前完成判定（2026-09-07）
+
+V7.2 已完成全部在 D1 前必做的任务、正式运行与一致性收口；D1 的预注册停止线关闭 A/B 方法主张，因此后续条件 1、2、5 不成立且 P3/P4/final roles 不解锁。最终交付类型为 `completed_negative_not_paper_ready`，不是“面向投稿的研究闭环”。可复用成果是任务与数据合同、clean I/O、统一 evaluator、强基线图谱和完整失败边界；当前没有可继续执行而又符合本计划的实验。
+
+负向 main/supplement/arXiv 已构建为 `3/1/3` pages，日志无 overfull 或 undefined reference/citation，全页渲染检查通过。该构建证明交付可读，不改变未达到投稿标准的科学结论。
 
 ---
 

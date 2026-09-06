@@ -1,5 +1,33 @@
 # Experiments
 
+## WorldSim V7.2 negative report build — completed（2026-09-07）
+
+- `paper_v72/main.pdf=3 pages / 110,902 bytes`；`supplement.pdf=1 page / 49,107 bytes`；`arxiv.pdf=3 pages / 110,775 bytes`；
+- TinyTeX `latexmk` 独立构建；overfull/undefined reference/undefined citation=`0/0/0`；main 3 页与 supplement 1 页全页渲染检查通过；
+- 文稿明确 `completed_negative_not_paper_ready`，没有把未解锁的 P3/P4/application/source-test 写成已完成；new scientific read=0；failure_ledger_delta=none。
+
+## WS-V72-D1-A-DEV-GATE-01 — completed / rejected（2026-09-07）
+
+- train canonical=`run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-TRAIN-01/20260906T223000Z__a1-observation-train-s7210-r1`；100 epochs；seed=`7210`；checkpoint SHA-256=`d489e2bb...e2d7`；wall=`715.21s`；peak GPU=`5.94GiB`；
+- dev canonical=`run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1`；501 Actors / 4 logs / 641,930 rays；matched cap=`512`；wall=`1498.27s`；
+- G1 TSDF CD/F/early/hit=`.178599/.750319/.411462/.549722`；A1 anchored=`.194976/.714542/.439344/.522150`；CD reduction=`-9.169%`、F gain=`-3.578pp`、early delta=`+2.788pp`、hit delta=`-2.757pp`；
+- pure A1 相对 G3：CD `+.000597m`、F `-.185pp`、early `-.427pp`、hit `+.184pp`，只形成很小回波权衡，不支持几何增益；
+- gate=`false`；decision=`close_method_claim`；route A/B pass=`false/false`；route-select/source-test/external-test read=`false/false/false`；P3/P4 unlocked=`false/false`；
+- D1 evidence=`D1_DEV_GATE.json`；failure_ledger_delta=`V71-F63`；报告=`docs/WORLDSIM_V7_2_D1_NEGATIVE_CLOSEOUT.md`。
+
+## WS-V72-P2-CLEAN-ACTOR-DATA-01 — dev completed（2026-09-07）
+
+- canonical=`run://worldsim_v72/WS-V72-P2-CLEAN-ACTOR-DATA-01/20260906T225000Z__clean-dev-actor-v2-s0-r2`；65 scenes / 501 Actors / 4 logs；hazard Actors=`246`；
+- build points=`2,059,365`；held-out query rays=`641,930`；fingerprint=`1a64f864c665a277ff21571908f5b73622e282ab74c1af70377b2ceb62d953ec`；
+- artifacts=target-free ActorBundleV2、独立 target、AdaPoinTr adapter、build-only TSDF；CUDA builder wall=`429.78s`、peak GPU=`.047GiB`；
+- failed r1 的缺 payload 问题见 `V71-F62`；r2 failure_ledger_delta=none；source/external final read=false。
+
+## WS-V72-P2-CLEAN-LIDAR-IO-01 — completed（2026-09-07）
+
+- canonical=`run://worldsim_v72/WS-V72-P2-CLEAN-LIDAR-IO-01/20260906T222500Z__clean-dev-route-lidar-io-r1`；4 dev + 3 route-select logs / 96 scenes；
+- 从官方十个 nuScenes trainval blob 分卷定位并原子提取 3,882/3,882 keyframe LiDAR，bytes=`2,695,516,800`，实际命中 shards=`04--09`；wall=`3534.41s`；
+- quality/source-test/external-test read=`false/false/false`；3 个 source-test candidates 未提取；failure_ledger_delta=none。
+
 ## WS-V72-P2-CLEAN-SPLIT-FREEZE-01 — completed（2026-09-07）
 
 - dataset=nuScenes；split unit=driving log；selection=metadata-only lexicographic log token；quality/history read=false；

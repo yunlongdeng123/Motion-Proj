@@ -1,16 +1,26 @@
-\section{Method}
+\section{Methods Under Audit}
 \subsection{Evidence Bundle}
-The versioned actor bundle stores normalized build points, per-point evidence and
-provenance, actor transforms, and target-free query rays. Targets live in separate
-structures so code can enforce the inference boundary.
+The versioned Actor bundle stores build points, ray origins and directions, timestamps,
+sensor and ring identifiers, intensity validity, Actor and sensor poses, and local
+evidence. Query targets are stored separately. Code-level role gates prevent source and
+external tests from being opened before selection.
 
 \subsection{Shared Surface-to-Return Operator}
-Every object-level baseline outputs a candidate surface. A common operator intersects
-query rays with that surface, applies the same support and censoring rules, and exposes
-the same outcome vocabulary. This keeps the comparison focused on the predicted surface.
+Each object method outputs a surface. A common operator measures bidirectional point
+distance and intersects held-out rays with that surface using fixed lateral and depth
+tolerances. Geometry and conditional-return metrics remain separate, and every density
+cap reports the actual point count when a native surface contains fewer points.
 
-\subsection{Candidate Research Routes}
-Route A learns an object-level evidential surface and uses the shared return operator.
-Route B learns the full scene return process, including background occlusion and
-no-return behavior. The preregistered D0 evidence selects the route before source and
-external test roles are opened.
+\subsection{Object-Surface Candidate}
+AdaPoinTr is first adapted from its official PCN checkpoint using the legacy training
+partition. The candidate is then fine-tuned for 100 epochs with its surface loss plus a
+hit-depth Huber term and a known-free early-surface penalty, both computed from the same
+predicted point set. We fix both added weights to 0.1 without a sweep. Before reading
+clean development quality, the primary output is fixed to 75\% measured TSDF points and
+25\% learned completion points; the unanchored network is diagnostic.
+
+\subsection{Full-LiDAR Capability}
+The broader route uses the official LiDAR4D implementation on KITTI-360, including its
+scene representation, range and intensity rendering, ray-drop refinement, and scan
+export. This run establishes end-to-end capability. Because its task and denominator
+differ from object completion, it cannot serve as a numerical route-selection shortcut.

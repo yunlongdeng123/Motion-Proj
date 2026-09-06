@@ -1,6 +1,6 @@
 schema_version: worldsim_v72.route_selection.v1
-status: clean_split_frozen_materialization_pending
-decision: undecided
+status: d1_closed_negative
+decision: close_method_claim
 clean_source_split: configs/worldsim_v72/clean_route_split.yaml
 clean_source_counts: {dev_logs: 4, route_select_logs: 3, source_test_candidate_logs: 3}
 preliminary_evidence:
@@ -13,6 +13,11 @@ preliminary_evidence:
   w0_w4_g0_run: run://worldsim_v72/WS-V72-D0-W0-W4-G0-01/20260906T185900Z__w0-w4-g0-s7205-r3
   w0_w4_g2_run: run://worldsim_v72/WS-V72-D0-W0-W4-G2-01/20260906T190200Z__w0-w4-g2-s7206-r1
   lidar4d_capability_run: run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2
+  clean_lidar_io_run: run://worldsim_v72/WS-V72-P2-CLEAN-LIDAR-IO-01/20260906T222500Z__clean-dev-route-lidar-io-r1
+  clean_dev_data_run: run://worldsim_v72/WS-V72-P2-CLEAN-ACTOR-DATA-01/20260906T225000Z__clean-dev-actor-v2-s0-r2
+  route_a_train_run: run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-TRAIN-01/20260906T223000Z__a1-observation-train-s7210-r1
+  route_a_dev_run: run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1
+  d1_gate_artifact: /root/autodl-tmp/runs/worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1/D1_DEV_GATE.json
   interpretation:
     - density_is_a_strong_geometry_return_confound
     - actor_tsdf_and_raw_fusion_form_a_non_dominated_simple_baseline_frontier
@@ -23,10 +28,33 @@ preliminary_evidence:
     - fou_structure_and_auxiliary_supervision_lack_cross_geometry_gain
     - d0_geometry_and_weight_matrix_complete_on_legacy_diagnostic
     - lidar4d_full_scan_capability_complete_on_public_kitti360
-    - clean_route_data_remains_required
-  route_decision_allowed: false
+    - clean_dev_contains_501_actors_from_4_dependency_chain_isolated_logs
+    - anchored_a1_loses_to_actor_tsdf_on_geometry_early_and_hit
+    - route_b_has_capability_but_no_matched_protocol_method_gain
+    - d1_closes_the_method_claim_without_opening_route_select_or_final_roles
+  route_decision_allowed: true
 allowed_evidence_roles: [dev, legacy_diagnostic, external_public_capability]
 forbidden_evidence_roles: [source_test, external_test]
+decision_result:
+  development_gate_pass: false
+  route_a_pass: false
+  route_b_pass: false
+  route_a_candidate: A1_anchored_surface
+  comparator: G1_tsdf
+  matched_density_budget: 512
+  candidate_actual_mean_points: 449.1976047904192
+  comparator_actual_mean_points: 401.49101796407183
+  relative_cd_reduction: -0.09169497769917126
+  absolute_fscore_gain: -0.03577748132988101
+  early_rate_delta: 0.02788154471671367
+  hit_recall_delta: -0.027571542068449806
+  route_b_reason: no_matched_protocol_gain_candidate
+  route_select_read: false
+  source_test_read: false
+  external_test_read: false
+  p3_unlocked: false
+  p4_unlocked: false
+  terminal_scope: diagnostic_baseline_report
 criteria:
   - task_validity
   - gain_over_strong_external_baseline

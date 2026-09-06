@@ -1,11 +1,39 @@
 schema_version: worldsim_v72.baseline_map.v1
 audited_at: 2026-09-06
 quality_results_read: true
-quality_read_roles: [legacy_diagnostic]
+quality_read_roles: [legacy_diagnostic, dev]
 source_test_read: false
 external_test_read: false
 
 object_completion:
+  d1_clean_dev:
+    status: completed_negative
+    clean_lidar_io_run: run://worldsim_v72/WS-V72-P2-CLEAN-LIDAR-IO-01/20260906T222500Z__clean-dev-route-lidar-io-r1
+    clean_actor_data_run: run://worldsim_v72/WS-V72-P2-CLEAN-ACTOR-DATA-01/20260906T225000Z__clean-dev-actor-v2-s0-r2
+    route_a_train_run: run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-TRAIN-01/20260906T223000Z__a1-observation-train-s7210-r1
+    route_a_dev_run: run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1
+    d1_gate_artifact: /root/autodl-tmp/runs/worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1/D1_DEV_GATE.json
+    actor_count: 501
+    log_count: 4
+    ray_count: 641930
+    density_budget: 512
+    methods: [G0_raw, G1_tsdf, G3_adapointr, A1_observation_constrained, A1_anchored_surface]
+    best_comparator: G1_tsdf
+    result:
+      candidate: A1_anchored_surface
+      candidate_cd_m: 0.19497613868715163
+      comparator_cd_m: 0.17859946474983188
+      candidate_fscore: 0.7145419156179714
+      comparator_fscore: 0.7503193969478524
+      candidate_early_rate: 0.4393438536912124
+      comparator_early_rate: 0.41146230897449876
+      candidate_hit_recall: 0.5221503902294643
+      comparator_hit_recall: 0.5497219322979141
+      d1_gate_pass: false
+      decision: close_method_claim
+    route_select_read: false
+    source_test_read: false
+    external_test_read: false
   simple_fusion:
     id: G0
     status: legacy_diagnostic_complete_matched_table
@@ -110,6 +138,8 @@ neural_lidar:
     peak_gpu_memory_mib: 22506
     wall_seconds: 8791.62043
     blockers: []
+    route_selected: false
+    matched_protocol_method_gain: false
   lidar_rt:
     status: deferred_until_route_b_selected
     repository: https://github.com/zju3dv/LiDAR-RT.git

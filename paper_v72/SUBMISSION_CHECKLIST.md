@@ -1,9 +1,12 @@
-# WorldSim V7.2 投稿检查表
+# WorldSim V7.2 交付检查表
 
-- [ ] D0 路线选择已冻结并记录在 `configs/worldsim_v72/route_selection.yaml`。
-- [ ] source test 与 external test 在冻结前从未被读取。
-- [ ] G0--G3 使用相同输入、密度预算、查询射线和 return operator。
-- [ ] 所有论文数值都可追溯到正式运行目录。
-- [ ] 失败台账引用与每项结果一起发布。
-- [ ] 主文、补充材料和 arXiv 版本通过独立编译与视觉检查。
-- [ ] 摘要、贡献和结论没有超出冻结证据。
+- [x] D0 基线图谱与 W0--W4 简单解释完成。
+- [x] clean split、选择性 I/O 与 ActorBundleV2 数据物化完成。
+- [x] D1 门槛在 dev quality 前冻结并机械执行。
+- [x] source test 与 external test 在冻结和负向停止后保持未读。
+- [x] G0/G1/G3/A1 使用相同 density cap、query rays 与 return operator。
+- [x] AdaPoinTr 与 LiDAR4D 外部能力均有正式运行凭证。
+- [x] 失败台账记录 V71-F62 数据恢复与 V71-F63 科学拒绝。
+- [x] 摘要、贡献、实验和结论明确写成负向技术报告。
+- [ ] 投稿级方法、完整应用与独立 source-test 证据：D1 未通过，按计划不解锁。
+- [x] 主文、补充材料和 arXiv 编译：`3 pages / 110,902 bytes`、`1 page / 49,107 bytes`、`3 pages / 110,775 bytes`；无 overfull、undefined reference/citation；全页渲染检查通过。
