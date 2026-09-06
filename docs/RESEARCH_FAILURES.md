@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F58 — G3 runner 未在 PoinTr 根目录解析相对 base config（2026-09-07）
+
+- category=`external_config_working_directory`；status=`resolved_same_protocol_r2`；task=`WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01`。
+- failed run=`20260906T164200Z__g3-adapointr-official-zs-r1`；官方 config 的 `_base_` 使用相对路径，runner 从
+  Motion-Proj 根目录解析时找不到 `cfgs/dataset_configs/PCN.yaml`。
+- exposure：只读 adapter/cohort metadata；发生在模型构造、点数组加载、forward 和 target metric 之前；
+  source/external final read=false。
+- resolution：只在官方 config 解析期间切换到固定 PoinTr build root，并在 `finally` 恢复工作目录；模型、checkpoint、
+  data、seed、batch、density 和 evaluator 均不变，r2 继续同一协议。
+- prevention：带相对 `_base_` 的外部 config 必须以其仓库根目录为解析边界。
+
 ## V71-F57 — PoinTr 顶层导入要求未使用架构的 CUDA 扩展（2026-09-07）
 
 - category=`external_baseline_import_scope`；status=`resolved_capability`；task=`WS-V72-D0-G3-ADAPOINTR-*`。
@@ -42,7 +53,7 @@
 - evidence：source-dispatch 修复 commit=`691619c5`；r1/r2/r3 `status.json`，r3 manifest/summary；
   prevention：所有 legacy cache 重建必须携带 per-Actor source provenance，禁止从目录存在推断 raw 可恢复。
 
-下一可用统一失败编号：`V71-F58`。
+下一可用统一失败编号：`V71-F59`。
 
 ## V7.2 D0 G0 outcome note — density is a required matched factor（2026-09-06）
 

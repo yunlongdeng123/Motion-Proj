@@ -103,7 +103,12 @@ def _import_pointr(root: Path):
 def _build_model(config: Mapping[str, Any]) -> tuple[torch.nn.Module, dict[str, Any]]:
     pointr_root = Path(config["pointr_root"])
     build_model_from_cfg, cfg_from_yaml_file = _import_pointr(pointr_root)
-    model_config = cfg_from_yaml_file(str(pointr_root / str(config["pointr_config"]))).model
+    previous_directory = Path.cwd()
+    try:
+        os.chdir(pointr_root)
+        model_config = cfg_from_yaml_file(str(config["pointr_config"])).model
+    finally:
+        os.chdir(previous_directory)
     model_config.num_points = int(config["output_point_count"])
     model_config.num_query = int(config["input_point_count"])
     model = build_model_from_cfg(model_config)
