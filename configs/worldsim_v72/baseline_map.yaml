@@ -1,12 +1,20 @@
 schema_version: worldsim_v72.baseline_map.v1
 audited_at: 2026-09-06
-quality_results_read: false
+quality_results_read: true
+quality_read_roles: [legacy_diagnostic]
+source_test_read: false
+external_test_read: false
 
 object_completion:
   simple_fusion:
     id: G0
-    status: implementation_pending
+    status: legacy_diagnostic_complete_matched_table_pending
     input: actor_build_points_only
+    canonical_run: run://worldsim_v72/WS-V72-D0-G0-RAW-FUSION-01/20260906T153519Z__g0-raw-fusion-cpu-r1
+    density_budgets: [64, 128, 256, 512, native]
+    actor_count: 66
+    log_count: 34
+    route_decision_allowed: false
   actor_tsdf:
     id: G1
     status: legacy_implementation_available_needs_matched_cohort
@@ -17,12 +25,15 @@ object_completion:
     independent_source_test: false
   adapointr:
     id: G3
-    status: source_fetched_gpu_environment_pending
+    status: source_checkpoint_and_adapter_ready_gpu_environment_pending
     repository: https://github.com/yuxumin/PoinTr.git
     checkout: /root/autodl-tmp/external/worldsim_v72/PoinTr
     commit: 4603257ed3db9e7dad349b712e1b2fe0da207015
     environment: worldsim-v72-pointr
-    blockers: [cuda_extensions_unbuilt, driving_actor_adapter_pending, gpu_unavailable]
+    checkpoint_manifest: configs/worldsim_v72/external_artifacts.yaml
+    adapter_run: run://worldsim_v72/WS-V72-P0-G3-DATA-ADAPTER-01/20260906T154442Z__adapointr-legacy-export-r1
+    adapter_shapes: {input_points: 512, target_points: 4096}
+    blockers: [cuda_extensions_unbuilt, pointnet2_ops_unbuilt, gpu_unavailable]
   object_centric_occ:
     status: deferred_until_route_a_selected
     repository: https://github.com/Ghostish/ObjectCentricOccCompletion.git

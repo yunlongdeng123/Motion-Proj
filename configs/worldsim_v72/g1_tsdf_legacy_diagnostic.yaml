@@ -1,0 +1,59 @@
+task_id: WS-V72-D0-G1-ACTOR-TSDF-01
+hypothesis_id: WS-V72-H-D0-SIMPLE-GEOMETRY-CONTROLS
+runs_root: /root/autodl-tmp/runs
+data_role: legacy_diagnostic
+pretrained_holdout_exposure: true
+cohort_rows: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2/TRAIN_HOLDOUT_TEMPORAL.jsonl
+dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+scene_metadata: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval/scene.json
+p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
+expected_actor_count: 66
+actors:
+  minimum_track_states: 9
+  actor_batch_size: 16
+  box_padding_m: 0.15
+  maximum_points_per_actor_frame: 4096
+  hazard:
+    ego_radius_m: 1.20
+    maximum_ttc_s: 30.0
+    minimum_closing_speed_mps: 0.50
+    hazard_ttc_s: 3.0
+    hazard_clearance_m: 2.0
+    hard_brake_reference_mps2: 4.0
+    hazard_hard_brake_score: 0.75
+    hard_brake_interaction_range_m: 15.0
+    crossing_forward_window_m: 20.0
+    crossing_interaction_range_m: 5.0
+compiler_overrides:
+  surface:
+    evaluation_stride: 3
+    heldout_modulo_value: 2
+    minimum_build_frames: 4
+    minimum_heldout_frames: 3
+tsdf:
+  voxel_size_m: 0.12
+  truncation_m: 0.36
+  padding_m: 0.24
+  maximum_rays: 16384
+  minimum_weight: 2.0
+  maximum_points: 8192
+  output_voxel_size_m: 0.06
+density_budgets: [64, 128, 256, 512]
+include_native_density: true
+evaluation:
+  fscore_threshold_m: 0.20
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 256
+  ray_chunk_size: 128
+  point_chunk_size: 512
+bootstrap:
+  seed: 7201
+  samples: 2000
+failure_ledger_refs: [V71-F04, V71-F05, V71-F52]
+failure_ledger_delta: none
+target_access: legacy_diagnostic_only
+source_test_read: false
+external_test_read: false
+training: false
+device: cpu
