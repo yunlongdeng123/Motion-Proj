@@ -405,7 +405,9 @@ D0 几何部分已在同一 66-Actor / 34-log `legacy_diagnostic` cohort 上完�
 
 当前证据为：官方预训练适配稳定优于 scratch，但 G3 在所有固定密度预算下没有越过 G0/G1 简单前沿；G2 的 early 更低，但承担明显 CD/F-score 与 hit 代价。完整数值与 run ID 见 `docs/WORLDSIM_V7_2_D0_GPU_RESULTS.md`。
 
-此结果完成第 9.1 节，不完成第 9.2 节，也不触发 D1。W0--W4、干净 dev/route-select 数据和路线 B 的原生 capability 仍待完成；`source_test` 与 `external_test` 保持未读。
+第 9.2 节也已完成：G0/G2 使用同一 categorical reader 比较 W0 单位权重、W1 build support、W2 密度／采样机会归一化、W3 单标量、W4 三态 response-only 与 W4 三态辅助监督。W3 与 W4 response-only 基本等价；F/O/U 辅助只在 G0 小幅改善，在 G2 同时恶化 early 与 hit，未形成跨几何稳定增量。单标量在两种几何上都改善 hit／深度误差，但付出小幅 early 代价。完整结果见 `docs/WORLDSIM_V7_2_D0_WEIGHT_RESULTS.md`。
+
+因此 D0 的 legacy 机制筛选完成，原“普遍三态表征缺陷”主张关闭；更窄且仍有效的问题是观测约束下的 hit--early 权衡。该证据仍不触发 D1：干净 dev/route-select 数据和路线 B 的原生 capability 尚缺，`source_test` 与 `external_test` 保持未读。
 
 ---
 

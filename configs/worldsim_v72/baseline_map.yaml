@@ -70,6 +70,22 @@ object_completion:
     commit: 0ca9883d491c7cbbaede938ac58342684a42cbb2
     blockers: [waymo_access, detector_tracker_pipeline, official_recipe_uses_8_gpus]
 
+return_weight_ablation:
+  status: legacy_diagnostic_complete
+  geometry_sources: [G0, G2]
+  arms: [W0_unit, W1_build_support, W2_density_opportunity, W3_scalar_response, W4_fou_response_only, W4_fou_auxiliary]
+  g0_canonical_run: run://worldsim_v72/WS-V72-D0-W0-W4-G0-01/20260906T185900Z__w0-w4-g0-s7205-r3
+  g2_canonical_run: run://worldsim_v72/WS-V72-D0-W0-W4-G2-01/20260906T190200Z__w0-w4-g2-s7206-r1
+  same_feature_schema_w3_w4: true
+  same_response_loss_w3_w4: true
+  target_free_holdout_weight_inference: true
+  result:
+    scalar_and_fou_response_are_effectively_tied: true
+    fou_auxiliary_cross_geometry_gain: false
+    learned_scalar_improves_hit_and_depth_with_early_cost: true
+    simple_support_controls_are_geometry_dependent: true
+  route_decision_allowed: false
+
 neural_lidar:
   dynfl:
     id: B0-primary

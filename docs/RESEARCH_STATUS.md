@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.2 D0 权重筛选完成：单标量解释主要收益，三态增量不跨几何（2026-09-07）
+
+G0/G2 冻结几何上的 W0--W4 同 categorical reader 对照已完成。canonical 分别为 `run://worldsim_v72/WS-V72-D0-W0-W4-G0-01/20260906T185900Z__w0-w4-g0-s7205-r3` 与 `run://worldsim_v72/WS-V72-D0-W0-W4-G2-01/20260906T190200Z__w0-w4-g2-s7206-r1`。两者使用相同 593 train / 66 holdout Actors、18 维 build-only 特征、12 epochs 和 13.7k 级近似等容量 MLP；holdout 权重在挂载 target 前生成。source/external final read=false。
+
+W3 单标量在 G0/G2 上分别相对 W0 改善 hit `+0.744/+5.900pp`、降低深度 MAE `7.20/39.59mm`，但 early 增加 `0.279/0.728pp`。W4 response-only 与 W3 几乎相同：G0/G2 hit 差仅 `+0.002/-0.024pp`。增加 F/O/U auxiliary 后，G0 相对 W0 小幅改善 early `-0.056pp`、hit `+0.623pp`；但在 G2 相对 W4 response-only 恶化 early `+0.344pp`、hit `-1.428pp`。因此三态结构／额外监督没有跨几何稳定增量，不再作为当前核心贡献。
+
+W1/W2 简单规则也依赖几何：在 G0 明显退化；W2 在 G2 只增加 early `0.048pp` 并提高 hit `2.433pp`，是必须保留的简单控制。D0 的 legacy geometry + weight matrix 已完成，原“普遍三态表征缺陷”主张关闭，剩余问题收窄为观测约束下的 hit--early 权衡。D1 仍等待干净 dev/route-select 数据与路线 B 原生 capability。详细结果=`docs/WORLDSIM_V7_2_D0_WEIGHT_RESULTS.md`；`V71-F60` 记录 G0 r1/r2 的截断索引失败及 r3 修复。
+
 ## WorldSim V7.2 D0 几何图谱完成：AdaPoinTr 预训练有效，但固定密度未越过简单前沿（2026-09-07）
 
 在同一已暴露 `legacy_diagnostic` cohort（66 Actors / 34 logs / 99,208 positive-return rays）上，G0 raw fusion、G1 Actor-local TSDF、G2 历史 M8 与 G3 AdaPoinTr 已按 64/128/256/512/native 密度接入同一 evaluator。G2 canonical=`run://worldsim_v72/WS-V72-D0-G2-M8-MATCHED-EVAL-01/20260906T174000Z__g2-m8-matched-s71110-r1`；G3 official zero-shot / pretrained-adapted / scratch canonical 分别为 `20260906T165000Z__g3-adapointr-official-zs-r3`、`20260906T165500Z__g3-adapointr-transfer-s7203-r1`、`20260906T174200Z__g3-adapointr-scratch-s7204-r1`。

@@ -25,3 +25,14 @@ behind the deterministic frontier; its best native CD used 4096 output points an
 cannot substitute for the density-matched result. These diagnostic findings motivate the
 W0--W4 return-weight study, but do not select a route because the cohort is historically
 exposed and no source or external test has been read.
+
+\paragraph{D0 return-weight controls.}
+With G0 and G2 geometry frozen, a scalar weight head and an approximately
+capacity-matched F/O/U head produced nearly identical response-only results. The scalar
+head consistently improved hit recall and conditional depth error over unit weights, but
+also increased early returns. Adding F/O/U auxiliary supervision yielded a small joint
+early/hit improvement on G0 and degraded both metrics relative to the response-only head
+on G2. Fixed support and density/opportunity rules were likewise geometry dependent.
+Accordingly, the diagnostic evidence supports a narrower hit--early trade-off problem,
+while it does not support a general need for a three-state representation. Route selection
+still requires clean development data and a runnable full-LiDAR baseline.

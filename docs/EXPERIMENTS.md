@@ -1,5 +1,23 @@
 # Experiments
 
+## WS-V72-D0-W0-W4-G2-01 — canonical completed（2026-09-07）
+
+- canonical run=`20260906T190200Z__w0-w4-g2-s7206-r1`；geometry=冻结 G2 M8；593 train / 66 holdout Actors；
+- categorical reader 下 W0/W1/W2/W3/W4-response/W4-aux 的 early=`17.110/17.711/17.158/17.837/17.706/18.050%`；
+- hit=`61.623/64.222/64.056/67.523/67.499/66.070%`；depth MAE=`299.25/282.78/283.34/259.67/258.32/270.02mm`；
+- W3 与 W4-response 等价；W4-aux 相对 W4-response 为 early `+0.344pp`、hit `-1.428pp`，三态辅助监督未提供增量；
+- 12 epochs；W3/W4 参数量=`13,697/13,827`；target-free holdout weight inference=true；peak GPU=`1.29GiB`；wall=`132.09s`；
+- formal artifacts=resolved/manifest/fingerprint/3 models/TRAIN/ACTORS/LOGS/summary/status；route decision allowed=false；failure_ledger_delta=none。
+
+## WS-V72-D0-W0-W4-G0-01 — canonical completed（2026-09-07）
+
+- canonical run=`20260906T185900Z__w0-w4-g0-s7205-r3`；geometry=冻结 G0 raw fusion；593 train / 66 holdout Actors；
+- categorical reader 下 W0/W1/W2/W3/W4-response/W4-aux 的 early=`12.142/15.802/15.504/12.421/12.654/12.086%`；
+- hit=`78.520/73.366/73.147/79.264/79.266/79.143%`；depth MAE=`189.35/240.80/244.76/182.16/181.84/185.33mm`；
+- W3 与 W4-response 等价；W4-aux 相对 W0 为 early `-0.056pp`、hit `+0.623pp`，但该方向没有在 G2 复现；
+- 12 epochs；W3/W4 参数量=`13,697/13,827`；target-free holdout weight inference=true；peak GPU=`1.60GiB`；wall=`134.45s`；
+- 1/659 capped Actor 使用显式最近点映射，最大距离=`0.392m`；failed r1/r2 与修复见 `V71-F60`；canonical failure_ledger_delta=`V71-F60_resolved`。
+
 ## WS-V72-D0-G3-ADAPOINTR-SCRATCH-01 — canonical completed（2026-09-07）
 
 - canonical run=`20260906T174200Z__g3-adapointr-scratch-s7204-r1`；initialization=scratch；593 train / 66 holdout Actors；600 epochs；holdout 只在最终评估读取；
