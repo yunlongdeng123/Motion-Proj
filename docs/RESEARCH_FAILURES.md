@@ -2,10 +2,10 @@
 
 ## V71-F60 — 单个截断 canonical 数组保留了截断前 sidecar 索引（2026-09-07）
 
-- category=`legacy_sidecar_index_provenance`；status=`resolved_same_protocol_r2`；task=`WS-V72-D0-W0-W4-G0-01`。
-- failed run=`20260906T185100Z__w0-w4-g0-s7205-r1`；在 G0 build-only 证据映射时，1/659 个 eligible Actor 的 `canonical` 已截断到 4096 点，但 sidecar 仍含最大值 4960 的截断前 `input_canonical_surface_indices`，CUDA `index_add_` 越界。
-- exposure：发生在第一个完整 geometry-build pass 完成前；未挂载 train/holdout target，未训练模型，未产生 quality metric；source/external final read=false。
-- resolution：有效索引继续使用显式 provenance；仅对越界 Actor 将 sidecar anchors 映射到当前 canonical 的最近点，并在 manifest/summary 记录 fallback Actor 数和最大映射距离。全量静态审计确认只有该 1 个 Actor 越界；sidecar anchors 与 cache anchors 最大坐标误差为 `1.09e-6m`。
+- category=`legacy_sidecar_index_provenance`；status=`resolved_same_protocol_r3`；task=`WS-V72-D0-W0-W4-G0-01`。
+- failed runs=`20260906T185100Z__w0-w4-g0-s7205-r1`,`20260906T185400Z__w0-w4-g0-s7205-r2`；1/659 个 eligible Actor 的 `canonical` 已截断到 4096 点，但 sidecar 仍含最大值 4960 的截断前 `input_canonical_surface_indices`。r1 在 G0 build-only 证据 `index_add_` 越界；r2 已修 build 权重映射，但辅助 F/O/U 标签仍误用旧索引。
+- exposure：r1 未挂载任何 target；r2 完成 659 个 target-free geometry 后开始首个 legacy train Actor，读取训练 target 并在任何优化步骤前失败。两者均无 holdout read、无 quality metric、无模型训练；source/external final read=false。
+- resolution：有效索引继续使用显式 provenance；仅对越界 Actor 将 sidecar anchors 映射到当前 canonical 的最近点，同一个已校验映射同时用于 build 权重与训练辅助标签，并在 manifest/summary 记录 fallback Actor 数和最大映射距离。全量静态审计确认只有该 1 个 Actor 越界；sidecar anchors 与 cache anchors 最大坐标误差为 `1.09e-6m`。
 - prevention：任何由 capped/sampled 数组消费旧 sidecar 索引的 runner，必须在 GPU scatter 前检查索引范围；fallback 必须可计数，不得静默删 Actor 或 clip 索引。
 
 下一可用统一失败编号：`V71-F61`。

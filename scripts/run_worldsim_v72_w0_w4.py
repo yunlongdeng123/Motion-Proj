@@ -279,6 +279,7 @@ def _build_geometry(
             actor["canonical_mapping_fallback_max_distance_m"] = float(
                 distances.max()
             )
+        actor["canonical_mapping_indices_t"] = indices
         masses = _aggregate_by_index(
             anchor_masses,
             indices,
@@ -427,14 +428,14 @@ def _attach_auxiliary_targets(
     config: Mapping[str, Any],
     device: torch.device,
 ) -> None:
-    anchor_targets, canonical_indices = _load_sidecar_supervision(actor, sidecar_root)
+    anchor_targets, _ = _load_sidecar_supervision(actor, sidecar_root)
     anchor_targets_t = torch.as_tensor(
         anchor_targets, dtype=torch.float32, device=device
     )
     if geometry_source == "g0":
         targets = _aggregate_by_index(
             anchor_targets_t,
-            torch.as_tensor(canonical_indices, dtype=torch.long, device=device),
+            actor["canonical_mapping_indices_t"],
             len(actor["authority_centers_t"]),
             torch.tensor([0.0, 0.0, 1.0], dtype=torch.float32, device=device),
         )
