@@ -1,0 +1,46 @@
+task_ids:
+  dev: WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01
+  route_select: WS-V72-D1-A-ROUTE-SELECT-01
+runs_root: /root/autodl-tmp/runs
+clean_data_root: /root/autodl-tmp/data/worldsim_v72/actor_bundle_v2
+training_adapter_root: /root/autodl-tmp/data/worldsim_v72/adapointr_legacy_v1
+training_cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train
+pointr_root: /root/autodl-tmp/build/worldsim_v72/PoinTr_AdaPoinTr_4603257
+pointr_config: cfgs/PCN_models/AdaPoinTr.yaml
+official_checkpoint: /root/autodl-tmp/external/worldsim_v72/checkpoints/AdaPoinTr_PCN.pth
+official_checkpoint_sha256: f58a5650b348ca3d68fc8e01e3e88f57d5a889bbad5521fec7a2760eda664fa1
+base_checkpoint: /root/autodl-tmp/runs/worldsim_v72/WS-V72-D0-G3-ADAPOINTR-TRANSFER-01/20260906T165500Z__g3-adapointr-transfer-s7203-r1/final.pt
+base_checkpoint_epoch: 600
+input_point_count: 512
+output_point_count: 4096
+train_epochs: 100
+batch_size: 16
+amp: true
+tf32: true
+optimizer: {type: AdamW, lr: 0.00002, weight_decay: 0.0005}
+scheduler: {decay_step: 25, lr_decay: 0.8, lowest_decay: 0.2}
+ray_supervision:
+  rays_per_actor: 48
+  lateral_temperature_normalized: 0.05
+  hit_huber_delta_normalized: 0.05
+  free_margin_normalized: 0.06
+  lambda_hit: 0.10
+  lambda_known_free: 0.10
+  rationale: one_initial_scale_relative_to_final_base_surface_loss_no_sweep
+checkpoint_every_epochs: 25
+console_every_epochs: 5
+seed: 7210
+density_budgets: [64, 128, 256, 512]
+include_native_density: true
+evaluation:
+  fscore_threshold_m: 0.20
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 256
+  ray_chunk_size: 128
+  point_chunk_size: 512
+bootstrap: {seed: 7240, samples: 2000}
+source_test_read: false
+external_test_read: false
+failure_ledger_refs: [V71-F43, V71-F52, V71-F54, V71-F55, V71-F56, V71-F57, V71-F58, V71-F59, V71-F62]
+failure_ledger_delta: none

@@ -34,8 +34,16 @@ cache:
   target_point_count: 4096
   known_free_fraction: 0.5
   sensor_tolerance_m: 0.12
+tsdf:
+  voxel_size_m: 0.12
+  truncation_m: 0.36
+  padding_m: 0.24
+  maximum_rays: 16384
+  minimum_weight: 2.0
+  maximum_points: 8192
+  output_voxel_size_m: 0.06
 sensor_model_ref: nuscenes_v1_0_trainval_lidar_top_measured_returns
 source_test_read: false
 external_test_read: false
-failure_ledger_refs: [V71-F43, V71-F52, V71-F62]
+failure_ledger_refs: [V71-F43, V71-F52]
 failure_ledger_delta: none

@@ -22,6 +22,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from motion_proj.worldsim_v71.dataset_nuscenes import build_v71_index, compile_source_scene
+from motion_proj.worldsim_v71.tsdf_evidential import build_b4_surface
 from motion_proj.worldsim_v72.data.actor_dataset import save_actor_bundle_v2
 from motion_proj.worldsim_v72.data.schema import (
     ActorBundleV2,
@@ -283,6 +284,20 @@ def _materialize_actor(
     )
 
     canonical = np.asarray(diagnostics["canonical"], dtype=np.float32)
+    anchors = np.concatenate(
+        [
+            np.asarray(diagnostics["kept"], dtype=np.float32).reshape(-1, 3),
+            np.asarray(diagnostics["projected"], dtype=np.float32).reshape(-1, 3),
+        ],
+        axis=0,
+    )
+    tsdf_surface = build_b4_surface(
+        diagnostics["build_frame_points"],
+        diagnostics["build_sensor_origins"],
+        anchors,
+        np.asarray(track.size_lwh_m, dtype=np.float32),
+        **config["tsdf"],
+    )
     target_points = np.asarray(surface_targets.surface_points_m, dtype=np.float32)
     scale_m = float(np.max(track.size_lwh_m) * 0.5)
     target_fixed, target_origins_fixed = _fixed_pair(
@@ -297,6 +312,7 @@ def _materialize_actor(
         target_normalized=target_fixed / scale_m,
         target_origins_normalized=target_origins_fixed / scale_m,
         canonical=canonical,
+        tsdf_surface=np.asarray(tsdf_surface, dtype=np.float32),
         target=target_points,
         target_sensor_origins=query.origin_m,
         size_lwh_m=np.asarray(track.size_lwh_m, dtype=np.float32),
@@ -318,6 +334,7 @@ def _materialize_actor(
         "build_frame_count": len(records),
         "build_point_count": actor_bundle.point_count,
         "surface_point_count": len(canonical),
+        "tsdf_point_count": len(tsdf_surface),
         "query_ray_count": len(query),
         "scale_m": scale_m,
     }
