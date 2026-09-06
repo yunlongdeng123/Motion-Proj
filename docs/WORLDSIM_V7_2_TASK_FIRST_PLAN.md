@@ -21,8 +21,11 @@
 | `WS-V72-P0-OPERATOR-ERRATUM-01` | done | M43 literal/categorical 字段隔离；真实 Actor state retention；M39 拒绝保留 |
 | `WS-V72-P0-DATA-CONTRACT-01` | done | `ActorBundleV2`、`QueryRayBatch`、`RayTargets`、target-free 点表面 forward |
 | `WS-V72-P0-DATA-ROLES-01` | done | nuScenes/AV2 metadata-only 暴露合并；最终 split 仍为空 |
-| `WS-V72-P0-BASELINE-CAPABILITY-01` | running | 官方代码与依赖已审计；CUDA 环境和数据能力运行等待 GPU/数据 |
-| `WS-V72-P1-D0-MATCHED-BASELINES-01` | blocked | 需要至少 1×RTX 3090 24 GiB 运行 AdaPoinTr 与正式 matched evaluation |
+| `WS-V72-P0-BASELINE-CAPABILITY-01` | done | 官方源码、checkpoint、依赖与数据适配已审计；GPU capability 为独立后续任务 |
+| `WS-V72-D0-G0-RAW-FUSION-01` | done | 66 Actors / 34 logs 的 5 点密度曲线；只作 legacy diagnostic |
+| `WS-V72-D0-G1-ACTOR-TSDF-01` | done | 同一 66 Actors / 34 logs 的 5 点密度曲线；44 raw + 22 processed provenance |
+| `WS-V72-P0-G3-DATA-ADAPTER-01` | done | AdaPoinTr 593/66 Actor adapter 与官方 PCN checkpoint 已就绪 |
+| `WS-V72-P1-D0-MATCHED-BASELINES-01` | blocked | 需要至少 1×RTX 3090 24 GiB 运行 G2/G3 与 W0--W4 |
 
 状态只使用 `pending/running/blocked/done/rejected`。D1 前不得填充 `source_test` 或 `external_test`。
 
@@ -41,16 +44,19 @@
 
 | 组别 | 几何/权重 | 当前状态 | 必须回答 |
 |---|---|---|---|
-| G0 | build-only 累积点/voxel surfel | CPU 实现中 | 点数与密度本身能解释多少结果 |
-| G1 | Actor-local TSDF | 旧实现可复用 | 与 G0/G2 在同一 Actor、同一算子上比较 |
+| G0 | build-only 累积点/voxel surfel | CPU canonical complete | 点数与密度本身能解释多少结果 |
+| G1 | Actor-local TSDF | CPU canonical complete | 与 G0 同 cohort；256/512 点形成非支配简单基线前沿 |
 | G2 | M8 | legacy learned | 只作历史候选，不产出独立源域主张 |
-| G3 | AdaPoinTr 适配版 | 官方源码已固定 | 从头训练与外部预训练分表 |
-| W0–W4 | unit/support/density/scalar/F-O-U | 等待 v2 cache 与 GPU | 三态证据是否优于同容量标量 |
+| G3 | AdaPoinTr 适配版 | 源码、官方 PCN 权重和 adapter 就绪 | 从头训练与外部预训练分表 |
+| W0–W4 | unit/support/density/scalar/F-O-U | 合同已就绪，等待 GPU | 三态证据是否优于同容量标量 |
 | B0 | DyNFL；访问受阻时 LiDAR4D | 官方源码已固定 | 能否生成完整扫描并公平处理场景拟合 |
 
 ## GPU 恢复后的第一顺序
 
-1. 构建一小批 `ActorBundleV2`，实测峰值内存并完成 AdaPoinTr CUDA 扩展 capability。
-2. 在 legacy development 上跑 G0/G1/G2/G3 同对象、同密度、同算子主表。
+1. 核对 driver/toolkit，建立隔离环境并完成 AdaPoinTr CUDA 扩展与单 batch capability。
+2. 复用已完成的 G0/G1，在 legacy development 上补 G2/G3 同对象、同密度、同算子主表。
 3. DyNFL 若 Waymo 授权和数据可用，先跑官方单场景；否则用完整 KITTI-360 数据跑 LiDAR4D 官方 sequence capability。
 4. 只有两路均有公平强对照后才做 D1；此时仍不读取最终 source/external test。
+
+CPU 前置结果与开卡交接分别见 `docs/WORLDSIM_V7_2_D0_CPU_PREFLIGHT_REPORT.md` 和
+`docs/WORLDSIM_V7_2_GPU_HANDOFF.md`。

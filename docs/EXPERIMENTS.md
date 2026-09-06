@@ -1,5 +1,35 @@
 # Experiments
 
+## WS-V72-D0-G1-ACTOR-TSDF-01 — canonical completed（2026-09-06）
+
+- canonical run=`20260906T160409Z__g1-actor-tsdf-cpu-r3`；66 Actors / 63 scenes / 34 logs；44 raw-source Actors、22 processed-recovery Actors；
+- density=`64/128/256/512/native`，平均实际点数=`64.0/126.5/241.9/437.7/1043.9`；
+- CD-L1=`230.32/193.10/168.76/154.26/141.24mm`；F-score@0.20m=`48.65/67.74/77.70/81.00/82.94%`；
+- early=`17.07/27.53/36.22/42.03/47.65%`；hit=`36.09/53.62/58.70/56.36/51.12%`；
+- 与 G0 同一 66-Actor identity set、同射线和同 evaluator；G1 在 256 点降低 early 并提高 hit，但 CD 略差；在 512 点改善 CD/hit，early 增加 0.20pp；两者形成非支配简单基线前沿；
+- formal artifacts=resolved/manifest/fingerprint/ACTORS/LOGS/summary/status；CPU peak RSS=`0.717GiB`，wall=`274.80s`；
+- failed r1=`20260906T155422Z__g1-actor-tsdf-cpu-r1`，见 `V71-F54`；r2 科学数值与 r3 完全相同但 manifest ledger delta 不完整，保留为非 canonical；
+- failure_ledger_refs=`V71-F52,V71-F43,V71-F54`；failure_ledger_delta=`V71-F54_resolved`。
+
+## WS-V72-P0-G3-DATA-ADAPTER-01 — canonical completed（2026-09-06）
+
+- run=`20260906T154442Z__adapointr-legacy-export-r1`；data role=`legacy_diagnostic`；
+- eligible partition=`593 train / 66 holdout`，对应 `54/34` logs；input/target=`512/4096` points；
+- normalization=Actor box max half-extent；target used for input sampling=false；source/external test read=false；
+- official checkpoint=`AdaPoinTr_PCN.pth`，bytes=`389,745,620`，SHA-256=`f58a5650...64fa1`；
+- resources=CPU，peak RSS=`0.037GiB`，wall=`43.71s`；verdict=`adapter_ready_gpu_training_pending`；
+- failure_ledger_refs=`V71-F52,V71-F43`；failure_ledger_delta=none。
+
+## WS-V72-D0-G0-RAW-FUSION-01 — canonical completed（2026-09-06）
+
+- run=`20260906T153519Z__g0-raw-fusion-cpu-r1`；66 Actors / 34 logs / 99,208 positive-return rays；
+- density=`64/128/256/512/native`，平均实际点数=`60.9/112.1/196.1/310.6/453.1`；
+- CD-L1=`209.62/183.02/167.55/159.87/156.13mm`；F-score@0.20m=`59.98/73.93/79.49/80.93/81.22%`；
+- early=`18.60/29.04/37.07/41.84/44.27%`；hit=`44.49/56.38/56.50/53.33/51.04%`；
+- verdict=`diagnostic_pipeline_ready_no_route_decision`；full-return unsupported；pretrained exposure=true；
+- formal artifacts=resolved/manifest/fingerprint/ACTORS/LOGS/summary/status；CPU peak RSS=`0.061GiB`，wall=`17.34s`；
+- failure_ledger_refs=`V71-F52,V71-F43`；failure_ledger_delta=none。
+
 ## WS-V72-P0-OPERATOR-ERRATUM-01 — completed（2026-09-06）
 
 - route=`shared/P0`；base=`79910be1`；branch=`research/worldsim-v7.2-task-first-completion-lidar`；

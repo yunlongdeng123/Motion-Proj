@@ -2,16 +2,17 @@
 
 ## V71-F54 — G1 r1 假定 legacy cohort 全部保留 raw LiDAR（2026-09-06）
 
-- category=`data_provenance_dispatch`；status=`resolved_same_protocol_r2`；task=`WS-V72-D0-G1-ACTOR-TSDF-01`。
+- category=`data_provenance_dispatch`；status=`resolved_same_protocol_r3`；task=`WS-V72-D0-G1-ACTOR-TSDF-01`。
 - failed run=`20260906T155422Z__g1-actor-tsdf-cpu-r1`；在第一个 processed-recovery scene 读取已缺失的 raw
   `.pcd.bin` 时失败，发生在任何 Actor metric/summary 之前。
 - root cause：V7.1 的 66-Actor M8 holdout 混合两个合法来源：44 Actors 来自 raw nuScenes，22 Actors 来自
   DriveStudio processed recovery；r1 只按 scene metadata 建 raw index，忽略了 cache 的恢复来源。
 - resolution：读取冻结 `ADDED_ACTOR_INDEX.json`，按 identity 将 43 raw scenes 与 20 processed scenes 分派到
   原编译路径；拒绝同 scene 混合来源、缺 root 或缺 Actor，不做 fallback/删样本。r2 完整重建 66/66 Actors，
-  G0/G1 identity set 完全相同。
-- exposure：r1 target metric read=0、source/external final read=false；r2 只读既有 `legacy_diagnostic`。
-- evidence：本条与 source-dispatch 修复同一逻辑提交；r1/r2 `status.json` 与 r2 manifest/summary；
+  但 manifest 的 `failure_ledger_delta` 误写为 `none`，故原样保留为非 canonical。r3 只修正运行元数据并按相同
+  协议重跑；r2/r3 的 `ACTORS.jsonl`、`LOGS.jsonl` SHA-256 和全部 metrics 均完全相同。G0/G1 identity set 相同。
+- exposure：r1 target metric read=0、source/external final read=false；r2/r3 只读既有 `legacy_diagnostic`。
+- evidence：source-dispatch 修复 commit=`691619c5`；r1/r2/r3 `status.json`，r3 manifest/summary；
   prevention：所有 legacy cache 重建必须携带 per-Actor source provenance，禁止从目录存在推断 raw 可恢复。
 
 下一可用统一失败编号：`V71-F55`。

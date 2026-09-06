@@ -8,7 +8,7 @@
 
 ## 结论
 
-路线 A 可以把 AdaPoinTr 作为第一个强学习基线，但不能直接拿 ShapeNet checkpoint 在驾驶 Actor 上失败后称其无效。需要使用相同 Actor build/target 划分从头训练或明确微调，并统一尺度、输入点数和输出点数。
+路线 A 可以把 AdaPoinTr 作为第一个强学习基线，但不能直接拿 ShapeNet/PCN checkpoint 在驾驶 Actor 上失败后称其无效。需要使用相同 Actor build/target 划分明确微调，并统一尺度、输入点数和输出点数。官方 PCN checkpoint 与 593/66 Actor 适配缓存现已就绪，CUDA capability 等待开卡。
 
 路线 B 当前主要受数据和 CUDA 环境阻塞。DyNFL 与 V7.2 的动态对象/给定轨迹设定最接近，但官方流程依赖 Waymo preprocessing、Nerfstudio 0.3.4 和编译扩展；当前没有已授权 Waymo 数据。LiDAR4D 的 KITTI-360 流程更容易独立跑通，但远端只有 KITTI tracking smoke，没有其完整 sequence 数据。
 
@@ -39,9 +39,11 @@
 | AV2 已下载 | 80 logs / 83 GiB，全部历史已消费 |
 | V7.1 Actor cache | 1004 Actors / 56 MiB 数据目录 |
 | PoinTr/DyNFL/LiDAR4D 源码快照 | 约 79 MiB |
+| AdaPoinTr 官方 PCN checkpoint | 389,745,620 bytes；SHA-256 `f58a5650...64fa1` |
+| AdaPoinTr legacy adapter cache | 659 Actors / 约 15.6 MiB；593 train / 66 holdout |
 | GPU | 不可用；`nvidia-smi` 被拒绝 |
 
-因此当前不创建 CUDA 环境、不编译扩展、不下载大数据。GPU 恢复时先用 1×RTX 3090 24 GiB 做 capability；正式 B 路线还需 Waymo 授权数据，或为 LiDAR4D 准备完整 KITTI-360 sequence。
+当前 PyTorch 为 `2.4.1+cu121`，但 `torch.cuda.is_available()=false` 且无 `nvcc`；因此不创建 CUDA 环境、不编译扩展、不下载场景级大数据。GPU 恢复时先用 1×RTX 3090 24 GiB 做 capability；正式 B 路线还需 Waymo 授权数据，或为 LiDAR4D 准备完整 KITTI-360 sequence。
 
 ## 一手来源
 

@@ -17,8 +17,16 @@ object_completion:
     route_decision_allowed: false
   actor_tsdf:
     id: G1
-    status: legacy_implementation_available_needs_matched_cohort
+    status: legacy_diagnostic_complete_matched_table_pending
     source: motion_proj/worldsim_v71/tsdf_evidential.py
+    canonical_run: run://worldsim_v72/WS-V72-D0-G1-ACTOR-TSDF-01/20260906T160409Z__g1-actor-tsdf-cpu-r3
+    density_budgets: [64, 128, 256, 512, native]
+    actor_count: 66
+    scene_count: 63
+    log_count: 34
+    source_provenance: {raw_actors: 44, processed_recovery_actors: 22}
+    failure_ledger_ref: V71-F54
+    route_decision_allowed: false
   legacy_m8:
     id: G2
     status: legacy_diagnostic_only

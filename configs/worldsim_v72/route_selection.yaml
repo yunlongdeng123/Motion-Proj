@@ -1,6 +1,14 @@
 schema_version: worldsim_v72.route_selection.v1
 status: pending_d0_and_gpu_capability
 decision: undecided
+preliminary_evidence:
+  g0_run: run://worldsim_v72/WS-V72-D0-G0-RAW-FUSION-01/20260906T153519Z__g0-raw-fusion-cpu-r1
+  g1_run: run://worldsim_v72/WS-V72-D0-G1-ACTOR-TSDF-01/20260906T160409Z__g1-actor-tsdf-cpu-r3
+  interpretation:
+    - density_is_a_strong_geometry_return_confound
+    - actor_tsdf_and_raw_fusion_form_a_non_dominated_simple_baseline_frontier
+    - learned_methods_must_clear_density_matched_g0_and_g1
+  route_decision_allowed: false
 allowed_evidence_roles: [dev, legacy_diagnostic]
 forbidden_evidence_roles: [source_test, external_test]
 criteria:

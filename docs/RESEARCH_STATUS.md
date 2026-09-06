@@ -1,5 +1,31 @@
 # Research Status
 
+## WorldSim V7.2 D0 CPU 前置完成：G0/G1 简单基线与 AdaPoinTr 资产就绪（2026-09-06）
+
+G0 canonical=`run://worldsim_v72/WS-V72-D0-G0-RAW-FUSION-01/20260906T153519Z__g0-raw-fusion-cpu-r1`，
+使用已暴露 66 Actors / 34 logs / 99,208 条正回波射线，固定 64/128/256/512/native 五个点数预算。平均
+CD-L1 从 `209.62→156.13mm`、F-score 从 `59.98→81.22%`，但 early 同时从 `18.60→44.27%`；hit 在
+128--256 点约 `56.4%` 达峰，native 降至 `51.04%`。因此 density 是强混杂，简单 raw fusion 不能省略；
+当前只支持任务/评测可证伪与几何—首返回权衡存在，不支持新方法或路线优越性。full return 指标因旧 cache
+只有正回波 target 而不报告。run 完整保存 manifest/fingerprint/330 Actor rows/170 log rows/summary，峰值 RSS=
+`0.061GiB`、wall=`17.34s`。
+
+G1 canonical=`run://worldsim_v72/WS-V72-D0-G1-ACTOR-TSDF-01/20260906T160409Z__g1-actor-tsdf-cpu-r3`，
+与 G0 使用完全相同的 66 Actors / 34 logs / 射线 / evaluator。G1 在 256 点相对 G0 的 CD/F-score 为
+`+1.21mm/-1.79pp`，同时 early `-0.85pp`、hit `+2.21pp`；在 512 点 CD `-5.61mm`、hit `+3.04pp`，
+early `+0.20pp`。因此 G0/G1 构成非支配简单基线前沿，学习方法必须在密度匹配条件下越过二者。G1 峰值
+RSS=`0.717GiB`、wall=`274.80s`。r1 的 raw-only provenance 假设失败登记为 `V71-F54`；canonical r3 明确
+分派 44 raw Actors 与 22 processed-recovery Actors，r2/r3 metrics 与逐行 artifacts 完全一致。
+
+AdaPoinTr 官方 PCN 权重已固定（389,745,620 bytes，SHA-256=`f58a5650...64fa1`）；独立 adapter canonical=
+`run://worldsim_v72/WS-V72-P0-G3-DATA-ADAPTER-01/20260906T154442Z__adapointr-legacy-export-r1`，输出
+593 train / 66 holdout、512 input / 4096 target，target 不参与输入采样，峰值 RSS=`0.037GiB`。当前硬阻塞为
+GPU/CUDA：Torch=`2.4.1+cu121`，CUDA available=false、`nvidia-smi` 无权限、`nvcc`/PointNet++/Chamfer 均缺失。
+下一步需要至少 1×RTX 3090 24GiB 运行 G2/G3 与 W0--W4；source/external final 仍未分配、未读取。
+
+详细证据=`docs/WORLDSIM_V7_2_D0_CPU_PREFLIGHT_REPORT.md`；开卡顺序=`docs/WORLDSIM_V7_2_GPU_HANDOFF.md`；
+failure_ledger_delta=`V71-F54_resolved`。
+
 ## WorldSim V7.2 P0 完成：任务边界、数据角色与基线能力已审计（2026-09-06）
 
 分支=`research/worldsim-v7.2-task-first-completion-lidar`，父提交=`79910be1`，任务=
