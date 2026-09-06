@@ -26,6 +26,10 @@ from motion_proj.worldsim_v71.dataset_nuscenes import (
     build_v71_index,
     compile_source_scene,
 )
+from motion_proj.worldsim_v71.dataset_drivestudio import (
+    compile_processed_scene,
+    discover_processed_train_scenes,
+)
 from motion_proj.worldsim_v71.tsdf_evidential import build_b4_surface
 from motion_proj.worldsim_v72.evaluation.surface_metrics import (
     deterministic_farthest_point_sample,
@@ -60,7 +64,43 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         for row in cohort:
             wanted[str(row["scene_name"])].add(str(row["track_id"]))
         scene_names = sorted(wanted)
-        index_split = {"roles": {"legacy_diagnostic": scene_names}}
+        processed_actor_rows = json.loads(
+            Path(config["processed_actor_index"]).read_text(encoding="utf-8")
+        )
+        processed_identities = {
+            (str(row["scene_name"]), str(row["track_id"]))
+            for row in processed_actor_rows
+        }
+        processed_scene_names = {
+            scene_name
+            for scene_name, track_ids in wanted.items()
+            if any((scene_name, track_id) in processed_identities for track_id in track_ids)
+        }
+        mixed_source_scenes = [
+            scene_name
+            for scene_name, track_ids in wanted.items()
+            if {
+                (scene_name, track_id) in processed_identities for track_id in track_ids
+            }
+            == {False, True}
+        ]
+        if mixed_source_scenes:
+            raise RuntimeError(f"同一 scene 混合 raw/processed Actor 来源: {mixed_source_scenes}")
+        raw_scene_names = sorted(set(scene_names) - processed_scene_names)
+        processed_candidates = discover_processed_train_scenes(
+            [Path(value) for value in config["processed_roots"]],
+            Path(config["scene_metadata"]),
+            [],
+        )
+        processed_scene_roots = {
+            str(row["scene_name"]): Path(row["scene_root"])
+            for row in processed_candidates
+            if str(row["scene_name"]) in processed_scene_names
+        }
+        if set(processed_scene_roots) != processed_scene_names:
+            missing_roots = sorted(processed_scene_names - set(processed_scene_roots))
+            raise RuntimeError(f"缺少 processed scene root: {missing_roots}")
+        index_split = {"roles": {"legacy_diagnostic": raw_scene_names}}
         index = build_v71_index(Path(config["dataset_root"]), index_split)
         compiler = yaml.safe_load((REPO_ROOT / config["p2_config"]).read_text(encoding="utf-8"))
         _deep_update(compiler, config["compiler_overrides"])
@@ -72,6 +112,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "git_commit": git_commit,
             "resolved_at_utc": datetime.now(timezone.utc).isoformat(),
             "scene_count": len(scene_names),
+            "raw_scene_count": len(raw_scene_names),
+            "processed_scene_count": len(processed_scene_names),
         }
         (run_dir / "resolved.yaml").write_text(
             yaml.safe_dump(resolved, sort_keys=False), encoding="utf-8"
@@ -85,6 +127,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "pretrained_holdout_exposure": True,
             "actor_count": len(cohort),
             "scene_count": len(scene_names),
+            "raw_scene_count": len(raw_scene_names),
+            "processed_scene_count": len(processed_scene_names),
             "cohort_rows": str(cohort_path),
             "cohort_rows_sha256": g0_runner._sha256(cohort_path),
             "source_test_read": False,
@@ -121,9 +165,22 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         device = torch.device("cpu")
         torch.set_num_threads(1)
         for scene_index, scene_name in enumerate(scene_names):
-            bundles = compile_source_scene(
-                scene_name, index, config["actors"], compiler, device
-            )
+            if scene_name in processed_scene_names:
+                bundles = compile_processed_scene(
+                    scene_name,
+                    processed_scene_roots[scene_name],
+                    config["actors"],
+                    compiler,
+                    device,
+                    keyframe_stride=int(config["processed_keyframe_stride"]),
+                    lidar_record_width=int(config["processed_lidar_record_width"]),
+                )
+                source_kind = "drivestudio_processed_10hz_keyframe_stride5"
+            else:
+                bundles = compile_source_scene(
+                    scene_name, index, config["actors"], compiler, device
+                )
+                source_kind = "nuscenes_raw_keyframes"
             for bundle in bundles:
                 track_id = str(bundle["row"]["track_id"])
                 if track_id not in wanted[scene_name]:
@@ -179,6 +236,7 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
                             "density_budget": "native" if budget is None else int(budget),
                             "anchor_point_count": int(len(anchors)),
                             "native_tsdf_point_count": int(len(native_surface)),
+                            "source_kind": source_kind,
                             "surface_generation": "build_only_actor_local_tsdf_fps" if budget is not None else "build_only_actor_local_tsdf_native",
                             "target_used_by_surface_generation": False,
                             **metrics,
@@ -237,6 +295,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "pretrained_holdout_exposure": True,
             "actor_count": len(found),
             "scene_count": len(scene_names),
+            "raw_scene_count": len(raw_scene_names),
+            "processed_scene_count": len(processed_scene_names),
             "log_count": len({row["log_id"] for row in rows}),
             "density_budgets": ["native" if value is None else value for value in budgets],
             "metrics": by_budget,

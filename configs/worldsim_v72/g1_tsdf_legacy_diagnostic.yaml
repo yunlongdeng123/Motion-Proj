@@ -6,6 +6,13 @@ pretrained_holdout_exposure: true
 cohort_rows: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2/TRAIN_HOLDOUT_TEMPORAL.jsonl
 dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
 scene_metadata: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval/scene.json
+processed_actor_index: /root/autodl-tmp/runs/worldsim_v71/WS-V71-S2-PROCESSED-CORPUS-RECOVERY-01/20260903T110000Z__processed-corpus-recovery-r1/ADDED_ACTOR_INDEX.json
+processed_roots:
+  - /root/autodl-tmp/data/worldsim_v67/drivestudio_processed_10Hz/trainval
+  - /root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval
+  - /root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval
+processed_keyframe_stride: 5
+processed_lidar_record_width: 4
 p2_config: configs/worldsim_v7/p2_av2_four_action_compile_v1.yaml
 expected_actor_count: 66
 actors:
@@ -50,8 +57,8 @@ evaluation:
 bootstrap:
   seed: 7201
   samples: 2000
-failure_ledger_refs: [V71-F04, V71-F05, V71-F52]
-failure_ledger_delta: none
+failure_ledger_refs: [V71-F04, V71-F05, V71-F52, V71-F54]
+failure_ledger_delta: V71-F54_resolved
 target_access: legacy_diagnostic_only
 source_test_read: false
 external_test_read: false

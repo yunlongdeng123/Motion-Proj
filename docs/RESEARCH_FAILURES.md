@@ -1,5 +1,29 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F54 — G1 r1 假定 legacy cohort 全部保留 raw LiDAR（2026-09-06）
+
+- category=`data_provenance_dispatch`；status=`resolved_same_protocol_r2`；task=`WS-V72-D0-G1-ACTOR-TSDF-01`。
+- failed run=`20260906T155422Z__g1-actor-tsdf-cpu-r1`；在第一个 processed-recovery scene 读取已缺失的 raw
+  `.pcd.bin` 时失败，发生在任何 Actor metric/summary 之前。
+- root cause：V7.1 的 66-Actor M8 holdout 混合两个合法来源：44 Actors 来自 raw nuScenes，22 Actors 来自
+  DriveStudio processed recovery；r1 只按 scene metadata 建 raw index，忽略了 cache 的恢复来源。
+- resolution：读取冻结 `ADDED_ACTOR_INDEX.json`，按 identity 将 43 raw scenes 与 20 processed scenes 分派到
+  原编译路径；拒绝同 scene 混合来源、缺 root 或缺 Actor，不做 fallback/删样本。r2 完整重建 66/66 Actors，
+  G0/G1 identity set 完全相同。
+- exposure：r1 target metric read=0、source/external final read=false；r2 只读既有 `legacy_diagnostic`。
+- evidence：本条与 source-dispatch 修复同一逻辑提交；r1/r2 `status.json` 与 r2 manifest/summary；
+  prevention：所有 legacy cache 重建必须携带 per-Actor source provenance，禁止从目录存在推断 raw 可恢复。
+
+下一可用统一失败编号：`V71-F55`。
+
+## V7.2 D0 G0 outcome note — density is a required matched factor（2026-09-06）
+
+G0 在同一 66-Actor legacy cohort 上把平均点数从 `60.9` 增至 `453.1` 时，CD-L1 改善 `53.49mm`，但
+early 恶化 `25.67pp`，hit 在 128--256 点达到平台后下降。该结果不是新 failure，也不选择路线；它将“点数/密度
+解释”从可选消融升级为 G0--G3 主表的强制匹配因素。禁止用 native-density CD 改善直接宣称回波改善，禁止在
+最终曲线上事后挑点。canonical=`20260906T153519Z__g0-raw-fusion-cpu-r1`；failure_ledger_delta=none；
+下一可用统一失败编号仍为 `V71-F55`。
+
 ## V71-F53 — 文档首页保留了过期的当前路线与授权（2026-09-06）
 
 - category=`documentation_navigation_stale_authorization`；status=`resolved_navigation`；base commit=`ec9c2e08`。
