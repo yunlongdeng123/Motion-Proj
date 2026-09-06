@@ -266,6 +266,19 @@ def _build_geometry(
         indices = torch.as_tensor(
             sidecar["input_canonical_surface_indices"], dtype=torch.long, device=device
         )
+        actor["canonical_mapping_fallback"] = False
+        actor["canonical_mapping_fallback_max_distance_m"] = 0.0
+        if bool(torch.any(indices < 0)) or bool(torch.any(indices >= len(centers))):
+            nearest = torch.cdist(
+                sidecar_anchors,
+                centers,
+                compute_mode="donot_use_mm_for_euclid_dist",
+            )
+            distances, indices = nearest.min(dim=1)
+            actor["canonical_mapping_fallback"] = True
+            actor["canonical_mapping_fallback_max_distance_m"] = float(
+                distances.max()
+            )
         masses = _aggregate_by_index(
             anchor_masses,
             indices,
@@ -287,6 +300,8 @@ def _build_geometry(
         primitive_types = torch.zeros((len(centers), 3), device=device)
         primitive_types[:, 0] = 1.0
     elif geometry_source == "g2":
+        actor["canonical_mapping_fallback"] = False
+        actor["canonical_mapping_fallback_max_distance_m"] = 0.0
         with torch.inference_mode():
             _, moved = m5_runner._move(base, actor, base_config)
             actor["m5_centers_t"] = moved
@@ -942,6 +957,9 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "same_feature_schema_w3_w4": True,
             "same_response_loss_w3_w4": True,
             "w4_auxiliary_is_separate_arm": True,
+            "canonical_mapping_fallback_actor_count": sum(
+                int(bool(actor["canonical_mapping_fallback"])) for actor in actors
+            ),
             "target_free_holdout_weight_inference": target_free_holdout_inference_complete,
             "pretrained_holdout_exposure": True,
             "source_test_read": False,
@@ -995,6 +1013,13 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "holdout_actor_count": len(holdout_actors),
             "arm_names": list(ARM_NAMES),
             "parameter_counts": parameter_counts,
+            "canonical_mapping_fallback_actor_count": sum(
+                int(bool(actor["canonical_mapping_fallback"])) for actor in actors
+            ),
+            "maximum_canonical_mapping_fallback_distance_m": max(
+                float(actor["canonical_mapping_fallback_max_distance_m"])
+                for actor in actors
+            ),
             "final_train": {name: [row for row in history if row["arm"] == name][-1] for name in models},
             "minimum_train_loss": {
                 name: min(float(row["loss"]) for row in history if row["arm"] == name)

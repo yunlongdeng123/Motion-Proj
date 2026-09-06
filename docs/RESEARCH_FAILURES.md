@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F60 — 单个截断 canonical 数组保留了截断前 sidecar 索引（2026-09-07）
+
+- category=`legacy_sidecar_index_provenance`；status=`resolved_same_protocol_r2`；task=`WS-V72-D0-W0-W4-G0-01`。
+- failed run=`20260906T185100Z__w0-w4-g0-s7205-r1`；在 G0 build-only 证据映射时，1/659 个 eligible Actor 的 `canonical` 已截断到 4096 点，但 sidecar 仍含最大值 4960 的截断前 `input_canonical_surface_indices`，CUDA `index_add_` 越界。
+- exposure：发生在第一个完整 geometry-build pass 完成前；未挂载 train/holdout target，未训练模型，未产生 quality metric；source/external final read=false。
+- resolution：有效索引继续使用显式 provenance；仅对越界 Actor 将 sidecar anchors 映射到当前 canonical 的最近点，并在 manifest/summary 记录 fallback Actor 数和最大映射距离。全量静态审计确认只有该 1 个 Actor 越界；sidecar anchors 与 cache anchors 最大坐标误差为 `1.09e-6m`。
+- prevention：任何由 capped/sampled 数组消费旧 sidecar 索引的 runner，必须在 GPU scatter 前检查索引范围；fallback 必须可计数，不得静默删 Actor 或 clip 索引。
+
+下一可用统一失败编号：`V71-F61`。
+
 ## V71-F59 — TorchVersion 子类不能直接写入 resolved YAML（2026-09-07）
 
 - category=`run_metadata_serialization`；status=`resolved_same_protocol_r3`；task=`WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01`。
@@ -64,7 +74,7 @@
 - evidence：source-dispatch 修复 commit=`691619c5`；r1/r2/r3 `status.json`，r3 manifest/summary；
   prevention：所有 legacy cache 重建必须携带 per-Actor source provenance，禁止从目录存在推断 raw 可恢复。
 
-下一可用统一失败编号：`V71-F60`。
+下一可用统一失败编号（该段记录时）：`V71-F60`；当前编号以文首为准。
 
 ## V7.2 D0 G0 outcome note — density is a required matched factor（2026-09-06）
 
