@@ -1,5 +1,32 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F57 — PoinTr 顶层导入要求未使用架构的 CUDA 扩展（2026-09-07）
+
+- category=`external_baseline_import_scope`；status=`resolved_capability`；task=`WS-V72-D0-G3-ADAPOINTR-*`。
+- symptom：AdaPoinTr capability 在模型构造前因 `models/__init__.py` 同时导入 GRNet，继而要求未编译的
+  `gridding` 扩展；没有模型 forward、target metric 或 source/external final read。
+- root cause：官方包入口注册所有架构，而本任务只使用 AdaPoinTr；该依赖与 G3 graph 无关。
+- resolution：保持官方 `4603257` snapshot 不改，在独立 build copy 中只注册 AdaPoinTr；模型源码、checkpoint、
+  forward 和 loss 不变。真实 512→4096 forward/backward 随后通过。
+- prevention：外部基线只编译实际执行图依赖；build delta 与 upstream commit 同时记录，不能冒充 clean upstream wheel。
+
+## V71-F56 — PointNet++ 上游固定旧架构且最小 CUDA 环境缺开发头文件（2026-09-07）
+
+- category=`cuda_extension_build_contract`；status=`resolved_sm86_build`；task=`WS-V72-D0-G3-ADAPOINTR-*`。
+- symptom：第一次 PointNet++ wheel 构建同时包含上游硬编码 `sm_37...sm_75`，且编译器找不到 `cusparse.h`；
+  发生在任何 G3 模型/数据读取前。
+- resolution：安装官方 NVIDIA CUDA 12.1 development libraries，在独立 build copy 将架构收窄为 RTX 3090
+  的 `sm_86`；PointNet++ 3.0.0 与 Chamfer CUDA 均完成 forward/backward smoke。
+- prevention：扩展构建必须记录 toolkit、GPU capability、upstream commit、build delta 和 wheel hash。
+
+## V71-F55 — NVIDIA label 被全局 conda mirror 重写为不存在路径（2026-09-07）
+
+- category=`environment_channel_resolution`；status=`resolved_explicit_official_channel`；task=`WS-V72-D0-G3-ADAPOINTR-*`。
+- symptom：`nvidia/label/cuda-12.1.1` 被映射到 TUNA mirror 后返回 HTTP 404；无模型、数据或 target read。
+- resolution：保持全局 conda 配置不变，仅对隔离环境使用完整官方 channel URL 与 `--override-channels`，成功安装
+  CUDA 12.1.105 compiler/runtime/development libraries。
+- prevention：带 label 的 vendor channel 使用 manifest 中的完整 URL，不依赖全局 channel alias。
+
 ## V71-F54 — G1 r1 假定 legacy cohort 全部保留 raw LiDAR（2026-09-06）
 
 - category=`data_provenance_dispatch`；status=`resolved_same_protocol_r3`；task=`WS-V72-D0-G1-ACTOR-TSDF-01`。
@@ -15,7 +42,7 @@
 - evidence：source-dispatch 修复 commit=`691619c5`；r1/r2/r3 `status.json`，r3 manifest/summary；
   prevention：所有 legacy cache 重建必须携带 per-Actor source provenance，禁止从目录存在推断 raw 可恢复。
 
-下一可用统一失败编号：`V71-F55`。
+下一可用统一失败编号：`V71-F58`。
 
 ## V7.2 D0 G0 outcome note — density is a required matched factor（2026-09-06）
 

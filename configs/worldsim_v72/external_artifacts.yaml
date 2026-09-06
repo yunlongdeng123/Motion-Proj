@@ -1,5 +1,5 @@
 schema_version: worldsim_v72.external_artifacts.v1
-audited_at: 2026-09-06
+audited_at: 2026-09-07
 artifacts:
   adapointr_pcn_checkpoint:
     source: https://cloud.tsinghua.edu.cn/f/b822a5979762417ba75e/?dl=1
@@ -9,3 +9,19 @@ artifacts:
     license_context: official_PoinTr_repository_model_release
     intended_use: initialize_G3_then_adapt_on_driving_actor_train_role
     direct_unadapted_quality_claim_allowed: false
+  pointnet2_pytorch_source:
+    source: https://github.com/erikwijmans/Pointnet2_PyTorch.git
+    path: /root/autodl-tmp/external/worldsim_v72/Pointnet2_PyTorch
+    commit: b5ceb6d9ca0467ea34beb81023f96ee82228f626
+    build_copy: /root/autodl-tmp/build/worldsim_v72/Pointnet2_PyTorch_sm86_b5ceb6d9
+    build_delta: replace_upstream_hardcoded_legacy_arch_list_with_sm_86
+    intended_use: AdaPoinTr_fps_and_gather_cuda_ops
+  adapointr_runtime:
+    conda_prefix: /root/autodl-tmp/envs/worldsim-v72-pointr
+    torch: 2.4.1+cu121
+    cuda_toolkit: 12.1.105
+    gpu: NVIDIA_GeForce_RTX_3090_24GiB
+    pointr_build_copy: /root/autodl-tmp/build/worldsim_v72/PoinTr_AdaPoinTr_4603257
+    build_delta: import_only_AdaPoinTr_to_avoid_unused_architecture_extensions
+    chamfer_extension: built_sm86
+    pointnet2_ops: 3.0.0_built_sm86

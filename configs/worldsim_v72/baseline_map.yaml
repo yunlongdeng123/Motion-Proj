@@ -33,7 +33,7 @@ object_completion:
     independent_source_test: false
   adapointr:
     id: G3
-    status: source_checkpoint_and_adapter_ready_gpu_environment_pending
+    status: gpu_capability_passed_runs_configured
     repository: https://github.com/yuxumin/PoinTr.git
     checkout: /root/autodl-tmp/external/worldsim_v72/PoinTr
     commit: 4603257ed3db9e7dad349b712e1b2fe0da207015
@@ -41,7 +41,16 @@ object_completion:
     checkpoint_manifest: configs/worldsim_v72/external_artifacts.yaml
     adapter_run: run://worldsim_v72/WS-V72-P0-G3-DATA-ADAPTER-01/20260906T154442Z__adapointr-legacy-export-r1
     adapter_shapes: {input_points: 512, target_points: 4096}
-    blockers: [cuda_extensions_unbuilt, pointnet2_ops_unbuilt, gpu_unavailable]
+    runtime: /root/autodl-tmp/envs/worldsim-v72-pointr
+    capability:
+      gpu: NVIDIA_GeForce_RTX_3090_24GiB
+      fp32_batch_48_peak_reserved_gib: 19.6309
+      amp_batch_64_peak_reserved_gib: 19.7871
+      amp_batch_64_samples_per_second: 107.0
+      checkpoint_compatible_tensors: 333
+      decoder_shape_mismatch_tensors: 2
+    configured_runs: [official_zero_shot, pretrained_adapted_600_epochs, scratch_600_epochs]
+    blockers: []
   object_centric_occ:
     status: deferred_until_route_a_selected
     repository: https://github.com/Ghostish/ObjectCentricOccCompletion.git

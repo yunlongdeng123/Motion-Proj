@@ -1,0 +1,38 @@
+task_id: WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01
+hypothesis_id: WS-V72-H-D0-EXTERNAL-COMPLETION
+runs_root: /root/autodl-tmp/runs
+data_role: legacy_diagnostic
+adapter_root: /root/autodl-tmp/data/worldsim_v72/adapointr_legacy_v1
+adapter_manifest: /root/autodl-tmp/data/worldsim_v72/adapointr_legacy_v1/manifest.json
+cohort_rows: /root/autodl-tmp/runs/worldsim_v71/WS-V71-M8-TEMPORAL-FRAME-COVERAGE-01/20260904T202000Z__m8-temporal-frame-s71110-r2/TRAIN_HOLDOUT_TEMPORAL.jsonl
+legacy_cache_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train
+pointr_root: /root/autodl-tmp/build/worldsim_v72/PoinTr_AdaPoinTr_4603257
+pointr_upstream_commit: 4603257ed3db9e7dad349b712e1b2fe0da207015
+pointr_config: cfgs/PCN_models/AdaPoinTr.yaml
+checkpoint: /root/autodl-tmp/external/worldsim_v72/checkpoints/AdaPoinTr_PCN.pth
+checkpoint_sha256: f58a5650b348ca3d68fc8e01e3e88f57d5a889bbad5521fec7a2760eda664fa1
+initialization: pretrained_strict
+input_point_count: 512
+output_point_count: 16384
+train_epochs: 0
+batch_size: 16
+amp: true
+tf32: true
+seed: 7203
+density_budgets: [64, 128, 256, 512]
+include_native_density: true
+evaluation:
+  fscore_threshold_m: 0.20
+  literal_lateral_tolerance_m: 0.20
+  literal_depth_tolerance_m: 0.20
+  distance_chunk_size: 256
+  ray_chunk_size: 128
+  point_chunk_size: 512
+bootstrap: {seed: 7230, samples: 2000}
+pretrained_holdout_exposure: true
+source_test_read: false
+external_test_read: false
+route_decision_allowed: false
+failure_ledger_refs: [V71-F43, V71-F52, V71-F54, V71-F55, V71-F56, V71-F57]
+failure_ledger_delta: none
+
