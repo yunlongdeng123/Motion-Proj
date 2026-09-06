@@ -318,16 +318,18 @@ def _evaluate(
 def run(config_path: Path, role: str, run_id: str, candidate_checkpoint: Path | None) -> dict[str, Any]:
     config_text = config_path.read_text(encoding="utf-8")
     config = yaml.safe_load(config_text)
-    if role not in {"dev", "route_select"}:
-        raise PermissionError("A1 只允许 dev 或 route_select")
+    if role not in {"train", "dev", "route_select"}:
+        raise PermissionError("A1 只允许 train、dev 或 route_select")
     if config["source_test_read"] or config["external_test_read"]:
         raise PermissionError("A1 不允许读取最终角色")
-    if role == "route_select" and candidate_checkpoint is None:
-        raise ValueError("route_select 必须显式绑定冻结 candidate checkpoint")
+    if role in {"dev", "route_select"} and candidate_checkpoint is None:
+        raise ValueError("dev/route_select 必须显式绑定冻结 candidate checkpoint")
+    if role == "train" and candidate_checkpoint is not None:
+        raise ValueError("train 从冻结 base checkpoint 开始，不接受 candidate checkpoint")
     task_id = config["task_ids"][role]
     run_dir = Path(config["runs_root"]) / "worldsim_v72" / task_id / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
-    role_root = Path(config["clean_data_root"]) / role
+    role_root = Path(config["clean_data_root"]) / role if role != "train" else None
     started = time.monotonic()
     git_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True).strip()
     torch.manual_seed(int(config["seed"])); np.random.seed(int(config["seed"])); torch.cuda.manual_seed_all(int(config["seed"]))
@@ -342,7 +344,7 @@ def run(config_path: Path, role: str, run_id: str, candidate_checkpoint: Path | 
         "run_uri": f"run://worldsim_v72/{task_id}/{run_id}",
         "status": "running",
         "role": role,
-        "training": role == "dev",
+        "training": role == "train",
         "candidate_checkpoint": str(candidate_checkpoint) if candidate_checkpoint else None,
         "git_commit": git_commit,
         "source_test_read": False,
@@ -354,19 +356,41 @@ def run(config_path: Path, role: str, run_id: str, candidate_checkpoint: Path | 
     (run_dir / "resolved.yaml").write_text(yaml.safe_dump({**config, "role": role, "run_id": run_id}, sort_keys=False), encoding="utf-8")
     _write_json(run_dir / "status.json", {"status": "running", "phase": "target_free_prediction"})
     try:
-        clean_inputs, identities = _load_clean_inputs(role_root)
         base = _load_model(config, Path(config["base_checkpoint"]))
-        base_predictions = _predict(base, clean_inputs.pin_memory(), int(config["batch_size"]), bool(config["amp"]))
-        if role == "dev":
+        if role == "train":
+            _write_json(run_dir / "status.json", {"status": "running", "phase": "training"})
             history = _train(base, config, run_dir)
-            candidate_predictions = _predict(base, clean_inputs.pin_memory(), int(config["batch_size"]), bool(config["amp"]))
             candidate_checkpoint = run_dir / "final.pt"
-        else:
-            del base
-            torch.cuda.empty_cache()
-            candidate = _load_model(config, candidate_checkpoint)
-            history = []
-            candidate_predictions = _predict(candidate, clean_inputs.pin_memory(), int(config["batch_size"]), bool(config["amp"]))
+            summary = {
+                **manifest,
+                "status": "done",
+                "candidate_checkpoint": str(candidate_checkpoint),
+                "candidate_checkpoint_sha256": _sha256(candidate_checkpoint),
+                "train_actor_count": 593,
+                "final_train": history[-1],
+                "target_free_dev_prediction": True,
+                "dev_target_read": False,
+                "route_decision_allowed": False,
+                "resources": {
+                    "gpu": torch.cuda.get_device_name(0),
+                    "peak_gpu_memory_gib": torch.cuda.max_memory_reserved() / 1024**3,
+                    "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024**2,
+                    "wall_seconds": time.monotonic() - started,
+                },
+            }
+            _write_json(run_dir / "summary.json", summary)
+            _write_json(run_dir / "manifest.json", {**manifest, "status": "done", "summary": "summary.json"})
+            _write_json(run_dir / "status.json", {"status": "done", "phase": "complete", "completed_at_utc": datetime.now(timezone.utc).isoformat()})
+            return summary
+
+        assert role_root is not None and candidate_checkpoint is not None
+        clean_inputs, identities = _load_clean_inputs(role_root)
+        base_predictions = _predict(base, clean_inputs.pin_memory(), int(config["batch_size"]), bool(config["amp"]))
+        del base
+        torch.cuda.empty_cache()
+        candidate = _load_model(config, candidate_checkpoint)
+        history = []
+        candidate_predictions = _predict(candidate, clean_inputs.pin_memory(), int(config["batch_size"]), bool(config["amp"]))
         _write_json(run_dir / "status.json", {"status": "running", "phase": "evaluation"})
         actor_rows, metrics = _evaluate(
             role_root,
