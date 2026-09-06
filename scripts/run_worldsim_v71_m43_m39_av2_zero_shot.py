@@ -174,6 +174,11 @@ def _prepare_authority_actor(
     actor["m8_residuals_t"] = residuals
     actor["m8_scales_t"] = scales
     actor["size_lwh_m"] = actor["size_t"].detach().cpu().numpy()
+    actor["track_id"] = str(bundle["row"]["track_id"])
+    actor["trajectory_xyz_m"] = np.asarray(
+        bundle["diagnostics"]["track"].city_centers_m, dtype=np.float32
+    ).copy()
+    actor["hazardous"] = bool(bundle["row"]["hazardous"])
     sidecar = _anchor_input_sidecar(bundle, actor, evidence_config, device)
     actor["authority_anchor_features_t"] = anchor_runner._anchor_features(
         actor, sidecar, feature_config, device
@@ -226,6 +231,14 @@ def _evaluate_bundle(
     origins = np.asarray(diagnostics["target_sensor_origins"], dtype=np.float32)
     actor["target"] = target
     actor["target_sensor_origins"] = origins
+    input_actor_state = {
+        "track_id": str(bundle["row"]["track_id"]),
+        "trajectory_xyz_m": np.asarray(
+            diagnostics["track"].city_centers_m, dtype=np.float32
+        ),
+        "size_lwh_m": np.asarray(diagnostics["track"].size_lwh_m, dtype=np.float32),
+        "hazardous": bool(bundle["row"]["hazardous"]),
+    }
 
     with torch.inference_mode():
         baseline = energy_runner._energy_partition(
@@ -259,6 +272,8 @@ def _evaluate_bundle(
         lateral_tolerance_m=float(config["evaluation"]["literal_lateral_tolerance_m"]),
         depth_tolerance_m=float(config["evaluation"]["literal_depth_tolerance_m"]),
         distance_chunk_size=int(config["evaluation"]["distance_chunk_size"]),
+        actor_state_before=input_actor_state,
+        actor_state_after=actor,
     )
     row.update(
         {
@@ -272,8 +287,12 @@ def _evaluate_bundle(
                 torch.linalg.vector_norm(residuals, dim=1).mean()
             ),
             "mean_gaussian_scale_m": float(scales.mean()),
-            "baseline_early_count": int(np.count_nonzero(baseline["early"])),
-            "baseline_hit_count": int(np.count_nonzero(baseline["hit"])),
+            "categorical_baseline_early_count": int(
+                np.count_nonzero(baseline["early"])
+            ),
+            "categorical_baseline_hit_count": int(
+                np.count_nonzero(baseline["hit"])
+            ),
             "m39_early_count": int(np.count_nonzero(categorical["early"])),
             "m39_hit_count": int(np.count_nonzero(categorical["hit"])),
             "m39_observable_count": int(np.count_nonzero(categorical["observable"])),
@@ -287,8 +306,12 @@ def _evaluate_bundle(
 def _surface_return_summary(rows: list[Mapping[str, Any]]) -> dict[str, Any]:
     def stratum(selected: list[Mapping[str, Any]]) -> dict[str, Any]:
         rays = sum(int(row["ray_count"]) for row in selected)
-        baseline_early = sum(int(row["baseline_early_count"]) for row in selected)
-        baseline_hit = sum(int(row["baseline_hit_count"]) for row in selected)
+        baseline_early = sum(
+            int(row["categorical_baseline_early_count"]) for row in selected
+        )
+        baseline_hit = sum(
+            int(row["categorical_baseline_hit_count"]) for row in selected
+        )
         m39_early = sum(int(row["m39_early_count"]) for row in selected)
         m39_hit = sum(int(row["m39_hit_count"]) for row in selected)
         return {

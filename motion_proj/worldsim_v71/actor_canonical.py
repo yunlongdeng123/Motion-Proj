@@ -68,13 +68,36 @@ def immutable_actor_state(actor: Any) -> tuple[Any, ...]:
     )
 
 
-def assert_actor_state_immutable(before: Any, after: Any) -> None:
+def compare_actor_states(before: Any, after: Any) -> dict[str, bool]:
+    """逐字段比较输入与输出 Actor 状态，并返回可审计的 retention 结果。"""
     left = immutable_actor_state(before)
     right = immutable_actor_state(after)
-    if left[0] != right[0] or left[3] != right[3]:
+
+    def optional_array_equal(left_value: Any, right_value: Any) -> bool:
+        if left_value is None or right_value is None:
+            return left_value is None and right_value is None
+        return bool(np.array_equal(np.asarray(left_value), np.asarray(right_value)))
+
+    identity_equal = left[0] == right[0]
+    trajectory_equal = optional_array_equal(left[1], right[1])
+    size_equal = optional_array_equal(left[2], right[2])
+    hazard_equal = left[3] == right[3]
+    actor_retained = bool(identity_equal and trajectory_equal and size_equal)
+    return {
+        "identity_equal": bool(identity_equal),
+        "trajectory_equal": bool(trajectory_equal),
+        "size_equal": bool(size_equal),
+        "hazard_equal": bool(hazard_equal),
+        "actor_retained": actor_retained,
+        "hazard_state_retained": bool(actor_retained and hazard_equal),
+    }
+
+
+def assert_actor_state_immutable(before: Any, after: Any) -> None:
+    comparison = compare_actor_states(before, after)
+    if not comparison["identity_equal"] or not comparison["hazard_equal"]:
         raise ValueError("Actor identity 或 hazard state 被表面更新改变")
-    for before_value, after_value, name in zip(left[1:3], right[1:3], ("trajectory", "size")):
-        if before_value is None and after_value is None:
-            continue
-        if not np.array_equal(np.asarray(before_value), np.asarray(after_value)):
-            raise ValueError(f"Actor {name} 被表面更新改变")
+    if not comparison["trajectory_equal"]:
+        raise ValueError("Actor trajectory 被表面更新改变")
+    if not comparison["size_equal"]:
+        raise ValueError("Actor size 被表面更新改变")

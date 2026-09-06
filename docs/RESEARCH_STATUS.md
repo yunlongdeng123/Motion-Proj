@@ -1,5 +1,20 @@
 # Research Status
 
+## WorldSim V7.2 P0 已启动：算子勘误与任务优先基础设施（2026-09-06）
+
+分支=`research/worldsim-v7.2-task-first-completion-lidar`，父提交=`79910be1`，任务=
+`WS-V72-P0-OPERATOR-ERRATUM-01`。本轮获得新研究授权，但远端无 GPU；当前只进行 CPU／静态前期工作，
+不启动训练、正式 target 测试或 M43 重算。
+
+已确认 `V71-F52` 的根因：M43 runner 用 categorical baseline 覆盖 literal baseline 通用字段。修正将两类计数
+置于独立命名空间，并使 M43 Actor retention 由输入／输出 ID、轨迹、尺寸和 hazard 标签真实比较。canonical
+M43 artifact 保持不可变；已有 JSONL 缺失被覆盖前的 literal baseline，匹配算子重算登记为 GPU 恢复后的
+`legacy_diagnostic`，不阻塞 V7.2。M39 的 `V71-F43` 跨传感器拒绝完整保留。
+
+证据=`docs/M43_OPERATOR_ERRATUM.md`、`scripts/run_worldsim_v71_m43_m39_av2_zero_shot.py`、
+`motion_proj/worldsim_v71/actor_canonical.py`、`motion_proj/worldsim_v71/evaluate_surface.py`。下一步：完成 v2
+数据合同、日志级数据角色清单和四类微型语义检查，再进行外部强基线 capability 预检。
+
 ## 文档导航整理与中文稿归位（2026-09-06）
 
 基线 commit=`ec9c2e08`。中文精翻、三张配图和便携 ZIP 统一放入 `docs/paper/`；英文源码与 PDF 保留 `paper/`。

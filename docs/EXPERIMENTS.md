@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V72-P0-OPERATOR-ERRATUM-01 — running（2026-09-06）
+
+- route=`shared/P0`；base=`79910be1`；branch=`research/worldsim-v7.2-task-first-completion-lidar`；
+- failure_ledger_refs=`V71-F52,V71-F43`；failure_ledger_delta=`V71-F52 runner risk resolving`；
+- scope=M43 literal/categorical 字段隔离、真实 Actor state retention、勘误文档与固定合成语义检查；
+- data role=`legacy_diagnostic`；canonical M43 run 不改写；new target read=false；training=false；GPU=false；
+- existing rows 缺少被覆盖前的 literal baseline，匹配算子重算等待 GPU，仅作历史描述性勘误；
+- evidence=`docs/M43_OPERATOR_ERRATUM.md`；正式 run ID 尚未创建。
+
 ## 文档归档与中文阅读稿迁移 — docs only（2026-09-06）
 
 - base commit=`ec9c2e08`；new runs=0、new target reads=0、GPU=0。

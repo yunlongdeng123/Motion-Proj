@@ -8,6 +8,7 @@ import numpy as np
 import torch
 
 from motion_proj.worldsim_v71.first_return_renderer import literal_first_return_partition
+from motion_proj.worldsim_v71.actor_canonical import compare_actor_states
 
 
 def symmetric_chamfer(
@@ -50,7 +51,24 @@ def evaluate_actor_surface(
     lateral_tolerance_m: float,
     depth_tolerance_m: float,
     distance_chunk_size: int,
+    actor_state_before: Any | None = None,
+    actor_state_after: Any | None = None,
 ) -> dict[str, Any]:
+    if (actor_state_before is None) != (actor_state_after is None):
+        raise ValueError("Actor retention 必须同时提供输入与输出状态")
+    if actor_state_before is None:
+        retention = {
+            "identity_equal": True,
+            "trajectory_equal": True,
+            "size_equal": True,
+            "hazard_equal": True,
+            "actor_retained": True,
+            "hazard_state_retained": True,
+        }
+        retention_measurement = "legacy_contract_assumed"
+    else:
+        retention = compare_actor_states(actor_state_before, actor_state_after)
+        retention_measurement = "measured_input_output"
     baseline = literal_first_return_partition(
         baseline_surface,
         target,
@@ -82,8 +100,13 @@ def evaluate_actor_surface(
         "output_chamfer_m": symmetric_chamfer(
             output_surface, target, device=device, chunk_size=distance_chunk_size
         ),
-        "actor_state_retention": 1.0,
-        "hazard_state_retention": 1.0,
+        "actor_state_retention": float(retention["actor_retained"]),
+        "hazard_state_retention": float(retention["hazard_state_retained"]),
+        "retention_measurement": retention_measurement,
+        "retention_fields_equal": {
+            key: bool(retention[key])
+            for key in ("identity_equal", "trajectory_equal", "size_equal", "hazard_equal")
+        },
     }
 
 

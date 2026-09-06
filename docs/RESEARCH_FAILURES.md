@@ -27,6 +27,10 @@
 - resolution：main 移除混算子归因；本地 supplement 明示 erratum；同步 STATUS、EXPERIMENTS 与 synthesis。
 - remaining boundary：本次论文任务不修改 runner、不重读 target。未来复用 runner 前必须为 literal/categorical
   分别命名 baseline/output 字段，并以固定合成计数测试聚合。当前状态=`documentation_corrected_runner_risk_open`。
+- V7.2 resolution update（2026-09-06）：`WS-V72-P0-OPERATOR-ERRATUM-01` 已将 runner 的 categorical baseline
+  改为独立 `categorical_baseline_*` 字段，并为 M43 接入输入／输出 Actor 状态实测。已有 canonical JSONL 未保存
+  被覆盖前的 literal baseline，故当前状态=`runner_fixed_legacy_recompute_pending_gpu`；未来重算只可使用原 20-log
+  cohort、冻结模型与匹配 literal 算子，结果只作 `legacy_diagnostic`，不得改变 `V71-F43`。
 
 下一可用编号：`V71-F53`。下方历史条目中的 next-ID 属于当时状态。
 
