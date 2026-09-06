@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F61 — LPIPS AlexNet 权重的 Python 首次下载连接停滞（2026-09-07）
+
+- category=`external_metric_checkpoint_transport`；status=`resolved_prefetched_same_upstream`；task=`WS-V72-B0-LIDAR4D-CAPABILITY-01`。
+- failed run=`20260906T192156Z__lidar4d-kitti360-f4950-s0-r1`；LiDAR4D 在构造官方 LPIPS meter 时通过 `torchvision` 首次下载 `alexnet-owt-7be5be79.pth`，连接超过 2 分钟仍停在握手且缓存为 0 bytes，故以 SIGTERM 收口。run wall=`142.20s`、峰值 GPU=`488MiB`、平均利用率=`0%`，没有 checkpoint 或 metric。
+- exposure：失败发生在 KITTI-360 dataloader、训练、验证和测试构造之前；Motion-Proj source/external final read=false。
+- resolution：使用同一官方 `download.pytorch.org` URL 预取相同权重到冻结 `TORCH_HOME`，bytes=`244,408,911`、SHA-256=`7be5be79...dee02`；不修改 LiDAR4D、LPIPS、模型、数据、split、seed 或 30k 协议，r2 继续。
+- prevention：含第三方 metric checkpoint 的外部基线在正式 run 前记录 URL、bytes、SHA-256 并完成缓存；传输失败不得解释为模型能力失败。
+
+下一可用统一失败编号：`V71-F62`。
+
 ## V71-F60 — 单个截断 canonical 数组保留了截断前 sidecar 索引（2026-09-07）
 
 - category=`legacy_sidecar_index_provenance`；status=`resolved_same_protocol_r3`；task=`WS-V72-D0-W0-W4-G0-01`。
