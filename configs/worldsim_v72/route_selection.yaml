@@ -34,3 +34,28 @@ criteria:
   - log_level_stability
   - complete_application
   - measured_compute_cost
+preregistered_d1_rule:
+  route_a_primary: A1_anchored_surface
+  route_a_diagnostic_only: A1_observation_constrained
+  matched_density_budget: 512
+  comparator_pool: [G0_raw, G1_tsdf, G3_adapointr]
+  primary_effect_any:
+    relative_cd_reduction_vs_best: 0.05
+    absolute_fscore_gain_vs_best: 0.02
+  side_effect_limits:
+    maximum_early_rate_increase_vs_best: 0.01
+    minimum_hit_recall_delta_vs_best: -0.01
+  development_requirement: primary_effect_and_both_side_effect_limits
+  route_select_requirement:
+    aggregate_same_gate: true
+    minimum_log_count_with_nonnegative_primary_direction: 2
+    total_route_select_log_count: 3
+  route_b_requirement:
+    full_scan_output: true
+    matched_protocol_gain_over_lidar4d_required: true
+    capability_only_does_not_count_as_method_gain: true
+  outcome:
+    a_pass_b_fail: select_route_a
+    a_fail_b_pass: select_route_b
+    both_pass: select_more_stable_complete_lower_cost_route
+    both_fail: close_method_claim_and_publish_diagnostic_baseline_report_only
