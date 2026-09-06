@@ -25,7 +25,9 @@
 | `WS-V72-D0-G0-RAW-FUSION-01` | done | 66 Actors / 34 logs 的 5 点密度曲线；只作 legacy diagnostic |
 | `WS-V72-D0-G1-ACTOR-TSDF-01` | done | 同一 66 Actors / 34 logs 的 5 点密度曲线；44 raw + 22 processed provenance |
 | `WS-V72-P0-G3-DATA-ADAPTER-01` | done | AdaPoinTr 593/66 Actor adapter 与官方 PCN checkpoint 已就绪 |
-| `WS-V72-P1-D0-MATCHED-BASELINES-01` | blocked | 需要至少 1×RTX 3090 24 GiB 运行 G2/G3 与 W0--W4 |
+| `WS-V72-P1-D0-MATCHED-BASELINES-01` | done | G0--G3 与 W0--W4 完成；普遍三态缺陷主张关闭 |
+| `WS-V72-B0-LIDAR4D-CAPABILITY-01` | done | 官方 KITTI-360 30k + refinement + final eval 完成 |
+| `WS-V72-P2-CLEAN-SPLIT-FREEZE-01` | done | 4 dev / 3 route-select 日志冻结；3 source-test candidates 保持未读 |
 
 状态只使用 `pending/running/blocked/done/rejected`。D1 前不得填充 `source_test` 或 `external_test`。
 
@@ -38,7 +40,7 @@
 
 `configs/worldsim_v72/data_role_inventory.json` 保存原始 metadata 合并，`data_roles.json` 只登记互斥日志角色。候选池只是容量审计，不是测试集。
 
-当前 nuScenes 只有 10 个明确未分配日志，达不到计划中的 `dev 20 + route_select 12 + source_test 30`。D1 前必须在以下边界内重新分配：缩小并公开实际独立样本规模，或接入具有公开协议的第二数据集；不能把相邻 scenes 拆开扩大分母。
+当前 nuScenes 只有 10 个全依赖链明确未暴露日志，达不到原目标规模。已按日志 token 字典序、完全不读质量地冻结 4 个 `dev` 与 3 个 `route_select`；余下 3 个只作为尚未打开的 `source_test` candidates。该缩小规模是明确证据限制，相邻 scenes 不扩大独立分母；冻结清单见 `configs/worldsim_v72/clean_route_split.yaml`。
 
 ## D0 最小比较
 
@@ -51,12 +53,11 @@
 | W0–W4 | unit/support/density/scalar/F-O-U | 合同已就绪，等待 GPU | 三态证据是否优于同容量标量 |
 | B0 | DyNFL；访问受阻时 LiDAR4D | 官方源码已固定 | 能否生成完整扫描并公平处理场景拟合 |
 
-## GPU 恢复后的第一顺序
+## 当前执行顺序（GPU 已恢复）
 
-1. 核对 driver/toolkit，建立隔离环境并完成 AdaPoinTr CUDA 扩展与单 batch capability。
-2. 复用已完成的 G0/G1，在 legacy development 上补 G2/G3 同对象、同密度、同算子主表。
-3. DyNFL 若 Waymo 授权和数据可用，先跑官方单场景；否则用完整 KITTI-360 数据跑 LiDAR4D 官方 sequence capability。
-4. 只有两路均有公平强对照后才做 D1；此时仍不读取最终 source/external test。
+1. 物化冻结的 4 个 dev 与 3 个 route-select 日志，保持余下 3 个 source-test candidates 未读。
+2. 在 clean dev 上运行 A1 观测约束 AdaPoinTr 与 G0/G1/G3 公平对照，并建立 B 的 clean development 证据。
+3. 冻结 A/B 候选后只读 route-select 完成 D1；此时仍不读取 source/external test。
 
 CPU 前置结果与开卡交接分别见 `docs/WORLDSIM_V7_2_D0_CPU_PREFLIGHT_REPORT.md` 和
 `docs/WORLDSIM_V7_2_GPU_HANDOFF.md`。

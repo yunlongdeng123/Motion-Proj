@@ -1,5 +1,11 @@
 # Research Status
 
+## WorldSim V7.2 clean dev / route-select 日志冻结（2026-09-07）
+
+`WS-V72-P2-CLEAN-SPLIT-FREEZE-01` 只依据 P0 metadata-only candidate pool，按日志 token 字典序冻结 nuScenes 的 4 个 dev 与 3 个 route-select 日志；余下 3 个仍只作为未打开的 source-test candidates。选择过程没有读取点云质量、Actor 数量或历史结果，相邻 scenes 不扩大独立分母。
+
+实际规模低于原 20/12/30 目标，是全依赖链仅剩 10 个未暴露日志的明确证据限制。`route_select` 已冻结但尚未物化，`source_test` 未冻结且未读，`external_test` 未读。清单=`configs/worldsim_v72/clean_route_split.yaml`。
+
 ## WorldSim V7.2 B0 LiDAR4D 原生能力完成（2026-09-07）
 
 canonical=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2`。KITTI-360 官方 drive 0000 frames 4950--5000 已完成 30k nominal iterations（639 epochs / 30,033 steps）、1000-step ray-drop refinement、4 帧最终评测和结果导出。最终 ray-drop RMSE/accuracy/F1=`0.21857/0.93833/0.95534`，depth RMSE/MedAE/LPIPS/SSIM/PSNR=`2.94718m/0.03123m/0.07972/0.85348/28.67599`，point CD/F-score=`0.11733/0.92081`。

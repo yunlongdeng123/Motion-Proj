@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V72-P2-CLEAN-SPLIT-FREEZE-01 — completed（2026-09-07）
+
+- dataset=nuScenes；split unit=driving log；selection=metadata-only lexicographic log token；quality/history read=false；
+- frozen counts=4 dev / 3 route-select；3 source-test candidates remain unopened；adjacent scenes are not independent replicates；
+- route-select materialized=false；source_test frozen/read=false/false；external_test read=false；
+- evidence=`configs/worldsim_v72/clean_route_split.yaml`、`configs/worldsim_v72/data_roles.json`。
+
 ## WS-V72-B0-LIDAR4D-CAPABILITY-01 — canonical completed（2026-09-07）
 
 - canonical=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2`；官方 LiDAR4D `4d6abbd`；KITTI-360 drive 0000 frames 4950--5000；47 train / 4 val-test；seed 0；30k nominal iterations；639 epochs / 30,033 steps；FP16；1024 rays；
