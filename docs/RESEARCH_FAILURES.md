@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F59 — TorchVersion 子类不能直接写入 resolved YAML（2026-09-07）
+
+- category=`run_metadata_serialization`；status=`resolved_same_protocol_r3`；task=`WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01`。
+- failed run=`20260906T164500Z__g3-adapointr-official-zs-r2`；模型 335/335 tensors strict load 后，PyYAML 拒绝序列化
+  `torch.__version__` 的 `TorchVersion` 子类。
+- exposure：载入官方模型与 66 个 target-free partial；发生在 forward 和 target metric 前；无 quality read，
+  source/external final read=false。
+- resolution：只将 Torch/CUDA 版本元数据显式转换为普通字符串；模型、权重、partial、seed、batch、density 和
+  evaluator 不变，r3 继续同一协议。
+- prevention：第三方库返回的字符串子类在写 resolved manifest 前统一转为 JSON/YAML 原生 scalar。
+
 ## V71-F58 — G3 runner 未在 PoinTr 根目录解析相对 base config（2026-09-07）
 
 - category=`external_config_working_directory`；status=`resolved_same_protocol_r2`；task=`WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01`。
@@ -53,7 +64,7 @@
 - evidence：source-dispatch 修复 commit=`691619c5`；r1/r2/r3 `status.json`，r3 manifest/summary；
   prevention：所有 legacy cache 重建必须携带 per-Actor source provenance，禁止从目录存在推断 raw 可恢复。
 
-下一可用统一失败编号：`V71-F59`。
+下一可用统一失败编号：`V71-F60`。
 
 ## V7.2 D0 G0 outcome note — density is a required matched factor（2026-09-06）
 

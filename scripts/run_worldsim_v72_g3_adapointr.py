@@ -442,8 +442,8 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
             "git_commit": git_commit,
             "resolved_at_utc": datetime.now(timezone.utc).isoformat(),
             "gpu": torch.cuda.get_device_name(0),
-            "torch": torch.__version__,
-            "torch_cuda": torch.version.cuda,
+            "torch": str(torch.__version__),
+            "torch_cuda": str(torch.version.cuda),
         }
         (run_dir / "resolved.yaml").write_text(
             yaml.safe_dump(resolved, sort_keys=False), encoding="utf-8"
