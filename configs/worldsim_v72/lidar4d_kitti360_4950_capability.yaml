@@ -1,0 +1,40 @@
+schema_version: worldsim_v72.lidar4d_capability.v1
+task_id: WS-V72-B0-LIDAR4D-CAPABILITY-01
+description: LiDAR4D 官方 KITTI-360 sequence 00 / frames 4950--5000 完整扫描能力运行
+evidence_role: external_public_capability
+route_selection_eligible: false
+failure_ledger_refs: [V71-F52, V71-F43]
+failure_ledger_delta: none
+motionproj_source_test_read: false
+motionproj_external_test_read: false
+seed: 0
+upstream:
+  repository: https://github.com/ispc-lab/LiDAR4D.git
+  checkout: /root/autodl-tmp/external/worldsim_v72/LiDAR4D
+  commit: 4d6abbd9e0c49744f5fb724a467ab0d8983f23fa
+  config: configs/kitti360_4950.txt
+  tiny_cuda_nn_commit: 749dd70c5afc5a9dadb85e5652ed65d55e0ba187
+environment:
+  python: /root/autodl-tmp/envs/worldsim-v72-lidar4d/bin/python
+  cuda_home: /root/autodl-tmp/envs/worldsim-v72-pointr
+  torch_home: /root/autodl-tmp/external/worldsim_v72/torch_cache
+  cuda_visible_devices: "0"
+dataset:
+  root: /root/autodl-tmp/datasets/KITTI-360
+  manifest: /root/autodl-tmp/datasets/kitti360_2013_05_28_drive_0000_sync_4950_5000_manifest.json
+  sequence: 2013_05_28_drive_0000_sync
+  frame_start: 4950
+  frame_end: 5000
+  train_frames: 47
+  validation_frames: 4
+  test_frames: 4
+training:
+  iterations: 30000
+  learning_rate: 0.01
+  num_rays_lidar: 1024
+  alpha_depth: 1.0
+  alpha_intensity: 0.1
+  alpha_raydrop: 0.01
+  fp16: true
+  preload_to_gpu: true
+  eval_interval_epochs: 100
