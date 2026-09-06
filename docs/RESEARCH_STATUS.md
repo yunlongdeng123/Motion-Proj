@@ -4,7 +4,7 @@
 
 KITTI-360 官方 drive 0000 frames 4950--5000 已按 HTTP Range 获取并预处理，保存 51 帧逐文件 SHA-256、标定、位姿、时间戳和 47/4 官方 split。隔离环境使用 Python 3.9、Torch 2.1.0+cu121、tiny-cuda-nn `749dd70` 的 sm86 build 与 Chamfer CUDA；RTX 3090 上 47 帧 FP16 预载、53,056,673 参数模型构造和 Chamfer forward 均通过。
 
-r1=`20260906T192156Z__lidar4d-kitti360-f4950-s0-r1` 在 dataloader/训练前因 LPIPS AlexNet 权重的 Python 首次下载停滞而收口，见 `V71-F61`。同一官方 URL 的 244,408,911-byte 权重已按 SHA-256=`7be5be79...dee02` 预取；r2 保持官方 30k/seed 0/FP16/1024 rays 协议继续。该证据角色仅为 `external_public_capability`，不触发 D1 选路；Motion-Proj source/external final read=false。
+r1=`20260906T192156Z__lidar4d-kitti360-f4950-s0-r1` 在 dataloader/训练前因 LPIPS AlexNet 权重的 Python 首次下载停滞而收口，见 `V71-F61`。同一官方 URL 的 244,408,911-byte 权重已按 SHA-256=`7be5be79...dee02` 预取；r2=`run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2` 已按官方 30k/seed 0/FP16/1024 rays 协议进入训练。该证据角色仅为 `external_public_capability`，不触发 D1 选路；Motion-Proj source/external final read=false。
 
 ## WorldSim V7.2 D0 权重筛选完成：单标量解释主要收益，三态增量不跨几何（2026-09-07）
 

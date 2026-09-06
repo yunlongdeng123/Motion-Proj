@@ -97,12 +97,14 @@ neural_lidar:
     blockers: [waymo_access, nerfstudio_0_3_4, cuda_extensions_unbuilt]
   lidar4d:
     id: B0-fallback
-    status: source_fetched_data_and_environment_pending
+    status: capability_running
     repository: https://github.com/ispc-lab/LiDAR4D.git
     checkout: /root/autodl-tmp/external/worldsim_v72/LiDAR4D
     commit: 4d6abbd9e0c49744f5fb724a467ab0d8983f23fa
-    environment: worldsim-v72-lidar4d
-    blockers: [kitti360_sequence_data_missing, tiny_cuda_nn_unbuilt, chamfer_extension_unbuilt]
+    environment: /root/autodl-tmp/envs/worldsim-v72-lidar4d
+    dataset_manifest: /root/autodl-tmp/datasets/kitti360_2013_05_28_drive_0000_sync_4950_5000_manifest.json
+    active_run: run://worldsim_v72/WS-V72-B0-LIDAR4D-CAPABILITY-01/20260906T192557Z__lidar4d-kitti360-f4950-s0-r2
+    blockers: []
   lidar_rt:
     status: deferred_until_route_b_selected
     repository: https://github.com/zju3dv/LiDAR-RT.git
