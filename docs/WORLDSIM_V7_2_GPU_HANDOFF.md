@@ -1,36 +1,43 @@
-# WorldSim V7.2 GPU 开机交接
+# WorldSim V7.2 GPU 执行状态
 
 更新：2026-09-07
 
-GPU 已恢复为 1×RTX 3090 24 GiB；无卡阶段的 G0/G1 与开卡后的 AdaPoinTr capability 均已完成。
+GPU 已恢复为 1×RTX 3090 24 GiB。G0--G3 几何图谱和 AdaPoinTr 三种初始化对照已经完成；当前不需要重跑这些任务。
 
-## 已就绪
+## 已完成
 
 - branch：`research/worldsim-v7.2-task-first-completion-lidar`
-- CPU implementation commit：`691619c5f20de4af838a20d416a6818aa377b2b0`
-- G0 canonical：`20260906T153519Z__g0-raw-fusion-cpu-r1`
-- G1 canonical：`20260906T160409Z__g1-actor-tsdf-cpu-r3`
-- G0/G1：相同 66 Actors、34 logs、五个密度预算和 evaluator；G1 峰值 RSS=`0.717 GiB`
-- AdaPoinTr adapter：`20260906T154442Z__adapointr-legacy-export-r1`
-- AdaPoinTr official checkpoint：`/root/autodl-tmp/external/worldsim_v72/checkpoints/AdaPoinTr_PCN.pth`
-- source snapshots：PoinTr `4603257`、DyNFL `b6d03de`、LiDAR4D `4d6abbd`
-- runtime：`/root/autodl-tmp/envs/worldsim-v72-pointr`，Torch `2.4.1+cu121`，CUDA toolkit `12.1.105`
-- extensions：Chamfer 与 PointNet++ 均已按 `sm_86` 编译并通过 forward/backward
-- capability：FP32 batch 48 峰值 reserved `19.63GiB`；AMP batch 64 峰值 `19.79GiB`、约 `107 samples/s`
-- checkpoint：4096-point decoder 可载入 333/335 tensors，仅重置输出维度相关的 2 个 tensors
+- G0：`20260906T153519Z__g0-raw-fusion-cpu-r1`
+- G1：`20260906T160409Z__g1-actor-tsdf-cpu-r3`
+- G2：`20260906T174000Z__g2-m8-matched-s71110-r1`
+- G3 official zero-shot：`20260906T165000Z__g3-adapointr-official-zs-r3`
+- G3 pretrained-adapted 600 epochs：`20260906T165500Z__g3-adapointr-transfer-s7203-r1`
+- G3 scratch 600 epochs：`20260906T174200Z__g3-adapointr-scratch-s7204-r1`
+- 相同 evaluator：66 Actors、34 logs、99,208 条正回波射线、64/128/256/512/native 五档密度
+- source/external test read：`false/false`
 
-## 当前执行顺序
+AdaPoinTr 独立运行环境为 `/root/autodl-tmp/envs/worldsim-v72-pointr`，Torch=`2.4.1+cu121`，CUDA toolkit=`12.1.105`。Chamfer 与 PointNet++ 已按 `sm_86` 编译；AMP batch 64 实测峰值约 `19.96GiB`。两次 600-epoch 训练分别使用约 52 分钟，训练 Actor 全量常驻 GPU。
 
-1. 先评测官方 AdaPoinTr zero-shot，单独标记外部预训练暴露。
-2. 以 AMP batch 64 运行 600-epoch pretrained-adapted 与 scratch 配方；二者分表，训练期间不读 holdout。
-3. 以同一 66-Actor cohort 重跑 G2 M8 surface，按 64/128/256/512/native 接入统一 evaluator，完成 G0--G3 geometry table。
-4. W0--W4 使用同一 categorical reader；W3/W4 先匹配输入与容量，再单独增加 F/O/U 辅助监督。
-5. 完成一个 LiDAR4D official sequence，或在取得 Waymo 授权后完成 DyNFL scene capability；之后才允许 D1 选路。
+## 已得到的关键结论
+
+- 官方 PCN zero-shot 存在严重域差，不能作为拒绝 AdaPoinTr 的依据。
+- 官方预训练适配版在所有固定预算下稳定优于 scratch，说明预训练确有迁移价值。
+- G3 pretrained 在 64/128/256/512 固定点数下仍未越过 G0/G1 简单前沿；4096 点原生输出的 CD 优势含明显密度因素。
+- G2 的 early 更低，但以 CD/F-score 和 hit 损失为代价，形成保守权衡点而非全面胜出。
+- 详细主表见 `docs/WORLDSIM_V7_2_D0_GPU_RESULTS.md`。
+
+## 下一执行顺序
+
+1. 固定 G0/G2 几何和同一 categorical reader，完成 W0--W4：单位权重、build-only 支持率、局部密度归一化、单标量 MLP、F/O/U head。
+2. 先比较 W3/W4 的同回波损失版本，再单独加入 F/O/U 辅助监督，避免混淆结构与额外标签。
+3. 在 legacy diagnostic 上只作机制筛选；分配干净 dev/route-select 数据后才允许 D1。
+4. 路线 B 的 capability 仍需完整 KITTI-360 sequence，或正式 Waymo 授权与预处理资产。
 
 ## 仍缺外部条件
 
-- DyNFL：未具备 Waymo 数据授权/预处理资产。
-- LiDAR4D：未下载完整 KITTI-360 sequence；现有 tracking smoke 不能替代。
+- DyNFL：Waymo 数据授权／预处理资产未具备；Nerfstudio 0.3.4 与 CUDA 扩展未安装。
+- LiDAR4D：未下载完整 KITTI-360 sequence；现有 KITTI tracking smoke 不能替代。
 - 独立数据：nuScenes 明确未暴露候选仅 10 logs；本地 AV2 80 logs 全部已暴露。
+- 旧 cohort 只有正回波 target，不能支持 full-return 主张。
 
-无需重跑 G0/G1，也无需重新生成 AdaPoinTr adapter。当前从 G3 三种初始化对照继续。
+无需重跑 G0--G3，也无需重新生成 AdaPoinTr adapter。D1、source test 和 external test 继续冻结。

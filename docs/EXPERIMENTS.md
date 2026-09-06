@@ -1,5 +1,43 @@
 # Experiments
 
+## WS-V72-D0-G3-ADAPOINTR-SCRATCH-01 — canonical completed（2026-09-07）
+
+- canonical run=`20260906T174200Z__g3-adapointr-scratch-s7204-r1`；initialization=scratch；593 train / 66 holdout Actors；600 epochs；holdout 只在最终评估读取；
+- density=`64/128/256/512/native`，实际点数=`64/128/256/512/4096`；
+- CD-L1=`316.34/273.04/237.19/206.49/144.04mm`；F-score=`32.69/48.97/60.44/67.54/80.31%`；
+- early=`16.30/27.08/36.72/44.10/51.55%`；hit=`31.98/49.91/54.14/51.68/45.58%`；
+- final/min train loss=`0.08053`；RTX 3090 AMP/TF32 batch 64；peak GPU=`19.96GiB`；wall=`3126.28s`；
+- 同训练预算下固定密度结果弱于 pretrained-adapted，确认外部预训练有正迁移；route decision allowed=false；
+- formal artifacts=resolved/manifest/fingerprint/CHECKPOINT_LOAD/TRAIN/final checkpoint/ACTORS/LOGS/summary/status；failure_ledger_delta=none。
+
+## WS-V72-D0-G2-M8-MATCHED-EVAL-01 — canonical completed（2026-09-07）
+
+- canonical run=`20260906T174000Z__g2-m8-matched-s71110-r1`；legacy M8 target-free surface generation；66 Actors / 34 logs；
+- density=`64/128/256/512/native`，平均实际点数=`60.42/112.06/191.98/260.77/420.45`；
+- CD-L1=`252.11/238.94/233.25/231.51/229.97mm`；F-score=`58.26/64.49/66.28/66.75/67.01%`；
+- early=`16.07/21.31/24.30/25.44/26.00%`；hit=`46.80/51.71/51.48/50.74/50.28%`；
+- G2 提供低 early 的保守前沿，但承担明显几何与 hit 代价；512 预算因候选不足实际仅 `260.77` 点，解释时必须同时报告；
+- peak GPU=`0.03GiB`；wall=`27.81s`；route decision allowed=false；failure_ledger_delta=none。
+
+## WS-V72-D0-G3-ADAPOINTR-TRANSFER-01 — canonical completed（2026-09-07）
+
+- canonical run=`20260906T165500Z__g3-adapointr-transfer-s7203-r1`；官方 PCN checkpoint 载入 333 tensors，4096 decoder 最后一层 2 tensors 重置；
+- 593 train / 66 holdout Actors；600 epochs；训练期间不读 holdout；density=`64/128/256/512/native`；
+- CD-L1=`266.52/223.67/194.00/170.49/122.36mm`；F-score=`41.62/60.16/69.25/74.19/82.88%`；
+- early=`17.75/28.85/37.63/43.91/50.20%`；hit=`37.25/53.34/55.07/52.09/46.54%`；
+- final/min train loss=`0.05357`；RTX 3090 AMP/TF32 batch 64；peak GPU=`19.96GiB`；wall=`3150.14s`；
+- 原生 4096 点 CD 最好但含密度混杂；64--512 固定预算均未越过 G0/G1 简单前沿；route decision allowed=false；
+- formal artifacts=resolved/manifest/fingerprint/CHECKPOINT_LOAD/TRAIN/final checkpoint/ACTORS/LOGS/summary/status；failure_ledger_delta=none。
+
+## WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01 — canonical completed（2026-09-07）
+
+- canonical run=`20260906T165000Z__g3-adapointr-official-zs-r3`；官方 PCN checkpoint strict load=`335/335 tensors`；无目标域训练；
+- density=`64/128/256/512/native`，实际点数=`64/128/256/512/16384`；
+- CD-L1=`823.75/817.56/812.90/810.00/795.94mm`；F-score=`2.71/3.15/3.33/3.46/3.05%`；
+- early=`2.45/2.64/2.75/2.85/3.04%`；hit=`1.31/1.47/1.60/1.68/1.84%`；低 early 来自几乎不命中；
+- peak GPU=`0.72GiB`；wall=`170.93s`；verdict=严重域差，只能作为 capability，不可据此拒绝 AdaPoinTr；
+- failed r1/r2 分别对应 `V71-F58/V71-F59`，均在产生科学指标前终止；canonical r3 failure_ledger_delta=none。
+
 ## WS-V72-D0-G1-ACTOR-TSDF-01 — canonical completed（2026-09-06）
 
 - canonical run=`20260906T160409Z__g1-actor-tsdf-cpu-r3`；66 Actors / 63 scenes / 34 logs；44 raw-source Actors、22 processed-recovery Actors；

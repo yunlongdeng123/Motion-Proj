@@ -4,13 +4,13 @@
 
 任务：`WS-V72-P0-BASELINE-CAPABILITY-01`
 
-本审计只读取论文、官方仓库和本地数据可用性，不运行质量评测。源码快照位于 `/root/autodl-tmp/external/worldsim_v72/`，不修改上游仓库。
+本文件先记录 P0 的论文、官方仓库与本地数据能力审计；2026-09-07 已追加 AdaPoinTr 的本机 capability 与 D0 质量运行结果。源码快照位于 `/root/autodl-tmp/external/worldsim_v72/`，上游 checkout 保持不改动；兼容修改位于独立 build copy。
 
 ## 结论
 
-路线 A 可以把 AdaPoinTr 作为第一个强学习基线，但不能直接拿 ShapeNet/PCN checkpoint 在驾驶 Actor 上失败后称其无效。需要使用相同 Actor build/target 划分明确微调，并统一尺度、输入点数和输出点数。官方 PCN checkpoint 与 593/66 Actor 适配缓存现已就绪，CUDA capability 等待开卡。
+路线 A 已完成 AdaPoinTr 的官方 zero-shot、预训练适配 600 epochs 与 scratch 600 epochs。zero-shot 失败显示严重域差；预训练适配稳定优于 scratch，证明外部初始化有价值；但在 64/128/256/512 固定点数下仍未超过 G0/G1 简单前沿。详细结果见 `docs/WORLDSIM_V7_2_D0_GPU_RESULTS.md`。
 
-路线 B 当前主要受数据和 CUDA 环境阻塞。DyNFL 与 V7.2 的动态对象/给定轨迹设定最接近，但官方流程依赖 Waymo preprocessing、Nerfstudio 0.3.4 和编译扩展；当前没有已授权 Waymo 数据。LiDAR4D 的 KITTI-360 流程更容易独立跑通，但远端只有 KITTI tracking smoke，没有其完整 sequence 数据。
+路线 B 当前主要受数据与独立环境阻塞。DyNFL 与 V7.2 的动态对象/给定轨迹设定最接近，但官方流程依赖 Waymo preprocessing、Nerfstudio 0.3.4 和编译扩展；当前没有已授权 Waymo 数据。LiDAR4D 的 KITTI-360 流程更容易独立跑通，但远端只有 KITTI tracking smoke，没有其完整 sequence 数据。
 
 ## 官方代码对照
 
@@ -41,9 +41,19 @@
 | PoinTr/DyNFL/LiDAR4D 源码快照 | 约 79 MiB |
 | AdaPoinTr 官方 PCN checkpoint | 389,745,620 bytes；SHA-256 `f58a5650...64fa1` |
 | AdaPoinTr legacy adapter cache | 659 Actors / 约 15.6 MiB；593 train / 66 holdout |
-| GPU | 不可用；`nvidia-smi` 被拒绝 |
+| GPU | 1×RTX 3090 24 GiB；AdaPoinTr AMP batch 64 峰值 `19.96GiB` |
 
-当前 PyTorch 为 `2.4.1+cu121`，但 `torch.cuda.is_available()=false` 且无 `nvcc`；因此不创建 CUDA 环境、不编译扩展、不下载场景级大数据。GPU 恢复时先用 1×RTX 3090 24 GiB 做 capability；正式 B 路线还需 Waymo 授权数据，或为 LiDAR4D 准备完整 KITTI-360 sequence。
+AdaPoinTr 独立环境使用 PyTorch `2.4.1+cu121` 与 CUDA toolkit `12.1.105`；Chamfer 和 PointNet++ 已按 RTX 3090 的 `sm_86` 编译并完成 forward/backward 与正式运行。正式 B 路线仍需 Waymo 授权数据，或为 LiDAR4D 准备完整 KITTI-360 sequence；GPU 已可用，不再列为其外部阻塞。
+
+## 2026-09-07 capability 与质量结果
+
+| 配方 | 训练 | 256 点 CD / F / early / hit | 512 点 CD / F / early / hit | 结论 |
+|---|---:|---|---|---|
+| official zero-shot | 0 | `812.90mm / 3.33% / 2.75% / 1.60%` | `810.00mm / 3.46% / 2.85% / 1.68%` | 域差严重，低 early 由几乎不命中造成 |
+| pretrained-adapted | 600 epochs | `194.00mm / 69.25% / 37.63% / 55.07%` | `170.49mm / 74.19% / 43.91% / 52.09%` | 明显恢复，但被 G0/G1 固定密度结果压过 |
+| scratch | 600 epochs | `237.19mm / 60.44% / 36.72% / 54.14%` | `206.49mm / 67.54% / 44.10% / 51.68%` | 同预算弱于预训练适配版 |
+
+checkpoint 原生 16384 输出 strict load 335/335 tensors；适配 4096 输出时载入 333 tensors，只重置 decoder 最后一层 2 个 tensors。训练配方为 AMP、TF32、batch 64、593 Actors、600 epochs；holdout 只在最终评估读取，不参与 checkpoint 选择。
 
 ## 一手来源
 

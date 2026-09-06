@@ -1,5 +1,13 @@
 # Research Status
 
+## WorldSim V7.2 D0 几何图谱完成：AdaPoinTr 预训练有效，但固定密度未越过简单前沿（2026-09-07）
+
+在同一已暴露 `legacy_diagnostic` cohort（66 Actors / 34 logs / 99,208 positive-return rays）上，G0 raw fusion、G1 Actor-local TSDF、G2 历史 M8 与 G3 AdaPoinTr 已按 64/128/256/512/native 密度接入同一 evaluator。G2 canonical=`run://worldsim_v72/WS-V72-D0-G2-M8-MATCHED-EVAL-01/20260906T174000Z__g2-m8-matched-s71110-r1`；G3 official zero-shot / pretrained-adapted / scratch canonical 分别为 `20260906T165000Z__g3-adapointr-official-zs-r3`、`20260906T165500Z__g3-adapointr-transfer-s7203-r1`、`20260906T174200Z__g3-adapointr-scratch-s7204-r1`。
+
+官方 PCN zero-shot 的 256 点 CD/F/hit=`812.90mm/3.33%/1.60%`，确认严重域差。相同 600-epoch 配方下，预训练适配版最终 loss=`0.05357`，scratch=`0.08053`；预训练版在 256 点达到 `194.00mm/69.25%/37.63% early/55.07% hit`，优于 scratch 的 `237.19mm/60.44%/36.72%/54.14%`，说明外部形状预训练确有迁移价值。但 G0/G1 在 256 点为 `167.55/168.76mm` CD、`79.49/77.70%` F、`56.50/58.70%` hit，G3 仍未越过简单前沿。G2 的 early=`24.30%` 明显更低，同时 CD=`233.25mm`、hit=`51.48%`，只构成保守权衡点。
+
+两次 G3 训练均使用 RTX 3090、AMP、TF32、batch 64、593 train Actors，峰值 GPU 显存=`19.96GiB`，wall=`3150.14/3126.28s`；训练期间不读 holdout，最终只评估一次。`source_test_read=false`、`external_test_read=false`，旧 positive-only target 不支持 full-return 指标。D0 几何部分完成，但 W0--W4 与干净 route data 仍缺，因此 D1 继续冻结。详细表格=`docs/WORLDSIM_V7_2_D0_GPU_RESULTS.md`；failure_ledger_delta=none。
+
 ## WorldSim V7.2 D0 CPU 前置完成：G0/G1 简单基线与 AdaPoinTr 资产就绪（2026-09-06）
 
 G0 canonical=`run://worldsim_v72/WS-V72-D0-G0-RAW-FUSION-01/20260906T153519Z__g0-raw-fusion-cpu-r1`，

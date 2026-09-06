@@ -8,7 +8,7 @@ external_test_read: false
 object_completion:
   simple_fusion:
     id: G0
-    status: legacy_diagnostic_complete_matched_table_pending
+    status: legacy_diagnostic_complete_matched_table
     input: actor_build_points_only
     canonical_run: run://worldsim_v72/WS-V72-D0-G0-RAW-FUSION-01/20260906T153519Z__g0-raw-fusion-cpu-r1
     density_budgets: [64, 128, 256, 512, native]
@@ -17,7 +17,7 @@ object_completion:
     route_decision_allowed: false
   actor_tsdf:
     id: G1
-    status: legacy_diagnostic_complete_matched_table_pending
+    status: legacy_diagnostic_complete_matched_table
     source: motion_proj/worldsim_v71/tsdf_evidential.py
     canonical_run: run://worldsim_v72/WS-V72-D0-G1-ACTOR-TSDF-01/20260906T160409Z__g1-actor-tsdf-cpu-r3
     density_budgets: [64, 128, 256, 512, native]
@@ -29,11 +29,17 @@ object_completion:
     route_decision_allowed: false
   legacy_m8:
     id: G2
-    status: legacy_diagnostic_only
+    status: legacy_diagnostic_complete_matched_table
     independent_source_test: false
+    canonical_run: run://worldsim_v72/WS-V72-D0-G2-M8-MATCHED-EVAL-01/20260906T174000Z__g2-m8-matched-s71110-r1
+    density_budgets: [64, 128, 256, 512, native]
+    actor_count: 66
+    log_count: 34
+    target_free_surface_generation: true
+    route_decision_allowed: false
   adapointr:
     id: G3
-    status: gpu_capability_passed_runs_configured
+    status: legacy_diagnostic_complete_three_initialization_protocol
     repository: https://github.com/yuxumin/PoinTr.git
     checkout: /root/autodl-tmp/external/worldsim_v72/PoinTr
     commit: 4603257ed3db9e7dad349b712e1b2fe0da207015
@@ -49,7 +55,14 @@ object_completion:
       amp_batch_64_samples_per_second: 107.0
       checkpoint_compatible_tensors: 333
       decoder_shape_mismatch_tensors: 2
-    configured_runs: [official_zero_shot, pretrained_adapted_600_epochs, scratch_600_epochs]
+    canonical_runs:
+      official_zero_shot: run://worldsim_v72/WS-V72-D0-G3-ADAPOINTR-OFFICIAL-ZS-01/20260906T165000Z__g3-adapointr-official-zs-r3
+      pretrained_adapted_600_epochs: run://worldsim_v72/WS-V72-D0-G3-ADAPOINTR-TRANSFER-01/20260906T165500Z__g3-adapointr-transfer-s7203-r1
+      scratch_600_epochs: run://worldsim_v72/WS-V72-D0-G3-ADAPOINTR-SCRATCH-01/20260906T174200Z__g3-adapointr-scratch-s7204-r1
+    fixed_density_result: does_not_clear_g0_g1_simple_frontier
+    source_test_read: false
+    external_test_read: false
+    route_decision_allowed: false
     blockers: []
   object_centric_occ:
     status: deferred_until_route_a_selected
@@ -60,22 +73,22 @@ object_completion:
 neural_lidar:
   dynfl:
     id: B0-primary
-    status: source_fetched_blocked_access_and_gpu
+    status: source_fetched_blocked_access_and_environment
     repository: https://github.com/prs-eth/Dynamic-LiDAR-Resimulation.git
     checkout: /root/autodl-tmp/external/worldsim_v72/Dynamic-LiDAR-Resimulation
     commit: b6d03de50ea84b98f685899240e1d8704523f95a
     environment: worldsim-v72-dynfl
-    blockers: [waymo_access, nerfstudio_0_3_4, cuda_extensions_unbuilt, gpu_unavailable]
+    blockers: [waymo_access, nerfstudio_0_3_4, cuda_extensions_unbuilt]
   lidar4d:
     id: B0-fallback
-    status: source_fetched_data_and_gpu_pending
+    status: source_fetched_data_and_environment_pending
     repository: https://github.com/ispc-lab/LiDAR4D.git
     checkout: /root/autodl-tmp/external/worldsim_v72/LiDAR4D
     commit: 4d6abbd9e0c49744f5fb724a467ab0d8983f23fa
     environment: worldsim-v72-lidar4d
-    blockers: [kitti360_sequence_data_missing, tiny_cuda_nn_unbuilt, chamfer_extension_unbuilt, gpu_unavailable]
+    blockers: [kitti360_sequence_data_missing, tiny_cuda_nn_unbuilt, chamfer_extension_unbuilt]
   lidar_rt:
     status: deferred_until_route_b_selected
     repository: https://github.com/zju3dv/LiDAR-RT.git
     commit: a411b7567dc98d1b0bbb60999d8878848a2ad327
-    blockers: [submodules_not_audited, gpu_unavailable]
+    blockers: [submodules_not_audited]

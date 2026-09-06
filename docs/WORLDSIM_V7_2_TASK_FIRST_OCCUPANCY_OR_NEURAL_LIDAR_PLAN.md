@@ -399,6 +399,14 @@ W3/W4 先用相同回波损失比较，再单独增加 F/O/U 辅助监督；避�
 
 这一步产出一张简洁主表与一张权衡图，不产出新的“authority module”。
 
+## 9.4 当前执行状态（2026-09-07）
+
+D0 几何部分已在同一 66-Actor / 34-log `legacy_diagnostic` cohort 上完成。G0 raw fusion、G1 Actor-local TSDF、G2 历史 M8 与 G3 AdaPoinTr 均使用统一的 64/128/256/512/native 密度预算、query rays 与 evaluator。G3 已完成官方 zero-shot、预训练适配 600 epochs 和 scratch 600 epochs；两次训练均为 AMP batch 64，峰值 GPU 显存约 `19.96GiB`。
+
+当前证据为：官方预训练适配稳定优于 scratch，但 G3 在所有固定密度预算下没有越过 G0/G1 简单前沿；G2 的 early 更低，但承担明显 CD/F-score 与 hit 代价。完整数值与 run ID 见 `docs/WORLDSIM_V7_2_D0_GPU_RESULTS.md`。
+
+此结果完成第 9.1 节，不完成第 9.2 节，也不触发 D1。W0--W4、干净 dev/route-select 数据和路线 B 的原生 capability 仍待完成；`source_test` 与 `external_test` 保持未读。
+
 ---
 
 # 10. 阶段 P2：两条有限规模研究路线

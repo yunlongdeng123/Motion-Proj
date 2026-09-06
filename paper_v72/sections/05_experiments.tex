@@ -10,13 +10,18 @@ historically exposed cohorts remain diagnostic. Source and external tests stay f
 until the route and configuration are locked. Table values are populated only from
 formal run artifacts; the current route decision is \RouteDecision.
 
-\paragraph{CPU preflight.}
+\paragraph{D0 geometry matrix.}
 On an exposed legacy cohort, increasing the raw-fusion surface density improved geometric
 coverage while substantially increasing literal early returns; hit recall reached a
 plateau before the native density. A matched Actor-local TSDF sweep traded geometry and
 return consistency against raw fusion: it improved CD and hit at 512 points with a small
 early-return increase, while at 256 points it reduced early returns and improved hit at a
 small CD cost. The two deterministic methods therefore form a non-dominated simple-baseline
-frontier. This observation makes density matching mandatory for the D0 table. It is a
-protocol finding rather than evidence for either research route, and exact values remain
-outside the main paper until G2--G3 are evaluated together.
+frontier. The legacy learned surface reduced early returns but paid a large geometry and
+hit-recall cost. AdaPoinTr transferred substantially better after 600-epoch adaptation than
+from scratch, while its official PCN checkpoint failed zero-shot under the driving-actor
+normalization. At every fixed 64--512 point budget, however, the adapted model remained
+behind the deterministic frontier; its best native CD used 4096 output points and therefore
+cannot substitute for the density-matched result. These diagnostic findings motivate the
+W0--W4 return-weight study, but do not select a route because the cohort is historically
+exposed and no source or external test has been read.
