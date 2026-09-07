@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 额外时刻训练进行中及侵入归属（2026-09-08）
+
+额外时刻监督r4已启动并进入真实共享训练：run `WS-V73-M2-GLOBAL-ACTOR-01/20260907T184000Z__surround-extra-time-labels-s7304-r4`，code9829ce58，PID17680，日志 `/root/autodl-tmp/controller_logs/v73_global_extra_time_r4.log`。首个记录阶段原生最终depth梯度非零，额外时刻target点数非零，native候选保留，峰值9.848GiB。30epochs/600更新，训练仍运行，不能加载或改写运行配置，结束后读取summary/最新checkpoint再做统一分析。冻结CPU前缀已按场景共享；DPT每步重新执行。当前无资源不足，不关机。
+
+利用r2/r3已保存的每帧计数和均值完成free归属分解，没有重跑模型或射线评价。开发5日志等权mean free中，r2本Actor贡献0.02249m、非本Actor贡献0.10208m（后者占81.95%）；r3分别0.01216m、0.13427m（后者91.69%）。总侵入频率从6.24%下降至3.28%，但总侵入距离从0.12457m增至0.14643m。因此，当前代理降低事件频率，却没有同时降低非本Actor首回波之前的误表面侵入严重程度。分解对象是同一真实原始束的唯一box归属代理；“非本Actor”包括其他Actor、背景、未归属和歧义，不等于已知纯背景。不能将该比例称为背景真值。
+
+归属结果与脚本：`docs/autoresearch/worldsim_v73/m2/global/r2_free_attribution.json`、`r3_free_attribution.json`，`scripts/attribute_worldsim_v73_free_intrusion.py`。按每帧真实束数量恢复侵入总量、扣除本Actor量，再在Actor/日志汇总；只有浮点舍入级负差截为0。F02进一步定位为跨归属真实束一致性问题；F04场景拼接仍待真实背景参与后的全局硬排序检验，本分析不替代场景级实验。
+
+后续顺序：收口r4的fit训练误差与dev留出结果；在相同fit标签预算上推进完整窗口438可输入Actor的共享训练及LiDAR-only/pointwise强控制，51无输入对象保留缺失评价，不再以25Actor诊断代替主结果；认真比较原生几何适配+统一融合。再在可恢复几何的架构上推进event缺支持处理与背景/Actor组合，最终使用新日志。完整cohort仍只有20fit/5dev独立日志。F01/F02/F03/F04/F05 active，F06在当前直接数据监督配置缓解，下一编号V73-F07。按计划持续研究并及时push；只在整个V7.3完成或确有不可解决的资源不足时履行已授权的无任务关机。
+
+---
+
 ## V7.3 射线管结果、窗口覆盖与额外时刻监督（2026-09-08）
 
 射线管r3已完成：run `20260907T175000Z__surround-native-beam-tube-s7304-r3`，code075f32bb，30epochs/600更新，1220.53s，峰值9.864GiB、RSS26.147GiB。相对r2只将range free换成固定3cm/32像素射线管几何覆盖代理，权重0.5不变；两种目标单位不同，该比较检验此具体配置，不能声称最优权重下全面优越。训练fallback 0/600，原生最终depth非零梯度600/600，最终25/25有native候选。
