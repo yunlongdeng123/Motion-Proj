@@ -2,7 +2,7 @@
 
 ## EAS-VGGT V7.2 执行终态（2026-09-08）
 
-状态=`implementation_and_mechanism_stage_complete_with_generalization_gap`；latest code=`ffe99700`，待最终文档 commit 更新；总结果=`docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。E1–E5 均已真实执行，不能再使用下方历史条目的 `E1 running / E2–E5 pending`。
+状态=`implementation_and_mechanism_stage_complete_with_generalization_gap`；latest implementation=`ffe99700`；文档与稿件 closeout 已在当前 HEAD 提交；总结果=`docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。E1–E5 均已真实执行，不能再使用下方历史条目的 `E1 running / E2–E5 pending`。
 
 核心结论：VGGT late EAS 在 development 上相对等容量 no-visual 将 Brier `.19186→.18755`；route-select 固定 reliability `alpha=.35` 将 Brier `.23753→.23434`、NLL `.95972→.94380`，但 surface F-score `.66756` 与 CD `.21031m` 基本不变。Pi3X visual arm 退化到 Brier `.24066`，故不支持跨基座通用。controlled ordered-return 的 separated blocking/detection 将 NLL `1.05022→.86215`；E3 held-out rendering PSNR `+0.545dB` 且物理/轨迹不接收 RGB 更新；E4 SE(3) 最大 commutation error=`6.82e-13m`。
 
