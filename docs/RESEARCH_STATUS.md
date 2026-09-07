@@ -1,5 +1,23 @@
 # Research Status
 
+## V7.3 原生梯度恢复，但自由空间冲突仍在（2026-09-08）
+
+共享原生数据监督r2已完成（code37bda7d4，run `20260907T171500Z__surround-shared-native-data-s7304-r2`），30epochs/600更新，1259.42s，峰值9.848GiB、RSS26.152GiB，native project最大变化0.001115。与r1同初始头/seed/数据/架构，仅增加build Actor轴向depth Huber。
+
+V73-F06在此配置下缓解：训练fallback=2/600，原生最终depth非零梯度=600/600，最终25/25 Actor均保留native候选（r1最终0/25）。这是恢复数据梯度的直接证据，不是物理指标胜利；F03关于event缺失支持的风险仍未解除。
+
+开发5日志最终hit26.78%/early17.35%/miss28.55%/free0.12457m，观测表面距离0.0742m；r1为hit36.20%/early15.68%/miss42.15%/free0.03028m。相较原生+LiDAR融合hit27.22%/early8.37%/free0.05903m，也没有物理指标支配。fit20日志free0.56707m，训练集本身仍有侵入，不能只归因为跨日志泛化。恢复native支持保住了更多覆盖，也重新暴露了过剩表面；F02继续active。
+
+原始结果、按日志配对区间及r2−r1比较：`docs/autoresearch/worldsim_v73/m2/global/r2_summary.json`、`r2_log_analysis.json`、`r2_minus_r1.json`；报告更新=`docs/WORLDSIM_V7_3_M2_GLOBAL_RESULTS.md`。没有读取source/external测试，dev只有2个运动日志的边界不变。
+
+下一机制问题：当前硬首交点range free只提供支持内交点位置梯度，缺少退出射线管的轮廓梯度。已先查[nvdiffrast官方文档/SIGGRAPH Asia 2020](https://nvlabs.github.io/nvdiffrast/)：栅格化本身不产生可见性位置梯度，antialiasing负责轮廓梯度。准备在同一三角表面上构造有限宽度的已观测free射线管覆盖代理，并保持原硬首交点评价；不加入opacity/existence，不以关闭native通路降loss，不增加新的世界表示。
+
+迁移范围：每条真实束以已知原始首回波−0.2m限定free终点，32×32局部正交投影、固定3cm训练宽度、有限3σ范围，按几何覆盖积分获得轮廓梯度；宽度是优化代理，不声称已标定真实光束。先做一次前后表面/横向梯度的解析机制实验，识别裁剪/有限支持限制，再进入同架构比较。当前Torch2.4.1+cu121，复用保留的v72-pointr CUDA12.1编译器；安装官方nvdiffrast v0.3.3和ninja，不升级Torch、不新建环境。
+
+当前无训练任务，渲染依赖准备进行中；资源充足，整个V7.3尚未完成，shutdown=false。failure_ledger_delta=mitigate V73-F06 + update V73-F02，F01:F05仍active，F06仅在r2测量监督范围缓解，下一编号V73-F07。按用户授权继续研究，完成全流程后才无任务关机。
+
+---
+
 ## V7.3 原生测量梯度恢复实验已启动（2026-09-08）
 
 共享几何恢复实验r2已启动：PID14038，code37bda7d4，task `WS-V73-M2-GLOBAL-ACTOR-01`，run `20260907T171500Z__surround-shared-native-data-s7304-r2`；日志`/root/autodl-tmp/controller_logs/v73_global_native_data_r2.log`。已进入initial_evaluation，随后自动执行20fit Actor×30epochs；5dev日志只评价。训练代码加载M1六相机r3 checkpoint，不继承退化的共享r1权重；保持seed7304和原架构，新增真实build投影depth Huber weight1。

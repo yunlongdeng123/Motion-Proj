@@ -1,5 +1,35 @@
 # V7.3 跨日志共享几何训练结果
 
+## r2：直接测量恢复原生通路
+
+共享原生数据监督r2已完成（code37bda7d4，run `20260907T171500Z__surround-shared-native-data-s7304-r2`），30epochs/600更新，1259.42s，峰值9.848GiB、RSS26.152GiB，native project最大变化0.001115。与r1同初始头/seed/数据/架构，仅增加build Actor轴向depth Huber。
+
+V73-F06在此配置下缓解：训练fallback=2/600，原生最终depth非零梯度=600/600，最终25/25 Actor均保留native候选（r1最终0/25）。这是恢复数据梯度的直接证据，不是物理指标胜利；F03关于event缺失支持的风险仍未解除。
+
+开发5日志最终hit26.78%/early17.35%/miss28.55%/free0.12457m，观测表面距离0.0742m；r1为hit36.20%/early15.68%/miss42.15%/free0.03028m。相较原生+LiDAR融合hit27.22%/early8.37%/free0.05903m，也没有物理指标支配。fit20日志free0.56707m，训练集本身仍有侵入，不能只归因为跨日志泛化。恢复native支持保住了更多覆盖，也重新暴露了过剩表面；F02继续active。
+
+原始结果、按日志配对区间及r2−r1比较：`docs/autoresearch/worldsim_v73/m2/global/r2_summary.json`、`r2_log_analysis.json`、`r2_minus_r1.json`；报告更新=`docs/WORLDSIM_V7_3_M2_GLOBAL_RESULTS.md`。没有读取source/external测试，dev只有2个运动日志的边界不变。
+
+下一机制问题：当前硬首交点range free只提供支持内交点位置梯度，缺少退出射线管的轮廓梯度。已先查[nvdiffrast官方文档/SIGGRAPH Asia 2020](https://nvlabs.github.io/nvdiffrast/)：栅格化本身不产生可见性位置梯度，antialiasing负责轮廓梯度。准备在同一三角表面上构造有限宽度的已观测free射线管覆盖代理，并保持原硬首交点评价；不加入opacity/existence，不以关闭native通路降loss，不增加新的世界表示。
+
+迁移范围：每条真实束以已知原始首回波−0.2m限定free终点，32×32局部正交投影、固定3cm训练宽度、有限3σ范围，按几何覆盖积分获得轮廓梯度；宽度是优化代理，不声称已标定真实光束。先做一次前后表面/横向梯度的解析机制实验，识别裁剪/有限支持限制，再进入同架构比较。当前Torch2.4.1+cu121，复用保留的v72-pointr CUDA12.1编译器；安装官方nvdiffrast v0.3.3和ninja，不升级Torch、不新建环境。
+
+当前无训练任务，渲染依赖准备进行中；资源充足，整个V7.3尚未完成，shutdown=false。failure_ledger_delta=mitigate V73-F06 + update V73-F02，F01:F05仍active，F06仅在r2测量监督范围缓解，下一编号V73-F07。按用户授权继续研究，完成全流程后才无任务关机。
+
+
+| 开发日志指标 | r1 | r2 | r2−r1 日志bootstrap95%区间 |
+|---|---:|---:|---|
+| hit_rate | 0.36200 | 0.26784 | [-0.17778, -0.01095] |
+| early_rate | 0.15680 | 0.17347 | [-0.03846, 0.07179] |
+| miss_rate | 0.42153 | 0.28547 | [-0.57005, 0.11262] |
+| free_intrusion_m | 0.03028 | 0.12457 | [-0.00128, 0.27456] |
+| surface_distance_m | 0.09037 | 0.07421 | [-0.04555, 0.00693] |
+| surface_recall_02 | 0.90505 | 0.91643 | [-0.04231, 0.05944] |
+
+---
+
+# V7.3 跨日志共享几何训练结果
+
 共享r1已完成，code8e175195，run `20260907T165500Z__surround-shared-native-s7304-r1`，30epochs/600更新，1140.09s，峰值9.825GiB、RSS26.102GiB，native project最大变化0.000407。
 
 开发5日志：最终hit36.20%/early15.68%/miss42.15%/free0.03028m/表面距离0.0904m；LiDAR PCA hit28.55%/early4.74%/miss66.38%/free0.00429m/表面距离0.1234m；同数量原生+LiDAR融合hit27.22%/early8.37%/miss55.52%/free0.05903m/表面距离0.0809m。fit20日志最终hit40.88%/early18.15%/miss37.33%/free0.04220m/表面距离0.0967m。全部按未输入时刻的真实原始束/正点统计，先Actor内计数加权、后日志等权。
