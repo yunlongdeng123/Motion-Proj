@@ -17,6 +17,7 @@ sys.path.insert(0,str(ROOT))
 from motion_proj.worldsim_v73.actor_rays import load_actor_rays
 from motion_proj.worldsim_v73.native_pyramid import NativeGeometryPyramid
 from motion_proj.worldsim_v73.spatial_queries import ActorSpatialQueryDecoder
+from motion_proj.worldsim_v73.surface_seeds import farthest_indices,native_surface_seeds
 from motion_proj.worldsim_v73.surface_readout import (first_triangle_intersection,closest_surface_points,
                                                      direct_free_space_loss,first_return_metrics)
 
@@ -71,6 +72,8 @@ def main():
     parser.add_argument('--free-weight',type=float,default=.5)
     parser.add_argument('--mode',choices=['joint','lidar_only','pointwise'],default='joint')
     parser.add_argument('--owner')
+    parser.add_argument('--completion-init',choices=['volume','native_surface','lidar_surface'],default='volume')
+    parser.add_argument('--input-cache',type=Path)
     args=parser.parse_args()
     task='WS-V73-M2-PHYSICAL-SURFACE-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
@@ -94,8 +97,14 @@ def main():
             for owner,actor in zip(view['owners'],view['actor_mask']):
                 if actor: counts[owner]=counts.get(owner,0)+1
         owner=args.owner or max(counts,key=counts.get)
-        rays=load_actor_rays('/root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval',args.scene,owner,
-                             {v['sample_id'] for v in scene['views']})
+        if args.input_cache:
+            cache_cohort=json.loads((args.input_cache/'cohort.json').read_text())
+            if cache_cohort['scene']!=args.scene or cache_cohort['owner']!=owner:
+                raise ValueError('输入缓存Actor身份不匹配')
+            rays=torch.load(args.input_cache/'raw_actor_rays.pt',weights_only=True)
+        else:
+            rays=load_actor_rays('/root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval',args.scene,owner,
+                                 {v['sample_id'] for v in scene['views']})
         torch.save(rays,out/'raw_actor_rays.pt')
         save('cohort.json',{'scene':args.scene,'owner':owner,
             'frames':[{k:v for k,v in r.items() if not isinstance(v,torch.Tensor)} for r in rays],
@@ -117,15 +126,25 @@ def main():
         torch.manual_seed(7303)
         decoder=ActorSpatialQueryDecoder().cuda()
         parameters=[*(pyramid.parameters() if pyramid is not None else []),*decoder.parameters()]
+        metric_scale=json.loads((args.native_run/'metric_scales.json').read_text())[args.scene]
+        lidar_seed=build[farthest_indices(build,len(decoder.coarse))] if args.completion_init=='lidar_surface' else None
+        seed_info={}
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         build_origins=torch.cat([r['origins_actor_m'] for r in build_rays]).cuda()
         build_directions=torch.cat([r['directions_actor'] for r in build_rays]).cuda()
         build_ranges=torch.cat([r['observed_first_range_m'] for r in build_rays]).cuda()
         def predict():
-            features=pyramid() if pyramid is not None else None
+            nonlocal seed_info
+            seeds=lidar_seed
+            if args.completion_init=='native_surface':
+                features,depths=pyramid(include_depth=True)
+                seeds,seed_info=native_surface_seeds(depths,metric_scale,matrices,intrinsics,size,build,len(decoder.coarse))
+            else:
+                features=pyramid() if pyramid is not None else None
+                seed_info={'initialization':args.completion_init,'lidar_fallback':False}
             with torch.autocast('cuda',dtype=torch.bfloat16):
                 return decoder(build,size,features,matrices,intrinsics,views[0][1]['image'].shape[-2:],camera_ids,times,
-                               use_spatial=args.mode!='pointwise',use_visual=args.mode!='lidar_only')
+                               use_spatial=args.mode!='pointwise',use_visual=args.mode!='lidar_only',completion_seeds=seeds)
 
         def evaluate(prediction):
             return evaluate_actor_surface(prediction,rays)
@@ -153,11 +172,14 @@ def main():
             loss=coverage+args.free_weight*free+.05*envelope
             loss.backward()
             native_grad=pyramid.head.projects[0].weight.grad.norm().item() if pyramid is not None else None
+            native_output_grad=sum(p.grad.detach().norm().item() for p in pyramid.head.scratch.output_conv2.parameters()
+                                   if p.grad is not None) if pyramid is not None else None
             normal_grad=decoder.normal.weight.grad.norm().item()
             torch.nn.utils.clip_grad_norm_(parameters,1.)
             optimizer.step()
             row={'step':step+1,'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':free.item(),
                  'native_project_gradient':native_grad,'normal_gradient':normal_grad,
+                 'native_depth_output_gradient':native_output_grad,'seed_support':seed_info,
                  'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,'step_s':time.monotonic()-tick}
             rows.append(row)
             with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
@@ -173,6 +195,7 @@ def main():
         torch.save({k:v.cpu() for k,v in prediction.items() if isinstance(v,torch.Tensor)},out/'final_surface.pt')
         result={'status':'done','scene':args.scene,'owner':owner,'views':len(views),'build_points':len(build),
             'steps':args.steps,'free_weight':args.free_weight,'mode':args.mode,'final':final,
+            'completion_initialization':args.completion_init,'seed_support':seed_info,
             'native_project_max_change':(pyramid.head.projects[0].weight.detach()-before).abs().max().item() if pyramid is not None else None,
             'first_step':rows[0],'last_step':rows[-1],
             'wall_s':time.monotonic()-started,'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,

@@ -31,14 +31,17 @@ class NativeGeometryPyramid(nn.Module):
             handles.append(getattr(self.head.scratch,name).register_forward_hook(hook))
         try:
             with torch.autocast('cuda',dtype=torch.bfloat16):
-                self.head(tokens,inputs[4],inputs[5])
+                depth,_=self.head(tokens,inputs[4],inputs[5])
         finally:
             for handle in handles: handle.remove()
-        return tuple(captured[j] for j in range(4))
+        return (*tuple(captured[j] for j in range(4)),depth[0,...,0].float())
 
-    def forward(self):
+    def forward(self,include_depth=False):
         features=[[],[],[],[]]
+        depths=[]
         for tokens,image,patch_start in self.token_inputs:
             maps=checkpoint(self.one_view,*tokens,image,patch_start,use_reentrant=False)
-            for level,feature in enumerate(maps): features[level].append(feature)
-        return [torch.cat(level) for level in features]
+            for level,feature in enumerate(maps[:4]): features[level].append(feature)
+            if include_depth: depths.append(maps[4])
+        features=[torch.cat(level) for level in features]
+        return (features,torch.cat(depths)) if include_depth else features

@@ -1,5 +1,15 @@
 # Experiments
 
+## V7.3 原生depth直接生成表面查询种子（2026-09-08）
+
+`WS-V73-M2-PHYSICAL-SURFACE-01` 表面种子两候选已实现，待提交后启动：`20260907T161000Z__surface-seeds-native-r1`、`20260907T161000Z__surface-seeds-lidar-r1`，均joint/120steps/seed7303/free权重0.5，复用r1原始束缓存与M1 r2冻结前缀/已微调head。原生候选从当前可训练DPT depth输出反投影至Actor坐标，按只读框归属选择候选，用FPS选512个种子；选点离散但保留位置至depth的梯度，另外继续读取四级refinenet特征。无native支持时回退LiDAR并记录逐视图支持数。
+
+LiDAR种子候选同样512 FPS。两者初始仅加5cm范围的可学习抖动，后续仍为无小位移硬上限的三层位置更新；没有删除completion表面、学习置信度/透明度或缩小patch半径。除种子和原生depth直接路径外保持原训练设计；将记录native depth输出梯度、支持数、真实曲面/free结果和资源。种子仅用build图像/点、标定、轨迹，未读heldout target做选择。
+
+前一完整控制组已证实volume completion阻挡远背景为主要卡点；本轮迁移On-Surface Prior/AdaPoinTr的表面支持思想，旨在检验初始化而非宣称新理论。V73-F02/F03保持active，failure_ledger_delta=none，下一编号V73-F06；暂不加入event或新正则。当前资源充足、shutdown=false。
+
+---
+
 ## V7.3 控制组完成：过剩补全曲面是主要卡点（2026-09-08）
 
 控制批次20260907T154500Z__physical-controls=`done`，native融合与4组120steps均完成，无运行研究进程。joint-r2 hit75.43%/early5.24%/miss16.51%/free0.133m，pointwise hit74.60%/free0.150m，LiDAR-only hit72.76%/free0.106m，joint-no-free hit76.16%/free0.090m。空间交互和视觉的净优势均未成立；不把free变差草率外推监督无用。

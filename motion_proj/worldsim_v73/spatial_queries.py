@@ -107,11 +107,12 @@ class ActorSpatialQueryDecoder(nn.Module):
         self.register_buffer('patch_faces',torch.tensor(faces,dtype=torch.long))
 
     def forward(self,build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
-                image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True):
+                image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True,completion_seeds=None):
         count=min(len(build_points_actor_m),self.evidence_queries)
         ids=torch.linspace(0,max(len(build_points_actor_m)-1,0),count,device=build_points_actor_m.device).long()
         evidence=build_points_actor_m[ids]
-        completion=self.coarse*size_lwh_m
+        # 表面种子并不限制后续位置更新；原生depth生成的种子保留梯度。
+        completion=self.coarse*size_lwh_m if completion_seeds is None else completion_seeds+self.coarse*.1
         x=torch.cat([evidence,completion])
         source=torch.cat([torch.zeros(count,device=x.device,dtype=torch.long),
                           torch.ones(len(completion),device=x.device,dtype=torch.long)])
