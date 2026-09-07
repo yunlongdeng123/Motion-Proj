@@ -1,5 +1,30 @@
 # Experiments
 
+## V7.3 米制射线管free完整结果与CAPA资源对策（2026-09-08）
+
+r8 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T212500Z__population-lidar-track-beam-range-s7304-r8` 完成，coded50c9eeb，30epoch/11130更新，4384.52s含完整评价，GPU allocated峰值0.33034GiB、RSS3.00688GiB；PID26975退出。与r7相同原build输入、全轨迹fit标签、架构、seed、优化预算，仅free改为米制有限射线管目标，权重仍0.5。
+
+| 完整开发75 Actor/5日志 | literal hit | early | miss | free m | target到surface m | recall@0.2m |
+|---|---:|---:|---:|---:|---:|---:|
+| 固定LiDAR PCA | 21.24% | 4.35% | 73.41% | 0.01771 | 0.30479 | 65.42% |
+| r7，硬相交range free | 31.75% | 11.84% | 49.90% | 0.07157 | 0.20952 | 74.55% |
+| r8，beam_tube_range free | 31.00% | 5.59% | 56.83% | 0.03432 | 0.22955 | 71.95% |
+
+r8−r7日志配对：free−0.03725m、95%[−0.06910,−0.01236]m，4日志降低、1相同；early−6.25pp、[−10.46,−2.40]pp，4降低、1相同。hit−0.75pp、[−5.51,+4.00]pp；miss+6.94pp、[−0.61,+14.49]pp。距离+0.02003m、[−0.02263,+0.07133]m，recall−2.60pp、[−5.01,−0.39]pp。代理带来的侵入改善已反映在中心束硬读出，但有覆盖代价且free仍高于PCA，不称全面优势。
+
+原build LiDAR-ready分层67对象/5日志（16无留出自有回波）：hit33.41%、early5.82%、miss53.65%、free0.03647m、距离0.22955m、recall76.34%。完整主报告保留23无留出自有回波及8空预测。运动>2m/s仅9对象/2日志：hit9.19%、early4.14%、miss81.57%、free0.02204m、距离0.14144m、recall84.82%；相对r7，侵入降低但命中/定位退化，不能将整体free改善外推为动态重建成立。fit旧窗口时刻已属训练标签：hit37.32%、early4.72%、miss52.19%、free0.02283m、距离0.16420m、recall76.49%，不是独立确认。所有分层和逐日志配对保存在population_lidar_r8_summary/analysis.json。
+
+同已修订r2 build背景的场景r3也已实际完成（run `WS-V73-M4-SCENE-COMPOSITION-01/20260907T224500Z__development-full-track-free-r3`，code277c9771，4.051s、RSS0.758GiB、纯CPU，全部416704束保留）。cohort返回：PCA hit21.45%/early31.68%/miss43.14%/free1.04603m；r7为25.07%/37.88%/31.26%/1.09527m；r8为21.55%/31.90%/38.65%/1.05145m。全原始束free为PCA0.32154m、r7 0.32539m、r8 0.32183m。背景已有的大量早面/未知覆盖仍在，场景结果不能只归因于Actor生成；F04仍active。完整数据与配对归档m4/scene_composition_r3_*.json。
+
+CAPA r1实际载入了原始本地VGGT及393216个可训练LoRA参数，但首窗口在官方仿射对齐sort处OOM，尚未完成第一个优化step。失败code277c9771、PID30545已退出、峰值allocated8.60038GiB；当时r5约12.07GiB、Ada r1约1.54GiB并发占用，不能据此宣告单作业必须加卡。r1/status.json与traceback完整保留，未影响另两项正常训练。
+
+按要求先检索[CAPA官方对齐](https://github.com/nv-dvl/capa/blob/main/capa/utils/alignment.py)、[MoGe官方分块求解](https://github.com/microsoft/MoGe/blob/main/moge/utils/alignment.py)和[PyTorch显存文档](https://docs.pytorch.org/docs/stable/notes/cuda.html)，定位全锚点×全观测的中间矩阵。已将仿射锚点按128分块，保留官方所有点、所有锚点、同一weighted-median求解和全局scatter_min选择，GPU抽样seed和12000点上限不变，不缩小RGB/视图。一次CPU数值对比（2例×129点、噪声/离群/零权重、234有效锚点、chunk7）scale/shift最大差均0；这是执行优化对比，不代表完整CAPA已成功。代码=`capa_alignment.py`；记录=`capa_chunked_alignment_comparison.json`。修订r2 `20260907T225000Z__population-build-tta-chunked-s7305-r2` 待提交后重新执行实际100步/31窗口。
+
+后续event机制比较采用r8 free配置：保持surface覆盖、full_track标签和全部预算，加入一个0.01权重的截断首事件项，检验是否能在保留free改善时恢复命中/覆盖；不把r8预选为最终胜出方法。该真实训练尚未启动，等CAPA实际首窗口资源明确后调度。主路线B joint r5继续原配置，后续仍需同full_track监督及强视觉控制。failure_ledger_delta=update F01/F02/F04/F05；F01/F02/F03/F04/F05/F07继续active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false，不因并发OOM中断正常作业关机。
+
+---
+
+
 ## V7.3 首事件解析语义完成并接入可选训练项（2026-09-08）
 
 `WS-V73-M3-FIRST-EVENT-01/20260907T224000Z__geometry-first-event-r2` 完成一次解析实验，code518268eb，0.927s。σ0.2m/C28/footprint0.03m/32²：正确5m面NLL0；4.6m早面遮住5m正确后面时NLL2.000001、早面沿深度梯度−10.000003、后面梯度0；复制早面仍NLL2.000001。无支持NLL28、质量0、梯度0；轮廓偏移0.025m时质量0.839767、NLL0.174630、横向梯度+6.97729。重复面没有增益，被遮挡的正确后面不能绕过早面，缺失支持的死梯度也确实仍存在，不能写成已解决F03。

@@ -22,11 +22,13 @@ def paired(before,after):
 
 parser=argparse.ArgumentParser(); parser.add_argument('--run',type=Path,required=True)
 parser.add_argument('--before',type=Path); parser.add_argument('--output',type=Path,required=True)
+parser.add_argument('--pair',action='append',default=[],help='BEFORE=AFTER method names within the saved scene run')
 args=parser.parse_args(); summary=json.loads((args.run/'summary.json').read_text()); stages=summary['statistics']
 result={'run':str(args.run),'aggregation':'paired equal independent log differences after within-scene ray weighting; 10000 log bootstrap samples seed7306',
     'boundary':'existing development data; five logs, no new-source confirmation; return count and missing remain in original summary',
     'methods_minus_lidar_pca':{name:paired(stages['lidar_pca'],stage) for name,stage in stages.items()
         if name not in ['background_only','lidar_pca']}}
+result['requested_pairs']={value:paired(stages[value.split('=',1)[0]],stages[value.split('=',1)[1]]) for value in args.pair}
 if args.before:
     before=json.loads((args.before/'summary.json').read_text())['statistics']
     result['before_run']=str(args.before)

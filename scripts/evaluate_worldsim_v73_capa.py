@@ -22,6 +22,7 @@ def main():
     parser.add_argument('--baseline-results',type=Path)
     parser.add_argument('--steps',type=int,default=100)
     parser.add_argument('--role',choices=['all','fit','development'],default='all')
+    parser.add_argument('--alignment-anchor-chunk',type=int,default=128,help='exact anchor enumeration chunks; zero restores unchunked official allocation')
     args=parser.parse_args()
     out=Path('/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-CAPA-01')/args.run_id
     out.mkdir(parents=True,exist_ok=False)
@@ -40,6 +41,8 @@ def main():
         'method':'official CAPA VGGT LoRA protocol; separate reset per build window; canonical native+LiDAR PCA fusion',
         'adaptation_boundary':'TTA uses build image/sensor inputs for each fit or development window; extra-time evaluation rays never enter CAPA loss; no cross-log weight carry-over',
         'execution_overrides':'preserve 378x672 build resolution instead of official 518px resize; enable upstream aggregator checkpointing; official 10% random frames per adaptation step, all 24 jointly for final inference',
+        'alignment_anchor_chunk':args.alignment_anchor_chunk,
+        'alignment_execution':'same official point subsampling/seed, all anchors and all residuals; chunk anchor enumeration only, official weighted median and global selection retained',
         'alignment':'official CAPA per-image affine scale/shift estimated from build measurements each step, differs from main shared fixed scale',
         'surface_density':'min(1024,build points)+512 native FPS, fixed 0.06m spacing/8 triangles per patch; native-only possible when build LiDAR absent',
         'source_test_read':False,'external_test_read':False,
@@ -48,6 +51,11 @@ def main():
     try:
         sys.path.insert(0,str(args.capa_root))
         from capa.protocol import CAPAProtocol
+        if args.alignment_anchor_chunk:
+            from functools import partial
+            from capa.utils import alignment
+            from motion_proj.worldsim_v73.capa_alignment import chunked_align_depth_affine
+            alignment.align_depth_affine=partial(chunked_align_depth_affine,anchor_chunk=args.alignment_anchor_chunk)
         # 保留官方每10步已有loss日志，便于长窗口训练的真实进展记录。
         logging.getLogger('capa').setLevel(logging.DEBUG)
         protocol=CAPAProtocol(config,torch.device('cuda'))

@@ -1,5 +1,15 @@
 # V7.3 CAPA基线适配
 
+## 真实首轮资源失败与保留信息的修订
+
+CAPA r1实际载入了原始本地VGGT及393216个可训练LoRA参数，但首窗口在官方仿射对齐sort处OOM，尚未完成第一个优化step。失败code277c9771、PID30545已退出、峰值allocated8.60038GiB；当时r5约12.07GiB、Ada r1约1.54GiB并发占用，不能据此宣告单作业必须加卡。r1/status.json与traceback完整保留，未影响另两项正常训练。
+
+按要求先检索[CAPA官方对齐](https://github.com/nv-dvl/capa/blob/main/capa/utils/alignment.py)、[MoGe官方分块求解](https://github.com/microsoft/MoGe/blob/main/moge/utils/alignment.py)和[PyTorch显存文档](https://docs.pytorch.org/docs/stable/notes/cuda.html)，定位全锚点×全观测的中间矩阵。已将仿射锚点按128分块，保留官方所有点、所有锚点、同一weighted-median求解和全局scatter_min选择，GPU抽样seed和12000点上限不变，不缩小RGB/视图。一次CPU数值对比（2例×129点、噪声/离群/零权重、234有效锚点、chunk7）scale/shift最大差均0；这是执行优化对比，不代表完整CAPA已成功。代码=`capa_alignment.py`；记录=`capa_chunked_alignment_comparison.json`。修订r2 `20260907T225000Z__population-build-tta-chunked-s7305-r2` 待提交后重新执行实际100步/31窗口。
+
+
+---
+
+
 ## V7.3 CAPA全窗口实际适配运行登记（2026-09-08）
 
 准备运行 `WS-V73-M2-CAPA-01/20260907T223500Z__population-build-tta-s7305-r1`，沿用已记录的官方100步rank4/alpha8、patch_embed qkv LoRA、每步3/24视图随机采样、最终全24视图联合推理；31个build窗口、完整489 Actor队列。所有744视图已有有效稀疏深度条件，fit/dev均只在各自build输入上窗口内TTA，逐窗口重置；额外时刻仅评价。协议、对齐及native-only边界见 `docs/WORLDSIM_V7_3_CAPA_BASELINE.md`。
