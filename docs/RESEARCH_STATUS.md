@@ -1,5 +1,31 @@
 # Research Status
 
+## V7.3 真实场景组合完成与背景近点对策（2026-09-08）
+
+code3f77f087完成原6开发scene/5日志场景数据与全部4种组合读出。数据run `WS-V73-M4-SCENE-DATA-01/20260907T211000Z__development-build-background-r1`：42.57s、RSS7.652GiB，723130个build背景支持/5785040三角面，12个留出扫描416704条原始束。比较run `WS-V73-M4-SCENE-COMPOSITION-01/20260907T211000Z__development-pca-lidar-native-r1`：4.409s、RSS0.785GiB、纯CPU、48个方法×扫描记录；没有训练/数据作业残留。每个方法都用同一背景，未将未重建对象的束删除。
+
+以下是scene内束加权→scene/log等权的开发均值，与旧Actor均值统计单位不同：
+
+| 组合 | 全部束hit | 全部束early | 全部束miss | 全部束free m | cohort返回hit | cohort返回early | cohort返回miss | cohort返回free m |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 仅背景诊断 | 26.31% | 13.96% | 50.59% | 0.52771 | 0.73% | 28.04% | 67.25% | 1.25900 |
+| LiDAR PCA＋背景 | 27.00% | 14.07% | 49.84% | 0.53015 | 21.36% | 32.63% | 42.82% | 1.26948 |
+| LiDAR-only r6＋背景 | 27.13% | 14.23% | 49.51% | 0.53509 | 28.19% | 39.07% | 27.58% | 1.31358 |
+| native fusion r2＋背景 | 26.84% | 14.19% | 49.61% | 0.53853 | 19.53% | 36.11% | 37.75% | 1.29321 |
+
+cohort返回仅11886束，框外背景代理397071束，其他注释对象7452束、重叠歧义295束；注释框边界带15687束是与以上组重叠的代理。场景总体被背景主导。cohort返回数在scene0359/0919/1089只有25/169/74，日志等权均值因此不能解释成全体射线比例。PCA→r6的背景代理返回被Actor提前抢占246→629束，native fusion为689束；这些是原始池化计数，不是独立样本数。当前方法未达到物理优势，固定背景也不够可靠，不能把所有组合错误归因于Actor。
+
+F04新增定位：先查[nuScenes官方remove_close](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/utils/data_classes.py)、[Voxblox官方](https://github.com/ethz-asl/voxblox)与[Open3D TSDF官方](https://open3d.org/docs/release/tutorial/t_reconstruction_system/integration.html)，再追踪背景BVH首交点的支持。27.51s CPU诊断显示背景56902个early中10974个命中“距任一build传感器xy均小于1m”的支持，该重叠组占侵入距离总和45.47%；掠射abs(cos)<0.1组只有1138个early。原始build扫描的传感器xy近点合计194536/833216，约23.35%。近点几何条件不是精确自车语义标签，任一build传感器邻域也不是精确采样来源，当前归因仍为定位线索。
+
+因此下一对照只修改静态背景构建：沿用官方devkit的采样LiDAR坐标abs(x)<1且abs(y)<1近点规则，在各自build扫描去除这部分背景候选。评价原始束一条不删，另列近传感器/其外区域，不能靠删评价错误制造改善。Actor训练输入、已训练表面、轨迹、曲面尺度和模型参数均不变。登记r2数据 `WS-V73-M4-SCENE-DATA-01/20260907T211500Z__development-background-sensor-close-r2` 与比较 `WS-V73-M4-SCENE-COMPOSITION-01/20260907T211500Z__development-pca-lidar-native-r2`；待完成才能判断此对策解释多少错误，未知背景与归属问题仍独立存在。
+
+结果证据=`docs/autoresearch/worldsim_v73/m4/scene_*r1*.json`、`background_attribution_r1.json`；更完整边界见 `WORLDSIM_V7_3_SCENE_COMPOSITION.md`。汇总工具同时加入通用已完成run配对引用与依据原build输入状态的共有LiDAR-ready分层，不重跑相同模型，可用于r7对r6与fusion的后续比较。
+
+joint r5 PID18843、全轨迹LiDAR-only r7 PID23188继续正常训练；r7已至epoch22，未中断正常任务。failure_ledger_delta=update V73-F04（完成真实全局读出，发现背景近点问题，修复效果待测）；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。CAPA、AdaPoinTr、主模型完成与新日志确认仍待推进；整个V7.3未完成，shutdown=false。
+
+
+---
+
 ## V7.3 场景组合实现与实验登记（2026-09-08）
 
 完整原生融合r2结果已经归档并push（ae295229）；joint r5 PID18843至epoch9、全轨迹LiDAR-only r7 PID23188至epoch19，正常运行。接下来并行做CPU场景物理评价，当前训练配置不变。

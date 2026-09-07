@@ -94,6 +94,9 @@ def main():
                     masks={'all_raw_returns':np.ones(len(observed),bool),'cohort_returns':np.isin(truth,scene['cohort_ids']),
                         'background_proxy_returns':truth==0,'other_annotated_returns':(truth>0)&~np.isin(truth,scene['cohort_ids']),
                         'ambiguous_returns':truth==-2,'annotation_box_boundary_band':raw['box_boundary_band']}
+                    if 'sensor_near_zone' in raw:
+                        masks['sensor_near_zone_returns']=raw['sensor_near_zone']
+                        masks['outside_sensor_near_zone_returns']=~raw['sensor_near_zone']
                     row={'scene':name,'log_id':scene['log_id'],'role':scene['role'],'sample_index':frame['sample_index'],
                         'method':method,'groups':{key:ray_statistics(depth,observed,mask) for key,mask in masks.items()},
                         'actors_without_pose':unavailable,

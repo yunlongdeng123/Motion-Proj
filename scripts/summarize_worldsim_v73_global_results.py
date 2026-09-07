@@ -77,6 +77,7 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--run',type=Path,required=True)
     parser.add_argument('--fusion',type=Path)
+    parser.add_argument('--reference',action='append',default=[],help='NAME=completed run; report paired final differences without rerunning inference')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
     summary=json.loads((args.run/'summary.json').read_text())
@@ -85,10 +86,18 @@ def main():
     if args.fusion:
         fusion=json.loads((args.fusion/'summary.json').read_text())
         stages['native_lidar_fusion']=[summarize_actor(row) for row in fusion['final']]
+    reference_protocols={}
+    for reference in args.reference:
+        name,path=reference.split('=',1)
+        other=json.loads((Path(path)/'summary.json').read_text())
+        stages[name]=[summarize_actor(row) for row in other['final']]
+        reference_protocols[name]={'run':path,'fit_label_times':other.get('fit_label_times'),
+                                   'boundary':other.get('boundary')}
     result={'run':str(args.run),'status':summary['status'],
         'scope':summary.get('boundary','existing log cohort; no new-source confirmation'),
         'fit_extra_time_usage':'training_labels' if summary.get('fit_label_times') in ['all_window','full_track'] else 'evaluation_only',
         'development_extra_time_usage':'evaluation_only',
+        'reference_protocols':reference_protocols,
         'aggregation':'within Actor weighted by observed rays/points, then scene/Actor mean within log and independent log mean',
         'denominator':'owned first-return outcomes include misses; free includes all raw near-box rays; unknown surface excluded',
         'stages':{name:stage_statistics(rows) for name,rows in stages.items()},'actors':stages,
@@ -97,6 +106,10 @@ def main():
     result['moving_gt2mps']={'definition':'known trajectory mean translation speed over build window > 2 m/s; report independent log count',
         'stages':{name:stage_statistics(rows) for name,rows in moving.items()},
         'paired_final_minus':{name:paired(rows,moving['final']) for name,rows in moving.items() if name!='final'}}
+    ready={name:[row for row in rows if row.get('input_status',row.get('status'))=='ready'] for name,rows in stages.items()}
+    result['build_lidar_ready']={'definition':'original build/metadata input status ready, independent of prediction quality; full population remains primary',
+        'stages':{name:stage_statistics(rows) for name,rows in ready.items()},
+        'paired_final_minus':{name:paired(rows,ready['final']) for name,rows in ready.items() if name!='final'}}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
     print(json.dumps(result['stages'],ensure_ascii=False))

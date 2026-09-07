@@ -16,6 +16,7 @@ def main():
     parser.add_argument('--actor-data',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--role',choices=['fit','development','all'],default='development')
+    parser.add_argument('--remove-sensor-close',action='store_true',help='仅从静态build背景排除本次LiDAR坐标abs(x),abs(y)<1m，沿用nuScenes devkit几何近点约定')
     args=parser.parse_args(); args.output.mkdir(parents=True,exist_ok=False)
     started=time.monotonic(); torch.set_num_threads(2)
     def save(name,value):
@@ -24,6 +25,8 @@ def main():
     save('manifest.json',{'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'native_run':str(args.native_run),'actor_data':str(args.actor_data),'role':args.role,
         'background':'all build first-return points outside EVERY known annotation box +0.1m at that scan time; fixed .06m PCA patches, no filling',
+        'remove_sensor_close_from_background':args.remove_sensor_close,
+        'sensor_close_boundary':'abs(x)<1 and abs(y)<1 in acquisition LiDAR coordinates; geometric convention, not exact ego semantic labels; all evaluation beams retained',
         'evaluation':'all original positive-range LiDAR beams at nonbuild sample indices modulo3==2 inside build window',
         'ownership':'unique known box+0.1m proxy; overlapping boxes ambiguous; outside all known boxes background proxy, not semantic GT',
         'boundary_band':'observed first-return endpoints within .2m of annotation box surface; not true surface/contact boundary',
@@ -56,6 +59,8 @@ def main():
                 origin=sensor_pose[:3,3]; vector=world-origin; ranges=np.linalg.norm(vector,axis=-1)
                 valid=np.isfinite(ranges)&(ranges>0)
                 world=world[valid]; vector=vector[valid]; ranges=ranges[valid]
+                raw_sensor=np.fromfile(index.dataset_root/lidar['filename'],dtype=np.float32).reshape(-1,5)[:,:3][valid]
+                sensor_close=(np.abs(raw_sensor[:,0])<1)&(np.abs(raw_sensor[:,1])<1)
                 membership=np.zeros(len(world),np.int32); label=np.zeros(len(world),np.int32)
                 boundary=np.zeros(len(world),bool); poses={}
                 for owner,trajectory in tracks.items():
@@ -71,13 +76,17 @@ def main():
                     boundary|=np.abs(distance)<=.2
                 label[membership>1]=-2
                 if is_build:
-                    backgrounds.append(world[membership==0].astype(np.float32))
+                    keep=(membership==0)&(~sensor_close if args.remove_sensor_close else True)
+                    backgrounds.append(world[keep].astype(np.float32))
                     build_counts.append({'sample_index':i,'rays':len(world),'excluded_known_objects':int((membership>0).sum()),
-                                         'background_points':int((membership==0).sum())})
+                        'sensor_close_points':int(sensor_close.sum()),
+                        'additional_close_background_excluded':int(((membership==0)&sensor_close).sum()) if args.remove_sensor_close else 0,
+                        'background_points':int(keep.sum())})
                 else:
                     filename='rays_'+str(i)+'.npz'
                     np.savez(target/filename,origin_world_m=origin.astype(np.float32),directions_world=(vector/ranges[:,None]).astype(np.float32),
-                        observed_first_range_m=ranges.astype(np.float32),observed_owner=label,box_boundary_band=boundary)
+                        observed_first_range_m=ranges.astype(np.float32),observed_owner=label,box_boundary_band=boundary,
+                        sensor_near_zone=sensor_close)
                     frames.append({'sample_index':i,'sample_id':sample['token'],'timestamp_us':stamp,'file':filename,
                                    'rays':len(world),'world_from_actor':poses})
             background=np.unique(np.concatenate(backgrounds),axis=0)
