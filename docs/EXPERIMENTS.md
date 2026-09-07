@@ -1,5 +1,19 @@
 # Experiments
 
+## V7.3 二十条新AV2日志的元数据选择与精确载荷准备（2026-09-08）
+
+针对nuScenes trainval无未记录新日志的F05，已依据AV2官方数据源迁移：只读S3目录得到Sensor train700条日志，排除仓库configs/docs/scripts中已引用身份及本地已有目录，共1条；699候选按日志名字典序选前20条，在读取每条对象元数据前登记身份。既有80条AV2 val legacy日志可用于格式开发。新train日志在本研究中是external_confirmation，不能用于共享训练或结构/超参选择；跨日志与传感器域改变需单列，不能混称同分布nuScenes确认。
+
+`configs/worldsim_v73/av2_external_confirmation_r1.json` 保存完整20身份/时间/载荷表，`scripts/prepare_worldsim_v73_av2_confirmation.py` 复用既有名单并按需复制；未新增哈希/校验和/指纹。元数据准备98.49s，20×(7周视相机×4build+6LiDAR+4标定/轨迹/标注)=760文件，343260344字节/327.36MiB，元数据无缺项。build扫描序号[5,15,20,30]、留出[10,25]；相机最近实际时间差−23.10至+18.11ms，必须各自时间投影，不能视作同步真值。图像、点云、标注值和模型分数均未用于选择，缺输入和缺返回必须保留。
+
+下一步直接下载该清单，数据进程也纳入关机前任务检查。此时外部推理/评价尚未开始；AV2双LiDAR来源、ego补偿、轨迹插值、纵向相机内参和6项nuScenes相机嵌入→7周视接口需在旧开发日志先迁移，不削减第7路输入，不给新增随机相机嵌入后冒称已可靠迁移。详见 `WORLDSIM_V7_3_CONFIRMATION_DATA.md`。主joint r5、CAPA r2与event r9正常运行，Ada r1已退出；后续r10/r11、Ada r2仍待可用资源。
+
+failure_ledger_delta=update F05数据来源与格式对策；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false，自动研究继续；最终必须保存/push且无训练、评估、数据或待启动任务才关机。
+
+---
+
+
+
 ## V7.3 AdaPoinTr首轮完整结果、event真实启动与独立日志对策（2026-09-08）
 
 AdaPoinTr r1 `WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1` 已完成并正常退出：code23981936，完整模型32494657个可训练参数，30epoch/11130 Actor呈现/2790优化更新，4926.63s含489对象初始/最终评价，GPU allocated峰值1.00658GiB、RSS2.11761GiB。最终75开发对象/5日志：hit16.05%、early11.31%、miss48.92%、free0.14656m、target→surface距离0.09758m、recall@0.2m85.66%。相对自身初始化，距离−0.11974m、日志bootstrap95%[−0.27337,−0.02175]m，recall+18.54pp、[+7.71,+30.93]pp，hit+6.68pp、[+3.16,+10.20]pp；early+6.38pp、[+2.47,+10.82]pp，free+0.03040m、[−0.01929,+0.07727]m。几何覆盖可学习，但不是一致的物理改善。
