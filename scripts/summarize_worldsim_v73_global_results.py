@@ -19,7 +19,9 @@ def summarize_actor(row):
     for name in ['hit_rate','early_rate','miss_rate']:
         value[name]=sum(r['owned_ray']['rays']*(r['owned_ray'].get(name) or 0) for r in frames)/owned if owned else None
     value['free_intrusion_m']=sum(r['all_near_box_rays']*r['mean_free_intrusion_m'] for r in frames)/rays if rays else None
-    value['surface_distance_m']=sum(r['positive_points']*(r['positive_surface_mean_m'] or 0) for r in frames)/points if points else None
+    distances=[r for r in frames if r['positive_surface_mean_m'] is not None]
+    measured=sum(r['positive_points'] for r in distances)
+    value['surface_distance_m']=sum(r['positive_points']*r['positive_surface_mean_m'] for r in distances)/measured if measured else None
     value['surface_recall_02']=sum(r['positive_points']*(r['positive_surface_recall_02'] or 0) for r in frames)/points if points else None
     support=row.get('seed_support',row)
     value['lidar_fallback']=support.get('lidar_fallback')
@@ -37,6 +39,7 @@ def stage_statistics(rows):
                 'motion_unavailable':sum(r.get('translation_speed_mps') is None for r in selected),
                 'build_under100':sum(r['build_points']<100 for r in selected),
                 'no_heldout_owned_return':sum(r['heldout_owned_rays']==0 for r in selected),
+                'no_predicted_surface':sum(r['surface_patches']==0 for r in selected),
                 'lidar_fallback':sum(r['lidar_fallback'] is True for r in selected)}
         for metric in METRICS:
             logs=defaultdict(list)

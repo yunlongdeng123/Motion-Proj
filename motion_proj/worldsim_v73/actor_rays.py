@@ -50,7 +50,7 @@ def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids,index=None,t
         membership=np.zeros(len(world),dtype=int)
         target_inside=np.zeros(len(world),dtype=bool)
         for track,rows in tracks.items():
-            if len(rows)<2: continue
+            # 单时刻轨迹仅在其已知时间可用；interpolate_pose不会对外部时间外推。
             other_pose=interpolate_pose(rows,stamp)
             if other_pose is None: continue
             other=(world-other_pose[:3,3])@other_pose[:3,:3]

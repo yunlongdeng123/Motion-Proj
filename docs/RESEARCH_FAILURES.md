@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 扩大窗口Actor覆盖并保留缺观测对象（2026-09-08）
+
+射线管r3 PID15884正常训练（code075f32bb，run `20260907T175000Z__surround-native-beam-tube-s7304-r3`），观测峰值9.864GiB。当前运行配置不改，等待30epoch后统一硬表面评价。
+
+并行准备 `WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2`。已有相机投影覆盖清单是346fit/58dev Actor（65/6个速度>2m/s对象），但不能把这404个对象当成所有LiDAR支持对象。新入口按31个既有场景的build LiDAR时刻与只读轨迹，枚举全部已知刚体车辆；依据输入/元数据，不依据预测/heldout质量。仍沿用原20fit/5dev日志，不改曝光身份、不宣称新来源确认。
+
+有LiDAR但没有相机对应/可插值相机时刻的Actor保留LiDAR查询路径。没有build LiDAR点的对象也写入cohort并保留原始束记录，当前visual-only初始化未接入，明确输出缺失；其可评价回波计入miss、正点覆盖计0，空表面距离记不可用，不能记成零误差或静默剔除。相机投影观测数不等于实例可见性真值。单时刻轨迹仅在其准确已知时间使用，不外推运动。
+
+为扩展到同场景多个Actor，同一window/view的冻结aggregator前缀在CPU共享一次；每次优化仍重新运行可训练DPT，绝不缓存跨优化步的DPT最终输出。这样避免按Actor重复持有同一前缀导致内存随Actor数量虚增，不削减相机/时间输入。模型内部引用以(scene,owner)区分上下文，几何更新语义不变。新代码只供后续run，运行中r3已经加载075f32bb，不重启。
+
+已核对[AdaPoinTr/PCN官方数据接口](https://raw.githubusercontent.com/yuxumin/PoinTr/master/datasets/PCNDataset.py)：部分输入与目标点集分开组织。当前共享模型的coverage主要监督输入build点，本身不能充分证明缺失表面学习；后续需要区分fit侧额外传感器标签与dev留出时刻，并按同一信息预算训练强控制。本次只扩展输入覆盖和缓存，不同时修改标签来源，避免与free机制实验混杂。
+
+数据准备提交后启动；资源90GiB cgroup/3090/磁盘约131GiB可用，当前无资源不足，shutdown=false。failure_ledger_delta=update V73-F05（覆盖/选择范围）及F01（共享前缀执行方式），F02仍active，F06仅直接测量配置缓解，下一编号V73-F07。event、背景/Actor统一遮挡与新日志确认仍待推进。全V7.3完成后遵照用户要求保存/push、无任务及启动队列后关机。
+
+---
+
 ## V7.3 同曲面射线管覆盖监督（2026-09-08）
 
 `WS-V73-M3-FREE-VISIBILITY-01` 一次解析机制实验已完成（code c6129bcc，run `20260907T174500Z__analytic-r1`）。5m处、横向偏移2.5cm的12cm曲面片遮挡20m返回：硬range侵入14.8m、整体平移梯度[0,0,-1]；有限射线管覆盖0.83977、平移梯度[-5.8593,0,0]。负梯度更新给出退出横向射线管的方向。位于原始首回波后或完全在管外时均为0；重复同一表面覆盖和梯度均不变。证据=`docs/autoresearch/worldsim_v73/m3/free_visibility_analytic_r1.json`。这只说明代理能提供不同局部几何方向，不保证真实数据收益、任意可见性切换或缺失支持出生。

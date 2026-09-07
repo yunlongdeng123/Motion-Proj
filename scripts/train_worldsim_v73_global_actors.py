@@ -54,21 +54,29 @@ def main():
     try:
         index=json.loads((args.actor_data/'index.json').read_text())
         save('cohort.json',index['cases'])
-        cases=[]
+        cases=[]; unsupported=[]
         for row in index['cases']:
-            if row['status']=='ready': cases.append(torch.load(args.actor_data/row['file'],map_location='cpu',weights_only=True))
+            if 'file' not in row: continue
+            case=torch.load(args.actor_data/row['file'],map_location='cpu',weights_only=True)
+            case['metadata']['input_status']=row['status']
+            (cases if row['status']=='ready' else unsupported).append(case)
         scenes={s['scene_id']:s for s in torch.load(args.native_run/'build_observations.pt',weights_only=False,map_location='cpu')}
         scales=json.loads((args.native_run/'metric_scales.json').read_text())
-        pyramids={}; head=None
+        pyramids={}; head=None; prefix_cache={}
         if args.mode!='lidar_only':
             for case in cases:
-                key=case['metadata']['owner']; scene=scenes[case['metadata']['scene']]
-                pyramid=NativeGeometryPyramid(args.native_run,scene,case['view_indices'],head=head,token_device='cpu')
+                if not case['view_indices']:
+                    case['native_observations']=[]
+                    continue
+                owner=case['metadata']['owner']; scene=scenes[case['metadata']['scene']]
+                key=(scene['scene_id'],owner)
+                pyramid=NativeGeometryPyramid(args.native_run,scene,case['view_indices'],head=head,
+                    token_device='cpu',prefix_cache=prefix_cache)
                 head=pyramid.head; pyramids[key]=pyramid
                 observations=[]
                 for i in case['view_indices']:
                     view=scene['views'][i]
-                    owned=torch.tensor([owner==key for owner in view['owners']],dtype=torch.bool)
+                    owned=torch.tensor([identity==owner for identity in view['owners']],dtype=torch.bool)
                     observations.append({'uv':view['uv'][owned],'z_m':view['z_m'][owned]})
                 case['native_observations']=observations
         del scenes
@@ -90,18 +98,20 @@ def main():
             points=case['points_actor_m'].cuda(); size=case['size_lwh_m'].cuda()
             matrices=case['camera_from_actor'].cuda(); calibration=case['intrinsics'].cuda()
             depth=None
-            if head is not None and (args.completion_init=='native_surface' or args.native_data_weight>0):
-                features,depth=pyramids[case['metadata']['owner']](include_depth=True)
+            has_views=head is not None and bool(case['view_indices'])
+            if has_views and (args.completion_init=='native_surface' or args.native_data_weight>0):
+                features,depth=pyramids[(case['metadata']['scene'],case['metadata']['owner'])](include_depth=True)
             else:
-                features=pyramids[case['metadata']['owner']]() if head is not None else None
-            if args.completion_init=='native_surface':
+                features=pyramids[(case['metadata']['scene'],case['metadata']['owner'])]() if has_views else None
+            if args.completion_init=='native_surface' and depth is not None:
                 seeds,support=native_surface_seeds(depth,scales[case['metadata']['scene']],matrices,calibration,
                                                     size,points,len(decoder.coarse))
             else:
-                seeds=case['lidar_seed'].cuda(); support={'lidar_fallback':False,'initialization':'lidar_surface'}
+                seeds=case['lidar_seed'].cuda(); support={'lidar_fallback':args.completion_init=='native_surface',
+                    'native_candidates':0 if args.completion_init=='native_surface' else None,'initialization':'lidar_surface'}
             with torch.autocast('cuda',dtype=torch.bfloat16):
                 result=decoder(points,size,features,matrices,calibration,case['image_hw'],case['camera_ids'].cuda(),
-                    case['time_offsets_s'].cuda(),use_spatial=args.mode!='pointwise',use_visual=args.mode!='lidar_only',
+                    case['time_offsets_s'].cuda(),use_spatial=args.mode!='pointwise',use_visual=features is not None,
                     completion_seeds=seeds)
             # 数据梯度不经过预测框内候选筛选，候选消失时仍可拉回原生几何。
             native_loss=points.sum()*0
@@ -121,8 +131,14 @@ def main():
         @torch.no_grad()
         def evaluate(tag,baseline=False):
             rows=[]
-            for case in cases:
-                if baseline:
+            for case in [*cases,*unsupported]:
+                if case['metadata']['input_status']!='ready':
+                    # 缺少可用输入的Actor明确输出缺失，仍计入真实束miss/覆盖评价。
+                    surface={'vertices_actor_m':torch.empty(0,3,device='cuda'),
+                        'faces':torch.empty(0,3,dtype=torch.long,device='cuda'),
+                        'centers_actor_m':torch.empty(0,3,device='cuda')}
+                    support={'prediction_unavailable':True,'reason':case['metadata'].get('reason')}
+                elif baseline:
                     surface=lidar_patches(case['points_actor_m'].cuda(),decoder)
                     support={}
                 else:
@@ -138,7 +154,8 @@ def main():
             save(tag+'.json',rows)
             return rows
 
-        save('status.json',{'status':'running','phase':'initial_evaluation','fit_actors':len(fit),'all_actors':len(cases)})
+        save('status.json',{'status':'running','phase':'initial_evaluation','fit_actors':len(fit),'all_actors':len(cases),
+            'unsupported_input_actors':len(unsupported),'shared_frozen_prefix_views':len(prefix_cache)})
         baseline=evaluate('lidar_baseline',True)
         initial=evaluate('initial')
         history=[]
@@ -195,13 +212,15 @@ def main():
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
         final=evaluate('final')
         result={'status':'done','fit_actors':len(fit),'development_actors':len(cases)-len(fit),
+            'cohort_actors':len(index['cases']),'unsupported_input_actors':len(unsupported),
+            'shared_frozen_prefix_views':len(prefix_cache),
             'epochs':args.epochs,'updates':len(history),'mode':args.mode,'completion_initialization':args.completion_init,
             'native_project_max_change':(head.projects[0].weight.detach()-before).abs().max().item() if head is not None else None,
             'first_step':history[0],'last_step':history[-1],'wall_s':time.monotonic()-started,
             'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,
             'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,
             'baseline':baseline,'initial':initial,'final':final,
-            'boundary':'one Actor per existing log, development no gradient; within-window heldout time, not new-source confirmation',
+            'boundary':index.get('selection_boundary','existing log cohort')+'; development no gradient; within-window heldout time, not new-source confirmation',
             'failure_ledger_delta':'pending comparison, risks remain active'}
         save('summary.json',result); save('status.json',{'status':'done'})
         print(json.dumps({k:v for k,v in result.items() if k not in ['baseline','initial','final']}),flush=True)

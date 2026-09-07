@@ -8,7 +8,7 @@ from torch.utils.checkpoint import checkpoint
 
 
 class NativeGeometryPyramid(nn.Module):
-    def __init__(self,native_run,scene,view_indices,head=None,token_device='cuda'):
+    def __init__(self,native_run,scene,view_indices,head=None,token_device='cuda',prefix_cache=None):
         super().__init__()
         sys.path.insert(0,'/root/autodl-tmp/external/worldsim_v72/vggt')
         from vggt.heads.dpt_head import DPTHead
@@ -19,9 +19,15 @@ class NativeGeometryPyramid(nn.Module):
             self.head.load_state_dict(state['depth_head'])
         self.token_inputs=[]
         for i in view_indices:
-            data=torch.load(Path(native_run)/'frozen_prefix'/f'{scene["scene_id"]}_{i:02}.pt',weights_only=True)
-            self.token_inputs.append((tuple(data['tokens'][j].to(token_device) for j in [4,11,17,23]),
-                        scene['views'][i]['image'][None,None].to(token_device),data['patch_start']))
+            key=(str(native_run),scene['scene_id'],i,str(token_device))
+            packed=prefix_cache.get(key) if prefix_cache is not None else None
+            if packed is None:
+                data=torch.load(Path(native_run)/'frozen_prefix'/f'{scene["scene_id"]}_{i:02}.pt',map_location='cpu',weights_only=True)
+                packed=(tuple(data['tokens'][j].to(token_device) for j in [4,11,17,23]),
+                        scene['views'][i]['image'][None,None].to(token_device),data['patch_start'])
+                # 同一窗口多个Actor共享不可变前缀；绝不缓存跨优化步的可训练DPT输出。
+                if prefix_cache is not None: prefix_cache[key]=packed
+            self.token_inputs.append(packed)
 
     def one_view(self,*inputs):
         tokens=[None]*24

@@ -51,17 +51,20 @@ def evaluate_actor_surface(prediction,rays):
     for r in rays:
         origins=r['origins_actor_m'].cuda(); directions=r['directions_actor'].cuda()
         ranges=r['observed_first_range_m'].cuda(); positive=r['positive_actor'].cuda()
-        depth,_=first_triangle_intersection(vertices,faces,origins,directions)
+        if len(faces):
+            depth,_=first_triangle_intersection(vertices,faces,origins,directions)
+        else:
+            depth=torch.full_like(ranges,float('inf'))
         points=r['points_actor_m'][r['positive_actor']].cuda()
-        nearest=closest_surface_points(vertices,faces,points)
-        distance=(nearest-points).norm(dim=-1)
+        nearest=closest_surface_points(vertices,faces,points) if len(faces) else None
+        distance=(nearest-points).norm(dim=-1) if nearest is not None else None
         rows.append({'sample_index':r['sample_index'],'role':r['role'],
             'owned_ray':first_return_metrics(depth[positive],ranges[positive]),
             'all_near_box_rays':len(ranges),
             'free_intrusion_rate':(torch.isfinite(depth)&(depth<ranges-.2)).float().mean().item() if len(ranges) else None,
             'mean_free_intrusion_m':direct_free_space_loss(depth,ranges).item(),
-            'positive_points':len(points),'positive_surface_mean_m':distance.mean().item() if len(points) else None,
-            'positive_surface_recall_02':(distance<=.2).float().mean().item() if len(points) else None})
+            'positive_points':len(points),'positive_surface_mean_m':distance.mean().item() if len(points) and distance is not None else None,
+            'positive_surface_recall_02':((distance<=.2).float().mean().item() if distance is not None else 0.) if len(points) else None})
     return rows
 
 
