@@ -1,6 +1,20 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V71-F64 — 缺失 B 实验被机械当作失败，导致整体过早收口（2026-09-07）
+
+- category=`research_decision_completeness`；status=`interpretation_corrected_runner_pending`；task=`WS-V72-R0-RESEARCH-PLAN-01`；证据基线 commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`。
+- observation：原总计划要求 A/B 都完成同信息量强基线比较后选路。实际 B 仅完成 LiDAR4D capability；`scripts/decide_worldsim_v72_d1.py::main` 不接收 B 结果，固定 `route_b_pass=False`，且 A dev 失败时直接给出 `close_method_claim`。缺实验被解释成双方科学失败，随后文档整体收口并关机。
+- cause：决策实现混合“比较未完成”和“候选已被否定”；停止线适用范围超出已经完成的实验。不是 A1 指标算错，也没有证据支持路线 B 已通过。
+- correction：保留 `V71-F63` 的 A1 负结果、旧 canonical gate 与论文；在当前状态和恢复计划中撤回“B 已被证伪／所有可执行工作完成”的解释。用户已要求遇卡点先检索再迁移，并已重新开机。
+- prevention：未来决策显式接收各路 `comparison_complete` 与结果证据；缺证据只产生待完成任务，不能默认 false 后触发整体结束。每个实质卡点先查官方论文／代码／issue，再做有依据迁移；不以同一候选失败代替路线审查。
+- reopening：允许在既有 dev 上继续有明确机制差异的研究，暴露身份保持不变；先修正决策逻辑，再完成 NKSR、LiDAR-RT、A2/B1 的相关工作。不得追溯修改旧阈值或用版本名恢复测试独立性。
+- evidence=`scripts/decide_worldsim_v72_d1.py`、`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`、原计划第 4/10B/11 节；新训练／新 target quality read=0；后续实现 task=`WS-V72-R1-DECISION-AND-DIAGNOSIS-01`，status=`pending`。
+
+下一可用统一失败编号：`V71-F65`。下方历史段落中的 next-ID 只反映当时状态。
+
 ## V71-F63 — A1 观测约束补全未越过干净 dev 的 G1 TSDF 前沿（2026-09-07）
+
+> 2026-09-07 适用范围更新：A1 的负结果保留；关于 B 与整体停止的解释由文首 V71-F64 纠正。用户已要求先检索再迁移，后续可在保留 dev 暴露身份的前提下开发不同机制；本条旧 prevention 不构成永久禁止研究。
 
 - category=`scientific_route_rejection`；status=`closed_by_preregistered_d1_stop_rule`；task=`WS-V72-D1-A-DEV-GATE-01`。
 - run=`run://worldsim_v72/WS-V72-P2-A1-OBSERVATION-CONSTRAINED-DEV-01/20260906T230000Z__a1-observation-dev-s7210-r1`；data=4 个全依赖链隔离 dev logs、501 Actors、641,930 held-out rays；冻结 density cap=`512`。

@@ -1,5 +1,15 @@
 # Research Status
 
+## WorldSim V7.2 先检索再迁移：恢复计划交付（2026-09-07）
+
+task=`WS-V72-R0-RESEARCH-PLAN-01`；status=`done`（仅计划）；代码／历史证据基线 commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`。当前入口=`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`。用户最新要求是每遇实质卡点先查顶会／优秀开源，再结合项目迁移，先交付一版计划；本轮没有启动新训练或读取新测试质量。
+
+**纠正上一节的整体收口解释：** A1 相对 G1 的负结果保留；路线 B 尚未做方法候选比较，不能算科学失败。`scripts/decide_worldsim_v72_d1.py::main` 固定 `route_b_pass=False` 且没有 B 输入，在 A dev 失败时直接输出 `close_method_claim`，不足以完成原计划的 A/B 决策。统一纠正=`V71-F64`；旧 run、gate、PDF 继续保留为当时记录，不能据其触发新一轮 shutdown。
+
+已联网核对 NKSR、Object-Centric Occupancy Completion、LiDAR-RT、DyNFL、SplatAD、Gau-Occ、DynamicVGGT、U4D 的论文／作者代码与接入条件。恢复顺序：R1 修正决策完整性及定位 A1 代理／首交点差异；R3 接 LiDAR-RT KITTI-360 完整场景，同时安排 R2 NKSR；再推进 A2 局部占据与 B1 同几何观测约束，完成同协议比较、完整应用及必要的独立证据。R1～R7 均为 `pending`，效果尚未验证。
+
+用户已重新开机；本轮实测 RTX 3090 24GB、空闲、数据盘约 55GB 可用。后续按实际容器内存配额使用缓存／预取。source-test candidates、external final 保持未读；dev 可用于正常研究迭代但不能重新称为未见数据。下一步是计划中的 R1 与 R3/R2；单候选负结果／缺 B 证据不再等价于项目完成，完整交付后才适用用户先前的关机要求。
+
 ## WorldSim V7.2 D1 负向收口：当前方法主张关闭（2026-09-07）
 
 实现／冻结 commits=`1e496ca6,a05dbb2a`；正式证据 paths 见本节 run URI 与 `docs/WORLDSIM_V7_2_D1_NEGATIVE_CLOSEOUT.md`。

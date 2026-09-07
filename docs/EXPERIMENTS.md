@@ -1,5 +1,12 @@
 # Experiments
 
+## WS-V72-R0-RESEARCH-PLAN-01 — done，仅研究计划（2026-09-07）
+
+- evidence baseline commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`；deliverable=`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`；此项不是 GPU 实验，没有新 benchmark／checkpoint／正式 run。
+- 只读核对当前代码、A1 训练 summary、旧计划与账本；联网核对相关正式论文和作者代码。发现旧 D1 决策未接入 B 结果，固定 false 导致整体收口解释过度。
+- failure_ledger_refs=`[V71-F43,V71-F52,V71-F54,V71-F55,V71-F56,V71-F57,V71-F58,V71-F59,V71-F62,V71-F63,V71-F64]`；failure_ledger_delta=`V71-F64`；旧 A1 数值及 canonical 均未修改。
+- new quality/source-test/external-test read=`false/false/false`；training launched=false；shutdown=false。恢复计划 R1～R7=`pending`，不得将本条解释为方法已恢复有效。
+
 ## WorldSim V7.2 negative report build — completed（2026-09-07）
 
 - `paper_v72/main.pdf=3 pages / 110,902 bytes`；`supplement.pdf=1 page / 49,107 bytes`；`arxiv.pdf=3 pages / 110,775 bytes`；

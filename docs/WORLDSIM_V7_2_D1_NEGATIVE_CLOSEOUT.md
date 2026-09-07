@@ -1,5 +1,7 @@
 # WorldSim V7.2 D1 负向收口报告
 
+> 2026-09-07 解释纠正：本报告保留 A1 负结果与当时交付记录。B 未完成方法候选比较，不能解释为科学失败；“V7.2 整体完成”由 `V71-F64` 撤回。当前恢复计划见 [WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md](WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md)，旧数值和 canonical 不变。
+
 ## 结论
 
 V7.2 解决了问题定义、数据隔离、对标基线和公平实验设计，但当前方法没有得到干净开发集支持。预注册 D1 判定为 `close_method_claim`：路线 A 的主候选没有越过 Actor-local TSDF；路线 B 只完成 LiDAR4D 公共协议能力运行，没有同协议方法增益。因此本版本交付可证伪诊断与基线报告，不进入 route-select、source-test、external-test、P3 或 P4，也不把负结果包装成投稿就绪的方法论文。
