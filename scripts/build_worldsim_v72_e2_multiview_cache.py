@@ -110,6 +110,11 @@ def main() -> None:
     if config["task_id"] != "WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01":
         raise ValueError("E2 task id mismatch")
     data = config["data"]
+    geometry_tolerance = config.get("observation", {}).get(
+        "geometry_consistency_tolerance_m"
+    )
+    if geometry_tolerance is not None:
+        geometry_tolerance = float(geometry_tolerance)
     if data["supervision_access"] or data["source_test_read"] or data["external_test_read"]:
         raise ValueError("multi-window build must not read evaluation or supervision payloads")
     run_dir = Path(config["runs_root"]) / "worldsim_v72" / config["task_id"] / args.run_id
@@ -206,9 +211,7 @@ def main() -> None:
                             window,
                             geometry,
                             metric_points_world=metric_points_world,
-                            geometry_consistency_tolerance_m=float(
-                                config["observation"]["geometry_consistency_tolerance_m"]
-                            ),
+                            geometry_consistency_tolerance_m=geometry_tolerance,
                         )
                         cache = ActorVisualCache(
                             track_id=str(actor["track_id"]),
@@ -231,10 +234,12 @@ def main() -> None:
                                 "backbone_cache_sha256": _sha256(geometry_path),
                                 "window_fingerprint": window.fingerprint,
                                 "selected_actor_fields": list(data["selected_actor_fields"]),
-                                "visibility_contract": "calibrated_frustum_and_foundation_depth_consistency_v2",
-                                "geometry_consistency_tolerance_m": float(
-                                    config["observation"]["geometry_consistency_tolerance_m"]
+                                "visibility_contract": (
+                                    "calibrated_frustum_only_v1"
+                                    if geometry_tolerance is None
+                                    else "calibrated_frustum_and_foundation_depth_consistency_v2"
                                 ),
+                                "geometry_consistency_tolerance_m": geometry_tolerance,
                             },
                         )
                         output_path = run_dir / "actor_cache" / backbone_name / window.window_id / f"{cache.track_id}.npz"

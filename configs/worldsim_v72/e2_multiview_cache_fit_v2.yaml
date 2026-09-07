@@ -19,7 +19,9 @@ data:
   external_test_read: false
 
 preprocess: {maximum_pixels: 255000, patch_multiple: 14}
-observation: {geometry_consistency_tolerance_m: 0.75}
+observation:
+  geometry_consistency_tolerance_m: null
+  foundation_geometry_role: diagnostic_only
 backbones:
   vggt:
     repository_root: /root/autodl-tmp/external/worldsim_v72/vggt
