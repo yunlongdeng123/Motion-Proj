@@ -68,6 +68,8 @@ def _load_tracks(cache_run: Path, backbone: str, maximum_views: int):
             if not np.array_equal(cache.candidates_actor_m, first.candidates_actor_m):
                 raise ValueError(f"candidate ordering changed for {track_id}")
         count = len(first.candidates_actor_m)
+        if count == 0:
+            continue
         feature_dim = first.visual_features.shape[-1]
         visual = np.zeros((count, maximum_views, feature_dim), dtype=np.float32)
         confidence = np.zeros((count, maximum_views), dtype=np.float32)
