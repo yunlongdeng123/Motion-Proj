@@ -1,5 +1,16 @@
 # V7.3 AdaPoinTr强补全控制
 
+## V7.3 AdaPoinTr官方坐标接口修订（2026-09-08）
+
+V73-F07：首轮AdaPoinTr r1使用本项目Z-up Actor轴输入PCN预训练模型，尚未迁移其车辆坐标约定。依据适配前物理误差继续查阅官方源码，确认[PoinTr NormalizeObjectPose](https://github.com/yuxumin/PoinTr/blob/master/datasets/data_transforms.py)及[PCN test_kitti](https://github.com/wentaoyuan/pcn/blob/master/test_kitti.py)在车辆规范化后显式交换Y/Z，输出再逆变换。该证据说明现有预训练接口有可修正的域差异，但并不单独证明r1全部误差由此造成。
+
+已为后续训练加入input_frame=pcn_y_up，输入(x,y,z)→(x,z,y)，所有coarse/fine/denoised输出变回Actor米制坐标后计算同一损失与表面。保持已知box最大维度的各向同性尺度、原输入/全轨迹fit标签/seed/网络/预算不变；不依据target拟合轴或尺度。矩阵仅定义模型坐标接口，不修改Actor轨迹和相机标定。保留input_frame=actor用于明确复现原r1。
+
+r1 PID28663继续原已加载代码，记录不覆盖，作为未迁移预训练轴的对照；不把其最终结果独自作为认真迁移的强基线。登记修订版 `WS-V73-M2-ADAPOINTR-01/20260907T231000Z__population-full-track-pcn-yup-s7307-r2`，与r1相同30epoch/全参数微调，待当前Ada作业完成后启动，不设后台自动重启或重复队列。r2当前仅实现/登记，未训练；F07状态active，下一failure编号V73-F08。F01/F02/F03/F04/F05仍active，F06直接数据配置缓解。主joint r5与米制free r8照常，整个V7.3未完成，shutdown=false。
+
+---
+
+
 完整模型已实际载入并进入首轮任务微调，初始化489对象评价已完成；最终训练结果尚未取得。主joint r5与free目标r8继续原配置，本工作不替换V7.3的预训练视觉几何适配主线。
 
 来源为[AdaPoinTr作者代码](https://github.com/yuxumin/PoinTr)、[官方模型](https://raw.githubusercontent.com/yuxumin/PoinTr/master/models/AdaPoinTr.py)、[PCN配置](https://raw.githubusercontent.com/yuxumin/PoinTr/master/cfgs/PCN_models/AdaPoinTr.yaml)。本机复用PoinTr_AdaPoinTr_4603257源码、AdaPoinTr_PCN.pth和v72-pointr环境。使用完整512查询/16384输出、384维、6层编码器/8层解码器及官方去噪结构，载入全部预训练权重，所有模型参数允许更新；没有改成旧4096输出或只训练末端小头。现有checkpoint包含32496706个模型Tensor元素（含BN缓冲），准确可训练参数数由运行manifest记录。

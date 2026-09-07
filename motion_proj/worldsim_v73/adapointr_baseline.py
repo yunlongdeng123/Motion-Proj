@@ -29,16 +29,22 @@ def load_official_model(repo,checkpoint):
     model.load_state_dict(payload['base_model'])
     source={'pretrained_epoch':payload.get('epoch'),'model_config':dict(config),
             'trainable_parameters':sum(p.numel() for p in model.parameters()),
-            'execution':'official full 512-query/16384-point model; exact chunked knn preserves all raw build points',
-            'input_axes':'original metric Actor canonical axes; isotropic division by known max box dimension, no GT-derived centering/alignment'}
+            'execution':'official full 512-query/16384-point model; exact chunked knn preserves all raw build points'}
     return model,source
 
 
-def prepare_input(points,size):
+def prepare_input(points,size,input_frame='pcn_y_up'):
     scale=size.max().clamp_min(.1)
     # 官方512个中心需要足够槽位；缺点时只重复已有输入，不产生新观测。
     if len(points)<512: points=points[torch.arange(512,device=points.device)%len(points)]
+    # 官方PoinTr/PCN车辆迁移将Z-up的已知规范坐标交换Y/Z；输出必须逆变换。
+    if input_frame=='pcn_y_up': points=points[..., [0,2,1]]
     return (points/scale)[None].contiguous(),scale
+
+
+def restore_actor_points(points,scale,input_frame='pcn_y_up'):
+    if input_frame=='pcn_y_up': points=points[..., [0,2,1]]
+    return points.float()*scale
 
 
 def select_surface_centers(points,count):

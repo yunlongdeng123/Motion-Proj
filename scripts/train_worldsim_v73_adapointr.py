@@ -4,7 +4,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import torch
 ROOT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT)); sys.path.insert(0,str(ROOT/'scripts'))
-from motion_proj.worldsim_v73.adapointr_baseline import load_official_model,prepare_input,select_surface_centers,sparse_denoising_loss
+from motion_proj.worldsim_v73.adapointr_baseline import load_official_model,prepare_input,restore_actor_points,select_surface_centers,sparse_denoising_loss
 from motion_proj.worldsim_v73.spatial_queries import ActorSpatialQueryDecoder
 from motion_proj.worldsim_v73.surface_readout import closest_surface_points,first_triangle_intersection,direct_free_space_loss
 from train_worldsim_v73_physical_surface import lidar_patches,evaluate_actor_surface
@@ -22,6 +22,8 @@ def main():
     parser.add_argument('--accumulate',type=int,default=4)
     parser.add_argument('--lr',type=float,default=1e-4)
     parser.add_argument('--seed',type=int,default=7307)
+    parser.add_argument('--input-frame',choices=['actor','pcn_y_up'],default='pcn_y_up',
+                        help='official vehicle migration swaps Actor Y/Z for PCN; actor retains the earlier unaligned control')
     args=parser.parse_args()
     out=Path('/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-ADAPOINTR-01')/args.run_id
     out.mkdir(parents=True,exist_ok=False); started=time.monotonic(); torch.set_num_threads(4)
@@ -32,6 +34,8 @@ def main():
         'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
         'method':'all-parameter official pretrained AdaPoinTr, sparse-observation task fine-tuning; not exact PCN benchmark reproduction',
         'input':'all original build LiDAR points; repeat only when fewer than 512 slots; no target initialization or point-count cap',
+        'input_frame':args.input_frame,
+        'coordinate_bridge':'PCN y-up uses (x,z,y) and inverse on every coarse/fine/denoised output; metric Actor frame, calibration, targets and trajectories unchanged; known max box dimension scale',
         'supervision':'fit-only full-track measured positives and original first-return free; development no gradient',
         'loss':'target-to-matched-patch coverage +0.5 literal free +0.05 soft box envelope +0.1 target-to-coarse coverage +0.1 sparse local denoising coverage',
         'unknown_region':'no global predicted-to-sparse-target penalty; sparse measurements are not complete surfaces',
@@ -43,6 +47,7 @@ def main():
     save('manifest.json',manifest); save('status.json',{'status':'running','phase':'load_official_model'})
     try:
         model,source=load_official_model(args.repo,args.weights)
+        source['input_axes']=args.input_frame
         manifest['official_model']=source; save('manifest.json',manifest)
         model=model.cuda(); model.train()
         # 仅复用固定patch grid/面定义，不训练这个辅助容器的query参数。
@@ -74,8 +79,8 @@ def main():
             for case in cases:
                 entry=case['metadata']; points=case['points_actor_m'].cuda()
                 if entry['status']=='ready':
-                    xyz,scale=prepare_input(points,case['size_lwh_m'].cuda())
-                    coarse,fine=model(xyz); fine=fine[0].float()*scale
+                    xyz,scale=prepare_input(points,case['size_lwh_m'].cuda(),args.input_frame)
+                    coarse,fine=model(xyz); fine=restore_actor_points(fine[0],scale,args.input_frame)
                     surface=matched_surface(fine,case)
                 else:
                     fine=points.new_empty(0,3)
@@ -98,10 +103,12 @@ def main():
                 group=fit[start:start+args.accumulate]; optimizer.zero_grad(set_to_none=True); group_rows=[]
                 for case in group:
                     tick=time.monotonic(); points=case['points_actor_m'].cuda(); size=case['size_lwh_m'].cuda()
-                    xyz,scale=prepare_input(points,size)
+                    xyz,scale=prepare_input(points,size,args.input_frame)
                     coarse,denoised_coarse,denoised_fine,fine=model(xyz)
-                    coarse=coarse[0].float()*scale; fine=fine[0].float()*scale
-                    denoised_coarse=denoised_coarse[0].float()*scale; denoised_fine=denoised_fine[0].float()*scale
+                    coarse=restore_actor_points(coarse[0],scale,args.input_frame)
+                    fine=restore_actor_points(fine[0],scale,args.input_frame)
+                    denoised_coarse=restore_actor_points(denoised_coarse[0],scale,args.input_frame)
+                    denoised_fine=restore_actor_points(denoised_fine[0],scale,args.input_frame)
                     surface=matched_surface(fine,case); vertices=surface['vertices_actor_m']; faces=surface['faces']
                     targets=case['training_points'].cuda(); chosen=targets[torch.randperm(len(targets),device='cuda')[:1024]]
                     nearest=closest_surface_points(vertices,faces,chosen)
@@ -141,7 +148,7 @@ def main():
         final=evaluate('final')
         save('summary.json',{'status':'done','fit_label_times':'full_track','epochs':args.epochs,
             'actor_presentations':len(history),'optimizer_updates':updates,'fit_actors':len(fit),
-            'cohort_actors':len(cases),'baseline':baseline,'initial':initial,'final':final,
+            'cohort_actors':len(cases),'input_frame':args.input_frame,'baseline':baseline,'initial':initial,'final':final,
             'first_step':history[0],'last_step':history[-1], 'wall_s':time.monotonic()-started,
             'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,
             'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,
