@@ -1,5 +1,19 @@
 # Research Status
 
+## EAS-VGGT E1：双基座诊断、原生 beam 合同与 Waymo split 已落地（2026-09-07）
+
+task=`WS-V72-E1-VGGT-EVIDENCE-IO-01`；status=`running`；implementation commits=`13421897,49bfe399,246d79f9,4c86e621,993ec9a8`；canonical diagnostic=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4`。详细报告=`docs/WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md`。
+
+VGGT-1B 与 Pi3X 官方有效 checkpoint 已固定并在同一 nuScenes 三前向相机 train window 完成真实推理。两者点图/位姿/内参/置信度均为有限值，feature shape 都为 `[3,27,48,2048]`。VGGT/Pi3X 的 native rig stress=`0.0955/0.0448m`，Sim(3) 后 camera-center RMSE=`0.0667/0.0414m`；同一 build LiDAR observation 的 median surface residual=`74.668/3.412m`，0.2m hit=`0.31/0.67%`。这只证明有效基座和剩余任务缺口；单个已暴露 train window、动态时差和任意尺度混在其中，不能写跨场景排名或方法收益。
+
+数据/I/O 已新增：build-only RGB payload、原始到模型 pixel transform、target-free backbone cache、显式非空 feature contract；原生 beam 查询与监督分离，unknown/invalid、no-return、单/双回波的 return count=`-1/0/1/2`。有序表面事件已实现排序、blocking/detection、no-return、proper NLL 和 primitive split 质量守恒，仍属 E2 地基。
+
+Waymo 在任何 payload/quality 下载前按固定 SHA-256 排序冻结：training contexts=`600 train/99 development/99 route-select`，official validation=`202 source-test`；source-test 未下载、未读。官方 GCS 需要 Waymo 注册与 gcloud 授权，development payload、真实负 range/firing validity/逐 pixel pose 审计和主指标数值合同尚未完成，故 E1 不标 done。当前可并行推进 E2 同信息基线和合成机制，E2–E5 均 pending。
+
+r1 BF16 通用矩阵求逆失败、r2 VGGT token 轴切错均已按官方实现修复；r4 在提交后重跑，manifest 与 code SHA 一致。工程记录=`V71-F67 resolved`；主张风险 `V71-F66 active`。本轮 target quality/source-test/external-test read=`false/false/false`；shutdown=false；下一可用统一失败编号=`V71-F68`。
+
+---
+
 ## EAS-VGGT revision 2：融合补充调研，贡献与证据优先（2026-09-07）
 
 task=`WS-V72-E0-CONFERENCE-INTEGRATION-02`；status=`done`（计划/文档）；事实基线 commit=`35ca52da`。用户要求融入 subagent 调研，不以资源约束限制主会叙事。当前计划同路径更新为 `docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2；来源和迁移决策=`docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`。
@@ -8,7 +22,7 @@ task=`WS-V72-E0-CONFERENCE-INTEGRATION-02`；status=`done`（计划/文档）；
 
 | 核心证据 | 现有稳定任务 / 状态 | 当前要求 |
 |---|---|---|
-| A：缺口与数据协议 | E1 / pending | 两个有效基座，分开 native、尺度/位姿/时间对齐和 surface adapter 误差；RGB/beam 合同与独立 split |
+| A：缺口与数据协议 | E1 / running | 双基座、RGB/cache、beam schema 和 context split 已完成；Waymo payload 与指标数值合同待补 |
 | B：同信息机制学习 | E2 / pending | 相同测量的校正/融合、CAPA/深度适配、scalar、LiDAR-only 和 EAS；表面事件/无回波机制及消融 |
 | C：对应与动态应用 | E3、E4 / pending | 所有权隔离+前向对应、真实图像/物理深度与遮挡、SE(3) 轨迹；解析干预与真实 GT 分开 |
 | D：冻结泛化与文稿 | E5 / pending | 独立场景、跨传感器、第三几何来源；共享 adapter/重训/TTA 分列，全链路成本 |

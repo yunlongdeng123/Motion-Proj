@@ -1,12 +1,13 @@
 # Motion-Proj 文档导航
 
-更新：2026-09-07；基线 `35ca52da`。EAS-VGGT plan revision 2 已融合用户补充调研，以贡献与独立证据优先；E1–E5 尚待实现。当前范围只读 [RESEARCH_STATUS.md](RESEARCH_STATUS.md) 文首。
+更新：2026-09-07；最新实现 `993ec9a8`。EAS-VGGT plan revision 2 已融合用户补充调研，以贡献与独立证据优先；E1 running，E2–E5 pending。当前范围只读 [RESEARCH_STATUS.md](RESEARCH_STATUS.md) 文首。
 
 ## 当前研究
 
 - [EAS-VGGT Recovery Plan](WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)：三机制、一项明确主任务、四组核心实验；继承 M8/M39/M22/M28/M49，补齐场景回波与跨模态对应。
 - [基础模型适配调研与迁移决策](WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md)：一手来源、同信息近邻基线、DynamicVGGT 权重边界、数据与基座可用性。
-- [状态](RESEARCH_STATUS.md)、[失败账本](RESEARCH_FAILURES.md)、[实验台账](EXPERIMENTS.md)。最新风险 `V71-F66`：条件回波、接口非干扰与少量单来源证据不够支撑通用适配主张。
+- [E1 双基座与 beam 报告](WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md)：正式真实窗口诊断、原生回波合同、Waymo 冻结划分与剩余授权边界。
+- [状态](RESEARCH_STATUS.md)、[失败账本](RESEARCH_FAILURES.md)、[实验台账](EXPERIMENTS.md)。主张风险 `V71-F66` 仍 active；`V71-F67` 为已修复适配器工程问题。
 
 ## 既有论文与历史
 

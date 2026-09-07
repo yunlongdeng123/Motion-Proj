@@ -1,5 +1,18 @@
 # Experiments
 
+## WS-V72-E1-VGGT-EVIDENCE-IO-01 — running，双基座与数据合同里程碑（2026-09-07）
+
+- canonical diagnostic=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4`；code=`4c86e6218aee05dfd8cf6794181c93d3200585f7`；status=`done`；task 总状态仍为 running。
+- 输入=nuScenes train `scene-0015` / log `d31dc715...26ed` / sample `234b0f37...5e08`，三前向相机，`3×3×378×672`，window fingerprint=`7066771c...dabe9`；选择不读质量，target/source/external test read=`false/false/false`。
+- VGGT-1B repo/checkpoint=`a288dd0f` / `f164acf6...0467e`；Pi3X repo/checkpoint=`9fa3ddb3` / `69972d6e...1669a`。VGGT load missing=`0`、unexpected=`394`，逐项均来自本实验主动关闭的 `track_head.*`；Pi3X missing/unexpected=`0/0`。共同 feature shape=`[3,27,48,2048]`。
+- VGGT/Pi3X native rig stress=`.09552/.04482m`，Sim(3) aligned center RMSE=`.06668/.04136m`，scale=`169.022/2.234`；LiDAR correspondence=`5823/4167`，median surface residual=`74.668/3.412m`，median depth error=`52.041/3.104m`，early/hit/late=`47.62/.31/52.07%` 与 `3.74/.67/95.58%`。仅为 build observation 瓶颈诊断，不是 holdout 方法比较。
+- resources=RTX 3090；wall=`76.40s`；VGGT/Pi3X inference=`20.63/21.86s`；peak GPU=`7.61/6.20GiB`；process peak RSS=`18.03GiB`。
+- 数据合同 commits=`993ec9a8`：Waymo context quality-blind split=`600 train/99 development/99 route-select/202 source-test`；原生 beam 的 invalid/no-return/one/two return=`-1/0/1/2`；source-test frozen but unopened；official payload status=`authorization required, not materialized`。
+- ordered-return groundwork=`49bfe399`：排序事件、blocking/detection、no-return proper likelihood 与 split invariance；不声称实际收益。targeted tests=`12 passed`。
+- failed r1=`20260907T142000Z...r1`（BF16 `torch.linalg.inv`）；r2 feature channel=`0`；r3 修复但 Git provenance 旧；r4 为唯一 canonical。failure_ledger_delta=`V71-F67_resolved`；报告=`docs/WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md`。
+
+---
+
 ## WS-V72-E0-CONFERENCE-INTEGRATION-02 — done，仅调研融合与计划（2026-09-07）
 
 - baseline commit=`35ca52da`；输入=用户补充 subagent 调研；deliverables=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2、`docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`。

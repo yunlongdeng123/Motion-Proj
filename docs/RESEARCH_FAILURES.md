@@ -1,12 +1,24 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-## 当前补充风险总览（2026-09-07，基线 35ca52da）
+## 当前补充风险总览（2026-09-07，最新实现 993ec9a8）
 
 | 当前范围 | 状态与解释 | 证据入口 |
 |---|---|---|
 | EAS-VGGT 方向继承 | F65 的规划纠偏保持；V7/V7.1 正负结果均保留 | 当前 plan 第 2 节 |
 | 论文主张与证据缺口 | F66 active；revision 2 已加强设计，尚无新实验解除 | 当前 plan 第 3–7 节、补充调研文档 |
-| 下一步 | E1–E5 pending，四组核心证据 A–D；旧 A/B 不恢复 | RESEARCH_STATUS 文首 |
+| E1 工程状态 | F67 resolved；双基座与 beam/split 合同已完成，Waymo payload 待授权 | E1 报告、canonical r4 |
+| 下一步 | E1 running，E2–E5 pending；旧 A/B 不恢复 | RESEARCH_STATUS 文首 |
+
+## V71-F67 — VGGT BF16 位姿求逆与 token 轴假设破坏公共适配器（2026-09-07）
+
+- category=`engineering/backbone_adapter_contract`；status=`resolved`；task=`WS-V72-E1-VGGT-EVIDENCE-IO-01`；resolved commit=`4c86e621`。
+- symptom：正式 r1 在 VGGT 相机 pose 的 `torch.linalg.inv` 处报 `Low precision dtypes not supported. Got BFloat16`，没有产生 summary。改用闭式逆后 r2 完成，但 VGGT feature shape 为 `[3,27,48,0]`；适配器把官方 `[B,S,N,C]` token 的相机轴误当成 token 轴。
+- cause/boundary：VGGT 官方在 Ampere 上用 BF16 推理，而 PyTorch 通用矩阵逆只支持 float/double/complex；VGGT aggregator 保留显式 sequence 维。这是薄适配层假设错误，不是基座精度负结果。r1 未读 target quality/source/external test；r2 的几何数字有效但 feature contract 不完整，不能作 canonical。
+- resolution：复用 VGGT 官方 `closed_form_inverse_se3`；按 `[B,S,patch_start:,C]` 提取特征，要求 cache 的空间/通道维均非零并增加轴布局回归。r3 验证修复但使用未提交源码，最终在 commit 后生成 r4；r4 feature shape 均为 `[3,27,48,2048]`，manifest code=`4c86e621`。
+- prevention：外部模型 adapter 必须验证官方张量轴、dtype 与坐标约定，非空 shape 是接口通过条件；dirty tree run 不登记 canonical。对精确工程错误复用官方实现并重跑一次，不把它扩展成模型 sweep。
+- evidence=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T142000Z__e1-vggt-pi3x-train-observation-s7201-r1`、canonical r4、`docs/WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md`；failure_ledger_delta=`V71-F67_resolved`。
+
+下一可用统一失败编号：`V71-F68`。
 
 ## V71-F66 — 条件回波和接口非干扰不足以支持通用传感器适配（2026-09-07）
 
@@ -18,7 +30,7 @@
 - resolution criteria：实际完成四组证据 A–D，在相同测量信息下确认专门机制增量、表面与传感器语义正确、物理/外观有独立真值对应，以及独立场景/来源的明确泛化范围；仅改计划不解除本风险。若结果只能支持较窄任务，相应收窄论文主张。
 - evidence=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2、`docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`、历史 `V71-F20/F22/F23/F24/F37–F43/F47` 与 D0 W0–W4；本轮无新科学质量读取、训练或 shutdown。
 
-下一可用统一失败编号：`V71-F67`；下方总览和 next-ID 属于历史记录。
+下一可用统一失败编号：`V71-F68`；下方总览和 next-ID 属于历史记录。
 
 ## 当前路线总览（2026-09-07，基线 debe8697）
 
@@ -27,7 +39,7 @@
 | V7/V7.1 | canonical compiler、M8/M39、物理/外观/轨迹分工为 EAS-VGGT 起点；保留外域、容量和算子负结果 | EAS-VGGT plan 第 2/8 节，历史 task/条目 |
 | V7.2 外部补全 A1 | 该候选未越过 G1；不是 EAS-VGGT 的科学拒绝 | V71-F63 |
 | V7.2 过早整体收口 | 缺失 B 实验不能解释成 false；旧修复队列被新方向替代 | V71-F64 |
-| V7.2 当前恢复 | EAS-VGGT E0 已完成，E1–E5 pending；无新模型结果 | V71-F65、RESEARCH_STATUS 文首 |
+| V7.2 当前恢复 | EAS-VGGT E1 running；双基座诊断和数据合同已有结果，E2–E5 pending | V71-F65、RESEARCH_STATUS 文首 |
 
 <a id="v71-f65-eas-vggt-direction"></a>
 ## V71-F65 — recovery 继续外部补全/神经 LiDAR，未继承 EAS 已有机制（2026-09-07）
