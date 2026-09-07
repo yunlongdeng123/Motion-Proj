@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V73-M2-JOINT-GEOMETRY-PATH-01 — pending（2026-09-07）
+
+- run=`20260907T151700Z__joint-dpt-query-s7302-r1`；base=`424743fc`；seed7302；8steps；scene0100按build支持量选Actor；native input=M1 r1已完成的12view冻结前缀与DPT checkpoint。
+- 候选=原生DPT四级refinenet输出→局部三维查询，hidden192、3层、16邻居、4尺度×4点、querychunk128、证据上限1024+补全512；输出局部三角片，无opacity/existence/可学习半径。
+- 优化=联合反向至原生project，build一侧center coverage+弱envelope；checkpointing保留全部可用视图。记录native/geometry梯度、参数变化、GPU/RSS与耗时。不读held-out得分，无方法优越性判定。
+- failure_ledger_refs=`[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05]`；delta=none。入口语法编译通过，真实联合路径实验待执行；M1 r2 PID4680仍running，不重复启动。
+
+---
+
 ## WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01 — r1 done，r2 queued（2026-09-07）
 
 - r1=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`；implementation=`29595e20`；15epochs/60更新；32,654,562原生DPT参数；project最大参数变化0.000526568；第一梯度832.50。

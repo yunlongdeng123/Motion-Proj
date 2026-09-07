@@ -1,5 +1,17 @@
 # Research Status
 
+## V7.3 当前执行：M1 全量已有日志训练，M2 联合梯度接入（2026-09-07）
+
+M1 r2=`running`，PID4680，run=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`，code=`424743fc`。31场景每场12视图已物化，60epochs训练正常；不重复启动。控制日志=`/root/autodl-tmp/controller_logs/v73_m1_native_r2.log`。
+
+`WS-V73-M2-JOINT-GEOMETRY-PATH-01` 实现已接入，实验=`pending`，run=`20260907T151700Z__joint-dpt-query-s7302-r1`；复用M1 r1的build输入、冻结aggregator多层token和训练后原生DPT。读取DPT四级refinenet特征并保持反向通路，1536上限查询（1024证据+512补全）、3层局部空间交互、每层4尺度×4局部采样，输出9顶点/8三角面曲面片。cKDTree建立局部图；查询分块128；DPT启用non-reentrant checkpoint。不学习opacity/existence/支持半径。
+
+首个M2实验仅8步真实build coverage训练，目的为确认曲面位置损失→局部采样→原生DPT梯度及真实显存。它不是有效方法对照，也还没有free/event或法向/曲面片训练；局部片已可输出，但本轮只监督center。scene0100依据build支持数选Actor，不读取held-out质量挑选。不能将这次检查包装为M2主研究结果。
+
+下一步：完成M1 r2分析；M2先明确联合通路资源/梯度，再接同表面几何/free、真实新时刻读出与等容量逐点/LiDAR-only对照。四风险及F05仍active，无资源停机结论。
+
+---
+
 ## V7.3 M1 原生几何可训练，扩大已有日志训练（2026-09-07）
 
 `WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01` r1=`done`，commit=`29595e20`，run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。原生DPT训练32,654,562参数，15epochs/60更新，4fit Actor MAE全部下降；2dev中scene0048 3.594→2.867m、scene0359 5.043→5.095m（仅11点）。第一project参数变化0.000526568；前缀峰值4.578GiB、DPT训练1.348GiB；118.18s。详表=`docs/WORLDSIM_V7_3_M1_NATIVE_RESULTS.md`，summary=`docs/autoresearch/worldsim_v73/m1/r1_summary.json`。

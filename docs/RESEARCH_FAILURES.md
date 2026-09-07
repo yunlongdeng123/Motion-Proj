@@ -1,5 +1,11 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 M2 联合通路注册补记（2026-09-07）
+
+`WS-V73-M2-JOINT-GEOMETRY-PATH-01` 将直接检测原生DPT→多尺度投影局部采样→查询几何的有效梯度和激活成本，迁移依据为Deformable DETR、AdaPoinTr与PyTorch non-reentrant checkpoint官方文档。尚未产出模型比较，failure_ledger_delta=none；不解除V73-F01:F05。稀疏coverage只用于本次center通路，不能解释成完整曲面片/未知区补全已学习；下一编号V73-F06。
+
+---
+
 ## V73-F05 — 原生 DPT 小样本可拟合但开发支持与泛化不足（2026-09-07）
 
 category=`scientific/generalization_and_support`；status=`active`；task=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`；code=`29595e20`；run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。
