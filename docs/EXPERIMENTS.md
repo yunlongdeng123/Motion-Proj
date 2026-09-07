@@ -1,5 +1,20 @@
 # Experiments
 
+## V7.3 全轨迹训练结束与米制射线管free比较（2026-09-08）
+
+LiDAR-only全轨迹标签r7 PID23188已完成30epoch/11130更新，正在完整489Actor最终曲面评价；训练结束记录elapsed3105.48s，最终wall time和开发结果待summary完成。不把最后一次loss或中间checkpoint当成最终性能。主joint r5 PID18843继续正常训练。
+
+现在进行已实现的米制射线管free目标比较：`WS-V73-M2-GLOBAL-ACTOR-01/20260907T212500Z__population-lidar-track-beam-range-s7304-r8`。相对r7，仅把free-mode由range改为beam_tube_range，仍为米制深度侵入、权重0.5；固定宽度0.03m、32×32栅格，通过同一显式三角面的最近深度及轮廓反传。输入、全轨迹fit标签、371fit对象、67dev可输入对象、51空输入对象、seed7304、AdamW lr1e-5、30epoch/11130更新及query架构均保持一致。复用完全相同的r6 initial与r5固定PCA评价，不重做相同模型读出。
+
+本比较检验“原硬相交free缺少轮廓位移梯度时，保留米制严重程度的有限宽度几何目标能否改善真实侵入”；不混入event、额外opacity、自由半径或结构改动。原25Actor的beam_tube仅覆盖比例目标曾降低early数量却恶化侵入距离；此次range版本已在解析场景验证位置和轮廓梯度，但尚没有真实训练收益证据。它仍是优化代理：有限支持外可无梯度，仍需coverage吸引；宽度不是已校准的真实激光光束，不能将解析梯度结果写成全局收敛保证。官方nvdiffrast来源及已有解析证据见 `WORLDSIM_V7_3_FREE_VISIBILITY_DESIGN.md`。
+
+r8使用现有motionproj训练环境与已编译nvdiffrast0.3.3，CUDA12.1编译器来自保留的v72-pointr环境；不升级Torch、不重建大环境。LiDAR-only作业不加载DPT，启动后以真实峰值记录资源；与r5和r7末尾评价并发的wall time不作单作业速度比较。r7评价结果一旦完成即用新增--reference配对r6，并列full cohort、原build LiDAR-ready、运动日志分层。
+
+背景r2已完成，数据/评价进程均退出，scene结果和图已push3cb18bba。failure_ledger_delta=update V73-F02的单因素比较登记；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。CAPA、AdaPoinTr、主joint最终结果、event与新日志确认未完成，shutdown=false。
+
+
+---
+
 ## V7.3 背景近传感器对照完成（2026-09-08）
 
 code7fb7e5a7完成r2背景与场景比较：数据 `WS-V73-M4-SCENE-DATA-01/20260907T211500Z__development-background-sensor-close-r2`，41.72s、RSS7.650GiB；比较 `WS-V73-M4-SCENE-COMPOSITION-01/20260907T211500Z__development-pca-lidar-native-r2`，3.953s、RSS0.751GiB、纯CPU。数据PID26177与评价PID26331均结束。
