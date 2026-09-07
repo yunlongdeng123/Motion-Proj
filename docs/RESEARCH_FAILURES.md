@@ -1,5 +1,36 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 当前风险总览（修订 2，2026-09-07）
+
+`WS-V73-M0-RISK-STORAGE-02` 完成磁盘清理与方法修订，没有新增算法失败。四项 active 风险见下表，方法已缓解但实证待 M1–M4；下一 V7.3 风险/失败编号=`V73-F05`。既有 V71 编号不重写。
+
+| ID | 分类/状态 | 具体机制与下一判别 |
+|---|---|---|
+| V73-F01 | resource/architecture；active | 局部多尺度采样和分块；实测原生 DPT/上层适配内存，保留完整输入 |
+| V73-F02 | objective/support；active | coverage + 几何 free；禁止 opacity/existence/半径塌缩逃避 |
+| V73-F03 | optimization/support_birth；active | 几何吸引持续生支持，event 仅修顺序；推理只读 build |
+| V73-F04 | composition/ownership；active | 静态去动态归属，遮挡后 UNKNOWN，统一硬交点和 owner |
+
+### V73-F01 — 目标时空配置的激活与局部查询成本
+
+观察：目前单卡 RTX3090 24GB；cgroup 内存90GiB、CPU14核，旧文首宿主755GB不能当训练预算。尚未有 V7.3 OOM。来源/迁移：VGGT 官方多层 DPT 与分块、Deformable DETR 稀疏采样；禁止全图 dense query attention，kNN 建图另报成本。最小辨别：真实 DPT 更新的峰值与耗时，再测必要 LoRA；证据=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 13.1，base=`63626e8d`。不因3090存在就提前认定失败或退回路线A。
+
+### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
+
+观察：用户指出目标漏洞，继承 V71-F20/F22 的支持/前尾边界，当前尚未实测新查询。根因候选：缺乏覆盖责任、可学习置信度/支持半径与惩罚耦合。迁移：AdaPoinTr 集合生成 + observed-target coverage + 原始束几何 free，UNKNOWN 不作负标签；不学任意 opacity。比较同几何监督加free后的召回/侵入/missing，而非只看loss。复开/解决条件：真实表面覆盖与侵入共同改善且没有支持消失；证据=plan13.2，task=M2/M3。
+
+### V73-F03 — 缺支持时首事件 NLL 无法独立创造几何
+
+观察：固定支持概率梯度不等于位置支持生成保证。迁移：DS-NeRF 终止分布作为先例，coverage/三维吸引与 coarse-to-fine 生成保持有效；必要时有限宽度延拓。禁止丢弃无候选射线和在推理中用 target 生点。判断：同架构对照记录缺支持率、硬交点及几何梯度，不能仅以NLL下降关闭风险；证据=plan13.3，task=M3。
+
+### V73-F04 — Actor/背景重复表面与边界伪影
+
+观察：背景 ghost、Actor 缺口与外扩可造成假 early/hit 改变，目前未完成 V7.3 scene 应用。迁移：Street Gaussians 分层思想，但物理使用统一硬排序，不用其外观透明度；逐测量时刻排除动态点，遮挡后背景UNKNOWN。最小比较：同一背景/轨迹的 Actor、边界带和全场景分列指标，反事实示例不冒充真值；证据=plan13.4，task=M4。
+
+清理 outcome：删除明确退役依赖/下载缓存；保存包版本与逐项目录，全部 data/run 保留；无需分配新的科学 failure。failure_ledger_delta=`V73-F01:F04_active`；同逻辑提交包含 plan/status/experiments/storage report。
+
+---
+
 ## V7.3 当前失败状态（2026-09-07）
 
 - 当前没有新增 V7.3 科学失败；下一编号保持 `V71-F70`。

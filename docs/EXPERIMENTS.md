@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V73-M0-RISK-STORAGE-02 — done（2026-09-07）
+
+- base commit=`63626e8d`；branch 继承 v72 final `23a67069`；无新科学 target/source/external quality read、无模型训练。
+- 文档=plan revision2 第13节、AGENTS 当前覆盖、三本研究台账；failure_ledger_refs=`[V71-F20,V71-F22,V71-F54,V71-F66,V71-F68,V71-F69,V73-F01,V73-F02,V73-F03,V73-F04]`；delta=`V73-F01:F04_active`。
+- 清理删除=5退役环境、asset-harvester预训练权重与旧HF缓存、pip HTTP缓存、conda索引/下载归档；实际释放=54.63GiB；free=186.30GiB。全部数据/run/当前基座与强基线保留。
+- 资源实测=3090 24GB，cgroup90GiB/14核；GPU研究任务为空；清理结果/环境包版本=`docs/autoresearch/worldsim_v73/storage/`。
+- 验证仅目录占用、进程/依赖路径检查、Git diff；不执行测试矩阵、不新增哈希/校验和/指纹；shutdown=false。
+- 下一步=M1原生DPT真实反向训练与build观测监督，不用冻结末层小外挂替代。
+
+---
+
 ## WS-V73-M0-GEOMETRIC-ADAPTATION-START — done（2026-09-07）
 
 - 分支从 `research/worldsim-v7.2-task-first-completion-lidar` 的最终状态创建为 `research/worldsim-v7.3-geometric-adaptation`；V7.3 计划纳入版本管理。

@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.3 M0 修订 2 与磁盘清理完成（2026-09-07）
+
+task=`WS-V73-M0-RISK-STORAGE-02`；status=`done`；base commit=`63626e8d`；当前分支=`research/worldsim-v7.3-geometric-adaptation`，从 v72 final `23a67069` 直接继承（祖先关系已确认）。正式方法计划修订 2 见 `docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 第 13 节。
+
+已落实方法约束：先投影再局部采样；evidence/completion 查询共享几何解码且同时承担 coverage/free；几何监督负责生成支持，event 负责观测顺序；Actor/背景保持归属并在场景级硬深度排序。对应 `V73-F01`–`V73-F04` 均为 active 风险，不代表已实验证明解决。用户附件已纳入方案，并补充 kNN 建图成本、推理细化只读 build 输入、DDP 不减少单样本激活的边界。
+
+已清理五套退役环境、旧 asset-harvester 权重/缓存及 pip/conda 下载缓存，实际释放 **54.63 GiB**，当前可用 **186.30 GiB**。原始数据、所有 run、当前 VGGT/Pi3X/MapAnything、AdaPoinTr、LiDAR4D 和背景环境保留。包版本/逐项清单=`docs/autoresearch/worldsim_v73/storage/`；原始清理记录=`/root/autodl-tmp/cleanup_manifests/worldsim-v73-20260907/`；报告=`docs/WORLDSIM_V7_3_STORAGE_REPORT.md`。删除前 GPU/研究任务为空，保留环境无指向待删前缀的符号链接。
+
+资源纠正：GPU 3090 24GB；cgroup 内存 **90 GiB**、CPU **14 核**，下文约 755GB 为宿主总量，不可用于本容器预算。磁盘现已不是阻塞，shutdown=false。
+
+下一任务=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`：接入原生 DPT 的真实训练、多层冻结前缀和 build-only 米制监督；先完成可训练几何与实际资源测量，随后认真训练/开发比较，再接入空间查询。无需用户确认，不新增哈希/校验和/指纹，不重复 smoke/回归。
+
+---
+
 ## WorldSim V7.3：几何解码适配主线已启动（2026-09-07）
 
 状态=`M0_branch_and_protocol_done_M1_native_geometry_baseline_in_progress`；分支=`research/worldsim-v7.3-geometric-adaptation`；正式计划=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md`。该分支从 V7.2 最终提交直接派生，V7.2 的数据、物理/外观所有权、连续证据、有序回波与 SE(3) 正结果继续作为已知事实，不把小型 late adapter 的几何负结果外推为视觉几何适配路线失败。
