@@ -25,6 +25,7 @@ from motion_proj.worldsim_v72.data.splits import load_data_roles, require_role_a
 from motion_proj.worldsim_v72.eas_vggt.alignment import (
     aligned_camera_center_rmse_m,
     common_surface_mask,
+    nearest_pixel_indices,
 )
 from motion_proj.worldsim_v72.eas_vggt.backbones import Pi3XBackbone, VGGTBackbone
 from motion_proj.worldsim_v72.eas_vggt.cache import save_backbone_geometry
@@ -99,10 +100,20 @@ def _projected_lidar_metrics(
         model_uv = original_uv1 @ geometry.model_from_original_px[index].T
         x = np.clip(np.rint(model_uv[:, 0]).astype(np.int64), 0, geometry.points_reference.shape[2] - 1)
         y = np.clip(np.rint(model_uv[:, 1]).astype(np.int64), 0, geometry.points_reference.shape[1] - 1)
+        # 同一相机像素只保留最近的 LiDAR 投影，避免把后方点误算为可见表面。
+        camera_depth = camera_points[inside, 2]
+        visible = nearest_pixel_indices(
+            x,
+            y,
+            camera_depth,
+            image_width=geometry.points_reference.shape[2],
+        )
+        x = x[visible]
+        y = y[visible]
         keep = surface_mask[index, y, x]
         if not np.any(keep):
             continue
-        lidar_world = points_world[inside][keep]
+        lidar_world = points_world[inside][visible][keep]
         predicted_world = aligned_points_world[index, y[keep], x[keep]].astype(np.float64)
         lidar_camera = np.concatenate([lidar_world, np.ones((len(lidar_world), 1))], axis=1) @ camera_from_world.T
         predicted_camera = np.concatenate([predicted_world, np.ones((len(predicted_world), 1))], axis=1) @ camera_from_world.T

@@ -6,7 +6,10 @@ from pathlib import Path
 import numpy as np
 
 from motion_proj.worldsim_v72.data.camera_schema import CameraFramePayload, CameraWindow
-from motion_proj.worldsim_v72.eas_vggt.alignment import aligned_camera_center_rmse_m
+from motion_proj.worldsim_v72.eas_vggt.alignment import (
+    aligned_camera_center_rmse_m,
+    nearest_pixel_indices,
+)
 from motion_proj.worldsim_v72.eas_vggt.cache import load_backbone_geometry, save_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
 
@@ -80,3 +83,13 @@ def test_backbone_cache_round_trip_and_similarity_alignment(tmp_path: Path) -> N
     restored = load_backbone_geometry(output)
     assert restored.backbone_id == "mock"
     assert restored.points_reference.shape == geometry.points_reference.shape
+
+
+def test_lidar_projection_keeps_nearest_depth_per_model_pixel() -> None:
+    selected = nearest_pixel_indices(
+        np.asarray([2, 2, 3, 3]),
+        np.asarray([1, 1, 1, 1]),
+        np.asarray([8.0, 3.0, 4.0, 6.0]),
+        image_width=8,
+    )
+    assert selected.tolist() == [1, 2]

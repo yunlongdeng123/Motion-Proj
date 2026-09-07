@@ -69,3 +69,28 @@ def common_surface_mask(
         return valid
     threshold = float(np.quantile(confidence[valid], confidence_quantile))
     return valid & (confidence >= threshold)
+
+
+def nearest_pixel_indices(
+    x: np.ndarray,
+    y: np.ndarray,
+    depth: np.ndarray,
+    *,
+    image_width: int,
+) -> np.ndarray:
+    """返回每个离散像素最近投影在原输入数组中的索引。"""
+    x = np.asarray(x, dtype=np.int64).reshape(-1)
+    y = np.asarray(y, dtype=np.int64).reshape(-1)
+    depth = np.asarray(depth, dtype=np.float64).reshape(-1)
+    if not (len(x) == len(y) == len(depth)):
+        raise ValueError("x/y/depth 数量必须一致")
+    if image_width <= 0 or np.any(x < 0) or np.any(x >= image_width) or np.any(y < 0):
+        raise ValueError("像素坐标或 image_width 无效")
+    if np.any(~np.isfinite(depth)):
+        raise ValueError("depth 必须有限")
+    pixel_index = y * image_width + x
+    order = np.lexsort((depth, pixel_index))
+    first = np.ones(len(order), dtype=bool)
+    if len(order) > 1:
+        first[1:] = pixel_index[order][1:] != pixel_index[order][:-1]
+    return order[first]
