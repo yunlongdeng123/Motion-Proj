@@ -2,7 +2,7 @@
 
 ## 分块后实际运行进展
 
-CAPA修订r2已实际启动：run `WS-V73-M2-CAPA-01/20260907T225000Z__population-build-tta-chunked-s7305-r2`，codeeb42f835，PID31466，日志 `/root/autodl-tmp/controller_logs/v73_population_capa_r2.log`。原始完整VGGT和393216个LoRA参数成功加载，首窗口已越过原OOM位置进入真实反向/优化，官方step0/10/20/30/40的L1读数为3.8186/1.8611/2.0940/1.4381/1.2993。随机视图子集不同，不能把这五个数当成同样本学习曲线或开发效果。全24视图最终联合推理与31窗口完整结果仍待运行，尚不称基线完成或资源问题彻底解决。
+CAPA修订r2已实际启动：run `WS-V73-M2-CAPA-01/20260907T225000Z__population-build-tta-chunked-s7305-r2`，codeeb42f835，PID31466，日志 `/root/autodl-tmp/controller_logs/v73_population_capa_r2.log`。原始完整VGGT和393216个LoRA参数成功加载，首窗口已越过原OOM位置进入真实反向/优化，官方step0/10/20/30/40的L1读数为3.8186/1.8611/2.0940/1.4381/1.2993。随机视图子集不同，不能把这五个数当成同样本学习曲线或开发效果。随后首个scene-0015窗口已实际完成全部100步、全24视图联合推理、LoRA/深度保存及其Actor评价；适配与保存267.033s，累计GPU allocated峰值8.08180GiB，现进入scene-0071。首窗口已跨过完整优化/推理路径，其余30窗口仍待完成，不称整个基线完成或所有规模资源问题已解决。
 
 最近GPU进程占用r5 12358MiB、Ada r1 1582MiB、CAPA r2 9880MiB，不能再叠加新GPU作业。当前GPU余量限制属于并发调度；正常训练继续，先等现有作业释放资源，再启动已准备的event单因素对照与Ada轴修订r2，不为关机强行结束正常任务。Ada r1最近epoch17/1567次优化更新，原完整初始化输出已保留；其轴未迁移限制仍按F07报告。
 
