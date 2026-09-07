@@ -135,6 +135,8 @@ def main():
                     native_count+=len(target)
                 if terms: native_loss=torch.stack(terms).sum()/native_count
             support['native_observed_points']=native_count
+            support['has_actor_camera_pose']=has_views
+            support['fallback_reason']=('no_actor_camera_pose' if not has_views else 'predicted_native_support_empty') if support.get('lidar_fallback') else None
             return result,support,native_loss
 
         @torch.no_grad()
@@ -198,6 +200,10 @@ def main():
                 envelope=(vertices.abs()-case['size_lwh_m'].cuda()/2-.25).clamp_min(0).square().mean()
                 loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss
                 loss.backward()
+                group_gradients={}
+                for name,module in [('native_dpt',head),('query_decoder',decoder)]:
+                    norms=[p.grad.detach().norm() for p in module.parameters() if p.grad is not None] if module is not None else []
+                    group_gradients[name]=torch.stack(norms).norm().item() if norms else 0.
                 grad=torch.nn.utils.clip_grad_norm_(parameters,1.)
                 if not torch.isfinite(grad): raise FloatingPointError('共享几何训练出现非有限梯度')
                 output_grad=sum(p.grad.norm().item() for p in head.scratch.output_conv2.parameters() if p.grad is not None) if head is not None else None
@@ -207,10 +213,12 @@ def main():
                     'free_objective':free.item(),'free_mode':args.free_mode,
                     'free_objective_unit':'m' if tube_free is None else 'coverage_fraction',
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
+                    'group_gradient_norms_before_clip':group_gradients,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
                     'native_candidates':support.get('native_candidates'),
                     'fit_label_times':args.fit_label_times,'extra_time_target_points':case['extra_time_target_points'],
                     'lidar_fallback':support.get('lidar_fallback',False),'views':len(case['view_indices']),
+                    'fallback_reason':support['fallback_reason'],
                     'query_count':len(prediction['centers_actor_m']),'step_s':time.monotonic()-tick,
                     'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
                 history.append(row)
@@ -221,6 +229,8 @@ def main():
             checkpoint={'depth_head':head.state_dict() if head is not None else None,'query_decoder':decoder.state_dict(),
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
+        save('status.json',{'status':'running','phase':'final_evaluation','epochs':args.epochs,
+            'updates':len(history),'elapsed_s':time.monotonic()-started})
         final=evaluate('final')
         result={'status':'done','fit_actors':len(fit),'development_actors':len(cases)-len(fit),
             'cohort_actors':len(index['cases']),'unsupported_input_actors':len(unsupported),

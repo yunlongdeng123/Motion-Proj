@@ -1,5 +1,21 @@
 # Research Status
 
+## V7.3 额外时刻结果与完整Actor队列训练（2026-09-08）
+
+额外fit时刻监督r4完成：run `20260907T184000Z__surround-extra-time-labels-s7304-r4`，code9829ce58，30epochs/600更新，1209.15s，峰值9.848GiB、RSS26.171GiB，原生project最大变化0.000998。训练native fallback4/600、原生最终depth梯度非零600/600，最终25/25保留native支持。该轮输入不变，仅增加fit窗口额外时刻的真实surface/free标签。数据边界已写入manifest、评价行和汇总。
+
+开发5日志结果：hit33.35%、early14.63%、miss36.69%、free0.14904m、观测表面距离0.07685m、0.2m召回93.28%。相对r2（26.78%/17.35%/28.55%/0.12457m/0.07421m/91.64%），命中和召回上升，early下降，但miss和侵入距离上升，无全面胜利。fit额外时刻已作为训练标签：fit距离0.06496m、召回95.15%、free0.84021m，不能把这组fit指标称为留出泛化；侵入在训练测量上仍明显。r4开发free中87.78%来自非本Actor首回波束的贡献，仍非纯背景真值。证据=`docs/autoresearch/worldsim_v73/m2/global/r4_*.json`，含r4−r2日志配对bootstrap区间。只有5个dev日志、其中2个运动Actor，不能据此宣布几何路线失败。
+
+下一正式扩大训练覆盖：`WS-V73-M2-GLOBAL-ACTOR-01/20260907T190000Z__population-shared-native-extra-time-s7304-r5`。数据=`WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2`，所有489已知窗口刚体对象均保留；371个fit可输入Actor训练，67个dev可输入Actor只评价，43fit/8dev无build LiDAR对象输出缺失并纳入适用评价分母。317/371 fit有额外时刻正回波；fit去重build点总数194680，额外时刻原始正返回96301（后者非唯一点数）。默认图像/时间窗口与模型容量不削减，冻结前缀共享，DPT逐步重算，缺相机对象保留LiDAR路径。
+
+固定配置：从M1r3 DPT重新初始化，query seed7304，joint/native_surface，native_data_weight1、range free0.5、fit_label_times=all_window，lr1e-5，30epochs=11130 Actor更新；不从r4继续，避免原25Actor过度曝光。逐Actor等权训练，指标先Actor内按束/点计数，再按日志等权；fit与dev共31场景但仍20/5独立日志。r5检验数据覆盖与充分训练，不与25Actor结果直接声称配对提升。LiDAR-only同解码器与等容量pointwise控制需使用同一完整cohort、相同fit标签及轮次；原生几何微调+融合和认真训练的补全/稀疏适配强基线仍待完成。当前不增event或新free代理，避免数据/目标同时变化。
+
+新日志只增加轻量参数组梯度统计和fallback原因，不改优化：区分“无可用Actor相机位姿”和“有视图但预测native支持消失”；扩展队列中预期缺相机的LiDAR分支不能记为同一种F06塌缩。共享norm裁剪仍1。已有较大总梯度而几何/free长期冲突，需要判断梯度量级而不能猜；已先核对[GradNorm/ICML2018](https://proceedings.mlr.press/v80/chen18a.html)及[PCGrad作者实现](https://github.com/tianheyu927/PCGrad)，前者处理任务梯度量级，后者处理方向冲突。本次不照搬多任务算法，也不把参数组norm当成逐损失冲突证据；只有后续实际诊断支持时才单独改变优化。
+
+r4已结束，r5提交后启动；磁盘131GiB可用，90GiB cgroup，当前无资源不足。failure_ledger_delta=update V73-F02/F05，F01/F03/F04仍active，F06在直接数据监督配置缓解，下一编号V73-F07。整个V7.3尚未完成，shutdown=false。长训练进行时继续不冲突的强基线/场景组合实现和文献迁移，完成后分析再推进；完成全研究才保存/push并无任务关机。
+
+---
+
 ## V7.3 额外时刻训练进行中及侵入归属（2026-09-08）
 
 额外时刻监督r4已启动并进入真实共享训练：run `WS-V73-M2-GLOBAL-ACTOR-01/20260907T184000Z__surround-extra-time-labels-s7304-r4`，code9829ce58，PID17680，日志 `/root/autodl-tmp/controller_logs/v73_global_extra_time_r4.log`。首个记录阶段原生最终depth梯度非零，额外时刻target点数非零，native候选保留，峰值9.848GiB。30epochs/600更新，训练仍运行，不能加载或改写运行配置，结束后读取summary/最新checkpoint再做统一分析。冻结CPU前缀已按场景共享；DPT每步重新执行。当前无资源不足，不关机。
