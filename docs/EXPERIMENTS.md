@@ -1,5 +1,15 @@
 # Experiments
 
+## V7.3 M2 联合通路实测完成（2026-09-07）
+
+`WS-V73-M2-JOINT-GEOMETRY-PATH-01` r1=`done`，run=`20260907T151700Z__joint-dpt-query-s7302-r1`，code=`c0e23d28`，seed7302。12视图、1536查询、13824顶点/12288三角面，8步联合训练17.61s；峰值5.358GiB、RSS2.016GiB。原生DPT project梯度每步非零，参数最大变化7.758e-5；build center coverage从0.07640降至0.04688m。详表=`docs/autoresearch/worldsim_v73/m2/r1_summary.json`。
+
+本结果只确认几何位置→局部视觉读取→预训练DPT的有效联合通路和当前配置资源；未训练patch法向/弯曲、无free/event、无held-out曲面比较，不能声明补全/主方法成功。`visual_observed_fraction=0.985`仅指投影在图内，尚非遮挡可见性。cKDTree避免全体两两建图，checkpoint保留12视图；不据此外推更多视图或上层LoRA显存。
+
+监督=一侧build center coverage+0.05弱box envelope；lr1e-5；选Actor只依据build支持量（scene0100，6565点）。冻结prefix来自M1 r1，原生head继续训练。未读取新日志/source/external评价，failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05]，delta=none。
+
+---
+
 ## WS-V73-M2-JOINT-GEOMETRY-PATH-01 — pending（2026-09-07）
 
 - run=`20260907T151700Z__joint-dpt-query-s7302-r1`；base=`424743fc`；seed7302；8steps；scene0100按build支持量选Actor；native input=M1 r1已完成的12view冻结前缀与DPT checkpoint。

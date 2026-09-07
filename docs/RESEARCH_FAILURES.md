@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 M2 联合通路实测完成（2026-09-07）
+
+`WS-V73-M2-JOINT-GEOMETRY-PATH-01` r1=`done`，run=`20260907T151700Z__joint-dpt-query-s7302-r1`，code=`c0e23d28`，seed7302。12视图、1536查询、13824顶点/12288三角面，8步联合训练17.61s；峰值5.358GiB、RSS2.016GiB。原生DPT project梯度每步非零，参数最大变化7.758e-5；build center coverage从0.07640降至0.04688m。详表=`docs/autoresearch/worldsim_v73/m2/r1_summary.json`。
+
+本结果只确认几何位置→局部视觉读取→预训练DPT的有效联合通路和当前配置资源；未训练patch法向/弯曲、无free/event、无held-out曲面比较，不能声明补全/主方法成功。`visual_observed_fraction=0.985`仅指投影在图内，尚非遮挡可见性。cKDTree避免全体两两建图，checkpoint保留12视图；不据此外推更多视图或上层LoRA显存。
+
+V73-F01在当前12view配置下得到资源缓解；F02/F03/F04/F05仍active。failure_ledger_delta=none，下一编号V73-F06。原生DPT可训练的结论来自真实梯度/参数变化，不来自输出命名。
+
+---
+
 ## V7.3 M2 联合通路注册补记（2026-09-07）
 
 `WS-V73-M2-JOINT-GEOMETRY-PATH-01` 将直接检测原生DPT→多尺度投影局部采样→查询几何的有效梯度和激活成本，迁移依据为Deformable DETR、AdaPoinTr与PyTorch non-reentrant checkpoint官方文档。尚未产出模型比较，failure_ledger_delta=none；不解除V73-F01:F05。稀疏coverage只用于本次center通路，不能解释成完整曲面片/未知区补全已学习；下一编号V73-F06。
