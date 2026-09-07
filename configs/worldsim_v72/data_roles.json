@@ -1,6 +1,6 @@
 {
   "schema_version": "worldsim_v72.data_roles.v1",
-  "status": "clean_dev_and_route_select_frozen_source_test_unopened",
+  "status": "clean_dev_route_and_source_test_frozen",
   "split_unit": "driving_log",
   "quality_used_for_selection": false,
   "datasets": {
@@ -71,11 +71,7 @@
           "343d984344e440c7952d1e403b572b2a",
           "eda311bda86f4e54857b0554639d6426"
         ],
-        "source_candidate_pool": [
-          "b5622d4dcb0d4549b813b3ffb96fbdc9",
-          "da04ae0b72024818a6219d8dd138ea4b",
-          "f93e8d66ce4b4fbea7062d19b1fe29fb"
-        ],
+        "source_candidate_pool": [],
         "dev": [
           "0986cb758b1d43fdaa051ab23d45582b",
           "20db5722b62c4c17bbff2d7b265a3c51",
@@ -87,16 +83,21 @@
           "6f7fe59adf984e55a82571ab4f17e4e2",
           "84ff0dbb8d7343ab95e776c4955d5884"
         ],
-        "source_test": []
+        "source_test": [
+          "b5622d4dcb0d4549b813b3ffb96fbdc9",
+          "da04ae0b72024818a6219d8dd138ea4b",
+          "f93e8d66ce4b4fbea7062d19b1fe29fb"
+        ]
       },
       "frozen_roles": {
         "route_select": true,
-        "source_test": false
+        "source_test": true
       },
       "notes": [
         "The ten dependency-chain-unexposed logs are assigned lexicographically without quality access.",
         "Four logs are development, three are route selection, and three remain unopened source-test candidates.",
-        "The reduced log counts are an explicit evidence limitation; adjacent scenes do not enlarge the denominator."
+        "The reduced log counts are an explicit evidence limitation; adjacent scenes do not enlarge the denominator.",
+        "The three source-test logs and one metadata-ordered visual scene per log were frozen after route selection and before source sensor payload access."
       ]
     },
     "av2_sensor_val": {
