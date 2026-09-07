@@ -1,0 +1,26 @@
+task_id: WS-V72-E2-EAS-ADAPTER-01
+runs_root: /root/autodl-tmp/runs
+failure_ledger_refs: [V71-F43, V71-F52, V71-F54, V71-F62, V71-F66]
+
+data:
+  roles: configs/worldsim_v72/data_roles.json
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  metadata_version: v1.0-trainval
+  role: train
+  camera_channels: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT]
+  window_id: 234b0f37af694571876a745e5bbb5e08
+  actor_corpus_scene: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train/scene-0015
+  selected_actor_fields: [track_id, scene_name, candidates, base_features, evidence_masses, evidence_opportunities]
+  supervision_access: false
+  source_test_read: false
+  external_test_read: false
+
+e1_cache_root: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4/cache
+backbones: [vggt, pi3x]
+
+adapter:
+  hidden_dim: 256
+  visual_dim: 128
+  maximum_surface_delta_m: 0.30
+  smoke_learning_rate: 0.0001
+  device: cuda
