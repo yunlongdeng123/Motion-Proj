@@ -15,7 +15,7 @@ def summarize_actor(row):
     rays=sum(r['all_near_box_rays'] for r in frames)
     points=sum(r['positive_points'] for r in frames)
     value={**row['actor'],'heldout_owned_rays':owned,'heldout_all_rays':rays,
-           'surface_patches':row['surface_patches']}
+           'surface_patches':row['surface_patches'],'extra_time_usage':row.get('extra_time_usage','evaluation_only')}
     for name in ['hit_rate','early_rate','miss_rate']:
         value[name]=sum(r['owned_ray']['rays']*(r['owned_ray'].get(name) or 0) for r in frames)/owned if owned else None
     value['free_intrusion_m']=sum(r['all_near_box_rays']*r['mean_free_intrusion_m'] for r in frames)/rays if rays else None
@@ -86,7 +86,9 @@ def main():
         fusion=json.loads((args.fusion/'summary.json').read_text())
         stages['native_lidar_fusion']=[summarize_actor(row) for row in fusion['final']]
     result={'run':str(args.run),'status':summary['status'],
-        'scope':'one Actor per existing log; raw heldout times inside build window; no new-source confirmation',
+        'scope':summary.get('boundary','existing log cohort; no new-source confirmation'),
+        'fit_extra_time_usage':'training_labels' if summary.get('fit_label_times')=='all_window' else 'evaluation_only',
+        'development_extra_time_usage':'evaluation_only',
         'aggregation':'within Actor weighted by observed rays/points, then scene/Actor mean within log and independent log mean',
         'denominator':'owned first-return outcomes include misses; free includes all raw near-box rays; unknown surface excluded',
         'stages':{name:stage_statistics(rows) for name,rows in stages.items()},'actors':stages,

@@ -33,6 +33,7 @@ def main():
     parser.add_argument('--free-width-m',type=float,default=.03)
     parser.add_argument('--free-resolution',type=int,default=32)
     parser.add_argument('--native-data-weight',type=float,default=0.)
+    parser.add_argument('--fit-label-times',choices=['build','all_window'],default='build')
     args=parser.parse_args()
     task='WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
@@ -49,6 +50,8 @@ def main():
         'shared_parameters':'native DPT and query decoder across fit logs; no development gradient or optimizer update',
         'frozen_prefix':'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted',
         'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
+        'surface_supervision_times':args.fit_label_times,
+        'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
     save('status.json',{'status':'running','phase':'load_contexts'})
     try:
@@ -92,6 +95,12 @@ def main():
         if not fit: raise ValueError('没有可训练fit Actor')
         for case in cases:
             case['lidar_seed']=case['points_actor_m'][farthest_indices(case['points_actor_m'],len(decoder.coarse))]
+            labels=[r for r in case['rays'] if r['role']=='build' or
+                    (case['metadata']['role']=='fit' and args.fit_label_times=='all_window')]
+            case['training_rays']=labels
+            case['training_points']=(torch.unique(torch.cat([r['points_actor_m'][r['positive_actor']] for r in labels]),dim=0)
+                if case['metadata']['role']=='fit' and args.fit_label_times=='all_window' else case['points_actor_m'])
+            case['extra_time_target_points']=sum(r['owned_points'] for r in labels if r['role']!='build')
         before=head.projects[0].weight.detach().clone() if head is not None else None
 
         def predict(case):
@@ -146,7 +155,8 @@ def main():
                     support['native_sensor_huber_m']=native_loss.item()
                 metrics=evaluate_actor_surface(surface,case['rays'])
                 rows.append({'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
-                             'seed_support':support,'frames':metrics})
+                             'seed_support':support,'frames':metrics,
+                             'extra_time_usage':'training_labels' if case['metadata']['role']=='fit' and args.fit_label_times=='all_window' else 'evaluation_only'})
                 if tag=='final':
                     torch.save({k:v.cpu() for k,v in surface.items() if isinstance(v,torch.Tensor)},
                                out/(case['metadata']['owner']+'_surface.pt'))
@@ -166,11 +176,11 @@ def main():
                 optimizer.zero_grad(set_to_none=True)
                 prediction,support,native_loss=predict(case)
                 vertices=prediction['vertices_actor_m'].float(); faces=prediction['faces']
-                points=case['points_actor_m'].cuda()
+                points=case['training_points'].cuda()
                 chosen=points[torch.randperm(len(points),device='cuda')[:1024]]
                 nearest=closest_surface_points(vertices,faces,chosen)
                 coverage=(nearest-chosen).norm(dim=-1).mean()
-                build=[r for r in case['rays'] if r['role']=='build']
+                build=case['training_rays']
                 ranges=torch.cat([r['observed_first_range_m'] for r in build]).cuda()
                 origins=torch.cat([r['origins_actor_m'] for r in build]).cuda()
                 directions=torch.cat([r['directions_actor'] for r in build]).cuda()
@@ -199,6 +209,7 @@ def main():
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
                     'native_candidates':support.get('native_candidates'),
+                    'fit_label_times':args.fit_label_times,'extra_time_target_points':case['extra_time_target_points'],
                     'lidar_fallback':support.get('lidar_fallback',False),'views':len(case['view_indices']),
                     'query_count':len(prediction['centers_actor_m']),'step_s':time.monotonic()-tick,
                     'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
@@ -214,6 +225,7 @@ def main():
         result={'status':'done','fit_actors':len(fit),'development_actors':len(cases)-len(fit),
             'cohort_actors':len(index['cases']),'unsupported_input_actors':len(unsupported),
             'shared_frozen_prefix_views':len(prefix_cache),
+            'fit_label_times':args.fit_label_times,
             'epochs':args.epochs,'updates':len(history),'mode':args.mode,'completion_initialization':args.completion_init,
             'native_project_max_change':(head.projects[0].weight.detach()-before).abs().max().item() if head is not None else None,
             'first_step':history[0],'last_step':history[-1],'wall_s':time.monotonic()-started,

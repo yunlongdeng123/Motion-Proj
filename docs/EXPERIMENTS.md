@@ -1,5 +1,21 @@
 # Experiments
 
+## V7.3 射线管结果、窗口覆盖与额外时刻监督（2026-09-08）
+
+射线管r3已完成：run `20260907T175000Z__surround-native-beam-tube-s7304-r3`，code075f32bb，30epochs/600更新，1220.53s，峰值9.864GiB、RSS26.147GiB。相对r2只将range free换成固定3cm/32像素射线管几何覆盖代理，权重0.5不变；两种目标单位不同，该比较检验此具体配置，不能声称最优权重下全面优越。训练fallback 0/600，原生最终depth非零梯度600/600，最终25/25有native候选。
+
+开发5日志：hit30.20%、early6.98%、miss34.13%、free0.14643m、观测表面距离0.08391m、0.2m召回93.29%。r2对应26.78%/17.35%/28.55%/0.12457m/0.07421m/91.64%。早交点频率下降，但全原始束平均侵入加重且miss上升，不能宣称风险F02解决。fit20日志free0.41012m（r2 0.56707m）；训练本身也未达到LiDAR PCA的一致性。r3开发free仍远高于LiDAR PCA 0.00429m。未做严重侵入归属诊断前，不将其原因预先定为背景/某查询子集。原始结果与按日志配对区间保存至 `docs/autoresearch/worldsim_v73/m2/global/r3_*.json`。
+
+完整窗口刚体枚举完成：run `WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2`，code9539f000。489个已知轨迹与build时刻有交集的刚体Actor中，438个有build LiDAR输入，51个无build LiDAR，visual-only初始化尚未接入，显式记录输入缺失。fit414/ready371，dev75/ready67；ready但零实际Actor相机时刻分别14/7；ready但无相机-LiDAR投影对应分别25/9。缺相机对象保留LiDAR路径；无输入对象在后续评价中输出空表面，纳入miss/覆盖分母，距离记不可用。该枚举仍是已知轨迹窗口范围，不是真实可见Actor全集。独立日志仍20fit/5dev，不能靠增加Actor数冒充新日志确认。完整index和分项计数已入Git。
+
+下一实验r4：`WS-V73-M2-GLOBAL-ACTOR-01/20260907T184000Z__surround-extra-time-labels-s7304-r4`，保持原25Actor控制队列/M1r3初始化/seed7304/30epochs/600更新/原生数据weight1/range free0.5。相对r2仅扩大fit几何标签：输入仍为4个build时刻的LiDAR和24视图，只在fit的surface coverage与free损失加入窗口内额外时刻真实测量。原生2D depth损失、尺度估计、query种子与视觉读取都仍只用build输入。dev不反传，dev额外时刻仍评价专用。合并点标签做坐标去重；默认build模式保持原输入点顺序与采样，避免无意改变既有实验。
+
+依据先前核对的[AdaPoinTr/PCN官方部分输入与目标分离接口](https://raw.githubusercontent.com/yuxumin/PoinTr/master/datasets/PCNDataset.py)，当前只对输入点做coverage监督不足以充分检验补全学习。r4是监督范围机制比较，不是相对较少训练标签基线的公平最终胜利。fit旧字段heldout_time仅表示未输入，r4将它标记为training_labels，不能再称训练集留出泛化；dev才保留evaluation_only。后续强控制需要相同fit标签预算。暂不同时更改query数量、event或free代理，避免无法归因。
+
+当前r3和数据准备已结束，无GPU训练/数据任务；r4提交后启动。资源足够，shutdown=false，整个V7.3未完成。failure_ledger_delta=update V73-F02/F05；F01资源上界与F03缺支持event/F04场景拼接仍active，F06只在当前直接数据监督配置缓解，下一编号V73-F07。继续研究；全流程完成后保存/push并确认无训练、评价、数据任务及启动队列，才关闭远端。
+
+---
+
 ## V7.3 扩大窗口Actor覆盖并保留缺观测对象（2026-09-08）
 
 射线管r3 PID15884正常训练（code075f32bb，run `20260907T175000Z__surround-native-beam-tube-s7304-r3`），观测峰值9.864GiB。当前运行配置不改，等待30epoch后统一硬表面评价。
