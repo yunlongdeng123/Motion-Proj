@@ -1,5 +1,30 @@
 # Experiments
 
+## V7.3 全轨迹LiDAR-only控制最终完成（2026-09-08）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260907T203500Z__population-lidar-only-track-labels-s7304-r7` 已完成，code d78e99ae，30epoch/11130更新，3519.80s包含最终完整评价（initial与固定PCA复用），GPU allocated峰值0.19448GiB、RSS2.987GiB；PID23188已退出。输入仍为原build，只有fit surface/free标签扩展到全轨迹；51个原输入不可用对象继续保留空预测，没有把后续测量作为推理输入。开发75对象/5日志、23个无留出自有回波、8个无预测。
+
+| 同一完整开发队列 | literal hit | early | miss | free m | 观测target到surface m | recall@0.2m |
+|---|---:|---:|---:|---:|---:|---:|
+| 固定LiDAR PCA | 21.24% | 4.35% | 73.41% | 0.01771 | 0.30479 | 65.42% |
+| LiDAR-only r6，短窗标签 | 31.01% | 14.02% | 49.31% | 0.08375 | 0.24118 | 72.42% |
+| LiDAR-only r7，全轨迹标签 | 31.75% | 11.84% | 49.90% | 0.07157 | 0.20952 | 74.55% |
+
+r7−r6独立日志配对：hit+0.75pp，bootstrap95%[−2.10,+3.37]pp（3/5日志改善）；early−2.18pp，[−4.70,−0.37]pp（4改善、1相同）；free−0.01218m，[−0.02226,−0.00210]m（3改善、1变差、1相同）；target距离−0.03165m，[−0.08340,−0.00251]m（4/5改善）；recall+2.12pp，[−0.03,+4.44]pp。miss+0.58pp，[−4.10,+5.27]pp。更充分的训练观测缓解部分侵入/定位问题，尚未形成全面优势；尤其free仍明显高于PCA。此收益属于标签范围变化，不能归因于视觉或空间交互结构。
+
+原build LiDAR-ready开发分层为67对象/5日志，其中16无留出自有回波：r7 hit33.77%、early12.47%、miss46.77%、free0.07548m、target距离0.20952m、recall78.89%。该分层由原输入元数据定义，与模型质量无关；完整75对象仍为主报告。已知速度>2m/s子集仅9对象/2日志（3无留出自有回波、1空预测）：r7 hit17.73%、early6.84%、miss73.64%、free0.03667m、距离0.08915m、recall85.42%；相对r6有物理侵入改善和命中/缺失退化，不能凭2日志宣称动态泛化成立。
+
+fit旧短窗口时刻也属于训练标签：r7 hit40.30%、early9.50%、miss45.01%、free0.04752m、距离0.15537m、recall79.40%；这些不是独立确认，也不是对整条全轨迹所有标签的完整评价。所有标签仍是稀疏真实观测与框归属代理，不称完整表面GT。
+
+完整summary、原PCA/初始化/final逐Actor记录、r6与native fusion配对、运动及共有输入分层均已归档 `docs/autoresearch/worldsim_v73/m2/global/population_lidar_r7_summary.json` 与 `population_lidar_r7_analysis.json`，采用既有结果汇总，不重跑基线。native fusion与r7标签预算和无LiDAR输入处理有差异，结果表不混为同监督架构比较。
+
+当前主joint r5 PID18843（最近epoch11）、米制beam_tube_range r8 PID26975（最近epoch2、GPU峰值0.33034GiB）正常训练。r8与r7输入/全轨迹标签/架构/seed相同，仅free目标变化；等待真实最终结果决定下一对策。完整主模型后还需用与r7/r8相同标签预算训练joint/原生保守控制，并推进CAPA、AdaPoinTr、event和新日志；不从本LiDAR控制推导视觉路线失败。
+
+failure_ledger_delta=update V73-F02/F05（更多fit观测有局部作用，动态独立样本仍不足）；F01/F02/F03/F04/F05继续active，F06直接数据配置缓解，下一编号V73-F07。场景背景r2及配对已完成，scene无残留作业。整个V7.3未完成，shutdown=false；按既有自动研究持续推进，真正完成且确认无训练/评价/数据/任务队列后再关机。
+
+
+---
+
 ## V7.3 场景配对结果与运行状态（2026-09-08）
 
 复用既有结果完成独立日志配对（`scripts/summarize_worldsim_v73_scene_composition.py`；10000次日志bootstrap、seed7306，不重跑模型）：背景近点修订使5/5日志的全束free降低，平均差−0.20861m、95%区间[−0.39920,−0.07872]m；early差−1.74pp、区间[−4.03,−0.34]pp。miss在5/5日志增加，平均+1.69pp、区间[+0.29,+4.02]pp。真实场景误差降低和覆盖代价须同时报告，仍为旧5日志开发证据。
