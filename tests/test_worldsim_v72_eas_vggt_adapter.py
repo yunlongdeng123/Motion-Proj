@@ -7,6 +7,7 @@ import torch
 
 from motion_proj.worldsim_v72.data.camera_schema import CameraFramePayload, CameraWindow
 from motion_proj.worldsim_v72.eas_vggt.models import (
+    CanonicalLateFusionEvidenceAdapter,
     EvidenceConditionedSurfaceAdapter,
     MatchedScalarSurfaceAdapter,
     lift_actor_surface_to_world,
@@ -173,6 +174,38 @@ def test_surface_geometry_is_appearance_invariant_and_se3_equivariant() -> None:
     transformed_world = lift_actor_surface_to_world(candidates, first, transform)
     expected = base_world @ transform[:3, :3].T + transform[:3, 3]
     assert torch.allclose(transformed_world, expected, atol=1.0e-6)
+
+
+def test_late_evidence_fusion_is_view_permutation_invariant() -> None:
+    torch.manual_seed(17)
+    model = CanonicalLateFusionEvidenceAdapter(
+        base_feature_dim=11, visual_feature_dim=32, hidden_dim=64, visual_dim=16
+    )
+    common = {
+        "base_features": torch.randn(7, 11),
+        "canonical_xyz": torch.randn(7, 3),
+        "evidence_fou": torch.softmax(torch.randn(7, 3), dim=-1),
+        "opportunity_count": torch.randint(0, 9, (7,)),
+    }
+    visual = torch.randn(7, 4, 32)
+    observed = torch.randint(0, 2, (7, 4), dtype=torch.bool)
+    confidence = torch.rand(7, 4)
+    first = model(
+        **common,
+        view_visual_features=visual,
+        view_observed=observed,
+        view_confidence=confidence,
+    )
+    order = torch.tensor([2, 0, 3, 1])
+    second = model(
+        **common,
+        view_visual_features=visual[:, order],
+        view_observed=observed[:, order],
+        view_confidence=confidence[:, order],
+    )
+    assert torch.allclose(first.evidence_fou, second.evidence_fou, atol=1.0e-6)
+    assert torch.allclose(first.evidence_strength, second.evidence_strength, atol=1.0e-6)
+    assert torch.all(first.surface_delta_actor_m.abs() <= 0.050001)
 
 
 def test_rgb_render_gradients_stop_at_physical_points() -> None:

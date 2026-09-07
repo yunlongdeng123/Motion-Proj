@@ -148,6 +148,110 @@ class MatchedScalarSurfaceAdapter(EvidenceConditionedSurfaceAdapter):
         return delta, self.scalar_head(evidence_hidden).squeeze(-1)
 
 
+class CanonicalLateFusionEvidenceAdapter(nn.Module):
+    """Fuse non-negative per-view evidence after canonical physical encoding."""
+
+    def __init__(
+        self,
+        *,
+        base_feature_dim: int,
+        visual_feature_dim: int,
+        hidden_dim: int = 256,
+        visual_dim: int = 128,
+        maximum_surface_delta_m: float = 0.05,
+    ) -> None:
+        super().__init__()
+        self.maximum_surface_delta_m = float(maximum_surface_delta_m)
+        physical_dim = base_feature_dim + 3 + 3 + 1
+        self.physical_projection = nn.Sequential(
+            nn.LayerNorm(physical_dim),
+            nn.Linear(physical_dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.GELU(),
+        )
+        self.visual_projection = nn.Sequential(
+            nn.LayerNorm(visual_feature_dim),
+            nn.Linear(visual_feature_dim, visual_dim),
+            nn.GELU(),
+            nn.Linear(visual_dim, visual_dim),
+        )
+        self.physical_evidence_head = nn.Linear(hidden_dim, 4)
+        self.view_evidence = nn.Sequential(
+            nn.Linear(hidden_dim + visual_dim + 1, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, 4),
+        )
+        self.surface_head = nn.Linear(hidden_dim, 3)
+        with torch.no_grad():
+            self.surface_head.weight.zero_()
+            self.surface_head.bias.zero_()
+            self.physical_evidence_head.bias.zero_()
+            self.physical_evidence_head.bias[0] = -2.0
+            self.view_evidence[-1].bias.zero_()
+            self.view_evidence[-1].bias[0] = -4.0
+
+    @staticmethod
+    def _concentration(raw: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        strength = torch.nn.functional.softplus(raw[..., :1])
+        fou = torch.softmax(raw[..., 1:], dim=-1)
+        return strength * fou, strength.squeeze(-1)
+
+    def forward(
+        self,
+        *,
+        base_features: torch.Tensor,
+        canonical_xyz: torch.Tensor,
+        evidence_fou: torch.Tensor,
+        opportunity_count: torch.Tensor,
+        view_visual_features: torch.Tensor,
+        view_observed: torch.Tensor,
+        view_confidence: torch.Tensor,
+    ) -> PhysicalEvidenceOutput:
+        if view_visual_features.ndim != 3 or view_observed.shape != view_visual_features.shape[:2]:
+            raise ValueError("view features/mask must have shapes (N,V,D)/(N,V)")
+        if view_confidence.shape != view_observed.shape:
+            raise ValueError("view confidence must have shape (N,V)")
+        opportunity = torch.log1p(opportunity_count.float()).unsqueeze(-1)
+        physical = torch.cat(
+            [base_features, canonical_xyz, evidence_fou, opportunity], dim=-1
+        )
+        physical_hidden = self.physical_projection(physical)
+        physical_concentration, physical_strength = self._concentration(
+            self.physical_evidence_head(physical_hidden)
+        )
+
+        visual = self.visual_projection(view_visual_features)
+        expanded_physical = physical_hidden.unsqueeze(1).expand(-1, visual.shape[1], -1)
+        confidence = torch.log1p(view_confidence.float()).unsqueeze(-1)
+        raw_view = self.view_evidence(
+            torch.cat([expanded_physical, visual, confidence], dim=-1)
+        )
+        view_concentration, view_strength = self._concentration(raw_view)
+        observed = view_observed.float()
+        view_concentration = view_concentration * observed.unsqueeze(-1)
+        view_strength = view_strength * observed
+
+        prior_strength = 1.0 + opportunity
+        added_concentration = physical_concentration + view_concentration.sum(dim=1)
+        concentration = prior_strength * evidence_fou + added_concentration
+        evidence_strength = concentration.sum(dim=-1, keepdim=True)
+        evidence = concentration / evidence_strength.clamp_min(1.0e-8)
+        added_strength = added_concentration.sum(dim=-1)
+        added_fou = added_concentration / added_strength.clamp_min(1.0e-8).unsqueeze(-1)
+        surface_delta = torch.tanh(self.surface_head(physical_hidden)) * self.maximum_surface_delta_m
+        zeros = torch.zeros_like(added_strength)
+        return PhysicalEvidenceOutput(
+            surface_delta_actor_m=surface_delta,
+            blocking_logit=zeros,
+            detection_logit=zeros,
+            evidence_fou=evidence,
+            evidence_strength=evidence_strength.squeeze(-1),
+            added_evidence_fou=added_fou,
+            added_evidence_strength=physical_strength + view_strength.sum(dim=1),
+        )
+
+
 def lift_actor_surface_to_world(
     candidates_actor_m: torch.Tensor,
     surface_delta_actor_m: torch.Tensor,
