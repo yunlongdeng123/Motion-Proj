@@ -8,9 +8,10 @@ inputs:
   fit_e3_run: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E3-DECOUPLED-APPEARANCE-01/20260907T170000Z__e3-fit-appearance-cache-r1
   development_e3_run: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E3-DECOUPLED-APPEARANCE-01/20260907T171000Z__e3-development-appearance-cache-r1
   backbones: [vggt, pi3x]
-model: {hidden_dim: 128}
+model: {hidden_dim: 128, maximum_rgb_residual: 0.10}
 optimization:
   steps: 800
   learning_rate: 0.0005
   weight_decay: 0.0001
   opacity_loss_weight: 0.1
+  residual_l1_weight: 0.25

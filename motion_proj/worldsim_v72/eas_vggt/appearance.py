@@ -127,6 +127,46 @@ class DetachedAppearanceAdapter(nn.Module):
         return AppearanceOutput(rgb=rgb, opacity=opacity)
 
 
+class AnchoredAppearanceAdapter(nn.Module):
+    """Keep measured canonical RGB as the anchor and learn only a bounded residual."""
+
+    def __init__(
+        self,
+        visual_feature_dim: int,
+        hidden_dim: int = 128,
+        maximum_rgb_residual: float = 0.10,
+    ) -> None:
+        super().__init__()
+        self.maximum_rgb_residual = float(maximum_rgb_residual)
+        self.network = nn.Sequential(
+            nn.LayerNorm(visual_feature_dim),
+            nn.Linear(visual_feature_dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, 5),
+        )
+        with torch.no_grad():
+            self.network[-1].bias.zero_()
+            self.network[-1].bias[3] = -2.2
+
+    def forward(
+        self,
+        visual_features: torch.Tensor,
+        visual_observed: torch.Tensor,
+        anchor_rgb: torch.Tensor,
+        anchor_observed: torch.Tensor,
+    ) -> AppearanceOutput:
+        raw = self.network(visual_features)
+        usable = (visual_observed.bool() & anchor_observed.bool()).float()
+        residual = torch.tanh(raw[..., :3]) * self.maximum_rgb_residual
+        residual_gate = torch.sigmoid(raw[..., 3]) * usable
+        rgb = (anchor_rgb + residual_gate.unsqueeze(-1) * residual).clamp(0.0, 1.0)
+        rgb = rgb * anchor_observed.float().unsqueeze(-1)
+        opacity = torch.sigmoid(raw[..., 4]) * visual_observed.float()
+        return AppearanceOutput(rgb=rgb, opacity=opacity)
+
+
 @dataclass(frozen=True)
 class RenderedAppearance:
     rgb: torch.Tensor

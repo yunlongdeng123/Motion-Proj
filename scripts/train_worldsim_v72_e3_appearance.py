@@ -21,7 +21,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from motion_proj.worldsim_v72.eas_vggt.actor_visual_cache import load_actor_visual_cache
-from motion_proj.worldsim_v72.eas_vggt.appearance import DetachedAppearanceAdapter
+from motion_proj.worldsim_v72.eas_vggt.appearance import AnchoredAppearanceAdapter
 from motion_proj.worldsim_v72.eas_vggt.appearance_cache import load_actor_appearance_cache
 
 
@@ -71,7 +71,7 @@ def _load_dataset(e2_run: Path, e3_run: Path, backbone: str, device: torch.devic
         target_parts.append(target.rgb)
         target_mask_parts.append(target_mask)
         context_rgb_parts.append(context_rgb.astype(np.float32))
-        context_mask_parts.append(context_observed)
+        context_mask_parts.append(context_observed & (rgb_confidence > 0.0))
         rows.append(
             {
                 "track_id": track_id,
@@ -109,8 +109,10 @@ def _metrics(rgb: torch.Tensor, opacity: torch.Tensor, data: dict[str, torch.Ten
 
 
 def _train(fit: dict[str, torch.Tensor], development: dict[str, torch.Tensor], config: dict[str, Any], checkpoint: Path):
-    model = DetachedAppearanceAdapter(
-        int(fit["visual_features"].shape[-1]), hidden_dim=int(config["model"]["hidden_dim"])
+    model = AnchoredAppearanceAdapter(
+        int(fit["visual_features"].shape[-1]),
+        hidden_dim=int(config["model"]["hidden_dim"]),
+        maximum_rgb_residual=float(config["model"]["maximum_rgb_residual"]),
     ).to(fit["visual_features"].device)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -122,14 +124,26 @@ def _train(fit: dict[str, torch.Tensor], development: dict[str, torch.Tensor], c
     target_visible = fit["target_mask"].bool()
     color_mask = observed & target_visible
     for step in range(int(config["optimization"]["steps"])):
-        output = model(fit["visual_features"].float(), observed)
+        output = model(
+            fit["visual_features"].float(),
+            observed,
+            fit["context_rgb"].float(),
+            fit["context_mask"].bool(),
+        )
         color_loss = torch.nn.functional.smooth_l1_loss(
             output.rgb[color_mask], fit["target_rgb"].float()[color_mask]
         )
         opacity_loss = torch.nn.functional.binary_cross_entropy(
             output.opacity[observed], target_visible.float()[observed]
         )
-        loss = color_loss + float(config["optimization"]["opacity_loss_weight"]) * opacity_loss
+        residual_penalty = torch.mean(
+            torch.abs(output.rgb[color_mask] - fit["context_rgb"].float()[color_mask])
+        )
+        loss = (
+            color_loss
+            + float(config["optimization"]["opacity_loss_weight"]) * opacity_loss
+            + float(config["optimization"]["residual_l1_weight"]) * residual_penalty
+        )
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
@@ -137,11 +151,22 @@ def _train(fit: dict[str, torch.Tensor], development: dict[str, torch.Tensor], c
             history.append({"step": step + 1, "loss": float(loss.detach().cpu())})
     model.eval()
     with torch.inference_mode():
-        fit_output = model(fit["visual_features"].float(), fit["context_mask"].bool())
-        dev_output = model(development["visual_features"].float(), development["context_mask"].bool())
+        fit_output = model(
+            fit["visual_features"].float(),
+            fit["context_mask"].bool(),
+            fit["context_rgb"].float(),
+            fit["context_mask"].bool(),
+        )
+        dev_output = model(
+            development["visual_features"].float(),
+            development["context_mask"].bool(),
+            development["context_rgb"].float(),
+            development["context_mask"].bool(),
+        )
     checkpoint.parent.mkdir(parents=True, exist_ok=True)
     torch.save(model.state_dict(), checkpoint)
     result = {
+        "variant": "canonical_rgb_plus_bounded_visual_residual",
         "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
         "history": history,
         "fit": _metrics(fit_output.rgb, fit_output.opacity, fit),

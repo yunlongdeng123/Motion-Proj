@@ -15,6 +15,7 @@ from motion_proj.worldsim_v72.eas_vggt.models import (
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
 from motion_proj.worldsim_v72.eas_vggt.visual_pooling import observe_actor_candidates
 from motion_proj.worldsim_v72.eas_vggt.appearance import (
+    AnchoredAppearanceAdapter,
     observe_candidate_rgb,
     render_detached_gaussian_appearance,
 )
@@ -209,3 +210,16 @@ def test_candidate_rgb_pooling_keeps_appearance_separate(tmp_path: Path) -> None
     )
     assert observation.observation_count.tolist() == [1, 0]
     np.testing.assert_allclose(observation.pooled_rgb[0], [0.2, 0.4, 0.6], atol=1.0e-6)
+
+
+def test_anchored_appearance_is_bounded_and_preserves_missing_anchor() -> None:
+    model = AnchoredAppearanceAdapter(8, hidden_dim=16, maximum_rgb_residual=0.10)
+    anchor = torch.tensor([[0.2, 0.4, 0.6], [0.7, 0.8, 0.9]])
+    output = model(
+        torch.randn(2, 8),
+        torch.ones(2, dtype=torch.bool),
+        anchor,
+        torch.tensor([True, False]),
+    )
+    assert torch.all(torch.abs(output.rgb[0] - anchor[0]) <= 0.100001)
+    assert torch.equal(output.rgb[1], torch.zeros(3))
