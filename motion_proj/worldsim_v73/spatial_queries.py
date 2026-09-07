@@ -107,7 +107,7 @@ class ActorSpatialQueryDecoder(nn.Module):
         self.register_buffer('patch_faces',torch.tensor(faces,dtype=torch.long))
 
     def forward(self,build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
-                image_hw,camera_ids,time_offsets_s):
+                image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True):
         count=min(len(build_points_actor_m),self.evidence_queries)
         ids=torch.linspace(0,max(len(build_points_actor_m)-1,0),count,device=build_points_actor_m.device).long()
         evidence=build_points_actor_m[ids]
@@ -118,10 +118,18 @@ class ActorSpatialQueryDecoder(nn.Module):
         h=self.position(x/size_lwh_m.clamp_min(.1))+self.source(source)
         observed=torch.zeros(len(x),device=x.device,dtype=torch.bool)
         for read,message,update,displacement in zip(self.reads,self.messages,self.updates,self.displacements):
-            ids=neighborhood(x,self.neighbors)
-            relative=x[ids]-x[:,None]
-            local=message(torch.cat([h[ids],relative,relative.norm(dim=-1,keepdim=True)],-1)).mean(1)
-            visual,available=read(x,h,features,camera_from_actor,intrinsics,image_hw,camera_ids,time_offsets_s)
+            if use_spatial:
+                ids=neighborhood(x,self.neighbors)
+                relative=x[ids]-x[:,None]
+                local=message(torch.cat([h[ids],relative,relative.norm(dim=-1,keepdim=True)],-1)).mean(1)
+            else:
+                # 等容量逐点控制：同一message MLP只处理自身，不读取其他查询。
+                local=message(torch.cat([h,x.new_zeros(len(x),4)],-1))
+            if use_visual:
+                visual,available=read(x,h,features,camera_from_actor,intrinsics,image_hw,camera_ids,time_offsets_s)
+            else:
+                visual=torch.zeros_like(h)
+                available=torch.zeros(len(x),device=x.device,dtype=torch.bool)
             h=h+update(torch.cat([h,local,visual],-1))
             x=x+displacement(h)
             observed|=available

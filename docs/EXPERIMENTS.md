@@ -1,5 +1,17 @@
 # Experiments
 
+## V7.3 同信息控制与原生表面比较注册（2026-09-07）
+
+`WS-V73-M2-PHYSICAL-SURFACE-01` r1当前running，PID6424，code=`45737d33`，120steps已过半；输入包含4build时刻10222个原始归属点（最终unique数以run为准），2个heldout时刻，所有近框原始束共约3.2万。训练峰值5.306GiB，原生project与法向梯度非零；完整结果待落盘，不提前判胜。
+
+接入控制组：joint、pointwise（同message/update容量、只读自身查询）、lidar_only（同query解码器关闭视觉读出），以及joint无free。全组统一seed7303，并在原生头构造后重置query初始化种子，因此它们彼此共享初值；早期r1没有这次重置，只作先导，不能与新组冒称相同初值。各120steps、lr1e-5、相同build点/束抽样量和显式patch尺度，先在同一fit Actor作机制比较。M1的冻结/已微调原生点图也用相同1536 PCA曲面片读出，5cm规范体素平均，记录每视图入Actor框点数，不能按heldout质量选点。
+
+计划批次=`20260907T154500Z__physical-controls`：joint-r2、pointwise-r1、lidar-only-r1、joint-no-free-r1；原生融合run=`20260907T154500Z__native-fusion-scene0100-r1`。只在build范围内indices2,5诊断，尚非独立日志确认；同时报告真实首交点hit/early/miss、已知free侵入、正观测点到同曲面距离/recall，未知区域不被当成负表面。原生点图按已知box归属存在背景污染风险，单独披露。
+
+当前无资源阻塞，shutdown=false；批次结束后按同一Actor成组比较再决定扩大日志与事件目标。
+
+---
+
 ## V7.3 M1 扩展结果与真实曲面实验（2026-09-07）
 
 M1 r2=`done`，code=`424743fc`，run=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`。25fit/6dev场景、60epochs/1500更新，1130.19s。原生DPT 32,654,562参数，project最大变化0.004067；训练峰值1.348GiB、RSS8.817GiB。

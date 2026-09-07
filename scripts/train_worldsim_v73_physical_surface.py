@@ -41,6 +41,27 @@ def lidar_patches(points,decoder,count=1536):
     return {'vertices_actor_m':vertices,'faces':faces,'centers_actor_m':centers}
 
 
+@torch.no_grad()
+def evaluate_actor_surface(prediction,rays):
+    vertices=prediction['vertices_actor_m'].float(); faces=prediction['faces']
+    rows=[]
+    for r in rays:
+        origins=r['origins_actor_m'].cuda(); directions=r['directions_actor'].cuda()
+        ranges=r['observed_first_range_m'].cuda(); positive=r['positive_actor'].cuda()
+        depth,_=first_triangle_intersection(vertices,faces,origins,directions)
+        points=r['points_actor_m'][r['positive_actor']].cuda()
+        nearest=closest_surface_points(vertices,faces,points)
+        distance=(nearest-points).norm(dim=-1)
+        rows.append({'sample_index':r['sample_index'],'role':r['role'],
+            'owned_ray':first_return_metrics(depth[positive],ranges[positive]),
+            'all_near_box_rays':len(ranges),
+            'free_intrusion_rate':(torch.isfinite(depth)&(depth<ranges-.2)).float().mean().item(),
+            'mean_free_intrusion_m':direct_free_space_loss(depth,ranges).item(),
+            'positive_points':len(points),'positive_surface_mean_m':distance.mean().item() if len(points) else None,
+            'positive_surface_recall_02':(distance<=.2).float().mean().item() if len(points) else None})
+    return rows
+
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--native-run',type=Path,required=True)
@@ -91,38 +112,23 @@ def main():
         channel_ids={'CAM_FRONT':0,'CAM_FRONT_RIGHT':1,'CAM_BACK_RIGHT':2,'CAM_BACK':3,'CAM_BACK_LEFT':4,'CAM_FRONT_LEFT':5}
         camera_ids=torch.tensor([channel_ids[v['camera_id']] for _,v in views],device='cuda')
         times=torch.tensor([(v['camera_time_us']-views[0][1]['camera_time_us'])/1e6 for _,v in views],device='cuda')
-        pyramid=NativeGeometryPyramid(args.native_run,scene,[i for i,_ in views])
+        # 模型初始化隔离于原生头创建的随机数消耗，使三种候选共享相同query初值。
+        pyramid=NativeGeometryPyramid(args.native_run,scene,[i for i,_ in views]) if args.mode!='lidar_only' else None
+        torch.manual_seed(7303)
         decoder=ActorSpatialQueryDecoder().cuda()
-        if args.mode!='joint': raise NotImplementedError('同信息控制候选将单独接入；本轮仅joint')
-        parameters=[*pyramid.parameters(),*decoder.parameters()]
+        parameters=[*(pyramid.parameters() if pyramid is not None else []),*decoder.parameters()]
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         build_origins=torch.cat([r['origins_actor_m'] for r in build_rays]).cuda()
         build_directions=torch.cat([r['directions_actor'] for r in build_rays]).cuda()
         build_ranges=torch.cat([r['observed_first_range_m'] for r in build_rays]).cuda()
         def predict():
-            features=pyramid()
+            features=pyramid() if pyramid is not None else None
             with torch.autocast('cuda',dtype=torch.bfloat16):
-                return decoder(build,size,features,matrices,intrinsics,views[0][1]['image'].shape[-2:],camera_ids,times)
+                return decoder(build,size,features,matrices,intrinsics,views[0][1]['image'].shape[-2:],camera_ids,times,
+                               use_spatial=args.mode!='pointwise',use_visual=args.mode!='lidar_only')
 
-        @torch.no_grad()
         def evaluate(prediction):
-            vertices=prediction['vertices_actor_m'].float(); faces=prediction['faces']
-            rows=[]
-            for r in rays:
-                origins=r['origins_actor_m'].cuda(); directions=r['directions_actor'].cuda()
-                ranges=r['observed_first_range_m'].cuda(); positive=r['positive_actor'].cuda()
-                depth,_=first_triangle_intersection(vertices,faces,origins,directions)
-                points=r['points_actor_m'][r['positive_actor']].cuda()
-                nearest=closest_surface_points(vertices,faces,points)
-                distance=(nearest-points).norm(dim=-1)
-                rows.append({'sample_index':r['sample_index'],'role':r['role'],
-                    'owned_ray':first_return_metrics(depth[positive],ranges[positive]),
-                    'all_near_box_rays':len(ranges),
-                    'free_intrusion_rate':(torch.isfinite(depth)&(depth<ranges-.2)).float().mean().item(),
-                    'mean_free_intrusion_m':direct_free_space_loss(depth,ranges).item(),
-                    'positive_points':len(points),'positive_surface_mean_m':distance.mean().item() if len(points) else None,
-                    'positive_surface_recall_02':(distance<=.2).float().mean().item() if len(points) else None})
-            return rows
+            return evaluate_actor_surface(prediction,rays)
 
         baseline=lidar_patches(build,decoder)
         save('lidar_patch_baseline.json',evaluate(baseline))
@@ -130,7 +136,7 @@ def main():
         del baseline
         with torch.no_grad(): initial=predict()
         save('initial.json',evaluate(initial)); del initial
-        before=pyramid.head.projects[0].weight.detach().clone()
+        before=pyramid.head.projects[0].weight.detach().clone() if pyramid is not None else None
         rows=[]
         for step in range(args.steps):
             tick=time.monotonic()
@@ -146,7 +152,7 @@ def main():
             envelope=(vertices.abs()-size/2-.25).clamp_min(0).square().mean()
             loss=coverage+args.free_weight*free+.05*envelope
             loss.backward()
-            native_grad=pyramid.head.projects[0].weight.grad.norm().item()
+            native_grad=pyramid.head.projects[0].weight.grad.norm().item() if pyramid is not None else None
             normal_grad=decoder.normal.weight.grad.norm().item()
             torch.nn.utils.clip_grad_norm_(parameters,1.)
             optimizer.step()
@@ -158,7 +164,7 @@ def main():
             save('status.json',{'status':'running','phase':'physical_train',**row})
             print(json.dumps(row),flush=True)
             if (step+1)%20==0 or step+1==args.steps:
-                torch.save({'depth_head':pyramid.head.state_dict(),'query_decoder':decoder.state_dict(),
+                torch.save({'depth_head':pyramid.head.state_dict() if pyramid is not None else None,'query_decoder':decoder.state_dict(),
                             'optimizer':optimizer.state_dict(),'step':step+1},out/'latest.pt')
             del prediction,vertices,faces,loss,coverage,free,envelope,nearest,depth
         with torch.no_grad(): prediction=predict()
@@ -167,7 +173,7 @@ def main():
         torch.save({k:v.cpu() for k,v in prediction.items() if isinstance(v,torch.Tensor)},out/'final_surface.pt')
         result={'status':'done','scene':args.scene,'owner':owner,'views':len(views),'build_points':len(build),
             'steps':args.steps,'free_weight':args.free_weight,'mode':args.mode,'final':final,
-            'native_project_max_change':(pyramid.head.projects[0].weight.detach()-before).abs().max().item(),
+            'native_project_max_change':(pyramid.head.projects[0].weight.detach()-before).abs().max().item() if pyramid is not None else None,
             'first_step':rows[0],'last_step':rows[-1],
             'wall_s':time.monotonic()-started,'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,
             'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,
