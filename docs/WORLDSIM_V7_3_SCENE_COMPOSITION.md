@@ -1,5 +1,22 @@
 # V7.3 场景级背景与Actor组合
 
+## V7.3 场景配对收尾与CAPA分块后真实训练（2026-09-08）
+
+复用场景r3保存结果完成r8−r7配对：cohort free−0.04382m、日志bootstrap95%[−0.07655,−0.01284]m，4日志降低、1相同；early−5.98pp、[−9.44,−2.52]pp；hit−3.52pp、[−9.62,+1.79]pp；miss+7.39pp、[+0.22,+14.55]pp。场景侵入降低仍伴随覆盖代价，且背景自身误差占比大，不宣告F04解决。全部原始束、cohort、背景/其他对象、边界代理与近传感器分层保留在m4/scene_composition_r3_summary.json，配对在scene_composition_r3_paired.json。没有新增模型推理。
+
+完整Actor开发队列的PCA/r6/r7/r8六项结果图已生成 `docs/autoresearch/worldsim_v73/m2/global/V73_POPULATION_FREE_TRADEOFFS.png/pdf`；柱为日志等权均值、点为5条独立日志，图中明确r6短窗标签与r7/r8全轨迹标签差别。图不使用旧25Actor诊断子集替代当前75个开发对象，运动样本仍仅2日志的限制保留在正文。
+
+CAPA修订r2已实际启动：run `WS-V73-M2-CAPA-01/20260907T225000Z__population-build-tta-chunked-s7305-r2`，codeeb42f835，PID31466，日志 `/root/autodl-tmp/controller_logs/v73_population_capa_r2.log`。原始完整VGGT和393216个LoRA参数成功加载，首窗口已越过原OOM位置进入真实反向/优化，官方step0/10/20/30/40的L1读数为3.8186/1.8611/2.0940/1.4381/1.2993。随机视图子集不同，不能把这五个数当成同样本学习曲线或开发效果。全24视图最终联合推理与31窗口完整结果仍待运行，尚不称基线完成或资源问题彻底解决。
+
+最近GPU进程占用r5 12358MiB、Ada r1 1582MiB、CAPA r2 9880MiB，不能再叠加新GPU作业。当前GPU余量限制属于并发调度；正常训练继续，先等现有作业释放资源，再启动已准备的event单因素对照与Ada轴修订r2，不为关机强行结束正常任务。Ada r1最近epoch17/1567次优化更新，原完整初始化输出已保留；其轴未迁移限制仍按F07报告。
+
+下一event run登记为 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T230000Z__population-lidar-track-beam-event-s7304-r9`：相对r8仅event-weight=0.01，固定σ0.2m/C28/width0.03m/res32，保持371fit/完整489队列、全轨迹fit标签、原build输入、seed7304、30epoch/11130更新与free配置。复用相同r6 initial和r5 PCA；无支持不从event分母删除。此时未启动，无后台自动启动队列，待有实测资源后执行。后续主joint同full_track适配、强视觉/补全控制、独立新日志及完整应用仍需推进。
+
+failure_ledger_delta=update F01/F02/F03/F04/F05/F07状态；F01/F02/F03/F04/F05/F07继续active，F06直接数据配置缓解，下一编号V73-F08。三项长训练/适配均正常，整个V7.3未完成，shutdown=false；15分钟自动研究继续，真正完成后保存/push并确保无任务/队列再关机。
+
+---
+
+
 ## V7.3 场景配对结果与运行状态（2026-09-08）
 
 复用既有结果完成独立日志配对（`scripts/summarize_worldsim_v73_scene_composition.py`；10000次日志bootstrap、seed7306，不重跑模型）：背景近点修订使5/5日志的全束free降低，平均差−0.20861m、95%区间[−0.39920,−0.07872]m；early差−1.74pp、区间[−4.03,−0.34]pp。miss在5/5日志增加，平均+1.69pp、区间[+0.29,+4.02]pp。真实场景误差降低和覆盖代价须同时报告，仍为旧5日志开发证据。
