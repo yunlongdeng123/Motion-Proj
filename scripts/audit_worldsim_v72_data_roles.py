@@ -169,7 +169,7 @@ def build_role_manifest(inventory: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument("--repo-root", type=Path, default=Path.cwd())
     parser.add_argument(
         "--metadata-root",
