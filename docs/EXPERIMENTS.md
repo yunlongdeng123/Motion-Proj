@@ -1,5 +1,17 @@
 # Experiments
 
+## V7.3 同信息融合显示覆盖与侵入权衡（2026-09-08）
+
+原生+LiDAR融合run `20260907T170500Z__native-lidar-fusion-r1` 已完成，code5d58e6fe，25Actor、67.20s，峰值2.687GiB、RSS6.825GiB，native fallback=0/25。fit20日志中16个运动Actor、11个build点数<100；development5日志中2个运动、2个build<100。所有对象均有未输入时刻Actor回波，未按评价质量选择。
+
+开发日志等权：LiDAR PCA hit28.55%/early4.74%/miss66.38%/free0.00429m，观测表面距离0.1234m/recall85.50%；native+LiDAR融合hit27.22%/early8.37%/miss55.52%/free0.05903m，距离0.0809m/recall94.17%。覆盖改善伴随early/free退化，没有形成物理指标支配。融合输出min(N,1024)+512个patch，LiDAR PCA为min(N,1536)；报告密度差异，不能把全部变化归因于图像信息。此融合与共享查询模型的patch数量/固定尺度相同。
+
+报告=`docs/WORLDSIM_V7_3_M2_GLOBAL_FUSION_RESULTS.md`；证据=`docs/autoresearch/worldsim_v73/m2/global/fusion_r1_summary.json`、`fusion_r1_log_analysis.json`。本方法为已训练原生DPT的简单融合参照，不是CAPA/AdaPoinTr/TSDF，也未完成最强同信息基线集合。failure_ledger_delta=update V73-F02（支持增加/侵入权衡）；F01:F06仍active，下一编号V73-F07。
+
+共享r1 PID12315仍在训练30epochs，不能把中间fallback或loss下降写为最终结果；随后运行已提交的native-data r2。当前融合任务已结束，资源未不足；整个研究未结束，因此shutdown=false。
+
+---
+
 ## V7.3 同信息原生与LiDAR融合比较（2026-09-08）
 
 `WS-V73-M2-GLOBAL-FUSION-01` 同信息简单融合基线已实现，run `20260907T170500Z__native-lidar-fusion-r1`。复用完成的M1六相机r3头与同一25个Actor，不新增训练、不读取新时间目标选择输出。原生depth→已知轨迹规范坐标→box归属点，与build LiDAR合并；保留min(1024,N) LiDAR证据中心+512原生FPS中心，使用合并点集局部PCA法向及相同0.06m、8三角面/patch读出。与共享模型输出数量一致，原生点完全缺失时保留LiDAR并报告。没有自由空间删除、凸包或opacity。
