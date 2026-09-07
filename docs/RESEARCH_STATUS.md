@@ -1,5 +1,17 @@
 # Research Status
 
+## V7.3 M1 原生 DPT 实现与首轮训练（2026-09-07）
+
+task=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`；实现=`done`，实验=`pending`，提交后立即启动；base=`dbe98c91`；run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。命令：`python scripts/train_worldsim_v73_native_geometry.py --config configs/worldsim_v73/m1_native_geometry.yaml --run-id 20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。
+
+原生预训练 depth_head 所有层允许训练；aggregator 冻结并重新提取其4/11/17/23层，跨4时刻×3前向相机联合编码，不复用旧最终网格。378×672全图，DPT逐视图累积梯度。一个scene/window共享固定build-LiDAR鲁棒米制尺度，标定与轨迹只读；按相机时刻插值Actor位姿；实际图像尺寸从文件读取，内参缩放从标定元数据尺寸计算。
+
+首轮沿用既有E2 split的前4 fit scenes和前2 development scenes，15 epochs，lr1e-5。此规模是机制训练起点，不作为完整主表；完成后扩展25 fit/6 development和规范表面读出。训练仅用build采样帧，按点序号留出1/5 build点作插值诊断，后者没有进入损失/尺度估计；不是新时刻表面确认。当前记录深度误差/Actor误差，不能冒称硬首交点或完整surface F-score。残余扫描内时序和2D投影遮挡不确定性保留。
+
+数据入口不计算哈希/校验和/指纹；仅复用历史split身份。必要检查=两入口py_compile通过；实测显存和原生project层梯度/参数变化由此次训练产出，不先追加smoke矩阵。source/external未读；四项风险仍active，shutdown=false。
+
+---
+
 ## WorldSim V7.3 M0 修订 2 与磁盘清理完成（2026-09-07）
 
 task=`WS-V73-M0-RISK-STORAGE-02`；status=`done`；base commit=`63626e8d`；当前分支=`research/worldsim-v7.3-geometric-adaptation`，从 v72 final `23a67069` 直接继承（祖先关系已确认）。正式方法计划修订 2 见 `docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 第 13 节。

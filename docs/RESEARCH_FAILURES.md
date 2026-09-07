@@ -1,5 +1,13 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 M1 启动前风险复核（2026-09-07）
+
+`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01` 的原生 DPT 入口与12视图数据路径已实现并通过语法编译，尚无新模型结果；`failure_ledger_delta=none`，V73-F01:F04仍active。保留逐点LiDAR采集时间缺失、稀疏像素遮挡和box归属近似的边界；不把build点插值误差当真实首交点指标。配置引用四风险及V71-F54/F66/F68/F69，下一V73编号仍F05。
+
+M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refused）；复用既有V7-F05网络恢复，重建当前LocalTUN并以新端口40923单命令代理push成功。无数据/模型影响，不新增科学failure；M0交付commit=`dbe98c91`。
+
+---
+
 ## V7.3 当前风险总览（修订 2，2026-09-07）
 
 `WS-V73-M0-RISK-STORAGE-02` 完成磁盘清理与方法修订，没有新增算法失败。四项 active 风险见下表，方法已缓解但实证待 M1–M4；下一 V7.3 风险/失败编号=`V73-F05`。既有 V71 编号不重写。

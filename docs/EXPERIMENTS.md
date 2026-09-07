@@ -1,5 +1,16 @@
 # Experiments
 
+## WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01 — pending，已实现即将启动（2026-09-07）
+
+- run=`run://worldsim_v73/WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01/20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`；base=`dbe98c91`；seed7301；config=`configs/worldsim_v73/m1_native_geometry.yaml`。
+- 同场景4build时刻×3前向相机，378×672；前4 fit scenes/前2development scenes（已有E2日志身份）；15epochs；原生DPT全层lr1e-5；aggregator完全冻结，多层缓存仅在该冻结条件下使用。
+- 监督=build LiDAR相机轴向z的Huber，加rigid Actor项；场景共享build-only鲁棒米制scale；Actor轨迹按相机时刻插值；诊断保留1/5build点，不进入loss/scale。该诊断不用于完整surface/scene/独立确认主张。
+- 产物=实际输入cohort、build_observations、frozen_prefix、metric_scales、baseline/final、train.jsonl、latest模型/优化器、summary/status。不生成新哈希/校验和/指纹。
+- failure_ledger_refs=`[V71-F54,V71-F66,V71-F68,V71-F69,V73-F01,V73-F02,V73-F03,V73-F04]`；delta=none；source/external=false。py_compile通过，未另开smoke/回归实验。
+- 本轮将实测原生几何梯度、权重变化、显存与训练改善；后续25fit/6development训练、规范表面转换和M2查询仍pending。
+
+---
+
 ## WS-V73-M0-RISK-STORAGE-02 — done（2026-09-07）
 
 - base commit=`63626e8d`；branch 继承 v72 final `23a67069`；无新科学 target/source/external quality read、无模型训练。
