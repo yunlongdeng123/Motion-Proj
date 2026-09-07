@@ -92,6 +92,7 @@ def observe_actor_candidates(
     *,
     minimum_camera_depth_m: float = 0.25,
     metric_points_world: np.ndarray | None = None,
+    geometry_consistency_tolerance_m: float | None = None,
 ) -> CandidateVisualObservation:
     """按已知标定投影 surface candidates，并聚合同一窗口的 patch features。
 
@@ -99,6 +100,8 @@ def observe_actor_candidates(
     因此后续训练必须把遮挡感知版本作为独立开关，不能把背景特征当 Actor 真值。
     """
 
+    if geometry_consistency_tolerance_m is not None and geometry_consistency_tolerance_m <= 0.0:
+        raise ValueError("geometry_consistency_tolerance_m must be positive")
     candidates = np.asarray(candidates_actor_m, dtype=np.float64).reshape(-1, 3)
     transform = np.asarray(world_from_actor, dtype=np.float64)
     if transform.shape != (4, 4):
@@ -157,6 +160,16 @@ def observe_actor_candidates(
         sampled_homogeneous = np.concatenate([sampled_world, np.ones((len(sampled_world), 1))], axis=1)
         sampled_camera = sampled_homogeneous @ np.linalg.inv(frame.world_from_camera_opencv).T
         depth_residual = sampled_camera[:, 2] - camera[selected, 2]
+        if geometry_consistency_tolerance_m is not None:
+            consistent = np.abs(depth_residual) <= float(geometry_consistency_tolerance_m)
+            selected = selected[consistent]
+            if not len(selected):
+                continue
+            features = features[consistent]
+            confidence = confidence[consistent]
+            sampled_world = sampled_world[consistent]
+            depth_residual = depth_residual[consistent]
+            residual_actor = residual_actor[consistent]
         geometry_features = np.column_stack(
             [residual_actor, depth_residual, np.log1p(confidence)]
         )

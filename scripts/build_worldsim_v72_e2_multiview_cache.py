@@ -206,6 +206,9 @@ def main() -> None:
                             window,
                             geometry,
                             metric_points_world=metric_points_world,
+                            geometry_consistency_tolerance_m=float(
+                                config["observation"]["geometry_consistency_tolerance_m"]
+                            ),
                         )
                         cache = ActorVisualCache(
                             track_id=str(actor["track_id"]),
@@ -228,7 +231,10 @@ def main() -> None:
                                 "backbone_cache_sha256": _sha256(geometry_path),
                                 "window_fingerprint": window.fingerprint,
                                 "selected_actor_fields": list(data["selected_actor_fields"]),
-                                "visibility_contract": "calibrated_frustum_only_v1",
+                                "visibility_contract": "calibrated_frustum_and_foundation_depth_consistency_v2",
+                                "geometry_consistency_tolerance_m": float(
+                                    config["observation"]["geometry_consistency_tolerance_m"]
+                                ),
                             },
                         )
                         output_path = run_dir / "actor_cache" / backbone_name / window.window_id / f"{cache.track_id}.npz"

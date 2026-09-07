@@ -81,6 +81,35 @@ def test_candidate_projection_pools_visible_features_and_rejects_behind_camera(t
     np.testing.assert_array_equal(observation.pooled_features[1:], 0.0)
 
 
+def test_candidate_projection_rejects_foundation_depth_mismatch(tmp_path: Path) -> None:
+    candidate = np.asarray([[1.5, 1.5, 1.0]])
+    background = np.broadcast_to(
+        np.asarray([1.5, 1.5, 3.0], dtype=np.float32), (1, 4, 4, 3)
+    ).copy()
+    rejected = observe_actor_candidates(
+        candidate,
+        np.eye(4),
+        _window(tmp_path),
+        _geometry(),
+        metric_points_world=background,
+        geometry_consistency_tolerance_m=0.75,
+    )
+    assert rejected.observation_count.tolist() == [0]
+
+    surface = np.broadcast_to(
+        np.asarray([1.5, 1.5, 1.0], dtype=np.float32), (1, 4, 4, 3)
+    ).copy()
+    accepted = observe_actor_candidates(
+        candidate,
+        np.eye(4),
+        _window(tmp_path),
+        _geometry(),
+        metric_points_world=surface,
+        geometry_consistency_tolerance_m=0.75,
+    )
+    assert accepted.observation_count.tolist() == [1]
+
+
 def _inputs(count: int = 7) -> dict[str, torch.Tensor]:
     return {
         "base_features": torch.randn(count, 11),
