@@ -1,5 +1,21 @@
 # Experiments
 
+## V7.3 M1 扩展结果与真实曲面实验（2026-09-07）
+
+M1 r2=`done`，code=`424743fc`，run=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`。25fit/6dev场景、60epochs/1500更新，1130.19s。原生DPT 32,654,562参数，project最大变化0.004067；训练峰值1.348GiB、RSS8.817GiB。
+
+按独立日志先平均场景MAE再等权汇总：fit 20日志 3.669→0.849m；development 5日志 2.870→2.485m，配对变化-0.384m，日志bootstrap95%区间[-0.889,0.395]m，4/5日志改善。6dev场景中5改善、scene1089 1.176→2.318m退化；scene0519 MAE改善而轴向early比例0.258→0.598。scene0994零Actor诊断点保留且不进入MAE均值；不能静默删除。
+
+仍只是build点插值诊断，非新时刻表面或字面首交点。区间跨零、支持量不均、部分early变差，F05继续active；不把这次结果写成跨日志方法胜利。详表=`docs/autoresearch/worldsim_v73/m1/r2_summary.json`与`r2_log_analysis.json`。
+
+`WS-V73-M2-PHYSICAL-SURFACE-01` 已实现待启动，run=`20260907T154000Z__joint-physical-scene0100-s7303-r1`，120steps，seed7303，native=M1 r2。用同一三角曲面最近点coverage +0.5原始首回波前free +0.05弱envelope；build随机1024点/512原始束每步，保留12视图1536查询。所有build原始Actor点可训练，本run改以build范围内未输入时刻（indices2,5）诊断；目标点只进入损失，不用于推理查询出生。提供同密度1536个LiDAR PCA曲面片比较；完整同信息原生融合、等容量逐点、LiDAR-only训练控制仍待接入。
+
+硬相交先无梯度确定首三角面，再重算所选相交位置梯度；最近曲面查询按最优重心点反传，避免保留全体pair计算图。当前分块全扫描仍为O(PF)/O(RF)计算，不宣称BVH加速。解析例验证了前后表面归属、miss、free梯度方向与面内/边缘最近点。资料依据：[Open3D射线](https://open3d.org/html/tutorial/geometry/ray_casting.html)、[最近曲面](https://open3d.org/docs/latest/tutorial/geometry/distance_queries.html)、[nvdiffrast](https://nvlabs.github.io/nvdiffrast/)；后者明确区分支持内位置与轮廓可见性梯度。没有安装新环境依赖，也没有添加哈希/校验和/指纹。
+
+physical状态=pending；仅一个fit Actor机制研究，不承担主表结论。动态归属按LiDAR时刻插值；所有原始束首返回限定free范围，遮挡后的目标Actor为未知；逐点扫描时刻仍不可用。source/external未读，failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05]。
+
+---
+
 ## V7.3 M2 联合通路实测完成（2026-09-07）
 
 `WS-V73-M2-JOINT-GEOMETRY-PATH-01` r1=`done`，run=`20260907T151700Z__joint-dpt-query-s7302-r1`，code=`c0e23d28`，seed7302。12视图、1536查询、13824顶点/12288三角面，8步联合训练17.61s；峰值5.358GiB、RSS2.016GiB。原生DPT project梯度每步非零，参数最大变化7.758e-5；build center coverage从0.07640降至0.04688m。详表=`docs/autoresearch/worldsim_v73/m2/r1_summary.json`。

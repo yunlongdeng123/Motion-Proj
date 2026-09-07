@@ -1,0 +1,44 @@
+"""可训练原生DPT多尺度特征；仅缓存完全冻结的aggregator前缀。"""
+from pathlib import Path
+import sys
+
+import torch
+from torch import nn
+from torch.utils.checkpoint import checkpoint
+
+
+class NativeGeometryPyramid(nn.Module):
+    def __init__(self,native_run,scene,view_indices):
+        super().__init__()
+        sys.path.insert(0,'/root/autodl-tmp/external/worldsim_v72/vggt')
+        from vggt.heads.dpt_head import DPTHead
+        self.head=DPTHead(dim_in=2048,output_dim=2,activation='exp',conf_activation='expp1').cuda()
+        state=torch.load(Path(native_run)/'latest.pt',map_location='cpu',weights_only=True)
+        self.head.load_state_dict(state['depth_head'])
+        self.token_inputs=[]
+        for i in view_indices:
+            data=torch.load(Path(native_run)/'frozen_prefix'/f'{scene["scene_id"]}_{i:02}.pt',weights_only=True)
+            self.token_inputs.append((tuple(data['tokens'][j].cuda() for j in [4,11,17,23]),
+                        scene['views'][i]['image'][None,None].cuda(),data['patch_start']))
+
+    def one_view(self,*inputs):
+        tokens=[None]*24
+        for j,t in zip([4,11,17,23],inputs[:4]): tokens[j]=t
+        captured={}
+        handles=[]
+        for level,name in enumerate(['refinenet4','refinenet3','refinenet2','refinenet1']):
+            def hook(module,values,result,key=level): captured[key]=result
+            handles.append(getattr(self.head.scratch,name).register_forward_hook(hook))
+        try:
+            with torch.autocast('cuda',dtype=torch.bfloat16):
+                self.head(tokens,inputs[4],inputs[5])
+        finally:
+            for handle in handles: handle.remove()
+        return tuple(captured[j] for j in range(4))
+
+    def forward(self):
+        features=[[],[],[],[]]
+        for tokens,image,patch_start in self.token_inputs:
+            maps=checkpoint(self.one_view,*tokens,image,patch_start,use_reentrant=False)
+            for level,feature in enumerate(maps): features[level].append(feature)
+        return [torch.cat(level) for level in features]

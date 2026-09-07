@@ -1,3 +1,13 @@
+# V7.3 原生DPT适配结果
+
+## r2：扩大已有日志训练
+
+M1 r2=`done`，code=`424743fc`，run=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`。25fit/6dev场景、60epochs/1500更新，1130.19s。原生DPT 32,654,562参数，project最大变化0.004067；训练峰值1.348GiB、RSS8.817GiB。
+
+按独立日志先平均场景MAE再等权汇总：fit 20日志 3.669→0.849m；development 5日志 2.870→2.485m，配对变化-0.384m，日志bootstrap95%区间[-0.889,0.395]m，4/5日志改善。6dev场景中5改善、scene1089 1.176→2.318m退化；scene0519 MAE改善而轴向early比例0.258→0.598。scene0994零Actor诊断点保留且不进入MAE均值；不能静默删除。
+
+仍只是build点插值诊断，非新时刻表面或字面首交点。区间跨零、支持量不均、部分early变差，F05继续active；不把这次结果写成跨日志方法胜利。详表=`docs/autoresearch/worldsim_v73/m1/r2_summary.json`与`r2_log_analysis.json`。
+
 # V7.3 M1 原生几何通路训练诊断
 
 2026-09-07；实现commit=`29595e20`；run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。
