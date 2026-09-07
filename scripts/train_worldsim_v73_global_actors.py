@@ -32,6 +32,11 @@ def main():
     parser.add_argument('--free-mode',choices=['range','beam_tube','beam_tube_range'],default='range')
     parser.add_argument('--free-width-m',type=float,default=.03)
     parser.add_argument('--free-resolution',type=int,default=32)
+    parser.add_argument('--event-weight',type=float,default=0.)
+    parser.add_argument('--event-sigma-m',type=float,default=.2)
+    parser.add_argument('--event-cap',type=float,default=28.)
+    parser.add_argument('--event-width-m',type=float,default=.03)
+    parser.add_argument('--event-resolution',type=int,default=32)
     parser.add_argument('--native-data-weight',type=float,default=0.)
     parser.add_argument('--fit-label-times',choices=['build','all_window'],default='build')
     parser.add_argument('--fit-targets',type=Path,help='独立的fit全轨迹标签目录；只替换fit损失目标，不替换模型输入')
@@ -56,6 +61,7 @@ def main():
         'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
         'surface_supervision_times':label_times,
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
+        'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
     save('status.json',{'status':'running','phase':'load_contexts'})
     try:
@@ -90,10 +96,15 @@ def main():
         torch.manual_seed(7304)
         decoder=ActorSpatialQueryDecoder().cuda()
         tube_free=None
+        event_objective=None
         if args.free_mode in ['beam_tube','beam_tube_range']:
             from motion_proj.worldsim_v73.surface_visibility import BeamTubeFreeSpaceLoss
             tube_free=BeamTubeFreeSpaceLoss(width_m=args.free_width_m,resolution=args.free_resolution,
                 penalty='range' if args.free_mode=='beam_tube_range' else 'coverage')
+        if args.event_weight:
+            from motion_proj.worldsim_v73.first_event import FirstSurfaceEventLoss
+            event_objective=FirstSurfaceEventLoss(width_m=args.event_width_m,resolution=args.event_resolution,
+                                                 sigma_m=args.event_sigma_m,cap=args.event_cap)
         parameters=[*(head.parameters() if head is not None else []),*decoder.parameters()]
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         fit=[c for c in cases if c['metadata']['role']=='fit']
@@ -219,7 +230,14 @@ def main():
                         depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
                         physical_free=direct_free_space_loss(depth,ranges[ids])
                 envelope=(vertices.abs()-case['size_lwh_m'].cuda()/2-.25).clamp_min(0).square().mean()
-                loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss
+                event=vertices.sum()*0; event_statistics={}
+                if event_objective is not None:
+                    owned=torch.cat([r['positive_actor'] for r in build]).cuda()[ids]
+                    selected=ids[owned]
+                    event,event_statistics=event_objective(vertices,faces,origins[selected],directions[selected],ranges[selected])
+                    event_statistics['literal_owned_miss_rays']=(~torch.isfinite(depth[owned])).sum().item()
+                    del owned,selected
+                loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss+args.event_weight*event
                 loss.backward()
                 group_gradients={}
                 for name,module in [('native_dpt',head),('query_decoder',decoder)]:
@@ -233,6 +251,7 @@ def main():
                     'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':physical_free.item(),
                     'free_objective':free.item(),'free_mode':args.free_mode,
                     'free_objective_unit':'coverage_fraction' if args.free_mode=='beam_tube' else 'm',
+                    'event_capped_nll':event.item(),'event_weight':args.event_weight,'event_statistics':event_statistics,
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
                     'group_gradient_norms_before_clip':group_gradients,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
@@ -246,7 +265,7 @@ def main():
                 with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
                 save('status.json',{'status':'running','phase':'shared_train','elapsed_s':time.monotonic()-started,**row})
                 print(json.dumps(row),flush=True)
-                del prediction,vertices,faces,loss,coverage,free,physical_free,envelope,nearest,depth,points,chosen,origins,directions,ranges,native_loss
+                del prediction,vertices,faces,loss,coverage,free,physical_free,envelope,event,nearest,depth,points,chosen,origins,directions,ranges,native_loss
             checkpoint={'depth_head':head.state_dict() if head is not None else None,'query_decoder':decoder.state_dict(),
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')

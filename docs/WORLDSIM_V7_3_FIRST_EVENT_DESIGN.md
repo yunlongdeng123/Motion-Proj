@@ -1,6 +1,8 @@
 # V7.3 首事件目标：几何分布与缺失支持
 
-状态：首个有限footprint实现已完成，尚未通过解析实验或进入真实训练。代码为 `motion_proj/worldsim_v73/first_event.py`，一次解析实验入口为 `scripts/diagnose_worldsim_v73_first_event.py`。F03仍active；不能把下列方案写成已消除梯度死锁。等同标签r7/r8真实硬结果后，再固定free配置，在已能学习表面的模型上比较event增量。
+状态：首个有限footprint实现及一次解析实验已完成，训练器已接入默认关闭的可选项，尚未进入真实event训练。代码为 `motion_proj/worldsim_v73/first_event.py`，解析实验入口为 `scripts/diagnose_worldsim_v73_first_event.py`。F03仍active；不能把下列方案写成已消除梯度死锁。等同标签r7/r8真实硬结果后，再固定free配置，在已能学习表面的模型上比较event增量。
+
+解析run `WS-V73-M3-FIRST-EVENT-01/20260907T224000Z__geometry-first-event-r2`，code518268eb，0.927s：正确面NLL0；4.6m早面遮住5m正确后面时NLL2.000001、早面深度梯度−10.000003、后面梯度0，复制早面NLL不变。无支持NLL28且梯度0。轮廓偏移0.025m时几何质量0.839767、NLL0.174630、横向梯度+6.97729。只确认这些解析语义，不代表真实训练收益。r1因shell PATH缺已有ninja执行入口而未进入案例，修正环境PATH后才执行r2，错误与结果均保留。
 
 [DS-NeRF（CVPR 2022）](https://www.cs.cmu.edu/~dsnerf/)已监督射线终止深度分布并纳入深度不确定性；[Depth-guided NeRF Training via Earth Mover’s Distance（ECCV 2024）](https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/8062_ECCV_2024_paper.php)也已研究对终止距离分布用EMD监督。因此，本轮不把终止分布损失本身称为创新，也不把换成EMD等同于解决无几何支持的梯度问题。
 

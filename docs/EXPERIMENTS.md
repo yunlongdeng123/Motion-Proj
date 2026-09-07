@@ -1,5 +1,18 @@
 # Experiments
 
+## V7.3 首事件解析语义完成并接入可选训练项（2026-09-08）
+
+`WS-V73-M3-FIRST-EVENT-01/20260907T224000Z__geometry-first-event-r2` 完成一次解析实验，code518268eb，0.927s。σ0.2m/C28/footprint0.03m/32²：正确5m面NLL0；4.6m早面遮住5m正确后面时NLL2.000001、早面沿深度梯度−10.000003、后面梯度0；复制早面仍NLL2.000001。无支持NLL28、质量0、梯度0；轮廓偏移0.025m时质量0.839767、NLL0.174630、横向梯度+6.97729。重复面没有增益，被遮挡的正确后面不能绕过早面，缺失支持的死梯度也确实仍存在，不能写成已解决F03。
+
+首个r1启动在解析场景执行前因shell PATH未包含已有ninja可执行文件而失败；使用现有motionproj/bin和保留的CUDA12.1编译器修正PATH后执行同一组案例，未安装包、未改变方法或扩展回归。r1/failure.json保留错误与对策，r2完整结果归档 `docs/autoresearch/worldsim_v73/m3/analytic_first_event_r2.json`。
+
+现已将该代理接入共享训练器的可选--event-weight（默认0）。event读取与free同一随机原始束子集中的positive_actor，避免把后方Actor或背景返回当作当前Actor应生成的表面；没有额外随机抽样改变其余控制的样本顺序。完整owned子集包含无支持束，训练日志保存supervised/no_support/capped、几何返回质量与字面owned miss；原surface coverage和独立free保持。当前仍无真实event训练结果。r8最终评价完成后固定free目标再登记/启动一个event权重比较，不能从解析案例推断真实收益。
+
+failure_ledger_delta=update F03解析与实现证据；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。r5与AdaPoinTr r1正常训练，CAPA等待r8退出。整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 几何首事件代理实现（2026-09-08）
 
 依据已登记的首事件设计，实现 `motion_proj/worldsim_v73/first_event.py`：固定footprint内最近三角面、米制深度插值、预乘likelihood轮廓梯度、log平移求和及全束统一截断。far裁剪由当前几何决定，不读取target；没有opacity或target挑面。返回supervised/no_support/capped计数与几何返回质量，明确缺失支持处仍可能零梯度。当前未接入训练器，不改变r5/r8或Ada作业。
