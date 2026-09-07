@@ -41,13 +41,63 @@ def _last_feature_grid(tokens: list[Any], patch_start: int, count: int, height: 
     return patches.detach().to(dtype=torch.float16, device="cpu").numpy()
 
 
+def _validate_checkpoint_keys(
+    incompatible: Any,
+    *,
+    allowed_unexpected_prefixes: tuple[str, ...] = (),
+) -> dict[str, Any]:
+    missing = list(incompatible.missing_keys)
+    unexpected = list(incompatible.unexpected_keys)
+    disallowed = [
+        name for name in unexpected if not any(name.startswith(prefix) for prefix in allowed_unexpected_prefixes)
+    ]
+    if missing or disallowed:
+        raise RuntimeError(
+            f"checkpoint contract mismatch: missing={missing[:8]}, unexpected={disallowed[:8]}"
+        )
+    return {
+        "missing_key_count": len(missing),
+        "unexpected_key_count": len(unexpected),
+        "allowed_unexpected_prefixes": list(allowed_unexpected_prefixes),
+    }
+
+
 class VGGTBackbone:
     backbone_id = "facebook/VGGT-1B"
 
-    def __init__(self, repository_root: Path, checkpoint: Path, device: str = "cuda") -> None:
+    def __init__(
+        self,
+        repository_root: Path,
+        checkpoint: Path,
+        device: str = "cuda",
+        keep_loaded: bool = False,
+    ) -> None:
         self.repository_root = Path(repository_root).resolve()
         self.checkpoint = Path(checkpoint).resolve()
         self.device = torch.device(device)
+        self.keep_loaded = bool(keep_loaded)
+        self._model: Any | None = None
+        self._checkpoint_contract: dict[str, Any] | None = None
+
+    def _load_model(self) -> Any:
+        if self._model is not None:
+            return self._model
+        _add_import_root(self.repository_root)
+        from safetensors.torch import load_file
+        from vggt.models.vggt import VGGT
+
+        model = VGGT(enable_track=False).eval()
+        incompatible = model.load_state_dict(load_file(str(self.checkpoint)), strict=False)
+        self._checkpoint_contract = _validate_checkpoint_keys(
+            incompatible,
+            allowed_unexpected_prefixes=("track_head.",),
+        )
+        self._model = model.to(self.device)
+        return self._model
+
+    def close(self) -> None:
+        self._model = None
+        torch.cuda.empty_cache()
 
     def infer(
         self,
@@ -55,15 +105,10 @@ class VGGTBackbone:
         images: torch.Tensor,
         model_from_original_px: np.ndarray,
     ) -> BackboneGeometry:
-        _add_import_root(self.repository_root)
-        from safetensors.torch import load_file
-        from vggt.models.vggt import VGGT
+        model = self._load_model()
         from vggt.utils.geometry import closed_form_inverse_se3
         from vggt.utils.pose_enc import pose_encoding_to_extri_intri
 
-        model = VGGT(enable_track=False).eval()
-        incompatible = model.load_state_dict(load_file(str(self.checkpoint)), strict=False)
-        model = model.to(self.device)
         images = images.to(self.device)
         dtype = torch.bfloat16 if torch.cuda.get_device_capability(self.device)[0] >= 8 else torch.float16
         with torch.inference_mode(), torch.amp.autocast("cuda", dtype=dtype):
@@ -94,22 +139,49 @@ class VGGTBackbone:
             provenance={
                 "window_fingerprint": window.fingerprint,
                 "official_adapter": True,
-                "unexpected_key_count": len(incompatible.unexpected_keys),
-                "missing_key_count": len(incompatible.missing_keys),
+                **dict(self._checkpoint_contract or {}),
                 "payload_role": "build_input",
             },
         )
-        del model, images, tokens, pose_encoding, points, confidence
-        torch.cuda.empty_cache()
+        del images, tokens, pose_encoding, points, confidence
+        if not self.keep_loaded:
+            self.close()
         return result
 
 class Pi3XBackbone:
     backbone_id = "yyfz233/Pi3X"
 
-    def __init__(self, repository_root: Path, checkpoint: Path, device: str = "cuda") -> None:
+    def __init__(
+        self,
+        repository_root: Path,
+        checkpoint: Path,
+        device: str = "cuda",
+        keep_loaded: bool = False,
+    ) -> None:
         self.repository_root = Path(repository_root).resolve()
         self.checkpoint = Path(checkpoint).resolve()
         self.device = torch.device(device)
+        self.keep_loaded = bool(keep_loaded)
+        self._model: Any | None = None
+        self._checkpoint_contract: dict[str, Any] | None = None
+
+    def _load_model(self) -> Any:
+        if self._model is not None:
+            return self._model
+        _add_import_root(self.repository_root)
+        from safetensors.torch import load_file
+        from pi3.models.pi3x import Pi3X
+
+        model = Pi3X(use_multimodal=True).eval()
+        incompatible = model.load_state_dict(load_file(str(self.checkpoint)), strict=False)
+        self._checkpoint_contract = _validate_checkpoint_keys(incompatible)
+        model.disable_multimodal(free_cuda_cache=False)
+        self._model = model.to(self.device)
+        return self._model
+
+    def close(self) -> None:
+        self._model = None
+        torch.cuda.empty_cache()
 
     def infer(
         self,
@@ -117,15 +189,9 @@ class Pi3XBackbone:
         images: torch.Tensor,
         model_from_original_px: np.ndarray,
     ) -> BackboneGeometry:
-        _add_import_root(self.repository_root)
-        from safetensors.torch import load_file
-        from pi3.models.pi3x import Pi3X
+        model = self._load_model()
         from pi3.utils.geometry import recover_intrinsic_from_rays_d
 
-        model = Pi3X(use_multimodal=True).eval()
-        incompatible = model.load_state_dict(load_file(str(self.checkpoint)), strict=False)
-        model.disable_multimodal(free_cuda_cache=False)
-        model = model.to(self.device)
         images = images[None].to(self.device)
         dtype = torch.bfloat16 if torch.cuda.get_device_capability(self.device)[0] >= 8 else torch.float16
         with torch.inference_mode(), torch.amp.autocast("cuda", dtype=dtype):
@@ -159,11 +225,11 @@ class Pi3XBackbone:
                 "window_fingerprint": window.fingerprint,
                 "official_adapter": True,
                 "multimodal_conditions_used": False,
-                "unexpected_key_count": len(incompatible.unexpected_keys),
-                "missing_key_count": len(incompatible.missing_keys),
+                **dict(self._checkpoint_contract or {}),
                 "payload_role": "build_input",
             },
         )
-        del model, images, hidden, outputs, rays
-        torch.cuda.empty_cache()
+        del images, hidden, outputs, rays
+        if not self.keep_loaded:
+            self.close()
         return result

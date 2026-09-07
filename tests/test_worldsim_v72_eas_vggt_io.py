@@ -11,7 +11,7 @@ from motion_proj.worldsim_v72.eas_vggt.alignment import (
     aligned_camera_center_rmse_m,
     nearest_pixel_indices,
 )
-from motion_proj.worldsim_v72.eas_vggt.backbones import _last_feature_grid
+from motion_proj.worldsim_v72.eas_vggt.backbones import _last_feature_grid, _validate_checkpoint_keys
 from motion_proj.worldsim_v72.eas_vggt.cache import load_backbone_geometry, save_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
 
@@ -102,3 +102,9 @@ def test_vggt_feature_grid_preserves_camera_and_channel_axes() -> None:
     feature_grid = _last_feature_grid([None, tokens], patch_start=5, count=3, height=28, width=42)
     assert feature_grid.shape == (3, 2, 3, 8)
     np.testing.assert_array_equal(feature_grid[0, 0, 0], tokens[0, 0, 5].numpy())
+
+
+def test_checkpoint_contract_only_allows_disabled_vggt_track_head() -> None:
+    incompatible = type("Keys", (), {"missing_keys": [], "unexpected_keys": ["track_head.a"]})()
+    result = _validate_checkpoint_keys(incompatible, allowed_unexpected_prefixes=("track_head.",))
+    assert result["unexpected_key_count"] == 1

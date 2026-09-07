@@ -1,0 +1,31 @@
+task_id: WS-V72-E2-EAS-ADAPTER-01
+runs_root: /root/autodl-tmp/runs
+failure_ledger_refs: [V71-F43, V71-F52, V71-F54, V71-F62, V71-F66]
+
+data:
+  roles: configs/worldsim_v72/data_roles.json
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  metadata_version: v1.0-trainval
+  role: train
+  camera_channels: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT]
+  scene_ids: [scene-0015, scene-0071, scene-0471]
+  windows_per_scene: 4
+  actor_corpus_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train
+  selected_actor_fields: [track_id, scene_name, candidates, base_features, evidence_masses, evidence_opportunities]
+  supervision_access: false
+  source_test_read: false
+  external_test_read: false
+
+preprocess:
+  maximum_pixels: 255000
+  patch_multiple: 14
+
+backbones:
+  vggt:
+    repository_root: /root/autodl-tmp/external/worldsim_v72/vggt
+    checkpoint: /root/autodl-tmp/models/eas_vggt/vggt/model.safetensors
+    device: cuda
+  pi3x:
+    repository_root: /root/autodl-tmp/external/worldsim_v72/Pi3
+    checkpoint: /root/autodl-tmp/models/eas_vggt/pi3x/model.safetensors
+    device: cuda
