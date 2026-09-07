@@ -87,15 +87,19 @@ class NuScenesCameraIndex:
         *,
         role: str,
         camera_channels: Iterable[str] = DEFAULT_CAMERA_CHANNELS,
+        scene_ids: Iterable[str] | None = None,
         maximum_windows: int | None = None,
     ) -> Iterator[CameraWindow]:
         wanted_logs = {str(value) for value in log_ids}
+        wanted_scenes = None if scene_ids is None else {str(value) for value in scene_ids}
         channels = tuple(str(value) for value in camera_channels)
         emitted = 0
         ordered_samples = sorted(self.samples, key=lambda row: (int(row["timestamp"]), str(row["token"])))
         for sample in ordered_samples:
             scene = self.scene_by_token[str(sample["scene_token"])]
             if str(scene["log_token"]) not in wanted_logs:
+                continue
+            if wanted_scenes is not None and str(scene["name"]) not in wanted_scenes:
                 continue
             frames: list[CameraFramePayload] = []
             missing = False

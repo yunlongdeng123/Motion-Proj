@@ -128,7 +128,7 @@ def main() -> None:
     parser.add_argument("--run-id", required=True)
     args = parser.parse_args()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
-    if config["task_id"] != "WS-V72-E2-EAS-ADAPTER-01":
+    if config["task_id"] != "WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01":
         raise ValueError("E2 task id mismatch")
     data = config["data"]
     if data["supervision_access"] or data["source_test_read"] or data["external_test_read"]:

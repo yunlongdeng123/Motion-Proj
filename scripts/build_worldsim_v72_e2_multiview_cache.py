@@ -52,7 +52,12 @@ def _load_actor_inputs(path: Path, fields: list[str]) -> dict[str, np.ndarray]:
 
 
 def _select_windows(index: NuScenesCameraIndex, allowed_logs: set[str], config: dict[str, Any]):
-    scene_ids = [str(value) for value in config["scene_ids"]]
+    if "visual_split" in config:
+        split = json.loads(Path(config["visual_split"]).read_text(encoding="utf-8"))
+        split_role = str(config["visual_split_role"])
+        scene_ids = [str(row["scene_id"]) for row in split["rows"] if row["role"] == split_role]
+    else:
+        scene_ids = [str(value) for value in config["scene_ids"]]
     scene_rows = {str(row["name"]): row for row in index.scenes}
     missing = set(scene_ids) - set(scene_rows)
     if missing:
@@ -61,11 +66,17 @@ def _select_windows(index: NuScenesCameraIndex, allowed_logs: set[str], config: 
     if not set(logs) <= allowed_logs:
         raise ValueError("frozen E2 scenes are not all in the train role")
     limit = int(config["windows_per_scene"])
-    selected = {scene: [] for scene in scene_ids}
-    for window in index.iter_windows(logs, role=str(config["role"]), camera_channels=config["camera_channels"]):
-        bucket = selected.get(window.scene_id)
-        if bucket is not None and len(bucket) < limit:
-            bucket.append(window)
+    selected = {}
+    for scene, log in zip(scene_ids, logs):
+        selected[scene] = list(
+            index.iter_windows(
+                [log],
+                role=str(config["role"]),
+                camera_channels=config["camera_channels"],
+                scene_ids=[scene],
+                maximum_windows=limit,
+            )
+        )
     if any(len(selected[scene]) != limit for scene in scene_ids):
         counts = {scene: len(windows) for scene, windows in selected.items()}
         raise RuntimeError(f"insufficient payload-complete windows: {counts}")
@@ -92,7 +103,7 @@ def main() -> None:
     parser.add_argument("--run-id", required=True)
     args = parser.parse_args()
     config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
-    if config["task_id"] != "WS-V72-E2-EAS-ADAPTER-01":
+    if config["task_id"] != "WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01":
         raise ValueError("E2 task id mismatch")
     data = config["data"]
     if data["supervision_access"] or data["source_test_read"] or data["external_test_read"]:
@@ -123,7 +134,7 @@ def main() -> None:
         corpus_root = Path(data["actor_corpus_root"])
         actor_paths = {
             scene: sorted((corpus_root / scene).glob("*.npz"))
-            for scene in data["scene_ids"]
+            for scene in sorted({window.scene_id for window in windows})
         }
         tracks_by_sample = {
             window.window_id: [path.stem for path in actor_paths[window.scene_id]]
@@ -221,7 +232,7 @@ def main() -> None:
             "status": "done",
             "failure_ledger_delta": "none",
             "window_count": len(windows),
-            "scene_count": len(data["scene_ids"]),
+            "scene_count": len({window.scene_id for window in windows}),
             "actor_pose_match_count": len(actor_poses),
             "rows": rows,
             "wall_seconds": time.monotonic() - started,

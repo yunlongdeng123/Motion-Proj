@@ -18,7 +18,7 @@ class PhysicalEvidenceOutput:
 
 
 class EvidenceConditionedSurfaceAdapter(nn.Module):
-    """共享 trunk 后分离物理位移、连续证据和分类回波参数。"""
+    """Keep actor-local geometry independent from appearance, then fuse evidence."""
 
     def __init__(
         self,
@@ -37,15 +37,15 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
             nn.GELU(),
             nn.Linear(visual_dim, visual_dim),
         )
-        # base + canonical xyz + F/O/U + log opportunity + visual presence
-        physical_dim = base_feature_dim + 3 + 3 + 1 + 1
+        # Physical ownership excludes visual features and global actor pose.
+        physical_dim = base_feature_dim + 3 + 3 + 1
         self.physical_projection = nn.Sequential(
             nn.LayerNorm(physical_dim),
             nn.Linear(physical_dim, hidden_dim),
             nn.GELU(),
         )
-        self.trunk = nn.Sequential(
-            nn.Linear(hidden_dim + visual_dim, hidden_dim),
+        self.evidence_trunk = nn.Sequential(
+            nn.Linear(hidden_dim + visual_dim + 1, hidden_dim),
             nn.GELU(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.GELU(),
@@ -69,15 +69,16 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
         opportunity = torch.log1p(opportunity_count.float()).unsqueeze(-1)
         observed = visual_observed.float().unsqueeze(-1)
         physical = torch.cat(
-            [base_features, canonical_xyz, evidence_fou, opportunity, observed], dim=-1
+            [base_features, canonical_xyz, evidence_fou, opportunity], dim=-1
         )
         visual = self.visual_projection(visual_features) * observed
-        hidden = self.trunk(torch.cat([self.physical_projection(physical), visual], dim=-1))
-        delta = torch.tanh(self.surface_head(hidden)) * self.maximum_surface_delta_m
-        raw_evidence = torch.nn.functional.softplus(self.evidence_head(hidden))
+        physical_hidden = self.physical_projection(physical)
+        evidence_hidden = self.evidence_trunk(torch.cat([physical_hidden, visual, observed], dim=-1))
+        delta = torch.tanh(self.surface_head(physical_hidden)) * self.maximum_surface_delta_m
+        raw_evidence = torch.nn.functional.softplus(self.evidence_head(evidence_hidden))
         evidence_strength = raw_evidence.sum(dim=-1, keepdim=True)
         fou = raw_evidence[..., 1:] / raw_evidence[..., 1:].sum(dim=-1, keepdim=True).clamp_min(1.0e-8)
-        return_logits = self.return_head(hidden)
+        return_logits = self.return_head(evidence_hidden)
         return PhysicalEvidenceOutput(
             surface_delta_actor_m=delta,
             blocking_logit=return_logits[..., 0],
@@ -106,14 +107,31 @@ class MatchedScalarSurfaceAdapter(EvidenceConditionedSurfaceAdapter):
                 inputs["canonical_xyz"],
                 inputs["evidence_fou"],
                 opportunity,
-                observed,
             ],
             dim=-1,
         )
         visual = self.visual_projection(inputs["visual_features"]) * observed
-        hidden = self.trunk(torch.cat([self.physical_projection(physical), visual], dim=-1))
-        delta = torch.tanh(self.surface_head(hidden)) * self.maximum_surface_delta_m
-        return delta, self.scalar_head(hidden).squeeze(-1)
+        physical_hidden = self.physical_projection(physical)
+        evidence_hidden = self.evidence_trunk(torch.cat([physical_hidden, visual, observed], dim=-1))
+        delta = torch.tanh(self.surface_head(physical_hidden)) * self.maximum_surface_delta_m
+        return delta, self.scalar_head(evidence_hidden).squeeze(-1)
+
+
+def lift_actor_surface_to_world(
+    candidates_actor_m: torch.Tensor,
+    surface_delta_actor_m: torch.Tensor,
+    world_from_actor: torch.Tensor,
+) -> torch.Tensor:
+    """Compose actor-local surfaces with an SE(3) pose; this map is equivariant by construction."""
+
+    if candidates_actor_m.shape != surface_delta_actor_m.shape or candidates_actor_m.shape[-1] != 3:
+        raise ValueError("candidate/delta shapes must match and end in xyz")
+    if world_from_actor.shape[-2:] != (4, 4):
+        raise ValueError("world_from_actor must end in (4,4)")
+    local = candidates_actor_m + surface_delta_actor_m
+    rotation = world_from_actor[..., :3, :3]
+    translation = world_from_actor[..., :3, 3]
+    return torch.einsum("...ij,...nj->...ni", rotation, local) + translation.unsqueeze(-2)
 
 
 def trainable_parameter_count(model: nn.Module) -> int:

@@ -8,19 +8,25 @@ data:
   metadata_version: v1.0-trainval
   role: train
   camera_channels: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT]
-  window_id: 234b0f37af694571876a745e5bbb5e08
-  actor_corpus_scene: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train/scene-0015
+  visual_split: configs/worldsim_v72/e2_visual_split.json
+  visual_split_role: fit
+  windows_per_scene: 4
+  actor_corpus_root: /root/autodl-tmp/data/worldsim_v71/corpus_v1/train
   selected_actor_fields: [track_id, scene_name, candidates, base_features, evidence_masses, evidence_opportunities]
   supervision_access: false
   source_test_read: false
   external_test_read: false
 
-e1_cache_root: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4/cache
-backbones: [vggt, pi3x]
+preprocess:
+  maximum_pixels: 255000
+  patch_multiple: 14
 
-adapter:
-  hidden_dim: 256
-  visual_dim: 128
-  maximum_surface_delta_m: 0.30
-  smoke_learning_rate: 0.0001
-  device: cuda
+backbones:
+  vggt:
+    repository_root: /root/autodl-tmp/external/worldsim_v72/vggt
+    checkpoint: /root/autodl-tmp/models/eas_vggt/vggt/model.safetensors
+    device: cuda
+  pi3x:
+    repository_root: /root/autodl-tmp/external/worldsim_v72/Pi3
+    checkpoint: /root/autodl-tmp/models/eas_vggt/pi3x/model.safetensors
+    device: cuda

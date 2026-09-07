@@ -9,6 +9,7 @@ from motion_proj.worldsim_v72.data.camera_schema import CameraFramePayload, Came
 from motion_proj.worldsim_v72.eas_vggt.models import (
     EvidenceConditionedSurfaceAdapter,
     MatchedScalarSurfaceAdapter,
+    lift_actor_surface_to_world,
     trainable_parameter_count,
 )
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
@@ -114,3 +115,24 @@ def test_scalar_control_matches_trunk_capacity() -> None:
     delta, response = scalar(**_inputs(count=7) | {"visual_features": torch.randn(7, 2048)})
     assert delta.shape == (7, 3)
     assert response.shape == (7,)
+
+
+def test_surface_geometry_is_appearance_invariant_and_se3_equivariant() -> None:
+    torch.manual_seed(11)
+    model = EvidenceConditionedSurfaceAdapter(base_feature_dim=11, visual_feature_dim=32, hidden_dim=64)
+    inputs = _inputs()
+    first = model(**inputs).surface_delta_actor_m
+    inputs["visual_features"] = 100.0 * torch.randn_like(inputs["visual_features"])
+    second = model(**inputs).surface_delta_actor_m
+    assert torch.equal(first, second)
+
+    angle = torch.tensor(0.7)
+    c, s = torch.cos(angle), torch.sin(angle)
+    transform = torch.eye(4)
+    transform[:3, :3] = torch.tensor([[c, -s, 0.0], [s, c, 0.0], [0.0, 0.0, 1.0]])
+    transform[:3, 3] = torch.tensor([3.0, -2.0, 0.5])
+    candidates = inputs["canonical_xyz"]
+    base_world = lift_actor_surface_to_world(candidates, first, torch.eye(4))
+    transformed_world = lift_actor_surface_to_world(candidates, first, transform)
+    expected = base_world @ transform[:3, :3].T + transform[:3, 3]
+    assert torch.allclose(transformed_world, expected, atol=1.0e-6)
