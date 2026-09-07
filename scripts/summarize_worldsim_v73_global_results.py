@@ -87,12 +87,16 @@ def main():
         stages['native_lidar_fusion']=[summarize_actor(row) for row in fusion['final']]
     result={'run':str(args.run),'status':summary['status'],
         'scope':summary.get('boundary','existing log cohort; no new-source confirmation'),
-        'fit_extra_time_usage':'training_labels' if summary.get('fit_label_times')=='all_window' else 'evaluation_only',
+        'fit_extra_time_usage':'training_labels' if summary.get('fit_label_times') in ['all_window','full_track'] else 'evaluation_only',
         'development_extra_time_usage':'evaluation_only',
         'aggregation':'within Actor weighted by observed rays/points, then scene/Actor mean within log and independent log mean',
         'denominator':'owned first-return outcomes include misses; free includes all raw near-box rays; unknown surface excluded',
         'stages':{name:stage_statistics(rows) for name,rows in stages.items()},'actors':stages,
         'paired_final_minus':{name:paired(rows,stages['final']) for name,rows in stages.items() if name!='final'}}
+    moving={name:[row for row in rows if (row.get('translation_speed_mps') or 0)>2] for name,rows in stages.items()}
+    result['moving_gt2mps']={'definition':'known trajectory mean translation speed over build window > 2 m/s; report independent log count',
+        'stages':{name:stage_statistics(rows) for name,rows in moving.items()},
+        'paired_final_minus':{name:paired(rows,moving['final']) for name,rows in moving.items() if name!='final'}}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
     print(json.dumps(result['stages'],ensure_ascii=False))

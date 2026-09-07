@@ -34,8 +34,11 @@ def main():
     parser.add_argument('--free-resolution',type=int,default=32)
     parser.add_argument('--native-data-weight',type=float,default=0.)
     parser.add_argument('--fit-label-times',choices=['build','all_window'],default='build')
+    parser.add_argument('--fit-targets',type=Path,help='独立的fit全轨迹标签目录；只替换fit损失目标，不替换模型输入')
     parser.add_argument('--baseline-results',type=Path,help='复用同一cohort与固定patch算子的既有LiDAR PCA结果')
+    parser.add_argument('--initial-results',type=Path,help='输入、模型初始化与seed均相同时复用既有initial表面评价')
     args=parser.parse_args()
+    label_times='full_track' if args.fit_targets else args.fit_label_times
     task='WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
     out.mkdir(parents=True,exist_ok=False)
@@ -49,9 +52,9 @@ def main():
         'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
         'shared_parameters':'native DPT and query decoder across fit logs; no development gradient or optimizer update',
-        'frozen_prefix':'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted',
+        'frozen_prefix':'none used by lidar_only' if args.mode=='lidar_only' else 'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted',
         'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
-        'surface_supervision_times':args.fit_label_times,
+        'surface_supervision_times':label_times,
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
     save('status.json',{'status':'running','phase':'load_contexts'})
@@ -102,6 +105,12 @@ def main():
             case['training_rays']=labels
             case['training_points']=(torch.unique(torch.cat([r['points_actor_m'][r['positive_actor']] for r in labels]),dim=0)
                 if case['metadata']['role']=='fit' and args.fit_label_times=='all_window' else case['points_actor_m'])
+            if args.fit_targets and case['metadata']['role']=='fit':
+                target_file=args.fit_targets/(case['metadata']['scene']+'__'+case['metadata']['owner']+'.pt')
+                target=torch.load(target_file,map_location='cpu',weights_only=True)
+                labels=target['target_rays']
+                case['training_rays']=labels
+                case['training_points']=target['target_points_actor_m']
             case['extra_time_target_points']=sum(r['owned_points'] for r in labels if r['role']!='build')
         before=head.projects[0].weight.detach().clone() if head is not None else None
 
@@ -160,7 +169,7 @@ def main():
                 metrics=evaluate_actor_surface(surface,case['rays'])
                 rows.append({'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
                              'seed_support':support,'frames':metrics,
-                             'extra_time_usage':'training_labels' if case['metadata']['role']=='fit' and args.fit_label_times=='all_window' else 'evaluation_only'})
+                             'extra_time_usage':'training_labels' if case['metadata']['role']=='fit' and case['metadata']['input_status']=='ready' and label_times!='build' else 'evaluation_only'})
                 if tag=='final':
                     torch.save({k:v.cpu() for k,v in surface.items() if isinstance(v,torch.Tensor)},
                                out/(case['metadata']['owner']+'_surface.pt'))
@@ -175,7 +184,13 @@ def main():
             save('lidar_baseline',baseline)
         else:
             baseline=evaluate('lidar_baseline',True)
-        initial=evaluate('initial')
+        if args.initial_results:
+            initial=json.loads(args.initial_results.read_text())
+            for row in initial:
+                row['extra_time_usage']='training_labels' if row['actor']['role']=='fit' and row['actor'].get('input_status',row['actor'].get('status'))=='ready' and label_times!='build' else 'evaluation_only'
+            save('initial',initial)
+        else:
+            initial=evaluate('initial')
         history=[]
         for epoch in range(args.epochs):
             random.shuffle(fit)
@@ -222,7 +237,7 @@ def main():
                     'group_gradient_norms_before_clip':group_gradients,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
                     'native_candidates':support.get('native_candidates'),
-                    'fit_label_times':args.fit_label_times,'extra_time_target_points':case['extra_time_target_points'],
+                    'fit_label_times':label_times,'extra_time_target_points':case['extra_time_target_points'],
                     'lidar_fallback':support.get('lidar_fallback',False),'views':len(case['view_indices']),
                     'fallback_reason':support['fallback_reason'],
                     'query_count':len(prediction['centers_actor_m']),'step_s':time.monotonic()-tick,
@@ -241,7 +256,7 @@ def main():
         result={'status':'done','fit_actors':len(fit),'development_actors':len(cases)-len(fit),
             'cohort_actors':len(index['cases']),'unsupported_input_actors':len(unsupported),
             'shared_frozen_prefix_views':len(prefix_cache),
-            'fit_label_times':args.fit_label_times,
+            'fit_label_times':label_times,
             'epochs':args.epochs,'updates':len(history),'mode':args.mode,'completion_initialization':args.completion_init,
             'native_project_max_change':(head.projects[0].weight.detach()-before).abs().max().item() if head is not None else None,
             'first_step':history[0],'last_step':history[-1],'wall_s':time.monotonic()-started,
