@@ -1,5 +1,30 @@
 # V7.3 场景级背景与Actor组合
 
+## V7.3 背景近传感器对照完成（2026-09-08）
+
+code7fb7e5a7完成r2背景与场景比较：数据 `WS-V73-M4-SCENE-DATA-01/20260907T211500Z__development-background-sensor-close-r2`，41.72s、RSS7.650GiB；比较 `WS-V73-M4-SCENE-COMPOSITION-01/20260907T211500Z__development-pca-lidar-native-r2`，3.953s、RSS0.751GiB、纯CPU。数据PID26177与评价PID26331均结束。
+
+仅在每个build扫描按官方nuScenes采样LiDAR坐标abs(x)<1且abs(y)<1排除静态背景候选，共194536条原始近点；背景精确坐标去重支持723130→606366。416704条留出原始束全部保留，Actor预测、轨迹及读出尺度不变。新增分层显示96339条评价返回落在近传感器区、320365条在其外；这是几何范围定义，不是精确自车语义标签，也不把传感器壳体承诺为静态世界。
+
+仅背景的开发5日志均值（统计单位scene→log，与Actor表不同）：全束free0.52771→0.31911m，early13.96%→12.22%，同时hit26.31%→25.90%、miss50.59%→52.27%。近点静态累积解释了部分严重侵入，但不能把支持删减伴随的覆盖下降隐藏。框外背景代理free0.53447→0.32445m；cohort返回被背景提前阻挡的日志平均仍27.08%、free1.03555m；近传感器区外全束仍有15.68%early、45.22%miss、free0.40830m。因此F04仍active，背景不能视为已经正确的固定真值。
+
+使用修订后的同一背景，完整组合结果：
+
+| Actor方法 | 全束hit | 全束early | 全束miss | 全束free m | cohort hit | cohort early | cohort miss | cohort free m |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| LiDAR PCA | 26.60% | 12.33% | 51.52% | 0.32154 | 21.45% | 31.68% | 43.14% | 1.04603 |
+| LiDAR-only r6 | 26.72% | 12.50% | 51.18% | 0.32652 | 28.54% | 38.45% | 27.59% | 1.09073 |
+| native fusion r2 | 26.43% | 12.45% | 51.28% | 0.32993 | 19.61% | 35.17% | 38.05% | 1.06979 |
+
+所有组合的相对Actor趋势仍未形成物理优势；全束差值很小不能替代cohort分项。固定背景会显著影响整体数值，后续主模型须使用相同已登记背景，并继续研究build支持与已观测free的一致性；不能用开发GT删背景支持、把错表面变透明或删掉困难评价束。Voxblox/TSDF与基于free的静态一致性已有官方参考，尚未声称实现这些新背景方法。
+
+原始结果=`docs/autoresearch/worldsim_v73/m4/scene_composition_r2_summary.json`，数据记录=`scene_data_r2_index.json`；对比研究图与复现脚本为 `V73_SCENE_BACKGROUND_COMPOSITION.png/.pdf`、`scripts/plot_worldsim_v73_scene_composition.py`。图为已有5日志的点估计，不是新日志确认或显著性结论。
+
+主joint r5 PID18843至epoch10，全轨迹LiDAR-only r7 PID23188至epoch28，正常训练，无资源不足。下一步待r7最终surface/summary完成后，用同一完整cohort配对r6并分列原build LiDAR-ready与运动子集；不将中途checkpoint当成最终结果。CAPA、AdaPoinTr、主模型完整结果、首事件与新日志确认继续待推进。failure_ledger_delta=update V73-F04；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。整个V7.3未完成，shutdown=false。
+
+
+---
+
 ## V7.3 真实场景组合完成与背景近点对策（2026-09-08）
 
 code3f77f087完成原6开发scene/5日志场景数据与全部4种组合读出。数据run `WS-V73-M4-SCENE-DATA-01/20260907T211000Z__development-build-background-r1`：42.57s、RSS7.652GiB，723130个build背景支持/5785040三角面，12个留出扫描416704条原始束。比较run `WS-V73-M4-SCENE-COMPOSITION-01/20260907T211000Z__development-pca-lidar-native-r1`：4.409s、RSS0.785GiB、纯CPU、48个方法×扫描记录；没有训练/数据作业残留。每个方法都用同一背景，未将未重建对象的束删除。
