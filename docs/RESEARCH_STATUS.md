@@ -1,5 +1,16 @@
 # Research Status
 
+## V7.3 首事件缺失支持的可实施边界（2026-09-08）
+
+检索DS-NeRF CVPR2022、终止分布EMD ECCV2024和nvdiffrast官方实现后，整理 `docs/WORLDSIM_V7_3_FIRST_EVENT_DESIGN.md`。候选分布来自固定footprint内同一显式表面的几何首交点，无独立opacity、无重复支持概率累加、无提前裁掉错误早面。只对当前Actor实际拥有的首返回做event；其他原始束保留free。
+
+严格s=0的NLL无穷和位置零梯度没有被log-domain“解决”。拟考虑全owned束上的显式截断NLL代理，同时保留直接surface coverage与独立free；missing取同一最大损失、不能从分母删除，截断比例与hard miss另报。此方案尚未实现/训练，不称严格似然、新物理模型或已经消除F03；该设计解释了为什么不能把数值ε或代理下降当作支持恢复。待r7/r8完整硬结果后固定free配置，再做一次有归因的event比较。
+
+当前r8完成30epoch/11130更新，进入完整489对象最终评价；r5与AdaPoinTr r1正常训练。CAPA已登记但未启动，等待r8退出后的显存余量。failure_ledger_delta=update F03方法边界；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 CAPA全窗口实际适配运行登记（2026-09-08）
 
 准备运行 `WS-V73-M2-CAPA-01/20260907T223500Z__population-build-tta-s7305-r1`，沿用已记录的官方100步rank4/alpha8、patch_embed qkv LoRA、每步3/24视图随机采样、最终全24视图联合推理；31个build窗口、完整489 Actor队列。所有744视图已有有效稀疏深度条件，fit/dev均只在各自build输入上窗口内TTA，逐窗口重置；额外时刻仅评价。协议、对齐及native-only边界见 `docs/WORLDSIM_V7_3_CAPA_BASELINE.md`。
