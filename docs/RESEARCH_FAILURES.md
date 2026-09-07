@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 扩大环视原生几何训练（2026-09-08）
+
+M2表面种子批次PID9230 running（native先行、lidar随后），native depth输出已获得非零梯度，12view当前峰值5.343GiB；完整曲面结果尚未完成。
+
+同时将M1强基线扩大到六个环视相机，避免把早期三前向相机配置当作研究上限。配置=`configs/worldsim_v73/m1_native_geometry_surround.yaml`，run=`20260907T161500Z__native-dpt-surround25-dev6-s7301-r3`，25fit/6dev、4时刻×6相机=24视图、378×672、60epochs/1500更新、seed7301，从预训练DPT初始化。冻结aggregator重新联合提取24视图的多层前缀；不能复用旧12view最终上下文。现有dataset含六相机payload目录，各场景实际可用窗口/Actor观测数由cohort完整报告，不凭目录存在宣称覆盖足够。
+
+已知资源90GiB cgroup、3090 24GiB、磁盘约160GiB可用；M2自身峰值5.343GiB，原生逐视图训练峰值约1.35GiB，24view前缀峰值由r3实测。若并发引发压力，优先串行调度完整窗口，不删相机来适配显存；只有完整任务在合理执行优化后仍不足才保存/push并无任务shutdown。当前未出现资源不足，不停机。
+
+该扩展针对F05视觉覆盖风险，不承担独立确认；保持相同fit/dev身份且不读source/external。旧M1结果只说明前向12view配置，不能替代环视基线。每个里程碑同步三本台账与push，禁止新增哈希/门控/重复smoke。
+
+---
+
 ## V7.3 原生depth直接生成表面查询种子（2026-09-08）
 
 `WS-V73-M2-PHYSICAL-SURFACE-01` 表面种子两候选已实现，待提交后启动：`20260907T161000Z__surface-seeds-native-r1`、`20260907T161000Z__surface-seeds-lidar-r1`，均joint/120steps/seed7303/free权重0.5，复用r1原始束缓存与M1 r2冻结前缀/已微调head。原生候选从当前可训练DPT depth输出反投影至Actor坐标，按只读框归属选择候选，用FPS选512个种子；选点离散但保留位置至depth的梯度，另外继续读取四级refinenet特征。无native支持时回退LiDAR并记录逐视图支持数。
