@@ -1,5 +1,23 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 完整AdaPoinTr已实际微调，初始结果归档（2026-09-08）
+
+`WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1` 已成功加载官方epoch353 checkpoint，准确可训练参数32494657。运行代码23981936，PID28663，日志 `/root/autodl-tmp/controller_logs/v73_population_adapointr_r1.log`。489对象的初始化评价已全部完成，随后开始完整模型任务微调；最近快照为epoch4、optimizer_update290、非零梯度范数1.6422、GPU allocated峰值1.00239GiB。该快照证明真实优化已进行，不是最终拟合或效果结论；最新状态以run/status.json为准。
+
+| 完整开发75对象/5日志，适配前 | literal hit | early | miss | free m | target到surface m | recall@0.2m |
+|---|---:|---:|---:|---:|---:|---:|
+| 固定LiDAR PCA | 21.24% | 4.35% | 73.41% | 0.01771 | 0.30479 | 65.42% |
+| 官方预训练AdaPoinTr，尚未本轮微调 | 9.37% | 4.94% | 54.97% | 0.11617 | 0.21732 | 67.11% |
+
+适配前相对PCA，独立日志配对hit−11.87pp、95%区间[−21.74,−2.01]pp，4日志下降、1相同；free+0.09846m、[+0.02770,+0.16252]m，4日志增加。miss−18.44pp、[−30.88,−3.52]pp，4日志降低。表面距离−0.08747m、[−0.19164,+0.01970]m；recall+1.70pp、[−11.13,+10.12]pp。覆盖和字面交点并未同步改善，不能据此宣告完整适配后的AdaPoinTr失败。此处只评价匹配数量的PCA曲面片；完整16384点输出已保存，原生密度与显式化差异还需分开分析。
+
+初始完整报告包含23个无留出自有回波和8个无输入空预测；共有LiDAR输入分层67对象/5日志，hit10.18%、early5.23%、miss51.80%、free0.12335m、距离0.21732m、recall71.71%。运动子集仍仅9对象/2日志，不能作为动态泛化确认。逐Actor、所有分层与配对保存在 `docs/autoresearch/worldsim_v73/m2/global/adapointr_r1_initial_analysis.json`，运行manifest另存同目录。仅汇总已有初始化结果，未重复推理或训练。
+
+主joint r5 PID18843继续运行；同全轨迹标签的米制beam free r8 PID26975最近到epoch26，尚未完成最终评价。当前三项训练均有正常进展，不关机。failure_ledger_delta=update F01/F02/F05（真实完整强基线启动及适配前起点）；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。CAPA、全轨迹joint、event及新日志确认仍待完成，整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 完整AdaPoinTr任务适配实现与登记（2026-09-08）
 
 主joint r5与米制free r8正常训练，当前不重复启动。独立完成官方AdaPoinTr强控制的实现，登记 `WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1`。使用现有官方完整PCN权重与v72-pointr环境，512query/16384点、6层encoder/8层decoder、384维、全部模型参数微调；不使用旧V7.2包装器或更小输出头。

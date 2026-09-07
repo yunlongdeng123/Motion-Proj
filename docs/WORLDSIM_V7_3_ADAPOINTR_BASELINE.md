@@ -1,6 +1,6 @@
 # V7.3 AdaPoinTr强补全控制
 
-当前为完整模型适配实现与首轮训练登记，尚未取得本轮训练结果。主joint r5与free目标r8继续原配置，本工作不替换V7.3的预训练视觉几何适配主线。
+完整模型已实际载入并进入首轮任务微调，初始化489对象评价已完成；最终训练结果尚未取得。主joint r5与free目标r8继续原配置，本工作不替换V7.3的预训练视觉几何适配主线。
 
 来源为[AdaPoinTr作者代码](https://github.com/yuxumin/PoinTr)、[官方模型](https://raw.githubusercontent.com/yuxumin/PoinTr/master/models/AdaPoinTr.py)、[PCN配置](https://raw.githubusercontent.com/yuxumin/PoinTr/master/cfgs/PCN_models/AdaPoinTr.yaml)。本机复用PoinTr_AdaPoinTr_4603257源码、AdaPoinTr_PCN.pth和v72-pointr环境。使用完整512查询/16384输出、384维、6层编码器/8层解码器及官方去噪结构，载入全部预训练权重，所有模型参数允许更新；没有改成旧4096输出或只训练末端小头。现有checkpoint包含32496706个模型Tensor元素（含BN缓冲），准确可训练参数数由运行manifest记录。
 
@@ -14,4 +14,8 @@
 
 初始化评价用于建立未做本轮任务适配的强起点，最终评价与之及r7/r8比较。相同固定LiDAR PCA结果直接复用；每epoch保存完整model/optimizer/scheduler及RNG状态，不新增校验和或门控。实际GPU/cgroup峰值由真实运行记录，不因与其他作业并发竞争就宣布单作业资源不足。
 
-源码：`motion_proj/worldsim_v73/adapointr_baseline.py`、`scripts/train_worldsim_v73_adapointr.py`。当前真实模型加载/训练尚待启动，不能将实现完成写成基线已完成。F02/F05与场景F04仍active；整个V7.3未完成，shutdown=false。
+实际运行代码23981936，PID28663，载入官方epoch353 checkpoint，32494657个可训练参数。最近状态epoch4/290次优化更新，GPU allocated峰值1.00239GiB，非零完整模型梯度；此为训练过程快照，最终结果尚未完成。每epoch保存状态的原计划已实际执行。
+
+适配前完整开发75对象/5日志：literal hit9.37%、early4.94%、miss54.97%、free0.11617m、target到surface距离0.21732m、recall@0.2m67.11%。相对固定PCA，hit差−11.87pp、日志bootstrap95%[−21.74,−2.01]pp；free差+0.09846m、[+0.02770,+0.16252]m；miss差−18.44pp、[−30.88,−3.52]pp。距离差−0.08747m、[−0.19164,+0.01970]m，recall差+1.70pp、[−11.13,+10.12]pp。尚不能用适配前的域差异、稀疏输入与匹配曲面转换结果代表认真微调后的强基线。共有输入与运动分层、原始逐Actor数据及全部配对见 `docs/autoresearch/worldsim_v73/m2/global/adapointr_r1_initial_analysis.json`；23个无留出自有回波和8个无输入空预测保留在完整报告。
+
+源码：`motion_proj/worldsim_v73/adapointr_baseline.py`、`scripts/train_worldsim_v73_adapointr.py`。F02/F05与场景F04仍active；整个V7.3未完成，shutdown=false。

@@ -1,0 +1,91 @@
+{
+  "code_commit": "23981936764141fa2582575bb552e951fd8096a1",
+  "config": {
+    "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2",
+    "fit_targets": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-EXTENDED-TARGETS-01/20260907T200000Z__fit-track-measurements-r2",
+    "baseline_results": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-ACTOR-01/20260907T190000Z__population-shared-native-extra-time-s7304-r5/lidar_baseline.json",
+    "run_id": "20260907T221000Z__population-full-track-pcn-s7307-r1",
+    "repo": "/root/autodl-tmp/build/worldsim_v72/PoinTr_AdaPoinTr_4603257",
+    "weights": "/root/autodl-tmp/external/worldsim_v72/checkpoints/AdaPoinTr_PCN.pth",
+    "epochs": 30,
+    "accumulate": 4,
+    "lr": 0.0001,
+    "seed": 7307
+  },
+  "method": "all-parameter official pretrained AdaPoinTr, sparse-observation task fine-tuning; not exact PCN benchmark reproduction",
+  "input": "all original build LiDAR points; repeat only when fewer than 512 slots; no target initialization or point-count cap",
+  "supervision": "fit-only full-track measured positives and original first-return free; development no gradient",
+  "loss": "target-to-matched-patch coverage +0.5 literal free +0.05 soft box envelope +0.1 target-to-coarse coverage +0.1 sparse local denoising coverage",
+  "unknown_region": "no global predicted-to-sparse-target penalty; sparse measurements are not complete surfaces",
+  "physical_readout": "min(build points,1024)+512 fixed .06m PCA patches from full 16384-point output; same triangle/first-return operators as query method",
+  "surface_gradient": "FPS/neighborhood/PCA orientation held fixed per step; selected center positions receive surface/free gradients; PCA recomputed each step",
+  "optimizer": "AdamW lr1e-4 weight_decay5e-4; lr x0.9 at epoch21; variable-point actors accumulated in groups4; clip norm10",
+  "density": "full native point cloud saved at initial/final for separate density/point-set analysis; primary surface budget matched",
+  "source_test_read": false,
+  "external_test_read": false,
+  "official_model": {
+    "pretrained_epoch": 353,
+    "model_config": {
+      "NAME": "AdaPoinTr",
+      "num_query": 512,
+      "num_points": 16384,
+      "center_num": [
+        512,
+        256
+      ],
+      "global_feature_dim": 1024,
+      "encoder_type": "graph",
+      "decoder_type": "fc",
+      "encoder_config": {
+        "embed_dim": 384,
+        "depth": 6,
+        "num_heads": 6,
+        "k": 8,
+        "n_group": 2,
+        "mlp_ratio": 2.0,
+        "block_style_list": [
+          "attn-graph",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn"
+        ],
+        "combine_style": "concat"
+      },
+      "decoder_config": {
+        "embed_dim": 384,
+        "depth": 8,
+        "num_heads": 6,
+        "k": 8,
+        "n_group": 2,
+        "mlp_ratio": 2.0,
+        "self_attn_block_style_list": [
+          "attn-graph",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn"
+        ],
+        "self_attn_combine_style": "concat",
+        "cross_attn_block_style_list": [
+          "attn-graph",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn",
+          "attn"
+        ],
+        "cross_attn_combine_style": "concat"
+      }
+    },
+    "trainable_parameters": 32494657,
+    "execution": "official full 512-query/16384-point model; exact chunked knn preserves all raw build points",
+    "input_axes": "original metric Actor canonical axes; isotropic division by known max box dimension, no GT-derived centering/alignment"
+  }
+}
