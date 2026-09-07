@@ -1,14 +1,17 @@
 # Motion-Proj 文档导航
 
-更新：2026-09-08。WorldSim V7.2 当前主线是 EAS-VGGT；E1–E5 已执行，route-select 有小幅证据正结果，source 因零视觉支持不可计算。历史文档中的 `running/pending` 不覆盖以下入口。
+更新：2026-09-07。当前主线已进入 WorldSim V7.3 几何解码适配；V7.2 EAS-VGGT E1–E5 作为已完成证据基线保留。历史文档中的 `running/pending` 不覆盖以下入口。
 
 ## 当前研究
+
+- [V7.3 科研计划](WORLDSIM_V7_3_RESEARCH_PLAN.md)：动态刚体 Actor 表面重建、原生几何解码有限适配、局部空间查询、表面/自由空间/首事件一致监督与研究决策规则。
+- [状态](RESEARCH_STATUS.md)、[失败账本](RESEARCH_FAILURES.md)、[实验台账](EXPERIMENTS.md)：V7.3 每个里程碑同步更新；当前 M0 完成、M1 原生几何适配基线启动。
 
 - [EAS-VGGT 执行结果](WORLDSIM_V7_2_EAS_VGGT_RESULTS.md)：最短的结论、数值表、canonical run、可写/禁写主张和下一阶段门槛。
 - [EAS-VGGT Recovery Plan revision 3](WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)：研究问题、V7/V7.1 正结果继承、四组实验及执行状态。
 - [基础模型适配调研](WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md)：VGGT、Pi3X、MapAnything、DynamicVGGT、强适配/神经 LiDAR 对标。
 - [E1 基座和 beam 报告](WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md)：VGGT/Pi3X 初始诊断和数据接口。
-- [状态](RESEARCH_STATUS.md)、[失败账本](RESEARCH_FAILURES.md)、[实验台账](EXPERIMENTS.md)。最新新增 `V71-F68`（route raw visual 负结果与校准恢复）和 `V71-F69`（source insufficient support）。
+- V7.2 最新失败为 `V71-F68`（route raw visual 负结果与校准恢复）和 `V71-F69`（source insufficient support）；V7.3 下一可用编号为 `V71-F70`。
 
 ## 论文与历史
 

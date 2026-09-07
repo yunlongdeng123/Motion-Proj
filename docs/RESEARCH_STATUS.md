@@ -1,5 +1,19 @@
 # Research Status
 
+## WorldSim V7.3：几何解码适配主线已启动（2026-09-07）
+
+状态=`M0_branch_and_protocol_done_M1_native_geometry_baseline_in_progress`；分支=`research/worldsim-v7.3-geometric-adaptation`；正式计划=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md`。该分支从 V7.2 最终提交直接派生，V7.2 的数据、物理/外观所有权、连续证据、有序回波与 SE(3) 正结果继续作为已知事实，不把小型 late adapter 的几何负结果外推为视觉几何适配路线失败。
+
+V7.3 主任务固定为稀疏多模态观测约束的动态刚体 Actor 规范表面重建。首轮优先建立两个强候选：原生 VGGT 多层几何解码通路的有限微调，以及在同一监督/预算上加入可生成新支持的 Actor 局部空间查询解码。图像几何特征可以参与物理表面构建；构建后的外观状态与外观损失仍不能修改物理表面。轨迹和标定默认只读。
+
+当前机器为单卡 RTX 3090 24GB，主机内存约 755GB；启动时 GPU 空闲，无 V7.3 训练进程。先复用 V7.2 已物化的 route ActorBundle、RGB、多视图缓存和官方 VGGT checkpoint，完成可学习路径、坐标/支持覆盖与训练集拟合诊断。进入原生 DPT 反向传播后允许梯度检查点、梯度累积、混合精度与冻结前缀缓存；不会为了适配单卡把方法退回冻结最终特征＋独立小外挂。
+
+研究纪律：不用哈希、校验和或指纹作为新流程门槛；不增加重复 smoke/回归套件。每个可解释里程碑更新状态、失败和实验台账后 push。遇到结构性卡点先检索顶会论文与官方优秀开源，再记录迁移假设和实测结果。仅在确认资源不足且没有研究任务运行时执行 shutdown，并向用户报告所需资源。
+
+下一步：盘点 VGGT 原生 DPT/训练接口和 V7.2 可用 Actor 观测，建立 M1 数据切片与原生几何解码微调基线；评价真实米制表面 precision/recall/F-score/Chamfer、支持覆盖、自由空间侵入和字面首交点，不以旧 oracle 位移损失代替主结论。
+
+---
+
 ## EAS-VGGT V7.2 执行终态（2026-09-08）
 
 状态=`implementation_and_mechanism_stage_complete_with_generalization_gap`；latest implementation=`ffe99700`；文档与稿件 closeout 已在当前 HEAD 提交；总结果=`docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。E1–E5 均已真实执行，不能再使用下方历史条目的 `E1 running / E2–E5 pending`。

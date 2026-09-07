@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V73-M0-GEOMETRIC-ADAPTATION-START — done（2026-09-07）
+
+- 分支从 `research/worldsim-v7.2-task-first-completion-lidar` 的最终状态创建为 `research/worldsim-v7.3-geometric-adaptation`；V7.3 计划纳入版本管理。
+- 主任务=动态刚体 Actor 规范表面重建；主比较=原生几何解码微调、有限 LoRA、局部空间查询几何适配，以及 LiDAR-only/简单融合等同信息强基线。
+- 启动资源=RTX 3090 24GB、主机内存约 755GB、数据盘可用约 132GB；GPU 无研究任务占用。已有 VGGT/Pi3X/MapAnything checkpoint、VGGT 官方源码、V7.2 route/source ActorBundle 与 RGB/cache 可复用。
+- 本里程碑不读取新的 target/source/external 质量，不启动训练，不增加哈希/校验和/指纹，也不运行重复测试。V7.2 source 已暴露身份保持历史边界；V7.3 的结构和超参数先在已有 fit/development/route 数据上研究，后续独立日志另行定义。
+- 下一实验=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`：验证原生多层几何特征到米制 Actor 表面的真实可学习路径，并先做训练集拟合和 development 几何比较。
+
+---
+
 ## WorldSim V7.2 EAS-VGGT E1–E5 — executed（2026-09-08）
 
 - E1 official backbones：VGGT/Pi3X canonical=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4`；MapAnything native-prompt canonical=`.../20260907T235000Z__e1-mapanything-route-s7103-r3`，median surface residual=`.7986m`、0.2m hit=`4.76%`、peak GPU=`7.15GiB`。
