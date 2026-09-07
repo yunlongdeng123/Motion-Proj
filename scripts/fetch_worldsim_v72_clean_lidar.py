@@ -60,7 +60,7 @@ def _required_keyframes(metadata_root: Path, sample_tokens: set[str]) -> set[str
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument("--roles", type=Path, required=True)
     parser.add_argument("--metadata-root", type=Path, required=True)
     parser.add_argument("--archive-root", type=Path, required=True)
@@ -68,14 +68,16 @@ def main() -> None:
     parser.add_argument("--index", type=Path, required=True)
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--workers", type=int, default=10)
+    parser.add_argument("--role", choices=["dev_route", "source_test"], default="dev_route")
     args = parser.parse_args()
 
     roles = load_data_roles(args.roles)
     dev_logs = require_role_access(roles, "nuscenes", "dev")
     route_logs = require_role_access(roles, "nuscenes", "route_select")
-    selected_logs = set(dev_logs + route_logs)
+    source_logs = require_role_access(roles, "nuscenes", "source_test")
+    selected_logs = set(source_logs if args.role == "source_test" else dev_logs + route_logs)
     source_candidates = set(roles["datasets"]["nuscenes"]["group_roles"]["source_candidate_pool"])
-    if selected_logs & source_candidates:
+    if args.role != "source_test" and selected_logs & source_candidates:
         raise RuntimeError("I/O 提取集合意外包含未打开 source-test candidates")
     scene_names, sample_tokens = _selected_scene_and_sample_tokens(
         args.metadata_root, selected_logs
@@ -94,13 +96,13 @@ def main() -> None:
         "task_id": "WS-V72-P2-CLEAN-LIDAR-IO-01",
         "run_id": args.run_id,
         "status": "running",
-        "roles": ["dev", "route_select"],
+        "roles": ["source_test"] if args.role == "source_test" else ["dev", "route_select"],
         "dev_log_count": len(dev_logs),
         "route_select_log_count": len(route_logs),
         "scene_count": len(scene_names),
         "required_keyframe_count": len(required),
         "quality_read": False,
-        "source_test_read": False,
+        "source_test_read": args.role == "source_test",
         "external_test_read": False,
         "git_commit": git_commit,
     }
