@@ -27,7 +27,10 @@ from motion_proj.worldsim_v72.eas_vggt.backbones import Pi3XBackbone, VGGTBackbo
 from motion_proj.worldsim_v72.eas_vggt.cache import save_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.cache import load_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.preprocess import resize_camera_window
-from motion_proj.worldsim_v72.eas_vggt.visual_pooling import observe_actor_candidates
+from motion_proj.worldsim_v72.eas_vggt.visual_pooling import (
+    aligned_backbone_points_world,
+    observe_actor_candidates,
+)
 
 
 def _write_json(path: Path, payload: Any) -> None:
@@ -175,7 +178,11 @@ def main() -> None:
                         geometry = backbone.infer(window, images, transforms)
                         inference_seconds = time.monotonic() - inference_started
                         geometry_path = run_dir / "backbone_cache" / backbone_name / f"{window.window_id}.npz"
-                        save_backbone_geometry(geometry, geometry_path)
+                        save_backbone_geometry(
+                            geometry,
+                            geometry_path,
+                            compressed=bool(config.get("compress_backbone_cache", True)),
+                        )
                         reused_geometry = False
                     else:
                         geometry_path = reuse_root / "backbone_cache" / backbone_name / f"{window.window_id}.npz"
@@ -187,13 +194,18 @@ def main() -> None:
                     matched = 0
                     observed = 0
                     camera_observations = 0
+                    metric_points_world = aligned_backbone_points_world(window, geometry)
                     for actor_path in actor_paths[window.scene_id]:
                         pose = actor_poses.get((window.window_id, actor_path.stem))
                         if pose is None:
                             continue
                         actor = actor_inputs[actor_path.stem]
                         observation = observe_actor_candidates(
-                            actor["candidates"], pose.world_from_actor, window, geometry
+                            actor["candidates"],
+                            pose.world_from_actor,
+                            window,
+                            geometry,
+                            metric_points_world=metric_points_world,
                         )
                         cache = ActorVisualCache(
                             track_id=str(actor["track_id"]),

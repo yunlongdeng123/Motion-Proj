@@ -71,6 +71,19 @@ class CandidateVisualObservation:
         return pooled.astype(np.float32)
 
 
+def aligned_backbone_points_world(window: CameraWindow, geometry: BackboneGeometry) -> np.ndarray:
+    """Align a backbone point map once per window before pooling multiple actors."""
+
+    if geometry.scale_status == "metric_aligned":
+        return np.asarray(geometry.points_reference, dtype=np.float32)
+    calibrated_poses = np.stack([frame.world_from_camera_opencv for frame in window.frames])
+    similarity, _ = aligned_camera_center_rmse_m(
+        geometry.reference_from_camera_opencv,
+        calibrated_poses,
+    )
+    return similarity.apply(geometry.points_reference)
+
+
 def observe_actor_candidates(
     candidates_actor_m: np.ndarray,
     world_from_actor: np.ndarray,
@@ -78,6 +91,7 @@ def observe_actor_candidates(
     geometry: BackboneGeometry,
     *,
     minimum_camera_depth_m: float = 0.25,
+    metric_points_world: np.ndarray | None = None,
 ) -> CandidateVisualObservation:
     """按已知标定投影 surface candidates，并聚合同一窗口的 patch features。
 
@@ -100,15 +114,13 @@ def observe_actor_candidates(
     observation_count = np.zeros(len(candidates), dtype=np.int32)
     model_height, model_width = geometry.points_reference.shape[1:3]
     feature_height, feature_width = geometry.feature_grid.shape[1:3]
-    if geometry.scale_status == "metric_aligned":
-        points_world = geometry.points_reference
-    else:
-        calibrated_poses = np.stack([frame.world_from_camera_opencv for frame in window.frames])
-        similarity, _ = aligned_camera_center_rmse_m(
-            geometry.reference_from_camera_opencv,
-            calibrated_poses,
-        )
-        points_world = similarity.apply(geometry.points_reference)
+    points_world = (
+        aligned_backbone_points_world(window, geometry)
+        if metric_points_world is None
+        else np.asarray(metric_points_world, dtype=np.float32)
+    )
+    if points_world.shape != geometry.points_reference.shape:
+        raise ValueError("metric_points_world shape mismatch")
     for index, frame in enumerate(window.frames):
         camera = homogeneous @ np.linalg.inv(frame.world_from_camera_opencv).T
         projected = camera[:, :3] @ frame.intrinsics_px.T

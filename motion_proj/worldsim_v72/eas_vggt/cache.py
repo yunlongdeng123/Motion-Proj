@@ -27,7 +27,12 @@ _ARRAY_FIELDS = (
 )
 
 
-def save_backbone_geometry(value: BackboneGeometry, output_path: Path) -> tuple[Path, Path]:
+def save_backbone_geometry(
+    value: BackboneGeometry,
+    output_path: Path,
+    *,
+    compressed: bool = True,
+) -> tuple[Path, Path]:
     output_path = Path(output_path)
     if output_path.suffix != ".npz":
         raise ValueError("视觉几何缓存必须使用 .npz")
@@ -35,7 +40,8 @@ def save_backbone_geometry(value: BackboneGeometry, output_path: Path) -> tuple[
     sidecar = output_path.with_suffix(".json")
     temporary_npz = output_path.with_suffix(".tmp.npz")
     temporary_json = sidecar.with_suffix(".tmp.json")
-    np.savez_compressed(
+    writer = np.savez_compressed if compressed else np.savez
+    writer(
         temporary_npz,
         schema_version=np.asarray(BACKBONE_GEOMETRY_SCHEMA_VERSION),
         **{name: getattr(value, name) for name in _ARRAY_FIELDS},
