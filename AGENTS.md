@@ -1,8 +1,12 @@
 # AGENTS 约定
 
-## 当前研究范围：EAS-VGGT（用户纠偏，2026-09-07）
+## 当前研究范围：EAS-VGGT（用户补充调研，2026-09-07）
 
-当前主线与阶段只读 `docs/RESEARCH_STATUS.md` 文首及 `docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`。继承 V7/V7.1 正结果，围绕物理/外观解耦、连续证据与分类回波测度、SE(3) 刚体轨迹等变性接入 VGGT 学习。旧 task-first A/B、research-first R1–R7 与 GPU handoff 已被替代；不要因旧文档或 `route_selection.yaml` 的历史状态自动重启外部补全、LiDAR4D/LiDAR-RT 或 shutdown。旧结果/曝光身份保留；新实现和收益不能由计划文字推定。卡点仍按下方“先检索、再迁移”执行。
+当前方向与执行范围以 `docs/RESEARCH_STATUS.md` 文首及 `docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2 为准。V7/V7.1 正结果继续作为起点；研究目标为同稀疏测量预算下可查询、可随 SE(3) 编辑且物理/外观保持对应的动态场景。四组核心证据：有效多基座瓶颈诊断、同信息强基线、正确几何/回波与跨模态对应、独立场景和第三来源冻结迁移。
+
+用户要求不以资源限制主会研究范围：不强制单卡、2GB 或极小 adapter，必要时使用结构化网络、PEFT/decoder/全量微调；报告全链路成本。条件 median、PSNR 不变和坐标恒等式不能代替完整方法证据；当前风险 F66 仍 active。来源核对见 `docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`。
+
+旧 task-first A/B、R1–R7 和 GPU handoff 不再调度；神经 LiDAR 等外部方法作公平比较，不代替 EAS 主线。既有实验和数据曝光身份保留；计划完成/单候选失败不触发 shutdown。卡点按下方“先检索、再迁移”执行，避免重复无信息量检查。
 
 ## 环境激活（重要）
 

@@ -1,5 +1,30 @@
 # Research Status
 
+## EAS-VGGT revision 2：融合补充调研，贡献与证据优先（2026-09-07）
+
+task=`WS-V72-E0-CONFERENCE-INTEGRATION-02`；status=`done`（计划/文档）；事实基线 commit=`35ca52da`。用户要求融入 subagent 调研，不以资源约束限制主会叙事。当前计划同路径更新为 `docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2；来源和迁移决策=`docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`。
+
+**当前主问题：** 同稀疏测量预算下，将视觉几何先验适配为可由传感器查询、可按刚体轨迹编辑且与外观保持对应的动态场景。V7 canonical compiler、M8、M39、M22/M28、M49 为继承端点；新增研究目标包括完整有效 beam 上的第一回波/无回波、有序对象—背景组合，以及物理—外观可见表面的对应。M39 条件 median 和 PSNR 不变不能单独满足新任务。
+
+| 核心证据 | 现有稳定任务 / 状态 | 当前要求 |
+|---|---|---|
+| A：缺口与数据协议 | E1 / pending | 两个有效基座，分开 native、尺度/位姿/时间对齐和 surface adapter 误差；RGB/beam 合同与独立 split |
+| B：同信息机制学习 | E2 / pending | 相同测量的校正/融合、CAPA/深度适配、scalar、LiDAR-only 和 EAS；表面事件/无回波机制及消融 |
+| C：对应与动态应用 | E3、E4 / pending | 所有权隔离+前向对应、真实图像/物理深度与遮挡、SE(3) 轨迹；解析干预与真实 GT 分开 |
+| D：冻结泛化与文稿 | E5 / pending | 独立场景、跨传感器、第三几何来源；共享 adapter/重训/TTA 分列，全链路成本 |
+
+默认候选为 VGGT、π³ 开发与 MapAnything 第三来源，E1 按官方有效 checkpoint/输入能力冻结；本轮未本机运行。CAPA 已核对官方实现，必须处理其近邻关系。DynamicVGGT 作者仓库当前没有预训练权重，不能用随机动态头结果代表论文。基座/数据来源、发表身份和具体迁移均见调研文档。
+
+资源不再限定在小头/单卡/2GB；允许结构化 adapter、必要的 PEFT/decoder/全量微调，以同信息和容量消融决定。优先充分训练与未见数据，默认扩展 Waymo Perception 的原生 range-image 任务；先核清 no-return 与 invalid/unfired 的区别。既有 nuScenes/AV2 已暴露身份不改变，3 个 source candidates 只作有限补充，不作为充分主验证。
+
+新风险=`V71-F66`（active，计划已补充但需实验解除）；`V71-F65` 的方向纠偏仍有效，旧 A/B、R1–R7 队列不恢复。新有序事件概率分解只是一种近似模型与待测候选，不能声称已解决 F20/F22 的覆盖/前尾问题或已识别真实材料物理。
+
+本轮 new training/checkpoint/target quality/source-test/external-test read=`false/false/false/false/false`；shutdown=false。下一步从 E1 的真实基座+数据+瓶颈诊断进入实质研究；不进行重复大规模验证。当前分支不变，最新失败编号下一可用=`V71-F67`。计划与研究笔记、README、AGENTS、状态/失败/实验台账同步。
+
+---
+
+以下为历史状态，旧资源上限和 E1–E5 的较窄范围均以文首 revision 2 为准。
+
 ## WorldSim V7.2 EAS-VGGT 主线恢复计划（2026-09-07）
 
 task=`WS-V72-E0-EAS-VGGT-REPLAN-01`；status=`done`（仅本次计划/文档交付）；事实基线 commit=`debe8697`；当前计划=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`。用户指出 task-first 与上一版 recovery 未充分继承 V7/V7.1，明确要求 EAS-VGGT：物理与外观解耦、连续证据与分类回波测度、SE(3) 刚体轨迹等变性。本轮据此完成方向纠偏，不再将外部几何补全或全扫描神经 LiDAR 作为主线/前置。

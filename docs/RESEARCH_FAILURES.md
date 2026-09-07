@@ -1,5 +1,25 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## 当前补充风险总览（2026-09-07，基线 35ca52da）
+
+| 当前范围 | 状态与解释 | 证据入口 |
+|---|---|---|
+| EAS-VGGT 方向继承 | F65 的规划纠偏保持；V7/V7.1 正负结果均保留 | 当前 plan 第 2 节 |
+| 论文主张与证据缺口 | F66 active；revision 2 已加强设计，尚无新实验解除 | 当前 plan 第 3–7 节、补充调研文档 |
+| 下一步 | E1–E5 pending，四组核心证据 A–D；旧 A/B 不恢复 | RESEARCH_STATUS 文首 |
+
+## V71-F66 — 条件回波和接口非干扰不足以支持通用传感器适配（2026-09-07）
+
+- category=`protocol/research_claim_scope`；status=`active`；mitigation=`plan_revised_verification_pending`；task=`WS-V72-E0-CONFERENCE-INTEGRATION-02`；baseline commit=`35ca52da`。
+- observation：上一版 EAS-VGGT 已继承正结果，但主终点仍偏 Actor-box 条件 median，no-return/概率遮挡被延后；强调物理与外观隔离，未要求两套状态在可见深度/轮廓/遮挡上的独立对应证据；有效多基座、强深度适配与充分独立数据也未成为必需项。用户补充调研指出额外 LiDAR、转换误差、PSNR 不变和“即插即用”的混杂。
+- cause/boundary：接口正确与旧条件任务机制不能直接推出完整传感器过程或通用视觉几何适配。该风险来自计划证据范围不足，不是本轮训练失败，也不否定 M8/M39/M22/M28/M49 已有结果。
+- mitigation：revision 2 定义明确主任务，增加两基座分层诊断、同信息校正/融合/CAPA/scalar/LiDAR-only 对照，新增有序表面事件与真实 no-return 监督、物理—外观对应及第三来源冻结迁移；资源不限制研究范围。
+- anti-repeat：不能把 F22/M35 的长前尾体密度改名为有序事件；必须辨别 surface support/事件定位，并对照单 hazard 和 M39+no-return。不能将 F/O/U、CDF 单调、质量守恒、PSNR 不变或增加参数单独写成方法有效。跨基座新训 projector/校准须标明，不能写零更新通用插件。
+- resolution criteria：实际完成四组证据 A–D，在相同测量信息下确认专门机制增量、表面与传感器语义正确、物理/外观有独立真值对应，以及独立场景/来源的明确泛化范围；仅改计划不解除本风险。若结果只能支持较窄任务，相应收窄论文主张。
+- evidence=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2、`docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`、历史 `V71-F20/F22/F23/F24/F37–F43/F47` 与 D0 W0–W4；本轮无新科学质量读取、训练或 shutdown。
+
+下一可用统一失败编号：`V71-F67`；下方总览和 next-ID 属于历史记录。
+
 ## 当前路线总览（2026-09-07，基线 debe8697）
 
 | 范围 | 最新解释 | 入口 |

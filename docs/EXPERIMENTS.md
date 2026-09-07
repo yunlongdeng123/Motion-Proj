@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V72-E0-CONFERENCE-INTEGRATION-02 — done，仅调研融合与计划（2026-09-07）
+
+- baseline commit=`35ca52da`；输入=用户补充 subagent 调研；deliverables=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md` revision 2、`docs/WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md`。
+- 联网核对 TALO/VGGT-Segmentor/Marigold-DC/TestPromptDC/SAM2Long/CAPA/DynamicVGGT/NFL/DyNFL 及基座/Waymo 官方接口；CAPA 有官方代码，DynamicVGGT 无预训练权重。所有本机模型能力与收益仍 pending。
+- 计划增量：同信息强基线；完整第一回波/无回波与场景遮挡；物理—外观对应；两个开发基座与第三来源冻结迁移；独立数据优先，不设单卡/2GB/极小 adapter 上限。E1–E5 ID 保持，映射四组证据 A–D。
+- failure_ledger_refs=`[V71-F20,V71-F22,V71-F23,V71-F24,V71-F25,V71-F28,V71-F37,V71-F38,V71-F39,V71-F40,V71-F41,V71-F42,V71-F43,V71-F47,V71-F52,V71-F54,V71-F60,V71-F62,V71-F63,V71-F64,V71-F65,V71-F66]`；继承 D0 W0–W4/density 结论；failure_ledger_delta=`V71-F66_active_plan_mitigated`。
+- 无新数据质量/target/source-test/external-test read、训练、checkpoint、seed/fingerprint 或 GPU run；shutdown=false。本轮仅文档范围检查，不执行旧 benchmark；下一任务仍为 `WS-V72-E1-VGGT-EVIDENCE-IO-01`。
+
+下方旧 E0 为历史交付，当前 E1–E5 范围以 revision 2 为准。
+
 ## WS-V72-E0-EAS-VGGT-REPLAN-01 — done，仅计划与文档（2026-09-07）
 
 - evidence baseline commit=`debe8697`；deliverable=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`；本轮不是模型实验，无新 checkpoint/run/benchmark。

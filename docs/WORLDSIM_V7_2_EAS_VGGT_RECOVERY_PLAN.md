@@ -1,41 +1,39 @@
-# WorldSim V7.2 Recovery：从 V7/V7.1 正结果构建 EAS-VGGT
+# WorldSim V7.2 EAS-VGGT Recovery Plan：贡献与证据优先版
 
-日期：2026-09-07；文档任务 `WS-V72-E0-EAS-VGGT-REPLAN-01`，状态 `done`；实现 E1–E5 均为 `pending`。仓库事实基线 `debe8697`，历史科学证据基线 `1913ab0e`。本计划按用户最新方向重写；新模型尚未实现、没有新的训练或测试结果。
+修订：2026-09-07；revision=`2`；任务 `WS-V72-E0-CONFERENCE-INTEGRATION-02`，状态 `done`（调研融合与计划交付）；仓库事实基线 `35ca52da`。E1–E5 实现/实验均为 `pending`。本版吸收用户补充的 subagent 调研；[核对与迁移决策](WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md) 保存一手来源与接受/修正项。本文中的新机制和收益都是待验证假设。
 
-当前执行入口以 [RESEARCH_STATUS.md](RESEARCH_STATUS.md) 文首为准。本计划替代 `WORLDSIM_V7_2_TASK_FIRST_OCCUPANCY_OR_NEURAL_LIDAR_PLAN.md`、`WORLDSIM_V7_2_TASK_FIRST_PLAN.md` 和 `WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md` 的路线安排。旧 A/B 选路、R1–R7 队列及其整体完成判据退役；历史实验、数据和负结果保留。对应纠偏为统一账本 `V71-F65`。
+用户最新优先级是形成最有竞争力的主会研究，而非满足单卡、2GB 或极小参数量。资源影响执行安排，不决定研究边界。沿用 V7.2 和 EAS-VGGT 主线，继续继承 V7/V7.1；原外部补全 A/B 与 R1–R7 队列不恢复。唯一当前状态为 [RESEARCH_STATUS.md](RESEARCH_STATUS.md)，既有结果不被本次计划追溯修改。
 
-## 1. 问题定义与这次纠偏
+## 1. 论文主问题与贡献组织
 
-**EAS-VGGT 要研究的是：如何将多视图视觉几何特征与有来源的稀疏观测，学习为可复用的 Actor 表面状态，使物理查询、图像外观和刚体运动各有明确参数归属，并在留出观测及轨迹编辑中保持可解释、可检验的行为。**
+**研究主问题：在相同的稀疏测量信息下，如何把视觉几何先验适配成可由传感器查询、可随刚体轨迹编辑，并且与外观保持对应的动态场景表示？**
 
-输入默认沿用项目已经具备的同步多视图 RGB、build LiDAR、标定、Actor 身份/框及已知刚体轨迹；训练目标来自隔离的观测。部署只读取输入窗口和 build 证据。这个版本是有标定、有 Actor 轨迹和稀疏 LiDAR 的视觉几何学习系统，暂不声称纯视觉、无标注跟踪或未来轨迹预测。连续时间轨迹由给定姿态插值，不能把插值称为预测。
+建议工作标题：**EAS-VGGT: Evidence-Conditioned Visual Geometry for Sensor-Consistent Dynamic Reconstruction**。EAS-VGGT 是主实现名称；只有冻结迁移证据成立后，才在标题/摘要中扩大为多基座通用 EAS。
 
-输出为每个 Actor 的 `PhysicalSurface + ContinuousEvidence + AppearanceState`，以及只读的 `ActorPose(t)`；背景有单独 owner。一个场景组合这些对象以支持图像渲染、Actor 条件回波查询和刚体轨迹编辑。完整场景应用通过对象组合逐步展开，不要求先补齐所有不可见表面。
+主任务固定为**稀疏 build 观测条件下，未参与构建的射线/时刻上的动态场景重建与第一回波预测**。输入为 RGB 窗口、有限 build LiDAR、标定和已知 Actor 身份/刚体轨迹；输出物理表面、连续证据、独立外观状态，以及场景级第一回波距离分布和 no-return 概率。默认是离线重建与指定轨迹条件下的重放/编辑，不是未来轨迹预测。主实验的 target RGB、LiDAR 和 ray outcome 都不输入模型；若补充研究“给定 target RGB 的深度补全”，另设协议，所有基线共享该输入。
 
-```mermaid
-flowchart LR
-    I[多视图输入 RGB] --> V[VGGT 特征]
-    L[build LiDAR 与来源] --> C[canonical 证据聚合]
-    V --> C
-    C --> P[物理表面与连续证据]
-    P --> Q[分类回波 query]
-    P -->|detach| A[独立外观分支]
-    V --> A
-    A --> R[图像渲染]
-    T[只读 SE3 轨迹] --> Q
-    T --> R
-```
+V7.1 的 Actor-box 条件 median 仍是正结果与起点，但单靠它不足以完成本任务。返回存在性、背景—对象遮挡、物理—外观对应关系升级为必需证据；实现从 EAS 对象状态组合展开，不依赖 AdaPoinTr 补齐全局表面或 LiDAR4D 代替 EAS 模型。
 
-| 维度 | 旧 V7.2 / 上版 recovery 的安排 | 本计划的安排 |
-|---|---|---|
-| 主要研究对象 | 补全后的点云或完整神经 LiDAR 扫描 | 有证据、可编辑且物理与外观分工明确的 Actor 状态 |
-| V7/V7.1 的作用 | G2 对照、失败约束、接口资产 | 方法起点：compiler、M8、M39、M22/M28、M49 |
-| 学习增量 | AdaPoinTr 微调、外部渲染器接入 | VGGT 特征到 canonical EAS 的物理/证据学习及独立外观分支 |
-| 外部论文迁移 | 补全模型与 LiDAR 渲染器决定主线 | 迁移特征融合、时序学习与渲染部件，服务三条已有机制 |
-| 评价中心 | CD/F-score 与 full-scan 指标选路 | 同几何回波、外观干预不影响物理、轨迹组合与视觉质量联合评价 |
-| 收口条件 | 单候选或缺 B 结果触发总体关闭 | 每个假设有独立证据状态；缺实验继续执行，失败先研究再迁移 |
+叙事链条固定为：**两个正常工作的视觉几何基座→排除尺度/位姿/动态对齐/表面转换误差→发现剩余的观测缺口→用 EAS 的专门机制处理→同信息基线、跨场景和跨几何来源验证**。缺口是否存在、由什么主导，必须先测；不能把预期写成已有发现。
 
-旧路线的主要错误是目标发生漂移，不能仅归因为 A1 loss 不好或 B 基线不够。补一个 NKSR/LiDAR-RT 也不能自动纠正这个问题。AdaPoinTr/LiDAR4D 的已有结果仍可作补充对照，但不作为 EAS-VGGT 的初始化、必需依赖或推进门槛。
+| 拟主张 | 方法内容 | 必需证据 | 单独不足以支撑该主张的结果 |
+|---|---|---|---|
+| C1：观测条件下的视觉几何适配 | 局部三维/跨视图证据学习；区分 FREE、OCCUPIED、UNKNOWN 及观测支持量 | 超过同 LiDAR 预算的校正、融合、深度适配、scalar 和 LiDAR-only 模型 | 原视觉模型输给额外获得 LiDAR 的模型 |
+| C2：可组合的传感器回波表示 | 物理表面证据与外观 opacity 分离；场景级有序返回/无返回模型 | surface 与 return 两表、完整有效 query 分母、对象/背景遮挡、密度和读出消融 | 条件 median 改善、NLL 下降或 CDF 单调 |
+| C3：有对应关系的可编辑动态状态 | 参数归属隔离、物理到外观的前向联系、SE(3) push-forward | 实际表面深度/轮廓/遮挡对应，真实时间留出及轨迹干预，多来源复用 | RGB 完全未变导致 PSNR 不变；仅验证坐标恒等式 |
+
+这三个贡献描述同一个 EAS 场景表示，不包装成三个互不相关模块。SE(3) 恒等式和梯度非干扰是结构基础；论文价值还需来自新观测建模、跨模态对应和实证收益。
+
+措辞统一为 **sensor-observation consistency / return-order consistency**。不将同行概括为“纯图像自监督大模型”，不预先声称“首次发现因果性缺陷”“碰撞安全”“全链路小于 2GB”或“PSNR 不变所以世界自洽”。录用概率没有可计算保证；本计划优化的是新颖性边界、可证伪性、任务完整性和外部有效性。
+
+| 相对上一版 | 本版实质变化 |
+|---|---|
+| VGGT+小头作为默认上限 | 结构化 evidence adapter 为起点；PEFT/部分 decoder/全量微调按证据开放 |
+| 固定 M8 上的条件回波为主要终点 | 保留继承对照，最终必须包含场景第一回波存在性和遮挡组合 |
+| 独立外观+非干扰 | 加入物理/外观可见表面对应，不能成为两套无关世界 |
+| 单基座、现有少量日志确认 | 两个开发基座、第三来源冻结迁移；扩大独立训练和未见场景 |
+| 等容量 scalar、G0/G1 | 补齐同测量校正/融合、CAPA/深度适配、LiDAR-only、神经 LiDAR 能力基线 |
+| 先长时间做接口/资源前置 | 数据/模型可用性与一轮跨模型瓶颈诊断合并；随后进入四组实质实验 |
 
 ## 2. 正结果继承表：保留什么、还缺什么
 
@@ -59,155 +57,154 @@ flowchart LR
 - M22：`run://worldsim_v71/WS-V71-M22-SE3-DYNAMIC-STATIC-COMPOSITION-01/20260904T161000Z__m22-se3-composition-r2`。
 - M49：`run://worldsim_v71/WS-V71-M49-VISIBILITY-SIGN-BOUNDARY-01/20260905T121500Z__m49-visibility-sign-boundary-r1`。
 
-## 3. EAS-VGGT 方法：三条机制与一个真正的学习接口
+## 3. 方法方案：以已有 EAS 为起点，补齐真正缺失的机制
 
-### 3.1 VGGT 到 canonical EAS 的接口
+### 3.1 强视觉先验与连续观测证据的学习
 
-第一实现使用官方 VGGT 冻结 aggregator；只读取输入窗口图像。通过标定和每帧 Actor pose，将 canonical anchor/child 投影到各输入图像，采样 patch features，并附带时间差、视线、producer provenance 和支持度。使用小型跨观测 attention 聚合到每个 primitive；无有效投影时保留 evidence-only 路径及缺失标记，不能删 Actor。
+复用 V7 canonical compiler 的来源合同、M8 的表面学习及 M39 的读出端点。视觉基座提供 dense geometry 和可用特征；build LiDAR 提供有原点、时间、Actor pose 和来源的射线约束。采用保留局部三维邻域与跨视角 token 的 evidence transformer，而非预先压成少数全局统计量。输出物理局部残差、连续 F/O/U、支持量/冲突统计及回波所需的证据描述。
 
-**学习发生在跨观测融合、物理残差头和证据头，不只是给旧 EAS 换一个名字。** 首轮锁住 M8 几何，仅比较 VGGT 是否改善证据；第二步才开放物理残差学习，分辨几何和 reader 的贡献。新分支使用零初始化输出残差连接旧 checkpoint，初始函数保留旧模型，随后由监督学习偏离；不根据评测结果逐 Actor 选择旧/新输出。
+物理点图必须用 build-only 标定/尺度约束变换到 metric world，再按 Actor 轨迹运动补偿到 canonical frame；背景单独处理。先在同步多相机帧验证，再增加时间窗口。全局对齐、动态累积和点图转表面的误差分别记录，不把凸包/球支持/错误融合产生的侵入归给基座本身。
 
-默认利用已有标定作几何对齐；VGGT 相机/点图只作为可选辅助输入或一致性特征。若使用其预测点图，必须先用 build-only 静态标定约束估计尺度和坐标变换；动态 Actor 不能当静态对应点对齐。仅冻结骨干不能消除 pose/gauge 错误。VGGT 的 depth/point confidence 是模型输出特征，不直接解释成 occupied probability 或校准后的认识不确定性。
+训练顺序仍为“固定几何学证据→单独开放几何→联合适配对照”，保留几何 set/plane/scale/frame 监督和独立 operator 表，防止 M19/M20 的补偿与 scale shortcut。observed anchors 的来源不覆盖；若需要修正带噪 build observations，显式建立观测噪声/校正版本，不暗改锚点。
 
-### 3.2 物理与外观解耦
+三态 softmax 本身不是新贡献。reader 只读取 occupied scalar 时，其表达能力不比 scalar head 更强；F/O/U 的价值必须来自额外可辨别的观测监督、跨帧信息和可靠性输出。支持量也不自动等于校准后的认识不确定性。所有这些机制都需要同输入、同容量、同监督预算的消融。
 
-状态定义为
+### 3.2 从条件回波到场景级有序事件测度
+
+**继承端点：** M39 的连续证据加权、全 ray 深度分类和 median 保留为同几何基线；M49 的有限衰减恒等式继续解释权重变化。其条件是 Actor box 内存在回波，不能直接升级为完整传感器模型。
+
+**拟研究增量：** 在 canonical 物理表面上保存证据测度，经 SE(3) 放置后，沿 world ray 形成有几何位置与局部支持的表面事件，再对全部 Actor 和背景的事件统一排序。分开表面阻挡与传感器检出，不把 RGB opacity、primitive 数量或 UNKNOWN 当成回波概率。
+
+第一实现采用有序表面事件的分类分布。设第 k 个事件的阻挡概率为 u_k，发生阻挡后检出回波的概率为 v_k：
 
 \[
-S_i=(P_i,E_i,A_i),\quad P_i=\{\mu_j,\Sigma_j\},\quad E_i=\{m_{Fj},m_{Oj},m_{Uj},s_j\},\quad T_i(t)\in SE(3).
+T_k=\prod_{\ell<k}(1-u_\ell),\qquad
+q_k=T_k u_k v_k,\qquad
+q_{\varnothing}=T_{K+1}+\sum_kT_k u_k(1-v_k).
 \]
 
-`s_j` 保存支持次数、来源和冲突统计，不把 softmax 熵本身当作可校准 epistemic uncertainty。物理分支用几何、逐帧和观测证据监督；外观分支接收 detached physical carrier 及冻结视觉特征，独立拥有颜色、opacity、视觉残差几何和 densification。visual-only primitives 永不进入物理 query。
+因此 `sum(q_k)+q_empty=1`，并能表达“前方表面阻挡却没有可检测回波”，而不是把它误作透明自由空间。`q_k` 的局部深度核给出连续深度/离散 bins 上的返回测度。训练采用同一 outcome distribution 的 likelihood/proper score；部署的存在性、距离与 depth-bin 概率读取同一分布，阈值与解码规则在 dev 训练前登记。
 
-| 参数组 | 可接受的训练信号 | 部署消费者 |
+这是**不透明表面第一回波的近似模型**，不是完整波形、双程光学或多次散射理论。概率分解本身是已有观测建模思想，不单列为“首次”创新；研究增量是如何从视觉先验和连续 build 证据学习可定位、可组合、与外观有对应的表面事件。u/v 在稀疏监督下可能不可辨识，不能叫作真实反射率或已辨识材料参数；需要表面/自由区间监督及 `v=1`、单 hazard head 对照判断是否有实质价值。
+
+不能重复 F22/M35/M38：事件深度与厚度受物理表面及传感器分辨率监督约束，不能把各向同性 Gaussian 的长前尾直接当体密度沿空域累积。事件支持过小又会重现 F20 的 coverage 损失，因此必须让视觉先验/物理头实际补足局部支持，并报告 support recall。只改善 query decoder、不改善所声称的表面，不算几何贡献。
+
+同时引入显式 surface quadrature mass：分裂/重复一个 primitive 时分配原质量，而不是让总阻挡随点数翻倍。相同位置/事件参数且总质量守恒的离散化，只要求 **reader** 不变；这不是整个可学习 encoder 在任意重采样下天然不变。F40/F41 已说明总量守恒并不足以改善 early，因此它是消除混杂的约束，仍需定位和观测监督。
+
+`no-return`、`unsupported`、`invalid/unfired` 分开：no-return 是有效测量机会的实际 outcome，UNKNOWN 是几何证据不足。没有事件支持造成的漏检仍计入完整 query 指标，不能用 unsupported 排除难例，也不能宣称该空间已知为空。事件式 reader 是否优于“原 M39+同容量 no-return head”和标准单 hazard 模型，由同几何实验决定；不预设复杂模型一定获胜。
+
+### 3.3 物理与外观：梯度隔离，前向保持对应
+
+状态为 `S_i=(P_i,E_i,A_i,T_i(t))`。物理 P/E 读取标定的几何/观测监督；appearance 有自己的 primitives、颜色、opacity 和优化器。RGB loss 不更新 physical geometry、evidence、Actor pose 或共享的可学习物理 backbone；PEFT/全量微调时必须显式分离可学习参数归属，不能只对最终 P 调一次 detach。
+
+同时，外观必须是 `A_i = H_app(stopgrad(P_i), image_features, residual_state)`：物理到外观的输入保持实时关联，detach 只截断梯度，不把外观永远锁在过期物理快照。visual primitives 有父表面/Actor 来源并共享同一轨迹；允许独立容量与可学习 residual，避免重现 309 个物理载体兼做高质量外观的容量失败。
+
+采用对外观单向生效的表面对应约束，结合可见范围内的深度、轮廓和遮挡顺序监督；其范围由真实可观测区域决定，不把 LiDAR 未见后表面全当空。必须与完全独立双分支、共享载体、隔离但无对应约束做同容量比较。物理修正后 PSNR 是否变化只是辅助指标；主要问题是同一可见车身、边界与前后遮挡是否仍能在两种输出中对应。
+
+### 3.4 SE(3) 轨迹与状态组合
+
+继承 `Q_{i,t}(x)=Q_i(T_i(t)^{-1}x)`，以及 `μ_world=Rμ+t`、`Σ_world=RΣRᵀ`。整体坐标变换 g 下满足 `Q_{gT}(gx)=Q_T(x)`；场景 ray 和全部 owners 一起变换时，距离参数及事件顺序保持。仅移动一个 Actor、固定传感器时，遮挡和回波应改变，其他 Actor 的 canonical 状态应保持。
+
+连续时间用给定姿态的旋转/平移插值，先做真实留出时刻，再做声明范围内的轨迹编辑。由相同 `T_i(t)` 同时驱动物理与外观；新增 SE(3) 理论只声称表示/组合层的性质，不把 π³ 的 view permutation equivariance 混同于空间 SE(3)，也不宣称 VGGT image encoder 精确等变。
+
+## 4. 四组核心实验
+
+### A. 瓶颈真实存在：基座、对齐和转换分别诊断
+
+选择有效官方 checkpoint 的 VGGT 与 π³ 作为默认开发基座；MapAnything 为第三种保留几何来源。E1 先核对权重、代码版本与原生能力，并固定选择；若候选缺有效 checkpoint，按可用性换位必须发生在质量比较之前，不能用差结果挑基座。DynamicVGGT 暂作方法参照，官方仓库未发布预训练权重；复现训练成功后可加入独立比较，随机动态头不算其论文模型。
+
+同一预选日志、同一 RGB/build LiDAR，报告：原生深度/点图；加正确标定/尺度与运动补偿后；再经公共 surface/query adapter 后。输出跨基座的 geometry、可见 free-space intrusion、return-order 误差和射线剖面图，并逐项统计转换引入的增量。oracle pose/高质量表面只作诊断上界，不能混入主方法输入。
+
+若误差主要被正确对齐或简单融合解决，就不以“基础模型观测缺陷”为论文主张。转而研究 EAS 中仍存在的证据/遮挡/跨模态对应问题，先查文献再定义有区别的候选；不重复一个没有剩余优势空间的小头。
+
+### B. 同信息比较：排除多拿 LiDAR、更多容量和普通深度适配
+
+| 编号 | 对照 | 主要排除的解释 |
 |---|---|---|
-| VGGT 冻结骨干 | 首轮无梯度；后续若解冻，单独的 physical adapter 仅收物理监督 | 特征生产 |
-| 物理 geometry head | set/plane/scale/frame；需要时加入已辨明作用的物理 ray loss | 物理表面、detached 外观条件 |
-| evidence head | soft F/O/U 观测目标、概率回波目标；与 geometry 分阶段 | 条件回波 reader 与证据输出 |
-| appearance head / visual primitives | RGB 重建损失，只在外观子图反传 | 图像 rasterizer |
-| Actor pose、背景 owner | 首轮只读；不通过 RGB 偷改 Actor 的物理轨迹 | 刚体放置与独立背景渲染 |
+| B0 | 视觉基座原生输出 | 输入较少的参考，不单凭它证明 EAS 机制有效 |
+| B1 | 基座+相同 build LiDAR 的尺度/位姿校正 | 只是修正 gauge/alignment |
+| B2 | 基座+相同 LiDAR 的融合/TSDF/标准 ray constraint | 普通观测处理已经足够；几何点数和支持预算匹配 |
+| B3 | 同几何/特征、近似容量的 scalar response head | 三态名义或额外参数解释收益 |
+| B4 | LiDAR-only+同规模物理/回波模型 | 视觉基座只是装饰；也保留 raw fusion/TSDF 简单端点 |
+| B5 | CAPA；并以 Marigold-DC/TestPromptDC 补充强深度适配 | 只是稀疏深度适配；原生深度指标与公共 scene adapter 的结果分开 |
+| B6 | 冻结 M8/M39、M39+同容量 no-return head、标准单 hazard、无 F/O/U、无来源/冲突、质量不守恒消融 | 增量是否来自新的 EAS 机制；逐项改变，不把多个开关一次合并 |
+| B7 | EAS 主模型：不同表面/证据/外观对应开关 | 建立 geometry×reader 与 ownership×correspondence 的归因 |
+| B8 | DyNFL / 现有 LiDAR4D 等成熟神经 LiDAR 同协议比较 | 任务完整性与性能位置；它们是竞争者，不是接入后代替 EAS |
 
-物理非干扰条件为 `∂Q_phys/∂θ_app = 0`，还要排除共享可学习 backbone、optimizer 参数交叉、普通 dict 子模型漏冻及缓存别名。仅对 `P` 调一次 `detach()` 不足以证明整个系统隔离（`V71-F28`）。允许视觉分支有自己的可学习几何，解决 M24–M27 的容量缺口；这与放开 physical centers/scale 的 RGB 梯度不同。
+所有核心方法共享 RGB/测量窗口、LiDAR 点/beam 预算、目标隔离、标定、轨迹、训练数据和合法 TTA 信息。B1–B7 的同信息组不能隐藏额外原始 sweeps、target RGB 或目标传感器标定监督。MapAnything 等原生可接收几何提示的模型还需**原生同提示输入**对照，不能故意只用它的无提示配置。
 
-### 3.3 连续证据与分类回波测度
+离线训练、测试时优化、无优化 forward 分列，报告 steps 与总时延；为每个强基线给到正常收敛和合理官方配置，不能用 EAS 已充分训练而对手未收敛制造差距。原生神经 LiDAR 通常用不同信息/逐场景优化，原生设置放参考表，严格匹配信息的版本标明 adaptation；不跨协议比较论文绝对数值。
 
-延续 F/O/U 的连续 soft target，允许不同观测同时提供 FREE 与 OCCUPIED 投票；未被观察不等于 FREE。保留支持量和来源，避免把 1 次与 100 次观察压成相同的不可区分输入。首轮不新增 Dirichlet/DS 理论主张，先验证这些信息的实际作用。
+### C. 改善发生在正确对象上，且两种世界保持对应
 
-给定 ray 在 Actor box 内的有序深度 bins，沿用 M39：
+| 证据表/实验 | 必须输出 |
+|---|---|
+| 几何表 | CD、surface precision/recall、frame coverage、可观测自由空间侵入；固定 literal reader 的回波结果；不同密度预算 |
+| 传感器表 | 有效 beam 上 return-existence NLL/Brier/precision/recall/F1；返回距离 MAE/RMSE、early/hit/late；漏检/虚假返回和对象/背景遮挡；条件与全分母分开 |
+| 跨模态对应 | 同一相机下物理与外观可见深度偏差、轮廓距离、遮挡顺序错误；再用独立测量/标注分别锚定，避免两者一起错却一致 |
+| 参数干预 | 外观颜色/容量/优化步数变化的 physical drift；物理修正后重新条件化外观的对应性；同容量基线和扩容成本 |
+| 轨迹干预 | 全局 gauge、单 Actor 平移/旋转、多 Actor 遮挡变化、真实留出时刻；合成轨迹解析真值与真实传感器真值分开 |
+| 表示干预 | 固定总质量的 primitive 分裂/重复、前方/后方事件增减、前遮挡无检出情形；证明正确排序/概率归一化不等于已经提高实际精度 |
 
-\[
-q_{kj}=\frac{m_{Oj}\kappa_j(o+d_kv)}{\sum_{a,b}m_{Ob}\kappa_b(o+d_av)},\quad
-p_k=\sum_jq_{kj},\quad \widehat d=\operatorname{median}(p).
-\]
+相机深度/轮廓/遮挡比较只在实际有相应真值或可靠可见性标签的区域计算。仅有 box 不能当精细 silhouette GT；伪标签基准须标明来源和不确定性，并以独立人工标注或现有真值补充。若采用人工评测，执行前另交付完整盲评协议；本轮不要求用户评分。碰撞指标只有独立碰撞几何与 query GT 时才能加入，回波改善不外推为安全结论。
 
-这是**条件于 box 内存在回波的深度分类测度**；不是 semantic 类别分类，也不是 opacity、体密度、完整扫描 no-return 概率或 literal 最小交点。分母无支持时输出显式 `unsupported`，不能用数值 epsilon 伪造确定回波。保留所有 ray/Actor 的评价分母，unsupported 数量另报。若未来增加 no-return 头，需要真实 firing/mask 标签及独立任务说明，不能把 UNKNOWN 或正回波 cache 的空洞当真值。
+存在性以全部有效发射机会为分母；early/hit/late 以真实正回波 rays 为主分母，预测 miss 仍留在分母中。距离误差同时报告成功检出条件下的结果及包含漏检惩罚的完整 outcome score。不能通过增加无回波格子稀释 early，也不能通过少输出回波降低条件 MAE。固定范围、传感器分辨率和容差，在各方法之间共享。
 
-M49 的有限衰减恒等式直接继承：
+统计单位为 driving log/独立 scene，报告 paired effect、逐 log 分布和 log bootstrap CI；原始 rays/Actors 保留完整分母。主终点预定为 scene-level outcome score 与 hazard early/all-hit 的联合变化，并设置 geometry/cross-modal 非劣条件；数值容限与预算在 E1 后、候选首次 quality read 前固定。M39-only 不能重新作为完整任务的结束线。
 
-\[
-F_v(b)-F(b)=\frac{(1-v)r_j\,[F(b)-C_j(b)]}{1-(1-v)r_j},\qquad 0<v<1.
-\]
+### D. 新场景、跨传感器、跨几何来源
 
-它表明单个或一族成分降权是否减少 early 取决于相对 CDF，不能仅依据低 confidence 全局抑制 children。训练阶段可使用 target 边界；部署不读取 target-defined `b`。第一轮保留 M39 的固定核、离散网格与 median，不同时调尺度、bin、家族总质量和算子。
+训练/开发用两个基座的数据，冻结一个共享 EAS core 后在第三来源测零更新迁移。**原生 latent 维度和语义不同，不能直接说一个 projection head 自动通用。** 主迁移接口采用 canonical metric geometry、统一证据 schema 和同一个公共图像特征通道；特殊基座 token 可作为主实现增强臂，但其专属 projector 的训练成本与数据必须计入。
 
-这里有两项独立假设：**VGGT 能提供 producer 手工特征之外的有效证据；完整连续证据能在冲突、稀疏/遮挡条件下提供单标量没有的收益或可靠性信息。** 后者尚未成立，V7.2 W0–W4 必须作为反证约束，而非丢弃三态方向或预先认定它有收益。
+明确分三种结果：共享 adapter 直接迁移；每基座分别训练；允许 build-only TTA。第三来源上新训投影头、拟合 calibration 或调整阈值，都不算第一种。若增强臂依赖 VGGT token，而通用 core 通过共享图像编码器使用第三种几何，准确称“未见几何来源迁移”，不宣称任意未知 backbone 的 native feature 即插即用。
 
-尤其是 reader 仅消费 `m_O` 时，F/O/U 本身不增加该 reader 相对 scalar 的函数表达能力。可能的增量来自观测监督、跨帧信息和可靠性输出，必须用 T1 验证；不能把同一个 scalar 换成三个 logits 就宣称新的物理能力。
+目标是在 source 未见场景和至少一个跨传感器数据集上分别验证。两个开发基座加一个第三来源是本项目通用性假设所需的设计，不是顶会录用的机械数量门槛。训练随机性在关键最终配对上用多个 seed 报告，不把所有消融反复重跑；数据/容量曲线选择少量预先固定点。
 
-### 3.4 SE(3) 刚体轨迹等变性
+## 5. 数据与资源：为独立结论配置资源
 
-物理查询延用 canonical inverse query：
-
-\[
-Q_{i,t}(x)=Q_i(T_i(t)^{-1}x),\qquad Q_{gT}(gx)=Q_T(x).
-\]
-
-非各向同性表面应满足 `μ_world=Rμ+t`、`Σ_world=RΣRᵀ`。射线也做同一个刚体变换时，距离参数及回波分布不变；这是全局坐标变换等变性。只移动 Actor、固定传感器时，回波必须随物体相对位置改变，不能要求 invariant。图像渲染还依赖视角/光照，不宣称视觉网络天然具有精确 SE(3) 等变性。
-
-连续轨迹采用给定姿态间的 SO(3) 插值与平移插值，先复用现有 trajectory module。验证平移、旋转、两者组合及多 Actor 独立运动；真实时间插值帧可与留出观测比较。人工编辑轨迹主要验证解析一致性和状态归属，没有对应实测扫描时只报告合成干预，不冒充真实 counterfactual GT。
-
-## 4. 论文与开源迁移：围绕机制选择
-
-2026-09-07 已核对以下一手来源。论文方法、开源实现、本机运行、同协议增益分别登记；本轮未安装或运行新的 VGGT 模型。
-
-| 来源 | 经核对的相关机制 | EAS-VGGT 的具体迁移 | 对标边界 |
-|---|---|---|---|
-| [VGGT 官方模型](https://github.com/facebookresearch/vggt/blob/main/vggt/models/vggt.py) / [训练说明](https://github.com/facebookresearch/vggt/blob/main/training/README.md) | aggregator 与相机/深度/点图/跟踪 heads 分开；训练支持冻结 aggregator、梯度累积 | 冻结视觉特征 + 小型 EAS 融合/head；通过 projection/cache 降低重复 backbone 开销 | 不从“支持冻结”推断单卡成本或驾驶数据增益；E1 实测 |
-| [DynamicVGGT](https://arxiv.org/html/2603.08254v1) | 当前/未来 point maps、并行运动注意力、scene-flow 监督的 Gaussian velocity、分阶段学习 | 借鉴跨帧特征融合和分阶段保留几何先验；本项目通过已知 Actor canonical 关系聚合 | 原文强调点运动/4D 重建；EAS-VGGT 强调物理/外观归属与证据测度。完整权重及本机复现未核实，不放进必需队列 |
-| [Gau-Occ](https://arxiv.org/abs/2603.22852) | completion diffuser 初始化 Gaussian anchors，几何对齐的图像语义融合 | 只迁移“在 primitive 上采样并融合多相机特征”的思路；EAS 的 anchors 来自已有 compiler/M8 | occupancy 与条件回波任务不同；不继承先全局补全才能工作的依赖 |
-| [Street Gaussians 官方代码](https://github.com/zju3dv/street_gaussians) + 本地 M22–M28 | 动态对象/静态背景 Gaussian 渲染部件，项目已有实际接入 | 复用 rasterizer、对象关联和轨迹接口；外观有独立容量 | 原生配置和本项目物理隔离版本按输入/训练预算比较，不能把不同数据的论文 PSNR 横比 |
-
-本计划对 EAS-VGGT 的方法组合与实验安排是基于这些来源和本地结果提出的研究设计，并非外部论文已经证明的结论。
-
-## 5. 实验设计：逐项解释新增收益
-
-### 5.1 核心对照矩阵
-
-| 实验 | 必需对照 | 保持一致的量 | 回答的问题 / 主要输出 |
-|---|---|---|---|
-| T1：视觉证据增量 | M8+原 M39；M8+等容量 scalar；M8+VGGT scalar；M8+VGGT F/O/U；同融合结构的图像特征置乱控制 | 固定 M8 几何、bins、reader、build 信息、训练预算；scalar/F/O/U 参数量近似匹配并实报 | VGGT 是否提供有效信息；报告 early/hit、depth NLL/Brier、MAE 和支持分层；F/O/U 是否超出 scalar |
-| T2：物理学习增量 | 原 M8；VGGT 几何头+旧证据；固定 M8+新证据；VGGT 几何头+新证据；G0/G1 作为几何参照 | 同点数预算/采样规则、输入观测、监督；新几何输入旧 head 时特征 schema 和来源须一致 | geometry 与 evidence 的 2×2 归因，避免把密度或读出变化写成几何贡献；CD/F-score/frame-distance 与 literal 回波分表 |
-| T3：物理/外观解耦 | 共享物理/视觉载体并允许 RGB 改几何的受控基线；隔离但同容量；隔离且视觉独立扩容；原生 StreetGS 外观参考 | 从同一快照起步，匹配 RGB views/steps；同容量组匹配参数和 primitive 数，扩容成本另报 | 固定证据下增加 RGB steps、改变纹理/颜色、调整视觉容量时，物理状态/query 漂移与画质变化；报告 footprint PSNR/SSIM/LPIPS |
-| T4：刚体轨迹 | canonical inverse query；显式 world-space transform 的参考实现；可选逐点运动表达对照 | 同一物理状态、姿态和 rays；不用重新训练来验证坐标恒等式 | 全局坐标变换残差、pairwise rigid residual、轨迹插值留出误差、单 Actor 编辑对其他 owner 的影响 |
-| T5：场景与外域 | 冻结 EAS-VGGT 与对应 EAS/视觉基线；全部 Actors+独立背景 | 相同输入窗口/轨迹/视图/传感器；先 source 冻结，再外域评测 | 同一状态支持多帧图像与物理查询；以 logs 为独立单位的稳定性和跨传感器边界 |
-
-T1 的置乱控制在各自数据角色内用同一固定规则打乱 Actor–图像特征关联，训练和评测保持规则一致，绝不混入 final 角色。若图像模态在 matched cohort 中缺失，先报告缺失覆盖及原因，整体结果保留全部 eligible Actors 的 evidence-only fallback；额外的可用图像子集用于配对机制分析，不能静默删困难样本。
-
-除了 EAS 必需对照，保留 **VGGT 特征 + 常规 Gaussian/标量头** 的同输入同预算基线，用于判断 typed state/证据组合是否超过一般视觉特征收益。训练/监督完全不同的 DynamicVGGT、Gau-Occ、LiDAR4D 只能列 related-work/task comparison；有可用官方实现且能做公平比较时再增加完整复现，不能用其论文数值占据实测行。
-
-### 5.2 指标与晋级原则
-
-首轮主要物理终点固定为同几何 categorical 的 `hazard early` 与 `all hit`，同时完整报告 all/hazard/clear 三组。geometry 表使用 literal 算子，reader 表使用 categorical 算子，字段分开。NLL 下降不能替代 early/hit；UNKNOWN coverage 不能靠删除 Actor 获得。F/O/U 监督另报 soft-label CE/Brier 和按支持量/冲突程度的校准，不把回波 Brier 与证据 Brier 混成一个分数。
-
-开发晋级采用联合方向：相对对应 EAS 对照，hazard early 不增且 all hit 不降，至少一项改善；all/clear 不能隐藏实质退化。实质非劣容限、effect size 和固定迭代预算在 E1 数据清单完成后、E2 首次 quality read 前落入实验 config；不套用旧 CD 的 D1 选路门。独立确认使用 log-level 配对区间和逐 log 表；3/4 个日志只能支持有限确认，不能以数十万 rays 伪造大样本显著性。
-
-结构正确与科学收益分别判定：非干扰/SE(3) 恒等式通过只能证明系统行为；学习增益和视觉可用性还需 T1–T3。若 F/O/U 没有超出 scalar，保留这一负结果并缩小证据主张，再分析新的可辨别信息；若某个 head 失败，保留旧端点、定位失败并研究迁移，不把 EAS-VGGT 整体宣布完成。
-
-完整场景中不能直接取多个 Actor 条件 median 的最小值就声称得到了物理正确的全扫描概率分布。初版明确提供各 Actor 的条件 query，场景空间一致性用独立 deterministic surface baseline 检查；概率遮挡/no-return 合成有真实监督后单独建模，不作为本轮模型起步前置。
-
-## 6. 数据、I/O 与单卡推进
-
-复用现有 `ActorBundleV2` 的 target-free 边界、raw/processed source dispatch 和 data-role inventory。增加 `image_evidence` sidecar：sample/camera/timestamp、原始/缩放裁剪尺寸、内参、外参、Actor pose、有效投影掩码、backbone revision 与 feature schema。先按元数据列出实际 RGB 文件需求和缺失项；现有 LiDAR I/O 已完成不代表相机 I/O 已完成。
-
-同一输入窗口一次 VGGT forward，跨 Actor 复用；优先缓存投影采样后的 primitive features 和必要的时间/相机索引，而不是常驻所有全分辨率 dense tokens。冻结 backbone 缓存按 scene/window 顺序流式写入数据盘，FP16 保存、训练时分块读和预取。验证是否使用未来输入帧由任务定义决定：离线重建可使用声明的窗口，任何未来预测评价不能读取未来 RGB、LiDAR 或目标轨迹。
-
-当前历史数据角色不洗白：593 train / 66 legacy dev 属于已暴露机制数据；4 个新 dev logs 也已经用于 A1；3 个原 route-select logs 只提取 LiDAR、未读 quality；3 个 source-test candidates 尚未打开；本地 80 个 AV2 logs 已暴露，剩余候选不等于已准备好的 test。旧角色名称与 token 保持，E5 前建立新的用途映射并冻结，不为凑数量重分配已暴露数据。新 RGB/backbone 也纳入日志依赖与公开预训练数据来源审计；来源不明时明确限制独立性主张。
-
-RTX 3090 24GB 的起步预算为 4–8 张输入图像/窗口、逐窗口 backbone 推理、缓存后批量训练轻量 heads，参数随 E1 的显存/吞吐实测确定。记录实际 cgroup RAM、GPU peak、GPU utilization、samples/s 和 I/O wait；不能用宿主 `free` 代替容器配额。预算是起点，不宣称已经测通。按显存自适应 batch、AMP、gradient accumulation，尽量让 GPU 在工作；重 backbone、训练和渲染重任务串行，CPU 解码/下一批预取与 GPU 重叠。
-
-## 7. 可执行阶段与产物
-
-| ID / 状态 | 工作与直接接入点 | 交付 / 完成条件 |
+| 数据资产 | 用途 | 约束 |
 |---|---|---|
-| E0 `done` | 本次正结果审计、论文检索、路线重设；统一账本 `V71-F65` | 本计划、最新 status/failure/experiment/README；仅文档交付 |
-| E1 `pending`：`WS-V72-E1-VGGT-EVIDENCE-IO-01` | 核对 M8/M39 checkpoint 与 `worldsim_v71/authority_contract.py`；在新 `worldsim_v72/eas_vggt/` 接 VGGT producer 与 image sidecar | metadata 需求清单、实际 RGB 覆盖、build-only 特征缓存、小批量 forward、一次所有权/坐标检查、成本；不重跑整套历史 benchmark |
-| E2 `pending`：`WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01` | 复用 `run_worldsim_v71_m39_categorical_authority_composition.py` 的 reader 逻辑，新模块隔离实现融合和证据头；先 T1 后 T2 | EAS-VGGT 物理/证据 checkpoint，匹配简单解释的表格；训练完成不自动等于晋级 |
-| E3 `pending`：`WS-V72-E3-DECOUPLED-APPEARANCE-01` | 复用 M24–M27 rasterizer/视图与独立 appearance siblings；实现 T3 | 真正能渲染的双分支模型、干预前后物理不变证据、画质/容量/成本表；不以纯接口检查代替可用画质 |
-| E4 `pending`：`WS-V72-E4-RIGID-TRAJECTORY-01` | 复用 M22/M28 和现有 pose interpolation，完成 T4、至少一个多 Actor 场景组合 | 连续时间刚体编辑、图像与条件 query 演示、解析及真实留出结果分开；固定传感器时回波应正确变化 |
-| E5 `pending`：`WS-V72-E5-FROZEN-CONFIRMATION-01` | 冻结候选和协议后，以现有未读角色做有限 source 确认；再选择未暴露外域 logs | 同协议基线/消融、逐 log 稳定性、外域 trade-off、复现说明与论文图表；未完成项有明确状态和后续 |
+| 既有 nuScenes 593 train / 66 legacy dev 与 4 个已消费 dev logs | 继承端点、代码桥接、机制诊断 | 不因升级 backbone 或版本而变成独立测试 |
+| Waymo Perception 官方数据 | 默认主任务候选：联合 RGB、metric LiDAR、range-image/outcome 与动态对象 | E1 核实 firing/return/invalid 语义和所有历史依赖，固定独立 split；采用官方训练池的充分规模，而非限于本地现成几段 |
+| AV2 / 可合法恢复 firing 语义的其他传感器 | 外域几何/距离验证；有真实 outcome 时再做存在性验证 | 已暴露 80 个 AV2 logs 不洗白；positive-only 点云不能制造 no-return 标签 |
+| 受控合成场景 | 表面事件遮挡、无检出阻挡、SE(3)/双分支对应的解析实验 | 不冒充真实新视角扫描/碰撞真值 |
 
-E2/E3 可复用同一 feature cache；E4 的接口实现不必等待模型超过某个 CD 阈值，能够与学习阶段交错推进。旧 `decide_worldsim_v72_d1.py` 不再参与 E1–E5 决策；修复旧 A/B 决策器不作为新主线的前置任务。新模块路径均为计划，不能因本文列出名字就登记“已实现”。
+主数据目标为数百个独立训练场景，以及数十到上百个未见评测场景；最终规模由官方可用数据和 log 依赖审计确定，不在看到质量之后挑场景。若原 nuScenes 只剩 3 个候选日志，就保留为有限补充并扩展独立数据，不能把它写成充分主验证。未知公开预训练曝光单独报告，不能保证基础模型训练集与测试域绝对无交集。
 
-## 8. 失败继承与卡点处理
+existing LiDAR I/O、source dispatch、ActorBundleV2 和目标隔离继续复用。新增多相机 payload、标定/裁剪矩阵、原生 beam outcome、逐点时间/运动补偿和特征缓存；cache 只存合法输入，target mounts 分离。缺失字段先依据官方 schema 恢复，不能从“没有点”推断“发射且无回波”。GPU 推理/训练批处理与 CPU 解码预取并行，DDP/分片/cache 只优化吞吐，不改变数据和指标合同。
 
-| 已有记录 | 对新计划的实质约束 | 有机制差异的下一步 |
+容量顺序为：有足够局部三维/跨视图信息的结构化 adapter→必要的 PEFT/decoder 微调→有数据支持的全量微调。冻结基座是解释性起点，不是方法宣言；若最终用了微调，标题和成本报告同步，不能继续声称完全冻结。RGB 梯度仍不得越过物理所有权边界。无需为了参数数字从头重训 1B，也不为小于 2GB 把有效特征删掉。
+
+资源优先用于强基线收敛、独立训练/测试数据、必要容量、跨来源验证。报告 backbone 特征生成、离线训练、per-scene/TTA、联合推理、缓存/数据 I/O 五部分成本；adapter-only 显存不能写成全系统显存。当前 3090 可做起步工作，更大训练需要时按实际需求配置；实际训练资源在实施时按已明确的实验需求安排。
+
+## 6. 四组实验与既有任务 ID 的执行映射
+
+| 工作包 | 稳定任务 ID / 状态 | 完成产物与推进条件 |
 |---|---|---|
-| `V71-F23/F24`：可学习 field 补偿几何恶化、scale 膨胀 | 不能用 ray loss 收敛证明物理表面更好 | 先固定 M8 学证据，再单独开放物理头；保留原生几何与逐帧监督 |
-| `V71-F35/F36/F40/F41/F42`：证据/幅值捷径及归一化风险 | 联合 categorical NLL 或分族守恒本身不是解法 | 引入新的视觉观测信息并保留 scalar/等容量控制；首轮不重复家族权重修补 |
-| `V71-F47` + M49：降权也能增 early | confidence/visibility 衰减不能当安全后处理 | 固定测度、报告责任分解，训练/分析与推理所用信息分开 |
-| `V71-F43/F52`：跨域 early 失败、混算子字段 | 保留有效外域负结果；不重复错误基线比较 | operator 命名空间与新日志依赖隔离；后续真实同协议确认 |
-| `V71-F25/F28`：float32 世界坐标伪残差、漏冻子模型 | 不能只看 outer module 或 world-space cdist | inverse query + 显式参数所有权；一次有针对性的回归验证 |
-| M24–M27 / `V71-F10`：sidecar 不等于学习内生、视觉容量不足 | “接到 renderer”不能算完成；不强迫一个 primitive 集兼任两种职责 | 独立 appearance geometry/容量，matched-capacity 消融及真实渲染 |
-| V7.2 D0 W0–W4、density outcome note | 三态尚无稳定超 scalar 增益；密度混杂存在 | 同几何视觉证据实验、冲突/支持量分析和匹配密度几何表 |
-| `V71-F54/F60/F62`：来源分派、旧 sidecar 索引和缺 payload | 缺原始数据不等于模型失败 | 复用恢复映射，RGB 先按 metadata 明确需求；不默默 clip 或删 Actor |
-| `V71-F63/F64/F65`：A1 失败、缺实验误判、方向漂移 | 外部补全候选失败不关闭 EAS 主线；不能以排队更多外部模型替代问题定义 | 三机制为研究边界；缺失/工程阻塞/科学拒绝分开；按新证据做有依据恢复 |
+| A：缺口与数据协议 | `WS-V72-E1-VGGT-EVIDENCE-IO-01` / pending | 有效基座/输入能力、RGB/beam 数据合同、一次两基座分层诊断、独立 split 和指标冻结；不持续做重复 preflight |
+| B：同信息机制学习 | `WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01` / pending | 有容量的 adapter、完整 return outcome、同信息强基线和机制消融；不能只有 M39 条件结果 |
+| C：对应与动态应用 | `WS-V72-E3-DECOUPLED-APPEARANCE-01`、`WS-V72-E4-RIGID-TRAJECTORY-01` / pending | 有真实渲染、物理/外观对应和场景遮挡的 EAS，真实时间留出/解析干预分开；不以非干扰定理代替应用质量 |
+| D：冻结泛化与文稿 | `WS-V72-E5-FROZEN-CONFIRMATION-01` / pending | 同源未见场景、外域、第三几何来源零更新/重训/TTA 区分；全成本、公开复现及论文证据矩阵 |
 
-每个新的实质卡点：先查相关顶会论文、官方仓库/文档及有证据的 issue，记录“问题→来源→可迁移部件→当前约束→最小辨别实验→结果”；然后实施可行方案。VGGT 长窗口显存问题优先官方冻结/累积/分块；动态对齐问题优先 canonical 特征聚合与 DynamicVGGT 的时序学习思路；外观容量问题优先独立视觉表示；证据不增益先定位是否缺信息、来源错配或算子问题。已有精确根因可以复用，不机械重复搜索，不无限 sweep、不放宽旧阈值。
+E1 的数据物化、基座能力与初步诊断交错进行，E3/E4 接口可在 E2 训练时推进；不要等某个 CD 门槛才开始整个场景实现。每个实质卡点先查顶会/官方开源，再做针对当前失败的新机制或工程修复；已有精确问题复用已知解决方案，不无限扫参，也不因单候选失败提前关机。
 
-只有外部权限或确实新增资源才需要用户介入，其他可执行工作继续。只做与改动风险相称的验证：文档一致性检查一次；新接口最小 forward/梯度/坐标检查；学习阶段做有信息量的对照，避免不断审计却不进入实验。
+直接接入点：`motion_proj/worldsim_v71/authority_contract.py`；M8/M22/M25/M27/M39/M49 scripts；`motion_proj/worldsim_v72/data/`、`evaluation/`、`render/`。新的 `eas_vggt/` 模块尚未实现。旧 D1/A1、NKSR/LiDAR-RT 队列不恢复；神经 LiDAR 在新协议下作为竞争者独立运行，不充当 EAS 的方法实现。
 
-## 9. 本轮状态与整体完成的含义
+## 7. 失败继承、贡献判定与稿件结构
 
-本轮完成 E0：新计划与当前入口同步；未启动 EAS-VGGT 训练、未安装新 backbone、未读新的 target quality，也未触发 shutdown。旧正/负结果和 PDF 保存原样；`paper/` 为 V7.1 EAS 证据稿，`paper_v72/` 为旧外部补全路线技术报告，两者都不是已完成的 EAS-VGGT 论文。
+| 相关记录 | 防止重复的要求 |
+|---|---|
+| `V71-F20`、`V71-F22`、`V71-F37`、`V71-F38`、`V71-F39` | 同时报告 support coverage 和 event localization；不能仅换成小 support 或重新累积弥散 density |
+| `V71-F23`、`V71-F24` | 物理表面与 reader 两表分开；原生 3D 监督保留，拒绝 decoder 补偿/scale 膨胀解释 |
+| `V71-F40`、`V71-F41`、`V71-F42`、`V71-F47` 与 M49 | 质量守恒、proper loss、衰减和单调 CDF 都不是性能证明；新增视觉/观测信息与分层收益必须实测 |
+| `V71-F25`、`V71-F28`、M24–M28 | 正确 inverse query 和参数归属；同时补上前向对应与画质，不能只给接口残差 |
+| `V71-F43`、`V71-F52`、D0 W0–W4 | 外域风险和 scalar 替代解释保留；严格区分 literal/categorical/scene outcome 字段 |
+| `V71-F54`、`V71-F60`、`V71-F62` | 数据来源/索引/缺 payload 分开处理；无点不等于 no-return |
+| `V71-F63`、`V71-F64`、`V71-F65` | A1 失败与缺比较不影响 EAS 研究对象；补齐完整证据不等于重新选外部完整模型 |
+| `V71-F66` | 上一版条件回波、接口非干扰和单来源小规模验证不足以支持通用传感器适配；风险需 A–D 实验解除 |
 
-下一实质工作为 E1 的 RGB/projection/feature-cache 接入，然后 E2 同几何视觉证据学习。EAS-VGGT 的代码、三机制实验、场景应用、独立确认及文档交付全部处理完才复核用户的整体关机条件；计划写完、一次候选失败或某个部分完成都不满足该条件。
+可写成主贡献的最低逻辑是：两个有效基座上有排除转换误差后的缺口；同信息基线无法解释主要增益；改善落在声称的表面/观测对象上；物理与外观没有分裂；独立数据与跨来源证据支持声明范围。只提高 median 就收窄为回波建模，不能写几何修复；各基座分别训练有效就写架构可移植，不能写零更新插件；若 scalar 已解释收益，就报告这一事实并继续查找有信息增量的机制。
+
+建议主文围绕四组证据安排：Fig.1 同一场景的视觉先验、测量冲突与 EAS；Table 1 两基座分层诊断；Table 2 同信息主比较；Table 3 几何/传感器分表及关键消融；Fig.2 物理—外观对应与轨迹干预；Table 4 新场景/跨传感器/第三来源；成本与容量表。数学部分集中于状态归属、表面测度的离散化条件、有序返回概率及 SE(3) 组合，不把已有恒等式包装为全部创新。
+
+本轮 E0 调研融合完成；E1–E5 仍 pending，没有新实验、checkpoint、target quality read 或 shutdown。`paper/`、`paper_v72/` 的既有 PDF 保留为历史证据，不能据本版研究假设改成成功结果。当前计划同路径更新，旧版本由 Git `7538f38f` 追溯；全部研究与交付完成后才复核用户的关机条件。
