@@ -1,5 +1,19 @@
 # V7.3 CAPA基线适配
 
+## 输入条件构建结果
+
+CAPA build条件桥已在全部31个现有窗口实际执行完成：run `WS-V73-M2-CAPA-DATA-01/20260907T194500Z__surround-build-conditions-r1`，codebbd438fa，CPU构建3.537s。744视图共有2516975个有效稀疏轴向深度像素（fit1993519/dev523456），无零条件视图；该数量按视图计数，同一物理点可投影到多个视图，不是独立3D点数。只保留每像素最近的正测量，未读取额外时刻标签，未重复保存RGB或稠密条件张量。记录=`docs/autoresearch/worldsim_v73/coverage/capa_build_conditions_r1.json`。
+
+这只确认实际数据桥已执行；CAPA权重载入、LoRA优化及物理评价尚未运行，不能记成完成基线。后续运行入口与协议差异见 `docs/WORLDSIM_V7_3_CAPA_BASELINE.md`。完整队列r5 PID18843已到epoch3，LiDAR-only r6 PID20389已到epoch5，二者保持原配置，峰值分别10.196/0.181GiB，磁盘约130GiB可用，无OOM。尚未完成的正常长训练继续运行，不因阶段结束关机。
+
+下一独立数据工作：只在fit日志检查同一已知Actor整个可用轨迹内是否还有额外LiDAR记录，判断能否为主模型与AdaPoinTr提供更充分的真实训练目标。目前r4/r5的额外目标只含短窗口内2个未输入时刻；官方PCN使用完整表面目标，不能把稀疏目标强行解释为完整GT。此检查依据已有build Actor身份、只读轨迹和载荷可用性，不依据模型分数；dev不扩展训练标签，当前两条训练不改输入或目标。发现资源/数据缺口时再先检索官方优秀方案并迁移，不从短窗监督负结果外推整个路线。
+
+failure_ledger_delta=update baseline data preparation + V73-F05；F01/F02/F03/F04/F05继续active，F06直接数据配置缓解，下一编号V73-F07。整个V7.3未完成，shutdown=false。
+
+---
+
+# V7.3 CAPA基线适配
+
 LiDAR-only完整队列r6已启动（code98d9fa32，PID20389，run `20260907T193500Z__population-lidar-only-extra-time-s7304-r6`），通过初始表面评价后进入真实训练。观测query梯度非零，native组为0，峰值0.181GiB；没有视觉前缀或DPT参与。r5 PID18843同时正常运行，GPU进程占用约12.1GiB+r6约0.53GiB，当前无OOM或资源不足。两条run的输入/标签协议保持登记配置，等待完整结果再比较。
 
 CAPA基线桥接代码已准备，模型优化尚未启动/验证。入口=`scripts/evaluate_worldsim_v73_capa.py`，数据桥=`motion_proj/worldsim_v73/capa_inputs.py`。直接调用本地官方CAPAProtocol和VGGT LoRA配置，不复制v72含checksum/固定旧split的包装器；依赖peft0.19.1、omegaconf2.3.1、colorlog6.10.1、huggingface_hub0.36.2及原始VGGT本地权重均已在motionproj环境，不需要新环境、下载或升级Torch。
