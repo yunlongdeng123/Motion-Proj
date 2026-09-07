@@ -29,6 +29,9 @@ def main():
     parser.add_argument('--mode',choices=['joint','pointwise','lidar_only'],default='joint')
     parser.add_argument('--completion-init',choices=['native_surface','lidar_surface'],default='native_surface')
     parser.add_argument('--free-weight',type=float,default=.5)
+    parser.add_argument('--free-mode',choices=['range','beam_tube'],default='range')
+    parser.add_argument('--free-width-m',type=float,default=.03)
+    parser.add_argument('--free-resolution',type=int,default=32)
     parser.add_argument('--native-data-weight',type=float,default=0.)
     args=parser.parse_args()
     task='WS-V73-M2-GLOBAL-ACTOR-01'
@@ -71,6 +74,10 @@ def main():
         del scenes
         torch.manual_seed(7304)
         decoder=ActorSpatialQueryDecoder().cuda()
+        tube_free=None
+        if args.free_mode=='beam_tube':
+            from motion_proj.worldsim_v73.surface_visibility import BeamTubeFreeSpaceLoss
+            tube_free=BeamTubeFreeSpaceLoss(width_m=args.free_width_m,resolution=args.free_resolution)
         parameters=[*(head.parameters() if head is not None else []),*decoder.parameters()]
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         fit=[c for c in cases if c['metadata']['role']=='fit']
@@ -151,8 +158,16 @@ def main():
                 origins=torch.cat([r['origins_actor_m'] for r in build]).cuda()
                 directions=torch.cat([r['directions_actor'] for r in build]).cuda()
                 ids=torch.randperm(len(ranges),device='cuda')[:512]
-                depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
-                free=direct_free_space_loss(depth,ranges[ids])
+                if tube_free is None:
+                    depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
+                    free=direct_free_space_loss(depth,ranges[ids])
+                    physical_free=free
+                else:
+                    free=tube_free(vertices,faces,origins[ids],directions[ids],ranges[ids])
+                    # 硬首交点只作同语义读数；有限宽度覆盖比例不能冒充米制侵入。
+                    with torch.no_grad():
+                        depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
+                        physical_free=direct_free_space_loss(depth,ranges[ids])
                 envelope=(vertices.abs()-case['size_lwh_m'].cuda()/2-.25).clamp_min(0).square().mean()
                 loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss
                 loss.backward()
@@ -161,7 +176,9 @@ def main():
                 output_grad=sum(p.grad.norm().item() for p in head.scratch.output_conv2.parameters() if p.grad is not None) if head is not None else None
                 optimizer.step()
                 row={'epoch':epoch+1,'scene':case['metadata']['scene'],'owner':case['metadata']['owner'],
-                    'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':free.item(),
+                    'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':physical_free.item(),
+                    'free_objective':free.item(),'free_mode':args.free_mode,
+                    'free_objective_unit':'m' if tube_free is None else 'coverage_fraction',
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
                     'native_candidates':support.get('native_candidates'),
@@ -172,7 +189,7 @@ def main():
                 with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
                 save('status.json',{'status':'running','phase':'shared_train','elapsed_s':time.monotonic()-started,**row})
                 print(json.dumps(row),flush=True)
-                del prediction,vertices,faces,loss,coverage,free,envelope,nearest,depth,points,chosen,origins,directions,ranges,native_loss
+                del prediction,vertices,faces,loss,coverage,free,physical_free,envelope,nearest,depth,points,chosen,origins,directions,ranges,native_loss
             checkpoint={'depth_head':head.state_dict() if head is not None else None,'query_decoder':decoder.state_dict(),
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
