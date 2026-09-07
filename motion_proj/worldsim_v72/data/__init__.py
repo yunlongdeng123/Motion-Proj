@@ -7,6 +7,11 @@ from motion_proj.worldsim_v72.data.schema import (
     RayTargets,
     SurfaceTargets,
 )
+from motion_proj.worldsim_v72.data.camera_schema import (
+    CAMERA_WINDOW_SCHEMA_VERSION,
+    CameraFramePayload,
+    CameraWindow,
+)
 
 __all__ = [
     "ACTOR_BUNDLE_SCHEMA_VERSION",
@@ -14,4 +19,7 @@ __all__ = [
     "QueryRayBatch",
     "RayTargets",
     "SurfaceTargets",
+    "CAMERA_WINDOW_SCHEMA_VERSION",
+    "CameraFramePayload",
+    "CameraWindow",
 ]
