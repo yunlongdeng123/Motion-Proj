@@ -8,6 +8,8 @@
 - E1–E5=`pending`；新模块、相机缓存与三机制实验均未运行。旧 LiDAR I/O 和 dev bundle 继续有效；source/external final read=false，new target quality read=false，shutdown=false。
 - 本轮只做文档/路径/账本引用一致性与 Git diff 检查，不重复历史 GPU 验证。下一任务=`WS-V72-E1-VGGT-EVIDENCE-IO-01`。
 
+- 交付补记：`7538f38f` 首次 direct push 发生 `GnuTLS recv error (-110)`；查 Git 官方 `http.proxy/http.version` 文档并读取当前 LocalTUN session 后，单命令代理/HTTP/1.1 push 成功。failure_ledger_delta 追加 `V7-F05_recurrence_resolved`，不分配新科学 failure ID；数据/模型/全局配置未改变。
+
 以下注册表保留历史事实；旧计划中的后续任务以当前 status 文首为准。
 
 ## WS-V72-R0-RESEARCH-PLAN-01 — done，仅研究计划（2026-09-07）

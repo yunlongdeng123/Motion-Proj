@@ -2819,6 +2819,8 @@ post-hoc filter、selector或阈值。该结构可证`dQ_phy/dV=0`与刚体组�
 
 ### V7-F05 — GitHub 直连 git operations 挂起
 
+- 2026-09-07 复发与恢复：EAS-VGGT 文档提交 `7538f38f` 的 direct push 以 `GnuTLS recv error (-110)` 退出。核对 [Git 官方代理/HTTP 配置](https://git-scm.com/docs/git-config) 后，读取当前 LocalTUN session，并仅为该命令设置代理和 HTTP/1.1；同一提交普通 push 成功，状态=`resolved`。这是既有出口传输问题的恢复，未改写历史、关闭 TLS 校验、修改全局 Git 配置或读取科学数据；task=`WS-V72-E0-EAS-VGGT-REPLAN-01`，不新增 failure ID。
+
 - symptom：提交 `e985e59` 后，远端 `git push` 与 `git ls-remote` 均长时间无返回；没有改写 commit、branch 或工作树。
 - diagnosis：GitHub 官方状态页显示 Git Operations operational；故障限于当前 AutoDL 出口路由，而非仓库或 GitHub 服务端事故。
 - resolution：终止精确识别的悬挂 git 进程，读取当前 LocalTUN session 的 remote proxy 后仅为该次 git command 设置
