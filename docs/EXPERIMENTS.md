@@ -1,5 +1,17 @@
 # Experiments
 
+## V7.3 表面支持缓解侵入，进入环视与动态覆盖（2026-09-08）
+
+表面种子两候选=`done`（code26646089，batch20260907T161000Z__surface-seeds）。native种子hit76.51%/early2.87%/miss18.05%/free0.0325m；LiDAR种子hit80.41%/early4.31%/miss14.57%/free0.0461m。相较volume joint free0.1333m，表面支持初始化显著缓解侵入，但两者都未支配LiDAR PCA强基线，V73-F02仍active，failure_ledger_delta=update V73-F02。native depth输出直接收到非零几何梯度，峰值5.343GiB。
+
+覆盖盘点确认机制Actor为7.48m处静止truck；环视输入把可观测Actor从238扩至404，速度>2m/s从41扩至71，31场景各24视图完整。六相机动态dev仍只有2日志；下一步必须进入动态/稀疏和更多有效窗口，不能停留于密集静止Actor。当前归属为box代理而非逐点实例真值；历史actor_count为整个scene计数，不能直接作短窗口覆盖率分母。新入口已补充scope/window_actor_count/LiDAR支持数，运行中r3按原code解释。
+
+结果=`docs/WORLDSIM_V7_3_M2_SEED_RESULTS.md`；原始summary=`docs/autoresearch/worldsim_v73/m2/seeds/`；build/元数据覆盖清单=`docs/autoresearch/worldsim_v73/coverage/`。M1环视r3 PID9615 running，24view前缀完成、训练已开始，日志=`/root/autodl-tmp/controller_logs/v73_m1_surround_r3.log`；不中断或重启。当前显存/内存/磁盘足够，shutdown=false。
+
+下一任务：共享跨Actor查询训练及同信息控制，按build观测/只读轨迹组织运动和稀疏队列；同步检验局部free几何方向和连贯性。已先查DRC CVPR2017与nvdiffrast可见性梯度，range深度罚与退出射线管的几何方向可能不同，尚属待测机制。event与场景拼接仍pending，四风险及F05未解除；下一编号V73-F06。无需用户确认，自动研究继续。
+
+---
+
 ## V7.3 扩大环视原生几何训练（2026-09-08）
 
 M2表面种子批次PID9230 running（native先行、lidar随后），native depth输出已获得非零梯度，12view当前峰值5.343GiB；完整曲面结果尚未完成。

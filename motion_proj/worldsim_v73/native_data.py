@@ -75,7 +75,14 @@ def load_scene_inputs(config, progress):
         record = {'scene_id': scene, 'log_id': scene_info['log_token'], 'role': role,
                   'requested_times': config['build_times_per_scene'], 'available_times': len(available),
                   'actor_count': sum(instances.get(t, '') in config['rigid_categories']
-                                     for t in tracks_by_scene[scene_info['token']]), 'views': []}
+                                     for t in tracks_by_scene[scene_info['token']]), 'views': [],
+                  'actor_count_scope':'all annotated rigid tracks in scene; not a window-visible denominator',
+                  'point_ownership':'annotation box +0.1m, overlapping membership excluded; proxy, not instance segmentation'}
+        build_stamps=[int(sensor_rows[-1]['timestamp']) for _,sensor_rows in available]
+        record['window_actor_count']=sum(instances.get(track,'') in config['rigid_categories'] and
+            any(interpolate_pose(trajectory,stamp) is not None for stamp in build_stamps)
+            for track,trajectory in tracks_by_scene[scene_info['token']].items())
+        lidar_supported_actors=set()
         if not available:
             scenes.append(record)
             progress({'phase':'data', 'scene':scene, 'views':0})
@@ -99,6 +106,8 @@ def load_scene_inputs(config, progress):
                 owners[assign] = track
                 canonical[assign] = local[assign]
                 owners[overlap] = 'ambiguous'
+            lidar_supported_actors.update(o for o in np.unique(owners)
+                                          if instances.get(o,'') in config['rigid_categories'])
             for channel, camera in zip(config['camera_channels'], sensor_rows[:-1]):
                 calibration = index.calibrated[camera['calibrated_sensor_token']]
                 ego = index.ego_poses[camera['ego_pose_token']]
@@ -144,6 +153,7 @@ def load_scene_inputs(config, progress):
                     'sample_id':sample['token'], 'camera_id':channel, 'camera_time_us':int(camera['timestamp']),
                     'lidar_time_us':int(lidar_row['timestamp']), 'image_path':str(index.dataset_root/camera['filename'])})
         record['observed_actor_count'] = len({o for v in record['views'] for o, m in zip(v['owners'],v['actor_mask']) if m})
+        record['lidar_supported_actor_count']=len(lidar_supported_actors)
         scenes.append(record)
         progress({'phase':'data', 'scene':scene, 'views':len(record['views']), 'actors':record['observed_actor_count']})
     return scenes

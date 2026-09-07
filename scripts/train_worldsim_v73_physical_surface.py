@@ -109,6 +109,7 @@ def main():
         save('cohort.json',{'scene':args.scene,'owner':owner,
             'frames':[{k:v for k,v in r.items() if not isinstance(v,torch.Tensor)} for r in rays],
             'scan_time_boundary':'single scan timestamp; no per-point time available',
+            'point_ownership':'annotation box +0.1m with overlap exclusion, not per-point instance ground truth',
             'free_domain':'all original first-return beams intersecting known box +0.5m; behind first hit unknown'})
         build_rays=[r for r in rays if r['role']=='build']
         build=torch.unique(torch.cat([r['points_actor_m'][r['positive_actor']] for r in build_rays]),dim=0).cuda()
