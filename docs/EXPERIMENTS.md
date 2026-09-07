@@ -1,5 +1,17 @@
 # Experiments
 
+## V7.3 米制射线管解析结果与完整队列进度（2026-09-08）
+
+米制射线管解析r2完成：run `WS-V73-M3-FREE-VISIBILITY-01/20260907T191000Z__analytic-severity-r2`，codee1d328f8，1.031s，峰值0.0002GiB。5m平面片的几何coverage同为0.839767时，首回波20m得到tube intrusion12.428555m，首回波6m得到0.671814m，分别符合coverage×14.8m和coverage×0.8m；横向平移梯度分别−86.7176和−4.68744，轴向梯度均−0.839767。原硬中心束只有轴向梯度约−1。重复相同表面结果相同；首回波前无冲突及管外时均为0。这说明同一几何代理在该解析配置中保留侵入严重度和轮廓梯度，不证明真实数据提升。
+
+证据=`docs/autoresearch/worldsim_v73/m3/free_severity_analytic_r2.json`；设计更新=`docs/WORLDSIM_V7_3_FREE_VISIBILITY_DESIGN.md`。无支持区域仍无此项梯度，必须依靠几何coverage/native数据通路恢复支持，不能把它写成已解决F03或首事件似然。3cm有限宽度、离散像素和局部AA仍有代理偏差，未来只在固定架构/标签下单独比较。
+
+完整队列r5 PID18843正常推进：code8831def5，已完成489对象的LiDAR PCA初始基线（`lidar_baseline.json`已写出），正在原生联合模型的训练前评价；共享744冻结前缀，观测RSS33.4GiB。run `20260907T190000Z__population-shared-native-extra-time-s7304-r5`，日志 `/root/autodl-tmp/controller_logs/v73_population_joint_r5.log`。它仍是已登记的range free、371fit Actor、30epochs/11130更新；本轮新米制射线管代码不会修改它已加载的程序。等待其实际训练/summary，正常作业不重复启动、不提前终止。完整队列训练后再用同信息pointwise/LiDAR-only与原生融合比较；场景组合和新日志确认仍未完成。
+
+failure_ledger_delta=update V73-F02（解析代理证据，不是实测缓解）；F01/F03/F04/F05仍active，F06仅当前直接数据配置缓解，下一编号V73-F07。没有资源不足或不可抗力，shutdown=false，整个研究继续。
+
+---
+
 ## V7.3 完整队列运行与米制射线管候选（2026-09-08）
 
 完整队列r5已启动：code8831def5，PID18843，run `WS-V73-M2-GLOBAL-ACTOR-01/20260907T190000Z__population-shared-native-extra-time-s7304-r5`，日志 `/root/autodl-tmp/controller_logs/v73_population_joint_r5.log`。载入完成，371fit/67dev可输入Actor、51无输入对象均在队列，744共享冻结视图前缀，观测RSS约32.9GiB；正在真实训练前表面评价。保持已登记的range free/额外fit时刻标签/30epoch配置不变。
