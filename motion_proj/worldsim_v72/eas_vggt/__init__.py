@@ -4,5 +4,14 @@ from motion_proj.worldsim_v72.eas_vggt.types import (
     BACKBONE_GEOMETRY_SCHEMA_VERSION,
     BackboneGeometry,
 )
+from motion_proj.worldsim_v72.eas_vggt.ordered_returns import (
+    OrderedReturnDistribution,
+    ordered_return_distribution,
+)
 
-__all__ = ["BACKBONE_GEOMETRY_SCHEMA_VERSION", "BackboneGeometry"]
+__all__ = [
+    "BACKBONE_GEOMETRY_SCHEMA_VERSION",
+    "BackboneGeometry",
+    "OrderedReturnDistribution",
+    "ordered_return_distribution",
+]
