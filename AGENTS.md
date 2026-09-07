@@ -10,7 +10,7 @@
 
 ## 当前覆盖：WorldSim V7.3（2026-09-07）
 
-当前执行以 `docs/RESEARCH_STATUS.md` 文首与 `docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` revision 2 为准。在由 v72 最终状态派生的 `research/worldsim-v7.3-geometric-adaptation` 上持续推进原生几何解码适配与空间查询，不恢复冻结最终特征小外挂主线。每个里程碑同步三本研究台账并及时 push。
+当前执行以 `docs/RESEARCH_STATUS.md` 文首与 `docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` revision 3 为准。在由 v72 最终状态派生的 `research/worldsim-v7.3-geometric-adaptation` 上持续推进原生几何解码适配与空间查询，不恢复冻结最终特征小外挂主线。每个里程碑同步三本研究台账并及时 push。
 
 用户明确禁止新增哈希、校验和、指纹和过度校验/门控；以下历史协议中的相关要求不适用于 V7.3。保留 run ID、config、代码提交引用、指标、checkpoint 与证据路径即可。当前容器实际内存配额 90 GiB、CPU 配额 14 核，宿主总内存不能当容器可用资源。只有资源不足等不可抗力才暂停；按用户要求先保存/push 状态、确认没有研究/数据任务运行后 shutdown，再提示加卡。旧“全部完成才关机”表述不覆盖此资源出口。
 

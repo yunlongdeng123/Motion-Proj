@@ -2,6 +2,8 @@
 
 日期：2026-09-07。性质：研究决策与方法探索计划，不是已完成实验，也不是固定工程排期。
 
+修订 3（2026-09-08）：第14节纳入共享训练中发现的预测支持逃避；保留原生几何真实数据梯度，避免把fallback增多写成重建成功。四风险约束继续适用，无新增门控。
+
 修订 2（2026-09-07）：纳入用户四项风险。第 13 节是当前实现约束，分别细化第 3、5、7、10 节，不新增研究晋级门控。分支已由 V7.2 最终提交 `23a67069` 派生为 `research/worldsim-v7.3-geometric-adaptation`，沿用该分支继续研究。
 
 ## 1. 方向与判断边界
@@ -308,3 +310,13 @@ M1 为认真训练的原生 DPT + 鲁棒米制对齐与规范融合；M2 才判�
 - LiDAR4D：https://github.com/ispc-lab/LiDAR4D
 - LiDAR-RT：https://github.com/zju3dv/LiDAR-RT
 - PEFT 官方说明：https://huggingface.co/docs/peft/en/package_reference/lora
+
+## 14. 原生支持的恢复梯度（revision 3）
+
+共享训练r1初始25/25 Actor有原生深度候选，epoch3的20次fit更新中16次因native预测没有框内候选而回退LiDAR。参见V73-F06与当前台账；这是训练中的实测风险，不是对所有PEFT方法的结论。
+
+预测支持选择、几何适配和自由空间目标不能形成自我关闭通道：归属框和fallback用于正确组织观测，但不能成为原生解码器唯一的几何梯度入口。保留从build侧已知Actor的传感器测量，按正确时刻/标定直接监督原生深度或点图的路径。即使当前没有预测支持落在Actor域内，原生输出仍能收到返回物理表面的梯度。此项并非对冻结输出的蒸馏，也不限制有效几何修复。
+
+先以当前build点的米制轴向Huber作为与coverage/free同训的控制实验，其目标是区分支持逃避与真实表面改善。后续event只处理终止分布和观测顺序，不能取代上述缺失支持恢复路径；置信度和推理fallback不得屏蔽几何评价。空候选和重复种子数量须作为支持事实报告，不当成独立观测量。
+
+依据：[CAPA](https://arxiv.org/html/2602.14751v1)以稀疏测量直接驱动适配；[VGGT训练](https://raw.githubusercontent.com/facebookresearch/vggt/main/training/README.md)提供冻结聚合器/训练原生几何头的实现。这里只有方法思想迁移，不将当前共享训练称为CAPA复现或其同预算胜负。

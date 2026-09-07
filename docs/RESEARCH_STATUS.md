@@ -1,5 +1,19 @@
 # Research Status
 
+## V7.3 共享训练暴露原生支持逃避通道（2026-09-08）
+
+共享跨Actor r1已真实训练（code8e175195，PID12315，run `20260907T165500Z__surround-shared-native-s7304-r1`），20fit/5development日志，输入准备25/25ready。上下文仍为六相机24view；Actor轨迹可插值的实际投影视图7–24，完整报告，未用预测质量剔除对象。资源实测峰值9.825GiB、RSS约26.1GiB，无OOM，无需关机。
+
+新增 **V73-F06：预测支持筛选导致原生通路退化，active**。初始化25/25 Actor均有native表面候选，r1 epoch1/2/3的LiDAR fallback分别2/20、11/20、16/20次；对应depth最终输出非零梯度18/20、9/20、4/20次。证据=`docs/autoresearch/worldsim_v73/m2/global/r1_support_interim.json`。当前还在30epoch运行，不冒充最终结论；features路径仍可能收到梯度，不能写成全部视觉梯度为零。
+
+代码归因：`native_surface_seeds`按当前预测深度反投影后的box归属选点，选空时回退LiDAR。coverage/free仅作用最终曲面；一旦选空，原生最终depth参数不再直接参与表面位置损失。原生支持移出归属域可以伴随free下降，形成无需opacity的隐藏逃避通道。现有证据足以标记机制风险，尚不能区分free、coverage与共享优化各自的因果占比。该风险细化F02/F03，不能外推视觉几何路线失败。
+
+先核对[CAPA原论文](https://arxiv.org/html/2602.14751v1)的稀疏测量直接驱动适配，以及[VGGT官方训练](https://raw.githubusercontent.com/facebookresearch/vggt/main/training/README.md)的原生几何头训练。迁移为一个受控候选：保留相同初始化、数据、架构、lr、seed7304、30epoch和free目标，增加当前build Actor在正确相机像素上的米制轴向Huber(beta0.2，weight1.0)。该损失使用真实build LiDAR、标定与只读轨迹，绕过预测框内选点，因此选空时仍可恢复native depth；不蒸馏旧深度，不加入零位移先验，不改轨迹或放宽归属框。
+
+下一run `20260907T171500Z__surround-shared-native-data-s7304-r2`，参数`--native-data-weight 1`，待r1完成后串行启动。默认weight0保留r1方法可复现。将报告native支持/fallback、depth数据项与输出梯度、同一硬曲面指标；保留无视觉/无对应对象的LiDAR路径。不能以减少fallback代替表面真实改善。最终event和背景组合尚未完成，V7.3继续；failure_ledger_delta=add V73-F06，下一编号V73-F07。
+
+---
+
 ## V7.3 环视原生结果与跨Actor共享训练（2026-09-08）
 
 M1六相机r3已完成（code cf039715，run `20260907T161500Z__native-dpt-surround25-dev6-s7301-r3`）：25fit/6dev场景，每窗口4时刻×6相机=24views，60epochs/1500更新，2287.82s，原生DPT 32,654,562参数。project最大变化0.004401，前缀峰值约5.510GiB，训练峰值1.350GiB，RSS9.853GiB。

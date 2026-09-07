@@ -13,6 +13,7 @@ import torch
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT)); sys.path.insert(0,str(ROOT/'scripts'))
 from motion_proj.worldsim_v73.native_pyramid import NativeGeometryPyramid
+from motion_proj.worldsim_v73.native_data import sample_depth
 from motion_proj.worldsim_v73.spatial_queries import ActorSpatialQueryDecoder
 from motion_proj.worldsim_v73.surface_seeds import farthest_indices,native_surface_seeds
 from motion_proj.worldsim_v73.surface_readout import closest_surface_points,first_triangle_intersection,direct_free_space_loss
@@ -28,6 +29,7 @@ def main():
     parser.add_argument('--mode',choices=['joint','pointwise','lidar_only'],default='joint')
     parser.add_argument('--completion-init',choices=['native_surface','lidar_surface'],default='native_surface')
     parser.add_argument('--free-weight',type=float,default=.5)
+    parser.add_argument('--native-data-weight',type=float,default=0.)
     args=parser.parse_args()
     task='WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
@@ -43,7 +45,8 @@ def main():
         'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
         'shared_parameters':'native DPT and query decoder across fit logs; no development gradient or optimizer update',
         'frozen_prefix':'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted',
-        'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05']})
+        'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
+        'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
     save('status.json',{'status':'running','phase':'load_contexts'})
     try:
         index=json.loads((args.actor_data/'index.json').read_text())
@@ -59,6 +62,12 @@ def main():
                 key=case['metadata']['owner']; scene=scenes[case['metadata']['scene']]
                 pyramid=NativeGeometryPyramid(args.native_run,scene,case['view_indices'],head=head,token_device='cpu')
                 head=pyramid.head; pyramids[key]=pyramid
+                observations=[]
+                for i in case['view_indices']:
+                    view=scene['views'][i]
+                    owned=torch.tensor([owner==key for owner in view['owners']],dtype=torch.bool)
+                    observations.append({'uv':view['uv'][owned],'z_m':view['z_m'][owned]})
+                case['native_observations']=observations
         del scenes
         torch.manual_seed(7304)
         decoder=ActorSpatialQueryDecoder().cuda()
@@ -73,18 +82,34 @@ def main():
         def predict(case):
             points=case['points_actor_m'].cuda(); size=case['size_lwh_m'].cuda()
             matrices=case['camera_from_actor'].cuda(); calibration=case['intrinsics'].cuda()
-            if args.completion_init=='native_surface':
+            depth=None
+            if head is not None and (args.completion_init=='native_surface' or args.native_data_weight>0):
                 features,depth=pyramids[case['metadata']['owner']](include_depth=True)
+            else:
+                features=pyramids[case['metadata']['owner']]() if head is not None else None
+            if args.completion_init=='native_surface':
                 seeds,support=native_surface_seeds(depth,scales[case['metadata']['scene']],matrices,calibration,
                                                     size,points,len(decoder.coarse))
             else:
-                features=pyramids[case['metadata']['owner']]() if head is not None else None
                 seeds=case['lidar_seed'].cuda(); support={'lidar_fallback':False,'initialization':'lidar_surface'}
             with torch.autocast('cuda',dtype=torch.bfloat16):
                 result=decoder(points,size,features,matrices,calibration,case['image_hw'],case['camera_ids'].cuda(),
                     case['time_offsets_s'].cuda(),use_spatial=args.mode!='pointwise',use_visual=args.mode!='lidar_only',
                     completion_seeds=seeds)
-            return result,support
+            # 数据梯度不经过预测框内候选筛选，候选消失时仍可拉回原生几何。
+            native_loss=points.sum()*0
+            native_count=0
+            if depth is not None and args.native_data_weight>0:
+                terms=[]
+                for image,observation in zip(depth,case['native_observations']):
+                    if not len(observation['uv']): continue
+                    predicted=sample_depth(image,observation['uv'].cuda())*scales[case['metadata']['scene']]
+                    target=observation['z_m'].cuda()
+                    terms.append(torch.nn.functional.smooth_l1_loss(predicted,target,beta=.2,reduction='sum'))
+                    native_count+=len(target)
+                if terms: native_loss=torch.stack(terms).sum()/native_count
+            support['native_observed_points']=native_count
+            return result,support,native_loss
 
         @torch.no_grad()
         def evaluate(tag,baseline=False):
@@ -94,7 +119,8 @@ def main():
                     surface=lidar_patches(case['points_actor_m'].cuda(),decoder)
                     support={}
                 else:
-                    surface,support=predict(case)
+                    surface,support,native_loss=predict(case)
+                    support['native_sensor_huber_m']=native_loss.item()
                 metrics=evaluate_actor_surface(surface,case['rays'])
                 rows.append({'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
                              'seed_support':support,'frames':metrics})
@@ -114,7 +140,7 @@ def main():
             for case in fit:
                 tick=time.monotonic()
                 optimizer.zero_grad(set_to_none=True)
-                prediction,support=predict(case)
+                prediction,support,native_loss=predict(case)
                 vertices=prediction['vertices_actor_m'].float(); faces=prediction['faces']
                 points=case['points_actor_m'].cuda()
                 chosen=points[torch.randperm(len(points),device='cuda')[:1024]]
@@ -128,7 +154,7 @@ def main():
                 depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
                 free=direct_free_space_loss(depth,ranges[ids])
                 envelope=(vertices.abs()-case['size_lwh_m'].cuda()/2-.25).clamp_min(0).square().mean()
-                loss=coverage+args.free_weight*free+.05*envelope
+                loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss
                 loss.backward()
                 grad=torch.nn.utils.clip_grad_norm_(parameters,1.)
                 if not torch.isfinite(grad): raise FloatingPointError('共享几何训练出现非有限梯度')
@@ -137,6 +163,8 @@ def main():
                 row={'epoch':epoch+1,'scene':case['metadata']['scene'],'owner':case['metadata']['owner'],
                     'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':free.item(),
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
+                    'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
+                    'native_candidates':support.get('native_candidates'),
                     'lidar_fallback':support.get('lidar_fallback',False),'views':len(case['view_indices']),
                     'query_count':len(prediction['centers_actor_m']),'step_s':time.monotonic()-tick,
                     'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
@@ -144,7 +172,7 @@ def main():
                 with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
                 save('status.json',{'status':'running','phase':'shared_train','elapsed_s':time.monotonic()-started,**row})
                 print(json.dumps(row),flush=True)
-                del prediction,vertices,faces,loss,coverage,free,envelope,nearest,depth,points,chosen,origins,directions,ranges
+                del prediction,vertices,faces,loss,coverage,free,envelope,nearest,depth,points,chosen,origins,directions,ranges,native_loss
             checkpoint={'depth_head':head.state_dict() if head is not None else None,'query_decoder':decoder.state_dict(),
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
