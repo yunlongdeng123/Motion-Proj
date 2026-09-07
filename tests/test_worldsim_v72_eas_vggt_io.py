@@ -4,12 +4,14 @@ from dataclasses import fields
 from pathlib import Path
 
 import numpy as np
+import torch
 
 from motion_proj.worldsim_v72.data.camera_schema import CameraFramePayload, CameraWindow
 from motion_proj.worldsim_v72.eas_vggt.alignment import (
     aligned_camera_center_rmse_m,
     nearest_pixel_indices,
 )
+from motion_proj.worldsim_v72.eas_vggt.backbones import _last_feature_grid
 from motion_proj.worldsim_v72.eas_vggt.cache import load_backbone_geometry, save_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
 
@@ -93,3 +95,10 @@ def test_lidar_projection_keeps_nearest_depth_per_model_pixel() -> None:
         image_width=8,
     )
     assert selected.tolist() == [1, 2]
+
+
+def test_vggt_feature_grid_preserves_camera_and_channel_axes() -> None:
+    tokens = torch.arange(3 * 11 * 8, dtype=torch.float32).reshape(1, 3, 11, 8)
+    feature_grid = _last_feature_grid([None, tokens], patch_start=5, count=3, height=28, width=42)
+    assert feature_grid.shape == (3, 2, 3, 8)
+    np.testing.assert_array_equal(feature_grid[0, 0, 0], tokens[0, 0, 5].numpy())

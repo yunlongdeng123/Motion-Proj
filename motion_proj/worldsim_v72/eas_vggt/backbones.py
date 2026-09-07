@@ -35,7 +35,9 @@ def _add_import_root(root: Path) -> None:
 
 def _last_feature_grid(tokens: list[Any], patch_start: int, count: int, height: int, width: int) -> np.ndarray:
     value = next(item for item in reversed(tokens) if item is not None)
-    patches = value[:, patch_start:, :].reshape(count, height // 14, width // 14, -1)
+    if value.ndim != 4 or value.shape[:2] != (1, count):
+        raise ValueError(f"expected VGGT tokens [1,{count},N,C], got {tuple(value.shape)}")
+    patches = value[:, :, patch_start:, :].reshape(count, height // 14, width // 14, value.shape[-1])
     return patches.detach().to(dtype=torch.float16, device="cpu").numpy()
 
 
@@ -56,6 +58,7 @@ class VGGTBackbone:
         _add_import_root(self.repository_root)
         from safetensors.torch import load_file
         from vggt.models.vggt import VGGT
+        from vggt.utils.geometry import closed_form_inverse_se3
         from vggt.utils.pose_enc import pose_encoding_to_extri_intri
 
         model = VGGT(enable_track=False).eval()
@@ -70,7 +73,7 @@ class VGGTBackbone:
         extrinsic, intrinsics = pose_encoding_to_extri_intri(pose_encoding, images.shape[-2:])
         camera_from_reference = torch.eye(4, device=extrinsic.device, dtype=extrinsic.dtype)[None, None].repeat(1, len(window.frames), 1, 1)
         camera_from_reference[..., :3, :4] = extrinsic
-        reference_from_camera = torch.linalg.inv(camera_from_reference)
+        reference_from_camera = closed_form_inverse_se3(camera_from_reference.flatten(0, 1)).reshape_as(camera_from_reference)
         points_np = points[0].float().cpu().numpy()
         confidence_np = confidence[0].float().cpu().numpy()
         feature_grid = _last_feature_grid(tokens, patch_start, len(window.frames), images.shape[-2], images.shape[-1])
