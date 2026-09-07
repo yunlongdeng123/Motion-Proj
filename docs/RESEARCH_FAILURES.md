@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 原生测量梯度恢复实验已启动（2026-09-08）
+
+共享几何恢复实验r2已启动：PID14038，code37bda7d4，task `WS-V73-M2-GLOBAL-ACTOR-01`，run `20260907T171500Z__surround-shared-native-data-s7304-r2`；日志`/root/autodl-tmp/controller_logs/v73_global_native_data_r2.log`。已进入initial_evaluation，随后自动执行20fit Actor×30epochs；5dev日志只评价。训练代码加载M1六相机r3 checkpoint，不继承退化的共享r1权重；保持seed7304和原架构，新增真实build投影depth Huber weight1。
+
+当前r1和融合评价任务均已结束，无其他研究作业/待启动批次；当前唯一研究任务为r2。磁盘约132GiB可用，r1实测9.825GiB GPU/26GiB RSS支持当前完整输入，无资源不足。三本台账已记录r1最终25/25 fallback、548/600次训练fallback及48/600次原生最终depth非零梯度。不要重复启动r2、改它的配置或把initial_evaluation误判卡死。
+
+下一次接续先读r2 status/进程：正常则开展不冲突工作；done后按与r1相同日志/原始束汇总并比较native支持、真实表面和early/free。若仅保住梯度仍不改善物理指标，继续针对已定位机制查优秀论文/官方开源后迁移；不把退化回退写为route B成功。等容量逐点/LiDAR-only控制、更多动态独立日志、event及完整背景组合仍未完成。failure_ledger_delta=none，F01:F06仍active，下一编号V73-F07。
+
+自动跟进worldsim-v7-3已同步计划最新修订（当前revision3），每15分钟接续；全V7.3完成或确实资源不足时，仍按用户授权保存/push、确保无训练/评价/数据任务及启动队列后shutdown并暂停跟进。当前shutdown=false，无需用户确认。
+
+---
+
 ## V7.3 首次共享训练完成：原生支持退化（2026-09-08）
 
 共享r1已完成，code8e175195，run `20260907T165500Z__surround-shared-native-s7304-r1`，30epochs/600更新，1140.09s，峰值9.825GiB、RSS26.102GiB，native project最大变化0.000407。
