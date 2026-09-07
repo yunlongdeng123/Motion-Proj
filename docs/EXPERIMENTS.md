@@ -1,5 +1,19 @@
 # Experiments
 
+## V7.3 完整队列首轮与LiDAR-only强控制（2026-09-08）
+
+完整队列joint r5（code8831def5，PID18843）已完成首个371 Actor更新并进入epoch2，非smoke/短回归。首轮峰值10.196GiB；14次无Actor相机位姿为预期LiDAR路径，17次有视图但预测native支持为空，分别记录，不能合并成F06塌缩率。357有视图更新的native组梯度norm中位数354.00、query组12.85，逐样本norm比例中位数29.51。该证据只反映参数组量级；Adam对尺度有适应性，不能据此声称query没学习，更不能等同逐损失梯度冲突。当前保持r5优化配置不变。首轮诊断=`docs/autoresearch/worldsim_v73/m2/global/population_r5_epoch1_diagnostics.json`。
+
+登记同一完整cohort的LiDAR-only控制：`WS-V73-M2-GLOBAL-ACTOR-01/20260907T193500Z__population-lidar-only-extra-time-s7304-r6`。371fit/67dev可输入、51无输入对象均与r5相同；只读build LiDAR、尺寸和已知轨迹，使用同一个3层局部空间查询解码器和固定三角patch，视觉读取关闭、completion改为LiDAR surface seed、不训练或读取DPT。真实fit额外时刻surface/free标签、query seed7304、lr1e-5、range free0.5、30epoch/11130更新与r5一致；native depth辅助项仅存在于视觉候选。它用于测量多模态候选的整体增量，不能把差异仅归因于某个视觉中间层。
+
+复用r5已经完成的同一cohort LiDAR PCA基线JSON，避免重新计算完全相同的固定算子；r6仍正常评价自己的initial/final表面。复用路径入manifest，基线计算时间不算r6训练成本。r5继续运行；LiDAR-only不持有DPT激活及冻结视觉前缀，先启动真实完整实验并观察资源，而不削减当前视觉候选输入。pointwise控制需同样完整cohort，待GPU空间合适时启动，不盲目叠加两套24视图反向。
+
+强基线代码已查：保留的官方AdaPoinTr PCN为512query/16384输出、600epoch默认训练，预训练权重和可运行v72-pointr环境仍在；旧v72 wrapper含固定旧split及checksum逻辑，本轮不复用该wrapper，后续直接接官方模型与V7.3数据。官方PCN完整GT的双向Chamfer不能直接被解释为稀疏LiDAR的完整表面监督，需明确未知区边界。CAPA官方仓库也已在本机，VGGT LoRA默认rank4、qkv、100steps；应认真适配到build稀疏测量与统一规范融合，而非声称当前native DPT已经复现CAPA。依据：[AdaPoinTr作者实现](https://github.com/yuxumin/PoinTr)、[CAPA项目](https://research.nvidia.com/labs/dvl/projects/capa/)。
+
+failure_ledger_delta=update V73-F05（完整数据真正训练中）及F06（按缺观测原因分开统计）；F01/F02/F03/F04/F05仍active，F06直接测量配置缓解但仍有短时空支持事件，下一编号V73-F07。资源尚足，shutdown=false。整个V7.3未完成，继续训练、分析与基线迁移，最终无任务关机授权不变。
+
+---
+
 ## V7.3 米制射线管解析结果与完整队列进度（2026-09-08）
 
 米制射线管解析r2完成：run `WS-V73-M3-FREE-VISIBILITY-01/20260907T191000Z__analytic-severity-r2`，codee1d328f8，1.031s，峰值0.0002GiB。5m平面片的几何coverage同为0.839767时，首回波20m得到tube intrusion12.428555m，首回波6m得到0.671814m，分别符合coverage×14.8m和coverage×0.8m；横向平移梯度分别−86.7176和−4.68744，轴向梯度均−0.839767。原硬中心束只有轴向梯度约−1。重复相同表面结果相同；首回波前无冲突及管外时均为0。这说明同一几何代理在该解析配置中保留侵入严重度和轮廓梯度，不证明真实数据提升。

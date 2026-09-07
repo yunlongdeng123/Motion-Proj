@@ -34,6 +34,7 @@ def main():
     parser.add_argument('--free-resolution',type=int,default=32)
     parser.add_argument('--native-data-weight',type=float,default=0.)
     parser.add_argument('--fit-label-times',choices=['build','all_window'],default='build')
+    parser.add_argument('--baseline-results',type=Path,help='复用同一cohort与固定patch算子的既有LiDAR PCA结果')
     args=parser.parse_args()
     task='WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
@@ -169,7 +170,11 @@ def main():
 
         save('status.json',{'status':'running','phase':'initial_evaluation','fit_actors':len(fit),'all_actors':len(cases),
             'unsupported_input_actors':len(unsupported),'shared_frozen_prefix_views':len(prefix_cache)})
-        baseline=evaluate('lidar_baseline',True)
+        if args.baseline_results:
+            baseline=json.loads(args.baseline_results.read_text())
+            save('lidar_baseline',baseline)
+        else:
+            baseline=evaluate('lidar_baseline',True)
         initial=evaluate('initial')
         history=[]
         for epoch in range(args.epochs):
