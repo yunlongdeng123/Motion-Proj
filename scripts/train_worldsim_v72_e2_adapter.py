@@ -190,7 +190,7 @@ def _loss_and_prediction(
         output = model(**inputs)
         delta = output.surface_delta_actor_m
         predicted = output.evidence_fou
-        strength_target = torch.log1p(data["target_opportunity"].float())
+        strength_target = torch.log1p(1.0 + torch.log1p(data["target_opportunity"].float()))
         strength_loss = torch.nn.functional.smooth_l1_loss(
             torch.log1p(output.evidence_strength), strength_target
         )

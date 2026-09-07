@@ -14,6 +14,7 @@ from motion_proj.worldsim_v72.eas_vggt.models import (
 )
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
 from motion_proj.worldsim_v72.eas_vggt.visual_pooling import observe_actor_candidates
+from motion_proj.worldsim_v72.eas_vggt.appearance import render_detached_gaussian_appearance
 
 
 def _window(tmp_path: Path) -> CameraWindow:
@@ -139,3 +140,22 @@ def test_surface_geometry_is_appearance_invariant_and_se3_equivariant() -> None:
     transformed_world = lift_actor_surface_to_world(candidates, first, transform)
     expected = base_world @ transform[:3, :3].T + transform[:3, 3]
     assert torch.allclose(transformed_world, expected, atol=1.0e-6)
+
+
+def test_rgb_render_gradients_stop_at_physical_points() -> None:
+    points = torch.tensor([[2.0, 2.0, 1.0], [1.0, 1.0, 2.0]], requires_grad=True)
+    colors = torch.tensor([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]], requires_grad=True)
+    opacity = torch.tensor([0.8, 0.6], requires_grad=True)
+    rendered = render_detached_gaussian_appearance(
+        points,
+        colors,
+        opacity,
+        torch.eye(4),
+        torch.eye(3),
+        height=5,
+        width=5,
+    )
+    rendered.rgb.square().mean().backward()
+    assert points.grad is None
+    assert colors.grad is not None and torch.isfinite(colors.grad).all()
+    assert opacity.grad is not None and torch.isfinite(opacity.grad).all()

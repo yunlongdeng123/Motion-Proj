@@ -15,6 +15,8 @@ class PhysicalEvidenceOutput:
     detection_logit: torch.Tensor
     evidence_fou: torch.Tensor
     evidence_strength: torch.Tensor
+    added_evidence_fou: torch.Tensor
+    added_evidence_strength: torch.Tensor
 
 
 class EvidenceConditionedSurfaceAdapter(nn.Module):
@@ -63,6 +65,9 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
         self.surface_head = nn.Linear(hidden_dim, 3)
         self.evidence_head = nn.Linear(hidden_dim, 4)
         self.return_head = nn.Linear(hidden_dim, 2)
+        with torch.no_grad():
+            self.evidence_head.bias.zero_()
+            self.evidence_head.bias[0] = -4.0
 
     def forward(
         self,
@@ -91,9 +96,13 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
         )
         evidence_hidden = self.evidence_trunk(torch.cat([physical_hidden, visual, observed], dim=-1))
         delta = torch.tanh(self.surface_head(physical_hidden)) * self.maximum_surface_delta_m
-        raw_evidence = torch.nn.functional.softplus(self.evidence_head(evidence_hidden))
-        evidence_strength = raw_evidence.sum(dim=-1, keepdim=True)
-        fou = raw_evidence[..., 1:] / raw_evidence[..., 1:].sum(dim=-1, keepdim=True).clamp_min(1.0e-8)
+        evidence_update = self.evidence_head(evidence_hidden)
+        added_strength = torch.nn.functional.softplus(evidence_update[..., :1])
+        added_fou = torch.softmax(evidence_update[..., 1:], dim=-1)
+        prior_strength = 1.0 + torch.log1p(opportunity_count.float()).unsqueeze(-1)
+        concentration = prior_strength * evidence_fou + added_strength * added_fou
+        evidence_strength = concentration.sum(dim=-1, keepdim=True)
+        fou = concentration / evidence_strength.clamp_min(1.0e-8)
         return_logits = self.return_head(evidence_hidden)
         return PhysicalEvidenceOutput(
             surface_delta_actor_m=delta,
@@ -101,6 +110,8 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
             detection_logit=return_logits[..., 1],
             evidence_fou=fou,
             evidence_strength=evidence_strength.squeeze(-1),
+            added_evidence_fou=added_fou,
+            added_evidence_strength=added_strength.squeeze(-1),
         )
 
 
