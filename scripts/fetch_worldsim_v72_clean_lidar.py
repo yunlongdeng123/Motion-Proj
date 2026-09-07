@@ -69,6 +69,7 @@ def main() -> None:
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--workers", type=int, default=10)
     parser.add_argument("--role", choices=["dev_route", "source_test"], default="dev_route")
+    parser.add_argument("--shards", nargs="+", default=None)
     args = parser.parse_args()
 
     roles = load_data_roles(args.roles)
@@ -115,6 +116,7 @@ def main() -> None:
             index_path=args.index,
             dst=args.raw_root,
             workers=args.workers,
+            shard_numbers=args.shards,
         )
         missing = [name for name in required if not (args.raw_root / name).is_file()]
         if missing:
