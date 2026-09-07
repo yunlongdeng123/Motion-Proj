@@ -1,5 +1,17 @@
 # Research Status
 
+## V7.3 首轮真实曲面负结果与后续比较（2026-09-07）
+
+M2真实曲面r1=`done`（code45737d33、run20260907T154000Z__joint-physical-scene0100-s7303-r1）；native融合=`done`（code512048bb、run20260907T154500Z__native-fusion-scene0100-r1）。统一三角读出结果见`docs/WORLDSIM_V7_3_M2_PHYSICAL_RESULTS.md`及`docs/autoresearch/worldsim_v73/m2/physical_r1_comparison.json`。
+
+单fit Actor两个未输入时刻，joint约69.62% hit/5.42% early/22.21% miss，对照LiDAR约69.58% hit/0.70% early/29.34% miss；已知原始束free平均侵入约0.078m，对照约0.0066m。native微调改善原生表面读出，但native-only未并入原始LiDAR表面，尚不能当最强同信息融合基线。joint未超过LiDAR强基线；正观测点均距约2.1cm不能掩盖提前相交。
+
+V73-F02更新为已有实测负证据，其他风险保持active；failure_ledger_delta=update V73-F02，下一编号V73-F06。已先检索AdaPoinTr官方自适应查询与LaS-Comp CVPR2026的观测保持/边界一致性，候选迁移详见报告。不能把当前单侧coverage下的过剩表面外推成路线B失败。
+
+同信息控制批次PID6922正在继续：`/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-CONTROL-BATCH-01/20260907T154500Z__physical-controls/status.json`；native-fusion已done，joint-r2 running，随后pointwise-r1/lidar-only-r1/joint-no-free-r1。批次控制器=`/root/autodl-tmp/codex_tmp/control_v73_batch.py`；不中断/重复现有任务。待成组结果后再调整支持初始化或几何监督，不同时堆叠正则。当前卡为方法效果，不是资源；shutdown=false。
+
+---
+
 ## V7.3 同信息控制与原生表面比较注册（2026-09-07）
 
 `WS-V73-M2-PHYSICAL-SURFACE-01` r1当前running，PID6424，code=`45737d33`，120steps已过半；输入包含4build时刻10222个原始归属点（最终unique数以run为准），2个heldout时刻，所有近框原始束共约3.2万。训练峰值5.306GiB，原生project与法向梯度非零；完整结果待落盘，不提前判胜。
