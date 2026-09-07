@@ -1,5 +1,15 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 控制组完成：过剩补全曲面是主要卡点（2026-09-08）
+
+控制批次20260907T154500Z__physical-controls=`done`，native融合与4组120steps均完成，无运行研究进程。joint-r2 hit75.43%/early5.24%/miss16.51%/free0.133m，pointwise hit74.60%/free0.150m，LiDAR-only hit72.76%/free0.106m，joint-no-free hit76.16%/free0.090m。空间交互和视觉的净优势均未成立；不把free变差草率外推监督无用。
+
+已按面来源定位：joint-r2 heldout累计侵入的71.58%来自completion面遮挡原始非Actor返回（952.42/1330.58m），build亦同。少量不受覆盖监督的体积内曲面挡住远背景是主要卡点，LiDAR-only同样存在。failure_ledger_delta=update V73-F02，下一编号V73-F06。结果和来源表=`docs/WORLDSIM_V7_3_M2_CONTROL_RESULTS.md`、`docs/autoresearch/worldsim_v73/m2/controls/`。
+
+已先查On-Surface Prior CVPR2022及AdaPoinTr作者代码；下一轮用可训练原生DPT点图的规范表面种子初始化completion，增加LiDAR表面种子控制，保持现有监督与容量。原生depth输出接入几何位置梯度，仍允许查询生成新支持，不学习opacity/存在概率/半径避罚。当前问题是方法效果，资源充足，shutdown=false。实现和下一训练继续推进。
+
+---
+
 ## V7.3 首轮真实曲面负结果与后续比较（2026-09-07）
 
 M2真实曲面r1=`done`（code45737d33、run20260907T154000Z__joint-physical-scene0100-s7303-r1）；native融合=`done`（code512048bb、run20260907T154500Z__native-fusion-scene0100-r1）。统一三角读出结果见`docs/WORLDSIM_V7_3_M2_PHYSICAL_RESULTS.md`及`docs/autoresearch/worldsim_v73/m2/physical_r1_comparison.json`。
