@@ -29,7 +29,7 @@ def main():
     parser.add_argument('--mode',choices=['joint','pointwise','lidar_only'],default='joint')
     parser.add_argument('--completion-init',choices=['native_surface','lidar_surface'],default='native_surface')
     parser.add_argument('--free-weight',type=float,default=.5)
-    parser.add_argument('--free-mode',choices=['range','beam_tube'],default='range')
+    parser.add_argument('--free-mode',choices=['range','beam_tube','beam_tube_range'],default='range')
     parser.add_argument('--free-width-m',type=float,default=.03)
     parser.add_argument('--free-resolution',type=int,default=32)
     parser.add_argument('--native-data-weight',type=float,default=0.)
@@ -86,9 +86,10 @@ def main():
         torch.manual_seed(7304)
         decoder=ActorSpatialQueryDecoder().cuda()
         tube_free=None
-        if args.free_mode=='beam_tube':
+        if args.free_mode in ['beam_tube','beam_tube_range']:
             from motion_proj.worldsim_v73.surface_visibility import BeamTubeFreeSpaceLoss
-            tube_free=BeamTubeFreeSpaceLoss(width_m=args.free_width_m,resolution=args.free_resolution)
+            tube_free=BeamTubeFreeSpaceLoss(width_m=args.free_width_m,resolution=args.free_resolution,
+                penalty='range' if args.free_mode=='beam_tube_range' else 'coverage')
         parameters=[*(head.parameters() if head is not None else []),*decoder.parameters()]
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         fit=[c for c in cases if c['metadata']['role']=='fit']
@@ -211,7 +212,7 @@ def main():
                 row={'epoch':epoch+1,'scene':case['metadata']['scene'],'owner':case['metadata']['owner'],
                     'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':physical_free.item(),
                     'free_objective':free.item(),'free_mode':args.free_mode,
-                    'free_objective_unit':'m' if tube_free is None else 'coverage_fraction',
+                    'free_objective_unit':'coverage_fraction' if args.free_mode=='beam_tube' else 'm',
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
                     'group_gradient_norms_before_clip':group_gradients,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],

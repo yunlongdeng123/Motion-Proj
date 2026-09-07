@@ -4,7 +4,7 @@ from torch import nn
 
 
 class BeamTubeFreeSpaceLoss(nn.Module):
-    def __init__(self,width_m=.03,resolution=32,ray_chunk=32,tolerance_m=.20):
+    def __init__(self,width_m=.03,resolution=32,ray_chunk=32,tolerance_m=.20,penalty='coverage'):
         super().__init__()
         import nvdiffrast.torch as dr
         self.dr=dr
@@ -13,6 +13,7 @@ class BeamTubeFreeSpaceLoss(nn.Module):
         self.resolution=resolution
         self.ray_chunk=ray_chunk
         self.tolerance_m=tolerance_m
+        self.penalty=penalty
         axis=(torch.arange(resolution,device='cuda')+.5)/resolution*2-1
         yy,xx=torch.meshgrid(axis,axis,indexing='ij')
         # 宽度是固定训练代理；有限3σ外不产生约束，不声称为传感器实测光束。
@@ -41,7 +42,14 @@ class BeamTubeFreeSpaceLoss(nn.Module):
             clip=torch.stack([x,y,z,torch.ones_like(z)],-1).contiguous()
             raster,_=self.dr.rasterize(self.context,clip,faces,resolution=[self.resolution,self.resolution])
             occupied=(raster[...,3:]>0).float()
-            coverage=self.dr.antialias(occupied,raster,clip,faces)
+            if self.penalty=='range':
+                # 原生rast的z/w不传位置梯度；显式插值米制沿束距离获得支持内梯度。
+                depth,_=self.dr.interpolate(distance[...,None].contiguous(),raster,faces)
+                value=occupied*(end[:,None,None,None]-depth).clamp_min(0)
+            else:
+                value=occupied
+            coverage=self.dr.antialias(value.contiguous(),raster,clip,faces)
             terms.append((coverage[...,0]*self.pixel_weights).sum((-2,-1)))
-        # 按原始束归一化；重复表面不增加独立概率机会。返回值是覆盖比例，不是米。
+        # 固定footprint积分再按真实束平均；range模式单位为米，coverage为比例。
+        # 重复表面不增加独立概率机会，两者均是有限宽度代理，不冒充字面中心束。
         return torch.cat(terms).mean()
