@@ -10,7 +10,8 @@ from motion_proj.worldsim_v72.data.nuscenes_camera import NuScenesCameraIndex, _
 from .native_data import interpolate_pose
 
 
-def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids,index=None,tracks=None):
+def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids,index=None,tracks=None,
+                    include_track=False,scan_cache=None):
     index=index or NuScenesCameraIndex(Path(dataset_root))
     scene=next(s for s in index.scenes if s['name']==scene_id)
     samples=sorted([s for s in index.samples if s['scene_token']==scene['token']],key=lambda s:s['timestamp'])
@@ -30,34 +31,38 @@ def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids,index=None,t
     records=[]
     # held-out仅为build时间范围内未输入的原始采样帧，metadata位姿只读。
     for i,sample in enumerate(samples):
-        if not min(selected)<=i<=max(selected): continue
-        if sample['token'] not in build_sample_ids and i%3!=2: continue
+        if not include_track:
+            if not min(selected)<=i<=max(selected): continue
+            if sample['token'] not in build_sample_ids and i%3!=2: continue
         lidar=index.sample_data.get(index.data_by_sample_channel.get((sample['token'],'LIDAR_TOP'),''))
         if lidar is None or not (index.dataset_root/lidar['filename']).is_file(): continue
         stamp=int(lidar['timestamp'])
         pose=interpolate_pose(trajectory,stamp)
         if pose is None: continue
-        world=index.sensor_points_world(sample['token']).astype(float)
-        calibrated=index.calibrated[lidar['calibrated_sensor_token']]
-        ego=index.ego_poses[lidar['ego_pose_token']]
-        sensor_pose=_transform(ego['translation'],ego['rotation'])@_transform(calibrated['translation'],calibrated['rotation'])
-        origin=(sensor_pose[:3,3]-pose[:3,3])@pose[:3,:3]
+        key=(scene_id,sample['token'])
+        cached=scan_cache.get(key) if scan_cache is not None else None
+        if cached is None:
+            world=index.sensor_points_world(sample['token']).astype(float)
+            calibrated=index.calibrated[lidar['calibrated_sensor_token']]
+            ego=index.ego_poses[lidar['ego_pose_token']]
+            sensor_pose=_transform(ego['translation'],ego['rotation'])@_transform(calibrated['translation'],calibrated['rotation'])
+            membership=np.zeros(len(world),dtype=int)
+            for rows in tracks.values():
+                other_pose=interpolate_pose(rows,stamp)
+                if other_pose is None: continue
+                other=(world-other_pose[:3,3])@other_pose[:3,:3]
+                other_size=min(rows,key=lambda r:abs(r[0]-stamp))[2]
+                membership+=np.all(np.abs(other)<=other_size/2+.10,axis=1)
+            cached=(world,sensor_pose[:3,3],membership)
+            if scan_cache is not None: scan_cache[key]=cached
+        world,sensor_origin,membership=cached
+        origin=(sensor_origin-pose[:3,3])@pose[:3,:3]
         local=(world-pose[:3,3])@pose[:3,:3]
         vector=local-origin
         ranges=np.linalg.norm(vector,axis=1)
         directions=vector/np.maximum(ranges[:,None],1e-8)
         size=min(trajectory,key=lambda r:abs(r[0]-stamp))[2]
-        membership=np.zeros(len(world),dtype=int)
-        target_inside=np.zeros(len(world),dtype=bool)
-        for track,rows in tracks.items():
-            # 单时刻轨迹仅在其已知时间可用；interpolate_pose不会对外部时间外推。
-            other_pose=interpolate_pose(rows,stamp)
-            if other_pose is None: continue
-            other=(world-other_pose[:3,3])@other_pose[:3,:3]
-            other_size=min(rows,key=lambda r:abs(r[0]-stamp))[2]
-            inside=np.all(np.abs(other)<=other_size/2+.10,axis=1)
-            membership+=inside
-            if track==owner: target_inside=inside
+        target_inside=np.all(np.abs(local)<=size/2+.10,axis=1)
         # 只根据已知box筛选可能穿过Actor邻域的原始束，不根据返回深度或模型结果筛选。
         extent=size/2+.50
         parallel=np.abs(directions)<1e-10
@@ -70,7 +75,7 @@ def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids,index=None,t
         near=(upper>=np.maximum(lower,0))&~outside_parallel&(ranges>0)
         positive=target_inside&(membership==1)
         records.append({'sample_id':sample['token'],'sample_index':i,'timestamp_us':stamp,
-            'role':'build' if sample['token'] in build_sample_ids else 'heldout_time',
+            'role':'build' if sample['token'] in build_sample_ids else ('fit_label_time' if include_track else 'heldout_time'),
             'origins_actor_m':torch.tensor(np.broadcast_to(origin,(near.sum(),3)).copy(),dtype=torch.float32),
             'directions_actor':torch.tensor(directions[near],dtype=torch.float32),
             'observed_first_range_m':torch.tensor(ranges[near],dtype=torch.float32),
@@ -98,6 +103,6 @@ class ActorRayDataset:
         for tracks in self.tracks.values():
             for rows in tracks.values(): rows.sort(key=lambda r:r[0])
 
-    def actor(self,scene_id,owner,build_sample_ids):
+    def actor(self,scene_id,owner,build_sample_ids,include_track=False,scan_cache=None):
         return load_actor_rays(self.index.dataset_root,scene_id,owner,build_sample_ids,
-                               index=self.index,tracks=self.tracks[scene_id])
+                               index=self.index,tracks=self.tracks[scene_id],include_track=include_track,scan_cache=scan_cache)
