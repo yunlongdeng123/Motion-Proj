@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 同全轨迹标签原生DPT控制实现与登记（2026-09-08）
+
+现有M1r3/fusion与r7/r8/Ada的标签预算不同，不能直接归因架构。已补齐共享训练器native_only模式：直接微调完整原生DPT，规范坐标native+LiDAR融合与同预算PCA曲面，query模块冻结且不参与预测；同full_track surface/free和build depth监督，不增加外挂小头。训练每步真实重算原生头；仅固定权重评价按scene/view复用深度，避免多个Actor重复解码。原始输入、视图和多尺度原生路径均保留。
+
+完整371fit Actor每epoch都呈现；无相机/无任何有效梯度的native-only样本保留LiDAR输出并记录无优化，而不伪称一次DPT更新。PCA方向是逐步更新、当前步固定的条件位置梯度近似。51个原输入空对象仍按主模型协议空预测，全部队列和缺失分母保持。实现尚未实际训练，不新增重复smoke。协议详见 `WORLDSIM_V7_3_MATCHED_NATIVE_CONTROL.md`。
+
+登记r10 `20260907T233000Z__population-joint-full-track-s7304-r10`（相对正在运行r5仅扩展full_track fit标签）及r11 `20260907T233000Z__population-native-only-full-track-s7304-r11`（同标签/原生初始化/30epoch的保守几何适配）；二者均未启动，无后台队列。r9 event对照也未启动。当前r5、AdaPoinTr r1与CAPA r2正常推进，需等实际资源释放后调度，不能从暂时空闲的瞬时显存忽略已知峰值。
+
+failure_ledger_delta=update F02/F05比较完整性与主路线推进；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false；长训练结束后继续按真实结果改进，全部研究收尾并确认无任务后才关机。
+
+---
+
+
 ## V7.3 场景配对收尾与CAPA分块后真实训练（2026-09-08）
 
 复用场景r3保存结果完成r8−r7配对：cohort free−0.04382m、日志bootstrap95%[−0.07655,−0.01284]m，4日志降低、1相同；early−5.98pp、[−9.44,−2.52]pp；hit−3.52pp、[−9.62,+1.79]pp；miss+7.39pp、[+0.22,+14.55]pp。场景侵入降低仍伴随覆盖代价，且背景自身误差占比大，不宣告F04解决。全部原始束、cohort、背景/其他对象、边界代理与近传感器分层保留在m4/scene_composition_r3_summary.json，配对在scene_composition_r3_paired.json。没有新增模型推理。

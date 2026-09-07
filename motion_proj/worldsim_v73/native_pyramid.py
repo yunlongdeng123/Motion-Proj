@@ -18,6 +18,7 @@ class NativeGeometryPyramid(nn.Module):
             state=torch.load(Path(native_run)/'latest.pt',map_location='cpu',weights_only=True)
             self.head.load_state_dict(state['depth_head'])
         self.token_inputs=[]
+        self.view_keys=[]
         for i in view_indices:
             key=(str(native_run),scene['scene_id'],i,str(token_device))
             packed=prefix_cache.get(key) if prefix_cache is not None else None
@@ -28,6 +29,7 @@ class NativeGeometryPyramid(nn.Module):
                 # 同一窗口多个Actor共享不可变前缀；绝不缓存跨优化步的可训练DPT输出。
                 if prefix_cache is not None: prefix_cache[key]=packed
             self.token_inputs.append(packed)
+            self.view_keys.append(key)
 
     def one_view(self,*inputs):
         tokens=[None]*24
@@ -55,3 +57,26 @@ class NativeGeometryPyramid(nn.Module):
             if include_depth: depths.append(maps[4])
         features=[torch.cat(level) for level in features]
         return (features,torch.cat(depths)) if include_depth else features
+
+    def one_depth(self,*inputs):
+        tokens=[None]*24
+        for j,t in zip([4,11,17,23],inputs[:4]): tokens[j]=t
+        with torch.autocast('cuda',dtype=torch.bfloat16):
+            depth,_=self.head(tokens,inputs[4],inputs[5])
+        return depth[0,...,0].float()
+
+    def depth_only(self,output_cache=None):
+        # 原生保守控制不消费query特征，避免保存/拼接无下游用途的多尺度副输出。
+        # 原生DPT内部多层解码照常；每步重算，不缓存可训练输出。
+        device=next(self.head.parameters()).device
+        if output_cache is not None:
+            # 调用者仅在一次固定权重的no-grad评价中共享，训练入口从不传此缓存。
+            output=[]
+            for key,(tokens,image,patch_start) in zip(self.view_keys,self.token_inputs):
+                if key not in output_cache:
+                    output_cache[key]=self.one_depth(*(t.to(device) for t in tokens),image.to(device),patch_start).detach().cpu()
+                output.append(output_cache[key].to(device))
+            return torch.cat(output)
+        return torch.cat([checkpoint(self.one_depth,*(t.to(device) for t in tokens),image.to(device),
+                                     patch_start,use_reentrant=False)
+                          for tokens,image,patch_start in self.token_inputs])

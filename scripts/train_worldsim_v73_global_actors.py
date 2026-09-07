@@ -15,7 +15,7 @@ sys.path.insert(0,str(ROOT)); sys.path.insert(0,str(ROOT/'scripts'))
 from motion_proj.worldsim_v73.native_pyramid import NativeGeometryPyramid
 from motion_proj.worldsim_v73.native_data import sample_depth
 from motion_proj.worldsim_v73.spatial_queries import ActorSpatialQueryDecoder
-from motion_proj.worldsim_v73.surface_seeds import farthest_indices,native_surface_seeds
+from motion_proj.worldsim_v73.surface_seeds import farthest_indices,native_surface_seeds,native_surface_points
 from motion_proj.worldsim_v73.surface_readout import closest_surface_points,first_triangle_intersection,direct_free_space_loss
 from train_worldsim_v73_physical_surface import lidar_patches,evaluate_actor_surface
 
@@ -26,7 +26,7 @@ def main():
     parser.add_argument('--actor-data',type=Path,required=True)
     parser.add_argument('--run-id',required=True)
     parser.add_argument('--epochs',type=int,default=30)
-    parser.add_argument('--mode',choices=['joint','pointwise','lidar_only'],default='joint')
+    parser.add_argument('--mode',choices=['joint','pointwise','lidar_only','native_only'],default='joint')
     parser.add_argument('--completion-init',choices=['native_surface','lidar_surface'],default='native_surface')
     parser.add_argument('--free-weight',type=float,default=.5)
     parser.add_argument('--free-mode',choices=['range','beam_tube','beam_tube_range'],default='range')
@@ -62,6 +62,7 @@ def main():
         'surface_supervision_times':label_times,
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
+        'native_only_boundary':'native_only adapts full original DPT with canonical native+LiDAR PCA fusion; query module supplies fixed patch definition only and is frozen; no-camera/no-gradient presentations are recorded without optimizer step',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
     save('status.json',{'status':'running','phase':'load_contexts'})
     try:
@@ -95,6 +96,7 @@ def main():
         del scenes
         torch.manual_seed(7304)
         decoder=ActorSpatialQueryDecoder().cuda()
+        if args.mode=='native_only': decoder.requires_grad_(False)
         tube_free=None
         event_objective=None
         if args.free_mode in ['beam_tube','beam_tube_range']:
@@ -105,7 +107,8 @@ def main():
             from motion_proj.worldsim_v73.first_event import FirstSurfaceEventLoss
             event_objective=FirstSurfaceEventLoss(width_m=args.event_width_m,resolution=args.event_resolution,
                                                  sigma_m=args.event_sigma_m,cap=args.event_cap)
-        parameters=[*(head.parameters() if head is not None else []),*decoder.parameters()]
+        parameters=[*(head.parameters() if head is not None else []),
+                    *(decoder.parameters() if args.mode!='native_only' else [])]
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         fit=[c for c in cases if c['metadata']['role']=='fit']
         if not fit: raise ValueError('没有可训练fit Actor')
@@ -125,25 +128,40 @@ def main():
             case['extra_time_target_points']=sum(r['owned_points'] for r in labels if r['role']!='build')
         before=head.projects[0].weight.detach().clone() if head is not None else None
 
-        def predict(case):
+        def predict(case,depth_cache=None):
             points=case['points_actor_m'].cuda(); size=case['size_lwh_m'].cuda()
             matrices=case['camera_from_actor'].cuda(); calibration=case['intrinsics'].cuda()
             depth=None
             has_views=head is not None and bool(case['view_indices'])
-            if has_views and (args.completion_init=='native_surface' or args.native_data_weight>0):
+            if has_views and args.mode=='native_only':
+                features=None
+                depth=pyramids[(case['metadata']['scene'],case['metadata']['owner'])].depth_only(depth_cache)
+            elif has_views and (args.completion_init=='native_surface' or args.native_data_weight>0):
                 features,depth=pyramids[(case['metadata']['scene'],case['metadata']['owner'])](include_depth=True)
             else:
                 features=pyramids[(case['metadata']['scene'],case['metadata']['owner'])]() if has_views else None
-            if args.completion_init=='native_surface' and depth is not None:
+            if args.mode=='native_only':
+                native,per_view=(native_surface_points(depth,scales[case['metadata']['scene']],matrices,calibration,size)
+                                 if depth is not None else (points.new_empty(0,3),[]))
+                source=native if len(native) else points
+                n=min(len(points),decoder.evidence_queries)
+                evidence=points[torch.linspace(0,len(points)-1,n,device='cuda').long()]
+                centers=torch.cat([evidence,source[farthest_indices(source,len(decoder.coarse))]])
+                result=lidar_patches(torch.cat([points,native]),decoder,centers=centers)
+                support={'native_candidates':len(native),'per_view_native_support':per_view,
+                         'lidar_fallback':not len(native),'initialization':'native_lidar_pca',
+                         'surface_gradient':'selected native center positions; per-step PCA neighborhood/orientation held fixed'}
+            elif args.completion_init=='native_surface' and depth is not None:
                 seeds,support=native_surface_seeds(depth,scales[case['metadata']['scene']],matrices,calibration,
                                                     size,points,len(decoder.coarse))
             else:
                 seeds=case['lidar_seed'].cuda(); support={'lidar_fallback':args.completion_init=='native_surface',
                     'native_candidates':0 if args.completion_init=='native_surface' else None,'initialization':'lidar_surface'}
-            with torch.autocast('cuda',dtype=torch.bfloat16):
-                result=decoder(points,size,features,matrices,calibration,case['image_hw'],case['camera_ids'].cuda(),
-                    case['time_offsets_s'].cuda(),use_spatial=args.mode!='pointwise',use_visual=features is not None,
-                    completion_seeds=seeds)
+            if args.mode!='native_only':
+                with torch.autocast('cuda',dtype=torch.bfloat16):
+                    result=decoder(points,size,features,matrices,calibration,case['image_hw'],case['camera_ids'].cuda(),
+                        case['time_offsets_s'].cuda(),use_spatial=args.mode!='pointwise',use_visual=features is not None,
+                        completion_seeds=seeds)
             # 数据梯度不经过预测框内候选筛选，候选消失时仍可拉回原生几何。
             native_loss=points.sum()*0
             native_count=0
@@ -163,7 +181,7 @@ def main():
 
         @torch.no_grad()
         def evaluate(tag,baseline=False):
-            rows=[]
+            rows=[]; depth_cache={}
             for case in [*cases,*unsupported]:
                 if case['metadata']['input_status']!='ready':
                     # 缺少可用输入的Actor明确输出缺失，仍计入真实束miss/覆盖评价。
@@ -175,7 +193,7 @@ def main():
                     surface=lidar_patches(case['points_actor_m'].cuda(),decoder)
                     support={}
                 else:
-                    surface,support,native_loss=predict(case)
+                    surface,support,native_loss=predict(case,depth_cache=depth_cache)
                     support['native_sensor_huber_m']=native_loss.item()
                 metrics=evaluate_actor_surface(surface,case['rays'])
                 rows.append({'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
@@ -238,7 +256,8 @@ def main():
                     event_statistics['literal_owned_miss_rays']=(~torch.isfinite(depth[owned])).sum().item()
                     del owned,selected
                 loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss+args.event_weight*event
-                loss.backward()
+                has_gradient=loss.requires_grad
+                if has_gradient or args.mode!='native_only': loss.backward()
                 group_gradients={}
                 for name,module in [('native_dpt',head),('query_decoder',decoder)]:
                     norms=[p.grad.detach().norm() for p in module.parameters() if p.grad is not None] if module is not None else []
@@ -246,9 +265,10 @@ def main():
                 grad=torch.nn.utils.clip_grad_norm_(parameters,1.)
                 if not torch.isfinite(grad): raise FloatingPointError('共享几何训练出现非有限梯度')
                 output_grad=sum(p.grad.norm().item() for p in head.scratch.output_conv2.parameters() if p.grad is not None) if head is not None else None
-                optimizer.step()
+                if has_gradient: optimizer.step()
                 row={'epoch':epoch+1,'scene':case['metadata']['scene'],'owner':case['metadata']['owner'],
                     'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':physical_free.item(),
+                    'optimizer_step':has_gradient,
                     'free_objective':free.item(),'free_mode':args.free_mode,
                     'free_objective_unit':'coverage_fraction' if args.free_mode=='beam_tube' else 'm',
                     'event_capped_nll':event.item(),'event_weight':args.event_weight,'event_statistics':event_statistics,
@@ -270,13 +290,17 @@ def main():
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
         save('status.json',{'status':'running','phase':'final_evaluation','epochs':args.epochs,
-            'updates':len(history),'elapsed_s':time.monotonic()-started})
+            'updates':sum(r['optimizer_step'] for r in history),'actor_presentations':len(history),'elapsed_s':time.monotonic()-started})
         final=evaluate('final')
         result={'status':'done','fit_actors':len(fit),'development_actors':len(cases)-len(fit),
             'cohort_actors':len(index['cases']),'unsupported_input_actors':len(unsupported),
             'shared_frozen_prefix_views':len(prefix_cache),
             'fit_label_times':label_times,
-            'epochs':args.epochs,'updates':len(history),'mode':args.mode,'completion_initialization':args.completion_init,
+            'epochs':args.epochs,'updates':sum(r['optimizer_step'] for r in history),'actor_presentations':len(history),
+            'no_gradient_presentations':sum(not r['optimizer_step'] for r in history),
+            'mode':args.mode,'completion_initialization':args.completion_init,
+            'trainable_parameters':{'native_dpt':sum(p.numel() for p in head.parameters() if p.requires_grad) if head is not None else 0,
+                                    'query_decoder':sum(p.numel() for p in decoder.parameters() if p.requires_grad)},
             'native_project_max_change':(head.projects[0].weight.detach()-before).abs().max().item() if head is not None else None,
             'first_step':history[0],'last_step':history[-1],'wall_s':time.monotonic()-started,
             'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,
