@@ -193,8 +193,14 @@ def main() -> None:
                 recovered = (world - pose[:3, 3]) @ pose[:3, :3]
                 recovery_errors.append(float(torch.max(torch.abs(recovered - canonical)).cpu()))
                 subset = min(int(config["evaluation"]["maximum_pairwise_points"]), len(world))
-                reference_distance = torch.cdist(canonical[:subset], canonical[:subset])
-                world_distance = torch.cdist(world[:subset], world[:subset])
+                reference_points = canonical[:subset]
+                world_points = world[:subset]
+                reference_distance = torch.linalg.vector_norm(
+                    reference_points[:, None] - reference_points[None, :], dim=-1
+                )
+                world_distance = torch.linalg.vector_norm(
+                    world_points[:, None] - world_points[None, :], dim=-1
+                )
                 distance_errors.append(
                     float(torch.max(torch.abs(reference_distance - world_distance)).cpu())
                 )
