@@ -48,6 +48,8 @@ def main():
     try:
         sys.path.insert(0,str(args.capa_root))
         from capa.protocol import CAPAProtocol
+        # 保留官方每10步已有loss日志，便于长窗口训练的真实进展记录。
+        logging.getLogger('capa').setLevel(logging.DEBUG)
         protocol=CAPAProtocol(config,torch.device('cuda'))
         # 保留完整图像与原标定；不把官方缩放后的像素误配给原始K。
         protocol.model.preprocess_inputs=lambda rgb:rgb.to('cuda')
@@ -77,7 +79,8 @@ def main():
             torch.save(adapted,out/(scene['scene_id']+'_lora.pt'))
             window={'scene':scene['scene_id'],'role':scene['role'],'views':len(rgb),
                 'condition_pixels_per_view':counts,'trainable_parameters':sum(p.numel() for p in adapted.values()),
-                'adaptation_and_save_s':time.monotonic()-tick}
+                'adaptation_and_save_s':time.monotonic()-tick,
+                'cumulative_peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
             windows.append(window); save('windows.json',windows)
             with torch.no_grad():
                 for entry in [row for row in entries if row['scene']==scene['scene_id']]:

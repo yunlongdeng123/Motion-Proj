@@ -1,5 +1,16 @@
 # Experiments
 
+## V7.3 CAPA全窗口实际适配运行登记（2026-09-08）
+
+准备运行 `WS-V73-M2-CAPA-01/20260907T223500Z__population-build-tta-s7305-r1`，沿用已记录的官方100步rank4/alpha8、patch_embed qkv LoRA、每步3/24视图随机采样、最终全24视图联合推理；31个build窗口、完整489 Actor队列。所有744视图已有有效稀疏深度条件，fit/dev均只在各自build输入上窗口内TTA，逐窗口重置；额外时刻仅评价。协议、对齐及native-only边界见 `docs/WORLDSIM_V7_3_CAPA_BASELINE.md`。
+
+已静态核对模块路径：主工程NativeGeometryPyramid只在实例化时加载普通VGGT，而该CAPA入口未实例化它；实际CAPA wrapper优先加载其VGGT_VPT。因此没有发现此前担心的普通VGGT抢先导入问题，不添加清模块之类补丁。上游DINO与跨视图aggregator均有nonreentrant checkpoint路径，现有train()覆盖这些路径；保留全部图像与视图信息。开启官方已有每10步loss日志并记录窗口累计显存峰值，不额外建重复测试。
+
+本登记不代表权重加载或LoRA训练已成功。计划在r8训练/最终评价退出并有显存余量后直接执行真实完整运行，避免并发争抢被误判为单作业资源不足；当前不建立后台自动启动队列。AdaPoinTr r1与主joint r5保持各自配置。F01/F02/F03/F04/F05/F07继续active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 AdaPoinTr官方坐标接口修订（2026-09-08）
 
 V73-F07：首轮AdaPoinTr r1使用本项目Z-up Actor轴输入PCN预训练模型，尚未迁移其车辆坐标约定。依据适配前物理误差继续查阅官方源码，确认[PoinTr NormalizeObjectPose](https://github.com/yuxumin/PoinTr/blob/master/datasets/data_transforms.py)及[PCN test_kitti](https://github.com/wentaoyuan/pcn/blob/master/test_kitti.py)在车辆规范化后显式交换Y/Z，输出再逆变换。该证据说明现有预训练接口有可修正的域差异，但并不单独证明r1全部误差由此造成。
