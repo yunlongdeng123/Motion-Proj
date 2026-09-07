@@ -1,5 +1,20 @@
 # Experiments
 
+## V7.3 场景组合实现与实验登记（2026-09-08）
+
+完整原生融合r2结果已经归档并push（ae295229）；joint r5 PID18843至epoch9、全轨迹LiDAR-only r7 PID23188至epoch19，正常运行。接下来并行做CPU场景物理评价，当前训练配置不变。
+
+F04全局读出实现完成：复用Open3D0.19 CPU BVH，以每Actor的只读刚体逆变换读取原始束，和同一build背景全局取最近交点及owner。背景在每次build扫描排除所有已知注释框+0.1m内测量，采用固定0.06m PCA曲面片；不补未知背景、不引入opacity。现有v72-lidar4d环境仅补装ijson3.5.1，未新建大环境或改变训练Torch。
+
+一次解析真值检查已经执行：run `WS-V73-M4-SCENE-READOUT-01/20260907T210500Z__analytic-rigid-occlusion-r1`，原先首距离[5,10,miss]、owner[1,0,-1]；平移前Actor后变为[7,5,miss]、owner[2,1,-1]，数值误差小于1微米。它支持刚体转换/全局遮挡实现，不作为真实几何或反事实真实性证据。未新增训练smoke/回归套件。
+
+登记开发场景数据 `WS-V73-M4-SCENE-DATA-01/20260907T211000Z__development-build-background-r1` 与比较 `WS-V73-M4-SCENE-COMPOSITION-01/20260907T211000Z__development-pca-lidar-native-r1`。对象为原6开发scene/5日志，固定背景上比较PCA、已完成r6 LiDAR-only与fusion r2；background-only为诊断项。全部原始回波保留，cohort/背景代理/其他对象/歧义/注释框边界带分列，按scene→独立log聚合，不能与Actor-only均值混比。真实数据作业提交后启动，结果待实际完成。
+
+方案、官方依据、统计域与未知区域边界见 `docs/WORLDSIM_V7_3_SCENE_COMPOSITION.md`。failure_ledger_delta=update V73-F04实现进展；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。尚未完成CAPA模型、AdaPoinTr、新日志确认及完整主方法对比，shutdown=false。
+
+
+---
+
 ## V7.3 完整原生融合参考完成（2026-09-08）
 
 `WS-V73-M2-GLOBAL-FUSION-01/20260907T203500Z__population-native-lidar-fusion-r2` 已完成，code d78e99ae，489 Actor、671.62s、GPU allocated峰值2.687GiB、RSS6.364GiB。每个24视图窗口固定M1r3 DPT解码一次，再做Actor规范融合和同尺度PCA三角片；没有新增优化或全轨迹标签，不能与更多标签训练的模型声称同预算架构胜负。
