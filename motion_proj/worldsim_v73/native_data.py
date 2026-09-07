@@ -2,7 +2,6 @@
 from collections import defaultdict
 import json
 from pathlib import Path
-from types import SimpleNamespace
 
 import ijson
 import numpy as np
@@ -75,7 +74,8 @@ def load_scene_inputs(config, progress):
                 break
         record = {'scene_id': scene, 'log_id': scene_info['log_token'], 'role': role,
                   'requested_times': config['build_times_per_scene'], 'available_times': len(available),
-                  'actor_count': len(tracks_by_scene[scene_info['token']]), 'views': []}
+                  'actor_count': sum(instances.get(t, '') in config['rigid_categories']
+                                     for t in tracks_by_scene[scene_info['token']]), 'views': []}
         if not available:
             scenes.append(record)
             progress({'phase':'data', 'scene':scene, 'views':0})

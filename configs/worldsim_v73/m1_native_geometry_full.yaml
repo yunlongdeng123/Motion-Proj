@@ -1,0 +1,18 @@
+task_id: WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01
+runs_root: /root/autodl-tmp/runs
+seed: 7301
+failure_ledger_refs: [V71-F54, V71-F66, V71-F68, V71-F69, V73-F01, V73-F02, V73-F03, V73-F04, V73-F05]
+data:
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  visual_split: configs/worldsim_v72/e2_visual_split.json
+  camera_channels: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT]
+  build_times_per_scene: 4
+  image_hw: [378, 672]
+  rigid_categories: [vehicle.car, vehicle.truck, vehicle.bus.rigid, vehicle.trailer, vehicle.construction]
+backbone:
+  repository: /root/autodl-tmp/external/worldsim_v72/vggt
+  checkpoint: /root/autodl-tmp/models/eas_vggt/vggt/model.safetensors
+training:
+  epochs: 60
+  lr: 0.00001
+  actor_weight: 1.0

@@ -28,6 +28,7 @@ def write_json(path, value):
 
 
 def summarize(errors):
+    errors = [e for e in errors if len(e)]
     if not errors:
         return {'count':0, 'mae_m':None, 'hit_02':None}
     x = torch.cat(errors)
@@ -147,6 +148,7 @@ def main():
         progress({'phase':'baseline_evaluation','trainable_parameters':parameters})
         baseline = evaluate('baseline')
         first_grad = None
+        maximum_training_gpu = 0.
         for epoch in range(config['training']['epochs']):
             random.shuffle(fit)
             epoch_loss=[]
@@ -174,6 +176,7 @@ def main():
                 optimizer.step()
                 row={'epoch':epoch+1,'scene':scene['scene_id'],'loss':loss_sum,'grad_norm':float(grad),
                      'step_s':time.monotonic()-step_start,'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
+                maximum_training_gpu = max(maximum_training_gpu, row['peak_gpu_gib'])
                 with (out/'train.jsonl').open('a') as f: f.write(json.dumps(row)+'\n')
                 epoch_loss.append(loss_sum)
                 progress({'phase':'training',**row})
@@ -183,6 +186,7 @@ def main():
         summary={'status':'done','trainable_parameters':parameters,'first_gradient_norm':first_grad,
             'first_project_weight_max_change':(head.projects[0].weight.detach()-before_weight).abs().max().item(),
             'epochs':config['training']['epochs'],'scene_count':len(scenes),'baseline':baseline,'final':final,
+            'maximum_training_gpu_gib':maximum_training_gpu,
             'wall_s':time.monotonic()-started,'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,
             'failure_ledger_delta':'none; V73-F01:F04 remain active beyond this native-DPT diagnostic',
             'claim':'native geometry gradient and build-point interpolation only; canonical surface/coverage/hard first-return still pending'}

@@ -1,5 +1,15 @@
 # Research Status
 
+## V7.3 M1 原生几何可训练，扩大已有日志训练（2026-09-07）
+
+`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01` r1=`done`，commit=`29595e20`，run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。原生DPT训练32,654,562参数，15epochs/60更新，4fit Actor MAE全部下降；2dev中scene0048 3.594→2.867m、scene0359 5.043→5.095m（仅11点）。第一project参数变化0.000526568；前缀峰值4.578GiB、DPT训练1.348GiB；118.18s。详表=`docs/WORLDSIM_V7_3_M1_NATIVE_RESULTS.md`，summary=`docs/autoresearch/worldsim_v73/m1/r1_summary.json`。
+
+结论仅为原生几何梯度与build点插值改善，不是完整surface/首交点/泛化成功。新增`V73-F05 active`记录开发支持不足与跨日志不稳定；训练early比例升高保留于V73-F02/F03。当前12视图DPT候选无需加卡，查询/上层LoRA资源还未测；shutdown=false。
+
+下一run=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`，提交后立即启动：全部25fit/6dev日志身份、60epochs，保持4时刻3相机378×672与相同监督。先扩大有效观测，再判别build-only局部适配与空间查询，不把小样本开发负结果外推路线失败。研究自动接续已设在本任务中，间隔15分钟；每个里程碑同步台账/push。
+
+---
+
 ## V7.3 M1 原生 DPT 实现与首轮训练（2026-09-07）
 
 task=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`；实现=`done`，实验=`pending`，提交后立即启动；base=`dbe98c91`；run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。命令：`python scripts/train_worldsim_v73_native_geometry.py --config configs/worldsim_v73/m1_native_geometry.yaml --run-id 20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。

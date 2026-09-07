@@ -1,5 +1,17 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V73-F05 — 原生 DPT 小样本可拟合但开发支持与泛化不足（2026-09-07）
+
+category=`scientific/generalization_and_support`；status=`active`；task=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`；code=`29595e20`；run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。
+
+观察：原生32.65M参数DPT真实更新，4fit场景Actor诊断MAE全部下降；scene0048开发MAE3.594→2.867m，scene0359仅11点且5.043→5.095m。train早于target0.2m比例增加，不能以深度MAE替代free/硬表面收益。两dev样本不支持泛化结论，也不否定视觉几何适配。
+
+先查CAPA官方稀疏几何TTA与CVPR2024 TTA depth completion，再迁移为全部25fit/6dev日志训练、记录实际Actor支持，必要时比较build-only局部适配/显式传感器融合。当前首选增加有效日志数据，保持同一损失/lr，不把结构和优化同时更改。解除条件为充分观测下稳定的开发几何/硬读出收益；不能因训练loss下降解除。r2=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`；报告=`docs/WORLDSIM_V7_3_M1_NATIVE_RESULTS.md`。
+
+V73-F01 outcome：12视图冻结前缀4.578GiB/DPT训练1.348GiB，当前native-DPT候选无资源阻塞；上层LoRA/空间查询尚未测，风险仅局部缓解。V73-F02:F04仍active。下一V73编号=`V73-F06`。
+
+---
+
 ## V7.3 M1 启动前风险复核（2026-09-07）
 
 `WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01` 的原生 DPT 入口与12视图数据路径已实现并通过语法编译，尚无新模型结果；`failure_ledger_delta=none`，V73-F01:F04仍active。保留逐点LiDAR采集时间缺失、稀疏像素遮挡和box归属近似的边界；不把build点插值误差当真实首交点指标。配置引用四风险及V71-F54/F66/F68/F69，下一V73编号仍F05。

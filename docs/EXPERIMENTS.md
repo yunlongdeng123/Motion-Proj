@@ -1,5 +1,14 @@
 # Experiments
 
+## WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01 — r1 done，r2 queued（2026-09-07）
+
+- r1=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`；implementation=`29595e20`；15epochs/60更新；32,654,562原生DPT参数；project最大参数变化0.000526568；第一梯度832.50。
+- 资源=prefix4.578GiB、train1.348GiB、RSS7.706GiB、wall118.18s；4fit全部Actor MAE降低；dev0048 3.594→2.867m、dev0359 5.043→5.095m（11点）；完整表见`WORLDSIM_V7_3_M1_NATIVE_RESULTS.md`。
+- 指标仅build点插值诊断，不是surface/场景硬首交点；source/external=false。failure_ledger_delta=`V73-F05_active;V73-F01_native_DPT_resource_mitigated`。
+- r2=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`，config=`configs/worldsim_v73/m1_native_geometry_full.yaml`：全部25fit/6development场景、60epochs、同12view/分辨率/监督/lr/seed。增加统计支持，不改强基线科学定义；提交后启动。
+
+---
+
 ## WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01 — pending，已实现即将启动（2026-09-07）
 
 - run=`run://worldsim_v73/WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01/20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`；base=`dbe98c91`；seed7301；config=`configs/worldsim_v73/m1_native_geometry.yaml`。
