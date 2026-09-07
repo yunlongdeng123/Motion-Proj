@@ -1,5 +1,7 @@
 # WorldSim V7.2 GPU 执行状态
 
+> **2026-09-07：本计划/交接的执行范围已被替代，status=`rejected`（目标不匹配，非全部方法被证伪）。** 当前使用 [EAS-VGGT Recovery Plan](WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md) 和 [最新状态](RESEARCH_STATUS.md)。下文 A/B、R1–R7、外部补全/神经 LiDAR 队列及 shutdown 判据属于历史，不据此启动任务。已完成的代码、I/O、run 和各自正/负结果保留；纠偏见 `V71-F64/F65`。
+
 更新：2026-09-07
 
 GPU 已恢复为 1×RTX 3090 24 GiB。G0--G3 几何图谱、AdaPoinTr 三种初始化对照和 G0/G2 上的 W0--W4 权重对照已经完成；当前不需要重跑这些任务。

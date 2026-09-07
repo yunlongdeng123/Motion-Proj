@@ -1,6 +1,8 @@
 # WorldSim V7.2：以任务与外部竞争为起点的研究计划
 
-> 2026-09-07 当前执行解释已由 [先检索再迁移恢复计划](WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md) 更新，当前状态见 `RESEARCH_STATUS.md` 文首，纠正见 `V71-F64`。本文件后文的 D1 “双方失败／整体完成”保留为历史记录：A1 负结果成立，B 的方法比较未完成；不再以缺失 B 证据触发整体结束。旧阈值、run 与已消费数据身份不变。用户本轮先要求计划，后续实验仍为 pending。
+> **2026-09-07：本计划/交接的执行范围已被替代，status=`rejected`（目标不匹配，非全部方法被证伪）。** 当前使用 [EAS-VGGT Recovery Plan](WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md) 和 [最新状态](RESEARCH_STATUS.md)。下文 A/B、R1–R7、外部补全/神经 LiDAR 队列及 shutdown 判据属于历史，不据此启动任务。已完成的代码、I/O、run 和各自正/负结果保留；纠偏见 `V71-F64/F65`。
+
+> 上一轮执行解释（历史）曾由 [先检索再迁移恢复计划](WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md) 更新，纠正见 `V71-F64`；该恢复计划现也已被 EAS-VGGT 替代。本文件后文的 D1 “双方失败／整体完成”保留为历史记录：A1 负结果成立，B 的方法比较未完成；不以缺失 B 证据触发整体结束。旧阈值、run 与已消费数据身份不变，最新阶段只读 `RESEARCH_STATUS.md` 文首。
 
 ## 对象级占据／三维补全，或神经 LiDAR 仿真：先比较，再选主线
 

@@ -1,14 +1,36 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## 当前路线总览（2026-09-07，基线 debe8697）
+
+| 范围 | 最新解释 | 入口 |
+|---|---|---|
+| V7/V7.1 | canonical compiler、M8/M39、物理/外观/轨迹分工为 EAS-VGGT 起点；保留外域、容量和算子负结果 | EAS-VGGT plan 第 2/8 节，历史 task/条目 |
+| V7.2 外部补全 A1 | 该候选未越过 G1；不是 EAS-VGGT 的科学拒绝 | V71-F63 |
+| V7.2 过早整体收口 | 缺失 B 实验不能解释成 false；旧修复队列被新方向替代 | V71-F64 |
+| V7.2 当前恢复 | EAS-VGGT E0 已完成，E1–E5 pending；无新模型结果 | V71-F65、RESEARCH_STATUS 文首 |
+
+<a id="v71-f65-eas-vggt-direction"></a>
+## V71-F65 — recovery 继续外部补全/神经 LiDAR，未继承 EAS 已有机制（2026-09-07）
+
+- category=`governance/research_scope`；status=`resolved`（方向与文档已纠正，效果未验证）；task=`WS-V72-E0-EAS-VGGT-REPLAN-01`；evidence baseline commit=`debe8697`。
+- observation：task-first 将对象补全/full neural LiDAR 设为选路中心，先前 recovery 又安排 NKSR、LiDAR-RT、A2/B1；V7/V7.1 的 canonical surface、continuous evidence/categorical return、physical/appearance ownership 和 SE(3) 只作为对照或外围资产。用户明确指出方向偏离，要求 EAS-VGGT。
+- cause：把下游任务宽度与替换成外部完整模型混同，把局部失败扩大为原表示应被替换；上一轮主要修正决策完整性，未重新核对研究对象与正证据继承。此为研究规划失误，不是新算法实验失败。
+- correction：新计划围绕三机制与 VGGT→canonical EAS 的学习接口；旧 A/B、R1–R7 队列不再执行。M8/M39/M22/M28/M49 等原结果及 M43、W0–W4、A1 负结果保留；外部模型降为可选对照/能力记录，不作为新主线前置。
+- prevention：每次新计划先列“已有正结果→原范围→新学习增量→反证对照”；先检索再迁移必须服务当前问题，不能变成外部模型排队；结构正确、学习增益、泛化和完整交付分别判断。README/status/failure/experiment 与旧入口同步，避免旧队列复活。
+- reopening：E1 完成 RGB/投影/缓存，E2 用同几何 scalar/F/O/U 和 VGGT feature 控制辨别收益，E3/E4 做真实外观与刚体组合；科学晋级取决于新证据。不是恢复 M40/F41 家族权重扫参，也不修改旧阈值或数据曝光身份。
+- evidence=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`、`paper/results/eas_evidence.json`、`paper/sections/05_experiments_appendix.tex`、`motion_proj/worldsim_v71/authority_contract.py`；本轮 new training/new target quality/source-test/external-test read=false，shutdown=false。
+
+下一可用统一失败编号：`V71-F66`。历史 next-ID 只反映当时状态。
+
 ## V71-F64 — 缺失 B 实验被机械当作失败，导致整体过早收口（2026-09-07）
 
-- category=`research_decision_completeness`；status=`interpretation_corrected_runner_pending`；task=`WS-V72-R0-RESEARCH-PLAN-01`；证据基线 commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`。
+- category=`research_decision_completeness`；status=`superseded`（解释已纠正；旧 runner 修复任务被 EAS-VGGT 主线替代）；task=`WS-V72-R0-RESEARCH-PLAN-01`；证据基线 commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`。
 - observation：原总计划要求 A/B 都完成同信息量强基线比较后选路。实际 B 仅完成 LiDAR4D capability；`scripts/decide_worldsim_v72_d1.py::main` 不接收 B 结果，固定 `route_b_pass=False`，且 A dev 失败时直接给出 `close_method_claim`。缺实验被解释成双方科学失败，随后文档整体收口并关机。
 - cause：决策实现混合“比较未完成”和“候选已被否定”；停止线适用范围超出已经完成的实验。不是 A1 指标算错，也没有证据支持路线 B 已通过。
 - correction：保留 `V71-F63` 的 A1 负结果、旧 canonical gate 与论文；在当前状态和恢复计划中撤回“B 已被证伪／所有可执行工作完成”的解释。用户已要求遇卡点先检索再迁移，并已重新开机。
 - prevention：未来决策显式接收各路 `comparison_complete` 与结果证据；缺证据只产生待完成任务，不能默认 false 后触发整体结束。每个实质卡点先查官方论文／代码／issue，再做有依据迁移；不以同一候选失败代替路线审查。
-- reopening：允许在既有 dev 上继续有明确机制差异的研究，暴露身份保持不变；先修正决策逻辑，再完成 NKSR、LiDAR-RT、A2/B1 的相关工作。不得追溯修改旧阈值或用版本名恢复测试独立性。
-- evidence=`scripts/decide_worldsim_v72_d1.py`、`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`、原计划第 4/10B/11 节；新训练／新 target quality read=0；后续实现 task=`WS-V72-R1-DECISION-AND-DIAGNOSIS-01`，status=`pending`。
+- reopening（2026-09-07 更新）：允许在既有 dev 上继续机制研究并保留曝光身份；原 NKSR/LiDAR-RT/A2/B1 队列及 R1 决策器修复前置由 V71-F65 替代。新路线从 EAS-VGGT E1 开始；旧 D1 不参与决策。缺证据不能当失败的原则继续有效，旧阈值与 run 不追溯修改。
+- evidence=`scripts/decide_worldsim_v72_d1.py`、`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`、原计划第 4/10B/11 节；新训练／新 target quality read=0；旧后续 task=`WS-V72-R1-DECISION-AND-DIAGNOSIS-01`，status=`rejected`（调度范围被替代，非算法拒绝）；当前见 `WS-V72-E1-VGGT-EVIDENCE-IO-01`。
 
 下一可用统一失败编号：`V71-F65`。下方历史段落中的 next-ID 只反映当时状态。
 

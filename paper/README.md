@@ -1,5 +1,7 @@
 # EAS 论文与本地研究档案
 
+> **当前研究状态（2026-09-07）**：本目录是 V7.1 EAS 的既有证据稿；下文“当前主稿”指这次历史构建。新方向为 [EAS-VGGT](../docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)，实现/实验 E1–E5 尚未完成。本轮不改写论文结果、不重建 PDF；当前执行入口见 [RESEARCH_STATUS](../docs/RESEARCH_STATUS.md)。
+
 当前主稿：**Evidential Actor Surfaces for Physically Consistent Driving Reconstruction**。
 科学证据快照为 `research/worldsim-v7.1-learned-evidential-surface@1913ab0e`，本次写作整理覆盖 V6--V7.1，未执行新实验。
 

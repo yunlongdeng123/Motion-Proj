@@ -1,5 +1,9 @@
 # AGENTS 约定
 
+## 当前研究范围：EAS-VGGT（用户纠偏，2026-09-07）
+
+当前主线与阶段只读 `docs/RESEARCH_STATUS.md` 文首及 `docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`。继承 V7/V7.1 正结果，围绕物理/外观解耦、连续证据与分类回波测度、SE(3) 刚体轨迹等变性接入 VGGT 学习。旧 task-first A/B、research-first R1–R7 与 GPU handoff 已被替代；不要因旧文档或 `route_selection.yaml` 的历史状态自动重启外部补全、LiDAR4D/LiDAR-RT 或 shutdown。旧结果/曝光身份保留；新实现和收益不能由计划文字推定。卡点仍按下方“先检索、再迁移”执行。
+
 ## 环境激活（重要）
 
 conda base 在 `/root/miniconda3`，项目环境 `motionproj` 建在数据盘 `/root/autodl-tmp/envs/motionproj`。

@@ -1,6 +1,8 @@
 # WorldSim V7.2 D1 负向收口报告
 
-> 2026-09-07 解释纠正：本报告保留 A1 负结果与当时交付记录。B 未完成方法候选比较，不能解释为科学失败；“V7.2 整体完成”由 `V71-F64` 撤回。当前恢复计划见 [WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md](WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md)，旧数值和 canonical 不变。
+> **2026-09-07 更正：此为旧 A1/D1 协议的历史报告，不是项目当前终态。** A1 对 G1 的负结果保留；B 缺少同协议候选比较不等于被证伪（`V71-F64`）。用户要求恢复 EAS-VGGT，见 [新计划](WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)；后续不再执行旧 A/B 队列（`V71-F65`），也不据本报告触发关机。
+
+> 上一轮解释纠正（历史）：本报告保留 A1 负结果与当时交付记录。B 未完成方法候选比较，不能解释为科学失败；“V7.2 整体完成”由 `V71-F64` 撤回。当时恢复计划为 [research-first plan](WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md)，现已被文首 EAS-VGGT 计划替代；旧数值和 canonical 不变。
 
 ## 结论
 

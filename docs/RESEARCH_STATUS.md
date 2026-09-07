@@ -1,5 +1,34 @@
 # Research Status
 
+## WorldSim V7.2 EAS-VGGT 主线恢复计划（2026-09-07）
+
+task=`WS-V72-E0-EAS-VGGT-REPLAN-01`；status=`done`（仅本次计划/文档交付）；事实基线 commit=`debe8697`；当前计划=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`。用户指出 task-first 与上一版 recovery 未充分继承 V7/V7.1，明确要求 EAS-VGGT：物理与外观解耦、连续证据与分类回波测度、SE(3) 刚体轨迹等变性。本轮据此完成方向纠偏，不再将外部几何补全或全扫描神经 LiDAR 作为主线/前置。
+
+**继承已成立的机制：** V7 canonical compiler/provenance；M8 物理几何与逐帧覆盖；M39 固定几何上的 categorical measure；M22/M28 物理/视觉所有权与逆刚体 query；M25/M27 外观学习和容量启示；M49 有限衰减边界。M8 dev CD `237.67→231.46mm`、literal hit `47.67→50.43%`；M39 categorical early `18.19→17.67%`、hit `62.28→64.46%`，属于不同算子下的独立比较，不能跨表混比。M43 跨域 early 负结果、D0 scalar 对照和旧算子更正均保留。
+
+新方法的学习接口为 VGGT 多视图特征→Actor canonical 聚合→物理/证据 heads，外观拥有独立 primitives 与优化器，轨迹由只读 SE(3) 放置。先固定 M8 验证视觉证据的增量，再分阶段训练物理和外观；不预设三态一定优于等容量 scalar，不把骨干或渲染器接通称为方法成立。
+
+| 阶段 | 状态 | 下一产物 |
+|---|---|---|
+| E0：主线重设与文档同步 | done | 本计划、正结果继承表、实验矩阵及 F65 |
+| E1：VGGT/RGB 证据与 I/O | pending | 相机 payload 清单、投影/特征缓存、一次接口和资源检查 |
+| E2：视觉证据及物理学习 | pending | 同几何 scalar/F/O/U 控制，几何/证据 2×2 归因 |
+| E3：独立外观学习 | pending | matched-capacity 消融、真实渲染和物理非干扰 |
+| E4：刚体轨迹与场景组合 | pending | 连续轨迹、多 Actor 干预及解析/真实留出分开评价 |
+| E5：冻结确认与研究交付 | pending | source/外域同协议结果、逐 log 稳定性和文稿 |
+
+**当前调度：** 后续从 E1 开始。旧 A/B D1 与 R1–R7 队列已被本计划替代（task scope=`rejected`，理由是目标不匹配，不是全部科学失败）。`configs/worldsim_v72/route_selection.yaml` 和旧 D1 runner 仅属于历史协议；不触发恢复/关机。`V71-F64` 的缺证据不能当 false 原则仍有效，但其 NKSR/LiDAR-RT 复开安排退役；新增 `V71-F65`。
+
+已有 LiDAR I/O 与 501-Actor dev bundle 复用；这些日志的多相机 RGB/同步/缓存尚待 E1 核查，不能写成全部 I/O 已完成。593 train/66 legacy dev 和 4 个 clean dev logs 保留曝光身份；3 route-select logs 仅提取 LiDAR、quality 未读，3 source-test candidates 未打开；外域新 final 未读，不能抹除已暴露 AV2 logs。
+
+本轮 new training / new target quality / source-test / external-test read=`false/false/false/false`，shutdown=`false`。联网核对 VGGT 官方代码/训练说明、DynamicVGGT、Gau-Occ 与 StreetGS；未安装新模型或启动新实验。当前分支仍为 `research/worldsim-v7.2-task-first-completion-lidar`；旧名称保留以衔接提交历史。
+
+根 README、docs 导航、统一账本/实验台账、旧计划入口、AGENTS 与论文目录说明已同步。`paper/` 是 V7.1 证据稿；`paper_v72/` 是旧补全路线报告；都不代表新 EAS-VGGT 已完成。全部实现/研究交付处理完才复核用户关机条件。下一可用失败 ID=`V71-F66`。
+
+---
+
+以下是按时间保留的历史状态；其中“当前”“下一步”和停止规则不覆盖文首的 EAS-VGGT 范围。
+
 ## WorldSim V7.2 先检索再迁移：恢复计划交付（2026-09-07）
 
 task=`WS-V72-R0-RESEARCH-PLAN-01`；status=`done`（仅计划）；代码／历史证据基线 commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`。当前入口=`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`。用户最新要求是每遇实质卡点先查顶会／优秀开源，再结合项目迁移，先交付一版计划；本轮没有启动新训练或读取新测试质量。

@@ -1,5 +1,7 @@
 # WorldSim V7.2：先检索、再迁移的研究推进计划
 
+> **2026-09-07：本计划/交接的执行范围已被替代，status=`rejected`（目标不匹配，非全部方法被证伪）。** 当前使用 [EAS-VGGT Recovery Plan](WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md) 和 [最新状态](RESEARCH_STATUS.md)。下文 A/B、R1–R7、外部补全/神经 LiDAR 队列及 shutdown 判据属于历史，不据此启动任务。已完成的代码、I/O、run 和各自正/负结果保留；纠偏见 `V71-F64/F65`。
+
 日期：2026-09-07。任务：`WS-V72-R0-RESEARCH-PLAN-01`，状态：`done`（仅指本计划交付）。代码事实基线：`e6bb9a971114e7b60f234f9c2cf4766ee784973a`。后续实验均为 `pending`。本次依据用户“每次卡点先网络检索顶会或优秀开源，再结合项目迁移”的要求制定；2026-09-07 已重新连接开机后的 AutoDL，未启动新训练、未读取新的测试质量、未执行关机。
 
 ## 1. 先纠正研究边界

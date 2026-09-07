@@ -1,5 +1,15 @@
 # Experiments
 
+## WS-V72-E0-EAS-VGGT-REPLAN-01 — done，仅计划与文档（2026-09-07）
+
+- evidence baseline commit=`debe8697`；deliverable=`docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md`；本轮不是模型实验，无新 checkpoint/run/benchmark。
+- 复核 V7 compiler、M8/M39/M22/M28/M25/M27/M49 及相应边界，联网核对 VGGT/DynamicVGGT/Gau-Occ/StreetGS 的一手来源。原 A/B 与 R1–R7 研究安排因用户明确的 EAS-VGGT 方向被替代，不作为全部候选的科学拒绝。
+- failure_ledger_refs=`[V71-F10,V71-F23,V71-F24,V71-F25,V71-F28,V71-F35,V71-F36,V71-F40,V71-F41,V71-F42,V71-F43,V71-F47,V71-F52,V71-F54,V71-F60,V71-F62,V71-F63,V71-F64,V71-F65]`；同时继承 D0 W0–W4 与 density outcome note；failure_ledger_delta=`V71-F65;V71-F64_remediation_superseded`。
+- E1–E5=`pending`；新模块、相机缓存与三机制实验均未运行。旧 LiDAR I/O 和 dev bundle 继续有效；source/external final read=false，new target quality read=false，shutdown=false。
+- 本轮只做文档/路径/账本引用一致性与 Git diff 检查，不重复历史 GPU 验证。下一任务=`WS-V72-E1-VGGT-EVIDENCE-IO-01`。
+
+以下注册表保留历史事实；旧计划中的后续任务以当前 status 文首为准。
+
 ## WS-V72-R0-RESEARCH-PLAN-01 — done，仅研究计划（2026-09-07）
 
 - evidence baseline commit=`e6bb9a971114e7b60f234f9c2cf4766ee784973a`；deliverable=`docs/WORLDSIM_V7_2_RESEARCH_FIRST_RECOVERY_PLAN.md`；此项不是 GPU 实验，没有新 benchmark／checkpoint／正式 run。
