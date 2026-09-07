@@ -1,5 +1,23 @@
 # Research Status
 
+## V7.3 环视原生结果与跨Actor共享训练（2026-09-08）
+
+M1六相机r3已完成（code cf039715，run `20260907T161500Z__native-dpt-surround25-dev6-s7301-r3`）：25fit/6dev场景，每窗口4时刻×6相机=24views，60epochs/1500更新，2287.82s，原生DPT 32,654,562参数。project最大变化0.004401，前缀峰值约5.510GiB，训练峰值1.350GiB，RSS9.853GiB。
+
+独立日志等权Actor轴向MAE：fit 20日志 3.926→0.771m；development 5日志 3.493→3.321m，配对变化-0.173m，bootstrap95%区间[-1.595,1.664]m，4/5日志改善。全部仍为build内保留点插值诊断，不能代替未输入时刻表面/首交点。scene0519的轴向early=0.801，原生深度优化不保证物理表面改善。F05继续active。
+
+原始结果与日志配对表：`docs/autoresearch/worldsim_v73/m1/r3_summary.json`、`r3_log_analysis.json`。环视前后覆盖不同，不把r2/r3的聚合数字直接当作同样本收益。
+
+下一任务 `WS-V73-M2-GLOBAL-ACTOR-01`，run `20260907T165500Z__surround-shared-native-s7304-r1`：20fit日志/5dev日志各选一个Actor，按build/轨迹信息优先速度>2m/s，再选日志内build支持数中位数；不是按预测质量或heldout误差挑选。无可用输入的选中对象保留在cohort并注明，不静默剔除。现有dev的运动Actor只覆盖2日志，不能担任充分的新日志确认。
+
+所有fit Actor共享原生DPT与三层局部查询参数，30epochs（预计600更新），seed7304、lr1e-5、每样本完整24views（轨迹可插值时）。开发日志无梯度/优化更新。预训练主体冻结前缀存CPU、当前Actor移GPU并checkpoint重算；不减少相机或修改轨迹。使用M1 r3已完成checkpoint；native depth表面FPS512种子 + 最多1024 build证据查询，通过同一三角表面训练coverage +0.5原始首返回free +0.05弱envelope，与上一机制实验同目标。此轮回答共享训练/泛化问题，不声称现有range free已解决F02。
+
+原始束预处理只解析一次元数据，使用每相机曝光时刻的已知Actor轨迹，不依赖同一scan恰好有Actor返回。仍用box+0.1m排除重叠的点归属代理及scan时间；逐点实例/逐点扫描时刻未知。每epoch保存checkpoint，完成后按日志报告hit/early/miss/free/可观测表面距离及LiDAR PCA比较，保留点数与patch数。后续等容量逐点、LiDAR-only同查询与原生+LiDAR强融合仍必要。
+
+当前global数据准备/训练待提交后启动；M1 r3无任务运行。磁盘133GiB可用、资源未不足，shutdown=false。failure_ledger_delta=update V73-F05；F01:F05仍active，下一编号V73-F06。整个V7.3完成后仍按已授权流程保存/push、无任务shutdown。
+
+---
+
 ## 用户追加：V7.3 完成后自动关机（2026-09-08）
 
 用户已明确授权：**整个V7.3研究完成后**，保存checkpoint、实验结果与报告，更新三本台账并push；确认没有训练、评估、数据处理任务，也没有会继续启动作业的队列/控制器运行，再经SSH执行AutoDL shutdown。无需再次询问。单个训练结束、单个里程碑完成或单候选失败不等于V7.3完成，不为关机强行结束正常任务。

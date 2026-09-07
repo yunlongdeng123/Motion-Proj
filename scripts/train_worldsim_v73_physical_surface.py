@@ -27,6 +27,7 @@ def lidar_patches(points,decoder,count=1536):
     ids=torch.linspace(0,len(points)-1,min(count,len(points)),device=points.device).long()
     centers=points[ids]
     neighbors=cKDTree(points.cpu().numpy()).query(centers.cpu().numpy(),k=min(20,len(points)))[1]
+    neighbors=np.asarray(neighbors).reshape(len(centers),-1)
     neighborhood=points[torch.tensor(neighbors,device=points.device)]
     local=neighborhood-neighborhood.mean(1,keepdim=True)
     _,vectors=torch.linalg.eigh(local.transpose(1,2)@local)
@@ -56,7 +57,7 @@ def evaluate_actor_surface(prediction,rays):
         rows.append({'sample_index':r['sample_index'],'role':r['role'],
             'owned_ray':first_return_metrics(depth[positive],ranges[positive]),
             'all_near_box_rays':len(ranges),
-            'free_intrusion_rate':(torch.isfinite(depth)&(depth<ranges-.2)).float().mean().item(),
+            'free_intrusion_rate':(torch.isfinite(depth)&(depth<ranges-.2)).float().mean().item() if len(ranges) else None,
             'mean_free_intrusion_m':direct_free_space_loss(depth,ranges).item(),
             'positive_points':len(points),'positive_surface_mean_m':distance.mean().item() if len(points) else None,
             'positive_surface_recall_02':(distance<=.2).float().mean().item() if len(points) else None})

@@ -10,19 +10,20 @@ from motion_proj.worldsim_v72.data.nuscenes_camera import NuScenesCameraIndex, _
 from .native_data import interpolate_pose
 
 
-def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids):
-    index=NuScenesCameraIndex(Path(dataset_root))
+def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids,index=None,tracks=None):
+    index=index or NuScenesCameraIndex(Path(dataset_root))
     scene=next(s for s in index.scenes if s['name']==scene_id)
     samples=sorted([s for s in index.samples if s['scene_token']==scene['token']],key=lambda s:s['timestamp'])
     sample_ids={s['token'] for s in samples}
-    tracks=defaultdict(list)
-    with (index.metadata_root/'sample_annotation.json').open('rb') as handle:
-        for row in ijson.items(handle,'item'):
-            if row['sample_token'] in sample_ids:
-                stamp=int(index.sample_by_token[row['sample_token']]['timestamp'])
-                tracks[row['instance_token']].append((stamp,_transform(row['translation'],row['rotation']),
-                                                       np.asarray(row['size'],float)[[1,0,2]]))
-    for rows in tracks.values(): rows.sort(key=lambda r:r[0])
+    if tracks is None:
+        tracks=defaultdict(list)
+        with (index.metadata_root/'sample_annotation.json').open('rb') as handle:
+            for row in ijson.items(handle,'item'):
+                if row['sample_token'] in sample_ids:
+                    stamp=int(index.sample_by_token[row['sample_token']]['timestamp'])
+                    tracks[row['instance_token']].append((stamp,_transform(row['translation'],row['rotation']),
+                                                           np.asarray(row['size'],float)[[1,0,2]]))
+        for rows in tracks.values(): rows.sort(key=lambda r:r[0])
     trajectory=tracks[owner]
     selected=[i for i,s in enumerate(samples) if s['token'] in build_sample_ids]
     if not selected: raise ValueError('没有对应的build采样帧')
@@ -80,3 +81,23 @@ def load_actor_rays(dataset_root, scene_id, owner, build_sample_ids):
             'raw_scan_points':len(world),'near_box_rays':int(near.sum()),
             'owned_points':int((positive&near).sum())})
     return records
+
+
+class ActorRayDataset:
+    """共享一次传感器索引和注释读取，避免多Actor预处理重复解析完整元数据。"""
+    def __init__(self,dataset_root,scene_ids):
+        self.index=NuScenesCameraIndex(Path(dataset_root))
+        names={s['token']:s['name'] for s in self.index.scenes if s['name'] in scene_ids}
+        self.tracks={name:defaultdict(list) for name in names.values()}
+        with (self.index.metadata_root/'sample_annotation.json').open('rb') as handle:
+            for row in ijson.items(handle,'item'):
+                sample=self.index.sample_by_token[row['sample_token']]
+                if sample['scene_token'] not in names: continue
+                self.tracks[names[sample['scene_token']]][row['instance_token']].append((int(sample['timestamp']),
+                    _transform(row['translation'],row['rotation']),np.asarray(row['size'],float)[[1,0,2]]))
+        for tracks in self.tracks.values():
+            for rows in tracks.values(): rows.sort(key=lambda r:r[0])
+
+    def actor(self,scene_id,owner,build_sample_ids):
+        return load_actor_rays(self.index.dataset_root,scene_id,owner,build_sample_ids,
+                               index=self.index,tracks=self.tracks[scene_id])

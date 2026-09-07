@@ -1,5 +1,15 @@
 # V7.3 原生DPT适配结果
 
+## r3：六相机完整窗口
+
+M1六相机r3已完成（code cf039715，run `20260907T161500Z__native-dpt-surround25-dev6-s7301-r3`）：25fit/6dev场景，每窗口4时刻×6相机=24views，60epochs/1500更新，2287.82s，原生DPT 32,654,562参数。project最大变化0.004401，前缀峰值约5.510GiB，训练峰值1.350GiB，RSS9.853GiB。
+
+独立日志等权Actor轴向MAE：fit 20日志 3.926→0.771m；development 5日志 3.493→3.321m，配对变化-0.173m，bootstrap95%区间[-1.595,1.664]m，4/5日志改善。全部仍为build内保留点插值诊断，不能代替未输入时刻表面/首交点。scene0519的轴向early=0.801，原生深度优化不保证物理表面改善。F05继续active。
+
+原始结果与日志配对表：`docs/autoresearch/worldsim_v73/m1/r3_summary.json`、`r3_log_analysis.json`。环视前后覆盖不同，不把r2/r3的聚合数字直接当作同样本收益。
+
+# V7.3 原生DPT适配结果
+
 ## r2：扩大已有日志训练
 
 M1 r2=`done`，code=`424743fc`，run=`20260907T151000Z__native-dpt-fit25-dev6-s7301-r2`。25fit/6dev场景、60epochs/1500更新，1130.19s。原生DPT 32,654,562参数，project最大变化0.004067；训练峰值1.348GiB、RSS8.817GiB。
