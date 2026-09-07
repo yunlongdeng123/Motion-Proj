@@ -25,6 +25,7 @@ from motion_proj.worldsim_v72.data.splits import load_data_roles, require_role_a
 from motion_proj.worldsim_v72.eas_vggt.actor_visual_cache import ActorVisualCache, save_actor_visual_cache
 from motion_proj.worldsim_v72.eas_vggt.backbones import Pi3XBackbone, VGGTBackbone
 from motion_proj.worldsim_v72.eas_vggt.cache import save_backbone_geometry
+from motion_proj.worldsim_v72.eas_vggt.cache import load_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.preprocess import resize_camera_window
 from motion_proj.worldsim_v72.eas_vggt.visual_pooling import observe_actor_candidates
 
@@ -148,8 +149,9 @@ def main() -> None:
             for path in paths
         }
         rows: list[dict[str, Any]] = []
+        reuse_root = Path(config["reuse_backbone_run"]) if config.get("reuse_backbone_run") else None
         for backbone_name, backbone_config in config["backbones"].items():
-            backbone = _make_backbone(backbone_name, backbone_config)
+            backbone = None if reuse_root is not None else _make_backbone(backbone_name, backbone_config)
             try:
                 for window_index, window in enumerate(windows):
                     _write_json(
@@ -162,17 +164,26 @@ def main() -> None:
                             "window_id": window.window_id,
                         },
                     )
-                    images, transforms = resize_camera_window(
-                        window,
-                        maximum_pixels=int(config["preprocess"]["maximum_pixels"]),
-                        patch_multiple=int(config["preprocess"]["patch_multiple"]),
-                    )
-                    torch.cuda.reset_peak_memory_stats()
-                    inference_started = time.monotonic()
-                    geometry = backbone.infer(window, images, transforms)
-                    inference_seconds = time.monotonic() - inference_started
-                    geometry_path = run_dir / "backbone_cache" / backbone_name / f"{window.window_id}.npz"
-                    save_backbone_geometry(geometry, geometry_path)
+                    if reuse_root is None:
+                        images, transforms = resize_camera_window(
+                            window,
+                            maximum_pixels=int(config["preprocess"]["maximum_pixels"]),
+                            patch_multiple=int(config["preprocess"]["patch_multiple"]),
+                        )
+                        torch.cuda.reset_peak_memory_stats()
+                        inference_started = time.monotonic()
+                        geometry = backbone.infer(window, images, transforms)
+                        inference_seconds = time.monotonic() - inference_started
+                        geometry_path = run_dir / "backbone_cache" / backbone_name / f"{window.window_id}.npz"
+                        save_backbone_geometry(geometry, geometry_path)
+                        reused_geometry = False
+                    else:
+                        geometry_path = reuse_root / "backbone_cache" / backbone_name / f"{window.window_id}.npz"
+                        geometry = load_backbone_geometry(geometry_path)
+                        if geometry.provenance.get("window_fingerprint") != window.fingerprint:
+                            raise ValueError(f"reused {backbone_name} cache/window fingerprint mismatch")
+                        inference_seconds = 0.0
+                        reused_geometry = True
                     matched = 0
                     observed = 0
                     camera_observations = 0
@@ -194,6 +205,7 @@ def main() -> None:
                             input_evidence_fou=actor["evidence_masses"],
                             opportunity_count=actor["evidence_opportunities"],
                             visual_features=observation.pooled_features,
+                            geometry_features=observation.pooled_geometry_features,
                             confidence_sum=observation.confidence_sum,
                             observation_count=observation.observation_count,
                             world_from_actor=pose.world_from_actor,
@@ -222,11 +234,13 @@ def main() -> None:
                             "observed_candidate_count": observed,
                             "camera_observation_count": camera_observations,
                             "inference_seconds": inference_seconds,
-                            "peak_gpu_memory_gib": torch.cuda.max_memory_allocated() / 1024**3,
+                            "reused_geometry": reused_geometry,
+                            "peak_gpu_memory_gib": 0.0 if reused_geometry else torch.cuda.max_memory_allocated() / 1024**3,
                         }
                     )
             finally:
-                backbone.close()
+                if backbone is not None:
+                    backbone.close()
         summary = {
             **manifest,
             "status": "done",

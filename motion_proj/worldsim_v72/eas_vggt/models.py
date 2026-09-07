@@ -25,6 +25,7 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
         *,
         base_feature_dim: int,
         visual_feature_dim: int,
+        geometric_feature_dim: int = 5,
         hidden_dim: int = 256,
         visual_dim: int = 128,
         maximum_surface_delta_m: float = 0.30,
@@ -42,6 +43,15 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
         self.physical_projection = nn.Sequential(
             nn.LayerNorm(physical_dim),
             nn.Linear(physical_dim, hidden_dim),
+            nn.GELU(),
+        )
+        self.geometry_projection = nn.Sequential(
+            nn.LayerNorm(geometric_feature_dim),
+            nn.Linear(geometric_feature_dim, hidden_dim),
+            nn.GELU(),
+        )
+        self.physical_fusion = nn.Sequential(
+            nn.Linear(2 * hidden_dim + 1, hidden_dim),
             nn.GELU(),
         )
         self.evidence_trunk = nn.Sequential(
@@ -63,16 +73,22 @@ class EvidenceConditionedSurfaceAdapter(nn.Module):
         opportunity_count: torch.Tensor,
         visual_features: torch.Tensor,
         visual_observed: torch.Tensor,
+        geometric_features: torch.Tensor,
+        geometry_observed: torch.Tensor,
     ) -> PhysicalEvidenceOutput:
         if evidence_fou.shape[-1] != 3 or canonical_xyz.shape[-1] != 3:
             raise ValueError("canonical_xyz/evidence_fou 最后一维必须为 3")
         opportunity = torch.log1p(opportunity_count.float()).unsqueeze(-1)
         observed = visual_observed.float().unsqueeze(-1)
+        geometry_present = geometry_observed.float().unsqueeze(-1)
         physical = torch.cat(
             [base_features, canonical_xyz, evidence_fou, opportunity], dim=-1
         )
         visual = self.visual_projection(visual_features) * observed
-        physical_hidden = self.physical_projection(physical)
+        geometry_hidden = self.geometry_projection(geometric_features) * geometry_present
+        physical_hidden = self.physical_fusion(
+            torch.cat([self.physical_projection(physical), geometry_hidden, geometry_present], dim=-1)
+        )
         evidence_hidden = self.evidence_trunk(torch.cat([physical_hidden, visual, observed], dim=-1))
         delta = torch.tanh(self.surface_head(physical_hidden)) * self.maximum_surface_delta_m
         raw_evidence = torch.nn.functional.softplus(self.evidence_head(evidence_hidden))
@@ -101,6 +117,7 @@ class MatchedScalarSurfaceAdapter(EvidenceConditionedSurfaceAdapter):
     def forward(self, **inputs) -> tuple[torch.Tensor, torch.Tensor]:
         opportunity = torch.log1p(inputs["opportunity_count"].float()).unsqueeze(-1)
         observed = inputs["visual_observed"].float().unsqueeze(-1)
+        geometry_present = inputs["geometry_observed"].float().unsqueeze(-1)
         physical = torch.cat(
             [
                 inputs["base_features"],
@@ -111,7 +128,10 @@ class MatchedScalarSurfaceAdapter(EvidenceConditionedSurfaceAdapter):
             dim=-1,
         )
         visual = self.visual_projection(inputs["visual_features"]) * observed
-        physical_hidden = self.physical_projection(physical)
+        geometry_hidden = self.geometry_projection(inputs["geometric_features"]) * geometry_present
+        physical_hidden = self.physical_fusion(
+            torch.cat([self.physical_projection(physical), geometry_hidden, geometry_present], dim=-1)
+        )
         evidence_hidden = self.evidence_trunk(torch.cat([physical_hidden, visual, observed], dim=-1))
         delta = torch.tanh(self.surface_head(physical_hidden)) * self.maximum_surface_delta_m
         return delta, self.scalar_head(evidence_hidden).squeeze(-1)

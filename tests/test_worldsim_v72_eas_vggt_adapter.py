@@ -63,7 +63,7 @@ def _geometry() -> BackboneGeometry:
         reference_from_camera_opencv=np.eye(4)[None],
         intrinsics_model_px=np.eye(3)[None],
         feature_grid=grid,
-        scale_status="arbitrary",
+        scale_status="metric_aligned",
         provenance={"payload_role": "build_input"},
     )
 
@@ -73,6 +73,7 @@ def test_candidate_projection_pools_visible_features_and_rejects_behind_camera(t
     observation = observe_actor_candidates(candidates, np.eye(4), _window(tmp_path), _geometry())
     assert observation.observation_count.tolist() == [1, 0, 0]
     np.testing.assert_allclose(observation.pooled_features[0], [1.0, 1.0], atol=1.0e-6)
+    assert observation.pooled_geometry_features.shape == (3, 5)
     np.testing.assert_array_equal(observation.pooled_features[1:], 0.0)
 
 
@@ -84,6 +85,8 @@ def _inputs(count: int = 7) -> dict[str, torch.Tensor]:
         "opportunity_count": torch.randint(0, 9, (count,)),
         "visual_features": torch.randn(count, 32),
         "visual_observed": torch.randint(0, 2, (count,), dtype=torch.bool),
+        "geometric_features": torch.randn(count, 5),
+        "geometry_observed": torch.randint(0, 2, (count,), dtype=torch.bool),
     }
 
 

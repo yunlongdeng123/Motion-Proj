@@ -10,7 +10,7 @@ from typing import Any, Mapping
 import numpy as np
 
 
-ACTOR_VISUAL_CACHE_SCHEMA_VERSION = "worldsim_v72.actor_visual_cache.v1"
+ACTOR_VISUAL_CACHE_SCHEMA_VERSION = "worldsim_v72.actor_visual_cache.v2"
 
 
 @dataclass(frozen=True)
@@ -24,6 +24,7 @@ class ActorVisualCache:
     input_evidence_fou: np.ndarray
     opportunity_count: np.ndarray
     visual_features: np.ndarray
+    geometry_features: np.ndarray
     confidence_sum: np.ndarray
     observation_count: np.ndarray
     world_from_actor: np.ndarray
@@ -36,11 +37,14 @@ class ActorVisualCache:
         evidence = np.asarray(self.input_evidence_fou, dtype=np.float32)
         opportunity = np.asarray(self.opportunity_count, dtype=np.int32).reshape(-1)
         visual = np.asarray(self.visual_features, dtype=np.float32)
+        geometry = np.asarray(self.geometry_features, dtype=np.float32)
         confidence = np.asarray(self.confidence_sum, dtype=np.float32).reshape(-1)
         observations = np.asarray(self.observation_count, dtype=np.int32).reshape(-1)
         transform = np.asarray(self.world_from_actor, dtype=np.float64)
         if base.ndim != 2 or visual.ndim != 2 or base.shape[0] != count or visual.shape[0] != count:
             raise ValueError("Actor feature row count does not match candidates")
+        if geometry.shape != (count, 5):
+            raise ValueError("geometry_features must have shape (N,5)")
         if evidence.shape != (count, 3):
             raise ValueError("input_evidence_fou must have shape (N,3)")
         if any(len(value) != count for value in (opportunity, confidence, observations)):
@@ -54,6 +58,7 @@ class ActorVisualCache:
         object.__setattr__(self, "input_evidence_fou", evidence)
         object.__setattr__(self, "opportunity_count", opportunity)
         object.__setattr__(self, "visual_features", visual)
+        object.__setattr__(self, "geometry_features", geometry)
         object.__setattr__(self, "confidence_sum", confidence)
         object.__setattr__(self, "observation_count", observations)
         object.__setattr__(self, "world_from_actor", transform)
@@ -66,6 +71,7 @@ _ARRAY_FIELDS = (
     "input_evidence_fou",
     "opportunity_count",
     "visual_features",
+    "geometry_features",
     "confidence_sum",
     "observation_count",
     "world_from_actor",

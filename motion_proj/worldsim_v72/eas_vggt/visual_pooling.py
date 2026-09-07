@@ -8,6 +8,7 @@ import numpy as np
 
 from motion_proj.worldsim_v72.data.camera_schema import CameraWindow
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
+from motion_proj.worldsim_v72.eas_vggt.alignment import aligned_camera_center_rmse_m
 
 
 def _bilinear(values: np.ndarray, x: np.ndarray, y: np.ndarray) -> np.ndarray:
@@ -32,18 +33,26 @@ def _bilinear(values: np.ndarray, x: np.ndarray, y: np.ndarray) -> np.ndarray:
 @dataclass(frozen=True)
 class CandidateVisualObservation:
     feature_sum: np.ndarray
+    geometry_feature_sum: np.ndarray
     confidence_sum: np.ndarray
     observation_count: np.ndarray
 
     def __post_init__(self) -> None:
         features = np.asarray(self.feature_sum, dtype=np.float32)
+        geometry = np.asarray(self.geometry_feature_sum, dtype=np.float32)
         confidence = np.asarray(self.confidence_sum, dtype=np.float32).reshape(-1)
         count = np.asarray(self.observation_count, dtype=np.int32).reshape(-1)
-        if features.ndim != 2 or len(features) != len(confidence) or len(features) != len(count):
+        if (
+            features.ndim != 2
+            or geometry.shape != (len(features), 5)
+            or len(features) != len(confidence)
+            or len(features) != len(count)
+        ):
             raise ValueError("candidate visual observation 形状不一致")
         if np.any(confidence < 0.0) or np.any(count < 0):
             raise ValueError("confidence/count 必须非负")
         object.__setattr__(self, "feature_sum", features)
+        object.__setattr__(self, "geometry_feature_sum", geometry)
         object.__setattr__(self, "confidence_sum", confidence)
         object.__setattr__(self, "observation_count", count)
 
@@ -51,6 +60,13 @@ class CandidateVisualObservation:
     def pooled_features(self) -> np.ndarray:
         denominator = np.maximum(self.confidence_sum, 1.0e-8)[:, None]
         pooled = self.feature_sum / denominator
+        pooled[self.observation_count == 0] = 0.0
+        return pooled.astype(np.float32)
+
+    @property
+    def pooled_geometry_features(self) -> np.ndarray:
+        denominator = np.maximum(self.confidence_sum, 1.0e-8)[:, None]
+        pooled = self.geometry_feature_sum / denominator
         pooled[self.observation_count == 0] = 0.0
         return pooled.astype(np.float32)
 
@@ -79,10 +95,20 @@ def observe_actor_candidates(
     homogeneous = np.concatenate([world, np.ones((len(world), 1))], axis=1)
     feature_dim = int(geometry.feature_grid.shape[-1])
     feature_sum = np.zeros((len(candidates), feature_dim), dtype=np.float64)
+    geometry_feature_sum = np.zeros((len(candidates), 5), dtype=np.float64)
     confidence_sum = np.zeros(len(candidates), dtype=np.float64)
     observation_count = np.zeros(len(candidates), dtype=np.int32)
     model_height, model_width = geometry.points_reference.shape[1:3]
     feature_height, feature_width = geometry.feature_grid.shape[1:3]
+    if geometry.scale_status == "metric_aligned":
+        points_world = geometry.points_reference
+    else:
+        calibrated_poses = np.stack([frame.world_from_camera_opencv for frame in window.frames])
+        similarity, _ = aligned_camera_center_rmse_m(
+            geometry.reference_from_camera_opencv,
+            calibrated_poses,
+        )
+        points_world = similarity.apply(geometry.points_reference)
     for index, frame in enumerate(window.frames):
         camera = homogeneous @ np.linalg.inv(frame.world_from_camera_opencv).T
         projected = camera[:, :3] @ frame.intrinsics_px.T
@@ -105,12 +131,30 @@ def observe_actor_candidates(
         feature_y = (pixel_y + 0.5) * feature_height / model_height - 0.5
         features = _bilinear(geometry.feature_grid[index].astype(np.float32), feature_x, feature_y)
         confidence = _bilinear(geometry.confidence[index], pixel_x, pixel_y).reshape(-1)
+        geometry_valid = _bilinear(geometry.valid_mask[index].astype(np.float32), pixel_x, pixel_y).reshape(-1) >= 0.5
+        sampled_world = _bilinear(points_world[index], pixel_x, pixel_y)
+        finite = geometry_valid & np.isfinite(sampled_world).all(axis=1) & np.isfinite(confidence)
+        selected = selected[finite]
+        if not len(selected):
+            continue
+        features = features[finite]
+        confidence = confidence[finite]
+        sampled_world = sampled_world[finite]
         confidence = np.maximum(confidence.astype(np.float64), 1.0e-6)
+        residual_actor = (sampled_world.astype(np.float64) - world[selected]) @ transform[:3, :3]
+        sampled_homogeneous = np.concatenate([sampled_world, np.ones((len(sampled_world), 1))], axis=1)
+        sampled_camera = sampled_homogeneous @ np.linalg.inv(frame.world_from_camera_opencv).T
+        depth_residual = sampled_camera[:, 2] - camera[selected, 2]
+        geometry_features = np.column_stack(
+            [residual_actor, depth_residual, np.log1p(confidence)]
+        )
         feature_sum[selected] += features.astype(np.float64) * confidence[:, None]
+        geometry_feature_sum[selected] += geometry_features * confidence[:, None]
         confidence_sum[selected] += confidence
         observation_count[selected] += 1
     return CandidateVisualObservation(
         feature_sum=feature_sum.astype(np.float32),
+        geometry_feature_sum=geometry_feature_sum.astype(np.float32),
         confidence_sum=confidence_sum.astype(np.float32),
         observation_count=observation_count,
     )

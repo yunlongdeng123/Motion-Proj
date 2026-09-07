@@ -72,6 +72,8 @@ def _tensor_inputs(caches: list[ActorVisualCache], device: torch.device) -> dict
         "opportunity_count": torch.from_numpy(concatenate("opportunity_count")).to(device),
         "visual_features": torch.from_numpy(concatenate("visual_features")).to(device),
         "visual_observed": torch.from_numpy(concatenate("observation_count") > 0).to(device),
+        "geometric_features": torch.from_numpy(concatenate("geometry_features")).to(device),
+        "geometry_observed": torch.from_numpy(concatenate("observation_count") > 0).to(device),
     }
 
 
@@ -184,6 +186,7 @@ def main() -> None:
                     input_evidence_fou=actor["evidence_masses"],
                     opportunity_count=actor["evidence_opportunities"],
                     visual_features=observation.pooled_features,
+                    geometry_features=observation.pooled_geometry_features,
                     confidence_sum=observation.confidence_sum,
                     observation_count=observation.observation_count,
                     world_from_actor=pose.world_from_actor,
