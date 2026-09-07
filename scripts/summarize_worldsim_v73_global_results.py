@@ -81,7 +81,7 @@ def main():
     args=parser.parse_args()
     summary=json.loads((args.run/'summary.json').read_text())
     stages={name:[summarize_actor(row) for row in summary[key]] for name,key in
-            [('lidar_pca','baseline'),('initial','initial'),('final','final')]}
+            [('lidar_pca','baseline'),('initial','initial'),('final','final')] if key in summary}
     if args.fusion:
         fusion=json.loads((args.fusion/'summary.json').read_text())
         stages['native_lidar_fusion']=[summarize_actor(row) for row in fusion['final']]

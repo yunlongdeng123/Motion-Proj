@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 LiDAR控制运行与CAPA桥接准备（2026-09-08）
+
+LiDAR-only完整队列r6已启动（code98d9fa32，PID20389，run `20260907T193500Z__population-lidar-only-extra-time-s7304-r6`），通过初始表面评价后进入真实训练。观测query梯度非零，native组为0，峰值0.181GiB；没有视觉前缀或DPT参与。r5 PID18843同时正常运行，GPU进程占用约12.1GiB+r6约0.53GiB，当前无OOM或资源不足。两条run的输入/标签协议保持登记配置，等待完整结果再比较。
+
+CAPA基线桥接代码已准备，模型优化尚未启动/验证。入口=`scripts/evaluate_worldsim_v73_capa.py`，数据桥=`motion_proj/worldsim_v73/capa_inputs.py`。直接调用本地官方CAPAProtocol和VGGT LoRA配置，不复制v72含checksum/固定旧split的包装器；依赖peft0.19.1、omegaconf2.3.1、colorlog6.10.1、huggingface_hub0.36.2及原始VGGT本地权重均已在motionproj环境，不需要新环境、下载或升级Torch。
+
+具体迁移边界：保留原378×672图像和K，build投影深度量化到像素时取最近正测量；不读取额外fit/heldout时刻。采用官方100步/rank4/alpha8/qkv设置；官方实际trainable选择是patch_embed内LoRA，其他注入LoRA冻结，这与主候选可训练DPT不同。官方每步随机取10%帧，本窗口为3帧；最终全24帧联合推理。为了保留反向通路并控制激活，启用上游aggregator已有的nonreentrant checkpointing，不缓存可训练路径最终特征。官方逐图像scale+shift从build测量拟合，作为CAPA协议差异明确记录，不能冒充主方法的窗口共享固定scale。
+
+CAPA每窗口重置后适配，包括dev窗口自身的build输入；其额外时刻始终只评价，不能将这种TTA称为“dev完全不反传的共享模型”。这属于部署时允许的稀疏输入适配，而不是读取dev留出标签调参。输出米制深度按相机曝光时刻与已知Actor轨迹规范化，接同固定大小PCA三角片融合与原始首回波评价；有图像native支持但无Actor build LiDAR时允许native-only表面，完全无支持明确miss。输出密度与观测可用比例单独记录，不把点到面转换结果当成CAPA论文原任务结果。
+
+先执行31个窗口的CPU条件构建，保存计数与时间/视图来源，不把已有RGB再复制到磁盘。模型优化等待当前GPU长训练完成或有足够实测余量后启动，不因人为并发争抢造成OOM而宣称需要加卡。后续按实际单作业资源选择保留信息的执行优化；这不改变用户不以24GB限制研究的要求。CAPA运行仍需原始基座及完整反向；若正常单作业仍不足，再按已授权流程保存、无任务关机并提示加卡。
+
+failure_ledger_delta=update V73-F05（同cohort控制已训练）及baseline preparation；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解但不宣称彻底解决，下一编号V73-F07。整个V7.3持续进行，shutdown=false。
+
+---
+
 ## V7.3 完整队列首轮与LiDAR-only强控制（2026-09-08）
 
 完整队列joint r5（code8831def5，PID18843）已完成首个371 Actor更新并进入epoch2，非smoke/短回归。首轮峰值10.196GiB；14次无Actor相机位姿为预期LiDAR路径，17次有视图但预测native支持为空，分别记录，不能合并成F06塌缩率。357有视图更新的native组梯度norm中位数354.00、query组12.85，逐样本norm比例中位数29.51。该证据只反映参数组量级；Adam对尺度有适应性，不能据此声称query没学习，更不能等同逐损失梯度冲突。当前保持r5优化配置不变。首轮诊断=`docs/autoresearch/worldsim_v73/m2/global/population_r5_epoch1_diagnostics.json`。
