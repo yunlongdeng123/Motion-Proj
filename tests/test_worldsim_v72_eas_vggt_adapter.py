@@ -14,7 +14,10 @@ from motion_proj.worldsim_v72.eas_vggt.models import (
 )
 from motion_proj.worldsim_v72.eas_vggt.types import BackboneGeometry
 from motion_proj.worldsim_v72.eas_vggt.visual_pooling import observe_actor_candidates
-from motion_proj.worldsim_v72.eas_vggt.appearance import render_detached_gaussian_appearance
+from motion_proj.worldsim_v72.eas_vggt.appearance import (
+    observe_candidate_rgb,
+    render_detached_gaussian_appearance,
+)
 
 
 def _window(tmp_path: Path) -> CameraWindow:
@@ -159,3 +162,21 @@ def test_rgb_render_gradients_stop_at_physical_points() -> None:
     assert points.grad is None
     assert colors.grad is not None and torch.isfinite(colors.grad).all()
     assert opacity.grad is not None and torch.isfinite(opacity.grad).all()
+
+
+def test_candidate_rgb_pooling_keeps_appearance_separate(tmp_path: Path) -> None:
+    candidates = np.asarray([[1.5, 1.5, 1.0], [0.0, 0.0, -1.0]])
+    images = torch.zeros((1, 3, 4, 4), dtype=torch.float32)
+    images[:, 0] = 0.2
+    images[:, 1] = 0.4
+    images[:, 2] = 0.6
+    observation = observe_candidate_rgb(
+        candidates,
+        np.eye(4),
+        _window(tmp_path),
+        images,
+        _geometry(),
+        occlusion_tolerance_m=2.0,
+    )
+    assert observation.observation_count.tolist() == [1, 0]
+    np.testing.assert_allclose(observation.pooled_rgb[0], [0.2, 0.4, 0.6], atol=1.0e-6)
