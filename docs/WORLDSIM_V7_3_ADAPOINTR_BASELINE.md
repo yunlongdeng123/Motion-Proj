@@ -1,5 +1,15 @@
 # V7.3 AdaPoinTr强补全控制
 
+## V7.3 AdaPoinTr首轮完整结果、event真实启动与独立日志对策（2026-09-08）
+
+AdaPoinTr r1 `WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1` 已完成并正常退出：code23981936，完整模型32494657个可训练参数，30epoch/11130 Actor呈现/2790优化更新，4926.63s含489对象初始/最终评价，GPU allocated峰值1.00658GiB、RSS2.11761GiB。最终75开发对象/5日志：hit16.05%、early11.31%、miss48.92%、free0.14656m、target→surface距离0.09758m、recall@0.2m85.66%。相对自身初始化，距离−0.11974m、日志bootstrap95%[−0.27337,−0.02175]m，recall+18.54pp、[+7.71,+30.93]pp，hit+6.68pp、[+3.16,+10.20]pp；early+6.38pp、[+2.47,+10.82]pp，free+0.03040m、[−0.01929,+0.07727]m。几何覆盖可学习，但不是一致的物理改善。
+
+相对同full_track标签的r7，Ada r1 hit−15.70pp、[−26.16,−2.97]pp；free+0.07499m、[−0.02406,+0.17408]m；相对r8，free+0.11224m、[+0.02594,+0.20383]m，recall+13.71pp、[+2.70,+27.37]pp。移动开发9对象/2日志的hit7.14%、early4.39%、miss18.56%、free0.08765m、距离0.15679m、recall45.61%，大量返回较晚，不能只看miss降低。8个空输入开发对象及23个无自有留出回波均保留。全体、共有输入、移动分层和配对见m2/global/adapointr_r1_analysis.json。r1未迁移PCN Y-up坐标的F07限制保留，修订r2尚未运行；不能仅凭r1否定完整补全基线。
+
+
+---
+
+
 ## V7.3 AdaPoinTr官方坐标接口修订（2026-09-08）
 
 V73-F07：首轮AdaPoinTr r1使用本项目Z-up Actor轴输入PCN预训练模型，尚未迁移其车辆坐标约定。依据适配前物理误差继续查阅官方源码，确认[PoinTr NormalizeObjectPose](https://github.com/yuxumin/PoinTr/blob/master/datasets/data_transforms.py)及[PCN test_kitti](https://github.com/wentaoyuan/pcn/blob/master/test_kitti.py)在车辆规范化后显式交换Y/Z，输出再逆变换。该证据说明现有预训练接口有可修正的域差异，但并不单独证明r1全部误差由此造成。

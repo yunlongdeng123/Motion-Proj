@@ -1,5 +1,21 @@
 # Research Status
 
+## V7.3 AdaPoinTr首轮完整结果、event真实启动与独立日志对策（2026-09-08）
+
+AdaPoinTr r1 `WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1` 已完成并正常退出：code23981936，完整模型32494657个可训练参数，30epoch/11130 Actor呈现/2790优化更新，4926.63s含489对象初始/最终评价，GPU allocated峰值1.00658GiB、RSS2.11761GiB。最终75开发对象/5日志：hit16.05%、early11.31%、miss48.92%、free0.14656m、target→surface距离0.09758m、recall@0.2m85.66%。相对自身初始化，距离−0.11974m、日志bootstrap95%[−0.27337,−0.02175]m，recall+18.54pp、[+7.71,+30.93]pp，hit+6.68pp、[+3.16,+10.20]pp；early+6.38pp、[+2.47,+10.82]pp，free+0.03040m、[−0.01929,+0.07727]m。几何覆盖可学习，但不是一致的物理改善。
+
+相对同full_track标签的r7，Ada r1 hit−15.70pp、[−26.16,−2.97]pp；free+0.07499m、[−0.02406,+0.17408]m；相对r8，free+0.11224m、[+0.02594,+0.20383]m，recall+13.71pp、[+2.70,+27.37]pp。移动开发9对象/2日志的hit7.14%、early4.39%、miss18.56%、free0.08765m、距离0.15679m、recall45.61%，大量返回较晚，不能只看miss降低。8个空输入开发对象及23个无自有留出回波均保留。全体、共有输入、移动分层和配对见m2/global/adapointr_r1_analysis.json。r1未迁移PCN Y-up坐标的F07限制保留，修订r2尚未运行；不能仅凭r1否定完整补全基线。
+
+Ada退出后已在释放的GPU预算内启动r9 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T230000Z__population-lidar-track-beam-event-s7304-r9`，codec2fbdccf，PID33444，日志 `/root/autodl-tmp/controller_logs/v73_population_lidar_event_r9.log`。与r8仅增加固定geometry first-event项，weight0.01/σ0.2m/cap28，完整30epoch、全轨迹fit标签和相同原始build输入。已进入真实反向与优化，首epoch峰值allocated0.40113GiB；no_support/capped/原字面miss分别保留，不把有界event代理称为已解决缺支持。主joint r5和CAPA r2继续，r10/r11与Ada轴修订r2仍待资源，无自动启动队列。
+
+F05调查：本地35场景/27日志的七传感器载荷足够形成窗口，但当前25日志外仅0139/0379，均有旧版实际使用记录。进一步比对发现nuScenes trainval全部850场景/68日志均已有V7.2角色，无未分配日志。公共挂载有完整294GiB归档，能补载荷不能补独立性，未大规模解压。已先查AV2官方论文/格式/下载源并成功匿名列举Sensor train目录；下一步从未出现过身份选外部确认候选，使用旧AV2开发日志解决格式问题，最终候选不用于结构或超参。跨传感器域限制必须单列；当前无新候选载荷/质量读取。详见 `WORLDSIM_V7_3_CONFIRMATION_DATA.md` 和 coverage/log_payload_inventory_r1.json。
+
+failure_ledger_delta=update F02/F03/F05/F07；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3仍未完成，shutdown=false；三项正常GPU研究继续。仅全部研究收尾后保存/push并确认无训练、评估、数据和待启动任务，才执行已授权关机。
+
+---
+
+
+
 ## V7.3 同全轨迹标签原生DPT控制实现与登记（2026-09-08）
 
 现有M1r3/fusion与r7/r8/Ada的标签预算不同，不能直接归因架构。已补齐共享训练器native_only模式：直接微调完整原生DPT，规范坐标native+LiDAR融合与同预算PCA曲面，query模块冻结且不参与预测；同full_track surface/free和build depth监督，不增加外挂小头。训练每步真实重算原生头；仅固定权重评价按scene/view复用深度，避免多个Actor重复解码。原始输入、视图和多尺度原生路径均保留。
