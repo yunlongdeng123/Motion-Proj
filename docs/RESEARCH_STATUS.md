@@ -1,5 +1,22 @@
 # Research Status
 
+## V7.3 完整原生融合参考完成（2026-09-08）
+
+`WS-V73-M2-GLOBAL-FUSION-01/20260907T203500Z__population-native-lidar-fusion-r2` 已完成，code d78e99ae，489 Actor、671.62s、GPU allocated峰值2.687GiB、RSS6.364GiB。每个24视图窗口固定M1r3 DPT解码一次，再做Actor规范融合和同尺度PCA三角片；没有新增优化或全轨迹标签，不能与更多标签训练的模型声称同预算架构胜负。
+
+开发75对象/5日志的LiDAR PCA→native+LiDAR：hit21.24%→22.78%，early4.35%→9.16%，miss73.41%→57.35%，free0.01771m→0.15030m，观测target到surface距离0.30479m→0.17542m，0.2m覆盖65.42%→78.13%。相对PCA，hit差+1.53pp，日志bootstrap95%[-4.10,+6.35]pp，3/5日志改善；free差+0.13260m，[+0.05887,+0.20172]m，5/5日志变差。距离、覆盖、miss在5/5日志改善。覆盖与物理侵入的冲突仍在，原生融合不是已成立的物理胜者。
+
+dev无预测对象8→3，fit43→10，说明原生视觉支持可覆盖部分无build LiDAR对象；这不能直接解释为其表面正确。dev仍23对象没有留出自有回波，保留未知GT语义。当前主模型的visual-only路径尚未接通，51个空输入对象仍明确计入；后续比较须同时列完整队列及共有可输入对象，不把输入可用性差异偷偷归于交互结构。运动dev仅9对象/2日志：fusion hit9.02%、early9.92%、miss67.06%、free0.20818m；尚不足以确认动态泛化。
+
+结果及配对/运动分层已归档 `docs/autoresearch/worldsim_v73/m2/global/population_fusion_r2_summary.json` 与 `population_fusion_r2_analysis.json`。当前joint r5 PID18843正常训练至epoch8；全轨迹标签LiDAR-only r7 PID23188至epoch14，真实fit_label_times=full_track、GPU allocated峰值0.1945GiB。融合PID23189已结束。没有改动在跑配置，没有发生资源不足。
+
+下一独立工作为F04的场景组合：先查阅[Open3D官方RaycastingScene](https://www.open3d.org/docs/release/python_api/open3d.t.geometry.RaycastingScene.html)与[Street Gaussians作者代码](https://github.com/zju3dv/street_gaussians/)，采用静态背景与只读轨迹Actor各自BVH求交，再统一取最近深度及owner。现有v72-lidar4d环境已安装Open3D0.19，可复用CPU读出，不为场景暴力全对全占用训练显存。静态背景只用build测量，并在每次采样排除已知动态归属；边界、背景未知和非刚体缺失必须分列。该方案尚未产生场景结果，不把Actor-only评价称为场景验证。
+
+failure_ledger_delta=update V73-F02/F04/F05；F01/F03继续active，F06直接数据配置缓解，下一编号V73-F07。CAPA模型、AdaPoinTr、全局组合、新日志确认尚未完成。整个V7.3未完成，shutdown=false；继续研究。
+
+
+---
+
 ## V7.3 完整LiDAR控制与全轨迹监督结果（2026-09-08）
 
 完整cohort LiDAR-only r6完成（code98d9fa32，run `20260907T193500Z__population-lidar-only-extra-time-s7304-r6`）：371fit训练Actor、67dev可输入Actor，30epoch/11130更新，2904.27s含自身initial/final评价，峰值0.181GiB、RSS2.964GiB。固定PCA基线从r5复用，其计算成本不包括在r6 wall time中；该run与joint r5并发，不用于单作业速度排名。489对象全部记录，43fit/8dev无输入对象保留空预测；dev75对象中23个无留出自有回波，不把它们当作有几何GT，miss/覆盖与无输出计数同时报告。
