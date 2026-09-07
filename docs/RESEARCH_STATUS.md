@@ -1,5 +1,19 @@
 # Research Status
 
+## EAS-VGGT V7.2 执行终态（2026-09-08）
+
+状态=`implementation_and_mechanism_stage_complete_with_generalization_gap`；latest code=`ffe99700`，待最终文档 commit 更新；总结果=`docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。E1–E5 均已真实执行，不能再使用下方历史条目的 `E1 running / E2–E5 pending`。
+
+核心结论：VGGT late EAS 在 development 上相对等容量 no-visual 将 Brier `.19186→.18755`；route-select 固定 reliability `alpha=.35` 将 Brier `.23753→.23434`、NLL `.95972→.94380`，但 surface F-score `.66756` 与 CD `.21031m` 基本不变。Pi3X visual arm 退化到 Brier `.24066`，故不支持跨基座通用。controlled ordered-return 的 separated blocking/detection 将 NLL `1.05022→.86215`；E3 held-out rendering PSNR `+0.545dB` 且物理/轨迹不接收 RGB 更新；E4 SE(3) 最大 commutation error=`6.82e-13m`。
+
+数据/I/O：route ActorBundle/EAS=`31 scenes / 310 Actors / 816,442 build points / 284,030 target rays`；source 从官方 shards 02/10 恢复 `677/677` keyframes，并物化 `17 scenes / 80 Actors / 265,177 build points / 94,615 query rays`。RGB 由冻结路径清单选择性恢复，图像与 archive SHA 均有 provenance。MapAnything 官方 checkpoint/原生 intrinsics+metric pose prompt 已完成 route 诊断。
+
+E5 source 仍保持 route 模型、checkpoint、`alpha=.35` 和锁定代码不变。12 个冻结 windows 只有 8 个 Actor pose match，observed candidates/camera observations=`0/0`，因此 evidence mean 为未定义而非性能负数。首次 formal run 保留为 serialization failure；target-free support audit canonical=`run://worldsim_v72/WS-V72-E5-FROZEN-SUPPORT-AUDIT-01/20260908T002500Z__e5-source-support-audit-s7502-r4`，verdict=`frozen_confirmation_inconclusive_insufficient_visual_support`。没有换 scene、调模型或使用 source 选择 alpha；external test 未读。
+
+当前主张：支持 EAS-VGGT 的连续证据 late fusion、分类有序回波、物理/外观所有权桥和 SE(3) 表示机制；只在 route-select 支持小幅证据改善。不支持几何修复、通用 backbone 插件、独立 source 泛化、真实完整 no-return、未来轨迹、占据或安全。`paper_v72` 主文/补充/arXiv 已按此边界重写并编译。
+
+---
+
 ## EAS-VGGT E1：双基座诊断、原生 beam 合同与 Waymo split 已落地（2026-09-07）
 
 task=`WS-V72-E1-VGGT-EVIDENCE-IO-01`；status=`running`；implementation commits=`13421897,49bfe399,246d79f9,4c86e621,993ec9a8`；canonical diagnostic=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4`。详细报告=`docs/WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md`。

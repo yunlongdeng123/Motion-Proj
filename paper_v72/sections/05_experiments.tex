@@ -1,55 +1,103 @@
 \section{Experiments}
-\paragraph{Protocol.}
-Historically exposed Actors are used only for D0 diagnostics and training. Four
-dependency-chain-isolated nuScenes logs form development; three further logs are frozen
-for route selection and three remain unopened source-test candidates. We selectively
-extract 3,882 official keyframe scans and materialize 501 development Actors with
-641,930 held-out rays. All surface predictions are target-free. The D1 rule, fixed
-before development quality is read, requires either a 5\% relative CD reduction or a
-2-point F-score gain over the strongest baseline, an early-return increase no larger
-than one point, and a hit-recall loss no larger than one point.
+\paragraph{Data and protocol.}
+nuScenes logs are separated into fit/development, route-selection, and source roles.
+The route corpus contains 31 scenes and 310 Actors (142 hazardous), with 816,442 build
+points and 284,030 target rays. Its visual evaluation covers 35 Actors and 239 surface
+candidates. The source I/O recovery materializes all 677 required keyframe scans and
+80 Actors from three frozen logs. Model selection never uses source labels.
 
-\paragraph{D0 baselines.}
-On the exposed diagnostic cohort, raw fusion and Actor-local TSDF form a non-dominated
-simple frontier. AdaPoinTr benefits substantially from official pretraining relative to
-training from scratch, but remains behind that frontier at every fixed 64--512 point
-budget. A scalar return-weight head recovers nearly all benefit of the capacity-matched
-F/O/U head, while F/O/U auxiliary supervision does not improve consistently across
-geometries. These results close the broad three-state representation claim and motivate
-only the narrower observation-constraint test.
+\paragraph{Foundation diagnostics.}
+Official VGGT-1B and $\pi^3$ checkpoints run through one shared camera/point-map
+interface. Their first raw LiDAR-alignment diagnostic gives median visible-surface
+residuals of 74.67 m and 3.41 m, respectively, after the then-current similarity
+alignment. These values diagnose adapter/alignment risk rather than benchmark the
+backbones. MapAnything is then run through its native calibrated pose and intrinsic
+prompts on a route window; it reaches 0.799 m median surface residual and 4.76\% hit at
+0.2 m. It is a stronger metric reference, but still does not supply range-sensor
+evidence directly.
 
 \begin{table}[t]
   \centering
-  \caption{Clean development results under the 512-point cap. Native surfaces with
-  fewer points are not duplicated; their mean realized size is reported.}
-  \label{tab:d1-dev}
+  \caption{Evidence prediction on development. All learned rows use comparable small
+  adapters; lower is better. ``Early'' denotes direct joint fusion.}
+  \label{tab:e2-dev}
   \small
-  \resizebox{\columnwidth}{!}{%
-  \begin{tabular}{lrrrrr}
+  \begin{tabular}{lrr}
     \toprule
-    Method & Pts. & CD$\downarrow$ & F$\uparrow$ & Early$\downarrow$ & Hit$\uparrow$ \\
+    VGGT arm & F/O/U NLL & Brier \\
     \midrule
-    Raw fusion & 266 & .1857 & .7439 & .4091 & .5237 \\
-    Actor TSDF & 401 & \textbf{.1786} & \textbf{.7503} & .4115 & \textbf{.5497} \\
-    AdaPoinTr & 512 & .2292 & .6344 & .4332 & .4910 \\
-    Obs.-constrained & 512 & .2298 & .6326 & .4290 & .4929 \\
-    Anchored candidate & 449 & .1950 & .7145 & .4393 & .5222 \\
+    Build evidence input & 1.24246 & .51723 \\
+    Scalar early fusion & 1.51519 & .41679 \\
+    F/O/U early fusion & .95373 & .27455 \\
+    Late, no visual & .79168 & .19186 \\
+    Late EAS-VGGT & \textbf{.79123} & \textbf{.18755} \\
     \bottomrule
-  \end{tabular}}
+  \end{tabular}
 \end{table}
 
-\paragraph{D1 result.}
-Table~\ref{tab:d1-dev} reports the clean gate. Relative to Actor TSDF, the anchored
-candidate changes CD by $+9.17\%$, F-score by $-3.58$ points, early returns by $+2.79$
-points, and hit recall by $-2.76$ points. Thus neither primary-effect path nor either
-side-effect guard passes. The unanchored candidate reduces early returns by only 0.43
-points and raises hit recall by 0.18 points relative to AdaPoinTr while slightly reducing
-geometric quality.
+\paragraph{Late fusion is the transferable development result.}
+Table~\ref{tab:e2-dev} shows that the original joint adapter overfits relative to the
+late-fusion decomposition. A near-capacity scalar head also generalizes poorly. The
+VGGT visual residual improves Brier by .00431 over its no-visual counterpart while
+surface displacement RMSE is effectively unchanged (.07530 versus .07549 m). Replacing
+VGGT with $\pi^3$ worsens Brier from .19264 to .24066, so cross-backbone universality is
+not supported.
 
-\paragraph{Full-LiDAR boundary.}
-The official LiDAR4D run on KITTI-360 frames 4950--5000 completes 30k nominal training
-iterations, 1000 ray-drop refinement steps, evaluation, and scan export. It obtains
-ray-drop F1 .9553, depth RMSE 2.9472\,m, and point CD/F-score .1173/.9208 in 8791.6
-seconds on one RTX~3090. This supports complete-LiDAR capability but supplies no matched
-method gain for D1. The frozen decision is therefore \RouteDecision; route-selection and
-final roles remain unread.
+\begin{table}[t]
+  \centering
+  \caption{Frozen route-selection evidence scores on 239 candidates.}
+  \label{tab:e5-route}
+  \small
+  \begin{tabular}{lrr}
+    \toprule
+    Arm & NLL$\downarrow$ & Brier$\downarrow$ \\
+    \midrule
+    Build evidence input & 1.31308 & .47670 \\
+    Late, no visual & .95972 & .23753 \\
+    Raw visual residual & .95848 & .24477 \\
+    Reliability $\alpha=.35$ & \textbf{.94380} & \textbf{.23434} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Reliability discount.}
+Raw visual fusion slightly improves route NLL but harms Brier. Selecting $\alpha=.35$
+on route data gives the best Brier among the fixed grid and improves both proper scores
+over the no-visual expert (Table~\ref{tab:e5-route}); two of three logs improve in
+Brier. Mean surface F-score remains .66756 and symmetric CD remains approximately
+.21031 m for every learned arm. This is evidence calibration, not geometry repair.
+
+\begin{table}[t]
+  \centering
+  \caption{Controlled ordered-return intervention (16,384 held-out rays).}
+  \label{tab:ordered}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Reader & NLL$\downarrow$ & Brier$\downarrow$ & BG MAE$\downarrow$ \\
+    \midrule
+    Single hazard & 1.05022 & .11969 & .22722 \\
+    Block/detect & \textbf{.86215} & \textbf{.000005} & \textbf{.000423} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Composition mechanisms.}
+The separated blocking/detection reader remains better after moving the front Actor
+behind the background (NLL .67563 versus .93539), and mass splitting changes the output
+by zero numerically. The appearance bridge assigns all 309 physical parents to 3,090
+visual primitives. Across six held-out views it improves pooled Actor PSNR from 17.186
+to 17.730 dB; physical geometry and trajectory receive no RGB update. Its 25.35 dB
+StreetGS reference also records the remaining appearance gap. On 11 Actors and 40
+poses, maximum SE(3) commutation, Actor-frame recovery, and pairwise-distance errors are
+$6.82\times10^{-13}$, $1.48\times10^{-13}$, and $2.82\times10^{-13}$ m; the largest
+observed translation span is 5.24 m.
+
+\paragraph{Source support and neural-LiDAR boundary.}
+The frozen source visual set contains 12 windows and eight matched Actor poses, but zero
+observable surface candidates and zero camera observations. Proper evidence scores are
+therefore undefined. A target-free audit records
+\texttt{inconclusive\_insufficient\_visual\_support}; the route result is not promoted
+to an independent-generalization claim. Separately, an official LiDAR4D capability run
+on KITTI-360 completes range, ray-drop, intensity, and scan export (ray-drop F1 .9553,
+depth RMSE 2.947 m). Its native protocol is not numerically comparable to the Actor task.

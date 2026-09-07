@@ -1,15 +1,19 @@
 \begin{abstract}
-Dynamic LiDAR world simulation needs explicit build-only inputs, held-out targets,
-visibility semantics, and baselines that separate surface quality from the return
-operator. We audit two routes: reusable object-surface completion and full neural LiDAR
-simulation. We introduce a versioned ray-preserving data contract, recover 3,882
-keyframes for dependency-chain-isolated development data, and evaluate raw fusion,
-Actor-local TSDF, a legacy learned surface, and AdaPoinTr under common density caps and
-ray metrics. An official LiDAR4D run establishes complete range, return, intensity, and
-scan capability on KITTI-360. On a clean four-log development set with 501 Actors, our
-pre-registered observation-constrained AdaPoinTr candidate underperforms Actor-local
-TSDF in Chamfer distance, F-score, early returns, and hit recall. We therefore close the
-method claim before route selection or source-test access. The result is a reproducible
-negative audit that identifies strong simple baselines and prevents a narrower,
-unsupported method claim.
+Feed-forward visual geometry predicts points and cameras, but it does not say which
+parts of a dynamic surface were observed by a range sensor, whether a surface blocks a
+beam, or whether that block produces a detectable return. We present EAS-VGGT, a
+prototype representation that adapts visual geometry into Actor-canonical continuous
+free/occupied/unknown evidence while separating physical state, appearance, and rigid
+trajectory. A late-fusion adapter improves development Brier score from .19186 to
+.18755 over an equal-capacity no-visual model. On a separate route-selection split, a
+simplex-preserving reliability discount improves Brier from .23753 to .23434 and NLL
+from .95972 to .94380 on 239 candidates, while leaving the inherited surface essentially
+unchanged. A controlled ordered-return experiment shows why blocking and detection
+must be separate: its NLL is .86215 versus 1.05022 for a single-hazard model. We also
+verify an appearance branch that gains .545 dB without updating physical geometry and
+SE(3) composition with numerical errors below $7\!\times\!10^{-13}$. A frozen source
+confirmation is inconclusive because its preselected views contain zero observable
+Actor candidates; we report that support failure rather than score an empty set. The
+results support the representation mechanisms and expose geometry/generalization as
+the remaining work for a competitive system.
 \end{abstract}

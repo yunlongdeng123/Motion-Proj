@@ -1,16 +1,21 @@
 \section{Related Work}
-\paragraph{Point-cloud completion.}
-Object-level completion predicts a denser or more complete surface from partial points;
-PoinTr provides a strong transformer baseline for this setting~\cite{yu2021pointr}.
-It is a relevant baseline family only when inference remains independent of held-out
-targets and all methods share the same return operator.
+\paragraph{Feed-forward visual geometry.}
+VGGT jointly predicts cameras, depth, point maps, and tracks from multiple
+views~\cite{wang2025vggt}. $\pi^3$ removes a distinguished reference view through
+permutation-equivariant geometry prediction~\cite{wang2025pi3}. MapAnything accepts
+optional intrinsics, poses, depth, and metric-scale prompts in a unified
+model~\cite{keetha2025mapanything}. These are strong geometry priors, but none directly
+defines sensor free/occupied/unknown evidence or an ordered first-return distribution.
 
-\paragraph{Occupancy completion.}
-Occupancy methods predict volumetric free/occupied structure. They are not directly
-equivalent to a point-surface representation and require volume supervision before an
-occupancy claim is justified.
+\paragraph{Robust multimodal fusion.}
+Fusion may fail when one modality is missing or degraded. Work on missing-modality
+transformers~\cite{ma2022missing} and multi-modal expert routing~\cite{park2025mome}
+motivates keeping visual and measurement experts separately usable. Our reliability
+discount is a small post-hoc instance of this principle; it is selected only on route
+data and does not constitute a new general calibration method.
 
-\paragraph{Neural LiDAR simulation.}
-Neural field and ray-tracing systems such as LiDAR4D~\cite{huang2023lidar4d} jointly model geometry, intensity, ray drop, and
-visibility. They provide a broader route, but typically require scene-specific training,
-tracked dynamic objects, compiled CUDA operators, and substantially more compute.
+\paragraph{Neural LiDAR and dynamic rendering.}
+LiDAR4D models geometry, intensity, ray drop, and dynamic scenes in a neural
+field~\cite{zheng2024lidar4d}. Gaussian-splatting systems provide high-quality RGB
+appearance but their opacity is a rendering quantity. EAS instead keeps a sensor
+evidence measure, an appearance state, and an Actor trajectory as distinct objects.

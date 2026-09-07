@@ -1,5 +1,19 @@
 # Experiments
 
+## WorldSim V7.2 EAS-VGGT E1–E5 — executed（2026-09-08）
+
+- E1 official backbones：VGGT/Pi3X canonical=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4`；MapAnything native-prompt canonical=`.../20260907T235000Z__e1-mapanything-route-s7103-r3`，median surface residual=`.7986m`、0.2m hit=`4.76%`、peak GPU=`7.15GiB`。
+- E2 training canonical=`run://worldsim_v72/WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01/20260907T183000Z__e2-canonical-late-fusion-s7202-r1`。VGGT dev late EAS/no-visual Brier=`.187549/.191860`，NLL=`.791229/.791682`；surface displacement RMSE=`.075297/.075488m`。Pi3X EAS/no-visual Brier=`.240658/.192637`，不支持迁移。
+- E2 ordered-return canonical=`run://worldsim_v72/WS-V72-E2-ORDERED-RETURN-MEASURE-01/20260907T195500Z__e2-ordered-return-s7203-r2`。16,384 heldout rays：separated/single-hazard NLL=`.862148/1.050220`，Brier=`.00000543/.119694`；moved Actor NLL=`.675627/.935390`；mass split max error=`0`。
+- E3 canonical=`run://worldsim_v72/WS-V72-E3-DECOUPLED-APPEARANCE-01/20260907T213500Z__e3-render-bridge-s7302-r2`。309 physical parents 全部映射到 3,090 visual primitives；6/6 heldout views PSNR 改善，pooled `17.1855→17.7305dB`；physical geometry/trajectory trainable from RGB=`false/false`。
+- E4 canonical=`run://worldsim_v72/WS-V72-E4-SE3-RIGID-TRAJECTORY-01/20260907T191500Z__e4-se3-rigid-trajectory-s7401-r4`。11 Actors/40 poses；max commutation/frame recovery/pairwise error=`6.82e-13/1.48e-13/2.82e-13m`；max view permutation F/O/U=`5.96e-8`；appearance-to-surface=`0`。
+- E5 route canonical=`run://worldsim_v72/WS-V72-E5-FROZEN-CONFIRMATION-01/20260907T223000Z__e5-route-calibrated-s7501-r2`。35 Actors/239 candidates；calibrated/no-visual Brier=`.234336/.237531`，NLL=`.943798/.959718`；raw visual Brier=`.244766`；alpha=`.35`；surface F-score=`.667558` 不变。
+- Source LiDAR I/O=`run://worldsim_v72/WS-V72-P2-CLEAN-LIDAR-IO-01/20260907T230000Z__clean-source-lidar-io-r2`：shards 02/10，required/present=`677/677`，bytes=`470,123,520`。Source EAS=`.../20260907T231500Z__source-eas-actor-corpus-r2`；ActorBundleV2=`.../20260907T234000Z__clean-source-actor-v2-s0-r1`；两者 `17 scenes/80 Actors/50 hazards`，fingerprint 一致。
+- Source VGGT cache=`run://worldsim_v72/WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01/20260907T233000Z__e2-source-vggt-cache-s7204-r1`：12 windows/3 scenes/8 matched poses/0 observed candidates。Formal r1 在空 tensor metric 序列化失败；canonical target-free support audit=`run://worldsim_v72/WS-V72-E5-FROZEN-SUPPORT-AUDIT-01/20260908T002500Z__e5-source-support-audit-s7502-r4`，verdict=`inconclusive_insufficient_visual_support`。
+- source-test read=`true`（仅上述冻结 cohort）；external-test read=`false`；模型/threshold/source alpha update=`false/false/false`。详细表=`docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。
+
+---
+
 ## WS-V72-E1-VGGT-EVIDENCE-IO-01 — running，双基座与数据合同里程碑（2026-09-07）
 
 - canonical diagnostic=`run://worldsim_v72/WS-V72-E1-VGGT-EVIDENCE-IO-01/20260907T144500Z__e1-vggt-pi3x-train-observation-s7201-r4`；code=`4c86e6218aee05dfd8cf6794181c93d3200585f7`；status=`done`；task 总状态仍为 running。

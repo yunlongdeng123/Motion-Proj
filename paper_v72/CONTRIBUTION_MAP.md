@@ -1,13 +1,10 @@
-# WorldSim V7.2 贡献—证据映射
+# EAS-VGGT 贡献—证据映射
 
-> 2026-09-07 更新：此表仅描述旧补全路线报告；新主线为 [EAS-VGGT](../docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)，新方法贡献尚待 E1–E5。A1 负结果保留，缺 B 比较的整体收口解释由 `V71-F64` 更正，路线漂移由 `V71-F65` 更正。
-
-| 计划贡献 | 必需证据 | 最终状态 |
+| 贡献 | 证据 | 当前判定 |
 |---|---|---|
-| target-free 动态 LiDAR 查询契约 | 接口检查、独立 targets、角色门控 | 已实现；clean dev 501 Actors 正式运行 |
-| 统一 surface-to-return 评价 | G0/G1/G2/G3/A1 共用密度与射线口径 | 已完成；实际点数与几何/回波分表报告 |
-| 旧对象补全与 full neural LiDAR 路线判定 | A/B 同协议候选比较 | A1 负结果成立；B 比较未完成，旧 D1 不足以整体判定；当前选路协议已退役 |
-| 学习式观测约束 surface 方法 | 超过 TSDF/AdaPoinTr 且副作用受控 | 未支持；V71-F63 关闭 |
-| 投稿级完整应用与独立 source test | D1 通过后才解锁 | 未解锁；不读取 final roles |
-
-本目录的历史交付为诊断与基线技术报告。数值来自正式 run summary；机械 `D1_DEV_GATE.json` 的 B=false 只是当时实现输出，不能当作科学拒绝。当前 EAS-VGGT 计划与后续实验另行记录。
+| 连续证据与视觉 late fusion | dev Brier `.19186→.18755`；route 可靠性折扣 `.23753→.23434`，NLL `.95972→.94380` | route-select 支持；没有 source 泛化证据 |
+| blocking/detection 分类回波测度 | controlled 16,384 rays：NLL `1.05022→.86215`，Brier `.11969→.000005`；质量分裂误差 0 | 机制支持；真实全场景回波待做 |
+| 物理/外观解耦且有父表面对应 | 309 物理 parents、3,090 visual primitives、6/6 held-out views 提升，PSNR `+0.545 dB`，物理/轨迹无 RGB 更新 | 单序列桥接支持；距 StreetGS 仍 `7.62 dB` |
+| SE(3) 刚体轨迹等变组合 | 11 Actors / 40 poses，最大 commutation `6.82e-13 m`，最大位移跨度 `5.24 m` | 表示层支持；不含 pose/trajectory 预测 |
+| 多基座叙事 | VGGT 正、Pi3X 负、MapAnything 原生公制提示已运行 | 只支持 VGGT 主实现，不支持通用 EAS 插件 |
+| 独立 source 确认 | 12 frozen windows，8 pose matches，0 observed candidates | 不可计算；不得声称独立确认 |

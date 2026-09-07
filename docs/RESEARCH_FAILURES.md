@@ -1,6 +1,33 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
-## 当前补充风险总览（2026-09-07，最新实现 993ec9a8）
+## V71-F69 — 冻结 source 视觉 cohort 无可观测 Actor 候选（2026-09-08）
+
+- category=`protocol/evaluation_support`；status=`closed_inconclusive`；task=`WS-V72-E5-FROZEN-CONFIRMATION-01`。
+- symptom：12 个锁定 source windows 和 8 个 Actor pose matches 中，`observed_candidate_count=0`、`camera_observation_count=0`。formal evaluator 对空 evidence tensor 求均值产生 NaN，严格 JSON 序列化拒绝写 summary；四份 surface actor rows 已写出，但不能据此生成视觉证据比较。
+- boundary：这是冻结 cohort 的模态支持失败，既不是 EAS 性能负数，也不是正结果。source scene/sample、checkpoint、代码 hash 和 route-selected `alpha=.35` 均匹配原 lock；不得换 scene、调 alpha 或把 undefined 指标写成 0。
+- research migration：联网核对 CVPR 2022 missing-modality robustness、CVPR 2025 MoME 与 selective prediction 后，迁移为 target-free support audit 和显式 insufficient-support verdict。canonical audit=`run://worldsim_v72/WS-V72-E5-FROZEN-SUPPORT-AUDIT-01/20260908T002500Z__e5-source-support-audit-s7502-r4`，不加载 checkpoint/label、不做选择。
+- prevention：未来独立 cohort 在任何 quality read 前冻结 camera/Actor overlap 与 minimum observed-candidate eligibility；无视觉支持时使用 measurement fallback 并单独报告覆盖率。当前 source 不再重复读取以制造确认。
+- failed formal=`run://worldsim_v72/WS-V72-E5-FROZEN-CONFIRMATION-01/20260907T235000Z__e5-source-frozen-s7502-r1`；support audit r1–r3 为字段名适配工程失败，r4 canonical。
+
+## V71-F68 — raw visual expert 在 route 上伤害 Brier（2026-09-08）
+
+- category=`scientific/domain_shift_fusion`；status=`resolved_narrowly_on_route`；task=`WS-V72-E5-FROZEN-CONFIRMATION-01`。
+- symptom：VGGT raw late visual 相对 no-visual 的 route NLL `.95972→.95848` 略好，但 Brier `.23753→.24477` 退化；Pi3X 在 development 也明显退化。直接把视觉 expert 全权用于新日志没有可靠性。
+- migration：先查 CVPR 2025 MoME 的独立专家/质量路由和 CVPR 2021 domain-drift calibration，再在 route 上选择 simplex-preserving `p=p0+alpha(pv-p0)`。`alpha=.35` 得到 Brier `.23434`、NLL `.94380`，2/3 logs Brier 改善；模型参数、几何和输入不变。
+- boundary：alpha 在 route 上选择，只能支持 route-select 恢复；source 因 F69 不可计算。不得写通用校准或独立泛化。Pi3X 负结果保留，不能因 VGGT 恢复声称多基座成功。
+- evidence=`run://worldsim_v72/WS-V72-E5-FROZEN-CONFIRMATION-01/20260907T223000Z__e5-route-calibrated-s7501-r2`；source lock 在 payload read 前保存 alpha、checkpoint、代码与 cohort hash。
+
+## V72 工程恢复补记（2026-09-08）
+
+- nuScenes RGB mirror 实际为 `800x450`，按冻结清单从三个相机 archive 选择性恢复并记录 SHA；缺 RGB 的 route cache r1 保留失败。
+- source LiDAR 首次 subset 参数未传给 worker，误启全部十个 shard；中断并清除 orphan 后修复，只扫描官方 shard 02/10，canonical `677/677`。
+- MapAnything r1 将 float64 intrinsics 传入 float32 ray encoder，r2 使用未登记 scale enum；按官方 API 转 float32 并使用 `metric_aligned` 后 r3 完成。均为适配工程错误，不解释为模型质量。
+
+下一可用统一失败编号：`V71-F70`。
+
+---
+
+## 历史补充风险总览（2026-09-07，已由文首 F68/F69 与结果页更新）
 
 | 当前范围 | 状态与解释 | 证据入口 |
 |---|---|---|

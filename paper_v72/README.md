@@ -1,9 +1,10 @@
-# 旧 V7.2 外部补全/神经 LiDAR 技术报告
+# EAS-VGGT V7.2 论文草稿
 
-状态说明更新于 2026-09-07，事实基线 `debe8697`。本目录 PDF/LaTeX 保留旧 A1/D1 时刻的报告，用于复现基线与负结果；它不是 EAS-VGGT 论文，也不是当前项目全部完成的证明。
+更新：2026-09-08。`main.tex`、`supplement.tex` 与 `arxiv.tex` 已按最新 EAS-VGGT 实验重写；旧 AdaPoinTr 负向报告可从 Git 历史追溯。
 
-`V71-F63` 的 A1 对 TSDF 负结果成立；旧 gate 未接入 B 候选实验，不能据其 `route_b_pass=false` 推断路线 B 已被证伪或整体完成（`V71-F64`）。上一版 recovery 的外部模型队列亦因用户要求 EAS-VGGT 而被替代（`V71-F65`）。PDF 中相应停止/完成表述属于历史记录，以本说明和当前状态为准。
+当前证据支持连续 F/O/U 的 VGGT late fusion、blocking/detection 有序回波测度、物理/外观所有权桥和 SE(3) 组合。route-select 上 proper score 有小幅正结果，但几何没有改善；Pi3X 迁移为负，冻结 source cohort 因 0 个可观测候选而不可计算。因此这是结构和证据链完整的研究草稿，还不是满足顶会强实证门槛的终稿。
 
-- [EAS-VGGT 当前计划](../docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)、[当前状态](../docs/RESEARCH_STATUS.md)。
-- [贡献/证据范围](CONTRIBUTION_MAP.md)、[交付检查表](SUBMISSION_CHECKLIST.md)。
-- 旧 `main.pdf` / `supplement.pdf` / `arxiv.pdf` 保持原字节，本轮没有新的科学实验或论文构建。
+- 主文：`main.pdf`（4 页）。
+- 补充材料：`supplement.pdf`（1 页）。
+- arXiv 入口：`arxiv.pdf`（4 页）。
+- 最新研究状态与 canonical run：`../docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。

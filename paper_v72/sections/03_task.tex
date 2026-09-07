@@ -1,11 +1,16 @@
 \section{Task Definition}
-Let the build evidence for an actor be $E$, including observed points, sensor origins,
-frame provenance, and known free/occupied evidence. For a query ray $q=(o,d,r_{\min},
-r_{\max})$, a predictor may use only $(E,q)$ at inference. Held-out return depths and
-points are labels and never enter the forward path.
+For Actor $i$, build observations provide calibrated LiDAR rays and RGB views, an
+identity, and known poses $T_i(t)\in\mathrm{SE}(3)$. Held-out points, ray outcomes, and
+target RGB are labels and never enter the forward pass. The representation is
+\[
+S_i=(P_i,E_i,A_i,T_i),
+\]
+where $P_i$ is an Actor-canonical physical surface, $E_i$ is continuous measurement
+evidence, and $A_i$ is appearance. For a world ray $q=(o,d,r_{\min},r_{\max})$, the
+model predicts a normalized distribution over ordered surface returns and no-return.
 
-The output state belongs to
-\{invalid, censored, no-return, background-occluded, actor-return, other\}.
-When an actor return is predicted, the model also reports a world depth and optional
-intensity. Scene composition selects the nearest valid actor or background surface by
-world depth. A valid no-return does not, by itself, certify the entire ray as free space.
+The intended task is sparse-build dynamic reconstruction and sensor replay under a
+given trajectory. It is not future trajectory prediction. Invalid or unfired queries,
+valid no-returns, unsupported geometry, background events, and Actor events remain
+separate. Geometry is evaluated independently from the return reader so a learned
+decoder cannot hide a weak surface.

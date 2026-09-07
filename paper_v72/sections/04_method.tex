@@ -1,26 +1,39 @@
-\section{Methods Under Audit}
-\subsection{Evidence Bundle}
-The versioned Actor bundle stores build points, ray origins and directions, timestamps,
-sensor and ring identifiers, intensity validity, Actor and sensor poses, and local
-evidence. Query targets are stored separately. Code-level role gates prevent source and
-external tests from being opened before selection.
+\section{EAS-VGGT}
+\subsection{Continuous Evidence Adaptation}
+Build LiDAR is compiled into Actor-canonical surface candidates with continuous
+free/occupied/unknown masses and opportunity counts. A frozen visual backbone supplies
+point-map geometry and local features. The successful adapter first encodes the
+measurement-only state and then applies a visual residual to its evidence logits and
+surface displacement. This late-fusion form preserves a usable fallback expert; an
+equal-capacity model removes visual inputs.
 
-\subsection{Shared Surface-to-Return Operator}
-Each object method outputs a surface. A common operator measures bidirectional point
-distance and intersects held-out rays with that surface using fixed lateral and depth
-tolerances. Geometry and conditional-return metrics remain separate, and every density
-cap reports the actual point count when a native surface contains fewer points.
+Given visual and fallback distributions $p_v,p_0\in\Delta^2$, route selection chooses
+a scalar reliability $\alpha$ and returns
+\[
+p_{\alpha}=p_0+\alpha(p_v-p_0).
+\]
+The convex combination is normalized and uses the same operation for surface residuals.
+It is a post-hoc reliability control, not a claim that one global $\alpha$ handles every
+domain. When the visual cohort has no observable candidates, the metric is undefined
+and the system reports insufficient support.
 
-\subsection{Object-Surface Candidate}
-AdaPoinTr is first adapted from its official PCN checkpoint using the legacy training
-partition. The candidate is then fine-tuned for 100 epochs with its surface loss plus a
-hit-depth Huber term and a known-free early-surface penalty, both computed from the same
-predicted point set. We fix both added weights to 0.1 without a sweep. Before reading
-clean development quality, the primary output is fixed to 75\% measured TSDF points and
-25\% learned completion points; the unanchored network is diagnostic.
+\subsection{Ordered Return Measure}
+After Actor placement, all candidate surface events are sorted by ray depth. Event $k$
+has blocking probability $u_k$ and conditional detection probability $v_k$. With
+$T_k=\prod_{\ell<k}(1-u_\ell)$,
+\[
+q_k=T_k u_k v_k,\qquad
+q_{\varnothing}=T_{K+1}+\sum_k T_k u_k(1-v_k).
+\]
+Thus $\sum_k q_k+q_{\varnothing}=1$. A front surface may block the background yet fail
+to produce a return, which a single hazard probability cannot express. Primitive mass
+is conserved under splitting so the reader does not change merely because a surface is
+resampled more densely.
 
-\subsection{Full-LiDAR Capability}
-The broader route uses the official LiDAR4D implementation on KITTI-360, including its
-scene representation, range and intensity rendering, ray-drop refinement, and scan
-export. This run establishes end-to-end capability. Because its task and denominator
-differ from object completion, it cannot serve as a numerical route-selection shortcut.
+\subsection{Appearance and Rigid Motion}
+Appearance primitives keep a physical parent and Actor owner, but RGB loss updates only
+$A_i$. The forward link uses $A_i=H_{\rm app}(\operatorname{stopgrad}(P_i),f_{\rm
+rgb})$, retaining correspondence while blocking RGB gradients from physical state and
+trajectory. Both branches use the same $T_i(t)$. Canonical queries obey
+$Q_{i,t}(x)=Q_i(T_i(t)^{-1}x)$; under a common transform $g$,
+$Q_{gT}(gx)=Q_T(x)$ and ordered ray distances are preserved.

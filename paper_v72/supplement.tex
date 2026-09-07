@@ -3,48 +3,65 @@
 \input{preamble}
 \input{results/results_macros}
 \usepackage[breaklinks,colorlinks,allcolors=blue]{hyperref}
-\title{A Task-First Audit of Dynamic LiDAR World Simulation: Supplementary Material}
+\title{EAS-VGGT: Supplementary Material}
 \author{Anonymous Authors}
 \begin{document}
 \maketitle
-\section{Data and Evaluation Protocol}
-The clean split is selected from dependency-chain-unexposed nuScenes logs using metadata
-only: four development logs, three route-selection logs, and three unopened source-test
-candidates. Selective archive I/O materializes 3,882 development and route-selection
-keyframe scans (2,695,516,800 bytes). Only development is compiled and evaluated after
-the gate is frozen. It contains 65 scenes, 501 Actors, 2,059,365 build points, and
-641,930 held-out positive-return rays. Actor bundles preserve point/ray provenance,
-intensity, ring, time, and poses; target arrays are stored separately.
 
-\section{Formal Runs}
-The AdaPoinTr transfer baseline uses the official PCN checkpoint, followed by 600 epochs
-of legacy adaptation. A1 starts from that frozen checkpoint and runs 100 additional
-epochs with surface, hit, and known-free losses. Its checkpoint SHA-256 is
-\texttt{d489e2bb...e2d7}; the full digest is retained in the run manifest.
-The clean development evaluator compares raw fusion, Actor TSDF, adapted AdaPoinTr,
-unanchored A1, and the fixed anchored output at 64, 128, 256, 512, and native budgets.
-Every run records a resolved configuration, manifest, status, Actor and log rows,
-aggregate summary, resource use, data roles, and failure-ledger references.
+\section{Data and I/O Contract}
+Every Actor artifact separates build inputs from target arrays and stores scene, log,
+track, pose, and measurement provenance. The route role contains three logs, 31 scenes,
+310 Actors, 816,442 build points, and 284,030 target rays. The source role contains three
+logs and 17 scenes. Selective extraction from official nuScenes shards 02 and 10 recovers
+677/677 required source keyframes (470,123,520 bytes). Source ActorBundleV2 and EAS
+corpora independently materialize the same 80 Actors and share fingerprint
+\texttt{2ec626e1...fcc4c1c}; 50 are hazardous, with 265,177 build points and 94,615 query
+rays. RGB recovery extracts only predeclared JPEG paths and records archive and image
+SHA-256 values.
 
-\section{D1 Gate}
-At the 512-point cap, Actor TSDF and the anchored candidate obtain CD
-.178599/.194976, F-score .750319/.714542, early rate .411462/.439344, and hit recall
-.549722/.522150. The candidate therefore misses both primary-effect alternatives and
-both side-effect limits. The mechanical result is
-\texttt{decision=close\_method\_claim}. Route selection, source test, and external test
-remain unread, and no P3/P4 experiment is authorized.
+\section{Canonical Runs}
+The primary development adapter is
+\path{20260907T183000Z__e2-canonical-late-fusion-s7202-r1}. The route reliability
+run is \path{20260907T223000Z__e5-route-calibrated-s7501-r2}. It selects
+$\alpha=.35$ by Brier and then NLL on a grid from zero to one; the source configuration
+stores this value, checkpoint hashes, code hashes, scene/sample identities, and the
+route-summary hash before source payload access.
 
-\section{Failure and Scope Boundary}
-\texttt{V71-F62} records the recoverable clean-data payload assumption; selective
-official-archive extraction resolves it without changing the split. \texttt{V71-F63}
-records the scientific D1 rejection. The latter is not repaired with an anchor-fraction,
-loss-weight, density, or threshold sweep. LiDAR4D demonstrates full-scan capability on
-its native KITTI-360 protocol, but its absolute numbers are not compared with the Actor
-task.
+The ordered-return run is
+\texttt{20260907T195500Z\_\_e2-ordered-return-s7203-r2}. Its held-out set has 16,384
+rays; 1,734 contain an undetected front blocker. The separated model obtains no-return
+MAE .00131 on that subset versus .37441 for the single-hazard reader. After the order
+intervention, NLL remains .67563 versus .93539.
 
-\section{Reproducibility Checklist}
-The final role state is: legacy diagnostic and clean development read; route selection,
-source test, and external test unread. Data, method, and metric artifacts are linked in
-\texttt{docs/WORLDSIM\_V7\_2\_D1\_NEGATIVE\_CLOSEOUT.md}. The main paper and this
-supplement describe a negative technical report rather than a submission-ready method.
+The appearance bridge is
+\path{20260907T213500Z__e3-render-bridge-s7302-r2}. All six held-out views improve
+Actor PSNR. Mean change outside the Actor support is .000707 versus .02836 inside, while
+physical and trajectory parameters are not trainable from RGB. The SE(3) run is
+\path{20260907T191500Z__e4-se3-rigid-trajectory-s7401-r4}.
+
+\section{Foundation Model Provenance}
+VGGT uses the official \texttt{facebook/VGGT-1B} checkpoint; $\pi^3$ uses the released
+\texttt{yyfz233/Pi3X} checkpoint. MapAnything is pinned to repository commit
+\texttt{3d10cf7a...} and checkpoint SHA-256 \texttt{981f060c...ed5a3a0}. It receives
+RGB, calibrated intrinsics, and metric OpenCV camera-to-world poses through its native
+preprocessor. The diagnostic uses BF16 memory-efficient inference and peaks at 7.15 GiB
+allocated GPU memory.
+
+\section{Frozen Source Outcome}
+The source cache processes the exact 12 locked sample tokens and peaks at 7.61 GiB. It
+finds eight Actor-pose matches but no candidate with a camera observation. The formal
+evaluator reaches all four arms, whose evidence tensors are empty, then correctly
+refuses to serialize non-finite means. The failed attempt is retained. A separate
+target-free support audit verifies the original lock and writes the canonical verdict
+\path{frozen_confirmation_inconclusive_insufficient_visual_support}; it loads no
+checkpoint or label and performs no selection. A future evaluation must freeze a
+minimum camera/Actor support rule before opening source quality.
+
+\section{Failure Boundaries}
+Engineering recoveries include official RGB and LiDAR selective I/O, dtype conversion
+for MapAnything camera prompts, and strict support reporting for empty cohorts. Scientific
+negative results remain visible: early visual fusion overfits, $\pi^3$ visual evidence
+hurts on development, raw VGGT fusion harms route Brier, and the frozen source set is
+not evaluable. None is converted into a positive claim by changing scenes or thresholds.
+
 \end{document}

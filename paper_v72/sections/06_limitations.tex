@@ -1,9 +1,15 @@
 \section{Limitations}
-Only four fully isolated source logs are available for development, so uncertainty
-across driving domains is not resolved. We intentionally do not read the three
-route-selection logs or source-test candidates after the development failure. The
-object task contains positive held-out returns and measured pre-hit free samples, but it
-does not support a full volumetric occupancy claim. LiDAR4D is evaluated on its native
-KITTI-360 protocol; its absolute metrics are not comparable with the object table. The
-study therefore validates the audit, data, and baseline infrastructure while providing
-no competitive method, application, generalization, occupancy, or safety claim.
+The positive real-data gain is small and appears in evidence calibration, while the
+physical surface is unchanged. $\pi^3$ does not reproduce the VGGT gain, and the
+MapAnything run is a diagnostic rather than an adapted EAS baseline. The ordered-return
+result uses a controlled analytic generator; real valid no-return and background
+composition still require a matched full-scene dataset. Appearance improves only one
+Actor sequence and remains well below the StreetGS reference. Exact SE(3) identities
+validate the representation, not pose estimation or future-motion prediction.
+
+Most consequentially, the frozen source scenes have no visual candidate support. A
+future independent protocol must predeclare a target-free eligibility threshold for
+camera/Actor overlap and evaluate the fallback expert when a modality is absent. It
+must then freeze that rule before opening quality. The current source data cannot be
+reused to claim independent confirmation. No occupancy, complete waveform, collision,
+planning, closed-loop, or safety claim follows from these experiments.

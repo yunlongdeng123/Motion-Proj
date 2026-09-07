@@ -1,6 +1,6 @@
 # WorldSim V7.2 EAS-VGGT Recovery Plan：贡献与证据优先版
 
-修订：2026-09-07；revision=`2`；任务 `WS-V72-E0-CONFERENCE-INTEGRATION-02`，状态 `done`（调研融合与计划交付）。E1=`running`：官方 VGGT-1B/Pi3X、RGB/feature cache、一次真实窗口诊断、原生 beam 合同和 Waymo context 划分已完成；官方 Waymo payload 仍待账号授权物化。E2–E5=`pending`。本版吸收用户补充的 subagent 调研；[核对与迁移决策](WORLDSIM_V7_2_FOUNDATION_ADAPTATION_RESEARCH.md) 保存一手来源与接受/修正项。本文中的新机制和收益都是待验证假设。
+修订：2026-09-08；revision=`3`；任务 `WS-V72-E0-CONFERENCE-INTEGRATION-02`。E1–E5 已按本计划执行：官方 VGGT-1B/Pi3X 与 MapAnything 已接通，连续证据 late fusion、可靠性折扣、有序 blocking/detection 回波、物理/外观所有权桥和 SE(3) 组合均有正式 run。route-select 上证据 proper score 有小幅正结果，但几何无改善、Pi3X 为负，冻结 source cohort 因 0 个可观测候选而不可计算。完整数值、canonical run 与可写/禁写范围见 [EAS-VGGT 结果](WORLDSIM_V7_2_EAS_VGGT_RESULTS.md)。本计划后文保留原预注册目标，执行结果优先于其中的待验证措辞。
 
 用户最新优先级是形成最有竞争力的主会研究，而非满足单卡、2GB 或极小参数量。资源影响执行安排，不决定研究边界。沿用 V7.2 和 EAS-VGGT 主线，继续继承 V7/V7.1；原外部补全 A/B 与 R1–R7 队列不恢复。唯一当前状态为 [RESEARCH_STATUS.md](RESEARCH_STATUS.md)，既有结果不被本次计划追溯修改。
 
@@ -183,10 +183,10 @@ existing LiDAR I/O、source dispatch、ActorBundleV2 和目标隔离继续复用
 
 | 工作包 | 稳定任务 ID / 状态 | 完成产物与推进条件 |
 |---|---|---|
-| A：缺口与数据协议 | `WS-V72-E1-VGGT-EVIDENCE-IO-01` / running | 基座/RGB/cache/beam schema、真实 train-window 诊断与 Waymo context split 已完成；待授权后物化 development payload 并冻结主指标数值合同 |
-| B：同信息机制学习 | `WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01` / pending | 有容量的 adapter、完整 return outcome、同信息强基线和机制消融；不能只有 M39 条件结果 |
-| C：对应与动态应用 | `WS-V72-E3-DECOUPLED-APPEARANCE-01`、`WS-V72-E4-RIGID-TRAJECTORY-01` / pending | 有真实渲染、物理/外观对应和场景遮挡的 EAS，真实时间留出/解析干预分开；不以非干扰定理代替应用质量 |
-| D：冻结泛化与文稿 | `WS-V72-E5-FROZEN-CONFIRMATION-01` / pending | 同源未见场景、外域、第三几何来源零更新/重训/TTA 区分；全成本、公开复现及论文证据矩阵 |
+| A：缺口与数据协议 | `WS-V72-E1-VGGT-EVIDENCE-IO-01` / done | VGGT/Pi3X/MapAnything 官方模型、RGB/cache/beam schema、nuScenes route/source I/O 已完成；Waymo 只保留冻结清单 |
+| B：同信息机制学习 | `WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01` / done-with-boundaries | late fusion 超过 no-visual，early/scalar/Pi3X 为负；有序 blocking/detection 机制在 controlled rays 成立，真实全场景 outcome 未完成 |
+| C：对应与动态应用 | `WS-V72-E3-DECOUPLED-APPEARANCE-01`、`WS-V72-E4-SE3-RIGID-TRAJECTORY-01` / done | held-out rendering、父表面所有权与 RGB 梯度隔离、SE(3) 解析/真实 pose 组合完成；外观质量仍有明显差距 |
+| D：冻结泛化与文稿 | `WS-V72-E5-FROZEN-CONFIRMATION-01` / route-supported, source-inconclusive | route proper score 支持；source 0 support，不作泛化主张；MapAnything 为第三来源诊断；稿件已更新 |
 
 E1 的数据物化、基座能力与初步诊断交错进行，E3/E4 接口可在 E2 训练时推进；不要等某个 CD 门槛才开始整个场景实现。每个实质卡点先查顶会/官方开源，再做针对当前失败的新机制或工程修复；已有精确问题复用已知解决方案，不无限扫参，也不因单候选失败提前关机。
 
@@ -209,4 +209,4 @@ E1 的数据物化、基座能力与初步诊断交错进行，E3/E4 接口可�
 
 建议主文围绕四组证据安排：Fig.1 同一场景的视觉先验、测量冲突与 EAS；Table 1 两基座分层诊断；Table 2 同信息主比较；Table 3 几何/传感器分表及关键消融；Fig.2 物理—外观对应与轨迹干预；Table 4 新场景/跨传感器/第三来源；成本与容量表。数学部分集中于状态归属、表面测度的离散化条件、有序返回概率及 SE(3) 组合，不把已有恒等式包装为全部创新。
 
-E0 调研融合完成；E1 running，正式初始诊断见 `docs/WORLDSIM_V7_2_E1_BACKBONE_AND_BEAM_REPORT.md`；E2–E5 pending。当前仍无 target/source/external test read 或 shutdown。`paper/`、`paper_v72/` 的既有 PDF 保留为历史证据，不能据本版研究假设改成成功结果。全部研究与交付完成后才复核用户的关机条件。
+E0–E5 已执行，正式结果见 `docs/WORLDSIM_V7_2_EAS_VGGT_RESULTS.md`。source-test 已按锁定协议读取，但因零可观测候选只产生 insufficient-support 结论；external test 未读。`paper_v72/` 已重写为 EAS-VGGT 当前证据草稿，旧 A1 报告由 Git 历史保留。V7.2 本轮交付在代码、数据/I/O、正式 run、账本、文稿和 push 全部复核后执行用户要求的远端关机。

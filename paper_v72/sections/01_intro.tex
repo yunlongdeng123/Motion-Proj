@@ -1,21 +1,34 @@
 \section{Introduction}
-Actor insertion pipelines can produce plausible point sets while violating the sensing
-process that generated them. Evaluation becomes especially misleading when held-out
-returns influence the forward pass, output density differs across methods, or a learned
-readout hides weak geometry. A useful simulator must distinguish invalid and censored
-queries, valid no-returns, background occlusion, and Actor returns while composing all
-surfaces in world-depth order.
+Large visual geometry models can reconstruct dense point maps from a few RGB views,
+yet a world simulator must answer a different question: what would a calibrated sensor
+measure after dynamic objects move? A visually plausible point does not establish
+free-space support, blocking probability, detectability, or a no-return outcome.
+Treating RGB opacity as LiDAR opacity also couples appearance edits to physical sensing.
 
-We organize the study around that task rather than around an inherited model. Our first
-route asks whether mature point completion gains physical consistency from measured
-hit and free-space constraints. Our second asks whether the broader problem instead
-requires a complete neural LiDAR model. Both face deterministic baselines and external
-methods before any final test is opened.
+We study this gap without replacing the existing dynamic world model with a generic
+completion network. EAS-VGGT starts from the positive components of our prior system:
+Actor-canonical surface anchors, categorical return evidence, independent appearance
+capacity, and rigid owner trajectories. It adds visual features as a measurement
+expert, maintains continuous free/occupied/unknown evidence, and composes scene events
+in ray order. Physical state and appearance share ownership and motion but have
+separate trainable parameters.
 
-This audit contributes (i) a target-free, ray-preserving Actor data contract with
-log-level role controls; (ii) a matched geometry and conditional-return evaluation that
-exposes density and readout effects; (iii) executed AdaPoinTr and LiDAR4D baselines; and
-(iv) a pre-registered negative route decision on 501 clean-development Actors. The
-negative result is central: the proposed observation-constrained completion does not
-beat Actor-local TSDF, so we stop before route selection, source testing, and application
-claims.
+The experiments reveal a useful boundary. Direct early fusion overfits, and visual
+features from $\pi^3$ do not transfer in this implementation. Late fusion with VGGT
+does improve held-out evidence calibration, although its surface displacement does not
+improve geometry. Raw visual fusion is slightly harmful on route selection, while a
+fixed convex reliability discount recovers a small gain in both proper scores. Thus
+the defensible contribution is observation-aware evidence adaptation, not global dense
+completion.
+
+Our concrete contributions are:
+\begin{itemize}
+  \item a ray-preserving EAS data and I/O contract that keeps build measurements,
+  held-out targets, Actor ownership, and split roles separate;
+  \item a continuous evidence adapter and a normalized ordered-return measure that
+  distinguishes blocking from detection and valid no-return;
+  \item a physical/appearance ownership bridge and a shared SE(3) trajectory action;
+  \item an executed comparison across VGGT, $\pi^3$, MapAnything, simple evidence
+  baselines, and a neural-LiDAR capability reference, including negative results and an
+  explicit insufficient-support source outcome.
+\end{itemize}
