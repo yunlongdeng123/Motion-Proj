@@ -1,6 +1,6 @@
 # V7.3 首事件目标：几何分布与缺失支持
 
-状态：方法设计，尚未实现或训练。F03仍active；不能把下列方案写成已消除梯度死锁。等同标签r7/r8真实硬结果后，再固定free配置，在已能学习表面的模型上比较event增量。
+状态：首个有限footprint实现已完成，尚未通过解析实验或进入真实训练。代码为 `motion_proj/worldsim_v73/first_event.py`，一次解析实验入口为 `scripts/diagnose_worldsim_v73_first_event.py`。F03仍active；不能把下列方案写成已消除梯度死锁。等同标签r7/r8真实硬结果后，再固定free配置，在已能学习表面的模型上比较event增量。
 
 [DS-NeRF（CVPR 2022）](https://www.cs.cmu.edu/~dsnerf/)已监督射线终止深度分布并纳入深度不确定性；[Depth-guided NeRF Training via Earth Mover’s Distance（ECCV 2024）](https://www.ecva.net/papers/eccv_2024/papers_ECCV/html/8062_ECCV_2024_paper.php)也已研究对终止距离分布用EMD监督。因此，本轮不把终止分布损失本身称为创新，也不把换成EMD等同于解决无几何支持的梯度问题。
 

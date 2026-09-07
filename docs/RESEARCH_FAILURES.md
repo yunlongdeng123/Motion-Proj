@@ -1,5 +1,16 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 几何首事件代理实现（2026-09-08）
+
+依据已登记的首事件设计，实现 `motion_proj/worldsim_v73/first_event.py`：固定footprint内最近三角面、米制深度插值、预乘likelihood轮廓梯度、log平移求和及全束统一截断。far裁剪由当前几何决定，不读取target；没有opacity或target挑面。返回supervised/no_support/capped计数与几何返回质量，明确缺失支持处仍可能零梯度。当前未接入训练器，不改变r5/r8或Ada作业。
+
+登记一次解析实验 `WS-V73-M3-FIRST-EVENT-01/20260907T224000Z__geometry-first-event-r1`，检查正确面、早面遮住正确后面、重复早面、无支持和轮廓位置梯度；相应脚本为 `scripts/diagnose_worldsim_v73_first_event.py`。此时仅代码完成、实验尚未执行，不能声称代理正确或真实有效。r8仍在最终完整评价；完成后再依据r7/r8硬结果选free目标并接入单因素event训练。
+
+failure_ledger_delta=update F03实现状态；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。主joint r5与AdaPoinTr r1正常训练，CAPA待r8退出再启动。整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 首事件缺失支持的可实施边界（2026-09-08）
 
 检索DS-NeRF CVPR2022、终止分布EMD ECCV2024和nvdiffrast官方实现后，整理 `docs/WORLDSIM_V7_3_FIRST_EVENT_DESIGN.md`。候选分布来自固定footprint内同一显式表面的几何首交点，无独立opacity、无重复支持概率累加、无提前裁掉错误早面。只对当前Actor实际拥有的首返回做event；其他原始束保留free。
