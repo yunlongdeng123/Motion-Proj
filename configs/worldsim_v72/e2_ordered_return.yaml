@@ -1,0 +1,16 @@
+task_id: WS-V72-E2-ORDERED-RETURN-MEASURE-01
+runs_root: /root/autodl-tmp/runs
+device: cuda
+seed: 7203
+data:
+  train_rays: 32768
+  test_rays: 16384
+model:
+  hidden_dim: 64
+optimization:
+  steps: 1200
+  batch_size: 2048
+  learning_rate: 0.002
+  weight_decay: 0.0001
+decision:
+  maximum_mass_split_error: 0.000001
