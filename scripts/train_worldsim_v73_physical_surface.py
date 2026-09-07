@@ -27,9 +27,11 @@ def lidar_patches(points,decoder,count=1536,centers=None):
     if centers is None:
         ids=torch.linspace(0,len(points)-1,min(count,len(points)),device=points.device).long()
         centers=points[ids]
-    neighbors=cKDTree(points.cpu().numpy()).query(centers.cpu().numpy(),k=min(20,len(points)))[1]
+    neighbors=cKDTree(points.detach().cpu().numpy()).query(centers.detach().cpu().numpy(),k=min(20,len(points)))[1]
     neighbors=np.asarray(neighbors).reshape(len(centers),-1)
-    neighborhood=points[torch.tensor(neighbors,device=points.device)]
+    # 点输出模型适配时固定本步PCA坐标架；所选中心的真实位置梯度仍传回点解码器。
+    # 既有只读PCA基线数值不变；不通过重根处不稳定的特征向量反向传播。
+    neighborhood=points[torch.tensor(neighbors,device=points.device)].detach()
     local=neighborhood-neighborhood.mean(1,keepdim=True)
     _,vectors=torch.linalg.eigh(local.transpose(1,2)@local)
     normal=vectors[:,:,0]

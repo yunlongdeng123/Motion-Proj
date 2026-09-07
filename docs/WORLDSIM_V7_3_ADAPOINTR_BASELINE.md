@@ -1,0 +1,17 @@
+# V7.3 AdaPoinTr强补全控制
+
+当前为完整模型适配实现与首轮训练登记，尚未取得本轮训练结果。主joint r5与free目标r8继续原配置，本工作不替换V7.3的预训练视觉几何适配主线。
+
+来源为[AdaPoinTr作者代码](https://github.com/yuxumin/PoinTr)、[官方模型](https://raw.githubusercontent.com/yuxumin/PoinTr/master/models/AdaPoinTr.py)、[PCN配置](https://raw.githubusercontent.com/yuxumin/PoinTr/master/cfgs/PCN_models/AdaPoinTr.yaml)。本机复用PoinTr_AdaPoinTr_4603257源码、AdaPoinTr_PCN.pth和v72-pointr环境。使用完整512查询/16384输出、384维、6层编码器/8层解码器及官方去噪结构，载入全部预训练权重，所有模型参数允许更新；没有改成旧4096输出或只训练末端小头。现有checkpoint包含32496706个模型Tensor元素（含BN缓冲），准确可训练参数数由运行manifest记录。
+
+输入保留原build Actor全部LiDAR点及只读尺寸，不用后续测量初始化。官方DGCNN在第一层会构建完整N×N距离矩阵，因此仅将精确kNN的查询轴分成512块、保留全部keys与原邻居数，避免通过裁剪输入适配显存。输入不足512槽位时重复已有点，重复不算新增观测；输入超过512时不限制点数，模型内部原始FPS层仍按官方结构工作。坐标保留本项目Actor规范轴，除以已知最大box维度做各向同性归一化，输出乘回米制；不从target拟合中心/尺度/旋转。
+
+官方PCN损失假定完整GT且fine与GT同点数，对稀疏真实标签不能直接照搬。此次任务适配保留完整网络与去噪分支，但使用：同一匹配预算显式曲面的观测target→surface覆盖、原始首返回前的直接free、软box envelope；另加权重0.1的target→coarse覆盖、权重0.1的局部稀疏去噪覆盖。后者从真实fit观测中选去噪查询附近的已测点，做已测点→局部denoised输出单向距离；不强迫全部预测靠近不完整target。未知区域不因没有LiDAR点被标为空。主free权重0.5，envelope0.05，与当前query控制一致；附加项和优化器预算差异明确报告，不能称完全相同目标或官方PCN基准复现。
+
+物理主评价从全部16384预测点以FPS选min(build,1024)+512个中心，与query方法的曲面片预算相同，使用同0.06m PCA三角片、同真实首交点/覆盖/free算子。训练时每步更新邻域与PCA架，但这些离散选择和PCA方向在本步停止梯度，仅将表面位置梯度传回所选预测中心，避免退化特征值处的特征向量梯度不稳定；该条件梯度近似需要保留为限制。既有只读LiDAR PCA基线的数值语义不变。初始与最终完整16384点输出单独保存，后续可评价原生密度/点集与显式化差异，不把下采样转换的错误直接算成原生点预测错误。
+
+训练登记 `WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1`：371个可输入fit Actor、67个可输入dev Actor，51个原输入缺失对象仍完整报告为空。仅fit读取既有全轨迹标签，开发无优化。30epoch/11130 Actor呈现，按4个变长Actor逐个反向累积，预计2790次优化更新；AdamW lr1e-4、weight_decay5e-4，epoch21后乘0.9，gradient clip10，seed7307，全FP32。此为完整预训练模型任务微调，不宣称用本数据从头复现官方600epoch PCN训练。若最终拟合不足，再依据实际训练和开发现象扩大预算或调整；不预先把固定30epoch的负结果当作充分失败。
+
+初始化评价用于建立未做本轮任务适配的强起点，最终评价与之及r7/r8比较。相同固定LiDAR PCA结果直接复用；每epoch保存完整model/optimizer/scheduler及RNG状态，不新增校验和或门控。实际GPU/cgroup峰值由真实运行记录，不因与其他作业并发竞争就宣布单作业资源不足。
+
+源码：`motion_proj/worldsim_v73/adapointr_baseline.py`、`scripts/train_worldsim_v73_adapointr.py`。当前真实模型加载/训练尚待启动，不能将实现完成写成基线已完成。F02/F05与场景F04仍active；整个V7.3未完成，shutdown=false。

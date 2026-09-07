@@ -1,5 +1,20 @@
 # Research Status
 
+## V7.3 完整AdaPoinTr任务适配实现与登记（2026-09-08）
+
+主joint r5与米制free r8正常训练，当前不重复启动。独立完成官方AdaPoinTr强控制的实现，登记 `WS-V73-M2-ADAPOINTR-01/20260907T221000Z__population-full-track-pcn-s7307-r1`。使用现有官方完整PCN权重与v72-pointr环境，512query/16384点、6层encoder/8层decoder、384维、全部模型参数微调；不使用旧V7.2包装器或更小输出头。
+
+先核对官方模型/训练配置，再迁移到本任务的稀疏真实标签：保留补全和去噪结构，统一物理曲面coverage/free/envelope，另有0.1 coarse覆盖和0.1局部稀疏去噪项；不把未采样表面惩罚为错误。所有原build点均输入；精确kNN按查询分块保留全keys，输入不足512时只重复已有点。米制归一化仅用已知box最大维度，target不进入输入或尺度估计。
+
+首轮30epoch/11130 Actor呈现、预计2790优化更新（每4个Actor累积），AdamW1e-4、wd5e-4、21epoch乘0.9、clip10、seed7307。fit使用与r7/r8相同全轨迹观测，dev无梯度，371fit/67dev可输入者优化/评价，51个无输入对象仍空预测并计入分母。未完成真实模型加载/训练前不能称强基线已经完成；拟合不足时再按证据扩大预算，不把30epoch当成足够性的门控。
+
+物理主评价用min(build,1024)+512个FPS中心和相同0.06m PCA三角片，完整16384原生点输出另存。每步邻域/PCA架重新估计但固定其本步梯度，曲面位置梯度传回预测中心；因此属于条件位置梯度近似，不能隐藏为完全相同原生几何参数化。既有PCA只读基线的算子数值不变。协议差异、来源、保存与资源策略详见 `docs/WORLDSIM_V7_3_ADAPOINTR_BASELINE.md`。
+
+failure_ledger_delta=update强补全基线实现/登记，F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。CAPA、主joint完整与全轨迹标签适配、event、新日志确认仍待推进。资源按真实执行记录，整个V7.3未完成，shutdown=false。
+
+
+---
+
 ## V7.3 全轨迹LiDAR-only控制最终完成（2026-09-08）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T203500Z__population-lidar-only-track-labels-s7304-r7` 已完成，code d78e99ae，30epoch/11130更新，3519.80s包含最终完整评价（initial与固定PCA复用），GPU allocated峰值0.19448GiB、RSS2.987GiB；PID23188已退出。输入仍为原build，只有fit surface/free标签扩展到全轨迹；51个原输入不可用对象继续保留空预测，没有把后续测量作为推理输入。开发75对象/5日志、23个无留出自有回波、8个无预测。
