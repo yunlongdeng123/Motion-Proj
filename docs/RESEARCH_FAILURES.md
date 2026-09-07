@@ -6,7 +6,7 @@
 
 `configs/worldsim_v73/av2_external_confirmation_r1.json` 保存完整20身份/时间/载荷表，`scripts/prepare_worldsim_v73_av2_confirmation.py` 复用既有名单并按需复制；未新增哈希/校验和/指纹。元数据准备98.49s，20×(7周视相机×4build+6LiDAR+4标定/轨迹/标注)=760文件，343260344字节/327.36MiB，元数据无缺项。build扫描序号[5,15,20,30]、留出[10,25]；相机最近实际时间差−23.10至+18.11ms，必须各自时间投影，不能视作同步真值。图像、点云、标注值和模型分数均未用于选择，缺输入和缺返回必须保留。
 
-下一步直接下载该清单，数据进程也纳入关机前任务检查。此时外部推理/评价尚未开始；AV2双LiDAR来源、ego补偿、轨迹插值、纵向相机内参和6项nuScenes相机嵌入→7周视接口需在旧开发日志先迁移，不削减第7路输入，不给新增随机相机嵌入后冒称已可靠迁移。详见 `WORLDSIM_V7_3_CONFIRMATION_DATA.md`。主joint r5、CAPA r2与event r9正常运行，Ada r1已退出；后续r10/r11、Ada r2仍待可用资源。
+精确载荷下载已实际启动：codec00020fb，PID34904，日志 /root/autodl-tmp/controller_logs/v73_av2_confirmation_download.log，子目录v73_av2_confirmation/status.json及copy.log记录760文件的传输进度；当前copying，s5cmd四并发正常写入所选文件。数据进程也纳入关机前任务检查。此时外部推理/评价尚未开始；AV2双LiDAR来源、ego补偿、轨迹插值、纵向相机内参和6项nuScenes相机嵌入→7周视接口需在旧开发日志先迁移，不削减第7路输入，不给新增随机相机嵌入后冒称已可靠迁移。详见 `WORLDSIM_V7_3_CONFIRMATION_DATA.md`。主joint r5、CAPA r2与event r9正常运行，Ada r1已退出；后续r10/r11、Ada r2仍待可用资源。
 
 failure_ledger_delta=update F05数据来源与格式对策；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false，自动研究继续；最终必须保存/push且无训练、评估、数据或待启动任务才关机。
 
