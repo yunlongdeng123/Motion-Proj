@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 场景配对结果与运行状态（2026-09-08）
+
+复用既有结果完成独立日志配对（`scripts/summarize_worldsim_v73_scene_composition.py`；10000次日志bootstrap、seed7306，不重跑模型）：背景近点修订使5/5日志的全束free降低，平均差−0.20861m、95%区间[−0.39920,−0.07872]m；early差−1.74pp、区间[−4.03,−0.34]pp。miss在5/5日志增加，平均+1.69pp、区间[+0.29,+4.02]pp。真实场景误差降低和覆盖代价须同时报告，仍为旧5日志开发证据。
+
+修订背景上，r6对PCA的cohort hit差+7.09pp，[+4.05,+10.18]pp，5/5日志改善；cohort free却增加0.04469m，[+0.01348,+0.08405]m。native fusion对PCA的cohort hit差−1.84pp，[−6.90,+3.22]pp；free增加0.02376m，[+0.01274,+0.03450]m。未形成完整物理优势。全部组、逐日志差值和分母保存在 `docs/autoresearch/worldsim_v73/m4/scene_composition_r2_paired.json` 与原summary；不同fit标签预算不混称同监督方法胜负。
+
+r8已实际启动：code d50c9eeb，PID26975，日志 `/root/autodl-tmp/controller_logs/v73_population_lidar_beam_range_r8.log`，真实free_mode=beam_tube_range、full_track标签，已到epoch2、GPU allocated峰值0.33034GiB，非零query梯度。joint r5 PID18843至epoch11，GPU峰值10.196GiB；r7 PID23188在final_evaluation，已写423/489个最终surface文件，仍有正常进展，不重复启动或中断。场景数据/评价任务均已结束。
+
+failure_ledger_delta=update V73-F02/F04证据与运行状态；F01/F02/F03/F04/F05仍active，F06直接数据配置缓解，下一编号V73-F07。r7最终summary未生成前不下结果结论。下一步完成r7→r6完整/共有输入/运动分层对比，继续主模型、强基线、event与新日志。整个V7.3未完成，shutdown=false。
+
+
+---
+
 ## V7.3 全轨迹训练结束与米制射线管free比较（2026-09-08）
 
 LiDAR-only全轨迹标签r7 PID23188已完成30epoch/11130更新，正在完整489Actor最终曲面评价；训练结束记录elapsed3105.48s，最终wall time和开发结果待summary完成。不把最后一次loss或中间checkpoint当成最终性能。主joint r5 PID18843继续正常训练。
