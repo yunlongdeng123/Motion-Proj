@@ -52,8 +52,8 @@ class BackboneGeometry:
         if intrinsics.shape != (count, 3, 3) or image_transforms.shape != (count, 3, 3):
             raise ValueError("intrinsics/model_from_original 必须为逐帧 3x3 矩阵")
         features = np.asarray(self.feature_grid)
-        if features.ndim != 4 or features.shape[0] != count:
-            raise ValueError("feature_grid 必须为 (N,h,w,c)，允许 h/w/c 为零")
+        if features.ndim != 4 or features.shape[0] != count or any(size <= 0 for size in features.shape[1:]):
+            raise ValueError("feature_grid 必须为通道和空间尺寸均为正的 (N,h,w,c)")
         if self.scale_status not in SCALE_STATUSES:
             raise ValueError(f"未知 scale_status: {self.scale_status}")
         object.__setattr__(self, "frame_ids", np.asarray(self.frame_ids, dtype=str).reshape(count))

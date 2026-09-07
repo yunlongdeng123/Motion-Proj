@@ -12,6 +12,11 @@ from motion_proj.worldsim_v72.data.camera_schema import (
     CameraFramePayload,
     CameraWindow,
 )
+from motion_proj.worldsim_v72.data.beam_schema import (
+    BEAM_RETURN_SCHEMA_VERSION,
+    BeamReturnTargets,
+    decode_waymo_range_images,
+)
 
 __all__ = [
     "ACTOR_BUNDLE_SCHEMA_VERSION",
@@ -22,4 +27,7 @@ __all__ = [
     "CAMERA_WINDOW_SCHEMA_VERSION",
     "CameraFramePayload",
     "CameraWindow",
+    "BEAM_RETURN_SCHEMA_VERSION",
+    "BeamReturnTargets",
+    "decode_waymo_range_images",
 ]
