@@ -46,9 +46,9 @@ def _random_se3(rng: np.random.Generator) -> np.ndarray:
             [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
             [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
         ],
-        dtype=np.float32,
+        dtype=np.float64,
     )
-    transform = np.eye(4, dtype=np.float32)
+    transform = np.eye(4, dtype=np.float64)
     transform[:3, :3] = rotation
     transform[:3, 3] = rng.uniform(-25.0, 25.0, size=3)
     return transform
@@ -163,7 +163,9 @@ def main() -> None:
             output = model(**inputs)
             candidates = inputs["canonical_xyz"]
             delta = output.surface_delta_actor_m
-            canonical = candidates + delta
+            candidates_geometry = candidates.double()
+            delta_geometry = delta.double()
+            canonical = candidates_geometry + delta_geometry
             order = torch.as_tensor(
                 rng.permutation(inputs["view_visual_features"].shape[1]), device=device
             )
@@ -180,14 +182,14 @@ def main() -> None:
             appearance_surface_errors.append(
                 float(torch.max(torch.abs(delta - changed_output.surface_delta_actor_m)).cpu())
             )
-            poses = [torch.from_numpy(cache.world_from_actor).float().to(device) for cache in track["caches"]]
+            poses = [torch.from_numpy(cache.world_from_actor).double().to(device) for cache in track["caches"]]
             base_pose = poses[0]
             base_rotation = base_pose[:3, :3]
             centers = []
             angles = []
             track_commute = []
             for pose in poses:
-                world = lift_actor_surface_to_world(candidates, delta, pose)
+                world = lift_actor_surface_to_world(candidates_geometry, delta_geometry, pose)
                 recovered = (world - pose[:3, 3]) @ pose[:3, :3]
                 recovery_errors.append(float(torch.max(torch.abs(recovered - canonical)).cpu()))
                 subset = min(int(config["evaluation"]["maximum_pairwise_points"]), len(world))
@@ -199,7 +201,9 @@ def main() -> None:
                 for _ in range(int(config["evaluation"]["global_transform_count"])):
                     global_transform = torch.from_numpy(_random_se3(rng)).to(device)
                     transformed_pose = global_transform @ pose
-                    transformed_world = lift_actor_surface_to_world(candidates, delta, transformed_pose)
+                    transformed_world = lift_actor_surface_to_world(
+                        candidates_geometry, delta_geometry, transformed_pose
+                    )
                     expected = world @ global_transform[:3, :3].T + global_transform[:3, 3]
                     error = float(torch.max(torch.abs(transformed_world - expected)).cpu())
                     commute_errors.append(error)
