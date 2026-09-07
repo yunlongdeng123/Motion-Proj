@@ -1,14 +1,15 @@
 task_id: WS-V72-E5-FROZEN-CONFIRMATION-01
 runs_root: /root/autodl-tmp/runs
 device: cuda
+architecture_lock: configs/worldsim_v72/e2_source_test_lock.json
 data:
-  role: route_select
-  source_test_read: false
+  role: source_test
+  source_test_read: true
   external_test_read: false
   backbone: vggt
   maximum_views: 4
-  visual_run: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01/20260907T220000Z__e2-route-vggt-cache-r2
-  actor_corpus_root: /root/autodl-tmp/data/worldsim_v72/eas_actor_corpus/route_select
+  visual_run: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01/20260907T233000Z__e2-source-vggt-cache-s7204-r1
+  actor_corpus_root: /root/autodl-tmp/data/worldsim_v72/eas_actor_corpus/source_test
   scene_metadata: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval/scene.json
 checkpoints:
   vggt_late_eas: /root/autodl-tmp/runs/worldsim_v72/WS-V72-E2-LEARNED-VISUAL-EVIDENCE-01/20260907T183000Z__e2-canonical-late-fusion-s7202-r1/checkpoints/vggt_late_eas.pt
@@ -27,12 +28,12 @@ surface_evaluation:
 decision:
   primary_arm: vggt_calibrated_eas
   comparator_arm: vggt_late_no_visual
-  architecture_locked_before_source_test: false
-
+  architecture_locked_before_source_test: true
 reliability_discount:
   enabled: true
-  mode: route_select_grid
+  mode: fixed
   visual_arm: vggt_late_eas
   fallback_arm: vggt_late_no_visual
   output_arm: vggt_calibrated_eas
-  candidate_alphas: [0.0, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1.0]
+  selected_alpha: 0.35
+  route_lock_reference: configs/worldsim_v72/e2_source_test_lock.json

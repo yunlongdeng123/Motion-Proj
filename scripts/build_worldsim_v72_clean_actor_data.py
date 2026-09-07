@@ -343,10 +343,12 @@ def _materialize_actor(
 def run(config_path: Path, role: str, run_id: str) -> dict[str, Any]:
     config_text = config_path.read_text(encoding="utf-8")
     config = yaml.safe_load(config_text)
-    if role not in {"dev", "route_select"}:
-        raise PermissionError("clean actor builder 只允许 dev 或 route_select")
-    if config["source_test_read"] or config["external_test_read"]:
-        raise PermissionError("clean actor builder 不允许读取最终角色")
+    if role not in {"dev", "route_select", "source_test"}:
+        raise PermissionError("clean actor builder 只允许 dev、route_select 或 source_test")
+    if bool(config["source_test_read"]) != (role == "source_test"):
+        raise PermissionError("source_test role/read flag mismatch")
+    if config["external_test_read"]:
+        raise PermissionError("clean actor builder 不允许读取 external_test")
     roles = load_data_roles(REPO_ROOT / config["roles"])
     log_ids = require_role_access(roles, "nuscenes", role)
     metadata_root = Path(config["dataset_root"]) / "v1.0-trainval"
@@ -371,7 +373,7 @@ def run(config_path: Path, role: str, run_id: str) -> dict[str, Any]:
         "log_ids": log_ids,
         "scene_count": len(scene_names),
         "git_commit": git_commit,
-        "source_test_read": False,
+        "source_test_read": role == "source_test",
         "external_test_read": False,
         "failure_ledger_refs": config["failure_ledger_refs"],
         "failure_ledger_delta": config["failure_ledger_delta"],
@@ -438,7 +440,7 @@ def run(config_path: Path, role: str, run_id: str) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--role", required=True)
     parser.add_argument("--run-id", required=True)

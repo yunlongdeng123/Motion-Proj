@@ -102,7 +102,7 @@ def _make_backbone(name: str, config: dict[str, Any]):
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(allow_abbrev=False)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--run-id", required=True)
     args = parser.parse_args()
@@ -115,8 +115,13 @@ def main() -> None:
     )
     if geometry_tolerance is not None:
         geometry_tolerance = float(geometry_tolerance)
-    if data["supervision_access"] or data["source_test_read"] or data["external_test_read"]:
-        raise ValueError("multi-window build must not read evaluation or supervision payloads")
+    role = str(data["role"])
+    if role not in {"dev", "route_select", "source_test"}:
+        raise PermissionError(f"unsupported multiview role: {role}")
+    if data["supervision_access"] or data["external_test_read"]:
+        raise ValueError("multi-window build must not read supervision or external-test payloads")
+    if bool(data["source_test_read"]) != (role == "source_test"):
+        raise PermissionError("source_test role/read flag mismatch")
     run_dir = Path(config["runs_root"]) / "worldsim_v72" / config["task_id"] / args.run_id
     run_dir.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
@@ -130,14 +135,14 @@ def main() -> None:
         "selection_contract": "explicit_scenes_then_metadata_order_first_k",
         "selection_uses_quality": False,
         "supervision_access": False,
-        "source_test_read": False,
+        "source_test_read": role == "source_test",
         "external_test_read": False,
     }
     _write_json(run_dir / "manifest.json", manifest)
     _write_json(run_dir / "status.json", {"status": "running", "phase": "window_index"})
     try:
         roles = load_data_roles(Path(data["roles"]))
-        allowed_logs = set(require_role_access(roles, "nuscenes", str(data["role"])))
+        allowed_logs = set(require_role_access(roles, "nuscenes", role))
         index = NuScenesCameraIndex(Path(data["dataset_root"]), metadata_version=str(data["metadata_version"]))
         windows = _select_windows(index, allowed_logs, data)
         corpus_root = Path(data["actor_corpus_root"])

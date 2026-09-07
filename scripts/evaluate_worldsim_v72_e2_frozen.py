@@ -176,6 +176,71 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         predictions[name] = (output.evidence_fou, output.surface_delta_actor_m)
         checkpoint_hashes[name] = _sha256(checkpoint_path)
         del model
+    discount_summary = None
+    if config.get("reliability_discount", {}).get("enabled", False):
+        discount = config["reliability_discount"]
+        visual_name = str(discount["visual_arm"])
+        fallback_name = str(discount["fallback_arm"])
+        output_name = str(discount["output_arm"])
+        if output_name in predictions:
+            raise ValueError(f"reliability-discount output already exists: {output_name}")
+        visual_prediction, visual_delta = predictions[visual_name]
+        fallback_prediction, fallback_delta = predictions[fallback_name]
+        mode = str(discount["mode"])
+        route_grid = []
+        if mode == "route_select_grid":
+            if role != "route_select":
+                raise PermissionError("reliability alpha may only be selected on route_select")
+            for alpha_value in discount["candidate_alphas"]:
+                alpha = float(alpha_value)
+                candidate = fallback_prediction + alpha * (visual_prediction - fallback_prediction)
+                route_grid.append({"alpha": alpha, **_evidence_metrics(candidate, target)})
+            selected = min(route_grid, key=lambda row: (row["fou_brier"], row["fou_nll"], row["alpha"]))
+            selected_alpha = float(selected["alpha"])
+        elif mode == "fixed":
+            if role == "source_test" and not bool(config["decision"]["architecture_locked_before_source_test"]):
+                raise PermissionError("source_test reliability discount requires a route-locked architecture")
+            selected_alpha = float(discount["selected_alpha"])
+        else:
+            raise ValueError(f"unknown reliability discount mode: {mode}")
+        if not 0.0 <= selected_alpha <= 1.0:
+            raise ValueError("reliability discount alpha must be in [0, 1]")
+        predictions[output_name] = (
+            fallback_prediction + selected_alpha * (visual_prediction - fallback_prediction),
+            fallback_delta + selected_alpha * (visual_delta - fallback_delta),
+        )
+        discount_summary = {
+            "method": "simplex_preserving_visual_expert_reliability_discount",
+            "mode": mode,
+            "visual_arm": visual_name,
+            "fallback_arm": fallback_name,
+            "output_arm": output_name,
+            "selected_alpha": selected_alpha,
+            "route_grid": route_grid,
+            "route_lock_reference": discount.get("route_lock_reference"),
+        }
+    lock_validation = None
+    if role == "source_test":
+        lock_path = REPO_ROOT / str(config["architecture_lock"])
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+        code_hashes_match = all(
+            _sha256(REPO_ROOT / relative_path) == expected
+            for relative_path, expected in lock["code_sha256"].items()
+        )
+        checks = {
+            "lock_was_created_before_source_payload_read": not bool(lock["source_payload_read"]),
+            "checkpoint_hashes_match_route_lock": checkpoint_hashes == lock["checkpoint_sha256"],
+            "reliability_alpha_matches_route_lock": discount_summary is not None
+            and float(discount_summary["selected_alpha"]) == float(lock["selected_reliability_alpha"]),
+            "evaluation_code_matches_route_lock": code_hashes_match,
+        }
+        if not all(checks.values()):
+            raise RuntimeError(f"source-test architecture lock mismatch: {checks}")
+        lock_validation = {
+            "path": str(lock_path),
+            "sha256": _sha256(lock_path),
+            "checks": checks,
+        }
     detailed_rows = {}
     for name, (prediction, delta) in predictions.items():
         _write_json(run_dir / "status.json", {"status": "running", "phase": f"evaluate_{name}"})
@@ -211,7 +276,11 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         "primary_improves_frozen_role_nll": primary["fou_nll"] < comparator["fou_nll"],
         "source_test_was_not_used_for_route_selection": role != "source_test"
         or bool(config["decision"]["architecture_locked_before_source_test"]),
-        "no_parameter_or_threshold_update": True,
+        "no_neural_parameter_update": True,
+        "reliability_discount_is_simplex_preserving": discount_summary is None
+        or 0.0 <= float(discount_summary["selected_alpha"]) <= 1.0,
+        "source_test_uses_fixed_route_alpha": role != "source_test"
+        or (discount_summary is not None and discount_summary["mode"] == "fixed"),
     }
     summary = {
         "schema_version": "worldsim_v72.e2_frozen_evaluation.v1",
@@ -227,9 +296,14 @@ def run(config_path: Path, run_id: str) -> dict[str, Any]:
         "results": outputs,
         "decisions": decisions,
         "checkpoint_sha256": checkpoint_hashes,
+        "reliability_discount": discount_summary,
+        "architecture_lock": lock_validation,
         "protocol": {
             "weights_updated": False,
             "thresholds_updated": False,
+            "route_selected_reliability_alpha": None
+            if discount_summary is None
+            else discount_summary["selected_alpha"],
             "positive_return_only_surface_scope": True,
             "complete_no_return_scope": "separate controlled ordered-return task",
             "source_test_read": role == "source_test",
