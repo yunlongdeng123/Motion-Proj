@@ -1,5 +1,13 @@
 # Experiments
 
+## V7.3 同信息原生与LiDAR融合比较（2026-09-08）
+
+`WS-V73-M2-GLOBAL-FUSION-01` 同信息简单融合基线已实现，run `20260907T170500Z__native-lidar-fusion-r1`。复用完成的M1六相机r3头与同一25个Actor，不新增训练、不读取新时间目标选择输出。原生depth→已知轨迹规范坐标→box归属点，与build LiDAR合并；保留min(1024,N) LiDAR证据中心+512原生FPS中心，使用合并点集局部PCA法向及相同0.06m、8三角面/patch读出。与共享模型输出数量一致，原生点完全缺失时保留LiDAR并报告。没有自由空间删除、凸包或opacity。
+
+本基线将补足早期native-only未融合LiDAR的信息差异，仍只是简单融合参考，不冒充CAPA、AdaPoinTr或TSDF。若其表现差，不能称已超过所有强融合。共享r1仍运行，native直接数据监督r2按既定计划随后串行训练；资源足够时融合评价可与r1并行，优先保持训练完整信息。failure_ledger_delta=none，F01:F06仍active；下一编号V73-F07。三本台账和报告随结果完成更新，整个V7.3尚未完成，不关机。
+
+---
+
 ## V7.3 共享训练暴露原生支持逃避通道（2026-09-08）
 
 共享跨Actor r1已真实训练（code8e175195，PID12315，run `20260907T165500Z__surround-shared-native-s7304-r1`），20fit/5development日志，输入准备25/25ready。上下文仍为六相机24view；Actor轨迹可插值的实际投影视图7–24，完整报告，未用预测质量剔除对象。资源实测峰值9.825GiB、RSS约26.1GiB，无OOM，无需关机。

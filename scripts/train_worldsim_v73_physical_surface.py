@@ -22,10 +22,11 @@ from motion_proj.worldsim_v73.surface_readout import (first_triangle_intersectio
                                                      direct_free_space_loss,first_return_metrics)
 
 
-def lidar_patches(points,decoder,count=1536):
+def lidar_patches(points,decoder,count=1536,centers=None):
     # 同样固定尺度三角片读出；LiDAR邻域PCA法向，不取凸包、不学习透明度。
-    ids=torch.linspace(0,len(points)-1,min(count,len(points)),device=points.device).long()
-    centers=points[ids]
+    if centers is None:
+        ids=torch.linspace(0,len(points)-1,min(count,len(points)),device=points.device).long()
+        centers=points[ids]
     neighbors=cKDTree(points.cpu().numpy()).query(centers.cpu().numpy(),k=min(20,len(points)))[1]
     neighbors=np.asarray(neighbors).reshape(len(centers),-1)
     neighborhood=points[torch.tensor(neighbors,device=points.device)]

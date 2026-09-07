@@ -18,7 +18,7 @@ def farthest_indices(points,count):
     return ids
 
 
-def native_surface_seeds(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,build_points,count):
+def native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m):
     height,width=depths.shape[-2:]
     y,x=torch.meshgrid(torch.arange(height,device=depths.device),torch.arange(width,device=depths.device),indexing='ij')
     pixel=torch.stack([x,y,torch.ones_like(x)],-1).float().reshape(-1,3)
@@ -31,6 +31,11 @@ def native_surface_seeds(depths,metric_scale,camera_from_actor,intrinsics,size_l
         valid=torch.isfinite(actor).all(-1)&(depth.reshape(-1)>.05)&(actor.abs()<=size_lwh_m/2+.25).all(-1)
         points.append(actor[valid]); counts.append(int(valid.sum()))
     candidates=torch.cat(points)
+    return candidates,counts
+
+
+def native_surface_seeds(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,build_points,count):
+    candidates,counts=native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m)
     fallback=len(candidates)==0
     if fallback: candidates=build_points
     ids=farthest_indices(candidates,count)
