@@ -27,7 +27,7 @@ from motion_proj.worldsim_v72.eas_vggt.alignment import (
     common_surface_mask,
     nearest_pixel_indices,
 )
-from motion_proj.worldsim_v72.eas_vggt.backbones import Pi3XBackbone, VGGTBackbone
+from motion_proj.worldsim_v72.eas_vggt.backbones import MapAnythingBackbone, Pi3XBackbone, VGGTBackbone
 from motion_proj.worldsim_v72.eas_vggt.cache import save_backbone_geometry
 from motion_proj.worldsim_v72.eas_vggt.preprocess import resize_camera_window
 
@@ -150,6 +150,8 @@ def _make_backbone(name: str, config: Mapping[str, Any]) -> Any:
         return VGGTBackbone(**common)
     if name == "pi3x":
         return Pi3XBackbone(**common)
+    if name == "mapanything":
+        return MapAnythingBackbone(**common)
     raise ValueError(f"未知基座: {name}")
 
 

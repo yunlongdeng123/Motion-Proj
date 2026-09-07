@@ -233,3 +233,114 @@ class Pi3XBackbone:
         if not self.keep_loaded:
             self.close()
         return result
+
+
+class MapAnythingBackbone:
+    """Official MapAnything with calibrated metric poses as its native prompted baseline."""
+
+    backbone_id = "facebook/map-anything"
+
+    def __init__(
+        self,
+        repository_root: Path,
+        checkpoint: Path,
+        device: str = "cuda",
+        keep_loaded: bool = False,
+    ) -> None:
+        self.repository_root = Path(repository_root).resolve()
+        self.checkpoint = Path(checkpoint).resolve()
+        self.device = torch.device(device)
+        self.keep_loaded = bool(keep_loaded)
+        self._model: Any | None = None
+
+    def _load_model(self) -> Any:
+        if self._model is None:
+            _add_import_root(self.repository_root)
+            from mapanything.models import MapAnything
+
+            self._model = MapAnything.from_pretrained(str(self.checkpoint.parent)).eval().to(self.device)
+        return self._model
+
+    def close(self) -> None:
+        self._model = None
+        torch.cuda.empty_cache()
+
+    def infer(
+        self,
+        window: CameraWindow,
+        images: torch.Tensor,
+        model_from_original_px: np.ndarray,
+    ) -> BackboneGeometry:
+        del images, model_from_original_px
+        from PIL import Image
+        from mapanything.utils.image import preprocess_inputs
+
+        raw_views = []
+        for frame in window.frames:
+            with Image.open(frame.image_path) as source:
+                image = np.asarray(source.convert("RGB"), dtype=np.uint8)
+            actual_h, actual_w = image.shape[:2]
+            original_w, original_h = map(int, frame.original_size_wh)
+            actual_from_original = np.asarray(
+                [[actual_w / original_w, 0.0, 0.0], [0.0, actual_h / original_h, 0.0], [0.0, 0.0, 1.0]],
+                dtype=np.float32,
+            )
+            raw_views.append(
+                {
+                    "img": image,
+                    "intrinsics": np.asarray(
+                        actual_from_original @ frame.intrinsics_px,
+                        dtype=np.float32,
+                    ),
+                    "camera_poses": np.asarray(frame.world_from_camera_opencv, dtype=np.float32),
+                    "is_metric_scale": True,
+                }
+            )
+        views = preprocess_inputs(raw_views, resolution_set=518, norm_type="dinov2", patch_size=14)
+        feature_grid = torch.nn.functional.avg_pool2d(
+            torch.cat([view["img"] for view in views]), kernel_size=14, stride=14
+        ).permute(0, 2, 3, 1).to(dtype=torch.float16, device="cpu").numpy()
+        model = self._load_model()
+        predictions = model.infer(
+            views,
+            memory_efficient_inference=True,
+            use_amp=True,
+            amp_dtype="bf16",
+            apply_mask=True,
+            mask_edges=True,
+        )
+        points = np.stack([value["pts3d"][0].float().cpu().numpy() for value in predictions])
+        confidence = np.stack([value["conf"][0].float().cpu().numpy() for value in predictions])
+        masks = np.stack([value["mask"][0].bool().cpu().numpy().squeeze(-1) for value in predictions])
+        poses = np.stack([value["camera_poses"][0].float().cpu().numpy() for value in predictions])
+        intrinsics = np.stack([value["intrinsics"][0].float().cpu().numpy() for value in predictions])
+        transforms = np.stack(
+            [intrinsics[index] @ np.linalg.inv(frame.intrinsics_px) for index, frame in enumerate(window.frames)]
+        )
+        result = BackboneGeometry(
+            backbone_id=self.backbone_id,
+            checkpoint_id=f"sha256:{_sha256(self.checkpoint)}",
+            repository_commit=_repository_commit(self.repository_root),
+            frame_ids=np.asarray([frame.frame_id for frame in window.frames]),
+            image_sha256=np.asarray([frame.image_sha256 for frame in window.frames]),
+            model_from_original_px=transforms,
+            points_reference=points,
+            confidence=confidence,
+            valid_mask=masks & np.isfinite(points).all(axis=-1) & np.isfinite(confidence),
+            reference_from_camera_opencv=poses,
+            intrinsics_model_px=intrinsics,
+            feature_grid=feature_grid,
+            scale_status="metric_aligned",
+            provenance={
+                "window_fingerprint": window.fingerprint,
+                "official_adapter": True,
+                "payload_role": "build_input",
+                "input_modalities": ["rgb", "intrinsics", "metric_camera_pose"],
+                "native_feature_exported": False,
+                "feature_grid": "common_rgb_patch_mean_diagnostic_only",
+            },
+        )
+        del predictions, views, feature_grid
+        if not self.keep_loaded:
+            self.close()
+        return result

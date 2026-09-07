@@ -1,0 +1,25 @@
+task_id: WS-V72-E1-VGGT-EVIDENCE-IO-01
+runs_root: /root/autodl-tmp/runs
+failure_ledger_refs: [V71-F43, V71-F52, V71-F54, V71-F62, V71-F66]
+data:
+  roles: configs/worldsim_v72/data_roles.json
+  dataset_root: /root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval
+  role: route_select
+  maximum_windows: 1
+  camera_channels: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT]
+preprocess:
+  maximum_pixels: 255000
+  patch_multiple: 14
+backbones:
+  mapanything:
+    repository_root: /root/autodl-tmp/external/worldsim_v72/map-anything
+    checkpoint: /root/autodl-tmp/models/eas_vggt/mapanything/model.safetensors
+    device: cuda
+diagnostic:
+  confidence_quantile: 0.50
+  depth_tolerance_m: 0.20
+  maximum_lidar_points: 20000
+  statistical_unit: camera_observation
+  selection_or_threshold_tuning_after_quality_read: false
+source_test_read: false
+external_test_read: false
