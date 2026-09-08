@@ -1,3 +1,16 @@
+## V7.3 旧AV2逐返回TSDF背景构建完成，登记固定表面比较（2026-09-08）
+
+`WS-V73-M4-AV2-SCENE-DATA-01/20260908T083000Z__old-development-vdb-per-return-r2` code7dadd661完成，CPU38.345745s/RSS1.715073GiB、0 GPU/更新。旧日志02678d04的4个build扫描共375000返回，实际积分364570背景返回，分别与父数据四扫描保留数91095/89913/90813/92749一致；父PCA去重后为364560中心，差10个重复返回不能混作选点变化。218766个真实原点组逐组积分，未采用统一扫描原点或近似时刻。
+
+原生393002三角面，沿所有原build束单次雕刻11499片(2.926%)，保留381503；9523条build矛盾束→0、剩余build侵入距离和0。原heldout文件与21 Actor已知逐返回轨迹均沿用父数据。构建阶段没有模型评价，也不表示新时刻几何提高；原生和雕刻两份表面均保留。
+
+登记同一旧日志固定表面场景比较`WS-V73-M4-AV2-SCENE-01/20260908T083000Z__old-development-vdb-r4`，使用已存joint R5、LiDAR R9、native fusion和共同PCA/仅背景，原187494束/5257 cohort束保持。仅改变背景为上述TSDF+build雕刻，零新神经推理/训练；比较须同时报告命中、early/free及缺失，不把一日志当独立确认或为其生成跨日志bootstrap。登记时评价尚未执行。
+
+新增紧凑构建摘要脚本，归档每日志参数/返回数/原点组/三角规模，不复制大规模Actor轨迹数组到工作区或git。新20日志模型质量仍未读；是否继续准备其TSDF候选以旧开发结果及既定F04决策为依据，不按新域质量挑背景。R10/R11继续，R12未启动，visual-only真实反向仍待显存释放。F04/F05保持active，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 AV2逐返回TSDF背景迁移登记（2026-09-08）
 
 当前AV2已存背景是PCA，尚未接入nuScenes开发侧的TSDF候选。针对VDBFusion单次integrate只接受一个sensor origin的接口卡点，本轮先查[官方仓库](https://github.com/PRBonn/vdbfusion)及[原生积分源码](https://raw.githubusercontent.com/PRBonn/vdbfusion/main/src/vdbfusion/vdbfusion/VDBVolume.cpp)。AV2已补偿到reference ego的端点只能转world一次；逐返回原点不能替换成扫描统一原点，否则会破坏已记录的米制射线。

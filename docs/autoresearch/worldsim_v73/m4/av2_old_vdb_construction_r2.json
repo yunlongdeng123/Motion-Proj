@@ -1,0 +1,135 @@
+{
+  "status": "done",
+  "wall_s": 38.34574504569173,
+  "peak_rss_gib": 1.7150726318359375,
+  "model_quality_computed": false,
+  "optimizer_updates": 0,
+  "boundary": "build-only background candidate; parent heldout beams and known Actor trajectories unchanged; no new-log quality evaluation",
+  "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-SCENE-DATA-01/20260908T083000Z__old-development-vdb-per-return-r2",
+  "manifest": {
+    "task_id": "WS-V73-M4-AV2-SCENE-DATA-01",
+    "code_commit": "7dadd6617132ac943cfb8a14bfd16e96a9156760",
+    "parent_scene_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-SCENE-DATA-01/20260908T024000Z__old-development-per-return-r1",
+    "sensor_root": "/root/autodl-tmp/data/av2/sensor/val",
+    "log_ids": [
+      "02678d04-cc9f-3148-9f95-1ba66347dff9"
+    ],
+    "implementation": "official vdbfusion wheel",
+    "vdbfusion_version": "0.1.6",
+    "voxel_size_m": 0.1,
+    "sdf_trunc_m": 0.3,
+    "space_carving": true,
+    "fill_holes": false,
+    "min_weight": 0.0,
+    "input_selection": "same parent build sweeps, valid sensor poses, outside every valid-time known box+0.1m; no sensor-near removal or input cap",
+    "endpoints": "published reference-ego compensated xyz transformed to world once; never apply per-point ego transform again to these endpoints",
+    "origins": "actual calibrated per-return world sensor origins; group exact identical float64 origins without time/position quantization or frame-origin substitution",
+    "grouping": "sort/partition once; preserve point order within each origin group; no repeated N-by-number-of-origins scan",
+    "integration_weights": "one unit per retained original return; parent PCA deduplicates float32 endpoints, so raw integration count can differ from its unique center count",
+    "unknown_boundary": "all 8 meshing-cell corners observed; no unknown-region closure or learned opacity",
+    "carving": "reuse common one-pass whole-triangle exclusion before all original build first-return ranges minus0.2m, with the same per-return origins",
+    "readout_inputs": "parent heldout beams, owners, sensor-known flags and readonly Actor trajectories linked unchanged; heldout values not evaluated or read for fusion",
+    "model_quality_computed": false,
+    "optimizer_updates": 0,
+    "external_build_values_processed": false,
+    "references": [
+      "https://github.com/PRBonn/vdbfusion",
+      "https://raw.githubusercontent.com/PRBonn/vdbfusion/main/src/vdbfusion/vdbfusion/VDBVolume.cpp",
+      "https://github.com/argoverse/av2-api/blob/main/src/av2/structures/sweep.py"
+    ]
+  },
+  "scenes": [
+    {
+      "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+      "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+      "role": "development",
+      "background_points": 364560,
+      "background_triangles": 381503,
+      "tsdf": {
+        "vertices": 302820,
+        "native_triangles": 393002,
+        "integrated_returns": 364570,
+        "origin_groups": 218766,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315969904859531000",
+            "raw_returns": 94860,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 3765,
+            "integrated_points": 91095,
+            "origin_groups": 54820,
+            "parent_retained_returns": 91095,
+            "integration_s": 2.8805450964719057,
+            "scan_wall_s": 8.043336575850844
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315969905859509000",
+            "raw_returns": 92980,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 3067,
+            "integrated_points": 89913,
+            "origin_groups": 54507,
+            "parent_retained_returns": 89913,
+            "integration_s": 2.849754750728607,
+            "scan_wall_s": 7.418522315099835
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315969906359832000",
+            "raw_returns": 93224,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 2411,
+            "integrated_points": 90813,
+            "origin_groups": 54522,
+            "parent_retained_returns": 90813,
+            "integration_s": 3.077037401497364,
+            "scan_wall_s": 7.779641008004546
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315969907359808000",
+            "raw_returns": 93936,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 1187,
+            "integrated_points": 92749,
+            "origin_groups": 54917,
+            "parent_retained_returns": 92749,
+            "integration_s": 3.364801611751318,
+            "scan_wall_s": 8.04559787362814
+          }
+        ],
+        "wall_s": 38.253601191565394
+      },
+      "carving": {
+        "original_triangles": 393002,
+        "removed_triangles": 11499,
+        "build_conflicting_rays_before": 9523,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 21,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 187494
+    }
+  ],
+  "totals": {
+    "logs": 1,
+    "actors": 21,
+    "build_raw_returns": 375000,
+    "integrated_background_returns": 364570,
+    "parent_unique_background_centers": 364560,
+    "origin_groups": 218766,
+    "native_triangles": 393002,
+    "carved_triangles": 381503,
+    "removed_triangles": 11499,
+    "remaining_build_early_rays": 0,
+    "remaining_build_free_sum_m": 0.0,
+    "linked_heldout_rays": 187494
+  }
+}
