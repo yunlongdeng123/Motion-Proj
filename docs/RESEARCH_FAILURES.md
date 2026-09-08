@@ -1,5 +1,27 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 旧AV2完整Actor固定推理结果（2026-09-08）
+
+code0a610555下已完成3项旧开发窗口真实评价，每项均覆盖21Actor/1日志/4移动对象、保留2个空输入和1个无自有留出返回，不训练、不卡点删对象、不读新20日志作方法选择。任务WS-V73-M4-AV2-FIXED-01：原生融合run `20260908T013000Z__old-development-native-fusion-r1`，53.7060s/GPU allocated1.29079GiB/RSS3.47623GiB；LiDAR PCA run `20260908T013100Z__old-development-lidar-pca-r1`，29.7731s/0.02101GiB/1.00754GiB；固定LiDAR-only r9 run `20260908T013200Z__old-development-lidar-event-r9`，43.3979s/0.05542GiB/1.17406GiB。三个进程全部正常结束，完整surface/frames保存在各run。
+
+| 固定方法 | hit | early | miss | free m | target→surface m | recall@0.2m |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| LiDAR PCA | 32.7578% | 3.6863% | 62.5793% | 0.103598 | 0.122136 | 75.5924% |
+| M1r3原生融合 | 29.1706% | 8.5989% | 60.3500% | 0.489094 | 0.115922 | 77.2792% |
+| 固定LiDAR-only r9 | 42.0909% | 7.7867% | 43.4908% | 0.180803 | 0.080236 | 82.6710% |
+
+原生融合略增覆盖/降低一向距离但显著增加已观测自由空间侵入；LiDAR-only r9降低缺失/增加命中同样付出侵入代价。仅一条旧开发日志，不能给出有意义的日志bootstrap区间，不能当独立新日志或跨域成功结论。unknown区域没有按稀疏target惩罚；本表距离是一向target→surface，不是完整Chamfer。证据 `coverage/av2_old_fixed_r1_analysis.json` 保留原始Actor统计、共有输入/移动分层；摘要中的单日志bootstrap退化值不作不确定性推断。
+
+原生路径已经真实读取七相机×四时刻和完整有效画幅，固定DPT实时解码、padding排除及规范表面读出可执行。此处native_fusion不消费相机ID嵌入，LiDAR-only也不消费视觉；七相机embedding插值和视觉空间交互仍需完成joint权重在旧窗口上验证，不能把这三项称为已验证完整视觉query跨域迁移。新20日志仍无模型推理/评价。
+
+当前三项长期训练正常：r5恢复PID39009在epoch22，峰值allocated10.19917GiB；native-only full_track r11 PID38460进入epoch1真实反向，原生头梯度有效/query梯度0，峰值2.34640GiB；Ada Y-up r2 PID37887进入epoch7，峰值1.00312GiB。mmap恢复进程持续推进；cgroup OOM计数仍0。r10同full_track joint在恢复主模型结束后调度，尚未启动，无后台启动队列。后续将完整主模型/强基线的表面放回同一背景比较，再做选定模型的新日志确认，不提前关闭研究。
+
+failure_ledger_delta=update F01/F02/F04/F05/F08执行与旧域失败证据；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，F08恢复执行有效但退出原因未明，下一编号V73-F09。整个V7.3未完成，shutdown=false；全部研究收尾保存/push且无训练、评估、数据和待启动任务才关机。
+
+---
+
+
+
 ## V7.3 joint已恢复真实训练与固定Actor评价入口（2026-09-08）
 
 恢复run `WS-V73-M2-GLOBAL-ACTOR-01/20260908T012500Z__population-joint-r5-epoch21-resume-r1` 已实际运行，code914d582d、PID39009，日志 `/root/autodl-tmp/controller_logs/v73_population_joint_r5_resume.log`。完整载入epoch21原生头、query及168项Adam状态，从epoch22继续真实反向与更新，峰值allocated10.19840GiB。继承7791完整呈现，原第22轮107个未保存更新保留在parent现场且不计入恢复模型。原运行status已标为interrupted，interruption.json保留末状态与原因未知证据。尚未完成余9轮或最终评价。
