@@ -1,3 +1,15 @@
+## V7.3 三角后候选机制登记与调度调整（2026-09-08）
+
+变更类型：研究决策/文献与源码可行性分析，不是新训练run；run_id与seed为不适用。自动跟进worldsim-v7-3从15改30分钟、仍ACTIVE。计划revision5记录near-surface certified-free约束与局部深度/遮挡对应候选，实施状态pending、没有性能结论。
+
+三角原比较继续：R12−R10为同Query的free目标变化，R12−R14为同finite-beam目标的生成通路变化，R14−R11为原生目标变化。若冲突持续先改Query表面参数化，随后独立比较新边界监督/对应，不混入新cohort或额外LoRA。ViGT采样依据来自论文，公开仓库未找到训练采样器；未宣称官方训练已复现。
+
+代码阅读基于ce685c1b工作树的`spatial_queries.py::ProjectedLocalRead`与`surface_visibility.py::BeamTubeFreeSpaceLoss`；证据与一手链接见计划revision5第16节。R10/PID53472与R14/PID68108在本次读取仍运行，R12尚未启动；未修改模型/损失/数据/训练配置，未新增进程、环境、权重下载或测试。20个新日志质量仍未读，V7.3未完成，shutdown=false。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F06]；failure_ledger_delta=none。
+
+---
+
 ## V7.3 用户方向确认：三角收口后优先表面参数化（2026-09-08）
 
 用户明确保持“可训练几何基座 + 显式3D surface generation + 物理约束”。已写入项目AGENTS与计划revision4第15节，并同步比较协议；这是一项条件研究决策，不是新实验结果或新增失败。当前代码证据截至7ca07029，R11/F09原生负结果、F02覆盖/free冲突、F03缺支持、F04场景读出与F05输入条件边界继续有效。
