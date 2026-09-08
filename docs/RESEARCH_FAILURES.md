@@ -1,3 +1,15 @@
+## V7.3 上层跨视图适配接口准备（2026-09-08 19:50 UTC）
+
+基于96709415及R14结果，独立核对VGGT官方/本机aggregator、DPT、attention及PyTorch2.4.1 checkpoint/SDPA。没有改训练或提前选择Q-v2；详见`WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md`，含明确标注未实现的architecture components图。若以18–23组适配为例，可以复用冻结17组global半部及4/11/17的DPT输入；23组必须重算。层号为0起，6组是12个frame/global block，不把旧最终缓存当适配结果。
+
+关键接入约束：当前Actor视图裁取在全窗口冻结聚合之后；上层可训练时须先保持完整24视图和原顺序/特殊token/RoPE，再为Actor选择DPT输入。不能在global attention之前裁视图；不能跨optimizer步缓存已适配输出。若改变为同窗口多Actor合并更新，预算与loss权重必须单独披露。非重入checkpoint保留缓存输入上新参数的梯度；其间冻结FFN也不能no_grad切断输入梯度。
+
+只CPU读取一份M1r3缓存与权重shape：4层[1,1,1301,2048]为FP32，patch_start5；qkv3072×1024、projection1024×1024。24视图全局31224token，单状态FP32 121.969MiB、4拼接输入975.750MiB；显式16头score为BF16 29.055GiB/FP32 58.111GiB，仅理论反例、不是实测OOM。rank8/末6组qkv LoRA 393216参数，加proj589824，不含DPT/Query/激活。SDPA后端与实际反向峰值待首次实施时记录，不因理论score申请加卡或减少视图。
+
+证据`m2/global/upper_tail_metadata_r1.json`、提案图与对应源码/绘图脚本；无新模型/训练/评价run，无测试、无下载新权重或依赖，20新日志质量未读。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F06,V73-F09]；failure_ledger_delta=none，旧风险保持，下一V73-F10。19:38 UTC R12/PID81766第20轮正常，GPU12660/24576MiB、cgroup oom/oom_kill=0；先完成三角再定Q-v2，30分钟ACTIVE、完成不关机。
+
+---
+
 ## V7.3 R14原生beam对照完成：未形成稳定物理增益（2026-09-08 19:05 UTC）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260908T100000Z__population-native-full-track-beam-range-s7304-r14`已done，codebf04ef32，PID68108退出。30轮/11130呈现/10550真实更新、580次no_surface_gradient（420无相机、160有相机无有效原生梯度）、零恢复。DPT32654562参数、Query冻结，native_project变化.004810881；wall29683.499341s（8.245h）、allocated2.361161GiB、RSS34.697498GiB。744份冻结前缀保留，398679588字节checkpoint与完整489最终记录/表面保存；无上层聚合器适配。

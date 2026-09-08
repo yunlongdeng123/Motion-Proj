@@ -1,0 +1,79 @@
+{
+  "kind": "CPU metadata and arithmetic only; no model forward/backward",
+  "cache_file": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01/20260907T161500Z__native-dpt-surround25-dev6-s7301-r3/frozen_prefix/scene-0450_03.pt",
+  "patch_start": 5,
+  "layers": {
+    "4": {
+      "shape": [
+        1,
+        1,
+        1301,
+        2048
+      ],
+      "dtype": "torch.float32"
+    },
+    "11": {
+      "shape": [
+        1,
+        1,
+        1301,
+        2048
+      ],
+      "dtype": "torch.float32"
+    },
+    "17": {
+      "shape": [
+        1,
+        1,
+        1301,
+        2048
+      ],
+      "dtype": "torch.float32"
+    },
+    "23": {
+      "shape": [
+        1,
+        1,
+        1301,
+        2048
+      ],
+      "dtype": "torch.float32"
+    }
+  },
+  "upper_projection_shapes": {
+    "aggregator.frame_blocks.18.attn.qkv.weight": [
+      3072,
+      1024
+    ],
+    "aggregator.frame_blocks.18.attn.proj.weight": [
+      1024,
+      1024
+    ],
+    "aggregator.global_blocks.18.attn.qkv.weight": [
+      3072,
+      1024
+    ],
+    "aggregator.global_blocks.18.attn.proj.weight": [
+      1024,
+      1024
+    ]
+  },
+  "arithmetic": {
+    "views": 24,
+    "image_hw": [
+      378,
+      672
+    ],
+    "tokens_per_view": 1301,
+    "global_tokens": 31224,
+    "one_bf16_state_mib": 60.984375,
+    "dense_scores_bf16_gib": 29.055421829223633,
+    "dense_scores_fp32_gib": 58.110843658447266,
+    "rank8_qkv_last6_pairs_parameters": 393216,
+    "rank8_qkv_proj_last6_pairs_parameters": 589824,
+    "four_concat_states_bf16_mib": 487.875,
+    "one_fp32_state_mib": 121.96875,
+    "four_concat_states_fp32_mib": 975.75
+  },
+  "boundary": "score sizes are hypothetical dense allocations, not measured peak memory; proposed tail has not been implemented or benchmarked"
+}
