@@ -1,3 +1,19 @@
+## V7.3 三角收口：转入 Q-v2（2026-09-08 22:05 UTC）
+
+R10/R12/R14三角及R11锚点已收口。R12相对R10降低early与自由空间侵入，但增加miss、降低hit与召回；并未同时恢复物理质量与覆盖。相对同beam的R14，R12 free更低、miss更高，hit/距离/召回区间跨0。相对同beam LiDAR控制R8，R12在全部5开发日志降低hit、增加miss。转入Q-v2显式表面参数化研究，保留可训练DPT与物理监督；不继续单纯loss网格，也不退回native-only。
+
+R12 run `20260908T050000Z__population-joint-full-track-beam-range-s7304-r12` / task `WS-V73-M2-GLOBAL-ACTOR-01` / code dc6fe427，分析d9637d0e：30轮11130更新/0跳步/0恢复，完整489最终评价done、PID81766退出。DPT32654562 + Query1670517可训练，M1r3初始化、full_track/native1/free.5/beam.03/res32/event0；原cohort与744前缀保留。wall27059.008429s、GPU10.235226GiB、RSS34.104195GiB、native_project变化.005098347。
+
+75 DEV/5日志全部保留23无owned与8空表面。R12 hit/early/miss/free/distance/recall=.215934/.056423/.651456/.060573/.154347/.762202。R12−R10：hit−5.553pp [−13.635,−.239]、early−14.621pp [−19.532,−9.688]、miss+32.528pp [+27.867,+38.476]、free−.210453m [−.315461,−.110354]、distance+.041154m、recall−6.385pp，六项区间不跨0。early/free改善伴随支持覆盖与正确命中损失，不能单列free当成功。
+
+R12−R14：free−.105845m [−.177679,−.036656]、early−4.351pp [−7.986,−.992]，miss+7.626pp [+5.122,+10.203]；hit/距离/召回区间跨0。R14−R11六项跨0结论复用。R12−R8：hit−9.409pp [−12.540,−6.705]、miss+8.312pp [+5.322,+11.592]，5日志全退化；其余四项跨0。通路比较包含多因素，不唯一归因Query或视觉token。
+
+训练native加权Huber .707176→.388714m，采样coverage .307158→.224648m，hard free .208722→.029032m；两组梯度真实非零。FIT含训练标签、移动2日志其中1条owned返回限制保留。20新日志质量未读。详见`WORLDSIM_V7_3_TRIANGLE_RESULTS.md`（实际architecture图、完整均值/配对/训练/资源）；4份R12 JSON与两图归档，汇总只执行一次，未重推理/回归。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F06,V73-F09]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。Q-v2任务`WS-V73-Q-V2-01`进入实现准备，首要因素为显式表面参数化；目标、数据与DPT适配范围保持，后续局部对应/near-boundary/上层适配独立研究。资源正常，GPU现空闲供下一轮；30分钟ACTIVE、完成不关机。
+
+---
+
 ## V7.3 上层跨视图适配接口准备（2026-09-08 19:50 UTC）
 
 基于96709415及R14结果，独立核对VGGT官方/本机aggregator、DPT、attention及PyTorch2.4.1 checkpoint/SDPA。没有改训练或提前选择Q-v2；详见`WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md`，含明确标注未实现的architecture components图。若以18–23组适配为例，可以复用冻结17组global半部及4/11/17的DPT输入；23组必须重算。层号为0起，6组是12个frame/global block，不把旧最终缓存当适配结果。
@@ -1561,6 +1577,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 观察：目前单卡 RTX3090 24GB；cgroup 内存90GiB、CPU14核，旧文首宿主755GB不能当训练预算。尚未有 V7.3 OOM。来源/迁移：VGGT 官方多层 DPT 与分块、Deformable DETR 稀疏采样；禁止全图 dense query attention，kNN 建图另报成本。最小辨别：真实 DPT 更新的峰值与耗时，再测必要 LoRA；证据=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 13.1，base=`63626e8d`。不因3090存在就提前认定失败或退回路线A。
 
 ### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
+
+- R12三角补充（2026-09-08 22:05 UTC）：同Query只改beam free后，DEV early−14.621pp/free−.210453m，但miss+32.528pp、hit−5.553pp、recall−6.385pp，六项日志配对区间不跨0。R12−R14 free改善但miss增加；R12−同beam R8在5日志降低hit/增加miss。支持覆盖与物理兑现仍冲突，触发Q-v2表面参数化；根因不唯一、保持active，不重复loss网格。证据`WORLDSIM_V7_3_TRIANGLE_RESULTS.md`及`m2/global/population_joint_r12_*`，训练code dc6fe427。
 
 观察：用户指出目标漏洞，继承 V71-F20/F22 的支持/前尾边界，当前尚未实测新查询。根因候选：缺乏覆盖责任、可学习置信度/支持半径与惩罚耦合。迁移：AdaPoinTr 集合生成 + observed-target coverage + 原始束几何 free，UNKNOWN 不作负标签；不学任意 opacity。比较同几何监督加free后的召回/侵入/missing，而非只看loss。复开/解决条件：真实表面覆盖与侵入共同改善且没有支持消失；证据=plan13.2，task=M2/M3。
 
