@@ -1,5 +1,18 @@
 # Research Status
 
+## V7.3 只读规范表面的轨迹编辑演示登记（2026-09-08）
+
+主r5恢复当前epoch28、native-only full_track r11 epoch7，训练仍正常；外部场景CPU构建最近15/20日志，无新外部模型质量结果。按计划13.4补充组合应用，先阅读[Street Gaussians ECCV2024官方代码](https://github.com/zju3dv/street_gaussians)及[NeuRAD CVPR2024论文](https://openaccess.thecvf.com/content/CVPR2024/papers/Tonderski_NeuRAD_Neural_Rendering_for_Autonomous_Driving_CVPR_2024_paper.pdf)。迁移Actor/背景分解与刚体actor shift演示思想，使用现有不透明三角面硬排序；不复现其外观渲染、传感器概率或以编辑展示证明其/本方法真实性。
+
+新增`scripts/demonstrate_worldsim_v73_trajectory_edit.py`，登记 `WS-V73-M4-TRAJECTORY-EDIT-01/20260908T033000Z__old-av2-r9-lateral2m-r1`，当前尚未执行。使用已完成旧AV2开发窗口02678d04…的完整21Actor和固定LiDAR-only r9表面，每个Actor规范BVH只加载一次；编辑对象为build/轨迹元数据中速度>2m/s的全部4辆，未按预测或heldout质量筛选。对每辆分别施加局部+Y 2m偏移，其他Actor/背景/射线不变，在两次原始heldout扫描每束真实时刻组合，不修改规范形状、尺寸、法向、连接或模型参数。
+
+记录同一187494条原始有返回束子集上的first-owner变化、新增遮挡、释放到背景/其他Actor/未知的计数；旧实测深度不作为编辑真值，不计算编辑accuracy、free违规或置信区间。未观测no-return束没有凭空补成完整扫描，露出的未知背景也不补洞。偏移未检验交通可行性或碰撞安全，因此本演示仅证明固定表面+轨迹的机械组合能力。随后可在完成的主模型表面上复用入口，当前r9示例不承担主视觉方法的增益主张。
+
+F04组合/背景未知边界继续active，F01/F02/F03/F05也保留；F06直接数据约束缓解，F07轴接口已落实，F08恢复推进且原退出原因未知，下一编号V73-F09。无新增hash、门控或模型smoke/回归。整个V7.3未完成，shutdown=false；主模型与数据控制器全部正常继续。
+
+---
+
+
 ## V7.3 固定点集密度揭示覆盖与物理冲突；外部场景构建登记（2026-09-08）
 
 code5dfa3948完成 `WS-V73-M2-ADAPOINTR-DENSITY-01/20260908T030000Z__development-native-vs-matched-r1`，CPU10.6413s/RSS0.66930GiB，所有75旧开发Actor/5日志，无训练或重新神经推理。Ada r2原生16384点的target→point0.088114m、recall86.9506%；匹配中心0.162732m、77.7732%。相同0.06m/20邻居PCA从匹配预算扩大到全部点：hit14.2906%→39.0141%，early8.5389%→39.3882%，miss54.2423%→18.2534%，free0.122057→0.341008m，target→surface0.113749→0.053369m，recall84.6032%→87.9661%。
