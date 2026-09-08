@@ -1,3 +1,16 @@
+## V7.3 LaTeX阶段证据稿同步（2026-09-08）
+
+计划要求同步V7.3 LaTeX的任务、方法假设与证据表；原仓库只有历史paper/paper_v72，本次新增`paper_v73/main.tex`和中文README，保留旧论文。英文草稿写明当前原生DPT/空间查询实现、不同标签与预算的对照条件、全489分母/开发5日志、R5的coverage/free负结果、事件缺支持、输出密度、Actor TSDF适用性、背景构建覆盖成本及未完成实验。没有预写最终方法胜出、完整表面真值、已完成新域确认或arXiv发布。
+
+新增`scripts/export_worldsim_v73_interim_tables.py`，只读取已归档population_joint_r5_analysis与actor_tsdf_r1_analysis JSON，生成10方法主表及6项配对差值/既有95%日志区间；没有重跑神经推理/统计bootstrap，没有按表格成绩改分母。明确R5完成30有效epoch/11130更新，同时披露107个丢弃更新、旧RNG未保存及恢复边界；CAPA TTA与AdaPoinTr的预算/预训练/标签差异不写成单因素结论。官方VGGT、AdaPoinTr、CAPA、DS-NeRF、Deformable DETR与nvdiffrast来源已核对，VDBFusion沿用此前核实资料。
+
+草稿使用本地现有TinyTeX编译，移除本机未装的可选microtype排版包后通过；没有新增环境或下载大依赖。5页PDF及全部页面排版检查完成，主表和引用可读，没有溢出或未定义引用。研究代码没有新smoke/回归。PDF为阶段可读稿，最终结果尚待R10/R11/R12、visual-only训练与已登记20新日志确认，不能当成整个V7.3完成。
+
+R13输入子集已由codebd71fcd1实际准备：`WS-V73-M2-EMPTY-INPUTS-01/20260908T085500Z__metadata-zero-lidar-training-inputs-r3`，51链接、43 fit/9日志、8 development/2日志、CPU.011242s；原metadata输入状态全部保留，零新标签选择/推理/训练。R13一轮真实反向仍等待R11退出，无自动GPU队列。外部20日志TSDF背景继续CPU构建，质量未读；R10/R11继续。failure_ledger_delta=none，F02/F03/F04/F05持续、下一失败编号V73-F09；shutdown=false。
+
+---
+
+
 ## V7.3 登记零LiDAR完整子集的一次真实训练检查（2026-09-08）
 
 现有显式visual-only推理已完成，但603eac54的新训练入口仅做过语法检查。针对已有F05输入条件缺口，登记一次覆盖全部原metadata零build LiDAR对象的真实反向实验；沿用已调研VGGT/SparseNeuS迁移依据，不重复网络调研或新增世界表示。不是按成绩挑选少量可拟合Actor，也不通过多次smoke替代认真训练。

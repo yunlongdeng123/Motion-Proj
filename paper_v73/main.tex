@@ -1,0 +1,347 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=24mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\emergencystretch=2em
+\title{Adapting Native Geometry Decoders for Dynamic Actor Surfaces:\\
+Interim Evidence on Coverage and Observed Free Space}
+\author{WorldSim V7.3 research draft}
+\date{Evidence snapshot: 8 September 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study metric surface reconstruction of rigid dynamic Actors from sparse
+LiDAR and multi-camera observations, with known identities, calibration and
+trajectories. The prototype adapts a pretrained native geometry decoder and
+uses spatial queries to generate explicit local surfaces in Actor coordinates.
+An interim development study shows that better coverage does not ensure
+better physical first intersections: the completed joint candidate R5 increases
+surface recall and reduces missing returns, but introduces more early surfaces
+and observed-free-space intrusion than strong same-input references.
+Changing the static background reduces a separate source of intrusion while
+exposing a coverage cost. These observations motivate controlled comparisons
+of label span, geometry adaptation and surface-based objectives. The report
+records completed experiments and their limitations; matched native and joint
+full-track training, the next objective comparison, and independent new-log
+confirmation remain unfinished. No final method superiority is claimed.
+\end{abstract}
+
+\section{Task and research hypothesis}
+For Actor $i$, we infer a reusable surface $\mathcal S_i$ in metric canonical
+coordinates from a fixed build window. Known rigid motion places it at query
+time: $\mathcal S_i(t)=T_{w\leftarrow i}(t)\mathcal S_i$. Camera calibration and
+trajectories are read-only. We focus on rigid vehicle categories; learned
+motion prediction, nonrigid deformation, intensity, complete no-return beam
+simulation and photorealistic rendering are outside this experiment.
+
+The hypothesis is that adapting a pretrained geometric decoding path and
+jointly reading local multi-view and LiDAR evidence can improve surface
+position and coverage without increasing violations of observed free space.
+This is an empirical hypothesis, not a consequence of adding parameters or
+attention. Earlier small-adapter results did not directly test it: their final
+surface displacement was computed from a physical hidden state, while current
+visual features affected an evidence update. In that interface, displacement
+had zero direct derivative with respect to current visual features when
+parameters and other inputs were fixed. V7.3 opens a trainable visual-to-surface
+path; a negative outcome for one implementation cannot reject all geometric
+foundation-model adaptation.
+
+\section{Implemented model and supervision}
+\subsection{Native decoding and spatial queries}
+The official VGGT training framework already supports freezing the aggregator
+while fine-tuning task heads~\cite{vggt}. Our prototype trains the full native
+DPT depth head (32,654,562 parameters), reading four aggregation levels. Only
+the completely frozen prefix is cached. No upper-aggregation LoRA is trained
+in the present joint candidate. Direct native-depth supervision uses build
+Actor LiDAR projected to the correct camera time, with the original metric
+scale fixed by robust build-side alignment.
+
+The query decoder has 1,670,517 parameters, hidden width 192 and three update
+layers. Up to 1,024 build-evidence queries and 512 completion queries carry
+canonical positions and learned states. Completion is seeded by aligned
+native geometry, with a LiDAR fallback; the explicit image-only entry also
+permits learned coarse positions when both point sources are absent. The
+older main runs did not train that last input regime.
+For a query $x_i$, view $v$ is read at
+\begin{equation}
+ x_{c,v}=T_{c\leftarrow w}(t_v)T_{w\leftarrow i}(t_v)x_i.
+\end{equation}
+Each query samples four local offsets at each of four feature scales, retaining
+camera, time and direction information. This follows the reference-centered
+sparse sampling idea of Deformable DETR~\cite{deformable}, transferred here
+to calibrated Actor queries. Query chunks have size 128. Local
+16-neighbor interactions use a spatial index with detached neighbor identities;
+we do not construct a dense query--query distance matrix. This reduces the
+interaction support to local neighborhoods; nearest-surface supervision still
+costs $O(PF)$ for $P$ target points and $F$ faces, with chunked temporary arrays.
+The prototype's image mask represents calibrated frustum and valid-image
+support, not verified occlusion visibility.
+
+Each query predicts an explicit $3\times3$ patch with eight triangles, normal
+and bounded local bending, on a fixed 0.06\,m grid spacing. Query centers are
+not limited to small displacements around original LiDAR candidates. Adjacent
+vertices within a patch are connected, but different patches are not welded
+into a closed manifold. Appearance opacity cannot hide a physical surface.
+
+\subsection{One surface, distinct measurement semantics}
+The implemented objectives act on this explicit geometry:
+\begin{equation}
+ L=L_{\mathrm{coverage}}+\lambda_n L_{\mathrm{native}}
+       +\lambda_f L_{\mathrm{free}}+0.05L_{\mathrm{envelope}}
+       +\lambda_e L_{\mathrm{event}}.
+\end{equation}
+Coverage is the mean distance from sampled measured target points to the nearest
+triangle. Sparse targets do not define a complete surface: an unmeasured region
+is not automatically empty, and we do not penalize all generated points merely
+for lacking a nearby sparse target. Native supervision is axial-depth SmoothL1
+with a 0.2\,m transition. It remains available at known build correspondences
+even when current predicted geometry leaves the Actor support region. This
+addresses a previously observed self-closing native-support path.
+
+For the original beam with first measured range $d_r^*$ and predicted first
+intersection $\hat d_r$, the hard free-space objective is
+\begin{equation}
+ L_{\mathrm{free}}=\frac1{|R|}\sum_{r\in R}
+ \mathbf1[\hat d_r<\infty]\,[d_r^*-0.2-\hat d_r]_+.
+\end{equation}
+All near-box original beams contribute; an occluded rear Actor does not replace
+the original first-return distance. Missing predictions have zero free penalty
+and remain penalized through measured coverage and reported missing-return
+rates. Regions behind the original return remain unknown. A finite beam-tube
+version uses the same surface with fixed width 0.03\,m and $32\times32$ sampling;
+it does not learn confidence or transparency.
+
+The event term is a capped, fixed-footprint likelihood of the same first visible
+surface with Gaussian range width 0.2\,m and cap 28. It is evaluated on the owned
+subset of the same sampled beams. Repeating a surface does not add an independent
+termination opportunity. Depth-termination supervision has prior art in
+DS-NeRF~\cite{dsnerf}; changing an expected-depth loss to a likelihood is not
+claimed as novel. Crucially, an entirely absent surface receives the cap and
+zero position gradient from this term. Coverage and free-space geometry must
+retain their separate roles. A local differentiable visibility boundary is not
+a guarantee of global support discovery or convergence. The rasterized
+visibility and antialiasing derivatives use nvdiffrast~\cite{nvdiffrast}.
+
+\section{Data, comparators and estimands}
+The nuScenes development study contains 489 rigid Actor entries in 31 windows
+from 25 independent logs: 414 fit entries in 20 logs and 75 development entries
+in five logs. The main runs admit 371 fit and 67 development entries with build
+LiDAR; the remaining 43 and eight stay in the population with explicit missing
+predictions. Each window supplies six cameras at four build times, jointly
+encoded at $378\times672$. Two interleaved times supply evaluation returns.
+Development logs never supply optimizer updates to the shared models.
+
+Additional full-track labels are fit-only: 414 target files contain 1,690,284
+measured Actor points, including positive targets for some empty-build entries.
+Those labels never become prediction inputs. R5 and R6 use the short-window
+label regime; R7--R9 use the longer fit-only labels. R10 and R11 are the matched
+joint/native full-track comparison still running at this snapshot. R12 isolates
+the beam-tube free objective relative to R10. An equal-capacity pointwise control
+has not been trained on this full population; therefore a spatial-attention
+causal claim is currently unsupported.
+
+We retain LiDAR accumulation with PCA patches, native adapted geometry plus
+canonical LiDAR fusion, native TSDF fusion, a CAPA-style build-only adaptation
+and a trained AdaPoinTr reference. CAPA supplies an official sparse-measurement
+test-time adaptation formulation~\cite{capa}; our transfer resets its low-rank
+parameters per window, takes 100 build-only updates and fuses its outputs in
+canonical coordinates. Its per-image affine alignment and test-time budget
+differ from shared training. AdaPoinTr~\cite{adapointr} uses the official PCN
+initialization, 30 fit epochs, axis conversion and full-track labels. It has a
+different optimizer, pretraining corpus and output density. These are meaningful
+competitors, not all single-factor ablations.
+
+An owned original return is a hit within $\pm0.2$\,m, early below that interval,
+late above it, or missing if no surface intersects. These outcomes include
+misses in the denominator. Free-space intrusion uses all original near-box
+beams. Measured surface recall is the fraction of heldout Actor measurements
+within 0.2\,m of the explicit surface. Frames are weighted by their actual
+measurements within each Actor, followed by Actor means within logs and equal
+log weighting. Paired uncertainty resamples independent logs 10,000 times,
+not individual rays. With only five development logs, intervals remain
+limited evidence. Twenty-three development Actors have no owned heldout
+return; they are retained and their unavailable metrics are identified.
+
+\section{Completed development evidence}
+\begin{table}[htbp]
+\centering\small
+\input{tables/actor_population.tex}
+\caption{Completed candidates, all 75 development entries in five logs.
+Recall is measured-target-to-surface recall, not complete-surface recall.
+Empty predictions remain missing. Short/long labels, adaptation budgets and
+output representations differ as described in the text; no row is a final
+confirmed method. Late rates are the residual outcome and are omitted for space.}
+\label{tab:population}
+\end{table}
+
+R5 completes 30 effective epochs (11,130 updates) of genuine native DPT and
+query adaptation. The final recall is 79.71\%, but early returns reach 20.98\%
+and mean free intrusion reaches 0.3517\,m. Relative to its own initialization,
+missing returns decrease while early returns increase. Relative to LiDAR R6,
+the surface is closer to heldout measurements but physical first intersections
+are worse (Table~\ref{tab:paired}). These are not contradictory metrics:
+additional support can cover true measurements and still lie in front of other
+observations. The main candidate has not established a physical advantage.
+
+\begin{table}[htbp]
+\centering\small
+\input{tables/joint_paired.tex}
+\caption{Selected paired development differences, five independent logs.
+Positive early/free and negative hit are adverse. R5 versus R6 shares the
+short-window label regime, but differs in visual input and native adaptation;
+it does not isolate attention. The recovered R5 run also has the random-state
+limitation described in Section~\ref{sec:limits}.}
+\label{tab:paired}
+\end{table}
+
+A separate observed-return point evaluation uses only original owned beam
+intersections and measured targets, with missing predictions retained. R5's
+F-score is 0.3541, compared with R6's 0.4319 and R9's 0.4922. R5 minus R6 is
+$-0.0778$ with log-bootstrap interval $[-0.1173,-0.0382]$. This is an observable
+subset, not full canonical-surface precision. Unsquared two-direction Chamfer
+is conditional on nonempty predicted/measured sets and is never substituted
+for the missing-rate column. Nearest-neighbor matching can also hide a
+wrong-beam intersection; literal first-return metrics remain necessary.
+
+The R7--R9 sequence isolates narrower mechanisms on LiDAR queries. Longer fit
+labels reduce early/free relative to R6. The beam-tube free objective then
+reduces early/free further while lowering measured recall. Adding event
+supervision reduces missing returns relative to R8, but the hit/free paired
+intervals span zero; event support is still absent on roughly 39\% of sampled
+owned training beams. None of these results proves that event likelihood alone
+recovers missing geometry.
+
+Query-source accounting attributes 91.74\% of R5's log-weighted free intrusion
+and 78.37\% of its early-return contribution to completion-initialized patches.
+Their centers average 1.087\,m from the nearest original build point. This
+measures source provenance, not causal visual attribution or displacement
+from each query's initial position: both source groups pass through the same
+trainable spatial/visual updates.
+
+\section{Density, static background and composition}
+Point-cloud conversion changes the physical readout. AdaPoinTr R2 retains all
+16,384 generated points, but its main comparison uses a common limited set of
+patch centers. Reading PCA patches at all native output points increases
+development hit by 24.72 percentage points and early by 30.85 points, while
+increasing free intrusion by 0.2190\,m. A denser surface is not an unqualified
+improvement. Native Actor TSDF at 0.1\,m voxels and 0.3\,m truncation produces
+a nonempty mesh for only 162 of 489 entries (18 of 75 development entries).
+Its low free intrusion therefore coexists with 96.33\% missing returns.
+This is an applicability limit of the stated sparse configuration, not a
+general negative result about TSDF fusion.
+
+At scene level we preserve background/Actor ownership and cast against
+\begin{equation}
+ \mathcal S_{\mathrm{scene}}(t)=\mathcal S_{\mathrm{static}}
+      \cup\bigcup_i T_{w\leftarrow i}(t)\mathcal S_i.
+\end{equation}
+The closest actual intersection across all owners is the scene first return.
+All methods share background inputs, Actor trajectories and the readout.
+Static construction excludes all known boxes at each build observation time.
+Original build beams provide one-pass face carving before the measured return;
+this does not fill unobserved background behind Actors.
+
+Using VDBFusion~\cite{vdbfusion} with fixed 0.1\,m voxels, 0.3\,m truncation and
+no hole filling yields a substantially different background support. On the
+five-log nuScenes development background-only comparison, TSDF plus carving
+reduces mean free intrusion from 0.2656 to 0.0822\,m, but increases missing
+returns from 53.28\% to 62.80\%. Every log improves free intrusion and loses
+hit coverage. With this common TSDF background, R5 still exceeds R9 in Actor
+cohort early returns by 15.33 points and free intrusion by 0.1084\,m; both
+paired intervals exclude zero. Background correction does not remove the
+Actor geometry problem.
+
+One already-exposed AV2 development log provides a separate implementation
+check. Its points are already compensated into reference-ego coordinates;
+endpoints are transformed to world once, while each return retains its actual
+time-dependent sensor origin. The single-origin VDBFusion API is called in
+groups of exactly equal origins, with no time/origin averaging. Relative to
+carved PCA background, carved TSDF reduces background-only free intrusion from
+0.5130 to 0.1075\,m but increases missing from 32.13\% to 45.54\%. Changing only
+the background leaves R5's moving-Actor outcomes unchanged on its 88 moving
+cohort beams. This single development log cannot supply between-log uncertainty
+or independent confirmation.
+
+\section{Remaining experiments and claim boundaries}\label{sec:limits}
+R10 and R11 still require completed training and analysis. R12 is registered
+but unrun. The one-epoch R13 input diagnostic is registered for all 51 original
+zero-build-LiDAR entries, with 41 camera-supported fit entries trained from
+M1 initialization. Seven have no positive full-track target but retain original
+near-box rays; unknown space must not become a negative target. A single epoch
+will establish execution and gradient behavior, not sufficient fitting or
+generalization. Its expanded input condition is separate from the objective
+comparison. The eight development empty-build entries have only one owned
+heldout return, preventing a credible geometric accuracy conclusion for that
+subgroup.
+
+Twenty additional AV2 logs were selected by available build metadata before
+model quality evaluation. Their 936 Actor entries, raw beams and 28-view
+frozen prefixes are prepared; TSDF background construction is in progress.
+No model-quality confirmation has been run on these logs. The final method
+and background choice must precede that readout. This is cross-dataset
+confirmation at a different camera/resolution budget, not an i.i.d. nuScenes
+test. Project-unseen logs also do not prove absence from foundation-model
+pretraining.
+
+Current joint and native-only configurations run on the RTX 3090 while
+preserving the stated time/view inputs. The joint peak allocated memory is approximately
+10.2\,GiB; native-only training uses approximately 2.35\,GiB. Twenty-eight-view
+AV2 prefix extraction at $672^2$ peaks at 7.64\,GiB. These are operation-specific
+allocated peaks, not a sum or a bound for deeper PEFT. Container RAM is capped
+at 90\,GiB. Concurrent run wall time is not exclusive GPU time.
+
+The original R5 process disappeared after epoch 21 without an available
+traceback; the cause remains unknown. Recovery restored model and optimizer
+but its legacy checkpoint lacked RNG state. The recovered run is not a
+bitwise continuation: 107 incomplete-epoch updates were discarded, and the
+observed combined wall-time lower bound is 9.32 hours. The run provenance
+remains part of its interpretation.
+
+Annotation boxes with margins approximate point ownership and overlap regions
+are excluded; they are not dense instance ground truth. nuScenes here lacks
+per-return timestamps, whereas the AV2 adapter has per-return sensor origins
+with a documented, development-inferred dual-LiDAR ID convention. Frustum
+support is not occlusion truth. The learned patches are not globally manifold.
+Trajectory-edit examples demonstrate composition only: with no counterfactual
+ground truth, released unknown background is not a correctness measurement.
+These limitations, the small development-log count and the unfinished controls
+preclude a final reconstruction or sensor-simulation superiority claim.
+
+\section*{Evidence and reproducibility}
+The source branch is \texttt{research/worldsim-v7.3-geometric-adaptation},
+derived directly from the final V7.2 state. The current operational authority
+is \path{docs/RESEARCH_STATUS.md}; \path{docs/RESEARCH_FAILURES.md} and
+\path{docs/EXPERIMENTS.md} retain failures and experiment history. Tables in
+this draft are generated from saved JSON summaries, without rerunning
+inference or selecting observations. Raw run directories under
+\path{/root/autodl-tmp/runs/worldsim_v73/} retain configurations, checkpoints,
+training logs and explicit surfaces. \path{paper_v73/README.md} identifies
+the exact compact evidence files and compilation commands. This draft is
+not an arXiv submission and does not mark V7.3 as complete.
+
+\begin{thebibliography}{9}
+\bibitem{vggt} VGGT authors. Official training framework and native geometry
+implementation. \url{https://github.com/facebookresearch/vggt/tree/main/training}.
+\bibitem{adapointr} X. Yu et al. AdaPoinTr: Diverse Point Cloud Completion with
+Adaptive Geometry-Aware Transformers. IEEE TPAMI, 2023.
+\url{https://arxiv.org/abs/2301.04545}.
+\bibitem{capa} CAPA authors. Depth Completion as Parameter-Efficient Test-Time
+Adaptations. 2026. Official project and implementation:
+\url{https://research.nvidia.com/labs/dvl/projects/capa/}.
+\bibitem{dsnerf} K. Deng et al. Depth-Supervised NeRF: Fewer Views and Faster
+Training for Free. CVPR, 2022. \url{https://www.cs.cmu.edu/~dsnerf/}.
+\bibitem{vdbfusion} I. Vizzo et al. VDBFusion: Flexible and Efficient TSDF
+Integration of Range Sensor Data. Sensors, 2022.
+\url{https://github.com/PRBonn/vdbfusion}.
+\bibitem{deformable} X. Zhu et al. Deformable DETR: Deformable Transformers
+for End-to-End Object Detection. 2020. Official implementation:
+\url{https://github.com/fundamentalvision/Deformable-DETR}.
+\bibitem{nvdiffrast} S. Laine et al. Modular Primitives for High-Performance
+Differentiable Rendering. ACM TOG 39(6), 2020.
+\url{https://nvlabs.github.io/nvdiffrast/}.
+\end{thebibliography}
+\end{document}
