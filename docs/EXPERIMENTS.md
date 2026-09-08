@@ -1,3 +1,18 @@
+## V7.3 AV2逐返回TSDF背景迁移登记（2026-09-08）
+
+当前AV2已存背景是PCA，尚未接入nuScenes开发侧的TSDF候选。针对VDBFusion单次integrate只接受一个sensor origin的接口卡点，本轮先查[官方仓库](https://github.com/PRBonn/vdbfusion)及[原生积分源码](https://raw.githubusercontent.com/PRBonn/vdbfusion/main/src/vdbfusion/vdbfusion/VDBVolume.cpp)。AV2已补偿到reference ego的端点只能转world一次；逐返回原点不能替换成扫描统一原点，否则会破坏已记录的米制射线。
+
+新增`motion_proj/worldsim_v73/vdb_integration.py`按实际相同float64原点分组，排序后一次分段，原点不取整/平均、不改变时刻、不截断点数；保留组内输入顺序。避免逐个原点反复扫描整点集造成O(N×原点数)工作。使用现有vdbfusion0.1.6 wheel和CPU环境，不新增环境或改第三方原生算法。
+
+登记`WS-V73-M4-AV2-SCENE-DATA-01/20260908T083000Z__old-development-vdb-per-return-r2`，新增`scripts/prepare_worldsim_v73_av2_vdb_background.py`；登记时未执行。先在旧开发日志02678d04完成实际背景构建：与原父数据相同4个build扫描，逐返回已知sensor pose、全部有效时刻已知框+.1m外端点，无near-sensor删点。uniform weight/voxel.1/trunc.3/space_carving=true/fill_holes=false/min_weight0；保留原生mesh与按所有原build束一次雕刻后的mesh。原父PCA端点做float32去重，而TSDF逐原返回加权，二者计数差异需披露。
+
+只链接父数据原heldout束、owner、sensor-known标记与只读Actor轨迹，不为构建读取heldout值或评价模型质量。新20日志尚不运行质量评价；旧开发接口完成后才将同实现用于其背景准备，最终背景选择仍在质量确认之前完成。原生体积可由已有输入重建，本次保留两份显式表面与完整构建参数，不另存大体积文件。
+
+08:18UTC R10/PID53472 epoch12、R11/PID38460 epoch26继续原训练；R12未启动，visual-only新反向仍待释放显存。本项仅CPU数据构建，执行期间同样不得shutdown。F04/F05保持active，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 实验可比条件整理与原生强控制报告更新（2026-09-08）
 
 新增`docs/WORLDSIM_V7_3_COMPARISON_PROTOCOLS.md`，基于实际manifest、实现和已存结果整理主路径、CAPA/AdaPoinTr/融合、零LiDAR及场景/新域比较。没有新训练、推理或重复评价；这是一份后续技术报告的证据解释文档，不是新增门控或验收清单。
