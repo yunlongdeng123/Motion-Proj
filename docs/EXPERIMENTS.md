@@ -1,3 +1,16 @@
+## V7.3 新20日志逐返回TSDF背景输入准备完成（2026-09-08）
+
+`WS-V73-M4-AV2-SCENE-DATA-01/20260908T084000Z__external20-vdb-per-return-r2` code75ac0563已完成；单CPU进程wall1249.572386s/RSS4.307499GiB、0 GPU/optimizer更新，PID64413已退出。全部预选20日志/936 Actor/80 build扫描；原7815152束，积分6839969背景返回，父PCA去重中心6839807，相差162个重复原测量。4149271个真实float64原点组，不平均或量化逐返回原点、不二次变换AV2已补偿端点、不限制返回数。
+
+固定VDBFusion0.1.6 voxel.1m/trunc.3m、uniform unit weight、space_carving=true、fill_holes=false/min_weight0。原生6962322三角面，沿所有原build束在首返回前.2m单次雕刻146991片（2.111%），保留6815331；20日志剩余build矛盾束0/侵入距离和0m。这个零值是构建约束下的读数，不能表示新时刻质量或场景完整性，也不能据此改变参数。原PCA及两份TSDF mesh均保留，未另存大VDB体积。
+
+3908250条原heldout返回仅链接，owner、逐返回sensor-known与只读Actor轨迹沿用父数据。model_quality_computed=false；20新日志还没有模型质量评价。最终方法/背景选择仍须先在开发结果上固定，不按新域成绩挑日志。紧凑逐日志证据`docs/autoresearch/worldsim_v73/m4/av2_external20_vdb_construction_r2.json`，专项报告`docs/WORLDSIM_V7_3_AV2_VDB_BACKGROUND.md`；没有把76MB轨迹index复制进git。
+
+09:20UTC R11/PID38460进入epoch30但尚未结束，R10/PID53472 epoch15正常、合计GPU15505MiB、oom/oom_kill均0；R12未启动，R13真实反向仍待R11实际退出释放显存。R13的51原metadata对象输入链接已准备，不需要重新构建。LaTeX interim_r1 PDF保留其09:04阶段快照，新主训练结果完成后统一推进下一稿。failure_ledger_delta=none（F02/F03/F04/F05持续，下一失败编号V73-F09）。整个V7.3未完成，自动跟进保持active，shutdown=false。
+
+---
+
+
 ## V7.3 LaTeX阶段证据稿同步（2026-09-08）
 
 计划要求同步V7.3 LaTeX的任务、方法假设与证据表；原仓库只有历史paper/paper_v72，本次新增`paper_v73/main.tex`和中文README，保留旧论文。英文草稿写明当前原生DPT/空间查询实现、不同标签与预算的对照条件、全489分母/开发5日志、R5的coverage/free负结果、事件缺支持、输出密度、Actor TSDF适用性、背景构建覆盖成本及未完成实验。没有预写最终方法胜出、完整表面真值、已完成新域确认或arXiv发布。

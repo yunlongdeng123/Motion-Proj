@@ -1,0 +1,1636 @@
+{
+  "status": "done",
+  "wall_s": 1249.5723855439574,
+  "peak_rss_gib": 4.307498931884766,
+  "model_quality_computed": false,
+  "optimizer_updates": 0,
+  "boundary": "build-only background candidate; parent heldout beams and known Actor trajectories unchanged; no new-log quality evaluation",
+  "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-SCENE-DATA-01/20260908T084000Z__external20-vdb-per-return-r2",
+  "manifest": {
+    "task_id": "WS-V73-M4-AV2-SCENE-DATA-01",
+    "code_commit": "75ac05635aa8d18b9bcf99150c13a688b0455824",
+    "parent_scene_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1",
+    "sensor_root": "/root/autodl-tmp/data/av2/sensor/train",
+    "log_ids": [
+      "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "022af476-9937-3e70-be52-f65420d52703",
+      "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "03b2cf2d-fb61-36fe-936f-36bbf197a8ac",
+      "03fba633-8085-30bc-b675-687a715536ac",
+      "04973bcf-fc64-367c-9642-6d6c5f363b61",
+      "0526e68e-2ff1-3e53-b0f8-45df02e45a93",
+      "05853f69-f948-3d04-8d64-d4e721c0e1a5",
+      "05fb81ab-5e46-3f63-a59f-82fc66d5a477",
+      "067b1c50-6567-3840-ab56-1ca2a0ed9c30",
+      "06852209-b868-306b-b492-ee6dbc914cf8",
+      "069cc46d-38bb-309d-88cf-296a3d0c0820",
+      "06e5ac08-f4cb-34ae-9406-3496f7cadc62",
+      "072c8e90-a51c-3429-9cdf-4dababb4e9d8",
+      "0749e9e0-ca52-3546-b324-d704138b11b5",
+      "074d2237-ed1b-34d7-a2fc-68edbce50bb2",
+      "07e4fccb-eb2d-31e5-bbcb-6550d0860f64",
+      "080b1ce2-9477-39ee-8233-b7f33e1dfe56",
+      "08734a1b-0289-3aa3-a6ba-8c7121521e26",
+      "087695bd-c662-3e86-83b4-aedc3b8eec36"
+    ],
+    "implementation": "official vdbfusion wheel",
+    "vdbfusion_version": "0.1.6",
+    "voxel_size_m": 0.1,
+    "sdf_trunc_m": 0.3,
+    "space_carving": true,
+    "fill_holes": false,
+    "min_weight": 0.0,
+    "input_selection": "same parent build sweeps, valid sensor poses, outside every valid-time known box+0.1m; no sensor-near removal or input cap",
+    "endpoints": "published reference-ego compensated xyz transformed to world once; never apply per-point ego transform again to these endpoints",
+    "origins": "actual calibrated per-return world sensor origins; group exact identical float64 origins without time/position quantization or frame-origin substitution",
+    "grouping": "sort/partition once; preserve point order within each origin group; no repeated N-by-number-of-origins scan",
+    "integration_weights": "one unit per retained original return; parent PCA deduplicates float32 endpoints, so raw integration count can differ from its unique center count",
+    "unknown_boundary": "all 8 meshing-cell corners observed; no unknown-region closure or learned opacity",
+    "carving": "reuse common one-pass whole-triangle exclusion before all original build first-return ranges minus0.2m, with the same per-return origins",
+    "readout_inputs": "parent heldout beams, owners, sensor-known flags and readonly Actor trajectories linked unchanged; heldout values not evaluated or read for fusion",
+    "model_quality_computed": false,
+    "optimizer_updates": 0,
+    "external_build_values_processed": true,
+    "references": [
+      "https://github.com/PRBonn/vdbfusion",
+      "https://raw.githubusercontent.com/PRBonn/vdbfusion/main/src/vdbfusion/vdbfusion/VDBVolume.cpp",
+      "https://github.com/argoverse/av2-api/blob/main/src/av2/structures/sweep.py"
+    ]
+  },
+  "scenes": [
+    {
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "role": "external_confirmation",
+      "background_points": 401802,
+      "background_triangles": 356462,
+      "tsdf": {
+        "vertices": 268915,
+        "native_triangles": 365644,
+        "integrated_returns": 401813,
+        "origin_groups": 219823,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315968868159601000",
+            "raw_returns": 103425,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 2299,
+            "integrated_points": 101126,
+            "origin_groups": 55275,
+            "parent_retained_returns": 101126,
+            "integration_s": 2.6750663053244352,
+            "scan_wall_s": 20.01377751491964
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315968869159564000",
+            "raw_returns": 102852,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 2172,
+            "integrated_points": 100680,
+            "origin_groups": 55011,
+            "parent_retained_returns": 100680,
+            "integration_s": 2.712483871728182,
+            "scan_wall_s": 18.800175802782178
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315968869659882000",
+            "raw_returns": 102635,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 2244,
+            "integrated_points": 100391,
+            "origin_groups": 54770,
+            "parent_retained_returns": 100391,
+            "integration_s": 2.790394466370344,
+            "scan_wall_s": 19.086405443027616
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315968870659846000",
+            "raw_returns": 102767,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 3151,
+            "integrated_points": 99616,
+            "origin_groups": 54767,
+            "parent_retained_returns": 99616,
+            "integration_s": 2.9135857485234737,
+            "scan_wall_s": 19.255700439214706
+          }
+        ],
+        "wall_s": 83.44849267974496
+      },
+      "carving": {
+        "original_triangles": 365644,
+        "removed_triangles": 9182,
+        "build_conflicting_rays_before": 7480,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 51,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 206777
+    },
+    {
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "role": "external_confirmation",
+      "background_points": 391808,
+      "background_triangles": 377266,
+      "tsdf": {
+        "vertices": 292877,
+        "native_triangles": 390776,
+        "integrated_returns": 391813,
+        "origin_groups": 223430,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315972122360247000",
+            "raw_returns": 101346,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 862,
+            "integrated_points": 100484,
+            "origin_groups": 56045,
+            "parent_retained_returns": 100484,
+            "integration_s": 3.040343228727579,
+            "scan_wall_s": 7.580339774489403
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315972123359540000",
+            "raw_returns": 100904,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 2429,
+            "integrated_points": 98475,
+            "origin_groups": 55984,
+            "parent_retained_returns": 98475,
+            "integration_s": 3.0546847861260176,
+            "scan_wall_s": 7.291191570460796
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315972123860521000",
+            "raw_returns": 99750,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 2014,
+            "integrated_points": 97736,
+            "origin_groups": 55838,
+            "parent_retained_returns": 97736,
+            "integration_s": 3.378235809504986,
+            "scan_wall_s": 7.663788078352809
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315972124859815000",
+            "raw_returns": 96500,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 1382,
+            "integrated_points": 95118,
+            "origin_groups": 55563,
+            "parent_retained_returns": 95118,
+            "integration_s": 3.8858297392725945,
+            "scan_wall_s": 8.07053161226213
+          }
+        ],
+        "wall_s": 39.35663181729615
+      },
+      "carving": {
+        "original_triangles": 390776,
+        "removed_triangles": 13510,
+        "build_conflicting_rays_before": 9910,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 26,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 198279
+    },
+    {
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "role": "external_confirmation",
+      "background_points": 361287,
+      "background_triangles": 464745,
+      "tsdf": {
+        "vertices": 359172,
+        "native_triangles": 471440,
+        "integrated_returns": 361293,
+        "origin_groups": 216863,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315967622059992000",
+            "raw_returns": 99703,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 10340,
+            "integrated_points": 89363,
+            "origin_groups": 54213,
+            "parent_retained_returns": 89363,
+            "integration_s": 3.9874940514564514,
+            "scan_wall_s": 18.9151230789721
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315967623059968000",
+            "raw_returns": 99765,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9452,
+            "integrated_points": 90313,
+            "origin_groups": 54283,
+            "parent_retained_returns": 90313,
+            "integration_s": 4.083508249372244,
+            "scan_wall_s": 18.982659878209233
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315967623559623000",
+            "raw_returns": 100048,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9123,
+            "integrated_points": 90925,
+            "origin_groups": 54335,
+            "parent_retained_returns": 90925,
+            "integration_s": 3.9956811480224133,
+            "scan_wall_s": 19.01085115224123
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315967624560262000",
+            "raw_returns": 99117,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 8425,
+            "integrated_points": 90692,
+            "origin_groups": 54032,
+            "parent_retained_returns": 90692,
+            "integration_s": 3.990027606487274,
+            "scan_wall_s": 18.625049244612455
+          }
+        ],
+        "wall_s": 87.89159572124481
+      },
+      "carving": {
+        "original_triangles": 471440,
+        "removed_triangles": 6695,
+        "build_conflicting_rays_before": 4703,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 52,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 199760
+    },
+    {
+      "scene": "av2-03b2cf2d-fb61-36fe-936f-36bbf197a8ac",
+      "log_id": "03b2cf2d-fb61-36fe-936f-36bbf197a8ac",
+      "role": "external_confirmation",
+      "background_points": 312250,
+      "background_triangles": 254854,
+      "tsdf": {
+        "vertices": 188715,
+        "native_triangles": 260996,
+        "integrated_returns": 312265,
+        "origin_groups": 202879,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315972818159664000",
+            "raw_returns": 96964,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 27367,
+            "integrated_points": 69597,
+            "origin_groups": 45879,
+            "parent_retained_returns": 69597,
+            "integration_s": 1.8257176410406828,
+            "scan_wall_s": 16.068659281358123
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315972819159628000",
+            "raw_returns": 96436,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 16363,
+            "integrated_points": 80073,
+            "origin_groups": 51312,
+            "parent_retained_returns": 80073,
+            "integration_s": 1.793893164023757,
+            "scan_wall_s": 15.888026215136051
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315972819659946000",
+            "raw_returns": 95832,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 13694,
+            "integrated_points": 82138,
+            "origin_groups": 52805,
+            "parent_retained_returns": 82138,
+            "integration_s": 1.8166360631585121,
+            "scan_wall_s": 15.592147521674633
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315972820659911000",
+            "raw_returns": 94631,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 14174,
+            "integrated_points": 80457,
+            "origin_groups": 52883,
+            "parent_retained_returns": 80457,
+            "integration_s": 1.7837140168994665,
+            "scan_wall_s": 15.538732161745429
+          }
+        ],
+        "wall_s": 67.13439658842981
+      },
+      "carving": {
+        "original_triangles": 260996,
+        "removed_triangles": 6142,
+        "build_conflicting_rays_before": 4967,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 59,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 191932
+    },
+    {
+      "scene": "av2-03fba633-8085-30bc-b675-687a715536ac",
+      "log_id": "03fba633-8085-30bc-b675-687a715536ac",
+      "role": "external_confirmation",
+      "background_points": 295816,
+      "background_triangles": 298807,
+      "tsdf": {
+        "vertices": 230393,
+        "native_triangles": 302997,
+        "integrated_returns": 295821,
+        "origin_groups": 181155,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315969564359450000",
+            "raw_returns": 102507,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 38854,
+            "integrated_points": 63653,
+            "origin_groups": 41215,
+            "parent_retained_returns": 63653,
+            "integration_s": 1.8474417943507433,
+            "scan_wall_s": 8.839793579652905
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315969565359412000",
+            "raw_returns": 101534,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 30435,
+            "integrated_points": 71099,
+            "origin_groups": 43954,
+            "parent_retained_returns": 71099,
+            "integration_s": 1.9553877245634794,
+            "scan_wall_s": 8.902280569076538
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315969565859731000",
+            "raw_returns": 100133,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 23524,
+            "integrated_points": 76609,
+            "origin_groups": 46308,
+            "parent_retained_returns": 76609,
+            "integration_s": 2.1649409998208284,
+            "scan_wall_s": 8.972947103902698
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315969566859694000",
+            "raw_returns": 100464,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 16004,
+            "integrated_points": 84460,
+            "origin_groups": 49678,
+            "parent_retained_returns": 84460,
+            "integration_s": 2.1615171786397696,
+            "scan_wall_s": 8.932929139584303
+          }
+        ],
+        "wall_s": 40.324559750035405
+      },
+      "carving": {
+        "original_triangles": 302997,
+        "removed_triangles": 4190,
+        "build_conflicting_rays_before": 3306,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 38,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 200366
+    },
+    {
+      "scene": "av2-04973bcf-fc64-367c-9642-6d6c5f363b61",
+      "log_id": "04973bcf-fc64-367c-9642-6d6c5f363b61",
+      "role": "external_confirmation",
+      "background_points": 371392,
+      "background_triangles": 462509,
+      "tsdf": {
+        "vertices": 366168,
+        "native_triangles": 472845,
+        "integrated_returns": 371397,
+        "origin_groups": 222219,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315968046659707000",
+            "raw_returns": 103866,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9240,
+            "integrated_points": 94626,
+            "origin_groups": 55556,
+            "parent_retained_returns": 94626,
+            "integration_s": 2.966351445764303,
+            "scan_wall_s": 13.065941624343395
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315968047659670000",
+            "raw_returns": 103702,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 10545,
+            "integrated_points": 93157,
+            "origin_groups": 55606,
+            "parent_retained_returns": 93157,
+            "integration_s": 2.796627940610051,
+            "scan_wall_s": 12.82094232365489
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315968048159978000",
+            "raw_returns": 103782,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 11131,
+            "integrated_points": 92651,
+            "origin_groups": 55670,
+            "parent_retained_returns": 92651,
+            "integration_s": 2.876537887379527,
+            "scan_wall_s": 12.628909483551979
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315968049159941000",
+            "raw_returns": 103998,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 13035,
+            "integrated_points": 90963,
+            "origin_groups": 55387,
+            "parent_retained_returns": 90963,
+            "integration_s": 2.824254587292671,
+            "scan_wall_s": 12.620441565290093
+          }
+        ],
+        "wall_s": 57.75377535820007
+      },
+      "carving": {
+        "original_triangles": 472845,
+        "removed_triangles": 10336,
+        "build_conflicting_rays_before": 7576,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 63,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 207797
+    },
+    {
+      "scene": "av2-0526e68e-2ff1-3e53-b0f8-45df02e45a93",
+      "log_id": "0526e68e-2ff1-3e53-b0f8-45df02e45a93",
+      "role": "external_confirmation",
+      "background_points": 290187,
+      "background_triangles": 175156,
+      "tsdf": {
+        "vertices": 135512,
+        "native_triangles": 179538,
+        "integrated_returns": 290197,
+        "origin_groups": 186028,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315966890259932000",
+            "raw_returns": 101922,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 30270,
+            "integrated_points": 71652,
+            "origin_groups": 45901,
+            "parent_retained_returns": 71652,
+            "integration_s": 1.6435057763010263,
+            "scan_wall_s": 8.791556054726243
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315966891259894000",
+            "raw_returns": 101853,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 30161,
+            "integrated_points": 71692,
+            "origin_groups": 46187,
+            "parent_retained_returns": 71692,
+            "integration_s": 1.6173254754394293,
+            "scan_wall_s": 8.688153248280287
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315966891760212000",
+            "raw_returns": 101765,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 28975,
+            "integrated_points": 72790,
+            "origin_groups": 46653,
+            "parent_retained_returns": 72790,
+            "integration_s": 1.6715693529695272,
+            "scan_wall_s": 8.724454253911972
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315966892760173000",
+            "raw_returns": 101626,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 27563,
+            "integrated_points": 74063,
+            "origin_groups": 47287,
+            "parent_retained_returns": 74063,
+            "integration_s": 1.8664633929729462,
+            "scan_wall_s": 9.009162271395326
+          }
+        ],
+        "wall_s": 37.65683922730386
+      },
+      "carving": {
+        "original_triangles": 179538,
+        "removed_triangles": 4382,
+        "build_conflicting_rays_before": 4325,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 35,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 203630
+    },
+    {
+      "scene": "av2-05853f69-f948-3d04-8d64-d4e721c0e1a5",
+      "log_id": "05853f69-f948-3d04-8d64-d4e721c0e1a5",
+      "role": "external_confirmation",
+      "background_points": 304581,
+      "background_triangles": 259814,
+      "tsdf": {
+        "vertices": 193321,
+        "native_triangles": 265032,
+        "integrated_returns": 304591,
+        "origin_groups": 187652,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315974315559679000",
+            "raw_returns": 100735,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 22633,
+            "integrated_points": 78102,
+            "origin_groups": 48276,
+            "parent_retained_returns": 78102,
+            "integration_s": 2.0030347853899,
+            "scan_wall_s": 10.659259807318449
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315974316560314000",
+            "raw_returns": 100835,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 24791,
+            "integrated_points": 76044,
+            "origin_groups": 46844,
+            "parent_retained_returns": 76044,
+            "integration_s": 2.050911260768771,
+            "scan_wall_s": 10.64812601171434
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315974317059967000",
+            "raw_returns": 100859,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 25198,
+            "integrated_points": 75661,
+            "origin_groups": 46661,
+            "parent_retained_returns": 75661,
+            "integration_s": 2.0253966469317675,
+            "scan_wall_s": 10.821699695661664
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315974318059938000",
+            "raw_returns": 100785,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 26001,
+            "integrated_points": 74784,
+            "origin_groups": 45871,
+            "parent_retained_returns": 74784,
+            "integration_s": 2.075238296762109,
+            "scan_wall_s": 10.957246840000153
+          }
+        ],
+        "wall_s": 47.315485309809446
+      },
+      "carving": {
+        "original_triangles": 265032,
+        "removed_triangles": 5218,
+        "build_conflicting_rays_before": 4442,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 31,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 201806
+    },
+    {
+      "scene": "av2-05fb81ab-5e46-3f63-a59f-82fc66d5a477",
+      "log_id": "05fb81ab-5e46-3f63-a59f-82fc66d5a477",
+      "role": "external_confirmation",
+      "background_points": 370553,
+      "background_triangles": 383019,
+      "tsdf": {
+        "vertices": 282424,
+        "native_triangles": 391805,
+        "integrated_returns": 370557,
+        "origin_groups": 217919,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315966858159917000",
+            "raw_returns": 102650,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 10452,
+            "integrated_points": 92198,
+            "origin_groups": 54772,
+            "parent_retained_returns": 92198,
+            "integration_s": 3.087379841133952,
+            "scan_wall_s": 21.046488396823406
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315966859159886000",
+            "raw_returns": 102233,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9349,
+            "integrated_points": 92884,
+            "origin_groups": 54604,
+            "parent_retained_returns": 92884,
+            "integration_s": 3.0088067315518856,
+            "scan_wall_s": 20.063976988196373
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315966859660204000",
+            "raw_returns": 102287,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9159,
+            "integrated_points": 93128,
+            "origin_groups": 54480,
+            "parent_retained_returns": 93128,
+            "integration_s": 2.934219704940915,
+            "scan_wall_s": 19.795021967962384
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315966860660174000",
+            "raw_returns": 102154,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9807,
+            "integrated_points": 92347,
+            "origin_groups": 54063,
+            "parent_retained_returns": 92347,
+            "integration_s": 2.7536278273910284,
+            "scan_wall_s": 19.641610357910395
+          }
+        ],
+        "wall_s": 88.3584117218852
+      },
+      "carving": {
+        "original_triangles": 391805,
+        "removed_triangles": 8786,
+        "build_conflicting_rays_before": 6626,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 36,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 204285
+    },
+    {
+      "scene": "av2-067b1c50-6567-3840-ab56-1ca2a0ed9c30",
+      "log_id": "067b1c50-6567-3840-ab56-1ca2a0ed9c30",
+      "role": "external_confirmation",
+      "background_points": 344087,
+      "background_triangles": 187225,
+      "tsdf": {
+        "vertices": 156798,
+        "native_triangles": 190806,
+        "integrated_returns": 344109,
+        "origin_groups": 210525,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315974099759607000",
+            "raw_returns": 93935,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 7858,
+            "integrated_points": 86077,
+            "origin_groups": 52559,
+            "parent_retained_returns": 86077,
+            "integration_s": 3.2650431096553802,
+            "scan_wall_s": 13.856210770085454
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315974100760242000",
+            "raw_returns": 93881,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 7882,
+            "integrated_points": 85999,
+            "origin_groups": 52634,
+            "parent_retained_returns": 85999,
+            "integration_s": 3.3065741918981075,
+            "scan_wall_s": 14.41383745521307
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315974101259894000",
+            "raw_returns": 93829,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 7877,
+            "integrated_points": 85952,
+            "origin_groups": 52625,
+            "parent_retained_returns": 85952,
+            "integration_s": 3.357378313317895,
+            "scan_wall_s": 13.797655887901783
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315974102259866000",
+            "raw_returns": 94112,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 8031,
+            "integrated_points": 86081,
+            "origin_groups": 52707,
+            "parent_retained_returns": 86081,
+            "integration_s": 3.2675866037607193,
+            "scan_wall_s": 13.990035958588123
+          }
+        ],
+        "wall_s": 62.52946975827217
+      },
+      "carving": {
+        "original_triangles": 190806,
+        "removed_triangles": 3581,
+        "build_conflicting_rays_before": 3593,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 29,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 187624
+    },
+    {
+      "scene": "av2-06852209-b868-306b-b492-ee6dbc914cf8",
+      "log_id": "06852209-b868-306b-b492-ee6dbc914cf8",
+      "role": "external_confirmation",
+      "background_points": 359964,
+      "background_triangles": 362012,
+      "tsdf": {
+        "vertices": 293732,
+        "native_triangles": 366847,
+        "integrated_returns": 359970,
+        "origin_groups": 212852,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315973941259532000",
+            "raw_returns": 97849,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 5866,
+            "integrated_points": 91983,
+            "origin_groups": 54169,
+            "parent_retained_returns": 91983,
+            "integration_s": 3.5136340130120516,
+            "scan_wall_s": 7.269244333729148
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315973942260161000",
+            "raw_returns": 97505,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 7825,
+            "integrated_points": 89680,
+            "origin_groups": 53092,
+            "parent_retained_returns": 89680,
+            "integration_s": 3.4601862002164125,
+            "scan_wall_s": 7.210213057696819
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315973942759816000",
+            "raw_returns": 97867,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 8065,
+            "integrated_points": 89802,
+            "origin_groups": 53051,
+            "parent_retained_returns": 89802,
+            "integration_s": 3.272531047463417,
+            "scan_wall_s": 7.013942584395409
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315973943759780000",
+            "raw_returns": 97357,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 8852,
+            "integrated_points": 88505,
+            "origin_groups": 52540,
+            "parent_retained_returns": 88505,
+            "integration_s": 3.1728243120014668,
+            "scan_wall_s": 6.887037167325616
+          }
+        ],
+        "wall_s": 36.37130705267191
+      },
+      "carving": {
+        "original_triangles": 366847,
+        "removed_triangles": 4835,
+        "build_conflicting_rays_before": 3956,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 24,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 196140
+    },
+    {
+      "scene": "av2-069cc46d-38bb-309d-88cf-296a3d0c0820",
+      "log_id": "069cc46d-38bb-309d-88cf-296a3d0c0820",
+      "role": "external_confirmation",
+      "background_points": 352642,
+      "background_triangles": 437199,
+      "tsdf": {
+        "vertices": 336394,
+        "native_triangles": 453049,
+        "integrated_returns": 352645,
+        "origin_groups": 217332,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315969489259576000",
+            "raw_returns": 99065,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 12492,
+            "integrated_points": 86573,
+            "origin_groups": 54136,
+            "parent_retained_returns": 86573,
+            "integration_s": 3.1204758267849684,
+            "scan_wall_s": 13.688883924856782
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315969490260211000",
+            "raw_returns": 99435,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 12455,
+            "integrated_points": 86980,
+            "origin_groups": 54134,
+            "parent_retained_returns": 86980,
+            "integration_s": 2.9709313716739416,
+            "scan_wall_s": 13.471768457442522
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315969490759866000",
+            "raw_returns": 99847,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 11423,
+            "integrated_points": 88424,
+            "origin_groups": 54209,
+            "parent_retained_returns": 88424,
+            "integration_s": 2.903651075437665,
+            "scan_wall_s": 13.454651048406959
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315969491759836000",
+            "raw_returns": 100951,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 10283,
+            "integrated_points": 90668,
+            "origin_groups": 54853,
+            "parent_retained_returns": 90668,
+            "integration_s": 3.018080323934555,
+            "scan_wall_s": 13.43532002903521
+          }
+        ],
+        "wall_s": 61.78272882476449
+      },
+      "carving": {
+        "original_triangles": 453049,
+        "removed_triangles": 15850,
+        "build_conflicting_rays_before": 11428,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 74,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 200104
+    },
+    {
+      "scene": "av2-06e5ac08-f4cb-34ae-9406-3496f7cadc62",
+      "log_id": "06e5ac08-f4cb-34ae-9406-3496f7cadc62",
+      "role": "external_confirmation",
+      "background_points": 350611,
+      "background_triangles": 220697,
+      "tsdf": {
+        "vertices": 199312,
+        "native_triangles": 224391,
+        "integrated_returns": 350612,
+        "origin_groups": 214071,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315967552459682000",
+            "raw_returns": 93687,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 6435,
+            "integrated_points": 87252,
+            "origin_groups": 53432,
+            "parent_retained_returns": 87252,
+            "integration_s": 4.962812088429928,
+            "scan_wall_s": 11.93313224799931
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315967553459657000",
+            "raw_returns": 93697,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 6234,
+            "integrated_points": 87463,
+            "origin_groups": 53504,
+            "parent_retained_returns": 87463,
+            "integration_s": 4.286944417282939,
+            "scan_wall_s": 11.352670907974243
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315967553959976000",
+            "raw_returns": 93837,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 6031,
+            "integrated_points": 87806,
+            "origin_groups": 53642,
+            "parent_retained_returns": 87806,
+            "integration_s": 4.6469852570444345,
+            "scan_wall_s": 11.628717947751284
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315967554959951000",
+            "raw_returns": 93636,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 5545,
+            "integrated_points": 88091,
+            "origin_groups": 53493,
+            "parent_retained_returns": 88091,
+            "integration_s": 4.283790392801166,
+            "scan_wall_s": 11.185099743306637
+          }
+        ],
+        "wall_s": 56.1394036244601
+      },
+      "carving": {
+        "original_triangles": 224391,
+        "removed_triangles": 3694,
+        "build_conflicting_rays_before": 4207,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 46,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 187445
+    },
+    {
+      "scene": "av2-072c8e90-a51c-3429-9cdf-4dababb4e9d8",
+      "log_id": "072c8e90-a51c-3429-9cdf-4dababb4e9d8",
+      "role": "external_confirmation",
+      "background_points": 325365,
+      "background_triangles": 390947,
+      "tsdf": {
+        "vertices": 324764,
+        "native_triangles": 397871,
+        "integrated_returns": 325370,
+        "origin_groups": 204741,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315967594260096000",
+            "raw_returns": 92214,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 15543,
+            "integrated_points": 76671,
+            "origin_groups": 49857,
+            "parent_retained_returns": 76671,
+            "integration_s": 5.154226753860712,
+            "scan_wall_s": 18.040685342624784
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315967595260078000",
+            "raw_returns": 92825,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 12343,
+            "integrated_points": 80482,
+            "origin_groups": 50965,
+            "parent_retained_returns": 80482,
+            "integration_s": 5.3509269915521145,
+            "scan_wall_s": 17.85528490319848
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315967595759733000",
+            "raw_returns": 93897,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 11885,
+            "integrated_points": 82012,
+            "origin_groups": 51323,
+            "parent_retained_returns": 82012,
+            "integration_s": 5.055104875937104,
+            "scan_wall_s": 17.95284333266318
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315967596759714000",
+            "raw_returns": 95389,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9184,
+            "integrated_points": 86205,
+            "origin_groups": 52596,
+            "parent_retained_returns": 86205,
+            "integration_s": 5.575283730402589,
+            "scan_wall_s": 18.6357083003968
+          }
+        ],
+        "wall_s": 88.38651820644736
+      },
+      "carving": {
+        "original_triangles": 397871,
+        "removed_triangles": 6924,
+        "build_conflicting_rays_before": 4885,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 39,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 186998
+    },
+    {
+      "scene": "av2-0749e9e0-ca52-3546-b324-d704138b11b5",
+      "log_id": "0749e9e0-ca52-3546-b324-d704138b11b5",
+      "role": "external_confirmation",
+      "background_points": 290519,
+      "background_triangles": 418334,
+      "tsdf": {
+        "vertices": 336040,
+        "native_triangles": 424447,
+        "integrated_returns": 290519,
+        "origin_groups": 195205,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315972769659964000",
+            "raw_returns": 86752,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 9322,
+            "integrated_points": 77430,
+            "origin_groups": 50572,
+            "parent_retained_returns": 77430,
+            "integration_s": 3.5469802524894476,
+            "scan_wall_s": 11.08907150104642
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315972770659939000",
+            "raw_returns": 85365,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 12254,
+            "integrated_points": 73111,
+            "origin_groups": 49065,
+            "parent_retained_returns": 73111,
+            "integration_s": 3.8291923478245735,
+            "scan_wall_s": 11.517430651932955
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315972771159595000",
+            "raw_returns": 84534,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 13381,
+            "integrated_points": 71153,
+            "origin_groups": 48268,
+            "parent_retained_returns": 71153,
+            "integration_s": 3.7182019483298063,
+            "scan_wall_s": 11.360866272822022
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315972772159570000",
+            "raw_returns": 84056,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 15231,
+            "integrated_points": 68825,
+            "origin_groups": 47300,
+            "parent_retained_returns": 68825,
+            "integration_s": 3.7361548990011215,
+            "scan_wall_s": 11.384009344503284
+          }
+        ],
+        "wall_s": 54.44791357032955
+      },
+      "carving": {
+        "original_triangles": 424447,
+        "removed_triangles": 6113,
+        "build_conflicting_rays_before": 4212,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 77,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 170163
+    },
+    {
+      "scene": "av2-074d2237-ed1b-34d7-a2fc-68edbce50bb2",
+      "log_id": "074d2237-ed1b-34d7-a2fc-68edbce50bb2",
+      "role": "external_confirmation",
+      "background_points": 292586,
+      "background_triangles": 207832,
+      "tsdf": {
+        "vertices": 152264,
+        "native_triangles": 212555,
+        "integrated_returns": 292607,
+        "origin_groups": 186886,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315975822160165000",
+            "raw_returns": 95745,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 21276,
+            "integrated_points": 74469,
+            "origin_groups": 47911,
+            "parent_retained_returns": 74469,
+            "integration_s": 1.874175677075982,
+            "scan_wall_s": 17.186070891097188
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315975823160120000",
+            "raw_returns": 96736,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 22470,
+            "integrated_points": 74266,
+            "origin_groups": 47064,
+            "parent_retained_returns": 74266,
+            "integration_s": 1.8803526796400547,
+            "scan_wall_s": 17.228530382737517
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315975823659775000",
+            "raw_returns": 96730,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 24203,
+            "integrated_points": 72527,
+            "origin_groups": 46166,
+            "parent_retained_returns": 72527,
+            "integration_s": 1.9141765274107456,
+            "scan_wall_s": 17.310913126915693
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315975824659731000",
+            "raw_returns": 96307,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 24962,
+            "integrated_points": 71345,
+            "origin_groups": 45745,
+            "parent_retained_returns": 71345,
+            "integration_s": 2.2172676641494036,
+            "scan_wall_s": 17.499624870717525
+          }
+        ],
+        "wall_s": 75.34009364433587
+      },
+      "carving": {
+        "original_triangles": 212555,
+        "removed_triangles": 4723,
+        "build_conflicting_rays_before": 4264,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 57,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 192993
+    },
+    {
+      "scene": "av2-07e4fccb-eb2d-31e5-bbcb-6550d0860f64",
+      "log_id": "07e4fccb-eb2d-31e5-bbcb-6550d0860f64",
+      "role": "external_confirmation",
+      "background_points": 372597,
+      "background_triangles": 326899,
+      "tsdf": {
+        "vertices": 240211,
+        "native_triangles": 335268,
+        "integrated_returns": 372612,
+        "origin_groups": 217191,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315966224759721000",
+            "raw_returns": 96412,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 4053,
+            "integrated_points": 92359,
+            "origin_groups": 54116,
+            "parent_retained_returns": 92359,
+            "integration_s": 2.428859379142523,
+            "scan_wall_s": 16.479304080829024
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315966225759677000",
+            "raw_returns": 97972,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 3615,
+            "integrated_points": 94357,
+            "origin_groups": 54401,
+            "parent_retained_returns": 94357,
+            "integration_s": 2.297368524596095,
+            "scan_wall_s": 16.35055522993207
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315966226259978000",
+            "raw_returns": 98369,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 4903,
+            "integrated_points": 93466,
+            "origin_groups": 54404,
+            "parent_retained_returns": 93466,
+            "integration_s": 2.4761504009366035,
+            "scan_wall_s": 16.42429748363793
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315966227259934000",
+            "raw_returns": 98864,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 6434,
+            "integrated_points": 92430,
+            "origin_groups": 54270,
+            "parent_retained_returns": 92430,
+            "integration_s": 2.3244372848421335,
+            "scan_wall_s": 16.312686244025826
+          }
+        ],
+        "wall_s": 71.72296424768865
+      },
+      "carving": {
+        "original_triangles": 335268,
+        "removed_triangles": 8369,
+        "build_conflicting_rays_before": 5662,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 35,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 195857
+    },
+    {
+      "scene": "av2-080b1ce2-9477-39ee-8233-b7f33e1dfe56",
+      "log_id": "080b1ce2-9477-39ee-8233-b7f33e1dfe56",
+      "role": "external_confirmation",
+      "background_points": 317201,
+      "background_triangles": 392616,
+      "tsdf": {
+        "vertices": 313081,
+        "native_triangles": 401586,
+        "integrated_returns": 317204,
+        "origin_groups": 200070,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315968529959861000",
+            "raw_returns": 94645,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 21900,
+            "integrated_points": 72745,
+            "origin_groups": 45178,
+            "parent_retained_returns": 72745,
+            "integration_s": 3.255296992138028,
+            "scan_wall_s": 18.85014434531331
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315968530959823000",
+            "raw_returns": 94723,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 15085,
+            "integrated_points": 79638,
+            "origin_groups": 50052,
+            "parent_retained_returns": 79638,
+            "integration_s": 3.598822519183159,
+            "scan_wall_s": 19.44886966049671
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315968531460130000",
+            "raw_returns": 94917,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 12354,
+            "integrated_points": 82563,
+            "origin_groups": 52168,
+            "parent_retained_returns": 82563,
+            "integration_s": 3.4409029614180326,
+            "scan_wall_s": 19.161734327673912
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315968532460092000",
+            "raw_returns": 95505,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 13247,
+            "integrated_points": 82258,
+            "origin_groups": 52672,
+            "parent_retained_returns": 82258,
+            "integration_s": 3.292606571689248,
+            "scan_wall_s": 19.258968621492386
+          }
+        ],
+        "wall_s": 87.50063491240144
+      },
+      "carving": {
+        "original_triangles": 401586,
+        "removed_triangles": 8970,
+        "build_conflicting_rays_before": 6571,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 82,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 190141
+    },
+    {
+      "scene": "av2-08734a1b-0289-3aa3-a6ba-8c7121521e26",
+      "log_id": "08734a1b-0289-3aa3-a6ba-8c7121521e26",
+      "role": "external_confirmation",
+      "background_points": 339314,
+      "background_triangles": 378387,
+      "tsdf": {
+        "vertices": 290031,
+        "native_triangles": 385547,
+        "integrated_returns": 339320,
+        "origin_groups": 211226,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315971454959820000",
+            "raw_returns": 93228,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 6934,
+            "integrated_points": 86294,
+            "origin_groups": 52734,
+            "parent_retained_returns": 86294,
+            "integration_s": 2.7239141035825014,
+            "scan_wall_s": 9.462731560692191
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315971455959775000",
+            "raw_returns": 93075,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 7567,
+            "integrated_points": 85508,
+            "origin_groups": 53051,
+            "parent_retained_returns": 85508,
+            "integration_s": 2.998797060921788,
+            "scan_wall_s": 9.565130809322
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315971456460078000",
+            "raw_returns": 92540,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 8579,
+            "integrated_points": 83961,
+            "origin_groups": 52858,
+            "parent_retained_returns": 83961,
+            "integration_s": 3.056352525949478,
+            "scan_wall_s": 9.779954308643937
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315971457459370000",
+            "raw_returns": 91429,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 7872,
+            "integrated_points": 83557,
+            "origin_groups": 52583,
+            "parent_retained_returns": 83557,
+            "integration_s": 3.270357556641102,
+            "scan_wall_s": 10.009877044707537
+          }
+        ],
+        "wall_s": 45.76860263943672
+      },
+      "carving": {
+        "original_triangles": 385547,
+        "removed_triangles": 7160,
+        "build_conflicting_rays_before": 5771,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 42,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 185112
+    },
+    {
+      "scene": "av2-087695bd-c662-3e86-83b4-aedc3b8eec36",
+      "log_id": "087695bd-c662-3e86-83b4-aedc3b8eec36",
+      "role": "external_confirmation",
+      "background_points": 395245,
+      "background_triangles": 460551,
+      "tsdf": {
+        "vertices": 367487,
+        "native_triangles": 468882,
+        "integrated_returns": 395254,
+        "origin_groups": 221204,
+        "voxel_size_m": 0.1,
+        "sdf_trunc_m": 0.3,
+        "build": [
+          {
+            "sample_index": 5,
+            "sample_id": "315969293260284000",
+            "raw_returns": 98091,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 1453,
+            "integrated_points": 96638,
+            "origin_groups": 55310,
+            "parent_retained_returns": 96638,
+            "integration_s": 4.169511308893561,
+            "scan_wall_s": 11.111816354095936
+          },
+          {
+            "sample_index": 15,
+            "sample_id": "315969294260246000",
+            "raw_returns": 100554,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 1455,
+            "integrated_points": 99099,
+            "origin_groups": 55446,
+            "parent_retained_returns": 99099,
+            "integration_s": 3.9908001963049173,
+            "scan_wall_s": 10.99350068345666
+          },
+          {
+            "sample_index": 20,
+            "sample_id": "315969294759901000",
+            "raw_returns": 102622,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 766,
+            "integrated_points": 101856,
+            "origin_groups": 55339,
+            "parent_retained_returns": 101856,
+            "integration_s": 3.1226187143474817,
+            "scan_wall_s": 10.409737275913358
+          },
+          {
+            "sample_index": 30,
+            "sample_id": "315969295759866000",
+            "raw_returns": 98801,
+            "invalid_sensor_pose": 0,
+            "excluded_known_objects": 1140,
+            "integrated_points": 97661,
+            "origin_groups": 55109,
+            "parent_retained_returns": 97661,
+            "integration_s": 3.908053183928132,
+            "scan_wall_s": 10.778487220406532
+          }
+        ],
+        "wall_s": 56.114960581064224
+      },
+      "carving": {
+        "original_triangles": 468882,
+        "removed_triangles": 8331,
+        "build_conflicting_rays_before": 5753,
+        "remaining_build_early_rays": 0,
+        "remaining_build_free_sum_m": 0.0,
+        "margin_m": 0.2,
+        "approximation": "whole triangle removal; one all-returned-intersections pass, coincident BVH hits can be coalesced"
+      },
+      "actors": 40,
+      "linked_heldout_frames": 2,
+      "linked_heldout_rays": 201041
+    }
+  ],
+  "totals": {
+    "logs": 20,
+    "actors": 936,
+    "build_raw_returns": 7815152,
+    "integrated_background_returns": 6839969,
+    "parent_unique_background_centers": 6839807,
+    "origin_groups": 4149271,
+    "native_triangles": 6962322,
+    "carved_triangles": 6815331,
+    "removed_triangles": 146991,
+    "remaining_build_early_rays": 0,
+    "remaining_build_free_sum_m": 0.0,
+    "linked_heldout_rays": 3908250
+  }
+}

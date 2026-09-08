@@ -1,6 +1,6 @@
 # V7.3：AV2逐返回TSDF背景与旧日志组合读出
 
-2026-09-08。旧AV2开发日志的逐返回TSDF构建及固定Actor表面比较已完成；新20日志只登记背景候选准备，尚未开始模型质量确认。低背景侵入伴随覆盖损失，不能据此宣布完整场景重建成功。
+2026-09-08。旧AV2开发日志的逐返回TSDF构建及固定Actor表面比较已完成；新20日志的同参数背景候选也已构建完成，尚未开始模型质量确认。低背景侵入伴随覆盖损失，不能据此宣布完整场景重建成功。
 
 ## 正确处理逐返回传感器原点
 
@@ -50,8 +50,22 @@
 
 ## 新20日志准备及研究边界
 
-登记`WS-V73-M4-AV2-SCENE-DATA-01/20260908T084000Z__external20-vdb-per-return-r2`，使用父数据`20260908T031000Z__external20-per-return-build-background-r1`的全部20身份/936 Actor/80 build扫描，构建相同参数的TSDF候选。保留原PCA背景供敏感性比较；候选准备并不宣布其优于PCA或选为最终背景。
+`WS-V73-M4-AV2-SCENE-DATA-01/20260908T084000Z__external20-vdb-per-return-r2`已完成，code75ac0563。使用父数据`20260908T031000Z__external20-per-return-build-background-r1`的全部20身份/936 Actor/80 build扫描，构建相同参数的TSDF候选。单CPU进程wall1249.572386s（20.83分钟）、RSS4.307499GiB、0 GPU/optimizer更新。保留原PCA背景供敏感性比较；候选准备并不宣布其优于PCA或选为最终背景。
 
-此阶段只读build sweep文件；heldout原束文件直接链接，Actor轨迹/owner/sensor-known定义沿用父数据，禁止按新域质量改变背景参数或选择性替换日志。新20日志尚未运行模型质量评估。准备就绪后仍需先固定最终方法及背景选择，再进行已登记的独立日志确认。
+| 新20日志构建量 | 数值 |
+|---|---:|
+| 原build返回 | 7815152 |
+| 实际积分背景返回 | 6839969 |
+| 父PCA去重中心 | 6839807 |
+| 逐返回真实原点分组 | 4149271 |
+| 原生三角面 | 6962322 |
+| build雕刻删除 | 146991 (2.111%) |
+| 保留三角面 | 6815331 |
+| 剩余build矛盾束 / 侵入距离和 | 0 / 0m |
+| 链接原heldout束 | 3908250 |
+
+积分数与父PCA中心相差162个原重复返回；TSDF保留原返回单位权重，不是增加新的观测或更改选点。全部20日志的固定build雕刻完成、进程PID64413已退出；该零build侵入仅是构建约束的读数，不能推断heldout完整性或泛化。原生与雕刻两份mesh均保留，未保存大VDB体积。归档`docs/autoresearch/worldsim_v73/m4/av2_external20_vdb_construction_r2.json`包含全部日志的参数、数量和构建记录，未将76MB Actor轨迹index复制进git。
+
+此阶段只读build sweep文件；heldout原束文件直接链接，Actor轨迹/owner/sensor-known定义沿用父数据，没有按新域质量改变背景参数或选择性替换日志。新20日志尚未运行模型质量评估。输入准备就绪后仍需先固定最终方法及背景选择，再进行已登记的独立日志确认。
 
 R10/R11继续，R12与visual-only新训练按既定顺序推进。F02/F04/F05持续，整个V7.3未完成。原始证据：`docs/autoresearch/worldsim_v73/m4/av2_old_vdb_construction_r2.json`、`av2_old_vdb_scene_r4_summary.json`、`av2_old_vdb_scene_r4_paired.json`；原run保留两份背景与逐帧场景读出。
