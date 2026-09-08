@@ -1,5 +1,23 @@
 # Experiments
 
+## V7.3 full_track联合训练实际启动与主模型场景读出完成（2026-09-08）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-joint-full-track-s7304-r10` 已实际启动，code26a7e509、PID53472，日志`/root/autodl-tmp/controller_logs/v73_population_joint_r10.log`。从原M1r3/seed7304初始化，复用相同PCA/initial评价；无resume-from，不继承r5已训练权重。唯一相对r5的目标修改是fit标签扩为既定full_track；hard range free.5/native1/event0/30轮保持。已进入epoch1实际反向，native/query梯度均非零，当前allocated峰值10.19725GiB；不是仅登记或smoke。r11原生full_track继续原PID38460。r12有限宽束比较仅登记、尚未启动，无后台等待启动队列。
+
+nuScenes场景`WS-V73-M4-SCENE-COMPOSITION-01/20260908T044000Z__development-joint-r5-carved-r7` code26a7e509已完成，CPU3.7789s/RSS.78560GiB。固定r5最终Actor表面与同一r3 build雕刻背景，6场景/5日志/416704原束/11886cohort束。全束hit26.6942%、early11.0288%、miss52.0292%、free.285150m；cohort hit21.4071%、early43.0467%、miss23.1791%、free1.007616m。相对同背景r8：cohort early+13.021pp、95%[+5.801,+23.188]，free+.098427m [+.036532,+.167488]，miss−16.054pp [−21.983,−9.849]，hit−1.052pp [−9.228,+9.222]。相对r9 early+13.306pp [+5.937,+23.406]、free+.095135m [+.033168,+.167766]。因此减少缺失仍以更多前表面为代价，不能把returned MAE下降当主结果成功。
+
+r5−同背景PCA cohort early+13.247pp [+6.464,+23.108]、free+.103847m [+.040282,+.169700]；全5日志都更差。移动返回组6657束/仅2日志，r5 hit17.0222%、early53.3954%、miss20.5379%、free.304949m；旧r5背景比较run未存此分组，不虚造跨run移动配对。原始按日志/组统计、精确计数及配对归档m4/scene_composition_r7_summary.json与r7_paired.json。此场景按日志内真实束加权，与Actor等权单体表不可直接数值相减。
+
+旧AV2场景`WS-V73-M4-AV2-SCENE-01/20260908T044000Z__old-development-joint-r5-carved-r3` code26a7e509完成，CPU8.5166s/RSS.94763GiB；一个旧日志、21固定Actor、逐束真实时刻、187494原束/5257cohort束。cohort r5 hit53.4716%、early30.5878%、miss9.8916%、free.314317m；同背景r9为54.2134%/9.2068%/17.2912%/.074238m，PCA为62.9446%/9.5872%/21.6664%/.060124m。4移动Actor对应88束，r5 hit22.7273%、miss45.4545%、free.855627m。接口及组合已实际运行，但没有跨域物理优势；单日志不提供bootstrap区间。证据m4/av2_old_scene_r3_summary.json/r3_paired.json。
+
+外部20日志数据/背景/完整冻结前缀都已生成，尚未进行新域模型质量确认；不能因旧AV2运行或构建结束宣称独立确认完成。数据盘当前约72GiB可用，两个训练并行时cgroup oom/oom_kill仍0；缓存/并行执行压力需按实际记录，不能把cgroup reclaim计数称为OOM。已完成CPU场景进程全部退出。
+
+F02/F04由完整联合模型和同背景读出得到进一步负结果，F03缺支持梯度仍待后续联合物理目标研究，F05新域/完整GT边界保留；F06直接头监督缓解、F07轴接口完成而物理未解决、F08恢复结果完整且原退出原因未知。F01没有触发真实资源不足停机，下一编号V73-F09。图m2/global/V73_JOINT_POPULATION_RESULTS.png/pdf已检查并修正过长横轴标签，无重复网络推理/回归。整个V7.3未完成，shutdown=false，继续自动研究。
+
+---
+
+
+
 ## V7.3 主联合r5最终完成：覆盖改善伴随物理退化（2026-09-08）
 
 r5恢复run `20260908T012500Z__population-joint-r5-epoch21-resume-r1` code914d582d正常完成全部30轮/489cohort最终评价，原PID39009已退出。11130有效更新=7791继承+3339新增，原107未保存更新独立记账；DPT32654562/query1670517可训练参数，恢复wall11359.0603s、GPU10.19917GiB/RSS34.05680GiB，原观测wall22180.1436s，合计下界33539.2039s。DPT project变化.0018500仅相对恢复epoch21。F08恢复执行完成，退出原因仍未知，无OOM归因。

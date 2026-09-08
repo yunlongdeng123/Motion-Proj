@@ -1,5 +1,13 @@
 # V7.3 场景级背景与Actor组合
 
+## 主联合r5同背景组合结果（2026-09-08）
+
+nuScenes r7 `20260908T044000Z__development-joint-r5-carved-r7` code26a7e509完成，3.7789s/RSS.78560GiB。同r3雕刻背景、75开发Actor/6场景/5日志、416704原束；cohort11886束，r5 hit21.4071%、early43.0467%、miss23.1791%、free1.007616m。
+
+相对同背景r8：cohort early+13.021pp [95% +5.801,+23.188]，free+.098427m [+.036532,+.167488]，miss−16.054pp [−21.983,−9.849]，hit−1.052pp [−9.228,+9.222]。相对r9 early+13.306pp [+5.937,+23.406]、free+.095135m [+.033168,+.167766]。相对PCA early+13.247pp [+6.464,+23.108]、free+.103847m [+.040282,+.169700]；物理代价明确，returned MAE改善不能替代原始束指标。
+
+旧AV2同背景逐束r3也完成，21对象/1旧日志/187494原束，cohort5257束r5 hit53.4716%、early30.5878%、miss9.8916%、free.314317m，r9为54.2134%/9.2068%/17.2912%/.074238m。该单旧日志没有bootstrap区间，不是外部确认。两种任务均只读取固定表面，未重新神经推理。源摘要m4/scene_composition_r7_summary.json/r7_paired.json与av2_old_scene_r3_summary.json/r3_paired.json。
+
 ## AdaPoinTr Y-up在相同雕刻背景的组合结果（2026-09-08）
 
 `WS-V73-M4-SCENE-COMPOSITION-01/20260908T030000Z__development-adapointr-yup-carved-r6`已完成，code5dfa3948，CPU3.8597s/RSS0.77354GiB。与下方r5使用同一build-free雕刻背景、6场景/5日志和每方法416704条原始heldout束，只增加已完成AdaPoinTr Y-up r2的固定匹配表面，不重新运行网络或训练。cohort11886束、移动cohort6657束/2日志，所有空表面/其他物体/边界和传感器近区返回保留。

@@ -47,6 +47,6 @@ fit日志也存在物理冲突：initial→final target距离.119997→.101236m�
 
 针对实际“覆盖改善、早表面增加”结果，重新查阅[nvdiffrast SIGGRAPH Asia2020官方说明](https://nvlabs.github.io/nvdiffrast/)：硬点采样覆盖本身没有可见性边界的位置梯度，抗锯齿提供局部边界变化梯度；这也不会解决完全无支持。本项目已有r8的有限宽束米制free实现及LiDAR实证，可直接迁移到真实联合通路，不引入透明度、额外存在概率或删除错误返回。
 
-先完成已登记r10同初始化full_track joint与r11同监督native-only，区分标签覆盖与表示作用。再登记r12 `20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`：同r10初始化/数据/30轮/native1.0/free0.5/event0，仅将hard range free改为现有0.03m/32像素beam_tube_range。r12不同时加入event或改学习率，结果须并列覆盖代价；若此方向获益，再补同目标原生强控制。当前尚未运行r10/r12，不把已有LiDAR控制当主联合模型证据。
+先完成已登记r10同初始化full_track joint与r11同监督native-only，区分标签覆盖与表示作用。再登记r12 `20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`：同r10初始化/数据/30轮/native1.0/free0.5/event0，仅将hard range free改为现有0.03m/32像素beam_tube_range。r12不同时加入event或改学习率，结果须并列覆盖代价；若此方向获益，再补同目标原生强控制。r10现已以code26a7e509/PID53472启动实际训练，r12尚未运行；不把已有LiDAR控制当主联合模型证据。
 
 F02/F03/F04/F05继续，F06直接原生监督已有实际学习信号但没有解决物理表面，整个V7.3未完成。没有因单配置失败切换主任务，也没有宣称路线B或基础模型已经被充分否定。

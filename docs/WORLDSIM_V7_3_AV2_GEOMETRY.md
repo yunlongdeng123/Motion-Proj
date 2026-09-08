@@ -1,5 +1,13 @@
 # V7.3 AV2逐点时空几何接口
 
+## 旧AV2联合视觉路径及场景结果（2026-09-08）
+
+固定r5已在原21对象/1旧日志、28×672²视图完整执行七相机embedding插值、有效矩形及native/query通路，0更新；69.6078s/GPU5.43790GiB/RSS3.67498GiB。单体Actor等权hit30.3075%、early17.0071%、miss43.9941%、free.968468m、距离.096616m、recall79.5175%。任务`WS-V73-M4-AV2-FIXED-01/20260908T041500Z__old-development-joint-r5-r1`。
+
+同一已雕刻背景上的逐束组合`WS-V73-M4-AV2-SCENE-01/20260908T044000Z__old-development-joint-r5-carved-r3`已完成：8.5166s/RSS.94763GiB，187494原束/5257cohort束。cohort r5 hit53.4716%、early30.5878%、miss9.8916%、free.314317m；r9为54.2134%/9.2068%/17.2912%/.074238m，PCA为62.9446%/9.5872%/21.6664%/.060124m。4移动Actor/88束r5 hit22.7273%、miss45.4545%、free.855627m。
+
+因此完整视觉接口可执行，但物理质量没有域迁移成功证据；单旧日志没有跨日志置信区间。源证据coverage/av2_old_joint_r5_analysis.json、m4/av2_old_scene_r3_summary.json/r3_paired.json。外部20新日志已完成输入/背景/冻结前缀构建，还未用于模型质量评分。
+
 ## 逐束时刻完整场景读出已完成（2026-09-08）
 
 旧开发日志02678d04-cc9f-3148-9f95-1ba66347dff9已以codead457f3c完成场景构建及同模型两背景评价。数据任务`WS-V73-M4-AV2-SCENE-DATA-01/20260908T024000Z__old-development-per-return-r1`，34.5845s/RSS0.85305GiB；评价任务`WS-V73-M4-AV2-SCENE-01`的`20260908T024000Z__old-development-uncarved-r1`为11.3142s/RSS0.96797GiB，`20260908T024000Z__old-development-carved-r2`为11.0018s/RSS0.94923GiB。全部CPU正常完成，无模型重新训练。

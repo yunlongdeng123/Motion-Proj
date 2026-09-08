@@ -1,5 +1,13 @@
 # V7.3 完整窗口Actor队列结果
 
+## 主joint r5最终结果与full_track对照（2026-09-08）
+
+r5完整30轮/11130有效更新和489对象评价已完成。全75开发对象/5日志hit22.2773%、early20.9807%、miss37.7094%、free.351717m、单向距离.145289m、recall79.7126%。相对同短窗r6：hit−8.728pp [−14.097,−4.478]，free+.267963m [+.055532,+.503369]，距离−.095886m [−.221717,−.013341]，recall+7.289pp [+2.275,+14.295]。覆盖增益没有兑现为正确第一表面，不能宣布主假设成立。
+
+完整初始化/强基线表、恢复成本、移动分组和机制判断见`WORLDSIM_V7_3_JOINT_R5_RESULTS.md`，图`autoresearch/worldsim_v73/m2/global/V73_JOINT_POPULATION_RESULTS.png/pdf`。新增观测域点集F-score同样显示r5比r6低7.778pp，严格区别于连续表面召回及完整表面GT。
+
+r10 full_track joint已以code26a7e509/PID53472启动，保持原M1r3/seed初始化和hard free/native/30轮，仅扩fit标签；r11同标签原生强控制继续运行。r12仅改有限宽束free的联合比较已登记未运行。以下保留先前PCA/r6/r7/r8的完整监督与物理目标证据。
+
 ## V7.3 米制射线管free完整结果与CAPA资源对策（2026-09-08）
 
 r8 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T212500Z__population-lidar-track-beam-range-s7304-r8` 完成，coded50c9eeb，30epoch/11130更新，4384.52s含完整评价，GPU allocated峰值0.33034GiB、RSS3.00688GiB；PID26975退出。与r7相同原build输入、全轨迹fit标签、架构、seed、优化预算，仅free改为米制有限射线管目标，权重仍0.5。

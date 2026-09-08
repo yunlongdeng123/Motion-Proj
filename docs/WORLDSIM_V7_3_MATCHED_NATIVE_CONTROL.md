@@ -1,5 +1,11 @@
 # V7.3 同全轨迹监督的原生几何控制
 
+## full_track主联合对照已启动（2026-09-08）
+
+r10 `20260907T233000Z__population-joint-full-track-s7304-r10` 已以code26a7e509/PID53472启动并进入实际反向，日志`/root/autodl-tmp/controller_logs/v73_population_joint_r10.log`，当前GPU allocated峰值10.19725GiB。从原M1r3/seed7304初始化，无resume-from；仅相对r5扩fit标签为full_track，free/native/event/epoch保持。r11原PID38460继续，不重复启动。
+
+r5恢复已完成30轮/489对象最终评价并退出。其覆盖改善伴随early/free退化，详见`WORLDSIM_V7_3_JOINT_R5_RESULTS.md`；不是停止路线B或停止整个研究的理由。后续r12有限宽束free仅登记，r10与r11仍用于同标签强控制，不用旧短窗r5冒充该比较。
+
 ## 实际调度与恢复边界（2026-09-08）
 
 native-only r11 `20260907T233000Z__population-native-only-full-track-s7304-r11` 已启动，code9541ac7d、PID38460，日志 `/root/autodl-tmp/controller_logs/v73_population_native_r11.log`；初始评价覆盖371fit/67dev ready与51空输入，全部744冻结视图。模型训练与最终效果尚未完成。
