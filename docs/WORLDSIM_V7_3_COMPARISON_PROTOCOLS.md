@@ -1,6 +1,6 @@
 # V7.3：实验可比条件与技术报告主张边界
 
-状态快照：2026-09-08 07:48 UTC。该文整理已执行方法、允许的比较和未完成工作，不是新增验收流程，不触发重跑。R10在第10轮、R11在第24轮；二者均未完成。原run的manifest/summary/逐帧结果及三本研究台账为证据来源，后续结果应更新本文的运行状态。
+状态快照：2026-09-08 10:44 UTC。R10/PID53472第21轮、R14/PID68108第3轮继续；R11完成，R12已登记尚未启动，R13一轮真实输入训练完成。本文整理允许的比较，不是新增验收流程、不触发重跑。用户最新方向以计划revision4为准：三角比较若仍显示Query coverage强但physics差，下一轮优先改Query surface parameterization，保持可训练几何基座/显式表面/物理约束。原run与三本台账保留执行证据。
 
 ## 输入、训练标签与评价是三件事
 
@@ -22,8 +22,9 @@
 | R8 LiDAR-only | 同R7 | full_track | finite-beam range .5 / event 0 | 完成30轮，11130更新 |
 | R9 LiDAR-only | 同R8 | full_track | finite-beam range .5 / event .01 | 完成30轮，11130更新 |
 | R10 joint | 同R5，从M1r3重新初始化 | full_track | hard range .5 / event 0 | 正在训练，目标30轮；没有最终比较 |
-| R11 native_only | M1r3全DPT，native＋LiDAR PCA表面 | full_track | hard range .5 / event 0 | 正在训练，目标30轮；无梯度呈现不计更新 |
+| R11 native_only | M1r3全DPT，native＋LiDAR PCA表面 | full_track | hard range .5 / event 0 | 完成30轮，11130呈现/10550实际更新/580无梯度跳步 |
 | R12 joint | 同R10，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 已登记，未启动 |
+| R14 native_only | 同R11，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 正在训练，目标30轮；无梯度呈现不计更新 |
 
 joint和native_only的直接native数据项权重均为1，来自当前build Actor在正确相机像素上的真实LiDAR轴向深度；不依赖预测框内候选是否存在。它不是旧位移标签，也不是冻结深度自蒸馏。DPT训练参数32654562；joint另有1670517个query参数。全共享路径使用AdamW lr1e-5与全局梯度裁剪1；LiDAR-only没有DPT梯度。不能仅因同epoch数就宣称相同训练计算量。
 
@@ -40,8 +41,12 @@ joint和native_only的直接native数据项权重均为1，来自当前build Act
 | R10−R7 | 同full_track下视觉预训练联合路径相对LiDAR路径的整体增量 | 单独归因为某一个attention层或视觉特征维数 |
 | R10−R11 | 同标签/目标下query生成通路相对原生头/PCA融合的增量 | 自动把生成参数化、法向/片形状等差异都归为三维消息交互 |
 | R12−R10 | 在joint本身检验finite-beam free，而不是外推LiDAR实验 | 同时改变输入cohort、event权重或增加LoRA后的混合收益 |
+| R12−R14 | 同finite-beam目标下Query生成相对原生PCA融合的整体增量 | 只归因于attention，忽略表面参数化/法向/连通差异 |
+| R14−R11 | 在原生控制本身检验finite-beam free | Query或新输入条件的收益 |
 
-完整489 cohort的同容量pointwise控制尚未训练；旧25 Actor控制不足以证明population上的空间交互因果收益。若主query候选成立，该控制需要在同监督与生成参数化下比较。R11使用hard range；如最终选择R12的finite-beam目标，也不能拿不同物理目标的R11结果冒充完全匹配的强控制。
+完整489 cohort的同容量pointwise控制尚未训练；旧25 Actor控制不足以证明population上的空间交互因果收益。若主query候选成立，该控制需要在同监督与生成参数化下比较。R11使用hard range，R14才是已启动的同finite-beam原生对照。R10−R14同时改变生成与目标，不能当单因素；R10/R12/R14三角与R11锚点共同解释结果。
+
+若三角比较后仍是Query覆盖占优但物理首表面不佳，按用户revision4决策优先改Query surface parameterization；原生基座仍可训练、物理损失和硬首交点评价继续。先查顶会与优秀官方开源，再结合实际片形状/方向/重叠/连通等失败迁移一个新候选；不继续以loss扫描为主、不因负结果默认换成native-only。该判断不是已完成比较的结论，也不是新门控。
 
 R5原进程在第22轮退出，保存到第21轮7791次更新；107个未保存更新保留在原日志。恢复又完成3339次更新，checkpoint有效更新11130，实际执行11237。旧checkpoint未含完整RNG，恢复明确重启CUDA seed并重放Python顺序。因此保留这项执行差异，不自动发起重复训练，也不把107次未保存更新重复计入最终模型。
 
@@ -63,9 +68,9 @@ AdaPoinTr r2采用PCN y-up坐标桥接(x,z,y)，对所有输出逆变换；标�
 
 ## 零LiDAR输入条件是单独的变化
 
-原R5/R10/R11/R12默认训练371 FIT、预测67 development可用输入对象，同时把51个零LiDAR对象留在评价分母并输出缺失。native融合与CAPA则可能在零LiDAR时仍有native表面，因此它们与旧joint之间存在输入入口差异，不能当作同样缺视觉。
+原R5/R10/R11/R12/R14默认训练371 FIT、预测67 development可用输入对象，同时把51个零LiDAR对象留在评价分母并输出缺失。native融合与CAPA则可能在零LiDAR时仍有native表面，因此它们与旧joint之间存在输入入口差异，不能当作同样缺视觉。
 
-显式visual-only固定推理已经完成：41个FIT/5个development对象可生成表面，但旧R5从未在这一输入条件训练，FIT free明显恶化。训练入口已实现但未运行真实新反向；开启后将纳入412 FIT/72 development，另外2 FIT/3 development没有相机或LiDAR仍缺失。新cohort应从M1重新训练并计算initial，不将该变化与R12的free修改合并归因。
+显式visual-only固定推理已经完成：41个FIT/5个development对象可生成表面，但旧R5从未在这一输入条件训练，FIT free明显恶化。R13随后从M1完成全部51对象子集的一轮41次真实更新，两组梯度均为正；7个无正目标对象中5次只有envelope梯度，开发唯一归属束从miss变early。它确认新训练入口，不代表充分拟合或泛化。完整新cohort将纳入412 FIT/72 development，另外2 FIT/3 development没有相机或LiDAR仍缺失；该训练仍未执行。输入变化应与目标/参数化独立解释，不与R12或下一轮表面设计同时混改。
 
 ## 单体、组合与新日志结论不能互换
 
@@ -75,7 +80,7 @@ AdaPoinTr r2采用PCN y-up坐标桥接(x,z,y)，对所有输出逆变换；标�
 
 外部20个AV2日志已完成输入、轨迹、背景和28-view/672×672冻结前缀准备，模型质量尚未读取。它们是项目未用于选择的新域确认，不是nuScenes IID日志，也不自动保证公开基础模型预训练语料级未见。7相机embedding桥接、有效letterbox区域与逐返回原点/轨迹均须披露；外部输入像素/视图预算与主nuScenes不同，不能宣称同推理预算。旧单个AV2开发日志已用于实现选择，不能充作这20个新日志的确认。
 
-R10/R11结果、同容量pointwise、最终物理目标、最终背景和新日志结果仍待研究推进；这里不预先宣布主假设成立或结束V7.3。资源表应报每项实际wall time、更新数、峰值allocated/RSS及并行背景，不能将并行作业各自wall简单相加为独占GPU小时。
+R11结果已完成并归档；R10/R12/R14收口、条件触发的表面参数化研究、同容量pointwise、最终物理目标/背景及新日志结果仍待推进，不预先宣布主假设成立或结束V7.3。资源表应报每项实际wall time、更新数、峰值allocated/RSS及并行背景，不能将并行作业各自wall简单相加为独占GPU小时。
 
 ## 证据入口
 

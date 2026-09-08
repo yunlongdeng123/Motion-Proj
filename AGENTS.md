@@ -1,5 +1,9 @@
 # AGENTS 约定
 
+## 用户研究方向与条件决策（2026-09-08）
+
+V7.3保持“可训练几何基座 + 显式3D表面生成 + 物理约束”。先完成R10/R12/R14三角比较，R11保留为原生hard-free锚点；若Query仍是coverage强但physics差，下一轮优先改变Query surface parameterization，保留几何适配主线，不继续仅调loss或默认退回native-only。参数化选择先查相关顶会/优秀官方开源，再结合现有表面与硬首交点失败迁移；比较收口前不提前改正在运行的实验。
+
 ## 技术报告与论文配图偏好
 
 技术报告和 paper 必须配一张简单直白的 architecture components 图：用模块、箭头和少量标签清楚展示输入、关键组件、数据流与输出，风格参照用户示例。
@@ -14,7 +18,7 @@
 
 ## 当前覆盖：WorldSim V7.3（2026-09-07）
 
-当前执行以 `docs/RESEARCH_STATUS.md` 文首与 `docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` revision 3 为准。在由 v72 最终状态派生的 `research/worldsim-v7.3-geometric-adaptation` 上持续推进原生几何解码适配与空间查询，不恢复冻结最终特征小外挂主线。每个里程碑同步三本研究台账并及时 push。
+当前执行以 `docs/RESEARCH_STATUS.md` 文首与 `docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` revision 4 为准。在由 v72 最终状态派生的 `research/worldsim-v7.3-geometric-adaptation` 上持续推进原生几何解码适配与空间查询，不恢复冻结最终特征小外挂主线。每个里程碑同步三本研究台账并及时 push。
 
 用户明确禁止新增哈希、校验和、指纹和过度校验/门控；以下历史协议中的相关要求不适用于 V7.3。保留 run ID、config、代码提交引用、指标、checkpoint 与证据路径即可。当前容器实际内存配额 90 GiB、CPU 配额 14 核，宿主总内存不能当容器可用资源。只有资源不足等不可抗力才暂停；按用户要求先保存/push 状态、确认没有研究/数据任务运行后 shutdown，再提示加卡。旧“全部完成才关机”表述不覆盖此资源出口。
 
