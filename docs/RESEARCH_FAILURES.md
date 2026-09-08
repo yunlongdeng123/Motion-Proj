@@ -1,3 +1,14 @@
+## V7.3 同监督固定表面诊断登记（2026-09-08 15:10 UTC）
+
+任务`WS-V73-M2-SURFACE-SUPPORT-01`新增run `20260908T151000Z__development-full-track-fixed-surfaces-r2`，pending。R10最终产物现在可用，本次只对R10 joint与R7 LiDAR的已保存表面复用原有CPU诊断；R11直接复用r1已保存的Actor/帧/日志计数，不重算。新问题是同full_track/hard-free条件下的邻近覆盖、正确沿束支持与早层遮挡差异，补足r1中R5/R9/R11训练条件不匹配的边界；不改主评价或当前三角配置。
+
+沿用全部75开发Actor/5日志/11886 owned返回、.2m距离容差与1e-4m数值交点合并。空表面和无owned对象继续保留，八类定义/聚合不变；不读取20新日志，不训练或神经推理，不改表面、删除Query或返回后方交点。分析脚本保持`scripts/analyze_worldsim_v73_surface_support.py`，新代码只涉及保存结果归并/绘图；原解析束验证已覆盖该读取方法，不再重复测试。
+
+15:06 UTC R12/PID81766第3轮、R14/PID68108第19轮正常运行；GPU14759/24576MiB、cgroup oom/oom_kill=0、磁盘69GiB可用。表面诊断复用已有CPU环境、线程2，无新增GPU负担。代码基于cc6b3a3e，manifest记录执行提交；failure_ledger_refs=[V73-F02,V73-F03,V73-F04]，登记failure_ledger_delta=none。仍先完成三角后决定是否修改Query surface parameterization，近边界监督/对应一致性分别研究。V7.3未完成、30分钟跟进ACTIVE、shutdown=false。
+
+---
+
+
 ## V7.3 R10最终配对完成：生成提高命中并增加侵入（2026-09-08 14:30 UTC）
 
 任务`WS-V73-M2-GLOBAL-ACTOR-01`，run `20260907T233000Z__population-joint-full-track-s7304-r10`，训练code26a7e509、seed7304；分析基于1dad4dd8后工作树的保存结果。R10 done、30轮11130呈现/11130真实更新、零跳步/恢复，371 FIT训练输入与67可预测DEV不变、489对象全记录/51零LiDAR缺失保留；DPT32654562＋Query1670517参数，native_project变化.005422188，wall33811.146305s、allocated10.213784GiB、RSS34.030704GiB，412133346字节latest.pt与最终surface保存，PID53472已退出。
