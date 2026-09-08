@@ -1,5 +1,17 @@
 # V7.3 场景级背景与Actor组合
 
+## 最新背景对照：TSDF减少错误遮挡并降低覆盖（2026-09-08）
+
+官方VDBFusion .1m/.3m、fill_holes=false与同一build雕刻已完成，使用原6开发场景/5日志/416704束。背景导致cohort提前返回由PCA+雕刻的25.191%降为5.839%、free .893276→.166678m；全束背景hit26.020→22.714%、miss53.279→62.802%，覆盖代价明确。详见[完整构建、场景对照与日志配对](WORLDSIM_V7_3_VDB_BACKGROUND.md)。TSDF+雕刻作为后续开发的主背景候选，原PCA+雕刻保留固定敏感性对照。
+
+同TSDF背景下r5联合模型cohort hit26.905%、early29.099%、miss27.565%、free.316813m；r9为32.872%/13.768%/44.601%/.208408m。r5−r9 early+15.331pp、95%[+7.145,+25.152]，free+.108405m [+.039898,+.180905]，5日志都更差；F02仍存在。仅换背景带来的r5 hit改善不能归为Actor架构收益。全原束、轨迹、已训练表面均固定，未做新神经推理或外观重加权。
+
+两项新场景run为`WS-V73-M4-SCENE-COMPOSITION-01/20260908T054500Z__development-vdb-background-r8`与`20260908T054500Z__development-vdb-build-carved-r9`，已完成，报告包含CAPA2/Ada2/r8/native fusion/PCA共同背景结果。新20日志仅完成输入/原PCA背景/冻结前缀构建，未读模型质量；该TSDF对照不是新域确认。R10/R11训练继续，整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## 主联合r5同背景组合结果（2026-09-08）
 
 nuScenes r7 `20260908T044000Z__development-joint-r5-carved-r7` code26a7e509完成，3.7789s/RSS.78560GiB。同r3雕刻背景、75开发Actor/6场景/5日志、416704原束；cohort11886束，r5 hit21.4071%、early43.0467%、miss23.1791%、free1.007616m。
