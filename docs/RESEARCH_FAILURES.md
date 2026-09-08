@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 F05零LiDAR输入的实际视觉支持核查登记（2026-09-08）
+
+R10/R11在06:10UTC继续原PID53472/38460、epoch5/18，实际native反向正常，GPU15503MiB；未启动重复训练。主训练器仍根据旧`unavailable_input`排除43 fit/8 development零LiDAR对象，而已有population native fusion允许零LiDAR但非空原生支持输出。需要把输入能力与实现限制分开，不能把“无LiDAR”自动解释为“无图像几何支持”。
+
+先查[VGGT官方模型](https://github.com/facebookresearch/vggt)、[原生头forward](https://raw.githubusercontent.com/facebookresearch/vggt/main/vggt/models/vggt.py)及[SparseNeuS官方实现](https://github.com/xxlong0/SparseNeuS)：前者为CVPR2025，后者ECCV2022，均支持由图像建立几何，但这不保证当前动态Actor在米制对齐或遮挡条件下重建正确。本轮不另装新基座/表示；优先利用已有原生深度支持路径。
+
+登记`WS-V73-M2-EMPTY-INPUTS-01/20260908T062000Z__population-build-availability-r1`，新增`scripts/analyze_worldsim_v73_empty_inputs.py`：完整51个metadata零LiDAR对象，读取现有case的标定/框/原build近框束与已完成native-fusion结果；仅fit侧统计full_track标签可用性。相机框与5个视锥平面的重叠是保守几何可能性，不是实际可见性；已有native框内候选也不是精度真值。零新推理、零重训、无新域读取，不按预测质量挑对象。
+
+登记时尚未执行；是否为后续训练增加显式visual-only入口需先看实际输入与目标覆盖。当前R10/R11及R12既定对照保持原配置，避免同时修改free目标与训练cohort。F05仍active，其他风险不变，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## V7.3 TSDF场景对照完成：背景遮挡改善，联合模型前表面仍错误（2026-09-08）
 
 场景`WS-V73-M4-SCENE-COMPOSITION-01/20260908T054500Z__development-vdb-background-r8`与`20260908T054500Z__development-vdb-build-carved-r9` codebe34e7fc完成，CPU3.86073/3.83265s、RSS.68997/.68205GiB；两项构建、顺序读出脚本及3份配对分析均已退出。固定75 Actor表面、6场景/5日志/416704原束/11886 cohort束，共同TSDF背景，无新网络推理/训练。
