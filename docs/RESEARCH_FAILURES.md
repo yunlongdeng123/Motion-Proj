@@ -1,3 +1,18 @@
+## V7.3 旧AV2 TSDF场景比较完成，登记20新日志背景候选（2026-09-08）
+
+`WS-V73-M4-AV2-SCENE-01/20260908T083000Z__old-development-vdb-r4` codee93c8b94完成，CPU13.407617s/RSS.704468GiB、0新推理/训练。固定21 Actor的已存R5/R9/native与PCA/仅背景，原187494束、5257 cohort、88 moving束，单日志不做跨日志bootstrap。
+
+仅背景TSDF+雕刻相对PCA+雕刻全束hit48.520→39.175%、early14.150→4.299%、miss32.133→45.543%、free.513045→.107526m；hit−9.346pp、early−9.850pp、miss+13.409pp、free−.405518m。覆盖成本必须同时报告。同TSDF背景cohort：PCA hit62.907/early9.397/miss22.656/free.044827m，native42.534/33.137/18.889/.343803m，R9 54.194/9.017/18.528/.058941m，R5 53.472/30.455/10.101/.299177m。R5−R9 early+21.438pp/free+.240236m、miss−8.427pp/hit−.7228pp；不同FIT标签/适配通路的整体候选差异，非单纯空间交互因果结论。
+
+同一R5只换背景，cohort hit不变、early−.1332pp、miss+.2092pp、free−.015140m；moving88束的free.855627m及返回指标不变。降低背景侵入没有消除Actor问题，F02不能归因于拼接背景；旧单日志不承担20新日志确认。报告`docs/WORLDSIM_V7_3_AV2_VDB_BACKGROUND.md`，原构建/场景/配对归档m4/av2_old_vdb_*，所有构建/评价进程均已退出。
+
+登记`WS-V73-M4-AV2-SCENE-DATA-01/20260908T084000Z__external20-vdb-per-return-r2`，父数据为`20260908T031000Z__external20-per-return-build-background-r1`；全部20预先选定日志/936 Actor/80 build扫描，固定相同TSDF参数与逐返回积分、同一build雕刻。新20日志只准备背景候选，heldout文件直接链接，不读其质量评价，不依据新域质量调参/换日志。原PCA背景保留，该候选不是最终优越性判定。登记时尚未执行，拟由一个CPU进程依次构建所有日志，无新的GPU训练队列。
+
+R10/R11继续原进程，R12未启动，visual-only新反向等待显存释放。F02/F04/F05保持active，下一失败编号V73-F09；整个V7.3未完成，shutdown=false，任何数据构建任务执行期间也不关机。
+
+---
+
+
 ## V7.3 旧AV2逐返回TSDF背景构建完成，登记固定表面比较（2026-09-08）
 
 `WS-V73-M4-AV2-SCENE-DATA-01/20260908T083000Z__old-development-vdb-per-return-r2` code7dadd661完成，CPU38.345745s/RSS1.715073GiB、0 GPU/更新。旧日志02678d04的4个build扫描共375000返回，实际积分364570背景返回，分别与父数据四扫描保留数91095/89913/90813/92749一致；父PCA去重后为364560中心，差10个重复返回不能混作选点变化。218766个真实原点组逐组积分，未采用统一扫描原点或近似时刻。
