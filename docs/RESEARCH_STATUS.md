@@ -1,3 +1,25 @@
+## Q-v2 r2固定表面分解完成（2026-09-08 23:55 UTC）
+
+support-r3 `WS-V73-M2-SURFACE-SUPPORT-01/20260908T235000Z__qv2-lidar-r2-vs-r8-support-r3`已done，执行基于a587bd6b与已登记收口工作树；75原DEV/5日志、11886 owned束、CPU.612499s/RSS.631134GiB，无神经推理或更新。联合r1继续训练，不改变其配置或读取20新日志。
+
+r2日志等权early19.4901%中6.5867个百分点有后方正确交点，12.9034个百分点缺正确沿束支持；late24.4222%（R8为6.5727%）。missing且有邻近表面由30.1786%降至4.0498%，不能当成正确hit改善。池化2092条early中只有290条有后方正确交点，和日志加权各自报告。两层交点可能只是闭合表面入/出，不认定自交；该诊断只含owned束，不归因全部背景侵入。
+
+下一步等待r1−r2：当前证据不支持仅靠更多free排斥解决几何，也不拒绝视觉适配。根据主联合结果区分位置/局部形状/视觉表示与前面遮挡，按既定条件独立研究；不扩loss网格。Q-v2报告、八类图与`qv2/support_r3/{summary,manifest}.json`同步。failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10；30分钟ACTIVE、完成不关机。
+
+---
+
+## Q-v2 LiDAR r2收口：低missing未兑现正确表面（2026-09-08 23:50 UTC）
+
+共享网格LiDAR r2已完成，但未同时改善物理与覆盖：相对同beam R8，miss−31.295pp，early+13.899pp、free+.106203m，三项95%日志配对区间均不跨0；hit−.454pp、单向distance−.067188m、recall−7.120pp区间均跨0。更多束有交点不等于表面更准确；该冲突在无视觉输入时仍存在，不能归咎于背景视觉token或因此拒绝可训练几何基座。联合r1继续，最终r1−r2整通路比较尚pending。
+
+task `WS-V73-Q-V2-01` / r2 run `20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`，code95050522、分析a587bd6b；30轮11130实际更新、零跳步/恢复、完整489对象最终评价done。耗时2505.097482s、GPU.252920GiB、RSS1.876888GiB、checkpoint11658264字节。75 DEV/5日志含23无owned与8空表面；hit/early/miss/free/distance/recall=.305489/.194901/.255388/.140523/.162366/.648249。r2−R8 miss区间[−40.344,−22.374]pp、early[+7.212,+22.236]pp、free[+.041433,+.175709]m；其余三项跨0。20新日志未读。
+
+已先核对Mesh R-CNN、Point2Mesh官方源码和Open3D交点接口，详见Q-v2报告文末。下一步登记固定r2/R8表面支持判别 `WS-V73-M2-SURFACE-SUPPORT-01/20260908T235000Z__qv2-lidar-r2-vs-r8-support-r3`（pending），区分错误前表面、后方有效支持与支持缺失；不重推理或复制闭合/双向完整表面真值，不凭两层交点判自交。联合r1/PID96997第7轮正常，等待r1−r2后再改训练因素，保留可训练几何基座主线。
+
+三本台账、计划与`WORLDSIM_V7_3_QV2_SHARED_MESH.md`同步；归档`qv2/shared_mesh_lidar_r2_{summary,final_manifest,analysis,training}.json`和两图，主分析只执行一次，图中native选择对LiDAR标不适用。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。30分钟ACTIVE、完成不关机。
+
+---
+
 ## Q-v2两支真实训练；固定网格评估入口就绪（2026-09-08 23:10 UTC）
 
 LiDAR r2 `WS-V73-Q-V2-01/20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`已从95050522启动，PID98643。23:08:11 UTC快照：完成489对象initial，第4轮，已记录1459呈现/1459实际更新，Query梯度非零、DPT梯度0，allocated峰值0.252920GiB；GPU总15163/24576MiB，cgroup oom/oom_kill=0，磁盘仍68GiB可用。联合r1/PID96997仍正常训练（其allocated峰值11.591165GiB）；不改两支配置。LiDAR日志的views=24/6只是相机位姿元数据，不代表读取图像，744前缀未加载。两支正式质量均pending。

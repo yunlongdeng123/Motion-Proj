@@ -6,7 +6,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 parser=argparse.ArgumentParser(); parser.add_argument('--summary',type=Path,required=True)
-parser.add_argument('--output',type=Path,required=True); args=parser.parse_args()
+parser.add_argument('--output',type=Path,required=True)
+parser.add_argument('--model-label'); args=parser.parse_args()
 data=json.loads(args.summary.read_text()); rows=data['epochs']; epochs=[r['epoch'] for r in rows]
 fig,axes=plt.subplots(2,3,figsize=(12,7.2))
 blue='#347f9e'; orange='#c18035'
@@ -21,7 +22,11 @@ for ax,metric,title in [(axes[0,1],'coverage_m','Sampled target-to-surface dista
     line(ax,[r['metrics'][metric]['mean'] for r in rows],'Actor mean')
     line(ax,[r['metrics'][metric]['median'] for r in rows],'Actor median',orange)
     ax.set_title(title); ax.set_ylabel('m'); ax.legend(fontsize=8)
-line(axes[1,0],[100*r['predicted_support_fallback_with_views']/r['actors_with_views'] if r['actors_with_views'] else 0 for r in rows],'No in-box native support')
+if data.get('training_mode')=='lidar_only':
+    axes[1,0].text(.5,.5,'Not applicable: LiDAR-only inputs\nNo native support selection',ha='center',va='center',
+                   transform=axes[1,0].transAxes,fontsize=9)
+else:
+    line(axes[1,0],[100*r['predicted_support_fallback_with_views']/r['actors_with_views'] if r['actors_with_views'] else 0 for r in rows],'No in-box native support')
 axes[1,0].set_title('LiDAR fallback among Actors with views'); axes[1,0].set_ylabel('% of presentations')
 zero_groups=[]; plotted_gradients=False
 for group,label,color in [('native_dpt','Native DPT',blue),('query_decoder','Query decoder',orange)]:
@@ -49,7 +54,7 @@ title={'native_only':'Native geometry decoder + canonical fusion',
        'joint':'Joint native geometry + spatial queries',
        'pointwise':'Native geometry + pointwise queries',
        'lidar_only':'LiDAR spatial queries'}.get(mode,'Shared geometry model')
-fig.suptitle(title+': training process',fontsize=14,y=.98)
+fig.suptitle((args.model_label or title)+': training process',fontsize=14,y=.98)
 counts=[r['actor_presentations'] for r in rows]
 count_text=str(counts[0]) if len(set(counts))==1 else str(min(counts))+'--'+str(max(counts))
 fig.text(.5,.936,count_text+' fit presentations per recorded epoch; sampled observations vary, not paired generalization evidence.',ha='center',fontsize=9)

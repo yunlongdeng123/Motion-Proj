@@ -432,3 +432,9 @@ R10/R12/R14与R11锚点全部done，见[完整结果](WORLDSIM_V7_3_TRIANGLE_RES
 ### 17.7 同网格LiDAR控制提前并行（2026-09-08 23:00 UTC）
 
 主r1第3轮正常，补齐Q-v2 r2 LiDAR-only控制：同642顶点/1280面、原cohort/full_track/seed7304/30轮、coverage/beam目标与优化器；关闭DPT/视觉通路及native辅助监督，512支持查询来自build LiDAR。它控制整条视觉几何路径而非单个attention，旧R8的patch表示不能代替。只运行此必要对照，不扩成多因素矩阵；先r2−R8，再两支完成后的r1−r2。实际资源记录、完整分母和20新日志未读保持，详见Q-v2报告新增节。F02/F09等继续，failure_ledger_delta=none。
+
+### 17.8 Q-v2 LiDAR首结果与固定表面判别（2026-09-08 23:50 UTC）
+
+r2 done：共享网格相对R8 miss−31.295pp，但early+13.899pp/free+.106203m，三项区间不跨0；hit/距离/召回跨0。F02仍active，不能将更少无返回写成正确表面，也不能归咎未使用的视觉。r1继续原配置，r1−r2 pending。先检索Mesh R-CNN/Point2Mesh源码与Open3D接口，登记固定r2/R8支持判别r3（pending，75原DEV），不重推理：区分前面挡住后方正确表面、无正确沿束支持和仅邻近测量。闭合网格的两层交点不作为自交证明。之后结合联合r1结果决定局部形状、认证free边界或上层适配，避免把新free排斥单独当解决缺支持的方法。详见Q-v2报告文末，failure_ledger_delta=update V73-F02 evidence; no new failure ID。
+
+17.8执行补充（2026-09-08 23:55 UTC）：support-r3 done。r2 early19.4901%中仅6.5867个百分点有后方正确支持，其余无正确沿束支持；late24.4222%。固定诊断不证明自交或背景归因。继续r1−r2后决定几何位置/形状与表示适配，不能只靠新增排斥；详见Q-v2报告八类分解。F02保持active，无新失败ID。

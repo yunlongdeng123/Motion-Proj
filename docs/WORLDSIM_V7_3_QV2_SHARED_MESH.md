@@ -1,5 +1,7 @@
 # Q-v2：观测查询驱动共享顶点表面
 
+**当前（2026-09-08 23:50 UTC）：LiDAR r2已收口，联合r1继续。** 共享网格LiDAR r2已完成，但未同时改善物理与覆盖：相对同beam R8，miss−31.295pp，early+13.899pp、free+.106203m，三项95%日志配对区间均不跨0；hit−.454pp、单向distance−.067188m、recall−7.120pp区间均跨0。更多束有交点不等于表面更准确；该冲突在无视觉输入时仍存在，不能归咎于背景视觉token或因此拒绝可训练几何基座。联合r1继续，最终r1−r2整通路比较尚pending。 详见文末完整结果与后续判别。以下更早状态作为历史。
+
 2026-09-08 23:10 UTC。联合r1（code bfc181b4、PID96997）与同网格LiDAR r2（code95050522、PID98643）均在正式训练，质量结果pending。r2在23:08快照为第4轮、1459次真实更新；两支资源正常。三角结果见[完整报告](WORLDSIM_V7_3_TRIANGLE_RESULTS.md)：R12显著降低R10的侵入却增加miss，未同时恢复正确命中与覆盖。本轮检验共享几何支持，保持可训练原生DPT和原物理目标，不声称连通即正确。
 
 ![Q-v2实际组件](autoresearch/worldsim_v73/qv2/V73_QV2_ARCHITECTURE.png)
@@ -65,3 +67,94 @@ task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam
 旧`analyze_worldsim_v73_query_provenance.py`与`analyze_worldsim_v73_surface_failures.py`按每patch8面/9顶点归属来源，不能用于本表示。Q-v2的source=2只说明输出来自共享网格顶点，不能给混合观测状态硬分LiDAR/视觉因果来源。`analyze_worldsim_v73_surface_support.py`仅依赖顶点/面，可按final失败模式使用，但闭合表面常有正常入/出两个交点；深度层数不是自交证明。主评价仍报告真实early/hit/miss/free与测量覆盖。
 
 23:08运行证据归档`autoresearch/worldsim_v73/qv2/shared_mesh_lidar_r2_training_start.json`，r2完成初始化489对象，1459/1459更新，非零Query梯度、DPT梯度0；原views字段仅元数据，不代表LiDAR分支读取图像。总GPU15163/24576MiB、无OOM，两支继续。failure_ledger_delta=none，F02等待最终对照，不新增失败ID、不额外做smoke/回归。
+
+## LiDAR控制r2正式收口（2026-09-08 23:50 UTC）
+
+共享网格LiDAR r2已完成，但未同时改善物理与覆盖：相对同beam R8，miss−31.295pp，early+13.899pp、free+.106203m，三项95%日志配对区间均不跨0；hit−.454pp、单向distance−.067188m、recall−7.120pp区间均跨0。更多束有交点不等于表面更准确；该冲突在无视觉输入时仍存在，不能归咎于背景视觉token或因此拒绝可训练几何基座。联合r1继续，最终r1−r2整通路比较尚pending。
+
+30轮、11130呈现/11130实际更新、0跳步/0恢复，完整489对象initial/final均done；训练code95050522，分析基于a587bd6b，原371 FIT/67 DEV可用输入和51不可用对象保留。Query requires_grad总1668393，但未调用的视觉模块无梯度；DPT/冻结图像前缀均未加载。642共享顶点/1280面，无opacity与导出重网格化；原full_track、beam.5/.03/res32、coverage/envelope保持。耗时2505.097482s（41.75min，含初始化及最终评价，受r1并行影响）、GPU allocated峰值0.252920GiB、RSS1.876888GiB、checkpoint11658264字节。该资源是LiDAR控制，不能用来估算联合视觉模型成本。
+
+### 完整DEV与同信息参数化比较
+
+| 方法 | hit | early | miss | free (m) | 单向distance (m) | recall@.2m |
+|---|---:|---:|---:|---:|---:|---:|
+| Q-v2 LiDAR r2 | 0.305489 | 0.194901 | 0.255388 | 0.140523 | 0.162366 | 0.648249 |
+| R8 LiDAR patches | 0.310028 | 0.055909 | 0.568336 | 0.034320 | 0.229553 | 0.719452 |
+| r2初始网格 | 0.252626 | 0.168260 | 0.346400 | 0.250007 | 0.212455 | 0.535783 |
+| 固定LiDAR PCA | 0.212448 | 0.043527 | 0.734104 | 0.017708 | 0.304790 | 0.654182 |
+
+比例列0–1，75 Actor/5独立日志，23无owned首返回、8空预测，完整分母不变。先Actor内按真实束/点计数加权，再日志内Actor平均、日志等权。free保留全部原始near-box首返回束；测量→表面是单向观测覆盖量，不是完整表面精度或对称Chamfer。hit/early/miss未覆盖的其余返回是late，不能把miss减少都记作正确命中。
+
+| 指标 | r2−对照 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit (pp) | -0.453880 | [-6.970048, +7.550361] | 2/5 |
+| early (pp) | +13.899145 | [+7.212093, +22.236059] | 0/5 |
+| miss (pp) | -31.294775 | [-40.343859, -22.373624] | 5/5 |
+| free (m) | +0.106203 | [+0.041433, +0.175709] | 0/5 |
+| 测量→表面 (m) | -0.067188 | [-0.212329, +0.046267] | 3/5 |
+| recall@.2m (pp) | -7.120321 | [-15.656573, +1.415930] | 2/5 |
+
+miss在5日志都减少，early/free在5日志都增加。hit仅2/5日志增加，区间跨0；distance平均下降而recall平均下降，二者均跨0，不宣称覆盖强或显著退化。该对照还包含椭球初始化、连续面支持与面数预算变化，不是仅共享边的单因素因果实验。当前首候选的LiDAR路径未满足F02解除条件，等待联合r1后再作下一轮方案选择。
+
+![保存的配对结果](autoresearch/worldsim_v73/qv2/V73_QV2_lidar_r2_PAIRS.png)
+
+### 相对初始化与训练过程
+
+| 指标 | r2−对照 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit (pp) | +5.286296 | [-1.907705, +11.223395] | 4/5 |
+| early (pp) | +2.664065 | [-3.922498, +8.351865] | 2/5 |
+| miss (pp) | -9.101176 | [-18.638966, -0.986893] | 4/5 |
+| free (m) | -0.109484 | [-0.267725, +0.004845] | 4/5 |
+| 测量→表面 (m) | -0.050090 | [-0.083915, -0.001377] | 4/5 |
+| recall@.2m (pp) | +11.246540 | [-9.795123, +27.862341] | 4/5 |
+
+训练相对自身初始化减少miss与单向距离，两项区间不跨0；hit/early/free/recall区间跨0。相对固定PCA，hit+9.304pp与miss−47.872pp有可靠变化，但early+15.137pp/free+.122816m亦增加，不能靠更弱PCA对照掩盖同信息R8结果。
+
+| 训练采样量 | 第1轮 | 第30轮 |
+|---|---:|---:|
+| 测量→表面 (m) | 0.214501 | 0.176469 |
+| hard free (m) | 0.145944 | 0.139383 |
+| beam目标 (m) | 0.146296 | 0.139979 |
+| Query梯度中位数 | 8.099575 | 5.979684 |
+
+过程量是每轮重新采样训练数据，不代替固定DEV；LiDAR模式没有native监督或native支持选择，图中该项为不适用。FIT最终hit/early/miss/free/distance/recall=.343442/.252846/.185162/.110072/.166360/.704862；full_track含FIT评价时刻标签，不是泛化。移动DEV仍9 Actor/2日志、3无owned/1空表面，hit.129493/miss.097081/recall.359051，其中一日志仅1条owned束，不能作稳健动态优势结论。
+
+![训练过程](autoresearch/worldsim_v73/qv2/V73_QV2_lidar_r2_TRAINING.png)
+
+### 新卡点的一手检索与迁移决定
+
+本轮实测是“闭合共享支持减少missing，却新增错误首返回”，不能从总指标直接诊断成自交。重新检索[Mesh R-CNN，ICCV2019](https://openaccess.thecvf.com/content_ICCV_2019/html/Gkioxari_Mesh_R-CNN_ICCV_2019_paper.html)及[官方mesh_head](https://raw.githubusercontent.com/facebookresearch/meshrcnn/main/meshrcnn/modeling/roi_heads/mesh_head.py)：其完整GT网格采样Chamfer/法向配合边长正则，说明顶点连通本身不足以保证几何质量；我们的稀疏target不支持直接照搬双向完整表面损失，边长惩罚也不是正确首返回保证。
+
+[Point2Mesh，SIGGRAPH2020](https://ranahanocka.github.io/point2mesh/)的[官方训练入口](https://raw.githubusercontent.com/ranahanocka/point2mesh/master/main.py)优化单对象网格，使用点/法向匹配、可选BeamGap与局部非均匀项，并在中途调用Manifold重建/细分。它支持研究局部形状先验的价值，但不是本任务同稀疏传感器、全日志共享训练的直接对照；不默认将其BeamGap称为原始传感器free，也不在导出时重网格化来修饰当前结果。其闭合初始网格/双向点损失不提供未知区域的占据真值。
+
+首选执行已有固定表面BVH判别，依据[Open3D官方接口](https://www.open3d.org/docs/release/python_api/open3d.t.geometry.RaycastingScene.html)分别读取最近点、字面首交点和全部交点：`cast_rays`是首事件，`list_intersections`的后方命中仅作诊断。不用signed distance/occupancy推断内部真值，闭合网格正常入/出也会产生两个交点。
+
+登记`WS-V73-M2-SURFACE-SUPPORT-01/20260908T235000Z__qv2-lidar-r2-vs-r8-support-r3`，状态pending；75个原DEV Actor全部保留，比较已完成r2/R8的固定输出，不重推理、不改模型、无新日志。分解early且后方有正确支持、只有邻近测量支持、early且缺正确支持、late与missing。若主要有后方有效表面，则优先处理错误前表面；若主要没有正确沿束支持，则继续定位几何位置/形状，而不把新增free排斥当单独解决方案。此判别不是新损失对照，联合r1的DPT与Query训练配置保持。
+
+证据`autoresearch/worldsim_v73/qv2/shared_mesh_lidar_r2_{summary,final_manifest,analysis,training}.json`与两图；完整train/checkpoint/表面仍在原run。收口脚本执行一次；后续绘图仅重读保存统计纠正LiDAR不适用标签，不重复bootstrap/神经推理。failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。r1在23:42快照第7轮正常；20新日志质量未读、30分钟ACTIVE、完成不关机。
+
+### r2/R8固定表面判别已完成（2026-09-08 23:55 UTC）
+
+登记support-r3已done，75 DEV全部、23无owned与8空表面保留，11886条原始owned heldout束，CPU .612499s/RSS.631134GiB，无神经推理/优化器更新。几何表面只读，主统计与旧对照不重算；此处报告八类边际频率，不声称是逐束状态转移。
+
+| 所有owned束的互斥分类 | R8 (%) | Q-v2 LiDAR r2 (%) |
+|---|---:|---:|
+| 正确首交点 | 31.0028 | 30.5489 |
+| early，后方有容差内交点 | 3.3768 | 6.5867 |
+| early，仅表面邻近测量 | 1.2435 | 8.2102 |
+| early，无正确交点/邻近表面 | 0.9706 | 4.6932 |
+| late，表面邻近测量 | 6.1436 | 15.4293 |
+| late，无邻近表面 | 0.4291 | 8.9929 |
+| missing，表面邻近测量 | 30.1786 | 4.0498 |
+| missing，无邻近表面 | 26.6551 | 21.4890 |
+
+![固定表面交点分解](autoresearch/worldsim_v73/qv2/V73_QV2_LIDAR_SUPPORT.png)
+
+Q-v2 early的19.4901%中，只有6.5867个百分点在后方还存在容差内正确交点；另12.9034个百分点缺乏正确沿束支持，其中8.2102个百分点虽有近测量表面但仍是错误交点。late增至24.4222%（R8为6.5727%）。因此，仅去掉早表面或强化排斥不能保证恢复正确首返回；位置、方向与局部形状仍需学习。missing且有近测量表面的比例由30.1786%降至4.0498%，说明新支持改变了原有“近但不相交”的频率，但不能把这一下降全部算作正确hit增量。
+
+池化原始计数给出另一权重视角：r2有2092条early，其中290条有后方正确交点，1802条没有；R8为666/191/475。不能拿大量束数替代5个独立日志，也不混用原始比例与日志等权百分比。r2的74.4612%多深度层频率可能包含正常入/出，不是自交率；本轮没有计算网格自交或把signed distance当占据真值。
+
+这份诊断只涉及Actor-owned返回，不能直接归因全部背景自由空间侵入，F04仍未解除。下一步继续r1正式训练并完成r1−r2整通路比较：若联合模型同样大量缺少正确沿束表面，优先研究几何位置/局部形状及有效视觉表示适配；near-boundary只能覆盖经过认证的局部自由段，不代替缺失支持的吸引。若确有早面遮挡后方有效支持，再有针对性地加入认证边界或首事件目标。当前不因LiDAR对照提前改变联合模型或新开loss网格。
+
+证据`autoresearch/worldsim_v73/qv2/support_r3/{summary,manifest}.json`，入口`scripts/run_worldsim_v73_qv2_lidar_support_r3.sh`；新增图只绘保存统计。failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。

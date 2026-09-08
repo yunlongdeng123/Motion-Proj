@@ -34,7 +34,7 @@ case "$variant" in
 esac
 "$python" scripts/summarize_worldsim_v73_global_results.py --run "$run" "${refs[@]}" --output "$run/analysis.json"
 "$python" scripts/summarize_worldsim_v73_training.py --run "$run" --output "$run/training_analysis.json"
-"$python" scripts/plot_worldsim_v73_training.py --summary "$run/training_analysis.json" --output "$archive/V73_QV2_${variant}_TRAINING"
+"$python" scripts/plot_worldsim_v73_training.py --summary "$run/training_analysis.json" --output "$archive/V73_QV2_${variant}_TRAINING" --model-label "$label"
 "$python" scripts/plot_worldsim_v73_joint_r10_pairs.py --analysis "$run/analysis.json" \
   --output "$archive/V73_QV2_${variant}_PAIRS" --model-label "$label" "${plotrefs[@]}" --protocol-note "$note"
 cp "$run/summary.json" "$archive/shared_mesh_${variant}_summary.json"
