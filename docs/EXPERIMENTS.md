@@ -1,3 +1,18 @@
+## V7.3 阶段论文r2与简明组件图完成（2026-09-08）
+
+基于已提交bf04ef32/966bed9e的R11/R13证据，更新`paper_v73/main.tex`与README为10:30UTC阶段快照。R11完整原生控制加入11方法开发主表，并新增同run初始化的6项配对区间表；明确10550真实更新/580跳步、5日志hit下降、FIT标签内改善与不同native_fusion条件距离分母。R13仅为41次一轮反向，其中5次envelope-only；唯一开发归属束从miss变early、误差3.462215m，不能写成输入覆盖即质量成功。R10/R14继续运行、R12/完整新cohort/20新日志模型质量尚未完成，原interim_r1作为历史快照保留。
+
+新增`scripts/plot_worldsim_v73_architecture.py`，以现有Matplotlib绘制实际VGGT冻结前缀→可训练DPT→深度/多尺度特征→局部3D查询→patch head→规范表面→已知运动/背景/硬首交点组件图。明确只读标定/尺度/轨迹及原生控制的PCA替换路径，灰色中间表示不暗示梯度截断；没有将用户示例的BEV/occupancy组件当本项目设计。图为可编辑SVG、矢量PDF及PNG，论文Figure1实际嵌入；后续报告沿用用户要求的这种简明组件表达。
+
+表格导出仅读取已归档JSON，未重新推理/训练或重新bootstrap；新增LoRA3D引用已核实官方ICLR2025 Spotlight项目与准确题名，并修正CAPA题名为单数Adaptation。20新日志TSDF构建已完成的状态也同步正文，同时保留model_quality未读边界。没有使用这些输入构建结果选择外部日志或参数。
+
+本地现有TinyTeX编译7页成功，全部页面视觉检查通过、图表可读、无overfull/underfull或未定义引用；无新环境、无smoke/回归。归档`docs/autoresearch/worldsim_v73/paper/interim_r2.pdf`，源`paper_v73/`，图`paper_v73/figures/architecture_components.{pdf,svg,png}`；可读交付另存本地outputs的V73_INTERIM_REPORT_R2.pdf、源码zip和组件图。
+
+10:26UTC实际进程R10/PID53472 epoch20、R14/PID68108 epoch2均正常，未重复启动、无新GPU队列。failure_ledger_delta=none；F02/F03/F04/F05/F09及既有边界继续，下一失败编号V73-F10。下一步分析完成后的R10，与R11同标签/目标比较；资源可用后执行已登记R12，独立安排完整visual-only新cohort训练，最终再读20新日志。整个V7.3未完成，自动跟进active，shutdown=false。
+
+---
+
+
 ## V7.3 零LiDAR真实训练结果与R14启动（2026-09-08）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13` code11433ba4已done、PID67103退出。原metadata全部51对象/41 fit真实更新/5 dev有表面/5缺两类输入者保留缺失；41次呈现均有DPT/query正梯度，native_project变化.000271443，完整DPT32654562/query1670517参数、195.286933s、allocated8.170046GiB/RSS14.146515GiB、288份原冻结前缀。不是旧checkpoint的固定推理，也不是完整新cohort训练或充分拟合。

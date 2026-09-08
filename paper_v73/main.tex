@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,booktabs,array}
+\usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \setlength{\parskip}{4pt}
 \setlength{\parindent}{0pt}
@@ -10,7 +11,7 @@
 \title{Adapting Native Geometry Decoders for Dynamic Actor Surfaces:\\
 Interim Evidence on Coverage and Observed Free Space}
 \author{WorldSim V7.3 research draft}
-\date{Evidence snapshot: 8 September 2026}
+\date{Interim r2: 8 September 2026, 10:30 UTC}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -25,9 +26,11 @@ and observed-free-space intrusion than strong same-input references.
 Changing the static background reduces a separate source of intrusion while
 exposing a coverage cost. These observations motivate controlled comparisons
 of label span, geometry adaptation and surface-based objectives. The report
-records completed experiments and their limitations; matched native and joint
-full-track training, the next objective comparison, and independent new-log
-confirmation remain unfinished. No final method superiority is claimed.
+records completed experiments and their limitations. A fully trained native
+decoder control improves fit-set hit rate but lowers development hit in all
+five logs. Its matched joint comparison, the next objective comparison, and
+independent new-log confirmation remain unfinished. No final method superiority
+is claimed.
 \end{abstract}
 
 \section{Task and research hypothesis}
@@ -52,6 +55,22 @@ foundation-model adaptation.
 
 \section{Implemented model and supervision}
 \subsection{Native decoding and spatial queries}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/architecture_components.pdf}
+\caption{Implemented reconstruction components. Blue marks the frozen shared
+prefix; green marks trainable DPT, query and patch modules. Gray denotes
+fixed operations, supplied geometry or intermediate representations, not a
+gradient barrier: visual features and native seed positions can influence
+the generated physical surface. Calibration, metric scale and trajectories
+remain read-only. The native control replaces the query/patch pathway with
+canonical fusion and PCA patches, retaining the physical first-intersection
+readout. Supervision uses fit measurements; additional fit targets are not
+prediction inputs. The diagram does not imply that all variants or objectives
+have established a benefit.}
+\label{fig:components}
+\end{figure}
+
 The official VGGT training framework already supports freezing the aggregator
 while fine-tuning task heads~\cite{vggt}. Our prototype trains the full native
 DPT depth head (32,654,562 parameters), reading four aggregation levels. Only
@@ -138,9 +157,10 @@ Development logs never supply optimizer updates to the shared models.
 Additional full-track labels are fit-only: 414 target files contain 1,690,284
 measured Actor points, including positive targets for some empty-build entries.
 Those labels never become prediction inputs. R5 and R6 use the short-window
-label regime; R7--R9 use the longer fit-only labels. R10 and R11 are the matched
-joint/native full-track comparison still running at this snapshot. R12 isolates
-the beam-tube free objective relative to R10. An equal-capacity pointwise control
+label regime; R7--R9 use the longer fit-only labels. R11 has completed the native
+full-track control; its matched joint counterpart R10 is still running.
+R12 isolates the beam-tube free objective relative to R10, and the running
+native R14 is its same-objective control. An equal-capacity pointwise control
 has not been trained on this full population; therefore a spatial-attention
 causal claim is currently unsupported.
 
@@ -222,6 +242,51 @@ measures source provenance, not causal visual attribution or displacement
 from each query's initial position: both source groups pass through the same
 trainable spatial/visual updates.
 
+\subsection{Completed native control: fit improvement does not transfer}
+R11 trains the entire native DPT for 30 epochs with full-track fit labels,
+the original hard-range free objective and fixed PCA surface construction.
+There are 11,130 Actor presentations and 10,550 actual optimizer updates.
+The 580 skipped presentations have no effective native gradient: 420 have no
+camera pose and 160 have no native support and fall back to fixed LiDAR.
+All lack native build-depth correspondences. The query decoder is frozen.
+The largest recorded native projection-weight change from M1 initialization
+is 0.005224; this is genuine native adaptation, not a frozen-output adapter.
+
+The measurement-weighted native Huber loss drops from 0.8592 to 0.3619\,m,
+and fit-log hit increases by 2.28 points, with interval $[0.93,3.70]$.
+Those fit measurements are in the training-label span. On the five
+development logs, hit decreases from 22.78\% to 17.61\%, declining in every
+log; early decreases from 9.16\% to 7.64\%. Mean free intrusion changes from
+0.1503 to 0.1650\,m, without a clear improvement. The paired evidence is
+shown in Table~\ref{tab:native-paired}.
+
+\begin{table}[htbp]
+\centering\small
+\input{tables/native_paired.tex}
+\caption{Native R11 final minus its own initialization on five development
+logs, with existing 10,000-resample log-bootstrap intervals (seed 7304).
+Improvement means higher hit/recall or lower early/miss/free/distance.
+The one-way distance is conditional on common evaluable support.}
+\label{tab:native-paired}
+\end{table}
+
+The old native-fusion reference generated surfaces for five additional
+zero-build-LiDAR development entries that R11 retains as missing. Its
+conditional distance mean therefore has a different denominator. Initial
+R11 and native fusion coincide on the 67 build-ready entries; comparisons of
+distance use common evaluable entries rather than subtracting unmatched means.
+R11 also trails same-full-track LiDAR R7 in hit by 14.14 points, interval
+$[-18.58,-8.62]$. Comparison with R9 additionally changes beam/event objectives.
+
+This configuration has not improved development physical reconstruction.
+It does not identify whether the cause is observation contamination, shared
+parameter drift, discrete support/readout, or objective semantics. LoRA3D's
+scene adaptation~\cite{lora3d} and CAPA's sparse-measurement adaptation~\cite{capa}
+motivate possible restricted or build-side adaptation controls; neither
+establishes this failure's cause. We first retain the matched R10/R11 and
+R12/R14 comparisons. Rejecting all visual geometric adaptation, or repeating
+the already evaluated CAPA setup unchanged, would not follow from this result.
+
 \section{Density, static background and composition}
 Point-cloud conversion changes the physical readout. AdaPoinTr R2 retains all
 16,384 generated points, but its main comparison uses a common limited set of
@@ -267,20 +332,38 @@ cohort beams. This single development log cannot supply between-log uncertainty
 or independent confirmation.
 
 \section{Remaining experiments and claim boundaries}\label{sec:limits}
-R10 and R11 still require completed training and analysis. R12 is registered
-but unrun. The one-epoch R13 input diagnostic is registered for all 51 original
-zero-build-LiDAR entries, with 41 camera-supported fit entries trained from
-M1 initialization. Seven have no positive full-track target but retain original
-near-box rays; unknown space must not become a negative target. A single epoch
-will establish execution and gradient behavior, not sufficient fitting or
-generalization. Its expanded input condition is separate from the objective
-comparison. The eight development empty-build entries have only one owned
-heldout return, preventing a credible geometric accuracy conclusion for that
-subgroup.
+R10 still requires completed training and analysis. R12 is registered but
+unrun; R14 has begun native-only training with the same 0.03\,m, $32^2$
+beam-tube free objective registered for R12. Both start from the original M1
+initialization with seed 7304; neither resumes the hard-free candidate.
+The objective comparison keeps the old cohort and all view/time inputs.
+
+R13 has completed one epoch over all 41 camera-supported fit entries among
+the 51 original zero-build-LiDAR entries, from fresh M1 initialization. All
+41 updates produce positive DPT and query gradient norms. There are no build
+native-depth correspondences in this cohort: visual decoder gradients flow
+through generated geometry and sampled features. Six training presentations
+use the coarse support fallback. Of seven entries without a positive full-track
+target, two have an active free penalty and five satisfy the sampled free
+constraints and update only through the box-envelope term. Therefore not all
+41 updates are sensor-residual-driven. Unknown regions are not negative targets.
+
+The final surfaces cover 41 of 43 fit entries and five of eight development
+entries; the five entries without camera poses remain missing. The sole owned
+development return changes from missing to an early intersection, with range
+error 3.4622\,m. Its target-to-surface distance is only 0.0119\,m, illustrating
+that a nearby surface can coexist with an incorrect earlier surface. We do
+not infer accuracy or a meaningful uncertainty interval from one return.
+This one-epoch diagnostic establishes execution, not sufficient fitting or
+generalization. Full training of the expanded cohort remains a separate
+experiment from the free-objective comparison.
 
 Twenty additional AV2 logs were selected by available build metadata before
 model quality evaluation. Their 936 Actor entries, raw beams and 28-view
-frozen prefixes are prepared; TSDF background construction is in progress.
+frozen prefixes are prepared. Their TSDF backgrounds are also complete:
+6,839,969 original background returns yield 6,962,322 raw triangles; one-pass
+build carving removes 146,991 (2.11\%), leaving 6,815,331. Zero remaining build
+violations reflect the construction constraint, not heldout correctness.
 No model-quality confirmation has been run on these logs. The final method
 and background choice must precede that readout. This is cross-dataset
 confirmation at a different camera/resolution budget, not an i.i.d. nuScenes
@@ -330,7 +413,7 @@ implementation. \url{https://github.com/facebookresearch/vggt/tree/main/training
 Adaptive Geometry-Aware Transformers. IEEE TPAMI, 2023.
 \url{https://arxiv.org/abs/2301.04545}.
 \bibitem{capa} CAPA authors. Depth Completion as Parameter-Efficient Test-Time
-Adaptations. 2026. Official project and implementation:
+Adaptation. 2026. Official project and implementation:
 \url{https://research.nvidia.com/labs/dvl/projects/capa/}.
 \bibitem{dsnerf} K. Deng et al. Depth-Supervised NeRF: Fewer Views and Faster
 Training for Free. CVPR, 2022. \url{https://www.cs.cmu.edu/~dsnerf/}.
@@ -343,5 +426,8 @@ for End-to-End Object Detection. 2020. Official implementation:
 \bibitem{nvdiffrast} S. Laine et al. Modular Primitives for High-Performance
 Differentiable Rendering. ACM TOG 39(6), 2020.
 \url{https://nvlabs.github.io/nvdiffrast/}.
+\bibitem{lora3d} Z. Lu et al. LoRA3D: Low-Rank Self-Calibration of 3D
+Geometric Foundation Models. ICLR, 2025.
+\url{https://520xyxyzq.github.io/lora3d/}.
 \end{thebibliography}
 \end{document}

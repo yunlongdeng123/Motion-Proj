@@ -12,6 +12,7 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     joint = json.loads((args.evidence_root / 'm2/global/population_joint_r5_analysis.json').read_text())
     tsdf = json.loads((args.evidence_root / 'm2/global/actor_tsdf_r1_analysis.json').read_text())
+    native = json.loads((args.evidence_root / 'm2/global/population_native_r11_analysis.json').read_text())
     methods = [('LiDAR PCA', 'lidar_pca'), ('Native fusion', 'native_fusion'),
                ('LiDAR R6 (window labels)', 'lidar_r6'), ('LiDAR R7 (track labels)', 'lidar_r7'),
                ('LiDAR R8 (beam free)', 'lidar_r8'), ('LiDAR R9 (+event)', 'lidar_event_r9'),
@@ -19,6 +20,7 @@ def main():
                ('Joint R5 (window labels)', 'final')]
     rows = [(label, joint['stages'][key]['development']) for label, key in methods]
     rows.insert(1, ('Actor TSDF + carving', tsdf['stages']['final']['development']))
+    rows.append(('Native DPT R11 (track labels)', native['stages']['final']['development']))
     metrics = [('hit_rate', 100, 2), ('early_rate', 100, 2), ('miss_rate', 100, 2),
                ('free_intrusion_m', 1, 4), ('surface_recall_02', 100, 2)]
     lines = [r'\begin{tabular}{lrrrrr}', r'\toprule',
@@ -43,7 +45,21 @@ def main():
                      f"[{lo * scale:+.3f}, {hi * scale:+.3f}]" + r' \\')
     lines.extend([r'\bottomrule', r'\end{tabular}'])
     (args.output / 'joint_paired.tex').write_bytes(('\n'.join(lines) + '\n').encode('utf-8'))
-    print(json.dumps({'tables': ['actor_population.tex', 'joint_paired.tex'],
+    lines = [r'\begin{tabular}{lrrr}', r'\toprule',
+             r'Metric & Difference & 95\% log bootstrap & Improved logs \\', r'\midrule']
+    for metric, label, scale in [('hit_rate', 'Hit (pp)', 100),
+                                 ('early_rate', 'Early (pp)', 100),
+                                 ('miss_rate', 'Miss (pp)', 100),
+                                 ('free_intrusion_m', 'Free (m)', 1),
+                                 ('surface_distance_m', 'One-way distance (m)', 1),
+                                 ('surface_recall_02', 'Recall (pp)', 100)]:
+        value = native['paired_final_minus']['initial']['development'][metric]
+        lo, hi = value['bootstrap95']
+        lines.append(f"{label} & {value['mean_delta'] * scale:+.3f} & "
+                     f"[{lo * scale:+.3f}, {hi * scale:+.3f}] & {value['improved_logs']}/{value['logs']}" + r' \\')
+    lines.extend([r'\bottomrule', r'\end{tabular}'])
+    (args.output / 'native_paired.tex').write_bytes(('\n'.join(lines) + '\n').encode('utf-8'))
+    print(json.dumps({'tables': ['actor_population.tex', 'joint_paired.tex', 'native_paired.tex'],
                       'source': str(args.evidence_root), 'neural_updates': 0}))
 
 
