@@ -1,3 +1,18 @@
+## V7.3 固定表面的沿束支持诊断登记（2026-09-08 11:58UTC）
+
+R10/PID53472第24轮、R14/PID68108第7轮继续正常训练，R12等待完整Query显存。本次登记`WS-V73-M2-SURFACE-SUPPORT-01/20260908T120000Z__development-fixed-surfaces-r1`，对全部75旧开发Actor的R5恢复完成表面、R9与R11最终表面做一次CPU诊断，尚未执行正式数据；不改动三角训练或选择新参数化。
+
+问题：错误首交点之后是否仍有距原始真实返回±0.2m的交点；如果没有，测量点是否仍在表面0.2m邻域。采用已有SurfaceBVH的cast_rays、Open3D list_intersections及unsigned compute_distance，将所有owned heldout返回分为正确首交点、early且后方正确、early无正确但邻近、early无正确且不邻近、late邻近/不邻近、missing邻近/不邻近八类；空表面保留missing，无owned返回对象保留零分母，不选择高误差样例。
+
+同时报告沿束多个数值分离深度层与多个free违规层；1e-4m相邻深度合并仅处理数值重合，不解释为精确拓扑/重复片计数。后方正确交点只是诊断，绝不替换字面首返回。统计先汇合Actor内原heldout帧、按owned束归一，再日志内Actor及5日志等权；与主评价聚合细节不同，不用来替换主表、宣称因果增益或独立新日志确认。R5/R9/R11目标、标签、模型不同，三者只作固定产物机制比较。
+
+实现`scripts/analyze_worldsim_v73_surface_support.py`；[Open3D官方0.19文档](https://www.open3d.org/docs/release/python_api/open3d.t.geometry.RaycastingScene.html)核实全部交点/无符号距离接口，避免对不闭合片使用occupancy/SDF符号。一次三条解析束检查通过：early+后方命中、邻近但missing、远离且missing分别为1；未发起回归套件。本机CPU环境复用，线程2，不训练/神经推理、不改表面/opacity、不下载权重。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；登记阶段failure_ledger_delta=none，下一失败编号V73-F10。证据从abd80411工作树增加本诊断；run将记录实际代码提交。完成后保存全部Actor/帧计数与5日志统计，结合三角最终结果再讨论参数化及近边界监督；不将当前诊断代替三角收口。20新日志质量未读，整个V7.3未完成，30分钟跟进继续，shutdown=false。
+
+---
+
+
 ## V7.3 三角后候选机制登记与调度调整（2026-09-08）
 
 变更类型：研究决策/文献与源码可行性分析，不是新训练run；run_id与seed为不适用。自动跟进worldsim-v7-3从15改30分钟、仍ACTIVE。计划revision5记录near-surface certified-free约束与局部深度/遮挡对应候选，实施状态pending、没有性能结论。
