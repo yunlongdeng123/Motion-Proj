@@ -1,5 +1,19 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 查询来源诊断完成：新增支持贡献大部分自由空间错误（2026-09-08）
+
+`WS-V73-M2-QUERY-PROVENANCE-01/20260908T052000Z__development-fixed-joint-lidar-r1` code05db8db9完成，CPU0.693519s/RSS0.634186GiB、零训练更新。全部75旧开发Actor/5日志，43832近框Actor–ray实例/11886原归属束；BVH真实首交点primitive ID映射每query的8三角面。原始实例可能跨Actor重复，来源标签仅描述初始化，双方后续都共享空间/视觉更新，不能称纯模态因果贡献。
+
+r5 build来源10419片、中心到最近build均距.048996m、free贡献.029052m、early4.538pp、hit19.990pp；completion34304片、均距1.087350m、free.322666m、early16.443pp、hit2.287pp。上述为Actor内归一→日志内Actor平均→独立日志等权，completion占总free91.740%、总early78.370%。r6 build来源均距.448301/free.010546，completion均距.066475/free.073208。来源贡献相加恢复已有硬评价；中心到最近build距离不是自身初始位移，稀疏支持之外本身不是错误或自由空间。r5原始owned early计数build622/completion364与日志等权占比不同，必须保留统计口径。
+
+全部9元数据速度>2m/s对象均保存、可视化，3个无heldout归属返回者仍保留。移动组仅2有观测日志：r5 completion free.188118m/early58.396pp，build free.026976m/early4.373pp。scene0359/c07f236a只有1条归属束，r5 completion提前.580631m、r6缺失，对该日志移动均值影响很大，不夸大动态样本量。67非空r5表面顶点到片中心最大.103816m，未靠无界半径或opacity扩大支持。图线段是同束原测量到实际首交点，不是最近邻；全9对象按owner排序且两方法坐标范围一致，地面投影不替代三维评价。
+
+报告`docs/WORLDSIM_V7_3_QUERY_PROVENANCE.md`，原始摘要归档`m2/global/query_provenance_r1_summary.json`，来源PNG/PDF及全部移动Actor三页PDF/PNG已生成检查。发现不支持对所有查询加强零位移先验；继续既定R10全轨迹joint/R11强原生头及仅改finite-beam free的R12。R10/R11在05:27UTC仍实际训练(epoch3/16)，GPU合计15503MiB；R12仅登记、未启动、无后台等待队列。新域20日志模型质量确认仍未执行。F02/F04继续，F03/F05边界保留，未新增重复失败编号，下一V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## V7.3 固定首交点的查询来源诊断登记（2026-09-08）
 
 r10 full_track joint继续epoch2、r11 native-only继续epoch15，均正常反向；当前合计显存约15.5GiB，无新资源阻断。为区分“观测支持被移离”与“新增补全造成错误前表面”，登记`WS-V73-M2-QUERY-PROVENANCE-01/20260908T052000Z__development-fixed-joint-lidar-r1`，覆盖全部75旧开发Actor、r5与同短窗r6的已存最终表面，尚未执行。
