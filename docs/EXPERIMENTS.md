@@ -1,3 +1,15 @@
+## Q-v2共享顶点表面已实现，正式训练登记（2026-09-08 22:12 UTC）
+
+依据三角收口07e98727与V73-F02/F03/F04/F06/F09，检索Pixel2Mesh ECCV2018、Mesh R-CNN ICCV2019官方论文/源码及PyTorch3D细分。实现`ActorSharedMeshQueryDecoder`：642共享顶点/1280面，从只读尺寸椭球先验初始化；最多1024 LiDAR+512原生深度查询提供隐状态，经网格边、最近观测和既有局部视觉读取更新顶点。固定拓扑不保证无自交，不对观测取凸包，UNKNOWN不标FREE。DPT32654562+Query1668393可训练；原24视图冻结前缀保持。详细来源、预算差异与architecture components图见`WORLDSIM_V7_3_QV2_SHARED_MESH.md`。
+
+task `WS-V73-Q-V2-01` / run `20260908T221500Z__shared-mesh-full-track-beam-s7304-r1` 登记pending，代码提交后立即启动30轮。保留R12的原cohort、M1r3初始化、seed7304/full_track/native1/free.5/beam.03/res32/event0/AdamW1e-5。新initial实际评价，旧PCA baseline复用；不resume旧patch、不混入新loss/上层LoRA/visual-only。输出1280面与旧最多12288不同，比较属于参数化方案而非等密度纯拓扑因果控制；最终先对R12，再R8/R14。20新日志未读。
+
+唯一合成路径检查通过：共享边归属2面、轴向首交点[2,2,1.2]m、四层视觉及原生种子梯度均非零。初次4×4合成粗图使既有offset全部越界，导致全尺度正梯度断言失败；核对grid_sample与valid mask后仅扩大合成图重试通过，未改模型、未改真实输入门槛，不另分科学失败ID。归档`qv2/shared_mesh_path_check.jsonl`，该检查不是质量或全DPT资源证据；没有回归/多轮smoke。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F06,V73-F09]；failure_ledger_delta=none，参数化效果pending，旧风险保持，下一V73-F10。运行入口`scripts/run_worldsim_v73_qv2_shared_mesh_r1.sh`，正式manifest记录实际commit。空闲GPU24GB，数据盘68GiB可用，资源不足未触发；完成不关机，30分钟ACTIVE。后续分别研究certified-free边界、局部对应、上层几何适配，训练期间先同步技术报告与无需修改模型的后续准备。
+
+---
+
 ## V7.3 三角收口：转入 Q-v2（2026-09-08 22:05 UTC）
 
 R10/R12/R14三角及R11锚点已收口。R12相对R10降低early与自由空间侵入，但增加miss、降低hit与召回；并未同时恢复物理质量与覆盖。相对同beam的R14，R12 free更低、miss更高，hit/距离/召回区间跨0。相对同beam LiDAR控制R8，R12在全部5开发日志降低hit、增加miss。转入Q-v2显式表面参数化研究，保留可训练DPT与物理监督；不继续单纯loss网格，也不退回native-only。

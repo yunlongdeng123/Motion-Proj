@@ -27,6 +27,8 @@ def main():
     parser.add_argument('--run-id',required=True)
     parser.add_argument('--epochs',type=int,default=30)
     parser.add_argument('--mode',choices=['joint','pointwise','lidar_only','native_only'],default='joint')
+    parser.add_argument('--query-surface',choices=['patches','shared_mesh'],default='patches')
+    parser.add_argument('--mesh-level',type=int,default=3)
     parser.add_argument('--completion-init',choices=['native_surface','lidar_surface'],default='native_surface')
     parser.add_argument('--free-weight',type=float,default=.5)
     parser.add_argument('--free-mode',choices=['range','beam_tube','beam_tube_range'],default='range')
@@ -46,10 +48,12 @@ def main():
     parser.add_argument('--include-visual-only',action='store_true',
                         help='单独输入cohort实验：纳入零build LiDAR但有相机位姿的Actor；旧对照默认关闭')
     args=parser.parse_args()
+    if args.query_surface=='shared_mesh' and (args.mode=='native_only' or args.initial_results):
+        raise ValueError('共享网格须训练Query并重新评价自身初始化；不能复用旧patch initial')
     if args.include_visual_only and args.initial_results:
         raise ValueError('visual-only训练必须重新评价含新增输入条件的initial，不能复用旧cohort预测')
     label_times='full_track' if args.fit_targets else args.fit_label_times
-    task='WS-V73-M2-GLOBAL-ACTOR-01'
+    task='WS-V73-Q-V2-01' if args.query_surface=='shared_mesh' else 'WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
     out.mkdir(parents=True,exist_ok=False)
     def save(name,value):
@@ -65,6 +69,9 @@ def main():
         'frozen_prefix':'none used by lidar_only' if args.mode=='lidar_only' else 'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted',
         'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
         'surface_supervision_times':label_times,
+        'query_surface':args.query_surface,
+        'surface_boundary':('shared-vertex ellipsoid deformation with build/native evidence queries; fixed genus-zero topology is a prior, not observed occupancy or a guarantee against self-intersection; identical explicit triangles in training and evaluation'
+                            if args.query_surface=='shared_mesh' else 'independent 3x3 patches, no interpatch shared vertices'),
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'visual_only_boundary':'opt-in admission depends only on zero build LiDAR and available calibrated camera poses, never predicted support or target quality; no-camera empty inputs remain unavailable; unobserved regions are not free space',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
@@ -104,7 +111,11 @@ def main():
                 case['native_observations']=observations
         del scenes
         torch.manual_seed(7304)
-        decoder=ActorSpatialQueryDecoder().cuda()
+        if args.query_surface=='shared_mesh':
+            from motion_proj.worldsim_v73.shared_mesh_queries import ActorSharedMeshQueryDecoder
+            decoder=ActorSharedMeshQueryDecoder(mesh_level=args.mesh_level).cuda()
+        else:
+            decoder=ActorSpatialQueryDecoder().cuda()
         if args.mode=='native_only': decoder.requires_grad_(False)
         tube_free=None
         event_objective=None
@@ -124,6 +135,8 @@ def main():
             resumed=torch.load(args.resume_from/'latest.pt',map_location='cpu',weights_only=True,mmap=True)
             if bool(resumed['config'].get('include_visual_only',False))!=args.include_visual_only:
                 raise ValueError('不能通过resume静默改变输入cohort；visual-only实验应从原M1初始化')
+            if resumed['config'].get('query_surface','patches')!=args.query_surface:
+                raise ValueError('不能把旧patch checkpoint作为共享网格的resume')
             if head is not None: head.load_state_dict(resumed['depth_head'])
             decoder.load_state_dict(resumed['query_decoder'])
             optimizer.load_state_dict(resumed['optimizer'])
@@ -208,6 +221,10 @@ def main():
                     native_count+=len(target)
                 if terms: native_loss=torch.stack(terms).sum()/native_count
             support['native_observed_points']=native_count
+            support['surface_parameterization']=args.query_surface if args.mode!='native_only' else 'native_lidar_pca'
+            support['surface_vertices']=len(result['vertices_actor_m'])
+            support['surface_faces']=len(result['faces'])
+            support['evidence_context_queries']=len(result.get('context_actor_m',[]))
             support['has_actor_camera_pose']=has_views
             support['input_path']='visual_only' if case['metadata']['visual_only_prediction_enabled'] else 'existing_multimodal_or_lidar'
             support['fallback_reason']=('no_actor_camera_pose' if not has_views else 'predicted_native_support_empty') if support.get('lidar_fallback') else None
@@ -232,6 +249,9 @@ def main():
                     support['native_sensor_huber_m']=native_loss.item()
                 metrics=evaluate_actor_surface(surface,case['rays'])
                 rows.append({'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
+                             'surface_parameterization':'lidar_pca_patches' if baseline else support.get('surface_parameterization',args.query_surface),
+                             'surface_vertices':len(surface['vertices_actor_m']),'surface_faces':len(surface['faces']),
+                             'surface_patches_boundary':'legacy center count; shared_mesh counts vertices, not independent patches',
                              'seed_support':support,'frames':metrics,
                              'extra_time_usage':'training_labels' if case['metadata']['role']=='fit' and (case['metadata']['input_status']=='ready' or case['metadata']['visual_only_prediction_enabled']) and label_times!='build' else 'evaluation_only'})
                 if tag=='final':
@@ -347,6 +367,8 @@ def main():
                     'lidar_fallback':support.get('lidar_fallback',False),'views':len(case['view_indices']),
                     'fallback_reason':support['fallback_reason'],
                     'query_count':len(prediction['centers_actor_m']),'step_s':time.monotonic()-tick,
+                    'evidence_context_queries':support['evidence_context_queries'],
+                    'query_surface':args.query_surface,'surface_vertices':len(vertices),
                     'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
                 history.append(row)
                 with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
@@ -373,6 +395,7 @@ def main():
                                   for role in ['fit','development']},
             'no_observed_supervision_presentations':sum(r.get('skip_reason')=='no_observed_supervision' for r in history),
             'mode':args.mode,'completion_initialization':args.completion_init,
+            'query_surface':args.query_surface,'mesh_level':args.mesh_level if args.query_surface=='shared_mesh' else None,
             'trainable_parameters':{'native_dpt':sum(p.numel() for p in head.parameters() if p.requires_grad) if head is not None else 0,
                                     'query_decoder':sum(p.numel() for p in decoder.parameters() if p.requires_grad)},
             'native_project_max_change':(head.projects[0].weight.detach()-before).abs().max().item() if head is not None else None,
