@@ -1,5 +1,18 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 固定首交点的查询来源诊断登记（2026-09-08）
+
+r10 full_track joint继续epoch2、r11 native-only继续epoch15，均正常反向；当前合计显存约15.5GiB，无新资源阻断。为区分“观测支持被移离”与“新增补全造成错误前表面”，登记`WS-V73-M2-QUERY-PROVENANCE-01/20260908T052000Z__development-fixed-joint-lidar-r1`，覆盖全部75旧开发Actor、r5与同短窗r6的已存最终表面，尚未执行。
+
+新增`scripts/analyze_worldsim_v73_query_provenance.py`，通过CPU BVH的真实首交点primitive ID对应每query的8个三角面，关联保存的source标签：0为初始化于build LiDAR的查询，1为新增completion查询。两者后续都参与同一空间/视觉更新，因此这是初始化来源诊断，不是“纯LiDAR贡献/纯视觉贡献”的因果消融。没有删除查询、重排遮挡、重新神经推理或训练，也不选择错误较大的对象。
+
+对全部heldout原始近框束分解free侵入，对明确归属首返回的束分解early/hit/late；缺失束无来源标签且保留。各来源free和事件贡献先按Actor原始束数归一，再日志内Actor及独立日志等权；另外保留原始Actor–ray实例计数，它们可能跨Actor重复同一物理束，不能当独立样本。各来源中心到build测量的最近距离及0.2m外比例单独报告，离开build支持本身不等于错误/幻觉。
+
+保存全部9个元数据速度>2m/s对象的原测量、实际首交点、首片来源及返回mask，用于后续可视化；3个没有heldout归属返回者也保留，不按效果挑例。补全错误与观测查询漂移的区分有助于决定是否需要对可靠build支持加直接几何约束，但在读到结果前不改r10/r11，不预设强零位移正则。r12有限宽束free仍仅登记。F02/F04持续，其他风险状态不变，下一编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 full_track联合训练实际启动与主模型场景读出完成（2026-09-08）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-joint-full-track-s7304-r10` 已实际启动，code26a7e509、PID53472，日志`/root/autodl-tmp/controller_logs/v73_population_joint_r10.log`。从原M1r3/seed7304初始化，复用相同PCA/initial评价；无resume-from，不继承r5已训练权重。唯一相对r5的目标修改是fit标签扩为既定full_track；hard range free.5/native1/event0/30轮保持。已进入epoch1实际反向，native/query梯度均非零，当前allocated峰值10.19725GiB；不是仅登记或smoke。r11原生full_track继续原PID38460。r12有限宽束比较仅登记、尚未启动，无后台等待启动队列。
