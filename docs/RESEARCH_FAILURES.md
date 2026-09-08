@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 AV2共同Actor窗口导出与七相机读取接口（2026-09-08）
+
+`WS-V73-M4-AV2-DATA-01/20260908T003500Z__old-development-window-r1` 已完成旧开发日志02678d04-cc9f-3148-9f95-1ba66347dff9的数据准备。实际执行基点75dd260d加本里程碑工作树源码，随后一并入库；无网络模型推理。41.84s、RSS0.87773GiB、28个完整七相机×四时刻视图、6扫描562494原始返回（375000 build/187494留出），全体传感器pose有效。依据build轨迹选21车辆，19个有输入、2个空输入均保存case，4辆已知速度>2m/s。一个空输入对象有3个留出自有返回，仍保留缺失；单时刻轨迹在逐点/相机时刻没有可用pose者也保留，不用外推伪装已知轨迹。
+
+每点Actor规范位置/原点/方向与归属按实际发射时间，所有已知框参与唯一归属；图像关联按各曝光时间移动同一规范点，只读取四个build扫描。留出射线与模型输入支持分开保存。build_observations.pt与21个case已按共同格式导出；coverage/av2_old_window_r1_index.json保留各Actor与scan统计。
+
+对七相机接口已先检索CVPR2023 CAPE、ICCV2023 PETRv2的相机局部位置与时空对齐处理，再补充可选calibration-azimuth camera_embedding_weights：周期插值现有六项嵌入，保留七路图像、投影、方向和时间，无新增随机camera参数。该插值是工程假设而非文献已验证的跨域保证。局部query和偏移采样、原生深度支持生成均接入valid_image_rect排除padding；共同训练/fusion入口可传递，现有nuScenes输入无这些字段时维持原路径。统计器新增角色保持独立，external_confirmation不会遗漏或混作开发集。
+
+完整28视图神经推理、其资源峰值及插值有效性尚未运行，不能称外部方法验证完成。下一步在该旧AV2开发窗口提取真实冻结前缀并运行固定模型；当前三项GPU正常占用，不叠加作业，不削减第七视角或视场。新20日志未做模型推理和外部评价。报告 `WORLDSIM_V7_3_AV2_GEOMETRY.md` 已更新。
+
+failure_ledger_delta=update F01/F04/F05对应/资源/新域接口进展；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。主r5、CAPA r2、event r9继续，后续Ada轴r2、joint full_track r10、native-only r11待资源，无启动队列。整个V7.3未完成，shutdown=false，最终需保存/push并确认无训练/评估/数据/待启动任务后才关机。
+
+---
+
+
+
 ## V7.3 外部载荷下载完成与AV2逐点几何接口（2026-09-08）
 
 20条新AV2确认日志的760文件已下载完成，343260344字节；s5cmd返回0，977.74s，PID34904正常退出。传输状态保存在 /root/autodl-tmp/controller_logs/v73_av2_confirmation/status.json，原始760行copy.log保留。仅复制原始文件，没有读取新日志的图像/点云数值进行方法选择，没有外部网络推理；既有登记名单不变。

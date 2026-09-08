@@ -6,6 +6,7 @@ the city endpoint therefore uses that reference pose exactly once. Ray origins
 and Actor canonical coordinates use each return's actual emission time.
 """
 from pathlib import Path
+import json
 
 import numpy as np
 import pandas as pd
@@ -17,6 +18,44 @@ RING_CAMERAS=('ring_front_center','ring_front_left','ring_front_right',
               'ring_side_left','ring_side_right','ring_rear_left','ring_rear_right')
 RIGID_VEHICLES={'REGULAR_VEHICLE','LARGE_VEHICLE','BUS','BOX_TRUCK','TRUCK',
                 'TRUCK_CAB','VEHICULAR_TRAILER','SCHOOL_BUS'}
+NUSCENES_CAMERA_ORDER=('CAM_FRONT','CAM_FRONT_RIGHT','CAM_BACK_RIGHT','CAM_BACK','CAM_BACK_LEFT','CAM_FRONT_LEFT')
+
+
+def source_camera_yaws(metadata):
+    """Calibration-only circular mean of the original six camera orientations."""
+    metadata=Path(metadata)
+    sensors={row['token']:row['channel'] for row in json.loads((metadata/'sensor.json').read_text())}
+    directions={channel:[] for channel in NUSCENES_CAMERA_ORDER}
+    for row in json.loads((metadata/'calibrated_sensor.json').read_text()):
+        channel=sensors[row['sensor_token']]
+        if channel not in directions: continue
+        q=row['rotation']
+        axis=Rotation.from_quat([q[1],q[2],q[3],q[0]]).apply([0,0,1])
+        directions[channel].append(np.arctan2(axis[1],axis[0]))
+    return np.array([np.arctan2(np.sin(directions[c]).mean(),np.cos(directions[c]).mean()) for c in NUSCENES_CAMERA_ORDER])
+
+
+def camera_identity_weights(ego_from_camera,source_yaws):
+    """Periodic linear interpolation of existing embeddings; no new parameters."""
+    axis=ego_from_camera[:3,2]
+    angle=np.arctan2(axis[1],axis[0])%(2*np.pi)
+    source=np.asarray(source_yaws)%(2*np.pi); order=np.argsort(source)
+    sorted_yaws=source[order]
+    right=int(np.searchsorted(sorted_yaws,angle,side='right'))%len(source)
+    left=(right-1)%len(source)
+    width=(sorted_yaws[right]-sorted_yaws[left])%(2*np.pi)
+    alpha=((angle-sorted_yaws[left])%(2*np.pi))/width
+    weights=np.zeros(len(source),dtype=np.float32)
+    weights[order[left]]=1-alpha; weights[order[right]]=alpha
+    return weights
+
+
+def sizes_at(track,timestamps_ns):
+    times=track['size_times_ns']; query=np.asarray(timestamps_ns,dtype=np.int64)
+    right=np.clip(np.searchsorted(times,query),0,len(times)-1)
+    left=np.maximum(right-1,0)
+    indices=np.where(np.abs(query-times[left])<=np.abs(query-times[right]),left,right)
+    return track['sizes_lwh_m'][indices]
 
 
 def transforms(frame):

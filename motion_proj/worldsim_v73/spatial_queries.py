@@ -33,9 +33,18 @@ class ProjectedLocalRead(nn.Module):
             pattern=torch.stack([angles.cos(),angles.sin()],-1)
             self.offsets.bias.copy_(pattern.repeat(len(feature_channels),1).reshape(-1))
 
-    def forward(self,x,h,features,camera_from_actor,intrinsics,image_hw,camera_ids,time_offsets_s):
+    def forward(self,x,h,features,camera_from_actor,intrinsics,image_hw,camera_ids,time_offsets_s,
+                camera_weights=None,valid_image_rect=None):
         height,width=image_hw
         maps=[proj(feat) for proj,feat in zip(self.projections,features)]
+        identity=(self.camera(camera_ids) if camera_weights is None else
+                  camera_weights.to(self.camera.weight)@self.camera.weight)
+        rect=(torch.as_tensor(valid_image_rect,device=x.device,dtype=x.dtype)
+              if valid_image_rect is not None else None)
+        if rect is not None:
+            normalizer=x.new_tensor([width-1,height-1])
+            lower=2*rect[:,:2]/normalizer-1
+            upper=2*(rect[:,2:]-1)/normalizer-1
         outputs=[]
         visibility=[]
         for start in range(0,len(x),self.query_chunk):
@@ -46,6 +55,8 @@ class ProjectedLocalRead(nn.Module):
             uv=homogeneous[...,:2]/homogeneous[...,2:].clamp_min(1e-5)
             uv=torch.stack([2*uv[...,0]/(width-1)-1,2*uv[...,1]/(height-1)-1],-1)
             base_valid=(camera_xyz[...,2]>.05)&(uv.abs()<=1).all(-1)
+            if rect is not None:
+                base_valid&=((uv>=lower[None])&(uv<=upper[None])).all(-1)
             offset=self.offsets(state).reshape(len(xyz),len(maps),self.samples,2).tanh()*4
             values=[]
             masks=[]
@@ -54,13 +65,15 @@ class ProjectedLocalRead(nn.Module):
                 unit=xyz.new_tensor([2/max(fw-1,1),2/max(fh-1,1)])
                 grid=uv[:,:,None,:]+offset[:,None,level]*unit
                 valid=base_valid[:,:,None]&(grid.abs()<=1).all(-1)
+                if rect is not None:
+                    valid&=((grid>=lower[None,:,None])&(grid<=upper[None,:,None])).all(-1)
                 sampled=F.grid_sample(feature,grid.permute(1,0,2,3).to(feature.dtype),align_corners=True)
                 sampled=sampled.permute(2,0,3,1)
                 direction=F.normalize(camera_xyz,dim=-1)
                 aux=torch.cat([direction, camera_xyz[...,2:3]/20,
                     time_offsets_s[None,:,None].expand(len(xyz),-1,1),uv,
                     xyz.new_full((len(xyz),len(camera_ids),1),float(level))],-1)
-                embedding=self.geometry(aux)+self.camera(camera_ids)[None]+self.scale.weight[level]
+                embedding=self.geometry(aux)+identity[None]+self.scale.weight[level]
                 values.append(sampled+embedding[:,:,None,:])
                 masks.append(valid)
             value=torch.stack(values,dim=2).flatten(1,3)
@@ -107,7 +120,8 @@ class ActorSpatialQueryDecoder(nn.Module):
         self.register_buffer('patch_faces',torch.tensor(faces,dtype=torch.long))
 
     def forward(self,build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
-                image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True,completion_seeds=None):
+                image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True,completion_seeds=None,
+                camera_weights=None,valid_image_rect=None):
         count=min(len(build_points_actor_m),self.evidence_queries)
         ids=torch.linspace(0,max(len(build_points_actor_m)-1,0),count,device=build_points_actor_m.device).long()
         evidence=build_points_actor_m[ids]
@@ -127,7 +141,8 @@ class ActorSpatialQueryDecoder(nn.Module):
                 # 等容量逐点控制：同一message MLP只处理自身，不读取其他查询。
                 local=message(torch.cat([h,x.new_zeros(len(x),4)],-1))
             if use_visual:
-                visual,available=read(x,h,features,camera_from_actor,intrinsics,image_hw,camera_ids,time_offsets_s)
+                visual,available=read(x,h,features,camera_from_actor,intrinsics,image_hw,camera_ids,time_offsets_s,
+                                      camera_weights=camera_weights,valid_image_rect=valid_image_rect)
             else:
                 visual=torch.zeros_like(h)
                 available=torch.zeros(len(x),device=x.device,dtype=torch.bool)

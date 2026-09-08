@@ -32,7 +32,7 @@ def summarize_actor(row):
 
 def stage_statistics(rows):
     output={}
-    for role in ['fit','development']:
+    for role in ['fit','development',*sorted({row['role'] for row in rows}-{'fit','development'})]:
         selected=[r for r in rows if r['role']==role]
         result={'actors':len(selected),'logs':len({r['log_id'] for r in selected}),
                 'moving_gt2mps':sum((r.get('translation_speed_mps') or 0)>2 for r in selected),
@@ -54,7 +54,7 @@ def stage_statistics(rows):
 def paired(reference,final):
     before={r['owner']:r for r in reference}
     output={}
-    for role in ['fit','development']:
+    for role in ['fit','development',*sorted({row['role'] for row in final}-{'fit','development'})]:
         metrics={}
         for metric in METRICS:
             logs=defaultdict(list)

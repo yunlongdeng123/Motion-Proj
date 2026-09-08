@@ -55,7 +55,7 @@ def main():
                 del features
                 points=case['points_actor_m'].cuda()
                 native,counts=native_surface_points(depth,scales[entry['scene']],case['camera_from_actor'].cuda(),
-                    case['intrinsics'].cuda(),case['size_lwh_m'].cuda())
+                    case['intrinsics'].cuda(),case['size_lwh_m'].cuda(),case.get('valid_image_rect_xyxy'))
                 count=min(len(points),decoder.evidence_queries)
                 evidence=points[torch.linspace(0,len(points)-1,count,device='cuda').long()]
                 support=native if len(native) else points

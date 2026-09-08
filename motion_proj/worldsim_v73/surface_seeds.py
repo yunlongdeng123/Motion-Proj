@@ -18,24 +18,27 @@ def farthest_indices(points,count):
     return ids
 
 
-def native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m):
+def native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,valid_image_rect=None):
     height,width=depths.shape[-2:]
     y,x=torch.meshgrid(torch.arange(height,device=depths.device),torch.arange(width,device=depths.device),indexing='ij')
     pixel=torch.stack([x,y,torch.ones_like(x)],-1).float().reshape(-1,3)
     points=[]
     counts=[]
-    for depth,pose,calibration in zip(depths,camera_from_actor,intrinsics):
+    for view_index,(depth,pose,calibration) in enumerate(zip(depths,camera_from_actor,intrinsics)):
         camera=(pixel@torch.linalg.inv(calibration).T)*depth.reshape(-1,1)*metric_scale
         actor=(camera-pose[:3,3])@pose[:3,:3]
         # 已知Actor归属框，不按heldout质量选择；计数反映投影/尺度支持不足。
         valid=torch.isfinite(actor).all(-1)&(depth.reshape(-1)>.05)&(actor.abs()<=size_lwh_m/2+.25).all(-1)
+        if valid_image_rect is not None:
+            rect=torch.as_tensor(valid_image_rect[view_index],device=depths.device)
+            valid&=((pixel[:,:2]>=rect[:2])&(pixel[:,:2]<rect[2:])).all(-1)
         points.append(actor[valid]); counts.append(int(valid.sum()))
     candidates=torch.cat(points)
     return candidates,counts
 
 
-def native_surface_seeds(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,build_points,count):
-    candidates,counts=native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m)
+def native_surface_seeds(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,build_points,count,valid_image_rect=None):
+    candidates,counts=native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,valid_image_rect)
     fallback=len(candidates)==0
     if fallback: candidates=build_points
     ids=farthest_indices(candidates,count)

@@ -131,6 +131,8 @@ def main():
         def predict(case,depth_cache=None):
             points=case['points_actor_m'].cuda(); size=case['size_lwh_m'].cuda()
             matrices=case['camera_from_actor'].cuda(); calibration=case['intrinsics'].cuda()
+            rect=case.get('valid_image_rect_xyxy')
+            camera_weights=case.get('camera_embedding_weights')
             depth=None
             has_views=head is not None and bool(case['view_indices'])
             if has_views and args.mode=='native_only':
@@ -141,7 +143,7 @@ def main():
             else:
                 features=pyramids[(case['metadata']['scene'],case['metadata']['owner'])]() if has_views else None
             if args.mode=='native_only':
-                native,per_view=(native_surface_points(depth,scales[case['metadata']['scene']],matrices,calibration,size)
+                native,per_view=(native_surface_points(depth,scales[case['metadata']['scene']],matrices,calibration,size,rect)
                                  if depth is not None else (points.new_empty(0,3),[]))
                 source=native if len(native) else points
                 n=min(len(points),decoder.evidence_queries)
@@ -153,7 +155,7 @@ def main():
                          'surface_gradient':'selected native center positions; per-step PCA neighborhood/orientation held fixed'}
             elif args.completion_init=='native_surface' and depth is not None:
                 seeds,support=native_surface_seeds(depth,scales[case['metadata']['scene']],matrices,calibration,
-                                                    size,points,len(decoder.coarse))
+                                                    size,points,len(decoder.coarse),valid_image_rect=rect)
             else:
                 seeds=case['lidar_seed'].cuda(); support={'lidar_fallback':args.completion_init=='native_surface',
                     'native_candidates':0 if args.completion_init=='native_surface' else None,'initialization':'lidar_surface'}
@@ -161,7 +163,7 @@ def main():
                 with torch.autocast('cuda',dtype=torch.bfloat16):
                     result=decoder(points,size,features,matrices,calibration,case['image_hw'],case['camera_ids'].cuda(),
                         case['time_offsets_s'].cuda(),use_spatial=args.mode!='pointwise',use_visual=features is not None,
-                        completion_seeds=seeds)
+                        completion_seeds=seeds,camera_weights=camera_weights,valid_image_rect=rect)
             # 数据梯度不经过预测框内候选筛选，候选消失时仍可拉回原生几何。
             native_loss=points.sum()*0
             native_count=0
