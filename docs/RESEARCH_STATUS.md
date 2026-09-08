@@ -1,5 +1,19 @@
 # Research Status
 
+## V7.3 VDBFusion背景已构建，登记同表面场景比较（2026-09-08）
+
+背景数据r4 `WS-V73-M4-SCENE-DATA-01/20260908T054000Z__development-vdbfusion-background-r4` code061cef64完成，CPU62.0251s/RSS6.90116GiB、磁盘457MiB；原PID56321已退出。相同6场景/5日志/24个build扫描，实际积分606366背景测量，生成727557三角面，保留官方TSDF体积。未读heldout值，无GPU训练/新查询网络推理。
+
+随后r5 `20260908T054000Z__development-vdbfusion-build-carved-r5`同code完成，CPU31.6688s/RSS6.73702GiB、PID56605退出。所有原build束one-pass排除17781片(2.444%)，保留709776片；12017条build矛盾束→0，剩余build侵入距离和0。该结果仅属于构建时段，不能称新时刻精度提升，也不保证未知射线正确。所有原heldout束、owner、Actor轨迹仍链接原数据；不按开发错误删面。
+
+构建原始index归档`m4/vdb_background_r4_construction.json`与`vdb_background_r5_construction.json`。登记场景比较`WS-V73-M4-SCENE-COMPOSITION-01/20260908T054500Z__development-vdb-background-r8`、`20260908T054500Z__development-vdb-build-carved-r9`，固定r5 joint、r8/r9 LiDAR、native fusion、CAPA2、AdaPoinTr2，另含相同LiDAR-PCA及仅背景读出。仅改变背景表示/是否使用既定build雕刻，仍评价全部416704原束及同一11886 cohort束，不删近传感器困难组。登记时尚未执行，两项由短CPU脚本顺序运行，不是训练队列；运行期间不得shutdown。
+
+背景体素分辨率与三角数不同于旧PCA，这正是此背景方法对照，不能混成Actor输出密度控制。需要同时看缺失、hit、early、free和cohort分项，不能凭零build侵入或面数下降宣布F04解决。R10/R11继续，R12未启动，外部20日志质量确认仍未读。F04持续，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## V7.3 F04迁移：官方VDBFusion静态背景对照登记（2026-09-08）
 
 针对原PCA背景在同一build雕刻后仍会提前遮挡Actor的F04，重新查询优秀开源并读取[PRBonn VDBFusion官方仓库](https://github.com/PRBonn/vdbfusion)、原生积分及MarchingCubes源码。官方CITATION列为Sensors2022、DOI10.3390/s22031296，不能误标为ICRA。该实现直接接收世界点云和传感器原点，适用于现有LiDAR输入，不需要构造近似针孔深度图。已在现有CPU/Open3D环境worldsim-v72-lidar4d安装vdbfusion0.1.6官方769.9kB wheel、--no-deps；没有升级Torch/CUDA或新增大环境。
