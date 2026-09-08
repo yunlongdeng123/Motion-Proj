@@ -1,6 +1,6 @@
 # V7.3：实验可比条件与技术报告主张边界
 
-状态快照：2026-09-08 14:30 UTC。R10/R11均完成30轮及最终评价；R12/code dc6fe427/PID81766已启动，R14/PID68108继续运行，R13一轮真实输入训练完成。R10−R11命中改善但early/free变差，三角完整结论仍待R12/R14。本文整理允许的比较，不是新增验收流程、不触发重跑。用户最新方向以计划revision5为准：三角比较若仍显示Query coverage强但physics差，下一轮优先改Query surface parameterization，保持可训练几何基座/显式表面/物理约束。原run与三本台账保留执行证据。
+状态快照：2026-09-08 19:05 UTC。R10/R11/R14完成30轮及最终评价，R12/PID81766继续第17轮，三角未收口。R14−R11的6项开发区间均跨0；R14相对同beam的LiDAR控制R8召回更高，但5日志hit全下降、free更差。不能只把coverage/physics冲突归到Query参数化，也不自动退回native-only。本文不新增验收流程或触发重跑。用户方向以计划revision6为准：三角若仍冲突，Q-v2优先检验Query surface parameterization，同时将上游表示适配作为独立因素。完成不关机、30分钟跟进ACTIVE。
 
 ## 输入、训练标签与评价是三件事
 
@@ -24,7 +24,7 @@
 | R10 joint | 同R5，从M1r3重新初始化 | full_track | hard range .5 / event 0 | 完成30轮，11130呈现/11130实际更新，无跳步/恢复 |
 | R11 native_only | M1r3全DPT，native＋LiDAR PCA表面 | full_track | hard range .5 / event 0 | 完成30轮，11130呈现/10550实际更新/580无梯度跳步 |
 | R12 joint | 同R10，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 已启动，目标30轮；首轮DPT/Query真实更新，非resume |
-| R14 native_only | 同R11，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 正在训练，目标30轮；无梯度呈现不计更新 |
+| R14 native_only | 同R11，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 完成30轮，10550实际更新/580无梯度跳步，最终评价done |
 
 joint和native_only的直接native数据项权重均为1，来自当前build Actor在正确相机像素上的真实LiDAR轴向深度；不依赖预测框内候选是否存在。它不是旧位移标签，也不是冻结深度自蒸馏。DPT训练参数32654562；joint另有1670517个query参数。全共享路径使用AdamW lr1e-5与全局梯度裁剪1；LiDAR-only没有DPT梯度。不能仅因同epoch数就宣称相同训练计算量。
 

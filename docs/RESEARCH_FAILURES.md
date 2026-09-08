@@ -1,3 +1,19 @@
+## V7.3 R14原生beam对照完成：未形成稳定物理增益（2026-09-08 19:05 UTC）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260908T100000Z__population-native-full-track-beam-range-s7304-r14`已done，codebf04ef32，PID68108退出。30轮/11130呈现/10550真实更新、580次no_surface_gradient（420无相机、160有相机无有效原生梯度）、零恢复。DPT32654562参数、Query冻结，native_project变化.004810881；wall29683.499341s（8.245h）、allocated2.361161GiB、RSS34.697498GiB。744份冻结前缀保留，398679588字节checkpoint与完整489最终记录/表面保存；无上层聚合器适配。
+
+全部75开发Actor/5日志、23无owned/8空表面保留。R14 hit/early/miss/free/distance/recall为.205563/.099932/.575200/.166419/.166946/.771985。R14−R11只改free目标：hit+2.945pp、95%[−.370,+7.506]pp，free+.001454m、[−.022062,+.026683]m，六项区间全部跨0，未建立稳定收益。不能把R8−R7的LiDAR free改善外推到原生路径。
+
+同beam目标的R14−R8：hit−10.446pp、[−17.429,−5.270]pp，5日志全下降；recall+5.253pp、[+3.180,+8.258]pp，5日志全提高；free+.132099m、[+.053660,+.203728]m。覆盖/物理冲突亦见原生路径，不足以唯一定位到Query曲面片。该比较包含基座/支持/PCA等通路差异，不作单模块因果归因。相对初始化hit−2.221pp区间跨0，不能称稳定改善或显著退化。
+
+训练native测量加权Huber .805201→.469110m、采样coverage .318582→.242145m；hard free .134530→.152671m、beam目标 .135196→.151870m。损失/过程不等于泛化；FIT距离−.011413m、recall+3.213pp区间不跨0，但full_track标签包含该评价时刻。移动仍9Actor/2日志，其中一日志仅1条owned返回，不能支持稳健动态主张。
+
+一次原聚合/10000次seed7304日志配对已保存，未重推理/重测旧基线。`m2/global/population_native_r14_{summary,manifest,analysis,training}.json`及`V73_NATIVE_R14_{TRAINING,PAIRS}.png/pdf`归档，图已视觉核对；MATCHED_NATIVE_CONTROL、POPULATION_RESULTS、COMPARISON_PROTOCOLS同步，保留实际architecture components图。执行复用汇总/绘图脚本，未新增测试或独立科学run。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F09]；failure_ledger_delta=update V73-F09 evidence; no new failure ID，下一V73-F10。19:01 UTC R12/PID81766第17轮正常，两组梯度为正、cgroup oom/oom_kill=0；继续R12后收口三角，Q-v2 pending。旧已核实问题复用VGGT/LoRA3D/CAPA与参数化源码依据，不发起loss网格/重跑。20新日志质量未读，30分钟ACTIVE、完成不关机，资源不足出口未触发。
+
+---
+
 ## V7.3 R14训练完成，最终评价运行中（2026-09-08 18:13 UTC）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260908T100000Z__population-native-full-track-beam-range-s7304-r14`完成30轮、11130次呈现和10550次实际更新，580次无有效梯度跳步；PID68108仍在运行最终评价，尚无final/summary，不登记为done或推断质量。训练阶段elapsed29061.685493s，最终含评价wall待收口。保持M1r3/seed7304、full_track、native1/free.5/event0，唯一目标因素为beam_tube_range。18:07 UTC R12/PID81766第13轮正常；GPU15731/24576MiB、cgroup oom/oom_kill=0、磁盘69GiB可用，无资源不足或shutdown条件。
@@ -203,6 +219,7 @@ R13一轮真实visual-only检查亦已完成：code11433ba4，全部51原metadat
 - 推翻范围：本R11配置没有成为更好的开发物理表面重建模型。完整微调和更多FIT测量本身不保证硬首返回提高；没有证明全部视觉几何适配、LoRA或原生表示失败。
 - 根因边界：训练/开发差异是事实，尚不能区分观测污染、共享参数漂移、离散支持/PCA读出和目标语义。580跳步的原因是无有效原生梯度，不是低loss被当作已优化。原生融合与R11条件距离的不同可评价对象不可混减均值。
 - 对策/复开：保留R10同标签空间查询与R11的匹配比较；R14仅将R11的hard free替换为与R12同一beam_tube_range，其他信息/初始化/标签/优化条件不变。LoRA3D/CAPA官方有限适配和场景校准作为后续迁移依据，不把预测confidence用于逃避已观测free，也不直接重跑已完成CAPA配置。
+- R14补充（2026-09-08 19:05 UTC）：同原生路径仅改beam_tube_range，30轮/10550更新完成。R14−R11开发hit+2.945pp、95%[−.370,+7.506]pp，free+.001454m、[−.022062,+.026683]m，6项区间均跨0；未建立稳定修复。相对同beam的LiDAR R8，hit−10.446pp、free+.132099m、recall+5.253pp，三项区间均不跨0。R14相对初始化hit差区间跨0，不把R11的显著下降转抄到R14。根因仍未唯一定位；覆盖/物理冲突不限于Query，表面和上游表示分别研究。新增证据`m2/global/population_native_r14_*`及同一专项报告，不新增失败编号、不关闭F09。
 - 证据：`WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-native-only-full-track-s7304-r11`，code9541ac7d；`docs/autoresearch/worldsim_v73/m2/global/population_native_r11_summary.json`、`population_native_r11_analysis.json`、`population_native_r11_training.json`；专项报告`docs/WORLDSIM_V7_3_MATCHED_NATIVE_CONTROL.md`。
 
 
