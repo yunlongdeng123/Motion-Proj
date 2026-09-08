@@ -1,5 +1,20 @@
 # Research Status
 
+## V7.3 主联合训练30轮完成与观测域双向指标登记（2026-09-08）
+
+r5恢复已完成30轮、11130次有效更新/呈现：7791来自完整恢复epoch，3339为新增，原中断107次未保存更新独立留档，合计实际执行至少11237次。当前仍在最终表面评价，不是整个run或V7.3完成。训练首轮→第30轮：native Huber测量加权0.804565→0.387529m，有监督Actor均值3.370621→1.069023m；采样target→surface均值0.050599→0.040186m；采样hard free0.332841→0.277535m，仍有明显波动。357个有视图对象中的native支持回退17→9；14个无相机姿态对象保留LiDAR路径。每轮原生监督346对象/173972测量。
+
+两组梯度中位数DPT334.9837→175.9464、query12.9341→12.5636，均为全局裁剪前范数；非零梯度不等于解决物理优化，不能从不同模块范数直接推断梯度冲突或学习率失效。采样/权重随epoch变化，训练曲线没有开发泛化含义。图`m2/global/V73_JOINT_R5_TRAINING.png/pdf`已由完整30轮历史生成并检查可读，标明epoch21恢复及并行资源影响耗时，没有重复模型测试。
+
+核对[SS3DM NeurIPS2024官方评价](https://github.com/THU-LYJ-Lab/SS3DM-Benchmark)，明确稀疏GT不支持完整表面precision/Chamfer。新增`scripts/evaluate_worldsim_v73_observed_points.py`和`docs/WORLDSIM_V7_3_OBSERVED_METRICS.md`：在原heldout首返回明确属于Actor的固定束域，将每个方法字面首交点P与原测量G进行双向点集precision/recall/F-score(0.2m)及非平方Chamfer两均值之和；不截掉远错误，不把未观测表面当空。不替代连续表面单向召回或逐束early/free/miss，NN可以掩盖邻束匹配错误，完整表面GT限制仍保留。
+
+登记`WS-V73-M4-OBSERVED-POINTS-01/20260908T043000Z__development-fixed-surfaces-r1`，全75旧开发Actor/5日志，PCA/r5/r6/r9/native fusion/CAPA2/Ada Y-up2；r5完成后读取保存表面做CPU实际评价，无神经重推理。无测量对象保留不可用；有测量无预测时P/R/F=0、距离不可定义并单列缺失/有效样本数，不能只按成功返回距离挑方法。不同标签、TTA和空输入路径差异不混为同预算，完整说明在新文档。
+
+上述观测域指标是F05评价边界的补充，没有新增一套验收或新失败编号；F01/F02/F03/F04/F05继续active，F06缓解，F07接口修正但物理问题保留，F08恢复训练完成但需最终评价且原原因未知，下一编号V73-F09。r11继续训练；旧AV2 joint、外部prefix、r10仍未启动，无等待启动队列。整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 主联合训练过程汇总与旧AV2联合接口登记（2026-09-08）
 
 r5恢复已进入epoch30收尾，r11原生full_track继续训练。新增`scripts/summarize_worldsim_v73_training.py`，直接整理既有train.jsonl的逐epoch实际呈现/更新、可用视图、native支持回退、原生监督计数、几何损失、两模块梯度及耗时。原生Huber同时按有效测量加权和有监督Actor等权，缺监督对象不记为零误差。恢复历史中的完整epoch只计一次，另记原中断107次未保存呈现；资源同时保留原进程最后观测耗时与恢复耗时，不把恢复时长冒充完整训练成本。新增训练过程图入口，最终评价完成后才归档完整曲线与最终质量结果。训练损失变化不承担泛化或物理成功主张。
