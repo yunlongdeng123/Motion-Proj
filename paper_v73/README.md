@@ -1,6 +1,6 @@
 # WorldSim V7.3 阶段技术报告
 
-这是研究进行中的英文LaTeX草稿，便于后续arXiv写作；没有对外发布，不代表V7.3完成。r2同步R11完整原生控制负结果、R13真实一轮输入训练及简明组件图。R10/R14仍运行，R12、完整新cohort训练、20新日志确认未完成；中文当前状态仍以`docs/RESEARCH_STATUS.md`为准。作者信息与最终结论尚未定稿。r1 PDF保留旧时间快照，不静默覆盖历史。
+这是研究进行中的英文LaTeX草稿，未对外发布。r3同步已完成R10/R12/R14三角、R11锚点与Q-v2共享顶点候选；Q-v2正式训练已启动，结果pending，20新日志质量未读。主表14个完成方法，新增三角配对表与Q-v2实际组件图，保留R5恢复及移动子集/输入覆盖/密度边界。r1/r2 PDF作为历史保留；中文当前状态以docs/RESEARCH_STATUS.md为准。
 
 在仓库根目录生成真实归档表格：
 
@@ -18,7 +18,7 @@ python scripts/plot_worldsim_v73_architecture.py \
 tectonic main.tex
 ```
 
-或使用现有LaTeX环境的`latexmk -pdf main.tex`。不需要BibTeX、shell escape或新环境；图使用现有Matplotlib导出PDF/SVG/PNG。组件图以模块/箭头/少量标签表达实际结构，不把用户示例中的BEV/occupancy模型当作本项目方法。表格来自已保存日志统计，生成过程不重跑模型、不改变分母。阶段表保留已完成R5/R11与固定强对照，不把正在运行的实验填为零。新结果完成时更新正文、表格源和三本研究台账，再重新编译。
+或使用现有LaTeX环境的`latexmk -pdf main.tex`。不需要BibTeX、shell escape或新环境；图使用现有Matplotlib导出PDF/SVG/PNG。组件图以模块/箭头/少量标签表达实际结构，不把用户示例中的BEV/occupancy模型当作本项目方法。表格来自已保存日志统计，生成过程不重跑模型、不改变分母。阶段表保留所有已完成对照，不把Q-v2等正在运行的实验填为零。新结果完成时更新正文、表格源和三本研究台账，再重新编译。
 
 核心证据路径：
 
@@ -32,3 +32,5 @@ tectonic main.tex
 - `docs/WORLDSIM_V7_3_COMPARISON_PROTOCOLS.md`：标签、预算、适配范围、密度与跨数据集比较边界。
 
 原始checkpoint、JSONL与完整表面在AutoDL的`/root/autodl-tmp/runs/worldsim_v73/`，代码与紧凑证据在v73远端分支。普通Git提交引用用于回溯；不添加额外哈希/校验和/指纹。
+
+新增证据：`m2/global/population_joint_r12_analysis.json`（包含R10/R14/R8），`population_native_r14_analysis.json`，三角完整中文报告与`WORLDSIM_V7_3_QV2_SHARED_MESH.md`。Q-v2图由`scripts/plot_worldsim_v73_qv2_architecture.py`生成并复制到本目录`figures/qv2_components.pdf`；固定拓扑可微检查不作为重建成功。

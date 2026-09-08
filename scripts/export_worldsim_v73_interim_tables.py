@@ -13,6 +13,7 @@ def main():
     joint = json.loads((args.evidence_root / 'm2/global/population_joint_r5_analysis.json').read_text())
     tsdf = json.loads((args.evidence_root / 'm2/global/actor_tsdf_r1_analysis.json').read_text())
     native = json.loads((args.evidence_root / 'm2/global/population_native_r11_analysis.json').read_text())
+    triangle = json.loads((args.evidence_root / 'm2/global/population_joint_r12_analysis.json').read_text())
     methods = [('LiDAR PCA', 'lidar_pca'), ('Native fusion', 'native_fusion'),
                ('LiDAR R6 (window labels)', 'lidar_r6'), ('LiDAR R7 (track labels)', 'lidar_r7'),
                ('LiDAR R8 (beam free)', 'lidar_r8'), ('LiDAR R9 (+event)', 'lidar_event_r9'),
@@ -21,6 +22,9 @@ def main():
     rows = [(label, joint['stages'][key]['development']) for label, key in methods]
     rows.insert(1, ('Actor TSDF + carving', tsdf['stages']['final']['development']))
     rows.append(('Native DPT R11 (track labels)', native['stages']['final']['development']))
+    rows.extend((label,triangle['stages'][key]['development']) for label,key in [
+        ('Joint R10 (track, hard free)','joint_r10'),('Joint R12 (track, beam free)','final'),
+        ('Native R14 (track, beam free)','native_r14')])
     metrics = [('hit_rate', 100, 2), ('early_rate', 100, 2), ('miss_rate', 100, 2),
                ('free_intrusion_m', 1, 4), ('surface_recall_02', 100, 2)]
     lines = [r'\begin{tabular}{lrrrrr}', r'\toprule',
@@ -59,7 +63,20 @@ def main():
                      f"[{lo * scale:+.3f}, {hi * scale:+.3f}] & {value['improved_logs']}/{value['logs']}" + r' \\')
     lines.extend([r'\bottomrule', r'\end{tabular}'])
     (args.output / 'native_paired.tex').write_bytes(('\n'.join(lines) + '\n').encode('utf-8'))
-    print(json.dumps({'tables': ['actor_population.tex', 'joint_paired.tex', 'native_paired.tex'],
+    lines=[r'\begin{tabular}{llrr}',r'\toprule',
+           r'R12 minus & Metric & Difference & 95\% log bootstrap \\',r'\midrule']
+    for key,label,selected in [('joint_r10','R10',['hit_rate','early_rate','miss_rate','free_intrusion_m','surface_distance_m','surface_recall_02']),
+                               ('native_r14','R14',['hit_rate','early_rate','miss_rate','free_intrusion_m']),
+                               ('lidar_r8','R8',['hit_rate','miss_rate'])]:
+        for metric,unit,scale in [('hit_rate','Hit (pp)',100),('early_rate','Early (pp)',100),
+                                  ('miss_rate','Miss (pp)',100),('free_intrusion_m','Free (m)',1),
+                                  ('surface_distance_m','Distance (m)',1),('surface_recall_02','Recall (pp)',100)]:
+            if metric not in selected: continue
+            value=triangle['paired_final_minus'][key]['development'][metric]; lo,hi=value['bootstrap95']
+            lines.append(f"{label} & {unit} & {value['mean_delta']*scale:+.3f} & [{lo*scale:+.3f}, {hi*scale:+.3f}]"+r' \\')
+    lines.extend([r'\bottomrule',r'\end{tabular}'])
+    (args.output/'triangle_paired.tex').write_bytes(('\n'.join(lines)+'\n').encode('utf-8'))
+    print(json.dumps({'tables': ['actor_population.tex', 'joint_paired.tex', 'native_paired.tex','triangle_paired.tex'],
                       'source': str(args.evidence_root), 'neural_updates': 0}))
 
 

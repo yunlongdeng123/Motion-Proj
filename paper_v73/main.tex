@@ -11,7 +11,7 @@
 \title{Adapting Native Geometry Decoders for Dynamic Actor Surfaces:\\
 Interim Evidence on Coverage and Observed Free Space}
 \author{WorldSim V7.3 research draft}
-\date{Interim r2: 8 September 2026, 10:30 UTC}
+\date{Interim r3: 8 September 2026, 22:20 UTC}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -19,18 +19,19 @@ We study metric surface reconstruction of rigid dynamic Actors from sparse
 LiDAR and multi-camera observations, with known identities, calibration and
 trajectories. The prototype adapts a pretrained native geometry decoder and
 uses spatial queries to generate explicit local surfaces in Actor coordinates.
-An interim development study shows that better coverage does not ensure
-better physical first intersections: the completed joint candidate R5 increases
-surface recall and reduces missing returns, but introduces more early surfaces
-and observed-free-space intrusion than strong same-input references.
-Changing the static background reduces a separate source of intrusion while
-exposing a coverage cost. These observations motivate controlled comparisons
-of label span, geometry adaptation and surface-based objectives. The report
-records completed experiments and their limitations. A fully trained native
-decoder control improves fit-set hit rate but lowers development hit in all
-five logs. Its matched joint comparison, the next objective comparison, and
-independent new-log confirmation remain unfinished. No final method superiority
-is claimed.
+A completed matched development comparison shows that improved coverage does
+not ensure correct physical first intersections. Changing only the joint
+model's free-space objective reduces early returns and intrusion, but raises
+missing returns by 32.53 percentage points and lowers correct hits by 5.55
+points across five development logs. A native-only matched control does not
+establish stable improvement from the same objective change. The joint model
+still has fewer correct hits than its same-objective LiDAR reference in every
+development log. We therefore begin Q-v2, an explicit shared-vertex surface
+parameterization that preserves native-decoder adaptation and measurement
+supervision. Its training is underway; no quality result is claimed. The
+report records completed results, source and density limitations, and the
+remaining independent-log and scene-composition evidence. No final method
+superiority is claimed.
 \end{abstract}
 
 \section{Task and research hypothesis}
@@ -106,6 +107,44 @@ not limited to small displacements around original LiDAR candidates. Adjacent
 vertices within a patch are connected, but different patches are not welded
 into a closed manifold. Appearance opacity cannot hide a physical surface.
 
+\subsection{Q-v2: shared-vertex generation under the same objectives}
+The completed objective comparison motivates changing surface parameterization
+rather than continuing a loss-weight grid. Q-v2 retains the trainable DPT and
+the existing local visual reader. Up to 1,024 LiDAR queries and 512 native-depth
+queries now provide observation states without emitting independent patches.
+A separate set of 642 vertices starts from an ellipsoid scaled by the supplied
+Actor dimensions and defines 1,280 shared-vertex triangles. Three refinement
+stages combine mesh-edge messages, nearby observation queries and projected
+visual features, updating vertex positions directly (Figure~\ref{fig:qv2}).
+This transfers the explicit deformation idea of Pixel2Mesh~\cite{pixel2mesh}
+and vertex-aligned mesh refinement in Mesh R-CNN~\cite{meshrcnn}; it is not a
+reproduction of their complete architectures or complete-mesh supervision.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/qv2_components.pdf}
+\caption{Implemented Q-v2 candidate; research quality remains pending. The
+fixed topology is a shape prior, not occupancy ground truth. Observed depth
+and visual features can influence the shared vertices; training and hard
+evaluation use identical explicit triangles.}
+\label{fig:qv2}
+\end{figure}
+
+The query parameter count is 1,668,393, close to the old 1,670,517, but the
+comparison is not density- or initialization-matched. The old representation
+emits 4,104--12,288 independent-patch triangles for build-ready Actors; Q-v2
+emits 1,280 connected triangles and uses up to 2,178 hidden queries including
+observation states. Its sphere topology cannot represent arbitrary holes or
+disconnected parts and can still fold, self-intersect or collapse. No SDF sign,
+unobserved occupancy labels, opacity, or new regularization loss is introduced.
+The first run uses the original cohort, full-track fit labels, M1 initialization,
+seed 7304, 30 epochs and R12's objective weights. It evaluates its own new
+initialization; it does not reuse the patch initialization or resume R12.
+A synthetic interface check establishes nonzero gradients from the same
+nearest-surface loss into all four visual scales and native seed positions.
+This is an implementation check, not real-data performance or a full-chain
+resource measurement.
+
 \subsection{One surface, distinct measurement semantics}
 The implemented objectives act on this explicit geometry:
 \begin{equation}
@@ -157,10 +196,11 @@ Development logs never supply optimizer updates to the shared models.
 Additional full-track labels are fit-only: 414 target files contain 1,690,284
 measured Actor points, including positive targets for some empty-build entries.
 Those labels never become prediction inputs. R5 and R6 use the short-window
-label regime; R7--R9 use the longer fit-only labels. R11 has completed the native
-full-track control; its matched joint counterpart R10 is still running.
-R12 isolates the beam-tube free objective relative to R10, and the running
-native R14 is its same-objective control. An equal-capacity pointwise control
+label regime; R7--R12 and R14 use the longer fit-only labels. R10, R11, R12 and
+R14 have completed 30 epochs and full evaluation. R12 isolates the beam-tube
+free objective relative to R10; R14 is its same-objective native control.
+R14 versus R11 isolates that objective change within the native path.
+An equal-capacity pointwise control
 has not been trained on this full population; therefore a spatial-attention
 causal claim is currently unsupported.
 
@@ -198,6 +238,68 @@ confirmed method. Late rates are the residual outcome and are omitted for space.
 \label{tab:population}
 \end{table}
 
+\subsection{Completed matched triangle: less intrusion, more missing support}
+R10 and R12 each complete 11,130 actual updates from fresh M1 initialization,
+without skips or recovery. R14, like native R11, completes 10,550 updates with
+580 no-gradient skips. The only objective change in R12 versus R10 is replacing
+hard-range free space with fixed-width beam-tube range; both use native weight
+1, free weight 0.5 and event weight 0. Completed means appear in
+Table~\ref{tab:population}, and paired intervals in Table~\ref{tab:triangle}.
+
+R12 reduces R10's early returns by 14.62 percentage points and free intrusion
+by 0.2105\,m, improving both in all five logs. However, missing returns increase
+by 32.53 points in every log, hit decreases by 5.55 points, target-to-surface
+distance increases by 0.0412\,m, and recall decreases by 6.38 points. All six
+paired intervals exclude zero. The generated geometry has not simultaneously
+retained coverage and achieved correct first intersections. The aggregate
+result does not uniquely identify patch rotation, contraction, displacement,
+overlap or correspondence contamination as its cause.
+
+\begin{table}[htbp]
+\centering\small
+\input{tables/triangle_paired.tex}
+\caption{Completed R12 differences on all 75 development Actors in five logs.
+R10 differs in free objective; R14 differs in native versus Query surface
+generation, and R8 in the LiDAR versus visual/native path. The latter two
+are pathway comparisons, not attention-only ablations. Values reuse saved
+10,000-resample paired intervals, without rerunning inference or bootstrap.}
+\label{tab:triangle}
+\end{table}
+
+Against R14, joint R12 has lower early/free but 7.63 points more missing
+returns in all five logs. Its hit difference of +1.04 points and its distance
+and recall intervals span zero. The native objective comparison R14 minus R11
+has all six intervals spanning zero: the hit mean changes by +2.95 points
+with interval $[-0.37,+7.51]$, and free by +0.0015\,m with
+$[-0.0221,+0.0267]$\,m. This does not establish that the two objectives are
+equivalent or that beam supervision improves every geometry path.
+
+The same-beam LiDAR reference R8 exceeds R12's hit by 9.41 points and has
+8.31 points fewer missing returns, with the adverse joint difference in all
+five logs. R12's early/free/distance/recall intervals relative to R8 span
+zero. Its higher mean recall therefore is not a reliable incremental visual
+benefit. R14 also has higher recall but worse hit and free than R8, showing
+that the coverage/physics conflict is not exclusive to Query patches.
+
+In contrast, under the hard objective, R10 versus native R11 improves hit by
+9.54 points, interval $[4.62,16.27]$, and reduces missing by 27.48 points,
+while increasing early by 12.62 points and free by 0.1061\,m. The Query path
+can change support substantially, but this is not sufficient physical quality.
+Q-v2 now tests a shared-vertex parameterization under the preserved R12
+data/objectives. Restricted upper-aggregation adaptation, near-surface
+certified-free supervision and local correspondence consistency remain
+separate later mechanisms rather than simultaneous changes to this run.
+
+R12's measurement-weighted native Huber drops from 0.7072 to 0.3887\,m,
+sampled coverage from 0.3072 to 0.2246\,m, and hard free from 0.2087 to
+0.0290\,m. Both trainable parameter groups retain nonzero gradients.
+These moving training samples are not fixed-observation paired evidence.
+R12's own-initialization development comparison similarly reduces free
+but increases missing; it does not establish a hit gain. The moving subset
+still contains only nine Actors in two logs, one log with a single owned
+return. Its uncertainty cannot support a robust dynamic-Actor claim.
+
+\subsection{Earlier short-window and external-method evidence}
 R5 completes 30 effective epochs (11,130 updates) of genuine native DPT and
 query adaptation. The final recall is 79.71\%, but early returns reach 20.98\%
 and mean free intrusion reaches 0.3517\,m. Relative to its own initialization,
@@ -283,8 +385,8 @@ It does not identify whether the cause is observation contamination, shared
 parameter drift, discrete support/readout, or objective semantics. LoRA3D's
 scene adaptation~\cite{lora3d} and CAPA's sparse-measurement adaptation~\cite{capa}
 motivate possible restricted or build-side adaptation controls; neither
-establishes this failure's cause. We first retain the matched R10/R11 and
-R12/R14 comparisons. Rejecting all visual geometric adaptation, or repeating
+establishes this failure's cause. The matched comparisons above preserve this
+limitation while motivating a changed surface parameterization. Rejecting all visual geometric adaptation, or repeating
 the already evaluated CAPA setup unchanged, would not follow from this result.
 
 \section{Density, static background and composition}
@@ -332,11 +434,11 @@ cohort beams. This single development log cannot supply between-log uncertainty
 or independent confirmation.
 
 \section{Remaining experiments and claim boundaries}\label{sec:limits}
-R10 still requires completed training and analysis. R12 is registered but
-unrun; R14 has begun native-only training with the same 0.03\,m, $32^2$
-beam-tube free objective registered for R12. Both start from the original M1
-initialization with seed 7304; neither resumes the hard-free candidate.
-The objective comparison keeps the old cohort and all view/time inputs.
+The R10/R12/R14 triangle and native R11 anchor are complete. Q-v2's first
+shared-vertex run has started from fresh M1 initialization; its quality remains
+pending. Full input-cohort training, same-decoder controls, selected-model scene
+composition and independent new-log confirmation remain unfinished. These
+cannot be replaced by the synthetic gradient-path check or the topology prior.
 
 R13 has completed one epoch over all 41 camera-supported fit entries among
 the 51 original zero-build-LiDAR entries, from fresh M1 initialization. All
@@ -372,7 +474,9 @@ pretraining.
 
 Current joint and native-only configurations run on the RTX 3090 while
 preserving the stated time/view inputs. The joint peak allocated memory is approximately
-10.2\,GiB; native-only training uses approximately 2.35\,GiB. Twenty-eight-view
+10.24\,GiB for R12; native-only R14 uses 2.36\,GiB. R12 completes in
+7.52 hours and R14 in 8.25 hours, including final evaluation and shared
+resource contention. These are not exclusive-throughput comparisons. Twenty-eight-view
 AV2 prefix extraction at $672^2$ peaks at 7.64\,GiB. These are operation-specific
 allocated peaks, not a sum or a bound for deeper PEFT. Container RAM is capped
 at 90\,GiB. Concurrent run wall time is not exclusive GPU time.
@@ -388,7 +492,8 @@ Annotation boxes with margins approximate point ownership and overlap regions
 are excluded; they are not dense instance ground truth. nuScenes here lacks
 per-return timestamps, whereas the AV2 adapter has per-return sensor origins
 with a documented, development-inferred dual-LiDAR ID convention. Frustum
-support is not occlusion truth. The learned patches are not globally manifold.
+support is not occlusion truth. The original learned patches are not globally
+manifold; the new connected topology does not guarantee geometrically valid surfaces.
 Trajectory-edit examples demonstrate composition only: with no counterfactual
 ground truth, released unknown background is not a correctness measurement.
 These limitations, the small development-log count and the unfinished controls
@@ -406,7 +511,7 @@ training logs and explicit surfaces. \path{paper_v73/README.md} identifies
 the exact compact evidence files and compilation commands. This draft is
 not an arXiv submission and does not mark V7.3 as complete.
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{10}
 \bibitem{vggt} VGGT authors. Official training framework and native geometry
 implementation. \url{https://github.com/facebookresearch/vggt/tree/main/training}.
 \bibitem{adapointr} X. Yu et al. AdaPoinTr: Diverse Point Cloud Completion with
@@ -429,5 +534,9 @@ Differentiable Rendering. ACM TOG 39(6), 2020.
 \bibitem{lora3d} Z. Lu et al. LoRA3D: Low-Rank Self-Calibration of 3D
 Geometric Foundation Models. ICLR, 2025.
 \url{https://520xyxyzq.github.io/lora3d/}.
+\bibitem{pixel2mesh} N. Wang et al. Pixel2Mesh: Generating 3D Mesh Models
+from Single RGB Images. ECCV, 2018. \url{https://github.com/nywang16/Pixel2Mesh}.
+\bibitem{meshrcnn} G. Gkioxari, J. Malik, and J. Johnson. Mesh R-CNN.
+ICCV, 2019. \url{https://github.com/facebookresearch/meshrcnn}.
 \end{thebibliography}
 \end{document}

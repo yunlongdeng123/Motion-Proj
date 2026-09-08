@@ -1,3 +1,17 @@
+## Q-v2正式作业运行；阶段论文r3同步三角（2026-09-08 22:22 UTC）
+
+Q-v2 `WS-V73-Q-V2-01/20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`已从提交bfc181b4启动，PID96997，目标30轮。22:20 UTC状态initial_evaluation，438可用Actor/51不可用、371 FIT与744全窗口冻结前缀已加载；实际完成更新数尚未产生，不把初始化评价说成已完成训练。沿用R12 full_track/native1/free.5/beam.03/res32/event0与M1r3 fresh初始化、seed7304。进程正常、cgroup oom/oom_kill=0，服务器保持运行。原run保存manifest/cohort/status和复用PCA结果；后续checkpoint、train.jsonl、完整final与配对结果按原训练器保存，不新增重复检查。
+
+阶段论文`paper_v73/main.tex`更新为r3（22:20UTC），已完整纳入R10/R12/R14/R11结论、14方法主表、12项三角配对与Q-v2实际architecture components图。明确R12的free收益伴随missing增加、相对R8仍无正确命中优势；Q-v2只是已实现且运行中的候选，固定拓扑、面密度、初始化差异均明示。R5旧结果/恢复、R13一轮边界、移动2日志稀疏性、输入覆盖与20新日志未读状态保留。未新增模型推理或bootstrap。
+
+现有TinyTeX编译9页/344398字节成功，9页视觉检查完成、图表可读，无overfull或未定义引用；末条参考文献有一条轻微underfull提示，无内容溢出，不为消除提示反复编译。论文归档`docs/autoresearch/worldsim_v73/paper/interim_r3.pdf`，本地outputs另存可读PDF和源zip；旧r1/r2保持历史。图源/四表导出脚本与README同步，未新增环境、smoke或回归。
+
+三角后的两项建议仍可独立研究：near-boundary只能增强经认证返回前区间中违规面的梯度，R12已有更低free但更多miss，因此不单独扩大排斥来替代表面支持；新局部对应项补候选深度/偏移射线/可靠归属，现有可学习offset与attention继续保留。Q-v2首轮不混入这两项或上层LoRA；根据显式网格的真实失败再分别接入。详见计划16–17节、Q-v2报告和上层接口报告。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none（运行与论文里程碑，无新科学结果），下一V73-F10。30分钟ACTIVE、完成不关机；正式作业结束后先按相同日志比较R12/R8/R14，持续推进Q-v2、必要的上层表示/输入与场景验证，不等待用户确认。
+
+---
+
 ## Q-v2共享顶点表面已实现，正式训练登记（2026-09-08 22:12 UTC）
 
 依据三角收口07e98727与V73-F02/F03/F04/F06/F09，检索Pixel2Mesh ECCV2018、Mesh R-CNN ICCV2019官方论文/源码及PyTorch3D细分。实现`ActorSharedMeshQueryDecoder`：642共享顶点/1280面，从只读尺寸椭球先验初始化；最多1024 LiDAR+512原生深度查询提供隐状态，经网格边、最近观测和既有局部视觉读取更新顶点。固定拓扑不保证无自交，不对观测取凸包，UNKNOWN不标FREE。DPT32654562+Query1668393可训练；原24视图冻结前缀保持。详细来源、预算差异与architecture components图见`WORLDSIM_V7_3_QV2_SHARED_MESH.md`。
