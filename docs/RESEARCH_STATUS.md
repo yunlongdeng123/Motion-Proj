@@ -1,3 +1,20 @@
+## V7.3 原生强控制R11完成与同目标R14登记（2026-09-08）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-native-only-full-track-s7304-r11` code9541ac7d已完成，PID38460退出。30轮11130呈现/10550实际更新/580无梯度跳步；580中420无相机、160有相机但原生支持为空而退回固定LiDAR，均无native build对应、两组梯度均0，涉及22个Actor。完整DPT32654562参数更新，query0可训练；native_project最大变化.005223576，wall30855.513131s、allocated2.346402GiB、RSS34.607677GiB；无恢复、无OOM。所有489对象保留，371 fit更新候选、67 dev可预测、51零LiDAR缺失；开发无梯度。
+
+开发75/5日志R11最终hit.176111/early.076432/miss.600949/free.164965m/单向surface distance.168504m/recall.751499。相对同run初始化：hit−5.166pp，95%[-10.920,-1.125]pp，5/5日志下降；early−1.512pp[-2.872,-.660]pp，5/5下降；free+.014661m[-.006742,+.031388]m，miss+2.741pp及recall−2.979pp区间跨0。FIT日志hit+2.276pp[+.925,+3.701]pp、early−3.707pp[-6.431,-1.301]pp；FIT是训练标签范围内读数，不是泛化成功。
+
+同full_track的LiDAR R7相比，R11 hit−14.144pp[-18.582,-8.623]pp、miss+10.197pp[+4.691,+16.870]pp；R9相比free+.126422m[+.046265,+.199240]m，但R9同时使用beam/event，不能归因于适配架构本身。R11与旧native_fusion的条件surface距离不能直接减两个均值：旧融合额外对5个零LiDAR开发对象生成支持，R11保留缺失；同ready67对象的初始化与融合完全相同，配对距离差采用共同可评价对象。R10仍运行，不能提前宣称native或query赢得匹配比较。
+
+新增科学候选负结果V73-F09：本配置原生完整适配改善训练拟合却降低开发硬hit，归因尚未解决。先检索[LoRA3D ICLR2025官方](https://520xyxyzq.github.io/lora3d/)与[CAPA官方](https://research.nvidia.com/labs/dvl/projects/capa/)的场景校准/有限适配，二者不证明当前共享DPT失败原因，已有CAPA R2负结果保留。直接迁移优先完成既定R10/R12几何目标对照，不从一个控制结果否定视觉适配、不叠加confidence屏蔽free、不重跑原CAPA。更受限的DPT适配或build侧场景校准仅在匹配证据支持后作为独立因素研究，不读20新日志调参。
+
+登记R14：`WS-V73-M2-GLOBAL-ACTOR-01/20260908T100000Z__population-native-full-track-beam-range-s7304-r14`。将此前“R12若采用beam目标须有匹配native控制”提前并行实施，仍只有原生融合/空间查询两个主候选。R14与R11共同M1r3/seed7304/full_track/30轮/AdamW1e-5/native1/free.5/event0/旧489 cohort，仅free改为beam_tube_range、width.03m/res32；复用R11同输入初始化与原PCA，重新训练而非resume。与R12目标一致，避免用hard-free R11冒充匹配控制。冻结前缀使用现有mmap执行方式，不减少24视图/分辨率，当前显存允许原生控制与R10并行；R12仍待完整query训练资源。登记时R14未启动，无自动GPU队列。
+
+R13一轮真实visual-only检查亦已完成：code11433ba4，全部51原metadata对象、41更新、195.286933s、allocated8.170046GiB/RSS14.146515GiB；完整新输入路径已发生真实DPT/query反向，专项结果尚在整理，不当作完整训练或质量成功。R10继续，20日志输入已就绪且模型质量未读。R11原始summary/analysis/training归档m2/global/population_native_r11_*，过程图已按真实模式生成检查；failure_ledger_delta=add V73-F09，F02/F03/F04/F05持续，下一失败编号V73-F10；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 原生控制的训练过程报告入口修正（2026-09-08）
 
 R11已到最后一轮，但尚未完成最终评价。原`plot_worldsim_v73_training.py`固定写“Joint”“371”与“epoch21恢复/107丢弃更新”，直接用于原生控制或visual-only新输入会错误归属实验。本次仅修正报告入口：训练摘要读取manifest的mode/include_visual_only；图题按真实模式选择，epoch呈现数、实际optimizer更新/跳步及恢复信息从已存日志计算。没有正中位数梯度的参数组明确标注，不在对数轴制造一条正梯度曲线；没有build native-depth监督时标记缺失，不记作零误差。

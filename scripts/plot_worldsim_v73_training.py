@@ -36,7 +36,8 @@ if plotted_gradients:
     axes[1,1].set_yscale('log'); axes[1,1].legend(fontsize=8)
 for i,label in enumerate(zero_groups):
     axes[1,1].text(.5,.08+i*.08,label+': no positive median gradient',ha='center',
-                   transform=axes[1,1].transAxes,fontsize=8)
+                   transform=axes[1,1].transAxes,fontsize=8,
+                   bbox={'facecolor':'white','edgecolor':'none','alpha':.92,'pad':2})
 line(axes[1,2],[r['metrics']['step_s']['mean'] for r in rows],'Mean step time')
 axes[1,2].set_title('Observed step time under shared resources'); axes[1,2].set_ylabel('s / Actor presentation')
 for ax in axes.flat:
