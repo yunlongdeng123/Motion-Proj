@@ -1,3 +1,16 @@
+## V7.3 R10完成与R12有限宽束联合训练启动（2026-09-08 14:15UTC）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-joint-full-track-s7304-r10` 已done，PID53472退出、GPU已释放；30轮11130呈现/11130真实更新、零跳步/零恢复，489个Actor的最终评价与412133346字节latest.pt已保存。wall33811.146305s（9.392h），allocated峰值10.213784GiB、RSS34.030704GiB，原生project参数最大变化.005422188。371 FIT/67可预测DEV、旧489 cohort/51零LiDAR缺失保留、744份冻结前缀/full_track标签；当前正在从保存的结果计算R10−R5/R7/R9/R11与初始化的日志配对，不提前宣布科学结论。
+
+R12按此前登记接续启动：`WS-V73-M2-GLOBAL-ACTOR-01/20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`，code dc6fe427，PID81766，日志`/root/autodl-tmp/controller_logs/v73_population_joint_beam_r12.log`。M1r3重新初始化、seed7304、30轮、原旧输入cohort/full_track；native1、free .5，只有free目标相对R10改为beam_tube_range .03m/res32，event0。复用R5同初始化评价与PCA，非resume；没有加入新表面参数化、额外LoRA、visual-only cohort或用户新候选损失/对应模块。
+
+14:15UTC R12第1轮已有optimizer更新，DPT与Query梯度均正、allocated10.228380GiB；GPU进程11494MiB，R14/PID68108仍运行、进程3066MiB。cgroup oom/oom_kill均0，没有确证资源不足；原始24视图未缩减，仅冻结前缀缓存，DPT继续真实反向。seed存于manifest顶层并在trainer固定7304，不在config子字典，不能把子字典缺值读成未设置seed。
+
+R12用已保存静态启动脚本直接启动，无自动GPU队列；没有中断R14。R10分析仅消费既有结果/训练日志，不重复训练或推理。调度里程碑failure_ledger_delta=none，R10科学结论待汇总；F02/F03/F04/F05/F09继续有效，下一失败编号V73-F10。三角完整比较尚未收口，20新日志质量未读；全V7.3未完成，30分钟跟进继续，shutdown=false。
+
+---
+
+
 ## V7.3 固定表面支持诊断完成（2026-09-08）
 
 `WS-V73-M2-SURFACE-SUPPORT-01/20260908T120000Z__development-fixed-surfaces-r1` code866ed28f已done、PID78078退出；全部75开发Actor/5日志/11886个owned返回，23对象无归属返回仍保留，R5/R9/R11各8空表面。CPU1.050194s、峰值RSS0.633244GiB，无神经推理/优化或表面修改。一次3条解析束检查已在登记前通过，没有重跑训练、smoke或回归套件。
