@@ -1,5 +1,21 @@
 # V7.3 独立确认数据准备
 
+## V7.3 外部20日志通用输入已启动与场景结果图（2026-09-08）
+
+`WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1` 已实际启动，codef70d099c，CPU父进程PID41941，日志 `/root/autodl-tmp/controller_logs/v73_av2_external20_export_r1.log`。最新3/20日志导出完成，原身份顺序、四build/两heldout时间和全部七相机保留；后续日志由该父进程顺序执行，属于关机前必须结束的数据控制进程。尚未完成整个20日志合并。
+
+原始图像/点云和标注数值已用于格式转换、逐点坐标、已知轨迹归属与输入/heldout分离，不能再写“新数据数值未读取”。没有运行新域网络推理、重建质量评分或共享梯度更新；方法选择仍依据既有开发日志。exporter没有按新输入覆盖或预测好坏挑选/删除身份，空输入也保留。每日志处理日志、input_protocol和case均在注册run下，真实质量确认仍待最终模型选择后进行。
+
+背景雕刻结果图由已保存r4/r5汇总生成，未重复推理：`docs/autoresearch/worldsim_v73/m4/V73_BUILD_FREE_BACKGROUND.png/pdf`，脚本 `scripts/plot_worldsim_v73_background_carving.py`。上排显示5日志背景free/early/miss的配对变化，下排显示同背景组合的cohort free/hit/miss；均值与个别日志都保留，明确Ada r1轴限制及不同训练预算。已检查排版并修正一处长标题截断，未新增模型smoke/回归。
+
+后续AV2全场景组合需保持逐点时刻：当前nuScenes场景入口使用每扫描一个Actor刚体矩阵，不能直接冒充AV2逐点已知轨迹。下一实现应按每束时间把原点/方向转入同一Actor规范系，再通过其固定BVH求交并全局硬排序；背景使用参考ego已补偿端点和逐点束原点。先在旧AV2开发窗口接通，20新日志不用于选择几何时序约定。
+
+三项训练正常，最近Ada Y-up r2为epoch25；r5恢复和native-only full_track继续，未启动r10。F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，F08恢复推进但退出原因未知，下一编号V73-F09。整个V7.3未完成，shutdown=false；必须完成研究、保存/push并确认训练、评价、数据及其启动控制进程全部结束后才关机。
+
+---
+
+
+
 2026-09-08，仅元数据/文件存在性调查，未读取候选图像、点云、标注或模型质量。
 
 nuScenes本地原始载荷调查耗时10.05s：当前31窗口属于25日志，磁盘完整七传感器关键帧足够形成四build时刻的共35场景/27日志；当前日志外仅scene-0139和scene-0379。二者分别出现在V6.4 fit和V5诊断/开发配置，不能因不在当前25日志中就重用为全新确认。逐场景可用性见 `docs/autoresearch/worldsim_v73/coverage/log_payload_inventory_r1.json`。
