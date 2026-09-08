@@ -1,3 +1,18 @@
+## V7.3 Actor TSDF对照完成：低侵入伴随严重缺失（2026-09-08）
+
+`WS-V73-M2-TSDF-FUSION-01/20260908T072000Z__population-build-vdb-r1` code6f753dab完成全部489 Actor/25日志，CPU9.081212s/RSS.649452GiB，0 GPU/训练更新。原生TSDF与同mesh单次build雕刻两份表面全部保存，融合、读出和配对分析进程均已退出。
+
+fit414对象积分194680原build返回，144形成mesh，131713三角面删2677；development75积分18593返回，18形成mesh，18982面删398。原build矛盾束2624/352→雕刻后侵入距离和0；观察时段一致不等于新时刻正确。有LiDAR但无mesh的fit227/dev49仍保留，不能偷偷退回PCA。全489按原build计数：0点51→0非空、1–15点179→0、16–63点88→16、64–255点81→56、≥256点90→90，未按质量选对象。
+
+完整75开发对象/5日志，TSDF+雕刻hit3.279%、early.258%、miss96.330%、free.000773m、recall21.508%；原TSDF为3.320%/.266%/96.283%/.000856m/21.512%。相对同输入PCA：hit−17.966pp，95%[−32.317,−5.663]；miss+22.919pp [7.264,41.174]；recall−43.910pp [−58.409,−29.412]；free−.016935m [−.035062,−.004568]。低侵入伴随大量缺失，不能称重建改善。表面距离只有18对象/4日志可定义，配对PCA增加.366072m [.280899,.487521]，不以未配对均值相减。移动9对象/2日志6无表面，miss91.237%、free.001030m，表面距离只1日志。
+
+此结果限定于voxel.1/trunc.3、不补unknown洞的官方原生mesh配置，不外推所有TSDF或较密静态背景。保留为经典融合适用性诊断，不以超过它充当主方法胜出；继续强native/LoRA、LiDAR同解码器与AdaPoinTr对照，不围绕本配置开参数网格或添加主表示。报告`docs/WORLDSIM_V7_3_ACTOR_TSDF.md`；构建和完整配对归档m2/global/actor_tsdf_r1_*，全原表面/逐帧结果保留在run，图V73_ACTOR_TSDF.png/pdf直接读取已存结果。
+
+R10/R11继续原进程，R12未启动，visual-only新训练入口尚待真实反向验证；外部20日志质量仍未读取。F02/F03/F04/F05保持active，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 同输入Actor TSDF非学习基线登记（2026-09-08）
 
 主表尚缺当前完整489 cohort的TSDF融合强参照，不能用旧V7.2 legacy cohort的带上限射线/zero-crossing点集与anchors并集代替当前字面表面比较。本轮先查询[Curless–Levoy SIGGRAPH1996原文](https://lightfield.stanford.edu/papers/volrange/)及[VDBFusion官方积分与提取源码](https://github.com/PRBonn/vdbfusion)，利用已安装vdbfusion0.1.6的现有CPU环境迁移，不新增环境、主候选或GPU任务。
