@@ -1,3 +1,11 @@
+## Q-v2进入真实共享训练（2026-09-08 22:24 UTC）
+
+首轮`WS-V73-Q-V2-01/20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`（code bfc181b4、PID96997）完成489对象初始化评价，现为shared_train第1轮，快照已记录116次呈现/116次真实更新。首步DPT/Query裁剪前梯度分别544.504028/11.606274，当前allocated峰值11.591165GiB；输出642共享顶点/1280面，24视图实例已正常反传。此为实际执行与梯度证据，不作质量结论；正式30轮继续，不改变配置或提前读取新日志。
+
+证据`qv2/shared_mesh_r1_training_start.json`与原run的initial/train/status，论文r3在此前22:20快照基础上保持质量pending；failure_ledger_delta=none，F02/F03/F04/F05/F06/F09保持，下一V73-F10。30分钟跟进ACTIVE、保持开机，完成后按已登记R12/R8/R14比较继续研究。
+
+---
+
 ## Q-v2正式作业运行；阶段论文r3同步三角（2026-09-08 22:22 UTC）
 
 Q-v2 `WS-V73-Q-V2-01/20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`已从提交bfc181b4启动，PID96997，目标30轮。22:20 UTC状态initial_evaluation，438可用Actor/51不可用、371 FIT与744全窗口冻结前缀已加载；实际完成更新数尚未产生，不把初始化评价说成已完成训练。沿用R12 full_track/native1/free.5/beam.03/res32/event0与M1r3 fresh初始化、seed7304。进程正常、cgroup oom/oom_kill=0，服务器保持运行。原run保存manifest/cohort/status和复用PCA结果；后续checkpoint、train.jsonl、完整final与配对结果按原训练器保存，不新增重复检查。
