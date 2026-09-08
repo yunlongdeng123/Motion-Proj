@@ -1,5 +1,24 @@
 # Experiments
 
+## V7.3 主联合r5最终完成：覆盖改善伴随物理退化（2026-09-08）
+
+r5恢复run `20260908T012500Z__population-joint-r5-epoch21-resume-r1` code914d582d正常完成全部30轮/489cohort最终评价，原PID39009已退出。11130有效更新=7791继承+3339新增，原107未保存更新独立记账；DPT32654562/query1670517可训练参数，恢复wall11359.0603s、GPU10.19917GiB/RSS34.05680GiB，原观测wall22180.1436s，合计下界33539.2039s。DPT project变化.0018500仅相对恢复epoch21。F08恢复执行完成，退出原因仍未知，无OOM归因。
+
+全75开发Actor/5日志：r5 hit22.2773%、early20.9807%、miss37.7094%、free.351717m、target→surface.145289m、recall79.7126%。相对同短窗r6：hit−8.728pp、bootstrap95%[−14.097,−4.478]，5/5差；free+.267963m [+.055532,+.503369]；距离−.095886m [−.221717,−.013341]、recall+7.289pp [+2.275,+14.295]。相对initial命中无明确改善，early+8.706pp [+1.221,+18.493]；相对native fusion free+.201413m [+.036521,+.399522]、early+11.826pp [+5.400,+23.016]。移动9对象仅2日志early62.7680%、recall91.5425%，不能用覆盖掩盖前表面。fit标签读出free也.340482→.432083m，表明不只是开发过拟合。
+
+完整表、配对、恢复边界和下一实验在`docs/WORLDSIM_V7_3_JOINT_R5_RESULTS.md`；证据`m2/global/population_joint_r5_analysis.json`及`population_joint_r5_training.json`。主假设当前不成立于该配置，不能外推为视觉几何路线全面失败。已查[nvdiffrast SIGGRAPH Asia2020官方说明](https://nvlabs.github.io/nvdiffrast/)，将既有r8的有限宽束米制free作为下一机制迁移，保留r10标签对照与r11强原生控制。登记r12 `20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`，同r10只改free为beam_tube_range .03m/32，event仍0，尚未启动。
+
+观测点集任务`WS-V73-M4-OBSERVED-POINTS-01/20260908T043000Z__development-fixed-surfaces-r1` code36b22287完成，CPU16.9374s/RSS.64511GiB，75对象/5日志/11886原束。r5 P/R/F=35.967/36.065/35.412%，r6=50.561/39.916/43.190%；配对F−7.778pp [−11.735,−3.820]，共同有预测33对象的双向距离+.386073m [+.163915,+.696813]。全缺失距离不可定义/有效分母明确保留，不把此观测域指标冒充完整表面GT。PID51413已退出，原样点集/返回mask保存在run，摘要归档m4/observed_points_r1_summary.json。
+
+旧AV2 joint `WS-V73-M4-AV2-FIXED-01/20260908T041500Z__old-development-joint-r5-r1` code36b22287完成，21对象/1旧日志，七相机/28×672²完整联合接口实际执行；0更新，69.6078s/GPU5.43790GiB/RSS3.67498GiB。hit30.3075%、early17.0071%、miss43.9941%、free.968468m、距离.096616m、recall79.5175%；接口可运行但物理未成功，单旧日志无跨日志区间。PID51411已退出，证据coverage/av2_old_joint_r5_analysis.json。
+
+外部20日志前缀`WS-V73-M4-AV2-PREFIX-01/20260908T043000Z__external20-28view-prefix-r1`以code36b22287完整完成，407.9406s/GPU7.64359GiB/RSS10.63879GiB，560视图、42371687680字节缓存（约39.46GiB），6722839条build尺度对应，固定IRLS尺度范围11.0605–55.1629。全部28视图联合聚合，只分块独立patch编码；没有新域优化、heldout质量评分或模型选择。原PID52753任务已结束，摘要归档coverage/av2_external20_prefix_summary.json，原全部日志保留。r11继续训练，r10接下来按原登记启动，当前无等待启动队列。
+
+登记r5场景CPU读出：nuScenes `WS-V73-M4-SCENE-COMPOSITION-01/20260908T044000Z__development-joint-r5-carved-r7`，同既有r3雕刻背景；旧AV2 `WS-V73-M4-AV2-SCENE-01/20260908T044000Z__old-development-joint-r5-carved-r3`，同逐束时刻背景。均读取固定表面，不重新推理网络，尚未执行。F01/F02/F03/F04/F05继续，F06缓解，F07轴修正但物理风险保留，F08恢复完成原因未知，下一编号V73-F09。整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 主联合训练30轮完成与观测域双向指标登记（2026-09-08）
 
 r5恢复已完成30轮、11130次有效更新/呈现：7791来自完整恢复epoch，3339为新增，原中断107次未保存更新独立留档，合计实际执行至少11237次。当前仍在最终表面评价，不是整个run或V7.3完成。训练首轮→第30轮：native Huber测量加权0.804565→0.387529m，有监督Actor均值3.370621→1.069023m；采样target→surface均值0.050599→0.040186m；采样hard free0.332841→0.277535m，仍有明显波动。357个有视图对象中的native支持回退17→9；14个无相机姿态对象保留LiDAR路径。每轮原生监督346对象/173972测量。

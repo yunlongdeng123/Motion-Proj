@@ -1,0 +1,4448 @@
+{
+  "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-FIXED-01/20260908T041500Z__old-development-joint-r5-r1",
+  "status": "done",
+  "scope": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization",
+  "fit_extra_time_usage": "evaluation_only",
+  "development_extra_time_usage": "evaluation_only",
+  "reference_protocols": {
+    "native_fusion": {
+      "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-FIXED-01/20260908T013000Z__old-development-native-fusion-r1",
+      "fit_label_times": "evaluation_only",
+      "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+    },
+    "lidar_pca": {
+      "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-FIXED-01/20260908T013100Z__old-development-lidar-pca-r1",
+      "fit_label_times": "evaluation_only",
+      "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+    },
+    "lidar_event_r9": {
+      "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-FIXED-01/20260908T013200Z__old-development-lidar-event-r9",
+      "fit_label_times": "evaluation_only",
+      "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+    }
+  },
+  "aggregation": "within Actor weighted by observed rays/points, then scene/Actor mean within log and independent log mean",
+  "denominator": "owned first-return outcomes include misses; free includes all raw near-box rays; unknown surface excluded",
+  "stages": {
+    "final": {
+      "fit": {
+        "actors": 0,
+        "logs": 0,
+        "moving_gt2mps": 0,
+        "motion_unavailable": 0,
+        "build_under100": 0,
+        "no_heldout_owned_return": 0,
+        "no_predicted_surface": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "early_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "miss_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "free_intrusion_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_distance_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_recall_02": {
+          "mean": null,
+          "logs": 0
+        }
+      },
+      "development": {
+        "actors": 21,
+        "logs": 1,
+        "moving_gt2mps": 4,
+        "motion_unavailable": 1,
+        "build_under100": 14,
+        "no_heldout_owned_return": 1,
+        "no_predicted_surface": 2,
+        "lidar_fallback": 6,
+        "hit_rate": {
+          "mean": 0.30307532987571195,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 0.17007060812412417,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 0.4399409317548964,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.968467840202253,
+          "logs": 1
+        },
+        "surface_distance_m": {
+          "mean": 0.09661553388054865,
+          "logs": 1
+        },
+        "surface_recall_02": {
+          "mean": 0.795175352304433,
+          "logs": 1
+        }
+      }
+    },
+    "native_fusion": {
+      "fit": {
+        "actors": 0,
+        "logs": 0,
+        "moving_gt2mps": 0,
+        "motion_unavailable": 0,
+        "build_under100": 0,
+        "no_heldout_owned_return": 0,
+        "no_predicted_surface": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "early_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "miss_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "free_intrusion_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_distance_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_recall_02": {
+          "mean": null,
+          "logs": 0
+        }
+      },
+      "development": {
+        "actors": 21,
+        "logs": 1,
+        "moving_gt2mps": 4,
+        "motion_unavailable": 1,
+        "build_under100": 14,
+        "no_heldout_owned_return": 1,
+        "no_predicted_surface": 2,
+        "lidar_fallback": 6,
+        "hit_rate": {
+          "mean": 0.29170589030777216,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 0.08598855609508786,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 0.6034998502180661,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.48909386630840807,
+          "logs": 1
+        },
+        "surface_distance_m": {
+          "mean": 0.11592167075687086,
+          "logs": 1
+        },
+        "surface_recall_02": {
+          "mean": 0.7727923028353014,
+          "logs": 1
+        }
+      }
+    },
+    "lidar_pca": {
+      "fit": {
+        "actors": 0,
+        "logs": 0,
+        "moving_gt2mps": 0,
+        "motion_unavailable": 0,
+        "build_under100": 0,
+        "no_heldout_owned_return": 0,
+        "no_predicted_surface": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "early_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "miss_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "free_intrusion_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_distance_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_recall_02": {
+          "mean": null,
+          "logs": 0
+        }
+      },
+      "development": {
+        "actors": 21,
+        "logs": 1,
+        "moving_gt2mps": 4,
+        "motion_unavailable": 1,
+        "build_under100": 14,
+        "no_heldout_owned_return": 1,
+        "no_predicted_surface": 2,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.3275778174601315,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 0.03686281658969587,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 0.6257925691567165,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.10359832924495514,
+          "logs": 1
+        },
+        "surface_distance_m": {
+          "mean": 0.1221360702882904,
+          "logs": 1
+        },
+        "surface_recall_02": {
+          "mean": 0.7559240982366673,
+          "logs": 1
+        }
+      }
+    },
+    "lidar_event_r9": {
+      "fit": {
+        "actors": 0,
+        "logs": 0,
+        "moving_gt2mps": 0,
+        "motion_unavailable": 0,
+        "build_under100": 0,
+        "no_heldout_owned_return": 0,
+        "no_predicted_surface": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "early_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "miss_rate": {
+          "mean": null,
+          "logs": 0
+        },
+        "free_intrusion_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_distance_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_recall_02": {
+          "mean": null,
+          "logs": 0
+        }
+      },
+      "development": {
+        "actors": 21,
+        "logs": 1,
+        "moving_gt2mps": 4,
+        "motion_unavailable": 1,
+        "build_under100": 14,
+        "no_heldout_owned_return": 1,
+        "no_predicted_surface": 2,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.4209092133704734,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 0.07786716139409852,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 0.43490809649704343,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.18080325779197523,
+          "logs": 1
+        },
+        "surface_distance_m": {
+          "mean": 0.0802357583066472,
+          "logs": 1
+        },
+        "surface_recall_02": {
+          "mean": 0.826709866494157,
+          "logs": 1
+        }
+      }
+    }
+  },
+  "actors": {
+    "final": [
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "13d7f7bf-6764-4571-8eb1-c2943248afa4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.13830008582993014,
+        "build_points": 3052,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1590,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__13d7f7bf-6764-4571-8eb1-c2943248afa4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1590,
+        "heldout_all_rays": 13429,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5761006331293838,
+        "early_rate": 0.25974842795410996,
+        "miss_rate": 0.10251573054295665,
+        "free_intrusion_m": 0.5341248152815974,
+        "surface_distance_m": 0.022274129331674216,
+        "surface_recall_02": 0.9987421797881336,
+        "lidar_fallback": false,
+        "native_candidates": 35359,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "203d8ec1-2359-4da7-b151-64009906c3e1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.0403288274951066,
+        "build_points": 4,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__203d8ec1-2359-4da7-b151-64009906c3e1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1,
+        "heldout_all_rays": 13,
+        "surface_patches": 516,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 1.0,
+        "miss_rate": 0.0,
+        "free_intrusion_m": 0.02582197865614524,
+        "surface_distance_m": 0.05628364533185959,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.10173540184462283,
+        "build_points": 3157,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1663,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1663,
+        "heldout_all_rays": 8271,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6007215726182035,
+        "early_rate": 0.239326520248916,
+        "miss_rate": 0.11785929490124972,
+        "free_intrusion_m": 0.8874461333836138,
+        "surface_distance_m": 0.021793571527614984,
+        "surface_recall_02": 0.9975947353471423,
+        "lidar_fallback": false,
+        "native_candidates": 32629,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "503e0fae-ef87-4886-99c9-d484f2807d5a",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.17313057392966918,
+        "build_points": 3,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 2,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__503e0fae-ef87-4886-99c9-d484f2807d5a.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 2,
+        "heldout_all_rays": 16,
+        "surface_patches": 515,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.1680777743458748,
+        "surface_recall_02": 0.5,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "5d57d7a6-f89c-4e66-a37d-97d1b559ac32",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.009310572747470583,
+        "build_points": 359,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 164,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__5d57d7a6-f89c-4e66-a37d-97d1b559ac32.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 164,
+        "heldout_all_rays": 604,
+        "surface_patches": 871,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5243902555326136,
+        "early_rate": 0.23170731634628483,
+        "miss_rate": 0.20121950710692058,
+        "free_intrusion_m": 0.44316528224392443,
+        "surface_distance_m": 0.0666660577422235,
+        "surface_recall_02": 0.8841463705388511,
+        "lidar_fallback": false,
+        "native_candidates": 111,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6247b383-8d62-47cd-9da7-3dc66698b146",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 5.833986872414763,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 5,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6247b383-8d62-47cd-9da7-3dc66698b146.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 5,
+        "heldout_all_rays": 127,
+        "surface_patches": 524,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.18413360118865968,
+        "surface_recall_02": 0.8,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6633d31b-92d5-46a1-b876-79cf349a10d1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.02272427257928608,
+        "build_points": 177,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 74,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6633d31b-92d5-46a1-b876-79cf349a10d1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 74,
+        "heldout_all_rays": 332,
+        "surface_patches": 689,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5810810826920174,
+        "early_rate": 0.14864864784318046,
+        "miss_rate": 0.12162161920521711,
+        "free_intrusion_m": 2.305567187717162,
+        "surface_distance_m": 0.03550070775924502,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": 408,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "740d54e5-d843-4ecd-8b97-c631873362d6",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500301,
+        "translation_speed_mps": 0.025444336176794247,
+        "build_points": 59,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 23,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__740d54e5-d843-4ecd-8b97-c631873362d6.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 23,
+        "heldout_all_rays": 285,
+        "surface_patches": 571,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.47826087474823,
+        "early_rate": 0.3478260934352875,
+        "miss_rate": 0.1304347813129425,
+        "free_intrusion_m": 1.214373230934143,
+        "surface_distance_m": 0.09124641865491867,
+        "surface_recall_02": 0.8695652484893799,
+        "lidar_fallback": false,
+        "native_candidates": 646,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9054f80c-f0eb-4651-ac0a-b8a1e1e848ba",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.025542008332163,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 7,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9054f80c-f0eb-4651-ac0a-b8a1e1e848ba.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 7,
+        "heldout_all_rays": 75,
+        "surface_patches": 524,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.1428571492433548,
+        "early_rate": 0.1428571492433548,
+        "miss_rate": 0.7142857313156128,
+        "free_intrusion_m": 0.0008914184849709273,
+        "surface_distance_m": 0.31370630860328674,
+        "surface_recall_02": 0.1428571492433548,
+        "lidar_fallback": false,
+        "native_candidates": 23,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "924674cf-6222-44f7-98fa-75fe5973b09f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.01409777052866194,
+        "build_points": 441,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 189,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__924674cf-6222-44f7-98fa-75fe5973b09f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 189,
+        "heldout_all_rays": 1384,
+        "surface_patches": 953,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6031745965518649,
+        "early_rate": 0.24867724646966924,
+        "miss_rate": 0.12698412290404712,
+        "free_intrusion_m": 0.4602634652458519,
+        "surface_distance_m": 0.016953147997064565,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": 590,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "94dede14-59da-4f09-b016-95f19596ac08",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 2.378573526829018,
+        "build_points": 47,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 33,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__94dede14-59da-4f09-b016-95f19596ac08.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 33,
+        "heldout_all_rays": 89,
+        "surface_patches": 559,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.1515151591915073,
+        "early_rate": 0.0,
+        "miss_rate": 0.3333333297209306,
+        "free_intrusion_m": 8.564798467614677,
+        "surface_distance_m": 0.09906764125282114,
+        "surface_recall_02": 0.9090909127033118,
+        "lidar_fallback": false,
+        "native_candidates": 210,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "96a4122e-9399-4be1-a754-bc017e06e0fc",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.029654617103898773,
+        "build_points": 5,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__96a4122e-9399-4be1-a754-bc017e06e0fc.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 13,
+        "surface_patches": 517,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.2836974710226059,
+        "surface_recall_02": 0.3333333333333333,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9e770735-b15c-47b1-8549-5dfa839f0fb4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03252241361526369,
+        "build_points": 528,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 208,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9e770735-b15c-47b1-8549-5dfa839f0fb4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 208,
+        "heldout_all_rays": 711,
+        "surface_patches": 1040,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6634615510702133,
+        "early_rate": 0.2211538478732109,
+        "miss_rate": 0.04807692486792803,
+        "free_intrusion_m": 0.9317659574721936,
+        "surface_distance_m": 0.03483725059777498,
+        "surface_recall_02": 0.9663461446762085,
+        "lidar_fallback": false,
+        "native_candidates": 612,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "aef67319-1cae-417f-a856-394d66251a49",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03786115417864079,
+        "build_points": 51,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 17,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__aef67319-1cae-417f-a856-394d66251a49.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 17,
+        "heldout_all_rays": 312,
+        "surface_patches": 563,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.3529411817298216,
+        "early_rate": 0.05882353116484249,
+        "miss_rate": 0.11764706232968498,
+        "free_intrusion_m": 0.4997541448817803,
+        "surface_distance_m": 0.0333333580809481,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": 84,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "b7907fce-60d8-42c2-ab3f-7cb381b9d438",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 0,
+        "translation_speed_mps": null,
+        "build_points": 0,
+        "actual_views": 0,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 0,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__b7907fce-60d8-42c2-ab3f-7cb381b9d438.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 0,
+        "heldout_all_rays": 0,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": null,
+        "early_rate": null,
+        "miss_rate": null,
+        "free_intrusion_m": null,
+        "surface_distance_m": null,
+        "surface_recall_02": null,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cca04728-1480-429b-8b8c-050c2a43173d",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.12750370885117174,
+        "build_points": 52,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cca04728-1480-429b-8b8c-050c2a43173d.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 216,
+        "surface_patches": 564,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.40000000496705373,
+        "early_rate": 0.03333333395421505,
+        "miss_rate": 0.5666666607062022,
+        "free_intrusion_m": 0.02802368494600092,
+        "surface_distance_m": 0.06326857780416807,
+        "surface_recall_02": 0.9000000317891439,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cccff98e-8342-41b9-9ecc-09db52eadc02",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.04129852777723096,
+        "build_points": 2110,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1166,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cccff98e-8342-41b9-9ecc-09db52eadc02.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1166,
+        "heldout_all_rays": 5469,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5180102755949796,
+        "early_rate": 0.36620927089585653,
+        "miss_rate": 0.060034305937140924,
+        "free_intrusion_m": 0.8265116156553477,
+        "surface_distance_m": 0.02171336165844985,
+        "surface_recall_02": 0.9948541977495517,
+        "lidar_fallback": false,
+        "native_candidates": 47982,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d1131350-786f-4cd8-9887-a1fe0b20987f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.010792463326453092,
+        "build_points": 11,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 6,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d1131350-786f-4cd8-9887-a1fe0b20987f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 6,
+        "heldout_all_rays": 27,
+        "surface_patches": 523,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 0.8333333333333334,
+        "free_intrusion_m": 0.2516428795125749,
+        "surface_distance_m": 0.15045785903930664,
+        "surface_recall_02": 0.8333333333333334,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d5739055-42d4-463b-ae79-7bcefae88a1c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.49738296062756127,
+        "build_points": 67,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d5739055-42d4-463b-ae79-7bcefae88a1c.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 108,
+        "surface_patches": 579,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.16666666865348817,
+        "early_rate": 0.03333333432674408,
+        "miss_rate": 0.7666666835546494,
+        "free_intrusion_m": 1.1887907981872559,
+        "surface_distance_m": 0.08985710144042969,
+        "surface_recall_02": 0.8666666746139526,
+        "lidar_fallback": false,
+        "native_candidates": 72,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "dca90fdc-681f-4fd7-b296-19e82700b86c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500299,
+        "translation_speed_mps": 0.791207775566388,
+        "build_points": 0,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__dca90fdc-681f-4fd7-b296-19e82700b86c.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 52,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": null,
+        "surface_recall_02": 0.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "f696fa0d-9a42-4178-be7c-3ddff054c418",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.792317391453988,
+        "build_points": 98,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 43,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__f696fa0d-9a42-4178-be7c-3ddff054c418.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 43,
+        "heldout_all_rays": 125,
+        "surface_patches": 610,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.3023255917915078,
+        "early_rate": 0.0697674427268117,
+        "miss_rate": 0.5581395473591116,
+        "free_intrusion_m": 1.2064157438278198,
+        "surface_distance_m": 0.08282716035149819,
+        "surface_recall_02": 0.9069767344829648,
+        "lidar_fallback": false,
+        "native_candidates": 279,
+        "native_sensor_huber_m": null
+      }
+    ],
+    "native_fusion": [
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "13d7f7bf-6764-4571-8eb1-c2943248afa4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.13830008582993014,
+        "build_points": 3052,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1590,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__13d7f7bf-6764-4571-8eb1-c2943248afa4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1590,
+        "heldout_all_rays": 13429,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.4842767307405952,
+        "early_rate": 0.24905661184270428,
+        "miss_rate": 0.23081761584529337,
+        "free_intrusion_m": 0.37666115531155125,
+        "surface_distance_m": 0.03531229090906164,
+        "surface_recall_02": 0.9874214006294995,
+        "lidar_fallback": false,
+        "native_candidates": 21901,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "203d8ec1-2359-4da7-b151-64009906c3e1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.0403288274951066,
+        "build_points": 4,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__203d8ec1-2359-4da7-b151-64009906c3e1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1,
+        "heldout_all_rays": 13,
+        "surface_patches": 516,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.1298588514328003,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.10173540184462283,
+        "build_points": 3157,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1663,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1663,
+        "heldout_all_rays": 8271,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.4618160032358646,
+        "early_rate": 0.2850270646204808,
+        "miss_rate": 0.21226699191514656,
+        "free_intrusion_m": 0.3685525015308208,
+        "surface_distance_m": 0.03910493096241518,
+        "surface_recall_02": 0.9963920971247638,
+        "lidar_fallback": false,
+        "native_candidates": 18023,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "503e0fae-ef87-4886-99c9-d484f2807d5a",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.17313057392966918,
+        "build_points": 3,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 2,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__503e0fae-ef87-4886-99c9-d484f2807d5a.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 2,
+        "heldout_all_rays": 16,
+        "surface_patches": 515,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.20803215354681015,
+        "surface_recall_02": 0.5,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "5d57d7a6-f89c-4e66-a37d-97d1b559ac32",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.009310572747470583,
+        "build_points": 359,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 164,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__5d57d7a6-f89c-4e66-a37d-97d1b559ac32.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 164,
+        "heldout_all_rays": 604,
+        "surface_patches": 871,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5182926829268293,
+        "early_rate": 0.16463414416080568,
+        "miss_rate": 0.26219512885663565,
+        "free_intrusion_m": 0.180419288970382,
+        "surface_distance_m": 0.07692719250917435,
+        "surface_recall_02": 0.8719512427725443,
+        "lidar_fallback": false,
+        "native_candidates": 117,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6247b383-8d62-47cd-9da7-3dc66698b146",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 5.833986872414763,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 5,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6247b383-8d62-47cd-9da7-3dc66698b146.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 5,
+        "heldout_all_rays": 127,
+        "surface_patches": 524,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.3050904870033264,
+        "surface_recall_02": 0.4,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6633d31b-92d5-46a1-b876-79cf349a10d1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.02272427257928608,
+        "build_points": 177,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 74,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6633d31b-92d5-46a1-b876-79cf349a10d1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 74,
+        "heldout_all_rays": 332,
+        "surface_patches": 689,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5675675611238222,
+        "early_rate": 0.06756756354022671,
+        "miss_rate": 0.3108108132272153,
+        "free_intrusion_m": 1.0519007561975215,
+        "surface_distance_m": 0.0428252082217384,
+        "surface_recall_02": 0.9864864993739773,
+        "lidar_fallback": false,
+        "native_candidates": 260,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "740d54e5-d843-4ecd-8b97-c631873362d6",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500301,
+        "translation_speed_mps": 0.025444336176794247,
+        "build_points": 59,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 23,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__740d54e5-d843-4ecd-8b97-c631873362d6.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 23,
+        "heldout_all_rays": 285,
+        "surface_patches": 571,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.260869562625885,
+        "early_rate": 0.08695652335882187,
+        "miss_rate": 0.6521739363670349,
+        "free_intrusion_m": 0.3071112036705017,
+        "surface_distance_m": 0.11920525133609772,
+        "surface_recall_02": 0.8695652484893799,
+        "lidar_fallback": false,
+        "native_candidates": 395,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9054f80c-f0eb-4651-ac0a-b8a1e1e848ba",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.025542008332163,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 7,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9054f80c-f0eb-4651-ac0a-b8a1e1e848ba.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 7,
+        "heldout_all_rays": 75,
+        "surface_patches": 524,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.1428571492433548,
+        "early_rate": 0.0,
+        "miss_rate": 0.8571429252624512,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.35307368636131287,
+        "surface_recall_02": 0.1428571492433548,
+        "lidar_fallback": false,
+        "native_candidates": 81,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "924674cf-6222-44f7-98fa-75fe5973b09f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.01409777052866194,
+        "build_points": 441,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 189,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__924674cf-6222-44f7-98fa-75fe5973b09f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 189,
+        "heldout_all_rays": 1384,
+        "surface_patches": 953,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6613756465533424,
+        "early_rate": 0.19047618960892712,
+        "miss_rate": 0.1269841202431255,
+        "free_intrusion_m": 0.7931014617226716,
+        "surface_distance_m": 0.02484355097212804,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": 442,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "94dede14-59da-4f09-b016-95f19596ac08",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 2.378573526829018,
+        "build_points": 47,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 33,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__94dede14-59da-4f09-b016-95f19596ac08.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 33,
+        "heldout_all_rays": 89,
+        "surface_patches": 559,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.2727272727272727,
+        "early_rate": 0.03030303165768132,
+        "miss_rate": 0.6363636417822405,
+        "free_intrusion_m": 3.8525040417574763,
+        "surface_distance_m": 0.0748323452743617,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": 217,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "96a4122e-9399-4be1-a754-bc017e06e0fc",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.029654617103898773,
+        "build_points": 5,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__96a4122e-9399-4be1-a754-bc017e06e0fc.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 13,
+        "surface_patches": 517,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.2571239272753398,
+        "surface_recall_02": 0.3333333333333333,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9e770735-b15c-47b1-8549-5dfa839f0fb4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03252241361526369,
+        "build_points": 528,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 208,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9e770735-b15c-47b1-8549-5dfa839f0fb4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 208,
+        "heldout_all_rays": 711,
+        "surface_patches": 1040,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6826923340559006,
+        "early_rate": 0.13461538963019848,
+        "miss_rate": 0.1442307736724615,
+        "free_intrusion_m": 0.4274212623698802,
+        "surface_distance_m": 0.04125763848423958,
+        "surface_recall_02": 0.9711538702249527,
+        "lidar_fallback": false,
+        "native_candidates": 661,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "aef67319-1cae-417f-a856-394d66251a49",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03786115417864079,
+        "build_points": 51,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 17,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__aef67319-1cae-417f-a856-394d66251a49.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 17,
+        "heldout_all_rays": 312,
+        "surface_patches": 563,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5882353169076583,
+        "early_rate": 0.0,
+        "miss_rate": 0.4117647181538975,
+        "free_intrusion_m": 0.1336702647117468,
+        "surface_distance_m": 0.03640915234299267,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": 69,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "b7907fce-60d8-42c2-ab3f-7cb381b9d438",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 0,
+        "translation_speed_mps": null,
+        "build_points": 0,
+        "actual_views": 0,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 0,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__b7907fce-60d8-42c2-ab3f-7cb381b9d438.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 0,
+        "heldout_all_rays": 0,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": null,
+        "early_rate": null,
+        "miss_rate": null,
+        "free_intrusion_m": null,
+        "surface_distance_m": null,
+        "surface_recall_02": null,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cca04728-1480-429b-8b8c-050c2a43173d",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.12750370885117174,
+        "build_points": 52,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cca04728-1480-429b-8b8c-050c2a43173d.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 216,
+        "surface_patches": 564,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.1051525170604388,
+        "surface_recall_02": 0.9000000317891439,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cccff98e-8342-41b9-9ecc-09db52eadc02",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.04129852777723096,
+        "build_points": 2110,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1166,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cccff98e-8342-41b9-9ecc-09db52eadc02.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1166,
+        "heldout_all_rays": 5469,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.35077187679644106,
+        "early_rate": 0.45454545416206277,
+        "miss_rate": 0.15780446785110758,
+        "free_intrusion_m": 0.5275727252154578,
+        "surface_distance_m": 0.0356722292913632,
+        "surface_recall_02": 0.9897084095056838,
+        "lidar_fallback": false,
+        "native_candidates": 37580,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d1131350-786f-4cd8-9887-a1fe0b20987f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.010792463326453092,
+        "build_points": 11,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 6,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d1131350-786f-4cd8-9887-a1fe0b20987f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 6,
+        "heldout_all_rays": 27,
+        "surface_patches": 523,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.16666666666666666,
+        "early_rate": 0.0,
+        "miss_rate": 0.8333333333333334,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.15530043840408325,
+        "surface_recall_02": 0.6666666666666666,
+        "lidar_fallback": true,
+        "native_candidates": 0,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d5739055-42d4-463b-ae79-7bcefae88a1c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.49738296062756127,
+        "build_points": 67,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d5739055-42d4-463b-ae79-7bcefae88a1c.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 108,
+        "surface_patches": 579,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.46666666865348816,
+        "early_rate": 0.03333333432674408,
+        "miss_rate": 0.4666666746139526,
+        "free_intrusion_m": 0.9815268980132209,
+        "surface_distance_m": 0.06926307380199433,
+        "surface_recall_02": 0.9333333730697632,
+        "lidar_fallback": false,
+        "native_candidates": 145,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "dca90fdc-681f-4fd7-b296-19e82700b86c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500299,
+        "translation_speed_mps": 0.791207775566388,
+        "build_points": 0,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__dca90fdc-681f-4fd7-b296-19e82700b86c.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 52,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": null,
+        "surface_recall_02": 0.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "f696fa0d-9a42-4178-be7c-3ddff054c418",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.792317391453988,
+        "build_points": 98,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 43,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__f696fa0d-9a42-4178-be7c-3ddff054c418.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 43,
+        "heldout_all_rays": 125,
+        "surface_patches": 610,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.20930233389832253,
+        "early_rate": 0.02325581499310427,
+        "miss_rate": 0.7674418632374254,
+        "free_intrusion_m": 0.7814357666969299,
+        "surface_distance_m": 0.09322681919086812,
+        "surface_recall_02": 0.9069767344829648,
+        "lidar_fallback": false,
+        "native_candidates": 366,
+        "native_sensor_huber_m": null
+      }
+    ],
+    "lidar_pca": [
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "13d7f7bf-6764-4571-8eb1-c2943248afa4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.13830008582993014,
+        "build_points": 3052,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1590,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__13d7f7bf-6764-4571-8eb1-c2943248afa4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1590,
+        "heldout_all_rays": 13429,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6716981130201112,
+        "early_rate": 0.0672955961909684,
+        "miss_rate": 0.2295597528417905,
+        "free_intrusion_m": 0.037255039466345945,
+        "surface_distance_m": 0.03667583489942851,
+        "surface_recall_02": 0.9666666792998524,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "203d8ec1-2359-4da7-b151-64009906c3e1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.0403288274951066,
+        "build_points": 4,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__203d8ec1-2359-4da7-b151-64009906c3e1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1,
+        "heldout_all_rays": 13,
+        "surface_patches": 4,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.1298588514328003,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.10173540184462283,
+        "build_points": 3157,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1663,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1663,
+        "heldout_all_rays": 8271,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6277811311127117,
+        "early_rate": 0.0950090199041388,
+        "miss_rate": 0.264582095845808,
+        "free_intrusion_m": 0.060908147806902777,
+        "surface_distance_m": 0.04047419506467328,
+        "surface_recall_02": 0.9747444442504153,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "503e0fae-ef87-4886-99c9-d484f2807d5a",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.17313057392966918,
+        "build_points": 3,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 2,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__503e0fae-ef87-4886-99c9-d484f2807d5a.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 2,
+        "heldout_all_rays": 16,
+        "surface_patches": 3,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.20803215354681015,
+        "surface_recall_02": 0.5,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "5d57d7a6-f89c-4e66-a37d-97d1b559ac32",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.009310572747470583,
+        "build_points": 359,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 164,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__5d57d7a6-f89c-4e66-a37d-97d1b559ac32.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 164,
+        "heldout_all_rays": 604,
+        "surface_patches": 359,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5365853847526922,
+        "early_rate": 0.1280487828501841,
+        "miss_rate": 0.2926829297368119,
+        "free_intrusion_m": 0.17452486737674436,
+        "surface_distance_m": 0.07752395748365216,
+        "surface_recall_02": 0.8658536469064108,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6247b383-8d62-47cd-9da7-3dc66698b146",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 5.833986872414763,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 5,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6247b383-8d62-47cd-9da7-3dc66698b146.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 5,
+        "heldout_all_rays": 127,
+        "surface_patches": 12,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.3050904870033264,
+        "surface_recall_02": 0.4,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6633d31b-92d5-46a1-b876-79cf349a10d1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.02272427257928608,
+        "build_points": 177,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 74,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6633d31b-92d5-46a1-b876-79cf349a10d1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 74,
+        "heldout_all_rays": 332,
+        "surface_patches": 177,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6081081032752991,
+        "early_rate": 0.0810810792687777,
+        "miss_rate": 0.2972972916590201,
+        "free_intrusion_m": 0.054639928738575386,
+        "surface_distance_m": 0.05157004538420085,
+        "surface_recall_02": 0.9459459572225004,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "740d54e5-d843-4ecd-8b97-c631873362d6",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500301,
+        "translation_speed_mps": 0.025444336176794247,
+        "build_points": 59,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 23,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__740d54e5-d843-4ecd-8b97-c631873362d6.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 23,
+        "heldout_all_rays": 285,
+        "surface_patches": 59,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.260869562625885,
+        "early_rate": 0.0,
+        "miss_rate": 0.739130437374115,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.12869955599308014,
+        "surface_recall_02": 0.8260869979858398,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9054f80c-f0eb-4651-ac0a-b8a1e1e848ba",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.025542008332163,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 7,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9054f80c-f0eb-4651-ac0a-b8a1e1e848ba.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 7,
+        "heldout_all_rays": 75,
+        "surface_patches": 12,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.3410894572734833,
+        "surface_recall_02": 0.1428571492433548,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "924674cf-6222-44f7-98fa-75fe5973b09f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.01409777052866194,
+        "build_points": 441,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 189,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__924674cf-6222-44f7-98fa-75fe5973b09f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 189,
+        "heldout_all_rays": 1384,
+        "surface_patches": 441,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.7724867794248793,
+        "early_rate": 0.07936507849781602,
+        "miss_rate": 0.14814814933078,
+        "free_intrusion_m": 0.05790924192594655,
+        "surface_distance_m": 0.02469508262183616,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "94dede14-59da-4f09-b016-95f19596ac08",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 2.378573526829018,
+        "build_points": 47,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 33,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__94dede14-59da-4f09-b016-95f19596ac08.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 33,
+        "heldout_all_rays": 89,
+        "surface_patches": 47,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.3030303012241017,
+        "early_rate": 0.03030303165768132,
+        "miss_rate": 0.6666666955658884,
+        "free_intrusion_m": 1.1874117985200345,
+        "surface_distance_m": 0.13039006654060248,
+        "surface_recall_02": 0.9090909127033118,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "96a4122e-9399-4be1-a754-bc017e06e0fc",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.029654617103898773,
+        "build_points": 5,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__96a4122e-9399-4be1-a754-bc017e06e0fc.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 13,
+        "surface_patches": 5,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.2571239272753398,
+        "surface_recall_02": 0.3333333333333333,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9e770735-b15c-47b1-8549-5dfa839f0fb4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03252241361526369,
+        "build_points": 528,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 208,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9e770735-b15c-47b1-8549-5dfa839f0fb4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 208,
+        "heldout_all_rays": 711,
+        "surface_patches": 528,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6971153765916824,
+        "early_rate": 0.07692307978868484,
+        "miss_rate": 0.18750000186264515,
+        "free_intrusion_m": 0.08992224171988236,
+        "surface_distance_m": 0.04159298911690712,
+        "surface_recall_02": 0.9711538702249527,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "aef67319-1cae-417f-a856-394d66251a49",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03786115417864079,
+        "build_points": 51,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 17,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__aef67319-1cae-417f-a856-394d66251a49.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 17,
+        "heldout_all_rays": 312,
+        "surface_patches": 51,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5882353169076583,
+        "early_rate": 0.0,
+        "miss_rate": 0.4117647181538975,
+        "free_intrusion_m": 0.13855984864326623,
+        "surface_distance_m": 0.039351648048442954,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "b7907fce-60d8-42c2-ab3f-7cb381b9d438",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 0,
+        "translation_speed_mps": null,
+        "build_points": 0,
+        "actual_views": 0,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 0,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__b7907fce-60d8-42c2-ab3f-7cb381b9d438.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 0,
+        "heldout_all_rays": 0,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": null,
+        "early_rate": null,
+        "miss_rate": null,
+        "free_intrusion_m": null,
+        "surface_distance_m": null,
+        "surface_recall_02": null,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cca04728-1480-429b-8b8c-050c2a43173d",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.12750370885117174,
+        "build_points": 52,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cca04728-1480-429b-8b8c-050c2a43173d.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 216,
+        "surface_patches": 52,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.1051525170604388,
+        "surface_recall_02": 0.9000000317891439,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cccff98e-8342-41b9-9ecc-09db52eadc02",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.04129852777723096,
+        "build_points": 2110,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1166,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cccff98e-8342-41b9-9ecc-09db52eadc02.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1166,
+        "heldout_all_rays": 5469,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6329331019730348,
+        "early_rate": 0.12264151431581782,
+        "miss_rate": 0.18782161730844815,
+        "free_intrusion_m": 0.2621138455183769,
+        "surface_distance_m": 0.03845720689290077,
+        "surface_recall_02": 0.9656946924395259,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d1131350-786f-4cd8-9887-a1fe0b20987f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.010792463326453092,
+        "build_points": 11,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 6,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d1131350-786f-4cd8-9887-a1fe0b20987f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 6,
+        "heldout_all_rays": 27,
+        "surface_patches": 11,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.16666666666666666,
+        "early_rate": 0.0,
+        "miss_rate": 0.8333333333333334,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.15530043840408325,
+        "surface_recall_02": 0.6666666666666666,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d5739055-42d4-463b-ae79-7bcefae88a1c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.49738296062756127,
+        "build_points": 67,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d5739055-42d4-463b-ae79-7bcefae88a1c.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 108,
+        "surface_patches": 67,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5,
+        "early_rate": 0.03333333432674408,
+        "miss_rate": 0.4666666746139526,
+        "free_intrusion_m": 0.008460150583198777,
+        "surface_distance_m": 0.11066926717758178,
+        "surface_recall_02": 0.8666666746139526,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "dca90fdc-681f-4fd7-b296-19e82700b86c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500299,
+        "translation_speed_mps": 0.791207775566388,
+        "build_points": 0,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__dca90fdc-681f-4fd7-b296-19e82700b86c.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 52,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": null,
+        "surface_recall_02": 0.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "f696fa0d-9a42-4178-be7c-3ddff054c418",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.792317391453988,
+        "build_points": 98,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 43,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__f696fa0d-9a42-4178-be7c-3ddff054c418.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 43,
+        "heldout_all_rays": 125,
+        "surface_patches": 98,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.18604651162790697,
+        "early_rate": 0.02325581499310427,
+        "miss_rate": 0.7906976855078409,
+        "free_intrusion_m": 0.0002614745998289436,
+        "surface_distance_m": 0.0988376542579296,
+        "surface_recall_02": 0.8837209080540857,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      }
+    ],
+    "lidar_event_r9": [
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "13d7f7bf-6764-4571-8eb1-c2943248afa4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.13830008582993014,
+        "build_points": 3052,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1590,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__13d7f7bf-6764-4571-8eb1-c2943248afa4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1590,
+        "heldout_all_rays": 13429,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.4786163382372766,
+        "early_rate": 0.04150943508219419,
+        "miss_rate": 0.24276729785608794,
+        "free_intrusion_m": 0.028300343459598695,
+        "surface_distance_m": 0.043363051627229594,
+        "surface_recall_02": 0.9842767278728245,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "203d8ec1-2359-4da7-b151-64009906c3e1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.0403288274951066,
+        "build_points": 4,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__203d8ec1-2359-4da7-b151-64009906c3e1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1,
+        "heldout_all_rays": 13,
+        "surface_patches": 516,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.08724828064441681,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.10173540184462283,
+        "build_points": 3157,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1663,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__4e818ab5-00cc-40ce-bc3e-27aa54b2bfd2.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1663,
+        "heldout_all_rays": 8271,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5628382527749365,
+        "early_rate": 0.08298255880074873,
+        "miss_rate": 0.24173181994593582,
+        "free_intrusion_m": 0.015578873443082038,
+        "surface_distance_m": 0.039339780538682825,
+        "surface_recall_02": 0.9915814789317848,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "503e0fae-ef87-4886-99c9-d484f2807d5a",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.17313057392966918,
+        "build_points": 3,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 2,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__503e0fae-ef87-4886-99c9-d484f2807d5a.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 2,
+        "heldout_all_rays": 16,
+        "surface_patches": 515,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5,
+        "early_rate": 0.0,
+        "miss_rate": 0.5,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.140166986733675,
+        "surface_recall_02": 0.5,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "5d57d7a6-f89c-4e66-a37d-97d1b559ac32",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.009310572747470583,
+        "build_points": 359,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 164,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__5d57d7a6-f89c-4e66-a37d-97d1b559ac32.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 164,
+        "heldout_all_rays": 604,
+        "surface_patches": 871,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5487805125189991,
+        "early_rate": 0.17073171095150272,
+        "miss_rate": 0.1585365817314241,
+        "free_intrusion_m": 0.11946772330052016,
+        "surface_distance_m": 0.06259228107405872,
+        "surface_recall_02": 0.9024390127600693,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6247b383-8d62-47cd-9da7-3dc66698b146",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 5.833986872414763,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 5,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6247b383-8d62-47cd-9da7-3dc66698b146.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 5,
+        "heldout_all_rays": 127,
+        "surface_patches": 524,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.2,
+        "early_rate": 0.2,
+        "miss_rate": 0.6,
+        "free_intrusion_m": 0.06825154562165418,
+        "surface_distance_m": 0.18063602447509766,
+        "surface_recall_02": 0.6,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "6633d31b-92d5-46a1-b876-79cf349a10d1",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.02272427257928608,
+        "build_points": 177,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 74,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__6633d31b-92d5-46a1-b876-79cf349a10d1.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 74,
+        "heldout_all_rays": 332,
+        "surface_patches": 689,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5810810633607812,
+        "early_rate": 0.06756756676209939,
+        "miss_rate": 0.20270269746715958,
+        "free_intrusion_m": 0.14616502327732292,
+        "surface_distance_m": 0.034542929381132126,
+        "surface_recall_02": 0.9864864591005686,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "740d54e5-d843-4ecd-8b97-c631873362d6",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500301,
+        "translation_speed_mps": 0.025444336176794247,
+        "build_points": 59,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 23,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__740d54e5-d843-4ecd-8b97-c631873362d6.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 23,
+        "heldout_all_rays": 285,
+        "surface_patches": 571,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.52173912525177,
+        "early_rate": 0.260869562625885,
+        "miss_rate": 0.1304347813129425,
+        "free_intrusion_m": 0.041266366839408875,
+        "surface_distance_m": 0.04276011884212494,
+        "surface_recall_02": 0.95652174949646,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9054f80c-f0eb-4651-ac0a-b8a1e1e848ba",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.025542008332163,
+        "build_points": 12,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 7,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9054f80c-f0eb-4651-ac0a-b8a1e1e848ba.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 7,
+        "heldout_all_rays": 75,
+        "surface_patches": 524,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.1428571492433548,
+        "early_rate": 0.1428571492433548,
+        "miss_rate": 0.7142857313156128,
+        "free_intrusion_m": 0.0005318196676671505,
+        "surface_distance_m": 0.25661933422088623,
+        "surface_recall_02": 0.2857142984867096,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "924674cf-6222-44f7-98fa-75fe5973b09f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.01409777052866194,
+        "build_points": 441,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 189,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__924674cf-6222-44f7-98fa-75fe5973b09f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 189,
+        "heldout_all_rays": 1384,
+        "surface_patches": 953,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6772486658954116,
+        "early_rate": 0.052910054782553326,
+        "miss_rate": 0.2169312146645059,
+        "free_intrusion_m": 0.0869719201182096,
+        "surface_distance_m": 0.02195667557260662,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "94dede14-59da-4f09-b016-95f19596ac08",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 2.378573526829018,
+        "build_points": 47,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 33,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__94dede14-59da-4f09-b016-95f19596ac08.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 33,
+        "heldout_all_rays": 89,
+        "surface_patches": 559,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.42424244049823645,
+        "early_rate": 0.03030303165768132,
+        "miss_rate": 0.5151515277949247,
+        "free_intrusion_m": 1.9762010654706634,
+        "surface_distance_m": 0.08735919834086389,
+        "surface_recall_02": 0.9090909127033118,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "96a4122e-9399-4be1-a754-bc017e06e0fc",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.029654617103898773,
+        "build_points": 5,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__96a4122e-9399-4be1-a754-bc017e06e0fc.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 13,
+        "surface_patches": 517,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": 0.13677348444859186,
+        "surface_recall_02": 0.6666666666666666,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "9e770735-b15c-47b1-8549-5dfa839f0fb4",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03252241361526369,
+        "build_points": 528,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 208,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__9e770735-b15c-47b1-8549-5dfa839f0fb4.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 208,
+        "heldout_all_rays": 711,
+        "surface_patches": 1040,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5769230648875237,
+        "early_rate": 0.10576923657208681,
+        "miss_rate": 0.13942308351397514,
+        "free_intrusion_m": 0.12638069707088162,
+        "surface_distance_m": 0.04164484702050686,
+        "surface_recall_02": 0.9759615510702133,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "aef67319-1cae-417f-a856-394d66251a49",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.03786115417864079,
+        "build_points": 51,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 17,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__aef67319-1cae-417f-a856-394d66251a49.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 17,
+        "heldout_all_rays": 312,
+        "surface_patches": 563,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.8823529762380263,
+        "early_rate": 0.0,
+        "miss_rate": 0.11764706232968498,
+        "free_intrusion_m": 0.3112896359883822,
+        "surface_distance_m": 0.012501740335103343,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "b7907fce-60d8-42c2-ab3f-7cb381b9d438",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 0,
+        "translation_speed_mps": null,
+        "build_points": 0,
+        "actual_views": 0,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 0,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__b7907fce-60d8-42c2-ab3f-7cb381b9d438.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 0,
+        "heldout_all_rays": 0,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": null,
+        "early_rate": null,
+        "miss_rate": null,
+        "free_intrusion_m": null,
+        "surface_distance_m": null,
+        "surface_recall_02": null,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cca04728-1480-429b-8b8c-050c2a43173d",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.12750370885117174,
+        "build_points": 52,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cca04728-1480-429b-8b8c-050c2a43173d.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 216,
+        "surface_patches": 564,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.4000000109275182,
+        "early_rate": 0.09999999900658925,
+        "miss_rate": 0.500000003973643,
+        "free_intrusion_m": 0.0010941470423454626,
+        "surface_distance_m": 0.054211881135900815,
+        "surface_recall_02": 0.9666666746139526,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "cccff98e-8342-41b9-9ecc-09db52eadc02",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.04129852777723096,
+        "build_points": 2110,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 1166,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__cccff98e-8342-41b9-9ecc-09db52eadc02.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 1166,
+        "heldout_all_rays": 5469,
+        "surface_patches": 1536,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5866209322755987,
+        "early_rate": 0.1320754755639805,
+        "miss_rate": 0.15265866244406684,
+        "free_intrusion_m": 0.10734309763680823,
+        "surface_distance_m": 0.04210698695958785,
+        "surface_recall_02": 0.9785592134268779,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d1131350-786f-4cd8-9887-a1fe0b20987f",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.010792463326453092,
+        "build_points": 11,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 6,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d1131350-786f-4cd8-9887-a1fe0b20987f.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 6,
+        "heldout_all_rays": 27,
+        "surface_patches": 523,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.16666666666666666,
+        "early_rate": 0.0,
+        "miss_rate": 0.8333333333333334,
+        "free_intrusion_m": 0.271718915965822,
+        "surface_distance_m": 0.10795238117376964,
+        "surface_recall_02": 1.0,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "d5739055-42d4-463b-ae79-7bcefae88a1c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 0.49738296062756127,
+        "build_points": 67,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 30,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__d5739055-42d4-463b-ae79-7bcefae88a1c.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 30,
+        "heldout_all_rays": 108,
+        "surface_patches": 579,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.6333333373069763,
+        "early_rate": 0.10000000298023223,
+        "miss_rate": 0.2,
+        "free_intrusion_m": 0.01213045472158464,
+        "surface_distance_m": 0.06592870354652405,
+        "surface_recall_02": 0.900000023841858,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "dca90fdc-681f-4fd7-b296-19e82700b86c",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 1.500299,
+        "translation_speed_mps": 0.791207775566388,
+        "build_points": 0,
+        "actual_views": 21,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 3,
+        "status": "unavailable_input",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__dca90fdc-681f-4fd7-b296-19e82700b86c.pt",
+        "reason": "no measured build LiDAR; current main input protocol retains empty prediction",
+        "input_status": "unavailable_input",
+        "heldout_owned_rays": 3,
+        "heldout_all_rays": 52,
+        "surface_patches": 0,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.0,
+        "early_rate": 0.0,
+        "miss_rate": 1.0,
+        "free_intrusion_m": 0.0,
+        "surface_distance_m": null,
+        "surface_recall_02": 0.0,
+        "lidar_fallback": null,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      },
+      {
+        "scene": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+        "role": "development",
+        "owner": "f696fa0d-9a42-4178-be7c-3ddff054c418",
+        "category": "REGULAR_VEHICLE",
+        "selection": "all known rigid vehicles with build-window pose",
+        "window_duration_s": 2.500277,
+        "translation_speed_mps": 6.792317391453988,
+        "build_points": 98,
+        "actual_views": 28,
+        "heldout_frames": 2,
+        "heldout_actor_returns": 43,
+        "status": "ready",
+        "file": "av2-02678d04-cc9f-3148-9f95-1ba66347dff9__f696fa0d-9a42-4178-be7c-3ddff054c418.pt",
+        "input_status": "ready",
+        "heldout_owned_rays": 43,
+        "heldout_all_rays": 125,
+        "surface_patches": 610,
+        "extra_time_usage": "evaluation_only",
+        "hit_rate": 0.5348837313263916,
+        "early_rate": 0.06976744385306226,
+        "miss_rate": 0.23255813225757244,
+        "free_intrusion_m": 0.3033735262155533,
+        "surface_distance_m": 0.06677472175553788,
+        "surface_recall_02": 0.9302325609118439,
+        "lidar_fallback": false,
+        "native_candidates": null,
+        "native_sensor_huber_m": null
+      }
+    ]
+  },
+  "paired_final_minus": {
+    "native_fusion": {
+      "fit": {
+        "hit_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "early_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "miss_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "free_intrusion_m": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "surface_distance_m": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "surface_recall_02": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        }
+      },
+      "development": {
+        "hit_rate": {
+          "logs": 1,
+          "mean_delta": 0.011369439567939801,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.011369439567939801
+          }
+        },
+        "early_rate": {
+          "logs": 1,
+          "mean_delta": 0.0840820520290363,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.0840820520290363
+          }
+        },
+        "miss_rate": {
+          "logs": 1,
+          "mean_delta": -0.16355891846316967,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.16355891846316967
+          }
+        },
+        "free_intrusion_m": {
+          "logs": 1,
+          "mean_delta": 0.47937397389384495,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.47937397389384495
+          }
+        },
+        "surface_distance_m": {
+          "logs": 1,
+          "mean_delta": -0.019306136876322218,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.019306136876322218
+          }
+        },
+        "surface_recall_02": {
+          "logs": 1,
+          "mean_delta": 0.022383049469131694,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.022383049469131694
+          }
+        }
+      }
+    },
+    "lidar_pca": {
+      "fit": {
+        "hit_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "early_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "miss_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "free_intrusion_m": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "surface_distance_m": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "surface_recall_02": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        }
+      },
+      "development": {
+        "hit_rate": {
+          "logs": 1,
+          "mean_delta": -0.024502487584419495,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.024502487584419495
+          }
+        },
+        "early_rate": {
+          "logs": 1,
+          "mean_delta": 0.1332077915344283,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.1332077915344283
+          }
+        },
+        "miss_rate": {
+          "logs": 1,
+          "mean_delta": -0.1858516374018202,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.1858516374018202
+          }
+        },
+        "free_intrusion_m": {
+          "logs": 1,
+          "mean_delta": 0.8648695109572978,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.8648695109572978
+          }
+        },
+        "surface_distance_m": {
+          "logs": 1,
+          "mean_delta": -0.02552053640774176,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.02552053640774176
+          }
+        },
+        "surface_recall_02": {
+          "logs": 1,
+          "mean_delta": 0.03925125406776579,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 1,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.03925125406776579
+          }
+        }
+      }
+    },
+    "lidar_event_r9": {
+      "fit": {
+        "hit_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "early_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "miss_rate": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "free_intrusion_m": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "surface_distance_m": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        },
+        "surface_recall_02": {
+          "logs": 0,
+          "mean_delta": null,
+          "bootstrap95": null,
+          "uncertainty_boundary": null,
+          "improved_logs": 0,
+          "per_log_delta": {}
+        }
+      },
+      "development": {
+        "hit_rate": {
+          "logs": 1,
+          "mean_delta": -0.11783388349476141,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.11783388349476141
+          }
+        },
+        "early_rate": {
+          "logs": 1,
+          "mean_delta": 0.09220344673002565,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.09220344673002565
+          }
+        },
+        "miss_rate": {
+          "logs": 1,
+          "mean_delta": 0.005032835257852931,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.005032835257852931
+          }
+        },
+        "free_intrusion_m": {
+          "logs": 1,
+          "mean_delta": 0.7876645824102777,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.7876645824102777
+          }
+        },
+        "surface_distance_m": {
+          "logs": 1,
+          "mean_delta": 0.016379775573901453,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.016379775573901453
+          }
+        },
+        "surface_recall_02": {
+          "logs": 1,
+          "mean_delta": -0.03153451418972396,
+          "bootstrap95": null,
+          "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+          "improved_logs": 0,
+          "per_log_delta": {
+            "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.03153451418972396
+          }
+        }
+      }
+    }
+  },
+  "moving_gt2mps": {
+    "definition": "known trajectory mean translation speed over build window > 2 m/s; report independent log count",
+    "stages": {
+      "final": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 4,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 4,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 1,
+          "hit_rate": {
+            "mean": 0.14917447505659248,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.05315614799254162,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.6514396520989137,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 2.443026407481867,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.16993367784906643,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.6897311991074079,
+            "logs": 1
+          }
+        }
+      },
+      "native_fusion": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 4,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 4,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 1,
+          "hit_rate": {
+            "mean": 0.1562216889672375,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.013389711662696396,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.8152371075705293,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 1.1584849521136016,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.20655583445746728,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.6124584709315799,
+            "logs": 1
+          }
+        }
+      },
+      "lidar_pca": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 4,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 4,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": 0.12226920321300216,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.013389711662696396,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.8643410952684323,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 0.29691831827996584,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.21885191626883543,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.5839172425001881,
+            "logs": 1
+          }
+        }
+      },
+      "lidar_event_r9": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 4,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 4,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": 0.3254958302669957,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.1107319061885246,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.5154988478420275,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 0.5870894892438845,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.14784731969809642,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.6812594430254664,
+            "logs": 1
+          }
+        }
+      }
+    },
+    "paired_final_minus": {
+      "native_fusion": {
+        "fit": {
+          "hit_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "early_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "miss_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "free_intrusion_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_distance_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_recall_02": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          }
+        },
+        "development": {
+          "hit_rate": {
+            "logs": 1,
+            "mean_delta": -0.007047213910645035,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.007047213910645035
+            }
+          },
+          "early_rate": {
+            "logs": 1,
+            "mean_delta": 0.03976643632984522,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.03976643632984522
+            }
+          },
+          "miss_rate": {
+            "logs": 1,
+            "mean_delta": -0.1637974554716155,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.1637974554716155
+            }
+          },
+          "free_intrusion_m": {
+            "logs": 1,
+            "mean_delta": 1.2845414553682655,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 1.2845414553682655
+            }
+          },
+          "surface_distance_m": {
+            "logs": 1,
+            "mean_delta": -0.03662215660840083,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.03662215660840083
+            }
+          },
+          "surface_recall_02": {
+            "logs": 1,
+            "mean_delta": 0.07727272817582795,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.07727272817582795
+            }
+          }
+        }
+      },
+      "lidar_pca": {
+        "fit": {
+          "hit_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "early_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "miss_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "free_intrusion_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_distance_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_recall_02": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          }
+        },
+        "development": {
+          "hit_rate": {
+            "logs": 1,
+            "mean_delta": 0.02690527184359031,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.02690527184359031
+            }
+          },
+          "early_rate": {
+            "logs": 1,
+            "mean_delta": 0.03976643632984522,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.03976643632984522
+            }
+          },
+          "miss_rate": {
+            "logs": 1,
+            "mean_delta": -0.2129014431695186,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.2129014431695186
+            }
+          },
+          "free_intrusion_m": {
+            "logs": 1,
+            "mean_delta": 2.146108089201901,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 2.146108089201901
+            }
+          },
+          "surface_distance_m": {
+            "logs": 1,
+            "mean_delta": -0.04891823841976901,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.04891823841976901
+            }
+          },
+          "surface_recall_02": {
+            "logs": 1,
+            "mean_delta": 0.10581395660721979,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.10581395660721979
+            }
+          }
+        }
+      },
+      "lidar_event_r9": {
+        "fit": {
+          "hit_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "early_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "miss_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "free_intrusion_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_distance_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_recall_02": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          }
+        },
+        "development": {
+          "hit_rate": {
+            "logs": 1,
+            "mean_delta": -0.17632135521040324,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.17632135521040324
+            }
+          },
+          "early_rate": {
+            "logs": 1,
+            "mean_delta": -0.05757575819598297,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.05757575819598297
+            }
+          },
+          "miss_rate": {
+            "logs": 1,
+            "mean_delta": 0.1359408042568863,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.1359408042568863
+            }
+          },
+          "free_intrusion_m": {
+            "logs": 1,
+            "mean_delta": 1.8559369182379826,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 1.8559369182379826
+            }
+          },
+          "surface_distance_m": {
+            "logs": 1,
+            "mean_delta": 0.02208635815097002,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.02208635815097002
+            }
+          },
+          "surface_recall_02": {
+            "logs": 1,
+            "mean_delta": 0.008471756081941534,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.008471756081941534
+            }
+          }
+        }
+      }
+    }
+  },
+  "build_lidar_ready": {
+    "definition": "original build/metadata input status ready, independent of prediction quality; full population remains primary",
+    "stages": {
+      "final": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 19,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 12,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 6,
+          "hit_rate": {
+            "mean": 0.3190266630270652,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.17902169276223598,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.4104641386893646,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 1.0194398317918452,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.09661553388054865,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.8370266866362454,
+            "logs": 1
+          }
+        }
+      },
+      "native_fusion": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 19,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 12,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 6,
+          "hit_rate": {
+            "mean": 0.30705883190291805,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.0905142695737767,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.5826314212821748,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 0.5148356487456927,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.11592167075687086,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.8134655819318962,
+            "logs": 1
+          }
+        }
+      },
+      "lidar_pca": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 19,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 12,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": 0.34481875522119104,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.03880296483125881,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.6060974412175963,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 0.10905087288942646,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.1221360702882904,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.7957095770912287,
+            "logs": 1
+          }
+        }
+      },
+      "lidar_event_r9": {
+        "fit": {
+          "actors": 0,
+          "logs": 0,
+          "moving_gt2mps": 0,
+          "motion_unavailable": 0,
+          "build_under100": 0,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "early_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "miss_rate": {
+            "mean": null,
+            "logs": 0
+          },
+          "free_intrusion_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_distance_m": {
+            "mean": null,
+            "logs": 0
+          },
+          "surface_recall_02": {
+            "mean": null,
+            "logs": 0
+          }
+        },
+        "development": {
+          "actors": 19,
+          "logs": 1,
+          "moving_gt2mps": 4,
+          "motion_unavailable": 0,
+          "build_under100": 12,
+          "no_heldout_owned_return": 0,
+          "no_predicted_surface": 0,
+          "lidar_fallback": 0,
+          "hit_rate": {
+            "mean": 0.4430623298636562,
+            "logs": 1
+          },
+          "early_rate": {
+            "mean": 0.0819654330464195,
+            "logs": 1
+          },
+          "miss_rate": {
+            "mean": 0.4051664173653089,
+            "logs": 1
+          },
+          "free_intrusion_m": {
+            "mean": 0.19031921872839497,
+            "logs": 1
+          },
+          "surface_distance_m": {
+            "mean": 0.0802357583066472,
+            "logs": 1
+          },
+          "surface_recall_02": {
+            "mean": 0.8702209120991127,
+            "logs": 1
+          }
+        }
+      }
+    },
+    "paired_final_minus": {
+      "native_fusion": {
+        "fit": {
+          "hit_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "early_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "miss_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "free_intrusion_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_distance_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_recall_02": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          }
+        },
+        "development": {
+          "hit_rate": {
+            "logs": 1,
+            "mean_delta": 0.01196783112414716,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.01196783112414716
+            }
+          },
+          "early_rate": {
+            "logs": 1,
+            "mean_delta": 0.08850742318845928,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.08850742318845928
+            }
+          },
+          "miss_rate": {
+            "logs": 1,
+            "mean_delta": -0.17216728259281017,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.17216728259281017
+            }
+          },
+          "free_intrusion_m": {
+            "logs": 1,
+            "mean_delta": 0.5046041830461525,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.5046041830461525
+            }
+          },
+          "surface_distance_m": {
+            "logs": 1,
+            "mean_delta": -0.019306136876322218,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.019306136876322218
+            }
+          },
+          "surface_recall_02": {
+            "logs": 1,
+            "mean_delta": 0.02356110470434915,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.02356110470434915
+            }
+          }
+        }
+      },
+      "lidar_pca": {
+        "fit": {
+          "hit_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "early_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "miss_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "free_intrusion_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_distance_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_recall_02": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          }
+        },
+        "development": {
+          "hit_rate": {
+            "logs": 1,
+            "mean_delta": -0.025792092194125784,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.025792092194125784
+            }
+          },
+          "early_rate": {
+            "logs": 1,
+            "mean_delta": 0.14021872793097717,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.14021872793097717
+            }
+          },
+          "miss_rate": {
+            "logs": 1,
+            "mean_delta": -0.1956333025282318,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.1956333025282318
+            }
+          },
+          "free_intrusion_m": {
+            "logs": 1,
+            "mean_delta": 0.9103889589024188,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.9103889589024188
+            }
+          },
+          "surface_distance_m": {
+            "logs": 1,
+            "mean_delta": -0.02552053640774176,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.02552053640774176
+            }
+          },
+          "surface_recall_02": {
+            "logs": 1,
+            "mean_delta": 0.04131710954501662,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 1,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.04131710954501662
+            }
+          }
+        }
+      },
+      "lidar_event_r9": {
+        "fit": {
+          "hit_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "early_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "miss_rate": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "free_intrusion_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_distance_m": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          },
+          "surface_recall_02": {
+            "logs": 0,
+            "mean_delta": null,
+            "bootstrap95": null,
+            "uncertainty_boundary": null,
+            "improved_logs": 0,
+            "per_log_delta": {}
+          }
+        },
+        "development": {
+          "hit_rate": {
+            "logs": 1,
+            "mean_delta": -0.12403566683659097,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.12403566683659097
+            }
+          },
+          "early_rate": {
+            "logs": 1,
+            "mean_delta": 0.09705625971581647,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.09705625971581647
+            }
+          },
+          "miss_rate": {
+            "logs": 1,
+            "mean_delta": 0.005297721324055717,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.005297721324055717
+            }
+          },
+          "free_intrusion_m": {
+            "logs": 1,
+            "mean_delta": 0.8291206130634503,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.8291206130634503
+            }
+          },
+          "surface_distance_m": {
+            "logs": 1,
+            "mean_delta": 0.016379775573901453,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": 0.016379775573901453
+            }
+          },
+          "surface_recall_02": {
+            "logs": 1,
+            "mean_delta": -0.03319422546286732,
+            "bootstrap95": null,
+            "uncertainty_boundary": "single independent log cannot estimate between-log uncertainty",
+            "improved_logs": 0,
+            "per_log_delta": {
+              "02678d04-cc9f-3148-9f95-1ba66347dff9": -0.03319422546286732
+            }
+          }
+        }
+      }
+    }
+  }
+}
