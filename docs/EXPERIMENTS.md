@@ -1,3 +1,19 @@
+## V7.3 同监督表面支持诊断完成（2026-09-08 15:20 UTC）
+
+`WS-V73-M2-SURFACE-SUPPORT-01/20260908T151000Z__development-full-track-fixed-surfaces-r2`已done，code6920c120；只对R10/R7已保存表面读取CPU首/全交点及无符号最近距离，wall.788708s、RSS.631866GiB，正常退出。R11完整复用r1保存计数，无重复训练/神经推理/测试。全部75开发Actor/5日志/11886 owned返回、23无owned对象和每方法8空表面保留；不读取新20日志质量。
+
+日志等权近邻覆盖/任意正确沿束交点/正确首交点：R10为82.6047/34.4466/27.1463%，R7为74.5468/39.3379/31.7549%，R11为75.1499/18.3920/17.6111%。邻近但无正确沿束交点分别48.1581/35.2089/56.7579%；R10−R7差+12.9492pp，五日志全增加。R10−R7 early中，无正确交点但邻近+8.8477pp、五日志全增加，后方有正确交点−.2827pp、3增2减；late且邻近+11.6434pp、五日志全增加。新增错误并非主要是早片挡住已存在的正确沿束片。
+
+R10−R11任意正确沿束支持+16.0546pp、五日志全增加，说明Query确实比原生控制生成更多正确位置的沿束支持；同时early且后方正确+6.5194pp、五日志全增加。不能把这一正支持增量外推成物理优势，也不能否定Query生成能力。R10/R7/R11多个early层出现率10.8324/8.2673/1.8116%，全部层数均值2.400/3.798/.642；层数和出现率不同，不称Query总是生成更多层。
+
+三个模型共享full_track标签、旧cohort和hard-free语义，模型与实际优化成本仍有差异；归因不能只落在attention。只做保存统计的逐日志差值、没有新增bootstrap。八类计数不是逐射线训练转移轨迹，owned束诊断也不能完整解释全部near-box束free或背景F04。原始1276条R10 early中577条后方正确、641条无正确但邻近、58条两者无，原始计数与日志等权分母不混写。
+
+证据已归档`docs/autoresearch/worldsim_v73/m2/global/surface_support_r2_{summary,manifest}.json`、`surface_support_matched_r2_analysis.json`和`V73_SURFACE_SUPPORT_MATCHED_R2.png/pdf`；R11来源为r1 summary。专项`WORLDSIM_V7_3_SURFACE_SUPPORT.md`保留实际architecture components图、同监督分类表与新图，以及r1历史。图复用既有Matplotlib并视觉核对，结果归并/绘图脚本保存；未改动训练代码。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；failure_ledger_delta=update V73-F02 support evidence, no new failure ID，下一编号V73-F10。同一已研究卡点复用计划revision5及r1的一手文献/接口依据；三角若仍冲突，优先Query surface parameterization，分别再检验near-surface certified-free与局部深度/方向/遮挡一致性。不以移除早片或选后方交点冒充正确几何，UNKNOWN不标FREE。R12/PID81766和R14/PID68108按原配置运行，最新15:06 UTC为第3/19轮、GPU14759/24576MiB、cgroup无OOM、磁盘69GiB可用；当前全V7.3未完成，30分钟跟进ACTIVE，shutdown=false。
+
+---
+
 ## V7.3 同监督固定表面诊断登记（2026-09-08 15:10 UTC）
 
 任务`WS-V73-M2-SURFACE-SUPPORT-01`新增run `20260908T151000Z__development-full-track-fixed-surfaces-r2`，pending。R10最终产物现在可用，本次只对R10 joint与R7 LiDAR的已保存表面复用原有CPU诊断；R11直接复用r1已保存的Actor/帧/日志计数，不重算。新问题是同full_track/hard-free条件下的邻近覆盖、正确沿束支持与早层遮挡差异，补足r1中R5/R9/R11训练条件不匹配的边界；不改主评价或当前三角配置。

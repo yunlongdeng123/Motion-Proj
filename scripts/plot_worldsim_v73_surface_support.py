@@ -13,15 +13,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--summary', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--model', action='append', help='保存的方法名=图中标签')
+    parser.add_argument('--protocol-note', default='Different training conditions: descriptive diagnosis, not a matched ablation. No geometry changed.')
     args = parser.parse_args()
     summary = json.loads(args.summary.read_text(encoding='utf-8'))
-    methods = ['joint_r5', 'lidar_r9', 'native_r11']
-    labels = ['R5 joint', 'R9 LiDAR', 'R11 native']
+    selected = [value.split('=', 1) for value in args.model] if args.model else [
+        ['joint_r5', 'R5 joint'], ['lidar_r9', 'R9 LiDAR'], ['native_r11', 'R11 native']]
+    methods, labels = zip(*selected)
     metrics = [summary['statistics'][name]['equal_log_means'] for name in methods]
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'pdf.fonttype': 42})
     fig, axes = plt.subplots(1, 2, figsize=(15, 6.4), gridspec_kw={'width_ratios': [1, 1.25]})
     fig.subplots_adjust(left=.055, right=.99, top=.86, bottom=.31, wspace=.25)
-    x = np.arange(3)
+    x = np.arange(len(methods))
     groups = [('near_surface', 'Surface within 0.2 m', '#819dac'),
               ('any_hit_band', 'Any intersection within 0.2 m', '#b2c9a0'),
               ('first_hit', 'Literal first hit', '#2f7d4e')]
@@ -42,7 +45,7 @@ def main():
         ('missing_but_near', 'Missing; surface nearby', '#6c757d'),
         ('missing_without_near', 'Missing; no nearby surface', '#d5dadd'),
     ]
-    left = np.zeros(3)
+    left = np.zeros(len(methods))
     handles = []
     for key, label, color in categories:
         values = np.array([item[key] * 100 for item in metrics])
@@ -63,8 +66,10 @@ def main():
     fig.legend(handles, [item[1] for item in categories], loc='lower center', bbox_to_anchor=(.5,.065),
                ncol=2, frameon=False, fontsize=10)
     fig.suptitle('V7.3 fixed surfaces: coverage, support and first intersections', fontsize=17, y=.98)
-    fig.text(.5,.025, '75 development Actors / 5 logs; 11,886 owned ray occurrences; 23 Actors without owned returns retained.\n'
-             'Different training conditions: descriptive diagnosis, not a matched ablation. No geometry changed.',
+    counts = summary['statistics'][methods[0]]
+    fig.text(.5,.025, f'{counts["actors"]} development Actors / {counts["logs"]} logs; '
+             f'{counts["raw_counts"]["rays"]:,} owned ray occurrences; '
+             f'{counts["actors_without_owned_rays"]} Actors without owned returns retained.\n' + args.protocol_note,
              ha='center', fontsize=9)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.output.with_suffix('.png'), dpi=180, facecolor='white')

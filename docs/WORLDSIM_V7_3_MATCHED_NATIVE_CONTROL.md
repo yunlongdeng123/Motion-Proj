@@ -108,6 +108,8 @@ R10的`failure_ledger_delta=update V73-F02 evidence; no new failure ID`。结合
 
 证据：`docs/autoresearch/worldsim_v73/m2/global/population_joint_r10_summary.json`、`population_joint_r10_analysis.json`、`population_joint_r10_training.json`；run中checkpoint、完整train.jsonl与owner_surface.pt保留。训练code26a7e509，本次汇总基于1dad4dd8后的工作树，只消费保存结果。20新日志模型质量仍未读取。
 
+补充机制诊断r2已完成：同监督R10−R7的“表面邻近但无正确沿束交点”增加12.949pp、五日志全增加；R10−R11任意正确沿束支持则增加16.055pp、五日志全增加。Query确实生成更多沿束支持，但相对强LiDAR控制仍有位置/形状与首表面冲突；详见[固定表面支持诊断](WORLDSIM_V7_3_SURFACE_SUPPORT.md)。该诊断仅使用owned返回，不能完整解释all-near-box free差值；三角最终仍待R12/R14。
+
 ## R11真实训练与资源
 
 30轮11130次Actor呈现、10550次optimizer更新、580次无梯度跳步，涉及22个Actor；其中420次来自14个无相机Actor，160次来自有相机但无框内native支持、退回固定LiDAR的情况。全部跳步记录均无native build对应，DPT/query梯度范数均为0。旧日志没有显式`skip_reason`字段，通用摘要中的该字段全0不能解释为没有跳步。
