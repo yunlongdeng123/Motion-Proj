@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 首事件训练收尾、Ada轴修订启动与28视图前缀准备登记（2026-09-08）
+
+r9 `20260907T230000Z__population-lidar-track-beam-event-s7304-r9` 已完成30epoch/11130更新和全489对象最终评价，PID33444退出。code c2fbdccf，5632.23s、GPU allocated峰值0.42522GiB、RSS3.00089GiB；独立日志配对统计正在汇总，尚不提前判断event增益。训练记录保留所有自有束的no_support/capped/字面miss，缺支持的零位置梯度限制仍在。
+
+释放该进程后实际启动AdaPoinTr r2 `WS-V73-M2-ADAPOINTR-01/20260907T231000Z__population-full-track-pcn-yup-s7307-r2`，code acd91103，PID37887，日志 `/root/autodl-tmp/controller_logs/v73_population_adapointr_r2.log`。相对r1仅输入[x,z,y]转PCN Y-up并逆变换全部输出；完整模型、初始化、30epoch/全轨迹fit标签和共同曲面评价保持。r2最终结果尚未产生，F07仍active。主joint r5与CAPA r2继续，无重复启动或后台队列。
+
+登记旧AV2开发窗口冻结前缀准备 `WS-V73-M4-AV2-PREFIX-01/20260908T011000Z__old-development-28view-prefix-r1`，脚本 `scripts/prepare_worldsim_v73_native_prefix.py`。依据官方VGGT源码，只分批独立逐图patch编码器（7图/批），其后28视图672×672共同进入全部跨视图聚合层。官方和本地aggregator已经只保留DPT所需4/11/17/23层，复用已有能力，不能将其写成新增内存优化。每视图缓存clone后保存以免复制整窗口底层storage；只缓存完全冻结前缀，原生适配头仍从M1r3权重实时解码。尺度以原始预训练头和build传感器对应估计固定窗口IRLS，随后装入已适配头；新域无共享梯度更新。
+
+该28视图任务尚未启动，等待CAPA真正结束释放峰值预算；不削减第七路、时间跨度或视场。其目的是旧开发数据接口与真实资源测量，不是新20日志确认结果。源码依据：https://raw.githubusercontent.com/facebookresearch/vggt/main/vggt/models/aggregator.py 、https://raw.githubusercontent.com/facebookresearch/vggt/main/vggt/heads/dpt_head.py 。
+
+failure_ledger_delta=update F01/F03/F05/F07进度；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。joint full_track r10/native-only r11继续待资源。整个V7.3未完成，shutdown=false；整体收尾保存/push且确认无训练、评估、数据和待启动任务后才关机。
+
+---
+
+
+
 ## V7.3 AV2共同Actor窗口导出与七相机读取接口（2026-09-08）
 
 `WS-V73-M4-AV2-DATA-01/20260908T003500Z__old-development-window-r1` 已完成旧开发日志02678d04-cc9f-3148-9f95-1ba66347dff9的数据准备。实际执行基点75dd260d加本里程碑工作树源码，随后一并入库；无网络模型推理。41.84s、RSS0.87773GiB、28个完整七相机×四时刻视图、6扫描562494原始返回（375000 build/187494留出），全体传感器pose有效。依据build轨迹选21车辆，19个有输入、2个空输入均保存case，4辆已知速度>2m/s。一个空输入对象有3个留出自有返回，仍保留缺失；单时刻轨迹在逐点/相机时刻没有可用pose者也保留，不用外推伪装已知轨迹。
