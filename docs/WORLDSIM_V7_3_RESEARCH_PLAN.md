@@ -378,3 +378,9 @@ attention权重不定义物理可见性真值，更不能屏蔽最终表面的L_
 参数化一手参考：[DMTet，NeurIPS2021](https://research.nvidia.com/labs/toronto-ai/DMTet/)、[FlexiCubes，SIGGRAPH2023与官方代码](https://github.com/nv-tlabs/FlexiCubes)。以上是研究选择依据，尚未实现/训练于V7.3。
 
 自动跟进已按用户要求改为每30分钟；正常未变状态保持安静，保存原有研究连续性、资源出口与全部完成且无任务后shutdown约定。
+
+### 16.4 候选参数化的源码边界（2026-09-08补充）
+
+已基于同监督支持诊断继续核对官方提取实现，详见[表面参数化源码迁移记录](WORLDSIM_V7_3_SURFACE_PARAMETERIZATION.md)。DMTet/FlexiCubes的已提取顶点可微不保证同号空单元能由网格loss自行获得出生梯度；若采用场表示，必须明确初始支持或直接观测监督如何作用于生成参数，不把UNKNOWN补成内部真值。原生DPT直接数据梯度不自动等于空表面恢复梯度。
+
+FlexiCubes训练与导出的四分片/两分片在非共面时可能不同；迁移时统一训练与硬物理读取使用的显式几何，或单独报告转换影响。其grad_func/QEF非可微路径不作为这里的训练接口。格点数量与实际面密度分别报告，不拿同名resolution当同预算，也不默认所有稠密格点扩成全视图查询。上述是源码与项目结合的设计约束，候选仍未实现/选定；R12/R14继续原配置，无新增run或门控。

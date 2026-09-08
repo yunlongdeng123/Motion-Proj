@@ -1,3 +1,15 @@
+## V7.3 表面参数化候选的源码迁移准备（2026-09-08 16:00 UTC）
+
+变更类型为一手源码/设计分析，无新训练或评价run。项目依据944d6904，复核Kaolin marching_tetrahedra、NVIDIA nvdiffrec DMTet提取、FlexiCubes核心与官方优化示例；详见`docs/WORLDSIM_V7_3_SURFACE_PARAMETERIZATION.md`及计划16.4。候选尚未实现、训练或选定，三角收口后的条件决策保持。
+
+新明确的迁移边界：DMTet/FlexiCubes按符号离散选择活跃单元，再对已选几何插值反向；仅接提取后网格损失不保证空支持恢复。原生build深度有梯度也不能代替生成参数获得支持梯度。FlexiCubes训练四分片/导出两分片在非共面时可能改变实际表面，若采用应统一训练与物理读出的显式三角划分，或单列转换误差；grad_func/QEF非可微分支不作为主训练路径。官方例子含完整参考网格/内部SDF条件，不能迁成未知区真值。相同grid resolution不等价于同输出密度或成本，当前没有候选资源实测。
+
+对应迁移准备：共享格点隐状态可由保留的三维查询局部传递，避免默认所有稠密格点都读24视图；若需要直接场监督或新初始化，单独披露其作用，UNKNOWN不补FREE/正厚度。若无法合理提供场的支持恢复条件，直接共享顶点显式曲面仍是候选替代，不退回native-only。源码/推论/本机实现/收益状态已分开，未下载依赖或权重，未运行测试，实际architecture components图已附报告。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F06]；failure_ledger_delta=none，无新失败编号，下一V73-F10。15:47 UTC R12/PID81766第5轮、R14/PID68108第22轮正常，GPU14759/24576MiB、cgroup oom/oom_kill=0；本轮未改训练、表面、损失或cohort。先完成R10/R12/R14与R11锚点，再决定参数化；near-surface与深度/方向/遮挡一致性保持独立待测。20新日志质量未读，30分钟跟进ACTIVE，全V7.3未完成、shutdown=false。
+
+---
+
 ## V7.3 同监督表面支持诊断完成（2026-09-08 15:20 UTC）
 
 `WS-V73-M2-SURFACE-SUPPORT-01/20260908T151000Z__development-full-track-fixed-surfaces-r2`已done，code6920c120；只对R10/R7已保存表面读取CPU首/全交点及无符号最近距离，wall.788708s、RSS.631866GiB，正常退出。R11完整复用r1保存计数，无重复训练/神经推理/测试。全部75开发Actor/5日志/11886 owned返回、23无owned对象和每方法8空表面保留；不读取新20日志质量。
