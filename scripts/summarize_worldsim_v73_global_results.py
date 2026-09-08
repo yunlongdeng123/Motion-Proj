@@ -27,6 +27,8 @@ def summarize_actor(row):
     value['lidar_fallback']=support.get('lidar_fallback')
     value['native_candidates']=support.get('native_candidates')
     value['native_sensor_huber_m']=support.get('native_sensor_huber_m')
+    value['input_path']=support.get('input_path')
+    value['coarse_fallback']=support.get('coarse_fallback',False)
     return value
 
 
@@ -40,6 +42,8 @@ def stage_statistics(rows):
                 'build_under100':sum(r['build_points']<100 for r in selected),
                 'no_heldout_owned_return':sum(r['heldout_owned_rays']==0 for r in selected),
                 'no_predicted_surface':sum(r['surface_patches']==0 for r in selected),
+                'visual_only_predictions':sum(r.get('input_path')=='visual_only' for r in selected),
+                'coarse_fallback':sum(r.get('coarse_fallback',False) for r in selected),
                 'lidar_fallback':sum(r['lidar_fallback'] is True for r in selected)}
         for metric in METRICS:
             logs=defaultdict(list)
@@ -111,6 +115,10 @@ def main():
     result['build_lidar_ready']={'definition':'original build/metadata input status ready, independent of prediction quality; full population remains primary',
         'stages':{name:stage_statistics(rows) for name,rows in ready.items()},
         'paired_final_minus':{name:paired(rows,ready['final']) for name,rows in ready.items() if name!='final'}}
+    empty={name:[row for row in rows if row['build_points']==0] for name,rows in stages.items()}
+    result['zero_build_lidar']={'definition':'all original zero-build-LiDAR Actors including camera-absent cases; metadata only, never selected by predicted support; full population remains primary',
+        'stages':{name:stage_statistics(rows) for name,rows in empty.items()},
+        'paired_final_minus':{name:paired(rows,empty['final']) for name,rows in empty.items() if name!='final'}}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
     print(json.dumps(result['stages'],ensure_ascii=False))

@@ -1,3 +1,18 @@
+## V7.3 visual-only训练入口已实现，尚未执行新cohort训练（2026-09-08）
+
+F05的固定推理已证明41 fit/5 development个零LiDAR但有相机位姿的对象可生成表面，尚未证明物理改善。本次将同一输入规则接入共享训练器：显式`--include-visual-only`、默认关闭；只依据build点数与已知相机位姿纳入，不依赖原生候选数、target质量或heldout误差。完整主cohort仍489，开启后训练412 fit、预测72 development，2 fit/3 development无任何输入对象仍保留缺失。R10/R11/R12既定371 fit/67 development可用输入对照均保持默认关闭。
+
+读取已完成input audit的既有统计：新增41 fit对象中34个共有54416个full_track正目标，另外7个无正目标但有真实full_track近框首回波；41个合计349221个Actor–ray实例，完全无目标/无原束者0。该计数是FIT标签可用性，不是新域测试；原束可跨Actor重复，不能当独立样本。不能把7个无正目标对象的未知表面标空，它们仅受到原始首回波之前的free约束及既定弱框正则。
+
+原生支持与LiDAR均为空时，joint/pointwise用已有coarse查询，仍读取四层可训练DPT特征；native_only保留真实空表面，不能伪造它具备查询生成能力。训练中空target/空surface的coverage记录null和原因，避免空均值NaN；无原束时free为零但不声称有观测。没有任何实际测量监督时跳过optimizer，不靠框正则计成数据训练；真实有标签但无几何梯度/无表面另记原因。原始owned miss与event absent-support语义保留。
+
+新增cohort不能复用旧initial预测或通过resume悄悄排除新增对象：新实验从M1开始、重新计算initial；固定推理自动继承checkpoint的visual-only训练配置，旧checkpoint仍需显式override且标为未训练输入条件。汇总保留全489主表，新增原metadata零LiDAR分组、coarse fallback、不可用coverage与跳步原因；不按非空预测选择分母。
+
+四个修改脚本的单次py_compile语法检查通过；尚未运行新的真实反向/完整新cohort训练，不把语法检查或固定推理称为训练验证。下一步在现有训练释放显存后执行一次必要的真实零LiDAR梯度验证，再根据R10/R12目标对照选择单独新cohort训练；不同时混改当前目标隔离实验。本轮没有第三个训练进程或等待启动队列，R10/R11继续；R12仍未启动。F02/F03/F05保持active，下一失败编号V73-F09，外部20日志质量确认仍未读取。整个V7.3未完成，shutdown=false。
+
+---
+
+
 # Experiments
 
 ## V7.3 全51零LiDAR固定推理完成：接口可运行、未训练退路仍侵入free（2026-09-08）

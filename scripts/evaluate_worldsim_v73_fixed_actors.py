@@ -63,6 +63,15 @@ def main():
             state=torch.load(args.checkpoint,map_location='cpu',weights_only=True,mmap=True)
             config=state['config']; mode=config['mode']
             decoder.load_state_dict(state['query_decoder'])
+        visual_only_enabled=args.include_visual_only or bool(config.get('include_visual_only',False))
+        manifest['effective_visual_only']=visual_only_enabled
+        manifest['checkpoint_visual_only_training']=bool(config.get('include_visual_only',False)) if state is not None else None
+        manifest['checkpoint_boundary']=('checkpoint explicitly includes visual-only input training; preserve that input policy at fixed inference'
+            if config.get('include_visual_only',False) else
+            'explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training')
+        if visual_only_enabled:
+            manifest['empty_input_policy']='zero-LiDAR camera-pose Actors may use native support or existing coarse queries; both-modality-absent Actors remain empty'
+        save('manifest.json',manifest)
         visual=mode not in ['lidar_only','lidar_pca']
         scenes={}; scales={}; prefix_cache={}; depth_cache={}
         if visual:
@@ -73,7 +82,7 @@ def main():
             case=torch.load(args.actor_data/entry['file'],map_location='cpu',weights_only=True)
             case['metadata']['input_status']=entry['status']
             points=case['points_actor_m'].cuda(); support={}
-            visual_only=args.include_visual_only and visual and not len(points) and bool(case['view_indices'])
+            visual_only=visual_only_enabled and visual and not len(points) and bool(case['view_indices'])
             case['metadata']['visual_only_prediction_enabled']=visual_only
             if entry['status']!='ready' and not visual_only:
                 surface={'vertices_actor_m':points.new_empty(0,3),'faces':torch.empty(0,3,device='cuda',dtype=torch.long),

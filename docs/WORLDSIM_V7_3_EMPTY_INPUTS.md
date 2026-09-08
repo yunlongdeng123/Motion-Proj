@@ -51,6 +51,14 @@
 
 开发唯一归属回波来自scene-0919/94ffa1429ec745bdb5505eb340d76e09，两方法都缺失。尽管可以生成表面、开发近框free为0，也不能推出开发几何更好；无命中和极小评价分母同时保留。没有为一条回波生成bootstrap区间。
 
-结论是显式推理入口可运行，直接把旧r5 checkpoint用于这个输入条件会在fit窗口产生更多自由空间违规。后续需要独立加入真实visual-only训练对象及其fit侧标签/原束约束，不能把coarse输出的存在当作修复。训练器入口目前尚未增加；R10/R11/R12仍保持旧cohort，新的cohort变化必须单独比较，不与free目标修改混在一起。
+结论是显式推理入口可运行，直接把旧r5 checkpoint用于这个输入条件会在fit窗口产生更多自由空间违规。后续需要独立加入真实visual-only训练对象及其fit侧标签/原束约束，不能把coarse输出的存在当作修复。训练器入口随后已实现，但尚未运行新cohort训练；R10/R11/R12仍保持旧cohort，新的cohort变化必须单独比较，不与free目标修改混在一起。
+
+## 训练入口迁移：已实现，真实反向尚待执行
+
+`train_worldsim_v73_global_actors.py --include-visual-only`默认关闭，开启后仅依靠原build点数与已知相机位姿纳入新增对象，不以候选数或标签质量筛选。原489个对象始终保留；可训练fit从371到412、可预测development从67到72，另外2 fit/3 development两种输入均缺失者仍输出缺失。原生头和查询共同参与原路径；native-only在原生支持与LiDAR均为空时保留空表面，不偷偷附加查询生成器。
+
+41个新增fit对象的既有full_track统计为34个有正目标、共54416点；7个没有正目标但有原始近框首回波；合计349221个Actor–ray实例，没有目标与原束均缺失者。正目标才参与coverage；没有正目标的区域并不自动是空空间，只在真实首返回前约束free。空target/空表面导致不可用的coverage记为null并注明原因。完全没有测量监督时不做optimizer更新；有真实标签却缺乏表面支持/几何梯度另行记录，首事件的缺失支持边界保留。
+
+新cohort从M1初始化并重新评价initial，不能复用旧initial或恢复旧fit顺序悄悄漏掉新增对象。固定推理自动继承新checkpoint的输入配置；旧checkpoint的显式override仍标记为未训练输入迁移。全cohort主表保持，另报告原metadata零LiDAR分组、coarse fallback、coverage缺失和跳步原因。这里只完成实现，尚无新的真实反向或完整训练结果；一次必要的真实梯度验证将在现有训练释放显存后执行，再依照R10/R12目标比较单独安排新cohort训练。
 
 输入核查证据`docs/autoresearch/worldsim_v73/m2/global/empty_inputs_r1_summary.json`；固定推理原始摘要`empty_fixed_r2_summary.json`、分组分析`empty_fixed_r2_analysis.json`，同属该目录。原run保留全部51表面和逐帧硬读出。F02/F03/F05持续，V7.3未完成，shutdown=false。

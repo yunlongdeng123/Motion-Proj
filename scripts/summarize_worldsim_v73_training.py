@@ -23,6 +23,11 @@ for epoch,values in sorted(epochs.items()):
         'unique_actors':len({row['owner'] for row in values}),'actors_with_views':len(views),
         'predicted_support_fallback_with_views':sum(row.get('lidar_fallback',False) for row in views),
         'no_camera_pose_presentations':sum(row.get('fallback_reason')=='no_actor_camera_pose' for row in values),
+        'visual_only_presentations':sum(row.get('input_path')=='visual_only' for row in values),
+        'coarse_fallback_presentations':sum(row.get('coarse_fallback',False) for row in values),
+        'coverage_unavailable_presentations':sum(row.get('coverage_unavailable_reason') is not None for row in values),
+        'skip_reasons':{reason:sum(row.get('skip_reason')==reason for row in values) for reason in
+                       ['no_observed_supervision','no_surface_support','no_surface_gradient']},
         'native_supervised_presentations':len(native),'native_measurements':count,
         'native_huber_measurement_weighted_m':sum(row['native_sensor_huber_m']*row['native_observed_points'] for row in native)/count if count else None,
         'native_huber_supervised_actor_distribution_m':distribution([row['native_sensor_huber_m'] for row in native]),

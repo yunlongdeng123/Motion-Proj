@@ -43,7 +43,11 @@ def main():
     parser.add_argument('--baseline-results',type=Path,help='复用同一cohort与固定patch算子的既有LiDAR PCA结果')
     parser.add_argument('--initial-results',type=Path,help='输入、模型初始化与seed均相同时复用既有initial表面评价')
     parser.add_argument('--resume-from',type=Path,help='恢复已保存epoch的模型/优化器；写入新的run目录并保留中断现场')
+    parser.add_argument('--include-visual-only',action='store_true',
+                        help='单独输入cohort实验：纳入零build LiDAR但有相机位姿的Actor；旧对照默认关闭')
     args=parser.parse_args()
+    if args.include_visual_only and args.initial_results:
+        raise ValueError('visual-only训练必须重新评价含新增输入条件的initial，不能复用旧cohort预测')
     label_times='full_track' if args.fit_targets else args.fit_label_times
     task='WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
@@ -62,6 +66,7 @@ def main():
         'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
         'surface_supervision_times':label_times,
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
+        'visual_only_boundary':'opt-in admission depends only on zero build LiDAR and available calibrated camera poses, never predicted support or target quality; no-camera empty inputs remain unavailable; unobserved regions are not free space',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
         'native_only_boundary':'native_only adapts full original DPT with canonical native+LiDAR PCA fusion; query module supplies fixed patch definition only and is frozen; no-camera/no-gradient presentations are recorded without optimizer step',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
@@ -74,7 +79,10 @@ def main():
             if 'file' not in row: continue
             case=torch.load(args.actor_data/row['file'],map_location='cpu',weights_only=True)
             case['metadata']['input_status']=row['status']
-            (cases if row['status']=='ready' else unsupported).append(case)
+            visual_only=(args.include_visual_only and args.mode!='lidar_only'
+                         and not len(case['points_actor_m']) and bool(case['view_indices']))
+            case['metadata']['visual_only_prediction_enabled']=visual_only
+            (cases if row['status']=='ready' or visual_only else unsupported).append(case)
         scenes={s['scene_id']:s for s in torch.load(args.native_run/'build_observations.pt',weights_only=False,map_location='cpu',mmap=True)}
         scales=json.loads((args.native_run/'metric_scales.json').read_text())
         pyramids={}; head=None; prefix_cache={}
@@ -114,6 +122,8 @@ def main():
         resumed=None; start_epoch=0
         if args.resume_from:
             resumed=torch.load(args.resume_from/'latest.pt',map_location='cpu',weights_only=True,mmap=True)
+            if bool(resumed['config'].get('include_visual_only',False))!=args.include_visual_only:
+                raise ValueError('不能通过resume静默改变输入cohort；visual-only实验应从原M1初始化')
             if head is not None: head.load_state_dict(resumed['depth_head'])
             decoder.load_state_dict(resumed['query_decoder'])
             optimizer.load_state_dict(resumed['optimizer'])
@@ -125,12 +135,13 @@ def main():
         fit=[c for c in cases if c['metadata']['role']=='fit']
         if not fit: raise ValueError('没有可训练fit Actor')
         for case in cases:
-            case['lidar_seed']=case['points_actor_m'][farthest_indices(case['points_actor_m'],len(decoder.coarse))]
+            case['lidar_seed']=(case['points_actor_m'][farthest_indices(case['points_actor_m'],len(decoder.coarse))]
+                                if len(case['points_actor_m']) else None)
             labels=[r for r in case['rays'] if r['role']=='build' or
                     (case['metadata']['role']=='fit' and args.fit_label_times=='all_window')]
             case['training_rays']=labels
             case['training_points']=(torch.unique(torch.cat([r['points_actor_m'][r['positive_actor']] for r in labels]),dim=0)
-                if case['metadata']['role']=='fit' and args.fit_label_times=='all_window' else case['points_actor_m'])
+                if labels and case['metadata']['role']=='fit' and args.fit_label_times=='all_window' else case['points_actor_m'])
             if args.fit_targets and case['metadata']['role']=='fit':
                 target_file=args.fit_targets/(case['metadata']['scene']+'__'+case['metadata']['owner']+'.pt')
                 target=torch.load(target_file,map_location='cpu',weights_only=True)
@@ -160,16 +171,24 @@ def main():
                 source=native if len(native) else points
                 n=min(len(points),decoder.evidence_queries)
                 evidence=points[torch.linspace(0,len(points)-1,n,device='cuda').long()]
-                centers=torch.cat([evidence,source[farthest_indices(source,len(decoder.coarse))]])
-                result=lidar_patches(torch.cat([points,native]),decoder,centers=centers)
+                if len(source):
+                    centers=torch.cat([evidence,source[farthest_indices(source,len(decoder.coarse))]])
+                    result=lidar_patches(torch.cat([points,native]),decoder,centers=centers)
+                else:
+                    result={'vertices_actor_m':points.new_empty(0,3),
+                            'faces':torch.empty(0,3,device='cuda',dtype=torch.long),'centers_actor_m':points.new_empty(0,3)}
                 support={'native_candidates':len(native),'per_view_native_support':per_view,
                          'lidar_fallback':not len(native),'initialization':'native_lidar_pca',
                          'surface_gradient':'selected native center positions; per-step PCA neighborhood/orientation held fixed'}
+                if not len(source):
+                    support.update(lidar_fallback=False,prediction_unavailable=True,reason='no_native_or_lidar_surface_support')
             elif args.completion_init=='native_surface' and depth is not None:
                 seeds,support=native_surface_seeds(depth,scales[case['metadata']['scene']],matrices,calibration,
                                                     size,points,len(decoder.coarse),valid_image_rect=rect)
             else:
-                seeds=case['lidar_seed'].cuda(); support={'lidar_fallback':args.completion_init=='native_surface',
+                seeds=case['lidar_seed'].cuda() if case['lidar_seed'] is not None else None
+                support={'lidar_fallback':args.completion_init=='native_surface' and len(points)>0,
+                    'coarse_fallback':seeds is None,
                     'native_candidates':0 if args.completion_init=='native_surface' else None,'initialization':'lidar_surface'}
             if args.mode!='native_only':
                 with torch.autocast('cuda',dtype=torch.bfloat16):
@@ -190,6 +209,7 @@ def main():
                 if terms: native_loss=torch.stack(terms).sum()/native_count
             support['native_observed_points']=native_count
             support['has_actor_camera_pose']=has_views
+            support['input_path']='visual_only' if case['metadata']['visual_only_prediction_enabled'] else 'existing_multimodal_or_lidar'
             support['fallback_reason']=('no_actor_camera_pose' if not has_views else 'predicted_native_support_empty') if support.get('lidar_fallback') else None
             return result,support,native_loss
 
@@ -197,7 +217,8 @@ def main():
         def evaluate(tag,baseline=False):
             rows=[]; depth_cache={}
             for case in [*cases,*unsupported]:
-                if case['metadata']['input_status']!='ready':
+                if (case['metadata']['input_status']!='ready'
+                    and (baseline or not case['metadata']['visual_only_prediction_enabled'])):
                     # 缺少可用输入的Actor明确输出缺失，仍计入真实束miss/覆盖评价。
                     surface={'vertices_actor_m':torch.empty(0,3,device='cuda'),
                         'faces':torch.empty(0,3,dtype=torch.long,device='cuda'),
@@ -212,7 +233,7 @@ def main():
                 metrics=evaluate_actor_surface(surface,case['rays'])
                 rows.append({'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
                              'seed_support':support,'frames':metrics,
-                             'extra_time_usage':'training_labels' if case['metadata']['role']=='fit' and case['metadata']['input_status']=='ready' and label_times!='build' else 'evaluation_only'})
+                             'extra_time_usage':'training_labels' if case['metadata']['role']=='fit' and (case['metadata']['input_status']=='ready' or case['metadata']['visual_only_prediction_enabled']) and label_times!='build' else 'evaluation_only'})
                 if tag=='final':
                     torch.save({k:v.cpu() for k,v in surface.items() if isinstance(v,torch.Tensor)},
                                out/(case['metadata']['owner']+'_surface.pt'))
@@ -263,34 +284,42 @@ def main():
                 vertices=prediction['vertices_actor_m'].float(); faces=prediction['faces']
                 points=case['training_points'].cuda()
                 chosen=points[torch.randperm(len(points),device='cuda')[:1024]]
-                nearest=closest_surface_points(vertices,faces,chosen)
-                coverage=(nearest-chosen).norm(dim=-1).mean()
+                coverage_available=bool(len(chosen) and len(faces))
+                nearest=closest_surface_points(vertices,faces,chosen) if coverage_available else None
+                coverage=(nearest-chosen).norm(dim=-1).mean() if coverage_available else vertices.sum()*0
                 build=case['training_rays']
-                ranges=torch.cat([r['observed_first_range_m'] for r in build]).cuda()
-                origins=torch.cat([r['origins_actor_m'] for r in build]).cuda()
-                directions=torch.cat([r['directions_actor'] for r in build]).cuda()
+                ranges=torch.cat([r['observed_first_range_m'] for r in build]).cuda() if build else vertices.new_empty(0)
+                origins=torch.cat([r['origins_actor_m'] for r in build]).cuda() if build else vertices.new_empty(0,3)
+                directions=torch.cat([r['directions_actor'] for r in build]).cuda() if build else vertices.new_empty(0,3)
                 ids=torch.randperm(len(ranges),device='cuda')[:512]
                 if tube_free is None:
                     depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
                     free=direct_free_space_loss(depth,ranges[ids])
                     physical_free=free
                 else:
-                    free=tube_free(vertices,faces,origins[ids],directions[ids],ranges[ids])
+                    free=tube_free(vertices,faces,origins[ids],directions[ids],ranges[ids]) if len(faces) else vertices.sum()*0
                     # 硬首交点只作同语义读数；有限宽度覆盖比例不能冒充米制侵入。
                     with torch.no_grad():
                         depth,_=first_triangle_intersection(vertices,faces,origins[ids],directions[ids])
                         physical_free=direct_free_space_loss(depth,ranges[ids])
-                envelope=(vertices.abs()-case['size_lwh_m'].cuda()/2-.25).clamp_min(0).square().mean()
+                envelope=((vertices.abs()-case['size_lwh_m'].cuda()/2-.25).clamp_min(0).square().mean()
+                          if len(vertices) else vertices.sum()*0)
                 event=vertices.sum()*0; event_statistics={}
                 if event_objective is not None:
-                    owned=torch.cat([r['positive_actor'] for r in build]).cuda()[ids]
+                    owned=(torch.cat([r['positive_actor'] for r in build]).cuda()[ids] if build else
+                           torch.empty(0,device='cuda',dtype=torch.bool))
                     selected=ids[owned]
                     event,event_statistics=event_objective(vertices,faces,origins[selected],directions[selected],ranges[selected])
                     event_statistics['literal_owned_miss_rays']=(~torch.isfinite(depth[owned])).sum().item()
                     del owned,selected
                 loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss+args.event_weight*event
-                has_gradient=loss.requires_grad
-                if has_gradient or args.mode!='native_only': loss.backward()
+                # 空标签不是零几何误差；没有实际测量目标时不靠框正则做一次假数据更新。
+                has_supervision=(len(chosen)>0 or
+                    (args.free_weight>0 and len(ids)>0) or
+                    (args.native_data_weight>0 and support['native_observed_points']>0) or
+                    (args.event_weight>0 and event_statistics.get('count',0)>0))
+                has_gradient=bool(has_supervision and loss.requires_grad)
+                if has_gradient: loss.backward()
                 group_gradients={}
                 for name,module in [('native_dpt',head),('query_decoder',decoder)]:
                     norms=[p.grad.detach().norm() for p in module.parameters() if p.grad is not None] if module is not None else []
@@ -300,8 +329,13 @@ def main():
                 output_grad=sum(p.grad.norm().item() for p in head.scratch.output_conv2.parameters() if p.grad is not None) if head is not None else None
                 if has_gradient: optimizer.step()
                 row={'epoch':epoch+1,'scene':case['metadata']['scene'],'owner':case['metadata']['owner'],
-                    'loss':loss.item(),'coverage_m':coverage.item(),'free_intrusion_m':physical_free.item(),
+                    'loss':loss.item(),'coverage_m':coverage.item() if coverage_available else None,'free_intrusion_m':physical_free.item(),
                     'optimizer_step':has_gradient,
+                    'skip_reason':None if has_gradient else ('no_observed_supervision' if not has_supervision else
+                        ('no_surface_support' if not len(faces) else 'no_surface_gradient')),
+                    'input_path':support['input_path'],'coarse_fallback':support.get('coarse_fallback',False),
+                    'training_target_points':len(points),'sampled_free_rays':len(ids),'surface_faces':len(faces),
+                    'coverage_unavailable_reason':None if coverage_available else ('no_target_points' if not len(chosen) else 'no_surface_support'),
                     'free_objective':free.item(),'free_mode':args.free_mode,
                     'free_objective_unit':'coverage_fraction' if args.free_mode=='beam_tube' else 'm',
                     'event_capped_nll':event.item(),'event_weight':args.event_weight,'event_statistics':event_statistics,
@@ -335,6 +369,9 @@ def main():
             'resumed_completed_presentations':resumed_steps,'new_presentations':len(history)-resumed_steps,
             'resume_from':str(args.resume_from) if args.resume_from else None,
             'no_gradient_presentations':sum(not r['optimizer_step'] for r in history),
+            'visual_only_actors':{role:sum(c['metadata']['visual_only_prediction_enabled'] and c['metadata']['role']==role for c in cases)
+                                  for role in ['fit','development']},
+            'no_observed_supervision_presentations':sum(r.get('skip_reason')=='no_observed_supervision' for r in history),
             'mode':args.mode,'completion_initialization':args.completion_init,
             'trainable_parameters':{'native_dpt':sum(p.numel() for p in head.parameters() if p.requires_grad) if head is not None else 0,
                                     'query_decoder':sum(p.numel() for p in decoder.parameters() if p.requires_grad)},
