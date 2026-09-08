@@ -1,6 +1,6 @@
 # V7.3：零LiDAR输入与视觉支持路径
 
-2026-09-08。主联合训练的旧cohort定义把零build LiDAR对象统一标为unavailable_input，即使已有图像/相机位姿；缺失被保留在评价分母，但不能由此推断没有可用视觉信息。
+2026-09-08 10:08 UTC。显式visual-only固定推理与R13一轮真实训练均已完成；R13的41次更新均有DPT/query反向，但尚无完整新cohort训练。开发唯一归属回波从缺失变为错误早交点，不能将生成表面或训练能执行写成质量成功。主联合训练的旧cohort定义把零build LiDAR对象统一标为unavailable_input，即使已有图像/相机位姿；缺失被保留在评价分母，但不能由此推断没有可用视觉信息。
 
 已查[VGGT官方原生几何头](https://raw.githubusercontent.com/facebookresearch/vggt/main/vggt/models/vggt.py)与[SparseNeuS官方实现](https://github.com/xxlong0/SparseNeuS)，两者体现图像几何预测不必以Actor LiDAR点为前提。前者CVPR2025、后者ECCV2022。这些工作不保证当前动态Actor的米制对齐、遮挡归属或生成表面正确；本轮优先使用已有DPT与空间查询，不增加另一种世界表示。
 
@@ -51,18 +51,40 @@
 
 开发唯一归属回波来自scene-0919/94ffa1429ec745bdb5505eb340d76e09，两方法都缺失。尽管可以生成表面、开发近框free为0，也不能推出开发几何更好；无命中和极小评价分母同时保留。没有为一条回波生成bootstrap区间。
 
-结论是显式推理入口可运行，直接把旧r5 checkpoint用于这个输入条件会在fit窗口产生更多自由空间违规。后续需要独立加入真实visual-only训练对象及其fit侧标签/原束约束，不能把coarse输出的存在当作修复。训练器入口随后已实现，但尚未运行新cohort训练；R10/R11/R12仍保持旧cohort，新的cohort变化必须单独比较，不与free目标修改混在一起。
+结论是显式推理入口可运行，直接把旧r5 checkpoint用于这个输入条件会在fit窗口产生更多自由空间违规。后续需要独立加入真实visual-only训练对象及其fit侧标签/原束约束，不能把coarse输出的存在当作修复。随后完成的R13真实一轮训练见文末；R10/R11/R12/R14仍保持旧cohort，新的cohort变化必须单独比较，不与free目标修改混在一起。
 
-## 训练入口迁移：已实现，真实反向尚待执行
+## 训练入口迁移
 
 `train_worldsim_v73_global_actors.py --include-visual-only`默认关闭，开启后仅依靠原build点数与已知相机位姿纳入新增对象，不以候选数或标签质量筛选。原489个对象始终保留；可训练fit从371到412、可预测development从67到72，另外2 fit/3 development两种输入均缺失者仍输出缺失。原生头和查询共同参与原路径；native-only在原生支持与LiDAR均为空时保留空表面，不偷偷附加查询生成器。
 
 41个新增fit对象的既有full_track统计为34个有正目标、共54416点；7个没有正目标但有原始近框首回波；合计349221个Actor–ray实例，没有目标与原束均缺失者。正目标才参与coverage；没有正目标的区域并不自动是空空间，只在真实首返回前约束free。空target/空表面导致不可用的coverage记为null并注明原因。完全没有测量监督时不做optimizer更新；有真实标签却缺乏表面支持/几何梯度另行记录，首事件的缺失支持边界保留。
 
-新cohort从M1初始化并重新评价initial，不能复用旧initial或恢复旧fit顺序悄悄漏掉新增对象。固定推理自动继承新checkpoint的输入配置；旧checkpoint的显式override仍标记为未训练输入迁移。全cohort主表保持，另报告原metadata零LiDAR分组、coarse fallback、coverage缺失和跳步原因。这里只完成实现，尚无新的真实反向或完整训练结果；一次必要的真实梯度验证将在现有训练释放显存后执行，再依照R10/R12目标比较单独安排新cohort训练。
+新cohort从M1初始化并重新评价initial，不能复用旧initial或恢复旧fit顺序悄悄漏掉新增对象。固定推理自动继承新checkpoint的输入配置；旧checkpoint的显式override仍标记为未训练输入迁移。全cohort主表保持，另报告原metadata零LiDAR分组、coarse fallback、coverage缺失和跳步原因。真实反向已由R13覆盖全部41个新增可训练对象，完整新cohort训练仍待与R10/R12目标比较独立安排。
 
 输入核查证据`docs/autoresearch/worldsim_v73/m2/global/empty_inputs_r1_summary.json`；固定推理原始摘要`empty_fixed_r2_summary.json`、分组分析`empty_fixed_r2_analysis.json`，同属该目录。原run保留全部51表面和逐帧硬读出。F02/F03/F05持续，V7.3未完成，shutdown=false。
 
-## 已登记的一轮真实训练检查
+## R13：一轮真实训练结果
 
-R13：20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13，从M1r3与seed7304重新初始化，全部51个原metadata零LiDAR对象仍在评价分母，41个有相机fit对象训练一轮。34个有正目标、7个无正目标但有真实原束，均不按质量选择。使用full_track标签、原hard range free.5、native_data_weight1、event0；不复用旧initial/PCA、不恢复旧checkpoint。它只检查新增真实反向和空目标处理，不承担充分拟合、主架构选择或新日志确认。登记时未执行，待R11实际退出释放显存后启动；R10/R11/R12不改变。数据小index由prepare_worldsim_v73_visual_only_cohort.py按build_points==0生成，并链接原51个case。
+R13：`WS-V73-M2-GLOBAL-ACTOR-01/20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13`，code11433ba4、done，PID67103已退出。从M1r3与seed7304重新初始化，全部51个原metadata零LiDAR对象仍在评价分母，41个有相机fit对象训练一轮。34个有正目标、7个无正目标但有真实原束，均不按质量选择。使用full_track标签、原hard range free.5、native_data_weight1、event0；不复用旧initial/PCA、不恢复旧checkpoint。它只检查新增真实反向和空目标处理，不承担充分拟合、主架构选择或新日志确认。数据小index由prepare_worldsim_v73_visual_only_cohort.py按build_points==0生成，并链接原51个case。
+
+41次呈现、41次实际更新、0跳步，DPT32654562/query1670517可训练参数，两组每次梯度范数均为正，native_project最大变化.000271443。34个有正目标对象共54416个full_track点；7个无目标者coverage均为null且均有采样原束，其中2个free损失为正、5个采样free已经满足，仅有box envelope梯度。这5次不能写成“41次都由真实传感器误差驱动”。
+
+此组build LiDAR为零，所有native_observed_points也为零：native_data_weight虽为1，直接native像素深度项没有测量，DPT梯度来自查询所读取的特征和生成表面路径。训练中6次使用coarse fallback，说明真实反向覆盖到了空native支持退路；不等于coarse几何已充分拟合。
+
+wall195.286933s、allocated GPU8.170046GiB、RSS14.146515GiB、288份现有冻结前缀；只缓存相关窗口原24视图联合前缀，没有砍视图或重新计算小视图模型。与R10并行期间未OOM。初始化和最终都有41/43个fit与5/8个开发对象生成表面，2 fit/3 dev无相机者始终缺失。最终coarse fallback为4 fit/1 dev，初始化为8 fit/0 dev。
+
+| 窗口heldout读数 | fit初始 | fit一轮后 | dev初始 | dev一轮后 |
+|---|---:|---:|---:|---:|
+| 有表面 / 总对象 | 41/43 | 41/43 | 5/8 | 5/8 |
+| hit | .005556 | .175000 | 0 | 0 |
+| early | .083333 | .063889 | 0 | 1 |
+| miss | .811111 | .638889 | 1 | 0 |
+| 近框free（m） | 1.235780 | .023596 | .107936 | .164967 |
+| 单向surface distance（m） | .345961 | .263917 | .272311 | .011909 |
+| recall@.2m | .580556 | .511111 | 0 | 1 |
+
+fit归属读数仍只有14个Actor、24条返回、6日志，free含43 Actor/9日志；fit的窗口返回属于full_track训练标签范围，不是独立确认。开发只有8对象/2日志、59近框Actor–ray实例，其中7对象无归属回波，唯一归属回波位于scene-0919/94ffa1429ec745bdb5505eb340d76e09。它初始miss，最终为early，返回误差3.462215m、首回波前侵入3.262215m；虽然目标到表面距离.011909m、recall为1，仍存在错误前表面。禁止将这一条回波生成的退化区间当可信不确定性；本文不使用该组bootstrap。
+
+本轮结论仅为真实新输入/空target处理及DPT/query梯度路径可执行。F02的覆盖与自由空间矛盾、F03缺支持及F05完整cohort训练仍未解决；不从一轮结果宣布新架构失败或成功，也不再重复同一smoke。下一步在既定目标比较后单独纳入完整412 fit/72可预测dev的新输入训练，保留全部489分母。
+
+证据同属`docs/autoresearch/worldsim_v73/m2/global/`：`visual_only_r13_summary.json`、`visual_only_r13_analysis.json`、`visual_only_r13_training_counts.json`及`visual_only_r13_train.jsonl`。原run保存全部51表面、checkpoint和初始/最终逐帧硬评价。

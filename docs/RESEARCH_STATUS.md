@@ -1,3 +1,20 @@
+## V7.3 零LiDAR真实训练结果与R14启动（2026-09-08）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13` code11433ba4已done、PID67103退出。原metadata全部51对象/41 fit真实更新/5 dev有表面/5缺两类输入者保留缺失；41次呈现均有DPT/query正梯度，native_project变化.000271443，完整DPT32654562/query1670517参数、195.286933s、allocated8.170046GiB/RSS14.146515GiB、288份原冻结前缀。不是旧checkpoint的固定推理，也不是完整新cohort训练或充分拟合。
+
+34个有正目标对象共54416点，7个无正目标者coverage=null且均有原始采样束，其中2次free>0、5次采样free已满足而只有box envelope梯度；不能把所有41更新写成真实传感器残差驱动。此零build LiDAR组的native_observed_points均0，DPT通过特征/生成表面接收梯度，native像素数据项实际不激活。6次训练使用coarse退路；最终fit41/43、dev5/8有表面，coarse为4/1，初始化8/0。
+
+开发只有一条归属返回：初始miss变最终early，误差3.462215m、侵入3.262215m；表面距离.011909m/recall1不能覆盖错误首交点。开发near-box free .107936→.164967m、仅59个Actor–ray实例/2日志，不据此主张泛化或用退化bootstrap。FIT窗口hit.005556→.175000、free1.235780→.023596m，但recall.580556→.511111；其24返回/14对象/6日志位于训练标签范围内。完整412 fit新cohort训练仍待目标比较后独立纳入；不把R12/R14目标因素与输入cohort混改，不重复此一轮smoke。
+
+R13原始summary/analysis/41行train及计数分析归档`docs/autoresearch/worldsim_v73/m2/global/visual_only_r13_*`，专项`WORLDSIM_V7_3_EMPTY_INPUTS.md`更新到真实执行状态。既有F02/F03/F05继续，无新增失败ID；R11负结果F09已由bf04ef32记录，下一编号F10。
+
+R14已按bf04ef32登记后实际启动：`20260908T100000Z__population-native-full-track-beam-range-s7304-r14`，PID68108，日志`/root/autodl-tmp/controller_logs/v73_population_native_beam_r14.log`。原生30轮/full_track/旧489 cohort/M1r3 seed7304，只有free从R11的hard range改为beam_tube_range .03m/res32；真实DPT更新已产生，query固定。10:07UTC epoch1 allocated2.358664GiB、进程3066MiB；R10/PID53472 epoch19、进程12570MiB，合计15636MiB、oom/oom_kill均0。R12未启动、无自动GPU队列，待完整query资源；当前无确证资源不足。
+
+用户新增写作偏好已保存用户级与项目AGENTS并push133e9a29：技术报告/paper必须有简单组件图，以模块、箭头和少量标签说明输入/组件/数据流/输出。下一稿paper同步R11/R13及此结构图，interim_r1保留原时间快照。20新日志模型质量仍未读取，整个V7.3未完成；自动跟进active，shutdown=false。
+
+---
+
+
 ## V7.3 原生强控制R11完成与同目标R14登记（2026-09-08）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-native-only-full-track-s7304-r11` code9541ac7d已完成，PID38460退出。30轮11130呈现/10550实际更新/580无梯度跳步；580中420无相机、160有相机但原生支持为空而退回固定LiDAR，均无native build对应、两组梯度均0，涉及22个Actor。完整DPT32654562参数更新，query0可训练；native_project最大变化.005223576，wall30855.513131s、allocated2.346402GiB、RSS34.607677GiB；无恢复、无OOM。所有489对象保留，371 fit更新候选、67 dev可预测、51零LiDAR缺失；开发无梯度。

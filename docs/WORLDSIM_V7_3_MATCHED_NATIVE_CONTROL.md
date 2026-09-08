@@ -1,6 +1,6 @@
 # V7.3：同全轨迹监督的原生几何控制
 
-截至2026-09-08 10:00 UTC，R11原生强控制已完成30轮及最终评价，PID38460退出；R10联合模型仍运行到第18轮。R11训练集硬hit提高，开发5日志硬hit均下降，尚未解决原生适配的泛化问题。R12联合模型的有限宽束free和R14同目标原生控制已登记、尚未启动。完整V7.3未完成。
+截至2026-09-08 10:08 UTC，R11原生强控制已完成30轮及最终评价，PID38460退出；R10联合模型仍运行到第19轮。R11训练集硬hit提高，开发5日志硬hit均下降，尚未解决原生适配的泛化问题。R12联合模型的有限宽束free已登记、尚未启动；R14同目标原生控制已启动，PID68108，第1轮。完整V7.3未完成。
 
 ## 对照定义
 
@@ -78,10 +78,10 @@ R10−R5主要回答FIT标签由短窗扩大为full_track的问题；R10−R7是
 
 R5本身在覆盖改善时出现early/free退化，已在`WORLDSIM_V7_3_JOINT_R5_RESULTS.md`记录；这既不能替代当前R10/R11比较，也不能推导所有视觉几何适配失败。R5原第22轮意外退出只保留第21轮状态，107个未保存更新留原日志；恢复完成有效11130更新，旧checkpoint缺完整RNG的执行差异已披露，不声称逐比特连续。
 
-R12登记`20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`，从与R10相同的M1r3/seed初始化，仅改变free为`beam_tube_range`、width.03m/resolution32；full_track/native1/free.5/event0/30轮不变。R14登记`20260908T100000Z__population-native-full-track-beam-range-s7304-r14`，同样只将R11的free改为该有限宽束目标，复用同输入的R11初始化及原PCA，重新训练而非恢复。两项登记时尚未启动，无自动GPU队列；R14优先与R10并行，R12待完整query显存可用。
+R12登记`20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`，从与R10相同的M1r3/seed初始化，仅改变free为`beam_tube_range`、width.03m/resolution32；full_track/native1/free.5/event0/30轮不变。R14登记`20260908T100000Z__population-native-full-track-beam-range-s7304-r14`，同样只将R11的free改为该有限宽束目标，复用同输入的R11初始化及原PCA，重新训练而非恢复。R14已于登记bf04ef32之后真实启动，与R10并行；R12仍待完整query显存可用，无自动GPU队列。
 
 R11新增V73-F09：本配置训练拟合改善却在开发硬hit上退化，观测污染、共享参数漂移、支持/PCA读出及目标语义的归因尚未完成。卡点先核对[LoRA3D ICLR2025官方项目](https://520xyxyzq.github.io/lora3d/)与[CAPA官方项目](https://research.nvidia.com/labs/dvl/projects/capa/)：两者的场景适配/稀疏测量校准是迁移参考，不证明本项目当前失败原因。优先完成R10/R11及R12/R14同目标比较，之后才依据证据独立改变DPT适配范围或build场景校准；保留CAPA R2既有负结果，不直接重跑、不用confidence逃避free、不否定全部视觉几何适配。
 
-visual-only的R13已完成一轮41次实际更新、DPT/query真实反向，专项结果正在整理；这仅确认新输入训练能执行，不是完整训练或质量成功。R10/R11/R12/R14继续原cohort。输入条件扩大、物理目标变化与空间机制分别解释，见`WORLDSIM_V7_3_COMPARISON_PROTOCOLS.md`。新20日志质量确认仍未读取。
+visual-only的R13已完成一轮41次实际更新、DPT/query真实反向，专项结果已归档EMPTY_INPUTS报告；这仅确认新输入训练能执行，不是完整训练或质量成功。R10/R11/R12/R14继续原cohort。输入条件扩大、物理目标变化与空间机制分别解释，见`WORLDSIM_V7_3_COMPARISON_PROTOCOLS.md`。新20日志质量确认仍未读取。
 
 原生解码路径依据：[VGGT官方训练说明](https://github.com/facebookresearch/vggt/blob/main/training/README.md)和[DPT实现](https://github.com/facebookresearch/vggt/blob/main/vggt/heads/dpt_head.py)。微调DPT是强控制的既定工作，本身不作为新贡献。

@@ -1,0 +1,283 @@
+{
+  "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-ACTOR-01/20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13",
+  "code": "11433ba4",
+  "status": "done",
+  "scope": "All 51 original metadata zero-build-LiDAR Actors; one fit epoch, execution evidence only.",
+  "presentations": 41,
+  "optimizer_updates": 41,
+  "positive_target_presentations": 34,
+  "no_target_presentations": 7,
+  "target_points": 54416,
+  "no_target_with_sampled_rays": 7,
+  "no_target_active_free_presentations": 2,
+  "no_target_zero_free_envelope_only": [
+    {
+      "scene": "scene-0906",
+      "owner": "16035f4b27ee4e5fbacf58b6792c9ffb",
+      "loss": 5.3277073419621956e-08,
+      "sampled_free_rays": 10
+    },
+    {
+      "scene": "scene-0911",
+      "owner": "d4d3cfa3b67946e2b07ff9e28ef1390c",
+      "loss": 8.978207006293815e-06,
+      "sampled_free_rays": 512
+    },
+    {
+      "scene": "scene-1072",
+      "owner": "7f7573e3860e4d5abfe1e22cf72ea8b0",
+      "loss": 2.4871458663255908e-05,
+      "sampled_free_rays": 100
+    },
+    {
+      "scene": "scene-0471",
+      "owner": "b72b9ed7061c4a10a883df15b8d29700",
+      "loss": 1.108179276343435e-05,
+      "sampled_free_rays": 56
+    },
+    {
+      "scene": "scene-0911",
+      "owner": "e0f3b500af184190a3a062c37a092581",
+      "loss": 1.0082864719151985e-05,
+      "sampled_free_rays": 14
+    }
+  ],
+  "native_observed_points": 0,
+  "coarse_fallback_presentations": 6,
+  "nonpositive_native_gradient": 0,
+  "nonpositive_query_gradient": 0,
+  "skip_reasons": {
+    "None": 41
+  },
+  "resources": {
+    "wall_s": 195.2869328893721,
+    "peak_gpu_gib": 8.170045852661133,
+    "peak_rss_gib": 14.146514892578125,
+    "shared_frozen_prefix_views": 288
+  },
+  "stages": {
+    "lidar_pca": {
+      "fit": {
+        "actors": 43,
+        "logs": 9,
+        "moving_gt2mps": 9,
+        "motion_unavailable": 11,
+        "build_under100": 43,
+        "no_heldout_owned_return": 29,
+        "no_predicted_surface": 43,
+        "visual_only_predictions": 0,
+        "coarse_fallback": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.0,
+          "logs": 6
+        },
+        "early_rate": {
+          "mean": 0.0,
+          "logs": 6
+        },
+        "miss_rate": {
+          "mean": 1.0,
+          "logs": 6
+        },
+        "free_intrusion_m": {
+          "mean": 0.0,
+          "logs": 9
+        },
+        "surface_distance_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_recall_02": {
+          "mean": 0.0,
+          "logs": 6
+        }
+      },
+      "development": {
+        "actors": 8,
+        "logs": 2,
+        "moving_gt2mps": 1,
+        "motion_unavailable": 5,
+        "build_under100": 8,
+        "no_heldout_owned_return": 7,
+        "no_predicted_surface": 8,
+        "visual_only_predictions": 0,
+        "coarse_fallback": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.0,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 0.0,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 1.0,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.0,
+          "logs": 2
+        },
+        "surface_distance_m": {
+          "mean": null,
+          "logs": 0
+        },
+        "surface_recall_02": {
+          "mean": 0.0,
+          "logs": 1
+        }
+      }
+    },
+    "initial": {
+      "fit": {
+        "actors": 43,
+        "logs": 9,
+        "moving_gt2mps": 9,
+        "motion_unavailable": 11,
+        "build_under100": 43,
+        "no_heldout_owned_return": 29,
+        "no_predicted_surface": 2,
+        "visual_only_predictions": 41,
+        "coarse_fallback": 8,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.005555555555555556,
+          "logs": 6
+        },
+        "early_rate": {
+          "mean": 0.08333333333333333,
+          "logs": 6
+        },
+        "miss_rate": {
+          "mean": 0.8111111111111111,
+          "logs": 6
+        },
+        "free_intrusion_m": {
+          "mean": 1.2357800382211002,
+          "logs": 9
+        },
+        "surface_distance_m": {
+          "mean": 0.3459614243358374,
+          "logs": 6
+        },
+        "surface_recall_02": {
+          "mean": 0.5805555555555556,
+          "logs": 6
+        }
+      },
+      "development": {
+        "actors": 8,
+        "logs": 2,
+        "moving_gt2mps": 1,
+        "motion_unavailable": 5,
+        "build_under100": 8,
+        "no_heldout_owned_return": 7,
+        "no_predicted_surface": 3,
+        "visual_only_predictions": 5,
+        "coarse_fallback": 0,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.0,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 0.0,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 1.0,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.10793553292751312,
+          "logs": 2
+        },
+        "surface_distance_m": {
+          "mean": 0.27231088280677795,
+          "logs": 1
+        },
+        "surface_recall_02": {
+          "mean": 0.0,
+          "logs": 1
+        }
+      }
+    },
+    "final": {
+      "fit": {
+        "actors": 43,
+        "logs": 9,
+        "moving_gt2mps": 9,
+        "motion_unavailable": 11,
+        "build_under100": 43,
+        "no_heldout_owned_return": 29,
+        "no_predicted_surface": 2,
+        "visual_only_predictions": 41,
+        "coarse_fallback": 4,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.175,
+          "logs": 6
+        },
+        "early_rate": {
+          "mean": 0.06388888888888888,
+          "logs": 6
+        },
+        "miss_rate": {
+          "mean": 0.6388888888888888,
+          "logs": 6
+        },
+        "free_intrusion_m": {
+          "mean": 0.023596239039619528,
+          "logs": 9
+        },
+        "surface_distance_m": {
+          "mean": 0.2639170774569114,
+          "logs": 6
+        },
+        "surface_recall_02": {
+          "mean": 0.5111111111111111,
+          "logs": 6
+        }
+      },
+      "development": {
+        "actors": 8,
+        "logs": 2,
+        "moving_gt2mps": 1,
+        "motion_unavailable": 5,
+        "build_under100": 8,
+        "no_heldout_owned_return": 7,
+        "no_predicted_surface": 3,
+        "visual_only_predictions": 5,
+        "coarse_fallback": 1,
+        "lidar_fallback": 0,
+        "hit_rate": {
+          "mean": 0.0,
+          "logs": 1
+        },
+        "early_rate": {
+          "mean": 1.0,
+          "logs": 1
+        },
+        "miss_rate": {
+          "mean": 0.0,
+          "logs": 1
+        },
+        "free_intrusion_m": {
+          "mean": 0.16496741771697998,
+          "logs": 2
+        },
+        "surface_distance_m": {
+          "mean": 0.011908634565770626,
+          "logs": 1
+        },
+        "surface_recall_02": {
+          "mean": 1.0,
+          "logs": 1
+        }
+      }
+    }
+  },
+  "boundary": "No direct native pixel supervision exists in this zero-LiDAR cohort; DPT gradients flow through generated surfaces and features. A positive optimizer update can be envelope-only when sampled free constraints are already satisfied. Development has only one owned return; no inferential quality claim."
+}
