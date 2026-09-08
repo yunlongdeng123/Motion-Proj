@@ -1,6 +1,6 @@
 # Q-v2：观测查询驱动共享顶点表面
 
-2026-09-08 22:22 UTC。首候选已从bfc181b4启动，PID96997，已完成489对象initial并进入第1轮shared_train；正式质量结果pending。三角结果见[完整报告](WORLDSIM_V7_3_TRIANGLE_RESULTS.md)：R12显著降低R10的侵入却增加miss，未同时恢复正确命中与覆盖。本轮检验共享几何支持，保持可训练原生DPT和原物理目标，不声称连通即正确。
+2026-09-08 23:10 UTC。联合r1（code bfc181b4、PID96997）与同网格LiDAR r2（code95050522、PID98643）均在正式训练，质量结果pending。r2在23:08快照为第4轮、1459次真实更新；两支资源正常。三角结果见[完整报告](WORLDSIM_V7_3_TRIANGLE_RESULTS.md)：R12显著降低R10的侵入却增加miss，未同时恢复正确命中与覆盖。本轮检验共享几何支持，保持可训练原生DPT和原物理目标，不声称连通即正确。
 
 ![Q-v2实际组件](autoresearch/worldsim_v73/qv2/V73_QV2_ARCHITECTURE.png)
 
@@ -24,7 +24,7 @@
 
 ## 正式运行登记
 
-- task：`WS-V73-Q-V2-01`，run：`20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`；状态running（PID96997，初始化评价完成，现第1轮真实训练）。
+- task：`WS-V73-Q-V2-01`，run：`20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`；状态running（PID96997，初始化评价完成，30轮正式训练继续；逐步状态见run/status.json）。
 - 依据提交07e98727；启动manifest记录实际实现commit。M1r3 fresh DPT、Query seed7304，30轮、371 FIT Actor/20日志；489对象完整评价、75 DEV/5日志含51总不可用对象。原窗口24视图与分辨率不变。
 - 同R12的full_track FIT标签、native1/free.5/beam width.03m/res32/event0、AdamW1e-5与clip1；不从R12 checkpoint恢复、不改visual-only输入cohort、不加入上层LoRA或新局部对应/near-boundary目标。
 - 新网格initial必须实际评价；旧LiDAR PCA baseline复用R10保存结果。最终主要比较Q-v2−R12，再以R8/R14定位物理控制边界。仍按独立日志配对，报告hit/early/miss/free/距离/召回与表面预算；未成功返回也保留。FIT不是泛化证据，移动子集2日志的稀疏限制继续。
@@ -46,7 +46,7 @@
 
 主联合Q-v2 r1已到第3轮，物理/覆盖结果仍pending。为防止把椭球初始支持或共享网格本身的收益误归于视觉，补齐同一`ActorSharedMeshQueryDecoder`的LiDAR-only r2；这是计划中的同解码器控制，提前并行训练以在主候选结束时取得可解释比较。旧R8采用独立patch，不能代替此项。
 
-task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`，登记pending、提交后启动。仍用原371 FIT/67 DEV可用输入、完整489对象、seed7304、30轮/full_track/AdamW1e-5/clip1、642顶点1280面、相同尺寸椭球与共享边。build LiDAR的最多1024证据查询+512支持查询输入不变；512支持来自同build LiDAR，关闭图像/DPT/视觉特征读取，native-data-weight=0。coverage、beam free .5/.03m/res32、envelope .05、event0保留。
+task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`，已从95050522启动，PID98643；23:08 UTC第4轮1459次更新，allocated峰值0.252920GiB。仍用原371 FIT/67 DEV可用输入、完整489对象、seed7304、30轮/full_track/AdamW1e-5/clip1、642顶点1280面、相同尺寸椭球与共享边。build LiDAR的最多1024证据查询+512支持查询输入不变；512支持来自同build LiDAR，关闭图像/DPT/视觉特征读取，native-data-weight=0。coverage、beam free .5/.03m/res32、envelope .05、event0保留。
 
 此对照同时移除DPT适配、原生深度支持、视觉读取和native深度辅助监督，是视觉几何整通路控制，不是仅一个attention token的消融。相同seed不意味着不同分支消耗的逐步CUDA随机数相同，故不称逐步采样完全匹配。两支具有相同网格输出与Query参数定义；LiDAR模式未调用的视觉模块虽仍存于state_dict，不会接收梯度或Adam更新。其summary的requires_grad参数数不能冒充每个参数都参与训练，依据实际梯度路径解释。
 
@@ -55,3 +55,13 @@ task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam
 前述“不等主候选结果做完整矩阵”的取舍仍成立：当前仅增加这一必要控制，不启动其他拓扑/密度/损失网格。可训练视觉几何r1主线继续，LiDAR控制不替代它。23:00前资源为GPU14412/24576MiB，主allocated11.591GiB、RSS34.08GiB、cgroup无OOM、磁盘68GiB可用；LiDAR路径不加载DPT/744前缀，沿用已完成R7/R8的低显存执行方式，实际新增峰值在启动后记录。两个现有6线程进程在14CPU配额内；耗时均披露并行竞争。
 
 证据和启动入口`scripts/run_worldsim_v73_qv2_lidar_mesh_r2.sh`，源机制复用本页已核实Pixel2Mesh/Mesh R-CNN与原项目LiDAR路径，无新卡点、无新依赖/单独smoke/回归。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，正式结果pending，下一V73-F10。20新日志未读、30分钟ACTIVE、完成不关机。
+
+## 固定推理与收口边界（2026-09-08 23:10 UTC）
+
+`evaluate_worldsim_v73_fixed_actors.py`现按checkpoint配置选择共享网格或旧patch，保持相同build-only输入、无梯度、真实三角面硬读出与全部不可用对象分母。新网格保留642顶点/1280面原输出，不能重解释为642个独立patch，也不重网格化。已仅在CPU成功加载r2真实完成轮次checkpoint（全部keys匹配）；完整固定推理尚未执行，20新日志质量未读。checkpoint类加载只是接口证据，不能替代正式模型效果。
+
+收口命令为`bash scripts/summarize_worldsim_v73_qv2.sh lidar_r2`与`... joint_r1`；分别在相应最终489对象评价完成后各执行一次，后者须等两支都完成。前者比较r2−R8；后者比较r1−r2/R12/R14/R8。原指标与统计脚本复用，不回算历史比较；保存训练曲线、配对图、原summary及最终manifest。
+
+旧`analyze_worldsim_v73_query_provenance.py`与`analyze_worldsim_v73_surface_failures.py`按每patch8面/9顶点归属来源，不能用于本表示。Q-v2的source=2只说明输出来自共享网格顶点，不能给混合观测状态硬分LiDAR/视觉因果来源。`analyze_worldsim_v73_surface_support.py`仅依赖顶点/面，可按final失败模式使用，但闭合表面常有正常入/出两个交点；深度层数不是自交证明。主评价仍报告真实early/hit/miss/free与测量覆盖。
+
+23:08运行证据归档`autoresearch/worldsim_v73/qv2/shared_mesh_lidar_r2_training_start.json`，r2完成初始化489对象，1459/1459更新，非零Query梯度、DPT梯度0；原views字段仅元数据，不代表LiDAR分支读取图像。总GPU15163/24576MiB、无OOM，两支继续。failure_ledger_delta=none，F02等待最终对照，不新增失败ID、不额外做smoke/回归。

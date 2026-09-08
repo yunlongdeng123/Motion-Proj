@@ -1,3 +1,17 @@
+## Q-v2两支真实训练；固定网格评估入口就绪（2026-09-08 23:10 UTC）
+
+LiDAR r2 `WS-V73-Q-V2-01/20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`已从95050522启动，PID98643。23:08:11 UTC快照：完成489对象initial，第4轮，已记录1459呈现/1459实际更新，Query梯度非零、DPT梯度0，allocated峰值0.252920GiB；GPU总15163/24576MiB，cgroup oom/oom_kill=0，磁盘仍68GiB可用。联合r1/PID96997仍正常训练（其allocated峰值11.591165GiB）；不改两支配置。LiDAR日志的views=24/6只是相机位姿元数据，不代表读取图像，744前缀未加载。两支正式质量均pending。
+
+固定checkpoint评估器按保存的query_surface/mesh_level构造共享网格；旧checkpoint缺字段仍走原patch类。原脚本硬编码独立patch，不能直接加载新source embedding和mesh buffers，此处在正式固定推理前完成接入。保存真实顶点/面数与parameterization，surface_patches保持兼容字段但明确shared_mesh计数是顶点，移除“所有方法0.06m patches”的错误通用描述。仅CPU加载一次r2已完成轮次的真实latest.pt，全部state keys匹配、642顶点1280面；未启动额外推理、回归或读取20新日志，原训练入口/参数不变。
+
+新增收口入口`scripts/summarize_worldsim_v73_qv2.sh lidar_r2`与`... joint_r1`：各在相应完整final结束后执行一次。r2对R8；r1对r2/R12/R14/R8，沿用已有六指标、完整489分母/75 DEV/5日志配对与10000次seed7304 bootstrap，不回算旧对照。固定推理准备不等于候选已获准进入新日志；仍在方法选择结束后确认。
+
+Q-v2的source=2标记共享网格顶点，不能复用旧patch的primitive_id//8或vertex_id//9来源归因。既有只读vertices/faces的BVH支持诊断可在final后按失败需要使用；闭合网格一入一出本来可能有两个深度层，不能据此断言自交或重复patch。此为预先明确表示语义，不是新增科学失败或修订已发表指标。
+
+证据`qv2/shared_mesh_lidar_r2_manifest.json`、`qv2/shared_mesh_lidar_r2_training_start.json`与当前代码差异；报告Q-v2固定评价节同步。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none（运行与新表示接入，无新质量结论），下一V73-F10。三本台账/报告同步，小步push；30分钟ACTIVE、完成不关机，下一步等待正式final并推进已登记Q-v2机制判别。
+
+---
+
 ## Q-v2继续；登记同网格LiDAR控制（2026-09-08 23:00 UTC）
 
 22:55 UTC主r1/PID96997第3轮正常，DPT/Query梯度均非零、allocated峰值11.591165GiB、RSS约34.08GiB；无OOM，磁盘68GiB可用。根据F02/F09的参数化与视觉归因风险，提前训练同网格LiDAR控制，而不等主r1完成才补齐。r1保留可训练DPT+显式共享网格+physics，配置/进程不变。

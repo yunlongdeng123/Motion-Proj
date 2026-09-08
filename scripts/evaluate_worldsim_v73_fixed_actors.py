@@ -20,6 +20,14 @@ from motion_proj.worldsim_v73.surface_seeds import farthest_indices,native_surfa
 from train_worldsim_v73_physical_surface import lidar_patches,evaluate_actor_surface
 
 
+def make_query_decoder(config):
+    # 旧checkpoint没有query_surface字段，保持原独立patch路径。
+    if config.get('query_surface','patches')=='shared_mesh':
+        from motion_proj.worldsim_v73.shared_mesh_queries import ActorSharedMeshQueryDecoder
+        return ActorSharedMeshQueryDecoder(mesh_level=config.get('mesh_level',3))
+    return ActorSpatialQueryDecoder()
+
+
 @torch.no_grad()
 def main():
     parser=argparse.ArgumentParser()
@@ -52,17 +60,25 @@ def main():
               'original_cohort_actors':original_actors,'selected_actors':len(index['cases']),
               'selection_boundary':'input-subset depends only on original build LiDAR count, never prediction or heldout quality',
               'checkpoint_boundary':'explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training',
-              'surface_readout':'same explicit 0.06m patches, literal triangles, no opacity or hull',
+              'surface_readout':'literal triangles from the selected surface representation; no opacity, hull or export remeshing',
               'external_test_read':'external_confirmation' in roles}
     save('manifest.json',manifest); save('cohort.json',index['cases'])
     save('status.json',{'status':'running','phase':'load'})
     try:
-        decoder=ActorSpatialQueryDecoder().cuda().eval()
         state=None; head=None; mode=args.method; config={}
         if args.method=='checkpoint':
             state=torch.load(args.checkpoint,map_location='cpu',weights_only=True,mmap=True)
             config=state['config']; mode=config['mode']
+        decoder=make_query_decoder(config).cuda().eval()
+        if state is not None:
             decoder.load_state_dict(state['query_decoder'])
+        query_surface=config.get('query_surface','patches')
+        parameterization=('lidar_pca_patches' if mode=='lidar_pca' else
+                          'native_lidar_pca' if mode in ['native_only','native_fusion'] else query_surface)
+        manifest.update(mode=mode,query_surface=query_surface,surface_parameterization=parameterization,
+                        mesh_level=config.get('mesh_level',3) if query_surface=='shared_mesh' else None,
+                        completion_initialization=config.get('completion_init','native_surface'),
+                        surface_patches_boundary='legacy center count; shared_mesh counts vertices, not independent patches')
         visual_only_enabled=args.include_visual_only or bool(config.get('include_visual_only',False))
         manifest['effective_visual_only']=visual_only_enabled
         manifest['checkpoint_visual_only_training']=bool(config.get('include_visual_only',False)) if state is not None else None
@@ -137,15 +153,20 @@ def main():
                 if has_views: del pyramid
                 del features,depth
             row={'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
+                 'surface_parameterization':parameterization,'surface_vertices':len(surface['vertices_actor_m']),
+                 'surface_faces':len(surface['faces']),'surface_patches_boundary':manifest['surface_patches_boundary'],
                  'seed_support':support,'frames':evaluate_actor_surface(surface,case['rays']),
                  'extra_time_usage':'evaluation_only'}
             rows.append(row)
             torch.save({k:v.cpu() for k,v in surface.items() if isinstance(v,torch.Tensor)},args.output/(entry['owner']+'_surface.pt'))
             save('status.json',{'status':'running','phase':'fixed_evaluation','actors_done':len(rows),'actors_total':len(index['cases']),
                                 'scene':entry['scene'],'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30})
-            print(json.dumps({'scene':entry['scene'],'owner':entry['owner'],'surface_patches':row['surface_patches']}),flush=True)
+            print(json.dumps({'scene':entry['scene'],'owner':entry['owner'],'surface_vertices':row['surface_vertices'],
+                              'surface_faces':row['surface_faces'],'surface_parameterization':parameterization}),flush=True)
             del case,surface,points
         result={'status':'done','final':rows,'actors':len(rows),'roles':roles,'optimizer_updates':0,
+                'mode':mode,'query_surface':query_surface,'mesh_level':manifest['mesh_level'],
+                'surface_parameterization':parameterization,'completion_initialization':manifest['completion_initialization'],
                 'wall_s':time.monotonic()-started,'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,
                 'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,
                 'fit_label_times':'evaluation_only','boundary':'fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization'}
