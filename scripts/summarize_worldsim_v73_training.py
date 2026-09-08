@@ -40,6 +40,9 @@ result={'run':str(args.run),'run_status':json.loads((args.run/'status.json').rea
     'boundary':'training-only process evidence; target/ray samples change by epoch, no paired heldout inference or generalization claim',
     'native_aggregation':'both supervised Actor-equal and native-measurement-weighted Huber; unobserved Actors not counted as zero native error',
     'resume_boundary':'saved train history already contains restored complete epochs; original discarded partial epoch stays in parent run and is not counted twice'}
+manifest=json.loads((args.run/'manifest.json').read_text())
+result['training_mode']=manifest.get('config',{}).get('mode')
+result['include_visual_only']=manifest.get('config',{}).get('include_visual_only',False)
 resume=args.run/'resume.json'
 if resume.is_file():
     result['resume']=json.loads(resume.read_text())
