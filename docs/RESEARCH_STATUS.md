@@ -1,5 +1,21 @@
 # Research Status
 
+## V7.3 AV2逐束时刻场景组合实现登记（2026-09-08）
+
+依据AV2官方Sweep时间/ego补偿约定和Open3D显式BVH接口，新增 `SurfaceBVH.cast_per_time`：一个Actor只建一次固定规范表面BVH，每块8192条束按实际纳秒时间插值已知刚体位姿，变换原点和方向，保持米制距离并参与背景/全部Actor的统一最近正交点。缺失轨迹或传感器姿态的束预测为缺失并计入原始分母；没有把整扫描单姿态称作逐点查询。既有nuScenes单姿态路径保留。来源 https://github.com/argoverse/av2-api/blob/main/src/av2/structures/sweep.py ，https://www.open3d.org/docs/latest/cpp_api/classopen3d_1_1t_1_1geometry_1_1_raycasting_scene.html 。
+
+新增 `scripts/prepare_worldsim_v73_av2_scene_geometry.py`，从同一Actor数据登记的四build/两heldout扫描构建场景：build原始点在所有有效时刻已知框+.1m之外形成背景支持；世界端点只应用一次参考ego变换，束原点和归属使用各自发射时间。保存未雕刻背景和相同build-only自由空间单次雕刻背景，heldout束及归属完全一致，range<1m仅分层、不删支持/评价束。已知轨迹按原始timestamps/矩阵保存，不为每个模型重估。
+
+共同场景评价器接入逐束轨迹、可选背景文件、移动cohort返回组和按输入角色分别统计；external_confirmation不会硬编码成“旧5日志开发”，未知pose也单列。CPU评价环境为既有Python3.9/Torch2.1/Open3D0.19，补装pyarrow21.0.0用于读取Feather，复用现有环境，无新环境或模型测试；主训练环境pyarrow24.0.0保持原状。
+
+登记旧开发数据 `WS-V73-M4-AV2-SCENE-DATA-01/20260908T024000Z__old-development-per-return-r1`；同模型两背景比较 `WS-V73-M4-AV2-SCENE-01/20260908T024000Z__old-development-uncarved-r1` 与 `20260908T024000Z__old-development-carved-r2`，使用完整21Actor、原始两次heldout扫描、已完成的固定native fusion/r9和PCA。源码尚未执行本场景组合，不把已实现接口当成功证据；先在旧开发窗口跑完整数据与实际查询。
+
+新20日志CPU转换仍在原PID41941下进行，主r5恢复和native-only r11继续正常训练，Ada Y-up r2处于最终评价收尾。F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，F08恢复推进但退出原因未明，下一编号V73-F09。整个V7.3未完成，shutdown=false；未启动r10，无训练启动队列，数据父进程及子任务须完成后才可能执行最终关机。
+
+---
+
+
+
 ## V7.3 外部20日志通用输入已启动与场景结果图（2026-09-08）
 
 `WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1` 已实际启动，codef70d099c，CPU父进程PID41941，日志 `/root/autodl-tmp/controller_logs/v73_av2_external20_export_r1.log`。最新3/20日志导出完成，原身份顺序、四build/两heldout时间和全部七相机保留；后续日志由该父进程顺序执行，属于关机前必须结束的数据控制进程。尚未完成整个20日志合并。

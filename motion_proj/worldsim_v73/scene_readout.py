@@ -49,6 +49,24 @@ class SurfaceBVH:
         rays=np.concatenate([np.broadcast_to(origins,directions.shape),directions],axis=-1).astype(np.float32)
         return self.scene.cast_rays(o3d.core.Tensor(rays),nthreads=2)['t_hit'].numpy()
 
+    def cast_per_time(self,origins,directions,timestamps_ns,trajectory,sensor_known=None,chunk=8192):
+        """Keep one canonical BVH and transform each beam at its known rigid time."""
+        directions=np.asarray(directions); origins=np.broadcast_to(origins,directions.shape)
+        times=np.asarray(timestamps_ns,np.int64)
+        known=(times>=trajectory.times[0])&(times<=trajectory.times[-1])
+        if sensor_known is not None: known&=sensor_known
+        depth=np.full(len(times),np.inf,np.float32)
+        if self.scene is None: return depth,known
+        indices=np.flatnonzero(known)
+        for start in range(0,len(indices),chunk):
+            take=indices[start:start+chunk]
+            poses,_=trajectory.at(times[take]); rotations=poses[:,:3,:3]
+            local_origins=np.einsum('nji,nj->ni',rotations,origins[take]-poses[:,:3,3])
+            local_directions=np.einsum('nji,nj->ni',rotations,directions[take])
+            # Rigid rotation preserves direction norm and the metric ray distance.
+            depth[take]=self.cast(local_origins,local_directions)
+        return depth,known
+
 
 def compose_first(background_depth,actor_depths):
     """Actor depths为(owner_id,原始束距离)；未命中=-1，背景=0。"""
