@@ -20,7 +20,7 @@
 
 几何监督仍为稀疏测量→表面单向coverage、原始束beam free与直接build轴向深度Huber；未知表面不惩罚为不存在，UNKNOWN不标FREE。固定闭合拓扑是一项可失败的形状先验，不能作为内部占据真值。原始束只监督有效首返回前；不添加体积正厚度。首轮不叠加ARAP、Laplacian或新loss，以先识别参数化的实际效果。
 
-可训练Query参数1668393（旧1670517），原生DPT32654562不变，早期/跨视图聚合仍冻结。输出面数1280，旧片为8×(512+min(build,1024))，约4104–12288；总隐查询数为642+512+min(build,1024)，最高2178，旧最高1536。面数、连续支持、初始化与邻接同时属于此次参数化迁移，不能说是面密度/初始化/纯拓扑完全匹配的单模块因果实验。若观察到收益，后续再做同解码器LiDAR控制及必要的预算/来源判别，不以无止境分辨率网格拖延。
+可训练Query参数1668393（旧1670517），原生DPT32654562不变，早期/跨视图聚合仍冻结。输出面数1280，旧片为8×(512+min(build,1024))，约4104–12288；总隐查询数为642+512+min(build,1024)，最高2178，旧最高1536。面数、连续支持、初始化与邻接同时属于此次参数化迁移，不能说是面密度/初始化/纯拓扑完全匹配的单模块因果实验。同解码器LiDAR控制现已提前安排，便于主候选结束时区分视觉通路与参数化本身；必要的预算/来源判别依据结果再定，不以无止境分辨率网格拖延。
 
 ## 正式运行登记
 
@@ -41,3 +41,17 @@
 ## 后续判别
 
 如果连通表面减少missing却增加early，检查实际网格位置/折叠与certified-free边界梯度，而非以闭合性当真值；如果训练几何仍难恢复，区分上下游支持与视觉对应，按已准备的边界独立适配VGGT上层。若物理/覆盖同时改善，继续同信息控制、完整输入与背景合成，再选择新日志确认。用户提出的near-surface certified-free与calibration-guided consistency可行性已写计划16节，均保持独立机制，不混入首轮。
+
+## 同共享网格的 LiDAR-only 控制（2026-09-08 23:00 UTC）
+
+主联合Q-v2 r1已到第3轮，物理/覆盖结果仍pending。为防止把椭球初始支持或共享网格本身的收益误归于视觉，补齐同一`ActorSharedMeshQueryDecoder`的LiDAR-only r2；这是计划中的同解码器控制，提前并行训练以在主候选结束时取得可解释比较。旧R8采用独立patch，不能代替此项。
+
+task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`，登记pending、提交后启动。仍用原371 FIT/67 DEV可用输入、完整489对象、seed7304、30轮/full_track/AdamW1e-5/clip1、642顶点1280面、相同尺寸椭球与共享边。build LiDAR的最多1024证据查询+512支持查询输入不变；512支持来自同build LiDAR，关闭图像/DPT/视觉特征读取，native-data-weight=0。coverage、beam free .5/.03m/res32、envelope .05、event0保留。
+
+此对照同时移除DPT适配、原生深度支持、视觉读取和native深度辅助监督，是视觉几何整通路控制，不是仅一个attention token的消融。相同seed不意味着不同分支消耗的逐步CUDA随机数相同，故不称逐步采样完全匹配。两支具有相同网格输出与Query参数定义；LiDAR模式未调用的视觉模块虽仍存于state_dict，不会接收梯度或Adam更新。其summary的requires_grad参数数不能冒充每个参数都参与训练，依据实际梯度路径解释。
+
+新initial必须实际评价，不能复用joint初始网格预测（观测隐状态不同），固定LiDAR PCA复用R10保存结果。先汇总r2−R8判断LiDAR参数化变化，再在两者都完成后汇总r1−r2，比较hit/early/miss/free/测量距离/召回；完整分母与独立日志配对保持。R12/R14已保存的基线继续作为外部通路锚点。分析脚本只新增保存真实surface_vertices/faces/parameterization字段及对照路径元数据；不改变任何指标、聚合、bootstrap或旧结果，不回算历史。
+
+前述“不等主候选结果做完整矩阵”的取舍仍成立：当前仅增加这一必要控制，不启动其他拓扑/密度/损失网格。可训练视觉几何r1主线继续，LiDAR控制不替代它。23:00前资源为GPU14412/24576MiB，主allocated11.591GiB、RSS34.08GiB、cgroup无OOM、磁盘68GiB可用；LiDAR路径不加载DPT/744前缀，沿用已完成R7/R8的低显存执行方式，实际新增峰值在启动后记录。两个现有6线程进程在14CPU配额内；耗时均披露并行竞争。
+
+证据和启动入口`scripts/run_worldsim_v73_qv2_lidar_mesh_r2.sh`，源机制复用本页已核实Pixel2Mesh/Mesh R-CNN与原项目LiDAR路径，无新卡点、无新依赖/单独smoke/回归。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，正式结果pending，下一V73-F10。20新日志未读、30分钟ACTIVE、完成不关机。

@@ -16,6 +16,9 @@ def summarize_actor(row):
     points=sum(r['positive_points'] for r in frames)
     value={**row['actor'],'heldout_owned_rays':owned,'heldout_all_rays':rays,
            'surface_patches':row['surface_patches'],'extra_time_usage':row.get('extra_time_usage','evaluation_only')}
+    # shared_mesh的旧字段计数是顶点数；保留显式预算，不能误报为642个独立patch。
+    for name in ['surface_parameterization','surface_vertices','surface_faces','surface_patches_boundary']:
+        value[name]=row.get(name)
     for name in ['hit_rate','early_rate','miss_rate']:
         value[name]=sum(r['owned_ray']['rays']*(r['owned_ray'].get(name) or 0) for r in frames)/owned if owned else None
     value['free_intrusion_m']=sum(r['all_near_box_rays']*r['mean_free_intrusion_m'] for r in frames)/rays if rays else None
@@ -97,7 +100,9 @@ def main():
         other=json.loads((Path(path)/'summary.json').read_text())
         stages[name]=[summarize_actor(row) for row in other['final']]
         reference_protocols[name]={'run':path,'fit_label_times':other.get('fit_label_times'),
-                                   'boundary':other.get('boundary')}
+                                   'boundary':other.get('boundary'),'mode':other.get('mode'),
+                                   'query_surface':other.get('query_surface'),'mesh_level':other.get('mesh_level'),
+                                   'completion_initialization':other.get('completion_initialization')}
     result={'run':str(args.run),'status':summary['status'],
         'scope':summary.get('boundary','existing log cohort; no new-source confirmation'),
         'fit_extra_time_usage':'training_labels' if summary.get('fit_label_times') in ['all_window','full_track'] else 'evaluation_only',

@@ -428,3 +428,7 @@ R10/R12/R14与R11锚点全部done，见[完整结果](WORLDSIM_V7_3_TRIANGLE_RES
 已按条件决策实现[观测查询驱动共享顶点网格](WORLDSIM_V7_3_QV2_SHARED_MESH.md)，任务`WS-V73-Q-V2-01`。642顶点/1280固定面，保留DPT可训练、LiDAR/native查询、原局部视觉读出与R12监督/数据；先检验表面支持共享，不叠加loss/上层适配。Pixel2Mesh/Mesh R-CNN官方源码提供迁移依据，稀疏测量不替代其完整表面监督。拓扑、初始化、面密度限制明示；实际通路检查通过，正式30轮结果pending，三本台账登记。F02等保持，不声称固定拓扑已经解决physics。
 
 17.6执行状态（22:22 UTC）：共享网格首轮已从bfc181b4启动，PID96997，task状态running；初始化评价不计为真实训练更新。三角结论及Q-v2组件已进入9页阶段论文r3，候选质量仍pending。完成不关机。
+
+### 17.7 同网格LiDAR控制提前并行（2026-09-08 23:00 UTC）
+
+主r1第3轮正常，补齐Q-v2 r2 LiDAR-only控制：同642顶点/1280面、原cohort/full_track/seed7304/30轮、coverage/beam目标与优化器；关闭DPT/视觉通路及native辅助监督，512支持查询来自build LiDAR。它控制整条视觉几何路径而非单个attention，旧R8的patch表示不能代替。只运行此必要对照，不扩成多因素矩阵；先r2−R8，再两支完成后的r1−r2。实际资源记录、完整分母和20新日志未读保持，详见Q-v2报告新增节。F02/F09等继续，failure_ledger_delta=none。

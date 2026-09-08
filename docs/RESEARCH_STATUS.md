@@ -1,3 +1,15 @@
+## Q-v2继续；登记同网格LiDAR控制（2026-09-08 23:00 UTC）
+
+22:55 UTC主r1/PID96997第3轮正常，DPT/Query梯度均非零、allocated峰值11.591165GiB、RSS约34.08GiB；无OOM，磁盘68GiB可用。根据F02/F09的参数化与视觉归因风险，提前训练同网格LiDAR控制，而不等主r1完成才补齐。r1保留可训练DPT+显式共享网格+physics，配置/进程不变。
+
+task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2`登记pending，基于a74b1dda，启动manifest记录实际代码。原cohort、seed7304、30轮/full_track、642顶点1280面、相同Query类与尺寸椭球；mode=lidar_only，512支持种子来自build LiDAR，native-data-weight=0。coverage/free.5/beam.03/res32/event0/envelope.05/AdamW1e-5保持。此为移除整个视觉/native通路及其辅助监督的控制，不称attention-only因果实验。未调用视觉参数无梯度，不把summary的requires_grad总数误报为全部实际更新。
+
+新initial实际评价、固定PCA复用；优先r2−R8参数化差异，再r1−r2同网格通路比较，保持489完整分母/5 DEV日志与未读20新日志。只增加这一必要控制，不展开矩阵。详见Q-v2报告新增节；分析脚本仅保留输出顶点/面数、表示与路径元数据，指标/聚合/bootstrap不变，不重算旧对照。6+6线程在14CPU配额内，实际新作业资源待启动记录；运行耗时披露并行竞争。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none（对照登记，无新结果），下一V73-F10。源码依据复用已核实Pixel2Mesh/Mesh R-CNN与现有LiDAR训练路径，未出现新卡点、不加smoke/回归/新依赖。三本台账与计划同步并push后启动，30分钟ACTIVE、完成不关机。
+
+---
+
 ## Q-v2进入真实共享训练（2026-09-08 22:24 UTC）
 
 首轮`WS-V73-Q-V2-01/20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`（code bfc181b4、PID96997）完成489对象初始化评价，现为shared_train第1轮，快照已记录116次呈现/116次真实更新。首步DPT/Query裁剪前梯度分别544.504028/11.606274，当前allocated峰值11.591165GiB；输出642共享顶点/1280面，24视图实例已正常反传。此为实际执行与梯度证据，不作质量结论；正式30轮继续，不改变配置或提前读取新日志。
