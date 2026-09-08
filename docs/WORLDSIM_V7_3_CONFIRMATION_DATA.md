@@ -41,7 +41,7 @@ nuScenes本地35个可用场景属于27日志，当前31窗口属于25日志；�
 
 旧AV2开发窗口已用同四build扫描构建未雕刻/雕刻背景，并在逐束已知姿态下组合21个固定Actor表面和两次187494原始heldout束。背景PCA间距0.06m、20近邻；排除所有有效时刻已知框+.1m，只按build首返回前.2m删除冲突三角面。世界背景和每个规范Actor各建一次BVH，按逐点时间逆变换射线并统一最近求交。range<1m仅报告分层，无该条件的数据删除。
 
-已以code8a0cf6a4启动外部场景数据`WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`：复用上述旧域确定参数，CPU逐日志构建，包含所有原20身份/936Actor。背景build雕刻诊断用于构建，heldout只另存原始束，不做外部模型推理或heldout质量评分。运行失败保存原因且停止，不跳过或替换日志。CPU父进程PID47224（外层等待shell47223），第一日志构建完成；日志`/root/autodl-tmp/controller_logs/v73_av2_external20_scene_data_r1.log`。父控制进程及子构建器须纳入关机前任务检查。
+已以code8a0cf6a4完成全部20日志的外部场景数据`WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`：复用上述旧域确定参数，CPU逐日志构建，包含所有原20身份/936Actor。背景build雕刻诊断用于构建，heldout只另存原始束，不做外部模型推理或heldout质量评分。运行失败保存原因且停止，不跳过或替换日志。构建耗时1519.9831s，CPU父RSS0.12975GiB、子最大0.91083GiB；父47224、外层shell47223及子任务均退出。6839807个背景点、原54718456面，按固定build-only规则删除2159469（3.9465%），余52558987面；906573条build冲突束降至23条，剩余侵入总和183.0328m，未因此调参或循环删面。936Actor的105755个已知姿态及全部80build/40heldout扫描保留。完整轨迹索引76684364字节保留在run，Git仅归档`m4/av2_external20_scene_construction.json`的构建摘要和源路径，避免重复大数组。日志`/root/autodl-tmp/controller_logs/v73_av2_external20_scene_data_r1.log`。未进行外部网络推理或heldout模型质量评分。
 
 方法定型后才在外部集形成固定模型对比。28×672²的完整冻结前缀在旧窗口实测allocated峰值7.64359GiB；当前r5/r11并行时不挤入该GPU任务。只缓存完全冻结前缀；可训练几何头实时解码，不把旧最终特征缓存冒充内部PEFT。
 

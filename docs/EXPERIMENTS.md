@@ -1,5 +1,29 @@
 # Experiments
 
+## V7.3 轨迹编辑组合完成与外部20场景构建完成（2026-09-08）
+
+`WS-V73-M4-TRAJECTORY-EDIT-01/20260908T033000Z__old-av2-r9-lateral2m-r1` 已以codee45118ef正常完成，CPU5.5590s/RSS0.95334GiB。旧AV2开发窗口全部21个固定r9 Actor规范BVH与原build雕刻背景共同读出；分别编辑build/轨迹元数据确定的全部4个移动Actor，按每束实际时刻施加局部+Y 2m，其他层不变。四个独立编辑情景各使用同187494条原有返回束，未重训、未重新生成形状、未读旧实测距离作为编辑GT。
+
+| 编辑Actor前缀 | 原先Actor首交点 | 编辑后Actor首交点 | 新增遮挡 | 释放束 | 释放到未知 | 释放到其他Actor |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 6247b383 | 6 | 4 | 3 | 5 | 5 | 0 |
+| 9054f80c | 2 | 2 | 2 | 2 | 2 | 0 |
+| 94dede14 | 19 | 0 | 0 | 19 | 19 | 0 |
+| f696fa0d | 38 | 22 | 21 | 37 | 31 | 6 |
+
+四个独立情景合计63次束释放，57次没有已存表面接续、6次接续其他Actor，接续背景0；不是同时移动四辆车的单一场景统计。保留未知暴露，没有补洞。该演示证明固定规范表面与时变轨迹的机械组合，不能证明反事实真实性、碰撞安全、完整no-return传感器仿真或视觉主方法优越。第三辆编辑后在原有束子集上没有首交点也完整保留。图`m4/V73_TRAJECTORY_EDIT.png/pdf`展示全部4车的首个登记扫描，区分灰色规范中心与彩色真实逐束交点；修正了最初图中中心重叠可能与交点混淆的符号，未重跑模型。逐情景/帧统计在`m4/trajectory_edit_r1_summary.json`。
+
+外部场景 `WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1` code8a0cf6a4 已完整完成20日志，1519.9831s，CPU父RSS0.12975GiB、子最大0.91083GiB；父47224、外层shell47223和子任务均已退出。936Actor、105755个只读轨迹姿态、80build/40heldout扫描、7815152/3908250原始返回，全部原身份与空输入保留。6839807个背景点生成54718456个三角面，按预先确定build-free单次雕刻删除2159469（3.9465%），保留52558987面；build冲突束906573→23，剩余侵入和183.0328m。未因外部残差改变参数或循环删面，不声称严格零违规；无heldout模型质量评分或外部网络推理。
+
+完整索引含原始轨迹数组76684364字节，保留于source run，不在Git重复巨大轨迹。新增`scripts/summarize_worldsim_v73_scene_construction.py`仅整理构建计数和既有build诊断，归档`m4/av2_external20_scene_construction.json`，保留源路径和各日志执行资源；不是新的验收门控。原始背景、未雕刻控制、heldout束、轨迹与全部构建日志持续可回溯。
+
+F04有了轨迹组合的实际证据，但已存背景稀疏/未知暴露和错误前表面仍未解决；F01/F02/F03/F05继续active，F06直接数据约束缓解，F07轴接口落实，F08恢复推进但原退出原因未知，下一编号V73-F09。主r5恢复最近epoch29、native-only full_track r11 epoch8，实际GPU峰值仍10.19917/2.34640GiB，cgroup oom/oom_kill=0，数据盘约112GiB可用。当前仅这两项主训练在运行，无训练启动队列。
+
+下一步在r5完成最终评价并退出后汇总主视觉几何结果、同信息LiDAR/原生融合/强基线差值，实际运行旧AV2七相机joint接口，然后安排已登记full_track joint r10及外部冻结前缀。最终确认仍等待方法选择，不能将本轮应用演示或数据完成算作整个V7.3完成。shutdown=false；继续15分钟自动推进，真正研究收尾保存/push且确认所有任务/控制器结束后关机。
+
+---
+
+
 ## V7.3 只读规范表面的轨迹编辑演示登记（2026-09-08）
 
 主r5恢复当前epoch28、native-only full_track r11 epoch7，训练仍正常；外部场景CPU构建最近15/20日志，无新外部模型质量结果。按计划13.4补充组合应用，先阅读[Street Gaussians ECCV2024官方代码](https://github.com/zju3dv/street_gaussians)及[NeuRAD CVPR2024论文](https://openaccess.thecvf.com/content/CVPR2024/papers/Tonderski_NeuRAD_Neural_Rendering_for_Autonomous_Driving_CVPR_2024_paper.pdf)。迁移Actor/背景分解与刚体actor shift演示思想，使用现有不透明三角面硬排序；不复现其外观渲染、传感器概率或以编辑展示证明其/本方法真实性。
