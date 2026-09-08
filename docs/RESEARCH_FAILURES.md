@@ -1,5 +1,21 @@
 # Motion-Proj 统一失败、风险与防重复账本
 
+## V7.3 外部载荷下载完成与AV2逐点几何接口（2026-09-08）
+
+20条新AV2确认日志的760文件已下载完成，343260344字节；s5cmd返回0，977.74s，PID34904正常退出。传输状态保存在 /root/autodl-tmp/controller_logs/v73_av2_confirmation/status.json，原始760行copy.log保留。仅复制原始文件，没有读取新日志的图像/点云数值进行方法选择，没有外部网络推理；既有登记名单不变。
+
+按AV2官方Sweep及SE3接口实现 `motion_proj/worldsim_v73/av2_geometry.py`：int64相对纳秒插值、逐点发射时间、参考ego补偿端点、两LiDAR逐点原点、已知Actor/camera时刻变换、保留七路全视場图像及padding有效矩形。输入端点只应用一次参考ego→city变换，不能重复运动补偿；Actor坐标/原点使用各点时间，图像使用自身曝光时间。尚未完成Actor case/build导出、六相机ID到七路接口与padding排除，不能称外部模型已接通。
+
+一次旧开发真实扫描诊断已完成：02678d04-cc9f-3148-9f95-1ba66347dff9序号5，94860返回、offset0.615–106.315ms，全部有ego姿态。只用扫描时刻原点会造成原点位置差中位0.59106m/p95 1.07697m/最大1.15741m。laser0–31→up的ring仰角MAD中位0.011554°，反向映射0.126340°，采用前者但明确为旧开发数据的几何推断，未检索到官方编号组声明；不在新确认日志重估。七相机原始曝光/光轴/内参与有效矩形均记录，672×672仅完整画布而非有效视场；padding不能形成表面支持。CPU0.99s、RSS0.22056GiB，无模型smoke或新确认质量读取。证据coverage/av2_geometry_development_r1.json，报告 `WORLDSIM_V7_3_AV2_GEOMETRY.md`。
+
+主joint r5、CAPA r2（最近17/31窗口完成）和event r9（最近epoch14）正常运行，不增加GPU并发。AdaPoinTr轴修订r2、joint full_track r10和native-only r11待现有资源释放，无自动启动队列。下一步在旧AV2开发数据导出共同Actor/射线接口并处理七路相机/有效画幅，之后继续完整对照和最终新日志应用。
+
+failure_ledger_delta=update F04/F05数据对应与外部格式进度；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F08。整个V7.3未完成，shutdown=false；保存/push和确认无训练、评估、数据及待启动任务之后才执行最终关机。
+
+---
+
+
+
 ## V7.3 二十条新AV2日志的元数据选择与精确载荷准备（2026-09-08）
 
 针对nuScenes trainval无未记录新日志的F05，已依据AV2官方数据源迁移：只读S3目录得到Sensor train700条日志，排除仓库configs/docs/scripts中已引用身份及本地已有目录，共1条；699候选按日志名字典序选前20条，在读取每条对象元数据前登记身份。既有80条AV2 val legacy日志可用于格式开发。新train日志在本研究中是external_confirmation，不能用于共享训练或结构/超参选择；跨日志与传感器域改变需单列，不能混称同分布nuScenes确认。
