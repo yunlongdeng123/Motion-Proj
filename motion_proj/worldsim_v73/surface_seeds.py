@@ -41,6 +41,10 @@ def native_surface_seeds(depths,metric_scale,camera_from_actor,intrinsics,size_l
     candidates,counts=native_surface_points(depths,metric_scale,camera_from_actor,intrinsics,size_lwh_m,valid_image_rect)
     fallback=len(candidates)==0
     if fallback: candidates=build_points
+    if not len(candidates):
+        # 无两类表面支持时交给现有有空间位置的coarse查询；不能伪造LiDAR点。
+        return None,{'per_view_native_support':counts,'native_candidates':0,
+                     'lidar_fallback':False,'coarse_fallback':True,'seed_count':count}
     ids=farthest_indices(candidates,count)
     return candidates[ids],{'per_view_native_support':counts,'native_candidates':sum(counts),
                              'lidar_fallback':fallback,'seed_count':count}

@@ -1,5 +1,19 @@
 # Experiments
 
+## V7.3 零LiDAR核查完成与固定视觉入口登记（2026-09-08）
+
+`WS-V73-M2-EMPTY-INPUTS-01/20260908T062000Z__population-build-availability-r1` codeb9690161完成，CPU1.249847s/RSS.362228GiB、零推理/更新。43个fit零LiDAR对象分布9日志，其中41有相机位姿和保守框视锥重叠、33有既有native支持、36有full_track正目标共58710点。41相机对象内34有正目标、8无既有native候选、9无build近框束。8个开发零LiDAR对象分布2日志，5有相机且已有native支持；全部8对象合计只有1条heldout归属回波，不能用此子组承载几何精度主张。fit/development原build近框束总数43894/70，缺失束和无相机对象均保留。
+
+详见`docs/WORLDSIM_V7_3_EMPTY_INPUTS.md`，原始核查归档m2/global/empty_inputs_r1_summary.json。相机视锥仅可能性、native候选不是正确性。F05中“无LiDAR即无可预测输入”属于当前主接口限制；不改变已有完成结果，也不暗中修改当前R10/R11或R12的训练cohort。
+
+固定推理器新增`--include-visual-only`显式入口与metadata-only的`--input-subset zero_lidar`。两类表面支持均空时，seed函数返回None并使用现有coarse位置查询；有原生支持则沿原路径，不伪造LiDAR点。原生融合模式无两类支持仍空，双模态均缺失仍空。所有旧默认运行保持原协议，R10/R11已载入的训练代码不变。r5的coarse参数此前主要随原生seed小残差训练，此输入退路未充分训练，不声称已有质量收益。
+
+登记`WS-V73-M2-EMPTY-INPUTS-01/20260908T063000Z__fixed-joint-r5-visual-only-r2`，r5最终固定checkpoint、全51零LiDAR对象、0更新/无外部数据。登记时尚未执行；此轮只接固定推理入口，训练器visual-only入口仍待独立变更。F05继续，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## V7.3 F05零LiDAR输入的实际视觉支持核查登记（2026-09-08）
 
 R10/R11在06:10UTC继续原PID53472/38460、epoch5/18，实际native反向正常，GPU15503MiB；未启动重复训练。主训练器仍根据旧`unavailable_input`排除43 fit/8 development零LiDAR对象，而已有population native fusion允许零LiDAR但非空原生支持输出。需要把输入能力与实现限制分开，不能把“无LiDAR”自动解释为“无图像几何支持”。

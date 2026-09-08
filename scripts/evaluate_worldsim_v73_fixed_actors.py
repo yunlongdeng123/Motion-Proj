@@ -27,19 +27,31 @@ def main():
     parser.add_argument('--native-run',type=Path,help='prefix and build alignment for these input windows')
     parser.add_argument('--checkpoint',type=Path,help='fixed completed shared-training latest.pt')
     parser.add_argument('--method',choices=['checkpoint','native_fusion','lidar_pca'],default='checkpoint')
+    parser.add_argument('--include-visual-only',action='store_true',
+                        help='explicitly allow zero-LiDAR Actors with camera poses; does not imply the checkpoint was trained on them')
+    parser.add_argument('--input-subset',choices=['all','zero_lidar'],default='all',
+                        help='metadata-only scope for a registered zero-LiDAR input-path analysis')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args(); args.output.mkdir(parents=True,exist_ok=False)
     torch.set_num_threads(4); torch.manual_seed(7304); started=time.monotonic()
     def save(name,value):
         (args.output/name).write_text(json.dumps(value,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
     index=json.loads((args.actor_data/'index.json').read_text())
+    original_actors=len(index['cases'])
+    if args.input_subset=='zero_lidar':
+        index['cases']=[case for case in index['cases'] if case['build_points']==0]
     roles=sorted({case['role'] for case in index['cases']})
     manifest={'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
               'actor_data':str(args.actor_data),'native_run':str(args.native_run),'checkpoint':str(args.checkpoint),
               'method':args.method,'roles':roles,'optimizer_updates':0,'camera_parameters_updated':False,
               'input_boundary':'original build support/images, fixed build alignment and known rigid trajectories only',
               'target_boundary':'heldout measurements used only by common final evaluator, never prediction',
-              'empty_input_policy':'all non-ready Actors retained with empty prediction, matching shared model protocol',
+              'empty_input_policy':('zero-LiDAR camera-pose Actors may use native support or existing coarse queries; both-modality-absent Actors remain empty'
+                                    if args.include_visual_only else 'all non-ready Actors retained with empty prediction, matching shared model protocol'),
+              'include_visual_only':args.include_visual_only,'input_subset':args.input_subset,
+              'original_cohort_actors':original_actors,'selected_actors':len(index['cases']),
+              'selection_boundary':'input-subset depends only on original build LiDAR count, never prediction or heldout quality',
+              'checkpoint_boundary':'explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training',
               'surface_readout':'same explicit 0.06m patches, literal triangles, no opacity or hull',
               'external_test_read':'external_confirmation' in roles}
     save('manifest.json',manifest); save('cohort.json',index['cases'])
@@ -61,7 +73,9 @@ def main():
             case=torch.load(args.actor_data/entry['file'],map_location='cpu',weights_only=True)
             case['metadata']['input_status']=entry['status']
             points=case['points_actor_m'].cuda(); support={}
-            if entry['status']!='ready':
+            visual_only=args.include_visual_only and visual and not len(points) and bool(case['view_indices'])
+            case['metadata']['visual_only_prediction_enabled']=visual_only
+            if entry['status']!='ready' and not visual_only:
                 surface={'vertices_actor_m':points.new_empty(0,3),'faces':torch.empty(0,3,device='cuda',dtype=torch.long),
                          'centers_actor_m':points.new_empty(0,3)}
                 support={'prediction_unavailable':True,'reason':case['metadata'].get('reason')}
@@ -89,21 +103,28 @@ def main():
                     source=native if len(native) else points
                     n=min(len(points),decoder.evidence_queries)
                     evidence=points[torch.linspace(0,len(points)-1,n,device='cuda').long()]
-                    centers=torch.cat([evidence,source[farthest_indices(source,len(decoder.coarse))]])
-                    surface=lidar_patches(torch.cat([points,native]),decoder,centers=centers)
+                    if len(source):
+                        centers=torch.cat([evidence,source[farthest_indices(source,len(decoder.coarse))]])
+                        surface=lidar_patches(torch.cat([points,native]),decoder,centers=centers)
+                    else:
+                        surface={'vertices_actor_m':points.new_empty(0,3),
+                                 'faces':torch.empty(0,3,device='cuda',dtype=torch.long),'centers_actor_m':points.new_empty(0,3)}
                     support={'native_candidates':len(native),'per_view_native_support':counts,'lidar_fallback':not len(native)}
+                    if not len(source): support.update(lidar_fallback=False,prediction_unavailable=True,reason='no_native_or_lidar_surface_support')
                 else:
                     if completion=='native_surface' and depth is not None:
                         seeds,support=native_surface_seeds(depth,scales[entry['scene']],matrices,calibration,size,
                                                           points,len(decoder.coarse),valid_image_rect=rect)
                     else:
-                        seeds=points[farthest_indices(points,len(decoder.coarse))]
-                        support={'native_candidates':None,'lidar_fallback':completion=='native_surface'}
+                        seeds=points[farthest_indices(points,len(decoder.coarse))] if len(points) else None
+                        support={'native_candidates':None,'lidar_fallback':completion=='native_surface' and len(points)>0,
+                                 'coarse_fallback':not len(points)}
                     with torch.autocast('cuda',dtype=torch.bfloat16):
                         surface=decoder(points,size,features,matrices,calibration,case['image_hw'],case['camera_ids'].cuda(),
                             case['time_offsets_s'].cuda(),use_spatial=mode!='pointwise',use_visual=features is not None,
                             completion_seeds=seeds,camera_weights=case.get('camera_embedding_weights'),valid_image_rect=rect)
                 support['has_actor_camera_pose']=has_views
+                support['input_path']='visual_only' if visual_only else 'existing_multimodal_or_lidar'
                 if has_views: del pyramid
                 del features,depth
             row={'actor':case['metadata'],'surface_patches':len(surface['centers_actor_m']),
