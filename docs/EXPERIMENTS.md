@@ -1,5 +1,23 @@
 # Experiments
 
+## V7.3 构建束自由空间背景雕刻对照登记（2026-09-08）
+
+三项长期训练正常：r5恢复已进入epoch23，native-only r11进入epoch2，Ada Y-up r2进入epoch14；未新增GPU并发，未读新20日志评价。现有场景背景自身的cohort early约27%且free约1m，足以遮蔽Actor增益，F04需直接处理构建侧几何一致性。
+
+先检索[经典范围图空间雕刻](https://lightfield.stanford.edu/papers/volrange/)、[Voxblox自由空间/全束积分](https://voxblox.readthedocs.io/en/latest/pages/The-Voxblox-Node.html)及[Open3D多交点API](https://www.open3d.org/docs/latest/cpp_api/classopen3d_1_1t_1_1geometry_1_1_raycasting_scene.html)，再迁移为当前显式三角面的轻量背景对照，不声称复现TSDF或新方法。
+
+新增 `scripts/carve_worldsim_v73_background.py`：以相同r2近传感器修订背景为输入，只读取原四个build扫描的有效原始首返回和已知扫描时刻标定，查询每束全部返回交点；若0<t<d_build−0.2m则删除被矛盾证据命中的背景三角面。首回波之后和未观测方向仍为未知，不移动Actor，不改轨迹，不通过opacity隐藏错表面，也不按heldout值删支持。保留所有heldout文件/归属/位姿为原文件链接。删除整片是离散近似，可能损失覆盖；必须同时报告hit/miss/early/free和边界分层。
+
+Open3D官方实现会合并部分等深重合交点，单次list_intersections并不保证所有重合三角面被清除。只作一次雕刻，并报告剩余build early/free实际读数，不以循环门控或假定零违规代替结果。分块8192射线只控制内存，全部build束保留；不人为扩张光束宽度或把unknown变成free。代码未运行，效果待测。
+
+登记数据 `WS-V73-M4-SCENE-DATA-01/20260908T014500Z__development-build-free-carved-r3`。配套同模型场景比较：原r2背景run `WS-V73-M4-SCENE-COMPOSITION-01/20260908T014500Z__development-event-capa-original-bg-r4`，雕刻背景run `20260908T014500Z__development-event-capa-carved-bg-r5`；包含同一PCA、r8、r9、CAPA r2、Ada r1和native fusion r2显式Actor表面。两边不重新网络推理，用相同416704原始heldout束，CPU BVH完成全局首交点；先回答背景变化是否减少侵入及代价，再观察event/强基线趋势。Ada r1轴限制仍明确，不替代正在训练的r2。均尚未启动。
+
+failure_ledger_delta=update F04的构建证据对策；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，F08恢复推进但退出原因未知，下一编号V73-F09。整个V7.3未完成，shutdown=false；正常训练继续，不把此CPU对照结束当作整体结束。
+
+---
+
+
+
 ## V7.3 旧AV2完整Actor固定推理结果（2026-09-08）
 
 code0a610555下已完成3项旧开发窗口真实评价，每项均覆盖21Actor/1日志/4移动对象、保留2个空输入和1个无自有留出返回，不训练、不卡点删对象、不读新20日志作方法选择。任务WS-V73-M4-AV2-FIXED-01：原生融合run `20260908T013000Z__old-development-native-fusion-r1`，53.7060s/GPU allocated1.29079GiB/RSS3.47623GiB；LiDAR PCA run `20260908T013100Z__old-development-lidar-pca-r1`，29.7731s/0.02101GiB/1.00754GiB；固定LiDAR-only r9 run `20260908T013200Z__old-development-lidar-event-r9`，43.3979s/0.05542GiB/1.17406GiB。三个进程全部正常结束，完整surface/frames保存在各run。
