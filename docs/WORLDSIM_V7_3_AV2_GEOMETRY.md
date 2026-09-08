@@ -1,5 +1,29 @@
 # V7.3 AV2逐点时空几何接口
 
+## 逐束时刻完整场景读出已完成（2026-09-08）
+
+旧开发日志02678d04-cc9f-3148-9f95-1ba66347dff9已以codead457f3c完成场景构建及同模型两背景评价。数据任务`WS-V73-M4-AV2-SCENE-DATA-01/20260908T024000Z__old-development-per-return-r1`，34.5845s/RSS0.85305GiB；评价任务`WS-V73-M4-AV2-SCENE-01`的`20260908T024000Z__old-development-uncarved-r1`为11.3142s/RSS0.96797GiB，`20260908T024000Z__old-development-carved-r2`为11.0018s/RSS0.94923GiB。全部CPU正常完成，无模型重新训练。
+
+每个规范Actor固定一个BVH，按每束纳秒时间的已知轨迹分8192束变换原点与方向，和固定世界背景全局取最近交点。未知sensor/Actor pose保留缺失，不把整帧姿态当逐点时刻。使用完整21Actor/187494条原始heldout返回：cohort5257、移动cohort88、框边界2708。来源和时间定义依[官方Sweep](https://github.com/argoverse/av2-api/blob/main/src/av2/structures/sweep.py)。场景角色、实际独立日志数和原始分母均保留。
+
+同四build扫描在所有已知有效时刻框+.1m之外建立2916480个背景PCA三角面，按原始首返回前.2m的已观测自由空间单次删去211100个（7.24%）。原71498条build冲突束在该窗口当前中央束/容差下降至0；不意味着所有射线、面内部或新时刻都无侵入。未按heldout误差删除背景，未使用opacity；range<1m只作分层、没有删点。
+
+仅背景全束free0.733877→0.513045m，early20.5169%→14.1498%，hit44.3774%→48.5205%，miss31.1071%→32.1333%。同一旧单日志显示背景侵入改善伴随缺失代价，不能给出独立日志不确定性或外部成功结论。
+
+| 雕刻背景上的Actor方法 | 全束hit | 全束early | 全束miss | 全束free m | cohort hit | cohort early | cohort miss | cohort free m |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| LiDAR PCA | 50.2560% | 14.4954% | 30.4079% | 0.527818 | 62.9446% | 9.5872% | 21.6663% | 0.060124 |
+| M1r3 native fusion | 49.5701% | 15.5290% | 30.0746% | 0.582709 | 42.6479% | 33.3080% | 18.2043% | 0.359073 |
+| LiDAR-only r9 | 50.0277% | 14.4501% | 30.2175% | 0.522228 | 54.2134% | 9.2068% | 17.2912% | 0.074238 |
+
+移动仅88束时PCA hit21.59%/miss73.86%，r9 44.32%/37.50%，native fusion22.73%/64.77%，不可当稳定移动泛化。仅背景对cohort的early约0.38%，和nuScenes当前雕刻背景约25.19%不同，应分别归因和报告。场景内原始射线加权的表格与下方Actor等权表使用不同统计单位，不应直接比较数值大小。
+
+证据在`docs/autoresearch/worldsim_v73/m4/av2_old_scene_data_index.json`、`av2_old_scene_r1_summary.json`、`av2_old_scene_r2_summary.json`。CPU环境复用Python3.9/Torch2.1/Open3D0.19，仅补pyarrow21.0.0读取Feather；主训练环境不变。接口成功与旧域负结果都已记录，joint七相机query仍待固定主模型实际运行；未将这些结果冒充新20日志确认。
+
+
+---
+
+
 ## V7.3 旧AV2完整Actor固定推理结果（2026-09-08）
 
 code0a610555下已完成3项旧开发窗口真实评价，每项均覆盖21Actor/1日志/4移动对象、保留2个空输入和1个无自有留出返回，不训练、不卡点删对象、不读新20日志作方法选择。任务WS-V73-M4-AV2-FIXED-01：原生融合run `20260908T013000Z__old-development-native-fusion-r1`，53.7060s/GPU allocated1.29079GiB/RSS3.47623GiB；LiDAR PCA run `20260908T013100Z__old-development-lidar-pca-r1`，29.7731s/0.02101GiB/1.00754GiB；固定LiDAR-only r9 run `20260908T013200Z__old-development-lidar-event-r9`，43.3979s/0.05542GiB/1.17406GiB。三个进程全部正常结束，完整surface/frames保存在各run。

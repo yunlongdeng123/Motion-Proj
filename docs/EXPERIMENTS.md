@@ -1,5 +1,22 @@
 # Experiments
 
+## V7.3 固定点集密度揭示覆盖与物理冲突；外部场景构建登记（2026-09-08）
+
+code5dfa3948完成 `WS-V73-M2-ADAPOINTR-DENSITY-01/20260908T030000Z__development-native-vs-matched-r1`，CPU10.6413s/RSS0.66930GiB，所有75旧开发Actor/5日志，无训练或重新神经推理。Ada r2原生16384点的target→point0.088114m、recall86.9506%；匹配中心0.162732m、77.7732%。相同0.06m/20邻居PCA从匹配预算扩大到全部点：hit14.2906%→39.0141%，early8.5389%→39.3882%，miss54.2423%→18.2534%，free0.122057→0.341008m，target→surface0.113749→0.053369m，recall84.6032%→87.9661%。
+
+密度变化的5日志配对：hit+24.724pp、bootstrap95%[+14.343,+36.328]pp；early+30.849pp、[+16.340,+42.835]pp；miss−35.989pp、[−45.407,−25.494]pp；free+0.218951m、[+0.108226,+0.334258]m。移动9对象/2日志全密度hit63.2750%、early34.8396%、miss1.0245%、free0.168564m。采样/显式化影响已证实，加密并未解决错误前表面。此为不同输出密度的诊断，不能放入匹配预算主表当方法增益；原GPU匹配结果与CPU BVH还存在数值实现差异。依据APSS/2DGS的表面定义思路分离评价，不引入opacity。F02/F03保留；若扩大Ada训练，必须同步约束实际最终表面，不能只在评价时加密。
+
+同code完成 `WS-V73-M4-SCENE-COMPOSITION-01/20260908T030000Z__development-adapointr-yup-carved-r6`，CPU3.8597s/RSS0.77354GiB，同雕刻背景/原始416704束/6场景5日志，使用r2匹配曲面。cohort11886束的等日志hit11.0410%、early33.6000%、miss36.5152%、free0.951842m。相对同背景Ada r1，cohort hit−0.682pp、[−2.892,+1.941]pp，free+0.001128m、[−0.016595,+0.014165]m；相对r8，hit−11.418pp、[−15.326,−8.430]pp，free+0.042653m、[+0.011555,+0.089395]m。相对PCA miss−8.009pp、[−14.314,−1.704]pp，但hit−10.874pp、[−21.286,−0.461]pp及free+0.048074m、[+0.011879,+0.098823]m。全密度表面尚未做场景读出。F04仍在，坐标修订不能作为场景成功证据。
+
+汇总器支持跨已保存run的方法配对，角色和真实日志数来自数据，不再固定“5开发日志”；单日志不输出退化bootstrap区间。仅汇总本次真实结果，无重复模型测试。Ada方法报告改为当前完整方法/预算/结果/密度/场景与限制，历史执行证据保留在三账本。`docs/autoresearch/worldsim_v73/m2/global/adapointr_density_r1_summary.json`、`V73_ADAPOINTR_DENSITY.png/pdf`与m4/scene_composition_r6_summary.json、scene_composition_r6_paired.json均已保存；图已检查排版。
+
+旧AV2逐束场景方案已完成真实开发验证，现登记 `WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`，新增CPU串行构建器 `scripts/prepare_worldsim_v73_av2_scene_batch.py`，当前未启动。复用原20身份/936Actor/4build+2heldout时刻、0.06m PCA、+.1m已知框排除及首回波前.2m的build-only删面；不按外部质量换日志或参数。输入坐标/背景构建与heldout束格式保存可先完成，外部网络和heldout质量评分继续等待方法选择。其父进程及子进程属于关机前必须结束的任务。
+
+主r5恢复最近epoch26、native-only full_track r11最近epoch5，GPU allocated峰值仍10.19917/2.34640GiB；cgroup oom/oom_kill仍0。继续两训练，r5完成后汇总真实主结果并验证旧AV2七相机joint路径，再安排full_track joint r10和外部前缀；不并发挤入已知需7.64GiB的28视图前缀。F01/F02/F03/F04/F05 active，F06直接数据约束缓解，F07轴接口落实，F08恢复推进/原退出原因未知，下一编号V73-F09。整个V7.3未完成，shutdown=false，无训练启动队列，15分钟自动推进保持。
+
+---
+
+
 ## V7.3 AdaPoinTr坐标修订结果、AV2外部输入完成与旧域场景实测（2026-09-08）
 
 AdaPoinTr Y-up r2 `WS-V73-M2-ADAPOINTR-01/20260907T231000Z__population-full-track-pcn-yup-s7307-r2` 已完整结束，code acd91103，30epoch/11130呈现/2790更新，5109.12s，GPU allocated峰值1.00658GiB、RSS2.07924GiB；PID37887已退出。保持r1输入/全轨迹标签/seed/预算，仅迁移官方PCN轴接口。75开发Actor/5日志：hit14.2906%、early8.5389%、miss54.2423%、free0.122057m、target→surface距离0.113749m、recall@0.2m84.6032%。相对自身初始化，距离−0.057385m、日志bootstrap95%[−0.086634,−0.037315]m，recall+11.792pp、[+4.380,+18.482]pp；early+5.573pp、[+2.968,+8.172]pp。相对r1，free−0.024503m、[−0.086788,+0.032201]m，hit−1.761pp、[−6.766,+3.705]pp，距离+0.016169m、[+0.000341,+0.035096]m，不能宣称坐标修复带来一致物理改善。F07接口修订已执行并完成训练，原r1局限保留；物理缺陷归入仍active的F02/F03，不扩大成完整补全路线失败。
