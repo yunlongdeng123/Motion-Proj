@@ -1,3 +1,18 @@
+## V7.3 同输入Actor TSDF非学习基线登记（2026-09-08）
+
+主表尚缺当前完整489 cohort的TSDF融合强参照，不能用旧V7.2 legacy cohort的带上限射线/zero-crossing点集与anchors并集代替当前字面表面比较。本轮先查询[Curless–Levoy SIGGRAPH1996原文](https://lightfield.stanford.edu/papers/volrange/)及[VDBFusion官方积分与提取源码](https://github.com/PRBonn/vdbfusion)，利用已安装vdbfusion0.1.6的现有CPU环境迁移，不新增环境、主候选或GPU任务。
+
+登记`WS-V73-M2-TSDF-FUSION-01/20260908T072000Z__population-build-vdb-r1`，新增`scripts/evaluate_worldsim_v73_actor_tsdf.py`，尚未执行。完整489 Actor/25日志、414 fit/75 development，所有零输入与无owned返回对象保留；只将原4个build扫描的明确Actor归属端点及当时传感器原点在已有规范坐标中积分，不读FIT full_track标签、图像或heldout质量构建表面。无输入点数截断、位姿重估或按效果选对象。
+
+固定voxel=.1m/trunc=.3m，与既有背景基线尺度相同；官方均匀权重/space_carving=true，fill_holes=false/min_weight=0，8个cell角均需观测权重，不在unknown边界闭合表面。不把TSDF空输出退回PCA再冒充TSDF完成补全。保留uncarved原生mesh，并以所有原build近框束（包括非当前Actor归属）执行已有one-pass首回波前0.2m整三角面雕刻；后方仍unknown。两种表面构建完成后才进入heldout硬评价，没有目标时刻删面、opacity或凸包。
+
+原生TSDF mesh和固定query patch密度不同，分别报告顶点、三角数、面积与缺失，不能称同输出预算。兼容字段surface_patches在该基线仅计原生三角元素，绝不能读成模型的8三角query片。保存全部两种表面及逐帧结果，通过现有CPU BVH统一首交点/表面距离、Actor→日志等权配对；CPU与旧GPU算子有浮点/共面细节边界。此项检验经典融合在当前稀疏输入上是否适用，不预定成功，也不把低侵入但高缺失算作胜出。
+
+R10/R11继续原进程，当前epoch8/22；R12未启动，visual-only训练入口实现尚待真实反向验证。外部20日志质量确认仍未读取。F02/F04/F05保持active，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 visual-only训练入口已实现，尚未执行新cohort训练（2026-09-08）
 
 F05的固定推理已证明41 fit/5 development个零LiDAR但有相机位姿的对象可生成表面，尚未证明物理改善。本次将同一输入规则接入共享训练器：显式`--include-visual-only`、默认关闭；只依据build点数与已知相机位姿纳入，不依赖原生候选数、target质量或heldout误差。完整主cohort仍489，开启后训练412 fit、预测72 development，2 fit/3 development无任何输入对象仍保留缺失。R10/R11/R12既定371 fit/67 development可用输入对照均保持默认关闭。
