@@ -1,3 +1,23 @@
+## V7.3 R10最终配对完成：生成提高命中并增加侵入（2026-09-08 14:30 UTC）
+
+任务`WS-V73-M2-GLOBAL-ACTOR-01`，run `20260907T233000Z__population-joint-full-track-s7304-r10`，训练code26a7e509、seed7304；分析基于1dad4dd8后工作树的保存结果。R10 done、30轮11130呈现/11130真实更新、零跳步/恢复，371 FIT训练输入与67可预测DEV不变、489对象全记录/51零LiDAR缺失保留；DPT32654562＋Query1670517参数，native_project变化.005422188，wall33811.146305s、allocated10.213784GiB、RSS34.030704GiB，412133346字节latest.pt与最终surface保存，PID53472已退出。
+
+完整75开发Actor/5日志、23无owned返回、8空表面：hit.271463、early.202637、miss.326175、free.271026m、单向target→surface.113193m、recall@.2m .826047。R10−同标签同hard-free原生R11：hit+9.535pp [95% +4.616,+16.268]pp、miss−27.477pp [−37.927,−20.665]pp；early+12.620pp [+5.904,+18.968]pp、free+.106062m [+.013990,+.209804]m。hit/missing在5日志均改善，early在5日志均变差。distance−.055311m [−.129487,+.001635]m、recall+7.455pp [−4.861,+23.965]pp，不能仅据均值宣称稳定几何优势。
+
+相对同full_track LiDAR R7：hit−4.609pp [−13.684,+7.766]pp、miss−17.280pp [−30.451,−7.635]pp、early+8.425pp [+1.889,+16.084]pp、free+.199452m [+.077589,+.317941]m。相对短窗R5：miss−5.092pp [−10.279,−.610]pp，其余所列指标区间跨0；R5恢复缺完整RNG的执行差异保留。相对自身初始化：missing−18.525pp，early+7.989pp；不把更多表面命中等同正确首表面。
+
+移动9 Actor仅2日志、6对象共6657 owned返回：R10移动hit均值.630446，但其中日志ddc03471df3e4c9bb9663629a4097743仅1条owned返回，另一日志ca6d14b008ed4e0bb6b1eaaedadbd6c1有6656条、hit.260892且比R7低9.379pp。这个分母事实削弱动态泛化解释，不删除对象/改聚合。FIT20日志的hit+.053166、distance−.020973m来自full_track标签覆盖时刻，不是泛化。
+
+训练native测量加权Huber .781005→.365007m，采样coverage .304005→.199457m、hard free .363581→.215236m；DPT/Query均有梯度。只是优化过程，不将不同采样均值当固定射线配对。分析只读取已有结果，配对一次5日志bootstrap10000/seed7304；绘图复用保存区间和日志，没有重跑神经推理/训练或测试套件。
+
+证据归档`docs/autoresearch/worldsim_v73/m2/global/population_joint_r10_summary.json`、`population_joint_r10_analysis.json`、`population_joint_r10_training.json`、`V73_JOINT_R10_TRAINING.png/pdf`、`V73_JOINT_R10_PAIRS.png/pdf`；两图已视觉检查。`WORLDSIM_V7_3_MATCHED_NATIVE_CONTROL.md`与`WORLDSIM_V7_3_POPULATION_RESULTS.md`已同步实际architecture components图、原生对照、区间与移动分母限制；比较协议也反映R10完成/R12启动。paper r2保持其10:30 UTC历史快照，下一完整三角里程碑再修订。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F05,V73-F09]；failure_ledger_delta=update V73-F02 evidence, no new failure ID，下一编号V73-F10。F02覆盖/物理冲突得到同目标R10−R11证据，非所有视觉几何适配的负结论；F03/F04/F05/F09均未解除。已查DMTet/FlexiCubes、ViGT与GNT/TransFusion一手来源的迁移边界见计划revision5及SUPPORT报告，不机械重复检索同一已记录卡点。
+
+R12/code dc6fe427/PID81766和R14/PID68108按原登记训练；本次结果分析未修改运行配置。继续R12−R10、R12−R14、R14−R11；三角若仍冲突，优先改Query表面参数化，随后分别评估near-surface certified-free与候选深度/方向/遮挡一致性，不以loss扫描或native-only退路替代。20新日志质量未读。最后资源实测14:15 UTC无OOM，完整V7.3未完成、30分钟跟进ACTIVE、shutdown=false。
+
+---
+
 ## V7.3 R10完成与R12有限宽束联合训练启动（2026-09-08 14:15UTC）
 
 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-joint-full-track-s7304-r10` 已done，PID53472退出、GPU已释放；30轮11130呈现/11130真实更新、零跳步/零恢复，489个Actor的最终评价与412133346字节latest.pt已保存。wall33811.146305s（9.392h），allocated峰值10.213784GiB、RSS34.030704GiB，原生project参数最大变化.005422188。371 FIT/67可预测DEV、旧489 cohort/51零LiDAR缺失保留、744份冻结前缀/full_track标签；当前正在从保存的结果计算R10−R5/R7/R9/R11与初始化的日志配对，不提前宣布科学结论。
@@ -1451,6 +1471,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 ### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
 
 观察：用户指出目标漏洞，继承 V71-F20/F22 的支持/前尾边界，当前尚未实测新查询。根因候选：缺乏覆盖责任、可学习置信度/支持半径与惩罚耦合。迁移：AdaPoinTr 集合生成 + observed-target coverage + 原始束几何 free，UNKNOWN 不作负标签；不学任意 opacity。比较同几何监督加free后的召回/侵入/missing，而非只看loss。复开/解决条件：真实表面覆盖与侵入共同改善且没有支持消失；证据=plan13.2，task=M2/M3。
+
+2026-09-08 R10实测补充（上述为初始登记风险）：状态active，已不只是未实测假设。全DPT＋Query/full_track/hard-free完成30轮；同目标R10−R11在5开发日志均提高hit、降低missing，也在5日志均增加early，free配对+.106062m、95%[+.013990,+.209804]m。相对R7同监督LiDAR，free+.199452m、[+.077589,+.317941]m。距离/召回的平均改善区间跨0，不称稳定准确性优势。当前不是靠opacity或半径缩小逃避惩罚，具体错误仍可能涉及片形状、方向、重叠、对应与目标代理，尚未完成因果归因。固定R5/R9/R11表面诊断还显示邻近覆盖不等于正确沿束支持，后方正确片也不能替代首返回。证据：R10 code26a7e509、`m2/global/population_joint_r10_{summary,analysis,training}.json`，支持诊断code866ed28f；R12/R14仍运行。复开路径：先完整三角，冲突若保留优先Query surface parameterization；不退回native-only，不把unknown标FREE，不将局部边界监督或attention一致性未经对照混入当前训练。无新失败ID。
 
 ### V73-F03 — 缺支持时首事件 NLL 无法独立创造几何
 

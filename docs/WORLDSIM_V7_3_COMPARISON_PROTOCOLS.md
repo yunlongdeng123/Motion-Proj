@@ -1,6 +1,6 @@
 # V7.3：实验可比条件与技术报告主张边界
 
-状态快照：2026-09-08。本次进程读取确认R10/PID53472、R14/PID68108继续运行；R11完成，R12已登记尚未启动，R13一轮真实输入训练完成。本文整理允许的比较，不是新增验收流程、不触发重跑。用户最新方向以计划revision5为准：三角比较若仍显示Query coverage强但physics差，下一轮优先改Query surface parameterization，保持可训练几何基座/显式表面/物理约束。原run与三本台账保留执行证据。
+状态快照：2026-09-08 14:30 UTC。R10/R11均完成30轮及最终评价；R12/code dc6fe427/PID81766已启动，R14/PID68108继续运行，R13一轮真实输入训练完成。R10−R11命中改善但early/free变差，三角完整结论仍待R12/R14。本文整理允许的比较，不是新增验收流程、不触发重跑。用户最新方向以计划revision5为准：三角比较若仍显示Query coverage强但physics差，下一轮优先改Query surface parameterization，保持可训练几何基座/显式表面/物理约束。原run与三本台账保留执行证据。
 
 ## 输入、训练标签与评价是三件事
 
@@ -21,9 +21,9 @@
 | R7 LiDAR-only | 同R6 | full_track | hard range .5 / event 0 | 完成30轮，11130更新 |
 | R8 LiDAR-only | 同R7 | full_track | finite-beam range .5 / event 0 | 完成30轮，11130更新 |
 | R9 LiDAR-only | 同R8 | full_track | finite-beam range .5 / event .01 | 完成30轮，11130更新 |
-| R10 joint | 同R5，从M1r3重新初始化 | full_track | hard range .5 / event 0 | 正在训练，目标30轮；没有最终比较 |
+| R10 joint | 同R5，从M1r3重新初始化 | full_track | hard range .5 / event 0 | 完成30轮，11130呈现/11130实际更新，无跳步/恢复 |
 | R11 native_only | M1r3全DPT，native＋LiDAR PCA表面 | full_track | hard range .5 / event 0 | 完成30轮，11130呈现/10550实际更新/580无梯度跳步 |
-| R12 joint | 同R10，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 已登记，未启动 |
+| R12 joint | 同R10，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 已启动，目标30轮；首轮DPT/Query真实更新，非resume |
 | R14 native_only | 同R11，从相同M1r3初始化 | full_track | finite-beam range .5 / event 0 | 正在训练，目标30轮；无梯度呈现不计更新 |
 
 joint和native_only的直接native数据项权重均为1，来自当前build Actor在正确相机像素上的真实LiDAR轴向深度；不依赖预测框内候选是否存在。它不是旧位移标签，也不是冻结深度自蒸馏。DPT训练参数32654562；joint另有1670517个query参数。全共享路径使用AdamW lr1e-5与全局梯度裁剪1；LiDAR-only没有DPT梯度。不能仅因同epoch数就宣称相同训练计算量。
@@ -46,7 +46,7 @@ joint和native_only的直接native数据项权重均为1，来自当前build Act
 
 完整489 cohort的同容量pointwise控制尚未训练；旧25 Actor控制不足以证明population上的空间交互因果收益。若主query候选成立，该控制需要在同监督与生成参数化下比较。R11使用hard range，R14才是已启动的同finite-beam原生对照。R10−R14同时改变生成与目标，不能当单因素；R10/R12/R14三角与R11锚点共同解释结果。
 
-若三角比较后仍是Query覆盖占优但物理首表面不佳，按用户revision4决策优先改Query surface parameterization；原生基座仍可训练、物理损失和硬首交点评价继续。先查顶会与优秀官方开源，再结合实际片形状/方向/重叠/连通等失败迁移一个新候选；不继续以loss扫描为主、不因负结果默认换成native-only。该判断不是已完成比较的结论，也不是新门控。
+若三角比较后仍是Query覆盖占优但物理首表面不佳，按用户revision5决策优先改Query surface parameterization；原生基座仍可训练、物理损失和硬首交点评价继续。先查顶会与优秀官方开源，再结合实际片形状/方向/重叠/连通等失败迁移一个新候选；不继续以loss扫描为主、不因负结果默认换成native-only。该判断不是已完成比较的结论，也不是新门控。
 
 三角收口后还需评估用户的近表面certified-free与局部对应一致性建议，详见计划第16节。二者尚未实施，不进入当前R10/R12/R14配置。当前已是投影中心＋可学习局部offset＋cross-attention；新对应因素为候选深度/偏移后方向/遮挡归属一致性。新增free项不复制体积厚度，严格区分原始束前自由证据与人为finite-beam代理；当前0.20m容差不因借鉴ViGT的0.10m采样区间而缩小。先回答表面参数化问题，再分别判断新监督/对应信息的增量，不把多因素改动解释成单模块收益。
 
