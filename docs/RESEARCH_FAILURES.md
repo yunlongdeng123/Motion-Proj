@@ -10,7 +10,7 @@ code5dfa3948完成 `WS-V73-M2-ADAPOINTR-DENSITY-01/20260908T030000Z__development
 
 汇总器支持跨已保存run的方法配对，角色和真实日志数来自数据，不再固定“5开发日志”；单日志不输出退化bootstrap区间。仅汇总本次真实结果，无重复模型测试。Ada方法报告改为当前完整方法/预算/结果/密度/场景与限制，历史执行证据保留在三账本。`docs/autoresearch/worldsim_v73/m2/global/adapointr_density_r1_summary.json`、`V73_ADAPOINTR_DENSITY.png/pdf`与m4/scene_composition_r6_summary.json、scene_composition_r6_paired.json均已保存；图已检查排版。
 
-旧AV2逐束场景方案已完成真实开发验证，现登记 `WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`，新增CPU串行构建器 `scripts/prepare_worldsim_v73_av2_scene_batch.py`，当前未启动。复用原20身份/936Actor/4build+2heldout时刻、0.06m PCA、+.1m已知框排除及首回波前.2m的build-only删面；不按外部质量换日志或参数。输入坐标/背景构建与heldout束格式保存可先完成，外部网络和heldout质量评分继续等待方法选择。其父进程及子进程属于关机前必须结束的任务。
+旧AV2逐束场景方案已完成真实开发验证，现登记 `WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`，新增CPU串行构建器 `scripts/prepare_worldsim_v73_av2_scene_batch.py`，已以code8a0cf6a4实际启动，CPU父进程PID47224（外层等待shell47223），第一日志已完成构建；日志`/root/autodl-tmp/controller_logs/v73_av2_external20_scene_data_r1.log`。复用原20身份/936Actor/4build+2heldout时刻、0.06m PCA、+.1m已知框排除及首回波前.2m的build-only删面；不按外部质量换日志或参数。输入坐标/背景构建与heldout束格式保存可先完成，外部网络和heldout质量评分继续等待方法选择。其父进程及子进程属于关机前必须结束的任务。
 
 主r5恢复最近epoch26、native-only full_track r11最近epoch5，GPU allocated峰值仍10.19917/2.34640GiB；cgroup oom/oom_kill仍0。继续两训练，r5完成后汇总真实主结果并验证旧AV2七相机joint路径，再安排full_track joint r10和外部前缀；不并发挤入已知需7.64GiB的28视图前缀。F01/F02/F03/F04/F05 active，F06直接数据约束缓解，F07轴接口落实，F08恢复推进/原退出原因未知，下一编号V73-F09。整个V7.3未完成，shutdown=false，无训练启动队列，15分钟自动推进保持。
 

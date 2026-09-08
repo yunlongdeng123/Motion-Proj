@@ -41,7 +41,7 @@ nuScenes本地35个可用场景属于27日志，当前31窗口属于25日志；�
 
 旧AV2开发窗口已用同四build扫描构建未雕刻/雕刻背景，并在逐束已知姿态下组合21个固定Actor表面和两次187494原始heldout束。背景PCA间距0.06m、20近邻；排除所有有效时刻已知框+.1m，只按build首返回前.2m删除冲突三角面。世界背景和每个规范Actor各建一次BVH，按逐点时间逆变换射线并统一最近求交。range<1m仅报告分层，无该条件的数据删除。
 
-登记外部场景数据`WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`：复用上述旧域确定参数，CPU逐日志构建，包含所有原20身份/936Actor。背景build雕刻诊断用于构建，heldout只另存原始束，不做外部模型推理或heldout质量评分。运行失败保存原因且停止，不跳过或替换日志。父控制进程及子构建器须纳入关机前任务检查。
+已以code8a0cf6a4启动外部场景数据`WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`：复用上述旧域确定参数，CPU逐日志构建，包含所有原20身份/936Actor。背景build雕刻诊断用于构建，heldout只另存原始束，不做外部模型推理或heldout质量评分。运行失败保存原因且停止，不跳过或替换日志。CPU父进程PID47224（外层等待shell47223），第一日志构建完成；日志`/root/autodl-tmp/controller_logs/v73_av2_external20_scene_data_r1.log`。父控制进程及子构建器须纳入关机前任务检查。
 
 方法定型后才在外部集形成固定模型对比。28×672²的完整冻结前缀在旧窗口实测allocated峰值7.64359GiB；当前r5/r11并行时不挤入该GPU任务。只缓存完全冻结前缀；可训练几何头实时解码，不把旧最终特征缓存冒充内部PEFT。
 
