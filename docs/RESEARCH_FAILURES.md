@@ -1,3 +1,15 @@
+## V7.3 R14训练完成，最终评价运行中（2026-09-08 18:13 UTC）
+
+`WS-V73-M2-GLOBAL-ACTOR-01/20260908T100000Z__population-native-full-track-beam-range-s7304-r14`完成30轮、11130次呈现和10550次实际更新，580次无有效梯度跳步；PID68108仍在运行最终评价，尚无final/summary，不登记为done或推断质量。训练阶段elapsed29061.685493s，最终含评价wall待收口。保持M1r3/seed7304、full_track、native1/free.5/event0，唯一目标因素为beam_tube_range。18:07 UTC R12/PID81766第13轮正常；GPU15731/24576MiB、cgroup oom/oom_kill=0、磁盘69GiB可用，无资源不足或shutdown条件。
+
+下一步直接复用既有`summarize_worldsim_v73_global_results.py`与`summarize_worldsim_v73_training.py`读取R14完成产物，做R14−R11原生目标对照及R14−R8同beam目标的通路比较；仍用全部75开发Actor/5日志、原聚合与一次10000次seed7304配对bootstrap，不再推理或重测旧模型。R14−R8不是纯视觉特征单模块因果对照。三角完整结论仍待R12；20新日志质量未读。
+
+配对图入口`scripts/plot_worldsim_v73_joint_r10_pairs.py`新增可选model-label/reference/protocol-note，以同一绘图方法呈现R14及后续三角结果，默认R10配置保留；只读取保存的区间，不新增bootstrap。此次仅静态审阅绘图差异，尚未生成/核对R14图。执行脚本暂存`/root/autodl-tmp/controller_logs/summarize_native_r14.sh`，未启动，没有后台等待队列；下次看到R14 summary与done后执行一次。改动不涉及训练或现有模型。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F09]；failure_ledger_delta=none，最终科学判断pending，下一V73-F10。用户revision6继续生效：Q-v2 pending、30分钟跟进ACTIVE，完成不关机；若三角coverage/physics冲突持续，优先Query surface parameterization，再分别检验近边界监督、局部对应与必要的上层适配。
+
+---
+
 ## V7.3 / Q-v2 持续研究授权与计划revision6（2026-09-08 17:15 UTC / 新加坡2026-09-09）
 
 用户最新明确要求持续V7.3，随后Q-v2；若全部完成且没有明确下一步，参考其方案继续auto research，而不是关机。旧“V7.3完成后shutdown/暂停自动跟进”安排已取消，AGENTS和30分钟ACTIVE heartbeat同步覆盖。真正不可避免的资源不足仍按原约定保存/push、确认无训练/评估/数据任务及启动队列后shutdown并通知加卡；当前未发现这类资源出口条件。
