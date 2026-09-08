@@ -1,5 +1,14 @@
 # V7.3 首事件目标：几何分布与缺失支持
 
+## 全队列r9结果（2026-09-08）
+
+r9 `20260907T230000Z__population-lidar-track-beam-event-s7304-r9` 已完成30epoch/11130更新，5632.23s，峰值GPU allocated0.42522GiB、RSS3.00089GiB。75开发Actor/5日志的hit32.4688%、early6.0060%、miss54.5686%、free0.038543m、距离0.227363m、recall72.4665%。r9−r8的独立日志bootstrap95%：hit+1.466pp [−0.418,+3.510]，miss−2.265pp [−4.321,−0.476]，early+0.415pp [−0.257,+1.050]，free+0.004223m [−0.001748,+0.012530]，距离−0.002190m [−0.008942,+0.003087]，recall+0.521pp [−0.578,+1.641]。
+
+event带来部分缺失改善，但未证实一致的命中/覆盖/自由空间改善。移动9Actor/2日志：hit10.4026%、early4.2654%、miss76.8620%、free0.017647m、距离0.146308m、recall81.8736%，不能从两日志推广动态收益。全体、输入可用和移动分层及各日志配对保存在 `docs/autoresearch/worldsim_v73/m2/global/population_r9_analysis.json`。
+
+epoch1全部自有抽样束38087/no_support14745/capped15315/字面miss22187；epoch30为38156/14723/15505/23575。随机抽样不同，不能作配对泛化比较。约39%训练束仍无有限宽度表面支持；有界event代理不创造缺失支持，F03继续active。暂不因loss下降或miss单项改善选它为最终胜者，主几何路径与同标签强对照继续。
+
+
 状态：首个有限footprint实现及一次解析实验已完成，训练器已接入默认关闭的可选项，尚未进入真实event训练。代码为 `motion_proj/worldsim_v73/first_event.py`，解析实验入口为 `scripts/diagnose_worldsim_v73_first_event.py`。F03仍active；不能把下列方案写成已消除梯度死锁。等同标签r7/r8真实硬结果后，再固定free配置，在已能学习表面的模型上比较event增量。
 
 解析run `WS-V73-M3-FIRST-EVENT-01/20260907T224000Z__geometry-first-event-r2`，code518268eb，0.927s：正确面NLL0；4.6m早面遮住5m正确后面时NLL2.000001、早面深度梯度−10.000003、后面梯度0，复制早面NLL不变。无支持NLL28且梯度0。轮廓偏移0.025m时几何质量0.839767、NLL0.174630、横向梯度+6.97729。只确认这些解析语义，不代表真实训练收益。r1因shell PATH缺已有ninja执行入口而未进入案例，修正环境PATH后才执行r2，错误与结果均保留。

@@ -1,5 +1,14 @@
 # V7.3 同全轨迹监督的原生几何控制
 
+## 实际调度与恢复边界（2026-09-08）
+
+native-only r11 `20260907T233000Z__population-native-only-full-track-s7304-r11` 已启动，code9541ac7d、PID38460，日志 `/root/autodl-tmp/controller_logs/v73_population_native_r11.log`；初始评价覆盖371fit/67dev ready与51空输入，全部744冻结视图。模型训练与最终效果尚未完成。
+
+主joint r5在epoch22意外退出，无异常栈，cgroup OOM0，原因尚不明。第21轮7791次完整更新及模型/优化器保存完好；107个未保存更新留在原日志但不进入恢复状态。恢复run `20260908T012500Z__population-joint-r5-epoch21-resume-r1` 已启动并实际进入epoch22反向，code914d582d、PID39009，峰值allocated10.19840GiB。只读冻结前缀/图像改为mmap共享文件页，不改变输入和监督。旧checkpoint缺RNG，明确记录CUDA抽样seed7304重启，并重放Python shuffle顺序，不声称逐比特连续；以后checkpoint保留RNG和fit顺序。
+
+该恢复依然是r5的短窗口监督，不能代替r10完整轨迹joint对照。r10尚未运行，应等待恢复主模型结束和实际资源释放。F08记录意外中断与恢复，F01不能仅凭不明退出认定资源不足。整个研究未完成，仍不关机。
+
+
 状态：实现与登记，尚未运行。已有M1r3 DPT深度适配与其固定native+LiDAR fusion用build标签，而r7/r8及AdaPoinTr使用更充分的fit全轨迹标签；不能把这种标签差异解释为架构收益。现在补齐原生保守控制，与后续full_track joint在同样标签上比较。
 
 入口为 `train_worldsim_v73_global_actors.py --mode native_only`。冻结原聚合前缀，仍使用完整24视图的原生多层特征，直接微调全部DPT几何头参数；不训练query模块，后者只提供同一固定曲面片grid和数量定义。每步重新解码原生深度，在正确相机曝光/Actor轨迹下回投影，生成规范点；融合原build LiDAR和512个native FPS支持，使用同min(build,1024)+512曲面预算及0.06m PCA片。没有逐点残差MLP、空间查询交互、opacity或额外可学习曲面半径。

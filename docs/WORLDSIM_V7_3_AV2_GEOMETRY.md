@@ -1,5 +1,14 @@
 # V7.3 AV2逐点时空几何接口
 
+## 完整28视图前缀已完成（2026-09-08）
+
+`WS-V73-M4-AV2-PREFIX-01/20260908T011000Z__old-development-28view-prefix-r1` 成功完成，code9541ac7d，33.9146s，GPU allocated峰值7.64359GiB、RSS7.60567GiB，冻结四层缓存2118584384字节。全部28视图672×672共同进入跨视图聚合层，仅逐图patch编码按7图分批。原始头与build325203个对应估计固定IRLS scale26.60637，之后装入M1r3适配头，优化更新0。只缓存完全冻结前缀，没有将其误称上层PEFT。
+
+官方及当前源码已经选择保存DPT层4/11/17/23，复用这一既有能力，不能把它列成新增创新或本次独立内存增益。每视图CPU token clone后保存，避免序列化整窗口storage。依据[VGGT官方aggregator](https://raw.githubusercontent.com/facebookresearch/vggt/main/vggt/models/aggregator.py)。
+
+新增固定Actor评价入口 `scripts/evaluate_worldsim_v73_fixed_actors.py`，供已完成共享模型、原生融合或LiDAR PCA使用；输入角色、空输入对象、7相机权重和padding矩形均显式保留，无优化或目标初始化。尚未运行固定模型神经评价；冻结前缀成功不能证明query迁移、跨域几何或新20日志效果。先在此旧开发窗口运行，再用最终选定方法处理外部确认集。
+
+
 2026-09-08。实现 `motion_proj/worldsim_v73/av2_geometry.py`，仅在旧开发日志02678d04-cc9f-3148-9f95-1ba66347dff9执行真实数据诊断。20条新确认日志的760文件已传输完成（977.74s，s5cmd返回0，下载PID34904退出），没有运行其网络推理或读取其中传感器数值进行方法选择。
 
 依据[官方Sweep接口](https://github.com/argoverse/av2-api/blob/main/src/av2/structures/sweep.py)及[官方SE3读取约定](https://github.com/argoverse/av2-api/blob/main/src/av2/utils/io.py)，每点时间为扫描参考纳秒时间加offset_ns；发布的坐标已补偿到参考时刻ego系。因此世界端点只乘一次参考ego姿态，不能再次按逐点ego变换移动端点；束原点则取逐点时刻的ego姿态与其物理LiDAR外参：

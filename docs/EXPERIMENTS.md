@@ -1,5 +1,19 @@
 # Experiments
 
+## V7.3 joint已恢复真实训练与固定Actor评价入口（2026-09-08）
+
+恢复run `WS-V73-M2-GLOBAL-ACTOR-01/20260908T012500Z__population-joint-r5-epoch21-resume-r1` 已实际运行，code914d582d、PID39009，日志 `/root/autodl-tmp/controller_logs/v73_population_joint_r5_resume.log`。完整载入epoch21原生头、query及168项Adam状态，从epoch22继续真实反向与更新，峰值allocated10.19840GiB。继承7791完整呈现，原第22轮107个未保存更新保留在parent现场且不计入恢复模型。原运行status已标为interrupted，interruption.json保留末状态与原因未知证据。尚未完成余9轮或最终评价。
+
+仅冻结前缀和build图像改用mmap文件页，原生DPT与query仍实时可训练；无视图/空间支持缩减。旧checkpoint缺随机数状态，resume.json记录seed7304重启CUDA抽样、重放Python shuffle顺序的限制，不能宣称逐比特续跑。后续checkpoint同时保存fit顺序和Python/CPU/CUDA RNG。
+
+固定模型评价脚本 `scripts/evaluate_worldsim_v73_fixed_actors.py` 已实现：完整载入已训练共享头/query，或选择固定原生融合/PCA；所有Actor保留，non-ready为空预测，输入角色原样进入最终汇总，七路相机插值权重与有效画幅传入同一解码/曲面支持路径。输出共同显式三角曲面及字面首交点评价，heldout仅交给最终评价器，无优化/目标初始化。此入口尚未实际运行，不把源码接通当作跨域效果验证；下一步旧AV2完整窗口真实推理，然后才能处理新20日志。
+
+event/CAPA/AV2前缀及native控制专题报告同步更新。native-only r11 PID38460仍做全队列初始评价，Ada Y-up r2 PID37887已进入epoch2训练，joint恢复PID39009正常；r10仍未启动，无自动启动队列。F08当前为已恢复执行、原因未明和最终结果待完成；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解，下一编号V73-F09。整个V7.3未完成，shutdown=false；全部研究收尾保存/push且确认无任何训练、评估、数据或待启动任务后才关机。
+
+---
+
+
+
 ## V7.3 event/CAPA完整结果、AV2前缀完成及joint中断恢复（2026-09-08）
 
 r9（code c2fbdccf，30epoch/11130更新、5632.23s）完整75开发Actor/5日志：hit32.4688%、early6.0060%、miss54.5686%、free0.038543m、target→surface0.227363m、recall@0.2m72.4665%。相对r8仅增加event：hit+1.466pp，日志bootstrap95%[−0.418,+3.510]pp；miss−2.265pp，[−4.321,−0.476]pp；early+0.415pp，[−0.257,+1.050]pp；free+0.004223m，[−0.001748,+0.012530]m；距离−0.002190m，[−0.008942,+0.003087]m；recall+0.521pp，[−0.578,+1.641]pp。缺失减少，但未形成覆盖/自由空间一致改善，不能直接选为最终胜者。移动9Actor/2日志hit10.4026%、early4.2654%、miss76.8620%、free0.017647m、距离0.146308m、recall81.8736%，样本量限制保留。证据m2/global/population_r9_analysis.json。

@@ -1,5 +1,14 @@
 # V7.3 CAPA基线适配
 
+## 完整CAPA r2结果（2026-09-08）
+
+r2 `20260907T225000Z__population-build-tta-chunked-s7305-r2` 已完成31窗口×100步=3100更新与489Actor评价。每步官方随机3视图、最终每窗口全部24视图联合推理；官方早期patch LoRA393216参数，每窗口从同一初始化重置，开发窗口也仅使用自己的build TTA。code eb42f835，8277.17s、GPU allocated峰值8.08370GiB、RSS13.74811GiB。R1全anchor分配失败已被保持所有anchors/residuals的分块仿射对齐修复，没有减少最终视图。
+
+75开发Actor/5日志：hit17.8032%、early10.9508%、miss58.4555%、free0.120341m、距离0.203133m、recall76.8964%，空表面8→3，所有分母保留。相对M1原生融合，hit−4.974pp、95% [−13.315,+1.334]pp；free−0.029963m、[−0.061784,+0.011995]m；距离+0.027708m、[+0.000880,+0.075590]m。此任务迁移没有一致优势；不能把其窗口TTA与共享适配预算混写，也不能据此否定CAPA原任务结论。
+
+移动9Actor/2日志：hit11.2711%、early4.8243%、miss69.1382%、free0.037237m、距离0.139751m、recall88.2605%，独立样本量很小。完整/可用输入/移动分层与PCA、原生融合、r9的配对在 `docs/autoresearch/worldsim_v73/m2/global/capa_r2_analysis.json`。最终全场景与新日志评价待主模型选择后统一收口。
+
+
 ## 分块后实际运行进展
 
 CAPA修订r2已实际启动：run `WS-V73-M2-CAPA-01/20260907T225000Z__population-build-tta-chunked-s7305-r2`，codeeb42f835，PID31466，日志 `/root/autodl-tmp/controller_logs/v73_population_capa_r2.log`。原始完整VGGT和393216个LoRA参数成功加载，首窗口已越过原OOM位置进入真实反向/优化，官方step0/10/20/30/40的L1读数为3.8186/1.8611/2.0940/1.4381/1.2993。随机视图子集不同，不能把这五个数当成同样本学习曲线或开发效果。随后首个scene-0015窗口已实际完成全部100步、全24视图联合推理、LoRA/深度保存及其Actor评价；适配与保存267.033s，累计GPU allocated峰值8.08180GiB，现进入scene-0071。首窗口已跨过完整优化/推理路径，其余30窗口仍待完成，不称整个基线完成或所有规模资源问题已解决。
