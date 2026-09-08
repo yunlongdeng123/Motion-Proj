@@ -1,0 +1,24 @@
+{
+  "task": "WS-V73-M2-SURFACE-SUPPORT-01",
+  "code_commit": "866ed28f9b90dd9c483e7cf76d08f123f625a743",
+  "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2",
+  "models": {
+    "joint_r5": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-ACTOR-01/20260908T012500Z__population-joint-r5-epoch21-resume-r1",
+    "lidar_r9": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-ACTOR-01/20260907T230000Z__population-lidar-track-beam-event-s7304-r9",
+    "native_r11": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-native-only-full-track-s7304-r11"
+  },
+  "scope": "all 75 original development Actors; only original owned heldout first returns",
+  "optimizer_updates": 0,
+  "neural_inference": false,
+  "tolerance_m": 0.2,
+  "depth_coalescing_m": 0.0001,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04"
+  ],
+  "readout": "existing CPU SurfaceBVH cast_rays plus list_intersections and unsigned compute_distance",
+  "statistics": "pool heldout frames within Actor; normalize each Actor by its owned rays, then mean Actors within log and mean logs; not a replacement for canonical main metrics",
+  "boundary": "no mesh edits, query deletion, new opacity, occupancy signs or target-based inference; later good intersection is diagnostic evidence, never substituted for the first return; coincident hits are not exact topology counts",
+  "source": "https://www.open3d.org/docs/release/python_api/open3d.t.geometry.RaycastingScene.html"
+}
