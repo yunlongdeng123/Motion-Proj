@@ -1,3 +1,15 @@
+## V7.3 / Q-v2 持续研究授权与计划revision6（2026-09-08 17:15 UTC / 新加坡2026-09-09）
+
+用户最新明确要求持续V7.3，随后Q-v2；若全部完成且没有明确下一步，参考其方案继续auto research，而不是关机。旧“V7.3完成后shutdown/暂停自动跟进”安排已取消，AGENTS和30分钟ACTIVE heartbeat同步覆盖。真正不可避免的资源不足仍按原约定保存/push、确认无训练/评估/数据任务及启动队列后shutdown并通知加卡；当前未发现这类资源出口条件。
+
+用户文件原样归档 `docs/references/V73_FOLLOWUP_REFERENCE_20260909.txt`，当前解释与执行顺序见计划revision6第17节。文件是后续建议参考，不是自动改动当前配置的指令；其中新基座/论文主张待一手核实。`WS-V73-Q-V2-01`登记pending，表示三角后下一轮Query显式表面生成研究，具体表示未选，没有新增实现/run/seed/结果。若coverage/physics冲突持续，优先参数化，保留可训练几何与物理监督；随后按证据分别研究近边界free、局部对应及上层聚合器适配，不要求穷尽全部后端或强制四格矩阵。主联合R10/R12/R14 event=0，R9是LiDAR-only，不能声称联合event已测。
+
+17:11 UTC实读：R12/PID81766第10/30轮，R14/PID68108第27/30轮，均按原配置运行；R10已收口，三角尚未完成。当前代码依据ada1e773，本次仅授权/计划与参考归档，无新实验、未读取20新日志质量、未变更训练/表面/损失/cohort。现有缓存只有冻结前缀含义，未来适配聚合器需重算对应通路。参考中的完整几何基座/上层LoRA是待核实候选，不是已成功实现。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，旧风险保持，下一编号V73-F10。下一步持续R12/R14，完整三角配对后推进Q-v2；每个实质里程碑同步三本台账、小步push、报告附architecture components图。完成不会触发shutdown，30分钟自动跟进ACTIVE。
+
+---
+
 ## V7.3 表面参数化候选的源码迁移准备（2026-09-08 16:00 UTC）
 
 变更类型为一手源码/设计分析，无新训练或评价run。项目依据944d6904，复核Kaolin marching_tetrahedra、NVIDIA nvdiffrec DMTet提取、FlexiCubes核心与官方优化示例；详见`docs/WORLDSIM_V7_3_SURFACE_PARAMETERIZATION.md`及计划16.4。候选尚未实现、训练或选定，三角收口后的条件决策保持。
