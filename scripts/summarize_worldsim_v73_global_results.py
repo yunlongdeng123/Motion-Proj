@@ -64,9 +64,10 @@ def paired(reference,final):
                 if a is not None and b is not None: logs[row['log_id']].append(b-a)
             delta=[statistics.mean(v) for v in logs.values()]
             rng=random.Random(7304)
-            boot=sorted(statistics.mean(rng.choices(delta,k=len(delta))) for _ in range(10000)) if delta else []
+            boot=sorted(statistics.mean(rng.choices(delta,k=len(delta))) for _ in range(10000)) if len(delta)>1 else []
             metrics[metric]={'logs':len(delta),'mean_delta':statistics.mean(delta) if delta else None,
                 'bootstrap95':[boot[249],boot[9749]] if boot else None,
+                'uncertainty_boundary':'single independent log cannot estimate between-log uncertainty' if len(delta)==1 else None,
                 'improved_logs':sum((d>0 if metric in ['hit_rate','surface_recall_02'] else d<0) for d in delta),
                 'per_log_delta':{k:statistics.mean(v) for k,v in logs.items()}}
         output[role]=metrics
