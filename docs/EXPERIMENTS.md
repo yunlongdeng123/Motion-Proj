@@ -1,3 +1,18 @@
+## V7.3 实验可比条件整理与原生强控制报告更新（2026-09-08）
+
+新增`docs/WORLDSIM_V7_3_COMPARISON_PROTOCOLS.md`，基于实际manifest、实现和已存结果整理主路径、CAPA/AdaPoinTr/融合、零LiDAR及场景/新域比较。没有新训练、推理或重复评价；这是一份后续技术报告的证据解释文档，不是新增门控或验收清单。
+
+CAPA每窗口重置并用development的build做TTA、每张图重新估计affine尺度/偏移；共享joint/native控制的development不反传且build尺度固定，两者不能写成完全相同训练/校准条件。AdaPoinTr的全16384点与匹配PCA片、更新累积及优化器不同，输出密度/呈现数/optimizer步数也不能混写。R5恢复缺完整RNG、107个丢弃更新与实际11130有效更新保留；不为整理报告自动重跑。
+
+R10−R11才是同full_track/目标下的当前原生强控制比较，但同时改变生成参数化和片形状，不自动证明attention收益；完整population同容量pointwise尚未运行。若采用R12的finite-beam目标，也需要匹配目标的原生控制。R12和visual-only新cohort仍分开安排，不合并归因。现有query读取mask为投影/裁剪有效性，不冒充密集遮挡真值；局部片之间未显式焊接，不声称闭合拓扑。
+
+`WORLDSIM_V7_3_MATCHED_NATIVE_CONTROL.md`已改写为当前状态，清除同页仍被写作现状的“R10/R11未启动”等旧叙述，恢复历史在三账/git与R5报告保留。07:48UTC实际R10/PID53472 epoch10、R11/PID38460 epoch24，均正常反向，allocated峰值10.213784/2.346402GiB。二者最终结果均未完成；R12未启动，无后台启动队列，visual-only真实反向尚待资源释放。
+
+单体Actor等权、场景按原束加权、observed点集与完整表面、旧AV2开发日志与20新域确认均分别注明；外部20日志输入就绪但质量仍未读，不保证预训练语料级未见，也不冒充nuScenes IID或同推理预算。F01–F08既有状态不因文档整理改变，下一失败编号V73-F09；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 Actor TSDF对照完成：低侵入伴随严重缺失（2026-09-08）
 
 `WS-V73-M2-TSDF-FUSION-01/20260908T072000Z__population-build-vdb-r1` code6f753dab完成全部489 Actor/25日志，CPU9.081212s/RSS.649452GiB，0 GPU/训练更新。原生TSDF与同mesh单次build雕刻两份表面全部保存，融合、读出和配对分析进程均已退出。

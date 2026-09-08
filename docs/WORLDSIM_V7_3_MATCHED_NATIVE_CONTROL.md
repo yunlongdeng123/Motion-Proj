@@ -1,32 +1,32 @@
-# V7.3 同全轨迹监督的原生几何控制
+# V7.3：同全轨迹监督的原生几何控制
 
-## full_track主联合对照已启动（2026-09-08）
+截至2026-09-08 07:48 UTC，R10联合模型和R11原生强控制都在实际训练中，分别到第10/24轮，尚无最终结果。R5恢复训练已完成30轮并退出。R12有限宽束free仅登记、未启动。本文描述当前对照，不把早期“未启动”记录当作现状；详细历史保留在三本研究台账及git历史。
 
-r10 `20260907T233000Z__population-joint-full-track-s7304-r10` 已以code26a7e509/PID53472启动并进入实际反向，日志`/root/autodl-tmp/controller_logs/v73_population_joint_r10.log`，当前GPU allocated峰值10.19725GiB。从原M1r3/seed7304初始化，无resume-from；仅相对r5扩fit标签为full_track，free/native/event/epoch保持。r11原PID38460继续，不重复启动。
+## 当前两项训练
 
-r5恢复已完成30轮/489对象最终评价并退出。其覆盖改善伴随early/free退化，详见`WORLDSIM_V7_3_JOINT_R5_RESULTS.md`；不是停止路线B或停止整个研究的理由。后续r12有限宽束free仅登记，r10与r11仍用于同标签强控制，不用旧短窗r5冒充该比较。
+共同数据是完整489 Actor的population，旧输入路径中371 FIT参与训练、67 development可预测，51零build LiDAR对象保留缺失。两项都从M1r3初始化，读取全24视图/744份冻结前缀；仅FIT使用既定full_track几何标签，模型输入仍只有build图像/LiDAR/标定/已知轨迹，development没有梯度。
 
-## 实际调度与恢复边界（2026-09-08）
+共同目标为target→surface覆盖＋0.5 hard range free＋0.05 box envelope＋1.0 build native像素深度，event关闭；seed7304、AdamW lr1e-5、目标30轮。native depth使用当前相机像素的真实build LiDAR，独立于预测框内候选，保留F06修复。相机、轨迹、build尺度只读。
 
-native-only r11 `20260907T233000Z__population-native-only-full-track-s7304-r11` 已启动，code9541ac7d、PID38460，日志 `/root/autodl-tmp/controller_logs/v73_population_native_r11.log`；初始评价覆盖371fit/67dev ready与51空输入，全部744冻结视图。模型训练与最终效果尚未完成。
+| 方法 | 实际run与进程 | 可训练通路 | 物理表面 |
+|---|---|---|---|
+| R10 joint | `20260907T233000Z__population-joint-full-track-s7304-r10`；code26a7e509，PID53472 | DPT32654562＋query1670517参数 | 局部空间查询生成的位置/法向/片形状 |
+| R11 native_only | `20260907T233000Z__population-native-only-full-track-s7304-r11`；code9541ac7d，PID38460 | DPT32654562参数，query冻结 | native＋LiDAR中心的PCA曲面片 |
 
-主joint r5在epoch22意外退出，无异常栈，cgroup OOM0，原因尚不明。第21轮7791次完整更新及模型/优化器保存完好；107个未保存更新留在原日志但不进入恢复状态。恢复run `20260908T012500Z__population-joint-r5-epoch21-resume-r1` 已启动并实际进入epoch22反向，code914d582d、PID39009，峰值allocated10.19840GiB。只读冻结前缀/图像改为mmap共享文件页，不改变输入和监督。旧checkpoint缺RNG，明确记录CUDA抽样seed7304重启，并重放Python shuffle顺序，不声称逐比特连续；以后checkpoint保留RNG和fit顺序。
+以上均位于`WS-V73-M2-GLOBAL-ACTOR-01`。日志分别为`/root/autodl-tmp/controller_logs/v73_population_joint_r10.log`、`v73_population_native_r11.log`。当前observed allocated峰值分别10.213784/2.346402GiB；两者运行不同阶段且并行，不能直接用峰值相加代替总显存测量。
 
-该恢复依然是r5的短窗口监督，不能代替r10完整轨迹joint对照。r10尚未运行，应等待恢复主模型结束和实际资源释放。F08记录意外中断与恢复，F01不能仅凭不明退出认定资源不足。整个研究未完成，仍不关机。
+R11原生深度在正确相机曝光和Actor轨迹下回投规范坐标，融合原build LiDAR和512个native FPS支持，使用min(build,1024)+512中心、0.06m PCA片。PCA邻域/方向每步重算但本步停止梯度；所选native中心的真实位置梯度回传DPT。无相机或无有效几何/native数据梯度时，保留相应LiDAR读出，呈现不虚报为optimizer更新。30轮计划11130个Actor呈现，最终真实更新数由日志统计。
 
+query模块在R11仅提供固定grid/数量定义，无逐点MLP或局部交互；DPT内部多层多尺度解码仍完整。训练每步重新解码，绝不跨优化步缓存DPT输出。只有一次固定权重的初始化/最终no-grad评价可按scene/view共享深度；冻结聚合前缀继续共享。不减少视图、分辨率或原始观测。
 
-状态：实现与登记，尚未运行。已有M1r3 DPT深度适配与其固定native+LiDAR fusion用build标签，而r7/r8及AdaPoinTr使用更充分的fit全轨迹标签；不能把这种标签差异解释为架构收益。现在补齐原生保守控制，与后续full_track joint在同样标签上比较。
+## 比较与尚未完成的结论
 
-入口为 `train_worldsim_v73_global_actors.py --mode native_only`。冻结原聚合前缀，仍使用完整24视图的原生多层特征，直接微调全部DPT几何头参数；不训练query模块，后者只提供同一固定曲面片grid和数量定义。每步重新解码原生深度，在正确相机曝光/Actor轨迹下回投影，生成规范点；融合原build LiDAR和512个native FPS支持，使用同min(build,1024)+512曲面预算及0.06m PCA片。没有逐点残差MLP、空间查询交互、opacity或额外可学习曲面半径。
+R10−R5主要回答FIT标签由短窗扩大为full_track的问题；R10−R7是同full_track下视觉联合路径与LiDAR路径比较；R10−R11比较query生成通路与认真训练的原生头/融合控制。最后一对同时改变位置生成及法向/片形状参数化，不能把差异自动归因为空间attention；完整population同容量pointwise控制仍未运行。
 
-PCA邻域和方向每步重新估计但本步停止梯度，surface/free位置梯度通过选中的native三维中心回传DPT深度；与已登记AdaPoinTr点集转换一样，必须披露这种条件位置梯度近似。直接build像素深度数据项独立于native候选筛选，保留F06修复。与主joint比较时，差别包括空间查询及表面生成参数化，不能直接把任何收益都单独归因于attention。
+R5本身在覆盖改善时出现early/free退化，已在`WORLDSIM_V7_3_JOINT_R5_RESULTS.md`记录；这既不能替代当前R10/R11比较，也不能推导所有视觉几何适配失败。R5原第22轮意外退出只保留第21轮状态，107个未保存更新留原日志；恢复完成有效11130更新，旧checkpoint缺完整RNG的执行差异已披露，不声称逐比特连续。
 
-监督为同一fit全轨迹target→surface覆盖、原始首回波前的hard range free（权重0.5）、box envelope0.05和直接build native depth1.0，event关闭。seed7304、AdamW1e-5、30epoch、11130个fit Actor呈现；共享fit参数，dev不反传。原输入可用的371fit/67dev参与对应路径，51个无输入对象按当前主模型边界保留空预测，不使用后续测量充当输入。无Actor相机位姿或当前所有native支持/像素数据梯度均缺失时，保留LiDAR融合读出并记录无优化的呈现；不能虚报为一次DPT更新。日志与最终summary分别报告Actor呈现数、真实optimizer更新数、无梯度呈现数和trainable参数数。
+R12登记`20260908T050000Z__population-joint-full-track-beam-range-s7304-r12`，从与R10相同的M1r3/seed初始化，仅改变free为`beam_tube_range`、width.03m/resolution32；full_track/native1/free.5/event0/30轮不变。它尚未启动，无等待启动队列。如最终采用该目标，也需同目标的原生强控制，不能拿hard range的R11冒充完全匹配。
 
-执行优化仅去除query不用的多尺度副输出拼接；DPT内部原有多层/多尺度解码仍完整。训练不缓存DPT结果；仅在每次权重固定的no-grad初始化/最终评价中按scene/view缓存CPU深度，同一窗口多个Actor复用，评价结束即丢弃。冻结聚合前缀继续按已有scene/view共享。不减少视图数、图像分辨率或原始观测。
+visual-only训练入口虽已实现，但尚无真实新反向结果；R10/R11/R12继续原cohort。输入条件扩大、物理目标变化与空间机制要分别解释，见`WORLDSIM_V7_3_COMPARISON_PROTOCOLS.md`。新20日志质量确认仍未读取，整个V7.3未完成。
 
-登记 `WS-V73-M2-GLOBAL-ACTOR-01/20260907T233000Z__population-native-only-full-track-s7304-r11`，从M1r3原生头初始化，固定PCA评价复用r5，初始表面按本方法实际计算。对应主joint全轨迹控制登记 `20260907T233000Z__population-joint-full-track-s7304-r10`：从与r5相同的M1r3/seed初始化，仅将fit标签由短窗改成full_track，free仍为range、event关闭，其他超参相同。二者尚未启动；与当前r5共享大量前缀数据但进程显存需按实际容量安排，不能在已接近满载时盲目叠加。
-
-r10对r5回答标签范围问题，r10对r7提供同全轨迹监督的视觉联合路径与LiDAR控制，r10对r11提供原生几何保守适配与查询生成比较。event r9仍为独立LiDAR机制对照，不替代路线B主模型。最终还需选定架构/目标后的新日志与场景验证，当前不宣称假设成立。
-
-原生路径来源：[VGGT官方训练说明](https://github.com/facebookresearch/vggt/blob/main/training/README.md)和[原生DPT实现](https://github.com/facebookresearch/vggt/blob/main/vggt/heads/dpt_head.py)。这属于认真训练强控制的既定工作，不将“微调DPT”称为新贡献。
+原生解码路径依据：[VGGT官方训练说明](https://github.com/facebookresearch/vggt/blob/main/training/README.md)和[DPT实现](https://github.com/facebookresearch/vggt/blob/main/vggt/heads/dpt_head.py)。微调DPT是强控制的既定工作，本身不作为新贡献。
