@@ -1,5 +1,19 @@
 # Research Status
 
+## V7.3 F04迁移：官方VDBFusion静态背景对照登记（2026-09-08）
+
+针对原PCA背景在同一build雕刻后仍会提前遮挡Actor的F04，重新查询优秀开源并读取[PRBonn VDBFusion官方仓库](https://github.com/PRBonn/vdbfusion)、原生积分及MarchingCubes源码。官方CITATION列为Sensors2022、DOI10.3390/s22031296，不能误标为ICRA。该实现直接接收世界点云和传感器原点，适用于现有LiDAR输入，不需要构造近似针孔深度图。已在现有CPU/Open3D环境worldsim-v72-lidar4d安装vdbfusion0.1.6官方769.9kB wheel、--no-deps；没有升级Torch/CUDA或新增大环境。
+
+登记同一6开发场景/5日志的背景构建`WS-V73-M4-SCENE-DATA-01/20260908T054000Z__development-vdbfusion-background-r4`。固定voxel=.1m、trunc=.3m、space_carving=true、统一权重；与PCA r2相同4个build扫描，排除每时刻全部已知注释框+.1m内点及采样LiDAR abs(x),abs(y)<1m近点，无输入点数截断。只读build测量，旧heldout束/owner/位姿链接原文件。fill_holes=false、min_weight=0使mesh单元8角都需观测权重，不让未知体素的默认正值闭合虚构表面；这是已安装官方API的参数语义。
+
+由于排除了动态端点的射线不会通过VDBFusion默认积分产生它们的自由前缀，随后同样使用既有one-pass全原build射线雕刻，登记`20260908T054000Z__development-vdbfusion-build-carved-r5`。这样TSDF与PCA两类表面都能通过所有已观测build首回波约束；不向动态端点后方刻空、不用heldout质量删三角面。分别保存雕刻前后结果及体积/表面规模，后续固定相同Actor比较literal hit/early/free/miss；TSDF变化不能归为Actor架构收益，也不预先保证更好。
+
+新增`scripts/prepare_worldsim_v73_vdb_background.py`；以上两项在登记时尚未执行。R10/R11继续既有训练，R12仍只登记，外部20日志模型质量仍未读取。F04继续active而非修复完成，其他风险不变，无重复smoke/回归、无新增校验机制。整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## V7.3 查询来源诊断完成：新增支持贡献大部分自由空间错误（2026-09-08）
 
 `WS-V73-M2-QUERY-PROVENANCE-01/20260908T052000Z__development-fixed-joint-lidar-r1` code05db8db9完成，CPU0.693519s/RSS0.634186GiB、零训练更新。全部75旧开发Actor/5日志，43832近框Actor–ray实例/11886原归属束；BVH真实首交点primitive ID映射每query的8三角面。原始实例可能跨Actor重复，来源标签仅描述初始化，双方后续都共享空间/视觉更新，不能称纯模态因果贡献。
