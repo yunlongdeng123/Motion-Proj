@@ -1,5 +1,21 @@
 # Experiments
 
+## V7.3 全51零LiDAR固定推理完成：接口可运行、未训练退路仍侵入free（2026-09-08）
+
+`WS-V73-M2-EMPTY-INPUTS-01/20260908T063000Z__fixed-joint-r5-visual-only-r2` code6ebf1289完成，r5最终固定checkpoint、0更新、51/51对象；wall75.879384s、allocated GPU2.686777GiB、RSS13.917145GiB，PID58903退出。与R10/R11并行时合计GPU20282MiB，未发生资源阻断。相机/标定/轨迹只读，未读外部20日志，未重训或增加opacity。
+
+fit43对象中41输出512片表面：32个当前r5 native种子、9个coarse退路；2无相机对象保留空。开发8对象中5输出512片且均为native种子，3无相机保留空。先前M1r3 native fusion fit33有支持/8相机对象无支持与当前不同，因为原生头不同；不能把所有变化归因于查询。r5的coarse退路此前主要随原生种子小残差训练，本次仅是输入条件迁移。
+
+已有逐帧硬读出按Actor/独立日志汇总：fit9日志，43894 build近框实例/22932 heldout实例，r5 free .344801/1.201042m，M1r3 native fusion .073563/.024463m；增加支持同时明显违反已观测free。fit heldout24归属束/14对象/6日志，r5 hit5.556%、miss57.222%，native .556%/86.667%；主体已适配过这些fit日志，不作新日志泛化主张。开发2日志70 build/59 heldout近框实例，r5 free0/0，native .179105/0，但唯一归属回波(scene0919/94ffa142)两方法都缺失；不以零free或更多表面宣布几何收益，不为单束生成bootstrap。
+
+报告`docs/WORLDSIM_V7_3_EMPTY_INPUTS.md`已更新；原始摘要`m2/global/empty_fixed_r2_summary.json`及分组`empty_fixed_r2_analysis.json`保留分母、缺失与每Actor记录。新增`scripts/summarize_worldsim_v73_empty_predictions.py`只处理已存结果，无重复推理或射线读出。主训练器visual-only入口尚未增加，下一实现应显式支持空点集、有正fit目标/仅free负约束/无监督三个情形，保留coarse退路的真实梯度与无支持边界，再作为独立cohort变化认真训练；不得暗改R10/R11/R12。
+
+R10/R11仍在原PID53472/38460训练，R12仍仅登记；外部20日志质量未读。F05输入能力问题已定位但训练与质量未解决，F02/F03仍在，其他风险状态不变，下一失败编号V73-F09。整个V7.3未完成，shutdown=false。
+
+---
+
+
+
 ## V7.3 零LiDAR核查完成与固定视觉入口登记（2026-09-08）
 
 `WS-V73-M2-EMPTY-INPUTS-01/20260908T062000Z__population-build-availability-r1` codeb9690161完成，CPU1.249847s/RSS.362228GiB、零推理/更新。43个fit零LiDAR对象分布9日志，其中41有相机位姿和保守框视锥重叠、33有既有native支持、36有full_track正目标共58710点。41相机对象内34有正目标、8无既有native候选、9无build近框束。8个开发零LiDAR对象分布2日志，5有相机且已有native支持；全部8对象合计只有1条heldout归属回波，不能用此子组承载几何精度主张。fit/development原build近框束总数43894/70，缺失束和无相机对象均保留。
