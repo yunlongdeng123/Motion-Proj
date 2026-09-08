@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--fit-targets',type=Path,help='独立的fit全轨迹标签目录；只替换fit损失目标，不替换模型输入')
     parser.add_argument('--baseline-results',type=Path,help='复用同一cohort与固定patch算子的既有LiDAR PCA结果')
     parser.add_argument('--initial-results',type=Path,help='输入、模型初始化与seed均相同时复用既有initial表面评价')
+    parser.add_argument('--resume-from',type=Path,help='恢复已保存epoch的模型/优化器；写入新的run目录并保留中断现场')
     args=parser.parse_args()
     label_times='full_track' if args.fit_targets else args.fit_label_times
     task='WS-V73-M2-GLOBAL-ACTOR-01'
@@ -74,7 +75,7 @@ def main():
             case=torch.load(args.actor_data/row['file'],map_location='cpu',weights_only=True)
             case['metadata']['input_status']=row['status']
             (cases if row['status']=='ready' else unsupported).append(case)
-        scenes={s['scene_id']:s for s in torch.load(args.native_run/'build_observations.pt',weights_only=False,map_location='cpu')}
+        scenes={s['scene_id']:s for s in torch.load(args.native_run/'build_observations.pt',weights_only=False,map_location='cpu',mmap=True)}
         scales=json.loads((args.native_run/'metric_scales.json').read_text())
         pyramids={}; head=None; prefix_cache={}
         if args.mode!='lidar_only':
@@ -110,6 +111,17 @@ def main():
         parameters=[*(head.parameters() if head is not None else []),
                     *(decoder.parameters() if args.mode!='native_only' else [])]
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
+        resumed=None; start_epoch=0
+        if args.resume_from:
+            resumed=torch.load(args.resume_from/'latest.pt',map_location='cpu',weights_only=True,mmap=True)
+            if head is not None: head.load_state_dict(resumed['depth_head'])
+            decoder.load_state_dict(resumed['query_decoder'])
+            optimizer.load_state_dict(resumed['optimizer'])
+            start_epoch=int(resumed['epoch'])
+            save('resume.json',{'parent_run':str(args.resume_from),'completed_epochs':start_epoch,
+                'state':'model and optimizer restored; parent incomplete epoch discarded, original logs untouched',
+                'random_state':'restored' if 'random_states' in resumed else 'legacy checkpoint has no RNG state; explicit seed7304 restart, not bitwise continuation',
+                'native_change_reference':'resumed epoch checkpoint, not original pretrained initialization'})
         fit=[c for c in cases if c['metadata']['role']=='fit']
         if not fit: raise ValueError('没有可训练fit Actor')
         for case in cases:
@@ -223,7 +235,26 @@ def main():
         else:
             initial=evaluate('initial')
         history=[]
-        for epoch in range(args.epochs):
+        if resumed is not None:
+            history=[json.loads(line) for line in (args.resume_from/'train.jsonl').read_text().splitlines()]
+            history=[row for row in history if row['epoch']<=start_epoch]
+            for row in history: row.setdefault('optimizer_step',True)
+            (out/'train.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in history))
+            if 'fit_order' in resumed:
+                by_owner={case['metadata']['owner']:case for case in fit}
+                fit=[by_owner[owner] for owner in resumed['fit_order']]
+            else:
+                # Legacy Python shuffle order is reproducible; CUDA sample RNG was not saved.
+                random.seed(7304)
+                for _ in range(start_epoch): random.shuffle(fit)
+            if 'random_states' in resumed:
+                state=resumed['random_states']; random.setstate(state['python'])
+                torch.set_rng_state(state['torch_cpu']); torch.cuda.set_rng_state_all(state['torch_cuda'])
+            else:
+                torch.manual_seed(7304)
+            del resumed
+        resumed_steps=len(history)
+        for epoch in range(start_epoch,args.epochs):
             random.shuffle(fit)
             for case in fit:
                 tick=time.monotonic()
@@ -289,7 +320,9 @@ def main():
                 print(json.dumps(row),flush=True)
                 del prediction,vertices,faces,loss,coverage,free,physical_free,envelope,event,nearest,depth,points,chosen,origins,directions,ranges,native_loss
             checkpoint={'depth_head':head.state_dict() if head is not None else None,'query_decoder':decoder.state_dict(),
-                        'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
+                        'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
+                        'fit_order':[case['metadata']['owner'] for case in fit],
+                        'random_states':{'python':random.getstate(),'torch_cpu':torch.get_rng_state(),'torch_cuda':torch.cuda.get_rng_state_all()}}
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
         save('status.json',{'status':'running','phase':'final_evaluation','epochs':args.epochs,
             'updates':sum(r['optimizer_step'] for r in history),'actor_presentations':len(history),'elapsed_s':time.monotonic()-started})
@@ -299,6 +332,8 @@ def main():
             'shared_frozen_prefix_views':len(prefix_cache),
             'fit_label_times':label_times,
             'epochs':args.epochs,'updates':sum(r['optimizer_step'] for r in history),'actor_presentations':len(history),
+            'resumed_completed_presentations':resumed_steps,'new_presentations':len(history)-resumed_steps,
+            'resume_from':str(args.resume_from) if args.resume_from else None,
             'no_gradient_presentations':sum(not r['optimizer_step'] for r in history),
             'mode':args.mode,'completion_initialization':args.completion_init,
             'trainable_parameters':{'native_dpt':sum(p.numel() for p in head.parameters() if p.requires_grad) if head is not None else 0,

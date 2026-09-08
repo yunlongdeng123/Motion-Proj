@@ -23,7 +23,7 @@ class NativeGeometryPyramid(nn.Module):
             key=(str(native_run),scene['scene_id'],i,str(token_device))
             packed=prefix_cache.get(key) if prefix_cache is not None else None
             if packed is None:
-                data=torch.load(Path(native_run)/'frozen_prefix'/f'{scene["scene_id"]}_{i:02}.pt',map_location='cpu',weights_only=True)
+                data=torch.load(Path(native_run)/'frozen_prefix'/f'{scene["scene_id"]}_{i:02}.pt',map_location='cpu',weights_only=True,mmap=True)
                 packed=(tuple(data['tokens'][j].to(token_device) for j in [4,11,17,23]),
                         scene['views'][i]['image'][None,None].to(token_device),data['patch_start'])
                 # 同一窗口多个Actor共享不可变前缀；绝不缓存跨优化步的可训练DPT输出。

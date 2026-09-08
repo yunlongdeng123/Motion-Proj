@@ -1,5 +1,29 @@
 # Research Status
 
+## V7.3 event/CAPA完整结果、AV2前缀完成及joint中断恢复（2026-09-08）
+
+r9（code c2fbdccf，30epoch/11130更新、5632.23s）完整75开发Actor/5日志：hit32.4688%、early6.0060%、miss54.5686%、free0.038543m、target→surface0.227363m、recall@0.2m72.4665%。相对r8仅增加event：hit+1.466pp，日志bootstrap95%[−0.418,+3.510]pp；miss−2.265pp，[−4.321,−0.476]pp；early+0.415pp，[−0.257,+1.050]pp；free+0.004223m，[−0.001748,+0.012530]m；距离−0.002190m，[−0.008942,+0.003087]m；recall+0.521pp，[−0.578,+1.641]pp。缺失减少，但未形成覆盖/自由空间一致改善，不能直接选为最终胜者。移动9Actor/2日志hit10.4026%、early4.2654%、miss76.8620%、free0.017647m、距离0.146308m、recall81.8736%，样本量限制保留。证据m2/global/population_r9_analysis.json。
+
+训练event全部自有抽样束：epoch1为38087束/no_support14745/capped15315/字面miss22187；epoch30为38156/14723/15505/23575。随机抽样不相同，不能当配对泛化指标；它表明近39%的训练监督束仍无有限宽度表面支持，F03未解决，不能声称event似然自动创造缺失支持。
+
+CAPA r2（code eb42f835）31窗口×100步=3100次build-only TTA完成，全部744视图最终全24联合推理，489Actor已评价，PID31466退出。8277.17s，GPU allocated峰值8.08370GiB、RSS13.74811GiB。完整75开发/5日志：hit17.8032%、early10.9508%、miss58.4555%、free0.120341m、距离0.203133m、recall76.8964%；空表面8→3，仍全部保留。相对原生M1融合，hit−4.974pp，[−13.315,+1.334]pp；free−0.029963m，[−0.061784,+0.011995]m；距离+0.027708m，[+0.000880,+0.075590]m。此任务迁移未显示一致优势，不等于CAPA原论文任务失败；CAPA每开发窗口用build适配，原生模型为共享训练，信息/优化预算差别明确。移动9Actor/2日志hit11.2711%、early4.8243%、miss69.1382%、free0.037237m、距离0.139751m、recall88.2605%。证据m2/global/capa_r2_analysis.json。
+
+旧AV2前缀 `WS-V73-M4-AV2-PREFIX-01/20260908T011000Z__old-development-28view-prefix-r1` 已成功，code9541ac7d，PID38283退出。完整28视图672×672跨视图聚合，独立图编码chunk7，33.9146s，GPU allocated峰值7.64359GiB、RSS7.60567GiB，4层缓存2118584384字节。原始头/build325203个尺度对应，固定IRLS scale26.60637；之后装入M1r3适配头，优化更新0。没有新20日志评分。冻结前缀资源问题在该旧窗口可行，完整query神经评价尚未做，不能外推所有跨域资源或效果。
+
+native-only r11 `20260907T233000Z__population-native-only-full-track-s7304-r11` 已真实启动，code9541ac7d、PID38460，日志 `/root/autodl-tmp/controller_logs/v73_population_native_r11.log`；744共享冻结视图、371fit/67dev/51空输入，当前初始评价。Ada Y-up r2 PID37887继续。
+
+新增V73-F08：主joint r5 PID18843在epoch22第107个呈现后意外消失，末条elapsed22180.14s、无traceback/完成输出，status仍显示running。第21轮模型/优化器已保存，7791完整呈现；余107步没有进入该checkpoint。容器memory.events的oom=0/oom_kill=0，宿主MemAvailable约681GiB，内核日志无读取权限；无法据此确定退出原因，也不能将其写成OOM或模型失败。保留全部原始日志、checkpoint与末状态，记录中断；整个研究未完成，不能关机。
+
+已先检索PyTorch官方mmap加载与恢复指南：https://docs.pytorch.org/tutorials/recipes/recipes/module_load_state_dict_tips.html 。冻结tokens/build图像改为只读torch.load(mmap=True)，进程可共享文件页，避免各自复制整个CPU前缀；不改变任何输入视图或可训练路径。新增--resume-from恢复模型和优化器并写新run，保留parent未完成epoch现场；以后保存Python/CPU/CUDA RNG和fit顺序。旧r5缺RNG，恢复明确为seed7304重启CUDA抽样、重放Python shuffle顺序，不声称逐比特连续。
+
+登记恢复run `WS-V73-M2-GLOBAL-ACTOR-01/20260908T012500Z__population-joint-r5-epoch21-resume-r1`，同r5配置从epoch21继续到30，原initial/PCA复用；尚未启动，代码入库后立即执行，最终报告区分7791继承与新3339呈现，旧未保存107步单列。r10同全轨迹joint仍未运行，不能用本恢复替代r10。
+
+failure_ledger_delta=update F01/F02/F03/F05/F07，并新增F08训练意外中断active；F01/F02/F03/F04/F05/F07仍active，F06直接数据配置缓解。下一编号V73-F09。当前不是已证实不可恢复的资源不足，先执行恢复和内存映射对策。整个V7.3未完成，shutdown=false；全部研究收尾保存/push且无训练、评估、数据和待启动任务后才关机。
+
+---
+
+
+
 ## V7.3 首事件训练收尾、Ada轴修订启动与28视图前缀准备登记（2026-09-08）
 
 r9 `20260907T230000Z__population-lidar-track-beam-event-s7304-r9` 已完成30epoch/11130更新和全489对象最终评价，PID33444退出。code c2fbdccf，5632.23s、GPU allocated峰值0.42522GiB、RSS3.00089GiB；独立日志配对统计正在汇总，尚不提前判断event增益。训练记录保留所有自有束的no_support/capped/字面miss，缺支持的零位置梯度限制仍在。
