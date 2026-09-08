@@ -62,3 +62,7 @@
 新cohort从M1初始化并重新评价initial，不能复用旧initial或恢复旧fit顺序悄悄漏掉新增对象。固定推理自动继承新checkpoint的输入配置；旧checkpoint的显式override仍标记为未训练输入迁移。全cohort主表保持，另报告原metadata零LiDAR分组、coarse fallback、coverage缺失和跳步原因。这里只完成实现，尚无新的真实反向或完整训练结果；一次必要的真实梯度验证将在现有训练释放显存后执行，再依照R10/R12目标比较单独安排新cohort训练。
 
 输入核查证据`docs/autoresearch/worldsim_v73/m2/global/empty_inputs_r1_summary.json`；固定推理原始摘要`empty_fixed_r2_summary.json`、分组分析`empty_fixed_r2_analysis.json`，同属该目录。原run保留全部51表面和逐帧硬读出。F02/F03/F05持续，V7.3未完成，shutdown=false。
+
+## 已登记的一轮真实训练检查
+
+R13：20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13，从M1r3与seed7304重新初始化，全部51个原metadata零LiDAR对象仍在评价分母，41个有相机fit对象训练一轮。34个有正目标、7个无正目标但有真实原束，均不按质量选择。使用full_track标签、原hard range free.5、native_data_weight1、event0；不复用旧initial/PCA、不恢复旧checkpoint。它只检查新增真实反向和空目标处理，不承担充分拟合、主架构选择或新日志确认。登记时未执行，待R11实际退出释放显存后启动；R10/R11/R12不改变。数据小index由prepare_worldsim_v73_visual_only_cohort.py按build_points==0生成，并链接原51个case。

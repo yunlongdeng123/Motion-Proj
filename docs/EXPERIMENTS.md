@@ -1,3 +1,18 @@
+## V7.3 登记零LiDAR完整子集的一次真实训练检查（2026-09-08）
+
+现有显式visual-only推理已完成，但603eac54的新训练入口仅做过语法检查。针对已有F05输入条件缺口，登记一次覆盖全部原metadata零build LiDAR对象的真实反向实验；沿用已调研VGGT/SparseNeuS迁移依据，不重复网络调研或新增世界表示。不是按成绩挑选少量可拟合Actor，也不通过多次smoke替代认真训练。
+
+数据准备`WS-V73-M2-EMPTY-INPUTS-01/20260908T085500Z__metadata-zero-lidar-training-inputs-r3`：新增`scripts/prepare_worldsim_v73_visual_only_cohort.py`，仅按原489对象index中build_points==0选择全部51对象（43 fit/9日志、8 development/2日志），原case文件直接链接；没有相机位姿者仍保留，不读取标签或预测质量用于筛选。该小index只服务明确的输入子集诊断，不替代全489主表。
+
+登记`WS-V73-M2-GLOBAL-ACTOR-01/20260908T085500Z__visual-only-full-track-one-epoch-s7304-r13`：从原M1r3初始化DPT/查询、seed7304、joint/native_surface、native_data_weight1、full_track FIT标签、hard range free.5、event0、lr1e-5，一轮完整遍历41个有相机fit对象。初始/PCA/最终均在51对象上重新评价，不复用旧initial/baseline，不恢复R5/R10权重。34个有正目标与7个无正目标但有真实近框束的fit对象全部保留；无正目标的coverage记null，不能把未知区域当自由空间。检查记录真实DPT/查询梯度、coarse支持路径、跳步原因及峰值资源，含3个无相机开发对象的缺失分母。
+
+这一次短训练仅回答新入口是否能实际学习和正确处理空目标；不据此选择主架构、声称充分拟合或跨日志质量成功，也不修改R10/R11/R12的cohort、目标或顺序。更大cohort的完整训练需作为独立变化与主候选结果衔接。登记时R13尚未启动；待R11实际退出后再直接启动，无等待轮询控制器/自动GPU队列。
+
+08:50UTC外部20日志逐返回TSDF构建已启动，PID64413、code75ac0563，按原20日志顺序处理build输入，未运行模型质量评价。R10/PID53472 epoch13、R11/PID38460 epoch28仍训练；没有OOM，R12未启动。failure_ledger_delta=none（F02/F03/F04/F05持续，下一失败编号V73-F09）；整个V7.3未完成，shutdown=false。
+
+---
+
+
 ## V7.3 旧AV2 TSDF场景比较完成，登记20新日志背景候选（2026-09-08）
 
 `WS-V73-M4-AV2-SCENE-01/20260908T083000Z__old-development-vdb-r4` codee93c8b94完成，CPU13.407617s/RSS.704468GiB、0新推理/训练。固定21 Actor的已存R5/R9/native与PCA/仅背景，原187494束、5257 cohort、88 moving束，单日志不做跨日志bootstrap。
