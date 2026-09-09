@@ -119,7 +119,7 @@ class ActorSpatialQueryDecoder(nn.Module):
                 faces.extend([[a,a+1,a+3],[a+1,a+4,a+3]])
         self.register_buffer('patch_faces',torch.tensor(faces,dtype=torch.long))
 
-    def forward(self,build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
+    def encode_queries(self,build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
                 image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True,completion_seeds=None,
                 camera_weights=None,valid_image_rect=None):
         count=min(len(build_points_actor_m),self.evidence_queries)
@@ -128,6 +128,7 @@ class ActorSpatialQueryDecoder(nn.Module):
         # 表面种子并不限制后续位置更新；原生depth生成的种子保留梯度。
         completion=self.coarse*size_lwh_m if completion_seeds is None else completion_seeds+self.coarse*.1
         x=torch.cat([evidence,completion])
+        initial=x
         source=torch.cat([torch.zeros(count,device=x.device,dtype=torch.long),
                           torch.ones(len(completion),device=x.device,dtype=torch.long)])
         h=self.position(x/size_lwh_m.clamp_min(.1))+self.source(source)
@@ -149,6 +150,15 @@ class ActorSpatialQueryDecoder(nn.Module):
             h=h+update(torch.cat([h,local,visual],-1))
             x=x+displacement(h)
             observed|=available
+        return x,h,source,observed,initial
+
+    def forward(self,build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
+                image_hw,camera_ids,time_offsets_s,use_spatial=True,use_visual=True,completion_seeds=None,
+                camera_weights=None,valid_image_rect=None):
+        x,h,source,observed,_=self.encode_queries(
+            build_points_actor_m,size_lwh_m,features,camera_from_actor,intrinsics,
+            image_hw,camera_ids,time_offsets_s,use_spatial,use_visual,completion_seeds,
+            camera_weights,valid_image_rect)
         normal=F.normalize(self.normal(h)+F.normalize(x,dim=-1),dim=-1,eps=1e-5)
         reference=torch.zeros_like(normal)
         reference[:,2]=1

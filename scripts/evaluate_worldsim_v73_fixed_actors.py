@@ -22,6 +22,10 @@ from train_worldsim_v73_physical_surface import lidar_patches,evaluate_actor_sur
 
 def make_query_decoder(config):
     # 旧checkpoint没有query_surface字段，保持原独立patch路径。
+    if config.get('query_surface')=='open_charts':
+        from motion_proj.worldsim_v73.open_chart_queries import ActorOpenChartQueryDecoder
+        return ActorOpenChartQueryDecoder(chart_count=config.get('chart_count',64),
+            chart_resolution=config.get('chart_resolution',4),chart_scale=config.get('chart_scale',.15))
     if config.get('query_surface','patches')=='shared_mesh':
         from motion_proj.worldsim_v73.shared_mesh_queries import ActorSharedMeshQueryDecoder
         return ActorSharedMeshQueryDecoder(mesh_level=config.get('mesh_level',3))

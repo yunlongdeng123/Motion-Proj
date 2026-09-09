@@ -1,3 +1,15 @@
+## 开放局部曲面实现与LiDAR对照登记（2026-09-09 05:40 UTC）
+
+基于d11e6788实现ActorOpenChartQueryDecoder并接入训练/固定推理：原≤1536观测/补全查询进行三层空间更新，在初始支持中FPS分配64输出chart，4×4共享网格共1024顶点/1152面。只读局部PCA坐标架+可训练法向残差/UV高度，尺寸确定半宽.15*(LWH)^(1/3)，无opacity/radius/删面/全局闭合。旧查询更新提取复用，原patch计算顺序/权重名保持；heightfield旧小片已存在，新增支持分配/尺度不是新拓扑保证。chart间相交、PCA污染和固定尺度仍可能失败。
+
+任务WS-V73-Q-V2-01，登记`20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3`（pending）：先LiDAR-only同原cohort/full_track/seed7304/30轮、coverage/beam.5/.03/res32/env.05/event0、AdamW1e-5clip1，与闭合r2/窄片R8比较。完整489对象初始与最终评价，51不可用保留；这是表面支持、初始化和拓扑组合改变，不能只归因闭合。原生DPT/局部图像接口保留，但本r3不加载/训练DPT，不冒充视觉研究结果。
+
+先一次真实FIT对象梯度/保存恢复检查（pending），通过后正式执行；不重复旧smoke/回归。实际实现、参数化边界、一手AtlasNet/SoftRas/DRC引用及简单组件图见`docs/WORLDSIM_V7_3_OPEN_CHARTS.md`。实现/训练入口和此登记同提交，随后真实过程补记。constructive ray监督下一独立因素，upper/DINOv3/full FT和near-boundary free均不启动；20新日志未读。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration，旧风险保持、下一V73-F10。三本台账/计划同步，30分钟ACTIVE、完成不关机。
+
+---
+
 ## Q-v2诊断收口，进入开放局部曲面候选（2026-09-09 04:55 UTC）
 
 固定网格诊断支持优先构造正确沿束支持，也修正了局部塌缩的归因：joint early26.9437%中仅1.4956个百分点有后方正确支持，其余25.4481个百分点没有；LiDAR r2该项为6.5867个百分点。joint 67非空网格未检出非邻接三角自交，局部形变温和；LiDAR r2有48/67检出相交且有局部高拉伸。因此不能把joint较差简单归因于collapse/stretch或自交。两支都未同时兑现物理与覆盖，闭合拓扑是否为原因仍需要改变参数化来检验。

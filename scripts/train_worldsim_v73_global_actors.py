@@ -27,8 +27,11 @@ def main():
     parser.add_argument('--run-id',required=True)
     parser.add_argument('--epochs',type=int,default=30)
     parser.add_argument('--mode',choices=['joint','pointwise','lidar_only','native_only'],default='joint')
-    parser.add_argument('--query-surface',choices=['patches','shared_mesh'],default='patches')
+    parser.add_argument('--query-surface',choices=['patches','shared_mesh','open_charts'],default='patches')
     parser.add_argument('--mesh-level',type=int,default=3)
+    parser.add_argument('--chart-count',type=int,default=64)
+    parser.add_argument('--chart-resolution',type=int,default=4)
+    parser.add_argument('--chart-scale',type=float,default=.15)
     parser.add_argument('--upper-lora',action='store_true',help='重算完整窗口18–23组qkv LoRA；默认保留旧冻结聚合器路径')
     parser.add_argument('--upper-rank',type=int,default=8)
     parser.add_argument('--upper-alpha',type=float,default=8.)
@@ -56,12 +59,12 @@ def main():
         parser.error('upper LoRA需要实际视觉几何通路，不能用于lidar_only')
     if args.upper_lora and args.initial_results:
         parser.error('上层适配应评价其实际初始化，不能复用旧最终token的initial')
-    if args.query_surface=='shared_mesh' and (args.mode=='native_only' or args.initial_results):
-        raise ValueError('共享网格须训练Query并重新评价自身初始化；不能复用旧patch initial')
+    if args.query_surface!='patches' and (args.mode=='native_only' or args.initial_results):
+        raise ValueError('新表面须训练Query并重新评价自身初始化；不能复用旧patch initial')
     if args.include_visual_only and args.initial_results:
         raise ValueError('visual-only训练必须重新评价含新增输入条件的initial，不能复用旧cohort预测')
     label_times='full_track' if args.fit_targets else args.fit_label_times
-    task='WS-V73-Q-V2-01' if args.query_surface=='shared_mesh' else 'WS-V73-M2-GLOBAL-ACTOR-01'
+    task='WS-V73-Q-V2-01' if args.query_surface!='patches' else 'WS-V73-M2-GLOBAL-ACTOR-01'
     out=Path('/root/autodl-tmp/runs/worldsim_v73')/task/args.run_id
     out.mkdir(parents=True,exist_ok=False)
     def save(name,value):
@@ -83,7 +86,9 @@ def main():
         'surface_supervision_times':label_times,
         'query_surface':args.query_surface,
         'surface_boundary':('shared-vertex ellipsoid deformation with build/native evidence queries; fixed genus-zero topology is a prior, not observed occupancy or a guarantee against self-intersection; identical explicit triangles in training and evaluation'
-                            if args.query_surface=='shared_mesh' else 'independent 3x3 patches, no interpatch shared vertices'),
+                            if args.query_surface=='shared_mesh' else
+                            'open heightfield charts from build/native query states; fixed Actor-size scale, local shared vertices, no global closure; identical UV triangles in training and evaluation; interchart overlap remains possible'
+                            if args.query_surface=='open_charts' else 'independent 3x3 patches, no interpatch shared vertices'),
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'visual_only_boundary':'opt-in admission depends only on zero build LiDAR and available calibrated camera poses, never predicted support or target quality; no-camera empty inputs remain unavailable; unobserved regions are not free space',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
@@ -138,6 +143,10 @@ def main():
         if args.query_surface=='shared_mesh':
             from motion_proj.worldsim_v73.shared_mesh_queries import ActorSharedMeshQueryDecoder
             decoder=ActorSharedMeshQueryDecoder(mesh_level=args.mesh_level).cuda()
+        elif args.query_surface=='open_charts':
+            from motion_proj.worldsim_v73.open_chart_queries import ActorOpenChartQueryDecoder
+            decoder=ActorOpenChartQueryDecoder(chart_count=args.chart_count,
+                chart_resolution=args.chart_resolution,chart_scale=args.chart_scale).cuda()
         else:
             decoder=ActorSpatialQueryDecoder().cuda()
         if args.mode=='native_only': decoder.requires_grad_(False)
@@ -256,6 +265,8 @@ def main():
             support['surface_vertices']=len(result['vertices_actor_m'])
             support['surface_faces']=len(result['faces'])
             support['evidence_context_queries']=len(result.get('context_actor_m',[]))
+            if 'chart_halfspan_m' in result:
+                support['chart_halfspan_m']=result['chart_halfspan_m'].item()
             support['has_actor_camera_pose']=has_views
             support['input_path']='visual_only' if case['metadata']['visual_only_prediction_enabled'] else 'existing_multimodal_or_lidar'
             support['fallback_reason']=('no_actor_camera_pose' if not has_views else 'predicted_native_support_empty') if support.get('lidar_fallback') else None
@@ -401,6 +412,7 @@ def main():
                     'evidence_context_queries':support['evidence_context_queries'],
                     'query_surface':args.query_surface,'surface_vertices':len(vertices),
                     'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
+                if 'chart_halfspan_m' in support: row['chart_halfspan_m']=support['chart_halfspan_m']
                 if upper is not None:
                     key=(case['metadata']['scene'],case['metadata']['owner'])
                     row['upper_context_views']=len(pyramids[key].prefix.images) if key in pyramids else 0

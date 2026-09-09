@@ -1,0 +1,37 @@
+# Q-v2开放局部曲面：支持重新分配
+
+2026-09-09 05:40 UTC。实现与首轮登记，正式质量结果pending。任务`WS-V73-Q-V2-01`，首轮`20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3`。基于d11e6788：旧joint没有明确有效增量，固定诊断显示joint主要缺正确沿束支持、局部形变温和；LiDAR闭合网格有48/67非空对象检出非邻接自交。按用户策略二先检验表面支持，不解冻upper或更换基座。
+
+![实际组件](autoresearch/worldsim_v73/open_charts/V73_OPEN_CHART_ARCHITECTURE.png)
+
+## 实际改变
+
+`ActorOpenChartQueryDecoder`复用原三层192维Actor空间查询及局部视觉读取，最多1024个build LiDAR与512个completion查询继续交互；旧解码器的查询更新原样提取为`encode_queries`，旧patch权重名及计算顺序不变。先在初始支持中FPS分配最多32个LiDAR锚点，其余从completion补足64个；输出中心采用这些查询的更新后位置。分配不读取heldout标签、free结果或最终预测质量。completion仍可来自原生几何、LiDAR fallback或已有可学习coarse位置，允许规范坐标更新，不限制为旧点附近的小残差。
+
+每个chart使用固定4×4 UV网格、16共享顶点/18面；64个chart共1024顶点/1152面。片内通过共享MLP读取查询隐状态和UV，生成法向高度；片间不连接成闭合外壳。初始化局部坐标架为初始支持的16近邻PCA，特征向量只读；支持完全重合时采用径向/z轴fallback。可学习法向为`normalize(n_PCA + .5*tanh(normal_head(h)))`，每步PCA坐标架无梯度，中心、法向残差和高度具有真实梯度。
+
+局部半宽`s=.15*(L*W*H)^(1/3)`米，仅由只读Actor尺寸确定；高度为`.5*s*tanh(height_MLP(h,uv))`，最后一层零初始化，因此初始片是平面。没有可学习radius、opacity/existence或删面后处理；原data/free/box损失与硬查询读取相同三角面。该尺度是本轮明确的参数化选择，不是传感器认证footprint或新占据标签。
+
+固定正交切向坐标和单值高度场限制chart内部切向塌缩/折叠，但不保证多个chart间不相交、没有宽面侵入或真实表面完整。固定尺度也可能过大/过小、PCA可能对应污染，法向残差范围可能妨碍大角度修正；这些都是可失败的假设，不能以拓扑外观替代真实指标。旧3×3窄片已有局部高度图，新增量是支持数量/尺度/分配及共享chart解码，不把“高度图”或“开放patch”本身宣称创新。
+
+## 一手依据与迁移范围
+
+[AtlasNet，CVPR2018作者页](https://imagine.enpc.fr/~groueixt/atlasnet/)及[官方模型](https://raw.githubusercontent.com/ThibaultGROUEIX/AtlasNet/master/model/atlasnet.py)使用多个参数化模板映射成曲面并合并。这里迁移局部曲面元素和模板拓扑，保留当前观测驱动空间查询；没有安装其PyMesh、复制ShapeNet完整形状损失、改变训练/评估UV采样或宣称完整复现。
+
+[Open3D0.19三角相交源码](https://raw.githubusercontent.com/isl-org/Open3D/v0.19.0/cpp/open3d/geometry/TriangleMesh.cpp)及已有固定诊断支持把局部形变与全局错误支持分开，不根据joint负结果盲加Laplacian/ARAP。[SoftRas，ICCV2019](https://openaccess.thecvf.com/content_ICCV_2019/html/Liu_Soft_Rasterizer_A_Differentiable_Renderer_for_Image-Based_3D_Reasoning_ICCV_2019_paper.html)的投影距离与[DRC，CVPR2017](https://shubhtuls.github.io/drc/)的射线一致性供下一项constructive监督设计参考，本轮不新增该loss，不把概率软融合当真实首返回。
+
+## 首轮协议与解释
+
+首轮先做LiDAR-only参数化对照：原371可用FIT/67可用DEV、完整414FIT/75DEV/51不可用对象、5 DEV日志、seed7304、30轮11130预期实际更新。输入只用build，FIT监督仍full_track；coverage、finite-beam free .5/.03m/res32、envelope.05、event0、AdamW1e-5/global clip1保持。原固定PCA基线复用，当前参数化initial和final完整重新评价；不把旧initial冒充新候选。20新日志质量未读。
+
+对照同LiDAR闭合网格r2与旧窄片R8，按原6指标/日志配对；这是支持分配、局部形状、初始化和拓扑的组合改变，不是“只取消闭合”的纯因果消融。先确认这个开放表示本身能否恢复有效表面，再以同一表示独立加入constructive ray吸引，避免与upper/new backbone/new data一起改。当前不启动DINOv3/full FT/upper PEFT或near-boundary free。
+
+可训练DPT和真实图像特征到chart的接口保留，固定推理通过保存config创建同一解码器；本次LiDAR作业不加载DPT或图像前缀，也不声称这一次已经训练视觉通路。未来joint需作为单独对照登记，不能把可用接口或较低LiDAR成本写成联合模型成果。
+
+## 验证与运行入口
+
+先一次真实FIT对象检查`scripts/check_worldsim_v73_open_charts.py`：原full_track测量采样、coverage/beam/box反传，检查normal/height/position有效梯度、一次更新的表面变化，以及固定推理factory按checkpoint恢复。结果pending；它不替代DEV效果，不验证未来视觉通路或Adam状态恢复。不重复旧smoke/回归。
+
+正式入口`scripts/run_worldsim_v73_open_charts_lidar_r3.sh`，运行状态以RESEARCH_STATUS文首为准。训练输出config/manifest/JSONL/每轮checkpoint和完整final，保存真实wall/GPU/RSS。组件图由源码绘制，结果未产生前不预填表格。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration。F02等均未解除，下一V73-F10；三本台账和计划同步，小步push，30分钟跟进ACTIVE、完成不关机。
