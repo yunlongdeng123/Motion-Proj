@@ -1,0 +1,23 @@
+{
+  "task": "WS-V73-PAPER-FORENSICS-01",
+  "models": {
+    "AdaPoinTr": "WS-V73-M2-ADAPOINTR-01/20260907T231000Z__population-full-track-pcn-yup-s7307-r2",
+    "VGGT-native": "WS-V73-M2-GLOBAL-FUSION-01/20260907T203500Z__population-native-lidar-fusion-r2",
+    "LiDAR-R8": "WS-V73-M2-GLOBAL-ACTOR-01/20260907T212500Z__population-lidar-track-beam-range-s7304-r8",
+    "Open-r3": "WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3",
+    "Attraction-r4": "WS-V73-Q-V2-01/20260909T063700Z__open-charts-lidar-ray-support-s7304-r4",
+    "First-r6": "WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6"
+  },
+  "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2",
+  "scope": "original 75 DEV actors, owned heldout rays; no external20 reads; zero optimization",
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04",
+    "V73-F09"
+  ],
+  "selection": "one actor per method: >=20 owned rays and >=5 early rays, closest early fraction to median among eligible failures; one median-severity early ray with later hit when available",
+  "quality": "q=sum squared edge lengths / (4 sqrt(3) area); q>10 descriptive sliver threshold",
+  "component_support": "any build endpoint within 0.2 m unsigned distance to a component; disconnected chart is not automatically a floater",
+  "oracles": "any-hit and near-surface use heldout endpoints; remove-early-faces deletes union of DEV early faces then recasts all owned rays; diagnostic only, no deployment edit"
+}

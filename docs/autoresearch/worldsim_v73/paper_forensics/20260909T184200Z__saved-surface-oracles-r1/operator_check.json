@@ -1,0 +1,36 @@
+{
+  "status": "done",
+  "scope": "CPU float64 operator verification on one saved DEV surface; not learned efficacy",
+  "witnesses": 60,
+  "vertices": 1024,
+  "faces": 1152,
+  "adjoint_absolute_error": 1.7763568394002505e-15,
+  "witness_backward_max_error": 0.0,
+  "first_depth_directional_relative_error": 6.682607245345196e-10,
+  "projected_constraint_residual": 2.011912859125664e-07,
+  "lsmr_iterations": 496,
+  "lsmr_normal_residual": 1.089754360710554e-10,
+  "step_response": [
+    {
+      "step_norm_m": 0.001,
+      "projected_max_depth_change_m": 8.872152790218024e-09,
+      "raw_max_depth_change_m": 9.155253228954052e-05
+    },
+    {
+      "step_norm_m": 0.0005,
+      "projected_max_depth_change_m": 2.2167476743106818e-09,
+      "raw_max_depth_change_m": 4.575843490073339e-05
+    },
+    {
+      "step_norm_m": 0.00025,
+      "projected_max_depth_change_m": 5.540261582837047e-10,
+      "raw_max_depth_change_m": 2.287476276308098e-05
+    }
+  ],
+  "saved_autograd_bytes": 5820,
+  "dense_ray_face_entries_avoided": 69120,
+  "wall_s": 0.09663653373718262,
+  "peak_rss_gib": 0.6426582336425781,
+  "boundary": "BVH float32 active set, float64 selected intersection; geometry backward only; no derivatives for rays/face choice; fixed local witnesses; projection coefficients detached; silhouettes/ties/grazing not made differentiable; no training or external20",
+  "relative_constraint_residual": 2.011912859125664e-07
+}

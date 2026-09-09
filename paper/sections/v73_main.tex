@@ -1,0 +1,49 @@
+\section{Introduction}
+A sparse scan records where a beam terminates, but it also constrains the space before that return. Recovering a reusable surface therefore asks more than placing points near observations. The reconstructed object must give coherent answers when the same surface is intersected from another time or viewpoint. A completion patch can improve endpoint coverage while obstructing a beam that should reach a different patch. Optimizing one aggregate distance can conceal this failure.
+
+We define the task as \emph{recovering a queryable canonical rigid surface from sparse observations}. The output is an actor surface in metric canonical coordinates, shared across all query rays and rigid placements. Known identities, calibration and trajectories are inputs. Surface reconstruction is the independent deliverable; first-intersection queries test that deliverable. Learning a complete LiDAR sensor, appearance model, motion policy, or closed-loop world simulator is outside the task.
+
+This reformulation follows a useful lesson from DVGT~\cite{dvgt}: an output representation should express the geometric object required by the task. DVGT predicts metric point maps in a common ego frame. Our output instead must be independent of the image raster and reusable under an actor's rigid motion. The contribution cannot consist merely of renaming a point map, adding a small head, or verifying a coordinate identity. It must supply a shared surface, an observation-consistent learning mechanism, and evidence that the surface answers the intended queries.
+
+Before proposing that mechanism, we ask what the extra surface actually looks like. A thin stretched triangle suggests shape regularization; an unsupported component suggests selective pruning; a well-shaped but overextended patch suggests a support-boundary or visibility problem. These explanations require different mathematics. We trace the \emph{actual first-hit triangle}, render the saved geometry in Blender, and intersect it with a plane containing the sensor ray. We then relax the evaluation in stages: correct first hit, any correct intersection, and any nearby surface. This locates what can be recovered by choosing an existing intersection and what still requires changing geometry.
+
+The resulting evidence motivates \emph{witness-constrained canonical charts}. Each chart couples an embedding with a physical support domain and sparse observation witnesses. For fixed visibility, first-hit depth correction lies in the row space of a sparse geometric Jacobian; completion can move in its null space. Multiplying by the incidence term yields a constraint without the grazing-angle denominator. A separately represented chart boundary can express partial support without distorting otherwise well-shaped triangles. These are method-level hypotheses, not consequences of a stronger backbone. We implement and check the sparse operator, while explicitly marking the remaining training and boundary-learning work.
+
+The manuscript contributes (i) a bounded surface-reconstruction formulation with a shared query contract; (ii) original failure morphology, oracle and pruning evidence linking measurements to responsible triangles; and (iii) a concrete surface-domain formulation and sparse witness-orthogonal operator. Current r3--r7 experiments test the existing chart and first-surface pathway. They do not validate every component of the proposed representation.
+
+\section{Related Work and Design Rationale}
+\paragraph{Geometry representations.}
+VGGT~\cite{vggt} provides multi-view geometry features; DVGT~\cite{dvgt} adapts the output coordinate system and aggregation to driving. AtlasNet~\cite{atlasnet} establishes chart-based surface generation. AdaPoinTr~\cite{adapointr} predicts completed point sets. We reuse these established ideas rather than claim canonical coordinates, charts, or point completion as new. The proposed distinction is a \emph{partially observed, physically queryable surface with explicit witness responsibility}, evaluated on the same exported geometry across rays. Our rendered AdaPoinTr baseline is the full task-fine-tuned model followed by the documented PCA patch conversion; its conversion artifacts cannot all be attributed to native point prediction.
+
+\paragraph{Representation and query operator.}
+LiDAR-RT~\cite{lidarrt} couples Gaussian primitives carrying intensity and ray-drop properties with a differentiable ray-tracing pipeline. Its operator and representation jointly serve sensor re-simulation. We adopt that level of coupling as a design criterion, while solving a narrower surface task: our query returns the first geometric intersection and its owner, without learned transparency or a sensor-return head. LiDAR-RT is a methodological reference here, not a reproduced numerical baseline.
+
+\paragraph{Diagnose before calibrating.}
+FoundationGeo~\cite{foundationgeo} uses progressively local scale alignment to expose residual geometry error, then separates scale and direction with a tangent-space parameterization. Our oracle ladder similarly localizes an error before selecting an intervention. Its percentages describe support availability, not a model allowed to choose a target-dependent return. We also retain non-dominating benchmark outcomes: FoundationGeo's reported metric AbsRel is 10.2 versus MoGe-2's 7.33 on NYUv2 and 17.8 versus 10.4 on ETH3D; lower is better. An average improvement does not imply superiority on each domain.
+
+\paragraph{Visibility and constrained updates.}
+Point2Mesh~\cite{point2mesh} uses a mesh self-prior and beam-gap attraction. Distance-based attraction does not by itself select the first visible surface. Differentiable rendering distinguishes smooth interior derivatives from visibility discontinuities~\cite{nvdiffrast,projective}. Gradient projection is also established~\cite{pcgrad,rosen}. Our proposed use is specifically tied to the sparse first-intersection Jacobian and incidence normalization of a shared canonical surface. We do not claim to invent null-space projection or to solve silhouette derivatives through an interior formula.
+
+\section{Queryable Canonical Surface Reconstruction}
+\label{sec:task}
+Let $\mathcal O_i$ contain build-side camera frames, LiDAR endpoints, beam origins and directions associated with rigid actor $i$. A known transform $T_i(t)=(R_i(t),t_i(t))$ maps canonical actor coordinates to world coordinates. Sensor and ego calibration map each endpoint and its origin into this frame. The model predicts
+\begin{equation}
+ f_\theta(\mathcal O_i)=\mathcal R_i,
+ \qquad \Ssurf_i=\bigcup_{k=1}^{K}\psi_{ik}(\Omega_{ik})\subset\R^3.
+ \label{eq:surface}
+\end{equation}
+Here $\psi_k:\Omega_k\subset\R^2\to\R^3$ is a chart embedding. The stored representation also records source provenance and a sparse witness index $\W_i$. Geometry is shared: no surface is constructed separately for an evaluation ray.
+
+For a world-space ray $(o,d)$, the geometric query is
+\begin{align}
+ o_i&=R_i^\top(o-t_i),\quad d_i=R_i^\top d,\\
+ Q(\mathcal R_i,o,d,t)&=\inf\{s\geq0:o_i+s d_i\in\Ssurf_i\}.
+ \label{eq:query}
+\end{align}
+The value is $+\infty$ when there is no intersection. Closest-point queries and mesh export use the same surface. A common rigid change of coordinates preserves the range in Eq.~\ref{eq:query}, since rotations preserve lengths. This identity validates reuse of coordinates; it does not prove reconstruction accuracy.
+
+\paragraph{Observation semantics.}
+A measured return $(o_r,d_r,r_r)$ gives endpoint $x_r=o_r+r_rd_r$ and evidence about the pre-hit beam interval. The region behind the first return is unobserved. It is not a negative surface target. Sparse endpoints also do not provide the complete ground-truth surface, so our main distance is directed target-to-surface distance, not unrestricted symmetric Chamfer accuracy. Missing predictions and actors without owned heldout returns remain in the cohort; an undefined physical metric is not a successful zero.
+
+\paragraph{What is new in the task.}
+The required output is a reusable partial surface constrained by multiple observations, rather than independent per-view depth or a per-ray return predictor. Querying checks surface coherence across views. There may be many surfaces consistent with sparse data; the task does not promise unique hidden geometry. The intended success criterion is improved measured coverage together with credible first-surface and free-space consistency at a fixed observation budget.

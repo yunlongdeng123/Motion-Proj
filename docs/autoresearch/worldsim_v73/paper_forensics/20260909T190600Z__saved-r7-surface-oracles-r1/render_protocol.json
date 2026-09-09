@@ -1,0 +1,15 @@
+{
+  "renderer": "Official Blender 3.6.23 Linux x64, Cycles CPU, 2 threads, 16 samples, denoising, Standard view",
+  "image_size": [
+    1100,
+    800
+  ],
+  "whole": "Original vertices and faces. Gray surface, red early faces, orange selected component.",
+  "detail": "Isolate the selected connected component using original triangles; original measurements and ray. Other components hidden only for display.",
+  "measurements": "Blue build endpoints; green heldout endpoints; octahedra are markers, not reconstructed geometry.",
+  "query_contract": "All metrics and analytic slices use full original surfaces, irrespective of display isolation.",
+  "geometry_editing": "No smoothing, remeshing or generated image content.",
+  "selection": "Recorded in manifest and summary; independently selected median eligible failure per method, not matched actors.",
+  "files": "<method>.blend contains full actor scene; <method>_detail.blend contains isolated chart scene.",
+  "runtime_note": "Official binary includes OpenColorIO. Debian build with opencolorio=False produced invalid black renders; those were replaced before delivery."
+}

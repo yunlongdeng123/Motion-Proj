@@ -1,42 +1,37 @@
-# EAS 论文与本地研究档案
+# 可查询规范刚体表面：V7.3 研究稿
 
-> **当前研究状态（2026-09-07）**：本目录是 V7.1 EAS 的既有证据稿；下文“当前主稿”指这次历史构建。新方向为 [EAS-VGGT](../docs/WORLDSIM_V7_2_EAS_VGGT_RECOVERY_PLAN.md)，实现/实验 E1–E5 尚未完成。本轮不改写论文结果、不重建 PDF；当前执行入口见 [RESEARCH_STATUS](../docs/RESEARCH_STATUS.md)。
+当前入口 main.pdf / main.tex 已于 2026-09-10 更新为 **Queryable Canonical Surfaces from Sparse Driving Observations**。这是证据与方法开发稿，使用 CVPR 模板作本地阅读；不宣称已满足投稿页数或完成全部方法验证。
 
-当前主稿：**Evidential Actor Surfaces for Physically Consistent Driving Reconstruction**。
-科学证据快照为 `research/worldsim-v7.1-learned-evidential-surface@1913ab0e`，本次写作整理覆盖 V6--V7.1，未执行新实验。
+## 本次内容
 
-## 阅读入口
+- 完成后的 joint r7：75 个 DEV Actor、5 个日志的配对结论与算力账。正确首交点相对 r6 提升 10.536 pp，free-space 保持仍未建立。
+- 七种原始保存表面的真实 Blender 全景与责任面片隔离图、精确三角面切片、首面/任意正确交点/邻近表面 Oracle 阶梯，以及共享网格剪枝干预。
+- 任务重定义为稀疏观测到可查询规范刚体表面；方法中给出显式 chart 支持域、正观测保留约束、首面 Jacobian、入射归一化正交更新和稀疏自定义伴随。
+- 严格区分已训练的 r3–r7、已通过数值验证的算子原型、尚未实现训练的支持域边界。完整主张与反例见 V73_REVISION_NOTES.md。
 
-- [中文精翻 main 与阅读包](../docs/paper/README.md)：统一存放于 `docs/paper/`，对应 `ec9c2e08` 的英文主稿。
-- `main.pdf`：当前 EAS 主线。保留 M7/M8 几何、M39 同几何证据组合、有限衰减理论、刚体/视觉所有权，以及必要的分层与 AV2 负结果。
-- `supplement.pdf`：仅供本地查看的完整研究档案，不提交 OpenReview。含复现细节、证明、V6--V6.7 演进、V7.1 实验图谱、历史 V7 结果与完整相机证据。
-- `CONTRIBUTION_MAP.md`：当前贡献与证据对应；其后保留的 HARP-3D 映射仅为历史记录。
-- `sections/supp_guide.tex`：阅读导航与历史口径更正。
-- `results/eas_evidence.json`：从 canonical M8/M39/M43/M49/M51 summary 摘录的精确数值及来源。`results_macros.tex` 保留旧研究数值，不覆盖既有 run。
+## 构建
 
-当前使用官方 CVPR 模板的带页码本地阅读模式，无伪造投稿编号。模板来源见 `TEMPLATE_PROVENANCE.md`。
-写作参考用户提供的 Gau-Occ 与 DynamicVGGT：聚焦问题、方法、证据，旧探索集中归档。未复制参考文献中的图或实验结果。
+    cd paper
+    latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 
-## 构建与核对
+本次以 Windows TinyTeX 2026 构建，并将同一 PDF 同步回 AutoDL。验收包含逐页渲染、所有图表与引用核对；无未定义引用、溢出框或过大浮动体警告。已生成的图表位于 figures/v73/ 与 tables/v73/，编译不需要训练环境。
 
-在有 TeX Live/TinyTeX 的机器上串行执行：
+scripts/v73_build_figures.py、scripts/v73_compose_blender_atlas.py 是派生图表源码。复现包提供 paper/、evidence/、forensics/、forensics_r7/ 的 staging 布局；设 WORLDSIM_PAPER_STAGE 指向包根目录后运行这两个脚本。NumPy、Matplotlib 与 Pillow 即可重绘图表，不需要模型推理。
 
-```bash
-latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
-latexmk -pdf -interaction=nonstopmode -halt-on-error supplement.tex
-python scripts/verify_paper.py
-```
+原始几何取证与渲染脚本位于项目根目录 scripts/forensic_worldsim_v73_paper_surfaces.py、scripts/forensic_worldsim_v73_paper_r7.py、scripts/render_worldsim_v73_paper_blender.py。渲染使用官方 Blender 3.6.23、Cycles CPU；Debian 精简构建缺少 OpenColorIO，未用于最终图。每例提供全景和隔离责任面的 .blend。可直接用 Blender 打开查看。隔离只影响展示，指标与切片始终查询原始完整网格。
 
-核对脚本仅检查本地源文件、39 个表格数值、分层计数与编译日志，不加载数据集或模型。
-PDF 另需逐页渲染检查；不要仅用编译成功代替排版验收。
-本次在 Windows 本地编译，AutoDL 无卡 2 GB 内存环境只承担串行读取与文件同步。
+证据目录：
 
-## 证据解释与投稿边界
+    docs/autoresearch/worldsim_v73/paper_forensics/
+      20260909T184200Z__saved-surface-oracles-r1/
+      20260909T190600Z__saved-r7-surface-oracles-r1/
 
-M43 正式 categorical 比较及拒绝结论保持不变。只读代码审计发现描述性
-`m8_point_surface` 的 early/hit 基线字段被 categorical 计数覆盖；不得将该混算子差值解释为匹配的几何迁移实验。
-Chamfer 配对未受影响，canonical run 不修改、不重读 target。详见统一失败账本 `V71-F52`。
+首面算子数值原型为 scripts/worldsim_v73_witness_operator_prototype.py，检查结果在第一目录的 operator_check.json。该原型不接入 r7，不把 DEV 局部试步解释为学习收益。新方案与既有负结论 V73-F02/F03/F04/F09 的关系由统一台账维护，本目录不建立平行 failure ledger。
 
-`supplement_v7_legacy.tex` 保存旧入口；`sections/supp_v7_restored.tex` 将其完整正文以独立标签空间纳入当前档案。
-`arxiv.tex` 仍与 main 共享正文，但真实作者信息、正式投稿模板与元数据需要单独配置；本次未构建或发布 arXiv。
-`SUBMISSION_CHECKLIST.md` 的旧 V7 页数、分支及 review 模式仅为历史记录，不能直接作为当前投稿清单。
+## 历史与边界
+
+旧 V7.1 的 sections、supplement 与文档保留作为历史材料；旧 scripts/verify_paper.py 检验的是旧稿，不能验证本稿。paper_v73/ 是较早 r4 阶段入口。本次主入口统一为 paper/main.pdf。
+
+参考 DVGT 的任务与输出共同重构、LiDAR-RT 的 representation/renderer 联合设计，以及 FoundationGeo 的 Oracle 诊断写法。本文不声称复现 LiDAR-RT 数值，不把 AdaPoinTr 的 PCA 曲面转换误当成其原生输出。
+
+证据截止时，固定 20 AV2 日志的独立确认由原研究任务执行中；本文未读取部分外部质量来调参，也未将其标成完成。外部确认、完整场景组合、新支持域训练及正交更新端到端收益仍需独立报告。

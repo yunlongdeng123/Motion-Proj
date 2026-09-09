@@ -1,21 +1,33 @@
-% CVPR 2026 author kit, adapted as a provisional CVPR 2027 research draft.
+% Local research manuscript; official CVPR style, no submission claim.
 \documentclass[10pt,twocolumn,letterpaper]{article}
 
 \usepackage[pagenumbers]{cvpr}
-\usepackage{graphicx}
-\input{preamble}
-\input{results/results_macros}
+\usepackage{graphicx,amsmath,amssymb,booktabs,array}
+\usepackage{url}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Ssurf}{\mathcal S}
+\newcommand{\W}{\mathcal W}
+\newcommand{\method}{Queryable Canonical Surfaces}
+\emergencystretch=2em
 
 \definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
-\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+\usepackage[breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
 
 \def\paperID{Local draft}
 \def\confName{CVPR}
 \def\confYear{2027}
 
-\input{manuscript_metadata}
-\author{Anonymous Authors}
+\title{Queryable Canonical Surfaces from Sparse Driving Observations}
+\author{WorldSim V7.3 Research Draft\\Evidence and method-development edition, 10 September 2026}
 
 \begin{document}
-\input{manuscript_body}
+\maketitle
+\input{sections/v73_abstract}
+\input{sections/v73_main}
+\input{sections/v73_method}
+\input{sections/v73_experiments}
+\input{sections/v73_references}
+\clearpage
+\appendix
+\input{sections/v73_appendix}
 \end{document}

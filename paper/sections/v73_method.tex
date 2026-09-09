@@ -1,0 +1,98 @@
+\section{Witness-Constrained Canonical Charts}
+\label{sec:method}
+\begin{figure*}[t]
+ \centering\includegraphics[width=\textwidth]{figures/v73/architecture.pdf}
+ \caption{Architecture components and data flow. A single canonical surface is constructed from sparse observations and known rigid transforms. The upper path is implemented in V7.3. The lower witness-orthogonal update is a numerically checked prototype developed in this revision; learned support-domain boundaries are proposed in Sec.~\ref{sec:domain}. The query always intersects the exported triangles.}
+ \label{fig:architecture}
+\end{figure*}
+
+\subsection{Implemented Embedding and First-Surface Learning}
+The current joint path adapts the full native VGGT DPT depth head (32,654,562 parameters), reads four feature levels, and uses local spatial queries to generate actor charts. Only the fully frozen aggregation prefix is cached. Geometry gradients reach the trainable DPT and its sampled features. Native seeds, feature reading and build-depth auxiliary supervision together define the joint pathway; r7 versus r6 does not isolate a single feature layer.
+
+The open-chart models use 64 charts, each a $4\times4$ vertex grid, giving 1,024 vertices and 1,152 triangles. A chart has a center, tangent frame, normal and height offsets. Its embedding has the form
+\begin{equation}
+ \psi_k(u)=c_k+U_ku+n_kh_k(u),\qquad U_k^\top U_k=I,
+ \quad U_k^\top n_k=0.
+ \label{eq:chart}
+\end{equation}
+In r3--r7 the chart domain is a fixed square for each actor's configured scale. This structural distinction matters: a regular local triangulation can still cover the wrong area.
+
+For endpoint residual $\delta=\psi_k(u)-x_r$, define $P_\parallel=d_rd_r^\top$ and $P_\perp=I-P_\parallel$. The constructive attraction used in r4 is
+\begin{equation}
+ L_{\rm att}(r)=\min_{k,u\in\Omega_k}
+ \|\alpha P_\perp\delta+P_\parallel\delta\|_2,
+ \quad\alpha=20/3.
+ \label{eq:att}
+\end{equation}
+The ratio reflects the current 0.03\,m lateral and 0.2\,m range scales, not a calibrated noise model. The nearest point is solved on actual triangles in the anisotropic metric. Discrete selection is detached; the envelope theorem gives the selected minimum's derivative away from switches. Merely detaching an arbitrary closest point would not justify other downstream derivatives.
+
+Attraction can select a correct rear surface while ignoring an incorrect front one. The r6/r7 objective therefore uses
+\begin{equation}
+ L_{\rm first}(r)=
+ \begin{cases}|Q_r-r_r|,&Q_r<\infty,\\L_{\rm att}(r),&Q_r=\infty.
+ \end{cases}
+ \label{eq:first}
+\end{equation}
+The total loss adds coverage, $0.5$ times finite-beam free loss, $0.05$ times box-envelope loss, and unit-weight Eq.~\ref{eq:first}; r7 also includes the native build-depth auxiliary term. No opacity or target-dependent return selector changes the deployed surface. The miss branch moves existing geometry; it cannot create a surface from an empty mesh.
+
+\subsection{Surface Domain as a First-Class Unknown}
+\label{sec:domain}
+The proposed representation is
+\begin{equation}
+\begin{aligned}
+ \mathcal R_i&=\bigl(\{c_k,U_k,n_k,h_k,b_k\}_{k=1}^K,\W_i\bigr),\\
+ \Omega_k&=\{u\in D_k:b_k(u)\geq0\}.
+\end{aligned}
+ \label{eq:domain}
+\end{equation}
+The scalar $b_k$ describes an intrinsic \emph{surface boundary}, not opacity, ray-drop probability, or occupied thickness. Its zero contour clips chart triangles into a single exportable geometric surface. The same clipped mesh is used for supervision and all queries. A sparse witness records an observation ID, supporting face/chart, barycentric location, and build-side measurement role. Occluded or unsupported regions remain unknown rather than receiving arbitrary free labels.
+
+This separates \emph{where a surface lies} ($\psi$) from \emph{where that surface exists within the chart} ($\Omega$). Moving a square to satisfy one measurement can obstruct another ray; changing an intrinsic boundary can remove the obstructing extension while preserving supported locations. Regularizing aspect ratio cannot express that change when all triangles already have good shape.
+
+Boundary learning must preserve measured support. A candidate objective minimizes reconstruction loss subject to reliable build witnesses retaining endpoint support and already-correct first returns:
+\begin{equation}
+ \operatorname{dist}(x_r,\Ssurf_i)\leq\epsilon_g,
+ \qquad |Q_r-r_r|\leq\epsilon_r
+ \quad(r\in\W_i^+).
+ \label{eq:witnessconstraint}
+\end{equation}
+The pre-hit observations constrain free space only on observed beams. A boundary cannot escape its loss by erasing a positive witness. Conflicting measurements may make Eq.~\ref{eq:witnessconstraint} infeasible; explicit slack and reported violations are required, not silent witness deletion. Small unsupported components are not automatically false. This domain-learning component is a concrete proposed method, not a result of the completed r7 run.
+
+\subsection{First-Hit Orthogonal Surface Updates}
+\label{sec:orthogonal}
+Consider a non-grazing first intersection inside triangle $(v_0,v_1,v_2)$ with barycentric weights $\beta_j$, unit normal $n$, and fixed ray $d$. Differentiating $o+td=\sum_j\beta_jv_j$ and projecting onto $n$ eliminates tangential barycentric changes:
+\begin{equation}
+ \delta t={\sum_{j=0}^2\beta_j n^\top\delta v_j\over n^\top d}.
+ \label{eq:hitjac}
+\end{equation}
+The ordinary depth Jacobian $A$ has only nine scalar entries per ray, but its entries grow near grazing incidence. Define the normalized constraint row
+\begin{equation}
+ B_r=(n_r^\top d_r)A_r,
+ \qquad B_r\delta V=\sum_j\beta_{rj}n_r^\top\delta v_j.
+ \label{eq:normalized}
+\end{equation}
+For $n_r^\top d_r\ne0$, $\ker B_r=\ker A_r$. Normalization changes conditioning, not the local zero-depth-change subspace. It does not make a grazing intersection identifiable.
+
+Let $B$ stack fixed first-hit witnesses, $g$ be a proposed completion displacement, and $B^\dagger$ the Moore--Penrose pseudoinverse. We split the update into
+\begin{align}
+ \delta V_{\rm support}&=(I-B^\dagger B)g,\\
+ \delta V_{\rm range}&=B^\dagger c,\qquad
+ c_r=(n_r^\top d_r)(r_r-t_r).
+ \label{eq:split}
+\end{align}
+The two components are orthogonal because the first lies in $\ker B$ and the second in $\operatorname{range}(B^\top)$. When $c$ is feasible, $B\delta V_{\rm range}=c$; otherwise the residual must be reported. If the current witness is already correct, $c_r=0$ protects its first-order depth while allowing completion directions that respect all stacked witnesses.
+
+\paragraph{Local guarantee and its boundary.}
+With a fixed active triangle, interior barycentrics and nonzero incidence, Eq.~\ref{eq:hitjac} is differentiable. Thus $A\delta V_{\rm support}=0$, so the protected depths change only at second order along a sufficiently small step. The condition is geometric and per-observation, unlike cancellation in an averaged task gradient. It provides no protection against a new front triangle entering a ray, a boundary crossing, a visibility tie, inconsistent witnesses, or finite-step topology changes. A trainable integration needs shared-surface recomputation and a trust-region/active-set policy; those have not yet been evaluated.
+
+\subsection{Sparse Differentiable Operator and Memory Closure}
+\label{sec:operator}
+The new prototype uses a CPU BVH to identify each first-hit face, solves the selected intersection, and implements a custom backward:
+\begin{equation}
+ {\partial L\over\partial v_j}\mathrel{+}=
+ {\partial L\over\partial t_r}\,{\beta_{rj}n_r\over n_r^\top d_r}.
+ \label{eq:backward}
+\end{equation}
+Only selected vertex indices, coefficients and validity are saved. The incidence-normalized $Bu$ and $B^\top z$ are gather/scatter operators with a matching custom adjoint. A matrix-free LSMR solve projects a proposed displacement using those operators. Coefficients are fixed for this local update; the prototype is not a fully differentiated optimization layer through the changing witness set.
+
+For $V$ vertices, $F$ triangles and $R$ rays, the BVH/mesh and sparse adjoint require $O(V+F+R)$ storage; the solver requires $O(V+R)$ working vectors. It never retains a dense $R\times F$ backward graph. Runtime includes BVH construction, queries, transfers if applicable, and solver iterations; no GPU-speed claim follows from this CPU implementation. Exact edge/boundary derivatives and domain clipping are discussed in the appendix. Their integration, and comparison with the existing r7 operator, remain necessary before claiming end-to-end method gains.

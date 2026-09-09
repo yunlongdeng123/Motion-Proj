@@ -1,0 +1,83 @@
+\section{Experiments}
+\label{sec:experiments}
+\subsection{Protocol and Evidence Scope}
+The population contains 489 rigid actors from 31 nuScenes scenes and 25 logs~\cite{nuscenes}. Of 414 fit entries, 371 have the required build inputs; of 75 development entries, 67 do. All 51 missing-input entries are retained. The development set contains five logs, 11,886 owned heldout returns, and 23 actors without owned heldout returns. Original build measurements are prediction inputs; full-track fit measurements are supervision. Development observations are never optimizer inputs in the completed models. This is an exposed development set, not an untouched test.
+
+Each actor's observations are pooled, normalized within the actor, averaged within its log, and then equally averaged across logs. We report six metrics: correct first intersection within $\pm0.2$\,m, early intersection, missing intersection, free intrusion in meters, one-way measured target-to-surface distance, and surface recall within 0.2\,m. The owned-return forensics do not replace free-space evaluation on all original near-box beams, including returns owned by other objects. Confidence intervals are the existing 10,000-resample paired log bootstrap; five logs provide limited independent evidence. An interval crossing zero does not establish equivalence.
+
+\begin{table*}[t]
+ \centering\small\input{tables/v73/main}
+ \caption{Completed development results from canonical saved summaries. Hit, early, missing and recall are percentages; free intrusion and distance are meters. Rows span different model and adaptation protocols and are not all single-factor ablations. Directed distance is conditional on available/evaluable surfaces; empty cases remain in coverage and ray accounting. Native fusion can produce surfaces for five additional zero-LiDAR development entries, so conditional distance is not an unconditional comparison. r7/r6 is the final pathway comparison described in the text.}
+ \label{tab:main}
+\end{table*}
+
+\subsection{What Does the Incorrect Surface Look Like?}
+\begin{figure*}[t]
+ \centering\includegraphics[width=\textwidth]{figures/v73/blender_atlas.pdf}
+ \caption{Blender renders of original saved surfaces. Rows show task-fine-tuned AdaPoinTr after PCA conversion, adapted VGGT native fusion, and final joint r7. Left shows actor context; right isolates the responsible connected chart using its original triangles. Gray is the original surface, red marks early-hit triangles, orange highlights the selected chart, blue markers are build points and green markers are heldout endpoints. The black segment is the original ray. Isolation affects display only; all queries use the full saved surface. Actors are selected by median early rate among predefined eligible failures, not by the largest improvement.}
+ \label{fig:blender}
+\end{figure*}
+
+We inspect six saved methods and add the completed r7 with the same protocol, not only favorable examples. For triangle area $a$ and edge lengths $\ell_j$, use the scale-invariant shape index
+\begin{equation}
+ q={\ell_0^2+\ell_1^2+\ell_2^2\over4\sqrt3a}.
+ \label{eq:q}
+\end{equation}
+An equilateral triangle has $q=1$; a right isosceles grid triangle has $q=2/\sqrt3\simeq1.155$. We fix $q>10$ as a descriptive severe-sliver threshold. No observed early-hit face crosses it. The largest such $q$ is 1.367 across these seven representations; r3, r4, r6 and r7 are near 1.155. The regular geometry of PCA conversion makes this partly structural for AdaPoinTr/native surfaces. It is direct evidence against sliver regularization as the immediate explanation for \emph{these} bad cases, not a rejection of mesh regularization generally.
+
+A component is called build-supported when at least one build endpoint has unsigned distance at most 0.2\,m to one of its triangles. Disconnectedness alone is insufficient: the current charts are disconnected by construction. On r4, 29.171 of the 30.797 early percentage points originate on build-supported components; on r6 the corresponding values are 20.919 of 22.981. These ratios are 94.7\% and 91.0\% of the log-weighted early contribution. A supported component can still extend incorrectly away from its supporting observations. This test does not certify every triangle or prove a unique error cause.
+
+\begin{figure*}[t]
+ \centering\includegraphics[width=\textwidth]{figures/v73/failure_slices.pdf}
+ \caption{Exact geometric failure slices for the six independently selected examples. The plane contains the original sensor ray; plotted segments are triangle--plane intersections, not projected point-cloud silhouettes. Red identifies the actual first-hit triangle and orange its connected chart. The green dot is the measured return and the band is the $\pm0.2$\,m tolerance. Regular local triangles can produce a wrong front crossing even when another surface is correctly supported behind it. Different panels show different actors and are morphology illustrations, not matched visual ablations.}
+ \label{fig:slices}
+\end{figure*}
+
+The slices reveal regular planar fragments and overlapping chart extensions. They do not establish that an artifact is a temporal ``air ghost'': that claim would require correspondence to time-specific source measurements. The evidence instead narrows the immediate design target to support extent and first-surface competition, with source/pose errors still possible.
+
+\subsection{Oracle Ladder: Selection, Support and Geometry}
+\begin{figure*}[t]
+ \centering\includegraphics[width=.88\textwidth]{figures/v73/oracle_ladder.pdf}
+ \caption{Oracle ladder on the same saved surfaces and owned returns. Blue is literal first-hit accuracy; orange adds rays with a later correct intersection; green adds rays whose endpoint is near a surface but has no correct intersection. The last two levels use the heldout endpoint and are diagnostic relaxations. Near-surface coverage is not a realizable ray predictor or a dense-surface ground-truth score.}
+ \label{fig:oracle}
+\end{figure*}
+
+For a fixed mesh and observed return, define $H_0$ as a correct first intersection; $H_1$ as any intersection within the range band; and $H_2$ as endpoint-to-surface distance within 0.2\,m. Ignoring numerical tolerance, $H_0\subseteq H_1\subseteq H_2$. The first gap measures the opportunity for target-informed intersection selection; the second measures the lack of correct along-ray support despite Euclidean proximity. A final observed-endpoint oracle would be 100\% by construction and says nothing about hidden geometry.
+
+For AdaPoinTr, the ladder is 14.29\% $\to$ 15.43\% $\to$ 84.60\%. Selecting a rear intersection alone can recover little; native point completion plus surface conversion chiefly lacks the required along-ray support. For r4 it is 36.07\% $\to$ 58.32\% $\to$ 73.46\%. Thus an existing correct intersection is hidden on 22.25 percentage points of rays. For r6 it becomes 39.07\% $\to$ 55.03\% $\to$ 72.44\%. First-surface supervision improves literal use of support while reducing some of the available rear support. These values motivate separate support and placement mechanisms rather than treating all errors as one scalar-distance problem.
+
+\subsection{Pruning Is an Intervention, Not an Explanation}
+\begin{figure*}[t]
+ \centering\includegraphics[width=.94\textwidth]{figures/v73/pruning_oracles.pdf}
+ \caption{Recast after shared-mesh interventions. Build-component pruning uses only build support. The early-face removal oracle uses the union of heldout early-hit faces, removes them once, and recasts every owned ray against the same remaining mesh. It does not pick a different surface for each ray. Neither intervention is a deployed result.}
+ \label{fig:pruning}
+\end{figure*}
+Removing all $q>10$ faces changes none of these results. Removing components without build support lowers r4 early rate only from 30.80\% to 29.89\%, while raising misses from 20.39\% to 26.27\%. For AdaPoinTr, early improves from 8.54\% to 4.27\%, but misses rise from 54.24\% to 80.21\% and correct hits fall from 14.29\% to 12.12\%. Broad connectivity pruning therefore discards useful completion as well as errors.
+
+We also remove the union of faces responsible for heldout early returns, then recast the original rays once. On r4, this oracle yields 48.76\% hit, 12.39\% early and 23.17\% missing, compared with 36.07/30.80/20.39 before removal. Its hit rate remains below the per-ray any-hit oracle's 58.32\%: one shared mesh couples rays, deleting a front face can expose another early face, and a face can be useful to a different ray. This specific deletion policy is not the optimal global pruning oracle. Its result supports modeling physical support domains under positive-witness constraints, rather than implementing per-ray transparency.
+
+\subsection{Completed First-Surface and Joint Comparisons}
+\begin{table}[t]
+ \centering\scriptsize\input{tables/v73/r6_paired}
+ \caption{r6 minus r4, five paired development logs. Early improves in every log; directed surface distance worsens in every log. Other intervals cross zero and do not establish preservation.}
+ \label{tab:r6}
+\end{table}
+Switching attraction to actual first-surface supervision reduces early by 7.815\,pp (95\% log interval $[-14.286,-2.820]$), but directed distance increases 0.01918\,m ($[0.00247,0.04363]$). Correct hits improve by 2.998\,pp with an interval crossing zero. Relative to r3, r6 improves hit by 7.992\,pp and reduces missing by 7.817\,pp, while increasing early by 6.762\,pp and free intrusion by 0.07264\,m; these intervals exclude zero. r6 is an informative compromise, not a method that jointly wins on coverage and physical consistency.
+
+\input{sections/v73_r7_result}
+
+\subsection{New Operator: What Has Actually Been Verified?}
+The new CPU float64 prototype is evaluated on 60 interior first-hit witnesses from one saved r6 development mesh with 1,024 vertices and 1,152 faces. This is a numerical operator check using known geometry, not training or generalization. The custom first-depth backward matches a central directional finite difference with relative error $6.68\times10^{-10}$. The sparse adjoint identity has absolute error $1.78\times10^{-15}$; its custom backward matches the explicit scatter exactly. The true projected constraint residual is $2.01\times10^{-7}$, rather than the solver's smaller internal residual estimate.
+
+For displacement norm $10^{-3}$\,m, maximum protected depth change is $8.87\times10^{-9}$\,m after projection versus $9.16\times10^{-5}$\,m for the normalized unprojected direction. Halving the projected step twice reduces the change by approximately four each time, consistent with the local second-order statement. No finite-step protection of all rays is inferred. Autograd records 5,820 bytes of selected-hit tensors for this case, rather than an all-ray/all-face tape. The complete check takes about 0.10\,s and process peak RSS is 0.643\,GiB. These are CPU measurements; CUDA integration, end-to-end training cost and learned gains remain unmeasured.
+
+\section{Limitations and Research Decisions}
+\label{sec:limits}
+The defensible output is a partial rigid surface under known trajectories. Current results do not support claims about complete hidden shape, articulated actors, new sensor intensity/dropout, image realism, learned motion, or closed-loop simulation. Background disocclusion and full-scene ownership remain separate problems. Unknown space stays unknown. Coordinate-equivariance checks and editable demos are interface evidence, not counterfactual ground truth.
+
+The chart formulation, new operator and proposed domain constraints are in the method section because they define the intended solution. Their evidence levels differ. Canonical charts and first-surface supervision are implemented and trained; the sparse orthogonal operator is implemented and numerically checked; learned chart boundaries and end-to-end witness-protected training are proposed. The present evidence does not establish their novelty against all prior work or their empirical superiority. A credible method claim needs a matched trained comparison, support-retention tests, and fixed external confirmation.
+
+We prune three immediate stories: sliver regularization as the explanation for the inspected early surfaces; indiscriminate component pruning as a safe fix; and a larger visual backbone as sufficient evidence of method novelty. A targeted domain boundary with shared first-hit witnesses is the remaining mechanism to test. Merely adding more free-space loss is also insufficient when a ray lacks correct support. This decision follows the observed error geometry rather than an open-ended loss or backbone search.
+
+\section{Conclusion}
+Queryable canonical surface reconstruction gives this project a bounded geometric object and an independent evaluation target. Exact failure surfaces show why good local triangles and close endpoints do not guarantee correct first intersections. The oracle decomposition motivates a support-domain representation and incidence-normalized witness constraints; a sparse custom operator makes that proposal concrete and testable. Current training reveals a real coverage/first-surface trade-off, while the proposed orthogonal and boundary mechanisms remain to be validated as a learned method.
