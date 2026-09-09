@@ -1,3 +1,13 @@
+## 最新用户终点：完成视觉重接对照后结束 V7.3（2026-09-09）
+
+本条覆盖此前“完成不关机/继续参考方案”的安排。先补完当前首个可见表面监督候选，再将可训练 visual foundation 接回选定显式表面，在相同数据、监督与可比训练预算下完成 Joint / LiDAR 对照。视觉侧须有真实可训练几何通路，不能使用冻结最终特征冒充适配；不无限扩展候选，不默认增加 DINOv3/full FT 或 loss 网格。当前首面候选与最终视觉对照仍 pending，不把本次终点登记当实验完成。
+
+结论规则：若 Joint 在表面与物理查询上有可信增量，论文可围绕 foundation geometry + sparse LiDAR → physically queryable dynamic Actor surface，但主张限定于实际证据；仅覆盖提高而 early/free 恶化不算该主张成功。若 Joint 无明确增量或更差，明确记录本轮 V7.3 核心假设实验失败/未获支持，总结实证原因与仍属推测的机制，不外推为所有视觉基座无效。区间跨零不等于证明统计等效，报告实际差值和不确定性。结构选择用原 DEV，最终方法选定后使用保留新日志确认，不按新日志结果继续调参。
+
+完成后同步远端 RESEARCH_STATUS.md、RESEARCH_FAILURES.md、EXPERIMENTS.md、最终报告和简单 architecture components 图，保存结果与必要 checkpoint，提交并成功 push GitHub 当前 v73 分支。然后暂停本任务30分钟自动跟进和会启动作业的控制器，确认训练、评价、数据任务全部退出，再执行 AutoDL shutdown 并报告实际结果。研究期间仍每30分钟跟进；现在不关机。此终点不要求额外用户确认。
+
+---
+
 # Motion-Proj / WorldSim V7.3 科研计划
 
 日期：2026-09-07。性质：研究决策与方法探索计划，不是已完成实验，也不是固定工程排期。
