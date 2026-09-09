@@ -520,4 +520,6 @@ failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；
 
 ---
 
-18.6执行补充（05:45 UTC）：一次真实FIT通路检查done，位置/法向/高度梯度非零、表面更新、固定factory恢复误差0。首次Ninja PATH调用错误按官方源码修正并保留证据，未安装依赖；不是科学失败。正式r3仍fresh30轮，检查的一次优化不计入研究更新。详见OPEN_CHARTS报告，failure_ledger_delta=none。
+18.6执行补充（05:39 UTC）：一次真实FIT通路检查done，位置/法向/高度梯度非零、表面更新、固定factory恢复误差0。首次Ninja PATH调用错误按官方源码修正并保留证据，未安装依赖；不是科学失败。正式r3仍fresh30轮，检查的一次优化不计入研究更新。详见OPEN_CHARTS报告，failure_ledger_delta=none。
+
+18.6正式执行（2026-09-09 05:42 UTC）：r3 code72607d0c/PID118560，第2/30轮，596次真实更新/0跳步，489对象initial done；保持原配置。最终done后执行一次open_charts_r3收口，对照r2/R8，再独立检验constructive ray监督。当前没有新质量结论，failure_ledger_delta=none，证据open_charts/lidar_r3_started{,_manifest}.json。

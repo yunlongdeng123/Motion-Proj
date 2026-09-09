@@ -1,4 +1,16 @@
-## 开放曲面真实通路通过，进入正式r3（2026-09-09 05:45 UTC）
+## 开放曲面r3正式训练进行中（2026-09-09 05:42 UTC）
+
+`WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3`已从72607d0c启动，PID118560。05:42:05 UTC快照：完整489对象initial评价done，进入第2/30轮，596次实际更新/596呈现，0跳步；GPU allocated峰值0.210188GiB，运行RSS约1.90GiB，盘余67GiB。状态正常，保持原配置，不把采样训练loss或初始评价当最终收益。检查脚本的一次优化不计入r3，正式作业fresh开始。
+
+64个开放chart、1024顶点/1152面、参数1706413，原full_track/seed7304/coverage+beam.5/.03/res32/env.05、event0、无DPT/图像前缀，30轮预期11130更新。它先隔离表面支持分配；原生可训练几何/局部视觉接口保留，但本LiDAR对照没有训练视觉。20新日志质量未读，upper PEFT/DINOv3/full FT和near-boundary free未启动。
+
+实际证据`docs/autoresearch/worldsim_v73/open_charts/lidar_r3_started{,_manifest}.json`；组件图及定义见OPEN_CHARTS报告。完整final done后仅运行一次`scripts/summarize_worldsim_v73_open_charts_r3.sh`，比较同LiDAR闭合r2与R8窄片，保留75 DEV/5日志、空预测和6项指标；该收口尚未执行。不把支持/初始化/尺度同时改变的结果只归因闭合。随后独立实现/比较constructive ray监督，不重跑已完成诊断。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，质量pending。三本台账/计划/报告同步push，30分钟ACTIVE、完成不关机。
+
+---
+
+## 开放曲面真实通路通过，进入正式r3（2026-09-09 05:39 UTC）
 
 基于019735d2的一次真实FIT检查done：按原元数据顺序首个ready车辆，3个build点/515个上下文查询，64chart/1024顶点/1152面，半宽.330649m；实际5个full_track目标点、194条原始束参与coverage/beam/box。一次AdamW更新，normal/height/displacement梯度范数=.666979/.573098/15.371632，表面最大变化.007932m；固定推理factory按保存配置恢复误差0。检查1.828437s、GPU.080078GiB、RSS1.421513GiB、参数1706413；不代表完整数据资源或DEV质量，更不代表视觉通路已训练。
 

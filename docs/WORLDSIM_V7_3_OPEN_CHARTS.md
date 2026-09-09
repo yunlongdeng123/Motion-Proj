@@ -1,5 +1,7 @@
 # Q-v2开放局部曲面：支持重新分配
 
+**当前（2026-09-09 05:42 UTC）：r3正式训练running。** code72607d0c/PID118560，489对象初始评价完成、第2/30轮、596真实更新/0跳步；GPU分配峰值.210188GiB，质量结果pending。文末记录实际执行，以下登记与检查按日期保留。
+
 2026-09-09 05:40 UTC。实现与首轮登记，正式质量结果pending。任务`WS-V73-Q-V2-01`，首轮`20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3`。基于d11e6788：旧joint没有明确有效增量，固定诊断显示joint主要缺正确沿束支持、局部形变温和；LiDAR闭合网格有48/67非空对象检出非邻接自交。按用户策略二先检验表面支持，不解冻upper或更换基座。
 
 ![实际组件](autoresearch/worldsim_v73/open_charts/V73_OPEN_CHART_ARCHITECTURE.png)
@@ -36,8 +38,20 @@
 
 failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration。F02等均未解除，下一V73-F10；三本台账和计划同步，小步push，30分钟跟进ACTIVE、完成不关机。
 
-## 真实通路检查完成（2026-09-09 05:45 UTC）
+## 真实通路检查完成（2026-09-09 05:39 UTC）
 
 一次检查done，code019735d2；元数据首个ready FIT车辆只有3个build点，515个上下文查询、64chart/1024顶点/1152面、半宽.330649m。5个full_track测量点与194条原始束，coverage.006435m、beam.005459m；normal/height/displacement梯度范数.666979/.573098/15.371632，一次更新表面最大变化.007932m，固定推理factory恢复误差0。参数1706413（未调用的视觉模块没有梯度）、1.828437s、GPU.080078GiB、RSS1.421513GiB，保存6865698字节；不代表整个FIT/DEV收益、完整资源或Adam状态恢复。
 
 首次直接调用未将既有runtime bin放入PATH，nvdiffrast加载时找不到Ninja，在优化前失败；核对[PyTorch2.4.1官方扩展源码](https://raw.githubusercontent.com/pytorch/pytorch/v2.4.1/torch/utils/cpp_extension.py)通过`ninja --version`判定可用后，增加与正式训练一致的shell环境入口，未新增安装。保留`autoresearch/worldsim_v73/open_charts/path_check_attempt1.txt`及`path_check_r1.json`，错误已恢复，不新增科学失败ID。正式r3从fresh初始化启动，不复用检查权重。
+
+## r3正式执行
+
+`WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3`已从72607d0c启动，PID118560。05:42:05 UTC快照：完整489对象initial评价done，进入第2/30轮，596次实际更新/596呈现，0跳步；GPU allocated峰值0.210188GiB，运行RSS约1.90GiB，盘余67GiB。状态正常，保持原配置，不把采样训练loss或初始评价当最终收益。检查脚本的一次优化不计入r3，正式作业fresh开始。
+
+64个开放chart、1024顶点/1152面、参数1706413，原full_track/seed7304/coverage+beam.5/.03/res32/env.05、event0、无DPT/图像前缀，30轮预期11130更新。它先隔离表面支持分配；原生可训练几何/局部视觉接口保留，但本LiDAR对照没有训练视觉。20新日志质量未读，upper PEFT/DINOv3/full FT和near-boundary free未启动。
+
+实际证据`docs/autoresearch/worldsim_v73/open_charts/lidar_r3_started{,_manifest}.json`；组件图及定义见OPEN_CHARTS报告。完整final done后仅运行一次`scripts/summarize_worldsim_v73_open_charts_r3.sh`，比较同LiDAR闭合r2与R8窄片，保留75 DEV/5日志、空预测和6项指标；该收口尚未执行。不把支持/初始化/尺度同时改变的结果只归因闭合。随后独立实现/比较constructive ray监督，不重跑已完成诊断。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，质量pending。三本台账/计划/报告同步push，30分钟ACTIVE、完成不关机。
+
+---
