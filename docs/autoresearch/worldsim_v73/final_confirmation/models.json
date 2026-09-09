@@ -1,0 +1,281 @@
+{
+  "status": "done",
+  "run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1",
+  "models": {
+    "joint_r7": {
+      "summary": {
+        "status": "done",
+        "actors": 936,
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "mode": "joint",
+        "query_surface": "open_charts",
+        "mesh_level": null,
+        "surface_parameterization": "open_charts",
+        "completion_initialization": "native_surface",
+        "wall_s": 1239.6247260924429,
+        "peak_gpu_gib": 5.438612461090088,
+        "peak_rss_gib": 44.07123565673828,
+        "fit_label_times": "evaluation_only",
+        "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+      },
+      "manifest": {
+        "code_commit": "6499d34d1a80cb309d24b189efa104aaf729d535",
+        "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1",
+        "native_run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-PREFIX-01/20260908T043000Z__external20-28view-prefix-r1",
+        "checkpoint": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260909T131000Z__open-charts-joint-first-surface-s7304-r7/latest.pt",
+        "method": "checkpoint",
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "camera_parameters_updated": false,
+        "input_boundary": "original build support/images, fixed build alignment and known rigid trajectories only",
+        "target_boundary": "heldout measurements used only by common final evaluator, never prediction",
+        "empty_input_policy": "all non-ready Actors retained with empty prediction, matching shared model protocol",
+        "include_visual_only": false,
+        "input_subset": "all",
+        "original_cohort_actors": 936,
+        "selected_actors": 936,
+        "selection_boundary": "input-subset depends only on original build LiDAR count, never prediction or heldout quality",
+        "checkpoint_boundary": "explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training",
+        "surface_readout": "literal triangles from the selected surface representation; no opacity, hull or export remeshing",
+        "external_test_read": true,
+        "mode": "joint",
+        "query_surface": "open_charts",
+        "surface_parameterization": "open_charts",
+        "mesh_level": null,
+        "completion_initialization": "native_surface",
+        "surface_patches_boundary": "legacy center count; shared_mesh counts vertices, not independent patches",
+        "effective_visual_only": false,
+        "checkpoint_visual_only_training": false
+      },
+      "result_path": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/joint_r7",
+      "saved_actor_rows": 936
+    },
+    "lidar_r6": {
+      "summary": {
+        "status": "done",
+        "actors": 936,
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "mode": "lidar_only",
+        "query_surface": "open_charts",
+        "mesh_level": null,
+        "surface_parameterization": "open_charts",
+        "completion_initialization": "lidar_surface",
+        "wall_s": 282.6694194562733,
+        "peak_gpu_gib": 0.05645132064819336,
+        "peak_rss_gib": 1.233001708984375,
+        "fit_label_times": "evaluation_only",
+        "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+      },
+      "manifest": {
+        "code_commit": "39cb35816a4ee7dc20e8b1d16b4f22e1ab3bccff",
+        "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1",
+        "native_run": "None",
+        "checkpoint": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6/latest.pt",
+        "method": "checkpoint",
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "camera_parameters_updated": false,
+        "input_boundary": "original build support/images, fixed build alignment and known rigid trajectories only",
+        "target_boundary": "heldout measurements used only by common final evaluator, never prediction",
+        "empty_input_policy": "all non-ready Actors retained with empty prediction, matching shared model protocol",
+        "include_visual_only": false,
+        "input_subset": "all",
+        "original_cohort_actors": 936,
+        "selected_actors": 936,
+        "selection_boundary": "input-subset depends only on original build LiDAR count, never prediction or heldout quality",
+        "checkpoint_boundary": "explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training",
+        "surface_readout": "literal triangles from the selected surface representation; no opacity, hull or export remeshing",
+        "external_test_read": true,
+        "mode": "lidar_only",
+        "query_surface": "open_charts",
+        "surface_parameterization": "open_charts",
+        "mesh_level": null,
+        "completion_initialization": "lidar_surface",
+        "surface_patches_boundary": "legacy center count; shared_mesh counts vertices, not independent patches",
+        "effective_visual_only": false,
+        "checkpoint_visual_only_training": false
+      },
+      "result_path": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/lidar_r6",
+      "saved_actor_rows": 936
+    },
+    "lidar_r8": {
+      "summary": {
+        "status": "done",
+        "actors": 936,
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "mode": "lidar_only",
+        "query_surface": "patches",
+        "mesh_level": null,
+        "surface_parameterization": "patches",
+        "completion_initialization": "lidar_surface",
+        "wall_s": 1729.7248103562742,
+        "peak_gpu_gib": 0.056316375732421875,
+        "peak_rss_gib": 1.1917152404785156,
+        "fit_label_times": "evaluation_only",
+        "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+      },
+      "manifest": {
+        "code_commit": "39cb35816a4ee7dc20e8b1d16b4f22e1ab3bccff",
+        "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1",
+        "native_run": "None",
+        "checkpoint": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-ACTOR-01/20260907T212500Z__population-lidar-track-beam-range-s7304-r8/latest.pt",
+        "method": "checkpoint",
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "camera_parameters_updated": false,
+        "input_boundary": "original build support/images, fixed build alignment and known rigid trajectories only",
+        "target_boundary": "heldout measurements used only by common final evaluator, never prediction",
+        "empty_input_policy": "all non-ready Actors retained with empty prediction, matching shared model protocol",
+        "include_visual_only": false,
+        "input_subset": "all",
+        "original_cohort_actors": 936,
+        "selected_actors": 936,
+        "selection_boundary": "input-subset depends only on original build LiDAR count, never prediction or heldout quality",
+        "checkpoint_boundary": "explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training",
+        "surface_readout": "literal triangles from the selected surface representation; no opacity, hull or export remeshing",
+        "external_test_read": true,
+        "mode": "lidar_only",
+        "query_surface": "patches",
+        "surface_parameterization": "patches",
+        "mesh_level": null,
+        "completion_initialization": "lidar_surface",
+        "surface_patches_boundary": "legacy center count; shared_mesh counts vertices, not independent patches",
+        "effective_visual_only": false,
+        "checkpoint_visual_only_training": false
+      },
+      "result_path": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/lidar_r8",
+      "saved_actor_rows": 936
+    },
+    "native_fusion": {
+      "summary": {
+        "status": "done",
+        "actors": 936,
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "mode": "native_fusion",
+        "query_surface": "patches",
+        "mesh_level": null,
+        "surface_parameterization": "native_lidar_pca",
+        "completion_initialization": "native_surface",
+        "wall_s": 1700.973595554009,
+        "peak_gpu_gib": 1.3015317916870117,
+        "peak_rss_gib": 44.76630783081055,
+        "fit_label_times": "evaluation_only",
+        "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+      },
+      "manifest": {
+        "code_commit": "65854c279cad814aac743be1d9a524a215abb38e",
+        "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1",
+        "native_run": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-PREFIX-01/20260908T043000Z__external20-28view-prefix-r1",
+        "checkpoint": "None",
+        "method": "native_fusion",
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "camera_parameters_updated": false,
+        "input_boundary": "original build support/images, fixed build alignment and known rigid trajectories only",
+        "target_boundary": "heldout measurements used only by common final evaluator, never prediction",
+        "empty_input_policy": "all non-ready Actors retained with empty prediction, matching shared model protocol",
+        "include_visual_only": false,
+        "input_subset": "all",
+        "original_cohort_actors": 936,
+        "selected_actors": 936,
+        "selection_boundary": "input-subset depends only on original build LiDAR count, never prediction or heldout quality",
+        "checkpoint_boundary": "explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training",
+        "surface_readout": "literal triangles from the selected surface representation; no opacity, hull or export remeshing",
+        "external_test_read": true,
+        "mode": "native_fusion",
+        "query_surface": "patches",
+        "surface_parameterization": "native_lidar_pca",
+        "mesh_level": null,
+        "completion_initialization": "native_surface",
+        "surface_patches_boundary": "legacy center count; shared_mesh counts vertices, not independent patches",
+        "effective_visual_only": false,
+        "checkpoint_visual_only_training": null
+      },
+      "result_path": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/native_fusion",
+      "saved_actor_rows": 936
+    },
+    "lidar_pca": {
+      "summary": {
+        "status": "done",
+        "actors": 936,
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "mode": "lidar_pca",
+        "query_surface": "patches",
+        "mesh_level": null,
+        "surface_parameterization": "lidar_pca_patches",
+        "completion_initialization": "native_surface",
+        "wall_s": 1457.5737773720175,
+        "peak_gpu_gib": 0.021816253662109375,
+        "peak_rss_gib": 1.0490188598632812,
+        "fit_label_times": "evaluation_only",
+        "boundary": "fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization"
+      },
+      "manifest": {
+        "code_commit": "65854c279cad814aac743be1d9a524a215abb38e",
+        "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1",
+        "native_run": "None",
+        "checkpoint": "None",
+        "method": "lidar_pca",
+        "roles": [
+          "external_confirmation"
+        ],
+        "optimizer_updates": 0,
+        "camera_parameters_updated": false,
+        "input_boundary": "original build support/images, fixed build alignment and known rigid trajectories only",
+        "target_boundary": "heldout measurements used only by common final evaluator, never prediction",
+        "empty_input_policy": "all non-ready Actors retained with empty prediction, matching shared model protocol",
+        "include_visual_only": false,
+        "input_subset": "all",
+        "original_cohort_actors": 936,
+        "selected_actors": 936,
+        "selection_boundary": "input-subset depends only on original build LiDAR count, never prediction or heldout quality",
+        "checkpoint_boundary": "explicit visual-only override is input-path migration, not evidence that these Actors participated in checkpoint training",
+        "surface_readout": "literal triangles from the selected surface representation; no opacity, hull or export remeshing",
+        "external_test_read": true,
+        "mode": "lidar_pca",
+        "query_surface": "patches",
+        "surface_parameterization": "lidar_pca_patches",
+        "mesh_level": null,
+        "completion_initialization": "native_surface",
+        "surface_patches_boundary": "legacy center count; shared_mesh counts vertices, not independent patches",
+        "effective_visual_only": false,
+        "checkpoint_visual_only_training": null
+      },
+      "result_path": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/lidar_pca",
+      "saved_actor_rows": 936
+    }
+  },
+  "optimizer_updates": 0,
+  "raw_rows": "full per-frame raw results and explicit surfaces retained in each original result_path; analysis.json retains per-Actor aggregate metrics",
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04",
+    "V73-F05",
+    "V73-F09"
+  ],
+  "failure_ledger_delta": "V73-F02/V73-F05/V73-F09: fixed external Joint r7 increment fails; five adverse paired metric intervals exclude zero; retain positive DEV and causal limitations"
+}

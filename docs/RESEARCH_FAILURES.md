@@ -1,3 +1,19 @@
+## 最终Actor确认失败，固定场景收尾中（2026-09-09 21:30 UTC）
+
+最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。
+
+证据docs/autoresearch/worldsim_v73/final_confirmation/{analysis,models}.json及配对图；run WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，执行code6499d34d，全部五方法936对象/20日志/0优化更新。878 ready、58缺输入、119无owned heldout对象均保留；含221移动>2m/s、108运动未知、556 build<100对象。模型/尺度/配置固定在读取外部质量之前，未按AV2再训练、调参或挑场景。
+
+已于2026-09-09 21:25:58 UTC启动登记的固定场景确认，WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，code65854c27、shell PID175098、controller_logs/final_scene_r1.log。只组合现有表面与固定build背景，CPU评价，无新候选或训练；等完整结果再收口F04。论文任务65854c27已完成且其渲染/分析进程退出；由本任务将外部和场景结果整合进paper/main.pdf。完成文档/push、暂停调度、确认所有任务退出后shutdown。
+
+failure_ledger_delta=update V73-F02/V73-F05/V73-F09；F03/F04仍未解除，无新ID，下一V73-F10。以下带日期段落为历史快照，当前授权只以上述有限收尾为准。
+
+---
+
+已证实的失败表现是跨域联合增量反转及early/free冲突；开发取证表明规则局部片也会错误延伸并遮挡后方正确支持，严重sliver并非这些early面的解释。域差异、视图/标定嵌入与米制对齐残差、局部视觉对应污染、支持域外扩是可能机制，未做因果隔离，不能写成已定位唯一根因。Joint同时改变native种子、可训练DPT特征及build-depth辅助项，故不是纯视觉特征消融。无OOM或资源阻断，不能用算力不足解释本次负结果。
+
+---
+
 ## 固定20日志确认已启动，论文取证协同（2026-09-09 19:04 UTC）
 
 WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1已于19:03:26 UTC启动，执行code6499d34d、shell PID169169。19:04:35快照Joint r7已完成68/936对象，allocated峰值5.437806GiB；r6/R8/native融合/PCA待顺序执行，0优化更新。外部模型质量评价现已开始，不能再写“20日志质量未读取”；配置已于开发阶段固定，禁止根据外部结果更改。完整五方法后收口Actor日志配对，再一次固定背景场景确认；当前无完整跨域结论。证据final_confirmation/started.json及run/manifest.json，日志controller_logs/final_confirmation_r1.log。
@@ -585,6 +601,8 @@ R13一轮真实visual-only检查亦已完成：code11433ba4，全部51原metadat
 
 
 ### V73-F09：共享原生DPT强控制的开发硬命中退化
+
+- 最终独立确认补充（2026-09-09 21:30 UTC）：最终r7开发的联合增量与旧native-only负结果分开保留；但20日志AV2确认中Joint r7不及匹配LiDAR r6，不能把开发正结果升级为跨域有效主张。此最终联合对照不等于本条旧native-only控制，也不证明所有DPT适配无效。 证据docs/autoresearch/worldsim_v73/final_confirmation/{analysis,models}.json及配对图；run WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，执行code6499d34d，全部五方法936对象/20日志/0优化更新。878 ready、58缺输入、119无owned heldout对象均保留；含221移动>2m/s、108运动未知、556 build<100对象。模型/尺度/配置固定在读取外部质量之前，未按AV2再训练、调参或挑场景。
 
 - 最终r7边界更新：开放chart/首面目标下，整条Joint相对同表示LiDAR r6的hit、miss、distance已有区间不跨0的开发增益。F09描述旧native-only强控制，不能据此宣称所有DPT适配无效；r7仍有free风险并待外部确认。
 
@@ -1889,6 +1907,8 @@ V73-F01在当前12view配置下得到资源缓解；F02/F03/F04/F05仍active。f
 
 ## V73-F05 — 原生 DPT 小样本可拟合但开发支持与泛化不足（2026-09-07）
 
+- 最终独立确认补充（2026-09-09 21:30 UTC）：最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。 已证实的失败表现是跨域联合增量反转及early/free冲突；开发取证表明规则局部片也会错误延伸并遮挡后方正确支持，严重sliver并非这些early面的解释。域差异、视图/标定嵌入与米制对齐残差、局部视觉对应污染、支持域外扩是可能机制，未做因果隔离，不能写成已定位唯一根因。Joint同时改变native种子、可训练DPT特征及build-depth辅助项，故不是纯视觉特征消融。无OOM或资源阻断，不能用算力不足解释本次负结果。 证据docs/autoresearch/worldsim_v73/final_confirmation/{analysis,models}.json及配对图；run WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，执行code6499d34d，全部五方法936对象/20日志/0优化更新。878 ready、58缺输入、119无owned heldout对象均保留；含221移动>2m/s、108运动未知、556 build<100对象。模型/尺度/配置固定在读取外部质量之前，未按AV2再训练、调参或挑场景。
+
 category=`scientific/generalization_and_support`；status=`active`；task=`WS-V73-M1-NATIVE-GEOMETRY-ADAPT-01`；code=`29595e20`；run=`20260907T150300Z__native-dpt-fit4-dev2-s7301-r1`。
 
 观察：原生32.65M参数DPT真实更新，4fit场景Actor诊断MAE全部下降；scene0048开发MAE3.594→2.867m，scene0359仅11点且5.043→5.095m。train早于target0.2m比例增加，不能以深度MAE替代free/硬表面收益。两dev样本不支持泛化结论，也不否定视觉几何适配。
@@ -1923,6 +1943,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 观察：目前单卡 RTX3090 24GB；cgroup 内存90GiB、CPU14核，旧文首宿主755GB不能当训练预算。尚未有 V7.3 OOM。来源/迁移：VGGT 官方多层 DPT 与分块、Deformable DETR 稀疏采样；禁止全图 dense query attention，kNN 建图另报成本。最小辨别：真实 DPT 更新的峰值与耗时，再测必要 LoRA；证据=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 13.1，base=`63626e8d`。不因3090存在就提前认定失败或退回路线A。
 
 ### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
+
+- 最终独立确认补充（2026-09-09 21:30 UTC）：最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。 证据docs/autoresearch/worldsim_v73/final_confirmation/{analysis,models}.json及配对图；run WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，执行code6499d34d，全部五方法936对象/20日志/0优化更新。878 ready、58缺输入、119无owned heldout对象均保留；含221移动>2m/s、108运动未知、556 build<100对象。模型/尺度/配置固定在读取外部质量之前，未按AV2再训练、调参或挑场景。
 
 - 最终联合r7（2026-09-09）：最终开发对照r7−r6显示联合几何增益：hit+10.5363pp（95%日志配对区间[+6.4624,+14.6212]pp，5/5改善），miss−4.3793pp（[−9.3948,−.2924]pp，4/5），测量→表面distance−.079399m（[−.187384,−.009326]m，4/5）。early−1.5225pp（[−5.7790,+2.7510]pp）、free+.042022m（[−.000489,+.069738]m）、recall+8.4288pp（[−.7072,+23.9799]pp）三项区间跨0。free四日志变差，不能用不显著掩盖其风险，也不能把此结果归类为Joint≈LiDAR或全部失败。当前仅支持联合通路对开发几何与正确首返回有增量；完整物理主张和跨域泛化尚待固定确认。 维持物理冲突active，不能将旧模型的负结果外推本联合通路无效。
 

@@ -1,3 +1,15 @@
+## 最终Actor确认失败，固定场景收尾中（2026-09-09 21:30 UTC）
+
+最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。
+
+证据docs/autoresearch/worldsim_v73/final_confirmation/{analysis,models}.json及配对图；run WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，执行code6499d34d，全部五方法936对象/20日志/0优化更新。878 ready、58缺输入、119无owned heldout对象均保留；含221移动>2m/s、108运动未知、556 build<100对象。模型/尺度/配置固定在读取外部质量之前，未按AV2再训练、调参或挑场景。
+
+已于2026-09-09 21:25:58 UTC启动登记的固定场景确认，WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，code65854c27、shell PID175098、controller_logs/final_scene_r1.log。只组合现有表面与固定build背景，CPU评价，无新候选或训练；等完整结果再收口F04。论文任务65854c27已完成且其渲染/分析进程退出；由本任务将外部和场景结果整合进paper/main.pdf。完成文档/push、暂停调度、确认所有任务退出后shutdown。
+
+failure_ledger_delta=update V73-F02/V73-F05/V73-F09；F03/F04仍未解除，无新ID，下一V73-F10。以下带日期段落为历史快照，当前授权只以上述有限收尾为准。
+
+---
+
 ## 固定20日志确认已启动，论文取证协同（2026-09-09 19:04 UTC）
 
 WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1已于19:03:26 UTC启动，执行code6499d34d、shell PID169169。19:04:35快照Joint r7已完成68/936对象，allocated峰值5.437806GiB；r6/R8/native融合/PCA待顺序执行，0优化更新。外部模型质量评价现已开始，不能再写“20日志质量未读取”；配置已于开发阶段固定，禁止根据外部结果更改。完整五方法后收口Actor日志配对，再一次固定背景场景确认；当前无完整跨域结论。证据final_confirmation/started.json及run/manifest.json，日志controller_logs/final_confirmation_r1.log。
