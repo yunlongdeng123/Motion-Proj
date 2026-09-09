@@ -25,6 +25,12 @@ def main():
     rows.extend((label,triangle['stages'][key]['development']) for label,key in [
         ('Joint R10 (track, hard free)','joint_r10'),('Joint R12 (track, beam free)','final'),
         ('Native R14 (track, beam free)','native_r14')])
+    for label,filename in [('Q-v2 joint r1','qv2/shared_mesh_joint_r1_analysis.json'),
+                           ('Q-v2 LiDAR r2','qv2/shared_mesh_lidar_r2_analysis.json'),
+                           ('Open charts r3 (LiDAR)','open_charts/open_charts_lidar_r3_analysis.json'),
+                           ('Ray attraction r4 (LiDAR)','ray_support/ray_support_r4_analysis.json')]:
+        completed=json.loads((args.evidence_root/filename).read_text())
+        rows.append((label,completed['stages']['final']['development']))
     metrics = [('hit_rate', 100, 2), ('early_rate', 100, 2), ('miss_rate', 100, 2),
                ('free_intrusion_m', 1, 4), ('surface_recall_02', 100, 2)]
     lines = [r'\begin{tabular}{lrrrrr}', r'\toprule',
@@ -76,7 +82,15 @@ def main():
             lines.append(f"{label} & {unit} & {value['mean_delta']*scale:+.3f} & [{lo*scale:+.3f}, {hi*scale:+.3f}]"+r' \\')
     lines.extend([r'\bottomrule',r'\end{tabular}'])
     (args.output/'triangle_paired.tex').write_bytes(('\n'.join(lines)+'\n').encode('utf-8'))
-    print(json.dumps({'tables': ['actor_population.tex', 'joint_paired.tex', 'native_paired.tex','triangle_paired.tex'],
+    ray=json.loads((args.evidence_root/'ray_support/ray_support_r4_analysis.json').read_text())
+    lines=[r'\begin{tabular}{lrrr}',r'\toprule',r'Metric & Difference & 95\% log interval & Improved logs \\',r'\midrule']
+    for key,label,scale in [('hit_rate','Hit (pp)',100),('early_rate','Early (pp)',100),('miss_rate','Miss (pp)',100),
+                          ('free_intrusion_m','Free (m)',1),('surface_distance_m','Distance (m)',1),('surface_recall_02','Recall (pp)',100)]:
+        value=ray['paired_final_minus']['open_charts_r3']['development'][key]; lo,hi=value['bootstrap95']
+        lines.append(f"{label} & {value['mean_delta']*scale:+.3f} & [{lo*scale:+.3f}, {hi*scale:+.3f}] & {value['improved_logs']}/{value['logs']}"+r' \\')
+    lines.extend([r'\bottomrule',r'\end{tabular}'])
+    (args.output/'ray_support_paired.tex').write_bytes(('\n'.join(lines)+'\n').encode('utf-8'))
+    print(json.dumps({'tables': ['actor_population.tex', 'joint_paired.tex', 'native_paired.tex','triangle_paired.tex','ray_support_paired.tex'],
                       'source': str(args.evidence_root), 'neural_updates': 0}))
 
 

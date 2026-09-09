@@ -553,3 +553,13 @@ r4射线条件吸引改善了测量附近覆盖，但加重物理冲突。相对
 已核实[Point2Mesh官方main](https://raw.githubusercontent.com/ranahanocka/point2mesh/master/main.py)和[BeamGapLoss实现](https://raw.githubusercontent.com/ranahanocka/point2mesh/master/models/losses.py)：其预计算离散投影目标，拉动面中心，按早期迭代调度与Chamfer/法向项切换；这不是本任务原始首返回的遮挡归属监督，不能原样复制并声称修复first-hit。优先复用现有显式首面读出，结合固定支持分解制定下一候选；仍须区分有梯度、几何更近、首返回正确三件事。
 
 failure_ledger_delta=update V73-F02 evidence; no new failure ID。20新日志未读、30分钟ACTIVE。
+
+### 18.11 首面支持诊断完成后的选择（2026-09-09 11:14 UTC）
+
+固定r3/r4支持分解done，code20b47943；task WS-V73-M2-SURFACE-SUPPORT-01/run20260909T110600Z__open-charts-r3-ray-r4-support-r5。75原DEV/5日志、11886条owned heldout束，23无owned与8空保留；只读保存三角面，0次神经推理/优化，.478369s、RSS.628590GiB。按Actor归一再日志等权，any正确沿束支持39.0399%→58.3205%，其中early且后方有正确面7.9637%→22.2508%，增加14.2872pp；early且无后方正确面8.2562%→8.5458%，仅增加.2896pp。两类增加合计为总early增加14.5768pp。
+
+当前额外early的聚合增量主要落在“早面挡住后方正确支持”类别，因此下一候选优先绑定字面首面：有交点时监督实际首面深度，无交点时保留距离吸引。该候选尚未实现/训练；离散可见性切换、近切面位置梯度及对其他束的冲突需一次必要检查，不预先声称连续性或成功。不是删除早面、把它透明化或将后交点替换为物理输出；不做loss权重网格、不默认解冻upper。这里是类别聚合变化，不是逐射线转移表，更不是归因因果证明。
+
+阶段paper已更新为interim r4：11页、18个完成方法的主表，新增r4−r3完整配对表与开放曲面/射线吸引组件图，修正Q-v2“质量pending”旧叙述，纳入联合对照、局部形变与此次支持分解。LaTeX编译成功，无overfull/编译warning；已检查关键页面和图表。表格读取远端完整证据生成，无新推理：本地首次导出缺少旧R11归档，因此转在远端生成表格再编译，没有重跑R11实验。不是arXiv投稿或研究完成，20新日志质量未读。
+
+failure_ledger_delta=update V73-F02 evidence; no new failure ID，20新日志未读、30分钟ACTIVE。

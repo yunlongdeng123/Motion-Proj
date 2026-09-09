@@ -1,5 +1,7 @@
 # WorldSim V7.3 阶段技术报告
 
+**当前interim r4（2026-09-09）：11页、18个完成方法。** 已纳入Q-v2 joint/LiDAR、开放chart、射线吸引r4和固定支持r5；旧“Q-v2 pending”已被完整结果取代。无胜出方法或独立20新日志确认。新表由同一export_worldsim_v73_interim_tables.py从远端完整归档生成；新增ray_support_paired.tex及ray_support_components.pdf。使用LaTeX技能脚本调用现有TinyTeX/latexmk编译，日志无overfull/编译warning；关键页面与图表已查看。以下r3说明为历史。
+
 这是研究进行中的英文LaTeX草稿，未对外发布。r3同步已完成R10/R12/R14三角、R11锚点与Q-v2共享顶点候选；Q-v2正式训练已启动，结果pending，20新日志质量未读。主表14个完成方法，新增三角配对表与Q-v2实际组件图，保留R5恢复及移动子集/输入覆盖/密度边界。r1/r2 PDF作为历史保留；中文当前状态以docs/RESEARCH_STATUS.md为准。
 
 在仓库根目录生成真实归档表格：
@@ -34,3 +36,5 @@ tectonic main.tex
 原始checkpoint、JSONL与完整表面在AutoDL的`/root/autodl-tmp/runs/worldsim_v73/`，代码与紧凑证据在v73远端分支。普通Git提交引用用于回溯；不添加额外哈希/校验和/指纹。
 
 新增证据：`m2/global/population_joint_r12_analysis.json`（包含R10/R14/R8），`population_native_r14_analysis.json`，三角完整中文报告与`WORLDSIM_V7_3_QV2_SHARED_MESH.md`。Q-v2图由`scripts/plot_worldsim_v73_qv2_architecture.py`生成并复制到本目录`figures/qv2_components.pdf`；固定拓扑可微检查不作为重建成功。
+
+本版新增证据：qv2/shared_mesh_{joint_r1,lidar_r2}_analysis.json、qv2/mesh_diagnostic_r1/summary.json、open_charts/open_charts_lidar_r3_analysis.json、ray_support/ray_support_r4_analysis.json、ray_support/support_r5/summary.json。组件图由scripts/plot_worldsim_v73_ray_support_architecture.py生成，复制PDF到figures/ray_support_components.pdf。全表格生成应在具备这些既有归档的远端执行；本地缺旧证据文件不意味着重跑实验。

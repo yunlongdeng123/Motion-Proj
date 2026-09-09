@@ -1,0 +1,24 @@
+{
+  "task": "WS-V73-M2-SURFACE-SUPPORT-01",
+  "code_commit": "20b47943475d427ac1b8932f7975d32ab5a14fd3",
+  "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2",
+  "models": {
+    "open_charts_r3": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3",
+    "ray_support_r4": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260909T063700Z__open-charts-lidar-ray-support-s7304-r4"
+  },
+  "scope": "all 75 original development Actors; only original owned heldout first returns",
+  "optimizer_updates": 0,
+  "neural_inference": false,
+  "tolerance_m": 0.2,
+  "depth_coalescing_m": 0.0001,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04"
+  ],
+  "readout": "existing CPU SurfaceBVH cast_rays plus list_intersections and unsigned compute_distance",
+  "statistics": "pool heldout frames within Actor; normalize each Actor by its owned rays, then mean Actors within log and mean logs; not a replacement for canonical main metrics",
+  "boundary": "no mesh edits, query deletion, new opacity, occupancy signs or target-based inference; later good intersection is diagnostic evidence, never substituted for the first return; coincident hits are not exact topology counts",
+  "source": "https://www.open3d.org/docs/release/python_api/open3d.t.geometry.RaycastingScene.html",
+  "failure_ledger_delta": "update V73-F02: early with later correct support rises from 7.9637 to 22.2508 percent under equal-log aggregation; early without later support changes from 8.2562 to 8.5458 percent; category differences are not per-ray transitions or causal attribution; no new failure ID"
+}

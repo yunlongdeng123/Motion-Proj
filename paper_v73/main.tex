@@ -11,7 +11,7 @@
 \title{Adapting Native Geometry Decoders for Dynamic Actor Surfaces:\\
 Interim Evidence on Coverage and Observed Free Space}
 \author{WorldSim V7.3 research draft}
-\date{Interim r3: 8 September 2026, 22:20 UTC}
+\date{Interim r4: 9 September 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -24,13 +24,16 @@ not ensure correct physical first intersections. Changing only the joint
 model's free-space objective reduces early returns and intrusion, but raises
 missing returns by 32.53 percentage points and lowers correct hits by 5.55
 points across five development logs. A native-only matched control does not
-establish stable improvement from the same objective change. The joint model
+establish stable improvement from the same objective change. The joint patch model
 still has fewer correct hits than its same-objective LiDAR reference in every
-development log. We therefore begin Q-v2, an explicit shared-vertex surface
-parameterization that preserves native-decoder adaptation and measurement
-supervision. Its training is underway; no quality result is claimed. The
-report records completed results, source and density limitations, and the
-remaining independent-log and scene-composition evidence. No final method
+development log. Completed Q-v2 shared-mesh experiments do not establish an
+incremental benefit from the joint visual pathway over its LiDAR control.
+An open-chart control and ray-conditioned surface attraction subsequently
+improve support, but attraction increases early intersections by 14.58 points
+relative to the same open surface. Fixed-surface analysis localizes this
+change mainly to early intersections with a later, correctly placed surface.
+We prioritize first-visible-surface supervision; independent new-log and
+selected-model scene confirmation remain unfinished. No final method
 superiority is claimed.
 \end{abstract}
 
@@ -123,7 +126,7 @@ reproduction of their complete architectures or complete-mesh supervision.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/qv2_components.pdf}
-\caption{Implemented Q-v2 candidate; research quality remains pending. The
+\caption{Implemented Q-v2 candidate; joint and LiDAR results are complete. The
 fixed topology is a shape prior, not occupancy ground truth. Observed depth
 and visual features can influence the shared vertices; training and hard
 evaluation use identical explicit triangles.}
@@ -145,12 +148,60 @@ nearest-surface loss into all four visual scales and native seed positions.
 This is an implementation check, not real-data performance or a full-chain
 resource measurement.
 
+
+\subsection{Open charts and ray-conditioned attraction}
+After the closed-mesh comparison, LiDAR run r3 reallocates support to 64 open
+charts. Each chart has a fixed $4\times4$ UV grid, a detached local PCA frame,
+a trainable normal residual and a shared height decoder. The metric half-span
+is $0.15(LWH)^{1/3}$ from supplied Actor dimensions. There are 1,024 vertices
+and 1,152 triangles, with no global closure or learned opacity. The chart
+decoder has 1,706,413 parameters; unused visual-reader parameters receive no
+gradients in these LiDAR controls. This borrows local parametric surface
+elements from AtlasNet~\cite{atlasnet}, not its complete-shape training.
+Fixed tangential coordinates limit intra-chart collapse but do not prevent
+inter-chart intersections, incorrect span or wrong support positions.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/ray_support_components.pdf}
+\caption{Actual open-chart and attraction components in LiDAR r4. The
+visual prefix and DPT are not loaded. Ray-conditioned nearest-surface
+attraction can move existing geometry on a missed ray, but need not move the
+first visible surface when a later surface is closer to the target.}
+\label{fig:raycomponents}
+\end{figure}
+
+Run r4 keeps the r3 representation and original losses, adding a weighted
+closest-point objective on owned original first returns. With unit direction
+$d$, measured endpoint $x^*=o+rd$, and $\delta=x-x^*$, it uses
+\begin{equation}
+ L_{\rm ray}=\operatorname{mean}_{r}\min_{x\in\mathcal S}
+ \left\|\alpha\bigl(\delta-d(d^T\delta)\bigr)+d(d^T\delta)\right\|_2,
+ \qquad \alpha=20/3.
+\end{equation}
+This fixed optimization ratio is not calibrated sensor uncertainty or
+occupied thickness. Exact triangle/edge closest points are computed in
+64-ray by 512-face blocks under the full anisotropic metric. Selected optimal
+barycentric coordinates are detached before reconstructing the differentiable
+distance in original coordinates. The envelope argument applies away from
+selection switches; it is not a first-intersection guarantee.
+
+The extra term has weight one and samples up to 1,024 owned returns with a
+separate, checkpointed generator. It changes return-observation weighting
+relative to the existing unique-endpoint coverage term, so any gain cannot
+be uniquely attributed to anisotropy. No unknown region is labeled free, no
+new topology is created from an empty mesh, and no target-selected later
+surface replaces the physical readout. SoftRas~\cite{softras} motivates
+distance gradients beyond hard projected support; its opacity aggregation is
+not used here. Both open-chart experiments are fresh 30-epoch LiDAR controls,
+not new evidence that the visual pathway has improved.
+
 \subsection{One surface, distinct measurement semantics}
 The implemented objectives act on this explicit geometry:
 \begin{equation}
  L=L_{\mathrm{coverage}}+\lambda_n L_{\mathrm{native}}
        +\lambda_f L_{\mathrm{free}}+0.05L_{\mathrm{envelope}}
-       +\lambda_e L_{\mathrm{event}}.
+       +\lambda_e L_{\mathrm{event}}+\lambda_r L_{\mathrm{ray}}.
 \end{equation}
 Coverage is the mean distance from sampled measured target points to the nearest
 triangle. Sparse targets do not define a complete surface: an unmeasured region
@@ -285,10 +336,10 @@ In contrast, under the hard objective, R10 versus native R11 improves hit by
 9.54 points, interval $[4.62,16.27]$, and reduces missing by 27.48 points,
 while increasing early by 12.62 points and free by 0.1061\,m. The Query path
 can change support substantially, but this is not sufficient physical quality.
-Q-v2 now tests a shared-vertex parameterization under the preserved R12
-data/objectives. Restricted upper-aggregation adaptation, near-surface
-certified-free supervision and local correspondence consistency remain
-separate later mechanisms rather than simultaneous changes to this run.
+Q-v2 tests the shared-vertex parameterization under the preserved R12
+data/objectives; its completed results appear below. Upper-aggregation
+adaptation and near-boundary free supervision remain deferred while we
+study the known surface and ray-support limitations.
 
 R12's measurement-weighted native Huber drops from 0.7072 to 0.3887\,m,
 sampled coverage from 0.3072 to 0.2246\,m, and hard free from 0.2087 to
@@ -298,6 +349,57 @@ R12's own-initialization development comparison similarly reduces free
 but increases missing; it does not establish a hit gain. The moving subset
 still contains only nine Actors in two logs, one log with a single owned
 return. Its uncertainty cannot support a robust dynamic-Actor claim.
+
+
+\subsection{Completed Q-v2 controls and ray-support failure}
+The closed-mesh joint r1 and same-mesh LiDAR r2 each complete 11,130 updates
+without skipped or resumed updates. Joint minus LiDAR early rate is
+$+7.454$ points, 95\% log interval $[+1.122,+17.719]$; all other five
+mean differences are unfavorable but their intervals cross zero. This
+compares the whole joint pathway, including native support and auxiliary
+depth supervision, and does not uniquely identify visual-feature quality.
+It does not establish equivalence or reject all foundation-model adaptation.
+
+Fixed deformation analysis detects nonadjacent face intersections in 48/67
+nonempty LiDAR meshes and 0/67 joint meshes. Open3D skips pairs sharing any
+vertex, so zero detections do not certify absence of folding. The joint mesh
+has mild local deformation despite its worse physical results; local collapse
+is not a sufficient explanation for the joint failure. Template-relative
+singular values measure deformation, not distance to ground truth.
+
+Open-chart r3 versus closed LiDAR r2 has six intervals spanning zero.
+Compared with the old narrow-patch R8, r3 lowers missing by 28.46 points but
+increases free intrusion by 0.1308\,m, both intervals excluding zero. It changes
+support allocation, span, initialization and topology together, so it cannot
+identify closure as the unique cause of error.
+
+\begin{table}[htbp]
+\centering\small
+\input{tables/ray_support_paired.tex}
+\caption{Completed ray-attraction r4 minus the same open-chart r3, all 75
+development entries and five logs. Only the hit interval spans zero.
+Improved coverage does not offset the increased early returns and intrusion.}
+\label{tab:raypaired}
+\end{table}
+
+Attraction r4 lowers missing by 7.99 points and target-to-surface distance by
+0.0253\,m, and increases recall by 3.88 points. However, early rate rises by
+14.58 points and free intrusion by 0.1014\,m; all five intervals exclude zero.
+The 4.99-point hit gain remains uncertain. Thus r4 is not selected as a joint
+surface/physics improvement, despite a correct local gradient implementation.
+
+The fixed-surface decomposition uses the same 75 entries and 11,886 owned
+heldout rays, with Actor normalization followed by equal-log means. Rays with
+any intersection within the target band rise from 39.04\% to 58.32\%, while
+the subset having an early intersection and a later correct one rises from
+7.96\% to 22.25\%. Early intersections with no later correct support change
+only from 8.26\% to 8.55\%. These are aggregate category differences, not
+paired transition probabilities for individual rays or a causal decomposition.
+They prioritize correction of the first visible surface over stronger
+target-nearest attraction. Later intersections are diagnostic only and never
+substituted for first returns. Near-boundary free and upper/backbone adaptation
+are deferred; the next candidate must retain missed-ray geometry gradients
+while tying supervision to actual first-surface visibility.
 
 \subsection{Earlier short-window and external-method evidence}
 R5 completes 30 effective epochs (11,130 updates) of genuine native DPT and
@@ -434,11 +536,12 @@ cohort beams. This single development log cannot supply between-log uncertainty
 or independent confirmation.
 
 \section{Remaining experiments and claim boundaries}\label{sec:limits}
-The R10/R12/R14 triangle and native R11 anchor are complete. Q-v2's first
-shared-vertex run has started from fresh M1 initialization; its quality remains
-pending. Full input-cohort training, same-decoder controls, selected-model scene
-composition and independent new-log confirmation remain unfinished. These
-cannot be replaced by the synthetic gradient-path check or the topology prior.
+The triangle, native anchor, Q-v2 joint/LiDAR controls, open charts and
+ray-attraction r4 are complete. They do not yet establish a model that jointly
+improves surface quality and physical first returns. First-visible-surface
+supervision is the next mechanism to study; full input-cohort training,
+selected-model composition and independent new-log confirmation remain
+unfinished. Implementation gradients and topology priors cannot replace them.
 
 R13 has completed one epoch over all 41 camera-supported fit entries among
 the 51 original zero-build-LiDAR entries, from fresh M1 initialization. All
@@ -480,6 +583,10 @@ resource contention. These are not exclusive-throughput comparisons. Twenty-eigh
 AV2 prefix extraction at $672^2$ peaks at 7.64\,GiB. These are operation-specific
 allocated peaks, not a sum or a bound for deeper PEFT. Container RAM is capped
 at 90\,GiB. Concurrent run wall time is not exclusive GPU time.
+Q-v2 joint r1 uses 11.59\,GiB allocated and 6.23 hours; its LiDAR control
+uses 0.253\,GiB and 41.75 minutes. Open-chart r3 and attraction r4 each peak
+near 0.210\,GiB, completing in 29.21 and 38.87 minutes. The latter costs exclude
+any visual prefix or DPT and are not joint-foundation-model resource claims.
 
 The original R5 process disappeared after epoch 21 without an available
 traceback; the cause remains unknown. Recovery restored model and optimizer
@@ -538,5 +645,11 @@ Geometric Foundation Models. ICLR, 2025.
 from Single RGB Images. ECCV, 2018. \url{https://github.com/nywang16/Pixel2Mesh}.
 \bibitem{meshrcnn} G. Gkioxari, J. Malik, and J. Johnson. Mesh R-CNN.
 ICCV, 2019. \url{https://github.com/facebookresearch/meshrcnn}.
+\bibitem{atlasnet} T. Groueix et al. AtlasNet: A Papier-Mache Approach to
+Learning 3D Surface Generation. CVPR, 2018.
+\url{https://imagine.enpc.fr/~groueixt/atlasnet/}.
+\bibitem{softras} S. Liu et al. Soft Rasterizer: A Differentiable Renderer for
+Image-based 3D Reasoning. ICCV, 2019.
+\url{https://github.com/ShichenLiu/SoftRas}.
 \end{thebibliography}
 \end{document}

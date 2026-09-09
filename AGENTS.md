@@ -1,5 +1,9 @@
 # AGENTS 约定
 
+## 当前执行：首个可见表面监督（2026-09-09 11:14 UTC）
+
+r4与固定支持r5均done：覆盖改善但early/free恶化，新增early的聚合增量主要落在“早面+后方正确支持”。下一候选优先实际首面深度监督并保留miss时距离吸引，具体实现/验证尚pending，以RESEARCH_STATUS文首为准；不做权重网格，不开upper/DINOv3/full FT或near-boundary free。阶段paper已更新11页，20新日志未读；30分钟ACTIVE、完成不关机。
+
 ## 当前执行：同开放曲面的射线监督对照（2026-09-09 06:37 UTC）
 
 Q-v2联合/同网格LiDAR已收口，当前联合通路无明确增量；按策略二/不确定性分支聚焦表面与沿束支持。开放chart r3 done，对闭合r2六项区间跨0，对R8少missing但更多free侵入。下一r4保持r3表示和原目标，仅新增真实返回的方向条件最近面吸引；具体配置/状态以RESEARCH_STATUS文首和RAY_SUPPORT报告为准。不默认开upper/DINOv3/full FT，不把near-boundary free提前；20新日志质量仍未读、30分钟ACTIVE、完成不关机。以下旧“先等Q-v2”已完成。

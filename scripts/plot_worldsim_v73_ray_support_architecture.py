@@ -19,7 +19,7 @@ box(5.3,.3,3.25,1.1,'Owned original first returns\nFIT full-track labels only\no
 box(9.3,.3,5.25,1.1,'Keep point→surface + finite-beam free + box\nEvaluate literal hit / early / missing on the same mesh\nAttraction does not guarantee correct first hit','#f4f5f6')
 for a,b in [((1.9,3.37),(2.28,3.37)),((4.85,3.37),(5.23,3.37)),((7.6,3.37),(8.03,3.37)),((11.25,3.37),(11.78,3.37)),((8.15,1.45),(9.15,2.33)),((13.2,2.59),(13.2,1.46))]: arrow(a,b)
 ax.text(7.5,5.02,'Ray support r4: one supervision change on the r3 open surface',ha='center',fontsize=17)
-ax.text(7.5,4.56,'LiDAR control: no visual prefix / DPT loaded. Formal quality result pending.',ha='center',fontsize=11)
+ax.text(7.5,4.56,'LiDAR control: no visual prefix / DPT loaded. Attraction is distinct from literal first-hit evaluation.',ha='center',fontsize=11)
 fig.subplots_adjust(left=.02,right=.99,bottom=.03,top=.98)
 out=Path(__file__).resolve().parents[1]/'docs/autoresearch/worldsim_v73/ray_support'; out.mkdir(parents=True,exist_ok=True)
 for ext in ['png','pdf']: fig.savefig(out/('V73_RAY_SUPPORT_ARCHITECTURE.'+ext),dpi=150)
