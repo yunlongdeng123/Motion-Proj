@@ -1,6 +1,6 @@
 # V7.3 最终结果：固定联合对照与跨域确认
 
-最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。 固定场景评价进行中，随后报告与仓库收尾关机。
+最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。 固定场景评价也已完成，按用户指定终点结束科研；自动跟进已暂停，最终push后无任务即关机。
 
 ![实际组件](autoresearch/worldsim_v73/ray_support/V73_OPEN_JOINT_COMPONENTS.png)
 
@@ -128,6 +128,239 @@ Joint新增原生种子、DPT多尺度特征、build-depth辅助项，比较整�
 
 论文中witness orthogonal算子仅为CPU数值原型，learned support domain/end-to-end训练未验证，不属于固定r7方法，不作为最终成功证据。后续方案仅留为讨论，本轮不继续试验。
 
-## 固定场景与交付状态
+## 最终固定场景确认
 
-已于2026-09-09 21:25:58 UTC启动登记的固定场景确认，WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，code65854c27、shell PID175098、controller_logs/final_scene_r1.log。只组合现有表面与固定build背景，CPU评价，无新候选或训练；等完整结果再收口F04。论文任务65854c27已完成且其渲染/分析进程退出；由本任务将外部和场景结果整合进paper/main.pdf。完成文档/push、暂停调度、确认所有任务退出后shutdown。
+WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，code65854c27。全部240个frame×method结果完成；CPU wall 720.392s、peak RSS 1.208GiB，0优化更新。全部保存Actor面、固定build雕刻背景与逐返回只读轨迹进行全局最近交点，未按heldout删面或调背景。
+
+场景聚合按scene内原始束加权，再scene/log等权；与Actor表的Actor内聚合不同。free=max(观测距离−.2m−首面距离,0)，除以全部分组射线数；miss保留，returned MAE仅条件于预测返回。box归属与边界带是近似标注，不是精确表面边界真值；未知/非cohort返回均保留。场景PCA由既有场景转换实现，不能直接等同Actor表PCA。
+
+### all_raw_returns
+
+3908250条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 50.403540 | 8.433444 | 34.585394 | 0.532750 | 1.809396 |
+| Scene PCA | 56.568982 | 10.398962 | 28.205844 | 0.631009 | 1.426038 |
+| Joint r7 | 54.657189 | 12.578680 | 25.733904 | 0.814896 | 1.683586 |
+| LiDAR r6 | 54.841702 | 12.721378 | 25.903413 | 0.805870 | 1.638085 |
+| Narrow R8 | 54.069748 | 9.780619 | 28.938087 | 0.587901 | 1.572917 |
+| Native fusion | 55.458713 | 11.426692 | 27.812161 | 0.703150 | 1.546657 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -0.184513 | [-0.378570, -0.029604] | 6/20 |
+| early_rate | -0.142699 | [-0.418547, +0.106596] | 9/20 |
+| miss_rate | -0.169509 | [-0.272419, -0.059737] | 14/20 |
+| free_intrusion_m | +0.009026 | [-0.031076, +0.036385] | 5/20 |
+| returned_mae_m | +0.045500 | [-0.014973, +0.083359] | 1/20 |
+### cohort_returns
+
+432333条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 0.824185 | 1.850429 | 75.665704 | 0.176131 | 12.952356 |
+| Scene PCA | 55.486435 | 14.134691 | 22.182735 | 0.285849 | 1.274284 |
+| Joint r7 | 43.345988 | 26.536924 | 6.538884 | 0.540585 | 1.561761 |
+| LiDAR r6 | 45.557252 | 27.502422 | 5.191937 | 0.521201 | 1.338726 |
+| Narrow R8 | 37.050233 | 11.806927 | 26.031467 | 0.266458 | 2.690105 |
+| Native fusion | 48.100254 | 20.617886 | 19.266364 | 0.411861 | 1.572248 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -2.211264 | [-3.253457, -1.135780] | 3/20 |
+| early_rate | -0.965498 | [-2.924373, +1.113415] | 14/20 |
+| miss_rate | +1.346947 | [+0.541599, +2.432499] | 3/20 |
+| free_intrusion_m | +0.019384 | [-0.010654, +0.052106] | 8/20 |
+| returned_mae_m | +0.223034 | [+0.136486, +0.323606] | 3/20 |
+### background_proxy_returns
+
+3414037条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 58.039000 | 9.385023 | 28.863159 | 0.585284 | 1.183147 |
+| Scene PCA | 57.597507 | 10.063834 | 28.609218 | 0.692242 | 1.330254 |
+| Joint r7 | 57.038624 | 11.096351 | 27.513215 | 0.890088 | 1.615614 |
+| LiDAR r6 | 57.079545 | 11.003898 | 27.868022 | 0.879959 | 1.596099 |
+| Narrow R8 | 57.797893 | 9.816573 | 28.320034 | 0.642918 | 1.274571 |
+| Native fusion | 57.332851 | 10.550572 | 28.307818 | 0.762726 | 1.429081 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -0.040921 | [-0.157976, +0.062616] | 9/20 |
+| early_rate | +0.092453 | [-0.064003, +0.231607] | 3/20 |
+| miss_rate | -0.354807 | [-0.450353, -0.259077] | 20/20 |
+| free_intrusion_m | +0.010129 | [-0.035895, +0.041896] | 5/20 |
+| returned_mae_m | +0.019515 | [-0.061909, +0.068495] | 1/20 |
+### other_annotated_returns
+
+59441条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 2.460363 | 4.890443 | 50.798800 | 0.262889 | 8.688733 |
+| Scene PCA | 2.448013 | 5.767094 | 48.660927 | 0.395986 | 8.808885 |
+| Joint r7 | 2.409168 | 7.826770 | 45.315777 | 0.741932 | 9.302310 |
+| LiDAR r6 | 2.418995 | 7.009662 | 45.898615 | 0.604113 | 9.123191 |
+| Narrow R8 | 2.450220 | 5.331953 | 48.853848 | 0.327451 | 8.806310 |
+| Native fusion | 2.661663 | 7.198400 | 47.287655 | 0.511143 | 8.787036 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -0.009826 | [-0.037535, +0.011855] | 1/20 |
+| early_rate | +0.817107 | [+0.239014, +1.579252] | 3/20 |
+| miss_rate | -0.582838 | [-1.870228, +0.904931] | 15/20 |
+| free_intrusion_m | +0.137819 | [+0.041065, +0.261733] | 5/20 |
+| returned_mae_m | +0.179119 | [+0.082741, +0.285138] | 6/20 |
+### ambiguous_returns
+
+2439条原始束，17日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 0.041135 | 1.669002 | 78.735431 | 0.079707 | 9.883168 |
+| Scene PCA | 3.754160 | 4.193648 | 66.428196 | 0.147793 | 8.320201 |
+| Joint r7 | 3.418548 | 17.680189 | 44.579477 | 0.550387 | 6.878562 |
+| LiDAR r6 | 5.108391 | 21.904949 | 39.797155 | 0.599214 | 6.588732 |
+| Narrow R8 | 4.059666 | 7.583529 | 58.859865 | 0.206706 | 7.760728 |
+| Native fusion | 3.475167 | 12.530540 | 56.770995 | 0.449227 | 7.125122 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -1.689842 | [-4.751127, +0.871228] | 3/17 |
+| early_rate | -4.224760 | [-11.311977, -0.052500] | 7/17 |
+| miss_rate | +4.782321 | [-1.350341, +13.175128] | 4/17 |
+| free_intrusion_m | -0.048827 | [-0.270868, +0.124015] | 8/17 |
+| returned_mae_m | +0.289830 | [-0.053027, +0.797443] | 5/16 |
+### annotation_box_boundary_band
+
+288014条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 3.281392 | 2.761368 | 69.570860 | 0.193097 | 10.458790 |
+| Scene PCA | 46.160882 | 9.115185 | 30.200092 | 0.308515 | 2.630812 |
+| Joint r7 | 37.544791 | 18.253247 | 15.651701 | 0.555626 | 2.942522 |
+| LiDAR r6 | 39.122337 | 17.748064 | 15.030952 | 0.520679 | 2.751062 |
+| Narrow R8 | 29.916372 | 8.681279 | 32.777066 | 0.289565 | 3.958714 |
+| Native fusion | 40.434871 | 14.795139 | 27.090086 | 0.421044 | 2.808090 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -1.577546 | [-2.423963, -0.699161] | 5/20 |
+| early_rate | +0.505183 | [-0.807619, +2.064786] | 12/20 |
+| miss_rate | +0.620750 | [-0.177042, +1.660496] | 9/20 |
+| free_intrusion_m | +0.034947 | [+0.011929, +0.057910] | 5/20 |
+| returned_mae_m | +0.191461 | [+0.087598, +0.309713] | 3/20 |
+### moving_cohort_returns
+
+81555条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 1.444947 | 3.021907 | 71.665357 | 0.271211 | 11.604536 |
+| Scene PCA | 47.334454 | 18.352953 | 22.383954 | 0.385665 | 1.979096 |
+| Joint r7 | 36.140940 | 30.262609 | 5.457666 | 0.870594 | 2.308594 |
+| LiDAR r6 | 39.403999 | 29.987513 | 4.689301 | 0.817469 | 2.072785 |
+| Narrow R8 | 38.844342 | 16.560925 | 18.187240 | 0.381541 | 2.746900 |
+| Native fusion | 40.223203 | 26.843263 | 17.933884 | 0.526481 | 2.142782 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -3.263059 | [-5.513142, -1.085451] | 5/20 |
+| early_rate | +0.275095 | [-1.692316, +2.069221] | 10/20 |
+| miss_rate | +0.768365 | [-0.236331, +1.684205] | 6/20 |
+| free_intrusion_m | +0.053125 | [+0.020925, +0.084638] | 4/20 |
+| returned_mae_m | +0.235809 | [-0.059713, +0.503798] | 4/20 |
+### sensor_near_zone_returns
+
+0条原始束，0日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | undefined | undefined | undefined | undefined | undefined |
+| Scene PCA | undefined | undefined | undefined | undefined | undefined |
+| Joint r7 | undefined | undefined | undefined | undefined | undefined |
+| LiDAR r6 | undefined | undefined | undefined | undefined | undefined |
+| Narrow R8 | undefined | undefined | undefined | undefined | undefined |
+| Native fusion | undefined | undefined | undefined | undefined | undefined |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | undefined | undefined | 0/0 |
+| early_rate | undefined | undefined | 0/0 |
+| miss_rate | undefined | undefined | 0/0 |
+| free_intrusion_m | undefined | undefined | 0/0 |
+| returned_mae_m | undefined | undefined | 0/0 |
+### outside_sensor_near_zone_returns
+
+3908250条原始束，20日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | 50.403540 | 8.433444 | 34.585394 | 0.532750 | 1.809396 |
+| Scene PCA | 56.568982 | 10.398962 | 28.205844 | 0.631009 | 1.426038 |
+| Joint r7 | 54.657189 | 12.578680 | 25.733904 | 0.814896 | 1.683586 |
+| LiDAR r6 | 54.841702 | 12.721378 | 25.903413 | 0.805870 | 1.638085 |
+| Narrow R8 | 54.069748 | 9.780619 | 28.938087 | 0.587901 | 1.572917 |
+| Native fusion | 55.458713 | 11.426692 | 27.812161 | 0.703150 | 1.546657 |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | -0.184513 | [-0.378570, -0.029604] | 6/20 |
+| early_rate | -0.142699 | [-0.418547, +0.106596] | 9/20 |
+| miss_rate | -0.169509 | [-0.272419, -0.059737] | 14/20 |
+| free_intrusion_m | +0.009026 | [-0.031076, +0.036385] | 5/20 |
+| returned_mae_m | +0.045500 | [-0.014973, +0.083359] | 1/20 |
+### sensor_pose_unknown_returns
+
+0条原始束，0日志。
+
+| 方法 | hit (%) | early (%) | miss (%) | free (m) | returned MAE (m) |
+|---|---:|---:|---:|---:|---:|
+| Background only | undefined | undefined | undefined | undefined | undefined |
+| Scene PCA | undefined | undefined | undefined | undefined | undefined |
+| Joint r7 | undefined | undefined | undefined | undefined | undefined |
+| LiDAR r6 | undefined | undefined | undefined | undefined | undefined |
+| Narrow R8 | undefined | undefined | undefined | undefined | undefined |
+| Native fusion | undefined | undefined | undefined | undefined | undefined |
+
+Joint r7 − LiDAR r6：
+
+| 指标 | 差值 | 95%日志配对区间 | 改善日志 |
+|---|---:|---:|---:|
+| hit_rate | undefined | undefined | 0/0 |
+| early_rate | undefined | undefined | 0/0 |
+| miss_rate | undefined | undefined | 0/0 |
+| free_intrusion_m | undefined | undefined | 0/0 |
+| returned_mae_m | undefined | undefined | 0/0 |
+
+所有其他配对、逐日志数据、原始owner冲突/未知pose计数见final_scene/{analysis,summary}.json；原逐束深度与owner NPZ留在运行目录。分组存在重叠，不能相加当独立样本；单日志不报bootstrap区间。
+
+## 场景结论与最终交付
+
+最终场景确认done：20日志40 heldout帧×6方法=240记录，每方法3908250原始束。cohort返回r7−r6 hit−2.211pp（[−3.253,−1.136]pp）、miss+1.347pp（[+.542,+2.432]pp）、returned MAE+.223034m（[+.136486,+.323606]m）；边界带hit−1.578pp、free+.034947m、returned MAE+.191461m的区间也均不跨0且变差。全束hit−.1845pp/miss−.1695pp均不跨0，其余全束三项区间跨0；背景分母较大不能遮盖Actor退化。边界与归属为box proxy、背景不完整、未知区域不当FREE，F04未解决。CPU wall720.392s、RSS1.207802GiB，0优化更新，无重复评价/汇总。
+
+证据：docs/autoresearch/worldsim_v73/final_confirmation/（Actor code6499d34d，已push 9b6bc02e）；final_scene/{analysis,summary,manifest,compact}.json（scene code65854c27）。原始checkpoint/显式表面/逐束输出保留在runs/worldsim_v73相应run中，报告列出原路径。paper/main.pdf更新为17页，包含原组件图、真实Blender失败切片、最终外部与场景结果；LaTeX编译成功、无未定义引用/溢出警告，新增页已渲染查看。
+
+30分钟自动跟进worldsim-v7-3已通过应用接口暂停，并核实本地status=PAUSED。所有科研计算结束，当前只执行最终文档提交/push与关机。GitHub push成功且最终进程检查确认无训练/评价/数据/渲染/汇总任务后执行shutdown；本节记录关机前交付状态，实际命令回执保存于本地outputs/V73_SHUTDOWN_RECEIPT.md。不得因历史计划或旧自动化prompt重新启动研究。

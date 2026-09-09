@@ -1,0 +1,14 @@
+\subsection{Fixed Scene Composition}
+\label{sec:scene}
+The final CPU scene run combines each stored actor surface with the same build-carved background and read-only per-return rigid poses. It evaluates 40 heldout frames from the 20 fixed AV2 logs, producing 240 frame--method records across six methods and 3,908,250 original returns per method. There is no heldout-driven background carving, surface deletion, optimization, or trajectory change. Scene statistics weight rays within each scene, then equally weight scenes within logs and independent logs. This differs from actor-level aggregation. The built-in scene PCA conversion is an existing distinct operator and is not numerically interchangeable with the actor-table PCA control.
+
+\begin{table*}[t]
+\centering\small\input{tables/v73/scene}
+\caption{Fixed background composition on all raw returns (3,908,250), cohort-owned returns (432,333) and the annotation-box boundary band (288,014), each spanning 20 logs. Hit/early/miss are percentages; free and returned MAE are meters. Returned MAE is conditional on a finite prediction, so it must be read together with miss. Groups overlap and box ownership/boundaries are proxies, not exact surface annotations.}
+\label{tab:scene}
+\end{table*}
+On cohort-owned returns, r7 minus r6 loses 2.211\,pp hits (95\% log interval $[-3.253,-1.136]$), adds 1.347\,pp misses ($[0.542,2.432]$), and increases conditional returned MAE by 0.2230\,m ($[0.1365,0.3236]$). Early changes $-0.965$\,pp and free intrusion $+0.01938$\,m, both with intervals crossing zero. Thus scene composition does not recover the missing joint advantage.
+
+In the annotation-box boundary band, hits decline 1.578\,pp ($[-2.424,-0.699]$), free intrusion increases 0.03495\,m ($[0.01193,0.05791]$), and returned MAE increases 0.19146\,m ($[0.08760,0.30971]$). On moving-cohort returns (81,555 rays, 20 logs), hits decline 3.263\,pp ($[-5.513,-1.085]$), while free intrusion increases 0.05312\,m ($[0.02092,0.08464]$). These subgroup outcomes retain the actor/background boundary and motion-conditioned query limitations; they do not isolate a unique boundary artifact cause.
+
+Across all raw returns, r7 minus r6 has only a $-0.185$\,pp hit change ($[-0.379,-0.030]$) and $-0.170$\,pp miss change ($[-0.272,-0.060]$). Early, free and returned-MAE intervals cross zero. Background-proxy returns number 3,414,037 and dominate the all-ray denominator; the small global difference must not conceal the larger cohort and boundary deterioration. Absolute background-only missing is 34.585\% on all raw returns. A finite build background remains incomplete, and unobserved disocclusion is not certified ground truth. The run completes in 720.39\,s with 1.208\,GiB peak RSS; all outputs and one paired-log summary are retained.

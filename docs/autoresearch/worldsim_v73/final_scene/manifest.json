@@ -1,0 +1,31 @@
+{
+  "code_commit": "65854c279cad814aac743be1d9a524a215abb38e",
+  "scene_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1",
+  "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1",
+  "models": {
+    "joint_r7": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/joint_r7",
+    "lidar_r6": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/lidar_r6",
+    "lidar_r8": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/lidar_r8",
+    "native_fusion": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1/native_fusion"
+  },
+  "background_file": "background.npz",
+  "method": "per-owner canonical CPU BVH + inverse rigid rays + global nearest distance; per-return time when scene supplies trajectories",
+  "aggregation": "ray weighted within scene, then equal scenes within log and equal independent logs; differs from Actor-only means",
+  "ownership": "all known annotation boxes+0.1m proxy, overlaps separate; no learned opacity or trajectory updates",
+  "empty_domain": "missing Actor geometry and unobserved background are not filled; all observed beams retained including other annotated objects",
+  "evaluation": "scene input roles retained; extra-time rays read for evaluation, no optimizer",
+  "source_test_read": false,
+  "external_test_read": true,
+  "roles": [
+    "external_confirmation"
+  ],
+  "status": "done",
+  "completed_observed_utc": "2026-09-09T21:42:39.229109+00:00",
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F04",
+    "V73-F05"
+  ],
+  "failure_ledger_delta": "V73-F04 remains active: cohort hits and misses worsen; boundary hit/free/returned MAE worsen with intervals excluding zero; no new candidate",
+  "optimizer_updates": 0
+}

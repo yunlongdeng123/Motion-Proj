@@ -1,12 +1,22 @@
-## 最终Actor确认失败，固定场景收尾中（2026-09-09 21:30 UTC）
+## V7.3 最终科研收口：独立联合确认失败（2026-09-09 21:42 UTC）
 
-最终固定AV2跨域确认失败：Joint r7相对匹配LiDAR r6的hit−2.9419pp、early+5.3637pp、free+.325997m、target→surface距离+.013259m、recall−2.4204pp，五项95%日志配对区间均排除0且方向更差；free在20/20日志变差。miss−.9625pp的区间[−1.9366,+.0576]pp跨0，不构成可靠改善或等效。开发5日志hit+10.5363pp等正结果仍成立，但未通过20个独立AV2日志的跨数据集确认。本轮V7.3联合方法的可泛化物理表面主张实验失败/未获支持，不外推所有视觉基座无用。
+V7.3/Q-v2及最终可训练视觉重接实验已结束；最终联合可泛化物理表面假设未获支持，按用户情况2收口。开发5日志hit+10.536pp等收益保留；固定20日志AV2 Actor确认r7−r6的hit−2.942pp、early+5.364pp、free+.325997m、距离+.013259m、recall−2.420pp，五项95%日志区间均不跨0且变差。不能外推所有视觉基座无效，也不把跨域失败冒称同分布新日志必然失败。
 
-证据docs/autoresearch/worldsim_v73/final_confirmation/{analysis,models}.json及配对图；run WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，执行code6499d34d，全部五方法936对象/20日志/0优化更新。878 ready、58缺输入、119无owned heldout对象均保留；含221移动>2m/s、108运动未知、556 build<100对象。模型/尺度/配置固定在读取外部质量之前，未按AV2再训练、调参或挑场景。
+最终场景确认done：20日志40 heldout帧×6方法=240记录，每方法3908250原始束。cohort返回r7−r6 hit−2.211pp（[−3.253,−1.136]pp）、miss+1.347pp（[+.542,+2.432]pp）、returned MAE+.223034m（[+.136486,+.323606]m）；边界带hit−1.578pp、free+.034947m、returned MAE+.191461m的区间也均不跨0且变差。全束hit−.1845pp/miss−.1695pp均不跨0，其余全束三项区间跨0；背景分母较大不能遮盖Actor退化。边界与归属为box proxy、背景不完整、未知区域不当FREE，F04未解决。CPU wall720.392s、RSS1.207802GiB，0优化更新，无重复评价/汇总。
 
-已于2026-09-09 21:25:58 UTC启动登记的固定场景确认，WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，code65854c27、shell PID175098、controller_logs/final_scene_r1.log。只组合现有表面与固定build背景，CPU评价，无新候选或训练；等完整结果再收口F04。论文任务65854c27已完成且其渲染/分析进程退出；由本任务将外部和场景结果整合进paper/main.pdf。完成文档/push、暂停调度、确认所有任务退出后shutdown。
+证据：docs/autoresearch/worldsim_v73/final_confirmation/（Actor code6499d34d，已push 9b6bc02e）；final_scene/{analysis,summary,manifest,compact}.json（scene code65854c27）。原始checkpoint/显式表面/逐束输出保留在runs/worldsim_v73相应run中，报告列出原路径。paper/main.pdf更新为17页，包含原组件图、真实Blender失败切片、最终外部与场景结果；LaTeX编译成功、无未定义引用/溢出警告，新增页已渲染查看。
 
-failure_ledger_delta=update V73-F02/V73-F05/V73-F09；F03/F04仍未解除，无新ID，下一V73-F10。以下带日期段落为历史快照，当前授权只以上述有限收尾为准。
+30分钟自动跟进worldsim-v7-3已通过应用接口暂停，并核实本地status=PAUSED。所有科研计算结束，当前只执行最终文档提交/push与关机。GitHub push成功且最终进程检查确认无训练/评价/数据/渲染/汇总任务后执行shutdown；本节记录关机前交付状态，实际命令回执保存于本地outputs/V73_SHUTDOWN_RECEIPT.md。不得因历史计划或旧自动化prompt重新启动研究。
+
+| 里程碑 | 执行状态 | 科学结论 |
+|---|---|---|
+| R10/R12/R14三角 | done | 覆盖/物理冲突，转入表示研究 |
+| Q-v2闭合与开放chart、constructive/first-surface对照 | done | 表示与监督有局部收益，未同时解决物理一致性 |
+| r6/r7最终LiDAR/可训练DPT联合比较 | done | 开发收益，独立联合确认失败 |
+| 固定AV2五方法/同背景六方法确认 | done | 最终主假设rejected，不按确认结果调参 |
+| 最终报告、失败记录、paper | done | 正负证据及原型/未验证提案明确分开 |
+
+failure_ledger_delta=update V73-F02/V73-F04/V73-F05/V73-F09；科学风险未因项目结束解除，无新ID，下一V73-F10。无资源不足/OOM导致停止；停止原因是用户指定的最终实验边界已经完成。以下为历史快照，不恢复旧授权。
 
 ---
 
@@ -1975,6 +1985,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 观察：固定支持概率梯度不等于位置支持生成保证。迁移：DS-NeRF 终止分布作为先例，coverage/三维吸引与 coarse-to-fine 生成保持有效；必要时有限宽度延拓。禁止丢弃无候选射线和在推理中用 target 生点。判断：同架构对照记录缺支持率、硬交点及几何梯度，不能仅以NLL下降关闭风险；证据=plan13.3，task=M3。
 
 ### V73-F04 — Actor/背景重复表面与边界伪影
+
+- 最终固定场景确认（2026-09-09 21:42 UTC）：最终场景确认done：20日志40 heldout帧×6方法=240记录，每方法3908250原始束。cohort返回r7−r6 hit−2.211pp（[−3.253,−1.136]pp）、miss+1.347pp（[+.542,+2.432]pp）、returned MAE+.223034m（[+.136486,+.323606]m）；边界带hit−1.578pp、free+.034947m、returned MAE+.191461m的区间也均不跨0且变差。全束hit−.1845pp/miss−.1695pp均不跨0，其余全束三项区间跨0；背景分母较大不能遮盖Actor退化。边界与归属为box proxy、背景不完整、未知区域不当FREE，F04未解决。CPU wall720.392s、RSS1.207802GiB，0优化更新，无重复评价/汇总。 证据final_scene/{analysis,summary,manifest}.json，任务WS-V73-FINAL-SCENE-01，执行code65854c27。执行done，科学风险active；本轮已关闭不再启动修复候选。
 
 观察：背景 ghost、Actor 缺口与外扩可造成假 early/hit 改变，目前未完成 V7.3 scene 应用。迁移：Street Gaussians 分层思想，但物理使用统一硬排序，不用其外观透明度；逐测量时刻排除动态点，遮挡后背景UNKNOWN。最小比较：同一背景/轨迹的 Actor、边界带和全场景分列指标，反事实示例不冒充真值；证据=plan13.4，task=M4。
 
