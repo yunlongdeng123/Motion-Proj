@@ -1,3 +1,15 @@
+## 上层LoRA独立接口落地，真实训练待进行（2026-09-09 00:40 UTC）
+
+在3eeca1e8基础上新增`upper_aggregation.py`及一次CPU接口脚本，代码/证据/本次记录同提交。实现VGGT第18–23组qkv LoRA（默认rank8，393216参数）、4/11/17冻结前缀与重新生成23层的DPT接口；保留全窗口24视图顺序，之后才选择Actor输入，不跨优化步缓存适配输出。未接入运行中的Q-v2 r1或正式优化器，完整传感器梯度与GPU峰值均pending。
+
+真实12个尾部Block仅CPU加载，冻结参数151182336；随机3视图/11token/32维/rank2检查对官方交替处理输出最大误差0，首frame/末global LoRA B梯度非零，冻结输入及原权重无梯度，一次合成更新改变输出，第三视图能影响第一视图。脚本1.779956s/RSS1.508625GiB，不能当成24视图资源或科学收益。首次位置张量非连续错误按官方PositionGetter的clone修复后，同一检查通过；保留首错与通过证据，不新增科学失败ID。
+
+报告及组件图：`docs/WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md`、`docs/autoresearch/worldsim_v73/upper_tail/V73_UPPER_TAIL_INTERFACE.png`；原始`interface_check_r1.jsonl`及`interface_check_r1_attempt1.txt`同目录。官方VGGT、LoRA与PyTorch源码接入依据见报告。20新日志质量未读，未下载环境/权重。
+
+Q-v2联合r1/PID96997于00:26 UTC第11轮正常：GPU分配峰值11.591165GiB、RSS约34.08GiB，盘余约68GiB；无OOM事件。继续原配置并等待完整r1−r2，随后分别决定表面局部形状、对应、certified-free或上层适配，不能把接口可用当成上层已训练。关联V73-F01/F02/F03/F06/F09，failure_ledger_delta=none；原风险保持，下一V73-F10。30分钟ACTIVE、完成不关机。
+
+---
+
 ## Q-v2 r2固定表面分解完成（2026-09-08 23:55 UTC）
 
 support-r3 `WS-V73-M2-SURFACE-SUPPORT-01/20260908T235000Z__qv2-lidar-r2-vs-r8-support-r3`已done，执行基于a587bd6b与已登记收口工作树；75原DEV/5日志、11886 owned束、CPU.612499s/RSS.631134GiB，无神经推理或更新。联合r1继续训练，不改变其配置或读取20新日志。

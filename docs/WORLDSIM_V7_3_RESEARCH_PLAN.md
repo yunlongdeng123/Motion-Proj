@@ -438,3 +438,10 @@ R10/R12/R14与R11锚点全部done，见[完整结果](WORLDSIM_V7_3_TRIANGLE_RES
 r2 done：共享网格相对R8 miss−31.295pp，但early+13.899pp/free+.106203m，三项区间不跨0；hit/距离/召回跨0。F02仍active，不能将更少无返回写成正确表面，也不能归咎未使用的视觉。r1继续原配置，r1−r2 pending。先检索Mesh R-CNN/Point2Mesh源码与Open3D接口，登记固定r2/R8支持判别r3（pending，75原DEV），不重推理：区分前面挡住后方正确表面、无正确沿束支持和仅邻近测量。闭合网格的两层交点不作为自交证明。之后结合联合r1结果决定局部形状、认证free边界或上层适配，避免把新free排斥单独当解决缺支持的方法。详见Q-v2报告文末，failure_ledger_delta=update V73-F02 evidence; no new failure ID。
 
 17.8执行补充（2026-09-08 23:55 UTC）：support-r3 done。r2 early19.4901%中仅6.5867个百分点有后方正确支持，其余无正确沿束支持；late24.4222%。固定诊断不证明自交或背景归因。继续r1−r2后决定几何位置/形状与表示适配，不能只靠新增排斥；详见Q-v2报告八类分解。F02保持active，无新失败ID。
+
+
+### 17.9 上层适配接口实现，正式研究配置待定（2026-09-09 00:40 UTC）
+
+第17.4的18–23组缓存边界已实现为独立`VGGTUpperTail`及`UpperAdaptedGeometryPyramid`，默认qkv rank8，保留全部24视图后再选择Actor DPT输入。CPU加载真实尾部权重，并在小型随机模型中按官方交替函数验证输出/LoRA梯度/跨视图影响；不是完整24视图数值复原、真实传感器反传或GPU测量。首次位置连续性错误按官方clone修复后检查通过，证据和简单组件图见[上层适配报告](WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md)。
+
+联合Q-v2 r1仍按bfc181b4原配置运行，00:26 UTC第11轮正常；该作业没有调用新上层接口。先收口r1−r2，再选择下一机制与登记正式配置；DPT/Query仍保持可训练主线，新增LoRA不是既定成功结论。正式接入时把LoRA加入优化器和checkpoint，逐步重算适配输出，首次真实步骤就地确认全窗口梯度/资源；不减少视图、不重复小型测试、不把更多loss同时混入。关联F01/F02/F03/F06/F09，failure_ledger_delta=none；20新日志质量未读，持续30分钟跟进，完成不关机。

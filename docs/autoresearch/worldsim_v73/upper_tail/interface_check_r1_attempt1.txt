@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/root/autodl-tmp/motion_proj/scripts/check_worldsim_v73_upper_tail_path.py", line 27, in <module>
+    x,gi,global_=Aggregator._process_global_attention(reference,x,1,3,11,32,gi,position)
+  File "/root/autodl-tmp/external/worldsim_v72/vggt/vggt/models/aggregator.py", line 299, in _process_global_attention
+    pos = pos.view(B, S, P, 2).view(B, S * P, 2)
+RuntimeError: view size is not compatible with input tensor's size and stride (at least one dimension spans across two contiguous subspaces). Use .reshape(...) instead.
