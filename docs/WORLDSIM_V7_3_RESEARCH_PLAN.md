@@ -500,3 +500,10 @@ joint r1收口已提交3ac15ca2并push，当前联合通路无明确增量，按
 failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；failure_ledger_delta=none at registration，现有风险保持，下一V73-F10。三本台账、计划与实现同步。
 
 ---
+
+
+### 18.5 固定诊断完成后的参数化选择
+
+固定网格诊断支持优先构造正确沿束支持，也修正了局部塌缩的归因：joint early26.9437%中仅1.4956个百分点有后方正确支持，其余25.4481个百分点没有；LiDAR r2该项为6.5867个百分点。joint 67非空网格未检出非邻接三角自交，局部形变温和；LiDAR r2有48/67检出相交且有局部高拉伸。因此不能把joint较差简单归因于collapse/stretch或自交。两支都未同时兑现物理与覆盖，闭合拓扑是否为原因仍需要改变参数化来检验。
+
+原两项固定诊断done，code61016ca5，证据与实施选择见Q-v2报告文末。进入开放局部结构化chart实现（pending），重分配局部支持并保持原几何/finite-beam监督；随后独立加入constructive ray支持，不以新上层/新基座/大loss矩阵混淆归因。旧局部高度图不是新发明，不能把弱化闭合先验预先当成功。failure_ledger_delta=update V73-F02 evidence; no new failure ID；20新日志未读，30分钟ACTIVE、完成不关机。

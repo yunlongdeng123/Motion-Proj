@@ -1,5 +1,7 @@
 # Q-v2：观测查询驱动共享顶点表面
 
+**最新诊断（2026-09-09 04:55 UTC）：** 固定网格诊断支持优先构造正确沿束支持，也修正了局部塌缩的归因：joint early26.9437%中仅1.4956个百分点有后方正确支持，其余25.4481个百分点没有；LiDAR r2该项为6.5867个百分点。joint 67非空网格未检出非邻接三角自交，局部形变温和；LiDAR r2有48/67检出相交且有局部高拉伸。因此不能把joint较差简单归因于collapse/stretch或自交。两支都未同时兑现物理与覆盖，闭合拓扑是否为原因仍需要改变参数化来检验。 下一项为开放局部曲面支持的实现，详见文末。
+
 **当前结论（2026-09-09 04:40 UTC）：** Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。 完整表格见文末；下方带日期的等待/运行状态仅为历史。
 
 **最新用户决策（2026-09-09 01:47 UTC）：先等Q-v2完整结果。** r1正在第17/30轮；结果前不启动或继续扩展upper LoRA等新候选。joint明确帮助时研究open/structured surface、constructive ray-support与独立upper PEFT；几乎无帮助时优先表面表示与constructive ray supervision，停止向DINOv3/full FT投入。near-boundary free后置；闭合/UNKNOWN与局部collapse/stretch仍是待判别风险。依据与不确定性处理见[计划revision7第18节](WORLDSIM_V7_3_RESEARCH_PLAN.md)，下方准备代码和历史结果不覆盖该决定。
@@ -262,3 +264,50 @@ FIT完整414对象的hit/early/miss/free/distance/recall=.343530/.256705/.203256
 先核对[PyTorch3D官方变形示例](https://pytorch3d.org/tutorials/deform_source_mesh_to_target_mesh)和[Open3D0.19源码](https://raw.githubusercontent.com/isl-org/Open3D/v0.19.0/cpp/open3d/geometry/TriangleMesh.cpp)：Chamfer拟合本身不保证平滑；显式三角相交判定和局部变形量可在不重新训练下读取。前者完整目标采样与边长缩短正则不直接移植到稀疏观测，诊断也不是新增质量门槛。[AtlasNet，CVPR2018](https://imagine.enpc.fr/~groueixt/atlasnet/)提供多参数曲面片的参考；这里尚未选择或实现新的参数化，不能宣称已复现或具有本任务收益。
 
 failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10；F03/F04/F05/F06/F09未解除。结果、训练统计和两图位于`autoresearch/worldsim_v73/qv2/shared_mesh_joint_r1_*`及`V73_QV2_joint_r1_*`，原始checkpoint/逐步日志/表面保留原run。三本台账、计划与AGENTS同步，30分钟ACTIVE、完成不关机。
+
+## 固定网格与joint沿束支持诊断收口（2026-09-09 04:55 UTC）
+
+固定网格诊断支持优先构造正确沿束支持，也修正了局部塌缩的归因：joint early26.9437%中仅1.4956个百分点有后方正确支持，其余25.4481个百分点没有；LiDAR r2该项为6.5867个百分点。joint 67非空网格未检出非邻接三角自交，局部形变温和；LiDAR r2有48/67检出相交且有局部高拉伸。因此不能把joint较差简单归因于collapse/stretch或自交。两支都未同时兑现物理与覆盖，闭合拓扑是否为原因仍需要改变参数化来检验。
+
+task/run：`WS-V73-M2-SURFACE-SUPPORT-01/20260909T045000Z__qv2-joint-r1-support-r4`与`WS-V73-Q-V2-MESH-DIAGNOSTIC-01/20260909T045000Z__fixed-dev-mesh-deformation-r1`，code61016ca5。两项done，CPU耗时.367797s/.628716GiB RSS和3.196148s/1.008175GiB RSS。仅读保存网格，0优化/0神经推理；原75 DEV/5日志、11886条owned heldout束、23无owned/8空保留，r2 support-r3直接复用。
+
+| 沿束支持类别 | joint r1 (%) | LiDAR r2 (%) |
+|---|---:|---:|
+| first_hit | 28.458401 | 30.548905 |
+| early_with_later_hit | 1.495569 | 6.586693 |
+| early_without_hit_but_near | 11.636394 | 8.210222 |
+| early_without_hit_or_near | 13.811725 | 4.693173 |
+| late_but_near | 6.478596 | 15.429253 |
+| late_without_near | 7.901459 | 8.992928 |
+| missing_but_near | 11.408593 | 4.049818 |
+| missing_without_near | 18.809263 | 21.489009 |
+
+joint共2131条raw early，其中仅133条后方有正确支持、1998条无正确支持；这不是日志等权分母。near目标不等于与该束相交；例如joint missing-but-near11.4086%，支持接近测量但仍缺字面首交点。后方正确支持只是诊断，不替代真实first，不据此过滤面或修改推理。
+
+| 局部形变量 | joint r1 | LiDAR r2 |
+|---|---:|---:|
+| smin_p05 | 0.915794 | 0.437277 |
+| smax_p95 | 1.257043 | 2.308692 |
+| anisotropy_p95 | 1.310224 | 4.070739 |
+| edge_ratio_p05 | 0.981374 | 0.741590 |
+| edge_ratio_p95 | 1.183438 | 1.815729 |
+| smin_below_01_fraction | 0.000000 | 0.003962 |
+| smax_above_3_fraction | 0.000000 | 0.033473 |
+| total_area_ratio | 1.104821 | 1.182624 |
+| intersected_face_fraction | 0.000000 | 0.062230 |
+
+分位数先按单Actor面/边统计，再在日志内平均、日志等权；不是把所有面合并后的分位数。fraction行用0–1。67非空对象之外8个空输出记形变不可用、物理missing保留。解析模板通过原checkpoint的template_vertices乘只读尺寸/2得到，不是GT、也不是网络initial输出；3×2局部映射奇异值对整体刚体旋转不变。joint这些指标没有显示严重局部压缩/拉伸，但不测量整体错误平移或表面是否贴合真实车辆。LiDAR的smin<.1占.3962%、smax>3占3.3473%，仅为描述性量，不设训练门控。
+
+Open3D0.19的get_self_intersecting_triangles检出joint0/67、LiDAR48/67有非邻接相交；它跳过共享任意顶点的配对，不能证明无相邻折叠或没有其他问题。LiDAR涉及相交的面比例日志等权6.2230%。这些结果不能建立相交与某条early的因果关系；不重跑大规模归因来拖延参数化实验。
+
+![固定网格诊断](autoresearch/worldsim_v73/qv2/V73_QV2_FIXED_DIAGNOSTICS.png)
+
+### 下一候选的实现方向
+
+先实施**开放局部结构化曲面支持**，保留现有Actor内空间交互、可训练DPT接口和统一显式三角面读出。首选把大量窄小逐点片重新组织为有限数量、具有更大局部覆盖的共享顶点chart，依build/native观测初始化查询并允许规范坐标更新；chart内使用局部UV高度图限制切向折叠，不强行连接UNKNOWN区域为全局闭合外壳。旧3×3小片本来已有局部高度图结构，因此“高度图”本身不是新增贡献；实际待检验的是支持分配/尺度与避免全局闭合连接。chart间仍可能重叠/错位，固定局部尺度也可能产生错误宽面，必须接受原硬物理评价。
+
+[AtlasNet官方模型](https://raw.githubusercontent.com/ThibaultGROUEIX/AtlasNet/master/model/atlasnet.py)按多个参数化模板映射并合并网格，提供开放局部曲面的实现参考；其ShapeNet完整形状与训练随机采样/评估规则网格不直接迁移。这里训练、导出和硬评价使用同一固定UV三角化，不新增PyMesh依赖或改变评价表面。候选仍pending，当前没有其训练结果。
+
+constructive ray监督作为随后可单独判别的因素：对真实owned首返回，研究以射线方向分解横向支持距离与沿束距离的几何吸引，使尚未相交的面也接收位置梯度；不把目标后的空间判free、不把概率opacity当物理表面。[SoftRas，ICCV2019](https://openaccess.thecvf.com/content_ICCV_2019/html/Liu_Soft_Rasterizer_A_Differentiable_Renderer_for_Image-Based_3D_Reasoning_ICCV_2019_paper.html)说明屏幕空间软距离能把梯度传给未覆盖像素的三角面；我们只借鉴投影距离对缺交点仍可导的思想，不迁移其全三角概率融合为真实首事件。[DRC，CVPR2017作者页](https://shubhtuls.github.io/drc/)证明多视图depth/ray consistency已有先例，不能把沿束监督本身当新颖性。精确loss与运行预算在实现时登记；先保持表面参数化和新增监督的归因分开，不同时解冻上层、换基座或扫loss网格。
+
+failure_ledger_delta=update V73-F02 evidence; no new failure ID。F02补充joint缺正确沿束支持、LiDAR局部变形/自交与joint未见严重局部问题的差异；F03/F04等未解除。原始逐面数组在mesh diagnostic run的各模型npz，summary/manifest归档`qv2/support_r4/`与`qv2/mesh_diagnostic_r1/`。20新日志未读、30分钟ACTIVE、完成不关机。

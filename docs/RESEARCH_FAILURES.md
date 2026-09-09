@@ -1,3 +1,15 @@
+## Q-v2诊断收口，进入开放局部曲面候选（2026-09-09 04:55 UTC）
+
+固定网格诊断支持优先构造正确沿束支持，也修正了局部塌缩的归因：joint early26.9437%中仅1.4956个百分点有后方正确支持，其余25.4481个百分点没有；LiDAR r2该项为6.5867个百分点。joint 67非空网格未检出非邻接三角自交，局部形变温和；LiDAR r2有48/67检出相交且有局部高拉伸。因此不能把joint较差简单归因于collapse/stretch或自交。两支都未同时兑现物理与覆盖，闭合拓扑是否为原因仍需要改变参数化来检验。
+
+两项固定诊断done，code61016ca5：support-r4仅joint，.367797s/RSS.628716GiB；mesh-deformation-r1比较r1/r2，3.196148s/RSS1.008175GiB。75原DEV、5日志、8空保留，仅读已保存表面，r2 support-r3复用。完整八类支持/局部形变量及边界见Q-v2报告文末和`docs/autoresearch/worldsim_v73/qv2/{support_r4,mesh_diagnostic_r1}/`。joint局部形变温和不能说明整体位置正确；Open3D检测跳过相邻面，0检出不是无折叠保证。
+
+下一项进入开放局部结构化chart实现（pending）：重分配更大局部支持、保留空间交互/可训练DPT接口/同一显式三角面，避免固定闭合外壳；chart内局部高度图不是新增发明（旧小片已有），chart间重叠/错位仍须评价。随后单独检验射线方向分解的constructive支持吸引，不用未知FREE或opacity。已核对AtlasNet官方实现、SoftRas论文与DRC作者页，迁移边界见报告；不再追加无尽诊断，upper PEFT/DINOv3/full FT不启动，near-boundary free后置。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。三本台账、计划与报告同步；20新日志未读，30分钟ACTIVE、完成不关机。
+
+---
+
 ## Q-v2固定表面诊断登记（2026-09-09 04:50 UTC）
 
 joint r1收口已提交3ac15ca2并push，当前联合通路无明确增量，按策略二优先表面/constructive ray监督。登记两项顺序CPU诊断，状态pending：`WS-V73-M2-SURFACE-SUPPORT-01/20260909T045000Z__qv2-joint-r1-support-r4`仅对r1做原八类沿束支持分解，LiDAR r2既有support-r3直接复用；`WS-V73-Q-V2-MESH-DIAGNOSTIC-01/20260909T045000Z__fixed-dev-mesh-deformation-r1`读取r1/r2原75 DEV固定网格与原checkpoint模板，统计局部形变和非邻接三角相交。入口`scripts/run_worldsim_v73_qv2_fixed_diagnostics_r1.sh`；代码与本登记同提交后执行，无神经推理/优化/新数据。
@@ -1717,6 +1729,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 观察：目前单卡 RTX3090 24GB；cgroup 内存90GiB、CPU14核，旧文首宿主755GB不能当训练预算。尚未有 V7.3 OOM。来源/迁移：VGGT 官方多层 DPT 与分块、Deformable DETR 稀疏采样；禁止全图 dense query attention，kNN 建图另报成本。最小辨别：真实 DPT 更新的峰值与耗时，再测必要 LoRA；证据=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 13.1，base=`63626e8d`。不因3090存在就提前认定失败或退回路线A。
 
 ### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
+
+- 固定网格诊断（2026-09-09 04:55 UTC，code61016ca5）：joint early26.9437%仅1.4956pp有后方正确支持；joint67非空网格0个检出非邻接自交，LiDAR48/67检出。joint局部形变温和，不能将其负结果直接归因collapse/stretch；LiDAR确有局部强变形风险，两者因果未定。下一步开放局部支持分配与独立constructive监督，证据qv2/support_r4及mesh_diagnostic_r1。F02保持active，无新失败ID。
 
 - Q-v2联合r1收口（2026-09-09 04:40 UTC）：同网格r1−r2 early+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp，其余五项均值较差但区间跨0；相对R12减少miss却增加early/free并降低recall。当前联合路径未显示明确有效增量，不能推导所有视觉无用或闭合拓扑为唯一原因。按用户策略二优先表面表示/constructive ray监督，局部collapse/stretch待固定网格统计。30轮11130更新、完整489最终评价done；证据qv2/shared_mesh_joint_r1_*及Q-v2报告，code bfc181b4。F02保持active，无新失败ID。
 

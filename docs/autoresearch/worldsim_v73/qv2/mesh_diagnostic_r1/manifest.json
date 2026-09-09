@@ -1,0 +1,28 @@
+{
+  "task_id": "WS-V73-Q-V2-MESH-DIAGNOSTIC-01",
+  "run_id": "20260909T045000Z__fixed-dev-mesh-deformation-r1",
+  "code_commit": "61016ca51d9500dd865f9a6f0e4deca4e4a8d976",
+  "config": {
+    "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2",
+    "models": {
+      "mesh_joint_r1": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260908T221500Z__shared-mesh-full-track-beam-s7304-r1",
+      "mesh_lidar_r2": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260908T230000Z__shared-mesh-lidar-full-track-beam-s7304-r2"
+    }
+  },
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04"
+  ],
+  "scope": "all 75 original development Actors; saved final meshes only; no optimization or neural inference",
+  "reference": "original checkpoint template_vertices multiplied by read-only Actor size/2; neither GT nor initial neural output",
+  "statistics": "face/edge quantiles per nonempty Actor, then mean Actors per log and mean logs; eight empty predictions retained as unavailable for distortion, not zero distortion",
+  "interpretation": "descriptive distortion bins are not quality gates; 3x2 singular values invariant under rigid rotations; anisotropy denominator numerical floor 1e-12",
+  "intersection": "Open3D0.19 get_self_intersecting_triangles skips pairs sharing ANY vertex; does not certify absence of adjacent folding or causal physics attribution",
+  "sources": [
+    "https://raw.githubusercontent.com/isl-org/Open3D/v0.19.0/cpp/open3d/geometry/TriangleMesh.cpp",
+    "https://pytorch3d.org/tutorials/deform_source_mesh_to_target_mesh"
+  ],
+  "failure_ledger_delta": "update V73-F02 evidence; no new failure ID; joint mostly lacks correct along-ray support and has mild local deformation, while LiDAR has nonadjacent triangle intersections in 48 of 67 nonempty meshes; do not attribute joint failure to local collapse",
+  "result_report": "docs/WORLDSIM_V7_3_QV2_SHARED_MESH.md"
+}

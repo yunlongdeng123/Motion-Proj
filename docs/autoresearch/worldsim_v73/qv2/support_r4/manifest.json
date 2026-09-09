@@ -1,0 +1,24 @@
+{
+  "task": "WS-V73-M2-SURFACE-SUPPORT-01",
+  "code_commit": "61016ca51d9500dd865f9a6f0e4deca4e4a8d976",
+  "actor_data": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2",
+  "models": {
+    "mesh_joint_r1": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-Q-V2-01/20260908T221500Z__shared-mesh-full-track-beam-s7304-r1"
+  },
+  "scope": "all 75 original development Actors; only original owned heldout first returns",
+  "optimizer_updates": 0,
+  "neural_inference": false,
+  "tolerance_m": 0.2,
+  "depth_coalescing_m": 0.0001,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04"
+  ],
+  "readout": "existing CPU SurfaceBVH cast_rays plus list_intersections and unsigned compute_distance",
+  "statistics": "pool heldout frames within Actor; normalize each Actor by its owned rays, then mean Actors within log and mean logs; not a replacement for canonical main metrics",
+  "boundary": "no mesh edits, query deletion, new opacity, occupancy signs or target-based inference; later good intersection is diagnostic evidence, never substituted for the first return; coincident hits are not exact topology counts",
+  "source": "https://www.open3d.org/docs/release/python_api/open3d.t.geometry.RaycastingScene.html",
+  "failure_ledger_delta": "update V73-F02 evidence; no new failure ID; joint mostly lacks correct along-ray support and has mild local deformation, while LiDAR has nonadjacent triangle intersections in 48 of 67 nonempty meshes; do not attribute joint failure to local collapse",
+  "result_report": "docs/WORLDSIM_V7_3_QV2_SHARED_MESH.md"
+}

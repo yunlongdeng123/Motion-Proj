@@ -1,3 +1,15 @@
+## Q-v2诊断收口，进入开放局部曲面候选（2026-09-09 04:55 UTC）
+
+固定网格诊断支持优先构造正确沿束支持，也修正了局部塌缩的归因：joint early26.9437%中仅1.4956个百分点有后方正确支持，其余25.4481个百分点没有；LiDAR r2该项为6.5867个百分点。joint 67非空网格未检出非邻接三角自交，局部形变温和；LiDAR r2有48/67检出相交且有局部高拉伸。因此不能把joint较差简单归因于collapse/stretch或自交。两支都未同时兑现物理与覆盖，闭合拓扑是否为原因仍需要改变参数化来检验。
+
+两项固定诊断done，code61016ca5：support-r4仅joint，.367797s/RSS.628716GiB；mesh-deformation-r1比较r1/r2，3.196148s/RSS1.008175GiB。75原DEV、5日志、8空保留，仅读已保存表面，r2 support-r3复用。完整八类支持/局部形变量及边界见Q-v2报告文末和`docs/autoresearch/worldsim_v73/qv2/{support_r4,mesh_diagnostic_r1}/`。joint局部形变温和不能说明整体位置正确；Open3D检测跳过相邻面，0检出不是无折叠保证。
+
+下一项进入开放局部结构化chart实现（pending）：重分配更大局部支持、保留空间交互/可训练DPT接口/同一显式三角面，避免固定闭合外壳；chart内局部高度图不是新增发明（旧小片已有），chart间重叠/错位仍须评价。随后单独检验射线方向分解的constructive支持吸引，不用未知FREE或opacity。已核对AtlasNet官方实现、SoftRas论文与DRC作者页，迁移边界见报告；不再追加无尽诊断，upper PEFT/DINOv3/full FT不启动，near-boundary free后置。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。三本台账、计划与报告同步；20新日志未读，30分钟ACTIVE、完成不关机。
+
+---
+
 ## Q-v2固定表面诊断登记（2026-09-09 04:50 UTC）
 
 joint r1收口已提交3ac15ca2并push，当前联合通路无明确增量，按策略二优先表面/constructive ray监督。登记两项顺序CPU诊断，状态pending：`WS-V73-M2-SURFACE-SUPPORT-01/20260909T045000Z__qv2-joint-r1-support-r4`仅对r1做原八类沿束支持分解，LiDAR r2既有support-r3直接复用；`WS-V73-Q-V2-MESH-DIAGNOSTIC-01/20260909T045000Z__fixed-dev-mesh-deformation-r1`读取r1/r2原75 DEV固定网格与原checkpoint模板，统计局部形变和非邻接三角相交。入口`scripts/run_worldsim_v73_qv2_fixed_diagnostics_r1.sh`；代码与本登记同提交后执行，无神经推理/优化/新数据。
