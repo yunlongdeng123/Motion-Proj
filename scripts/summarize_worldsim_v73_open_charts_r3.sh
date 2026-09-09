@@ -17,7 +17,7 @@ archive=docs/autoresearch/worldsim_v73/open_charts
   --output "$archive/V73_OPEN_CHARTS_lidar_r3_TRAINING" --model-label 'Open charts LiDAR r3'
 "$python_bin" scripts/plot_worldsim_v73_joint_r10_pairs.py --analysis "$run/analysis.json" \
   --output "$archive/V73_OPEN_CHARTS_lidar_r3_PAIRS" --model-label 'Open charts LiDAR r3' \
-  --reference 'mesh_lidar_r2=Q-v2 closed mesh LiDAR r2' --reference 'lidar_r8=R8 narrow LiDAR patches' \
+  --reference 'mesh_lidar_r2=Closed r2' --reference 'lidar_r8=Narrow R8' \
   --protocol-note 'Same LiDAR data and beam objective; support allocation, local shape, initialization and face budget change together.'
 cp "$run/summary.json" "$archive/open_charts_lidar_r3_summary.json"
 cp "$run/manifest.json" "$archive/open_charts_lidar_r3_final_manifest.json"

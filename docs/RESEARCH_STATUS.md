@@ -1,3 +1,15 @@
+## 开放chart r3收口：支持仍未兑现物理收益（2026-09-09 06:29 UTC）
+
+相对闭合LiDAR r2，开放chart r3六项区间均跨0，没有建立优势或等效。相对旧窄片R8，miss−28.4589pp（区间[−40.4369,−16.4809]pp），free+.130846m（[+.003899,+.294775]m）；hit+.0734pp、early+10.6289pp、单向distance−.050126m、recall−2.3699pp均跨0。开放支持仍未同时改善覆盖和物理，不能将此前冲突唯一归因闭合，也不能宣称所有开放表示失败。
+
+WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3，训练code72607d0c，30轮11130实际更新/0跳步/0恢复、完整489初始/最终评价done。DEV75/5日志含23无owned/8空；hit/early/miss/free/distance/recall=.310762/.162199/.283747/.165166/.179427/.695753。r3−r2 hit+.5273pp、early−3.2702pp、miss+2.8359pp、free+.024642m、distance+.017062m、recall+4.7504pp，全部区间跨0。1752.516051s、GPU.210188GiB、RSS1.940502GiB、checkpoint12048622字节。参数1706413，未调用视觉模块无梯度，无DPT/图像前缀，不冒充联合结果。
+
+下一步保持r3表示，按已查[SoftRas官方实现](https://raw.githubusercontent.com/ShichenLiu/SoftRas/master/soft_renderer/functional/soft_rasterize.py)的距离梯度与[DRC作者页](https://shubhtuls.github.io/drc/)的射线一致性思路，独立实现射线条件最近面吸引，做一次未命中梯度检查后登记r4。现有coverage已有真实吸引；新候选检验方向信息，不能写成first-hit保证或新物理概率模型，不导入opacity、未知FREE、正占据厚度或删面。upper/DINOv3/full FT与near-boundary free后置；20新日志质量未读，30分钟ACTIVE、完成不关机。
+
+证据WORLDSIM_V7_3_OPEN_CHARTS.md与autoresearch/worldsim_v73/open_charts/open_charts_lidar_r3_*；failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。三本台账/计划/报告同步push。
+
+---
+
 ## 开放曲面r3正式训练进行中（2026-09-09 05:42 UTC）
 
 `WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3`已从72607d0c启动，PID118560。05:42:05 UTC快照：完整489对象initial评价done，进入第2/30轮，596次实际更新/596呈现，0跳步；GPU allocated峰值0.210188GiB，运行RSS约1.90GiB，盘余67GiB。状态正常，保持原配置，不把采样训练loss或初始评价当最终收益。检查脚本的一次优化不计入r3，正式作业fresh开始。
