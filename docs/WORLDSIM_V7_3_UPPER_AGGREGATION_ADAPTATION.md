@@ -1,6 +1,6 @@
 # V7.3：上层跨视图适配的接口与资源边界
 
-2026-09-09 00:40 UTC。已实现独立的上层LoRA与冻结前缀→DPT接口，并完成一次CPU接口检查；尚未接入正式训练，完整24视图传感器反传与GPU峰值待实测。三角比较已收口，Q-v2共享网格联合r1正在运行，同网格LiDAR r2已完成。两者均未使用本接口；不得把既有结果称为上层适配结果。
+2026-09-09 01:24 UTC。上层LoRA已接入可选训练、checkpoint恢复和固定推理入口；尚未启动正式上层训练，完整24视图传感器反传与GPU峰值待实测。此前CPU交替/梯度检查和本轮保存恢复/真实前缀构造检查均通过，各自证据边界见下文。三角比较已收口，Q-v2共享网格联合r1正在运行，同网格LiDAR r2已完成。两者均未使用本接口；不得把既有结果称为上层适配结果。
 
 ![上层适配组件接口已实现，CPU检查通过，传感器训练待进行；层号从0开始](autoresearch/worldsim_v73/upper_tail/V73_UPPER_TAIL_INTERFACE.png)
 
@@ -54,10 +54,24 @@
 
 B为零初始化，首步A梯度为零符合该参数化，不代表梯度路径断开。脚本首次遇到位置张量expand后非连续，官方global函数的view无法重排；按照[官方PositionGetter](https://raw.githubusercontent.com/facebookresearch/vggt/main/vggt/layers/rope.py)增加clone修复，随后重跑同一检查通过。首个错误保存在`upper_tail/interface_check_r1_attempt1.txt`，通过结果在`upper_tail/interface_check_r1.jsonl`（均位于`autoresearch/worldsim_v73/`）。这是未进入训练的接口修复，不是科学负结果，也不新增失败ID。
 
-本次没有证明实际24视图的数值复原、DPT/Query的真实传感器loss反传、GPU可承受性或重建收益。`UpperAdaptedGeometryPyramid`已实现但未执行，正式训练入口和优化器尚未接入。首次真实步骤需要把LoRA显式加入优化器，保存适配config与adapter状态，并就地记录实际全窗口梯度和资源；不另外重复小型检查。
+本次没有证明实际24视图的数值复原、DPT/Query的真实传感器loss反传、GPU可承受性或重建收益。上述00:40阶段尚未执行`UpperAdaptedGeometryPyramid`，也未接入训练入口。01:24已完成下节的入口接入与CPU构造；真实传感器前向/反传仍待首次正式运行就地记录，不重复此前小型梯度检查。
+
+## 可选训练与固定推理入口（01:24 UTC）
+
+`scripts/train_worldsim_v73_global_actors.py`新增`--upper-lora`，默认关闭；打开时从原窗口4/11/17缓存重算18–23组，再生成Actor的DPT输入。参数`--upper-rank 8 --upper-alpha 8`与原始`--upper-weights`来源进入config。数据、Query参数化、coverage/free/event、DPT辅助监督、每Actor更新与原学习率不由该选项改变。当前r1仍是bfc181b4启动的既有进程，没有开启或加载新入口。
+
+优化器顺序为DPT、Query、LoRA，后者只加入requires_grad参数；冻结尾部原权重仍参与计算但没有Adam状态。依据[PyTorch 2.4.1优化器源码](https://raw.githubusercontent.com/pytorch/pytorch/v2.4.1/torch/optim/optimizer.py)，参数状态按保存顺序匹配，故resume不能静默换上层适配定义。checkpoint沿用模型/优化器/epoch/RNG和FIT顺序，另外保存`upper_config`和`upper_adapter`；原权重由已记录来源加载，避免重复保存冻结主体。这也遵循[官方LoRA保存与恢复流程](https://raw.githubusercontent.com/microsoft/LoRA/main/README.md)的原权重加适配参数分离方式。
+
+`scripts/evaluate_worldsim_v73_fixed_actors.py`按checkpoint的`upper_lora`定义恢复同一尾部，保持全窗口上下文后再选择Actor视图，整个固定推理无梯度、无更新。旧checkpoint无该字段时仍使用原冻结聚合器路径。这个入口只做了代码接入，未用于20个新日志；后者继续留待方法选择完成。
+
+每步记录`upper_lora`梯度组及`upper_context_views`，与Actor实际选取的`views`区分；summary保存LoRA可训练数、config与零初始化B的最终绝对幅值。`shared_frozen_prefix_views`记录实际图像视图数，不把窗口缓存个数当视图数。当前实现训练和评价均逐Actor重算上层，没有跨步适配缓存；初始/最终评价也会因此变慢。这是尚未测量的执行成本，不宣称相同30轮具有相同墙钟预算。
+
+新增一次检查命令为`python scripts/check_worldsim_v73_upper_checkpoint.py --native-run <原M1r3> --output <仓库外记录路径>`。人为将首frame的LoRA B赋值1e-4后，保存1581418字节适配checkpoint，再加载真实原始尾部与adapter，所有适配参数恢复最大差0；没有优化器更新。原`scene-0015`的24视图只构造CPU前缀，4/11/17均为`[1,24,1301,2048]`，示例Actor选择[0,23]；第二Actor共享CPU前缀和DPT头，旧23层不使用。该脚本4.518705s，峰值RSS3.002346GiB；证据`autoresearch/worldsim_v73/upper_tail/checkpoint_check_r1.json`。
+
+这项检查没有聚合/DPT/Query前向，没有证明Adam恢复或真实训练数值连续性，也不是GPU资源测量。训练/固定推理脚本仅做语法与调用路径审阅，端到端运行待正式实验。已有上层梯度脚本没有重复执行；未新增环境、权重下载或评价run。实现基于3c824f96，与台账同提交，failure_ledger_delta=none。
 
 ## 当前结论
 
 上层有限适配的独立代码与CPU接口证据已具备，不必重算完全冻结的早期部分；还没有证据证明它能改善本任务或单卡能承受完整训练。代码保留全窗口上下文，每次调用重建适配输出，返回后模块清除对上一计算图的引用。按当前每Actor更新方式，完整上层每步都要重算；这项计算代价仍待实测。
 
-Q-v2联合r1在00:26 UTC已完成第11轮，继续原配置；LiDAR r2已显示更多交点未转化为正确首表面，详见Q-v2报告。先收口r1−r2，再选择下一项机制研究；表面参数化、对应一致性、认证free边界和上层适配分别解释，不混入新cohort/event/新基座后只归因于LoRA。关联V73-F01/F02/F03/F06/F09，failure_ledger_delta=none；没有新的正式训练/评价run或环境/权重下载。代码以3eeca1e8为基线新增，检查与本报告同提交；20新日志质量未读，30分钟跟进ACTIVE，完成不关机。
+Q-v2联合r1在01:15 UTC正在第15轮，继续原配置；LiDAR r2已显示更多交点未转化为正确首表面，详见Q-v2报告。先收口r1−r2，再选择下一项机制研究；表面参数化、对应一致性、认证free边界和上层适配分别解释，不混入新cohort/event/新基座后只归因于LoRA。关联V73-F01/F02/F03/F06/F09，failure_ledger_delta=none；没有新的正式训练/评价run或环境/权重下载。基础接口已提交3c824f96，本轮入口与新证据同提交；20新日志质量未读，30分钟跟进ACTIVE，完成不关机。

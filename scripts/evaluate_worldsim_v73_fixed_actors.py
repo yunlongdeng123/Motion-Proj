@@ -65,13 +65,16 @@ def main():
     save('manifest.json',manifest); save('cohort.json',index['cases'])
     save('status.json',{'status':'running','phase':'load'})
     try:
-        state=None; head=None; mode=args.method; config={}
+        state=None; head=None; upper=None; mode=args.method; config={}
         if args.method=='checkpoint':
             state=torch.load(args.checkpoint,map_location='cpu',weights_only=True,mmap=True)
             config=state['config']; mode=config['mode']
         decoder=make_query_decoder(config).cuda().eval()
         if state is not None:
             decoder.load_state_dict(state['query_decoder'])
+            if config.get('upper_lora',False):
+                from motion_proj.worldsim_v73.upper_aggregation import VGGTUpperTail,make_upper_pyramid
+                upper=VGGTUpperTail.from_checkpoint(state).cuda().eval()
         query_surface=config.get('query_surface','patches')
         parameterization=('lidar_pca_patches' if mode=='lidar_pca' else
                           'native_lidar_pca' if mode in ['native_only','native_fusion'] else query_surface)
@@ -79,6 +82,9 @@ def main():
                         mesh_level=config.get('mesh_level',3) if query_surface=='shared_mesh' else None,
                         completion_initialization=config.get('completion_init','native_surface'),
                         surface_patches_boundary='legacy center count; shared_mesh counts vertices, not independent patches')
+        if upper is not None:
+            manifest.update(upper_config=upper.config,
+                upper_boundary='fixed trained upper weights; full-window recomputation from layers 4/11/17 before actor view selection; no optimizer updates')
         visual_only_enabled=args.include_visual_only or bool(config.get('include_visual_only',False))
         manifest['effective_visual_only']=visual_only_enabled
         manifest['checkpoint_visual_only_training']=bool(config.get('include_visual_only',False)) if state is not None else None
@@ -111,8 +117,11 @@ def main():
                 calibration=case['intrinsics'].cuda(); rect=case.get('valid_image_rect_xyxy')
                 depth=None; features=None; has_views=visual and bool(case['view_indices'])
                 if has_views:
-                    pyramid=NativeGeometryPyramid(args.native_run,scenes[entry['scene']],case['view_indices'],head=head,
-                                                   token_device='cpu',prefix_cache=prefix_cache)
+                    if upper is not None:
+                        pyramid=make_upper_pyramid(args.native_run,scenes[entry['scene']],case['view_indices'],head,upper,prefix_cache)
+                    else:
+                        pyramid=NativeGeometryPyramid(args.native_run,scenes[entry['scene']],case['view_indices'],head=head,
+                                                       token_device='cpu',prefix_cache=prefix_cache)
                     if head is None:
                         head=pyramid.head
                         if state is not None: head.load_state_dict(state['depth_head'])
@@ -149,6 +158,7 @@ def main():
                             case['time_offsets_s'].cuda(),use_spatial=mode!='pointwise',use_visual=features is not None,
                             completion_seeds=seeds,camera_weights=case.get('camera_embedding_weights'),valid_image_rect=rect)
                 support['has_actor_camera_pose']=has_views
+                if upper is not None: support['upper_context_views']=len(pyramid.prefix.images) if has_views else 0
                 support['input_path']='visual_only' if visual_only else 'existing_multimodal_or_lidar'
                 if has_views: del pyramid
                 del features,depth
@@ -170,6 +180,7 @@ def main():
                 'wall_s':time.monotonic()-started,'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30,
                 'peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/2**20,
                 'fit_label_times':'evaluation_only','boundary':'fixed shared weights; input roles preserved; no new-source adaptation or target-supported initialization'}
+        if upper is not None: result['upper_config']=upper.config
         save('summary.json',result); save('status.json',{'status':'done'})
         print(json.dumps({k:v for k,v in result.items() if k!='final'}),flush=True)
     except Exception as exc:

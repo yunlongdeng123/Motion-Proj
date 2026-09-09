@@ -445,3 +445,10 @@ r2 done：共享网格相对R8 miss−31.295pp，但early+13.899pp/free+.106203m
 第17.4的18–23组缓存边界已实现为独立`VGGTUpperTail`及`UpperAdaptedGeometryPyramid`，默认qkv rank8，保留全部24视图后再选择Actor DPT输入。CPU加载真实尾部权重，并在小型随机模型中按官方交替函数验证输出/LoRA梯度/跨视图影响；不是完整24视图数值复原、真实传感器反传或GPU测量。首次位置连续性错误按官方clone修复后检查通过，证据和简单组件图见[上层适配报告](WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md)。
 
 联合Q-v2 r1仍按bfc181b4原配置运行，00:26 UTC第11轮正常；该作业没有调用新上层接口。先收口r1−r2，再选择下一机制与登记正式配置；DPT/Query仍保持可训练主线，新增LoRA不是既定成功结论。正式接入时把LoRA加入优化器和checkpoint，逐步重算适配输出，首次真实步骤就地确认全窗口梯度/资源；不减少视图、不重复小型测试、不把更多loss同时混入。关联F01/F02/F03/F06/F09，failure_ledger_delta=none；20新日志质量未读，持续30分钟跟进，完成不关机。
+
+
+### 17.10 上层适配的训练与恢复入口（2026-09-09 01:24 UTC）
+
+在3c824f96接口之上接入默认关闭的upper LoRA选项、优化器参数、adapter/config保存和同定义resume；固定推理同步恢复原始尾部与适配参数。完整窗口重算、原Actor更新频率和监督不变，记录上层实际context视图与梯度组；不把优化器状态按错误参数顺序恢复，也不使用旧23层冒充适配。一次CPU真实权重保存恢复及24视图前缀构造检查通过，未运行传感器前向/反传或正式实验，见[上层适配报告](WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md)。
+
+Q-v2 r1在01:15 UTC第15轮正常，仍按原bfc181b4配置运行；上层实验run/config选择仍待r1−r2结果。首次实际训练就地测量全窗口梯度与资源，不靠重复小型检查宣称可训练或单卡可承受。20新日志质量未读；F01/F02/F03/F06/F09保持，failure_ledger_delta=none。30分钟ACTIVE、完成不关机。

@@ -29,6 +29,10 @@ def main():
     parser.add_argument('--mode',choices=['joint','pointwise','lidar_only','native_only'],default='joint')
     parser.add_argument('--query-surface',choices=['patches','shared_mesh'],default='patches')
     parser.add_argument('--mesh-level',type=int,default=3)
+    parser.add_argument('--upper-lora',action='store_true',help='重算完整窗口18–23组qkv LoRA；默认保留旧冻结聚合器路径')
+    parser.add_argument('--upper-rank',type=int,default=8)
+    parser.add_argument('--upper-alpha',type=float,default=8.)
+    parser.add_argument('--upper-weights',type=Path,default=Path('/root/autodl-tmp/models/eas_vggt/vggt/model.safetensors'))
     parser.add_argument('--completion-init',choices=['native_surface','lidar_surface'],default='native_surface')
     parser.add_argument('--free-weight',type=float,default=.5)
     parser.add_argument('--free-mode',choices=['range','beam_tube','beam_tube_range'],default='range')
@@ -48,6 +52,10 @@ def main():
     parser.add_argument('--include-visual-only',action='store_true',
                         help='单独输入cohort实验：纳入零build LiDAR但有相机位姿的Actor；旧对照默认关闭')
     args=parser.parse_args()
+    if args.upper_lora and args.mode=='lidar_only':
+        parser.error('upper LoRA需要实际视觉几何通路，不能用于lidar_only')
+    if args.upper_lora and args.initial_results:
+        parser.error('上层适配应评价其实际初始化，不能复用旧最终token的initial')
     if args.query_surface=='shared_mesh' and (args.mode=='native_only' or args.initial_results):
         raise ValueError('共享网格须训练Query并重新评价自身初始化；不能复用旧patch initial')
     if args.include_visual_only and args.initial_results:
@@ -65,8 +73,12 @@ def main():
     save('manifest.json',{'task_id':task,'run_id':args.run_id,'seed':7304,
         'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
-        'shared_parameters':'native DPT and query decoder across fit logs; no development gradient or optimizer update',
-        'frozen_prefix':'none used by lidar_only' if args.mode=='lidar_only' else 'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted',
+        'shared_parameters':('native DPT, query decoder and upper qkv LoRA across fit logs; no development gradient or optimizer update' if args.upper_lora else
+                             'native DPT and query decoder across fit logs; no development gradient or optimizer update'),
+        'frozen_prefix':('none used by lidar_only' if args.mode=='lidar_only' else
+            'CPU layers 4/11/17; full-window 18-23 recomputed before actor view selection' if args.upper_lora else
+            'aggregator 24-view joint tokens, stored CPU; upper aggregation not adapted'),
+        'upper_adaptation':('qkv LoRA groups 18-23; shared across FIT logs, never development updates; one full-window forward per actor optimizer step' if args.upper_lora else 'none'),
         'native_data_boundary':'current build Actor LiDAR at calibrated camera pixels, independent of predicted in-box support; no frozen-depth target',
         'surface_supervision_times':label_times,
         'query_surface':args.query_surface,
@@ -93,6 +105,14 @@ def main():
         scenes={s['scene_id']:s for s in torch.load(args.native_run/'build_observations.pt',weights_only=False,map_location='cpu',mmap=True)}
         scales=json.loads((args.native_run/'metric_scales.json').read_text())
         pyramids={}; head=None; prefix_cache={}
+        upper=None
+        if args.upper_lora:
+            from motion_proj.worldsim_v73.upper_aggregation import VGGTUpperTail,make_upper_pyramid
+            upper=VGGTUpperTail(args.upper_weights,rank=args.upper_rank,alpha=args.upper_alpha).cuda()
+            save('upper_adaptation.json',{'config':upper.config,
+                'trainable_parameters':sum(p.numel() for p in upper.parameters() if p.requires_grad),
+                'frozen_parameters':sum(p.numel() for p in upper.parameters() if not p.requires_grad),
+                'input_boundary':'whole window in original order before actor DPT view selection; no cross-step adapted cache'})
         if args.mode!='lidar_only':
             for case in cases:
                 if not case['view_indices']:
@@ -100,8 +120,11 @@ def main():
                     continue
                 owner=case['metadata']['owner']; scene=scenes[case['metadata']['scene']]
                 key=(scene['scene_id'],owner)
-                pyramid=NativeGeometryPyramid(args.native_run,scene,case['view_indices'],head=head,
-                    token_device='cpu',prefix_cache=prefix_cache)
+                if upper is not None:
+                    pyramid=make_upper_pyramid(args.native_run,scene,case['view_indices'],head,upper,prefix_cache)
+                else:
+                    pyramid=NativeGeometryPyramid(args.native_run,scene,case['view_indices'],head=head,
+                        token_device='cpu',prefix_cache=prefix_cache)
                 head=pyramid.head; pyramids[key]=pyramid
                 observations=[]
                 for i in case['view_indices']:
@@ -110,6 +133,7 @@ def main():
                     observations.append({'uv':view['uv'][owned],'z_m':view['z_m'][owned]})
                 case['native_observations']=observations
         del scenes
+        prefix_views=(sum(len(prefix.images) for prefix in prefix_cache.values()) if upper is not None else len(prefix_cache))
         torch.manual_seed(7304)
         if args.query_surface=='shared_mesh':
             from motion_proj.worldsim_v73.shared_mesh_queries import ActorSharedMeshQueryDecoder
@@ -129,6 +153,7 @@ def main():
                                                  sigma_m=args.event_sigma_m,cap=args.event_cap)
         parameters=[*(head.parameters() if head is not None else []),
                     *(decoder.parameters() if args.mode!='native_only' else [])]
+        if upper is not None: parameters.extend(p for p in upper.parameters() if p.requires_grad)
         optimizer=torch.optim.AdamW(parameters,lr=1e-5)
         resumed=None; start_epoch=0
         if args.resume_from:
@@ -137,6 +162,12 @@ def main():
                 raise ValueError('不能通过resume静默改变输入cohort；visual-only实验应从原M1初始化')
             if resumed['config'].get('query_surface','patches')!=args.query_surface:
                 raise ValueError('不能把旧patch checkpoint作为共享网格的resume')
+            if bool(resumed['config'].get('upper_lora',False))!=args.upper_lora:
+                raise ValueError('resume不能改变上层适配通路，应另行登记新实验')
+            if upper is not None:
+                if any(resumed['upper_config'][key]!=upper.config[key] for key in ['rank','alpha','targets','weights_file']):
+                    raise ValueError('resume必须保留LoRA定义与原始权重来源')
+                upper.load_adapter_state_dict(resumed['upper_adapter'])
             if head is not None: head.load_state_dict(resumed['depth_head'])
             decoder.load_state_dict(resumed['query_decoder'])
             optimizer.load_state_dict(resumed['optimizer'])
@@ -262,7 +293,7 @@ def main():
             return rows
 
         save('status.json',{'status':'running','phase':'initial_evaluation','fit_actors':len(fit),'all_actors':len(cases),
-            'unsupported_input_actors':len(unsupported),'shared_frozen_prefix_views':len(prefix_cache)})
+            'unsupported_input_actors':len(unsupported),'shared_frozen_prefix_views':prefix_views})
         if args.baseline_results:
             baseline=json.loads(args.baseline_results.read_text())
             save('lidar_baseline',baseline)
@@ -341,7 +372,7 @@ def main():
                 has_gradient=bool(has_supervision and loss.requires_grad)
                 if has_gradient: loss.backward()
                 group_gradients={}
-                for name,module in [('native_dpt',head),('query_decoder',decoder)]:
+                for name,module in [('native_dpt',head),('query_decoder',decoder),*([('upper_lora',upper)] if upper is not None else [])]:
                     norms=[p.grad.detach().norm() for p in module.parameters() if p.grad is not None] if module is not None else []
                     group_gradients[name]=torch.stack(norms).norm().item() if norms else 0.
                 grad=torch.nn.utils.clip_grad_norm_(parameters,1.)
@@ -370,6 +401,9 @@ def main():
                     'evidence_context_queries':support['evidence_context_queries'],
                     'query_surface':args.query_surface,'surface_vertices':len(vertices),
                     'peak_gpu_gib':torch.cuda.max_memory_allocated()/2**30}
+                if upper is not None:
+                    key=(case['metadata']['scene'],case['metadata']['owner'])
+                    row['upper_context_views']=len(pyramids[key].prefix.images) if key in pyramids else 0
                 history.append(row)
                 with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
                 save('status.json',{'status':'running','phase':'shared_train','elapsed_s':time.monotonic()-started,**row})
@@ -379,13 +413,15 @@ def main():
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                         'fit_order':[case['metadata']['owner'] for case in fit],
                         'random_states':{'python':random.getstate(),'torch_cpu':torch.get_rng_state(),'torch_cuda':torch.cuda.get_rng_state_all()}}
+            if upper is not None:
+                checkpoint.update(upper_config=upper.config,upper_adapter=upper.adapter_state_dict())
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
         save('status.json',{'status':'running','phase':'final_evaluation','epochs':args.epochs,
             'updates':sum(r['optimizer_step'] for r in history),'actor_presentations':len(history),'elapsed_s':time.monotonic()-started})
         final=evaluate('final')
         result={'status':'done','fit_actors':len(fit),'development_actors':len(cases)-len(fit),
             'cohort_actors':len(index['cases']),'unsupported_input_actors':len(unsupported),
-            'shared_frozen_prefix_views':len(prefix_cache),
+            'shared_frozen_prefix_views':prefix_views,
             'fit_label_times':label_times,
             'epochs':args.epochs,'updates':sum(r['optimizer_step'] for r in history),'actor_presentations':len(history),
             'resumed_completed_presentations':resumed_steps,'new_presentations':len(history)-resumed_steps,
@@ -405,6 +441,10 @@ def main():
             'baseline':baseline,'initial':initial,'final':final,
             'boundary':index.get('selection_boundary','existing log cohort')+'; development no gradient; within-window heldout time, not new-source confirmation',
             'failure_ledger_delta':'pending comparison, risks remain active'}
+        if upper is not None:
+            result['upper_config']=upper.config
+            result['trainable_parameters']['upper_lora']=sum(p.numel() for p in upper.parameters() if p.requires_grad)
+            result['upper_lora_B_max_abs']=max(p.detach().abs().max().item() for name,p in upper.named_parameters() if name.endswith('lora_B'))
         save('summary.json',result); save('status.json',{'status':'done'})
         print(json.dumps({k:v for k,v in result.items() if k not in ['baseline','initial','final']}),flush=True)
     except Exception as exc:

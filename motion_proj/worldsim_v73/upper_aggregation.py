@@ -37,6 +37,7 @@ class VGGTUpperTail(nn.Module):
         from safetensors import safe_open
         self.embed_dim=embed_dim
         self.config={'start_layer':18,'end_layer':23,'rank':rank,'alpha':alpha,
+                     'embed_dim':embed_dim,'num_heads':num_heads,
                      'targets':['qkv','proj'] if adapt_projection else ['qkv'],
                      'weights_file':str(weights_file) if weights_file else None}
         rope=RotaryPositionEmbedding2D(frequency=100)
@@ -90,6 +91,15 @@ class VGGTUpperTail(nn.Module):
             for name,p in self.named_parameters():
                 if p.requires_grad: p.copy_(state[name])
 
+    @classmethod
+    def from_checkpoint(cls,state):
+        config=state['upper_config']
+        model=cls(config['weights_file'],rank=config['rank'],alpha=config['alpha'],
+                  adapt_projection='proj' in config['targets'],
+                  embed_dim=config.get('embed_dim',1024),num_heads=config.get('num_heads',16))
+        model.load_adapter_state_dict(state['upper_adapter'])
+        return model
+
 
 class FrozenUpperPrefix:
     """每窗口创建一次，可跨步复用；只持有完全冻结的4/11/17层CPU输入。"""
@@ -130,9 +140,23 @@ class UpperAdaptedGeometryPyramid(NativeGeometryPyramid):
             # 输出持有所需梯度链；模块自身不保留上一优化步的适配token。
             self.token_inputs=[]
 
-    def depth_only(self):
+    def depth_only(self,output_cache=None):
+        # 与原生接口保持调用兼容，但此实现不接受适配深度的持久缓存。
         self._refresh_inputs()
         try:
             return super().depth_only(output_cache=None)
         finally:
             self.token_inputs=[]
+
+
+def make_upper_pyramid(native_run,scene,view_indices,head,upper_tail,prefix_cache):
+    """训练与固定推理共用构造入口，加载4/11/17而不是旧最终token。"""
+    if head is None:
+        from vggt.heads.dpt_head import DPTHead
+        head=DPTHead(dim_in=2048,output_dim=2,activation='exp',conf_activation='expp1')
+        state=torch.load(Path(native_run)/'latest.pt',map_location='cpu',weights_only=True)
+        head.load_state_dict(state['depth_head'])
+        head.to(next(upper_tail.parameters()).device)
+    key=scene['scene_id']
+    if key not in prefix_cache: prefix_cache[key]=FrozenUpperPrefix(native_run,scene)
+    return UpperAdaptedGeometryPyramid(prefix_cache[key],view_indices,head,upper_tail)

@@ -1,3 +1,13 @@
+## 上层LoRA训练/恢复入口接入，未启动正式实验（2026-09-09 01:24 UTC）
+
+基于3c824f96，训练入口新增默认关闭的`--upper-lora`；开启时把18–23组qkv LoRA加入DPT/Query优化器，逐步重算全窗口后选择Actor输入。checkpoint保存upper_config/upper_adapter并支持相同定义的resume，固定推理按checkpoint恢复同一通路。旧配置走原路径；正在运行的Q-v2 r1仍使用bfc181b4已加载代码与原配置，没有开启上层适配。
+
+一次新CPU保存—恢复/真实前缀构造检查done：人为赋值的LoRA参数精确恢复（最大差0，adapter文件1581418字节），scene-0015完整24视图4/11/17各[1,24,1301,2048]，两个Actor共享前缀/DPT，旧23不读取。脚本4.518705s/RSS3.002346GiB，无optimizer更新、无聚合/传感器前向；这不验证Adam恢复、完整反传或GPU峰值。先核对官方LoRA及PyTorch optimizer保存顺序，证据`docs/autoresearch/worldsim_v73/upper_tail/checkpoint_check_r1.json`，实现/命令/组件图见上层适配报告；此前小型梯度检查未重复。
+
+01:15 UTC，联合r1/PID96997正在第15/30轮，GPU14436/24576MiB、100%利用率，分配峰值11.591165GiB，RSS约34.08GiB，盘余68GiB。继续训练及完整r1−r2收口，再登记独立机制实验；没有新增正式run、没有读20新日志质量。关联V73-F01/F02/F03/F06/F09，failure_ledger_delta=none，下一V73-F10；30分钟跟进ACTIVE、完成不关机。代码、报告和三本台账同提交并push。
+
+---
+
 ## 上层LoRA独立接口落地，真实训练待进行（2026-09-09 00:40 UTC）
 
 在3eeca1e8基础上新增`upper_aggregation.py`及一次CPU接口脚本，代码/证据/本次记录同提交。实现VGGT第18–23组qkv LoRA（默认rank8，393216参数）、4/11/17冻结前缀与重新生成23层的DPT接口；保留全窗口24视图顺序，之后才选择Actor输入，不跨优化步缓存适配输出。未接入运行中的Q-v2 r1或正式优化器，完整传感器梯度与GPU峰值均pending。
