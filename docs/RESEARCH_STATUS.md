@@ -1,3 +1,19 @@
+## r6收口并固定最终视觉对照（2026-09-09 13:10 UTC）
+
+r6相对r4的early下降7.8152pp（95%日志配对区间[−14.2862,−2.8201]pp），五日志均改善；但distance增加.019181m（[+.002470,+.043629]m），五日志均变差。hit+2.9980pp、miss+.1699pp、free−.028730m、recall−1.0169pp的区间均跨0。相对r3，hit+7.9915pp、miss−7.8169pp、recall+2.8675pp改善，同时early+6.7616pp、free+.072641m恶化，这五项区间均不跨0；distance区间跨0。r6不是共同覆盖/物理胜出方法，不能把miss不显著变化当保持等效。
+
+WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6，训练code d1c22ebe，30轮11130更新/0跳步/0恢复，489 initial/final complete；主汇总只执行一次。DEV75/5日志，23无owned/8空保留；hit/early/miss/free/distance/recall=.390677/.229815/.205579/.237807/.173315/.724428。wall2139.057728s（35.65min）、GPU.210189GiB、RSS1.933098GiB，无DPT/图像前缀；20新日志未读。
+
+固定r6开放chart和首面/miss目标用于最终Joint重接：此选择依据其相对r4明确early改善、相对r3更多hit/更少miss，同时保留tradeoff，并非宣称其全面最优。最终run登记WS-V73-Q-V2-01/20260909T131000Z__open-charts-joint-first-surface-s7304-r7（pending），mode joint、native_surface种子、native-data-weight=1（同原Q-v2联合路径）；64chart/.15/4×4，原coverage+.5beam(.03/res32)+.05box+1first_surface，ray1024/ratio20÷3/RNG7305，event0；相同FIT/cohort/full_track/seed7304/30轮/AdamW1e−5/clip1。fresh M1 DPT初始化，不从r6续训，不新增upper或更换基座。
+
+最终主对照r7−r6：视觉数据、原生种子、DPT多尺度特征与原生build测量辅助项为整条联合通路差异，不能称纯feature因果试验或严格相同总loss。表面/物理损失、Actor数据和更新预算相同，分别报告计算成本；视觉辅助只用相同build侧LiDAR，不引入新heldout监督。一次真实FIT检查单独确认几何损失→DPT与各层特征梯度，辅助深度梯度不冒充几何梯度；通过后正式启动，检查权重不用。
+
+不根据r7中途DEV调配置或挑epoch；完整30轮后收口，固定最终Joint/LiDAR到20保留新日志，无再适配或按确认结果调参。报告所有六项硬表面/射线指标与日志不确定性，保留缺输入对象。若无可信联合收益，明确V7.3假设失败/未获支持并区分原因与推测；如有收益，主张限于实际几何和物理证据，未解决场景边界仍公开。最终报告含组件图、三本台账push成功后停止调度、确认所有任务退出，再shutdown。
+
+证据ray_support/first_surface_r6_{summary,final_manifest,analysis,training}.json与配对/训练图。failure_ledger_delta=update V73-F02; no new failure ID；F02/F03/F04/F09仍active，下一V73-F10。
+
+---
+
 ## r6首面梯度检查完成并启动（2026-09-09 12:33 UTC）
 
 代码d1c22ebe的一次检查done：早面距1m、后面正好位于测量2m时，首面项为1m，梯度只作用早面（.612372），后面梯度0；一次局部步后.999625m，有限差分误差9.46e−12。miss项与r4相同且梯度4.714045；近切面梯度612.372742，轮廓切换loss从1到0，证明这些不连续性/放大量仍在，不能声称已解决。真实首个ready FIT五条owned束均有首面，新项.416071m，normal/height/position梯度2.429358/.036763/40.152752；联合一次优化后顶点最大变化.008665m。检查2.259955s、GPU.087645GiB、RSS1.426708GiB，不使用DEV或新日志，也不复用检查权重。
