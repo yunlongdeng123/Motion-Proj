@@ -1,3 +1,15 @@
+## Q-v2固定表面诊断登记（2026-09-09 04:50 UTC）
+
+joint r1收口已提交3ac15ca2并push，当前联合通路无明确增量，按策略二优先表面/constructive ray监督。登记两项顺序CPU诊断，状态pending：`WS-V73-M2-SURFACE-SUPPORT-01/20260909T045000Z__qv2-joint-r1-support-r4`仅对r1做原八类沿束支持分解，LiDAR r2既有support-r3直接复用；`WS-V73-Q-V2-MESH-DIAGNOSTIC-01/20260909T045000Z__fixed-dev-mesh-deformation-r1`读取r1/r2原75 DEV固定网格与原checkpoint模板，统计局部形变和非邻接三角相交。入口`scripts/run_worldsim_v73_qv2_fixed_diagnostics_r1.sh`；代码与本登记同提交后执行，无神经推理/优化/新数据。
+
+逐面3×2映射奇异值相对尺寸缩放解析模板，整体刚体转动不影响统计；记录smin/smax、面积/边长比/各向异性分位数及描述性比例，不把模板当GT或分位数当门槛。Open3D0.19官方源码明确跳过共享任意顶点的面配对，因此相交数不覆盖相邻折叠，零相交也不保证无问题；正常两个沿束深度层不算自交。8空预测在物理分母保留，局部形变量记不可用；67非空对象先Actor统计、日志内均值、日志等权，不把面数当独立样本。不会改网格、删面、重网格化或取凸包。
+
+已核对PyTorch3D变形教程与Open3D三角相交实现，相关来源见Q-v2报告和run manifest。判别目标是明确错误返回是否有后方正确支持，并测量局部变形风险；这些只定位症状，不能证明闭合/视觉为唯一原因。诊断后选择开放/结构化表面及constructive监督，不继续无限诊断/仅调free。20新日志未读、upper/DINOv3/full FT不启动，30分钟ACTIVE、完成不关机。
+
+failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；failure_ledger_delta=none at registration，现有风险保持，下一V73-F10。三本台账、计划与实现同步。
+
+---
+
 ## Q-v2 joint r1收口：优先表面表示与沿束支持（2026-09-09 04:40 UTC）
 
 Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。
