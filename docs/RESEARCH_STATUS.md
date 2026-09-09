@@ -1,3 +1,13 @@
+## 开放曲面真实通路通过，进入正式r3（2026-09-09 05:45 UTC）
+
+基于019735d2的一次真实FIT检查done：按原元数据顺序首个ready车辆，3个build点/515个上下文查询，64chart/1024顶点/1152面，半宽.330649m；实际5个full_track目标点、194条原始束参与coverage/beam/box。一次AdamW更新，normal/height/displacement梯度范数=.666979/.573098/15.371632，表面最大变化.007932m；固定推理factory按保存配置恢复误差0。检查1.828437s、GPU.080078GiB、RSS1.421513GiB、参数1706413；不代表完整数据资源或DEV质量，更不代表视觉通路已训练。
+
+首次直接调用缺少runtime bin的PATH，PyTorch扩展找不到现有Ninja，在反传/更新前退出；先查官方cpp_extension的ninja --version调用，补齐与正式入口一致的PATH/CUDA环境后同一检查通过，未安装环境/包。首错和通过记录保留`docs/autoresearch/worldsim_v73/open_charts/path_check_attempt1.txt`与`path_check_r1.json`；复用这次检查，不再重复。新增shell入口显式设置现有工具路径。
+
+任务WS-V73-Q-V2-01/r3仍按既定30轮/seed7304/full_track、原coverage和finite-beam参数，代码提交后启动；正式实际PID/初始评价与更新数另记，不把通路检查的1次更新算入r3。训练manifest明确LiDAR未加载DPT/前缀，关联F09也保留；没有新科学失败，failure_ledger_delta=none，环境调用问题已恢复。计划、三本台账与OPEN_CHARTS报告同步，20新日志未读、30分钟ACTIVE、完成不关机。
+
+---
+
 ## 开放局部曲面实现与LiDAR对照登记（2026-09-09 05:40 UTC）
 
 基于d11e6788实现ActorOpenChartQueryDecoder并接入训练/固定推理：原≤1536观测/补全查询进行三层空间更新，在初始支持中FPS分配64输出chart，4×4共享网格共1024顶点/1152面。只读局部PCA坐标架+可训练法向残差/UV高度，尺寸确定半宽.15*(LWH)^(1/3)，无opacity/radius/删面/全局闭合。旧查询更新提取复用，原patch计算顺序/权重名保持；heightfield旧小片已存在，新增支持分配/尺度不是新拓扑保证。chart间相交、PCA污染和固定尺度仍可能失败。

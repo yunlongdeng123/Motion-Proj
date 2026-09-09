@@ -519,3 +519,5 @@ failure_ledger_refs=[V73-F02,V73-F03,V73-F04]；failure_ledger_delta=none at reg
 failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration，旧风险保持、下一V73-F10。三本台账/计划同步，30分钟ACTIVE、完成不关机。
 
 ---
+
+18.6执行补充（05:45 UTC）：一次真实FIT通路检查done，位置/法向/高度梯度非零、表面更新、固定factory恢复误差0。首次Ninja PATH调用错误按官方源码修正并保留证据，未安装依赖；不是科学失败。正式r3仍fresh30轮，检查的一次优化不计入研究更新。详见OPEN_CHARTS报告，failure_ledger_delta=none。

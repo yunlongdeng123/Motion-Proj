@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/root/autodl-tmp/motion_proj/scripts/check_worldsim_v73_open_charts.py", line 45, in <module>
+    free=BeamTubeFreeSpaceLoss(width_m=.03,resolution=32,penalty='range')(vertices,faces,origins[ids],directions[ids],ranges[ids])
+  File "/root/autodl-tmp/motion_proj/motion_proj/worldsim_v73/surface_visibility.py", line 11, in __init__
+    self.context=dr.RasterizeCudaContext()
+  File "/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/nvdiffrast/torch/ops.py", line 184, in __init__
+    self.cpp_wrapper = _get_plugin().RasterizeCRStateWrapper(cuda_device_idx)
+  File "/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/nvdiffrast/torch/ops.py", line 125, in _get_plugin
+    torch.utils.cpp_extension.load(name=plugin_name, sources=source_paths, extra_cflags=common_opts+cc_opts, extra_cuda_cflags=common_opts+['-lineinfo'], extra_ldflags=ldflags, with_cuda=True, verbose=False)
+  File "/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py", line 1312, in load
+    return _jit_compile(
+  File "/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py", line 1722, in _jit_compile
+    _write_ninja_file_and_build_library(
+  File "/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py", line 1804, in _write_ninja_file_and_build_library
+    verify_ninja_availability()
+  File "/root/autodl-tmp/envs/motionproj/lib/python3.10/site-packages/torch/utils/cpp_extension.py", line 1853, in verify_ninja_availability
+    raise RuntimeError("Ninja is required to load C++ extensions")
+RuntimeError: Ninja is required to load C++ extensions

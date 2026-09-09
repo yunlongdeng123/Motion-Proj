@@ -35,3 +35,9 @@
 正式入口`scripts/run_worldsim_v73_open_charts_lidar_r3.sh`，运行状态以RESEARCH_STATUS文首为准。训练输出config/manifest/JSONL/每轮checkpoint和完整final，保存真实wall/GPU/RSS。组件图由源码绘制，结果未产生前不预填表格。
 
 failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration。F02等均未解除，下一V73-F10；三本台账和计划同步，小步push，30分钟跟进ACTIVE、完成不关机。
+
+## 真实通路检查完成（2026-09-09 05:45 UTC）
+
+一次检查done，code019735d2；元数据首个ready FIT车辆只有3个build点，515个上下文查询、64chart/1024顶点/1152面、半宽.330649m。5个full_track测量点与194条原始束，coverage.006435m、beam.005459m；normal/height/displacement梯度范数.666979/.573098/15.371632，一次更新表面最大变化.007932m，固定推理factory恢复误差0。参数1706413（未调用的视觉模块没有梯度）、1.828437s、GPU.080078GiB、RSS1.421513GiB，保存6865698字节；不代表整个FIT/DEV收益、完整资源或Adam状态恢复。
+
+首次直接调用未将既有runtime bin放入PATH，nvdiffrast加载时找不到Ninja，在优化前失败；核对[PyTorch2.4.1官方扩展源码](https://raw.githubusercontent.com/pytorch/pytorch/v2.4.1/torch/utils/cpp_extension.py)通过`ninja --version`判定可用后，增加与正式训练一致的shell环境入口，未新增安装。保留`autoresearch/worldsim_v73/open_charts/path_check_attempt1.txt`及`path_check_r1.json`，错误已恢复，不新增科学失败ID。正式r3从fresh初始化启动，不复用检查权重。

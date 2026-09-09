@@ -76,7 +76,8 @@ def main():
     save('manifest.json',{'task_id':task,'run_id':args.run_id,'seed':7304,
         'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
-        'shared_parameters':('native DPT, query decoder and upper qkv LoRA across fit logs; no development gradient or optimizer update' if args.upper_lora else
+        'shared_parameters':('query decoder across FIT logs; no native DPT or image prefix; unused visual-reader parameters have no gradients; no development updates' if args.mode=='lidar_only' else
+                             'native DPT, query decoder and upper qkv LoRA across fit logs; no development gradient or optimizer update' if args.upper_lora else
                              'native DPT and query decoder across fit logs; no development gradient or optimizer update'),
         'frozen_prefix':('none used by lidar_only' if args.mode=='lidar_only' else
             'CPU layers 4/11/17; full-window 18-23 recomputed before actor view selection' if args.upper_lora else
@@ -93,7 +94,7 @@ def main():
         'visual_only_boundary':'opt-in admission depends only on zero build LiDAR and available calibrated camera poses, never predicted support or target quality; no-camera empty inputs remain unavailable; unobserved regions are not free space',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
         'native_only_boundary':'native_only adapts full original DPT with canonical native+LiDAR PCA fusion; query module supplies fixed patch definition only and is frozen; no-camera/no-gradient presentations are recorded without optimizer step',
-        'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06']})
+        'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06','V73-F09']})
     save('status.json',{'status':'running','phase':'load_contexts'})
     try:
         index=json.loads((args.actor_data/'index.json').read_text())
