@@ -57,8 +57,8 @@ def constructive_ray_support_loss(vertices,faces,origins,directions,ranges,later
                                   kind='closest'):
     """仅对归属已知的实际首返回调用；不把缺测/UNKNOWN当free或occupied。
 
-    返回米制各向异性距离。比例是优化取舍，不是已校准的传感器噪声。
-    它是方向加权coverage候选，既不保证遮挡顺序，也不创建空网格拓扑。
+    closest返回米制各向异性距离；first_surface在有交点时改为实际首面绝对误差。
+    比例是优化取舍，不是已校准噪声；两者均不创建空网格拓扑或保证优化成功。
     """
     if kind not in ('closest','first_surface'):
         raise ValueError('未知射线支持目标')

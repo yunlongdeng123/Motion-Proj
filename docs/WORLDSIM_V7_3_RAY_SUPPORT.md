@@ -146,3 +146,15 @@ failure_ledger_delta=update V73-F02 evidence; no new failure ID。
 主比较r6−r4及r6−r3；完成后选定表面/监督并重新接可训练视觉几何通路做最终Joint/LiDAR对照，不无限扩展。用户最终收尾安排保持：最终证据与报告/三本台账push成功、暂停调度、确认无任务后shutdown。现阶段不关机。failure_ledger_refs=[V73-F02,V73-F03,V73-F04]，failure_ledger_delta=none at registration，旧风险未解除。
 
 ---
+
+## r6首面梯度检查完成并启动（2026-09-09 12:33 UTC）
+
+代码d1c22ebe的一次检查done：早面距1m、后面正好位于测量2m时，首面项为1m，梯度只作用早面（.612372），后面梯度0；一次局部步后.999625m，有限差分误差9.46e−12。miss项与r4相同且梯度4.714045；近切面梯度612.372742，轮廓切换loss从1到0，证明这些不连续性/放大量仍在，不能声称已解决。真实首个ready FIT五条owned束均有首面，新项.416071m，normal/height/position梯度2.429358/.036763/40.152752；联合一次优化后顶点最大变化.008665m。检查2.259955s、GPU.087645GiB、RSS1.426708GiB，不使用DEV或新日志，也不复用检查权重。
+
+WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6已于12:31:39 UTC fresh启动，PID154801，训练code d1c22ebe。12:33:26快照：489 initial完整，第1/30轮，81次实际更新/0跳步，峰值GPU.205304GiB。首正式步包含302条首面、722条miss吸引；原coverage/free随机采样保持独立于ray RNG。不把训练loss作为最终质量。完整final后仅运行一次scripts/summarize_worldsim_v73_first_surface_r6.sh，r6−r4/r3/R8六项日志配对指标；r6当前质量pending。
+
+接下来的有限收尾：依据完整r6与既有开放曲面对照选定监督；在相同Actor/cohort、显式曲面、原几何目标、30轮/seed/优化器设置下，重新接现有可训练DPT多尺度几何通路。优先复用Q-v2原联合路径（native种子与native测量辅助项），明确这是整条联合系统增量而非纯视觉特征因果分离；不新增upper/DINOv3/full FT。只缓存完全冻结aggregator，DPT每步重算并接受表面梯度。最终配置选择后在20个保留日志确认，不继续按确认结果调参。Joint无可靠增益就报告核心假设失败/未获支持，完成报告与台账push、停止调度并确认无任务后shutdown。
+
+证据ray_support/first_surface_check_r1.json、r6_started{,_manifest}.json。failure_ledger_refs=[V73-F02,V73-F03,V73-F04]，failure_ledger_delta=none，检查不解除风险；无资源不足。每30分钟跟进，当前不关机。
+
+---

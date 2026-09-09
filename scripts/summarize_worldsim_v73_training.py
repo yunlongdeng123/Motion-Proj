@@ -34,6 +34,10 @@ for epoch,values in sorted(epochs.items()):
         'metrics':{metric:distribution([row.get(metric) for row in values]) for metric in
             ['loss','coverage_m','free_intrusion_m','free_objective','ray_support_m','gradient_norm_before_clip','native_candidates','query_count','step_s']},
         'ray_support':{'sampled_owned_returns':sum(row.get('ray_support_statistics',{}).get('count',0) for row in values),
+            'first_surface_returns':sum(row.get('ray_support_statistics',{}).get('first_surface_count',0) for row in values),
+            'miss_attraction_returns':sum(row.get('ray_support_statistics',{}).get('miss_attraction_count',0) for row in values),
+            'first_surface_abs_m':distribution([row.get('ray_support_statistics',{}).get('first_surface_abs_m') for row in values]),
+            'miss_attraction_m':distribution([row.get('ray_support_statistics',{}).get('miss_attraction_m') for row in values]),
             'lateral_m':distribution([row.get('ray_support_statistics',{}).get('lateral_m') for row in values]),
             'parallel_abs_m':distribution([row.get('ray_support_statistics',{}).get('parallel_abs_m') for row in values])},
         'gradient_groups':{group:distribution([row.get('group_gradient_norms_before_clip',{}).get(group) for row in values])
