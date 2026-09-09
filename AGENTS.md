@@ -1,5 +1,9 @@
 # AGENTS 约定
 
+## 当前执行：同开放曲面的射线监督对照（2026-09-09 06:37 UTC）
+
+Q-v2联合/同网格LiDAR已收口，当前联合通路无明确增量；按策略二/不确定性分支聚焦表面与沿束支持。开放chart r3 done，对闭合r2六项区间跨0，对R8少missing但更多free侵入。下一r4保持r3表示和原目标，仅新增真实返回的方向条件最近面吸引；具体配置/状态以RESEARCH_STATUS文首和RAY_SUPPORT报告为准。不默认开upper/DINOv3/full FT，不把near-boundary free提前；20新日志质量仍未读、30分钟ACTIVE、完成不关机。以下旧“先等Q-v2”已完成。
+
 ## Q-v2收口后的当前优先级（2026-09-09 04:40 UTC）
 
 Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。 先诊断保存网格的局部变形/沿束支持，再选开放或结构化表面；不将当前结果解释成闭合因果已证实。下方旧的“等待r1”记录已完成。

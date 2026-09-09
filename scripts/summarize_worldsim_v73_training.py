@@ -32,7 +32,10 @@ for epoch,values in sorted(epochs.items()):
         'native_huber_measurement_weighted_m':sum(row['native_sensor_huber_m']*row['native_observed_points'] for row in native)/count if count else None,
         'native_huber_supervised_actor_distribution_m':distribution([row['native_sensor_huber_m'] for row in native]),
         'metrics':{metric:distribution([row.get(metric) for row in values]) for metric in
-            ['loss','coverage_m','free_intrusion_m','free_objective','gradient_norm_before_clip','native_candidates','query_count','step_s']},
+            ['loss','coverage_m','free_intrusion_m','free_objective','ray_support_m','gradient_norm_before_clip','native_candidates','query_count','step_s']},
+        'ray_support':{'sampled_owned_returns':sum(row.get('ray_support_statistics',{}).get('count',0) for row in values),
+            'lateral_m':distribution([row.get('ray_support_statistics',{}).get('lateral_m') for row in values]),
+            'parallel_abs_m':distribution([row.get('ray_support_statistics',{}).get('parallel_abs_m') for row in values])},
         'gradient_groups':{group:distribution([row.get('group_gradient_norms_before_clip',{}).get(group) for row in values])
                            for group in ['native_dpt','query_decoder']}})
 result={'run':str(args.run),'run_status':json.loads((args.run/'status.json').read_text()),'epochs':rows,

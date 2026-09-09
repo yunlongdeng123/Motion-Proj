@@ -1,3 +1,15 @@
+## 射线条件曲面吸引实现与r4登记（2026-09-09 06:37 UTC）
+
+基于r3收口8b012af1，保持64开放chart/1024顶点/1152面，只新增真实返回条件的各向异性最近面吸引。delta按只读射线方向分解，min_surface ||(20/3)*delta_perp+delta_parallel||，单位米、权重1；原coverage+.5beam(.03m/res32)+.05box保持。64ray×512face分块，完整度量最优重心停止梯度后按包络定理反传实际顶点；未命中仍可拉动非空表面，但不保证首交点/正面积或空拓扑出生。不是新的event概率模型或未知FREE。
+
+登记WS-V73-Q-V2-01/20260909T063700Z__open-charts-lidar-ray-support-s7304-r4（pending）：同r3 LiDAR-only/full_track、seed7304 fresh、30轮预期11130更新、AdamW1e-5/clip1，完整489 initial/final，75 DEV/5日志/空预测保留。新项最多1024 owned原始首返回，从全部FIT测量束独立抽样，CUDA Generator seed7305另存/恢复，不消耗旧coverage/free随机流；相对去重point coverage也增加返回观测权重，不能将收益只归因方向度量。无DPT/视觉前缀，20新日志质量未读。
+
+一次必要检查pending：解析miss时原event零梯度、新项梯度和下降方向、各向同性一致性/一个非切换坐标有限差分；元数据首个ready FIT的新项位置/法向/高度梯度与一次联合更新。通过后fresh正式训练，不复用检查权重、不重复旧factory/regression。实现、SoftRas/DRC一手迁移及简单组件图见WORLDSIM_V7_3_RAY_SUPPORT.md；入口check_worldsim_v73_ray_support.sh/run_worldsim_v73_ray_support_r4.sh，完整final后一次summarize_worldsim_v73_ray_support_r4.sh，对照r3为主、闭合r2/R8附列。不做weight/alpha网格、不启动upper/DINOv3/full FT或near-boundary free。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration，旧风险未解除、下一V73-F10。三本台账/计划/实现同步push；30分钟ACTIVE，完成不关机。
+
+---
+
 ## 开放chart r3收口：支持仍未兑现物理收益（2026-09-09 06:29 UTC）
 
 相对闭合LiDAR r2，开放chart r3六项区间均跨0，没有建立优势或等效。相对旧窄片R8，miss−28.4589pp（区间[−40.4369,−16.4809]pp），free+.130846m（[+.003899,+.294775]m）；hit+.0734pp、early+10.6289pp、单向distance−.050126m、recall−2.3699pp均跨0。开放支持仍未同时改善覆盖和物理，不能将此前冲突唯一归因闭合，也不能宣称所有开放表示失败。

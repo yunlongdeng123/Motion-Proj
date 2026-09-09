@@ -17,6 +17,7 @@ from motion_proj.worldsim_v73.native_data import sample_depth
 from motion_proj.worldsim_v73.spatial_queries import ActorSpatialQueryDecoder
 from motion_proj.worldsim_v73.surface_seeds import farthest_indices,native_surface_seeds,native_surface_points
 from motion_proj.worldsim_v73.surface_readout import closest_surface_points,first_triangle_intersection,direct_free_space_loss
+from motion_proj.worldsim_v73.ray_support import constructive_ray_support_loss
 from train_worldsim_v73_physical_surface import lidar_patches,evaluate_actor_surface
 
 
@@ -46,6 +47,9 @@ def main():
     parser.add_argument('--event-cap',type=float,default=28.)
     parser.add_argument('--event-width-m',type=float,default=.03)
     parser.add_argument('--event-resolution',type=int,default=32)
+    parser.add_argument('--ray-support-weight',type=float,default=0.)
+    parser.add_argument('--ray-lateral-ratio',type=float,default=20/3)
+    parser.add_argument('--ray-support-samples',type=int,default=1024)
     parser.add_argument('--native-data-weight',type=float,default=0.)
     parser.add_argument('--fit-label-times',choices=['build','all_window'],default='build')
     parser.add_argument('--fit-targets',type=Path,help='独立的fit全轨迹标签目录；只替换fit损失目标，不替换模型输入')
@@ -73,6 +77,8 @@ def main():
         tmp.replace(out/name)
     started=time.monotonic()
     torch.set_num_threads(6); torch.manual_seed(7304); random.seed(7304)
+    # 独立抽取owned束，不改变原coverage/free的全局随机数序列。
+    ray_generator=torch.Generator(device='cuda').manual_seed(7305) if args.ray_support_weight else None
     save('manifest.json',{'task_id':task,'run_id':args.run_id,'seed':7304,
         'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
@@ -93,6 +99,7 @@ def main():
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'visual_only_boundary':'opt-in admission depends only on zero build LiDAR and available calibrated camera poses, never predicted support or target quality; no-camera empty inputs remain unavailable; unobserved regions are not free space',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
+        'ray_support_boundary':'optional anisotropic closest point on actual triangles; up to ray_support_samples owned first returns from all FIT training rays, separate CUDA RNG seed7305; return multiplicity differs from unique-point coverage; directions read-only, no unknown labels or first-hit guarantee',
         'native_only_boundary':'native_only adapts full original DPT with canonical native+LiDAR PCA fusion; query module supplies fixed patch definition only and is frozen; no-camera/no-gradient presentations are recorded without optimizer step',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06','V73-F09']})
     save('status.json',{'status':'running','phase':'load_contexts'})
@@ -174,6 +181,9 @@ def main():
                 raise ValueError('不能把旧patch checkpoint作为共享网格的resume')
             if bool(resumed['config'].get('upper_lora',False))!=args.upper_lora:
                 raise ValueError('resume不能改变上层适配通路，应另行登记新实验')
+            if any(resumed['config'].get(key,default)!=getattr(args,key) for key,default in
+                   [('ray_support_weight',0.),('ray_lateral_ratio',20/3),('ray_support_samples',1024)]):
+                raise ValueError('射线监督更改须fresh实验，不能静默作为原配置续训')
             if upper is not None:
                 if any(resumed['upper_config'][key]!=upper.config[key] for key in ['rank','alpha','targets','weights_file']):
                     raise ValueError('resume必须保留LoRA定义与原始权重来源')
@@ -334,6 +344,7 @@ def main():
             if 'random_states' in resumed:
                 state=resumed['random_states']; random.setstate(state['python'])
                 torch.set_rng_state(state['torch_cpu']); torch.cuda.set_rng_state_all(state['torch_cuda'])
+                if ray_generator is not None: ray_generator.set_state(state['ray_support_cuda'])
             else:
                 torch.manual_seed(7304)
             del resumed
@@ -375,12 +386,23 @@ def main():
                     event,event_statistics=event_objective(vertices,faces,origins[selected],directions[selected],ranges[selected])
                     event_statistics['literal_owned_miss_rays']=(~torch.isfinite(depth[owned])).sum().item()
                     del owned,selected
-                loss=coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss+args.event_weight*event
+                ray_support=vertices.sum()*0; ray_statistics={}
+                if ray_generator is not None:
+                    positive=torch.cat([r['positive_actor'] for r in build]).cuda() if build else torch.empty(0,device='cuda',dtype=torch.bool)
+                    owned_ids=torch.nonzero(positive,as_tuple=False).flatten()
+                    chosen_owned=owned_ids[torch.randperm(len(owned_ids),device='cuda',generator=ray_generator)[:args.ray_support_samples]]
+                    ray_support,ray_statistics=constructive_ray_support_loss(vertices,faces,origins[chosen_owned],
+                        directions[chosen_owned],ranges[chosen_owned],args.ray_lateral_ratio)
+                    ray_statistics['available_owned_returns']=len(owned_ids)
+                    del positive,owned_ids,chosen_owned
+                loss=(coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss+
+                      args.event_weight*event+args.ray_support_weight*ray_support)
                 # 空标签不是零几何误差；没有实际测量目标时不靠框正则做一次假数据更新。
                 has_supervision=(len(chosen)>0 or
                     (args.free_weight>0 and len(ids)>0) or
                     (args.native_data_weight>0 and support['native_observed_points']>0) or
-                    (args.event_weight>0 and event_statistics.get('count',0)>0))
+                    (args.event_weight>0 and event_statistics.get('count',0)>0) or
+                    (args.ray_support_weight>0 and ray_statistics.get('count',0)>0))
                 has_gradient=bool(has_supervision and loss.requires_grad)
                 if has_gradient: loss.backward()
                 group_gradients={}
@@ -402,6 +424,8 @@ def main():
                     'free_objective':free.item(),'free_mode':args.free_mode,
                     'free_objective_unit':'coverage_fraction' if args.free_mode=='beam_tube' else 'm',
                     'event_capped_nll':event.item(),'event_weight':args.event_weight,'event_statistics':event_statistics,
+                    'ray_support_m':ray_support.item() if ray_statistics.get('count',0) else None,
+                    'ray_support_weight':args.ray_support_weight,'ray_support_statistics':ray_statistics,
                     'gradient_norm_before_clip':grad.item(),'native_output_gradient_after_clip':output_grad,
                     'group_gradient_norms_before_clip':group_gradients,
                     'native_sensor_huber_m':native_loss.item(),'native_observed_points':support['native_observed_points'],
@@ -421,11 +445,12 @@ def main():
                 with (out/'train.jsonl').open('a') as handle: handle.write(json.dumps(row)+'\n')
                 save('status.json',{'status':'running','phase':'shared_train','elapsed_s':time.monotonic()-started,**row})
                 print(json.dumps(row),flush=True)
-                del prediction,vertices,faces,loss,coverage,free,physical_free,envelope,event,nearest,depth,points,chosen,origins,directions,ranges,native_loss
+                del prediction,vertices,faces,loss,coverage,free,physical_free,envelope,event,ray_support,nearest,depth,points,chosen,origins,directions,ranges,native_loss
             checkpoint={'depth_head':head.state_dict() if head is not None else None,'query_decoder':decoder.state_dict(),
                         'optimizer':optimizer.state_dict(),'epoch':epoch+1,'config':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
                         'fit_order':[case['metadata']['owner'] for case in fit],
                         'random_states':{'python':random.getstate(),'torch_cpu':torch.get_rng_state(),'torch_cuda':torch.cuda.get_rng_state_all()}}
+            if ray_generator is not None: checkpoint['random_states']['ray_support_cuda']=ray_generator.get_state()
             if upper is not None:
                 checkpoint.update(upper_config=upper.config,upper_adapter=upper.adapter_state_dict())
             torch.save(checkpoint,out/'latest.tmp.pt'); (out/'latest.tmp.pt').replace(out/'latest.pt')
