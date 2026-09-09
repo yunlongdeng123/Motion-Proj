@@ -66,3 +66,15 @@ F05的身份独立性已有数据对策，域迁移/实际覆盖/空输入问题
 分析复用已保存结果，Actor按独立日志汇总六指标及配对区间，场景按原始束汇总日志配对。不提前启动确认、不改运行训练；这次仅准备收尾入口和通用绘图role参数，没有新推理/测试。最终报告纳入正负结果、F02/F03/F04/F09及失败解释，三本台账和GitHub push完成、停自动调度且确认无任务后shutdown。failure_ledger_delta=none at preparation，旧风险active；30分钟跟进持续至收尾。
 
 ---
+
+## 固定20日志确认已启动，论文取证协同（2026-09-09 19:04 UTC）
+
+WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1已于19:03:26 UTC启动，执行code6499d34d、shell PID169169。19:04:35快照Joint r7已完成68/936对象，allocated峰值5.437806GiB；r6/R8/native融合/PCA待顺序执行，0优化更新。外部模型质量评价现已开始，不能再写“20日志质量未读取”；配置已于开发阶段固定，禁止根据外部结果更改。完整五方法后收口Actor日志配对，再一次固定背景场景确认；当前无完整跨域结论。证据final_confirmation/started.json及run/manifest.json，日志controller_logs/final_confirmation_r1.log。
+
+并行论文任务明确负责paper/、paper_forensics和自己的脚本，未修改本任务台账，也不会启动确认。已核实其取证summary/manifest：原75 DEV/11886 owned束，六方法AdaPoinTr、VGGT-native、R8、r3、r4、r6，不含最终r7；q=三边平方和/(4√3面积)，early面q>10计数全部0。r4/r6约94.7%/91.0%的日志等权early贡献来自“连通片至少有一个build端点在.2m内”的片。此支持定义不证明整个片正确，也不证明没有任何形变；不能将错误默认归因细长面或无支持浮片。按build支持剪连通片使r4 miss20.3879%→26.2698%、r6 20.5579%→27.4044%，并不能保住原覆盖。基于heldout删除early面是oracle诊断，未改部署输出或训练，不拿它作为模型成绩。证据paper_forensics/20260909T184200Z__saved-surface-oracles-r1/{summary,manifest}.json，已存在诊断不再重跑。
+
+r7开发已显示hit/miss/distance增益而free风险仍在，保持完整结论，不宣布整个联合主线失败或物理问题已解决。论文的可视化和新算子原型归并行任务，其原型不是本次固定r7权重的方法，也不是新确认候选。Blender仍CPU渲染；最终shutdown需所有训练/确认/数据及论文渲染任务结束并完成push，当前不关机。
+
+三本台账/最终结果报告同步，failure_ledger_delta=update V73-F02 with existing forensic evidence; no new failure ID。F03/F04/F05/F09边界仍按证据保留，下一V73-F10；每30分钟跟进至最终收尾。
+
+---
