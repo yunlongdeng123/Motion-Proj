@@ -216,3 +216,17 @@ WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6，训�
 最终主对照r7−r6：视觉数据、原生种子、DPT多尺度特征与原生build测量辅助项为整条联合通路差异，不能称纯feature因果试验或严格相同总loss。表面/物理损失、Actor数据和更新预算相同，分别报告计算成本；视觉辅助只用相同build侧LiDAR，不引入新heldout监督。一次真实FIT检查单独确认几何损失→DPT与各层特征梯度，辅助深度梯度不冒充几何梯度；通过后正式启动，检查权重不用。
 
 不根据r7中途DEV调配置或挑epoch；完整30轮后收口，固定最终Joint/LiDAR到20保留新日志，无再适配或按确认结果调参。报告所有六项硬表面/射线指标与日志不确定性，保留缺输入对象。若无可信联合收益，明确V7.3假设失败/未获支持并区分原因与推测；如有收益，主张限于实际几何和物理证据，未解决场景边界仍公开。最终报告含组件图、三本台账push成功后停止调度、确认所有任务退出，再shutdown。
+
+## 最终联合r7通路检查通过并启动（2026-09-09 13:15 UTC）
+
+一次真实首个ready FIT检查done，code185bc728：24实际DPT视图，115原生框内种子候选、512completion seeds、无LiDAR fallback。仅几何项（coverage/free/box/首面）对四层DPT特征的梯度范数为.00122070/.00250244/.00194550/.00164032，对DPT首project参数梯度188.088562；这些数值未混入辅助depth梯度。辅助项读取3条build测量，.261523m；联合梯度范数789.206299，沿用clip1，一次Adam后DPT参数最大变化1.00285e−5。检查6.219805s、GPU11.874109GiB、RSS2.912842GiB，无DEV/新日志质量读取，scratch权重不复用；有梯度不代表泛化有效。
+
+WS-V73-Q-V2-01/20260909T131000Z__open-charts-joint-first-surface-s7304-r7于13:14:02 UTC fresh启动，训练code185bc728/PID156599。13:15:35快照仍initial_evaluation，744冻结前缀视图、371 FIT/438有输入/51缺输入，共489对象，0正式更新；不能写成已完成initial或训练收益。完整初始后按30轮/11130预期更新运行，原生DPT约3265万参数与开放Query共同训练；不解冻aggregator、不用缓存DPT输出、不改变运行配置。新20日志质量仍未读。
+
+主比较r7−r6；同表面/物理损失与更新预算，Joint新增native种子、可训练DPT特征与build-depth辅助监督，结论针对整条通路。完整final后仅执行一次scripts/summarize_worldsim_v73_open_joint_r7.sh，附旧闭合joint r1与R8；禁止中途挑epoch/根据新日志再调参。原始支持/物理风险仍active，不额外延长V7.3。
+
+证据ray_support/open_joint_check_r1.json、r7_started{,_manifest}.json，简单组件图V73_OPEN_JOINT_COMPONENTS.{png,pdf}已生成并查看。failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F09]，failure_ledger_delta=none at start，下一V73-F10。三本台账和报告同步push，30分钟跟进；最终对照/确认/报告完成且无任务后shutdown，现在不关机。
+
+---
+
+![最终视觉重接组件](autoresearch/worldsim_v73/ray_support/V73_OPEN_JOINT_COMPONENTS.png)

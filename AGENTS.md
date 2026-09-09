@@ -1,3 +1,7 @@
+## 当前执行：最终联合r7已启动（2026-09-09 13:15 UTC）
+
+真实DPT/各层特征几何梯度检查done，不再重复。最终r7训练code185bc728、PID156599，run20260909T131000Z__open-charts-joint-first-surface-s7304-r7，13:15仍initial评价，30轮pending；完整final后一次summarize_worldsim_v73_open_joint_r7.sh，主比r6。新日志质量未读，不新增候选/调参；然后固定模型确认、最终报告台账push、停调度并确认无任务后shutdown。以RESEARCH_STATUS文首和最新用户终点为准，覆盖历史无限继续条款。
+
 ## 当前执行：r6已收口，最终联合r7待一次检查后启动（2026-09-09 13:10 UTC）
 
 r6相对r4的early下降7.8152pp（95%日志配对区间[−14.2862,−2.8201]pp），五日志均改善；但distance增加.019181m（[+.002470,+.043629]m），五日志均变差。hit+2.9980pp、miss+.1699pp、free−.028730m、recall−1.0169pp的区间均跨0。相对r3，hit+7.9915pp、miss−7.8169pp、recall+2.8675pp改善，同时early+6.7616pp、free+.072641m恶化，这五项区间均不跨0；distance区间跨0。r6不是共同覆盖/物理胜出方法，不能把miss不显著变化当保持等效。 r6汇总已执行一次，不再重跑。固定首面监督与开放chart，下一r7为最终可训练DPT/native种子/辅助项联合对照；检查/训练状态以RESEARCH_STATUS文首为准。完整结果后新日志确认、最终报告push并无任务后shutdown；不再新增候选。
