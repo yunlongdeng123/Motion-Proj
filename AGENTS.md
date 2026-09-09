@@ -1,5 +1,13 @@
 # AGENTS 约定
 
+## 最新用户决策：先等Q-v2，再按joint增量选路线（2026-09-09 01:47 UTC）
+
+先等待Q-v2联合r1完整结果并与同网格LiDAR r2收口。结果出来前不启动upper LoRA、near-boundary free、DINOv3/full FT或其他新训练，不继续扩展这些候选的实现；现有上层接口保留为准备代码。30分钟跟进保持ACTIVE，正常无实质变化时安静，不打断当前训练。
+
+若joint对真实表面与硬首交点有明确帮助，保留visual foundation主线，研究open/structured surface、constructive ray-support loss与独立的upper representation PEFT。若joint几乎无帮助，优先surface representation与constructive ray supervision，不把下一轮精力投向DINOv3或full FT，也不因已有LoRA入口而默认开跑它。若证据不确定，明确报告不确定，先按表面/沿束支持的已知问题推进，不把“不显著”等同“视觉无用”。
+
+near-boundary free不是当前第一优先级。闭合性/固定genus-zero拓扑可能向UNKNOWN施加过强结构先验，但闭合本身不等于已把UNKNOWN标FREE；局部collapse/stretch与闭合导致错误的因果关系仍待证据。当前已有target→surface coverage吸引，缺的是对真实返回处正确沿束表面支持的明确构造约束，不能写成完全没有几何吸引监督。joint−r2检验整条视觉几何路径（含原生支持和辅助监督），不能唯一归因某层视觉表示。具体六项风险与结果判断见计划第18节；本条优先于下方旧的候选推进顺序。
+
 ## 最新用户覆盖：持续 V7.3 / Q-v2，不因完成而关机（2026-09-09）
 
 继续本任务的V7.3 auto research，三角收口后推进Q-v2相关研究。若这些工作全部完成且没有明确下一步，读取 `docs/references/V73_FOLLOWUP_REFERENCE_20260909.txt`，结合当前项目与核实过的一手资料选择有信息量的后续研究继续。文件是用户提供的参考建议，不自动覆盖当前实验配置，也不把其中未核实的论文或模型主张当成已验证事实。Q-v2首候选已实现为观测查询驱动共享顶点网格，首轮正式作业运行；具体状态与证据见RESEARCH_STATUS文首和WORLDSIM_V7_3_QV2_SHARED_MESH报告，候选效果尚未确定。

@@ -452,3 +452,33 @@ r2 done：共享网格相对R8 miss−31.295pp，但early+13.899pp/free+.106203m
 在3c824f96接口之上接入默认关闭的upper LoRA选项、优化器参数、adapter/config保存和同定义resume；固定推理同步恢复原始尾部与适配参数。完整窗口重算、原Actor更新频率和监督不变，记录上层实际context视图与梯度组；不把优化器状态按错误参数顺序恢复，也不使用旧23层冒充适配。一次CPU真实权重保存恢复及24视图前缀构造检查通过，未运行传感器前向/反传或正式实验，见[上层适配报告](WORLDSIM_V7_3_UPPER_AGGREGATION_ADAPTATION.md)。
 
 Q-v2 r1在01:15 UTC第15轮正常，仍按原bfc181b4配置运行；上层实验run/config选择仍待r1−r2结果。首次实际训练就地测量全窗口梯度与资源，不靠重复小型检查宣称可训练或单卡可承受。20新日志质量未读；F01/F02/F03/F06/F09保持，failure_ledger_delta=none。30分钟ACTIVE、完成不关机。
+
+
+## 18. 等待Q-v2完整结果与两条后续策略（revision 7，2026-09-09 01:47 UTC）
+
+本节是用户最新方向覆盖。当前Q-v2联合r1/PID96997正在第17/30轮，继续原bfc181b4配置；同网格LiDAR r2已完成。先收口完整r1−r2，结果前暂停新候选训练及其实现扩展，包括upper LoRA、near-boundary free、DINOv3/full FT。3caffc7a已有upper接口和保存恢复准备不构成实验启动决定。每30分钟跟进，正常无实质变化时安静，保持持续研究和完成不关机。
+
+### 18.1 六项判断的证据边界
+
+| 判断 | 当前应采用的表述 |
+|---|---|
+| 闭合性可能与UNKNOWN语义冲突 | 闭合先验可能在缺观测区域强行连接表面；闭合不自动等同UNKNOWN被标FREE/occupied。任务无需先假定完整内部体积真值。相关F02/F04。 |
+| Near-boundary free不是第一优先级 | 这是当前研究优先级：先正确生成沿束支持，保留现有全射线/finite-beam free；新增近边界项暂后置。 |
+| 缺constructive ray-surface supervision | 现有target→surface距离能吸引几何，但近邻表面可以很近却没有正确沿束首交点；需要构造真实返回附近的正确射线—表面支持。不是完全没有位置梯度，event的无交点cap也不负责支持出生。相关F02/F03。 |
+| Q-v2 closed topology可能过强 | 当前642顶点/1280面的固定genus-zero是事实；它是否是质量卡点仍待联合结果及必要的表面比较，不把候选负结果外推全部显式生成。 |
+| 视觉表示是否帮助尚未回答 | 完整r1−r2 pending。该差异包括视觉特征、native支持及DPT辅助监督，属于整条视觉几何通路的增量，不能唯一归因attention或上层表示。相关F05/F06/F09。 |
+| 全局mesh deformation可能局部collapse/stretch | 连通性不保证局部质量。当前没有这两种变形的完整统计，不能当作已查明根因；结果后必要时使用已保存网格做局部几何诊断，不重训练取证。 |
+
+已知r2支持诊断显示，大部分early没有后方正确沿束支持；单独推开早表面不能保证正确hit出现。它支持优先研究constructive监督，但尚未指定某种ray loss或证明某种拓扑必然成功。UNKNOWN、被遮挡后方和射线间未观测区继续保持未知，不借完整体积/双向稀疏Chamfer伪标签填满。
+
+### 18.2 结果判断与条件执行
+
+以相同75 DEV Actor/5独立日志的r1−r2配对差、效应大小、跨日志方向和已有不确定性为主，同时看表面距离/覆盖与hit/early/free/miss。不会仅凭loss下降、更多相交或单一指标判joint明显有帮助，也不为这次决策新增硬门槛。资源与更新预算单独报告。
+
+策略一：若joint对正确表面和硬物理查询有明确增量，保留visual foundation主线；下一轮研究open/structured surface与constructive ray-support loss，upper representation PEFT作为可独立判别的表示因素。已实现upper入口可复用，正式运行范围仍需按结果和实际资源登记。不要把三者与新数据/基座一并混改后只归因一个模块。
+
+策略二：若joint几乎不帮助，优先surface representation与constructive ray supervision；停止把后续实现/计算投入DINOv3或full FT，不默认启动upper PEFT作为补救。保留现有可训练DPT等受控通路，不从当前整通路比较推导所有视觉基础模型无用。
+
+若5日志证据仍宽或冲突，结论写“视觉增量尚不确定”，不能把区间跨0当等效性或无帮助证明；研究资源先聚焦已知的表面/沿束支持问题。方法选择前20新日志质量不读。候选实施仍先核实一手研究/优秀官方开源，按当前代码迁移；本次仅记录用户条件策略，不开展新的方案搜索或训练。
+
+关联V73-F01/F02/F03/F04/F05/F06/F09；failure_ledger_delta=none。没有新增科学失败或解除旧风险。AGENTS、三本台账、Q-v2/upper报告与30分钟自动跟进规则同步本次方向，原历史准备记录保留。

@@ -1,3 +1,13 @@
+## 用户条件策略覆盖：先等Q-v2结果（2026-09-09 01:47 UTC）
+
+联合r1/PID96997正在第17/30轮，继续原bfc181b4配置。结果出来前暂停新候选训练和实现扩展；3caffc7a已实现的upper入口保留待用，不自动启动。完整r1−r2按原75 DEV/5日志配对收口，再依用户两条策略推进：joint明确帮助时研究open/structured surface + constructive ray-support与独立upper PEFT；几乎无帮助时优先surface representation + constructive ray supervision，不继续投入DINOv3/full FT。证据不确定时不宣称视觉无用，先聚焦已知表面/沿束支持问题。near-boundary free暂后置。
+
+六项判断在计划revision7第18节逐项区分事实与假设：固定genus-zero是事实，闭合与UNKNOWN冲突、局部collapse/stretch的原因仍未证明；已有target→surface吸引，尚缺明确的正确沿束支持构造约束。r1−r2检验整条视觉几何路径及其辅助监督，不唯一定位某层表示。没有新质量结果、训练或评价run；20新日志未读。关联V73-F01/F02/F03/F04/F05/F06/F09，failure_ledger_delta=none，下一V73-F10。
+
+此决策在3caffc7a基础上写入AGENTS、计划与专项报告，三本台账同步提交/push；30分钟自动跟进同步新优先级并保持ACTIVE，正常无变化时安静，完成不关机。
+
+---
+
 ## 上层LoRA训练/恢复入口接入，未启动正式实验（2026-09-09 01:24 UTC）
 
 基于3c824f96，训练入口新增默认关闭的`--upper-lora`；开启时把18–23组qkv LoRA加入DPT/Query优化器，逐步重算全窗口后选择Actor输入。checkpoint保存upper_config/upper_adapter并支持相同定义的resume，固定推理按checkpoint恢复同一通路。旧配置走原路径；正在运行的Q-v2 r1仍使用bfc181b4已加载代码与原配置，没有开启上层适配。
