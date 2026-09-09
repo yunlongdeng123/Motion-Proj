@@ -542,3 +542,4 @@ failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；
 
 ---
 
+18.9实际执行（2026-09-09 06:44 UTC）：一次解析/真实FIT检查通过，ray项在miss时具有几何梯度，位置/法向/高度通路有效；不是完整质量或first-hit保证。r4 code28ac577a/PID123769 fresh启动，489 initial done、第1轮10真实更新/0跳步；保持登记配置，完整final后一次收口r3/r2/R8。检查及运行证据见RAY_SUPPORT报告，failure_ledger_delta=none，20新日志未读、30分钟ACTIVE。

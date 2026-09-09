@@ -1,0 +1,78 @@
+{
+  "status": "done",
+  "code_commit": "28ac577ad4e53be3c8ef38e07b13276e0888d8de",
+  "synthetic": {
+    "literal_miss": true,
+    "event_nll": 28.0,
+    "event_gradient_norm": 0.0,
+    "event_statistics": {
+      "supervised_rays": 1,
+      "no_support_rays": 1,
+      "capped_rays": 1,
+      "mean_geometric_return_mass": 0.0
+    },
+    "isotropic_nearest_error_m": 0.0,
+    "finite_difference_absolute_error": 1.5579892931327777e-10,
+    "ray_loss_before_m": 3.3333333333333335,
+    "ray_loss_after_m": 3.311111111111111,
+    "ray_gradient_norm": 4.714045207910317,
+    "lateral_before_m": 0.5,
+    "lateral_after_m": 0.49666666666666665,
+    "boundary": "one missed, off-axis triangle; local derivative away from face switches, not a guarantee on arbitrary meshes"
+  },
+  "real_fit": {
+    "actor": {
+      "scene": "scene-0626",
+      "log_id": "01ebe4444f624b4699ec6bf58837b153",
+      "role": "fit",
+      "owner": "055e6afb9b1143a68f69a181b7f266e4",
+      "category": "vehicle.car",
+      "unique_projected_build_points": 3,
+      "observed_views": 3,
+      "camera_channels": [
+        "CAM_BACK"
+      ],
+      "nearest_camera_m": 41.110491890678276,
+      "window_duration_s": 2.550218,
+      "translation_speed_mps": 0.13348618025670475,
+      "source_has_camera_lidar_correspondence": true,
+      "selection": "all known rigid tracks with pose at build LiDAR time; missing inputs retained",
+      "build_points": 3,
+      "actual_views": 24,
+      "heldout_frames": 2,
+      "heldout_actor_returns": 0,
+      "status": "ready",
+      "file": "scene-0626__055e6afb9b1143a68f69a181b7f266e4.pt"
+    },
+    "owned_returns": 5,
+    "sampled_owned_returns": 5,
+    "coverage_m": 0.006435111165046692,
+    "free_m": 0.005458992440253496,
+    "ray_support_m": 0.010924695059657097,
+    "ray_statistics": {
+      "count": 5,
+      "unavailable": null,
+      "lateral_ratio": 6.666666666666667,
+      "lateral_m": 0.000395424198359251,
+      "parallel_abs_m": 0.01048211008310318
+    },
+    "ray_only_gradient_norms": {
+      "normal": 1.1811299324035645,
+      "height": 0.5682498812675476,
+      "position": 25.316831588745117
+    },
+    "combined_gradient_norm_before_clip": 40.411964416503906,
+    "combined_loss": 0.02013656310737133,
+    "optimizer_updates": 1,
+    "vertex_max_change_m": 0.007959842681884766
+  },
+  "wall_s": 2.2730885799974203,
+  "peak_gpu_gib": 0.087677001953125,
+  "peak_rss_gib": 1.4103240966796875,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03"
+  ],
+  "failure_ledger_delta": "none; new gradient path check only",
+  "boundary": "no DEV or new-log evaluation, no visual training; scratch optimizer not reused by formal training"
+}

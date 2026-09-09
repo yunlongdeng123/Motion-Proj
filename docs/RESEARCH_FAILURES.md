@@ -1,3 +1,15 @@
+## 射线吸引检查通过，r4正式训练启动（2026-09-09 06:44 UTC）
+
+代码28ac577a的一次检查done：离轴未命中三角的原event NLL=28、位置梯度0；新ray项3.333333→3.311111m，横向.500000→.496667m，梯度范数4.714045。alpha=1欧氏最近点误差0，非切换坐标有限差分误差1.56e−10。真实首个ready FIT（scene-0626/055e6afb9b1143a68f69a181b7f266e4）5条owned返回，新项.010925m，ray-only法向/高度/位置梯度1.181130/.568250/25.316832；联合一次更新最大顶点变化.007960m。2.273089s、GPU.087677GiB、RSS1.410324GiB。未读取DEV/新日志，检查不等于质量提升、不能解除F03；不复用检查权重。
+
+WS-V73-Q-V2-01/20260909T063700Z__open-charts-lidar-ray-support-s7304-r4已于06:43:05 UTC fresh启动，code28ac577a/PID123769。06:44:44快照完整489对象initial done、第1/30轮、10实际更新/10呈现/0跳步，已记录有效ray监督；GPU峰值当时.195063GiB，盘余67GiB，无资源短缺。30轮预期11130更新，未完成；不把initial或训练采样loss当最终收益。
+
+同r3开放表示、原coverage/finite-beam/box和数据/优化器不变，新项权重1、横向比例20/3、最多1024 owned束，独立CUDA RNG7305另存/恢复。首个正式step的原coverage1.536066m/free.656263m与r3首步一致；新项7.765499m参与真实反传。此单步一致不是全训练等价性证明。无DPT或视觉前缀，20新日志质量未读；upper/DINOv3/full FT和near-boundary free继续后置。
+
+证据autoresearch/worldsim_v73/ray_support/{path_check_r1,r4_started,r4_started_manifest}.json，定义与组件图见WORLDSIM_V7_3_RAY_SUPPORT.md。完整final后仅运行一次summarize_worldsim_v73_ray_support_r4.sh，对照r3为主并附r2/R8；本次尚未收口r4。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，旧风险仍active、下一V73-F10。三本台账/计划/报告同步push，30分钟ACTIVE、完成不关机。
+
+---
+
 ## 射线条件曲面吸引实现与r4登记（2026-09-09 06:37 UTC）
 
 基于r3收口8b012af1，保持64开放chart/1024顶点/1152面，只新增真实返回条件的各向异性最近面吸引。delta按只读射线方向分解，min_surface ||(20/3)*delta_perp+delta_parallel||，单位米、权重1；原coverage+.5beam(.03m/res32)+.05box保持。64ray×512face分块，完整度量最优重心停止梯度后按包络定理反传实际顶点；未命中仍可拉动非空表面，但不保证首交点/正面积或空拓扑出生。不是新的event概率模型或未知FREE。

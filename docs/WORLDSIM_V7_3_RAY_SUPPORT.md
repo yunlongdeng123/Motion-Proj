@@ -1,5 +1,7 @@
 # 射线条件的显式曲面吸引
 
+**当前（2026-09-09 06:44 UTC）：必要检查done，r4正式训练running。** code28ac577a/PID123769，完整489 initial done，第1/30轮10实际更新/0跳步；最终质量pending，完整执行证据见文末。下方登记时的pending为历史。
+
 2026-09-09 06:37 UTC。实现与独立对照登记，检查和正式质量结果pending；基于r3结果提交8b012af1。任务WS-V73-Q-V2-01，run `20260909T063700Z__open-charts-lidar-ray-support-s7304-r4`。
 
 ![实际组件](autoresearch/worldsim_v73/ray_support/V73_RAY_SUPPORT_ARCHITECTURE.png)
@@ -35,3 +37,15 @@ r3开放chart与闭合LiDAR r2没有建立共同优势，对R8仍是missing下�
 正式入口`scripts/run_worldsim_v73_ray_support_r4.sh`。检查结果和实际运行状态另记，当前pending；收口入口`scripts/summarize_worldsim_v73_ray_support_r4.sh`，仅完整final结束后运行一次。若没有共同物理/覆盖收益，依据保存支持分解决定几何/沿束约束下一项，不进行alpha/weight网格，也不回到upper/DINOv3/full FT。
 
 failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none at registration。旧风险保持，未证实解决F03，下一V73-F10；三本台账与计划同步，小步push、30分钟ACTIVE、完成不关机。
+
+## 实际执行
+
+代码28ac577a的一次检查done：离轴未命中三角的原event NLL=28、位置梯度0；新ray项3.333333→3.311111m，横向.500000→.496667m，梯度范数4.714045。alpha=1欧氏最近点误差0，非切换坐标有限差分误差1.56e−10。真实首个ready FIT（scene-0626/055e6afb9b1143a68f69a181b7f266e4）5条owned返回，新项.010925m，ray-only法向/高度/位置梯度1.181130/.568250/25.316832；联合一次更新最大顶点变化.007960m。2.273089s、GPU.087677GiB、RSS1.410324GiB。未读取DEV/新日志，检查不等于质量提升、不能解除F03；不复用检查权重。
+
+WS-V73-Q-V2-01/20260909T063700Z__open-charts-lidar-ray-support-s7304-r4已于06:43:05 UTC fresh启动，code28ac577a/PID123769。06:44:44快照完整489对象initial done、第1/30轮、10实际更新/10呈现/0跳步，已记录有效ray监督；GPU峰值当时.195063GiB，盘余67GiB，无资源短缺。30轮预期11130更新，未完成；不把initial或训练采样loss当最终收益。
+
+同r3开放表示、原coverage/finite-beam/box和数据/优化器不变，新项权重1、横向比例20/3、最多1024 owned束，独立CUDA RNG7305另存/恢复。首个正式step的原coverage1.536066m/free.656263m与r3首步一致；新项7.765499m参与真实反传。此单步一致不是全训练等价性证明。无DPT或视觉前缀，20新日志质量未读；upper/DINOv3/full FT和near-boundary free继续后置。
+
+证据autoresearch/worldsim_v73/ray_support/{path_check_r1,r4_started,r4_started_manifest}.json，定义与组件图见WORLDSIM_V7_3_RAY_SUPPORT.md。完整final后仅运行一次summarize_worldsim_v73_ray_support_r4.sh，对照r3为主并附r2/R8；本次尚未收口r4。failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=none，旧风险仍active、下一V73-F10。三本台账/计划/报告同步push，30分钟ACTIVE、完成不关机。
+
+---
