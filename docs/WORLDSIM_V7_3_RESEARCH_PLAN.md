@@ -573,3 +573,13 @@ failure_ledger_delta=update V73-F02 evidence; no new failure ID。20新日志未
 阶段paper已更新为interim r4：11页、18个完成方法的主表，新增r4−r3完整配对表与开放曲面/射线吸引组件图，修正Q-v2“质量pending”旧叙述，纳入联合对照、局部形变与此次支持分解。LaTeX编译成功，无overfull/编译warning；已检查关键页面和图表。表格读取远端完整证据生成，无新推理：本地首次导出缺少旧R11归档，因此转在远端生成表格再编译，没有重跑R11实验。不是arXiv投稿或研究完成，20新日志质量未读。
 
 failure_ledger_delta=update V73-F02 evidence; no new failure ID，20新日志未读、30分钟ACTIVE。
+
+## 首面监督 r6 登记（2026-09-09 12:30 UTC）
+
+在r4同开放曲面/数据/优化预算下，仅将ray-support-kind切为first_surface：owned原始返回有字面交点时使用实际最前面距离的绝对误差，miss时使用r4各向异性最近面吸引，按全部采样owned束平均。前面由几何顺序选择，目标不选择后面；无opacity/删面/UNKNOWN标签。离散轮廓切换与近切面大梯度仍存在，沿用原全局clip1。first_surface统计区分首面数与miss数，lateral/parallel统计仅针对miss，不能与r4全束统计直接混比。
+
+登记WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6，pending。64chart/1024顶点/1152面，LiDAR-only、full_track、seed7304 fresh、独立ray RNG7305、30轮11130预期更新；coverage+.5finite-beam(.03m/res32)+.05box+1ray，event/native0，最多1024owned。完整489 initial/final及75 DEV/5日志，20新日志未读。本次先一次必要梯度检查，再正式启动；不复用检查权重。r5是固定支持诊断，不是训练编号缺失。
+
+主比较r6−r4及r6−r3；完成后选定表面/监督并重新接可训练视觉几何通路做最终Joint/LiDAR对照，不无限扩展。用户最终收尾安排保持：最终证据与报告/三本台账push成功、暂停调度、确认无任务后shutdown。现阶段不关机。failure_ledger_refs=[V73-F02,V73-F03,V73-F04]，failure_ledger_delta=none at registration，旧风险未解除。
+
+---

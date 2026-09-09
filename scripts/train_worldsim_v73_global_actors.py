@@ -48,6 +48,7 @@ def main():
     parser.add_argument('--event-width-m',type=float,default=.03)
     parser.add_argument('--event-resolution',type=int,default=32)
     parser.add_argument('--ray-support-weight',type=float,default=0.)
+    parser.add_argument('--ray-support-kind',choices=['closest','first_surface'],default='closest')
     parser.add_argument('--ray-lateral-ratio',type=float,default=20/3)
     parser.add_argument('--ray-support-samples',type=int,default=1024)
     parser.add_argument('--native-data-weight',type=float,default=0.)
@@ -99,7 +100,7 @@ def main():
         'input_boundary':'all predictions read build points/images only; extra-time labels may be used only in fit losses, never development updates',
         'visual_only_boundary':'opt-in admission depends only on zero build LiDAR and available calibrated camera poses, never predicted support or target quality; no-camera empty inputs remain unavailable; unobserved regions are not free space',
         'event_boundary':'optional capped geometry-first-surface NLL on owned subset of the same sampled original beams; all owned misses included at cap, direct coverage/free retained; no opacity or target-selected visibility',
-        'ray_support_boundary':'optional anisotropic closest point on actual triangles; up to ray_support_samples owned first returns from all FIT training rays, separate CUDA RNG seed7305; return multiplicity differs from unique-point coverage; directions read-only, no unknown labels or first-hit guarantee',
+        'ray_support_boundary':'owned original returns, separate CUDA RNG7305; closest: anisotropic nearest surface; first_surface: literal first intersection absolute range error, closest attraction only on miss; no target-selected later hit, opacity or unknown labels; visibility switches remain discrete; return multiplicity differs from unique-point coverage',
         'native_only_boundary':'native_only adapts full original DPT with canonical native+LiDAR PCA fusion; query module supplies fixed patch definition only and is frozen; no-camera/no-gradient presentations are recorded without optimizer step',
         'source_test_read':False,'external_test_read':False,'failure_ledger_refs':['V73-F01','V73-F02','V73-F03','V73-F04','V73-F05','V73-F06','V73-F09']})
     save('status.json',{'status':'running','phase':'load_contexts'})
@@ -182,7 +183,7 @@ def main():
             if bool(resumed['config'].get('upper_lora',False))!=args.upper_lora:
                 raise ValueError('resume不能改变上层适配通路，应另行登记新实验')
             if any(resumed['config'].get(key,default)!=getattr(args,key) for key,default in
-                   [('ray_support_weight',0.),('ray_lateral_ratio',20/3),('ray_support_samples',1024)]):
+                   [('ray_support_weight',0.),('ray_lateral_ratio',20/3),('ray_support_samples',1024),('ray_support_kind','closest')]):
                 raise ValueError('射线监督更改须fresh实验，不能静默作为原配置续训')
             if upper is not None:
                 if any(resumed['upper_config'][key]!=upper.config[key] for key in ['rank','alpha','targets','weights_file']):
@@ -392,7 +393,7 @@ def main():
                     owned_ids=torch.nonzero(positive,as_tuple=False).flatten()
                     chosen_owned=owned_ids[torch.randperm(len(owned_ids),device='cuda',generator=ray_generator)[:args.ray_support_samples]]
                     ray_support,ray_statistics=constructive_ray_support_loss(vertices,faces,origins[chosen_owned],
-                        directions[chosen_owned],ranges[chosen_owned],args.ray_lateral_ratio)
+                        directions[chosen_owned],ranges[chosen_owned],args.ray_lateral_ratio,kind=args.ray_support_kind)
                     ray_statistics['available_owned_returns']=len(owned_ids)
                     del positive,owned_ids,chosen_owned
                 loss=(coverage+args.free_weight*free+.05*envelope+args.native_data_weight*native_loss+

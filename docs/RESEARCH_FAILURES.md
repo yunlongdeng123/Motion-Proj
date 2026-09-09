@@ -1,3 +1,13 @@
+## 首面监督 r6 登记（2026-09-09 12:30 UTC）
+
+在r4同开放曲面/数据/优化预算下，仅将ray-support-kind切为first_surface：owned原始返回有字面交点时使用实际最前面距离的绝对误差，miss时使用r4各向异性最近面吸引，按全部采样owned束平均。前面由几何顺序选择，目标不选择后面；无opacity/删面/UNKNOWN标签。离散轮廓切换与近切面大梯度仍存在，沿用原全局clip1。first_surface统计区分首面数与miss数，lateral/parallel统计仅针对miss，不能与r4全束统计直接混比。
+
+登记WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6，pending。64chart/1024顶点/1152面，LiDAR-only、full_track、seed7304 fresh、独立ray RNG7305、30轮11130预期更新；coverage+.5finite-beam(.03m/res32)+.05box+1ray，event/native0，最多1024owned。完整489 initial/final及75 DEV/5日志，20新日志未读。本次先一次必要梯度检查，再正式启动；不复用检查权重。r5是固定支持诊断，不是训练编号缺失。
+
+主比较r6−r4及r6−r3；完成后选定表面/监督并重新接可训练视觉几何通路做最终Joint/LiDAR对照，不无限扩展。用户最终收尾安排保持：最终证据与报告/三本台账push成功、暂停调度、确认无任务后shutdown。现阶段不关机。failure_ledger_refs=[V73-F02,V73-F03,V73-F04]，failure_ledger_delta=none at registration，旧风险未解除。
+
+---
+
 ## 最新用户终点：完成视觉重接对照后结束 V7.3（2026-09-09）
 
 本条覆盖此前“完成不关机/继续参考方案”的安排。先补完当前首个可见表面监督候选，再将可训练 visual foundation 接回选定显式表面，在相同数据、监督与可比训练预算下完成 Joint / LiDAR 对照。视觉侧须有真实可训练几何通路，不能使用冻结最终特征冒充适配；不无限扩展候选，不默认增加 DINOv3/full FT 或 loss 网格。当前首面候选与最终视觉对照仍 pending，不把本次终点登记当实验完成。
