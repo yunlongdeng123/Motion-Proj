@@ -1,3 +1,15 @@
+## 最终确认流程登记，r7正常训练（2026-09-09 13:50 UTC）
+
+13:48只读快照：最终联合r7仍shared_train、第3/30轮，原生DPT与Query均有梯度，GPU占用12452MiB/95%利用率，allocated峰值10.223834GiB；没有失败或资源短缺，保持原配置。此为单步运行状态，不解读为质量改善，不重新执行梯度检查。
+
+固定最终确认入口已准备，尚未执行或读取外部质量。WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，scripts/run_worldsim_v73_final_confirmation.sh：仅r7完整30轮及DEV收口后，顺序评价Joint r7、匹配LiDAR r6、旧窄片LiDAR R8、M1头native融合、LiDAR PCA五个固定方法。原20 AV2日志936对象/878 ready/58缺输入，28路时刻视图，所有缺输入与缺返回保留；同一已准备build-only IRLS米制尺度与标定/轨迹，不改camera映射、不打开新visual-only路径、不做新日志优化或挑epoch。主对照r7−r6，其他为强弱与表示参照；这是真正跨数据集确认，不能写成nuScenes同分布新日志。没有未来训练或网格搜索。
+
+固定表面齐全后，WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，scripts/run_worldsim_v73_final_scene_confirmation.sh：一次CPU BVH组合四个保存模型表面（r7/r6/R8/native融合）及既有background_only/场景LiDAR PCA控制。同20日志、同build雕刻background.npz与逐束只读轨迹，字面全局首交点，不按heldout删除背景/Actor面。场景内置PCA控制与Actor表格的PCA分别按既有实现报告，不混成同一数值。r7−r6主配对保留，完整场景分组/所有原始返回保留；跨域和背景边界仍需按证据报告，不把编辑演示当真值。
+
+分析复用已保存结果，Actor按独立日志汇总六指标及配对区间，场景按原始束汇总日志配对。不提前启动确认、不改运行训练；这次仅准备收尾入口和通用绘图role参数，没有新推理/测试。最终报告纳入正负结果、F02/F03/F04/F09及失败解释，三本台账和GitHub push完成、停自动调度且确认无任务后shutdown。failure_ledger_delta=none at preparation，旧风险active；30分钟跟进持续至收尾。
+
+---
+
 ## 最终联合r7通路检查通过并启动（2026-09-09 13:15 UTC）
 
 一次真实首个ready FIT检查done，code185bc728：24实际DPT视图，115原生框内种子候选、512completion seeds、无LiDAR fallback。仅几何项（coverage/free/box/首面）对四层DPT特征的梯度范数为.00122070/.00250244/.00194550/.00164032，对DPT首project参数梯度188.088562；这些数值未混入辅助depth梯度。辅助项读取3条build测量，.261523m；联合梯度范数789.206299，沿用clip1，一次Adam后DPT参数最大变化1.00285e−5。检查6.219805s、GPU11.874109GiB、RSS2.912842GiB，无DEV/新日志质量读取，scratch权重不复用；有梯度不代表泛化有效。

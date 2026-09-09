@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--analysis', type=Path, required=True)
 parser.add_argument('--output', type=Path, required=True)
 parser.add_argument('--model-label', default='R10')
+parser.add_argument('--role', default='development', help='已有结果中的数据角色，不改变统计或数据选择')
 parser.add_argument('--reference', action='append', default=[], help='保存结果键=图中对照标签')
 parser.add_argument('--protocol-note', default='R5 uses shorter labels and has a disclosed recovery RNG difference; R7/R11 share full-track labels and hard-free semantics.')
 args = parser.parse_args()
@@ -29,7 +30,7 @@ references = [item.split('=', 1) for item in args.reference] if args.reference e
 refs = [item[0] for item in references]
 positions = np.arange(len(refs))
 for ax, (metric, title, scale) in zip(axes.flat, metrics):
-    rows = [data['paired_final_minus'][ref]['development'][metric] for ref in refs]
+    rows = [data['paired_final_minus'][ref][args.role][metric] for ref in refs]
     means = np.array([row['mean_delta'] for row in rows]) * scale
     intervals = np.array([row['bootstrap95'] for row in rows]) * scale
     ax.errorbar(means, positions, xerr=np.stack([means-intervals[:,0], intervals[:,1]-means]),
@@ -42,8 +43,9 @@ for ax, (metric, title, scale) in zip(axes.flat, metrics):
     ax.spines[['top','right']].set_visible(False)
     ax.title.set_fontsize(10)
     ax.tick_params(labelsize=9)
-fig.suptitle(args.model_label+': paired development differences across five logs', fontsize=15, y=.98)
-fig.text(.5,.927,'75 Actors retained; within-Actor observation weights, then independent-log means.',ha='center',fontsize=9)
+cohort=data['stages']['final'][args.role]
+fig.suptitle(args.model_label+': paired '+args.role.replace('_',' ')+' differences across '+str(cohort['logs'])+' logs', fontsize=15, y=.98)
+fig.text(.5,.927,str(cohort['actors'])+' Actors retained; within-Actor observation weights, then independent-log means.',ha='center',fontsize=9)
 fig.text(.5,.034,'Bars: saved 95% log bootstrap intervals (10,000 resamples, seed 7304). No new inference or resampling.',ha='center',fontsize=9)
 fig.text(.5,.014,args.protocol_note,ha='center',fontsize=8.5)
 fig.subplots_adjust(left=.11,right=.98,top=.86,bottom=.14,wspace=.48,hspace=.48)
