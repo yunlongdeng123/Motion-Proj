@@ -1,3 +1,17 @@
+## Q-v2 joint r1收口：优先表面表示与沿束支持（2026-09-09 04:40 UTC）
+
+Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。
+
+task WS-V73-Q-V2-01/run `20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`，code bfc181b4、分析50222d3e。30轮11130实际更新、零跳步/恢复，完整489对象最终评价done；75 DEV/5日志含23无owned、8空预测。hit/early/miss/free/distance/recall=.284584/.269437/.302179/.179303/.188367/.594776。相对R12 miss−34.9277pp，但early+21.3014pp/free+.118729m/recall−16.7426pp，这四项区间不跨0；不能把减少缺失写成正确表面。耗时22410.642356s、GPU11.591165GiB、RSS34.133816GiB、checkpoint412177558字节；训练/最终评估均已退出。
+
+完整六指标及对照区间、训练过程、FIT/移动DEV限制见`docs/WORLDSIM_V7_3_QV2_SHARED_MESH.md`文末，证据`docs/autoresearch/worldsim_v73/qv2/shared_mesh_joint_r1_{summary,final_manifest,analysis,training}.json`和两图。只执行一次收口分析，两图已目视检查；原始checkpoint和表面保留。
+
+接下来先做固定网格局部变形及r1沿束支持诊断，复用r2 support-r3，之后选open/structured surface和constructive监督；不重复旧bootstrap，不重推理取证，不以模板作GT或两层交点作自交。已查PyTorch3D/Open3D官方实现及AtlasNet一手资料，迁移边界见报告。现有可训练几何路径保留，但不投入upper PEFT/DINOv3/full FT；near-boundary free后置。20新日志质量未读，30分钟ACTIVE，完成不关机。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。三本台账、计划、AGENTS与专项报告同里程碑提交/push。
+
+---
+
 ## 用户条件策略覆盖：先等Q-v2结果（2026-09-09 01:47 UTC）
 
 联合r1/PID96997正在第17/30轮，继续原bfc181b4配置。结果出来前暂停新候选训练和实现扩展；3caffc7a已实现的upper入口保留待用，不自动启动。完整r1−r2按原75 DEV/5日志配对收口，再依用户两条策略推进：joint明确帮助时研究open/structured surface + constructive ray-support与独立upper PEFT；几乎无帮助时优先surface representation + constructive ray supervision，不继续投入DINOv3/full FT。证据不确定时不宣称视觉无用，先聚焦已知表面/沿束支持问题。near-boundary free暂后置。

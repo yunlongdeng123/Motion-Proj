@@ -482,3 +482,9 @@ Q-v2 r1在01:15 UTC第15轮正常，仍按原bfc181b4配置运行；上层实验
 若5日志证据仍宽或冲突，结论写“视觉增量尚不确定”，不能把区间跨0当等效性或无帮助证明；研究资源先聚焦已知的表面/沿束支持问题。方法选择前20新日志质量不读。候选实施仍先核实一手研究/优秀官方开源，按当前代码迁移；本次仅记录用户条件策略，不开展新的方案搜索或训练。
 
 关联V73-F01/F02/F03/F04/F05/F06/F09；failure_ledger_delta=none。没有新增科学失败或解除旧风险。AGENTS、三本台账、Q-v2/upper报告与30分钟自动跟进规则同步本次方向，原历史准备记录保留。
+
+### 18.3 Q-v2结果后的执行选择（2026-09-09 04:40 UTC）
+
+Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。
+
+r1完整489对象、30轮11130更新done；对照与过程见[Q-v2报告](WORLDSIM_V7_3_QV2_SHARED_MESH.md)文末。先固定网格局部变形和joint沿束支持诊断，复用r2旧统计；依据证据选择开放/结构化表面与构造性沿束监督。不是闭合拓扑原因已证实，也不认为现有target→surface没有吸引梯度。保持原20新日志未读与30分钟跟进，资源无短缺。关联F01/F02/F03/F04/F05/F06/F09；failure_ledger_delta=update V73-F02 evidence; no new failure ID。

@@ -1,5 +1,7 @@
 # V7.3：上层跨视图适配的接口与资源边界
 
+**当前（2026-09-09 04:40 UTC）：upper正式训练继续pending，暂停扩展。** Q-v2 r1−r2未显示明确联合收益，early更差且其余五项区间跨0。按用户策略二先推进表面表示和constructive ray监督，不因本接口存在而启动LoRA/DINOv3/full FT；以下实现准备不是训练结果。
+
 **最新用户决策（2026-09-09 01:47 UTC）：先等Q-v2完整结果。** r1正在第17/30轮；结果前不启动或继续扩展upper LoRA等新候选。joint明确帮助时研究open/structured surface、constructive ray-support与独立upper PEFT；几乎无帮助时优先表面表示与constructive ray supervision，停止向DINOv3/full FT投入。near-boundary free后置；闭合/UNKNOWN与局部collapse/stretch仍是待判别风险。依据与不确定性处理见[计划revision7第18节](WORLDSIM_V7_3_RESEARCH_PLAN.md)，下方准备代码和历史结果不覆盖该决定。
 
 2026-09-09 01:24 UTC。上层LoRA已接入可选训练、checkpoint恢复和固定推理入口；尚未启动正式上层训练，完整24视图传感器反传与GPU峰值待实测。此前CPU交替/梯度检查和本轮保存恢复/真实前缀构造检查均通过，各自证据边界见下文。三角比较已收口，Q-v2共享网格联合r1正在运行，同网格LiDAR r2已完成。两者均未使用本接口；不得把既有结果称为上层适配结果。

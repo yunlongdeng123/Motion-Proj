@@ -1,5 +1,9 @@
 # AGENTS 约定
 
+## Q-v2收口后的当前优先级（2026-09-09 04:40 UTC）
+
+Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。 先诊断保存网格的局部变形/沿束支持，再选开放或结构化表面；不将当前结果解释成闭合因果已证实。下方旧的“等待r1”记录已完成。
+
 ## 最新用户决策：先等Q-v2，再按joint增量选路线（2026-09-09 01:47 UTC）
 
 先等待Q-v2联合r1完整结果并与同网格LiDAR r2收口。结果出来前不启动upper LoRA、near-boundary free、DINOv3/full FT或其他新训练，不继续扩展这些候选的实现；现有上层接口保留为准备代码。30分钟跟进保持ACTIVE，正常无实质变化时安静，不打断当前训练。

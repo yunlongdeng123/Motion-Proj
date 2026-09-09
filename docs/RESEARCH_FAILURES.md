@@ -1,3 +1,17 @@
+## Q-v2 joint r1收口：优先表面表示与沿束支持（2026-09-09 04:40 UTC）
+
+Q-v2联合r1与同网格LiDAR r2均done。r1−r2的early为+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp；hit−2.0905pp、miss+4.6790pp、free+.038779m、单向distance+.026002m、recall−5.3473pp均值方向均较差，但这五项区间跨0。当前整条联合通路没有显示明确的有效增量，不能把跨0当等效性证明，也不能外推所有视觉基础模型无用。按第18节策略二/不确定性分支，下一轮优先surface representation与constructive ray supervision；upper PEFT、DINOv3、full FT不启动，near-boundary free后置。
+
+task WS-V73-Q-V2-01/run `20260908T221500Z__shared-mesh-full-track-beam-s7304-r1`，code bfc181b4、分析50222d3e。30轮11130实际更新、零跳步/恢复，完整489对象最终评价done；75 DEV/5日志含23无owned、8空预测。hit/early/miss/free/distance/recall=.284584/.269437/.302179/.179303/.188367/.594776。相对R12 miss−34.9277pp，但early+21.3014pp/free+.118729m/recall−16.7426pp，这四项区间不跨0；不能把减少缺失写成正确表面。耗时22410.642356s、GPU11.591165GiB、RSS34.133816GiB、checkpoint412177558字节；训练/最终评估均已退出。
+
+完整六指标及对照区间、训练过程、FIT/移动DEV限制见`docs/WORLDSIM_V7_3_QV2_SHARED_MESH.md`文末，证据`docs/autoresearch/worldsim_v73/qv2/shared_mesh_joint_r1_{summary,final_manifest,analysis,training}.json`和两图。只执行一次收口分析，两图已目视检查；原始checkpoint和表面保留。
+
+接下来先做固定网格局部变形及r1沿束支持诊断，复用r2 support-r3，之后选open/structured surface和constructive监督；不重复旧bootstrap，不重推理取证，不以模板作GT或两层交点作自交。已查PyTorch3D/Open3D官方实现及AtlasNet一手资料，迁移边界见报告。现有可训练几何路径保留，但不投入upper PEFT/DINOv3/full FT；near-boundary free后置。20新日志质量未读，30分钟ACTIVE，完成不关机。
+
+failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。三本台账、计划、AGENTS与专项报告同里程碑提交/push。
+
+---
+
 ## 用户条件策略覆盖：先等Q-v2结果（2026-09-09 01:47 UTC）
 
 联合r1/PID96997正在第17/30轮，继续原bfc181b4配置。结果出来前暂停新候选训练和实现扩展；3caffc7a已实现的upper入口保留待用，不自动启动。完整r1−r2按原75 DEV/5日志配对收口，再依用户两条策略推进：joint明确帮助时研究open/structured surface + constructive ray-support与独立upper PEFT；几乎无帮助时优先surface representation + constructive ray supervision，不继续投入DINOv3/full FT。证据不确定时不宣称视觉无用，先聚焦已知表面/沿束支持问题。near-boundary free暂后置。
@@ -1691,6 +1705,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 观察：目前单卡 RTX3090 24GB；cgroup 内存90GiB、CPU14核，旧文首宿主755GB不能当训练预算。尚未有 V7.3 OOM。来源/迁移：VGGT 官方多层 DPT 与分块、Deformable DETR 稀疏采样；禁止全图 dense query attention，kNN 建图另报成本。最小辨别：真实 DPT 更新的峰值与耗时，再测必要 LoRA；证据=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 13.1，base=`63626e8d`。不因3090存在就提前认定失败或退回路线A。
 
 ### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
+
+- Q-v2联合r1收口（2026-09-09 04:40 UTC）：同网格r1−r2 early+7.4536pp，95%日志配对区间[+1.1217,+17.7188]pp，其余五项均值较差但区间跨0；相对R12减少miss却增加early/free并降低recall。当前联合路径未显示明确有效增量，不能推导所有视觉无用或闭合拓扑为唯一原因。按用户策略二优先表面表示/constructive ray监督，局部collapse/stretch待固定网格统计。30轮11130更新、完整489最终评价done；证据qv2/shared_mesh_joint_r1_*及Q-v2报告，code bfc181b4。F02保持active，无新失败ID。
 
 - Q-v2 support-r3（2026-09-08 23:55 UTC）：r2 early19.4901%中仅6.5867个百分点有后方正确交点，另12.9034个百分点无正确沿束支持；late24.4222%。仅剔除早表面或加free不能保证正确返回。固定r2/R8、75 DEV、11886 owned束，见qv2/support_r3；不以两层交点认定自交、不归因背景全束，联合r1继续。
 
