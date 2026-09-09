@@ -28,6 +28,6 @@ py=/root/autodl-tmp/envs/motionproj/bin/python
   --reference "native_fusion=$out/native_fusion" --reference "lidar_pca=$out/lidar_pca" --output "$out/analysis.json"
 "$py" scripts/plot_worldsim_v73_joint_r10_pairs.py --analysis "$out/analysis.json" \
   --output "$out/V73_FINAL_EXTERNAL20_PAIRS" --role external_confirmation --model-label 'Final Joint r7' \
-  --reference 'lidar_r6=Matched LiDAR r6' --reference 'lidar_r8=Narrow LiDAR R8' \
+  --reference 'lidar_r6=LiDAR r6' --reference 'lidar_r8=Narrow R8' \
   --reference 'native_fusion=Native fusion' --reference 'lidar_pca=LiDAR PCA' \
   --protocol-note 'Fixed weights and build-only inputs; cross-dataset AV2 confirmation, no adaptation or model selection.'

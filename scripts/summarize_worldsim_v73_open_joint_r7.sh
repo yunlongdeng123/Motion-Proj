@@ -18,7 +18,7 @@ archive=docs/autoresearch/worldsim_v73/ray_support
   --output "$archive/V73_OPEN_JOINT_R7_TRAINING" --model-label 'Open joint r7'
 "$python_bin" scripts/plot_worldsim_v73_joint_r10_pairs.py --analysis "$run/analysis.json" \
   --output "$archive/V73_OPEN_JOINT_R7_PAIRS" --model-label 'Open joint r7' \
-  --reference 'first_surface_r6=Matched LiDAR r6' --reference 'closed_joint_r1=Closed joint r1' --reference 'lidar_r8=Narrow R8' \
+  --reference 'first_surface_r6=LiDAR r6' --reference 'closed_joint_r1=Closed r1' --reference 'lidar_r8=Narrow R8' \
   --protocol-note 'Same r6 surface/objective/budget; Joint adds native seeds, trainable DPT features and build-depth auxiliary supervision.'
 cp "$run/summary.json" "$archive/open_joint_r7_summary.json"
 cp "$run/manifest.json" "$archive/open_joint_r7_final_manifest.json"

@@ -1,3 +1,17 @@
+## 最终联合r7收口：开发几何增益成立，物理风险仍在（2026-09-09 19:00 UTC）
+
+最终开发对照r7−r6显示联合几何增益：hit+10.5363pp（95%日志配对区间[+6.4624,+14.6212]pp，5/5改善），miss−4.3793pp（[−9.3948,−.2924]pp，4/5），测量→表面distance−.079399m（[−.187384,−.009326]m，4/5）。early−1.5225pp（[−5.7790,+2.7510]pp）、free+.042022m（[−.000489,+.069738]m）、recall+8.4288pp（[−.7072,+23.9799]pp）三项区间跨0。free四日志变差，不能用不显著掩盖其风险，也不能把此结果归类为Joint≈LiDAR或全部失败。当前仅支持联合通路对开发几何与正确首返回有增量；完整物理主张和跨域泛化尚待固定确认。
+
+WS-V73-Q-V2-01/20260909T131000Z__open-charts-joint-first-surface-s7304-r7，训练code185bc728，30轮11130实际更新/0跳步/0恢复，489 initial/final完整。75 DEV/5日志，23无owned/8空对象保留；hit/early/miss/free/distance/recall=.496040/.214590/.161786/.279829/.093915/.808715。wall20249.418502s（5.625h）、GPU10.223834GiB、RSS34.127140GiB，744冻结前缀视图；可训练DPT32654562/Query1706413，DPT首project最大变化.005171027。原生辅助173972测量/轮，measurement-weighted Huber .845831→.486418m；几何通路有效不等于所有物理指标改善。
+
+r7汇总已由并行论文任务执行一次（/root/autodl-tmp/paper_r7_summary.log），本任务复用归档，不重复汇总/训练。模型与确认方案已固定：按登记的FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1顺序运行r7/r6/R8/native融合/PCA，随后同固定背景场景评价；不根据新日志调参或再启动候选。当前20新日志的模型质量仍未读取，确认待启动。跨域和背景问题作为结果边界，不能预先宣布论文主假设全部成功。
+
+另有用户正在进行的“更新WorldSim论文与失败切片可视化”任务，负责paper/和paper_forensics，已发送共享文件协调信息；保留其未提交文件，不代为stage/覆盖。它的Blender任务仍运行，最终shutdown必须等待其渲染/论文任务完成以及所有训练/评价/数据任务退出。当前任务继续负责最终确认及三本台账，最终push后再关机，不恢复无限扩展。
+
+证据ray_support/open_joint_r7_{summary,final_manifest,analysis,training}.json及配对/训练/组件图。failure_ledger_delta=update V73-F02/V73-F09 evidence; no new failure ID，F03/F04仍未解除，下一V73-F10。
+
+---
+
 ## 最终确认流程登记，r7正常训练（2026-09-09 13:50 UTC）
 
 13:48只读快照：最终联合r7仍shared_train、第3/30轮，原生DPT与Query均有梯度，GPU占用12452MiB/95%利用率，allocated峰值10.223834GiB；没有失败或资源短缺，保持原配置。此为单步运行状态，不解读为质量改善，不重新执行梯度检查。
