@@ -1,3 +1,15 @@
+## r4收口：吸引改善覆盖但加重物理冲突（2026-09-09 11:06 UTC）
+
+r4射线条件吸引改善了测量附近覆盖，但加重物理冲突。相对同表示r3，miss−7.9868pp、distance−.025294m、recall+3.8844pp，三项95%日志配对区间均不跨0；同时early+14.5768pp、free+.101371m，区间也不跨0。hit+4.9934pp区间[−2.3967,+12.6030]pp跨0，不能宣称正确首交点已可靠改善。r4不作为共同覆盖/物理胜出方法，不把这个结果外推为所有constructive监督无效。
+
+任务WS-V73-Q-V2-01，run20260909T063700Z__open-charts-lidar-ray-support-s7304-r4，训练code28ac577a，30轮11130实际更新/0跳步/0恢复，完整489 initial/final done；汇总仅执行一次。75 DEV/5日志，23无owned/8空保留；hit/early/miss/free/distance/recall=.360696/.307967/.203879/.266536/.154133/.734597。wall2331.936524s（38.87min）、GPU allocated .210189GiB、RSS1.930431GiB、checkpoint12049071字节；无DPT/图像前缀。20新日志质量未读。
+
+下一步登记固定表面支持分解WS-V73-M2-SURFACE-SUPPORT-01/20260909T110600Z__open-charts-r3-ray-r4-support-r5（pending）：只读r3/r4保存三角面和原75 DEV束，按已有八类区分early且后方有正确支持、early且只有邻近支持、early且无正确/邻近支持；不重新神经推理、不改曲面或将后交点替代首返回。此前Q-v2诊断不能代替新参数化的这次判别。结果用于决定应加强首表面归属还是支持位置/方向/范围，不进行alpha/weight网格，也不直接把最近面吸引接回视觉基座。
+
+Point2Mesh BeamGap官方源码已核实，其离散目标/面中心吸引不能等同原始首返回一致性，迁移边界见WORLDSIM_V7_3_RAY_SUPPORT.md。证据ray_support/ray_support_r4_{summary,final_manifest,analysis,training}.json与两图；failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；failure_ledger_delta=update V73-F02 evidence; no new failure ID，下一V73-F10。三本台账/计划/报告同步push；upper/DINOv3/full FT/near-boundary free后置，30分钟ACTIVE、完成不关机。
+
+---
+
 ## 射线吸引检查通过，r4正式训练启动（2026-09-09 06:44 UTC）
 
 代码28ac577a的一次检查done：离轴未命中三角的原event NLL=28、位置梯度0；新ray项3.333333→3.311111m，横向.500000→.496667m，梯度范数4.714045。alpha=1欧氏最近点误差0，非切换坐标有限差分误差1.56e−10。真实首个ready FIT（scene-0626/055e6afb9b1143a68f69a181b7f266e4）5条owned返回，新项.010925m，ray-only法向/高度/位置梯度1.181130/.568250/25.316832；联合一次更新最大顶点变化.007960m。2.273089s、GPU.087677GiB、RSS1.410324GiB。未读取DEV/新日志，检查不等于质量提升、不能解除F03；不复用检查权重。
@@ -1799,6 +1811,8 @@ M0首次push遇到本次开机后旧LocalTUN远端端口消失（connection refu
 观察：目前单卡 RTX3090 24GB；cgroup 内存90GiB、CPU14核，旧文首宿主755GB不能当训练预算。尚未有 V7.3 OOM。来源/迁移：VGGT 官方多层 DPT 与分块、Deformable DETR 稀疏采样；禁止全图 dense query attention，kNN 建图另报成本。最小辨别：真实 DPT 更新的峰值与耗时，再测必要 LoRA；证据=`docs/WORLDSIM_V7_3_RESEARCH_PLAN.md` 13.1，base=`63626e8d`。不因3090存在就提前认定失败或退回路线A。
 
 ### V73-F02 — 自由生成可能后退、消失或收缩来逃避 free
+
+- 射线吸引r4（2026-09-09 11:06 UTC）：r4射线条件吸引改善了测量附近覆盖，但加重物理冲突。相对同表示r3，miss−7.9868pp、distance−.025294m、recall+3.8844pp，三项95%日志配对区间均不跨0；同时early+14.5768pp、free+.101371m，区间也不跨0。hit+4.9934pp区间[−2.3967,+12.6030]pp跨0，不能宣称正确首交点已可靠改善。r4不作为共同覆盖/物理胜出方法，不把这个结果外推为所有constructive监督无效。 code28ac577a，RAY_SUPPORT报告与ray_support_r4_*。下一固定分解r5区分错误首面与后方支持，当前总量不能唯一诊断因果；保持active，无新ID。
 
 - 开放chart r3补充（2026-09-09 06:29 UTC）：相对闭合LiDAR r2，开放chart r3六项区间均跨0，没有建立优势或等效。相对旧窄片R8，miss−28.4589pp（区间[−40.4369,−16.4809]pp），free+.130846m（[+.003899,+.294775]m）；hit+.0734pp、early+10.6289pp、单向distance−.050126m、recall−2.3699pp均跨0。开放支持仍未同时改善覆盖和物理，不能将此前冲突唯一归因闭合，也不能宣称所有开放表示失败。 相对initial更少early/free却更多miss/更低recall，四项区间不跨0。code72607d0c、OPEN_CHARTS报告与open_charts_lidar_r3_*；保持active，无新ID。
 

@@ -543,3 +543,13 @@ failure_ledger_refs=[V73-F01,V73-F02,V73-F03,V73-F04,V73-F05,V73-F06,V73-F09]；
 ---
 
 18.9实际执行（2026-09-09 06:44 UTC）：一次解析/真实FIT检查通过，ray项在miss时具有几何梯度，位置/法向/高度通路有效；不是完整质量或first-hit保证。r4 code28ac577a/PID123769 fresh启动，489 initial done、第1轮10真实更新/0跳步；保持登记配置，完整final后一次收口r3/r2/R8。检查及运行证据见RAY_SUPPORT报告，failure_ledger_delta=none，20新日志未读、30分钟ACTIVE。
+
+### 18.10 射线吸引结果与首面支持判别（2026-09-09 11:06 UTC）
+
+r4射线条件吸引改善了测量附近覆盖，但加重物理冲突。相对同表示r3，miss−7.9868pp、distance−.025294m、recall+3.8844pp，三项95%日志配对区间均不跨0；同时early+14.5768pp、free+.101371m，区间也不跨0。hit+4.9934pp区间[−2.3967,+12.6030]pp跨0，不能宣称正确首交点已可靠改善。r4不作为共同覆盖/物理胜出方法，不把这个结果外推为所有constructive监督无效。
+
+下一步登记固定表面支持分解WS-V73-M2-SURFACE-SUPPORT-01/20260909T110600Z__open-charts-r3-ray-r4-support-r5（pending）：只读r3/r4保存三角面和原75 DEV束，按已有八类区分early且后方有正确支持、early且只有邻近支持、early且无正确/邻近支持；不重新神经推理、不改曲面或将后交点替代首返回。此前Q-v2诊断不能代替新参数化的这次判别。结果用于决定应加强首表面归属还是支持位置/方向/范围，不进行alpha/weight网格，也不直接把最近面吸引接回视觉基座。
+
+已核实[Point2Mesh官方main](https://raw.githubusercontent.com/ranahanocka/point2mesh/master/main.py)和[BeamGapLoss实现](https://raw.githubusercontent.com/ranahanocka/point2mesh/master/models/losses.py)：其预计算离散投影目标，拉动面中心，按早期迭代调度与Chamfer/法向项切换；这不是本任务原始首返回的遮挡归属监督，不能原样复制并声称修复first-hit。优先复用现有显式首面读出，结合固定支持分解制定下一候选；仍须区分有梯度、几何更近、首返回正确三件事。
+
+failure_ledger_delta=update V73-F02 evidence; no new failure ID。20新日志未读、30分钟ACTIVE。
