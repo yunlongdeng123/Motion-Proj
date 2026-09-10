@@ -1,91 +1,24 @@
-# V74 方法竞争：配置已冻结，真实留出评价进行中
+# V74 当前状态：NO_SURVIVOR / 已冻结
 
-2026-09-10，执行基线 e782b2b4。用户已解除 P0 阶段终点。RTX 3090 24GiB、14 CPU、90GiB 内存；当前没有资源阻断，V74-F02 GPU 状态已解决。P0 结果保持，原始数据不重跑。
+更新：2026-09-11。按原研究计划完成三独立候选最小证据与强控制，首轮均未晋级。WEX=FAIL_NOVELTY；RIF=FAIL_SCIENCE；DCS=FAIL_SCIENCE（合成正例保留，新颖性证据不足）。自动筛选值已填写，人工 verdict 为空。不是GPU或内存阻断。
 
-| task | 当前状态 | 实际证据 |
+- [最终报告与架构图](WORLDSIM_V7_4_RESULTS.md)、[完整质量/成本表](autoresearch/worldsim_v74/final/REAL_RESULTS.md)、[机器可读判定](autoresearch/worldsim_v74/final/decision.json)
+- [详细失败](WORLDSIM_V7_4_FAILURES.md)、[总失败账](RESEARCH_FAILURES.md)、[实验账](EXPERIMENTS.md)
+- [原计划](WorldSim_V74_Method_Tournament_Plan.md)、[实现/数学边界](WORLDSIM_V7_4_METHODS.md)、[运行期间状态历史](archive/2026-09/v74_execution/RESEARCH_STATUS_MILESTONES.md)
+
+| 工作 | 最终状态 | 事实与范围 |
 |---|---|---|
-| WS-V74-RESUME-01 | done | start/resource_resume.json，分支干净、GPU 空闲 |
-| WS-V74-FIT-CALIBRATION-01 | done | nuScenes 129812 / AV2 672669 跨 BUILD 平面比较，epsilon=.174520/.200000m；DEV 质量未读 |
-| WS-V74-METHOD-TOURNAMENT-01 | implementing | WEX/RIF/DCS 独立实现及强控制；43 ready/8 日志 + 23 缺 BUILD 合同对象 |
+| P0 文档/空间/CPU数据 | done | 76文档归档，释放131.802GiB，1425对象准备 |
+| 本数据集FIT定标/训练 | done | nuScenes20 / AV217 FIT日志；C的FULL/NO_DEMAND分别训练 |
+| 真实候选+全部控制 | done | A215 / B172 / C215固定资产；66对象合同保留43ready与23缺BUILD |
+| 解析/固定场/完整3D机制 | done | 80域子系统、80固定P1、80组三维×14方法；原错误版本留档 |
+| 共同几何/外部参考 | done | PCA、V73r6/r7/R8、官方NKSR；原生预算与训练信息单列 |
+| 扩大字典整数参考/事件取证 | done | 80个有限字典；初始/关键事件/首次退化/提议价值保存 |
+| 统一筛选 | NO_SURVIVOR | 所有候选对主域必要控制均不满足共同筛选 |
+| 确认seed/FINAL扩展 | not entered | 无PASS；不重复已淘汰配置或新增第四候选 |
 
-主 seed=7401，确认=7402；输出≤4096三角形；各自 FIT/DEV。真实DEV已经开始读取，C结果见下方当前里程碑，尚无总体裁决；V74-F03 初始冲突图遗漏已修复，V74-F04 登记 WEX 的标准求解器替代/支撑缺失风险。FIT 定标是各自数据内完成，局部平面残差含曲率/轨迹/归属代理误差，不是噪声真值；容差以上仍记冲突。原 nuScenes FINAL 数据缺口 V74-F01 保留。
-OSQP 1.0.4 已安装，SciPy 1.15.3/HiGHS 可用。WEX 域子系统实现及其固定/贪心/MILP/软域控制已经写入；80 个解析约束算例 r1/r2 和两数据集各2对象 FIT pilot 已完成，不能代替完整三维机制与真实验证。公共硬求交/评价接入已有 V73 定义；保存机制算例、初始/事件/最终资产及全部对象分母。详细失败见 [V74 失败过程](WORLDSIM_V7_4_FAILURES.md)。failure_ledger_delta=resolve V74-F02 GPU resource; no science verdict。
+nuScenes 5已曝光DEV日志25ready，AV2 3已曝光DEV日志18ready；各自在本域FIT与DEV，不作跨域要求或全新确认test声明。11ready没有自有QUERY返回保持未定义。新AV2 FINAL10日志仅原始窗口准备，nuScenes全新FINAL身份缺口保留。
 
-WEX 实际证据：解析 multiple_front_constraints 20例中，r2 WEX20/20、贪心13/20、MILP20/20；MILP累计 .143s，WEX .230s。其余有正确候选的解析组贪心/MILP同样成功，不能声明机制不可替代。
-FIT4对象中 WEX/MILP BUILD正确命中分别均为40/41、908/3195、74/74、1145/4208；两个较密对象缺正确候选2242/3009束，域选择无法凭空补齐。WEX计算 .575/45.30/.076/126.40s，MILP .060/.884/.089/2.471s；首个资产与V73首交点读出数值差0。无DEV/FINAL质量读取。
-证据 `autoresearch/worldsim_v74/a_wex/{domain_r1_summary,domain_r2_summary,fit_pilot_results,fit_pilot_resources}.json`。failure_ledger_delta=V74-F03 resolved initial implementation; V74-F04 active hypothesis risk，尚无主方法晋级/淘汰裁决。
+当前服务器RTX3090 24GiB、14CPU、90GiB内存资源足够，完成后所有研究训练/评价任务退出；最终实测见 final/resource_closeout.json。V73保持冻结、旧启动器保持暂停。本轮按科学淘汰规则结束，未触发“资源不足时shutdown加卡”分支。
 
-## B/C 首次实现与 FIT 训练里程碑
-
-执行基线 b08b85d6，尚未读取真实 DEV/FINAL QUERY。RIF 的连续 P1 场/完整区间编译/星形一致细分与 B0 sampled、B1 exact、B2 普通几何误差细分已实现。80个固定场数值机制：false_free_claims=0，mesh–field根差≤4.77e−7m，延拓误差≤1.34e−15；这是数值/表示证据，尚不替代自适应与控制的端到端几何实验。FIT4 pilot 正在完成，首个41返回对象 RIF全中，B1/B2分别漏5/3束；较密对象仍有约束松弛，不作物理保证。
-
-DCS 读取点/局部法向/BUILD射线及 LP alpha/beta/eta，PointNet局部编码输出中心位移、法向偏转、两轴有限尺度；真实八边形定价后做HiGHS整数选择，无透明响应。每数据集每FIT日志固定1个≥8点中位对象：nuScenes20日志/640教师例，AV2 17日志/544例；各自 full/no_demand 模型，均200轮，同初始化与更新预算，分别2000/1800次更新，每个模型14087参数（参数量以training.json为准）。教师只用本数据集 FIT BUILD + FIT额外射线，无DEV/FINAL。第一FIT对象八边形与导出三角的支持/early集合相同。
-
-C 初始调度只轮转前32锚点，修复为在完整排序队列内轮转，固定20×8提议预算不变；r1/r2资产与原代码保存，V74-F05工程项已解决，网络没有重训/挑checkpoint。r2完整无需求/普通增密控制一同完成，BUILD安全仍伴随密对象支撑不足，待相同真实DEV评价，不先宣告胜者。
-
-下一步：43对象/8日志三候选全部必要控制资产；80组三维真表面机制重建；共同强基线。NKSR官方源已下载，CUDA11.8独立环境安装中；PyTorch大文件15s超时已按官方超时说明迁移到续传与180s，V74-F06=环境/网络处理，不是GPU不足。failure_ledger_delta=V74-F05 resolved; V74-F06 active; V74-F04 remains unresolved。
-
-## 固定资产进度与A责任排序更正
-
-A/C各215资产（43对象×5方法）r1已完成，真实DEV QUERY尚未读。B四对象FIT仍在完成密对象求解，三维80例×14方法机制run已启动。公共r6/r7/R8原表面与4096面PCA surfel参考资产已准备172项；历史跨域训练边界单列。
-V74-F07：FIT对象scene-0471__203cea9260874ff78e5e200a866ef44f第23束，正确带内首存储候选24.020634m，而最近候选23.774240m，观测23.871235m。初始A1把面遍历顺序当最近责任，违背对照定义。现按每束候选真实t稳定排序；A真实r1与三维run中的旧A保留但不用于正式裁决，A组将执行一次更正生成r2。物理评价器始终取min(t)，此错误只影响责任初始化/控制，不是查询器改分数。
-无质量驱动调参，当前三候选参数/提议预算保持。新B/C/训练里程碑bdc10313已push。failure_ledger_delta=V74-F07 engineering correction pending corrected assets; V74-F06 install ongoing。
-
-## RIF 数值求解迁移（DEV之前）
-
-原显式松弛QP的FIT4×4结果全部保存。AV2密对象RIF耗时396.16s，超过300s外层预算：只有外层检查耗时，没有限制单次求解；100k级松弛变量使成熟求解器开销主导。按同一凸目标解析消去e=-Hc、s=max(mu-Fc,0)，用SciPy L-BFGS-B求剩余343–727个场系数，所有B控制同样迁移，加入求解回调时间预算。无约束删减/损失改权/新表示。
-同两个FIT粗网格：小对象原/新目标−53.090999094/−53.090999374，大对象651.864226/628.003868；新解.529/10.719s。大对象原QP没有充分求到同目标的最优，不能把其失败当B科学证伪；新解完整H/F残差继续保存。V74-F08=数值成本问题，已迁移，完整FIT r2和43真实对象四控制准备推进。
-旧80例混合机制run已因A排序/B数值版本被中断，保留已完成状态；r2只重建受影响A/B，已完成C几何结果原样复用，余下C继续。没有重复训练C。当前仍无真实DEV/FINAL结果或候选裁决。
-NKSR主wheel续传完成；国内CUDA依赖改直连镜像，实际下载恢复约17MB/s。独立环境继续安装。failure_ledger_delta=V74-F08 numerical migration; V74-F07 corrected assets ongoing; V74-F06 progressing。
-
-## 固定配置进入真实 DEV 评价
-
-执行基线96cef75c。三候选、所有控制的参数与FIT checkpoint已冻结，首次真实DEV读取开始；此前没有读真实DEV质量。只评价已完成的固定资产，A取距离排序修正r2，B取同目标松弛消元版本，C取完整锚点调度版本。43 ready对象与23缺BUILD合同对象共同保留；5个nuScenes/3个AV2日志分别按对象内、日志内、日志间汇总，未知分母保持未知。
-外部NKSR固定官方ks预训练权重，BUILD PCA朝传感器法向、原生0.1m体素、detail_level=0、mise_iter=1，不按DEV选择体素或裁剪面数。其原生面数/训练来源与4096面主比赛分开报告。安装尚在完成，不能把安装完成算作模型成功。
-`autoresearch/worldsim_v74/evaluation/freeze_before_dev.json`保存配置和开始时间。failure_ledger_delta=none；F06外部环境仍处理中，F07/F08修正完整组继续，无候选裁决。
-
-## C真实留出首轮结果：未达到共同晋级门槛
-
-WS-V74-PROBE-EVALUATION-01 / 20260910__C-probe66-r1-s7401完成43 ready+23缺BUILD对象×5控制；ready没有工程缺输出/空面，11对象无自有QUERY返回仍在分母表中。nuScenes按5日志等权：DCS/C1普通增密/C3同网络无需求命中25.936%/26.342%/26.238%，early2.398%/3.837%/3.191%，miss66.777%/65.830%/66.741%；DCS相对C1召回下降2.528pp。DCS的early下降未达3pp，命中增长路径也未达3pp，自由侵入.006740m反而高于C1的.002628m，不能只报early改善。
-AV2自身FIT、3日志DEV：DCS/C1/C3命中26.511%/32.550%/27.722%，miss63.402%/55.022%/62.320%，自由侵入.069451/.075572/.044875m。未要求跨域泛化。C相对无新增片C0改善，无法据此绕过强普通增密与去需求控制。V74-F09登记本轮质量/机制增量不足；最终候选分类待80几何机制与配对日志归因收口，不再按DEV改模型或预算。
-B同目标消元FIT4×4已完成，无工程错误，完整原/新结果都保留。A/B正式资产继续。failure_ledger_delta=add V74-F09; V74-F08 corrected FIT completed; no overall verdict。
-
-## A真实留出：标准同表示控制已解释收益
-
-A责任候选排序更正r2完成215/215资产，66对象合同评价无ready工程缺输出/空面。nuScenes WEX/A1固定/A2贪心命中均34.732%，A3 MILP34.914%；四者early均7.522%，miss53.680%，召回70.826%。AV2四者命中均37.752%、early10.424%、miss42.892%、召回81.307%（保留原始数值微差）。新机制相对任何必要强控制均未通过预定主改善路径。V74-F04从FIT风险进入真实DEV标准方法替代证据；F07更正正式资产已完成。解析冲突20例中的WEX优势不能代替真实必要性，更不能忽略同样能解决且更快的MILP。
-公共参考172资产/264合同对象方法评价完成。原R8中位面数nuScenes4392/AV24568，超过4096，因此只作历史原生质量/成本边界，不能偷偷列入同预算优胜比较；r6/r7历史先验及AV2训练来源同样单列。报告表和配对日志bootstrap原值在evaluation/partial_AC_*；B/80几何机制未结束，未填总体裁决。
-C补充检索PointTriNet官方PointNet局部提议、列生成对偶退化/稳定化一手研究；采用保存的proposal参数、LP/整数事件与中间表面做实际生片价值归因，不在看DEV后加稳定化新机制。NKSR独立CUDA11.8环境依赖已完成，官方源码在编译、ks权重在下载。failure_ledger_delta=V74-F04 real novelty risk confirmed; V74-F07 corrected real assets complete; V74-F06 progressing。
-
-## B真实留出与三候选共同筛选结果
-
-B正式43×4资产完成，峰值RSS0.980GiB/CUDA0.074GiB，1404.1s墙钟/8368.6CPU秒，无工程缺输出、无面预算超限。主nuScenes25对象的RIF100个数值子问题全部报告收敛，末层scaled梯度最大4.45e−5；因此当前主域的负结果不能归为旧松弛QP超时。AV2末层仍有RIF/B0/B1各1对象、B2两对象达到10000迭代上限，保留数值边界。
-nuScenes RIF相对B2普通细分：hit+6.599pp、recall+10.571pp、early+4.820pp、free−0.079m；相对B1同精确区间固定网格：hit+6.040pp、early+5.930pp、free+0.125m；相对B0普通采样：hit−0.586pp、early+5.156pp。所有比较均未通过共同改善路径，不能仅报覆盖改善。AV2相对B2 hit+8.241pp、early+1.621pp；相对B0 hit+2.248pp，两个域均未给本轮门槛降标。
-V74-F10登记RIF覆盖/留出物理取舍；F08同目标数值迁移已形成有效完整主域证据。三个候选当前真实筛选均未通过，但80组完整三维机制及官方NKSR对照尚在完成，统一裁决未填。A/B/C全部初始与关键事件的首次QUERY退化前后引用、射线ID及C逐提议实际价值已保存，不回流方法。failure_ledger_delta=add V74-F10; V74-F08 resolved numerical migration with AV2 iteration limits retained。
-
----
-
-# P0 完成时的历史状态
-
-日期：2026-09-10。分支 `research/worldsim-v7.4-method-tournament` 从 V73 最终 `01af4739` 建立；文档里程碑 d6bea861、存储里程碑 463ef199 均已 push；数据执行基线 463ef199。
-
-| task | 状态 | 真实结果 |
-|---|---|---|
-| WS-V74-P0-DOCS-01 | done | 76 份非主线文档归档，AGENTS/导航/主计划统一；保留 V73 历史与论文 |
-| WS-V74-P0-STORAGE-01 | done | 清理 4105 项可重建缓存/旧逐帧副本，实际释放 131.802 GiB；最终准备时可用 194.126 GiB |
-| WS-V74-P0-DATA-01 | done | 1425 对象 BUILD/QUERY 分离、1071391 点几何缓存；43 对象/8 日志 probe，另保留 23 缺输入合同对象；AV2 新 FINAL 10 日志原始窗口已下载 |
-| WS-V74-METHOD-TOURNAMENT-01 | pending | 等用户有卡开机；WEX/RIF/DCS 尚未实现训练或取得质量结果 |
-
-| 数据集/角色 | 日志 | 对象 | 有 BUILD | 缺 BUILD | 无自有 QUERY 返回 |
-|---|---:|---:|---:|---:|---:|
-| nuscenes FIT | 20 | 414 | 371 | 43 | 83 |
-| nuscenes DEV | 5 | 75 | 67 | 8 | 23 |
-| av2 FIT | 17 | 807 | 764 | 43 | 96 |
-| av2 DEV | 3 | 129 | 114 | 15 | 23 |
-
-完整细节与命令：[P0 交接报告](WORLDSIM_V74_P0_HANDOFF.md)；机器可读：`autoresearch/worldsim_v74/p0/handoff_summary.json`。
-两数据集分别 FIT 与评价；AV2 新 FINAL 在 `configs/worldsim_v74/av2_final.json`，只有原始文件准备完成，规范坐标转换/测试未执行。
-nuScenes 暂无可证明全新未曝光的最终日志；保留现有域内开发，不能宣称双数据集独立最终确认已经齐备。43/48 的 probe 差额来自部分预定日志可用对象不足，不按留出质量换对象；11 个 probe 对象没有自有 QUERY 返回。
-
-本实例 cgroup 0.5 CPU/2 GiB、GPU 不可访问；CPU 分离导出峰值 0.375 GiB，局部几何峰值 0.097 GiB，无 OOM，无训练/模型评价。
-下一步：完成本里程碑 push，确认所有任务退出后 shutdown；实际回执保存于本次任务本地 outputs。用户有卡开机后按 V74 主计划推进三独立候选与强控制，不恢复 V73 launcher 或旧调度。
-failure_ledger_delta=V74-F02 的 CPU 规避已完成、GPU 资源需求仍 active；V74-F01 仍 active，无新增科学失败/候选裁决。历史：[V73 状态快照](archive/2026-09/pre-v74/V73_RESEARCH_STATUS.md)。
+failure_ledger_delta: F04=WEX FAIL_NOVELTY；F09=DCS FAIL_SCIENCE（局部机制正结果保留）；F10=RIF FAIL_SCIENCE；F06/F11=外部环境/空层导出工程项解决；F01=独立 nuScenes FINAL 身份缺口保留，因无晋级者未进入 FINAL。

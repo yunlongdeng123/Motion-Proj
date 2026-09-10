@@ -1,0 +1,44 @@
+--- a/package/nksr/fields/base_field.py
++++ b/package/nksr/fields/base_field.py
+@@ -11,7 +11,7 @@
+ from abc import ABC
+ import numpy as np
+ from typing import Union, Optional
+-from nksr.svh import SparseFeatureHierarchy
++from nksr.svh import SparseFeatureHierarchy, SparseIndexGrid
+ from nksr.meshing import MarchingCubes
+ from nksr.ext import meshing
+ from nksr import utils
+@@ -157,13 +157,27 @@
+         Returns:
+
+         """
++        # Missing hierarchy levels represent empty support, not missing features to invent.
++        if not any(g is not None and g.num_voxels > 0 for g in self.svh.grids):
++            return MeshingResult(torch.empty((0, 3), device=self.svh.device),
++                                 torch.empty((0, 3), dtype=torch.long, device=self.svh.device))
+         flattened_grids = []
+         for d in range(min(self.svh.depth, max_depth + 1)):
+-            f_grid = meshing.build_flattened_grid(
+-                self.svh.grids[d]._grid,
+-                self.svh.grids[d - 1]._grid if d > 0 else None,
+-                d != self.svh.depth - 1
+-            )
++            grid = self.svh.grids[d]
++            previous = self.svh.grids[d - 1] if d > 0 else None
++            if grid is None:
++                # The native coordinate builder rejects zero rows. Its flattening
++                # operation can construct a valid empty NanoVDB grid by removing
++                # a temporary voxel covered by its child. No voxel reaches the field.
++                seed = SparseIndexGrid.from_ijk_coords(
++                    torch.zeros((1, 3), dtype=torch.int32, device=self.svh.device),
++                    *self.svh.get_grid_voxel_size_origin(d), device=self.svh.device)
++                f_grid = meshing.build_flattened_grid(seed._grid, seed._grid, False)
++                assert f_grid.num_voxels() == 0
++            else:
++                f_grid = meshing.build_flattened_grid(
++                    grid._grid, previous._grid if previous is not None else None,
++                    d != self.svh.depth - 1)
+             if grid_upsample > 1:
+                 f_grid = f_grid.subdivided_grid(grid_upsample)
+             flattened_grids.append(f_grid)

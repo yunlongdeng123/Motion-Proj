@@ -8,12 +8,13 @@ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from motion_proj.worldsim_v74.data import load_build
 from motion_proj.worldsim_v74.common import write_json,save_mesh,evaluate
 from motion_proj.worldsim_v74.c_dcs import geometry_context
-parser=argparse.ArgumentParser();parser.add_argument('--phase',choices=['fit','probe'],required=True);parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--phase',choices=['fit','probe'],required=True);parser.add_argument('--output',type=Path,required=True);parser.add_argument('--reuse',type=Path);args=parser.parse_args()
 args.output.mkdir(parents=True,exist_ok=False);torch.set_num_threads(4);start=time.monotonic()
 cfg=json.loads((ROOT/'configs/worldsim_v74/tournament.json').read_text());source=Path('/root/autodl-tmp/third_party/NKSR-v74');ckpt=source/'checkpoints/ks.pth'
 if args.phase=='fit':cases=json.loads((ROOT/'docs/autoresearch/worldsim_v74/a_wex/fit_pilot_manifest.json').read_text())['cases']
 else:cases=json.loads((Path(cfg['data_root'])/'probe_cohort.json').read_text())['cases']
 method='NKSR_ks_native';rows=[]
+previous={(r['dataset'],r['case_id']):r for r in json.loads((args.reuse/'assets.json').read_text())} if args.reuse else {}
 write_json(args.output/'manifest.json',{'task':'WS-V74-NKSR-REFERENCE-01','phase':args.phase,'methods':[method],'cases':cases,'config':cfg,
     'implementation':str(source),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=source,text=True).strip(),
     'checkpoint':str(ckpt),'checkpoint_origin':'https://huggingface.co/heiwang1997/nksr-checkpoints/resolve/main/checkpoints/ks.pth',
@@ -21,9 +22,13 @@ write_json(args.output/'manifest.json',{'task':'WS-V74-NKSR-REFERENCE-01','phase
     'fixed_native_settings':{'config':'ks','voxel_size_m':.1,'detail_level':0.,'detail_level_note':'explicit voxel size overrides detail_level in official API','mise_iter':1,'solver_max_iter':2000,'solver_tol':1e-5},
     'training_boundary':'official pretrained general reconstruction prior, not retrained on either dataset; this is a common external reference, not evidence of V74 cross-dataset generalization',
     'budget_boundary':'native triangle count retained even above4096 and marked; no post-hoc decimation or hidden crop',
-    'query_loaded':False,'failure_ledger_refs':cfg['failure_ledger_refs']+['V74-F06']})
+    'query_loaded':False,'failure_ledger_refs':cfg['failure_ledger_refs']+['V74-F06'],
+    'reuse':str(args.reuse) if args.reuse else None,'mesher_patch':'third_party/patches/nksr_empty_meshing_levels.patch; only absent hierarchy handling, no learned field change'})
 model=nksr.Reconstructor('cuda',config={'parent':'ks','url':str(ckpt)})
 for case in cases:
+    prior=previous.get((case['dataset'],case['case_id']))
+    if prior is not None and prior['record']['status']!='engineering_error':
+        rows.append(prior);write_json(args.output/'assets.json',rows);continue
     folder=args.output/case['dataset']/case['case_id']/method;folder.mkdir(parents=True)
     b=load_build(Path(case['build_file']).parent);t=time.monotonic()
     try:
@@ -34,7 +39,9 @@ for case in cases:
         else:
             mesh=field.extract_dual_mesh(mise_iter=1);v=mesh.v.cpu().numpy();f=mesh.f.cpu().numpy();status='complete'
         torch.cuda.synchronize();seconds=time.monotonic()-t;save_mesh(folder/'final.npz',v,f)
-        record={'status':status,'method':method,'wall_seconds':seconds,'faces':len(f),'vertices':len(v),'input_points':len(xyz),'face_budget_compliant':len(f)<=cfg['face_budget']}
+        record={'status':status,'method':method,'wall_seconds':seconds,'faces':len(f),'vertices':len(v),'input_points':len(xyz),'face_budget_compliant':len(f)<=cfg['face_budget'],
+            'hierarchy_voxels':[g.num_voxels if g is not None else None for g in field.svh.grids] if field is not None else None,
+            'rerun_reason':'official mesher dereferenced missing hierarchy level' if prior else None}
         if args.phase=='fit':write_json(folder/'build_metrics.json',evaluate(v,f,b,folder/'build_rays.npz'))
         write_json(folder/'reconstruction.json',record)
         del field;torch.cuda.empty_cache()

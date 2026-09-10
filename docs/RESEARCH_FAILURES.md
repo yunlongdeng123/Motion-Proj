@@ -1,3 +1,27 @@
+# V74 最终失败索引（2026-09-11）
+
+**NO_SURVIVOR，冻结本轮。** 人工verdict空；[最终报告](WORLDSIM_V7_4_RESULTS.md)、[机器判定及run清单](autoresearch/worldsim_v74/final/decision.json)、[逐项过程](WORLDSIM_V7_4_FAILURES.md)。以下是各ID当前状态，后文旧阶段文字是演进历史，不重新激活已结束实验。
+
+| ID | 类别 | 最终状态 |
+|---|---|---|
+| V74-F01 | 数据/独立确认 | nuScenes新FINAL身份仍缺；无PASS，未进入扩展 |
+| V74-F02 | 资源 | 有卡恢复，已解决；本轮无OOM/资源停止 |
+| V74-F03 | 工程 | WEX自由约束关联修复，原r1留档 |
+| V74-F04 | 新颖性 | WEX FAIL_NOVELTY，标准控制解释真实收益 |
+| V74-F05 | 工程 | DCS锚点队列遍历修复，预算/网络保持 |
+| V74-F06 | 工程环境 | NKSR独立cu118环境/编译/权重完成 |
+| V74-F07 | 工程 | WEX真实距离责任排序修复，正式r2完成 |
+| V74-F08 | 数值工程 | RIF同目标松弛消元完成；AV2迭代上限仍标注 |
+| V74-F09 | 科学/增量证据 | DCS FAIL_SCIENCE；合成正例保留，eta容量贡献未检验 |
+| V74-F10 | 科学 | RIF FAIL_SCIENCE，覆盖收益伴随超限early |
+| V74-F11 | 外部导出工程 | NKSR8个缺层对象修复，无成功子集筛选；原空面保留 |
+
+failure_ledger_delta: F04=WEX FAIL_NOVELTY；F09=DCS FAIL_SCIENCE（局部机制正结果保留）；F10=RIF FAIL_SCIENCE；F06/F11=外部环境/空层导出工程项解决；F01=独立 nuScenes FINAL 身份缺口保留，因无晋级者未进入 FINAL。
+
+---
+
+## 历史阶段记录与 V73 结论（不覆盖）
+
 # 统一失败账本：V74 当前入口
 
 日期：2026-09-10；有卡研究恢复，执行基线 e782b2b4。本文件保留统一失败 ID、索引和结论，V74 事件详情见 [V74 失败过程](WORLDSIM_V7_4_FAILURES.md)；历史指令不产生当前执行授权。按 ID 渐进式读取，每里程碑同步状态/实验台账。

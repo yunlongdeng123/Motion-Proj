@@ -1,0 +1,93 @@
+{
+  "expanded_dictionary": [
+    {
+      "family": "missing_support",
+      "instances": 20,
+      "integer_status": {
+        "0": 20
+      },
+      "max_mip_gap": 0.0,
+      "physical_build_feasible": 0,
+      "mean_unexplained_build_rays": 5.8,
+      "candidate_count_min_max": [
+        703,
+        778
+      ],
+      "hit_rate_query": 0.3252258438616991,
+      "early_rate_query": 0.0015151515603065492,
+      "miss_rate_query": 0.6732590019702911
+    },
+    {
+      "family": "multi_front",
+      "instances": 20,
+      "integer_status": {
+        "0": 20
+      },
+      "max_mip_gap": 0.0,
+      "physical_build_feasible": 1,
+      "mean_unexplained_build_rays": 3.2,
+      "candidate_count_min_max": [
+        757,
+        889
+      ],
+      "hit_rate_query": 0.696178063750267,
+      "early_rate_query": 0.012266079802066088,
+      "miss_rate_query": 0.28678837828338144
+    },
+    {
+      "family": "redundant_thin",
+      "instances": 20,
+      "integer_status": {
+        "0": 20
+      },
+      "max_mip_gap": 0.0,
+      "physical_build_feasible": 0,
+      "mean_unexplained_build_rays": 9.4,
+      "candidate_count_min_max": [
+        775,
+        865
+      ],
+      "hit_rate_query": 0.3861018672585487,
+      "early_rate_query": 0.0,
+      "miss_rate_query": 0.6138981439173221
+    },
+    {
+      "family": "shared_conflict",
+      "instances": 20,
+      "integer_status": {
+        "0": 20
+      },
+      "max_mip_gap": 0.0,
+      "physical_build_feasible": 8,
+      "mean_unexplained_build_rays": 0.8,
+      "candidate_count_min_max": [
+        733,
+        877
+      ],
+      "hit_rate_query": 0.7228897899389267,
+      "early_rate_query": 0.014643259765580296,
+      "miss_rate_query": 0.252882593870163
+    }
+  ],
+  "dcs_capacity_demand": [
+    {
+      "dataset": "nuscenes",
+      "objects": 25,
+      "pricing_events": 500,
+      "nonzero_capacity_duals": 0,
+      "max_candidate_columns": 174,
+      "max_selected_triangles": 512,
+      "budget_observation": "32 initial +20*8 proposed columns gives <=192 columns or1536 triangles, below4096; eta/capacity role was not exercised; alpha/beta remain the tested demands"
+    },
+    {
+      "dataset": "av2",
+      "objects": 18,
+      "pricing_events": 360,
+      "nonzero_capacity_duals": 0,
+      "max_candidate_columns": 170,
+      "max_selected_triangles": 528,
+      "budget_observation": "32 initial +20*8 proposed columns gives <=192 columns or1536 triangles, below4096; eta/capacity role was not exercised; alpha/beta remain the tested demands"
+    }
+  ],
+  "scope": "read-only diagnosis of fixed completed assets, no candidate budget or score changes"
+}

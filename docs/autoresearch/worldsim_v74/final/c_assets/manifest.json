@@ -1,0 +1,1744 @@
+{
+  "task": "WS-V74-METHOD-TOURNAMENT-01",
+  "run": "20260910__probe43-assets-r1-s7401",
+  "phase": "mini_real_assets",
+  "base_commit": "bdc10313a15a28eb2d77f65e5b89e6e6e9692748",
+  "seed": 7401,
+  "methods": [
+    "DCS",
+    "C0_fixed",
+    "C1_residual",
+    "C2_local_network",
+    "C3_no_demand"
+  ],
+  "config": {
+    "task": "WS-V74-METHOD-TOURNAMENT-01",
+    "seed": 7401,
+    "confirmation_seed": 7402,
+    "data_root": "/root/autodl-tmp/data/worldsim_v74/p0_r1",
+    "face_budget": 4096,
+    "hit_band_m": 0.2,
+    "dataset_parameters": {
+      "nuscenes": {
+        "epsilon_obs_m": 0.1745198741555214,
+        "point_spacing_m": 0.03922037380180133,
+        "carrier_half_width_m": 0.15688149520720532
+      },
+      "av2": {
+        "epsilon_obs_m": 0.2,
+        "point_spacing_m": 0.03126779549551398,
+        "carrier_half_width_m": 0.15
+      }
+    },
+    "wex": {
+      "carriers": 64,
+      "grid": 4,
+      "domain_margin": 0.05,
+      "max_outer_iterations": 100,
+      "beam_configurations": 64,
+      "qp_max_iter": 10000,
+      "qp_eps": 1e-05,
+      "wall_seconds": 300,
+      "construction_rounds": 2
+    },
+    "rif": {
+      "initial_grid": 7,
+      "refinement_rounds": 3,
+      "max_nodes": 2500,
+      "wall_seconds": 300,
+      "free_margin": 0.01
+    },
+    "dcs": {
+      "initial_patches": 32,
+      "pricing_rounds": 20,
+      "proposals_per_round": 8,
+      "polygon_sides": 8,
+      "wall_seconds": 300
+    },
+    "fit_only": true,
+    "visual_input": false,
+    "failure_ledger_refs": [
+      "V73-F02",
+      "V73-F03",
+      "V73-F04",
+      "V73-F05",
+      "V73-F09",
+      "V74-F01"
+    ],
+    "dcs_checkpoints": {
+      "nuscenes": {
+        "full": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/nuscenes/full.pt",
+        "no_demand": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/nuscenes/no_demand.pt"
+      },
+      "av2": {
+        "full": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/av2/full.pt",
+        "no_demand": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/av2/no_demand.pt"
+      }
+    }
+  },
+  "cases": [
+    {
+      "case_id": "scene-0919__eb04d999c02e4aaf960a9ae96bce00f1",
+      "dataset": "nuscenes",
+      "log_id": "5bd40b613ac740cd9dbacdfbc3d68201",
+      "scene": "scene-0919",
+      "owner": "eb04d999c02e4aaf960a9ae96bce00f1",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0919__eb04d999c02e4aaf960a9ae96bce00f1.pt",
+      "build_points": 1,
+      "build_frame_ids": [
+        "7af2a84ed5664aaa8015a5352670c982",
+        "4a9a39eae79547848db991d5eeee313d",
+        "9d89067ae94a4fc29c464f0d8dc2dab6"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__eb04d999c02e4aaf960a9ae96bce00f1/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__eb04d999c02e4aaf960a9ae96bce00f1/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__eb04d999c02e4aaf960a9ae96bce00f1/query_truth.npz",
+      "build_rays": 23,
+      "query_rays": 5,
+      "query_owned_returns": 0,
+      "query_frame_ids": [
+        "f660499bce224bb990e3ae46587bd0c0"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0919__abc5cec2e4364b2f87fa4b3f14949b4b",
+      "dataset": "nuscenes",
+      "log_id": "5bd40b613ac740cd9dbacdfbc3d68201",
+      "scene": "scene-0919",
+      "owner": "abc5cec2e4364b2f87fa4b3f14949b4b",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0919__abc5cec2e4364b2f87fa4b3f14949b4b.pt",
+      "build_points": 2,
+      "build_frame_ids": [
+        "7af2a84ed5664aaa8015a5352670c982"
+      ],
+      "build_sample_indices": [
+        1
+      ],
+      "translation_speed_mps": null,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__abc5cec2e4364b2f87fa4b3f14949b4b/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__abc5cec2e4364b2f87fa4b3f14949b4b/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__abc5cec2e4364b2f87fa4b3f14949b4b/query_truth.npz",
+      "build_rays": 28,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0919__4d85967bcc764c85a1839e74ebddb51d",
+      "dataset": "nuscenes",
+      "log_id": "5bd40b613ac740cd9dbacdfbc3d68201",
+      "scene": "scene-0919",
+      "owner": "4d85967bcc764c85a1839e74ebddb51d",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0919__4d85967bcc764c85a1839e74ebddb51d.pt",
+      "build_points": 3,
+      "build_frame_ids": [
+        "7af2a84ed5664aaa8015a5352670c982"
+      ],
+      "build_sample_indices": [
+        1
+      ],
+      "translation_speed_mps": null,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__4d85967bcc764c85a1839e74ebddb51d/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__4d85967bcc764c85a1839e74ebddb51d/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__4d85967bcc764c85a1839e74ebddb51d/query_truth.npz",
+      "build_rays": 53,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0919__ceff294804854a3c978300051e4a343c",
+      "dataset": "nuscenes",
+      "log_id": "5bd40b613ac740cd9dbacdfbc3d68201",
+      "scene": "scene-0919",
+      "owner": "ceff294804854a3c978300051e4a343c",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0919__ceff294804854a3c978300051e4a343c.pt",
+      "build_points": 65,
+      "build_frame_ids": [
+        "7af2a84ed5664aaa8015a5352670c982",
+        "4a9a39eae79547848db991d5eeee313d",
+        "9d89067ae94a4fc29c464f0d8dc2dab6",
+        "6b849f66b0974bff9cd073b4c70b23cb"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.22232084191238044,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__ceff294804854a3c978300051e4a343c/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__ceff294804854a3c978300051e4a343c/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__ceff294804854a3c978300051e4a343c/query_truth.npz",
+      "build_rays": 634,
+      "query_rays": 267,
+      "query_owned_returns": 36,
+      "query_frame_ids": [
+        "f660499bce224bb990e3ae46587bd0c0",
+        "7110a0d148fa40e3baf92bd9a2f9cce4"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0919__8403683d59554ee9b23122079c7f1237",
+      "dataset": "nuscenes",
+      "log_id": "5bd40b613ac740cd9dbacdfbc3d68201",
+      "scene": "scene-0919",
+      "owner": "8403683d59554ee9b23122079c7f1237",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0919__8403683d59554ee9b23122079c7f1237.pt",
+      "build_points": 134,
+      "build_frame_ids": [
+        "7af2a84ed5664aaa8015a5352670c982",
+        "4a9a39eae79547848db991d5eeee313d",
+        "9d89067ae94a4fc29c464f0d8dc2dab6",
+        "6b849f66b0974bff9cd073b4c70b23cb"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.12831167742782018,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__8403683d59554ee9b23122079c7f1237/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__8403683d59554ee9b23122079c7f1237/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__8403683d59554ee9b23122079c7f1237/query_truth.npz",
+      "build_rays": 3299,
+      "query_rays": 1491,
+      "query_owned_returns": 76,
+      "query_frame_ids": [
+        "f660499bce224bb990e3ae46587bd0c0",
+        "7110a0d148fa40e3baf92bd9a2f9cce4"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "scene-0919__0d8428e135f54d55b724631c24f60e4e",
+      "dataset": "nuscenes",
+      "log_id": "5bd40b613ac740cd9dbacdfbc3d68201",
+      "scene": "scene-0919",
+      "owner": "0d8428e135f54d55b724631c24f60e4e",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0919__0d8428e135f54d55b724631c24f60e4e.pt",
+      "build_points": 136,
+      "build_frame_ids": [
+        "4a9a39eae79547848db991d5eeee313d",
+        "9d89067ae94a4fc29c464f0d8dc2dab6",
+        "6b849f66b0974bff9cd073b4c70b23cb"
+      ],
+      "build_sample_indices": [
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.100061771466919,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__0d8428e135f54d55b724631c24f60e4e/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__0d8428e135f54d55b724631c24f60e4e/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0919__0d8428e135f54d55b724631c24f60e4e/query_truth.npz",
+      "build_rays": 3013,
+      "query_rays": 1376,
+      "query_owned_returns": 56,
+      "query_frame_ids": [
+        "f660499bce224bb990e3ae46587bd0c0",
+        "7110a0d148fa40e3baf92bd9a2f9cce4"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "scene-1089__13206479ece344ea94386e13be84a8f4",
+      "dataset": "nuscenes",
+      "log_id": "8fefc430cbfa4c2191978c0df302eb98",
+      "scene": "scene-1089",
+      "owner": "13206479ece344ea94386e13be84a8f4",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-1089__13206479ece344ea94386e13be84a8f4.pt",
+      "build_points": 76,
+      "build_frame_ids": [
+        "d77dc97de372425480a70a096ca74acd",
+        "ed049445922a45d9978a84445737e154",
+        "feb84d6727b044809a5fb13f143c4843",
+        "9898700a0faf490d910d5703bd835122"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.12234241414965359,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-1089__13206479ece344ea94386e13be84a8f4/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-1089__13206479ece344ea94386e13be84a8f4/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-1089__13206479ece344ea94386e13be84a8f4/query_truth.npz",
+      "build_rays": 1344,
+      "query_rays": 662,
+      "query_owned_returns": 19,
+      "query_frame_ids": [
+        "dae22c7877f945569dac6a6c58de4adc",
+        "47ca9df04f0c415aa486628bfa67e084"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-1089__cc1739871a724fe085eb6e3048d1008d",
+      "dataset": "nuscenes",
+      "log_id": "8fefc430cbfa4c2191978c0df302eb98",
+      "scene": "scene-1089",
+      "owner": "cc1739871a724fe085eb6e3048d1008d",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-1089__cc1739871a724fe085eb6e3048d1008d.pt",
+      "build_points": 162,
+      "build_frame_ids": [
+        "d77dc97de372425480a70a096ca74acd",
+        "ed049445922a45d9978a84445737e154",
+        "feb84d6727b044809a5fb13f143c4843",
+        "9898700a0faf490d910d5703bd835122"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.0444208778125719,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-1089__cc1739871a724fe085eb6e3048d1008d/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-1089__cc1739871a724fe085eb6e3048d1008d/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-1089__cc1739871a724fe085eb6e3048d1008d/query_truth.npz",
+      "build_rays": 1787,
+      "query_rays": 897,
+      "query_owned_returns": 55,
+      "query_frame_ids": [
+        "dae22c7877f945569dac6a6c58de4adc",
+        "47ca9df04f0c415aa486628bfa67e084"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0519__2c2b567c46d2460baa539d177b454929",
+      "dataset": "nuscenes",
+      "log_id": "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+      "scene": "scene-0519",
+      "owner": "2c2b567c46d2460baa539d177b454929",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0519__2c2b567c46d2460baa539d177b454929.pt",
+      "build_points": 1,
+      "build_frame_ids": [
+        "309a9721e7184261beb804f18d385044",
+        "f93bfd9e73c14756a42d6e44d849db59",
+        "72322fb3df6c4cf0a93cddb8e1778bf9",
+        "0ac766077264454e9fe3f88c441d00ec"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.025023274116357977,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__2c2b567c46d2460baa539d177b454929/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__2c2b567c46d2460baa539d177b454929/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__2c2b567c46d2460baa539d177b454929/query_truth.npz",
+      "build_rays": 6,
+      "query_rays": 4,
+      "query_owned_returns": 0,
+      "query_frame_ids": [
+        "0f36b39b8dea4de68f1641a63343125e",
+        "2dece2e80c704ca399697551a511062f"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0519__973973cbfde34a65abef6b7e41f6f2f9",
+      "dataset": "nuscenes",
+      "log_id": "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+      "scene": "scene-0519",
+      "owner": "973973cbfde34a65abef6b7e41f6f2f9",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0519__973973cbfde34a65abef6b7e41f6f2f9.pt",
+      "build_points": 5,
+      "build_frame_ids": [
+        "309a9721e7184261beb804f18d385044",
+        "f93bfd9e73c14756a42d6e44d849db59",
+        "72322fb3df6c4cf0a93cddb8e1778bf9",
+        "0ac766077264454e9fe3f88c441d00ec"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.12996518077327385,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__973973cbfde34a65abef6b7e41f6f2f9/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__973973cbfde34a65abef6b7e41f6f2f9/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__973973cbfde34a65abef6b7e41f6f2f9/query_truth.npz",
+      "build_rays": 37,
+      "query_rays": 11,
+      "query_owned_returns": 4,
+      "query_frame_ids": [
+        "0f36b39b8dea4de68f1641a63343125e",
+        "2dece2e80c704ca399697551a511062f"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0519__92481beec46d44a6bf163d3931e39465",
+      "dataset": "nuscenes",
+      "log_id": "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+      "scene": "scene-0519",
+      "owner": "92481beec46d44a6bf163d3931e39465",
+      "role": "DEV",
+      "category": "vehicle.truck",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0519__92481beec46d44a6bf163d3931e39465.pt",
+      "build_points": 7,
+      "build_frame_ids": [
+        "309a9721e7184261beb804f18d385044",
+        "f93bfd9e73c14756a42d6e44d849db59",
+        "72322fb3df6c4cf0a93cddb8e1778bf9",
+        "0ac766077264454e9fe3f88c441d00ec"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__92481beec46d44a6bf163d3931e39465/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__92481beec46d44a6bf163d3931e39465/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__92481beec46d44a6bf163d3931e39465/query_truth.npz",
+      "build_rays": 173,
+      "query_rays": 77,
+      "query_owned_returns": 5,
+      "query_frame_ids": [
+        "0f36b39b8dea4de68f1641a63343125e",
+        "2dece2e80c704ca399697551a511062f"
+      ],
+      "build_ambiguous_returns": 7,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0519__240fc5911ea24449a234c9f3efe762ee",
+      "dataset": "nuscenes",
+      "log_id": "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+      "scene": "scene-0519",
+      "owner": "240fc5911ea24449a234c9f3efe762ee",
+      "role": "DEV",
+      "category": "vehicle.truck",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0519__240fc5911ea24449a234c9f3efe762ee.pt",
+      "build_points": 37,
+      "build_frame_ids": [
+        "309a9721e7184261beb804f18d385044",
+        "f93bfd9e73c14756a42d6e44d849db59",
+        "72322fb3df6c4cf0a93cddb8e1778bf9",
+        "0ac766077264454e9fe3f88c441d00ec"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.08543276271513821,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__240fc5911ea24449a234c9f3efe762ee/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__240fc5911ea24449a234c9f3efe762ee/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__240fc5911ea24449a234c9f3efe762ee/query_truth.npz",
+      "build_rays": 92,
+      "query_rays": 49,
+      "query_owned_returns": 13,
+      "query_frame_ids": [
+        "0f36b39b8dea4de68f1641a63343125e",
+        "2dece2e80c704ca399697551a511062f"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0520__050ae9cd51b74b21b4e98b3e88553416",
+      "dataset": "nuscenes",
+      "log_id": "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+      "scene": "scene-0520",
+      "owner": "050ae9cd51b74b21b4e98b3e88553416",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0520__050ae9cd51b74b21b4e98b3e88553416.pt",
+      "build_points": 49,
+      "build_frame_ids": [
+        "c2a52f0a40ee413a872dead309c2df20",
+        "ac16b737276c46fdb4a34d707d491c66",
+        "cd6b4f5eb88a4f7590c29d744dbd6cd0",
+        "7dae85733d7d49449d10dd6defa13e33"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0520__050ae9cd51b74b21b4e98b3e88553416/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0520__050ae9cd51b74b21b4e98b3e88553416/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0520__050ae9cd51b74b21b4e98b3e88553416/query_truth.npz",
+      "build_rays": 187,
+      "query_rays": 98,
+      "query_owned_returns": 33,
+      "query_frame_ids": [
+        "fe72a269726a4f399d64eb29d177bd78",
+        "f9f8b1d1a2f843f6a6909d4e8402e85d"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "scene-0519__c32c9f21ee6b499d9e7fb729c33c5016",
+      "dataset": "nuscenes",
+      "log_id": "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+      "scene": "scene-0519",
+      "owner": "c32c9f21ee6b499d9e7fb729c33c5016",
+      "role": "DEV",
+      "category": "vehicle.truck",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0519__c32c9f21ee6b499d9e7fb729c33c5016.pt",
+      "build_points": 6570,
+      "build_frame_ids": [
+        "309a9721e7184261beb804f18d385044",
+        "f93bfd9e73c14756a42d6e44d849db59",
+        "72322fb3df6c4cf0a93cddb8e1778bf9",
+        "0ac766077264454e9fe3f88c441d00ec"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 5.515934474448842,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__c32c9f21ee6b499d9e7fb729c33c5016/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__c32c9f21ee6b499d9e7fb729c33c5016/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0519__c32c9f21ee6b499d9e7fb729c33c5016/query_truth.npz",
+      "build_rays": 10428,
+      "query_rays": 9634,
+      "query_owned_returns": 6302,
+      "query_frame_ids": [
+        "0f36b39b8dea4de68f1641a63343125e",
+        "2dece2e80c704ca399697551a511062f"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "scene-0359__868692bbf2d54963acf7be203b4ee943",
+      "dataset": "nuscenes",
+      "log_id": "ddc03471df3e4c9bb9663629a4097743",
+      "scene": "scene-0359",
+      "owner": "868692bbf2d54963acf7be203b4ee943",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0359__868692bbf2d54963acf7be203b4ee943.pt",
+      "build_points": 1,
+      "build_frame_ids": [
+        "72bb457fb5af40e8990e28fcc0e27cfa"
+      ],
+      "build_sample_indices": [
+        1
+      ],
+      "translation_speed_mps": null,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__868692bbf2d54963acf7be203b4ee943/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__868692bbf2d54963acf7be203b4ee943/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__868692bbf2d54963acf7be203b4ee943/query_truth.npz",
+      "build_rays": 32,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0359__4b2017e4c90b4e85a7686eec93226348",
+      "dataset": "nuscenes",
+      "log_id": "ddc03471df3e4c9bb9663629a4097743",
+      "scene": "scene-0359",
+      "owner": "4b2017e4c90b4e85a7686eec93226348",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0359__4b2017e4c90b4e85a7686eec93226348.pt",
+      "build_points": 3,
+      "build_frame_ids": [
+        "ee21ad8eaaf744fe9f2a9b5827c67fae"
+      ],
+      "build_sample_indices": [
+        6
+      ],
+      "translation_speed_mps": null,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__4b2017e4c90b4e85a7686eec93226348/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__4b2017e4c90b4e85a7686eec93226348/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__4b2017e4c90b4e85a7686eec93226348/query_truth.npz",
+      "build_rays": 224,
+      "query_rays": 185,
+      "query_owned_returns": 1,
+      "query_frame_ids": [
+        "0f8be4217fd845df97a01f8e6ce1bbbc"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0359__5ff94bf9094345d482550bdab9ee98e0",
+      "dataset": "nuscenes",
+      "log_id": "ddc03471df3e4c9bb9663629a4097743",
+      "scene": "scene-0359",
+      "owner": "5ff94bf9094345d482550bdab9ee98e0",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0359__5ff94bf9094345d482550bdab9ee98e0.pt",
+      "build_points": 3,
+      "build_frame_ids": [
+        "ee21ad8eaaf744fe9f2a9b5827c67fae"
+      ],
+      "build_sample_indices": [
+        6
+      ],
+      "translation_speed_mps": null,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__5ff94bf9094345d482550bdab9ee98e0/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__5ff94bf9094345d482550bdab9ee98e0/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__5ff94bf9094345d482550bdab9ee98e0/query_truth.npz",
+      "build_rays": 5,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0359__1a3b146b21484790806752f2ab7504c3",
+      "dataset": "nuscenes",
+      "log_id": "ddc03471df3e4c9bb9663629a4097743",
+      "scene": "scene-0359",
+      "owner": "1a3b146b21484790806752f2ab7504c3",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0359__1a3b146b21484790806752f2ab7504c3.pt",
+      "build_points": 6,
+      "build_frame_ids": [
+        "6cd4e483f154478fa7a992a9b000b8bf",
+        "ee21ad8eaaf744fe9f2a9b5827c67fae"
+      ],
+      "build_sample_indices": [
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.25739153067985227,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__1a3b146b21484790806752f2ab7504c3/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__1a3b146b21484790806752f2ab7504c3/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__1a3b146b21484790806752f2ab7504c3/query_truth.npz",
+      "build_rays": 251,
+      "query_rays": 105,
+      "query_owned_returns": 1,
+      "query_frame_ids": [
+        "0f8be4217fd845df97a01f8e6ce1bbbc"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0359__319b91dab95b493b9f7423b62d177f1b",
+      "dataset": "nuscenes",
+      "log_id": "ddc03471df3e4c9bb9663629a4097743",
+      "scene": "scene-0359",
+      "owner": "319b91dab95b493b9f7423b62d177f1b",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0359__319b91dab95b493b9f7423b62d177f1b.pt",
+      "build_points": 6,
+      "build_frame_ids": [
+        "ee21ad8eaaf744fe9f2a9b5827c67fae"
+      ],
+      "build_sample_indices": [
+        6
+      ],
+      "translation_speed_mps": null,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__319b91dab95b493b9f7423b62d177f1b/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__319b91dab95b493b9f7423b62d177f1b/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__319b91dab95b493b9f7423b62d177f1b/query_truth.npz",
+      "build_rays": 142,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "scene-0359__4b99718939174fcfa17a8edea11e7188",
+      "dataset": "nuscenes",
+      "log_id": "ddc03471df3e4c9bb9663629a4097743",
+      "scene": "scene-0359",
+      "owner": "4b99718939174fcfa17a8edea11e7188",
+      "role": "DEV",
+      "category": "vehicle.truck",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0359__4b99718939174fcfa17a8edea11e7188.pt",
+      "build_points": 42,
+      "build_frame_ids": [
+        "ce0debc00191416b8b2114d1cae85086",
+        "6cd4e483f154478fa7a992a9b000b8bf",
+        "ee21ad8eaaf744fe9f2a9b5827c67fae"
+      ],
+      "build_sample_indices": [
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 1.7845206084791154,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__4b99718939174fcfa17a8edea11e7188/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__4b99718939174fcfa17a8edea11e7188/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0359__4b99718939174fcfa17a8edea11e7188/query_truth.npz",
+      "build_rays": 119,
+      "query_rays": 59,
+      "query_owned_returns": 15,
+      "query_frame_ids": [
+        "bccf0d493e1e473ca757fe8eb68f81f7",
+        "0f8be4217fd845df97a01f8e6ce1bbbc"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "scene-0048__9798ef1b25104da78e1f1448efac2645",
+      "dataset": "nuscenes",
+      "log_id": "f38ef5a1e9c941aabb2155768670b92a",
+      "scene": "scene-0048",
+      "owner": "9798ef1b25104da78e1f1448efac2645",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0048__9798ef1b25104da78e1f1448efac2645.pt",
+      "build_points": 19,
+      "build_frame_ids": [
+        "ce281c1d428c4bdea116ed560796de33",
+        "5845238756da40deb28eb39cee880c97",
+        "7981d9d42c944689affd1fa2637268a6",
+        "a6afbd306d194022a3290e5806da289d"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__9798ef1b25104da78e1f1448efac2645/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__9798ef1b25104da78e1f1448efac2645/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__9798ef1b25104da78e1f1448efac2645/query_truth.npz",
+      "build_rays": 838,
+      "query_rays": 344,
+      "query_owned_returns": 0,
+      "query_frame_ids": [
+        "6a5253fa0d4641a58ae661498d9515a7",
+        "742c4b32ead141f5b825033c8e2f7486"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0048__4e77883d5ed9460b82eb53db4b3cddd7",
+      "dataset": "nuscenes",
+      "log_id": "f38ef5a1e9c941aabb2155768670b92a",
+      "scene": "scene-0048",
+      "owner": "4e77883d5ed9460b82eb53db4b3cddd7",
+      "role": "DEV",
+      "category": "vehicle.car",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0048__4e77883d5ed9460b82eb53db4b3cddd7.pt",
+      "build_points": 67,
+      "build_frame_ids": [
+        "ce281c1d428c4bdea116ed560796de33",
+        "5845238756da40deb28eb39cee880c97",
+        "7981d9d42c944689affd1fa2637268a6"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__4e77883d5ed9460b82eb53db4b3cddd7/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__4e77883d5ed9460b82eb53db4b3cddd7/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__4e77883d5ed9460b82eb53db4b3cddd7/query_truth.npz",
+      "build_rays": 781,
+      "query_rays": 347,
+      "query_owned_returns": 13,
+      "query_frame_ids": [
+        "6a5253fa0d4641a58ae661498d9515a7",
+        "742c4b32ead141f5b825033c8e2f7486"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "scene-0048__710013a656504729afef0b37e0255ff6",
+      "dataset": "nuscenes",
+      "log_id": "f38ef5a1e9c941aabb2155768670b92a",
+      "scene": "scene-0048",
+      "owner": "710013a656504729afef0b37e0255ff6",
+      "role": "DEV",
+      "category": "vehicle.construction",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0048__710013a656504729afef0b37e0255ff6.pt",
+      "build_points": 105,
+      "build_frame_ids": [
+        "ce281c1d428c4bdea116ed560796de33",
+        "5845238756da40deb28eb39cee880c97",
+        "7981d9d42c944689affd1fa2637268a6",
+        "a6afbd306d194022a3290e5806da289d"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.02600053041082036,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__710013a656504729afef0b37e0255ff6/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__710013a656504729afef0b37e0255ff6/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__710013a656504729afef0b37e0255ff6/query_truth.npz",
+      "build_rays": 284,
+      "query_rays": 139,
+      "query_owned_returns": 52,
+      "query_frame_ids": [
+        "6a5253fa0d4641a58ae661498d9515a7",
+        "742c4b32ead141f5b825033c8e2f7486"
+      ],
+      "build_ambiguous_returns": 2,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0048__263d333b531d41c8b8949d230864fd5b",
+      "dataset": "nuscenes",
+      "log_id": "f38ef5a1e9c941aabb2155768670b92a",
+      "scene": "scene-0048",
+      "owner": "263d333b531d41c8b8949d230864fd5b",
+      "role": "DEV",
+      "category": "vehicle.construction",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0048__263d333b531d41c8b8949d230864fd5b.pt",
+      "build_points": 385,
+      "build_frame_ids": [
+        "ce281c1d428c4bdea116ed560796de33",
+        "5845238756da40deb28eb39cee880c97",
+        "7981d9d42c944689affd1fa2637268a6",
+        "a6afbd306d194022a3290e5806da289d"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__263d333b531d41c8b8949d230864fd5b/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__263d333b531d41c8b8949d230864fd5b/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__263d333b531d41c8b8949d230864fd5b/query_truth.npz",
+      "build_rays": 1678,
+      "query_rays": 766,
+      "query_owned_returns": 165,
+      "query_frame_ids": [
+        "6a5253fa0d4641a58ae661498d9515a7",
+        "742c4b32ead141f5b825033c8e2f7486"
+      ],
+      "build_ambiguous_returns": 20,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "scene-0048__01215d6383f44ab48cb5e28618cb1064",
+      "dataset": "nuscenes",
+      "log_id": "f38ef5a1e9c941aabb2155768670b92a",
+      "scene": "scene-0048",
+      "owner": "01215d6383f44ab48cb5e28618cb1064",
+      "role": "DEV",
+      "category": "vehicle.truck",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/scene-0048__01215d6383f44ab48cb5e28618cb1064.pt",
+      "build_points": 1305,
+      "build_frame_ids": [
+        "ce281c1d428c4bdea116ed560796de33",
+        "5845238756da40deb28eb39cee880c97",
+        "7981d9d42c944689affd1fa2637268a6",
+        "a6afbd306d194022a3290e5806da289d"
+      ],
+      "build_sample_indices": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "translation_speed_mps": 0.0,
+      "timing": "nuScenes scan timestamp approximation",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__01215d6383f44ab48cb5e28618cb1064/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__01215d6383f44ab48cb5e28618cb1064/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/nuscenes/DEV/scene-0048__01215d6383f44ab48cb5e28618cb1064/query_truth.npz",
+      "build_rays": 4290,
+      "query_rays": 1786,
+      "query_owned_returns": 466,
+      "query_frame_ids": [
+        "6a5253fa0d4641a58ae661498d9515a7",
+        "742c4b32ead141f5b825033c8e2f7486"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c1e8f262-fc72-4298-9d3a-0f8e11a33bcd",
+      "dataset": "av2",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "owner": "c1e8f262-fc72-4298-9d3a-0f8e11a33bcd",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/01bb304d-7bd8-35f8-bbef-7086b688e35e/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c1e8f262-fc72-4298-9d3a-0f8e11a33bcd.pt",
+      "build_points": 1,
+      "build_frame_ids": [
+        "315968868159601000",
+        "315968869159564000",
+        "315968869659882000",
+        "315968870659846000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": null,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c1e8f262-fc72-4298-9d3a-0f8e11a33bcd/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c1e8f262-fc72-4298-9d3a-0f8e11a33bcd/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c1e8f262-fc72-4298-9d3a-0f8e11a33bcd/query_truth.npz",
+      "build_rays": 20,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [
+        "315968868659919000",
+        "315968870160191000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__4b427e12-32d9-402a-bcbb-171dc59d22d4",
+      "dataset": "av2",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "owner": "4b427e12-32d9-402a-bcbb-171dc59d22d4",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/01bb304d-7bd8-35f8-bbef-7086b688e35e/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__4b427e12-32d9-402a-bcbb-171dc59d22d4.pt",
+      "build_points": 22,
+      "build_frame_ids": [
+        "315968868159601000",
+        "315968869159564000",
+        "315968869659882000",
+        "315968870659846000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 12.467926236222452,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__4b427e12-32d9-402a-bcbb-171dc59d22d4/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__4b427e12-32d9-402a-bcbb-171dc59d22d4/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__4b427e12-32d9-402a-bcbb-171dc59d22d4/query_truth.npz",
+      "build_rays": 106,
+      "query_rays": 58,
+      "query_owned_returns": 13,
+      "query_frame_ids": [
+        "315968868659919000",
+        "315968870160191000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c3240908-70d1-4a5a-a10b-70fe1a853247",
+      "dataset": "av2",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "owner": "c3240908-70d1-4a5a-a10b-70fe1a853247",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/01bb304d-7bd8-35f8-bbef-7086b688e35e/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c3240908-70d1-4a5a-a10b-70fe1a853247.pt",
+      "build_points": 23,
+      "build_frame_ids": [
+        "315968868159601000",
+        "315968869159564000",
+        "315968869659882000",
+        "315968870659846000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": null,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c3240908-70d1-4a5a-a10b-70fe1a853247/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c3240908-70d1-4a5a-a10b-70fe1a853247/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__c3240908-70d1-4a5a-a10b-70fe1a853247/query_truth.npz",
+      "build_rays": 255,
+      "query_rays": 266,
+      "query_owned_returns": 9,
+      "query_frame_ids": [
+        "315968868659919000",
+        "315968870160191000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__96276247-715c-4a4c-abd5-fa3b537ad703",
+      "dataset": "av2",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "owner": "96276247-715c-4a4c-abd5-fa3b537ad703",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/01bb304d-7bd8-35f8-bbef-7086b688e35e/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__96276247-715c-4a4c-abd5-fa3b537ad703.pt",
+      "build_points": 132,
+      "build_frame_ids": [
+        "315968868159601000",
+        "315968869159564000",
+        "315968869659882000",
+        "315968870659846000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.03301934085280435,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__96276247-715c-4a4c-abd5-fa3b537ad703/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__96276247-715c-4a4c-abd5-fa3b537ad703/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__96276247-715c-4a4c-abd5-fa3b537ad703/query_truth.npz",
+      "build_rays": 1140,
+      "query_rays": 592,
+      "query_owned_returns": 71,
+      "query_frame_ids": [
+        "315968868659919000",
+        "315968870160191000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__16d5d096-f64b-482e-a836-1884fea3ca9b",
+      "dataset": "av2",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "owner": "16d5d096-f64b-482e-a836-1884fea3ca9b",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/01bb304d-7bd8-35f8-bbef-7086b688e35e/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__16d5d096-f64b-482e-a836-1884fea3ca9b.pt",
+      "build_points": 154,
+      "build_frame_ids": [
+        "315968868159601000",
+        "315968869159564000",
+        "315968869659882000",
+        "315968870659846000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.05184475638833586,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__16d5d096-f64b-482e-a836-1884fea3ca9b/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__16d5d096-f64b-482e-a836-1884fea3ca9b/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__16d5d096-f64b-482e-a836-1884fea3ca9b/query_truth.npz",
+      "build_rays": 867,
+      "query_rays": 426,
+      "query_owned_returns": 76,
+      "query_frame_ids": [
+        "315968868659919000",
+        "315968870160191000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e",
+      "dataset": "av2",
+      "log_id": "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "scene": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e",
+      "owner": "1f19982b-bfbb-4a7f-91b8-aa949861188e",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/01bb304d-7bd8-35f8-bbef-7086b688e35e/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e.pt",
+      "build_points": 1108,
+      "build_frame_ids": [
+        "315968868159601000",
+        "315968869159564000",
+        "315968869659882000",
+        "315968870659846000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 9.021030349736806,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/query_truth.npz",
+      "build_rays": 3662,
+      "query_rays": 1443,
+      "query_owned_returns": 490,
+      "query_frame_ids": [
+        "315968868659919000",
+        "315968870160191000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__dddc232a-0517-4c58-a552-63efbcc4f9d4",
+      "dataset": "av2",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "owner": "dddc232a-0517-4c58-a552-63efbcc4f9d4",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/022af476-9937-3e70-be52-f65420d52703/av2-022af476-9937-3e70-be52-f65420d52703__dddc232a-0517-4c58-a552-63efbcc4f9d4.pt",
+      "build_points": 1,
+      "build_frame_ids": [
+        "315972122360247000",
+        "315972123359540000",
+        "315972123860521000",
+        "315972124859815000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": null,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__dddc232a-0517-4c58-a552-63efbcc4f9d4/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__dddc232a-0517-4c58-a552-63efbcc4f9d4/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__dddc232a-0517-4c58-a552-63efbcc4f9d4/query_truth.npz",
+      "build_rays": 30,
+      "query_rays": 21,
+      "query_owned_returns": 0,
+      "query_frame_ids": [
+        "315972122859902000",
+        "315972124360160000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__f9e4e3ad-4528-44a4-a37d-0c24f6d5ef96",
+      "dataset": "av2",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "owner": "f9e4e3ad-4528-44a4-a37d-0c24f6d5ef96",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/022af476-9937-3e70-be52-f65420d52703/av2-022af476-9937-3e70-be52-f65420d52703__f9e4e3ad-4528-44a4-a37d-0c24f6d5ef96.pt",
+      "build_points": 17,
+      "build_frame_ids": [
+        "315972122360247000",
+        "315972123359540000",
+        "315972123860521000",
+        "315972124859815000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.0440460412165039,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__f9e4e3ad-4528-44a4-a37d-0c24f6d5ef96/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__f9e4e3ad-4528-44a4-a37d-0c24f6d5ef96/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__f9e4e3ad-4528-44a4-a37d-0c24f6d5ef96/query_truth.npz",
+      "build_rays": 285,
+      "query_rays": 136,
+      "query_owned_returns": 5,
+      "query_frame_ids": [
+        "315972122859902000",
+        "315972124360160000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__91204692-99fb-4844-9112-52d863395255",
+      "dataset": "av2",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "owner": "91204692-99fb-4844-9112-52d863395255",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/022af476-9937-3e70-be52-f65420d52703/av2-022af476-9937-3e70-be52-f65420d52703__91204692-99fb-4844-9112-52d863395255.pt",
+      "build_points": 19,
+      "build_frame_ids": [
+        "315972122360247000",
+        "315972123359540000",
+        "315972123860521000",
+        "315972124859815000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.12418508391819584,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__91204692-99fb-4844-9112-52d863395255/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__91204692-99fb-4844-9112-52d863395255/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__91204692-99fb-4844-9112-52d863395255/query_truth.npz",
+      "build_rays": 176,
+      "query_rays": 78,
+      "query_owned_returns": 7,
+      "query_frame_ids": [
+        "315972122859902000",
+        "315972124360160000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff",
+      "dataset": "av2",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "owner": "c321bdab-4498-41bf-9e88-bf513138a4ff",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/022af476-9937-3e70-be52-f65420d52703/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff.pt",
+      "build_points": 72,
+      "build_frame_ids": [
+        "315972122360247000",
+        "315972123359540000",
+        "315972123860521000",
+        "315972124859815000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.06534357342262705,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff/query_truth.npz",
+      "build_rays": 378,
+      "query_rays": 162,
+      "query_owned_returns": 45,
+      "query_frame_ids": [
+        "315972122859902000",
+        "315972124360160000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__61cda0ac-eb56-4c1f-817d-5ae595a10f42",
+      "dataset": "av2",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "owner": "61cda0ac-eb56-4c1f-817d-5ae595a10f42",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/022af476-9937-3e70-be52-f65420d52703/av2-022af476-9937-3e70-be52-f65420d52703__61cda0ac-eb56-4c1f-817d-5ae595a10f42.pt",
+      "build_points": 82,
+      "build_frame_ids": [
+        "315972122360247000",
+        "315972123359540000",
+        "315972123860521000",
+        "315972124859815000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": null,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__61cda0ac-eb56-4c1f-817d-5ae595a10f42/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__61cda0ac-eb56-4c1f-817d-5ae595a10f42/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__61cda0ac-eb56-4c1f-817d-5ae595a10f42/query_truth.npz",
+      "build_rays": 2913,
+      "query_rays": 2119,
+      "query_owned_returns": 251,
+      "query_frame_ids": [
+        "315972122859902000",
+        "315972124360160000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1",
+      "dataset": "av2",
+      "log_id": "022af476-9937-3e70-be52-f65420d52703",
+      "scene": "av2-022af476-9937-3e70-be52-f65420d52703",
+      "owner": "8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/022af476-9937-3e70-be52-f65420d52703/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1.pt",
+      "build_points": 3497,
+      "build_frame_ids": [
+        "315972122360247000",
+        "315972123359540000",
+        "315972123860521000",
+        "315972124859815000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 11.150457383695056,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/query_truth.npz",
+      "build_rays": 26356,
+      "query_rays": 4112,
+      "query_owned_returns": 1075,
+      "query_frame_ids": [
+        "315972122859902000",
+        "315972124360160000"
+      ],
+      "build_ambiguous_returns": 81,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "av2-0322b098-7e42-34db-bcec-9a4d072191e9__4bba798d-afa8-49cb-9081-c29adafdb083",
+      "dataset": "av2",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "owner": "4bba798d-afa8-49cb-9081-c29adafdb083",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/0322b098-7e42-34db-bcec-9a4d072191e9/av2-0322b098-7e42-34db-bcec-9a4d072191e9__4bba798d-afa8-49cb-9081-c29adafdb083.pt",
+      "build_points": 3,
+      "build_frame_ids": [
+        "315967622059992000",
+        "315967623059968000",
+        "315967623559623000",
+        "315967624560262000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": null,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__4bba798d-afa8-49cb-9081-c29adafdb083/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__4bba798d-afa8-49cb-9081-c29adafdb083/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__4bba798d-afa8-49cb-9081-c29adafdb083/query_truth.npz",
+      "build_rays": 37,
+      "query_rays": 0,
+      "query_owned_returns": 0,
+      "query_frame_ids": [
+        "315967622559647000",
+        "315967624059944000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "av2-0322b098-7e42-34db-bcec-9a4d072191e9__cd2184b3-5dea-470b-8f6a-3e399cdc9061",
+      "dataset": "av2",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "owner": "cd2184b3-5dea-470b-8f6a-3e399cdc9061",
+      "role": "DEV",
+      "category": "LARGE_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/0322b098-7e42-34db-bcec-9a4d072191e9/av2-0322b098-7e42-34db-bcec-9a4d072191e9__cd2184b3-5dea-470b-8f6a-3e399cdc9061.pt",
+      "build_points": 41,
+      "build_frame_ids": [
+        "315967622059992000",
+        "315967623059968000",
+        "315967623559623000",
+        "315967624560262000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 6.3567331833129606,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__cd2184b3-5dea-470b-8f6a-3e399cdc9061/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__cd2184b3-5dea-470b-8f6a-3e399cdc9061/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__cd2184b3-5dea-470b-8f6a-3e399cdc9061/query_truth.npz",
+      "build_rays": 442,
+      "query_rays": 193,
+      "query_owned_returns": 14,
+      "query_frame_ids": [
+        "315967622559647000",
+        "315967624059944000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "lower"
+    },
+    {
+      "case_id": "av2-0322b098-7e42-34db-bcec-9a4d072191e9__652737cd-fa55-4415-88f1-9bfc64516add",
+      "dataset": "av2",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "owner": "652737cd-fa55-4415-88f1-9bfc64516add",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/0322b098-7e42-34db-bcec-9a4d072191e9/av2-0322b098-7e42-34db-bcec-9a4d072191e9__652737cd-fa55-4415-88f1-9bfc64516add.pt",
+      "build_points": 46,
+      "build_frame_ids": [
+        "315967622059992000",
+        "315967623059968000",
+        "315967623559623000",
+        "315967624560262000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.21793619023118072,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__652737cd-fa55-4415-88f1-9bfc64516add/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__652737cd-fa55-4415-88f1-9bfc64516add/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__652737cd-fa55-4415-88f1-9bfc64516add/query_truth.npz",
+      "build_rays": 444,
+      "query_rays": 164,
+      "query_owned_returns": 30,
+      "query_frame_ids": [
+        "315967622559647000",
+        "315967624059944000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "av2-0322b098-7e42-34db-bcec-9a4d072191e9__83070de2-3c9d-41ff-9046-13de6242f674",
+      "dataset": "av2",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "owner": "83070de2-3c9d-41ff-9046-13de6242f674",
+      "role": "DEV",
+      "category": "VEHICULAR_TRAILER",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/0322b098-7e42-34db-bcec-9a4d072191e9/av2-0322b098-7e42-34db-bcec-9a4d072191e9__83070de2-3c9d-41ff-9046-13de6242f674.pt",
+      "build_points": 504,
+      "build_frame_ids": [
+        "315967622059992000",
+        "315967623059968000",
+        "315967623559623000",
+        "315967624560262000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.16449797970151467,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__83070de2-3c9d-41ff-9046-13de6242f674/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__83070de2-3c9d-41ff-9046-13de6242f674/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__83070de2-3c9d-41ff-9046-13de6242f674/query_truth.npz",
+      "build_rays": 2999,
+      "query_rays": 1435,
+      "query_owned_returns": 227,
+      "query_frame_ids": [
+        "315967622559647000",
+        "315967624059944000"
+      ],
+      "build_ambiguous_returns": 5,
+      "build_rank_stratum": "middle"
+    },
+    {
+      "case_id": "av2-0322b098-7e42-34db-bcec-9a4d072191e9__34e30688-d5ec-477d-a1ee-557a239f7fc7",
+      "dataset": "av2",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "owner": "34e30688-d5ec-477d-a1ee-557a239f7fc7",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/0322b098-7e42-34db-bcec-9a4d072191e9/av2-0322b098-7e42-34db-bcec-9a4d072191e9__34e30688-d5ec-477d-a1ee-557a239f7fc7.pt",
+      "build_points": 574,
+      "build_frame_ids": [
+        "315967622059992000",
+        "315967623059968000",
+        "315967623559623000",
+        "315967624560262000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.08100020733633234,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__34e30688-d5ec-477d-a1ee-557a239f7fc7/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__34e30688-d5ec-477d-a1ee-557a239f7fc7/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__34e30688-d5ec-477d-a1ee-557a239f7fc7/query_truth.npz",
+      "build_rays": 3496,
+      "query_rays": 1624,
+      "query_owned_returns": 357,
+      "query_frame_ids": [
+        "315967622559647000",
+        "315967624059944000"
+      ],
+      "build_ambiguous_returns": 216,
+      "build_rank_stratum": "upper"
+    },
+    {
+      "case_id": "av2-0322b098-7e42-34db-bcec-9a4d072191e9__3d2e4e47-3900-451c-a0ed-20a62a221646",
+      "dataset": "av2",
+      "log_id": "0322b098-7e42-34db-bcec-9a4d072191e9",
+      "scene": "av2-0322b098-7e42-34db-bcec-9a4d072191e9",
+      "owner": "3d2e4e47-3900-451c-a0ed-20a62a221646",
+      "role": "DEV",
+      "category": "REGULAR_VEHICLE",
+      "source_case": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/0322b098-7e42-34db-bcec-9a4d072191e9/av2-0322b098-7e42-34db-bcec-9a4d072191e9__3d2e4e47-3900-451c-a0ed-20a62a221646.pt",
+      "build_points": 3724,
+      "build_frame_ids": [
+        "315967622059992000",
+        "315967623059968000",
+        "315967623559623000",
+        "315967624560262000"
+      ],
+      "build_sample_indices": [
+        5,
+        15,
+        20,
+        30
+      ],
+      "translation_speed_mps": 0.06616659090728103,
+      "timing": "per-return AV2 ns",
+      "ownership": "unique annotation box +0.1m proxy, overlap excluded; not segmentation GT",
+      "unknown_policy": "after observed first return unknown; no synthetic no-return rays",
+      "original_status": "ready",
+      "build_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__3d2e4e47-3900-451c-a0ed-20a62a221646/build.npz",
+      "query_rays_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__3d2e4e47-3900-451c-a0ed-20a62a221646/query_rays.npz",
+      "query_truth_file": "/root/autodl-tmp/data/worldsim_v74/p0_r1/av2/DEV/av2-0322b098-7e42-34db-bcec-9a4d072191e9__3d2e4e47-3900-451c-a0ed-20a62a221646/query_truth.npz",
+      "build_rays": 11614,
+      "query_rays": 6139,
+      "query_owned_returns": 2013,
+      "query_frame_ids": [
+        "315967622559647000",
+        "315967624059944000"
+      ],
+      "build_ambiguous_returns": 0,
+      "build_rank_stratum": "upper"
+    }
+  ],
+  "query_loaded": false,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04",
+    "V73-F05",
+    "V73-F09",
+    "V74-F01"
+  ]
+}

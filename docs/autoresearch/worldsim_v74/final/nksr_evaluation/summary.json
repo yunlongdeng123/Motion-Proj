@@ -1,0 +1,849 @@
+{
+  "aggregation": "ray/point weighted within object, object means within log, independent log equal means; undefined denominators stay undefined",
+  "datasets": {
+    "nuscenes": {
+      "NKSR_ks_native": {
+        "ready": {
+          "objects": 25,
+          "missing_method_output": 0,
+          "empty_surfaces": 1,
+          "no_owned_query": 8,
+          "budget_exceeded": 10,
+          "metrics_build": {
+            "hit_rate": {
+              "mean": 0.833103467822075,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.919034351905187,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.8629792034626007,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.8481841385364532,
+                "ddc03471df3e4c9bb9663629a4097743": 0.6865079353253046,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.8488117098808289
+              }
+            },
+            "early_rate": {
+              "mean": 0.09472391274447242,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.06350937501216929,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.13084795325994492,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.05220495816320181,
+                "ddc03471df3e4c9bb9663629a4097743": 0.09126984390119712,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.135787433385849
+              }
+            },
+            "late_rate": {
+              "mean": 0.004627300451199213,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.015005290197829405,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.0,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.0037544394532839456,
+                "ddc03471df3e4c9bb9663629a4097743": 0.0,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.004376772604882717
+              }
+            },
+            "miss_rate": {
+              "mean": 0.0675453190629681,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.002450980401287476,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.006172839552164078,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.09585646609775722,
+                "ddc03471df3e4c9bb9663629a4097743": 0.2222222238779068,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.011024085385724903
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.12764734381332649,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.07879421611626942,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.1159137561917305,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.09799333217476185,
+                "ddc03471df3e4c9bb9663629a4097743": 0.026252937979885854,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.31928247660398484
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.011116636469766187,
+              "logs": 5,
+              "defined_objects": 24,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.01062799741824468,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.010837621986865997,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.012784529957571067,
+                "ddc03471df3e4c9bb9663629a4097743": 0.009799748798832298,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.011533284187316894
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.9665475495656333,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 1.0,
+                "8fefc430cbfa4c2191978c0df302eb98": 1.0,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.9999239047368368,
+                "ddc03471df3e4c9bb9663629a4097743": 0.8333333333333334,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.9994805097579956
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.9172786346697928,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.9775686049391054,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.9779889538661468,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.8914705871653034,
+                "ddc03471df3e4c9bb9663629a4097743": 0.7738095238095237,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.9655555035688849
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.0841751658856433,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.058534251817833914,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.11500974658869395,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.04328645111423977,
+                "ddc03471df3e4c9bb9663629a4097743": 0.08730158730158731,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.11674379260586157
+              }
+            }
+          },
+          "metrics_query": {
+            "hit_rate": {
+              "mean": 0.5449109768867493,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.5257588525613149,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.8028708100318909,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.5641219198703766,
+                "ddc03471df3e4c9bb9663629a4097743": 0.13333333532015482,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.6984699666500092
+              }
+            },
+            "early_rate": {
+              "mean": 0.14381199923654397,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.2667084460457166,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.1708133965730667,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.021961282193660735,
+                "ddc03471df3e4c9bb9663629a4097743": 0.06666666766007741,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.1929102037101984
+              }
+            },
+            "late_rate": {
+              "mean": 0.05030798379952709,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.1297340573122104,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.0,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.09637892767786979,
+                "ddc03471df3e4c9bb9663629a4097743": 0.0,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.025426934007555246
+              }
+            },
+            "miss_rate": {
+              "mean": 0.260969045329839,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.07779866519073646,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.02631578966975212,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.3175378690473735,
+                "ddc03471df3e4c9bb9663629a4097743": 0.8000000019868215,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.08319290075451136
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.17350742836793262,
+              "logs": 5,
+              "defined_objects": 20,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.11849840171635151,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.13808940909802914,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.06123994787534078,
+                "ddc03471df3e4c9bb9663629a4097743": 0.19417419036229452,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.3555351927876472
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.2729338635504246,
+              "logs": 5,
+              "defined_objects": 16,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.11756855621933937,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.07640258967876434,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.15852168798446656,
+                "ddc03471df3e4c9bb9663629a4097743": 0.9404508769512177,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.07172560691833496
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.7504014227787654,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.8550543189048767,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.9645932912826538,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.7827092677354812,
+                "ddc03471df3e4c9bb9663629a4097743": 0.20000000794728598,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.949650228023529
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.5828565043602456,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.6003202450570871,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.8210526315789474,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.5774827616052625,
+                "ddc03471df3e4c9bb9663629a4097743": 0.13333333333333333,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.7820935502265975
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.03794552853212023,
+              "logs": 5,
+              "defined_objects": 17,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.07456140350877193,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.01818181818181818,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.013360837829260553,
+                "ddc03471df3e4c9bb9663629a4097743": 0.0,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.08362358314075052
+              }
+            }
+          }
+        },
+        "all_with_missing_build": {
+          "objects": 33,
+          "missing_method_output": 0,
+          "empty_surfaces": 9,
+          "no_owned_query": 15,
+          "budget_exceeded": 10,
+          "metrics_build": {
+            "hit_rate": {
+              "mean": 0.833103467822075,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.919034351905187,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.8629792034626007,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.8481841385364532,
+                "ddc03471df3e4c9bb9663629a4097743": 0.6865079353253046,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.8488117098808289
+              }
+            },
+            "early_rate": {
+              "mean": 0.09472391274447242,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.06350937501216929,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.13084795325994492,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.05220495816320181,
+                "ddc03471df3e4c9bb9663629a4097743": 0.09126984390119712,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.135787433385849
+              }
+            },
+            "late_rate": {
+              "mean": 0.004627300451199213,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.015005290197829405,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.0,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.0037544394532839456,
+                "ddc03471df3e4c9bb9663629a4097743": 0.0,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.004376772604882717
+              }
+            },
+            "miss_rate": {
+              "mean": 0.0675453190629681,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.002450980401287476,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.006172839552164078,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.09585646609775722,
+                "ddc03471df3e4c9bb9663629a4097743": 0.2222222238779068,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.011024085385724903
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.11559674727824261,
+              "logs": 5,
+              "defined_objects": 32,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.06753789952823094,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.1159137561917305,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.04899666608738092,
+                "ddc03471df3e4c9bb9663629a4097743": 0.026252937979885854,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.31928247660398484
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.011116636469766187,
+              "logs": 5,
+              "defined_objects": 24,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.01062799741824468,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.010837621986865997,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.012784529957571067,
+                "ddc03471df3e4c9bb9663629a4097743": 0.009799748798832298,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.011533284187316894
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.9665475495656333,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 1.0,
+                "8fefc430cbfa4c2191978c0df302eb98": 1.0,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.9999239047368368,
+                "ddc03471df3e4c9bb9663629a4097743": 0.8333333333333334,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.9994805097579956
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.9172786346697928,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.9775686049391054,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.9779889538661468,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.8914705871653034,
+                "ddc03471df3e4c9bb9663629a4097743": 0.7738095238095237,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.9655555035688849
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.0841751658856433,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.058534251817833914,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.11500974658869395,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.04328645111423977,
+                "ddc03471df3e4c9bb9663629a4097743": 0.08730158730158731,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.11674379260586157
+              }
+            }
+          },
+          "metrics_query": {
+            "hit_rate": {
+              "mean": 0.5186230342586835,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.3943191394209862,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.8028708100318909,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.5641219198703766,
+                "ddc03471df3e4c9bb9663629a4097743": 0.13333333532015482,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.6984699666500092
+              }
+            },
+            "early_rate": {
+              "mean": 0.13047657693425813,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.20003133453428745,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.1708133965730667,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.021961282193660735,
+                "ddc03471df3e4c9bb9663629a4097743": 0.06666666766007741,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.1929102037101984
+              }
+            },
+            "late_rate": {
+              "mean": 0.043821280933916566,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.0973005429841578,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.0,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.09637892767786979,
+                "ddc03471df3e4c9bb9663629a4097743": 0.0,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.025426934007555246
+              }
+            },
+            "miss_rate": {
+              "mean": 0.30707911207030214,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.30834899889305234,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.02631578966975212,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.3175378690473735,
+                "ddc03471df3e4c9bb9663629a4097743": 0.8000000019868215,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.08319290075451136
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.16386829646925133,
+              "logs": 5,
+              "defined_objects": 25,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.09479872137308121,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.13808940909802914,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.03674396872520447,
+                "ddc03471df3e4c9bb9663629a4097743": 0.19417419036229452,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.3555351927876472
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.2729338635504246,
+              "logs": 5,
+              "defined_objects": 16,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.11756855621933937,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.07640258967876434,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.15852168798446656,
+                "ddc03471df3e4c9bb9663629a4097743": 0.9404508769512177,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.07172560691833496
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.7076487068335215,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.6412907391786575,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.9645932912826538,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.7827092677354812,
+                "ddc03471df3e4c9bb9663629a4097743": 0.20000000794728598,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.949650228023529
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.5528404921073913,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.4502401837928154,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.8210526315789474,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.5774827616052625,
+                "ddc03471df3e4c9bb9663629a4097743": 0.13333333333333333,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.7820935502265975
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.03421745835668164,
+              "logs": 5,
+              "defined_objects": 18,
+              "per_log": {
+                "5bd40b613ac740cd9dbacdfbc3d68201": 0.05592105263157895,
+                "8fefc430cbfa4c2191978c0df302eb98": 0.01818181818181818,
+                "ca6d14b008ed4e0bb6b1eaaedadbd6c1": 0.013360837829260553,
+                "ddc03471df3e4c9bb9663629a4097743": 0.0,
+                "f38ef5a1e9c941aabb2155768670b92a": 0.08362358314075052
+              }
+            }
+          }
+        }
+      }
+    },
+    "av2": {
+      "NKSR_ks_native": {
+        "ready": {
+          "objects": 18,
+          "missing_method_output": 0,
+          "empty_surfaces": 0,
+          "no_owned_query": 3,
+          "budget_exceeded": 10,
+          "metrics_build": {
+            "hit_rate": {
+              "mean": 0.8263753188980951,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.8633630772431692,
+                "022af476-9937-3e70-be52-f65420d52703": 0.82485431432724,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.790908565123876
+              }
+            },
+            "early_rate": {
+              "mean": 0.142318962348832,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.11426650360226631,
+                "022af476-9937-3e70-be52-f65420d52703": 0.12802885348598161,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.18466152995824814
+              }
+            },
+            "late_rate": {
+              "mean": 0.013538346625864506,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.013531394302845001,
+                "022af476-9937-3e70-be52-f65420d52703": 0.013394940023620924,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.013688705551127592
+              }
+            },
+            "miss_rate": {
+              "mean": 0.017767373989853594,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.008839035173878074,
+                "022af476-9937-3e70-be52-f65420d52703": 0.03372189262881875,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.010741194166863957
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.781970176121427,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.7274043451373776,
+                "022af476-9937-3e70-be52-f65420d52703": 0.4629429404934247,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 1.1555632427334785
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.013625424122437835,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.014414644644906124,
+                "022af476-9937-3e70-be52-f65420d52703": 0.009251623957728347,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.017210003764679033
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.9999841054280599,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 1.0,
+                "022af476-9937-3e70-be52-f65420d52703": 0.9999523262182871,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9999999900658926
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.9333315957906896,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.9356235290547016,
+                "022af476-9937-3e70-be52-f65420d52703": 0.9312698264861777,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9331014318311897
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.10695627764985309,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.07226046028824241,
+                "022af476-9937-3e70-be52-f65420d52703": 0.1064155137065438,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.14219285895477302
+              }
+            }
+          },
+          "metrics_query": {
+            "hit_rate": {
+              "mean": 0.664252499739329,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.7349693298339843,
+                "022af476-9937-3e70-be52-f65420d52703": 0.558061170578003,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.6997269988059998
+              }
+            },
+            "early_rate": {
+              "mean": 0.2067398816347122,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.13078027665615083,
+                "022af476-9937-3e70-be52-f65420d52703": 0.3229324221611023,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.16650694608688354
+              }
+            },
+            "late_rate": {
+              "mean": 0.07890268738071123,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.1176418736577034,
+                "022af476-9937-3e70-be52-f65420d52703": 0.039462614059448245,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.07960357442498207
+              }
+            },
+            "miss_rate": {
+              "mean": 0.05010494577387969,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.016608523204922676,
+                "022af476-9937-3e70-be52-f65420d52703": 0.0795438215136528,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.054162492603063585
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.8963864529091451,
+              "logs": 3,
+              "defined_objects": 16,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.9552815245464444,
+                "022af476-9937-3e70-be52-f65420d52703": 0.8119651253024737,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9219127088785172
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.08471041408677897,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.07212186381220817,
+                "022af476-9937-3e70-be52-f65420d52703": 0.09462897703051568,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.08738040141761302
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.908751086393992,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.9336479425430297,
+                "022af476-9937-3e70-be52-f65420d52703": 0.8675628066062927,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9250425100326538
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.71685230623395,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.7616020588539915,
+                "022af476-9937-3e70-be52-f65420d52703": 0.618396638620858,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.7705582212270005
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.052599814519893505,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.02663272870304534,
+                "022af476-9937-3e70-be52-f65420d52703": 0.060335484933650416,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.07083122992298477
+              }
+            }
+          }
+        },
+        "all_with_missing_build": {
+          "objects": 33,
+          "missing_method_output": 0,
+          "empty_surfaces": 15,
+          "no_owned_query": 18,
+          "budget_exceeded": 10,
+          "metrics_build": {
+            "hit_rate": {
+              "mean": 0.8263753188980951,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.8633630772431692,
+                "022af476-9937-3e70-be52-f65420d52703": 0.82485431432724,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.790908565123876
+              }
+            },
+            "early_rate": {
+              "mean": 0.142318962348832,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.11426650360226631,
+                "022af476-9937-3e70-be52-f65420d52703": 0.12802885348598161,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.18466152995824814
+              }
+            },
+            "late_rate": {
+              "mean": 0.013538346625864506,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.013531394302845001,
+                "022af476-9937-3e70-be52-f65420d52703": 0.013394940023620924,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.013688705551127592
+              }
+            },
+            "miss_rate": {
+              "mean": 0.017767373989853594,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.008839035173878074,
+                "022af476-9937-3e70-be52-f65420d52703": 0.03372189262881875,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.010741194166863957
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.4602691580432163,
+              "logs": 3,
+              "defined_objects": 33,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.3967660064385696,
+                "022af476-9937-3e70-be52-f65420d52703": 0.2136659725354268,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.7703754951556524
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.013625424122437835,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.014414644644906124,
+                "022af476-9937-3e70-be52-f65420d52703": 0.009251623957728347,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.017210003764679033
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.9999841054280599,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 1.0,
+                "022af476-9937-3e70-be52-f65420d52703": 0.9999523262182871,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9999999900658926
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.9333315957906896,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.9356235290547016,
+                "022af476-9937-3e70-be52-f65420d52703": 0.9312698264861777,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9331014318311897
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.10695627764985309,
+              "logs": 3,
+              "defined_objects": 18,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.07226046028824241,
+                "022af476-9937-3e70-be52-f65420d52703": 0.1064155137065438,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.14219285895477302
+              }
+            }
+          },
+          "metrics_query": {
+            "hit_rate": {
+              "mean": 0.664252499739329,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.7349693298339843,
+                "022af476-9937-3e70-be52-f65420d52703": 0.558061170578003,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.6997269988059998
+              }
+            },
+            "early_rate": {
+              "mean": 0.2067398816347122,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.13078027665615083,
+                "022af476-9937-3e70-be52-f65420d52703": 0.3229324221611023,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.16650694608688354
+              }
+            },
+            "late_rate": {
+              "mean": 0.07890268738071123,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.1176418736577034,
+                "022af476-9937-3e70-be52-f65420d52703": 0.039462614059448245,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.07960357442498207
+              }
+            },
+            "miss_rate": {
+              "mean": 0.05010494577387969,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.016608523204922676,
+                "022af476-9937-3e70-be52-f65420d52703": 0.0795438215136528,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.054162492603063585
+              }
+            },
+            "mean_free_intrusion_m": {
+              "mean": 0.6324890277464035,
+              "logs": 3,
+              "defined_objects": 24,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.796067937122037,
+                "022af476-9937-3e70-be52-f65420d52703": 0.44289006834680383,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.6585090777703694
+              }
+            },
+            "positive_surface_mean_m": {
+              "mean": 0.08471041408677897,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.07212186381220817,
+                "022af476-9937-3e70-be52-f65420d52703": 0.09462897703051568,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.08738040141761302
+              }
+            },
+            "positive_surface_recall_02": {
+              "mean": 0.908751086393992,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.9336479425430297,
+                "022af476-9937-3e70-be52-f65420d52703": 0.8675628066062927,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.9250425100326538
+              }
+            },
+            "any_correct_intersection": {
+              "mean": 0.71685230623395,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.7616020588539915,
+                "022af476-9937-3e70-be52-f65420d52703": 0.618396638620858,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.7705582212270005
+              }
+            },
+            "early_with_later_correct_support": {
+              "mean": 0.052599814519893505,
+              "logs": 3,
+              "defined_objects": 15,
+              "per_log": {
+                "01bb304d-7bd8-35f8-bbef-7086b688e35e": 0.02663272870304534,
+                "022af476-9937-3e70-be52-f65420d52703": 0.060335484933650416,
+                "0322b098-7e42-34db-bcec-9a4d072191e9": 0.07083122992298477
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

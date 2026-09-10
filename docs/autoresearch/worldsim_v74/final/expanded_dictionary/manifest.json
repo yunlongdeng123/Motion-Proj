@@ -1,0 +1,69 @@
+{
+  "source": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-GEOMETRIC-MECHANISMS-01/20260910__opaque-scenes80-r2-numerics-s7401",
+  "task": "WS-V74-C-EXPANDED-DICTIONARY-REFERENCE-01",
+  "dictionary": "all saved proposals from DCS/C1/C2/C3 plus BUILD-PCA patches at every positive input point and scales exp(-.7),1,exp(.7); all drawn from existing parameter bounds",
+  "boundary": "post-hoc BUILD-only integer reference with enlarged pool; not a fourth candidate, not deployment performance, no QUERY or GT geometry in construction",
+  "solver": "same HiGHS master; max300s, mip_rel_gap1e-5, actual final gap/status retained",
+  "config": {
+    "task": "WS-V74-METHOD-TOURNAMENT-01",
+    "seed": 7401,
+    "confirmation_seed": 7402,
+    "data_root": "/root/autodl-tmp/data/worldsim_v74/p0_r1",
+    "face_budget": 4096,
+    "hit_band_m": 0.2,
+    "dataset_parameters": {
+      "nuscenes": {
+        "epsilon_obs_m": 0.1745198741555214,
+        "point_spacing_m": 0.03922037380180133,
+        "carrier_half_width_m": 0.15688149520720532
+      },
+      "av2": {
+        "epsilon_obs_m": 0.2,
+        "point_spacing_m": 0.03126779549551398,
+        "carrier_half_width_m": 0.15
+      }
+    },
+    "wex": {
+      "carriers": 64,
+      "grid": 4,
+      "domain_margin": 0.05,
+      "max_outer_iterations": 100,
+      "beam_configurations": 64,
+      "qp_max_iter": 10000,
+      "qp_eps": 1e-05,
+      "wall_seconds": 30,
+      "construction_rounds": 2
+    },
+    "rif": {
+      "initial_grid": 5,
+      "refinement_rounds": 3,
+      "max_nodes": 2500,
+      "wall_seconds": 30,
+      "free_margin": 0.01
+    },
+    "dcs": {
+      "initial_patches": 4,
+      "pricing_rounds": 20,
+      "proposals_per_round": 8,
+      "polygon_sides": 8,
+      "wall_seconds": 30
+    },
+    "fit_only": true,
+    "visual_input": false,
+    "failure_ledger_refs": [
+      "V73-F02",
+      "V73-F03",
+      "V73-F04",
+      "V73-F05",
+      "V73-F09",
+      "V74-F01"
+    ],
+    "dcs_checkpoints": {
+      "full": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/nuscenes/full.pt",
+      "no_demand": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/nuscenes/no_demand.pt"
+    },
+    "epsilon_obs_m": 0.02,
+    "point_spacing_m": 0.03922037380180133,
+    "carrier_half_width_m": 0.2
+  }
+}

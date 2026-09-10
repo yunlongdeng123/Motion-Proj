@@ -101,3 +101,8 @@ hash 后再复用；不得无理由重新下载。V1 的 5.39 GB `.partial` 不�
 
 OccGS/ReSim/SVD/cut-in 的依赖和研究结论已归档；它们不再授权执行。需要追溯时从
 [`archive/2026-07/README.md`](archive/2026-07/README.md) 进入。
+
+## V74 NKSR 外部参考环境（2026-09-11完成）
+
+官方源 /root/autodl-tmp/third_party/NKSR-v74（public，nksr1.0.3），独立环境 /root/autodl-tmp/envs/nksr-v74，torch2.4.1+cu118 / CUDA11.8 / RTX3090 sm86；主motionproj环境未替换。官方ks权重 /root/autodl-tmp/third_party/NKSR-v74/checkpoints/ks.pth，来源 https://huggingface.co/heiwang1997/nksr-checkpoints/resolve/main/checkpoints/ks.pth 。Open3D CPU0.19只提供Python依赖，NKSR计算仍用CUDA。51个CPP/CUDA源已编译；原环境、网络、导出失败记录保留。
+缺失层Python适配补丁 third_party/patches/nksr_empty_meshing_levels.patch 已同时应用到源码及独立env的nksr/fields/base_field.py；重建环境时需再次应用。未修改checkpoint/网络/体素参数。官方源许可仍适用，不把整个第三方源或权重提交到本仓库。运行入口 scripts/run_worldsim_v74_nksr.py，最终manifest与完整源版本在 docs/autoresearch/worldsim_v74/final/nksr_probe/manifest.json。

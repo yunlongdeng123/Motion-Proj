@@ -11,9 +11,23 @@ flowchart LR
   E --> F[反例 / 残差 / 成本 / 裁决]
 ```
 
-当前尚无新科学失败。V74-F01：nuScenes 全新 FINAL 身份缺口仍 active；V74-F02：有卡恢复后 resource resolved。详细历史与证据链接见总失败账对应节。
+初始开机阶段尚无新科学失败（历史状态，已由最终判定更新）。V74-F01：nuScenes 全新 FINAL 身份缺口仍 active；V74-F02：有卡恢复后 resource resolved。详细历史与证据链接见总失败账对应节。
 
 每条后续失败记录：观察、受影响对象/射线、首次退化前后资产、配置/seed、约束残差、接受或拒绝理由、最近一手来源、迁移方案、实际执行结果、未证实解释、复开条件。没有做的实验不填结果。
+
+## 最终分类与反例边界（2026-09-11）
+
+NO_SURVIVOR。WEX=FAIL_NOVELTY；RIF/DCS=FAIL_SCIENCE。全部真实与完整3D机制已完成，旧节中“未裁决/下一项”是发生时记录。F04的解析WEX20/20对贪心13/20为正例，但MILP20/20且更快，完整真实组同表示控制解释收益。F10主域RIF均数值收敛而early保护失败；不能把求解器成功当几何可行。F09合成缺支撑hit有增益，但BUILD有用生片4.031%仅较强局部网络1.406%多2.625pp，未达15pp；真实普通生片/去需求控制未被战胜。860真实DCS事件eta=0，提议库最多1536面小于4096，容量需求机制没有被检验，不能写成有效或无效。
+
+扩大字典80例均整数gap=0，缺支撑组仍平均5.8束未解释，有限候选最优不是连续几何不可能性证书。首次退化按已有事件中“自有QUERY命中净损失或新early”定义，before/after资产、射线ID、残差和接受/拒绝理由在 event_evidence 与 final/event_summary.json，属于事后诊断。最差对象视图和全日志汇总同时见 [最终报告](WORLDSIM_V7_4_RESULTS.md)。复查只针对既有假设；更改模型/预算需要新的研究范围，不能自动复活失败候选。
+
+## V74-F11：NKSR 缺失层导出异常（已修复）
+
+触发：原生probe43中8个1–17点稀疏对象，field.svh.grids[0]=None，而官方 extract_dual_mesh 直接访问 `_grid`。第一适配试图从0×3坐标建立空层，被底层“Cannot build empty grid”拒绝；r1/r2错误与对象列表保留。检索官方 [issue入口](https://github.com/nv-tlabs/NKSR/issues) 与 [导出源码](https://github.com/nv-tlabs/NKSR/blob/public/package/nksr/fields/base_field.py)，结合本地 SparseFeatureHierarchy 与 C++ dualCubeGraph 可知层序决定2^l步长，不能简单删除列表中的空层。
+
+最终迁移：用官方 build_flattened_grid 在被子格覆盖的临时单格上删除全部体素，获得合法的空NanoVDB层，保留原层级位置/变换。没有把临时点交给网络、场或最终几何；返回前空层体素数为0。补丁在 third_party/patches/nksr_empty_meshing_levels.patch。其余learned field、ks权重、.1m体素与MISE1不变。只重跑8个错误对象，全部完成，面数40/25/446/516/171/80/105/1164；另35对象复用。一个此前合法空面继续保留，没有因为miss高而重建。
+
+run=WS-V74-NKSR-REFERENCE-01/20260911__probe43-empty-native-r3；最终66对象评价=WS-V74-PROBE-EVALUATION-01/20260911__NKSR-probe66-empty-native-r3，ready零工程缺输出。真实中位面数nuScenes2097、AV25431.5，超面数/预训练信息仍单列。修复属于外部对照工程，不改变A/B/C裁决，也不是研究创新。
 
 ## V74-F03：初始冲突关联遗漏自由段连接（已修复）
 
