@@ -1,3 +1,36 @@
+# 统一失败账本：V74 当前入口
+
+更新：2026-09-10；基线 `01af4739`；task=WS-V74-P0-DOCS-01 / STORAGE-01 / DATA-01。
+本文件是唯一失败事实源。下方 V1–V73 原始记录冻结保留，历史“当前/下一步/门控”不产生 V74 执行要求；最新事实优先于旧快照。
+按 ID 渐进式读取；每个里程碑同步状态和实验台账。V74 不新增校验和、指纹或过度验收。
+
+| ID | 类别/状态 | 观察事实与后续 |
+|---|---|---|
+| V74-F01 | data/protocol；active | 现有 nuScenes 角色覆盖全部 68 trainval 日志；尚无可直接认证未曝光的 10 个新日志，保留域内 FIT/DEV，另建 AV2 新测试 |
+| V74-F02 | resource；active | 当前 cgroup 0.5 CPU/2 GiB、GPU 无访问权限；P0 按对象流式，GPU 实验待有卡开机 |
+| V73-F02/F03 | support/optimization；active | 覆盖与提前命中冲突、缺正确支持；V74 分别检验责任交换、区间场和生面，非继续 loss 网格 |
+| V73-F04/F05 | composition/data；active | 框归属代理、缺输入/缺自有返回分母；V74 保留并单列 |
+| V73-F09 | model；historical active | 联合视觉开发收益与跨域反转均保留，不外推所有域内方法失败 |
+
+## V74-F01：nuScenes 独立最终身份不足
+
+观察事实：V73 的 log_payload_inventory_r1 记录本地 27 个可用日志，历史角色表覆盖 trainval 68 日志，无未分配身份。角色分配不等于实际训练曝光，但也不足以直接证明未曝光。
+来源检索：nuScenes 官方说明 test 不公开本任务所需的对象标注；不能用它冒充已有轨迹真值。AV2 官方 Sensor 数据提供公开带标注日志及逐文件下载。
+迁移：nuScenes 先保留既有 FIT/DEV 与时间留出；AV2 将旧 20 日志按固定 ID 分作 FIT/DEV，另预留新 FINAL。不得把旧 FIT 换名为独立 FINAL，也不得把缺数据记作科学失败。
+复开：具备真实历史未使用证据的 nuScenes 新日志或新增合规带标注数据时扩展；不阻塞当前两数据集的域内开发检验。
+证据：docs/autoresearch/worldsim_v73/coverage/log_payload_inventory_r1.json；configs/worldsim_v72/data_roles.json；V74 P0 交接报告；基线 01af4739。本条不宣称全学术界不存在替代数据。
+
+## V74-F02：当前实例没有 GPU 且只有 2 GiB 内存
+
+观察事实：`nvidia-smi` 被拒绝；`cpu.max=50000 100000`，`memory.max=2147483648`。CPU P0 尚未出现 OOM。
+迁移：读取既有逐对象 .pt，禁止加载数 GB build_observations 拼包；单线程、逐对象写出，完成后释放。保存配置、分母与输入/评价边界。GPU 阶段不按此实例配额缩减科学目标。
+复开：P0 收口、三本总账与 push 完成且无任务后 shutdown，用户有卡开机后继续。实际 GPU/内存需求由候选和外部基线实测确定，不能把 GPU 未分配写成算法失败。
+证据：WS-V74-P0-DATA-01；P0 报告及最终资源记录。failure_ledger_delta=新增资源事实，尚无科学裁决。
+
+---
+
+# V1–V73 历史事实（冻结；不作为当前执行授权）
+
 ## V7.3 最终科研收口：独立联合确认失败（2026-09-09 21:42 UTC）
 
 V7.3/Q-v2及最终可训练视觉重接实验已结束；最终联合可泛化物理表面假设未获支持，按用户情况2收口。开发5日志hit+10.536pp等收益保留；固定20日志AV2 Actor确认r7−r6的hit−2.942pp、early+5.364pp、free+.325997m、距离+.013259m、recall−2.420pp，五项95%日志区间均不跨0且变差。不能外推所有视觉基座无效，也不把跨域失败冒称同分布新日志必然失败。

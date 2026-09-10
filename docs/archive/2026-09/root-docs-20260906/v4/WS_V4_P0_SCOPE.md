@@ -7,7 +7,7 @@
 - 分支：`research/worldsim-v4-evidelta`
 - V3.3 收口提交：`e6663e1`，已确认在 `main` 历史中
 - 事实配置：[`../configs/worldsim_v4/p0_scope_v1.yaml`](../../../../../configs/worldsim_v4/p0_scope_v1.yaml)
-- 计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](../../../../WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
+- 计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](../../pre-v74/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - canonical：`20260811T080636Z__p0-scope-formal-s0-r2`
 - config/summary/manifest/status SHA-256：
   `248bde621343597196c1a608ce8674a0c4a1f974d38abc70710c7783d8ecaaa8` /
@@ -60,7 +60,7 @@ high actor、difficult actor/`ABSTAIN`、remove/lateral/insert、2–4 秒连续
 
 KITTI 仅允许读取 `/root/autodl-pub/KITTI`。P0 实查该路径不存在，当前状态是
 `blocked_local_dataset_missing`；这不阻塞 D0 nuScenes cohort，但 D1 不能启动 adapter quality run，也不得通过网络下载
-绕过。详见 [`WS_V4_KITTI_AUDIT.md`](../../../../WS_V4_KITTI_AUDIT.md)。
+绕过。详见 [`WS_V4_KITTI_AUDIT.md`](../../pre-v74/WS_V4_KITTI_AUDIT.md)。
 
 ## 4. Baseline 冻结
 

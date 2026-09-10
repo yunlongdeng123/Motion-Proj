@@ -1,0 +1,82 @@
+> 历史归档（2026-09-10）：以下为原版本事实与指令快照；当前执行以 docs/RESEARCH_STATUS.md 为准。
+
+# V7.3 独立确认数据准备
+
+## 外部20日志冻结前缀完成（2026-09-08）
+
+`WS-V73-M4-AV2-PREFIX-01/20260908T043000Z__external20-28view-prefix-r1` code36b22287完整完成，407.9406s/GPU7.64359GiB/RSS10.63879GiB。原20身份/560视图，每日志28×672²共同进入冻结聚合器；只分块独立图像patch编码，每块7视图。4个官方DPT输入层缓存42371687680字节（约39.46GiB）。
+
+用原预训练头与6722839条build对应估计固定IRLS米制尺度，范围11.0605–55.1629，再安装M1r3头。没有新日志梯度、heldout模型质量或方法选择，尺度差异未触发外部调参。原PID52753退出，摘要`autoresearch/worldsim_v73/coverage/av2_external20_prefix_summary.json`保留每日志尺度/计数/资源。
+
+输入、逐束背景与前缀已齐备，最终质量确认仍等待旧开发方法选择；这是AV2新日志的跨数据集确认，不能写成nuScenes同分布新日志。当前r5的旧开发物理退化已记录，未据此读取外部分数试选候选。
+
+更新于2026-09-08。20条预登记AV2日志的输入已全部导出，尚未运行外部网络推理、heldout重建质量评价或共享参数更新。方法选择继续使用旧开发数据；外部确认不是已经取得的结果。
+
+## 独立性与身份选择
+
+nuScenes本地35个可用场景属于27日志，当前31窗口属于25日志；额外scene-0139、scene-0379分别有V6.4 fit和V5诊断/开发历史。更完整的旧角色表覆盖trainval全部850场景/68日志（train54、legacy2、exposure_unknown2、dev4、route_select3、source_test3），因此没有可保守视为全新身份的trainval日志。公开挂载十个blob约294GiB能补载荷，不能创造日志独立性，本轮未整体解压。证据`docs/autoresearch/worldsim_v73/coverage/log_payload_inventory_r1.json`及既有V7.2角色表。
+
+改用[官方AV2 Sensor数据](https://argoverse.org/av2.html)中未使用的公开日志。官方S3 train目录700身份，排除仓库此前出现的1条，699候选按字典序取前20条；名单在获取这些日志逐文件元数据与传感器值之前确定。固定名单和760个载荷项在`configs/worldsim_v73/av2_external_confirmation_r1.json`，来源`s3://argoverse/datasets/av2/sensor/train/`，本地`/root/autodl-tmp/data/av2/sensor/train/`。
+
+官方split=train不等于本研究训练角色；这20条在V7.3中为external_confirmation，不加入共享fit和超参数选择。新日志与传感器域同时改变，必须单列跨数据集结果，不能称nuScenes同分布确认。缺失或低覆盖对象保留，不按预测好坏换身份。
+
+## 固定输入和时空语义
+
+每日志原始LiDAR序号[5,15,20,30]为build，[10,25]为heldout；七路ring相机各取四个build参考时刻最近的实际曝光，共28图。保留所有七路独立观测，不把−23.10至+18.11ms的相机/扫描时间差硬置零。760文件343260344字节（327.36MiB），977.74s完成下载；无需下载整个数据集或重复解压大归档。
+
+按[AV2官方Sweep](https://github.com/argoverse/av2-api/blob/main/src/av2/structures/sweep.py)处理：发布端点已运动补偿到扫描参考ego系，世界端点只乘一次参考ego变换；每点时间为参考时间+offset_ns，束原点取该点时刻的ego和物理LiDAR外参。Actor归属/规范坐标使用同一逐点时刻只读轨迹，相机投影使用实际曝光时刻。未知pose不夹边冒充已知。0–31→up、32–63→down来自旧AV2开发窗口ring角度一致性的推断，未按新域质量重选。
+
+完整画幅按最长边672缩放至672²画布，内参与有效矩形同步变换；padding不作为query/native表面支持。七相机ID以已知标定方位插值原六项训练嵌入，保留独立视图投影、方向和时间；嵌入平滑性仍是假设。旧AV2已完成完整28视图前缀、固定native fusion和LiDAR-only推理；它们不使用视觉query相机ID，最终joint七相机交互仍待旧窗口实际运行。细节和边界见`WORLDSIM_V7_3_AV2_GEOMETRY.md`。
+
+## 20日志输入导出已完成
+
+任务`WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1`，codef70d099c，2061.27s；CPU父RSS3.66828GiB，子最大1.26955GiB。原PID41941及子任务均退出。索引归档`docs/autoresearch/worldsim_v73/coverage/av2_external20_index.json`，完整case、原始28图输入、逐点build/heldout束和日志保存于run。
+
+| 输入覆盖记录 | 数量 |
+| --- | ---: |
+| 日志 / 完整相机输入 | 20 / 560 |
+| build时刻有已知姿态的刚体车辆 | 936 |
+| ready / unavailable_input | 878 / 58 |
+| 已知轨迹速度>2m/s / 速度不可用 | 221 / 108 |
+| 无可用Actor相机时刻 | 1 |
+| 无自有heldout返回 | 119 |
+| 原始返回总数 | 11723402 |
+| build / heldout返回 | 7815152 / 3908250 |
+| 传感器姿态未知返回 | 0 |
+| 框归属重叠返回 | 7077 |
+
+此cohort根据build和轨迹元数据形成，不是“全部真实可见车辆”或按target点筛选的完整表面集。58个空输入全部保留；现有主query尚未覆盖所有视觉-only空LiDAR路径。原始传感器和标注数值已经处理，不能再说“新值未读取”；目前没有外部模型质量结论。
+
+## 场景构建与后续执行
+
+旧AV2开发窗口已用同四build扫描构建未雕刻/雕刻背景，并在逐束已知姿态下组合21个固定Actor表面和两次187494原始heldout束。背景PCA间距0.06m、20近邻；排除所有有效时刻已知框+.1m，只按build首返回前.2m删除冲突三角面。世界背景和每个规范Actor各建一次BVH，按逐点时间逆变换射线并统一最近求交。range<1m仅报告分层，无该条件的数据删除。
+
+已以code8a0cf6a4完成全部20日志的外部场景数据`WS-V73-M4-AV2-SCENE-DATA-01/20260908T031000Z__external20-per-return-build-background-r1`：复用上述旧域确定参数，CPU逐日志构建，包含所有原20身份/936Actor。背景build雕刻诊断用于构建，heldout只另存原始束，不做外部模型推理或heldout质量评分。运行失败保存原因且停止，不跳过或替换日志。构建耗时1519.9831s，CPU父RSS0.12975GiB、子最大0.91083GiB；父47224、外层shell47223及子任务均退出。6839807个背景点、原54718456面，按固定build-only规则删除2159469（3.9465%），余52558987面；906573条build冲突束降至23条，剩余侵入总和183.0328m，未因此调参或循环删面。936Actor的105755个已知姿态及全部80build/40heldout扫描保留。完整轨迹索引76684364字节保留在run，Git仅归档`m4/av2_external20_scene_construction.json`的构建摘要和源路径，避免重复大数组。日志`/root/autodl-tmp/controller_logs/v73_av2_external20_scene_data_r1.log`。未进行外部网络推理或heldout模型质量评分。
+
+方法定型后才在外部集形成固定模型对比。28×672²的完整冻结前缀在旧窗口实测allocated峰值7.64359GiB；当前r5/r11并行时不挤入该GPU任务。只缓存完全冻结前缀；可训练几何头实时解码，不把旧最终特征缓存冒充内部PEFT。
+
+F05的身份独立性已有数据对策，域迁移/实际覆盖/空输入问题仍在。20日志下载与输入完成不能代替独立确认，当前也没有证据表明必须因资源不足关机。整个V7.3继续自动研究，最终保存并push，确认无训练、评价、数据或启动控制任务后才shutdown。
+
+## 最终确认流程登记，r7正常训练（2026-09-09 13:50 UTC）
+
+13:48只读快照：最终联合r7仍shared_train、第3/30轮，原生DPT与Query均有梯度，GPU占用12452MiB/95%利用率，allocated峰值10.223834GiB；没有失败或资源短缺，保持原配置。此为单步运行状态，不解读为质量改善，不重新执行梯度检查。
+
+固定最终确认入口已准备，尚未执行或读取外部质量。WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1，scripts/run_worldsim_v73_final_confirmation.sh：仅r7完整30轮及DEV收口后，顺序评价Joint r7、匹配LiDAR r6、旧窄片LiDAR R8、M1头native融合、LiDAR PCA五个固定方法。原20 AV2日志936对象/878 ready/58缺输入，28路时刻视图，所有缺输入与缺返回保留；同一已准备build-only IRLS米制尺度与标定/轨迹，不改camera映射、不打开新visual-only路径、不做新日志优化或挑epoch。主对照r7−r6，其他为强弱与表示参照；这是真正跨数据集确认，不能写成nuScenes同分布新日志。没有未来训练或网格搜索。
+
+固定表面齐全后，WS-V73-FINAL-SCENE-01/20260909T135000Z__fixed-r7-r6-external20-r1，scripts/run_worldsim_v73_final_scene_confirmation.sh：一次CPU BVH组合四个保存模型表面（r7/r6/R8/native融合）及既有background_only/场景LiDAR PCA控制。同20日志、同build雕刻background.npz与逐束只读轨迹，字面全局首交点，不按heldout删除背景/Actor面。场景内置PCA控制与Actor表格的PCA分别按既有实现报告，不混成同一数值。r7−r6主配对保留，完整场景分组/所有原始返回保留；跨域和背景边界仍需按证据报告，不把编辑演示当真值。
+
+分析复用已保存结果，Actor按独立日志汇总六指标及配对区间，场景按原始束汇总日志配对。不提前启动确认、不改运行训练；这次仅准备收尾入口和通用绘图role参数，没有新推理/测试。最终报告纳入正负结果、F02/F03/F04/F09及失败解释，三本台账和GitHub push完成、停自动调度且确认无任务后shutdown。failure_ledger_delta=none at preparation，旧风险active；30分钟跟进持续至收尾。
+
+---
+
+## 固定20日志确认已启动，论文取证协同（2026-09-09 19:04 UTC）
+
+WS-V73-FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1已于19:03:26 UTC启动，执行code6499d34d、shell PID169169。19:04:35快照Joint r7已完成68/936对象，allocated峰值5.437806GiB；r6/R8/native融合/PCA待顺序执行，0优化更新。外部模型质量评价现已开始，不能再写“20日志质量未读取”；配置已于开发阶段固定，禁止根据外部结果更改。完整五方法后收口Actor日志配对，再一次固定背景场景确认；当前无完整跨域结论。证据final_confirmation/started.json及run/manifest.json，日志controller_logs/final_confirmation_r1.log。
+
+并行论文任务明确负责paper/、paper_forensics和自己的脚本，未修改本任务台账，也不会启动确认。已核实其取证summary/manifest：原75 DEV/11886 owned束，六方法AdaPoinTr、VGGT-native、R8、r3、r4、r6，不含最终r7；q=三边平方和/(4√3面积)，early面q>10计数全部0。r4/r6约94.7%/91.0%的日志等权early贡献来自“连通片至少有一个build端点在.2m内”的片。此支持定义不证明整个片正确，也不证明没有任何形变；不能将错误默认归因细长面或无支持浮片。按build支持剪连通片使r4 miss20.3879%→26.2698%、r6 20.5579%→27.4044%，并不能保住原覆盖。基于heldout删除early面是oracle诊断，未改部署输出或训练，不拿它作为模型成绩。证据paper_forensics/20260909T184200Z__saved-surface-oracles-r1/{summary,manifest}.json，已存在诊断不再重跑。
+
+r7开发已显示hit/miss/distance增益而free风险仍在，保持完整结论，不宣布整个联合主线失败或物理问题已解决。论文的可视化和新算子原型归并行任务，其原型不是本次固定r7权重的方法，也不是新确认候选。Blender仍CPU渲染；最终shutdown需所有训练/确认/数据及论文渲染任务结束并完成push，当前不关机。
+
+三本台账/最终结果报告同步，failure_ledger_delta=update V73-F02 with existing forensic evidence; no new failure ID。F03/F04/F05/F09边界仍按证据保留，下一V73-F10；每30分钟跟进至最终收尾。
+
+---

@@ -5,7 +5,7 @@
 例如 V7.1 初期 closeout 早于后续 M8 / M39 / M43 结果。
 
 - 最新状态与授权：[RESEARCH_STATUS](../RESEARCH_STATUS.md)。
-- 当前综合：[V7.1 research synthesis](../WORLDSIM_V71_RESEARCH_SYNTHESIS.md)。
+- 当前综合：[V7.1 research synthesis](../archive/2026-09/pre-v74/WORLDSIM_V71_RESEARCH_SYNTHESIS.md)。
 - 统一负结论：[RESEARCH_FAILURES](../RESEARCH_FAILURES.md)；实验索引：[EXPERIMENTS](../EXPERIMENTS.md)。
 - [论文阅读](../paper/README.md)、[历史根层计划](../archive/README.md)。
 

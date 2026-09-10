@@ -106,34 +106,34 @@
 
 以下 18 份仍被代码、脚本、测试或冻结配置引用，内容和路径不变。保留不表示当前授权。
 
-- [DR_V2_M0_SOURCE_AUDIT.md](../../../DR_V2_M0_SOURCE_AUDIT.md)：`scripts/finalize_dr_v2_m0.py`
-- [DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md](../../../DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)：`configs/worldsim_v3/r0_integration_protocol_v1.yaml`
-- [KITTI_LAYOUT_AUDIT.md](../../../KITTI_LAYOUT_AUDIT.md)：`scripts/audit_worldsim_v4_kitti.py`
+- [DR_V2_M0_SOURCE_AUDIT.md](../pre-v74/DR_V2_M0_SOURCE_AUDIT.md)：`scripts/finalize_dr_v2_m0.py`
+- [DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md](../pre-v74/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_1.md)：`configs/worldsim_v3/r0_integration_protocol_v1.yaml`
+- [KITTI_LAYOUT_AUDIT.md](../pre-v74/KITTI_LAYOUT_AUDIT.md)：`scripts/audit_worldsim_v4_kitti.py`
 - [KITTI_TRACKING_ADAPTER_SMOKE_V5.json](../../../KITTI_TRACKING_ADAPTER_SMOKE_V5.json)：`tests/test_audit_worldsim_v5_kitti_adapter_smoke.py`
 - [KITTI_TRACKING_ARCHIVE_METADATA_V5.json](../../../KITTI_TRACKING_ARCHIVE_METADATA_V5.json)：`configs/worldsim_v5/kitti_adapter_smoke_v1.yaml`、`scripts/audit_worldsim_v5_kitti_adapter_smoke.py`、`scripts/audit_worldsim_v5_kitti_archives.py`、`scripts/extract_worldsim_v5_kitti_smoke.py`、`tests/test_worldsim_v5_kitti_smoke_extraction.py`
-- [WORLDSIM_V4_EVIDELTA_GS_PLAN.md](../../../WORLDSIM_V4_EVIDELTA_GS_PLAN.md)：`configs/worldsim_v4/p0_scope_v1.yaml`、`motion_proj/worldsim_v4/p0_contract.py`、`tests/test_worldsim_v4_p0_contract.py`
-- [WORLDSIM_V5_1_M1_PLAN.md](../../../WORLDSIM_V5_1_M1_PLAN.md)：`configs/worldsim_v51/p0_m1_scope_v1.yaml`
-- [WORLDSIM_V5_1_M1_TOPCONF_PLAN.md](../../../WORLDSIM_V5_1_M1_TOPCONF_PLAN.md)：`configs/worldsim_v51/p0_m1_scope_v1.yaml`、`configs/worldsim_v51/stage_b_authorization_v1.yaml`、`configs/worldsim_v51/stage_d_progressive_preflight_v1.yaml`、`configs/worldsim_v51/stage_f_f0_source_preflight_v1.yaml`
-- [WORLDSIM_V5_2_1_BADCASE_REPORT.md](../../../WORLDSIM_V5_2_1_BADCASE_REPORT.md)：`scripts/closeout_worldsim_v521.py`
-- [WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md](../../../WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md)：`configs/worldsim_v521/p0_scope_freeze_v1.yaml`
-- [WORLDSIM_V5_2_1_CLOSEOUT.md](../../../WORLDSIM_V5_2_1_CLOSEOUT.md)：`scripts/closeout_worldsim_v521.py`
-- [WORLDSIM_V5_2_1_M123_REVIEW.md](../../../WORLDSIM_V5_2_1_M123_REVIEW.md)：`scripts/closeout_worldsim_v521.py`
-- [WORLDSIM_V5_STRUCTDELTA_PLAN.md](../../../WORLDSIM_V5_STRUCTDELTA_PLAN.md)：`configs/worldsim_v5/p0_scope_v1.yaml`、`tests/test_worldsim_v5_p0_contract.py`
-- [WORLDSIM_V6_1_OCCUPANCY_VERIFIED_WORLD_COMPILER_RESEARCH_PLAN.md](../../../WORLDSIM_V6_1_OCCUPANCY_VERIFIED_WORLD_COMPILER_RESEARCH_PLAN.md)：`configs/worldsim_v61/p0_scope_freeze_v1.yaml`
-- [WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md](../../../WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md)：`configs/worldsim_v62/p0_scope_freeze_v1.yaml`
-- [WS_V4_KITTI_AUDIT.md](../../../WS_V4_KITTI_AUDIT.md)：`configs/worldsim_v4/kitti_adapter_v1.yaml`
-- [WS_V5_M1_FAILURE_FORENSICS.md](../../../WS_V5_M1_FAILURE_FORENSICS.md)：`configs/worldsim_v5/p0_scope_v1.yaml`、`scripts/audit_worldsim_v5_p0.py`、`tests/test_worldsim_v5_p0_contract.py`
-- [WS_V5_M2_GEOMETRY_FORENSICS.md](../../../WS_V5_M2_GEOMETRY_FORENSICS.md)：`configs/worldsim_v5/p0_scope_v1.yaml`、`scripts/audit_worldsim_v5_p0.py`、`tests/test_worldsim_v5_p0_contract.py`
+- [WORLDSIM_V4_EVIDELTA_GS_PLAN.md](../pre-v74/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)：`configs/worldsim_v4/p0_scope_v1.yaml`、`motion_proj/worldsim_v4/p0_contract.py`、`tests/test_worldsim_v4_p0_contract.py`
+- [WORLDSIM_V5_1_M1_PLAN.md](../pre-v74/WORLDSIM_V5_1_M1_PLAN.md)：`configs/worldsim_v51/p0_m1_scope_v1.yaml`
+- [WORLDSIM_V5_1_M1_TOPCONF_PLAN.md](../pre-v74/WORLDSIM_V5_1_M1_TOPCONF_PLAN.md)：`configs/worldsim_v51/p0_m1_scope_v1.yaml`、`configs/worldsim_v51/stage_b_authorization_v1.yaml`、`configs/worldsim_v51/stage_d_progressive_preflight_v1.yaml`、`configs/worldsim_v51/stage_f_f0_source_preflight_v1.yaml`
+- [WORLDSIM_V5_2_1_BADCASE_REPORT.md](../pre-v74/WORLDSIM_V5_2_1_BADCASE_REPORT.md)：`scripts/closeout_worldsim_v521.py`
+- [WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md](../pre-v74/WORLDSIM_V5_2_1_BASE_BADCASE_CENSUS_PLAN.md)：`configs/worldsim_v521/p0_scope_freeze_v1.yaml`
+- [WORLDSIM_V5_2_1_CLOSEOUT.md](../pre-v74/WORLDSIM_V5_2_1_CLOSEOUT.md)：`scripts/closeout_worldsim_v521.py`
+- [WORLDSIM_V5_2_1_M123_REVIEW.md](../pre-v74/WORLDSIM_V5_2_1_M123_REVIEW.md)：`scripts/closeout_worldsim_v521.py`
+- [WORLDSIM_V5_STRUCTDELTA_PLAN.md](../pre-v74/WORLDSIM_V5_STRUCTDELTA_PLAN.md)：`configs/worldsim_v5/p0_scope_v1.yaml`、`tests/test_worldsim_v5_p0_contract.py`
+- [WORLDSIM_V6_1_OCCUPANCY_VERIFIED_WORLD_COMPILER_RESEARCH_PLAN.md](../pre-v74/WORLDSIM_V6_1_OCCUPANCY_VERIFIED_WORLD_COMPILER_RESEARCH_PLAN.md)：`configs/worldsim_v61/p0_scope_freeze_v1.yaml`
+- [WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md](../pre-v74/WORLDSIM_V6_2_CONSTRAINT_AWARE_PHYSICAL_STATE_COMPLETION_PLAN.md)：`configs/worldsim_v62/p0_scope_freeze_v1.yaml`
+- [WS_V4_KITTI_AUDIT.md](../pre-v74/WS_V4_KITTI_AUDIT.md)：`configs/worldsim_v4/kitti_adapter_v1.yaml`
+- [WS_V5_M1_FAILURE_FORENSICS.md](../pre-v74/WS_V5_M1_FAILURE_FORENSICS.md)：`configs/worldsim_v5/p0_scope_v1.yaml`、`scripts/audit_worldsim_v5_p0.py`、`tests/test_worldsim_v5_p0_contract.py`
+- [WS_V5_M2_GEOMETRY_FORENSICS.md](../pre-v74/WS_V5_M2_GEOMETRY_FORENSICS.md)：`configs/worldsim_v5/p0_scope_v1.yaml`、`scripts/audit_worldsim_v5_p0.py`、`tests/test_worldsim_v5_p0_contract.py`
 
 另有 8 份文档被上述兼容文件或旧归档索引链接，因此一并原位保留：
 
-- [KITTI_TRACKING_ADAPTER_SMOKE_V5.md](../../../KITTI_TRACKING_ADAPTER_SMOKE_V5.md)
-- [KITTI_TRACKING_ARCHIVE_AUDIT_V5.md](../../../KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)
-- [WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md](../../../WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md)
-- [WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md](../../../WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md)
-- [WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md](../../../WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md)
-- [WS_V5_M1_DEVELOPMENT_REPLICATION.md](../../../WS_V5_M1_DEVELOPMENT_REPLICATION.md)
-- [WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md](../../../WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md)
-- [WS_V5_M3_DEVELOPMENT.md](../../../WS_V5_M3_DEVELOPMENT.md)
+- [KITTI_TRACKING_ADAPTER_SMOKE_V5.md](../pre-v74/KITTI_TRACKING_ADAPTER_SMOKE_V5.md)
+- [KITTI_TRACKING_ARCHIVE_AUDIT_V5.md](../pre-v74/KITTI_TRACKING_ARCHIVE_AUDIT_V5.md)
+- [WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md](../pre-v74/WORLDSIM_V5_2_1_HUMAN_REVIEW_ATTRIBUTION.md)
+- [WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md](../pre-v74/WORLDSIM_V5_2_M123_AUTORESEARCH_PLAN.md)
+- [WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md](../pre-v74/WS_V5_M1B_BOUNDARY_RESIDUAL_FORENSICS.md)
+- [WS_V5_M1_DEVELOPMENT_REPLICATION.md](../pre-v74/WS_V5_M1_DEVELOPMENT_REPLICATION.md)
+- [WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md](../pre-v74/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md)
+- [WS_V5_M3_DEVELOPMENT.md](../pre-v74/WS_V5_M3_DEVELOPMENT.md)
 
 既有 `docs/archive/`、`docs/autoresearch/` 与 `docs/run_manifests/` 的文件不改写；不添加备份副本。

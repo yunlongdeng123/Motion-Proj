@@ -8,8 +8,8 @@
 
 | 附录项 | 证据入口 | 用途 |
 |---|---|---|
-| M2-A：历史几何根因 | [`../../../WS_V5_M2_GEOMETRY_FORENSICS.md`](../../../WS_V5_M2_GEOMETRY_FORENSICS.md) | V4 risk saturation、oracle regret、154-request denominator |
-| M2-B：staged/per-actor development | [`../../../WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`](../../../WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md) | r001–r011 时间线、协议修正、失败/机制结论、哈希 |
+| M2-A：历史几何根因 | [`../../../WS_V5_M2_GEOMETRY_FORENSICS.md`](../../2026-09/pre-v74/WS_V5_M2_GEOMETRY_FORENSICS.md) | V4 risk saturation、oracle regret、154-request denominator |
+| M2-B：staged/per-actor development | [`../../../WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md`](../../2026-09/pre-v74/WS_V5_M2_GEOMETRY_FIRST_DEVELOPMENT.md) | r001–r011 时间线、协议修正、失败/机制结论、哈希 |
 | M2-C：surface 机器元数据 | [`M2_R001_R009_METADATA.json`](M2_R001_R009_METADATA.json) | surface run path、source、terminal、主要指标与 SHA-256 |
 | M2-D：Gaussianization 元数据 | [`M2_R010_R011_GAUSSIANIZATION_METADATA.json`](M2_R010_R011_GAUSSIANIZATION_METADATA.json) | launcher failure、四因子臂、factorial contrast、完整性 SHA-256 |
 | M2-D2：cross-view / closeout 元数据 | [`M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json`](M2_R012_R015_CROSS_VIEW_CLOSEOUT_METADATA.json) | G4/G5、coverage、blocked terminal、r015 rejection ledger 与 SHA-256 |
