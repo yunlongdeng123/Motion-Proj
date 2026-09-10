@@ -26,6 +26,8 @@ V74-F06（environment/network, active）：NKSR需要匹配nvcc的PyTorch；使�
 
 engineering；corrected code / rerun pending。FIT第23束证明正确带内候选存储顺序不是距离顺序（24.020634 vs23.774240m）。按t稳定排序后更正固定责任与共享控制，实际硬首交点评价始终正确取min。旧A资产保留且标记superseded，不根据其DEV分数调参；详情 [V74失败过程](WORLDSIM_V7_4_FAILURES.md)。
 
+当前里程碑：96cef75c配置冻结进入真实DEV评价；F06安装处理中，F07/F08正式修正版完成后收口，无新增科学失败或人工verdict。
+
 ## V74-F08：RIF显式松弛求解成本（已迁移，完成组仍在执行）
 
 environment/numerics；原FIT密对象100k级松弛使RIF396s，且外层300s预算不能限制一次内部求解。代数消元保持原凸目标，L-BFGS-B只优化场系数；同大FIT粗网格目标651.864→628.004，计算10.719s。迁移同时用于B0/B1/B2，真实DEV未读。详见 [V74失败过程](WORLDSIM_V7_4_FAILURES.md)。

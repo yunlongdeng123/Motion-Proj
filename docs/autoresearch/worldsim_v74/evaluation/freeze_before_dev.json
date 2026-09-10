@@ -1,0 +1,81 @@
+{
+  "task": "WS-V74-PROBE-EVALUATION-01",
+  "utc": "2026-09-10T15:06:48.301095+00:00",
+  "frozen_commit": "96cef75c0bc83640eaba7e3b14742a5d68a7b68d",
+  "config": {
+    "task": "WS-V74-METHOD-TOURNAMENT-01",
+    "seed": 7401,
+    "confirmation_seed": 7402,
+    "data_root": "/root/autodl-tmp/data/worldsim_v74/p0_r1",
+    "face_budget": 4096,
+    "hit_band_m": 0.2,
+    "dataset_parameters": {
+      "nuscenes": {
+        "epsilon_obs_m": 0.1745198741555214,
+        "point_spacing_m": 0.03922037380180133,
+        "carrier_half_width_m": 0.15688149520720532
+      },
+      "av2": {
+        "epsilon_obs_m": 0.2,
+        "point_spacing_m": 0.03126779549551398,
+        "carrier_half_width_m": 0.15
+      }
+    },
+    "wex": {
+      "carriers": 64,
+      "grid": 4,
+      "domain_margin": 0.05,
+      "max_outer_iterations": 100,
+      "beam_configurations": 64,
+      "qp_max_iter": 10000,
+      "qp_eps": 1e-05,
+      "wall_seconds": 300,
+      "construction_rounds": 2
+    },
+    "rif": {
+      "initial_grid": 7,
+      "refinement_rounds": 3,
+      "max_nodes": 2500,
+      "wall_seconds": 300,
+      "free_margin": 0.01,
+      "solver": "same_QP_analytic_slack_elimination_LBFGSB",
+      "solver_maxiter": 10000
+    },
+    "dcs": {
+      "initial_patches": 32,
+      "pricing_rounds": 20,
+      "proposals_per_round": 8,
+      "polygon_sides": 8,
+      "wall_seconds": 300
+    },
+    "fit_only": true,
+    "visual_input": false,
+    "failure_ledger_refs": [
+      "V73-F02",
+      "V73-F03",
+      "V73-F04",
+      "V73-F05",
+      "V73-F09",
+      "V74-F01"
+    ],
+    "dcs_checkpoints": {
+      "nuscenes": {
+        "full": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/nuscenes/full.pt",
+        "no_demand": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/nuscenes/no_demand.pt"
+      },
+      "av2": {
+        "full": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/av2/full.pt",
+        "no_demand": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-FIT-TRAIN-01/20260910__pricing-teacher-r1-s7401/av2/no_demand.pt"
+      }
+    }
+  },
+  "quality_scope": "exposed dataset-specific DEV; not independent FINAL",
+  "decision": "freeze all candidate parameters, initialization budgets, and FIT checkpoints before first real DEV quality reading",
+  "sources": {
+    "A": "WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401",
+    "B": "WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401",
+    "C": "WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401"
+  },
+  "external_reference_protocol": "NKSR official pretrained ks, BUILD-only PCA sensor-oriented normals, fixed native voxel_size=0.1m, detail_level=0, mise_iter=1; native budget reported separately; no DEV selection",
+  "failure_ledger_delta": "none; F06 installation ongoing, F07/F08 corrected runs completing; no candidate verdict"
+}

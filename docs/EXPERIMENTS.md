@@ -38,6 +38,12 @@ V74-F07：FIT对象scene-0471__203cea9260874ff78e5e200a866ef44f第23束，正确
 旧80例混合机制run已因A排序/B数值版本被中断，保留已完成状态；r2只重建受影响A/B，已完成C几何结果原样复用，余下C继续。没有重复训练C。当前仍无真实DEV/FINAL结果或候选裁决。
 NKSR主wheel续传完成；国内CUDA依赖改直连镜像，实际下载恢复约17MB/s。独立环境继续安装。failure_ledger_delta=V74-F08 numerical migration; V74-F07 corrected assets ongoing; V74-F06 progressing。
 
+## 固定配置进入真实 DEV 评价
+
+执行基线96cef75c。三候选、所有控制的参数与FIT checkpoint已冻结，首次真实DEV读取开始；此前没有读真实DEV质量。只评价已完成的固定资产，A取距离排序修正r2，B取同目标松弛消元版本，C取完整锚点调度版本。43 ready对象与23缺BUILD合同对象共同保留；5个nuScenes/3个AV2日志分别按对象内、日志内、日志间汇总，未知分母保持未知。
+外部NKSR固定官方ks预训练权重，BUILD PCA朝传感器法向、原生0.1m体素、detail_level=0、mise_iter=1，不按DEV选择体素或裁剪面数。其原生面数/训练来源与4096面主比赛分开报告。安装尚在完成，不能把安装完成算作模型成功。
+`autoresearch/worldsim_v74/evaluation/freeze_before_dev.json`保存配置和开始时间。failure_ledger_delta=none；F06外部环境仍处理中，F07/F08修正完整组继续，无候选裁决。
+
 ---
 
 # P0 已完成实验
