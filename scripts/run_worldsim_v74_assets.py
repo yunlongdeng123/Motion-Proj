@@ -20,6 +20,7 @@ for case in cases:
     for method in args.methods:
         folder=args.output/case['dataset']/case['case_id']/method
         params={**cfg,**cfg['dataset_parameters'][case['dataset']]}
+        params['dcs_checkpoints']=cfg.get('dcs_checkpoints',{}).get(case['dataset'],{})
         try:
             if method.startswith('A') or method=='WEX':from motion_proj.worldsim_v74.a_wex import reconstruct
             elif method.startswith('B') or method=='RIF':from motion_proj.worldsim_v74.b_rif import reconstruct

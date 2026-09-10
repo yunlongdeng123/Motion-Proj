@@ -27,3 +27,14 @@ flowchart LR
 观察：解析问题标准MILP全部恢复可行，且比WEX快；FIT4对象两方法分别得到相同命中40/41、908/3195、74/74、1145/4208与相同面数738/1339/1200/1285。两密对象 G_empty2242/3009，WEX45.30/126.40s，对应MILP .884/2.471s。
 当前解释：共享域对子集有用，但标准求解能解释当前收益；64个有限承载片在较密对象覆盖不足。BUILD拟合不是留出收益，不能因空自由违规就声称修复成功。未使用QUERY补候选、扩大半宽或换方法。
 下一项有决策价值证据：相同固定43对象/8日志上的必要控制；不加C生片器救A。事件资产与实际约束统计保留在FIT pilot run，索引见方法结果摘要。资源可用，无OOM。
+
+## V74-F05：C初始提议预算重复访问同一小队列（已修复）
+
+观察：r1最多只访问前32个高需求锚点，20轮中每4轮回到原队列；在3195/4208点FIT对象，大量同值alpha令调度忽略其余锚点。源c_dcs_initial.py和pricing逐轮alpha/beta/anchors保留。
+检索：[PointTriNet官方](https://github.com/nmwsharp/learned-triangulation) 的迭代局部提议机制，以及 [Template Pricing研究](https://arxiv.org/abs/2604.12070) 对退化与提议多样性的讨论。迁移仅修正原有预算的锚点遍历，不引入新模板定价算法或RL。全体控制共享完整队列轮转，仍固定20×8个提议，实际主问题只接受整数目标改善；无网络重训。
+r1/r2均仅FIT四对象。r2提高密对象访问范围，但仍有大量缺支撑；没有因free=0宣称成功。C2是局部PointNet提议适配控制（普通残差锚点），C3是同完整网络无需求输入控制（保留全局锚点排序）；不是官方PointTriNet全模型复现。新方法若通过仍需更强原生外部对比。
+
+## V74-F06：NKSR独立环境下载中断（处理中）
+
+当前主环境Torch2.4.1+cu121，宿主nvcc11.8；采用独立nksr-v74环境与官方Torch2.4.1+cu118，避免覆盖方法实验环境。官方NKSR public源已取得，未宣称已运行。
+官方wheel下载在121.3/857.6MB处ReadTimeout，默认15秒；检索 [pip超时接口](https://pip.pypa.io/en/stable/cli/pip/) 与 [PyTorch历史版本](https://pytorch.org/get-started/previous-versions/)，使用同官方地址curl续传、失败重试与180s超时。日志 third_party/wheels/{torch_download,torch_install}.log。当前不是资源不足，不关闭正在运行的方法任务。

@@ -15,6 +15,16 @@ WEX 实际证据：解析 multiple_front_constraints 20例中，r2 WEX20/20、�
 FIT4对象中 WEX/MILP BUILD正确命中分别均为40/41、908/3195、74/74、1145/4208；两个较密对象缺正确候选2242/3009束，域选择无法凭空补齐。WEX计算 .575/45.30/.076/126.40s，MILP .060/.884/.089/2.471s；首个资产与V73首交点读出数值差0。无DEV/FINAL质量读取。
 证据 `autoresearch/worldsim_v74/a_wex/{domain_r1_summary,domain_r2_summary,fit_pilot_results,fit_pilot_resources}.json`。failure_ledger_delta=V74-F03 resolved initial implementation; V74-F04 active hypothesis risk，尚无主方法晋级/淘汰裁决。
 
+## B/C 首次实现与 FIT 训练里程碑
+
+执行基线 b08b85d6，尚未读取真实 DEV/FINAL QUERY。RIF 的连续 P1 场/完整区间编译/星形一致细分与 B0 sampled、B1 exact、B2 普通几何误差细分已实现。80个固定场数值机制：false_free_claims=0，mesh–field根差≤4.77e−7m，延拓误差≤1.34e−15；这是数值/表示证据，尚不替代自适应与控制的端到端几何实验。FIT4 pilot 正在完成，首个41返回对象 RIF全中，B1/B2分别漏5/3束；较密对象仍有约束松弛，不作物理保证。
+
+DCS 读取点/局部法向/BUILD射线及 LP alpha/beta/eta，PointNet局部编码输出中心位移、法向偏转、两轴有限尺度；真实八边形定价后做HiGHS整数选择，无透明响应。每数据集每FIT日志固定1个≥8点中位对象：nuScenes20日志/640教师例，AV2 17日志/544例；各自 full/no_demand 模型，均200轮，同初始化与更新预算，分别2000/1800次更新，每个模型14087参数（参数量以training.json为准）。教师只用本数据集 FIT BUILD + FIT额外射线，无DEV/FINAL。第一FIT对象八边形与导出三角的支持/early集合相同。
+
+C 初始调度只轮转前32锚点，修复为在完整排序队列内轮转，固定20×8提议预算不变；r1/r2资产与原代码保存，V74-F05工程项已解决，网络没有重训/挑checkpoint。r2完整无需求/普通增密控制一同完成，BUILD安全仍伴随密对象支撑不足，待相同真实DEV评价，不先宣告胜者。
+
+下一步：43对象/8日志三候选全部必要控制资产；80组三维真表面机制重建；共同强基线。NKSR官方源已下载，CUDA11.8独立环境安装中；PyTorch大文件15s超时已按官方超时说明迁移到续传与180s，V74-F06=环境/网络处理，不是GPU不足。failure_ledger_delta=V74-F05 resolved; V74-F06 active; V74-F04 remains unresolved。
+
 ---
 
 # P0 完成时的历史状态

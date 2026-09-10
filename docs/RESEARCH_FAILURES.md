@@ -17,6 +17,11 @@
 V74-F03（engineering, resolved）：初版冲突关联遗漏 free 约束连接，15/20 条件问题未探索联合责任；加回同一超图的一跳连接后 WEX20/20。r1和r2都保留，首次实现调试不记科学失败。
 V74-F04（support/novelty risk, active）：成熟MILP在解析20/20且更快；FIT4对象与WEX同命中/同面数，密对象的正确候选缺失约70%。尚无DEV质量，不能外推全部WEX表示失败。详见 [V74详细过程](WORLDSIM_V7_4_FAILURES.md)。
 
+## V74-F05 / V74-F06：C 初始调度与外部环境
+
+V74-F05（engineering, resolved）：C提议调度将所有高需求点截成前32，固定20轮反复访问；改为完整排序轮转，四FIT对象所有控制完成r2，原r1与代码保留。未改变候选预算/网络/训练目标，未读取DEV。
+V74-F06（environment/network, active）：NKSR需要匹配nvcc的PyTorch；使用独立cu118环境，官方857.6MB wheel下载15s读取超时，改为curl续传/180s超时。不是算力或磁盘不足，其他方法正常推进。详见 [V74详细过程](WORLDSIM_V7_4_FAILURES.md)。
+
 ## V74-F01：nuScenes 独立最终身份不足
 
 观察：V73 log_payload_inventory_r1 报告本地 27 可用日志；旧角色覆盖 trainval 全部 68 日志。角色分配不等于实际训练曝光，但不足以证明从未曝光。当前 20 FIT/5 DEV 共 489 对象已完整准备，DEV 不是新的盲测。
