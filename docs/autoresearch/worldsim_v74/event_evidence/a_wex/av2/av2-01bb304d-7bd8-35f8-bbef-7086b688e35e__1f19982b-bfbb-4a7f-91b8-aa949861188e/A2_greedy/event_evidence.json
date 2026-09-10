@@ -1,0 +1,71 @@
+{
+  "summary": {
+    "dataset": "av2",
+    "case_id": "av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e",
+    "method": "A2_greedy",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/A2_greedy/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/A2_greedy/event_000.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 0,
+    "useful_build": 0,
+    "useful_query": 0,
+    "useful_build_rate": null,
+    "useful_query_rate": null,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/A2_greedy/event_000.npz",
+      "query_owned_count": 490,
+      "query_hits_before": 75,
+      "query_hits_after": 67,
+      "lost_query_hit_rays": [
+        21,
+        154,
+        482,
+        671,
+        685,
+        689,
+        698,
+        742,
+        851,
+        1128,
+        1136,
+        1193,
+        1308,
+        1315,
+        1323,
+        1339,
+        1347
+      ],
+      "gained_query_hit_rays": [
+        157,
+        218,
+        898,
+        905,
+        1165,
+        1276,
+        1284,
+        1292,
+        1317
+      ],
+      "new_query_early_rays": [
+        96
+      ]
+    },
+    {
+      "event": 1,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-01bb304d-7bd8-35f8-bbef-7086b688e35e__1f19982b-bfbb-4a7f-91b8-aa949861188e/A2_greedy/event_001.npz",
+      "query_owned_count": 490,
+      "query_hits_before": 67,
+      "query_hits_after": 67,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": []
+    }
+  ]
+}

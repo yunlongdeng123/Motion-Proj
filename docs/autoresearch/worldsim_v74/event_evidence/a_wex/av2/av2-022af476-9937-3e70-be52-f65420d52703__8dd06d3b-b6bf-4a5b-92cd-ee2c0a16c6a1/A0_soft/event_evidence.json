@@ -1,0 +1,84 @@
+{
+  "summary": {
+    "dataset": "av2",
+    "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1",
+    "method": "A0_soft",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/A0_soft/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/A0_soft/event_000.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 0,
+    "useful_build": 0,
+    "useful_query": 0,
+    "useful_build_rate": null,
+    "useful_query_rate": null,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/A0_soft/event_000.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 109,
+      "query_hits_after": 96,
+      "lost_query_hit_rays": [
+        406,
+        423,
+        838,
+        860,
+        880,
+        901,
+        1398,
+        2173,
+        2187,
+        2452,
+        2568,
+        2574,
+        2580,
+        2595,
+        2609,
+        2622,
+        2767,
+        3179,
+        3211,
+        3213,
+        3218,
+        3224,
+        3908,
+        3921,
+        3931,
+        3943,
+        3968,
+        4035
+      ],
+      "gained_query_hit_rays": [
+        1021,
+        1335,
+        1371,
+        1442,
+        2381,
+        2393,
+        2512,
+        2538,
+        3250,
+        3730,
+        3747,
+        3764,
+        3780,
+        3798,
+        4055
+      ],
+      "new_query_early_rays": [
+        823,
+        845,
+        1016,
+        2533,
+        2603,
+        3628,
+        3908
+      ]
+    }
+  ]
+}

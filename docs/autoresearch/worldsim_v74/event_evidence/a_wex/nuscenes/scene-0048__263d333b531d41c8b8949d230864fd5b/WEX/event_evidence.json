@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "dataset": "nuscenes",
+    "case_id": "scene-0048__263d333b531d41c8b8949d230864fd5b",
+    "method": "WEX",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/nuscenes/scene-0048__263d333b531d41c8b8949d230864fd5b/WEX/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/nuscenes/scene-0048__263d333b531d41c8b8949d230864fd5b/WEX/event_000.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 0,
+    "useful_build": 0,
+    "useful_query": 0,
+    "useful_build_rate": null,
+    "useful_query_rate": null,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-A-REAL-01/20260910__probe43-assets-r2-ordered-s7401/nuscenes/scene-0048__263d333b531d41c8b8949d230864fd5b/WEX/event_000.npz",
+      "query_owned_count": 165,
+      "query_hits_before": 36,
+      "query_hits_after": 34,
+      "lost_query_hit_rays": [
+        43,
+        79,
+        457,
+        471,
+        485
+      ],
+      "gained_query_hit_rays": [
+        71,
+        418,
+        432
+      ],
+      "new_query_early_rays": []
+    }
+  ]
+}

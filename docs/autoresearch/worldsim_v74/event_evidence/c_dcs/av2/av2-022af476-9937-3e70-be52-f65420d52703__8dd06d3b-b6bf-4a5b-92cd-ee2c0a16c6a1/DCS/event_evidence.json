@@ -1,0 +1,1215 @@
+{
+  "summary": {
+    "dataset": "av2",
+    "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1",
+    "method": "DCS",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_00.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 160,
+    "useful_build": 48,
+    "useful_query": 45,
+    "useful_build_rate": 0.3,
+    "useful_query_rate": 0.28125,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_00.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 5,
+      "query_hits_after": 22,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3844,
+        3856,
+        3868,
+        3879,
+        3891,
+        3902,
+        3915,
+        3927,
+        3937,
+        3948,
+        3997,
+        4006,
+        4015,
+        4024,
+        4033,
+        4042,
+        4051
+      ],
+      "new_query_early_rays": [
+        3521
+      ],
+      "proposed": 8,
+      "useful_build_proposals": 7,
+      "useful_query_proposals": 6,
+      "proposal_new_build_support": [
+        1,
+        15,
+        8,
+        22,
+        2,
+        3,
+        20,
+        13
+      ],
+      "proposal_new_query_support": [
+        0,
+        3,
+        9,
+        12,
+        1,
+        1,
+        13,
+        10
+      ],
+      "proposal_build_early_count": [
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        1,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 1,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_01.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 22,
+      "query_hits_after": 23,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3988
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 2,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        2,
+        0,
+        1
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 2,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_02.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 23,
+      "query_hits_after": 23,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        7,
+        6,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "proposal_new_query_support": [
+        2,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        130,
+        10,
+        2,
+        4,
+        4,
+        2,
+        10,
+        2
+      ],
+      "proposal_query_early_count": [
+        37,
+        3,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "event": 3,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_03.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 23,
+      "query_hits_after": 42,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3095,
+        3100,
+        3106,
+        3111,
+        3116,
+        3122,
+        3129,
+        3137,
+        3506,
+        3515,
+        3524,
+        3534,
+        3545,
+        3557,
+        3569,
+        3581,
+        3694,
+        3709,
+        3725
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 4,
+      "proposal_new_build_support": [
+        0,
+        0,
+        3,
+        1,
+        2,
+        28,
+        33,
+        4
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        15,
+        17,
+        4
+      ],
+      "proposal_build_early_count": [
+        10,
+        2,
+        1,
+        2,
+        3,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        2,
+        2,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 4,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_04.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 42,
+      "query_hits_after": 46,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3144,
+        3594,
+        3776,
+        3788
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 1,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        2,
+        1,
+        1,
+        3,
+        4,
+        0,
+        11,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        4,
+        0
+      ],
+      "proposal_build_early_count": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        0,
+        2
+      ],
+      "proposal_query_early_count": [
+        2,
+        2,
+        1,
+        1,
+        0,
+        3,
+        0,
+        2
+      ]
+    },
+    {
+      "event": 5,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_05.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 46,
+      "query_hits_after": 53,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3090,
+        3498,
+        3810,
+        3821,
+        3955,
+        3963,
+        3964
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 4,
+      "proposal_new_build_support": [
+        6,
+        9,
+        5,
+        3,
+        0,
+        9,
+        2,
+        0
+      ],
+      "proposal_new_query_support": [
+        3,
+        2,
+        0,
+        2,
+        0,
+        0,
+        2,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        1,
+        9,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 6,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_06.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 53,
+      "query_hits_after": 59,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3074,
+        3079,
+        3151,
+        3481,
+        3489,
+        3833
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 4,
+      "proposal_new_build_support": [
+        5,
+        1,
+        2,
+        0,
+        1,
+        37,
+        5,
+        1
+      ],
+      "proposal_new_query_support": [
+        4,
+        0,
+        0,
+        0,
+        1,
+        16,
+        1,
+        1
+      ],
+      "proposal_build_early_count": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 7,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_07.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 59,
+      "query_hits_after": 62,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3607,
+        3658,
+        4068
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 5,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        1,
+        1,
+        0,
+        97,
+        1,
+        8,
+        89,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        21,
+        0,
+        1,
+        22,
+        2
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        19,
+        0,
+        0,
+        22,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        4,
+        0
+      ]
+    },
+    {
+      "event": 8,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_08.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 62,
+      "query_hits_after": 63,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3085
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 1,
+      "useful_query_proposals": 1,
+      "proposal_new_build_support": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        89,
+        0,
+        63
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        22,
+        0,
+        20
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        34,
+        0,
+        5
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        7,
+        0,
+        1
+      ]
+    },
+    {
+      "event": 9,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_09.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 63,
+      "query_hits_after": 66,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3784,
+        3797,
+        3956
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 2,
+      "useful_query_proposals": 1,
+      "proposal_new_build_support": [
+        0,
+        3,
+        0,
+        92,
+        5,
+        0,
+        0,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        21,
+        3,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        14
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        9
+      ]
+    },
+    {
+      "event": 10,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_10.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 66,
+      "query_hits_after": 65,
+      "lost_query_hit_rays": [
+        4068
+      ],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 1,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        93,
+        0,
+        2,
+        102,
+        90,
+        0,
+        0,
+        0
+      ],
+      "proposal_new_query_support": [
+        23,
+        0,
+        0,
+        21,
+        21,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        24,
+        0,
+        0,
+        11,
+        28,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        3,
+        0,
+        0,
+        4,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 11,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_11.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 65,
+      "query_hits_after": 65,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        0,
+        0,
+        0,
+        93,
+        0,
+        2,
+        0,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        22,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        1,
+        0,
+        0,
+        31,
+        0,
+        1,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        2,
+        0,
+        0,
+        7,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 12,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_12.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 65,
+      "query_hits_after": 83,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3166,
+        3173,
+        3180,
+        3199,
+        3508,
+        3517,
+        3646,
+        3836,
+        3847,
+        3870,
+        3882,
+        3893,
+        3981,
+        3990,
+        3999,
+        4008,
+        4017,
+        4026
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 2,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        0,
+        0,
+        0,
+        18,
+        2,
+        0,
+        32,
+        42
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        11,
+        1,
+        0,
+        17,
+        18
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        1,
+        7,
+        0,
+        1,
+        1,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        1,
+        4,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 13,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_13.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 83,
+      "query_hits_after": 88,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3159,
+        3491,
+        3634,
+        3824,
+        3973
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 4,
+      "proposal_new_build_support": [
+        9,
+        0,
+        9,
+        0,
+        3,
+        78,
+        14,
+        22
+      ],
+      "proposal_new_query_support": [
+        3,
+        3,
+        3,
+        0,
+        0,
+        5,
+        5,
+        6
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        219,
+        0,
+        0,
+        3,
+        0,
+        1
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        67,
+        0,
+        0,
+        5,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 14,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_14.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 88,
+      "query_hits_after": 93,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3158,
+        3206,
+        3473,
+        3619,
+        3621
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 4,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        0,
+        5,
+        5,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 15,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_15.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 93,
+      "query_hits_after": 97,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3152,
+        3800,
+        3813,
+        3966
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 2,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        20,
+        2,
+        6,
+        0,
+        0,
+        0,
+        84,
+        1
+      ],
+      "proposal_new_query_support": [
+        4,
+        3,
+        4,
+        0,
+        0,
+        0,
+        6,
+        0
+      ],
+      "proposal_build_early_count": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        19,
+        1
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        2
+      ]
+    },
+    {
+      "event": 16,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_16.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 97,
+      "query_hits_after": 98,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3070
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 2,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        0,
+        89,
+        0,
+        34,
+        87,
+        1,
+        67,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        7,
+        0,
+        1,
+        9,
+        1,
+        5,
+        1
+      ],
+      "proposal_build_early_count": [
+        0,
+        12,
+        0,
+        8,
+        31,
+        0,
+        1,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        4,
+        0,
+        3,
+        9,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "event": 17,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_17.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 98,
+      "query_hits_after": 109,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        3066,
+        3233,
+        3242,
+        3609,
+        3801,
+        3940,
+        3949,
+        4053,
+        4061,
+        4065,
+        4068
+      ],
+      "new_query_early_rays": [
+        3918
+      ],
+      "proposed": 8,
+      "useful_build_proposals": 4,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        87,
+        65,
+        6,
+        7,
+        77,
+        2,
+        7,
+        7
+      ],
+      "proposal_new_query_support": [
+        7,
+        9,
+        2,
+        2,
+        9,
+        0,
+        7,
+        1
+      ],
+      "proposal_build_early_count": [
+        25,
+        10,
+        0,
+        0,
+        18,
+        0,
+        0,
+        8
+      ],
+      "proposal_query_early_count": [
+        7,
+        5,
+        0,
+        0,
+        8,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "event": 18,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_18.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 109,
+      "query_hits_after": 109,
+      "lost_query_hit_rays": [
+        3956,
+        3964
+      ],
+      "gained_query_hit_rays": [
+        3632,
+        3957
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        1,
+        1,
+        67,
+        7,
+        71,
+        68,
+        7,
+        1
+      ],
+      "proposal_new_query_support": [
+        1,
+        0,
+        10,
+        2,
+        5,
+        10,
+        2,
+        1
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        9,
+        31,
+        2,
+        8,
+        3,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        6,
+        4,
+        4,
+        6,
+        3,
+        0
+      ]
+    },
+    {
+      "event": 19,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__8dd06d3b-b6bf-4a5b-92cd-ee2c0a16c6a1/DCS/event_19.npz",
+      "query_owned_count": 1075,
+      "query_hits_before": 109,
+      "query_hits_after": 108,
+      "lost_query_hit_rays": [
+        3632
+      ],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        42,
+        0,
+        0,
+        90,
+        0,
+        12,
+        32,
+        0
+      ],
+      "proposal_new_query_support": [
+        9,
+        0,
+        0,
+        9,
+        0,
+        5,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        1,
+        0,
+        0,
+        18,
+        0,
+        1,
+        1,
+        0
+      ],
+      "proposal_query_early_count": [
+        2,
+        0,
+        0,
+        7,
+        0,
+        2,
+        2,
+        0
+      ]
+    }
+  ]
+}

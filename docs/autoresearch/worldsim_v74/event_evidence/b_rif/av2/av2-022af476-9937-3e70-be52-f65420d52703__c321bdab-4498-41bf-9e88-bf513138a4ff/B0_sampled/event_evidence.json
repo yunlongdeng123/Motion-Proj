@@ -1,0 +1,44 @@
+{
+  "summary": {
+    "dataset": "av2",
+    "case_id": "av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff",
+    "method": "B0_sampled",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff/B0_sampled/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff/B0_sampled/event_00.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 0,
+    "useful_build": 0,
+    "useful_query": 0,
+    "useful_build_rate": null,
+    "useful_query_rate": null,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/av2/av2-022af476-9937-3e70-be52-f65420d52703__c321bdab-4498-41bf-9e88-bf513138a4ff/B0_sampled/event_00.npz",
+      "query_owned_count": 45,
+      "query_hits_before": 25,
+      "query_hits_after": 25,
+      "lost_query_hit_rays": [
+        30,
+        59,
+        62,
+        110
+      ],
+      "gained_query_hit_rays": [
+        52,
+        85,
+        95,
+        143
+      ],
+      "new_query_early_rays": [
+        62,
+        86
+      ]
+    }
+  ]
+}

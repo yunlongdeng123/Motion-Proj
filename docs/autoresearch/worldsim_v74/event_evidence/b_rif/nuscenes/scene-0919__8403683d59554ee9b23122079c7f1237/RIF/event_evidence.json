@@ -1,0 +1,172 @@
+{
+  "summary": {
+    "dataset": "nuscenes",
+    "case_id": "scene-0919__8403683d59554ee9b23122079c7f1237",
+    "method": "RIF",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/RIF/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/RIF/event_00.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 0,
+    "useful_build": 0,
+    "useful_query": 0,
+    "useful_build_rate": null,
+    "useful_query_rate": null,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/RIF/event_00.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 25,
+      "query_hits_after": 5,
+      "lost_query_hit_rays": [
+        62,
+        68,
+        74,
+        80,
+        86,
+        92,
+        125,
+        136,
+        143,
+        149,
+        154,
+        160,
+        161,
+        167,
+        172,
+        588,
+        603,
+        620,
+        922,
+        963,
+        980,
+        994,
+        1010,
+        1026
+      ],
+      "gained_query_hit_rays": [
+        776,
+        792,
+        808,
+        869
+      ],
+      "new_query_early_rays": []
+    },
+    {
+      "event": 1,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/RIF/event_01.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 5,
+      "query_hits_after": 14,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        449,
+        741,
+        742,
+        758,
+        759,
+        775,
+        1059,
+        1074,
+        1089
+      ],
+      "new_query_early_rays": [
+        144,
+        150,
+        155,
+        162,
+        168,
+        561,
+        577,
+        1104,
+        1120,
+        1135,
+        1151,
+        1166,
+        1181,
+        1196
+      ]
+    },
+    {
+      "event": 2,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/RIF/event_02.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 14,
+      "query_hits_after": 12,
+      "lost_query_hit_rays": [
+        741,
+        742,
+        758,
+        759,
+        776,
+        792,
+        808,
+        881,
+        1059
+      ],
+      "gained_query_hit_rays": [
+        490,
+        620,
+        791,
+        807,
+        870,
+        980,
+        995
+      ],
+      "new_query_early_rays": [
+        69,
+        75,
+        161,
+        397,
+        419,
+        432,
+        460,
+        531,
+        560,
+        742,
+        759,
+        776,
+        792,
+        808,
+        881,
+        922,
+        963,
+        1027
+      ]
+    },
+    {
+      "event": 3,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/RIF/event_03.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 12,
+      "query_hits_after": 18,
+      "lost_query_hit_rays": [
+        1074,
+        1089
+      ],
+      "gained_query_hit_rays": [
+        407,
+        963,
+        994,
+        1010,
+        1026,
+        1043,
+        1059,
+        1120
+      ],
+      "new_query_early_rays": [
+        384,
+        562,
+        578,
+        606,
+        1074,
+        1089
+      ]
+    }
+  ]
+}

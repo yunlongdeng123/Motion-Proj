@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "dataset": "nuscenes",
+    "case_id": "scene-0048__9798ef1b25104da78e1f1448efac2645",
+    "method": "B1_exact",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0048__9798ef1b25104da78e1f1448efac2645/B1_exact/initial.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0048__9798ef1b25104da78e1f1448efac2645/B1_exact/event_00.npz",
+      "event": 0,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 0,
+    "useful_build": 0,
+    "useful_query": 0,
+    "useful_build_rate": null,
+    "useful_query_rate": null,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-B-REAL-01/20260910__probe43-assets-r1-eliminated-s7401/nuscenes/scene-0048__9798ef1b25104da78e1f1448efac2645/B1_exact/event_00.npz",
+      "query_owned_count": 0,
+      "query_hits_before": 0,
+      "query_hits_after": 0,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [
+        31
+      ]
+    }
+  ]
+}

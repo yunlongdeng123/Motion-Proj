@@ -66,3 +66,10 @@ nuScenes WEX相对A1/A2主要指标差为0，相对A3 MILP命中−0.182pp；AV2
 ### V74-F09 生片机制归因的来源与执行边界
 
 [PointTriNet官方](https://nmwsharp.com/research/learned-triangulation/)使用局部PointNet提议和候选分类；当前C2是同邻域PointNet+标准整数主问题的控制，未冒称完整官方PointTriNet。[对偶稳定化](https://arxiv.org/abs/2405.11198)和[退化定价研究](https://arxiv.org/abs/2604.12070)提醒低约化成本/LP改进不等于新的有用支撑。接入点：对保存的每步parameters/anchors重新做同一真实八边形求交，记录能修复旧miss/late且不产生early的BUILD/QUERY生片率，并保存首次QUERY退化前后资产与射线ID。QUERY只用于事后取证，没有进入提议或选择。稳定化不是已实现组件，不用这些来源将负结果变成事后新方法。
+
+## V74-F10：RIF的区间满足不延伸为留出几何安全
+
+当前主域数值证据完整：25对象×4轮RIF均报告收敛，末层scaled stationarity最大4.45e−5，root_outside_domain=0、zero_tetra=0；16/25对象BUILD全正确且无提前。显式松弛的残差为场值单位，不是几何测距误差。AV2 18对象中RIF10对象BUILD物理满足，末层1对象到10000迭代上限；这部分不宣称充分收敛。
+真实QUERY上RIF37.208%命中、14.840%early、20.379%miss、74.103%召回、free0.512m。B2普通同轮数细分30.608%命中、10.021%early、63.533%召回、free0.591m；RIF虽增加覆盖，early显著超非劣上限。B0采样命中37.794%、early9.684%；B1精确固定网格31.168%、early8.910%。因此问题不只是“更密就好”或“区间端点算错”，而是当前重建层没有将BUILD的局部几何保证变成足够好的留出表面。
+检索[可见性增强重建](https://arxiv.org/abs/2202.01810)、[弱支持表面的可见性重建](https://pmc.ncbi.nlm.nih.gov/articles/PMC4897344/)及[NKSR官方](https://research.nvidia.com/labs/toronto-ai/NKSR/)。接入点为已有同信息外部先验/标准控制，以及初始—细分—最终的真实QUERY取证；不在冻结后额外增加可见性头、RGB、未知空间约束或修改权重。当前BUILD观察有限，未观测几何必须由表示/先验支持，不能从已测区间证明全空间安全。
+保存：real_solver_status.json包含逐对象末层求解状态/完整events路径；event_evidence/b_rif保存首次退化前后表面、lost/gained/newearly射线ID；原npz包含全部场、四面体、约束端点、根残差。结论只针对本轮配置/表示预算；待统一机制报告后填筛选分类，人工verdict保持空。

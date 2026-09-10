@@ -56,6 +56,12 @@ A责任候选排序更正r2完成215/215资产，66对象合同评价无ready工
 公共参考172资产/264合同对象方法评价完成。原R8中位面数nuScenes4392/AV24568，超过4096，因此只作历史原生质量/成本边界，不能偷偷列入同预算优胜比较；r6/r7历史先验及AV2训练来源同样单列。报告表和配对日志bootstrap原值在evaluation/partial_AC_*；B/80几何机制未结束，未填总体裁决。
 C补充检索PointTriNet官方PointNet局部提议、列生成对偶退化/稳定化一手研究；采用保存的proposal参数、LP/整数事件与中间表面做实际生片价值归因，不在看DEV后加稳定化新机制。NKSR独立CUDA11.8环境依赖已完成，官方源码在编译、ks权重在下载。failure_ledger_delta=V74-F04 real novelty risk confirmed; V74-F07 corrected real assets complete; V74-F06 progressing。
 
+## B真实留出与三候选共同筛选结果
+
+B正式43×4资产完成，峰值RSS0.980GiB/CUDA0.074GiB，1404.1s墙钟/8368.6CPU秒，无工程缺输出、无面预算超限。主nuScenes25对象的RIF100个数值子问题全部报告收敛，末层scaled梯度最大4.45e−5；因此当前主域的负结果不能归为旧松弛QP超时。AV2末层仍有RIF/B0/B1各1对象、B2两对象达到10000迭代上限，保留数值边界。
+nuScenes RIF相对B2普通细分：hit+6.599pp、recall+10.571pp、early+4.820pp、free−0.079m；相对B1同精确区间固定网格：hit+6.040pp、early+5.930pp、free+0.125m；相对B0普通采样：hit−0.586pp、early+5.156pp。所有比较均未通过共同改善路径，不能仅报覆盖改善。AV2相对B2 hit+8.241pp、early+1.621pp；相对B0 hit+2.248pp，两个域均未给本轮门槛降标。
+V74-F10登记RIF覆盖/留出物理取舍；F08同目标数值迁移已形成有效完整主域证据。三个候选当前真实筛选均未通过，但80组完整三维机制及官方NKSR对照尚在完成，统一裁决未填。A/B/C全部初始与关键事件的首次QUERY退化前后引用、射线ID及C逐提议实际价值已保存，不回流方法。failure_ledger_delta=add V74-F10; V74-F08 resolved numerical migration with AV2 iteration limits retained。
+
 ---
 
 # P0 已完成实验

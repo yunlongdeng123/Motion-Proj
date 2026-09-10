@@ -1,0 +1,1110 @@
+{
+  "summary": {
+    "dataset": "nuscenes",
+    "case_id": "scene-0919__8403683d59554ee9b23122079c7f1237",
+    "method": "C1_residual",
+    "first_degradation": {
+      "before": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_00.npz",
+      "after": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_01.npz",
+      "event": 1,
+      "meaning": "first net loss of owned QUERY hits or new early QUERY ray; diagnostic only, never used to select asset"
+    },
+    "proposed": 160,
+    "useful_build": 30,
+    "useful_query": 34,
+    "useful_build_rate": 0.1875,
+    "useful_query_rate": 0.2125,
+    "definition": "proposal repairs at least one previously missed/late first return and creates no early hit on any observed ray; QUERY diagnostic never enters inference; actual selected event hits are reported separately"
+  },
+  "events": [
+    {
+      "event": 0,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_00.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 7,
+      "query_hits_after": 7,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        1,
+        1,
+        1,
+        5,
+        4,
+        4,
+        5,
+        5
+      ],
+      "proposal_new_query_support": [
+        0,
+        1,
+        3,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "proposal_build_early_count": [
+        1,
+        1,
+        4,
+        2,
+        4,
+        2,
+        3,
+        1
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 1,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_01.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 7,
+      "query_hits_after": 11,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        994,
+        1010,
+        1026,
+        1043
+      ],
+      "new_query_early_rays": [
+        759,
+        776,
+        792,
+        808,
+        980
+      ],
+      "proposed": 8,
+      "useful_build_proposals": 4,
+      "useful_query_proposals": 4,
+      "proposal_new_build_support": [
+        5,
+        4,
+        1,
+        5,
+        3,
+        5,
+        5,
+        5
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        4,
+        2,
+        7,
+        2,
+        0,
+        2
+      ],
+      "proposal_build_early_count": [
+        0,
+        2,
+        0,
+        1,
+        6,
+        1,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        2,
+        2,
+        0,
+        0,
+        0,
+        0,
+        4,
+        1
+      ]
+    },
+    {
+      "event": 2,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_02.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 11,
+      "query_hits_after": 14,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        1059,
+        1074,
+        1089
+      ],
+      "new_query_early_rays": [
+        742
+      ],
+      "proposed": 8,
+      "useful_build_proposals": 4,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        1,
+        2,
+        1,
+        1,
+        3,
+        3,
+        5,
+        5
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        1,
+        1
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 3,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_03.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 14,
+      "query_hits_after": 14,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        3,
+        2,
+        4,
+        5,
+        3,
+        3,
+        3,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        5,
+        0,
+        1,
+        0,
+        4,
+        1,
+        4
+      ],
+      "proposal_query_early_count": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        1,
+        1,
+        5
+      ]
+    },
+    {
+      "event": 4,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_04.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 14,
+      "query_hits_after": 16,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        154,
+        172
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        1,
+        0,
+        2,
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2,
+        3
+      ],
+      "proposal_build_early_count": [
+        8,
+        0,
+        7,
+        2,
+        6,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        3,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 5,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_05.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 16,
+      "query_hits_after": 16,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 4,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        3,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "event": 6,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_06.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 16,
+      "query_hits_after": 17,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        125
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 1,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        0,
+        1,
+        1,
+        3,
+        2,
+        3,
+        3,
+        3
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        2,
+        0,
+        1
+      ],
+      "proposal_build_early_count": [
+        0,
+        1,
+        9,
+        2,
+        0,
+        2,
+        10,
+        13
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        8,
+        0,
+        0,
+        0,
+        6,
+        4
+      ]
+    },
+    {
+      "event": 7,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_07.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 17,
+      "query_hits_after": 17,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 1,
+      "proposal_new_build_support": [
+        2,
+        4,
+        1,
+        4,
+        3,
+        3,
+        4,
+        4
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        12,
+        3,
+        1,
+        3,
+        3,
+        1,
+        3,
+        1
+      ],
+      "proposal_query_early_count": [
+        4,
+        1,
+        0,
+        1,
+        1,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "event": 8,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_08.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 17,
+      "query_hits_after": 17,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        1,
+        4,
+        1,
+        0,
+        1,
+        2,
+        3,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        1,
+        6,
+        13,
+        2,
+        2,
+        11,
+        4,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        4,
+        5,
+        1,
+        3,
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 9,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_09.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 17,
+      "query_hits_after": 17,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 5,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        1,
+        3,
+        2,
+        3,
+        3,
+        0,
+        1,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        3
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        4
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 10,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_10.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 17,
+      "query_hits_after": 17,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        5,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        3,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "proposal_query_early_count": [
+        1,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 11,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_11.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 17,
+      "query_hits_after": 18,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        1104
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 3,
+      "useful_query_proposals": 4,
+      "proposal_new_build_support": [
+        2,
+        5,
+        5,
+        3,
+        4,
+        1,
+        5,
+        4
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "proposal_build_early_count": [
+        5,
+        0,
+        1,
+        1,
+        0,
+        0,
+        3,
+        3
+      ],
+      "proposal_query_early_count": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 12,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_12.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 18,
+      "query_hits_after": 20,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        92,
+        406
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 4,
+      "useful_query_proposals": 5,
+      "proposal_new_build_support": [
+        0,
+        3,
+        3,
+        1,
+        4,
+        2,
+        3,
+        2
+      ],
+      "proposal_new_query_support": [
+        0,
+        1,
+        2,
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "proposal_build_early_count": [
+        0,
+        2,
+        2,
+        0,
+        0,
+        15,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 13,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_13.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 20,
+      "query_hits_after": 20,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        4,
+        3,
+        0,
+        3,
+        3,
+        4,
+        2,
+        4
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        3,
+        1,
+        0,
+        3,
+        3,
+        1,
+        1,
+        1
+      ],
+      "proposal_query_early_count": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "event": 14,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_14.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 20,
+      "query_hits_after": 20,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 1,
+      "useful_query_proposals": 1,
+      "proposal_new_build_support": [
+        0,
+        1,
+        2,
+        1,
+        1,
+        0,
+        0,
+        5
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        13,
+        11,
+        0,
+        3,
+        0,
+        0,
+        3
+      ],
+      "proposal_query_early_count": [
+        0,
+        5,
+        4,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "event": 15,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_15.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 20,
+      "query_hits_after": 21,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [
+        149
+      ],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 1,
+      "useful_query_proposals": 3,
+      "proposal_new_build_support": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "proposal_build_early_count": [
+        2,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 16,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_16.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 21,
+      "query_hits_after": 21,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        0,
+        1,
+        2,
+        1,
+        3,
+        0,
+        5,
+        4
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        3
+      ],
+      "proposal_query_early_count": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "event": 17,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_17.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 21,
+      "query_hits_after": 21,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 2,
+      "proposal_new_build_support": [
+        0,
+        0,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        7,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        0,
+        1,
+        6,
+        1,
+        0,
+        0,
+        0
+      ],
+      "proposal_query_early_count": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "event": 18,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_18.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 21,
+      "query_hits_after": 21,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        3,
+        3,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        4,
+        1,
+        4
+      ],
+      "proposal_query_early_count": [
+        3,
+        2,
+        0,
+        0,
+        0,
+        1,
+        1,
+        5
+      ]
+    },
+    {
+      "event": 19,
+      "asset": "/root/autodl-tmp/runs/worldsim_v74/WS-V74-C-REAL-01/20260910__probe43-assets-r1-s7401/nuscenes/scene-0919__8403683d59554ee9b23122079c7f1237/C1_residual/event_19.npz",
+      "query_owned_count": 76,
+      "query_hits_before": 21,
+      "query_hits_after": 21,
+      "lost_query_hit_rays": [],
+      "gained_query_hit_rays": [],
+      "new_query_early_rays": [],
+      "proposed": 8,
+      "useful_build_proposals": 0,
+      "useful_query_proposals": 0,
+      "proposal_new_build_support": [
+        0,
+        3,
+        1,
+        2,
+        1,
+        0,
+        2,
+        1
+      ],
+      "proposal_new_query_support": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "proposal_build_early_count": [
+        4,
+        3,
+        3,
+        2,
+        8,
+        0,
+        7,
+        2
+      ],
+      "proposal_query_early_count": [
+        7,
+        1,
+        1,
+        2,
+        3,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

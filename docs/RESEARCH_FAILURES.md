@@ -30,6 +30,10 @@ engineering；corrected code / rerun pending。FIT第23束证明正确带内候�
 
 V74-F04最新：排序更正后的真实DEV表明WEX与固定/贪心责任的命中、early、miss、recall相同，nuScenes命中还低于A3 MILP0.182pp。新颖性增量不足，等待三维机制统一收口；人工verdict未填。F07对应修正资产/评价已完成。历史R8超过4096面，明确列在原生预算参考。
 
+## V74-F10：RIF提高覆盖但留出提前命中增加
+
+主域RIF100个子问题均收敛，真实相对B2 hit+6.599pp伴随early+4.820pp，超过允许+0.5pp；相对B1 early+5.930pp/free+0.125m，相对B0 hit−0.586pp/early+5.156pp。无工程缺输出或超面数解释该现象。BUILD16/25对象物理成立，不认证未观测空间。AV2部分迭代上限单列，不能扩大科学否定范围。详见 [V74失败过程](WORLDSIM_V7_4_FAILURES.md) 和 evaluation/b_rif；机制/外部参考待最终收口。
+
 ## V74-F09：DCS真实DEV未形成相对强控制的共同收益
 
 quality/novelty evidence不足，当前冻结模型/预算；nuScenes相对C1命中−0.405pp、early−1.439pp、召回−2.528pp、free+0.004113m，未达两条改善路径且召回保护失败。AV2自身训练相对C1命中−6.039pp、miss+8.380pp。无空面/工程缺失可解释该差额；不能以相对C0增密收益称对偶需求创新。详细表与逐对象证据见 [V74失败过程](WORLDSIM_V7_4_FAILURES.md) 和 evaluation/c_dcs。机制与日志区间待收口，人工verdict留空。
