@@ -68,6 +68,7 @@ def geometric_distance(v,f,gtv,gtf):
 
 
 parser=argparse.ArgumentParser();parser.add_argument('--methods',nargs='+',required=True);parser.add_argument('--output',type=Path,required=True)
+parser.add_argument('--reuse',type=Path);parser.add_argument('--reuse-methods',nargs='*',default=[])
 args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=False);torch.set_num_threads(4);cfg=json.loads((ROOT/'configs/worldsim_v74/tournament.json').read_text())
 params={**cfg,**cfg['dataset_parameters']['nuscenes'],'dcs_checkpoints':cfg['dcs_checkpoints']['nuscenes']}
 params['epsilon_obs_m']=.02;params['carrier_half_width_m']=.2
@@ -85,6 +86,10 @@ for family in ['multi_front','shared_conflict','missing_support','redundant_thin
         for name,data in [('build',build),('query',query)]:np.savez_compressed(case/f'{name}.npz',**{k:v for k,v in data.items() if k!='metadata'})
         for method in args.methods:
             out=case/method
+            previous=args.reuse/case.name/method if args.reuse and method in args.reuse_methods else None
+            if previous is not None and (previous/'metrics.json').exists():
+                row=json.loads((previous/'metrics.json').read_text());row['artifact_source']=str(previous)
+                out.symlink_to(previous,target_is_directory=True);rows.append(row);continue
             try:
                 if method=='WEX' or method.startswith('A'):from motion_proj.worldsim_v74.a_wex import reconstruct
                 elif method=='RIF' or method.startswith('B'):from motion_proj.worldsim_v74.b_rif import reconstruct

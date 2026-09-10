@@ -3,6 +3,7 @@ import itertools,time
 from pathlib import Path
 import numpy as np
 import scipy.sparse as sp
+from scipy.optimize import minimize
 from scipy.spatial import cKDTree
 import osqp
 import torch
@@ -120,28 +121,34 @@ def prior_values(field,build):
     return (signed*weights).sum(1)/weights.sum(1)
 
 
-def field_solve(field,c0,H,F,mu,soft=False):
+def field_solve(field,c0,H,F,mu,soft=False,seconds=300):
     n=len(field.v);nr=H.shape[0];nf=F.shape[0]
     edges=np.unique(np.sort(field.t[:,list(itertools.combinations(range(4),2))].reshape(-1,2),axis=1),axis=0)
     L=sp.csr_matrix((np.tile([1.,-1.],len(edges)),(np.repeat(np.arange(len(edges)),2),edges.ravel())),shape=(len(edges),n))
     P=sp.eye(n)+.02*(L.T@L)
-    if soft:
-        # 同场/同先验 endpoint + sampled-free 二次软约束，未用完整区间约束。
-        # 用同一显式松弛二次目标精确解 sampled 控制，避免把弱化的单步优化当对照。
-        return field_solve(field,c0,H,F,mu,soft=False)
-    else:
-        # 根的等式松弛 e 和每个区间端点非负松弛 s 均显式保存，软化不宣称保证。
-        # 二次松弛避免将传感器代理冲突错误宣布成整个表示不可行。
-        P=sp.block_diag([P,sp.eye(nr)*1e4,sp.eye(nf)*1e4],format='csc')
-        q=np.r_[-c0,np.zeros(nr+nf)]
-        A=sp.vstack([sp.hstack([H,sp.eye(nr),sp.csr_matrix((nr,nf))]),
-                     sp.hstack([F,sp.csr_matrix((nf,nr)),sp.eye(nf)]),
-                     sp.hstack([sp.csr_matrix((nf,n+nr)),sp.eye(nf)])],format='csc')
-        solver=osqp.OSQP();solver.setup(P=sp.triu(P,format='csc'),q=q,A=A,l=np.r_[np.zeros(nr),np.full(nf,mu),np.zeros(nf)],
-            u=np.r_[np.zeros(nr),np.full(nf*2,np.inf)],verbose=False,eps_abs=1e-5,eps_rel=1e-5,max_iter=10000)
-    res=solver.solve();c=res.x[:n] if res.x is not None else c0.copy()
-    return c,{'solver_status':res.info.status,'solver_iterations':res.info.iter,'primal_residual':float(res.info.prim_res),
-              'H_residual':np.asarray(H@c),'F_slack':np.maximum(mu-F@c,0)}
+    # 同一QP中 e=-Hc, s=max(mu-Fc,0) 可解析消元；仅改变数值求解变量，不改变目标/观测。
+    # 避免为几十万区间端点各建一个额外变量；原始残差仍完整保存。
+    H=H.tocsr();F=F.tocsr();P=P.tocsr()
+    diagonal=np.asarray(P.diagonal()+1e4*H.power(2).sum(0).A1+1e4*F.power(2).sum(0).A1)
+    scale=np.sqrt(np.maximum(diagonal,1.));begin=time.monotonic();latest=[c0.copy()]
+    def objective(y):
+        c=y/scale;hc=H@c;slack=np.maximum(mu-F@c,0);pc=P@c
+        value=.5*c@pc-c0@c+.5e4*(hc@hc+slack@slack)
+        grad=pc-c0+1e4*(H.T@hc-F.T@slack)
+        latest[0]=c
+        return float(value),np.asarray(grad/scale)
+    def callback(y):
+        if time.monotonic()-begin>seconds:raise TimeoutError('fixed FIT solver wall budget')
+    try:
+        res=minimize(objective,c0*scale,jac=True,method='L-BFGS-B',callback=callback,
+            options={'maxiter':10000,'maxfun':20000,'maxcor':30,'ftol':1e-12,'gtol':1e-7,'maxls':40})
+        c=res.x/scale;status=str(res.message);iterations=res.nit
+    except TimeoutError:
+        c=latest[0];status='time_limit';iterations=None
+    value,grad=objective(c*scale)
+    return c,{'solver_status':status,'solver_iterations':iterations,'primal_residual':0.,
+              'eliminated_slack_variables':nr+nf,'solver_stationarity_scaled_inf':float(np.max(np.abs(grad))),
+              'objective':value,'H_residual':np.asarray(H@c),'F_slack':np.maximum(mu-F@c,0)}
 
 
 def reconstruct(build,params,variant,out):
@@ -168,9 +175,9 @@ def reconstruct(build,params,variant,out):
                 np.minimum.at(entry,interval['ray'],interval['lo']);np.maximum.at(exit,interval['ray'],interval['hi'])
                 take=np.flatnonzero(np.isfinite(entry));tt=entry[take]+q*(exit[take]-entry[take])
                 rows,_=field.point_rows(o[take]+tt[:,None]*d[take]);sample_rows.append(rows)
-            sampled=sp.vstack(sample_rows,format='csr');c,diag=field_solve(field,c0,H,sampled,cfg['free_margin'],soft=True)
+            sampled=sp.vstack(sample_rows,format='csr');c,diag=field_solve(field,c0,H,sampled,cfg['free_margin'],soft=True,seconds=max(1,cfg['wall_seconds']-(time.monotonic()-start)))
             diag['F_slack']=np.maximum(cfg['free_margin']-F@c,0)
-        else:c,diag=field_solve(field,c0,H,F,cfg['free_margin'])
+        else:c,diag=field_solve(field,c0,H,F,cfg['free_margin'],seconds=max(1,cfg['wall_seconds']-(time.monotonic()-start)))
         v,f,zero=field.extract(c);actual=ray_state(v,f,build,eps)
         save_mesh(out/f'event_{step:02d}.npz',v,f,field_vertices=field.v,tetrahedra=field.t,field_values=c,tau=tau)
         np.savez_compressed(out/f'constraints_{step:02d}.npz',root_cell=rootcell,root_residual=diag['H_residual'],free_slack=diag['F_slack'],**interval)
