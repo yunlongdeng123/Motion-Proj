@@ -1,4 +1,19 @@
-# 当前实验台账：V74 P0 完成
+# V74 方法竞争：有卡恢复，首次实现进行中
+
+2026-09-10，执行基线 e782b2b4。用户已解除 P0 阶段终点。RTX 3090 24GiB、14 CPU、90GiB 内存；当前没有资源阻断，V74-F02 GPU 状态已解决。P0 结果保持，原始数据不重跑。
+
+| task | 当前状态 | 实际证据 |
+|---|---|---|
+| WS-V74-RESUME-01 | done | start/resource_resume.json，分支干净、GPU 空闲 |
+| WS-V74-FIT-CALIBRATION-01 | pending | 只用各自 FIT 固定几何/数值预算，DEV 质量尚未读取 |
+| WS-V74-METHOD-TOURNAMENT-01 | implementing | WEX/RIF/DCS 独立实现及强控制；43 ready/8 日志 + 23 缺 BUILD 合同对象 |
+
+主 seed=7401，确认=7402；输出≤4096三角形；各自 FIT/DEV。尚无模型质量、候选裁决或新科学失败。原 nuScenes FINAL 数据缺口 V74-F01 保留。
+先建立成熟 OSQP/HiGHS 对照与统一真实求交，保存机制算例、初始/事件/最终资产及全部对象分母。详细失败见 [V74 失败过程](WORLDSIM_V7_4_FAILURES.md)。failure_ledger_delta=resolve V74-F02 GPU resource; no science verdict。
+
+---
+
+# P0 已完成实验
 
 日期：2026-09-10；执行基线 463ef199；来源 V73 最终 01af4739。P0 只有数据/存储工作，optimizer_updates=0，model_quality_evaluated=false。
 

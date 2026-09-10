@@ -1,11 +1,11 @@
 # 统一失败账本：V74 当前入口
 
-日期：2026-09-10；P0 done，执行基线 463ef199。本文件是唯一失败事实源；历史指令不产生当前执行授权。按 ID 渐进式读取，每里程碑同步状态/实验台账。
+日期：2026-09-10；有卡研究恢复，执行基线 e782b2b4。本文件保留统一失败 ID、索引和结论，V74 事件详情见 [V74 失败过程](WORLDSIM_V7_4_FAILURES.md)；历史指令不产生当前执行授权。按 ID 渐进式读取，每里程碑同步状态/实验台账。
 
 | ID | 分类/状态 | 事实与后续 |
 |---|---|---|
 | V74-F01 | data/protocol；active | 现有 nuScenes 68 trainval 日志均有历史角色，尚无可直接证明全新未曝光的 10 个日志；现有域内 FIT/DEV 可用 |
-| V74-F02 | resource；active GPU / CPU workaround done | 当前 0.5 CPU/2 GiB 无 GPU；1425 对象分离导出已完成，RSS .375 GiB，无 OOM；有卡开机后继续方法实验 |
+| V74-F02 | resource；resolved | 用户有卡开机，RTX3090 24GiB、14 CPU、90GiB，已恢复方法研究；P0 低配事实保留 |
 | V73-F02/F03 | support/optimization；historical active | 覆盖与提前面冲突、缺正确支持；A/B/C 改变重建变量，不恢复 loss 网格 |
 | V73-F04/F05 | composition/data；historical active | 框归属代理与缺输入/缺返回分母仍保留 |
 | V73-F09 | model；historical active | 联合视觉开发收益与跨域反转保留，不外推全部域内方法失败 |
@@ -18,9 +18,10 @@
 边界与复开：nuScenes 严格 FINAL 需真实未曝光身份/数据证据；不改名旧 FIT/DEV、不把缺数据当科学失败。当前双数据集开发和 AV2 最终确认路线可继续。
 证据：configs/worldsim_v72/data_roles.json；docs/autoresearch/worldsim_v73/coverage/log_payload_inventory_r1.json；configs/worldsim_v74/{data_roles,av2_final}.json；P0 数据摘要。task=WS-V74-P0-DATA-01。
 
-## V74-F02：当前无 GPU，低配实例采用逐对象 CPU 预处理
+## V74-F02：P0 无 GPU 已解决，低配 CPU 预处理保留
 
-观察：nvidia-smi 权限被拒绝；cpu.max=50000 100000，memory.max=2147483648；没有 CUDA OOM。宿主 112 核/755 GiB 不属于实例预算。
+恢复更新：2026-09-10 用户有卡开机，RTX3090 24GiB，cpu.max=1400000 100000，memory.max=96636764160；GPU 无其他任务，资源阻断已解除。证据 start/resource_resume.json。
+历史观察：nvidia-smi 权限被拒绝；cpu.max=50000 100000，memory.max=2147483648；没有 CUDA OOM。宿主 112 核/755 GiB 不属于实例预算。
 已迁移：按 PyTorch 官方 mmap 读取既有逐对象数据，不加载大 RGB 拼包；1425 对象导出 15.04s / RSS 0.375 GiB；局部几何缓存 20.50s / RSS 0.097 GiB。两数据集字段往返核对通过，未产生模型分数。
 存储事实：已释放 131.802 GiB，P0 结束前剩余 194.126 GiB；5 处视觉前缀、旧逐帧传感器/语义缓存已删除，保留 340 个代表文件及关键 checkpoint/表面/原始数据/指标。历史逐帧分析可能需重建并恢复依赖，不能宣称零成本完整重放。
 复开：数据/文档 push 后确认任务全部退出，shutdown 并提示加卡。GPU 方法规模和外部基线需求在有卡实例实测，不按当前低配机器削弱计划。
