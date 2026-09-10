@@ -6,4 +6,4 @@
 - [V74 主计划](docs/WorldSim_V74_Method_Tournament_Plan.md)、[P0 与 GPU 交接](docs/WORLDSIM_V74_P0_HANDOFF.md)、[文档导航](docs/README.md)
 - [V73 及更早文档归档](docs/archive/2026-09/pre-v74/README.md)、[V73 最终论文](paper/main.pdf)
 
-当前执行 CPU P0。nuScenes 与 AV2 各自在训练日志学习、在本数据集留出日志评价；跨数据集零样本不是硬要求。旧论文、归档计划与旧运行状态不授权恢复 V73。
+CPU P0 已完成，等待用户有卡开机。nuScenes 与 AV2 各自在训练日志学习、在本数据集留出日志评价；跨数据集零样本不是硬要求。旧论文、归档计划与旧运行状态不授权恢复 V73。

@@ -1,0 +1,679 @@
+{
+  "task": "WS-V74-P0-DATA-01",
+  "status": "raw_ready",
+  "dataset": "AV2 Sensor",
+  "role": "FINAL",
+  "official_source_split": "train",
+  "selected_log_ids": [
+    "087fec73-1a0c-399a-9292-cc2cf99dc97f",
+    "08bcc06e-3adf-3651-aa4d-d791004418ca",
+    "094c4119-eb33-3dfb-a18d-492cbdc8413a",
+    "098fe60e-bab0-32e2-89bc-bedced881911",
+    "0a132537-3aec-35bb-af13-7faa0811000d",
+    "0a524e66-ee33-3b6c-89ef-eac1985316db",
+    "0a8a4cfa-4902-3a76-8301-08698d6290a2",
+    "0ab21841-0c08-3bae-8424-daa9b336683f",
+    "0b1b993a-68b3-3232-9afa-fc9942b5b79b",
+    "0b324587-6097-3f92-a07a-a44f48c85d9e"
+  ],
+  "available_logs": 700,
+  "selection": "first 10 lexicographic public IDs absent from existing repository references and local raw logs; selected before payload listing",
+  "build_lidar_indices": [
+    5,
+    15,
+    20,
+    30
+  ],
+  "query_lidar_indices": [
+    10,
+    25
+  ],
+  "training_policy": "AV2 FIT only from data_roles.json; this FINAL never enters shared training, hyperparameter selection or teacher generation",
+  "payload_values_used_for_selection": false,
+  "model_quality_read": false,
+  "output": "/root/autodl-tmp/data/worldsim_v74/av2_final_raw",
+  "source": "https://argoverse.github.io/user-guide/datasets/sensor.html",
+  "logs": [
+    {
+      "log_id": "087fec73-1a0c-399a-9292-cc2cf99dc97f",
+      "available_lidar_sweeps": 156,
+      "lidar_timestamps_ns": {
+        "5": 315975422759723000,
+        "10": 315975423260036000,
+        "15": 315975423759690000,
+        "20": 315975424260003000,
+        "25": 315975424759657000,
+        "30": 315975425259971000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315975422759723000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/sensors/lidar/315975422759723000.feather",
+          "bytes": 1013258
+        },
+        {
+          "filename": "sensors/lidar/315975423260036000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/sensors/lidar/315975423260036000.feather",
+          "bytes": 1032178
+        },
+        {
+          "filename": "sensors/lidar/315975423759690000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/sensors/lidar/315975423759690000.feather",
+          "bytes": 1033578
+        },
+        {
+          "filename": "sensors/lidar/315975424260003000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/sensors/lidar/315975424260003000.feather",
+          "bytes": 1060410
+        },
+        {
+          "filename": "sensors/lidar/315975424759657000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/sensors/lidar/315975424759657000.feather",
+          "bytes": 1065618
+        },
+        {
+          "filename": "sensors/lidar/315975425259971000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/sensors/lidar/315975425259971000.feather",
+          "bytes": 1076058
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/annotations.feather",
+          "bytes": 606106
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/city_SE3_egovehicle.feather",
+          "bytes": 167970
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/087fec73-1a0c-399a-9292-cc2cf99dc97f/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "08bcc06e-3adf-3651-aa4d-d791004418ca",
+      "available_lidar_sweeps": 157,
+      "lidar_timestamps_ns": {
+        "5": 315967854459648000,
+        "10": 315967854959966000,
+        "15": 315967855460283000,
+        "20": 315967855959938000,
+        "25": 315967856459590000,
+        "30": 315967856959909000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315967854459648000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/sensors/lidar/315967854459648000.feather",
+          "bytes": 1051466
+        },
+        {
+          "filename": "sensors/lidar/315967854959966000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/sensors/lidar/315967854959966000.feather",
+          "bytes": 1050858
+        },
+        {
+          "filename": "sensors/lidar/315967855460283000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/sensors/lidar/315967855460283000.feather",
+          "bytes": 1046322
+        },
+        {
+          "filename": "sensors/lidar/315967855959938000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/sensors/lidar/315967855959938000.feather",
+          "bytes": 1037770
+        },
+        {
+          "filename": "sensors/lidar/315967856459590000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/sensors/lidar/315967856459590000.feather",
+          "bytes": 1029818
+        },
+        {
+          "filename": "sensors/lidar/315967856959909000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/sensors/lidar/315967856959909000.feather",
+          "bytes": 1033986
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/annotations.feather",
+          "bytes": 374866
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/city_SE3_egovehicle.feather",
+          "bytes": 166258
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/08bcc06e-3adf-3651-aa4d-d791004418ca/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "094c4119-eb33-3dfb-a18d-492cbdc8413a",
+      "available_lidar_sweeps": 156,
+      "lidar_timestamps_ns": {
+        "5": 315973295459735000,
+        "10": 315973295960053000,
+        "15": 315973296459700000,
+        "20": 315973296960018000,
+        "25": 315973297460328000,
+        "30": 315973297959983000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315973295459735000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/sensors/lidar/315973295459735000.feather",
+          "bytes": 1007370
+        },
+        {
+          "filename": "sensors/lidar/315973295960053000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/sensors/lidar/315973295960053000.feather",
+          "bytes": 1009970
+        },
+        {
+          "filename": "sensors/lidar/315973296459700000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/sensors/lidar/315973296459700000.feather",
+          "bytes": 1006682
+        },
+        {
+          "filename": "sensors/lidar/315973296960018000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/sensors/lidar/315973296960018000.feather",
+          "bytes": 1011618
+        },
+        {
+          "filename": "sensors/lidar/315973297460328000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/sensors/lidar/315973297460328000.feather",
+          "bytes": 1011466
+        },
+        {
+          "filename": "sensors/lidar/315973297959983000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/sensors/lidar/315973297959983000.feather",
+          "bytes": 1006354
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/annotations.feather",
+          "bytes": 1174226
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/city_SE3_egovehicle.feather",
+          "bytes": 162026
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/094c4119-eb33-3dfb-a18d-492cbdc8413a/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "098fe60e-bab0-32e2-89bc-bedced881911",
+      "available_lidar_sweeps": 156,
+      "lidar_timestamps_ns": {
+        "5": 315969839160049000,
+        "10": 315969839660367000,
+        "15": 315969840160005000,
+        "20": 315969840660323000,
+        "25": 315969841159959000,
+        "30": 315969841659614000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315969839160049000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/sensors/lidar/315969839160049000.feather",
+          "bytes": 908514
+        },
+        {
+          "filename": "sensors/lidar/315969839660367000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/sensors/lidar/315969839660367000.feather",
+          "bytes": 905338
+        },
+        {
+          "filename": "sensors/lidar/315969840160005000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/sensors/lidar/315969840160005000.feather",
+          "bytes": 893978
+        },
+        {
+          "filename": "sensors/lidar/315969840660323000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/sensors/lidar/315969840660323000.feather",
+          "bytes": 889858
+        },
+        {
+          "filename": "sensors/lidar/315969841159959000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/sensors/lidar/315969841159959000.feather",
+          "bytes": 892618
+        },
+        {
+          "filename": "sensors/lidar/315969841659614000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/sensors/lidar/315969841659614000.feather",
+          "bytes": 884474
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/annotations.feather",
+          "bytes": 317282
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/city_SE3_egovehicle.feather",
+          "bytes": 167962
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/098fe60e-bab0-32e2-89bc-bedced881911/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "0a132537-3aec-35bb-af13-7faa0811000d",
+      "available_lidar_sweeps": 156,
+      "lidar_timestamps_ns": {
+        "5": 315972365659746000,
+        "10": 315972366160047000,
+        "15": 315972366659701000,
+        "20": 315972367160004000,
+        "25": 315972367659658000,
+        "30": 315972368159960000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315972365659746000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/sensors/lidar/315972365659746000.feather",
+          "bytes": 1069058
+        },
+        {
+          "filename": "sensors/lidar/315972366160047000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/sensors/lidar/315972366160047000.feather",
+          "bytes": 1069554
+        },
+        {
+          "filename": "sensors/lidar/315972366659701000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/sensors/lidar/315972366659701000.feather",
+          "bytes": 1068626
+        },
+        {
+          "filename": "sensors/lidar/315972367160004000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/sensors/lidar/315972367160004000.feather",
+          "bytes": 1069698
+        },
+        {
+          "filename": "sensors/lidar/315972367659658000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/sensors/lidar/315972367659658000.feather",
+          "bytes": 1067482
+        },
+        {
+          "filename": "sensors/lidar/315972368159960000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/sensors/lidar/315972368159960000.feather",
+          "bytes": 1063866
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/annotations.feather",
+          "bytes": 632050
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/city_SE3_egovehicle.feather",
+          "bytes": 168426
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a132537-3aec-35bb-af13-7faa0811000d/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "0a524e66-ee33-3b6c-89ef-eac1985316db",
+      "available_lidar_sweeps": 157,
+      "lidar_timestamps_ns": {
+        "5": 315966219360112000,
+        "10": 315966219859767000,
+        "15": 315966220360082000,
+        "20": 315966220859737000,
+        "25": 315966221360051000,
+        "30": 315966221859706000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315966219360112000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/sensors/lidar/315966219360112000.feather",
+          "bytes": 1035754
+        },
+        {
+          "filename": "sensors/lidar/315966219859767000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/sensors/lidar/315966219859767000.feather",
+          "bytes": 1035090
+        },
+        {
+          "filename": "sensors/lidar/315966220360082000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/sensors/lidar/315966220360082000.feather",
+          "bytes": 1037458
+        },
+        {
+          "filename": "sensors/lidar/315966220859737000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/sensors/lidar/315966220859737000.feather",
+          "bytes": 1036114
+        },
+        {
+          "filename": "sensors/lidar/315966221360051000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/sensors/lidar/315966221360051000.feather",
+          "bytes": 1037570
+        },
+        {
+          "filename": "sensors/lidar/315966221859706000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/sensors/lidar/315966221859706000.feather",
+          "bytes": 1036178
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/annotations.feather",
+          "bytes": 846042
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/city_SE3_egovehicle.feather",
+          "bytes": 164218
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a524e66-ee33-3b6c-89ef-eac1985316db/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "0a8a4cfa-4902-3a76-8301-08698d6290a2",
+      "available_lidar_sweeps": 156,
+      "lidar_timestamps_ns": {
+        "5": 315968252059837000,
+        "10": 315968252560155000,
+        "15": 315968253059807000,
+        "20": 315968253560125000,
+        "25": 315968254059779000,
+        "30": 315968254560097000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315968252059837000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/sensors/lidar/315968252059837000.feather",
+          "bytes": 939914
+        },
+        {
+          "filename": "sensors/lidar/315968252560155000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/sensors/lidar/315968252560155000.feather",
+          "bytes": 947922
+        },
+        {
+          "filename": "sensors/lidar/315968253059807000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/sensors/lidar/315968253059807000.feather",
+          "bytes": 944658
+        },
+        {
+          "filename": "sensors/lidar/315968253560125000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/sensors/lidar/315968253560125000.feather",
+          "bytes": 936730
+        },
+        {
+          "filename": "sensors/lidar/315968254059779000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/sensors/lidar/315968254059779000.feather",
+          "bytes": 966738
+        },
+        {
+          "filename": "sensors/lidar/315968254560097000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/sensors/lidar/315968254560097000.feather",
+          "bytes": 938842
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/annotations.feather",
+          "bytes": 550058
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/city_SE3_egovehicle.feather",
+          "bytes": 166226
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0a8a4cfa-4902-3a76-8301-08698d6290a2/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "0ab21841-0c08-3bae-8424-daa9b336683f",
+      "available_lidar_sweeps": 156,
+      "lidar_timestamps_ns": {
+        "5": 315972003059935000,
+        "10": 315972003559589000,
+        "15": 315972004059897000,
+        "20": 315972004559551000,
+        "25": 315972005059859000,
+        "30": 315972005560177000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315972003059935000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/sensors/lidar/315972003059935000.feather",
+          "bytes": 967914
+        },
+        {
+          "filename": "sensors/lidar/315972003559589000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/sensors/lidar/315972003559589000.feather",
+          "bytes": 969010
+        },
+        {
+          "filename": "sensors/lidar/315972004059897000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/sensors/lidar/315972004059897000.feather",
+          "bytes": 966818
+        },
+        {
+          "filename": "sensors/lidar/315972004559551000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/sensors/lidar/315972004559551000.feather",
+          "bytes": 966210
+        },
+        {
+          "filename": "sensors/lidar/315972005059859000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/sensors/lidar/315972005059859000.feather",
+          "bytes": 969210
+        },
+        {
+          "filename": "sensors/lidar/315972005560177000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/sensors/lidar/315972005560177000.feather",
+          "bytes": 965930
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/annotations.feather",
+          "bytes": 901834
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/city_SE3_egovehicle.feather",
+          "bytes": 167202
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0ab21841-0c08-3bae-8424-daa9b336683f/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "0b1b993a-68b3-3232-9afa-fc9942b5b79b",
+      "available_lidar_sweeps": 157,
+      "lidar_timestamps_ns": {
+        "5": 315973808860053000,
+        "10": 315973809359698000,
+        "15": 315973809860017000,
+        "20": 315973810360325000,
+        "25": 315973810859980000,
+        "30": 315973811359626000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315973808860053000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/sensors/lidar/315973808860053000.feather",
+          "bytes": 1074026
+        },
+        {
+          "filename": "sensors/lidar/315973809359698000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/sensors/lidar/315973809359698000.feather",
+          "bytes": 1073498
+        },
+        {
+          "filename": "sensors/lidar/315973809860017000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/sensors/lidar/315973809860017000.feather",
+          "bytes": 1069506
+        },
+        {
+          "filename": "sensors/lidar/315973810360325000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/sensors/lidar/315973810360325000.feather",
+          "bytes": 1062642
+        },
+        {
+          "filename": "sensors/lidar/315973810859980000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/sensors/lidar/315973810859980000.feather",
+          "bytes": 1055826
+        },
+        {
+          "filename": "sensors/lidar/315973811359626000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/sensors/lidar/315973811359626000.feather",
+          "bytes": 1056378
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/annotations.feather",
+          "bytes": 523914
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/city_SE3_egovehicle.feather",
+          "bytes": 167850
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b1b993a-68b3-3232-9afa-fc9942b5b79b/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    },
+    {
+      "log_id": "0b324587-6097-3f92-a07a-a44f48c85d9e",
+      "available_lidar_sweeps": 157,
+      "lidar_timestamps_ns": {
+        "5": 315970084459877000,
+        "10": 315970084960196000,
+        "15": 315970085459839000,
+        "20": 315970085960157000,
+        "25": 315970086459800000,
+        "30": 315970086960118000
+      },
+      "files": [
+        {
+          "filename": "sensors/lidar/315970084459877000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/sensors/lidar/315970084459877000.feather",
+          "bytes": 1057274
+        },
+        {
+          "filename": "sensors/lidar/315970084960196000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/sensors/lidar/315970084960196000.feather",
+          "bytes": 1060346
+        },
+        {
+          "filename": "sensors/lidar/315970085459839000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/sensors/lidar/315970085459839000.feather",
+          "bytes": 1052714
+        },
+        {
+          "filename": "sensors/lidar/315970085960157000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/sensors/lidar/315970085960157000.feather",
+          "bytes": 1053954
+        },
+        {
+          "filename": "sensors/lidar/315970086459800000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/sensors/lidar/315970086459800000.feather",
+          "bytes": 1040506
+        },
+        {
+          "filename": "sensors/lidar/315970086960118000.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/sensors/lidar/315970086960118000.feather",
+          "bytes": 1041578
+        },
+        {
+          "filename": "annotations.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/annotations.feather",
+          "bytes": 530722
+        },
+        {
+          "filename": "city_SE3_egovehicle.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/city_SE3_egovehicle.feather",
+          "bytes": 167186
+        },
+        {
+          "filename": "calibration/egovehicle_SE3_sensor.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/calibration/egovehicle_SE3_sensor.feather",
+          "bytes": 4586
+        },
+        {
+          "filename": "calibration/intrinsics.feather",
+          "source": "s3://argoverse/datasets/av2/sensor/train/0b324587-6097-3f92-a07a-a44f48c85d9e/calibration/intrinsics.feather",
+          "bytes": 5330
+        }
+      ]
+    }
+  ],
+  "planned_bytes": 68985736
+}

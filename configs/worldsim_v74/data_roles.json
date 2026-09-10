@@ -1,0 +1,103 @@
+{
+  "task": "WS-V74-P0-DATA-01",
+  "schema": "worldsim_v74.lidar.v1",
+  "seed": 7401,
+  "confirmation_seed": 7402,
+  "dataset_roles": {
+    "nuscenes": {
+      "FIT": [
+        "01ebe4444f624b4699ec6bf58837b153",
+        "0f1b01dd18d8438794fb3445517633df",
+        "2f3c08142bc04ac3af6a8cf6c721b816",
+        "53cf9c55dd8644bea67b9f009fc1ee38",
+        "6175c3299ae0482791f4ab1e9d54b326",
+        "65629cfc47fe489fabc497ead466a313",
+        "69271ec7af1f446ca16820ac46d2047a",
+        "6c12081a828548b6b0a36f12d53be6ca",
+        "75f5ca2350b346d19a39aa7439f61755",
+        "7a0fde44c3504eaeb18f9ad83bed65bc",
+        "881dd2f8aaec49b681eb54be5bf3b3e2",
+        "8c66d9d518c54aed98dce7e3095501bc",
+        "8ff48ad1df8e4966a2151730c92b7f3c",
+        "b2685a235700404581dc7354dd5b4eda",
+        "bd38be48fba140f1941bf7c84a33255d",
+        "c9b039c47ec54cc7b5c0fcc7a5730e38",
+        "d31dc715d1c34b99bd5afb0e3aea26ed",
+        "e55205b1f2894b49957905d7ddfdb96d",
+        "ee155e99938a4c2698fed50fc5b5d16a",
+        "f61e86a4241b484484da143725dce8fc"
+      ],
+      "DEV": [
+        "5bd40b613ac740cd9dbacdfbc3d68201",
+        "8fefc430cbfa4c2191978c0df302eb98",
+        "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+        "ddc03471df3e4c9bb9663629a4097743",
+        "f38ef5a1e9c941aabb2155768670b92a"
+      ],
+      "FINAL": []
+    },
+    "av2": {
+      "FIT": [
+        "03b2cf2d-fb61-36fe-936f-36bbf197a8ac",
+        "03fba633-8085-30bc-b675-687a715536ac",
+        "04973bcf-fc64-367c-9642-6d6c5f363b61",
+        "0526e68e-2ff1-3e53-b0f8-45df02e45a93",
+        "05853f69-f948-3d04-8d64-d4e721c0e1a5",
+        "05fb81ab-5e46-3f63-a59f-82fc66d5a477",
+        "067b1c50-6567-3840-ab56-1ca2a0ed9c30",
+        "06852209-b868-306b-b492-ee6dbc914cf8",
+        "069cc46d-38bb-309d-88cf-296a3d0c0820",
+        "06e5ac08-f4cb-34ae-9406-3496f7cadc62",
+        "072c8e90-a51c-3429-9cdf-4dababb4e9d8",
+        "0749e9e0-ca52-3546-b324-d704138b11b5",
+        "074d2237-ed1b-34d7-a2fc-68edbce50bb2",
+        "07e4fccb-eb2d-31e5-bbcb-6550d0860f64",
+        "080b1ce2-9477-39ee-8233-b7f33e1dfe56",
+        "08734a1b-0289-3aa3-a6ba-8c7121521e26",
+        "087695bd-c662-3e86-83b4-aedc3b8eec36"
+      ],
+      "DEV": [
+        "01bb304d-7bd8-35f8-bbef-7086b688e35e",
+        "022af476-9937-3e70-be52-f65420d52703",
+        "0322b098-7e42-34db-bcec-9a4d072191e9"
+      ],
+      "FINAL": [
+        "087fec73-1a0c-399a-9292-cc2cf99dc97f",
+        "08bcc06e-3adf-3651-aa4d-d791004418ca",
+        "094c4119-eb33-3dfb-a18d-492cbdc8413a",
+        "098fe60e-bab0-32e2-89bc-bedced881911",
+        "0a132537-3aec-35bb-af13-7faa0811000d",
+        "0a524e66-ee33-3b6c-89ef-eac1985316db",
+        "0a8a4cfa-4902-3a76-8301-08698d6290a2",
+        "0ab21841-0c08-3bae-8424-daa9b336683f",
+        "0b1b993a-68b3-3232-9afa-fc9942b5b79b",
+        "0b324587-6097-3f92-a07a-a44f48c85d9e"
+      ]
+    }
+  },
+  "fit_policy": "separate training per dataset; no cross-dataset transfer required",
+  "av2_role_policy": "old exposed 20 logs: first 3 IDs DEV, remaining 17 FIT; new FINAL in separate plan",
+  "nuscenes_final_status": "unavailable_fresh_identity; historical exposure is not cleared by changing names",
+  "primary_max_triangles": 4096,
+  "capacity_max_triangles": 16384,
+  "evaluation_hit_band_m": 0.2,
+  "epsilon_obs": "pending FIT calibration before DEV quality; evaluation hit band is not noise sigma",
+  "visual_inputs": false,
+  "source_indices": {
+    "nuscenes": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M2-GLOBAL-DATA-01/20260907T180000Z__window-rigid-population-r2/index.json",
+    "av2": "/root/autodl-tmp/runs/worldsim_v73/WS-V73-M4-AV2-DATA-01/20260908T020000Z__external20-common-windows-r1/index.json"
+  },
+  "output": "/root/autodl-tmp/data/worldsim_v74/p0_r1",
+  "code_commit": "463ef1993d2a863465422fdcce7636f87e1f3f6e",
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04",
+    "V73-F05",
+    "V73-F09",
+    "V74-F01",
+    "V74-F02"
+  ],
+  "av2_final_plan": "configs/worldsim_v74/av2_final.json",
+  "av2_final_status": "raw_ready; coordinate conversion and evaluation pending until frozen-method phase"
+}

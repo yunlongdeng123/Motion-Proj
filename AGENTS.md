@@ -4,7 +4,7 @@
 
 唯一当前状态是 `docs/RESEARCH_STATUS.md`，主计划是 `docs/WorldSim_V74_Method_Tournament_Plan.md`。
 从 V73 最终分支建立 `research/worldsim-v7.4-method-tournament`；V73 科研保持冻结。
-当前先完成 P0 文档归档、数据盘清理和无需 GPU 的数据准备，汇报后由用户有卡开机；不提前运行 GPU 实验。
+P0 文档归档、数据盘清理和现有 FIT/DEV 的 CPU 数据准备已完成；详见 P0 交接报告。当前等待用户有卡开机，再进入方法实验。
 后续按 WEX/RIF/DCS 三候选计划推进，不自动增加第四候选或拼接失败方法。
 nuScenes 与 AV2 优先各自 FIT/train、DEV 与 FINAL/test；跨数据集零样本不是要求。
 旧 5 个 nuScenes DEV 和 20 个 AV2 确认日志均已曝光，不冒充新 FINAL。

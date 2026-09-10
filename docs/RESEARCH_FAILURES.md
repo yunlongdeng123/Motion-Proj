@@ -1,43 +1,35 @@
 # 统一失败账本：V74 当前入口
 
-## P0 存储里程碑已完成（2026-09-10）
+日期：2026-09-10；P0 done，执行基线 463ef199。本文件是唯一失败事实源；历史指令不产生当前执行授权。按 ID 渐进式读取，每里程碑同步状态/实验台账。
 
-WS-V74-P0-STORAGE-01 done；执行基线 d6bea861。删除 4105 个已列明目标，实际释放 131.802 GiB，完成时可用 194.487 GiB。
-包括 5 处冻结视觉前缀和退役 V6 传感器重渲染帧/旧 dense logits；按 run/组保留 340 个代表文件。原始数据、V73 checkpoint/表面/射线/指标、环境和模型保留。
-恢复旧逐帧分析可能需要重新推理或恢复历史依赖；不把缓存清理解释成无成本完整复现。精确路径/大小/恢复方式：docs/autoresearch/worldsim_v74/p0/storage_plan.json；实际删除和空间差：storage_result.json。
-failure_ledger_delta=none（未新增科学失败）；V74-F01/F02 继续。CPU 数据预处理 running，尚未关机。
-
-
-更新：2026-09-10；基线 `01af4739`；task=WS-V74-P0-DOCS-01 / STORAGE-01 / DATA-01。
-本文件是唯一失败事实源。下方 V1–V73 原始记录冻结保留，历史“当前/下一步/门控”不产生 V74 执行要求；最新事实优先于旧快照。
-按 ID 渐进式读取；每个里程碑同步状态和实验台账。V74 不新增校验和、指纹或过度验收。
-
-| ID | 类别/状态 | 观察事实与后续 |
+| ID | 分类/状态 | 事实与后续 |
 |---|---|---|
-| V74-F01 | data/protocol；active | 现有 nuScenes 角色覆盖全部 68 trainval 日志；尚无可直接认证未曝光的 10 个新日志，保留域内 FIT/DEV，另建 AV2 新测试 |
-| V74-F02 | resource；active | 当前 cgroup 0.5 CPU/2 GiB、GPU 无访问权限；P0 按对象流式，GPU 实验待有卡开机 |
-| V73-F02/F03 | support/optimization；active | 覆盖与提前命中冲突、缺正确支持；V74 分别检验责任交换、区间场和生面，非继续 loss 网格 |
-| V73-F04/F05 | composition/data；active | 框归属代理、缺输入/缺自有返回分母；V74 保留并单列 |
-| V73-F09 | model；historical active | 联合视觉开发收益与跨域反转均保留，不外推所有域内方法失败 |
+| V74-F01 | data/protocol；active | 现有 nuScenes 68 trainval 日志均有历史角色，尚无可直接证明全新未曝光的 10 个日志；现有域内 FIT/DEV 可用 |
+| V74-F02 | resource；active GPU / CPU workaround done | 当前 0.5 CPU/2 GiB 无 GPU；1425 对象分离导出已完成，RSS .375 GiB，无 OOM；有卡开机后继续方法实验 |
+| V73-F02/F03 | support/optimization；historical active | 覆盖与提前面冲突、缺正确支持；A/B/C 改变重建变量，不恢复 loss 网格 |
+| V73-F04/F05 | composition/data；historical active | 框归属代理与缺输入/缺返回分母仍保留 |
+| V73-F09 | model；historical active | 联合视觉开发收益与跨域反转保留，不外推全部域内方法失败 |
 
 ## V74-F01：nuScenes 独立最终身份不足
 
-观察事实：V73 的 log_payload_inventory_r1 记录本地 27 个可用日志，历史角色表覆盖 trainval 68 日志，无未分配身份。角色分配不等于实际训练曝光，但也不足以直接证明未曝光。
-来源检索：nuScenes 官方说明 test 不公开本任务所需的对象标注；不能用它冒充已有轨迹真值。AV2 官方 Sensor 数据提供公开带标注日志及逐文件下载。
-迁移：nuScenes 先保留既有 FIT/DEV 与时间留出；AV2 将旧 20 日志按固定 ID 分作 FIT/DEV，另预留新 FINAL。不得把旧 FIT 换名为独立 FINAL，也不得把缺数据记作科学失败。
-复开：具备真实历史未使用证据的 nuScenes 新日志或新增合规带标注数据时扩展；不阻塞当前两数据集的域内开发检验。
-证据：docs/autoresearch/worldsim_v73/coverage/log_payload_inventory_r1.json；configs/worldsim_v72/data_roles.json；V74 P0 交接报告；基线 01af4739。本条不宣称全学术界不存在替代数据。
+观察：V73 log_payload_inventory_r1 报告本地 27 可用日志；旧角色覆盖 trainval 全部 68 日志。角色分配不等于实际训练曝光，但不足以证明从未曝光。当前 20 FIT/5 DEV 共 489 对象已完整准备，DEV 不是新的盲测。
+检索：nuScenes 官方 test 不公开本任务直接需要的对象标注；AV2 官方 Sensor 提供公开带标注日志及按文件下载（来源见 P0 报告）。
+迁移：AV2 旧曝光 20 日志固定 ID 排序，首 3 DEV、其余 17 FIT；另预留/下载 10 个未见于既有身份引用和原始目录的 FINAL 日志。新 FINAL 原始载荷就绪，未读取标注/LiDAR 数值、未做规范坐标导出或模型质量评价。
+边界与复开：nuScenes 严格 FINAL 需真实未曝光身份/数据证据；不改名旧 FIT/DEV、不把缺数据当科学失败。当前双数据集开发和 AV2 最终确认路线可继续。
+证据：configs/worldsim_v72/data_roles.json；docs/autoresearch/worldsim_v73/coverage/log_payload_inventory_r1.json；configs/worldsim_v74/{data_roles,av2_final}.json；P0 数据摘要。task=WS-V74-P0-DATA-01。
 
-## V74-F02：当前实例没有 GPU 且只有 2 GiB 内存
+## V74-F02：当前无 GPU，低配实例采用逐对象 CPU 预处理
 
-观察事实：`nvidia-smi` 被拒绝；`cpu.max=50000 100000`，`memory.max=2147483648`。CPU P0 尚未出现 OOM。
-迁移：读取既有逐对象 .pt，禁止加载数 GB build_observations 拼包；单线程、逐对象写出，完成后释放。保存配置、分母与输入/评价边界。GPU 阶段不按此实例配额缩减科学目标。
-复开：P0 收口、三本总账与 push 完成且无任务后 shutdown，用户有卡开机后继续。实际 GPU/内存需求由候选和外部基线实测确定，不能把 GPU 未分配写成算法失败。
-证据：WS-V74-P0-DATA-01；P0 报告及最终资源记录。failure_ledger_delta=新增资源事实，尚无科学裁决。
+观察：nvidia-smi 权限被拒绝；cpu.max=50000 100000，memory.max=2147483648；没有 CUDA OOM。宿主 112 核/755 GiB 不属于实例预算。
+已迁移：按 PyTorch 官方 mmap 读取既有逐对象数据，不加载大 RGB 拼包；1425 对象导出 15.04s / RSS 0.375 GiB；局部几何缓存 20.50s / RSS 0.097 GiB。两数据集字段往返核对通过，未产生模型分数。
+存储事实：已释放 131.802 GiB，P0 结束前剩余 194.126 GiB；5 处视觉前缀、旧逐帧传感器/语义缓存已删除，保留 340 个代表文件及关键 checkpoint/表面/原始数据/指标。历史逐帧分析可能需重建并恢复依赖，不能宣称零成本完整重放。
+复开：数据/文档 push 后确认任务全部退出，shutdown 并提示加卡。GPU 方法规模和外部基线需求在有卡实例实测，不按当前低配机器削弱计划。
+证据：docs/autoresearch/worldsim_v74/p0/{data_summary,geometry_summary,data_roundtrip,storage_plan,storage_result,handoff_summary}.json。failure_ledger_delta=CPU 规避完成，GPU 资源需求保留；无科学裁决。
 
 ---
 
 # V1–V73 历史事实（冻结；不作为当前执行授权）
+
 
 ## V7.3 最终科研收口：独立联合确认失败（2026-09-09 21:42 UTC）
 

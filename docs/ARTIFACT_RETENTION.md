@@ -9,9 +9,8 @@
 实际清理清单：`autoresearch/worldsim_v74/p0/storage_result.json`（执行后生成）。
 [原保留政策历史快照](archive/2026-09/pre-v74/V73_ARTIFACT_RETENTION.md)。
 
-## P0 存储里程碑已完成（2026-09-10）
 
-WS-V74-P0-STORAGE-01 done；执行基线 d6bea861。删除 4105 个已列明目标，实际释放 131.802 GiB，完成时可用 194.487 GiB。
-包括 5 处冻结视觉前缀和退役 V6 传感器重渲染帧/旧 dense logits；按 run/组保留 340 个代表文件。原始数据、V73 checkpoint/表面/射线/指标、环境和模型保留。
-恢复旧逐帧分析可能需要重新推理或恢复历史依赖；不把缓存清理解释成无成本完整复现。精确路径/大小/恢复方式：docs/autoresearch/worldsim_v74/p0/storage_plan.json；实际删除和空间差：storage_result.json。
-failure_ledger_delta=none（未新增科学失败）；V74-F01/F02 继续。CPU 数据预处理 running，尚未关机。
+## 已执行清理
+
+WS-V74-P0-STORAGE-01 done，提交 463ef199；4105 个目标，实际释放 131.802 GiB。5 处 frozen_prefix 与退役 V6/V6.3–V6.7 逐帧缓存；保留 340 代表文件。
+完整路径/大小/原因/恢复方式见 storage_plan.json，实际空间差见 storage_result.json。P0 后可用 194.126 GiB。V74 已导出的 BUILD/QUERY/geometry 和新 FINAL raw 纳入保留范围。
