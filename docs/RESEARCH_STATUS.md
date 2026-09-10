@@ -25,6 +25,12 @@ C 初始调度只轮转前32锚点，修复为在完整排序队列内轮转，�
 
 下一步：43对象/8日志三候选全部必要控制资产；80组三维真表面机制重建；共同强基线。NKSR官方源已下载，CUDA11.8独立环境安装中；PyTorch大文件15s超时已按官方超时说明迁移到续传与180s，V74-F06=环境/网络处理，不是GPU不足。failure_ledger_delta=V74-F05 resolved; V74-F06 active; V74-F04 remains unresolved。
 
+## 固定资产进度与A责任排序更正
+
+A/C各215资产（43对象×5方法）r1已完成，真实DEV QUERY尚未读。B四对象FIT仍在完成密对象求解，三维80例×14方法机制run已启动。公共r6/r7/R8原表面与4096面PCA surfel参考资产已准备172项；历史跨域训练边界单列。
+V74-F07：FIT对象scene-0471__203cea9260874ff78e5e200a866ef44f第23束，正确带内首存储候选24.020634m，而最近候选23.774240m，观测23.871235m。初始A1把面遍历顺序当最近责任，违背对照定义。现按每束候选真实t稳定排序；A真实r1与三维run中的旧A保留但不用于正式裁决，A组将执行一次更正生成r2。物理评价器始终取min(t)，此错误只影响责任初始化/控制，不是查询器改分数。
+无质量驱动调参，当前三候选参数/提议预算保持。新B/C/训练里程碑bdc10313已push。failure_ledger_delta=V74-F07 engineering correction pending corrected assets; V74-F06 install ongoing。
+
 ---
 
 # P0 完成时的历史状态

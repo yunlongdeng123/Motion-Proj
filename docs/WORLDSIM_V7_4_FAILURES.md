@@ -38,3 +38,9 @@ r1/r2均仅FIT四对象。r2提高密对象访问范围，但仍有大量缺支�
 
 当前主环境Torch2.4.1+cu121，宿主nvcc11.8；采用独立nksr-v74环境与官方Torch2.4.1+cu118，避免覆盖方法实验环境。官方NKSR public源已取得，未宣称已运行。
 官方wheel下载在121.3/857.6MB处ReadTimeout，默认15秒；检索 [pip超时接口](https://pip.pypa.io/en/stable/cli/pip/) 与 [PyTorch历史版本](https://pytorch.org/get-started/previous-versions/)，使用同官方地址curl续传、失败重试与180s超时。日志 third_party/wheels/{torch_download,torch_install}.log。当前不是资源不足，不关闭正在运行的方法任务。
+
+## V74-F07：最近责任误用面遍历顺序（代码已改，正式A更正生成待完成）
+
+最小反例：FIT scene-0471__203cea9260874ff78e5e200a866ef44f，ray23，观测23.8712349m，epsilon .174519874m；G集合的存储首值24.0206337m，真实最近23.7742405m。见 closest_responsibility_counterexample.json。
+检索：[NVIDIA对遍历/最近交点顺序的说明](https://forums.developer.nvidia.com/t/why-are-some-of-my-any-hits-missed/288077/2)。本项目没有采用OptiX，该来源支持必须区分遍历顺序与距离顺序；迁移为每束G按真实t稳定排序，不改共同Möller–Trumbore的min首交点。
+此为协议实现错误：A1必须固定最近正确候选责任，WEX/贪心与MILP采用同一候选顺序。真实A r1全部保留并由r2更正，不读r1 DEV质量；正在进行的三维机制中旧A也标为更正前，B/C不受影响。解析域子系统无空间距离，不受此排序错误影响。未加候选、改半宽或引入新机制。

@@ -76,7 +76,7 @@ def evaluate(v,f,b,path=None):
     positive=np.asarray(b['positive_actor'],dtype=bool)
     metrics=first_return_metrics(depth[positive],observed[positive])
     metrics.update({'all_near_box_rays':len(observed),'free_intrusion_rate':float(s['early'].mean()) if len(observed) else None,
-                    'mean_free_intrusion_m':float(direct_free_space_loss(depth,observed)),
+                    'mean_free_intrusion_m':float(direct_free_space_loss(depth,observed)) if len(observed) else None,
                     'any_correct_intersection':float(s['any_correct'][positive].mean()) if positive.any() else None,
                     'early_with_later_correct_support':float(s['early_with_later_correct'][positive].mean()) if positive.any() else None})
     p=torch.as_tensor(b['points_actor_m'][positive],dtype=torch.float32,device='cuda')

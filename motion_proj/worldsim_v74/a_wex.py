@@ -17,7 +17,10 @@ def incidence(vertices,faces,build,epsilon):
     free_ids=np.flatnonzero(hits['t']<target-epsilon)
     owned=build['positive_actor'].astype(bool)&~build['ambiguous_owner'].astype(bool)
     good_ids=np.flatnonzero((np.abs(hits['t']-target)<=epsilon)&owned[hits['ray']])
-    groups={int(r):good_ids[hits['ray'][good_ids]==r] for r in np.unique(hits['ray'][good_ids])}
+    groups={}
+    for r in np.unique(hits['ray'][good_ids]):
+        ids=good_ids[hits['ray'][good_ids]==r]
+        groups[int(r)]=ids[np.argsort(hits['t'][ids],kind='stable')]
     missing=np.setdiff1d(np.flatnonzero(owned),np.array(list(groups),int))
     return mat,free_ids,groups,hits,missing
 
