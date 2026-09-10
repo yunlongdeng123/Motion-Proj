@@ -50,6 +50,12 @@ WS-V74-PROBE-EVALUATION-01 / 20260910__C-probe66-r1-s7401完成43 ready+23缺BUI
 AV2自身FIT、3日志DEV：DCS/C1/C3命中26.511%/32.550%/27.722%，miss63.402%/55.022%/62.320%，自由侵入.069451/.075572/.044875m。未要求跨域泛化。C相对无新增片C0改善，无法据此绕过强普通增密与去需求控制。V74-F09登记本轮质量/机制增量不足；最终候选分类待80几何机制与配对日志归因收口，不再按DEV改模型或预算。
 B同目标消元FIT4×4已完成，无工程错误，完整原/新结果都保留。A/B正式资产继续。failure_ledger_delta=add V74-F09; V74-F08 corrected FIT completed; no overall verdict。
 
+## A真实留出：标准同表示控制已解释收益
+
+A责任候选排序更正r2完成215/215资产，66对象合同评价无ready工程缺输出/空面。nuScenes WEX/A1固定/A2贪心命中均34.732%，A3 MILP34.914%；四者early均7.522%，miss53.680%，召回70.826%。AV2四者命中均37.752%、early10.424%、miss42.892%、召回81.307%（保留原始数值微差）。新机制相对任何必要强控制均未通过预定主改善路径。V74-F04从FIT风险进入真实DEV标准方法替代证据；F07更正正式资产已完成。解析冲突20例中的WEX优势不能代替真实必要性，更不能忽略同样能解决且更快的MILP。
+公共参考172资产/264合同对象方法评价完成。原R8中位面数nuScenes4392/AV24568，超过4096，因此只作历史原生质量/成本边界，不能偷偷列入同预算优胜比较；r6/r7历史先验及AV2训练来源同样单列。报告表和配对日志bootstrap原值在evaluation/partial_AC_*；B/80几何机制未结束，未填总体裁决。
+C补充检索PointTriNet官方PointNet局部提议、列生成对偶退化/稳定化一手研究；采用保存的proposal参数、LP/整数事件与中间表面做实际生片价值归因，不在看DEV后加稳定化新机制。NKSR独立CUDA11.8环境依赖已完成，官方源码在编译、ks权重在下载。failure_ledger_delta=V74-F04 real novelty risk confirmed; V74-F07 corrected real assets complete; V74-F06 progressing。
+
 ---
 
 # P0 完成时的历史状态

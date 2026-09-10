@@ -58,3 +58,11 @@ r1/r2均仅FIT四对象。r2提高密对象访问范围，但仍有大量缺支�
 两个数据集分别FIT训练的full/no_demand checkpoint与43对象BUILD事件保存于WS-V74-C-FIT-TRAIN-01和WS-V74-C-REAL-01；所有初始、20步实际片/参数/对偶价格/整数接受或拒绝原因齐备。查询由独立evaluate_worldsim_v74_assets.py读取，未回流求解。
 nuScenes相对C0命中+6.106pp，但相对C1−0.405pp、相对C3−0.301pp；early相比C1−1.439pp、free反而+0.004113m，说明减少提前返回频率不等于整体自由空间侵入更小。相对C1召回−2.528pp超保护底线。AV2相对C1命中−6.039pp且miss+8.380pp；相对C3命中−1.211pp，free+0.024576m。不能混合域掩盖差异，也不能仅报安全分数忽略支撑。
 证据：docs/autoresearch/worldsim_v74/evaluation/c_dcs/{per_actor,summary,manifest,resources}.json；详细逐射线query_rays.npz与原surface_path在run目录。后续仅做已规定的几何生片有效性/强控制归因和三候选统一裁决，不用补丁续命。
+
+### V74-F04 真实DEV追加证据（A排序更正后）
+
+nuScenes WEX相对A1/A2主要指标差为0，相对A3 MILP命中−0.182pp；AV2约束控制同分。所有每日志/逐对象/逐射线证据与求解时间保存在evaluation/a_wex及WS-V74-A-REAL-01的r2，不以近似均值声称所有顶点位级相同。WEX没有新候选补齐能力，稀疏自由约束下固定责任已够用，密对象仍保留大量G_empty；这是当前表示/预算下标准替代与支持不足，并非证明所有共享交换数学对象都无意义。
+
+### V74-F09 生片机制归因的来源与执行边界
+
+[PointTriNet官方](https://nmwsharp.com/research/learned-triangulation/)使用局部PointNet提议和候选分类；当前C2是同邻域PointNet+标准整数主问题的控制，未冒称完整官方PointTriNet。[对偶稳定化](https://arxiv.org/abs/2405.11198)和[退化定价研究](https://arxiv.org/abs/2604.12070)提醒低约化成本/LP改进不等于新的有用支撑。接入点：对保存的每步parameters/anchors重新做同一真实八边形求交，记录能修复旧miss/late且不产生early的BUILD/QUERY生片率，并保存首次QUERY退化前后资产与射线ID。QUERY只用于事后取证，没有进入提议或选择。稳定化不是已实现组件，不用这些来源将负结果变成事后新方法。

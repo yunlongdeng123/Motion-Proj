@@ -28,6 +28,8 @@ engineering；corrected code / rerun pending。FIT第23束证明正确带内候�
 
 当前里程碑：96cef75c配置冻结进入真实DEV评价；F06安装处理中，F07/F08正式修正版完成后收口，无新增科学失败或人工verdict。
 
+V74-F04最新：排序更正后的真实DEV表明WEX与固定/贪心责任的命中、early、miss、recall相同，nuScenes命中还低于A3 MILP0.182pp。新颖性增量不足，等待三维机制统一收口；人工verdict未填。F07对应修正资产/评价已完成。历史R8超过4096面，明确列在原生预算参考。
+
 ## V74-F09：DCS真实DEV未形成相对强控制的共同收益
 
 quality/novelty evidence不足，当前冻结模型/预算；nuScenes相对C1命中−0.405pp、early−1.439pp、召回−2.528pp、free+0.004113m，未达两条改善路径且召回保护失败。AV2自身训练相对C1命中−6.039pp、miss+8.380pp。无空面/工程缺失可解释该差额；不能以相对C0增密收益称对偶需求创新。详细表与逐对象证据见 [V74失败过程](WORLDSIM_V7_4_FAILURES.md) 和 evaluation/c_dcs。机制与日志区间待收口，人工verdict留空。
