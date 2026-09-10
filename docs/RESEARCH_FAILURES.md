@@ -10,6 +10,13 @@
 | V73-F04/F05 | composition/data；historical active | 框归属代理与缺输入/缺返回分母仍保留 |
 | V73-F09 | model；historical active | 联合视觉开发收益与跨域反转保留，不外推全部域内方法失败 |
 
+当前实现里程碑：FIT 定标已完成，WEX 解析域子系统与公共求交首次实现，尚无新科学结论。OSQP/HiGHS 用作成熟强控制，不将 QP/MILP 自身当创新；来源见 [方法实现记录](WORLDSIM_V7_4_METHODS.md)。
+
+## V74-F03 / V74-F04：WEX 初始机制与 FIT 证据
+
+V74-F03（engineering, resolved）：初版冲突关联遗漏 free 约束连接，15/20 条件问题未探索联合责任；加回同一超图的一跳连接后 WEX20/20。r1和r2都保留，首次实现调试不记科学失败。
+V74-F04（support/novelty risk, active）：成熟MILP在解析20/20且更快；FIT4对象与WEX同命中/同面数，密对象的正确候选缺失约70%。尚无DEV质量，不能外推全部WEX表示失败。详见 [V74详细过程](WORLDSIM_V7_4_FAILURES.md)。
+
 ## V74-F01：nuScenes 独立最终身份不足
 
 观察：V73 log_payload_inventory_r1 报告本地 27 可用日志；旧角色覆盖 trainval 全部 68 日志。角色分配不等于实际训练曝光，但不足以证明从未曝光。当前 20 FIT/5 DEV 共 489 对象已完整准备，DEV 不是新的盲测。

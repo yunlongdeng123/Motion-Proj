@@ -1,0 +1,55 @@
+{
+  "task": "WS-V74-METHOD-TOURNAMENT-01",
+  "seed": 7401,
+  "confirmation_seed": 7402,
+  "data_root": "/root/autodl-tmp/data/worldsim_v74/p0_r1",
+  "face_budget": 4096,
+  "hit_band_m": 0.2,
+  "dataset_parameters": {
+    "nuscenes": {
+      "epsilon_obs_m": 0.1745198741555214,
+      "point_spacing_m": 0.03922037380180133,
+      "carrier_half_width_m": 0.15688149520720532
+    },
+    "av2": {
+      "epsilon_obs_m": 0.2,
+      "point_spacing_m": 0.03126779549551398,
+      "carrier_half_width_m": 0.15
+    }
+  },
+  "wex": {
+    "carriers": 64,
+    "grid": 4,
+    "domain_margin": 0.05,
+    "max_outer_iterations": 100,
+    "beam_configurations": 64,
+    "qp_max_iter": 10000,
+    "qp_eps": 1e-05,
+    "wall_seconds": 300,
+    "construction_rounds": 2
+  },
+  "rif": {
+    "initial_grid": 7,
+    "refinement_rounds": 3,
+    "max_nodes": 2500,
+    "wall_seconds": 300,
+    "free_margin": 0.01
+  },
+  "dcs": {
+    "initial_patches": 32,
+    "pricing_rounds": 20,
+    "proposals_per_round": 8,
+    "polygon_sides": 8,
+    "wall_seconds": 300
+  },
+  "fit_only": true,
+  "visual_input": false,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04",
+    "V73-F05",
+    "V73-F09",
+    "V74-F01"
+  ]
+}

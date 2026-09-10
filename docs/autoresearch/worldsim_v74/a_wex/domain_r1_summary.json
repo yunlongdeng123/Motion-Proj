@@ -1,0 +1,123 @@
+{
+  "task": "WS-V74-A-MECHANISM-01",
+  "run": "20260910__domain-subsystem-r1-s7401",
+  "seed": 7401,
+  "scope": "80 analytic shared-domain disjunction instances; not the required end-to-end geometric mechanism cohort or real validation",
+  "families": {
+    "duplicate_and_scale": {
+      "A1_fixed": {
+        "feasible": 0,
+        "all_explained": 0,
+        "wall_seconds": 0.05702324956655502
+      },
+      "A2_greedy": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.47377706319093704
+      },
+      "WEX": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.47222233563661575
+      },
+      "A3_milp": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.13774661161005497
+      },
+      "enumeration": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.4689852353185415
+      }
+    },
+    "empty_correct_candidate": {
+      "A1_fixed": {
+        "feasible": 0,
+        "all_explained": 0,
+        "wall_seconds": 0.05699463188648224
+      },
+      "A2_greedy": {
+        "feasible": 20,
+        "all_explained": 0,
+        "wall_seconds": 0.2677060104906559
+      },
+      "WEX": {
+        "feasible": 20,
+        "all_explained": 0,
+        "wall_seconds": 0.21321829035878181
+      },
+      "A3_milp": {
+        "feasible": 20,
+        "all_explained": 0,
+        "wall_seconds": 0.1521673258394003
+      },
+      "enumeration": {
+        "feasible": 20,
+        "all_explained": 0,
+        "wall_seconds": 0.21076601929962635
+      }
+    },
+    "joint_exchange": {
+      "A1_fixed": {
+        "feasible": 0,
+        "all_explained": 0,
+        "wall_seconds": 0.0631747655570507
+      },
+      "A2_greedy": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.27576519548892975
+      },
+      "WEX": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.2342794332653284
+      },
+      "A3_milp": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.1696968413889408
+      },
+      "enumeration": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.22038893960416317
+      }
+    },
+    "multiple_front_constraints": {
+      "A1_fixed": {
+        "feasible": 0,
+        "all_explained": 0,
+        "wall_seconds": 0.05799853056669235
+      },
+      "A2_greedy": {
+        "feasible": 5,
+        "all_explained": 5,
+        "wall_seconds": 0.1429574079811573
+      },
+      "WEX": {
+        "feasible": 5,
+        "all_explained": 5,
+        "wall_seconds": 0.14215115271508694
+      },
+      "A3_milp": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.13547096773982048
+      },
+      "enumeration": {
+        "feasible": 20,
+        "all_explained": 20,
+        "wall_seconds": 0.21454335562884808
+      }
+    }
+  },
+  "wall_seconds": 4.37980050034821,
+  "peak_rss_gib": 0.3931694030761719,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03"
+  ],
+  "verdict": "not_decided"
+}
