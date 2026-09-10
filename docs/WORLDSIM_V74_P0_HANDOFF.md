@@ -34,3 +34,10 @@ AV2 [官方数据集](https://www.argoverse.org/av2.html) 和 [下载文档](htt
 
 CPU 数据/存储任务尚未完成，未执行 shutdown。完成时补充真实计数、输出目录、验证结果与 push 状态，再确认无任务并关机。
 GPU 阶段先读取主计划和三本总账，再实现三候选与必要控制；不得直接运行旧 V73 launcher。nuScenes 与 AV2 自身训练/评价，主 seed=7401、第二 seed=7402。
+
+## P0 存储里程碑已完成（2026-09-10）
+
+WS-V74-P0-STORAGE-01 done；执行基线 d6bea861。删除 4105 个已列明目标，实际释放 131.802 GiB，完成时可用 194.487 GiB。
+包括 5 处冻结视觉前缀和退役 V6 传感器重渲染帧/旧 dense logits；按 run/组保留 340 个代表文件。原始数据、V73 checkpoint/表面/射线/指标、环境和模型保留。
+恢复旧逐帧分析可能需要重新推理或恢复历史依赖；不把缓存清理解释成无成本完整复现。精确路径/大小/恢复方式：docs/autoresearch/worldsim_v74/p0/storage_plan.json；实际删除和空间差：storage_result.json。
+failure_ledger_delta=none（未新增科学失败）；V74-F01/F02 继续。CPU 数据预处理 running，尚未关机。
