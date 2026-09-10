@@ -1,4 +1,4 @@
-# V74 方法竞争：有卡恢复，首次实现进行中
+# V74 方法竞争：配置已冻结，真实留出评价进行中
 
 2026-09-10，执行基线 e782b2b4。用户已解除 P0 阶段终点。RTX 3090 24GiB、14 CPU、90GiB 内存；当前没有资源阻断，V74-F02 GPU 状态已解决。P0 结果保持，原始数据不重跑。
 
@@ -8,7 +8,7 @@
 | WS-V74-FIT-CALIBRATION-01 | done | nuScenes 129812 / AV2 672669 跨 BUILD 平面比较，epsilon=.174520/.200000m；DEV 质量未读 |
 | WS-V74-METHOD-TOURNAMENT-01 | implementing | WEX/RIF/DCS 独立实现及强控制；43 ready/8 日志 + 23 缺 BUILD 合同对象 |
 
-主 seed=7401，确认=7402；输出≤4096三角形；各自 FIT/DEV。尚无 DEV 模型质量或候选裁决；V74-F03 初始冲突图遗漏已修复，V74-F04 登记 WEX 的标准求解器替代/支撑缺失风险。FIT 定标是各自数据内完成，局部平面残差含曲率/轨迹/归属代理误差，不是噪声真值；容差以上仍记冲突。原 nuScenes FINAL 数据缺口 V74-F01 保留。
+主 seed=7401，确认=7402；输出≤4096三角形；各自 FIT/DEV。真实DEV已经开始读取，C结果见下方当前里程碑，尚无总体裁决；V74-F03 初始冲突图遗漏已修复，V74-F04 登记 WEX 的标准求解器替代/支撑缺失风险。FIT 定标是各自数据内完成，局部平面残差含曲率/轨迹/归属代理误差，不是噪声真值；容差以上仍记冲突。原 nuScenes FINAL 数据缺口 V74-F01 保留。
 OSQP 1.0.4 已安装，SciPy 1.15.3/HiGHS 可用。WEX 域子系统实现及其固定/贪心/MILP/软域控制已经写入；80 个解析约束算例 r1/r2 和两数据集各2对象 FIT pilot 已完成，不能代替完整三维机制与真实验证。公共硬求交/评价接入已有 V73 定义；保存机制算例、初始/事件/最终资产及全部对象分母。详细失败见 [V74 失败过程](WORLDSIM_V7_4_FAILURES.md)。failure_ledger_delta=resolve V74-F02 GPU resource; no science verdict。
 
 WEX 实际证据：解析 multiple_front_constraints 20例中，r2 WEX20/20、贪心13/20、MILP20/20；MILP累计 .143s，WEX .230s。其余有正确候选的解析组贪心/MILP同样成功，不能声明机制不可替代。
@@ -43,6 +43,12 @@ NKSR主wheel续传完成；国内CUDA依赖改直连镜像，实际下载恢复�
 执行基线96cef75c。三候选、所有控制的参数与FIT checkpoint已冻结，首次真实DEV读取开始；此前没有读真实DEV质量。只评价已完成的固定资产，A取距离排序修正r2，B取同目标松弛消元版本，C取完整锚点调度版本。43 ready对象与23缺BUILD合同对象共同保留；5个nuScenes/3个AV2日志分别按对象内、日志内、日志间汇总，未知分母保持未知。
 外部NKSR固定官方ks预训练权重，BUILD PCA朝传感器法向、原生0.1m体素、detail_level=0、mise_iter=1，不按DEV选择体素或裁剪面数。其原生面数/训练来源与4096面主比赛分开报告。安装尚在完成，不能把安装完成算作模型成功。
 `autoresearch/worldsim_v74/evaluation/freeze_before_dev.json`保存配置和开始时间。failure_ledger_delta=none；F06外部环境仍处理中，F07/F08修正完整组继续，无候选裁决。
+
+## C真实留出首轮结果：未达到共同晋级门槛
+
+WS-V74-PROBE-EVALUATION-01 / 20260910__C-probe66-r1-s7401完成43 ready+23缺BUILD对象×5控制；ready没有工程缺输出/空面，11对象无自有QUERY返回仍在分母表中。nuScenes按5日志等权：DCS/C1普通增密/C3同网络无需求命中25.936%/26.342%/26.238%，early2.398%/3.837%/3.191%，miss66.777%/65.830%/66.741%；DCS相对C1召回下降2.528pp。DCS的early下降未达3pp，命中增长路径也未达3pp，自由侵入.006740m反而高于C1的.002628m，不能只报early改善。
+AV2自身FIT、3日志DEV：DCS/C1/C3命中26.511%/32.550%/27.722%，miss63.402%/55.022%/62.320%，自由侵入.069451/.075572/.044875m。未要求跨域泛化。C相对无新增片C0改善，无法据此绕过强普通增密与去需求控制。V74-F09登记本轮质量/机制增量不足；最终候选分类待80几何机制与配对日志归因收口，不再按DEV改模型或预算。
+B同目标消元FIT4×4已完成，无工程错误，完整原/新结果都保留。A/B正式资产继续。failure_ledger_delta=add V74-F09; V74-F08 corrected FIT completed; no overall verdict。
 
 ---
 

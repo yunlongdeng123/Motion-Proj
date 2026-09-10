@@ -51,3 +51,10 @@ r1/r2均仅FIT四对象。r2提高密对象访问范围，但仍有大量缺支�
 检索：[OSQP time_limit](https://osqp.org/docs/interfaces/solver_settings.html)、[SciPy L-BFGS-B](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html)；结合当前显式二次松弛，使用精确代数消元：e=-Hc，s=max(mu-Fc,0)。新目标仍为0.5cᵀPc−c0ᵀc+5000(||Hc||²+||max(mu−Fc,0)||²)，改变数值变量规模，不改变物理合同。
 对角缩放后用成熟L-BFGS-B及解析梯度，最大10000迭代，求解内回调检查剩余时间。显式约束残差改为解析恢复；primal_residual=0仅指已消元辅助等式恒等成立，必须结合H_residual/F_slack和stationarity看真实可行性/收敛，不能当物理认证。
 一次两个FIT粗层对比复用原QP存档、不重跑原QP：小对象目标差2.80e−7，大对象新目标降低23.86036，未达原假定同解说明原数值求解不足。完整r2继续同四FIT对象和全部必要控制；原r1也保存。三维机制旧B结果将由同目标新数值版本替换，已完成C原样复用。
+
+## V74-F09：DCS的普通生片替代与留出支撑不足
+
+状态：真实DEV筛选路径均未达标，机制/区间归因待收口；人工verdict未填。配置在ab3ca371登记冻结，此后不调需求教师、提议预算或片尺寸。
+两个数据集分别FIT训练的full/no_demand checkpoint与43对象BUILD事件保存于WS-V74-C-FIT-TRAIN-01和WS-V74-C-REAL-01；所有初始、20步实际片/参数/对偶价格/整数接受或拒绝原因齐备。查询由独立evaluate_worldsim_v74_assets.py读取，未回流求解。
+nuScenes相对C0命中+6.106pp，但相对C1−0.405pp、相对C3−0.301pp；early相比C1−1.439pp、free反而+0.004113m，说明减少提前返回频率不等于整体自由空间侵入更小。相对C1召回−2.528pp超保护底线。AV2相对C1命中−6.039pp且miss+8.380pp；相对C3命中−1.211pp，free+0.024576m。不能混合域掩盖差异，也不能仅报安全分数忽略支撑。
+证据：docs/autoresearch/worldsim_v74/evaluation/c_dcs/{per_actor,summary,manifest,resources}.json；详细逐射线query_rays.npz与原surface_path在run目录。后续仅做已规定的几何生片有效性/强控制归因和三候选统一裁决，不用补丁续命。

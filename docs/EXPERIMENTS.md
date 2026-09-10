@@ -44,6 +44,12 @@ NKSR主wheel续传完成；国内CUDA依赖改直连镜像，实际下载恢复�
 外部NKSR固定官方ks预训练权重，BUILD PCA朝传感器法向、原生0.1m体素、detail_level=0、mise_iter=1，不按DEV选择体素或裁剪面数。其原生面数/训练来源与4096面主比赛分开报告。安装尚在完成，不能把安装完成算作模型成功。
 `autoresearch/worldsim_v74/evaluation/freeze_before_dev.json`保存配置和开始时间。failure_ledger_delta=none；F06外部环境仍处理中，F07/F08修正完整组继续，无候选裁决。
 
+## C真实留出首轮结果：未达到共同晋级门槛
+
+WS-V74-PROBE-EVALUATION-01 / 20260910__C-probe66-r1-s7401完成43 ready+23缺BUILD对象×5控制；ready没有工程缺输出/空面，11对象无自有QUERY返回仍在分母表中。nuScenes按5日志等权：DCS/C1普通增密/C3同网络无需求命中25.936%/26.342%/26.238%，early2.398%/3.837%/3.191%，miss66.777%/65.830%/66.741%；DCS相对C1召回下降2.528pp。DCS的early下降未达3pp，命中增长路径也未达3pp，自由侵入.006740m反而高于C1的.002628m，不能只报early改善。
+AV2自身FIT、3日志DEV：DCS/C1/C3命中26.511%/32.550%/27.722%，miss63.402%/55.022%/62.320%，自由侵入.069451/.075572/.044875m。未要求跨域泛化。C相对无新增片C0改善，无法据此绕过强普通增密与去需求控制。V74-F09登记本轮质量/机制增量不足；最终候选分类待80几何机制与配对日志归因收口，不再按DEV改模型或预算。
+B同目标消元FIT4×4已完成，无工程错误，完整原/新结果都保留。A/B正式资产继续。failure_ledger_delta=add V74-F09; V74-F08 corrected FIT completed; no overall verdict。
+
 ---
 
 # P0 已完成实验

@@ -28,6 +28,10 @@ engineering；corrected code / rerun pending。FIT第23束证明正确带内候�
 
 当前里程碑：96cef75c配置冻结进入真实DEV评价；F06安装处理中，F07/F08正式修正版完成后收口，无新增科学失败或人工verdict。
 
+## V74-F09：DCS真实DEV未形成相对强控制的共同收益
+
+quality/novelty evidence不足，当前冻结模型/预算；nuScenes相对C1命中−0.405pp、early−1.439pp、召回−2.528pp、free+0.004113m，未达两条改善路径且召回保护失败。AV2自身训练相对C1命中−6.039pp、miss+8.380pp。无空面/工程缺失可解释该差额；不能以相对C0增密收益称对偶需求创新。详细表与逐对象证据见 [V74失败过程](WORLDSIM_V7_4_FAILURES.md) 和 evaluation/c_dcs。机制与日志区间待收口，人工verdict留空。
+
 ## V74-F08：RIF显式松弛求解成本（已迁移，完成组仍在执行）
 
 environment/numerics；原FIT密对象100k级松弛使RIF396s，且外层300s预算不能限制一次内部求解。代数消元保持原凸目标，L-BFGS-B只优化场系数；同大FIT粗网格目标651.864→628.004，计算10.719s。迁移同时用于B0/B1/B2，真实DEV未读。详见 [V74失败过程](WORLDSIM_V7_4_FAILURES.md)。
