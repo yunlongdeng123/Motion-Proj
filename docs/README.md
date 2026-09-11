@@ -1,3 +1,5 @@
+> 当前：V74 下半场无卡准备；见 [RESEARCH_STATUS.md](RESEARCH_STATUS.md)。主计划已切换为生成式表面演化；下文 H1 状态属于冻结历史。
+
 # WorldSim 文档导航
 
 更新：2026-09-11。V74 完成最小证据包，NO_SURVIVOR，本轮冻结。

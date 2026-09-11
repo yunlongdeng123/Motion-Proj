@@ -1,3 +1,16 @@
+# V74-H2 实验入口
+
+当前授权：2026-09-11 无卡准备；主规则见 [scaling law](../auto-research_scaling_law.md)。不把 P0 的实现和数据准备写成方法成功。
+
+| task | 状态 | 内容与证据 | failure_ledger_delta |
+|---|---|---|---|
+| WS-V74-H2-DOCS-01 | running | 失败总账索引化、研究边界、H2 方法差异与合同 | none |
+| WS-V74-H2-DATA-01 | planned | FIT 时间块任务、旧 DEV、AV2 储备坐标 | none |
+| WS-V74-H2-E0-01 | planned | 表示能力、不可辨识、收缩退化与查询数值边界 | none |
+| WS-V74-H2-E1-CPU-01 | planned | 80 三维构型、普通 C1/C3 硬查询控制；不是完整 A 学习比较 | none |
+
+以下是上半场及更早的历史实验，不是当前执行状态。
+
 # V74 最终实验里程碑：NO_SURVIVOR
 
 2026-09-11。主 task WS-V74-METHOD-TOURNAMENT-01，seed7401，首次真实DEV前冻结实现96cef75c/登记ab3ca371。以下为最终状态；后面的运行时间线保留当时的 pending/未裁决 表述，仅作为历史。

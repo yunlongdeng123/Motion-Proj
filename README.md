@@ -1,3 +1,5 @@
+> 当前：V74 下半场无卡准备；见 [docs/RESEARCH_STATUS.md](docs/RESEARCH_STATUS.md)。主计划已切换为生成式表面演化；下文 H1 状态属于冻结历史。
+
 # Motion-Proj / WorldSim V7.4
 
 从稀疏 LiDAR、测量射线和已知刚体轨迹重建固定的对象规范表面。WEX、RIF、DCS 分别检验支撑责任交换、射线区间有限元和需求驱动生面；三个候选已完成本轮独立实验，按预定标准 NO_SURVIVOR 冻结。
