@@ -1,3 +1,10 @@
+# H2 当前环境补充（2026-09-11）
+
+无卡实例cgroup 0.5CPU/2GiB；服务器数据脚本固定CUDA_VISIBLE_DEVICES为空、单线程逐对象。较重CPU工作在本地Windows Python3.11、NumPy2.2.6、SciPy1.15.3完成；连续学习使用torch2.8.0+cpu，依赖装在任务目录，不替换服务器motionproj环境。AV2使用pyarrow19.0.1；QEM使用fast-simplification0.1.12。
+后续有卡环境需按实际瓶颈剖面决定资源；不得沿用下面H1的3090/14CPU/90GiB作为当前实测。CPU交接见 [当前报告](WORLDSIM_V7_4_H2_CPU_HANDOFF.md)。
+
+以下为此前环境记录。
+
 # Motion-Proj V2 运行环境
 
 - 更新时间：2026-08-02

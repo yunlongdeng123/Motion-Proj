@@ -1,0 +1,32 @@
+{
+  "task": "WS-V74-H2-E1-CPU-01",
+  "seed": 7411,
+  "scenes_per_family": 20,
+  "steps": 8,
+  "events_per_step": 64,
+  "families": [
+    "multilayer",
+    "shared_support",
+    "missing_support",
+    "grazing_thin"
+  ],
+  "scale_uniform": [
+    0.85,
+    1.15
+  ],
+  "initialization": "predeclared family-specific controlled corruption; real-data PCA initialization is separate",
+  "rays": "64 sampled target rays +16 wider rays, 3 BUILD /3 distinct QUERY origins, true whole-surface first hit",
+  "A_trained": false,
+  "C2_trained": false,
+  "status": "cpu_controls_only",
+  "failure_ledger_refs": [
+    "V74-F04",
+    "V74-F09",
+    "V74-F10"
+  ],
+  "failure_ledger_delta": "V74-H2-F03: finite precision edge boundary; ordinary controls do not establish A necessity",
+  "gpu_used": false,
+  "host": "LAPTOP-LNJHVPS6",
+  "source": "local CPU work then copied to AutoDL",
+  "ledger_note": "Launch-time pending status closed on 2026-09-11; run metrics are unchanged."
+}

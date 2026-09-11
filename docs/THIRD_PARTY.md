@@ -1,3 +1,10 @@
+# H2 外部方法补充（2026-09-11）
+
+NKSR原生资产保持，另用标准QEM生成预算适配参照。固定流程：精确坐标合并重复顶点，删除重复顶点形成的零面积三角形，然后默认agg=7简化到4096面。库为fast-simplification0.1.12；参数只依据面数合同与工程错误修复，未读取查询质量。所有47原生参照都应用同一流程；结果不是NKSR论文的原生性能。
+来源：[QEM](https://www.cs.cmu.edu/~garland/quadrics/)、[fast-simplification官方](https://github.com/pyvista/fast-simplification)。完整失败修复：[V74-H2-F04](research_failures/entries/V74-H2-F04.md)。
+
+以下为此前第三方记录。
+
 # WorldSim 第三方依赖
 
 - 更新时间：2026-08-11

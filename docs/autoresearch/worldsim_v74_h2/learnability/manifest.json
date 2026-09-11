@@ -1,0 +1,20 @@
+{
+  "task": "WS-V74-H2-LEARNABILITY-01",
+  "role": "synthetic FIT memorization only",
+  "seed": 7411,
+  "scene_seed": 7421,
+  "tasks": 12,
+  "width": 32,
+  "epochs": 400,
+  "optimizer": "Adam lr=0.003",
+  "gpu_used": false,
+  "features": "raw full plane depth for order; invertible asinh depth/residual/boundary/uv features, no clipping",
+  "scope": "one continuous joint geometry step; oracle matched patches; topology policy and 8-step rollout remain untested",
+  "A_and_C2_information": "identical full plane/intersection feature set, coordinates and depths; C2 may infer ordering",
+  "failure_ledger_refs": [
+    "V74-F04",
+    "V74-F09"
+  ],
+  "failure_ledger_delta": "V74-H2-F05: raw depth ordering and invertible feature scaling replace clipping; r1 retained",
+  "checkpoint_config_note": "Checkpoint config records creation-time pending ledger status; this manifest closes it without modifying trained parameters."
+}

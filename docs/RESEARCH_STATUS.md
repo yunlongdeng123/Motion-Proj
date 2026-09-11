@@ -1,13 +1,17 @@
-# V74-H2 当前状态：CPU_PREPARATION_RUNNING
+# V74-H2 当前状态：WAIT_GPU / 无卡准备完成
 
-更新：2026-09-11。用户授权无卡模式完成全部可执行准备，随后停止等有卡开机。当前实例 cgroup 为 0.5 CPU / 2 GiB，数据盘约 186 GiB 可用；不沿用上次 GPU 资源描述。
+更新：2026-09-11。用户要求的无卡阶段已收口并停止，等待有卡开机。全程规则：[scaling law](../auto-research_scaling_law.md)；主计划：[下半场计划](WorldSim_V74_Second_Half_Generative_Surface_Plan.md)。
 
-- 主计划：[下半场计划](WorldSim_V74_Second_Half_Generative_Surface_Plan.md)；全程规则：[scaling law](../auto-research_scaling_law.md)。
-- 唯一候选 A：共享表面位置/边界的竞争感知演化；主机制、学习能力和新颖性均未成立。
-- P0：文献与内部撞题审查、合同/强控制冻结、失败资产索引整理中。
-- 数据：FIT 内按日志划验证、按真实帧块拆输入/监督；DEV 合同继承；AV2 储备 FINAL 只做坐标和格式准备。
-- P1：CPU E0、精确事件追踪和普通控制先行；完整学习式机制裁决尚未产生。
-- GPU 学习、真实 DEV 比较、独立 FINAL 与场景应用未启动；B/C 未启用。
+- [完整CPU交接与架构图](WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[方法差异/合同](WORLDSIM_V7_4_H2_METHOD_CONTRACT.md)、[机器状态](autoresearch/worldsim_v74_h2/cpu_phase_decision.json)。
+- P0完成：主线、9项最近前序差异、强控制、失败索引、论文骨架。
+- 数据完成：2408 FIT真实帧块任务，17不足帧对象保留；2612共同初始表面；10AV2预留日志盲化坐标转换。
+- CPU科学参照完成：6必要几何E0、80×5表面控制、完整事件/退化保存、数值和固定姿态误差诊断；12合成FIT连续更新器学习能力。
+- NKSR预算准备完成：47原生参照适配至≤4096面，1空网格保留；新查询质量未评价。
+- P1未整体通过：完整A/C2事件策略与8步学习、C4/C5仍待有卡阶段；P2/真实DEV/独立FINAL未启动。A科学和新颖性verdict均未定，人工verdict=null。
+- B/C未启用；H1 [NO_SURVIVOR](WORLDSIM_V7_4_RESULTS.md)与V73保持冻结。
 
-H1 保持 [NO_SURVIVOR](WORLDSIM_V7_4_RESULTS.md)，不覆盖旧结论。当前分支从 `abbd431c` 建立为 `research/worldsim-v7.4-h2-generative-surface`。
-failure_ledger_refs: V74-F04/F09/F10、V73-F09；failure_ledger_delta: none（初始登记）。人工 verdict: null。
+分支：`research/worldsim-v7.4-h2-generative-surface`，基于H1最终abbd431c。无卡实例0.5CPU/2GiB，较重CPU工作已迁移本地完成。资源不足未导致遗漏CPU工作；完成后不留研究控制器或自动恢复任务。
+
+failure_ledger_delta: V74-H2-F01（数据可用性）、F02（CPU迁移/路径修复）、F03（数值边界）、F04（NKSR预算规范化修复）、F05（远层排序/特征截断修复，学习证据r2）。[按ID读取](RESEARCH_FAILURES.md)，不继续堆叠全文日志。
+
+资源收口：[实际进程与磁盘记录](autoresearch/worldsim_v74_h2/resource_closeout.json)。已完成任务无研究worker遗留；无卡模式停止等待，没有配置自动重启。

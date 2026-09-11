@@ -1,13 +1,18 @@
-# V74-H2 实验入口
+# V74-H2 实验入口（无卡阶段收口）
 
-当前授权：2026-09-11 无卡准备；主规则见 [scaling law](../auto-research_scaling_law.md)。不把 P0 的实现和数据准备写成方法成功。
+当前WAIT_GPU，P1未整体裁决，P2未进入。详情与架构：[CPU交接](WORLDSIM_V7_4_H2_CPU_HANDOFF.md)。所有后续roadmap遵循 [scaling law](../auto-research_scaling_law.md)。
 
-| task | 状态 | 内容与证据 | failure_ledger_delta |
+| task/run | 当前结果 | 轻量证据 | failure_ledger_delta |
 |---|---|---|---|
-| WS-V74-H2-DOCS-01 | running | 失败总账索引化、研究边界、H2 方法差异与合同 | none |
-| WS-V74-H2-DATA-01 | planned | FIT 时间块任务、旧 DEV、AV2 储备坐标 | none |
-| WS-V74-H2-E0-01 | planned | 表示能力、不可辨识、收缩退化与查询数值边界 | none |
-| WS-V74-H2-E1-CPU-01 | planned | 80 三维构型、普通 C1/C3 硬查询控制；不是完整 A 学习比较 | none |
+| WS-V74-H2-DOCS-01 | done；1084历史目录/80分片、最终短卡、主题检索 | research_failures/migration.json | 历史不覆盖 |
+| WS-V74-H2-DATA-01 / fit_blocks_r1 | done；2408任务/1204对象，另17不足帧 | autoresearch/worldsim_v74_h2/fit_data_summary.json | H2-F01 |
+| WS-V74-H2-DATA-01 / av2_final_reserve_r1 | done；10日志只格式转换，未测质量 | autoresearch/worldsim_v74_h2/av2_reserve_summary.json | H2-F02修复 |
+| WS-V74-H2-INITIALS-01 / initials_r1 | done；2612同规则起点，351空输入保留 | autoresearch/worldsim_v74_h2/initials_summary.json | none |
+| WS-V74-H2-E0-01 | done；能力构造/歧义/四状态有限最优 | autoresearch/worldsim_v74_h2/cpu/e0.json | 仅边界，无A裁决 |
+| WS-V74-H2-E1-CPU-01 / geometry80-r1 | done；80×5普通控制资产，A/C2完整学习比较未测 | autoresearch/worldsim_v74_h2/cpu/summary.json | 不以普通控制残余失败替A立论 |
+| WS-V74-H2-NUMERICS-01 | done；共面/闭边/薄层、固定误差敏感性 | autoresearch/worldsim_v74_h2/cpu/boundary_diagnostics.json | H2-F03 |
+| WS-V74-H2-LEARNABILITY-01 / continuous12-r1/r2 | done；r2修复深度截断，单步连续目标能拟合，未测完整事件/泛化 | autoresearch/worldsim_v74_h2/learnability/results.json | H2-F05修复；不判新颖性 |
+| WS-V74-H2-NKSR-BUDGET-01 / qem-r1/r2/r3 | done；r1/r2超限1，r3统一规范化后47合规，原生保留 | autoresearch/worldsim_v74_h2/nksr_budget/results.json | H2-F04修复 |
 
 以下是上半场及更早的历史实验，不是当前执行状态。
 

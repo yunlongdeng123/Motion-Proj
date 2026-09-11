@@ -1,10 +1,10 @@
 # Motion-Proj 执行约定
 
-## 当前授权：WorldSim V7.4 下半场 / 无卡准备（2026-09-11）
+## 当前授权：WorldSim V7.4 下半场 / WAIT_GPU（2026-09-11）
 
 唯一当前状态是 `docs/RESEARCH_STATUS.md`。主计划为 `docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md`；方案制定、实质卡点与实验 roadmap 重规划必须遵循根目录 `auto-research_scaling_law.md`。
 当前分支 `research/worldsim-v7.4-h2-generative-surface` 从 H1 最终 `abbd431c` 建立。V73 与 V74 上半场 NO_SURVIVOR 保持冻结。
-本次只执行无需 GPU 的工作：P0、数据和文档、CPU 能力/控制实验、GPU 阶段实现准备；完成后主动停止并通知用户有卡开机。
+本次无需 GPU 的 P0、数据/文档、CPU 能力/控制和基础学习准备已完成，详见 `docs/WORLDSIM_V7_4_H2_CPU_HANDOFF.md`。当前停止等待用户有卡开机；不自动启动GPU学习或控制器。完整P1未判通过，P2未进入。
 唯一主候选是 First-Return Surface Dynamics；B 仅在计划条件成立时启用，C 暂缓。不可将 DCS/WEX 改名重开。
 两个数据集各自 FIT/train 与 DEV/test；不要求跨域零样本。旧 DEV 已曝光，不冒充 independent FINAL。
 

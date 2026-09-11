@@ -1,0 +1,19 @@
+{
+  "task": "WS-V74-H2-LEARNABILITY-01",
+  "role": "synthetic FIT memorization only",
+  "seed": 7411,
+  "scene_seed": 7421,
+  "tasks": 12,
+  "width": 32,
+  "epochs": 400,
+  "optimizer": "Adam lr=0.003",
+  "gpu_used": false,
+  "scope": "one continuous joint geometry step; oracle matched patches; topology policy and 8-step rollout remain untested",
+  "A_and_C2_information": "identical full plane/intersection feature set, coordinates and depths; C2 may infer ordering",
+  "failure_ledger_refs": [
+    "V74-F04",
+    "V74-F09"
+  ],
+  "failure_ledger_delta": "V74-H2-F05: clipped input/order; superseded by r2, original source/weights retained",
+  "ledger_note": "Launch-time pending status closed on 2026-09-11; run metrics are unchanged."
+}

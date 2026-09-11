@@ -1,0 +1,43 @@
+{
+  "task": "WS-V74-H2-P0-CONTRACT-01",
+  "status": "CPU references fixed; full P1 training pending",
+  "seed": 7411,
+  "confirmation_seed": 7412,
+  "max_faces": 4096,
+  "capacity_diagnostic_faces": 16384,
+  "unroll_steps": 8,
+  "depth_control_steps": 4,
+  "max_events_per_step": 64,
+  "initial_patches": "min(64,BUILD positive points)",
+  "radii_per_patch": 8,
+  "hit_band_m": 0.2,
+  "necessary_controls": [
+    "C1",
+    "C2"
+  ],
+  "finite_search_reference": "C3",
+  "required_mechanism_ablations": [
+    "C4",
+    "C5"
+  ],
+  "negative_control": "C6",
+  "cpu_synthetic_seed": 7411,
+  "cpu_fit_seed": 7421,
+  "width_options": [
+    32,
+    64
+  ],
+  "max_fit_group_configs": 4,
+  "data_roles": "configs/worldsim_v74_h2/data_roles.json",
+  "A_full_P1_pass": null,
+  "human_verdict": null,
+  "science_failure_policy": "close A; B only if predeclared representation/operator condition holds; no C",
+  "research_rules": "auto-research_scaling_law.md",
+  "failure_ledger_refs": [
+    "V74-F04",
+    "V74-F09",
+    "V74-F10",
+    "V74-H2-F01",
+    "V74-H2-F03"
+  ]
+}
