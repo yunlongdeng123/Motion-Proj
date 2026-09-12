@@ -1,3 +1,7 @@
+# V74-H2 GPU P1：2026-09-12
+
+WS-V74-H2-GPU-P1-01 正在实现；[启动记录](autoresearch/worldsim_v74_h2/gpu_p1/launch.json)。按计划1.1比较witness-native算子与同信息强控制。P2未进入；failure_ledger_delta=none。以下CPU阶段已完成，WAIT_GPU为历史。
+
 # V74-H2 实验入口（无卡阶段收口）
 
 当前WAIT_GPU，P1未整体裁决，P2未进入。详情与架构：[CPU交接](WORLDSIM_V7_4_H2_CPU_HANDOFF.md)。所有后续roadmap遵循 [scaling law](../auto-research_scaling_law.md)。

@@ -1,0 +1,50 @@
+{
+  "task": "WS-V74-H2-GPU-P1-01",
+  "status": "implementation",
+  "plan_version": "1.1 / 2026-09-12",
+  "science_question": "witness-conditioned shared support/placement versus same-witness ordinary optimization and set dynamics",
+  "gpu": "RTX 3090 24 GiB",
+  "cpu_quota": 14,
+  "memory_GiB": 90,
+  "seed": 7411,
+  "fit_scene_seed": 7421,
+  "mechanism_cases": "existing 80 fixed cases; new synthetic FIT uses separate seed; exposed mechanism cases are not independent confirmation",
+  "steps": 8,
+  "event_budget_per_step": 64,
+  "max_faces": 4096,
+  "width_options": [
+    32,
+    64
+  ],
+  "config_budget": 4,
+  "continuous_state": "center, SO3, 8 radii for every active patch",
+  "birth": "shared endpoint-cluster anchored pool with multiple positive witnesses",
+  "witness_binding": "positive support and negative prefix conflict feed local-sector shared geometry and full successor messages; joint updates retraced",
+  "controls": [
+    "C1 ordinary boundary/adaptive search",
+    "C2 same-information set updater",
+    "C3 same-pool bounded beam",
+    "C4 staged updates",
+    "C5 winner-only weak ablation"
+  ],
+  "training": "hard candidate evaluation on synthetic FIT A+B; forward A only; event ranking plus continuous regression; learner-state aggregation if covariate shift diagnosed",
+  "failure_ledger_refs": [
+    "V74-F04",
+    "V74-F09",
+    "V74-F10",
+    "V74-H2-F03",
+    "V74-H2-F05"
+  ],
+  "failure_ledger_delta": "none at launch",
+  "A_scientific_verdict": null,
+  "A_novelty_verdict": null,
+  "human_verdict": null,
+  "P2_entered": false,
+  "B_enabled": false,
+  "C_enabled": false,
+  "sources": [
+    "https://proceedings.mlr.press/v15/ross11a.html",
+    "https://docs.pytorch.org/docs/stable/func.api.html",
+    "https://arxiv.org/abs/1906.04173"
+  ]
+}

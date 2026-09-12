@@ -1,12 +1,10 @@
 # Motion-Proj 执行约定
 
-## 当前授权：WorldSim V7.4 下半场 / WAIT_GPU（2026-09-11）
+## 当前授权：WorldSim V7.4 下半场 / GPU P1（2026-09-12）
 
-唯一当前状态是 `docs/RESEARCH_STATUS.md`。主计划为 `docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md`；方案制定、实质卡点与实验 roadmap 重规划必须遵循根目录 `auto-research_scaling_law.md`。
-当前分支 `research/worldsim-v7.4-h2-generative-surface` 从 H1 最终 `abbd431c` 建立。V73 与 V74 上半场 NO_SURVIVOR 保持冻结。
-本次无需 GPU 的 P0、数据/文档、CPU 能力/控制和基础学习准备已完成，详见 `docs/WORLDSIM_V7_4_H2_CPU_HANDOFF.md`。当前停止等待用户有卡开机；不自动启动GPU学习或控制器。完整P1未判通过，P2未进入。
-唯一主候选是 First-Return Surface Dynamics；B 仅在计划条件成立时启用，C 暂缓。不可将 DCS/WEX 改名重开。
-两个数据集各自 FIT/train 与 DEV/test；不要求跨域零样本。旧 DEV 已曝光，不冒充 independent FINAL。
+用户已开启GPU并修订主计划为 `docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md` v1.1。当前执行该计划，尽可能把有益的几何求交、事件教师和训练批量放到GPU。`docs/RESEARCH_STATUS.md` 为当前状态；历史WAIT_GPU已被本次授权替代。
+方案制定与实质卡点重规划遵循 `auto-research_scaling_law.md`。唯一主命题是 observation witness 决定共享表面存在/支撑域/位置，真实首面归属由硬几何产生；不能靠重命名二维片或加损失宣称创新。
+分支 `research/worldsim-v7.4-h2-generative-surface`；V73和H1 NO_SURVIVOR冻结。P1完整机制/同信息强控制通过后才进入P2真实训练；B有条件备用，C暂缓。两域各自训练/测试，不要求跨域零样本，旧DEV不是独立FINAL。
 
 ## 工作与资源
 
@@ -14,7 +12,7 @@
 - 不加哈希、校验和、指纹；不增加过度校验或门控，不运行大量 smoke/回归测试。Git 自身版本标识用于普通提交追溯。
 - 小步提交并及时 push 当前远端分支，不改写 V73 或已共享历史。每个里程碑同步三本总账。
 - 资源不足时先完成仍可执行的 CPU/整理工作、保存结果并 push，确认没有训练、评价、数据、渲染或会启动任务的控制器，再执行 shutdown 并提示加卡。不能只看宿主 CPU/内存，读取当前 cgroup 配额。
-- 计划的科学淘汰规则仍然有效；研究失败、数据缺失与资源不足分别记录。本次用户明确要求完成无需 GPU 的工作后停止，等待有卡开机；不启动自动恢复器。H1 科学冻结不阻止用户授权的 H2 新抽象。
+- 计划的科学淘汰规则仍然有效；研究失败、数据缺失与资源不足分别记录。本次用户授权继续GPU研究，按计划的证据和停止规则推进。H1 科学冻结不阻止用户授权的 H2 新抽象。
 - 已授权清理与后续实验无关的大文件。优先删除可重建缓存和退役中间数据；保留原始输入、最终/关键 checkpoint、固定表面、指标、失败证据和重建入口。按路径、类别、大小、原因及恢复方式记录，不能把归档文档当作大文件备份。
 
 ## 研究事实与文档

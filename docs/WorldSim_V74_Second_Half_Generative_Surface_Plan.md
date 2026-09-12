@@ -2,8 +2,8 @@
 
 ## 面向首次回波一致性的生成式物理表面重建
 
-**版本：V7.4-H2 / 1.0**  
-**日期：2026-09-11**  
+**版本：V7.4-H2 / 1.1**  
+**日期：2026-09-12**  
 **状态：研究设计；本计划中的新实验尚未执行；候选的新颖性与有效性均未成立。**  
 **论文准备度：维持约 3/6，弱拒绝（Weak Reject）。**
 
@@ -15,15 +15,22 @@
 
 ### 0.1 唯一主科学命题
 
-**在相同构建观测、表面容量和训练信息下，以全局首次交点竞争状态驱动共享表面的位置、支撑边界和拓扑演化，能否比普通表面优化与普通增密，更有效地把“已有但被遮挡的正确支撑”转化为“留出视角下的正确首次可见支撑”，同时不靠减少覆盖获得表面上的精确度改善？**
+本轮先挑战一个此前一直默认、但没有被证明的表示假设：
 
-这里有三个必须同时满足的条件：
+> **如果最终消费者本来就是 LiDAR 的字面首次交点查询，为什么核心重建表示必须先服从“通用视觉表面”，再在事后用若干物理损失修正？**
 
-1. 改变的是共享三维表面的生成过程，而不是每条射线的置信度或输出掩码。
-2. 改善发生在没有参与该资产构建的真实视角／时刻，而不只是构建射线上。
-3. 相同表示、相同训练信息、成熟优化与普通自适应更新不能解释全部收益。
+因此，本轮主命题升级为：
 
-**这是一项待检验假设，不是由此前失败逻辑推出的必然真理。** 过去的失败说明值得研究生成动力学，但没有证明传统重建器、足够强的先验或另一种标准优化一定无法解决任务。
+**在相同构建观测、表面容量和训练信息下，由 observation witness（观测见证）直接决定 surface existence / support extent / placement，并由共享几何的 hard first-intersection 自然产生 first-hit ownership 的重建算子，能否比“先重建普通表面、再加 first-hit/free-space 约束”的路线，更有效地得到留出视角可复用的物理表面，同时不靠收缩覆盖获得精确度改善？**
+
+这里有四个必须同时满足的条件：
+
+1. 新对象是 **witness-conditioned finite-support physical surface**，而不是 VGGT mesh 上多加几个损失。
+2. first-hit ownership 不是独立分类头，而是 surface existence + placement 在共享几何上的全局结果。
+3. 改善发生在没有参与该资产构建的真实视角／时刻，而不只是构建射线上。
+4. 相同 witness、相同信息、相同表示自由度下的普通 mesh/surfel 优化与普通自适应更新不能解释全部收益。
+
+**这仍是一项待检验假设，不是由此前失败逻辑推出的必然真理。** 过去的失败只说明“通用 surface → 事后物理修补”值得被挑战，没有证明 witness-native representation 必然优于成熟表面优化。
 
 ### 0.2 本轮取舍
 
@@ -96,13 +103,38 @@ AV2 的 10 个日志只有在执行时再次确认未被其他后续试验曝光
 
 ## 2. 任务合同：一个输入集合，一份固定表面
 
-### 2.1 主实验采用激光射线条件，不预先承诺多模态贡献
+### 2.1 第一轮把 LiDAR witness 设为物理 authority；视觉只保留为 shape prior
 
-本轮 A 的第一条主线使用稀疏 LiDAR 及其射线、标定、对象身份和已知轨迹。图像不进入第一轮方法竞争，以控制变量。
+本轮 A 的第一条主线使用稀疏 LiDAR 及其射线、标定、对象身份和已知轨迹，以隔离真正的新 reconstruction operator。图像不进入第一轮方法竞争。
 
-因此，本轮没有视觉实验时，论文应称为“稀疏射线条件下的表面重建”，不能称为已经验证的多模态融合方法。视觉先验只在另有必要且方法成立后作为清楚标注的扩展；不在 A 失败时作为救场补丁。
+这不是说视觉不重要，而是重新分配角色：
 
-### 2.2 输入与规范坐标
+- **LiDAR / ray observation 提供 physical authority**：哪里被端点直接支持，哪里在返回前缀中被观测为空。
+- **VGGT / DVGT 等视觉基础模型最多提供 shape / correspondence / completion prior**：可以提出未观测区域的几何候选，但不能覆盖真实 negative witness。
+
+因此，未来多模态扩展的原则是：**visual priors propose geometry; physical observations authorize surface support**。在第一轮没有视觉实验时，论文仍应称为“稀疏射线条件下的表面重建”，不能预先声称多模态贡献。视觉先验不作为 A 失败后的救场补丁。
+
+### 2.2 Observation witness：不是把一条 LiDAR ray 压成一个点
+
+对于可靠对象返回 \(t_j^*\)，一条射线同时提供两类物理证据：
+
+\[
+W_j^+ : x_j=o_j+t_j^*d_j \quad \text{附近应存在可被命中的 surface},
+\]
+
+\[
+W_j^- : \{o_j+t d_j\mid 0<t<t_j^*\} \quad \text{不能存在会抢占 first hit 的 surface}.
+\]
+
+普通点云重建常把它主要压缩为 \(x_j\in S\)。本轮希望保留完整见证语义：
+
+\[
+\boxed{x_j\in S \quad \land \quad S\cap r_j([0,t_j^*))=\varnothing}.
+\]
+
+这里的 novelty 不来自重新写这两个约束；真正要检验的是：**witness 是否进入 surface birth / support extent / placement / split / persistence 的生成过程，而不只是成为普通 mesh 的附加 loss。**
+
+### 2.3 输入与规范坐标
 
 记对象在时间 \(\tau\) 的规范坐标到世界坐标刚体变换为 \(T_i(\tau)\)。观测射线转换到对象规范坐标后为：
 
@@ -114,7 +146,7 @@ r_j(s)=o_j+s d_j,\qquad s>0,\quad \|d_j\|=1.
 
 不使用未来轨迹预测。查询阶段给定的新时刻仅用于刚体放置。
 
-### 2.3 输出与查询
+### 2.4 输出与查询
 
 \[
 \mathcal O_{\mathrm{build}}
@@ -131,7 +163,7 @@ Q(S_i,r)=\inf\{s>0:r(s)\in S_i\};
 
 运行时只读取冻结资产、射线与已知刚体变换，不读取该条查询射线的测量深度、不产生逐射线几何、不根据查询方向修改资产。
 
-### 2.4 不能混淆的三个结论
+### 2.5 不能混淆的三个结论
 
 - 资产没有交点，不等于真实世界已证明为空。
 - 对象整体删除，不等于安全；空资产在覆盖与遗漏指标中必须失败。
@@ -157,13 +189,19 @@ Q(S_i,r)=\inf\{s>0:r(s)\in S_i\};
 
 ### 3.1 审查结论
 
-**通用版“二维片＋首次交点损失＋生成／缩小／分裂／合并”不通过主方法创新审查。**
+**通用版“二维片＋首次交点损失＋生成／缩小／分裂／合并”不通过主方法创新审查。二维片只是 surface carrier，不是论文灵魂。**
 
-进一步投资必须落实到一个具体区别：
+进一步投资必须落实到更高一层的区别：
 
-> 对一块共享表面，更新不能只回答“它是否错误”，而要同时回答“哪些观测仍需要它、其边界在三维中该如何改变、改变以后实际由哪个后继表面成为第一交点”；该信息必须进入表面生成更新，而非只用于最后验收。
+> **observation witness 不只是监督一个先验存在的 surface，而要参与决定 surface 为什么存在、能扩到哪里、应放在哪里，以及修改后谁实际获得 first-hit ownership。**
 
-这仍然只是候选差异。排序、反事实重算、图网络、分裂操作分别都不是原创性结论。只有联合作为一个方法时确实不可替代，才可能构成主贡献。
+也就是说，本轮真正候选的新对象／新机制是：
+
+\[
+\boxed{\text{Observation witnesses}\rightarrow\text{surface existence / extent / placement}\rightarrow\text{hard first-hit competition}}.
+\]
+
+具体 carrier 可以是 oriented disk、local chart、surfel 或有限三角 patch；如果换 carrier 后核心方法仍成立，说明创新落在正确层级。排序、反事实重算、图网络、分裂操作分别都不是原创性结论。只有 witness-native reconstruction operator 相对普通 surface + constraints 产生不可替代增量，才可能构成主贡献。
 
 ### 3.2 进入下一阶段前，写一页创新差异表
 
@@ -209,19 +247,35 @@ Q(S_i,r)=\inf\{s>0:r(s)\in S_i\};
 | LAS-Diffusion，2023 [R20] | 图像条件、占据与 SDF 分层生成及局部注意力不是新组合 |
 | MonoSDF，2022 [R21] | 使用预测深度／法向等单目几何先验改善隐式重建，早于视觉大基座热潮 |
 
-C 未来需要证明的是：**先验对未观测形状的生成，与测量对实例几何的修正，在表示或生成算子中有实质分工，而且这一分工优于同基座、同输入、同解码预算的普通条件重建。**
+C 未来需要证明的是：**先验对未观测形状的生成，与测量对实例几何的物理授权，在表示或生成算子中有实质分工，而且这一分工优于同基座、同输入、同解码预算的普通条件重建。**
+
+若未来启用，建议显式区分：
+
+\[
+S=S_{\mathrm{observed}}\cup S_{\mathrm{completed}},
+\]
+
+其中 \(S_{\mathrm{observed}}\) 主要由 positive witness 支撑，\(S_{\mathrm{completed}}\) 可以来自 visual/shape prior，但二者都不得违反可靠的 negative witness。这样 VGGT 的位置是 **proposal/prior，而不是 physical authority**。
 
 “冻结基座＋条件解码器”本身不够。C 本轮不训练，不作为第二备用；DVGT-2 等更新版本也不因为更新而自动替换当前问题中的几何先验。
 
 ---
 
-## 5. 主候选 A：一套可执行的表面演化设计
+## 5. 主候选 A：Witness-Native Physical Surface Reconstruction
 
-**工作名：首次回波竞争驱动的表面演化（First-Return Surface Dynamics）。**
+**工作名：观测见证驱动的首次表面重建（Observation-Witnessed First-Surface Reconstruction）。**
 
-这是对候选 A 的具体研究设计，不预设名称即代表创新。初始版本不使用扩散模型、强化学习、透明度或基础视觉大模型。
+核心方法对象不是“更好的二维高斯／二维片”，而是：
 
-### 5.1 表示选择：实际八边形表面，不把高斯核当物理实体
+\[
+S=\bigcup_k \psi_k(\Omega_k),
+\]
+
+其中局部几何 \(\psi_k\) 与有限 support domain \(\Omega_k\) 共同由 observation witnesses 与几何先验决定；first-hit ownership 由冻结共享几何上的 literal nearest intersection 自然产生。
+
+Adaptive First-Return Surface Primitives 现在降级为这一 reconstruction operator 的**第一种可执行 carrier**。初始版本不使用扩散模型、强化学习、透明度或基础视觉大模型，以先判断 witness-native 表示／生成机制本身是否成立。
+
+### 5.1 第一种 carrier：实际有限八边形表面，但 support domain 才是关键状态
 
 每个局部片定义为：
 
@@ -240,7 +294,7 @@ b_{k,m}=c_k+\rho_{k,m}
 
 主预算继承 4096 个三角形，因此至多 512 个这样的片。这是初始公平预算，不是全领域最优容量。16384 面仅用于事先规定的容量诊断，不能只给本方法扩大容量。
 
-选择八边形的目的，是让训练中硬前向与最终资产是同一个几何对象。不要训练解析圆盘，最后才三角化，却仅凭很小的几何误差宣称首次交点一定一致；擦边射线可能对这种差异敏感。
+选择八边形的目的，是让训练中硬前向与最终资产是同一个几何对象，并给 support domain 提供最小的非均匀边界自由度。八边形本身不是方法创新；真正要观察的是 witness 如何驱动 support domain 的出生、扩张、回缩和必要分裂。不要训练解析圆盘，最后才三角化，却仅凭很小的几何误差宣称首次交点一定一致；擦边射线可能对这种差异敏感。
 
 **八个独立半径不是创新。** 所有必要控制也必须获得这套表示与同样的几何自由度。椭圆双尺度仅作为“支撑边界自由度”的诊断对照。
 
@@ -284,7 +338,7 @@ b_{k,m}=c_k+\rho_{k,m}
 
 **这只是正确的计算定义，不是新颖性证明。** 有限差分、重算和多步搜索都可能是普通方法。后续必须用同事件预算的成熟搜索与普通演化器来排除这一解释。
 
-### 5.4 统一更新器：改变几何，不预测运行时深度
+### 5.4 Witness-conditioned reconstruction operator：改变 surface state，不预测运行时深度
 
 主模型学习一个跨训练对象共享的条件更新规则：
 
@@ -302,7 +356,19 @@ F_\phi(S^{(m)},h^{(m)},
 
 **同网络去顺序控制仍获得完整交点集合和深度等几何信息。** 不故意切断其可推导顺序的信息，只去掉显式链式更新结构；让充分表达的集合模型也有机会恢复相关关系。
 
-### 5.5 表面事件不必一次实现六种
+### 5.5 Witness authority 如何进入 surface dynamics
+
+第一版必须把 witness 与 surface event 明确绑定，而不能只在总损失里出现：
+
+- **Birth**：需要一组几何一致的 positive witnesses 或由 prior 提出的候选再获得正见证授权；不能把单条 MISS 直接等价成随意生片。
+- **Growth**：只能扩展到与 positive support 相容、且不侵入已知 negative prefix 的区域。
+- **Retract / Trim**：当局部 support repeatedly 抢占其他 ray 的错误 first hit 时，只回缩冲突区域，而不是整片缩小。
+- **Split**：同一片的不同局部区域若分别受到正支撑与 free-prefix 冲突，应允许结构分裂。
+- **Persistence / Merge**：已经被多视角稳定支持的区域不应因单条冲突轻易消失；合并必须同时满足几何连续与 witness compatibility。
+
+如果最后实现仍可以等价描述为“普通 mesh + 四个 loss + adaptive remeshing”，则本轮应判定 representation/operator novelty 不成立。
+
+### 5.6 表面事件不必一次实现六种
 
 | 事件 | 第一版的作用 | 是否是创新本身 |
 |---|---|---|
@@ -315,7 +381,7 @@ F_\phi(S^{(m)},h^{(m)},
 
 局部无用片可消亡，但不能把整对象删除作为策略。空表面照常进入失败统计。不存在“只要所有片足够小就成功”的精确度捷径。
 
-### 5.6 和 DCS、WEX、RIF 的实质边界
+### 5.7 和 DCS、WEX、RIF 的实质边界
 
 | 对象 | 前序核心路径 | A 必须实际实现的不同点 |
 |---|---|---|
@@ -474,7 +540,7 @@ Q_{\mathrm{scene}}(r,\tau)=
 | 编号 | 控制 | 固定什么 | 检验什么 |
 |---|---|---|---|
 | C0 | PCA 有限 surfel＋冻结原生尺度 | 同构建点、同面数 | 最强简单几何起点 |
-| C1 | 同八半径表示＋硬首交点目标＋普通自适应优化 | 表示、信息、出生候选和计算预算 | 是否只是普通几何优化的问题 |
+| C1 | **同一 witness + 同八半径表示 + 普通 surface optimization / adaptive remeshing** | witness、表示、信息、出生候选和计算预算 | witness-native operator 是否真的超过“普通 surface + 正确约束” |
 | C2 | 同架构容量、同拟合集任务的无显式顺序集合模型 | 训练信息、交点深度、参数量、展开步数 | 显式竞争结构是否必要 |
 | C3 | 相同事件池＋精确重算的普通搜索／有限最优参照 | 事件候选及重算预算 | 是否只是比弱贪心强；是否重复 WEX 的失败 |
 | C4 | 同模型，位置与边界分阶段更新 | 网络和信息尽量匹配 | 联合演化而非串联修补是否有增量 |
@@ -613,6 +679,26 @@ A 的方法成功须同时有：可隔离的机制必要性、真实开发集联
 对每一次声称成功的修复保存：修改前后的完整表面、构建射线、留出射线、实际首交点与后继链，以及覆盖变化。可视化按预定规则选择最差、典型与最好对象，不只展示漂亮个例。
 
 ---
+
+## 11.1 论文 story 的冻结表述
+
+若 A 最终成立，主故事应避免写成“我们在 VGGT / mesh 上加入 first-hit、free-space、support 等损失”。更准确的表述是：
+
+> **当最终消费者是 LiDAR first-return query 时，物理重建不应先生成一个与查询语义无关的通用 surface，再事后修补；我们研究一种 witness-native reconstruction operator，使 observation witnesses 在生成过程中共同决定 surface support，而 first-hit ownership 由同一共享几何的 hard nearest intersection 产生。**
+
+对应的角色分工是：
+
+```text
+visual / shape prior  → geometry proposal / completion prior
+positive witness      → observed surface support
+negative ray prefix   → forbidden first-hit region
+                         ↓
+witness-conditioned reusable physical surface
+                         ↓
+literal hard first intersection
+```
+
+该 story 只有在 C1 等同信息强控制失败、独立日志确认通过后才能作为论文主张；否则仍维持“有启发的表示假设，但证据不足／新颖性不足”。
 
 ## 12. 备用 B 的启用条件与最小实验
 
