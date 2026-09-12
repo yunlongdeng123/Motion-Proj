@@ -77,3 +77,5 @@ RTX3090 24GiB，14核/90GiB。GPU承担候选硬求交、代价教师、A/C2训�
 论文准备度维持约3/6，人工verdict=null。研究方案与卡点重规划继续遵循 [scaling law](../auto-research_scaling_law.md)；没有将更改叙事或更换方法名称作为继续训练的理由。
 
 资源收口：[实际进程记录](autoresearch/worldsim_v74_h2/gpu_p1/resource_closeout.json)。无研究worker，未配置自动恢复；服务器仍为有卡开机，未发出shutdown。数据盘剩余约183.75GiB。
+
+后续电源安排：用户已明确授权V74收口后关闭AutoDL。最新无任务检查完成，当前文档推送后执行shutdown；上文“仍开机”是执行该授权前的快照。见[关机前记录](autoresearch/worldsim_v74_h2/gpu_p1/shutdown_preparation.json)。

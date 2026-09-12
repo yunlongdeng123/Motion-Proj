@@ -30,3 +30,5 @@ python scripts/query_research_failures.py --record RF0013 --detail --max-lines 8
 GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU实现修正）、F08（一次DAgger修正完成后仍有自身闭环学习限制，停止当前实现）。按ID读取详情；仍无A科学/新颖性裁决。
 
 最终解释以[GPU P1报告](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)为准；不是科学/新颖性裁决，不生成H2全类别NO_SURVIVOR。
+
+2026-09-12用户授权收口后关机；无新增研究失败，F08优化限制结论保持，关机不是资源不足或新的科学裁决。

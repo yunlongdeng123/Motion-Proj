@@ -10,4 +10,6 @@
 
 failure_ledger_delta: F06合成角色区间修复，F07初始GPU实现修复，F08一次优化修正未解除最小闭环能力限制。遵循[scaling law](../auto-research_scaling_law.md)。
 
-资源收口：[实际进程记录](autoresearch/worldsim_v74_h2/gpu_p1/resource_closeout.json)。无研究worker，未配置自动恢复；服务器仍为有卡开机，未发出shutdown。数据盘剩余约183.75GiB。
+资源收口：[实际进程记录](autoresearch/worldsim_v74_h2/gpu_p1/resource_closeout.json)。无研究worker，未配置自动恢复；该记录是关机前的资源快照。数据盘剩余约183.75GiB。
+
+关机安排（2026-09-12用户明确授权）：研究已按上述边界收口，CPU/GPU无研究任务、无研究cron或tmux。当前文档提交推送后立即执行 `shutdown -h now`，不自动重启研究。见[关机前记录](autoresearch/worldsim_v74_h2/gpu_p1/shutdown_preparation.json)，命令结果保存在本地任务对话。

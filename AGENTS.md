@@ -30,3 +30,7 @@
 - 使用 Conventional Commits，一次一个逻辑主题；正文写问题、改动、必要验证、task/run 与证据路径。
 - 提交前查看暂存 diff 并执行 `git diff --cached --check`；仅做风险相称的验证。
 - Python 优先 `/root/autodl-tmp/envs/motionproj/bin/python`；P0 设置 `CUDA_VISIBLE_DEVICES=`，逐对象处理，线程按 cgroup 配额控制。
+
+## 收口后电源授权（2026-09-12）
+
+用户明确要求V74收口后shutdown AutoDL，条件为没有正在运行的任务、代码push且文档更新完毕。当前研究已按优化限制收口，条件核实后执行关机；后续需新的开机/研究授权，不设自动恢复器。
