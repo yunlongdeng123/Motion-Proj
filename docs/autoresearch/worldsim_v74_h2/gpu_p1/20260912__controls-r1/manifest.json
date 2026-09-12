@@ -1,0 +1,25 @@
+{
+  "task": "WS-V74-H2-GPU-P1-01",
+  "mode": "mechanism",
+  "seed": 7411,
+  "fit_scene_seed": 174211,
+  "validation_scene_seed": 174311,
+  "mechanism_scene_seed": 7411,
+  "steps": 8,
+  "events": 64,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "dtype": "float64 geometry, float32 learning features",
+  "max_faces": 4096,
+  "padding_slots": 16,
+  "padding_note": "P1 initial<=3 plus <=8 births/splits, so padding16 does not reduce physical512-patch budget",
+  "teacher_access": "synthetic FIT BUILD+supervision; proposal/features only BUILD",
+  "cost": "same robust first distance + free prefix + plane/radial support proxy; actual surface metric separate",
+  "failure_ledger_refs": [
+    "V74-F04",
+    "V74-F09",
+    "V74-H2-F03",
+    "V74-H2-F05"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null
+}

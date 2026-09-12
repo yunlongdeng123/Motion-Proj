@@ -1,3 +1,9 @@
+# GPU P1里程碑：硬教师、强控制与闭环能力诊断
+
+2026-09-12：fit-teacher-r3完成80 FIT+20 FIT_VAL八步教师；C1_ORDINARY、C3_BEAM、共同池贪心各80构型完成，代码/证据位于gpu_p1。learn-w32-r1 A/C2各80任务、memorize12-w32-r1 A/C2各12任务已完成。A自身12任务薄结构退化，正在执行F08规定的唯一优化修正dagger12-w32-r1；P2未进入。
+
+failure_ledger_delta: F06合成角色区间修复，F07初始GPU接口/候选描述修复，F08闭环学习限制。现有表不构成科学/新颖性成功或失败裁决。
+
 # V74-H2 GPU P1：2026-09-12
 
 WS-V74-H2-GPU-P1-01 正在实现；[启动记录](autoresearch/worldsim_v74_h2/gpu_p1/launch.json)。按计划1.1比较witness-native算子与同信息强控制。P2未进入；failure_ledger_delta=none。以下CPU阶段已完成，WAIT_GPU为历史。

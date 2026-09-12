@@ -1,0 +1,24 @@
+{
+  "task": "WS-V74-H2-GPU-TRAIN-01",
+  "teacher": "/root/autodl-tmp/runs/worldsim_v74_h2/WS-V74-H2-GPU-P1-01/20260912__fit-teacher-r3",
+  "width": 32,
+  "epochs_cap": 600,
+  "optimizer": "Adam lr=0.002",
+  "seed": 7411,
+  "rollout_steps": 8,
+  "training": "BPTT over recurrent hidden state on teacher geometry trajectories; policy geometry closure evaluated separately",
+  "batch_episodes": 16,
+  "fit_scenes": 12,
+  "fit_val_scenes": 12,
+  "inputs": "BUILD/current surface only; candidate cost targets use synthetic FIT supervision; no mechanism QUERY as input or teacher",
+  "memorization_only": true,
+  "selection": "training loss only",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "failure_ledger_refs": [
+    "V74-H2-F05",
+    "V74-F04",
+    "V74-F09"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null
+}
