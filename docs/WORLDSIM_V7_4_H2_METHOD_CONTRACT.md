@@ -1,3 +1,5 @@
+当前执行状态：[STOP_IMPLEMENTATION_OPTIMIZATION](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)。下面的“修正进行中”属于中途记录；修正现已完成，未解除A最小闭环限制。
+
 # GPU P1执行补充：计划1.1 / 2026-09-12
 
 当前计算对象是witness-conditioned共享表面的局部支撑/位置与持续状态。正支撑和negative prefix按片内扇区聚合，完整平面/后继特征经A链或C2集合网络进入共享片节点，输出所有活动片的连续位移/旋转/八半径及公共出生/分裂事件。归属由硬几何查询产生，没有独立ownership头。

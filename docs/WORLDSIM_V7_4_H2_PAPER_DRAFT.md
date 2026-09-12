@@ -1,3 +1,11 @@
+# 计划1.1执行后论文状态：主方法证据尚未建立
+
+![Architecture components](figures/worldsim_v74_h2_gpu/architecture.png)
+
+当前A实现因最小闭环学习能力不足停止，详见[GPU执行报告](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)。科学/新颖性未裁决，真实域结果未打开。不得将下文候选贡献写成已成立结果；历史失败与当前优化诊断不构成主论文。论文准备度维持约3/6，人工verdict=null。
+
+以下为CPU阶段保留的骨架，未执行实验继续为空：
+
 # V74-H2 论文骨架（证据未齐，非投稿稿）
 
 ![Architecture components](figures/worldsim_v74_h2/architecture.png)

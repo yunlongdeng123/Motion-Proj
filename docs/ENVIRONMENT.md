@@ -1,3 +1,7 @@
+# 当前GPU阶段资源（2026-09-12）
+
+RTX3090 24GiB、14核CPU配额、90GiB内存，PyTorch2.4.1+cu121。GPU P1已按优化限制停止，资源充足，无OOM。见 `autoresearch/worldsim_v74_h2/gpu_p1/resource_closeout.json`。以下无卡记录为2026-09-11历史。
+
 # H2 当前环境补充（2026-09-11）
 
 无卡实例cgroup 0.5CPU/2GiB；服务器数据脚本固定CUDA_VISIBLE_DEVICES为空、单线程逐对象。较重CPU工作在本地Windows Python3.11、NumPy2.2.6、SciPy1.15.3完成；连续学习使用torch2.8.0+cpu，依赖装在任务目录，不替换服务器motionproj环境。AV2使用pyarrow19.0.1；QEM使用fast-simplification0.1.12。

@@ -1,6 +1,6 @@
 # Research Failures：渐进读取入口
 
-当前路线：V74-H2 计划1.1 / GPU P1；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
+当前路线：V74-H2 计划1.1 / 当前实现因优化限制停止；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
 
 | 要解决的问题 | 从哪里读 |
 |---|---|
@@ -27,4 +27,6 @@ python scripts/query_research_failures.py --record RF0013 --detail --max-lines 8
 
 2026-09-12恢复GPU P1：继承F03/F05数值与完整信息边界，当前无新裁决。计划1.1的witness算子不得复活已关闭的责任求解/提议挑片路线。
 
-GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU实现修正）、F08（自身几何闭环优化限制，一次DAgger修正进行中）。按ID读取详情；仍无A科学/新颖性裁决。
+GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU实现修正）、F08（一次DAgger修正完成后仍有自身闭环学习限制，停止当前实现）。按ID读取详情；仍无A科学/新颖性裁决。
+
+最终解释以[GPU P1报告](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)为准；不是科学/新颖性裁决，不生成H2全类别NO_SURVIVOR。

@@ -1,8 +1,8 @@
 # Motion-Proj 执行约定
 
-## 当前授权：WorldSim V7.4 下半场 / GPU P1（2026-09-12）
+## 当前授权：WorldSim V7.4 下半场 / 当前实现停止（2026-09-12）
 
-用户已开启GPU并修订主计划为 `docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md` v1.1。当前执行该计划，尽可能把有益的几何求交、事件教师和训练批量放到GPU。`docs/RESEARCH_STATUS.md` 为当前状态；历史WAIT_GPU已被本次授权替代。
+用户已开启GPU并修订主计划为 `docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md` v1.1。已执行该计划的GPU P1并完成一次优化修正，当前STOP_IMPLEMENTATION_OPTIMIZATION，见GPU_P1_REPORT。没有新的用户授权或足以改变当前解释的新证据时，不自动重启已停止实现；不将此状态误写为资源不足。`docs/RESEARCH_STATUS.md` 为当前状态；历史WAIT_GPU已被本次授权替代。
 方案制定与实质卡点重规划遵循 `auto-research_scaling_law.md`。唯一主命题是 observation witness 决定共享表面存在/支撑域/位置，真实首面归属由硬几何产生；不能靠重命名二维片或加损失宣称创新。
 分支 `research/worldsim-v7.4-h2-generative-surface`；V73和H1 NO_SURVIVOR冻结。P1完整机制/同信息强控制通过后才进入P2真实训练；B有条件备用，C暂缓。两域各自训练/测试，不要求跨域零样本，旧DEV不是独立FINAL。
 

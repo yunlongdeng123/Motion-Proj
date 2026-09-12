@@ -1,0 +1,30 @@
+{
+  "task": "WS-V74-H2-GPU-P1-CLOSEOUT-01",
+  "status": "STOP_IMPLEMENTATION_OPTIMIZATION",
+  "P0": "done with plan1.1",
+  "P1": "not passed: minimum closed-loop learnability unmet after one correction",
+  "A_implementation_verdict": "optimization / current width32 eight-step regression-ranking implementation stopped",
+  "A_scientific_verdict": null,
+  "A_novelty_verdict": null,
+  "human_verdict": null,
+  "P2_entered": false,
+  "B_enabled": false,
+  "C_enabled": false,
+  "resource_shortage": false,
+  "remaining_unexecuted": [
+    "full A/C2 80-case necessary-mechanism comparison",
+    "C4/C5 trained ablations",
+    "real nuScenes/AV2 training and DEV",
+    "independent FINAL",
+    "scene application"
+  ],
+  "reason": "12-task A thin-structure closed loop remains degraded; two fixed DAgger rounds did not improve selected hard FIT objective; stop this implementation per plan6.4/16",
+  "failure_ledger_refs": [
+    "V74-H2-F06",
+    "V74-H2-F07",
+    "V74-H2-F08"
+  ],
+  "failure_ledger_delta": "F06/F07 resolved; F08 closed as implementation optimization limitation, not science or novelty failure",
+  "new_knowledge": "shared hard-event teacher and low parameter error do not ensure stable first-return geometry under the learner own eight-step trajectory",
+  "bounds": "only this width32 training/parameterization; width64, other equivalent-geometry supervision or stronger models untested; no universal impossibility claim"
+}
