@@ -1,5 +1,7 @@
 # WS-V74-CLOSEOUT-01：CLOSED_WITHOUT_VALIDATED_MAIN_METHOD（2026-09-13）
 
+最终精简：当前分支 ZIP 约 **21.5 MB**（原105.25 MB，减少约80%），跟踪文件展开约53.6 MB（原375.9 MB）；两批共307个资产、原文件322.49 MB已归档。全部代码/配置/Markdown、失败查询索引和V7.4报告图保留。旧下载包不会自动变小，需重新下载当前分支；完整 Git 历史保持，未强推改写。
+
 仓库资产清理完成：241 个大表/渲染场景/编译包已从当前分支移出，原值完整存于仓库外归档并有本地副本；核心代码、文档、报告内嵌图和失败查询索引保留，原始 runs 不删除。见 [归档清单与恢复方法](archives/worldsim_v74_closeout_20260913/README.md)。本次没有新实验；failure_ledger_delta 仍为 F11（追加资产位置），F08–F10 数值不变。
 
 用户明确结束 V7.4。H1 NO_SURVIVOR 保持；H2 当前 ordered 实现关闭，GPU P1/P1.5/P1.6 完成但没有建立经验证的论文主方法。没有新训练、新方法或新科学否定实验。整体 witness-native 假说仍开放，开放问题不代表继续执行授权。
@@ -183,3 +185,5 @@ CPU 实际工作：分离导出 15.04s / RSS 0.375 GiB；最终局部几何导�
 新 AV2 FINAL 仅原始窗口就绪，规范坐标导出与测试待方法冻结阶段；nuScenes 独立新 FINAL 身份限制保留，不把域内 DEV 计为未曝光 test。
 failure_ledger_refs=[V73-F02,V73-F03,V73-F04,V73-F05,V73-F09,V74-F01,V74-F02]；failure_ledger_delta=update V74-F02 CPU workaround, no new science failure。
 证据统一位于 `docs/autoresearch/worldsim_v74/p0/`。[V73 完整台账](archive/2026-09/pre-v74/V73_EXPERIMENTS.md)。
+
+追加精简完成：两批合计移出 307 个批量/生成资产，原始文件共 322.49 MB；两个完整包均已保存远端和本地副本。V7.4 核心图保留，旧论文与 V7.3 非架构图改为按需恢复。 [追加归档](archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md)。

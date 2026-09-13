@@ -27,7 +27,7 @@ free是已观测原首回波前0.2米之外的提前距离，每个来源先除�
 
 原始计数呈现另一种权重：r5 build来源有622个owned early、4477 hit、486 late；completion有364 early、250 hit、747 late。不能混用这些原始计数与日志等权百分比。r5全部67非空表面的最大顶点—片中心距离0.103816m，与固定0.06m切向间隔及有界法向弯曲一致；未使用可训练opacity或无界片半径来增加命中。
 
-![来源分解](../../../autoresearch/worldsim_v73/m2/global/V73_QUERY_PROVENANCE.png)
+[来源分解（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-009)
 
 ## 全部移动Actor，而非按错误挑例
 

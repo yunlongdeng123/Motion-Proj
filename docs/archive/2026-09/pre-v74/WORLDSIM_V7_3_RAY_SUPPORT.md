@@ -104,9 +104,9 @@ r4射线条件吸引改善了测量附近覆盖，但加重物理冲突。相对
 
 训练过程的ray项均值1.807623→1.012918m，横向距离.251593→.130846m、沿束绝对距离.366765→.305871m；coverage .410470→.262036m、hard free .309972→.178250m。每轮抽224163条owned返回，Query梯度中位数29.800581→27.316797，均是随机过程量，不作为固定配对泛化结论。完整414 FIT日志均值hit/early/miss/free/distance/recall=.457606/.304668/.117380/.287443/.097345/.863192；full_track已用作监督，不称独立验证。
 
-![完整配对结果](../../../autoresearch/worldsim_v73/ray_support/V73_RAY_SUPPORT_R4_PAIRS.png)
+[完整配对结果（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-031)
 
-![训练过程](../../../autoresearch/worldsim_v73/ray_support/V73_RAY_SUPPORT_R4_TRAINING.png)
+[训练过程（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-032)
 
 最近面吸引允许选择后方目标附近面，这是目标定义边界；当前总指标还不能证明新增early主要来自遮挡后方正确面，不能提前归因。新项还改变返回加权和有效几何项强度，收益不是纯方向度量因果。主汇总只运行一次，原run与归档failure_delta同步，图已检查。V73-F02补充证据仍active，无新失败ID，F03不因解析miss梯度解除。
 
@@ -209,9 +209,9 @@ WS-V73-Q-V2-01/20260909T123000Z__open-charts-lidar-first-surface-s7304-r6，训�
 
 训练每轮224163条owned束；首面监督153529→161815条，miss吸引70634→62348条。训练均值首面误差.479230→.431779m、miss吸引3.505257→2.058346m，采样和命中集合变化，不是固定配对评价。
 
-![r6配对](../../../autoresearch/worldsim_v73/ray_support/V73_FIRST_SURFACE_R6_PAIRS.png)
+[r6配对（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-027)
 
-![r6训练](../../../autoresearch/worldsim_v73/ray_support/V73_FIRST_SURFACE_R6_TRAINING.png)
+[r6训练（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-028)
 
 固定r6开放chart和首面/miss目标用于最终Joint重接：此选择依据其相对r4明确early改善、相对r3更多hit/更少miss，同时保留tradeoff，并非宣称其全面最优。最终run登记WS-V73-Q-V2-01/20260909T131000Z__open-charts-joint-first-surface-s7304-r7（pending），mode joint、native_surface种子、native-data-weight=1（同原Q-v2联合路径）；64chart/.15/4×4，原coverage+.5beam(.03/res32)+.05box+1first_surface，ray1024/ratio20÷3/RNG7305，event0；相同FIT/cohort/full_track/seed7304/30轮/AdamW1e−5/clip1。fresh M1 DPT初始化，不从r6续训，不新增upper或更换基座。
 
@@ -283,9 +283,9 @@ Joint新增原生种子、DPT多尺度特征、build-depth辅助项，比较整�
 
 训练首面数179962→186091/轮，miss吸引44201→38072；首面项.584286→.453181m、miss项1.760630→1.320796m。DPT梯度中位数447.8159→193.2195，Query34.8176→26.8733，均为变化采样过程量。FIT20日志曾用于监督，不能作独立泛化证据。
 
-![r7配对](../../../autoresearch/worldsim_v73/ray_support/V73_OPEN_JOINT_R7_PAIRS.png)
+[r7配对（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-029)
 
-![r7训练](../../../autoresearch/worldsim_v73/ray_support/V73_OPEN_JOINT_R7_TRAINING.png)
+[r7训练（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-030)
 
 r7汇总已由并行论文任务执行一次（/root/autodl-tmp/paper_r7_summary.log），本任务复用归档，不重复汇总/训练。模型与确认方案已固定：按登记的FINAL-CONFIRMATION-01/20260909T135000Z__fixed-r7-r6-external20-r1顺序运行r7/r6/R8/native融合/PCA，随后同固定背景场景评价；不根据新日志调参或再启动候选。当前20新日志的模型质量仍未读取，确认待启动。跨域和背景问题作为结果边界，不能预先宣布论文主假设全部成功。
 

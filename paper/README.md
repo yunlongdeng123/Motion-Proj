@@ -1,3 +1,7 @@
+> 2026-09-13：旧论文/科学绘图资产按[追加归档](../docs/archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md)移出当前分支；源文件保留，复现前按需恢复插图或表面。
+
+> 2026-09-13：本目录的大表/生成资产已按清单移出 Git；需要逐例数据时先查[完整归档与恢复方法](../docs/archives/worldsim_v74_closeout_20260913/README.md)。下方历史路径保留作定位，当前目录未必包含全部旧文件。
+
 # 可查询规范刚体表面：V7.3 研究稿
 
 当前入口 main.pdf / main.tex 已于 2026-09-10 更新为 **Queryable Canonical Surfaces from Sparse Driving Observations**。这是证据与方法开发稿，使用 CVPR 模板作本地阅读；不宣称已满足投稿页数或完成全部方法验证。

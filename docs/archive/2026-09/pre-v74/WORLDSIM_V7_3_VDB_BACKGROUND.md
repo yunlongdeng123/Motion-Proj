@@ -55,7 +55,7 @@ r5−r9：early+15.331pp [+7.145,+25.152]、free+0.108405m [+0.039898,+0.180905]
 
 移动组6657束、仅2日志：r5 hit17.248%、early52.840%、miss21.800%、free0.301967m；r9为10.607%/2.674%/78.733%/0.011671m。不同方法仍在新增支持与正确首交点间存在明显权衡，少量日志不承载普遍动态场景结论。
 
-![背景与Actor分项](../../../autoresearch/worldsim_v73/m4/V73_VDB_BACKGROUND.png)
+[背景与Actor分项（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-011)
 
 ## 后续位置与证据
 

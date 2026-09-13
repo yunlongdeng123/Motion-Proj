@@ -56,9 +56,9 @@ Joint新增原生种子、DPT多尺度特征、build-depth辅助项，比较整�
 
 训练首面数179962→186091/轮，miss吸引44201→38072；首面项.584286→.453181m、miss项1.760630→1.320796m。DPT梯度中位数447.8159→193.2195，Query34.8176→26.8733，均为变化采样过程量。FIT20日志曾用于监督，不能作独立泛化证据。
 
-![r7配对](../../../autoresearch/worldsim_v73/ray_support/V73_OPEN_JOINT_R7_PAIRS.png)
+[r7配对（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-029)
 
-![r7训练](../../../autoresearch/worldsim_v73/ray_support/V73_OPEN_JOINT_R7_TRAINING.png)
+[r7训练（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-030)
 
 ## 最终独立AV2确认
 
@@ -120,7 +120,7 @@ Joint新增原生种子、DPT多尺度特征、build-depth辅助项，比较整�
 
 相对R8，Joint大幅减少missing，却显著增加early/free，hit与距离/recall增量不确定；相对native融合/PCA，覆盖与hit提升也伴随更严重early/free。故不能挑选较弱基线或只报告missing，将最终方法包装为全面胜出。距离为稀疏测量到表面的单向、条件指标，不是完整真值Chamfer；UNKNOWN不作FREE。
 
-![外部配对](../../../autoresearch/worldsim_v73/final_confirmation/V73_FINAL_EXTERNAL20_PAIRS.png)
+[外部配对（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-001)
 
 ## 失败解释与结论边界
 

@@ -64,7 +64,7 @@ Query平均hit+1.037pp，但区间跨0；free−.105845m与early−4.351pp的区
 
 hit−9.409pp、miss+8.312pp，均在5日志同方向且区间不跨0。early、free、距离、recall区间跨0；不把free均值+.026254m写成显著退化，也不把召回均值+4.275pp写成可靠优势。视觉联合通路尚未超越同目标的LiDAR控制；该通路比较不是仅视觉token的因果检验。
 
-![保存的开发配对](../../../autoresearch/worldsim_v73/m2/global/V73_JOINT_R12_PAIRS.png)
+[保存的开发配对（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-005)
 
 ## 初始化、FIT与训练过程
 
@@ -84,7 +84,7 @@ hit−9.409pp、miss+8.312pp，均在5日志同方向且区间不跨0。early、
 
 每轮346个有native测量的Actor、173972点；14个无相机Actor保留LiDAR路径且正常Query更新。过程损失下降不等于固定观测或开发泛化提升。
 
-![训练过程](../../../autoresearch/worldsim_v73/m2/global/V73_JOINT_R12_TRAINING.png)
+[训练过程（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-006)
 
 FIT最终hit/early/miss/free/distance/recall为.269072/.047431/.612011/.041092/.127853/.801617（414对象/20日志）。full_track包含FIT评价时刻标签，不能作为泛化结果。移动DEV仍9 Actor/2日志、3无owned/1空表面；hit .122691、miss .768534、recall .888962；其中一日志仅1条owned返回，不能支持稳健动态优势，也不事后删除。
 

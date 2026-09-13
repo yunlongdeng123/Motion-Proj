@@ -1,5 +1,7 @@
 # V7.4 已收尾：CLOSED_WITHOUT_VALIDATED_MAIN_METHOD（2026-09-13）
 
+最终精简：当前分支 ZIP 约 **21.5 MB**（原105.25 MB，减少约80%），跟踪文件展开约53.6 MB（原375.9 MB）；两批共307个资产、原文件322.49 MB已归档。全部代码/配置/Markdown、失败查询索引和V7.4报告图保留。旧下载包不会自动变小，需重新下载当前分支；完整 Git 历史保持，未强推改写。
+
 仓库资产清理完成：241 个大表/渲染场景/编译包已从当前分支移出，原值完整存于仓库外归档并有本地副本；核心代码、文档、报告内嵌图和失败查询索引保留，原始 runs 不删除。见 [归档清单与恢复方法](archives/worldsim_v74_closeout_20260913/README.md)。本次没有新实验；failure_ledger_delta 仍为 F11（追加资产位置），F08–F10 数值不变。
 
 用户明确结束 V7.4。H1 NO_SURVIVOR 保持；H2 当前 ordered 实现关闭，GPU P1/P1.5/P1.6 完成但没有建立经验证的论文主方法。没有新训练、新方法或新科学否定实验。整体 witness-native 假说仍开放，开放问题不代表继续执行授权。
@@ -45,3 +47,5 @@ failure_ledger_delta: F06合成角色区间修复，F07初始GPU实现修复，F
 资源收口：[实际进程记录](autoresearch/worldsim_v74_h2/gpu_p1/resource_closeout.json)。无研究worker，未配置自动恢复；该记录是关机前的资源快照。数据盘剩余约183.75GiB。
 
 关机安排（2026-09-12用户明确授权）：研究已按上述边界收口，CPU/GPU无研究任务、无研究cron或tmux。当前文档提交推送后立即执行 `shutdown -h now`，不自动重启研究。见[关机前记录](autoresearch/worldsim_v74_h2/gpu_p1/shutdown_preparation.json)，命令结果保存在本地任务对话。
+
+追加精简完成：两批合计移出 307 个批量/生成资产，原始文件共 322.49 MB；两个完整包均已保存远端和本地副本。V7.4 核心图保留，旧论文与 V7.3 非架构图改为按需恢复。 [追加归档](archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md)。
