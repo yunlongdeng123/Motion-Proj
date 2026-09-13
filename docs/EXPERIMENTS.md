@@ -1,3 +1,9 @@
+# P1.5 forensic 里程碑：WS-V74-H2-P15-01 / switching-margin-r1
+
+2026-09-13：先完成 F08 人工复审更新，随后审计已有 12 FIT 任务的 A/C2 八步轨迹。输入来自 GPU P1 原 run；不启新训练，不把诊断 FIT 当独立验证。记录每条首次 HIT→EARLY、真实首面归属、三种 margin、同父状态教师→学习器插值；拓扑不匹配单列。
+
+failure_ledger_refs=[V74-H2-F03,V74-H2-F05,V74-H2-F08]；failure_ledger_delta=F08 人工复审；[预先定义](WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md)。状态 RUNNING；以下为历史记录。
+
 # 关机交接：2026-09-12
 
 用户授权V74收口后关闭AutoDL；研究任务和相关调度均已结束，代码/文档在当前分支提交推送后执行shutdown。实验结论仍为STOP_IMPLEMENTATION_OPTIMIZATION，未进入真实大训练。failure_ledger_delta=none（仅电源状态变更）。[关机前记录](autoresearch/worldsim_v74_h2/gpu_p1/shutdown_preparation.json)。

@@ -1,3 +1,9 @@
+# V74-H2 P1.5：存量失败轨迹审计中（2026-09-13）
+
+用户已授权在当前开机环境继续 P1.5；仅分析已保存 A/C2/教师轨迹，必要时重算同状态的冻结教师动作，不训练模型。当前 A 实现仍关闭；人工复审约 3/6 Weak Reject。witness-native operator 假设开放，ordered-chain 和 novel representation 均无必要性证据。
+
+[审计定义](WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md)；[人工复审 F08](research_failures/entries/V74-H2-F08.md)。failure_ledger_delta=F08 人工复审与 claim 边界。P2/B/C 均未进入。以下为历史状态。
+
 # V74-H2 当前状态：STOP_IMPLEMENTATION_OPTIMIZATION
 
 2026-09-12，执行计划1.1后停止当前A训练实现。资源充足；12任务自身八步几何闭环未满足最小能力，一次固定DAgger修正未改善A最佳闭环目标。按计划6.4/16停止该实现，不进入P2。

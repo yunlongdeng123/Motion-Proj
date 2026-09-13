@@ -20,3 +20,5 @@ H2 计划1.1唯一新命题：在相同表示、witness信息和容量下，让p
 查询示例：`python scripts/query_research_failures.py --id V74-F09 --detail --limit 2`。历史有重复阶段条目时优先跟随版本最终报告；不要把旧权限、资源或 SHA 门禁恢复为当前规则。
 
 H2计划1.1当前实现：硬事件教师可达，但width32八步学习器在已训练薄结构的自身轨迹仍退化，一次DAgger聚合没有改善A最佳目标，按优化限制停止。关闭的是直接扩大这套训练实现的默认路线；witness-native科学假设、其他学习参数化仍开放，不能据此自动转B。入口V74-H2-F08。
+
+2026-09-13 人工复审：见 [F08](entries/V74-H2-F08.md)。关闭当前 A 实现的继续调参路线；不关闭 witness-native operator。C1 已排除这些合成例本身要求该机制的说法；ordered-chain 和新 representation 均缺必要性证据。P1.5 只查失效来源，不自动立项 ownership-stable 方法。

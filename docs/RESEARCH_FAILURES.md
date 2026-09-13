@@ -1,6 +1,6 @@
 # Research Failures：渐进读取入口
 
-当前路线：V74-H2 计划1.1 / 当前实现因优化限制停止；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
+当前路线：V74-H2 当前 A 实现关闭，P1.5 已获授权做存量轨迹审计；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
 
 | 要解决的问题 | 从哪里读 |
 |---|---|
@@ -23,7 +23,7 @@ python scripts/query_research_failures.py --record RF0013 --detail --max-lines 8
 
 迁移：原 14485 行 → 80 个历史分片、1084 条可查询记录；正文顺序完整保留，详见 [迁移清单](research_failures/migration.json)。旧哈希/门控要求是历史文本，**不适用于当前工作**；当前用户要求和 [scaling law](../auto-research_scaling_law.md) 优先。
 
-下半场CPU已收口：V74-H2-F01（数据）、F02（迁移/路径修复）、F03（数值）、F04（预算规范化修复）、F05（远层排序/特征截断修复）；尚无A的科学或新颖性裁决。人工verdict=null。H1最终短卡优先返回，旧阶段记录继续可查。
+历史 CPU 里程碑：下半场CPU已收口：V74-H2-F01（数据）、F02（迁移/路径修复）、F03（数值）、F04（预算规范化修复）、F05（远层排序/特征截断修复）；尚无A的科学或新颖性裁决。人工verdict=null。H1最终短卡优先返回，旧阶段记录继续可查。
 
 2026-09-12恢复GPU P1：继承F03/F05数值与完整信息边界，当前无新裁决。计划1.1的witness算子不得复活已关闭的责任求解/提议挑片路线。
 
@@ -32,3 +32,5 @@ GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU�
 最终解释以[GPU P1报告](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)为准；不是科学/新颖性裁决，不生成H2全类别NO_SURVIVOR。
 
 2026-09-12用户授权收口后关机；无新增研究失败，F08优化限制结论保持，关机不是资源不足或新的科学裁决。
+
+2026-09-13 人工复审：当前 A 实现关闭、约 3/6 Weak Reject；witness-native operator 假设仍开放。最新复审见 [F08](research_failures/entries/V74-H2-F08.md)，[P1.5 审计定义](WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md)。历史人工 verdict=null 不代表本次复审缺失。
