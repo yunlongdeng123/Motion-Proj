@@ -1,0 +1,33 @@
+{
+  "task": "WS-V74-H2-P15-01",
+  "run": "switching-margin-r1",
+  "source": "/root/autodl-tmp/runs/worldsim_v74_h2/WS-V74-H2-GPU-P1-01",
+  "output": "/root/autodl-tmp/runs/worldsim_v74_h2/WS-V74-H2-P15-01/20260913__switching-margin-r1",
+  "cases": [
+    "grazing_thin-00",
+    "grazing_thin-01",
+    "grazing_thin-02",
+    "missing_support-00",
+    "missing_support-01",
+    "missing_support-02",
+    "multilayer-00",
+    "multilayer-01",
+    "multilayer-02",
+    "shared_support-00",
+    "shared_support-01",
+    "shared_support-02"
+  ],
+  "models": {
+    "A": "20260912__A-dagger12-r1",
+    "C2": "20260912__C2-dagger12-r1"
+  },
+  "training": false,
+  "epsilon_m": 0.2,
+  "role": "exposed FIT diagnostics",
+  "alpha_grid": "1001 uniform plus .0001/.0003; first observed bracket bisected 16 times",
+  "failure_ledger_refs": [
+    "V74-H2-F03",
+    "V74-H2-F05",
+    "V74-H2-F08"
+  ]
+}

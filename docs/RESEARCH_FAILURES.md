@@ -34,3 +34,5 @@ GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU�
 2026-09-12用户授权收口后关机；无新增研究失败，F08优化限制结论保持，关机不是资源不足或新的科学裁决。
 
 2026-09-13 人工复审：当前 A 实现关闭、约 3/6 Weak Reject；witness-native operator 假设仍开放。最新复审见 [F08](research_failures/entries/V74-H2-F08.md)，[P1.5 审计定义](WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md)。历史人工 verdict=null 不代表本次复审缺失。
+
+P1.5 分析已完成：[F09](research_failures/entries/V74-H2-F09.md) 给出连续漂移而非薄结构换面的证据；报告整理中。A 当前实现关闭，未新立项。

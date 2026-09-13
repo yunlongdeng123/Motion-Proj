@@ -1,3 +1,7 @@
+# P1.5 分析里程碑：DONE / switching-margin-r1
+
+2026-09-13：存量 216 状态查询比较、70 条首次退化、同父状态教师插值完成；无训练。A 薄结构 52/52 是同片连续前移，C2 12 条短暂同类退化后恢复。当前 ordered 实现关闭；未满足新方法立项条件。failure_ledger_delta=V74-H2-F09；[证据卡](research_failures/entries/V74-H2-F09.md)。以下是历史里程碑。
+
 # P1.5 forensic 里程碑：WS-V74-H2-P15-01 / switching-margin-r1
 
 2026-09-13：先完成 F08 人工复审更新，随后审计已有 12 FIT 任务的 A/C2 八步轨迹。输入来自 GPU P1 原 run；不启新训练，不把诊断 FIT 当独立验证。记录每条首次 HIT→EARLY、真实首面归属、三种 margin、同父状态教师→学习器插值；拓扑不匹配单列。
