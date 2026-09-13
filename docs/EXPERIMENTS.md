@@ -1,3 +1,13 @@
+# 当前：V8.1 GPU_PILOT_PASSED / 双3090并行（2026-09-13）
+
+修正记录：[V81-F03](research_failures/entries/V81-F03.md)。首轮DVGT导出遗漏官方RDF→FLU与gt_scale_factor=0.1的还原，并误用LiDAR时间戳ego pose；已按官方合同修复，39项原生forward无需重跑，错误导出另存。新增坐标/尺度/时间戳测试通过；此为实现错误，不能作为模型badcase。两主模型队列继续独立运行。
+
+用户已开启2×RTX3090并授权继续，DVGT固定GPU0、VGGT固定GPU1独立推理。task=WS-V81-GPU-P2-01；run=20260913-dual3090-r1；seed=8101。首例full6已完成：DVGT 10.638GiB / 0.865s，VGGT 7.535GiB / 1.011s（前向时间，不含模型加载）。28核/180GiB cgroup；保留官方完整FP32权重，BF16 autocast。没有训练或V8.2方法开发。
+
+冻结r2的408任务主队列接续；full6 DISCOVERY，稀疏/重排 VIEW_DIAGNOSTIC，合成纹理 SYNTHETIC_DIAGNOSTIC。完整自然四格匹配组仍为0。VGGT首例camera-baseline scale CV=0.691，必须分开审计全局尺度不稳定与局部形状误差。人工verdict=null；尚无可推广failure结论。资源不需扩容；不沿用V74关机指令。
+
+failure_ledger_refs=V81-F01/F02、V74-H2-F09/F10/F11；failure_ledger_delta=V81-F03（导出合同修正）。证据：`/root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/registration.json`及两模型首例result.json。以下为冻结历史。
+
 # 当前：V8.1 CPU_COMPLETE_WAIT_GPU（2026-09-13）
 
 WS-V81-CPU-01 / 20260913-cpu-r2；稀疏视角×低纹理failure discovery。27日志、34场景、68窗口、6120 ROI、1527几何候选；8案例卡、49视觉复核，36混杂排除。同日志/语义/距离完整四格匹配组=0，不能计算自然H1交互效应。全部DISCOVERY，AV2 reserve质量保持封存。

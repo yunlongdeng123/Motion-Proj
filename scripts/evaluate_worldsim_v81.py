@@ -15,7 +15,7 @@ def matched_rows(rows,blocks):
     return selected
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--atlas',required=True);p.add_argument('--prediction-root',required=True);p.add_argument('--out',required=True)
+    p=argparse.ArgumentParser();p.add_argument('--atlas',required=True);p.add_argument('--prediction-root',required=True);p.add_argument('--out',required=True);p.add_argument('--no-figures',action='store_true')
     a=p.parse_args();atlas=Path(a.atlas);results=[];registry=[json.loads(l) for l in (atlas/'v81_roi_registry.jsonl').read_text().splitlines()]
     selected={r['roi_id'] for r in json.loads((atlas/'case_selection.json').read_text())};panels={}
     blocks=json.loads((atlas/'matched_cohorts.json').read_text())
@@ -30,13 +30,18 @@ def main():
             A=np.array(views[roi['camera']]['original_to_network_pixel_center']);uv=np.c_[ref['uv'],np.ones(len(ref['uv']))]@A.T
             sampled=map_coordinates(pred,[uv[:,1],uv[:,0]],order=1,mode='constant',cval=np.nan)
             metrics=depth_metrics(sampled,ref['depth_z']);row={'roi_id':roi['roi_id'],'log':roi['log'],'scene':roi['scene'],'cohort':roi['cohort'],'semantic':roi['semantic'],'method':r['method'],'variant':r['variant'],'error':metrics['mae_m'],'role':r['role'],'reference_status':roi['reference_status'],**metrics}
-            row.update(visual_screen=roi.get('visual_screen','UNREVIEWED'),scientific_acceptance=roi.get('scientific_acceptance','NOT_ESTABLISHED'))
+            row.update(visual_screen=roi.get('visual_screen','UNREVIEWED'),scientific_acceptance=roi.get('scientific_acceptance','NOT_ESTABLISHED'),window=r['window'],output_key=rp.parent.name,result_path=str(rp),anchor_camera=r.get('anchor_camera'),texture_case=r.get('texture_case'),metric_scale=r['metric_scale'],scale_cv=r['camera_baseline_scale_cv'])
             valid=np.isfinite(sampled)&(sampled>0);rays=np.c_[ref['uv'],np.ones(len(ref['uv']))]@np.linalg.inv(ref['K']).T
             points=rays[valid]*sampled[valid,None];fit=plane_fit(points)
             row['surface_space']='depth unprojected with dataset intrinsics; not native Gaussian mesh'
             row['point_to_plane_m']=float(np.mean(abs((points-ref['center'])@ref['normal']))) if len(points) else None
             row['normal_error_deg']=float(np.degrees(np.arccos(np.clip(abs(fit['normal']@ref['normal']),0,1)))) if fit else None
             row['plane_bending_p95_m']=float(np.quantile(fit['residual'],.95)) if fit else None
+            if valid.sum():
+                # 仅用于区分局部形状误差与整体尺度偏移；不改变任何主深度指标。
+                ld=np.log(sampled[valid]/ref['depth_z'][valid]);row['log_shape_rmse_diagnostic']=float(np.sqrt(np.mean((ld-ld.mean())**2)))
+                row['median_depth_ratio_diagnostic']=float(np.median(sampled[valid]/ref['depth_z'][valid]))
+            else:row.update(log_shape_rmse_diagnostic=None,median_depth_ratio_diagnostic=None)
             row['render_metrics']=None
             results.append(row)
             if roi['roi_id'] in selected:
@@ -51,7 +56,7 @@ def main():
     summary={'rows':len(results),'status':'WAIT_MODEL_OUTPUTS' if not results else 'DISCOVERY_ONLY_PENDING_REFERENCE_SPOTCHECK_AND_MATCHING','frozen_matched_blocks':len(blocks),'log_interactions':strata,'promotion':'NO_GO','reason':'No automatic V8.2 promotion; requires confirmed reference, causal controls, independent logs and headroom'}
     (out/'summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary))
     # 实际输出存在才生成模型对比图，选择规则沿用冻结case_selection。
-    if panels:
+    if panels and not a.no_figures:
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt

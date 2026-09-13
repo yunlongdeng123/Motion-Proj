@@ -47,17 +47,27 @@ def scale_from_cameras(extrinsics,views):
     if not ratios:raise ValueError('metric scale is unidentified from available camera baselines')
     return float(np.median(ratios)),float(np.std(ratios)/np.mean(ratios))
 
-def main():
+_MODEL_CACHE={}
+
+def dvgt_camera_points(points,first_view,target_view):
+    # 官方 default_dataset.yaml: gt_scale_factor=0.1；base_loader.py: ego RDF。
+    # nuScenes 标定自车坐标为 FLU，第一时刻以首个输入相机的 ego pose 为准。
+    rdf_to_flu=np.array([[0,0,1],[-1,0,0],[0,-1,0]],dtype=float)
+    if 'world_from_ego_camera' not in first_view:raise ValueError('DVGT requires camera-timestamp ego pose; enrich manifest first')
+    T=np.linalg.inv(target_view['world_from_camera'])@np.array(first_view['world_from_ego_camera'])
+    return (points.astype('float64')/.1)@rdf_to_flu.T@T[:3,:3].T+T[:3,3]
+
+def main(argv=None):
     p=argparse.ArgumentParser();p.add_argument('--method',choices=REPOS,required=True);p.add_argument('--manifest',required=True)
     p.add_argument('--variant',choices=['full6','sparse3','sparse2','temporal18'],default='full6');p.add_argument('--out',required=True)
     p.add_argument('--execute',action='store_true');p.add_argument('--texture-case',help='JSON containing per-view intervention images; synthetic diagnostics only')
     p.add_argument('--anchor-camera',help='Keep the evaluated ROI camera in all view subsets')
-    a=p.parse_args();m=json.loads(Path(a.manifest).read_text());views=select_views(m,a.variant,a.anchor_camera)
+    a=p.parse_args(argv);m=json.loads(Path(a.manifest).read_text());views=select_views(m,a.variant,a.anchor_camera)
     if a.texture_case:
         tx=json.loads(Path(a.texture_case).read_text());overrides=tx['image_overrides']
         views=[dict(v,image=overrides.get(v['image'],v['image'])) for v in views]
     role='SYNTHETIC_DIAGNOSTIC' if a.texture_case else 'DISCOVERY' if a.variant=='full6' and not a.anchor_camera else 'VIEW_DIAGNOSTIC'
-    plan={'method':a.method,'variant':a.variant,'window':m['window_id'],'n_images':len(views),'anchor_camera':a.anchor_camera,'checkpoint':str(WEIGHTS[a.method]),'role':role,'heldout_access':False}
+    plan={'method':a.method,'variant':a.variant,'window':m['window_id'],'n_images':len(views),'anchor_camera':a.anchor_camera,'checkpoint':str(WEIGHTS[a.method]),'role':role,'heldout_access':False,'texture_case':a.texture_case,'manifest':a.manifest}
     if not a.execute:print(json.dumps(plan,indent=2));return
     import torch
     if not torch.cuda.is_available():raise RuntimeError('WAIT_GPU: no GPU; CPU inference is intentionally disabled')
@@ -65,18 +75,34 @@ def main():
     if (out/'result.json').exists():raise FileExistsError('completed run exists; select a new output run')
     out.mkdir(parents=True,exist_ok=True);repo=REPOS[a.method];sys.path.insert(0,str(repo));os.chdir(repo)
     if a.method=='dvgt':
-        from dvgt.models.architectures.dvgt1 import DVGT1
         from dvgt.utils.load_fn import load_and_preprocess_images
-        # 官方完整权重含 DINO；只禁用构造阶段冗余下载，随后 strict=True 覆盖全部参数。
-        hubload=torch.hub.load
-        def local_hub(*args,**kwargs):
-            if args and 'dinov3' in str(args[0]):kwargs['pretrained']=False;kwargs.pop('weights',None)
-            return hubload(*args,**kwargs)
-        torch.hub.load=local_hub
-        try:model=DVGT1(dino_v3_weight_path=None,frames_chunk_size=1)
-        finally:torch.hub.load=hubload
-        state=torch.load(WEIGHTS[a.method],map_location='cpu',weights_only=True,mmap=True)
+    elif a.method=='vggt':
+        from vggt.utils.load_fn import load_and_preprocess_images
+    else:
+        from dggt.utils.load_fn import load_and_preprocess_images
+    if a.method not in _MODEL_CACHE:
+        print(json.dumps({'stage':'LOAD_MODEL','method':a.method}),flush=True)
+        if a.method=='dvgt':
+            from dvgt.models.architectures.dvgt1 import DVGT1
+            hubload=torch.hub.load
+            def local_hub(*args,**kwargs):
+                if args and 'dinov3' in str(args[0]):kwargs['pretrained']=False;kwargs.pop('weights',None)
+                return hubload(*args,**kwargs)
+            torch.hub.load=local_hub
+            try:model=DVGT1(dino_v3_weight_path=None,frames_chunk_size=1)
+            finally:torch.hub.load=hubload
+            state=torch.load(WEIGHTS[a.method],map_location='cpu',weights_only=True,mmap=True)
+        elif a.method=='vggt':
+            from vggt.models.vggt import VGGT
+            from safetensors.torch import load_file
+            model=VGGT();state=load_file(str(WEIGHTS[a.method]))
+        else:
+            from dggt.models.vggt import VGGT
+            model=VGGT();state=torch.load(WEIGHTS[a.method],map_location='cpu',weights_only=True,mmap=True)
         model.load_state_dict(state,strict=True);del state
+        _MODEL_CACHE[a.method]=model.eval().to('cuda')
+    model=_MODEL_CACHE[a.method]
+    if a.method=='dvgt':
         temp=out/'native_input';temp.mkdir(exist_ok=True);sample_order=list(dict.fromkeys(v['sample_token'] for v in views))
         for v in views:
             fi=sample_order.index(v['sample_token']);d=temp/f'frame_{fi}';d.mkdir(exist_ok=True)
@@ -84,19 +110,10 @@ def main():
             if not target.exists():target.symlink_to(v['image'])
         images=load_and_preprocess_images(str(temp),mode='crop').to('cuda')
     else:
-        if a.method=='vggt':
-            from vggt.models.vggt import VGGT
-            from vggt.utils.load_fn import load_and_preprocess_images
-            from safetensors.torch import load_file
-            model=VGGT();state=load_file(str(WEIGHTS[a.method]))
-        else:
-            from dggt.models.vggt import VGGT
-            from dggt.utils.load_fn import load_and_preprocess_images
-            model=VGGT();state=torch.load(WEIGHTS[a.method],map_location='cpu',weights_only=True,mmap=True)
-        model.load_state_dict(state,strict=True);del state
         images=load_and_preprocess_images([v['image'] for v in views],mode='crop').to('cuda')
     model=model.eval().to('cuda');torch.cuda.reset_peak_memory_stats();started=time.time()
     dtype=torch.bfloat16 if torch.cuda.get_device_capability()[0]>=8 else torch.float16
+    print(json.dumps({'stage':'FORWARD','method':a.method,'window':m['window_id'],'variant':a.variant,'shape':list(images.shape)}),flush=True)
     with torch.inference_mode(),torch.autocast('cuda',dtype=dtype):pred=model(images)
     torch.cuda.synchronize();runtime=time.time()-started
     # 保存原生 tensor，不按置信度丢弃难点。renderer 单独消费 DGGT gs_map。
@@ -115,14 +132,12 @@ def main():
         if v['sample_token']!=m['target_sample']:continue
         size=list(Image.open(v['image']).size);net_size,A=pixel_affine(size,a.method)
         if a.method=='dvgt':
-            # DVGT points 位于第一输入时刻 ego frame。该变换来自输入 calibration contract。
-            if 'world_from_ego' not in views[0]:raise ValueError('input manifest lacks first-frame world_from_ego')
             points=saved['points'][0].reshape(-1,*saved['points'].shape[-3:])[i]
-            T=np.linalg.inv(np.array(v['world_from_camera']))@np.array(views[0]['world_from_ego'])
-            xyz=points@T[:3,:3].T+T[:3,3];depth=xyz[...,2]
+            xyz=dvgt_camera_points(points,views[0],v);depth=xyz[...,2]
         else:depth=saved['depth'][0,i,...,0]*scale
         np.save(out/(v['camera']+'_depth_z_m.npy'),depth.astype('float32'))
         records.append({'camera':v['camera'],'original_wh':size,'network_wh':net_size,'original_to_network_pixel_center':A})
-    result={**plan,'status':'DONE','elapsed_s':runtime,'peak_gpu_allocated_gib':torch.cuda.max_memory_allocated()/2**30,'metric_scale':scale,'camera_baseline_scale_cv':scale_cv,'scale_source':'native_metric' if a.method=='dvgt' else 'dataset_camera_baselines_no_lidar', 'views':records,'render_status':'NOT_RENDERED','failure_codes':[]}
+    result={**plan,'status':'DONE','elapsed_s':runtime,'peak_gpu_allocated_gib':torch.cuda.max_memory_allocated()/2**30,'metric_scale':scale,'camera_baseline_scale_cv':scale_cv,'scale_source':'native_metric' if a.method=='dvgt' else 'dataset_camera_baselines_no_lidar', 'views':records,'render_status':'NOT_RENDERED','failure_codes':[],'runtime':{'torch':torch.__version__,'cuda':torch.version.cuda,'gpu':torch.cuda.get_device_name(),'visible_devices':os.environ.get('CUDA_VISIBLE_DEVICES'),'precision':str(dtype),'strict_checkpoint':True},'native_shapes':{k:list(v.shape) for k,v in saved.items()}}
+    if a.method=='dvgt':result.update(export_contract='dvgt_rdf_scale0.1_camera_ego_v1',metric_scale=10.,scale_source='official_gt_scale_factor_0.1_no_lidar_fit')
     (out/'result.json').write_text(json.dumps(result,indent=2));print(json.dumps(result),flush=True)
 if __name__=='__main__':main()

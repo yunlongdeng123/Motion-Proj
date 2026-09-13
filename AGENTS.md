@@ -1,3 +1,7 @@
+# 最新用户授权：V8.1 GPU阶段（2026-09-13）
+
+2×RTX3090已就绪；DVGT/GPU0、VGGT/GPU1独立并行推理，继续科学发现与可视化。无卡阶段停止要求已由本次开卡授权接续。V8.2不开发；不继承V74关机指令。当前task WS-V81-GPU-P2-01。
+
 # 当前：V8.1 稀疏视角 × 低纹理失效发现（2026-09-13）
 
 用户新授权执行 docs/WorldSim_V81_SparseView_LowTexture_Failure_Discovery_Plan.md。只做科学发现、badcase/goodcase与可视化对比；先完成所有可行的无卡工作，停止并提示用户开GPU。V8.2才研究方法；不重开V7.4 family。当前分支 research/worldsim-v8.1-sparseview-lowtexture。
