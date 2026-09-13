@@ -1,3 +1,9 @@
+# GPU阶段补记（2026-09-13）
+
+DVGT-1与raw VGGT均已各完成220项官方权重推理，实际Torch2.4.1+cu121/BF16/3090环境已运行6图和18图；不宣称作者整套评测复现。DVGT导出须除gt_scale_factor=0.1、RDF→FLU并使用首输入相机ego时间戳，修正见[V81-F03](research_failures/entries/V81-F03.md)。raw VGGT相机基线定尺度与区域外INPUT LiDAR尺度控制分表。DGGT仍只有CPU合同与权重准备，没有本轮GPU/renderer结果；其他不可运行方法没有新增复现。
+
+[当前科学报告](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)。以下为CPU方法审计历史。
+
 # V8.1 方法可执行性审计
 
 2026-09-13；task `WS-V81-CPU-01`。这里的“代码/权重公开”不等于已经通过本机 GPU 推理验证。原计划中的方法级 failure 全部仍为待检验假说。

@@ -1,0 +1,43 @@
+{
+  "task_id": "WS-V81-GPU-P2-01",
+  "run_id": "20260913-dual3090-r1",
+  "status": "P2_PRIMARY_DISCOVERY_COMPLETE",
+  "expected_jobs": 440,
+  "actual_jobs": 440,
+  "missing_jobs": [],
+  "unexpected_jobs": [],
+  "errors": [],
+  "roles": {
+    "DISCOVERY": 136,
+    "VIEW_DIAGNOSTIC": 296,
+    "SYNTHETIC_DIAGNOSTIC": 8
+  },
+  "dvgt_fixed_export_contract": 220,
+  "metric_rows": 6324,
+  "main_full6_coverage": {
+    "dvgt": {
+      "rows": 1527,
+      "coverage_below_0_9": 0,
+      "mae_unavailable": 0
+    },
+    "vggt": {
+      "rows": 1527,
+      "coverage_below_0_9": 0,
+      "mae_unavailable": 0
+    }
+  },
+  "validation": "7 geometry checks and 1 native coordinate/scale/timestamp regression passed",
+  "promotion": "NO_GO_PENDING_RELIABLE_FAILURE",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V81-F01",
+    "V81-F02",
+    "V81-F03"
+  ],
+  "failure_ledger_delta": "V81-F04",
+  "completed_at": "2026-09-13T15:37:32.826449",
+  "automatic_resume": false,
+  "shutdown_performed": false,
+  "gpu_snapshot": "index, name, memory.used [MiB], utilization.gpu [%]\n0, NVIDIA GeForce RTX 3090, 1 MiB, 0 %\n1, NVIDIA GeForce RTX 3090, 1 MiB, 0 %\n",
+  "active_research_workers": []
+}

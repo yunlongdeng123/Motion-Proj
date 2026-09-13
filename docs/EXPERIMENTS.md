@@ -1,3 +1,11 @@
+# 当前：V8.1 P2_PRIMARY_DISCOVERY_COMPLETE（2026-09-13）
+
+WS-V81-GPU-P2-01：DVGT/GPU0、VGGT/GPU1各220项真实推理，共440；6324条ROI评价，31张图，15个posthoc唯一ROI视觉复核。峰值12.60/8.20GiB，2×3090足够。7项几何+1项原生坐标尺度时间戳检查通过；无训练、无自动恢复、未关机。
+
+DVGT公共相机对照没有一致稀疏化退化；最大4个非地面C11日志候选含卡车/网格/植被/遮挡混杂，灰墙有0.103m goodcase。raw VGGT大误差部分被区域外INPUT LiDAR全局尺度控制解释：招牌3图22.130→1.105m，低纹理墙7.678→0.413m。自然完整四格=0，未触发V8.2，NO_GO_PENDING_RELIABLE_FAILURE。H2–H5方法假设未检验，独立AV2质量未查看，人工verdict=null。
+
+failure_ledger_refs=V81-F01/F02/F03；failure_ledger_delta=V81-F04。[科学报告与架构](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)、[图谱](WORLDSIM_V8_1_FAILURE_ATLAS.md)、[接续](WORLDSIM_V8_1_GPU_HANDOFF.md)。以下为冻结历史。
+
 # 当前：V8.1 GPU_PILOT_PASSED / 双3090并行（2026-09-13）
 
 修正记录：[V81-F03](research_failures/entries/V81-F03.md)。首轮DVGT导出遗漏官方RDF→FLU与gt_scale_factor=0.1的还原，并误用LiDAR时间戳ego pose；已按官方合同修复，39项原生forward无需重跑，错误导出另存。新增坐标/尺度/时间戳测试通过；此为实现错误，不能作为模型badcase。两主模型队列继续独立运行。

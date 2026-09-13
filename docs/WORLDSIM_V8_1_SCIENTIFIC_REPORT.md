@@ -1,73 +1,85 @@
-# V8.1 无卡阶段报告：候选图谱完成，模型失效待检验
+# V8.1：双3090推理与失效发现报告
 
-2026-09-13；`WS-V81-CPU-01 / 20260913-cpu-r2`；seed 8101；状态 **CPU_COMPLETE_WAIT_GPU**。
+本轮完成 DVGT-1 与 raw VGGT 各220项独立推理，共440项；没有训练或修改模型。当前证据支持：**DVGT在本批公共相机对照中没有出现一致的稀疏化退化；raw VGGT的大深度误差包含显著的尺度不稳定，普通区域外LiDAR定尺度可以解释相当部分。尚未建立“稀疏视角×低纹理导致2026 SOTA共同失效”的结论。** V8.2保持`NO_GO_PENDING_RELIABLE_FAILURE`，方向没有被全面否定。
 
-![Architecture components](figures/worldsim_v81/architecture.png)
+![Architecture components](figures/worldsim_v81_gpu/architecture.png)
 
-无卡条件下可执行的数据筛查、方法可用性审计、可视化、输入干预准备与推理接口检查已经完成。主要发现是**参考几何与 RGB 纹理可能来自不同深度层，以及干净四格对照不足**。模型推理为0，尚无已验证的 SOTA badcase；H1–H5 均 NOT_TESTED，V8.2 为 NO_GO_PENDING_EVIDENCE。人工 verdict=null。
+## 实际执行与分母
 
-## 数据与筛选口径
+task=`WS-V81-GPU-P2-01`，run=`20260913-dual3090-r1`。CPU冻结数据为27日志、34场景、68窗口、6120 ROI，1527通过几何筛查。自然数据全部是DISCOVERY；AV2独立reserve未查看质量。
 
-现有落盘数据含35个六相机完整场景、27个日志。r1先检查12日志、14场景、28窗口；发现混杂后，r2按同一 metadata 顺序扩大至全部27日志、34场景、68窗口、340个选中样本。另1场景因完整时序帧不足排除。没有根据模型误差选样本，也没有放宽阈值。全部已曝光数据仍为 DISCOVERY。
+| 实验 | DVGT / GPU0 | VGGT / GPU1 | 角色 |
+|---|---:|---:|---|
+| 68窗口×6/3/2相机 | 204 | 204 | full6为DISCOVERY，其余为同场景诊断 |
+| 3个冻结目标×6/3/2/18图 | 12 | 12 | 保留目标相机的视角诊断 |
+| 1个招牌纹理衰减×4种输入 | 4 | 4 | 合成诊断，mask使用参考平面 |
+| 合计 | 220 | 220 | 136自然输出、296视角诊断、8合成输出 |
 
-6120个固定320×180 ROI中，1527个通过几何支撑初筛，1311个同时通过极暗/过曝筛查。参考使用相邻四个 keyframe 的 LiDAR，当前样本只作 INPUT_PROMPT。全部1527份参考通过输入/参考样本不相交检查。RGB主模型不读取这些 LiDAR。
+实际GPU为2×RTX3090 24GB，cgroup为28核/180GiB。峰值分配显存DVGT **12.60GiB**、VGGT **8.20GiB**，18图输入也完成；无需扩容。两模型分别常驻一张卡独立消费队列，没有DDP。前向累计61.54s/63.93s；这不含初始化、文件压缩、导出和评价时间。Torch2.4.1+cu121、BF16 autocast、FP32官方权重；这是实际已跑通环境，不宣称完全复现作者Torch2.8环境及整套论文指标。
 
-参考按扫描位姿 sensor→ego→world→camera 变换，膨胀剔除源帧和目标帧标注物体，要求至少两个扫描在8像素格内深度一致，拒绝深度边界与可检测的当前遮挡。原始点文件没有逐点时间戳，所以只称扫描位姿补偿，不声称精确逐点 deskew。平面初筛要求≥30点、6×6格覆盖≥0.25、RANSAC内点比例≥0.85、RMS≤0.12m；这不等于视觉或科学验收。
+评价器输出6324条ROI×模型×输入配置记录，包含无四格标签的几何候选；不能将其当成6324个独立样本。原始缺失和coverage保留。置信区间以日志为单位，先取日志内ROI中位数，再对日志bootstrap；不把像素当独立样本。
 
-纹理由梯度能量和32-bin灰度熵的30%/70%分位联合定义；另记录特征/重复匹配密度、LiDAR二维/三维分散度与深度跨度。低重叠要求 calibrated frustum 上界≤0.1；高重叠要求留出几何可见支撑下界≥0.4且视差≥1°。中间区保留，缺少 raw prior、视差或模型预测时保留 null。
+## 发现一：稀疏化没有一致地击穿DVGT
 
-| 候选格 | ROI | 日志 | 地面 / 非地面候选 |
-|---|---:|---:|---:|
-| C00 高纹理×高重叠 | 18 | 9 | 11 / 7 |
-| C10 低纹理×高重叠 | 28 | 12 | 20 / 8 |
-| C01 高纹理×低重叠 | 215 | 26 | 139 / 76 |
-| C11 低纹理×低重叠 | 182 | 22 | 123 / 59 |
+以下仅比较两种输入都包含的相机、相同ROI；使用CPU冻结cohort和已知混杂排除，仍含未逐一复核候选。数字为稀疏输入减full6的AbsRel，负数表示改善。
 
-这是几何/曝光/可见性筛查后的候选计数，尚未扣除逐图发现的混杂。四格图保留原始规则选中的案例，不能当作干净自然实验。
+| 输入 / 非地面候选 | ROI / 日志 | DVGT变化及95%日志CI | VGGT变化及95%日志CI |
+|---|---|---|---|
+| 3相机 | 69 / 19 | +0.00232 [-0.00229, +0.00552] | +0.4851 [+0.2700, +0.6750] |
+| 2相机 | 14 / 7 | +0.000096 [-0.00350, +0.00167] | +0.3909 [-0.4769, +0.6679] |
 
-![四格候选；尚无模型预测](figures/worldsim_v81/evidence_grid.png)
+DVGT地面候选同样没有一致退化：3相机变化+0.00155，2相机−0.000287，两者区间均跨零。这是当前样本的边界，不是“稀疏化永远无害”或严格等效性证明。2相机非地面分母较小，因为主队列只保留前/后相机；没有把缺少目标相机记成模型MISS。
 
-## 当前真正发现的问题
+![公共相机配对](figures/worldsim_v81_gpu/paired_view_effects.png)
 
-全部46个高重叠候选已逐图复核，另检查平面招牌和2个低纹理低重叠示例，共49项记录。36项标为 CONFOUND_EXCLUDE_MAIN，包括栅栏、植被、多层遮挡、湿路反光、路缘深度边界。7个非地面 C00 均有明确混杂，其余也只称候选。
+冻结的低纹理墙面`scene-0632_fd5b6a5c_CAM_FRONT_RIGHT_02`中，DVGT的6/3/2/18图MAE为0.506/0.531/0.440/0.389m；法向误差1.71/1.55/1.43/0.33度。减少相机没有造成这里的局部坍塌，增加时间信息则有一定改善。
 
-例如 scene-0535 的 CAM_FRONT_RIGHT_04、scene-0071 的 CAM_BACK_LEFT_14：前景网格贡献高频纹理，LiDAR主平面却可能属于后方墙面。不能据此说模型在有充分纹理的墙上表现如何。scene-0632_fd5b6a5c_CAM_FRONT_RIGHT_02 的低梯度墙板可作为下一步自然候选；scene-0800_a4354e58_CAM_BACK_LEFT_13 的暗墙板仍需排除阴影/曝光解释。平面招牌 scene-0626_9a9c05fe_CAM_BACK_LEFT_13 用于单列的合成输入干预。
+![同场景视角对照](figures/worldsim_v81_gpu/same_scene_views.png)
 
-**剔除已识别混杂后，按同一日志、地面/非地面、距离桶匹配，完整四格 block=0，独立匹配日志=0。** 当前数据不能估计 H1 四格交互效应。ROI/像素数量不能补足独立日志；未匹配组间差异不能称非加性退化。evaluator只允许完整冻结匹配组进入探索性统计，缺格返回不足。
+## 发现二：raw VGGT需要先排除全局尺度问题
 
-开GPU不会自动解决这个数据缺口。先用冻结自然候选寻找可复现模型错误，再做同场景视角/纹理干预。自然H1主结论仍需补充干净高重叠对照和独立日志；新增数据或重定义视觉ROI时另建带来源队列，不能覆盖本轮冻结结果或按模型误差改阈值。
+VGGT原生输出没有本数据集的绝对尺度保证。本实验保存全部原生输出，再用公开标定相机基线做全局定尺度，未用LiDAR拟合主结果。68个full6窗口中，基线尺度比的CV中位数0.664，范围0.210–1.809，说明不同相机对不能稳定地给出相同尺度。两相机只有一个基线比，CV=0不代表可靠。
 
-## CPU控制和干预
+进一步添加**普通全局尺度控制**：只用当前帧INPUT LiDAR，剔除膨胀标注框，剔除所有投影落在目标ROI及16px边缘内的点，再在输入相机上按8px格取最近回波，以中位深度比例定一个正尺度。held-out邻帧点只由评价器使用。该控制不改VGGT权重，不是DriveMVS，不是同点数prompt实验；跨相机投影记录也不能称为同等数量的独立LiDAR点。
 
-1527个几何候选均尝试当前 INPUT_PROMPT 的 RANSAC 平面控制，1516个产生有效指标，11个无有效预测。非地面候选595例中位 depth MAE=0.135m，地面921例=0.438m。这包含原始候选混杂，只衡量局部输入几何与独立参考一致性，不是 SOTA 性能、DriveMVS复现或科学 headroom。
+| 冻结目标 / 输入 | 原相机基线尺度MAE | 区域外INPUT LiDAR尺度MAE |
+|---|---:|---:|
+| 招牌 / 3相机 | 22.130m | 1.105m |
+| 低纹理墙面 / 3相机 | 7.678m | 0.413m |
+| 灰色墙板 / 6相机 | 6.405m | 0.932m |
 
-![纹理、重叠与简单平面控制](figures/worldsim_v81/factor_controls.png)
+这个普通控制解释了所列大误差的明显部分，但没有全部消除误差，也不是每种输入都改善：灰色墙板18图由0.298m变为0.665m。单个全局尺度不可能证明局部形状全部正确；残余还需可靠参考与多日志复核。**不能把这些结果写成VGGD的prior lock-in，尚未运行VGGD下游模型。**
 
-已生成8张固定规则候选卡，展示 RGB、参考深度、输入平面控制误差及几何侧视；32组同点数 prompt placement 输入；1个视觉较干净平面招牌的跨视角纹理衰减输入。保持原图尺寸、位姿及上下文视图对应关系。r1含栅栏的2组纹理示范作为混杂历史保留，r2使用上述招牌。
+![区域外LiDAR尺度控制](figures/worldsim_v81_gpu/outside_roi_scale_control.png)
 
-![同场景纹理干预输入](figures/worldsim_v81/factor_escalation_inputs.png)
-![相同点数、不同位置的输入](figures/worldsim_v81/prompt_placement.png)
+## 发现三：必须把参考混杂与真实模型错误分开
 
-合成mask明示使用参考平面，属于真值辅助 DIAGNOSTIC_ONLY，不进入自然发现主表，不证明真实分布的因果效应。当前没有SOTA goodcase/badcase，只有参考/控制一致与混杂候选。
+按预先声明的探索规则，在C11非地面候选中分别为每个模型取误差最高/最低的4个不同日志；共16次选择、15个唯一ROI。之后才进行视觉复核，选择清单和全部候选图保留，未改CPU阈值或四格。此轮是POSTHOC DISCOVERY，不能成为独立确认。
 
-## 模型准备与验证
+DVGT排名最差的4个不同日志候选分别含前景卡车、铁丝网、植被、树枝遮挡。特别是下图白色区域其实是停放卡车，LiDAR参考主要落在后方建筑附近，13.83m大误差不能直接记成“低纹理墙面失败”。同样，低平均误差的网格/植被区域也不能充当科学goodcase。
 
-DVGT-1、VGGT-1B、DGGT nuScenes 官方代码与完整权重已落盘，三个模型均通过 strict meta 参数名/形状加载。官方预处理也已在真实六相机窗口上通过：DVGT为[1,1,6,3,288,512]，VGGT/DGGT为[6,3,294,518]。没有模型前向。
+![错误参考绑定案例](figures/worldsim_v81_gpu/case_scene-0071_cd3039e0_CAM_BACK_LEFT_01.png)
 
-7项针对性检查通过：相机z与射线距离、跨扫描支撑、缺失预测分母、日志bootstrap、nuScenes盒坐标轴、保留目标视角与时序相机顺序、拒绝混杂/缺格补足匹配组。空输出evaluator返回 WAIT_MODEL_OUTPUTS，没有生成假模型比较图。
+**goodcase边界**：`scene-0139_7e27d5c0_CAM_BACK_LEFT_12`的灰色墙板有297个held-out支撑点，DVGT MAE0.103m、法向2.73度，VGGT MAE约0.29m。它说明自然C11中也存在几何表现良好的样本；仍属于探索日志，不是确认集。
 
-隔离环境 /root/autodl-tmp/envs/worldsim-v81 继承现有基础包，Torch2.4.1+cu121/torchvision0.19.1与DVGT官方建议Torch2.8/CUDA12.8有差异；GPU前向与kernel尚未验证。继承环境pip check有3项既存mapanything/nuScenes-devkit冲突，本轮流式metadata路径不调用它们，不能称整个环境无冲突。大依赖安装曾中断，cgroup未记录OOM kill，归因未确定；之后用完整本地wheel和小包分步安装完成。
+![低纹理墙面goodcase](figures/worldsim_v81_gpu/case_scene-0139_7e27d5c0_CAM_BACK_LEFT_12.png)
 
-DVGT/VGGT为第一轮主模型，DGGT为条件扩展。DriveMVS、FocusGS、VGGD官方入口当前缺少可运行代码，不用代理冒充其输出。版本、一手来源和路径见[方法审计](WORLDSIM_V8_1_METHOD_AUDIT.md)。
+**raw VGGT局部错误候选**：`scene-0632_1b3e964e_CAM_FRONT_RIGHT_13`为木板墙，有92个held-out支撑点；VGGT MAE约3.02m、法向29.8度，DVGT约0.50m/8.3度。与前述灰墙不同，它显示真实几何误差候选，但不能据单例推广为共同SOTA缺口，或仅归因于纹理。
 
-## GPU接续与边界
+![木板墙错误候选](figures/worldsim_v81_gpu/case_scene-0632_1b3e964e_CAM_FRONT_RIGHT_13.png)
 
-冻结408个DVGT/VGGT任务（68窗口×full6/sparse3/sparse2×2模型），另有保留目标相机的干预及temporal18入口。各模型先一个full6窗口检查坐标、原生输出、峰值显存，再决定批量。VGGT保留原生深度及公开相机基线定尺度结果，不用ROI LiDAR拟合。未输入/未预测相机不当MISS，预测内部缺失保留coverage分母。
+## 合成纹理对照没有制造出DVGT崩溃
 
-H1–H5均NOT_TESTED；PSNR/SSIM/LPIPS、prior recovery、geometry-vs-rendering mismatch均未产生。DGGT core depth/gs_map准备不等于完整renderer接通。10个AV2 reserve日志保持 quality sealed，本轮未用其质量选模型；独立确认前仍需核实原始RGB/标定合同。
+CPU阶段冻结的单个招牌采用参考平面辅助mask做高频衰减，保留模型、标定和视角。DVGT原始→衰减MAE：6图0.368→0.407m，3图0.126→0.160m，2图0.154→0.215m，18图0.146→0.179m。退化有限，不能把这个实验称作自然低纹理因果证明。没有追加更极端衰减来强行得到失败。
 
-完整证据：/root/autodl-tmp/runs/worldsim_v81/WS-V81-CPU-01/20260913-cpu-r2/，含registry、parquet、1527份参考NPZ、68份输入合同、控制/干预/队列、逐图复核、HTML与状态。r1保留历史。轻量记录在 docs/autoresearch/worldsim_v81/。cgroup实测0.5 CPU、2GiB；r1核心atlas约629s，r2增量atlas约335s，不包含全部准备时间。
+![合成纹理诊断](figures/worldsim_v81_gpu/texture_diagnostic.png)
 
-**无卡阶段已停下，无自动续跑。建议2×48GB GPU分别运行两个主模型，或1×80GB顺序执行；主机≥64GB RAM、8 vCPU。** 这是首轮预算建议，实际显存待首个GPU窗口测量。详见[GPU交接](WORLDSIM_V8_1_CPU_HANDOFF.md)。
+## 实现修正、科学限制与下一步
 
-failure_ledger_refs：V74-H2-F11/F09/F10、V74-F01；failure_ledger_delta：V81-F01（公开方法边界）、V81-F02（参考混杂与零匹配组）。无新增SOTA scientific failure。
+首轮DVGT导出曾遗漏官方训练尺度0.1的还原和RDF→FLU，并误用LiDAR时间戳的ego pose。已按官方代码修复，39个原生forward直接重导出，旧错误深度另存；详见[V81-F03](research_failures/entries/V81-F03.md)。7项几何检查和新增坐标/尺度/首相机时间戳检查通过。错误导出不进入当前指标或badcase清单。
+
+**自然H1完整匹配组仍为0**，因此没有估计Texture×Overlap交互项。H2缺官方可运行DriveMVS，H3缺FocusGS，H4没有VGGD下游对照；H5没有真实渲染输出。DGGT完整4D/渲染及成熟driving reconstruction oracle本轮未进入，PSNR/SSIM/LPIPS保持未知，不能用输入图替代渲染质量。AV2独立reserve保持封存。
+
+当前普通控制和goodcase足以阻止过早立项，但不足以关闭整个研究方向。下一阶段应先建立**与真实可见平面绑定、包含干净高重叠对照的新来源队列**，再冻结可靠残余错误的确认规则；只有出现不能被普通尺度控制解释的多日志失效，才扩展DGGT/可运行下游模型与独立数据域。不要为了完成图表数量伪造rendering或独立确认结果。
+
+本轮GPU作业已结束，无自动恢复器，没有关机操作。人工verdict仍为null。代码、主报告、轻量统计与关键图入库；全部原生输出、每任务result、参考、控制和31张可视化保存在`/root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/`。

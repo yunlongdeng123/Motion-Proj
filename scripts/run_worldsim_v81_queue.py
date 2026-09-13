@@ -24,6 +24,7 @@ def main():
             # 不跨实现错误静默批跑，也不将资源失败记为模型failure。
             raise
         with progress.open('a') as f:f.write(json.dumps(record)+'\n')
-    (out/(a.method+'_queue_done.json')).write_text(json.dumps({'status':'DONE','total_jobs':len(jobs),'elapsed_s':time.time()-started,'gpu':os.environ.get('CUDA_VISIBLE_DEVICES')},indent=2))
+    queue_name=Path(a.queue).stem
+    (out/(a.method+'_'+queue_name+'_done.json')).write_text(json.dumps({'status':'DONE','queue':a.queue,'total_jobs':len(jobs),'elapsed_s':time.time()-started,'gpu':os.environ.get('CUDA_VISIBLE_DEVICES')},indent=2))
 
 if __name__=='__main__':main()
