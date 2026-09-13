@@ -1,3 +1,10 @@
+# 当前：V8.1 CPU准备中（2026-09-13）
+
+WS-V81-CPU-01；主方向稀疏视角×低纹理 failure discovery。r1完成12日志、14场景、28窗口、2520 ROI、589几何候选与可视化；14个高重叠候选复核暴露栅栏/多层前景混杂，因此按原metadata顺序补齐27个落盘日志的r2，不放宽筛选标准。
+
+SOTA推理=0，H1–H5未检验，V8.2暂NO_GO（未有证据，不是科学否定）。官方代码/权重和隔离环境准备中。failure_ledger_refs=V74-H2-F11/F09/F10、V74-F01；failure_ledger_delta=V81-F01/F02。人工verdict=null。用户要求CPU完成后停下提示开GPU。
+
+入口：[V8.1执行](WORLDSIM_V8_1_PLAN.md)、[方法审计](WORLDSIM_V8_1_METHOD_AUDIT.md)、[CPU报告](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)。以下为冻结历史。
 # Research Failures：渐进读取入口
 
 最终精简：GitHub 实际下载 ZIP 约 **22.2 MB**；同口径本地打包105.25→21.45 MB，减少约80%，跟踪文件展开约53.6 MB（原375.9 MB）；两批共307个资产、原文件322.49 MB已归档。全部代码/配置/Markdown、失败查询索引和V7.4报告图保留。旧下载包不会自动变小，需重新下载当前分支；完整 Git 历史保持，未强推改写。

@@ -1,0 +1,22 @@
+# V8.1 方法可执行性审计
+
+2026-09-13；task `WS-V81-CPU-01`。这里的“代码/权重公开”不等于已经通过本机 GPU 推理验证。原计划中的方法级 failure 全部仍为待检验假说。
+
+| 方法 | 官方版本 / checkpoint | 本轮用途与边界 |
+|---|---|---|
+| DVGT-1 | [官方仓库](https://github.com/wzzheng/DVGT)，commit `51cf3f6d11fdff8bc7e2bbe1a88f71665ccb2236`；[官方权重](https://huggingface.co/RainyNight/DVGT-1/tree/4918b6ed3547a00fd217d602fabb84ada180dba4) | 第一主模型。固定 DVGT-1，不混入同仓库 DVGT-2。点图在首帧 ego 系，原生宽512、patch16、2Hz；原生输出不作 ROI 真值尺度拟合。伪标签生产失败是否传到推理仍待实验。 |
+| VGGT | [官方仓库](https://github.com/facebookresearch/vggt)，commit `a288dd0f14786c93483e45524328726ab7b1b4ce`；[VGGT-1B](https://huggingface.co/facebook/VGGT-1B/tree/860abec7937da0a4c03c41d3c269c366e82abdf9) 既有官方 safetensors | VGGD 的 prior probe。原生宽518、patch14；同时保留原始深度单位及相机基线定尺度后的深度。使用 dataset calibration 定尺度，不读取 held-out LiDAR。不能称为 VGGD 输出。 |
+| DGGT | [官方仓库](https://github.com/xiaomi-research/dggt)，commit `a3276d2bbe4cbb03bcc117830b1836110a27adeb`；[官方模型库](https://huggingface.co/xiaomi-research/dggt/tree/735ac9a6486057b1eb886c33a8c6dc79e0b43214) | 模型库确有 `model_latest_nuscenes.pt`，README 的“其他权重稍后发布”已落后于模型库。准备原生 core 输出与 Gaussian tensors；完整动态渲染/扩散 refinement 待第一轮 geometry 结果后按需进入，不能把 core depth 当最终 Gaussian 渲染深度。 |
+| DriveMVS | [官方仓库](https://github.com/Akina2001/DriveMVS)，commit `7c3f6d811667509a6d6572709e23ac1f28cc96cf` | 仅 README，0 个 Python 文件；Tier B / literature boundary。已准备同点数不同位置的 INPUT_PROMPT，未复现 DriveMVS。 |
+| FocusGS | [官方项目页](https://focusgs.github.io/) | Code 实际为 `https://github.com/YOUR REPO HERE` 占位链接；Tier B。ambiguity localization / completion failure 未检验。 |
+| VGGD | [论文 v1](https://arxiv.org/html/2608.10682v1)；[官方仓库](https://github.com/JHLin42in/VGGD)，commit `fb95aa1b4f8ce616bafb056160f4670eef0af99e` | README + LICENSE，0 个 Python 文件；Tier B。prior lock-in / recovery 不能用 raw VGGT 结果代替。 |
+| PointForward | [论文 v1](https://arxiv.org/abs/2605.11594v1) | 作者页面写代码待发布；本轮不进可复现实验主表。 |
+| LGS | [论文 v1](https://arxiv.org/abs/2608.11077v1) | LiDAR 驱动的结构干预路线，论文域为 Waymo/PandaSet。未建立本机官方 checkpoint/eval contract；只保留扩展假说。 |
+| ReconDrive | [官方仓库](https://github.com/TuojingAI/ReconDrive)，commit `d2bc397b724d6cc021da22f8f57ad6af1cc53e3c` | 已确认有63个Python文件；未因此自动通过 checkpoint / nuScenes evaluation contract。主 failure 明确后再扩展。 |
+| P2GS | 原计划指定的 CVPR 2026 一手论文 | 仅 photometric confound 观察位；未完成本轮可运行性审核，不列执行模型。 |
+
+资源和运行版本记录见 `docs/autoresearch/worldsim_v81/` 及完整 run 的 `official_assets.json` / `runtime_versions.json`。Git commit 用普通版本追溯，没有引入哈希或指纹门控。
+
+推理数据合同：使用完全相同的原始 RGB、frame/camera/ROI，各方法保留自己的官方 resize。输出按实际 resize 的 pixel-center affine 回到原图查询，避免“统一 resize”改变 baseline。DVGT-1 的 DINOv3 完整代码固定到 `6876159a11b4df116f30f667f8c9888617df0751`；仅在构造期间关闭冗余 DINO 单独权重下载，随后用官方完整 checkpoint 严格加载全部参数。这不改变前向网络或模型权重。
+
+参考几何坐标变换参照 [nuScenes 官方 devkit](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/utils/data_classes.py)。本轮按每扫描 ego pose 做运动补偿；原始点文件没有逐点时间戳，因此不声称已完成精确逐点 deskew。参考支撑质量与最终 scientific acceptance 分开记录。

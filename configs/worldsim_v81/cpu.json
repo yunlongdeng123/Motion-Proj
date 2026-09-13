@@ -1,0 +1,19 @@
+{
+  "task_id": "WS-V81-CPU-01",
+  "run_id": "20260913-cpu-r1",
+  "seed": 8101,
+  "phase": "P0_P1_AND_P2_P3_PREPARATION",
+  "failure_ledger_refs": ["V74-H2-F11", "V74-H2-F09", "V74-H2-F10", "V74-F01"],
+  "failure_ledger_delta": "pending",
+  "data_role": "DISCOVERY",
+  "input_role": "RGB_INPUT; current sample LiDAR INPUT_PROMPT for optional controls",
+  "reference_role": "HELDOUT_GT; neighbor sample LiDAR only, never fed to RGB models",
+  "selection": "metadata log order; max 12 logs; max 2 scenes/log; two interior windows/scene",
+  "synthetic_role": "DIAGNOSTIC_ONLY",
+  "native_preprocess": {"DVGT": "512x288 bicubic, patch16", "VGGT": "518x294 bicubic, patch14", "DGGT": "518x294 bicubic, patch14"},
+  "comparison": "identical original RGB views and ROI; retain native resize then backproject to original pixel coordinates",
+  "bootstrap_unit": "log",
+  "training": false,
+  "auto_resume": false,
+  "human_verdict": null
+}

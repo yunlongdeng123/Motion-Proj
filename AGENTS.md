@@ -1,3 +1,10 @@
+# 当前：V8.1 稀疏视角 × 低纹理失效发现（2026-09-13）
+
+用户新授权执行 docs/WorldSim_V81_SparseView_LowTexture_Failure_Discovery_Plan.md。只做科学发现、badcase/goodcase与可视化对比；先完成所有可行的无卡工作，停止并提示用户开GPU。V8.2才研究方法；不重开V7.4 family。当前分支 research/worldsim-v8.1-sparseview-lowtexture。
+
+首批task WS-V81-CPU-01；所有自然数据为DISCOVERY。raw VGGT不代表VGGD，代码未开放方法只记假说。实际GPU输出之前不填写模型failure、rendering指标或human verdict。GPU接续见 docs/WORLDSIM_V8_1_CPU_HANDOFF.md；没有自动恢复器。V7.4收尾关机记录只作为历史，不代表本轮新的电源指令。
+
+以下为继承的工作规则与V7.4历史；与本轮用户指令冲突时按当前V8.1授权执行。
 # Motion-Proj 执行约定
 
 ## 当前状态：V7.4 已收尾（2026-09-13）

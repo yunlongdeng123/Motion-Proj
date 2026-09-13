@@ -1,18 +1,12 @@
-# WorldSim V7.4：已收尾
+# WorldSim V8.1：稀疏视角 × 低纹理失效发现
 
-最终精简：GitHub 实际下载 ZIP 约 **22.2 MB**；同口径本地打包105.25→21.45 MB，减少约80%，跟踪文件展开约53.6 MB（原375.9 MB）；两批共307个资产、原文件322.49 MB已归档。全部代码/配置/Markdown、失败查询索引和V7.4报告图保留。旧下载包不会自动变小，需重新下载当前分支；完整 Git 历史保持，未强推改写。
+当前按用户的 [V8.1计划](docs/WorldSim_V81_SparseView_LowTexture_Failure_Discovery_Plan.md) 做科学发现、badcase/goodcase 和可视化对比。先检查真实数据、现有方法和简单强控制；V8.2 才研究解法。
 
-当前状态：**V7.4 已结束，未形成经过验证的论文主方法。** H1 NO_SURVIVOR；H2 当前 ordered 实现关闭，整体 witness-native 假说未被全面证伪。后续遵循 failure discovery 优先原则；本轮不自动续跑。
+- [执行入口](docs/WORLDSIM_V8_1_PLAN.md)
+- [方法公开状态审计](docs/WORLDSIM_V8_1_METHOD_AUDIT.md)
+- [CPU报告与架构图](docs/WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)
+- [可视化图谱](docs/WORLDSIM_V8_1_FAILURE_ATLAS.md)
+- [GPU交接](docs/WORLDSIM_V8_1_CPU_HANDOFF.md)
+- [当前研究状态](docs/RESEARCH_STATUS.md) / [失败资产](docs/RESEARCH_FAILURES.md)
 
-- [版本收尾与研究教训](docs/WORLDSIM_V7_4_CLOSEOUT.md)
-- [P1.6 病因诊断、普通控制与架构](docs/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)
-- [P1.5 失败审计、架构与证据](docs/WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)
-- [GPU执行报告与架构](docs/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)
-- [当前研究状态](docs/RESEARCH_STATUS.md)
-- [失败资产渐进读取](docs/RESEARCH_FAILURES.md)
-- [原修订计划](docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md)
-- [CPU数据与文档交接](docs/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)
-
-H1 NO_SURVIVOR与V73均为冻结历史。
-
-[大资产归档与轻量获取方法](docs/archives/worldsim_v74_closeout_20260913/README.md)：当前分支保留代码、核心文档及必要证据；旧批量资产按需恢复。
+V7.4 保持 [CLOSED_WITHOUT_VALIDATED_MAIN_METHOD](docs/WORLDSIM_V7_4_CLOSEOUT.md)；旧代码和失败证据保留，已关闭路线不重启。
