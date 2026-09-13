@@ -1,3 +1,7 @@
+# 当前：P1.6 病因诊断 RUNNING（2026-09-13）
+
+`WS-V74-H2-P16-01 / 20260913__physical-metric-r1`。复用原 12 FIT 任务，按[预先定义](WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_PLAN.md)做几何分解、恢复分析和 BUILD 普通物理控制。无训练。failure_ledger_refs=F08/F09；failure_ledger_delta=F09 增补诊断授权，尚无新结果。用户 3/6 Weak Reject 保持。以下为历史状态。
+
 # V74-H2 P1.5 已完成：当前 ordered 实现关闭
 
 2026-09-13：P1.5 存量失败审计完成，未训练新模型。A 薄结构 52/52 首次 HIT→EARLY 保持同一首面；连续位置漂移经斜入射放大已解释退化。C2 有 12 条短暂同类退化后恢复，不能称全程稳定。完整解释见 [P1.5 报告与架构](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)，渐进入口 [F09](research_failures/entries/V74-H2-F09.md)。
