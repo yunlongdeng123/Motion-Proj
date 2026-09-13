@@ -1,9 +1,9 @@
-# V8.1 → V8.2：NO_GO
+# V8.1 → V8.2：NO_GO_PENDING_EVIDENCE
 
-2026-09-13，阶段性入口判定 `NO_GO`。含义：当前没有通过真实模型实验、独立日志确认和简单强控制的 failure，暂不允许进入 V8.2 方法开发。**这不是对 sparse-view × low-texture 方向的科学否定，也不是 V8.1 已结束。**
+2026-09-13。无卡阶段完成，V8.1科学发现仍待GPU推进。当前没有通过真实模型实验、独立日志确认与简单强控制的failure，不进入V8.2方法开发。该判定不否定稀疏视角×低纹理方向。
 
 ![Architecture components](figures/worldsim_v81/architecture.png)
 
-H1–H5：NOT_TESTED。当前障碍分别是模型未推理、部分目标未开源、高重叠候选日志少、部分平面 patch 有前景混杂。没有把这些工程/数据障碍写成科学失败。
+H1–H5均NOT_TESTED。障碍分别是模型未推理、部分方法官方代码未发布、参考/RGB前景混杂，以及视觉排除后同日志/语义/距离四格匹配组为0。四者不混写为科学失败。开GPU推进模型发现，不能自动补足自然对照。
 
-下一动作：用户开GPU后执行第一轮 DVGT-1 / VGGT 合同核验、冻结 discovery 队列和同场景干预；稳定 failure 出现后再进行 DGGT 扩展、强重建 oracle 和10日志 AV2 独立确认。届时才可能改为 `GO_<failure>`。人工 verdict=null。
+用户开GPU后先完成DVGT-1/VGGT单窗口实际合同核验，再运行冻结自然候选与同场景诊断。稳定failure出现后接DGGT、成熟重建oracle与AV2独立确认。自然H1主结论需要另补干净高重叠对照；新增队列保留来源与选择历史。满足原计划证据条件后才可能改为GO_<failure>。人工verdict=null，无自动恢复器。

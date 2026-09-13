@@ -1,10 +1,10 @@
-# 当前：V8.1 CPU准备中（2026-09-13）
+# 当前：V8.1 CPU_COMPLETE_WAIT_GPU（2026-09-13）
 
-WS-V81-CPU-01；主方向稀疏视角×低纹理 failure discovery。r1完成12日志、14场景、28窗口、2520 ROI、589几何候选与可视化；14个高重叠候选复核暴露栅栏/多层前景混杂，因此按原metadata顺序补齐27个落盘日志的r2，不放宽筛选标准。
+WS-V81-CPU-01 / 20260913-cpu-r2；稀疏视角×低纹理failure discovery。27日志、34场景、68窗口、6120 ROI、1527几何候选；8案例卡、49视觉复核，36混杂排除。同日志/语义/距离完整四格匹配组=0，不能计算自然H1交互效应。全部DISCOVERY，AV2 reserve质量保持封存。
 
-SOTA推理=0，H1–H5未检验，V8.2暂NO_GO（未有证据，不是科学否定）。官方代码/权重和隔离环境准备中。failure_ledger_refs=V74-H2-F11/F09/F10、V74-F01；failure_ledger_delta=V81-F01/F02。人工verdict=null。用户要求CPU完成后停下提示开GPU。
+无卡可执行工作完成：DVGT/VGGT/DGGT官方权重落盘、3模型strict meta加载和真实输入预处理通过、7项检查通过、408任务队列与诊断输入冻结。模型推理=0，H1–H5未检验，V8.2 NO_GO_PENDING_EVIDENCE。CPU阶段已停止，无自动续跑；请求2×48GB GPU或1×80GB，主机≥64GB RAM/8 vCPU。GPU不会自动补足自然对照数据缺口。
 
-入口：[V8.1执行](WORLDSIM_V8_1_PLAN.md)、[方法审计](WORLDSIM_V8_1_METHOD_AUDIT.md)、[CPU报告](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)。以下为冻结历史。
+failure_ledger_refs=V74-H2-F11/F09/F10、V74-F01；failure_ledger_delta=V81-F01/F02。人工verdict=null。入口：[CPU报告](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)、[图谱](WORLDSIM_V8_1_FAILURE_ATLAS.md)、[GPU交接](WORLDSIM_V8_1_CPU_HANDOFF.md)。以下为冻结历史。
 # V7.4 已收尾：CLOSED_WITHOUT_VALIDATED_MAIN_METHOD（2026-09-13）
 
 最终精简：GitHub 实际下载 ZIP 约 **22.2 MB**；同口径本地打包105.25→21.45 MB，减少约80%，跟踪文件展开约53.6 MB（原375.9 MB）；两批共307个资产、原文件322.49 MB已归档。全部代码/配置/Markdown、失败查询索引和V7.4报告图保留。旧下载包不会自动变小，需重新下载当前分支；完整 Git 历史保持，未强推改写。

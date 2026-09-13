@@ -26,3 +26,32 @@ def test_nuscenes_box_width_length_axes():
     b={'rotation':[1,0,0,0],'translation':[0,0,0],'size':[2,6,2]}
     points=np.array([[2,0,0],[0,2,0],[4,0,0]])
     np.testing.assert_array_equal(remove_boxes(points,[b],0),points[1:])
+
+def test_view_interventions_keep_target_and_temporal_camera_order():
+    import importlib.util
+    from pathlib import Path
+    spec=importlib.util.spec_from_file_location('v81_infer',Path(__file__).resolve().parents[1]/'scripts/run_worldsim_v81_inference.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    select_views,pixel_affine=module.select_views,module.pixel_affine
+    cameras=['CAM_FRONT','CAM_FRONT_RIGHT','CAM_BACK_RIGHT','CAM_BACK','CAM_BACK_LEFT','CAM_FRONT_LEFT']
+    def frame(sample,time):return [{'camera':c,'sample_token':sample,'timestamp_us':time} for c in cameras]
+    m={'views':frame('now',1000000),'context_views':frame('before',500000)+frame('after',1500000)}
+    for variant in ['sparse2','sparse3']:assert select_views(m,variant,'CAM_BACK_LEFT')[0]['camera']=='CAM_BACK_LEFT'
+    result=select_views(m,'temporal18','CAM_BACK_LEFT')
+    assert len(result)==18
+    assert [v['camera'] for v in result[:6]]==[v['camera'] for v in result[6:12]]==[v['camera'] for v in result[12:]]
+    size,A=pixel_affine([1600,900],'dvgt');assert size==[512,288]
+    np.testing.assert_allclose(np.array(A)@[-.5,-.5,1],[-.5,-.5,1])
+
+def test_matching_cannot_rescue_missing_cells_with_unmatched_or_confounded_rows():
+    import importlib.util
+    from pathlib import Path
+    spec=importlib.util.spec_from_file_location('v81_eval',Path(__file__).resolve().parents[1]/'scripts/evaluate_worldsim_v81.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    rows=[{'roi_id':str(i),'coverage':1.,'error':1.,'visual_screen':'UNREVIEWED'} for i in range(4)]
+    blocks=[{'cases':dict(zip(['C00','C10','C01','C11'],map(str,range(4))))}]
+    assert module.matched_rows(rows,[])==[]
+    assert len(module.matched_rows(rows,blocks))==4
+    assert module.matched_rows(rows[:-1],blocks)==[]
+    rows[0]['visual_screen']='CONFOUND_EXCLUDE_MAIN'
+    assert module.matched_rows(rows,blocks)==[]

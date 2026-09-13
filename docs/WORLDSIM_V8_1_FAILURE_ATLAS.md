@@ -1,10 +1,16 @@
-# V8.1 Failure Atlas：当前是 CPU 候选池
+# V8.1 候选与混杂图谱
 
-入口：[无卡报告](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)；完整可浏览页面位于 run 的 `index.html`。已有7张真实候选卡，内容依次为 RGB、独立 LiDAR depth、输入/留出覆盖、输入 LiDAR 平面控制误差、参考侧视图。
+最终CPU轮 WS-V81-CPU-01 / 20260913-cpu-r2。27日志、34场景、68窗口、6120 ROI，1527几何候选；8张案例卡、49项逐图观察。模型推理=0，以下是候选/控制图，不是已验证的SOTA失效。
 
-![Architecture](figures/worldsim_v81/architecture.png)
-![Grid](figures/worldsim_v81/evidence_grid.png)
+![Architecture components](figures/worldsim_v81/architecture.png)
+![固定四格示例；保留混杂以暴露数据问题](figures/worldsim_v81/evidence_grid.png)
 
-所有卡片按模型运行前的 cohort 内纹理中位距离选取，同日志不重复计数；保留不干净的候选并标注 confound，不用更漂亮的图偷偷替换。参考初筛后的可视检查见 `spot_checks.json`。本轮 SOTA badcase=0（尚未推理），SOTA goodcase=0（尚未推理）；这两个零都不表示模型表现好或差。
+高重叠46项全部复核，36项排除主实验；7个非地面C00均有混杂。同日志/语义/距离的完整四格匹配组=0，不能用候选数替代干净独立对照。
 
-后续必须在原始卡片并排补上实际模型 depth/point/render/error，才能分配 F-TEX-PLANE / F-OVL-DRIFT 等 failure code。几何筛选拒绝项、缺失预测与 goodcase boundary 一并保留。DriveMVS/FocusGS/VGGD 不可运行时，相关方法级面板保持未检验。
+![纹理重叠与CPU平面控制](figures/worldsim_v81/factor_controls.png)
+![仅用于diagnostic的纹理衰减输入](figures/worldsim_v81/factor_escalation_inputs.png)
+![同点数不同位置的prompt输入](figures/worldsim_v81/prompt_placement.png)
+
+完整HTML在 /root/autodl-tmp/runs/worldsim_v81/WS-V81-CPU-01/20260913-cpu-r2/index.html；同目录 case_selection.json 固定选择规则，spot_checks.json 保存逐图观察，matched_cohorts.json 为空数组，simple_control_results.jsonl 保留有效与缺失分母。真实DONE模型结果出现后，evaluator才生成模型深度/误差/侧视对比；未生成prior-recovery或rendering/geometry mismatch图。
+
+解释见[CPU报告](WORLDSIM_V8_1_SCIENTIFIC_REPORT.md)，限制见[方法审计](WORLDSIM_V8_1_METHOD_AUDIT.md)。人工verdict=null。

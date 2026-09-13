@@ -1,0 +1,53 @@
+[
+  {
+    "method": "dvgt",
+    "argv": [
+      "/root/autodl-tmp/envs/worldsim-v81/bin/python",
+      "/root/autodl-tmp/motion_proj/scripts/run_worldsim_v81_inference.py",
+      "--method",
+      "dvgt",
+      "--variant",
+      "full6",
+      "--manifest",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-CPU-01/20260913-cpu-r2/input_manifests/scene-0015_18ad5b3a.json",
+      "--out",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/dvgt/scene-0015_18ad5b3a/full6"
+    ],
+    "execute_requires": "explicit --execute after GPU is opened",
+    "gpu_phase": "first two primary; DGGT extension conditional"
+  },
+  {
+    "method": "vggt",
+    "argv": [
+      "/root/autodl-tmp/envs/worldsim-v81/bin/python",
+      "/root/autodl-tmp/motion_proj/scripts/run_worldsim_v81_inference.py",
+      "--method",
+      "vggt",
+      "--variant",
+      "full6",
+      "--manifest",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-CPU-01/20260913-cpu-r2/input_manifests/scene-0015_18ad5b3a.json",
+      "--out",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/vggt/scene-0015_18ad5b3a/full6"
+    ],
+    "execute_requires": "explicit --execute after GPU is opened",
+    "gpu_phase": "first two primary; DGGT extension conditional"
+  },
+  {
+    "method": "dggt",
+    "argv": [
+      "/root/autodl-tmp/envs/worldsim-v81/bin/python",
+      "/root/autodl-tmp/motion_proj/scripts/run_worldsim_v81_inference.py",
+      "--method",
+      "dggt",
+      "--variant",
+      "full6",
+      "--manifest",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-CPU-01/20260913-cpu-r2/input_manifests/scene-0015_18ad5b3a.json",
+      "--out",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/dggt/scene-0015_18ad5b3a/full6"
+    ],
+    "execute_requires": "explicit --execute after GPU is opened",
+    "gpu_phase": "first two primary; DGGT extension conditional"
+  }
+]

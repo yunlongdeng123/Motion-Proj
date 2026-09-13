@@ -12,7 +12,7 @@
 - 只读模型：`/root/autodl-tmp/models/worldsim_v81/`；已有VGGT：`/root/autodl-tmp/models/eas_vggt/vggt/model.safetensors`。
 - 官方代码：`/root/autodl-tmp/external/worldsim_v81/{DVGT,dggt}`，VGGT沿用固定的`external/worldsim_v72/vggt`。
 
-r1通过参考筛查后仍发现前景栅栏混杂；r2扩大数据而不放宽质量标准。原始候选和排除理由都保留。报告中的控制误差是输入LiDAR平面控制，不能称为SOTA失败。
+r2最终27日志/34场景/68窗口/6120 ROI/1527几何候选；49项视觉复核，36混杂排除，完整四格匹配组=0。r1通过几何筛查后仍发现前景栅栏混杂；r2扩大数据而不放宽标准。原始候选和排除理由都保留。报告中的控制误差是输入LiDAR平面控制，不能称为SOTA失败。
 
 ## 开卡建议
 
@@ -34,11 +34,11 @@ r1通过参考筛查后仍发现前景栅栏混杂；r2扩大数据而不放宽�
 cd /root/autodl-tmp/motion_proj
 PYTHONPATH=. /root/autodl-tmp/envs/worldsim-v81/bin/python scripts/run_worldsim_v81_inference.py \
   --method dvgt --variant full6 \
-  --manifest /absolute/path/to/r2/input_manifests/WINDOW.json \
-  --out /root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/dvgt/WINDOW/full6
+  --manifest /root/autodl-tmp/runs/worldsim_v81/WS-V81-CPU-01/20260913-cpu-r2/input_manifests/scene-0015_18ad5b3a.json \
+  --out /root/autodl-tmp/runs/worldsim_v81/WS-V81-GPU-P2-01/dvgt/scene-0015_18ad5b3a/full6
 ```
 
-实际运行时明确指定 `CUDA_VISIBLE_DEVICES=0` 并加 `--execute`；第二个模型使用另一个设备。脚本拒绝无GPU执行和覆盖已完成的同名run。不要把以上占位WINDOW命令直接当成已运行证据。
+实际运行时明确指定 `CUDA_VISIBLE_DEVICES=0` 并加 `--execute`；第二个模型使用另一个设备。脚本拒绝无GPU执行和覆盖已完成的同名run。首个真实窗口的三模型dry plan和官方预处理已经CPU验证；这些命令不代表GPU已运行。完整参数见r2的gpu_pilot_commands.json。
 
 ```bash
 PYTHONPATH=. /root/autodl-tmp/envs/motionproj/bin/python scripts/evaluate_worldsim_v81.py \
@@ -50,3 +50,5 @@ PYTHONPATH=. /root/autodl-tmp/envs/motionproj/bin/python scripts/evaluate_worlds
 ## 当前科学边界
 
 模型inference=0；H1–H5未检验；SOTA badcase/goodcase均尚未发现。V8.2暂`NO_GO`只因证据未完成，不关闭研究方向。failure_ledger_delta=V81-F01/F02；人工verdict=null。
+
+GPU前向前仍需处理实际kernel兼容性；隔离环境继承的mapanything/nuScenes-devkit依赖冲突未宣称已消除。7项检查、3模型strict meta与3个官方真实输入预处理均通过；这些不替代GPU复现。自然H1仍需补干净高重叠对照；GPU队列先服务badcase候选筛查和同场景诊断。

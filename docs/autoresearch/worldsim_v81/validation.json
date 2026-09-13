@@ -1,0 +1,20 @@
+{
+  "time_utc": "2026-09-13T06:16:31.037048+00:00",
+  "focused_tests": {
+    "command": "CUDA_VISIBLE_DEVICES= OPENBLAS_NUM_THREADS=1 PYTHONPATH=. /root/autodl-tmp/envs/worldsim-v81/bin/python -m pytest tests/test_worldsim_v81_geometry.py -q",
+    "result": "7 passed in 0.52s"
+  },
+  "strict_parameter_contracts": [
+    "meta_dvgt.json",
+    "meta_vggt.json",
+    "meta_dggt.json"
+  ],
+  "native_input_contracts": "cpu_input_contracts.json",
+  "sota_forward": false,
+  "gpu_kernels": "NOT_TESTED",
+  "pip_check_inherited_conflicts": [
+    "mapanything: trimesh missing",
+    "mapanything: opencv-python-headless 4.10 vs required 4.11",
+    "nuscenes-devkit: numpy<2 vs installed 2.2.6"
+  ]
+}

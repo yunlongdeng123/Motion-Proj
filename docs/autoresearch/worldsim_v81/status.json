@@ -1,0 +1,26 @@
+{
+  "task": "WS-V81-CPU-01",
+  "run": "20260913-cpu-r2",
+  "status": "CPU_COMPLETE_WAIT_GPU",
+  "time_utc": "2026-09-13T05:56:41.627376+00:00",
+  "failure_ledger_refs": [
+    "V74-H2-F11",
+    "V74-H2-F09",
+    "V74-H2-F10",
+    "V74-F01"
+  ],
+  "failure_ledger_delta": [
+    "V81-F01",
+    "V81-F02"
+  ],
+  "cpu_max": "50000 100000",
+  "memory_max": "2147483648",
+  "tests": "7 passed",
+  "model_parameter_checks": "DVGT/VGGT/DGGT strict meta load pass",
+  "sota_inference_count": 0,
+  "human_verdict": null,
+  "auto_resume": false,
+  "v82_decision": "NO_GO_PENDING_EVIDENCE",
+  "gpu_suggestion": "2x48GB for independent inference, or 1x80GB sequential; RAM>=64GB, CPU>=8",
+  "cpu_native_preprocessing": "3 official loaders with actual six-camera images passed"
+}

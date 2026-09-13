@@ -1,0 +1,82 @@
+[
+  {
+    "method": "dvgt",
+    "dry_plan": {
+      "method": "dvgt",
+      "variant": "full6",
+      "window": "scene-0015_18ad5b3a",
+      "n_images": 6,
+      "anchor_camera": null,
+      "checkpoint": "/root/autodl-tmp/models/worldsim_v81/dvgt1.pt",
+      "role": "DISCOVERY",
+      "heldout_access": false
+    },
+    "official_preprocess_shape": [
+      1,
+      1,
+      6,
+      3,
+      288,
+      512
+    ],
+    "pixel_range": [
+      0.062745101749897,
+      1.0
+    ],
+    "status": "PASS",
+    "model_forward": false,
+    "cuda": false
+  },
+  {
+    "method": "vggt",
+    "dry_plan": {
+      "method": "vggt",
+      "variant": "full6",
+      "window": "scene-0015_18ad5b3a",
+      "n_images": 6,
+      "anchor_camera": null,
+      "checkpoint": "/root/autodl-tmp/models/eas_vggt/vggt/model.safetensors",
+      "role": "DISCOVERY",
+      "heldout_access": false
+    },
+    "official_preprocess_shape": [
+      6,
+      3,
+      294,
+      518
+    ],
+    "pixel_range": [
+      0.062745101749897,
+      1.0
+    ],
+    "status": "PASS",
+    "model_forward": false,
+    "cuda": false
+  },
+  {
+    "method": "dggt",
+    "dry_plan": {
+      "method": "dggt",
+      "variant": "full6",
+      "window": "scene-0015_18ad5b3a",
+      "n_images": 6,
+      "anchor_camera": null,
+      "checkpoint": "/root/autodl-tmp/models/worldsim_v81/model_latest_nuscenes.pt",
+      "role": "DISCOVERY",
+      "heldout_access": false
+    },
+    "official_preprocess_shape": [
+      6,
+      3,
+      294,
+      518
+    ],
+    "pixel_range": [
+      0.062745101749897,
+      1.0
+    ],
+    "status": "PASS",
+    "model_forward": false,
+    "cuda": false
+  }
+]

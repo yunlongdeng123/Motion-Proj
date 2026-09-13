@@ -20,3 +20,5 @@
 推理数据合同：使用完全相同的原始 RGB、frame/camera/ROI，各方法保留自己的官方 resize。输出按实际 resize 的 pixel-center affine 回到原图查询，避免“统一 resize”改变 baseline。DVGT-1 的 DINOv3 完整代码固定到 `6876159a11b4df116f30f667f8c9888617df0751`；仅在构造期间关闭冗余 DINO 单独权重下载，随后用官方完整 checkpoint 严格加载全部参数。这不改变前向网络或模型权重。
 
 参考几何坐标变换参照 [nuScenes 官方 devkit](https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/utils/data_classes.py)。本轮按每扫描 ego pose 做运动补偿；原始点文件没有逐点时间戳，因此不声称已完成精确逐点 deskew。参考支撑质量与最终 scientific acceptance 分开记录。
+
+最终CPU状态：DVGT-1/VGGT-1B/DGGT nuScenes完整权重均已落盘，三个模型strict meta参数名/形状加载通过；三个官方预处理在真实6相机输入上通过。没有GPU前向。记录见meta_*.json与cpu_input_contracts.json。Torch2.4.1+cu121与DVGT官方建议2.8/12.8不同；实际GPU兼容性待开卡验证，不将meta通过称为完整复现。

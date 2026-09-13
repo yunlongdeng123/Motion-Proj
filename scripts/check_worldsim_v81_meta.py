@@ -37,6 +37,7 @@ else:
     from dggt.models.vggt import VGGT
     with torch.device('meta'):net=VGGT()
     state=torch.load(ROOT/'models/worldsim_v81/model_latest_nuscenes.pt',map_location='meta',weights_only=True,mmap=True)
+net=net.to('meta')  # DGGT sky模块从NumPy创建的小型buffer也移到meta再检验。
 net.load_state_dict(state,strict=True)
 result={'method':model,'status':'STRICT_META_LOAD_PASS','parameter_tensors':len(state),'parameter_elements':sum(p.numel() for p in net.parameters()),'torch':torch.__version__,'cuda_visible':torch.cuda.is_available(),'inference_performed':False,'elapsed_s':time.time()-start,'peak_rss_mib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024}
 (run/('meta_'+model+'.json')).write_text(json.dumps(result,indent=2));print(json.dumps(result),flush=True)

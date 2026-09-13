@@ -15,6 +15,13 @@ from matplotlib.patches import FancyBboxPatch,FancyArrowPatch
 import pyarrow as pa,pyarrow.parquet as pq
 from motion_proj.worldsim_v81.geometry import transform,apply,project,plane_fit,depth_metrics,roi_mask
 
+def draw_architecture(figdir):
+    fig,ax=plt.subplots(figsize=(13,3.8));ax.set_xlim(0,13);ax.set_ylim(0,4);ax.axis('off')
+    boxes=[(.2,2.3,2.2,.95,'RGB + calibration\nModel inputs only'),(3,2.3,2.6,.95,'Static ROI + factors\nFrozen candidates'),(6.3,2.3,2.5,.95,'Official frozen models\nDVGT / VGGT / DGGT'),(9.7,2.3,2.9,.95,'Depth / surface audit\nBadcase + goodcase atlas'),(3,.2,2.6,1.15,'LiDAR audit inputs\nCurrent: plane control\nNeighbors: held-out GT'),(9.7,.3,2.9,.95,'Controls + new logs\nV8.2 decision')]
+    for x,y,w,h,t in boxes:ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=.08',facecolor='#edf4f8',edgecolor='#315974'));ax.text(x+w/2,y+h/2,t,ha='center',va='center',fontsize=10)
+    for p1,p2 in [((2.45,2.8),(2.9,2.8)),((5.7,2.8),(6.2,2.8)),((8.9,2.8),(9.6,2.8)),((5.7,.8),(11.1,2.15)),((11.1,2.2),(11.1,1.35))]:ax.add_patch(FancyArrowPatch(p1,p2,arrowstyle='-|>',mutation_scale=15,color='#315974'))
+    ax.text(6.6,3.65,'CPU ready | matched groups = 0 | model outputs require GPU',fontsize=12,ha='center');fig.savefig(figdir/'architecture.png',dpi=160,bbox_inches='tight');fig.savefig(figdir/'architecture.svg',bbox_inches='tight');plt.close(fig)
+
 def render_card(row,run,path):
     rid=row['roi_id'];ref=np.load(run/'reference_geometry'/f'{rid}.npz');rgb=np.array(Image.open(run/'crops'/f'{rid}.jpg'))
     x0,y0,x1,y1=row['box'];uv=ref['uv']-[x0,y0];pu=ref['prompt_uv']-[x0,y0];gt=ref['depth_z'];xyz=ref['xyz']
@@ -133,11 +140,7 @@ def main():
         for ax,im,title in zip(axes,[orig,orig,edited,edited],['Full views / natural','Sparse views / same RGB','Full / attenuated texture','Sparse + attenuation']):ax.imshow(im);ax.set_title(title,fontsize=10);ax.axis('off')
         fig.suptitle('Same-scene factorial input control (synthetic diagnostic only)');fig.text(.06,.025,'Geometry and calibration fixed; predicted depth/error will be added after GPU inference.',fontsize=9);fig.savefig(figdir/'factor_escalation_inputs.png',dpi=150);plt.close(fig)
     # 架构图：模块、少量箭头和标签。
-    fig,ax=plt.subplots(figsize=(13,3.8));ax.set_xlim(0,13);ax.set_ylim(0,4);ax.axis('off')
-    boxes=[(.2,2.3,2.2,.95,'RGB + calibration\nCurrent LiDAR'),(3,2.3,2.6,.95,'Static ROI + factors\nFrozen 2 x 2 cohorts'),(6.3,2.3,2.5,.95,'Official frozen models\nDVGT / VGGT / DGGT'),(9.7,2.3,2.9,.95,'Depth / surface audit\nBadcase + goodcase atlas'),(3,.3,2.6,.95,'Neighbor LiDAR\nDisjoint held-out reference'),(9.7,.3,2.9,.95,'Controls + new logs\nV8.2 decision')]
-    for x,y,w,h,t in boxes:ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=.08',facecolor='#edf4f8',edgecolor='#315974'));ax.text(x+w/2,y+h/2,t,ha='center',va='center',fontsize=11)
-    for p1,p2 in [((2.45,2.8),(2.9,2.8)),((5.7,2.8),(6.2,2.8)),((8.9,2.8),(9.6,2.8)),((5.7,.8),(11.1,2.15)),((11.1,2.2),(11.1,1.35))]:ax.add_patch(FancyArrowPatch(p1,p2,arrowstyle='-|>',mutation_scale=15,color='#315974'))
-    ax.text(6.6,3.65,'CPU preparation completed  |  model outputs require GPU',fontsize=12,ha='center');fig.savefig(figdir/'architecture.png',dpi=160,bbox_inches='tight');fig.savefig(figdir/'architecture.svg',bbox_inches='tight');plt.close(fig)
+    draw_architecture(figdir)
     selection=[{'roi_id':r['roi_id'],'cohort':r['cohort'],'log':r['log'],'selection':'within-cohort median texture distance; <=1 case/log per cell; nonground first; no model/control error selection','figure':str(figdir/(r['roi_id']+'.png'))} for r in chosen]
     (run/'case_selection.json').write_text(json.dumps(selection,indent=2));(run/'simple_control_results.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in controls))
     for r in rows:r.pop('plane_control_error_values',None)

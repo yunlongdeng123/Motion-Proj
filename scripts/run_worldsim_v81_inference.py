@@ -22,6 +22,9 @@ def select_views(manifest,variant,anchor_camera=None):
         t=views[0]['timestamp_us'];prev=[v for v in by_sample.values() if v[0]['timestamp_us']<t];nxt=[v for v in by_sample.values() if v[0]['timestamp_us']>t]
         if not prev or not nxt:raise ValueError('temporal18 requires both adjacent complete frames')
         before=max(prev,key=lambda v:v[0]['timestamp_us']);after=min(nxt,key=lambda v:v[0]['timestamp_us'])
+        order=[v['camera'] for v in views]
+        before=sorted(before,key=lambda v:order.index(v['camera']))
+        after=sorted(after,key=lambda v:order.index(v['camera']))
         for group in [before,after]:
             if abs(abs(group[0]['timestamp_us']-t)-500000)>120000:raise ValueError('DVGT requires 2Hz; missing adjacent frame')
         return before+views+after
@@ -53,7 +56,8 @@ def main():
     if a.texture_case:
         tx=json.loads(Path(a.texture_case).read_text());overrides=tx['image_overrides']
         views=[dict(v,image=overrides.get(v['image'],v['image'])) for v in views]
-    plan={'method':a.method,'variant':a.variant,'window':m['window_id'],'n_images':len(views),'anchor_camera':a.anchor_camera,'checkpoint':str(WEIGHTS[a.method]),'role':'SYNTHETIC_DIAGNOSTIC' if a.texture_case else 'DISCOVERY','heldout_access':False}
+    role='SYNTHETIC_DIAGNOSTIC' if a.texture_case else 'DISCOVERY' if a.variant=='full6' and not a.anchor_camera else 'VIEW_DIAGNOSTIC'
+    plan={'method':a.method,'variant':a.variant,'window':m['window_id'],'n_images':len(views),'anchor_camera':a.anchor_camera,'checkpoint':str(WEIGHTS[a.method]),'role':role,'heldout_access':False}
     if not a.execute:print(json.dumps(plan,indent=2));return
     import torch
     if not torch.cuda.is_available():raise RuntimeError('WAIT_GPU: no GPU; CPU inference is intentionally disabled')
@@ -87,8 +91,7 @@ def main():
             model=VGGT();state=load_file(str(WEIGHTS[a.method]))
         else:
             from dggt.models.vggt import VGGT
-            # 使用同一官方预处理函数；DGGT dataset 文件还导入其原生包。
-            from datasets.dataset import load_and_preprocess_images
+            from dggt.utils.load_fn import load_and_preprocess_images
             model=VGGT();state=torch.load(WEIGHTS[a.method],map_location='cpu',weights_only=True,mmap=True)
         model.load_state_dict(state,strict=True);del state
         images=load_and_preprocess_images([v['image'] for v in views],mode='crop').to('cuda')
