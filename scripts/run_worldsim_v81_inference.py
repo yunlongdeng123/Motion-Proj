@@ -62,6 +62,7 @@ def main(argv=None):
     p.add_argument('--variant',choices=['full6','sparse3','sparse2','temporal18'],default='full6');p.add_argument('--out',required=True)
     p.add_argument('--execute',action='store_true');p.add_argument('--texture-case',help='JSON containing per-view intervention images; synthetic diagnostics only')
     p.add_argument('--anchor-camera',help='Keep the evaluated ROI camera in all view subsets')
+    p.add_argument('--allow-relative-single-view',action='store_true',help='仅单图 VGGT/DGGT：保存未定尺度的 native depth，不声称米制')
     a=p.parse_args(argv);m=json.loads(Path(a.manifest).read_text());views=select_views(m,a.variant,a.anchor_camera)
     if a.texture_case:
         tx=json.loads(Path(a.texture_case).read_text());overrides=tx['image_overrides']
@@ -125,7 +126,8 @@ def main(argv=None):
         if a.method=='vggt':from vggt.utils.pose_enc import pose_encoding_to_extri_intri
         else:from dggt.utils.pose_enc import pose_encoding_to_extri_intri
         ext,intr=pose_encoding_to_extri_intri(pred['pose_enc'],images.shape[-2:]);ext=ext[0].float().cpu().numpy()
-        scale,scale_cv=scale_from_cameras(ext,views)
+        if len(views)==1 and a.allow_relative_single_view:scale,scale_cv=1.,None
+        else:scale,scale_cv=scale_from_cameras(ext,views)
         np.savez_compressed(out/'cameras.npz',extrinsic=ext,intrinsic=intr[0].float().cpu().numpy())
     records=[]
     for i,v in enumerate(views):
@@ -135,9 +137,11 @@ def main(argv=None):
             points=saved['points'][0].reshape(-1,*saved['points'].shape[-3:])[i]
             xyz=dvgt_camera_points(points,views[0],v);depth=xyz[...,2]
         else:depth=saved['depth'][0,i,...,0]*scale
-        np.save(out/(v['camera']+'_depth_z_m.npy'),depth.astype('float32'))
+        suffix='_depth_z_native.npy' if a.method!='dvgt' and len(views)==1 and a.allow_relative_single_view else '_depth_z_m.npy'
+        np.save(out/(v['camera']+suffix),depth.astype('float32'))
         records.append({'camera':v['camera'],'original_wh':size,'network_wh':net_size,'original_to_network_pixel_center':A})
     result={**plan,'status':'DONE','elapsed_s':runtime,'peak_gpu_allocated_gib':torch.cuda.max_memory_allocated()/2**30,'metric_scale':scale,'camera_baseline_scale_cv':scale_cv,'scale_source':'native_metric' if a.method=='dvgt' else 'dataset_camera_baselines_no_lidar', 'views':records,'render_status':'NOT_RENDERED','failure_codes':[],'runtime':{'torch':torch.__version__,'cuda':torch.version.cuda,'gpu':torch.cuda.get_device_name(),'visible_devices':os.environ.get('CUDA_VISIBLE_DEVICES'),'precision':str(dtype),'strict_checkpoint':True},'native_shapes':{k:list(v.shape) for k,v in saved.items()}}
     if a.method=='dvgt':result.update(export_contract='dvgt_rdf_scale0.1_camera_ego_v1',metric_scale=10.,scale_source='official_gt_scale_factor_0.1_no_lidar_fit')
+    elif len(views)==1 and a.allow_relative_single_view:result.update(scale_source='UNIDENTIFIED_NATIVE_RELATIVE_UNIT',metric_scale=None,depth_unit='native_relative')
     (out/'result.json').write_text(json.dumps(result,indent=2));print(json.dumps(result),flush=True)
 if __name__=='__main__':main()
