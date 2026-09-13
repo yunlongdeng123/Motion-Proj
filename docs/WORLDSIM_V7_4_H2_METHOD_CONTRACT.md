@@ -1,3 +1,5 @@
+> **2026-09-13：V7.4 已收尾。** 下文为历史设计与阶段证据，不包含恢复训练或新方法立项授权。最终状态见 [收尾报告](WORLDSIM_V7_4_CLOSEOUT.md)。
+
 2026-09-13 最新：[P1.6报告](WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)。普通BUILD法向控制修复旧退化，但联合指标未过；不以normal drift立新方法。ordered实现关闭，witness总假说开放，用户3/6 Weak Reject保持。以下为历史设计/证据，不授权恢复训练。
 
 当前执行状态：[STOP_IMPLEMENTATION_OPTIMIZATION](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)。下面的“修正进行中”属于中途记录；修正现已完成，未解除A最小闭环限制。

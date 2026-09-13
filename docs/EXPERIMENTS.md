@@ -1,3 +1,9 @@
+# WS-V74-CLOSEOUT-01：CLOSED_WITHOUT_VALIDATED_MAIN_METHOD（2026-09-13）
+
+用户明确结束 V7.4。H1 NO_SURVIVOR 保持；H2 当前 ordered 实现关闭，GPU P1/P1.5/P1.6 完成但没有建立经验证的论文主方法。没有新训练、新方法或新科学否定实验。整体 witness-native 假说仍开放，开放问题不代表继续执行授权。
+
+[收尾报告与流程图](WORLDSIM_V7_4_CLOSEOUT.md)；[最终短卡 F11](research_failures/entries/V74-H2-F11.md)；[更新后的 scaling law](../auto-research_scaling_law.md)。failure_ledger_refs=V74-H2-F08/F09/F10；failure_ledger_delta=V74-H2-F11。规则转为 failure discovery → 简单强控制 → 有效主方法 → paper story → 有增量的次要方法。本次实验增量为零；只进行文档整理与仓库资产清理，既有 runs 不删除。以下全部是历史阶段记录。
+
 # P1.6 最终收口：WS-V74-H2-P16-01 / 20260913__physical-metric-r2
 
 P1.6 诊断、普通BUILD物理控制、同父残差诊断及架构/三张科学图已完成，无训练。旧70条失败在控制闭环对应步骤全部HIT，但A自由空间变差、C2出现3条新共享支撑HIT→EARLY；结论PARTIAL_EXPLANATION_NOT_JOINT_SUCCESS。关闭薄结构法向漂移要求新机制的依据，整体witness假说开放；不新立项。主计算23.43s/峰值分配0.0581GiB，资源充足。

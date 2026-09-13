@@ -1,7 +1,8 @@
-# WorldSim V74-H2：计划1.1执行记录
+# WorldSim V7.4：已收尾
 
-当前状态：**P1.6 已完成，普通物理控制只部分解释；ordered实现继续关闭**。旧薄结构正例漂移可由普通校正消除，但联合自由空间/覆盖尚未通过；不新立项，operator假说开放，评分仍约3/6 Weak Reject。
+当前状态：**V7.4 已结束，未形成经过验证的论文主方法。** H1 NO_SURVIVOR；H2 当前 ordered 实现关闭，整体 witness-native 假说未被全面证伪。后续遵循 failure discovery 优先原则；本轮不自动续跑。
 
+- [版本收尾与研究教训](docs/WORLDSIM_V7_4_CLOSEOUT.md)
 - [P1.6 病因诊断、普通控制与架构](docs/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)
 - [P1.5 失败审计、架构与证据](docs/WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)
 - [GPU执行报告与架构](docs/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)

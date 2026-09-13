@@ -1,40 +1,27 @@
 # Research Failures：渐进读取入口
 
-当前路线：V74-H2 当前 A 实现关闭，P1.5 已完成，P1.6 已完成、普通控制仅部分解释；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
+**当前：V7.4 已收尾，未得到经过验证的论文主方法。** H1 保持 NO_SURVIVOR；H2 当前 ordered 实现关闭，整体 witness-native 假说未被全面证伪。用户已结束本轮，不自动延长诊断或启动新方法。
 
 | 要解决的问题 | 从哪里读 |
 |---|---|
-| 哪些方法族已关闭，什么仍开放 | [累计研究边界](research_failures/BOUNDARIES.md) |
-| 上半场三个候选为何失败 | [V74-H1 最终失败](WORLDSIM_V7_4_FAILURES.md)；关键 V74-F04/F09/F10 |
-| 按版本查找 | [分页版本目录](research_failures/VERSIONS.md) |
-| 按 ID、主题、关键词查找 | 下方查询命令；历史 1084 条目录 |
-| 下半场新失败 | [新记录目录](research_failures/ENTRIES.md) |
+| V7.4 最终结论与研究过程教训 | [F11 收尾短卡](research_failures/entries/V74-H2-F11.md) → [收尾报告](WORLDSIM_V7_4_CLOSEOUT.md) |
+| 哪些动机已排除，什么仍开放 | [累计研究边界](research_failures/BOUNDARIES.md) |
+| GPU 训练实现为何停止 | [F08](research_failures/entries/V74-H2-F08.md) |
+| 薄结构为何退化、普通控制解释了多少 | [F09](research_failures/entries/V74-H2-F09.md) → [F10](research_failures/entries/V74-H2-F10.md) |
+| 上半场三个候选为何失败 | [H1 最终失败](WORLDSIM_V7_4_FAILURES.md)；关键 V74-F04/F09/F10 |
+| 按版本或 ID 渐进检索 | [版本目录](research_failures/VERSIONS.md)、[新记录目录](research_failures/ENTRIES.md)、下方查询命令 |
 | 如何新增可复用资产 | [维护约定与模板](research_failures/README.md) |
 
 ```bash
-python scripts/query_research_failures.py --id V74-F10 --detail --limit 1
+python scripts/query_research_failures.py --id V74-H2-F11 --detail --limit 1
+python scripts/query_research_failures.py --id V74-H2-F10 --detail --limit 1
 python scripts/query_research_failures.py --query 后继 --limit 5
 python scripts/query_research_failures.py --topic first_return --version V73 --limit 10
 python scripts/query_research_failures.py --record RF0013 --detail --max-lines 80
 ```
 
-主题：`first_return`、`coverage`、`novelty`、`data_evidence`、`engineering`、`resources`、`optimization`、`legacy_policy`。
-无 `--detail` 时仅输出目录；多页用 `--offset`，长正文用 `--line-offset`。同一 ID 的不同阶段记录分别保留，不合并成互相矛盾的“当前结论”。
+无 `--detail` 时只输出目录；多页用 `--offset`，长正文用 `--line-offset`。历史 14485 行已迁移为 80 个分片、1084 条历史记录，正文保留；新卡另由查询器读取。见 [迁移清单](research_failures/migration.json)。不默认全文读取。
 
-迁移：原 14485 行 → 80 个历史分片、1084 条可查询记录；正文顺序完整保留，详见 [迁移清单](research_failures/migration.json)。旧哈希/门控要求是历史文本，**不适用于当前工作**；当前用户要求和 [scaling law](../auto-research_scaling_law.md) 优先。
+主题：`first_return`、`coverage`、`novelty`、`data_evidence`、`engineering`、`resources`、`optimization`、`legacy_policy`。旧阶段的 RUNNING、WAIT_GPU、未裁决及历史权限仅代表当时状态，不能恢复为当前执行授权。旧哈希/门控要求不适用；当前用户要求与 [scaling law](../auto-research_scaling_law.md) 优先。
 
-历史 CPU 里程碑：下半场CPU已收口：V74-H2-F01（数据）、F02（迁移/路径修复）、F03（数值）、F04（预算规范化修复）、F05（远层排序/特征截断修复）；尚无A的科学或新颖性裁决。人工verdict=null。H1最终短卡优先返回，旧阶段记录继续可查。
-
-2026-09-12恢复GPU P1：继承F03/F05数值与完整信息边界，当前无新裁决。计划1.1的witness算子不得复活已关闭的责任求解/提议挑片路线。
-
-GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU实现修正）、F08（一次DAgger修正完成后仍有自身闭环学习限制，停止当前实现）。按ID读取详情；仍无A科学/新颖性裁决。
-
-最终解释以[GPU P1报告](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)为准；不是科学/新颖性裁决，不生成H2全类别NO_SURVIVOR。
-
-2026-09-12用户授权收口后关机；无新增研究失败，F08优化限制结论保持，关机不是资源不足或新的科学裁决。
-
-2026-09-13 人工复审：当前 A 实现关闭、约 3/6 Weak Reject；witness-native operator 假设仍开放。最新复审见 [F08](research_failures/entries/V74-H2-F08.md)，[P1.5 审计定义](WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md)。历史人工 verdict=null 不代表本次复审缺失。
-
-P1.5 分析已完成：[F09](research_failures/entries/V74-H2-F09.md) 给出连续漂移而非薄结构换面的证据；[报告已完成](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)。A 当前实现关闭，未新立项。
-
-P1.6最新：[F10](research_failures/entries/V74-H2-F10.md)：法向误差解释旧薄结构正例退化；普通BUILD控制不能联合解决所有问题。先读短卡，再按需读报告/逐例资产。
+failure_ledger_delta：新增 V74-H2-F11（收尾与规划纠偏），F08–F10 及 V73/H1 历史证据保持原结论。

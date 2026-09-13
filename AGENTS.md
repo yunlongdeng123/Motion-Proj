@@ -1,18 +1,12 @@
-# 当前状态：P1.6 已完成（2026-09-13）
-
-见 docs/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md 和 F10。普通法向控制解释旧薄结构正例漂移，但未联合解决全任务；当前不训练、不新立项，ordered实现继续关闭。整体witness假说仍开放。报告/三本总账/分支push、证据备份、无活动任务后沿用用户shutdown授权。以下历史阶段不代表重新启动授权。
-
-# 当前状态：P1.5 已完成，ordered 实现关闭（2026-09-13）
-
-用户要求先更新 failure，再用现有轨迹做 switching-margin 审计。仅诊断/冻结几何查询与教师重标注；不恢复 A 训练、不扩网络/epoch/DAgger、不调 loss、不启真实数据训练或 B/C。当前实现停止仍有效。用户人工复审约 3/6 Weak Reject；不能代改。执行定义见 docs/WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md；结果见 P15_FORENSICS_REPORT 和 F09，已经完成本轮授权审计，不自动再训练或立项。收口后沿用用户明确的 push、文档、任务清空后 shutdown 授权。
-
 # Motion-Proj 执行约定
 
-## 当前授权：WorldSim V7.4 下半场 / 当前实现停止（2026-09-12）
+## 当前状态：V7.4 已收尾（2026-09-13）
 
-用户已开启GPU并修订主计划为 `docs/WorldSim_V74_Second_Half_Generative_Surface_Plan.md` v1.1。已执行该计划的GPU P1并完成一次优化修正，当前STOP_IMPLEMENTATION_OPTIMIZATION，见GPU_P1_REPORT。没有新的用户授权或足以改变当前解释的新证据时，不自动重启已停止实现；不将此状态误写为资源不足。`docs/RESEARCH_STATUS.md` 为当前状态；历史WAIT_GPU已被本次授权替代。
-方案制定与实质卡点重规划遵循 `auto-research_scaling_law.md`。唯一主命题是 observation witness 决定共享表面存在/支撑域/位置，真实首面归属由硬几何产生；不能靠重命名二维片或加损失宣称创新。
-分支 `research/worldsim-v7.4-h2-generative-surface`；V73和H1 NO_SURVIVOR冻结。P1完整机制/同信息强控制通过后才进入P2真实训练；B有条件备用，C暂缓。两域各自训练/测试，不要求跨域零样本，旧DEV不是独立FINAL。
+用户已结束 V7.4；H1 NO_SURVIVOR，H2 当前 ordered 实现关闭，未形成经过验证的论文主方法。P1.5/P1.6 完成，整体 witness-native 假说未被全面证伪。本轮只更新失败资产、规划规则与清理当前分支大文件，不启新研究。最终状态见 docs/WORLDSIM_V7_4_CLOSEOUT.md 与 V74-H2-F11。
+
+后续方案与卡点重规划遵循 auto-research_scaling_law.md，尤其第33条：先 failure discovery 与简单强控制，再找有效办法；禁止先有 fancy mechanism 再不断补必要性理由。有效主方法出现后立即整理 paper story，之后才研究有增量的次要方法。不预设下一主方法。
+
+分支 research/worldsim-v7.4-h2-generative-surface；只清理此分支当前树，V73/H1 与已共享历史保持。外移大资产先保留仓库外完整归档和恢复索引，核心代码、文档、失败证据可追溯。推送并确认没有活动任务后沿用 shutdown 授权。
 
 ## 工作与资源
 
@@ -20,7 +14,7 @@
 - 不加哈希、校验和、指纹；不增加过度校验或门控，不运行大量 smoke/回归测试。Git 自身版本标识用于普通提交追溯。
 - 小步提交并及时 push 当前远端分支，不改写 V73 或已共享历史。每个里程碑同步三本总账。
 - 资源不足时先完成仍可执行的 CPU/整理工作、保存结果并 push，确认没有训练、评价、数据、渲染或会启动任务的控制器，再执行 shutdown 并提示加卡。不能只看宿主 CPU/内存，读取当前 cgroup 配额。
-- 计划的科学淘汰规则仍然有效；研究失败、数据缺失与资源不足分别记录。本次用户授权继续GPU研究，按计划的证据和停止规则推进。H1 科学冻结不阻止用户授权的 H2 新抽象。
+- 计划的科学淘汰规则仍然有效；研究失败、数据缺失与资源不足分别记录。V7.4 已结束；旧计划中的待办不代表继续研究授权。
 - 已授权清理与后续实验无关的大文件。优先删除可重建缓存和退役中间数据；保留原始输入、最终/关键 checkpoint、固定表面、指标、失败证据和重建入口。按路径、类别、大小、原因及恢复方式记录，不能把归档文档当作大文件备份。
 
 ## 研究事实与文档
