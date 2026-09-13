@@ -1,6 +1,6 @@
-# 当前：P1.6 病因诊断 RUNNING（2026-09-13）
+# 当前：P1.6 计算完成，结果整理中（2026-09-13）
 
-`WS-V74-H2-P16-01 / 20260913__physical-metric-r1`。复用原 12 FIT 任务，按[预先定义](WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_PLAN.md)做几何分解、恢复分析和 BUILD 普通物理控制。无训练。failure_ledger_refs=F08/F09；failure_ledger_delta=F09 增补诊断授权，尚无新结果。用户 3/6 Weak Reject 保持。以下为历史状态。
+P1.6 全部计算完成，无训练。普通BUILD控制恢复原70条失败，但A自由空间变差、C2有新共享支撑退化，结论 PARTIAL_EXPLANATION_NOT_JOINT_SUCCESS。关闭薄结构法向漂移要求新机制的依据；整体假说未关闭，不自动新立项。failure_ledger_delta=V74-H2-F10；[短卡](research_failures/entries/V74-H2-F10.md)，[结果](autoresearch/worldsim_v74_h2/p16/decision.json)。报告/图整理中。以下为历史状态。
 
 # V74-H2 P1.5 已完成：当前 ordered 实现关闭
 

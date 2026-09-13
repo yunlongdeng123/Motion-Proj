@@ -1,6 +1,6 @@
-# P1.6 启动：WS-V74-H2-P16-01 / 20260913__physical-metric-r1
+# P1.6 计算里程碑：WS-V74-H2-P16-01 / 20260913__physical-metric-r1
 
-状态 RUNNING，2026-09-13；继承 GPU-P1-01/P15-01 资产，固定 12 已曝光 FIT 任务；[协议](WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_PLAN.md)。RTX3090/14 CPU/90GiB；不训练，普通控制只读 BUILD，监督参考单列。failure_ledger_refs=[V74-H2-F08,V74-H2-F09]；failure_ledger_delta=F09 诊断授权，无新科学结论。以下为历史记录。
+P1.6 全部计算完成，无训练。普通BUILD控制恢复原70条失败，但A自由空间变差、C2有新共享支撑退化，结论 PARTIAL_EXPLANATION_NOT_JOINT_SUCCESS。关闭薄结构法向漂移要求新机制的依据；整体假说未关闭，不自动新立项。failure_ledger_delta=V74-H2-F10；[短卡](research_failures/entries/V74-H2-F10.md)，[结果](autoresearch/worldsim_v74_h2/p16/decision.json)。报告/图整理中。以下为历史状态。
 
 # P1.5 最终收口：WS-V74-H2-P15-01
 

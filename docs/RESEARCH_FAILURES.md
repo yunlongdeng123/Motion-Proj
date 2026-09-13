@@ -1,6 +1,6 @@
 # Research Failures：渐进读取入口
 
-当前路线：V74-H2 当前 A 实现关闭，P1.5 已完成，P1.6 病因诊断进行中；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
+当前路线：V74-H2 当前 A 实现关闭，P1.5 已完成，P1.6 计算已完成、普通控制仅部分解释；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
 
 | 要解决的问题 | 从哪里读 |
 |---|---|
@@ -36,3 +36,5 @@ GPU阶段新增：F06（合成角色种子重合，已修）、F07（初始GPU�
 2026-09-13 人工复审：当前 A 实现关闭、约 3/6 Weak Reject；witness-native operator 假设仍开放。最新复审见 [F08](research_failures/entries/V74-H2-F08.md)，[P1.5 审计定义](WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md)。历史人工 verdict=null 不代表本次复审缺失。
 
 P1.5 分析已完成：[F09](research_failures/entries/V74-H2-F09.md) 给出连续漂移而非薄结构换面的证据；[报告已完成](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)。A 当前实现关闭，未新立项。
+
+P1.6最新：[F10](research_failures/entries/V74-H2-F10.md)：法向误差解释旧薄结构正例退化；普通BUILD控制不能联合解决所有问题。先读短卡，再按需读报告/逐例资产。
