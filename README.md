@@ -1,3 +1,5 @@
+当前 V8.1：[有限补证收口](docs/WORLDSIM_V8_1_BOUNDED_CLOSEOUT_REPORT.md)、[方法族 badcase report](docs/WORLDSIM_V8_1_METHOD_BADCASE_REPORT.md)。当前批次已停，V8.2 NO_GO；不是整个方法族已测完。
+
 # WorldSim V8.1：稀疏视角 × 低纹理失效发现
 
 当前按用户的 [V8.1计划](docs/WorldSim_V81_SparseView_LowTexture_Failure_Discovery_Plan.md) 做科学发现、badcase/goodcase 和可视化对比。先检查真实数据、现有方法和简单强控制；V8.2 才研究解法。

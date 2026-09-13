@@ -2,18 +2,9 @@
 
 2026-09-13；`WS-V81-CLOSE-01`。V8.1 的对象是不同方法如何使用稀缺观测。没有运行的方法只能登记待检验机制；raw VGGT 仅作为几何 prior probe，不能代替 VGGD 或完整驾驶重建。其他方法是否失败，不是进入 V8.2 的数量门槛。
 
-```mermaid
-flowchart LR
- I[真实 RGB 与观测配置] --> M[官方模型与原生预处理]
- M --> G[原生几何 / Gaussian]
- G --> R[渲染与可选 refinement]
- G --> E[可见表面与残余评价]
- R --> E
- L[合法 INPUT 度量锚点] --> C[普通尺度 / 局部平面控制]
- C --> E
- H[独立 HELDOUT 参考] --> E
- E --> D[四环证据与一次推进判定]
-```
+本轮状态：18项新增DVGT/raw VGGT发现推理已完成；条件下游未触发，DGGT本轮没有新增core/Gaussian/render/diffusion输出。其他方法均没有新增方法级badcase。[有限收口结论](WORLDSIM_V8_1_BOUNDED_CLOSEOUT_REPORT.md)。
+
+![架构组件](figures/worldsim_v81_closeout/four_link_architecture.png)
 
 ## 方法范围
 

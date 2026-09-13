@@ -1,3 +1,11 @@
+# 当前：V8.1 有限补证收口（2026-09-13）
+
+WS-V81-CLOSE-01完成：10旧候选内部复核；8新AV2日志840格模型前筛查，3日志18项新推理。旧440项未重跑、无训练。木板墙最强法向候选参考不稳；灰墙297点/0.103m好例保留。VGGT两个新日志有0.429/0.290m可恢复差距，单图度量锚点后MAE0.018/0.472/0.337m；DVGT两个后向单相机坐标/覆盖合同未建立，不计科学failure或稳健负例。
+
+四环证据不足，V8.2 NO_GO；当前共同失效子命题降低优先级，停止本批次。其他8方法已纳入方法族badcase report，DGGT等方法级实证仍缺，条件下游扩展未触发；不能宣称整个V8.1已测完。无自动续跑、确认reserve封存、未关机。人工verdict=null；failure_ledger_refs=V81-F01/F02/F03/F04；failure_ledger_delta=V81-F05。
+
+[有限收口报告](WORLDSIM_V8_1_BOUNDED_CLOSEOUT_REPORT.md)；[方法族badcase report](WORLDSIM_V8_1_METHOD_BADCASE_REPORT.md)；[推进判定](WORLDSIM_V8_1_TO_V8_2_DECISION.md)。以下为历史。
+
 # GPU阶段补记（2026-09-13）
 
 DVGT-1与raw VGGT均已各完成220项官方权重推理，实际Torch2.4.1+cu121/BF16/3090环境已运行6图和18图；不宣称作者整套评测复现。DVGT导出须除gt_scale_factor=0.1、RDF→FLU并使用首输入相机ego时间戳，修正见[V81-F03](research_failures/entries/V81-F03.md)。raw VGGT相机基线定尺度与区域外INPUT LiDAR尺度控制分表。DGGT仍只有CPU合同与权重准备，没有本轮GPU/renderer结果；其他不可运行方法没有新增复现。

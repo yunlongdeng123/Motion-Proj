@@ -1,0 +1,84 @@
+{
+  "task": "WS-V81-CLOSE-01",
+  "run": "20260913-bounded-r1",
+  "state": "BOUNDED_CLOSEOUT_COMPLETE",
+  "registered_at": "2026-09-13T08:49:21.370660+00:00",
+  "seed": 8101,
+  "failure_ledger_refs": [
+    "V81-F01",
+    "V81-F02",
+    "V81-F03",
+    "V81-F04"
+  ],
+  "failure_ledger_delta": "V81-F05",
+  "human_verdict": null,
+  "prior_jobs_repeated": 0,
+  "training": false,
+  "four_links": [
+    "reliable_residual_after_ordinary_scale",
+    "prespecified_real_evidence_intervention_and_recovery",
+    "ordinary_controls_and_recoverable_headroom_with_input_disclosure",
+    "frozen_failure_new_logs_and_direct_reconstruction_method_for_task_claim"
+  ],
+  "existing_roi_ids": [
+    "scene-0862_9b1a2d20_CAM_BACK_RIGHT_01",
+    "scene-0450_023039d6_CAM_FRONT_RIGHT_01",
+    "scene-0139_7e27d5c0_CAM_BACK_LEFT_12",
+    "scene-0919_a6711744_CAM_BACK_LEFT_12",
+    "scene-0632_1b3e964e_CAM_FRONT_RIGHT_13",
+    "scene-0139_7e27d5c0_CAM_FRONT_LEFT_02",
+    "scene-0632_fd5b6a5c_CAM_BACK_RIGHT_01",
+    "scene-0632_fd5b6a5c_CAM_FRONT_RIGHT_02",
+    "scene-0626_9a9c05fe_CAM_BACK_LEFT_13",
+    "scene-0139_7e27d5c0_CAM_FRONT_LEFT_10"
+  ],
+  "fixed_interior_inset_px": 32,
+  "reference_rule": {
+    "points_min": 30,
+    "scans_min": 2,
+    "coverage_min": 0.25,
+    "rms_max_m": 0.12,
+    "inlier_min": 0.85,
+    "leave_scan_normal_spread_max_deg": 5
+  },
+  "operational_residual_rule": {
+    "depth_mae_exceeds": "max(0.5 m, 0.05 * median reference depth, 3 * reference plane RMS)",
+    "normal_error_exceeds": "max(10 deg, 3 * leave-scan normal spread)",
+    "plane_bending_p95_exceeds_m": 0.2,
+    "note": "one metric suffices for candidate; this is a cost-control discovery definition, not paper significance or human acceptance"
+  },
+  "scale_protocol": "pure RGB forward with public camera-baseline metric conversion separated from visual + outside-target INPUT LiDAR global scale; no heldout fitting; same calibration algorithm and target exclusion across comparisons; local INPUT plane separate extra-information reference",
+  "new_sources": {
+    "dataset": "AV2 val",
+    "logs": [
+      "02678d04-cc9f-3148-9f95-1ba66347dff9",
+      "02a00399-3857-444e-8db3-a8f58489c394",
+      "04994d08-156c-3018-9717-ba0e29be8153",
+      "05fa5048-f355-3274-b565-c0ddc547b315",
+      "0aa4e8f5-2f9a-39a1-8f80-c2fdde4405a2",
+      "0bae3b5e-417d-3b03-abaa-806b433233b8",
+      "0c3bad78-9f1e-395d-a376-2eb7499229fd",
+      "0fb7276f-ecb5-3e5b-87a8-cc74c709c715"
+    ],
+    "selection": "first 8 sorted locally available metadata log directories excluding sealed 10-log reserve; fixed before RGB and model-quality access",
+    "role": "NEW_TO_V81_DISCOVERY_LEGACY_METADATA_NOT_CONFIRMATION",
+    "max_logs": 8,
+    "windows_per_log": 1,
+    "selection_timestamp": "middle available LiDAR timestamp; nearest RGB, context +/-0.5 seconds",
+    "do_not_replace_failed_screen_logs": true
+  },
+  "intervention": "same target camera; target alone vs target plus two actually visible temporal observations at +/-0.5s; require calibrated visible support and parallax >=1deg, fixed target and input metric calibration protocol; recovery restores exactly removed observations; no synthetic stress escalation",
+  "conditional_downstream": "DGGT core/Gaussian/RGB pilot may establish executable method contract; scientific failure extension and independent confirmation only for surviving first three links",
+  "stop": "stop after this single frozen batch; if ordinary controls remove meaningful residuals or valid evidence removal shows no repeatable degradation, lower or close joint sparse-view x low-texture claim; absent data or executable contract is a missing-evidence result, not model robustness",
+  "completed_at": "2026-09-13T09:16:20.191783+00:00",
+  "new_forwards": 18,
+  "scientifically_comparable_intervention_logs": {
+    "vggt": 3,
+    "dvgt": 1
+  },
+  "promotion": "NO_GO",
+  "subclaim": "DEPRIORITIZE_CURRENT_JOINT_FAILURE_CLAIM",
+  "downstream": "NOT_TRIGGERED; DGGT method-level evidence outstanding",
+  "automatic_resume": false,
+  "power_action": "NONE"
+}
