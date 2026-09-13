@@ -12,3 +12,5 @@
 - [CPU数据与文档交接](WORLDSIM_V7_4_H2_CPU_HANDOFF.md)
 
 H1 NO_SURVIVOR与V73均为冻结历史。
+
+[大资产归档与轻量获取方法](archives/worldsim_v74_closeout_20260913/README.md)：当前分支保留代码、核心文档及必要证据；旧批量资产按需恢复。

@@ -118,11 +118,11 @@ python scripts/render_p15_report.py <上述新输出目录>
 |---|---|
 | 最新边界 | [F09 短卡](research_failures/entries/V74-H2-F09.md)，[状态](RESEARCH_STATUS.md) |
 | 总体分母、margin、配对状态 | [summary.json](autoresearch/worldsim_v74_h2/p15/summary.json) |
-| 查某条失败 | [transitions.json](autoresearch/worldsim_v74_h2/p15/transitions.json) 的 model/case/step/ray |
+| 查某条失败 | [transitions.json（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-235) 的 model/case/step/ray |
 | 连续漂移与替换反事实 | [depth_decomposition.json](autoresearch/worldsim_v74_h2/p15/depth_decomposition.json) |
 | 小 alpha 是否只是等深身份变化 | [cofirst_diagnostics.json](autoresearch/worldsim_v74_h2/p15/cofirst_diagnostics.json) |
 | 教师动作、打分、同状态配对 | [references.json](autoresearch/worldsim_v74_h2/p15/references.json) |
-| 插值临界区间与物理误差尺度 | [interpolations.json](autoresearch/worldsim_v74_h2/p15/interpolations.json) |
+| 插值临界区间与物理误差尺度 | [interpolations.json（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-234) |
 | 完整大资产地址与输入 | [manifest.json](autoresearch/worldsim_v74_h2/p15/manifest.json) |
 
 完整结果约 26MiB，包括父/教师/学习器表面、逐 alpha 全射线查询、HIT→HIT 对照和真实前后状态链接。逐射线 JSON 是按需资产，不继续堆入 failure 入口。输入为既有 FIT 174211 任务，本轮无新随机种子和随机搜索。

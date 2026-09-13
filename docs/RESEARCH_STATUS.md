@@ -1,8 +1,10 @@
 # V7.4 已收尾：CLOSED_WITHOUT_VALIDATED_MAIN_METHOD（2026-09-13）
 
+仓库资产清理完成：241 个大表/渲染场景/编译包已从当前分支移出，原值完整存于仓库外归档并有本地副本；核心代码、文档、报告内嵌图和失败查询索引保留，原始 runs 不删除。见 [归档清单与恢复方法](archives/worldsim_v74_closeout_20260913/README.md)。本次没有新实验；failure_ledger_delta 仍为 F11（追加资产位置），F08–F10 数值不变。
+
 用户明确结束 V7.4。H1 NO_SURVIVOR 保持；H2 当前 ordered 实现关闭，GPU P1/P1.5/P1.6 完成但没有建立经验证的论文主方法。没有新训练、新方法或新科学否定实验。整体 witness-native 假说仍开放，开放问题不代表继续执行授权。
 
-[收尾报告与流程图](WORLDSIM_V7_4_CLOSEOUT.md)；[最终短卡 F11](research_failures/entries/V74-H2-F11.md)；[更新后的 scaling law](../auto-research_scaling_law.md)。failure_ledger_refs=V74-H2-F08/F09/F10；failure_ledger_delta=V74-H2-F11。规则转为 failure discovery → 简单强控制 → 有效主方法 → paper story → 有增量的次要方法。当前正在完成仓库资产清理；既有 runs 不删除。以下全部是历史阶段记录。
+[收尾报告与流程图](WORLDSIM_V7_4_CLOSEOUT.md)；[最终短卡 F11](research_failures/entries/V74-H2-F11.md)；[更新后的 scaling law](../auto-research_scaling_law.md)。failure_ledger_refs=V74-H2-F08/F09/F10；failure_ledger_delta=V74-H2-F11。规则转为 failure discovery → 简单强控制 → 有效主方法 → paper story → 有增量的次要方法。仓库资产清理已完成；既有 runs 不删除。以下全部是历史阶段记录。
 
 # 当前：P1.6 已完成，普通控制仅部分解释（2026-09-13）
 

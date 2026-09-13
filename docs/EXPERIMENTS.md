@@ -1,8 +1,10 @@
 # WS-V74-CLOSEOUT-01：CLOSED_WITHOUT_VALIDATED_MAIN_METHOD（2026-09-13）
 
+仓库资产清理完成：241 个大表/渲染场景/编译包已从当前分支移出，原值完整存于仓库外归档并有本地副本；核心代码、文档、报告内嵌图和失败查询索引保留，原始 runs 不删除。见 [归档清单与恢复方法](archives/worldsim_v74_closeout_20260913/README.md)。本次没有新实验；failure_ledger_delta 仍为 F11（追加资产位置），F08–F10 数值不变。
+
 用户明确结束 V7.4。H1 NO_SURVIVOR 保持；H2 当前 ordered 实现关闭，GPU P1/P1.5/P1.6 完成但没有建立经验证的论文主方法。没有新训练、新方法或新科学否定实验。整体 witness-native 假说仍开放，开放问题不代表继续执行授权。
 
-[收尾报告与流程图](WORLDSIM_V7_4_CLOSEOUT.md)；[最终短卡 F11](research_failures/entries/V74-H2-F11.md)；[更新后的 scaling law](../auto-research_scaling_law.md)。failure_ledger_refs=V74-H2-F08/F09/F10；failure_ledger_delta=V74-H2-F11。规则转为 failure discovery → 简单强控制 → 有效主方法 → paper story → 有增量的次要方法。本次实验增量为零；只进行文档整理与仓库资产清理，既有 runs 不删除。以下全部是历史阶段记录。
+[收尾报告与流程图](WORLDSIM_V7_4_CLOSEOUT.md)；[最终短卡 F11](research_failures/entries/V74-H2-F11.md)；[更新后的 scaling law](../auto-research_scaling_law.md)。failure_ledger_refs=V74-H2-F08/F09/F10；failure_ledger_delta=V74-H2-F11。规则转为 failure discovery → 简单强控制 → 有效主方法 → paper story → 有增量的次要方法。本次实验增量为零；文档整理与仓库资产清理已完成，既有 runs 不删除。以下全部是历史阶段记录。
 
 # P1.6 最终收口：WS-V74-H2-P16-01 / 20260913__physical-metric-r2
 
@@ -80,7 +82,7 @@ WS-V74-H2-GPU-P1-01 正在实现；[启动记录](autoresearch/worldsim_v74_h2/g
 | PROBE-EVALUATION / NKSR-probe66-empty-native-r3 | 66/66，零工程缺输出 | final/nksr_evaluation |
 | DECISION / final-tournament-s7401 | NO_SURVIVOR | final/decision.json、最终报告 |
 
-上表 run 前缀日期分别保存在 [完整run清单](autoresearch/worldsim_v74/final/decision.json)，不以简称替代唯一run ID。最终报告含架构图、全部真实/机制解释与成本；[完整质量表](autoresearch/worldsim_v74/final/REAL_RESULTS.md) 和 [配对日志原值](autoresearch/worldsim_v74/final/paired_log_comparisons.json) 为权威数值。大资产仍驻留runs路径。
+上表 run 前缀日期分别保存在 [完整run清单](autoresearch/worldsim_v74/final/decision.json)，不以简称替代唯一run ID。最终报告含架构图、全部真实/机制解释与成本；[完整质量表](autoresearch/worldsim_v74/final/REAL_RESULTS.md) 和 [配对日志原值（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-223) 为权威数值。大资产仍驻留runs路径。
 
 所有主域必要控制筛选为False；AV2单列数值不虚构主域日志门槛。未触发确认seed/FINAL扩展；没有新方法或看DEV调参。NKSR空层工程修复不修改网络和体素参数。
 

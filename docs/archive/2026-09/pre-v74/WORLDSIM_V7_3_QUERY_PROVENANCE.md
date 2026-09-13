@@ -46,7 +46,7 @@ free是已观测原首回波前0.2米之外的提前距离，每个来源先除�
 
 三页图按完整owner排序，展示两模型的相同原始束、相同Actor规范地面投影和成对一致坐标范围。线段连接同一束的真实测量与预测首交点，不是最近邻对应；全部存储束均保留。灰色为build，黑叉为测量，红/绿/蓝为early/hit/late，圆/三角表示build/completion来源。图不显示高度，不能代替三维数值评价。
 
-[全部9个对象的三页PDF](../../../autoresearch/worldsim_v73/m2/global/V73_MOVING_QUERY_INTERSECTIONS.pdf)
+[全部9个对象的三页PDF（已归档）](../../../archives/worldsim_v74_closeout_20260913/README.md#asset-029)
 
 ## 研究决策
 

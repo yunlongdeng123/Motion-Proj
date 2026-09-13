@@ -18,7 +18,7 @@
 
 ## 既有证据与目录
 
-- [V7.1 EAS main](../../../../paper/main.pdf) / [本地 supplement](../../../../paper/supplement.pdf)、[中文稿](../../../paper/main_zh.md)、[源码说明](../../../../paper/README.md)、[写作更正](../../../../paper/REVISION_NOTES.md)。
+- [V7.1 EAS main（已归档）](../../../archives/worldsim_v74_closeout_20260913/README.md#asset-240) / [本地 supplement（已归档）](../../../archives/worldsim_v74_closeout_20260913/README.md#asset-241)、[中文稿](../../../paper/main_zh.md)、[源码说明](../../../../paper/README.md)、[写作更正](../../../../paper/REVISION_NOTES.md)。
 - [旧 V7.2 技术报告](../../../../paper_v72/README.md)：A1、简单基线与 LiDAR4D capability 的历史结果；不是新 EAS-VGGT 实验。
 
 `motion_proj/`、`scripts/`、`configs/`、`tests/` 为实现与配置；`docs/autoresearch/`、`docs/run_manifests/` 为凭证；`docs/archive/` 为历史材料。既有 checkpoint、数据曝光身份与 PDF 保留，计划完成不触发关机。

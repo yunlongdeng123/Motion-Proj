@@ -21,7 +21,7 @@ flowchart LR
 
 76 份不再是主线的顶层文档移入 `docs/archive/2026-09/pre-v74/`；旧 AGENTS、README、状态/实验台账有历史快照。统一失败账本保留原事实，顶部换成 V74 当前入口。主计划修订为两个数据集各自训练/评价，旧跨域结果保留为历史。
 已删除 4105 个列明的缓存/旧帧目标，实际释放 **131.802 GiB**，P0 最终准备时可用 **194.126 GiB**。按组保留 340 个代表帧，关键 checkpoint、固定表面、原始 LiDAR/RGB、轨迹、指标、模型与环境保留。
-重建旧逐帧分析可能需要重新推理和恢复旧依赖。目录大小之和与实际空闲空间差分开记录。路径/大小/理由/恢复方式在 [清理计划](autoresearch/worldsim_v74/p0/storage_plan.json)，实际结果在 [清理回执](autoresearch/worldsim_v74/p0/storage_result.json)。
+重建旧逐帧分析可能需要重新推理和恢复旧依赖。目录大小之和与实际空闲空间差分开记录。路径/大小/理由/恢复方式在 [清理计划（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-226)，实际结果在 [清理回执（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-227)。
 
 ## 已准备的数据
 
@@ -37,7 +37,7 @@ flowchart LR
 `build_geometry.npz` 保存 min(16,N) kNN、局部协方差/右手基和朝对应 BUILD 传感器原点的法向。1071391 个构建点中 1071227 有可估计法向、164 退化点显式记无效；法向只是输入估计，不是完整表面真值。
 nuScenes 延续单扫描时刻近似；AV2 延续逐返回纳秒时刻。归属是框+.1m且排除重叠的代理，首返回后未知，不虚构 no-return。
 
-固定 probe：5 nuScenes DEV 日志 + AV2 旧 20 日志按 ID 最先 3 条；按 BUILD 点数排序三层，每层首末取样。真实得到 **43 个有 BUILD 对象/8 日志**，另有 **23 个缺 BUILD 合同对象**；11 个 probe 对象无自有 QUERY 返回。部分日志不足 6 个可用对象，保留实际数而不增窗或按效果替换。全量对象始终在 index 中。[队列](autoresearch/worldsim_v74/p0/probe_cohort.json)、[逐日志可用量](autoresearch/worldsim_v74/p0/probe_availability.json)。
+固定 probe：5 nuScenes DEV 日志 + AV2 旧 20 日志按 ID 最先 3 条；按 BUILD 点数排序三层，每层首末取样。真实得到 **43 个有 BUILD 对象/8 日志**，另有 **23 个缺 BUILD 合同对象**；11 个 probe 对象无自有 QUERY 返回。部分日志不足 6 个可用对象，保留实际数而不增窗或按效果替换。全量对象始终在 index 中。[队列（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-225)、[逐日志可用量](autoresearch/worldsim_v74/p0/probe_availability.json)。
 
 AV2 另外固定 **10 个新 FINAL 日志、100 个原始文件、65.79 MiB**；全部下载，未打开原始标注/LiDAR 数值，未运行测试。路径 `/root/autodl-tmp/data/worldsim_v74/av2_final_raw/`；名单/精确时间见 `configs/worldsim_v74/av2_final.json`。其规范坐标导出属于方法冻结后的最终确认准备，当前状态为 raw_ready。
 nuScenes 暂无可证明全新未曝光的 FINAL 日志，当前已就绪的是域内训练/开发；**不能宣称两数据集独立最终确认已经完成或数据都已齐备**。不把旧 FIT/DEV 改名为盲测。

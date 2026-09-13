@@ -125,7 +125,7 @@ GPU为RTX3090 24GiB，CPU14核、cgroup内存90GiB，未发生资源不足。C�
 
 工程失败 F03/F05/F07/F08/F11 的原始代码、日志、失败资产与修订保留；明确修复受影响实现后才用正式资产判科学结果。详细过程见 [V74失败记录](WORLDSIM_V7_4_FAILURES.md)，总 ID 与历史见 [统一失败账](RESEARCH_FAILURES.md)。A交换、B根/残差/细分、C全部提议和接受/拒绝原因，以及首次 QUERY 退化前后表面和射线ID均保存。事后分析不回流模型。
 
-机器可读 [最终判定](autoresearch/worldsim_v74/final/decision.json) 包含 run 路径清单与 failure_ledger_delta；[配对日志结果](autoresearch/worldsim_v74/final/paired_log_comparisons.json)、[完整机制](autoresearch/worldsim_v74/final/mechanism_summary.json)、[事件汇总](autoresearch/worldsim_v74/final/event_summary.json) 已进入 Git。大型 NPZ、checkpoint、逐束证据驻留 `/root/autodl-tmp/runs/worldsim_v74/`，不能仅凭轻量文档声称它们已远端备份。没有增加哈希、指纹或门控检查。
+机器可读 [最终判定](autoresearch/worldsim_v74/final/decision.json) 包含 run 路径清单与 failure_ledger_delta；[配对日志结果（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-223)、[完整机制（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-220)、[事件汇总（已归档）](archives/worldsim_v74_closeout_20260913/README.md#asset-217) 已进入 Git。大型 NPZ、checkpoint、逐束证据驻留 `/root/autodl-tmp/runs/worldsim_v74/`，不能仅凭轻量文档声称它们已远端备份。没有增加哈希、指纹或门控检查。
 
 下列视图固定选取主域相对必要控制 hit 差最差的对象，只作诊断，不能代表全队列平均。每对用完整网格共同边界与同一视角；B最差对象仅5束自有QUERY，解读须结合全队列。图的透明度仅为可视化，不参与读出。
 
