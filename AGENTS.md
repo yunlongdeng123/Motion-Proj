@@ -1,6 +1,6 @@
-# 当前授权：P1.6 病因诊断（2026-09-13）
+# 当前状态：P1.6 已完成（2026-09-13）
 
-用户要求 normal/tangent、ray-conditioned error、cumulative drift/recovery 和一个普通物理 metric control。按 docs/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_PLAN.md 执行，不训练。以下 P1.5 停止是历史里程碑，不阻止本次明确诊断授权；不自动重开已关闭实现。
+见 docs/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md 和 F10。普通法向控制解释旧薄结构正例漂移，但未联合解决全任务；当前不训练、不新立项，ordered实现继续关闭。整体witness假说仍开放。报告/三本总账/分支push、证据备份、无活动任务后沿用用户shutdown授权。以下历史阶段不代表重新启动授权。
 
 # 当前状态：P1.5 已完成，ordered 实现关闭（2026-09-13）
 

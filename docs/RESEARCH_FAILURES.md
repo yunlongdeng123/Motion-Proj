@@ -1,6 +1,6 @@
 # Research Failures：渐进读取入口
 
-当前路线：V74-H2 当前 A 实现关闭，P1.5 已完成，P1.6 计算已完成、普通控制仅部分解释；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
+当前路线：V74-H2 当前 A 实现关闭，P1.5 已完成，P1.6 已完成、普通控制仅部分解释；[状态](RESEARCH_STATUS.md) → [研究边界](research_failures/BOUNDARIES.md) → 相关 failure ID → 证据。不要默认读完历史账本。
 
 | 要解决的问题 | 从哪里读 |
 |---|---|

@@ -1,7 +1,8 @@
 # WorldSim V74-H2：计划1.1执行记录
 
-当前状态：**P1.5 已完成，当前 ordered 实现关闭**。薄结构失败由同片连续位置漂移解释，未启动新方法；operator 假设开放，论文评分约3/6 Weak Reject。
+当前状态：**P1.6 已完成，普通物理控制只部分解释；ordered实现继续关闭**。旧薄结构正例漂移可由普通校正消除，但联合自由空间/覆盖尚未通过；不新立项，operator假说开放，评分仍约3/6 Weak Reject。
 
+- [P1.6 病因诊断、普通控制与架构](docs/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)
 - [P1.5 失败审计、架构与证据](docs/WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)
 - [GPU执行报告与架构](docs/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)
 - [当前研究状态](docs/RESEARCH_STATUS.md)

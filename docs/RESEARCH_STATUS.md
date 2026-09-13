@@ -1,6 +1,8 @@
-# 当前：P1.6 计算完成，结果整理中（2026-09-13）
+# 当前：P1.6 已完成，普通控制仅部分解释（2026-09-13）
 
-P1.6 全部计算完成，无训练。普通BUILD控制恢复原70条失败，但A自由空间变差、C2有新共享支撑退化，结论 PARTIAL_EXPLANATION_NOT_JOINT_SUCCESS。关闭薄结构法向漂移要求新机制的依据；整体假说未关闭，不自动新立项。failure_ledger_delta=V74-H2-F10；[短卡](research_failures/entries/V74-H2-F10.md)，[结果](autoresearch/worldsim_v74_h2/p16/decision.json)。报告/图整理中。以下为历史状态。
+P1.6 诊断、普通BUILD物理控制、同父残差诊断及架构/三张科学图已完成，无训练。旧70条失败在控制闭环对应步骤全部HIT，但A自由空间变差、C2出现3条新共享支撑HIT→EARLY；结论PARTIAL_EXPLANATION_NOT_JOINT_SUCCESS。关闭薄结构法向漂移要求新机制的依据，整体witness假说开放；不新立项。主计算23.62s/峰值分配0.0604GiB，资源充足。
+
+[最终报告](WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)；[短卡F10](research_failures/entries/V74-H2-F10.md)；[资产索引](autoresearch/worldsim_v74_h2/p16/README.md)。failure_ledger_refs=F08/F09；failure_ledger_delta=F10；用户评分仍3/6 WeakReject。代码和文档push、证据备份且无活动任务后依既有授权shutdown。以下为历史记录。
 
 # V74-H2 P1.5 已完成：当前 ordered 实现关闭
 
