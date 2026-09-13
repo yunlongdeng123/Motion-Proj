@@ -16,3 +16,5 @@
 | 启动/预算/耗时 | launch.json（历史启动）、manifest.json（启动快照）、completion.json（计算完成） |
 
 模型原始=raw；可用控制=closed_build；closed_fit_diagnostic和same_parent_fit只能做诊断。8步终点尚未恢复=右删失。完整逐射线rows、所有表面、求解历史在runs；不将本目录长JSON粘贴进failure入口。日志无哈希/校验和/指纹。
+
+正式结果为r2；launch.json记录原r1启动。batch_correction.json说明为何匹配原8+4前向设置，r1原资产保留在runs及历史提交132500fa。

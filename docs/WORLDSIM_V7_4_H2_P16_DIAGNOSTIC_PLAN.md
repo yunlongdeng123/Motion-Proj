@@ -28,3 +28,5 @@ flowchart LR
 前序与迁移：法向残差及 Jacobian 是 [Open3D point-to-plane ICP](https://www.open3d.org/docs/release/tutorial/pipelines/icp_registration.html#point-to-plane-icp) 等成熟几何优化的标准对象；射线距离由本项目平面求交公式直接推导。Gauss–Newton/Armijo 使用 [Ceres 官方求解文档](https://ceres-solver.readthedocs.io/latest/nnls_solving.html#line-search-methods) 的普通套路。这里只迁移残差/Jacobian/线搜索，没有接入 ICP 配准或声称新算法。
 
 完整资产进 runs，轻量表、短 failure 卡、架构图和报告进 Git；每里程碑同步三本总账。收口 push、备份后确认无研究任务或调度器，再沿用用户 shutdown 授权。
+
+执行补充（分析后发现的对照工程差异）：首轮r1前向batch12不同于原8+4；r2仅恢复原批次，其他定义/模型/阈值/预算不变。r1保留，r2为正式结果；不能因修正后结果有变化挑选更好run。

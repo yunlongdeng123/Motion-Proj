@@ -169,7 +169,7 @@ def main():
     data=a.source/'20260912__fit-teacher-r3'/'fit';names=sorted(p.name for p in (a.source/MODELS['A']).iterdir() if p.is_dir())
     builds={n:load(data/n/'build.npz') for n in names};obs={n:load(data/n/'supervision.npz') for n in names};truth={n:surface(data/n/'truth.npz') for n in names}
     write(out/'manifest.json',dict(task='WS-V74-H2-P16-01',run=out.name,status='RUNNING',training=False,source=str(a.source),p15=str(a.p15),models=MODELS,cases=names,
-                                  role='exposed 12 FIT tasks; BUILD-only control; FIT evaluation; full FIT control diagnostic only',iterations=8,backtracking_trials=8,armijo=1e-4,epsilon_m=.2,
+                                  role='exposed 12 FIT tasks; BUILD-only control; FIT evaluation; full FIT control diagnostic only',network_forward_batch=8,iterations=8,backtracking_trials=8,armijo=1e-4,epsilon_m=.2,
                                   failure_ledger_refs=['V74-H2-F08','V74-H2-F09']))
     for n in names:
         (out/'inputs'/n).mkdir(parents=True)
@@ -243,7 +243,10 @@ def main():
             bo=[builds[n] for n in names];b=observations(bo);inp=b if mode=='closed_build' else observations([joined(builds[n],obs[n]) for n in names]);s=pack([raw[model,n][0][0] for n in names]);birth,_=birth_pool(bo);hidden=None;hist=[unpack(s)];logs=[]
             for t in range(8):
                 pool=proposals(s,b,birth,t);f={**features(s,b),'evidence':pool['evidence'],'candidate':pool['desc'],'all_delta':pool['delta'].float()}
-                delta,score,hidden=net(f,hidden);event=score.masked_fill(~pool['valid'],1e4).argmin(-1);proposal=learned_step(s,delta,pool,event)
+                # 与原 evaluate 脚本保持同样的 8+4 网络前向批次，避免批大小引入路径混杂。
+                parts=[net({k:v[lo:lo+8] for k,v in f.items()},None if hidden is None else hidden[lo:lo+8]) for lo in range(0,len(names),8)]
+                delta,score,hidden=[torch.cat([x[j] for x in parts],0) for j in range(3)]
+                event=score.masked_fill(~pool['valid'],1e4).argmin(-1);proposal=learned_step(s,delta,pool,event)
                 pre=unpack(proposal)
                 if t==0:
                     for j,n in enumerate(names):
