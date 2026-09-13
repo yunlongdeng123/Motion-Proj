@@ -1,3 +1,9 @@
+# V74-H2 P1.5 已完成：当前 ordered 实现关闭
+
+2026-09-13：P1.5 存量失败审计完成，未训练新模型。A 薄结构 52/52 首次 HIT→EARLY 保持同一首面；连续位置漂移经斜入射放大已解释退化。C2 有 12 条短暂同类退化后恢复，不能称全程稳定。完整解释见 [P1.5 报告与架构](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)，渐进入口 [F09](research_failures/entries/V74-H2-F09.md)。
+
+当前 A/ordered 实现关闭，witness-native reconstruction operator 假设开放；不立项 ownership-stable 方法，不启 B/C 或真实训练。人工评分沿用用户复审约 3/6 Weak Reject；没有新的科学/新颖性裁决。failure_ledger_delta=F08 人工复审 + F09 几何失效边界。代码、文档推送且无活动任务后按用户授权关机；以下为历史阶段记录。
+
 # P1.5 分析完成，报告整理中
 
 2026-09-13：存量 216 状态查询比较、70 条首次退化、同父状态教师插值完成；无训练。A 薄结构 52/52 是同片连续前移，C2 12 条短暂同类退化后恢复。当前 ordered 实现关闭；未满足新方法立项条件。failure_ledger_delta=V74-H2-F09；[证据卡](research_failures/entries/V74-H2-F09.md)。以下是历史里程碑。

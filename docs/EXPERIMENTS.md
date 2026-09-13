@@ -1,3 +1,7 @@
+# P1.5 最终收口：WS-V74-H2-P15-01
+
+2026-09-13，switching-margin-r1 DONE。216 保存状态、70 条首次退化、9 个父状态的冻结教师/插值、2 组几何替换诊断与4张图已完成；主 GPU 查询 13.26s / 峰值分配 0.068GiB，无新训练。A 薄结构 52/52 由同片位置漂移解释；不启动新方法。failure_ledger_delta=F08 + F09。[最终报告](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)，[判定与边界](autoresearch/worldsim_v74_h2/p15/decision.json)。全部任务结束后推送并按授权关机；下文是历史。
+
 # P1.5 分析里程碑：DONE / switching-margin-r1
 
 2026-09-13：存量 216 状态查询比较、70 条首次退化、同父状态教师插值完成；无训练。A 薄结构 52/52 是同片连续前移，C2 12 条短暂同类退化后恢复。当前 ordered 实现关闭；未满足新方法立项条件。failure_ledger_delta=V74-H2-F09；[证据卡](research_failures/entries/V74-H2-F09.md)。以下是历史里程碑。

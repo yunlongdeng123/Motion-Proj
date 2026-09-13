@@ -1,6 +1,6 @@
-# 当前补充授权：P1.5 failure forensics（2026-09-13）
+# 当前状态：P1.5 已完成，ordered 实现关闭（2026-09-13）
 
-用户要求先更新 failure，再用现有轨迹做 switching-margin 审计。仅诊断/冻结几何查询与教师重标注；不恢复 A 训练、不扩网络/epoch/DAgger、不调 loss、不启真实数据训练或 B/C。当前实现停止仍有效。用户人工复审约 3/6 Weak Reject；不能代改。执行定义见 docs/WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md。收口后沿用用户明确的 push、文档、任务清空后 shutdown 授权。
+用户要求先更新 failure，再用现有轨迹做 switching-margin 审计。仅诊断/冻结几何查询与教师重标注；不恢复 A 训练、不扩网络/epoch/DAgger、不调 loss、不启真实数据训练或 B/C。当前实现停止仍有效。用户人工复审约 3/6 Weak Reject；不能代改。执行定义见 docs/WORLDSIM_V7_4_H2_P15_FORENSICS_PLAN.md；结果见 P15_FORENSICS_REPORT 和 F09，已经完成本轮授权审计，不自动再训练或立项。收口后沿用用户明确的 push、文档、任务清空后 shutdown 授权。
 
 # Motion-Proj 执行约定
 

@@ -1,3 +1,5 @@
+2026-09-13 最新状态：[P1.5 报告](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)已完成。人工复审约3/6 Weak Reject；当前 ordered-chain 实现关闭。保留 witness-native physical surface reconstruction operator 假设，不声称新 surface representation；薄结构失败已定位到同片连续漂移。下面是此前阶段的历史设计/证据，不授权恢复训练。
+
 # V74-H2 计划1.1：GPU P1执行报告
 
 2026-09-12。**当前状态：STOP_IMPLEMENTATION_OPTIMIZATION。** 当前A实现没有通过最小闭环学习能力，按计划6.4/16在一次明确优化修正后停止；不是资源不足，不是对witness-native科学假设或新颖性的终局裁决。P2与真实DEV/FINAL未进入，B/C未启用。
