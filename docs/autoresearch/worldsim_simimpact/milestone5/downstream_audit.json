@@ -1,0 +1,4272 @@
+{
+  "scope": "Downstream-first pilot audit; no geometry interventions, no causal or broad safety conclusion.",
+  "reference": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1/closed_loop/reference/scene-0004.json",
+  "checkpoint_step": 8000,
+  "fitting_complete": false,
+  "recorded_ego_clearance": {
+    "0.0": {
+      "signed_box_clearance_m": 0.4567719876315095,
+      "time_s": 3.5,
+      "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+      "category": "vehicle.car",
+      "evaluated_state_samples": 41,
+      "has_annotated_overlap": false
+    },
+    "-0.1": {
+      "signed_box_clearance_m": 0.5567719876315095,
+      "time_s": 3.5,
+      "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+      "category": "vehicle.car",
+      "evaluated_state_samples": 41,
+      "has_annotated_overlap": false
+    },
+    "0.1": {
+      "signed_box_clearance_m": 0.3567719876315093,
+      "time_s": 3.5,
+      "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+      "category": "vehicle.car",
+      "evaluated_state_samples": 41,
+      "has_annotated_overlap": false
+    }
+  },
+  "closed_loop": [
+    {
+      "condition": "closedloop_raw",
+      "actual_closed_loop": true,
+      "executed_seconds": 4.0,
+      "state_samples": 41,
+      "ADE_vs_recorded_ego_m": 1.6229895296453496,
+      "FDE_vs_recorded_ego_m": 5.166760398531468,
+      "minimum_acceleration_mps2": -0.3965864525300738,
+      "final_speed_mps": 3.8217209172121773,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "clearance": {
+        "0.0": {
+          "signed_box_clearance_m": 0.5662427690070423,
+          "time_s": 1.8,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "-0.1": {
+          "signed_box_clearance_m": 0.6669747641043012,
+          "time_s": 1.8,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "0.1": {
+          "signed_box_clearance_m": 0.4655107739097835,
+          "time_s": 1.8,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        }
+      }
+    },
+    {
+      "condition": "closedloop_median",
+      "actual_closed_loop": true,
+      "executed_seconds": 4.0,
+      "state_samples": 41,
+      "ADE_vs_recorded_ego_m": 1.7224871668471402,
+      "FDE_vs_recorded_ego_m": 5.541917462024511,
+      "minimum_acceleration_mps2": -0.4430638383814254,
+      "final_speed_mps": 3.5936003498660933,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "clearance": {
+        "0.0": {
+          "signed_box_clearance_m": 0.5716723898201529,
+          "time_s": 1.7000000000000002,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "-0.1": {
+          "signed_box_clearance_m": 0.6727308672550355,
+          "time_s": 1.7000000000000002,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "0.1": {
+          "signed_box_clearance_m": 0.4706139123852704,
+          "time_s": 1.7000000000000002,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        }
+      }
+    }
+  ],
+  "replay": [
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 0,
+      "time_s": 0.0,
+      "points": 26520,
+      "ADE_vs_recorded_ego_m": 1.0750721318806544,
+      "FDE_vs_recorded_ego_m": 3.0665607318622574,
+      "minimum_acceleration_mps2": 0.11132808270446881,
+      "final_speed_mps": 5.307357210644599,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "initial_policy_max_abs_vs_previous": 0.0,
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 2.6080503385102785,
+        "time_s": 0.5,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6526710305963326,
+              "pred": [
+                18.122314453125,
+                -0.25940102338790894,
+                -0.0032413345761597157,
+                4.457852840423584,
+                1.9035675525665283
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6526710305963326,
+              "pred": [
+                18.122314453125,
+                -0.25940102338790894,
+                -0.0032413345761597157,
+                4.457852840423584,
+                1.9035675525665283
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 0,
+      "time_s": 0.0,
+      "points": 27090,
+      "ADE_vs_recorded_ego_m": 1.2193672177841182,
+      "FDE_vs_recorded_ego_m": 3.620963294008108,
+      "minimum_acceleration_mps2": 0.05305771907225019,
+      "final_speed_mps": 4.957303132976097,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.14429508590346374,
+      "execution_endpoint_change_vs_real_m": 0.5546356088157214,
+      "extra_minimum_acceleration_mps2": -0.05827036363221862,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 2.607833197434732,
+        "time_s": 0.5,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.8398372522189218,
+              "pred": [
+                18.57056427001953,
+                -0.32357051968574524,
+                -0.007834295742213726,
+                4.471119403839111,
+                1.9124009609222412
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.8398372522189218,
+              "pred": [
+                18.57056427001953,
+                -0.32357051968574524,
+                -0.007834295742213726,
+                4.471119403839111,
+                1.9124009609222412
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 6504,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 0,
+      "time_s": 0.0,
+      "points": 27077,
+      "ADE_vs_recorded_ego_m": 1.254827374683183,
+      "FDE_vs_recorded_ego_m": 3.765873965273264,
+      "minimum_acceleration_mps2": 0.03657379060566809,
+      "final_speed_mps": 4.861385239574172,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.17975524280252864,
+      "execution_endpoint_change_vs_real_m": 0.7000332149964011,
+      "extra_minimum_acceleration_mps2": -0.07475429209880072,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 2.6081921355580455,
+        "time_s": 0.5,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7036725626600273,
+              "pred": [
+                18.271833419799805,
+                -0.272823303937912,
+                -0.0031935556326061487,
+                4.435497760772705,
+                1.8985801935195923
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7036725626600273,
+              "pred": [
+                18.271833419799805,
+                -0.272823303937912,
+                -0.0031935556326061487,
+                4.435497760772705,
+                1.8985801935195923
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4945,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 0,
+      "time_s": 0.0,
+      "points": 27090,
+      "ADE_vs_recorded_ego_m": 1.0724016935452332,
+      "FDE_vs_recorded_ego_m": 3.04400397893884,
+      "minimum_acceleration_mps2": 0.11635142681224317,
+      "final_speed_mps": 5.339743936011416,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.0026704383354212435,
+      "execution_endpoint_change_vs_real_m": 0.07064082895747714,
+      "extra_minimum_acceleration_mps2": 0.005023344107774358,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 2.607708350316539,
+        "time_s": 0.5,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7697238166379906,
+              "pred": [
+                18.33855438232422,
+                -0.3468552529811859,
+                -0.0027538323774933815,
+                4.480955123901367,
+                1.9185950756072998
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7697238166379906,
+              "pred": [
+                18.33855438232422,
+                -0.3468552529811859,
+                -0.0027538323774933815,
+                4.480955123901367,
+                1.9185950756072998
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 6040,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 0,
+      "time_s": 0.0,
+      "points": 27077,
+      "ADE_vs_recorded_ego_m": 1.1133571533335072,
+      "FDE_vs_recorded_ego_m": 3.216936841594353,
+      "minimum_acceleration_mps2": 0.09498991833166072,
+      "final_speed_mps": 5.222981048303059,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.03828502145285273,
+      "execution_endpoint_change_vs_real_m": 0.17791666857484786,
+      "extra_minimum_acceleration_mps2": -0.016338164372808092,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 2.6079187995143696,
+        "time_s": 0.5,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6568201145689844,
+              "pred": [
+                18.106395721435547,
+                -0.2751321494579315,
+                -0.001439522486180067,
+                4.446037292480469,
+                1.903153896331787
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6568201145689844,
+              "pred": [
+                18.106395721435547,
+                -0.2751321494579315,
+                -0.001439522486180067,
+                4.446037292480469,
+                1.903153896331787
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3139,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 0,
+      "time_s": 0.0,
+      "points": 26520,
+      "ADE_vs_recorded_ego_m": 1.2290608642647303,
+      "FDE_vs_recorded_ego_m": 3.6680761423920742,
+      "minimum_acceleration_mps2": 0.04483685069409748,
+      "final_speed_mps": 4.911824661331731,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.15398873238407584,
+      "execution_endpoint_change_vs_real_m": 0.6027616761040162,
+      "extra_minimum_acceleration_mps2": -0.06649123201037133,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 2.608090041894866,
+        "time_s": 0.5,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6696355140946098,
+              "pred": [
+                18.310791015625,
+                -0.20043590664863586,
+                -0.00866017397493124,
+                4.462226867675781,
+                1.8969526290893555
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6696355140946098,
+              "pred": [
+                18.310791015625,
+                -0.20043590664863586,
+                -0.00866017397493124,
+                4.462226867675781,
+                1.8969526290893555
+              ],
+              "gt": [
+                18.80354584760221,
+                -0.39821364082814603,
+                -0.00817121339820395,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3870,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 1,
+      "time_s": 0.44998598098754883,
+      "points": 26443,
+      "ADE_vs_recorded_ego_m": 1.9933974974100686,
+      "FDE_vs_recorded_ego_m": 5.264704742639804,
+      "minimum_acceleration_mps2": -0.3177257048739042,
+      "final_speed_mps": 4.782704954826684,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 1.605197622461435,
+        "time_s": 0.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.4681176450453418,
+              "pred": [
+                17.595291137695312,
+                -0.034969404339790344,
+                -0.010790408588945866,
+                4.651970863342285,
+                1.9593547582626343
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 1,
+      "time_s": 0.44998598098754883,
+      "points": 27035,
+      "ADE_vs_recorded_ego_m": 2.620873590402973,
+      "FDE_vs_recorded_ego_m": 7.077580963883626,
+      "minimum_acceleration_mps2": -0.4144394949183542,
+      "final_speed_mps": 4.019057024630077,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.6274760929929046,
+      "execution_endpoint_change_vs_real_m": 1.826196996122965,
+      "extra_minimum_acceleration_mps2": -0.09671379004444997,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 1.5909734091162087,
+        "time_s": 0.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.48758516864909046,
+              "pred": [
+                17.771419525146484,
+                -0.015806732699275017,
+                -0.005174004007130861,
+                4.487975120544434,
+                1.9178495407104492
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3772,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 1,
+      "time_s": 0.44998598098754883,
+      "points": 27029,
+      "ADE_vs_recorded_ego_m": 2.626478303365569,
+      "FDE_vs_recorded_ego_m": 7.170253007954288,
+      "minimum_acceleration_mps2": -0.39996848862860884,
+      "final_speed_mps": 3.912585977014129,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.6330808059555006,
+      "execution_endpoint_change_vs_real_m": 1.9110710995336357,
+      "extra_minimum_acceleration_mps2": -0.08224278375470462,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 1.5926069401501242,
+        "time_s": 0.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6104501173488824,
+              "pred": [
+                17.90941619873047,
+                -0.2021019458770752,
+                -0.004609750583767891,
+                4.459471225738525,
+                1.9065967798233032
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6104501173488824,
+              "pred": [
+                17.90941619873047,
+                -0.2021019458770752,
+                -0.004609750583767891,
+                4.459471225738525,
+                1.9065967798233032
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3031,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 1,
+      "time_s": 0.44998598098754883,
+      "points": 27035,
+      "ADE_vs_recorded_ego_m": 2.0028086065999386,
+      "FDE_vs_recorded_ego_m": 5.21386862995257,
+      "minimum_acceleration_mps2": -0.3177257048739042,
+      "final_speed_mps": 4.879258060755292,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.009411109189870093,
+      "execution_endpoint_change_vs_real_m": 0.06169512381231056,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 1.6035311142789979,
+        "time_s": 0.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.43484669129396525,
+              "pred": [
+                17.601591110229492,
+                0.039458584040403366,
+                -0.0018335622735321522,
+                4.569673538208008,
+                1.9452708959579468
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 1,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4341,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 1,
+      "time_s": 0.44998598098754883,
+      "points": 27029,
+      "ADE_vs_recorded_ego_m": 2.018119653838036,
+      "FDE_vs_recorded_ego_m": 5.32957948164125,
+      "minimum_acceleration_mps2": -0.3177257048739042,
+      "final_speed_mps": 4.768102862470521,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0247221564279676,
+      "execution_endpoint_change_vs_real_m": 0.11903665525112431,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 1.604654161287066,
+        "time_s": 0.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5378781703840836,
+              "pred": [
+                17.633413314819336,
+                -0.18956629931926727,
+                -0.002559603890404105,
+                4.516144752502441,
+                1.9249125719070435
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5378781703840836,
+              "pred": [
+                17.633413314819336,
+                -0.18956629931926727,
+                -0.002559603890404105,
+                4.516144752502441,
+                1.9249125719070435
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3971,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 1,
+      "time_s": 0.44998598098754883,
+      "points": 26443,
+      "ADE_vs_recorded_ego_m": 2.619552160215481,
+      "FDE_vs_recorded_ego_m": 7.151909647722292,
+      "minimum_acceleration_mps2": -0.39427297854557264,
+      "final_speed_mps": 3.9137441062533114,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.6261546628054124,
+      "execution_endpoint_change_vs_real_m": 1.9045068591367573,
+      "extra_minimum_acceleration_mps2": -0.07654727367166841,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 1.5924513605138706,
+        "time_s": 0.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6502802159967334,
+              "pred": [
+                18.072406768798828,
+                -0.19403770565986633,
+                -0.005756948608905077,
+                4.516441822052002,
+                1.9111597537994385
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 3,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6502802159967334,
+              "pred": [
+                18.072406768798828,
+                -0.19403770565986633,
+                -0.005756948608905077,
+                4.516441822052002,
+                1.9111597537994385
+              ],
+              "gt": [
+                18.653864966182848,
+                -0.38656893791539143,
+                -0.010482452212193513,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3041,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 2,
+      "time_s": 0.9499859809875488,
+      "points": 26222,
+      "ADE_vs_recorded_ego_m": 0.4007428540383805,
+      "FDE_vs_recorded_ego_m": 0.7846045798620669,
+      "minimum_acceleration_mps2": 0.1284181748434461,
+      "final_speed_mps": 7.080206824038284,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.8187946220106174,
+        "time_s": 1.4499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.6144909813990913,
+              "pred": [
+                31.19196891784668,
+                -2.7007699012756348,
+                -0.12217943370342255,
+                4.686161041259766,
+                1.914027452468872
+              ],
+              "gt": [
+                31.91856635280368,
+                -2.674021826036238,
+                -0.28806664811635646,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7161338738752793,
+              "pred": [
+                18.206974029541016,
+                -0.2048758864402771,
+                0.008654470555484295,
+                4.401138782501221,
+                1.884920597076416
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.6144909813990913,
+              "pred": [
+                31.19196891784668,
+                -2.7007699012756348,
+                -0.12217943370342255,
+                4.686161041259766,
+                1.914027452468872
+              ],
+              "gt": [
+                31.91856635280368,
+                -2.674021826036238,
+                -0.28806664811635646,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7161338738752793,
+              "pred": [
+                18.206974029541016,
+                -0.2048758864402771,
+                0.008654470555484295,
+                4.401138782501221,
+                1.884920597076416
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 2,
+      "time_s": 0.9499859809875488,
+      "points": 26711,
+      "ADE_vs_recorded_ego_m": 0.3735366347378935,
+      "FDE_vs_recorded_ego_m": 0.9378648863592571,
+      "minimum_acceleration_mps2": 0.1043065480098419,
+      "final_speed_mps": 6.871775133005204,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.027206219300487,
+      "execution_endpoint_change_vs_real_m": 0.6258910214556211,
+      "extra_minimum_acceleration_mps2": -0.024111626833604183,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.8172570992460226,
+        "time_s": 1.4499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7016836142609899,
+              "pred": [
+                18.150304794311523,
+                -0.20493027567863464,
+                0.0052378117106854916,
+                4.453303813934326,
+                1.9062559604644775
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7016836142609899,
+              "pred": [
+                18.150304794311523,
+                -0.20493027567863464,
+                0.0052378117106854916,
+                4.453303813934326,
+                1.9062559604644775
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 5593,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 2,
+      "time_s": 0.9499859809875488,
+      "points": 26699,
+      "ADE_vs_recorded_ego_m": 0.3833001209947317,
+      "FDE_vs_recorded_ego_m": 0.9682356405044203,
+      "minimum_acceleration_mps2": 0.11402486411084674,
+      "final_speed_mps": 6.9167674948929205,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.017442733043648795,
+      "execution_endpoint_change_vs_real_m": 0.6046383485108581,
+      "extra_minimum_acceleration_mps2": -0.014393310732599349,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.8170739823000626,
+        "time_s": 1.4499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.525612903352984,
+              "pred": [
+                31.191484451293945,
+                -2.5903213024139404,
+                0.13375267386436462,
+                4.709014415740967,
+                1.9174797534942627
+              ],
+              "gt": [
+                31.91856635280368,
+                -2.674021826036238,
+                -0.28806664811635646,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.644016497665021,
+              "pred": [
+                18.065296173095703,
+                -0.1527242660522461,
+                0.007962449453771114,
+                4.4240946769714355,
+                1.8940231800079346
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.525612903352984,
+              "pred": [
+                31.191484451293945,
+                -2.5903213024139404,
+                0.13375267386436462,
+                4.709014415740967,
+                1.9174797534942627
+              ],
+              "gt": [
+                31.91856635280368,
+                -2.674021826036238,
+                -0.28806664811635646,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.644016497665021,
+              "pred": [
+                18.065296173095703,
+                -0.1527242660522461,
+                0.007962449453771114,
+                4.4240946769714355,
+                1.8940231800079346
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3619,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 2,
+      "time_s": 0.9499859809875488,
+      "points": 26711,
+      "ADE_vs_recorded_ego_m": 0.36372782574481716,
+      "FDE_vs_recorded_ego_m": 0.7085549646106513,
+      "minimum_acceleration_mps2": 0.1134026403109717,
+      "final_speed_mps": 6.970298921885911,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.037015028293563346,
+      "execution_endpoint_change_vs_real_m": 0.22237581471044365,
+      "extra_minimum_acceleration_mps2": -0.015015534532474381,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.8183066979998465,
+        "time_s": 1.4499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6929015599381441,
+              "pred": [
+                18.127342224121094,
+                -0.20267894864082336,
+                0.011750467121601105,
+                4.4351348876953125,
+                1.8999390602111816
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6929015599381441,
+              "pred": [
+                18.127342224121094,
+                -0.20267894864082336,
+                0.011750467121601105,
+                4.4351348876953125,
+                1.8999390602111816
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4880,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 2,
+      "time_s": 0.9499859809875488,
+      "points": 26699,
+      "ADE_vs_recorded_ego_m": 0.4015129285136983,
+      "FDE_vs_recorded_ego_m": 0.8238718035993154,
+      "minimum_acceleration_mps2": 0.12435153565704504,
+      "final_speed_mps": 7.048401112554407,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0007700744753177946,
+      "execution_endpoint_change_vs_real_m": 0.14855148013402822,
+      "extra_minimum_acceleration_mps2": -0.004066639186401044,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.8186342512867859,
+        "time_s": 1.4499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.5862794807848609,
+              "pred": [
+                31.337696075439453,
+                -2.803696393966675,
+                0.017514090985059738,
+                4.706179141998291,
+                1.9157469272613525
+              ],
+              "gt": [
+                31.91856635280368,
+                -2.674021826036238,
+                -0.28806664811635646,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6576567777719023,
+              "pred": [
+                18.04289436340332,
+                -0.184800922870636,
+                0.011353619396686554,
+                4.413680076599121,
+                1.888231635093689
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.5862794807848609,
+              "pred": [
+                31.337696075439453,
+                -2.803696393966675,
+                0.017514090985059738,
+                4.706179141998291,
+                1.9157469272613525
+              ],
+              "gt": [
+                31.91856635280368,
+                -2.674021826036238,
+                -0.28806664811635646,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6576567777719023,
+              "pred": [
+                18.04289436340332,
+                -0.184800922870636,
+                0.011353619396686554,
+                4.413680076599121,
+                1.888231635093689
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 2380,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 2,
+      "time_s": 0.9499859809875488,
+      "points": 26222,
+      "ADE_vs_recorded_ego_m": 0.37809053659722663,
+      "FDE_vs_recorded_ego_m": 0.8750326536818034,
+      "minimum_acceleration_mps2": 0.1221404525373915,
+      "final_speed_mps": 6.986988448228674,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.02265231744115387,
+      "execution_endpoint_change_vs_real_m": 0.3925640632091321,
+      "extra_minimum_acceleration_mps2": -0.006277722306054584,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.8173796201096073,
+        "time_s": 1.4499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7055272589349203,
+              "pred": [
+                18.207063674926758,
+                -0.18912896513938904,
+                0.006694438401609659,
+                4.412230968475342,
+                1.8898134231567383
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.7055272589349203,
+              "pred": [
+                18.207063674926758,
+                -0.18912896513938904,
+                0.006694438401609659,
+                4.412230968475342,
+                1.8898134231567383
+              ],
+              "gt": [
+                18.50454588402519,
+                -0.4155108139689628,
+                -0.035116469928077196,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3543,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 3,
+      "time_s": 1.4499859809875488,
+      "points": 26157,
+      "ADE_vs_recorded_ego_m": 2.253744446852907,
+      "FDE_vs_recorded_ego_m": 5.233364502687591,
+      "minimum_acceleration_mps2": 0.021576007365733178,
+      "final_speed_mps": 8.620200888197072,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5398352752566493,
+        "time_s": 1.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.26737090757209875,
+              "pred": [
+                30.120220184326172,
+                -2.8659915924072266,
+                0.7180027961730957,
+                4.6717023849487305,
+                1.9174202680587769
+              ],
+              "gt": [
+                31.408785017649897,
+                -3.4101575952972674,
+                -0.41855093628754897,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5514882228268103,
+              "pred": [
+                18.099716186523438,
+                -0.05451498180627823,
+                0.03611879423260689,
+                4.408575057983398,
+                1.8813514709472656
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5514882228268103,
+              "pred": [
+                18.099716186523438,
+                -0.05451498180627823,
+                0.03611879423260689,
+                4.408575057983398,
+                1.8813514709472656
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 3,
+      "time_s": 1.4499859809875488,
+      "points": 26605,
+      "ADE_vs_recorded_ego_m": 2.0401683229090226,
+      "FDE_vs_recorded_ego_m": 4.804551676925358,
+      "minimum_acceleration_mps2": 0.07419590361166845,
+      "final_speed_mps": 8.58978914203107,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.21357612394388426,
+      "execution_endpoint_change_vs_real_m": 0.535666202698162,
+      "extra_minimum_acceleration_mps2": 0.05261989624593527,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5397474680169166,
+        "time_s": 1.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.45716486437123094,
+              "pred": [
+                30.413402557373047,
+                -3.391002893447876,
+                0.09329430013895035,
+                4.666569232940674,
+                1.9330334663391113
+              ],
+              "gt": [
+                31.408785017649897,
+                -3.4101575952972674,
+                -0.41855093628754897,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6339406488806308,
+              "pred": [
+                18.404888153076172,
+                -0.11748851090669632,
+                0.018301144242286682,
+                4.431267738342285,
+                1.8975844383239746
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6339406488806308,
+              "pred": [
+                18.404888153076172,
+                -0.11748851090669632,
+                0.018301144242286682,
+                4.431267738342285,
+                1.8975844383239746
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 6124,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 3,
+      "time_s": 1.4499859809875488,
+      "points": 26577,
+      "ADE_vs_recorded_ego_m": 2.143898218473389,
+      "FDE_vs_recorded_ego_m": 5.056841202075785,
+      "minimum_acceleration_mps2": 0.055982252140991194,
+      "final_speed_mps": 8.643543610234104,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.10984622837951807,
+      "execution_endpoint_change_vs_real_m": 0.3549954909979076,
+      "extra_minimum_acceleration_mps2": 0.03440624477525801,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5397617939708392,
+        "time_s": 1.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.5276205903174593,
+              "pred": [
+                31.247333526611328,
+                -3.401390552520752,
+                0.1660803258419037,
+                4.700931072235107,
+                1.9433183670043945
+              ],
+              "gt": [
+                31.408785017649897,
+                -3.4101575952972674,
+                -0.41855093628754897,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6353884482127689,
+              "pred": [
+                18.145328521728516,
+                -0.17638123035430908,
+                0.010458841919898987,
+                4.388415813446045,
+                1.8712592124938965
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.5276205903174593,
+              "pred": [
+                31.247333526611328,
+                -3.401390552520752,
+                0.1660803258419037,
+                4.700931072235107,
+                1.9433183670043945
+              ],
+              "gt": [
+                31.408785017649897,
+                -3.4101575952972674,
+                -0.41855093628754897,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6353884482127689,
+              "pred": [
+                18.145328521728516,
+                -0.17638123035430908,
+                0.010458841919898987,
+                4.388415813446045,
+                1.8712592124938965
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3726,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 3,
+      "time_s": 1.4499859809875488,
+      "points": 26605,
+      "ADE_vs_recorded_ego_m": 2.152132331615732,
+      "FDE_vs_recorded_ego_m": 5.034526210418699,
+      "minimum_acceleration_mps2": 0.049070726988889854,
+      "final_speed_mps": 8.6070405629641,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.10161211523717473,
+      "execution_endpoint_change_vs_real_m": 0.3360602408128115,
+      "extra_minimum_acceleration_mps2": 0.027494719623156676,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5397663432427483,
+        "time_s": 1.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.41037728994335665,
+              "pred": [
+                30.420928955078125,
+                -3.193373441696167,
+                0.26206037402153015,
+                4.712857723236084,
+                1.938893437385559
+              ],
+              "gt": [
+                31.408785017649897,
+                -3.4101575952972674,
+                -0.41855093628754897,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6405712189281622,
+              "pred": [
+                18.283889770507812,
+                -0.132629856467247,
+                0.016534928232431412,
+                4.469639301300049,
+                1.9145827293395996
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6405712189281622,
+              "pred": [
+                18.283889770507812,
+                -0.132629856467247,
+                0.016534928232431412,
+                4.469639301300049,
+                1.9145827293395996
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 5279,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 3,
+      "time_s": 1.4499859809875488,
+      "points": 26577,
+      "ADE_vs_recorded_ego_m": 2.233706750560615,
+      "FDE_vs_recorded_ego_m": 5.1953582667856555,
+      "minimum_acceleration_mps2": 0.022488519494833555,
+      "final_speed_mps": 8.605137154027666,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.020037696292291685,
+      "execution_endpoint_change_vs_real_m": 0.2032953748928911,
+      "extra_minimum_acceleration_mps2": 0.000912512129100377,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5397963060559839,
+        "time_s": 1.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.37548610267503596,
+              "pred": [
+                31.352855682373047,
+                -3.2193760871887207,
+                0.4699651896953583,
+                4.714393138885498,
+                1.9453544616699219
+              ],
+              "gt": [
+                31.408785017649897,
+                -3.4101575952972674,
+                -0.41855093628754897,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6069285726408574,
+              "pred": [
+                18.05873680114746,
+                -0.16086237132549286,
+                0.01094269659370184,
+                4.41834020614624,
+                1.8837745189666748
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6069285726408574,
+              "pred": [
+                18.05873680114746,
+                -0.16086237132549286,
+                0.01094269659370184,
+                4.41834020614624,
+                1.8837745189666748
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 2778,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 3,
+      "time_s": 1.4499859809875488,
+      "points": 26157,
+      "ADE_vs_recorded_ego_m": 2.157075563325101,
+      "FDE_vs_recorded_ego_m": 5.060919686903879,
+      "minimum_acceleration_mps2": 0.050723520788909966,
+      "final_speed_mps": 8.63343237617017,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.09666888352780578,
+      "execution_endpoint_change_vs_real_m": 0.21311366963533196,
+      "extra_minimum_acceleration_mps2": 0.02914751342317679,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5398084329148225,
+        "time_s": 1.9499859809875488,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5803485204441767,
+              "pred": [
+                18.161611557006836,
+                -0.08368511497974396,
+                0.03146591782569885,
+                4.37693977355957,
+                1.8673665523529053
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5803485204441767,
+              "pred": [
+                18.161611557006836,
+                -0.08368511497974396,
+                0.03146591782569885,
+                4.37693977355957,
+                1.8673665523529053
+              ],
+              "gt": [
+                18.36011616969367,
+                -0.5392649672970246,
+                -0.06148995334241685,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 2618,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 4,
+      "time_s": 1.9499859809875488,
+      "points": 25590,
+      "ADE_vs_recorded_ego_m": 1.5274541100222347,
+      "FDE_vs_recorded_ego_m": 4.117224371588649,
+      "minimum_acceleration_mps2": 0.03726958917440646,
+      "final_speed_mps": 5.842600663689029,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5271080613282485,
+        "time_s": 2.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 4,
+      "time_s": 1.9499859809875488,
+      "points": 26140,
+      "ADE_vs_recorded_ego_m": 1.8185740682633107,
+      "FDE_vs_recorded_ego_m": 5.101720822317223,
+      "minimum_acceleration_mps2": -0.051560768967596045,
+      "final_speed_mps": 5.329023616060218,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.29111995824107595,
+      "execution_endpoint_change_vs_real_m": 1.0036207928288061,
+      "extra_minimum_acceleration_mps2": -0.0888303581420025,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5277292595364018,
+        "time_s": 2.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 7161,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 4,
+      "time_s": 1.9499859809875488,
+      "points": 26104,
+      "ADE_vs_recorded_ego_m": 1.8811024168171404,
+      "FDE_vs_recorded_ego_m": 5.322156994022917,
+      "minimum_acceleration_mps2": -0.10436574150566301,
+      "final_speed_mps": 5.197696842798762,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.35364830679490566,
+      "execution_endpoint_change_vs_real_m": 1.2222127478431817,
+      "extra_minimum_acceleration_mps2": -0.14163533068006948,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5277839381475744,
+        "time_s": 2.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4642,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 4,
+      "time_s": 1.9499859809875488,
+      "points": 26140,
+      "ADE_vs_recorded_ego_m": 1.4845367200611728,
+      "FDE_vs_recorded_ego_m": 3.9586547060977306,
+      "minimum_acceleration_mps2": 0.04771066729696535,
+      "final_speed_mps": 5.932662522839683,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.04291738996106198,
+      "execution_endpoint_change_vs_real_m": 0.17182995113391356,
+      "extra_minimum_acceleration_mps2": 0.010441078122558893,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5269917365484538,
+        "time_s": 2.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 6242,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 4,
+      "time_s": 1.9499859809875488,
+      "points": 26104,
+      "ADE_vs_recorded_ego_m": 1.5385578350209732,
+      "FDE_vs_recorded_ego_m": 4.152219620668273,
+      "minimum_acceleration_mps2": 0.027643451597139945,
+      "final_speed_mps": 5.812101428434798,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.011103724998738462,
+      "execution_endpoint_change_vs_real_m": 0.13316119330280965,
+      "extra_minimum_acceleration_mps2": -0.009626137577266516,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5274047368504007,
+        "time_s": 2.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3939,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 4,
+      "time_s": 1.9499859809875488,
+      "points": 25590,
+      "ADE_vs_recorded_ego_m": 1.9119682919254861,
+      "FDE_vs_recorded_ego_m": 5.423357174516396,
+      "minimum_acceleration_mps2": -0.11724212758028091,
+      "final_speed_mps": 5.148489973984228,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.3845141819032514,
+      "execution_endpoint_change_vs_real_m": 1.3201858984532349,
+      "extra_minimum_acceleration_mps2": -0.15451171675468736,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.5277083799321891,
+        "time_s": 2.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4929,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 5,
+      "time_s": 2.449985980987549,
+      "points": 25055,
+      "ADE_vs_recorded_ego_m": 0.37865813635718043,
+      "FDE_vs_recorded_ego_m": 1.0363525362482011,
+      "minimum_acceleration_mps2": 0.12090298691253205,
+      "final_speed_mps": 7.329668658819976,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.46437811003737406,
+        "time_s": 2.949985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.4784410262548862,
+              "pred": [
+                17.53673553466797,
+                -0.5741637945175171,
+                -0.005139774642884731,
+                4.401979923248291,
+                1.8659543991088867
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 5,
+      "time_s": 2.449985980987549,
+      "points": 25589,
+      "ADE_vs_recorded_ego_m": 1.1561697824842787,
+      "FDE_vs_recorded_ego_m": 3.4963400100763633,
+      "minimum_acceleration_mps2": -0.01227219465078096,
+      "final_speed_mps": 6.082042345616473,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.7775116461270983,
+      "execution_endpoint_change_vs_real_m": 2.4794135497255776,
+      "extra_minimum_acceleration_mps2": -0.133175181563313,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.461341643310355,
+        "time_s": 2.949985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5740937855578526,
+              "pred": [
+                17.413009643554688,
+                -0.7940014004707336,
+                0.03847111761569977,
+                4.457431316375732,
+                1.9091944694519043
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5740937855578526,
+              "pred": [
+                17.413009643554688,
+                -0.7940014004707336,
+                0.03847111761569977,
+                4.457431316375732,
+                1.9091944694519043
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 8794,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 5,
+      "time_s": 2.449985980987549,
+      "points": 25557,
+      "ADE_vs_recorded_ego_m": 1.2320192388242135,
+      "FDE_vs_recorded_ego_m": 3.7479113107782087,
+      "minimum_acceleration_mps2": -0.05624742314745432,
+      "final_speed_mps": 5.948321482488768,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.8533611024670331,
+      "execution_endpoint_change_vs_real_m": 2.7282518485229645,
+      "extra_minimum_acceleration_mps2": -0.17715041005998639,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.46178408178203284,
+        "time_s": 2.949985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.3773942603331942,
+              "pred": [
+                17.869548797607422,
+                -0.2881728708744049,
+                0.037541713565588,
+                4.516886234283447,
+                1.9240596294403076
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 8023,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 5,
+      "time_s": 2.449985980987549,
+      "points": 25589,
+      "ADE_vs_recorded_ego_m": 0.387273583043587,
+      "FDE_vs_recorded_ego_m": 1.107094247686013,
+      "minimum_acceleration_mps2": 0.11640450619054965,
+      "final_speed_mps": 7.294916685746289,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.00861544668640657,
+      "execution_endpoint_change_vs_real_m": 0.12769688309506586,
+      "extra_minimum_acceleration_mps2": -0.0044984807219824036,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.4645647271959532,
+        "time_s": 2.949985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.39943303965474586,
+              "pred": [
+                16.676759719848633,
+                -0.5537353157997131,
+                -0.23001323640346527,
+                4.425370216369629,
+                1.859107494354248
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4882,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 5,
+      "time_s": 2.449985980987549,
+      "points": 25557,
+      "ADE_vs_recorded_ego_m": 0.42907358316107097,
+      "FDE_vs_recorded_ego_m": 1.207193853971563,
+      "minimum_acceleration_mps2": 0.11488969724247163,
+      "final_speed_mps": 7.260351071354933,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.05041544680389054,
+      "execution_endpoint_change_vs_real_m": 0.1898399612890767,
+      "extra_minimum_acceleration_mps2": -0.006013289670060429,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.4647049916400999,
+        "time_s": 2.949985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.4245303137305828,
+              "pred": [
+                17.114316940307617,
+                -0.5679020881652832,
+                -0.05572918802499771,
+                4.388265132904053,
+                1.8610564470291138
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3923,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 5,
+      "time_s": 2.449985980987549,
+      "points": 25055,
+      "ADE_vs_recorded_ego_m": 1.1820715392068648,
+      "FDE_vs_recorded_ego_m": 3.559931837640402,
+      "minimum_acceleration_mps2": -0.025073690418431955,
+      "final_speed_mps": 6.048455280508843,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.8034134028496844,
+      "execution_endpoint_change_vs_real_m": 2.5559963922335203,
+      "extra_minimum_acceleration_mps2": -0.145976677330964,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.46085558230647133,
+        "time_s": 2.949985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6214959799258548,
+              "pred": [
+                18.090986251831055,
+                -0.7449159622192383,
+                0.05948049947619438,
+                4.498348712921143,
+                1.8985941410064697
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6214959799258548,
+              "pred": [
+                18.090986251831055,
+                -0.7449159622192383,
+                0.05948049947619438,
+                4.498348712921143,
+                1.8985941410064697
+              ],
+              "gt": [
+                17.959528282099555,
+                -1.1603900876965172,
+                -0.16734112546978186,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 7793,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 6,
+      "time_s": 2.949985980987549,
+      "points": 24728,
+      "ADE_vs_recorded_ego_m": 3.231449346270102,
+      "FDE_vs_recorded_ego_m": 8.367135202595147,
+      "minimum_acceleration_mps2": -0.8666400349906319,
+      "final_speed_mps": 4.957875967253004,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.42214455699586184,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6573281457256435,
+              "pred": [
+                17.214807510375977,
+                -1.3881278038024902,
+                -0.3147694766521454,
+                4.4925103187561035,
+                1.9061439037322998
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6573281457256435,
+              "pred": [
+                17.214807510375977,
+                -1.3881278038024902,
+                -0.3147694766521454,
+                4.4925103187561035,
+                1.9061439037322998
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 6,
+      "time_s": 2.949985980987549,
+      "points": 25233,
+      "ADE_vs_recorded_ego_m": 3.1245234459619873,
+      "FDE_vs_recorded_ego_m": 8.247637408090764,
+      "minimum_acceleration_mps2": -0.7961321397212372,
+      "final_speed_mps": 4.882313496171526,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.10692590030811466,
+      "execution_endpoint_change_vs_real_m": 0.9072625716325543,
+      "extra_minimum_acceleration_mps2": 0.07050789526939472,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.41796397316423567,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6373967373157592,
+              "pred": [
+                17.23830223083496,
+                -1.4309356212615967,
+                0.006934126373380423,
+                4.596761226654053,
+                1.9126341342926025
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6373967373157592,
+              "pred": [
+                17.23830223083496,
+                -1.4309356212615967,
+                0.006934126373380423,
+                4.596761226654053,
+                1.9126341342926025
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 11605,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 6,
+      "time_s": 2.949985980987549,
+      "points": 25196,
+      "ADE_vs_recorded_ego_m": 3.2243647526342,
+      "FDE_vs_recorded_ego_m": 8.596994480311563,
+      "minimum_acceleration_mps2": -0.8113157605609765,
+      "final_speed_mps": 4.67235817436843,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.007084593635902081,
+      "execution_endpoint_change_vs_real_m": 0.840655508685223,
+      "extra_minimum_acceleration_mps2": 0.05532427442965537,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.41985095514465265,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 2,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 12495,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 6,
+      "time_s": 2.949985980987549,
+      "points": 25233,
+      "ADE_vs_recorded_ego_m": 3.1595716245413565,
+      "FDE_vs_recorded_ego_m": 8.14280237326057,
+      "minimum_acceleration_mps2": -0.8420628966342717,
+      "final_speed_mps": 5.081235208409781,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.0718777217287454,
+      "execution_endpoint_change_vs_real_m": 0.2554436490544467,
+      "extra_minimum_acceleration_mps2": 0.024577138356360217,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.4219824434094419,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5917863875820122,
+              "pred": [
+                17.495742797851562,
+                -1.2551419734954834,
+                -0.48077645897865295,
+                4.556656360626221,
+                1.9195353984832764
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.5917863875820122,
+              "pred": [
+                17.495742797851562,
+                -1.2551419734954834,
+                -0.48077645897865295,
+                4.556656360626221,
+                1.9195353984832764
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 4394,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 6,
+      "time_s": 2.949985980987549,
+      "points": 25196,
+      "ADE_vs_recorded_ego_m": 3.2194813485756066,
+      "FDE_vs_recorded_ego_m": 8.312776518850313,
+      "minimum_acceleration_mps2": -0.8723331818867783,
+      "final_speed_mps": 5.002984649899871,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": -0.011967997694495303,
+      "execution_endpoint_change_vs_real_m": 0.18034672565715135,
+      "extra_minimum_acceleration_mps2": -0.005693146896146417,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.4231579180010518,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.4825737073302214,
+              "pred": [
+                16.82417869567871,
+                -1.0659141540527344,
+                -0.484477698802948,
+                4.5519304275512695,
+                1.9282739162445068
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.2816391661297231,
+              "pred": [
+                18.676525115966797,
+                7.02274751663208,
+                -0.8689801692962646,
+                4.872779369354248,
+                1.9738901853561401
+              ],
+              "gt": [
+                19.0636124755005,
+                7.506520767112507,
+                0.9137762950178595,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 3285,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 6,
+      "time_s": 2.949985980987549,
+      "points": 24728,
+      "ADE_vs_recorded_ego_m": 3.233449529531984,
+      "FDE_vs_recorded_ego_m": 8.615467422314161,
+      "minimum_acceleration_mps2": -0.8159486850492281,
+      "final_speed_mps": 4.677968017245525,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0020001832618818938,
+      "execution_endpoint_change_vs_real_m": 0.941059862480661,
+      "extra_minimum_acceleration_mps2": 0.050691349941403785,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.41825901528678006,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6266591866224968,
+              "pred": [
+                17.100563049316406,
+                -1.5550075769424438,
+                0.051457133144140244,
+                4.530848026275635,
+                1.9172167778015137
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 4,
+          "matched": 1,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.6266591866224968,
+              "pred": [
+                17.100563049316406,
+                -1.5550075769424438,
+                0.051457133144140244,
+                4.530848026275635,
+                1.9172167778015137
+              ],
+              "gt": [
+                17.51603833622999,
+                -1.747321331898652,
+                -0.24470642286859126,
+                4.523,
+                2.036
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 3,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 11577,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "index": 7,
+      "time_s": 3.449985980987549,
+      "points": 24385,
+      "ADE_vs_recorded_ego_m": 1.565117720364153,
+      "FDE_vs_recorded_ego_m": 4.03247698362462,
+      "minimum_acceleration_mps2": -0.17113594751642203,
+      "final_speed_mps": 6.728402695042515,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.0,
+      "execution_endpoint_change_vs_real_m": 0.0,
+      "extra_minimum_acceleration_mps2": 0.0,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.455068785529511,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 3,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.28403170420167195,
+              "pred": [
+                26.069896697998047,
+                -7.775013446807861,
+                -3.14119291305542,
+                4.763900279998779,
+                1.8910808563232422
+              ],
+              "gt": [
+                27.009958301657235,
+                -8.897648038835325,
+                -0.7803360057903976,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.33548681459239615,
+              "pred": [
+                16.211145401000977,
+                -1.5377596616744995,
+                -1.3464597463607788,
+                4.523106098175049,
+                1.9039028882980347
+              ],
+              "gt": [
+                16.907061913238998,
+                -2.4308045139320282,
+                -0.31706647893115436,
+                4.523,
+                2.036
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.3447770613419269,
+              "pred": [
+                16.79849624633789,
+                9.39073657989502,
+                -3.006511688232422,
+                4.720928192138672,
+                1.9017398357391357
+              ],
+              "gt": [
+                17.082659826599652,
+                9.729969883859054,
+                1.1250457590140366,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501"
+          ],
+          "predicted_positive_count": 6,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 6,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 0,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "index": 7,
+      "time_s": 3.449985980987549,
+      "points": 24769,
+      "ADE_vs_recorded_ego_m": 2.0757253588638815,
+      "FDE_vs_recorded_ego_m": 5.901276751872198,
+      "minimum_acceleration_mps2": -0.3154089200693227,
+      "final_speed_mps": 5.657619075020061,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.5106076384997285,
+      "execution_endpoint_change_vs_real_m": 2.0743373277321595,
+      "extra_minimum_acceleration_mps2": -0.14427297255290067,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.455068785529511,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 3,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.2944180142519612,
+              "pred": [
+                27.01203727722168,
+                -7.415757656097412,
+                1.862599492073059,
+                4.663550853729248,
+                1.900558590888977
+              ],
+              "gt": [
+                27.009958301657235,
+                -8.897648038835325,
+                -0.7803360057903976,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.32517393290710617,
+              "pred": [
+                16.561447143554688,
+                -1.465624451637268,
+                0.057765405625104904,
+                4.51806116104126,
+                1.9160383939743042
+              ],
+              "gt": [
+                16.907061913238998,
+                -2.4308045139320282,
+                -0.31706647893115436,
+                4.523,
+                2.036
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.27531178550396856,
+              "pred": [
+                16.673940658569336,
+                8.847819328308105,
+                -0.4977487027645111,
+                4.73229455947876,
+                1.9286316633224487
+              ],
+              "gt": [
+                17.082659826599652,
+                9.729969883859054,
+                1.1250457590140366,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 9490,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "index": 7,
+      "time_s": 3.449985980987549,
+      "points": 24715,
+      "ADE_vs_recorded_ego_m": 2.002924950183982,
+      "FDE_vs_recorded_ego_m": 5.623457665084653,
+      "minimum_acceleration_mps2": -0.2988021185499163,
+      "final_speed_mps": 5.812431348367405,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.4378072298198288,
+      "execution_endpoint_change_vs_real_m": 1.7522392314058084,
+      "extra_minimum_acceleration_mps2": -0.12766617103349426,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.455068785529511,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.2765746071089219,
+              "pred": [
+                16.589853286743164,
+                -1.341591715812683,
+                0.037427160888910294,
+                4.581595420837402,
+                1.9415301084518433
+              ],
+              "gt": [
+                16.907061913238998,
+                -2.4308045139320282,
+                -0.31706647893115436,
+                4.523,
+                2.036
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.2756774024645886,
+              "pred": [
+                16.927824020385742,
+                9.040289878845215,
+                -0.5008810758590698,
+                4.715456485748291,
+                1.925086498260498
+              ],
+              "gt": [
+                17.082659826599652,
+                9.729969883859054,
+                1.1250457590140366,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 4,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 9291,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "index": 7,
+      "time_s": 3.449985980987549,
+      "points": 24769,
+      "ADE_vs_recorded_ego_m": 1.6671837581792168,
+      "FDE_vs_recorded_ego_m": 4.358826364274835,
+      "minimum_acceleration_mps2": -0.2071459637645728,
+      "final_speed_mps": 6.568398325800123,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.10206603781506374,
+      "execution_endpoint_change_vs_real_m": 0.32852020606993254,
+      "extra_minimum_acceleration_mps2": -0.036010016248150784,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.455068785529511,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.35788354594725735,
+              "pred": [
+                16.54208755493164,
+                -1.3895015716552734,
+                -0.9593110084533691,
+                4.517105579376221,
+                1.9095617532730103
+              ],
+              "gt": [
+                16.907061913238998,
+                -2.4308045139320282,
+                -0.31706647893115436,
+                4.523,
+                2.036
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.3111534945699884,
+              "pred": [
+                16.48752212524414,
+                9.142413139343262,
+                -3.1403567790985107,
+                4.753666877746582,
+                1.90885591506958
+              ],
+              "gt": [
+                17.082659826599652,
+                9.729969883859054,
+                1.1250457590140366,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 5716,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "index": 7,
+      "time_s": 3.449985980987549,
+      "points": 24715,
+      "ADE_vs_recorded_ego_m": 1.5895939367362433,
+      "FDE_vs_recorded_ego_m": 4.0937798600045125,
+      "minimum_acceleration_mps2": -0.18103275332585914,
+      "final_speed_mps": 6.716535439091316,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.024476216372090187,
+      "execution_endpoint_change_vs_real_m": 0.08886070398114898,
+      "extra_minimum_acceleration_mps2": -0.00989680580943711,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.455068785529511,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "IoU": 0.3159902533429529,
+              "pred": [
+                16.57301139831543,
+                -1.2462735176086426,
+                -1.0524747371673584,
+                4.543308258056641,
+                1.9127862453460693
+              ],
+              "gt": [
+                16.907061913238998,
+                -2.4308045139320282,
+                -0.31706647893115436,
+                4.523,
+                2.036
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.3702358300533698,
+              "pred": [
+                16.90428352355957,
+                9.14804744720459,
+                -2.8914029598236084,
+                4.684215068817139,
+                1.8927624225616455
+              ],
+              "gt": [
+                17.082659826599652,
+                9.729969883859054,
+                1.1250457590140366,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501"
+          ],
+          "predicted_positive_count": 6,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 6,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 5056,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "index": 7,
+      "time_s": 3.449985980987549,
+      "points": 24385,
+      "ADE_vs_recorded_ego_m": 2.021703070293578,
+      "FDE_vs_recorded_ego_m": 5.708821083754743,
+      "minimum_acceleration_mps2": -0.2977437353865492,
+      "final_speed_mps": 5.765000153438111,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "ADE_delta_vs_real_m": 0.456585349929425,
+      "execution_endpoint_change_vs_real_m": 1.8907039188244137,
+      "extra_minimum_acceleration_mps2": -0.12660778787012716,
+      "next_half_second_clearance": {
+        "signed_box_clearance_m": 0.455068785529511,
+        "time_s": 3.449985980987549,
+        "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+        "category": "vehicle.car",
+        "evaluated_state_samples": 6,
+        "has_annotated_overlap": false
+      },
+      "detection": {
+        "0.25": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 2,
+          "matches": [
+            {
+              "instance": "a65e08fbee8d4b16aa2d32d59a1538e6",
+              "IoU": 0.36325499609360135,
+              "pred": [
+                26.085657119750977,
+                -7.353897571563721,
+                1.9685660600662231,
+                4.62783670425415,
+                1.8873870372772217
+              ],
+              "gt": [
+                27.009958301657235,
+                -8.897648038835325,
+                -0.7803360057903976,
+                4.598,
+                2.001
+              ]
+            },
+            {
+              "instance": "f54238bdd48443fcb4a019271dbca2f8",
+              "IoU": 0.2787092188689177,
+              "pred": [
+                16.84050941467285,
+                9.261578559875488,
+                -0.3287242650985718,
+                4.725265979766846,
+                1.941664218902588
+              ],
+              "gt": [
+                17.082659826599652,
+                9.729969883859054,
+                1.1250457590140366,
+                4.45,
+                2.03
+              ]
+            }
+          ],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.25,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        },
+        "0.5": {
+          "eligible_visible_forward_vehicles": 5,
+          "matched": 0,
+          "matches": [],
+          "unmatched_ids": [
+            "a326c569f4a84999a361a7f1a61af12d",
+            "a65e08fbee8d4b16aa2d32d59a1538e6",
+            "acb7920a70b44a84b1a61ce6460483cb",
+            "ae03d500f9f5482f9fdaf390c796e501",
+            "f54238bdd48443fcb4a019271dbca2f8"
+          ],
+          "predicted_positive_count": 5,
+          "IoU_threshold": 0.5,
+          "scope": "nuScenes adapter diagnostic, not a native detection benchmark or AP; annotations require >=5 real LiDAR points."
+        }
+      },
+      "semantic_argmax_changed_cells_vs_real": 7118,
+      "semantic_limit": "Prediction differences only; complete drivable-area/map truth not evaluated."
+    }
+  ]
+}

@@ -42,4 +42,4 @@ flowchart LR
 - 若普通尺度、覆盖、读出或标定控制解释差距，就关闭相应重建立论。若局部几何修复不恢复下游，就不为该候选训练新方法。
 - 真正留下的错误族可以是可行驶空间被侵占、演员范围或距离偏差、遮挡关系、道路/路缘几何或缺少支撑；不预设必须是 first-return。
 
-SplatAD 原生 RGB＋LiDAR 场景接入仍用于完整的新位姿验证，进度见 [原生传感器推进记录](WORLDSIM_SIMULATION_NATIVE_SENSOR_STAGE.md)。整体目标保持 active；尚未确认可支持主方法的因果坏例。
+SplatAD 原生 RGB＋LiDAR 已完成两次实际 4 秒反馈闭环及模态对照，完整拟合版本仍在推进，见 [原生闭环试跑](WORLDSIM_SIMULATION_NATIVE_CLOSED_LOOP_PILOT.md)。目前只替换 RGB 可重现主要退化，LiDAR 单独替换影响小；RGB 通道仍可能包含几何、外观和时刻差异，不能直接给机制定性。整体目标保持 active；尚未确认可支持主方法的因果坏例。

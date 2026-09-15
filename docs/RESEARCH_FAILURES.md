@@ -1,3 +1,7 @@
+# 当前：原生RGB＋LiDAR反馈已实际运行，8k试跑差距主要经RGB通道（2026-09-15）
+
+WS-SIM-NATIVE-CLOSEDLOOP-01 / scene0004-step008000-pilot2：8日志时刻×6模态对照，64策略/PDM预测，raw/median各一次4秒实际新位姿传感器闭环。仅LiDAR的平均ADE增量−0.017/+0.015m，RGB-only为+0.288m；RGB通道归因未区分视觉几何、外观或采样时刻。两闭环无标注框交叠，最小间距+0.566/+0.572m；5.17/5.54m终点误差不能全部归为重建，真实输入初始预测本身已有3.07m。当前是8000步接入试跑，不是完整30001步SOTA失效结论；完整拟合仍运行。累计18次HUGSIM＋2次本轮反馈闭环、72几何前向、738策略/PDM预测。自然几何恢复与独立严重危害确认仍缺。goal active；人工verdict=null；failure_ledger_delta=V74-H2-F18。见docs/WORLDSIM_SIMULATION_NATIVE_CLOSED_LOOP_PILOT.md。以下为历史。
+
 # 当前：下游优先判据生效，Pi3X有限因果审计完成，原生传感器拟合中（2026-09-15）
 
 原生留出接口补充：固定第8000步checkpoint的4帧LiDAR和6相机验证已全部完成，raw/median点云并列保存；距离绝对误差中位数0.11–0.22m且仍有长尾。首场景拟合快照10000/30001步；尚无新位姿RGB+LiDAR闭环结果。该接口补证不增加策略/PDM次数，不晋级几何坏例。failure_ledger_delta=none（沿用F17研究结论），人工verdict=null。
