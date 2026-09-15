@@ -1,9 +1,10 @@
+import os
 """只读取预登记 BUILD RGB；保存官方前向的原生输出，评价在独立进程进行。"""
 import os,sys,json,time,argparse,pathlib,traceback,subprocess
 import numpy as np
 import torch
 from safetensors.torch import load_file
-P=pathlib.Path('/root/autodl-tmp');R=P/'runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1'
+P=pathlib.Path('/root/autodl-tmp');R=pathlib.Path(os.environ.get('SIMIMPACT_RUN_ROOT',str(P/'runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1')))
 REPOS={'vggt':P/'external/worldsim_v72/vggt','dvgt1':P/'external/worldsim_v81/DVGT','pi3x':P/'external/worldsim_v72/Pi3','omega512':P/'external/worldsim_v74_mainfig/vggt-omega'}
 WEIGHTS={'vggt':P/'models/eas_vggt/vggt/model.safetensors','dvgt1':P/'models/worldsim_v81/dvgt1.pt','pi3x':P/'models/eas_vggt/pi3x/model.safetensors','omega512':P/'models/worldsim_v74_mainfig/vggt_omega_1b_512.pt'}
 def main():

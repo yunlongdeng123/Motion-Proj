@@ -1,10 +1,11 @@
+import os
 """冻结本批首两关键帧RGB作为BUILD，后六帧LiDAR仅供后续评价。"""
 import json
 from pathlib import Path
 import numpy as np
 from pyquaternion import Quaternion
 from PIL import Image
-R=Path('/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1')
+R=Path(os.environ.get('SIMIMPACT_RUN_ROOT','/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1'))
 M=Path('/root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval')
 src=json.loads((R/'raw_source_availability.json').read_text())
 sd={x['filename']:x for x in json.loads((M/'sample_data.json').read_text()) if x['is_key_frame']}
@@ -27,6 +28,6 @@ for name,s in src.items():
     dest=R/'inputs'/f'{name}.json'
     if dest.exists():raise RuntimeError(f'Already registered {dest}')
     dest.write_text(json.dumps({'scene':name,'log':s.get('log','see metadata'),'role':'BUILD_RGB_ONLY','views':views,
-        'query_sample_indices':list(range(2,8)),'selection':'Initial cohort retained; frames chosen after native rollout, discovery only',
+        'query_sample_indices':list(range(2,len(s['samples']))),'selection':'Frozen source manifest; discovery only, see root registration',
         'downstream':'Native simulator geometry replacement is a diagnostic adapter, not an official feed-forward end-to-end system'},indent=2))
     print(name,len(views),flush=True)

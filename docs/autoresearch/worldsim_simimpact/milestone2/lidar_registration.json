@@ -1,0 +1,26 @@
+{
+  "task": "WS-SIM-LIDAR-01",
+  "parent": "WS-SIM-IMPACT-01",
+  "stage": "same-time discovery",
+  "scenes": [
+    "scene-0013",
+    "scene-0038",
+    "scene-0041"
+  ],
+  "methods": [
+    "vggt",
+    "omega512",
+    "dvgt1",
+    "pi3x"
+  ],
+  "inputs": "Existing frozen six/twelve RGB predictions; first six output maps in both conditions",
+  "sensor_reference": "First real BUILD LiDAR scan: fixed measured ray directions and return targets; no raydrop/intensity model",
+  "controls": [
+    "known calibration and poses",
+    "native metric / camera-baseline scale",
+    "one median BUILD LiDAR scalar",
+    "early-only causal hybrid in downstream evaluation"
+  ],
+  "claim_limit": "Adapter + policy probe, not yet a pose-responsive closed-loop LiDAR simulator; same-time reference not independent confirmation",
+  "human_verdict": null
+}

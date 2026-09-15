@@ -1,3 +1,7 @@
+# 当前：LiDAR策略和官方车辆模型实测完成，近车交互批次推进中（2026-09-15）
+
+WS-SIM-LIDAR-01：195组官方TransFuser及195组PDM车辆执行，nuScenes适配、非反应式4秒跟踪，不混称传感器闭环。三场景无新增演员交叠；全局BUILD尺度后24个完整扫描执行ADE变化−0.0738至+0.0949m，末端最大变化1.1398m。公交车82/84早交案例未新增碰撞且ADE改善，保留反例。GPU校准发现HUGSIM RGB+ED+S深度未除alpha，旧raw深度诊断需更正，LTF闭环不受该通道影响。6不同日志近车窗口已按真实状态先冻结后运行，不按模型误差挑选；目标active，人工verdict=null，failure_ledger_delta=V74-H2-F15。见docs/WORLDSIM_SIMULATION_LIDAR_IMPACT.md。以下为历史。
+
 # 当前：原生闭环与碰撞采样影响已实测，研究继续（2026-09-15）
 
 WS-SIM-IMPACT-01/20260915-r1：18次HUGSIM/LTF闭环、24次四官方模型推理。LTF无LiDAR输入依赖实测为0；固定控制器迭代预算的同轨迹采样对照中，0013可由碰撞终止变为完成，0041无变化。证明碰撞表示采样影响，不等于自然前馈phantom危害。48组替换对终止点覆盖为0，阴性不可解释；帧对应/标定待解。详见docs/WORLDSIM_SIMULATION_IMPACT.md与V74-H2-F14。目标active，不以工程接通收口；人工verdict=null，failure_ledger_delta=V74-H2-F14。以下为历史。

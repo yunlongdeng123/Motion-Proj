@@ -1,9 +1,10 @@
+import os
 """分开保存BUILD度量锚点与QUERY参考，均不进入官方模型前向。"""
 import json
 from pathlib import Path
 import numpy as np
 from pyquaternion import Quaternion
-R=Path('/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1')
+R=Path(os.environ.get('SIMIMPACT_RUN_ROOT','/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1'))
 M=Path('/root/autodl-tmp/data/worldsim_v4/drivestudio_raw_trainval/v1.0-trainval')
 src=json.loads((R/'raw_source_availability.json').read_text())
 needed={x['filename'] for s in src.values() for x in s['records'] if '/LIDAR_TOP/' in x['filename']}

@@ -1,0 +1,17 @@
+{
+  "task_id": "WS-SIM-IMPACT-01",
+  "run_id": "20260915-r1",
+  "objective": "Run official log-based and interactive end-to-end simulators to determine whether real reconstruction errors materially affect simulation; if first-return conflict is not impactful, investigate other feed-forward geometry/physics failures.",
+  "initial_simulator": "hyzhou404/HUGSIM",
+  "initial_policy": "hyzhou404/NAVSIM LTF, autonomousvision/navsim_baselines/ltf_seed_0.ckpt",
+  "initial_scenes": ["scene-0013", "scene-0038", "scene-0041"],
+  "selection": "First three lexicographically ordered public nuScenes scenes with an easy scenario in the official scenarios archive. Selected for integration before executing or inspecting policy outputs, not selected for geometric failure.",
+  "seed": 20260915,
+  "resource": {"gpu": "RTX 3090 24 GiB x 1", "cpu_quota": 14, "memory_limit_GiB": 90},
+  "design": ["Establish official native simulator and frozen policy baseline", "Trace geometry consumers: camera, LiDAR, static collision, dynamic collision, road height", "Replay identical sensor poses and then paired closed-loop initial states", "Intervene only on the measured reconstruction defect; preserve representation/readout and retain ordinary controls", "Record both harmful and null results, with no requirement that first-return conflict be harmful"],
+  "metrics": ["native collision and off-road termination", "policy trajectory and control differences", "route progress", "sensor change on actual policy inputs", "independently referenced physical geometry mismatch"],
+  "boundary": "A manual perturbation is sensitivity evidence, not a naturally occurring reconstruction badcase. LTF or HUGSIM alone is not all simulators. Camera expected depth is not physical LiDAR. Existing first-return scenes are exposed DEV. No previously sealed reserve is opened.",
+  "failure_ledger_refs": ["V74-H2-F13", "V74-F06", "V6-F52"],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null
+}
