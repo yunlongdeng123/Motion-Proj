@@ -4,10 +4,14 @@ import json
 from pathlib import Path
 import requests
 import time
+import os
 
 ROOT=Path('/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1')
 ASSETS=ROOT/'assets'
 CHUNK=8*1024*1024
+HOST=os.environ.get('SIM_ASSET_HOST','https://huggingface.co')
+SESSION=requests.Session()
+if os.environ.get('SIM_ASSET_DIRECT')=='1':SESSION.trust_env=False
 # Prioritize the first runnable simulator/policy pair. All initial scenes stay registered.
 FILES=[('scenarios.zip','datasets/XDimLab/HUGSIM','scenarios.zip',203858),
  ('ltf_seed_0.ckpt','autonomousvision/navsim_baselines','ltf/ltf_seed_0.ckpt',673235500),
@@ -21,7 +25,7 @@ def get_part(job):
     if dest.exists() and dest.stat().st_size==expected:return
     for attempt in range(6):
         try:
-            with requests.get(url,headers={'Range':f'bytes={start}-{end}'},timeout=(20,40)) as r:
+            with SESSION.get(url,headers={'Range':f'bytes={start}-{end}'},timeout=(20,40)) as r:
                 r.raise_for_status()
                 if r.status_code!=206 and not(start==0 and len(r.content)==expected):
                     raise RuntimeError(f'Range not honored: {r.status_code}')
@@ -39,7 +43,7 @@ def main():
     results=[]
     for local,repo,path,size in FILES:
         dest=ASSETS/local;dest.parent.mkdir(parents=True,exist_ok=True)
-        url=f'https://huggingface.co/{repo}/resolve/main/{path}'
+        url=f'{HOST}/{repo}/resolve/main/{path}'
         if dest.exists() and dest.stat().st_size==size:
             results.append({'path':str(dest),'url':url,'bytes':size});continue
         parts=ASSETS/'range_parts'/local.replace('/','_');parts.mkdir(parents=True,exist_ok=True)

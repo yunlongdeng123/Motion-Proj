@@ -8,6 +8,8 @@ import random
 import sys
 import time
 import zipfile
+import dataclasses
+import importlib
 
 BASE = Path('/root/autodl-tmp/external/worldsim_simimpact')
 ROOT = Path('/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1')
@@ -46,11 +48,17 @@ def main():
     parser.add_argument('--scene',required=True)
     parser.add_argument('--steps',type=int,default=401)
     parser.add_argument('--tag',default='native')
+    parser.add_argument('--collision-sample-stride',type=int,default=1)
+    parser.add_argument('--collision-cloud',type=str,default=None)
+    parser.add_argument('--controller-fixed-iterations',action='store_true')
     args=parser.parse_args()
     random.seed(20260915); np.random.seed(20260915); torch.manual_seed(20260915)
     torch.set_num_threads(4)
     torch.backends.cuda.matmul.allow_tf32=False
     torch.backends.cudnn.allow_tf32=False
+    controller_module=importlib.import_module('sim.ilqr.lqr')
+    if args.controller_fixed_iterations:
+        controller_module.lqr._solver_params=dataclasses.replace(controller_module.lqr._solver_params,max_solve_time=None)
     out=ROOT/'rollouts'/args.scene/args.tag
     out.mkdir(parents=True,exist_ok=False)
     model_root=ROOT/'assets'/'extracted'
@@ -71,6 +79,14 @@ def main():
     cfg.base.realcar_path=str(ROOT/'assets'/'3DRealCar')
     OmegaConf.save(cfg,out/'resolved_config.yaml')
     env=HUGSimEnv(cfg=cfg,output=str(out))
+    source_count=len(env.points)
+    if args.collision_cloud:
+        env.points=torch.from_numpy(np.load(args.collision_cloud)['points'].astype(np.float32)).cuda()
+    if args.collision_sample_stride>1:
+        env.points=env.points[::args.collision_sample_stride]
+    (out/'collision_protocol.json').write_text(json.dumps({'source_count':source_count,'evaluated_count':len(env.points),
+        'sample_stride':args.collision_sample_stride,'external_cloud':args.collision_cloud,
+        'scope':'Collision-channel sensitivity control; RGB, renderer, vehicle physics and policy unchanged. Not a natural badcase.' if args.collision_sample_stride>1 else 'Native unless explicit external cloud'},indent=2))
     obs,info=env.reset(seed=20260915)
     config=TransfuserConfig();config.latent=True
     agent=TransfuserAgent(config,lr=1e-4,checkpoint_path=str(ROOT/'assets/ltf_seed_0.ckpt'))
@@ -88,7 +104,10 @@ def main():
     gpu_traj,feats=predict(obs,info)
     qa={'strict_checkpoint_loading':True,'cpu_gpu_max_abs_trajectory_difference_m':float(np.max(np.abs(cpu_traj-gpu_traj))),
         'torch':torch.__version__,'policy_device':'cuda','initial_policy_inputs':{k:list(v.shape) for k,v in feats.items()},
-        'renderer':'official HUGSIM_splat RGB+ED+S','controller':'official traj2control / iLQR','simulator':'official HUGSimEnv.step'}
+        'renderer':'official HUGSIM_splat RGB+ED+S','controller':'official traj2control / iLQR','simulator':'official HUGSimEnv.step',
+        'controller_max_solve_time':controller_module.lqr._solver_params.max_solve_time,
+        'controller_max_iterations':controller_module.lqr._solver_params.max_ilqr_iterations,
+        'controller_comparison':'Diagnostic fixed iteration budget; removes official 50ms wall-clock stopping' if args.controller_fixed_iterations else 'Official 50ms stopping'}
     (out/'runtime_qa.json').write_text(json.dumps(qa,indent=2))
     if qa['cpu_gpu_max_abs_trajectory_difference_m']>1e-3:raise RuntimeError('Unexpected CPU/GPU policy discrepancy')
     with (out/'initial_observation.pkl').open('wb') as f:pickle.dump((obs,info),f)
