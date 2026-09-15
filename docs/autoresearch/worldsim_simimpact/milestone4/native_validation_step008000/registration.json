@@ -1,0 +1,55 @@
+{
+  "task_id": "WS-SIM-NATIVE-SENSOR-VALIDATION-01",
+  "seed": 20260915,
+  "fit": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1/fits/scene-0004/splatad/native-r2",
+  "checkpoint_step": 8000,
+  "selection": "All held-out sensors when requested; otherwise four evenly spaced LiDAR scans and earliest held-out image per camera, chosen before rendering.",
+  "role": "Native held-out sensor fidelity and adapter validation; not downstream impact or a geometry badcase.",
+  "readouts": [
+    "official point_cloud from raw accumulated depth",
+    "official median_point_cloud"
+  ],
+  "information": "Full-scene RGB+LiDAR fit, metric calibration and annotated dynamic actor trajectories. Official validation uses measured/imputed ray directions and validity masks.",
+  "completed": true,
+  "start_unix": 1789459781.9923232,
+  "human_verdict": null,
+  "lidar_indices": [
+    0,
+    64,
+    128,
+    193
+  ],
+  "camera_indices": [
+    0,
+    114,
+    229,
+    341,
+    453,
+    565
+  ],
+  "heldout_lidars": 194,
+  "heldout_cameras": 678,
+  "dataparser_transform": [
+    [
+      0.9270642995834351,
+      -0.3749021887779236,
+      -1.3529437986603554e-12,
+      70.98719787597656
+    ],
+    [
+      0.37490221858024597,
+      0.9270643591880798,
+      9.064567711902782e-05,
+      -1196.46533203125
+    ],
+    [
+      -3.3983516914304346e-05,
+      -8.4034247265663e-05,
+      1.0,
+      -1.7393524646759033
+    ]
+  ],
+  "dataparser_scale": 1.0,
+  "time_offset": 1531883985.904844,
+  "end_unix": 1789460008.8637254
+}

@@ -1,5 +1,7 @@
 # 当前：下游优先判据生效，Pi3X有限因果审计完成，原生传感器拟合中（2026-09-15）
 
+原生留出接口补充：固定第8000步checkpoint的4帧LiDAR和6相机验证已全部完成，raw/median点云并列保存；距离绝对误差中位数0.11–0.22m且仍有长尾。首场景拟合快照10000/30001步；尚无新位姿RGB+LiDAR闭环结果。该接口补证不增加策略/PDM次数，不晋级几何坏例。failure_ledger_delta=none（沿用F17研究结论），人工verdict=null。
+
 用户明确改为先发现仿真退化、再做局部几何恢复；Early/Chamfer仅作诊断。23项空间传感器定位＋7项真实网格平面/删除对照完成。Pi3X六图右区传感器恢复有信号，十二图不重复；有2734点支持的局部路面网格修复，两者都未消除接触，不晋级Hero动机，不继续细切/扫参。既有48组下游重排：7个新增名义接触均在0061，2个终点变化>1m，无新增停止或超过2m/s²的额外制动。累计18次HUGSIM闭环、72几何前向、674策略/PDM执行。官方SplatAD完整0004/0061数据3449文件已提取，CUDA已编译；0004已稳定拟合、阶段checkpoint落盘，完整新位姿RGB+LiDAR闭环尚未完成。原始与median两条官方点云输出均保留。整体goal active；人工verdict=null；failure_ledger_delta=V74-H2-F17。见docs/WORLDSIM_SIMULATION_DOWNSTREAM_FIRST.md及WORLDSIM_SIMULATION_PI3X_CAUSAL_AUDIT.md。以下为历史。
 
 # 当前：六日志有限补证完成，普遍phantom严重危害主张降级（2026-09-15）
