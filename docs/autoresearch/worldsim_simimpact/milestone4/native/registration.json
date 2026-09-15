@@ -1,0 +1,32 @@
+{
+  "task_id": "WS-SIM-NATIVE-LIDAR-01",
+  "run_id": "20260915-r1",
+  "parent_goal": "Actual reconstruction impact in end-to-end driving simulation",
+  "purpose": "Establish native SplatAD camera+LiDAR novel-pose sensor loop with official driving components and metric log reference; not another extreme first-return perturbation search",
+  "scenes": [
+    "scene-0004",
+    "scene-0061"
+  ],
+  "selection": "0004 is first lexicographic scene in the completed ordinary interaction cohort; 0061 is its sole nominal contact candidate. Both exposed discovery sources, not independent confirmation.",
+  "official_renderer": "georghess/neurad-studio SplatAD with carlinds/splatad CUDA kernels",
+  "asset_fitting": "Official scene-specific RGB+LiDAR reconstruction, with known calibration and annotated dynamics. This supplies a strong metric simulator reference; not a feed-forward model training or same-information ranking.",
+  "initial_fit_budget": "Official 30001-step schedule, checkpointed; first establish one scene, assess actual validation and resource cost before fitting second",
+  "model_and_policy_scope": "Existing official geometry checkpoints, official RGB+LiDAR TransFuser, official vehicle controller/dynamics; all adapters and extra information reported",
+  "required_evidence": [
+    "Native RGB and LiDAR change with actually executed ego pose",
+    "Same-run observer calibration and independent log sensor agreement",
+    "Frozen sensor protocol and physics query semantics",
+    "Closed-loop native baseline before geometric intervention",
+    "Residual harm separated from FOV, scale, RGB artifacts and near-boundary vehicle-box effects"
+  ],
+  "counterexamples_retained": [
+    "V74-H2-F13",
+    "V74-H2-F14",
+    "V74-H2-F15",
+    "V74-H2-F16"
+  ],
+  "resource": "Single RTX3090 24GiB, 14CPU/90GiB cgroup; no old H2 restart",
+  "seed": 20260915,
+  "human_verdict": null,
+  "failure_ledger_delta": "pending"
+}

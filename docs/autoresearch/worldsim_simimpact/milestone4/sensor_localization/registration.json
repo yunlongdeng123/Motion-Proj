@@ -1,0 +1,25 @@
+{
+  "task_id": "WS-SIM-PI3X-LOCAL-01",
+  "run_id": "20260915-r1",
+  "scene": "scene-0061",
+  "variants": [
+    "six",
+    "twelve"
+  ],
+  "trigger": "Only two residual contact conditions after all missing rays restored in completed COVERAGE-01; selected on downstream event, not depth error",
+  "role": "Finite sensor-domain localization before geometry-asset oracle repair; a policy recovery here is not yet a reconstruction-causality result",
+  "regions": {
+    "forward_corridor": "0<x<=25 m, abs(y)<=3 m",
+    "forward_left": "0<x<=25 m, 3<y<=12 m",
+    "forward_right": "0<x<=25 m, -12<=y<-3 m",
+    "near_rear": "-10<x<=0 m, abs(y)<=12 m",
+    "outside_local_regions": "Complement; deliberately nonlocal control, not a hero patch"
+  },
+  "membership": "Union of GT endpoint and reconstructed endpoint membership; all z. Unknown/no-return rays restored before every residual/intervention.",
+  "conditions": "Real + each residual + each of five local repairs and corresponding only-local-error hybrids = 23 forwards. No adaptive partition search within this batch.",
+  "downstream": "Frozen official TransFuser RGB+LiDAR, then official PDM execution. Keep GPU-reference numerical comparison and signed clearance; contact remains annotation-rectangle diagnostic.",
+  "next_step": "Only a bounded localized recovery warrants a geometry-asset substitution; no recovery closes these two candidates. Novel-pose loop still required for final claim.",
+  "device": "CPU to leave single GPU available for native SplatAD fit",
+  "seed": 20260915,
+  "human_verdict": null
+}

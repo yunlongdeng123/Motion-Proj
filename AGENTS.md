@@ -1,3 +1,7 @@
+# 当前：下游优先判据生效，Pi3X有限因果审计完成，原生传感器拟合中（2026-09-15）
+
+用户明确改为先发现仿真退化、再做局部几何恢复；Early/Chamfer仅作诊断。23项空间传感器定位＋7项真实网格平面/删除对照完成。Pi3X六图右区传感器恢复有信号，十二图不重复；有2734点支持的局部路面网格修复，两者都未消除接触，不晋级Hero动机，不继续细切/扫参。既有48组下游重排：7个新增名义接触均在0061，2个终点变化>1m，无新增停止或超过2m/s²的额外制动。累计18次HUGSIM闭环、72几何前向、674策略/PDM执行。官方SplatAD完整0004/0061数据3449文件已提取，CUDA已编译；0004已稳定拟合、阶段checkpoint落盘，完整新位姿RGB+LiDAR闭环尚未完成。原始与median两条官方点云输出均保留。整体goal active；人工verdict=null；failure_ledger_delta=V74-H2-F17。见docs/WORLDSIM_SIMULATION_DOWNSTREAM_FIRST.md及WORLDSIM_SIMULATION_PI3X_CAUSAL_AUDIT.md。以下为历史。
+
 # 当前：六日志有限补证完成，普遍phantom严重危害主张降级（2026-09-15）
 
 WS-SIM-INTERACTION-01/20260915-r1及COVERAGE-01：48前向、96扫描、390+59组官方策略/PDM执行。唯一新增名义接触在0061且对象为路锥，真实LiDAR基线仅1.6cm余量。删除FOV外缺失束8/8交叠、FOV内0/8；只注入路锥错误0/8，修复路锥仍7/8。主要差距为观测范围；恢复全部缺失后的2个Pi3X残余保留，但仅一个域适配/近边界来源。降级普遍phantom→严重事故，不以更多极端诊断或训练维持。累计18次HUGSIM闭环、72几何前向、644策略/车辆执行；PDM不是新位姿传感器闭环。整体目标active，人工verdict=null，failure_ledger_delta=V74-H2-F16。见docs/WORLDSIM_SIMULATION_INTERACTION_FINDINGS.md。以下为历史。

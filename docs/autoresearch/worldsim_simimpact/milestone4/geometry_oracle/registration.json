@@ -1,0 +1,16 @@
+{
+  "task_id": "WS-SIM-PI3X-GEOMETRY-01",
+  "run_id": "20260915-r1",
+  "scene": "scene-0061",
+  "role": "Actual saved triangle-asset intervention and rerendering; local ordinary plane with additional real LiDAR information. Same-time discovery, not a novel-pose closed loop or independent confirmation.",
+  "selection": "Right-forward region chosen because six-view sensor oracle both recovered nominal contact and only-local error induced contact; twelve-view non-recovery retained.",
+  "region": "0<x<=25, -12<=y<-3 m; original ego frame",
+  "reference": "GT returns in region and -0.3<z<0.2; RANSAC plane 0.05m / 1000 iterations. Require |normal_z|>0.95 and >=100 supporting returns. No downstream tuning.",
+  "repair": "Move mesh vertices vertically to fitted plane if within 0.5m plane and 0.35m XY of a measured return classified as plane support; exclude vertices in annotated actor boxes expanded 0.1m. Keep other vertices and triangle connectivity.",
+  "deletion_control": "Remove all faces touching the identical selected vertices; no new plane geometry.",
+  "coverage": "Restore only the originally missing rays identically in all conditions. Newly missing rays after geometry/deletion stay missing and are counted, so the deletion control is essential.",
+  "budget": "Real + original residual / local-plane repair / same-face deletion for each of six and twelve inputs = 7 policy forwards and PDM executions. One fixed radius/plane protocol, no sweep.",
+  "claim_boundary": "Ordinary oracle control, not a proposed learned method; nominal contact baseline has 1.6cm clearance. Require geometry readout and downstream recovery together.",
+  "seed": 20260915,
+  "human_verdict": null
+}

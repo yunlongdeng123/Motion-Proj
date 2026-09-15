@@ -1,0 +1,40 @@
+{
+  "versions": {
+    "torch": "2.4.1+cu118",
+    "torchvision": "0.19.1+cu118",
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "numba": "0.65.1",
+    "av2": "0.3.6",
+    "tyro": "0.8.14",
+    "gsplat": "1.0.0",
+    "neurad-studio": "0.1.0",
+    "viser": "0.1.28",
+    "pandaset": "0.3.dev0",
+    "zod": "0.8.0",
+    "dataclass-wizard": "0.30.0",
+    "torchmetrics": "1.9.0",
+    "nerfacc": "0.5.2",
+    "tinycudann": "2.0",
+    "splines": "0.3.0",
+    "pytorch-msssim": "1.0.0",
+    "protobuf": "3.20.3",
+    "wandb": "0.16.6"
+  },
+  "actual_cv2": "4.11.0",
+  "torch_cuda": "11.8",
+  "repositories": {
+    "neurad-studio": "8ba9b5116b8a2822a80c64f63a4ae64c5871aa68",
+    "SplatAD_splat": "6e31ad766d39e0c33f9034a2ed772d51364b2343",
+    "viser-splatad": "57142e42df8edd4de33fd60a08d6bb6c35970aa1",
+    "pandaset-devkit": "59be180e2a3f3e37f6d66af9e67bf944ccbf6ec0"
+  },
+  "deviations": [
+    "AV2 0.3.6 instead of 0.2.1; AV2 input unused",
+    "Numba 0.65.1 instead of 0.57, NumPy 1.26.4 retained",
+    "OpenCV 4.11.0 instead of 4.10.0",
+    "Only backend=eager compile mode option removed for Torch2.4 compatibility",
+    "Optional exporters, Jupyter and cloud logging dependencies not installed; not exercised"
+  ],
+  "isolation": "Separate site-package namespace using initial hardlink copy; package replacements only in splatad-impact; no modifications to prior experiment environments"
+}
