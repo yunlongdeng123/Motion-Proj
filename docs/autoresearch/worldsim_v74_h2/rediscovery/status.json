@@ -1,0 +1,29 @@
+{
+  "state": "CPU_DONE_WAIT_GPU",
+  "task_id": "WS-V74-H2-REDISCOVERY-01",
+  "run_id": "20260915-cpu-r1",
+  "completed_utc": "2026-09-15T00:51:45.247505+00:00",
+  "finding": "历史系统有稳定回放badcase；官方VGGT及其后继普遍失效未建立",
+  "counts": {
+    "historical_selected_cases": 7,
+    "rays_in_selected_cases": 8364,
+    "paired_actor_system_replays": 21,
+    "figures": 15,
+    "new_model_forwards": 0,
+    "training_updates": 0
+  },
+  "gpu_recommendation": "2x24GB independent model inference; one 24GB serial is possible for initial small batches; host RAM at least32GB, recommended64GB",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V73-F02",
+    "V73-F03",
+    "V73-F04",
+    "V73-F09",
+    "V74-F06",
+    "V74-H2-F11"
+  ],
+  "failure_ledger_delta": "V74-H2-F12",
+  "sealed_reserve_quality_read": false,
+  "auto_resume": false,
+  "shutdown": false
+}
