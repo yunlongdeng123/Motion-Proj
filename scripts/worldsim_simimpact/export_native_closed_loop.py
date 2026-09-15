@@ -1,4 +1,4 @@
-"""封装原生闭环试跑证据；保留实际执行与拟合尚未完成的边界。"""
+"""封装已完成的原生闭环证据；研究结论由后续分析填写。"""
 import argparse,json,shutil,subprocess,tarfile
 from pathlib import Path
 N=Path('/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1')
@@ -8,16 +8,16 @@ ap=argparse.ArgumentParser();ap.add_argument('--run',type=Path,required=True);ap
 reg=json.loads((args.run/'registration.json').read_text());assert reg['completed']
 dest=args.run/'export'
 if dest.exists():raise RuntimeError(f'Preserve existing export {dest}')
-dest.mkdir();shutil.copy2(args.run/'registration.json',args.run/'registration.before_milestone5.json')
+dest.mkdir();shutil.copy2(args.run/'registration.json',args.run/'registration.before_export.json')
 reg.update(fit=str(args.fit),checkpoint_dir=str(args.checkpoint_dir),
     policy_checkpoint=str(I/'lidar_policy/assets/transfuser_seed_0.ckpt'),
     source_revisions={r:subprocess.check_output(['git','-C',str(B/r),'rev-parse','HEAD'],text=True).strip() for r in ['neurad-studio','SplatAD_splat','NAVSIM']},
-    failure_ledger_delta='V74-H2-F18',source_snapshot=str(args.run/'source_snapshot'),
-    scientific_status='Integration pilot only. RGB-channel replacement reproduces the observed replay gap; LiDAR-only effects small. No geometry causal claim, final 30001-step fit remains in progress.')
+    source_snapshot=str(args.run/'source_snapshot'),
+    scientific_status='Completed sensor and policy execution; downstream findings await analysis. No automatic geometry causal or safety conclusion.')
 (args.run/'registration.json').write_text(json.dumps(reg,indent=2))
 source=args.run/'source_snapshot';source.mkdir()
 for name in ['native_splatad_bridge.py','run_splatad_closed_loop.py','audit_native_closed_loop.py']:
-    shutil.copy2(N/'scripts'/name,source/name)
+    shutil.copy2(Path(__file__).resolve().parent/name,source/name)
 for name in ['registration.json','sensor_interface_qa.json','policy_execution_summary.json','downstream_audit.json']:
     shutil.copy2(args.run/name,dest/name)
 shutil.copy2(N/'native_policy_runtime.json',dest/'native_policy_runtime.json')

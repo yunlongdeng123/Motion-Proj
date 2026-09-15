@@ -1,0 +1,3604 @@
+{
+  "role": "Existing official training-time held-out metrics, no new inference or downstream condition. Squared-distance metrics retain official units.",
+  "fit": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1/fits/scene-0004/splatad/native-r2",
+  "progress": {
+    "step": 24000,
+    "time_unix": 1789463273.6141205,
+    "gaussians": 5000000,
+    "gpu_memory_allocated_mib": 3147.6318359375
+  },
+  "fit_manifest": {
+    "task_id": "WS-SIM-NATIVE-LIDAR-01",
+    "run": "native-r2",
+    "scene": "scene-0004",
+    "start_unix": 1789457772.7612357,
+    "seed": 20260915,
+    "max_steps": 30001,
+    "role": "RGB+LiDAR scene fitting, strong metric simulator reference; not a feed-forward method or equal information budget",
+    "split": "Official LINSPACE 50% train / 50% held-out sensor observations; full log dynamics and calibration are supplied",
+    "changes_from_official_splatad": "CPU image/LiDAR cache; six caching workers; local TensorBoard only; FID disabled because appearance ranking is not the objective; remove unsupported mode argument only for torch.compile backend=eager on Torch2.4; optimization/model defaults retained",
+    "source_revisions": {
+      "neurad-studio": "8ba9b5116b8a2822a80c64f63a4ae64c5871aa68",
+      "SplatAD_splat": "6e31ad766d39e0c33f9034a2ed772d51364b2343",
+      "viser-splatad": "57142e42df8edd4de33fd60a08d6bb6c35970aa1"
+    },
+    "runtime": {
+      "torch": "2.4.1+cu118",
+      "numpy": "1.26.4",
+      "gpu": "NVIDIA GeForce RTX 3090"
+    },
+    "completed": false,
+    "human_verdict": null
+  },
+  "scalar_tags": [
+    "learning_rate/trajectory_opt",
+    "learning_rate/means",
+    "learning_rate/camera_velocity_opt_linear",
+    "learning_rate/camera_velocity_opt_angular",
+    "learning_rate/camera_velocity_opt_time_to_center_pixel",
+    "learning_rate/fields",
+    "Train Iter (time)",
+    "ETA (time)",
+    "Train Loss",
+    "Train Loss Dict/main_loss",
+    "Train Loss Dict/mcmc_scale_reg",
+    "Train Loss Dict/mcmc_opacity_reg",
+    "Train Loss Dict/camera_velocity_regularizer",
+    "Train Metrics Dict/psnr",
+    "Train Metrics Dict/gaussian_count",
+    "Train Metrics Dict/camera_opt_vel_max",
+    "Train Metrics Dict/camera_opt_vel_mean",
+    "Train Metrics Dict/camera_opt_ang_vel_max",
+    "Train Metrics Dict/camera_opt_ang_vel_mean",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_0",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_1",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_2",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_3",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_4",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_5",
+    "Train Metrics Dict/camera_opt_ttc_pixel_adjustment_6",
+    "GPU Memory (MB)",
+    "Train Rays / Sec",
+    "Train Loss Dict/depth_loss",
+    "Train Loss Dict/intensity_loss",
+    "Train Loss Dict/ray_drop_loss",
+    "Train Loss Dict/alpha_sum_until_points_loss",
+    "Train Metrics Dict/depth_median_l2",
+    "Train Metrics Dict/depth_mean_rel_l2",
+    "Train Metrics Dict/median_depth_median_l2",
+    "Train Metrics Dict/median_depth_mean_rel_l2",
+    "Train Metrics Dict/intensity_rmse",
+    "Train Metrics Dict/ray_drop_accuracy",
+    "Test Rays / Sec",
+    "Eval Images Metrics/psnr",
+    "Eval Images Metrics/ssim",
+    "Eval Images Metrics/lpips",
+    "Eval Images Metrics/num_rays",
+    "Eval Images Metrics/depth_median_l2",
+    "Eval Images Metrics/depth_mean_rel_l2",
+    "Eval Images Metrics/median_depth_median_l2",
+    "Eval Images Metrics/median_depth_mean_rel_l2",
+    "Eval Images Metrics/intensity_rmse",
+    "Eval Images Metrics/ray_drop_accuracy",
+    "Eval Images Metrics/chamfer_distance",
+    "Eval Images Metrics/median_chamfer_distance",
+    "Eval Images Metrics Dict (all images)/lpips",
+    "Eval Images Metrics Dict (all images)/num_camera_rays_per_sec",
+    "Eval Images Metrics Dict (all images)/median_depth_mean_rel_l2",
+    "Eval Images Metrics Dict (all images)/chamfer_distance",
+    "Eval Images Metrics Dict (all images)/median_chamfer_distance",
+    "Eval Images Metrics Dict (all images)/median_depth_median_l2",
+    "Eval Images Metrics Dict (all images)/ssim",
+    "Eval Images Metrics Dict (all images)/depth_mean_rel_l2",
+    "Eval Images Metrics Dict (all images)/depth_median_l2",
+    "Eval Images Metrics Dict (all images)/ray_drop_accuracy",
+    "Eval Images Metrics Dict (all images)/num_lidar_rays_per_sec",
+    "Eval Images Metrics Dict (all images)/intensity_rmse",
+    "Eval Images Metrics Dict (all images)/psnr",
+    "Eval Images Metrics Dict (all images)/fps"
+  ],
+  "heldout_metrics": {
+    "Eval Images Metrics/psnr": [
+      {
+        "step": 500,
+        "value": 17.324430465698242,
+        "wall_time": 1789458002.2558103
+      },
+      {
+        "step": 1000,
+        "value": 20.570825576782227,
+        "wall_time": 1789458072.48526
+      },
+      {
+        "step": 1500,
+        "value": 21.284217834472656,
+        "wall_time": 1789458154.4712083
+      },
+      {
+        "step": 2000,
+        "value": 18.904483795166016,
+        "wall_time": 1789458238.5820248
+      },
+      {
+        "step": 2500,
+        "value": 24.99041175842285,
+        "wall_time": 1789458418.3518584
+      },
+      {
+        "step": 3000,
+        "value": 21.14314842224121,
+        "wall_time": 1789458506.1222382
+      },
+      {
+        "step": 3500,
+        "value": 21.07790756225586,
+        "wall_time": 1789458585.113678
+      },
+      {
+        "step": 4000,
+        "value": 24.89653968811035,
+        "wall_time": 1789458663.5198965
+      },
+      {
+        "step": 4500,
+        "value": 26.898597717285156,
+        "wall_time": 1789458747.7487826
+      },
+      {
+        "step": 5000,
+        "value": 28.47722053527832,
+        "wall_time": 1789458921.0305705
+      },
+      {
+        "step": 5500,
+        "value": 22.54773712158203,
+        "wall_time": 1789458998.112801
+      },
+      {
+        "step": 6000,
+        "value": 22.265403747558594,
+        "wall_time": 1789459080.5254416
+      },
+      {
+        "step": 6500,
+        "value": 25.29267120361328,
+        "wall_time": 1789459173.3821526
+      },
+      {
+        "step": 7000,
+        "value": 20.7635498046875,
+        "wall_time": 1789459269.2770355
+      },
+      {
+        "step": 7500,
+        "value": 27.25490379333496,
+        "wall_time": 1789459464.3631923
+      },
+      {
+        "step": 8000,
+        "value": 23.867273330688477,
+        "wall_time": 1789459564.719001
+      },
+      {
+        "step": 8500,
+        "value": 24.367115020751953,
+        "wall_time": 1789459656.943636
+      },
+      {
+        "step": 9000,
+        "value": 24.116153717041016,
+        "wall_time": 1789459752.1615841
+      },
+      {
+        "step": 9500,
+        "value": 22.138978958129883,
+        "wall_time": 1789459844.26492
+      },
+      {
+        "step": 10000,
+        "value": 25.1944637298584,
+        "wall_time": 1789460047.540391
+      },
+      {
+        "step": 10500,
+        "value": 26.683828353881836,
+        "wall_time": 1789460142.2478237
+      },
+      {
+        "step": 11000,
+        "value": 21.75243377685547,
+        "wall_time": 1789460235.7996194
+      },
+      {
+        "step": 11500,
+        "value": 26.22760772705078,
+        "wall_time": 1789460329.4070046
+      },
+      {
+        "step": 12000,
+        "value": 23.971403121948242,
+        "wall_time": 1789460424.5860054
+      },
+      {
+        "step": 12500,
+        "value": 26.849853515625,
+        "wall_time": 1789460627.958502
+      },
+      {
+        "step": 13000,
+        "value": 28.01679229736328,
+        "wall_time": 1789460721.410132
+      },
+      {
+        "step": 13500,
+        "value": 23.3243465423584,
+        "wall_time": 1789460813.7799623
+      },
+      {
+        "step": 14000,
+        "value": 25.173131942749023,
+        "wall_time": 1789460911.614732
+      },
+      {
+        "step": 14500,
+        "value": 22.356651306152344,
+        "wall_time": 1789461003.4134984
+      },
+      {
+        "step": 15000,
+        "value": 26.54073143005371,
+        "wall_time": 1789461227.0524256
+      },
+      {
+        "step": 15500,
+        "value": 27.715063095092773,
+        "wall_time": 1789461321.8972805
+      },
+      {
+        "step": 16000,
+        "value": 23.165969848632812,
+        "wall_time": 1789461413.125537
+      },
+      {
+        "step": 16500,
+        "value": 24.687641143798828,
+        "wall_time": 1789461507.4766357
+      },
+      {
+        "step": 17000,
+        "value": 20.822193145751953,
+        "wall_time": 1789461606.2104342
+      },
+      {
+        "step": 17500,
+        "value": 26.379961013793945,
+        "wall_time": 1789461829.3127453
+      },
+      {
+        "step": 18000,
+        "value": 26.013126373291016,
+        "wall_time": 1789461920.5705216
+      },
+      {
+        "step": 18500,
+        "value": 27.22706413269043,
+        "wall_time": 1789462012.7395806
+      },
+      {
+        "step": 19000,
+        "value": 27.879985809326172,
+        "wall_time": 1789462101.630869
+      },
+      {
+        "step": 19500,
+        "value": 24.72289276123047,
+        "wall_time": 1789462190.305838
+      },
+      {
+        "step": 20000,
+        "value": 25.02750015258789,
+        "wall_time": 1789462418.0310423
+      },
+      {
+        "step": 20500,
+        "value": 27.850236892700195,
+        "wall_time": 1789462509.4214175
+      },
+      {
+        "step": 21000,
+        "value": 27.35593032836914,
+        "wall_time": 1789462596.4753358
+      },
+      {
+        "step": 21500,
+        "value": 24.216938018798828,
+        "wall_time": 1789462687.4742916
+      },
+      {
+        "step": 22000,
+        "value": 24.162940979003906,
+        "wall_time": 1789462776.694804
+      },
+      {
+        "step": 22500,
+        "value": 22.33170509338379,
+        "wall_time": 1789463006.7646918
+      },
+      {
+        "step": 23000,
+        "value": 25.014467239379883,
+        "wall_time": 1789463095.6402419
+      },
+      {
+        "step": 23500,
+        "value": 29.96949005126953,
+        "wall_time": 1789463184.2133405
+      }
+    ],
+    "Eval Images Metrics/ssim": [
+      {
+        "step": 500,
+        "value": 0.6614994406700134,
+        "wall_time": 1789458002.2559578
+      },
+      {
+        "step": 1000,
+        "value": 0.6715775728225708,
+        "wall_time": 1789458072.485402
+      },
+      {
+        "step": 1500,
+        "value": 0.6850512027740479,
+        "wall_time": 1789458154.4713488
+      },
+      {
+        "step": 2000,
+        "value": 0.6207929849624634,
+        "wall_time": 1789458238.5821676
+      },
+      {
+        "step": 2500,
+        "value": 0.7996811866760254,
+        "wall_time": 1789458418.352001
+      },
+      {
+        "step": 3000,
+        "value": 0.7132885456085205,
+        "wall_time": 1789458506.1223822
+      },
+      {
+        "step": 3500,
+        "value": 0.6963774561882019,
+        "wall_time": 1789458585.1138763
+      },
+      {
+        "step": 4000,
+        "value": 0.7904467582702637,
+        "wall_time": 1789458663.5200446
+      },
+      {
+        "step": 4500,
+        "value": 0.8584458827972412,
+        "wall_time": 1789458747.7488687
+      },
+      {
+        "step": 5000,
+        "value": 0.8699469566345215,
+        "wall_time": 1789458921.0307155
+      },
+      {
+        "step": 5500,
+        "value": 0.7097315788269043,
+        "wall_time": 1789458998.1129005
+      },
+      {
+        "step": 6000,
+        "value": 0.7843207120895386,
+        "wall_time": 1789459080.5255852
+      },
+      {
+        "step": 6500,
+        "value": 0.8041566610336304,
+        "wall_time": 1789459173.3822505
+      },
+      {
+        "step": 7000,
+        "value": 0.6741944551467896,
+        "wall_time": 1789459269.2771802
+      },
+      {
+        "step": 7500,
+        "value": 0.8495402336120605,
+        "wall_time": 1789459464.3632555
+      },
+      {
+        "step": 8000,
+        "value": 0.764279842376709,
+        "wall_time": 1789459564.719135
+      },
+      {
+        "step": 8500,
+        "value": 0.7652907371520996,
+        "wall_time": 1789459656.9437027
+      },
+      {
+        "step": 9000,
+        "value": 0.7593792676925659,
+        "wall_time": 1789459752.1617255
+      },
+      {
+        "step": 9500,
+        "value": 0.7507466673851013,
+        "wall_time": 1789459844.265006
+      },
+      {
+        "step": 10000,
+        "value": 0.7979640960693359,
+        "wall_time": 1789460047.5405023
+      },
+      {
+        "step": 10500,
+        "value": 0.8805228471755981,
+        "wall_time": 1789460142.2479694
+      },
+      {
+        "step": 11000,
+        "value": 0.7175109386444092,
+        "wall_time": 1789460235.7997575
+      },
+      {
+        "step": 11500,
+        "value": 0.8880676031112671,
+        "wall_time": 1789460329.407147
+      },
+      {
+        "step": 12000,
+        "value": 0.7615856528282166,
+        "wall_time": 1789460424.5862052
+      },
+      {
+        "step": 12500,
+        "value": 0.8172801733016968,
+        "wall_time": 1789460627.9586496
+      },
+      {
+        "step": 13000,
+        "value": 0.8817168474197388,
+        "wall_time": 1789460721.4101965
+      },
+      {
+        "step": 13500,
+        "value": 0.7919647097587585,
+        "wall_time": 1789460813.7801108
+      },
+      {
+        "step": 14000,
+        "value": 0.8217461109161377,
+        "wall_time": 1789460911.6148791
+      },
+      {
+        "step": 14500,
+        "value": 0.7169427871704102,
+        "wall_time": 1789461003.413578
+      },
+      {
+        "step": 15000,
+        "value": 0.8175560832023621,
+        "wall_time": 1789461227.0525723
+      },
+      {
+        "step": 15500,
+        "value": 0.8464725017547607,
+        "wall_time": 1789461321.8973472
+      },
+      {
+        "step": 16000,
+        "value": 0.7709393501281738,
+        "wall_time": 1789461413.1256328
+      },
+      {
+        "step": 16500,
+        "value": 0.7488848567008972,
+        "wall_time": 1789461507.476707
+      },
+      {
+        "step": 17000,
+        "value": 0.767626166343689,
+        "wall_time": 1789461606.2106478
+      },
+      {
+        "step": 17500,
+        "value": 0.7909969687461853,
+        "wall_time": 1789461829.312855
+      },
+      {
+        "step": 18000,
+        "value": 0.7656633257865906,
+        "wall_time": 1789461920.5706668
+      },
+      {
+        "step": 18500,
+        "value": 0.8198899030685425,
+        "wall_time": 1789462012.739684
+      },
+      {
+        "step": 19000,
+        "value": 0.8891143202781677,
+        "wall_time": 1789462101.6309743
+      },
+      {
+        "step": 19500,
+        "value": 0.8015108108520508,
+        "wall_time": 1789462190.3059146
+      },
+      {
+        "step": 20000,
+        "value": 0.7855462431907654,
+        "wall_time": 1789462418.0311675
+      },
+      {
+        "step": 20500,
+        "value": 0.8470372557640076,
+        "wall_time": 1789462509.4215622
+      },
+      {
+        "step": 21000,
+        "value": 0.9018286466598511,
+        "wall_time": 1789462596.4754102
+      },
+      {
+        "step": 21500,
+        "value": 0.8475956320762634,
+        "wall_time": 1789462687.4744034
+      },
+      {
+        "step": 22000,
+        "value": 0.7948139905929565,
+        "wall_time": 1789462776.6949294
+      },
+      {
+        "step": 22500,
+        "value": 0.7506565451622009,
+        "wall_time": 1789463006.764866
+      },
+      {
+        "step": 23000,
+        "value": 0.7996270060539246,
+        "wall_time": 1789463095.6403732
+      },
+      {
+        "step": 23500,
+        "value": 0.8834635615348816,
+        "wall_time": 1789463184.2134442
+      }
+    ],
+    "Eval Images Metrics/lpips": [
+      {
+        "step": 500,
+        "value": 0.6969169974327087,
+        "wall_time": 1789458002.2561114
+      },
+      {
+        "step": 1000,
+        "value": 0.599830687046051,
+        "wall_time": 1789458072.4855483
+      },
+      {
+        "step": 1500,
+        "value": 0.6630109548568726,
+        "wall_time": 1789458154.4714975
+      },
+      {
+        "step": 2000,
+        "value": 0.5684820413589478,
+        "wall_time": 1789458238.5823138
+      },
+      {
+        "step": 2500,
+        "value": 0.3458857834339142,
+        "wall_time": 1789458418.3521483
+      },
+      {
+        "step": 3000,
+        "value": 0.5067994594573975,
+        "wall_time": 1789458506.1225421
+      },
+      {
+        "step": 3500,
+        "value": 0.49764004349708557,
+        "wall_time": 1789458585.1140392
+      },
+      {
+        "step": 4000,
+        "value": 0.3915238380432129,
+        "wall_time": 1789458663.5201962
+      },
+      {
+        "step": 4500,
+        "value": 0.31071025133132935,
+        "wall_time": 1789458747.748947
+      },
+      {
+        "step": 5000,
+        "value": 0.28817465901374817,
+        "wall_time": 1789458921.0308635
+      },
+      {
+        "step": 5500,
+        "value": 0.47787564992904663,
+        "wall_time": 1789458998.1130028
+      },
+      {
+        "step": 6000,
+        "value": 0.437345951795578,
+        "wall_time": 1789459080.525736
+      },
+      {
+        "step": 6500,
+        "value": 0.3194237947463989,
+        "wall_time": 1789459173.3823507
+      },
+      {
+        "step": 7000,
+        "value": 0.5656774044036865,
+        "wall_time": 1789459269.2773325
+      },
+      {
+        "step": 7500,
+        "value": 0.3092097043991089,
+        "wall_time": 1789459464.3633187
+      },
+      {
+        "step": 8000,
+        "value": 0.43787461519241333,
+        "wall_time": 1789459564.7192705
+      },
+      {
+        "step": 8500,
+        "value": 0.42350757122039795,
+        "wall_time": 1789459656.9437654
+      },
+      {
+        "step": 9000,
+        "value": 0.4761776924133301,
+        "wall_time": 1789459752.1618972
+      },
+      {
+        "step": 9500,
+        "value": 0.4493131637573242,
+        "wall_time": 1789459844.2650938
+      },
+      {
+        "step": 10000,
+        "value": 0.3564286231994629,
+        "wall_time": 1789460047.5406187
+      },
+      {
+        "step": 10500,
+        "value": 0.3332027196884155,
+        "wall_time": 1789460142.2481189
+      },
+      {
+        "step": 11000,
+        "value": 0.480380117893219,
+        "wall_time": 1789460235.7999036
+      },
+      {
+        "step": 11500,
+        "value": 0.3084532618522644,
+        "wall_time": 1789460329.4072936
+      },
+      {
+        "step": 12000,
+        "value": 0.37263739109039307,
+        "wall_time": 1789460424.58638
+      },
+      {
+        "step": 12500,
+        "value": 0.35209766030311584,
+        "wall_time": 1789460627.9588008
+      },
+      {
+        "step": 13000,
+        "value": 0.3030466139316559,
+        "wall_time": 1789460721.4102628
+      },
+      {
+        "step": 13500,
+        "value": 0.39514583349227905,
+        "wall_time": 1789460813.7802625
+      },
+      {
+        "step": 14000,
+        "value": 0.38711726665496826,
+        "wall_time": 1789460911.6150312
+      },
+      {
+        "step": 14500,
+        "value": 0.5017474293708801,
+        "wall_time": 1789461003.4136593
+      },
+      {
+        "step": 15000,
+        "value": 0.34544575214385986,
+        "wall_time": 1789461227.0527217
+      },
+      {
+        "step": 15500,
+        "value": 0.32243263721466064,
+        "wall_time": 1789461321.897428
+      },
+      {
+        "step": 16000,
+        "value": 0.4398849606513977,
+        "wall_time": 1789461413.125728
+      },
+      {
+        "step": 16500,
+        "value": 0.4022896885871887,
+        "wall_time": 1789461507.4767811
+      },
+      {
+        "step": 17000,
+        "value": 0.4184457063674927,
+        "wall_time": 1789461606.2108698
+      },
+      {
+        "step": 17500,
+        "value": 0.3191782534122467,
+        "wall_time": 1789461829.3129637
+      },
+      {
+        "step": 18000,
+        "value": 0.3800918161869049,
+        "wall_time": 1789461920.5708194
+      },
+      {
+        "step": 18500,
+        "value": 0.31666114926338196,
+        "wall_time": 1789462012.7397883
+      },
+      {
+        "step": 19000,
+        "value": 0.2906259596347809,
+        "wall_time": 1789462101.6310823
+      },
+      {
+        "step": 19500,
+        "value": 0.34385305643081665,
+        "wall_time": 1789462190.305987
+      },
+      {
+        "step": 20000,
+        "value": 0.3544749915599823,
+        "wall_time": 1789462418.0312965
+      },
+      {
+        "step": 20500,
+        "value": 0.288066029548645,
+        "wall_time": 1789462509.4217117
+      },
+      {
+        "step": 21000,
+        "value": 0.27049604058265686,
+        "wall_time": 1789462596.4754858
+      },
+      {
+        "step": 21500,
+        "value": 0.32242298126220703,
+        "wall_time": 1789462687.4745173
+      },
+      {
+        "step": 22000,
+        "value": 0.3695138096809387,
+        "wall_time": 1789462776.6950538
+      },
+      {
+        "step": 22500,
+        "value": 0.4020795226097107,
+        "wall_time": 1789463006.7650409
+      },
+      {
+        "step": 23000,
+        "value": 0.3329310119152069,
+        "wall_time": 1789463095.640508
+      },
+      {
+        "step": 23500,
+        "value": 0.24067187309265137,
+        "wall_time": 1789463184.2135515
+      }
+    ],
+    "Eval Images Metrics/num_rays": [
+      {
+        "step": 500,
+        "value": 1440000.0,
+        "wall_time": 1789458002.256264
+      },
+      {
+        "step": 1000,
+        "value": 1440000.0,
+        "wall_time": 1789458072.485694
+      },
+      {
+        "step": 1500,
+        "value": 1440000.0,
+        "wall_time": 1789458154.4716437
+      },
+      {
+        "step": 2000,
+        "value": 1440000.0,
+        "wall_time": 1789458238.5824578
+      },
+      {
+        "step": 2500,
+        "value": 1312000.0,
+        "wall_time": 1789458418.3522956
+      },
+      {
+        "step": 3000,
+        "value": 1440000.0,
+        "wall_time": 1789458506.1226938
+      },
+      {
+        "step": 3500,
+        "value": 1440000.0,
+        "wall_time": 1789458585.1141903
+      },
+      {
+        "step": 4000,
+        "value": 1440000.0,
+        "wall_time": 1789458663.5203443
+      },
+      {
+        "step": 4500,
+        "value": 1312000.0,
+        "wall_time": 1789458747.7490227
+      },
+      {
+        "step": 5000,
+        "value": 1312000.0,
+        "wall_time": 1789458921.0310137
+      },
+      {
+        "step": 5500,
+        "value": 1440000.0,
+        "wall_time": 1789458998.1131082
+      },
+      {
+        "step": 6000,
+        "value": 1440000.0,
+        "wall_time": 1789459080.5259156
+      },
+      {
+        "step": 6500,
+        "value": 1440000.0,
+        "wall_time": 1789459173.3824499
+      },
+      {
+        "step": 7000,
+        "value": 1440000.0,
+        "wall_time": 1789459269.2774842
+      },
+      {
+        "step": 7500,
+        "value": 1440000.0,
+        "wall_time": 1789459464.3633833
+      },
+      {
+        "step": 8000,
+        "value": 1440000.0,
+        "wall_time": 1789459564.7194037
+      },
+      {
+        "step": 8500,
+        "value": 1440000.0,
+        "wall_time": 1789459656.943828
+      },
+      {
+        "step": 9000,
+        "value": 1440000.0,
+        "wall_time": 1789459752.1620593
+      },
+      {
+        "step": 9500,
+        "value": 1440000.0,
+        "wall_time": 1789459844.2651803
+      },
+      {
+        "step": 10000,
+        "value": 1312000.0,
+        "wall_time": 1789460047.540733
+      },
+      {
+        "step": 10500,
+        "value": 1440000.0,
+        "wall_time": 1789460142.248267
+      },
+      {
+        "step": 11000,
+        "value": 1440000.0,
+        "wall_time": 1789460235.8000486
+      },
+      {
+        "step": 11500,
+        "value": 1312000.0,
+        "wall_time": 1789460329.407441
+      },
+      {
+        "step": 12000,
+        "value": 1440000.0,
+        "wall_time": 1789460424.5865355
+      },
+      {
+        "step": 12500,
+        "value": 1440000.0,
+        "wall_time": 1789460627.9589517
+      },
+      {
+        "step": 13000,
+        "value": 1312000.0,
+        "wall_time": 1789460721.4103284
+      },
+      {
+        "step": 13500,
+        "value": 1440000.0,
+        "wall_time": 1789460813.7804103
+      },
+      {
+        "step": 14000,
+        "value": 1440000.0,
+        "wall_time": 1789460911.615182
+      },
+      {
+        "step": 14500,
+        "value": 1440000.0,
+        "wall_time": 1789461003.41374
+      },
+      {
+        "step": 15000,
+        "value": 1440000.0,
+        "wall_time": 1789461227.0528724
+      },
+      {
+        "step": 15500,
+        "value": 1440000.0,
+        "wall_time": 1789461321.8974972
+      },
+      {
+        "step": 16000,
+        "value": 1440000.0,
+        "wall_time": 1789461413.1258397
+      },
+      {
+        "step": 16500,
+        "value": 1440000.0,
+        "wall_time": 1789461507.4768543
+      },
+      {
+        "step": 17000,
+        "value": 1440000.0,
+        "wall_time": 1789461606.2110925
+      },
+      {
+        "step": 17500,
+        "value": 1440000.0,
+        "wall_time": 1789461829.3130722
+      },
+      {
+        "step": 18000,
+        "value": 1440000.0,
+        "wall_time": 1789461920.570969
+      },
+      {
+        "step": 18500,
+        "value": 1440000.0,
+        "wall_time": 1789462012.739893
+      },
+      {
+        "step": 19000,
+        "value": 1440000.0,
+        "wall_time": 1789462101.6311886
+      },
+      {
+        "step": 19500,
+        "value": 1440000.0,
+        "wall_time": 1789462190.3060527
+      },
+      {
+        "step": 20000,
+        "value": 1440000.0,
+        "wall_time": 1789462418.031427
+      },
+      {
+        "step": 20500,
+        "value": 1440000.0,
+        "wall_time": 1789462509.4218767
+      },
+      {
+        "step": 21000,
+        "value": 1312000.0,
+        "wall_time": 1789462596.475561
+      },
+      {
+        "step": 21500,
+        "value": 1312000.0,
+        "wall_time": 1789462687.4746306
+      },
+      {
+        "step": 22000,
+        "value": 1440000.0,
+        "wall_time": 1789462776.695284
+      },
+      {
+        "step": 22500,
+        "value": 1440000.0,
+        "wall_time": 1789463006.7652144
+      },
+      {
+        "step": 23000,
+        "value": 1440000.0,
+        "wall_time": 1789463095.6406422
+      },
+      {
+        "step": 23500,
+        "value": 1312000.0,
+        "wall_time": 1789463184.2136621
+      }
+    ],
+    "Eval Images Metrics/depth_median_l2": [
+      {
+        "step": 500,
+        "value": 4.1886820793151855,
+        "wall_time": 1789458002.256414
+      },
+      {
+        "step": 1000,
+        "value": 0.5438432097434998,
+        "wall_time": 1789458072.4858546
+      },
+      {
+        "step": 1500,
+        "value": 0.08824635297060013,
+        "wall_time": 1789458154.4717908
+      },
+      {
+        "step": 2000,
+        "value": 0.07563475519418716,
+        "wall_time": 1789458238.582603
+      },
+      {
+        "step": 2500,
+        "value": 0.06314634531736374,
+        "wall_time": 1789458418.3524408
+      },
+      {
+        "step": 3000,
+        "value": 0.03244149312376976,
+        "wall_time": 1789458506.1228406
+      },
+      {
+        "step": 3500,
+        "value": 0.023767517879605293,
+        "wall_time": 1789458585.1143394
+      },
+      {
+        "step": 4000,
+        "value": 0.022526143118739128,
+        "wall_time": 1789458663.5204902
+      },
+      {
+        "step": 4500,
+        "value": 0.007954772561788559,
+        "wall_time": 1789458747.7490985
+      },
+      {
+        "step": 5000,
+        "value": 0.020909136161208153,
+        "wall_time": 1789458921.031161
+      },
+      {
+        "step": 5500,
+        "value": 0.038001082837581635,
+        "wall_time": 1789458998.1132214
+      },
+      {
+        "step": 6000,
+        "value": 0.013809235766530037,
+        "wall_time": 1789459080.5260653
+      },
+      {
+        "step": 6500,
+        "value": 0.014961292035877705,
+        "wall_time": 1789459173.3825593
+      },
+      {
+        "step": 7000,
+        "value": 0.007507212460041046,
+        "wall_time": 1789459269.277635
+      },
+      {
+        "step": 7500,
+        "value": 0.019730087369680405,
+        "wall_time": 1789459464.3634467
+      },
+      {
+        "step": 8000,
+        "value": 0.01615271158516407,
+        "wall_time": 1789459564.7195413
+      },
+      {
+        "step": 8500,
+        "value": 0.013862406834959984,
+        "wall_time": 1789459656.94389
+      },
+      {
+        "step": 9000,
+        "value": 0.0139073571190238,
+        "wall_time": 1789459752.162205
+      },
+      {
+        "step": 9500,
+        "value": 0.011594845913350582,
+        "wall_time": 1789459844.2652676
+      },
+      {
+        "step": 10000,
+        "value": 0.01051582396030426,
+        "wall_time": 1789460047.5408502
+      },
+      {
+        "step": 10500,
+        "value": 0.015055811032652855,
+        "wall_time": 1789460142.2484138
+      },
+      {
+        "step": 11000,
+        "value": 0.006225187797099352,
+        "wall_time": 1789460235.8001935
+      },
+      {
+        "step": 11500,
+        "value": 0.006610119715332985,
+        "wall_time": 1789460329.4075892
+      },
+      {
+        "step": 12000,
+        "value": 0.014180857688188553,
+        "wall_time": 1789460424.5867004
+      },
+      {
+        "step": 12500,
+        "value": 0.0043165599927306175,
+        "wall_time": 1789460627.959101
+      },
+      {
+        "step": 13000,
+        "value": 0.011278385296463966,
+        "wall_time": 1789460721.410394
+      },
+      {
+        "step": 13500,
+        "value": 0.011813987977802753,
+        "wall_time": 1789460813.780558
+      },
+      {
+        "step": 14000,
+        "value": 0.016082245856523514,
+        "wall_time": 1789460911.6153314
+      },
+      {
+        "step": 14500,
+        "value": 0.009684459306299686,
+        "wall_time": 1789461003.4138405
+      },
+      {
+        "step": 15000,
+        "value": 0.013861509039998055,
+        "wall_time": 1789461227.0530212
+      },
+      {
+        "step": 15500,
+        "value": 0.006257660686969757,
+        "wall_time": 1789461321.8975651
+      },
+      {
+        "step": 16000,
+        "value": 0.009238756261765957,
+        "wall_time": 1789461413.1259413
+      },
+      {
+        "step": 16500,
+        "value": 0.0045295897871255875,
+        "wall_time": 1789461507.4769266
+      },
+      {
+        "step": 17000,
+        "value": 0.009670575149357319,
+        "wall_time": 1789461606.2113929
+      },
+      {
+        "step": 17500,
+        "value": 0.01252307090908289,
+        "wall_time": 1789461829.3131797
+      },
+      {
+        "step": 18000,
+        "value": 0.0045966519974172115,
+        "wall_time": 1789461920.5711236
+      },
+      {
+        "step": 18500,
+        "value": 0.004194687586277723,
+        "wall_time": 1789462012.7399962
+      },
+      {
+        "step": 19000,
+        "value": 0.0038535003550350666,
+        "wall_time": 1789462101.6313057
+      },
+      {
+        "step": 19500,
+        "value": 0.005576225463300943,
+        "wall_time": 1789462190.3061204
+      },
+      {
+        "step": 20000,
+        "value": 0.01012731809169054,
+        "wall_time": 1789462418.031568
+      },
+      {
+        "step": 20500,
+        "value": 0.004680569749325514,
+        "wall_time": 1789462509.4220326
+      },
+      {
+        "step": 21000,
+        "value": 0.002290045842528343,
+        "wall_time": 1789462596.4756358
+      },
+      {
+        "step": 21500,
+        "value": 0.007712026592344046,
+        "wall_time": 1789462687.4747455
+      },
+      {
+        "step": 22000,
+        "value": 0.01634453982114792,
+        "wall_time": 1789462776.695485
+      },
+      {
+        "step": 22500,
+        "value": 0.00800349935889244,
+        "wall_time": 1789463006.7653778
+      },
+      {
+        "step": 23000,
+        "value": 0.003137788735330105,
+        "wall_time": 1789463095.6407747
+      },
+      {
+        "step": 23500,
+        "value": 0.006507283542305231,
+        "wall_time": 1789463184.2137835
+      }
+    ],
+    "Eval Images Metrics/depth_mean_rel_l2": [
+      {
+        "step": 500,
+        "value": 0.3328790068626404,
+        "wall_time": 1789458002.2565632
+      },
+      {
+        "step": 1000,
+        "value": 0.03209291771054268,
+        "wall_time": 1789458072.4860077
+      },
+      {
+        "step": 1500,
+        "value": 0.03415143862366676,
+        "wall_time": 1789458154.471938
+      },
+      {
+        "step": 2000,
+        "value": 0.06605936586856842,
+        "wall_time": 1789458238.582746
+      },
+      {
+        "step": 2500,
+        "value": 0.03255181759595871,
+        "wall_time": 1789458418.3525844
+      },
+      {
+        "step": 3000,
+        "value": 0.06482861936092377,
+        "wall_time": 1789458506.1229873
+      },
+      {
+        "step": 3500,
+        "value": 0.015580638311803341,
+        "wall_time": 1789458585.1144848
+      },
+      {
+        "step": 4000,
+        "value": 0.0688604786992073,
+        "wall_time": 1789458663.520637
+      },
+      {
+        "step": 4500,
+        "value": 0.017267119139432907,
+        "wall_time": 1789458747.7491736
+      },
+      {
+        "step": 5000,
+        "value": 0.08085252344608307,
+        "wall_time": 1789458921.0313075
+      },
+      {
+        "step": 5500,
+        "value": 0.01901913434267044,
+        "wall_time": 1789458998.1133275
+      },
+      {
+        "step": 6000,
+        "value": 0.025799497961997986,
+        "wall_time": 1789459080.5262134
+      },
+      {
+        "step": 6500,
+        "value": 0.011385351419448853,
+        "wall_time": 1789459173.3826613
+      },
+      {
+        "step": 7000,
+        "value": 0.025062203407287598,
+        "wall_time": 1789459269.2778091
+      },
+      {
+        "step": 7500,
+        "value": 0.019665217027068138,
+        "wall_time": 1789459464.3635097
+      },
+      {
+        "step": 8000,
+        "value": 0.05451773852109909,
+        "wall_time": 1789459564.7196734
+      },
+      {
+        "step": 8500,
+        "value": 0.024706697091460228,
+        "wall_time": 1789459656.9439516
+      },
+      {
+        "step": 9000,
+        "value": 0.033693816512823105,
+        "wall_time": 1789459752.1623476
+      },
+      {
+        "step": 9500,
+        "value": 0.03196638822555542,
+        "wall_time": 1789459844.2653537
+      },
+      {
+        "step": 10000,
+        "value": 0.05090918019413948,
+        "wall_time": 1789460047.5409648
+      },
+      {
+        "step": 10500,
+        "value": 0.01360371895134449,
+        "wall_time": 1789460142.248564
+      },
+      {
+        "step": 11000,
+        "value": 0.01752248965203762,
+        "wall_time": 1789460235.8003383
+      },
+      {
+        "step": 11500,
+        "value": 0.024813653901219368,
+        "wall_time": 1789460329.4077375
+      },
+      {
+        "step": 12000,
+        "value": 0.0808882787823677,
+        "wall_time": 1789460424.5868752
+      },
+      {
+        "step": 12500,
+        "value": 0.048985399305820465,
+        "wall_time": 1789460627.9592519
+      },
+      {
+        "step": 13000,
+        "value": 0.02119585871696472,
+        "wall_time": 1789460721.4104588
+      },
+      {
+        "step": 13500,
+        "value": 0.05328158661723137,
+        "wall_time": 1789460813.7807074
+      },
+      {
+        "step": 14000,
+        "value": 0.06011277437210083,
+        "wall_time": 1789460911.61548
+      },
+      {
+        "step": 14500,
+        "value": 0.042205724865198135,
+        "wall_time": 1789461003.4139247
+      },
+      {
+        "step": 15000,
+        "value": 0.21810351312160492,
+        "wall_time": 1789461227.0531712
+      },
+      {
+        "step": 15500,
+        "value": 0.020719457417726517,
+        "wall_time": 1789461321.8976336
+      },
+      {
+        "step": 16000,
+        "value": 0.010775186121463776,
+        "wall_time": 1789461413.1260362
+      },
+      {
+        "step": 16500,
+        "value": 0.02422424405813217,
+        "wall_time": 1789461507.4769993
+      },
+      {
+        "step": 17000,
+        "value": 0.00893313717097044,
+        "wall_time": 1789461606.2126596
+      },
+      {
+        "step": 17500,
+        "value": 0.012276759371161461,
+        "wall_time": 1789461829.313286
+      },
+      {
+        "step": 18000,
+        "value": 0.019551530480384827,
+        "wall_time": 1789461920.5712738
+      },
+      {
+        "step": 18500,
+        "value": 0.05162665247917175,
+        "wall_time": 1789462012.7401
+      },
+      {
+        "step": 19000,
+        "value": 0.07020147889852524,
+        "wall_time": 1789462101.631423
+      },
+      {
+        "step": 19500,
+        "value": 0.10755827277898788,
+        "wall_time": 1789462190.3061888
+      },
+      {
+        "step": 20000,
+        "value": 0.02286175638437271,
+        "wall_time": 1789462418.0317113
+      },
+      {
+        "step": 20500,
+        "value": 0.038544148206710815,
+        "wall_time": 1789462509.4221787
+      },
+      {
+        "step": 21000,
+        "value": 0.014043623581528664,
+        "wall_time": 1789462596.4757185
+      },
+      {
+        "step": 21500,
+        "value": 0.007421643938869238,
+        "wall_time": 1789462687.4748597
+      },
+      {
+        "step": 22000,
+        "value": 0.0668453574180603,
+        "wall_time": 1789462776.695714
+      },
+      {
+        "step": 22500,
+        "value": 0.009073322638869286,
+        "wall_time": 1789463006.765536
+      },
+      {
+        "step": 23000,
+        "value": 0.05695091560482979,
+        "wall_time": 1789463095.6409106
+      },
+      {
+        "step": 23500,
+        "value": 0.014019284397363663,
+        "wall_time": 1789463184.2138987
+      }
+    ],
+    "Eval Images Metrics/median_depth_median_l2": [
+      {
+        "step": 500,
+        "value": 1.730254888534546,
+        "wall_time": 1789458002.256713
+      },
+      {
+        "step": 1000,
+        "value": 0.28617075085639954,
+        "wall_time": 1789458072.4861574
+      },
+      {
+        "step": 1500,
+        "value": 0.06499441713094711,
+        "wall_time": 1789458154.4720838
+      },
+      {
+        "step": 2000,
+        "value": 0.032246485352516174,
+        "wall_time": 1789458238.5828881
+      },
+      {
+        "step": 2500,
+        "value": 0.028104199096560478,
+        "wall_time": 1789458418.352731
+      },
+      {
+        "step": 3000,
+        "value": 0.03005199134349823,
+        "wall_time": 1789458506.1231358
+      },
+      {
+        "step": 3500,
+        "value": 0.026944048702716827,
+        "wall_time": 1789458585.114629
+      },
+      {
+        "step": 4000,
+        "value": 0.023487091064453125,
+        "wall_time": 1789458663.5207856
+      },
+      {
+        "step": 4500,
+        "value": 0.009220249019563198,
+        "wall_time": 1789458747.749249
+      },
+      {
+        "step": 5000,
+        "value": 0.017951607704162598,
+        "wall_time": 1789458921.0314524
+      },
+      {
+        "step": 5500,
+        "value": 0.04332757741212845,
+        "wall_time": 1789458998.1134305
+      },
+      {
+        "step": 6000,
+        "value": 0.009219791740179062,
+        "wall_time": 1789459080.5263617
+      },
+      {
+        "step": 6500,
+        "value": 0.018229825422167778,
+        "wall_time": 1789459173.382765
+      },
+      {
+        "step": 7000,
+        "value": 0.009006577543914318,
+        "wall_time": 1789459269.277973
+      },
+      {
+        "step": 7500,
+        "value": 0.026801157742738724,
+        "wall_time": 1789459464.363572
+      },
+      {
+        "step": 8000,
+        "value": 0.015314940363168716,
+        "wall_time": 1789459564.719807
+      },
+      {
+        "step": 8500,
+        "value": 0.01071232557296753,
+        "wall_time": 1789459656.9440129
+      },
+      {
+        "step": 9000,
+        "value": 0.013475573621690273,
+        "wall_time": 1789459752.1624897
+      },
+      {
+        "step": 9500,
+        "value": 0.014105096459388733,
+        "wall_time": 1789459844.2654393
+      },
+      {
+        "step": 10000,
+        "value": 0.01706233248114586,
+        "wall_time": 1789460047.5410767
+      },
+      {
+        "step": 10500,
+        "value": 0.01684478111565113,
+        "wall_time": 1789460142.2487113
+      },
+      {
+        "step": 11000,
+        "value": 0.008177114650607109,
+        "wall_time": 1789460235.8004816
+      },
+      {
+        "step": 11500,
+        "value": 0.015614153817296028,
+        "wall_time": 1789460329.4078856
+      },
+      {
+        "step": 12000,
+        "value": 0.02259167470037937,
+        "wall_time": 1789460424.5870242
+      },
+      {
+        "step": 12500,
+        "value": 0.008630195632576942,
+        "wall_time": 1789460627.9594033
+      },
+      {
+        "step": 13000,
+        "value": 0.012302389368414879,
+        "wall_time": 1789460721.4105241
+      },
+      {
+        "step": 13500,
+        "value": 0.017513232305645943,
+        "wall_time": 1789460813.780857
+      },
+      {
+        "step": 14000,
+        "value": 0.023943684995174408,
+        "wall_time": 1789460911.615628
+      },
+      {
+        "step": 14500,
+        "value": 0.017494432628154755,
+        "wall_time": 1789461003.414008
+      },
+      {
+        "step": 15000,
+        "value": 0.02342122048139572,
+        "wall_time": 1789461227.0533211
+      },
+      {
+        "step": 15500,
+        "value": 0.011717990040779114,
+        "wall_time": 1789461321.8977005
+      },
+      {
+        "step": 16000,
+        "value": 0.022643594071269035,
+        "wall_time": 1789461413.1261294
+      },
+      {
+        "step": 16500,
+        "value": 0.0115681616589427,
+        "wall_time": 1789461507.4770718
+      },
+      {
+        "step": 17000,
+        "value": 0.021316390484571457,
+        "wall_time": 1789461606.2127025
+      },
+      {
+        "step": 17500,
+        "value": 0.02686481736600399,
+        "wall_time": 1789461829.313393
+      },
+      {
+        "step": 18000,
+        "value": 0.01003214530646801,
+        "wall_time": 1789461920.5714214
+      },
+      {
+        "step": 18500,
+        "value": 0.008921883068978786,
+        "wall_time": 1789462012.7402034
+      },
+      {
+        "step": 19000,
+        "value": 0.013040903955698013,
+        "wall_time": 1789462101.631531
+      },
+      {
+        "step": 19500,
+        "value": 0.009179087355732918,
+        "wall_time": 1789462190.3062596
+      },
+      {
+        "step": 20000,
+        "value": 0.020525341853499413,
+        "wall_time": 1789462418.0318406
+      },
+      {
+        "step": 20500,
+        "value": 0.010685889050364494,
+        "wall_time": 1789462509.4223258
+      },
+      {
+        "step": 21000,
+        "value": 0.00811862014234066,
+        "wall_time": 1789462596.4757934
+      },
+      {
+        "step": 21500,
+        "value": 0.020054243505001068,
+        "wall_time": 1789462687.4749792
+      },
+      {
+        "step": 22000,
+        "value": 0.02829284965991974,
+        "wall_time": 1789462776.6958938
+      },
+      {
+        "step": 22500,
+        "value": 0.02267000637948513,
+        "wall_time": 1789463006.7656941
+      },
+      {
+        "step": 23000,
+        "value": 0.00749222282320261,
+        "wall_time": 1789463095.6410425
+      },
+      {
+        "step": 23500,
+        "value": 0.013820668682456017,
+        "wall_time": 1789463184.2140057
+      }
+    ],
+    "Eval Images Metrics/median_depth_mean_rel_l2": [
+      {
+        "step": 500,
+        "value": 2.171288251876831,
+        "wall_time": 1789458002.2568624
+      },
+      {
+        "step": 1000,
+        "value": 0.5495214462280273,
+        "wall_time": 1789458072.486304
+      },
+      {
+        "step": 1500,
+        "value": 0.08835682272911072,
+        "wall_time": 1789458154.4722269
+      },
+      {
+        "step": 2000,
+        "value": 0.13142652809619904,
+        "wall_time": 1789458238.5830333
+      },
+      {
+        "step": 2500,
+        "value": 0.06764020770788193,
+        "wall_time": 1789458418.3528767
+      },
+      {
+        "step": 3000,
+        "value": 0.09987612068653107,
+        "wall_time": 1789458506.1232831
+      },
+      {
+        "step": 3500,
+        "value": 0.022237278521060944,
+        "wall_time": 1789458585.1147747
+      },
+      {
+        "step": 4000,
+        "value": 0.09344393759965897,
+        "wall_time": 1789458663.5209334
+      },
+      {
+        "step": 4500,
+        "value": 0.025774849578738213,
+        "wall_time": 1789458747.749325
+      },
+      {
+        "step": 5000,
+        "value": 0.10227096825838089,
+        "wall_time": 1789458921.0315971
+      },
+      {
+        "step": 5500,
+        "value": 0.02935599535703659,
+        "wall_time": 1789458998.113537
+      },
+      {
+        "step": 6000,
+        "value": 0.038609474897384644,
+        "wall_time": 1789459080.526509
+      },
+      {
+        "step": 6500,
+        "value": 0.024430884048342705,
+        "wall_time": 1789459173.3828647
+      },
+      {
+        "step": 7000,
+        "value": 0.03114672750234604,
+        "wall_time": 1789459269.278124
+      },
+      {
+        "step": 7500,
+        "value": 0.15158705413341522,
+        "wall_time": 1789459464.3636396
+      },
+      {
+        "step": 8000,
+        "value": 0.06854288280010223,
+        "wall_time": 1789459564.7199392
+      },
+      {
+        "step": 8500,
+        "value": 0.028915036469697952,
+        "wall_time": 1789459656.9440749
+      },
+      {
+        "step": 9000,
+        "value": 0.04540560394525528,
+        "wall_time": 1789459752.1626325
+      },
+      {
+        "step": 9500,
+        "value": 0.04328913986682892,
+        "wall_time": 1789459844.2655253
+      },
+      {
+        "step": 10000,
+        "value": 0.07821010798215866,
+        "wall_time": 1789460047.5411894
+      },
+      {
+        "step": 10500,
+        "value": 0.015855921432375908,
+        "wall_time": 1789460142.2488608
+      },
+      {
+        "step": 11000,
+        "value": 0.026665955781936646,
+        "wall_time": 1789460235.8006258
+      },
+      {
+        "step": 11500,
+        "value": 0.02832024171948433,
+        "wall_time": 1789460329.4080334
+      },
+      {
+        "step": 12000,
+        "value": 0.11759839951992035,
+        "wall_time": 1789460424.587171
+      },
+      {
+        "step": 12500,
+        "value": 0.06894578039646149,
+        "wall_time": 1789460627.9595525
+      },
+      {
+        "step": 13000,
+        "value": 0.025664135813713074,
+        "wall_time": 1789460721.4105885
+      },
+      {
+        "step": 13500,
+        "value": 0.07357818633317947,
+        "wall_time": 1789460813.7810059
+      },
+      {
+        "step": 14000,
+        "value": 0.07801957428455353,
+        "wall_time": 1789460911.6157753
+      },
+      {
+        "step": 14500,
+        "value": 0.05233559384942055,
+        "wall_time": 1789461003.4140894
+      },
+      {
+        "step": 15000,
+        "value": 0.25549933314323425,
+        "wall_time": 1789461227.0534718
+      },
+      {
+        "step": 15500,
+        "value": 0.02782003954052925,
+        "wall_time": 1789461321.8977783
+      },
+      {
+        "step": 16000,
+        "value": 0.013931788504123688,
+        "wall_time": 1789461413.126223
+      },
+      {
+        "step": 16500,
+        "value": 0.03085392341017723,
+        "wall_time": 1789461507.477144
+      },
+      {
+        "step": 17000,
+        "value": 0.011839189566671848,
+        "wall_time": 1789461606.2127373
+      },
+      {
+        "step": 17500,
+        "value": 0.014818428084254265,
+        "wall_time": 1789461829.3135073
+      },
+      {
+        "step": 18000,
+        "value": 0.025429826229810715,
+        "wall_time": 1789461920.5715694
+      },
+      {
+        "step": 18500,
+        "value": 0.060423217713832855,
+        "wall_time": 1789462012.7403111
+      },
+      {
+        "step": 19000,
+        "value": 0.09458574652671814,
+        "wall_time": 1789462101.6316373
+      },
+      {
+        "step": 19500,
+        "value": 0.13886645436286926,
+        "wall_time": 1789462190.3063412
+      },
+      {
+        "step": 20000,
+        "value": 0.031519390642642975,
+        "wall_time": 1789462418.0319688
+      },
+      {
+        "step": 20500,
+        "value": 0.0465194396674633,
+        "wall_time": 1789462509.4224741
+      },
+      {
+        "step": 21000,
+        "value": 0.021028853952884674,
+        "wall_time": 1789462596.4758716
+      },
+      {
+        "step": 21500,
+        "value": 0.009456523694097996,
+        "wall_time": 1789462687.4750936
+      },
+      {
+        "step": 22000,
+        "value": 0.09611576795578003,
+        "wall_time": 1789462776.696066
+      },
+      {
+        "step": 22500,
+        "value": 0.01151261106133461,
+        "wall_time": 1789463006.7658718
+      },
+      {
+        "step": 23000,
+        "value": 0.07829559594392776,
+        "wall_time": 1789463095.6411738
+      },
+      {
+        "step": 23500,
+        "value": 0.018623510375618935,
+        "wall_time": 1789463184.2141123
+      }
+    ],
+    "Eval Images Metrics/intensity_rmse": [
+      {
+        "step": 500,
+        "value": 0.058309417217969894,
+        "wall_time": 1789458002.2570121
+      },
+      {
+        "step": 1000,
+        "value": 0.05718504637479782,
+        "wall_time": 1789458072.486448
+      },
+      {
+        "step": 1500,
+        "value": 0.06552984565496445,
+        "wall_time": 1789458154.472371
+      },
+      {
+        "step": 2000,
+        "value": 0.06305557489395142,
+        "wall_time": 1789458238.5831776
+      },
+      {
+        "step": 2500,
+        "value": 0.05519799888134003,
+        "wall_time": 1789458418.3530233
+      },
+      {
+        "step": 3000,
+        "value": 0.057148680090904236,
+        "wall_time": 1789458506.1234305
+      },
+      {
+        "step": 3500,
+        "value": 0.045412398874759674,
+        "wall_time": 1789458585.1149213
+      },
+      {
+        "step": 4000,
+        "value": 0.05225006490945816,
+        "wall_time": 1789458663.5210807
+      },
+      {
+        "step": 4500,
+        "value": 0.04790754243731499,
+        "wall_time": 1789458747.7494
+      },
+      {
+        "step": 5000,
+        "value": 0.04923829436302185,
+        "wall_time": 1789458921.0317416
+      },
+      {
+        "step": 5500,
+        "value": 0.048608697950839996,
+        "wall_time": 1789458998.1136663
+      },
+      {
+        "step": 6000,
+        "value": 0.04471142590045929,
+        "wall_time": 1789459080.5266562
+      },
+      {
+        "step": 6500,
+        "value": 0.039024870842695236,
+        "wall_time": 1789459173.3829641
+      },
+      {
+        "step": 7000,
+        "value": 0.0439128577709198,
+        "wall_time": 1789459269.278277
+      },
+      {
+        "step": 7500,
+        "value": 0.04765389859676361,
+        "wall_time": 1789459464.363702
+      },
+      {
+        "step": 8000,
+        "value": 0.045512858778238297,
+        "wall_time": 1789459564.720076
+      },
+      {
+        "step": 8500,
+        "value": 0.03920392319560051,
+        "wall_time": 1789459656.9441357
+      },
+      {
+        "step": 9000,
+        "value": 0.042355477809906006,
+        "wall_time": 1789459752.1627748
+      },
+      {
+        "step": 9500,
+        "value": 0.04199422150850296,
+        "wall_time": 1789459844.265612
+      },
+      {
+        "step": 10000,
+        "value": 0.04348292201757431,
+        "wall_time": 1789460047.5413034
+      },
+      {
+        "step": 10500,
+        "value": 0.03929901868104935,
+        "wall_time": 1789460142.2490065
+      },
+      {
+        "step": 11000,
+        "value": 0.041419219225645065,
+        "wall_time": 1789460235.8007677
+      },
+      {
+        "step": 11500,
+        "value": 0.04119717702269554,
+        "wall_time": 1789460329.408182
+      },
+      {
+        "step": 12000,
+        "value": 0.04192109405994415,
+        "wall_time": 1789460424.5873196
+      },
+      {
+        "step": 12500,
+        "value": 0.03897884860634804,
+        "wall_time": 1789460627.9597008
+      },
+      {
+        "step": 13000,
+        "value": 0.04075753688812256,
+        "wall_time": 1789460721.4106536
+      },
+      {
+        "step": 13500,
+        "value": 0.042752161622047424,
+        "wall_time": 1789460813.7811546
+      },
+      {
+        "step": 14000,
+        "value": 0.04639727994799614,
+        "wall_time": 1789460911.6159227
+      },
+      {
+        "step": 14500,
+        "value": 0.040693022310733795,
+        "wall_time": 1789461003.414169
+      },
+      {
+        "step": 15000,
+        "value": 0.04529724270105362,
+        "wall_time": 1789461227.0536203
+      },
+      {
+        "step": 15500,
+        "value": 0.04007593169808388,
+        "wall_time": 1789461321.8978505
+      },
+      {
+        "step": 16000,
+        "value": 0.033296529203653336,
+        "wall_time": 1789461413.126316
+      },
+      {
+        "step": 16500,
+        "value": 0.04147948697209358,
+        "wall_time": 1789461507.4772158
+      },
+      {
+        "step": 17000,
+        "value": 0.032600730657577515,
+        "wall_time": 1789461606.2127771
+      },
+      {
+        "step": 17500,
+        "value": 0.03732016682624817,
+        "wall_time": 1789461829.3136141
+      },
+      {
+        "step": 18000,
+        "value": 0.03819525986909866,
+        "wall_time": 1789461920.571719
+      },
+      {
+        "step": 18500,
+        "value": 0.03768176585435867,
+        "wall_time": 1789462012.7404149
+      },
+      {
+        "step": 19000,
+        "value": 0.038490235805511475,
+        "wall_time": 1789462101.631743
+      },
+      {
+        "step": 19500,
+        "value": 0.04095965623855591,
+        "wall_time": 1789462190.3064167
+      },
+      {
+        "step": 20000,
+        "value": 0.03954532369971275,
+        "wall_time": 1789462418.0321057
+      },
+      {
+        "step": 20500,
+        "value": 0.03873983398079872,
+        "wall_time": 1789462509.4226215
+      },
+      {
+        "step": 21000,
+        "value": 0.037984512746334076,
+        "wall_time": 1789462596.4759803
+      },
+      {
+        "step": 21500,
+        "value": 0.032023657113313675,
+        "wall_time": 1789462687.4752061
+      },
+      {
+        "step": 22000,
+        "value": 0.04687125235795975,
+        "wall_time": 1789462776.696216
+      },
+      {
+        "step": 22500,
+        "value": 0.031852152198553085,
+        "wall_time": 1789463006.7660408
+      },
+      {
+        "step": 23000,
+        "value": 0.03897228091955185,
+        "wall_time": 1789463095.6413152
+      },
+      {
+        "step": 23500,
+        "value": 0.03959153965115547,
+        "wall_time": 1789463184.2142193
+      }
+    ],
+    "Eval Images Metrics/ray_drop_accuracy": [
+      {
+        "step": 500,
+        "value": 0.8241289854049683,
+        "wall_time": 1789458002.257152
+      },
+      {
+        "step": 1000,
+        "value": 0.8462092876434326,
+        "wall_time": 1789458072.4865732
+      },
+      {
+        "step": 1500,
+        "value": 0.8985845446586609,
+        "wall_time": 1789458154.4724958
+      },
+      {
+        "step": 2000,
+        "value": 0.9147174954414368,
+        "wall_time": 1789458238.583301
+      },
+      {
+        "step": 2500,
+        "value": 0.8893003463745117,
+        "wall_time": 1789458418.353152
+      },
+      {
+        "step": 3000,
+        "value": 0.9188657999038696,
+        "wall_time": 1789458506.123559
+      },
+      {
+        "step": 3500,
+        "value": 0.9011410474777222,
+        "wall_time": 1789458585.1150591
+      },
+      {
+        "step": 4000,
+        "value": 0.9250352382659912,
+        "wall_time": 1789458663.5212088
+      },
+      {
+        "step": 4500,
+        "value": 0.9194916486740112,
+        "wall_time": 1789458747.7494695
+      },
+      {
+        "step": 5000,
+        "value": 0.9203609228134155,
+        "wall_time": 1789458921.031867
+      },
+      {
+        "step": 5500,
+        "value": 0.8950176239013672,
+        "wall_time": 1789458998.11379
+      },
+      {
+        "step": 6000,
+        "value": 0.9067344069480896,
+        "wall_time": 1789459080.5267825
+      },
+      {
+        "step": 6500,
+        "value": 0.9179551005363464,
+        "wall_time": 1789459173.383051
+      },
+      {
+        "step": 7000,
+        "value": 0.9212979674339294,
+        "wall_time": 1789459269.2784064
+      },
+      {
+        "step": 7500,
+        "value": 0.9112773537635803,
+        "wall_time": 1789459464.3637586
+      },
+      {
+        "step": 8000,
+        "value": 0.9183887243270874,
+        "wall_time": 1789459564.720193
+      },
+      {
+        "step": 8500,
+        "value": 0.9166448712348938,
+        "wall_time": 1789459656.9441905
+      },
+      {
+        "step": 9000,
+        "value": 0.9208394885063171,
+        "wall_time": 1789459752.1628993
+      },
+      {
+        "step": 9500,
+        "value": 0.9148092269897461,
+        "wall_time": 1789459844.2656887
+      },
+      {
+        "step": 10000,
+        "value": 0.9318241477012634,
+        "wall_time": 1789460047.5414014
+      },
+      {
+        "step": 10500,
+        "value": 0.9204009175300598,
+        "wall_time": 1789460142.2491326
+      },
+      {
+        "step": 11000,
+        "value": 0.920287013053894,
+        "wall_time": 1789460235.8008916
+      },
+      {
+        "step": 11500,
+        "value": 0.9354416728019714,
+        "wall_time": 1789460329.4083068
+      },
+      {
+        "step": 12000,
+        "value": 0.9152854681015015,
+        "wall_time": 1789460424.5874455
+      },
+      {
+        "step": 12500,
+        "value": 0.9269635081291199,
+        "wall_time": 1789460627.9598298
+      },
+      {
+        "step": 13000,
+        "value": 0.9230365753173828,
+        "wall_time": 1789460721.4107122
+      },
+      {
+        "step": 13500,
+        "value": 0.9295088052749634,
+        "wall_time": 1789460813.7812843
+      },
+      {
+        "step": 14000,
+        "value": 0.9076070785522461,
+        "wall_time": 1789460911.6160517
+      },
+      {
+        "step": 14500,
+        "value": 0.9351121187210083,
+        "wall_time": 1789461003.4142413
+      },
+      {
+        "step": 15000,
+        "value": 0.9074565172195435,
+        "wall_time": 1789461227.0537498
+      },
+      {
+        "step": 15500,
+        "value": 0.9241442680358887,
+        "wall_time": 1789461321.897913
+      },
+      {
+        "step": 16000,
+        "value": 0.9269898533821106,
+        "wall_time": 1789461413.1263983
+      },
+      {
+        "step": 16500,
+        "value": 0.940349817276001,
+        "wall_time": 1789461507.4772806
+      },
+      {
+        "step": 17000,
+        "value": 0.9295313954353333,
+        "wall_time": 1789461606.2128057
+      },
+      {
+        "step": 17500,
+        "value": 0.9199038147926331,
+        "wall_time": 1789461829.313706
+      },
+      {
+        "step": 18000,
+        "value": 0.9283586740493774,
+        "wall_time": 1789461920.5718448
+      },
+      {
+        "step": 18500,
+        "value": 0.92905592918396,
+        "wall_time": 1789462012.7405064
+      },
+      {
+        "step": 19000,
+        "value": 0.937362790107727,
+        "wall_time": 1789462101.6318333
+      },
+      {
+        "step": 19500,
+        "value": 0.9185474514961243,
+        "wall_time": 1789462190.306484
+      },
+      {
+        "step": 20000,
+        "value": 0.9165514707565308,
+        "wall_time": 1789462418.032215
+      },
+      {
+        "step": 20500,
+        "value": 0.9388972520828247,
+        "wall_time": 1789462509.4227486
+      },
+      {
+        "step": 21000,
+        "value": 0.9320502877235413,
+        "wall_time": 1789462596.4760575
+      },
+      {
+        "step": 21500,
+        "value": 0.9358211755752563,
+        "wall_time": 1789462687.4752991
+      },
+      {
+        "step": 22000,
+        "value": 0.9006941318511963,
+        "wall_time": 1789462776.69646
+      },
+      {
+        "step": 22500,
+        "value": 0.9282078146934509,
+        "wall_time": 1789463006.7661836
+      },
+      {
+        "step": 23000,
+        "value": 0.9238881468772888,
+        "wall_time": 1789463095.6414306
+      },
+      {
+        "step": 23500,
+        "value": 0.9283258318901062,
+        "wall_time": 1789463184.214313
+      }
+    ],
+    "Eval Images Metrics/chamfer_distance": [
+      {
+        "step": 500,
+        "value": 9.326845169067383,
+        "wall_time": 1789458002.2572827
+      },
+      {
+        "step": 1000,
+        "value": 7.04558801651001,
+        "wall_time": 1789458072.4866993
+      },
+      {
+        "step": 1500,
+        "value": 4.287717819213867,
+        "wall_time": 1789458154.4726205
+      },
+      {
+        "step": 2000,
+        "value": 3.3812808990478516,
+        "wall_time": 1789458238.5834243
+      },
+      {
+        "step": 2500,
+        "value": 3.0872230529785156,
+        "wall_time": 1789458418.3532786
+      },
+      {
+        "step": 3000,
+        "value": 3.3752994537353516,
+        "wall_time": 1789458506.1236866
+      },
+      {
+        "step": 3500,
+        "value": 2.721647024154663,
+        "wall_time": 1789458585.1151874
+      },
+      {
+        "step": 4000,
+        "value": 2.106377124786377,
+        "wall_time": 1789458663.5213366
+      },
+      {
+        "step": 4500,
+        "value": 4.894895553588867,
+        "wall_time": 1789458747.74954
+      },
+      {
+        "step": 5000,
+        "value": 3.1002354621887207,
+        "wall_time": 1789458921.0319936
+      },
+      {
+        "step": 5500,
+        "value": 2.6864655017852783,
+        "wall_time": 1789458998.1138864
+      },
+      {
+        "step": 6000,
+        "value": 2.129688262939453,
+        "wall_time": 1789459080.5269105
+      },
+      {
+        "step": 6500,
+        "value": 2.352644443511963,
+        "wall_time": 1789459173.3831384
+      },
+      {
+        "step": 7000,
+        "value": 3.0655853748321533,
+        "wall_time": 1789459269.2785354
+      },
+      {
+        "step": 7500,
+        "value": 2.0019869804382324,
+        "wall_time": 1789459464.3638146
+      },
+      {
+        "step": 8000,
+        "value": 3.3769922256469727,
+        "wall_time": 1789459564.7203114
+      },
+      {
+        "step": 8500,
+        "value": 2.0939409732818604,
+        "wall_time": 1789459656.9442458
+      },
+      {
+        "step": 9000,
+        "value": 1.5706562995910645,
+        "wall_time": 1789459752.1630251
+      },
+      {
+        "step": 9500,
+        "value": 3.0073771476745605,
+        "wall_time": 1789459844.2657716
+      },
+      {
+        "step": 10000,
+        "value": 2.6462717056274414,
+        "wall_time": 1789460047.5415018
+      },
+      {
+        "step": 10500,
+        "value": 2.01345157623291,
+        "wall_time": 1789460142.249258
+      },
+      {
+        "step": 11000,
+        "value": 4.698068141937256,
+        "wall_time": 1789460235.8010163
+      },
+      {
+        "step": 11500,
+        "value": 2.206719398498535,
+        "wall_time": 1789460329.4084342
+      },
+      {
+        "step": 12000,
+        "value": 2.040221691131592,
+        "wall_time": 1789460424.587575
+      },
+      {
+        "step": 12500,
+        "value": 1.181520700454712,
+        "wall_time": 1789460627.9599586
+      },
+      {
+        "step": 13000,
+        "value": 2.5308051109313965,
+        "wall_time": 1789460721.4107714
+      },
+      {
+        "step": 13500,
+        "value": 1.533315896987915,
+        "wall_time": 1789460813.7814136
+      },
+      {
+        "step": 14000,
+        "value": 3.220665216445923,
+        "wall_time": 1789460911.616182
+      },
+      {
+        "step": 14500,
+        "value": 1.2336525917053223,
+        "wall_time": 1789461003.414313
+      },
+      {
+        "step": 15000,
+        "value": 4.180747985839844,
+        "wall_time": 1789461227.0539012
+      },
+      {
+        "step": 15500,
+        "value": 2.7467026710510254,
+        "wall_time": 1789461321.897978
+      },
+      {
+        "step": 16000,
+        "value": 1.342484474182129,
+        "wall_time": 1789461413.1264803
+      },
+      {
+        "step": 16500,
+        "value": 1.676142692565918,
+        "wall_time": 1789461507.4773455
+      },
+      {
+        "step": 17000,
+        "value": 1.382878303527832,
+        "wall_time": 1789461606.2128344
+      },
+      {
+        "step": 17500,
+        "value": 1.50360107421875,
+        "wall_time": 1789461829.3138132
+      },
+      {
+        "step": 18000,
+        "value": 2.474660873413086,
+        "wall_time": 1789461920.5719745
+      },
+      {
+        "step": 18500,
+        "value": 1.0433393716812134,
+        "wall_time": 1789462012.7405999
+      },
+      {
+        "step": 19000,
+        "value": 1.083390474319458,
+        "wall_time": 1789462101.631924
+      },
+      {
+        "step": 19500,
+        "value": 1.0021440982818604,
+        "wall_time": 1789462190.3065524
+      },
+      {
+        "step": 20000,
+        "value": 1.8315699100494385,
+        "wall_time": 1789462418.032324
+      },
+      {
+        "step": 20500,
+        "value": 0.9012616872787476,
+        "wall_time": 1789462509.422878
+      },
+      {
+        "step": 21000,
+        "value": 1.7967102527618408,
+        "wall_time": 1789462596.4761245
+      },
+      {
+        "step": 21500,
+        "value": 1.2530361413955688,
+        "wall_time": 1789462687.475393
+      },
+      {
+        "step": 22000,
+        "value": 1.983825922012329,
+        "wall_time": 1789462776.696611
+      },
+      {
+        "step": 22500,
+        "value": 1.376598596572876,
+        "wall_time": 1789463006.7663248
+      },
+      {
+        "step": 23000,
+        "value": 1.0713616609573364,
+        "wall_time": 1789463095.6415467
+      },
+      {
+        "step": 23500,
+        "value": 1.9844907522201538,
+        "wall_time": 1789463184.2144072
+      }
+    ],
+    "Eval Images Metrics/median_chamfer_distance": [
+      {
+        "step": 500,
+        "value": 10.709187507629395,
+        "wall_time": 1789458002.2574184
+      },
+      {
+        "step": 1000,
+        "value": 22.178251266479492,
+        "wall_time": 1789458072.486829
+      },
+      {
+        "step": 1500,
+        "value": 12.940593719482422,
+        "wall_time": 1789458154.4727526
+      },
+      {
+        "step": 2000,
+        "value": 4.2582244873046875,
+        "wall_time": 1789458238.583553
+      },
+      {
+        "step": 2500,
+        "value": 2.802426815032959,
+        "wall_time": 1789458418.353409
+      },
+      {
+        "step": 3000,
+        "value": 3.2376251220703125,
+        "wall_time": 1789458506.1238174
+      },
+      {
+        "step": 3500,
+        "value": 2.796891212463379,
+        "wall_time": 1789458585.11532
+      },
+      {
+        "step": 4000,
+        "value": 2.0651652812957764,
+        "wall_time": 1789458663.5214703
+      },
+      {
+        "step": 4500,
+        "value": 9.035383224487305,
+        "wall_time": 1789458747.7496119
+      },
+      {
+        "step": 5000,
+        "value": 2.506436824798584,
+        "wall_time": 1789458921.0321224
+      },
+      {
+        "step": 5500,
+        "value": 2.208481788635254,
+        "wall_time": 1789458998.1139746
+      },
+      {
+        "step": 6000,
+        "value": 1.939523696899414,
+        "wall_time": 1789459080.5270455
+      },
+      {
+        "step": 6500,
+        "value": 1.921141505241394,
+        "wall_time": 1789459173.3832283
+      },
+      {
+        "step": 7000,
+        "value": 3.629619598388672,
+        "wall_time": 1789459269.2786708
+      },
+      {
+        "step": 7500,
+        "value": 4.941551208496094,
+        "wall_time": 1789459464.3638718
+      },
+      {
+        "step": 8000,
+        "value": 2.792603015899658,
+        "wall_time": 1789459564.7204313
+      },
+      {
+        "step": 8500,
+        "value": 1.5256896018981934,
+        "wall_time": 1789459656.944302
+      },
+      {
+        "step": 9000,
+        "value": 1.193168044090271,
+        "wall_time": 1789459752.1631548
+      },
+      {
+        "step": 9500,
+        "value": 3.072234630584717,
+        "wall_time": 1789459844.2658703
+      },
+      {
+        "step": 10000,
+        "value": 1.9071123600006104,
+        "wall_time": 1789460047.541607
+      },
+      {
+        "step": 10500,
+        "value": 1.5504616498947144,
+        "wall_time": 1789460142.2493932
+      },
+      {
+        "step": 11000,
+        "value": 4.639113426208496,
+        "wall_time": 1789460235.8011463
+      },
+      {
+        "step": 11500,
+        "value": 1.91498863697052,
+        "wall_time": 1789460329.4085636
+      },
+      {
+        "step": 12000,
+        "value": 1.4048750400543213,
+        "wall_time": 1789460424.587706
+      },
+      {
+        "step": 12500,
+        "value": 0.8407702445983887,
+        "wall_time": 1789460627.9601166
+      },
+      {
+        "step": 13000,
+        "value": 5.20259952545166,
+        "wall_time": 1789460721.410832
+      },
+      {
+        "step": 13500,
+        "value": 1.0869669914245605,
+        "wall_time": 1789460813.7815464
+      },
+      {
+        "step": 14000,
+        "value": 2.291271209716797,
+        "wall_time": 1789460911.6163185
+      },
+      {
+        "step": 14500,
+        "value": 0.8670602440834045,
+        "wall_time": 1789461003.414396
+      },
+      {
+        "step": 15000,
+        "value": 3.431731700897217,
+        "wall_time": 1789461227.0540388
+      },
+      {
+        "step": 15500,
+        "value": 2.0517852306365967,
+        "wall_time": 1789461321.8980422
+      },
+      {
+        "step": 16000,
+        "value": 1.979552984237671,
+        "wall_time": 1789461413.1265666
+      },
+      {
+        "step": 16500,
+        "value": 1.0721927881240845,
+        "wall_time": 1789461507.4774134
+      },
+      {
+        "step": 17000,
+        "value": 1.0478997230529785,
+        "wall_time": 1789461606.212864
+      },
+      {
+        "step": 17500,
+        "value": 0.9728726744651794,
+        "wall_time": 1789461829.3139193
+      },
+      {
+        "step": 18000,
+        "value": 1.4956506490707397,
+        "wall_time": 1789461920.5721123
+      },
+      {
+        "step": 18500,
+        "value": 0.7352089881896973,
+        "wall_time": 1789462012.7406955
+      },
+      {
+        "step": 19000,
+        "value": 1.0999605655670166,
+        "wall_time": 1789462101.6320157
+      },
+      {
+        "step": 19500,
+        "value": 0.7067340612411499,
+        "wall_time": 1789462190.306622
+      },
+      {
+        "step": 20000,
+        "value": 0.9342402219772339,
+        "wall_time": 1789462418.0324428
+      },
+      {
+        "step": 20500,
+        "value": 0.6433677077293396,
+        "wall_time": 1789462509.4230118
+      },
+      {
+        "step": 21000,
+        "value": 1.7479825019836426,
+        "wall_time": 1789462596.4761925
+      },
+      {
+        "step": 21500,
+        "value": 0.9169855117797852,
+        "wall_time": 1789462687.4754906
+      },
+      {
+        "step": 22000,
+        "value": 1.3666515350341797,
+        "wall_time": 1789462776.6967468
+      },
+      {
+        "step": 22500,
+        "value": 0.9685691595077515,
+        "wall_time": 1789463006.76647
+      },
+      {
+        "step": 23000,
+        "value": 0.6941823959350586,
+        "wall_time": 1789463095.641667
+      },
+      {
+        "step": 23500,
+        "value": 0.9034128189086914,
+        "wall_time": 1789463184.2145047
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/lpips": [
+      {
+        "step": 2500,
+        "value": 0.511773407459259,
+        "wall_time": 1789458419.3995728
+      },
+      {
+        "step": 5000,
+        "value": 0.44486144185066223,
+        "wall_time": 1789458922.0633605
+      },
+      {
+        "step": 7500,
+        "value": 0.4288809895515442,
+        "wall_time": 1789459465.6492178
+      },
+      {
+        "step": 10000,
+        "value": 0.4121684432029724,
+        "wall_time": 1789460048.7422447
+      },
+      {
+        "step": 12500,
+        "value": 0.4013901352882385,
+        "wall_time": 1789460629.193918
+      },
+      {
+        "step": 15000,
+        "value": 0.3898393213748932,
+        "wall_time": 1789461228.2624996
+      },
+      {
+        "step": 17500,
+        "value": 0.35024362802505493,
+        "wall_time": 1789461830.5551522
+      },
+      {
+        "step": 20000,
+        "value": 0.33165496587753296,
+        "wall_time": 1789462419.3991308
+      },
+      {
+        "step": 22500,
+        "value": 0.32180193066596985,
+        "wall_time": 1789463008.1023042
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/num_camera_rays_per_sec": [
+      {
+        "step": 2500,
+        "value": 56819276.0,
+        "wall_time": 1789458419.3996084
+      },
+      {
+        "step": 5000,
+        "value": 56900304.0,
+        "wall_time": 1789458922.0633862
+      },
+      {
+        "step": 7500,
+        "value": 56254712.0,
+        "wall_time": 1789459465.649243
+      },
+      {
+        "step": 10000,
+        "value": 54962156.0,
+        "wall_time": 1789460048.7422755
+      },
+      {
+        "step": 12500,
+        "value": 54364004.0,
+        "wall_time": 1789460629.1939678
+      },
+      {
+        "step": 15000,
+        "value": 54068240.0,
+        "wall_time": 1789461228.2625437
+      },
+      {
+        "step": 17500,
+        "value": 55802244.0,
+        "wall_time": 1789461830.555179
+      },
+      {
+        "step": 20000,
+        "value": 57036884.0,
+        "wall_time": 1789462419.3991733
+      },
+      {
+        "step": 22500,
+        "value": 57330844.0,
+        "wall_time": 1789463008.102339
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/median_depth_mean_rel_l2": [
+      {
+        "step": 2500,
+        "value": 0.14913779497146606,
+        "wall_time": 1789458419.3996289
+      },
+      {
+        "step": 5000,
+        "value": 0.06572460383176804,
+        "wall_time": 1789458922.0634034
+      },
+      {
+        "step": 7500,
+        "value": 0.05963042378425598,
+        "wall_time": 1789459465.6492608
+      },
+      {
+        "step": 10000,
+        "value": 0.05067753046751022,
+        "wall_time": 1789460048.7422924
+      },
+      {
+        "step": 12500,
+        "value": 0.05096111446619034,
+        "wall_time": 1789460629.1939871
+      },
+      {
+        "step": 15000,
+        "value": 0.04605508968234062,
+        "wall_time": 1789461228.2625623
+      },
+      {
+        "step": 17500,
+        "value": 0.04858163371682167,
+        "wall_time": 1789461830.5551982
+      },
+      {
+        "step": 20000,
+        "value": 0.047804057598114014,
+        "wall_time": 1789462419.3991933
+      },
+      {
+        "step": 22500,
+        "value": 0.04851385951042175,
+        "wall_time": 1789463008.1023638
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/chamfer_distance": [
+      {
+        "step": 2500,
+        "value": 4.4080352783203125,
+        "wall_time": 1789458419.399647
+      },
+      {
+        "step": 5000,
+        "value": 2.80059814453125,
+        "wall_time": 1789458922.0634189
+      },
+      {
+        "step": 7500,
+        "value": 2.5685431957244873,
+        "wall_time": 1789459465.6492763
+      },
+      {
+        "step": 10000,
+        "value": 2.393836736679077,
+        "wall_time": 1789460048.7423093
+      },
+      {
+        "step": 12500,
+        "value": 2.136584520339966,
+        "wall_time": 1789460629.1940043
+      },
+      {
+        "step": 15000,
+        "value": 1.944623351097107,
+        "wall_time": 1789461228.2625797
+      },
+      {
+        "step": 17500,
+        "value": 1.6572197675704956,
+        "wall_time": 1789461830.5552151
+      },
+      {
+        "step": 20000,
+        "value": 1.5518258810043335,
+        "wall_time": 1789462419.3992112
+      },
+      {
+        "step": 22500,
+        "value": 1.4137096405029297,
+        "wall_time": 1789463008.1023867
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/median_chamfer_distance": [
+      {
+        "step": 2500,
+        "value": 5.001895427703857,
+        "wall_time": 1789458419.3996649
+      },
+      {
+        "step": 5000,
+        "value": 2.7044363021850586,
+        "wall_time": 1789458922.0634336
+      },
+      {
+        "step": 7500,
+        "value": 2.263373851776123,
+        "wall_time": 1789459465.6492918
+      },
+      {
+        "step": 10000,
+        "value": 2.0199739933013916,
+        "wall_time": 1789460048.7423255
+      },
+      {
+        "step": 12500,
+        "value": 1.8077784776687622,
+        "wall_time": 1789460629.1940205
+      },
+      {
+        "step": 15000,
+        "value": 1.5842344760894775,
+        "wall_time": 1789461228.262597
+      },
+      {
+        "step": 17500,
+        "value": 1.3591068983078003,
+        "wall_time": 1789461830.5552316
+      },
+      {
+        "step": 20000,
+        "value": 1.2709046602249146,
+        "wall_time": 1789462419.3992286
+      },
+      {
+        "step": 22500,
+        "value": 1.16123366355896,
+        "wall_time": 1789463008.1024091
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/median_depth_median_l2": [
+      {
+        "step": 2500,
+        "value": 0.034210700541734695,
+        "wall_time": 1789458419.3996818
+      },
+      {
+        "step": 5000,
+        "value": 0.02078062668442726,
+        "wall_time": 1789458922.063449
+      },
+      {
+        "step": 7500,
+        "value": 0.01895834319293499,
+        "wall_time": 1789459465.6493063
+      },
+      {
+        "step": 10000,
+        "value": 0.01767927035689354,
+        "wall_time": 1789460048.7423396
+      },
+      {
+        "step": 12500,
+        "value": 0.01629805378615856,
+        "wall_time": 1789460629.1940362
+      },
+      {
+        "step": 15000,
+        "value": 0.015807634219527245,
+        "wall_time": 1789461228.2626133
+      },
+      {
+        "step": 17500,
+        "value": 0.013495479710400105,
+        "wall_time": 1789461830.5552473
+      },
+      {
+        "step": 20000,
+        "value": 0.013259552419185638,
+        "wall_time": 1789462419.399246
+      },
+      {
+        "step": 22500,
+        "value": 0.013109969906508923,
+        "wall_time": 1789463008.1024313
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/ssim": [
+      {
+        "step": 2500,
+        "value": 0.6979305148124695,
+        "wall_time": 1789458419.399699
+      },
+      {
+        "step": 5000,
+        "value": 0.7535286545753479,
+        "wall_time": 1789458922.0634632
+      },
+      {
+        "step": 7500,
+        "value": 0.7781528830528259,
+        "wall_time": 1789459465.6493206
+      },
+      {
+        "step": 10000,
+        "value": 0.7855629920959473,
+        "wall_time": 1789460048.7423544
+      },
+      {
+        "step": 12500,
+        "value": 0.7928016781806946,
+        "wall_time": 1789460629.1940513
+      },
+      {
+        "step": 15000,
+        "value": 0.7960838079452515,
+        "wall_time": 1789461228.262629
+      },
+      {
+        "step": 17500,
+        "value": 0.8160631656646729,
+        "wall_time": 1789461830.5552633
+      },
+      {
+        "step": 20000,
+        "value": 0.8210411667823792,
+        "wall_time": 1789462419.399263
+      },
+      {
+        "step": 22500,
+        "value": 0.8241848349571228,
+        "wall_time": 1789463008.102453
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/depth_mean_rel_l2": [
+      {
+        "step": 2500,
+        "value": 0.05140722543001175,
+        "wall_time": 1789458419.3997154
+      },
+      {
+        "step": 5000,
+        "value": 0.041961975395679474,
+        "wall_time": 1789458922.0634775
+      },
+      {
+        "step": 7500,
+        "value": 0.03978768363595009,
+        "wall_time": 1789459465.6493354
+      },
+      {
+        "step": 10000,
+        "value": 0.03629707172513008,
+        "wall_time": 1789460048.7423697
+      },
+      {
+        "step": 12500,
+        "value": 0.03606203570961952,
+        "wall_time": 1789460629.1940665
+      },
+      {
+        "step": 15000,
+        "value": 0.03332553058862686,
+        "wall_time": 1789461228.2626448
+      },
+      {
+        "step": 17500,
+        "value": 0.035913679748773575,
+        "wall_time": 1789461830.5552785
+      },
+      {
+        "step": 20000,
+        "value": 0.03548023849725723,
+        "wall_time": 1789462419.3992803
+      },
+      {
+        "step": 22500,
+        "value": 0.03558557853102684,
+        "wall_time": 1789463008.102475
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/depth_median_l2": [
+      {
+        "step": 2500,
+        "value": 0.04948270320892334,
+        "wall_time": 1789458419.3997316
+      },
+      {
+        "step": 5000,
+        "value": 0.02100347727537155,
+        "wall_time": 1789458922.0634918
+      },
+      {
+        "step": 7500,
+        "value": 0.017126277089118958,
+        "wall_time": 1789459465.6493502
+      },
+      {
+        "step": 10000,
+        "value": 0.01543527189642191,
+        "wall_time": 1789460048.7423844
+      },
+      {
+        "step": 12500,
+        "value": 0.012113356031477451,
+        "wall_time": 1789460629.1940815
+      },
+      {
+        "step": 15000,
+        "value": 0.011394377797842026,
+        "wall_time": 1789461228.26266
+      },
+      {
+        "step": 17500,
+        "value": 0.006335913669317961,
+        "wall_time": 1789461830.5552938
+      },
+      {
+        "step": 20000,
+        "value": 0.006048068404197693,
+        "wall_time": 1789462419.399301
+      },
+      {
+        "step": 22500,
+        "value": 0.005560336634516716,
+        "wall_time": 1789463008.1024969
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/ray_drop_accuracy": [
+      {
+        "step": 2500,
+        "value": 0.9027130007743835,
+        "wall_time": 1789458419.3997476
+      },
+      {
+        "step": 5000,
+        "value": 0.9125696420669556,
+        "wall_time": 1789458922.0635056
+      },
+      {
+        "step": 7500,
+        "value": 0.9162989854812622,
+        "wall_time": 1789459465.6493642
+      },
+      {
+        "step": 10000,
+        "value": 0.9176643490791321,
+        "wall_time": 1789460048.742399
+      },
+      {
+        "step": 12500,
+        "value": 0.9197865128517151,
+        "wall_time": 1789460629.1940968
+      },
+      {
+        "step": 15000,
+        "value": 0.9205389022827148,
+        "wall_time": 1789461228.2626753
+      },
+      {
+        "step": 17500,
+        "value": 0.9254243969917297,
+        "wall_time": 1789461830.5553083
+      },
+      {
+        "step": 20000,
+        "value": 0.9261178374290466,
+        "wall_time": 1789462419.3993294
+      },
+      {
+        "step": 22500,
+        "value": 0.9258836507797241,
+        "wall_time": 1789463008.1025183
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/num_lidar_rays_per_sec": [
+      {
+        "step": 2500,
+        "value": 166642.25,
+        "wall_time": 1789458419.3997633
+      },
+      {
+        "step": 5000,
+        "value": 176479.875,
+        "wall_time": 1789458922.068635
+      },
+      {
+        "step": 7500,
+        "value": 181970.75,
+        "wall_time": 1789459465.6545131
+      },
+      {
+        "step": 10000,
+        "value": 186841.828125,
+        "wall_time": 1789460048.747734
+      },
+      {
+        "step": 12500,
+        "value": 193700.953125,
+        "wall_time": 1789460629.1941116
+      },
+      {
+        "step": 15000,
+        "value": 195535.71875,
+        "wall_time": 1789461228.2626903
+      },
+      {
+        "step": 17500,
+        "value": 197124.515625,
+        "wall_time": 1789461830.560467
+      },
+      {
+        "step": 20000,
+        "value": 198126.53125,
+        "wall_time": 1789462419.399356
+      },
+      {
+        "step": 22500,
+        "value": 199310.25,
+        "wall_time": 1789463008.1077065
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/intensity_rmse": [
+      {
+        "step": 2500,
+        "value": 0.05552193894982338,
+        "wall_time": 1789458419.7909365
+      },
+      {
+        "step": 5000,
+        "value": 0.047413405030965805,
+        "wall_time": 1789458922.3967543
+      },
+      {
+        "step": 7500,
+        "value": 0.04437337443232536,
+        "wall_time": 1789459466.0900378
+      },
+      {
+        "step": 10000,
+        "value": 0.04272138327360153,
+        "wall_time": 1789460049.1399965
+      },
+      {
+        "step": 12500,
+        "value": 0.04156449809670448,
+        "wall_time": 1789460629.6034205
+      },
+      {
+        "step": 15000,
+        "value": 0.040841441601514816,
+        "wall_time": 1789461228.6693544
+      },
+      {
+        "step": 17500,
+        "value": 0.039493050426244736,
+        "wall_time": 1789461831.0087864
+      },
+      {
+        "step": 20000,
+        "value": 0.039034247398376465,
+        "wall_time": 1789462419.9003947
+      },
+      {
+        "step": 22500,
+        "value": 0.038745395839214325,
+        "wall_time": 1789463008.5686653
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/psnr": [
+      {
+        "step": 2500,
+        "value": 21.927936553955078,
+        "wall_time": 1789458419.791161
+      },
+      {
+        "step": 5000,
+        "value": 23.282333374023438,
+        "wall_time": 1789458922.397037
+      },
+      {
+        "step": 7500,
+        "value": 23.908632278442383,
+        "wall_time": 1789459466.0902994
+      },
+      {
+        "step": 10000,
+        "value": 24.179466247558594,
+        "wall_time": 1789460049.1400375
+      },
+      {
+        "step": 12500,
+        "value": 24.8005428314209,
+        "wall_time": 1789460629.6035342
+      },
+      {
+        "step": 15000,
+        "value": 24.75633430480957,
+        "wall_time": 1789461228.6694007
+      },
+      {
+        "step": 17500,
+        "value": 25.867197036743164,
+        "wall_time": 1789461831.008911
+      },
+      {
+        "step": 20000,
+        "value": 26.292442321777344,
+        "wall_time": 1789462419.9006722
+      },
+      {
+        "step": 22500,
+        "value": 26.42288589477539,
+        "wall_time": 1789463008.5689137
+      }
+    ],
+    "Eval Images Metrics Dict (all images)/fps": [
+      {
+        "step": 2500,
+        "value": 39.9477653503418,
+        "wall_time": 1789458419.7912362
+      },
+      {
+        "step": 5000,
+        "value": 40.01227951049805,
+        "wall_time": 1789458922.397131
+      },
+      {
+        "step": 7500,
+        "value": 39.56208801269531,
+        "wall_time": 1789459466.0904522
+      },
+      {
+        "step": 10000,
+        "value": 38.6662483215332,
+        "wall_time": 1789460049.1400604
+      },
+      {
+        "step": 12500,
+        "value": 38.245609283447266,
+        "wall_time": 1789460629.6035995
+      },
+      {
+        "step": 15000,
+        "value": 38.042877197265625,
+        "wall_time": 1789461228.6694193
+      },
+      {
+        "step": 17500,
+        "value": 39.267066955566406,
+        "wall_time": 1789461831.009119
+      },
+      {
+        "step": 20000,
+        "value": 40.13130187988281,
+        "wall_time": 1789462419.9008238
+      },
+      {
+        "step": 22500,
+        "value": 40.3380241394043,
+        "wall_time": 1789463008.5689998
+      }
+    ]
+  }
+}

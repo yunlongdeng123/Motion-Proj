@@ -1,0 +1,17 @@
+{
+  "task_id": "WS-SIM-NATIVE-CLOSEDLOOP-01",
+  "planned_run": "scene0004-step030000-full1",
+  "status": "prepared_not_started",
+  "prerequisite": "Successful complete 30001-step fit, final checkpoint present, new output directories.",
+  "sensor_validation": "All 194 held-out LiDAR scans and 678 held-out cameras under the fixed official split.",
+  "downstream": "Eight logged samples x six modality conditions plus two 4s feedback loops; same 8000-step pilot starts, no independent confirmation.",
+  "timing": "Replay matches each logged sensor sampling time. Feedback queries remain synchronous. Comparing with the 8k pilot jointly changes budget and replay timing; do not attribute their difference solely to fitting.",
+  "decision": "Review full-budget quality and measured downstream degradation before any second-scene fitting or local geometry intervention.",
+  "no_automatic_followup_scene": true,
+  "new_execution_count": 0,
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}
