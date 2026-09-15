@@ -1,3 +1,9 @@
+# 当前：完整预算闭环与原生检测完成，局部强度恢复解释主要漏检（2026-09-15）
+
+SplatAD 30001步完成；194 LiDAR／678相机留出、64策略/PDM与2次反馈闭环完成。LiDAR-only平均ADE差−0.014/+0.026m，两闭环无框交叠。冻结nuScenes CenterPoint真实机动车32/32，原生raw/median16/20；工程车真实8/8、原生0/1，局部真实扫描恢复8/8，而median仅恢复强度即7/8、位置恢复仅2/3。保留传感器感知坏例，不晋级纯几何或phantom Hero。四前馈模型两日志18次检测包含DVGT正例，不能主张普遍同样失效。全部CenterPoint130次，累计18 HUGSIM＋4 SplatAD反馈闭环、72几何前向、802策略/PDM。见docs/WORLDSIM_SIMULATION_FULL_BUDGET_PERCEPTION.md及F19。
+
+本轮有限工程车诊断收口，不细切ROI或追末帧残余；不启动第二个SplatAD拟合。后续仅复核已有Ω车辆／Pi3X行人检测候选的真实支持，再判断实际局部资产修复是否必要。尚无前馈几何资产修复后的独立下游恢复。goal active；人工verdict=null；failure_ledger_delta=V74-H2-F19。以下为历史。
+
 # 当前：原生RGB＋LiDAR反馈已实际运行，8k试跑差距主要经RGB通道（2026-09-15）
 
 完整预算接续已准备：`run_native_full_evaluation.sh` 仅在拟合成功且第30000步checkpoint存在时运行全留出传感器评价、日志时刻匹配的模态对照及两次反馈闭环；当前尚未启动，不增加执行次数。已有TensorBoard快照读至第24000步，成本/质量复核来自既有日志。0073横穿拖车仅列为后续候选，第二个场景未启动；无新增failure（沿用F18），goal active。

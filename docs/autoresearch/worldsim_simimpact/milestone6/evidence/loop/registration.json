@@ -1,0 +1,130 @@
+{
+  "task_id": "WS-SIM-NATIVE-CLOSEDLOOP-01",
+  "run_id": "scene0004-step030000-full1",
+  "scene": "scene-0004",
+  "fit": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1/fits/scene-0004/splatad/native-r2",
+  "checkpoint_dir": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1/validation/scene0004-step030000-full1/checkpoint",
+  "replay_sensor_timing": "logged",
+  "checkpoint_step": 30000,
+  "fitting_complete": true,
+  "seed": 20260915,
+  "steps": 8,
+  "replan_interval_s": 0.5,
+  "physics_interval_s": 0.1,
+  "scope": "SplatAD renders all three policy cameras and LiDAR at actually executed poses. Official TransFuser seed0 and PDM controller/bicycle; nuScenes adapter, annotated actors follow the log. Not an official end-to-end benchmark score.",
+  "conditions": [
+    "real_sensor_teacher_forcing",
+    "rendered_sensor_teacher_forcing_raw",
+    "rendered_sensor_teacher_forcing_median",
+    "lidar_only_teacher_forcing_raw",
+    "lidar_only_teacher_forcing_median",
+    "rgb_only_teacher_forcing",
+    "closedloop_raw",
+    "closedloop_median"
+  ],
+  "sensor_protocol": "For closed loop, synchronized query-time cameras and a fixed initial-log LiDAR firing pattern with official rolling compensation; no future GT images, ranges or validity masks enter closed-loop policy. Assets were fit with full-scene RGB+LiDAR and dynamics, an extra-information reference.",
+  "controls": "Same 1\u201380m point range for policy inputs, known sensor extrinsics, native raw and median readouts kept. Vehicle model/ego-reference convention remains a dataset adapter.",
+  "limits": "Real sensors exist only on logged poses; teacher-forced comparison is distinct from closed-loop counterfactuals. A changed trajectory does not imply degradation, collision safety or reconstruction causality.",
+  "failure_ledger_refs": [
+    "V74-H2-F15",
+    "V74-H2-F16",
+    "V74-H2-F17"
+  ],
+  "failure_ledger_delta": "V74-H2-F19",
+  "human_verdict": null,
+  "completed": true,
+  "start_unix": 1789466028.653925,
+  "camera_calibration": {
+    "CAM_FRONT": {
+      "max_calibration_matrix_difference": 7.956246054163785e-05,
+      "split": "train"
+    },
+    "CAM_FRONT_LEFT": {
+      "max_calibration_matrix_difference": 1.157195200107708e-05,
+      "split": "train"
+    },
+    "CAM_FRONT_RIGHT": {
+      "max_calibration_matrix_difference": 8.608085408923216e-06,
+      "split": "train"
+    }
+  },
+  "lidar_pattern": {
+    "initial_log_split": "train",
+    "valid_firing_directions": 30487,
+    "pattern_shape": [
+      2,
+      32,
+      1088,
+      5
+    ],
+    "time_min_s": -0.05000000074505806,
+    "time_max_s": 0.0,
+    "scope": "Fixed firing directions/times calibrated from the initial real scan, including official imputed directions and ego exclusion. No future GT ranges or validity masks; not an ideal uniform manufacturer scan."
+  },
+  "time_origin_absolute_s": 1531883986.912474,
+  "world_from_ego_initial": [
+    [
+      0.38254821679339507,
+      -0.9236045592890308,
+      -0.024728119392885183,
+      358.9831117798762
+    ],
+    [
+      0.9239354391306085,
+      0.38239933678072396,
+      0.010679491944477124,
+      1076.6165772367613
+    ],
+    [
+      -0.0004076109951356953,
+      -0.026932606449758638,
+      0.9996371684581857,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "dataparser_transform": [
+    [
+      0.9270642995834351,
+      -0.3749021887779236,
+      -1.3529437986603554e-12,
+      70.98719787597656
+    ],
+    [
+      0.37490221858024597,
+      0.9270643591880798,
+      9.064567711902782e-05,
+      -1196.46533203125
+    ],
+    [
+      -3.3983516914304346e-05,
+      -8.4034247265663e-05,
+      1.0,
+      -1.7393524646759033
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "end_unix": 1789466238.6909266,
+  "policy_forwards": 64,
+  "controller_forecasts": 64,
+  "actual_closed_loops": 2,
+  "policy_checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-INTERACTION-01/20260915-r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+  "source_revisions": {
+    "neurad-studio": "8ba9b5116b8a2822a80c64f63a4ae64c5871aa68",
+    "SplatAD_splat": "6e31ad766d39e0c33f9034a2ed772d51364b2343",
+    "NAVSIM": "ca0ca7e4368646d8f7b86fb1fdaa1862c946176f"
+  },
+  "source_snapshot": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-LIDAR-01/20260915-r1/closed_loop/scene0004-step030000-full1/source_snapshot",
+  "scientific_status": "Completed sensor and policy execution; downstream findings await analysis. No automatic geometry causal or safety conclusion.",
+  "analysis_status": "Full fit and downstream measurements complete. Excavator local sensor recovery has a strong intensity alternative on median readout; no geometry-asset causal repair or independent safety confirmation. See milestone6 report."
+}

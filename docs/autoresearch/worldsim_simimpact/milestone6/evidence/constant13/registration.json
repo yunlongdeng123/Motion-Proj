@@ -1,0 +1,81 @@
+{
+  "task_id": "WS-SIM-NATIVE-DETECTOR-01",
+  "run_id": "constant13_scene0004_r1",
+  "scene": "scene-0004",
+  "frames": 8,
+  "seed": 20260915,
+  "role": "Frozen detection on native SplatAD sensor outputs; no geometry causal conclusion.",
+  "method": "CenterPoint voxel0.1 circle NMS, MMDetection3D v1.4.0 implementation; not a new geometry SOTA.",
+  "code_revision": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/assets/mmdet3d_centerpoint_voxel01.pth",
+  "checkpoint_source": "https://download.openmmlab.com/mmdetection3d/v1.0.0_models/centerpoint/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus_20220810_030004-9061688e.pth",
+  "inputs": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/native_scans_scene0004_step030000_r1",
+  "preprocessing": "Native exported xyz/intensity/age arrays, matched ten-sweep timestamps. Native detector range filter/voxelization/postprocessing retained.",
+  "evaluation": "Class-aware center distance <=2m and BEV IoU>=0.5, separately at fixed confidence 0.3/0.5; front0..32m, lateral +/-16m, >=5 current LiDAR returns. Counts are frame observations, not AP/NDS or unique actors.",
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "V74-H2-F19",
+  "human_verdict": null,
+  "completed": true,
+  "start_unix": 1789465682.7399218,
+  "runtime": {
+    "torch": "2.1.2+cu118",
+    "numpy": "1.23.5",
+    "mmcv": "2.1.0",
+    "mmengine": "0.10.7",
+    "mmdet": "3.3.0",
+    "nuscenes-devkit": "1.2.0",
+    "extra_dependencies": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/pydeps"
+  },
+  "conditions": [
+    "real",
+    "raw",
+    "median"
+  ],
+  "constant_intensity_control": 13.0,
+  "sensor_registration": {
+    "task_id": "WS-SIM-NATIVE-DETECTOR-01",
+    "run_id": "native_scans_scene0004_step030000_r1",
+    "checkpoint_step": 30000,
+    "role": "Full-budget native SplatAD scans at logged LiDAR poses/times for the existing eight-frame CenterPoint reference.",
+    "scope": "Not a feed-forward reconstruction condition; full-scene RGB+LiDAR asset, known poses/dynamics and learned intensity/drop are extra information. Natural sensor differences precede geometry attribution.",
+    "timing": "Current scan plus the same nine historical timestamps as the real baseline; every scan rendered with its causal velocity.",
+    "pattern": {
+      "initial_log_split": "train",
+      "valid_firing_directions": 30487,
+      "pattern_shape": [
+        2,
+        32,
+        1088,
+        5
+      ],
+      "time_min_s": -0.05000000074505806,
+      "time_max_s": 0.0,
+      "scope": "Fixed firing directions/times calibrated from the initial real scan, including official imputed directions and ego exclusion. No future GT ranges or validity masks; not an ideal uniform manufacturer scan."
+    },
+    "readouts": [
+      "raw",
+      "median"
+    ],
+    "intensity": "Native sigmoid output multiplied by255, matching nuScenes reflectance units.",
+    "failure_ledger_refs": [
+      "V74-H2-F18"
+    ],
+    "failure_ledger_delta": "pending",
+    "human_verdict": null,
+    "completed": true,
+    "start_unix": 1789465104.3396416,
+    "end_unix": 1789465128.6425755,
+    "native_lidar_renders": 78
+  },
+  "checkpoint_compatibility": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "shape_differences": {}
+  },
+  "dataset_split": "train",
+  "end_unix": 1789465741.3807783,
+  "detector_forwards": 24,
+  "analysis_status": "Full fit and downstream measurements complete. Excavator local sensor recovery has a strong intensity alternative on median readout; no geometry-asset causal repair or independent safety confirmation. See milestone6 report."
+}

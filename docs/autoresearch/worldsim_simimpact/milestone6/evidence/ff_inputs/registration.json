@@ -1,0 +1,80 @@
+{
+  "task_id": "WS-SIM-FF-PERCEPTION-01",
+  "run_id": "20260915-r1",
+  "scenes": [
+    "scene-0004",
+    "scene-0061"
+  ],
+  "seed": 20260915,
+  "selection": "Two already exposed discovery logs with all ten raw past scans available; not new or independent confirmation.",
+  "scope": "Four existing six-view BUILD-scale reconstruction meshes, current first-intersection scan only. This is a sensor/perception isolation test, not a new-pose complete simulator.",
+  "information": "Known metric poses, BUILD LiDAR global scale, original current-beam intensity, and the same nine real past sweeps are extra inputs shared by all methods. fill_missing additionally restores GT ranges on absent current returns; no claim of same-information advantage.",
+  "conditions": [
+    "real",
+    "vggt_full",
+    "vggt_fill_missing",
+    "omega512_full",
+    "omega512_fill_missing",
+    "dvgt1_full",
+    "dvgt1_fill_missing",
+    "pi3x_full",
+    "pi3x_fill_missing"
+  ],
+  "evaluation": "Frozen CenterPoint native nuScenes protocol; do not infer safety from detection changes. Same confidence0.3/0.5, center2m/IoU0.5, front32m/lateral16m, currentGTpoints>=5.",
+  "stop_rule": "One finite probe, no new geometry model inference. Only consistent actual downstream loss may justify local asset repair; no threshold/parameter sweeps to manufacture a failure.",
+  "failure_ledger_refs": [
+    "V74-H2-F16",
+    "V74-H2-F17",
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null,
+  "prepared": true,
+  "start_unix": 1789466539.3648446,
+  "beam_alignment_checks": [
+    {
+      "scene": "scene-0004",
+      "current_points": 26520,
+      "existing_real_to_raw_lidar_max_abs_difference_m": 1.7053025658242404e-13,
+      "vggt": {
+        "finite_current_returns": 19445,
+        "missing_current_returns": 7075
+      },
+      "omega512": {
+        "finite_current_returns": 18839,
+        "missing_current_returns": 7681
+      },
+      "dvgt1": {
+        "finite_current_returns": 18533,
+        "missing_current_returns": 7987
+      },
+      "pi3x": {
+        "finite_current_returns": 19385,
+        "missing_current_returns": 7135
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "current_points": 25908,
+      "existing_real_to_raw_lidar_max_abs_difference_m": 2.8421709430404007e-13,
+      "vggt": {
+        "finite_current_returns": 18710,
+        "missing_current_returns": 7198
+      },
+      "omega512": {
+        "finite_current_returns": 18677,
+        "missing_current_returns": 7231
+      },
+      "dvgt1": {
+        "finite_current_returns": 17975,
+        "missing_current_returns": 7933
+      },
+      "pi3x": {
+        "finite_current_returns": 18816,
+        "missing_current_returns": 7092
+      }
+    }
+  ],
+  "end_unix": 1789466587.3487062,
+  "expected_detector_forwards": 18
+}

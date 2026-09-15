@@ -1,0 +1,24 @@
+{
+  "task_id": "WS-SIM-NATIVE-LIDAR-01",
+  "run": "native-r2",
+  "scene": "scene-0004",
+  "start_unix": 1789457772.7612357,
+  "seed": 20260915,
+  "max_steps": 30001,
+  "role": "RGB+LiDAR scene fitting, strong metric simulator reference; not a feed-forward method or equal information budget",
+  "split": "Official LINSPACE 50% train / 50% held-out sensor observations; full log dynamics and calibration are supplied",
+  "changes_from_official_splatad": "CPU image/LiDAR cache; six caching workers; local TensorBoard only; FID disabled because appearance ranking is not the objective; remove unsupported mode argument only for torch.compile backend=eager on Torch2.4; optimization/model defaults retained",
+  "source_revisions": {
+    "neurad-studio": "8ba9b5116b8a2822a80c64f63a4ae64c5871aa68",
+    "SplatAD_splat": "6e31ad766d39e0c33f9034a2ed772d51364b2343",
+    "viser-splatad": "57142e42df8edd4de33fd60a08d6bb6c35970aa1"
+  },
+  "runtime": {
+    "torch": "2.4.1+cu118",
+    "numpy": "1.26.4",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "completed": true,
+  "human_verdict": null,
+  "end_unix": 1789464840.7265685
+}

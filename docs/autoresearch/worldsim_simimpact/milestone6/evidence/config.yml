@@ -1,0 +1,669 @@
+!!python/object:nerfstudio.engine.trainer.TrainerConfig
+_target: !!python/name:nerfstudio.engine.trainer.Trainer ''
+checkpoint_saving_tracker: !!python/object:nerfstudio.engine.trainer.MetricTrackerConfig
+  _target: &id001 !!python/name:nerfstudio.engine.trainer.MetricTracker ''
+  higher_is_better: true
+  margin: 0.05
+  metric: null
+data: null
+early_stopping_tracker: !!python/object:nerfstudio.engine.trainer.MetricTrackerConfig
+  _target: *id001
+  higher_is_better: true
+  margin: 0.1
+  metric: null
+experiment_name: scene-0004
+gradient_accumulation_steps: {}
+load_checkpoint: null
+load_config: null
+load_dir: null
+load_optimizer: true
+load_scheduler: true
+load_step: null
+log_gradients: false
+logging: !!python/object:nerfstudio.configs.base_config.LoggingConfig
+  local_writer: !!python/object:nerfstudio.configs.base_config.LocalWriterConfig
+    _target: !!python/name:nerfstudio.utils.writer.LocalWriter ''
+    enable: false
+    max_log_size: 10
+    stats_to_track: !!python/tuple
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Train Iter (time)
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Train Rays / Sec
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Test PSNR
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Vis Rays / Sec
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - Test Rays / Sec
+    - !!python/object/apply:nerfstudio.utils.writer.EventName
+      - ETA (time)
+  max_buffer_size: 20
+  profiler: basic
+  relative_log_dir: !!python/object/apply:pathlib.PosixPath []
+  steps_per_log: 10
+machine: !!python/object:nerfstudio.configs.base_config.MachineConfig
+  device_type: cuda
+  dist_url: auto
+  machine_rank: 0
+  num_devices: 1
+  num_machines: 1
+  seed: 20260915
+max_num_iterations: 30001
+method_name: splatad
+mixed_precision: false
+optimizers:
+  camera_opt:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: &id002 !!python/name:torch.optim.adam.Adam ''
+      eps: 1.0e-15
+      lr: 0.0001
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: &id003 !!python/name:nerfstudio.engine.schedulers.ExponentialDecayScheduler ''
+      lr_final: 5.0e-07
+      lr_pre_warmup: 1.0e-08
+      max_steps: 30000
+      ramp: cosine
+      warmup_steps: 0
+  camera_velocity_opt_angular:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.0002
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: *id003
+      lr_final: 1.0e-07
+      lr_pre_warmup: 0
+      max_steps: 30000
+      ramp: cosine
+      warmup_steps: 1000
+  camera_velocity_opt_linear:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.001
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: *id003
+      lr_final: 1.0e-06
+      lr_pre_warmup: 0
+      max_steps: 30000
+      ramp: cosine
+      warmup_steps: 1000
+  camera_velocity_opt_time_to_center_pixel:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.0002
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: *id003
+      lr_final: 1.0e-07
+      lr_pre_warmup: 0
+      max_steps: 30000
+      ramp: cosine
+      warmup_steps: 10000
+  features_dc:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.0025
+      max_norm: null
+      weight_decay: 0
+    scheduler: null
+  features_rest:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.0025
+      max_norm: null
+      weight_decay: 0
+    scheduler: null
+  fields:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.001
+      max_norm: null
+      weight_decay: 1.0e-06
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: *id003
+      lr_final: 0.001
+      lr_pre_warmup: 1.0e-08
+      max_steps: 20001
+      ramp: cosine
+      warmup_steps: 500
+  means:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.00016
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: *id003
+      lr_final: 1.6e-06
+      lr_pre_warmup: 1.0e-08
+      max_steps: 30000
+      ramp: cosine
+      warmup_steps: 0
+  opacities:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.05
+      max_norm: null
+      weight_decay: 0
+    scheduler: null
+  quats:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.001
+      max_norm: null
+      weight_decay: 0
+    scheduler: null
+  scales:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.005
+      max_norm: null
+      weight_decay: 0
+    scheduler: null
+  trajectory_opt:
+    optimizer: !!python/object:nerfstudio.engine.optimizers.AdamOptimizerConfig
+      _target: *id002
+      eps: 1.0e-15
+      lr: 0.001
+      max_norm: null
+      weight_decay: 0
+    scheduler: !!python/object:nerfstudio.engine.schedulers.ExponentialDecaySchedulerConfig
+      _target: *id003
+      lr_final: 0.0001
+      lr_pre_warmup: 1.0e-08
+      max_steps: 20001
+      ramp: cosine
+      warmup_steps: 2500
+output_dir: !!python/object/apply:pathlib.PosixPath
+- /
+- root
+- autodl-tmp
+- runs
+- worldsim_simimpact
+- WS-SIM-NATIVE-LIDAR-01
+- 20260915-r1
+- fits
+pipeline: !!python/object:nerfstudio.pipelines.splatad_pipeline.SplatADPipelineConfig
+  _target: !!python/name:nerfstudio.pipelines.splatad_pipeline.SplatADPipeline ''
+  calc_fid_steps: !!python/tuple []
+  datamanager: !!python/object:nerfstudio.data.datamanagers.full_images_lidar_datamanager.FullImageLidarDatamanagerConfig
+    _target: !!python/name:nerfstudio.data.datamanagers.full_images_lidar_datamanager.FullImageLidarDatamanager ''
+    cache_images: cpu
+    cache_images_type: uint8
+    cache_lidars: cpu
+    camera_res_scale_factor: 1.0
+    data: null
+    dataparser: !!python/object:nerfstudio.data.dataparsers.nuscenes_dataparser.NuScenesDataParserConfig
+      _target: !!python/name:nerfstudio.data.dataparsers.nuscenes_dataparser.NuScenes ''
+      add_missing_points: true
+      allow_per_point_times: true
+      annotation_interval: 0.5
+      cameras: !!python/tuple
+      - all
+      data: !!python/object/apply:pathlib.PosixPath
+      - /
+      - root
+      - autodl-tmp
+      - runs
+      - worldsim_simimpact
+      - WS-SIM-NATIVE-LIDAR-01
+      - 20260915-r1
+      - data
+      dataset_end_fraction: 1.0
+      dataset_start_fraction: 0.0
+      include_deformable_actors: true
+      lidar_azimuth_resolution:
+        LIDAR_TOP: 0.3333333333333333
+      lidar_elevation_mapping:
+        LIDAR_TOP:
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - &id004 !!python/object/apply:numpy.dtype
+            args:
+            - i8
+            - false
+            - true
+            state: !!python/tuple
+            - 3
+            - <
+            - null
+            - null
+            - null
+            - -1
+            - -1
+            - 0
+          - !!binary |
+            AAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - &id005 !!python/object/apply:numpy.dtype
+            args:
+            - f8
+            - false
+            - true
+            state: !!python/tuple
+            - 3
+            - <
+            - null
+            - null
+            - null
+            - -1
+            - -1
+            - 0
+          - !!binary |
+            7FG4HoWrPsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            AQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            FxtisSFWPcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            AgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            QeQLRL4APMA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            AwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            bK211lqrOsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            BAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            lnZfafdVOcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            BQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            wT8J/JMAOMA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            BgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            7AizjjCrNsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            BwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            FtJcIc1VNcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            CAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            QJsGtGkANMA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            CQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            a2SwRgarMsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            CgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            li1a2aJVMcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            CwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            wPYDbD8AMMA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            DAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            1n9b/bdVLcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            DQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            KhKvIvGqKsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            DgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            gKQCSCoAKMA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            DwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            1DZWbWNVJcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            EAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            KsmpkpyqIsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            EQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            ALf6b6v/H8A=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            EgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            qNuhuh2qGsA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            EwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            VABJBZBUFcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            FAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            +EngnwT+D8A=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            FQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            UJMuNelSBcA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            FgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            QLn5lJtP9b8=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            FwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            AEDQpgFtWj8=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            GAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            YCHNFdJc9T8=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            GQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            YEeYdYRZBUA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            GgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            CP8k8E8CEEA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            GwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            WNp9pd1XFUA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            HAAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            sLXWWmutGkA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            HQAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            hMgXiHwBIEA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            HgAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            MDbEYkOsIkA=
+          ? !!python/object/apply:numpy.core.multiarray.scalar
+          - *id004
+          - !!binary |
+            HwAAAAAAAAA=
+          : !!python/object/apply:numpy.core.multiarray.scalar
+          - *id005
+          - !!binary |
+            16NwPQpXJUA=
+      lidars: !!python/tuple
+      - LIDAR_TOP
+      load_cuboids: true
+      max_eval_frames: null
+      min_lidar_dist: !!python/tuple
+      - 1.0
+      - 2.0
+      - 2.0
+      radars: !!python/tuple []
+      rolling_shutter_time: 0.0
+      sequence: scene-0004
+      skip_elevation_channels:
+        LIDAR_TOP: !!python/tuple
+        - 0
+        - 1
+      time_to_center_pixel: 0.0
+      train_eval_split_type: !!python/object/apply:nerfstudio.data.dataparsers.ad_dataparser.SplitTypes
+      - linspace
+      train_split_fraction: 0.5
+      trajectory_extrapolation_length: 1.0
+      verbose: false
+      version: v1.0-trainval
+    downsample_factor: 1
+    eval_image_indices: !!python/tuple
+    - 0
+    eval_lidar_indices: !!python/tuple
+    - 0
+    eval_num_images_to_sample_from: -1
+    eval_num_lidars_to_sample_from: -1
+    eval_num_times_to_repeat_images: -1
+    eval_num_times_to_repeat_lidars: -1
+    fps_reset_every: 100
+    images_on_gpu: false
+    masks_on_gpu: false
+    max_thread_workers: 6
+    paint_points: true
+    paint_points_topk: 2
+    train_cameras_sampling_seed: 42
+    train_cameras_sampling_strategy: random
+    train_image_only: false
+    train_lidar_only: false
+  model: !!python/object:nerfstudio.models.splatad.SplatADModelConfig
+    _target: !!python/name:nerfstudio.models.splatad.SplatADModel ''
+    actor_flip_probability: 0.5
+    appearance_dim: 8
+    background_color: random
+    camera_optimizer: !!python/object:nerfstudio.cameras.camera_optimizers.CameraOptimizerConfig
+      _target: !!python/name:nerfstudio.cameras.camera_optimizers.CameraOptimizer ''
+      mode: 'off'
+      optimizer: null
+      rot_l2_penalty: 0.001
+      scheduler: null
+      trans_l2_penalty: 0.01
+    camera_velocity_optimizer: !!python/object:nerfstudio.cameras.camera_optimizers.CameraVelocityOptimizerConfig
+      _target: !!python/name:nerfstudio.cameras.camera_optimizers.CameraVelocityOptimizer ''
+      angular_l2_penalty: 1.0e-05
+      enabled: true
+      linear_l2_penalty: 1.0e-06
+      zero_initial_velocities: false
+    collider_params:
+      far_plane: 6.0
+      near_plane: 2.0
+    compensate_rs_camera: true
+    compensate_rs_lidar: true
+    continue_cull_post_densification: true
+    cull_alpha_thresh: 0.1
+    cull_scale_thresh: 500.0
+    cull_screen_size: 0.15
+    densify_grad_thresh: 0.0006
+    densify_size_thresh: 0.5
+    depth_lambda: 0.1
+    depth_loss_quantile_threshold: 0.95
+    dynamic_actors: !!python/object:nerfstudio.model_components.dynamic_actors.DynamicActorsConfig
+      _target: !!python/name:nerfstudio.model_components.dynamic_actors.DynamicActors ''
+      actor_bbox_padding: !!python/tuple
+      - 0.25
+      - 0.25
+      - 0.1
+      optimize_trajectories: true
+    enable_collider: true
+    eval_num_rays_per_chunk: 4096
+    feature_dim: 13
+    flip_actors_at_init: true
+    implementation: tcnn
+    init_opacities: 0.5
+    init_scale: 0.2
+    intensity_lambda: 1.0
+    line_of_sight_dist: 0.8
+    line_of_sight_lambda: 0.1
+    loss_coefficients:
+      rgb_loss_coarse: 1.0
+      rgb_loss_fine: 1.0
+    max_num_seed_points: 2000000
+    max_steps: 30001
+    mcmc_cap_max: 5000000
+    mcmc_min_opacity: 0.005
+    mcmc_noise_lr: 500000.0
+    mcmc_opacity_reg_lambda: 0.005
+    mcmc_scale_reg_lambda: 0.001
+    min_points_per_actor: 500
+    n_far_points: 300000
+    n_split_samples: 2
+    num_downscales: 2
+    output_depth_during_training: false
+    prompt: null
+    radius_clip_lidar: 0.0
+    radius_clip_pix: 0.0
+    rasterize_mode: antialiased
+    ray_drop_lambda: 0.1
+    refine_every: 100
+    reset_alpha_every: 30
+    resolution_schedule: 3000
+    rgb_decoder_hidden_dim: 32
+    rgb_decoder_kernel_size: 3
+    rgb_decoder_num_hidden_blocks: 1
+    rgb_upsample_factor: 1
+    split_screen_size: 0.05
+    ssim_lambda: 0.2
+    stop_screen_size_at: 4000
+    stop_split_at: 15000
+    strategy: mcmc
+    use_absgrad: true
+    use_camopt_in_eval: false
+    verbose: true
+    warmup_length: 500
+project_name: nerfstudio-project
+prompt: null
+relative_model_dir: !!python/object/apply:pathlib.PosixPath
+- nerfstudio_models
+save_only_latest_checkpoint: true
+steps_per_eval_all_images: 2500
+steps_per_eval_batch: 0
+steps_per_eval_image: 500
+steps_per_save: 2000
+timestamp: native-r2
+training_start_step: null
+use_grad_scaler: false
+viewer: !!python/object:nerfstudio.configs.base_config.ViewerConfig
+  camera_frustum_scale: 0.1
+  default_composite_depth: true
+  image_format: jpeg
+  jpeg_quality: 75
+  make_share_url: false
+  max_num_display_images: 512
+  max_points_per_cloud: 2000
+  num_rays_per_chunk: 32768
+  quit_on_train_completion: false
+  relative_log_filename: viewer_log_filename.txt
+  websocket_host: 0.0.0.0
+  websocket_port: null
+  websocket_port_default: 7007
+vis: tensorboard

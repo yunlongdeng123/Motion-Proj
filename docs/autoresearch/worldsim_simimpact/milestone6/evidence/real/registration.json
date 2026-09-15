@@ -1,0 +1,40 @@
+{
+  "task_id": "WS-SIM-NATIVE-DETECTOR-01",
+  "run_id": "real_scene0004_r1",
+  "scene": "scene-0004",
+  "frames": 8,
+  "seed": 20260915,
+  "role": "Frozen native-dataset real-sensor detection reference, no reconstruction condition or training.",
+  "method": "CenterPoint voxel0.1 circle NMS, MMDetection3D v1.4.0 implementation; not a new geometry SOTA.",
+  "code_revision": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/assets/mmdet3d_centerpoint_voxel01.pth",
+  "checkpoint_source": "https://download.openmmlab.com/mmdetection3d/v1.0.0_models/centerpoint/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus_20220810_030004-9061688e.pth",
+  "inputs": "Current raw LiDAR plus nine causal past sweeps; known metric poses. Preaggregated xyz/intensity/age replaces file and sweep loaders; native model, voxelization, range filter and postprocessing retained.",
+  "preprocessing": "Current sweep retains its original points; historical sweeps remove the central +/-1m square, then transform into current LiDAR frame. Intensity remains raw nuScenes units and time is seconds.",
+  "evaluation": "Class-aware center distance <=2m and BEV IoU>=0.5, separately at fixed confidence 0.3/0.5; front0..32m, lateral +/-16m, >=5 current LiDAR returns. Counts are frame observations, not AP/NDS or unique actors.",
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "V74-H2-F19",
+  "human_verdict": null,
+  "completed": true,
+  "start_unix": 1789464380.3727522,
+  "runtime": {
+    "torch": "2.1.2+cu118",
+    "numpy": "1.23.5",
+    "mmcv": "2.1.0",
+    "mmengine": "0.10.7",
+    "mmdet": "3.3.0",
+    "nuscenes-devkit": "1.2.0",
+    "extra_dependencies": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/pydeps"
+  },
+  "checkpoint_compatibility": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "shape_differences": {}
+  },
+  "dataset_split": "train",
+  "end_unix": 1789464435.297436,
+  "detector_forwards": 8,
+  "analysis_status": "Full fit and downstream measurements complete. Excavator local sensor recovery has a strong intensity alternative on median readout; no geometry-asset causal repair or independent safety confirmation. See milestone6 report."
+}

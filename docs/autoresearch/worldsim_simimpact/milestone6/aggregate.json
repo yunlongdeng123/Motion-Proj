@@ -1,0 +1,1305 @@
+{
+  "replay": [
+    {
+      "condition": "lidar_only_teacher_forcing_median",
+      "frames": 8,
+      "mean_ADE_delta_m": 0.02646615520242839,
+      "min_max_ADE_delta_m": [
+        0.005770628044333037,
+        0.047070920769407554
+      ],
+      "max_endpoint_change_m": 0.24106887749869835,
+      "max_extra_braking_mps2": -0.01977313914613621
+    },
+    {
+      "condition": "lidar_only_teacher_forcing_raw",
+      "frames": 8,
+      "mean_ADE_delta_m": -0.014434267736887767,
+      "min_max_ADE_delta_m": [
+        -0.08240530998078555,
+        0.0724534874412055
+      ],
+      "max_endpoint_change_m": 0.2502425931176319,
+      "max_extra_braking_mps2": -0.016468961615729416
+    },
+    {
+      "condition": "real_sensor_teacher_forcing",
+      "frames": 8,
+      "mean_ADE_delta_m": 0.0,
+      "min_max_ADE_delta_m": [
+        0.0,
+        0.0
+      ],
+      "max_endpoint_change_m": 0.0,
+      "max_extra_braking_mps2": 0.0
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_median",
+      "frames": 8,
+      "mean_ADE_delta_m": 0.2806905604675709,
+      "min_max_ADE_delta_m": [
+        -0.031079437655985753,
+        0.572746270081077
+      ],
+      "max_endpoint_change_m": 1.8066149761379808,
+      "max_extra_braking_mps2": -0.18541441702345207
+    },
+    {
+      "condition": "rendered_sensor_teacher_forcing_raw",
+      "frames": 8,
+      "mean_ADE_delta_m": 0.24101127127634275,
+      "min_max_ADE_delta_m": [
+        -0.12480826785490917,
+        0.5747544215135718
+      ],
+      "max_endpoint_change_m": 1.7447747743648652,
+      "max_extra_braking_mps2": -0.15776801622947345
+    },
+    {
+      "condition": "rgb_only_teacher_forcing",
+      "frames": 8,
+      "mean_ADE_delta_m": 0.2654735349068675,
+      "min_max_ADE_delta_m": [
+        -0.044039626216734185,
+        0.5518930568710996
+      ],
+      "max_endpoint_change_m": 1.7378102680789,
+      "max_extra_braking_mps2": -0.17884732033814918
+    }
+  ],
+  "closed_loop": [
+    {
+      "condition": "closedloop_raw",
+      "actual_closed_loop": true,
+      "executed_seconds": 4.0,
+      "state_samples": 41,
+      "ADE_vs_recorded_ego_m": 1.3685932759705477,
+      "FDE_vs_recorded_ego_m": 4.291727993026711,
+      "minimum_acceleration_mps2": -0.37117567472187596,
+      "final_speed_mps": 4.253415126425577,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "clearance": {
+        "0.0": {
+          "signed_box_clearance_m": 0.5654415246907598,
+          "time_s": 1.9000000000000001,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "-0.1": {
+          "signed_box_clearance_m": 0.6660975617048166,
+          "time_s": 1.9000000000000001,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "0.1": {
+          "signed_box_clearance_m": 0.464785487676703,
+          "time_s": 1.9000000000000001,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        }
+      }
+    },
+    {
+      "condition": "closedloop_median",
+      "actual_closed_loop": true,
+      "executed_seconds": 4.0,
+      "state_samples": 41,
+      "ADE_vs_recorded_ego_m": 1.422908507338887,
+      "FDE_vs_recorded_ego_m": 4.555454446192304,
+      "minimum_acceleration_mps2": -0.45671647225241674,
+      "final_speed_mps": 4.024219152175562,
+      "evaluation": "Recorded-trajectory agreement only here; actor clearance is audited separately.",
+      "clearance": {
+        "0.0": {
+          "signed_box_clearance_m": 0.569779716851882,
+          "time_s": 1.7000000000000002,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "-0.1": {
+          "signed_box_clearance_m": 0.6707288616812147,
+          "time_s": 1.7000000000000002,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        },
+        "0.1": {
+          "signed_box_clearance_m": 0.4688305720225492,
+          "time_s": 1.7000000000000002,
+          "instance": "6c2f6afc232e44f9bdfd1045e8a8f2be",
+          "category": "vehicle.car",
+          "evaluated_state_samples": 41,
+          "has_annotated_overlap": false
+        }
+      }
+    }
+  ],
+  "sensor_validation": {
+    "lidar_frames": 194,
+    "camera_frames": 678,
+    "mean_camera_PSNR_dB": 26.700226506583423,
+    "pointwise_scope": "Official measured/imputed ray raster. Distance error uses GT-return positions, including predicted-drop positions; separate ray-drop counts retained. Mean per-frame metrics are not pooled quantiles.",
+    "raw": {
+      "bias_m": -0.14811068645194048,
+      "mae_m": 0.7927601208391878,
+      "median_abs_m": 0.07148978574988768,
+      "p90_abs_m": 0.7935217805744451,
+      "rmse_m": 3.8256033880194438
+    },
+    "median": {
+      "bias_m": -0.11768505024752512,
+      "mae_m": 0.8186440292707423,
+      "median_abs_m": 0.1125433423469976,
+      "p90_abs_m": 0.7388671529661751,
+      "rmse_m": 4.257086280694942
+    },
+    "valid_rays": 5920838,
+    "gt_returns": 4924362,
+    "pred_returns": 4984373,
+    "false_drop": 193860,
+    "false_return": 253871
+  },
+  "detector": {
+    "real": {
+      "real": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 153,
+              "motor_vehicles": 32,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 116,
+                "pedestrian": 4,
+                "motorcycle": 1,
+                "traffic_cone": 1
+              }
+            },
+            "bev_iou0p5": {
+              "all": 129,
+              "motor_vehicles": 32,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 95,
+                "pedestrian": 2,
+                "motorcycle": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 149,
+              "motor_vehicles": 32,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 112,
+                "pedestrian": 4,
+                "motorcycle": 1,
+                "traffic_cone": 1
+              }
+            },
+            "bev_iou0p5": {
+              "all": 127,
+              "motor_vehicles": 32,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 93,
+                "pedestrian": 2,
+                "motorcycle": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "native": {
+      "median": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 98,
+              "motor_vehicles": 26,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 3,
+                "barrier": 68,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 87,
+              "motor_vehicles": 26,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 3,
+                "barrier": 59,
+                "pedestrian": 2
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 77,
+              "motor_vehicles": 20,
+              "by_class": {
+                "car": 19,
+                "barrier": 53,
+                "pedestrian": 4,
+                "construction_vehicle": 1
+              }
+            },
+            "bev_iou0p5": {
+              "all": 73,
+              "motor_vehicles": 20,
+              "by_class": {
+                "car": 19,
+                "barrier": 51,
+                "pedestrian": 2,
+                "construction_vehicle": 1
+              }
+            }
+          }
+        }
+      },
+      "raw": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 67,
+              "motor_vehicles": 21,
+              "by_class": {
+                "car": 21,
+                "barrier": 42,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 53,
+              "motor_vehicles": 21,
+              "by_class": {
+                "car": 21,
+                "barrier": 31,
+                "pedestrian": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 50,
+              "motor_vehicles": 16,
+              "by_class": {
+                "car": 16,
+                "barrier": 34
+              }
+            },
+            "bev_iou0p5": {
+              "all": 42,
+              "motor_vehicles": 16,
+              "by_class": {
+                "car": 16,
+                "barrier": 26
+              }
+            }
+          }
+        }
+      }
+    },
+    "constant13": {
+      "median": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 97,
+              "motor_vehicles": 20,
+              "by_class": {
+                "car": 18,
+                "barrier": 74,
+                "pedestrian": 3,
+                "construction_vehicle": 2
+              }
+            },
+            "bev_iou0p5": {
+              "all": 75,
+              "motor_vehicles": 20,
+              "by_class": {
+                "car": 18,
+                "barrier": 54,
+                "pedestrian": 1,
+                "construction_vehicle": 2
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 73,
+              "motor_vehicles": 10,
+              "by_class": {
+                "car": 10,
+                "barrier": 60,
+                "pedestrian": 3
+              }
+            },
+            "bev_iou0p5": {
+              "all": 58,
+              "motor_vehicles": 10,
+              "by_class": {
+                "car": 10,
+                "barrier": 47,
+                "pedestrian": 1
+              }
+            }
+          }
+        }
+      },
+      "raw": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 78,
+              "motor_vehicles": 16,
+              "by_class": {
+                "car": 16,
+                "barrier": 62
+              }
+            },
+            "bev_iou0p5": {
+              "all": 59,
+              "motor_vehicles": 14,
+              "by_class": {
+                "car": 14,
+                "barrier": 45
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 53,
+              "motor_vehicles": 10,
+              "by_class": {
+                "car": 10,
+                "barrier": 43
+              }
+            },
+            "bev_iou0p5": {
+              "all": 48,
+              "motor_vehicles": 10,
+              "by_class": {
+                "car": 10,
+                "barrier": 38
+              }
+            }
+          }
+        }
+      },
+      "real": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 137,
+              "motor_vehicles": 23,
+              "by_class": {
+                "car": 22,
+                "barrier": 109,
+                "pedestrian": 4,
+                "construction_vehicle": 1,
+                "traffic_cone": 1
+              }
+            },
+            "bev_iou0p5": {
+              "all": 100,
+              "motor_vehicles": 23,
+              "by_class": {
+                "car": 22,
+                "barrier": 75,
+                "pedestrian": 2,
+                "construction_vehicle": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 122,
+              "motor_vehicles": 19,
+              "by_class": {
+                "car": 19,
+                "barrier": 100,
+                "pedestrian": 3
+              }
+            },
+            "bev_iou0p5": {
+              "all": 91,
+              "motor_vehicles": 19,
+              "by_class": {
+                "car": 19,
+                "barrier": 71,
+                "pedestrian": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "logged_pattern": {
+      "median": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 103,
+              "motor_vehicles": 29,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 5,
+                "barrier": 70,
+                "pedestrian": 4,
+                "motorcycle": 1
+              }
+            },
+            "bev_iou0p5": {
+              "all": 87,
+              "motor_vehicles": 28,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 4,
+                "barrier": 57,
+                "pedestrian": 2,
+                "motorcycle": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 78,
+              "motor_vehicles": 21,
+              "by_class": {
+                "car": 19,
+                "construction_vehicle": 2,
+                "barrier": 53,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 69,
+              "motor_vehicles": 20,
+              "by_class": {
+                "car": 19,
+                "construction_vehicle": 1,
+                "barrier": 47,
+                "pedestrian": 2
+              }
+            }
+          }
+        }
+      },
+      "raw": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 74,
+              "motor_vehicles": 22,
+              "by_class": {
+                "car": 22,
+                "barrier": 50,
+                "pedestrian": 2
+              }
+            },
+            "bev_iou0p5": {
+              "all": 64,
+              "motor_vehicles": 22,
+              "by_class": {
+                "car": 22,
+                "barrier": 40,
+                "pedestrian": 2
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 52,
+              "motor_vehicles": 17,
+              "by_class": {
+                "car": 17,
+                "barrier": 35
+              }
+            },
+            "bev_iou0p5": {
+              "all": 47,
+              "motor_vehicles": 17,
+              "by_class": {
+                "car": 17,
+                "barrier": 30
+              }
+            }
+          }
+        }
+      }
+    },
+    "local": {
+      "median_local_intensity": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 117,
+              "motor_vehicles": 31,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 82,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 92,
+              "motor_vehicles": 30,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 7,
+                "barrier": 60,
+                "pedestrian": 2
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 93,
+              "motor_vehicles": 27,
+              "by_class": {
+                "car": 19,
+                "construction_vehicle": 8,
+                "barrier": 62,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 83,
+              "motor_vehicles": 26,
+              "by_class": {
+                "car": 19,
+                "construction_vehicle": 7,
+                "barrier": 55,
+                "pedestrian": 2
+              }
+            }
+          }
+        }
+      },
+      "median_local_real": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 116,
+              "motor_vehicles": 31,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 81,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 90,
+              "motor_vehicles": 31,
+              "by_class": {
+                "car": 23,
+                "construction_vehicle": 8,
+                "barrier": 57,
+                "pedestrian": 2
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 94,
+              "motor_vehicles": 27,
+              "by_class": {
+                "car": 19,
+                "construction_vehicle": 8,
+                "barrier": 63,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 83,
+              "motor_vehicles": 27,
+              "by_class": {
+                "car": 19,
+                "construction_vehicle": 8,
+                "barrier": 54,
+                "pedestrian": 2
+              }
+            }
+          }
+        }
+      },
+      "median_local_xyz": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 106,
+              "motor_vehicles": 28,
+              "by_class": {
+                "car": 23,
+                "barrier": 74,
+                "pedestrian": 4,
+                "construction_vehicle": 5
+              }
+            },
+            "bev_iou0p5": {
+              "all": 89,
+              "motor_vehicles": 28,
+              "by_class": {
+                "car": 23,
+                "barrier": 59,
+                "pedestrian": 2,
+                "construction_vehicle": 5
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 77,
+              "motor_vehicles": 22,
+              "by_class": {
+                "car": 19,
+                "barrier": 51,
+                "pedestrian": 4,
+                "construction_vehicle": 3
+              }
+            },
+            "bev_iou0p5": {
+              "all": 70,
+              "motor_vehicles": 22,
+              "by_class": {
+                "car": 19,
+                "barrier": 46,
+                "pedestrian": 2,
+                "construction_vehicle": 3
+              }
+            }
+          }
+        }
+      },
+      "raw_local_intensity": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 90,
+              "motor_vehicles": 29,
+              "by_class": {
+                "car": 21,
+                "construction_vehicle": 8,
+                "barrier": 57,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 64,
+              "motor_vehicles": 22,
+              "by_class": {
+                "car": 21,
+                "barrier": 41,
+                "pedestrian": 1,
+                "construction_vehicle": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 57,
+              "motor_vehicles": 18,
+              "by_class": {
+                "car": 16,
+                "barrier": 39,
+                "construction_vehicle": 2
+              }
+            },
+            "bev_iou0p5": {
+              "all": 46,
+              "motor_vehicles": 16,
+              "by_class": {
+                "car": 16,
+                "barrier": 30
+              }
+            }
+          }
+        }
+      },
+      "raw_local_real": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 99,
+              "motor_vehicles": 29,
+              "by_class": {
+                "car": 21,
+                "construction_vehicle": 8,
+                "barrier": 66,
+                "pedestrian": 4
+              }
+            },
+            "bev_iou0p5": {
+              "all": 78,
+              "motor_vehicles": 29,
+              "by_class": {
+                "car": 21,
+                "construction_vehicle": 8,
+                "barrier": 48,
+                "pedestrian": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 70,
+              "motor_vehicles": 24,
+              "by_class": {
+                "car": 16,
+                "construction_vehicle": 8,
+                "barrier": 46
+              }
+            },
+            "bev_iou0p5": {
+              "all": 59,
+              "motor_vehicles": 24,
+              "by_class": {
+                "car": 16,
+                "construction_vehicle": 8,
+                "barrier": 35
+              }
+            }
+          }
+        }
+      },
+      "raw_local_xyz": {
+        "frames": 8,
+        "eligible_all": 153,
+        "unique_instances": 32,
+        "eligible_motor_vehicles": 32,
+        "unique_motor_vehicles": 5,
+        "eligible_by_class": {
+          "barrier": 116,
+          "car": 23,
+          "construction_vehicle": 8,
+          "pedestrian": 4,
+          "motorcycle": 1,
+          "traffic_cone": 1
+        },
+        "thresholds": {
+          "0.3": {
+            "center2m": {
+              "all": 91,
+              "motor_vehicles": 27,
+              "by_class": {
+                "car": 21,
+                "barrier": 60,
+                "pedestrian": 4,
+                "construction_vehicle": 6
+              }
+            },
+            "bev_iou0p5": {
+              "all": 70,
+              "motor_vehicles": 26,
+              "by_class": {
+                "car": 21,
+                "barrier": 43,
+                "construction_vehicle": 5,
+                "pedestrian": 1
+              }
+            }
+          },
+          "0.5": {
+            "center2m": {
+              "all": 57,
+              "motor_vehicles": 18,
+              "by_class": {
+                "car": 16,
+                "barrier": 39,
+                "construction_vehicle": 2
+              }
+            },
+            "bev_iou0p5": {
+              "all": 50,
+              "motor_vehicles": 18,
+              "by_class": {
+                "car": 16,
+                "barrier": 32,
+                "construction_vehicle": 2
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "feedforward": [
+    {
+      "scene": "scene-0004",
+      "condition": "real",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 19,
+          "bev_iou0p5": 13
+        },
+        "0.5": {
+          "center2m": 19,
+          "bev_iou0p5": 13
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "vggt_full",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 19,
+          "bev_iou0p5": 9
+        },
+        "0.5": {
+          "center2m": 19,
+          "bev_iou0p5": 9
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "vggt_fill_missing",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 19,
+          "bev_iou0p5": 9
+        },
+        "0.5": {
+          "center2m": 19,
+          "bev_iou0p5": 9
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "omega512_full",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 18,
+          "bev_iou0p5": 9
+        },
+        "0.5": {
+          "center2m": 18,
+          "bev_iou0p5": 9
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "omega512_fill_missing",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 18,
+          "bev_iou0p5": 9
+        },
+        "0.5": {
+          "center2m": 17,
+          "bev_iou0p5": 8
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "dvgt1_full",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 19,
+          "bev_iou0p5": 14
+        },
+        "0.5": {
+          "center2m": 19,
+          "bev_iou0p5": 14
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "dvgt1_fill_missing",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 19,
+          "bev_iou0p5": 14
+        },
+        "0.5": {
+          "center2m": 19,
+          "bev_iou0p5": 14
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "pi3x_full",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 18,
+          "bev_iou0p5": 10
+        },
+        "0.5": {
+          "center2m": 16,
+          "bev_iou0p5": 9
+        }
+      }
+    },
+    {
+      "scene": "scene-0004",
+      "condition": "pi3x_fill_missing",
+      "dataset_split": "train",
+      "eligible": 19,
+      "scores": {
+        "0.3": {
+          "center2m": 18,
+          "bev_iou0p5": 10
+        },
+        "0.5": {
+          "center2m": 16,
+          "bev_iou0p5": 9
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "real",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 8
+        },
+        "0.5": {
+          "center2m": 10,
+          "bev_iou0p5": 8
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "vggt_full",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        },
+        "0.5": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "vggt_fill_missing",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        },
+        "0.5": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "omega512_full",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        },
+        "0.5": {
+          "center2m": 9,
+          "bev_iou0p5": 5
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "omega512_fill_missing",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        },
+        "0.5": {
+          "center2m": 8,
+          "bev_iou0p5": 5
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "dvgt1_full",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        },
+        "0.5": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "dvgt1_fill_missing",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        },
+        "0.5": {
+          "center2m": 10,
+          "bev_iou0p5": 6
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "pi3x_full",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 4
+        },
+        "0.5": {
+          "center2m": 9,
+          "bev_iou0p5": 4
+        }
+      }
+    },
+    {
+      "scene": "scene-0061",
+      "condition": "pi3x_fill_missing",
+      "dataset_split": "train",
+      "eligible": 10,
+      "scores": {
+        "0.3": {
+          "center2m": 10,
+          "bev_iou0p5": 4
+        },
+        "0.5": {
+          "center2m": 9,
+          "bev_iou0p5": 4
+        }
+      }
+    }
+  ]
+}

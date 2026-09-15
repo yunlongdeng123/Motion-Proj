@@ -1,0 +1,38 @@
+{
+  "task_id": "WS-SIM-NATIVE-DETECTOR-01",
+  "run_id": "logged_pattern_scans_scene0004_r1",
+  "checkpoint_step": 30000,
+  "role": "Full-budget native SplatAD scans at logged LiDAR poses/times for the existing eight-frame CenterPoint reference.",
+  "scope": "Not a feed-forward reconstruction condition; full-scene RGB+LiDAR asset, known poses/dynamics and learned intensity/drop are extra information. Natural sensor differences precede geometry attribution.",
+  "timing": "Current scan plus the same nine historical timestamps as the real baseline; every scan rendered with its causal velocity.",
+  "pattern": {
+    "initial_log_split": "train",
+    "valid_firing_directions": 30487,
+    "pattern_shape": [
+      2,
+      32,
+      1088,
+      5
+    ],
+    "time_min_s": -0.05000000074505806,
+    "time_max_s": 0.0,
+    "scope": "Fixed firing directions/times calibrated from the initial real scan, including official imputed directions and ego exclusion. No future GT ranges or validity masks; not an ideal uniform manufacturer scan."
+  },
+  "readouts": [
+    "raw",
+    "median"
+  ],
+  "intensity": "Native sigmoid output multiplied by255, matching nuScenes reflectance units.",
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "V74-H2-F19",
+  "human_verdict": null,
+  "completed": true,
+  "start_unix": 1789465897.0875893,
+  "scan_pattern_control": "logged",
+  "pattern_control_information": "Official per-scan measured/imputed directions and validity, an extra-information logged-sensor diagnostic. Valid depth placeholders set to1; model eval does not consume actual GT ranges. Not a counterfactual closed-loop firing pattern.",
+  "end_unix": 1789465918.6349416,
+  "native_lidar_renders": 78,
+  "analysis_status": "Full fit and downstream measurements complete. Excavator local sensor recovery has a strong intensity alternative on median readout; no geometry-asset causal repair or independent safety confirmation. See milestone6 report."
+}

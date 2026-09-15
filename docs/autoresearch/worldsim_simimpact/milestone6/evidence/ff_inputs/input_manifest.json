@@ -1,0 +1,208 @@
+{
+  "registration": {
+    "task_id": "WS-SIM-FF-PERCEPTION-01",
+    "run_id": "20260915-r1",
+    "scenes": [
+      "scene-0004",
+      "scene-0061"
+    ],
+    "seed": 20260915,
+    "selection": "Two already exposed discovery logs with all ten raw past scans available; not new or independent confirmation.",
+    "scope": "Four existing six-view BUILD-scale reconstruction meshes, current first-intersection scan only. This is a sensor/perception isolation test, not a new-pose complete simulator.",
+    "information": "Known metric poses, BUILD LiDAR global scale, original current-beam intensity, and the same nine real past sweeps are extra inputs shared by all methods. fill_missing additionally restores GT ranges on absent current returns; no claim of same-information advantage.",
+    "conditions": [
+      "real",
+      "vggt_full",
+      "vggt_fill_missing",
+      "omega512_full",
+      "omega512_fill_missing",
+      "dvgt1_full",
+      "dvgt1_fill_missing",
+      "pi3x_full",
+      "pi3x_fill_missing"
+    ],
+    "evaluation": "Frozen CenterPoint native nuScenes protocol; do not infer safety from detection changes. Same confidence0.3/0.5, center2m/IoU0.5, front32m/lateral16m, currentGTpoints>=5.",
+    "stop_rule": "One finite probe, no new geometry model inference. Only consistent actual downstream loss may justify local asset repair; no threshold/parameter sweeps to manufacture a failure.",
+    "failure_ledger_refs": [
+      "V74-H2-F16",
+      "V74-H2-F17",
+      "V74-H2-F18"
+    ],
+    "failure_ledger_delta": "pending",
+    "human_verdict": null,
+    "prepared": true,
+    "start_unix": 1789466539.3648446,
+    "beam_alignment_checks": [
+      {
+        "scene": "scene-0004",
+        "current_points": 26520,
+        "existing_real_to_raw_lidar_max_abs_difference_m": 1.7053025658242404e-13,
+        "vggt": {
+          "finite_current_returns": 19445,
+          "missing_current_returns": 7075
+        },
+        "omega512": {
+          "finite_current_returns": 18839,
+          "missing_current_returns": 7681
+        },
+        "dvgt1": {
+          "finite_current_returns": 18533,
+          "missing_current_returns": 7987
+        },
+        "pi3x": {
+          "finite_current_returns": 19385,
+          "missing_current_returns": 7135
+        }
+      },
+      {
+        "scene": "scene-0061",
+        "current_points": 25908,
+        "existing_real_to_raw_lidar_max_abs_difference_m": 2.8421709430404007e-13,
+        "vggt": {
+          "finite_current_returns": 18710,
+          "missing_current_returns": 7198
+        },
+        "omega512": {
+          "finite_current_returns": 18677,
+          "missing_current_returns": 7231
+        },
+        "dvgt1": {
+          "finite_current_returns": 17975,
+          "missing_current_returns": 7933
+        },
+        "pi3x": {
+          "finite_current_returns": 18816,
+          "missing_current_returns": 7092
+        }
+      }
+    ],
+    "end_unix": 1789466587.3487062,
+    "expected_detector_forwards": 18
+  },
+  "frames": [
+    {
+      "scene": "scene-0004",
+      "sample_token": "0dc36bc3a7aa4b3bb221ca96d15c29ec",
+      "points": {
+        "real": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/real.npz",
+        "vggt_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/vggt_full.npz",
+        "vggt_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/vggt_fill_missing.npz",
+        "omega512_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/omega512_full.npz",
+        "omega512_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/omega512_fill_missing.npz",
+        "dvgt1_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/dvgt1_full.npz",
+        "dvgt1_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/dvgt1_fill_missing.npz",
+        "pi3x_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/pi3x_full.npz",
+        "pi3x_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0004/pi3x_fill_missing.npz"
+      },
+      "history": [
+        {
+          "token": "bf763865353244bc91faf10cd6df8e50",
+          "age_s": 0.049783,
+          "points": 26494
+        },
+        {
+          "token": "2a0ec83204b8488f9af35c9433a382d7",
+          "age_s": 0.100088,
+          "points": 26514
+        },
+        {
+          "token": "a8d1f0f69cc84482a0db4c4301de386a",
+          "age_s": 0.149325,
+          "points": 26562
+        },
+        {
+          "token": "ef06c63fd56f4c6f8cd63ac29abe6985",
+          "age_s": 0.199626,
+          "points": 26606
+        },
+        {
+          "token": "9c7cdc01f7a64b4eb0887f63a3a9ee9e",
+          "age_s": 0.249936,
+          "points": 26478
+        },
+        {
+          "token": "ce79efb635e84fa9b60a887a559e4671",
+          "age_s": 0.299723,
+          "points": 26546
+        },
+        {
+          "token": "9cd04cfe64914d52a43cee83bb8d7c24",
+          "age_s": 0.350046,
+          "points": 26474
+        },
+        {
+          "token": "64cf57e6cde447f384b85cf7c74dd8aa",
+          "age_s": 0.399782,
+          "points": 26563
+        },
+        {
+          "token": "658f8de7fc7a4a43a73c2bb0c8ae8ef6",
+          "age_s": 0.449573,
+          "points": 26498
+        }
+      ]
+    },
+    {
+      "scene": "scene-0061",
+      "sample_token": "c78067571d104caba7c568a847d56971",
+      "points": {
+        "real": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/real.npz",
+        "vggt_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/vggt_full.npz",
+        "vggt_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/vggt_fill_missing.npz",
+        "omega512_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/omega512_full.npz",
+        "omega512_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/omega512_fill_missing.npz",
+        "dvgt1_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/dvgt1_full.npz",
+        "dvgt1_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/dvgt1_fill_missing.npz",
+        "pi3x_full": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/pi3x_full.npz",
+        "pi3x_fill_missing": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/scene-0061/pi3x_fill_missing.npz"
+      },
+      "history": [
+        {
+          "token": "8b0057dad5e94b01b028a11fda8f7ff4",
+          "age_s": 0.050345,
+          "points": 25889
+        },
+        {
+          "token": "ea5e9d8a2127433792082559dd4e704a",
+          "age_s": 0.100106,
+          "points": 25840
+        },
+        {
+          "token": "aa7beddeaa4d4ae2b5b42004211ddf3e",
+          "age_s": 0.149876,
+          "points": 25890
+        },
+        {
+          "token": "a65204ec380748bdbbbc832ad759b3a8",
+          "age_s": 0.200196,
+          "points": 25992
+        },
+        {
+          "token": "da50fa505ae7484bae0e5fbdcb597492",
+          "age_s": 0.249377,
+          "points": 25988
+        },
+        {
+          "token": "21567a9a9b9d4b539c96f235e2104776",
+          "age_s": 0.300275,
+          "points": 25977
+        },
+        {
+          "token": "f3f9904997f7405c956c90a12deff73b",
+          "age_s": 0.35004,
+          "points": 25983
+        },
+        {
+          "token": "c3bc4ca720f646a1996fe360969203d9",
+          "age_s": 0.40037,
+          "points": 25932
+        },
+        {
+          "token": "48eda3aa72204add885afefe8e9c4177",
+          "age_s": 0.450127,
+          "points": 25917
+        }
+      ]
+    }
+  ]
+}

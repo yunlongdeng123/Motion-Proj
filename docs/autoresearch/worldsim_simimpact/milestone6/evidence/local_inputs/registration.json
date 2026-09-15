@@ -1,0 +1,229 @@
+{
+  "task_id": "WS-SIM-NATIVE-DETECTOR-LOCAL-01",
+  "run_id": "local_excavator_inputs_r1",
+  "scenes": [
+    "scene-0004"
+  ],
+  "seed": 20260915,
+  "instance": "acb7920a70b44a84b1a61ce6460483cb",
+  "selection": "Single construction vehicle: real8/8, raw0/8, median1/8 at score0.5, class-aware IoU0.5; already exposed eight-query discovery window.",
+  "scope": "Finite local sensor audit, not geometry-asset repair. GT oriented box expanded by0.25m, chosen once, includes its neighborhood; cannot label every changed point as object surface.",
+  "information": "Evaluator-held GT boxes and real ten-sweep scans are oracle extra inputs. Actual geometry model/checkpoint unchanged.",
+  "conditions": [
+    "raw_local_real",
+    "raw_local_xyz",
+    "raw_local_intensity",
+    "median_local_real",
+    "median_local_xyz",
+    "median_local_intensity"
+  ],
+  "interventions": {
+    "local_real": "Replace all predicted points inside the region with real points in the same region.",
+    "local_xyz": "For predicted points inside region, copy nearest real position from the same sweep, retaining each predicted intensity/age/count. Many-to-one correspondences are possible; not exact surface restoration.",
+    "local_intensity": "At fixed predicted positions, copy intensity from nearest real point of the same sweep, retaining geometry/age/count."
+  },
+  "stop_rule": "Exactly three local operations, two readouts, eight existing query times. Full local replacement tests localization; intensity recovery provides an alternative explanation. Only persistent geometry-specific recovery warrants actual asset intervention; no smaller-box or threshold sweep.",
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null,
+  "prepared": true,
+  "start_unix": 1789466819.3171375,
+  "expected_detector_forwards": 48,
+  "intervention_statistics": [
+    {
+      "index": 0,
+      "readout": "raw",
+      "pred_changed_points": 574,
+      "real_replacement_points": 596,
+      "position_move_quantiles_m": [
+        0.10814715308670553,
+        0.37919113447294334,
+        1.423579043997731
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 0,
+      "readout": "median",
+      "pred_changed_points": 638,
+      "real_replacement_points": 596,
+      "position_move_quantiles_m": [
+        0.09836808931994107,
+        0.2852039327457579,
+        0.6105863943240867
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 1,
+      "readout": "raw",
+      "pred_changed_points": 679,
+      "real_replacement_points": 795,
+      "position_move_quantiles_m": [
+        0.11966271320119815,
+        0.4844807882848272,
+        1.4235793786865807
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 1,
+      "readout": "median",
+      "pred_changed_points": 795,
+      "real_replacement_points": 795,
+      "position_move_quantiles_m": [
+        0.10917840190407907,
+        0.3081197799411261,
+        1.0960469391495982
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 2,
+      "readout": "raw",
+      "pred_changed_points": 888,
+      "real_replacement_points": 1008,
+      "position_move_quantiles_m": [
+        0.1349484636198649,
+        0.41432640091586814,
+        1.3119672955165218
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 2,
+      "readout": "median",
+      "pred_changed_points": 997,
+      "real_replacement_points": 1008,
+      "position_move_quantiles_m": [
+        0.12247257696708722,
+        0.33935986674311336,
+        1.031287108389101
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 3,
+      "readout": "raw",
+      "pred_changed_points": 1247,
+      "real_replacement_points": 1241,
+      "position_move_quantiles_m": [
+        0.1499937481908882,
+        0.4210714410950651,
+        1.29475322828612
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 3,
+      "readout": "median",
+      "pred_changed_points": 1267,
+      "real_replacement_points": 1241,
+      "position_move_quantiles_m": [
+        0.12448501720985927,
+        0.2713566544035194,
+        1.037836544861805
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 4,
+      "readout": "raw",
+      "pred_changed_points": 1523,
+      "real_replacement_points": 1529,
+      "position_move_quantiles_m": [
+        0.16817117079942637,
+        0.41932968898891965,
+        1.3260658474067293
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 4,
+      "readout": "median",
+      "pred_changed_points": 1571,
+      "real_replacement_points": 1529,
+      "position_move_quantiles_m": [
+        0.16120770545927066,
+        0.32901218679833044,
+        0.992838965550481
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 5,
+      "readout": "raw",
+      "pred_changed_points": 2006,
+      "real_replacement_points": 2053,
+      "position_move_quantiles_m": [
+        0.1624227033324665,
+        0.34590724767539927,
+        1.2861407321893863
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 5,
+      "readout": "median",
+      "pred_changed_points": 2200,
+      "real_replacement_points": 2053,
+      "position_move_quantiles_m": [
+        0.16478248322114106,
+        0.2926212567731483,
+        0.9579805809439182
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 6,
+      "readout": "raw",
+      "pred_changed_points": 2586,
+      "real_replacement_points": 2599,
+      "position_move_quantiles_m": [
+        0.14633659006595362,
+        0.33128129230293124,
+        1.3583924047226512
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 6,
+      "readout": "median",
+      "pred_changed_points": 2786,
+      "real_replacement_points": 2599,
+      "position_move_quantiles_m": [
+        0.1416640130590373,
+        0.26200400358329357,
+        1.0667330605833871
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 7,
+      "readout": "raw",
+      "pred_changed_points": 3145,
+      "real_replacement_points": 3079,
+      "position_move_quantiles_m": [
+        0.1266095709714932,
+        0.298441009843744,
+        1.6149314846094036
+      ],
+      "outside_region_unchanged": true
+    },
+    {
+      "index": 7,
+      "readout": "median",
+      "pred_changed_points": 3309,
+      "real_replacement_points": 3079,
+      "position_move_quantiles_m": [
+        0.11996480651065945,
+        0.25347928591051205,
+        0.9151100635696965
+      ],
+      "outside_region_unchanged": true
+    }
+  ],
+  "end_unix": 1789466837.9853075
+}

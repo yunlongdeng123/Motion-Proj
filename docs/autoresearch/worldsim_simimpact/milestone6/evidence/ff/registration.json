@@ -1,0 +1,135 @@
+{
+  "task_id": "WS-SIM-FF-PERCEPTION-01",
+  "run_id": "detection_r1",
+  "scene": [
+    "scene-0004",
+    "scene-0061"
+  ],
+  "frames": 2,
+  "seed": 20260915,
+  "role": "Existing feed-forward mesh current-scan perception isolation; common real history, metric scale and intensity are extra information.",
+  "method": "CenterPoint voxel0.1 circle NMS, MMDetection3D v1.4.0 implementation; not a new geometry SOTA.",
+  "code_revision": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/assets/mmdet3d_centerpoint_voxel01.pth",
+  "checkpoint_source": "https://download.openmmlab.com/mmdetection3d/v1.0.0_models/centerpoint/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus_20220810_030004-9061688e.pth",
+  "inputs": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/input_manifest.json",
+  "preprocessing": "Current sweep retains its original points; historical sweeps remove the central +/-1m square, then transform into current LiDAR frame. Intensity remains raw nuScenes units and time is seconds.",
+  "evaluation": "Class-aware center distance <=2m and BEV IoU>=0.5, separately at fixed confidence 0.3/0.5; front0..32m, lateral +/-16m, >=5 current LiDAR returns. Counts are frame observations, not AP/NDS or unique actors.",
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "V74-H2-F19",
+  "human_verdict": null,
+  "completed": true,
+  "start_unix": 1789466635.3909993,
+  "runtime": {
+    "torch": "2.1.2+cu118",
+    "numpy": "1.23.5",
+    "mmcv": "2.1.0",
+    "mmengine": "0.10.7",
+    "mmdet": "3.3.0",
+    "nuscenes-devkit": "1.2.0",
+    "extra_dependencies": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/pydeps"
+  },
+  "conditions": [
+    "real",
+    "vggt_full",
+    "vggt_fill_missing",
+    "omega512_full",
+    "omega512_fill_missing",
+    "dvgt1_full",
+    "dvgt1_fill_missing",
+    "pi3x_full",
+    "pi3x_fill_missing"
+  ],
+  "constant_intensity_control": null,
+  "sensor_registration": {
+    "task_id": "WS-SIM-FF-PERCEPTION-01",
+    "run_id": "20260915-r1",
+    "scenes": [
+      "scene-0004",
+      "scene-0061"
+    ],
+    "seed": 20260915,
+    "selection": "Two already exposed discovery logs with all ten raw past scans available; not new or independent confirmation.",
+    "scope": "Four existing six-view BUILD-scale reconstruction meshes, current first-intersection scan only. This is a sensor/perception isolation test, not a new-pose complete simulator.",
+    "information": "Known metric poses, BUILD LiDAR global scale, original current-beam intensity, and the same nine real past sweeps are extra inputs shared by all methods. fill_missing additionally restores GT ranges on absent current returns; no claim of same-information advantage.",
+    "conditions": [
+      "real",
+      "vggt_full",
+      "vggt_fill_missing",
+      "omega512_full",
+      "omega512_fill_missing",
+      "dvgt1_full",
+      "dvgt1_fill_missing",
+      "pi3x_full",
+      "pi3x_fill_missing"
+    ],
+    "evaluation": "Frozen CenterPoint native nuScenes protocol; do not infer safety from detection changes. Same confidence0.3/0.5, center2m/IoU0.5, front32m/lateral16m, currentGTpoints>=5.",
+    "stop_rule": "One finite probe, no new geometry model inference. Only consistent actual downstream loss may justify local asset repair; no threshold/parameter sweeps to manufacture a failure.",
+    "failure_ledger_refs": [
+      "V74-H2-F16",
+      "V74-H2-F17",
+      "V74-H2-F18"
+    ],
+    "failure_ledger_delta": "pending",
+    "human_verdict": null,
+    "prepared": true,
+    "start_unix": 1789466539.3648446,
+    "beam_alignment_checks": [
+      {
+        "scene": "scene-0004",
+        "current_points": 26520,
+        "existing_real_to_raw_lidar_max_abs_difference_m": 1.7053025658242404e-13,
+        "vggt": {
+          "finite_current_returns": 19445,
+          "missing_current_returns": 7075
+        },
+        "omega512": {
+          "finite_current_returns": 18839,
+          "missing_current_returns": 7681
+        },
+        "dvgt1": {
+          "finite_current_returns": 18533,
+          "missing_current_returns": 7987
+        },
+        "pi3x": {
+          "finite_current_returns": 19385,
+          "missing_current_returns": 7135
+        }
+      },
+      {
+        "scene": "scene-0061",
+        "current_points": 25908,
+        "existing_real_to_raw_lidar_max_abs_difference_m": 2.8421709430404007e-13,
+        "vggt": {
+          "finite_current_returns": 18710,
+          "missing_current_returns": 7198
+        },
+        "omega512": {
+          "finite_current_returns": 18677,
+          "missing_current_returns": 7231
+        },
+        "dvgt1": {
+          "finite_current_returns": 17975,
+          "missing_current_returns": 7933
+        },
+        "pi3x": {
+          "finite_current_returns": 18816,
+          "missing_current_returns": 7092
+        }
+      }
+    ],
+    "end_unix": 1789466587.3487062,
+    "expected_detector_forwards": 18
+  },
+  "checkpoint_compatibility": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "shape_differences": {}
+  },
+  "dataset_split": "per_frame",
+  "end_unix": 1789466689.3208768,
+  "detector_forwards": 18,
+  "analysis_status": "Full fit and downstream measurements complete. Excavator local sensor recovery has a strong intensity alternative on median readout; no geometry-asset causal repair or independent safety confirmation. See milestone6 report."
+}
