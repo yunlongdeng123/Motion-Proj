@@ -1,0 +1,42 @@
+{
+  "task_id": "WS-SIM-FF-COHORT-PERCEPTION-01",
+  "detector_forwards_this_run": 82,
+  "matrix_entries": 102,
+  "reused_entries": 20,
+  "cumulative_detector_forwards": 222,
+  "candidate_count": 24,
+  "selected_new_targets": [
+    {
+      "scene": "scene-0028",
+      "method": "pi3x",
+      "instance": "0ada7c35bb6d4dac84a98ea5b43a0c37",
+      "class": "pedestrian",
+      "metadata_lead": false,
+      "robust_center_loss": false,
+      "robust_IoU_loss": true,
+      "new_to_detector_log": true
+    },
+    {
+      "scene": "scene-0028",
+      "method": "dvgt1",
+      "instance": "16c34d766b024d47a910ce20e224d34f",
+      "class": "pedestrian",
+      "metadata_lead": false,
+      "robust_center_loss": false,
+      "robust_IoU_loss": true,
+      "new_to_detector_log": true
+    }
+  ],
+  "scope": "Six exposed logs, one timestamp each. Current scan isolation with real intensity/history; no complete simulator or independent test claim.",
+  "failure_ledger_delta": "V74-H2-F21",
+  "human_verdict": null,
+  "goal_status": "active",
+  "analysis_time_unix": 1789470236.5516548,
+  "outcome": "Matrix completed. No real-qualified target has persistent center-match loss at both fixed scores in both view budgets after original missing-return restoration. All48 metadata lead conditions keep center matches;47 keep IoU matches.",
+  "new_candidates": "Two scene0028 roadside pedestrians, about15m lateral, remain confidently detected. Center error about0.34..0.48m and small-box IoU loss. Geometry association only; no local causal intervention or demonstrated planning harm.",
+  "stop_decision": "Close this finite cohort screen without ROI/threshold/model sweeps or training on the two new pedestrians. Retain all positive and negative results; no universal phantom, serious safety or independent confirmation claim.",
+  "new_geometry_forwards": 0,
+  "new_policy_forwards": 0,
+  "new_closed_loops": 0,
+  "overall_goal_status": "active"
+}

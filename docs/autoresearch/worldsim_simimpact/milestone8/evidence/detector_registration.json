@@ -1,0 +1,432 @@
+{
+  "task_id": "WS-SIM-FF-COHORT-PERCEPTION-01",
+  "run_id": "detection_r1",
+  "scene": [
+    "scene-0004",
+    "scene-0028",
+    "scene-0045",
+    "scene-0061",
+    "scene-0073",
+    "scene-0094"
+  ],
+  "frames": 6,
+  "seed": 20260915,
+  "role": "Complete the six-log already exposed interaction cohort for frozen CenterPoint. Four logs have not yet been evaluated by this detector. No independent test claim.",
+  "method": "CenterPoint voxel0.1 circle NMS, MMDetection3D v1.4.0 implementation; not a new geometry SOTA.",
+  "code_revision": "fe25f7a51d36e3702f961e198894580d83c4387b",
+  "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/assets/mmdet3d_centerpoint_voxel01.pth",
+  "checkpoint_source": "https://download.openmmlab.com/mmdetection3d/v1.0.0_models/centerpoint/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus/centerpoint_01voxel_second_secfpn_circlenms_4x8_cyclic_20e_nus_20220810_030004-9061688e.pth",
+  "inputs": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-COHORT-PERCEPTION-01/20260915-r1/input_manifest.json",
+  "preprocessing": "Current sweep retains its original points; historical sweeps remove the central +/-1m square, then transform into current LiDAR frame. Intensity remains raw nuScenes units and time is seconds.",
+  "evaluation": "Class-aware center distance <=2m and BEV IoU>=0.5, separately at fixed confidence 0.3/0.5; front0..32m, lateral +/-16m, >=5 current LiDAR returns. Counts are frame observations, not AP/NDS or unique actors.",
+  "failure_ledger_refs": [
+    "V74-H2-F18"
+  ],
+  "failure_ledger_delta": "pending_analysis",
+  "human_verdict": null,
+  "completed": true,
+  "start_unix": 1789470120.3599007,
+  "runtime": {
+    "torch": "2.1.2+cu118",
+    "numpy": "1.23.5",
+    "mmcv": "2.1.0",
+    "mmengine": "0.10.7",
+    "mmdet": "3.3.0",
+    "nuscenes-devkit": "1.2.0",
+    "extra_dependencies": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-NATIVE-DETECTOR-01/20260915-r1/pydeps"
+  },
+  "conditions": [
+    "real",
+    "vggt_six_full",
+    "vggt_six_fill_missing",
+    "vggt_twelve_full",
+    "vggt_twelve_fill_missing",
+    "omega512_six_full",
+    "omega512_six_fill_missing",
+    "omega512_twelve_full",
+    "omega512_twelve_fill_missing",
+    "dvgt1_six_full",
+    "dvgt1_six_fill_missing",
+    "dvgt1_twelve_full",
+    "dvgt1_twelve_fill_missing",
+    "pi3x_six_full",
+    "pi3x_six_fill_missing",
+    "pi3x_twelve_full",
+    "pi3x_twelve_fill_missing"
+  ],
+  "constant_intensity_control": null,
+  "sensor_registration": {
+    "task_id": "WS-SIM-FF-COHORT-PERCEPTION-01",
+    "run_id": "20260915-r1",
+    "seed": 20260915,
+    "scenes": [
+      "scene-0004",
+      "scene-0028",
+      "scene-0045",
+      "scene-0061",
+      "scene-0073",
+      "scene-0094"
+    ],
+    "selection": {
+      "scene-0004": {
+        "log_token": "47620afea3c443f6a761e885273cb531",
+        "original_start_index": 2,
+        "metadata_selection": {
+          "speed_mps": 4.340955923874641,
+          "four_second_heading_change_rad": 0.007256279869535773,
+          "leads": [
+            {
+              "instance": "a326c569f4a84999a361a7f1a61af12d",
+              "category": "vehicle.car",
+              "center_forward_m": 18.803545847602436,
+              "center_lateral_m": -0.3982136408280894,
+              "lidar_points": 50
+            }
+          ]
+        }
+      },
+      "scene-0028": {
+        "log_token": "bc41a49366734ebf978d6a71981537dc",
+        "original_start_index": 3,
+        "metadata_selection": {
+          "speed_mps": 6.006568375111381,
+          "four_second_heading_change_rad": 0.18313442695661836,
+          "leads": [
+            {
+              "instance": "7ad3064db5ef45fa901f467ab828409e",
+              "category": "vehicle.car",
+              "center_forward_m": 21.786537033035074,
+              "center_lateral_m": 0.7485188799341813,
+              "lidar_points": 43
+            }
+          ]
+        }
+      },
+      "scene-0045": {
+        "log_token": "f38ef5a1e9c941aabb2155768670b92a",
+        "original_start_index": 14,
+        "metadata_selection": {
+          "speed_mps": 5.623387072611479,
+          "four_second_heading_change_rad": 0.0310678231052586,
+          "leads": [
+            {
+              "instance": "9e6e88c2111d4221b4d82c2080fe8abd",
+              "category": "vehicle.car",
+              "center_forward_m": 24.302789492637572,
+              "center_lateral_m": -0.28256454664528974,
+              "lidar_points": 25
+            }
+          ]
+        }
+      },
+      "scene-0061": {
+        "log_token": "7e25a2c8ea1f41c5b0da1e69ecfa71a2",
+        "original_start_index": 25,
+        "metadata_selection": {
+          "speed_mps": 3.7265457626534726,
+          "four_second_heading_change_rad": 0.17478870324812387,
+          "leads": [
+            {
+              "instance": "c1958768d48640948f6053d04cffd35b",
+              "category": "vehicle.car",
+              "center_forward_m": 10.197157022511817,
+              "center_lateral_m": 1.6656753713441503,
+              "lidar_points": 335
+            }
+          ]
+        }
+      },
+      "scene-0073": {
+        "log_token": "7a0fde44c3504eaeb18f9ad83bed65bc",
+        "original_start_index": 24,
+        "metadata_selection": {
+          "speed_mps": 2.201104430878331,
+          "four_second_heading_change_rad": 0.02348358673341648,
+          "leads": [
+            {
+              "instance": "eee9e548ad534e63ba568c66a6f44bc2",
+              "category": "vehicle.trailer",
+              "center_forward_m": 23.54319690192756,
+              "center_lateral_m": -0.6567866461566609,
+              "lidar_points": 742
+            }
+          ]
+        }
+      },
+      "scene-0094": {
+        "log_token": "53cf9c55dd8644bea67b9f009fc1ee38",
+        "original_start_index": 29,
+        "metadata_selection": {
+          "speed_mps": 4.277018338908533,
+          "four_second_heading_change_rad": 0.0015090685546831084,
+          "leads": [
+            {
+              "instance": "f3ad74c90730479b9b1bf50731b6493e",
+              "category": "vehicle.car",
+              "center_forward_m": 24.063797989628313,
+              "center_lateral_m": -0.26964783042421914,
+              "lidar_points": 28
+            }
+          ]
+        }
+      }
+    },
+    "scope": "Complete the six-log already exposed interaction cohort for frozen CenterPoint. Four logs have not yet been evaluated by this detector. No independent test claim.",
+    "inputs": "Four official six/twelve-view predictions already computed; common six output depth maps; fixed known calibration and one BUILD LiDAR global scale. Only current mesh scan changes; identical nine causal real sweeps and current-ray real intensity are extra information. fill_missing restores originally missing current ranges with real data.",
+    "conditions": [
+      "real",
+      "vggt_six_full",
+      "vggt_six_fill_missing",
+      "vggt_twelve_full",
+      "vggt_twelve_fill_missing",
+      "omega512_six_full",
+      "omega512_six_fill_missing",
+      "omega512_twelve_full",
+      "omega512_twelve_fill_missing",
+      "dvgt1_six_full",
+      "dvgt1_six_fill_missing",
+      "dvgt1_twelve_full",
+      "dvgt1_twelve_fill_missing",
+      "pi3x_six_full",
+      "pi3x_six_fill_missing",
+      "pi3x_twelve_full",
+      "pi3x_twelve_fill_missing"
+    ],
+    "evaluation": "Unchanged native CenterPoint score0.3/0.5, class-correct center2m and BEV IoU0.5. Front0..32m/lateral16m, >=5 annotated current LiDAR points. Keep every eligible object and positive/negative result; counts are observations, not AP/NDS.",
+    "candidate_rule": "Start with targets matched on real inputs at score0.5 in both center and IoU. Report losses at both score0.3 and0.5, and continuous same-class box errors. Only new-log candidates surviving fill_missing in both input budgets merit causal audit. Prioritize metadata-selected lead actor, then robust class-correct center loss, then IoU loss; ties scene/instance order. At most two new targets, no geometric severity selection.",
+    "planner_boundary": "CenterPoint output is not fed into the previously used TransFuser. Detection mismatch or TTC computed from boxes is not an executed planner or closed-loop consequence. No new safety claim.",
+    "stop_rule": "One complete existing six-log matrix. Do not retune thresholds, ROIs, or reconstruction to force a problem. No new model fitting or geometry forwards. Existing Omega/Pi3X scene0004 local audits remain closed.",
+    "failure_ledger_refs": [
+      "V74-H2-F16",
+      "V74-H2-F19",
+      "V74-H2-F20"
+    ],
+    "failure_ledger_delta": "pending",
+    "human_verdict": null,
+    "start_unix": 1789469608.454459,
+    "prepared": true,
+    "missing_raw_files": 36,
+    "expected_new_detector_forwards": 82,
+    "reused_detector_forwards": 20,
+    "total_matrix_forwards": 102,
+    "preparation_end_unix": 1789470094.0765448,
+    "alignment_checks": [
+      {
+        "scene": "scene-0004",
+        "current_points": 26520,
+        "alignment_max_abs_m": 1.7053025658242404e-13,
+        "history_points": 238735,
+        "conditions": {
+          "vggt_twelve": {
+            "returned": 19432,
+            "missing": 7088
+          },
+          "omega512_twelve": {
+            "returned": 18976,
+            "missing": 7544
+          },
+          "dvgt1_twelve": {
+            "returned": 18554,
+            "missing": 7966
+          },
+          "pi3x_twelve": {
+            "returned": 19319,
+            "missing": 7201
+          }
+        }
+      },
+      {
+        "scene": "scene-0028",
+        "current_points": 26991,
+        "alignment_max_abs_m": 3.126388037344441e-13,
+        "history_points": 240874,
+        "conditions": {
+          "vggt_six": {
+            "returned": 20089,
+            "missing": 6902
+          },
+          "vggt_twelve": {
+            "returned": 20113,
+            "missing": 6878
+          },
+          "omega512_six": {
+            "returned": 20217,
+            "missing": 6774
+          },
+          "omega512_twelve": {
+            "returned": 20237,
+            "missing": 6754
+          },
+          "dvgt1_six": {
+            "returned": 19465,
+            "missing": 7526
+          },
+          "dvgt1_twelve": {
+            "returned": 19473,
+            "missing": 7518
+          },
+          "pi3x_six": {
+            "returned": 20221,
+            "missing": 6770
+          },
+          "pi3x_twelve": {
+            "returned": 20195,
+            "missing": 6796
+          }
+        }
+      },
+      {
+        "scene": "scene-0045",
+        "current_points": 26104,
+        "alignment_max_abs_m": 1.9539925233402755e-13,
+        "history_points": 239246,
+        "conditions": {
+          "vggt_six": {
+            "returned": 19944,
+            "missing": 6160
+          },
+          "vggt_twelve": {
+            "returned": 19891,
+            "missing": 6213
+          },
+          "omega512_six": {
+            "returned": 19792,
+            "missing": 6312
+          },
+          "omega512_twelve": {
+            "returned": 19759,
+            "missing": 6345
+          },
+          "dvgt1_six": {
+            "returned": 19260,
+            "missing": 6844
+          },
+          "dvgt1_twelve": {
+            "returned": 19263,
+            "missing": 6841
+          },
+          "pi3x_six": {
+            "returned": 19797,
+            "missing": 6307
+          },
+          "pi3x_twelve": {
+            "returned": 19811,
+            "missing": 6293
+          }
+        }
+      },
+      {
+        "scene": "scene-0061",
+        "current_points": 25908,
+        "alignment_max_abs_m": 2.8421709430404007e-13,
+        "history_points": 233408,
+        "conditions": {
+          "vggt_twelve": {
+            "returned": 18765,
+            "missing": 7143
+          },
+          "omega512_twelve": {
+            "returned": 18608,
+            "missing": 7300
+          },
+          "dvgt1_twelve": {
+            "returned": 17979,
+            "missing": 7929
+          },
+          "pi3x_twelve": {
+            "returned": 18759,
+            "missing": 7149
+          }
+        }
+      },
+      {
+        "scene": "scene-0073",
+        "current_points": 26149,
+        "alignment_max_abs_m": 5.968558980384842e-13,
+        "history_points": 236186,
+        "conditions": {
+          "vggt_six": {
+            "returned": 18932,
+            "missing": 7217
+          },
+          "vggt_twelve": {
+            "returned": 18677,
+            "missing": 7472
+          },
+          "omega512_six": {
+            "returned": 19409,
+            "missing": 6740
+          },
+          "omega512_twelve": {
+            "returned": 19447,
+            "missing": 6702
+          },
+          "dvgt1_six": {
+            "returned": 19122,
+            "missing": 7027
+          },
+          "dvgt1_twelve": {
+            "returned": 19130,
+            "missing": 7019
+          },
+          "pi3x_six": {
+            "returned": 19489,
+            "missing": 6660
+          },
+          "pi3x_twelve": {
+            "returned": 19499,
+            "missing": 6650
+          }
+        }
+      },
+      {
+        "scene": "scene-0094",
+        "current_points": 24554,
+        "alignment_max_abs_m": 3.694822225952521e-13,
+        "history_points": 219540,
+        "conditions": {
+          "vggt_six": {
+            "returned": 17692,
+            "missing": 6862
+          },
+          "vggt_twelve": {
+            "returned": 17737,
+            "missing": 6817
+          },
+          "omega512_six": {
+            "returned": 18060,
+            "missing": 6494
+          },
+          "omega512_twelve": {
+            "returned": 18051,
+            "missing": 6503
+          },
+          "dvgt1_six": {
+            "returned": 17777,
+            "missing": 6777
+          },
+          "dvgt1_twelve": {
+            "returned": 17793,
+            "missing": 6761
+          },
+          "pi3x_six": {
+            "returned": 18243,
+            "missing": 6311
+          },
+          "pi3x_twelve": {
+            "returned": 18251,
+            "missing": 6303
+          }
+        }
+      }
+    ]
+  },
+  "checkpoint_compatibility": {
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "shape_differences": {}
+  },
+  "dataset_split": "per_frame",
+  "end_unix": 1789470191.7527385,
+  "detector_forwards": 82
+}

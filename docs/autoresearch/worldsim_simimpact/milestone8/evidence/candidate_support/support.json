@@ -1,0 +1,418 @@
+[
+  {
+    "scene": "scene-0028",
+    "method": "pi3x",
+    "instance": "0ada7c35bb6d4dac84a98ea5b43a0c37",
+    "class": "pedestrian",
+    "metadata_lead": false,
+    "robust_center_loss": false,
+    "robust_IoU_loss": true,
+    "new_to_detector_log": true,
+    "gt": {
+      "class": "pedestrian",
+      "instance": "0ada7c35bb6d4dac84a98ea5b43a0c37",
+      "lidar_points": 11,
+      "center_lidar": [
+        15.05796320132464,
+        2.8703157436301368,
+        -1.4152105597521905
+      ],
+      "wlh": [
+        0.54,
+        0.831,
+        1.681
+      ],
+      "rotation": [
+        -0.7818435509367843,
+        -0.017284983116985002,
+        -0.028475293511212828,
+        0.622584170114094
+      ]
+    },
+    "real_detection": {
+      "0.3": {
+        "center_match": true,
+        "IoU_match": true,
+        "nearest_same_class": {
+          "center_error_m": 0.17707077381820308,
+          "score": 0.8333276510238647,
+          "IoU": 0.5161631386607183,
+          "center_lidar": [
+            14.88241195678711,
+            2.84716796875,
+            -1.3870213031768799
+          ],
+          "wlh": [
+            0.6761128306388855,
+            0.748079776763916,
+            1.8090810775756836
+          ],
+          "rotation": [
+            0.754329908889135,
+            -0.0,
+            -0.0,
+            -0.6564955358228335
+          ],
+          "same_target_identity_unverified": false
+        }
+      },
+      "0.5": {
+        "center_match": true,
+        "IoU_match": true,
+        "nearest_same_class": {
+          "center_error_m": 0.17707077381820308,
+          "score": 0.8333276510238647,
+          "IoU": 0.5161631386607183,
+          "center_lidar": [
+            14.88241195678711,
+            2.84716796875,
+            -1.3870213031768799
+          ],
+          "wlh": [
+            0.6761128306388855,
+            0.748079776763916,
+            1.8090810775756836
+          ],
+          "rotation": [
+            0.754329908889135,
+            -0.0,
+            -0.0,
+            -0.6564955358228335
+          ],
+          "same_target_identity_unverified": false
+        }
+      }
+    },
+    "actual_inside_returns": 11,
+    "middle_height_returns": 8,
+    "local_observed_span_m": [
+      0.23387336353668797,
+      0.2692686841412146,
+      1.4307608615105654
+    ],
+    "models": [
+      {
+        "method": "vggt",
+        "variant": "six",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": 0.14984768812215776,
+        "MAE_m": 0.29827608125417354,
+        "error_q10_q50_q90_m": [
+          -0.12021539533471781,
+          0.14984768812215776,
+          0.36885146496992327
+        ]
+      },
+      {
+        "method": "vggt",
+        "variant": "twelve",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": 0.175240552649921,
+        "MAE_m": 0.3368337407501341,
+        "error_q10_q50_q90_m": [
+          -0.1543302329812022,
+          0.175240552649921,
+          0.8667225008725126
+        ]
+      },
+      {
+        "method": "omega512",
+        "variant": "six",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": -0.6977643760476084,
+        "MAE_m": 0.6232848787772352,
+        "error_q10_q50_q90_m": [
+          -0.7330029588504985,
+          -0.6977643760476084,
+          -0.3229585522891085
+        ]
+      },
+      {
+        "method": "omega512",
+        "variant": "twelve",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": -0.16070176827112093,
+        "MAE_m": 0.1861057826952757,
+        "error_q10_q50_q90_m": [
+          -0.20598595770422,
+          -0.16070176827112093,
+          0.11169377620210241
+        ]
+      },
+      {
+        "method": "dvgt1",
+        "variant": "six",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": 0.12530971266768276,
+        "MAE_m": 0.1784485662651603,
+        "error_q10_q50_q90_m": [
+          0.05127813493871969,
+          0.12530971266768276,
+          0.2047948671658908
+        ]
+      },
+      {
+        "method": "dvgt1",
+        "variant": "twelve",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": 0.1271897014754675,
+        "MAE_m": 0.17654607270159497,
+        "error_q10_q50_q90_m": [
+          0.05209448015356344,
+          0.1271897014754675,
+          0.19952772391637907
+        ]
+      },
+      {
+        "method": "pi3x",
+        "variant": "six",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": -0.42127534602630057,
+        "MAE_m": 0.3857429506995898,
+        "error_q10_q50_q90_m": [
+          -0.5798504283235282,
+          -0.42127534602630057,
+          -0.09798678104887415
+        ]
+      },
+      {
+        "method": "pi3x",
+        "variant": "twelve",
+        "returned": 11,
+        "missing": 0,
+        "median_signed_error_m": -0.7330875036855282,
+        "MAE_m": 0.660906810373471,
+        "error_q10_q50_q90_m": [
+          -0.8622879684240932,
+          -0.7330875036855282,
+          -0.4195386946370103
+        ]
+      }
+    ],
+    "reference_boundary": "Inside an annotated box is not sufficient proof of opaque body support; middle-height counts and visible RGB retained. No reference interpolation invents missing surfaces.",
+    "prefix": "0_scene-0028_pi3x",
+    "camera": "CAM_FRONT_RIGHT",
+    "visible_target_returns": 11,
+    "image_box_xyxy": [
+      1327.7735787168483,
+      507.8625855014556,
+      1423.3747730140676,
+      673.5319385289922
+    ]
+  },
+  {
+    "scene": "scene-0028",
+    "method": "dvgt1",
+    "instance": "16c34d766b024d47a910ce20e224d34f",
+    "class": "pedestrian",
+    "metadata_lead": false,
+    "robust_center_loss": false,
+    "robust_IoU_loss": true,
+    "new_to_detector_log": true,
+    "gt": {
+      "class": "pedestrian",
+      "instance": "16c34d766b024d47a910ce20e224d34f",
+      "lidar_points": 8,
+      "center_lidar": [
+        15.648968086123961,
+        3.3346364051068065,
+        -1.494969881898362
+      ],
+      "wlh": [
+        0.532,
+        0.601,
+        1.628
+      ],
+      "rotation": [
+        -0.7763807778688407,
+        -0.017035834298139846,
+        -0.02862504727804826,
+        0.629383249518025
+      ]
+    },
+    "real_detection": {
+      "0.3": {
+        "center_match": true,
+        "IoU_match": true,
+        "nearest_same_class": {
+          "center_error_m": 0.03301635046924469,
+          "score": 0.7711783051490784,
+          "IoU": 0.6885370700690092,
+          "center_lidar": [
+            15.681140899658203,
+            3.327220916748047,
+            -1.4535234570503235
+          ],
+          "wlh": [
+            0.6227118968963623,
+            0.6631186604499817,
+            1.7584127187728882
+          ],
+          "rotation": [
+            0.7991349304121308,
+            -0.0,
+            -0.0,
+            -0.6011516971573805
+          ],
+          "same_target_identity_unverified": false
+        }
+      },
+      "0.5": {
+        "center_match": true,
+        "IoU_match": true,
+        "nearest_same_class": {
+          "center_error_m": 0.03301635046924469,
+          "score": 0.7711783051490784,
+          "IoU": 0.6885370700690092,
+          "center_lidar": [
+            15.681140899658203,
+            3.327220916748047,
+            -1.4535234570503235
+          ],
+          "wlh": [
+            0.6227118968963623,
+            0.6631186604499817,
+            1.7584127187728882
+          ],
+          "rotation": [
+            0.7991349304121308,
+            -0.0,
+            -0.0,
+            -0.6011516971573805
+          ],
+          "same_target_identity_unverified": false
+        }
+      }
+    },
+    "actual_inside_returns": 8,
+    "middle_height_returns": 7,
+    "local_observed_span_m": [
+      0.3488087180337792,
+      0.2606448372453631,
+      1.1510897864208258
+    ],
+    "models": [
+      {
+        "method": "vggt",
+        "variant": "six",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.1706853017852641,
+        "MAE_m": 0.37757277938140854,
+        "error_q10_q50_q90_m": [
+          -0.6036153716079931,
+          -0.1706853017852641,
+          0.30586295533189545
+        ]
+      },
+      {
+        "method": "vggt",
+        "variant": "twelve",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.1762275653351173,
+        "MAE_m": 0.37837541552795395,
+        "error_q10_q50_q90_m": [
+          -0.6505840224258642,
+          -0.1762275653351173,
+          0.2207831900120712
+        ]
+      },
+      {
+        "method": "omega512",
+        "variant": "six",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.9618344264496193,
+        "MAE_m": 0.954056432648597,
+        "error_q10_q50_q90_m": [
+          -1.0757620837147515,
+          -0.9618344264496193,
+          -0.8230933625697159
+        ]
+      },
+      {
+        "method": "omega512",
+        "variant": "twelve",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.38877134991811246,
+        "MAE_m": 0.6056046163701221,
+        "error_q10_q50_q90_m": [
+          -0.5060600105833567,
+          -0.38877134991811246,
+          0.4183730221009252
+        ]
+      },
+      {
+        "method": "dvgt1",
+        "variant": "six",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.15776835095584296,
+        "MAE_m": 0.4958282386922046,
+        "error_q10_q50_q90_m": [
+          -0.27746215697666887,
+          -0.15776835095584296,
+          0.7878870173720064
+        ]
+      },
+      {
+        "method": "dvgt1",
+        "variant": "twelve",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.26549206387698554,
+        "MAE_m": 0.567669955458562,
+        "error_q10_q50_q90_m": [
+          -0.3839727007999111,
+          -0.26549206387698554,
+          0.6838256999281587
+        ]
+      },
+      {
+        "method": "pi3x",
+        "variant": "six",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.4024649680823078,
+        "MAE_m": 0.6640604412221118,
+        "error_q10_q50_q90_m": [
+          -0.5501316200943552,
+          -0.4024649680823078,
+          0.5199049159315767
+        ]
+      },
+      {
+        "method": "pi3x",
+        "variant": "twelve",
+        "returned": 8,
+        "missing": 0,
+        "median_signed_error_m": -0.8403709165432671,
+        "MAE_m": 1.015916672911565,
+        "error_q10_q50_q90_m": [
+          -1.0015515457840525,
+          -0.8403709165432671,
+          0.0007876559523286586
+        ]
+      }
+    ],
+    "reference_boundary": "Inside an annotated box is not sufficient proof of opaque body support; middle-height counts and visible RGB retained. No reference interpolation invents missing surfaces.",
+    "prefix": "1_scene-0028_dvgt1",
+    "camera": "CAM_FRONT_RIGHT",
+    "visible_target_returns": 8,
+    "image_box_xyxy": [
+      1307.2749196283426,
+      517.3206973151767,
+      1372.6074826749925,
+      668.261596159132
+    ]
+  }
+]
