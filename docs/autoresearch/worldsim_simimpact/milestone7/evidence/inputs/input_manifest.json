@@ -1,0 +1,80 @@
+{
+  "registration": {
+    "task_id": "WS-SIM-FF-LOCAL-ASSET-01",
+    "run_id": "local_asset_inputs_r2",
+    "scenes": [
+      "scene-0004"
+    ],
+    "seed": 20260915,
+    "selection": "Two previously frozen score0.3 CenterPoint center-distance detection misses: Omega car and Pi3X pedestrian. Both six/twelve geometry outputs audited; twelve-view downstream behavior is not yet observed.",
+    "scope": "Actual saved triangle vertices/faces are edited, then all current measured rays are cast again. Existing nine real past sweeps/intensity and BUILD metric scale remain common extra inputs. Not a complete feedback simulator or independent confirmation.",
+    "repair": "For all original mesh vertices within0.35m of an original model first-hit point on any GT-box target return, add one robust median radial range offset (GT minus model), preserving triangle connectivity. Only originally returned target beams fit this scalar. Save full modified mesh.",
+    "deletion": "Delete every face touching the same selected vertices, without moving other vertices. Count all resulting changed or missing rays, including rays outside the target.",
+    "coverage": "Restore only rays already missing in the original asset from real LiDAR in every condition. Newly missing rays after editing stay missing. No unseen ranges are supplied to the raycaster.",
+    "information": "Evaluator-held GT target boxes and current ranges select/fit the ordinary oracle patch; this is not a same-information advantage or a proposed learning method.",
+    "conditions": [
+      "original_twelve",
+      "local_radial",
+      "same_faces_deleted"
+    ],
+    "budget": "Six-view original detector results reused; two twelve-view originals plus two interventions x two methods x two view counts =10 detector calls. One radius, one scalar protocol, no sweep.",
+    "stop_rule": "Require improved target range readout and recovered target detection beyond same-face deletion. No recovery does not rule out every local repair, but this ordinary local-bias hypothesis closes without further tuning.",
+    "failure_ledger_refs": [
+      "V74-H2-F19"
+    ],
+    "failure_ledger_delta": "pending",
+    "human_verdict": null,
+    "prepared": true,
+    "start_unix": 1789468202.647332,
+    "expected_detector_forwards": 10,
+    "end_unix": 1789468247.5047343
+  },
+  "frames": [
+    {
+      "scene": "scene-0004",
+      "sample_token": "0dc36bc3a7aa4b3bb221ca96d15c29ec",
+      "points": {
+        "omega512_six_local_radial": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/omega512_six/local_radial.npz",
+        "omega512_six_same_faces_deleted": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/omega512_six/same_faces_deleted.npz"
+      },
+      "method": "omega512",
+      "variant": "six",
+      "target_instance": "f54238bdd48443fcb4a019271dbca2f8"
+    },
+    {
+      "scene": "scene-0004",
+      "sample_token": "0dc36bc3a7aa4b3bb221ca96d15c29ec",
+      "points": {
+        "omega512_twelve_original_twelve": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/omega512_twelve/original_twelve.npz",
+        "omega512_twelve_local_radial": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/omega512_twelve/local_radial.npz",
+        "omega512_twelve_same_faces_deleted": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/omega512_twelve/same_faces_deleted.npz"
+      },
+      "method": "omega512",
+      "variant": "twelve",
+      "target_instance": "f54238bdd48443fcb4a019271dbca2f8"
+    },
+    {
+      "scene": "scene-0004",
+      "sample_token": "0dc36bc3a7aa4b3bb221ca96d15c29ec",
+      "points": {
+        "pi3x_six_local_radial": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/pi3x_six/local_radial.npz",
+        "pi3x_six_same_faces_deleted": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/pi3x_six/same_faces_deleted.npz"
+      },
+      "method": "pi3x",
+      "variant": "six",
+      "target_instance": "acb2c4d8335344ad8a5a504513b6f40f"
+    },
+    {
+      "scene": "scene-0004",
+      "sample_token": "0dc36bc3a7aa4b3bb221ca96d15c29ec",
+      "points": {
+        "pi3x_twelve_original_twelve": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/pi3x_twelve/original_twelve.npz",
+        "pi3x_twelve_local_radial": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/pi3x_twelve/local_radial.npz",
+        "pi3x_twelve_same_faces_deleted": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FF-PERCEPTION-01/20260915-r1/local_asset_inputs_r2/pi3x_twelve/same_faces_deleted.npz"
+      },
+      "method": "pi3x",
+      "variant": "twelve",
+      "target_instance": "acb2c4d8335344ad8a5a504513b6f40f"
+    }
+  ]
+}

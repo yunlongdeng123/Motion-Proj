@@ -1,3 +1,9 @@
+# 当前：局部网格修改获得有限感知因果证据，普通删除同样有效（2026-09-15）
+
+WS-SIM-FF-LOCAL-ASSET-01 / r2：两个冻结下游候选、两输入预算，10次CenterPoint。Ω车辆局部网格校正后重新投射完整扫描，中心误差2.073/1.954m→0.086/0.030m，IoU0.347/0.370→0.836/0.804；同面删除也恢复（0.089/0.086m）。支持当前固定真实历史适配器内的局部几何→传感器→感知作用，未证明生成式修复必要性。Pi3X行人距离改善但检测不稳定恢复，关闭本轮径向修复子命题。均未通过预注册超出删除控制的Hero准入。不能把2m中心匹配失配称作车辆完全消失，亦无独立日志/规划/安全证明。
+
+全部CenterPoint累计140次；72几何前向、802策略/PDM、18 HUGSIM＋4 SplatAD闭环不变。见docs/WORLDSIM_SIMULATION_LOCAL_ASSET_CAUSAL_AUDIT.md和F20。两候选不继续扫参；下一步若推进应冻结新的时刻/日志及完整传感器信息范围，而非重复当前几何诊断。goal active；人工verdict=null；failure_ledger_delta=V74-H2-F20。以下为历史。
+
 # 当前：完整预算闭环与原生检测完成，局部强度恢复解释主要漏检（2026-09-15）
 
 SplatAD 30001步完成；194 LiDAR／678相机留出、64策略/PDM与2次反馈闭环完成。LiDAR-only平均ADE差−0.014/+0.026m，两闭环无框交叠。冻结nuScenes CenterPoint真实机动车32/32，原生raw/median16/20；工程车真实8/8、原生0/1，局部真实扫描恢复8/8，而median仅恢复强度即7/8、位置恢复仅2/3。保留传感器感知坏例，不晋级纯几何或phantom Hero。四前馈模型两日志18次检测包含DVGT正例，不能主张普遍同样失效。全部CenterPoint130次，累计18 HUGSIM＋4 SplatAD反馈闭环、72几何前向、802策略/PDM。见docs/WORLDSIM_SIMULATION_FULL_BUDGET_PERCEPTION.md及F19。
