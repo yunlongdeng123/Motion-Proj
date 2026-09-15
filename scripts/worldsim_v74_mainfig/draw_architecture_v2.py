@@ -2,7 +2,7 @@ import pathlib,matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
-F=pathlib.Path(__file__).resolve().parents[2]/'outputs/V74_Main_Paper_Figures/figures';ink='#172b46';gray='#698095'
+F=pathlib.Path(__file__).resolve().parents[2]/'outputs/V74_Main_Paper_Figures/figures';F.mkdir(parents=True,exist_ok=True);ink='#172b46';gray='#698095'
 plt.rcParams.update({'font.family':'DejaVu Sans','svg.fonttype':'none','pdf.fonttype':42})
 fig,ax=plt.subplots(figsize=(14,6.3));ax.set_xlim(0,14);ax.set_ylim(0,6.3);ax.axis('off')
 def box(x,y,w,t,fc='#eaf0f7',h=.75):
