@@ -1,3 +1,23 @@
+# 代码核查更新：新来源基线未通过，准备原生nuScenes规划器（2026-09-15）
+
+BridgeSim版本 `eb727f87918c6bc34de82adfb66620b2b953cd61` 已下载并核查源码，未安装、未运行。`bridgesim/evaluation/models/pdm_closed_adapter.py` 明确标作PDM-lite：特权状态、候选路径、IDM与自行车模型、自定义评分；其模块说明以GT未来中心线为路线，另有live lane/fallback分支，不能称所有路径都固定用GT。它不是未经改动的原版PDM-Closed，也没有自动消费本轮CenterPoint检测框。
+
+`evaluation/utils/lidar_utils.py` 的 `ray_lidar_to_ego_points` 把二维射线距离分数转成恒定高度点。`evaluation/core/environment_manager.py` 另有独立可选PointCloudLidar入口，因此不能声称BridgeSim完全不支持3D；其真实扫描、重建资产和物理首交契约仍待验证。本轮不把README的“runtime LiDAR”直接当作已完成3D几何因果接口。[官方源码](https://github.com/VAIL-UCLA/BridgeSim)
+
+新来源scene-0002的真实TransFuser/PDM基线和一次额外路线提示均未通过固定准入：平均ADE/FDE 1.667/4.642m→1.422/3.727m，框交叠1/8→0/8；不拟合该场景，不将基线域适配问题写成重建危害。已冻结官方SparseDrive-S stage2的两帧预热＋八起点原生六相机输入；运行环境和公开权重准备中，尚无新模型结果。其三秒规划须独立于四秒PDM评价，scene-0002训练集重叠和GT路线信息明确保留。[官方SparseDrive](https://github.com/swc-17/SparseDrive)
+
+```mermaid
+flowchart LR
+    A[真实六相机与标定] --> B[官方SparseDrive-S]
+    R[原生路线提示：额外真值] --> B
+    B --> C[感知与运动预测]
+    C --> D[原生三秒规划]
+    D --> E[先与真实日志比较]
+    E -. 基线可靠后 .-> F[同接口重建渲染与局部资产干预]
+```
+
+以下为此前接口复核，保留历史范围。
+
 # 感知到规划接口复核（2026-09-15，尚未运行新规划器）
 
 当前 CenterPoint 的定位偏差不能直接解释先前的 TransFuser 轨迹：后者接收 RGB＋LiDAR，不消费这些检测框。要接通另一条实际链，必须将检测结果送入真正读取它的规划模块，并先检查真实输入基线；不能只用框计算 TTC 就宣称实际制动。

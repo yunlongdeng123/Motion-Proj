@@ -1,0 +1,674 @@
+[
+  {
+    "scene": "scene-0002_start00",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.7260541915893555,
+        0.07695626467466354,
+        0.09248429536819458
+      ],
+      [
+        3.584068536758423,
+        0.3435746729373932,
+        0.19049084186553955
+      ],
+      [
+        5.4935455322265625,
+        0.8410317301750183,
+        0.3039901554584503
+      ],
+      [
+        7.3804826736450195,
+        1.5664390325546265,
+        0.44855958223342896
+      ],
+      [
+        9.127167701721191,
+        2.558300018310547,
+        0.5835076570510864
+      ],
+      [
+        10.696199417114258,
+        3.7825498580932617,
+        0.7037915587425232
+      ],
+      [
+        12.129752159118652,
+        5.2525553703308105,
+        0.8462488651275635
+      ],
+      [
+        13.408469200134277,
+        6.929572105407715,
+        0.9354380369186401
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 1.3938823899008328,
+      "FDE_vs_recorded_ego_m": 2.4487922665373665,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 13.408469200134277,
+      "four_second_lateral_m": 6.929572105407715
+    },
+    "initial_velocity_mps": 3.3211449632515118,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      3.3211450576782227,
+      -0.021526165306568146
+    ],
+    "input_acceleration_xy": [
+      0.8670276403427124,
+      0.5584323406219482
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start01",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.5658948421478271,
+        0.052854832261800766,
+        0.07148604094982147
+      ],
+      [
+        3.0978991985321045,
+        0.21785537898540497,
+        0.14794698357582092
+      ],
+      [
+        4.621479511260986,
+        0.5340691804885864,
+        0.24612808227539062
+      ],
+      [
+        6.148260116577148,
+        0.9915735721588135,
+        0.35864683985710144
+      ],
+      [
+        7.648110389709473,
+        1.6668249368667603,
+        0.4759804308414459
+      ],
+      [
+        9.101908683776855,
+        2.541034698486328,
+        0.5932173132896423
+      ],
+      [
+        10.550559043884277,
+        3.63960337638855,
+        0.7335897088050842
+      ],
+      [
+        11.934174537658691,
+        4.969766139984131,
+        0.821191668510437
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 0.8070417188128091,
+      "FDE_vs_recorded_ego_m": 2.4361142283463364,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 11.934174537658691,
+      "four_second_lateral_m": 4.969766139984131
+    },
+    "initial_velocity_mps": 3.3047785907181724,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      3.304778575897217,
+      -0.020514648407697678
+    ],
+    "input_acceleration_xy": [
+      -0.2684134542942047,
+      0.49125224351882935
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start02",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.7798500061035156,
+        0.0860109031200409,
+        0.11080144345760345
+      ],
+      [
+        3.785428524017334,
+        0.40915343165397644,
+        0.2217254638671875
+      ],
+      [
+        5.921871662139893,
+        1.0467822551727295,
+        0.34673136472702026
+      ],
+      [
+        8.043399810791016,
+        1.9865654706954956,
+        0.5044363141059875
+      ],
+      [
+        10.055530548095703,
+        3.281543731689453,
+        0.638853132724762
+      ],
+      [
+        11.839096069335938,
+        4.896413326263428,
+        0.7907257080078125
+      ],
+      [
+        13.468740463256836,
+        6.852059841156006,
+        0.9407736659049988
+      ],
+      [
+        14.896751403808594,
+        9.060933113098145,
+        1.0330348014831543
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 2.1441178800600023,
+      "FDE_vs_recorded_ego_m": 3.4604543460984325,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 14.896751403808594,
+      "four_second_lateral_m": 9.060933113098145
+    },
+    "initial_velocity_mps": 3.2270312027583303,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      3.2270312309265137,
+      -0.06303374469280243
+    ],
+    "input_acceleration_xy": [
+      1.4183646440505981,
+      0.6414618492126465
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start03",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.3615338802337646,
+        0.06255374848842621,
+        0.07496190816164017
+      ],
+      [
+        2.642411470413208,
+        0.21758268773555756,
+        0.15835462510585785
+      ],
+      [
+        3.897130250930786,
+        0.4884868264198303,
+        0.23692719638347626
+      ],
+      [
+        5.1915059089660645,
+        0.8752994537353516,
+        0.3396763205528259
+      ],
+      [
+        6.543672561645508,
+        1.4136927127838135,
+        0.4276762306690216
+      ],
+      [
+        7.937985897064209,
+        2.1279447078704834,
+        0.5171167254447937
+      ],
+      [
+        9.423049926757812,
+        3.0065555572509766,
+        0.6092309951782227
+      ],
+      [
+        10.929865837097168,
+        4.086479663848877,
+        0.6764141321182251
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 2.4543678356001624,
+      "FDE_vs_recorded_ego_m": 6.024143177977076,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 10.929865837097168,
+      "four_second_lateral_m": 4.086479663848877
+    },
+    "initial_velocity_mps": 2.9962131617745515,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      2.99621319770813,
+      -0.034359730780124664
+    ],
+    "input_acceleration_xy": [
+      -0.5546350479125977,
+      0.7946010828018188
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start04",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.3429564237594604,
+        0.05647653341293335,
+        0.07573505491018295
+      ],
+      [
+        2.547555446624756,
+        0.21895401179790497,
+        0.17683398723602295
+      ],
+      [
+        3.748363733291626,
+        0.4988427460193634,
+        0.23850470781326294
+      ],
+      [
+        5.032985210418701,
+        0.9145379066467285,
+        0.350084513425827
+      ],
+      [
+        6.483917713165283,
+        1.5039485692977905,
+        0.4460848867893219
+      ],
+      [
+        8.094127655029297,
+        2.335909366607666,
+        0.530112624168396
+      ],
+      [
+        9.889402389526367,
+        3.417144536972046,
+        0.6306899189949036
+      ],
+      [
+        11.82650375366211,
+        4.791949272155762,
+        0.6789847016334534
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 2.9606992384261686,
+      "FDE_vs_recorded_ego_m": 6.286166549449967,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 11.82650375366211,
+      "four_second_lateral_m": 4.791949272155762
+    },
+    "initial_velocity_mps": 2.9774553767455054,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      2.9774553775787354,
+      -0.1000237762928009
+    ],
+    "input_acceleration_xy": [
+      -0.8022444248199463,
+      0.8397942185401917
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start05",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.8121339082717896,
+        0.08495189249515533,
+        0.10046860575675964
+      ],
+      [
+        4.034058570861816,
+        0.41467633843421936,
+        0.20730619132518768
+      ],
+      [
+        6.553717136383057,
+        1.0699509382247925,
+        0.2910054922103882
+      ],
+      [
+        9.249789237976074,
+        2.019751787185669,
+        0.386152982711792
+      ],
+      [
+        12.023504257202148,
+        3.2490148544311523,
+        0.4382854104042053
+      ],
+      [
+        14.835122108459473,
+        4.657866954803467,
+        0.5030445456504822
+      ],
+      [
+        17.732969284057617,
+        6.250137805938721,
+        0.5380802154541016
+      ],
+      [
+        20.66157341003418,
+        7.947203636169434,
+        0.5632140040397644
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 2.1298412691415574,
+      "FDE_vs_recorded_ego_m": 3.907857876974128,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 20.66157341003418,
+      "four_second_lateral_m": 7.947203636169434
+    },
+    "initial_velocity_mps": 3.0952631150773704,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      3.0952630043029785,
+      -0.07404843717813492
+    ],
+    "input_acceleration_xy": [
+      2.1085047721862793,
+      0.7109378576278687
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start06",
+    "condition": "real",
+    "trajectory": [
+      [
+        1.7317495346069336,
+        0.10619711875915527,
+        0.11265027523040771
+      ],
+      [
+        3.5414276123046875,
+        0.4189828336238861,
+        0.1998666524887085
+      ],
+      [
+        5.50494384765625,
+        0.8849253058433533,
+        0.25746476650238037
+      ],
+      [
+        7.614049434661865,
+        1.4861774444580078,
+        0.2940165102481842
+      ],
+      [
+        9.89507007598877,
+        2.2109456062316895,
+        0.32712170481681824
+      ],
+      [
+        12.287252426147461,
+        3.0677285194396973,
+        0.3588848114013672
+      ],
+      [
+        14.838542938232422,
+        4.02282190322876,
+        0.38208064436912537
+      ],
+      [
+        17.545944213867188,
+        5.079658031463623,
+        0.3799954950809479
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 2.1018798679966824,
+      "FDE_vs_recorded_ego_m": 4.8188281541891325,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 17.545944213867188,
+      "four_second_lateral_m": 5.079658031463623
+    },
+    "initial_velocity_mps": 3.5411490669575145,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      3.541149139404297,
+      -0.03855005279183388
+    ],
+    "input_acceleration_xy": [
+      0.23362965881824493,
+      1.6729918718338013
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  },
+  {
+    "scene": "scene-0002_start07",
+    "condition": "real",
+    "trajectory": [
+      [
+        2.1926021575927734,
+        0.08840910345315933,
+        0.08837786316871643
+      ],
+      [
+        4.708789348602295,
+        0.3667896091938019,
+        0.1302471160888672
+      ],
+      [
+        7.534978866577148,
+        0.8071202039718628,
+        0.1637611985206604
+      ],
+      [
+        10.578048706054688,
+        1.3721706867218018,
+        0.19676445424556732
+      ],
+      [
+        13.798874855041504,
+        2.0707626342773438,
+        0.22198905050754547
+      ],
+      [
+        17.12530517578125,
+        2.9002530574798584,
+        0.23872628808021545
+      ],
+      [
+        20.589271545410156,
+        3.811762571334839,
+        0.2776932418346405
+      ],
+      [
+        24.098430633544922,
+        4.787806510925293,
+        0.27996841073036194
+      ]
+    ],
+    "metrics": {
+      "ADE_vs_recorded_ego_m": 1.2930731581065542,
+      "FDE_vs_recorded_ego_m": 1.9681756062617453,
+      "planned_actor_intersection_at_0p5s_samples": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "planned_actor_intersection_any": false,
+      "four_second_forward_m": 24.098430633544922,
+      "four_second_lateral_m": 4.787806510925293
+    },
+    "initial_velocity_mps": 4.0216049634858475,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-FRESH-NATIVE-01/20260915-r1/baseline_route_r1/lidar_policy/assets/transfuser_seed_0.ckpt",
+    "latent": false,
+    "strict_checkpoint_loading": true,
+    "scope": "Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop",
+    "input_velocity_xy": [
+      4.021605014801025,
+      -0.07893694192171097
+    ],
+    "input_acceleration_xy": [
+      1.6283341646194458,
+      1.6487407684326172
+    ],
+    "status_source": "Backward finite differences from current and two previous CAM_FRONT sensor records, including causal yaw rate; no future state input. Steering derived by the same Pacifica bicycle relation as native loop.",
+    "driving_command_onehot": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "driving_command_source": "GT-derived static spatial route,20m arc-length lookahead and2.5m lateral threshold. Extra route oracle; no outcome-based command selection."
+  }
+]

@@ -1,0 +1,267 @@
+{
+  "task_id": "WS-SIM-FRESH-NATIVE-ROUTE-CONTROL-01",
+  "run_id": "baseline_route_r1",
+  "seed": 20260915,
+  "start_unix": 1789472108.462279,
+  "motivation": "The first real-input baseline has meanADE1.667m/FDE4.642m and one overlap; the inherited client ignores route and hard-codes straight while this log turns. This is not reconstruction evidence.",
+  "protocol": "One known-route oracle: use the next20m of the recorded spatial ego route (arc length, not future motion speed). At20m lookahead, ego-local lateral offset>2.5m means left, <-2.5m right, otherwise straight. One-hot NAVSIM order left/straight/right/unknown. No alternative lookaheads, thresholds, or outcome-selected commands.",
+  "extra_information": "This is a GT-derived high-level route hint, explicitly extra information. No future numeric trajectory, velocity, actor boxes, RGB or LiDAR are sent to the policy. All current sensors and causal kinematic state are byte-identical source data to the first baseline.",
+  "implementation": "Official TransFuser feature builder already consumes driving_command; override only this previously fixed field. Same weights, preprocessing, steering initialization, controller and evaluation.",
+  "admission": "Same meanADE<=1m,meanFDE<=2m,and no executed or recorded overlap across eight starts. Original failed admission remains unchanged; any fit uses this explicitly separate route-informed protocol.",
+  "stop_rule": "If this one ordinary input correction does not qualify the real baseline, do not fit this source or tune the command rule; investigate a native-dataset planner instead.",
+  "failure_ledger_refs": [
+    "V74-H2-F21"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null,
+  "prepared": true,
+  "rows": [
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start00",
+      "original_start_index": 3,
+      "sample_token": "828a847cc7174a7d9c8058734ca6dd6e",
+      "points": 25249,
+      "initial_velocity_xy_mps": [
+        3.3211449632515118,
+        -0.02152616540329295
+      ],
+      "initial_acceleration_xy_mps2": [
+        0.867027652896294,
+        0.5584323685168407
+      ],
+      "initial_yaw_rate_rad_s": 0.13505897650128532,
+      "reference_horizon_last_time_s": 4.5,
+      "reference_last_heading_change_rad": 1.213160958526836,
+      "route_lookahead_local_xyz": [
+        13.485833111569832,
+        12.083609271134037,
+        0.12711028189780027
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 104.05384400738168
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start01",
+      "original_start_index": 4,
+      "sample_token": "25fbd2d7377449aabfd2173c3a0a418f",
+      "points": 25231,
+      "initial_velocity_xy_mps": [
+        3.3047785907181724,
+        -0.020514648044196244
+      ],
+      "initial_acceleration_xy_mps2": [
+        -0.26841344888258883,
+        0.49125223457235917
+      ],
+      "initial_yaw_rate_rad_s": 0.16583622258555147,
+      "reference_horizon_last_time_s": 4.449991,
+      "reference_last_heading_change_rad": 1.1811011302827779,
+      "route_lookahead_local_xyz": [
+        13.295479829116346,
+        12.691165886599492,
+        0.14731529108151875
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 102.37291753011787
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start02",
+      "original_start_index": 5,
+      "sample_token": "244e2876a6744249814936b24b6b03ea",
+      "points": 25254,
+      "initial_velocity_xy_mps": [
+        3.2270312027583303,
+        -0.06303374817360784
+      ],
+      "initial_acceleration_xy_mps2": [
+        1.4183646983478804,
+        0.641461833924689
+      ],
+      "initial_yaw_rate_rad_s": 0.2132041950537733,
+      "reference_horizon_last_time_s": 4.400004,
+      "reference_last_heading_change_rad": 1.0737021260167605,
+      "route_lookahead_local_xyz": [
+        13.681372192983986,
+        12.87660489544669,
+        0.20364846441098372
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 100.48714581077049
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start03",
+      "original_start_index": 6,
+      "sample_token": "cc175ce81d9448c9b797dd81e1981460",
+      "points": 25131,
+      "initial_velocity_xy_mps": [
+        2.9962131617745515,
+        -0.034359730503341665
+      ],
+      "initial_acceleration_xy_mps2": [
+        -0.5546350325686914,
+        0.7946010587644772
+      ],
+      "initial_yaw_rate_rad_s": 0.25979057884291773,
+      "reference_horizon_last_time_s": 4.400002,
+      "reference_last_heading_change_rad": 0.9515550044764918,
+      "route_lookahead_local_xyz": [
+        14.482690300028139,
+        12.507390963105195,
+        0.3047516735175897
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 98.93016334756774
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start04",
+      "original_start_index": 7,
+      "sample_token": "7778e7e99779472cbb886e43dbc9a1ea",
+      "points": 25278,
+      "initial_velocity_xy_mps": [
+        2.9774553767455054,
+        -0.10002377380632561
+      ],
+      "initial_acceleration_xy_mps2": [
+        -0.8022444409356803,
+        0.8397942139918827
+      ],
+      "initial_yaw_rate_rad_s": 0.30700511674061315,
+      "reference_horizon_last_time_s": 4.399988,
+      "reference_last_heading_change_rad": 0.8029045082824244,
+      "route_lookahead_local_xyz": [
+        15.689524436642728,
+        11.476965682083346,
+        0.2058786081127728
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 97.43830059451952
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start05",
+      "original_start_index": 8,
+      "sample_token": "0bcb08a96d264c8ca9f2119c6b0dbeb2",
+      "points": 25335,
+      "initial_velocity_xy_mps": [
+        3.0952631150773704,
+        -0.0740484400933703
+      ],
+      "initial_acceleration_xy_mps2": [
+        2.108504716550478,
+        0.710937865461504
+      ],
+      "initial_yaw_rate_rad_s": 0.3280112202238419,
+      "reference_horizon_last_time_s": 4.400013,
+      "reference_last_heading_change_rad": 0.6377653117994928,
+      "route_lookahead_local_xyz": [
+        17.01899008449493,
+        9.8748818106327,
+        0.2044309650120475
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 95.9434682850181
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start06",
+      "original_start_index": 9,
+      "sample_token": "a71b19643dbc488e97323303442d1a21",
+      "points": 25429,
+      "initial_velocity_xy_mps": [
+        3.5411490669575145,
+        -0.03855005276096199
+      ],
+      "initial_acceleration_xy_mps2": [
+        0.2336296573063286,
+        1.6729918549640501
+      ],
+      "initial_yaw_rate_rad_s": 0.37544053800239763,
+      "reference_horizon_last_time_s": 4.499891,
+      "reference_last_heading_change_rad": 0.4941762860429036,
+      "route_lookahead_local_xyz": [
+        18.08147279982245,
+        8.14054267427764,
+        0.23701327065004207
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 94.56624180413814
+    },
+    {
+      "scene": "scene-0002",
+      "case_id": "scene-0002_start07",
+      "original_start_index": 10,
+      "sample_token": "ecc288c7de6746348af26a0b368a945d",
+      "points": 25715,
+      "initial_velocity_xy_mps": [
+        4.0216049634858475,
+        -0.07893694236642897
+      ],
+      "initial_acceleration_xy_mps2": [
+        1.6283341870704884,
+        1.648740768350111
+      ],
+      "initial_yaw_rate_rad_s": 0.4038857971087316,
+      "reference_horizon_last_time_s": 4.500001,
+      "reference_last_heading_change_rad": 0.29809759650278755,
+      "route_lookahead_local_xyz": [
+        19.226511436876535,
+        5.315985659535897,
+        0.12241332815852957
+      ],
+      "driving_command_onehot": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "route_available_m": 92.66936770949913
+    }
+  ],
+  "expected_policy_forwards": 8,
+  "expected_vehicle_forecasts": 8,
+  "prepared_unix": 1789472108.6516583,
+  "completed": true,
+  "completed_unix": 1789472484.3716002,
+  "policy_forwards": 8,
+  "vehicle_forecasts": 8
+}

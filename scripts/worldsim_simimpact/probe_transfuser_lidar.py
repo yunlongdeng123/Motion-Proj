@@ -34,6 +34,10 @@ for name in sorted(p.stem for p in (R/'inputs').glob('*.json')):
     rgb={v['camera']:np.array(Image.open(v['image']).convert('RGB')) for v in views[:6] if v['camera'] in ['CAM_FRONT','CAM_FRONT_LEFT','CAM_FRONT_RIGHT']}
     info={'ego_pos':[0.,0.,0.],'ego_steer':0.,'ego_velo':float(ref['initial_velocity_xy_mps'][0]),'accelerate':0.}
     data=parse_raw(({'rgb':rgb},info))['input']
+    if 'driving_command_onehot' in ref:
+        command=np.asarray(ref['driving_command_onehot'],dtype=np.float32)
+        assert command.shape==(4,) and set(command.tolist())<=set([0.,1.]) and command.sum()==1
+        data.ego_statuses[-1].driving_command=command
     if 'initial_acceleration_xy_mps2' in ref:
         data.ego_statuses[-1].ego_velocity=np.array(ref['initial_velocity_xy_mps'],dtype=np.float32)
         data.ego_statuses[-1].ego_acceleration=np.array(ref['initial_acceleration_xy_mps2'],dtype=np.float32)
@@ -63,7 +67,8 @@ for name in sorted(p.stem for p in (R/'inputs').glob('*.json')):
     base_row={'scene':name,'condition':'real','trajectory':baseline.tolist(),'metrics':metrics(baseline),'initial_velocity_mps':info['ego_velo'],
         'checkpoint':str(O/'assets/transfuser_seed_0.ckpt'),'latent':False,'strict_checkpoint_loading':True,'scope':'Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop',
         'input_velocity_xy':data.ego_statuses[-1].ego_velocity.tolist(),'input_acceleration_xy':data.ego_statuses[-1].ego_acceleration.tolist(),
-        'status_source':ref.get('status_source','Forward finite-difference speed; zero lateral speed and acceleration from original client')}
+        'status_source':ref.get('status_source','Forward finite-difference speed; zero lateral speed and acceleration from original client'),
+        'driving_command_onehot':data.ego_statuses[-1].driving_command.tolist(),'driving_command_source':ref.get('driving_command_source','Unchanged fixed official client command')}
     (out/'real.json').write_text(json.dumps(base_row,indent=2));np.save(out/'real_histogram.npy',basehist);all_rows.append(base_row)
     for rec in [r for r in completed if r['scene']==name]:
         key=f'{rec["method"]}_{rec["variant"]}_{rec["protocol"]}';scan=np.load(O/'scans'/name/f'{key}.npz');distance=scan['first_range'];finite=np.isfinite(distance);early=distance<ranges-.2;late=finite&(distance>ranges+.2)

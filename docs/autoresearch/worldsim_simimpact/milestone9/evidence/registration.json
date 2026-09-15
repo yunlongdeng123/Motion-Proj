@@ -1,0 +1,82 @@
+{
+  "task_id": "WS-SIM-FRESH-NATIVE-01",
+  "run_id": "20260915-r1",
+  "seed": 20260915,
+  "purpose": "New-log native RGB+3D-LiDAR simulation, baseline-first before any new scene fitting. No synthetic perturbation or geometric-error selection.",
+  "selection": {
+    "candidate_scene_range": "scene-0001..scene-0100 (the locally mounted first public shard discovery window)",
+    "max_distinct_logs": 6,
+    "order": "scene name then first qualifying chronological keyframe, starting at index2",
+    "future_keyframes_available": 16,
+    "initial_ego_speed_mps": [
+      2,
+      15
+    ],
+    "initial_actor_center_forward_m": [
+      4,
+      30
+    ],
+    "initial_actor_lateral_abs_max_m": 6,
+    "initial_actor_min_lidar_points": 8,
+    "actor_categories": "vehicle or human pedestrian",
+    "recorded_ego_actor_min_4s_box_gap_m": [
+      0.8,
+      5
+    ],
+    "interaction": "Within4s, target lateral position in initial ego frame changes >=1.5m OR recorded ego forward speed falls by >=2m/s.",
+    "ego_box": "Same Pacifica adapter envelope as prior PDM: length5.176,width2.297,rear-axle-to-center1.461m. Metadata screening only."
+  },
+  "exclusion": "Every log containing an already evaluated scene in initial simulation cohort, six-log interaction cohort, or V74 official-mainfigure cohort. Excludes shared logs, not merely scene names. Foundation-model or detector training overlap is not ruled out.",
+  "stage1_real_baseline": "Eight logged timestamps per selected window, one unchanged TransFuser seed0 and official PDM vehicle tracking; no reconstruction outputs. All timestamps and failures retained.",
+  "fit_admission": "First scene in frozen order with no real-baseline executed annotated-actor overlap across eight starts, mean4s ADE<=1m and mean4s FDE<=2m. Assess data availability before any fit. At most one full30001-step SplatAD fit in this batch; no automatic second fit.",
+  "future_stage": "Only a qualified source justifies complete scene sensor fitting/validation and actual feedback loops. Geometry diagnostics alone do not admit a Hero candidate.",
+  "stop_rule": "Finite6-log window; if no real baseline qualifies, do not reinterpret domain-transfer failures as reconstruction harm. Do not adjust thresholds or synthesize more extreme actors.",
+  "information": "Future ego and annotations are metadata selection/evaluation only; policy receives current images/LiDAR and backward-derived state. Scene fitting uses extra full RGB+LiDAR/actor observations and is separately labelled.",
+  "failure_ledger_refs": [
+    "V74-H2-F18",
+    "V74-H2-F19",
+    "V74-H2-F20",
+    "V74-H2-F21"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null,
+  "start_unix": 1789471274.0978332,
+  "selection_completed": true,
+  "excluded_scenes": [
+    "scene-0004",
+    "scene-0013",
+    "scene-0028",
+    "scene-0038",
+    "scene-0041",
+    "scene-0045",
+    "scene-0048",
+    "scene-0061",
+    "scene-0073",
+    "scene-0094",
+    "scene-0359",
+    "scene-0519",
+    "scene-0520",
+    "scene-0919",
+    "scene-1089"
+  ],
+  "excluded_log_tokens": [
+    "47620afea3c443f6a761e885273cb531",
+    "53cf9c55dd8644bea67b9f009fc1ee38",
+    "5bd40b613ac740cd9dbacdfbc3d68201",
+    "783683d957054175bda1b326453a13f4",
+    "7a0fde44c3504eaeb18f9ad83bed65bc",
+    "7e25a2c8ea1f41c5b0da1e69ecfa71a2",
+    "8fefc430cbfa4c2191978c0df302eb98",
+    "bc41a49366734ebf978d6a71981537dc",
+    "ca6d14b008ed4e0bb6b1eaaedadbd6c1",
+    "d31dc715d1c34b99bd5afb0e3aea26ed",
+    "d7fd2bb9696d43af901326664e42340b",
+    "ddc03471df3e4c9bb9663629a4097743",
+    "f38ef5a1e9c941aabb2155768670b92a"
+  ],
+  "scenes": [
+    "scene-0002"
+  ],
+  "selection_end_unix": 1789471311.4557753,
+  "selected_count": 1
+}

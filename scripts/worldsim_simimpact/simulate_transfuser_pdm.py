@@ -21,8 +21,10 @@ inputs=json.loads((R/'policy_probe_summary.json').read_text());results=[]
 for name in sorted({r['scene'] for r in inputs}):
     ref=json.loads((R/f'{name}_log_reference.json').read_text());rows=[r for r in inputs if r['scene']==name]
     causal='initial_acceleration_xy_mps2' in ref
+    yaw_rate=float(ref.get('initial_yaw_rate_rad_s',0.));forward_speed=float(ref['initial_velocity_xy_mps'][0])
+    steering=float(np.arctan(yaw_rate*vehicle.wheel_base/forward_speed)) if abs(forward_speed)>.1 else 0.
     initial=EgoState.build_from_rear_axle(rear_axle_pose=StateSE2(0,0,0),rear_axle_velocity_2d=StateVector2D(*ref['initial_velocity_xy_mps']) if causal else StateVector2D(ref['initial_velocity_xy_mps'][0],0),
-        rear_axle_acceleration_2d=StateVector2D(*ref['initial_acceleration_xy_mps2']) if causal else StateVector2D(0,0),tire_steering_angle=0,time_point=TimePoint(1000000),vehicle_parameters=vehicle)
+        rear_axle_acceleration_2d=StateVector2D(*ref['initial_acceleration_xy_mps2']) if causal else StateVector2D(0,0),tire_steering_angle=steering,time_point=TimePoint(1000000),vehicle_parameters=vehicle,angular_vel=yaw_rate)
     states=[]
     for row in rows:
         traj=Trajectory(np.array(row['trajectory']),trajectory_sampling=TrajectorySampling(num_poses=8,interval_length=.5))
@@ -52,7 +54,7 @@ for name in sorted({r['scene'] for r in inputs}):
             final_forward_m=float(s[-1,0]),final_lateral_m=float(s[-1,1]),minimum_longitudinal_acceleration_mps2=float(s[:,5].min()),
             final_speed_mps=float(np.linalg.norm(s[-1,3:5])),ADE_vs_recorded_ego_m=float(errors.mean()),FDE_vs_recorded_ego_m=float(errors[-1]),
             actor_overlap_any=any(flags),actor_overlap_first_time_s=next((float(t) for t,f in zip(times,flags) if f),None),
-            recorded_ego_actor_overlap_under_same_vehicle=any(gt_overlap),vehicle_model='Official NAVSIM/nuPlan Pacifica; dataset-adapter convention',
+            recorded_ego_actor_overlap_under_same_vehicle=any(gt_overlap),vehicle_model='Official NAVSIM/nuPlan Pacifica; dataset-adapter convention',initial_yaw_rate_rad_s=yaw_rate,initial_tire_steering_angle_rad=steering,
             scope='Official PDMSimulator 4s tracking. Actor overlap is a separate geometric diagnostic, not the full PDM score; no map/at-fault/reaction metric.')
         results.append(res)
     print(name,len(rows),'max_shift',max(r['final_position_change_vs_real_m'] for r in results if r['scene']==name),'overlaps',sum(r['actor_overlap_any'] for r in results if r['scene']==name),flush=True)
