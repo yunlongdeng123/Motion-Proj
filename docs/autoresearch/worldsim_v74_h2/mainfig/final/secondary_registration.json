@@ -1,0 +1,21 @@
+{
+  "task": "WS-V74-MAINFIG-SECONDARY-01",
+  "run": "20260915-secondary-r1",
+  "registered_utc": "2026-09-15T03:34:42Z",
+  "seed": 7403,
+  "trigger": "Four official geometry models show shared first-return crossings; extend bounded method-level references, not training.",
+  "cohort": "Same frozen 75 discovery objects / 6 scenes / 5 logs. No new selection by results.",
+  "models": {
+    "nksr": "Official ks native field/dual mesh; BUILD LiDAR samples1,3,4,6 plus PCA16 normals; extra geometric information.",
+    "dvgt2": "Official checkpoint, causal geometry branch; same RGB six/twelve images; native points in each ego_n frame, GT scale factor0.1. Same declared grid adapter controls.",
+    "dggt": "Official nuScenes weights; same six/twelve RGB. Depth-grid diagnostic separated from Gaussian RGB+expected-depth rendering; expected depth is not first return.",
+    "noksr": "Official Carla Serial checkpoint if publicly retrievable; same BUILD-only points/normals, native meshing. Engineering blockers recorded, not counted as failure."
+  },
+  "control": "No QUERY to solver, fixed primary scale protocol. Surface representations and information budgets reported separately.",
+  "failure_ledger_refs": [
+    "V74-H2-F12",
+    "V74-F06"
+  ],
+  "failure_ledger_delta": "pending",
+  "human_verdict": null
+}

@@ -8,13 +8,14 @@ def outputs(path):
  kg=np.array([affine(v,(h,w))@np.array(v['intrinsics_original']) for v in views]);method=rec['method']
  yy,xx=np.mgrid[:h,:w];pix=np.stack([xx,yy,np.ones_like(xx)],-1)
  base=1.;scale_cv=None
- if method=='dvgt1':
+ if method in ['dvgt1','dvgt2']:
   pts=a['points'][0].reshape(-1,h,w,3);conf=a['points_conf'][0].reshape(-1,h,w)
   rdf=np.array([[0,0,1],[-1,0,0],[0,-1,0]])
-  for p,v in zip(pts,views):
-   T=np.linalg.inv(v['world_from_camera'])@np.array(views[0]['world_from_ego_camera'])
+  for i,(p,v) in enumerate(zip(pts,views)):
+   ego=views[0] if method=='dvgt1' else views[(i//6)*6]
+   T=np.linalg.inv(v['world_from_camera'])@np.array(ego['world_from_ego_camera'])
    cam.append((p/.1)@rdf.T@T[:3,:3].T+T[:3,3])
- elif method in ['vggt','omega512']:
+ elif method in ['vggt','omega512','dggt']:
   E=a['extrinsics'][0];K=a['intrinsics'][0];dep=a['depth'][0,...,0];conf=a['depth_conf'][0]
   centers=np.array([-e[:,:3].T@e[:,3] for e in E]);true=np.array([v['world_from_camera'] for v in views])[:,:3,3];rat=[]
   for i in range(len(views)):

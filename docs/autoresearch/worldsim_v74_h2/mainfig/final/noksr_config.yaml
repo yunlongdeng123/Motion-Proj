@@ -1,0 +1,330 @@
+experiment_name: run_1
+output_folder: output
+exp_output_root_path: output/Carla/run_1
+global_train_seed: 12345
+global_test_seed: 32102
+data:
+  dataset_root_path: data
+  batch_size: 1
+  num_workers: 4
+  voxel_size: 0.1
+  supervision:
+    only_l1_sdf_loss: false
+    structure_weight: 20.0
+    gt_type: PointTSDFVolume
+    on_surface:
+      normal_loss: false
+      weight: 200.0
+      normal_weight: 100.0
+      subsample: 10000
+      svh_tree_depth: 4
+    sdf:
+      max_dist: 0.6
+      weight: 300.0
+      reg_sdf_weight: 0.0
+      svh_tree_depth: 4
+      samplers:
+      - type: uniform
+        n_samples: 10000
+        expand: 1
+        expand_top: 3
+      - type: band
+        n_samples: 10000
+        eps: 0.5
+      truncate: false
+      gt_type: l1
+      gt_soft: true
+      gt_band: 1.0
+      pd_transform: true
+      vol_sup: true
+    udf:
+      max_dist: 0.6
+      abs_sdf: true
+      weight: 150.0
+      svh_tree_depth: 4
+      samplers:
+      - type: uniform
+        n_samples: 10000
+        expand: 1
+        expand_top: 5
+      - type: band
+        n_samples: 10000
+        eps: 0.5
+    eikonal:
+      loss: false
+      flip: true
+      weight: 10.0
+    laplacian:
+      loss: false
+      weight: 0.0
+  num_input_points: 10000
+  uniform_sampling: true
+  input_splats: false
+  num_query_points: 50000
+  std_dev: 0.0
+  in_memory: true
+  take: -1
+  intake_start: 0
+  over_fitting: false
+  reconstruction:
+    by_segment: false
+    segment_num: 10
+    trim: true
+    gt_mask: false
+    gt_sdf: false
+    mask_threshold: 0.1
+  visualization:
+    save: false
+    Mesh: true
+    Input_points: true
+    Dense_points: false
+  dataset: Carla
+  base_path: data/carla-lidar/dataset-no-patch
+  input_path: data/carla-lidar/dataset-p1n2-no-patch
+  drives:
+  - Town01-0
+  - Town01-1
+  - Town01-2
+  - Town02-0
+  - Town02-1
+  - Town02-2
+  - Town10-0
+  - Town10-1
+  - Town10-2
+  - Town10-3
+  - Town10-4
+  transforms: []
+  evaluation:
+    evaluator: MeshEvaluator
+model:
+  ckpt_path: null
+  logger:
+    _target_: pytorch_lightning.loggers.WandbLogger
+    project: noksr
+    name: run_1
+  trainer:
+    accelerator: gpu
+    devices: auto
+    num_nodes: 1
+    max_epochs: 100
+    max_steps: 200000
+    num_sanity_val_steps: 8
+    check_val_every_n_epoch: 4
+    profiler: simple
+  checkpoint_monitor:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    save_top_k: -1
+    every_n_epochs: 4
+    filename: '{epoch}'
+    dirpath: output/Carla/run_1/training
+  optimizer:
+    name: Adam
+    lr: 0.001
+    warmup_steps_ratio: 0.1
+  lr_decay:
+    decay_start_epoch: 60
+  inference:
+    split: test
+  network:
+    module: noksr
+    use_color: false
+    use_normal: true
+    use_xyz: true
+    latent_dim: 32
+    prepare_epochs: 350
+    eval_algorithm: DMC
+    grad_type: Analytical
+    backbone: PointTransformerV3
+    point_transformerv3:
+      in_channels: 6
+      order:
+      - z
+      - z-trans
+      - hilbert
+      - hilbert-trans
+      stride:
+      - 8
+      - 8
+      - 4
+      - 2
+      enc_depths:
+      - 2
+      - 2
+      - 2
+      - 6
+      - 2
+      enc_channels:
+      - 32
+      - 64
+      - 128
+      - 256
+      - 512
+      enc_num_head:
+      - 2
+      - 4
+      - 8
+      - 16
+      - 32
+      enc_patch_size:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      dec_depths:
+      - 2
+      - 2
+      - 2
+      - 2
+      dec_channels:
+      - 64
+      - 64
+      - 128
+      - 256
+      dec_num_head:
+      - 4
+      - 4
+      - 8
+      - 16
+      dec_patch_size:
+      - 64
+      - 64
+      - 64
+      - 64
+      mlp_ratio: 4
+      qkv_bias: true
+      qk_scale: null
+      attn_drop: 0.0
+      proj_drop: 0.0
+      drop_path: 0.3
+      pre_norm: true
+      shuffle_orders: true
+      enable_rpe: false
+      enable_flash: false
+      upcast_attention: false
+      upcast_softmax: false
+      cls_mode: false
+      pdnorm_bn: false
+      pdnorm_ln: false
+      pdnorm_decouple: true
+      pdnorm_adaptive: false
+      pdnorm_affine: true
+      pdnorm_conditions:
+      - ScanNet
+      - S3DIS
+      - Structured3D
+    default_decoder:
+      decoder_type: Decoder
+      backbone: PointTransformerV3
+      decoder_channels:
+      - 64
+      - 64
+      - 128
+      - 256
+      stride:
+      - 8
+      - 8
+      - 4
+      - 2
+      coords_enc: Fourier
+      architecture: point_nerf
+      activation: LeakyReLU
+      negative_slope: 0.01
+      neighboring: Serial
+      serial_neighbor_layers: 3
+      k_neighbors: 8
+      dist_factor:
+      - 1
+      - 1
+      - 1
+      - 1
+      serial_orders:
+      - hilbert
+      last_n_layers: 4
+      feature_dim:
+      - 8
+      - 8
+      - 8
+      - 8
+      point_nerf_hidden_dim: 32
+      point_nerf_before_skip: 1
+      point_nerf_after_skip: 1
+      num_hidden_layers_before: 2
+      num_hidden_layers_after: 2
+      hidden_dim: 32
+    sdf_decoder:
+      decoder_type: Decoder
+      backbone: PointTransformerV3
+      decoder_channels:
+      - 64
+      - 64
+      - 128
+      - 256
+      stride:
+      - 8
+      - 8
+      - 4
+      - 2
+      coords_enc: Fourier
+      activation: LeakyReLU
+      negative_slope: 0.01
+      neighboring: Serial
+      serial_neighbor_layers: 3
+      k_neighbors: 8
+      dist_factor:
+      - 1
+      - 1
+      - 1
+      - 1
+      serial_orders:
+      - hilbert
+      last_n_layers: 4
+      feature_dim:
+      - 8
+      - 8
+      - 8
+      - 8
+      point_nerf_hidden_dim: 32
+      point_nerf_before_skip: 1
+      point_nerf_after_skip: 1
+      num_hidden_layers_before: 2
+      num_hidden_layers_after: 2
+      hidden_dim: 32
+    mask_decoder:
+      decoder_type: Decoder
+      backbone: PointTransformerV3
+      decoder_channels:
+      - 64
+      - 64
+      - 128
+      - 256
+      stride:
+      - 8
+      - 8
+      - 4
+      - 2
+      coords_enc: Fourier
+      activation: LeakyReLU
+      negative_slope: 0.01
+      neighboring: Serial
+      serial_neighbor_layers: 3
+      k_neighbors: 8
+      dist_factor:
+      - 1
+      - 1
+      - 1
+      - 1
+      serial_orders:
+      - hilbert
+      last_n_layers: 4
+      feature_dim:
+      - 8
+      - 8
+      - 8
+      - 8
+      point_nerf_hidden_dim: 32
+      point_nerf_before_skip: 1
+      point_nerf_after_skip: 1
+      num_hidden_layers_before: 2
+      num_hidden_layers_after: 2
+      hidden_dim: 32

@@ -1,0 +1,32 @@
+{
+  "task": "WS-V74-MAINFIG-01",
+  "run": "20260915-first-return-r1",
+  "secondary_task": "WS-V74-MAINFIG-SECONDARY-01",
+  "secondary_run": "20260915-secondary-r1",
+  "nksr": {
+    "repository": "https://github.com/nv-tlabs/NKSR",
+    "revision": "e40336845e67761343a756788e5a98b827d4a143",
+    "weight": "/root/autodl-tmp/third_party/NKSR-v74/checkpoints/ks.pth",
+    "config": "ks, voxel0.1m, detail_level0, solver_max_iter2000, tol1e-5, mise_iter1",
+    "patch": "Existing official empty-hierarchy mesher compatibility fix retained; no learned field parameter changes. See third_party/patches/nksr_empty_meshing_levels.patch in Motion-Proj.",
+    "runtime": "torch2.4.1+cu118, nksr1.0.3"
+  },
+  "noksr": {
+    "repository": "https://github.com/theialab/noksr",
+    "revision": "73950498ea095ce95e03d4403540833b16eb887e",
+    "weight": "/root/autodl-tmp/models/worldsim_v74_mainfig/noksr/Carla_Serial_best.ckpt",
+    "checkpoint_origin": "Google Drive archive linked by official README; selected member downloaded using HTTP ranges",
+    "strict_checkpoint": true,
+    "config": "Official carla_model/carla_original, voxel0.1m, gt_sdf=False, gt_mask=False, trim=True, mask_threshold0.1m",
+    "runtime": "torch2.4.1+cu118, pytorch3d0.7.7 compiled from official source, spconv-cu118, lightning1.9.4. Official enable_flash=False PyTorch attention; CUDA ABI prevented installed FlashAttention import."
+  },
+  "dggt": {
+    "repository": "https://github.com/xiaomi-research/dggt",
+    "revision": "a3276d2bbe4cbb03bcc117830b1836110a27adeb",
+    "render": "gsplat1.5.3, official mode2 RGB+ED equations plus sky, predicted semantic sky mask, timestamps0/.5s; input-view reconstruction. Camera matrices extended to4x4, point arrays float32.",
+    "geometry_dependency": "Depth and pose exactly equal to VGGT in all12 tested windows, not an independent failure family."
+  },
+  "remaining_models": "See all per-window official input, revision and weight records inside primary_aggregate / secondary_summary and remote predictions directories.",
+  "human_verdict": null,
+  "failure_ledger_delta": "V74-H2-F13"
+}
