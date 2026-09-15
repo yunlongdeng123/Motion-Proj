@@ -1,3 +1,7 @@
+# 当前：六日志有限补证完成，普遍phantom严重危害主张降级（2026-09-15）
+
+WS-SIM-INTERACTION-01/20260915-r1及COVERAGE-01：48前向、96扫描、390+59组官方策略/PDM执行。唯一新增名义接触在0061且对象为路锥，真实LiDAR基线仅1.6cm余量。删除FOV外缺失束8/8交叠、FOV内0/8；只注入路锥错误0/8，修复路锥仍7/8。主要差距为观测范围；恢复全部缺失后的2个Pi3X残余保留，但仅一个域适配/近边界来源。降级普遍phantom→严重事故，不以更多极端诊断或训练维持。累计18次HUGSIM闭环、72几何前向、644策略/车辆执行；PDM不是新位姿传感器闭环。整体目标active，人工verdict=null，failure_ledger_delta=V74-H2-F16。见docs/WORLDSIM_SIMULATION_INTERACTION_FINDINGS.md。以下为历史。
+
 # 当前：LiDAR策略和官方车辆模型实测完成，近车交互批次推进中（2026-09-15）
 
 WS-SIM-LIDAR-01：195组官方TransFuser及195组PDM车辆执行，nuScenes适配、非反应式4秒跟踪，不混称传感器闭环。三场景无新增演员交叠；全局BUILD尺度后24个完整扫描执行ADE变化−0.0738至+0.0949m，末端最大变化1.1398m。公交车82/84早交案例未新增碰撞且ADE改善，保留反例。GPU校准发现HUGSIM RGB+ED+S深度未除alpha，旧raw深度诊断需更正，LTF闭环不受该通道影响。6不同日志近车窗口已按真实状态先冻结后运行，不按模型误差挑选；目标active，人工verdict=null，failure_ledger_delta=V74-H2-F15。见docs/WORLDSIM_SIMULATION_LIDAR_IMPACT.md。以下为历史。

@@ -7,7 +7,7 @@ import sys,json
 from pathlib import Path
 import numpy as np
 B=Path('/root/autodl-tmp/external/worldsim_simimpact');sys.path[:0]=[str(B/'NAVSIM'),str(B/'HUGSIM'),str(B/'HUGSIM/sim')]
-R=Path(os.environ.get('SIMIMPACT_RUN_ROOT','/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1'))/'lidar_policy'
+R=Path(os.environ.get('SIMIMPACT_SIMULATION_INPUT_ROOT',str(Path(os.environ.get('SIMIMPACT_RUN_ROOT','/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1'))/'lidar_policy')))
 from nuplan.common.actor_state.ego_state import EgoState
 from nuplan.common.actor_state.state_representation import StateSE2,StateVector2D,TimePoint
 from nuplan.common.actor_state.vehicle_parameters import get_pacifica_parameters
@@ -20,8 +20,9 @@ sampling=TrajectorySampling(num_poses=40,interval_length=.1);vehicle=get_pacific
 inputs=json.loads((R/'policy_probe_summary.json').read_text());results=[]
 for name in sorted({r['scene'] for r in inputs}):
     ref=json.loads((R/f'{name}_log_reference.json').read_text());rows=[r for r in inputs if r['scene']==name]
-    initial=EgoState.build_from_rear_axle(rear_axle_pose=StateSE2(0,0,0),rear_axle_velocity_2d=StateVector2D(ref['initial_velocity_xy_mps'][0],0),
-        rear_axle_acceleration_2d=StateVector2D(0,0),tire_steering_angle=0,time_point=TimePoint(1000000),vehicle_parameters=vehicle)
+    causal='initial_acceleration_xy_mps2' in ref
+    initial=EgoState.build_from_rear_axle(rear_axle_pose=StateSE2(0,0,0),rear_axle_velocity_2d=StateVector2D(*ref['initial_velocity_xy_mps']) if causal else StateVector2D(ref['initial_velocity_xy_mps'][0],0),
+        rear_axle_acceleration_2d=StateVector2D(*ref['initial_acceleration_xy_mps2']) if causal else StateVector2D(0,0),tire_steering_angle=0,time_point=TimePoint(1000000),vehicle_parameters=vehicle)
     states=[]
     for row in rows:
         traj=Trajectory(np.array(row['trajectory']),trajectory_sampling=TrajectorySampling(num_poses=8,interval_length=.5))

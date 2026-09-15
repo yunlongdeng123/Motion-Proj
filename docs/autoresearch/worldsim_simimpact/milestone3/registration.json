@@ -1,0 +1,61 @@
+{
+  "task_id": "WS-SIM-INTERACTION-01",
+  "run_id": "20260915-r1",
+  "seed": 20260915,
+  "stage": "Metadata-selected natural interaction discovery; no independent test claim",
+  "selection": {
+    "scene_name_range": "scene-0001 through scene-0100",
+    "excluded_scenes": [
+      "scene-0013",
+      "scene-0038",
+      "scene-0041"
+    ],
+    "excluded_logs": "All logs containing the three initial simulation scenes",
+    "max_windows": 6,
+    "distinct_logs": true,
+    "window": "First qualifying keyframe from index 2 with >= 4 seconds of future reference",
+    "order": "scene name then chronological index; no severity sorting",
+    "lead_vehicle_center_forward_m": [
+      4,
+      25
+    ],
+    "lead_vehicle_center_lateral_abs_max_m": 2.0,
+    "lead_vehicle_min_lidar_points": 5,
+    "ego_speed_mps": [
+      2,
+      15
+    ],
+    "four_second_heading_change_abs_max_rad": 0.2
+  },
+  "models": [
+    "vggt",
+    "omega512",
+    "dvgt1",
+    "pi3x"
+  ],
+  "variants": [
+    "six",
+    "twelve"
+  ],
+  "geometry_inputs": "First frame or first two frames RGB; common first six output maps",
+  "controls": [
+    "Known calibration / poses",
+    "native scale and one BUILD LiDAR scalar",
+    "real LiDAR baseline",
+    "full reconstructed scan",
+    "oracle early/late/missing hybrids"
+  ],
+  "downstream": "Official TransFuser RGB+LiDAR and official NAVSIM PDMSimulator; nuScenes adapter, not full native benchmark",
+  "outcomes": [
+    "tracked position and acceleration",
+    "recorded-actor overlap with baseline checks",
+    "reference trajectory error"
+  ],
+  "stop_rule": "One six-log metadata-selected batch. If no residual harm after ordinary scale controls, lower first-return-to-serious-harm claim; do not make synthetic geometry more extreme.",
+  "old_AV2_reserve_access": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F13",
+    "V74-H2-F14"
+  ]
+}

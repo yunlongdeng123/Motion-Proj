@@ -1,0 +1,23 @@
+{
+  "task": "WS-SIM-INTERACTION-COVERAGE-01",
+  "parent": "WS-SIM-INTERACTION-01",
+  "scene": "scene-0061",
+  "selection": "Only new nominal actor-overlap scene in frozen six-log cohort; selected after discovery, not independent validation",
+  "purpose": "Separate common camera field-of-view limits, missing-return effect and cone-local errors before a physics-harm claim",
+  "conditions": [
+    "real",
+    "GT_FOV_only",
+    "GT_without_common_missing",
+    "missing_inside_fov_only",
+    "missing_outside_fov_only",
+    "full_restore_all_missing",
+    "full_restore_outside_fov",
+    "full_restore_inside_fov_missing",
+    "cone_only_error",
+    "full_restore_cones"
+  ],
+  "information": "All restore/hybrid conditions use oracle real LiDAR; FOV uses known cameras. These are diagnostics, not same-budget method improvements.",
+  "fov_boundary": "Geometric image field of view, not occlusion-tested visibility",
+  "human_verdict": null,
+  "stop_rule": "One coverage/local restoration batch on the discovered scene; no more extreme synthetic perturbations"
+}

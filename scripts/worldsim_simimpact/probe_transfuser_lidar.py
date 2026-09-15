@@ -33,7 +33,11 @@ for name in sorted(p.stem for p in (R/'inputs').glob('*.json')):
     ref=json.loads(ref_file.read_text());views=json.loads((R/'inputs'/f'{name}.json').read_text())['views']
     rgb={v['camera']:np.array(Image.open(v['image']).convert('RGB')) for v in views[:6] if v['camera'] in ['CAM_FRONT','CAM_FRONT_LEFT','CAM_FRONT_RIGHT']}
     info={'ego_pos':[0.,0.,0.],'ego_steer':0.,'ego_velo':float(ref['initial_velocity_xy_mps'][0]),'accelerate':0.}
-    data=parse_raw(({'rgb':rgb},info))['input'];gt=np.load(O/'scans'/name/'real.npz');gtpoints=gt['points'];origin=gt['origin'];directions=gt['directions'];ranges=gt['ranges']
+    data=parse_raw(({'rgb':rgb},info))['input']
+    if 'initial_acceleration_xy_mps2' in ref:
+        data.ego_statuses[-1].ego_velocity=np.array(ref['initial_velocity_xy_mps'],dtype=np.float32)
+        data.ego_statuses[-1].ego_acceleration=np.array(ref['initial_acceleration_xy_mps2'],dtype=np.float32)
+    gt=np.load(O/'scans'/name/'real.npz');gtpoints=gt['points'];origin=gt['origin'];directions=gt['directions'];ranges=gt['ranges']
     out=O/'policy_outputs'/name;out.mkdir(parents=True,exist_ok=True)
     def predict(points):
         pc=np.zeros((6,len(points)),dtype=np.float32);pc[:3]=points.T;data.lidars[-1]=Lidar(pc)
@@ -57,7 +61,9 @@ for name in sorted(p.stem for p in (R/'inputs').glob('*.json')):
             'planned_actor_intersection_at_0p5s_samples':intersections,'planned_actor_intersection_any':any(intersections),
             'four_second_forward_m':float(traj[-1,0]),'four_second_lateral_m':float(traj[-1,1])}
     base_row={'scene':name,'condition':'real','trajectory':baseline.tolist(),'metrics':metrics(baseline),'initial_velocity_mps':info['ego_velo'],
-        'checkpoint':str(O/'assets/transfuser_seed_0.ckpt'),'latent':False,'strict_checkpoint_loading':True,'scope':'Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop'}
+        'checkpoint':str(O/'assets/transfuser_seed_0.ckpt'),'latent':False,'strict_checkpoint_loading':True,'scope':'Official policy + feature builder with nuScenes adapter; planned trajectory, not closed-loop',
+        'input_velocity_xy':data.ego_statuses[-1].ego_velocity.tolist(),'input_acceleration_xy':data.ego_statuses[-1].ego_acceleration.tolist(),
+        'status_source':ref.get('status_source','Forward finite-difference speed; zero lateral speed and acceleration from original client')}
     (out/'real.json').write_text(json.dumps(base_row,indent=2));np.save(out/'real_histogram.npy',basehist);all_rows.append(base_row)
     for rec in [r for r in completed if r['scene']==name]:
         key=f'{rec["method"]}_{rec["variant"]}_{rec["protocol"]}';scan=np.load(O/'scans'/name/f'{key}.npz');distance=scan['first_range'];finite=np.isfinite(distance);early=distance<ranges-.2;late=finite&(distance>ranges+.2)

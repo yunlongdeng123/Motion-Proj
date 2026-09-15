@@ -1,3 +1,5 @@
+> 后续六日志补证及观测范围恢复已完成，见 [交互发现与推进判定](WORLDSIM_SIMULATION_INTERACTION_FINDINGS.md)。以下数字属于相应早期批次。
+
 > 更新（2026-09-15）：后续195组LiDAR策略与官方车辆执行、深度通道更正见 [LiDAR影响实测](WORLDSIM_SIMULATION_LIDAR_IMPACT.md)。下面保留第一轮闭环记录；其中depth的旧“期望深度”泛称应以新报告的通道校准为准。
 
 # 重建几何是否实质影响端到端仿真：第一轮实际结果

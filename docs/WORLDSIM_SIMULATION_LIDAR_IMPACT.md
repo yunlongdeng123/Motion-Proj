@@ -1,3 +1,5 @@
+> 后续六日志补证及观测范围恢复已完成，见 [交互发现与推进判定](WORLDSIM_SIMULATION_INTERACTION_FINDINGS.md)。以下数字属于相应早期批次。
+
 # 重建几何是否实质影响仿真：LiDAR 策略与官方车辆模型实测
 
 2026-09-15；WS-SIM-IMPACT-01 / 20260915-r1；子实验 WS-SIM-LIDAR-01。目标 active，人工 verdict=null。当前没有确认自然前馈几何缺陷造成严重仿真危害；不能写“VGGT 及 SOTA 普遍导致事故/false-safe”。

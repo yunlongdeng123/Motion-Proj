@@ -14,6 +14,7 @@ cd "$R/scripts"
 mkdir -p "$R/lidar_policy/assets"
 ln -s /root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/lidar_policy/assets/transfuser_seed_0.ckpt "$R/lidar_policy/assets/transfuser_seed_0.ckpt"
 "$E" prepare_policy_log_reference.py > "$R/policy_log_reference.log" 2>&1
+"$E" prepare_causal_ego_status.py > "$R/causal_status.log" 2>&1
 for method in dvgt1 vggt omega512 pi3x; do
   "$F" infer_reconstruction.py --method "$method" > "$R/inference_${method}.log" 2>&1
 done
