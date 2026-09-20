@@ -213,3 +213,32 @@ CPU用时5.91秒；0次新检测、重建或生成，CUDA未初始化。审计�
 - 原始根为`/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/`与`WS-V75-SHAPE-PRIOR-AUDIT-01/`；归档包含全部JSON协议、条件、拟合、决策和CPU/逐帧轨迹。12份较大的条件JSON无损保存为`.json.gz`并验证解压内容逐字节一致，路径映射写入[provenance](../autoresearch/worldsim_v75/shape_feedback/provenance.json)；原始JSON及npy/npz/mp4仍在runs。
 - 新增`audit_shape_priors.py`、`run_shape_prior_feedback.py`、`assess_shape_feedback.py`、`export_shape_review_inputs.py`、`build_shape_feedback_review.py`。旧执行器增加显式冻结状态接口，默认原四组路径不变；第三方代码未改。
 - 本地同一审阅页`outputs/V75_Multiscene_Closed_Loop/index.html`新增真实视频、PNG/SVG/PDF和绘图数据，旧正反结果全部保留。`human_verdict:null`，`failure_ledger_refs:[V74-H2-F20,V74-H2-F22]`，`failure_ledger_delta:none`。
+
+## 唯一额外seed复核：主候选反向，小效应可由普通先验恢复
+
+`WS-V75-SHAPE-CONFIRM-01 / 20260920-r1`在读取任何新输出前[冻结协议](../autoresearch/worldsim_v75/shape_confirmation/protocol.json)：只用seed43、原两任务、原两份状态，117帧/15决策；不重新拟合，不变策略/输入幅度/时长。先跑两例GT条件基线，通过原门控后才跑四个配对分支，最多六段。上节seed42是发现，不能倒称预注册结果。结构仍沿用上述[组件图](../autoresearch/worldsim_v75/shape_feedback/figures/components.png)。
+
+指定02678d04为主候选，三个条件须同时成立：可见拟合相对固定类别的行进差>1m、平均自身ego参考动作误差更高、最大欠制动更高。阈值依据已曝光发现结果制定，在seed43之前写入；第二任务完整报告，不拿它替换失败的主候选。任何OOM/工程错误/GT基线失败停止队列，不追加seed或调阈值。
+
+两个GT基线都通过：动作误差中位数为0.419/0.366m/s²，最大欠制动0.597/1.407、最大额外制动1.583/1.034，全部117帧无参考重叠、横偏<1m。原动作逐帧回放相机矩阵差为0，因此此处不是GT基线失败或工程中断。
+
+| 日志 | seed | 配对行进差 m | 配对平均动作误差差 m/s² | 配对最大欠制动差 m/s² | 配对最大额外制动差 m/s² |
+|---|---:|---:|---:|---:|---:|
+| 02678d04，主候选 | 42 | +2.757 | +0.649 | +1.706 | −0.715 |
+| 02678d04，主候选 | 43 | **−0.324** | **−0.235** | **−0.147** | +0.032 |
+| 24642607 | 42 | +0.301 | +0.123 | +0.047 | 0 |
+| 24642607 | 43 | +0.257 | +0.119 | +0.117 | 0 |
+
+差值均为“可见拟合减固定类别”。动作误差参考各分支自己的ego状态。GT行进也随seed变化：第一任务33.591→32.442m，因此不能把跨seed差直接算作重建影响，结论依据同seed配对。
+
+![同输入的两seed配对进度与动作取舍](../autoresearch/worldsim_v75/shape_confirmation/figures/replication-summary.png)
+
+**主候选三项全部反向，按事前规则关闭。** seed43中，可见拟合平均动作误差0.194、最大欠制动1.442m/s²；类别先验为0.429、1.589。此前2.757m差异是真实的单次执行结果，但不能继续作为稳定代表badcase。没有新跑seed44、更长窗口、重新拟合或另换严重场景来保住它。也不能将两seed差异全部归因内部生成状态；观察器与闭环路径仍共同参与。
+
+![两任务、两seed的全部动作误差](../autoresearch/worldsim_v75/shape_confirmation/figures/all-action-errors.png)
+
+第二任务保留一个**小幅、在这两个seed同向且普通先验可修复**的现象。可见拟合的动作误差中位数0.557/0.532m/s²，均略高于原0.5门槛；类别先验为0.312/0.306，两个seed都满足原绝对门控。平均误差0.628→0.505、0.612→0.493，最大欠制动略降，最大额外制动同为1.034。类别分支与各自GT的行进差为+0.020/−0.001m，可见拟合为+0.321/+0.256m；没有用额外停车换指标。承认这个普通解，不把它包装成严重驾驶危害或复杂方法的必要性。是否具有论文级普遍性/价值并未通过这一个曝光任务证明。
+
+六段702帧/90次决策全部完成，队列483.84秒，峰值12.971GiB，无OOM；702帧精确回放均相机矩阵差0、无固定参考重叠。两个“seed×适配器”四宫格视频均完整117帧，保留全部实际画面。人工verdict均null，`failure_ledger_delta:none`，不硬造新failure ID。
+
+原始根：`/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-CONFIRM-01/20260920-r1/`。归档包括协议、冻结条件引用、完整决策/逐帧轨迹/门控和[全部比较数据](../autoresearch/worldsim_v75/shape_confirmation/review/comparison.json)。六份大条件JSON无损保存为`.json.gz`并逐字节验证；原JSON、npy、npz、mp4留在runs，[provenance](../autoresearch/worldsim_v75/shape_confirmation/provenance.json)提供恢复入口。新执行器只允许已登记形状任务的固定seed43，旧默认seed42与原四分支保持不变；没有修改第三方源码或启动训练。

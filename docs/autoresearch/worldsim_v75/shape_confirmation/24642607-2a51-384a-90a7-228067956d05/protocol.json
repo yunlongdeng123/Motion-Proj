@@ -1,0 +1,42 @@
+{
+  "task_id": "WS-V75-SHAPE-CONFIRM-01",
+  "run_id": "24642607-2a51-384a-90a7-228067956d05",
+  "source_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-02/20260920-r1",
+  "base": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-DEV2-01/20260920-r1/cases/24642607-2a51-384a-90a7-228067956d05/start-6.5/base",
+  "source_log": "24642607-2a51-384a-90a7-228067956d05",
+  "target": "56569385-722e-4413-ba4d-068307bca2ab",
+  "frames": 117,
+  "blocks": 15,
+  "fps": 30,
+  "seed": 43,
+  "arms": [
+    "gt_clean",
+    "dvgt_class_prior",
+    "dvgt_visible_extent"
+  ],
+  "role": "two fixed ordinary cuboid adapters with matched near-surface gap; exposed development task",
+  "policy": "FasterRCNN ground-contact + Kalman + official nuPlan IDM;40m; frozen previous parameters",
+  "shared_inputs": [
+    "initial RGB",
+    "generic daylight driving text",
+    "20 prior RGB frames for policy tracker only",
+    "known calibration/ego/route",
+    "known official height map for perception and official GroundSnapper",
+    "GT map and other actor states/trajectories"
+  ],
+  "change_for_error_arms": "initial center, dimensions and orientation from frozen ordinary-prior readout; shared relative GT motion",
+  "gt_feedback_gate": {
+    "max_route_lateral_m": 1.0,
+    "no_reference_overlap": true,
+    "median_abs_online_oracle_acceleration_difference_mps2": 0.5,
+    "max_underbraking_mps2": 2.0,
+    "max_overbraking_mps2": 2.0
+  },
+  "error_arm_admission": "previous real/GT feedback passed; separate frozen shape protocol after CPU input-role audit; no residual ranking",
+  "stop": "any OOM immediate stop without retry; GT feedback failure blocks reconstruction comparison; no seeds/threshold/source search",
+  "engineering_revision": "distance gate before Hungarian; historical runs retain pre-fix outputs",
+  "conditioning_dir": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1/conditioning",
+  "human_verdict": null,
+  "failure_ledger_delta": "none",
+  "frozen_state_protocol": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-CONFIRM-01/20260920-r1/24642607-2a51-384a-90a7-228067956d05/frozen_state_protocol.json"
+}

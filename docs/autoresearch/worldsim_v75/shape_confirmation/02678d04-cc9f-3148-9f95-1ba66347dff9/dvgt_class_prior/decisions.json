@@ -1,0 +1,4139 @@
+[
+  {
+    "block": 0,
+    "observation_frame": 0,
+    "observation_source": "initial_real_rgb",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.054156976487918,
+      "steer": 0.003794858077607771,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 0,
+    "last_condition_frame": 4,
+    "ego_state": {
+      "x_m": -0.61154655545187,
+      "y_m": 1.289300811914444,
+      "z_m": 0.05341498067692174,
+      "yaw_rad": 2.0021126058842817,
+      "speed_mps": 10.68542649578293,
+      "steer_rad": 0.0018974290388038854,
+      "pitch_rad": -0.0366477008206045,
+      "roll_rad": 0.01794785939065091,
+      "velocity_x_mps": -4.551440715789795,
+      "velocity_y_mps": 9.668057441711426,
+      "yaw_rate_radps": 0.0035583741856301514,
+      "suspension_pitch_rad": 0.0007989547451221471,
+      "suspension_roll_rad": -5.736516125444933e-05,
+      "suspension_pitch_rate_radps": 0.007668010498273965,
+      "suspension_roll_rate_radps": -0.000735019783667803,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 0,
+      "timestamp_us": 1000000,
+      "lead": null,
+      "detections": [],
+      "acceleration_mps2": -0.324941858927508,
+      "steer_rad": 0.0018974290388038854,
+      "ego_state": {
+        "x_m": 0.0,
+        "y_m": 0.0,
+        "z_m": 0.0,
+        "yaw_rad": 2.001791220837205,
+        "speed_mps": 10.728751968659314,
+        "steer_rad": 0.0,
+        "pitch_rad": -0.04192159311182686,
+        "roll_rad": 0.02410193491542456,
+        "velocity_x_mps": -4.655090469286994,
+        "velocity_y_mps": 9.654516708751817,
+        "yaw_rate_radps": 0.0,
+        "suspension_pitch_rad": 0.0,
+        "suspension_roll_rad": 0.0,
+        "suspension_pitch_rate_radps": 0.0,
+        "suspension_roll_rate_radps": 0.0,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": null,
+    "oracle_acceleration_mps2": -0.324941858927508,
+    "acceleration_difference_mps2": 0.0,
+    "route_lateral_m": 0.012062927911091651,
+    "clearance": {
+      "id": "d13812c4-094e-4a8d-96da-afafd527e2cb",
+      "category": "WHEELCHAIR",
+      "distance_m": 12.425193432250179,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 1,
+    "observation_frame": 4,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.08842260780565737,
+      "steer": 0.003581532104271203,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 5,
+    "last_condition_frame": 12,
+    "ego_state": {
+      "x_m": -1.8061093457894326,
+      "y_m": 3.852899521047592,
+      "z_m": 0.16115058024058632,
+      "yaw_rad": 2.0034914022537964,
+      "speed_mps": 10.543950146448665,
+      "steer_rad": 0.0017907660521356015,
+      "pitch_rad": -0.04020173591713538,
+      "roll_rad": 0.025066409528046937,
+      "velocity_x_mps": -4.4384541511535645,
+      "velocity_y_mps": 9.564274787902832,
+      "yaw_rate_radps": 0.005950577001968322,
+      "suspension_pitch_rad": 0.0033891831520634287,
+      "suspension_roll_rad": -0.00033773853468414616,
+      "suspension_pitch_rate_radps": 0.006917828931007791,
+      "suspension_roll_rate_radps": -0.0009793876543712017,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 4,
+      "timestamp_us": 1133333,
+      "lead": {
+        "box": [
+          655.43212890625,
+          384.48138427734375,
+          712.7832641601562,
+          432.7455139160156
+        ],
+        "score": 0.9903163313865662,
+        "class_id": 3,
+        "world_center": [
+          -15.74970064222521,
+          36.400494986731104
+        ],
+        "contact_edge_world": [
+          [
+            -16.433540849689628,
+            36.18634289791284,
+            0.6825375299018048
+          ],
+          [
+            -15.065860434760792,
+            36.61464707554938,
+            0.651287611029315
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -4.467223061453636,
+          9.706815003696974
+        ],
+        "gap_m": 35.750505311169746,
+        "lead_speed_mps": 10.68542649578293
+      },
+      "detections": [
+        {
+          "box": [
+            655.43212890625,
+            384.48138427734375,
+            712.7832641601562,
+            432.7455139160156
+          ],
+          "score": 0.9903163313865662,
+          "class_id": 3,
+          "world_center": [
+            -15.74970064222521,
+            36.400494986731104
+          ],
+          "contact_edge_world": [
+            [
+              -16.433540849689628,
+              36.18634289791284,
+              0.6825375299018048
+            ],
+            [
+              -15.065860434760792,
+              36.61464707554938,
+              0.651287611029315
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -4.467223061453636,
+            9.706815003696974
+          ]
+        }
+      ],
+      "acceleration_mps2": -0.5305356468339443,
+      "steer_rad": 0.0017907660521356015,
+      "ego_state": {
+        "x_m": -0.61154655545187,
+        "y_m": 1.289300811914444,
+        "z_m": 0.05341498067692174,
+        "yaw_rad": 2.0021126058842817,
+        "speed_mps": 10.68542649578293,
+        "steer_rad": 0.0018974290388038854,
+        "pitch_rad": -0.0366477008206045,
+        "roll_rad": 0.01794785939065091,
+        "velocity_x_mps": -4.551440715789795,
+        "velocity_y_mps": 9.668057441711426,
+        "yaw_rate_radps": 0.0035583741856301514,
+        "suspension_pitch_rad": 0.0007989547451221471,
+        "suspension_roll_rad": -5.736516125444933e-05,
+        "suspension_pitch_rate_radps": 0.007668010498273965,
+        "suspension_roll_rate_radps": -0.000735019783667803,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": null,
+    "oracle_acceleration_mps2": -0.303669319030583,
+    "acceleration_difference_mps2": -0.2268663278033613,
+    "route_lateral_m": 0.015594600040300655,
+    "clearance": {
+      "id": "d13812c4-094e-4a8d-96da-afafd527e2cb",
+      "category": "WHEELCHAIR",
+      "distance_m": 14.722693318712427,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 2,
+    "observation_frame": 12,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.0760656230513287,
+      "steer": 0.0033050889714412806,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 13,
+    "last_condition_frame": 20,
+    "ego_state": {
+      "x_m": -2.981543011446953,
+      "y_m": 6.387031111048699,
+      "z_m": 0.28670865637875664,
+      "yaw_rad": 2.0051103615341708,
+      "speed_mps": 10.422244997435289,
+      "steer_rad": 0.0016525444857206403,
+      "pitch_rad": -0.04813552922204436,
+      "roll_rad": 0.02422579905095291,
+      "velocity_x_mps": -4.387488842010498,
+      "velocity_y_mps": 9.453737258911133,
+      "yaw_rate_radps": 0.006118339083665836,
+      "suspension_pitch_rad": 0.0037431677781962318,
+      "suspension_roll_rad": -0.0004816536929909374,
+      "suspension_pitch_rate_radps": -0.0007525382102184781,
+      "suspension_roll_rate_radps": -0.0002302928206268056,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 12,
+      "timestamp_us": 1400000,
+      "lead": {
+        "box": [
+          663.5628051757812,
+          388.9098205566406,
+          719.5672607421875,
+          438.7285461425781
+        ],
+        "score": 0.9961263537406921,
+        "class_id": 3,
+        "world_center": [
+          -16.845071348392437,
+          39.007845430825256
+        ],
+        "contact_edge_world": [
+          [
+            -17.80524615209609,
+            39.485507471524805,
+            0.6512873679148619
+          ],
+          [
+            -15.88489654468879,
+            38.5301833901257,
+            0.6512882341741847
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -4.336412562453634,
+          9.73254760086423
+        ],
+        "gap_m": 35.105444166500114,
+        "lead_speed_mps": 10.65392606307126
+      },
+      "detections": [
+        {
+          "box": [
+            663.5628051757812,
+            388.9098205566406,
+            719.5672607421875,
+            438.7285461425781
+          ],
+          "score": 0.9961263537406921,
+          "class_id": 3,
+          "world_center": [
+            -16.845071348392437,
+            39.007845430825256
+          ],
+          "contact_edge_world": [
+            [
+              -17.80524615209609,
+              39.485507471524805,
+              0.6512873679148619
+            ],
+            [
+              -15.88489654468879,
+              38.5301833901257,
+              0.6512882341741847
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -4.336412562453634,
+            9.73254760086423
+          ]
+        },
+        {
+          "box": [
+            503.1098327636719,
+            397.32720947265625,
+            561.1940307617188,
+            444.61328125
+          ],
+          "score": 0.9514870047569275,
+          "class_id": 3,
+          "world_center": [
+            -19.23334068220894,
+            35.15783754158528
+          ],
+          "contact_edge_world": [
+            [
+              -20.51820296249366,
+              36.07577883970962,
+              0.6825375408081645
+            ],
+            [
+              -17.94847840192422,
+              34.23989624346093,
+              0.7137875595963743
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            -4.421278808525106,
+            9.57220864733326
+          ]
+        }
+      ],
+      "acceleration_mps2": -0.45639373830797225,
+      "steer_rad": 0.0016525444857206403,
+      "ego_state": {
+        "x_m": -1.8061093457894326,
+        "y_m": 3.852899521047592,
+        "z_m": 0.16115058024058632,
+        "yaw_rad": 2.0034914022537964,
+        "speed_mps": 10.543950146448665,
+        "steer_rad": 0.0017907660521356015,
+        "pitch_rad": -0.04020173591713538,
+        "roll_rad": 0.025066409528046937,
+        "velocity_x_mps": -4.4384541511535645,
+        "velocity_y_mps": 9.564274787902832,
+        "yaw_rate_radps": 0.005950577001968322,
+        "suspension_pitch_rad": 0.0033891831520634287,
+        "suspension_roll_rad": -0.00033773853468414616,
+        "suspension_pitch_rate_radps": 0.006917828931007791,
+        "suspension_roll_rate_radps": -0.0009793876543712017,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": null,
+    "oracle_acceleration_mps2": -0.23598549888392847,
+    "acceleration_difference_mps2": -0.22040823942404378,
+    "route_lateral_m": 0.01164487045135898,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 15.051686444176234,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 3,
+    "observation_frame": 20,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.02998329299035274,
+      "steer": 0.0027551639475248877,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 21,
+    "last_condition_frame": 28,
+    "ego_state": {
+      "x_m": -4.149978922089577,
+      "y_m": 8.900810379668236,
+      "z_m": 0.4163797330201181,
+      "yaw_rad": 2.006606864083714,
+      "speed_mps": 10.374271848583891,
+      "steer_rad": 0.0013775819737624438,
+      "pitch_rad": -0.04895543064843114,
+      "roll_rad": 0.026449270404358422,
+      "velocity_x_mps": -4.377933502197266,
+      "velocity_y_mps": 9.405275344848633,
+      "yaw_rate_radps": 0.005361709023189629,
+      "suspension_pitch_rad": 0.002058199473129985,
+      "suspension_roll_rad": -0.00046709022360581456,
+      "suspension_pitch_rate_radps": -0.005725351842848531,
+      "suspension_roll_rate_radps": 0.0001864266084287037,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 20,
+      "timestamp_us": 1666667,
+      "lead": null,
+      "detections": [
+        {
+          "box": [
+            551.5479736328125,
+            420.1314392089844,
+            590.9442749023438,
+            455.351806640625
+          ],
+          "score": 0.990127444267273,
+          "class_id": 3,
+          "world_center": [
+            -38.71926966796788,
+            74.029077307027
+          ],
+          "contact_edge_world": [
+            [
+              -41.47918995783741,
+              77.10904408450631,
+              -0.379962533030481
+            ],
+            [
+              -35.95934937809834,
+              70.94911052954767,
+              -0.22371259063382243
+            ]
+          ],
+          "track_id": 4,
+          "world_velocity": [
+            -4.38555793049908,
+            9.454632326262166
+          ]
+        },
+        {
+          "box": [
+            491.29815673828125,
+            410.46160888671875,
+            554.6520385742188,
+            463.20770263671875
+          ],
+          "score": 0.9812173843383789,
+          "class_id": 3,
+          "world_center": [
+            -20.45145968566333,
+            37.18163414857072
+          ],
+          "contact_edge_world": [
+            [
+              -21.94575301191248,
+              38.340012549498944,
+              0.6512873793386231
+            ],
+            [
+              -18.957166359414185,
+              36.023255747642494,
+              0.7137874529737944
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            -4.474631238051877,
+            8.850842303162768
+          ]
+        },
+        {
+          "box": [
+            668.1366577148438,
+            406.3085632324219,
+            724.7513427734375,
+            454.5633850097656
+          ],
+          "score": 0.9717034697532654,
+          "class_id": 3,
+          "world_center": [
+            -27.534338361419472,
+            63.773666039566294
+          ],
+          "contact_edge_world": [
+            [
+              -31.08207347418242,
+              69.1380483474893,
+              -0.19246247170061337
+            ],
+            [
+              -23.98660324865653,
+              58.40928373164328,
+              0.11200790155381646
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -4.38555793049908,
+            9.454632326262166
+          ]
+        }
+      ],
+      "acceleration_mps2": -0.17989975794211643,
+      "steer_rad": 0.0013775819737624438,
+      "ego_state": {
+        "x_m": -2.981543011446953,
+        "y_m": 6.387031111048699,
+        "z_m": 0.28670865637875664,
+        "yaw_rad": 2.0051103615341708,
+        "speed_mps": 10.422244997435289,
+        "steer_rad": 0.0016525444857206403,
+        "pitch_rad": -0.04813552922204436,
+        "roll_rad": 0.02422579905095291,
+        "velocity_x_mps": -4.387488842010498,
+        "velocity_y_mps": 9.453737258911133,
+        "yaw_rate_radps": 0.006118339083665836,
+        "suspension_pitch_rad": 0.0037431677781962318,
+        "suspension_roll_rad": -0.0004816536929909374,
+        "suspension_pitch_rate_radps": -0.0007525382102184781,
+        "suspension_roll_rate_radps": -0.0002302928206268056,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 38.070940388701246,
+      "center_world": [
+        -19.825468576496508,
+        45.46527032553676,
+        1.2475346793107114
+      ],
+      "route_lateral_center_m": -0.5905851632314221,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.768876644173368,
+    "acceleration_difference_mps2": 1.5889768862312517,
+    "route_lateral_m": 0.008841386131642995,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 11.23240076936047,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 4,
+    "observation_frame": 28,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.13779301704022018,
+      "steer": 0.001896770417864262,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 29,
+    "last_condition_frame": 36,
+    "ego_state": {
+      "x_m": -5.304952807463171,
+      "y_m": 11.378216551528931,
+      "z_m": 0.5427756244603021,
+      "yaw_rad": 2.0077810057999366,
+      "speed_mps": 10.153802745733502,
+      "steer_rad": 0.000948385208932131,
+      "pitch_rad": -0.046318055590307876,
+      "roll_rad": 0.02613275967731909,
+      "velocity_x_mps": -4.294988632202148,
+      "velocity_y_mps": 9.200695991516113,
+      "yaw_rate_radps": 0.00392461809458677,
+      "suspension_pitch_rad": 0.004800810101346626,
+      "suspension_roll_rad": -0.0003760107622020978,
+      "suspension_pitch_rate_radps": 0.01132947100381838,
+      "suspension_roll_rate_radps": 0.0004005854573779225,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 28,
+      "timestamp_us": 1933333,
+      "lead": {
+        "box": [
+          671.0382690429688,
+          415.92913818359375,
+          732.4445190429688,
+          470.5885925292969
+        ],
+        "score": 0.986971914768219,
+        "class_id": 3,
+        "world_center": [
+          -17.952123647256354,
+          41.390146005726585
+        ],
+        "contact_edge_world": [
+          [
+            -18.983508494831543,
+            42.0290494080827,
+            0.5887849627061224
+          ],
+          [
+            -16.920738799681164,
+            40.75124260337047,
+            0.6200383823999203
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -2.931160744509355,
+          6.547034807426223
+        ],
+        "gap_m": 31.984997909800178,
+        "lead_speed_mps": 7.172447294909945
+      },
+      "detections": [
+        {
+          "box": [
+            477.8809509277344,
+            418.7332458496094,
+            548.0753173828125,
+            479.7217712402344
+          ],
+          "score": 0.9876997470855713,
+          "class_id": 3,
+          "world_center": [
+            -19.843550458173418,
+            36.09306959034363
+          ],
+          "contact_edge_world": [
+            [
+              -20.974905239483274,
+              36.634858663960934,
+              0.6825375168797396
+            ],
+            [
+              -18.71219567686356,
+              35.55128051672634,
+              0.7137882846064649
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            -2.127818972760155,
+            4.104977903960775
+          ]
+        },
+        {
+          "box": [
+            671.0382690429688,
+            415.92913818359375,
+            732.4445190429688,
+            470.5885925292969
+          ],
+          "score": 0.986971914768219,
+          "class_id": 3,
+          "world_center": [
+            -17.952123647256354,
+            41.390146005726585
+          ],
+          "contact_edge_world": [
+            [
+              -18.983508494831543,
+              42.0290494080827,
+              0.5887849627061224
+            ],
+            [
+              -16.920738799681164,
+              40.75124260337047,
+              0.6200383823999203
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -2.931160744509355,
+            6.547034807426223
+          ]
+        },
+        {
+          "box": [
+            547.8709716796875,
+            428.07098388671875,
+            591.4481201171875,
+            465.8211364746094
+          ],
+          "score": 0.9631540775299072,
+          "class_id": 3,
+          "world_center": [
+            -35.76401460816989,
+            68.37369811046428
+          ],
+          "contact_edge_world": [
+            [
+              -37.805946729182246,
+              70.1440144118997,
+              -0.2549619973592341
+            ],
+            [
+              -33.722082487157536,
+              66.60338180902885,
+              -0.16121231022085114
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -14.016847611624382,
+            12.290467440058467
+          ]
+        }
+      ],
+      "acceleration_mps2": -0.8267581022413211,
+      "steer_rad": 0.000948385208932131,
+      "ego_state": {
+        "x_m": -4.149978922089577,
+        "y_m": 8.900810379668236,
+        "z_m": 0.4163797330201181,
+        "yaw_rad": 2.006606864083714,
+        "speed_mps": 10.374271848583891,
+        "steer_rad": 0.0013775819737624438,
+        "pitch_rad": -0.04895543064843114,
+        "roll_rad": 0.026449270404358422,
+        "velocity_x_mps": -4.377933502197266,
+        "velocity_y_mps": 9.405275344848633,
+        "yaw_rate_radps": 0.005361709023189629,
+        "suspension_pitch_rad": 0.002058199473129985,
+        "suspension_roll_rad": -0.00046709022360581456,
+        "suspension_pitch_rate_radps": -0.005725351842848531,
+        "suspension_roll_rate_radps": 0.0001864266084287037,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 35.297125818854646,
+      "center_world": [
+        -19.826912330273554,
+        45.46277940471401,
+        1.247489666237777
+      ],
+      "route_lateral_center_m": -0.5883409159677631,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.979226688233163,
+    "acceleration_difference_mps2": 1.152468585991842,
+    "route_lateral_m": 0.005566420504545141,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 7.474461579111661,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 5,
+    "observation_frame": 36,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.14126932828356165,
+      "steer": 0.0009389165489112578,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 37,
+    "last_condition_frame": 44,
+    "ego_state": {
+      "x_m": -6.436950455949308,
+      "y_m": 13.800545501236915,
+      "z_m": 0.6513713027712116,
+      "yaw_rad": 2.0085188940765435,
+      "speed_mps": 9.927771537941146,
+      "steer_rad": 0.0004694582744556289,
+      "pitch_rad": -0.03591360402372009,
+      "roll_rad": 0.026568651629979474,
+      "velocity_x_mps": -4.20615816116333,
+      "velocity_y_mps": 8.99271297454834,
+      "yaw_rate_radps": 0.002204335900839104,
+      "suspension_pitch_rad": 0.006439262734017479,
+      "suspension_roll_rad": -0.00024708482539682457,
+      "suspension_pitch_rate_radps": 0.0025017407243180427,
+      "suspension_roll_rate_radps": 0.0004881908690043297,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 36,
+      "timestamp_us": 2200000,
+      "lead": {
+        "box": [
+          673.80810546875,
+          413.1475524902344,
+          739.246337890625,
+          471.3455505371094
+        ],
+        "score": 0.9910596013069153,
+        "class_id": 3,
+        "world_center": [
+          -18.599600331962783,
+          42.7987458736051
+        ],
+        "contact_edge_world": [
+          [
+            -19.87255462989716,
+            43.966327458418284,
+            0.5262878053746756
+          ],
+          [
+            -17.326646034028403,
+            41.63116428879191,
+            0.6200385671443296
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -2.6920962049492445,
+          5.981624443135475
+        ],
+        "gap_m": 30.21865417919635,
+        "lead_speed_mps": 6.558862977074196
+      },
+      "detections": [
+        {
+          "box": [
+            647.9129028320312,
+            426.3349914550781,
+            677.82275390625,
+            455.1966857910156
+          ],
+          "score": 0.9973087310791016,
+          "class_id": 3,
+          "world_center": [
+            -36.87626660528171,
+            80.69890646033463
+          ],
+          "contact_edge_world": [
+            [
+              -37.67822377625642,
+              80.63496424949044,
+              -0.379961989395754
+            ],
+            [
+              -36.074309434307,
+              80.76284867117882,
+              -0.41121212173427324
+            ]
+          ],
+          "track_id": 4,
+          "world_velocity": [
+            1.086049607857186,
+            11.583842624760313
+          ]
+        },
+        {
+          "box": [
+            673.80810546875,
+            413.1475524902344,
+            739.246337890625,
+            471.3455505371094
+          ],
+          "score": 0.9910596013069153,
+          "class_id": 3,
+          "world_center": [
+            -18.599600331962783,
+            42.7987458736051
+          ],
+          "contact_edge_world": [
+            [
+              -19.87255462989716,
+              43.966327458418284,
+              0.5262878053746756
+            ],
+            [
+              -17.326646034028403,
+              41.63116428879191,
+              0.6200385671443296
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -2.6920962049492445,
+            5.981624443135475
+          ]
+        },
+        {
+          "box": [
+            456.52459716796875,
+            415.1788024902344,
+            541.74951171875,
+            484.852783203125
+          ],
+          "score": 0.9892503023147583,
+          "class_id": 3,
+          "world_center": [
+            -19.84013590132749,
+            36.01268792138181
+          ],
+          "contact_edge_world": [
+            [
+              -20.978544297627046,
+              36.40978080578675,
+              0.6825383697857565
+            ],
+            [
+              -18.701727505027932,
+              35.61559503697687,
+              0.7137880147852735
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            -1.0199248496191997,
+            1.8444406123822934
+          ]
+        },
+        {
+          "box": [
+            615.2999877929688,
+            428.60943603515625,
+            640.0814819335938,
+            454.45843505859375
+          ],
+          "score": 0.9873548150062561,
+          "class_id": 3,
+          "world_center": [
+            -40.34817357420203,
+            83.7719125824487
+          ],
+          "contact_edge_world": [
+            [
+              -41.40790423724429,
+              84.4393745371824,
+              -0.4424622756025429
+            ],
+            [
+              -39.28844291115977,
+              83.10445062771501,
+              -0.4206017841798726
+            ]
+          ],
+          "track_id": 6,
+          "world_velocity": [
+            -4.297184931837651,
+            9.19966911692223
+          ]
+        },
+        {
+          "box": [
+            543.8233032226562,
+            424.48876953125,
+            589.6196899414062,
+            461.8275451660156
+          ],
+          "score": 0.9553151726722717,
+          "class_id": 3,
+          "world_center": [
+            -36.78018183365569,
+            70.16327686715488
+          ],
+          "contact_edge_world": [
+            [
+              -38.789572237424885,
+              71.77432478021406,
+              -0.28621196330055865
+            ],
+            [
+              -34.7707914298865,
+              68.5522289540957,
+              -0.19246197415903588
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -13.395984300135224,
+            11.206927237528806
+          ]
+        }
+      ],
+      "acceleration_mps2": -0.8476159697013699,
+      "steer_rad": 0.0004694582744556289,
+      "ego_state": {
+        "x_m": -5.304952807463171,
+        "y_m": 11.378216551528931,
+        "z_m": 0.5427756244603021,
+        "yaw_rad": 2.0077810057999366,
+        "speed_mps": 10.153802745733502,
+        "steer_rad": 0.000948385208932131,
+        "pitch_rad": -0.046318055590307876,
+        "roll_rad": 0.02613275967731909,
+        "velocity_x_mps": -4.294988632202148,
+        "velocity_y_mps": 9.200695991516113,
+        "yaw_rate_radps": 0.00392461809458677,
+        "suspension_pitch_rad": 0.004800810101346626,
+        "suspension_roll_rad": -0.0003760107622020978,
+        "suspension_pitch_rate_radps": 0.01132947100381838,
+        "suspension_roll_rate_radps": 0.0004005854573779225,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 32.56733804380854,
+      "center_world": [
+        -19.825369711484143,
+        45.46187912804995,
+        1.2468612271576784
+      ],
+      "route_lateral_center_m": -0.5894555711329237,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -2.057388060820007,
+    "acceleration_difference_mps2": 1.209772091118637,
+    "route_lateral_m": 0.003154565027917445,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 3.880223330521444,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 6,
+    "observation_frame": 44,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.25501212297143333,
+      "steer": 6.254578956484404e-05,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 45,
+    "last_condition_frame": 52,
+    "ego_state": {
+      "x_m": -7.5331004980349565,
+      "y_m": 16.14295195801735,
+      "z_m": 0.7370719807379851,
+      "yaw_rad": 2.0088122148956113,
+      "speed_mps": 9.519753161235345,
+      "steer_rad": 3.127289478242202e-05,
+      "pitch_rad": -0.030027735737913137,
+      "roll_rad": 0.02537202691109041,
+      "velocity_x_mps": -4.036224365234375,
+      "velocity_y_mps": 8.62175178527832,
+      "yaw_rate_radps": 0.0005739391070633947,
+      "suspension_pitch_rad": 0.010215456256097584,
+      "suspension_roll_rad": -0.00011330084360965792,
+      "suspension_pitch_rate_radps": 0.01259530988165832,
+      "suspension_roll_rate_radps": 0.0004650639197234404,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 44,
+      "timestamp_us": 2466667,
+      "lead": {
+        "box": [
+          677.2367553710938,
+          403.79425048828125,
+          749.9364624023438,
+          468.10980224609375
+        ],
+        "score": 0.9849045276641846,
+        "class_id": 3,
+        "world_center": [
+          -17.569006666989097,
+          40.43204300355815
+        ],
+        "contact_edge_world": [
+          [
+            -18.33545681304118,
+            40.52773751988132,
+            0.6200383611290501
+          ],
+          [
+            -16.80255652093701,
+            40.33634848723497,
+            0.6200383692818985
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -1.6943007843287528,
+          3.714013999196459
+        ],
+        "gap_m": 26.148188389760158,
+        "lead_speed_mps": 4.082030974909335
+      },
+      "detections": [
+        {
+          "box": [
+            677.2367553710938,
+            403.79425048828125,
+            749.9364624023438,
+            468.10980224609375
+          ],
+          "score": 0.9849045276641846,
+          "class_id": 3,
+          "world_center": [
+            -17.569006666989097,
+            40.43204300355815
+          ],
+          "contact_edge_world": [
+            [
+              -18.33545681304118,
+              40.52773751988132,
+              0.6200383611290501
+            ],
+            [
+              -16.80255652093701,
+              40.33634848723497,
+              0.6200383692818985
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -1.6943007843287528,
+            3.714013999196459
+          ]
+        },
+        {
+          "box": [
+            647.72509765625,
+            414.73406982421875,
+            678.6758422851562,
+            442.7896728515625
+          ],
+          "score": 0.9844437837600708,
+          "class_id": 3,
+          "world_center": [
+            -35.17983483872776,
+            76.86999304348983
+          ],
+          "contact_edge_world": [
+            [
+              -35.916516632061544,
+              76.77208259876117,
+              -0.31746228732091586
+            ],
+            [
+              -34.44315304539397,
+              76.96790348821848,
+              -0.34871230062322445
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -8.222772909214232,
+            14.564975227681437
+          ]
+        },
+        {
+          "box": [
+            424.8710021972656,
+            403.9732666015625,
+            526.7410888671875,
+            484.58673095703125
+          ],
+          "score": 0.9574710726737976,
+          "class_id": 3,
+          "world_center": [
+            -19.48292499966551,
+            35.19181532578883
+          ],
+          "contact_edge_world": [
+            [
+              -20.587819976975517,
+              35.45436126852175,
+              0.6825377724246198
+            ],
+            [
+              -18.378030022355503,
+              34.92926938305591,
+              0.7137875634433613
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            -0.2745227637289017,
+            0.30290151943027177
+          ]
+        },
+        {
+          "box": [
+            546.1262817382812,
+            413.29736328125,
+            588.8479614257812,
+            451.8407897949219
+          ],
+          "score": 0.9383970499038696,
+          "class_id": 3,
+          "world_center": [
+            -33.23966078227409,
+            63.86036006368225
+          ],
+          "contact_edge_world": [
+            [
+              -35.39454650248037,
+              66.18645869729721,
+              -0.192462395539021
+            ],
+            [
+              -31.084775062067816,
+              61.53426143006728,
+              -0.0049622404994495994
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -4.208162466685344,
+            8.991774928429594
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.5300727378286,
+      "steer_rad": 3.127289478242202e-05,
+      "ego_state": {
+        "x_m": -6.436950455949308,
+        "y_m": 13.800545501236915,
+        "z_m": 0.6513713027712116,
+        "yaw_rad": 2.0085188940765435,
+        "speed_mps": 9.927771537941146,
+        "steer_rad": 0.0004694582744556289,
+        "pitch_rad": -0.03591360402372009,
+        "roll_rad": 0.026568651629979474,
+        "velocity_x_mps": -4.20615816116333,
+        "velocity_y_mps": 8.99271297454834,
+        "yaw_rate_radps": 0.002204335900839104,
+        "suspension_pitch_rad": 0.006439262734017479,
+        "suspension_roll_rad": -0.00024708482539682457,
+        "suspension_pitch_rate_radps": 0.0025017407243180427,
+        "suspension_roll_rate_radps": 0.0004881908690043297,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 29.905156098469988,
+      "center_world": [
+        -19.817432952523077,
+        45.46461432411983,
+        1.2457150589799884
+      ],
+      "route_lateral_center_m": -0.59784476380274,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -2.1701457265150568,
+    "acceleration_difference_mps2": 0.6400729886864567,
+    "route_lateral_m": -0.008593065866008455,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 1.4887198946337985,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 7,
+    "observation_frame": 52,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.34051117769898975,
+      "steer": -0.0008332613320563628,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 53,
+    "last_condition_frame": 60,
+    "ego_state": {
+      "x_m": -8.574634566534758,
+      "y_m": 18.368142260733602,
+      "z_m": 0.8058262496986602,
+      "yaw_rad": 2.008682166623602,
+      "speed_mps": 8.974934595894608,
+      "steer_rad": -0.0004166306660281814,
+      "pitch_rad": -0.02725646229686495,
+      "roll_rad": 0.020822828597295586,
+      "velocity_x_mps": -3.804338216781616,
+      "velocity_y_mps": 8.128743171691895,
+      "yaw_rate_radps": -0.0009664093883897803,
+      "suspension_pitch_rad": 0.01450799603778807,
+      "suspension_roll_rad": 7.355967990503291e-06,
+      "suspension_pitch_rate_radps": 0.011496704033168577,
+      "suspension_roll_rate_radps": 0.0004022373676134525,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 52,
+      "timestamp_us": 2733333,
+      "lead": {
+        "box": [
+          683.2276000976562,
+          397.4588317871094,
+          760.2861938476562,
+          467.4671325683594
+        ],
+        "score": 0.9793247580528259,
+        "class_id": 3,
+        "world_center": [
+          -17.353290988117475,
+          39.96926242712472
+        ],
+        "contact_edge_world": [
+          [
+            -17.975311622146208,
+            39.8253290502188,
+            0.6436272735507862
+          ],
+          [
+            -16.731270354088743,
+            40.11319580403063,
+            0.6200366027377304
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -1.0173338167273291,
+          2.2032584563676645
+        ],
+        "gap_m": 23.328172256760908,
+        "lead_speed_mps": 2.426755352150987
+      },
+      "detections": [
+        {
+          "box": [
+            646.0279541015625,
+            406.6847839355469,
+            676.564453125,
+            434.8098449707031
+          ],
+          "score": 0.9905610680580139,
+          "class_id": 3,
+          "world_center": [
+            -33.16758011614763,
+            72.18003728567075
+          ],
+          "contact_edge_world": [
+            [
+              -34.101244897576336,
+              72.72569343520819,
+              -0.25496215597633487
+            ],
+            [
+              -32.23391533471893,
+              71.6343811361333,
+              -0.22371153523104015
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -2.578999551021461,
+            17.070205068772943
+          ]
+        },
+        {
+          "box": [
+            683.2276000976562,
+            397.4588317871094,
+            760.2861938476562,
+            467.4671325683594
+          ],
+          "score": 0.9793247580528259,
+          "class_id": 3,
+          "world_center": [
+            -17.353290988117475,
+            39.96926242712472
+          ],
+          "contact_edge_world": [
+            [
+              -17.975311622146208,
+              39.8253290502188,
+              0.6436272735507862
+            ],
+            [
+              -16.731270354088743,
+              40.11319580403063,
+              0.6200366027377304
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -1.0173338167273291,
+            2.2032584563676645
+          ]
+        },
+        {
+          "box": [
+            375.5343933105469,
+            393.6157531738281,
+            500.92169189453125,
+            492.5438232421875
+          ],
+          "score": 0.9720252156257629,
+          "class_id": 3,
+          "world_center": [
+            -19.02760901273437,
+            34.09499410012206
+          ],
+          "contact_edge_world": [
+            [
+              -19.979595074820576,
+              34.045227326724046,
+              0.7137881442350893
+            ],
+            [
+              -18.075622950648164,
+              34.14476087352007,
+              0.7137880182609666
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            0.25811158113642796,
+            -0.8447765725406382
+          ]
+        },
+        {
+          "box": [
+            615.1958618164062,
+            410.08477783203125,
+            638.86279296875,
+            432.7307434082031
+          ],
+          "score": 0.9719864726066589,
+          "class_id": 3,
+          "world_center": [
+            -36.27283294201321,
+            75.40319172267658
+          ],
+          "contact_edge_world": [
+            [
+              -36.75199195917462,
+              75.20828902247423,
+              -0.25496199529040364
+            ],
+            [
+              -35.7936739248518,
+              75.59809442287893,
+              -0.286212286748758
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -6.052943839056656,
+            11.649008746603103
+          ]
+        },
+        {
+          "box": [
+            543.3515625,
+            406.53973388671875,
+            584.8809204101562,
+            445.82928466796875
+          ],
+          "score": 0.9621495604515076,
+          "class_id": 3,
+          "world_center": [
+            -30.796671001539693,
+            59.417552816904106
+          ],
+          "contact_edge_world": [
+            [
+              -32.11971713991124,
+              60.46124894006097,
+              -0.03621296648486094
+            ],
+            [
+              -29.473624863168144,
+              58.37385669374724,
+              0.057537481651228184
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            -4.037741418328509,
+            8.621040800829377
+          ]
+        },
+        {
+          "box": [
+            581.8341064453125,
+            395.7889709472656,
+            615.3609008789062,
+            432.2913818359375
+          ],
+          "score": 0.5698119401931763,
+          "class_id": 8,
+          "world_center": [
+            -38.91870428991682,
+            77.81582905746004
+          ],
+          "contact_edge_world": [
+            [
+              -40.49578842286522,
+              79.21641768172717,
+              -0.3799628818280891
+            ],
+            [
+              -37.34162015696842,
+              76.41524043319292,
+              -0.28621210285174614
+            ]
+          ],
+          "track_id": 4,
+          "world_velocity": [
+            -0.6259459667920417,
+            3.9843030178665124
+          ]
+        }
+      ],
+      "acceleration_mps2": -2.0430670661939385,
+      "steer_rad": -0.0004166306660281814,
+      "ego_state": {
+        "x_m": -7.5331004980349565,
+        "y_m": 16.14295195801735,
+        "z_m": 0.7370719807379851,
+        "yaw_rad": 2.0088122148956113,
+        "speed_mps": 9.519753161235345,
+        "steer_rad": 3.127289478242202e-05,
+        "pitch_rad": -0.030027735737913137,
+        "roll_rad": 0.02537202691109041,
+        "velocity_x_mps": -4.036224365234375,
+        "velocity_y_mps": 8.62175178527832,
+        "yaw_rate_radps": 0.0005739391070633947,
+        "suspension_pitch_rad": 0.010215456256097584,
+        "suspension_roll_rad": -0.00011330084360965792,
+        "suspension_pitch_rate_radps": 0.01259530988165832,
+        "suspension_roll_rate_radps": 0.0004650639197234404,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 27.31688902135175,
+      "center_world": [
+        -19.800347937245,
+        45.471197282993636,
+        1.2443364222587052
+      ],
+      "route_lateral_center_m": -0.6161541299824664,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -2.1227346232652193,
+    "acceleration_difference_mps2": 0.07966755707128081,
+    "route_lateral_m": -0.01692109101640852,
+    "clearance": {
+      "id": "4d8b2da8-f934-4738-8257-b9a24a34966e",
+      "category": "BICYCLIST",
+      "distance_m": 1.227403138895797,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 8,
+    "observation_frame": 60,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.3751116698742259,
+      "steer": -0.0013329273376190768,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 61,
+    "last_condition_frame": 68,
+    "ego_state": {
+      "x_m": -9.550497724567892,
+      "y_m": 20.454489374676704,
+      "z_m": 0.8668733769592982,
+      "yaw_rad": 2.0082581216110644,
+      "speed_mps": 8.374755173872504,
+      "steer_rad": -0.0006664636688095384,
+      "pitch_rad": -0.023215425730009013,
+      "roll_rad": 0.016861358724628305,
+      "velocity_x_mps": -3.546867609024048,
+      "velocity_y_mps": 7.586583614349365,
+      "yaw_rate_radps": -0.0018424424248177859,
+      "suspension_pitch_rad": 0.016865529500208788,
+      "suspension_roll_rad": 9.14405056774788e-05,
+      "suspension_pitch_rate_radps": 0.004989609492837938,
+      "suspension_roll_rate_radps": 0.00022860341437542652,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 60,
+      "timestamp_us": 3000000,
+      "lead": {
+        "box": [
+          685.0840454101562,
+          394.4698486328125,
+          772.9408569335938,
+          471.1358947753906
+        ],
+        "score": 0.9893312454223633,
+        "class_id": 3,
+        "world_center": [
+          -17.398251334311333,
+          40.05712109086907
+        ],
+        "contact_edge_world": [
+          [
+            -18.012656486388956,
+            39.84760919348763,
+            0.6456804120252899
+          ],
+          [
+            -16.783846182233713,
+            40.26663298825051,
+            0.6200391044631222
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.6220225733616696,
+          1.323089496781706
+        ],
+        "gap_m": 21.033274883220827,
+        "lead_speed_mps": 1.462009766805001
+      },
+      "detections": [
+        {
+          "box": [
+            648.1326904296875,
+            404.78375244140625,
+            677.0762939453125,
+            432.16357421875
+          ],
+          "score": 0.9980514049530029,
+          "class_id": 3,
+          "world_center": [
+            -31.057999315676415,
+            67.68752347867411
+          ],
+          "contact_edge_world": [
+            [
+              -31.657581706798858,
+              67.75687189353073,
+              -0.16121250577421842
+            ],
+            [
+              -30.458416924553973,
+              67.61817506381749,
+              -0.16121281275484733
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -3.805603145754306,
+            8.128150816613262
+          ]
+        },
+        {
+          "box": [
+            685.0840454101562,
+            394.4698486328125,
+            772.9408569335938,
+            471.1358947753906
+          ],
+          "score": 0.9893312454223633,
+          "class_id": 3,
+          "world_center": [
+            -17.398251334311333,
+            40.05712109086907
+          ],
+          "contact_edge_world": [
+            [
+              -18.012656486388956,
+              39.84760919348763,
+              0.6456804120252899
+            ],
+            [
+              -16.783846182233713,
+              40.26663298825051,
+              0.6200391044631222
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.6220225733616696,
+            1.323089496781706
+          ]
+        },
+        {
+          "box": [
+            539.5828247070312,
+            403.0495910644531,
+            582.8807373046875,
+            443.7498474121094
+          ],
+          "score": 0.9869743585586548,
+          "class_id": 3,
+          "world_center": [
+            -29.561684378139265,
+            57.28709331962472
+          ],
+          "contact_edge_world": [
+            [
+              -30.726402805630816,
+              58.125137542422735,
+              -0.0049627746305387355
+            ],
+            [
+              -28.396965950647715,
+              56.4490490968267,
+              0.0887876910601606
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            -0.8841667070312336,
+            2.5785829998754153
+          ]
+        },
+        {
+          "box": [
+            311.6666564941406,
+            385.7986755371094,
+            473.9761657714844,
+            507.3836975097656
+          ],
+          "score": 0.9359081983566284,
+          "class_id": 3,
+          "world_center": [
+            -18.87563336757868,
+            33.57941178662451
+          ],
+          "contact_edge_world": [
+            [
+              -19.862150190736937,
+              33.42214708838466,
+              0.7137887529248239
+            ],
+            [
+              -17.889116544420418,
+              33.73667648486436,
+              0.7137889732808509
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            0.5033143970985635,
+            -1.4220479331657365
+          ]
+        },
+        {
+          "box": [
+            612.50341796875,
+            403.107666015625,
+            638.6973876953125,
+            431.7303771972656
+          ],
+          "score": 0.8794543147087097,
+          "class_id": 3,
+          "world_center": [
+            -33.07779012254909,
+            68.82001400463581
+          ],
+          "contact_edge_world": [
+            [
+              -33.649626726368176,
+              68.88787471576833,
+              -0.19246287935498163
+            ],
+            [
+              -32.505953518729996,
+              68.75215329350328,
+              -0.192462042789443
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -1.0598521765638687,
+            9.163700363217046
+          ]
+        },
+        {
+          "box": [
+            576.4349975585938,
+            394.11572265625,
+            609.1976318359375,
+            429.3742980957031
+          ],
+          "score": 0.7297977209091187,
+          "class_id": 3,
+          "world_center": [
+            -35.829601529231994,
+            71.52029087198297
+          ],
+          "contact_edge_world": [
+            [
+              -36.610379629498475,
+              71.62606362021074,
+              -0.22371151956740132
+            ],
+            [
+              -35.04882342896552,
+              71.41451812375519,
+              -0.22371188952855903
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -4.2193189717293285,
+            6.879440089668016
+          ]
+        },
+        {
+          "box": [
+            644.66796875,
+            396.3733215332031,
+            672.8074951171875,
+            419.454345703125
+          ],
+          "score": 0.5777153968811035,
+          "class_id": 3,
+          "world_center": [
+            -41.00638087309536,
+            89.06408578711317
+          ],
+          "contact_edge_world": [
+            [
+              -41.89619574354343,
+              89.25825348308626,
+              -0.5674623792606499
+            ],
+            [
+              -40.11656600264729,
+              88.86991809114008,
+              -0.5674623992017094
+            ]
+          ],
+          "track_id": 4,
+          "world_velocity": [
+            -1.9591043313981629,
+            8.707703881435368
+          ]
+        }
+      ],
+      "acceleration_mps2": -2.2506700192453555,
+      "steer_rad": -0.0006664636688095384,
+      "ego_state": {
+        "x_m": -8.574634566534758,
+        "y_m": 18.368142260733602,
+        "z_m": 0.8058262496986602,
+        "yaw_rad": 2.008682166623602,
+        "speed_mps": 8.974934595894608,
+        "steer_rad": -0.0004166306660281814,
+        "pitch_rad": -0.02725646229686495,
+        "roll_rad": 0.020822828597295586,
+        "velocity_x_mps": -3.804338216781616,
+        "velocity_y_mps": 8.128743171691895,
+        "yaw_rate_radps": -0.0009664093883897803,
+        "suspension_pitch_rad": 0.01450799603778807,
+        "suspension_roll_rad": 7.355967990503291e-06,
+        "suspension_pitch_rate_radps": 0.011496704033168577,
+        "suspension_roll_rate_radps": 0.0004022373676134525,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 24.866002001210454,
+      "center_world": [
+        -19.775913899511515,
+        45.48102276391706,
+        1.2429488616329376
+      ],
+      "route_lateral_center_m": -0.6424872095770864,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.9492930415362126,
+    "acceleration_difference_mps2": -0.30137697770914285,
+    "route_lateral_m": -0.01993959174322959,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 1.4112365154724282,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 9,
+    "observation_frame": 68,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.305107609280616,
+      "steer": -0.0014097306025785614,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 69,
+    "last_condition_frame": 76,
+    "ego_state": {
+      "x_m": -10.464767906177999,
+      "y_m": 22.41149468773794,
+      "z_m": 0.9077161230801547,
+      "yaw_rad": 2.0077341184766837,
+      "speed_mps": 7.886584219453956,
+      "steer_rad": -0.0007048653012892807,
+      "pitch_rad": -0.017380141230051563,
+      "roll_rad": 0.01732510265061376,
+      "velocity_x_mps": -3.336487054824829,
+      "velocity_y_mps": 7.146052837371826,
+      "yaw_rate_radps": -0.001992500862238414,
+      "suspension_pitch_rad": 0.015065696072330156,
+      "suspension_roll_rad": 0.00012205547907662868,
+      "suspension_pitch_rate_radps": -0.007791482332701685,
+      "suspension_roll_rate_radps": 3.956835945638044e-05,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 68,
+      "timestamp_us": 3266667,
+      "lead": {
+        "box": [
+          688.8915405273438,
+          392.20587158203125,
+          786.5559692382812,
+          471.2012939453125
+        ],
+        "score": 0.928654134273529,
+        "class_id": 3,
+        "world_center": [
+          -17.981493439138504,
+          41.50186981797498
+        ],
+        "contact_edge_world": [
+          [
+            -18.76242730083493,
+            41.58474233745045,
+            0.5887888030581117
+          ],
+          [
+            -17.200559577442075,
+            41.418997298499505,
+            0.6200385898689418
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.5604511251067358,
+          1.2409491758019535
+        ],
+        "gap_m": 19.955134100847598,
+        "lead_speed_mps": 1.3615192692912923
+      },
+      "detections": [
+        {
+          "box": [
+            648.4696655273438,
+            395.60137939453125,
+            677.7483520507812,
+            421.29876708984375
+          ],
+          "score": 0.9989442229270935,
+          "class_id": 3,
+          "world_center": [
+            -34.25797522040879,
+            74.81309668048932
+          ],
+          "contact_edge_world": [
+            [
+              -34.7646865332718,
+              74.53186427553103,
+              -0.286212119293491
+            ],
+            [
+              -33.75126390754578,
+              75.09432908544761,
+              -0.3174616521380531
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -2.3141029553842056,
+            5.653388177082791
+          ]
+        },
+        {
+          "box": [
+            202.0916748046875,
+            378.64715576171875,
+            424.3066711425781,
+            534.9743041992188
+          ],
+          "score": 0.9936556816101074,
+          "class_id": 3,
+          "world_center": [
+            -18.730155958952082,
+            32.81172982324323
+          ],
+          "contact_edge_world": [
+            [
+              -19.78327812925916,
+              32.54889112873589,
+              0.7137878087869807
+            ],
+            [
+              -17.677033788645005,
+              33.07456851775058,
+              0.7137884450288934
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            0.6185068262088778,
+            -1.8286838412228281
+          ]
+        },
+        {
+          "box": [
+            535.7978515625,
+            399.7726745605469,
+            579.77490234375,
+            440.7049560546875
+          ],
+          "score": 0.970234751701355,
+          "class_id": 3,
+          "world_center": [
+            -29.355968833800333,
+            57.054751672370074
+          ],
+          "contact_edge_world": [
+            [
+              -30.386401082301106,
+              57.70218724561104,
+              0.003148935665748809
+            ],
+            [
+              -28.325536585299556,
+              56.407316099129105,
+              0.08878726318123276
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            0.6610169113109636,
+            -0.4792255025747929
+          ]
+        },
+        {
+          "box": [
+            688.8915405273438,
+            392.20587158203125,
+            786.5559692382812,
+            471.2012939453125
+          ],
+          "score": 0.928654134273529,
+          "class_id": 3,
+          "world_center": [
+            -17.981493439138504,
+            41.50186981797498
+          ],
+          "contact_edge_world": [
+            [
+              -18.76242730083493,
+              41.58474233745045,
+              0.5887888030581117
+            ],
+            [
+              -17.200559577442075,
+              41.418997298499505,
+              0.6200385898689418
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.5604511251067358,
+            1.2409491758019535
+          ]
+        },
+        {
+          "box": [
+            616.3082275390625,
+            395.9178466796875,
+            638.754150390625,
+            423.0146179199219
+          ],
+          "score": 0.8678168058395386,
+          "class_id": 3,
+          "world_center": [
+            -34.44575168084012,
+            71.97004359582243
+          ],
+          "contact_edge_world": [
+            [
+              -34.92829303840473,
+              71.99401652876892,
+              -0.2237120830069066
+            ],
+            [
+              -33.963210323275504,
+              71.94607066287594,
+              -0.22371200023032634
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -1.7565448974850462,
+            7.986614935407905
+          ]
+        },
+        {
+          "box": [
+            568.8959350585938,
+            385.1471862792969,
+            619.49609375,
+            428.0575256347656
+          ],
+          "score": 0.5581666827201843,
+          "class_id": 8,
+          "world_center": [
+            -33.48362863292277,
+            67.2853402572975
+          ],
+          "contact_edge_world": [
+            [
+              -34.775502150541016,
+              67.88717200641881,
+              -0.19246230479369153
+            ],
+            [
+              -32.19175511530453,
+              66.6835085081762,
+              -0.1299615723483889
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -5.730173081943169,
+            4.622656321822883
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.8306456556836959,
+      "steer_rad": -0.0007048653012892807,
+      "ego_state": {
+        "x_m": -9.550497724567892,
+        "y_m": 20.454489374676704,
+        "z_m": 0.8668733769592982,
+        "yaw_rad": 2.0082581216110644,
+        "speed_mps": 8.374755173872504,
+        "steer_rad": -0.0006664636688095384,
+        "pitch_rad": -0.023215425730009013,
+        "roll_rad": 0.016861358724628305,
+        "velocity_x_mps": -3.546867609024048,
+        "velocity_y_mps": 7.586583614349365,
+        "yaw_rate_radps": -0.0018424424248177859,
+        "suspension_pitch_rad": 0.016865529500208788,
+        "suspension_roll_rad": 9.14405056774788e-05,
+        "suspension_pitch_rate_radps": 0.004989609492837938,
+        "suspension_roll_rate_radps": 0.00022860341437542652,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 22.5801566909344,
+      "center_world": [
+        -19.74711146625697,
+        45.49286567850501,
+        1.2416889165221627
+      ],
+      "route_lateral_center_m": -0.6736221663049031,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.7337587872350229,
+    "acceleration_difference_mps2": -0.096886868448673,
+    "route_lateral_m": -0.020170399483300662,
+    "clearance": {
+      "id": "5af65fb4-4f83-4107-bb38-fc20caa07f19",
+      "category": "BICYCLE",
+      "distance_m": 3.949200276434827,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 10,
+    "observation_frame": 76,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.30280704376430284,
+      "steer": -0.001162946330269175,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 77,
+    "last_condition_frame": 84,
+    "ego_state": {
+      "x_m": -11.32331021294427,
+      "y_m": 24.25146797632646,
+      "z_m": 0.9338823023168545,
+      "yaw_rad": 2.0072681889234105,
+      "speed_mps": 7.402092343816985,
+      "steer_rad": -0.0005814731651345875,
+      "pitch_rad": -0.009914686450020714,
+      "roll_rad": 0.019111387413289577,
+      "velocity_x_mps": -3.128528594970703,
+      "velocity_y_mps": 6.70844841003418,
+      "yaw_rate_radps": -0.0016249289480079747,
+      "suspension_pitch_rad": 0.013924590537539097,
+      "suspension_roll_rad": 0.00010996111051860257,
+      "suspension_pitch_rate_radps": -0.0017709720032395345,
+      "suspension_roll_rate_radps": -8.580301769462545e-05,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 76,
+      "timestamp_us": 3533333,
+      "lead": {
+        "box": [
+          693.7897338867188,
+          390.4840393066406,
+          804.7334594726562,
+          480.17529296875
+        ],
+        "score": 0.9907153844833374,
+        "class_id": 3,
+        "world_center": [
+          -18.00152039546937,
+          41.62286711671806
+        ],
+        "contact_edge_world": [
+          [
+            -18.781919235749065,
+            41.66406771478131,
+            0.5887865270506096
+          ],
+          [
+            -17.221121555189672,
+            41.581666518654814,
+            0.6200368549087714
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.4855406440948485,
+          1.1292806283693588
+        ],
+        "gap_m": 17.95420956563918,
+        "lead_speed_mps": 1.2286514179892671
+      },
+      "detections": [
+        {
+          "box": [
+            648.0016479492188,
+            388.12359619140625,
+            677.5259399414062,
+            414.5354309082031
+          ],
+          "score": 0.9948864579200745,
+          "class_id": 3,
+          "world_center": [
+            -36.58614029639584,
+            79.9353967152325
+          ],
+          "contact_edge_world": [
+            [
+              -37.22203674240876,
+              79.84269719248579,
+              -0.3799619664120386
+            ],
+            [
+              -35.95024385038292,
+              80.02809623797921,
+              -0.3939836487388777
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -2.0920733331869052,
+            6.451085443851001
+          ]
+        },
+        {
+          "box": [
+            693.7897338867188,
+            390.4840393066406,
+            804.7334594726562,
+            480.17529296875
+          ],
+          "score": 0.9907153844833374,
+          "class_id": 3,
+          "world_center": [
+            -18.00152039546937,
+            41.62286711671806
+          ],
+          "contact_edge_world": [
+            [
+              -18.781919235749065,
+              41.66406771478131,
+              0.5887865270506096
+            ],
+            [
+              -17.221121555189672,
+              41.581666518654814,
+              0.6200368549087714
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.4855406440948485,
+            1.1292806283693588
+          ]
+        },
+        {
+          "box": [
+            527.7053833007812,
+            393.4951171875,
+            576.6656494140625,
+            439.7450256347656
+          ],
+          "score": 0.9802933931350708,
+          "class_id": 3,
+          "world_center": [
+            -29.64098390398209,
+            57.58951966411337
+          ],
+          "contact_edge_world": [
+            [
+              -30.729023382630494,
+              58.24830034402035,
+              -0.004961553221377812
+            ],
+            [
+              -28.55294442533369,
+              56.93073898420639,
+              0.08878769510544249
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            0.5769269932117786,
+            -0.5560559096206099
+          ]
+        },
+        {
+          "box": [
+            34.13869094848633,
+            370.794677734375,
+            358.597900390625,
+            596.0453491210938
+          ],
+          "score": 0.9388046264648438,
+          "class_id": 3,
+          "world_center": [
+            -18.130796685315325,
+            31.553174346449968
+          ],
+          "contact_edge_world": [
+            [
+              -19.307055993795647,
+              31.29404180563926,
+              0.7137900018972663
+            ],
+            [
+              -16.954537376835,
+              31.812306887260675,
+              0.7450399870191728
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            0.821897070276819,
+            -2.2921792119005397
+          ]
+        },
+        {
+          "box": [
+            612.037109375,
+            388.68658447265625,
+            638.1275634765625,
+            419.00018310546875
+          ],
+          "score": 0.9377725720405579,
+          "class_id": 3,
+          "world_center": [
+            -35.37002828648049,
+            73.8099129553229
+          ],
+          "contact_edge_world": [
+            [
+              -35.929529676933136,
+              73.83624198374133,
+              -0.2549627815447555
+            ],
+            [
+              -34.81052689602785,
+              73.78358392690447,
+              -0.2549614923732162
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -2.2682142798415788,
+            7.464622648637295
+          ]
+        },
+        {
+          "box": [
+            558.211669921875,
+            384.3648986816406,
+            594.4816284179688,
+            426.8427429199219
+          ],
+          "score": 0.705769956111908,
+          "class_id": 3,
+          "world_center": [
+            -33.88041122706765,
+            67.01289319293382
+          ],
+          "contact_edge_world": [
+            [
+              -34.84711572370074,
+              67.56095680517348,
+              -0.19246261156435107
+            ],
+            [
+              -32.913706730434555,
+              66.46482958069416,
+              -0.12996305060126678
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -4.835414572499806,
+            1.5741269534982663
+          ]
+        },
+        {
+          "box": [
+            8.539595603942871,
+            258.2936096191406,
+            355.8946228027344,
+            598.5771484375
+          ],
+          "score": 0.6939155459403992,
+          "class_id": 6,
+          "world_center": [
+            -18.15536704031039,
+            31.441024170038183
+          ],
+          "contact_edge_world": [
+            [
+              -19.39949075253879,
+              31.158429484669544,
+              0.7137858440531224
+            ],
+            [
+              -16.911243328081994,
+              31.72361885540682,
+              0.7450365802913692
+            ]
+          ],
+          "track_id": 10,
+          "world_velocity": [
+            -3.3373416661329514,
+            7.145653311911593
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.8168422625858172,
+      "steer_rad": -0.0005814731651345875,
+      "ego_state": {
+        "x_m": -10.464767906177999,
+        "y_m": 22.41149468773794,
+        "z_m": 0.9077161230801547,
+        "yaw_rad": 2.0077341184766837,
+        "speed_mps": 7.886584219453956,
+        "steer_rad": -0.0007048653012892807,
+        "pitch_rad": -0.017380141230051563,
+        "roll_rad": 0.01732510265061376,
+        "velocity_x_mps": -3.336487054824829,
+        "velocity_y_mps": 7.146052837371826,
+        "yaw_rate_radps": -0.001992500862238414,
+        "suspension_pitch_rad": 0.015065696072330156,
+        "suspension_roll_rad": 0.00012205547907662868,
+        "suspension_pitch_rate_radps": -0.007791482332701685,
+        "suspension_roll_rate_radps": 3.956835945638044e-05,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 20.41764664636369,
+      "center_world": [
+        -19.716943306137452,
+        45.50444572619146,
+        1.2406837750065935
+      ],
+      "route_lateral_center_m": -0.7059364192158251,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.6602081988055815,
+    "acceleration_difference_mps2": -0.1566340637802357,
+    "route_lateral_m": -0.0173558830674958,
+    "clearance": {
+      "id": "0e470e35-ac97-496e-adbb-1bf778dbdadf",
+      "category": "REGULAR_VEHICLE",
+      "distance_m": 5.800711561558575,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 11,
+    "observation_frame": 84,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.3122250784180884,
+      "steer": -0.0008062546489399443,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 85,
+    "last_condition_frame": 92,
+    "ego_state": {
+      "x_m": -12.125630273402932,
+      "y_m": 25.972610014446733,
+      "z_m": 0.9495483034536898,
+      "yaw_rad": 2.0069350362859004,
+      "speed_mps": 6.902531593897887,
+      "steer_rad": -0.00040312732446997214,
+      "pitch_rad": -0.007736756661041209,
+      "roll_rad": 0.018936416084566633,
+      "velocity_x_mps": -2.9154388904571533,
+      "velocity_y_mps": 6.2566094398498535,
+      "yaw_rate_radps": -0.0010860991512636055,
+      "suspension_pitch_rad": 0.01412966016497784,
+      "suspension_roll_rad": 7.76748192408831e-05,
+      "suspension_pitch_rate_radps": 0.0012355680095976808,
+      "suspension_roll_rate_radps": -0.00012526736979419272,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 84,
+      "timestamp_us": 3800000,
+      "lead": {
+        "box": [
+          700.1992797851562,
+          386.50128173828125,
+          829.2174682617188,
+          487.1556091308594
+        ],
+        "score": 0.9922345876693726,
+        "class_id": 3,
+        "world_center": [
+          -17.97451706387696,
+          41.67794006723233
+        ],
+        "contact_edge_world": [
+          [
+            -18.770288821883483,
+            41.688300813810045,
+            0.5887890229021606
+          ],
+          [
+            -17.178745305870432,
+            41.66757932065462,
+            0.6200362478133485
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.39443333538425496,
+          0.9896107628138424
+        ],
+        "gap_m": 15.988549772923266,
+        "lead_speed_mps": 1.0635781831394286
+      },
+      "detections": [
+        {
+          "box": [
+            647.7584228515625,
+            380.3901062011719,
+            677.99658203125,
+            406.5446472167969
+          ],
+          "score": 0.9926559925079346,
+          "class_id": 3,
+          "world_center": [
+            -37.25706577158989,
+            81.45499949678356
+          ],
+          "contact_edge_world": [
+            [
+              -37.97924742522369,
+              81.52582672909611,
+              -0.4112124327675457
+            ],
+            [
+              -36.534884117956096,
+              81.384172264471,
+              -0.4112127151832379
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -2.0171765229200727,
+            6.7887212289942624
+          ]
+        },
+        {
+          "box": [
+            700.1992797851562,
+            386.50128173828125,
+            829.2174682617188,
+            487.1556091308594
+          ],
+          "score": 0.9922345876693726,
+          "class_id": 3,
+          "world_center": [
+            -17.97451706387696,
+            41.67794006723233
+          ],
+          "contact_edge_world": [
+            [
+              -18.770288821883483,
+              41.688300813810045,
+              0.5887890229021606
+            ],
+            [
+              -17.178745305870432,
+              41.66757932065462,
+              0.6200362478133485
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.39443333538425496,
+            0.9896107628138424
+          ]
+        },
+        {
+          "box": [
+            522.9757690429688,
+            388.87554931640625,
+            572.4808959960938,
+            437.72064208984375
+          ],
+          "score": 0.9721845388412476,
+          "class_id": 3,
+          "world_center": [
+            -29.226400639742085,
+            56.92916535844408
+          ],
+          "contact_edge_world": [
+            [
+              -30.1507750811799,
+              57.36834537031094,
+              0.019419385633832942
+            ],
+            [
+              -28.30202619830427,
+              56.489985346577214,
+              0.08878714825354628
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            0.7403233474168215,
+            -0.9417730647105347
+          ]
+        },
+        {
+          "box": [
+            0.8138216137886047,
+            357.7371520996094,
+            230.2291717529297,
+            690.8779296875
+          ],
+          "score": 0.9551520943641663,
+          "class_id": 3,
+          "world_center": [
+            -17.21614079521236,
+            30.923628967879196
+          ],
+          "contact_edge_world": [
+            [
+              -17.75154460757185,
+              30.74073821544421,
+              0.745035278813025
+            ],
+            [
+              -16.68073698285287,
+              31.106519720314182,
+              0.7450398448486419
+            ]
+          ],
+          "track_id": 3,
+          "world_velocity": [
+            1.1498206996503115,
+            -2.5542279990256
+          ]
+        },
+        {
+          "box": [
+            607.8109130859375,
+            384.5738525390625,
+            638.9127807617188,
+            414.835205078125
+          ],
+          "score": 0.93157958984375,
+          "class_id": 3,
+          "world_center": [
+            -34.4440624453844,
+            71.89518096678643
+          ],
+          "contact_edge_world": [
+            [
+              -35.061226286587754,
+              71.92400302970862,
+              -0.22371167575415374
+            ],
+            [
+              -33.82689860418104,
+              71.86635890386425,
+              -0.2237114486210796
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -1.6004360727995013,
+            5.162384919457333
+          ]
+        },
+        {
+          "box": [
+            549.7290649414062,
+            360.50177001953125,
+            613.2423095703125,
+            423.5594482421875
+          ],
+          "score": 0.6684485077857971,
+          "class_id": 8,
+          "world_center": [
+            -32.63138987782169,
+            65.19827437778581
+          ],
+          "contact_edge_world": [
+            [
+              -34.11094662201823,
+              65.95877578430569,
+              -0.16121283123773855
+            ],
+            [
+              -31.15183313362514,
+              64.43777297126593,
+              -0.06746250550536459
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -2.1575748930340146,
+            -1.3158438739894902
+          ]
+        },
+        {
+          "box": [
+            310.5391540527344,
+            406.0417175292969,
+            332.04296875,
+            429.38311767578125
+          ],
+          "score": 0.503815770149231,
+          "class_id": 3,
+          "world_center": [
+            -41.94411445758588,
+            64.74105488910452
+          ],
+          "contact_edge_world": [
+            [
+              -42.32043255165581,
+              64.667921894138,
+              -0.2712090500692783
+            ],
+            [
+              -41.56779636351595,
+              64.81418788407103,
+              -0.2795935585226732
+            ]
+          ],
+          "track_id": 11,
+          "world_velocity": [
+            -3.129195544780468,
+            6.708137320368457
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.8733504705085302,
+      "steer_rad": -0.00040312732446997214,
+      "ego_state": {
+        "x_m": -11.32331021294427,
+        "y_m": 24.25146797632646,
+        "z_m": 0.9338823023168545,
+        "yaw_rad": 2.0072681889234105,
+        "speed_mps": 7.402092343816985,
+        "steer_rad": -0.0005814731651345875,
+        "pitch_rad": -0.009914686450020714,
+        "roll_rad": 0.019111387413289577,
+        "velocity_x_mps": -3.128528594970703,
+        "velocity_y_mps": 6.70844841003418,
+        "yaw_rate_radps": -0.0016249289480079747,
+        "suspension_pitch_rad": 0.013924590537539097,
+        "suspension_roll_rad": 0.00010996111051860257,
+        "suspension_pitch_rate_radps": -0.0017709720032395345,
+        "suspension_roll_rate_radps": -8.580301769462545e-05,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 18.387018838389945,
+      "center_world": [
+        -19.69030243946145,
+        45.51221797929615,
+        1.2400454631529043
+      ],
+      "route_lateral_center_m": -0.7335883580844258,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.6059219969809986,
+    "acceleration_difference_mps2": -0.26742847352753163,
+    "route_lateral_m": -0.013196376750916984,
+    "clearance": {
+      "id": "0e470e35-ac97-496e-adbb-1bf778dbdadf",
+      "category": "REGULAR_VEHICLE",
+      "distance_m": 2.5591927846164033,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 12,
+    "observation_frame": 92,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.31115102631569036,
+      "steer": -0.0008136659119251503,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 93,
+    "last_condition_frame": 100,
+    "ego_state": {
+      "x_m": -12.871261264390707,
+      "y_m": 27.573475842732904,
+      "z_m": 0.9593981153874189,
+      "yaw_rad": 2.0066660786423896,
+      "speed_mps": 6.4046911963968896,
+      "steer_rad": -0.00040683295596257514,
+      "pitch_rad": -0.004648358653162239,
+      "roll_rad": 0.021991846083899737,
+      "velocity_x_mps": -2.7034084796905518,
+      "velocity_y_mps": 5.806173801422119,
+      "yaw_rate_radps": -0.0009627087961039783,
+      "suspension_pitch_rad": 0.014280520096854196,
+      "suspension_roll_rad": 5.414801602353956e-05,
+      "suspension_pitch_rate_radps": 0.0001746922887144413,
+      "suspension_roll_rate_radps": -5.902215467180643e-05,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 92,
+      "timestamp_us": 4066667,
+      "lead": {
+        "box": [
+          704.2105712890625,
+          387.3767395019531,
+          850.5978393554688,
+          501.22637939453125
+        ],
+        "score": 0.9884974956512451,
+        "class_id": 3,
+        "world_center": [
+          -18.052951552026542,
+          41.8435469026945
+        ],
+        "contact_edge_world": [
+          [
+            -18.84747149701879,
+            41.815876358874284,
+            0.5887858025775901
+          ],
+          [
+            -17.258431607034293,
+            41.87121744651471,
+            0.6200379210900449
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.3309703635973997,
+          0.8755067696833276
+        ],
+        "gap_m": 14.308353719346554,
+        "lead_speed_mps": 0.9333662660158389
+      },
+      "detections": [
+        {
+          "box": [
+            648.3289794921875,
+            378.9054260253906,
+            678.5206298828125,
+            403.46185302734375
+          ],
+          "score": 0.9906202554702759,
+          "class_id": 3,
+          "world_center": [
+            -38.38314062320246,
+            84.01514025421062
+          ],
+          "contact_edge_world": [
+            [
+              -38.96938334571196,
+              83.76611927110835,
+              -0.44246227413894035
+            ],
+            [
+              -37.796897900692954,
+              84.26416123731289,
+              -0.4737127075054701
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -2.1579242214719443,
+            7.207730557716779
+          ]
+        },
+        {
+          "box": [
+            704.2105712890625,
+            387.3767395019531,
+            850.5978393554688,
+            501.22637939453125
+          ],
+          "score": 0.9884974956512451,
+          "class_id": 3,
+          "world_center": [
+            -18.052951552026542,
+            41.8435469026945
+          ],
+          "contact_edge_world": [
+            [
+              -18.84747149701879,
+              41.815876358874284,
+              0.5887858025775901
+            ],
+            [
+              -17.258431607034293,
+              41.87121744651471,
+              0.6200379210900449
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.3309703635973997,
+            0.8755067696833276
+          ]
+        },
+        {
+          "box": [
+            607.6268310546875,
+            389.43316650390625,
+            637.33154296875,
+            416.1562805175781
+          ],
+          "score": 0.9686266183853149,
+          "class_id": 3,
+          "world_center": [
+            -33.96749534406068,
+            70.9573053298717
+          ],
+          "contact_edge_world": [
+            [
+              -34.515379277658774,
+              70.96726218321959,
+              -0.22371219185325986
+            ],
+            [
+              -33.41961141046259,
+              70.94734847652381,
+              -0.22371276506334414
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -0.9412613825730867,
+            3.2419084071036783
+          ]
+        },
+        {
+          "box": [
+            515.7774658203125,
+            388.41436767578125,
+            570.349609375,
+            442.0441589355469
+          ],
+          "score": 0.9374924898147583,
+          "class_id": 3,
+          "world_center": [
+            -28.806642431754135,
+            56.24519515697789
+          ],
+          "contact_edge_world": [
+            [
+              -29.63678446810368,
+              56.48700129423956,
+              0.04171005715148679
+            ],
+            [
+              -27.976500395404585,
+              56.003389019716224,
+              0.08878817299744046
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            0.915190653021713,
+            -1.3043474669153545
+          ]
+        },
+        {
+          "box": [
+            835.705322265625,
+            44.1855354309082,
+            1276.2867431640625,
+            576.3638916015625
+          ],
+          "score": 0.7945578694343567,
+          "class_id": 6,
+          "world_center": [
+            -14.564137934967725,
+            38.004888435880616
+          ],
+          "contact_edge_world": [
+            [
+              -15.937580651040793,
+              37.215866800751826,
+              0.6512871481466747
+            ],
+            [
+              -13.190695218894657,
+              38.793910071009414,
+              0.5262883056194221
+            ]
+          ],
+          "track_id": 10,
+          "world_velocity": [
+            3.6901635691988335,
+            10.747421958758293
+          ]
+        },
+        {
+          "box": [
+            272.0514831542969,
+            397.9783630371094,
+            320.3589172363281,
+            431.2994689941406
+          ],
+          "score": 0.7770328521728516,
+          "class_id": 3,
+          "world_center": [
+            -42.31114090851639,
+            64.64694090385422
+          ],
+          "contact_edge_world": [
+            [
+              -43.21275345248874,
+              64.595075534782,
+              -0.3156805945044363
+            ],
+            [
+              -41.40952836454404,
+              64.69880627292642,
+              -0.3168476296264413
+            ]
+          ],
+          "track_id": 11,
+          "world_velocity": [
+            -2.4915466223020504,
+            4.139472001399336
+          ]
+        },
+        {
+          "box": [
+            528.767578125,
+            358.5224304199219,
+            610.9309692382812,
+            424.18865966796875
+          ],
+          "score": 0.6203088760375977,
+          "class_id": 6,
+          "world_center": [
+            -33.030074241373356,
+            65.40708606202736
+          ],
+          "contact_edge_world": [
+            [
+              -34.88455851365236,
+              66.34287599836402,
+              -0.19246308634207177
+            ],
+            [
+              -31.175589969094354,
+              64.47129612569071,
+              -0.06746209402154335
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -1.3143346670317226,
+            -1.6908258977185668
+          ]
+        },
+        {
+          "box": [
+            525.58740234375,
+            358.9538269042969,
+            611.680908203125,
+            425.5858154296875
+          ],
+          "score": 0.5973665118217468,
+          "class_id": 8,
+          "world_center": [
+            -32.49124826832576,
+            64.3147544519631
+          ],
+          "contact_edge_world": [
+            [
+              -34.359010987437486,
+              65.22633192777771,
+              -0.16121226649830867
+            ],
+            [
+              -30.62348554921404,
+              63.40317697614847,
+              -0.03621274222320148
+            ]
+          ],
+          "track_id": 12,
+          "world_velocity": [
+            -2.915924700826962,
+            6.2563827843144075
+          ]
+        },
+        {
+          "box": [
+            88.8843765258789,
+            418.6973876953125,
+            143.39010620117188,
+            473.3852233886719
+          ],
+          "score": 0.5198584198951721,
+          "class_id": 3,
+          "world_center": [
+            -35.57799260184238,
+            50.200521060735355
+          ],
+          "contact_edge_world": [
+            [
+              -39.40128711040468,
+              53.28718381657656,
+              -0.5201377018121112
+            ],
+            [
+              -31.75469809328009,
+              47.11385830489415,
+              0.1825378458922513
+            ]
+          ],
+          "track_id": 13,
+          "world_velocity": [
+            -2.915924700826962,
+            6.2563827843144075
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.8669061578941422,
+      "steer_rad": -0.00040683295596257514,
+      "ego_state": {
+        "x_m": -12.125630273402932,
+        "y_m": 25.972610014446733,
+        "z_m": 0.9495483034536898,
+        "yaw_rad": 2.0069350362859004,
+        "speed_mps": 6.902531593897887,
+        "steer_rad": -0.00040312732446997214,
+        "pitch_rad": -0.007736756661041209,
+        "roll_rad": 0.018936416084566633,
+        "velocity_x_mps": -2.9154388904571533,
+        "velocity_y_mps": 6.2566094398498535,
+        "yaw_rate_radps": -0.0010860991512636055,
+        "suspension_pitch_rad": 0.01412966016497784,
+        "suspension_roll_rad": 7.76748192408831e-05,
+        "suspension_pitch_rate_radps": 0.0012355680095976808,
+        "suspension_roll_rate_radps": -0.00012526736979419272,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 16.485669635663953,
+      "center_world": [
+        -19.669589570634844,
+        45.51477670113253,
+        1.2398089716995733
+      ],
+      "route_lateral_center_m": -0.7538320356634083,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.546539095024934,
+    "acceleration_difference_mps2": -0.32036706286920813,
+    "route_lateral_m": -0.009160840365163559,
+    "clearance": {
+      "id": "0e470e35-ac97-496e-adbb-1bf778dbdadf",
+      "category": "REGULAR_VEHICLE",
+      "distance_m": 1.6628497552019976,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 13,
+    "observation_frame": 100,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.27297955364345716,
+      "steer": -0.000911081436190607,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 101,
+    "last_condition_frame": 108,
+    "ego_state": {
+      "x_m": -13.564258524385691,
+      "y_m": 29.06251829593515,
+      "z_m": 0.9652990525269878,
+      "yaw_rad": 2.0064011468114975,
+      "speed_mps": 5.96792336460825,
+      "steer_rad": -0.0004555407180953035,
+      "pitch_rad": -0.00261351823084495,
+      "roll_rad": 0.025313149979741316,
+      "velocity_x_mps": -2.5174214839935303,
+      "velocity_y_mps": 5.410979270935059,
+      "yaw_rate_radps": -0.0009862265964037818,
+      "suspension_pitch_rad": 0.013059238251298962,
+      "suspension_roll_rad": 4.667817620971827e-05,
+      "suspension_pitch_rate_radps": -0.004358064366325931,
+      "suspension_roll_rate_radps": -1.3927816407862633e-05,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 100,
+      "timestamp_us": 4333333,
+      "lead": {
+        "box": [
+          713.7666625976562,
+          384.4692687988281,
+          877.6018676757812,
+          511.8163146972656
+        ],
+        "score": 0.9946069121360779,
+        "class_id": 3,
+        "world_center": [
+          -18.21470034486436,
+          42.36250584574442
+        ],
+        "contact_edge_world": [
+          [
+            -18.993419229416432,
+            42.234560771694376,
+            0.588786277499654
+          ],
+          [
+            -17.435981460312295,
+            42.49045091979447,
+            0.596701413770885
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.3125007012362322,
+          0.8866942709950684
+        ],
+        "gap_m": 13.183877492657404,
+        "lead_speed_mps": 0.935728655176072
+      },
+      "detections": [
+        {
+          "box": [
+            713.7666625976562,
+            384.4692687988281,
+            877.6018676757812,
+            511.8163146972656
+          ],
+          "score": 0.9946069121360779,
+          "class_id": 3,
+          "world_center": [
+            -18.21470034486436,
+            42.36250584574442
+          ],
+          "contact_edge_world": [
+            [
+              -18.993419229416432,
+              42.234560771694376,
+              0.588786277499654
+            ],
+            [
+              -17.435981460312295,
+              42.49045091979447,
+              0.596701413770885
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.3125007012362322,
+            0.8866942709950684
+          ]
+        },
+        {
+          "box": [
+            647.408935546875,
+            369.5621032714844,
+            682.1057739257812,
+            401.2786560058594
+          ],
+          "score": 0.9860743880271912,
+          "class_id": 3,
+          "world_center": [
+            -38.11195947438285,
+            83.53700871965584
+          ],
+          "contact_edge_world": [
+            [
+              -38.79363465093704,
+              83.3349198530374,
+              -0.4424620927458953
+            ],
+            [
+              -37.43028429782866,
+              83.73909758627428,
+              -0.47371183155207186
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -1.9898526415572262,
+            6.743018857696546
+          ]
+        },
+        {
+          "box": [
+            605.3132934570312,
+            386.0276794433594,
+            638.2582397460938,
+            415.79681396484375
+          ],
+          "score": 0.9715209007263184,
+          "class_id": 3,
+          "world_center": [
+            -33.52084379509355,
+            70.08959480641332
+          ],
+          "contact_edge_world": [
+            [
+              -33.97806477604496,
+              69.86170664917347,
+              -0.1924627972765074
+            ],
+            [
+              -33.063622814142136,
+              70.31748296365318,
+              -0.22371254631628634
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -0.38186137628194405,
+            1.7245163011125262
+          ]
+        },
+        {
+          "box": [
+            235.31764221191406,
+            384.71392822265625,
+            310.0855407714844,
+            434.4281311035156
+          ],
+          "score": 0.9619728326797485,
+          "class_id": 3,
+          "world_center": [
+            -42.07509463644022,
+            63.91589745689586
+          ],
+          "contact_edge_world": [
+            [
+              -43.424508169235104,
+              63.86523768232635,
+              -0.3487117264879056
+            ],
+            [
+              -40.725681103645336,
+              63.96655723146537,
+              -0.34871278880665235
+            ]
+          ],
+          "track_id": 11,
+          "world_velocity": [
+            -1.114808761951704,
+            0.9452513665341029
+          ]
+        },
+        {
+          "box": [
+            52.332115173339844,
+            407.4763488769531,
+            129.60223388671875,
+            477.2179260253906
+          ],
+          "score": 0.9336783289909363,
+          "class_id": 3,
+          "world_center": [
+            -36.07453441480631,
+            50.855367119660386
+          ],
+          "contact_edge_world": [
+            [
+              -39.85513084592147,
+              53.52834662586461,
+              -0.5362116364169762
+            ],
+            [
+              -32.293937983691144,
+              48.18238761345617,
+              0.12003793585042999
+            ]
+          ],
+          "track_id": 14,
+          "world_velocity": [
+            -2.704054178527239,
+            5.805872916348859
+          ]
+        },
+        {
+          "box": [
+            509.84051513671875,
+            387.2185974121094,
+            568.2353515625,
+            442.0256652832031
+          ],
+          "score": 0.9278347492218018,
+          "class_id": 3,
+          "world_center": [
+            -29.058840028120642,
+            56.78826015599684
+          ],
+          "contact_edge_world": [
+            [
+              -29.965541489680245,
+              57.1239895184609,
+              0.026288487021616458
+            ],
+            [
+              -28.15213856656104,
+              56.45253079353277,
+              0.08878850443482778
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            0.7652343687910075,
+            -1.054188963650138
+          ]
+        },
+        {
+          "box": [
+            53.365325927734375,
+            411.33251953125,
+            198.30592346191406,
+            474.9773254394531
+          ],
+          "score": 0.9141180515289307,
+          "class_id": 3,
+          "world_center": [
+            -35.90190159379526,
+            51.48489541354074
+          ],
+          "contact_edge_world": [
+            [
+              -40.298846666792244,
+              53.97318192574941,
+              -0.5362121989919655
+            ],
+            [
+              -31.504956520798267,
+              48.996608901332074,
+              0.08878689148553942
+            ]
+          ],
+          "track_id": 13,
+          "world_velocity": [
+            -2.2970443249872132,
+            5.7325558992559005
+          ]
+        },
+        {
+          "box": [
+            852.501220703125,
+            67.01932525634766,
+            1280.0,
+            598.9977416992188
+          ],
+          "score": 0.795319139957428,
+          "class_id": 6,
+          "world_center": [
+            -15.064375242970502,
+            38.329544741236006
+          ],
+          "contact_edge_world": [
+            [
+              -16.268417844712044,
+              37.862033787148484,
+              0.6512886357850729
+            ],
+            [
+              -13.860332641228963,
+              38.797055695323536,
+              0.6079366480272739
+            ]
+          ],
+          "track_id": 10,
+          "world_velocity": [
+            3.0792541474482715,
+            8.803953676201003
+          ]
+        },
+        {
+          "box": [
+            603.0388793945312,
+            370.9872131347656,
+            637.6893920898438,
+            398.3377380371094
+          ],
+          "score": 0.654064416885376,
+          "class_id": 3,
+          "world_center": [
+            -42.09359043560936,
+            87.57487344702496
+          ],
+          "contact_edge_world": [
+            [
+              -43.16725257934229,
+              88.02753851787949,
+              -0.5362120259993453
+            ],
+            [
+              -41.019928291876425,
+              87.12220837617042,
+              -0.5049618043597777
+            ]
+          ],
+          "track_id": 15,
+          "world_velocity": [
+            -2.704054178527239,
+            5.805872916348859
+          ]
+        },
+        {
+          "box": [
+            540.4474487304688,
+            369.9261474609375,
+            603.5379028320312,
+            423.3331604003906
+          ],
+          "score": 0.6524268388748169,
+          "class_id": 3,
+          "world_center": [
+            -32.74808321228231,
+            65.26571234697639
+          ],
+          "contact_edge_world": [
+            [
+              -34.109593888419354,
+              65.96279597842933,
+              -0.1612131622085018
+            ],
+            [
+              -31.386572536145273,
+              64.56862871552343,
+              -0.06746321246964371
+            ]
+          ],
+          "track_id": 12,
+          "world_velocity": [
+            -2.2055441046327653,
+            5.277720083182214
+          ]
+        },
+        {
+          "box": [
+            519.9478759765625,
+            362.9709777832031,
+            603.7651977539062,
+            423.6509094238281
+          ],
+          "score": 0.618625283241272,
+          "class_id": 8,
+          "world_center": [
+            -33.145405733994416,
+            65.36673726256755
+          ],
+          "contact_edge_world": [
+            [
+              -34.9742841878922,
+              66.29113685624361,
+              -0.1924631459697177
+            ],
+            [
+              -31.316527280096633,
+              64.4423376688915,
+              -0.06746203103904502
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -0.9097436827484886,
+            -1.5896358362656338
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.637877321860743,
+      "steer_rad": -0.0004555407180953035,
+      "ego_state": {
+        "x_m": -12.871261264390707,
+        "y_m": 27.573475842732904,
+        "z_m": 0.9593981153874189,
+        "yaw_rad": 2.0066660786423896,
+        "speed_mps": 6.4046911963968896,
+        "steer_rad": -0.00040683295596257514,
+        "pitch_rad": -0.004648358653162239,
+        "roll_rad": 0.021991846083899737,
+        "velocity_x_mps": -2.7034084796905518,
+        "velocity_y_mps": 5.806173801422119,
+        "yaw_rate_radps": -0.0009627087961039783,
+        "suspension_pitch_rad": 0.014280520096854196,
+        "suspension_roll_rad": 5.414801602353956e-05,
+        "suspension_pitch_rate_radps": 0.0001746922887144413,
+        "suspension_roll_rate_radps": -5.902215467180643e-05,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 14.711905660981857,
+      "center_world": [
+        -19.655378473374892,
+        45.5125746823061,
+        1.2399155854792305
+      ],
+      "route_lateral_center_m": -0.7662953491510698,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.496555344170555,
+    "acceleration_difference_mps2": -0.14132197769018795,
+    "route_lateral_m": -0.0027638967728872096,
+    "clearance": {
+      "id": "0e470e35-ac97-496e-adbb-1bf778dbdadf",
+      "category": "REGULAR_VEHICLE",
+      "distance_m": 1.6964143178518296,
+      "overlap_area_m2": 0.0
+    }
+  },
+  {
+    "block": 14,
+    "observation_frame": 108,
+    "observation_source": "previous_generated_chunk",
+    "command": {
+      "throttle": 0.0,
+      "brake": 0.26043347063765904,
+      "steer": -0.000869242385792053,
+      "stop": false,
+      "reverse": false,
+      "steer_is_direct": true,
+      "manual_control": false
+    },
+    "first_condition_frame": 109,
+    "last_condition_frame": 116,
+    "ego_state": {
+      "x_m": -14.209012753254653,
+      "y_m": 30.44886671157407,
+      "z_m": 0.9684957576680956,
+      "yaw_rad": 2.006155385369963,
+      "speed_mps": 5.551229290721052,
+      "steer_rad": -0.0004346211928960265,
+      "pitch_rad": -0.0006655965106620857,
+      "roll_rad": 0.028883337369326637,
+      "velocity_x_mps": -2.3403842449188232,
+      "velocity_y_mps": 5.033761024475098,
+      "yaw_rate_radps": -0.0008836863106357627,
+      "suspension_pitch_rad": 0.012102938213434538,
+      "suspension_roll_rad": 4.186947198182129e-05,
+      "suspension_pitch_rate_radps": -0.002112308041938286,
+      "suspension_roll_rate_radps": -2.1952882479166598e-05,
+      "ragdoll_active": false
+    },
+    "policy": {
+      "frame": 108,
+      "timestamp_us": 4600000,
+      "lead": {
+        "box": [
+          721.2014770507812,
+          383.991455078125,
+          909.5095825195312,
+          528.000732421875
+        ],
+        "score": 0.9972872734069824,
+        "class_id": 3,
+        "world_center": [
+          -18.37381543167124,
+          42.8078609072708
+        ],
+        "contact_edge_world": [
+          [
+            -19.238030282981914,
+            42.81271644470084,
+            0.557537902532957
+          ],
+          [
+            -17.50960058036057,
+            42.80300536984076,
+            0.6059010612501705
+          ]
+        ],
+        "track_id": 2,
+        "world_velocity": [
+          -0.32254521164113165,
+          0.9538920344871754
+        ],
+        "gap_m": 11.859509061240422,
+        "lead_speed_mps": 1.0009136219571229
+      },
+      "detections": [
+        {
+          "box": [
+            721.2014770507812,
+            383.991455078125,
+            909.5095825195312,
+            528.000732421875
+          ],
+          "score": 0.9972872734069824,
+          "class_id": 3,
+          "world_center": [
+            -18.37381543167124,
+            42.8078609072708
+          ],
+          "contact_edge_world": [
+            [
+              -19.238030282981914,
+              42.81271644470084,
+              0.557537902532957
+            ],
+            [
+              -17.50960058036057,
+              42.80300536984076,
+              0.6059010612501705
+            ]
+          ],
+          "track_id": 2,
+          "world_velocity": [
+            -0.32254521164113165,
+            0.9538920344871754
+          ]
+        },
+        {
+          "box": [
+            646.5343017578125,
+            368.627685546875,
+            682.8422241210938,
+            402.86962890625
+          ],
+          "score": 0.9907189011573792,
+          "class_id": 3,
+          "world_center": [
+            -37.597500512442956,
+            82.36844338274196
+          ],
+          "contact_edge_world": [
+            [
+              -38.29328207883387,
+              82.20578864397807,
+              -0.4112124949052882
+            ],
+            [
+              -36.90171894605204,
+              82.53109812150585,
+              -0.4424628156480672
+            ]
+          ],
+          "track_id": 5,
+          "world_velocity": [
+            -1.5838326471789983,
+            5.598058941666385
+          ]
+        },
+        {
+          "box": [
+            505.0520935058594,
+            388.41534423828125,
+            564.8735961914062,
+            446.2490539550781
+          ],
+          "score": 0.974005401134491,
+          "class_id": 3,
+          "world_center": [
+            -29.162545713146073,
+            57.059717287093775
+          ],
+          "contact_edge_world": [
+            [
+              -30.053727997423415,
+              57.3887363970542,
+              0.026986801658150927
+            ],
+            [
+              -28.27136342886873,
+              56.73069817713335,
+              0.08878731306536247
+            ]
+          ],
+          "track_id": 13,
+          "world_velocity": [
+            7.538456053365415,
+            10.880775897479353
+          ]
+        },
+        {
+          "box": [
+            229.59353637695312,
+            384.4383544921875,
+            298.4632873535156,
+            440.3372497558594
+          ],
+          "score": 0.9486267566680908,
+          "class_id": 3,
+          "world_center": [
+            -41.521434715564794,
+            63.508567480690466
+          ],
+          "contact_edge_world": [
+            [
+              -42.85986166772181,
+              63.65300218740693,
+              -0.3769307045977328
+            ],
+            [
+              -40.18300776340779,
+              63.364132773974,
+              -0.3487129635862227
+            ]
+          ],
+          "track_id": 9,
+          "world_velocity": [
+            -4.331521543492845,
+            -2.181351322020181
+          ]
+        },
+        {
+          "box": [
+            603.0820922851562,
+            386.4529724121094,
+            637.7235107421875,
+            418.0392150878906
+          ],
+          "score": 0.9263589978218079,
+          "class_id": 3,
+          "world_center": [
+            -33.50435872451939,
+            70.04456364500312
+          ],
+          "contact_edge_world": [
+            [
+              -33.98197868522538,
+              69.84397189700044,
+              -0.19246254088154302
+            ],
+            [
+              -33.0267387638134,
+              70.2451553930058,
+              -0.22371326508602563
+            ]
+          ],
+          "track_id": 7,
+          "world_velocity": [
+            -0.05864505886950744,
+            0.7863919488045276
+          ]
+        },
+        {
+          "box": [
+            879.678955078125,
+            60.024559020996094,
+            1280.0,
+            557.9935913085938
+          ],
+          "score": 0.9004490971565247,
+          "class_id": 6,
+          "world_center": [
+            -15.94414676189968,
+            41.6158897353485
+          ],
+          "contact_edge_world": [
+            [
+              -17.283920984749518,
+              41.09813756902569,
+              0.6200399340502094
+            ],
+            [
+              -14.604372539049841,
+              42.13364190167131,
+              0.5575390397634057
+            ]
+          ],
+          "track_id": 10,
+          "world_velocity": [
+            1.7161762301455903,
+            8.950507152330166
+          ]
+        },
+        {
+          "box": [
+            170.81011962890625,
+            377.6291198730469,
+            295.17388916015625,
+            442.5707702636719
+          ],
+          "score": 0.7285857796669006,
+          "class_id": 3,
+          "world_center": [
+            -42.014320543568175,
+            62.74388805616576
+          ],
+          "contact_edge_world": [
+            [
+              -44.3185638336995,
+              62.86459300899162,
+              -0.3799612513233561
+            ],
+            [
+              -39.71007725343685,
+              62.6231831033399,
+              -0.34871199024247934
+            ]
+          ],
+          "track_id": 11,
+          "world_velocity": [
+            -0.44234307195361044,
+            -1.191579762478395
+          ]
+        },
+        {
+          "box": [
+            540.8688354492188,
+            367.8846130371094,
+            600.1516723632812,
+            426.5426940917969
+          ],
+          "score": 0.7066944241523743,
+          "class_id": 3,
+          "world_center": [
+            -32.64879929284918,
+            65.19371911909707
+          ],
+          "contact_edge_world": [
+            [
+              -33.90654863871788,
+              65.88092826858181,
+              -0.16121210606643865
+            ],
+            [
+              -31.391049946980484,
+              64.50650996961234,
+              -0.06746241731184854
+            ]
+          ],
+          "track_id": 8,
+          "world_velocity": [
+            -0.722333745436277,
+            2.309491983567339
+          ]
+        },
+        {
+          "box": [
+            524.80126953125,
+            363.43499755859375,
+            602.2369384765625,
+            426.0491027832031
+          ],
+          "score": 0.5424928665161133,
+          "class_id": 8,
+          "world_center": [
+            -33.10226340486123,
+            65.60897578573045
+          ],
+          "contact_edge_world": [
+            [
+              -34.784195170664916,
+              66.53262725207802,
+              -0.19246126376247075
+            ],
+            [
+              -31.420331639057547,
+              64.68532431938289,
+              -0.06746160377536237
+            ]
+          ],
+          "track_id": 12,
+          "world_velocity": [
+            -1.6809849712691314,
+            3.5817830094686647
+          ]
+        }
+      ],
+      "acceleration_mps2": -1.562600823825954,
+      "steer_rad": -0.0004346211928960265,
+      "ego_state": {
+        "x_m": -13.564258524385691,
+        "y_m": 29.06251829593515,
+        "z_m": 0.9652990525269878,
+        "yaw_rad": 2.0064011468114975,
+        "speed_mps": 5.96792336460825,
+        "steer_rad": -0.0004555407180953035,
+        "pitch_rad": -0.00261351823084495,
+        "roll_rad": 0.025313149979741316,
+        "velocity_x_mps": -2.5174214839935303,
+        "velocity_y_mps": 5.410979270935059,
+        "yaw_rate_radps": -0.0009862265964037818,
+        "suspension_pitch_rad": 0.013059238251298962,
+        "suspension_roll_rad": 4.667817620971827e-05,
+        "suspension_pitch_rate_radps": -0.004358064366325931,
+        "suspension_roll_rate_radps": -1.3927816407862633e-05,
+        "ragdoll_active": false
+      },
+      "uses_gt_actor": false,
+      "provided_route": true,
+      "provided_metric_ground_plane": true
+    },
+    "oracle_lead": {
+      "id": "94dede14-59da-4f09-b016-95f19596ac08",
+      "segment": 0,
+      "gap_m": 13.060729104808578,
+      "center_world": [
+        -19.64644196418376,
+        45.506570626449985,
+        1.2402505491414375
+      ],
+      "route_lateral_center_m": -0.7724684765852472,
+      "lead_speed_mps": 0.0
+    },
+    "oracle_acceleration_mps2": -1.5267975052683085,
+    "acceleration_difference_mps2": -0.035803318557645625,
+    "route_lateral_m": 0.002381188179660721,
+    "clearance": {
+      "id": "0e470e35-ac97-496e-adbb-1bf778dbdadf",
+      "category": "REGULAR_VEHICLE",
+      "distance_m": 1.8817727793044376,
+      "overlap_area_m2": 0.0
+    }
+  }
+]

@@ -17,6 +17,7 @@ def main():
     p.add_argument('--moving-screen',type=Path)
     p.add_argument('--shape-feedback',type=Path)
     p.add_argument('--shape-audit',type=Path)
+    p.add_argument('--shape-confirmation',type=Path)
     a=p.parse_args();out=a.output;out.mkdir(parents=True,exist_ok=True)
     cases=[]
     for label,src,ctrl in [('02678d04',a.case1,a.control1),('24642607',a.case2,a.case2/'state_control')]:
@@ -77,6 +78,16 @@ def main():
         from build_shape_feedback_review import build
         html=html.replace('<img src="architecture.svg"', '<div class="card"><strong>最新：相近近端距离，仍可能产生不同制动。</strong><p>两种普通形状导出，输入近端间距差小于4毫米。实际生成反馈中，两任务的配对行进差为2.757／0.301米；普通类别先验部分缓解动作偏差，尚未一致恢复。4段468帧已完成。</p><a href="#shape-feedback">查看实际视频、完整曲线和输入边界 →</a></div><img src="architecture.svg"')
         html=html.replace('</html>',build(a.shape_feedback,a.shape_audit,out)+'</html>')
+    if a.shape_confirmation:
+        from build_shape_confirmation_review import build
+        confirmation=json.loads((a.shape_confirmation/'comparison.json').read_text())
+        if confirmation['decision']=='primary_not_reproduced_close_candidate':
+            html=html.replace('最新：相近近端距离，仍可能产生不同制动。','最新：一次额外seed未复现主候选，按事前规则关闭。')
+            html=html.replace('两种普通形状导出，输入近端间距差小于4毫米。实际生成反馈中，两任务的配对行进差为2.757／0.301米；普通类别先验部分缓解动作偏差，尚未一致恢复。4段468帧已完成。',
+                              '发现阶段的主场景配对行进差为+2.757米；固定seed43后变为−0.324米，平均误差和欠制动差也反向。两例GT基线通过，全部预定分支保留，不追加seed维护这个候选。')
+        html=html.replace('新证据：相近的近端距离，不保证相同的生成闭环','发现阶段（seed42）：相近距离与生成反馈的候选差异')
+        html=html.replace('<img src="architecture.svg"','<p><a href="#shape-confirmation">最新：查看唯一额外seed的复核结果 →</a></p><img src="architecture.svg"')
+        html=html.replace('</html>',build(a.shape_confirmation,out)+'</html>')
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     for path in out.glob('*.svg'):path.write_text('\n'.join(s.rstrip() for s in path.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8',newline='\n')
     print(out/'index.html')

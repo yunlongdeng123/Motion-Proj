@@ -1,0 +1,32 @@
+{
+  "task_id": "WS-V75-SHAPE-CONFIRM-01",
+  "run_id": "20260920-r1",
+  "source_discovery": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/20260920-conditioning-r2",
+  "frozen_utc": "2026-09-20T14:56:22.589503+00:00",
+  "seed": 43,
+  "frames": 117,
+  "scope": "one prespecified additional seed, both exposed development tasks; not independent-source confirmation",
+  "inputs": "exact source ordinary condition JSON and cached initial embeddings; no new fitting, reconstruction, geometry change or policy tuning",
+  "primary_log": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+  "primary_replication_rule": {
+    "generated_progress_extent_minus_class_gt_m": 1.0,
+    "mean_abs_action_error_extent_gt_class": true,
+    "max_underbraking_extent_gt_class": true
+  },
+  "rule_interpretation": "chosen after seed42 discovery and frozen before any seed43 output; conjunction required for primary candidate, second case fully reported without selection",
+  "recovery_rule": "report mean/median error, max under/overbraking, progress and clearance together; class prior cannot be called full recovery while any seed fails original absolute baseline gate",
+  "baseline_gate": {
+    "median_abs_action_error_at_own_ego_mps2_max": 0.5,
+    "max_underbraking_mps2": 2.0,
+    "max_overbraking_mps2": 2.0,
+    "max_route_lateral_m": 1.0,
+    "no_overlap": true
+  },
+  "stop": "at most6 runs; GT baseline/dense failure or engineering error stops queue; any OOM stops immediately without retry/downsize; if primary rule fails close this candidate, no additional seeds/threshold/horizon/source search",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}

@@ -1,0 +1,37 @@
+{
+  "task_id": "WS-V75-SHAPE-CONFIRM-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T14:56:22.589503+00:00",
+  "audit_protocol": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-PRIOR-AUDIT-01/20260920-r1/protocol.json",
+  "audit_result": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-PRIOR-AUDIT-01/20260920-r1/result.json",
+  "reason": "ordinary priors remove target GT shape; near-gap difference below4mm and direct progress difference below2mm, while exported width/height differ; test whether RGB feedback changes",
+  "scope": "one prespecified additional seed, both exposed development tasks; not independent-source confirmation",
+  "comparison": "two actual feedback arms and existing original-GT-shape DVGT arm; reference remains original physical scene; no new GT/old-task rerun",
+  "recovery_boundary": "better projected-box fit is not automatically better shape or driving; report all action/progress/clearance tradeoffs; no method claim from a single favorable metric",
+  "stop": "at most6 runs; GT baseline/dense failure or engineering error stops queue; any OOM stops immediately without retry/downsize; if primary rule fails close this candidate, no additional seeds/threshold/horizon/source search",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none",
+  "base": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-DEV2-01/20260920-r1/cases/24642607-2a51-384a-90a7-228067956d05/start-6.5/base",
+  "target": "56569385-722e-4413-ba4d-068307bca2ab",
+  "source_log": "24642607-2a51-384a-90a7-228067956d05",
+  "source_generated_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1",
+  "source_real_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-02/20260920-r1",
+  "conditions": {
+    "gt_clean": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-DEV2-01/20260920-r1/cases/24642607-2a51-384a-90a7-228067956d05/start-6.5/base/scene.json",
+    "dvgt_class_prior": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/20260920-conditioning-r2/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_class_prior.json",
+    "dvgt_visible_extent": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/20260920-conditioning-r2/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_visible_extent.json"
+  },
+  "conditioning_dir": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1/conditioning",
+  "frames": 117,
+  "seed": 43,
+  "audit_case_result": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-PRIOR-AUDIT-01/20260920-r1/24642607-2a51-384a-90a7-228067956d05/result.json",
+  "near_gap_difference_m": -0.003690719307122947,
+  "direct_progress_difference_m": -0.0014933747873051573,
+  "extra_information": "ego/calibration/route/terrain; shared GT relative motion and other actors; no target GT initial shape in fitted state",
+  "confirmation_protocol": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-CONFIRM-01/20260920-r1/protocol.json",
+  "source_discovery_case": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/20260920-conditioning-r2/24642607-2a51-384a-90a7-228067956d05"
+}

@@ -40,17 +40,23 @@ def main():
     frozen=None
     if args.frozen_state_protocol:
         frozen=json.loads(args.frozen_state_protocol.read_text())
-        assert frozen['task_id']==args.task_id=='WS-V75-SHAPE-FEEDBACK-01'
+        assert frozen['task_id']==args.task_id
+        assert args.task_id in ['WS-V75-SHAPE-FEEDBACK-01','WS-V75-SHAPE-CONFIRM-01']
         assert frozen['base']==str(base) and frozen['source_real_run']==str(SOURCE) and frozen['target']==source['target']
-        assert frozen['frames']==117 and frozen['seed']==42 and args.arm in frozen['conditions']
+        expected_seed=43 if args.task_id=='WS-V75-SHAPE-CONFIRM-01' else 42
+        assert frozen['frames']==117 and frozen['seed']==expected_seed and args.arm in frozen['conditions']
         parent=Path(frozen['source_generated_run'])
         assert json.loads((parent/'gt_clean/result.json').read_text())['baseline_admitted']
         assert json.loads((parent/'gt_clean/dense_reference_result.json').read_text())['status']=='passed'
+        if args.task_id=='WS-V75-SHAPE-CONFIRM-01' and args.arm!='gt_clean':
+            assert json.loads((OUT/'gt_clean/result.json').read_text())['baseline_admitted']
+            assert json.loads((OUT/'gt_clean/dense_reference_result.json').read_text())['status']=='passed'
     else:
         assert args.arm in ARMS, '额外状态分支必须有冻结协议'
+    seed=frozen['seed'] if frozen else 42
     protocol={'task_id':args.task_id,'run_id':OUT.name,'source_run':str(SOURCE),
               'base':str(base),'source_log':source['source_log'],'target':source['target'],
-              'frames':117,'blocks':15,'fps':30,'seed':42,'arms':ARMS,
+              'frames':117,'blocks':15,'fps':30,'seed':seed,'arms':ARMS,
               'role':'single exposed development approach task; state gate repaired using ordinary terrain and legal past images',
               'policy':'FasterRCNN ground-contact + Kalman + official nuPlan IDM;40m; frozen previous parameters',
               'shared_inputs':['initial RGB','generic daylight driving text','20 prior RGB frames for policy tracker only','known calibration/ego/route',
@@ -128,7 +134,7 @@ def main():
         tr=np.load(base/'trajectory.npz'); terrain=RasterGround(base); vertices,faces=terrain.mesh_for_route(tr['ego_world'][:,:2,3])
         snapper=GroundSnapper(vertices,faces); bridge=FeedbackBridge(base,condition,ground_snapper=snapper)
         policy=RasterRGBIDMPolicy(base); policy.restore_tracker(json.loads((SOURCE/'tracker_at_t0.json').read_text()))
-        cfg=config(); cfg.text_encoder=None; cfg.image_encoder=None; cfg.diffusion_model.seed=42
+        cfg=config(); cfg.text_encoder=None; cfg.image_encoder=None; cfg.diffusion_model.seed=seed
         pipeline=cfg.setup().to('cuda').eval()
         embeddings=torch.load(conditioning/'embeddings.pt',weights_only=True,map_location='cpu')
         cache=pipeline.initialize_cache_from_embeddings(**embeddings,view_names=[CAMERA])
