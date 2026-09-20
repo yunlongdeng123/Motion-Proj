@@ -17,6 +17,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=OUT)
     parser.add_argument('--base-dir',type=Path,default=BASE);parser.add_argument('--target',default=TARGET)
     parser.add_argument('--task-id',default='WS-V75-NATURAL-01')
+    parser.add_argument('--source-protocol',type=Path)
     a=parser.parse_args();OUT,BASE,TARGET=a.output,a.base_dir,a.target
     assert not OUT.exists(), '拒绝覆盖冻结目录'
     base=json.loads((BASE/'input_manifest.json').read_text())
@@ -92,6 +93,15 @@ def main():
               'generation_frames':[0,30,60,90,120,150,180,210,234],
               'training_overlap':'unknown','failure_ledger_refs':['V75-F01','V74-H2-F20','V74-H2-F21','V74-H2-F22'],
               'human_verdict':None}
+    if a.source_protocol:
+        source=json.loads(a.source_protocol.read_text())
+        assert source['task_id']=='WS-V75-VISIBLE-DEV-01'
+        protocol.update(source_protocol=str(a.source_protocol),admission_policy='reference_and_raw_support_without_error_ranking',
+                        role=source['boundary'],target_selection=source['target_selection'],
+                        followup_if_admitted=source['generation'],generation_frames=source['measurement_frames'],
+                        stop_rules=['OOM stops immediately without retry or downsizing',
+                                    'causal generation requires same reliable target LiDAR readout and raw model support',
+                                    'good cases retained; no residual-size or global-scale-failure ranking',source['stop']])
     OUT.mkdir(parents=True)
     (OUT/'protocol.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n')
     inp=OUT/'native_input/frame_0';inp.mkdir(parents=True)

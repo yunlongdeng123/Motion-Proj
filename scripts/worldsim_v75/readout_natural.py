@@ -152,12 +152,13 @@ def main():
                    projection_bounds=bbox(c,rotation,dimensions,K).tolist(),
                    max_projected_bound_change_px=float(np.max(abs(bbox(c,rotation,dimensions,K)-bbox(gt_camera,rotation,dimensions,K)))))
     reference_ok=lidar_read is not None and lidar_read['n']>=6 and lidar_read['center_error_m']<=.5 and lidar_read['face_retention']>=.8
-    model_ok=all(r is not None and r['n']>=20 and r['face_retention']>=.8 and r['radial_scale']>0 for r in [raw_read,scaled_read])
+    prospective=p.get('admission_policy')=='reference_and_raw_support_without_error_ranking'
+    model_ok=all(r is not None and r['n']>=20 and r['face_retention']>=.8 and r['radial_scale']>0 for r in ([raw_read] if prospective else [raw_read,scaled_read]))
     residual=scaled_read is not None and scaled_read['center_error_m']>.3 and scaled_read['max_projected_bound_change_px']>2
     reasons=[]
     if not reference_ok:reasons.append('independent_reference_readout_not_reliable')
     if not model_ok:reasons.append('model_core_or_visible_face_support_insufficient')
-    if not residual:reasons.append('controlled_residual_below_frozen_threshold')
+    if not prospective and not residual:reasons.append('controlled_residual_below_frozen_threshold')
     result={'status':'complete','human_verdict':None,'target':p['target'],'central_network_pixels':int(central.sum()),
             'calibrated_ray_control':control,
             'coordinate_admission':'raw point-map orientation failed; projected metric numbers invalid as accuracy claims; calibrated ego-range control separately evaluated',
@@ -169,7 +170,8 @@ def main():
             'lidar_time_filter':{'source_points':len(lidar),'points_at_or_before_cutoff':int(allowed.sum()),
                                  'excluded_future_returns':int((~allowed).sum()),'source':'official av2.structures.sweep offsets from sweep timestamp',
                                  'target_points_in_3d_box':int(target_inside.sum()),'target_points_in_detector_core':int(in_core.sum())},
-            'generation_admitted':bool(reference_ok and model_ok and residual),'stop_reasons':reasons,
+            'generation_admitted':bool(reference_ok and model_ok and (prospective or residual)),'stop_reasons':reasons,
+            'admission_policy':p.get('admission_policy','legacy_scaled_residual_discovery'),
             'failure_ledger_delta':'none','world_model_generation_calls':0,
             'boundary':'one exposed log; real model depth but oracle size/yaw, known calibration and separate extra LiDAR scale; not an end-to-end pure-visual reconstructed scene'}
     np.savez(OUT/f'readout{suffix}_arrays.npz',depths=depths,central_mask=central,lidar_uv=uv[in_core],lidar_camera=pc[in_core],

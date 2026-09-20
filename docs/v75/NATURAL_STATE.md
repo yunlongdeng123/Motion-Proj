@@ -142,3 +142,6 @@ actor读出固定使用真实初帧检测框中央60%、标注尺寸与朝向。
 原始目录均在`/root/autodl-tmp/runs/worldsim_v75/`。主要脚本为`prepare_natural.py`、`infer_natural.py`、`readout_natural.py`、`screen_natural_sources.py`、`run_natural_readouts.py`、`run_natural_rollouts.py`、`evaluate_natural_rollout.py`与`review_natural_rollouts.py`。本地HTML及科学图由`build_natural_report.py`从这些结果构建，不生成或补画实验内容。
 
 未训练、未改第三方源码、未使用保留样例。没有把模型几何误差直接换算为生成三维状态误差或碰撞。额外目标LiDAR是信息增加的修复参照，不能称同预算方法优势。failure_ledger_refs：V75-F01、V74-H2-F20、V74-H2-F21、V74-H2-F22；failure_ledger_delta：none；人工verdict：null。
+
+
+后续独立冻结的开发窗口与完整正反结果见[可见性前置窗口](VISIBLE_COHORT.md)。定位诊断收口，当前任务导向定义见[PROBLEM](PROBLEM.md)。

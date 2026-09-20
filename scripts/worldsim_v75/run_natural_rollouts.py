@@ -1,4 +1,5 @@
 """单个真实残余案例的五个固定输入比较；前置失败或OOM即停。"""
+import argparse
 import copy
 import json
 import os
@@ -24,7 +25,7 @@ def call(script,log,args):
         result=subprocess.run(command,cwd=P,stdout=f,stderr=subprocess.STDOUT)
     if result.returncode:raise RuntimeError(f'{script}: rc={result.returncode}, stopped; log={log}')
 
-def verify_condition(case,target):
+def verify_condition(case,target,allow_unchanged=False):
     clean=np.load(OUT/'gt_clean/conditions.npy',mmap_mode='r');other=np.load(case/'conditions.npy',mmap_mode='r')
     trajectory=np.load(BASE/'trajectory.npz')
     reference=next(t for t in json.loads((BASE/'scene.json').read_text())['tracks'] if t['id']==target['id'])
@@ -38,15 +39,24 @@ def verify_condition(case,target):
             if (hi>lo).all():allowed[lo[1]:hi[1],lo[0]:hi[0]]=True
         outside=int((changed&~allowed).sum());assert outside==0,(case.name,f,outside)
         rows.append({'frame':f,'changed_pixels':int(changed.sum()),'outside_target_union':outside})
-    assert any(r['changed_pixels'] for r in rows)
+    changed_any=any(r['changed_pixels'] for r in rows)
+    assert changed_any or allow_unchanged
     (case/'condition_binding_check.json').write_text(json.dumps({'status':'passed','checked_frames':61,'rows':rows,
-        'other_scene_components_exactly_unchanged':True,'claim':'geometry/raster binding only; no measured generated consequence yet'},indent=2)+'\n')
+        'any_target_pixel_changed':changed_any,'other_scene_components_exactly_unchanged':True,'claim':'geometry/raster binding only; no measured generated consequence yet'},indent=2)+'\n')
 
 def main():
+    global SOURCE,LOG,BASE,READ,OUT,VARIANTS
+    parser=argparse.ArgumentParser();parser.add_argument('--visible-case',type=Path)
+    args=parser.parse_args();prospective=args.visible_case is not None
+    if prospective:
+        case=args.visible_case;SOURCE=case.parent.parent;LOG=case.name;BASE=case/'base';READ=case/'reconstruction';OUT=case/'rollouts'
+        selection=json.loads((SOURCE/'observation_selection.json').read_text())
+        assert any(r['log_id']==LOG for r in selection['model_cases'])
+        VARIANTS=['gt_clean','dvgt_metric','ordinary_bbox','reference_lidar']
     assert not OUT.exists(),'拒绝重跑/覆盖此发现比较'
     assert json.loads((SOURCE/'readout_queue_result.json').read_text())['status']=='complete'
     read=json.loads((READ/'readout_ray_control_result.json').read_text());assert read['generation_admitted']
-    assert read['readouts']['dvgt_metric']['center_error_m']>2*read['readouts']['reference_lidar']['center_error_m']
+    if not prospective:assert read['readouts']['dvgt_metric']['center_error_m']>2*read['readouts']['reference_lidar']['center_error_m']
     OUT.mkdir(parents=True)
     protocol={'task_id':'WS-V75-NATURAL-ROLLOUT-01','run_id':'20260920-r1','frozen_utc':datetime.now(timezone.utc).isoformat(),
               'log_id':LOG,'target':read['target'],'base_dir':str(BASE),'readout_dir':str(READ),'variants':VARIANTS,'seed':42,
@@ -59,6 +69,10 @@ def main():
               'stop':'preflight/render/evaluation failure or any OOM stops controller; no automatic retries/downsizing',
               'claim_boundary':'conditional state-readout diagnostic, not pure visual end-to-end simulator; no policy feedback; no universal failure claim',
               'human_verdict':None}
+    if prospective:
+        assert read['admission_policy']=='reference_and_raw_support_without_error_ranking'
+        protocol.update(task_id='WS-V75-VISIBLE-ROLLOUT-01',case_id=LOG,source_protocol=str(SOURCE/'protocol.json'),
+                        selection='first two real-observation-admitted development logs fixed before reconstruction; good cases retained without error ranking')
     (OUT/'protocol.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n')
     result={'status':'running','pid':os.getpid(),'completed':[],'human_verdict':None};began=time.monotonic()
     try:
@@ -83,9 +97,11 @@ def main():
             (case/'input_manifest.json').write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n')
             for f in ['trajectory.npz','initial_rgb.png',* [x.name for x in BASE.glob('reference-*.png')]]:
                 (case/f).symlink_to(BASE/f)
-            (case/'prompt.txt').write_text('A forward-facing driving camera at an urban intersection in daylight. A white sedan is ahead, with buildings, lane markings, sidewalks, and other vehicles around the road.\n')
+            prompt=('A forward-facing driving camera on an urban road in daylight. Parked and moving vehicles, buildings, sidewalks, and road markings are visible.\n'
+                    if prospective else 'A forward-facing driving camera at an urban intersection in daylight. A white sedan is ahead, with buildings, lane markings, sidewalks, and other vehicles around the road.\n')
+            (case/'prompt.txt').write_text(prompt)
             call('scripts/worldsim_v75/render_argoverse.py',case/'render.log',['--run-dir',case])
-            if name!='gt_clean':verify_condition(case,target)
+            if name!='gt_clean':verify_condition(case,target,allow_unchanged=prospective)
             if name=='gt_clean':
                 print(json.dumps({'stage':'encode','variant':name}),flush=True)
                 call('scripts/worldsim_v75/run_prepared.py',case/'encode.log',['encode','--input-dir',case])
