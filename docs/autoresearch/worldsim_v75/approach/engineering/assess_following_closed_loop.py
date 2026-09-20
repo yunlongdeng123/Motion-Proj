@@ -9,9 +9,7 @@ from run_following_closed_loop import OUT, reference_clearance
 
 
 def main():
-    global OUT
-    parser = argparse.ArgumentParser(); parser.add_argument('--arm', required=True)
-    parser.add_argument('--run-dir',type=Path,default=OUT); args = parser.parse_args(); OUT=args.run_dir
+    parser = argparse.ArgumentParser(); parser.add_argument('--arm', required=True); args = parser.parse_args()
     folder = OUT/args.arm; path = folder/'dense_reference_result.json'; assert not path.exists()
     run = json.loads((folder/'result.json').read_text()); assert run['status'] == 'complete'
     protocol = json.loads((OUT/'protocol.json').read_text()); base = Path(protocol['base']); reference = scene(base)

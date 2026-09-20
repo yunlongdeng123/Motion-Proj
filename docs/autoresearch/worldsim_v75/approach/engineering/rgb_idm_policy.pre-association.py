@@ -28,9 +28,7 @@ class MotionTracks:
         assigned = {}
         if self.tracks and detections:
             costs = np.array([[np.linalg.norm(t['state'][:2]-d['world_center']) for d in detections] for t in self.tracks])
-            # 距离门控必须先于全局分配；事后丢弃远距离配对会挤掉有效近邻。
-            penalty = 11. * (max(costs.shape)+1)
-            ti, di = linear_sum_assignment(np.where(costs <= 10, costs, penalty))
+            ti, di = linear_sum_assignment(costs)
             assigned = {int(d): self.tracks[int(t)] for t, d in zip(ti, di) if costs[t, d] <= 10}
         for i, detection in enumerate(detections):
             track = assigned.get(i)

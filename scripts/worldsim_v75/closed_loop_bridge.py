@@ -64,12 +64,16 @@ def upload_scene(data, times, K):
 
 class FeedbackBridge:
     """真值文件只初始化ego/标定；条件场景单独传入，参考评价由调用方持有。"""
-    def __init__(self, base, condition_scene):
+    def __init__(self, base, condition_scene, ground_snapper=None):
         self.base = Path(base)
         self.trajectory = np.load(self.base/'trajectory.npz')
         self.state, self.speed_source = initial_state(self.base, self.trajectory)
         self.extrinsic = np.linalg.inv(self.trajectory['ego_world'][0]) @ self.trajectory['camera_world'][0]
         self.config = VehicleConfig()
+        self.ground_snapper = ground_snapper
+        if ground_snapper is not None:
+            # 初始化官方地面高度锚点；初始RGB对应的姿态保持原样。
+            ground_snapper.snap(self.state, self.config)
         self.cursor = 0
         self.ctx, self.sid, self.camera_fit = upload_scene(copy.deepcopy(condition_scene), self.trajectory['timestamps_us'], self.trajectory['K'])
 
@@ -86,6 +90,8 @@ class FeedbackBridge:
             if f > 0:
                 dt = float(self.trajectory['timestamps_us'][f]-self.trajectory['timestamps_us'][f-1])/1e6
                 self.state = integrate_vehicle(self.state, command, dt, self.config)
+                if self.ground_snapper is not None:
+                    self.state = self.ground_snapper.snap(self.state, self.config)
             s = self.state
             rig = rig_pose_from_state(s.x_m, s.y_m, s.z_m, s.yaw_rad,
                                       s.pitch_rad+s.suspension_pitch_rad,

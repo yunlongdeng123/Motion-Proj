@@ -1,0 +1,41 @@
+{
+  "task_ids": [
+    "WS-V75-RASTER-POLICY-01",
+    "WS-V75-APPROACH-BASELINE-01",
+    "WS-V75-APPROACH-CLOSEDLOOP-01",
+    "WS-V75-APPROACH-REFERENCE-01"
+  ],
+  "sources": {
+    "raster": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-RASTER-POLICY-01/20260920-r1",
+    "real_r1": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-01/20260920-r1",
+    "real_r2": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-01/20260920-association-r2",
+    "generated_r1": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-r1",
+    "generated_r2": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2"
+  },
+  "base_commit_before_this_turn": "db13cb14",
+  "role": "single exposed development log; r1/r2 are engineering repair, not independent samples or seed replication",
+  "generated_frames": 585,
+  "complete_generated_runs": 5,
+  "final_comparison_runs": 4,
+  "dvgt_forwards": 1,
+  "actual_detector_calls": 36,
+  "detector_note": "35 warmup/real baseline plus1 reconstruction input detector; saved5 observations reused for raster-only check",
+  "extra_information": [
+    "known metric height raster for policy and ego ground snap",
+    "20 real history frames for policy initialization",
+    "known route/calibration, GT actor size/yaw and shared other trajectories",
+    "background LiDAR for scale arm",
+    "three past LiDAR sweeps for reference arm, source scan partial point-time filtered"
+  ],
+  "engineering_repairs": [
+    "nonplanar road requires ground map, not extrapolated plane",
+    "fixed20 prior captures tolerate nanosecond timestamp jitter",
+    "distance-gated matching before Hungarian prevents valid-pair eviction"
+  ],
+  "full_assets": "source directories retain generated/condition tensors, all videos, native DVGT outputs, per-frame inputs and logs",
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}

@@ -15,14 +15,20 @@ COLORS = {'gt_clean':'#526e84', 'dvgt_metric':'#d05549', 'dvgt_lidar_scaled':'#9
 
 
 def main():
-    parser = argparse.ArgumentParser(); parser.add_argument('--figures-only', action='store_true'); parser.add_argument('--refresh-media', action='store_true'); args = parser.parse_args()
+    global OUT
+    parser = argparse.ArgumentParser(); parser.add_argument('--figures-only', action='store_true'); parser.add_argument('--refresh-media', action='store_true')
+    parser.add_argument('--run-dir',type=Path,default=OUT); parser.add_argument('--target-clearance',action='store_true')
+    args = parser.parse_args(); OUT=args.run_dir
+    if args.target_clearance: NAMES['reference_lidar']='Target LiDAR anchor'
     assert json.loads((OUT/'queue_result.json').read_text())['status'] == 'complete'
     dest = OUT/'review'
     if args.figures_only or args.refresh_media: assert (dest/'comparison.json').exists()
     else: assert not dest.exists(); dest.mkdir()
     protocol = json.loads((OUT/'protocol.json').read_text()); base = Path(protocol['base'])
     original = np.load(base/'trajectory.npz'); samples = {}; summary = []
-    read = json.loads((base.parent/'reconstruction/readout_ray_control_result.json').read_text())
+    from run_following_closed_loop import footprint
+    from scipy.spatial.transform import Rotation
+    target_reference=next(t for t in json.loads((base/'scene.json').read_text())['tracks'] if t['id']==protocol['target'] and 0 in t['frames'])
     for name in ARMS:
         folder = OUT/name
         samples[name] = {'run': json.loads((folder/'result.json').read_text()),
@@ -35,7 +41,15 @@ def main():
         positions = np.array([r['ego_xy_yaw'][:2] for r in values['dense']['rows']])
         acceleration = np.array([r['policy']['acceleration_mps2'] for r in values['decisions']])
         assert np.array_equal(values['video'][0], reference['video'][0]), '生成初帧必须配对一致'
-        summary.append({'arm': name, 'initial_target_center_residual_m': 0. if name=='gt_clean' else read['readouts'][name]['center_error_m'],
+        target_clearance=[]
+        for r in values['dense']['rows']:
+            f=r['frame']; j=target_reference['frames'].index(f)
+            target_yaw=Rotation.from_quat(target_reference['quaternions'][j]).as_euler('xyz')[2]
+            body=footprint(r['ego_xy_yaw'][:2],r['ego_xy_yaw'][2],4.8,2.)
+            target_body=footprint(target_reference['centers'][j][:2],target_yaw,*target_reference['dimensions'][:2])
+            target_clearance.append(float(body.distance(target_body)))
+        values['target_clearance']=target_clearance
+        summary.append({'arm': name, 'initial_target_center_residual_m': float(np.linalg.norm(values['run']['offset_world_m'])),
                         'progress_m': values['dense']['progress_m'],
                         'progress_change_vs_gt_m': values['dense']['progress_m']-reference['dense']['progress_m'],
                         'end_position_change_vs_gt_m': float(np.linalg.norm(positions[-1]-ref_pos[-1])),
@@ -43,9 +57,11 @@ def main():
                         'max_abs_acceleration_change_vs_gt_mps2': float(np.max(abs(acceleration-ref_acc))),
                         'braking_decisions': int((acceleration < 0).sum()), 'all_decisions': len(acceleration),
                         'minimum_reference_clearance_m': values['dense']['minimum_reference_clearance_m'],
+                        'minimum_target_reference_clearance_m': min(target_clearance),
+                        'final_target_reference_clearance_m': target_clearance[-1],
                         'reference_overlap_frames': len(values['dense']['overlap_frames']), 'frames': len(positions)})
     (dest/'comparison.json').write_text(json.dumps({'status':'complete', 'cases':summary, 'seed':42, 'source_logs':1,
-        'human_verdict':None, 'failure_ledger_delta':'none', 'boundary':'first exposed task with fixed ordinary policy; full causal feedback but not a driving SOTA/generalization result'}, indent=2)+'\n')
+        'human_verdict':None, 'failure_ledger_delta':'none', 'boundary':protocol['role']+'; full causal feedback but not a driving SOTA/generalization result'}, indent=2)+'\n')
     fig, axes = plt.subplots(2, 2, figsize=(12, 8), layout='constrained')
     origin = original['ego_world'][0, :2, 3]; rotation = original['ego_world'][0, :2, :2]
     for name, values in samples.items():
@@ -60,13 +76,28 @@ def main():
         ds = values['decisions']; times = [r['observation_frame']/30 for r in ds]
         acceleration = [r['policy']['acceleration_mps2'] for r in ds]
         axes[0, 1].step(times, acceleration, where='post', color=COLORS[name], label=NAMES[name])
-        axes[1, 0].plot(ts, [r['clearance']['distance_m'] if r['clearance'] else np.nan for r in dense], color=COLORS[name], label=NAMES[name])
+        clearance=values['target_clearance'] if args.target_clearance else [r['clearance']['distance_m'] if r['clearance'] else np.nan for r in dense]
+        axes[1, 0].plot(ts, clearance, color=COLORS[name], label=NAMES[name])
         axes[1, 1].plot(ts, np.linalg.norm(positions-ref_pos, axis=1), color=COLORS[name], label=NAMES[name])
     axes[0, 0].set(xlabel='Initial ego right (m)', ylabel='Initial ego forward (m)', title='Solid: executed ego / dashed: target condition')
     axes[0, 0].set_aspect('equal', adjustable='datalim')
+    if args.target_clearance:
+        ax=axes[0,0]; ax.clear(); ax.set_aspect('auto')
+        true_initial=(np.array(target_reference['centers'][0][:2])-origin)@rotation
+        ax.axvline(true_initial[0],color='#4b5961',ls=':',label='Fixed GT target at start')
+        for i,(name,values) in enumerate(samples.items()):
+            end=np.array(values['dense']['rows'][-1]['ego_xy_yaw'][:2])
+            forward=((end-origin)@rotation)[0]
+            target=next(t for t in json.loads((OUT/name/'condition_scene.json').read_text())['tracks'] if t['id']==protocol['target'] and 0 in t['frames'])
+            target_forward=((np.array(target['centers'][0][:2])-origin)@rotation)[0]
+            ax.hlines(i,0,forward,color=COLORS[name],linewidth=2)
+            ax.scatter([forward],[i],color=COLORS[name],marker='s',s=35,label='Final ego' if i==0 else None)
+            ax.scatter([target_forward],[i],color=COLORS[name],marker='^',s=55,label='Input target' if i==0 else None)
+        ax.set_yticks(range(4),[NAMES[n] for n in samples]); ax.invert_yaxis()
+        ax.set(xlabel='Initial ego forward coordinate (m)',title='Longitudinal projection: final ego / input target',ylim=(3.8,-.8))
     axes[0, 1].set(xlabel='Policy observation time (s)', ylabel='Acceleration (m/s^2)', title='Actions from actual generated RGB')
     axes[0, 1].axhline(0, color='#777777', lw=.8)
-    axes[1, 0].set(xlabel='Time (s)', ylabel='Footprint clearance (m)', title='Independent recorded actors; every frame')
+    axes[1, 0].set(xlabel='Time (s)', ylabel='Footprint clearance (m)', title='Fixed reference target; every frame' if args.target_clearance else 'Independent recorded actors; every frame')
     axes[1, 1].set(xlabel='Time (s)', ylabel='Position difference vs GT-state loop (m)', title='Closed-loop execution difference')
     for ax in axes.flat:
         ax.grid(alpha=.2); ax.spines[['top','right']].set_visible(False); ax.legend(fontsize=7)

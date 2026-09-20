@@ -1,0 +1,40 @@
+{
+  "task_id": "WS-V75-APPROACH-CLOSEDLOOP-01",
+  "run_id": "20260920-r1",
+  "source_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-01/20260920-r1",
+  "base": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-TASKS-01/20260920-r1/cases/02678d04-cc9f-3148-9f95-1ba66347dff9/start-6.5/base",
+  "source_log": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+  "target": "94dede14-59da-4f09-b016-95f19596ac08",
+  "frames": 117,
+  "blocks": 15,
+  "fps": 30,
+  "seed": 42,
+  "arms": [
+    "gt_clean",
+    "dvgt_metric",
+    "dvgt_lidar_scaled",
+    "reference_lidar"
+  ],
+  "role": "single exposed development approach task; state gate repaired using ordinary terrain and legal past images",
+  "policy": "FasterRCNN ground-contact + Kalman + official nuPlan IDM;40m; frozen previous parameters",
+  "shared_inputs": [
+    "initial RGB",
+    "generic daylight driving text",
+    "20 prior RGB frames for policy tracker only",
+    "known calibration/ego/route",
+    "known official height map for perception and official GroundSnapper",
+    "GT map and other actor states/trajectories"
+  ],
+  "change_for_error_arms": "target initial translation readout only; same offset over actor trajectory; fixed physical reference",
+  "gt_feedback_gate": {
+    "max_route_lateral_m": 1.0,
+    "no_reference_overlap": true,
+    "median_abs_online_oracle_acceleration_difference_mps2": 0.5,
+    "max_underbraking_mps2": 2.0,
+    "max_overbraking_mps2": 2.0
+  },
+  "error_arm_admission": "GT feedback and dense reference pass, then reliable reference/model support; no residual-size ranking",
+  "stop": "any OOM immediate stop without retry; GT feedback failure blocks reconstruction comparison; no seeds/threshold/source search",
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}
