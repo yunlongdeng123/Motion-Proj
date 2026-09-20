@@ -1,5 +1,5 @@
 """原生六相机 SparseDrive 前向；该进程不加载未来轨迹或 actor 真值。"""
-import copy,json,os,random,sys,time,shutil
+import argparse,copy,json,os,random,sys,time,shutil
 from pathlib import Path
 import numpy as np
 import torch
@@ -15,9 +15,10 @@ from mmdet.datasets.pipelines import Compose
 import projects.mmdet3d_plugin
 from projects.mmdet3d_plugin.datasets.nuscenes_3d_dataset import NuScenes3DDataset
 
-src=R/'real_inputs_r2';reg=json.loads((src/'registration.json').read_text());inputs=json.loads((src/'policy_inputs.json').read_text())
+ap=argparse.ArgumentParser();ap.add_argument('--input-dir',type=Path,default=R/'real_inputs_r2');ap.add_argument('--out-dir',type=Path,default=R/'real_outputs_r1');args=ap.parse_args()
+src=args.input_dir;reg=json.loads((src/'registration.json').read_text());inputs=json.loads((src/'policy_inputs.json').read_text())
 assert reg['prepared'] and len(inputs)==reg['expected_forward_count']
-out=R/'real_outputs_r1';out.mkdir(exist_ok=False);shutil.copy2(__file__,out/'source_snapshot.py')
+out=args.out_dir;out.mkdir(exist_ok=False);shutil.copy2(__file__,out/'source_snapshot.py')
 torch.set_num_threads(4);random.seed(reg['seed']);np.random.seed(reg['seed']);torch.manual_seed(reg['seed'])
 checkpoint=torch.load(R/'assets/sparsedrive_stage2.pth',map_location='cpu');state=checkpoint['state_dict']
 if all(k.startswith('module.') for k in state):state={k[7:]:v for k,v in state.items()}
@@ -40,8 +41,11 @@ manifest={'task_id':reg['task_id'],'source_inputs':str(src),'started_unix':time.
 pipeline=Compose(cfg.test_pipeline)
 dataset_stub=type('AugmentationConfig',(),{'data_aug_conf':cfg.data_aug_conf,'test_mode':True})()
 aug=NuScenes3DDataset.get_augmentation(dataset_stub)
-rows=[]
+rows=[];previous_condition=None
 for source in inputs:
+    condition=source.get('condition','real')
+    if condition!=previous_condition:
+        model.head.det_head.instance_bank.reset();model.head.map_head.instance_bank.reset();model.head.motion_plan_head.instance_queue.reset();previous_condition=condition
     datum={k:copy.deepcopy(source[k]) for k in ['timestamp','img_filename','lidar2img','cam_intrinsic','lidar2global','ego_status','gt_ego_fut_cmd']}
     for k in ['lidar2img','cam_intrinsic']:datum[k]=[np.array(v,dtype=np.float64) for v in datum[k]]
     for k in ['lidar2global','ego_status','gt_ego_fut_cmd']:datum[k]=np.array(datum[k],dtype=np.float64 if k=='lidar2global' else np.float32)
@@ -51,8 +55,8 @@ for source in inputs:
     torch.cuda.synchronize();duration=time.time()-begin
     arrays={k:v.detach().cpu().numpy() for k,v in result.items() if isinstance(v,torch.Tensor)}
     assert arrays['final_planning'].shape==(6,2) and np.isfinite(arrays['final_planning']).all()
-    path=out/f"frame_{source['original_index']:02d}.npz";np.savez_compressed(path,**arrays)
-    row={'original_index':source['original_index'],'sample_token':source['sample_token'],'evaluated':source['original_index'] in reg['evaluation_original_indices'],'seconds':duration,'prediction':arrays['final_planning'].tolist(),'output_file':str(path)}
-    rows.append(row);(out/'forward_rows.json').write_text(json.dumps(rows,indent=2));print('FORWARD',row['original_index'],'seconds',duration,flush=True)
+    path=out/f"{condition}_frame_{source['original_index']:02d}.npz";np.savez_compressed(path,**arrays)
+    row={'condition':condition,'original_index':source['original_index'],'sample_token':source['sample_token'],'evaluated':source['original_index'] in reg['evaluation_original_indices'],'seconds':duration,'prediction':arrays['final_planning'].tolist(),'output_file':str(path)}
+    rows.append(row);(out/'forward_rows.json').write_text(json.dumps(rows,indent=2));print('FORWARD',condition,row['original_index'],'seconds',duration,flush=True)
 manifest.update(completed=True,completed_unix=time.time(),actual_forward_count=len(rows),evaluated_count=sum(r['evaluated'] for r in rows),peak_GPU_allocated_MiB=torch.cuda.max_memory_allocated()/1024**2)
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2));print('REAL_FORWARD_COMPLETED',flush=True)
