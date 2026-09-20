@@ -1,0 +1,212 @@
+{
+  "status": "complete",
+  "human_verdict": null,
+  "target": "94dede14-59da-4f09-b016-95f19596ac08",
+  "central_network_pixels": 28,
+  "calibrated_ray_control": true,
+  "coordinate_admission": "raw point-map orientation failed; projected metric numbers invalid as accuracy claims; calibrated ego-range control separately evaluated",
+  "gt_center_camera": [
+    0.8750521683159329,
+    1.5179937035822137,
+    110.19758222381206
+  ],
+  "reference_only_gt_center_world": [
+    -46.602289438910475,
+    101.58039279553633,
+    3.813148871197442
+  ],
+  "readouts": {
+    "ordinary_bbox": {
+      "center_camera": [
+        1.3030305624114982,
+        1.9171236784067531,
+        126.48740444277543
+      ],
+      "bbox_residual_px": [
+        0.16051478744611813,
+        -0.21143244226016122,
+        -0.15538125102409595,
+        0.20450204587575627
+      ],
+      "success": true,
+      "n": 4,
+      "center_world": [
+        -53.13821441978086,
+        116.51211869834397,
+        3.9744695949376476
+      ],
+      "center_error_m": 16.300330615298837,
+      "offset_world_m": [
+        -6.535924980870384,
+        14.931725902807642,
+        0.16132072374020545
+      ],
+      "depth_error_m": 16.289822218963366,
+      "projection_bounds": [
+        256.88090052963366,
+        260.33326029385887,
+        267.0705708974134,
+        268.1410097253978
+      ],
+      "max_projected_bound_change_px": 2.0924305246097674
+    },
+    "dvgt_metric": {
+      "center_camera": [
+        0.9713590040628417,
+        1.4291417259439432,
+        94.29147922566334
+      ],
+      "radial_scale": 0.7454614128659905,
+      "n": 28,
+      "scale_mad": 0.0021845311374762977,
+      "face_retention": 1.0,
+      "median_observed_depth_m": 92.27589705513299,
+      "ordinary_surface_depth_m": 124.47245635045304,
+      "center_world": [
+        -39.77129862935628,
+        87.22320180356974,
+        3.3336557552551627
+      ],
+      "center_error_m": 15.90664270888919,
+      "offset_world_m": [
+        6.830990809554194,
+        -14.35719099196659,
+        -0.4794931159422795
+      ],
+      "depth_error_m": -15.906102998148725,
+      "projection_bounds": [
+        255.20450284264982,
+        259.0490826211301,
+        268.87619551950763,
+        269.5249334594975
+      ],
+      "max_projected_bound_change_px": 2.4414320494383333
+    },
+    "dvgt_lidar_scaled": {
+      "center_camera": [
+        0.7938973168130979,
+        1.168045775894341,
+        77.06496984378516
+      ],
+      "radial_scale": 0.6092699125520469,
+      "n": 28,
+      "scale_mad": 0.0017767136776830061,
+      "face_retention": 1.0,
+      "median_observed_depth_m": 75.04944452644816,
+      "ordinary_surface_depth_m": 124.47245635045304,
+      "center_world": [
+        -32.619297290126596,
+        71.55209441123698,
+        2.990786726119125
+      ],
+      "center_error_m": 33.13455979467854,
+      "offset_world_m": [
+        13.982992148783879,
+        -30.028298384299347,
+        -0.822362145078317
+      ],
+      "depth_error_m": -33.1326123800269,
+      "projection_bounds": [
+        253.74690343968115,
+        257.9325917684513,
+        270.4784247620229,
+        270.7530600743515
+      ],
+      "max_projected_bound_change_px": 4.043661291953583
+    },
+    "reference_lidar": null
+  },
+  "projection_checks": [
+    {
+      "camera": "ring_front_center",
+      "valid_pixels": 70899,
+      "median_reprojection_error_px": 1481.7962266587472,
+      "positive_depth_fraction": 0.3860282897949219
+    },
+    {
+      "camera": "ring_front_left",
+      "valid_pixels": 192075,
+      "median_reprojection_error_px": 428.51950631735804,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_front_right",
+      "valid_pixels": 196608,
+      "median_reprojection_error_px": 73.52696143958238,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_rear_left",
+      "valid_pixels": 141297,
+      "median_reprojection_error_px": 541.486963643049,
+      "positive_depth_fraction": 0.8840522766113281
+    },
+    {
+      "camera": "ring_rear_right",
+      "valid_pixels": 195213,
+      "median_reprojection_error_px": 228.76100161327608,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_side_left",
+      "valid_pixels": 185278,
+      "median_reprojection_error_px": 593.914619426761,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_side_right",
+      "valid_pixels": 196608,
+      "median_reprojection_error_px": 90.93912772883232,
+      "positive_depth_fraction": 1.0
+    }
+  ],
+  "metric_scale_control": 0.8133157944984011,
+  "background_anchor_pixels": 32770,
+  "anchor_views": [
+    {
+      "camera": "ring_front_center",
+      "anchor_pixels": 1390
+    },
+    {
+      "camera": "ring_front_left",
+      "anchor_pixels": 5752
+    },
+    {
+      "camera": "ring_front_right",
+      "anchor_pixels": 2783
+    },
+    {
+      "camera": "ring_rear_left",
+      "anchor_pixels": 2351
+    },
+    {
+      "camera": "ring_rear_right",
+      "anchor_pixels": 5757
+    },
+    {
+      "camera": "ring_side_left",
+      "anchor_pixels": 8264
+    },
+    {
+      "camera": "ring_side_right",
+      "anchor_pixels": 6473
+    }
+  ],
+  "background_abs_depth_error_raw_median_m": 2.493450865354743,
+  "background_abs_depth_error_scaled_median_m": 1.477242989842365,
+  "lidar_time_filter": {
+    "source_points": 95381,
+    "points_at_or_before_cutoff": 35643,
+    "excluded_future_returns": 59738,
+    "source": "official av2.structures.sweep offsets from sweep timestamp",
+    "target_points_in_3d_box": 0,
+    "target_points_in_detector_core": 0
+  },
+  "generation_admitted": false,
+  "stop_reasons": [
+    "independent_reference_readout_not_reliable"
+  ],
+  "failure_ledger_delta": "none",
+  "world_model_generation_calls": 0,
+  "boundary": "one exposed log; real model depth but oracle size/yaw, known calibration and separate extra LiDAR scale; not an end-to-end pure-visual reconstructed scene"
+}

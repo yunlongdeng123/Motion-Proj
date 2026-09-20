@@ -29,6 +29,7 @@ def encode(out):
     return {'text_shape':list(text.shape),'image_shape':list(image.shape),'generation_calls':0}
 
 def generate(out,seed):
+    manifest=json.loads((out/'input_manifest.json').read_text())
     for name in ['clean.npy','clean.mp4']:
         assert not (out/name).exists(), f'拒绝覆盖{name}'
     inputs=np.load(out/'conditions.npy',mmap_mode='r')
@@ -65,7 +66,9 @@ def generate(out,seed):
     result.flush()
     return {'frames':cursor,'timings':timings,'seed':seed,'generation_calls':30,
             'model_view_name':CAMERA,'model_view_name_is_not_source_calibration':True,
-            'policy_feedback':False,'natural_reconstruction_input':False}
+            'policy_feedback':False,'natural_reconstruction_input':manifest.get('natural_reconstruction_input',False),
+            'state_source':manifest.get('state_source','GT / native conditions'),
+            'extra_information':manifest.get('extra_information',[])}
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('phase',choices=['encode','generate'])

@@ -1,0 +1,18 @@
+{
+  "task_id": "WS-V75-NATURAL-SOURCES-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T09:19:59.207672+00:00",
+  "visual_review": {
+    "04994d08-156c-3018-9717-ba0e29be8153": "exclude: nearer parked SUV occludes left/front portion of selected silver car",
+    "05fa5048-f355-3274-b565-c0ddc547b315": "pass: parked dark car, front and side visible",
+    "0bae3b5e-417d-3b03-abaa-806b433233b8": "pass: white turning car, rear and side visible",
+    "0c3bad78-9f1e-395d-a376-2eb7499229fd": "pass: parked white SUV, rear visible",
+    "0fb7276f-ecb5-3e5b-87a8-cc74c709c715": "pass: silver sedan ahead, rear visible",
+    "185d3943-dd15-397a-8b2e-69cd86628fb7": "exclude: blue foreground SUV occludes selected dark sedan left portion"
+  },
+  "reviewer": "assistant inspected actual initial RGB contact sheets before model inference; not human verdict",
+  "readout": "official DVGT-1 raw ego range + known calibrated rays; RGB detector and same GT dimensions/yaw; background LiDAR scale separately",
+  "controls": "same frozen natural readout criteria; raw point orientation separately audited, not silently assumed known",
+  "no_replacement_for_occluded_targets": true,
+  "human_verdict": null
+}

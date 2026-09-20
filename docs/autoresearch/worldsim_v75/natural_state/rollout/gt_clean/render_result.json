@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "world_model_generation_calls": 0,
+  "human_verdict": null,
+  "pinhole_approximation": {
+    "max_radial_residual_px": 0.003638828952375661,
+    "max_angle_rad": 0.4888315488082297,
+    "fifth_order_coefficients": [
+      0.0,
+      1466.9211339970022,
+      -3.068662011954018,
+      514.9394191114618,
+      -92.19566530554714,
+      320.35270616046574
+    ],
+    "tolerance_px": 0.05
+  },
+  "independent_cube_projection_checks": [
+    {
+      "center": [
+        0,
+        0,
+        20
+      ],
+      "actual_bounds": [
+        557,
+        269,
+        713,
+        425
+      ],
+      "pinhole_bounds": [
+        557.8719576911791,
+        270.3044161350236,
+        712.2722024102519,
+        424.7046608540963
+      ],
+      "max_bound_residual_px": 1.3044161350235868
+    },
+    {
+      "center": [
+        4,
+        2,
+        20
+      ],
+      "actual_bounds": [
+        843,
+        416,
+        1021,
+        579
+      ],
+      "pinhole_bounds": [
+        844.6152693123142,
+        417.3522682484262,
+        1021.0726918483973,
+        579.104905573169
+      ],
+      "max_bound_residual_px": 1.6152693123142399
+    },
+    {
+      "center": [
+        -4,
+        -2,
+        15
+      ],
+      "actual_bounds": [
+        110,
+        32,
+        360,
+        256
+      ],
+      "pinhole_bounds": [
+        111.2141068967187,
+        33.189754602161884,
+        360.0466441448672,
+        255.8293931926105
+      ],
+      "max_bound_residual_px": 1.2141068967187039
+    }
+  ],
+  "frames": 237,
+  "renderer": "official Ludus CUDA; custom Argoverse-to-pool adapter",
+  "official_source_changed": false,
+  "shader_uses_full_box_dimensions": true,
+  "interface_pose": "world-to-FLU; official C++ converts FLU to RDF",
+  "max_extrapolation_us": 0,
+  "nonzero_pixels_first": 68768,
+  "wall_s": 2.6471744310110807
+}

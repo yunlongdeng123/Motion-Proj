@@ -1,0 +1,241 @@
+{
+  "status": "complete",
+  "human_verdict": null,
+  "target": "d3d66fcc-6a28-4f86-9be4-6d1f012f726a",
+  "central_network_pixels": 544,
+  "calibrated_ray_control": true,
+  "coordinate_admission": "raw point-map orientation failed; projected metric numbers invalid as accuracy claims; calibrated ego-range control separately evaluated",
+  "gt_center_camera": [
+    4.841733640837968,
+    1.0188369919648426,
+    34.71328480975048
+  ],
+  "reference_only_gt_center_world": [
+    36.64220368426741,
+    -1.270243134047884,
+    0.7529786047857793
+  ],
+  "readouts": {
+    "ordinary_bbox": {
+      "center_camera": [
+        5.751409251709008,
+        1.2262362484630314,
+        38.58887100840591
+      ],
+      "bbox_residual_px": [
+        0.35862544174273125,
+        -0.8961716249628466,
+        -0.32052811646752843,
+        0.7256634976595251
+      ],
+      "success": true,
+      "n": 4,
+      "center_world": [
+        40.58988257454936,
+        -1.8003562066578438,
+        0.5932786946779937
+      ],
+      "center_error_m": 3.98631315275381,
+      "offset_world_m": [
+        3.9476788902819493,
+        -0.5301130726099599,
+        -0.15969991010778561
+      ],
+      "depth_error_m": 3.8755861986554265,
+      "projection_bounds": [
+        314.97400630111775,
+        259.198313669111,
+        370.156254110095,
+        287.4711124967664
+      ],
+      "max_projected_bound_change_px": 8.085949840415935
+    },
+    "dvgt_metric": {
+      "center_camera": [
+        4.732216143383452,
+        1.0089379344470115,
+        31.75063194931886
+      ],
+      "radial_scale": 0.8227924559493471,
+      "n": 544,
+      "scale_mad": 0.003876213436236897,
+      "face_retention": 1.0,
+      "median_observed_depth_m": 29.821472014448926,
+      "ordinary_surface_depth_m": 36.42842743513947,
+      "center_world": [
+        33.68301785283961,
+        -1.4498915353207136,
+        0.734278016315312
+      ],
+      "center_error_m": 2.964692909056877,
+      "offset_world_m": [
+        -2.9591858314277957,
+        -0.17964840127282966,
+        -0.018700588470467294
+      ],
+      "depth_error_m": -2.962652860431625,
+      "projection_bounds": [
+        309.6555966436296,
+        256.5524429048249,
+        376.8050541366816,
+        290.98232949127924
+      ],
+      "max_projected_bound_change_px": 9.16645829382378
+    },
+    "dvgt_lidar_scaled": {
+      "center_camera": [
+        4.465213584412309,
+        0.9520113270862998,
+        29.959187999474718
+      ],
+      "radial_scale": 0.776368606196036,
+      "n": 544,
+      "scale_mad": 0.0037388129913676904,
+      "face_retention": 0.9705882352941176,
+      "median_observed_depth_m": 28.012600727055244,
+      "ordinary_surface_depth_m": 36.42842743513947,
+      "center_world": [
+        31.873595732439103,
+        -1.3580787440924351,
+        0.7712162367397124
+      ],
+      "center_error_m": 4.769451698450404,
+      "offset_world_m": [
+        -4.768607951828304,
+        -0.0878356100445512,
+        0.01823763195393313
+      ],
+      "depth_error_m": -4.754096810275765,
+      "projection_bounds": [
+        307.88536597830193,
+        255.642101833091,
+        379.08341659513826,
+        292.1908684790834
+      ],
+      "max_projected_bound_change_px": 11.444820752280464
+    },
+    "reference_lidar": {
+      "center_camera": [
+        5.130397513715717,
+        1.093832680829217,
+        34.422215358747835
+      ],
+      "radial_scale": 0.8920244220477338,
+      "n": 57,
+      "scale_mad": 0.0026226151038774015,
+      "face_retention": 0.9649122807017544,
+      "median_observed_depth_m": 32.41573278442712,
+      "ordinary_surface_depth_m": 36.416299054206696,
+      "center_world": [
+        36.38141213859796,
+        -1.5868121070417407,
+        0.6791919853690219
+      ],
+      "center_error_m": 0.416740458990973,
+      "offset_world_m": [
+        -0.2607915456694485,
+        -0.3165689729938568,
+        -0.07378661941675735
+      ],
+      "depth_error_m": -0.2910694510026488,
+      "projection_bounds": [
+        311.97150951504284,
+        257.70331217822724,
+        373.8742340283129,
+        289.4317158359544
+      ],
+      "max_projected_bound_change_px": 6.235638185455116
+    }
+  },
+  "projection_checks": [
+    {
+      "camera": "ring_front_center",
+      "valid_pixels": 239613,
+      "median_reprojection_error_px": 54.82832588510831,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_front_left",
+      "valid_pixels": 141752,
+      "median_reprojection_error_px": 591.977642760598,
+      "positive_depth_fraction": 0.8296546936035156
+    },
+    {
+      "camera": "ring_front_right",
+      "valid_pixels": 194985,
+      "median_reprojection_error_px": 72.2798248199699,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_rear_left",
+      "valid_pixels": 193023,
+      "median_reprojection_error_px": 91.308851779546,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_rear_right",
+      "valid_pixels": 196565,
+      "median_reprojection_error_px": 190.2359517447825,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_side_left",
+      "valid_pixels": 192209,
+      "median_reprojection_error_px": 310.0756484961867,
+      "positive_depth_fraction": 1.0
+    },
+    {
+      "camera": "ring_side_right",
+      "valid_pixels": 190306,
+      "median_reprojection_error_px": 89.5206394706918,
+      "positive_depth_fraction": 1.0
+    }
+  ],
+  "metric_scale_control": 0.9393433266299779,
+  "background_anchor_pixels": 61881,
+  "anchor_views": [
+    {
+      "camera": "ring_front_center",
+      "anchor_pixels": 7481
+    },
+    {
+      "camera": "ring_front_left",
+      "anchor_pixels": 7963
+    },
+    {
+      "camera": "ring_front_right",
+      "anchor_pixels": 7024
+    },
+    {
+      "camera": "ring_rear_left",
+      "anchor_pixels": 8763
+    },
+    {
+      "camera": "ring_rear_right",
+      "anchor_pixels": 9018
+    },
+    {
+      "camera": "ring_side_left",
+      "anchor_pixels": 12486
+    },
+    {
+      "camera": "ring_side_right",
+      "anchor_pixels": 9146
+    }
+  ],
+  "background_abs_depth_error_raw_median_m": 2.1699013862574112,
+  "background_abs_depth_error_scaled_median_m": 1.8493311678668345,
+  "lidar_time_filter": {
+    "source_points": 101238,
+    "points_at_or_before_cutoff": 88010,
+    "excluded_future_returns": 13228,
+    "source": "official av2.structures.sweep offsets from sweep timestamp",
+    "target_points_in_3d_box": 162,
+    "target_points_in_detector_core": 57
+  },
+  "generation_admitted": true,
+  "stop_reasons": [],
+  "failure_ledger_delta": "none",
+  "world_model_generation_calls": 0,
+  "boundary": "one exposed log; real model depth but oracle size/yaw, known calibration and separate extra LiDAR scale; not an end-to-end pure-visual reconstructed scene"
+}

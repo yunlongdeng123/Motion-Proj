@@ -1,0 +1,37 @@
+{
+  "task_id": "WS-V75-NATURAL-ROLLOUT-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T09:25:42.032310+00:00",
+  "log_id": "0bae3b5e-417d-3b03-abaa-806b433233b8",
+  "target": "d3d66fcc-6a28-4f86-9be4-6d1f012f726a",
+  "base_dir": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/0bae3b5e-417d-3b03-abaa-806b433233b8/base",
+  "readout_dir": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/0bae3b5e-417d-3b03-abaa-806b433233b8/reconstruction",
+  "variants": [
+    "gt_clean",
+    "dvgt_metric",
+    "dvgt_lidar_scaled",
+    "ordinary_bbox",
+    "reference_lidar"
+  ],
+  "seed": 42,
+  "selection": "discovery follow-up to observed raw residual 2.96m; other three sources retained; not an independent test",
+  "input": "initial real RGB + same text, same GT ego/map/other actors/future displacements; target initial translation from selected readout",
+  "extra_information": [
+    "GT dimensions/yaw and future actor/ego trajectories shared by all arms",
+    "LiDAR scale or target readout adds real metric observations in named diagnostic arms"
+  ],
+  "intervention": "constant initial world translation error across full target track; from frame0; same initial RGB and RNG",
+  "frames": 237,
+  "fps": 30,
+  "primary_evaluation_frames": [
+    0,
+    15,
+    30,
+    45,
+    60
+  ],
+  "evaluator": "existing FasterRCNN, score .25/IoU .3; real-frame calibration ±4px <=2px and all five matches before generation",
+  "stop": "preflight/render/evaluation failure or any OOM stops controller; no automatic retries/downsizing",
+  "claim_boundary": "conditional state-readout diagnostic, not pure visual end-to-end simulator; no policy feedback; no universal failure claim",
+  "human_verdict": null
+}

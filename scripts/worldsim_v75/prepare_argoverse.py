@@ -55,16 +55,24 @@ def project_track(track, f, camera_world, K):
             'depth_m':float(camera[:,2].mean())}
 
 def main():
+    global LOG
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, default=OUT)
+    parser.add_argument('--log-id', default=LOG)
+    parser.add_argument('--start-offset-seconds', type=float, default=0.0)
+    parser.add_argument('--task-id', default='WS-V75-AV2-BRIDGE-01')
+    parser.add_argument('--run-id', default='20260920-r1')
     a = parser.parse_args()
+    LOG = a.log_id
     out, raw = a.output, ROOT/LOG
     assert not (out/'input_manifest.json').exists(), '拒绝覆盖已冻结输入'
     out.mkdir(parents=True, exist_ok=True)
     images = sorted((raw/'sensors/cameras'/CAMERA).glob('*.jpg'))
     assert len(images)>=159
     image_ns = np.asarray([int(p.stem) for p in images], np.int64)
-    time_ns = image_ns[0]+np.rint(np.arange(N)*1e9/30).astype(np.int64)
+    assert a.start_offset_seconds >= 0
+    start_ns = image_ns[np.searchsorted(image_ns,image_ns[0]+round(a.start_offset_seconds*1e9))]
+    time_ns = start_ns+np.rint(np.arange(N)*1e9/30).astype(np.int64)
     nearest = np.abs(image_ns[:,None]-time_ns[None,:]).argmin(0)
     residual = image_ns[nearest]-time_ns
     assert np.abs(residual).max() < 26_000_000
@@ -88,7 +96,7 @@ def main():
     # resize的像素中心约定：(u+0.5)*s-0.5。
     K = np.array([intr.fx_px*scale,intr.fy_px*scale,
                   (intr.cx_px+0.5)*scale-0.5,(intr.cy_px-top+0.5)*scale-0.5])
-    crop_image(images[0],crop).save(out/'initial_rgb.png')
+    crop_image(images[nearest[0]],crop).save(out/'initial_rgb.png')
     ann = pd.read_feather(raw/'annotations.feather')
     tracks, rejected = [], []
     for track_id, df in ann.groupby('track_uuid',sort=True):
@@ -177,11 +185,12 @@ def main():
         sheet.paste(overlay.resize((640,352)),(640,y+26))
         references.append({'frame':f,'path':str(images[nearest[f]]),'source_delta_ns':int(residual[f])})
     sheet.save(out/'projection-review.jpg',quality=92)
-    manifest = {'task_id':'WS-V75-AV2-BRIDGE-01','run_id':'20260920-r1',
+    manifest = {'task_id':a.task_id,'run_id':a.run_id,'case_id':LOG,
                 'role':'engineering_development_previously_exposed_log','log_id':LOG,'dataset':'Argoverse 2 Sensor val',
                 'raw_path':str(raw),'camera':CAMERA,'source_images':len(images),'source_image_size':[width,height],
                 'crop_xyxy':crop,'output_wh':[W,H],'K_fx_fy_cx_cy':K.tolist(),'city_origin':origin.tolist(),
-                'first_timestamp_ns':int(time_ns[0]),'frames':N,'fps':30,'source_fps':20,
+                'first_timestamp_ns':int(time_ns[0]),'start_offset_seconds':float((start_ns-image_ns[0])/1e9),
+                'frames':N,'fps':30,'source_fps':20,
                 'gt_exact_match_frames':np.flatnonzero(np.abs(residual)<=1000).tolist(),
                 'nearest_gt_delta_max_ms':float(np.abs(residual).max()/1e6),'references':references,
                 'interpolation':'world-frame translation linear + SO(3) Slerp; no extrapolation; split gaps >150ms',

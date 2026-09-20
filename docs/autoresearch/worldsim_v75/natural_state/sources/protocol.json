@@ -1,0 +1,24 @@
+{
+  "task_id": "WS-V75-NATURAL-SOURCES-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T09:15:45.148130+00:00",
+  "logs": [
+    "02a00399-3857-444e-8db3-a8f58489c394",
+    "04994d08-156c-3018-9717-ba0e29be8153",
+    "05fa5048-f355-3274-b565-c0ddc547b315",
+    "0aa4e8f5-2f9a-39a1-8f80-c2fdde4405a2",
+    "0bae3b5e-417d-3b03-abaa-806b433233b8",
+    "0c3bad78-9f1e-395d-a376-2eb7499229fd",
+    "0fb7276f-ecb5-3e5b-87a8-cc74c709c715",
+    "185d3943-dd15-397a-8b2e-69cd86628fb7"
+  ],
+  "role": "development_screen; prior exposure not excluded; not independent confirmation",
+  "selection": "first eight lexicographic locally complete AV2 val logs excluding previous bridge",
+  "start": "first front RGB timestamp >= first RGB +0.5 seconds, fixed once per log",
+  "target": "REGULAR_VEHICLE; full projected box in 1280x704 crop at 0,.5,1,1.5,2 seconds; initial >=48x32px and camera depth 5..60m",
+  "reference": "latest sweep <= start; per-point timestamp <= start; >=6 points inside target 3D cuboid(+0.15m) and central60% projected box",
+  "priority": "within each log lexicographic eligible track UUID; inspect real RGB for occlusion before reconstruction",
+  "stop": "all eight exhausted without eligible target: report data gap, do not loosen thresholds or add logs in this screen",
+  "models_loaded": false,
+  "human_verdict": null
+}
