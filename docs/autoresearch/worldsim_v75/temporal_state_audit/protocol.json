@@ -1,0 +1,34 @@
+{
+  "task_id": "WS-V75-TEMPORAL-STATE-AUDIT-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T13:51:48.268194+00:00",
+  "cases": [
+    {
+      "generated_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2",
+      "state_control_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-STATE-CONTROL-01/20260920-r1"
+    },
+    {
+      "generated_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1",
+      "state_control_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-STATE-CONTROL-02/20260920-r1"
+    }
+  ],
+  "role": "post hoc observability and strong-control audit on both exposed braking development tasks",
+  "past_input": "exact saved20 pre-start captures and current capture; no detector rerun",
+  "reference": "AV2 annotations are evaluation/extra-information controls, not pure-visual model inputs",
+  "ordinary_readout": "least-squares ground-contact world position slope; fixed halves and interleaved consistency checks, no tuning",
+  "association": "maximum GT-projection IoU >=0.3 only for evaluation; report all missing observations",
+  "controls": [
+    "recorded trajectory",
+    "target static at common GT initial pose",
+    "target CV from past1s reference annotations at common GT initial pose"
+  ],
+  "control_information": "oracle t0 center/size/yaw and other actors future; past-only speed; not a runnable visual reconstruction ranking",
+  "feedback": "same15 decisions117 frames/official dynamics; same first RGB action; direct state, no new RGB generation",
+  "verification": "reproduce two prior GT direct-state runs at all117 frames before interpreting new control differences",
+  "stop": "two existing tasks only, no thresholds/seeds/horizon/source replacement, no new reconstruction or generation calls; report feasibility, not scientific failure attribution",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}

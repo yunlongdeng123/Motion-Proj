@@ -13,6 +13,7 @@ NAMES={'gt_clean':'GT条件','dvgt_metric':'DVGT','dvgt_lidar_scaled':'全局尺
 def main():
     p=argparse.ArgumentParser();p.add_argument('--case1',type=Path,required=True);p.add_argument('--control1',type=Path,required=True)
     p.add_argument('--case2',type=Path,required=True);p.add_argument('--architecture',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--temporal-audit',type=Path)
     a=p.parse_args();out=a.output;out.mkdir(parents=True,exist_ok=True)
     cases=[]
     for label,src,ctrl in [('02678d04',a.case1,a.control1),('24642607',a.case2,a.case2/'state_control')]:
@@ -62,6 +63,9 @@ def main():
     second=cases[1]['state']['cases'];raw=second[1];anchor=second[3]
     finding=f'<div class="card"><strong>保留第二个任务中的好案例，降低单目标中心修复主张的优先级。</strong><p>24642607的DVGT残余{raw["initial_geometry_residual_m"]:.2f}米，只对应{abs(raw["rgb_progress_change_vs_gt_m"]):.2f}米进度差。目标LiDAR将几何残余降至{anchor["initial_geometry_residual_m"]:.2f}米，平均动作差{raw["rgb_mean_abs_action_change_vs_gt_mps2"]:.3f}→{anchor["rgb_mean_abs_action_change_vs_gt_mps2"]:.3f} m/s²，但进度差变为{anchor["rgb_progress_change_vs_gt_m"]:+.2f}米。两任务均未得到动作与执行一致恢复的严重badcase，不继续扩大本例平移、尺度、关联或时长来维持主张。</p></div>'
     html=html.replace('<img src="two-task-feedback.png"',finding+'<img src="two-task-feedback.png"')
+    if a.temporal_audit:
+        from build_temporal_audit_review import build
+        html=html.replace('</html>',build(a.temporal_audit,out)+'</html>')
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     for path in out.glob('*.svg'):path.write_text('\n'.join(s.rstrip() for s in path.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8',newline='\n')
     print(out/'index.html')

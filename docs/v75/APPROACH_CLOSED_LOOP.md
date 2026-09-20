@@ -107,3 +107,40 @@ flowchart LR
 新知识是：**重建中心误差的改善，既不保证动作与执行同时恢复，误差较大也不保证任务明显受损。** 运动和路径占用等联合任务状态仍是开放问题；单帧点图或跟踪器速度不能自动称为原生重建模型的运动输出。后续须先检查时间观测和官方时序接口是否提供可验证的运动状态，再决定是否值得做新干预，不预设生成记忆或新求解器。
 
 本任务资源：36次真实检测（35基线+1初始框），1次DVGT，4组468帧生成；编码峰值15.965GiB、生成12.971GiB、DVGT12.697GiB，全部无OOM。三组误差队列241.08秒，CPU直接状态控制8.21秒。原始根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1/`，全部终态与视频保留。新任务接口复用原代码，仅增加显式run/task参数；第三方源码未修改。`failure_ledger_delta: none`，人工verdict全部null。两任务交互审阅页为`outputs/V75_Multiscene_Closed_Loop/index.html`，主图有PNG/SVG/PDF。
+
+## 时间状态审计：近静止任务的范围边界
+
+`WS-V75-TEMPORAL-STATE-AUDIT-01 / 20260920-r1`只审计上述两个任务，不追加来源、模型、seed或时长。先冻结[协议](../autoresearch/worldsim_v75/temporal_state_audit/protocol.json)，再检查已保存20个过去capture和起点capture，运行普通静止/匀速的CPU反馈；完整[结果](../autoresearch/worldsim_v75/temporal_state_audit/result.json)和所有观测、缺失与轨迹均保留。
+
+```mermaid
+flowchart LR
+    RGB[起点前真实RGB] --> O[已保存观测与对应审计]
+    P[过去参考标注 额外信息] --> C[目标静止 或匀速外推]
+    C --> S[当前条件状态]
+    S --> I[固定IDM]
+    I --> E[官方ego动力学]
+    E --> S
+    E --> V[与固定参考比较]
+    G[记录未来 仅参考] --> V
+```
+
+核查了一手实现：[DVGT-1 forward](https://github.com/wzzheng/DVGT/blob/51cf3f6d11fdff8bc7e2bbe1a88f71665ccb2236/dvgt/models/architectures/dvgt1.py)返回时序点图、置信度和ego位姿，没有对象身份、对象速度或未来轨迹输出；[官方输入要求](https://github.com/wzzheng/DVGT/blob/51cf3f6d11fdff8bc7e2bbe1a88f71665ccb2236/README.md)是固定视角顺序的2Hz序列。任何对象速度都需要额外对应和读出算法，不能直接把单帧差分包装成原生模型输出。[OmniDreams协议](https://github.com/NVIDIA/flashdreams/blob/bc711d6f95693d73693e6b5fac75749cc6fcf1d7/integrations_v2/omnidreams/impl/grpc/protos/video_model.proto)则接收外部DynamicActor trajectory；实际渲染路径按时间查询cuboid。已有运行的是本地底层pipeline，不因此冒称新跑了gRPC服务。
+
+逐帧检查旧四组条件：各目标中心差均为恒定平移（浮点误差低于1e-10m），朝向、尺寸、时间索引和其他演员完全相同。**原来四组保留了目标的记录未来轨迹，只比较位置偏移；没有实际读出DVGT对象运动。** 两日志均能列出请求时刻−1/−0.5/0秒、每时刻7个相机且实际capture≤请求时刻的合法输入，清单保留每相机延迟。图像存在不等于运动可观测性通过，本轮未运行时序DVGT。
+
+| 日志 | 过去参考拟合速度 m/s | 未来3.867s最大参考位移 m | 静止控制进度差 m | 过去参考CV进度差 m | 可用对应观测 |
+|---|---:|---:|---:|---:|---:|
+| 02678d04 | 0.0869 | 0.1787 | −0.00515 | +0.09766 | 0/21 |
+| 24642607 | 0.0442 | 0.1589 | +0.00119 | −0.04249 | 21/21 |
+
+这里目标接近静止，厘米级标注变化不被当作精确真实运动。普通CV速度仅由过去一秒参考标注最小二乘得到；未来参考不参与拟合。两控制都共享GT起点位置、尺寸与朝向，其他演员保留记录未来，属于额外信息的运动隔离诊断；GT起点可能由前后标注插值，明确不是纯因果重建排名。静止控制冻结目标完整姿态，CV固定初始朝向并外推中心。
+
+六组各117帧/15次决策使用相同初始RGB动作、nuPlan IDM和官方动力学：两组234帧精确复现此前GT直接状态基线（逐帧状态最大差0），另四组468帧为新普通控制，均无固定参考重叠。平均绝对动作差：静止为0.00140/0.00469m/s²，过去参考CV为0.01652/0.00722m/s²。没有新生成RGB，因此不把CPU控制升级为世界模型闭环恢复。
+
+![时间状态与普通控制](../autoresearch/worldsim_v75/temporal_state_audit/temporal-controls.png)
+
+第一任务0/21是**策略管线经过检测与地面接触过滤后的可用对应观测**，不是原始检测器召回率。第二任务21/21对应且ID相同，但接触点最小二乘速度0.523m/s，与参考速度向量误差0.480m/s；固定前后半段拟合差2.362m/s，交错子序列差0.393m/s。接触点随视角变化，不等于刚体中心；此结果只说明当前简单视觉读出不能支持精确对象速度归因，未证明DVGT失效，也未给模型合成错误速度。
+
+**关闭这两例上的追加运动干预。** 普通静止解释已足以保持执行结果，不能靠人为增大速度制造问题。后续若研究时间状态，必须先有实际运动并影响跟车任务的对象，再核查合法过去输入的对象对应、普通匀速解释与误差来源；不把当前缺口扩大为所有运动重建不可行，也不因此重开中心平移扫描。
+
+CPU用时5.91秒；0次新检测、重建或生成，CUDA未初始化。审计脚本为`scripts/worldsim_v75/audit_temporal_state.py`，真实过去RGB审阅图和PNG/SVG/PDF已加入同一双任务报告。原始根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-TEMPORAL-STATE-AUDIT-01/20260920-r1/`，`failure_ledger_delta: none`，人工verdict仍null。
