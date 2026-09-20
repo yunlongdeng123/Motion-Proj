@@ -77,11 +77,35 @@ actor读出固定使用真实初帧检测框中央60%、标注尺寸与朝向。
 
 ![生成响应](../autoresearch/worldsim_v75/natural_state/figures/generation-response.svg)
 
+## 固定 seed43 复核
+
+在读取第二个seed结果前冻结四组：GT条件、DVGT距离读出、普通框拟合、额外目标LiDAR。完全复用seed42的条件数组、编码、初始RGB、文本、目标与五个评价时刻；只改变随机seed。没有重新选目标、改变偏移或增加事后阈值。额外全局尺度的发现结果保留，不再重复这一已知变差控制。
+
+新增四组各237帧完整生成与解码，20/20次预定检测匹配，四组首帧原始数组完全相同；含加载约123–124秒/组，PyTorch峰值12.81GiB，无OOM。
+
+| Seed | GT条件二维均值(px) | DVGT读出(px) | 普通框拟合(px) | 额外目标LiDAR(px) |
+|---|---:|---:|---:|---:|
+| 42 | 23.71 | 25.19 | 13.97 | 10.50 |
+| 43 | 19.68 | 24.24 | 14.33 | 11.71 |
+
+额外目标LiDAR分别比DVGT均值低14.69、12.53px，在每个seed的四个非初始时刻均更低。普通框拟合分别低11.22、9.91px，均改善3/4非初始时刻；其三维残余更大的事实不变。GT条件分别只低1.48、4.56px，改善1/4与2/4非初始时刻。三个对比均报告，不能只选修复方向。
+
+**阶段判断：同一发现案例的位置条件响应和额外观测修复信号可重复；三维中心更准不单调对应生成二维中心更准，也没有可靠证据把全部生成偏差归因于重建。** 两个seed不是两个场景，仍未完成跨来源确认。第2秒的遮挡限制保留，不用它单独证明三维状态或闭环危害。不追加seed44或更大误差。后续应先建立可靠的生成状态观测和普通投影响应对照，再在有限新来源窗口确认；当前不具备以“普遍误差放大”为前提启动方法训练的依据。
+
+![真实RGB、初始状态与实际条件](../autoresearch/worldsim_v75/natural_state/figures/input-state-condition.svg)
+
+图中黄色框对应真实初帧白车；BEV按实际三维cuboid投影，DVGT沿ego前向更近2.963m，完整三维中心残余2.965m。右侧显示固定1秒的实际填充cuboid/地图条件裁剪；该显示时刻在读取seed43结果前指定，量化仍为全部五帧。这是actor初始化误差，不是phantom或首回波图。
+
+![两seed固定复核](../autoresearch/worldsim_v75/natural_state/figures/replication-response.svg)
+
+[全部对比](../autoresearch/worldsim_v75/natural_state/replication/replication_result.json)与[冻结协议](../autoresearch/worldsim_v75/natural_state/replication/protocol.json)保留逐时刻值、全部分母、首帧一致性和信息预算边界；人工verdict仍为null。
+
 ## 复现与边界
 
 - `WS-V75-NATURAL-01/20260920-r1`：旧目标的坐标和参考排除。
 - `WS-V75-NATURAL-SOURCES-01/20260920-r1`：八日志冻结、六初选、四次重建与读出；逐case原始输入和点图保留。
 - `WS-V75-NATURAL-ROLLOUT-01/20260920-r1`：一个发现案例的五组生成及独立检测。
+- `WS-V75-NATURAL-ROLLOUT-01/20260920-seed43`：同一输入的四组有限随机性复核；`repeat_natural_rollouts.py`执行，`summarize_natural_replication.py`汇总。
 
 原始目录均在`/root/autodl-tmp/runs/worldsim_v75/`。主要脚本为`prepare_natural.py`、`infer_natural.py`、`readout_natural.py`、`screen_natural_sources.py`、`run_natural_readouts.py`、`run_natural_rollouts.py`、`evaluate_natural_rollout.py`与`review_natural_rollouts.py`。本地HTML及科学图由`build_natural_report.py`从这些结果构建，不生成或补画实验内容。
 

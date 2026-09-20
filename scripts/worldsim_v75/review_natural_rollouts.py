@@ -1,4 +1,5 @@
 """保存真实、GT条件、自然读出与额外观测修复的实际视频和配对指标。"""
+import argparse
 import json
 from pathlib import Path
 import av
@@ -11,9 +12,13 @@ LABELS={'gt_clean':'GT condition','dvgt_metric':'DVGT + known rays','dvgt_lidar_
         'ordinary_bbox':'RGB box fit + size/yaw','reference_lidar':'Extra target LiDAR'}
 
 def main():
+    global OUT,VARIANTS
+    parser=argparse.ArgumentParser();parser.add_argument('--run-dir',type=Path,default=OUT)
+    OUT=parser.parse_args().run_dir
     assert not (OUT/'review_result.json').exists(),'拒绝覆盖总结'
     assert json.loads((OUT/'queue_result.json').read_text())['status']=='complete'
     protocol=json.loads((OUT/'protocol.json').read_text());base=Path(protocol['base_dir'])
+    VARIANTS=protocol['variants']
     reference=json.loads((OUT/'evaluator_reference.json').read_text())
     evaluations={v:json.loads((OUT/v/'evaluation.json').read_text()) for v in VARIANTS}
     clean=evaluations['gt_clean']['frames'];summaries=[]
@@ -36,7 +41,7 @@ def main():
                           'decoded_frames':decoded,'peak_allocated_gib':generation['peak_allocated_gib'],'generation_wall_s':generation['wall_s']})
     data={v:np.load(OUT/v/'clean.npy',mmap_mode='r') for v in VARIANTS}
     # 所有栏共用以真实检测为中心的固定裁剪，不能跟随预测移动掩盖差异。
-    sheet=Image.new('RGB',(1800,5*202+32),'#101b2b');draw=ImageDraw.Draw(sheet)
+    sheet=Image.new('RGB',(300*(1+len(VARIANTS)),5*202+32),'#101b2b');draw=ImageDraw.Draw(sheet)
     cols=['Real RGB',*[LABELS[v] for v in VARIANTS]]
     for c,title in enumerate(cols):draw.text((c*300+7,8),title,fill='white')
     for i,row in enumerate(reference['frames']):
@@ -65,10 +70,10 @@ def main():
         for packet in stream.encode():writer.mux(packet)
     full.save(OUT/'full-comparison.jpg',quality=94)
     with av.open(str(OUT/'comparison.mp4')) as container:assert sum(1 for _ in container.decode(video=0))==237
-    result={'status':'complete','variants':summaries,'seed':42,'source_logs':1,'target_count':1,
+    result={'status':'complete','variants':summaries,'seed':protocol['seed'],'source_logs':1,'target_count':1,
             'primary_window_seconds':[0,2],'policy_feedback':False,'human_verdict':None,
             'failure_ledger_delta':'none','full_comparison_decoded':237,
-            'boundary':'one seed discovery; 2D independent detector; GT future displacements retained; extra target LiDAR repair is not same-budget'}
+            'boundary':'single-scene per-seed result; 2D independent detector; GT future displacements retained; extra target LiDAR repair is not same-budget'}
     (OUT/'review_result.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({'status':'complete','variants':[{k:v for k,v in r.items() if k!='pairs'} for r in summaries]}),flush=True)
 
