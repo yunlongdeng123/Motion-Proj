@@ -1,6 +1,7 @@
 """单个已暴露接近任务的普通基线：高程地面＋合法真实历史，一次固定执行。"""
 from dataclasses import asdict
 from datetime import datetime,timezone
+import argparse
 import copy
 import json
 from pathlib import Path
@@ -44,9 +45,14 @@ def reference_at_times(base,timestamps,ego_matrices):
 
 
 def main():
+    global OUT
+    parser=argparse.ArgumentParser(); parser.add_argument('--run-dir',type=Path,default=OUT)
+    parser.add_argument('--source-protocol',type=Path,default=SOURCE/'protocol.json')
+    parser.add_argument('--task-id',default='WS-V75-APPROACH-BASELINE-01')
+    args=parser.parse_args(); OUT=args.run_dir
     assert not (OUT/'protocol.json').exists() and not (OUT/'result.json').exists()
     OUT.mkdir(parents=True,exist_ok=True)
-    source=json.loads((SOURCE/'protocol.json').read_text()); base=Path(source['base'])
+    source=json.loads(args.source_protocol.read_text()); base=Path(source['base'])
     manifest=json.loads((base/'input_manifest.json').read_text()); raw=Path(manifest['raw_path']); origin=np.array(manifest['city_origin'])
     ego=pd.read_feather(raw/'city_SE3_egovehicle.feather'); tr=np.load(base/'trajectory.npz')
     images=sorted((raw/'sensors/cameras'/CAMERA).glob('*.jpg')); times=np.array([int(p.stem) for p in images],np.int64)
@@ -56,7 +62,7 @@ def main():
     # 官方20Hz文件含纳秒级抖动；固定20个先前capture，不用恰好1秒的浮点边界截断。
     assert len(history)==20 and cutoff-times[history[0]]<1_001_000_000
     assert np.unique(captures).size==15 and ((requested-captures)<50_001_000).all()
-    protocol={'task_id':'WS-V75-APPROACH-BASELINE-01','run_id':OUT.name,'frozen_utc':datetime.now(timezone.utc).isoformat(),
+    protocol={'task_id':args.task_id,'run_id':OUT.name,'frozen_utc':datetime.now(timezone.utc).isoformat(),
               'base':str(base),'source_log':source['source_log'],'target':source['target'],
               'role':'one exposed development approach task; not re-admission of closed 48-window screening',
               'motivation':'known height raster fixes nonplanar-ground assumption; neutral-speed tracker cold start has no prior motion evidence',
@@ -69,6 +75,10 @@ def main():
               'generation_if_passed':'single seed42 GT-generated117-frame feedback baseline with shared warmup and terrain; before reconstruction arms',
               'stop':'one fixed preparation; no threshold/seed/source sweep; OOM stops immediately; failed real state or GT feedback blocks reconstruction comparison',
               'human_verdict':None,'failure_ledger_delta':'none','failure_ledger_refs':['V74-H2-F22']}
+    if args.source_protocol!=SOURCE/'protocol.json':
+        protocol.update(source_protocol=str(args.source_protocol),
+                        role='fixed selected development task from BRAKING-DEV2; not independent confirmation',
+                        motivation='apply frozen terrain-aware policy and20 legal past captures without tuning; task selected before model-error inspection')
     save(OUT/'protocol.json',protocol); result={'status':'started','rows':[],'warmup':[],'human_verdict':None,'failure_ledger_delta':'none'}
     began=time.monotonic()
     try:

@@ -68,3 +68,16 @@ flowchart LR
 - 官方代码与权重沿用[反馈报告](FOLLOWING_CLOSED_LOOP.md)，第三方源码未修改；CPU筛查显式隐藏GPU，真实策略使用V75环境和一张RTX3090。
 - [真实策略result](../autoresearch/worldsim_v75/braking_tasks/interface-audit/result.json)、[单次诊断协议](../autoresearch/worldsim_v75/braking_tasks/interface-audit/protocol.json)、[状态替换](../autoresearch/worldsim_v75/braking_tasks/interface-audit/state_control_result.json)。本地审阅页`outputs/V75_Braking_Task_Research/index.html`。
 - `failure_ledger_refs: [V74-H2-F22]`；`failure_ledger_delta: none`；`human_verdict: null`。没有新卡；原F22是历史任务适用性边界，未恢复其旧策略为有效基线。
+
+
+## 后续有限开发窗口：任务DEV2
+
+原48窗口的0合格终态保持不变。`WS-V75-BRAKING-DEV2-01 / 20260920-r1`在看减速或模型误差之前，冻结本地完整日志中未参加原12日志筛查的字典序前6条：20bcd747、20dd185d、214e388e、24642607、27c03d98、29a00842。每条固定2.5/4.5/6.5秒，18窗口。2.5秒起保证20张真实历史；允许前车在前2秒才进入原40m作用范围，但要求初帧可见且框≥48×32、同目标至少3/5次为路线前车、至少2次匹配的普通制动需求。该规则来自已知接近任务入口教训，在本轮数据度量之前冻结，不改写旧协议。
+
+18窗口→2个记录减速窗口→1个任务几何合格：`24642607 +6.5s`，目标`56569385-722e-4413-ba4d-068307bca2ab`，5/5次前车、4/5次制动需求，初始框约81.6×61.3px；记录速度9.612→7.727m/s。全部排除与固定来源见[DEV2筛查](../autoresearch/worldsim_v75/approach_dev2/screen/result.json)。此日志早已用于V7.5其他研究，只是新的任务窗口，**不是独立确认日志**。
+
+采用原世界坐标关联，未采用失败的IoU控制。已知官方高程、固定20张历史、检测器、Kalman和IDM均不调参。`WS-V75-APPROACH-BASELINE-02`的35次真实检测中，15次正式前车判断全部正确；距离误差中位1.255m、动作差中位0.221m/s²，最大欠制动0.298、最大额外制动1.112m/s²，通过原真实基线。峰值0.623GiB、9.83秒，无OOM。
+
+随后`WS-V75-APPROACH-CLOSEDLOOP-02`的GT条件117帧/15次真实反馈通过：动作差中位0.268m/s²、最大欠制动1.401、最大额外制动1.034；逐帧最大横向偏差0.186m，无参考重叠，行进28.122m。生成峰值12.971GiB，70.99秒；另输入编码峰值15.965GiB，7.12秒。它随后才进入自然重建读出与四组反馈，见[接近任务报告的第二任务](APPROACH_CLOSED_LOOP.md#第二个接近任务24642607)。没有因重建误差大小筛选入组。
+
+原始任务筛查根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-DEV2-01/20260920-r1/`；真实基线根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-02/20260920-r1/`。无追加日志或起点，无新失败卡，人工verdict为null。

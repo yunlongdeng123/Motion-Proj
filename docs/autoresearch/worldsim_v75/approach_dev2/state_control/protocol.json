@@ -1,0 +1,52 @@
+{
+  "task_id": "WS-V75-APPROACH-STATE-CONTROL-02",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T13:34:04.264916+00:00",
+  "source": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1",
+  "base": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-DEV2-01/20260920-r1/cases/24642607-2a51-384a-90a7-228067956d05/start-6.5/base",
+  "source_log": "24642607-2a51-384a-90a7-228067956d05",
+  "target": "56569385-722e-4413-ba4d-068307bca2ab",
+  "arms": [
+    "gt_clean",
+    "dvgt_metric",
+    "dvgt_lidar_scaled",
+    "reference_lidar"
+  ],
+  "frames": 117,
+  "decisions": 15,
+  "seed": null,
+  "question": "Which execution differences already arise from geometry and ordinary control, before generated observations?",
+  "intervention": "same initial RGB-derived command; from frame4 read each frozen condition scene at current time; no future-state lookahead",
+  "velocity": "same oracle helper as previous evaluation: backward difference of current and previous actor positions; initial command shared",
+  "same_components": [
+    "initial ego",
+    "117 original timestamps",
+    "5 then8 frame zero-order hold",
+    "nuPlan IDM parameters",
+    "40m lead range",
+    "provided route steering and actuator mapping",
+    "official integrate_vehicle",
+    "official GroundSnapper"
+  ],
+  "extra_information": [
+    "full current condition actor positions, dimensions, yaw and exact backward velocities",
+    "provided route and metric ground",
+    "shared nonreactive actor trajectories"
+  ],
+  "role": "post hoc strong diagnostic on one exposed development scene; not same-information visual policy ranking",
+  "verification": {
+    "replay_all_four_camera_matrices_max_abs": 1e-07,
+    "saved_action_acceleration_max_abs": 1e-10
+  },
+  "analysis": [
+    "four actual state feedback rollouts",
+    "offline intended-state action at each saved generated ego state",
+    "offline geometry action at common GT-generated ego states, excluding shared startup"
+  ],
+  "stop": "four frozen arms only; no new generation, detector, source, seed, horizon, thresholds, or policy tuning",
+  "human_verdict": null,
+  "failure_ledger_delta": "none",
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ]
+}

@@ -30,11 +30,13 @@ def main():
     parser=argparse.ArgumentParser(); parser.add_argument('--phase',choices=['encode','generate'],required=True)
     parser.add_argument('--arm',choices=ARMS,default='gt_clean')
     parser.add_argument('--run-dir',type=Path,default=OUT); parser.add_argument('--source-run',type=Path,default=SOURCE)
-    parser.add_argument('--conditioning-dir',type=Path); args=parser.parse_args(); OUT=args.run_dir; SOURCE=args.source_run
+    parser.add_argument('--conditioning-dir',type=Path)
+    parser.add_argument('--task-id',default='WS-V75-APPROACH-CLOSEDLOOP-01')
+    args=parser.parse_args(); OUT=args.run_dir; SOURCE=args.source_run
     source=json.loads((SOURCE/'protocol.json').read_text()); qualification=json.loads((SOURCE/'result.json').read_text())
     assert qualification['status']=='complete' and qualification['real_gate_passed']
     base=Path(source['base']); OUT.mkdir(parents=True,exist_ok=True)
-    protocol={'task_id':'WS-V75-APPROACH-CLOSEDLOOP-01','run_id':OUT.name,'source_run':str(SOURCE),
+    protocol={'task_id':args.task_id,'run_id':OUT.name,'source_run':str(SOURCE),
               'base':str(base),'source_log':source['source_log'],'target':source['target'],
               'frames':117,'blocks':15,'fps':30,'seed':42,'arms':ARMS,
               'role':'single exposed development approach task; state gate repaired using ordinary terrain and legal past images',

@@ -17,6 +17,17 @@ class MotionTracks:
     def __init__(self):
         self.tracks = []; self.previous_time = None; self.serial = 0
 
+    def associate(self, detections):
+        if not self.tracks or not detections: return {}
+        costs = np.array([[np.linalg.norm(t['state'][:2]-d['world_center']) for d in detections] for t in self.tracks])
+        # 距离门控必须先于全局分配；事后丢弃远距离配对会挤掉有效近邻。
+        penalty = 11. * (max(costs.shape)+1)
+        ti, di = linear_sum_assignment(np.where(costs <= 10, costs, penalty))
+        return {int(d): self.tracks[int(t)] for t, d in zip(ti, di) if costs[t, d] <= 10}
+
+    def remember_detection(self, track, detection):
+        pass
+
     def update(self, detections, time_s, ego_velocity):
         dt = 0. if self.previous_time is None else time_s-self.previous_time
         assert dt >= 0
@@ -25,13 +36,7 @@ class MotionTracks:
         for track in self.tracks:
             track['state'] = F@track['state']; track['cov'] = F@track['cov']@F.T+4*(G@G.T)
         self.tracks = [x for x in self.tracks if time_s-x['seen'] <= .6]
-        assigned = {}
-        if self.tracks and detections:
-            costs = np.array([[np.linalg.norm(t['state'][:2]-d['world_center']) for d in detections] for t in self.tracks])
-            # 距离门控必须先于全局分配；事后丢弃远距离配对会挤掉有效近邻。
-            penalty = 11. * (max(costs.shape)+1)
-            ti, di = linear_sum_assignment(np.where(costs <= 10, costs, penalty))
-            assigned = {int(d): self.tracks[int(t)] for t, d in zip(ti, di) if costs[t, d] <= 10}
+        assigned = self.associate(detections)
         for i, detection in enumerate(detections):
             track = assigned.get(i)
             z = np.asarray(detection['world_center'])
@@ -43,6 +48,7 @@ class MotionTracks:
                 gain = track['cov']@H.T@np.linalg.inv(H@track['cov']@H.T+np.eye(2)*2.25)
                 track['state'] += gain@(z-H@track['state'])
                 track['cov'] = (np.eye(4)-gain@H)@track['cov']; track['seen'] = time_s
+            self.remember_detection(track, detection)
             detection['track_id'] = track['id']; detection['world_velocity'] = track['state'][2:].tolist()
         self.previous_time = time_s
         return detections

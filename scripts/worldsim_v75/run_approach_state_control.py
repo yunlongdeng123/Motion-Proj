@@ -1,6 +1,7 @@
 """四份冻结场景的CPU直接状态反馈；先复现旧动力学，再做普通强控制。"""
 from dataclasses import asdict
 from datetime import datetime, timezone
+import argparse
 import json
 import os
 from pathlib import Path
@@ -87,13 +88,17 @@ def rollout(base, tr, policy, terrain, condition, reference, target, source_rows
 
 
 def main():
+    global SOURCE,OUT
+    parser=argparse.ArgumentParser();parser.add_argument('--source-run',type=Path,default=SOURCE)
+    parser.add_argument('--run-dir',type=Path,default=OUT);parser.add_argument('--task-id',default='WS-V75-APPROACH-STATE-CONTROL-01')
+    args=parser.parse_args();SOURCE,OUT=args.source_run,args.run_dir
     assert os.environ.get('CUDA_VISIBLE_DEVICES') == '', '本控制必须明确禁用GPU'
     assert not OUT.exists(); OUT.mkdir(parents=True)
     source = json.loads((SOURCE/'protocol.json').read_text()); base = Path(source['base'])
     assert json.loads((SOURCE/'queue_result.json').read_text())['status'] == 'complete'
     tr = np.load(base/'trajectory.npz'); reference = scene(base)
     target = next(t for t in reference['tracks'] if t['id'] == source['target'] and 0 in t['frames'])
-    protocol = {'task_id': 'WS-V75-APPROACH-STATE-CONTROL-01', 'run_id': OUT.name,
+    protocol = {'task_id': args.task_id, 'run_id': OUT.name,
                 'frozen_utc': datetime.now(timezone.utc).isoformat(), 'source': str(SOURCE), 'base': str(base),
                 'source_log': source['source_log'], 'target': source['target'], 'arms': ARMS,
                 'frames': 117, 'decisions': 15, 'seed': None,

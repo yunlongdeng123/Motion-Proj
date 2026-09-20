@@ -25,6 +25,10 @@
 | WS-V75-RASTER-POLICY-01；APPROACH-BASELINE-01 / 20260920-r1；20260920-association-r2 | 官方高程＋真实历史的普通基线；实际关联反例修复与保存输入回放 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[工程证据](autoresearch/worldsim_v75/approach/) |
 | WS-V75-APPROACH-CLOSEDLOOP-01；APPROACH-REFERENCE-01 / 20260920-r1；20260920-association-r2 | 5组585帧含原GT工程失败；最终四组完整反馈、一次DVGT与42点截止前参照，几何修正未稳定恢复动作 | [报告](v75/APPROACH_CLOSED_LOOP.md)、[四组结果](autoresearch/worldsim_v75/approach/comparison.json) |
 | WS-V75-APPROACH-STATE-CONTROL-01 / 20260920-r1 | 四组CPU直接状态反馈；468帧旧轨迹精确复现、468帧新控制，几何响应与生成/策略接口边界 | [报告](v75/APPROACH_STATE_CONTROL.md)、[结果](autoresearch/worldsim_v75/approach_state_control/result.json) |
+| WS-V75-IOU-ASSOCIATION-CONTROL-01 / 20260920-r1 | 原策略175次回放访问精确复现；固定IoU关联平均改善但额外制动恶化，未进入新生成 | [控制报告](v75/APPROACH_STATE_CONTROL.md)、[结果](autoresearch/worldsim_v75/approach_state_control/iou_control/result.json) |
+| WS-V75-BRAKING-DEV2-01；APPROACH-BASELINE-02 / 20260920-r1 | 新有限6×3窗口18→2→1，真实35次检测与固定策略基线通过 | [任务发现](v75/BRAKING_TASKS.md)、[分母](autoresearch/worldsim_v75/approach_dev2/screen/result.json) |
+| WS-V75-APPROACH-CLOSEDLOOP-02；APPROACH-RECONSTRUCTION-02；APPROACH-REFERENCE-02 / 20260920-r1 | 第二制动任务四组468帧反馈、1次DVGT与55点额外参照；保留自然误差影响小的好案例 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[结果](autoresearch/worldsim_v75/approach_dev2/comparison.json) |
+| WS-V75-APPROACH-STATE-CONTROL-02 / 20260920-r1 | 第二任务468帧旧动作精确回放与468帧直接状态控制；双任务统一对比图 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[状态控制](autoresearch/worldsim_v75/approach_dev2/state_control/result.json) |
 | WS-V74-P0-* / 20260910 | 数据、资源与输入角色准备 | [P0](archive/2026-09/v74-0920/WORLDSIM_V74_P0_HANDOFF.md) |
 | WS-V74-METHOD-TOURNAMENT-01 | H1 WEX / RIF / DCS 与强控制 | [结果](archive/2026-09/v74-0920/WORLDSIM_V7_4_RESULTS.md)、[失败](archive/2026-09/v74-0920/WORLDSIM_V7_4_FAILURES.md) |
 | H2 CPU / GPU P1 | 数据与学习能力实验、实现关闭 | [CPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[GPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md) |

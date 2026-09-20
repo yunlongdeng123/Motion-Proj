@@ -95,7 +95,7 @@ def main():
               'human_verdict':None}
     if a.source_protocol:
         source=json.loads(a.source_protocol.read_text())
-        if source['task_id']=='WS-V75-APPROACH-CLOSEDLOOP-01':
+        if source['task_id'] in ['WS-V75-APPROACH-CLOSEDLOOP-01','WS-V75-APPROACH-CLOSEDLOOP-02']:
             assert source['target']==TARGET and Path(source['base'])==BASE
             parent=a.source_protocol.parent
             baseline=json.loads((parent/'gt_clean/result.json').read_text())
@@ -107,7 +107,7 @@ def main():
                     'target_selection':'inherited exposed approach task, qualified real and GT feedback; no reconstruction-error ranking',
                     'generation':'same seed42,117-frame actual feedback: metric/ordinary global scale/target LiDAR against frozen GT; no extra seed',
                     'measurement_frames':[0,4,12,20,28,36,44,52,60,68,76,84,92,100,108,116]}
-        assert source['task_id'] in ['WS-V75-VISIBLE-DEV-01','WS-V75-APPROACH-CLOSEDLOOP-01']
+        assert source['task_id'] in ['WS-V75-VISIBLE-DEV-01','WS-V75-APPROACH-CLOSEDLOOP-01','WS-V75-APPROACH-CLOSEDLOOP-02']
         protocol.update(source_protocol=str(a.source_protocol),admission_policy='reference_and_raw_support_without_error_ranking',
                         role=source['boundary'],target_selection=source['target_selection'],
                         followup_if_admitted=source['generation'],generation_frames=source['measurement_frames'],

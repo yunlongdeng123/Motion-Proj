@@ -1,0 +1,24 @@
+{
+  "task_id": "WS-V75-APPROACH-REFERENCE-02",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T13:28:39.515623+00:00",
+  "source_readout": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1/reconstruction/readout_ray_control_result.json",
+  "files": [
+    "/root/autodl-tmp/data/av2/sensor/val/24642607-2a51-384a-90a7-228067956d05/sensors/lidar/315970922059760000.feather",
+    "/root/autodl-tmp/data/av2/sensor/val/24642607-2a51-384a-90a7-228067956d05/sensors/lidar/315970922159956000.feather",
+    "/root/autodl-tmp/data/av2/sensor/val/24642607-2a51-384a-90a7-228067956d05/sensors/lidar/315970922260153000.feather"
+  ],
+  "cutoff_ns": 315970922299927215,
+  "target": "56569385-722e-4413-ba4d-068307bca2ab",
+  "role": "post hoc missing-reference supplementation; original5-point rejection preserved; no new DVGT input or model selection",
+  "information": "two additional past LiDAR sweeps, known ego poses and GT actor masks; no GT translation motion compensation",
+  "rules": {
+    "max_target_center_displacement_m": 0.2,
+    "minimum_core_points": 6,
+    "reference_center_error_max_m": 0.5,
+    "same_face_retention_min": 0.8
+  },
+  "stop": "exactly3 sweeps including original partial scan; no further scan/threshold expansion",
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}

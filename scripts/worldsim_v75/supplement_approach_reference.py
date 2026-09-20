@@ -1,5 +1,6 @@
 """有限参考补证：当前部分扫描＋之前两次扫描，点时间均不得越过生成起点。"""
 from datetime import datetime,timezone
+import argparse
 import json
 from pathlib import Path
 import numpy as np
@@ -12,14 +13,18 @@ OUT=Path('/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260
 
 
 def main():
+    global OUT
+    parser=argparse.ArgumentParser();parser.add_argument('--run-dir',type=Path,default=OUT)
+    parser.add_argument('--task-id',default='WS-V75-APPROACH-REFERENCE-01')
+    args=parser.parse_args();OUT=args.run_dir
     read=OUT/'reconstruction'; old=json.loads((read/'readout_ray_control_result.json').read_text()); p=json.loads((read/'protocol.json').read_text())
     dest=read/'reference_supplement_result.json'; assert not dest.exists()
     base=json.loads((Path(p['base_run'])/'input_manifest.json').read_text()); raw=ROOT/base['log_id']; cutoff=p['cutoff_ns']; origin=np.array(base['city_origin'])
     files=sorted(x for x in (raw/'sensors/lidar').glob('*.feather') if int(x.stem)<=cutoff)[-3:]
     assert len(files)==3 and str(files[-1])==p['lidar_anchor_file']
-    protocol={'task_id':'WS-V75-APPROACH-REFERENCE-01','run_id':OUT.name,'frozen_utc':datetime.now(timezone.utc).isoformat(),
+    protocol={'task_id':args.task_id,'run_id':OUT.name,'frozen_utc':datetime.now(timezone.utc).isoformat(),
         'source_readout':str(read/'readout_ray_control_result.json'),'files':list(map(str,files)),'cutoff_ns':cutoff,'target':p['target'],
-        'role':'post hoc missing-reference supplementation; original4-point rejection preserved; no new DVGT input or model selection',
+        'role':f'post hoc missing-reference supplementation; original{old["readouts"]["reference_lidar"]["n"]}-point rejection preserved; no new DVGT input or model selection',
         'information':'two additional past LiDAR sweeps, known ego poses and GT actor masks; no GT translation motion compensation',
         'rules':{'max_target_center_displacement_m':.2,'minimum_core_points':6,'reference_center_error_max_m':.5,'same_face_retention_min':.8},
         'stop':'exactly3 sweeps including original partial scan; no further scan/threshold expansion',

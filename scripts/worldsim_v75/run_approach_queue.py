@@ -1,5 +1,5 @@
 """有限三个误差/控制分支，单卡顺序执行；异常尤其OOM直接停止队列。"""
-import json,os,subprocess,sys,time
+import argparse,json,os,subprocess,sys,time
 from pathlib import Path
 
 OUT=Path('/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2')
@@ -8,6 +8,11 @@ CONDITIONING=OUT.parent/'20260920-r1/conditioning'
 
 
 def main():
+    global OUT,SOURCE,CONDITIONING
+    parser=argparse.ArgumentParser();parser.add_argument('--run-dir',type=Path,default=OUT)
+    parser.add_argument('--source-run',type=Path,default=SOURCE);parser.add_argument('--conditioning-dir',type=Path,default=CONDITIONING)
+    parser.add_argument('--task-id',default='WS-V75-APPROACH-CLOSEDLOOP-01')
+    args=parser.parse_args();OUT,SOURCE,CONDITIONING=args.run_dir,args.source_run,args.conditioning_dir
     path=OUT/'queue_result.json'; assert not path.exists()
     gt=json.loads((OUT/'gt_clean/result.json').read_text()); assert gt['status']=='complete' and gt['baseline_admitted']
     assert json.loads((OUT/'gt_clean/dense_reference_result.json').read_text())['status']=='passed'
@@ -20,7 +25,7 @@ def main():
             print(json.dumps({'stage':'generate','arm':arm}),flush=True)
             with (OUT/f'{arm}.log').open('w') as log:
                 subprocess.run([sys.executable,str(Path(__file__).with_name('run_approach_closed_loop.py')),'--phase','generate','--arm',arm,
-                                '--run-dir',str(OUT),'--source-run',str(SOURCE),'--conditioning-dir',str(CONDITIONING)],stdout=log,stderr=subprocess.STDOUT,check=True)
+                                '--run-dir',str(OUT),'--source-run',str(SOURCE),'--conditioning-dir',str(CONDITIONING),'--task-id',args.task_id],stdout=log,stderr=subprocess.STDOUT,check=True)
             run=json.loads((OUT/arm/'result.json').read_text()); assert run['status']=='complete'
             with (OUT/f'{arm}.assessment.log').open('w') as log:
                 subprocess.run([sys.executable,str(Path(__file__).with_name('assess_following_closed_loop.py')),'--run-dir',str(OUT),'--arm',arm],stdout=log,stderr=subprocess.STDOUT,check=True)

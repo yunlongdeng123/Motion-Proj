@@ -1,0 +1,42 @@
+{
+  "task_id": "WS-V75-IOU-ASSOCIATION-CONTROL-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T13:14:53.482681+00:00",
+  "base": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-TASKS-01/20260920-r1/cases/02678d04-cc9f-3148-9f95-1ba66347dff9/start-6.5/base",
+  "source_log": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+  "target": "94dede14-59da-4f09-b016-95f19596ac08",
+  "real_source": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-01/20260920-association-r2",
+  "generated_source": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2",
+  "state_control_source": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-STATE-CONTROL-01/20260920-r1",
+  "variant": "last observed image bbox IoU >=0.3 before Hungarian; same .6s expiry and exact metric Kalman",
+  "source": "https://github.com/abewley/sort/blob/master/sort.py",
+  "source_transfer": "ordinary IoU matching and default0.3; NOT full SORT or official tracker execution",
+  "fixed": [
+    "saved detector candidates",
+    "ground-contact position",
+    "metric Kalman dynamics/noise",
+    "ego-speed cold start",
+    "IDM",
+    "route",
+    "time sequence"
+  ],
+  "real_gate": {
+    "correct_leader_fraction": 0.8,
+    "median_abs_gap_error_m": 3.0,
+    "median_abs_acceleration_difference_mps2": 0.5,
+    "max_underbraking_mps2": 2.0,
+    "max_overbraking_mps2": 2.0
+  },
+  "offline_gt_gate": {
+    "median_abs_action_error_mps2": 0.5,
+    "max_underbraking_mps2": 2.0,
+    "max_overbraking_mps2": 2.0
+  },
+  "offline_improvement": "reference_lidar after shared startup: mean absolute action error and max underbraking both strictly decrease; max overbraking does not increase",
+  "target_reference": "intended condition-state action at same saved ego; original fixed-physical reference also retained",
+  "future_feedback_if_passed": "one paired GT/reference_lidar feedback trial, same117frames/seed42; GT full gate first; any OOM stops",
+  "stop": "one fixed association variant; no IoU or world-Kalman tuning; if any gate fails close this control without new GPU work",
+  "role": "exposed development control, offline changed actions do not prove closed-loop recovery",
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}

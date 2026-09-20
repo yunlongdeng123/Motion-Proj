@@ -16,7 +16,8 @@ NAMES = ['DVGT', 'Global LiDAR scale', 'Target LiDAR anchor']
 def main():
     p = argparse.ArgumentParser(); p.add_argument('--evidence', type=Path, required=True)
     p.add_argument('--recorded', type=Path, required=True); p.add_argument('--image', type=Path, required=True)
-    p.add_argument('--output', type=Path, required=True); a = p.parse_args(); out = a.output; out.mkdir(parents=True, exist_ok=True)
+    p.add_argument('--output', type=Path, required=True); p.add_argument('--iou-control',type=Path)
+    a = p.parse_args(); out = a.output; out.mkdir(parents=True, exist_ok=True)
     result = json.loads((a.evidence/'result.json').read_text()); assert result['status'] == 'complete'
     for name in ['result.json','protocol.json','replay_verification.json','offline_action_comparison.json']:
         shutil.copy2(a.evidence/name, out/name)
@@ -80,6 +81,28 @@ def main():
     <h2>接口与验证</h2><p>保留所有分支相同的第一段真实RGB动作，从第4帧后的决策开始查询当前条件状态；速度只用当前与之前条件位置，不读取未来状态。复用同一IDM、40米范围、路线控制、执行器映射、官方动力学和高程贴合。</p><p>先回放四组已保存动作：468帧相机矩阵和全部决策边界状态与原结果完全一致；60次动作映射也完全一致。新增四组反馈468帧，全程禁用CUDA，执行约8.85秒。</p>
     <h2>这轮改变了什么研究决策</h2><p>不能再用本例的大尺度减速作为生成模型独有问题；不能仅按三维中心误差给“修复”排名。下一项强控制只检查普通时序关联：在保存的真实与生成输入上测试是否能合法恢复状态/动作，先排除策略自身的身份切换；它若不能通过真实基线或不能恢复，就关闭该分支，不调阈值或追加本例seed/时长。离线回放不会冒称新的完整闭环改善。</p>
     <p class="tag">一个事后开发场景；额外三维状态、已知路线/地形、GT尺寸朝向与共享非反应式轨迹。没有新训练、模型推理、跨场景确认或科学失败卡，人工verdict为null。</p><p><a href="result.json">结果</a> · <a href="protocol.json">冻结协议</a> · <a href="replay_verification.json">精确回放验证</a> · <a href="interface-control.svg">主图SVG</a> · <a href="../V75_Approach_Closed_Loop/index.html">上一轮四组实际视频</a></p></html>'''
+    if a.iou_control:
+        control=json.loads((a.iou_control/'result.json').read_text());assert control['status']=='complete'
+        shutil.copy2(a.iou_control/'result.json',out/'iou-control-result.json')
+        labels=['GT','DVGT','Global scale','Target LiDAR'];xx=np.arange(4)
+        fig,axes=plt.subplots(1,3,figsize=(14.6,4.1))
+        keys=['mean_abs_action_error_mps2','max_underbraking_mps2','max_overbraking_mps2']
+        titles=['Mean absolute action error','Maximum underbraking error','Maximum excess braking error']
+        for ax,key,title in zip(axes,keys,titles):
+            for j,variant in enumerate(['original','iou']):
+                values=[r[variant][key] for r in control['generated']]
+                bars=ax.bar(xx+(j-.5)*.34,values,width=.34,color=['#386986','#d96c4b'][j],label=['Original association','Image IoU association'][j])
+                for b,v in zip(bars,values):ax.text(b.get_x()+b.get_width()/2,v+.035,f'{v:.2f}',ha='center',fontsize=8)
+            ax.set(title=title,ylabel='Acceleration difference (m/s²)',ylim=(0,2.8));ax.set_xticks(xx,labels);ax.tick_params(axis='x',labelsize=9);ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
+        fig.legend(*axes[0].get_legend_handles_labels(),loc='upper center',ncol=2,frameon=False)
+        fig.text(.5,.02,'Offline replay at saved ego states • 14 post-startup decisions per arm • reference = intended condition-state IDM • no new rollout',ha='center',fontsize=9,color='#567085')
+        fig.tight_layout(rect=(0,.065,1,.91));fig.savefig(out/'iou-association-control.png',dpi=180);fig.savefig(out/'iou-association-control.svg');plt.close(fig)
+        original='<p>不能再用本例的大尺度减速作为生成模型独有问题；不能仅按三维中心误差给“修复”排名。下一项强控制只检查普通时序关联：在保存的真实与生成输入上测试是否能合法恢复状态/动作，先排除策略自身的身份切换；它若不能通过真实基线或不能恢复，就关闭该分支，不调阈值或追加本例seed/时长。离线回放不会冒称新的完整闭环改善。</p>'
+        updated='<p>不能再用本例的大尺度减速作为生成模型独有问题，也不能仅按三维中心误差给“修复”排名。普通关联对照现已完成，结果没有达到事前写明的恢复条件；本例的关联修补分支关闭，不继续调参数或追加seed/时长。</p>'
+        assert original in html;html=html.replace(original,updated)
+        section='''<h2>有限关联控制：平均改善，但并非全面恢复</h2><p>只用图像框IoU≥0.3替换米制距离关联，保留原检测、地面位置、米制Kalman参数、过期时间、速度初始化和IDM。关联方式与默认门槛参考<a href="https://github.com/abewley/sort/blob/master/sort.py">SORT官方实现</a>；本实验不是完整SORT，也没有重跑检测。原策略在175次回放访问中精确复现，覆盖95条保存记录。</p><p>真实基线仍通过。LiDAR分支平均动作差1.102→0.725，最大欠制动差2.420→1.678 m/s²；最大额外制动差却1.114→1.525 m/s²。因此事前规定的“欠制动改善且额外制动不增”未通过，不为该变体启动新生成闭环。不能仅展示平均值来声称恢复，也不能据此排除所有成熟跟踪方法。</p><img src="iou-association-control.png" alt="四组原关联与IoU关联的动作误差和两侧极值"><p><a href="iou-control-result.json">关联控制完整结果</a>。下一研究单位是另一个按真实任务筛选的开发窗口，本例不再追加修补。</p>'''
+        html=html.replace('</body>','') if '</body>' in html else html
+        html=html.replace('</html>',section+'</html>')
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     # Windows绘图库按系统换行输出SVG；归档使用统一LF。
     for path in out.glob('*.svg'):

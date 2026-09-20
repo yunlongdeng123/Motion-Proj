@@ -1,0 +1,54 @@
+{
+  "task_id": "WS-V75-BRAKING-DEV2-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T13:19:38.594956+00:00",
+  "logs": [
+    "20bcd747-ef60-391a-9f4a-ae99f049c260",
+    "20dd185d-b4eb-3024-a17a-b4e5d8b15b65",
+    "214e388e-cbd7-3dde-a204-d2ec42298808",
+    "24642607-2a51-384a-90a7-228067956d05",
+    "27c03d98-6ac3-38a3-ba5e-102b184d01ef",
+    "29a00842-ead2-3050-b587-c5ef507e4125"
+  ],
+  "source_selection": "first6 sorted locally complete logs outside prior12 braking screen; freeze before reading motion or model errors",
+  "role": "additional finite development window; may overlap earlier non-braking research, NOT independent confirmation",
+  "previous_screen_unchanged": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-TASKS-01/20260920-r1",
+  "start_offsets_seconds": [
+    2.5,
+    4.5,
+    6.5
+  ],
+  "measurement_frames": [
+    0,
+    15,
+    30,
+    45,
+    60
+  ],
+  "history": "at least20 actual captures before start; no0.5s cold-start windows",
+  "motion_gate": {
+    "initial_speed_min_mps": 2.0,
+    "speed_drop_over_2s_min_mps": 1.0
+  },
+  "task_gate": {
+    "target": "first route leader during first2s; it need not be inside40m at initial frame",
+    "target_leader_observations_min": 3,
+    "target_initial_bbox_min_wh": [
+      48,
+      32
+    ],
+    "initial_and_all_leader_projections_fully_inside": true,
+    "oracle_leader_braking_times_min": 2,
+    "oracle_acceleration_max_mps2": -0.5,
+    "leader_effect_vs_free_acceleration_max_mps2": -0.5
+  },
+  "selection_order": "first qualifying start per log; first2 qualified logs for real RGB baseline, independent of reconstruction error",
+  "same_next_policy": "original world-distance association, fixed20 past captures, official height raster, sameIDM; rejected IoU variant not adopted",
+  "scope": "CPU screen only; task geometry qualification does not admit generation; real RGB then GT feedback still required",
+  "stop": "exact6x3 windows, no replacement/additional offsets; close if none qualify; never change thresholds to rescue candidates",
+  "human_verdict": null,
+  "failure_ledger_delta": "none",
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ]
+}
