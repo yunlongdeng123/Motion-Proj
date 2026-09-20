@@ -1,0 +1,18 @@
+{
+  "task_id": "WS-V75-SHAPE-FEEDBACK-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T14:25:40.592961+00:00",
+  "audit_protocol": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-PRIOR-AUDIT-01/20260920-r1/protocol.json",
+  "audit_result": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-PRIOR-AUDIT-01/20260920-r1/result.json",
+  "reason": "ordinary priors remove target GT shape; near-gap difference below4mm and direct progress difference below2mm, while exported width/height differ; test whether RGB feedback changes",
+  "scope": "both original exposed tasks, same two ordinary adapters, seed42,117frames each; not a pure dimension-only causal intervention because exported centers also differ",
+  "comparison": "two actual feedback arms and existing original-GT-shape DVGT arm; reference remains original physical scene; no new GT/old-task rerun",
+  "recovery_boundary": "better projected-box fit is not automatically better shape or driving; report all action/progress/clearance tradeoffs; no method claim from a single favorable metric",
+  "stop": "four runs exactly; any nonzero child/failed result/OOM stops the full queue; no retries/configuration reduction/seeds/horizon/source expansion",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}

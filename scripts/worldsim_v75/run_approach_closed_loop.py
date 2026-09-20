@@ -28,14 +28,26 @@ ARMS=['gt_clean','dvgt_metric','dvgt_lidar_scaled','reference_lidar']
 def main():
     global OUT,SOURCE
     parser=argparse.ArgumentParser(); parser.add_argument('--phase',choices=['encode','generate'],required=True)
-    parser.add_argument('--arm',choices=ARMS,default='gt_clean')
+    parser.add_argument('--arm',choices=ARMS+['dvgt_class_prior','dvgt_visible_extent'],default='gt_clean')
     parser.add_argument('--run-dir',type=Path,default=OUT); parser.add_argument('--source-run',type=Path,default=SOURCE)
     parser.add_argument('--conditioning-dir',type=Path)
     parser.add_argument('--task-id',default='WS-V75-APPROACH-CLOSEDLOOP-01')
+    parser.add_argument('--frozen-state-protocol',type=Path)
     args=parser.parse_args(); OUT=args.run_dir; SOURCE=args.source_run
     source=json.loads((SOURCE/'protocol.json').read_text()); qualification=json.loads((SOURCE/'result.json').read_text())
     assert qualification['status']=='complete' and qualification['real_gate_passed']
     base=Path(source['base']); OUT.mkdir(parents=True,exist_ok=True)
+    frozen=None
+    if args.frozen_state_protocol:
+        frozen=json.loads(args.frozen_state_protocol.read_text())
+        assert frozen['task_id']==args.task_id=='WS-V75-SHAPE-FEEDBACK-01'
+        assert frozen['base']==str(base) and frozen['source_real_run']==str(SOURCE) and frozen['target']==source['target']
+        assert frozen['frames']==117 and frozen['seed']==42 and args.arm in frozen['conditions']
+        parent=Path(frozen['source_generated_run'])
+        assert json.loads((parent/'gt_clean/result.json').read_text())['baseline_admitted']
+        assert json.loads((parent/'gt_clean/dense_reference_result.json').read_text())['status']=='passed'
+    else:
+        assert args.arm in ARMS, '额外状态分支必须有冻结协议'
     protocol={'task_id':args.task_id,'run_id':OUT.name,'source_run':str(SOURCE),
               'base':str(base),'source_log':source['source_log'],'target':source['target'],
               'frames':117,'blocks':15,'fps':30,'seed':42,'arms':ARMS,
@@ -51,6 +63,11 @@ def main():
               'engineering_revision':'distance gate before Hungarian; historical runs retain pre-fix outputs',
               'conditioning_dir':str(args.conditioning_dir or OUT/'conditioning'),
               'human_verdict':None,'failure_ledger_delta':'none'}
+    if frozen:
+        protocol.update(arms=list(frozen['conditions']),role='two fixed ordinary cuboid adapters with matched near-surface gap; exposed development task',
+                        change_for_error_arms='initial center, dimensions and orientation from frozen ordinary-prior readout; shared relative GT motion',
+                        frozen_state_protocol=str(args.frozen_state_protocol),
+                        error_arm_admission='previous real/GT feedback passed; separate frozen shape protocol after CPU input-role audit; no residual ranking')
     if (OUT/'protocol.json').exists(): assert json.loads((OUT/'protocol.json').read_text())==protocol
     else:
         save(OUT/'protocol.json',protocol); (OUT/'frozen_utc.txt').write_text(datetime.now(timezone.utc).isoformat()+'\n')
@@ -72,7 +89,7 @@ def main():
     assert json.loads((conditioning/'result.json').read_text())['status']=='complete'
     assert np.array_equal(np.array(Image.open(conditioning/'initial_rgb.png')),np.array(Image.open(base/'initial_rgb.png')))
     offset=np.zeros(3)
-    if args.arm!='gt_clean':
+    if args.arm!='gt_clean' and not frozen:
         previous=json.loads((OUT/'gt_clean/result.json').read_text()); dense=json.loads((OUT/'gt_clean/dense_reference_result.json').read_text())
         assert previous['status']=='complete' and previous['baseline_admitted'] and dense['status']=='passed'
         read=json.loads((OUT/'reconstruction/readout_ray_control_result.json').read_text())
@@ -95,9 +112,19 @@ def main():
     dest=OUT/args.arm; assert not dest.exists(); dest.mkdir(); started=time.monotonic()
     result={'status':'started','arm':args.arm,'human_verdict':None,'failure_ledger_delta':'none'}
     try:
-        reference=scene(base); condition=copy.deepcopy(reference)
+        reference=scene(base)
+        condition=json.loads(Path(frozen['conditions'][args.arm]).read_text()) if frozen else copy.deepcopy(reference)
         target=next(t for t in condition['tracks'] if t['id']==source['target'] and 0 in t['frames'])
-        target['centers']=(np.array(target['centers'])+offset).tolist(); save(dest/'condition_scene.json',condition)
+        if frozen:
+            original=next(t for t in reference['tracks'] if (t['id'],t['segment'])==(target['id'],target['segment']))
+            assert set(condition)==set(reference) and len(condition['tracks'])==len(reference['tracks'])
+            assert all(condition[k]==reference[k] for k in reference if k!='tracks')
+            assert all(t==next(v for v in condition['tracks'] if (v['id'],v['segment'])==(t['id'],t['segment'])) for t in reference['tracks'] if t!=original)
+            assert target['frames']==original['frames']
+            offset=np.array(target['centers'][0])-original['centers'][0]
+        else:
+            target['centers']=(np.array(target['centers'])+offset).tolist()
+        save(dest/'condition_scene.json',condition)
         tr=np.load(base/'trajectory.npz'); terrain=RasterGround(base); vertices,faces=terrain.mesh_for_route(tr['ego_world'][:,:2,3])
         snapper=GroundSnapper(vertices,faces); bridge=FeedbackBridge(base,condition,ground_snapper=snapper)
         policy=RasterRGBIDMPolicy(base); policy.restore_tracker(json.loads((SOURCE/'tracker_at_t0.json').read_text()))

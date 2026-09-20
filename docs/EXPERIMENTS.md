@@ -31,6 +31,8 @@
 | WS-V75-APPROACH-STATE-CONTROL-02 / 20260920-r1 | 第二任务468帧旧动作精确回放与468帧直接状态控制；双任务统一对比图 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[状态控制](autoresearch/worldsim_v75/approach_dev2/state_control/result.json) |
 | WS-V75-TEMPORAL-STATE-AUDIT-01 / 20260920-r1 | 官方时间接口、两任务过去观测与静止/CV强控制；两组234帧精确复现、四组468帧新CPU反馈，无模型调用 | [时间状态范围](v75/APPROACH_CLOSED_LOOP.md#时间状态审计近静止任务的范围边界)、[证据](autoresearch/worldsim_v75/temporal_state_audit/result.json) |
 | WS-V75-MOVING-FOLLOWING-SCREEN-01 / 20260920-r1 | 复用固定6日志18起点的真实运动跟车资格；18→15→2→1近静止→0，无模型调用，窗口关闭 | [任务覆盖边界](v75/BRAKING_TASKS.md#同一固定来源的真实运动跟车资格)、[完整分母](autoresearch/worldsim_v75/moving_following_screen/result.json) |
+| WS-V75-SHAPE-PRIOR-AUDIT-01 / 20260920-r1 | 两任务五组普通形状/距离适配；1170帧CPU控制，目标GT形状移出拟合、额外LiDAR单列，0次新模型调用 | [形状输入边界](v75/APPROACH_CLOSED_LOOP.md#普通形状先验与生成闭环相近间距不保证相同制动)、[完整审计](autoresearch/worldsim_v75/shape_feedback/audit/result.json) |
+| WS-V75-SHAPE-FEEDBACK-01 / 20260920-r1；20260920-conditioning-r2 | 首轮目录预检错误保留；两任务两普通形状导出共468帧实际反馈，936帧新旧精确回放；2.757/0.301m配对进度差、先验部分缓解非完整恢复 | [结果与真实对比图](v75/APPROACH_CLOSED_LOOP.md#四段实际生成反馈)、[结果](autoresearch/worldsim_v75/shape_feedback/comparison.json)、[完整来源](autoresearch/worldsim_v75/shape_feedback/provenance.json) |
 | WS-V74-P0-* / 20260910 | 数据、资源与输入角色准备 | [P0](archive/2026-09/v74-0920/WORLDSIM_V74_P0_HANDOFF.md) |
 | WS-V74-METHOD-TOURNAMENT-01 | H1 WEX / RIF / DCS 与强控制 | [结果](archive/2026-09/v74-0920/WORLDSIM_V7_4_RESULTS.md)、[失败](archive/2026-09/v74-0920/WORLDSIM_V7_4_FAILURES.md) |
 | H2 CPU / GPU P1 | 数据与学习能力实验、实现关闭 | [CPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[GPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md) |

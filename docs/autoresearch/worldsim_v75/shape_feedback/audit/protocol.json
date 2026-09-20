@@ -1,0 +1,46 @@
+{
+  "task_id": "WS-V75-SHAPE-PRIOR-AUDIT-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T14:21:29.911449+00:00",
+  "sources": [
+    {
+      "generated_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2",
+      "direct_state_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-STATE-CONTROL-01/20260920-r1"
+    },
+    {
+      "generated_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1",
+      "direct_state_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-STATE-CONTROL-02/20260920-r1"
+    }
+  ],
+  "question": "Did oracle target shape hide important task-state errors, or does a standard prior plus observed surface suffice?",
+  "role": "post hoc fixed two-task input-role audit; no reconstruction-error ranking or independent confirmation",
+  "prior_dimensions_lwh_m": [
+    3.9,
+    1.6,
+    1.56
+  ],
+  "prior_source": "https://raw.githubusercontent.com/open-mmlab/OpenPCDet/master/tools/cfgs/kitti_models/pointpillar.yaml",
+  "prior_source_used": "Car anchor_sizes only; no PointPillars model, weights, rotations, scores or results imported",
+  "orientation": "upright and aligned with known ego heading; no target GT yaw/pitch/roll in fit",
+  "inputs": "saved detector bbox, calibration, ego heading, saved calibrated DVGT range; unknown length remains fixed class prior",
+  "visible_fit": "median visible plane along ego-forward axis plus half prior length sets longitudinal center; four bbox edges fit lateral/vertical center and positive width/height; no GT shape or translation in fit",
+  "numerical_bounds": "positive widths/heights0.1..10m and transverse coordinates+-200m; bound-active estimates are rejected, not retuned",
+  "extra_information_controls": "old frozen background-LiDAR scale and old three-scan target-LiDAR core with GT target masks; not equal-information advantages",
+  "arms": [
+    "bbox_class_prior",
+    "dvgt_class_prior",
+    "dvgt_visible_extent",
+    "scaled_visible_extent",
+    "lidar_visible_extent"
+  ],
+  "old_readout_replay_tolerance_m": 1e-10,
+  "cpu_feedback": "shared original initial RGB command and relative GT actor motion, same117frames15decisions; full other actors/route/terrain retained",
+  "certificate": "single1mm length change and half-length center shift tests core first-depth invariance; algebraic observability check only, no model intervention",
+  "stop": "exact two sources and five ordinary readouts; no threshold/seed/source/horizon change, no new detector/model or generation; no automatic promotion from CPU controls",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}

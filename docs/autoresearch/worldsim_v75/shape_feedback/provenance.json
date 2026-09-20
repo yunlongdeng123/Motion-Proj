@@ -1,0 +1,120 @@
+{
+  "task_ids": [
+    "WS-V75-SHAPE-PRIOR-AUDIT-01",
+    "WS-V75-SHAPE-FEEDBACK-01"
+  ],
+  "runs": {
+    "audit": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-PRIOR-AUDIT-01/20260920-r1",
+    "feedback": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/20260920-conditioning-r2",
+    "preflight_failure": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-SHAPE-FEEDBACK-01/20260920-r1"
+  },
+  "source_versions": {
+    "FlashDreams": "bc711d6f95693d73693e6b5fac75749cc6fcf1d7",
+    "DVGT": "51cf3f6d11fdff8bc7e2bbe1a88f71665ccb2236",
+    "nuPlan": "ce3c323af01c0d7ec5672f7832ef53f9c679aab0"
+  },
+  "ordinary_prior_source": "https://github.com/open-mmlab/OpenPCDet/blob/master/tools/cfgs/kitti_models/pointpillar.yaml",
+  "prior_dimensions_lwh_m": [
+    3.9,
+    1.6,
+    1.56
+  ],
+  "new_gpu_generated_frames": 468,
+  "new_gpu_decisions": 60,
+  "new_cpu_direct_frames": 1170,
+  "dense_replay_frames": 936,
+  "archive_scope": "complete JSON protocols, fitted states, conditions, decisions, CPU trajectories, dense checks, metrics and selected actual images; raw arrays/cameras/videos stay at the listed run paths",
+  "review_path_local": "outputs/V75_Multiscene_Closed_Loop/index.html",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none",
+  "lossless_condition_archives": [
+    {
+      "logical_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_class_prior.json",
+      "compressed_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_class_prior.json.gz",
+      "original_bytes": 2510867,
+      "compressed_bytes": 630974,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_visible_extent.json",
+      "compressed_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_visible_extent.json.gz",
+      "original_bytes": 2510881,
+      "compressed_bytes": 630951,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_class_prior.json",
+      "compressed_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_class_prior.json.gz",
+      "original_bytes": 2222811,
+      "compressed_bytes": 542498,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_visible_extent.json",
+      "compressed_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_visible_extent.json.gz",
+      "original_bytes": 2222842,
+      "compressed_bytes": 542494,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/dvgt_class_prior/condition_scene.json",
+      "compressed_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/dvgt_class_prior/condition_scene.json.gz",
+      "original_bytes": 2510867,
+      "compressed_bytes": 630963,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/dvgt_visible_extent/condition_scene.json",
+      "compressed_archive_path": "feedback/02678d04-cc9f-3148-9f95-1ba66347dff9/dvgt_visible_extent/condition_scene.json.gz",
+      "original_bytes": 2510881,
+      "compressed_bytes": 630937,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/dvgt_class_prior/condition_scene.json",
+      "compressed_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/dvgt_class_prior/condition_scene.json.gz",
+      "original_bytes": 2222811,
+      "compressed_bytes": 542487,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/dvgt_visible_extent/condition_scene.json",
+      "compressed_archive_path": "feedback/24642607-2a51-384a-90a7-228067956d05/dvgt_visible_extent/condition_scene.json.gz",
+      "original_bytes": 2222842,
+      "compressed_bytes": 542480,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "preflight_failure/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_class_prior.json",
+      "compressed_archive_path": "preflight_failure/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_class_prior.json.gz",
+      "original_bytes": 2510867,
+      "compressed_bytes": 630974,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "preflight_failure/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_visible_extent.json",
+      "compressed_archive_path": "preflight_failure/02678d04-cc9f-3148-9f95-1ba66347dff9/condition-dvgt_visible_extent.json.gz",
+      "original_bytes": 2510881,
+      "compressed_bytes": 630951,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "preflight_failure/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_class_prior.json",
+      "compressed_archive_path": "preflight_failure/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_class_prior.json.gz",
+      "original_bytes": 2222811,
+      "compressed_bytes": 542498,
+      "validation": "byte-identical decompression"
+    },
+    {
+      "logical_archive_path": "preflight_failure/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_visible_extent.json",
+      "compressed_archive_path": "preflight_failure/24642607-2a51-384a-90a7-228067956d05/condition-dvgt_visible_extent.json.gz",
+      "original_bytes": 2222842,
+      "compressed_bytes": 542494,
+      "validation": "byte-identical decompression"
+    }
+  ]
+}

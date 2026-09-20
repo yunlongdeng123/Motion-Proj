@@ -15,6 +15,8 @@ def main():
     p.add_argument('--case2',type=Path,required=True);p.add_argument('--architecture',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--temporal-audit',type=Path)
     p.add_argument('--moving-screen',type=Path)
+    p.add_argument('--shape-feedback',type=Path)
+    p.add_argument('--shape-audit',type=Path)
     a=p.parse_args();out=a.output;out.mkdir(parents=True,exist_ok=True)
     cases=[]
     for label,src,ctrl in [('02678d04',a.case1,a.control1),('24642607',a.case2,a.case2/'state_control')]:
@@ -70,6 +72,11 @@ def main():
     if a.moving_screen:
         from build_moving_following_review import build
         html=html.replace('</html>',build(a.moving_screen,out)+'</html>')
+    if a.shape_feedback:
+        if not a.shape_audit:p.error('--shape-feedback requires --shape-audit')
+        from build_shape_feedback_review import build
+        html=html.replace('<img src="architecture.svg"', '<div class="card"><strong>最新：相近近端距离，仍可能产生不同制动。</strong><p>两种普通形状导出，输入近端间距差小于4毫米。实际生成反馈中，两任务的配对行进差为2.757／0.301米；普通类别先验部分缓解动作偏差，尚未一致恢复。4段468帧已完成。</p><a href="#shape-feedback">查看实际视频、完整曲线和输入边界 →</a></div><img src="architecture.svg"')
+        html=html.replace('</html>',build(a.shape_feedback,a.shape_audit,out)+'</html>')
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     for path in out.glob('*.svg'):path.write_text('\n'.join(s.rstrip() for s in path.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8',newline='\n')
     print(out/'index.html')
