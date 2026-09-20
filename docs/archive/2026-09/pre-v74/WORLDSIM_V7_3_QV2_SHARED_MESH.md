@@ -104,7 +104,7 @@ task `WS-V73-Q-V2-01` / run `20260908T230000Z__shared-mesh-lidar-full-track-beam
 
 miss在5日志都减少，early/free在5日志都增加。hit仅2/5日志增加，区间跨0；distance平均下降而recall平均下降，二者均跨0，不宣称覆盖强或显著退化。该对照还包含椭球初始化、连续面支持与面数预算变化，不是仅共享边的单因素因果实验。当前首候选的LiDAR路径未满足F02解除条件，等待联合r1后再作下一轮方案选择。
 
-[保存的配对结果（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-025)
+[保存的配对结果（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-025)
 
 ### 相对初始化与训练过程
 
@@ -128,7 +128,7 @@ miss在5日志都减少，early/free在5日志都增加。hit仅2/5日志增加�
 
 过程量是每轮重新采样训练数据，不代替固定DEV；LiDAR模式没有native监督或native支持选择，图中该项为不适用。FIT最终hit/early/miss/free/distance/recall=.343442/.252846/.185162/.110072/.166360/.704862；full_track含FIT评价时刻标签，不是泛化。移动DEV仍9 Actor/2日志、3无owned/1空表面，hit.129493/miss.097081/recall.359051，其中一日志仅1条owned束，不能作稳健动态优势结论。
 
-[训练过程（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-026)
+[训练过程（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-026)
 
 ### 新卡点的一手检索与迁移决定
 
@@ -157,7 +157,7 @@ miss在5日志都减少，early/free在5日志都增加。hit仅2/5日志增加�
 | missing，表面邻近测量 | 30.1786 | 4.0498 |
 | missing，无邻近表面 | 26.6551 | 21.4890 |
 
-[固定表面交点分解（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-022)
+[固定表面交点分解（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-022)
 
 Q-v2 early的19.4901%中，只有6.5867个百分点在后方还存在容差内正确交点；另12.9034个百分点缺乏正确沿束支持，其中8.2102个百分点虽有近测量表面但仍是错误交点。late增至24.4222%（R8为6.5727%）。因此，仅去掉早表面或强化排斥不能保证恢复正确首返回；位置、方向与局部形状仍需学习。missing且有近测量表面的比例由30.1786%降至4.0498%，说明新支持改变了原有“近但不相交”的频率，但不能把这一下降全部算作正确hit增量。
 
@@ -240,7 +240,7 @@ R8：
 
 R14比较early增加、miss减少、recall降低的区间不跨0；R8比较还包括free增加。没有凭弱PCA宣布成功，也不因此退回native-only。
 
-[完整DEV配对差（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-023)
+[完整DEV配对差（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-023)
 
 ### 训练是否只改善了代理目标
 
@@ -257,7 +257,7 @@ R14比较early增加、miss减少、recall降低的区间不跨0；R8比较还�
 
 FIT完整414对象的hit/early/miss/free/distance/recall=.343530/.256705/.203256/.119893/.202376/.626248；full_track含FIT时刻标签，不是泛化。移动DEV9对象/2日志、3无owned/1空；hit.165184、early.148070、miss.117200、free.019435m、distance.338689m、recall.315691。一日志仅1条owned束，不能支持稳健动态优势。
 
-[真实训练过程（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-024)
+[真实训练过程（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-024)
 
 ### 下一步与失败结论
 
@@ -302,7 +302,7 @@ joint共2131条raw early，其中仅133条后方有正确支持、1998条无正�
 
 Open3D0.19的get_self_intersecting_triangles检出joint0/67、LiDAR48/67有非邻接相交；它跳过共享任意顶点的配对，不能证明无相邻折叠或没有其他问题。LiDAR涉及相交的面比例日志等权6.2230%。这些结果不能建立相交与某条early的因果关系；不重跑大规模归因来拖延参数化实验。
 
-[固定网格诊断（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-021)
+[固定网格诊断（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-021)
 
 ### 下一候选的实现方向
 

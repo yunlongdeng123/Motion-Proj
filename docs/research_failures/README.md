@@ -1,25 +1,26 @@
 # 失败资产维护
 
-读取顺序：总入口（约一页）→ BOUNDARIES → 版本/关键词/ID → 一条详情 → 所需 NPZ/指标。历史目录按原出现顺序保留；最新裁决优先于旧阶段状态。
+入口 [RESEARCH_FAILURES](../RESEARCH_FAILURES.md) → [版本](VERSIONS.md) / [ID](IDS.md) → 单条证据。当前状态只写 [RESEARCH_STATUS](../RESEARCH_STATUS.md)，不写进本目录首页。
 
-历史小节是证据原文，不是全部重新审核过的分类。`defined_ids` 是标题中明示 ID；`referenced_ids` 是正文引用。主题是检索标签，不是失败层级的自动裁决。无 ID 的运行阶段具有顺序记录号 RFxxxx。
+## 存储与维护
 
-新失败在 `entries/ID.md` 新建一个文件，首个注释采用下面 metadata。查询器会自动读取新文件，无需重写 14k 行历史。阶段运行状态进入 EXPERIMENTS；同一个失败的修复/收口更新同一资产，保留原证据链接，不再复制整篇日志。
+- `history/part-*.md` 与 `history_index.json`：冻结的原始正文、原行号及阶段顺序。不要改写正文或重排记录；已有事实更正通过新卡链接原证据。
+- `entries/ID.md`：可维护的独立失败卡。相同问题更新原卡，保留原始结果、正例、控制及结论变化。
+- `VERSIONS.md`、`versions/`、`IDS.md`、`ids/`、`ENTRIES.md`：由 `python scripts/build_research_failure_index.py` 生成；新增或修改卡后再生成，避免人工漏项。
+- `defined_ids` 是明确标题定义，`referenced_ids` 是引用；只有引用时不虚构独立失败。主题用于检索，不自动裁决失败层级。
+- 没有新增失败时不修改总入口。任务运行失败写实验/运行证据；只有可复用的工程教训才需要单独 failure 卡。
 
 ```markdown
 # V74-H2-Fxx：具体失败边界
 <!-- metadata: {"title":"具体失败边界","defined_ids":["V74-H2-Fxx"],"referenced_ids":[],"versions":["V74-H2"],"topics":["engineering"]} -->
 
-状态/分类：工程 / 数值 / 优化 / 表示 / 科学 / 新颖性 / 证据不足；填写其一并说明证据。
-命题与触发条件：
-最强控制与同信息预算：
-实际结果（含正例与负例）：
-排除的假设/不再重试的方法族：
-仍开放的假设与适用范围：
-卡点一手来源 → 迁移位置 → 一次有针对性的修正：
-证据：task/run、输入角色、配置、初始化/首次退化/最终资产、责任射线/片、状态和资源成本。
+类型：工程 / 数值 / 优化 / 表示 / 科学 / 新颖性 / 证据不足。
+命题、触发条件及输入信息范围：
+最强控制与实际结果（含正例、负例、完整分母）：
+排除的解释、仍开放的问题与适用范围：
+证据：task/run、配置、输入角色、原始与关键资产、成本及报告链接。
 failure_ledger_refs / failure_ledger_delta：
 人工 verdict：null
 ```
 
-每个里程碑同步 RESEARCH_STATUS、EXPERIMENTS 和总入口/相关 ID。不要把数据不足写成科学失败，不把修 bug 写成机制成立。历史相对链接沿原 `docs/` 基准解释；可用原文件路径或 Git 历史定位。大型外部证据只记录保存位置与恢复入口，不声称 Git 轻量索引等于资产备份。
+失败卡记录某次实验的结论及边界，不写当前任务队列或新的执行授权。技术报告按协作规则配组件图。大型证据只链接保存位置和恢复入口，轻量索引不冒充资产备份。

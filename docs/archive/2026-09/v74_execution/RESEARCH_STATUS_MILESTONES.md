@@ -13,7 +13,7 @@
 | WS-V74-METHOD-TOURNAMENT-01 | implementing | WEX/RIF/DCS 独立实现及强控制；43 ready/8 日志 + 23 缺 BUILD 合同对象 |
 
 主 seed=7401，确认=7402；输出≤4096三角形；各自 FIT/DEV。真实DEV已经开始读取，C结果见下方当前里程碑，尚无总体裁决；V74-F03 初始冲突图遗漏已修复，V74-F04 登记 WEX 的标准求解器替代/支撑缺失风险。FIT 定标是各自数据内完成，局部平面残差含曲率/轨迹/归属代理误差，不是噪声真值；容差以上仍记冲突。原 nuScenes FINAL 数据缺口 V74-F01 保留。
-OSQP 1.0.4 已安装，SciPy 1.15.3/HiGHS 可用。WEX 域子系统实现及其固定/贪心/MILP/软域控制已经写入；80 个解析约束算例 r1/r2 和两数据集各2对象 FIT pilot 已完成，不能代替完整三维机制与真实验证。公共硬求交/评价接入已有 V73 定义；保存机制算例、初始/事件/最终资产及全部对象分母。详细失败见 [V74 失败过程](../../../WORLDSIM_V7_4_FAILURES.md)。failure_ledger_delta=resolve V74-F02 GPU resource; no science verdict。
+OSQP 1.0.4 已安装，SciPy 1.15.3/HiGHS 可用。WEX 域子系统实现及其固定/贪心/MILP/软域控制已经写入；80 个解析约束算例 r1/r2 和两数据集各2对象 FIT pilot 已完成，不能代替完整三维机制与真实验证。公共硬求交/评价接入已有 V73 定义；保存机制算例、初始/事件/最终资产及全部对象分母。详细失败见 [V74 失败过程](../v74-0920/WORLDSIM_V7_4_FAILURES.md)。failure_ledger_delta=resolve V74-F02 GPU resource; no science verdict。
 
 WEX 实际证据：解析 multiple_front_constraints 20例中，r2 WEX20/20、贪心13/20、MILP20/20；MILP累计 .143s，WEX .230s。其余有正确候选的解析组贪心/MILP同样成功，不能声明机制不可替代。
 FIT4对象中 WEX/MILP BUILD正确命中分别均为40/41、908/3195、74/74、1145/4208；两个较密对象缺正确候选2242/3009束，域选择无法凭空补齐。WEX计算 .575/45.30/.076/126.40s，MILP .060/.884/.089/2.471s；首个资产与V73首交点读出数值差0。无DEV/FINAL质量读取。
@@ -86,7 +86,7 @@ V74-F10登记RIF覆盖/留出物理取舍；F08同目标数值迁移已形成有
 | av2 FIT | 17 | 807 | 764 | 43 | 96 |
 | av2 DEV | 3 | 129 | 114 | 15 | 23 |
 
-完整细节与命令：[P0 交接报告](../../../WORLDSIM_V74_P0_HANDOFF.md)；机器可读：`autoresearch/worldsim_v74/p0/handoff_summary.json`。
+完整细节与命令：[P0 交接报告](../v74-0920/WORLDSIM_V74_P0_HANDOFF.md)；机器可读：`autoresearch/worldsim_v74/p0/handoff_summary.json`。
 两数据集分别 FIT 与评价；AV2 新 FINAL 在 `configs/worldsim_v74/av2_final.json`，只有原始文件准备完成，规范坐标转换/测试未执行。
 nuScenes 暂无可证明全新未曝光的最终日志；保留现有域内开发，不能宣称双数据集独立最终确认已经齐备。43/48 的 probe 差额来自部分预定日志可用对象不足，不按留出质量换对象；11 个 probe 对象没有自有 QUERY 返回。
 

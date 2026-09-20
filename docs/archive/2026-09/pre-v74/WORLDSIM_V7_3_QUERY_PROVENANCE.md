@@ -27,7 +27,7 @@ free是已观测原首回波前0.2米之外的提前距离，每个来源先除�
 
 原始计数呈现另一种权重：r5 build来源有622个owned early、4477 hit、486 late；completion有364 early、250 hit、747 late。不能混用这些原始计数与日志等权百分比。r5全部67非空表面的最大顶点—片中心距离0.103816m，与固定0.06m切向间隔及有界法向弯曲一致；未使用可训练opacity或无界片半径来增加命中。
 
-[来源分解（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-009)
+[来源分解（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-009)
 
 ## 全部移动Actor，而非按错误挑例
 
@@ -46,7 +46,7 @@ free是已观测原首回波前0.2米之外的提前距离，每个来源先除�
 
 三页图按完整owner排序，展示两模型的相同原始束、相同Actor规范地面投影和成对一致坐标范围。线段连接同一束的真实测量与预测首交点，不是最近邻对应；全部存储束均保留。灰色为build，黑叉为测量，红/绿/蓝为early/hit/late，圆/三角表示build/completion来源。图不显示高度，不能代替三维数值评价。
 
-[全部9个对象的三页PDF（已归档）](../../../archives/worldsim_v74_closeout_20260913/README.md#asset-029)
+[全部9个对象的三页PDF（已归档）](../worldsim_v74_closeout_20260913/README.md#asset-029)
 
 ## 研究决策
 

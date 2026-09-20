@@ -3,8 +3,8 @@
 > **最后更新**：2026-08-09
 > **当前范围**：V3 WorldSim 模型链直接约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
-> [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
-> **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
+> [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](../../2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
+> **事实源**：[`EXPERIMENTS.md`](../../../EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。

@@ -10,8 +10,7 @@ WS-SIM-FF-LOCAL-ASSET-01 / r2：两个冻结下游候选、两输入预算，10�
 全部CenterPoint累计140次；72几何前向、802策略/PDM、18 HUGSIM＋4 SplatAD闭环不变。见docs/WORLDSIM_SIMULATION_LOCAL_ASSET_CAUSAL_AUDIT.md和F20。两候选不继续扫参；下一步若推进应冻结新的时刻/日志及完整传感器信息范围，而非重复当前几何诊断。goal active；人工verdict=null；failure_ledger_delta=V74-H2-F20。以下为历史。
 
 '''
-for rel in ['AGENTS.md','docs/RESEARCH_STATUS.md','docs/EXPERIMENTS.md','docs/RESEARCH_FAILURES.md']:
-    p=S/rel;p.write_text(note+p.read_text(encoding='utf-8'),encoding='utf-8',newline='\n');paths.append(rel)
+# 历史打包器不再发布全局状态；结果保存在本轮报告/证据中。
 rel='docs/research_failures/entries/V74-H2-F20.md';(S/rel).write_text('''# V74-H2-F20：局部几何能影响感知，但删除控制已恢复，距离改善也不保证检测改善
 
 - task/run：WS-SIM-FF-LOCAL-ASSET-01 / local_asset_inputs_r2、local_asset_detection_r2。scene-0004已曝光train单帧，两输入预算非独立重复。

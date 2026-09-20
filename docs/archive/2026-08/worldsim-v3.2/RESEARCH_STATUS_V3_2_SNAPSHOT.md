@@ -8,7 +8,7 @@
 - 当前门禁：全部单卡 RTX 3090 可执行的 V3.2 工作已完成；S1/S2/S3/R0 形成 production candidate，S4 非时序分支因删除语义重生成仅保留 diagnostic；S4 temporal 受 Hugging Face gated base 权重阻塞，S5 受许可证门阻塞；当前无新的已授权执行项
 - 当前计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_2.md)
 - S0 审计：[`WS_V32_S0_SOTA_AUDIT.md`](WS_V32_S0_SOTA_AUDIT.md)
-- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
+- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](../worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - 当前分支：`research/worldsim-v3.2-semantic-repair`
 - F0 审计协议 SHA-256：`2004a0294cc4adb9750dd3bc78aac0b650c99338f761697c14afd8e71a6fd611`
@@ -675,4 +675,4 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 `WS-V3-R0-INTEGRATION-01` 已 `done`，V3.1 当前为 `none_plan_complete`。F1、P4、D3/D4 与 A3 formal/R2–R4
 保持未解锁；除非未来以新任务、新协议和新授权启动，否则不得恢复为当前动作，也不得改写既有 terminal。
 V3.1 的计划与 R0 收口快照已归档至
-[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；当前没有新的研究计划或实验授权。
+[`archive/2026-08/worldsim-v3.1/`](../worldsim-v3.1/README.md)；当前没有新的研究计划或实验授权。

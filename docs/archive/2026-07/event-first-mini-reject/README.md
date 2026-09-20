@@ -38,9 +38,9 @@
 
 ## 3. 文档快照入口
 
-- 正式报告：[`../../../N1_MINI_EVENT_POOL_REPORT.md`](../../../N1_MINI_EVENT_POOL_REPORT.md)
-- N0 资产记录：[`../../../N0_ASSET_AND_EVENT_PREFLIGHT.md`](../../../N0_ASSET_AND_EVENT_PREFLIGHT.md)
-- 执行路线与后续方向：[`../../../POST_OCCGS_RESEARCH_DIRECTIONS.md`](../../../POST_OCCGS_RESEARCH_DIRECTIONS.md)
+- 正式报告：[`../../../N1_MINI_EVENT_POOL_REPORT.md`](../cutin-mining-closed/N1_MINI_EVENT_POOL_REPORT.md)
+- N0 资产记录：[`../../../N0_ASSET_AND_EVENT_PREFLIGHT.md`](../cutin-mining-closed/N0_ASSET_AND_EVENT_PREFLIGHT.md)
+- 执行路线与后续方向：[`../../../POST_OCCGS_RESEARCH_DIRECTIONS.md`](../cutin-mining-closed/POST_OCCGS_RESEARCH_DIRECTIONS.md)
 - 失败账本：[`../../../RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)
 - 数值事实源：[`../../../EXPERIMENTS.md`](../../../EXPERIMENTS.md)
 

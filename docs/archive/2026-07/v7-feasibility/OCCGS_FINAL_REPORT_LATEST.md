@@ -4,7 +4,7 @@
 > **审计整理时间**：2026-07-22
 > **证据基线**：`9722fa2`
 > **轮次决策**：`modify_method_then_scale`
-> **当前后续计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md)
+> **当前后续计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](../v7.1-h1-reject/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_SUPERSEDED.md)
 
 ## 1. 结论
 
@@ -38,8 +38,8 @@ V7 第一轮完成了单卡 object-centric Gaussian resimulation 的工程可行
 | D1 | done | 得出 `modify_method_then_scale` | 本报告 |
 
 原始阶段报告与长计划见
-[`archive/2026-07/v7-feasibility/`](archive/2026-07/v7-feasibility/)，V7 数值事实见
-[`EXPERIMENTS.md`](EXPERIMENTS.md)。
+[`archive/2026-07/v7-feasibility/`](.)，V7 数值事实见
+[`EXPERIMENTS.md`](../../../EXPERIMENTS.md)。
 
 ## 3. 关键数字
 
@@ -84,7 +84,7 @@ O0 occupancy 与 S0/C0 代码路径当前独立；editor 没有查询 occupancy�
 5. mini 三场景不足以支持外部有效性或正式下游 utility 结论，且 S1 held-out 质量明显偏弱。
 
 这些问题不抹去已有 feasibility 结果，但会限制其论文解释。对应防重复条件见
-[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)。
+[`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)。
 
 ## 6. 下一步
 

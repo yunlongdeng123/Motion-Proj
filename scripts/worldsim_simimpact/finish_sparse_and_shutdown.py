@@ -74,10 +74,9 @@ def publish(state):
             '结果为开环回放，非闭环事故或几何因果证明；真实路线提示、训练集重叠、重建监督与共同裁剪控制保持明示。'
             '既有六日志结果与 Ω 局部几何因果结论不变。人工 verdict=null；failure_ledger_delta=none。\n\n'
             '证据：docs/autoresearch/worldsim_simimpact/closeout_20260920/。完整日志与原始结果保留 runs/ 下。\n\n')
-    for rel in ['AGENTS.md','docs/EXPERIMENTS.md','docs/RESEARCH_STATUS.md','docs/RESEARCH_FAILURES.md']:
-        path = P/rel
-        path.write_text(note+path.read_text())
-    paths = ['AGENTS.md','docs/EXPERIMENTS.md','docs/RESEARCH_STATUS.md','docs/RESEARCH_FAILURES.md',str(D.relative_to(P))]
+    # 运行器只发布本次 run 的证据，不改协作规则、失败目录或全局状态。
+    (D/'README.md').write_text(note, encoding='utf-8')
+    paths = [str(D.relative_to(P))]
     with (C/'git.log').open('w') as log:
         for cmd in [
             ['git','add','--',*paths],

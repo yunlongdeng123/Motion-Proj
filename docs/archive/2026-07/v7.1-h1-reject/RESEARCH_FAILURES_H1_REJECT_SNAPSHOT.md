@@ -3,8 +3,8 @@
 > **最后更新**：2026-07-23
 > **当前范围**：OccGS-Resim V7 retrospective evidence 与 V7.1。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
-> [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
-> **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
+> [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](../v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
+> **事实源**：[`EXPERIMENTS.md`](../../../EXPERIMENTS.md) 和实际 run 产物。
 
 本文件只保留对 V7 下一步仍有直接约束的历史结论，以及 V7 feasibility 暴露但尚未形成 research reject 的风险。
 归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。

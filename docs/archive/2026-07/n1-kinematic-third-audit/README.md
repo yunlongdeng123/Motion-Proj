@@ -2,10 +2,10 @@
 
 本目录索引 2026-07-25 第三版 N1 的冻结入口，不复制或改写正式 run。
 
-- 预注册：[`../../../N1_KINEMATIC_PREREGISTRATION.md`](../../../N1_KINEMATIC_PREREGISTRATION.md)
-- 正式报告：[`../../../N1_KINEMATIC_EVENT_POOL_REPORT.md`](../../../N1_KINEMATIC_EVENT_POOL_REPORT.md)
+- 预注册：[`../../../N1_KINEMATIC_PREREGISTRATION.md`](../cutin-mining-closed/N1_KINEMATIC_PREREGISTRATION.md)
+- 正式报告：[`../../../N1_KINEMATIC_EVENT_POOL_REPORT.md`](../cutin-mining-closed/N1_KINEMATIC_EVENT_POOL_REPORT.md)
 - 人审提示词快照：
-  [`../../../N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md`](../../../N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md)
+  [`../../../N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md`](../cutin-mining-closed/N1_KINEMATIC_HUMAN_REVIEW_PROMPT.md)
 - 失败账本：[`../../../RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)
 
 正式 run：

@@ -74,7 +74,7 @@ machine support 也独立失败：negative=2、same-actor pair=2，低于冻结 
 
 当前合同：
 
-- [`../../../N1_RECEIVER_CUTIN_PREREGISTRATION.md`](../../../N1_RECEIVER_CUTIN_PREREGISTRATION.md)
+- [`../../../N1_RECEIVER_CUTIN_PREREGISTRATION.md`](../cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md)
 - [`../../../RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md) 的 N1-F12–F15；
 - [`../../../RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)。
 

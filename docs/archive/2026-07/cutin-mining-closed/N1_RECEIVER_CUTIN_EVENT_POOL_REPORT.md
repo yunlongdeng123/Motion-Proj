@@ -170,7 +170,7 @@ summary 中的 `receiver_interaction_pass_count=145` 是独立 receiver componen
    加入 `POSIX_FADV_DONTNEED`、直接 file-handle JSON parsing、批后 heap trim 与内存日志。
 
 成功 run 从新 ID 完整重跑 685 scenes；没有续跑、覆盖或把工程失败记为 research reject。完整证据与防重复
-规则见 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 的 `N1-F16`、`N1-F17`。
+规则见 [`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md) 的 `N1-F16`、`N1-F17`。
 
 ## 8. 第四次人工审核包
 

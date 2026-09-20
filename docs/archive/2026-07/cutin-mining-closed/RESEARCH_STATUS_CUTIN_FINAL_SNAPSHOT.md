@@ -13,9 +13,9 @@
 > **授权边界**：禁止进入 N2/N3、传感器 sweeps 下载/抽取、外部数据集下载、push、双卡或大型权重；任何未来
 > 复开都需要用户的新的研究授权、资源方案与新 run ID。
 
-正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物为准；为什么不能重复旧尝试见
-[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；V7.1 完整计划、收口快照和编辑备份见
-[`archive/2026-07/v7.1-h1-reject/`](archive/2026-07/v7.1-h1-reject/)。
+正式数值以 [`EXPERIMENTS.md`](../../../EXPERIMENTS.md) 和实际 run 产物为准；为什么不能重复旧尝试见
+[`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)；V7.1 完整计划、收口快照和编辑备份见
+[`archive/2026-07/v7.1-h1-reject/`](../v7.1-h1-reject)。
 
 ## 0. N1 cut-in final 收口（2026-07-26）
 
@@ -263,8 +263,8 @@ run contract 的工程闭环。它没有证明 occupancy certificate/trajectory 
 发生冲突时按以下顺序处理：
 
 1. 实际 run 产物、resolved config、原始指标、checkpoint 与 terminal marker；
-2. [`EXPERIMENTS.md`](EXPERIMENTS.md)；
+2. [`EXPERIMENTS.md`](../../../EXPERIMENTS.md)；
 3. 本文件；
-4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；
+4. [`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)；
 5. 当前预注册路线；
 6. `docs/archive/` 中的历史计划、报告和提示词。

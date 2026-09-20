@@ -15,13 +15,13 @@
 > - **当前决策**：`modify_method_then_scale`
 > - **当前优先任务**：`V7-EV-10`，随后为 `V7-H1-11`
 > - **首要硬件约束**：单张 RTX 4090 24 GB；正式单 run 峰值显存目标 `<22 GB`
-> - **前序计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md)
-> - **历史执行记录**：[`archive/2026-07/v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md`](archive/2026-07/v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md)
+> - **前序计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7_SUPERSEDED.md)
+> - **历史执行记录**：[`archive/2026-07/v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md`](../v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md)
 
-当前状态、执行授权和下一任务只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)。如果该文件尚未把“当前计划”
+当前状态、执行授权和下一任务只看 [`RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)。如果该文件尚未把“当前计划”
 切换到 V7.1，则本文件是候选计划，Auto Research Agent 不得仅凭本文件启动长实验、下载大数据或改写当前研究状态。
-数值事实以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和原始 run 产物为准；失败边界以
-[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 为准。
+数值事实以 [`EXPERIMENTS.md`](../../../EXPERIMENTS.md) 和原始 run 产物为准；失败边界以
+[`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md) 为准。
 
 ---
 
@@ -149,7 +149,7 @@ V7-EV-10 证据与 run contract
 ### 1.4 新增、执行时必须登记的风险
 
 以下是从现有代码直接暴露的 V7.1 风险。实现阶段若确认，应同步加入
-[`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)，不得只留在 run 日志：
+[`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)，不得只留在 run 日志：
 
 | 建议 ID | 风险 |
 |---|---|

@@ -5,7 +5,7 @@
 > **当前阶段**：`V7.1 / H1-11D_rejected / autoresearch_stopped`
 > **证据基线**：`9722fa2`（V7 feasibility 收口提交）
 > **当前决策**：`reject_occgs_method_claim`
-> **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md)
+> **当前计划**：[`OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1.md`](OCCGS_RESIM_AUTORESEARCH_PLAN_V7.1_EXECUTED.md)
 > **当前任务**：无 running task；11D 预注册 pilot 已同时拒绝 H1-CERT 与 H1-PROJ，按停止规则不进入
 > H2/H3/scale。保留 object-centric GS、WorldState、typed-label 和 run-contract 基础设施。
 > **执行授权**：用户于 2026-07-23 授权持续 Auto Research；按 gate 自动推进，直到 research reject、必须人工审核、
@@ -26,8 +26,8 @@
 > code `304407b94350ddfd17a9d4f29e43b7d1b789a326`；engineering gate `PASS`，H1-CERT/H1-PROJ
 > 均为 `REJECTED`，terminal marker 为唯一 `REJECTED`。
 
-正式数值以 [`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
-[`archive/2026-07/README.md`](archive/2026-07/README.md)。
+正式数值以 [`EXPERIMENTS.md`](../../../EXPERIMENTS.md) 和实际产物为准；历史路线与完整旧账本见
+[`archive/2026-07/README.md`](../README.md)。
 
 ## 1. 一句话结论
 
@@ -50,8 +50,8 @@ V7/V7.1 已证明 object-centric GS、统一 WorldState、同步 typed label 与
 | `U0-UTILITY-08` | partial | 3-scene 约束/渲染 signal proxy | naive V4 是极端无效负例；未跑 detector/event task；H3 未验证 |
 | `D1-DECIDE-09` | done | feasibility 轮次收口 | 决策为先改方法再扩规模 |
 
-阶段详情见 [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)；整理前长计划和逐 Gate 报告已移至
-[`archive/2026-07/v7-feasibility/`](archive/2026-07/v7-feasibility/)。
+阶段详情见 [`OCCGS_FINAL_REPORT.md`](../v7-feasibility/OCCGS_FINAL_REPORT_LATEST.md)；整理前长计划和逐 Gate 报告已移至
+[`archive/2026-07/v7-feasibility/`](../v7-feasibility)。
 
 ## 3. 核心假设状态
 
@@ -94,9 +94,9 @@ V7/V7.1 已证明 object-centric GS、统一 WorldState、同步 typed label 与
 发生冲突时按以下顺序处理：
 
 1. 实际 run 产物、配置、checkpoint 与原始指标；
-2. [`EXPERIMENTS.md`](EXPERIMENTS.md) 的 V7 登记；
+2. [`EXPERIMENTS.md`](../../../EXPERIMENTS.md) 的 V7 登记；
 3. 本文件的当前状态与执行边界；
-4. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md) 的风险和防重复条件；
+4. [`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md) 的风险和防重复条件；
 5. 当前 V7 计划中尚未执行的设计；
 6. `docs/archive/` 中的历史计划、报告和提示词。
 

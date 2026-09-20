@@ -38,9 +38,9 @@
 
 活跃层快照：
 
-- [`../../../N1_RECEIVER_CUTIN_EVENT_POOL_REPORT.md`](../../../N1_RECEIVER_CUTIN_EVENT_POOL_REPORT.md)；
-- [`../../../N1_RECEIVER_CUTIN_HUMAN_REVIEW_PROMPT.md`](../../../N1_RECEIVER_CUTIN_HUMAN_REVIEW_PROMPT.md)；
-- [`../../../N1_RECEIVER_CUTIN_PREREGISTRATION.md`](../../../N1_RECEIVER_CUTIN_PREREGISTRATION.md)。
+- [`../../../N1_RECEIVER_CUTIN_EVENT_POOL_REPORT.md`](../cutin-mining-closed/N1_RECEIVER_CUTIN_EVENT_POOL_REPORT.md)；
+- [`../../../N1_RECEIVER_CUTIN_HUMAN_REVIEW_PROMPT.md`](../cutin-mining-closed/N1_RECEIVER_CUTIN_HUMAN_REVIEW_PROMPT.md)；
+- [`../../../N1_RECEIVER_CUTIN_PREREGISTRATION.md`](../cutin-mining-closed/N1_RECEIVER_CUTIN_PREREGISTRATION.md)。
 
 这些链接在交付时指向逐字节同版材料；后续若文档演化，以 run 内 artifact 和 hash 为最终事实。
 

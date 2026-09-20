@@ -2,9 +2,9 @@
 
 更新：2026-09-11。按原研究计划完成三独立候选最小证据与强控制，首轮均未晋级。WEX=FAIL_NOVELTY；RIF=FAIL_SCIENCE；DCS=FAIL_SCIENCE（合成正例保留，新颖性证据不足）。自动筛选值已填写，人工 verdict 为空。不是GPU或内存阻断。
 
-- [最终报告与架构图](WORLDSIM_V7_4_RESULTS.md)、[完整质量/成本表](autoresearch/worldsim_v74/final/REAL_RESULTS.md)、[机器可读判定](autoresearch/worldsim_v74/final/decision.json)
-- [详细失败](WORLDSIM_V7_4_FAILURES.md)、[总失败账](RESEARCH_FAILURES.md)、[实验账](EXPERIMENTS.md)
-- [原计划](WorldSim_V74_Method_Tournament_Plan.md)、[实现/数学边界](WORLDSIM_V7_4_METHODS.md)、[运行期间状态历史](archive/2026-09/v74_execution/RESEARCH_STATUS_MILESTONES.md)
+- [最终报告与架构图](../v74-0920/WORLDSIM_V7_4_RESULTS.md)、[完整质量/成本表](../../../autoresearch/worldsim_v74/final/REAL_RESULTS.md)、[机器可读判定](../../../autoresearch/worldsim_v74/final/decision.json)
+- [详细失败](../v74-0920/WORLDSIM_V7_4_FAILURES.md)、[总失败账](../../../RESEARCH_FAILURES.md)、[实验账](../../../EXPERIMENTS.md)
+- [原计划](../v74-0920/WorldSim_V74_Method_Tournament_Plan.md)、[实现/数学边界](../v74-0920/WORLDSIM_V7_4_METHODS.md)、[运行期间状态历史](RESEARCH_STATUS_MILESTONES.md)
 
 | 工作 | 最终状态 | 事实与范围 |
 |---|---|---|

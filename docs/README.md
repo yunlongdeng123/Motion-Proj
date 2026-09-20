@@ -1,18 +1,25 @@
-# WorldSim V7.4：已收尾
+# 文档导航
 
-最终精简：GitHub 实际下载 ZIP 约 **22.2 MB**；同口径本地打包105.25→21.45 MB，减少约80%，跟踪文件展开约53.6 MB（原375.9 MB）；两批共307个资产、原文件322.49 MB已归档。全部代码/配置/Markdown、失败查询索引和V7.4报告图保留。旧下载包不会自动变小，需重新下载当前分支；完整 Git 历史保持，未强推改写。
+| 内容 | 唯一入口 | 维护方式 |
+|---|---|---|
+| 当前阶段、阻塞与执行范围 | [RESEARCH_STATUS](RESEARCH_STATUS.md) | 替换当前快照 |
+| task/run 与结果位置 | [EXPERIMENTS](EXPERIMENTS.md) | 每项实验一条索引 |
+| 跨版本失败和证据边界 | [RESEARCH_FAILURES](RESEARCH_FAILURES.md) | ID 卡与生成目录 |
+| 协作规则 | [AGENTS](../AGENTS.md) | 规则变化时更新 |
+| 研究规划原则 | [Scaling law](../auto-research_scaling_law.md) | 遵循用户修订 |
+| V7.4 报告、计划和旧状态 | [V7.4 归档](archive/2026-09/v74-0920/README.md) | 冻结历史 |
+| 更早版本和资产恢复 | [归档总目录](archive/README.md) | 按需恢复 |
+| 环境与迁移 | [环境](ENVIRONMENT.md)、[迁移](MACHINE_MIGRATION.md)、[第三方](THIRD_PARTY.md) | 按实际环境更新 |
 
-当前状态：**V7.4 已结束，未形成经过验证的论文主方法。** H1 NO_SURVIVOR；H2 当前 ordered 实现关闭，整体 witness-native 假说未被全面证伪。后续遵循 failure discovery 优先原则；本轮不自动续跑。
+```mermaid
+flowchart LR
+    R[README 导航] --> S[RESEARCH_STATUS 当前状态]
+    R --> E[EXPERIMENTS 实验索引]
+    R --> F[RESEARCH_FAILURES 失败索引]
+    E --> A[归档报告与 run 证据]
+    F --> C[版本 / ID / 失败卡]
+    C --> A
+    G[AGENTS 协作规则] -.维护约定.-> R
+```
 
-- [版本收尾与研究教训](WORLDSIM_V7_4_CLOSEOUT.md)
-- [P1.6 病因诊断、普通控制与架构](WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)
-- [P1.5 失败审计、架构与证据](WORLDSIM_V7_4_H2_P15_FORENSICS_REPORT.md)
-- [GPU执行报告与架构](WORLDSIM_V7_4_H2_GPU_P1_REPORT.md)
-- [当前研究状态](RESEARCH_STATUS.md)
-- [失败资产渐进读取](RESEARCH_FAILURES.md)
-- [原修订计划](WorldSim_V74_Second_Half_Generative_Surface_Plan.md)
-- [CPU数据与文档交接](WORLDSIM_V7_4_H2_CPU_HANDOFF.md)
-
-H1 NO_SURVIVOR与V73均为冻结历史。
-
-[大资产归档与轻量获取方法](archives/worldsim_v74_closeout_20260913/README.md)：当前分支保留代码、核心文档及必要证据；旧批量资产按需恢复。
+同一段进展不再复制到多个文件。历史失败分片保留原文和行号；旧引用路径通过 [迁移表](archive/2026-09/v74-0920/PATH_MAP.json) 或既有归档入口定位。

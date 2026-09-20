@@ -13,9 +13,9 @@
 > **当前决策**：`modify_method_then_scale`
 > **硬件目标**：先在单张 RTX 4090 24 GB 上验证；不默认双卡
 > **当前任务**：`V7-EV-10`，随后为 `V7-H1-11`
-> **历史执行计划**：[`archive/2026-07/v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md`](archive/2026-07/v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md)
+> **历史执行计划**：[`archive/2026-07/v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md`](../v7-feasibility/OCCGS_RESIM_AUTORESEARCH_PLAN_V7_EXECUTED.md)
 
-当前状态与执行授权只看 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)。本文件定义后续研究问题、实验顺序和门禁，
+当前状态与执行授权只看 [`RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)。本文件定义后续研究问题、实验顺序和门禁，
 不把 feasibility 产物预先写成方法结论。
 
 ## 1. Executive decision
@@ -68,8 +68,8 @@ accept rate 代理收益，而运行 matched、scene-disjoint 的真实下游任
 | L0 | Telea + hard composition；12 帧 outside-mask L1=0 | geometry-guided completion 提升 |
 | U0 | accepted edit 有 RGB signal，极端 V4 被拒绝 | 下游数据收益 |
 
-完整 feasibility 审计见 [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md)，实验数值见
-[`EXPERIMENTS.md`](EXPERIMENTS.md)。
+完整 feasibility 审计见 [`OCCGS_FINAL_REPORT.md`](../v7-feasibility/OCCGS_FINAL_REPORT_LATEST.md)，实验数值见
+[`EXPERIMENTS.md`](../../../EXPERIMENTS.md)。
 
 ## 4. `V7-EV-10` — 证据与运行契约修复
 
@@ -256,9 +256,9 @@ checkpoint（如适用）
 
 状态只使用 `pending/running/blocked/done/rejected`。每个 gate 后依次更新：
 
-1. [`EXPERIMENTS.md`](EXPERIMENTS.md)；
-2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)；
-3. 若出现新负结论或重开边界，更新 [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；
+1. [`EXPERIMENTS.md`](../../../EXPERIMENTS.md)；
+2. [`RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)；
+3. 若出现新负结论或重开边界，更新 [`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)；
 4. 研究 commit 正文写明 task ID、split、seed、fingerprint、证据路径与验证命令。
 
 人工 verdict 只能由用户或其指定评审者填写。机器规则、agent 目视检查和 top-k screen 均不得写成 human pass。
@@ -266,7 +266,7 @@ checkpoint（如适用）
 ## 11. 与历史路线的边界
 
 - 不重开 `RF-01`–`RF-18`；完整旧账本见
-  [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
+  [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](../v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
 - 不回到 2D diffusion latent 作为唯一世界状态；
 - 不用 future actor boxes 定义“自由生成”物理正确性；
 - 不把 layout adherence、像素差、PSNR 或 machine legality 单独写成下游收益；

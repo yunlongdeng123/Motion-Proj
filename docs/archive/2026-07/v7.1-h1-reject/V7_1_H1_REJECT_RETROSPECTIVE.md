@@ -74,4 +74,4 @@ recall，都会使用 11D 结果反向改变冻结设计。它们不能提供独
 5. 只有上述通过后才复用 GS renderer 和执行下游效用实验。
 
 具体设计见活跃文档
-[`../../../POST_OCCGS_RESEARCH_DIRECTIONS.md`](../../../POST_OCCGS_RESEARCH_DIRECTIONS.md)。
+[`../../../POST_OCCGS_RESEARCH_DIRECTIONS.md`](../cutin-mining-closed/POST_OCCGS_RESEARCH_DIRECTIONS.md)。

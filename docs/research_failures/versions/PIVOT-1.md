@@ -1,12 +1,14 @@
 # PIVOT / 第 1 页
 
-历史目录；当前裁决以版本最终报告及 [研究边界](../BOUNDARIES.md) 为准。
+[全部版本](../VERSIONS.md) · [全部 ID](../IDS.md) · [研究边界](../BOUNDARIES.md)
+
+此处是阶段索引，不维护当前执行状态。独立卡优先，历史保持原顺序。
 
 | 记录 | 原标题 | 定义 ID |
 |---|---|---|
-| [RF0796](../history/part-055.md)（行7） | 1. V1–V6 版本总览与 V1/V2 汇总 | 阶段记录 |
-| [RF0797](../history/part-055.md)（行35） | 1.1 V1 汇总条目 | 阶段记录 |
-| [RF0849](../history/part-064.md)（行74） | V2 启动时必须先读的结论（2026-08-02） | 阶段记录 |
+| [RF0796](../history/part-055.md)（行7） | 1. V1–V6 版本总览与 V1/V2 汇总 | 阶段记录 / 引用 |
+| [RF0797](../history/part-055.md)（行35） | 1.1 V1 汇总条目 | 阶段记录 / 引用 |
+| [RF0849](../history/part-064.md)（行74） | V2 启动时必须先读的结论（2026-08-02） | 阶段记录 / 引用 |
 | [RF0915](../history/part-070.md)（行104） | PIVOT-F01：nuScenes cut-in 没有可验证的召回率分母 | PIVOT-F01 |
 | [RF0916](../history/part-070.md)（行129） | PIVOT-F02：贡献漂移——工程系统吞噬了重建与编辑研究 | PIVOT-F02 |
 | [RF0917](../history/part-070.md)（行146） | PIVOT-F03：未完成 exact reproduction 前禁止集成式“改进” | PIVOT-F03 |
@@ -41,4 +43,4 @@
 | [RF0946](../history/part-073.md)（行15） | PIVOT-F31：SAM2 `reverse=True` 默认从最早 prompt 开始，可能合法地产生零帧 | PIVOT-F31 |
 | [RF0947](../history/part-073.md)（行22） | PIVOT-F32：mask QC 必须在同一像素坐标系比较 | PIVOT-F32 |
 | [RF0948](../history/part-073.md)（行29） | PIVOT-F33：大规模 Gaussian 重复索引累加不得使用逐元素 `np.add.at` | PIVOT-F33 |
-| [RF0983](../history/part-075.md)（行77） | 7. 历史新路线启动前附加检查 | 阶段记录 |
+| [RF0983](../history/part-075.md)（行77） | 7. 历史新路线启动前附加检查 | 阶段记录 / 引用 |

@@ -15,8 +15,7 @@ SplatAD 30001步完成；194 LiDAR／678相机留出、64策略/PDM与2次反馈
 
 '''
 paths=[]
-for rel in ['AGENTS.md','docs/RESEARCH_STATUS.md','docs/EXPERIMENTS.md','docs/RESEARCH_FAILURES.md']:
-    p=S/rel;p.write_text(note+p.read_text(encoding='utf-8'),encoding='utf-8',newline='\n');paths.append(rel)
+# 历史打包器不再发布全局状态；结果保存在本轮报告/证据中。
 rel='docs/research_failures/entries/V74-H2-F19.md';p=S/rel;p.parent.mkdir(parents=True,exist_ok=True)
 p.write_text('''# V74-H2-F19：稳定仿真感知退化也不能自动归为几何，强度恢复提供替代解释
 

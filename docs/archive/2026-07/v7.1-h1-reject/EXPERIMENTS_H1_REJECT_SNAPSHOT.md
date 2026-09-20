@@ -1,9 +1,9 @@
 # Motion-Proj V7 / V7.1 实验事实源
 
 > **范围**：本文件登记 OccGS-Resim V7 retrospective evidence 与 V7.1 正式实验。V1–V6 及整理前全量账本已归档至
-> [`archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md`](archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md)。
+> [`archive/2026-07/v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md`](../v7-feasibility/EXPERIMENTS_V1_V7_SNAPSHOT.md)。
 > **证据基线**：`9722fa2`。
-> **当前状态**：见 [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)；本文件不授权执行。
+> **当前状态**：见 [`RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)；本文件不授权执行。
 
 ## 1. 证据完整性说明
 
@@ -17,9 +17,9 @@ V7 feasibility 产物可定位且核心 JSON/ckpt 存在，但 `runs/occgs_resim
 
 | Task / artifact | 状态 | 配置与结果 | 证据 | 结论边界 |
 |---|---|---|---|---|
-| `E0-ENV-01` | completed / retrospective | DriveStudio env；Python 3.9.25；torch 2.1.2+cu118；gsplat 1.3.0；CUDA extension smoke 通过 | [`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md) | 环境可用，不是方法结果 |
-| `G0-THIRDPARTY-00` | completed / retrospective | DriveStudio `e59bda4...` MIT；SplatAD/Occ3D 只审计；本机完整前向 sweep 限于 mini 10 scenes | [`archive/2026-07/v7-feasibility/OCCGS_THIRD_PARTY_AUDIT.md`](archive/2026-07/v7-feasibility/OCCGS_THIRD_PARTY_AUDIT.md) | 约束后续数据规模 |
-| `D0-DATA-02` | completed / retrospective | S0=003/scene-0655，S1=005/scene-0796，S2=004/scene-0757；3 前向相机；8 秒训练窗；10 Hz 处理；数据完整性通过 | [`archive/2026-07/v7-feasibility/OCCGS_DATA_PREPARATION.md`](archive/2026-07/v7-feasibility/OCCGS_DATA_PREPARATION.md)；`data/occgs/scene_specs/d0_frozen_picks_v2.json` | 三场景 feasibility，不支持规模结论 |
+| `E0-ENV-01` | completed / retrospective | DriveStudio env；Python 3.9.25；torch 2.1.2+cu118；gsplat 1.3.0；CUDA extension smoke 通过 | [`archive/2026-07/v7-feasibility/OCCGS_E0_ENV_MANIFEST.md`](../v7-feasibility/OCCGS_E0_ENV_MANIFEST.md) | 环境可用，不是方法结果 |
+| `G0-THIRDPARTY-00` | completed / retrospective | DriveStudio `e59bda4...` MIT；SplatAD/Occ3D 只审计；本机完整前向 sweep 限于 mini 10 scenes | [`archive/2026-07/v7-feasibility/OCCGS_THIRD_PARTY_AUDIT.md`](../v7-feasibility/OCCGS_THIRD_PARTY_AUDIT.md) | 约束后续数据规模 |
+| `D0-DATA-02` | completed / retrospective | S0=003/scene-0655，S1=005/scene-0796，S2=004/scene-0757；3 前向相机；8 秒训练窗；10 Hz 处理；数据完整性通过 | [`archive/2026-07/v7-feasibility/OCCGS_DATA_PREPARATION.md`](../v7-feasibility/OCCGS_DATA_PREPARATION.md)；`data/occgs/scene_specs/d0_frozen_picks_v2.json` | 三场景 feasibility，不支持规模结论 |
 
 ## 3. B0 reconstruction
 
@@ -72,7 +72,7 @@ feasibility，不登记 H2 pass。
 
 | Task | 状态 | 决策 | 证据 |
 |---|---|---|---|
-| `D1-DECIDE-09` | done | `modify_method_then_scale` | [`OCCGS_FINAL_REPORT.md`](OCCGS_FINAL_REPORT.md) |
+| `D1-DECIDE-09` | done | `modify_method_then_scale` | [`OCCGS_FINAL_REPORT.md`](../v7-feasibility/OCCGS_FINAL_REPORT_LATEST.md) |
 
 含义是保留路线、优先执行 `V7-EV-10 → V7-H1-11`；不表示 H1/H2/H3 已通过，也不解锁扩场景或双卡。
 

@@ -6,8 +6,8 @@
 - 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
 - 分支：`research/worldsim-v4-evidelta`
 - V3.3 收口提交：`e6663e1`，已确认在 `main` 历史中
-- 事实配置：[`../configs/worldsim_v4/p0_scope_v1.yaml`](../configs/worldsim_v4/p0_scope_v1.yaml)
-- 计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
+- 事实配置：[`../configs/worldsim_v4/p0_scope_v1.yaml`](../../../../../configs/worldsim_v4/p0_scope_v1.yaml)
+- 计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](../../../2026-09/pre-v74/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - canonical：`20260811T080636Z__p0-scope-formal-s0-r2`
 - config/summary/manifest/status SHA-256：
   `248bde621343597196c1a608ce8674a0c4a1f974d38abc70710c7783d8ecaaa8` /

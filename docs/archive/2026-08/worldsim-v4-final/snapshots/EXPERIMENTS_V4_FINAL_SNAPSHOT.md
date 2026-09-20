@@ -102,12 +102,12 @@
 - 更新时间：2026-08-12
 - 当前路线：WorldSim V4 / EviDelta-GS
 - 当前执行授权：`WS-V4-B0-MATCHED-BASELINES-01` 6-development-scene evaluator/baseline；不得读取 test quality
-- 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
-- V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
-- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
-- V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- 当前方案：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](../../../2026-09/pre-v74/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
+- V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](../../worldsim-v3.2/README.md)
+- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](../../worldsim-v3.1/README.md)
+- V2 历史方案：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](../../../2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 - V1 最终台账：
-  [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
+  [`archive/2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md`](../../../2026-07/dynamic-reconstruction-v1/EXPERIMENTS.md)
 
 本文件保留 V2 完整执行证据，并从 2026-08-05 起登记 V3。V2 M0–M4 已完成；M5 部分执行后停止扩张，
 保持 `pending` 历史终态；M6–M8 不再授权。A0、A1 与 A2 已完成；A2 fixed/matched 正式裁决为
@@ -1378,7 +1378,7 @@ Matched-RigidNodes-budget：
 - V1 当前态、实验台账、环境与报告已移入命名归档；
 - V2 计划已按实际 checkpoint、DriveStudio 缺口和用户镜像偏好校准；
 - 可再生中间产物的精确路径、字节数与恢复方式见
-  [`archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md`](archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md)；
+  [`archive/2026-08/v2-preflight/CLEANUP_MANIFEST.md`](../../v2-preflight/CLEANUP_MANIFEST.md)；
 - AD-GS 六场景最终 60k checkpoint/render/metrics、processed 输入、raw subset、DGGT 完整预下载候选均受保护。
 
 ## 5. V1 冻结输入
@@ -1590,4 +1590,4 @@ F0 canonical audit 已 `done`，inference=`not_run_prerequisites_failed`，F1=`c
 Pareto、负结果/适用边界、复现 manifest 和最小离线可视化索引均已生成。V3.1 当前为 `none_plan_complete`。
 P4、A3 formal/R2–R4、D3/D4 与新训练/推理仍未授权，除非未来以独立任务重新预注册。
 V3.1 计划和本文件的 R0 收口快照见
-[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；归档内容不构成新的执行入口。
+[`archive/2026-08/worldsim-v3.1/`](../../worldsim-v3.1/README.md)；归档内容不构成新的执行入口。

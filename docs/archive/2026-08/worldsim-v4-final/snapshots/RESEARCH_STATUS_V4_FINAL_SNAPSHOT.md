@@ -75,7 +75,7 @@
 - 当前任务：`WS-V4-B0-MATCHED-BASELINES-01`
 - 路线状态：`active / d0_done / d1_blocked_external / b0_streetgs_3of6_v33_adgs_1of6`
 - 当前门禁：继续补齐 V3.3/StreetGS/AD-GS 6-development-scene strict matched baseline；StreetGS 旧 stride=10 六场景只作 provenance，D1 因公共 KITTI 缺失保持 blocked，M1 与 test quality 尚未授权
-- 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
+- 当前计划：[`WORLDSIM_V4_EVIDELTA_GS_PLAN.md`](../../../2026-09/pre-v74/WORLDSIM_V4_EVIDELTA_GS_PLAN.md)
 - V4 分支：`research/worldsim-v4-evidelta`
 - V4 起始 HEAD：`main@21084309480895f5541196a06191a5dffb4e30c1`
 - V4 P0：[`WS_V4_P0_SCOPE.md`](WS_V4_P0_SCOPE.md)
@@ -131,16 +131,16 @@
 - B0 统一评测：PSNR/SSIM/LPIPS-Alex + global/static/actor/boundary/edit_roi；scene bootstrap/paired tests 与
   engineering timing/yield/recovery 派生已实现；baseline/AD-GS/region/evaluator 联合定向单测=`50 passed`
 - V3.3 终态：`v33_supported`，全部 canonical 资产只读
-- V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
-- P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](WS_V33_P0_SOTA_AUDIT.md)
-- S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](WS_V33_S1_OBJECT_AWARE_GS.md)
-- S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](WS_V33_S2_ROADPATCH_INPAINT.md)
-- S3 Actor 视图选择：[`WS_V33_S3_ASSET_VIEW_SELECTION.md`](WS_V33_S3_ASSET_VIEW_SELECTION.md)
-- S4 Spatial Delta：[`WS_V33_S4_SPATIAL_DELTA.md`](WS_V33_S4_SPATIAL_DELTA.md)
-- S5 语义门控渲染：[`WS_V33_S5_SEMANTIC_RENDER.md`](WS_V33_S5_SEMANTIC_RENDER.md)
-- R0 完整集成：[`WS_V33_R0_INTEGRATION.md`](WS_V33_R0_INTEGRATION.md)
-- V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)
-- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)
+- V3.3 历史计划：[`DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md`](../../../2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_WORLDSIM_MODEL_PLAN_V3_3.md)
+- P0 审计：[`WS_V33_P0_SOTA_AUDIT.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_P0_SOTA_AUDIT.md)
+- S1 对象场：[`WS_V33_S1_OBJECT_AWARE_GS.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_S1_OBJECT_AWARE_GS.md)
+- S2 道路修复：[`WS_V33_S2_ROADPATCH_INPAINT.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_S2_ROADPATCH_INPAINT.md)
+- S3 Actor 视图选择：[`WS_V33_S3_ASSET_VIEW_SELECTION.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_S3_ASSET_VIEW_SELECTION.md)
+- S4 Spatial Delta：[`WS_V33_S4_SPATIAL_DELTA.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_S4_SPATIAL_DELTA.md)
+- S5 语义门控渲染：[`WS_V33_S5_SEMANTIC_RENDER.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_S5_SEMANTIC_RENDER.md)
+- R0 完整集成：[`WS_V33_R0_INTEGRATION.md`](../../../2026-09/root-docs-20260906/v2-v3/WS_V33_R0_INTEGRATION.md)
+- V3.2 终局归档：[`archive/2026-08/worldsim-v3.2/`](../../worldsim-v3.2/README.md)
+- V3.1 终局归档：[`archive/2026-08/worldsim-v3.1/`](../../worldsim-v3.1/README.md)
 - V3 启动 Git 基线：`research/dynamic-editing-v2@e691c1f`
 - V3.3 历史分支：`research/worldsim-v3.3-object-maintenance`
 - V3.3 P0 canonical run：`20260810T171744Z__p0-source-audit-s0-r2`
@@ -1023,4 +1023,4 @@ scene-0230 四个配对 30k 训练均已完成；共同 initialization provenanc
 `WS-V3-R0-INTEGRATION-01` 已 `done`，V3.1 当前为 `none_plan_complete`。F1、P4、D3/D4 与 A3 formal/R2–R4
 保持未解锁；除非未来以新任务、新协议和新授权启动，否则不得恢复为当前动作，也不得改写既有 terminal。
 V3.1 的计划与 R0 收口快照已归档至
-[`archive/2026-08/worldsim-v3.1/`](archive/2026-08/worldsim-v3.1/README.md)；当前没有新的研究计划或实验授权。
+[`archive/2026-08/worldsim-v3.1/`](../../worldsim-v3.1/README.md)；当前没有新的研究计划或实验授权。

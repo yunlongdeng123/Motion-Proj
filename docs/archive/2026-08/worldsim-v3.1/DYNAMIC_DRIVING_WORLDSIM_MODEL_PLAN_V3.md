@@ -7,7 +7,7 @@
 - **V3 启动基线**：`research/dynamic-editing-v2@e691c1f`
 - **当前任务**：`WS-V3-A1-CALIBRATION-01`（`running`）
 - **唯一当前计划**：本文件
-- **历史前序**：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
+- **历史前序**：[`DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md`](../../2026-09/root-docs-20260906/v2-v3/DYNAMIC_DRIVING_EDITING_DIAGNOSTIC_PLAN_V2.md)
 
 ## 0. 权威边界
 
@@ -398,9 +398,9 @@ registry；整数/低比特量化和 LOD 是在该最低集之上的独立实验
 清空上下文或换实例后，依次读取：
 
 1. `AGENTS.md`；
-2. [`RESEARCH_STATUS.md`](RESEARCH_STATUS.md)；
-3. [`RESEARCH_FAILURES.md`](RESEARCH_FAILURES.md)；
-4. [`EXPERIMENTS.md`](EXPERIMENTS.md)；
+2. [`RESEARCH_STATUS.md`](../../../RESEARCH_STATUS.md)；
+3. [`RESEARCH_FAILURES.md`](../../../RESEARCH_FAILURES.md)；
+4. [`EXPERIMENTS.md`](../../../EXPERIMENTS.md)；
 5. 本计划；
 6. 当前 task 的 formal run terminal、Git status 和资源状态。
 

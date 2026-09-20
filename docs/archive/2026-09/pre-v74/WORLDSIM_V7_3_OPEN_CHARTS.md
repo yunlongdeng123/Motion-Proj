@@ -109,9 +109,9 @@ WS-V73-Q-V2-01/20260909T054000Z__open-charts-lidar-full-track-beam-s7304-r3，�
 
 相对自身initial，early/free下降，但miss上升、recall下降，四项区间均不跨0；hit与单向distance跨0。训练采样coverage均值.421556→.298424m，hard-free .239535→.113505m，beam目标.242114→.114673m，Query梯度中位数10.760300→8.477972；随机过程量不作为配对泛化证据。完整414 FIT对象最终hit/early/miss/free/distance/recall=.370788/.243993/.158147/.168581/.120806/.825378，371可训练，FIT全轨迹已用作监督，不能当独立测试。
 
-[日志配对结果（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-012)
+[日志配对结果（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-012)
 
-[训练过程（旧图已归档）](../../../archives/worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-013)
+[训练过程（旧图已归档）](../worldsim_v74_closeout_20260913/LEGACY_MEDIA.md#legacy-013)
 
 主汇总仅执行一次，配对图长标签遮挡后仅读保存分析重绘短标签，不重算推理/区间。完整各日志、moving与分母见open_charts_lidar_r3_analysis.json，资源/过程见summary/final_manifest/training；原run和归档failure_delta同步。V73-F02补充证据仍active，F03不因coverage有梯度而解除；无新ID，下一V73-F10。
 

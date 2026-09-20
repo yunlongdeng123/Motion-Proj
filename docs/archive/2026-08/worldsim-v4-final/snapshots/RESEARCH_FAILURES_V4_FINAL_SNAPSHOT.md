@@ -49,8 +49,8 @@
 > **最后更新**：2026-08-12
 > **当前范围**：V4 当前门禁、V3.3/V3.2/V3.1 WorldSim 终局约束，以及 V1–V7.1、N1/cut-in、V2 的完整防重复结论。
 > **历史账本**：完整 `RF-01`–`RF-18` 原文见
-> [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
-> **事实源**：[`EXPERIMENTS.md`](EXPERIMENTS.md) 和实际 run 产物。
+> [`archive/2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md`](../../../2026-07/v7-feasibility/RESEARCH_FAILURES_RF01_RF18.md)。
+> **事实源**：[`EXPERIMENTS.md`](../../../../EXPERIMENTS.md) 和实际 run 产物。
 
 本文件保留仍约束后续路线的历史结论，并把 H1-11D 的失败严格分为“观察到的事实、合理推断、尚未知、
 复开条件”。归档不会使旧失败失效；任何新计划复用旧机制时仍须满足原 RF 的重开条件。
@@ -334,7 +334,7 @@
 ## V3.2 终局处置与复开门禁（2026-08-11）
 
 V3.2 已以 `WS-V32-R0-INTEGRATION-01=done`、整体 `none_plan_complete` 收口。归档位于
-[`archive/2026-08/worldsim-v3.2/`](archive/2026-08/worldsim-v3.2/README.md)。下面的 `V3-F34`–`V3-F46`
+[`archive/2026-08/worldsim-v3.2/`](../../worldsim-v3.2/README.md)。下面的 `V3-F34`–`V3-F46`
 继续约束任何后续路线，但不构成继续执行 V3.2 的任务清单。
 
 | 分支 | 终局处置 | 禁止的延续方式 | 合法复开条件 |

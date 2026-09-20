@@ -89,7 +89,7 @@ WS-SIM-FRESH-NATIVE-01 / 20260915-r1：有限新日志窗口仅scene-0002达元�
 BridgeSim代码核查为PDM-lite及二维runtime ray LiDAR，另有独立可选3D PointCloudLidar；尚未运行。准备官方原生nuScenes SparseDrive-S stage2，两预热＋八起点已冻结、权重/环境准备中，尚未前向；不把接口准备计为科学结果。累计818策略/PDM、222 CenterPoint、72几何前向、18HUGSIM＋4SplatAD反馈闭环。goal active；人工verdict=null；failure_ledger_delta=V74-H2-F22。见docs/WORLDSIM_SIMULATION_FRESH_BASELINE.md。以下为历史。
 
 '''
-for p in [S/'AGENTS.md',D/'RESEARCH_STATUS.md',D/'EXPERIMENTS.md',D/'RESEARCH_FAILURES.md']:p.write_text(summary+p.read_text(encoding='utf-8'),encoding='utf-8')
+# 历史打包器不再发布全局状态；结果保存在本轮报告/证据中。
 failure=D/'research_failures/entries/V74-H2-F22.md';failure.parent.mkdir(parents=True,exist_ok=True);failure.write_text('''# V74-H2-F22：新来源的真实驾驶基线未达到几何归因条件
 
 - task/run：WS-SIM-FRESH-NATIVE-01 / 20260915-r1。

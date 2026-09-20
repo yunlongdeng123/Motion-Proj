@@ -1,8 +1,8 @@
-> 2026-09-13：本目录的大表/生成资产已按清单移出 Git；需要逐例数据时先查[完整归档与恢复方法](../../../archives/worldsim_v74_closeout_20260913/README.md)。下方历史路径保留作定位，当前目录未必包含全部旧文件。
+> 2026-09-13：本目录的大表/生成资产已按清单移出 Git；需要逐例数据时先查[完整归档与恢复方法](../../../archive/2026-09/worldsim_v74_closeout_20260913/README.md)。下方历史路径保留作定位，当前目录未必包含全部旧文件。
 
 # P1.6 结果：按问题渐进读取
 
-先读[报告](../../../WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)或[F10](../../../research_failures/entries/V74-H2-F10.md)，不默认读取全部JSON。
+先读[报告](../../../archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_P16_DIAGNOSTIC_REPORT.md)或[F10](../../../research_failures/entries/V74-H2-F10.md)，不默认读取全部JSON。
 
 | 问题 | 读取资产 / 筛选键 |
 |---|---|

@@ -11,8 +11,7 @@ WS-SIM-FF-COHORT-PERCEPTION-01 / 20260915-r1：82新增检测＋20复用完成10
 累计222 CenterPoint；72几何前向、802策略/PDM、18 HUGSIM＋4 SplatAD闭环不变。六日志全部已曝光，每日志一时刻，当前扫描＋真实强度/九帧历史的额外信息控制，非完整传感器或独立确认。有限筛查收口；整体goal active、人工verdict=null；failure_ledger_delta=V74-H2-F21。下一次有意义推进须补独立来源与实际规划接口，不重跑这批或把低杠杆框误差继续细调成Hero。见docs/WORLDSIM_SIMULATION_SIX_LOG_PERCEPTION.md。以下为历史。
 
 '''
-for rel in ['AGENTS.md','docs/RESEARCH_STATUS.md','docs/EXPERIMENTS.md','docs/RESEARCH_FAILURES.md']:
-    p=S/rel;p.write_text(note+p.read_text(encoding='utf-8'),encoding='utf-8',newline='\n');paths.append(rel)
+# 历史打包器不再发布全局状态；结果保存在本轮报告/证据中。
 rel='docs/research_failures/entries/V74-H2-F21.md'
 (S/rel).write_text('''# V74-H2-F21：跨日志框精度下降不等于前车严重丢失或驾驶仿真危害
 
