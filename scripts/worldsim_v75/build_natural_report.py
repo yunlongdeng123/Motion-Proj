@@ -48,7 +48,7 @@ def replication_section(evidence, out):
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--evidence',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--replication',type=Path);parser.add_argument('--trace',type=Path)
+    parser.add_argument('--replication',type=Path);parser.add_argument('--trace',type=Path);parser.add_argument('--observation',type=Path)
     a=parser.parse_args();e=a.evidence;out=a.output;out.mkdir(parents=True,exist_ok=True)
     sources=json.loads((e/'readout_queue_result.json').read_text(encoding='utf-8'))
     rollout=json.loads((e/'review_result.json').read_text(encoding='utf-8'))
@@ -107,6 +107,11 @@ def main():
         shutil.copy2(a.trace/'trace_data.json',out/'trace_data.json')
         body=body.replace('<section><h2>先找可靠目标，再看模型</h2>',
             '<section><h2>把初始位置误差放回场景</h2><img src="input-state-condition.svg"><p>黄色框是真实初帧中的同一白车。BEV按实际坐标与共享尺寸绘制：DVGT读出沿车前向近2.963m，完整三维中心差为2.965m。右侧为实际送入生成器的条件裁剪，含填充cuboid与地图；固定显示1秒，量化仍保留全部五个时刻。这是actor位置误差图，不是首回波或假表面证据。</p><a href="trace_data.json">图中坐标与来源</a></section><section><h2>先找可靠目标，再看模型</h2>')
+    if a.observation:
+        from build_observation_report import observation_section
+        section=observation_section(a.observation,out)
+        body=body.replace('<section><h2>固定 seed 43 复核：改善重复，普通对照同样有效</h2>',section+'<section><h2>固定 seed 43 复核：改善重复，普通对照同样有效</h2>')
+        body=body.replace('改善可重复，几何准确度与生成质量仍不单调；尚无跨场景或闭环确认。','检测指标改善可重复；新增点轨迹与投影检查未支持额外放大，完整两秒的独立状态测量不成立。本例保留为条件响应示例，尚无跨场景或闭环确认。')
     for svg in out.glob('*.svg'):
         normalized='\n'.join(line.rstrip() for line in svg.read_text(encoding='utf-8').splitlines())+'\n'
         svg.write_bytes(normalized.encode('utf-8'))

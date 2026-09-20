@@ -13,6 +13,8 @@
 | WS-V75-NATURAL-01；NATURAL-SOURCES-01 / 20260920-r1 | 旧目标参考排除；八日志冻结、四个清楚可见目标的DVGT距离读出与普通控制 | [自然状态读出](v75/NATURAL_STATE.md) |
 | WS-V75-NATURAL-ROLLOUT-01 / 20260920-r1 | 一个自然残余发现候选的五组生成、真实视频检测与额外观测修复 | [生成比较](v75/NATURAL_STATE.md)、[证据](autoresearch/worldsim_v75/natural_state/) |
 | WS-V75-NATURAL-ROLLOUT-01 / 20260920-seed43 | 同一自然候选、固定输入的四组随机性复核；三项对照与实际状态链条图 | [有限复核](v75/NATURAL_STATE.md)、[逐时刻结果](autoresearch/worldsim_v75/natural_state/replication/replication_result.json) |
+| WS-V75-OBSERVATION-01 / 20260920-r1 | 已有视频的固定点观测、缺失支持与普通投影控制 | [观测边界](v75/NATURAL_STATE.md)、[结果](autoresearch/worldsim_v75/natural_state/observation/result.json) |
+| WS-V75-CONFIRM-SOURCES-01 / 20260920-r1 | 四日志前瞻来源窗口；真实可观测性未通过，无模型推理 | [来源与排除](v75/NATURAL_STATE.md)、[记录](autoresearch/worldsim_v75/natural_state/observation/confirmation_visual_review.json) |
 | WS-V74-P0-* / 20260910 | 数据、资源与输入角色准备 | [P0](archive/2026-09/v74-0920/WORLDSIM_V74_P0_HANDOFF.md) |
 | WS-V74-METHOD-TOURNAMENT-01 | H1 WEX / RIF / DCS 与强控制 | [结果](archive/2026-09/v74-0920/WORLDSIM_V7_4_RESULTS.md)、[失败](archive/2026-09/v74-0920/WORLDSIM_V7_4_FAILURES.md) |
 | H2 CPU / GPU P1 | 数据与学习能力实验、实现关闭 | [CPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[GPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md) |

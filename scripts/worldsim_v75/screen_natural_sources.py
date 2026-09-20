@@ -1,4 +1,5 @@
 """固定八日志先筛可见性与真实参考支持，不加载重建/生成输出。"""
+import argparse
 import json
 from datetime import datetime,timezone
 from pathlib import Path
@@ -25,10 +26,18 @@ def track_pose(annotations,ego_df,track_id,query,origin):
     return poses(packed,query),df[['length_m','width_m','height_m']].iloc[0].to_numpy(float)
 
 def main():
+    global OUT
+    parser=argparse.ArgumentParser();parser.add_argument('--frozen-protocol',type=Path);parser.add_argument('--output',type=Path,default=OUT)
+    args=parser.parse_args();OUT=args.output
     assert not OUT.exists(),'拒绝重复筛查/覆盖冻结分母'
-    logs=[d.name for d in sorted(ROOT.iterdir()) if d.is_dir() and d.name!=LOG and
-          len(list((d/'sensors/cameras'/CAMERA).glob('*.jpg')))>=200 and (d/'annotations.feather').exists()][:8]
-    assert len(logs)==8
+    frozen=json.loads(args.frozen_protocol.read_text()) if args.frozen_protocol else None
+    if frozen:
+        assert frozen['status']=='frozen' and len(frozen['logs'])==4
+        logs=frozen['logs']
+    else:
+        logs=[d.name for d in sorted(ROOT.iterdir()) if d.is_dir() and d.name!=LOG and
+              len(list((d/'sensors/cameras'/CAMERA).glob('*.jpg')))>=200 and (d/'annotations.feather').exists()][:8]
+        assert len(logs)==8
     OUT.mkdir(parents=True)
     protocol={'task_id':'WS-V75-NATURAL-SOURCES-01','run_id':'20260920-r1',
               'frozen_utc':datetime.now(timezone.utc).isoformat(),'logs':logs,
@@ -40,8 +49,11 @@ def main():
               'priority':'within each log lexicographic eligible track UUID; inspect real RGB for occlusion before reconstruction',
               'stop':'all eight exhausted without eligible target: report data gap, do not loosen thresholds or add logs in this screen',
               'models_loaded':False,'human_verdict':None}
+    if frozen:
+        protocol.update(task_id=frozen['task_id'],run_id=frozen['run_id'],role=frozen['boundary'],selection=frozen['selection'],
+                        stop=frozen['stop'],parent_source_protocol=str(args.frozen_protocol))
     (OUT/'protocol.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n')
-    rows=[];sheet=Image.new('RGB',(1280,8*382),'#111827')
+    rows=[];sheet=Image.new('RGB',(1280,len(logs)*382),'#111827')
     for index,log in enumerate(logs):
         raw=ROOT/log;images=sorted((raw/'sensors/cameras'/CAMERA).glob('*.jpg'))
         initial=next(im for im in images if int(im.stem)>=int(images[0].stem)+500_000_000);start=int(initial.stem)
@@ -102,7 +114,7 @@ def main():
         sheet.paste(rgb.resize((640,352)),(0,y+30));sheet.paste(overlay.resize((640,352)),(640,y+30))
         print(json.dumps({'log_id':log,'eligible':len(eligible),'selected':row['selected_target']}),flush=True)
     sheet.save(OUT/'source-screen.jpg',quality=94)
-    result={'status':'complete','logs':rows,'screened_logs':8,'logs_with_eligible_targets':sum(r['selected_target'] is not None for r in rows),
+    result={'status':'complete','logs':rows,'screened_logs':len(logs),'logs_with_eligible_targets':sum(r['selected_target'] is not None for r in rows),
             'world_model_calls':0,'reconstruction_calls':0,'human_verdict':None,'failure_ledger_delta':'none',
             'interpretation':'只确认参考与几何可见性；不是模型失败分母，人工/独立确认未完成'}
     (OUT/'screen_result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')

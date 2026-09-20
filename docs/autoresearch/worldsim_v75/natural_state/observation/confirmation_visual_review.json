@@ -1,0 +1,19 @@
+{
+  "status": "complete_no_admitted_targets",
+  "reviewer": "assistant inspected actual five-time RGB contact sheet before any reconstruction or generated output",
+  "human_verdict": null,
+  "logs": [
+    {"log_id": "19350c96-623d-4d77-af96-f8c23f00c358", "selected_target": null, "admitted": false, "reason": "no target passes frozen geometry and causal reference support"},
+    {"log_id": "19f53e16-9f99-3035-9672-7e860f3b0048", "selected_target": "0780ca4f-505b-46d4-950c-a7cd732b92f8", "admitted": false, "reason": "selected projected target overlaps nearer rear vehicles; its full visible contour cannot be cleanly isolated in the five-time real frames"},
+    {"log_id": "1da4a0aa-22ae-3958-856d-05303de1f576", "selected_target": "1f0774a6-f61d-4073-a244-41370408fc94", "admitted": false, "reason": "projected box overlaps a dark foreground vehicle and a white queued vehicle; clean target identity/contour is not verified, rather than assuming projected in-frame means visible"},
+    {"log_id": "20bcd747-ef60-391a-9f4a-ae99f049c260", "selected_target": "648d539b-75e3-487d-9da5-1ef631334ae9", "admitted": false, "reason": "crossing white Mercedes occludes the selected background vehicle at 0.5 and 1.0 seconds"}
+  ],
+  "screened_logs": 4,
+  "geometrically_eligible_logs": 3,
+  "visually_admitted_logs": 0,
+  "reconstruction_calls": 0,
+  "generation_calls": 0,
+  "replacement_targets": 0,
+  "failure_ledger_delta": "none",
+  "interpretation": "finite source-window data/observability exclusion, not a model failure or independent confirmation; stop this window without replacement"
+}

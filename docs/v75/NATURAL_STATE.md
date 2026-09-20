@@ -14,7 +14,7 @@ flowchart LR
     D --> W[OmniDreams + 生成历史]
     F[相同初帧 / 文本 / seed] --> W
     W --> V[生成 RGB]
-    V --> E[固定二维检测 / 配对比较]
+    V --> E[检测与点追踪 / 普通投影对照]
     T[真实未来 RGB] --> E
 ```
 
@@ -100,12 +100,44 @@ actor读出固定使用真实初帧检测框中央60%、标注尺寸与朝向。
 
 [全部对比](../autoresearch/worldsim_v75/natural_state/replication/replication_result.json)与[冻结协议](../autoresearch/worldsim_v75/natural_state/replication/protocol.json)保留逐时刻值、全部分母、首帧一致性和信息预算边界；人工verdict仍为null。
 
+## 独立点观测与普通投影控制
+
+复用已有九条视频（真实＋两seed各四组），只新增一次固定RAFT观察器。按真实初帧检测框中央60%选62个Shi–Tomasi点；初始对应对齐后，以0.5秒间隔双向光流追踪，不使用未来框、不重新选点或平滑。直接复用仓库RAFT封装与已有官方C_T_SKHT_V2权重、FP32、原始704×1280、12次更新。官方输入为RGB归一化到[-1,1]，输出单位为px，见[Torchvision契约](https://docs.pytorch.org/vision/stable/auto_examples/others/plot_optical_flow.html)。
+
+±4px初帧平移校准的中位残差0.020/0.024px，62点均保留。该校准只证明局部平移的数值行为，不保证未来语义对应。固定前后向误差≤2px、至少8个且≥25%初始点共同保留；本例须至少16/62点。两个seed在五个时刻的共同支持分别为62/30/30/29/8与62/22/13/10/0。完整两秒的独立均值不成立，缺失保留为空，不缩短主窗口或降低门槛。
+
+在可测非初始时刻，普通输入投影与生成点的横向响应同号、幅度相近。例如seed42的DVGT相对GT条件：
+
+| 时刻(s) | 条件cuboid投影横移(px) | RAFT点横移(px) |
+|---|---:|---:|
+| 0.5 | +10.15 | +6.61 |
+| 1.0 | +3.26 | +2.44 |
+| 1.5 | −7.06 | −4.01 |
+
+框中心与纹理点不是同一观测对象，不能把该差或比值叫作历史放大。额外LiDAR与普通框拟合的全部对比见[观测结果](../autoresearch/worldsim_v75/natural_state/observation/result.json)。三维误差范数还丢弃了方向与透视：初始2.965m的DVGT和0.417m的LiDAR读出，投影框中心分别右移14.92与14.15px；三维误差排序不应被直接当作图像影响排序。
+
+**新增边界：可重复检测收益不等于稳定三维状态改善；本例的已测响应没有显示超出普通投影的额外机制，完整两秒又缺少独立观测支持。** 它保留为条件敏感性与改善空间示例，不晋级主论文badcase、额外放大或闭环危害；不继续为本例换追踪阈值、seed、窗口或幅度。此次观察器约13.89秒、PyTorch峰值2.56GiB、无OOM、无新增生成。
+
+![普通投影控制](../autoresearch/worldsim_v75/natural_state/observation/projection-control.svg)
+
+## 四条新来源的有限窗口
+
+从80条本地完整AV2日志中，按UUID序审计13条的既有文档提及记录，冻结4条此前未被文档提及的日志；这不保证无既往曝光或无预训练重叠。沿用原起点、几何、参考与首个合格UUID规则，一条无几何合格目标，三条进入五个真实时刻的可观测性复核，均因遮挡或轮廓混叠未通过。完整分母4→3→0，重建/生成均0次，无替换、扩池或新阈值。
+
+该窗口按停止规则关闭，是来源/可观测性限制，不能算模型失败。固定UUID首选不保证得到适于运动测量的干净目标；后续新的前瞻协议应先构造可见候选集再锁目标，不能事后补位救本批结果。若重用这四条日志，须明确二次开发角色，不能再作独立确认。
+
+![新来源真实时刻与排除](../autoresearch/worldsim_v75/natural_state/observation/real-targets.jpg)
+
+[来源冻结](../autoresearch/worldsim_v75/natural_state/observation/confirmation_protocol.json)、[逐日志复核](../autoresearch/worldsim_v75/natural_state/observation/confirmation_visual_review.json)保留。
+
 ## 复现与边界
 
 - `WS-V75-NATURAL-01/20260920-r1`：旧目标的坐标和参考排除。
 - `WS-V75-NATURAL-SOURCES-01/20260920-r1`：八日志冻结、六初选、四次重建与读出；逐case原始输入和点图保留。
 - `WS-V75-NATURAL-ROLLOUT-01/20260920-r1`：一个发现案例的五组生成及独立检测。
 - `WS-V75-NATURAL-ROLLOUT-01/20260920-seed43`：同一输入的四组有限随机性复核；`repeat_natural_rollouts.py`执行，`summarize_natural_replication.py`汇总。
+- `WS-V75-OBSERVATION-01/20260920-r1`：固定光流观察器、共同支持与普通投影对照；不增加生成。
+- `WS-V75-CONFIRM-SOURCES-01/20260920-r1`：四日志来源窗口与15个真实时刻，0个目标通过可观测性，无模型推理。
 
 原始目录均在`/root/autodl-tmp/runs/worldsim_v75/`。主要脚本为`prepare_natural.py`、`infer_natural.py`、`readout_natural.py`、`screen_natural_sources.py`、`run_natural_readouts.py`、`run_natural_rollouts.py`、`evaluate_natural_rollout.py`与`review_natural_rollouts.py`。本地HTML及科学图由`build_natural_report.py`从这些结果构建，不生成或补画实验内容。
 

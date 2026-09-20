@@ -1,0 +1,47 @@
+{
+  "task_id": "WS-V75-OBSERVATION-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T10:14:30.041852+00:00",
+  "role": "exposed discovery-video observer cross-check; not independent scene confirmation",
+  "frames": [
+    0,
+    15,
+    30,
+    45,
+    60
+  ],
+  "seeds": [
+    42,
+    43
+  ],
+  "arms": [
+    "gt_clean",
+    "dvgt_metric",
+    "ordinary_bbox",
+    "reference_lidar"
+  ],
+  "source_runs": {
+    "42": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-ROLLOUT-01/20260920-r1",
+    "43": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-ROLLOUT-01/20260920-seed43"
+  },
+  "flow": "existing torchvision RAFT large C_T_SKHT_V2, FP32, 12 updates, full 704x1280 RGB [-1,1]",
+  "source": "https://docs.pytorch.org/vision/stable/auto_examples/others/plot_optical_flow.html",
+  "queries": "Shi-Tomasi initial real RGB only, central 60% initial detector box, max64, quality0.01, minDistance3",
+  "tracking": "first align real initial points to generated initial; then chain only the four fixed 0.5s intervals; no reinitialization, smoothing or future box association",
+  "fb_max_error_px": 2.0,
+  "minimum_common_points": 8,
+  "minimum_common_fraction": 0.25,
+  "calibration": "real initial translated +/-4px horizontally; median point error <=2px, >=80% initial points retain FB consistency",
+  "primary": "norm of coordinatewise median generated-minus-real displacement on the same initial point identities common to real and all four arms within each seed",
+  "support": "all five scheduled times retained; full-window mean undefined if any time fails fixed support; point counts are not independent samples",
+  "projection_control": "exact input cuboid projected bound-center shift relative to GT condition; vector comparison only, not a metric amplification factor",
+  "stop": "one fixed observer/configuration only; no threshold or frame changes; any OOM stops; no new world-model generation, downloads or training",
+  "boundary": "visible texture point correspondence is a 2D observation, not object center/metric 3D truth; occlusion and shape change can invalidate it",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V75-F01",
+    "V74-H2-F20",
+    "V74-H2-F21",
+    "V74-H2-F22"
+  ]
+}
