@@ -1,0 +1,66 @@
+{
+  "task_id": "WS-V75-BRAKING-TASKS-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T12:02:54.783035+00:00",
+  "logs": [
+    "02678d04-cc9f-3148-9f95-1ba66347dff9",
+    "02a00399-3857-444e-8db3-a8f58489c394",
+    "04994d08-156c-3018-9717-ba0e29be8153",
+    "05fa5048-f355-3274-b565-c0ddc547b315",
+    "0aa4e8f5-2f9a-39a1-8f80-c2fdde4405a2",
+    "0bae3b5e-417d-3b03-abaa-806b433233b8",
+    "0c3bad78-9f1e-395d-a376-2eb7499229fd",
+    "0fb7276f-ecb5-3e5b-87a8-cc74c709c715",
+    "185d3943-dd15-397a-8b2e-69cd86628fb7",
+    "19350c96-623d-4d77-af96-f8c23f00c358",
+    "19f53e16-9f99-3035-9672-7e860f3b0048",
+    "1da4a0aa-22ae-3958-856d-05303de1f576"
+  ],
+  "start_offsets_seconds": [
+    0.5,
+    2.5,
+    4.5,
+    6.5
+  ],
+  "measurement_frames": [
+    0,
+    15,
+    30,
+    45,
+    60
+  ],
+  "boundary": "development task selection from locally complete AV2 logs; exposure not independent",
+  "target_selection": "first twelve lexicographic locally complete logs, fixed four starts; recorded speed drop then persistent visible route leader; no reconstruction-error ranking",
+  "motion_gate": {
+    "initial_speed_min_mps": 2.0,
+    "speed_drop_over_2s_min_mps": 1.0,
+    "speed_estimation": "backward 0.5s position displacement projected on current ego forward"
+  },
+  "task_gate": {
+    "initial_leader_present_times_min": 3,
+    "fully_visible_all_leader_times": true,
+    "initial_bbox_min_wh": [
+      48,
+      32
+    ],
+    "oracle_leader_braking_times_min": 2,
+    "oracle_acceleration_max_mps2": -0.5,
+    "leader_effect_vs_free_acceleration_max_mps2": -0.5
+  },
+  "admission": {
+    "correct_leader_fraction": 0.8,
+    "median_abs_gap_error_m": 3.0,
+    "median_abs_idm_accel_difference_mps2": 0.5,
+    "max_false_braking_difference_mps2": 2.0,
+    "plane_p90_m": 0.2
+  },
+  "max_real_baseline_tasks": 2,
+  "selection_order": "first qualifying start per log; first two distinct logs for real RGB policy; first qualified for GT feedback",
+  "generation": "fixed117 frames seed42; GT feedback then native DVGT / ordinary global LiDAR scale / target LiDAR if baseline and references pass",
+  "stop": "finite12x4 window; do not replace failed windows, tune thresholds or select by reconstruction error; any OOM immediately stops",
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}
