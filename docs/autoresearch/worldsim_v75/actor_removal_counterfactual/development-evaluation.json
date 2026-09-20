@@ -1,0 +1,55 @@
+{
+  "status": "complete",
+  "summaries": [
+    {
+      "arm": "reference",
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 3,
+        "other_matches_mean": 4.9
+      },
+      "removed": {
+        "actor_present": 1,
+        "behind_present": 9,
+        "other_matches_mean": 4.5
+      }
+    },
+    {
+      "arm": "dvgt_metric",
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 3,
+        "other_matches_mean": 4.9
+      },
+      "removed": {
+        "actor_present": 1,
+        "behind_present": 8,
+        "other_matches_mean": 4.8
+      }
+    },
+    {
+      "arm": "class_prior",
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 8,
+        "other_matches_mean": 4.0
+      },
+      "removed": {
+        "actor_present": 4,
+        "behind_present": 4,
+        "other_matches_mean": 4.3
+      }
+    }
+  ],
+  "reference_gate_passed": true,
+  "state_mismatches_vs_reference_removed": {
+    "dvgt_metric": 1,
+    "class_prior": 8
+  },
+  "class_prior_corrected_dvgt_decisions": 0,
+  "state_effect_gate_passed": false,
+  "feedback_admitted": false,
+  "new_detector_calls": 66,
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}

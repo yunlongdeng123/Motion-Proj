@@ -1,0 +1,57 @@
+{
+  "status": "complete",
+  "summaries": [
+    {
+      "arm": "reference",
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 10,
+        "other_matches_mean": 8.1
+      },
+      "removed": {
+        "actor_present": 10,
+        "behind_present": 10,
+        "other_matches_mean": 9.2
+      }
+    },
+    {
+      "arm": "dvgt_metric",
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 10,
+        "other_matches_mean": 9.1
+      },
+      "removed": {
+        "actor_present": 10,
+        "behind_present": 10,
+        "other_matches_mean": 9.6
+      }
+    },
+    {
+      "arm": "class_prior",
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 10,
+        "other_matches_mean": 9.3
+      },
+      "removed": {
+        "actor_present": 10,
+        "behind_present": 10,
+        "other_matches_mean": 9.2
+      }
+    }
+  ],
+  "reference_gate_passed": false,
+  "state_mismatches_vs_reference_removed": {
+    "dvgt_metric": 0,
+    "class_prior": 0
+  },
+  "gate_kind": "independent_class_prior_editability_confirmation",
+  "class_prior_removed_actor_excess_vs_reference": 0,
+  "confirmation_gate_passed": false,
+  "feedback_admitted": false,
+  "closed_loop_not_run_by_protocol": true,
+  "new_detector_calls": 66,
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}

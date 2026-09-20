@@ -1,0 +1,117 @@
+{
+  "task_family": "WS-V75-ACTOR-REMOVAL",
+  "date": "2026-09-21",
+  "question": "Which reconstruction errors matter to the generative world-model state under an actor-removal counterfactual?",
+  "answer": "The exposed development signal was not independently confirmed. On the new source, reference editability failed and an f=0 onset diagnostic supports initial-image anchoring as the upstream bottleneck.",
+  "development": {
+    "sequences": 6,
+    "frames": 702,
+    "generation_forwards": 90,
+    "summaries": [
+      {
+        "arm": "reference",
+        "unedited": {
+          "actor_present": 10,
+          "behind_present": 3,
+          "other_matches_mean": 4.9
+        },
+        "removed": {
+          "actor_present": 1,
+          "behind_present": 9,
+          "other_matches_mean": 4.5
+        }
+      },
+      {
+        "arm": "dvgt_metric",
+        "unedited": {
+          "actor_present": 10,
+          "behind_present": 3,
+          "other_matches_mean": 4.9
+        },
+        "removed": {
+          "actor_present": 1,
+          "behind_present": 8,
+          "other_matches_mean": 4.8
+        }
+      },
+      {
+        "arm": "class_prior",
+        "unedited": {
+          "actor_present": 10,
+          "behind_present": 8,
+          "other_matches_mean": 4.0
+        },
+        "removed": {
+          "actor_present": 4,
+          "behind_present": 4,
+          "other_matches_mean": 4.3
+        }
+      }
+    ],
+    "reference_gate_passed": true
+  },
+  "independent_confirmation": {
+    "screened_logs": 5,
+    "new_dvgt_forwards": 1,
+    "sequences": 6,
+    "frames": 702,
+    "generation_forwards": 90,
+    "summaries": [
+      {
+        "arm": "reference",
+        "unedited": {
+          "actor_present": 10,
+          "behind_present": 10,
+          "other_matches_mean": 8.1
+        },
+        "removed": {
+          "actor_present": 10,
+          "behind_present": 10,
+          "other_matches_mean": 9.2
+        }
+      },
+      {
+        "arm": "dvgt_metric",
+        "unedited": {
+          "actor_present": 10,
+          "behind_present": 10,
+          "other_matches_mean": 9.1
+        },
+        "removed": {
+          "actor_present": 10,
+          "behind_present": 10,
+          "other_matches_mean": 9.6
+        }
+      },
+      {
+        "arm": "class_prior",
+        "unedited": {
+          "actor_present": 10,
+          "behind_present": 10,
+          "other_matches_mean": 9.3
+        },
+        "removed": {
+          "actor_present": 10,
+          "behind_present": 10,
+          "other_matches_mean": 9.2
+        }
+      }
+    ],
+    "reference_gate_passed": false,
+    "confirmation_gate_passed": false
+  },
+  "onset_diagnostic": {
+    "sequences": 1,
+    "frames": 117,
+    "generation_forwards": 15,
+    "actor_present": 10,
+    "behind_present": 10,
+    "interpretation": "initial_image_anchor_supported"
+  },
+  "new_effective_world_model_sequences_after_definition": 7,
+  "new_effective_generated_frames_after_definition": 819,
+  "new_effective_generation_forwards_after_definition": 105,
+  "claim_boundary": "one exposed development source, one independently frozen source and one post-failure mechanism diagnostic; no closed-loop or multi-model claim",
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}
