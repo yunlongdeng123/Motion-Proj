@@ -1,0 +1,27 @@
+{
+  "task_id": "WS-V75-DVGT-CONTRACT-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T15:17:52.619232+00:00",
+  "sources": [
+    "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2/reconstruction",
+    "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1/reconstruction"
+  ],
+  "repository": "/root/autodl-tmp/external/worldsim_v81/DVGT",
+  "revision": "51cf3f6d11fdff8bc7e2bbe1a88f71665ccb2236",
+  "scope": "exact existing two one-timestep calls; no model, PnP, alignment fitting, camera reordering or scientific badcase selection",
+  "checks": [
+    "official preprocessing versus saved input pixels",
+    "official metric scale and RDF/FLU algebra",
+    "known-ray projection roundtrip",
+    "predicted first-ego pose near identity",
+    "raw point reprojection and angular consistency",
+    "existing PnP results retained"
+  ],
+  "input_roles": "known calibration used only for evaluation and algebra checks; source native forward received RGB only",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}

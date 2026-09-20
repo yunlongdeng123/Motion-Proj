@@ -18,6 +18,7 @@ def main():
     p.add_argument('--shape-feedback',type=Path)
     p.add_argument('--shape-audit',type=Path)
     p.add_argument('--shape-confirmation',type=Path)
+    p.add_argument('--native-contract',type=Path)
     a=p.parse_args();out=a.output;out.mkdir(parents=True,exist_ok=True)
     cases=[]
     for label,src,ctrl in [('02678d04',a.case1,a.control1),('24642607',a.case2,a.case2/'state_control')]:
@@ -88,6 +89,10 @@ def main():
         html=html.replace('新证据：相近的近端距离，不保证相同的生成闭环','发现阶段（seed42）：相近距离与生成反馈的候选差异')
         html=html.replace('<img src="architecture.svg"','<p><a href="#shape-confirmation">最新：查看唯一额外seed的复核结果 →</a></p><img src="architecture.svg"')
         html=html.replace('</html>',build(a.shape_confirmation,out)+'</html>')
+    if a.native_contract:
+        from build_dvgt_contract_review import build
+        html=html.replace('<img src="architecture.svg"','<p><a href="#native-contract">本轮：原生DVGT输入与三时刻普通控制 →</a></p><img src="architecture.svg"')
+        html=html.replace('</html>',build(a.native_contract,out)+'</html>')
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     for path in out.glob('*.svg'):path.write_text('\n'.join(s.rstrip() for s in path.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8',newline='\n')
     print(out/'index.html')

@@ -1,0 +1,39 @@
+{
+  "run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1",
+  "audit_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-CONTRACT-01/20260920-r1",
+  "archive": "docs/autoresearch/worldsim_v75/native_contract",
+  "archived": "protocol/preflight/results/manifests/resource records/all paired metrics and actual-input scientific figures",
+  "raw_preserved": [
+    {
+      "log_id": "02678d04-cc9f-3148-9f95-1ba66347dff9",
+      "baseline": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-01/20260920-association-r2/reconstruction",
+      "new_raw": [
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/02678d04-cc9f-3148-9f95-1ba66347dff9/native_outputs.npz",
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/02678d04-cc9f-3148-9f95-1ba66347dff9/network_rgb.npy",
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/02678d04-cc9f-3148-9f95-1ba66347dff9/projection_display.npz",
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/02678d04-cc9f-3148-9f95-1ba66347dff9/native_input"
+      ]
+    },
+    {
+      "log_id": "24642607-2a51-384a-90a7-228067956d05",
+      "baseline": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-CLOSEDLOOP-02/20260920-r1/reconstruction",
+      "new_raw": [
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/24642607-2a51-384a-90a7-228067956d05/native_outputs.npz",
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/24642607-2a51-384a-90a7-228067956d05/network_rgb.npy",
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/24642607-2a51-384a-90a7-228067956d05/projection_display.npz",
+        "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DVGT-TEMPORAL-CONTRACT-01/20260920-r1/24642607-2a51-384a-90a7-228067956d05/native_input"
+      ]
+    }
+  ],
+  "scripts": [
+    "audit_dvgt_native_contract.py",
+    "probe_dvgt_temporal_contract.py",
+    "export_dvgt_contract_review.py",
+    "build_dvgt_contract_review.py",
+    "build_multiscene_feedback_review.py"
+  ],
+  "reproduction": "CPU prepare; DVGT infer --case-index 0 then 1 (stop on any failure); CPU evaluate; export review; archived frozen run must never be overwritten",
+  "figure_source": "actual saved RGB and common-grid raw-point angular errors; no illustrative or generated scene content",
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}
