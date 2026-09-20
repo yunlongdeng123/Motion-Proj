@@ -30,6 +30,7 @@
 | WS-V75-APPROACH-CLOSEDLOOP-02；APPROACH-RECONSTRUCTION-02；APPROACH-REFERENCE-02 / 20260920-r1 | 第二制动任务四组468帧反馈、1次DVGT与55点额外参照；保留自然误差影响小的好案例 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[结果](autoresearch/worldsim_v75/approach_dev2/comparison.json) |
 | WS-V75-APPROACH-STATE-CONTROL-02 / 20260920-r1 | 第二任务468帧旧动作精确回放与468帧直接状态控制；双任务统一对比图 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[状态控制](autoresearch/worldsim_v75/approach_dev2/state_control/result.json) |
 | WS-V75-TEMPORAL-STATE-AUDIT-01 / 20260920-r1 | 官方时间接口、两任务过去观测与静止/CV强控制；两组234帧精确复现、四组468帧新CPU反馈，无模型调用 | [时间状态范围](v75/APPROACH_CLOSED_LOOP.md#时间状态审计近静止任务的范围边界)、[证据](autoresearch/worldsim_v75/temporal_state_audit/result.json) |
+| WS-V75-MOVING-FOLLOWING-SCREEN-01 / 20260920-r1 | 复用固定6日志18起点的真实运动跟车资格；18→15→2→1近静止→0，无模型调用，窗口关闭 | [任务覆盖边界](v75/BRAKING_TASKS.md#同一固定来源的真实运动跟车资格)、[完整分母](autoresearch/worldsim_v75/moving_following_screen/result.json) |
 | WS-V74-P0-* / 20260910 | 数据、资源与输入角色准备 | [P0](archive/2026-09/v74-0920/WORLDSIM_V74_P0_HANDOFF.md) |
 | WS-V74-METHOD-TOURNAMENT-01 | H1 WEX / RIF / DCS 与强控制 | [结果](archive/2026-09/v74-0920/WORLDSIM_V7_4_RESULTS.md)、[失败](archive/2026-09/v74-0920/WORLDSIM_V7_4_FAILURES.md) |
 | H2 CPU / GPU P1 | 数据与学习能力实验、实现关闭 | [CPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[GPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md) |

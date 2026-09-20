@@ -81,3 +81,33 @@ flowchart LR
 随后`WS-V75-APPROACH-CLOSEDLOOP-02`的GT条件117帧/15次真实反馈通过：动作差中位0.268m/s²、最大欠制动1.401、最大额外制动1.034；逐帧最大横向偏差0.186m，无参考重叠，行进28.122m。生成峰值12.971GiB，70.99秒；另输入编码峰值15.965GiB，7.12秒。它随后才进入自然重建读出与四组反馈，见[接近任务报告的第二任务](APPROACH_CLOSED_LOOP.md#第二个接近任务24642607)。没有因重建误差大小筛选入组。
 
 原始任务筛查根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-BRAKING-DEV2-01/20260920-r1/`；真实基线根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-APPROACH-BASELINE-02/20260920-r1/`。无追加日志或起点，无新失败卡，人工verdict为null。
+
+## 同一固定来源的真实运动跟车资格
+
+在[时间状态审计](APPROACH_CLOSED_LOOP.md#时间状态审计近静止任务的范围边界)发现两个已验证目标均近静止后，登记`WS-V75-MOVING-FOLLOWING-SCREEN-01 / 20260920-r1`。复用DEV2的六日志及2.5/4.5/6.5秒三个起点；没有扩展来源、起点或检查模型误差。[新协议](../autoresearch/worldsim_v75/moving_following_screen/protocol.json)先冻结，再执行全部18窗口；旧制动筛查结果不变。
+
+新问题是普通前车跟随中的运动状态，因此不再要求日志ego已发生减速。仍沿用初始ego速度≥2m/s、路线及40m范围、前车至少3/5次持续出现、初始框48×32等定义，增加过去参考速度及沿ego朝向分量均≥1m/s、前两秒位移≥2m、完整117帧目标参考、三个过去时刻32×24可见框、至少两次前车令普通IDM相对自由行驶减加速度≥0.5m/s²。条件都在查看本轮任务度量前固定。最多取每日志第一个合格起点、前两个日志；真实RGB基线失败后不替补。
+
+```mermaid
+flowchart LR
+    D[6日志 真实RGB时间戳/标定/参考轨迹] --> W[18个固定窗口]
+    W --> S[ego速度检查 15个]
+    S --> L[40m路线前车 2个]
+    L --> P[持续前车 1个]
+    P --> M[真实向前运动 0个]
+    M --> O[完整分母 零模型推理]
+```
+
+| 首个排除原因 | 窗口数 | 证据边界 |
+|---|---:|---|
+| ego初始速度不足2m/s | 3 | 20bcd747三个固定起点 |
+| 40m/当前路线内没有前车 | 13 | 不代表画面中没有车辆 |
+| 前车持续性不足 | 1 | 24642607 +4.5s，前车仅2/5次出现 |
+| 持续前车近静止 | 1 | 24642607 +6.5s，过去参考速度0.044m/s，前两秒位移0.059m |
+| 合格真实运动任务 | **0** | 未进入后续视觉观测或动作相关性检查 |
+
+[完整结果](../autoresearch/worldsim_v75/moving_following_screen/result.json)保留18行、参考前车、首个排除原因、实际读到的度量及未执行项。未执行的视觉/动作检查不能填成不通过。准备了15个场景输入，其中13个新准备、2个复用；没有重新运行任何旧生成任务。所有原始场景与准备日志保留在run目录，通过[资产入口](../autoresearch/worldsim_v75/moving_following_screen/provenance.json)定位。
+
+**该有限窗口关闭，零准入是数据/任务覆盖缺口，不是运动重建或世界模型的负结果。** 不修改阈值、补选来源或添加合成速度。运动状态对生成闭环的重要性仍未被检验；也不能把更多排除数量称为新的科学失败发现。
+
+CPU用时124.36秒，0次新检测、重建、生成或训练，CUDA未初始化。新脚本`scripts/worldsim_v75/screen_moving_following.py`，原始根`/root/autodl-tmp/runs/worldsim_v75/WS-V75-MOVING-FOLLOWING-SCREEN-01/20260920-r1/`。架构与完整表格已并入`outputs/V75_Multiscene_Closed_Loop/index.html`，不新建状态文档。`failure_ledger_delta: none`、`human_verdict: null`。

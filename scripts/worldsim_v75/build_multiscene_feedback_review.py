@@ -14,6 +14,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--case1',type=Path,required=True);p.add_argument('--control1',type=Path,required=True)
     p.add_argument('--case2',type=Path,required=True);p.add_argument('--architecture',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--temporal-audit',type=Path)
+    p.add_argument('--moving-screen',type=Path)
     a=p.parse_args();out=a.output;out.mkdir(parents=True,exist_ok=True)
     cases=[]
     for label,src,ctrl in [('02678d04',a.case1,a.control1),('24642607',a.case2,a.case2/'state_control')]:
@@ -66,6 +67,9 @@ def main():
     if a.temporal_audit:
         from build_temporal_audit_review import build
         html=html.replace('</html>',build(a.temporal_audit,out)+'</html>')
+    if a.moving_screen:
+        from build_moving_following_review import build
+        html=html.replace('</html>',build(a.moving_screen,out)+'</html>')
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     for path in out.glob('*.svg'):path.write_text('\n'.join(s.rstrip() for s in path.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8',newline='\n')
     print(out/'index.html')

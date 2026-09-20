@@ -1,0 +1,338 @@
+{
+  "task_id": "WS-V75-MOVING-FOLLOWING-SCREEN-01",
+  "run_id": "20260920-r1",
+  "case_id": "29a00842-ead2-3050-b587-c5ef507e4125",
+  "role": "engineering_development_previously_exposed_log",
+  "log_id": "29a00842-ead2-3050-b587-c5ef507e4125",
+  "dataset": "Argoverse 2 Sensor val",
+  "raw_path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125",
+  "camera": "ring_front_center",
+  "source_images": 319,
+  "source_image_size": [
+    1550,
+    2048
+  ],
+  "crop_xyxy": [
+    0,
+    597.75,
+    1550,
+    1450.25
+  ],
+  "output_wh": [
+    1280,
+    704
+  ],
+  "K_fx_fy_cx_cy": [
+    1472.4359049425843,
+    1472.4359049425843,
+    640.279522700618,
+    350.3588697490143
+  ],
+  "city_origin": [
+    2323.900830475353,
+    950.574443376681,
+    11.676487266178407
+  ],
+  "first_timestamp_ns": 315966341899927209,
+  "start_offset_seconds": 4.549999992,
+  "frames": 237,
+  "fps": 30,
+  "source_fps": 20,
+  "gt_exact_match_frames": [
+    0,
+    3,
+    6,
+    9,
+    12,
+    15,
+    18,
+    21,
+    24,
+    27,
+    30,
+    33,
+    36,
+    39,
+    42,
+    45,
+    48,
+    51,
+    54,
+    57,
+    60,
+    63,
+    66,
+    69,
+    72,
+    75,
+    78,
+    81,
+    84,
+    87,
+    90,
+    93,
+    96,
+    99,
+    102,
+    105,
+    108,
+    111,
+    114,
+    117,
+    120,
+    123,
+    126,
+    129,
+    132,
+    135,
+    138,
+    141,
+    144,
+    147,
+    150,
+    153,
+    156,
+    159,
+    162,
+    165,
+    168,
+    171,
+    174,
+    177,
+    180,
+    183,
+    186,
+    189,
+    192,
+    195,
+    198,
+    201,
+    204,
+    207,
+    210,
+    213,
+    216,
+    219,
+    222,
+    225,
+    228,
+    231,
+    234
+  ],
+  "nearest_gt_delta_max_ms": 16.666681,
+  "references": [
+    {
+      "frame": 0,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966341899927209.jpg",
+      "source_delta_ns": 0
+    },
+    {
+      "frame": 30,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966342899927210.jpg",
+      "source_delta_ns": 1
+    },
+    {
+      "frame": 60,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966343899927218.jpg",
+      "source_delta_ns": 9
+    },
+    {
+      "frame": 90,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966344899927210.jpg",
+      "source_delta_ns": 1
+    },
+    {
+      "frame": 120,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966345899927221.jpg",
+      "source_delta_ns": 12
+    },
+    {
+      "frame": 150,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966346899927208.jpg",
+      "source_delta_ns": -1
+    },
+    {
+      "frame": 180,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966347899927219.jpg",
+      "source_delta_ns": 10
+    },
+    {
+      "frame": 234,
+      "path": "/root/autodl-tmp/data/av2/sensor/val/29a00842-ead2-3050-b587-c5ef507e4125/sensors/cameras/ring_front_center/315966349699927215.jpg",
+      "source_delta_ns": 6
+    }
+  ],
+  "interpolation": "world-frame translation linear + SO(3) Slerp; no extrapolation; split gaps >150ms",
+  "map_mark_counts": {
+    "NONE": 196,
+    "DASHED_WHITE": 42,
+    "SOLID_YELLOW": 2,
+    "DOUBLE_SOLID_YELLOW": 16,
+    "SOLID_WHITE": 14,
+    "DOUBLE_DASH_YELLOW": 2
+  },
+  "track_segments": 161,
+  "candidate_rule": "geometric visibility only: full bbox >=16x12px, uninterrupted from frame0 through frame150; actual occlusion not yet inspected",
+  "long_candidates": [
+    {
+      "id": "0dc5580a-68fd-4c9e-a33c-6384ed858cac",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 237
+    },
+    {
+      "id": "0f951123-6c98-4dda-ba61-51b937c9fb6e",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "1128e942-aa5d-451f-9f11-6df65fafd18d",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "12c2faa7-43b2-44f6-b77d-e0267ee017a9",
+      "category": "MOBILE_PEDESTRIAN_CROSSING_SIGN",
+      "prefix_frames": 237
+    },
+    {
+      "id": "1e20852f-ab96-4ade-99f2-af970cddcd59",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "2070efdd-94c5-48d0-a16c-467b74266556",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 237
+    },
+    {
+      "id": "2509e455-e098-4418-aff7-501e848be499",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "2fbd42d7-84e8-4794-82b4-895a143ce1ec",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "3b629f49-733e-447d-b859-4deafd23e38b",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "3f81ddb3-a9b3-49b5-8054-fae297a1cb8f",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "40b0c27a-2725-4499-bc1f-347f0e928690",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 237
+    },
+    {
+      "id": "4afd7a51-72e8-4cf3-833f-4dc3df229643",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "4cb7778c-be57-4421-a107-f6cd9f6228fe",
+      "category": "VEHICULAR_TRAILER",
+      "prefix_frames": 237
+    },
+    {
+      "id": "5968a66c-4100-4e7a-96dc-e0fed057f0a3",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "6861ba04-9eb9-43ea-8e48-73de4993b2d9",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 157
+    },
+    {
+      "id": "6bc543e4-67d1-4955-8d81-92a47d521989",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 210
+    },
+    {
+      "id": "7aa11aec-f352-45f0-a446-9e4b7684a222",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "8642ac69-7009-44d6-bf8c-5ef9f7dcb730",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "92356425-c272-48b2-be67-ab662e475d02",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "94fa93b3-c106-4315-8aa1-69b8ae97fc1e",
+      "category": "VEHICULAR_TRAILER",
+      "prefix_frames": 237
+    },
+    {
+      "id": "9d70218f-3c7c-40c3-accf-439fc5fa69c0",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 190
+    },
+    {
+      "id": "a8136360-febb-468c-bf08-7a3a5c348492",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "b3776151-db54-4b0c-8782-4536e879113a",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 168
+    },
+    {
+      "id": "baaf52cc-3be0-4aed-be43-ec33bb855d9c",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 159
+    },
+    {
+      "id": "c1e0f051-cdb3-491e-bedd-b003f8638c9e",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    },
+    {
+      "id": "cc40ce98-ca5e-4644-a818-03d39cdea159",
+      "category": "TRUCK_CAB",
+      "prefix_frames": 237
+    },
+    {
+      "id": "ce7522a1-65df-436f-ae93-d3763552c505",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 179
+    },
+    {
+      "id": "db2810cf-f5f4-4557-9bc7-4e6937c9fc05",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 156
+    },
+    {
+      "id": "e99930b9-de1b-4808-953e-546640575299",
+      "category": "PEDESTRIAN",
+      "prefix_frames": 237
+    },
+    {
+      "id": "f5960e1e-a7a5-40a5-966f-90431a236ca6",
+      "category": "REGULAR_VEHICLE",
+      "prefix_frames": 237
+    }
+  ],
+  "official_native_argoverse_loader": false,
+  "world_model_generation_calls": 0,
+  "condition_source": "GT map, GT actor annotations and recorded ego trajectory; oracle engineering baseline",
+  "missing_semantics": [
+    "traffic lights/signs/poles absent from AV2 map annotations",
+    "double lane marks mapped to single renderer primitive",
+    "drivable-area boundaries used as road-boundary proxy"
+  ],
+  "claim_boundary": "适配与域外开发输入，不是自然重建结果或独立确认；不把重复的20Hz参考帧当30Hz真值",
+  "human_verdict": null
+}

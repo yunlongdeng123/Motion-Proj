@@ -1,0 +1,49 @@
+{
+  "task_id": "WS-V75-MOVING-FOLLOWING-SCREEN-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T14:03:16.586517+00:00",
+  "logs": [
+    "20bcd747-ef60-391a-9f4a-ae99f049c260",
+    "20dd185d-b4eb-3024-a17a-b4e5d8b15b65",
+    "214e388e-cbd7-3dde-a204-d2ec42298808",
+    "24642607-2a51-384a-90a7-228067956d05",
+    "27c03d98-6ac3-38a3-ba5e-102b184d01ef",
+    "29a00842-ead2-3050-b587-c5ef507e4125"
+  ],
+  "start_offsets_seconds": [
+    2.5,
+    4.5,
+    6.5
+  ],
+  "source_role": "reuse all18 windows in the existing frozen6-log development window; no new logs or offsets, not independent confirmation",
+  "motivation": "previous qualified braking targets are nearly static; motion is a different state dimension, not a revision of previous screen terminal counts",
+  "task": "following a genuinely moving front actor that changes ordinary driving actions; recorded ego deceleration is not required",
+  "task_gate": {
+    "initial_ego_speed_min_mps": 2.0,
+    "first_route_leader_times_min": 3,
+    "past_target_speed_min_mps": 1.0,
+    "past_forward_velocity_min_mps": 1.0,
+    "target_displacement_over2s_min_m": 2.0,
+    "target_full117frame_reference": true,
+    "initial_bbox_min_wh": [
+      48,
+      32
+    ],
+    "past_3time_bbox_min_wh": [
+      32,
+      24
+    ],
+    "all_sampled_projections_fully_inside": true,
+    "leader_effect_vs_free_acceleration_max_mps2": -0.5,
+    "leader_effect_times_min": 2
+  },
+  "past_reference": "past1s >=8 annotations, maximum adjacent gap150ms; evaluate past CV future error but never fit with future positions",
+  "selection": "first qualifying start per log, first2 logs in frozen order; no model-error ranking or replacement after downstream failure",
+  "next_scope": "real RGB fixed-policy and legal-past correspondence qualification first; no generation admission from this screen",
+  "stop": "exact6x3 windows; no new logs, thresholds, offsets or synthetic velocities; zero candidates closes this window",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}
