@@ -10,6 +10,8 @@
 | WS-V75-ACTOR-REMOVAL-CONFIRM-QUALIFY-01 / 20260921-r1,r2,r3 | r1/r2为raster前环境失败、0生成；r3复用同一单次DVGT，三状态raster通过，科学输入不变 | [工程与资格边界](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)、[资格摘要](autoresearch/worldsim_v75/actor_removal_counterfactual/confirmation-qualification-summary.json) |
 | WS-V75-ACTOR-REMOVAL-CONFIRM-GENERATION-01 / 20260921-r1 | 独立源三状态×两编辑6段702帧；reference/DVGT/class均A=10/10、B=10/10，reference gate失败，禁止重建排名 | [对象移除报告](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)、[评价](autoresearch/worldsim_v75/actor_removal_counterfactual/confirmation-evaluation.json) |
 | WS-V75-ACTOR-REMOVAL-ONSET-01 / 20260921-r1 | A从f=0状态缺失的单段117帧机制诊断；A仍10/10，支持initial-image anchor；无闭环 | [对象移除报告](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)、[机制评价](autoresearch/worldsim_v75/actor_removal_counterfactual/onset-evaluation.json) |
+| WS-V75-ACTOR-REMOVAL-G1-SCREEN-01 / 20260921-r1 | 下一批8个未曝光日志的中远距/小占比输入窗口；第5个首次通过后停止，8次CPU检测、0重建/生成 | [显著性候选](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)、[来源摘要](autoresearch/worldsim_v75/actor_removal_counterfactual/g1-salience-screen.json) |
+| WS-V75-ACTOR-REMOVAL-G1-QUALIFY-01；G1-GENERATION-01 / 20260921-r1 | reference raster通过；仅未编辑/移除2段234帧，A=10/10→7/10仍未通过G1，DVGT未准入 | [门控结果](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)、[评价](autoresearch/worldsim_v75/actor_removal_counterfactual/g1-reference-evaluation.json) |
 | WS-V75-VELOCITY-PRIOR-CONTROL-01 / 20260920-r1 | 两日志20流CPU回放、世界速度零均值普通控制；主项退化、未准入生成 | [收口与全部证据](autoresearch/worldsim_v75/velocity_prior_control/README.md) |
 | WS-V75-QUALIFY-01 / 20260920-r1 | 官方接口契约与资源来源核对 | [问题协议](v75/PROBLEM.md)、[V75-F01](research_failures/entries/V75-F01.md) |
 | WS-V75-PREFLIGHT-01 / 20260920-r1 | 环境、真实初帧与条件、输入编码和权重预检 | [运行准备](v75/PREFLIGHT.md)、[证据](autoresearch/worldsim_v75/preflight) |

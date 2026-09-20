@@ -108,9 +108,50 @@
     "behind_present": 10,
     "interpretation": "initial_image_anchor_supported"
   },
-  "new_effective_world_model_sequences_after_definition": 7,
-  "new_effective_generated_frames_after_definition": 819,
-  "new_effective_generation_forwards_after_definition": 105,
+  "g1_salience_bridge": {
+    "screened_logs": 5,
+    "new_dvgt_forwards": 0,
+    "sequences": 2,
+    "frames": 234,
+    "generation_forwards": 30,
+    "summary": {
+      "unedited": {
+        "actor_present": 10,
+        "behind_present": 8,
+        "other_matches_mean": 2.9
+      },
+      "removed": {
+        "actor_present": 7,
+        "behind_present": 10,
+        "other_matches_mean": 3.6
+      }
+    },
+    "reference_gate_passed": false,
+    "dvgt_admitted": false
+  },
+  "salience_candidate": [
+    {
+      "source": "exposed_dev",
+      "area_px2": 3853.626264333224,
+      "depth_m": 47.96738421440668,
+      "removed_actor_present": 1
+    },
+    {
+      "source": "new_mid_distance",
+      "area_px2": 5859.371807993581,
+      "depth_m": 41.879992463345275,
+      "removed_actor_present": 7
+    },
+    {
+      "source": "independent_near",
+      "area_px2": 18229.067214930343,
+      "depth_m": 20.26024864135077,
+      "removed_actor_present": 10
+    }
+  ],
+  "new_effective_world_model_sequences_after_definition": 9,
+  "new_effective_generated_frames_after_definition": 1053,
+  "new_effective_generation_forwards_after_definition": 135,
   "claim_boundary": "one exposed development source, one independently frozen source and one post-failure mechanism diagnostic; no closed-loop or multi-model claim",
   "human_verdict": null,
   "failure_ledger_delta": "none"
