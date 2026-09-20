@@ -24,6 +24,7 @@
 | WS-V75-BRAKING-INTERFACE-AUDIT-01 / 20260920-r1 | 一次事后真实RGB入口诊断，5次感知；距离/速度状态误差通过同一IDM抵消，无生成 | [报告](v75/BRAKING_TASKS.md)、[证据](autoresearch/worldsim_v75/braking_tasks/interface-audit/) |
 | WS-V75-RASTER-POLICY-01；APPROACH-BASELINE-01 / 20260920-r1；20260920-association-r2 | 官方高程＋真实历史的普通基线；实际关联反例修复与保存输入回放 | [接近任务](v75/APPROACH_CLOSED_LOOP.md)、[工程证据](autoresearch/worldsim_v75/approach/) |
 | WS-V75-APPROACH-CLOSEDLOOP-01；APPROACH-REFERENCE-01 / 20260920-r1；20260920-association-r2 | 5组585帧含原GT工程失败；最终四组完整反馈、一次DVGT与42点截止前参照，几何修正未稳定恢复动作 | [报告](v75/APPROACH_CLOSED_LOOP.md)、[四组结果](autoresearch/worldsim_v75/approach/comparison.json) |
+| WS-V75-APPROACH-STATE-CONTROL-01 / 20260920-r1 | 四组CPU直接状态反馈；468帧旧轨迹精确复现、468帧新控制，几何响应与生成/策略接口边界 | [报告](v75/APPROACH_STATE_CONTROL.md)、[结果](autoresearch/worldsim_v75/approach_state_control/result.json) |
 | WS-V74-P0-* / 20260910 | 数据、资源与输入角色准备 | [P0](archive/2026-09/v74-0920/WORLDSIM_V74_P0_HANDOFF.md) |
 | WS-V74-METHOD-TOURNAMENT-01 | H1 WEX / RIF / DCS 与强控制 | [结果](archive/2026-09/v74-0920/WORLDSIM_V7_4_RESULTS.md)、[失败](archive/2026-09/v74-0920/WORLDSIM_V7_4_FAILURES.md) |
 | H2 CPU / GPU P1 | 数据与学习能力实验、实现关闭 | [CPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[GPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md) |

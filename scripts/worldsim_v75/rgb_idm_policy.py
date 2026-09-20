@@ -105,12 +105,9 @@ class RGBIDMPolicy:
         acceleration = self.idm.idm_model([], [0., max(0., speed)], [progress, lead_speed, 0.], self.idm.idm_params)[1]
         return float(np.clip(acceleration, -3, 1))
 
-    def step(self, *, rgb, frame_index, timestamp_us, ego_state, camera_override=None):
-        state = ego_state
+    def command_for_acceleration(self, state, acceleration):
+        """共享的固定路线跟踪和执行器映射；供RGB策略与直接状态强控制使用。"""
         speed = state['speed_mps']; yaw = state['yaw_rad']
-        detections = self.perceive(rgb, state, camera_override)
-        detections = self.tracker.update(detections, timestamp_us/1e6, speed*np.array([np.cos(yaw), np.sin(yaw)]))
-        lead = self.choose_lead(detections, state); acceleration = self.acceleration(speed, lead)
         progress, _ = self.route.project([state['x_m'], state['y_m']])
         target = self.route.at(progress+max(5., speed*1.5))
         delta = target-np.array([state['x_m'], state['y_m']])
@@ -118,6 +115,15 @@ class RGBIDMPolicy:
         steer = np.arctan2(2*2.8*local_left, max(float(delta@delta), 1.))
         command = DriverCommand(throttle=max(0., acceleration)/3.5, brake=max(0., -acceleration)/6.,
                                 steer=float(np.clip(steer/.5, -1, 1)), steer_is_direct=True)
+        return command, float(steer)
+
+    def step(self, *, rgb, frame_index, timestamp_us, ego_state, camera_override=None):
+        state = ego_state
+        speed = state['speed_mps']; yaw = state['yaw_rad']
+        detections = self.perceive(rgb, state, camera_override)
+        detections = self.tracker.update(detections, timestamp_us/1e6, speed*np.array([np.cos(yaw), np.sin(yaw)]))
+        lead = self.choose_lead(detections, state); acceleration = self.acceleration(speed, lead)
+        command, steer = self.command_for_acceleration(state, acceleration)
         self.last = {'frame': frame_index, 'timestamp_us': timestamp_us, 'lead': lead,
                      'detections': detections, 'acceleration_mps2': acceleration, 'steer_rad': float(steer),
                      'ego_state': dict(ego_state),
