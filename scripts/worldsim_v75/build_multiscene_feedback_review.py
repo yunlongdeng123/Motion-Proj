@@ -93,6 +93,8 @@ def main():
         from build_dvgt_contract_review import build
         html=html.replace('<img src="architecture.svg"','<p><a href="#native-contract">本轮：原生DVGT输入与三时刻普通控制 →</a></p><img src="architecture.svg"')
         html=html.replace('</html>',build(a.native_contract,out)+'</html>')
+    if (out.parent/'V75_WorldSim_Definition/index.html').exists():
+        html=html.replace('<h1>','<div class="card" id="quality-definition-link"><strong>评价定义已澄清：变化不等于更真实。</strong><p><a href="../V75_WorldSim_Definition/index.html">查看WorldSim五项质量、反事实参考与下一项有限实验 →</a></p><p>下面保留原始实证及其当时的评价边界，不将旧实验追认为反事实正确性证据。</p></div><h1>',1)
     (out/'index.html').write_text(html,encoding='utf-8',newline='\n')
     for path in out.glob('*.svg'):path.write_text('\n'.join(s.rstrip() for s in path.read_text(encoding='utf-8').splitlines())+'\n',encoding='utf-8',newline='\n')
     print(out/'index.html')

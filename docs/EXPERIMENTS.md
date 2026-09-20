@@ -4,6 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V75-CF-DEFINITION-01 / 20260921-r1 | WorldSim反事实质量定义、参考层级与有限实验设计；0模型调用，非新科学结果 | [定义](v75/PROBLEM.md)、[评价协议](v75/COUNTERFACTUAL_EVALUATION.md)、[审阅图](autoresearch/worldsim_v75/counterfactual_definition/) |
+| WS-V75-VELOCITY-PRIOR-CONTROL-01 / 20260920-r1 | 两日志20流CPU回放、世界速度零均值普通控制；主项退化、未准入生成 | [收口与全部证据](autoresearch/worldsim_v75/velocity_prior_control/README.md) |
 | WS-V75-QUALIFY-01 / 20260920-r1 | 官方接口契约与资源来源核对 | [问题协议](v75/PROBLEM.md)、[V75-F01](research_failures/entries/V75-F01.md) |
 | WS-V75-PREFLIGHT-01 / 20260920-r1 | 环境、真实初帧与条件、输入编码和权重预检 | [运行准备](v75/PREFLIGHT.md)、[证据](autoresearch/worldsim_v75/preflight) |
 | WS-V75-BASELINE-01 / 20260920-single3090-r1 | 单卡首段、完整clean及同seed完整重复；资源与视频核验 | [单卡基线](v75/BASELINE.md)、[证据](autoresearch/worldsim_v75/baseline) |
