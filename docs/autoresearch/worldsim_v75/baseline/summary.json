@@ -1,0 +1,58 @@
+{
+  "task_id": "WS-V75-BASELINE-01",
+  "run_id": "20260920-single3090-r1",
+  "data_role": "engineering_development",
+  "scene_count": 1,
+  "seeds": [
+    42
+  ],
+  "gpu": "RTX 3090 24576 MiB",
+  "runs": [
+    {
+      "name": "首段试跑",
+      "stem": "first-block-seed42",
+      "blocks": 1,
+      "frames": 5,
+      "generation_loop_s": 4.396750619634986,
+      "peak_allocated_gib": 12.749699115753174,
+      "oom": false,
+      "sampled_device_peak_mib": null,
+      "wall_s": null
+    },
+    {
+      "name": "完整 clean",
+      "stem": "clean-seed42",
+      "blocks": 30,
+      "frames": 237,
+      "generation_loop_s": 100.82776226848364,
+      "peak_allocated_gib": 12.805928707122803,
+      "oom": false,
+      "sampled_device_peak_mib": 17830.0,
+      "wall_s": 126.0
+    },
+    {
+      "name": "完整 clean 重复",
+      "stem": "clean-repeat-seed42",
+      "blocks": 30,
+      "frames": 237,
+      "generation_loop_s": 101.16685551218688,
+      "peak_allocated_gib": 12.805928707122803,
+      "oom": false,
+      "sampled_device_peak_mib": 17830.0,
+      "wall_s": 126.0
+    }
+  ],
+  "total_completed_generation_blocks": 61,
+  "repeat_decoded_frames_exactly_equal": true,
+  "policy_feedback": false,
+  "reconstruction_error_intervention": false,
+  "future_rgb_gt_available": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V75-F01",
+    "V74-H2-F20",
+    "V74-H2-F21",
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}
