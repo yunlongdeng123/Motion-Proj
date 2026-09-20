@@ -60,7 +60,7 @@
 
 执行结果见[未来轨迹反事实报告](ACTOR_TRAJECTORY_COUNTERFACTUAL.md)。目标在 `f=0..4` 保持不变，从 `f=5` 起沿自身轨迹按 `0.5×` 时间推进；配对的初始 RGB、状态前缀、地图、非目标演员、相机和 seed42 相同。
 
-两个固定来源的 reference 门控都通过。大误差来源的 DVGT 派生中心误差为 `13.27m`，reference/DVGT/class-prior 配对响应误差为 `2.11/55.61/32.08px`，减速成功为 `5/5、2/5、3/5`；小误差独立对照的 DVGT 中心误差为 `0.380m`，响应误差为 `3.59/1.65/2.84px`，没有 material degradation。事前判据为相对 reference 增加至少 `10px` 响应误差或损失至少 `2/5` 编辑成功，未按结果修改。
+两个固定来源的 reference 门控都通过，被测生成模型始终是 OmniDreams。大误差来源给 OmniDreams 输入 reference/depth-shift/depth+shape 三种状态，配对响应误差为 `2.11/55.61/32.08px`，减速成功为 `5/5、2/5、3/5`；小误差独立对照为 `3.59/1.65/2.84px`，没有 material degradation。事前判据为相对 reference state 增加至少 `10px` 响应误差或损失至少 `2/5` 编辑成功，未按结果修改。DVGT 只提供 depth-shift 的现实误差样本，不是此实验的生成模型主语。
 
 这组结果提供一个机制正例和一个保留的好案例：足以改变未来占据与可见性的大深度状态错误会传到生成响应，小误差并不自动造成退化。它仍是固定相机状态实验，不是策略反馈闭环，也不能由两源估计 prevalence 或严格误差阈值。
 
@@ -74,6 +74,6 @@
 
 ## 主图设计
 
-当前主图使用两行对照：大深度误差正例与小误差好案例；每行依次展示原始观测、reference/DVGT/class-prior 的同一减速生成，并直接标出配对响应误差。另配输入—重建—编辑—条件—生成—响应的组件图。未执行闭环时不画虚构事故或策略结果。
+当前主图使用两行对照：大深度误差正例与小误差好案例；每行依次展示原始观测，以及 OmniDreams 在 reference state、depth-shift state、depth+shape state 下的同一减速生成，并直接标出配对响应误差。另配状态变体—编辑—条件—OmniDreams—响应的组件图。未执行闭环时不画虚构事故或策略结果。
 
 人工 verdict：null；`failure_ledger_delta:none`。

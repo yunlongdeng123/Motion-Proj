@@ -1,17 +1,23 @@
 {
   "status": "complete",
+  "model_under_test": "OmniDreams single-view 2B",
+  "state_arm_labels": {
+    "reference": "reference state",
+    "dvgt_metric": "depth-shift state",
+    "class_prior": "depth+shape state"
+  },
   "large_error_source": {
-    "dvgt_center_error_m": 13.267042594399834,
+    "depth_shift_m": 13.267042594399834,
     "reference_response_error_px": 2.105765018021154,
-    "dvgt_response_error_px": 55.6147811200763,
-    "class_response_error_px": 32.07874443742681,
+    "depth_shift_response_error_px": 55.6147811200763,
+    "depth_shape_response_error_px": 32.07874443742681,
     "material": true
   },
   "small_error_control": {
-    "dvgt_center_error_m": 0.3795239333796184,
+    "depth_shift_m": 0.3795239333796184,
     "reference_response_error_px": 3.5883339102174143,
-    "dvgt_response_error_px": 1.6541849336427148,
-    "class_response_error_px": 2.8448179763801362,
+    "depth_shift_response_error_px": 1.6541849336427148,
+    "depth_shape_response_error_px": 2.8448179763801362,
     "material": false
   },
   "claim_boundary": "two fixed sources; DVGT-derived range uses known rays and oracle size/yaw; fixed-camera counterfactual, not policy feedback or population prevalence",

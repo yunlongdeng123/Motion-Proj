@@ -19,6 +19,8 @@ SMALL_Q = ROOT/'WS-V75-ACTOR-SLOWDOWN-CONTROL-QUALIFY-01/20260921-r1'
 SMALL_BASE = ROOT/'WS-V75-ACTOR-REMOVAL-CONFIRM-GENERATION-01/20260921-r1'
 ARMS = ['reference', 'dvgt_metric', 'class_prior']
 COLORS = {'reference': '#69d2e7', 'dvgt_metric': '#ff6b6b', 'class_prior': '#ffd166'}
+LABELS = {'reference': 'reference state', 'dvgt_metric': 'depth-shift state',
+          'class_prior': 'depth+shape state'}
 
 
 def font(size, bold=False):
@@ -60,13 +62,13 @@ def initial_panel(array_path, g1_eval, title, subtitle):
 
 def architecture():
     W, H = 1800, 440; im = Image.new('RGB', (W, H), '#f4f7fa'); d = ImageDraw.Draw(im)
-    d.text((55, 28), 'Which reconstruction errors matter to the generative world-model state?', font=font(34, True), fill='#14213d')
+    d.text((55, 28), 'Which input-state errors does OmniDreams propagate into its generated future?', font=font(34, True), fill='#14213d')
     boxes = [
-        (45, 125, 260, 270, '7-view RGB', 'same observation'),
-        (315, 125, 560, 270, 'Reconstruction', 'reference / DVGT / class'),
-        (615, 125, 855, 270, 'State edit', 'same future slowdown'),
+        (45, 125, 260, 270, 'Observed RGB', 'same initial image'),
+        (315, 125, 560, 270, 'State variants', 'reference / depth shift / shape'),
+        (615, 125, 855, 270, 'Future edit', 'same actor slowdown'),
         (910, 125, 1165, 270, 'Condition raster', 'same map, camera, seed'),
-        (1220, 125, 1450, 270, 'OmniDreams', 'generated future'),
+        (1220, 125, 1450, 270, 'OmniDreams', 'MODEL UNDER TEST'),
         (1505, 125, 1755, 270, 'State response', 'track + response error'),
     ]
     for i, (x1, y1, x2, y2, title, sub) in enumerate(boxes):
@@ -77,8 +79,8 @@ def architecture():
         if i < len(boxes)-1:
             d.line((x2+10, 197, boxes[i+1][0]-12, 197), fill='#315a78', width=5)
             d.polygon([(boxes[i+1][0]-12, 197), (boxes[i+1][0]-27, 187), (boxes[i+1][0]-27, 207)], fill='#315a78')
-    gates = [('G0 reliable readout', 315, 250), ('G1 reference follows edit', 615, 310),
-             ('G2 reconstruction changes response', 1220, 500)]
+    gates = [('G0 state reaches raster', 315, 250), ('G1 OmniDreams follows correct edit', 615, 450),
+             ('G2 OmniDreams propagates state error', 1220, 500)]
     for text, x, width in gates:
         d.rounded_rectangle((x, 325, x+width, 385), 14, fill='#14213d')
         d.text((x+width//2, 355), text, font=font(18, True), fill='white', anchor='mm')
@@ -90,10 +92,10 @@ def response_plot(large_eval, small_eval):
     x = np.arange(2); width = .23
     for i, arm in enumerate(ARMS):
         vals = [large_eval['summaries'][arm]['median_pair_response_error_px'], small_eval['summaries'][arm]['median_pair_response_error_px']]
-        bars = ax.bar(x+(i-1)*width, vals, width, label=arm.replace('_', ' '), color=COLORS[arm], edgecolor='#263746')
+        bars = ax.bar(x+(i-1)*width, vals, width, label=LABELS[arm], color=COLORS[arm], edgecolor='#263746')
         ax.bar_label(bars, labels=[f'{v:.1f}' for v in vals], padding=3, fontsize=9)
     ax.axhline(10, color='#6c7a86', linestyle='--', linewidth=1.2, label='10 px material margin')
-    ax.set_xticks(x, ['Large depth error\nDVGT center error 13.27 m', 'Small-error control\nDVGT center error 0.38 m'])
+    ax.set_xticks(x, ['Large input-state error\ndepth shift 13.27 m', 'Small-error control\ndepth shift 0.38 m'])
     ax.set_ylabel('Median pair-response error (px)'); ax.set_ylim(0, 66)
     ax.grid(axis='y', alpha=.25); ax.spines[['top', 'right']].set_visible(False)
     ax.legend(frameon=False, ncol=2, loc='upper right'); fig.tight_layout()
@@ -102,13 +104,13 @@ def response_plot(large_eval, small_eval):
 
 def main_figure(large_eval, small_eval):
     W, H = 2020, 1120; im = Image.new('RGB', (W, H), '#f4f7fa'); d = ImageDraw.Draw(im)
-    d.text((45, 28), 'A reconstruction error matters when it changes the response to the same future edit', font=font(31, True), fill='#14213d')
-    d.text((45, 78), 'Yellow: detected actor  |  Red: unedited state  |  Cyan: slowed state  |  all pairs share RGB, map, camera and seed', font=font(18), fill='#49657a')
+    d.text((45, 28), 'OmniDreams propagates a large input-state error into its generated future', font=font(31, True), fill='#14213d')
+    d.text((45, 78), 'OmniDreams is the model under test  |  Yellow: output detection  |  Red/Cyan: unedited/slowed state  |  same RGB, map, camera and seed', font=font(18), fill='#49657a')
     configs = [
         ('(a) Large-error source', 'Depth: 41.9m -> 28.6m  |  center error 13.27m',
          LARGE_BASE/'reference-unedited/generated.npy', LARGE_G1/'evaluation.json', large_eval,
          {'reference': LARGE_G1/'reference-edited/generated.npy', 'dvgt_metric': LARGE/'dvgt_metric-edited/generated.npy', 'class_prior': LARGE/'class_prior-edited/generated.npy'}, 130),
-        ('(b) Small-error control', 'Depth: 20.3m  |  DVGT center error 0.38m',
+        ('(b) Small-error control', 'Depth: 20.3m  |  input center error 0.38m',
          SMALL_BASE/'reference-unedited/generated.npy', SMALL_G1/'evaluation.json', small_eval,
          {'reference': SMALL_G1/'reference-edited/generated.npy', 'dvgt_metric': SMALL/'dvgt_metric-edited/generated.npy', 'class_prior': SMALL/'class_prior-edited/generated.npy'}, 610),
     ]
@@ -119,7 +121,7 @@ def main_figure(large_eval, small_eval):
         for arm in ARMS:
             row = next(x for x in evaluation['rows'] if x['arm'] == arm and x['frame'] == 85)
             err = evaluation['summaries'][arm]['median_pair_response_error_px']
-            panels.append(boxed_frame(paths[arm], row, f'{arm.replace("_", " ")}  |  response error {err:.1f}px'))
+            panels.append(boxed_frame(paths[arm], row, f'OmniDreams · {LABELS[arm]}  |  {err:.1f}px'))
         for i, panel in enumerate(panels): im.paste(panel, (45+i*490, y+52))
         verdict = 'MATERIAL STATE EFFECT' if evaluation['material_reconstruction_state_effect'] else 'NO MATERIAL DEGRADATION'
         color = '#c94242' if evaluation['material_reconstruction_state_effect'] else '#208a5d'
@@ -127,7 +129,7 @@ def main_figure(large_eval, small_eval):
         d.text((1755, y+369), verdict, font=font(20, True), fill='white', anchor='mm')
         if y < 500: d.line((45, 585, 1995, 585), fill='#aebdca', width=2)
     d.rounded_rectangle((45, 1055, 1995, 1100), 12, fill='#14213d')
-    d.text((1020, 1077), '13.27 m depth-state error -> wrong future occupancy / actor scale -> +53.5 px DVGT response error; 0.38 m control does not degrade response',
+    d.text((1020, 1077), '13.27 m input depth shift -> wrong future occupancy / actor scale -> +53.5 px OmniDreams response error; 0.38 m control does not degrade response',
            font=font(18, True), fill='white', anchor='mm')
     im.save(EVIDENCE/'main-state-error-figure.png')
 
@@ -138,15 +140,17 @@ def main():
     assert large['material_reconstruction_state_effect'] and not small['material_reconstruction_state_effect']
     architecture(); response_plot(large, small); main_figure(large, small)
     summary = {
-        'status': 'complete', 'large_error_source': {'dvgt_center_error_m': 13.267042594399834,
+        'status': 'complete', 'model_under_test': 'OmniDreams single-view 2B',
+        'state_arm_labels': LABELS,
+        'large_error_source': {'depth_shift_m': 13.267042594399834,
             'reference_response_error_px': large['summaries']['reference']['median_pair_response_error_px'],
-            'dvgt_response_error_px': large['summaries']['dvgt_metric']['median_pair_response_error_px'],
-            'class_response_error_px': large['summaries']['class_prior']['median_pair_response_error_px'],
+            'depth_shift_response_error_px': large['summaries']['dvgt_metric']['median_pair_response_error_px'],
+            'depth_shape_response_error_px': large['summaries']['class_prior']['median_pair_response_error_px'],
             'material': True},
-        'small_error_control': {'dvgt_center_error_m': 0.3795239333796184,
+        'small_error_control': {'depth_shift_m': 0.3795239333796184,
             'reference_response_error_px': small['summaries']['reference']['median_pair_response_error_px'],
-            'dvgt_response_error_px': small['summaries']['dvgt_metric']['median_pair_response_error_px'],
-            'class_response_error_px': small['summaries']['class_prior']['median_pair_response_error_px'],
+            'depth_shift_response_error_px': small['summaries']['dvgt_metric']['median_pair_response_error_px'],
+            'depth_shape_response_error_px': small['summaries']['class_prior']['median_pair_response_error_px'],
             'material': False},
         'claim_boundary': 'two fixed sources; DVGT-derived range uses known rays and oracle size/yaw; fixed-camera counterfactual, not policy feedback or population prevalence',
         'human_verdict': None, 'failure_ledger_delta': 'none'}
