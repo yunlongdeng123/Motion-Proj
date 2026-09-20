@@ -1,0 +1,56 @@
+{
+  "task_id": "WS-V75-LOCALIZE-01",
+  "run_id": "20260920-r1",
+  "frozen_utc": "2026-09-20T07:31:16.444355+00:00",
+  "target_id": "81",
+  "role": "engineering_development_and_synthetic_condition_sensitivity",
+  "physical_reference_changed": false,
+  "natural_reconstruction_error": false,
+  "seed_values": [
+    42,
+    43
+  ],
+  "frames": 237,
+  "fps": 30,
+  "offset_m": [
+    -0.5,
+    0.5
+  ],
+  "direction_world": [
+    0.9999976350456649,
+    -0.00018481152429366158,
+    0.002166967415015359
+  ],
+  "start_frame": 5,
+  "restore_frame": 37,
+  "primary_measurement_frames": [
+    5,
+    53
+  ],
+  "post_restore_frames": [
+    37,
+    53
+  ],
+  "selection_rule": "full projected box at prespecified samples through frame53, initial>=16x12px, nearer-box overlap<10%, largest initial area; original RGB silhouette inspected",
+  "selection_amendment_before_intervention": "Initial 3.37s filter left track99, whose lower body is behind a hedge. Rejected on real RGB. Shortened required visibility to frame53, leaving at least16 frames after restore; no biased video viewed.",
+  "rejected_targets": {
+    "99": "vegetation occlusion in real initial RGB",
+    "93": "occluded by covered vehicle16; initial verbal identification was corrected before freezing",
+    "16": "covered vehicle leaves full view before frame53"
+  },
+  "target_description": "oncoming white car, isolated front silhouette in real initial RGB",
+  "measurements": [
+    "raw uint8 paired RGB difference in fixed reference ROI and outside it",
+    "condition projection change in pixels",
+    "target localization only if an independent evaluator passes on clean"
+  ],
+  "claim_boundary": "pixel response is not metric state error; short recovery window, no policy feedback, no future RGB GT",
+  "cases": [
+    "clean",
+    "negative_persistent",
+    "positive_persistent",
+    "negative_restore",
+    "positive_restore"
+  ],
+  "human_verdict": null
+}
