@@ -19,13 +19,14 @@
 - [对象移除反事实](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)完成。曝光开发源中 reference/DVGT removed 为 A=`1/10`、B=`9/10`/`8/10`，类别先验为 A=`4/10`、B=`4/10`，形成状态可编辑性候选；冻结的独立源三状态均为 A=`10/10`、B=`10/10`，reference gate 失败，候选未复现。把 A 从 f=0 起移出全部状态条件后仍为 A=`10/10`，支持 initial-image anchor 压过结构化编辑。该源禁止重建排名，也未启动闭环。
 - 新的中距 G1 来源窗口筛到 A=`5859px²/41.88m`，只跑 reference 两段：removed A=`7/10`、B=`10/10`，仍未通过 A≤2 的门槛，故0次DVGT。三个固定来源的 A 残留为`1/10→7/10→10/10`，与初始投影面积增大、距离减小同向；当前仅是显著性 envelope 候选，面积/距离/场景/运动混杂，不声称因果或单调。
 - 下一批8日志的远距小投影窗口为0个合格A→B对象对，0 detector/重建/生成；未放宽面积、距离、时间或拓扑。这是数据覆盖边界，不是模型通过。对象即时移除作为独立重建比较入口到此关闭。
+- [未来轨迹反事实](v75/ACTOR_TRAJECTORY_COUNTERFACTUAL.md)已完成。两个来源的 reference 减速门控都通过。大误差来源中，官方DVGT-1距离经已知射线和oracle尺寸/朝向读出后，中心误差为`13.27m`；reference/DVGT/class-prior响应误差为`2.11/55.61/32.08px`，编辑成功为`5/5、2/5、3/5`，两个重建臂均触发冻结的material rule。小误差独立对照中DVGT中心误差为`0.380m`，三臂响应误差为`3.59/1.65/2.84px`，未退化。当前支持“会改变未来占据与可见性的大状态误差会影响生成响应”，不支持任意误差有害、普遍发生率或严格阈值。
 
 这些实验支持接口能力与有限误差边界，**不证明重建普遍成熟，也不证明反事实正确**。DVGT距离读出使用GT尺寸/朝向、LiDAR诊断有额外信息、交通非反应式，原有信息边界继续有效。当前只有单一IDM，没有成熟驾驶多策略排名证据。
 
 ## 本轮交付与下一步
 
-`WS-V75-CF-DEFINITION-01 / 20260921-r1`完成质量定义；随后对象移除开发发现、独立来源确认、f=0机制诊断和中距G1门控均完成。独立资格两次 raster 前环境失败分别保留为r1/r2，0生成；r3复用同一DVGT结果，未改变科学输入。定义后新增有效世界模型输出共9段、1,053帧、135次前向，单张RTX3090无OOM。图和轻量结果归档在[对象移除证据](autoresearch/worldsim_v75/actor_removal_counterfactual/)。
+`WS-V75-CF-DEFINITION-01 / 20260921-r1`完成质量定义；对象移除开发发现、独立确认、f=0机制诊断和来源收口均完成。未来减速新增8段、936帧、120次生成前向；定义后累计17段、1,989帧、255次生成前向，单张RTX3090无OOM。大误差源新增一次官方DVGT-1前向；资格r1因缺`iopath`在前向前结束，r2保持同一科学输入完成，不计重复或failure卡。图和轻量结果见[轨迹反事实证据](autoresearch/worldsim_v75/actor_trajectory_counterfactual/)及[对象移除证据](autoresearch/worldsim_v75/actor_removal_counterfactual/)。
 
-下一步改为**保持初始 RGB 一致的未来演员轨迹干预**：先只跑 reference unedited/edited 两段验证 G1，G1 通过才调用重建进入 G2。当前不追加对象移除来源、seed、事件时刻、编辑强度或闭环反馈，不同时铺多模型或多策略实验。
+下一步冻结一个新的来源窗口，在读取重建误差前先通过相同 reference 轨迹编辑门控，再执行至多一次DVGT读出。若没有第二个大误差且material的来源，就把当前结果保留为机制badcase，不声称prevalence；若独立复现，再只对该具体状态错误接入一次实际策略反馈。当前不追加同源seed、事件帧、减速系数或阈值扫描。
 
 保留V7.4 [F20](research_failures/entries/V74-H2-F20.md)、[F21](research_failures/entries/V74-H2-F21.md)、[F22](research_failures/entries/V74-H2-F22.md)边界，不恢复失败的TransFuser域基线。人工verdict均null；本轮`failure_ledger_delta:none`，不新增失败卡，不在AGENTS或FAILURES重复状态。

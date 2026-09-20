@@ -28,7 +28,7 @@ def save(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent=
 def main():
     os.environ.setdefault('HF_HUB_OFFLINE','1');os.environ.setdefault('LOCAL_FILES_ONLY','1')
     p=argparse.ArgumentParser();p.add_argument('--arm',required=True,choices=['reference','dvgt_metric','class_prior'])
-    p.add_argument('--variant',required=True,choices=['unedited','removed']);p.add_argument('--output',type=Path,default=OUT)
+    p.add_argument('--variant',required=True,choices=['unedited','removed','edited']);p.add_argument('--output',type=Path,default=OUT)
     p.add_argument('--qualification',type=Path,default=QUAL);a=p.parse_args()
     q=json.loads((a.qualification/'result.json').read_text());raster=json.loads((a.qualification/'raster_result.json').read_text())
     assert q['status']=='qualified' and q['generation_admitted'] and raster['status']=='passed' and raster['generation_admitted']
