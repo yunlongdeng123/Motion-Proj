@@ -1,0 +1,40 @@
+{
+  "task_id": "WS-V75-PREFLIGHT-01",
+  "run_id": "20260920-r1",
+  "result": "pre_generation_checks_passed",
+  "source_commit": "bc711d6f95693d73693e6b5fac75749cc6fcf1d7",
+  "resources": {
+    "gpu": "1xRTX3090 24GB",
+    "python": "3.12.14",
+    "torch": "2.12.1+cu130"
+  },
+  "roles": {
+    "scene": "engineering_development_only",
+    "independent_confirmation_scenes": 0,
+    "future_rgb_ground_truth": false
+  },
+  "checks": [
+    "dependency_consistency",
+    "BF16_CUDA_matmul",
+    "H264_encoder",
+    "official_v2_help",
+    "config_without_instantiation",
+    "237_official_condition_frames",
+    "text_and_image_embeddings",
+    "official_weights_and_cache",
+    "baseline_check_only"
+  ],
+  "formal_generation_calls": 0,
+  "scientific_badcases_confirmed": 0,
+  "training_steps": 0,
+  "failure_ledger_refs": [
+    "V74-H2-F20",
+    "V74-H2-F21",
+    "V74-H2-F22",
+    "V75-F01"
+  ],
+  "failure_ledger_delta": "none; V75-F01 recorded by qualification run",
+  "human_verdict": null,
+  "next_action": "Explicit one-block clean generation after this preparation scope",
+  "original_artifacts": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-PREFLIGHT-01/20260920-r1"
+}

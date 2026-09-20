@@ -7,6 +7,7 @@
 | 跨版本失败和证据边界 | [RESEARCH_FAILURES](RESEARCH_FAILURES.md) | ID 卡与生成目录 |
 | 协作规则 | [AGENTS](../AGENTS.md) | 规则变化时更新 |
 | 研究规划原则 | [Scaling law](../auto-research_scaling_law.md) | 遵循用户修订 |
+| V7.5 问题与输入接口 | [问题协议](v75/PROBLEM.md)、[运行准备](v75/PREFLIGHT.md) | 协议与可复现命令；状态见上方唯一入口 |
 | V7.4 报告、计划和旧状态 | [V7.4 归档](archive/2026-09/v74-0920/README.md) | 冻结历史 |
 | 更早版本和资产恢复 | [归档总目录](archive/README.md) | 按需恢复 |
 | 环境与迁移 | [环境](ENVIRONMENT.md)、[迁移](MACHINE_MIGRATION.md)、[第三方](THIRD_PARTY.md) | 按实际环境更新 |
