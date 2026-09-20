@@ -1,0 +1,28 @@
+{
+  "task_id": "WS-SIM-SPARSE-NATIVE-CLOSEOUT-01",
+  "run_id": "20260920-r1",
+  "pid": 1676,
+  "started_unix": 1789869031.4868557,
+  "status": "failed",
+  "stages": [
+    {
+      "name": "real_policy",
+      "command": [
+        "/root/autodl-tmp/envs/sparsedrive-impact/bin/python",
+        "/root/autodl-tmp/motion_proj/scripts/worldsim_simimpact/run_sparse_native_real.py"
+      ],
+      "started_unix": 1789869031.487116,
+      "timeout_seconds": 1800,
+      "returncode": 1,
+      "ended_unix": 1789869034.158657
+    }
+  ],
+  "human_verdict": null,
+  "authorization": "User requested closeout and shutdown after remote tasks; terminal failures also close out.",
+  "expected_forward_count": 40,
+  "new_training": false,
+  "automatic_retry": false,
+  "error": "Traceback (most recent call last):\n  File \"/root/autodl-tmp/motion_proj/scripts/worldsim_simimpact/finish_sparse_and_shutdown.py\", line 118, in main\n    raise RuntimeError(f\"{name} failed with exit {row['returncode']}; dependent stages skipped\")\nRuntimeError: real_policy failed with exit 1; dependent stages skipped\n",
+  "ended_unix": 1789869034.16052,
+  "actual_saved_forward_count": 0
+}

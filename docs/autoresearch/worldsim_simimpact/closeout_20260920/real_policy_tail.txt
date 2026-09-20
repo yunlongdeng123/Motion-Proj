@@ -1,0 +1,18 @@
+/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmcv/__init__.py:20: UserWarning: On January 1, 2023, MMCV will release v2.0.0, in which it will remove components related to the training process and add a data transformation module. In addition, it will rename the package names mmcv to mmcv-lite and mmcv-full to mmcv. See https://github.com/open-mmlab/mmcv/blob/master/docs/en/compatibility.md for more details.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/root/autodl-tmp/motion_proj/scripts/worldsim_simimpact/run_sparse_native_real.py", line 13, in <module>
+    from mmdet.models import build_detector
+  File "/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmdet/models/__init__.py", line 7, in <module>
+    from .dense_heads import *  # noqa: F401,F403
+  File "/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmdet/models/dense_heads/__init__.py", line 2, in <module>
+    from .anchor_free_head import AnchorFreeHead
+  File "/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmdet/models/dense_heads/anchor_free_head.py", line 10, in <module>
+    from mmdet.core import build_bbox_coder, multi_apply
+  File "/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmdet/core/__init__.py", line 5, in <module>
+    from .evaluation import *  # noqa: F401, F403
+  File "/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmdet/core/evaluation/__init__.py", line 8, in <module>
+    from .mean_ap import average_precision, eval_map, print_map_summary
+  File "/root/autodl-tmp/envs/sparsedrive-impact/lib/python3.9/site-packages/mmdet/core/evaluation/mean_ap.py", line 7, in <module>
+    from terminaltables import AsciiTable
+ModuleNotFoundError: No module named 'terminaltables'
