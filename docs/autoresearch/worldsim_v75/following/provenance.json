@@ -1,0 +1,32 @@
+{
+  "task_id": "WS-V75-FOLLOWING-CLOSEDLOOP-01",
+  "run_id": "20260920-r1",
+  "role": "exposed development; not independent confirmation",
+  "failure_ledger_refs": [
+    "V74-H2-F22",
+    "V75-F01"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null,
+  "third_party_sources_changed": false,
+  "source_paths": {
+    "closed_loop": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-FOLLOWING-CLOSEDLOOP-01/20260920-r1",
+    "real_baseline": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-FOLLOWING-BASELINE-01/20260920-natural4"
+  },
+  "nuplan_source_commit": "ce3c323af01c0d7ec5672f7832ef53f9c679aab0",
+  "flashdreams_source_commit": "bc711d6f95693d73693e6b5fac75749cc6fcf1d7",
+  "engineering_repairs": [
+    {
+      "issue": "five-time RGB lookup incorrectly used base directory",
+      "repair": "load exact timestamp RGB from source sensor images; original frozen protocol preserved",
+      "occurred_before_policy": true
+    },
+    {
+      "issue": "finite-route endpoint clamp assigned far objects to nearby endpoint",
+      "repair": "preserve endpoint longitudinal distance; old result retained in initial_source_window",
+      "occurred_before_policy": true
+    }
+  ],
+  "observability_correction": "0c3bad78 GT path leader outside camera in all 5 frames; not a detector failure; no rerun or replacement",
+  "large_assets": "original conditions and generated arrays/videos retained under source_paths; this is a light report archive"
+}

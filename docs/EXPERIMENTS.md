@@ -18,6 +18,8 @@
 | WS-V75-VISIBLE-DEV-01 / 20260920-r1 | 四日志可见性前置、八候选两读出、完整排除与普通尺度控制 | [可见性窗口](v75/VISIBLE_COHORT.md) |
 | WS-V75-VISIBLE-ROLLOUT-01 / 20260920-r1 | 一例四组生成、实际二维正反结果、条件刚体比较不合格 | [报告](v75/VISIBLE_COHORT.md)、[证据](autoresearch/worldsim_v75/visible_cohort/) |
 | WS-V75-CLOSEDLOOP-CONTRACT-01 / 20260920-r1 | 真实场景39帧动作→相机→条件契约；无世界模型生成或策略结论 | [闭环接口](v75/CLOSED_LOOP.md) |
+| WS-V75-FOLLOWING-BASELINE-01 / 20260920-r1；20260920-natural4 | 任务来源与真实RGB策略；两个通过、一个相机不可观测 | [反馈报告](v75/FOLLOWING_CLOSED_LOOP.md) |
+| WS-V75-FOLLOWING-CLOSEDLOOP-01 / 20260920-r1 | 一任务四组真实生成反馈，468帧/60决策，普通尺度与参考修复 | [报告](v75/FOLLOWING_CLOSED_LOOP.md)、[证据](autoresearch/worldsim_v75/following/) |
 | WS-V74-P0-* / 20260910 | 数据、资源与输入角色准备 | [P0](archive/2026-09/v74-0920/WORLDSIM_V74_P0_HANDOFF.md) |
 | WS-V74-METHOD-TOURNAMENT-01 | H1 WEX / RIF / DCS 与强控制 | [结果](archive/2026-09/v74-0920/WORLDSIM_V7_4_RESULTS.md)、[失败](archive/2026-09/v74-0920/WORLDSIM_V7_4_FAILURES.md) |
 | H2 CPU / GPU P1 | 数据与学习能力实验、实现关闭 | [CPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_CPU_HANDOFF.md)、[GPU](archive/2026-09/v74-0920/WORLDSIM_V7_4_H2_GPU_P1_REPORT.md) |

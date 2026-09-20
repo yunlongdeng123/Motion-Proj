@@ -1,0 +1,66 @@
+{
+  "task_id": "WS-V75-FOLLOWING-BASELINE-01",
+  "run_id": "20260920-natural4",
+  "frozen_utc": "2026-09-20T11:25:38.629369+00:00",
+  "role": "exposed_development_sources",
+  "bases": [
+    "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/05fa5048-f355-3274-b565-c0ddc547b315/base",
+    "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/0bae3b5e-417d-3b03-abaa-806b433233b8/base",
+    "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/0c3bad78-9f1e-395d-a376-2eb7499229fd/base",
+    "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/0fb7276f-ecb5-3e5b-87a8-cc74c709c715/base"
+  ],
+  "frames": [
+    0,
+    15,
+    30,
+    45,
+    60
+  ],
+  "selection": "four already prepared natural development logs, frozen order; initial route leader must persist at >=3/5 times; first real-policy-qualified task; no further replacement window",
+  "virtual_ego": {
+    "length_m": 4.8,
+    "width_m": 2.0,
+    "reference": "center, official demo default; not claimed to be the recorded AV2 vehicle"
+  },
+  "task": "follow/brake on provided route; non-interactive actors; first2s then fixed4s if real baseline passes",
+  "policy": "official nuPlan IDM + ordinary calibrated ground-contact RGB perception + route tracking",
+  "idm": {
+    "target_velocity": 10.0,
+    "min_gap": 1.0,
+    "headway": 1.5,
+    "accel_max": 1.0,
+    "decel_max": 3.0
+  },
+  "detector": {
+    "model": "official FasterRCNN ResNet50 FPN v2 COCO_V1 cached",
+    "score": 0.5,
+    "classes": [
+      3,
+      6,
+      8
+    ]
+  },
+  "input": [
+    "current RGB",
+    "ego state and camera calibration",
+    "provided route",
+    "metric local map ground plane"
+  ],
+  "reference_only": [
+    "GT actors and trajectories",
+    "recorded future images for real-input baseline"
+  ],
+  "admission": {
+    "correct_leader_fraction": 0.8,
+    "median_abs_gap_error_m": 3.0,
+    "median_abs_idm_accel_difference_mps2": 0.5,
+    "max_false_braking_difference_mps2": 2.0,
+    "plane_p90_m": 0.2
+  },
+  "stop": "no threshold or source replacement; real baseline failure stops error-arm generation; any OOM stops without retry",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V74-H2-F22"
+  ],
+  "failure_ledger_delta": "none"
+}

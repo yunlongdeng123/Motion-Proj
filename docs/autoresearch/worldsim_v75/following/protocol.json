@@ -1,0 +1,38 @@
+{
+  "task_id": "WS-V75-FOLLOWING-CLOSEDLOOP-01",
+  "run_id": "20260920-r1",
+  "source_run": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-FOLLOWING-BASELINE-01/20260920-natural4",
+  "base": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-NATURAL-SOURCES-01/20260920-r1/cases/0bae3b5e-417d-3b03-abaa-806b433233b8/base",
+  "source_log": "0bae3b5e-417d-3b03-abaa-806b433233b8",
+  "target": "d3d66fcc-6a28-4f86-9be4-6d1f012f726a",
+  "role": "exposed_development_task; not independent confirmation",
+  "seed": 42,
+  "frames": 117,
+  "fps": 30,
+  "blocks": 15,
+  "arms": [
+    "gt_clean",
+    "dvgt_metric",
+    "dvgt_lidar_scaled",
+    "reference_lidar"
+  ],
+  "change": "target initial translation readout only, same offset across track; physical reference unchanged",
+  "interface": "generated RGB -> fixed RGB+IDM -> official integrate_vehicle -> camera -> Ludus -> cached OmniDreams",
+  "extra_information": [
+    "provided recorded route",
+    "known camera and ego state",
+    "known map ground plane",
+    "GT dimensions/yaw and future actor trajectories shared",
+    "LiDAR arms add metric observations"
+  ],
+  "first_gate": "real RGB baseline admitted; GT generated feedback before error arms",
+  "gt_feedback_gate": {
+    "max_route_lateral_m": 1.0,
+    "no_reference_overlap": true,
+    "median_abs_online_oracle_acceleration_difference_mps2": 0.5,
+    "max_excess_braking_mps2": 2.0
+  },
+  "stop": "GT task baseline failure stops error arms; any OOM stops immediately without retry; no seed/threshold search",
+  "human_verdict": null,
+  "failure_ledger_delta": "none"
+}

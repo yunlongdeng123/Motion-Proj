@@ -44,3 +44,6 @@ coast末速度10.698m/s；初速度10.978m/s，只用截至初始RGB时刻的最
 - 任何OOM或接口失败立即停，不降配置自动重试；不研究长时间放大，不恢复旧TransFuser域失败基线。
 
 原始证据：`/root/autodl-tmp/runs/worldsim_v75/WS-V75-CLOSEDLOOP-CONTRACT-01/20260920-r1/`；[协议](../autoresearch/worldsim_v75/closed_loop_contract/protocol.json)、[结果](../autoresearch/worldsim_v75/closed_loop_contract/result.json)。代码：`scripts/worldsim_v75/closed_loop_bridge.py`、`audit_closed_loop_contract.py`。当前任务定义见[PROBLEM](PROBLEM.md)。
+
+
+本工程检查之后的正式RGB策略反馈与四组结果见[首轮跟车闭环](FOLLOWING_CLOSED_LOOP.md)。
