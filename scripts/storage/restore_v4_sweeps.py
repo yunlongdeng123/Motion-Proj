@@ -7,6 +7,8 @@ PUBLIC=Path('/root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval')
 
 def entries(root,scene):
  manifest=root/'manifests'/f'{scene}_raw_manifest_v4.json'
+ if not manifest.is_file():
+  manifest=Path('/root/autodl-tmp/cleanup_manifests/20260922-v4-retire/manifests')/manifest.name
  rows=json.loads(manifest.read_text())['files']
  return [r for r in rows if r['filename'].startswith('sweeps/')]
 

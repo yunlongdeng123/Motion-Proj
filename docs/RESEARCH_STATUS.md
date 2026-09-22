@@ -8,7 +8,7 @@
 
 单张RTX3090正式推理既有授权保留；任何OOM立即停止，不自动降配置、重试或调研多卡。本轮已完成首个对象移除反事实发现、独立来源确认和一个机制诊断。无训练、旧队列恢复或关机任务。模型与样例资源就绪，下载heartbeat已暂停。
 
-2026-09-22 按用户要求完成两轮存储清理，累计释放约92.2GiB，当前可用约93.1GiB（已用约606.9GiB）。第二轮新增释放44.7GiB，处理V4展开数据、完全相同的旧缓存、预检checkpoint及下载残片；V4约98.2GiB，runs约185.6GiB。正式checkpoint、原指标/结论与最新actor的23份生成数组保留。旧分析按需恢复输入：[V4/旧runs清理与恢复](autoresearch/storage_cleanup_20260922_r2/README.md)、[第一轮V7.5数组压缩与回放](autoresearch/storage_cleanup_20260922/README.md)。两轮均0次模型调用，未改研究结论。
+2026-09-22 按用户最新要求，V4数据已整体退出常驻存储：`data/worldsim_v4`目录删除，另释放96.5GiB，当前可用约189.5GiB（已用510.5GiB）。官方预处理权重归位到`models/legacy_v4_preprocess`；原包、来源清单、配置、正式checkpoint和研究结论保留。旧V4/V7.4/V8.1等依赖该目录的输入需恢复后才能重跑，当前V7.5产物保留。[V4退休与恢复说明](autoresearch/v4_data_retirement_20260922/README.md)。此前两轮清理约92.2GiB的记录仍保留：[旧runs与去重](autoresearch/storage_cleanup_20260922_r2/README.md)、[V7.5数组压缩与回放](autoresearch/storage_cleanup_20260922/README.md)。存储工作均0次模型调用，未改研究结论。
 
 ## 已有证据及保留边界
 
