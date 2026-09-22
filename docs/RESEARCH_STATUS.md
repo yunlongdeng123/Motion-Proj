@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-09-22。分支：`research/worldsim-v7.4-h2-generative-surface`。本文件是唯一当前快照；历史见[V7.4归档](archive/2026-09/v74-0920/STATUS_PRE_V75.md)，实验按[索引](EXPERIMENTS.md)查阅。
+更新：2026-09-22。分支：`research/worldsim-v7.5-generative-state`。本文件是唯一当前快照；历史见[V7.4归档](archive/2026-09/v74-0920/STATUS_PRE_V75.md)，实验按[索引](EXPERIMENTS.md)查阅。
 
 ## 当前方向与授权
 
