@@ -21,14 +21,26 @@
         "all_of": {
           "/root/autodl-tmp/envs/worldsim-v75/bin/python": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/envs/worldsim-v75/bin/python": [
+            "/root/autodl-tmp/envs/worldsim-v75/bin/python"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "weights": {
         "passed": true,
         "all_of": {
           "/root/autodl-tmp/models/worldsim_v75/omni-dreams-models/single_view/2b_res720p_30fps_i2v_hdmap_distilled.pt": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75/omni-dreams-models/single_view/2b_res720p_30fps_i2v_hdmap_distilled.pt": [
+            "/root/autodl-tmp/models/worldsim_v75/omni-dreams-models/single_view/2b_res720p_30fps_i2v_hdmap_distilled.pt"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "data": {
         "passed": true,
@@ -36,14 +48,29 @@
         "any_of": {
           "/root/autodl-tmp/models/worldsim_v75/omni-dreams-samples/data": true,
           "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true
-        }
+        },
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75/omni-dreams-samples/data": [
+            "/root/autodl-tmp/models/worldsim_v75/omni-dreams-samples/data"
+          ],
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": [
+            "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "prior_evidence": {
         "passed": true,
         "all_of": {},
         "any_of": {
           "/root/autodl-tmp/motion_proj/docs/autoresearch/worldsim_v75/actor_trajectory_counterfactual/summary.json": true
-        }
+        },
+        "matches": {
+          "/root/autodl-tmp/motion_proj/docs/autoresearch/worldsim_v75/actor_trajectory_counterfactual/summary.json": [
+            "/root/autodl-tmp/motion_proj/docs/autoresearch/worldsim_v75/actor_trajectory_counterfactual/summary.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "gpu_checks_run": false,
       "notes": [
@@ -53,7 +80,7 @@
     },
     {
       "model_id": "resim",
-      "readiness": "source_only_missing_weights",
+      "readiness": "ready_for_gpu_preflight",
       "source": {
         "passed": true,
         "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim",
@@ -67,26 +94,67 @@
         }
       },
       "environment": {
-        "passed": false,
+        "passed": true,
         "all_of": {
-          "/root/autodl-tmp/envs/resim/bin/python": false
+          "/root/autodl-tmp/envs/resim/bin/python": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/envs/resim/bin/python": [
+            "/root/autodl-tmp/envs/resim/bin/python"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "weights": {
-        "passed": false,
+        "passed": true,
         "all_of": {
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/transformer/latest": false,
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/vae/3d-vae.pt": false
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/latest": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/vae/3d-vae.pt": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00001-of-00002.safetensors": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00002-of-00002.safetensors": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/spiece.model": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/latest": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/latest"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/vae/3d-vae.pt": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/vae/3d-vae.pt"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00001-of-00002.safetensors": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00001-of-00002.safetensors"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00002-of-00002.safetensors": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00002-of-00002.safetensors"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/spiece.model": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/spiece.model"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "data": {
         "passed": true,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true
-        }
+        "all_of": {
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true,
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/adapter-index.json": true
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": [
+            "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+          ],
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/adapter-index.json": [
+            "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/adapter-index.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "prior_evidence": {
         "passed": false,
@@ -115,26 +183,49 @@
         }
       },
       "environment": {
-        "passed": false,
+        "passed": true,
         "all_of": {
-          "/root/autodl-tmp/envs/driveeditor/bin/python": false
+          "/root/autodl-tmp/envs/driveeditor/bin/python": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/envs/driveeditor/bin/python": [
+            "/root/autodl-tmp/envs/driveeditor/bin/python"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "weights": {
         "passed": false,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.ckpt": false,
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.safetensors": false
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/model.safetensors": false
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/model.safetensors": []
+        },
+        "incomplete_matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/model.safetensors": {
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/model.safetensors": "size_below_minimum"
+          }
         }
       },
       "data": {
-        "passed": false,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.pkl": false
-        }
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/data.pkl": true,
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/driveeditor/index.json": true
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/data.pkl": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/data.pkl"
+          ],
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/driveeditor/index.json": [
+            "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/driveeditor/index.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "prior_evidence": {
         "passed": false,
@@ -149,7 +240,7 @@
     },
     {
       "model_id": "gaussiandwm",
-      "readiness": "source_only_missing_weights",
+      "readiness": "ready_for_gpu_preflight",
       "source": {
         "passed": true,
         "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/GaussianDWM",
@@ -163,26 +254,63 @@
         }
       },
       "environment": {
-        "passed": false,
+        "passed": true,
         "all_of": {
-          "/root/autodl-tmp/envs/gaussiandwm/bin/python": false
+          "/root/autodl-tmp/envs/gaussiandwm/bin/python": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/envs/gaussiandwm/bin/python": [
+            "/root/autodl-tmp/envs/gaussiandwm/bin/python"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "weights": {
-        "passed": false,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/*.safetensors": false,
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/**/*.pt": false
-        }
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/model.safetensors": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/config.json": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/tokenizer.json": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/preprocessor_config.json": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/video_preprocessor_config.json": true
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/model.safetensors": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/model.safetensors"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/config.json": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/config.json"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/tokenizer.json": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/tokenizer.json"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/preprocessor_config.json": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/preprocessor_config.json"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/video_preprocessor_config.json": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/video_preprocessor_config.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "data": {
-        "passed": false,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/gaussiandwm/gauss": false
-        }
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/gauss_compatible": true,
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/gaussiandwm/sample-inventory.json": true
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/gauss_compatible": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/gauss_compatible"
+          ],
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/gaussiandwm/sample-inventory.json": [
+            "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/gaussiandwm/sample-inventory.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "prior_evidence": {
         "passed": false,
@@ -211,12 +339,25 @@
         }
       },
       "environment": {
-        "passed": true,
+        "passed": false,
         "all_of": {
           "/root/autodl-tmp/envs/drivestudio/bin/python": true,
-          "/root/autodl-tmp/third_party/drivestudio": true
+          "/root/autodl-tmp/third_party/drivestudio": true,
+          "/root/autodl-tmp/envs/drivestudio/lib/python3.10/site-packages/simple_knn/_C*.so": false,
+          "/root/autodl-tmp/envs/drivestudio/lib/python3.10/site-packages/diff_gaussian_rasterization/_C*.so": false
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/envs/drivestudio/bin/python": [
+            "/root/autodl-tmp/envs/drivestudio/bin/python"
+          ],
+          "/root/autodl-tmp/third_party/drivestudio": [
+            "/root/autodl-tmp/third_party/drivestudio"
+          ],
+          "/root/autodl-tmp/envs/drivestudio/lib/python3.10/site-packages/simple_knn/_C*.so": [],
+          "/root/autodl-tmp/envs/drivestudio/lib/python3.10/site-packages/diff_gaussian_rasterization/_C*.so": []
+        },
+        "incomplete_matches": {}
       },
       "weights": {
         "passed": false,
@@ -224,14 +365,25 @@
         "any_of": {
           "/root/autodl-tmp/runs/worldsim_v4/**/checkpoints/*.pth": false,
           "/root/autodl-tmp/runs/worldsim_v5/**/checkpoints/*.pth": false
-        }
+        },
+        "matches": {
+          "/root/autodl-tmp/runs/worldsim_v4/**/checkpoints/*.pth": [],
+          "/root/autodl-tmp/runs/worldsim_v5/**/checkpoints/*.pth": []
+        },
+        "incomplete_matches": {}
       },
       "data": {
         "passed": true,
         "all_of": {},
         "any_of": {
           "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true
-        }
+        },
+        "matches": {
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": [
+            "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "prior_evidence": {
         "passed": true,
@@ -239,17 +391,95 @@
         "any_of": {
           "/root/autodl-tmp/runs/worldsim_v521/**/panels/BC-STREETGS-*": true,
           "/root/autodl-tmp/motion_proj/docs/research_failures/history/part-061.md": true
-        }
+        },
+        "matches": {
+          "/root/autodl-tmp/runs/worldsim_v521/**/panels/BC-STREETGS-*": [
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-01b4f6297395",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-06e2e7af1319",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-0a3da171aabc",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-12f3d4fb3c21",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-1314120b629c",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-280b927fe4a6",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-288d21bac1f4",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-28c57583e48f",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-2fc03117c5fd",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-3258304a11e4",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-367851f26286",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-3e165ae06439",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-42e40cfc79e7",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-4305955afdfd",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-4733e13ede96",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-48c2a53866ee",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-4ee668cee202",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-5422984cefa2",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-542370fc3820",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-5a307bab27a4",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-6132ad736366",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-614ad9c21212",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-68028485671e",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-7a01b616aeb1",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-84bf82336ee0",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-84d204d2eaf0",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-93b9805b2e84",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-945caf2fc082",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-a0e7a92f6ccd",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-acdbdd5360d1",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-b363a27e6231",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-c42a157a3fdd",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-c8096ffb23ee",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-ca402d854f35",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-d7fedd6e1bb8",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-d88b4d207783",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-db017324ec5f",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-de0d0faedc57",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-e0a4e9b28abe",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-e28719680898",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-e2d074b07003",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-eaef846daf56",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T091500Z__p2-discovery-base-census-s0-r001/panels/BC-STREETGS-f3d733562bc7",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-0484d5ac57e4",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-12b7edf91fe1",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-1dfcfe8ae0ce",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-1efd86379d39",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-22bc19c2354c",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-2643680b27f4",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-3e639bcdf461",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-46ba96d19c17",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-4daade5e9bad",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-526ced0f9c87",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-5d187898ab33",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-62640d591ebc",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-68c77ab5bc76",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-72b52bdfef65",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-7e9c9ecf93da",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-8e24b7f0863f",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-92b15e4aa891",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-941877386d16",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-9e081a75adb5",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-9ead6369b496",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-cd44783bf132",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-d663b53045e5",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-eccdfaed8cb6",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-f545081973e0",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-f954e877d579",
+            "/root/autodl-tmp/runs/worldsim_v521/20260820T103000Z__p9-one-shot-confirmation-s0-r001/panels/BC-STREETGS-fbce8ea44dd6"
+          ],
+          "/root/autodl-tmp/motion_proj/docs/research_failures/history/part-061.md": [
+            "/root/autodl-tmp/motion_proj/docs/research_failures/history/part-061.md"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "gpu_checks_run": false,
       "notes": [
         "prior matched reconstruction and actor-composition evidence is reusable",
-        "historical checkpoints were retired, so new inference needs checkpoint restoration or retraining"
+        "historical checkpoints were retired, so new inference needs checkpoint restoration or retraining",
+        "the retained DriveStudio environment lacks Street Gaussians simple-knn and rasterizer extensions; the current CPU host has no nvcc, so new native inference remains fail-closed"
       ]
     },
     {
       "model_id": "hugsim",
-      "readiness": "source_only_missing_weights",
+      "readiness": "ready_for_gpu_preflight",
       "source": {
         "passed": true,
         "path": "/root/autodl-tmp/external/worldsim_simimpact/HUGSIM",
@@ -267,40 +497,104 @@
         "all_of": {
           "/root/autodl-tmp/envs/hugsim-impact/bin/python": true
         },
-        "any_of": {}
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/envs/hugsim-impact/bin/python": [
+            "/root/autodl-tmp/envs/hugsim-impact/bin/python"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "weights": {
-        "passed": false,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.ply": false,
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.pth": false
-        }
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/scene.pth": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_06_04_16_00_28/gs.pth": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_02_14_25_45/gs.pth": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_10_58_02/gs.pth": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_15_58_29/gs.pth": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_16_10_02/gs.pth": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_07_05_43_00/gs.pth": true
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/scene.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/scene.pth"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_06_04_16_00_28/gs.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_06_04_16_00_28/gs.pth"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_02_14_25_45/gs.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_02_14_25_45/gs.pth"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_10_58_02/gs.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_10_58_02/gs.pth"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_15_58_29/gs.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_15_58_29/gs.pth"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_16_10_02/gs.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_16_10_02/gs.pth"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_07_05_43_00/gs.pth": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_07_05_43_00/gs.pth"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "data": {
         "passed": true,
-        "all_of": {},
-        "any_of": {
-          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/inputs": true
-        }
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/cfg.yaml": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/ground_param.pkl": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenarios/nuscenes/scene-0383-easy-00.yaml": true,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/map_cache/nusc_map_cache/nusc_trainval/maps/singapore-onenorth.pb": true,
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/hugsim/index.json": true
+        },
+        "any_of": {},
+        "matches": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/cfg.yaml": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/cfg.yaml"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/ground_param.pkl": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/ground_param.pkl"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenarios/nuscenes/scene-0383-easy-00.yaml": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenarios/nuscenes/scene-0383-easy-00.yaml"
+          ],
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/map_cache/nusc_map_cache/nusc_trainval/maps/singapore-onenorth.pb": [
+            "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/map_cache/nusc_map_cache/nusc_trainval/maps/singapore-onenorth.pb"
+          ],
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/hugsim/index.json": [
+            "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/hugsim/index.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "prior_evidence": {
         "passed": true,
         "all_of": {},
         "any_of": {
           "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/native_collision_replay.json": true
-        }
+        },
+        "matches": {
+          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/native_collision_replay.json": [
+            "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/native_collision_replay.json"
+          ]
+        },
+        "incomplete_matches": {}
       },
       "gpu_checks_run": false,
       "notes": [
-        "local source and environment exist",
-        "a benchmark-aligned exported reconstruction is not currently resident"
+        "local source, environment, official exported scene-0383, scenarios, map cache, and referenced 3DRealCar assets are resident",
+        "released scenario actor paths require the same suffix normalization performed by upstream export_multiple_scenes.py",
+        "scene-0383 is an upstream smoke-test scene, not one of the benchmark-aligned DriveStudio scenes 179/191/204"
       ]
     }
   ],
   "summary": {
     "prior_evidence_reusable": 1,
-    "ready_for_gpu_preflight": 1,
-    "source_only_missing_weights": 4
+    "ready_for_gpu_preflight": 4,
+    "source_only_missing_weights": 1
   }
 }

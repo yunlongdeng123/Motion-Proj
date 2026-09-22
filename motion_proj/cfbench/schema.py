@@ -81,6 +81,10 @@ def validate_case(case: Mapping[str, Any]) -> None:
         raise ContractError("case.anchor.pre_frames must be a positive integer")
     if not isinstance(anchor.get("rollout_frames"), int) or anchor["rollout_frames"] < 2:
         raise ContractError("case.anchor.rollout_frames must be >= 2")
+    if not isinstance(anchor.get("clip_frames"), int) or anchor["clip_frames"] < 3:
+        raise ContractError("case.anchor.clip_frames must be >= 3")
+    if anchor["clip_frames"] != anchor["pre_frames"] + anchor["rollout_frames"]:
+        raise ContractError("clip_frames must equal pre_frames + rollout_frames")
 
     target = _mapping(case.get("target"), "case.target")
     if target.get("role") not in TARGET_ROLES:

@@ -13,6 +13,9 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import numpy as np
+
+from motion_proj.cfbench.geometry import footprint, footprints_overlap, shifted_pose
 from motion_proj.cfbench.schema import DIMENSIONS, MANIFEST_SCHEMA, validate_manifest
 
 
@@ -69,14 +72,16 @@ def _load_candidates(data_root: Path) -> tuple[list[str], dict[str, int], list[A
             annotations = row.get("frame_annotations", {})
             frames = [int(value) for value in annotations.get("frame_idx", [])]
             transforms = annotations.get("obj_to_world", [])
-            if len(frames) != len(transforms) or len(frames) < 24:
+            if len(frames) != len(transforms) or len(frames) < 33:
                 continue
             run_start, run_end = _longest_consecutive(frames)
-            if run_end - run_start + 1 < 24:
+            if run_end - run_start + 1 < 33:
                 continue
             transform_by_frame = dict(zip(frames, transforms))
             event_frame = run_start + 5
-            if event_frame + 18 > run_end:
+            # 24 帧 clip 包含 5 帧共享前缀和 19 帧分支；1.5 倍加速还要求
+            # 源轨迹至少覆盖 event + ceil(18 * 1.5) = event + 27。
+            if event_frame + 27 > run_end:
                 continue
             displacement = _distance(transform_by_frame[run_start], transform_by_frame[run_end])
             score = float(run_end - run_start + 1) + min(displacement, 50.0)
@@ -131,7 +136,8 @@ def _base_case(
         "anchor": {
             "event_frame": int(event_frame),
             "pre_frames": 5,
-            "rollout_frames": 24,
+            "rollout_frames": 19,
+            "clip_frames": 24,
             "state_fixation": "same scene, prefix, camera, seed and non-target state",
         },
         "target": target,
@@ -156,9 +162,61 @@ def _base_case(
     }
 
 
+def _proposal_is_collision_free(
+    data_root: Path,
+    actor: ActorCandidate,
+    local_offset: list[float],
+    *,
+    keep_source_actor: bool,
+) -> bool:
+    """用事实 actor footprint 筛除固定偏移后的初始碰撞。"""
+
+    scene_root = data_root / actor.scene_id
+    info = json.loads((scene_root / "instances" / "instances_info.json").read_text())
+    frame_instances = json.loads(
+        (scene_root / "instances" / "frame_instances.json").read_text()
+    )
+
+    def track(row: dict[str, Any]) -> tuple[dict[int, np.ndarray], dict[int, list[float]]]:
+        annotations = row["frame_annotations"]
+        frames = [int(value) for value in annotations["frame_idx"]]
+        return (
+            {
+                frame: np.asarray(value, dtype=np.float64)
+                for frame, value in zip(frames, annotations["obj_to_world"])
+            },
+            {
+                frame: list(map(float, value))
+                for frame, value in zip(frames, annotations["box_size"])
+            },
+        )
+
+    target_poses, target_sizes = track(info[actor.actor_key])
+    track_cache = {str(key): track(row) for key, row in info.items()}
+    for frame in range(actor.event_frame, actor.event_frame + 19):
+        if frame not in target_poses or frame not in target_sizes:
+            return False
+        proposed = footprint(
+            shifted_pose(target_poses[frame], local_offset), target_sizes[frame]
+        )
+        for other_key_raw in frame_instances.get(str(frame), []):
+            other_key = str(other_key_raw)
+            if not keep_source_actor and other_key == actor.actor_key:
+                continue
+            if other_key not in track_cache:
+                continue
+            other_poses, other_sizes = track_cache[other_key]
+            if frame not in other_poses or frame not in other_sizes:
+                continue
+            if footprints_overlap(proposed, footprint(other_poses[frame], other_sizes[frame])):
+                return False
+    return True
+
+
 def build_manifest(data_root: Path) -> dict[str, Any]:
     scenes, frame_counts, candidates = _load_candidates(data_root)
     cases: list[dict[str, Any]] = []
+    used_actors: set[tuple[str, str]] = set()
 
     # Three ego and three non-ego speed probes. The role split prevents ReSim's
     # ego trajectory interface from being misrepresented as non-ego editing.
@@ -180,6 +238,7 @@ def build_manifest(data_root: Path) -> dict[str, Any]:
             )
         )
     for index, actor in enumerate(candidates[:3]):
+        used_actors.add((actor.scene_id, actor.actor_key))
         factor = 0.5 if index % 2 == 0 else 1.5
         cases.append(
             _base_case(
@@ -215,8 +274,22 @@ def build_manifest(data_root: Path) -> dict[str, Any]:
                 direction="leftward displacement" if offset > 0 else "rightward displacement",
             )
         )
-    for index, actor in enumerate(candidates[3:6]):
-        offset = 3.5 if index % 2 == 0 else -3.5
+    lateral_candidates: list[tuple[ActorCandidate, float]] = []
+    for actor in candidates[3:]:
+        if (actor.scene_id, actor.actor_key) in used_actors:
+            continue
+        offset = -3.5 if len(lateral_candidates) % 2 == 0 else 3.5
+        if not _proposal_is_collision_free(
+            data_root, actor, [0.0, offset, 0.0], keep_source_actor=False
+        ):
+            continue
+        lateral_candidates.append((actor, offset))
+        used_actors.add((actor.scene_id, actor.actor_key))
+        if len(lateral_candidates) == 3:
+            break
+    if len(lateral_candidates) < 3:
+        raise RuntimeError("insufficient collision-free lateral proposals")
+    for index, (actor, offset) in enumerate(lateral_candidates):
         cases.append(
             _base_case(
                 case_id=f"CFB-LATERAL-ACTOR-{index + 1:02d}",
@@ -234,7 +307,15 @@ def build_manifest(data_root: Path) -> dict[str, Any]:
             )
         )
 
-    for index, actor in enumerate(candidates[6:12]):
+    removal_candidates = [
+        actor
+        for actor in candidates
+        if (actor.scene_id, actor.actor_key) not in used_actors
+    ][:6]
+    if len(removal_candidates) < 6:
+        raise RuntimeError("insufficient removal candidates")
+    for index, actor in enumerate(removal_candidates):
+        used_actors.add((actor.scene_id, actor.actor_key))
         cases.append(
             _base_case(
                 case_id=f"CFB-REMOVE-{index + 1:02d}",
@@ -252,8 +333,22 @@ def build_manifest(data_root: Path) -> dict[str, Any]:
             )
         )
 
-    for index, actor in enumerate(candidates[12:18]):
-        offset = 3.5 if index % 2 == 0 else -3.5
+    insertion_candidates: list[tuple[ActorCandidate, float]] = []
+    for actor in candidates:
+        if (actor.scene_id, actor.actor_key) in used_actors:
+            continue
+        offset = 3.5 if len(insertion_candidates) % 2 == 0 else -3.5
+        if not _proposal_is_collision_free(
+            data_root, actor, [8.0, offset, 0.0], keep_source_actor=True
+        ):
+            continue
+        insertion_candidates.append((actor, offset))
+        used_actors.add((actor.scene_id, actor.actor_key))
+        if len(insertion_candidates) == 6:
+            break
+    if len(insertion_candidates) < 6:
+        raise RuntimeError("insufficient collision-free insertion proposals")
+    for index, (actor, offset) in enumerate(insertion_candidates):
         entity_id = f"inserted:{actor.actor_id}"
         cases.append(
             _base_case(

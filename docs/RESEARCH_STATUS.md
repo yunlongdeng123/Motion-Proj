@@ -1,12 +1,12 @@
 # 当前研究状态
 
-更新：2026-09-22。分支：`research/worldsim-v7.5-generative-state`。本文件是唯一当前快照；历史见[V7.4归档](archive/2026-09/v74-0920/STATUS_PRE_V75.md)，实验按[索引](EXPERIMENTS.md)查阅。
+更新：2026-09-23。分支：`research/worldsim-v7.5-generative-state`。本文件是唯一当前快照；历史见[V7.4归档](archive/2026-09/v74-0920/STATUS_PRE_V75.md)，实验按[索引](EXPERIMENTS.md)查阅。
 
 ## 当前方向与授权
 
 按用户最新要求，V7.5继续研究**基于高斯重建的反事实编辑**，但主验证转为下游导向的自建 paired-edit benchmark：冻结 factual/counterfactual 分支，覆盖速度变化、横向重定位/换道、移除和插入，以 A/P/E/O、trajectory adherence、object/background preservation 六维分别报告，pilot 不合成总分。统一的是 case、输出和评价合同；OmniDreams、ReSim、DriveEditor、GaussianDWM、Street Gaussians、HUGSIM 的原生/适配/consumer-only 能力不作伪等价。完整定义、能力矩阵和架构见[下游反事实 benchmark](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)，此前“什么重建状态足以支持可信反事实生成”的[问题定义](v75/PROBLEM.md)继续作为上位研究问题。
 
-当前 AutoDL 已开机但无 GPU，本轮只做 GPU-free 准备：已冻结六个系统的源码 revision 与能力 registry，从现有三个 nuScenes DriveStudio 10Hz 场景生成四类各6个、共24个 `proposed_cpu_only` 候选，并生成 source/environment/weights/data preflight 与 fail-closed run plan；0次模型调用、无训练、无旧队列恢复。单张RTX3090正式推理既有授权保留；任何OOM立即停止，不自动降配置、重试或把不支持的任务换成 proxy。
+当前 AutoDL 已开机但无 GPU，本轮已把能做的 GPU-free 准备推进到底：六系统源码和能力 registry 冻结；24 个 case 全部通过 source-track、目标可见与初始碰撞 CPU gate，状态为 `geometry_pass_manual_pending`，道路与人工 verdict 仍为 null；ReSim 的 6 个 ego paired adapter、DriveEditor 的 18 个逐 case official-format pickle、GaussianDWM 三个场景共 715 帧兼容 Gaussian、HUGSIM 官方 scene-0383 导出场景/地图/5 scenarios/6 cars 均已物化。OmniDreams、ReSim、GaussianDWM、HUGSIM 为 `ready_for_gpu_preflight`，Street Gaussians 复用历史证据，DriveEditor 仅剩官方 Google Drive 12.1GB 模型的 24h quota。0次模型前向、无训练、无旧队列恢复。单张RTX3090正式推理既有授权保留；任何OOM立即停止，不自动降配置、重试或把不支持的任务换成 proxy。
 
 2026-09-22 按用户最新授权完成历史存储退役：本轮旧 runs 大产物释放 166.8 GiB，当前可用约 356.3 GiB（已用 343.7 GiB）。历史配置、指标、日志、源码及报告图保留；旧训练 checkpoint、固定表面和大型数组已按清单退役，重建产物需要恢复输入并重新训练/推理，文档不是完整备份。当前 V7.5 的 4,038 个文件/链接核验未变，data/models/envs/external 和论文原文未清理。[历史 runs 研究脉络、删除与恢复清单](autoresearch/old_runs_retirement_20260922/README.md)。此前 V4 原始数据已整体退出常驻存储，预处理权重归位到 models/legacy_v4_preprocess；[V4 数据恢复](autoresearch/v4_data_retirement_20260922/README.md)、[前轮旧 runs 去重](autoresearch/storage_cleanup_20260922_r2/README.md)、[V7.5 数组压缩](autoresearch/storage_cleanup_20260922/README.md)记录保留。存储工作均 0 次模型调用，未改研究结论。
 
@@ -28,9 +28,9 @@
 
 ## 本轮交付与下一步
 
-`WS-V75-DOWNSTREAM-CFBENCH-PREP-01 / 20260922-r1`完成 GPU-free benchmark 基建：24-case manifest、六模型能力/资源 registry、preflight、顺序 planner、六维 result schema/evaluator、architecture components 图和6项单元测试。当前 readiness 为 OmniDreams=`ready_for_gpu_preflight`、Street Gaussians=`prior_evidence_reusable`、其余四项=`source_only_missing_weights`；其中 ReSim/DriveEditor/GaussianDWM 还缺独立环境或对齐数据，DriveEditor 的官方显存要求高于单张24GB，GaussianDWM只作为下游 consumer。生成物见[bench证据目录](autoresearch/worldsim_v75/downstream_bench/)，设计与停止规则见[报告](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)。本轮0次模型调用，`failure_ledger_delta:none`。
+`WS-V75-DOWNSTREAM-CFBENCH-PREP-02 / 20260923-r1`完成 GPU-free bench 全量准备：10项本地单元测试通过；GaussianDWM 官方测试55 passed、1 skipped；六环境核心 import 5/6 通过，StreetGS 因旧环境缺 CUDA 扩展而准确 fail-closed。preflight 最终为 OmniDreams/ReSim/GaussianDWM/HUGSIM=`ready_for_gpu_preflight`、Street Gaussians=`prior_evidence_reusable`、DriveEditor=`source_only_missing_weights`。下载与物化脚本拒绝 `.aria2`/尺寸不足文件；GaussianDWM 官方裸 Tensor 样例与 loader 的合同不匹配已用官方环境复现，兼容包装输出 `[16000,14] float32`；HUGSIM sample input 与导出 scene 的区别及旧 scenario 路径后缀已修正；DriveEditor 18 个输入已结构验证但参考 crop 仍须人工审阅。生成物见[bench证据目录](autoresearch/worldsim_v75/downstream_bench/)，设计、问题发现与停止规则见[报告](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)。本轮0次模型前向，`failure_ledger_delta:none`。
 
-无 GPU 阶段的下一步是逐 case 完成可见性、道路、初始碰撞与像素/状态可辨认的资格审核，并只为资源可满足的方法补齐公开权重、独立环境和 batch adapter；在24个 case 从 `proposed_cpu_only` 转为 `qualified` 前不启动正式比较。GPU恢复后固定按 OmniDreams → ReSim → DriveEditor → GaussianDWM consumer → Street Gaussians → HUGSIM 推进，每个方法先跑1个合法 paired smoke；unsupported、consumer-only、历史复用和本轮新推理分栏。Street Gaussians 先复用历史结论建立预期，若需要本轮新 render 再决定恢复 checkpoint 或重训，不把旧图冒充新推理。
+无 GPU 阶段剩余的唯一外部下载阻塞是 DriveEditor 权重配额；道路有效与最终 case verdict 必须人工完成，脚本不会代填。GPU恢复后固定按 OmniDreams → ReSim → DriveEditor → GaussianDWM consumer → Street Gaussians → HUGSIM 推进，每个方法先跑1个合法 paired smoke；DriveEditor 只有在满足官方显存配置时进入，HUGSIM 完整闭环还需 AD client，StreetGS 若要本轮新 render 还需恢复 checkpoint/编译扩展。unsupported、consumer-only、历史复用和本轮新推理分栏，不把旧图冒充新推理。
 
 `WS-V75-CF-DEFINITION-01 / 20260921-r1`完成质量定义；对象移除开发发现、独立确认、f=0机制诊断和来源收口均完成。未来减速新增8段、936帧、120次生成前向；定义后累计17段、1,989帧、255次生成前向，单张RTX3090无OOM。大误差源新增一次官方DVGT-1前向；资格r1因缺`iopath`在前向前结束，r2保持同一科学输入完成，不计重复或failure卡。图和轻量结果见[轨迹反事实证据](autoresearch/worldsim_v75/actor_trajectory_counterfactual/)及[对象移除证据](autoresearch/worldsim_v75/actor_removal_counterfactual/)。
 

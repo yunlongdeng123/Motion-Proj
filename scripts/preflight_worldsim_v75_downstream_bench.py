@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import glob
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -16,8 +17,34 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from motion_proj.cfbench.registry import load_registry
 
 
-def _matches(pattern: str) -> list[str]:
-    return sorted(glob.glob(pattern, recursive=True))
+def _candidate_issue(path: str, min_size_bytes: int | None = None) -> str | None:
+    candidate = Path(path)
+    if not os.path.lexists(candidate):
+        return "missing"
+    try:
+        resolved = candidate.resolve(strict=True)
+    except (FileNotFoundError, RuntimeError):
+        return "broken_symlink"
+    if Path(f"{resolved}.aria2").exists():
+        return "aria2_in_progress"
+    if resolved.name.endswith((".part", ".incomplete")):
+        return "partial_filename"
+    if min_size_bytes is not None:
+        if not resolved.is_file() or resolved.stat().st_size < min_size_bytes:
+            return "size_below_minimum"
+    return None
+
+
+def _partition_matches(pattern: str, min_size_bytes: int | None = None) -> tuple[list[str], dict[str, str]]:
+    complete: list[str] = []
+    incomplete: dict[str, str] = {}
+    for match in sorted(glob.glob(pattern, recursive=True)):
+        issue = _candidate_issue(match, min_size_bytes)
+        if issue is None:
+            complete.append(match)
+        else:
+            incomplete[match] = issue
+    return complete, incomplete
 
 
 def _path_group(row: dict[str, Any], key: str) -> dict[str, Any]:
@@ -26,10 +53,24 @@ def _path_group(row: dict[str, Any], key: str) -> dict[str, Any]:
         return {"passed": False, "all_of": {}, "any_of": {}}
     all_of = [str(path) for path in spec.get("all_of", [])]
     any_of = [str(path) for path in spec.get("any_of", [])]
-    all_hits = {pattern: bool(_matches(pattern)) for pattern in all_of}
-    any_hits = {pattern: bool(_matches(pattern)) for pattern in any_of}
+    minimums = {str(pattern): int(size) for pattern, size in spec.get("min_size_bytes", {}).items()}
+    completed: dict[str, list[str]] = {}
+    incomplete: dict[str, dict[str, str]] = {}
+    for pattern in all_of + any_of:
+        hits, rejected = _partition_matches(pattern, minimums.get(pattern))
+        completed[pattern] = hits
+        if rejected:
+            incomplete[pattern] = rejected
+    all_hits = {pattern: bool(completed[pattern]) for pattern in all_of}
+    any_hits = {pattern: bool(completed[pattern]) for pattern in any_of}
     passed = all(all_hits.values()) and (not any_of or any(any_hits.values()))
-    return {"passed": passed, "all_of": all_hits, "any_of": any_hits}
+    return {
+        "passed": passed,
+        "all_of": all_hits,
+        "any_of": any_hits,
+        "matches": completed,
+        "incomplete_matches": incomplete,
+    }
 
 
 def _source(row: dict[str, Any]) -> dict[str, Any]:

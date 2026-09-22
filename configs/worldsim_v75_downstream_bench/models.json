@@ -71,13 +71,18 @@
       },
       "weights": {
         "all_of": [
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/transformer/latest",
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/vae/3d-vae.pt"
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/latest",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/vae/3d-vae.pt",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00001-of-00002.safetensors",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/model-00002-of-00002.safetensors",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/t5-v1_1-xxl/spiece.model"
         ]
       },
       "data": {
-        "any_of": [
-          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+        "all_of": [
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/adapter-index.json"
         ]
       },
       "prior_evidence": {},
@@ -116,19 +121,22 @@
         ]
       },
       "weights": {
-        "any_of": [
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.ckpt",
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.safetensors"
-        ]
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/model.safetensors"
+        ],
+        "min_size_bytes": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/model.safetensors": 12059467678
+        }
       },
       "data": {
-        "any_of": [
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.pkl"
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/data.pkl",
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/driveeditor/index.json"
         ]
       },
       "prior_evidence": {},
       "reuse_prior_evidence": false,
-      "entrypoint": "python interactive_gui.py after a non-interactive batch adapter is added",
+      "entrypoint": "python scripts/run_driveeditor_worldsim_v75_batch.py --input-index <index> after official GPU resource gate",
       "capabilities": {
         "ego:actor_speed_change": "unsupported",
         "ego:actor_lateral_relocation": "unsupported",
@@ -162,14 +170,18 @@
         ]
       },
       "weights": {
-        "any_of": [
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/*.safetensors",
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/**/*.pt"
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/model.safetensors",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/config.json",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/tokenizer.json",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/preprocessor_config.json",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model/video_preprocessor_config.json"
         ]
       },
       "data": {
-        "any_of": [
-          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/gaussiandwm/gauss"
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/gauss_compatible",
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/gaussiandwm/sample-inventory.json"
         ]
       },
       "prior_evidence": {},
@@ -205,7 +217,9 @@
       "environment": {
         "all_of": [
           "/root/autodl-tmp/envs/drivestudio/bin/python",
-          "/root/autodl-tmp/third_party/drivestudio"
+          "/root/autodl-tmp/third_party/drivestudio",
+          "/root/autodl-tmp/envs/drivestudio/lib/python3.10/site-packages/simple_knn/_C*.so",
+          "/root/autodl-tmp/envs/drivestudio/lib/python3.10/site-packages/diff_gaussian_rasterization/_C*.so"
         ]
       },
       "weights": {
@@ -237,7 +251,8 @@
       },
       "resource_notes": [
         "prior matched reconstruction and actor-composition evidence is reusable",
-        "historical checkpoints were retired, so new inference needs checkpoint restoration or retraining"
+        "historical checkpoints were retired, so new inference needs checkpoint restoration or retraining",
+        "the retained DriveStudio environment lacks Street Gaussians simple-knn and rasterizer extensions; the current CPU host has no nvcc, so new native inference remains fail-closed"
       ]
     },
     {
@@ -260,14 +275,23 @@
         ]
       },
       "weights": {
-        "any_of": [
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.ply",
-          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.pth"
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/scene.pth",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_06_04_16_00_28/gs.pth",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_02_14_25_45/gs.pth",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_10_58_02/gs.pth",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_15_58_29/gs.pth",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_05_16_10_02/gs.pth",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/3DRealCar/2024_07_07_05_43_00/gs.pth"
         ]
       },
       "data": {
-        "any_of": [
-          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/inputs"
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/cfg.yaml",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenes/scene-0383/ground_param.pkl",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/scenarios/nuscenes/scene-0383-easy-00.yaml",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/runtime/official/map_cache/nusc_map_cache/nusc_trainval/maps/singapore-onenorth.pb",
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/adapter_inputs/hugsim/index.json"
         ]
       },
       "prior_evidence": {
@@ -286,8 +310,9 @@
         "non_ego:actor_insertion": "native"
       },
       "resource_notes": [
-        "local source and environment exist",
-        "a benchmark-aligned exported reconstruction is not currently resident"
+        "local source, environment, official exported scene-0383, scenarios, map cache, and referenced 3DRealCar assets are resident",
+        "released scenario actor paths require the same suffix normalization performed by upstream export_multiple_scenes.py",
+        "scene-0383 is an upstream smoke-test scene, not one of the benchmark-aligned DriveStudio scenes 179/191/204"
       ]
     }
   ]

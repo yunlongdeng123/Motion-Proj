@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V75-DOWNSTREAM-CFBENCH-PREP-02 / 20260923-r1 | GPU-free 全量准备：24/24 CPU geometry pass、24张人工审阅图；ReSim/DriveEditor/GaussianDWM/HUGSIM 输入与公开资产物化；GaussianDWM loader 合同问题、DriveEditor reference mask 风险及 HUGSIM release 路径问题；10项本地测试与55项上游测试通过；0模型前向 | [设计、发现与边界](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)、[manifest/qualification/assets/env/preflight/plan](autoresearch/worldsim_v75/downstream_bench/) |
 | WS-V75-DOWNSTREAM-CFBENCH-PREP-01 / 20260922-r1 | 下游导向 paired-edit pilot：四类各6个共24个候选；六模型能力/资源 registry、CPU preflight、fail-closed planner、六维无总分 evaluator；0模型调用 | [设计与边界](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)、[manifest/preflight/plan](autoresearch/worldsim_v75/downstream_bench/) |
 | WS-STORAGE-OLD-RUNS-RETIRE-01 / 20260922-r1 | 历史研究脉络与产物退役；保留轻量证据、当前 V7.5 依赖核验；0 模型调用 | [清单与恢复边界](autoresearch/old_runs_retirement_20260922/README.md) |
 | WS-V75-CF-DEFINITION-01 / 20260921-r1 | WorldSim反事实质量定义、参考层级与有限实验设计；0模型调用，非新科学结果 | [定义](v75/PROBLEM.md)、[评价协议](v75/COUNTERFACTUAL_EVALUATION.md)、[审阅图](autoresearch/worldsim_v75/counterfactual_definition/) |
