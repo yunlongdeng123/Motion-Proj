@@ -1,12 +1,14 @@
 # 当前研究状态
 
-更新：2026-09-21。分支：`research/worldsim-v7.4-h2-generative-surface`。本文件是唯一当前快照；历史见[V7.4归档](archive/2026-09/v74-0920/STATUS_PRE_V75.md)，实验按[索引](EXPERIMENTS.md)查阅。
+更新：2026-09-22。分支：`research/worldsim-v7.4-h2-generative-surface`。本文件是唯一当前快照；历史见[V7.4归档](archive/2026-09/v74-0920/STATUS_PRE_V75.md)，实验按[索引](EXPERIMENTS.md)查阅。
 
 ## 当前方向与授权
 
 按用户最新要求，V7.5先定义“WorldSim做得好”，主问题调整为 **What reconstruction state is needed to make counterfactual generative simulation faithful?** 评价干预遵循、不受影响的事实、世界/可见性一致，以及相对于可信参考的策略后果保真度。重放、几何、视频观感和策略表现均不能单独代替该目标。完整定义和架构见[PROBLEM](v75/PROBLEM.md)，参考边界与有限实验见[评价协议](v75/COUNTERFACTUAL_EVALUATION.md)。
 
 单张RTX3090正式推理既有授权保留；任何OOM立即停止，不自动降配置、重试或调研多卡。本轮已完成首个对象移除反事实发现、独立来源确认和一个机制诊断。无训练、旧队列恢复或关机任务。模型与样例资源就绪，下载heartbeat已暂停。
+
+2026-09-22 按用户要求完成存储清理，实际释放约47.5GiB，结束时可用约48.4GiB。63份条件数组改为无损压缩，46份已收口生成数组改为保留指标/视频/输入与复现步骤；最新actor实验的23份生成数组保留。运行旧分析前按需恢复输入；[清理与复现入口](autoresearch/storage_cleanup_20260922/README.md)。本轮0次模型调用，未改研究结论。
 
 ## 已有证据及保留边界
 
