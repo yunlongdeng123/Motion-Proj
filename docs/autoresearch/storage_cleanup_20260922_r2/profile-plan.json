@@ -1,0 +1,995 @@
+{
+  "recovery": [
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T111810Z__streetgs-scene0048-profile100-s0-r16",
+      "scene": "scene-0048",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T222252Z__streetgs-scene0048-matched-formal30k-s0-r50/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T111810Z__streetgs-scene0048-profile100-s0-r16/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T111810Z__streetgs-scene0048-profile100-s0-r16/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T111810Z__streetgs-scene0048-profile100-s0-r16/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0048_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=45",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=10",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154320Z__streetgs-scene0048-matched-profile100-s0-r30",
+      "scene": "scene-0048",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T222252Z__streetgs-scene0048-matched-formal30k-s0-r50/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154320Z__streetgs-scene0048-matched-profile100-s0-r30/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154320Z__streetgs-scene0048-matched-profile100-s0-r30/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154320Z__streetgs-scene0048-matched-profile100-s0-r30/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0048_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=45",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154633Z__streetgs-scene0048-matched-novis-profile100-s0-r31",
+      "scene": "scene-0048",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T133559Z__streetgs-scene0048-formal30k-s0-r24/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T222252Z__streetgs-scene0048-matched-formal30k-s0-r50/work_dirs/worldsim_v4_streetgs/scene0048_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154633Z__streetgs-scene0048-matched-novis-profile100-s0-r31/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154633Z__streetgs-scene0048-matched-novis-profile100-s0-r31/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154633Z__streetgs-scene0048-matched-novis-profile100-s0-r31/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0048_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=45",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43",
+      "scene": "scene-0230",
+      "method": "adgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44/model/point_cloud/iteration_60000/point_cloud.ply",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44/model/point_cloud/iteration_60000/deform.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185600Z__adgs-scene0230-formal60k-s0-r44/model/point_cloud/iteration_60000/env.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/adgs/bin/python",
+          "train.py",
+          "--config",
+          "/root/autodl-tmp/motion_proj/configs/worldsim_v4/adgs_nuscenes_v4.py",
+          "--source_path",
+          "/root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0230",
+          "--model_path",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43/model",
+          "--data_device",
+          "cuda:0",
+          "--iterations",
+          "100",
+          "--save_iterations",
+          "100",
+          "--disable_test_evaluation",
+          "--quiet"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57",
+      "scene": "scene-0242",
+      "method": "adgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012200Z__adgs-scene0242-formal60k-s0-r58/model/point_cloud/iteration_60000/point_cloud.ply",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012200Z__adgs-scene0242-formal60k-s0-r58/model/point_cloud/iteration_60000/deform.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012200Z__adgs-scene0242-formal60k-s0-r58/model/point_cloud/iteration_60000/env.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/adgs/bin/python",
+          "train.py",
+          "--config",
+          "/root/autodl-tmp/motion_proj/configs/worldsim_v4/adgs_nuscenes_v4.py",
+          "--source_path",
+          "/root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0242",
+          "--model_path",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57/model",
+          "--data_device",
+          "cuda:0",
+          "--iterations",
+          "100",
+          "--save_iterations",
+          "100",
+          "--disable_test_evaluation",
+          "--quiet"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61",
+      "scene": "scene-0255",
+      "method": "adgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032400Z__adgs-scene0255-formal60k-s0-r62/model/point_cloud/iteration_60000/point_cloud.ply",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032400Z__adgs-scene0255-formal60k-s0-r62/model/point_cloud/iteration_60000/deform.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032400Z__adgs-scene0255-formal60k-s0-r62/model/point_cloud/iteration_60000/env.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/adgs/bin/python",
+          "train.py",
+          "--config",
+          "/root/autodl-tmp/motion_proj/configs/worldsim_v4/adgs_nuscenes_v4.py",
+          "--source_path",
+          "/root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0255",
+          "--model_path",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61/model",
+          "--data_device",
+          "cuda:0",
+          "--iterations",
+          "100",
+          "--save_iterations",
+          "100",
+          "--disable_test_evaluation",
+          "--quiet"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105",
+      "scene": "scene-0048",
+      "method": "adgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/point_cloud.ply",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/deform.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064550Z__adgs-scene0048-formal60k-s0-r106/model/point_cloud/iteration_60000/env.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/adgs/bin/python",
+          "train.py",
+          "--config",
+          "/root/autodl-tmp/motion_proj/configs/worldsim_v4/adgs_nuscenes_v4.py",
+          "--source_path",
+          "/root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0048",
+          "--model_path",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105/model",
+          "--data_device",
+          "cuda:0",
+          "--iterations",
+          "100",
+          "--save_iterations",
+          "100",
+          "--disable_test_evaluation",
+          "--quiet"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109",
+      "scene": "scene-0994",
+      "method": "adgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081700Z__adgs-scene0994-formal60k-s0-r110/model/point_cloud/iteration_60000/point_cloud.ply",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081700Z__adgs-scene0994-formal60k-s0-r110/model/point_cloud/iteration_60000/deform.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081700Z__adgs-scene0994-formal60k-s0-r110/model/point_cloud/iteration_60000/env.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/adgs/bin/python",
+          "train.py",
+          "--config",
+          "/root/autodl-tmp/motion_proj/configs/worldsim_v4/adgs_nuscenes_v4.py",
+          "--source_path",
+          "/root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0994",
+          "--model_path",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109/model",
+          "--data_device",
+          "cuda:0",
+          "--iterations",
+          "100",
+          "--save_iterations",
+          "100",
+          "--disable_test_evaluation",
+          "--quiet"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113",
+      "scene": "scene-0139",
+      "method": "adgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095700Z__adgs-scene0139-formal60k-s0-r114/model/point_cloud/iteration_60000/point_cloud.ply",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095700Z__adgs-scene0139-formal60k-s0-r114/model/point_cloud/iteration_60000/deform.pth",
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095700Z__adgs-scene0139-formal60k-s0-r114/model/point_cloud/iteration_60000/env.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/adgs/bin/python",
+          "train.py",
+          "--config",
+          "/root/autodl-tmp/motion_proj/configs/worldsim_v4/adgs_nuscenes_v4.py",
+          "--source_path",
+          "/root/autodl-tmp/data/worldsim_v4/adgs_processed_v4/train/scene-0139",
+          "--model_path",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113/model",
+          "--data_device",
+          "cuda:0",
+          "--iterations",
+          "100",
+          "--save_iterations",
+          "100",
+          "--disable_test_evaluation",
+          "--quiet"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150355Z__m1-validation-streetgs-scene0071-profile100-s0-r133",
+      "scene": "scene-0071",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150557Z__m1-validation-streetgs-scene0071-formal30k-s0-r134/work_dirs/worldsim_v4_streetgs/scene0071_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150355Z__m1-validation-streetgs-scene0071-profile100-s0-r133/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150355Z__m1-validation-streetgs-scene0071-profile100-s0-r133/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150355Z__m1-validation-streetgs-scene0071-profile100-s0-r133/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0071_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=68",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T160907Z__m1-validation-streetgs-scene0317-profile100-s0-r138",
+      "scene": "scene-0317",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T161057Z__m1-validation-streetgs-scene0317-formal30k-s0-r139/work_dirs/worldsim_v4_streetgs/scene0317_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T160907Z__m1-validation-streetgs-scene0317-profile100-s0-r138/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T160907Z__m1-validation-streetgs-scene0317-profile100-s0-r138/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T160907Z__m1-validation-streetgs-scene0317-profile100-s0-r138/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0317_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=251",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170021Z__m1-validation-streetgs-scene0450-profile100-s0-r143",
+      "scene": "scene-0450",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170227Z__m1-validation-streetgs-scene0450-formal30k-s0-r144/work_dirs/worldsim_v4_streetgs/scene0450_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170021Z__m1-validation-streetgs-scene0450-profile100-s0-r143/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170021Z__m1-validation-streetgs-scene0450-profile100-s0-r143/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170021Z__m1-validation-streetgs-scene0450-profile100-s0-r143/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0450_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=364",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T174831Z__m1-validation-streetgs-scene0862-profile100-s0-r150",
+      "scene": "scene-0862",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175416Z__m1-validation-streetgs-scene0862-formal30k-s0-r153/work_dirs/worldsim_v4_streetgs/scene0862_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T174831Z__m1-validation-streetgs-scene0862-profile100-s0-r150/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T174831Z__m1-validation-streetgs-scene0862-profile100-s0-r150/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T174831Z__m1-validation-streetgs-scene0862-profile100-s0-r150/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0862_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=652",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175021Z__m1-validation-streetgs-scene1012-profile100-s0-r151",
+      "scene": "scene-1012",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T183929Z__m1-validation-streetgs-scene1012-formal30k-s0-r154/work_dirs/worldsim_v4_streetgs/scene1012_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175021Z__m1-validation-streetgs-scene1012-profile100-s0-r151/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175021Z__m1-validation-streetgs-scene1012-profile100-s0-r151/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175021Z__m1-validation-streetgs-scene1012-profile100-s0-r151/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene1012_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=770",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175215Z__m1-validation-streetgs-scene1089-profile100-s0-r152",
+      "scene": "scene-1089",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T191300Z__m1-validation-streetgs-scene1089-formal30k-s0-r155/work_dirs/worldsim_v4_streetgs/scene1089_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175215Z__m1-validation-streetgs-scene1089-profile100-s0-r152/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175215Z__m1-validation-streetgs-scene1089-profile100-s0-r152/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175215Z__m1-validation-streetgs-scene1089-profile100-s0-r152/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene1089_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=829",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    },
+    {
+      "run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105007Z__m3-test-assets-streetgs-scene0919-profile100-s0-r278",
+      "scene": "scene-0919",
+      "method": "streetgs",
+      "preserved_formal_checkpoints": [
+        "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105124Z__m3-test-assets-streetgs-scene0919-formal30k-s0-r279/work_dirs/worldsim_v4_streetgs/scene0919_formal_s0/checkpoint_final.pth"
+      ],
+      "config": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105007Z__m3-test-assets-streetgs-scene0919-profile100-s0-r278/resolved.yaml",
+      "source_snapshot": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105007Z__m3-test-assets-streetgs-scene0919-profile100-s0-r278/source_snapshot",
+      "commands": [
+        [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "tools/train.py",
+          "--config_file",
+          "configs/streetgs.yaml",
+          "--output_root",
+          "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105007Z__m3-test-assets-streetgs-scene0919-profile100-s0-r278/work_dirs",
+          "--project",
+          "worldsim_v4_streetgs",
+          "--run_name",
+          "scene0919_profile100_s0",
+          "dataset=nuscenes/3cams",
+          "data.data_root=/root/autodl-tmp/data/worldsim_v4/drivestudio_processed_10Hz/trainval",
+          "data.scene_idx=704",
+          "data.start_timestep=0",
+          "data.end_timestep=-1",
+          "data.pixel_source.load_smpl=false",
+          "data.pixel_source.test_image_stride=0",
+          "+data.pixel_source.partition_modulus=5",
+          "+data.pixel_source.excluded_remainders=[2,4]",
+          "trainer.optim.num_iters=100",
+          "logging.saveckpt_freq=100",
+          "logging.vis_freq=-1",
+          "render.render_full=false",
+          "render.render_test=false",
+          "render.render_novel=null"
+        ]
+      ],
+      "restore_note": "仅 100 步预检；如要复现使用保存的命令与配置，把输出改为新的 run 目录。需要 GPU/原环境，不恢复旧任务状态；正式结果 checkpoint 全部保留。"
+    }
+  ],
+  "files": [
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T111810Z__streetgs-scene0048-profile100-s0-r16/work_dirs/worldsim_v4_streetgs/scene0048_profile100_s0/checkpoint_final.pth",
+      "bytes": 340298602,
+      "allocated": 340299776,
+      "inode": 4702593853,
+      "device": 66305,
+      "mtime_ns": 1786447173025949876,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T111810Z__streetgs-scene0048-profile100-s0-r16",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154320Z__streetgs-scene0048-matched-profile100-s0-r30/work_dirs/worldsim_v4_streetgs/scene0048_profile100_s0/checkpoint_final.pth",
+      "bytes": 340298602,
+      "allocated": 340303872,
+      "inode": 11052551620,
+      "device": 66305,
+      "mtime_ns": 1786463066372345155,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154320Z__streetgs-scene0048-matched-profile100-s0-r30",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154633Z__streetgs-scene0048-matched-novis-profile100-s0-r31/work_dirs/worldsim_v4_streetgs/scene0048_profile100_s0/checkpoint_final.pth",
+      "bytes": 340298602,
+      "allocated": 340303872,
+      "inode": 175412802,
+      "device": 66305,
+      "mtime_ns": 1786463255178555160,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T154633Z__streetgs-scene0048-matched-novis-profile100-s0-r31",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43/model/point_cloud/iteration_100/point_cloud.ply",
+      "bytes": 82578770,
+      "allocated": 82579456,
+      "inode": 352856078,
+      "device": 66305,
+      "mtime_ns": 1786474355080101057,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43/model/point_cloud/iteration_100/deform.pth",
+      "bytes": 114955577,
+      "allocated": 114958336,
+      "inode": 352856079,
+      "device": 66305,
+      "mtime_ns": 1786474355284738596,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43/model/point_cloud/iteration_100/env.pth",
+      "bytes": 805307528,
+      "allocated": 805314560,
+      "inode": 352856080,
+      "device": 66305,
+      "mtime_ns": 1786474356380117342,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260811T185145Z__adgs-scene0230-profile100-s0-r43",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57/model/point_cloud/iteration_100/point_cloud.ply",
+      "bytes": 29034314,
+      "allocated": 29036544,
+      "inode": 6782557002,
+      "device": 66305,
+      "mtime_ns": 1786497658526775381,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57/model/point_cloud/iteration_100/deform.pth",
+      "bytes": 114974649,
+      "allocated": 114974720,
+      "inode": 6782557003,
+      "device": 66305,
+      "mtime_ns": 1786497658662781151,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57/model/point_cloud/iteration_100/env.pth",
+      "bytes": 805307528,
+      "allocated": 805314560,
+      "inode": 6782557004,
+      "device": 66305,
+      "mtime_ns": 1786497659542818458,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T012130Z__adgs-scene0242-profile100-s0-r57",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61/model/point_cloud/iteration_100/point_cloud.ply",
+      "bytes": 93182174,
+      "allocated": 93184000,
+      "inode": 192203605,
+      "device": 66305,
+      "mtime_ns": 1786504944340427420,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61/model/point_cloud/iteration_100/deform.pth",
+      "bytes": 80599481,
+      "allocated": 80601088,
+      "inode": 192203606,
+      "device": 66305,
+      "mtime_ns": 1786504944444368743,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61/model/point_cloud/iteration_100/env.pth",
+      "bytes": 805307528,
+      "allocated": 805310464,
+      "inode": 192203607,
+      "device": 66305,
+      "mtime_ns": 1786504945459796430,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T032200Z__adgs-scene0255-profile100-s0-r61",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105/model/point_cloud/iteration_100/point_cloud.ply",
+      "bytes": 123324146,
+      "allocated": 123326464,
+      "inode": 12369964,
+      "device": 66305,
+      "mtime_ns": 1786517111667882437,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105/model/point_cloud/iteration_100/deform.pth",
+      "bytes": 86833529,
+      "allocated": 86835200,
+      "inode": 12369965,
+      "device": 66305,
+      "mtime_ns": 1786517111819943181,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105/model/point_cloud/iteration_100/env.pth",
+      "bytes": 805307528,
+      "allocated": 805310464,
+      "inode": 12369966,
+      "device": 66305,
+      "mtime_ns": 1786517112920382950,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T064440Z__adgs-scene0048-profile100-s0-r105",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109/model/point_cloud/iteration_100/point_cloud.ply",
+      "bytes": 96551918,
+      "allocated": 96555008,
+      "inode": 10743731396,
+      "device": 66305,
+      "mtime_ns": 1786522574289258126,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109/model/point_cloud/iteration_100/deform.pth",
+      "bytes": 56054969,
+      "allocated": 56057856,
+      "inode": 10743731397,
+      "device": 66305,
+      "mtime_ns": 1786522574401237647,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109/model/point_cloud/iteration_100/env.pth",
+      "bytes": 805307528,
+      "allocated": 805310464,
+      "inode": 10743731398,
+      "device": 66305,
+      "mtime_ns": 1786522575569026836,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T081600Z__adgs-scene0994-profile100-s0-r109",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113/model/point_cloud/iteration_100/point_cloud.ply",
+      "bytes": 104250014,
+      "allocated": 104251392,
+      "inode": 4319408769,
+      "device": 66305,
+      "mtime_ns": 1786528601376208734,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113/model/point_cloud/iteration_100/deform.pth",
+      "bytes": 83126137,
+      "allocated": 83128320,
+      "inode": 4319408773,
+      "device": 66305,
+      "mtime_ns": 1786528601488202543,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113/model/point_cloud/iteration_100/env.pth",
+      "bytes": 805307528,
+      "allocated": 805310464,
+      "inode": 4319408776,
+      "device": 66305,
+      "mtime_ns": 1786528602604140833,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-B0-MATCHED-BASELINES-01/20260812T095600Z__adgs-scene0139-profile100-s0-r113",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150355Z__m1-validation-streetgs-scene0071-profile100-s0-r133/work_dirs/worldsim_v4_streetgs/scene0071_profile100_s0/checkpoint_final.pth",
+      "bytes": 319991658,
+      "allocated": 319991808,
+      "inode": 10790719521,
+      "device": 66305,
+      "mtime_ns": 1786547098315266126,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T150355Z__m1-validation-streetgs-scene0071-profile100-s0-r133",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T160907Z__m1-validation-streetgs-scene0317-profile100-s0-r138/work_dirs/worldsim_v4_streetgs/scene0317_profile100_s0/checkpoint_final.pth",
+      "bytes": 324364458,
+      "allocated": 324366336,
+      "inode": 2249132222,
+      "device": 66305,
+      "mtime_ns": 1786551004913798629,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T160907Z__m1-validation-streetgs-scene0317-profile100-s0-r138",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170021Z__m1-validation-streetgs-scene0450-profile100-s0-r143/work_dirs/worldsim_v4_streetgs/scene0450_profile100_s0/checkpoint_final.pth",
+      "bytes": 327157610,
+      "allocated": 327159808,
+      "inode": 11022803178,
+      "device": 66305,
+      "mtime_ns": 1786554085891786558,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T170021Z__m1-validation-streetgs-scene0450-profile100-s0-r143",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T174831Z__m1-validation-streetgs-scene0862-profile100-s0-r150/work_dirs/worldsim_v4_streetgs/scene0862_profile100_s0/checkpoint_final.pth",
+      "bytes": 325917738,
+      "allocated": 325918720,
+      "inode": 6592108872,
+      "device": 66305,
+      "mtime_ns": 1786556968355017659,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T174831Z__m1-validation-streetgs-scene0862-profile100-s0-r150",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175021Z__m1-validation-streetgs-scene1012-profile100-s0-r151/work_dirs/worldsim_v4_streetgs/scene1012_profile100_s0/checkpoint_final.pth",
+      "bytes": 330359402,
+      "allocated": 330362880,
+      "inode": 8820929509,
+      "device": 66305,
+      "mtime_ns": 1786557077871150568,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175021Z__m1-validation-streetgs-scene1012-profile100-s0-r151",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175215Z__m1-validation-streetgs-scene1089-profile100-s0-r152/work_dirs/worldsim_v4_streetgs/scene1089_profile100_s0/checkpoint_final.pth",
+      "bytes": 339706478,
+      "allocated": 339709952,
+      "inode": 162797900,
+      "device": 66305,
+      "mtime_ns": 1786557189758821730,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M1-EVIDENCE-FIELD-01/20260812T175215Z__m1-validation-streetgs-scene1089-profile100-s0-r152",
+        "recipe": "profile-plan.json:recovery"
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105007Z__m3-test-assets-streetgs-scene0919-profile100-s0-r278/work_dirs/worldsim_v4_streetgs/scene0919_profile100_s0/checkpoint_final.pth",
+      "bytes": 347051946,
+      "allocated": 347054080,
+      "inode": 10850470530,
+      "device": 66305,
+      "mtime_ns": 1786618264140769069,
+      "links": 1,
+      "category": "legacy_profile_checkpoint",
+      "restore": {
+        "recovery_record_run": "/root/autodl-tmp/runs/worldsim_v4/WS-V4-M3-TEMPORAL-DELTA-01/20260813T105007Z__m3-test-assets-streetgs-scene0919-profile100-s0-r278",
+        "recipe": "profile-plan.json:recovery"
+      }
+    }
+  ]
+}
