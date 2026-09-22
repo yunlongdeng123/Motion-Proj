@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="520" viewBox="0 0 1280 520">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <style>
+      .box { fill:#f8fafc; stroke:#334155; stroke-width:2; rx:14; }
+      .accent { fill:#e0f2fe; stroke:#0369a1; stroke-width:2; rx:14; }
+      .eval { fill:#ecfdf5; stroke:#047857; stroke-width:2; rx:14; }
+      .down { fill:#fff7ed; stroke:#c2410c; stroke-width:2; rx:14; }
+      .title { font:700 21px Arial, sans-serif; fill:#0f172a; }
+      .label { font:16px Arial, sans-serif; fill:#1e293b; }
+      .small { font:14px Arial, sans-serif; fill:#475569; }
+      .arrow { stroke:#334155; stroke-width:2.4; fill:none; marker-end:url(#arrow); }
+    </style>
+  </defs>
+  <text x="40" y="40" class="title">V7.5 paired counterfactual downstream benchmark</text>
+
+  <rect x="40" y="85" width="220" height="150" class="box"/>
+  <text x="63" y="120" class="title">Shared source</text>
+  <text x="63" y="154" class="label">observation x</text>
+  <text x="63" y="184" class="label">asset/state (a, z)</text>
+  <text x="63" y="214" class="small">same prefix + camera</text>
+
+  <rect x="335" y="70" width="250" height="180" class="accent"/>
+  <text x="360" y="108" class="title">Paired case compiler</text>
+  <text x="360" y="143" class="label">factual: z</text>
+  <text x="360" y="173" class="label">counterfactual: z′</text>
+  <text x="360" y="203" class="small">one variable only</text>
+  <text x="360" y="228" class="small">24 cases / 4 edit families</text>
+
+  <rect x="665" y="65" width="250" height="190" class="box"/>
+  <text x="690" y="103" class="title">Method adapters</text>
+  <text x="690" y="138" class="small">OmniDreams · ReSim</text>
+  <text x="690" y="165" class="small">DriveEditor · StreetGS</text>
+  <text x="690" y="192" class="small">HUGSIM</text>
+  <text x="690" y="224" class="label">→ paired videos/states</text>
+
+  <rect x="995" y="75" width="235" height="170" class="eval"/>
+  <text x="1020" y="113" class="title">Six-axis evaluator</text>
+  <text x="1020" y="148" class="small">A · P · E · O</text>
+  <text x="1020" y="176" class="small">trajectory adherence</text>
+  <text x="1020" y="204" class="small">object/background</text>
+  <text x="1020" y="229" class="small">no composite score</text>
+
+  <rect x="430" y="335" width="300" height="120" class="down"/>
+  <text x="455" y="373" class="title">Downstream consumer</text>
+  <text x="455" y="408" class="label">GaussianDWM understanding</text>
+  <text x="455" y="435" class="small">grounding · planning · generation</text>
+
+  <rect x="870" y="335" width="300" height="120" class="box"/>
+  <text x="895" y="373" class="title">Problem discovery</text>
+  <text x="895" y="408" class="label">state error → output error</text>
+  <text x="895" y="435" class="small">per-case failure strata</text>
+
+  <path d="M260 160 L335 160" class="arrow"/>
+  <path d="M585 160 L665 160" class="arrow"/>
+  <path d="M915 160 L995 160" class="arrow"/>
+  <path d="M790 255 L790 295 L730 295 L730 335" class="arrow"/>
+  <path d="M730 395 L870 395" class="arrow"/>
+  <path d="M1112 245 L1112 335" class="arrow"/>
+</svg>

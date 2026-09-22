@@ -1,0 +1,807 @@
+{
+  "schema_version": "worldsim_v75_cfbench_run_plan_v1",
+  "sequential_order": [
+    "omnidreams",
+    "resim",
+    "driveeditor",
+    "gaussiandwm",
+    "street_gaussians",
+    "hugsim"
+  ],
+  "execution_enabled": false,
+  "reason": "GPU-free preparation turn; commands remain fail-closed until weights and case qualification pass",
+  "models": [
+    {
+      "model_id": "omnidreams",
+      "role": "counterfactual_generator",
+      "readiness": "ready_for_gpu_preflight",
+      "case_count": 24,
+      "generated_case_count": 24,
+      "consumer_case_count": 0,
+      "cases": [
+        {
+          "case_id": "CFB-SPEED-EGO-01",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-02",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-03",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-01",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-02",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-03",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-01",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-02",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-03",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-01",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-02",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-03",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-REMOVE-01",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-02",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-03",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-04",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-05",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-06",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-INSERT-01",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-02",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-03",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-04",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-05",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-06",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        }
+      ],
+      "entrypoint": "existing V7.5 FlashDreams runner wrapper; no command enabled in GPU-free plan",
+      "execution_enabled": false
+    },
+    {
+      "model_id": "resim",
+      "role": "ego_action_world_model",
+      "readiness": "source_only_missing_weights",
+      "case_count": 6,
+      "generated_case_count": 6,
+      "consumer_case_count": 0,
+      "cases": [
+        {
+          "case_id": "CFB-SPEED-EGO-01",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-02",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-03",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-01",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-02",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-03",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        }
+      ],
+      "entrypoint": "cd sat && bash inference_custom.sh <resolved-config>",
+      "execution_enabled": false
+    },
+    {
+      "model_id": "driveeditor",
+      "role": "object_video_editor",
+      "readiness": "source_only_missing_weights",
+      "case_count": 18,
+      "generated_case_count": 18,
+      "consumer_case_count": 0,
+      "cases": [
+        {
+          "case_id": "CFB-SPEED-ACTOR-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-REMOVE-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-04",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-05",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-06",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-INSERT-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-04",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-05",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-06",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        }
+      ],
+      "entrypoint": "python interactive_gui.py after a non-interactive batch adapter is added",
+      "execution_enabled": false
+    },
+    {
+      "model_id": "gaussiandwm",
+      "role": "downstream_understanding_and_generation_consumer",
+      "readiness": "source_only_missing_weights",
+      "case_count": 24,
+      "generated_case_count": 0,
+      "consumer_case_count": 24,
+      "cases": [
+        {
+          "case_id": "CFB-SPEED-EGO-01",
+          "support": "consumer_only",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-02",
+          "support": "consumer_only",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-03",
+          "support": "consumer_only",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-01",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-02",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-03",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-01",
+          "support": "consumer_only",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-02",
+          "support": "consumer_only",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-03",
+          "support": "consumer_only",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-01",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-02",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-03",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-REMOVE-01",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-02",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-03",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-04",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-05",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-06",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-INSERT-01",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-02",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-03",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-04",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-05",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-06",
+          "support": "consumer_only",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        }
+      ],
+      "entrypoint": "PYTHONPATH=src python -m gaussiandwm_cvpr.scripts.infer_qa or infer_world",
+      "execution_enabled": false
+    },
+    {
+      "model_id": "street_gaussians",
+      "role": "explicit_gaussian_reconstruction_baseline",
+      "readiness": "prior_evidence_reusable",
+      "case_count": 24,
+      "generated_case_count": 24,
+      "consumer_case_count": 0,
+      "cases": [
+        {
+          "case_id": "CFB-SPEED-EGO-01",
+          "support": "adapted",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-02",
+          "support": "adapted",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-03",
+          "support": "adapted",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-01",
+          "support": "adapted",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-02",
+          "support": "adapted",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-03",
+          "support": "adapted",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-REMOVE-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-04",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-05",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-06",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-INSERT-01",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-02",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-03",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-04",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-05",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-06",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        }
+      ],
+      "entrypoint": "existing DriveStudio StreetGS adapter; checkpoints must be restored before new renders",
+      "execution_enabled": false
+    },
+    {
+      "model_id": "hugsim",
+      "role": "closed_loop_gaussian_reference_simulator",
+      "readiness": "source_only_missing_weights",
+      "case_count": 24,
+      "generated_case_count": 24,
+      "consumer_case_count": 0,
+      "cases": [
+        {
+          "case_id": "CFB-SPEED-EGO-01",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-02",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-EGO-03",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-SPEED-ACTOR-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_speed_change"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-01",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-02",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-EGO-03",
+          "support": "native",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-LATERAL-ACTOR-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation"
+        },
+        {
+          "case_id": "CFB-REMOVE-01",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-02",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-03",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-04",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-05",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-REMOVE-06",
+          "support": "adapted",
+          "target_role": "non_ego",
+          "family": "actor_removal"
+        },
+        {
+          "case_id": "CFB-INSERT-01",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-02",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-03",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-04",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-05",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        },
+        {
+          "case_id": "CFB-INSERT-06",
+          "support": "native",
+          "target_role": "non_ego",
+          "family": "actor_insertion"
+        }
+      ],
+      "entrypoint": "python closed_loop.py with an exported scene and frozen scenario",
+      "execution_enabled": false
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "schema_version": "worldsim_v75_cfbench_model_registry_v1",
+  "models": [
+    {
+      "model_id": "omnidreams",
+      "display_name": "NVIDIA Cosmos-Dreams / OmniDreams single-view 2B",
+      "role": "counterfactual_generator",
+      "official_url": "https://github.com/nv-tlabs/omni-dreams",
+      "source": {
+        "path": "/root/autodl-tmp/external/worldsim_v75/flashdreams",
+        "expected_commit": "bc711d6f95693d73693e6b5fac75749cc6fcf1d7",
+        "required_paths": [
+          "flashdreams/flashdreams/infra/runner.py",
+          "integrations_v2/omnidreams/impl/pipeline.py"
+        ]
+      },
+      "environment": {
+        "all_of": [
+          "/root/autodl-tmp/envs/worldsim-v75/bin/python"
+        ]
+      },
+      "weights": {
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75/omni-dreams-models/single_view/2b_res720p_30fps_i2v_hdmap_distilled.pt"
+        ]
+      },
+      "data": {
+        "any_of": [
+          "/root/autodl-tmp/models/worldsim_v75/omni-dreams-samples/data",
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+        ]
+      },
+      "prior_evidence": {
+        "any_of": [
+          "/root/autodl-tmp/motion_proj/docs/autoresearch/worldsim_v75/actor_trajectory_counterfactual/summary.json"
+        ]
+      },
+      "reuse_prior_evidence": false,
+      "entrypoint": "existing V7.5 FlashDreams runner wrapper; no command enabled in GPU-free plan",
+      "capabilities": {
+        "ego:actor_speed_change": "native",
+        "ego:actor_lateral_relocation": "native",
+        "non_ego:actor_speed_change": "adapted",
+        "non_ego:actor_lateral_relocation": "adapted",
+        "non_ego:actor_removal": "adapted",
+        "non_ego:actor_insertion": "adapted"
+      },
+      "resource_notes": [
+        "single-view 2B checkpoint already ran on one RTX 3090",
+        "structured non-ego edits are adapter-level conditions, not all official headline interfaces"
+      ]
+    },
+    {
+      "model_id": "resim",
+      "display_name": "ReSim",
+      "role": "ego_action_world_model",
+      "official_url": "https://github.com/OpenDriveLab/ReSim",
+      "source": {
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim",
+        "expected_commit": "bf13dff45975eabbabc4e7de778207d2bb785e9b",
+        "required_paths": [
+          "README.md",
+          "sat/sample_video.py",
+          "sat/inference_custom.sh"
+        ]
+      },
+      "environment": {
+        "all_of": [
+          "/root/autodl-tmp/envs/resim/bin/python"
+        ]
+      },
+      "weights": {
+        "all_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/transformer/latest",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/vae/3d-vae.pt"
+        ]
+      },
+      "data": {
+        "any_of": [
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+        ]
+      },
+      "prior_evidence": {},
+      "reuse_prior_evidence": false,
+      "entrypoint": "cd sat && bash inference_custom.sh <resolved-config>",
+      "capabilities": {
+        "ego:actor_speed_change": "native",
+        "ego:actor_lateral_relocation": "native",
+        "non_ego:actor_speed_change": "unsupported",
+        "non_ego:actor_lateral_relocation": "unsupported",
+        "non_ego:actor_removal": "unsupported",
+        "non_ego:actor_insertion": "unsupported"
+      },
+      "resource_notes": [
+        "public weights currently cover expert actions; expert plus CARLA non-expert weights remain on the upstream roadmap",
+        "ego future trajectory conditioning must not be relabeled as non-ego actor editing"
+      ]
+    },
+    {
+      "model_id": "driveeditor",
+      "display_name": "DriveEditor",
+      "role": "object_video_editor",
+      "official_url": "https://github.com/yvanliang/DriveEditor",
+      "source": {
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEditor",
+        "expected_commit": "e67d73a6ffc0a90996331db1e1415ab92b341293",
+        "required_paths": [
+          "interactive_gui.py",
+          "configs/sample.yaml",
+          "README.md"
+        ]
+      },
+      "environment": {
+        "all_of": [
+          "/root/autodl-tmp/envs/driveeditor/bin/python"
+        ]
+      },
+      "weights": {
+        "any_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.ckpt",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.safetensors"
+        ]
+      },
+      "data": {
+        "any_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.pkl"
+        ]
+      },
+      "prior_evidence": {},
+      "reuse_prior_evidence": false,
+      "entrypoint": "python interactive_gui.py after a non-interactive batch adapter is added",
+      "capabilities": {
+        "ego:actor_speed_change": "unsupported",
+        "ego:actor_lateral_relocation": "unsupported",
+        "non_ego:actor_speed_change": "native",
+        "non_ego:actor_lateral_relocation": "native",
+        "non_ego:actor_removal": "native",
+        "non_ego:actor_insertion": "native"
+      },
+      "resource_notes": [
+        "official README requires more than 32 GB VRAM on one GPU or two 24 GB GPUs",
+        "a single 24 GB RTX 3090 is not an authorized official inference configuration"
+      ]
+    },
+    {
+      "model_id": "gaussiandwm",
+      "display_name": "GaussianDWM CVPR release",
+      "role": "downstream_understanding_and_generation_consumer",
+      "official_url": "https://github.com/dtc111111/GaussianDWM",
+      "source": {
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/GaussianDWM",
+        "expected_commit": "50e29cb7df691f58dc5c9992b7de6ec496a4e6d0",
+        "required_paths": [
+          "src/gaussiandwm_cvpr/scripts/infer_qa.py",
+          "src/gaussiandwm_cvpr/scripts/infer_world.py",
+          "README.md"
+        ]
+      },
+      "environment": {
+        "all_of": [
+          "/root/autodl-tmp/envs/gaussiandwm/bin/python"
+        ]
+      },
+      "weights": {
+        "any_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/*.safetensors",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/**/*.pt"
+        ]
+      },
+      "data": {
+        "any_of": [
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/gaussiandwm/gauss"
+        ]
+      },
+      "prior_evidence": {},
+      "reuse_prior_evidence": false,
+      "entrypoint": "PYTHONPATH=src python -m gaussiandwm_cvpr.scripts.infer_qa or infer_world",
+      "capabilities": {
+        "ego:actor_speed_change": "consumer_only",
+        "ego:actor_lateral_relocation": "consumer_only",
+        "non_ego:actor_speed_change": "consumer_only",
+        "non_ego:actor_lateral_relocation": "consumer_only",
+        "non_ego:actor_removal": "consumer_only",
+        "non_ego:actor_insertion": "consumer_only"
+      },
+      "resource_notes": [
+        "the public CVPR package has QA and world-generation inference but no 4D editing API",
+        "use it downstream on paired edited worlds; do not score it as an editor"
+      ]
+    },
+    {
+      "model_id": "street_gaussians",
+      "display_name": "Street Gaussians",
+      "role": "explicit_gaussian_reconstruction_baseline",
+      "official_url": "https://github.com/zju3dv/street_gaussians",
+      "source": {
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/street_gaussians",
+        "expected_commit": "c343613afadcb0006b1dfd1ffa8597132f662d26",
+        "required_paths": [
+          "render.py",
+          "train.py",
+          "README.md"
+        ]
+      },
+      "environment": {
+        "all_of": [
+          "/root/autodl-tmp/envs/drivestudio/bin/python",
+          "/root/autodl-tmp/third_party/drivestudio"
+        ]
+      },
+      "weights": {
+        "any_of": [
+          "/root/autodl-tmp/runs/worldsim_v4/**/checkpoints/*.pth",
+          "/root/autodl-tmp/runs/worldsim_v5/**/checkpoints/*.pth"
+        ]
+      },
+      "data": {
+        "any_of": [
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval"
+        ]
+      },
+      "prior_evidence": {
+        "any_of": [
+          "/root/autodl-tmp/runs/worldsim_v521/**/panels/BC-STREETGS-*",
+          "/root/autodl-tmp/motion_proj/docs/research_failures/history/part-061.md"
+        ]
+      },
+      "reuse_prior_evidence": true,
+      "entrypoint": "existing DriveStudio StreetGS adapter; checkpoints must be restored before new renders",
+      "capabilities": {
+        "ego:actor_speed_change": "adapted",
+        "ego:actor_lateral_relocation": "adapted",
+        "non_ego:actor_speed_change": "native",
+        "non_ego:actor_lateral_relocation": "native",
+        "non_ego:actor_removal": "native",
+        "non_ego:actor_insertion": "adapted"
+      },
+      "resource_notes": [
+        "prior matched reconstruction and actor-composition evidence is reusable",
+        "historical checkpoints were retired, so new inference needs checkpoint restoration or retraining"
+      ]
+    },
+    {
+      "model_id": "hugsim",
+      "display_name": "HUGSIM",
+      "role": "closed_loop_gaussian_reference_simulator",
+      "official_url": "https://github.com/hyzhou404/HUGSIM",
+      "source": {
+        "path": "/root/autodl-tmp/external/worldsim_simimpact/HUGSIM",
+        "expected_commit": "62c690d39fd90020e68a196bd8bcc1c4d4191f2e",
+        "required_paths": [
+          "closed_loop.py",
+          "eval_render/render.py",
+          "README.md"
+        ]
+      },
+      "environment": {
+        "all_of": [
+          "/root/autodl-tmp/envs/hugsim-impact/bin/python"
+        ]
+      },
+      "weights": {
+        "any_of": [
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.ply",
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.pth"
+        ]
+      },
+      "data": {
+        "any_of": [
+          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/inputs"
+        ]
+      },
+      "prior_evidence": {
+        "any_of": [
+          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/native_collision_replay.json"
+        ]
+      },
+      "reuse_prior_evidence": false,
+      "entrypoint": "python closed_loop.py with an exported scene and frozen scenario",
+      "capabilities": {
+        "ego:actor_speed_change": "native",
+        "ego:actor_lateral_relocation": "native",
+        "non_ego:actor_speed_change": "native",
+        "non_ego:actor_lateral_relocation": "native",
+        "non_ego:actor_removal": "adapted",
+        "non_ego:actor_insertion": "native"
+      },
+      "resource_notes": [
+        "local source and environment exist",
+        "a benchmark-aligned exported reconstruction is not currently resident"
+      ]
+    }
+  ]
+}

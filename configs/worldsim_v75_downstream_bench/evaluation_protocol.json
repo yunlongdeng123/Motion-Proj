@@ -1,0 +1,48 @@
+{
+  "schema_version": "worldsim_v75_cfbench_evaluation_protocol_v1",
+  "paired_design": {
+    "shared": [
+      "initial observation",
+      "camera path before the branch",
+      "non-target actor states",
+      "background and weather",
+      "random seed when the implementation exposes one"
+    ],
+    "changed": "exactly one declared intervention variable",
+    "branch_rule": "factual and counterfactual must match through the causal branch frame"
+  },
+  "dimensions": {
+    "adherence": {
+      "single": "the intended entity executes its requested control",
+      "paired": "the two rendered actions differ in the requested direction"
+    },
+    "physics": {
+      "single": "motion, scale, contact and occlusion contain no teleportation, morphing or ghost force",
+      "paired": "pre-branch trajectories align and post-branch trajectories bifurcate physically"
+    },
+    "environment_preservation": {
+      "single": "camera, background and non-target permanence remain stable",
+      "paired": "cross-video differences outside the affected region are minimal"
+    },
+    "outcome": {
+      "single": null,
+      "paired": "the final states diverge in the intervention-predicted direction"
+    },
+    "trajectory_adherence": {
+      "single": "ADE/FDE or state-center/yaw errors against the requested trajectory",
+      "paired": "the measured trajectory delta matches the requested delta"
+    },
+    "object_background_preservation": {
+      "single": "target asset identity is preserved and non-target/background content is unchanged",
+      "paired": "target-only change is localized; removal reveals plausible background"
+    }
+  },
+  "reporting": {
+    "binary_apeo": true,
+    "continuous_geometry_where_available": true,
+    "no_composite_score": true,
+    "missing_is_not_zero": true,
+    "unsupported_is_not_failure": true,
+    "human_verdict_default": null
+  }
+}

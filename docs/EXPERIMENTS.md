@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V75-DOWNSTREAM-CFBENCH-PREP-01 / 20260922-r1 | 下游导向 paired-edit pilot：四类各6个共24个候选；六模型能力/资源 registry、CPU preflight、fail-closed planner、六维无总分 evaluator；0模型调用 | [设计与边界](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)、[manifest/preflight/plan](autoresearch/worldsim_v75/downstream_bench/) |
 | WS-STORAGE-OLD-RUNS-RETIRE-01 / 20260922-r1 | 历史研究脉络与产物退役；保留轻量证据、当前 V7.5 依赖核验；0 模型调用 | [清单与恢复边界](autoresearch/old_runs_retirement_20260922/README.md) |
 | WS-V75-CF-DEFINITION-01 / 20260921-r1 | WorldSim反事实质量定义、参考层级与有限实验设计；0模型调用，非新科学结果 | [定义](v75/PROBLEM.md)、[评价协议](v75/COUNTERFACTUAL_EVALUATION.md)、[审阅图](autoresearch/worldsim_v75/counterfactual_definition/) |
 | WS-V75-ACTOR-REMOVAL-QUALIFY-01；GENERATION-01 / 20260921-r2；r1 | 两个曝光开发源中冻结首个A遮挡B对象对；三状态×未编辑/移除共6段702帧；reference通过，类别先验残留候选 | [对象移除报告](v75/ACTOR_REMOVAL_COUNTERFACTUAL.md)、[轻量证据](autoresearch/worldsim_v75/actor_removal_counterfactual/summary.json) |

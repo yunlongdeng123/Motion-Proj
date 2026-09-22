@@ -1,0 +1,306 @@
+{
+  "schema_version": "worldsim_v75_cfbench_preflight_v1",
+  "mode": "gpu_free",
+  "models": [
+    {
+      "model_id": "omnidreams",
+      "readiness": "ready_for_gpu_preflight",
+      "source": {
+        "passed": true,
+        "path": "/root/autodl-tmp/external/worldsim_v75/flashdreams",
+        "head": "bc711d6f95693d73693e6b5fac75749cc6fcf1d7",
+        "expected_commit": "bc711d6f95693d73693e6b5fac75749cc6fcf1d7",
+        "dirty": false,
+        "required_paths": {
+          "flashdreams/flashdreams/infra/runner.py": true,
+          "integrations_v2/omnidreams/impl/pipeline.py": true
+        }
+      },
+      "environment": {
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/envs/worldsim-v75/bin/python": true
+        },
+        "any_of": {}
+      },
+      "weights": {
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75/omni-dreams-models/single_view/2b_res720p_30fps_i2v_hdmap_distilled.pt": true
+        },
+        "any_of": {}
+      },
+      "data": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/models/worldsim_v75/omni-dreams-samples/data": true,
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true
+        }
+      },
+      "prior_evidence": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/motion_proj/docs/autoresearch/worldsim_v75/actor_trajectory_counterfactual/summary.json": true
+        }
+      },
+      "gpu_checks_run": false,
+      "notes": [
+        "single-view 2B checkpoint already ran on one RTX 3090",
+        "structured non-ego edits are adapter-level conditions, not all official headline interfaces"
+      ]
+    },
+    {
+      "model_id": "resim",
+      "readiness": "source_only_missing_weights",
+      "source": {
+        "passed": true,
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim",
+        "head": "bf13dff45975eabbabc4e7de778207d2bb785e9b",
+        "expected_commit": "bf13dff45975eabbabc4e7de778207d2bb785e9b",
+        "dirty": false,
+        "required_paths": {
+          "README.md": true,
+          "sat/sample_video.py": true,
+          "sat/inference_custom.sh": true
+        }
+      },
+      "environment": {
+        "passed": false,
+        "all_of": {
+          "/root/autodl-tmp/envs/resim/bin/python": false
+        },
+        "any_of": {}
+      },
+      "weights": {
+        "passed": false,
+        "all_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/transformer/latest": false,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/CogVideoX-2b-sat/vae/3d-vae.pt": false
+        },
+        "any_of": {}
+      },
+      "data": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true
+        }
+      },
+      "prior_evidence": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {}
+      },
+      "gpu_checks_run": false,
+      "notes": [
+        "public weights currently cover expert actions; expert plus CARLA non-expert weights remain on the upstream roadmap",
+        "ego future trajectory conditioning must not be relabeled as non-ego actor editing"
+      ]
+    },
+    {
+      "model_id": "driveeditor",
+      "readiness": "source_only_missing_weights",
+      "source": {
+        "passed": true,
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEditor",
+        "head": "e67d73a6ffc0a90996331db1e1415ab92b341293",
+        "expected_commit": "e67d73a6ffc0a90996331db1e1415ab92b341293",
+        "dirty": false,
+        "required_paths": {
+          "interactive_gui.py": true,
+          "configs/sample.yaml": true,
+          "README.md": true
+        }
+      },
+      "environment": {
+        "passed": false,
+        "all_of": {
+          "/root/autodl-tmp/envs/driveeditor/bin/python": false
+        },
+        "any_of": {}
+      },
+      "weights": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.ckpt": false,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.safetensors": false
+        }
+      },
+      "data": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/driveeditor/checkpoints/*.pkl": false
+        }
+      },
+      "prior_evidence": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {}
+      },
+      "gpu_checks_run": false,
+      "notes": [
+        "official README requires more than 32 GB VRAM on one GPU or two 24 GB GPUs",
+        "a single 24 GB RTX 3090 is not an authorized official inference configuration"
+      ]
+    },
+    {
+      "model_id": "gaussiandwm",
+      "readiness": "source_only_missing_weights",
+      "source": {
+        "passed": true,
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/GaussianDWM",
+        "head": "50e29cb7df691f58dc5c9992b7de6ec496a4e6d0",
+        "expected_commit": "50e29cb7df691f58dc5c9992b7de6ec496a4e6d0",
+        "dirty": false,
+        "required_paths": {
+          "src/gaussiandwm_cvpr/scripts/infer_qa.py": true,
+          "src/gaussiandwm_cvpr/scripts/infer_world.py": true,
+          "README.md": true
+        }
+      },
+      "environment": {
+        "passed": false,
+        "all_of": {
+          "/root/autodl-tmp/envs/gaussiandwm/bin/python": false
+        },
+        "any_of": {}
+      },
+      "weights": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/*.safetensors": false,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/**/*.pt": false
+        }
+      },
+      "data": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/data/worldsim_v75_downstream_bench/gaussiandwm/gauss": false
+        }
+      },
+      "prior_evidence": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {}
+      },
+      "gpu_checks_run": false,
+      "notes": [
+        "the public CVPR package has QA and world-generation inference but no 4D editing API",
+        "use it downstream on paired edited worlds; do not score it as an editor"
+      ]
+    },
+    {
+      "model_id": "street_gaussians",
+      "readiness": "prior_evidence_reusable",
+      "source": {
+        "passed": true,
+        "path": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/street_gaussians",
+        "head": "c343613afadcb0006b1dfd1ffa8597132f662d26",
+        "expected_commit": "c343613afadcb0006b1dfd1ffa8597132f662d26",
+        "dirty": false,
+        "required_paths": {
+          "render.py": true,
+          "train.py": true,
+          "README.md": true
+        }
+      },
+      "environment": {
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/envs/drivestudio/bin/python": true,
+          "/root/autodl-tmp/third_party/drivestudio": true
+        },
+        "any_of": {}
+      },
+      "weights": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/runs/worldsim_v4/**/checkpoints/*.pth": false,
+          "/root/autodl-tmp/runs/worldsim_v5/**/checkpoints/*.pth": false
+        }
+      },
+      "data": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval": true
+        }
+      },
+      "prior_evidence": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/runs/worldsim_v521/**/panels/BC-STREETGS-*": true,
+          "/root/autodl-tmp/motion_proj/docs/research_failures/history/part-061.md": true
+        }
+      },
+      "gpu_checks_run": false,
+      "notes": [
+        "prior matched reconstruction and actor-composition evidence is reusable",
+        "historical checkpoints were retired, so new inference needs checkpoint restoration or retraining"
+      ]
+    },
+    {
+      "model_id": "hugsim",
+      "readiness": "source_only_missing_weights",
+      "source": {
+        "passed": true,
+        "path": "/root/autodl-tmp/external/worldsim_simimpact/HUGSIM",
+        "head": "62c690d39fd90020e68a196bd8bcc1c4d4191f2e",
+        "expected_commit": "62c690d39fd90020e68a196bd8bcc1c4d4191f2e",
+        "dirty": false,
+        "required_paths": {
+          "closed_loop.py": true,
+          "eval_render/render.py": true,
+          "README.md": true
+        }
+      },
+      "environment": {
+        "passed": true,
+        "all_of": {
+          "/root/autodl-tmp/envs/hugsim-impact/bin/python": true
+        },
+        "any_of": {}
+      },
+      "weights": {
+        "passed": false,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.ply": false,
+          "/root/autodl-tmp/models/worldsim_v75_downstream_bench/hugsim/**/*.pth": false
+        }
+      },
+      "data": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/inputs": true
+        }
+      },
+      "prior_evidence": {
+        "passed": true,
+        "all_of": {},
+        "any_of": {
+          "/root/autodl-tmp/runs/worldsim_simimpact/WS-SIM-IMPACT-01/20260915-r1/native_collision_replay.json": true
+        }
+      },
+      "gpu_checks_run": false,
+      "notes": [
+        "local source and environment exist",
+        "a benchmark-aligned exported reconstruction is not currently resident"
+      ]
+    }
+  ],
+  "summary": {
+    "prior_evidence_reusable": 1,
+    "ready_for_gpu_preflight": 1,
+    "source_only_missing_weights": 4
+  }
+}

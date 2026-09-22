@@ -1,0 +1,1148 @@
+{
+  "schema_version": "worldsim_v75_cfbench_manifest_v1",
+  "benchmark": {
+    "task_id": "WS-V75-DOWNSTREAM-CFBENCH-01",
+    "purpose": "problem discovery, not prevalence or leaderboard claims",
+    "paired_design": true,
+    "no_composite_score": true,
+    "dimensions": [
+      "adherence",
+      "physics",
+      "environment_preservation",
+      "outcome",
+      "trajectory_adherence",
+      "object_background_preservation"
+    ],
+    "construction": "CPU metadata screen; every case still requires visual/road/collision qualification"
+  },
+  "cases": [
+    {
+      "case_id": "CFB-SPEED-EGO-01",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 65,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "ego",
+        "entity_id": "ego"
+      },
+      "intervention": {
+        "family": "actor_speed_change",
+        "variable": "speed_scale",
+        "factual": {
+          "speed_scale": 1.0
+        },
+        "counterfactual": {
+          "speed_scale": 0.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "shorter progress",
+        "affected_entities": [
+          "ego"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-EGO-02",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "191",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 65,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "ego",
+        "entity_id": "ego"
+      },
+      "intervention": {
+        "family": "actor_speed_change",
+        "variable": "speed_scale",
+        "factual": {
+          "speed_scale": 1.0
+        },
+        "counterfactual": {
+          "speed_scale": 1.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "longer progress",
+        "affected_entities": [
+          "ego"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-EGO-03",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 65,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "ego",
+        "entity_id": "ego"
+      },
+      "intervention": {
+        "family": "actor_speed_change",
+        "variable": "speed_scale",
+        "factual": {
+          "speed_scale": 1.0
+        },
+        "counterfactual": {
+          "speed_scale": 0.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "shorter progress",
+        "affected_entities": [
+          "ego"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-ACTOR-01",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "edacd867fad74e8ba40d1737b9efa8be",
+        "actor_key": "8",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_speed_change",
+        "variable": "speed_scale",
+        "factual": {
+          "speed_scale": 1.0
+        },
+        "counterfactual": {
+          "speed_scale": 0.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "shorter progress",
+        "affected_entities": [
+          "edacd867fad74e8ba40d1737b9efa8be"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-ACTOR-02",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "191",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "5bbb1387aaea487cb7c77586286358ab",
+        "actor_key": "7",
+        "class_name": "vehicle.truck"
+      },
+      "intervention": {
+        "family": "actor_speed_change",
+        "variable": "speed_scale",
+        "factual": {
+          "speed_scale": 1.0
+        },
+        "counterfactual": {
+          "speed_scale": 1.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "longer progress",
+        "affected_entities": [
+          "5bbb1387aaea487cb7c77586286358ab"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-ACTOR-03",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "ef8683c140ff4b43b82ac9b318352202",
+        "actor_key": "3",
+        "class_name": "vehicle.bus.rigid"
+      },
+      "intervention": {
+        "family": "actor_speed_change",
+        "variable": "speed_scale",
+        "factual": {
+          "speed_scale": 1.0
+        },
+        "counterfactual": {
+          "speed_scale": 0.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "shorter progress",
+        "affected_entities": [
+          "ef8683c140ff4b43b82ac9b318352202"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-LATERAL-EGO-01",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 100,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "ego",
+        "entity_id": "ego"
+      },
+      "intervention": {
+        "family": "actor_lateral_relocation",
+        "variable": "lateral_offset_m",
+        "factual": {
+          "lateral_offset_m": 0.0
+        },
+        "counterfactual": {
+          "lateral_offset_m": 3.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "leftward displacement",
+        "affected_entities": [
+          "ego"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-LATERAL-EGO-02",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "191",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 100,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "ego",
+        "entity_id": "ego"
+      },
+      "intervention": {
+        "family": "actor_lateral_relocation",
+        "variable": "lateral_offset_m",
+        "factual": {
+          "lateral_offset_m": 0.0
+        },
+        "counterfactual": {
+          "lateral_offset_m": -3.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "rightward displacement",
+        "affected_entities": [
+          "ego"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-LATERAL-EGO-03",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 100,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "ego",
+        "entity_id": "ego"
+      },
+      "intervention": {
+        "family": "actor_lateral_relocation",
+        "variable": "lateral_offset_m",
+        "factual": {
+          "lateral_offset_m": 0.0
+        },
+        "counterfactual": {
+          "lateral_offset_m": 3.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "leftward displacement",
+        "affected_entities": [
+          "ego"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-LATERAL-ACTOR-01",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "191",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 15,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "b1483aa674c244bbb2afa8f2142e8a8b",
+        "actor_key": "27",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_lateral_relocation",
+        "variable": "lateral_offset_m",
+        "factual": {
+          "lateral_offset_m": 0.0
+        },
+        "counterfactual": {
+          "lateral_offset_m": 3.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "leftward displacement",
+        "affected_entities": [
+          "b1483aa674c244bbb2afa8f2142e8a8b"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-LATERAL-ACTOR-02",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 35,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "80c08b992f1d47359de644be24f491df",
+        "actor_key": "49",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_lateral_relocation",
+        "variable": "lateral_offset_m",
+        "factual": {
+          "lateral_offset_m": 0.0
+        },
+        "counterfactual": {
+          "lateral_offset_m": -3.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "rightward displacement",
+        "affected_entities": [
+          "80c08b992f1d47359de644be24f491df"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-LATERAL-ACTOR-03",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "191",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "cecc914839c04fe593ad9ef0aabed0ec",
+        "actor_key": "21",
+        "class_name": "vehicle.bicycle"
+      },
+      "intervention": {
+        "family": "actor_lateral_relocation",
+        "variable": "lateral_offset_m",
+        "factual": {
+          "lateral_offset_m": 0.0
+        },
+        "counterfactual": {
+          "lateral_offset_m": 3.5
+        }
+      },
+      "expected_outcome": {
+        "direction": "leftward displacement",
+        "affected_entities": [
+          "cecc914839c04fe593ad9ef0aabed0ec"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-REMOVE-01",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "191",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "c865dd2c1694431fadbbb2a511196ef0",
+        "actor_key": "15",
+        "class_name": "vehicle.trailer"
+      },
+      "intervention": {
+        "family": "actor_removal",
+        "variable": "presence",
+        "factual": {
+          "presence": true
+        },
+        "counterfactual": {
+          "presence": false
+        }
+      },
+      "expected_outcome": {
+        "direction": "target absent with disoccluded content revealed",
+        "affected_entities": [
+          "c865dd2c1694431fadbbb2a511196ef0"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-REMOVE-02",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "829a6f7a158c4627b060c269eea85e41",
+        "actor_key": "11",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_removal",
+        "variable": "presence",
+        "factual": {
+          "presence": true
+        },
+        "counterfactual": {
+          "presence": false
+        }
+      },
+      "expected_outcome": {
+        "direction": "target absent with disoccluded content revealed",
+        "affected_entities": [
+          "829a6f7a158c4627b060c269eea85e41"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-REMOVE-03",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "19c251bd4de942828f1ecde6bd4f6270",
+        "actor_key": "18",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_removal",
+        "variable": "presence",
+        "factual": {
+          "presence": true
+        },
+        "counterfactual": {
+          "presence": false
+        }
+      },
+      "expected_outcome": {
+        "direction": "target absent with disoccluded content revealed",
+        "affected_entities": [
+          "19c251bd4de942828f1ecde6bd4f6270"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-REMOVE-04",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "6daee9ee84754723ab026478f37914ad",
+        "actor_key": "32",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_removal",
+        "variable": "presence",
+        "factual": {
+          "presence": true
+        },
+        "counterfactual": {
+          "presence": false
+        }
+      },
+      "expected_outcome": {
+        "direction": "target absent with disoccluded content revealed",
+        "affected_entities": [
+          "6daee9ee84754723ab026478f37914ad"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-REMOVE-05",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "b4f1133baba34cc29706d7e53d10ac45",
+        "actor_key": "25",
+        "class_name": "vehicle.car"
+      },
+      "intervention": {
+        "family": "actor_removal",
+        "variable": "presence",
+        "factual": {
+          "presence": true
+        },
+        "counterfactual": {
+          "presence": false
+        }
+      },
+      "expected_outcome": {
+        "direction": "target absent with disoccluded content revealed",
+        "affected_entities": [
+          "b4f1133baba34cc29706d7e53d10ac45"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-REMOVE-06",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "b4ead73f049b41f8ab07eabce298f539",
+        "actor_key": "20",
+        "class_name": "vehicle.construction"
+      },
+      "intervention": {
+        "family": "actor_removal",
+        "variable": "presence",
+        "factual": {
+          "presence": true
+        },
+        "counterfactual": {
+          "presence": false
+        }
+      },
+      "expected_outcome": {
+        "direction": "target absent with disoccluded content revealed",
+        "affected_entities": [
+          "b4ead73f049b41f8ab07eabce298f539"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-INSERT-01",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "inserted:55b278441b1f437c955e69540b5ecb3d",
+        "source_asset_actor_key": "6",
+        "source_asset_actor_id": "55b278441b1f437c955e69540b5ecb3d",
+        "class_name": "vehicle.car",
+        "proposal_offset_actor_frame_m": [
+          8.0,
+          3.5,
+          0.0
+        ]
+      },
+      "intervention": {
+        "family": "actor_insertion",
+        "variable": "presence",
+        "factual": {
+          "presence": false
+        },
+        "counterfactual": {
+          "presence": true
+        }
+      },
+      "expected_outcome": {
+        "direction": "new actor present at a road-valid non-colliding pose",
+        "affected_entities": [
+          "inserted:55b278441b1f437c955e69540b5ecb3d"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-INSERT-02",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "inserted:83ada4635f91492e83490063a7486f02",
+        "source_asset_actor_key": "7",
+        "source_asset_actor_id": "83ada4635f91492e83490063a7486f02",
+        "class_name": "vehicle.car",
+        "proposal_offset_actor_frame_m": [
+          8.0,
+          -3.5,
+          0.0
+        ]
+      },
+      "intervention": {
+        "family": "actor_insertion",
+        "variable": "presence",
+        "factual": {
+          "presence": false
+        },
+        "counterfactual": {
+          "presence": true
+        }
+      },
+      "expected_outcome": {
+        "direction": "new actor present at a road-valid non-colliding pose",
+        "affected_entities": [
+          "inserted:83ada4635f91492e83490063a7486f02"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-INSERT-03",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "204",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "inserted:1ae75f60ad3f4c8dbaf0c857109da437",
+        "source_asset_actor_key": "1",
+        "source_asset_actor_id": "1ae75f60ad3f4c8dbaf0c857109da437",
+        "class_name": "vehicle.car",
+        "proposal_offset_actor_frame_m": [
+          8.0,
+          3.5,
+          0.0
+        ]
+      },
+      "intervention": {
+        "family": "actor_insertion",
+        "variable": "presence",
+        "factual": {
+          "presence": false
+        },
+        "counterfactual": {
+          "presence": true
+        }
+      },
+      "expected_outcome": {
+        "direction": "new actor present at a road-valid non-colliding pose",
+        "affected_entities": [
+          "inserted:1ae75f60ad3f4c8dbaf0c857109da437"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-INSERT-04",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "inserted:014ac96c171d49dbb2d2f312777ced67",
+        "source_asset_actor_key": "3",
+        "source_asset_actor_id": "014ac96c171d49dbb2d2f312777ced67",
+        "class_name": "vehicle.car",
+        "proposal_offset_actor_frame_m": [
+          8.0,
+          -3.5,
+          0.0
+        ]
+      },
+      "intervention": {
+        "family": "actor_insertion",
+        "variable": "presence",
+        "factual": {
+          "presence": false
+        },
+        "counterfactual": {
+          "presence": true
+        }
+      },
+      "expected_outcome": {
+        "direction": "new actor present at a road-valid non-colliding pose",
+        "affected_entities": [
+          "inserted:014ac96c171d49dbb2d2f312777ced67"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-INSERT-05",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "inserted:43fb20f67dbb4b149e9715f93a49e8ad",
+        "source_asset_actor_key": "28",
+        "source_asset_actor_id": "43fb20f67dbb4b149e9715f93a49e8ad",
+        "class_name": "vehicle.construction",
+        "proposal_offset_actor_frame_m": [
+          8.0,
+          3.5,
+          0.0
+        ]
+      },
+      "intervention": {
+        "family": "actor_insertion",
+        "variable": "presence",
+        "factual": {
+          "presence": false
+        },
+        "counterfactual": {
+          "presence": true
+        }
+      },
+      "expected_outcome": {
+        "direction": "new actor present at a road-valid non-colliding pose",
+        "affected_entities": [
+          "inserted:43fb20f67dbb4b149e9715f93a49e8ad"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    },
+    {
+      "case_id": "CFB-INSERT-06",
+      "status": "proposed_cpu_only",
+      "dataset": {
+        "name": "nuscenes_drivestudio_10hz",
+        "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+        "scene_id": "179",
+        "role": "pilot_development_only"
+      },
+      "anchor": {
+        "event_frame": 5,
+        "pre_frames": 5,
+        "rollout_frames": 24,
+        "state_fixation": "same scene, prefix, camera, seed and non-target state"
+      },
+      "target": {
+        "role": "non_ego",
+        "entity_id": "inserted:af663976db5e412e83db033d309c5c29",
+        "source_asset_actor_key": "13",
+        "source_asset_actor_id": "af663976db5e412e83db033d309c5c29",
+        "class_name": "vehicle.car",
+        "proposal_offset_actor_frame_m": [
+          8.0,
+          -3.5,
+          0.0
+        ]
+      },
+      "intervention": {
+        "family": "actor_insertion",
+        "variable": "presence",
+        "factual": {
+          "presence": false
+        },
+        "counterfactual": {
+          "presence": true
+        }
+      },
+      "expected_outcome": {
+        "direction": "new actor present at a road-valid non-colliding pose",
+        "affected_entities": [
+          "inserted:af663976db5e412e83db033d309c5c29"
+        ],
+        "unchanged_scope": "all_except_affected_entities"
+      },
+      "qualification": {
+        "state_fixation": true,
+        "single_variable_change": true,
+        "requires_visible_effect": true,
+        "requires_collision_and_road_gate": true,
+        "human_verdict": null
+      }
+    }
+  ]
+}
