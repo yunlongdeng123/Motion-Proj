@@ -37,7 +37,11 @@ def _load_and_validate(input_row: dict) -> tuple[dict, str, dict]:
     case_id = str(item.get("name"))
     if case_id != str(input_row["case_id"]):
         raise RuntimeError(f"{pickle_path}: case id mismatch {case_id!r}")
-    operation = _operation(case_id)
+    role = input_row.get("evaluation_role", "counterfactual_edit")
+    if role not in {"counterfactual_edit", "factual_identity_reconstruction"}:
+        raise RuntimeError(f"{pickle_path}: unknown evaluation role {role!r}")
+    operation = ("Repositioning" if role == "factual_identity_reconstruction"
+                 else _operation(case_id))
     if input_row.get("operation") != operation:
         raise RuntimeError(
             f"{pickle_path}: operation mismatch {input_row.get('operation')!r} != {operation!r}"
