@@ -5,6 +5,7 @@ import copy
 from datetime import datetime, timezone
 import html
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -18,6 +19,8 @@ from add_cfbench_original_videos import make_original
 
 CAMERAS = [('CAM_FRONT','前视'), ('CAM_FRONT_LEFT','左前视'), ('CAM_FRONT_RIGHT','右前视'),
            ('CAM_BACK_LEFT','左后视'), ('CAM_BACK_RIGHT','右后视'), ('CAM_BACK','后视')]
+SCENE_NAMES = {str(i): scene['name'] for i, scene in enumerate(json.loads(
+    Path('/root/autodl-tmp/data/worldsim_v75_downstream_bench/map_metadata/scene.json').read_text()))}
 REVIEWS = [
     {'case_id':'CFB-SPEED-EGO-01', 'reviewer':'user', 'scores':None,
      'observations':'factual建筑扭曲、相邻车道车辆有重叠；counterfactual能看出减速，但有开一段、停一下、再开的卡顿感。'},
@@ -51,7 +54,11 @@ def planned_pose(case, poses, frame):
     if after and family=='actor_lateral_relocation':
         # 延长观察，不把原1.8秒横移过程偷偷拉长到整段视频。
         alpha=float(np.clip((frame-event)/18,0,1))
-        pose=shifted_pose(pose,[0,spec['lateral_offset_m']*alpha**2*(3-2*alpha),0])
+        signed_left=spec['lateral_offset_m']*alpha**2*(3-2*alpha)
+        # DriveStudio ego lidar: +Y前进、+X向右；nuScenes actor: +X前进、+Y向左。
+        # intervention统一规定正号=行驶方向左侧，负号=右侧。
+        local_offset=[-signed_left,0,0] if case['target']['role']=='ego' else [0,signed_left,0]
+        pose=shifted_pose(pose,local_offset)
     elif after and family=='actor_insertion':
         pose=shifted_pose(pose,case['target']['proposal_offset_actor_frame_m'])
     return pose
@@ -65,7 +72,8 @@ def describe(case, noun):
         return f'从{begin:g}秒开始，将{noun}沿原轨迹的推进速度设为原来的{scale*100:g}%（{scale:g}×，{action}）；其余对象状态不改。'
     if family=='actor_lateral_relocation':
         offset=spec['lateral_offset_m']
-        return f'从{begin:g}秒开始，让{noun}在1.8秒内沿自身局部Y方向横移{offset:+g}米，随后保持该偏移；其余对象状态不改。'
+        direction='向左' if offset>0 else '向右'
+        return f'从{begin:g}秒开始，让{noun}在1.8秒内沿行驶方向{direction}横移{abs(offset):g}米（有符号值{offset:+g}米；正号=左，负号=右），随后保持该偏移；其余对象状态不改。'
     if family=='actor_removal':
         return f'从{begin:g}秒开始移除{noun}，其他车辆、自车轨迹和地图保持不变。'
     if family=='actor_insertion':
@@ -74,11 +82,11 @@ def describe(case, noun):
     raise ValueError(family)
 
 
-def build_candidate(row, first, out_root):
+def build_candidate(row, first, out_root, revision='R3', reuse_original_from=None):
     case=copy.deepcopy(row['case']); parent=case['case_id']
-    case.update(case_id=parent+'-R3-10S',parent_case_id=parent,status='awaiting_user_review_no_inference')
+    case.update(case_id=parent+f'-{revision}-10S',parent_case_id=parent,status='awaiting_user_review_no_inference')
     reasons=['延长至10秒，保留原对象、倍率/偏移和源事件。']
-    if parent=='CFB-SPEED-EGO-02':
+    if parent=='CFB-SPEED-EGO-02' and case['dataset']['scene_id']=='191':
         case['dataset']=copy.deepcopy(first['case']['dataset'])
         reasons.append('沿用上一提案：静止scene-0242改为运动scene-0230，与第1例共源，不算独立场景。')
     root=Path(case['dataset']['root'])/case['dataset']['scene_id']
@@ -124,15 +132,17 @@ def build_candidate(row, first, out_root):
         warnings.append('目标速度干预不足以形成清楚的终点差；不把该候选自动视为有效速度测试。')
     if family=='actor_lateral_relocation' and ego and pathlength<1:
         warnings.append('自车原本近乎静止，本例是横向重定位，不应称为正常行驶换道。')
-    if family in ['actor_lateral_relocation','actor_insertion']:
-        warnings.append('偏移采用对象/ego位姿的局部坐标，不是屏幕左右；需人工确认位置是否合理。')
+    if family=='actor_lateral_relocation':
+        warnings.append('左右按车辆行驶方向定义，不是画面左右；实际道路合法性仍待检查。')
+    elif family=='actor_insertion':
+        warnings.append('插入偏移采用供体对象自身局部坐标，不是屏幕左右；需人工确认位置是否合理。')
     prior_path=Path('/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-FULL-01/20260923-r1/omnidreams-r2')/parent/'input-audit.json'
     prior_audit=json.loads(prior_path.read_text()) if prior_path.exists() else {}
     prior_road_fraction=prior_audit.get('counterfactual_center_in_drivable_fraction')
     if prior_road_fraction is not None and prior_road_fraction<1:
         warnings.append('旧短窗检查已发现计划位置的目标中心部分不在可行驶区域内；本页未替你更改偏移，待你审位置。')
     entry={'case_id':case['case_id'],'parent_case_id':parent,'case':case,
-           'scene_name':{'179':'scene-0230','191':'scene-0242','204':'scene-0255'}[case['dataset']['scene_id']],
+           'scene_name':SCENE_NAMES[str(case['dataset']['scene_id'])],
            'camera_index':camera,'camera_name':camera_name,'view':view,
            'target_description':noun+('（搭载相机的采集车）' if ego else '（供体原车保留）' if family=='actor_insertion' else '（不是自车）'),
            'counterfactual_description':describe(case,noun),'revision_reason':' '.join(reasons),
@@ -147,6 +157,16 @@ def build_candidate(row, first, out_root):
            'prior_short_window_input_audit':prior_audit,
            'prior_user_review':next((r for r in REVIEWS if r['case_id']==parent),None)}
     out=out_root/'cases'/case['case_id']
+    if reuse_original_from is not None:
+        prior=json.loads((reuse_original_from/'original-nuscenes.json').read_text())
+        assert prior['source_root']==str(root)
+        assert prior['source_frames']==list(range(start,stop+1))
+        assert prior['camera_index']==camera and prior['frame_count']==100
+        assert prior['intervention_time_s']==pre/10
+        out.mkdir(parents=True,exist_ok=False)
+        os.link(reuse_original_from/'original-nuscenes.mp4',out/'original-nuscenes.mp4')
+        prior['case_id']=case['case_id']
+        save(out/'original-nuscenes.json',prior)
     make_original(case,camera,out)
     if not ego:
         visible={}
@@ -199,9 +219,17 @@ def main():
               'model_calls':0,'new_ai_video_reviews':0,'case_count':len(candidates),'cases':candidates}
     save(args.output/'candidates.json',manifest)
     save(args.output/'human-review-original-four.json',{'source':'用户2026-09-23聊天口述，保留定性意见，不转换成数值分','reviews':REVIEWS})
-    body=['<h1>OmniDreams · 24 个 case · 10 秒待审版</h1><p class="notice">前4例已延长，另追加20例。只放10秒原始视频和干预提案，推理结果与评价留空。等你确认后再跑。</p>',
+    write_report(args.output,manifest)
+    print(json.dumps({'cases':len(candidates),'seconds':10,'model_calls':0,'status':manifest['status']}))
+
+
+def write_report(output, manifest):
+    candidates=manifest['cases']
+    summary=manifest.get('revision_summary','24段10秒原始视频与干预提案，推理结果与评价留空。等你确认后再跑。')
+    body=['<h1>OmniDreams · 24 个 case · 10 秒待审版</h1><p class="notice">'+html.escape(summary)+'</p>',
           '<p>ego = 搭载相机的采集车；画面中标出的其他车辆不是ego。全部视频正常10Hz播放，未减速、循环或插帧。</p>',
-          '<div class="architecture">nuScenes 原始片段 → 指定对象与反事实 → <strong>你的人工确认</strong> → 同seed factual / counterfactual（待运行）</div>',
+          '<p>横移方向按车辆行驶方向：<strong>+ 向左，− 向右</strong>；后视画面中的屏幕左右可能正好相反。</p>',
+          '<div class="architecture">nuScenes / DriveStudio 10Hz → 原24例；修订例经 DriverQ 场景/运动/投影查询 → 10秒片段 + 指定反事实 → <strong>你的人工确认</strong> → factual / counterfactual（待运行）</div>',
           '<p><a href="candidates.json">候选参数</a> · <a href="human-review-original-four.json">你对旧版的人工 review</a></p>',
           '<nav>'+''.join(f'<a href="#{r["case_id"]}">{r["parent_case_id"].replace("CFB-","")}</a>' for r in candidates)+'</nav>']
     for row in candidates:
@@ -215,17 +243,19 @@ def main():
                  f'<p class="note">从{row["event_s"]:g}秒开始编辑；此前为公共前缀。事实分支保留原状态。ego是相机所在的采集车。</p>']
         if row['warnings']:
             body.append('<p class="warning">注意：'+' '.join(html.escape(w) for w in row['warnings'])+'</p>')
+        if row.get('selection_evidence'):
+            body.append('<p class="note">筛选依据：'+html.escape(row['selection_evidence']['summary'])+'</p>')
         if 'target_projection_visibility' in row['input_check']:
             visible=row['input_check']['target_projection_visibility']
-            body += [f'<details><summary>查看目标/计划位置（原始{row["target_reference_s"]:g}秒帧）</summary><img loading="lazy" src="{base}/target-reference.jpg" alt="原始画面的目标与计划位置几何标注"><p class="note">黄色是原目标/供体；绿色是计划位置，仅几何框，不是生成结果。投影在画内不保证无遮挡。</p></details>']
+            opened=' open' if row.get('show_target_reference') else ''
+            body += [f'<details{opened}><summary>查看目标/计划位置（原始{row["target_reference_s"]:g}秒帧）</summary><img loading="lazy" src="{base}/target-reference.jpg" alt="原始画面的目标与计划位置几何标注"><p class="note">黄色是原目标/供体；绿色是计划位置，仅几何框，不是生成结果。投影在画内不保证无遮挡。</p></details>']
         body += ['<p>新版结果评价：<span class="empty">—</span>（未推理，待人工 review；不做 AI 视频评分）</p>']
         if row['prior_user_review']:
             body += ['<details><summary>你对旧版短片的 review（不代表新版结果）</summary><p class="review">'+html.escape(row['prior_user_review']['observations'])+'</p></details>']
         body += ['<p><strong>待你确认：保留 / 修改 / 不采用。</strong></p></article>']
     css="body{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;background:#f5f7fa;color:#213044;margin:0}main{max-width:1320px;margin:auto;padding:24px}article{background:white;padding:24px;margin:25px 0;border:1px solid #dae2eb;border-radius:8px}h2{font-size:22px}h3{font-size:16px}.notice,.intent{background:#edf6fa;padding:12px}.note{color:#586776;font-size:14px}.videos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}video{width:100%;aspect-ratio:16/9;background:#111}.placeholder{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px dashed #adb7c2;background:#f5f7fa;color:#788491;box-sizing:border-box}.empty{color:#788491}img{width:100%}.review{border-left:3px solid #9c8d5b;padding-left:12px}.architecture{padding:18px;border:1px solid #9bb8c6;background:white}a{color:#086684}@media(max-width:800px){.videos{grid-template-columns:1fr}main{padding:12px}article{padding:16px}}"
     css+='nav{display:flex;gap:8px 16px;flex-wrap:wrap;padding:12px;background:white}nav a{font-size:13px}.warning{background:#fff3dc;border-left:3px solid #c58c25;padding:10px;font-size:14px}'
-    (args.output/'index.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniDreams 24-case 10秒·待人工确认</title><style>'+css+'</style><main>'+''.join(body)+'</main></html>',encoding='utf-8')
-    print(json.dumps({'cases':len(candidates),'seconds':10,'model_calls':0,'status':manifest['status']}))
+    (output/'index.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniDreams 24-case 10秒·待人工确认</title><style>'+css+'</style><main>'+''.join(body)+'</main></html>',encoding='utf-8')
 
 
 if __name__=='__main__':

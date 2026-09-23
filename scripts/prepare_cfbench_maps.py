@@ -2,6 +2,7 @@
 import argparse
 import json
 from pathlib import Path
+import sqlite3
 import tarfile
 import zipfile
 
@@ -9,6 +10,8 @@ import zipfile
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--driverq-db", type=Path,
+                        help="将 DriverQ 已索引场景全部加入地图索引；省略时保持原三场景行为")
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -24,9 +27,14 @@ def main():
                         break
     scenes = json.loads((out / "scene.json").read_text())
     logs = {row["token"]: row for row in json.loads((out / "log.json").read_text())}
+    if args.driverq_db:
+        with sqlite3.connect(f'file:{args.driverq_db}?mode=ro',uri=True) as conn:
+            names={row[0] for row in conn.execute('SELECT scene_name FROM scenes')}
+    else:
+        names={"scene-0230", "scene-0242", "scene-0255"}
     selection = {row["name"]: {"scene_token": row["token"], "location": logs[row["log_token"]]["location"]}
-                 for row in scenes if row["name"] in ["scene-0230", "scene-0242", "scene-0255"]}
-    assert len(selection) == 3
+                 for row in scenes if row["name"] in names}
+    assert set(selection)==names
     with zipfile.ZipFile("/root/autodl-tmp/nuScenes-map-expansion-v1.3.zip") as archive:
         for location in {row["location"] for row in selection.values()}:
             matches = [name for name in archive.namelist() if name.endswith(f"/{location}.json") or name == f"{location}.json"]

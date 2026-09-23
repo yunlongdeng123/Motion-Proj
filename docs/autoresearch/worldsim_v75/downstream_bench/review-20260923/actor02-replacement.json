@@ -1,0 +1,108 @@
+{
+  "case_id": "CFB-SPEED-ACTOR-02-R4-10S",
+  "parent_case_id": "CFB-SPEED-ACTOR-02",
+  "case": {
+    "case_id": "CFB-SPEED-ACTOR-02-R4-10S",
+    "status": "awaiting_user_review_no_inference",
+    "dataset": {
+      "name": "nuscenes_drivestudio_10hz",
+      "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+      "scene_id": "204",
+      "role": "pilot_development_only"
+    },
+    "anchor": {
+      "event_frame": 45,
+      "pre_frames": 5,
+      "rollout_frames": 95,
+      "clip_frames": 100,
+      "state_fixation": "same scene, prefix, camera, seed and non-target state",
+      "video_duration_s": 10.0
+    },
+    "target": {
+      "role": "non_ego",
+      "entity_id": "ef8683c140ff4b43b82ac9b318352202",
+      "actor_key": "3",
+      "class_name": "vehicle.bus.rigid"
+    },
+    "intervention": {
+      "family": "actor_speed_change",
+      "variable": "speed_scale",
+      "factual": {
+        "speed_scale": 1.0
+      },
+      "counterfactual": {
+        "speed_scale": 1.5
+      }
+    },
+    "expected_outcome": {
+      "direction": "longer progress",
+      "affected_entities": [
+        "ef8683c140ff4b43b82ac9b318352202"
+      ],
+      "unchanged_scope": "all_except_affected_entities"
+    },
+    "qualification": {
+      "state_fixation": true,
+      "single_variable_change": true,
+      "requires_visible_effect": true,
+      "requires_collision_and_road_gate": true,
+      "human_verdict": null
+    },
+    "parent_case_id": "CFB-SPEED-ACTOR-02"
+  },
+  "scene_name": "scene-0255",
+  "camera_index": 5,
+  "camera_name": "CAM_BACK",
+  "view": "后视",
+  "target_description": "画面中间的巴士 #3（不是自车）",
+  "counterfactual_description": "从0.5秒开始，让画面中间的巴士 #3 沿原轨迹以1.5×速度推进（加速50%）；自车/相机和其他对象轨迹保持不变。",
+  "revision_reason": "按你的要求替换多辆卡车难辨认的片段：改为scene-0255后视画面中间的巴士。仍是10秒、0.5秒起1.5×加速。",
+  "source_frame_range": [
+    40,
+    139
+  ],
+  "source_state_endpoint_frame": 140,
+  "event_s": 0.5,
+  "video_duration_s": 10.0,
+  "last_reference_frame_s": 9.9,
+  "planned_generated_frames": 300,
+  "planned_native_frames": 301,
+  "planned_fps": 30,
+  "native_tail_trim_frames": 1,
+  "tail_padding": 0,
+  "input_check": {
+    "factual_postevent_path_length_m": 36.276704281854926,
+    "target_endpoint_delta_m": 12.669181129812467,
+    "missing_factual_state_frames": [],
+    "missing_counterfactual_state_frames": [],
+    "trajectory_available_without_extrapolation": true,
+    "full_collision_road_gate": "not_claimed",
+    "target_projection_visibility": {
+      "factual": {
+        "visible_frames": 95,
+        "eligible_frames": 100,
+        "total_video_frames": 100,
+        "last_visible_s": 9.9
+      },
+      "counterfactual": {
+        "visible_frames": 100,
+        "eligible_frames": 100,
+        "total_video_frames": 100,
+        "last_visible_s": 9.9
+      }
+    }
+  },
+  "warnings": [],
+  "approval": {
+    "status": "pending",
+    "reviewer": "user",
+    "inference_allowed": false
+  },
+  "prior_short_window_input_audit": {},
+  "prior_user_review": null,
+  "target_reference_s": 0.5,
+  "supersedes_case_id": "CFB-SPEED-ACTOR-02-R3-10S",
+  "show_target_reference": true,
+  "replacement_user_reason": "这个case画面有好几辆卡车，不太好分辨，你换个case吧",
+  "source_overlap_note": "与SPEED-ACTOR-03使用同一场景同一巴士，起点后移4秒；编辑分别为加速/减速，不作为独立场景。"
+}

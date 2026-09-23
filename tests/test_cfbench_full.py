@@ -14,6 +14,7 @@ from add_cfbench_original_videos import make_original
 from run_resim_cfbench_queue import trim_video
 from build_cfbench_html import describe_case, task_intent_html
 from prepare_omnidreams_review_candidates import planned_pose, describe
+from prepare_omnidreams_cfbench import changed_pose
 
 
 def test_all_frozen_cases_have_explicit_counterfactual_intents():
@@ -63,7 +64,7 @@ def test_ten_second_proposal_edits_do_not_stretch_transition_or_extrapolate():
     poses={i:np.eye(4) for i in range(196)}
     for i,p in poses.items():
         p[0,3]=i
-    case={'anchor':{'event_frame':65,'pre_frames':14},'target':{},
+    case={'anchor':{'event_frame':65,'pre_frames':14,'rollout_frames':95},'target':{'role':'non_ego'},
           'intervention':{'family':'actor_speed_change','counterfactual':{'speed_scale':1.5}}}
     assert planned_pose(case,poses,151)[0,3]==194
     assert planned_pose(case,poses,160) is None
@@ -72,6 +73,13 @@ def test_ten_second_proposal_edits_do_not_stretch_transition_or_extrapolate():
     assert planned_pose(case,poses,65)[1,3]==0
     assert planned_pose(case,poses,83)[1,3]==3.5
     assert planned_pose(case,poses,151)[1,3]==3.5
+    case['target']['role']='ego'
+    case['intervention'].update(coordinate_convention='vehicle_forward_left_v2',transition_duration_s=1.8)
+    assert planned_pose(case,poses,83)[0,3]==83-3.5
+    assert planned_pose(case,poses,83)[1,3]==0
+    assert np.allclose(changed_pose(case,poses,83),planned_pose(case,poses,83))
+    case['target']['role']='non_ego'
+    assert np.allclose(changed_pose(case,poses,83),planned_pose(case,poses,83))
     case['intervention']={'family':'actor_removal','counterfactual':{}}
     assert planned_pose(case,poses,64) is not None and planned_pose(case,poses,65) is None
     case['intervention']={'family':'actor_insertion','counterfactual':{}}
