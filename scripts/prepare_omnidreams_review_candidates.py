@@ -180,7 +180,10 @@ def build_candidate(row, first, out_root, revision='R3', reuse_original_from=Non
                 warnings.append(f'{"事实目标" if name=="factual" else "计划CF目标"}仅{len(seen)}/{len(eligible)}个应存在帧投影在画内，延长视频不等于延长有效目标观察。')
         entry['input_check']['target_projection_visibility']=visible
         # 延长后不重选对象；保留原始关键帧并标注目标/供体与计划位置。
-        mark=min(event+18,stop) if family=='actor_lateral_relocation' else event
+        mark=row.get('review_reference_frame')
+        if mark is None:
+            mark=min(event+18,stop) if family=='actor_lateral_relocation' else event
+        assert start <= mark <= stop
         im=Image.open(root/f'images/{mark:03d}_{camera}.jpg').convert('RGB'); draw=ImageDraw.Draw(im)
         for name,pose,color in [('SOURCE #'+key,pose_at(poses,mark),'yellow'),('PLANNED',planned_pose(case,poses,mark),'lime')]:
             if pose is None or (name=='PLANNED' and family not in ['actor_lateral_relocation','actor_insertion']):
@@ -245,10 +248,15 @@ def write_report(output, manifest):
             body.append('<p class="warning">注意：'+' '.join(html.escape(w) for w in row['warnings'])+'</p>')
         if row.get('selection_evidence'):
             body.append('<p class="note">筛选依据：'+html.escape(row['selection_evidence']['summary'])+'</p>')
-        if 'target_projection_visibility' in row['input_check']:
-            visible=row['input_check']['target_projection_visibility']
+        if row.get('target_reference_s') is not None:
             opened=' open' if row.get('show_target_reference') else ''
-            body += [f'<details{opened}><summary>查看目标/计划位置（原始{row["target_reference_s"]:g}秒帧）</summary><img loading="lazy" src="{base}/target-reference.jpg" alt="原始画面的目标与计划位置几何标注"><p class="note">黄色是原目标/供体；绿色是计划位置，仅几何框，不是生成结果。投影在画内不保证无遮挡。</p></details>']
+            if row.get('target_reference_kind')=='ego_bev':
+                title=f'查看自车俯视落点（原始{row["target_reference_s"]:g}秒状态）'
+                caption='黄色框是事实自车，绿色框是计划自车；俯视图而非生成结果。自车位于前视相机后方，不能在自己的画面中画出真实车身框。灰色地图不能代表锥桶，仍需结合原视频人工审查。'
+            else:
+                title=f'查看目标/计划位置（原始{row["target_reference_s"]:g}秒帧）'
+                caption='黄色是原目标/供体；绿色是计划位置，仅几何框，不是生成结果。投影在画内不保证无遮挡。'
+            body += [f'<details{opened}><summary>{title}</summary><img loading="lazy" src="{base}/target-reference.jpg" alt="事实目标黄色框与计划目标绿色框"><p class="note">{caption}</p></details>']
         body += ['<p>新版结果评价：<span class="empty">—</span>（未推理，待人工 review；不做 AI 视频评分）</p>']
         if row['prior_user_review']:
             body += ['<details><summary>你对旧版短片的 review（不代表新版结果）</summary><p class="review">'+html.escape(row['prior_user_review']['observations'])+'</p></details>']
