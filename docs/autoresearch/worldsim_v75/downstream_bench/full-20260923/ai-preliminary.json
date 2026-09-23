@@ -1,0 +1,1586 @@
+{
+  "CFB-SPEED-EGO-01": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "f33/51/69，CF右侧卡车停留更久、道路推进较少，与减速方向相符；两支均有路锥及卡车形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。f33/51/69，CF右侧卡车停留更久、道路推进较少，与减速方向相符；两支均有路锥及卡车形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。ego改变视角，无共同可见域重投影，成对项弃权。f33/51/69，CF右侧卡车停留更久、道路推进较少，与减速方向相符；两支均有路锥及卡车形变。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。f33/51/69，CF右侧卡车停留更久、道路推进较少，与减速方向相符；两支均有路锥及卡车形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；ego未运行独立视觉里程计。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。f33/51/69，CF右侧卡车停留更久、道路推进较少，与减速方向相符；两支均有路锥及卡车形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "f33/51/69，CF右侧卡车停留更久、道路推进较少，与减速方向相符；两支均有路锥及卡车形变。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-SPEED-EGO-02": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "输入近乎静止：事实路径约0.0017米，终点干预差约0.00005米。A/O/T弃权，不能当作忽略加速。两支均把原始红灯变成绿灯。",
+        "confidence": "insufficient",
+        "abstain_reason": "input_invalid"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。输入近乎静止：事实路径约0.0017米，终点干预差约0.00005米。A/O/T弃权，不能当作忽略加速。两支均把原始红灯变成绿灯。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。ego改变视角，无共同可见域重投影，成对项弃权。输入近乎静止：事实路径约0.0017米，终点干预差约0.00005米。A/O/T弃权，不能当作忽略加速。两支均把原始红灯变成绿灯。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。输入近乎静止：事实路径约0.0017米，终点干预差约0.00005米。A/O/T弃权，不能当作忽略加速。两支均把原始红灯变成绿灯。",
+        "confidence": "insufficient",
+        "abstain_reason": "input_invalid"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；ego未运行独立视觉里程计。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。输入近乎静止：事实路径约0.0017米，终点干预差约0.00005米。A/O/T弃权，不能当作忽略加速。两支均把原始红灯变成绿灯。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "输入近乎静止：事实路径约0.0017米，终点干预差约0.00005米。A/O/T弃权，不能当作忽略加速。两支均把原始红灯变成绿灯。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-SPEED-EGO-03": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "CF相对车库和立杆的推进较少，但视差信号小，仅低置信定性响应；车辆外观变暗、路灯及树木形态失真。",
+        "confidence": "low",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。CF相对车库和立杆的推进较少，但视差信号小，仅低置信定性响应；车辆外观变暗、路灯及树木形态失真。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。ego改变视角，无共同可见域重投影，成对项弃权。CF相对车库和立杆的推进较少，但视差信号小，仅低置信定性响应；车辆外观变暗、路灯及树木形态失真。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。CF相对车库和立杆的推进较少，但视差信号小，仅低置信定性响应；车辆外观变暗、路灯及树木形态失真。",
+        "confidence": "low",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；ego未运行独立视觉里程计。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。CF相对车库和立杆的推进较少，但视差信号小，仅低置信定性响应；车辆外观变暗、路灯及树木形态失真。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "CF相对车库和立杆的推进较少，但视差信号小，仅低置信定性响应；车辆外观变暗、路灯及树木形态失真。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-SPEED-ACTOR-01": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "远处目标的速度差难以由固定静帧可靠判断；f33后两支共同出现原图没有的横跨道路结构。检测命中不等于速度响应正确。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 1,
+        "counterfactual": 1,
+        "pair": 1,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。远处目标的速度差难以由固定静帧可靠判断；f33后两支共同出现原图没有的横跨道路结构。检测命中不等于速度响应正确。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 1,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。远处目标的速度差难以由固定静帧可靠判断；f33后两支共同出现原图没有的横跨道路结构。检测命中不等于速度响应正确。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。远处目标的速度差难以由固定静帧可靠判断；f33后两支共同出现原图没有的横跨道路结构。检测命中不等于速度响应正确。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。远处目标的速度差难以由固定静帧可靠判断；f33后两支共同出现原图没有的横跨道路结构。检测命中不等于速度响应正确。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "远处目标的速度差难以由固定静帧可靠判断；f33后两支共同出现原图没有的横跨道路结构。检测命中不等于速度响应正确。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-SPEED-ACTOR-02": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "目标卡车受大型集装箱车遮挡，独立读出关联不稳定；两支共享集装箱外观/车辆形变，速度响应弃权。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。目标卡车受大型集装箱车遮挡，独立读出关联不稳定；两支共享集装箱外观/车辆形变，速度响应弃权。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。目标卡车受大型集装箱车遮挡，独立读出关联不稳定；两支共享集装箱外观/车辆形变，速度响应弃权。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。目标卡车受大型集装箱车遮挡，独立读出关联不稳定；两支共享集装箱外观/车辆形变，速度响应弃权。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。目标卡车受大型集装箱车遮挡，独立读出关联不稳定；两支共享集装箱外观/车辆形变，速度响应弃权。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "目标卡车受大型集装箱车遮挡，独立读出关联不稳定；两支共享集装箱外观/车辆形变，速度响应弃权。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-SPEED-ACTOR-03": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "远处巴士检测可匹配，但固定五帧不足以判别干预响应；f51/69的路灯、树木和道路外观相对原图改变。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。远处巴士检测可匹配，但固定五帧不足以判别干预响应；f51/69的路灯、树木和道路外观相对原图改变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。远处巴士检测可匹配，但固定五帧不足以判别干预响应；f51/69的路灯、树木和道路外观相对原图改变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。远处巴士检测可匹配，但固定五帧不足以判别干预响应；f51/69的路灯、树木和道路外观相对原图改变。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。远处巴士检测可匹配，但固定五帧不足以判别干预响应；f51/69的路灯、树木和道路外观相对原图改变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "远处巴士检测可匹配，但固定五帧不足以判别干预响应；f51/69的路灯、树木和道路外观相对原图改变。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-LATERAL-EGO-01": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "CF道路/中央分隔带与右侧卡车的相对视角明显横移；建筑和护栏也有形变。仅确认横移方向，未测米制轨迹。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。CF道路/中央分隔带与右侧卡车的相对视角明显横移；建筑和护栏也有形变。仅确认横移方向，未测米制轨迹。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。ego改变视角，无共同可见域重投影，成对项弃权。CF道路/中央分隔带与右侧卡车的相对视角明显横移；建筑和护栏也有形变。仅确认横移方向，未测米制轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。CF道路/中央分隔带与右侧卡车的相对视角明显横移；建筑和护栏也有形变。仅确认横移方向，未测米制轨迹。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；ego未运行独立视觉里程计。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。CF道路/中央分隔带与右侧卡车的相对视角明显横移；建筑和护栏也有形变。仅确认横移方向，未测米制轨迹。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "CF道路/中央分隔带与右侧卡车的相对视角明显横移；建筑和护栏也有形变。仅确认横移方向，未测米制轨迹。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-LATERAL-EGO-02": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "FACT接近静止、CF在f51/69可见道路标线视差；CF左侧边缘出现额外车辆/形变，两支红灯均变绿。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。FACT接近静止、CF在f51/69可见道路标线视差；CF左侧边缘出现额外车辆/形变，两支红灯均变绿。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。ego改变视角，无共同可见域重投影，成对项弃权。FACT接近静止、CF在f51/69可见道路标线视差；CF左侧边缘出现额外车辆/形变，两支红灯均变绿。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。FACT接近静止、CF在f51/69可见道路标线视差；CF左侧边缘出现额外车辆/形变，两支红灯均变绿。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；ego未运行独立视觉里程计。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。FACT接近静止、CF在f51/69可见道路标线视差；CF左侧边缘出现额外车辆/形变，两支红灯均变绿。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "FACT接近静止、CF在f51/69可见道路标线视差；CF左侧边缘出现额外车辆/形变，两支红灯均变绿。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-LATERAL-EGO-03": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "CF可见横移趋势，但树木/楼体重绘、车辆形态和路缘变形较明显，难以精确验证横移幅度。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。CF可见横移趋势，但树木/楼体重绘、车辆形态和路缘变形较明显，难以精确验证横移幅度。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。ego改变视角，无共同可见域重投影，成对项弃权。CF可见横移趋势，但树木/楼体重绘、车辆形态和路缘变形较明显，难以精确验证横移幅度。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。CF可见横移趋势，但树木/楼体重绘、车辆形态和路缘变形较明显，难以精确验证横移幅度。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；ego未运行独立视觉里程计。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。CF可见横移趋势，但树木/楼体重绘、车辆形态和路缘变形较明显，难以精确验证横移幅度。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "CF可见横移趋势，但树木/楼体重绘、车辆形态和路缘变形较明显，难以精确验证横移幅度。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-LATERAL-ACTOR-01": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "被编辑目标是骑车人后方的远处汽车，不是前景骑车人。遮挡及检测关联歧义使A/O/T弃权；前景与大部分背景两支接近。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。被编辑目标是骑车人后方的远处汽车，不是前景骑车人。遮挡及检测关联歧义使A/O/T弃权；前景与大部分背景两支接近。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。被编辑目标是骑车人后方的远处汽车，不是前景骑车人。遮挡及检测关联歧义使A/O/T弃权；前景与大部分背景两支接近。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。被编辑目标是骑车人后方的远处汽车，不是前景骑车人。遮挡及检测关联歧义使A/O/T弃权；前景与大部分背景两支接近。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。被编辑目标是骑车人后方的远处汽车，不是前景骑车人。遮挡及检测关联歧义使A/O/T弃权；前景与大部分背景两支接近。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "被编辑目标是骑车人后方的远处汽车，不是前景骑车人。遮挡及检测关联歧义使A/O/T弃权；前景与大部分背景两支接近。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-LATERAL-ACTOR-02": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "f33/51/69，CF汽车明显向新投影位置偏移、FACT沿原路径；事实及CF后段均7/7匹配，中心误差约2.16/2.14px。车身颜色较真实图偏黑。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 3,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。f33/51/69，CF汽车明显向新投影位置偏移、FACT沿原路径；事实及CF后段均7/7匹配，中心误差约2.16/2.14px。车身颜色较真实图偏黑。 输入审计：目标中心在地图可行驶区域内比例0.836；这是输入风险，不记为模型新增道路违例。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。f33/51/69，CF汽车明显向新投影位置偏移、FACT沿原路径；事实及CF后段均7/7匹配，中心误差约2.16/2.14px。车身颜色较真实图偏黑。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。f33/51/69，CF汽车明显向新投影位置偏移、FACT沿原路径；事实及CF后段均7/7匹配，中心误差约2.16/2.14px。车身颜色较真实图偏黑。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": 3,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "2D代理：真实/FACT/CF后段各7/7匹配，中心误差中位数4.84/2.16/2.14px；固定帧可见对应横移。不称米制ADE，不证明连续3D轨迹。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。f33/51/69，CF汽车明显向新投影位置偏移、FACT沿原路径；事实及CF后段均7/7匹配，中心误差约2.16/2.14px。车身颜色较真实图偏黑。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "f33/51/69，CF汽车明显向新投影位置偏移、FACT沿原路径；事实及CF后段均7/7匹配，中心误差约2.16/2.14px。车身颜色较真实图偏黑。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-LATERAL-ACTOR-03": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "f33/51可同时看到原位置骑车人和偏移位置的第二个骑车人；不是干净地搬移单个对象。COCO自行车/人分拆使T关联不可用。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 1,
+        "pair": 1,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。f33/51可同时看到原位置骑车人和偏移位置的第二个骑车人；不是干净地搬移单个对象。COCO自行车/人分拆使T关联不可用。 输入审计：目标中心在地图可行驶区域内比例0.000；这是输入风险，不记为模型新增道路违例。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。f33/51可同时看到原位置骑车人和偏移位置的第二个骑车人；不是干净地搬移单个对象。COCO自行车/人分拆使T关联不可用。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。f33/51可同时看到原位置骑车人和偏移位置的第二个骑车人；不是干净地搬移单个对象。COCO自行车/人分拆使T关联不可用。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 1,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。f33/51可同时看到原位置骑车人和偏移位置的第二个骑车人；不是干净地搬移单个对象。COCO自行车/人分拆使T关联不可用。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "f33/51可同时看到原位置骑车人和偏移位置的第二个骑车人；不是干净地搬移单个对象。COCO自行车/人分拆使T关联不可用。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-REMOVE-01": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 0,
+        "pair": 0,
+        "evidence": "要求删除的是背景挂车；f15/33/51/69仍可见该红色牵引车连接的集装箱挂车，与FACT近似。不能用CF无目标track造成的0匹配宣称删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。要求删除的是背景挂车；f15/33/51/69仍可见该红色牵引车连接的集装箱挂车，与FACT近似。不能用CF无目标track造成的0匹配宣称删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。要求删除的是背景挂车；f15/33/51/69仍可见该红色牵引车连接的集装箱挂车，与FACT近似。不能用CF无目标track造成的0匹配宣称删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 0,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。要求删除的是背景挂车；f15/33/51/69仍可见该红色牵引车连接的集装箱挂车，与FACT近似。不能用CF无目标track造成的0匹配宣称删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；移除任务无持续目标轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "not_applicable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。要求删除的是背景挂车；f15/33/51/69仍可见该红色牵引车连接的集装箱挂车，与FACT近似。不能用CF无目标track造成的0匹配宣称删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "要求删除的是背景挂车；f15/33/51/69仍可见该红色牵引车连接的集装箱挂车，与FACT近似。不能用CF无目标track造成的0匹配宣称删除成功。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-REMOVE-02": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "停车场目标部分遮挡、相邻车辆密集，原始图仅2/7目标匹配。无法在接触表可靠区分删除与遮挡；树木/杆件及近处车辆有共同变形。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。停车场目标部分遮挡、相邻车辆密集，原始图仅2/7目标匹配。无法在接触表可靠区分删除与遮挡；树木/杆件及近处车辆有共同变形。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。停车场目标部分遮挡、相邻车辆密集，原始图仅2/7目标匹配。无法在接触表可靠区分删除与遮挡；树木/杆件及近处车辆有共同变形。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。停车场目标部分遮挡、相邻车辆密集，原始图仅2/7目标匹配。无法在接触表可靠区分删除与遮挡；树木/杆件及近处车辆有共同变形。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；移除任务无持续目标轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "not_applicable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。停车场目标部分遮挡、相邻车辆密集，原始图仅2/7目标匹配。无法在接触表可靠区分删除与遮挡；树木/杆件及近处车辆有共同变形。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "停车场目标部分遮挡、相邻车辆密集，原始图仅2/7目标匹配。无法在接触表可靠区分删除与遮挡；树木/杆件及近处车辆有共同变形。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-REMOVE-03": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "远处路边目标车过小、身份与邻车难区分，删除项弃权。f33以后两支出现原始场景不存在的架空横梁。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 1,
+        "counterfactual": 1,
+        "pair": 1,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。远处路边目标车过小、身份与邻车难区分，删除项弃权。f33以后两支出现原始场景不存在的架空横梁。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 1,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。远处路边目标车过小、身份与邻车难区分，删除项弃权。f33以后两支出现原始场景不存在的架空横梁。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。远处路边目标车过小、身份与邻车难区分，删除项弃权。f33以后两支出现原始场景不存在的架空横梁。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；移除任务无持续目标轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "not_applicable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。远处路边目标车过小、身份与邻车难区分，删除项弃权。f33以后两支出现原始场景不存在的架空横梁。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "远处路边目标车过小、身份与邻车难区分，删除项弃权。f33以后两支出现原始场景不存在的架空横梁。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-REMOVE-04": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "目标随后驶出视野；早期红框与相邻车辆重叠，身份不足以稳定判断。后期出画不能作为删除成功。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。目标随后驶出视野；早期红框与相邻车辆重叠，身份不足以稳定判断。后期出画不能作为删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。目标随后驶出视野；早期红框与相邻车辆重叠，身份不足以稳定判断。后期出画不能作为删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。目标随后驶出视野；早期红框与相邻车辆重叠，身份不足以稳定判断。后期出画不能作为删除成功。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；移除任务无持续目标轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "not_applicable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。目标随后驶出视野；早期红框与相邻车辆重叠，身份不足以稳定判断。后期出画不能作为删除成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "目标随后驶出视野；早期红框与相邻车辆重叠，身份不足以稳定判断。后期出画不能作为删除成功。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-REMOVE-05": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 0,
+        "pair": 0,
+        "evidence": "f15/33/51/69白色目标车仍在CF中，且比FACT更久留在画内；删除明确未执行，末段还发生车身形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。f15/33/51/69白色目标车仍在CF中，且比FACT更久留在画内；删除明确未执行，末段还发生车身形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。f15/33/51/69白色目标车仍在CF中，且比FACT更久留在画内；删除明确未执行，末段还发生车身形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 0,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。f15/33/51/69白色目标车仍在CF中，且比FACT更久留在画内；删除明确未执行，末段还发生车身形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；移除任务无持续目标轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "not_applicable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。f15/33/51/69白色目标车仍在CF中，且比FACT更久留在画内；删除明确未执行，末段还发生车身形变。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "f15/33/51/69白色目标车仍在CF中，且比FACT更久留在画内；删除明确未执行，末段还发生车身形变。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-REMOVE-06": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "目标是远处施工车辆，投影与施工围挡/材料重叠；固定接触表不能可靠判定其身份是否被删除。两支路灯弯折和施工区域重绘。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。目标是远处施工车辆，投影与施工围挡/材料重叠；固定接触表不能可靠判定其身份是否被删除。两支路灯弯折和施工区域重绘。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。目标是远处施工车辆，投影与施工围挡/材料重叠；固定接触表不能可靠判定其身份是否被删除。两支路灯弯折和施工区域重绘。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。目标是远处施工车辆，投影与施工围挡/材料重叠；固定接触表不能可靠判定其身份是否被删除。两支路灯弯折和施工区域重绘。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；移除任务无持续目标轨迹。",
+        "confidence": "insufficient",
+        "abstain_reason": "not_applicable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。目标是远处施工车辆，投影与施工围挡/材料重叠；固定接触表不能可靠判定其身份是否被删除。两支路灯弯折和施工区域重绘。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "目标是远处施工车辆，投影与施工围挡/材料重叠；固定接触表不能可靠判定其身份是否被删除。两支路灯弯折和施工区域重绘。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-INSERT-01": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "f33/51/69，CF指定区域出现更靠近道路的黑色汽车，FACT仅保留原远处车辆；新增占据可见，但车身拉长/邻车融合，供体身份不保证。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。f33/51/69，CF指定区域出现更靠近道路的黑色汽车，FACT仅保留原远处车辆；新增占据可见，但车身拉长/邻车融合，供体身份不保证。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。f33/51/69，CF指定区域出现更靠近道路的黑色汽车，FACT仅保留原远处车辆；新增占据可见，但车身拉长/邻车融合，供体身份不保证。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。f33/51/69，CF指定区域出现更靠近道路的黑色汽车，FACT仅保留原远处车辆；新增占据可见，但车身拉长/邻车融合，供体身份不保证。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。f33/51/69，CF指定区域出现更靠近道路的黑色汽车，FACT仅保留原远处车辆；新增占据可见，但车身拉长/邻车融合，供体身份不保证。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "f33/51/69，CF指定区域出现更靠近道路的黑色汽车，FACT仅保留原远处车辆；新增占据可见，但车身拉长/邻车融合，供体身份不保证。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-INSERT-02": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "插入位置在画面边缘且极小，邻车遮挡严重，不能可靠确认新增实体；该目标中心在可行驶地图外，需审阅case本身。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。插入位置在画面边缘且极小，邻车遮挡严重，不能可靠确认新增实体；该目标中心在可行驶地图外，需审阅case本身。 输入审计：目标中心在地图可行驶区域内比例0.000；这是输入风险，不记为模型新增道路违例。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。插入位置在画面边缘且极小，邻车遮挡严重，不能可靠确认新增实体；该目标中心在可行驶地图外，需审阅case本身。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。插入位置在画面边缘且极小，邻车遮挡严重，不能可靠确认新增实体；该目标中心在可行驶地图外，需审阅case本身。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。插入位置在画面边缘且极小，邻车遮挡严重，不能可靠确认新增实体；该目标中心在可行驶地图外，需审阅case本身。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "插入位置在画面边缘且极小，邻车遮挡严重，不能可靠确认新增实体；该目标中心在可行驶地图外，需审阅case本身。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-INSERT-03": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "新目标与远处左侧停放汽车重叠，固定接触表不足以区分新增车和原车外观变化；A/O/T弃权。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。新目标与远处左侧停放汽车重叠，固定接触表不足以区分新增车和原车外观变化；A/O/T弃权。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。新目标与远处左侧停放汽车重叠，固定接触表不足以区分新增车和原车外观变化；A/O/T弃权。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。新目标与远处左侧停放汽车重叠，固定接触表不足以区分新增车和原车外观变化；A/O/T弃权。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。新目标与远处左侧停放汽车重叠，固定接触表不足以区分新增车和原车外观变化；A/O/T弃权。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "新目标与远处左侧停放汽车重叠，固定接触表不足以区分新增车和原车外观变化；A/O/T弃权。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-INSERT-04": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "f33/51/69，CF右侧出现较近的银色车，与FACT不同；可见新增占据，但输入中心位于可行驶地图外，不能认定道路物理合法。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。f33/51/69，CF右侧出现较近的银色车，与FACT不同；可见新增占据，但输入中心位于可行驶地图外，不能认定道路物理合法。 输入审计：目标中心在地图可行驶区域内比例0.000；这是输入风险，不记为模型新增道路违例。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。f33/51/69，CF右侧出现较近的银色车，与FACT不同；可见新增占据，但输入中心位于可行驶地图外，不能认定道路物理合法。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。f33/51/69，CF右侧出现较近的银色车，与FACT不同；可见新增占据，但输入中心位于可行驶地图外，不能认定道路物理合法。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 2,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。f33/51/69，CF右侧出现较近的银色车，与FACT不同；可见新增占据，但输入中心位于可行驶地图外，不能认定道路物理合法。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "f33/51/69，CF右侧出现较近的银色车，与FACT不同；可见新增占据，但输入中心位于可行驶地图外，不能认定道路物理合法。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-INSERT-05": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "插入框与过路集装箱/牵引车大范围重叠；末帧检测匹配到的是卡车而非可靠的新增供体汽车。不能把该匹配当插入成功。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 2,
+        "counterfactual": 2,
+        "pair": 2,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。插入框与过路集装箱/牵引车大范围重叠；末帧检测匹配到的是卡车而非可靠的新增供体汽车。不能把该匹配当插入成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。插入框与过路集装箱/牵引车大范围重叠；末帧检测匹配到的是卡车而非可靠的新增供体汽车。不能把该匹配当插入成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。插入框与过路集装箱/牵引车大范围重叠；末帧检测匹配到的是卡车而非可靠的新增供体汽车。不能把该匹配当插入成功。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 2,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。插入框与过路集装箱/牵引车大范围重叠；末帧检测匹配到的是卡车而非可靠的新增供体汽车。不能把该匹配当插入成功。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "插入框与过路集装箱/牵引车大范围重叠；末帧检测匹配到的是卡车而非可靠的新增供体汽车。不能把该匹配当插入成功。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  },
+  "CFB-INSERT-06": {
+    "reviewer": "AI visual preliminary",
+    "scope": "固定五帧接触表，非全帧动态审阅",
+    "review_frames_30hz": [
+      0,
+      15,
+      33,
+      51,
+      69
+    ],
+    "source": "evaluation-review.jpg + evaluation.json + posthoc input-audit.json",
+    "dimensions": {
+      "A": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "插入位置在树木/围栏后；两支近似，无可辨认新增汽车。遮挡与非行驶区域输入使可见性不足，不能直接判失败或通过。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "P": {
+        "factual": 3,
+        "counterfactual": 3,
+        "pair": 3,
+        "evidence": "固定f0/15/33/51/69的可见形状/遮挡代理，不涵盖帧间jerk或完整3D动力学。插入位置在树木/围栏后；两支近似，无可辨认新增汽车。遮挡与非行驶区域输入使可见性不足，不能直接判失败或通过。 输入审计：目标中心在地图可行驶区域内比例0.000；这是输入风险，不记为模型新增道路违例。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "E": {
+        "factual": 3,
+        "counterfactual": null,
+        "pair": 4,
+        "evidence": "事实分与真实图比较；成对分仅编辑外区域。bbox排除域为近似，阴影/遮挡影响域未完整分割。插入位置在树木/围栏后；两支近似，无可辨认新增汽车。遮挡与非行驶区域输入使可见性不足，不能直接判失败或通过。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      },
+      "O": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "只评开环可见占据/响应方向，不是驾驶策略、避碰或闭环安全结论。插入位置在树木/围栏后；两支近似，无可辨认新增汽车。遮挡与非行驶区域输入使可见性不足，不能直接判失败或通过。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "T": {
+        "factual": null,
+        "counterfactual": null,
+        "pair": null,
+        "evidence": "无可靠米制轨迹；检测位置接近控制投影不保证身份或速度响应；本case关联/可辨认性不足。",
+        "confidence": "insufficient",
+        "abstain_reason": "readout_unreliable"
+      },
+      "OP": {
+        "factual": 3,
+        "counterfactual": null,
+        "pair": 3,
+        "evidence": "事实分看原图身份/纹理保真，成对分看目标及非目标外观保持；相同错误可造成成对高分。插入位置在树木/围栏后；两支近似，无可辨认新增汽车。遮挡与非行驶区域输入使可见性不足，不能直接判失败或通过。",
+        "confidence": "moderate",
+        "abstain_reason": null
+      }
+    },
+    "finding": "插入位置在树木/围栏后；两支近似，无可辨认新增汽车。遮挡与非行驶区域输入使可见性不足，不能直接判失败或通过。",
+    "human_verdict": null,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false
+  }
+}

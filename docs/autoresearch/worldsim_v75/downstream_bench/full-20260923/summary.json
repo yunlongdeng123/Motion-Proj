@@ -1,0 +1,1786 @@
+{
+  "task_id": "WS-V75-DOWNSTREAM-FULL-01",
+  "run_id": "20260923-r1",
+  "snapshot_utc": "2026-09-23T06:24:51.276331+00:00",
+  "inputs": "fixed24 pilot development;3 nuScenes scenes;GT control vs reconstruction tiers separate",
+  "resources": {
+    "gpu": "single RTX3090 24GB",
+    "cpu_evaluator_threads": 3,
+    "seed": 42
+  },
+  "omnidreams": {
+    "generated_pairs": 24,
+    "generated_videos": 48,
+    "generated_frames": 3696,
+    "generation_calls": 480,
+    "reference_videos": 24,
+    "generation_wall_s": 1583.1527586262673,
+    "peak_allocated_gib": 13.247443199157715,
+    "ai_fixed_frame_reviewed": 24,
+    "full_temporal_review_complete": false,
+    "downstream_policy_evaluation_complete": false,
+    "pair_score_denominators": {
+      "A": 11,
+      "P": 24,
+      "E": 18,
+      "O": 11,
+      "T": 1,
+      "OP": 24
+    },
+    "cases": [
+      {
+        "case_id": "CFB-SPEED-EGO-01",
+        "generation_status": "generation_complete",
+        "wall_s": 65.75616870447993,
+        "peak_allocated_gib": 13.241644859313965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": null,
+          "outside_edit_ssim_mean": null,
+          "factual_psnr_db_mean": 17.62202073027409,
+          "factual_ssim_mean": 0.41340696811676025
+        },
+        "input_audit": {
+          "case_id": "CFB-SPEED-EGO-01",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "ego",
+          "family": "actor_speed_change",
+          "factual_target_path_length_m": 5.9933311620630985,
+          "counterfactual_target_path_length_m": 3.4379994219046077,
+          "target_endpoint_delta_m": 2.5548129594360565,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 3,
+          "P": 2,
+          "E": null,
+          "O": 3,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-02",
+        "generation_status": "generation_complete",
+        "wall_s": 64.31798321194947,
+        "peak_allocated_gib": 13.242789268493652,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": null,
+          "outside_edit_ssim_mean": null,
+          "factual_psnr_db_mean": 21.32048583894214,
+          "factual_ssim_mean": 0.8095490762165615
+        },
+        "input_audit": {
+          "case_id": "CFB-SPEED-EGO-02",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "ego",
+          "family": "actor_speed_change",
+          "factual_target_path_length_m": 0.0017342716838020193,
+          "counterfactual_target_path_length_m": 0.0024357755498203414,
+          "target_endpoint_delta_m": 5.3126393695074675e-05,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": null,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-03",
+        "generation_status": "generation_complete",
+        "wall_s": 64.3590068332851,
+        "peak_allocated_gib": 13.243597984313965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": null,
+          "outside_edit_ssim_mean": null,
+          "factual_psnr_db_mean": 18.013094168934742,
+          "factual_ssim_mean": 0.4581302319254194
+        },
+        "input_audit": {
+          "case_id": "CFB-SPEED-EGO-03",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "ego",
+          "family": "actor_speed_change",
+          "factual_target_path_length_m": 2.9143276963150426,
+          "counterfactual_target_path_length_m": 1.2477540624033532,
+          "target_endpoint_delta_m": 1.6653961948772542,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 2,
+          "P": 2,
+          "E": null,
+          "O": 2,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-01",
+        "generation_status": "generation_complete",
+        "wall_s": 65.1684180945158,
+        "peak_allocated_gib": 13.243597984313965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 0.9453796638165437
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 1.366374957847564
+          },
+          "counterfactual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 0.7715115283383734
+          },
+          "outside_edit_mae_01_mean": 0.025131011115653173,
+          "outside_edit_ssim_mean": 0.8358617169516427,
+          "factual_psnr_db_mean": 18.733762994974942,
+          "factual_ssim_mean": 0.64698355112757
+        },
+        "input_audit": {
+          "case_id": "CFB-SPEED-ACTOR-01",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_speed_change",
+          "factual_target_path_length_m": 13.797280214212321,
+          "counterfactual_target_path_length_m": 6.850549820604257,
+          "target_endpoint_delta_m": 6.945586670685162,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 1,
+          "E": 3,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-02",
+        "generation_status": "generation_complete",
+        "wall_s": 65.07215012796223,
+        "peak_allocated_gib": 13.24326229095459,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 4,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 24.130814298497242
+          },
+          "factual": {
+            "target_matches": 4,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 11.416306070782293
+          },
+          "counterfactual": {
+            "target_matches": 3,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 4.260067333233179
+          },
+          "outside_edit_mae_01_mean": 0.015329612319224648,
+          "outside_edit_ssim_mean": 0.9352467741285052,
+          "factual_psnr_db_mean": 18.425265263040384,
+          "factual_ssim_mean": 0.707056292465755
+        },
+        "input_audit": {
+          "case_id": "CFB-SPEED-ACTOR-02",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_speed_change",
+          "factual_target_path_length_m": 9.946315897616795,
+          "counterfactual_target_path_length_m": 12.54782615358401,
+          "target_endpoint_delta_m": 2.60151014604978,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-03",
+        "generation_status": "generation_complete",
+        "wall_s": 64.65583839081228,
+        "peak_allocated_gib": 13.244025230407715,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 4.080476060717055
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 3.1901706965103105
+          },
+          "counterfactual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 3.862249016560294
+          },
+          "outside_edit_mae_01_mean": 0.008408038743904658,
+          "outside_edit_ssim_mean": 0.9494056275912693,
+          "factual_psnr_db_mean": 17.68671527877787,
+          "factual_ssim_mean": 0.6054546662739345
+        },
+        "input_audit": {
+          "case_id": "CFB-SPEED-ACTOR-03",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_speed_change",
+          "factual_target_path_length_m": 9.44661882112771,
+          "counterfactual_target_path_length_m": 4.6417489629102064,
+          "target_endpoint_delta_m": 4.7998627188701555,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-01",
+        "generation_status": "generation_complete",
+        "wall_s": 64.82873723842204,
+        "peak_allocated_gib": 13.245001792907715,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": null,
+          "outside_edit_ssim_mean": null,
+          "factual_psnr_db_mean": 16.96444292658729,
+          "factual_ssim_mean": 0.431193436895098
+        },
+        "input_audit": {
+          "case_id": "CFB-LATERAL-EGO-01",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation",
+          "factual_target_path_length_m": 8.040970801161277,
+          "counterfactual_target_path_length_m": 11.537185164125331,
+          "target_endpoint_delta_m": 3.499999999999988,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 3,
+          "P": 2,
+          "E": null,
+          "O": 3,
+          "T": null,
+          "OP": 2
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-02",
+        "generation_status": "generation_complete",
+        "wall_s": 63.36847262084484,
+        "peak_allocated_gib": 13.244574546813965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": null,
+          "outside_edit_ssim_mean": null,
+          "factual_psnr_db_mean": 24.310645672290086,
+          "factual_ssim_mean": 0.8875336391585213
+        },
+        "input_audit": {
+          "case_id": "CFB-LATERAL-EGO-02",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation",
+          "factual_target_path_length_m": 0.002150174109129524,
+          "counterfactual_target_path_length_m": 3.500108102858541,
+          "target_endpoint_delta_m": 3.499999999999933,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 3,
+          "P": 2,
+          "E": null,
+          "O": 3,
+          "T": null,
+          "OP": 2
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-03",
+        "generation_status": "generation_complete",
+        "wall_s": 65.20491319522262,
+        "peak_allocated_gib": 13.244574546813965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": null,
+          "outside_edit_ssim_mean": null,
+          "factual_psnr_db_mean": 16.016523269064624,
+          "factual_ssim_mean": 0.46487029109682354
+        },
+        "input_audit": {
+          "case_id": "CFB-LATERAL-EGO-03",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "ego",
+          "family": "actor_lateral_relocation",
+          "factual_target_path_length_m": 9.066925476382892,
+          "counterfactual_target_path_length_m": 12.624369427112205,
+          "target_endpoint_delta_m": 3.4999999999999436,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 2,
+          "P": 2,
+          "E": null,
+          "O": 2,
+          "T": null,
+          "OP": 2
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-01",
+        "generation_status": "generation_complete",
+        "wall_s": 63.44523018412292,
+        "peak_allocated_gib": 13.245734214782715,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 20.652621015420408
+          },
+          "factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 9.797046193533044
+          },
+          "counterfactual": {
+            "target_matches": 3,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 12.392749615272876
+          },
+          "outside_edit_mae_01_mean": 0.006067255146003195,
+          "outside_edit_ssim_mean": 0.9754121814455304,
+          "factual_psnr_db_mean": 22.19704948669323,
+          "factual_ssim_mean": 0.8091471110071454
+        },
+        "input_audit": {
+          "case_id": "CFB-LATERAL-ACTOR-01",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation",
+          "factual_target_path_length_m": 7.854054578131612,
+          "counterfactual_target_path_length_m": 8.705182530726622,
+          "target_endpoint_delta_m": 3.50000000000003,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-02",
+        "generation_status": "generation_complete",
+        "wall_s": 64.57940077967942,
+        "peak_allocated_gib": 13.243903160095215,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 4.840209146425648
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 2.1632755595638957
+          },
+          "counterfactual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 2.144087925708214
+          },
+          "outside_edit_mae_01_mean": 0.008248709408300263,
+          "outside_edit_ssim_mean": 0.9697009239877973,
+          "factual_psnr_db_mean": 20.69199759201447,
+          "factual_ssim_mean": 0.5889620908669063
+        },
+        "input_audit": {
+          "case_id": "CFB-LATERAL-ACTOR-02",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation",
+          "factual_target_path_length_m": 9.85477148331636,
+          "counterfactual_target_path_length_m": 10.266997593954656,
+          "target_endpoint_delta_m": 3.4999999999999067,
+          "counterfactual_center_in_drivable_fraction": 0.8363636363636363,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 3,
+          "P": 3,
+          "E": 4,
+          "O": 3,
+          "T": 3,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-03",
+        "generation_status": "generation_complete",
+        "wall_s": 64.03744574449956,
+        "peak_allocated_gib": 13.246344566345215,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 61.44448876954587
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.009702946791159255,
+          "outside_edit_ssim_mean": 0.9632629411561149,
+          "factual_psnr_db_mean": 22.82018529513025,
+          "factual_ssim_mean": 0.8352454304695129
+        },
+        "input_audit": {
+          "case_id": "CFB-LATERAL-ACTOR-03",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_lateral_relocation",
+          "factual_target_path_length_m": 1.940474504109092,
+          "counterfactual_target_path_length_m": 4.105835560362709,
+          "target_endpoint_delta_m": 3.4999999999999987,
+          "counterfactual_center_in_drivable_fraction": 0.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 2,
+          "P": 1,
+          "E": 3,
+          "O": 2,
+          "T": null,
+          "OP": 1
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-REMOVE-01",
+        "generation_status": "generation_complete",
+        "wall_s": 65.46662464179099,
+        "peak_allocated_gib": 13.24478816986084,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 38.9495075336866
+          },
+          "factual": {
+            "target_matches": 5,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 22.94473004001818
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.003025264820150499,
+          "outside_edit_ssim_mean": 0.9870791094643729,
+          "factual_psnr_db_mean": 22.137810322232777,
+          "factual_ssim_mean": 0.775441859449659
+        },
+        "input_audit": {
+          "case_id": "CFB-REMOVE-01",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_removal",
+          "factual_target_path_length_m": 16.749840293491747,
+          "counterfactual_target_path_length_m": 16.749840293491747,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": null,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 0,
+          "P": 2,
+          "E": 4,
+          "O": 0,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-REMOVE-02",
+        "generation_status": "generation_complete",
+        "wall_s": 64.35070809908211,
+        "peak_allocated_gib": 13.243842124938965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 11.026083833392434
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 5.185155970821528
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.017586262497518743,
+          "outside_edit_ssim_mean": 0.8604329143251691,
+          "factual_psnr_db_mean": 19.716256284647375,
+          "factual_ssim_mean": 0.5933943050248283
+        },
+        "input_audit": {
+          "case_id": "CFB-REMOVE-02",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_removal",
+          "factual_target_path_length_m": 0.019250974881803214,
+          "counterfactual_target_path_length_m": 0.019250974881803214,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": null,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 3,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-REMOVE-03",
+        "generation_status": "generation_complete",
+        "wall_s": 65.39374190941453,
+        "peak_allocated_gib": 13.246588706970215,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 6,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 3.0629242816541247
+          },
+          "factual": {
+            "target_matches": 6,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 1.8326861033858777
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.01991217170975038,
+          "outside_edit_ssim_mean": 0.8956636105264936,
+          "factual_psnr_db_mean": 18.733762994974942,
+          "factual_ssim_mean": 0.64698355112757
+        },
+        "input_audit": {
+          "case_id": "CFB-REMOVE-03",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_removal",
+          "factual_target_path_length_m": 0.43406363554768573,
+          "counterfactual_target_path_length_m": 0.43406363554768573,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": null,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 1,
+          "E": 3,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-REMOVE-04",
+        "generation_status": "generation_complete",
+        "wall_s": 65.87406780943274,
+        "peak_allocated_gib": 13.246283531188965,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 4,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 6,
+            "matched_target_center_error_median_px": 8.496870734486926
+          },
+          "factual": {
+            "target_matches": 4,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 6,
+            "matched_target_center_error_median_px": 8.450612222390975
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.015735236927866936,
+          "outside_edit_ssim_mean": 0.8879193578447614,
+          "factual_psnr_db_mean": 18.43047035291826,
+          "factual_ssim_mean": 0.6003522617476327
+        },
+        "input_audit": {
+          "case_id": "CFB-REMOVE-04",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_removal",
+          "factual_target_path_length_m": 0.11919999999999997,
+          "counterfactual_target_path_length_m": 0.11919999999999997,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": null,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 3,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-REMOVE-05",
+        "generation_status": "generation_complete",
+        "wall_s": 66.25408947840333,
+        "peak_allocated_gib": 13.246298789978027,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 5,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 5,
+            "matched_target_center_error_median_px": 13.581082601412156
+          },
+          "factual": {
+            "target_matches": 5,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 5,
+            "matched_target_center_error_median_px": 10.545032549870745
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.04126101306506565,
+          "outside_edit_ssim_mean": 0.6556487849780491,
+          "factual_psnr_db_mean": 14.155075578047278,
+          "factual_ssim_mean": 0.35744759014674593
+        },
+        "input_audit": {
+          "case_id": "CFB-REMOVE-05",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_removal",
+          "factual_target_path_length_m": 0.2723787304918885,
+          "counterfactual_target_path_length_m": 0.2723787304918885,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": null,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 0,
+          "P": 2,
+          "E": 3,
+          "O": 0,
+          "T": null,
+          "OP": 2
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-REMOVE-06",
+        "generation_status": "generation_complete",
+        "wall_s": 65.4776147659868,
+        "peak_allocated_gib": 13.24588680267334,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 0,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.00737192840980632,
+          "outside_edit_ssim_mean": 0.9665733405521938,
+          "factual_psnr_db_mean": 18.510802373066557,
+          "factual_ssim_mean": 0.5351345453943525
+        },
+        "input_audit": {
+          "case_id": "CFB-REMOVE-06",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_removal",
+          "factual_target_path_length_m": 0.11927714859176151,
+          "counterfactual_target_path_length_m": 0.11927714859176151,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": null,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-INSERT-01",
+        "generation_status": "generation_complete",
+        "wall_s": 65.75937696546316,
+        "peak_allocated_gib": 13.24564266204834,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 3.100316753990766
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 7.9458641471506635
+          },
+          "counterfactual": {
+            "target_matches": 6,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 6.91844995734305
+          },
+          "outside_edit_mae_01_mean": 0.05950263408677919,
+          "outside_edit_ssim_mean": 0.5849425111498151,
+          "factual_psnr_db_mean": 14.155075578047278,
+          "factual_ssim_mean": 0.35744759014674593
+        },
+        "input_audit": {
+          "case_id": "CFB-INSERT-01",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_insertion",
+          "factual_target_path_length_m": 0.16676538647292552,
+          "counterfactual_target_path_length_m": 0.16676538647292552,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 3,
+          "P": 2,
+          "E": 3,
+          "O": 3,
+          "T": null,
+          "OP": 2
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-INSERT-02",
+        "generation_status": "generation_complete",
+        "wall_s": 65.23054975643754,
+        "peak_allocated_gib": 13.24661922454834,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 1,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 10.497702541813782
+          },
+          "factual": {
+            "target_matches": 6,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 2.696607890297231
+          },
+          "counterfactual": {
+            "target_matches": 4,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 5,
+            "matched_target_center_error_median_px": 7.099245401509369
+          },
+          "outside_edit_mae_01_mean": 0.0037183005562318222,
+          "outside_edit_ssim_mean": 0.984836723123278,
+          "factual_psnr_db_mean": 19.716256284647375,
+          "factual_ssim_mean": 0.5933943050248283
+        },
+        "input_audit": {
+          "case_id": "CFB-INSERT-02",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_insertion",
+          "factual_target_path_length_m": 0.05300000000000016,
+          "counterfactual_target_path_length_m": 0.05300000000000016,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": 0.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-INSERT-03",
+        "generation_status": "generation_complete",
+        "wall_s": 66.10123774409294,
+        "peak_allocated_gib": 13.24619197845459,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 11.492449095587528
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 10.51143278422803
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.012966696106429611,
+          "outside_edit_ssim_mean": 0.9068477664675031,
+          "factual_psnr_db_mean": 18.510802373066557,
+          "factual_ssim_mean": 0.5351345453943525
+        },
+        "input_audit": {
+          "case_id": "CFB-INSERT-03",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_insertion",
+          "factual_target_path_length_m": 0.095817716261681,
+          "counterfactual_target_path_length_m": 0.09581771626155132,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-INSERT-04",
+        "generation_status": "generation_complete",
+        "wall_s": 66.1509656906128,
+        "peak_allocated_gib": 13.24564266204834,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 6,
+            "matched_target_center_error_median_px": 9.380231702127698
+          },
+          "factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 6,
+            "matched_target_center_error_median_px": 10.04102836675635
+          },
+          "counterfactual": {
+            "target_matches": 5,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 13.31238701159237
+          },
+          "outside_edit_mae_01_mean": 0.034198604324566464,
+          "outside_edit_ssim_mean": 0.679479352065495,
+          "factual_psnr_db_mean": 14.155075578047278,
+          "factual_ssim_mean": 0.35744759014674593
+        },
+        "input_audit": {
+          "case_id": "CFB-INSERT-04",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_insertion",
+          "factual_target_path_length_m": 0.10964430122736392,
+          "counterfactual_target_path_length_m": 0.10964430122736392,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": 0.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": 3,
+          "P": 2,
+          "E": 3,
+          "O": 3,
+          "T": null,
+          "OP": 2
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-INSERT-05",
+        "generation_status": "generation_complete",
+        "wall_s": 65.48359771259129,
+        "peak_allocated_gib": 13.246893882751465,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 142.15213426481088
+          },
+          "factual": {
+            "target_matches": 7,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 142.64289032041054
+          },
+          "counterfactual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 76.69301644943464
+          },
+          "outside_edit_mae_01_mean": 0.01513875016410436,
+          "outside_edit_ssim_mean": 0.9044245907238552,
+          "factual_psnr_db_mean": 22.137810322232777,
+          "factual_ssim_mean": 0.775441859449659
+        },
+        "input_audit": {
+          "case_id": "CFB-INSERT-05",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_insertion",
+          "factual_target_path_length_m": 7.672411671563997e-12,
+          "counterfactual_target_path_length_m": 7.672411671563997e-12,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": 1.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 2,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      },
+      {
+        "case_id": "CFB-INSERT-06",
+        "generation_status": "generation_complete",
+        "wall_s": 64.19338878057897,
+        "peak_allocated_gib": 13.247443199157715,
+        "prefix_13frames_equal": true,
+        "automatic": {
+          "real_factual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "factual": {
+            "target_matches": 2,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": 18.594445877899112
+          },
+          "counterfactual": {
+            "target_matches": 0,
+            "sampled_post_frames": 7,
+            "visible_target_projection_frames": 7,
+            "matched_target_center_error_median_px": null
+          },
+          "outside_edit_mae_01_mean": 0.005111698526889086,
+          "outside_edit_ssim_mean": 0.9895819170134408,
+          "factual_psnr_db_mean": 19.690686744100145,
+          "factual_ssim_mean": 0.6909346154757908
+        },
+        "input_audit": {
+          "case_id": "CFB-INSERT-06",
+          "role": "posthoc_input_diagnostic_not_pre_registered_scoring_gate",
+          "target_role": "non_ego",
+          "family": "actor_insertion",
+          "factual_target_path_length_m": 0.0032627417013534094,
+          "counterfactual_target_path_length_m": 0.0032627417013534094,
+          "target_endpoint_delta_m": null,
+          "counterfactual_center_in_drivable_fraction": 0.0,
+          "road_audit_caveat": "仅目标中心与drivable_area；不验证车身、车道方向、信号灯或自行车/行人路权；移除后N/A",
+          "frozen_case_unchanged": true,
+          "human_verdict": null
+        },
+        "scores_pair": {
+          "A": null,
+          "P": 3,
+          "E": 4,
+          "O": null,
+          "T": null,
+          "OP": 3
+        },
+        "human_verdict": null
+      }
+    ]
+  },
+  "resim_snapshot": {
+    "status": "running",
+    "requested": 24,
+    "supported": 6,
+    "unsupported": 18,
+    "completed_pairs": 1,
+    "completed_branches": 3,
+    "active_case": "CFB-SPEED-EGO-02"
+  },
+  "reconstruction_inputs": {
+    "task_id": "WS-V75-DOWNSTREAM-FULL-01",
+    "scenes": [
+      {
+        "scene_id": "179",
+        "scene_name": "scene-0230",
+        "source": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/179",
+        "hugsim_input": "/root/autodl-tmp/data/worldsim_v75_downstream_bench/reconstruction_inputs/hugsim/scene-0230",
+        "frame_count": 196,
+        "cameras": 6,
+        "fps": 10,
+        "target_ids": [
+          "13",
+          "18",
+          "20",
+          "25",
+          "3",
+          "32",
+          "7",
+          "8"
+        ],
+        "actor_count": 24,
+        "ground_plane": [
+          -0.0017519205741273012,
+          0.013983394272555412,
+          0.9999006927985,
+          -17.230237948844472
+        ],
+        "ground_inliers": 9222,
+        "camera_height_m": 1.4773027982121647,
+        "status": "rgb_pose_track_prepared_semantics_depth_reconstruction_pending",
+        "variant": "official HUGSIM reconstruction with DriveStudio10Hz input adapter; all case targets retained as editable actors",
+        "hugsim_split": "native idx%30>=24 = source frame%5==4 holdout; factual report separates train/holdout",
+        "human_verdict": null
+      },
+      {
+        "scene_id": "191",
+        "scene_name": "scene-0242",
+        "source": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/191",
+        "hugsim_input": "/root/autodl-tmp/data/worldsim_v75_downstream_bench/reconstruction_inputs/hugsim/scene-0242",
+        "frame_count": 196,
+        "cameras": 6,
+        "fps": 10,
+        "target_ids": [
+          "15",
+          "2",
+          "21",
+          "27",
+          "3",
+          "7"
+        ],
+        "actor_count": 40,
+        "ground_plane": [
+          -0.0016536652349879992,
+          -0.0256545901283611,
+          0.99966949908289,
+          24.092176351062196
+        ],
+        "ground_inliers": 5717,
+        "camera_height_m": 1.4028401987278691,
+        "status": "rgb_pose_track_prepared_semantics_depth_reconstruction_pending",
+        "variant": "official HUGSIM reconstruction with DriveStudio10Hz input adapter; all case targets retained as editable actors",
+        "hugsim_split": "native idx%30>=24 = source frame%5==4 holdout; factual report separates train/holdout",
+        "human_verdict": null
+      },
+      {
+        "scene_id": "204",
+        "scene_name": "scene-0255",
+        "source": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval/204",
+        "hugsim_input": "/root/autodl-tmp/data/worldsim_v75_downstream_bench/reconstruction_inputs/hugsim/scene-0255",
+        "frame_count": 196,
+        "cameras": 6,
+        "fps": 10,
+        "target_ids": [
+          "1",
+          "11",
+          "3",
+          "49"
+        ],
+        "actor_count": 13,
+        "ground_plane": [
+          -0.0012962252602459745,
+          -0.007709998044407823,
+          0.9999694373980785,
+          9.031677803962761
+        ],
+        "ground_inliers": 6170,
+        "camera_height_m": 1.4541713524657878,
+        "status": "rgb_pose_track_prepared_semantics_depth_reconstruction_pending",
+        "variant": "official HUGSIM reconstruction with DriveStudio10Hz input adapter; all case targets retained as editable actors",
+        "hugsim_split": "native idx%30>=24 = source frame%5==4 holdout; factual report separates train/holdout",
+        "human_verdict": null
+      }
+    ],
+    "generation_calls": 0,
+    "training_started": false
+  },
+  "validation": {
+    "status": "pass",
+    "checked_cases": 24,
+    "decoded_videos": 72,
+    "internal_links_checked": 249,
+    "human_verdicts_filled": 0,
+    "videos": [
+      {
+        "case_id": "CFB-SPEED-EGO-01",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-01",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-01",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-02",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-02",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-02",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-03",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-03",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-EGO-03",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-01",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-01",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-01",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-02",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-02",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-02",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-03",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-03",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-SPEED-ACTOR-03",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-01",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-01",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-01",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-02",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-02",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-02",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-03",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-03",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-EGO-03",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-01",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-01",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-01",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-02",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-02",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-02",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-03",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-03",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-LATERAL-ACTOR-03",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-01",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-REMOVE-01",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-01",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-02",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-REMOVE-02",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-02",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-03",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-REMOVE-03",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-03",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-04",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-REMOVE-04",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-04",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-05",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-REMOVE-05",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-05",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-06",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-REMOVE-06",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-REMOVE-06",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-01",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-INSERT-01",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-01",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-02",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-INSERT-02",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-02",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-03",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-INSERT-03",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-03",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-04",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-INSERT-04",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-04",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-05",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-INSERT-05",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-05",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-06",
+        "branch": "original-nuscenes",
+        "decoded_frames": 24
+      },
+      {
+        "case_id": "CFB-INSERT-06",
+        "branch": "factual",
+        "decoded_frames": 77
+      },
+      {
+        "case_id": "CFB-INSERT-06",
+        "branch": "counterfactual",
+        "decoded_frames": 77
+      }
+    ]
+  },
+  "tests": "15 passed: test_cfbench_full + test_cfbench_gpu_smoke + test_worldsim_v75_downstream_bench",
+  "run_root": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-FULL-01/20260923-r1",
+  "report": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-FULL-01/20260923-r1/reports/omnidreams/index.html",
+  "failure_ledger_refs": [],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}

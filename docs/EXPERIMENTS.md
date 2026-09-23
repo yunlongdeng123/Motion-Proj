@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V75-DOWNSTREAM-FULL-01 / 20260923-r1 | 我们固定24case：OmniDreams 24对/48段3696帧，原始参考24段、自动读出与固定五帧AI初评；ReSim单卡chunk17+offload真实ego队列；三个pilot高斯重建输入准备。静帧诊断非闭环评测，人工null、六维无总分 | [记录与architecture](autoresearch/worldsim_v75/downstream_bench/full-20260923/README.md)、[轻量证据](autoresearch/worldsim_v75/downstream_bench/full-20260923/summary.json) |
 | WS-V75-DOWNSTREAM-GPU-SMOKE-01 / 20260923-r1 | 单 RTX3090：OmniDreams ego 减速2×61帧，GaussianDWM QA兼容版1条合成回答，HUGSIM移除2×9帧×6相机；ReSim VAE OOM停止，StreetGS checkpoint缺失；工程 smoke，正式bench 0 case | [报告与architecture](autoresearch/worldsim_v75/downstream_bench/gpu-smoke-20260923/README.md)、[日志/结果](autoresearch/worldsim_v75/downstream_bench/gpu-smoke-20260923/summary.json) |
 | WS-V75-DOWNSTREAM-CFBENCH-PREP-02 / 20260923-r1 | GPU-free 全量准备：24/24 CPU geometry pass、24张人工审阅图；ReSim/DriveEditor/GaussianDWM/HUGSIM 输入与公开资产物化；GaussianDWM loader 合同问题、DriveEditor reference mask 风险及 HUGSIM release 路径问题；10项本地测试与55项上游测试通过；0模型前向 | [设计、发现与边界](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)、[manifest/qualification/assets/env/preflight/plan](autoresearch/worldsim_v75/downstream_bench/) |
 | WS-V75-DOWNSTREAM-CFBENCH-PREP-01 / 20260922-r1 | 下游导向 paired-edit pilot：四类各6个共24个候选；六模型能力/资源 registry、CPU preflight、fail-closed planner、六维无总分 evaluator；0模型调用 | [设计与边界](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)、[manifest/preflight/plan](autoresearch/worldsim_v75/downstream_bench/) |

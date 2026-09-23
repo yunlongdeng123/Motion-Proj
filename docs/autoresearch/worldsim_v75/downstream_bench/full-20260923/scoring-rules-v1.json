@@ -1,0 +1,34 @@
+{
+  "version": "cfbench-six-dimension-v1",
+  "task_id": "WS-V75-DOWNSTREAM-FULL-01",
+  "role": "pilot_problem_discovery_not_leaderboard",
+  "composite_score": false,
+  "scope": "固定24case；同源、同目标、同干预、同评测时间窗；原生能力与适配能力分层，不以原论文demo替代",
+  "input_tiers": ["GT控制输入适配", "高斯重建输入", "下游consumer"],
+  "denominators": ["requested=24", "supported", "inputs_valid", "inference_complete", "scorable_per_dimension"],
+  "no_future_rgb_for_prediction": true,
+  "reconstruction_information_boundary": "场景优化可以使用多帧事实观测，但标明build视角、时间与train/holdout；不能与只看历史的预测器声称同信息预算",
+  "temporal_window": {"common_source_hz": 10, "pre_frames": 5, "post_frames": 19, "duration_s": 2.3, "intervention_time_s": 0.5, "native_padding_scored": false},
+  "review_frames_30hz": [0, 9, 15, 24, 33, 42, 51, 60, 69],
+  "score_layers": {
+    "automatic": "原单位、分母、适用门与读出器校准同时报告；输入控制值不能充当输出测量",
+    "ai_preliminary": "逐维0–4序数分；给简短可核查依据、帧号、置信度与弃权理由。接触表观察不声称看过完整动态视频",
+    "human": "默认null，只由用户或指定评审填写；AI不能代填"
+  },
+  "ordinal_anchors": {"0": "可核实的未执行、反向执行或严重违例", "1": "主要失败，只有零星正确迹象", "2": "部分正确但有明显偏差或不稳定", "3": "主要正确，存在有限的小偏差", "4": "在可评分证据中持续一致、未发现违例；不是未观测部分的通过保证"},
+  "abstain": ["unsupported", "missing_input", "input_invalid", "not_visible", "readout_unreliable", "ambiguous_identity", "insufficient_temporal_evidence", "not_applicable"],
+  "dimensions": {
+    "A": {"name": "Adherence", "question": "指定对象和变量是否按要求改变？事实分支是否保留原状态？", "automatic": ["检测/跟踪命中率及有效帧数", "删除残留率、插入出现率与新增重复体数量", "速度/横向位移的成对响应方向"], "guard": "无检测不等于成功删除；需真实图与事实生成分支读出校准并与视觉复核一致"},
+    "P": {"name": "Physics", "question": "尺度、形状、运动连续性和遮挡是否合理？", "automatic": ["可靠3D读出后的速度/加速度/jerk与碰撞率", "仅2D时报告尺度跳变、流一致性等代理量"], "guard": "图像只能给可见物理合理性，不能据此证明完整动力学；输入本身违例与模型新增违例分开"},
+    "E": {"name": "Environment preservation", "question": "允许影响域外的道路、建筑和非目标交通内容是否保持？", "automatic": ["相同相机轨迹且排除编辑及遮挡域后的MAE/SSIM/LPIPS", "跨ego轨迹需共同可见域重投影或几何读出"], "guard": "不同ego轨迹禁止直接像素差当作背景失败；当前bbox掩码仅近似，阴影/遮挡遗漏须标注"},
+    "O": {"name": "Outcome", "question": "生成输出的变化方向是否符合预先声明的干预逻辑？", "automatic": ["独立读出的行进量/目标位移差方向", "删除后的占据释放或插入后的新增占据", "若真正运行AD则另列碰撞、TTC、驾驶区域和任务完成"], "guard": "不从目标输入自证O；不把开环视频评价说成闭环驾驶安全，非反应式背景不假设会让行"},
+    "T": {"name": "Trajectory adherence", "question": "生成中可见轨迹与指定轨迹有多接近？", "automatic": ["可信3D跟踪：ADE/FDE(m)、yaw(deg)、速度误差(m/s)", "2D读出：中心误差(px)、成对位移响应误差(px)、有效匹配比例"], "guard": "2D像素误差不能换名为米制ADE；移除无持续轨迹时N/A，不补零；关联歧义需弃权"},
+    "OP": {"name": "Object/background preservation", "question": "目标外观身份与非目标对象/背景外观是否保持？", "automatic": ["目标身份特征相似度", "非目标对象分区与背景分区分别报告"], "guard": "与E分别描述身份/纹理和空间范围；删除目标外观N/A；插入只与供体参考比，不与空白事实crop比"}
+  },
+  "detector": {"model": "torchvision FasterRCNN ResNet50 FPN v2 COCO_V1", "confidence": 0.5, "iou_match": 0.3, "association": "一对一Hungarian，保留原始检测与投影。校准失败不转成生成失败", "device": "cpu", "metric_role": "2D proxy only"},
+  "target_mask_padding_px_at1280": 16,
+  "summary": "六维分别给均值/中位数或分布与n；ordinal仅描述性，不合成总分；同场景case相关，仅3scene，不宣称总体发生率",
+  "excluded_headlines": ["小样本24case的FID/FVD排名", "不存在反事实GT的PSNR", "从输入轨迹直接计算的编辑成功率", "不同信息预算不加区分的统一排名"],
+  "source_note": "借鉴What-If World的A/P/E/O和单变量配对思想；该文使用严格二元判据。本地0–4诊断尺度及T/OP为自建扩展，不冒充原文评分复现。",
+  "sources": ["https://arxiv.org/html/2605.27589v1", "https://github.com/nv-tlabs/omni-dreams", "https://github.com/OpenDriveLab/ReSim", "https://github.com/yvanliang/DriveEditor", "https://github.com/dtc111111/GaussianDWM", "https://github.com/zju3dv/street_gaussians", "https://github.com/hyzhou404/HUGSIM"]
+}
