@@ -237,12 +237,15 @@ def write_report(output, manifest):
           '<nav>'+''.join(f'<a href="#{r["case_id"]}">{r["parent_case_id"].replace("CFB-","")}</a>' for r in candidates)+'</nav>']
     for row in candidates:
         cid=row['case_id']; base='cases/'+cid
+        approved=row.get('approval',{}).get('status')=='approved'
+        placeholder='本例已批准，待整组审核与GPU恢复后推理' if approved else '待你确认后推理'
         body += [f'<article id="{cid}"><h2>{cid}</h2>',
                  f'<p>{row["scene_name"]} · {row["camera_name"]}（{row["view"]}）· 目标：{row["target_description"]}</p>',
+                 '<p class="note"><strong>审核状态：</strong>'+('用户已批准' if approved else '待用户审核')+'</p>',
                  f'<p class="intent"><strong>反事实：</strong>{row["counterfactual_description"]}</p>',
                  '<p class="note">'+row['revision_reason']+'</p>',
                  '<div class="videos"><div><h3>原始 nuScenes · 10秒</h3>'+f'<video controls preload="metadata" playsinline src="{base}/original-nuscenes.mp4"></video></div>'+
-                 '<div><h3>factual</h3><div class="placeholder">待你确认后推理</div></div><div><h3>counterfactual</h3><div class="placeholder">待你确认后推理</div></div></div>',
+                 '<div><h3>factual</h3><div class="placeholder">'+placeholder+'</div></div><div><h3>counterfactual</h3><div class="placeholder">'+placeholder+'</div></div></div>',
                  f'<p class="note">从{row["event_s"]:g}秒开始编辑；此前为公共前缀。事实分支保留原状态。ego是相机所在的采集车。</p>']
         if row['warnings']:
             body.append('<p class="warning">注意：'+' '.join(html.escape(w) for w in row['warnings'])+'</p>')
@@ -260,7 +263,7 @@ def write_report(output, manifest):
         body += ['<p>新版结果评价：<span class="empty">—</span>（未推理，待人工 review；不做 AI 视频评分）</p>']
         if row['prior_user_review']:
             body += ['<details><summary>你对旧版短片的 review（不代表新版结果）</summary><p class="review">'+html.escape(row['prior_user_review']['observations'])+'</p></details>']
-        body += ['<p><strong>待你确认：保留 / 修改 / 不采用。</strong></p></article>']
+        body += ['<p><strong>'+('本例已批准；未运行推理。' if approved else '待你确认：保留 / 修改 / 不采用。')+'</strong></p></article>']
     css="body{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;background:#f5f7fa;color:#213044;margin:0}main{max-width:1320px;margin:auto;padding:24px}article{background:white;padding:24px;margin:25px 0;border:1px solid #dae2eb;border-radius:8px}h2{font-size:22px}h3{font-size:16px}.notice,.intent{background:#edf6fa;padding:12px}.note{color:#586776;font-size:14px}.videos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}video{width:100%;aspect-ratio:16/9;background:#111}.placeholder{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px dashed #adb7c2;background:#f5f7fa;color:#788491;box-sizing:border-box}.empty{color:#788491}img{width:100%}.review{border-left:3px solid #9c8d5b;padding-left:12px}.architecture{padding:18px;border:1px solid #9bb8c6;background:white}a{color:#086684}@media(max-width:800px){.videos{grid-template-columns:1fr}main{padding:12px}article{padding:16px}}"
     css+='nav{display:flex;gap:8px 16px;flex-wrap:wrap;padding:12px;background:white}nav a{font-size:13px}.warning{background:#fff3dc;border-left:3px solid #c58c25;padding:10px;font-size:14px}'
     (output/'index.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniDreams 24-case 10秒·待人工确认</title><style>'+css+'</style><main>'+''.join(body)+'</main></html>',encoding='utf-8')
