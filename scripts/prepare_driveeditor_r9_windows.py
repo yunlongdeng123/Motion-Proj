@@ -28,7 +28,8 @@ from motion_proj.cfbench.geometry import pose_at, project_box  # noqa: E402
 
 
 def compile_window(row: dict, window: int, stride: int = 10,
-                   factual_identity: bool = False) -> tuple[dict, dict]:
+                   factual_identity: bool = False,
+                   reference_scope: str = "full_case") -> tuple[dict, dict]:
     case = row["case"]
     if case["target"]["role"] != "non_ego":
         raise ValueError("DriveEditor has no native ego-editing operation")
@@ -46,7 +47,9 @@ def compile_window(row: dict, window: int, stride: int = 10,
     cls = str(target["class_name"])
     token = str(target.get("source_asset_actor_id") or target["entity_id"])
     visible = []
-    for frame in range(int(row["source_frame_range"][0]), int(row["source_frame_range"][1]) + 1):
+    reference_frames = (frames if reference_scope == "window" else
+                        range(int(row["source_frame_range"][0]), int(row["source_frame_range"][1]) + 1))
+    for frame in reference_frames:
         p = pose_at(poses, float(frame))
         size = sizes.get(frame)
         if p is not None and size is not None:
@@ -118,6 +121,8 @@ def compile_window(row: dict, window: int, stride: int = 10,
         "evaluation_role": "factual_identity_reconstruction" if factual_identity else "counterfactual_edit",
         "frame_count": 10,
         "reference_mask": ref_metrics,
+        "reference_frame": ref_frame,
+        "reference_scope": reference_scope,
         "native_duration_s": 1.0,
         "window_stride_frames": stride,
         "condition_previous_last_frame": stride == 9 and window > 0,
@@ -138,6 +143,8 @@ def main() -> None:
                         help="9 means one-frame overlap for iterative conditioning")
     parser.add_argument("--factual-identity", action="store_true",
                         help="Paper reconstruction control: mask and regenerate source object at unchanged 3D boxes")
+    parser.add_argument("--reference-scope", choices=["full_case", "window"], default="full_case",
+                        help="window matches a native 10-frame reconstruction clip; full_case keeps a consistent asset across iterative segments")
     args = parser.parse_args()
     if args.factual_identity and args.stride != 10:
         raise RuntimeError("factual identity reconstruction is a native 10-frame control")
@@ -159,7 +166,8 @@ def main() -> None:
             continue
         for window in windows:
             try:
-                item, record = compile_window(row, window, args.stride, args.factual_identity)
+                item, record = compile_window(row, window, args.stride,
+                                              args.factual_identity, args.reference_scope)
                 path = args.output / f"{record['case_id']}.pkl"
                 with path.open("wb") as handle:
                     pickle.dump([item], handle, protocol=pickle.HIGHEST_PROTOCOL)
