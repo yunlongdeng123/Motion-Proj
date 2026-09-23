@@ -6,9 +6,9 @@
 
 按用户最新要求，V7.5继续研究**基于高斯重建的反事实编辑**，但主验证转为下游导向的自建 paired-edit benchmark：冻结 factual/counterfactual 分支，覆盖速度变化、横向重定位/换道、移除和插入，以 A/P/E/O、trajectory adherence、object/background preservation 六维分别报告，pilot 不合成总分。统一的是 case、输出和评价合同；OmniDreams、ReSim、DriveEditor、GaussianDWM、Street Gaussians、HUGSIM 的原生/适配/consumer-only 能力不作伪等价。完整定义、能力矩阵和架构见[下游反事实 benchmark](v75/DOWNSTREAM_COUNTERFACTUAL_BENCH.md)，此前“什么重建状态足以支持可信反事实生成”的[问题定义](v75/PROBLEM.md)继续作为上位研究问题。
 
-当前 AutoDL 为单张 RTX 3090 24GB。用户已授权：跳过 DriveEditor，依次跑另外五个系统的自建24-case评测；允许 ReSim 单卡显存优化；允许为我们三个pilot场景补做 StreetGS/HUGSIM 高斯重建，不用论文demo替换case。每完成一篇交付含原始/factual/counterfactual三列视频和六维分数/弃权的HTML。当前执行 `WS-V75-DOWNSTREAM-FULL-01 / 20260923-r1`，[本轮记录](autoresearch/worldsim_v75/downstream_bench/full-20260923/README.md)。OmniDreams 24/24对、48段×77帧、480次生成调用完成；24个自动读出和固定五帧AI初审完成。ReSim chunk17+offload单卡变体已完成第1对、正在第2个ego case；支持6个ego、18个actor为unsupported，不能称24/24成功。GPU串行使用。无电源操作。
+当前 AutoDL 为单张 RTX 3090 24GB。**2026-09-23最新授权：只聚焦OmniDreams；先交付case与反事实提案，用户人工确认后才能启动新版推理；停止ReSim；不再做AI视频/静帧评分。** 旧的多方法全量授权不得绕过本次人工gate。ReSim已按要求停止队列、子进程及等待导出进程，保留4个完整pair、9个完成分支和中断证据；禁止自动恢复。OmniDreams旧24/24对、48段×77帧、480次生成调用及历史自动/AI读出保留，[旧轮记录](autoresearch/worldsim_v75/downstream_bench/full-20260923/README.md)。没有新的GPU推理进程或电源操作。
 
-固定24候选仍为 `geometry_pass_manual_pending`：这是用户授权的开发性全量推理，不是道路/人工资格已全部通过。OmniDreams的AI成对可评分分母A/P/E/O/T/OP分别11/24/18/11/1/24，其他项保留弃权，人工verdict全部null、无总分。A/O仅可见开环响应，P仅固定帧形状/遮挡代理，未完成全帧运动及AD策略评测。事后输入审计发现SPEED-EGO-02终点干预差仅0.000053米、部分插入中心不在drivable_area；不删除、不替换case，不把输入问题当模型失败。已给OmniDreams全部24个case补原始nuScenes视频，ReSim目录生成时同步补入；每段原始参考24帧10Hz1600×900，与case同相机同窗口、不插帧。
+当前提案 `WS-V75-OMNI-REVIEW-02 / 20260923-proposal-r1`：[四例待审说明](autoresearch/worldsim_v75/downstream_bench/review-20260923/README.md)。前四例各提供6秒原始参考与反事实，factual/CF和新版评价留空，0新模型调用、0新AI评分。第2例原scene-0242自车几乎静止，按用户要求提议换scene-0230运动窗口，与第1例共源；全部新ID追加`-R2-6S`，旧结果不覆盖。其他三例保留对象/事件/倍率。所有候选`approval.status=pending`、`inference_allowed=false`，不得把CPU可见性/轨迹检查当用户批准。用户四条旧版定性review单独保留，不代填数值分；第4例camera5已核实为CAM_BACK，ego为搭载相机的采集车，编辑汽车#8。旧24候选及AI分仅作历史开发证据，不作全面bench结论。
 
 ReSim已修正为9帧历史+未来重复最后历史图占位，公开原生49帧中取索引4–27对齐2.3秒窗口，未输入未来RGB；chunk17 VAE改变时序边界，不冒充原生49帧等价。GaussianDWM仍需真实RGB/Gaussian/CLIP特征及paired输入对齐，公开715帧归档不是三个完整场景。HUGSIM三个pilot均已导出196帧×6相机RGB/位姿/track/地面高度，语义/深度预处理与重建尚未完成。StreetGS复用DriveStudio适配路径，现有Python3.9/Torch2.1.2/gsplat1.3可CPU导入，不应沿用原版simple-knn缺失作为此路径的阻塞；还未新增训练。DriveEditor仍不调用GPU。新OOM保留证据并停止当前队列；不自动改科学配置或把unsupported换成proxy。
 
@@ -34,10 +34,10 @@ ReSim已修正为9帧历史+未来重复最后历史图占位，公开原生49�
 
 `WS-V75-DOWNSTREAM-FULL-01 / 20260923-r1`：OmniDreams第一份HTML已包含全部24case三列视频、评分规则、自动读出、AI初评、事后输入审计和architecture图。服务器报告 `runs/worldsim_v75/WS-V75-DOWNSTREAM-FULL-01/20260923-r1/reports/omnidreams/index.html`（相对`/root/autodl-tmp`），本地 `outputs/cfbench-20260923/omnidreams/index.html`。72视频全解码、来源/时间窗/249内部链接核验通过；15项相关CPU测试通过。所有原始错误日志保留：nuScenes相机拟合与AV2容差不兼容、ReSim offload-only仍OOM、CPU评估缺依赖等。`failure_ledger_delta:none`，本轮AI候选未升级为独立确认科学failure。
 
-下一步：跟进ReSim现有串行队列，完成支持6case后提供24行能力/结果报告；18不支持不记零分。同步完成HUGSIM官方预处理资产/环境，随后为相同三个场景重建；StreetGS准备DriveStudio训练/编辑适配，保留停车目标作为可编辑节点。GaussianDWM在真实输入对齐后才计consumer结果，不复用合成QA代替。新自动跟进 `v75-24-case` 每20分钟在本任务检查，仅重要完成/失败/需操作时通知；结束全部已授权评测后暂停，不关机。无其他旧研究队列恢复。OmniDreams当前是GT条件生成基线，不是高斯重建比较；后续需补全时间/可见性读出与真正下游O，不能用首轮静帧诊断替代完整评价。
+下一步：仅等待用户review新HTML中四个case及反事实，按明确批准的case/配置再启动OmniDreams推理。新交付在本地`outputs/cfbench-20260923/omnidreams-case-review/index.html`，远端`/root/autodl-tmp/runs/worldsim_v75/WS-V75-OMNI-REVIEW-02/20260923-proposal-r1/index.html`。原始61帧10Hz，计划181帧30Hz连续生成至6秒；不减播放帧率或循环短片冒充延长。ReSim停止记录在旧run的`resim/user-stop.json`，产物未删除。自动跟进`v75-24-case`已在应用中不存在，未重建；其他方法新实验暂停，不得定时自动绕过人工确认，不关机。
 
 `WS-V75-CF-DEFINITION-01 / 20260921-r1`完成质量定义；对象移除开发发现、独立确认、f=0机制诊断和来源收口均完成。未来减速新增8段、936帧、120次生成前向；定义后累计17段、1,989帧、255次生成前向，单张RTX3090无OOM。大误差源新增一次官方DVGT-1前向；资格r1因缺`iopath`在前向前结束，r2保持同一科学输入完成，不计重复或failure卡。图和轻量结果见[轨迹反事实证据](autoresearch/worldsim_v75/actor_trajectory_counterfactual/)及[对象移除证据](autoresearch/worldsim_v75/actor_removal_counterfactual/)。
 
 此前有限来源确认已按停止规则关闭。原先 cuboid→raster 演员覆盖审计并入新 bench 的 case qualification gate，使“几何投影可见”与“状态条件真实承载目标”一致；不再作为单独主线继续筛日志、调用DVGT或启动策略反馈。若以后用新冻结协议独立复现大误差与material effect，再只对该具体状态错误接入一次实际反馈。当前不追加同源seed、事件帧、减速系数或阈值扫描。
 
-保留V7.4 [F20](research_failures/entries/V74-H2-F20.md)、[F21](research_failures/entries/V74-H2-F21.md)、[F22](research_failures/entries/V74-H2-F22.md)边界，不恢复失败的TransFuser域基线。人工verdict均null；本轮`failure_ledger_delta:none`，不新增失败卡，不在AGENTS或FAILURES重复状态。
+保留V7.4 [F20](research_failures/entries/V74-H2-F20.md)、[F21](research_failures/entries/V74-H2-F21.md)、[F22](research_failures/entries/V74-H2-F22.md)边界，不恢复失败的TransFuser域基线。旧实验数值verdict未代填；本次仅保存用户主动提供的四条定性review。`failure_ledger_delta:none`，不新增失败卡，不在AGENTS或FAILURES重复状态。

@@ -1,0 +1,362 @@
+{
+  "task_id": "WS-V75-OMNI-REVIEW-02",
+  "run_id": "20260923-proposal-r1",
+  "created_utc": "2026-09-23T07:10:36.652020+00:00",
+  "status": "awaiting_user_review_no_inference",
+  "model_calls": 0,
+  "new_ai_video_reviews": 0,
+  "case_count": 4,
+  "cases": [
+    {
+      "case_id": "CFB-SPEED-EGO-01-R2-6S",
+      "parent_case_id": "CFB-SPEED-EGO-01",
+      "case": {
+        "case_id": "CFB-SPEED-EGO-01-R2-6S",
+        "status": "awaiting_user_review_no_inference",
+        "dataset": {
+          "name": "nuscenes_drivestudio_10hz",
+          "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+          "scene_id": "179",
+          "role": "pilot_development_only"
+        },
+        "anchor": {
+          "event_frame": 65,
+          "pre_frames": 5,
+          "rollout_frames": 56,
+          "clip_frames": 61,
+          "state_fixation": "same scene, prefix, camera, seed and non-target state"
+        },
+        "target": {
+          "role": "ego",
+          "entity_id": "ego"
+        },
+        "intervention": {
+          "family": "actor_speed_change",
+          "variable": "speed_scale",
+          "factual": {
+            "speed_scale": 1.0
+          },
+          "counterfactual": {
+            "speed_scale": 0.5
+          }
+        },
+        "expected_outcome": {
+          "direction": "shorter progress",
+          "affected_entities": [
+            "ego"
+          ],
+          "unchanged_scope": "all_except_affected_entities"
+        },
+        "qualification": {
+          "state_fixation": true,
+          "single_variable_change": true,
+          "requires_visible_effect": true,
+          "requires_collision_and_road_gate": true,
+          "human_verdict": null
+        },
+        "parent_case_id": "CFB-SPEED-EGO-01"
+      },
+      "scene_name": "scene-0230",
+      "camera_index": 0,
+      "camera_name": "CAM_FRONT",
+      "view": "前视",
+      "target_description": "自车（搭载相机的采集车）",
+      "counterfactual_description": "从0.5秒开始，将自车沿原轨迹的推进速度设为原来的50%（0.5×，减速）；其余对象状态不改。",
+      "revision_reason": "同一场景、目标和事件，窗口由2.3秒延长至6秒。",
+      "source_frame_range": [
+        60,
+        120
+      ],
+      "event_s": 0.5,
+      "last_frame_s": 6.0,
+      "planned_generated_frames": 181,
+      "planned_fps": 30,
+      "tail_padding": 0,
+      "source_role": "development_candidate_not_independent_test",
+      "input_check": {
+        "factual_postevent_path_length_m": 20.90059118617146,
+        "target_endpoint_delta_m": 11.978711003533649,
+        "trajectory_available_without_extrapolation": true,
+        "full_collision_road_gate": "not_claimed"
+      },
+      "approval": {
+        "status": "pending",
+        "reviewer": "user",
+        "inference_allowed": false
+      },
+      "prior_user_review": {
+        "case_id": "CFB-SPEED-EGO-01",
+        "reviewer": "user",
+        "scores": null,
+        "observations": "factual建筑扭曲、相邻车道车辆有重叠；counterfactual能看出减速，但有开一段、停一下、再开的卡顿感。"
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-EGO-02-R2-6S",
+      "parent_case_id": "CFB-SPEED-EGO-02",
+      "case": {
+        "case_id": "CFB-SPEED-EGO-02-R2-6S",
+        "status": "awaiting_user_review_no_inference",
+        "dataset": {
+          "name": "nuscenes_drivestudio_10hz",
+          "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+          "scene_id": "179",
+          "role": "pilot_development_only"
+        },
+        "anchor": {
+          "event_frame": 65,
+          "pre_frames": 5,
+          "rollout_frames": 56,
+          "clip_frames": 61,
+          "state_fixation": "same scene, prefix, camera, seed and non-target state"
+        },
+        "target": {
+          "role": "ego",
+          "entity_id": "ego"
+        },
+        "intervention": {
+          "family": "actor_speed_change",
+          "variable": "speed_scale",
+          "factual": {
+            "speed_scale": 1.0
+          },
+          "counterfactual": {
+            "speed_scale": 1.5
+          }
+        },
+        "expected_outcome": {
+          "direction": "longer progress",
+          "affected_entities": [
+            "ego"
+          ],
+          "unchanged_scope": "all_except_affected_entities"
+        },
+        "qualification": {
+          "state_fixation": true,
+          "single_variable_change": true,
+          "requires_visible_effect": true,
+          "requires_collision_and_road_gate": true,
+          "human_verdict": null
+        },
+        "parent_case_id": "CFB-SPEED-EGO-02"
+      },
+      "scene_name": "scene-0230",
+      "camera_index": 0,
+      "camera_name": "CAM_FRONT",
+      "view": "前视",
+      "target_description": "自车（搭载相机的采集车）",
+      "counterfactual_description": "从0.5秒开始，将自车沿原轨迹的推进速度设为原来的150%（1.5×，加速）；其余对象状态不改。",
+      "revision_reason": "原scene-0242自车近乎静止，改用scene-0230运动自车；与第1例共用原始片段、分别测试加速/减速，不算独立场景。",
+      "source_frame_range": [
+        60,
+        120
+      ],
+      "event_s": 0.5,
+      "last_frame_s": 6.0,
+      "planned_generated_frames": 181,
+      "planned_fps": 30,
+      "tail_padding": 0,
+      "source_role": "development_candidate_not_independent_test",
+      "input_check": {
+        "factual_postevent_path_length_m": 20.90059118617146,
+        "target_endpoint_delta_m": 11.770790581583045,
+        "trajectory_available_without_extrapolation": true,
+        "full_collision_road_gate": "not_claimed"
+      },
+      "approval": {
+        "status": "pending",
+        "reviewer": "user",
+        "inference_allowed": false
+      },
+      "prior_user_review": {
+        "case_id": "CFB-SPEED-EGO-02",
+        "reviewer": "user",
+        "scores": null,
+        "observations": "自车原本静止，乘加速倍率不适用，需换case或指令；生成出现车厢幻觉，原始卡车的空车厢被填补。",
+        "branch_note": "车厢幻觉所指分支在口述中为“cycle”，未确认；不自行认定存在cycle分支。"
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-EGO-03-R2-6S",
+      "parent_case_id": "CFB-SPEED-EGO-03",
+      "case": {
+        "case_id": "CFB-SPEED-EGO-03-R2-6S",
+        "status": "awaiting_user_review_no_inference",
+        "dataset": {
+          "name": "nuscenes_drivestudio_10hz",
+          "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+          "scene_id": "204",
+          "role": "pilot_development_only"
+        },
+        "anchor": {
+          "event_frame": 65,
+          "pre_frames": 5,
+          "rollout_frames": 56,
+          "clip_frames": 61,
+          "state_fixation": "same scene, prefix, camera, seed and non-target state"
+        },
+        "target": {
+          "role": "ego",
+          "entity_id": "ego"
+        },
+        "intervention": {
+          "family": "actor_speed_change",
+          "variable": "speed_scale",
+          "factual": {
+            "speed_scale": 1.0
+          },
+          "counterfactual": {
+            "speed_scale": 0.5
+          }
+        },
+        "expected_outcome": {
+          "direction": "shorter progress",
+          "affected_entities": [
+            "ego"
+          ],
+          "unchanged_scope": "all_except_affected_entities"
+        },
+        "qualification": {
+          "state_fixation": true,
+          "single_variable_change": true,
+          "requires_visible_effect": true,
+          "requires_collision_and_road_gate": true,
+          "human_verdict": null
+        },
+        "parent_case_id": "CFB-SPEED-EGO-03"
+      },
+      "scene_name": "scene-0255",
+      "camera_index": 0,
+      "camera_name": "CAM_FRONT",
+      "view": "前视",
+      "target_description": "自车（搭载相机的采集车）",
+      "counterfactual_description": "从0.5秒开始，将自车沿原轨迹的推进速度设为原来的50%（0.5×，减速）；其余对象状态不改。",
+      "revision_reason": "同一场景、目标和事件，窗口由2.3秒延长至6秒。",
+      "source_frame_range": [
+        60,
+        120
+      ],
+      "event_s": 0.5,
+      "last_frame_s": 6.0,
+      "planned_generated_frames": 181,
+      "planned_fps": 30,
+      "tail_padding": 0,
+      "source_role": "development_candidate_not_independent_test",
+      "input_check": {
+        "factual_postevent_path_length_m": 18.37245454601434,
+        "target_endpoint_delta_m": 12.437475362707012,
+        "trajectory_available_without_extrapolation": true,
+        "full_collision_road_gate": "not_claimed"
+      },
+      "approval": {
+        "status": "pending",
+        "reviewer": "user",
+        "inference_allowed": false
+      },
+      "prior_user_review": {
+        "case_id": "CFB-SPEED-EGO-03",
+        "reviewer": "user",
+        "scores": null,
+        "observations": "生成建筑歪斜，树枝叶与建筑交叠处模糊；视频太短，看不清减速是否发生。"
+      }
+    },
+    {
+      "case_id": "CFB-SPEED-ACTOR-01-R2-6S",
+      "parent_case_id": "CFB-SPEED-ACTOR-01",
+      "case": {
+        "case_id": "CFB-SPEED-ACTOR-01-R2-6S",
+        "status": "awaiting_user_review_no_inference",
+        "dataset": {
+          "name": "nuscenes_drivestudio_10hz",
+          "root": "/root/autodl-tmp/data/dynamic_editing_v2/drivestudio_processed_10Hz/trainval",
+          "scene_id": "179",
+          "role": "pilot_development_only"
+        },
+        "anchor": {
+          "event_frame": 5,
+          "pre_frames": 5,
+          "rollout_frames": 56,
+          "clip_frames": 61,
+          "state_fixation": "same scene, prefix, camera, seed and non-target state"
+        },
+        "target": {
+          "role": "non_ego",
+          "entity_id": "edacd867fad74e8ba40d1737b9efa8be",
+          "actor_key": "8",
+          "class_name": "vehicle.car"
+        },
+        "intervention": {
+          "family": "actor_speed_change",
+          "variable": "speed_scale",
+          "factual": {
+            "speed_scale": 1.0
+          },
+          "counterfactual": {
+            "speed_scale": 0.5
+          }
+        },
+        "expected_outcome": {
+          "direction": "shorter progress",
+          "affected_entities": [
+            "edacd867fad74e8ba40d1737b9efa8be"
+          ],
+          "unchanged_scope": "all_except_affected_entities"
+        },
+        "qualification": {
+          "state_fixation": true,
+          "single_variable_change": true,
+          "requires_visible_effect": true,
+          "requires_collision_and_road_gate": true,
+          "human_verdict": null
+        },
+        "parent_case_id": "CFB-SPEED-ACTOR-01"
+      },
+      "scene_name": "scene-0230",
+      "camera_index": 5,
+      "camera_name": "CAM_BACK",
+      "view": "后视",
+      "target_description": "其他汽车 #8（不是自车）",
+      "counterfactual_description": "从0.5秒开始，将汽车 #8沿原轨迹的推进速度设为原来的50%（0.5×，减速）；其余对象状态不改。",
+      "revision_reason": "同一场景、目标和事件，窗口由2.3秒延长至6秒。",
+      "source_frame_range": [
+        0,
+        60
+      ],
+      "event_s": 0.5,
+      "last_frame_s": 6.0,
+      "planned_generated_frames": 181,
+      "planned_fps": 30,
+      "tail_padding": 0,
+      "source_role": "development_candidate_not_independent_test",
+      "input_check": {
+        "factual_postevent_path_length_m": 40.08646923907963,
+        "target_endpoint_delta_m": 19.30066766979828,
+        "trajectory_available_without_extrapolation": true,
+        "full_collision_road_gate": "not_claimed",
+        "target_projection_visibility": {
+          "factual": {
+            "visible_frames": 61,
+            "total_frames": 61,
+            "last_visible_s": 6.0
+          },
+          "counterfactual": {
+            "visible_frames": 61,
+            "total_frames": 61,
+            "last_visible_s": 6.0
+          }
+        }
+      },
+      "approval": {
+        "status": "pending",
+        "reviewer": "user",
+        "inference_allowed": false
+      },
+      "prior_user_review": {
+        "case_id": "CFB-SPEED-ACTOR-01",
+        "reviewer": "user",
+        "scores": null,
+        "observations": "原始画面看起来像快速倒车，需要明确相机视角和ego身份；factual鬼影严重，counterfactual像速度慢一些的鬼影。"
+      }
+    }
+  ]
+}

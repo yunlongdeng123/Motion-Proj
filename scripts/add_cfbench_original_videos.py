@@ -17,12 +17,13 @@ def make_original(case, camera, out):
     start = case["anchor"]["event_frame"]-case["anchor"]["pre_frames"]
     end = case["anchor"]["event_frame"]+case["anchor"]["rollout_frames"]-1
     frames = list(range(start, end+1))
-    assert len(frames) == 24
+    assert len(frames) > 1
+    count = len(frames)
     record = {"role": "observed_factual_reference_not_generated", "dataset": "nuScenes DriveStudio-processed10Hz RGB",
               "case_id": case["case_id"], "scene_id": case["dataset"]["scene_id"], "camera_index": camera,
               "source_root": str(source), "source_frames": frames, "source_images": [f"images/{f:03d}_{camera}.jpg" for f in frames],
-              "fps": 10, "frame_count": 24, "resolution": [1600, 900], "first_frame_time_s": 0,
-              "last_frame_time_s": 2.3, "intervention_time_s": .5,
+              "fps": 10, "frame_count": count, "resolution": [1600, 900], "first_frame_time_s": 0,
+              "last_frame_time_s": (count-1)/10, "intervention_time_s": case["anchor"]["pre_frames"]/10,
               "interpolation": "none; original processed dataset frames in temporal order", "encoding": "H264 CRF18 yuv420p",
               "note": "参考事实观测；反事实不存在配对真实GT。编码不是逐像素无损，原始JPEG仍在source_images。"}
     provenance = out / "original-nuscenes.json"
@@ -42,7 +43,7 @@ def make_original(case, camera, out):
                 writer.mux(packet)
         provenance.write_text(json.dumps(record, ensure_ascii=False, indent=2)+"\n")
     with av.open(str(path)) as reader:
-        assert sum(1 for _ in reader.decode(video=0)) == 24
+        assert sum(1 for _ in reader.decode(video=0)) == count
     return record
 
 
@@ -63,7 +64,7 @@ def main():
                     raise RuntimeError("推理队列失败，停止等待case目录")
                 time.sleep(10)
         record = make_original(row["case"], row.get("camera_index", 0), args.run / row["case_id"])
-        print(json.dumps({"original_video_added": record["case_id"], "frames": 24, "camera": record["camera_index"]}), flush=True)
+        print(json.dumps({"original_video_added": record["case_id"], "frames": record["frame_count"], "camera": record["camera_index"]}), flush=True)
 
 
 if __name__ == "__main__":
