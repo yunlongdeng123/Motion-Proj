@@ -8,7 +8,7 @@
 
 当前 AutoDL 为单张 RTX 3090 24GB。**2026-09-23最新授权：只聚焦OmniDreams；先交付case与反事实提案，用户人工确认后才能启动新版推理；停止ReSim；不再做AI视频/静帧评分。** 旧的多方法全量授权不得绕过本次人工gate。ReSim已按要求停止队列、子进程及等待导出进程，保留4个完整pair、9个完成分支和中断证据；禁止自动恢复。OmniDreams旧24/24对、48段×77帧、480次生成调用及历史自动/AI读出保留，[旧轮记录](autoresearch/worldsim_v75/downstream_bench/full-20260923/README.md)。没有新的GPU推理进程或电源操作。
 
-当前提案 `WS-V75-OMNI-REVIEW-02 / 20260923-proposal-r1`：[四例待审说明](autoresearch/worldsim_v75/downstream_bench/review-20260923/README.md)。前四例各提供6秒原始参考与反事实，factual/CF和新版评价留空，0新模型调用、0新AI评分。第2例原scene-0242自车几乎静止，按用户要求提议换scene-0230运动窗口，与第1例共源；全部新ID追加`-R2-6S`，旧结果不覆盖。其他三例保留对象/事件/倍率。所有候选`approval.status=pending`、`inference_allowed=false`，不得把CPU可见性/轨迹检查当用户批准。用户四条旧版定性review单独保留，不代填数值分；第4例camera5已核实为CAM_BACK，ego为搭载相机的采集车，编辑汽车#8。旧24候选及AI分仅作历史开发证据，不作全面bench结论。
+当前提案 `WS-V75-OMNI-REVIEW-02 / 20260923-proposal-r2-10s`：[24例待审说明](autoresearch/worldsim_v75/downstream_bench/review-20260923/README.md)。用户认为前四例总体无大问题，要求延长10秒并追加其余20例；现共24例，每段原始100帧10Hz，factual/CF和新版评价留空，0新模型调用、0新AI评分。第2例沿用上一提案的运动scene-0230；为避免1.5倍速查询超出轨迹，保留源事件65，将前缀由0.5秒增至1.4秒。横移保留1.8秒过渡后维持偏移，不随视频拉长。新ID均追加`-R3-10S`；旧6秒提案和旧结果保留。新窗口及追加case仍为`approval.status=pending`、`inference_allowed=false`；CPU检查不代替人工批准。已知短窗位置风险、静止ego横移及长窗目标可见性限制明确展示，不按结果换目标。用户旧版四条定性review保留，不代填数值分。
 
 ReSim已修正为9帧历史+未来重复最后历史图占位，公开原生49帧中取索引4–27对齐2.3秒窗口，未输入未来RGB；chunk17 VAE改变时序边界，不冒充原生49帧等价。GaussianDWM仍需真实RGB/Gaussian/CLIP特征及paired输入对齐，公开715帧归档不是三个完整场景。HUGSIM三个pilot均已导出196帧×6相机RGB/位姿/track/地面高度，语义/深度预处理与重建尚未完成。StreetGS复用DriveStudio适配路径，现有Python3.9/Torch2.1.2/gsplat1.3可CPU导入，不应沿用原版simple-knn缺失作为此路径的阻塞；还未新增训练。DriveEditor仍不调用GPU。新OOM保留证据并停止当前队列；不自动改科学配置或把unsupported换成proxy。
 
@@ -34,7 +34,7 @@ ReSim已修正为9帧历史+未来重复最后历史图占位，公开原生49�
 
 `WS-V75-DOWNSTREAM-FULL-01 / 20260923-r1`：OmniDreams第一份HTML已包含全部24case三列视频、评分规则、自动读出、AI初评、事后输入审计和architecture图。服务器报告 `runs/worldsim_v75/WS-V75-DOWNSTREAM-FULL-01/20260923-r1/reports/omnidreams/index.html`（相对`/root/autodl-tmp`），本地 `outputs/cfbench-20260923/omnidreams/index.html`。72视频全解码、来源/时间窗/249内部链接核验通过；15项相关CPU测试通过。所有原始错误日志保留：nuScenes相机拟合与AV2容差不兼容、ReSim offload-only仍OOM、CPU评估缺依赖等。`failure_ledger_delta:none`，本轮AI候选未升级为独立确认科学failure。
 
-下一步：仅等待用户review新HTML中四个case及反事实，按明确批准的case/配置再启动OmniDreams推理。新交付在本地`outputs/cfbench-20260923/omnidreams-case-review/index.html`，远端`/root/autodl-tmp/runs/worldsim_v75/WS-V75-OMNI-REVIEW-02/20260923-proposal-r1/index.html`。原始61帧10Hz，计划181帧30Hz连续生成至6秒；不减播放帧率或循环短片冒充延长。ReSim停止记录在旧run的`resim/user-stop.json`，产物未删除。自动跟进`v75-24-case`已在应用中不存在，未重建；其他方法新实验暂停，不得定时自动绕过人工确认，不关机。
+下一步：等待用户review新版24例10秒HTML及反事实，按明确批准的case/配置再启动OmniDreams推理。本地`outputs/cfbench-20260923/omnidreams-case-review/index.html`，远端`/root/autodl-tmp/runs/worldsim_v75/WS-V75-OMNI-REVIEW-02/20260923-proposal-r2-10s/index.html`。原始视频严格100帧10Hz、10秒；计划模型原生301帧30Hz，展示取前300帧保证10秒，不使用循环或减速播放。ReSim停止记录仍在旧run的`resim/user-stop.json`，产物未删除。自动跟进`v75-24-case`已在应用中不存在，未重建；其他方法新实验暂停，不得定时自动绕过人工确认，不关机。
 
 `WS-V75-CF-DEFINITION-01 / 20260921-r1`完成质量定义；对象移除开发发现、独立确认、f=0机制诊断和来源收口均完成。未来减速新增8段、936帧、120次生成前向；定义后累计17段、1,989帧、255次生成前向，单张RTX3090无OOM。大误差源新增一次官方DVGT-1前向；资格r1因缺`iopath`在前向前结束，r2保持同一科学输入完成，不计重复或failure卡。图和轻量结果见[轨迹反事实证据](autoresearch/worldsim_v75/actor_trajectory_counterfactual/)及[对象移除证据](autoresearch/worldsim_v75/actor_removal_counterfactual/)。
 

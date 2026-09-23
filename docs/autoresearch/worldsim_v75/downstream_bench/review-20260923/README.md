@@ -1,25 +1,29 @@
-# OmniDreams：先审case，再推理
+# OmniDreams：24例10秒提案，先审再推理
 
-Task `WS-V75-OMNI-REVIEW-02`，run `20260923-proposal-r1`。开发性候选，不是新模型结果。`failure_ledger_refs:[]`，`failure_ledger_delta:none`。
+Task `WS-V75-OMNI-REVIEW-02`，run `20260923-proposal-r2-10s`。仅原始视频与干预计划，不是新模型结果。`failure_ledger_refs:[]`，`failure_ledger_delta:none`。
 
 ```text
 nuScenes原始RGB / 标定 / 轨迹
              ↓
-4个6秒候选 + 对象/相机 + 单变量干预提案
+24个10秒候选 + 相机/目标 + 单变量干预
              ↓
-        用户人工确认（待完成）
+       用户确认新版（待完成）
              ↓
-同seed factual / counterfactual（尚未运行）
+同seed factual / counterfactual（留空）
              ↓
          用户人工review（留空）
 ```
 
-四例依次为：scene-0230前视ego 0.5×减速；同一运动片段ego 1.5×加速；scene-0255前视ego 0.5×减速；scene-0230后视汽车#8 0.5×减速。ID均追加`-R2-6S`，保留父case。第2例从静止的scene-0242换到scene-0230，明确与第1例共源，不作为独立场景。其余不变更目标/事件/倍率。全部从0.5秒开始干预，窗口0–6秒；计划生成181帧30Hz，无尾部填充。参考61帧10Hz，不减速、不循环、不合成未来。
+用户认为前四例总体无大问题，要求延长10秒并追加余下20例。24例由速度、横移、移除、插入各6例组成；保留父case、相机、事件和目标，不按生成质量重选。第2例沿用上一提案：从静止scene-0242换至运动scene-0230，与第1例共源；本次为不外推1.5倍速轨迹，前缀改为1.4秒，源事件65不动。其余23例在0.5秒干预。横移仍用1.8秒平滑过渡，之后保持局部偏移，不把编辑动作拉长到整段10秒。
 
-仅CPU检查轨迹长度、完整性及目标几何可见性：四例计划终点差约11.98/11.77/12.44/19.30米；第4例事实与计划CF的目标投影均61/61帧在画内，不保证无遮挡，不声称已完成全道路/碰撞审核。相机映射来自DriveStudio预处理定义，camera5为CAM_BACK；ego是搭载相机的采集车，不是目标汽车#8。
+原始视频每段100帧10Hz，容器时长严格10秒，帧时刻0–9.9秒；不减速、不循环、不插帧。计划模型原生输出301帧30Hz，只展示前300帧（10秒），末帧裁去，不填充。生成接口扩展和推理尚未执行，用户未批准的新配置不能入队。
 
-用户对旧版四例的定性意见保存在[human-review-original-four.json](human-review-original-four.json)，不转换成数值评分；第2例口述“cycle”所指分支未确认。原AI静帧分保留为历史，不新增或冒充人工判断。只校验视频文件/帧数/时间戳，不由AI复核生成质量。
+HTML包含24行case导航、逐case一句反事实、相机和目标身份、原始/factual/CF三列；后两列及评价留空。非ego目标有原始参考标框：黄色是被编辑目标/供体，绿色是计划位置几何投影，不是生成图。ego为搭载相机的采集车，CAM_BACK是后视，不能凭画面直接称倒车。
 
-远端HTML与视频：`/root/autodl-tmp/runs/worldsim_v75/WS-V75-OMNI-REVIEW-02/20260923-proposal-r1/index.html`。本地交付：`outputs/cfbench-20260923/omnidreams-case-review/index.html`。原始/factual/CF三列，后两列与新版评价占位，待用户批准。工具脚本`prepare_omnidreams_review_candidates.py`只生成提案和原始参考，不调用模型；用户未批准不得转换为推理队列。
+仅CPU检查：24例均有完整所需目标轨迹，不做外推。REMOVE-04/05事实目标仅21/20帧投影在画内，10秒视频不等于10秒有效目标观察；静止ego横向重定位和旧短窗已有可行驶区域问题在对应case展示，不自动替换偏移，不声称全道路/碰撞审核通过。旧版人工意见保存在[human-review-original-four.json](human-review-original-four.json)，不转换成数值评分，也不对新版做AI视频/静帧评分。
 
-用户要求停止ReSim：已停止队列与子进程及等候导出进程，保留4个完整pair、共9个完成分支及中断日志，未删除产物。停止记录在上一run的`resim/user-stop.json`和`resim/queue-result.json`。当前执行状态只见[RESEARCH_STATUS](../../../../RESEARCH_STATUS.md)。
+新版候选见[candidates-10s.json](candidates-10s.json)。旧四例6秒[candidates.json](candidates.json)及原run保留；没有覆盖旧实验结果。
+
+远端报告：`/root/autodl-tmp/runs/worldsim_v75/WS-V75-OMNI-REVIEW-02/20260923-proposal-r2-10s/index.html`。本地交付：`outputs/cfbench-20260923/omnidreams-case-review/index.html`；旧6秒本地报告保留到`omnidreams-case-review-6s/`。用户确认前不跑推理，ReSim保持停止。当前执行状态只见[RESEARCH_STATUS](../../../../RESEARCH_STATUS.md)。
+
+验证：`CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=3 /root/autodl-tmp/envs/motionproj/bin/python -m pytest -q tests/test_cfbench_full.py`，5项通过，包括100帧10秒参考、时间重参数越界不外推、横移1.8秒后保持、移除/插入事件边界。全部导出视频在导出时CPU全帧解码；仅工程校验，不是AI质量核对。

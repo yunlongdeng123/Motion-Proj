@@ -13,6 +13,7 @@ sys.path.insert(0,str(ROOT/'scripts'))
 from add_cfbench_original_videos import make_original
 from run_resim_cfbench_queue import trim_video
 from build_cfbench_html import describe_case, task_intent_html
+from prepare_omnidreams_review_candidates import planned_pose, describe
 
 
 def test_all_frozen_cases_have_explicit_counterfactual_intents():
@@ -37,21 +38,46 @@ def test_all_frozen_cases_have_explicit_counterfactual_intents():
     assert '0.000053米' in warning
 
 
-def test_original_reference_window_and_idempotency(tmp_path):
+@pytest.mark.parametrize('count',[24,100])
+def test_original_reference_window_and_idempotency(tmp_path,count):
     source=tmp_path/'data'/'179'/'images'
     source.mkdir(parents=True)
-    case={'case_id':'fixture','dataset':{'root':str(tmp_path/'data'),'scene_id':'179'},'anchor':{'event_frame':9,'pre_frames':5,'rollout_frames':19}}
-    for f in range(4,28):
+    case={'case_id':'fixture','dataset':{'root':str(tmp_path/'data'),'scene_id':'179'},'anchor':{'event_frame':9,'pre_frames':5,'rollout_frames':count-5}}
+    for f in range(4,4+count):
         Image.new('RGB',(1600,900),(f*3,20,30)).save(source/f'{f:03d}_2.jpg')
     out=tmp_path/'output'
     record=make_original(case,2,out)
-    assert record['source_frames']==list(range(4,28))
+    assert record['source_frames']==list(range(4,4+count))
+    assert record['frame_count']==count and record['last_frame_time_s']==(count-1)/10
+    with av.open(str(out/'original-nuscenes.mp4')) as reader:
+        assert float(reader.streams.video[0].duration*reader.streams.video[0].time_base)==count/10
     assert record['camera_index']==2
     timestamp=(out/'original-nuscenes.mp4').stat().st_mtime_ns
     assert make_original(case,2,out)==record
     assert (out/'original-nuscenes.mp4').stat().st_mtime_ns==timestamp
     with pytest.raises(AssertionError):
         make_original(case,1,out)
+
+
+def test_ten_second_proposal_edits_do_not_stretch_transition_or_extrapolate():
+    poses={i:np.eye(4) for i in range(196)}
+    for i,p in poses.items():
+        p[0,3]=i
+    case={'anchor':{'event_frame':65,'pre_frames':14},'target':{},
+          'intervention':{'family':'actor_speed_change','counterfactual':{'speed_scale':1.5}}}
+    assert planned_pose(case,poses,151)[0,3]==194
+    assert planned_pose(case,poses,160) is None
+    assert '1.4秒' in describe(case,'自车')
+    case['intervention']={'family':'actor_lateral_relocation','counterfactual':{'lateral_offset_m':3.5}}
+    assert planned_pose(case,poses,65)[1,3]==0
+    assert planned_pose(case,poses,83)[1,3]==3.5
+    assert planned_pose(case,poses,151)[1,3]==3.5
+    case['intervention']={'family':'actor_removal','counterfactual':{}}
+    assert planned_pose(case,poses,64) is not None and planned_pose(case,poses,65) is None
+    case['intervention']={'family':'actor_insertion','counterfactual':{}}
+    case['target']['proposal_offset_actor_frame_m']=[8,-3.5,0]
+    assert planned_pose(case,poses,64) is None
+    assert np.allclose(planned_pose(case,poses,65)[:3,3],[73,-3.5,0])
 
 
 def test_resim_common_window_is_indices_4_through_27(tmp_path):
