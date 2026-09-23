@@ -27,19 +27,21 @@ from prepare_driveeditor_worldsim_v75_inputs import (  # noqa: E402
 from motion_proj.cfbench.geometry import pose_at, project_box  # noqa: E402
 
 
-def compile_window(row: dict, window: int) -> tuple[dict, dict]:
+def compile_window(row: dict, window: int, stride: int = 10) -> tuple[dict, dict]:
     case = row["case"]
     if case["target"]["role"] != "non_ego":
         raise ValueError("DriveEditor has no native ego-editing operation")
-    if not 0 <= window < 10:
-        raise ValueError("window must be in [0, 9]")
+    if stride not in (9, 10) or not 0 <= window < (11 if stride == 9 else 10):
+        raise ValueError("window/stride outside approved 100-frame clip")
     scene = Path(case["dataset"]["root"]) / case["dataset"]["scene_id"]
     target = case["target"]
     key = str(target.get("actor_key") or target.get("source_asset_actor_key"))
     poses, sizes, actor = _track(scene, key)
     camera = int(row["camera_index"])
-    start = int(row["source_frame_range"][0]) + window * 10
+    start = int(row["source_frame_range"][0]) + window * stride
     frames = list(range(start, start + 10))
+    if frames[-1] > int(row["source_frame_range"][1]):
+        raise ValueError(f"window {window} escapes approved clip")
     cls = str(target["class_name"])
     token = str(target.get("source_asset_actor_id") or target["entity_id"])
     visible = []
@@ -112,6 +114,9 @@ def compile_window(row: dict, window: int) -> tuple[dict, dict]:
         "frame_count": 10,
         "reference_mask": ref_metrics,
         "native_duration_s": 1.0,
+        "window_stride_frames": stride,
+        "condition_previous_last_frame": stride == 9 and window > 0,
+        "overlap_frame": frames[0] if stride == 9 and window > 0 else None,
         "ten_second_output_requires_stitching": True,
         "ego_native_support": False,
     }
@@ -124,6 +129,8 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--case-id", action="append", default=[])
     parser.add_argument("--window", type=int, action="append", default=[])
+    parser.add_argument("--stride", type=int, choices=[9, 10], default=10,
+                        help="9 means one-frame overlap for iterative conditioning")
     args = parser.parse_args()
     if int(np.__version__.split(".", 1)[0]) != 1:
         raise RuntimeError("DriveEditor pickle input must be serialized with NumPy 1.x")
@@ -135,7 +142,7 @@ def main() -> None:
     if selected != {r["case_id"] for r in rows} and selected:
         raise RuntimeError(f"unknown requested cases: {sorted(selected - {r['case_id'] for r in rows})}")
     args.output.mkdir(parents=True, exist_ok=False)
-    windows = args.window or list(range(10))
+    windows = args.window or list(range(11 if args.stride == 9 else 10))
     records, errors = [], []
     for row in rows:
         if row["case"]["target"]["role"] == "ego":
@@ -143,7 +150,7 @@ def main() -> None:
             continue
         for window in windows:
             try:
-                item, record = compile_window(row, window)
+                item, record = compile_window(row, window, args.stride)
                 path = args.output / f"{record['case_id']}.pkl"
                 with path.open("wb") as handle:
                     pickle.dump([item], handle, protocol=pickle.HIGHEST_PROTOCOL)
@@ -152,9 +159,10 @@ def main() -> None:
             except Exception as exc:
                 errors.append({"case_id": row["case_id"], "window": window,
                                "status": "input_compile_failed", "error": f"{type(exc).__name__}: {exc}"})
-    index = {"schema_version": "driveeditor_r9_native_windows_v1",
+    index = {"schema_version": "driveeditor_r9_iterative_overlap_v1" if args.stride == 9 else "driveeditor_r9_native_windows_v1",
              "approved_manifest": str(args.manifest.resolve()),
              "native_window_s": 1.0, "target_clip_s": 10.0,
+             "window_stride_frames": args.stride,
              "cases": records, "unavailable": errors}
     (args.output / "index.json").write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"windows": len(records), "unavailable": len(errors),

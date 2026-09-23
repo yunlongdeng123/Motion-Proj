@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import pickle
@@ -98,6 +99,24 @@ def _video_frame_count(path: Path) -> int:
         capture.release()
 
 
+def _last_rgb_frame(path: Path) -> np.ndarray:
+    capture = cv2.VideoCapture(str(path))
+    try:
+        if not capture.isOpened():
+            raise RuntimeError(f"cannot open previous segment: {path}")
+        last = None
+        while True:
+            ok, frame = capture.read()
+            if not ok:
+                break
+            last = frame
+        if last is None:
+            raise RuntimeError(f"previous segment is empty: {path}")
+        return cv2.cvtColor(last, cv2.COLOR_BGR2RGB)
+    finally:
+        capture.release()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-root", type=Path, required=True)
@@ -107,6 +126,8 @@ def main() -> None:
     parser.add_argument("--steps", type=int, default=25)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--decoding-t", type=int, default=1)
+    parser.add_argument("--paper-iterative", action="store_true",
+                        help="Condition each overlapping segment on the previous generated last frame")
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -127,6 +148,16 @@ def main() -> None:
     missing = sorted(selected - found)
     if missing:
         raise RuntimeError(f"requested DriveEditor cases are absent: {missing}")
+    if args.paper_iterative:
+        if input_index.get("schema_version") != "driveeditor_r9_iterative_overlap_v1":
+            raise RuntimeError("iterative mode requires approved 9-frame-stride inputs")
+        if len({row["approved_case_id"] for row in input_rows}) != 1:
+            raise RuntimeError("iterative mode runs one approved case sequentially")
+        if [row["window_index"] for row in input_rows] != list(range(len(input_rows))):
+            raise RuntimeError("iterative mode must start at window 0 without gaps")
+        if any(a["window_source_frames"][-1] != b["window_source_frames"][0]
+               for a, b in zip(input_rows, input_rows[1:])):
+            raise RuntimeError("iterative windows must overlap by exactly one source frame")
 
     args.output_root.mkdir(parents=True, exist_ok=True)
     if args.dry_run:
@@ -181,6 +212,10 @@ def main() -> None:
             "sequential_cfg": os.environ.get("DRIVEEDITOR_SEQUENTIAL_CFG") == "1",
             "input_pickle": str(Path(input_row["pickle"]).resolve()),
             "counterfactual_video": str(output_video.resolve()), "status": "started",
+            "paper_iterative_conditioning": args.paper_iterative,
+            "previous_segment_video": (str((args.output_root / input_rows[index - 1]["case_id"] /
+                                            "counterfactual.mp4").resolve())
+                                       if args.paper_iterative and index > 0 else None),
         }
         _save_json(item_result, result)
         began = time.monotonic()
@@ -195,8 +230,20 @@ def main() -> None:
                 show.im.append(image)
                 show.im_with_box.append(np.copy(image))
                 show.box.append(box)
+            show.previous_segment_last_frame = (
+                _last_rgb_frame(args.output_root / input_rows[index - 1]["case_id"] /
+                                "counterfactual.mp4")
+                if args.paper_iterative and index > 0 else None
+            )
+            result["previous_generated_last_frame_sha256"] = (
+                hashlib.sha256(show.previous_segment_last_frame.tobytes()).hexdigest()
+                if show.previous_segment_last_frame is not None else None
+            )
             set_seed(args.seed + index)
             temporary_video = show.predict(args.decoding_t, False, operation)
+            if show.used_previous_segment_condition != (args.paper_iterative and index > 0):
+                raise RuntimeError("previous-frame conditioning state did not match iterative plan")
+            result["used_previous_segment_condition"] = show.used_previous_segment_condition
             shutil.copyfile(temporary_video, output_video)
             decoded = _video_frame_count(output_video)
             if decoded != 10:
