@@ -228,17 +228,19 @@ def main():
 
 def write_report(output, manifest):
     candidates=manifest['cases']
+    all_approved=all(row.get('approval',{}).get('status')=='approved' for row in candidates)
     summary=manifest.get('revision_summary','24段10秒原始视频与干预提案，推理结果与评价留空。等你确认后再跑。')
-    body=['<h1>OmniDreams · 24 个 case · 10 秒待审版</h1><p class="notice">'+html.escape(summary)+'</p>',
+    phase='人工已批准版' if all_approved else '待审版'
+    body=[f'<h1>OmniDreams · 24 个 case · 10 秒{phase}</h1><p class="notice">'+html.escape(summary)+'</p>',
           '<p>ego = 搭载相机的采集车；画面中标出的其他车辆不是ego。全部视频正常10Hz播放，未减速、循环或插帧。</p>',
           '<p>横移方向按车辆行驶方向：<strong>+ 向左，− 向右</strong>；后视画面中的屏幕左右可能正好相反。</p>',
-          '<div class="architecture">nuScenes / DriveStudio 10Hz → 原24例；修订例经 DriverQ 场景/运动/投影查询 → 10秒片段 + 指定反事实 → <strong>你的人工确认</strong> → factual / counterfactual（待运行）</div>',
+          '<div class="architecture">nuScenes / DriveStudio 10Hz → 原24例；修订例经 DriverQ 场景/运动/投影查询 → 10秒片段 + 指定反事实 → <strong>'+('人工确认（24/24已完成）' if all_approved else '你的人工确认')+'</strong> → factual / counterfactual（待运行）</div>',
           '<p><a href="candidates.json">候选参数</a> · <a href="human-review-original-four.json">你对旧版的人工 review</a></p>',
           '<nav>'+''.join(f'<a href="#{r["case_id"]}">{r["parent_case_id"].replace("CFB-","")}</a>' for r in candidates)+'</nav>']
     for row in candidates:
         cid=row['case_id']; base='cases/'+cid
         approved=row.get('approval',{}).get('status')=='approved'
-        placeholder='本例已批准，待整组审核与GPU恢复后推理' if approved else '待你确认后推理'
+        placeholder=('本例已批准，待GPU恢复后推理' if all_approved else '本例已批准，待整组审核与GPU恢复后推理') if approved else '待你确认后推理'
         body += [f'<article id="{cid}"><h2>{cid}</h2>',
                  f'<p>{row["scene_name"]} · {row["camera_name"]}（{row["view"]}）· 目标：{row["target_description"]}</p>',
                  '<p class="note"><strong>审核状态：</strong>'+('用户已批准' if approved else '待用户审核')+'</p>',
@@ -260,13 +262,13 @@ def write_report(output, manifest):
                 title=f'查看目标/计划位置（原始{row["target_reference_s"]:g}秒帧）'
                 caption='黄色是原目标/供体；绿色是计划位置，仅几何框，不是生成结果。投影在画内不保证无遮挡。'
             body += [f'<details{opened}><summary>{title}</summary><img loading="lazy" src="{base}/target-reference.jpg" alt="事实目标黄色框与计划目标绿色框"><p class="note">{caption}</p></details>']
-        body += ['<p>新版结果评价：<span class="empty">—</span>（未推理，待人工 review；不做 AI 视频评分）</p>']
+        body += ['<p>新版结果评价：<span class="empty">—</span>（未推理，暂无评分）</p>']
         if row['prior_user_review']:
             body += ['<details><summary>你对旧版短片的 review（不代表新版结果）</summary><p class="review">'+html.escape(row['prior_user_review']['observations'])+'</p></details>']
         body += ['<p><strong>'+('本例已批准；未运行推理。' if approved else '待你确认：保留 / 修改 / 不采用。')+'</strong></p></article>']
     css="body{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;background:#f5f7fa;color:#213044;margin:0}main{max-width:1320px;margin:auto;padding:24px}article{background:white;padding:24px;margin:25px 0;border:1px solid #dae2eb;border-radius:8px}h2{font-size:22px}h3{font-size:16px}.notice,.intent{background:#edf6fa;padding:12px}.note{color:#586776;font-size:14px}.videos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}video{width:100%;aspect-ratio:16/9;background:#111}.placeholder{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px dashed #adb7c2;background:#f5f7fa;color:#788491;box-sizing:border-box}.empty{color:#788491}img{width:100%}.review{border-left:3px solid #9c8d5b;padding-left:12px}.architecture{padding:18px;border:1px solid #9bb8c6;background:white}a{color:#086684}@media(max-width:800px){.videos{grid-template-columns:1fr}main{padding:12px}article{padding:16px}}"
     css+='nav{display:flex;gap:8px 16px;flex-wrap:wrap;padding:12px;background:white}nav a{font-size:13px}.warning{background:#fff3dc;border-left:3px solid #c58c25;padding:10px;font-size:14px}'
-    (output/'index.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniDreams 24-case 10秒·待人工确认</title><style>'+css+'</style><main>'+''.join(body)+'</main></html>',encoding='utf-8')
+    (output/'index.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OmniDreams 24-case 10秒·'+phase+'</title><style>'+css+'</style><main>'+''.join(body)+'</main></html>',encoding='utf-8')
 
 
 if __name__=='__main__':
