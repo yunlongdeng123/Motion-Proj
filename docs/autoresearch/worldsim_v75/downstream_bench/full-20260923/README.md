@@ -26,6 +26,7 @@ Task `WS-V75-DOWNSTREAM-FULL-01`，run `20260923-r1`，seed42，单RTX3090。当
 - 输入是GT地图/轨迹，不是高斯重建输出；6 native ego + 18 adapted actor。GT actor尺寸取全track中位数、未来GT状态用于控制，输入信息预算显式披露。事实/CF同初图、同文本、同非目标状态；地图双线以对应单线primitive适配，z=0。
 - nuScenes pinhole到FTheta使用完整可见域5阶minimax近似；原先复用AV2的0.05px容差失败，保留0生成失败；新适配网格32769点残差<0.5px、三独立cuboid测试<3px。
 - 全部24case有 `original-nuscenes.mp4` + `original-nuscenes.json`：1600×900、10Hz、24帧、不插帧，来源为nuScenes DriveStudio预处理JPEG，不声称原始相机比特流无损。与生成共用来源窗口/相机，0.5秒发生干预；不是反事实GT。
+- HTML总览新增“反事实任务”列，每组视频前新增中文任务卡：减速/加速倍率、横移幅度、移除对象、插入供体与局部偏移，以及事实/CF要求、生效时间、保持条件和预期可见变化。说明直接读取冻结输入，不根据生成结果倒推；原始参数仍可展开，结构化结果同时保存 `counterfactual_task`。本次仅改报告，0新模型调用；3项针对性测试通过（含全部24case描述核对），浏览器目视核验通过。
 - CPU FasterRCNN读出9帧，AI审阅固定5帧(0/15/33/51/69)。AI可评分成对分母A/P/E/O/T/OP=11/24/18/11/1/24；其他弃权/N/A。P仅可见形状/遮挡代理，T唯一可评分case仍是2D，不称米制ADE。所有人工verdict为null。
 - 15项相关CPU测试通过；报告72个视频全解码、原始来源/窗口/分辨率/帧率、249个内部链接检查通过。浏览器检查三列视频及评分表；窄屏改为纵向展示，宽屏保留三列。
 

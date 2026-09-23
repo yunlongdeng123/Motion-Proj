@@ -1,5 +1,6 @@
 """针对原始参考导出和公共时间窗的CPU回归。"""
 from pathlib import Path
+import json
 import sys
 
 import av
@@ -11,6 +12,29 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
 from add_cfbench_original_videos import make_original
 from run_resim_cfbench_queue import trim_video
+from build_cfbench_html import describe_case, task_intent_html
+
+
+def test_all_frozen_cases_have_explicit_counterfactual_intents():
+    cases=json.loads((ROOT/'docs/autoresearch/worldsim_v75/downstream_bench/cases.json').read_text())['cases']
+    descriptions={c['case_id']:describe_case({'case':c,'event_output_frame':15,'fps':30,'score_frames':70}) for c in cases}
+    assert len(descriptions)==24
+    for description in descriptions.values():
+        assert all(description[k] for k in ['title','target','factual','counterfactual','timing','unchanged','expected_visible_change'])
+        assert '0.5秒' in description['timing'] and '2.3秒' in description['timing']
+        assert '目标，不是执行结果' in task_intent_html(description,{})
+    assert '自车减速' in descriptions['CFB-SPEED-EGO-01']['title']
+    assert '0.5×' in descriptions['CFB-SPEED-EGO-01']['counterfactual']
+    assert '加速' in descriptions['CFB-SPEED-ACTOR-02']['title']
+    assert '1.5×' in descriptions['CFB-SPEED-ACTOR-02']['counterfactual']
+    assert '-3.5 m' in descriptions['CFB-LATERAL-EGO-02']['title']
+    assert '+3.5 m' in descriptions['CFB-LATERAL-ACTOR-02']['title']
+    assert '挂车 #15' in descriptions['CFB-REMOVE-01']['title']
+    assert '删除' in descriptions['CFB-REMOVE-01']['counterfactual']
+    assert '供体原车继续保留' in descriptions['CFB-INSERT-02']['counterfactual']
+    assert 'X +8 / Y -3.5 / Z +0 米' in descriptions['CFB-INSERT-02']['counterfactual']
+    warning=task_intent_html(descriptions['CFB-SPEED-EGO-02'],{'target_endpoint_delta_m':.000053126})
+    assert '0.000053米' in warning
 
 
 def test_original_reference_window_and_idempotency(tmp_path):
