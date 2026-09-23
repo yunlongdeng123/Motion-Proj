@@ -27,7 +27,8 @@ from prepare_driveeditor_worldsim_v75_inputs import (  # noqa: E402
 from motion_proj.cfbench.geometry import pose_at, project_box  # noqa: E402
 
 
-def compile_window(row: dict, window: int, stride: int = 10) -> tuple[dict, dict]:
+def compile_window(row: dict, window: int, stride: int = 10,
+                   factual_identity: bool = False) -> tuple[dict, dict]:
     case = row["case"]
     if case["target"]["role"] != "non_ego":
         raise ValueError("DriveEditor has no native ego-editing operation")
@@ -64,6 +65,8 @@ def compile_window(row: dict, window: int, stride: int = 10) -> tuple[dict, dict
         "actor_removal": "Deletion",
         "actor_insertion": "Insertion",
     }[case["intervention"]["family"]]
+    if factual_identity:
+        operation = "Repositioning"
     payload_frames = []
     missing = []
     for frame in frames:
@@ -71,7 +74,7 @@ def compile_window(row: dict, window: int, stride: int = 10) -> tuple[dict, dict
         size = sizes.get(frame)
         # The legacy adapter accelerates timestamps even before the event;
         # the approved r9 pair instead fixes the entire factual prefix.
-        if frame < int(case["anchor"]["event_frame"]):
+        if factual_identity or frame < int(case["anchor"]["event_frame"]):
             cf_p, cf_size = p, size
         else:
             cf_p, cf_size = _counterfactual(case, poses, sizes, frame)
@@ -90,7 +93,8 @@ def compile_window(row: dict, window: int, stride: int = 10) -> tuple[dict, dict
         })
     if missing:
         raise RuntimeError(f"{row['case_id']} window {window}: missing actor states {missing}")
-    name = f"{row['case_id']}__w{window:02d}"
+    name = (f"{row['case_id']}__factual_w{window:02d}" if factual_identity
+            else f"{row['case_id']}__w{window:02d}")
     item = {
         "name": name,
         "camera_intrinsic": _intrinsic(scene, camera),
@@ -111,6 +115,7 @@ def compile_window(row: dict, window: int, stride: int = 10) -> tuple[dict, dict
         "approved_camera_index": camera,
         "approved_scene_id": case["dataset"]["scene_id"],
         "operation": operation,
+        "evaluation_role": "factual_identity_reconstruction" if factual_identity else "counterfactual_edit",
         "frame_count": 10,
         "reference_mask": ref_metrics,
         "native_duration_s": 1.0,
@@ -131,7 +136,11 @@ def main() -> None:
     parser.add_argument("--window", type=int, action="append", default=[])
     parser.add_argument("--stride", type=int, choices=[9, 10], default=10,
                         help="9 means one-frame overlap for iterative conditioning")
+    parser.add_argument("--factual-identity", action="store_true",
+                        help="Paper reconstruction control: mask and regenerate source object at unchanged 3D boxes")
     args = parser.parse_args()
+    if args.factual_identity and args.stride != 10:
+        raise RuntimeError("factual identity reconstruction is a native 10-frame control")
     if int(np.__version__.split(".", 1)[0]) != 1:
         raise RuntimeError("DriveEditor pickle input must be serialized with NumPy 1.x")
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
@@ -150,7 +159,7 @@ def main() -> None:
             continue
         for window in windows:
             try:
-                item, record = compile_window(row, window, args.stride)
+                item, record = compile_window(row, window, args.stride, args.factual_identity)
                 path = args.output / f"{record['case_id']}.pkl"
                 with path.open("wb") as handle:
                     pickle.dump([item], handle, protocol=pickle.HIGHEST_PROTOCOL)
@@ -159,9 +168,12 @@ def main() -> None:
             except Exception as exc:
                 errors.append({"case_id": row["case_id"], "window": window,
                                "status": "input_compile_failed", "error": f"{type(exc).__name__}: {exc}"})
-    index = {"schema_version": "driveeditor_r9_iterative_overlap_v1" if args.stride == 9 else "driveeditor_r9_native_windows_v1",
+    index = {"schema_version": ("driveeditor_r9_factual_identity_native_windows_v1" if args.factual_identity
+                                else "driveeditor_r9_iterative_overlap_v1" if args.stride == 9
+                                else "driveeditor_r9_native_windows_v1"),
              "approved_manifest": str(args.manifest.resolve()),
              "native_window_s": 1.0, "target_clip_s": 10.0,
+             "evaluation_role": "factual_identity_reconstruction" if args.factual_identity else "counterfactual_edit",
              "window_stride_frames": args.stride,
              "cases": records, "unavailable": errors}
     (args.output / "index.json").write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")

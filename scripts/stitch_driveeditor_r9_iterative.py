@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -27,6 +28,22 @@ def video_info(path: Path) -> tuple[int, float, int, int]:
         count += 1
     cap.release()
     return count, fps, width, height
+
+
+def last_rgb_frame_sha256(path: Path) -> str:
+    cap = cv2.VideoCapture(str(path))
+    if not cap.isOpened():
+        raise RuntimeError(f"cannot decode previous segment: {path}")
+    last = None
+    while True:
+        ok, bgr = cap.read()
+        if not ok:
+            break
+        last = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    cap.release()
+    if last is None:
+        raise RuntimeError(f"no previous segment frame: {path}")
+    return hashlib.sha256(last.tobytes()).hexdigest()
 
 
 def link_once(source: Path, target: Path) -> None:
@@ -70,6 +87,8 @@ def main() -> None:
             raise RuntimeError(f"wrong previous-frame conditioning state: {video}")
         if index and not result.get("previous_generated_last_frame_sha256"):
             raise RuntimeError(f"previous generated condition was not hashed: {video}")
+        if index and result["previous_generated_last_frame_sha256"] != last_rgb_frame_sha256(parts[-1]):
+            raise RuntimeError(f"previous generated condition does not match preceding segment: {video}")
         if video_info(video) != (10, 10.0, 1024, 576):
             raise RuntimeError(f"invalid native 10-frame video: {video}")
         parts.append(video)
