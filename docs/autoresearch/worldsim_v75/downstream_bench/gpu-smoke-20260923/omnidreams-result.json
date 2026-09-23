@@ -1,0 +1,142 @@
+{
+  "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+  "run_id": "20260923-r1",
+  "model_id": "omnidreams",
+  "input_role": "official_scene_engineering_smoke",
+  "bench_case_id": null,
+  "seed": 42,
+  "blocks_per_branch": 8,
+  "intervention": {
+    "ego_speed_scale": [
+      1.0,
+      0.5
+    ]
+  },
+  "held_fixed": [
+    "initial_image",
+    "prompt",
+    "actor_states",
+    "map",
+    "timestamps",
+    "seed"
+  ],
+  "human_verdict": null,
+  "failure_ledger_refs": [],
+  "branches": {
+    "factual": {
+      "frames": 61,
+      "generation_calls": 8,
+      "peak_allocated_gib": 12.80658483505249,
+      "timings": [
+        {
+          "branch": "factual",
+          "block": 0,
+          "frames": 5,
+          "wall_s": 3.306589648127556
+        },
+        {
+          "branch": "factual",
+          "block": 1,
+          "frames": 13,
+          "wall_s": 2.5282627306878567
+        },
+        {
+          "branch": "factual",
+          "block": 2,
+          "frames": 21,
+          "wall_s": 3.045114155858755
+        },
+        {
+          "branch": "factual",
+          "block": 3,
+          "frames": 29,
+          "wall_s": 3.079209016636014
+        },
+        {
+          "branch": "factual",
+          "block": 4,
+          "frames": 37,
+          "wall_s": 3.001004535704851
+        },
+        {
+          "branch": "factual",
+          "block": 5,
+          "frames": 45,
+          "wall_s": 3.201922381296754
+        },
+        {
+          "branch": "factual",
+          "block": 6,
+          "frames": 53,
+          "wall_s": 3.4395307544618845
+        },
+        {
+          "branch": "factual",
+          "block": 7,
+          "frames": 61,
+          "wall_s": 3.440763244405389
+        }
+      ]
+    },
+    "counterfactual": {
+      "frames": 61,
+      "generation_calls": 8,
+      "peak_allocated_gib": 12.804219722747803,
+      "timings": [
+        {
+          "branch": "counterfactual",
+          "block": 0,
+          "frames": 5,
+          "wall_s": 2.0451335925608873
+        },
+        {
+          "branch": "counterfactual",
+          "block": 1,
+          "frames": 13,
+          "wall_s": 2.5251444429159164
+        },
+        {
+          "branch": "counterfactual",
+          "block": 2,
+          "frames": 21,
+          "wall_s": 3.0530199091881514
+        },
+        {
+          "branch": "counterfactual",
+          "block": 3,
+          "frames": 29,
+          "wall_s": 3.1140214446932077
+        },
+        {
+          "branch": "counterfactual",
+          "block": 4,
+          "frames": 37,
+          "wall_s": 3.0275135207921267
+        },
+        {
+          "branch": "counterfactual",
+          "block": 5,
+          "frames": 45,
+          "wall_s": 3.291212160140276
+        },
+        {
+          "branch": "counterfactual",
+          "block": 6,
+          "frames": 53,
+          "wall_s": 3.3698259461671114
+        },
+        {
+          "branch": "counterfactual",
+          "block": 7,
+          "frames": 61,
+          "wall_s": 3.340651523321867
+        }
+      ]
+    }
+  },
+  "status": "complete",
+  "source_scene": "/root/autodl-tmp/models/worldsim_v75/omni-dreams-scenes/scenes/clipgt-0d404ff7-2b66-498c-b047-1ed8cded60d4.usdz",
+  "condition_changed_pixels_last": 194061,
+  "wall_s": 98.08741045184433,
+  "failure_ledger_delta": "none"
+}

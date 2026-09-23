@@ -1,0 +1,41 @@
+{
+  "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+  "run_id": "20260923-r1",
+  "model_id": "gaussiandwm",
+  "role": "consumer_only",
+  "status": "complete",
+  "input_role": "upstream_synthetic_contract_example",
+  "benchmark_aligned": false,
+  "seed": 42,
+  "max_new_tokens": 64,
+  "human_verdict": null,
+  "claim_boundary": "仅验证官方 QA 完整调用链，不评价真实驾驶质量；不是 paired downstream outcome。",
+  "failure_ledger_refs": [],
+  "implementation_variant": "qa_compatibility_adapter_not_raw_upstream",
+  "excluded_unused_parameters": {
+    "traj_head.mlp.0.bias": [
+      4096
+    ],
+    "traj_head.mlp.0.weight": [
+      4096
+    ],
+    "traj_head.mlp.1.bias": [
+      4096
+    ],
+    "traj_head.mlp.1.weight": [
+      4096,
+      4096
+    ],
+    "traj_head.mlp.3.bias": [
+      5
+    ],
+    "traj_head.mlp.3.weight": [
+      5,
+      4096
+    ]
+  },
+  "predictions_path": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1/gaussiandwm-r2/infer/qa_predictions_gpu-smoke-20260923.json",
+  "wall_s": 34.22198529355228,
+  "peak_allocated_gib": 21.239506244659424,
+  "failure_ledger_delta": "none"
+}

@@ -1,0 +1,224 @@
+no module 'xformers'. Processing without...
+no module 'xformers'. Processing without...
+[2026-09-23 12:47:56,956] [WARNING] No training data specified
+[2026-09-23 12:47:56,957] [INFO] using world size: 1
+[2026-09-23 12:47:56,963] [INFO] [RANK 0] > initializing model parallel with size 1
+[2026-09-23 12:47:56,966] [INFO] [RANK 0] building SATVideoDiffusionEngine model ...
+[2026-09-23 12:48:07,602] [WARNING] [RANK 0] Failed to load bitsandbytes:No module named 'bitsandbytes'
+[2026-09-23 12:48:07,603] [INFO] [RANK 0] replacing layer 0 attention with lora
+[2026-09-23 12:48:07,647] [INFO] [RANK 0] replacing layer 1 attention with lora
+[2026-09-23 12:48:07,681] [INFO] [RANK 0] replacing layer 2 attention with lora
+[2026-09-23 12:48:07,713] [INFO] [RANK 0] replacing layer 3 attention with lora
+[2026-09-23 12:48:07,743] [INFO] [RANK 0] replacing layer 4 attention with lora
+[2026-09-23 12:48:07,774] [INFO] [RANK 0] replacing layer 5 attention with lora
+[2026-09-23 12:48:07,804] [INFO] [RANK 0] replacing layer 6 attention with lora
+[2026-09-23 12:48:07,834] [INFO] [RANK 0] replacing layer 7 attention with lora
+[2026-09-23 12:48:07,863] [INFO] [RANK 0] replacing layer 8 attention with lora
+[2026-09-23 12:48:07,892] [INFO] [RANK 0] replacing layer 9 attention with lora
+[2026-09-23 12:48:07,921] [INFO] [RANK 0] replacing layer 10 attention with lora
+[2026-09-23 12:48:07,950] [INFO] [RANK 0] replacing layer 11 attention with lora
+[2026-09-23 12:48:07,983] [INFO] [RANK 0] replacing layer 12 attention with lora
+[2026-09-23 12:48:08,014] [INFO] [RANK 0] replacing layer 13 attention with lora
+[2026-09-23 12:48:08,045] [INFO] [RANK 0] replacing layer 14 attention with lora
+[2026-09-23 12:48:08,077] [INFO] [RANK 0] replacing layer 15 attention with lora
+[2026-09-23 12:48:08,108] [INFO] [RANK 0] replacing layer 16 attention with lora
+[2026-09-23 12:48:08,142] [INFO] [RANK 0] replacing layer 17 attention with lora
+[2026-09-23 12:48:08,172] [INFO] [RANK 0] replacing layer 18 attention with lora
+[2026-09-23 12:48:08,201] [INFO] [RANK 0] replacing layer 19 attention with lora
+[2026-09-23 12:48:08,230] [INFO] [RANK 0] replacing layer 20 attention with lora
+[2026-09-23 12:48:08,259] [INFO] [RANK 0] replacing layer 21 attention with lora
+[2026-09-23 12:48:08,288] [INFO] [RANK 0] replacing layer 22 attention with lora
+[2026-09-23 12:48:08,317] [INFO] [RANK 0] replacing layer 23 attention with lora
+[2026-09-23 12:48:08,348] [INFO] [RANK 0] replacing layer 24 attention with lora
+[2026-09-23 12:48:08,379] [INFO] [RANK 0] replacing layer 25 attention with lora
+[2026-09-23 12:48:08,409] [INFO] [RANK 0] replacing layer 26 attention with lora
+[2026-09-23 12:48:08,438] [INFO] [RANK 0] replacing layer 27 attention with lora
+[2026-09-23 12:48:08,468] [INFO] [RANK 0] replacing layer 28 attention with lora
+[2026-09-23 12:48:08,498] [INFO] [RANK 0] replacing layer 29 attention with lora
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.67s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.52s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.55s/it]
+Initialized embedder #0: FrozenT5Embedder with 4762310656 params. Trainable: False
+Initialized embedder #1: TrajEncoder with 16806912 params. Trainable: True
+ContextParallelEncoder3D has 92.22 M params
+Encoder3D initialized.
+Working with z of shape (1, 16, 32, 32) = 16384 dimensions.
+ContextParallelDecoder3D has 123.37 M params
+Decoder3D initialized.
+/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/vae_modules/autoencoder.py:565: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  sd = torch.load(path, map_location="cpu")["state_dict"]
+Deleting key loss.logvar from state_dict.
+Deleting key loss.perceptual_loss.scaling_layer.shift from state_dict.
+Deleting key loss.perceptual_loss.scaling_layer.scale from state_dict.
+Deleting key loss.perceptual_loss.net.slice1.0.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice1.0.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice1.2.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice1.2.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice2.5.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice2.5.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice2.7.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice2.7.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice3.10.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice3.10.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice3.12.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice3.12.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice3.14.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice3.14.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice4.17.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice4.17.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice4.19.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice4.19.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice4.21.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice4.21.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice5.24.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice5.24.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice5.26.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice5.26.bias from state_dict.
+Deleting key loss.perceptual_loss.net.slice5.28.weight from state_dict.
+Deleting key loss.perceptual_loss.net.slice5.28.bias from state_dict.
+Deleting key loss.perceptual_loss.lin0.model.1.weight from state_dict.
+Deleting key loss.perceptual_loss.lin1.model.1.weight from state_dict.
+Deleting key loss.perceptual_loss.lin2.model.1.weight from state_dict.
+Deleting key loss.perceptual_loss.lin3.model.1.weight from state_dict.
+Deleting key loss.perceptual_loss.lin4.model.1.weight from state_dict.
+Deleting key loss.discriminator.blocks.0.downsample_res.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.0.downsample_res.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.0.net.0.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.0.net.0.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.0.net.2.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.0.net.2.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.0.downsample.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.0.downsample.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.1.downsample_res.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.1.downsample_res.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.1.net.0.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.1.net.0.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.1.net.2.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.1.net.2.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.1.downsample.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.1.downsample.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.2.downsample_res.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.2.downsample_res.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.2.net.0.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.2.net.0.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.2.net.2.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.2.net.2.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.2.downsample.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.2.downsample.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.3.downsample_res.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.3.downsample_res.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.3.net.0.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.3.net.0.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.3.net.2.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.3.net.2.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.3.downsample.conv.weight from state_dict.
+Deleting key loss.discriminator.blocks.3.downsample.conv.bias from state_dict.
+Deleting key loss.discriminator.blocks.4.0.conv_res.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.0.conv_res.bias from state_dict.
+Deleting key loss.discriminator.blocks.4.0.net.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.0.net.0.bias from state_dict.
+Deleting key loss.discriminator.blocks.4.0.net.2.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.0.net.2.bias from state_dict.
+Deleting key loss.discriminator.blocks.4.0.downsample.1.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.0.downsample.1.bias from state_dict.
+Deleting key loss.discriminator.blocks.4.1.0.fn.norm.gamma from state_dict.
+Deleting key loss.discriminator.blocks.4.1.0.fn.attn.to_q.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.1.0.fn.attn.to_kv.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.1.0.fn.attn.to_out.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.1.1.fn.norm.gamma from state_dict.
+Deleting key loss.discriminator.blocks.4.1.1.fn.net.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.1.1.fn.net.0.bias from state_dict.
+Deleting key loss.discriminator.blocks.4.1.1.fn.net.2.weight from state_dict.
+Deleting key loss.discriminator.blocks.4.1.1.fn.net.2.bias from state_dict.
+Deleting key loss.discriminator.blocks.5.0.conv_res.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.0.conv_res.bias from state_dict.
+Deleting key loss.discriminator.blocks.5.0.net.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.0.net.0.bias from state_dict.
+Deleting key loss.discriminator.blocks.5.0.net.2.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.0.net.2.bias from state_dict.
+Deleting key loss.discriminator.blocks.5.0.downsample.1.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.0.downsample.1.bias from state_dict.
+Deleting key loss.discriminator.blocks.5.1.0.fn.norm.gamma from state_dict.
+Deleting key loss.discriminator.blocks.5.1.0.fn.attn.to_q.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.1.0.fn.attn.to_kv.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.1.0.fn.attn.to_out.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.1.1.fn.norm.gamma from state_dict.
+Deleting key loss.discriminator.blocks.5.1.1.fn.net.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.1.1.fn.net.0.bias from state_dict.
+Deleting key loss.discriminator.blocks.5.1.1.fn.net.2.weight from state_dict.
+Deleting key loss.discriminator.blocks.5.1.1.fn.net.2.bias from state_dict.
+Deleting key loss.discriminator.blocks.6.0.conv_res.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.0.conv_res.bias from state_dict.
+Deleting key loss.discriminator.blocks.6.0.net.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.0.net.0.bias from state_dict.
+Deleting key loss.discriminator.blocks.6.0.net.2.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.0.net.2.bias from state_dict.
+Deleting key loss.discriminator.blocks.6.1.0.fn.norm.gamma from state_dict.
+Deleting key loss.discriminator.blocks.6.1.0.fn.attn.to_q.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.1.0.fn.attn.to_kv.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.1.0.fn.attn.to_out.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.1.1.fn.norm.gamma from state_dict.
+Deleting key loss.discriminator.blocks.6.1.1.fn.net.0.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.1.1.fn.net.0.bias from state_dict.
+Deleting key loss.discriminator.blocks.6.1.1.fn.net.2.weight from state_dict.
+Deleting key loss.discriminator.blocks.6.1.1.fn.net.2.bias from state_dict.
+Deleting key loss.discriminator.to_logits.0.weight from state_dict.
+Deleting key loss.discriminator.to_logits.0.bias from state_dict.
+Deleting key loss.discriminator.to_logits.3.weight from state_dict.
+Deleting key loss.discriminator.to_logits.3.bias from state_dict.
+Missing keys:  []
+Unexpected keys:  []
+Restored from /root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/vae/3d-vae.pt
+[2026-09-23 12:48:16,410] [INFO] [RANK 0]  > number of parameters on model parallel rank 0: 6793632227
+[2026-09-23 12:48:22,704] [INFO] [RANK 0] global rank 0 is loading checkpoint /root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt
+[2026-09-23 12:48:40,976] [INFO] [RANK 0] Warning: Missing keys for inference: ['model.diffusion_model.mixins.pos_embed.pos_embedding'].
+[2026-09-23 12:48:40,978] [INFO] [RANK 0] > successfully loaded /root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt
+Loading json: /root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1/resim-r2/factual.json
+Using 1 clips
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 18315.74it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]Processing 0 / 1 batch
+  0%|          | 0/1 [00:05<?, ?it/s]
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/root/autodl-tmp/motion_proj/scripts/run_resim_sample.py", line 112, in <module>
+[rank0]:     main()
+[rank0]:   File "/root/autodl-tmp/motion_proj/scripts/run_resim_sample.py", line 108, in main
+[rank0]:     runpy.run_path(str(sample_path), run_name="__main__")
+[rank0]:   File "/root/autodl-tmp/envs/motionproj/lib/python3.10/runpy.py", line 289, in run_path
+[rank0]:     return _run_module_code(code, init_globals, run_name,
+[rank0]:   File "/root/autodl-tmp/envs/motionproj/lib/python3.10/runpy.py", line 96, in _run_module_code
+[rank0]:     _run_code(code, mod_globals, init_globals,
+[rank0]:   File "/root/autodl-tmp/envs/motionproj/lib/python3.10/runpy.py", line 86, in _run_code
+[rank0]:     exec(code, run_globals)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/sample_video.py", line 442, in <module>
+[rank0]:     sampling_main(args, model_cls=SATVideoDiffusionEngine)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/sample_video.py", line 282, in sampling_main
+[rank0]:     z = model.encode_first_stage(x, batch)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/diffusion_video.py", line 253, in encode_first_stage
+[rank0]:     out.append(self.first_stage_model.encode(x_sample))
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/vae_modules/autoencoder.py", line 608, in encode
+[rank0]:     z = super().encode(x, return_reg_log, unregularized)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/vae_modules/autoencoder.py", line 224, in encode
+[rank0]:     z = self.encoder(x)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/vae_modules/cp_enc_dec.py", line 828, in forward
+[rank0]:     h = self.down[i_level].block[i_block](h, temb)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/vae_modules/cp_enc_dec.py", line 684, in forward
+[rank0]:     h = self.norm1(h)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/ReSim/sat/vae_modules/cp_enc_dec.py", line 438, in forward
+[rank0]:     output = super().forward(input_)
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/modules/normalization.py", line 288, in forward
+[rank0]:     return F.group_norm(
+[rank0]:   File "/root/autodl-tmp/envs/resim/lib/python3.10/site-packages/torch/nn/functional.py", line 2606, in group_norm
+[rank0]:     return torch.group_norm(input, num_groups, weight, bias, eps, torch.backends.cudnn.enabled)
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 5.36 GiB. GPU 0 has a total capacity of 23.56 GiB of which 4.46 GiB is free. Including non-PyTorch memory, this process has 19.09 GiB memory in use. Of the allocated memory 18.34 GiB is allocated by PyTorch, and 300.23 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

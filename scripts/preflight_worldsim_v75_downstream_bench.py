@@ -17,7 +17,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from motion_proj.cfbench.registry import load_registry
 
 
-def _candidate_issue(path: str, min_size_bytes: int | None = None) -> str | None:
+def _candidate_issue(
+    path: str,
+    min_size_bytes: int | None = None,
+    expected_size_bytes: int | None = None,
+) -> str | None:
     candidate = Path(path)
     if not os.path.lexists(candidate):
         return "missing"
@@ -32,14 +36,21 @@ def _candidate_issue(path: str, min_size_bytes: int | None = None) -> str | None
     if min_size_bytes is not None:
         if not resolved.is_file() or resolved.stat().st_size < min_size_bytes:
             return "size_below_minimum"
+    if expected_size_bytes is not None:
+        if not resolved.is_file() or resolved.stat().st_size != expected_size_bytes:
+            return "size_mismatch"
     return None
 
 
-def _partition_matches(pattern: str, min_size_bytes: int | None = None) -> tuple[list[str], dict[str, str]]:
+def _partition_matches(
+    pattern: str,
+    min_size_bytes: int | None = None,
+    expected_size_bytes: int | None = None,
+) -> tuple[list[str], dict[str, str]]:
     complete: list[str] = []
     incomplete: dict[str, str] = {}
     for match in sorted(glob.glob(pattern, recursive=True)):
-        issue = _candidate_issue(match, min_size_bytes)
+        issue = _candidate_issue(match, min_size_bytes, expected_size_bytes)
         if issue is None:
             complete.append(match)
         else:
@@ -54,10 +65,17 @@ def _path_group(row: dict[str, Any], key: str) -> dict[str, Any]:
     all_of = [str(path) for path in spec.get("all_of", [])]
     any_of = [str(path) for path in spec.get("any_of", [])]
     minimums = {str(pattern): int(size) for pattern, size in spec.get("min_size_bytes", {}).items()}
+    expected_sizes = {
+        str(pattern): int(size) for pattern, size in spec.get("size_bytes", {}).items()
+    }
     completed: dict[str, list[str]] = {}
     incomplete: dict[str, dict[str, str]] = {}
     for pattern in all_of + any_of:
-        hits, rejected = _partition_matches(pattern, minimums.get(pattern))
+        hits, rejected = _partition_matches(
+            pattern,
+            minimums.get(pattern),
+            expected_sizes.get(pattern),
+        )
         completed[pattern] = hits
         if rejected:
             incomplete[pattern] = rejected

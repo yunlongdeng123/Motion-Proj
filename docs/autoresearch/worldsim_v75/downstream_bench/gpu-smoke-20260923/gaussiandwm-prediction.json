@@ -1,0 +1,26 @@
+{
+  "task_type": "qa",
+  "model_id": "/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model",
+  "revision": "main",
+  "config_dir": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1/gaussiandwm-r2/configs",
+  "split": "val",
+  "dataset_names": [
+    "qa_val"
+  ],
+  "count": 1,
+  "items": [
+    {
+      "task_type": "qa",
+      "sample_uid": "dummy_qa_000001",
+      "source_index": 0,
+      "dataset_name": "qa_val",
+      "qa_group": "NuInteract_RD&P",
+      "qa_subtask": "prediction",
+      "pred": "Given the current scenario, the next action would be to continue driving straight at a moderate speed while maintaining the current lane. The road ahead is clear, and there are no immediate obstacles or traffic. It is important to stay alert for any changes in the environment, such as pedestrians or other vehicles entering the road.",
+      "gt": "The vehicle should continue forward cautiously.",
+      "meta": {
+        "source": "gaussiandwm_cvpr.qa"
+      }
+    }
+  ]
+}

@@ -1,0 +1,717 @@
+{
+  "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+  "run_id": "20260923-r1",
+  "resource": "single NVIDIA RTX 3090 24GB",
+  "seed": 42,
+  "complete_runtime_smoke_models": [
+    "omnidreams",
+    "gaussiandwm_qa_compat",
+    "hugsim"
+  ],
+  "fresh_paired_smokes": 2,
+  "benchmark_completed_cases": 0,
+  "six_dimension_scores": {
+    "adherence": null,
+    "physics": null,
+    "environment_preservation": null,
+    "outcome": null,
+    "trajectory_adherence": null,
+    "object_background_preservation": null
+  },
+  "human_verdict": null,
+  "no_composite_score": true,
+  "run_root": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1",
+  "omnidreams": {
+    "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+    "run_id": "20260923-r1",
+    "model_id": "omnidreams",
+    "input_role": "official_scene_engineering_smoke",
+    "bench_case_id": null,
+    "seed": 42,
+    "blocks_per_branch": 8,
+    "intervention": {
+      "ego_speed_scale": [
+        1.0,
+        0.5
+      ]
+    },
+    "held_fixed": [
+      "initial_image",
+      "prompt",
+      "actor_states",
+      "map",
+      "timestamps",
+      "seed"
+    ],
+    "human_verdict": null,
+    "failure_ledger_refs": [],
+    "branches": {
+      "factual": {
+        "frames": 61,
+        "generation_calls": 8,
+        "peak_allocated_gib": 12.80658483505249,
+        "timings": [
+          {
+            "branch": "factual",
+            "block": 0,
+            "frames": 5,
+            "wall_s": 3.306589648127556
+          },
+          {
+            "branch": "factual",
+            "block": 1,
+            "frames": 13,
+            "wall_s": 2.5282627306878567
+          },
+          {
+            "branch": "factual",
+            "block": 2,
+            "frames": 21,
+            "wall_s": 3.045114155858755
+          },
+          {
+            "branch": "factual",
+            "block": 3,
+            "frames": 29,
+            "wall_s": 3.079209016636014
+          },
+          {
+            "branch": "factual",
+            "block": 4,
+            "frames": 37,
+            "wall_s": 3.001004535704851
+          },
+          {
+            "branch": "factual",
+            "block": 5,
+            "frames": 45,
+            "wall_s": 3.201922381296754
+          },
+          {
+            "branch": "factual",
+            "block": 6,
+            "frames": 53,
+            "wall_s": 3.4395307544618845
+          },
+          {
+            "branch": "factual",
+            "block": 7,
+            "frames": 61,
+            "wall_s": 3.440763244405389
+          }
+        ]
+      },
+      "counterfactual": {
+        "frames": 61,
+        "generation_calls": 8,
+        "peak_allocated_gib": 12.804219722747803,
+        "timings": [
+          {
+            "branch": "counterfactual",
+            "block": 0,
+            "frames": 5,
+            "wall_s": 2.0451335925608873
+          },
+          {
+            "branch": "counterfactual",
+            "block": 1,
+            "frames": 13,
+            "wall_s": 2.5251444429159164
+          },
+          {
+            "branch": "counterfactual",
+            "block": 2,
+            "frames": 21,
+            "wall_s": 3.0530199091881514
+          },
+          {
+            "branch": "counterfactual",
+            "block": 3,
+            "frames": 29,
+            "wall_s": 3.1140214446932077
+          },
+          {
+            "branch": "counterfactual",
+            "block": 4,
+            "frames": 37,
+            "wall_s": 3.0275135207921267
+          },
+          {
+            "branch": "counterfactual",
+            "block": 5,
+            "frames": 45,
+            "wall_s": 3.291212160140276
+          },
+          {
+            "branch": "counterfactual",
+            "block": 6,
+            "frames": 53,
+            "wall_s": 3.3698259461671114
+          },
+          {
+            "branch": "counterfactual",
+            "block": 7,
+            "frames": 61,
+            "wall_s": 3.340651523321867
+          }
+        ]
+      }
+    },
+    "status": "complete",
+    "source_scene": "/root/autodl-tmp/models/worldsim_v75/omni-dreams-scenes/scenes/clipgt-0d404ff7-2b66-498c-b047-1ed8cded60d4.usdz",
+    "condition_changed_pixels_last": 194061,
+    "wall_s": 98.08741045184433,
+    "failure_ledger_delta": "none"
+  },
+  "gaussiandwm": {
+    "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+    "run_id": "20260923-r1",
+    "model_id": "gaussiandwm",
+    "role": "consumer_only",
+    "status": "complete",
+    "input_role": "upstream_synthetic_contract_example",
+    "benchmark_aligned": false,
+    "seed": 42,
+    "max_new_tokens": 64,
+    "human_verdict": null,
+    "claim_boundary": "仅验证官方 QA 完整调用链，不评价真实驾驶质量；不是 paired downstream outcome。",
+    "failure_ledger_refs": [],
+    "implementation_variant": "qa_compatibility_adapter_not_raw_upstream",
+    "excluded_unused_parameters": {
+      "traj_head.mlp.0.bias": [
+        4096
+      ],
+      "traj_head.mlp.0.weight": [
+        4096
+      ],
+      "traj_head.mlp.1.bias": [
+        4096
+      ],
+      "traj_head.mlp.1.weight": [
+        4096,
+        4096
+      ],
+      "traj_head.mlp.3.bias": [
+        5
+      ],
+      "traj_head.mlp.3.weight": [
+        5,
+        4096
+      ]
+    },
+    "predictions_path": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1/gaussiandwm-r2/infer/qa_predictions_gpu-smoke-20260923.json",
+    "wall_s": 34.22198529355228,
+    "peak_allocated_gib": 21.239506244659424,
+    "failure_ledger_delta": "none"
+  },
+  "hugsim": {
+    "factual": {
+      "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+      "run_id": "20260923-r1",
+      "model_id": "hugsim",
+      "status": "complete",
+      "benchmark_aligned": false,
+      "input_role": "official_scene_engineering_smoke",
+      "scene": "scene-0383",
+      "intervention": "remove the only scenario actor",
+      "seed": 42,
+      "ad_client_used": false,
+      "feedback_policy": false,
+      "actions": {
+        "acc": 0.0,
+        "steer_rate": 0.0
+      },
+      "human_verdict": null,
+      "failure_ledger_refs": [],
+      "branches": {
+        "factual": {
+          "frames": 9,
+          "views": [
+            "CAM_BACK",
+            "CAM_BACK_LEFT",
+            "CAM_BACK_RIGHT",
+            "CAM_FRONT",
+            "CAM_FRONT_LEFT",
+            "CAM_FRONT_RIGHT"
+          ],
+          "render_calls": 54,
+          "peak_allocated_gib": 3.015374183654785,
+          "actor_counts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "branch_process_isolation": true,
+      "wall_s": 12.782805532217026,
+      "failure_ledger_delta": "none"
+    },
+    "counterfactual": {
+      "task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01",
+      "run_id": "20260923-r1",
+      "model_id": "hugsim",
+      "status": "complete",
+      "benchmark_aligned": false,
+      "input_role": "official_scene_engineering_smoke",
+      "scene": "scene-0383",
+      "intervention": "remove the only scenario actor",
+      "seed": 42,
+      "ad_client_used": false,
+      "feedback_policy": false,
+      "actions": {
+        "acc": 0.0,
+        "steer_rate": 0.0
+      },
+      "human_verdict": null,
+      "failure_ledger_refs": [],
+      "branches": {
+        "counterfactual": {
+          "frames": 9,
+          "views": [
+            "CAM_BACK",
+            "CAM_BACK_LEFT",
+            "CAM_BACK_RIGHT",
+            "CAM_FRONT",
+            "CAM_FRONT_LEFT",
+            "CAM_FRONT_RIGHT"
+          ],
+          "render_calls": 54,
+          "peak_allocated_gib": 2.5592713356018066,
+          "actor_counts": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "branch_process_isolation": true,
+      "wall_s": 12.30022368580103,
+      "failure_ledger_delta": "none"
+    }
+  },
+  "hugsim_pair_diagnostics": {
+    "same_ego_states_and_timestamps": true,
+    "actor_count_change": [
+      1,
+      0
+    ],
+    "image_differences": [
+      {
+        "camera": "CAM_BACK",
+        "frame": 0,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 1,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 2,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 3,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 4,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 5,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 6,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 7,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK",
+        "frame": 8,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 0,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 1,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 2,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 3,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 4,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 5,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 6,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 7,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_LEFT",
+        "frame": 8,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 0,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 1,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 2,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 3,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 4,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 5,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 6,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 7,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_BACK_RIGHT",
+        "frame": 8,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 0,
+        "changed_pixels": 1840,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.2742777777777778
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 1,
+        "changed_pixels": 1879,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.2782759259259259
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 2,
+        "changed_pixels": 1897,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.2852527777777778
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 3,
+        "changed_pixels": 1936,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.2904657407407407
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 4,
+        "changed_pixels": 1967,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.29452685185185185
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 5,
+        "changed_pixels": 2006,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.29595462962962965
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 6,
+        "changed_pixels": 2044,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.3005009259259259
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 7,
+        "changed_pixels": 2078,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.3073398148148148
+      },
+      {
+        "camera": "CAM_FRONT",
+        "frame": 8,
+        "changed_pixels": 2108,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.31298703703703706
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 0,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 1,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 2,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 3,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 4,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 5,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 6,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 7,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_LEFT",
+        "frame": 8,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 0,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 1,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 2,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 3,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 4,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 5,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 6,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 7,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      },
+      {
+        "camera": "CAM_FRONT_RIGHT",
+        "frame": 8,
+        "changed_pixels": 0,
+        "total_pixels": 360000,
+        "mean_absolute_rgb_difference": 0.0
+      }
+    ]
+  },
+  "resim": {
+    "status": "oom_stopped",
+    "stage": "first_stage_VAE_encoding",
+    "generated_videos": 0,
+    "requested_allocation_gib": 5.36,
+    "free_gib_at_failure": 4.46,
+    "automatic_retry_after_oom": false,
+    "log": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1/resim-factual-r2.log"
+  },
+  "street_gaussians": {
+    "status": "blocked_missing_checkpoint",
+    "new_render_calls": 0,
+    "prior_evidence_only": true,
+    "missing_extensions": [
+      "simple_knn",
+      "diff_gaussian_rasterization"
+    ],
+    "restoration_boundary": "历史自训checkpoint已退役；本轮未训练、未用其他方法资产冒充"
+  },
+  "driveeditor": {
+    "status": "excluded_by_current_request",
+    "gpu_calls": 0
+  },
+  "failure_ledger_refs": [],
+  "failure_ledger_delta": "none"
+}

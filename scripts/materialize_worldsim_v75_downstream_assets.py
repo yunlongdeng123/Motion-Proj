@@ -26,6 +26,7 @@ def _completion_issue(
     path: Path,
     *,
     min_size_bytes: int | None = None,
+    expected_size_bytes: int | None = None,
     required_files: tuple[Path, ...] = (),
 ) -> str | None:
     """Return why a downloaded path is incomplete, or ``None`` when usable."""
@@ -40,6 +41,9 @@ def _completion_issue(
     if min_size_bytes is not None:
         if not resolved.is_file() or resolved.stat().st_size < min_size_bytes:
             return "size_below_minimum"
+    if expected_size_bytes is not None:
+        if not resolved.is_file() or resolved.stat().st_size != expected_size_bytes:
+            return "size_mismatch"
     for relative in required_files:
         issue = _completion_issue(resolved / relative)
         if issue is not None:
@@ -52,11 +56,13 @@ def _ensure_link(
     target: Path,
     *,
     min_size_bytes: int | None = None,
+    expected_size_bytes: int | None = None,
     required_files: tuple[Path, ...] = (),
 ) -> dict[str, Any]:
     issue = _completion_issue(
         source,
         min_size_bytes=min_size_bytes,
+        expected_size_bytes=expected_size_bytes,
         required_files=required_files,
     )
     if issue is not None:
@@ -186,7 +192,7 @@ def _driveeditor(asset_root: Path) -> dict[str, Any]:
         _ensure_link(
             root / "downloads" / "model.safetensors",
             root / "checkpoints" / "model.safetensors",
-            min_size_bytes=12_059_467_678,
+            expected_size_bytes=12_059_467_678,
         ),
     ]
     return {"status": "ready" if all(row["status"] == "ready" for row in links) else "pending", "links": links}

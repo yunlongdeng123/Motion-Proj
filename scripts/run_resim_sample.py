@@ -43,7 +43,7 @@ def _dataset_preflight(config_path: Path, output_path: Path) -> None:
         "video_size": mp4_shape[-2:] == list(cfg.args.sampling_video_size),
         "trajectory_shape": traj_shape == [8, 3],
         "apply_traj": bool(cfg.args.apply_traj),
-        "use_ema": bool(cfg.args.use_ema),
+        "checkpoint_selection_exists": _checkpoint_path(cfg.args).is_file(),
         "save_gt_disabled": not bool(cfg.args.save_gt),
         "concat_gt_disabled": not bool(cfg.args.concat_gt_for_demo),
     }
@@ -56,6 +56,8 @@ def _dataset_preflight(config_path: Path, output_path: Path) -> None:
         "expected_output_rgb_frames": expected_output_frames,
         "text": str(item["txt"]),
         "lidar_pc_token": str(item["lidar_pc_token"]),
+        "checkpoint_path": str(_checkpoint_path(cfg.args)),
+        "use_ema": bool(cfg.args.get("use_ema", False)),
         "checks": checks,
         "passed": all(checks.values()),
     }
@@ -63,6 +65,16 @@ def _dataset_preflight(config_path: Path, output_path: Path) -> None:
     output_path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if not result["passed"]:
         raise RuntimeError(f"dataset preflight 检查失败: {result}")
+
+
+def _checkpoint_path(args) -> Path:
+    """按官方 SAT 的普通/EMA 目录规则核验，不强制公开包不存在的 EMA。"""
+    root = Path(str(args.load))
+    if root.suffix == ".pt":
+        return root
+    iteration = (root / "latest").read_text().strip()
+    suffix = "-ema" if bool(args.get("use_ema", False)) else ""
+    return root / f"{iteration}{suffix}" / "mp_rank_00_model_states.pt"
 
 
 def main() -> None:

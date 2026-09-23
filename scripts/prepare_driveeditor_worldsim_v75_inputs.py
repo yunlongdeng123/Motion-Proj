@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 import pickle
+import platform
 import sys
 from pathlib import Path
 from typing import Any
@@ -302,6 +303,12 @@ def main() -> None:
     parser.add_argument("--index", type=Path, required=True)
     parser.add_argument("--contact-sheet", type=Path)
     args = parser.parse_args()
+    if int(np.__version__.split(".", 1)[0]) != 1:
+        raise RuntimeError(
+            "DriveEditor 当前冻结环境使用 NumPy 1.x；请用 "
+            "/root/autodl-tmp/envs/driveeditor/bin/python 生成 pickle，"
+            "否则官方环境无法反序列化 NumPy 2.x 内部模块路径。"
+        )
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     validate_manifest(manifest)
     cases = [case for case in manifest["cases"] if case["target"]["role"] == "non_ego"]
@@ -320,6 +327,10 @@ def main() -> None:
         "schema_version": "worldsim_v75_driveeditor_inputs_v1",
         "gpu_operations_run": False,
         "pickle_layout": "one official-format single-item list per case",
+        "serialization_runtime": {
+            "python": platform.python_version(),
+            "numpy": np.__version__,
+        },
         "root": str(args.output_root.resolve()),
         "case_count": len(rows),
         "cases": rows,

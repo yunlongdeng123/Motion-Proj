@@ -1,0 +1,17 @@
+The tokenizer you are loading from '/root/autodl-tmp/models/worldsim_v75_downstream_bench/gaussiandwm/model' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+{"task_id": "WS-V75-DOWNSTREAM-GPU-SMOKE-01", "run_id": "20260923-r1", "model_id": "gaussiandwm", "role": "consumer_only", "status": "failed_stopped", "input_role": "upstream_synthetic_contract_example", "benchmark_aligned": false, "seed": 42, "max_new_tokens": 64, "human_verdict": null, "claim_boundary": "仅验证官方 QA 完整调用链，不评价真实驾驶质量；不是 paired downstream outcome。", "failure_ledger_refs": [], "error_type": "RuntimeError", "error": "Error(s) in loading state_dict for UnifiedGaussianDWM:\n\tUnexpected key(s) in state_dict: \"traj_head.mlp.0.bias\", \"traj_head.mlp.0.weight\", \"traj_head.mlp.1.bias\", \"traj_head.mlp.1.weight\", \"traj_head.mlp.3.bias\", \"traj_head.mlp.3.weight\". ", "wall_s": 14.322947653010488, "peak_allocated_gib": 0.0, "failure_ledger_delta": "none"}
+Traceback (most recent call last):
+  File "/root/autodl-tmp/motion_proj/scripts/run_cfbench_gaussiandwm_smoke.py", line 62, in <module>
+    main()
+  File "/root/autodl-tmp/motion_proj/scripts/run_cfbench_gaussiandwm_smoke.py", line 42, in main
+    prediction = run_qa_inference_from_config_dir(
+  File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/GaussianDWM/src/gaussiandwm_cvpr/infer/qa.py", line 168, in run_qa_inference_from_config_dir
+    model = UnifiedGaussianDWM.from_pretrained(model_name, revision=model_revision)
+  File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/GaussianDWM/src/gaussiandwm_cvpr/models/unified_model.py", line 443, in from_pretrained
+    model.load_pretrained_weights(root, revision=revision, strict=True)
+  File "/root/autodl-tmp/external/worldsim_v75_downstream_bench/GaussianDWM/src/gaussiandwm_cvpr/models/unified_model.py", line 431, in load_pretrained_weights
+    self.load_state_dict(state, strict=strict)
+  File "/root/autodl-tmp/envs/gaussiandwm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 2581, in load_state_dict
+    raise RuntimeError(
+RuntimeError: Error(s) in loading state_dict for UnifiedGaussianDWM:
+	Unexpected key(s) in state_dict: "traj_head.mlp.0.bias", "traj_head.mlp.0.weight", "traj_head.mlp.1.bias", "traj_head.mlp.1.weight", "traj_head.mlp.3.bias", "traj_head.mlp.3.weight".

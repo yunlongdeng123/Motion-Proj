@@ -1,0 +1,31 @@
+{
+  "config": "/root/autodl-tmp/runs/worldsim_v75/WS-V75-DOWNSTREAM-GPU-SMOKE-01/20260923-r1/resim-r2/cfbench-resim-smoke-factual.yaml",
+  "dataset_target": "data_waymo.WaymoDataset",
+  "dataset_length": 1,
+  "mp4_shape": [
+    49,
+    3,
+    512,
+    896
+  ],
+  "fut_traj_shape": [
+    8,
+    3
+  ],
+  "expected_output_rgb_frames": 49,
+  "text": "This video depicts a realistic view from the driver's perspective of a car driving on the road.",
+  "lidar_pc_token": "cfbench-smoke-factual",
+  "checkpoint_path": "/root/autodl-tmp/models/worldsim_v75_downstream_bench/resim/runtime/transformer/30000/mp_rank_00_model_states.pt",
+  "use_ema": false,
+  "checks": {
+    "dataset_length_one": true,
+    "source_rgb_frame_count": true,
+    "video_size": true,
+    "trajectory_shape": true,
+    "apply_traj": true,
+    "checkpoint_selection_exists": true,
+    "save_gt_disabled": true,
+    "concat_gt_disabled": true
+  },
+  "passed": true
+}

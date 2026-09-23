@@ -197,3 +197,18 @@ def test_preflight_enforces_minimum_size(tmp_path: Path) -> None:
     result = _path_group(row, "weights")
     assert result["passed"] is False
     assert result["incomplete_matches"][pattern][pattern] == "size_below_minimum"
+
+
+def test_preflight_enforces_exact_size(tmp_path: Path) -> None:
+    weight = tmp_path / "model.safetensors"
+    weight.write_bytes(b"one byte too long")
+    pattern = str(weight)
+    row = {
+        "weights": {
+            "all_of": [pattern],
+            "size_bytes": {pattern: len(b"one byte too long") - 1},
+        }
+    }
+    result = _path_group(row, "weights")
+    assert result["passed"] is False
+    assert result["incomplete_matches"][pattern][pattern] == "size_mismatch"
