@@ -1,0 +1,23 @@
+{
+  "run_id": "VADGS-P0R1-000",
+  "seed": 0,
+  "config": "/root/autodl-tmp/external/worldsim_v75/VAD-GS/configs/v76/nuscenes_000_repro_exhaustive.yaml",
+  "source_path": "/root/autodl-tmp/data/v76_vadgs/official_000/000",
+  "previous_run": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0-000",
+  "reuse": "only same official RGB images, SIFT keypoints/descriptors, input calibration/poses",
+  "new": "exhaustive matches, triangulation, corrected name-based track mapping, fresh initialization and all weights",
+  "database_initial_counts": {
+    "images": 305,
+    "keypoints": 305,
+    "descriptors": 305,
+    "matches": 0,
+    "two_view_geometries": 0
+  },
+  "colmap": "3.7 CPU, exhaustive matcher, 12 threads, seed 0",
+  "training": "30000 iterations; official cameras 0-4 temporal split; camera 5 extrapolation separate",
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "none; evaluates the engineering correction",
+  "shutdown_authorization": "2026-09-26 user asked autonomous continuation, then AutoDL shutdown after sufficient completion and saving results"
+}
