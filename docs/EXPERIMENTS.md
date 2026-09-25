@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| VADGS-P0R1-000-TEST-8000 / 20260926 | 同一75官方test：22.7086/0.7520/0.2348，较4k三项改善；固定五相机图和9k日志风险留证，继续30k | [报告与architecture](v76/P0R1_EXECUTION.md)、[指标/图像/审核](autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/) |
 | VADGS-P0R1-000-GATE-4000 / 20260926 | 4k新权重75官方test：21.7392/0.7300/0.2727；六横移×32actor世界变换零变化；近树遮挡方向对照，工程通过但非30k结论 | [报告与architecture](v76/P0R1_EXECUTION.md)、[指标/图像/几何](autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/) |
 | VADGS-VISIBLE-SAM-CROSSFRAME-20260926 | 固定36视图47投影对象关联28个；可见公交车因truck检测漏标，唯一fallback扩展按停止规则收口，完整动态输入未准入 | [适配边界](v76/MATCHED_SCENE_PRIORS.md)、[全部结果与审核](autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/)、[V76-F02](research_failures/entries/V76-F02.md) |
 | VADGS-P0R1-000-INITIALIZATION-CONTROL；VISIBLE-DETECTION-GATE-20260926 | 穷举完成并开始全新训练；15,475个COLMAP点的55,557条保存可见性边全部正确；同场景可见检测→SAM固定6正/4遮挡控制通过，未准入完整场景训练 | [初始化核验](v76/P0R1_EXECUTION.md)、[可见身份控制](v76/MATCHED_SCENE_PRIORS.md) |

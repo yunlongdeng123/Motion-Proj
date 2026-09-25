@@ -97,6 +97,36 @@ JSON中的 `colmap_visibility_rows_mismatched=15464` 以及wrong_camera/wrong_fr
 
 浮点PSNR21.7401；白且acc<0.1的平均比例0.03127%。固定[帧20五相机对照](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/official_test_frame20.png)已查看：道路、车辆和建筑已形成重建，仍有模糊与天空伪影，未见Camera5式大白块。完整[逐视图指标](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/official_test_metrics.json)保留。该结果是4k工程门禁，不是30k收敛质量、完整论文复现或匹配器因果收益；旧P0的16k结果不能当同迭代对照。初始化仍含候选test帧先验，Camera5外推继续单列。
 
+## 8k官方时间test：同一75视图中途检查
+
+2026-09-26 05:51保存的全新8k权重由独立一次性入口显式加载，06:16前完成评估与固定帧20作图，返回值0。权重大小和SHA-256见[审核记录](../autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/review.json)。与上文4k使用完全相同的75个相机/帧键、is_val、actor插值及PNG量化指标；全部指标有限，梯度训练视图交集0。
+
+| 检查点 | PSNR ↑ | SSIM ↑ | LPIPS ↓ |
+|---|---:|---:|---:|
+| 4k | 21.7392 | 0.7300 | 0.2727 |
+| 8k | **22.7086** | **0.7520** | **0.2348** |
+| 8k减4k | +0.9694 | +0.0220 | −0.0379 |
+
+75个同视图中，PSNR改善67个、SSIM改善60个、LPIPS改善75个；五个相机的均值三项均改善。8k按相机的完整分母均为15：
+
+| 相机 | PSNR ↑ | SSIM ↑ | LPIPS ↓ |
+|---|---:|---:|---:|
+| 0 | 22.4817 | 0.7744 | 0.2099 |
+| 1 | 19.9681 | 0.6762 | 0.3044 |
+| 2 | 24.3217 | 0.8063 | 0.1832 |
+| 3 | 22.3597 | 0.7152 | 0.2911 |
+| 4 | 24.4115 | 0.7879 | 0.1853 |
+
+浮点PSNR22.7097；白且acc<0.1的平均像素比例为0.00772%，4k为0.03127%。[逐视图指标](../autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/metrics.json)与[固定帧20五相机图](../autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/frame20.png)已保存并查看：道路、建筑和车辆持续重建，Camera1近处卡车、Camera3行人与店面仍有模糊、形变和暗色伪影，Camera2天空仍有伪影。已查看的五张图没有Camera5式大白洞；不据此声称所有测试视图无缺陷。
+
+该结果支持本run在训练方向的时间留出质量继续改善；不是30k收敛结论、匹配器单因素收益或完整论文复现。初始化仍包含候选test帧先验，Camera5完全未见方向继续单列，旧P0的16k也不是同迭代有效控制。本次没有重复4k几何门禁或提前重复30k外推队列。
+
+### 9k附近日志警告的有限排查
+
+06:18快照训练已至9160/30000，最近记录loss有限，无Traceback、RuntimeError、CUDA OOM或loss nan/inf匹配。`need extension` 来自 `trellis.py` 的语义区域体素缺口分支；配置每5个view-stack epoch在24k前允许propagation，并有SSIM/覆盖条件，因此这行文字本身不是CUDA扩展缺失。传播轮次和同时进行的8k评估可能影响耗时，不能仅凭瞬时ETA判定卡死。
+
+日志实际保留3条NumPy RuntimeWarning：空切片均值、均值中的无效标量运算及 `trellis.py:285` 基线比值中的无效标量运算。源代码存在空集合/零分母产生非有限候选分数的路径；当前证据没有证明其对后续传播无影响。没有因此改变训练算法或重启，新8k权重早于该阶段，也不能用8k通过证明9k之后没有风险。下个检查点需继续核验有限指标和图像；原始警告、源代码上下文、进程与资源见[运行快照](../autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/runtime_snapshot.json)。本次没有新增已确认失败类型，failure ledger不增加ID。
+
 ## 同场景准备与资源协调
 
 CPU匹配期间已利用空闲GPU补齐scene-0230/0255各366张Depth Anything V2深度和366张DSINE法线。法线经固定官方六视图的轴/符号核验；SAM按真实投影框与原track ID准备。生成方法、数值核验、适配边界与证据见[同场景先验报告](MATCHED_SCENE_PRIORS.md)。P0R1继续使用原有官方样例先验，不受同场景适配影响。
@@ -109,4 +139,4 @@ CPU匹配期间已利用空闲GPU补齐scene-0230/0255各366张Depth Anything V2
 
 按原P0→同场景→ego stress顺序推进，根据有效证据与资源达到可交付阶段后可停止扩展，明确保留未解决范围。单个GPU空闲、训练退出、工程失败或checkpoint落盘都不是关机充分条件。收口时保存输入、关键权重、正反结果和报告，将小型证据取回本地并提交push v76；确认没有训练/评价/渲染/先验任务及会启动它们的控制器，再将当前heartbeat设为PAUSED，最后调用AutoDL官方 `/usr/bin/shutdown` 并检查结果。官方关机入口见[省钱说明](https://api.autodl.com/docs/save_money/)。不把“发出关机命令”写成已验证停机。
 
-`failure_ledger_refs: [V76-F01]`；`failure_ledger_delta: none`。只有4k中途结果，不作方法成功或失败结论。
+`failure_ledger_refs: [V76-F01]`；`failure_ledger_delta: none`。已有4k工程门禁和8k官方时间test中途结果，不作方法成功或失败结论。

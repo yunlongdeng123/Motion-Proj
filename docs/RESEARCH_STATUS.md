@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-09-26 04:34（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
+更新：2026-09-26 06:18（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
 
 ## 当前方向
 
@@ -10,9 +10,9 @@ V7.6 正在研究 ego-view densification：以 **VAD-GS 全新训练**连接原�
 
 发现 [V76-F01](research_failures/entries/V76-F01.md)：旧COLMAP image ID被当作有序相机/帧编号，300/305图像错配，15,754/15,756个初始化点的visibility与真实track不一致，法线来源也受影响。按名字映射修复已通过回归，且已核验P0R1实际新初始化：15,475个COLMAP点、55,557条保存可见性边全部正确，错误行数0。旧P0约17,725迭代主动停止，4k/8k/16k权重及原始输入/日志/评估保留；不恢复旧权重。修复后的4k工程检查已通过，最终画质仍待30k；不能单独归因于映射或匹配器。
 
-最新run **VADGS-P0R1-000** 已完成穷举、新三角化和4k工程门禁。04:27保存4k，04:32独立75视图官方时间test为 **PSNR21.7392 / SSIM0.7300 / LPIPS0.2727**，固定五相机图已查看。六个横移中的32个actor实际世界位置/旋转全部不变，RGB/depth/acc有限；+3.5m仍进入近树遮挡，−3.5m可见街道。4k不是最终收敛结论，Camera5外推和30k评价仍待主队列。04:34约4349/30,000迭代；控制器PID22094、训练PID27160，GPU仅主训练。一次性4k控制器PID30707已正常完成退出，结果和审核在 `engineering_4k/`，不要重复启动。主状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`；数值、边界与architecture见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。新初始化实际track已核验0错配；穷举后的保留点数未大幅增长，数量不代表覆盖或画质。
+最新run **VADGS-P0R1-000** 已完成穷举、新三角化、4k工程门禁与8k官方时间test。8k同一75视图为 **PSNR22.7086 / SSIM0.7520 / LPIPS0.2348**，较4k分别+0.9694/+0.0220/−0.0379；五个相机均值三项均改善，固定五相机图已查看，近车/行人等仍有细节失真。4k的六偏移×32actor实际世界位置/旋转不变；+3.5m进入近树遮挡，−3.5m可见街道。两个一次性检查已退出，不重复启动。06:18主训练9160/30,000，控制器PID22094、训练PID27160仍运行；9k附近的体素扩展/NumPy空集合与比值警告已保存，最近loss有限且未见异常退出，尚不能判定警告无害，下个检查点继续核验。Camera5外推和30k结果仍待主队列。主状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`；指标、边界与architecture见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。新初始化实际track已核验0错配；穷举后保留点数未大幅增长，数量不代表覆盖或画质。
 
-scene-0230/0255各有366张深度与366张DSINE法线。背景SAM完成366/366与295/366，后者由CPU两线程nice10进程PID28434续做（日志 `scene_0255/sam_background_cpu.log`）。[V76-F02](research_failures/entries/V76-F02.md) 的唯一fallback先通过6个固定可见正例/4个遮挡反例；后续固定0/40/60帧、36视图跨帧扩展完成，47个投影对象关联28个。确认可见公交车ID3被判成truck而漏标，固定同类关联的完整输入召回未过。按推理前停止规则，本轮停止这项扩展，不改阈值/类别或换检测器，保留全部sidecar和保护标记；同场景训练和HUGSIM同场景比较未完成。详见[先验与身份控制报告](v76/MATCHED_SCENE_PRIORS.md)。
+scene-0230/0255各有366张深度与366张DSINE法线。背景SAM完成366/366与333/366，后者由CPU两线程nice10进程PID28434续做（日志 `scene_0255/sam_background_cpu.log`）。[V76-F02](research_failures/entries/V76-F02.md) 的唯一fallback先通过6个固定可见正例/4个遮挡反例；后续固定0/40/60帧、36视图跨帧扩展完成，47个投影对象关联28个。确认可见公交车ID3被判成truck而漏标，固定同类关联的完整输入召回未过。按推理前停止规则，本轮停止这项扩展，不改阈值/类别或换检测器，保留全部sidecar和保护标记；同场景训练和HUGSIM同场景比较未完成。详见[先验与身份控制报告](v76/MATCHED_SCENE_PRIORS.md)。
 
 ## V7.5 截至收尾的已确认状态
 

@@ -1,0 +1,53 @@
+{
+  "task_id": "VADGS-P0R1-000-TEST-8000",
+  "reviewer": "Codex visual and metric audit",
+  "human_verdict": null,
+  "recorded_at": "2026-09-26T06:18:30.466862+08:00",
+  "checkpoint_iteration": 8000,
+  "checkpoint": {
+    "bytes": 824842456,
+    "mtime": "2026-09-26T05:51:14.837891+08:00",
+    "sha256": "59b60914eec5fc72ee67060e80719ff45aed85138f93374272ff67d4610f56bc"
+  },
+  "official_temporal_test": {
+    "view_count": 75,
+    "psnr": 22.708552856445312,
+    "ssim": 0.7519970838228861,
+    "lpips": 0.23477905869483948,
+    "float_psnr": 22.709726638793946,
+    "acc_mean": 0.9313305608431498,
+    "acc_lt_0_1_fraction": 0.04551540649494806,
+    "rgb_white_fraction": 0.0017895061635681486,
+    "white_and_low_acc_fraction": 7.721193357307735e-05
+  },
+  "paired_view_count": 75,
+  "delta_from_fresh_4k": {
+    "psnr": 0.9693878936767568,
+    "ssim": 0.021998260021209637,
+    "lpips": -0.037944989204406726
+  },
+  "paired_views_improved": {
+    "psnr": 67,
+    "ssim": 60,
+    "lpips": 75
+  },
+  "reviewed_figures": [
+    "frame20.png"
+  ],
+  "visual_findings": [
+    "Street, buildings and vehicles reconstruct in all five fixed views.",
+    "Camera1 truck and camera3 pedestrian/storefront retain blur, shape errors and dark artifacts.",
+    "Camera2 sky retains artifacts. No Camera5-style large white void in the reviewed five views."
+  ],
+  "decision": "Continue existing fresh 30k pipeline; no duplicate 4k geometry or intermediate Camera5 evaluation.",
+  "limits": [
+    "Intermediate checkpoint, not final convergence or complete paper reproduction.",
+    "Initialization priors include candidate temporal test frames.",
+    "Old invalidated P0 16k is neither the same iteration nor a clean causal control.",
+    "8k checkpoint predates the observed later propagation warnings; it cannot establish their harmlessness."
+  ],
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "none"
+}
