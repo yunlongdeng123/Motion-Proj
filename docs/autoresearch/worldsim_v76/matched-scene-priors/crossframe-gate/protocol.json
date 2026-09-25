@@ -1,0 +1,37 @@
+{
+  "task_id": "VADGS-VISIBLE-SAM-CROSSFRAME-20260926",
+  "frozen_utc": "2026-09-25T20:14:38.487285+00:00",
+  "frames": [
+    0,
+    40,
+    60
+  ],
+  "cameras": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "scenes": [
+    "scene_0230",
+    "scene_0255"
+  ],
+  "selection": "fixed start, later interior and last frame, all cameras; frame20 already used for development",
+  "score_threshold": 0.25,
+  "iou_threshold": 0.3,
+  "association": "same COCO class maximum IoU one-to-one; unmatched allowed",
+  "detector": "/root/autodl-tmp/models/worldsim_v75/evaluators/fasterrcnn_resnet50_fpn_v2_coco-dd69338a.pth",
+  "sam": "/root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth",
+  "device": "cpu",
+  "cpu_threads": 2,
+  "seed": 0,
+  "review": "inspect every projected object crop for identity mistakes and visible unmatched targets; include all views in contact sheets",
+  "stop_rule": "any clear foreground identity error or visible unmatched dynamic target prevents full-input qualification; no threshold sweep or replacement detector",
+  "scope": "adapted data development control, not an independent method test or human verdict",
+  "training_inputs_modified": false,
+  "failure_ledger_refs": [
+    "V76-F02"
+  ]
+}

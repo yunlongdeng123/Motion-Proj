@@ -41,7 +41,7 @@ nohup /root/autodl-tmp/envs/vadgs-v76/bin/python script/v76/run_p0r1_pipeline.py
   > /root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline.log 2>&1 < /dev/null &
 ```
 
-两入口均拒绝重复创建或重复启动。`prepare_p0r1.py` 已执行，不再重跑。代码编译检查通过，COLMAP三角化线程参数已由本机help验证；实际全量匹配已启动并完成初始区块。
+两入口均拒绝重复创建或重复启动。`prepare_p0r1.py` 已执行，不再重跑。代码编译检查通过，COLMAP三角化线程参数已由本机help验证；入口已实际执行，完整匹配与初始化结果如下。
 
 ## 全量匹配与实际初始化核验
 
@@ -63,9 +63,39 @@ nohup /root/autodl-tmp/envs/vadgs-v76/bin/python script/v76/run_p0r1_pipeline.py
 
 JSON中的 `colmap_visibility_rows_mismatched=15464` 以及wrong_camera/wrong_frame仍是**旧ID算术的反例对照**；实际正确性字段 `colmap_visibility_rows_differ_from_name_mapping=0`。数据库原始ID仍有300/305不满足顺序假设，这是使用名字映射的必要性，不是新初始化再次错绑。
 
-本场景的穷举匹配使误差过滤点数增加892（2.63%），实际进入背景的COLMAP点减少281（1.78%）；平均原始重投影误差由1.1207变为1.1549px。本次没有出现保留点数的大幅增长；这些数量也不能证明两种几何的空间覆盖或画质相同。新run还纠正了visibility/法线来源，后续画质变化不能单独归因于匹配器。4k渲染和30k官方test尚待权重；训练中瞬时PSNR不当作测试结果。
+本场景的穷举匹配使误差过滤点数增加892（2.63%），实际进入背景的COLMAP点减少281（1.78%）；平均原始重投影误差由1.1207变为1.1549px。本次没有出现保留点数的大幅增长；这些数量也不能证明两种几何的空间覆盖或画质相同。新run还纠正了visibility/法线来源，后续画质变化不能单独归因于匹配器。下文给出4k中途检查；训练中瞬时PSNR不当作测试结果。
 
 完整[新run审计](../autoresearch/worldsim_v76/p0r1_exhaustive/initialization_colmap_audit.json)与[两run只读比较](../autoresearch/worldsim_v76/p0r1_exhaustive/initialization_comparison.json)。这验证了V76-F01修复实际进入训练输入，没有新增方法结论。
+
+## 4k工程渲染与官方时间test
+
+`VADGS-P0R1-000-GATE-4000` 显式加载2026-09-26 04:27保存的 `iteration_4000.pth`（706,692,120字节），04:32完成检查，未恢复旧P0。一次性入口 `run_p0r1_4k_gate.py` 等待权重大小/mtime连续60秒不变及至少12GB空闲显存后，顺序执行横移、统计、75视图test和固定帧20作图；该队列已退出，不能重复启动。主训练继续。
+
+帧20、相机0，指定0/0.5/1/2/3.5m及额外−3.5m对照全部渲染成功。RGB/depth/acc有限，c2w实际写入、横移/纵向/偏航断言通过。对渲染器实际scene graph中的32个actor逐一读取世界translation/quaternion，六个偏移中相对事实相机的最大变化均为0；原 `ego_pose` 和timestamp也保持不变。加载器采用帧号作timestamp，本例为20，**不是20秒**；没有把模型时标重采样为ego编辑后的时标。
+
+| 横移 | 平均acc | 原始depth中位数 | acc>0.5处 depth/acc 中位数 |
+|---|---:|---:|---:|
+| −3.5m | 0.8159 | 12.203m | 18.063m |
+| 0m | 0.8434 | 14.110m | 17.730m |
+| +0.5m | 0.8480 | 14.181m | 17.508m |
+| +1m | 0.8529 | 14.046m | 17.034m |
+| +2m | 0.8660 | 12.105m | 14.688m |
+| +3.5m | 0.9993 | 0.272m | 0.272m |
+
+已查看[横移RGB/acc/depth图](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/sweep.png)：+3.5m仍进入近处树木遮挡，−3.5m仍可看见街道。这是路径几何诊断，不能用正向近物图判断新视角质量退化。完整[逐actor世界变换](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/sweep_manifest.json)和[数值摘要](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/sweep_summary.json)保留。
+
+独立75视图测试直接使用 `Scene.getTestCameras()`，5相机×15个帧4/8/.../60，保留is_val与actor插值，梯度训练交集0。全图PNG量化口径、官方PSNR/SSIM与LPIPS Alex v0.1：
+
+| 相机 | 视图数 | PSNR ↑ | SSIM ↑ | LPIPS ↓ |
+|---|---:|---:|---:|---:|
+| 0 | 15 | 21.0898 | 0.7512 | 0.2340 |
+| 1 | 15 | 19.4466 | 0.6717 | 0.3407 |
+| 2 | 15 | 22.6551 | 0.7668 | 0.2240 |
+| 3 | 15 | 22.2046 | 0.7042 | 0.3420 |
+| 4 | 15 | 23.2997 | 0.7561 | 0.2230 |
+| 全部 | 75 | **21.7392** | **0.7300** | **0.2727** |
+
+浮点PSNR21.7401；白且acc<0.1的平均比例0.03127%。固定[帧20五相机对照](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/official_test_frame20.png)已查看：道路、车辆和建筑已形成重建，仍有模糊与天空伪影，未见Camera5式大白块。完整[逐视图指标](../autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/official_test_metrics.json)保留。该结果是4k工程门禁，不是30k收敛质量、完整论文复现或匹配器因果收益；旧P0的16k结果不能当同迭代对照。初始化仍含候选test帧先验，Camera5外推继续单列。
 
 ## 同场景准备与资源协调
 
@@ -79,4 +109,4 @@ CPU匹配期间已利用空闲GPU补齐scene-0230/0255各366张Depth Anything V2
 
 按原P0→同场景→ego stress顺序推进，根据有效证据与资源达到可交付阶段后可停止扩展，明确保留未解决范围。单个GPU空闲、训练退出、工程失败或checkpoint落盘都不是关机充分条件。收口时保存输入、关键权重、正反结果和报告，将小型证据取回本地并提交push v76；确认没有训练/评价/渲染/先验任务及会启动它们的控制器，再将当前heartbeat设为PAUSED，最后调用AutoDL官方 `/usr/bin/shutdown` 并检查结果。官方关机入口见[省钱说明](https://api.autodl.com/docs/save_money/)。不把“发出关机命令”写成已验证停机。
 
-`failure_ledger_refs: [V76-F01]`；`failure_ledger_delta: none`。目前没有新训练指标，也没有方法成功或失败结论。
+`failure_ledger_refs: [V76-F01]`；`failure_ledger_delta: none`。只有4k中途结果，不作方法成功或失败结论。

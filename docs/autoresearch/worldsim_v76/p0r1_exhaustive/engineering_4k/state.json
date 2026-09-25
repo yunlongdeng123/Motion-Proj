@@ -1,0 +1,30 @@
+{
+  "task_id": "VADGS-P0R1-000-GATE-4000",
+  "pid": 30707,
+  "stage": "completed_needs_review",
+  "completed_stages": [
+    "sweep",
+    "sweep_summary",
+    "official_test",
+    "official_test_plot"
+  ],
+  "timeout_seconds": 7200,
+  "checkpoint_iteration": 4000,
+  "shutdown_when_pipeline_exits": false,
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "updated_at": "2026-09-25T20:32:24.024759+00:00",
+  "checkpoint_bytes": 706692120,
+  "status": "completed",
+  "command": [
+    "/root/autodl-tmp/envs/vadgs-v76/bin/python",
+    "script/v76/plot_official_test.py",
+    "--input-dir",
+    "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/engineering_4k/official_test",
+    "--output",
+    "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/engineering_4k/official_test_frame20.png"
+  ],
+  "child_pid": null,
+  "returncode": 0
+}

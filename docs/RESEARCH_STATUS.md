@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-09-26 03:19（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
+更新：2026-09-26 04:34（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
 
 ## 当前方向
 
@@ -8,11 +8,11 @@ V7.6 正在研究 ego-view densification：以 **VAD-GS 全新训练**连接原�
 
 用户指定的两个优先诊断均已完成：COLMAP 138,944 点在 `<0.6 px` 后剩 33,930 点（24.42%），最终 15,756 点进入背景初始化；16k 官方时间 test 的 75 视图为 PSNR 22.7010 / SSIM 0.7486 / LPIPS 0.2313，基础重建已起来。此前相机 0 的61帧对照混合训练和留出，不能替代官方 test。
 
-发现 [V76-F01](research_failures/entries/V76-F01.md)：旧COLMAP image ID被当作有序相机/帧编号，300/305图像错配，15,754/15,756个初始化点的visibility与真实track不一致，法线来源也受影响。按名字映射修复已通过回归，且已核验P0R1实际新初始化：15,475个COLMAP点、55,557条保存可见性边全部正确，错误行数0。旧P0约17,725迭代主动停止，4k/8k/16k权重及原始输入/日志/评估保留；不恢复旧权重。源代码和新输入正确不等于画质已改善，仍待新run测试。
+发现 [V76-F01](research_failures/entries/V76-F01.md)：旧COLMAP image ID被当作有序相机/帧编号，300/305图像错配，15,754/15,756个初始化点的visibility与真实track不一致，法线来源也受影响。按名字映射修复已通过回归，且已核验P0R1实际新初始化：15,475个COLMAP点、55,557条保存可见性边全部正确，错误行数0。旧P0约17,725迭代主动停止，4k/8k/16k权重及原始输入/日志/评估保留；不恢复旧权重。修复后的4k工程检查已通过，最终画质仍待30k；不能单独归因于映射或匹配器。
 
-最新run **VADGS-P0R1-000** 已完成68.258分钟穷举和新三角化，46,360对全部尝试，有效几何对13,997。03:01全新训练启动，03:19约844/30,000迭代、尚无4k checkpoint；控制器PID22094、训练PID27160，GPU仅该训练。状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`，按它与实时进程核实，勿重复启动。新145,690点经过error<0.6px剩34,822（23.90%），最终15,475点进入背景；旧run相应33,930（24.42%）和15,756，穷举未带来保留点数大幅增长。数量不代表空间覆盖或画质；控制条件与architecture见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。
+最新run **VADGS-P0R1-000** 已完成穷举、新三角化和4k工程门禁。04:27保存4k，04:32独立75视图官方时间test为 **PSNR21.7392 / SSIM0.7300 / LPIPS0.2727**，固定五相机图已查看。六个横移中的32个actor实际世界位置/旋转全部不变，RGB/depth/acc有限；+3.5m仍进入近树遮挡，−3.5m可见街道。4k不是最终收敛结论，Camera5外推和30k评价仍待主队列。04:34约4349/30,000迭代；控制器PID22094、训练PID27160，GPU仅主训练。一次性4k控制器PID30707已正常完成退出，结果和审核在 `engineering_4k/`，不要重复启动。主状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`；数值、边界与architecture见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。新初始化实际track已核验0错配；穷举后的保留点数未大幅增长，数量不代表覆盖或画质。
 
-scene-0230/0255各有366张深度与366张DSINE法线。背景SAM在主训练启动时已自动让出GPU，完成366/366与268/366；scene-0255剩余98张由CPU两线程nice10进程PID28434续做（日志 `scene_0255/sam_background_cpu.log`）。[V76-F02](research_failures/entries/V76-F02.md) 的旧框提示动态标签仍隔离保存。唯一预注册控制已在CPU完成：可见检测同类一对一关联保留6/6固定可见正例、排除4/4遮挡反例，重新SAM后十例局部图通过；17个提示共关联10个，其他3个未匹配提示及跨帧召回尚未核验。新mask只在隔离sidecar，保护标记不解除，未启动同场景训练。详见[先验与身份控制报告](v76/MATCHED_SCENE_PRIORS.md)。
+scene-0230/0255各有366张深度与366张DSINE法线。背景SAM完成366/366与295/366，后者由CPU两线程nice10进程PID28434续做（日志 `scene_0255/sam_background_cpu.log`）。[V76-F02](research_failures/entries/V76-F02.md) 的唯一fallback先通过6个固定可见正例/4个遮挡反例；后续固定0/40/60帧、36视图跨帧扩展完成，47个投影对象关联28个。确认可见公交车ID3被判成truck而漏标，固定同类关联的完整输入召回未过。按推理前停止规则，本轮停止这项扩展，不改阈值/类别或换检测器，保留全部sidecar和保护标记；同场景训练和HUGSIM同场景比较未完成。详见[先验与身份控制报告](v76/MATCHED_SCENE_PRIORS.md)。
 
 ## V7.5 截至收尾的已确认状态
 
@@ -26,7 +26,7 @@ V7.5 之前的自然状态、对象移除、速度干预及接近任务控制仍
 
 ## 下一门禁
 
-继续P0R1：初始化已核验，4k可用后优先完成工程渲染和几何门禁，30k检查官方test与Camera5外推、横移和actor时间戳。按证据推进同场景：V76-F02局部控制已通过，仍需完整动态标签及跨帧/远处目标检查；不把局部门禁通过当作数据齐全。帧20的+3.5m进入近物遮挡，需选可通行方向/帧位。V7.5 HUGSIM输出只作历史数据对照，不用其checkpoint初始化V7.6。
+继续P0R1至30k，审核主队列的官方test、Camera5外推、横移和actor世界变换；4k工程门禁已完成。同场景输入仍缺可靠跨帧动态mask，本轮有限fallback已按停止规则收口，不能把局部正例通过当作数据齐全。可在P0R1完成且结论/未完成范围清楚后按用户授权结束本轮扩展。帧20的+3.5m进入近物遮挡，ego压力测试需区分可通行方向/帧位。V7.5 HUGSIM输出只作历史数据对照，不用其checkpoint初始化V7.6。
 
 ## 当前电源授权
 

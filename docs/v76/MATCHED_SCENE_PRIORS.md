@@ -75,6 +75,14 @@ DSINE 使用官方 commit `ef0c2afa32b4dd19cb8ca4567c652802cd92591c` 的 `DSINE_
 
 检测整轮49.48秒、SAM整轮198.55秒，均在CPU两线程、nice10、CUDA不可见条件下运行；GPU专用于P0R1。局部门禁支持这项普通输入修复，但全场景动态标签、跨帧身份和远处目标召回仍未核验，保护标记保持。后续扩展应验证这些剩余条件，不能把局部控制通过写成同场景训练已就绪。
 
+## 固定跨帧扩展：可见召回仍不合格
+
+`VADGS-VISIBLE-SAM-CROSSFRAME-20260926` 在推理前固定两场景的帧0/40/60、全部6相机，共36视图；保持同一模型、score0.25、同类IoU0.3、一对一关联及SAM提示方式。CPU两线程完成666.08秒，全部输出仍在隔离sidecar。47个投影对象中28个关联、19个未关联；分母含遮挡目标，**28/47不是可见目标召回率**。
+
+已查看全部36视图接触表及47对象局部图。明确反例是scene-0255 `000_5` 的公交车ID3：RGB中可见，但检测器将其判成truck（COCO8），score0.9273、与原公交车投影框IoU0.6771，因固定同类规则没有关联，也没有动态mask。同一ID在040_5和060_5得到bus检测并生成mask，说明固定帧20局部通过不足以保证跨帧输入一致。见[同一公交车三帧对照](../autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/bus_crossframe_boundary.png)和[审核记录](../autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/review.json)。未对其余远处或部分遮挡对象补写可见性真值，也不声称28个关联全部身份正确。
+
+按预先写入[协议](../autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/protocol.json)的停止条件，本轮停止这项fallback扩展；不事后改类别兼容、阈值或换检测器继续救结果。原四例遮挡错标的局部修复仍成立，但完整动态先验没有准入，保护标记保持，同场景训练和HUGSIM同场景画质比较尚未完成。全部[逐视图结果与图像](../autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/)保留。这是适配输入的跨帧召回边界，不是VAD-GS方法否定；P0R1继续使用官方先验。
+
 ## 资产与复现
 
 - 远端：`/root/autodl-tmp/data/v76_vadgs/scene_{0230,0255}`；法线报告在 `normal_img/generation_report.json`，SAM证据在 `sam_prior_evidence/`。

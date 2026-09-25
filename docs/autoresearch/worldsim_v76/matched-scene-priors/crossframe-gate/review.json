@@ -1,0 +1,97 @@
+{
+  "task_id": "VADGS-VISIBLE-SAM-CROSSFRAME-20260926",
+  "reviewer": "Codex visual/code audit",
+  "human_verdict": null,
+  "view_count": 36,
+  "projected_objects": 47,
+  "associated_objects": 28,
+  "unmatched_objects": 19,
+  "reviewed_figures": [
+    "objects_000.jpg",
+    "objects_006.jpg",
+    "objects_012.jpg",
+    "objects_018.jpg",
+    "objects_024.jpg",
+    "objects_030.jpg",
+    "objects_036.jpg",
+    "objects_042.jpg",
+    "scene0230_frame000.jpg",
+    "scene0230_frame040.jpg",
+    "scene0230_frame060.jpg",
+    "scene0255_frame000.jpg",
+    "scene0255_frame040.jpg",
+    "scene0255_frame060.jpg"
+  ],
+  "clear_visible_miss": {
+    "scene": "scene_0255",
+    "view": "000_5",
+    "track_id": 3,
+    "annotation_class": "vehicle.bus.rigid",
+    "visible_in_rgb": true,
+    "associated": false,
+    "expected_coco_class": 6,
+    "best_overlapping_detection": {
+      "box": [
+        792.2755737304688,
+        420.77490234375,
+        913.2326049804688,
+        478.058837890625
+      ],
+      "score": 0.927264928817749,
+      "label": 8
+    },
+    "best_detection_iou": 0.6770645459081068,
+    "diagnosis": "Detector labels the visible bus truck (8); unchanged same-class association excludes it."
+  },
+  "later_positive_same_id": [
+    {
+      "view": "040_5",
+      "match": {
+        "detection": {
+          "box": [
+            844.9837036132812,
+            403.2164611816406,
+            910.5275268554688,
+            483.9288635253906
+          ],
+          "score": 0.6704515218734741,
+          "label": 6
+        },
+        "iou": 0.6274140807062611,
+        "raw_pixels": 4415,
+        "assigned_pixels": 4415,
+        "sam_score": 0.9557481408119202
+      }
+    },
+    {
+      "view": "060_5",
+      "match": {
+        "detection": {
+          "box": [
+            846.2285766601562,
+            394.4410095214844,
+            929.0886840820312,
+            505.4892883300781
+          ],
+          "score": 0.9249873161315918,
+          "label": 6
+        },
+        "iou": 0.6759432829166434,
+        "raw_pixels": 8105,
+        "assigned_pixels": 8105,
+        "sam_score": 0.964512825012207
+      }
+    }
+  ],
+  "limits": [
+    "47 includes fully/partially occluded objects; 28/47 is association coverage, not visible-object recall.",
+    "All object crops were inspected, but distant and overlapping instances are not fully truth-labelled; no total identity error rate is claimed.",
+    "These scenes are development resources, not independent scientific tests."
+  ],
+  "training_input_approved": false,
+  "decision": "Stop this bounded fallback expansion; preserve sidecars and block markers. No threshold/class-compatibility change, no replacement detector or matched-scene training in this round.",
+  "failure_ledger_refs": [
+    "V76-F02"
+  ],
+  "failure_ledger_delta": "none; extend existing failure boundary with a concrete crossframe visible miss"
+}

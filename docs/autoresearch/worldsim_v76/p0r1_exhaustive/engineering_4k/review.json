@@ -1,0 +1,37 @@
+{
+  "task_id": "VADGS-P0R1-000-GATE-4000",
+  "reviewer": "Codex visual/code audit",
+  "human_verdict": null,
+  "engineering_gate_passed": true,
+  "checkpoint_iteration": 4000,
+  "reviewed_figures": [
+    "sweep.png",
+    "official_test_frame20.png"
+  ],
+  "official_temporal_test": {
+    "view_count": 75,
+    "psnr": 21.739164962768555,
+    "ssim": 0.7299988238016765,
+    "lpips": 0.2727240478992462,
+    "float_psnr": 21.740072657267252,
+    "acc_mean": 0.9313364887237549,
+    "acc_lt_0_1_fraction": 0.04148549356385047,
+    "rgb_white_fraction": 0.0018083847883341756,
+    "white_and_low_acc_fraction": 0.0003126543194775877
+  },
+  "actor_checks": "32 actual scene-graph actors at each of six offsets; world translation/quaternion maximum change zero",
+  "timestamp_units": "DriveStudio loader frame index; timestamp20 is not 20 seconds",
+  "visual_findings": [
+    "Road, vehicles and buildings reconstruct with remaining blur/sky artifacts at4k.",
+    "+3.5m is near-tree occlusion (depth0.272m); -3.5m retains street view."
+  ],
+  "decision": "Continue the existing fresh30k pipeline. Do not repeat the completed4k gate.",
+  "limits": [
+    "Initialization priors include candidate temporal test frames.",
+    "No claim of converged reproduction, matcher causal gain or matched-scene improvement."
+  ],
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "none"
+}

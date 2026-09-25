@@ -4,6 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| VADGS-P0R1-000-GATE-4000 / 20260926 | 4k新权重75官方test：21.7392/0.7300/0.2727；六横移×32actor世界变换零变化；近树遮挡方向对照，工程通过但非30k结论 | [报告与architecture](v76/P0R1_EXECUTION.md)、[指标/图像/几何](autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/) |
+| VADGS-VISIBLE-SAM-CROSSFRAME-20260926 | 固定36视图47投影对象关联28个；可见公交车因truck检测漏标，唯一fallback扩展按停止规则收口，完整动态输入未准入 | [适配边界](v76/MATCHED_SCENE_PRIORS.md)、[全部结果与审核](autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/)、[V76-F02](research_failures/entries/V76-F02.md) |
 | VADGS-P0R1-000-INITIALIZATION-CONTROL；VISIBLE-DETECTION-GATE-20260926 | 穷举完成并开始全新训练；15,475个COLMAP点的55,557条保存可见性边全部正确；同场景可见检测→SAM固定6正/4遮挡控制通过，未准入完整场景训练 | [初始化核验](v76/P0R1_EXECUTION.md)、[可见身份控制](v76/MATCHED_SCENE_PRIORS.md) |
 | VADGS-MATCHED-PRIORS-20260926；SAM-OCCLUSION-20260926 | 两场景各366深度/法线，官方六视图验证编码；SAM固定12视图发现V76-F02遮挡身份错误，动态标签保留并退出训练入口 | [数据合同与architecture](v76/MATCHED_SCENE_PRIORS.md)、[生成代码与门禁证据](autoresearch/worldsim_v76/matched-scene-priors/)、[V76-F02](research_failures/entries/V76-F02.md) |
 | VADGS-P0R1-000 / 20260926 | 修复track映射，独立exhaustive匹配/新初始化/从零30k；官方test与Camera5外推分开，有限自动队列和最终收口关机授权 | [执行记录与architecture](v76/P0R1_EXECUTION.md)、[配置与控制器](autoresearch/worldsim_v76/p0r1_exhaustive/) |
