@@ -4,9 +4,10 @@
 
 | 查什么 | 入口 |
 |---|---|
-| **以前各版本的 failure** | [全部版本](research_failures/VERSIONS.md)；包含早期 N1 / H1 / PIVOT、V1–V7.3 |
+| **以前各版本的 failure** | [全部版本](research_failures/VERSIONS.md)；包含早期 N1 / H1 / PIVOT 至 V7.5 |
 | **已知 failure ID** | [全量 ID 目录](research_failures/IDS.md)，区分独立定义与仅有引用 |
-| V7.4-H1 和 H2 F01–F22 | [全部33张独立卡](research_failures/ENTRIES.md) |
+| V7.4-H1 和 H2 F01–F22 | [独立卡目录](research_failures/ENTRIES.md) |
+| V7.5 工程与能力边界 | [V75-F01 输入绑定](research_failures/entries/V75-F01.md)、[V75-F02 DriveEditor 分母与接口](research_failures/entries/V75-F02.md)；[r9 收尾证据](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) |
 | 已排除的解释与仍开放的问题 | [累计研究边界](research_failures/BOUNDARIES.md) |
 | 原始过程和原文完整性 | [历史分片说明](research_failures/migration.json)、[本次恢复核对](archive/2026-09/v74-0920/FAILURE_AUDIT.json) |
 | 怎么新增或修订 | [维护规范](research_failures/README.md) |
@@ -17,6 +18,7 @@
 python scripts/query_research_failures.py --version V73 --limit 10
 python scripts/query_research_failures.py --id V73-F09 --detail --limit 2
 python scripts/query_research_failures.py --id V74-H2-F22 --detail --limit 1
+python scripts/query_research_failures.py --id V75-F02 --detail --limit 1
 python scripts/query_research_failures.py --query coverage --limit 5
 ```
 

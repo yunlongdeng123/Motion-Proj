@@ -1,5 +1,7 @@
 # WS-V75-DOWNSTREAM-CFBENCH-PREP-02
 
+> 本页是 2026-09-23 的准备阶段快照。后续 r9 人工批准、HUGSIM/DriveEditor 实际执行数量与资产退役边界见 [r9 收尾](r9-closeout/README.md)；下文的 `manual_pending`、`execution_enabled=false` 只描述当时状态。
+
 本目录保存下游反事实 pilot 的轻量、可审计证据；大型模型、数据和逐 case pickle 不进入 Git。
 
 ## 当前证据

@@ -1,0 +1,47 @@
+{
+  "schema_version": "v75_r9_closeout_index_v1",
+  "captured_date": "2026-09-26",
+  "approved_run": "WS-V75-OMNI-REVIEW-02/20260923-proposal-r9-all-approved",
+  "approved_case_count": 24,
+  "approved_case_sha256": "43bcbfa786dce4e740c6804f0c01bc6fbcf291c3eab6544fa3cd83a7a56b6e64",
+  "case_roles": {"ego": 6, "object": 18},
+  "hugsim": {
+    "approved_scenes": 7,
+    "exported_scenes": 7,
+    "case_results": 24,
+    "factual_videos_100_frames": 24,
+    "counterfactual_videos_100_frames": 24,
+    "native_input_rate_hz": 12,
+    "adapter_input_rate_hz": 10
+  },
+  "driveeditor": {
+    "supported_object_cases": 18,
+    "native_factual_videos_10_frames": 18,
+    "native_counterfactual_videos_10_frames": 18,
+    "completed_iterative_counterfactual_videos_100_frames": 11,
+    "unsupported_ego_cases": 6
+  },
+  "other_methods": {
+    "omnidreams": "earlier 24-pair generation retained; no claim of new r9 generation",
+    "resim": "stopped before a complete r9 24-case result",
+    "gaussiandwm": "interface smoke only",
+    "recedit_drive": "CPU preflight passed; required finetuned checkpoint absent; no inference"
+  },
+  "retained_root": "/root/autodl-tmp/retained/worldsim-v75-r9-24case-20260925",
+  "retained_mp4_count": 119,
+  "retained_mp4_sha256_verified": 119,
+  "human_review_workbooks": 2,
+  "checkpoint_assets_retained": false,
+  "composite_score": null,
+  "primary_evidence": [
+    "README.md",
+    "evidence/approved-r9-candidates.json",
+    "evidence/hugsim-status.json",
+    "evidence/video-sha256.txt",
+    "videos/hugsim/cases/*/result.json",
+    "videos/hugsim/cases/*/auto-metrics.json",
+    "videos/driveeditor/native-cases/*/paired-auto-metrics.json",
+    "videos/driveeditor/iterative-cases/*/result.json",
+    "evidence/reviews/*.xlsx"
+  ]
+}

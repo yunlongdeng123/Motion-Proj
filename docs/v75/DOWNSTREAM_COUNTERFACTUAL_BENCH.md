@@ -1,5 +1,7 @@
 # V7.5 下游反事实 benchmark 准备
 
+> 本页记录 V7.5 早期设计与准备时的资格状态。后续 r9 24-case 已获人工批准，并完成部分模型路径；最新执行分母、保留资产和未覆盖能力见 [r9 收尾证据](../autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)。以下历史 `manual_pending` 不代表当前批准状态。
+
 ## 结论
 
 V7.5 调整为：**在高斯重建状态上施加反事实干预，并以编辑遵循、物理合理性、环境不变性及下游响应为核心发现问题。** 第一阶段不是做大而全的 leaderboard，而是冻结 24 个 paired edits（四类各 6 个），逐模型运行并保留六个独立维度，不合成总分。

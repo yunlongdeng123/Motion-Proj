@@ -1,0 +1,29 @@
+{
+  "schema_version": "v76_vadgs_p0_8k_evidence_v1",
+  "captured_at_utc": "2026-09-25T16:44:00Z",
+  "run_id": "VADGS-P0-000",
+  "training_iteration_at_capture": 14969,
+  "target_iteration": 30000,
+  "source": "official nuScenes 000, frames 0-60",
+  "training_camera_candidates": [0, 1, 2, 3, 4],
+  "heldout_camera": 5,
+  "training_initialization": "fresh VAD-GS; no HUGSIM checkpoint",
+  "run_root": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0-000",
+  "available_weight_iterations": [4000, 8000],
+  "heldout_camera5_61_views": {
+    "4000": {"psnr_db": 7.9962127795, "ssim": 0.5011610384, "lpips": 0.4949329554},
+    "8000": {"psnr_db": 8.0454727157, "ssim": 0.4941494142, "lpips": 0.4859840562}
+  },
+  "camera0_control_61_views": {
+    "4000": {"psnr_db": 20.9985351875, "ssim": 0.7624418648, "lpips": 0.2317854958},
+    "8000": {"psnr_db": 22.6483054865, "ssim": 0.7872601161, "lpips": 0.2075864768}
+  },
+  "geometry_gate_4000": {
+    "camera": 0,
+    "frame": 20,
+    "lateral_offsets_m": [0, 0.5, 1, 2, 3.5],
+    "actor_world_timestamp_unchanged": true,
+    "positive_3p5m_near_obstacle": true
+  },
+  "failure_classification": "4k/8k novel-view coverage: evidence insufficient pending 30k; checkpoint selection bug: fixed engineering"
+}

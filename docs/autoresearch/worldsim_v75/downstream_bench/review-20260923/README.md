@@ -1,5 +1,7 @@
 # OmniDreams：24例10秒提案，先审再推理
 
+> 本页记录早期 r3 待审提案。最终 r9 清单已获人工批准；后续执行和保留边界见 [V7.5 r9 收尾](../r9-closeout/README.md)。旧提案中的“待确认”不是当前状态。
+
 本页保留 `r3-replace-actor02` 的历史正文。后续按用户反馈使用 DriverQ 修订8例，见 [r4 DriverQ待审版](driverq-review.md)；当前执行状态仍只见 [RESEARCH_STATUS](../../../../RESEARCH_STATUS.md)。
 
 Task `WS-V75-OMNI-REVIEW-02`，run `20260923-proposal-r3-replace-actor02`。仅原始视频与干预计划，不是新模型结果。`failure_ledger_refs:[]`，`failure_ledger_delta:none`。

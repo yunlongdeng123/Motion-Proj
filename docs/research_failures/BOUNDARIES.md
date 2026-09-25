@@ -2,6 +2,16 @@
 
 这里记录结论及其适用范围，不维护项目运行状态。执行范围见 [RESEARCH_STATUS](../RESEARCH_STATUS.md)。同一命题优先阅读较晚证据卡，同时保留早期原始观察。
 
+## V7.5 下游反事实 pilot
+
+| 已确认边界 | 仍开放的问题 | 证据 |
+|---|---|---|
+| 官方 OmniDreams batch wrapper 不绑定逐案例初帧和条件；不能用该入口声称跨场景实验，底层明确传参路径可绕过 | 底层路径的泛化能力 | [V75-F01](entries/V75-F01.md) |
+| DriveEditor 原生对象编辑只覆盖 18 个对象 case 的 1 秒窗口，11 个有另行适配的完整 10 秒迭代；6 个 ego 接口不支持，缺失不计零分 | 长时迭代与其他方法在同一观察合同上的有效对比 | [V75-F02](entries/V75-F02.md)、[r9 收尾](../autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) |
+| HUGSIM 24-case 渲染可执行，但 10 Hz 适配、scene-0242 稀疏 COLMAP 点与 scene-0998 相机更新偏大均需单列；A/P/E proxy 不等于 outcome、轨迹或身份真值 | 在质量合格的同场景输入上的联合效果和下游反馈 | [r9 收尾](../autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) |
+
+V7.5 的 24 个相关 case、不同模型能力和已退役的训练资产不支持六模型统一排行榜；这一范围声明不是新科学失败卡。V7.6 的 4k/8k 留出视角空白仍待 30k 判定，不提前归档为表示失败。
+
 ## 后续官方模型与仿真取证
 
 | 边界 | 对应证据 |
