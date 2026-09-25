@@ -39,3 +39,4 @@
 | [V74-H2-F22](entries/V74-H2-F22.md) | 新来源的真实驾驶基线未达到几何归因条件 |
 | [V75-F01](entries/V75-F01.md) | 官方 batch 命令未绑定逐案例图像与条件输入 |
 | [V75-F02](entries/V75-F02.md) | DriveEditor 原生对象编辑与 10 秒全 case 评价的能力边界 |
+| [V76-F01](entries/V76-F01.md) | COLMAP 无序 image ID 导致 VAD-GS 初始化 track 绑定错误 |

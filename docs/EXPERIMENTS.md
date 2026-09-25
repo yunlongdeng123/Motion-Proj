@@ -4,7 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| VADGS-P0-000 / V7.6进行中 | 官方nuScenes 000，VAD-GS从零训练；4k/8k权重、几何门禁与61张留出相机5早期评估；30k及scene-0230/0255待续 | [V7.6工程记录与architecture](v76/P0_ENGINEERING.md)、[4k/8k数据](autoresearch/worldsim_v76/p0-8k-evidence.json) |
+| VADGS-P0-000-COLMAP-AUDIT；TEST-16000 / 20260926 | 两项复现诊断：COLMAP <0.6px剩33,930/138,944点；官方时间test75视图22.7010/0.7486/0.2313；发现并修复V76-F01图像ID错绑，旧run停止并保留 | [复现审计与architecture](v76/P0_REPRODUCTION_AUDIT.md)、[证据与修复](autoresearch/worldsim_v76/reproduction-audit/)、[V76-F01](research_failures/entries/V76-F01.md) |
+| VADGS-P0-000 / 早期诊断 | 官方nuScenes 000，VAD-GS从零训练；4k/8k几何及相机5外推；相机0的61帧是混合训练/留出对照。旧初始化后证实有工程错误，不作方法判决 | [V7.6工程记录与architecture](v76/P0_ENGINEERING.md)、[4k/8k数据](autoresearch/worldsim_v76/p0-8k-evidence.json) |
 | WS-V75-OMNI-REVIEW-02 / 20260923-proposal-r9-all-approved | 24个10秒case获人工批准，6个ego、18个对象；获批清单与原始参考保留。r9批准快照不是新的OmniDreams生成成绩 | [V7.5 r9收尾与architecture](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)、[机器可读索引](autoresearch/worldsim_v75/downstream_bench/r9-closeout/summary.json) |
 | WS-V75-FIVE-BASELINES-01 / 20260923-r1，HUGSIM r9 | 7场景ground/scene各30k与导出；24/24 case各100帧事实/反事实和自动指标；10Hz适配与两个场景质量风险单列；训练checkpoint后已退役 | [收尾数量、证据与恢复边界](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) |
 | WS-V75-FIVE-BASELINES-01 / 20260923-r1，DriveEditor r9 | 18对象case原生10帧事实/反事实；11个完成10秒迭代反事实；6个ego接口不支持、7个对象迭代未完成，不合并分母 | [收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)、[V75-F02](research_failures/entries/V75-F02.md) |

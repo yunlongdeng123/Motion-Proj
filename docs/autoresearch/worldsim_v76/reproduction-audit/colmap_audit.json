@@ -1,0 +1,4067 @@
+{
+  "task_id": "VADGS-P0-000-COLMAP-AUDIT",
+  "run": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0-000",
+  "points_path": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0-000/colmap/triangulated/sparse/model/points3D.bin",
+  "threshold": "error < 0.6 px",
+  "points_before": 138944,
+  "points_error_lt_0_6": 33930,
+  "retention_fraction": 0.2441991017964072,
+  "mean_error_before": 1.1207097393487584,
+  "mean_error_after": 0.38187388717683135,
+  "error_quantiles_0_25_50_75_90_95_99_100": [
+    2.4308005638078215e-05,
+    0.6090669883909452,
+    1.0026754597397338,
+    1.5297241708253275,
+    2.068465043946215,
+    2.3752583544099353,
+    2.922506744589814,
+    3.9720630480556034
+  ],
+  "track_length_mean_before": 4.840921522339936,
+  "track_length_mean_after": 3.380312407898615,
+  "total_track_observations": 672617,
+  "retained_track_observations": 114694,
+  "saved_initialization": {
+    "background_points": 229879,
+    "visibility_shape": [
+      229879,
+      305
+    ],
+    "retained_colmap_points_exact_float32_matches": 15756,
+    "colmap_suffix_order_verified": true,
+    "colmap_visibility_rows_mismatched": 0,
+    "visibility_comparison_note": "previous mismatch count checks reproduction of the old arithmetic; the following checks actual image names",
+    "colmap_visibility_rows_differ_from_name_mapping": 15754,
+    "colmap_visibility_edges_actual": 59793,
+    "colmap_visibility_edges_correct": 59793,
+    "colmap_visibility_edges_shared": 3370,
+    "colmap_track_edges_wrong_camera": 31186,
+    "colmap_track_edges_wrong_frame": 58408,
+    "other_background_points": 214123,
+    "fraction_colmap": 0.06854040603969914
+  },
+  "image_id_mapping_error_count": 300,
+  "fix_validation": {
+    "mapped_images": 305,
+    "view_table_matches_dataset_filename_order": true,
+    "mismatches_against_image_names": 0,
+    "scope": "修复后的映射函数通过当前305图像验证；旧 input_ply 与训练checkpoint未被修复或重新生成。"
+  },
+  "image_id_mapping_errors": [
+    {
+      "id": 257,
+      "name": "cam_4/018.png"
+    },
+    {
+      "id": 256,
+      "name": "cam_3/053.png"
+    },
+    {
+      "id": 255,
+      "name": "cam_4/021.png"
+    },
+    {
+      "id": 254,
+      "name": "cam_4/024.png"
+    },
+    {
+      "id": 253,
+      "name": "cam_4/023.png"
+    },
+    {
+      "id": 252,
+      "name": "cam_4/006.png"
+    },
+    {
+      "id": 251,
+      "name": "cam_3/054.png"
+    },
+    {
+      "id": 250,
+      "name": "cam_2/010.png"
+    },
+    {
+      "id": 249,
+      "name": "cam_4/047.png"
+    },
+    {
+      "id": 248,
+      "name": "cam_3/046.png"
+    },
+    {
+      "id": 247,
+      "name": "cam_4/037.png"
+    },
+    {
+      "id": 246,
+      "name": "cam_4/009.png"
+    },
+    {
+      "id": 245,
+      "name": "cam_4/046.png"
+    },
+    {
+      "id": 244,
+      "name": "cam_4/001.png"
+    },
+    {
+      "id": 243,
+      "name": "cam_3/041.png"
+    },
+    {
+      "id": 242,
+      "name": "cam_3/045.png"
+    },
+    {
+      "id": 241,
+      "name": "cam_4/031.png"
+    },
+    {
+      "id": 240,
+      "name": "cam_2/024.png"
+    },
+    {
+      "id": 239,
+      "name": "cam_4/022.png"
+    },
+    {
+      "id": 238,
+      "name": "cam_3/010.png"
+    },
+    {
+      "id": 237,
+      "name": "cam_2/053.png"
+    },
+    {
+      "id": 236,
+      "name": "cam_4/042.png"
+    },
+    {
+      "id": 235,
+      "name": "cam_3/043.png"
+    },
+    {
+      "id": 234,
+      "name": "cam_3/040.png"
+    },
+    {
+      "id": 233,
+      "name": "cam_4/036.png"
+    },
+    {
+      "id": 232,
+      "name": "cam_4/034.png"
+    },
+    {
+      "id": 231,
+      "name": "cam_3/042.png"
+    },
+    {
+      "id": 230,
+      "name": "cam_2/015.png"
+    },
+    {
+      "id": 229,
+      "name": "cam_4/032.png"
+    },
+    {
+      "id": 228,
+      "name": "cam_4/026.png"
+    },
+    {
+      "id": 227,
+      "name": "cam_4/010.png"
+    },
+    {
+      "id": 226,
+      "name": "cam_3/004.png"
+    },
+    {
+      "id": 225,
+      "name": "cam_4/016.png"
+    },
+    {
+      "id": 224,
+      "name": "cam_4/019.png"
+    },
+    {
+      "id": 222,
+      "name": "cam_3/033.png"
+    },
+    {
+      "id": 221,
+      "name": "cam_3/034.png"
+    },
+    {
+      "id": 220,
+      "name": "cam_3/035.png"
+    },
+    {
+      "id": 219,
+      "name": "cam_3/032.png"
+    },
+    {
+      "id": 218,
+      "name": "cam_3/037.png"
+    },
+    {
+      "id": 217,
+      "name": "cam_3/031.png"
+    },
+    {
+      "id": 216,
+      "name": "cam_3/036.png"
+    },
+    {
+      "id": 215,
+      "name": "cam_3/060.png"
+    },
+    {
+      "id": 214,
+      "name": "cam_3/038.png"
+    },
+    {
+      "id": 213,
+      "name": "cam_3/030.png"
+    },
+    {
+      "id": 212,
+      "name": "cam_3/029.png"
+    },
+    {
+      "id": 211,
+      "name": "cam_4/041.png"
+    },
+    {
+      "id": 210,
+      "name": "cam_3/027.png"
+    },
+    {
+      "id": 209,
+      "name": "cam_4/048.png"
+    },
+    {
+      "id": 208,
+      "name": "cam_3/007.png"
+    },
+    {
+      "id": 207,
+      "name": "cam_4/038.png"
+    },
+    {
+      "id": 206,
+      "name": "cam_1/060.png"
+    },
+    {
+      "id": 205,
+      "name": "cam_2/037.png"
+    },
+    {
+      "id": 204,
+      "name": "cam_3/001.png"
+    },
+    {
+      "id": 203,
+      "name": "cam_4/039.png"
+    },
+    {
+      "id": 202,
+      "name": "cam_2/040.png"
+    },
+    {
+      "id": 201,
+      "name": "cam_2/036.png"
+    },
+    {
+      "id": 200,
+      "name": "cam_3/028.png"
+    },
+    {
+      "id": 199,
+      "name": "cam_2/039.png"
+    },
+    {
+      "id": 198,
+      "name": "cam_2/060.png"
+    },
+    {
+      "id": 197,
+      "name": "cam_4/049.png"
+    },
+    {
+      "id": 196,
+      "name": "cam_2/038.png"
+    },
+    {
+      "id": 195,
+      "name": "cam_4/040.png"
+    },
+    {
+      "id": 194,
+      "name": "cam_2/035.png"
+    },
+    {
+      "id": 193,
+      "name": "cam_2/023.png"
+    },
+    {
+      "id": 192,
+      "name": "cam_2/058.png"
+    },
+    {
+      "id": 191,
+      "name": "cam_2/025.png"
+    },
+    {
+      "id": 190,
+      "name": "cam_4/051.png"
+    },
+    {
+      "id": 189,
+      "name": "cam_3/003.png"
+    },
+    {
+      "id": 188,
+      "name": "cam_3/025.png"
+    },
+    {
+      "id": 187,
+      "name": "cam_2/052.png"
+    },
+    {
+      "id": 185,
+      "name": "cam_2/056.png"
+    },
+    {
+      "id": 184,
+      "name": "cam_3/006.png"
+    },
+    {
+      "id": 183,
+      "name": "cam_1/055.png"
+    },
+    {
+      "id": 182,
+      "name": "cam_1/054.png"
+    },
+    {
+      "id": 181,
+      "name": "cam_4/056.png"
+    },
+    {
+      "id": 180,
+      "name": "cam_2/042.png"
+    },
+    {
+      "id": 179,
+      "name": "cam_1/057.png"
+    },
+    {
+      "id": 178,
+      "name": "cam_2/050.png"
+    },
+    {
+      "id": 177,
+      "name": "cam_2/057.png"
+    },
+    {
+      "id": 176,
+      "name": "cam_3/026.png"
+    },
+    {
+      "id": 175,
+      "name": "cam_4/054.png"
+    },
+    {
+      "id": 174,
+      "name": "cam_2/046.png"
+    },
+    {
+      "id": 173,
+      "name": "cam_2/026.png"
+    },
+    {
+      "id": 172,
+      "name": "cam_1/058.png"
+    },
+    {
+      "id": 171,
+      "name": "cam_1/059.png"
+    },
+    {
+      "id": 170,
+      "name": "cam_2/041.png"
+    },
+    {
+      "id": 169,
+      "name": "cam_2/022.png"
+    },
+    {
+      "id": 168,
+      "name": "cam_1/056.png"
+    },
+    {
+      "id": 167,
+      "name": "cam_2/027.png"
+    },
+    {
+      "id": 166,
+      "name": "cam_2/030.png"
+    },
+    {
+      "id": 165,
+      "name": "cam_2/033.png"
+    },
+    {
+      "id": 164,
+      "name": "cam_2/049.png"
+    },
+    {
+      "id": 163,
+      "name": "cam_1/051.png"
+    },
+    {
+      "id": 162,
+      "name": "cam_2/034.png"
+    },
+    {
+      "id": 161,
+      "name": "cam_3/018.png"
+    },
+    {
+      "id": 160,
+      "name": "cam_2/031.png"
+    },
+    {
+      "id": 159,
+      "name": "cam_3/024.png"
+    },
+    {
+      "id": 158,
+      "name": "cam_1/053.png"
+    },
+    {
+      "id": 157,
+      "name": "cam_4/008.png"
+    },
+    {
+      "id": 156,
+      "name": "cam_3/020.png"
+    },
+    {
+      "id": 155,
+      "name": "cam_2/045.png"
+    },
+    {
+      "id": 154,
+      "name": "cam_3/023.png"
+    },
+    {
+      "id": 153,
+      "name": "cam_2/043.png"
+    },
+    {
+      "id": 152,
+      "name": "cam_3/017.png"
+    },
+    {
+      "id": 151,
+      "name": "cam_3/008.png"
+    },
+    {
+      "id": 150,
+      "name": "cam_3/022.png"
+    },
+    {
+      "id": 149,
+      "name": "cam_3/019.png"
+    },
+    {
+      "id": 148,
+      "name": "cam_4/003.png"
+    },
+    {
+      "id": 147,
+      "name": "cam_3/005.png"
+    },
+    {
+      "id": 146,
+      "name": "cam_3/021.png"
+    },
+    {
+      "id": 145,
+      "name": "cam_2/047.png"
+    },
+    {
+      "id": 144,
+      "name": "cam_2/029.png"
+    },
+    {
+      "id": 143,
+      "name": "cam_1/052.png"
+    },
+    {
+      "id": 142,
+      "name": "cam_2/044.png"
+    },
+    {
+      "id": 141,
+      "name": "cam_2/020.png"
+    },
+    {
+      "id": 140,
+      "name": "cam_2/018.png"
+    },
+    {
+      "id": 139,
+      "name": "cam_3/012.png"
+    },
+    {
+      "id": 138,
+      "name": "cam_3/016.png"
+    },
+    {
+      "id": 137,
+      "name": "cam_4/011.png"
+    },
+    {
+      "id": 136,
+      "name": "cam_2/048.png"
+    },
+    {
+      "id": 135,
+      "name": "cam_4/020.png"
+    },
+    {
+      "id": 134,
+      "name": "cam_2/009.png"
+    },
+    {
+      "id": 133,
+      "name": "cam_2/012.png"
+    },
+    {
+      "id": 132,
+      "name": "cam_2/028.png"
+    },
+    {
+      "id": 131,
+      "name": "cam_2/014.png"
+    },
+    {
+      "id": 130,
+      "name": "cam_2/021.png"
+    },
+    {
+      "id": 129,
+      "name": "cam_3/011.png"
+    },
+    {
+      "id": 128,
+      "name": "cam_3/015.png"
+    },
+    {
+      "id": 59,
+      "name": "cam_0/043.png"
+    },
+    {
+      "id": 58,
+      "name": "cam_1/027.png"
+    },
+    {
+      "id": 57,
+      "name": "cam_0/030.png"
+    },
+    {
+      "id": 56,
+      "name": "cam_0/024.png"
+    },
+    {
+      "id": 55,
+      "name": "cam_1/025.png"
+    },
+    {
+      "id": 54,
+      "name": "cam_0/022.png"
+    },
+    {
+      "id": 53,
+      "name": "cam_1/026.png"
+    },
+    {
+      "id": 52,
+      "name": "cam_1/002.png"
+    },
+    {
+      "id": 51,
+      "name": "cam_1/001.png"
+    },
+    {
+      "id": 50,
+      "name": "cam_1/028.png"
+    },
+    {
+      "id": 49,
+      "name": "cam_0/027.png"
+    },
+    {
+      "id": 48,
+      "name": "cam_0/031.png"
+    },
+    {
+      "id": 47,
+      "name": "cam_1/024.png"
+    },
+    {
+      "id": 46,
+      "name": "cam_1/023.png"
+    },
+    {
+      "id": 45,
+      "name": "cam_0/026.png"
+    },
+    {
+      "id": 44,
+      "name": "cam_1/015.png"
+    },
+    {
+      "id": 43,
+      "name": "cam_0/036.png"
+    },
+    {
+      "id": 42,
+      "name": "cam_1/014.png"
+    },
+    {
+      "id": 41,
+      "name": "cam_1/017.png"
+    },
+    {
+      "id": 40,
+      "name": "cam_1/003.png"
+    },
+    {
+      "id": 39,
+      "name": "cam_1/016.png"
+    },
+    {
+      "id": 38,
+      "name": "cam_0/041.png"
+    },
+    {
+      "id": 37,
+      "name": "cam_1/004.png"
+    },
+    {
+      "id": 36,
+      "name": "cam_1/022.png"
+    },
+    {
+      "id": 35,
+      "name": "cam_1/013.png"
+    },
+    {
+      "id": 34,
+      "name": "cam_1/020.png"
+    },
+    {
+      "id": 33,
+      "name": "cam_1/007.png"
+    },
+    {
+      "id": 32,
+      "name": "cam_1/000.png"
+    },
+    {
+      "id": 31,
+      "name": "cam_1/006.png"
+    },
+    {
+      "id": 30,
+      "name": "cam_1/008.png"
+    },
+    {
+      "id": 12,
+      "name": "cam_0/010.png"
+    },
+    {
+      "id": 11,
+      "name": "cam_0/013.png"
+    },
+    {
+      "id": 10,
+      "name": "cam_0/006.png"
+    },
+    {
+      "id": 9,
+      "name": "cam_0/000.png"
+    },
+    {
+      "id": 8,
+      "name": "cam_0/009.png"
+    },
+    {
+      "id": 7,
+      "name": "cam_0/003.png"
+    },
+    {
+      "id": 6,
+      "name": "cam_0/001.png"
+    },
+    {
+      "id": 5,
+      "name": "cam_0/007.png"
+    },
+    {
+      "id": 4,
+      "name": "cam_0/004.png"
+    },
+    {
+      "id": 3,
+      "name": "cam_0/011.png"
+    },
+    {
+      "id": 2,
+      "name": "cam_0/005.png"
+    },
+    {
+      "id": 1,
+      "name": "cam_0/002.png"
+    },
+    {
+      "id": 14,
+      "name": "cam_0/008.png"
+    },
+    {
+      "id": 15,
+      "name": "cam_1/011.png"
+    },
+    {
+      "id": 16,
+      "name": "cam_0/014.png"
+    },
+    {
+      "id": 17,
+      "name": "cam_1/018.png"
+    },
+    {
+      "id": 18,
+      "name": "cam_0/016.png"
+    },
+    {
+      "id": 19,
+      "name": "cam_1/012.png"
+    },
+    {
+      "id": 20,
+      "name": "cam_0/015.png"
+    },
+    {
+      "id": 21,
+      "name": "cam_0/018.png"
+    },
+    {
+      "id": 22,
+      "name": "cam_0/017.png"
+    },
+    {
+      "id": 23,
+      "name": "cam_1/009.png"
+    },
+    {
+      "id": 24,
+      "name": "cam_1/005.png"
+    },
+    {
+      "id": 25,
+      "name": "cam_1/021.png"
+    },
+    {
+      "id": 26,
+      "name": "cam_1/010.png"
+    },
+    {
+      "id": 27,
+      "name": "cam_0/019.png"
+    },
+    {
+      "id": 28,
+      "name": "cam_1/019.png"
+    },
+    {
+      "id": 29,
+      "name": "cam_0/020.png"
+    },
+    {
+      "id": 60,
+      "name": "cam_0/035.png"
+    },
+    {
+      "id": 61,
+      "name": "cam_0/025.png"
+    },
+    {
+      "id": 62,
+      "name": "cam_0/021.png"
+    },
+    {
+      "id": 63,
+      "name": "cam_0/028.png"
+    },
+    {
+      "id": 64,
+      "name": "cam_0/023.png"
+    },
+    {
+      "id": 65,
+      "name": "cam_0/059.png"
+    },
+    {
+      "id": 66,
+      "name": "cam_0/034.png"
+    },
+    {
+      "id": 67,
+      "name": "cam_0/046.png"
+    },
+    {
+      "id": 68,
+      "name": "cam_0/037.png"
+    },
+    {
+      "id": 69,
+      "name": "cam_0/042.png"
+    },
+    {
+      "id": 70,
+      "name": "cam_0/039.png"
+    },
+    {
+      "id": 71,
+      "name": "cam_1/029.png"
+    },
+    {
+      "id": 72,
+      "name": "cam_0/032.png"
+    },
+    {
+      "id": 73,
+      "name": "cam_1/030.png"
+    },
+    {
+      "id": 74,
+      "name": "cam_0/048.png"
+    },
+    {
+      "id": 75,
+      "name": "cam_1/032.png"
+    },
+    {
+      "id": 76,
+      "name": "cam_0/045.png"
+    },
+    {
+      "id": 77,
+      "name": "cam_0/044.png"
+    },
+    {
+      "id": 78,
+      "name": "cam_0/050.png"
+    },
+    {
+      "id": 79,
+      "name": "cam_0/057.png"
+    },
+    {
+      "id": 80,
+      "name": "cam_0/033.png"
+    },
+    {
+      "id": 81,
+      "name": "cam_1/033.png"
+    },
+    {
+      "id": 82,
+      "name": "cam_0/029.png"
+    },
+    {
+      "id": 83,
+      "name": "cam_1/031.png"
+    },
+    {
+      "id": 84,
+      "name": "cam_0/047.png"
+    },
+    {
+      "id": 85,
+      "name": "cam_1/034.png"
+    },
+    {
+      "id": 86,
+      "name": "cam_0/038.png"
+    },
+    {
+      "id": 87,
+      "name": "cam_0/040.png"
+    },
+    {
+      "id": 88,
+      "name": "cam_0/053.png"
+    },
+    {
+      "id": 89,
+      "name": "cam_0/056.png"
+    },
+    {
+      "id": 90,
+      "name": "cam_1/037.png"
+    },
+    {
+      "id": 91,
+      "name": "cam_1/038.png"
+    },
+    {
+      "id": 92,
+      "name": "cam_0/058.png"
+    },
+    {
+      "id": 93,
+      "name": "cam_0/060.png"
+    },
+    {
+      "id": 94,
+      "name": "cam_0/055.png"
+    },
+    {
+      "id": 95,
+      "name": "cam_0/054.png"
+    },
+    {
+      "id": 96,
+      "name": "cam_1/035.png"
+    },
+    {
+      "id": 97,
+      "name": "cam_0/052.png"
+    },
+    {
+      "id": 98,
+      "name": "cam_0/049.png"
+    },
+    {
+      "id": 99,
+      "name": "cam_1/036.png"
+    },
+    {
+      "id": 100,
+      "name": "cam_0/051.png"
+    },
+    {
+      "id": 101,
+      "name": "cam_1/040.png"
+    },
+    {
+      "id": 102,
+      "name": "cam_1/039.png"
+    },
+    {
+      "id": 103,
+      "name": "cam_1/045.png"
+    },
+    {
+      "id": 104,
+      "name": "cam_1/041.png"
+    },
+    {
+      "id": 105,
+      "name": "cam_1/042.png"
+    },
+    {
+      "id": 106,
+      "name": "cam_1/049.png"
+    },
+    {
+      "id": 107,
+      "name": "cam_1/043.png"
+    },
+    {
+      "id": 108,
+      "name": "cam_1/044.png"
+    },
+    {
+      "id": 109,
+      "name": "cam_1/046.png"
+    },
+    {
+      "id": 111,
+      "name": "cam_1/050.png"
+    },
+    {
+      "id": 112,
+      "name": "cam_1/047.png"
+    },
+    {
+      "id": 113,
+      "name": "cam_2/002.png"
+    },
+    {
+      "id": 114,
+      "name": "cam_2/003.png"
+    },
+    {
+      "id": 115,
+      "name": "cam_2/001.png"
+    },
+    {
+      "id": 116,
+      "name": "cam_2/006.png"
+    },
+    {
+      "id": 117,
+      "name": "cam_2/007.png"
+    },
+    {
+      "id": 118,
+      "name": "cam_2/011.png"
+    },
+    {
+      "id": 119,
+      "name": "cam_2/005.png"
+    },
+    {
+      "id": 120,
+      "name": "cam_2/004.png"
+    },
+    {
+      "id": 121,
+      "name": "cam_2/000.png"
+    },
+    {
+      "id": 122,
+      "name": "cam_2/017.png"
+    },
+    {
+      "id": 123,
+      "name": "cam_2/008.png"
+    },
+    {
+      "id": 124,
+      "name": "cam_2/016.png"
+    },
+    {
+      "id": 125,
+      "name": "cam_2/013.png"
+    },
+    {
+      "id": 126,
+      "name": "cam_3/013.png"
+    },
+    {
+      "id": 127,
+      "name": "cam_3/014.png"
+    },
+    {
+      "id": 258,
+      "name": "cam_4/025.png"
+    },
+    {
+      "id": 259,
+      "name": "cam_3/009.png"
+    },
+    {
+      "id": 260,
+      "name": "cam_4/005.png"
+    },
+    {
+      "id": 261,
+      "name": "cam_2/032.png"
+    },
+    {
+      "id": 262,
+      "name": "cam_4/014.png"
+    },
+    {
+      "id": 263,
+      "name": "cam_4/030.png"
+    },
+    {
+      "id": 264,
+      "name": "cam_2/051.png"
+    },
+    {
+      "id": 265,
+      "name": "cam_4/007.png"
+    },
+    {
+      "id": 266,
+      "name": "cam_4/002.png"
+    },
+    {
+      "id": 267,
+      "name": "cam_4/029.png"
+    },
+    {
+      "id": 268,
+      "name": "cam_4/027.png"
+    },
+    {
+      "id": 269,
+      "name": "cam_2/054.png"
+    },
+    {
+      "id": 270,
+      "name": "cam_4/012.png"
+    },
+    {
+      "id": 271,
+      "name": "cam_4/033.png"
+    },
+    {
+      "id": 272,
+      "name": "cam_4/059.png"
+    },
+    {
+      "id": 273,
+      "name": "cam_4/013.png"
+    },
+    {
+      "id": 274,
+      "name": "cam_4/015.png"
+    },
+    {
+      "id": 275,
+      "name": "cam_4/035.png"
+    },
+    {
+      "id": 276,
+      "name": "cam_4/004.png"
+    },
+    {
+      "id": 277,
+      "name": "cam_4/052.png"
+    },
+    {
+      "id": 278,
+      "name": "cam_4/028.png"
+    },
+    {
+      "id": 279,
+      "name": "cam_4/055.png"
+    },
+    {
+      "id": 280,
+      "name": "cam_4/053.png"
+    },
+    {
+      "id": 281,
+      "name": "cam_2/019.png"
+    },
+    {
+      "id": 282,
+      "name": "cam_4/017.png"
+    },
+    {
+      "id": 283,
+      "name": "cam_2/059.png"
+    },
+    {
+      "id": 284,
+      "name": "cam_4/000.png"
+    },
+    {
+      "id": 285,
+      "name": "cam_4/057.png"
+    },
+    {
+      "id": 286,
+      "name": "cam_4/058.png"
+    },
+    {
+      "id": 287,
+      "name": "cam_3/000.png"
+    },
+    {
+      "id": 288,
+      "name": "cam_4/045.png"
+    },
+    {
+      "id": 290,
+      "name": "cam_4/050.png"
+    },
+    {
+      "id": 291,
+      "name": "cam_2/055.png"
+    },
+    {
+      "id": 292,
+      "name": "cam_4/060.png"
+    },
+    {
+      "id": 293,
+      "name": "cam_3/044.png"
+    },
+    {
+      "id": 294,
+      "name": "cam_3/057.png"
+    },
+    {
+      "id": 295,
+      "name": "cam_3/048.png"
+    },
+    {
+      "id": 296,
+      "name": "cam_3/047.png"
+    },
+    {
+      "id": 297,
+      "name": "cam_4/043.png"
+    },
+    {
+      "id": 298,
+      "name": "cam_3/051.png"
+    },
+    {
+      "id": 299,
+      "name": "cam_3/049.png"
+    },
+    {
+      "id": 300,
+      "name": "cam_3/058.png"
+    },
+    {
+      "id": 301,
+      "name": "cam_3/059.png"
+    },
+    {
+      "id": 302,
+      "name": "cam_3/050.png"
+    },
+    {
+      "id": 303,
+      "name": "cam_3/056.png"
+    },
+    {
+      "id": 304,
+      "name": "cam_3/055.png"
+    },
+    {
+      "id": 305,
+      "name": "cam_3/052.png"
+    }
+  ],
+  "per_camera": {
+    "0": {
+      "views": 61,
+      "observations_before": 173243,
+      "observations_error_lt_0_6": 16415,
+      "observation_retention": 0.09475130308295285,
+      "observations_saved_initialization": 9076,
+      "retained_per_image_min_median_max": [
+        58.0,
+        230.0,
+        585.0
+      ]
+    },
+    "1": {
+      "views": 61,
+      "observations_before": 103430,
+      "observations_error_lt_0_6": 18763,
+      "observation_retention": 0.18140771536304748,
+      "observations_saved_initialization": 2897,
+      "retained_per_image_min_median_max": [
+        18.0,
+        216.0,
+        1397.0
+      ]
+    },
+    "2": {
+      "views": 61,
+      "observations_before": 162975,
+      "observations_error_lt_0_6": 42829,
+      "observation_retention": 0.26279490719435494,
+      "observations_saved_initialization": 33215,
+      "retained_per_image_min_median_max": [
+        188.0,
+        634.0,
+        1439.0
+      ]
+    },
+    "3": {
+      "views": 61,
+      "observations_before": 84620,
+      "observations_error_lt_0_6": 9271,
+      "observation_retention": 0.109560387615221,
+      "observations_saved_initialization": 982,
+      "retained_per_image_min_median_max": [
+        5.0,
+        91.0,
+        560.0
+      ]
+    },
+    "4": {
+      "views": 61,
+      "observations_before": 148349,
+      "observations_error_lt_0_6": 27416,
+      "observation_retention": 0.18480744730331852,
+      "observations_saved_initialization": 13698,
+      "retained_per_image_min_median_max": [
+        171.0,
+        445.0,
+        867.0
+      ]
+    }
+  },
+  "per_image": [
+    {
+      "image_id": 9,
+      "name": "cam_0/000.png",
+      "camera": 0,
+      "frame": 0,
+      "observations_before": 2315,
+      "observations_error_lt_0_6": 115,
+      "observations_saved_initialization": 43
+    },
+    {
+      "image_id": 6,
+      "name": "cam_0/001.png",
+      "camera": 0,
+      "frame": 1,
+      "observations_before": 2632,
+      "observations_error_lt_0_6": 220,
+      "observations_saved_initialization": 79
+    },
+    {
+      "image_id": 1,
+      "name": "cam_0/002.png",
+      "camera": 0,
+      "frame": 2,
+      "observations_before": 2948,
+      "observations_error_lt_0_6": 241,
+      "observations_saved_initialization": 110
+    },
+    {
+      "image_id": 7,
+      "name": "cam_0/003.png",
+      "camera": 0,
+      "frame": 3,
+      "observations_before": 2876,
+      "observations_error_lt_0_6": 230,
+      "observations_saved_initialization": 102
+    },
+    {
+      "image_id": 4,
+      "name": "cam_0/004.png",
+      "camera": 0,
+      "frame": 4,
+      "observations_before": 2692,
+      "observations_error_lt_0_6": 156,
+      "observations_saved_initialization": 87
+    },
+    {
+      "image_id": 2,
+      "name": "cam_0/005.png",
+      "camera": 0,
+      "frame": 5,
+      "observations_before": 2502,
+      "observations_error_lt_0_6": 168,
+      "observations_saved_initialization": 75
+    },
+    {
+      "image_id": 10,
+      "name": "cam_0/006.png",
+      "camera": 0,
+      "frame": 6,
+      "observations_before": 2476,
+      "observations_error_lt_0_6": 191,
+      "observations_saved_initialization": 80
+    },
+    {
+      "image_id": 5,
+      "name": "cam_0/007.png",
+      "camera": 0,
+      "frame": 7,
+      "observations_before": 2520,
+      "observations_error_lt_0_6": 165,
+      "observations_saved_initialization": 57
+    },
+    {
+      "image_id": 14,
+      "name": "cam_0/008.png",
+      "camera": 0,
+      "frame": 8,
+      "observations_before": 2524,
+      "observations_error_lt_0_6": 156,
+      "observations_saved_initialization": 47
+    },
+    {
+      "image_id": 8,
+      "name": "cam_0/009.png",
+      "camera": 0,
+      "frame": 9,
+      "observations_before": 2649,
+      "observations_error_lt_0_6": 102,
+      "observations_saved_initialization": 34
+    },
+    {
+      "image_id": 12,
+      "name": "cam_0/010.png",
+      "camera": 0,
+      "frame": 10,
+      "observations_before": 2659,
+      "observations_error_lt_0_6": 84,
+      "observations_saved_initialization": 28
+    },
+    {
+      "image_id": 3,
+      "name": "cam_0/011.png",
+      "camera": 0,
+      "frame": 11,
+      "observations_before": 2487,
+      "observations_error_lt_0_6": 58,
+      "observations_saved_initialization": 16
+    },
+    {
+      "image_id": 13,
+      "name": "cam_0/012.png",
+      "camera": 0,
+      "frame": 12,
+      "observations_before": 2495,
+      "observations_error_lt_0_6": 79,
+      "observations_saved_initialization": 14
+    },
+    {
+      "image_id": 11,
+      "name": "cam_0/013.png",
+      "camera": 0,
+      "frame": 13,
+      "observations_before": 2633,
+      "observations_error_lt_0_6": 126,
+      "observations_saved_initialization": 27
+    },
+    {
+      "image_id": 16,
+      "name": "cam_0/014.png",
+      "camera": 0,
+      "frame": 14,
+      "observations_before": 2776,
+      "observations_error_lt_0_6": 252,
+      "observations_saved_initialization": 62
+    },
+    {
+      "image_id": 20,
+      "name": "cam_0/015.png",
+      "camera": 0,
+      "frame": 15,
+      "observations_before": 2801,
+      "observations_error_lt_0_6": 296,
+      "observations_saved_initialization": 84
+    },
+    {
+      "image_id": 18,
+      "name": "cam_0/016.png",
+      "camera": 0,
+      "frame": 16,
+      "observations_before": 2836,
+      "observations_error_lt_0_6": 297,
+      "observations_saved_initialization": 101
+    },
+    {
+      "image_id": 22,
+      "name": "cam_0/017.png",
+      "camera": 0,
+      "frame": 17,
+      "observations_before": 2899,
+      "observations_error_lt_0_6": 289,
+      "observations_saved_initialization": 125
+    },
+    {
+      "image_id": 21,
+      "name": "cam_0/018.png",
+      "camera": 0,
+      "frame": 18,
+      "observations_before": 3040,
+      "observations_error_lt_0_6": 342,
+      "observations_saved_initialization": 142
+    },
+    {
+      "image_id": 27,
+      "name": "cam_0/019.png",
+      "camera": 0,
+      "frame": 19,
+      "observations_before": 3122,
+      "observations_error_lt_0_6": 366,
+      "observations_saved_initialization": 139
+    },
+    {
+      "image_id": 29,
+      "name": "cam_0/020.png",
+      "camera": 0,
+      "frame": 20,
+      "observations_before": 3132,
+      "observations_error_lt_0_6": 391,
+      "observations_saved_initialization": 139
+    },
+    {
+      "image_id": 62,
+      "name": "cam_0/021.png",
+      "camera": 0,
+      "frame": 21,
+      "observations_before": 2953,
+      "observations_error_lt_0_6": 350,
+      "observations_saved_initialization": 115
+    },
+    {
+      "image_id": 54,
+      "name": "cam_0/022.png",
+      "camera": 0,
+      "frame": 22,
+      "observations_before": 2733,
+      "observations_error_lt_0_6": 355,
+      "observations_saved_initialization": 101
+    },
+    {
+      "image_id": 64,
+      "name": "cam_0/023.png",
+      "camera": 0,
+      "frame": 23,
+      "observations_before": 2832,
+      "observations_error_lt_0_6": 427,
+      "observations_saved_initialization": 121
+    },
+    {
+      "image_id": 56,
+      "name": "cam_0/024.png",
+      "camera": 0,
+      "frame": 24,
+      "observations_before": 2831,
+      "observations_error_lt_0_6": 412,
+      "observations_saved_initialization": 120
+    },
+    {
+      "image_id": 61,
+      "name": "cam_0/025.png",
+      "camera": 0,
+      "frame": 25,
+      "observations_before": 2577,
+      "observations_error_lt_0_6": 225,
+      "observations_saved_initialization": 58
+    },
+    {
+      "image_id": 45,
+      "name": "cam_0/026.png",
+      "camera": 0,
+      "frame": 26,
+      "observations_before": 2692,
+      "observations_error_lt_0_6": 240,
+      "observations_saved_initialization": 62
+    },
+    {
+      "image_id": 49,
+      "name": "cam_0/027.png",
+      "camera": 0,
+      "frame": 27,
+      "observations_before": 2765,
+      "observations_error_lt_0_6": 280,
+      "observations_saved_initialization": 77
+    },
+    {
+      "image_id": 63,
+      "name": "cam_0/028.png",
+      "camera": 0,
+      "frame": 28,
+      "observations_before": 2722,
+      "observations_error_lt_0_6": 245,
+      "observations_saved_initialization": 69
+    },
+    {
+      "image_id": 82,
+      "name": "cam_0/029.png",
+      "camera": 0,
+      "frame": 29,
+      "observations_before": 2624,
+      "observations_error_lt_0_6": 210,
+      "observations_saved_initialization": 86
+    },
+    {
+      "image_id": 57,
+      "name": "cam_0/030.png",
+      "camera": 0,
+      "frame": 30,
+      "observations_before": 2538,
+      "observations_error_lt_0_6": 199,
+      "observations_saved_initialization": 98
+    },
+    {
+      "image_id": 48,
+      "name": "cam_0/031.png",
+      "camera": 0,
+      "frame": 31,
+      "observations_before": 2562,
+      "observations_error_lt_0_6": 235,
+      "observations_saved_initialization": 117
+    },
+    {
+      "image_id": 72,
+      "name": "cam_0/032.png",
+      "camera": 0,
+      "frame": 32,
+      "observations_before": 2616,
+      "observations_error_lt_0_6": 229,
+      "observations_saved_initialization": 114
+    },
+    {
+      "image_id": 80,
+      "name": "cam_0/033.png",
+      "camera": 0,
+      "frame": 33,
+      "observations_before": 2629,
+      "observations_error_lt_0_6": 223,
+      "observations_saved_initialization": 104
+    },
+    {
+      "image_id": 66,
+      "name": "cam_0/034.png",
+      "camera": 0,
+      "frame": 34,
+      "observations_before": 2686,
+      "observations_error_lt_0_6": 201,
+      "observations_saved_initialization": 103
+    },
+    {
+      "image_id": 60,
+      "name": "cam_0/035.png",
+      "camera": 0,
+      "frame": 35,
+      "observations_before": 2748,
+      "observations_error_lt_0_6": 183,
+      "observations_saved_initialization": 100
+    },
+    {
+      "image_id": 43,
+      "name": "cam_0/036.png",
+      "camera": 0,
+      "frame": 36,
+      "observations_before": 2569,
+      "observations_error_lt_0_6": 116,
+      "observations_saved_initialization": 69
+    },
+    {
+      "image_id": 68,
+      "name": "cam_0/037.png",
+      "camera": 0,
+      "frame": 37,
+      "observations_before": 2638,
+      "observations_error_lt_0_6": 109,
+      "observations_saved_initialization": 70
+    },
+    {
+      "image_id": 86,
+      "name": "cam_0/038.png",
+      "camera": 0,
+      "frame": 38,
+      "observations_before": 2710,
+      "observations_error_lt_0_6": 124,
+      "observations_saved_initialization": 69
+    },
+    {
+      "image_id": 70,
+      "name": "cam_0/039.png",
+      "camera": 0,
+      "frame": 39,
+      "observations_before": 2835,
+      "observations_error_lt_0_6": 104,
+      "observations_saved_initialization": 46
+    },
+    {
+      "image_id": 87,
+      "name": "cam_0/040.png",
+      "camera": 0,
+      "frame": 40,
+      "observations_before": 2882,
+      "observations_error_lt_0_6": 111,
+      "observations_saved_initialization": 55
+    },
+    {
+      "image_id": 38,
+      "name": "cam_0/041.png",
+      "camera": 0,
+      "frame": 41,
+      "observations_before": 2797,
+      "observations_error_lt_0_6": 75,
+      "observations_saved_initialization": 41
+    },
+    {
+      "image_id": 69,
+      "name": "cam_0/042.png",
+      "camera": 0,
+      "frame": 42,
+      "observations_before": 2778,
+      "observations_error_lt_0_6": 65,
+      "observations_saved_initialization": 35
+    },
+    {
+      "image_id": 59,
+      "name": "cam_0/043.png",
+      "camera": 0,
+      "frame": 43,
+      "observations_before": 2932,
+      "observations_error_lt_0_6": 126,
+      "observations_saved_initialization": 72
+    },
+    {
+      "image_id": 77,
+      "name": "cam_0/044.png",
+      "camera": 0,
+      "frame": 44,
+      "observations_before": 3012,
+      "observations_error_lt_0_6": 158,
+      "observations_saved_initialization": 92
+    },
+    {
+      "image_id": 76,
+      "name": "cam_0/045.png",
+      "camera": 0,
+      "frame": 45,
+      "observations_before": 3071,
+      "observations_error_lt_0_6": 222,
+      "observations_saved_initialization": 134
+    },
+    {
+      "image_id": 67,
+      "name": "cam_0/046.png",
+      "camera": 0,
+      "frame": 46,
+      "observations_before": 3009,
+      "observations_error_lt_0_6": 229,
+      "observations_saved_initialization": 150
+    },
+    {
+      "image_id": 84,
+      "name": "cam_0/047.png",
+      "camera": 0,
+      "frame": 47,
+      "observations_before": 2929,
+      "observations_error_lt_0_6": 276,
+      "observations_saved_initialization": 186
+    },
+    {
+      "image_id": 74,
+      "name": "cam_0/048.png",
+      "camera": 0,
+      "frame": 48,
+      "observations_before": 3461,
+      "observations_error_lt_0_6": 504,
+      "observations_saved_initialization": 315
+    },
+    {
+      "image_id": 98,
+      "name": "cam_0/049.png",
+      "camera": 0,
+      "frame": 49,
+      "observations_before": 3461,
+      "observations_error_lt_0_6": 515,
+      "observations_saved_initialization": 323
+    },
+    {
+      "image_id": 78,
+      "name": "cam_0/050.png",
+      "camera": 0,
+      "frame": 50,
+      "observations_before": 3162,
+      "observations_error_lt_0_6": 468,
+      "observations_saved_initialization": 339
+    },
+    {
+      "image_id": 100,
+      "name": "cam_0/051.png",
+      "camera": 0,
+      "frame": 51,
+      "observations_before": 3310,
+      "observations_error_lt_0_6": 558,
+      "observations_saved_initialization": 427
+    },
+    {
+      "image_id": 97,
+      "name": "cam_0/052.png",
+      "camera": 0,
+      "frame": 52,
+      "observations_before": 3351,
+      "observations_error_lt_0_6": 565,
+      "observations_saved_initialization": 457
+    },
+    {
+      "image_id": 88,
+      "name": "cam_0/053.png",
+      "camera": 0,
+      "frame": 53,
+      "observations_before": 3267,
+      "observations_error_lt_0_6": 585,
+      "observations_saved_initialization": 485
+    },
+    {
+      "image_id": 95,
+      "name": "cam_0/054.png",
+      "camera": 0,
+      "frame": 54,
+      "observations_before": 3328,
+      "observations_error_lt_0_6": 525,
+      "observations_saved_initialization": 432
+    },
+    {
+      "image_id": 94,
+      "name": "cam_0/055.png",
+      "camera": 0,
+      "frame": 55,
+      "observations_before": 3365,
+      "observations_error_lt_0_6": 540,
+      "observations_saved_initialization": 459
+    },
+    {
+      "image_id": 89,
+      "name": "cam_0/056.png",
+      "camera": 0,
+      "frame": 56,
+      "observations_before": 3388,
+      "observations_error_lt_0_6": 513,
+      "observations_saved_initialization": 440
+    },
+    {
+      "image_id": 79,
+      "name": "cam_0/057.png",
+      "camera": 0,
+      "frame": 57,
+      "observations_before": 3208,
+      "observations_error_lt_0_6": 438,
+      "observations_saved_initialization": 372
+    },
+    {
+      "image_id": 92,
+      "name": "cam_0/058.png",
+      "camera": 0,
+      "frame": 58,
+      "observations_before": 3123,
+      "observations_error_lt_0_6": 448,
+      "observations_saved_initialization": 380
+    },
+    {
+      "image_id": 65,
+      "name": "cam_0/059.png",
+      "camera": 0,
+      "frame": 59,
+      "observations_before": 2771,
+      "observations_error_lt_0_6": 371,
+      "observations_saved_initialization": 309
+    },
+    {
+      "image_id": 93,
+      "name": "cam_0/060.png",
+      "camera": 0,
+      "frame": 60,
+      "observations_before": 2364,
+      "observations_error_lt_0_6": 332,
+      "observations_saved_initialization": 283
+    },
+    {
+      "image_id": 32,
+      "name": "cam_1/000.png",
+      "camera": 1,
+      "frame": 0,
+      "observations_before": 711,
+      "observations_error_lt_0_6": 149,
+      "observations_saved_initialization": 18
+    },
+    {
+      "image_id": 51,
+      "name": "cam_1/001.png",
+      "camera": 1,
+      "frame": 1,
+      "observations_before": 1188,
+      "observations_error_lt_0_6": 404,
+      "observations_saved_initialization": 32
+    },
+    {
+      "image_id": 52,
+      "name": "cam_1/002.png",
+      "camera": 1,
+      "frame": 2,
+      "observations_before": 1585,
+      "observations_error_lt_0_6": 465,
+      "observations_saved_initialization": 37
+    },
+    {
+      "image_id": 40,
+      "name": "cam_1/003.png",
+      "camera": 1,
+      "frame": 3,
+      "observations_before": 1610,
+      "observations_error_lt_0_6": 392,
+      "observations_saved_initialization": 36
+    },
+    {
+      "image_id": 37,
+      "name": "cam_1/004.png",
+      "camera": 1,
+      "frame": 4,
+      "observations_before": 1446,
+      "observations_error_lt_0_6": 136,
+      "observations_saved_initialization": 11
+    },
+    {
+      "image_id": 24,
+      "name": "cam_1/005.png",
+      "camera": 1,
+      "frame": 5,
+      "observations_before": 1375,
+      "observations_error_lt_0_6": 85,
+      "observations_saved_initialization": 3
+    },
+    {
+      "image_id": 31,
+      "name": "cam_1/006.png",
+      "camera": 1,
+      "frame": 6,
+      "observations_before": 1368,
+      "observations_error_lt_0_6": 45,
+      "observations_saved_initialization": 3
+    },
+    {
+      "image_id": 33,
+      "name": "cam_1/007.png",
+      "camera": 1,
+      "frame": 7,
+      "observations_before": 1123,
+      "observations_error_lt_0_6": 26,
+      "observations_saved_initialization": 3
+    },
+    {
+      "image_id": 30,
+      "name": "cam_1/008.png",
+      "camera": 1,
+      "frame": 8,
+      "observations_before": 674,
+      "observations_error_lt_0_6": 21,
+      "observations_saved_initialization": 1
+    },
+    {
+      "image_id": 23,
+      "name": "cam_1/009.png",
+      "camera": 1,
+      "frame": 9,
+      "observations_before": 677,
+      "observations_error_lt_0_6": 18,
+      "observations_saved_initialization": 2
+    },
+    {
+      "image_id": 26,
+      "name": "cam_1/010.png",
+      "camera": 1,
+      "frame": 10,
+      "observations_before": 612,
+      "observations_error_lt_0_6": 19,
+      "observations_saved_initialization": 2
+    },
+    {
+      "image_id": 15,
+      "name": "cam_1/011.png",
+      "camera": 1,
+      "frame": 11,
+      "observations_before": 550,
+      "observations_error_lt_0_6": 68,
+      "observations_saved_initialization": 2
+    },
+    {
+      "image_id": 19,
+      "name": "cam_1/012.png",
+      "camera": 1,
+      "frame": 12,
+      "observations_before": 1066,
+      "observations_error_lt_0_6": 198,
+      "observations_saved_initialization": 4
+    },
+    {
+      "image_id": 35,
+      "name": "cam_1/013.png",
+      "camera": 1,
+      "frame": 13,
+      "observations_before": 1389,
+      "observations_error_lt_0_6": 198,
+      "observations_saved_initialization": 9
+    },
+    {
+      "image_id": 42,
+      "name": "cam_1/014.png",
+      "camera": 1,
+      "frame": 14,
+      "observations_before": 1827,
+      "observations_error_lt_0_6": 63,
+      "observations_saved_initialization": 11
+    },
+    {
+      "image_id": 44,
+      "name": "cam_1/015.png",
+      "camera": 1,
+      "frame": 15,
+      "observations_before": 1761,
+      "observations_error_lt_0_6": 83,
+      "observations_saved_initialization": 9
+    },
+    {
+      "image_id": 39,
+      "name": "cam_1/016.png",
+      "camera": 1,
+      "frame": 16,
+      "observations_before": 1268,
+      "observations_error_lt_0_6": 75,
+      "observations_saved_initialization": 10
+    },
+    {
+      "image_id": 41,
+      "name": "cam_1/017.png",
+      "camera": 1,
+      "frame": 17,
+      "observations_before": 634,
+      "observations_error_lt_0_6": 58,
+      "observations_saved_initialization": 8
+    },
+    {
+      "image_id": 17,
+      "name": "cam_1/018.png",
+      "camera": 1,
+      "frame": 18,
+      "observations_before": 950,
+      "observations_error_lt_0_6": 114,
+      "observations_saved_initialization": 10
+    },
+    {
+      "image_id": 28,
+      "name": "cam_1/019.png",
+      "camera": 1,
+      "frame": 19,
+      "observations_before": 1537,
+      "observations_error_lt_0_6": 189,
+      "observations_saved_initialization": 13
+    },
+    {
+      "image_id": 34,
+      "name": "cam_1/020.png",
+      "camera": 1,
+      "frame": 20,
+      "observations_before": 1604,
+      "observations_error_lt_0_6": 247,
+      "observations_saved_initialization": 21
+    },
+    {
+      "image_id": 25,
+      "name": "cam_1/021.png",
+      "camera": 1,
+      "frame": 21,
+      "observations_before": 1520,
+      "observations_error_lt_0_6": 291,
+      "observations_saved_initialization": 34
+    },
+    {
+      "image_id": 36,
+      "name": "cam_1/022.png",
+      "camera": 1,
+      "frame": 22,
+      "observations_before": 1642,
+      "observations_error_lt_0_6": 264,
+      "observations_saved_initialization": 33
+    },
+    {
+      "image_id": 46,
+      "name": "cam_1/023.png",
+      "camera": 1,
+      "frame": 23,
+      "observations_before": 2111,
+      "observations_error_lt_0_6": 358,
+      "observations_saved_initialization": 28
+    },
+    {
+      "image_id": 47,
+      "name": "cam_1/024.png",
+      "camera": 1,
+      "frame": 24,
+      "observations_before": 2599,
+      "observations_error_lt_0_6": 453,
+      "observations_saved_initialization": 31
+    },
+    {
+      "image_id": 55,
+      "name": "cam_1/025.png",
+      "camera": 1,
+      "frame": 25,
+      "observations_before": 2693,
+      "observations_error_lt_0_6": 459,
+      "observations_saved_initialization": 29
+    },
+    {
+      "image_id": 53,
+      "name": "cam_1/026.png",
+      "camera": 1,
+      "frame": 26,
+      "observations_before": 2624,
+      "observations_error_lt_0_6": 311,
+      "observations_saved_initialization": 29
+    },
+    {
+      "image_id": 58,
+      "name": "cam_1/027.png",
+      "camera": 1,
+      "frame": 27,
+      "observations_before": 2381,
+      "observations_error_lt_0_6": 248,
+      "observations_saved_initialization": 21
+    },
+    {
+      "image_id": 50,
+      "name": "cam_1/028.png",
+      "camera": 1,
+      "frame": 28,
+      "observations_before": 2332,
+      "observations_error_lt_0_6": 250,
+      "observations_saved_initialization": 29
+    },
+    {
+      "image_id": 71,
+      "name": "cam_1/029.png",
+      "camera": 1,
+      "frame": 29,
+      "observations_before": 1815,
+      "observations_error_lt_0_6": 115,
+      "observations_saved_initialization": 8
+    },
+    {
+      "image_id": 73,
+      "name": "cam_1/030.png",
+      "camera": 1,
+      "frame": 30,
+      "observations_before": 1595,
+      "observations_error_lt_0_6": 185,
+      "observations_saved_initialization": 16
+    },
+    {
+      "image_id": 83,
+      "name": "cam_1/031.png",
+      "camera": 1,
+      "frame": 31,
+      "observations_before": 1526,
+      "observations_error_lt_0_6": 259,
+      "observations_saved_initialization": 13
+    },
+    {
+      "image_id": 75,
+      "name": "cam_1/032.png",
+      "camera": 1,
+      "frame": 32,
+      "observations_before": 1562,
+      "observations_error_lt_0_6": 248,
+      "observations_saved_initialization": 17
+    },
+    {
+      "image_id": 81,
+      "name": "cam_1/033.png",
+      "camera": 1,
+      "frame": 33,
+      "observations_before": 1860,
+      "observations_error_lt_0_6": 437,
+      "observations_saved_initialization": 19
+    },
+    {
+      "image_id": 85,
+      "name": "cam_1/034.png",
+      "camera": 1,
+      "frame": 34,
+      "observations_before": 2318,
+      "observations_error_lt_0_6": 495,
+      "observations_saved_initialization": 28
+    },
+    {
+      "image_id": 96,
+      "name": "cam_1/035.png",
+      "camera": 1,
+      "frame": 35,
+      "observations_before": 2264,
+      "observations_error_lt_0_6": 454,
+      "observations_saved_initialization": 29
+    },
+    {
+      "image_id": 99,
+      "name": "cam_1/036.png",
+      "camera": 1,
+      "frame": 36,
+      "observations_before": 2006,
+      "observations_error_lt_0_6": 151,
+      "observations_saved_initialization": 20
+    },
+    {
+      "image_id": 90,
+      "name": "cam_1/037.png",
+      "camera": 1,
+      "frame": 37,
+      "observations_before": 1714,
+      "observations_error_lt_0_6": 167,
+      "observations_saved_initialization": 18
+    },
+    {
+      "image_id": 91,
+      "name": "cam_1/038.png",
+      "camera": 1,
+      "frame": 38,
+      "observations_before": 1952,
+      "observations_error_lt_0_6": 216,
+      "observations_saved_initialization": 34
+    },
+    {
+      "image_id": 102,
+      "name": "cam_1/039.png",
+      "camera": 1,
+      "frame": 39,
+      "observations_before": 2375,
+      "observations_error_lt_0_6": 206,
+      "observations_saved_initialization": 27
+    },
+    {
+      "image_id": 101,
+      "name": "cam_1/040.png",
+      "camera": 1,
+      "frame": 40,
+      "observations_before": 2340,
+      "observations_error_lt_0_6": 201,
+      "observations_saved_initialization": 19
+    },
+    {
+      "image_id": 104,
+      "name": "cam_1/041.png",
+      "camera": 1,
+      "frame": 41,
+      "observations_before": 1840,
+      "observations_error_lt_0_6": 105,
+      "observations_saved_initialization": 14
+    },
+    {
+      "image_id": 105,
+      "name": "cam_1/042.png",
+      "camera": 1,
+      "frame": 42,
+      "observations_before": 1681,
+      "observations_error_lt_0_6": 242,
+      "observations_saved_initialization": 31
+    },
+    {
+      "image_id": 107,
+      "name": "cam_1/043.png",
+      "camera": 1,
+      "frame": 43,
+      "observations_before": 1741,
+      "observations_error_lt_0_6": 325,
+      "observations_saved_initialization": 61
+    },
+    {
+      "image_id": 108,
+      "name": "cam_1/044.png",
+      "camera": 1,
+      "frame": 44,
+      "observations_before": 1915,
+      "observations_error_lt_0_6": 421,
+      "observations_saved_initialization": 90
+    },
+    {
+      "image_id": 103,
+      "name": "cam_1/045.png",
+      "camera": 1,
+      "frame": 45,
+      "observations_before": 1909,
+      "observations_error_lt_0_6": 464,
+      "observations_saved_initialization": 99
+    },
+    {
+      "image_id": 109,
+      "name": "cam_1/046.png",
+      "camera": 1,
+      "frame": 46,
+      "observations_before": 1637,
+      "observations_error_lt_0_6": 337,
+      "observations_saved_initialization": 106
+    },
+    {
+      "image_id": 112,
+      "name": "cam_1/047.png",
+      "camera": 1,
+      "frame": 47,
+      "observations_before": 1387,
+      "observations_error_lt_0_6": 329,
+      "observations_saved_initialization": 119
+    },
+    {
+      "image_id": 110,
+      "name": "cam_1/048.png",
+      "camera": 1,
+      "frame": 48,
+      "observations_before": 2408,
+      "observations_error_lt_0_6": 1205,
+      "observations_saved_initialization": 209
+    },
+    {
+      "image_id": 106,
+      "name": "cam_1/049.png",
+      "camera": 1,
+      "frame": 49,
+      "observations_before": 3091,
+      "observations_error_lt_0_6": 1396,
+      "observations_saved_initialization": 260
+    },
+    {
+      "image_id": 111,
+      "name": "cam_1/050.png",
+      "camera": 1,
+      "frame": 50,
+      "observations_before": 3091,
+      "observations_error_lt_0_6": 1397,
+      "observations_saved_initialization": 265
+    },
+    {
+      "image_id": 163,
+      "name": "cam_1/051.png",
+      "camera": 1,
+      "frame": 51,
+      "observations_before": 2229,
+      "observations_error_lt_0_6": 569,
+      "observations_saved_initialization": 140
+    },
+    {
+      "image_id": 143,
+      "name": "cam_1/052.png",
+      "camera": 1,
+      "frame": 52,
+      "observations_before": 2334,
+      "observations_error_lt_0_6": 874,
+      "observations_saved_initialization": 142
+    },
+    {
+      "image_id": 158,
+      "name": "cam_1/053.png",
+      "camera": 1,
+      "frame": 53,
+      "observations_before": 2300,
+      "observations_error_lt_0_6": 876,
+      "observations_saved_initialization": 136
+    },
+    {
+      "image_id": 182,
+      "name": "cam_1/054.png",
+      "camera": 1,
+      "frame": 54,
+      "observations_before": 1852,
+      "observations_error_lt_0_6": 508,
+      "observations_saved_initialization": 110
+    },
+    {
+      "image_id": 183,
+      "name": "cam_1/055.png",
+      "camera": 1,
+      "frame": 55,
+      "observations_before": 1419,
+      "observations_error_lt_0_6": 175,
+      "observations_saved_initialization": 63
+    },
+    {
+      "image_id": 168,
+      "name": "cam_1/056.png",
+      "camera": 1,
+      "frame": 56,
+      "observations_before": 1636,
+      "observations_error_lt_0_6": 173,
+      "observations_saved_initialization": 52
+    },
+    {
+      "image_id": 179,
+      "name": "cam_1/057.png",
+      "camera": 1,
+      "frame": 57,
+      "observations_before": 1694,
+      "observations_error_lt_0_6": 195,
+      "observations_saved_initialization": 87
+    },
+    {
+      "image_id": 172,
+      "name": "cam_1/058.png",
+      "camera": 1,
+      "frame": 58,
+      "observations_before": 1606,
+      "observations_error_lt_0_6": 176,
+      "observations_saved_initialization": 84
+    },
+    {
+      "image_id": 171,
+      "name": "cam_1/059.png",
+      "camera": 1,
+      "frame": 59,
+      "observations_before": 1073,
+      "observations_error_lt_0_6": 133,
+      "observations_saved_initialization": 74
+    },
+    {
+      "image_id": 206,
+      "name": "cam_1/060.png",
+      "camera": 1,
+      "frame": 60,
+      "observations_before": 403,
+      "observations_error_lt_0_6": 42,
+      "observations_saved_initialization": 28
+    },
+    {
+      "image_id": 121,
+      "name": "cam_2/000.png",
+      "camera": 2,
+      "frame": 0,
+      "observations_before": 1659,
+      "observations_error_lt_0_6": 188,
+      "observations_saved_initialization": 117
+    },
+    {
+      "image_id": 115,
+      "name": "cam_2/001.png",
+      "camera": 2,
+      "frame": 1,
+      "observations_before": 2124,
+      "observations_error_lt_0_6": 314,
+      "observations_saved_initialization": 200
+    },
+    {
+      "image_id": 113,
+      "name": "cam_2/002.png",
+      "camera": 2,
+      "frame": 2,
+      "observations_before": 2614,
+      "observations_error_lt_0_6": 574,
+      "observations_saved_initialization": 319
+    },
+    {
+      "image_id": 114,
+      "name": "cam_2/003.png",
+      "camera": 2,
+      "frame": 3,
+      "observations_before": 2605,
+      "observations_error_lt_0_6": 634,
+      "observations_saved_initialization": 355
+    },
+    {
+      "image_id": 120,
+      "name": "cam_2/004.png",
+      "camera": 2,
+      "frame": 4,
+      "observations_before": 2443,
+      "observations_error_lt_0_6": 579,
+      "observations_saved_initialization": 321
+    },
+    {
+      "image_id": 119,
+      "name": "cam_2/005.png",
+      "camera": 2,
+      "frame": 5,
+      "observations_before": 2251,
+      "observations_error_lt_0_6": 452,
+      "observations_saved_initialization": 243
+    },
+    {
+      "image_id": 116,
+      "name": "cam_2/006.png",
+      "camera": 2,
+      "frame": 6,
+      "observations_before": 2219,
+      "observations_error_lt_0_6": 484,
+      "observations_saved_initialization": 259
+    },
+    {
+      "image_id": 117,
+      "name": "cam_2/007.png",
+      "camera": 2,
+      "frame": 7,
+      "observations_before": 2233,
+      "observations_error_lt_0_6": 533,
+      "observations_saved_initialization": 260
+    },
+    {
+      "image_id": 123,
+      "name": "cam_2/008.png",
+      "camera": 2,
+      "frame": 8,
+      "observations_before": 2483,
+      "observations_error_lt_0_6": 512,
+      "observations_saved_initialization": 266
+    },
+    {
+      "image_id": 134,
+      "name": "cam_2/009.png",
+      "camera": 2,
+      "frame": 9,
+      "observations_before": 2483,
+      "observations_error_lt_0_6": 502,
+      "observations_saved_initialization": 267
+    },
+    {
+      "image_id": 250,
+      "name": "cam_2/010.png",
+      "camera": 2,
+      "frame": 10,
+      "observations_before": 1915,
+      "observations_error_lt_0_6": 261,
+      "observations_saved_initialization": 186
+    },
+    {
+      "image_id": 118,
+      "name": "cam_2/011.png",
+      "camera": 2,
+      "frame": 11,
+      "observations_before": 1903,
+      "observations_error_lt_0_6": 290,
+      "observations_saved_initialization": 202
+    },
+    {
+      "image_id": 133,
+      "name": "cam_2/012.png",
+      "camera": 2,
+      "frame": 12,
+      "observations_before": 2101,
+      "observations_error_lt_0_6": 435,
+      "observations_saved_initialization": 280
+    },
+    {
+      "image_id": 125,
+      "name": "cam_2/013.png",
+      "camera": 2,
+      "frame": 13,
+      "observations_before": 2367,
+      "observations_error_lt_0_6": 536,
+      "observations_saved_initialization": 334
+    },
+    {
+      "image_id": 131,
+      "name": "cam_2/014.png",
+      "camera": 2,
+      "frame": 14,
+      "observations_before": 2572,
+      "observations_error_lt_0_6": 691,
+      "observations_saved_initialization": 464
+    },
+    {
+      "image_id": 230,
+      "name": "cam_2/015.png",
+      "camera": 2,
+      "frame": 15,
+      "observations_before": 2516,
+      "observations_error_lt_0_6": 680,
+      "observations_saved_initialization": 468
+    },
+    {
+      "image_id": 124,
+      "name": "cam_2/016.png",
+      "camera": 2,
+      "frame": 16,
+      "observations_before": 2453,
+      "observations_error_lt_0_6": 580,
+      "observations_saved_initialization": 427
+    },
+    {
+      "image_id": 122,
+      "name": "cam_2/017.png",
+      "camera": 2,
+      "frame": 17,
+      "observations_before": 2304,
+      "observations_error_lt_0_6": 467,
+      "observations_saved_initialization": 376
+    },
+    {
+      "image_id": 140,
+      "name": "cam_2/018.png",
+      "camera": 2,
+      "frame": 18,
+      "observations_before": 2441,
+      "observations_error_lt_0_6": 572,
+      "observations_saved_initialization": 464
+    },
+    {
+      "image_id": 281,
+      "name": "cam_2/019.png",
+      "camera": 2,
+      "frame": 19,
+      "observations_before": 2673,
+      "observations_error_lt_0_6": 771,
+      "observations_saved_initialization": 620
+    },
+    {
+      "image_id": 141,
+      "name": "cam_2/020.png",
+      "camera": 2,
+      "frame": 20,
+      "observations_before": 2691,
+      "observations_error_lt_0_6": 778,
+      "observations_saved_initialization": 621
+    },
+    {
+      "image_id": 130,
+      "name": "cam_2/021.png",
+      "camera": 2,
+      "frame": 21,
+      "observations_before": 2585,
+      "observations_error_lt_0_6": 658,
+      "observations_saved_initialization": 523
+    },
+    {
+      "image_id": 169,
+      "name": "cam_2/022.png",
+      "camera": 2,
+      "frame": 22,
+      "observations_before": 2454,
+      "observations_error_lt_0_6": 662,
+      "observations_saved_initialization": 508
+    },
+    {
+      "image_id": 193,
+      "name": "cam_2/023.png",
+      "camera": 2,
+      "frame": 23,
+      "observations_before": 2784,
+      "observations_error_lt_0_6": 847,
+      "observations_saved_initialization": 625
+    },
+    {
+      "image_id": 240,
+      "name": "cam_2/024.png",
+      "camera": 2,
+      "frame": 24,
+      "observations_before": 2784,
+      "observations_error_lt_0_6": 834,
+      "observations_saved_initialization": 623
+    },
+    {
+      "image_id": 191,
+      "name": "cam_2/025.png",
+      "camera": 2,
+      "frame": 25,
+      "observations_before": 2411,
+      "observations_error_lt_0_6": 533,
+      "observations_saved_initialization": 398
+    },
+    {
+      "image_id": 173,
+      "name": "cam_2/026.png",
+      "camera": 2,
+      "frame": 26,
+      "observations_before": 2521,
+      "observations_error_lt_0_6": 637,
+      "observations_saved_initialization": 491
+    },
+    {
+      "image_id": 167,
+      "name": "cam_2/027.png",
+      "camera": 2,
+      "frame": 27,
+      "observations_before": 2724,
+      "observations_error_lt_0_6": 779,
+      "observations_saved_initialization": 592
+    },
+    {
+      "image_id": 132,
+      "name": "cam_2/028.png",
+      "camera": 2,
+      "frame": 28,
+      "observations_before": 2730,
+      "observations_error_lt_0_6": 751,
+      "observations_saved_initialization": 579
+    },
+    {
+      "image_id": 144,
+      "name": "cam_2/029.png",
+      "camera": 2,
+      "frame": 29,
+      "observations_before": 2506,
+      "observations_error_lt_0_6": 651,
+      "observations_saved_initialization": 492
+    },
+    {
+      "image_id": 166,
+      "name": "cam_2/030.png",
+      "camera": 2,
+      "frame": 30,
+      "observations_before": 2350,
+      "observations_error_lt_0_6": 629,
+      "observations_saved_initialization": 483
+    },
+    {
+      "image_id": 160,
+      "name": "cam_2/031.png",
+      "camera": 2,
+      "frame": 31,
+      "observations_before": 2382,
+      "observations_error_lt_0_6": 623,
+      "observations_saved_initialization": 470
+    },
+    {
+      "image_id": 261,
+      "name": "cam_2/032.png",
+      "camera": 2,
+      "frame": 32,
+      "observations_before": 2365,
+      "observations_error_lt_0_6": 581,
+      "observations_saved_initialization": 433
+    },
+    {
+      "image_id": 165,
+      "name": "cam_2/033.png",
+      "camera": 2,
+      "frame": 33,
+      "observations_before": 2557,
+      "observations_error_lt_0_6": 578,
+      "observations_saved_initialization": 431
+    },
+    {
+      "image_id": 162,
+      "name": "cam_2/034.png",
+      "camera": 2,
+      "frame": 34,
+      "observations_before": 2838,
+      "observations_error_lt_0_6": 636,
+      "observations_saved_initialization": 486
+    },
+    {
+      "image_id": 194,
+      "name": "cam_2/035.png",
+      "camera": 2,
+      "frame": 35,
+      "observations_before": 2836,
+      "observations_error_lt_0_6": 617,
+      "observations_saved_initialization": 471
+    },
+    {
+      "image_id": 201,
+      "name": "cam_2/036.png",
+      "camera": 2,
+      "frame": 36,
+      "observations_before": 2540,
+      "observations_error_lt_0_6": 532,
+      "observations_saved_initialization": 405
+    },
+    {
+      "image_id": 205,
+      "name": "cam_2/037.png",
+      "camera": 2,
+      "frame": 37,
+      "observations_before": 2338,
+      "observations_error_lt_0_6": 399,
+      "observations_saved_initialization": 284
+    },
+    {
+      "image_id": 196,
+      "name": "cam_2/038.png",
+      "camera": 2,
+      "frame": 38,
+      "observations_before": 2638,
+      "observations_error_lt_0_6": 453,
+      "observations_saved_initialization": 327
+    },
+    {
+      "image_id": 199,
+      "name": "cam_2/039.png",
+      "camera": 2,
+      "frame": 39,
+      "observations_before": 2852,
+      "observations_error_lt_0_6": 657,
+      "observations_saved_initialization": 466
+    },
+    {
+      "image_id": 202,
+      "name": "cam_2/040.png",
+      "camera": 2,
+      "frame": 40,
+      "observations_before": 2848,
+      "observations_error_lt_0_6": 580,
+      "observations_saved_initialization": 429
+    },
+    {
+      "image_id": 170,
+      "name": "cam_2/041.png",
+      "camera": 2,
+      "frame": 41,
+      "observations_before": 2615,
+      "observations_error_lt_0_6": 350,
+      "observations_saved_initialization": 244
+    },
+    {
+      "image_id": 180,
+      "name": "cam_2/042.png",
+      "camera": 2,
+      "frame": 42,
+      "observations_before": 2544,
+      "observations_error_lt_0_6": 473,
+      "observations_saved_initialization": 333
+    },
+    {
+      "image_id": 153,
+      "name": "cam_2/043.png",
+      "camera": 2,
+      "frame": 43,
+      "observations_before": 2796,
+      "observations_error_lt_0_6": 562,
+      "observations_saved_initialization": 398
+    },
+    {
+      "image_id": 142,
+      "name": "cam_2/044.png",
+      "camera": 2,
+      "frame": 44,
+      "observations_before": 2985,
+      "observations_error_lt_0_6": 595,
+      "observations_saved_initialization": 468
+    },
+    {
+      "image_id": 155,
+      "name": "cam_2/045.png",
+      "camera": 2,
+      "frame": 45,
+      "observations_before": 3056,
+      "observations_error_lt_0_6": 792,
+      "observations_saved_initialization": 585
+    },
+    {
+      "image_id": 174,
+      "name": "cam_2/046.png",
+      "camera": 2,
+      "frame": 46,
+      "observations_before": 3162,
+      "observations_error_lt_0_6": 841,
+      "observations_saved_initialization": 684
+    },
+    {
+      "image_id": 145,
+      "name": "cam_2/047.png",
+      "camera": 2,
+      "frame": 47,
+      "observations_before": 3206,
+      "observations_error_lt_0_6": 964,
+      "observations_saved_initialization": 777
+    },
+    {
+      "image_id": 136,
+      "name": "cam_2/048.png",
+      "camera": 2,
+      "frame": 48,
+      "observations_before": 3216,
+      "observations_error_lt_0_6": 994,
+      "observations_saved_initialization": 809
+    },
+    {
+      "image_id": 164,
+      "name": "cam_2/049.png",
+      "camera": 2,
+      "frame": 49,
+      "observations_before": 2999,
+      "observations_error_lt_0_6": 909,
+      "observations_saved_initialization": 744
+    },
+    {
+      "image_id": 178,
+      "name": "cam_2/050.png",
+      "camera": 2,
+      "frame": 50,
+      "observations_before": 2933,
+      "observations_error_lt_0_6": 899,
+      "observations_saved_initialization": 774
+    },
+    {
+      "image_id": 264,
+      "name": "cam_2/051.png",
+      "camera": 2,
+      "frame": 51,
+      "observations_before": 3165,
+      "observations_error_lt_0_6": 1116,
+      "observations_saved_initialization": 962
+    },
+    {
+      "image_id": 187,
+      "name": "cam_2/052.png",
+      "camera": 2,
+      "frame": 52,
+      "observations_before": 3205,
+      "observations_error_lt_0_6": 1144,
+      "observations_saved_initialization": 1001
+    },
+    {
+      "image_id": 237,
+      "name": "cam_2/053.png",
+      "camera": 2,
+      "frame": 53,
+      "observations_before": 3181,
+      "observations_error_lt_0_6": 1125,
+      "observations_saved_initialization": 974
+    },
+    {
+      "image_id": 269,
+      "name": "cam_2/054.png",
+      "camera": 2,
+      "frame": 54,
+      "observations_before": 3341,
+      "observations_error_lt_0_6": 1165,
+      "observations_saved_initialization": 1076
+    },
+    {
+      "image_id": 291,
+      "name": "cam_2/055.png",
+      "camera": 2,
+      "frame": 55,
+      "observations_before": 3463,
+      "observations_error_lt_0_6": 1254,
+      "observations_saved_initialization": 1156
+    },
+    {
+      "image_id": 185,
+      "name": "cam_2/056.png",
+      "camera": 2,
+      "frame": 56,
+      "observations_before": 3631,
+      "observations_error_lt_0_6": 1439,
+      "observations_saved_initialization": 1351
+    },
+    {
+      "image_id": 177,
+      "name": "cam_2/057.png",
+      "camera": 2,
+      "frame": 57,
+      "observations_before": 3534,
+      "observations_error_lt_0_6": 1387,
+      "observations_saved_initialization": 1283
+    },
+    {
+      "image_id": 192,
+      "name": "cam_2/058.png",
+      "camera": 2,
+      "frame": 58,
+      "observations_before": 3533,
+      "observations_error_lt_0_6": 1411,
+      "observations_saved_initialization": 1285
+    },
+    {
+      "image_id": 283,
+      "name": "cam_2/059.png",
+      "camera": 2,
+      "frame": 59,
+      "observations_before": 2989,
+      "observations_error_lt_0_6": 1089,
+      "observations_saved_initialization": 981
+    },
+    {
+      "image_id": 198,
+      "name": "cam_2/060.png",
+      "camera": 2,
+      "frame": 60,
+      "observations_before": 2328,
+      "observations_error_lt_0_6": 850,
+      "observations_saved_initialization": 765
+    },
+    {
+      "image_id": 287,
+      "name": "cam_3/000.png",
+      "camera": 3,
+      "frame": 0,
+      "observations_before": 376,
+      "observations_error_lt_0_6": 11,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 204,
+      "name": "cam_3/001.png",
+      "camera": 3,
+      "frame": 1,
+      "observations_before": 1018,
+      "observations_error_lt_0_6": 92,
+      "observations_saved_initialization": 41
+    },
+    {
+      "image_id": 186,
+      "name": "cam_3/002.png",
+      "camera": 3,
+      "frame": 2,
+      "observations_before": 1511,
+      "observations_error_lt_0_6": 128,
+      "observations_saved_initialization": 59
+    },
+    {
+      "image_id": 189,
+      "name": "cam_3/003.png",
+      "camera": 3,
+      "frame": 3,
+      "observations_before": 1598,
+      "observations_error_lt_0_6": 153,
+      "observations_saved_initialization": 63
+    },
+    {
+      "image_id": 226,
+      "name": "cam_3/004.png",
+      "camera": 3,
+      "frame": 4,
+      "observations_before": 1116,
+      "observations_error_lt_0_6": 96,
+      "observations_saved_initialization": 26
+    },
+    {
+      "image_id": 147,
+      "name": "cam_3/005.png",
+      "camera": 3,
+      "frame": 5,
+      "observations_before": 827,
+      "observations_error_lt_0_6": 83,
+      "observations_saved_initialization": 18
+    },
+    {
+      "image_id": 184,
+      "name": "cam_3/006.png",
+      "camera": 3,
+      "frame": 6,
+      "observations_before": 943,
+      "observations_error_lt_0_6": 26,
+      "observations_saved_initialization": 7
+    },
+    {
+      "image_id": 208,
+      "name": "cam_3/007.png",
+      "camera": 3,
+      "frame": 7,
+      "observations_before": 1152,
+      "observations_error_lt_0_6": 78,
+      "observations_saved_initialization": 8
+    },
+    {
+      "image_id": 151,
+      "name": "cam_3/008.png",
+      "camera": 3,
+      "frame": 8,
+      "observations_before": 1102,
+      "observations_error_lt_0_6": 73,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 259,
+      "name": "cam_3/009.png",
+      "camera": 3,
+      "frame": 9,
+      "observations_before": 789,
+      "observations_error_lt_0_6": 17,
+      "observations_saved_initialization": 1
+    },
+    {
+      "image_id": 238,
+      "name": "cam_3/010.png",
+      "camera": 3,
+      "frame": 10,
+      "observations_before": 512,
+      "observations_error_lt_0_6": 32,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 129,
+      "name": "cam_3/011.png",
+      "camera": 3,
+      "frame": 11,
+      "observations_before": 496,
+      "observations_error_lt_0_6": 28,
+      "observations_saved_initialization": 2
+    },
+    {
+      "image_id": 139,
+      "name": "cam_3/012.png",
+      "camera": 3,
+      "frame": 12,
+      "observations_before": 419,
+      "observations_error_lt_0_6": 19,
+      "observations_saved_initialization": 1
+    },
+    {
+      "image_id": 126,
+      "name": "cam_3/013.png",
+      "camera": 3,
+      "frame": 13,
+      "observations_before": 500,
+      "observations_error_lt_0_6": 5,
+      "observations_saved_initialization": 1
+    },
+    {
+      "image_id": 127,
+      "name": "cam_3/014.png",
+      "camera": 3,
+      "frame": 14,
+      "observations_before": 613,
+      "observations_error_lt_0_6": 20,
+      "observations_saved_initialization": 4
+    },
+    {
+      "image_id": 128,
+      "name": "cam_3/015.png",
+      "camera": 3,
+      "frame": 15,
+      "observations_before": 584,
+      "observations_error_lt_0_6": 22,
+      "observations_saved_initialization": 6
+    },
+    {
+      "image_id": 138,
+      "name": "cam_3/016.png",
+      "camera": 3,
+      "frame": 16,
+      "observations_before": 413,
+      "observations_error_lt_0_6": 19,
+      "observations_saved_initialization": 1
+    },
+    {
+      "image_id": 152,
+      "name": "cam_3/017.png",
+      "camera": 3,
+      "frame": 17,
+      "observations_before": 285,
+      "observations_error_lt_0_6": 30,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 161,
+      "name": "cam_3/018.png",
+      "camera": 3,
+      "frame": 18,
+      "observations_before": 643,
+      "observations_error_lt_0_6": 17,
+      "observations_saved_initialization": 4
+    },
+    {
+      "image_id": 149,
+      "name": "cam_3/019.png",
+      "camera": 3,
+      "frame": 19,
+      "observations_before": 804,
+      "observations_error_lt_0_6": 29,
+      "observations_saved_initialization": 4
+    },
+    {
+      "image_id": 156,
+      "name": "cam_3/020.png",
+      "camera": 3,
+      "frame": 20,
+      "observations_before": 1078,
+      "observations_error_lt_0_6": 38,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 146,
+      "name": "cam_3/021.png",
+      "camera": 3,
+      "frame": 21,
+      "observations_before": 1075,
+      "observations_error_lt_0_6": 12,
+      "observations_saved_initialization": 3
+    },
+    {
+      "image_id": 150,
+      "name": "cam_3/022.png",
+      "camera": 3,
+      "frame": 22,
+      "observations_before": 1067,
+      "observations_error_lt_0_6": 48,
+      "observations_saved_initialization": 1
+    },
+    {
+      "image_id": 154,
+      "name": "cam_3/023.png",
+      "camera": 3,
+      "frame": 23,
+      "observations_before": 1100,
+      "observations_error_lt_0_6": 50,
+      "observations_saved_initialization": 3
+    },
+    {
+      "image_id": 159,
+      "name": "cam_3/024.png",
+      "camera": 3,
+      "frame": 24,
+      "observations_before": 629,
+      "observations_error_lt_0_6": 12,
+      "observations_saved_initialization": 4
+    },
+    {
+      "image_id": 188,
+      "name": "cam_3/025.png",
+      "camera": 3,
+      "frame": 25,
+      "observations_before": 444,
+      "observations_error_lt_0_6": 13,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 176,
+      "name": "cam_3/026.png",
+      "camera": 3,
+      "frame": 26,
+      "observations_before": 1134,
+      "observations_error_lt_0_6": 88,
+      "observations_saved_initialization": 14
+    },
+    {
+      "image_id": 210,
+      "name": "cam_3/027.png",
+      "camera": 3,
+      "frame": 27,
+      "observations_before": 1700,
+      "observations_error_lt_0_6": 176,
+      "observations_saved_initialization": 18
+    },
+    {
+      "image_id": 200,
+      "name": "cam_3/028.png",
+      "camera": 3,
+      "frame": 28,
+      "observations_before": 1849,
+      "observations_error_lt_0_6": 194,
+      "observations_saved_initialization": 28
+    },
+    {
+      "image_id": 212,
+      "name": "cam_3/029.png",
+      "camera": 3,
+      "frame": 29,
+      "observations_before": 1615,
+      "observations_error_lt_0_6": 124,
+      "observations_saved_initialization": 27
+    },
+    {
+      "image_id": 213,
+      "name": "cam_3/030.png",
+      "camera": 3,
+      "frame": 30,
+      "observations_before": 1445,
+      "observations_error_lt_0_6": 86,
+      "observations_saved_initialization": 23
+    },
+    {
+      "image_id": 217,
+      "name": "cam_3/031.png",
+      "camera": 3,
+      "frame": 31,
+      "observations_before": 1628,
+      "observations_error_lt_0_6": 409,
+      "observations_saved_initialization": 29
+    },
+    {
+      "image_id": 219,
+      "name": "cam_3/032.png",
+      "camera": 3,
+      "frame": 32,
+      "observations_before": 2046,
+      "observations_error_lt_0_6": 487,
+      "observations_saved_initialization": 34
+    },
+    {
+      "image_id": 222,
+      "name": "cam_3/033.png",
+      "camera": 3,
+      "frame": 33,
+      "observations_before": 2052,
+      "observations_error_lt_0_6": 463,
+      "observations_saved_initialization": 44
+    },
+    {
+      "image_id": 221,
+      "name": "cam_3/034.png",
+      "camera": 3,
+      "frame": 34,
+      "observations_before": 1649,
+      "observations_error_lt_0_6": 130,
+      "observations_saved_initialization": 26
+    },
+    {
+      "image_id": 220,
+      "name": "cam_3/035.png",
+      "camera": 3,
+      "frame": 35,
+      "observations_before": 1238,
+      "observations_error_lt_0_6": 74,
+      "observations_saved_initialization": 22
+    },
+    {
+      "image_id": 216,
+      "name": "cam_3/036.png",
+      "camera": 3,
+      "frame": 36,
+      "observations_before": 1879,
+      "observations_error_lt_0_6": 168,
+      "observations_saved_initialization": 19
+    },
+    {
+      "image_id": 218,
+      "name": "cam_3/037.png",
+      "camera": 3,
+      "frame": 37,
+      "observations_before": 1879,
+      "observations_error_lt_0_6": 168,
+      "observations_saved_initialization": 19
+    },
+    {
+      "image_id": 214,
+      "name": "cam_3/038.png",
+      "camera": 3,
+      "frame": 38,
+      "observations_before": 2110,
+      "observations_error_lt_0_6": 177,
+      "observations_saved_initialization": 21
+    },
+    {
+      "image_id": 223,
+      "name": "cam_3/039.png",
+      "camera": 3,
+      "frame": 39,
+      "observations_before": 2110,
+      "observations_error_lt_0_6": 176,
+      "observations_saved_initialization": 21
+    },
+    {
+      "image_id": 234,
+      "name": "cam_3/040.png",
+      "camera": 3,
+      "frame": 40,
+      "observations_before": 1551,
+      "observations_error_lt_0_6": 90,
+      "observations_saved_initialization": 6
+    },
+    {
+      "image_id": 243,
+      "name": "cam_3/041.png",
+      "camera": 3,
+      "frame": 41,
+      "observations_before": 1428,
+      "observations_error_lt_0_6": 168,
+      "observations_saved_initialization": 13
+    },
+    {
+      "image_id": 231,
+      "name": "cam_3/042.png",
+      "camera": 3,
+      "frame": 42,
+      "observations_before": 1621,
+      "observations_error_lt_0_6": 224,
+      "observations_saved_initialization": 13
+    },
+    {
+      "image_id": 235,
+      "name": "cam_3/043.png",
+      "camera": 3,
+      "frame": 43,
+      "observations_before": 2007,
+      "observations_error_lt_0_6": 265,
+      "observations_saved_initialization": 23
+    },
+    {
+      "image_id": 293,
+      "name": "cam_3/044.png",
+      "camera": 3,
+      "frame": 44,
+      "observations_before": 2483,
+      "observations_error_lt_0_6": 345,
+      "observations_saved_initialization": 34
+    },
+    {
+      "image_id": 242,
+      "name": "cam_3/045.png",
+      "camera": 3,
+      "frame": 45,
+      "observations_before": 2484,
+      "observations_error_lt_0_6": 354,
+      "observations_saved_initialization": 37
+    },
+    {
+      "image_id": 248,
+      "name": "cam_3/046.png",
+      "camera": 3,
+      "frame": 46,
+      "observations_before": 2470,
+      "observations_error_lt_0_6": 350,
+      "observations_saved_initialization": 29
+    },
+    {
+      "image_id": 296,
+      "name": "cam_3/047.png",
+      "camera": 3,
+      "frame": 47,
+      "observations_before": 2529,
+      "observations_error_lt_0_6": 560,
+      "observations_saved_initialization": 32
+    },
+    {
+      "image_id": 295,
+      "name": "cam_3/048.png",
+      "camera": 3,
+      "frame": 48,
+      "observations_before": 2492,
+      "observations_error_lt_0_6": 548,
+      "observations_saved_initialization": 26
+    },
+    {
+      "image_id": 299,
+      "name": "cam_3/049.png",
+      "camera": 3,
+      "frame": 49,
+      "observations_before": 2305,
+      "observations_error_lt_0_6": 421,
+      "observations_saved_initialization": 15
+    },
+    {
+      "image_id": 302,
+      "name": "cam_3/050.png",
+      "camera": 3,
+      "frame": 50,
+      "observations_before": 2322,
+      "observations_error_lt_0_6": 371,
+      "observations_saved_initialization": 16
+    },
+    {
+      "image_id": 298,
+      "name": "cam_3/051.png",
+      "camera": 3,
+      "frame": 51,
+      "observations_before": 2336,
+      "observations_error_lt_0_6": 439,
+      "observations_saved_initialization": 10
+    },
+    {
+      "image_id": 305,
+      "name": "cam_3/052.png",
+      "camera": 3,
+      "frame": 52,
+      "observations_before": 1605,
+      "observations_error_lt_0_6": 223,
+      "observations_saved_initialization": 8
+    },
+    {
+      "image_id": 256,
+      "name": "cam_3/053.png",
+      "camera": 3,
+      "frame": 53,
+      "observations_before": 1085,
+      "observations_error_lt_0_6": 61,
+      "observations_saved_initialization": 7
+    },
+    {
+      "image_id": 251,
+      "name": "cam_3/054.png",
+      "camera": 3,
+      "frame": 54,
+      "observations_before": 1567,
+      "observations_error_lt_0_6": 91,
+      "observations_saved_initialization": 14
+    },
+    {
+      "image_id": 304,
+      "name": "cam_3/055.png",
+      "camera": 3,
+      "frame": 55,
+      "observations_before": 2045,
+      "observations_error_lt_0_6": 227,
+      "observations_saved_initialization": 20
+    },
+    {
+      "image_id": 303,
+      "name": "cam_3/056.png",
+      "camera": 3,
+      "frame": 56,
+      "observations_before": 1997,
+      "observations_error_lt_0_6": 217,
+      "observations_saved_initialization": 19
+    },
+    {
+      "image_id": 294,
+      "name": "cam_3/057.png",
+      "camera": 3,
+      "frame": 57,
+      "observations_before": 1562,
+      "observations_error_lt_0_6": 122,
+      "observations_saved_initialization": 11
+    },
+    {
+      "image_id": 300,
+      "name": "cam_3/058.png",
+      "camera": 3,
+      "frame": 58,
+      "observations_before": 1326,
+      "observations_error_lt_0_6": 32,
+      "observations_saved_initialization": 5
+    },
+    {
+      "image_id": 301,
+      "name": "cam_3/059.png",
+      "camera": 3,
+      "frame": 59,
+      "observations_before": 1086,
+      "observations_error_lt_0_6": 51,
+      "observations_saved_initialization": 6
+    },
+    {
+      "image_id": 215,
+      "name": "cam_3/060.png",
+      "camera": 3,
+      "frame": 60,
+      "observations_before": 891,
+      "observations_error_lt_0_6": 41,
+      "observations_saved_initialization": 6
+    },
+    {
+      "image_id": 284,
+      "name": "cam_4/000.png",
+      "camera": 4,
+      "frame": 0,
+      "observations_before": 1506,
+      "observations_error_lt_0_6": 267,
+      "observations_saved_initialization": 137
+    },
+    {
+      "image_id": 244,
+      "name": "cam_4/001.png",
+      "camera": 4,
+      "frame": 1,
+      "observations_before": 2158,
+      "observations_error_lt_0_6": 444,
+      "observations_saved_initialization": 204
+    },
+    {
+      "image_id": 266,
+      "name": "cam_4/002.png",
+      "camera": 4,
+      "frame": 2,
+      "observations_before": 2703,
+      "observations_error_lt_0_6": 823,
+      "observations_saved_initialization": 362
+    },
+    {
+      "image_id": 148,
+      "name": "cam_4/003.png",
+      "camera": 4,
+      "frame": 3,
+      "observations_before": 2834,
+      "observations_error_lt_0_6": 867,
+      "observations_saved_initialization": 369
+    },
+    {
+      "image_id": 276,
+      "name": "cam_4/004.png",
+      "camera": 4,
+      "frame": 4,
+      "observations_before": 2770,
+      "observations_error_lt_0_6": 808,
+      "observations_saved_initialization": 362
+    },
+    {
+      "image_id": 260,
+      "name": "cam_4/005.png",
+      "camera": 4,
+      "frame": 5,
+      "observations_before": 2559,
+      "observations_error_lt_0_6": 629,
+      "observations_saved_initialization": 300
+    },
+    {
+      "image_id": 252,
+      "name": "cam_4/006.png",
+      "camera": 4,
+      "frame": 6,
+      "observations_before": 2355,
+      "observations_error_lt_0_6": 539,
+      "observations_saved_initialization": 260
+    },
+    {
+      "image_id": 265,
+      "name": "cam_4/007.png",
+      "camera": 4,
+      "frame": 7,
+      "observations_before": 2279,
+      "observations_error_lt_0_6": 421,
+      "observations_saved_initialization": 206
+    },
+    {
+      "image_id": 157,
+      "name": "cam_4/008.png",
+      "camera": 4,
+      "frame": 8,
+      "observations_before": 2823,
+      "observations_error_lt_0_6": 300,
+      "observations_saved_initialization": 178
+    },
+    {
+      "image_id": 246,
+      "name": "cam_4/009.png",
+      "camera": 4,
+      "frame": 9,
+      "observations_before": 3255,
+      "observations_error_lt_0_6": 315,
+      "observations_saved_initialization": 143
+    },
+    {
+      "image_id": 227,
+      "name": "cam_4/010.png",
+      "camera": 4,
+      "frame": 10,
+      "observations_before": 3298,
+      "observations_error_lt_0_6": 328,
+      "observations_saved_initialization": 113
+    },
+    {
+      "image_id": 137,
+      "name": "cam_4/011.png",
+      "camera": 4,
+      "frame": 11,
+      "observations_before": 3092,
+      "observations_error_lt_0_6": 387,
+      "observations_saved_initialization": 151
+    },
+    {
+      "image_id": 270,
+      "name": "cam_4/012.png",
+      "camera": 4,
+      "frame": 12,
+      "observations_before": 2891,
+      "observations_error_lt_0_6": 371,
+      "observations_saved_initialization": 150
+    },
+    {
+      "image_id": 273,
+      "name": "cam_4/013.png",
+      "camera": 4,
+      "frame": 13,
+      "observations_before": 2952,
+      "observations_error_lt_0_6": 543,
+      "observations_saved_initialization": 194
+    },
+    {
+      "image_id": 262,
+      "name": "cam_4/014.png",
+      "camera": 4,
+      "frame": 14,
+      "observations_before": 3213,
+      "observations_error_lt_0_6": 712,
+      "observations_saved_initialization": 271
+    },
+    {
+      "image_id": 274,
+      "name": "cam_4/015.png",
+      "camera": 4,
+      "frame": 15,
+      "observations_before": 3234,
+      "observations_error_lt_0_6": 712,
+      "observations_saved_initialization": 286
+    },
+    {
+      "image_id": 225,
+      "name": "cam_4/016.png",
+      "camera": 4,
+      "frame": 16,
+      "observations_before": 2975,
+      "observations_error_lt_0_6": 451,
+      "observations_saved_initialization": 202
+    },
+    {
+      "image_id": 282,
+      "name": "cam_4/017.png",
+      "camera": 4,
+      "frame": 17,
+      "observations_before": 2709,
+      "observations_error_lt_0_6": 277,
+      "observations_saved_initialization": 174
+    },
+    {
+      "image_id": 257,
+      "name": "cam_4/018.png",
+      "camera": 4,
+      "frame": 18,
+      "observations_before": 2775,
+      "observations_error_lt_0_6": 354,
+      "observations_saved_initialization": 219
+    },
+    {
+      "image_id": 224,
+      "name": "cam_4/019.png",
+      "camera": 4,
+      "frame": 19,
+      "observations_before": 2915,
+      "observations_error_lt_0_6": 501,
+      "observations_saved_initialization": 265
+    },
+    {
+      "image_id": 135,
+      "name": "cam_4/020.png",
+      "camera": 4,
+      "frame": 20,
+      "observations_before": 3008,
+      "observations_error_lt_0_6": 520,
+      "observations_saved_initialization": 286
+    },
+    {
+      "image_id": 255,
+      "name": "cam_4/021.png",
+      "camera": 4,
+      "frame": 21,
+      "observations_before": 2916,
+      "observations_error_lt_0_6": 468,
+      "observations_saved_initialization": 228
+    },
+    {
+      "image_id": 239,
+      "name": "cam_4/022.png",
+      "camera": 4,
+      "frame": 22,
+      "observations_before": 2982,
+      "observations_error_lt_0_6": 476,
+      "observations_saved_initialization": 253
+    },
+    {
+      "image_id": 253,
+      "name": "cam_4/023.png",
+      "camera": 4,
+      "frame": 23,
+      "observations_before": 2887,
+      "observations_error_lt_0_6": 460,
+      "observations_saved_initialization": 237
+    },
+    {
+      "image_id": 254,
+      "name": "cam_4/024.png",
+      "camera": 4,
+      "frame": 24,
+      "observations_before": 2748,
+      "observations_error_lt_0_6": 343,
+      "observations_saved_initialization": 188
+    },
+    {
+      "image_id": 258,
+      "name": "cam_4/025.png",
+      "camera": 4,
+      "frame": 25,
+      "observations_before": 2530,
+      "observations_error_lt_0_6": 283,
+      "observations_saved_initialization": 151
+    },
+    {
+      "image_id": 228,
+      "name": "cam_4/026.png",
+      "camera": 4,
+      "frame": 26,
+      "observations_before": 2542,
+      "observations_error_lt_0_6": 387,
+      "observations_saved_initialization": 204
+    },
+    {
+      "image_id": 268,
+      "name": "cam_4/027.png",
+      "camera": 4,
+      "frame": 27,
+      "observations_before": 2654,
+      "observations_error_lt_0_6": 536,
+      "observations_saved_initialization": 286
+    },
+    {
+      "image_id": 278,
+      "name": "cam_4/028.png",
+      "camera": 4,
+      "frame": 28,
+      "observations_before": 2659,
+      "observations_error_lt_0_6": 549,
+      "observations_saved_initialization": 286
+    },
+    {
+      "image_id": 267,
+      "name": "cam_4/029.png",
+      "camera": 4,
+      "frame": 29,
+      "observations_before": 2480,
+      "observations_error_lt_0_6": 489,
+      "observations_saved_initialization": 245
+    },
+    {
+      "image_id": 263,
+      "name": "cam_4/030.png",
+      "camera": 4,
+      "frame": 30,
+      "observations_before": 2294,
+      "observations_error_lt_0_6": 379,
+      "observations_saved_initialization": 178
+    },
+    {
+      "image_id": 241,
+      "name": "cam_4/031.png",
+      "camera": 4,
+      "frame": 31,
+      "observations_before": 2189,
+      "observations_error_lt_0_6": 293,
+      "observations_saved_initialization": 127
+    },
+    {
+      "image_id": 229,
+      "name": "cam_4/032.png",
+      "camera": 4,
+      "frame": 32,
+      "observations_before": 2152,
+      "observations_error_lt_0_6": 277,
+      "observations_saved_initialization": 143
+    },
+    {
+      "image_id": 271,
+      "name": "cam_4/033.png",
+      "camera": 4,
+      "frame": 33,
+      "observations_before": 2249,
+      "observations_error_lt_0_6": 229,
+      "observations_saved_initialization": 128
+    },
+    {
+      "image_id": 232,
+      "name": "cam_4/034.png",
+      "camera": 4,
+      "frame": 34,
+      "observations_before": 2414,
+      "observations_error_lt_0_6": 264,
+      "observations_saved_initialization": 143
+    },
+    {
+      "image_id": 275,
+      "name": "cam_4/035.png",
+      "camera": 4,
+      "frame": 35,
+      "observations_before": 2491,
+      "observations_error_lt_0_6": 280,
+      "observations_saved_initialization": 147
+    },
+    {
+      "image_id": 233,
+      "name": "cam_4/036.png",
+      "camera": 4,
+      "frame": 36,
+      "observations_before": 2242,
+      "observations_error_lt_0_6": 262,
+      "observations_saved_initialization": 132
+    },
+    {
+      "image_id": 247,
+      "name": "cam_4/037.png",
+      "camera": 4,
+      "frame": 37,
+      "observations_before": 2052,
+      "observations_error_lt_0_6": 171,
+      "observations_saved_initialization": 93
+    },
+    {
+      "image_id": 207,
+      "name": "cam_4/038.png",
+      "camera": 4,
+      "frame": 38,
+      "observations_before": 2024,
+      "observations_error_lt_0_6": 179,
+      "observations_saved_initialization": 110
+    },
+    {
+      "image_id": 203,
+      "name": "cam_4/039.png",
+      "camera": 4,
+      "frame": 39,
+      "observations_before": 2189,
+      "observations_error_lt_0_6": 327,
+      "observations_saved_initialization": 151
+    },
+    {
+      "image_id": 195,
+      "name": "cam_4/040.png",
+      "camera": 4,
+      "frame": 40,
+      "observations_before": 2131,
+      "observations_error_lt_0_6": 342,
+      "observations_saved_initialization": 146
+    },
+    {
+      "image_id": 211,
+      "name": "cam_4/041.png",
+      "camera": 4,
+      "frame": 41,
+      "observations_before": 1915,
+      "observations_error_lt_0_6": 230,
+      "observations_saved_initialization": 83
+    },
+    {
+      "image_id": 236,
+      "name": "cam_4/042.png",
+      "camera": 4,
+      "frame": 42,
+      "observations_before": 1741,
+      "observations_error_lt_0_6": 231,
+      "observations_saved_initialization": 85
+    },
+    {
+      "image_id": 297,
+      "name": "cam_4/043.png",
+      "camera": 4,
+      "frame": 43,
+      "observations_before": 1898,
+      "observations_error_lt_0_6": 349,
+      "observations_saved_initialization": 125
+    },
+    {
+      "image_id": 289,
+      "name": "cam_4/044.png",
+      "camera": 4,
+      "frame": 44,
+      "observations_before": 2096,
+      "observations_error_lt_0_6": 425,
+      "observations_saved_initialization": 183
+    },
+    {
+      "image_id": 288,
+      "name": "cam_4/045.png",
+      "camera": 4,
+      "frame": 45,
+      "observations_before": 2218,
+      "observations_error_lt_0_6": 442,
+      "observations_saved_initialization": 210
+    },
+    {
+      "image_id": 245,
+      "name": "cam_4/046.png",
+      "camera": 4,
+      "frame": 46,
+      "observations_before": 2282,
+      "observations_error_lt_0_6": 462,
+      "observations_saved_initialization": 267
+    },
+    {
+      "image_id": 249,
+      "name": "cam_4/047.png",
+      "camera": 4,
+      "frame": 47,
+      "observations_before": 2417,
+      "observations_error_lt_0_6": 627,
+      "observations_saved_initialization": 344
+    },
+    {
+      "image_id": 209,
+      "name": "cam_4/048.png",
+      "camera": 4,
+      "frame": 48,
+      "observations_before": 2394,
+      "observations_error_lt_0_6": 648,
+      "observations_saved_initialization": 358
+    },
+    {
+      "image_id": 197,
+      "name": "cam_4/049.png",
+      "camera": 4,
+      "frame": 49,
+      "observations_before": 2211,
+      "observations_error_lt_0_6": 583,
+      "observations_saved_initialization": 314
+    },
+    {
+      "image_id": 290,
+      "name": "cam_4/050.png",
+      "camera": 4,
+      "frame": 50,
+      "observations_before": 2176,
+      "observations_error_lt_0_6": 579,
+      "observations_saved_initialization": 304
+    },
+    {
+      "image_id": 190,
+      "name": "cam_4/051.png",
+      "camera": 4,
+      "frame": 51,
+      "observations_before": 2244,
+      "observations_error_lt_0_6": 628,
+      "observations_saved_initialization": 334
+    },
+    {
+      "image_id": 277,
+      "name": "cam_4/052.png",
+      "camera": 4,
+      "frame": 52,
+      "observations_before": 2355,
+      "observations_error_lt_0_6": 673,
+      "observations_saved_initialization": 359
+    },
+    {
+      "image_id": 280,
+      "name": "cam_4/053.png",
+      "camera": 4,
+      "frame": 53,
+      "observations_before": 2297,
+      "observations_error_lt_0_6": 641,
+      "observations_saved_initialization": 330
+    },
+    {
+      "image_id": 175,
+      "name": "cam_4/054.png",
+      "camera": 4,
+      "frame": 54,
+      "observations_before": 2146,
+      "observations_error_lt_0_6": 536,
+      "observations_saved_initialization": 301
+    },
+    {
+      "image_id": 279,
+      "name": "cam_4/055.png",
+      "camera": 4,
+      "frame": 55,
+      "observations_before": 1911,
+      "observations_error_lt_0_6": 445,
+      "observations_saved_initialization": 264
+    },
+    {
+      "image_id": 181,
+      "name": "cam_4/056.png",
+      "camera": 4,
+      "frame": 56,
+      "observations_before": 1934,
+      "observations_error_lt_0_6": 472,
+      "observations_saved_initialization": 292
+    },
+    {
+      "image_id": 285,
+      "name": "cam_4/057.png",
+      "camera": 4,
+      "frame": 57,
+      "observations_before": 2072,
+      "observations_error_lt_0_6": 525,
+      "observations_saved_initialization": 312
+    },
+    {
+      "image_id": 286,
+      "name": "cam_4/058.png",
+      "camera": 4,
+      "frame": 58,
+      "observations_before": 2067,
+      "observations_error_lt_0_6": 612,
+      "observations_saved_initialization": 364
+    },
+    {
+      "image_id": 272,
+      "name": "cam_4/059.png",
+      "camera": 4,
+      "frame": 59,
+      "observations_before": 1642,
+      "observations_error_lt_0_6": 446,
+      "observations_saved_initialization": 274
+    },
+    {
+      "image_id": 292,
+      "name": "cam_4/060.png",
+      "camera": 4,
+      "frame": 60,
+      "observations_before": 1204,
+      "observations_error_lt_0_6": 299,
+      "observations_saved_initialization": 187
+    }
+  ],
+  "interpretation_limit": "保留率不能独立衡量几何覆盖或证明 sparse matching 的因果影响；需同输入 exhaustive 对照。",
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "new: COLMAP image ID arithmetic assigns tracks to wrong views"
+}

@@ -4,10 +4,11 @@
 
 | 查什么 | 入口 |
 |---|---|
-| **以前各版本的 failure** | [全部版本](research_failures/VERSIONS.md)；包含早期 N1 / H1 / PIVOT 至 V7.5 |
+| **以前各版本的 failure** | [全部版本](research_failures/VERSIONS.md)；包含早期 N1 / H1 / PIVOT 至 V7.6 |
 | **已知 failure ID** | [全量 ID 目录](research_failures/IDS.md)，区分独立定义与仅有引用 |
 | V7.4-H1 和 H2 F01–F22 | [独立卡目录](research_failures/ENTRIES.md) |
 | V7.5 工程与能力边界 | [V75-F01 输入绑定](research_failures/entries/V75-F01.md)、[V75-F02 DriveEditor 分母与接口](research_failures/entries/V75-F02.md)；[r9 收尾证据](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) |
+| V7.6 复现工程错误 | [V76-F01 COLMAP track视图错绑](research_failures/entries/V76-F01.md)；[官方时间test与初始化审计](v76/P0_REPRODUCTION_AUDIT.md) |
 | 已排除的解释与仍开放的问题 | [累计研究边界](research_failures/BOUNDARIES.md) |
 | 原始过程和原文完整性 | [历史分片说明](research_failures/migration.json)、[本次恢复核对](archive/2026-09/v74-0920/FAILURE_AUDIT.json) |
 | 怎么新增或修订 | [维护规范](research_failures/README.md) |

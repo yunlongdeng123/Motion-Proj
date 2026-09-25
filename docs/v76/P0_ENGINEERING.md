@@ -1,6 +1,6 @@
 # V7.6 P0：4k/8k 工程记录
 
-记录时间：2026-09-26 00:44（Asia/Singapore）。本页冻结 P0 到 8k 的工程证据；逐项数值见[机器可读记录](../autoresearch/worldsim_v76/p0-8k-evidence.json)。现行阶段与下一门禁只见 [RESEARCH_STATUS](../RESEARCH_STATUS.md)。V7.5 基线范围见[收尾记录](../autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)。
+记录时间：2026-09-26 00:44（Asia/Singapore）。本页冻结 P0 到 8k 的工程证据；逐项数值见[机器可读记录](../autoresearch/worldsim_v76/p0-8k-evidence.json)。后续已完成[16k 官方测试与复现审计](P0_REPRODUCTION_AUDIT.md)，发现 [V76-F01](../research_failures/entries/V76-F01.md)：旧初始化的 COLMAP track 错绑；旧 P0 已停止。下文保留的“等待30k”是发现该错误前的计划，不再作为现行结论门禁。相机0的61帧是混合训练/留出诊断，相机5是整路未见外推；二者都不能替代官方时间 test。现行阶段与下一门禁只见 [RESEARCH_STATUS](../RESEARCH_STATUS.md)。V7.5 基线范围见[收尾记录](../autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)。
 
 ## Architecture components
 
