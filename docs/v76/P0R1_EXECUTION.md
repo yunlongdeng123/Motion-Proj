@@ -45,7 +45,7 @@ nohup /root/autodl-tmp/envs/vadgs-v76/bin/python script/v76/run_p0r1_pipeline.py
 
 ## 同场景准备与资源协调
 
-CPU匹配期间已利用空闲GPU完成scene-0255的366张Depth Anything V2灰度深度先验，日志为其数据目录下 `depth_prior.log`；scene-0230的该项已有。DSINE官方代码与权重在准备中，模型来自官方[hub入口](https://github.com/baegwangbin/DSINE/blob/main/hubconf.py)指向的下载地址。SAM ViT-H已有本地checkpoint，可用于后续实例和背景分割；正式推理前需验证object ID编码、相机坐标与法线PNG编码。先验生成属于同场景适配，不能标为与官方示例完全同源。
+CPU匹配期间已利用空闲GPU补齐scene-0230/0255各366张Depth Anything V2深度和366张DSINE法线。法线经固定官方六视图的轴/符号核验；SAM按真实投影框与原track ID准备。生成方法、数值核验、适配边界与证据见[同场景先验报告](MATCHED_SCENE_PRIORS.md)。P0R1继续使用原有官方样例先验，不受同场景适配影响。
 
 官方VAD-GS的动态mask是三通道ID图，背景255，各channel可包含对象ID；背景SAM是uint8区域图。对象ID必须与 `instances_info.json` 的track一致。法线读取为RGB解码后整体取负并按c2w旋转，DSINE导出必须通过官方样例方向检查后使用。避免同时在单卡上执行主训练和重型SAM/DSINE推理。
 

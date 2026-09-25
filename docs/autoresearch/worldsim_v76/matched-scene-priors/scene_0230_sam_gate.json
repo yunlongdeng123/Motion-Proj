@@ -1,0 +1,196 @@
+{
+  "scene": "/root/autodl-tmp/data/v76_vadgs/scene_0230",
+  "seed": 0,
+  "task_id": "scene_0230-SAM-ADAPTER",
+  "sam_commit": "99fbbe789cf99ff851886bca0935da33586db86b",
+  "checkpoint": "/root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth",
+  "dynamic_ids": [
+    6,
+    8,
+    12,
+    21,
+    27,
+    29,
+    33,
+    34,
+    37,
+    42
+  ],
+  "views": [
+    {
+      "name": "020_0",
+      "projected_objects": [
+        {
+          "track_id": 37,
+          "box_xyxy": [
+            662.5989512935989,
+            475.0810177471517,
+            723.0484767396697,
+            518.8293989291963
+          ],
+          "center_depth": 55.75743472756206,
+          "sam_score": 0.8925832509994507,
+          "visible_pixels": 1531
+        },
+        {
+          "track_id": 33,
+          "box_xyxy": [
+            578.7070090945044,
+            480.33315388116125,
+            590.402157791556,
+            508.8413638011522
+          ],
+          "center_depth": 77.5028193091019,
+          "sam_score": 0.7229393720626831,
+          "visible_pixels": 152
+        }
+      ],
+      "status": "generated",
+      "region_count": 152,
+      "dynamic_pixels": 1683
+    },
+    {
+      "name": "020_1",
+      "projected_objects": [
+        {
+          "track_id": 34,
+          "box_xyxy": [
+            108.67403709397422,
+            494.356421835328,
+            174.7338045815892,
+            624.9766212122049
+          ],
+          "center_depth": 16.49305148474639,
+          "sam_score": 0.8852204084396362,
+          "visible_pixels": 3158
+        }
+      ],
+      "status": "generated",
+      "region_count": 185,
+      "dynamic_pixels": 3158
+    },
+    {
+      "name": "020_2",
+      "projected_objects": [],
+      "status": "generated",
+      "region_count": 170,
+      "dynamic_pixels": 0
+    },
+    {
+      "name": "020_3",
+      "projected_objects": [
+        {
+          "track_id": 34,
+          "box_xyxy": [
+            1398.8533275712207,
+            514.7029913991474,
+            1463.7685264178713,
+            639.9555070377122
+          ],
+          "center_depth": 16.980186008741157,
+          "sam_score": 0.9068954586982727,
+          "visible_pixels": 2896
+        },
+        {
+          "track_id": 6,
+          "box_xyxy": [
+            1056.171605964439,
+            506.31375468109985,
+            1108.6021960352869,
+            626.653662919356
+          ],
+          "center_depth": 18.474917886086303,
+          "sam_score": 0.8621901273727417,
+          "visible_pixels": 4938
+        },
+        {
+          "track_id": 21,
+          "box_xyxy": [
+            1143.4929995163486,
+            504.4169283292819,
+            1207.6623165013718,
+            625.1383493478133
+          ],
+          "center_depth": 18.50015638622881,
+          "sam_score": 0.7828066349029541,
+          "visible_pixels": 4301
+        }
+      ],
+      "status": "generated",
+      "region_count": 101,
+      "dynamic_pixels": 12135
+    },
+    {
+      "name": "020_4",
+      "projected_objects": [],
+      "status": "generated",
+      "region_count": 89,
+      "dynamic_pixels": 0
+    },
+    {
+      "name": "020_5",
+      "projected_objects": [
+        {
+          "track_id": 29,
+          "box_xyxy": [
+            1287.8735579428528,
+            488.6461447230439,
+            1470.2486937608521,
+            566.3901729283789
+          ],
+          "center_depth": 21.58312891573476,
+          "sam_score": 0.955052375793457,
+          "visible_pixels": 8280
+        },
+        {
+          "track_id": 8,
+          "box_xyxy": [
+            859.0364889257122,
+            475.9257764640026,
+            924.0575352982521,
+            530.1720172064202
+          ],
+          "center_depth": 26.667469697921746,
+          "sam_score": 0.9402812719345093,
+          "visible_pixels": 2973
+        },
+        {
+          "track_id": 12,
+          "box_xyxy": [
+            970.2651113901595,
+            462.6018765850155,
+            1003.5084670300184,
+            496.22731837139236
+          ],
+          "center_depth": 86.57731996140456,
+          "sam_score": 0.9221630096435547,
+          "visible_pixels": 905
+        },
+        {
+          "track_id": 27,
+          "box_xyxy": [
+            998.2800399585147,
+            468.259149357476,
+            1031.6157101858907,
+            498.963302182902
+          ],
+          "center_depth": 95.1217509851558,
+          "sam_score": 0.9012256860733032,
+          "visible_pixels": 852
+        }
+      ],
+      "status": "generated",
+      "region_count": 108,
+      "dynamic_pixels": 13010
+    }
+  ],
+  "input_role": "adapted initialization prior; includes candidate temporal test frames",
+  "method": "SAM ViT-H AMG 32x32; box-prompt masks clipped to projected cuboid AABB; closest center depth wins overlap",
+  "encoding": "dynamic BGR channel0=original ID, others255; background grayscale labels2..254, residual0",
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "none",
+  "status": "complete",
+  "seconds": 30.76254304125905
+}

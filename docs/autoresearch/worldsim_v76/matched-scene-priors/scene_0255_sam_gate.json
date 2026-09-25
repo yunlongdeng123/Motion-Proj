@@ -1,0 +1,158 @@
+{
+  "scene": "/root/autodl-tmp/data/v76_vadgs/scene_0255",
+  "seed": 0,
+  "task_id": "scene_0255-SAM-ADAPTER",
+  "sam_commit": "99fbbe789cf99ff851886bca0935da33586db86b",
+  "checkpoint": "/root/autodl-tmp/models/gaussian_grouping_v51_stage_f/sam_vit_h_4b8939.pth",
+  "dynamic_ids": [
+    2,
+    3,
+    8,
+    14,
+    23,
+    36,
+    37,
+    49
+  ],
+  "views": [
+    {
+      "name": "020_0",
+      "projected_objects": [],
+      "status": "generated",
+      "region_count": 105,
+      "dynamic_pixels": 0
+    },
+    {
+      "name": "020_1",
+      "projected_objects": [
+        {
+          "track_id": 36,
+          "box_xyxy": [
+            423.91203563857806,
+            470.02768429665207,
+            441.6539981946866,
+            505.3175286538946
+          ],
+          "center_depth": 68.49386595246699,
+          "sam_score": 0.7157711982727051,
+          "visible_pixels": 299
+        }
+      ],
+      "status": "generated",
+      "region_count": 89,
+      "dynamic_pixels": 299
+    },
+    {
+      "name": "020_2",
+      "projected_objects": [
+        {
+          "track_id": 37,
+          "box_xyxy": [
+            829.9887779486552,
+            438.70892709397737,
+            866.4491049035014,
+            513.9152822598269
+          ],
+          "center_depth": 34.14841986072088,
+          "sam_score": 0.8427703380584717,
+          "visible_pixels": 923
+        },
+        {
+          "track_id": 2,
+          "box_xyxy": [
+            872.7575553068607,
+            448.79488231151953,
+            901.9216318062221,
+            501.2486638264941
+          ],
+          "center_depth": 40.02370649228283,
+          "sam_score": 0.7569752335548401,
+          "visible_pixels": 522
+        },
+        {
+          "track_id": 14,
+          "box_xyxy": [
+            1136.1626915518607,
+            440.0506629475095,
+            1164.2990502261414,
+            492.971945165823
+          ],
+          "center_depth": 44.06920686459898,
+          "sam_score": 0.7126429080963135,
+          "visible_pixels": 1176
+        },
+        {
+          "track_id": 23,
+          "box_xyxy": [
+            1123.2587449654907,
+            441.7612281300727,
+            1156.0241663812567,
+            498.339480885533
+          ],
+          "center_depth": 45.39218657868332,
+          "sam_score": 0.7485504150390625,
+          "visible_pixels": 837
+        }
+      ],
+      "status": "generated",
+      "region_count": 92,
+      "dynamic_pixels": 3458
+    },
+    {
+      "name": "020_3",
+      "projected_objects": [],
+      "status": "generated",
+      "region_count": 104,
+      "dynamic_pixels": 0
+    },
+    {
+      "name": "020_4",
+      "projected_objects": [
+        {
+          "track_id": 8,
+          "box_xyxy": [
+            1079.083349118283,
+            428.71719700436796,
+            1125.5959611909102,
+            499.1333463351171
+          ],
+          "center_depth": 32.29171948113196,
+          "sam_score": 0.8449305295944214,
+          "visible_pixels": 1048
+        }
+      ],
+      "status": "generated",
+      "region_count": 119,
+      "dynamic_pixels": 1048
+    },
+    {
+      "name": "020_5",
+      "projected_objects": [
+        {
+          "track_id": 3,
+          "box_xyxy": [
+            830.1150044539453,
+            412.12756668276336,
+            909.7048556956387,
+            490.0245810812384
+          ],
+          "center_depth": 51.26855403973116,
+          "sam_score": 0.9571967124938965,
+          "visible_pixels": 3996
+        }
+      ],
+      "status": "generated",
+      "region_count": 72,
+      "dynamic_pixels": 3996
+    }
+  ],
+  "input_role": "adapted initialization prior; includes candidate temporal test frames",
+  "method": "SAM ViT-H AMG 32x32; box-prompt masks clipped to projected cuboid AABB; closest center depth wins overlap",
+  "encoding": "dynamic BGR channel0=original ID, others255; background grayscale labels2..254, residual0",
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "none",
+  "status": "complete",
+  "seconds": 26.29121975786984
+}

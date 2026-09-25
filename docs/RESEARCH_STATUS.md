@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-09-26 02:00（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
+更新：2026-09-26 02:26（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
 
 ## 当前方向
 
@@ -10,7 +10,9 @@ V7.6 正在研究 ego-view densification：以 **VAD-GS 全新训练**连接原�
 
 发现 [V76-F01](research_failures/entries/V76-F01.md)：COLMAP image ID 被错误当作有序相机/帧编号，300/305 图像错配，15,754/15,756 个 COLMAP 初始化点的 visibility 与真实 track 不一致，法线来源也受影响。已修复为按名字连接实际视图表，3 项回归和305图像核验通过；尚未重新初始化或重新训练。旧 P0 于约17,725迭代主动停止，GPU 上已无该训练进程；4k/8k/16k权重、原始输入、日志与评估完整保留。它不是训练崩溃，不恢复旧 P0 checkpoint，也不再以该run的30k收敛作为方法判决。修复不证明画质已改善，稀疏匹配的独立影响仍未测量。
 
-最新自主执行run为 **VADGS-P0R1-000**，01:52启动官方 exhaustive matching（COLMAP3.7 CPU，12线程）；旧SIFT和输入位姿复用，匹配表清空于新副本，新几何/初始化/模型均独立。有限控制器PID22094，匹配子进程PID22095；状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`，按它与实时进程核实，勿重复启动。队列会自动进入三角化、全新30k训练和基础评估。scene-0255的366张深度先验已完成，DSINE代码/权重正在准备；后续重型先验与主训练避免显存竞争。控制条件与架构见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。
+最新自主执行run为 **VADGS-P0R1-000**，01:52启动官方 exhaustive matching（COLMAP3.7 CPU，12线程），02:26正常推进到匹配block[4/7,1/7]，尚无新checkpoint。旧SIFT和输入位姿复用，匹配表清空于新副本，新几何/初始化/模型均独立。有限控制器PID22094，匹配子进程PID22095；状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`，按它与实时进程核实，勿重复启动。队列会自动进入三角化、全新30k训练和基础评估。控制条件与架构见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。
+
+scene-0230/0255已各有366张深度与366张DSINE法线，固定官方六视图的法线轴/符号核验通过。SAM固定12视图测试发现 [V76-F02](research_failures/entries/V76-F02.md)：框提示将前景车/路牌误绑定给被遮挡行人；数值ID合法不等于可见身份正确。各6张动态mask已完整移到证据目录，训练入口有阻断标记，尚未启动同场景训练。后台只补背景SAM区域（02:26约27/366与6/366），进入P0R1 GPU阶段时自动退出让资源。数据合同、反例及唯一预注册的可见二维检测关联fallback见[先验报告](v76/MATCHED_SCENE_PRIORS.md)。此问题来自本适配器，不影响P0R1官方样例输入。
 
 ## V7.5 截至收尾的已确认状态
 
@@ -24,7 +26,7 @@ V7.5 之前的自然状态、对象移除、速度干预及接近任务控制仍
 
 ## 下一门禁
 
-继续P0R1：三角化后核对过滤与正确track映射，4k优先完成工程渲染和几何门禁，30k检查官方test与Camera5外推、横移和actor时间戳，再按证据推进scene-0230/0255同场景准备与新训。帧20的+3.5m进入近物遮挡，需选可通行方向/帧位。V7.5 HUGSIM输出只作历史数据对照，不用其checkpoint初始化V7.6。
+继续P0R1：三角化后核对过滤与正确track映射，4k优先完成工程渲染和几何门禁，30k检查官方test与Camera5外推、横移和actor时间戳，再按证据推进同场景；同场景必须先过V76-F02可见身份门禁，不把空mask或裁切遮挡物当修复。帧20的+3.5m进入近物遮挡，需选可通行方向/帧位。V7.5 HUGSIM输出只作历史数据对照，不用其checkpoint初始化V7.6。
 
 ## 当前电源授权
 

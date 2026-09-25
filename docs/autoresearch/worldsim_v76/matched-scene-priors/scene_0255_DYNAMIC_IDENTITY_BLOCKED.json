@@ -1,0 +1,11 @@
+{
+  "failure_id": "V76-F02",
+  "time": "2026-09-25T18:24:46.549422+00:00",
+  "reason": "Projected hidden pedestrian boxes lead SAM to label foreground car/sign as pedestrian; uint8 ID and shape checks alone miss this.",
+  "evidence": "/root/autodl-tmp/data/v76_vadgs/sam_occlusion_audit",
+  "preserved_dynamic_masks": "/root/autodl-tmp/data/v76_vadgs/scene_0255/sam_prior_evidence/rejected_box_only_sam_masks_20260926",
+  "decision": "Do not bulk-generate box-only actor labels or launch matched-scene training until visible identity gate passes.",
+  "pre_registered_fallback": "Associate class-compatible visible 2D detections to projected 3D tracks, then prompt SAM; validate on the same fixed positives and occlusions before expansion.",
+  "background_sam_may_continue": true,
+  "human_verdict": null
+}
