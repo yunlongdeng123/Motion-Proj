@@ -79,6 +79,7 @@ def main():
     parser.add_argument('--names')
     parser.add_argument('--projection-only', action='store_true')
     parser.add_argument('--background-only', action='store_true')
+    parser.add_argument('--device', choices=['cpu','cuda'], default='cuda')
     parser.add_argument('--stop-on-training', action='store_true')
     args = parser.parse_args()
     names = args.names.split(',') if args.names else [f'{f:03d}_{c}' for f in range(61) for c in range(6)]
@@ -93,7 +94,7 @@ def main():
         torch.manual_seed(0)
         sys.path.insert(0, str(SAM_ROOT/'segment_anything'))
         from segment_anything import sam_model_registry, SamAutomaticMaskGenerator
-        sam = sam_model_registry['vit_h'](checkpoint=str(args.checkpoint)).cuda().eval()
+        sam = sam_model_registry['vit_h'](checkpoint=str(args.checkpoint)).to(args.device).eval()
         generator = SamAutomaticMaskGenerator(sam, points_per_side=32, points_per_batch=32,
             pred_iou_thresh=.88, stability_score_thresh=.95, crop_n_layers=0)
         predictor = generator.predictor
@@ -110,7 +111,7 @@ def main():
         'method': 'SAM ViT-H AMG 32x32; box-prompt masks clipped to projected cuboid AABB; closest center depth wins overlap',
         'encoding': 'dynamic BGR channel0=original ID, others255; background grayscale labels2..254, residual0',
         'failure_ledger_refs': ['V76-F01', 'V76-F02'], 'failure_ledger_delta': 'none', 'status': 'running',
-        'background_only': args.background_only}
+        'background_only': args.background_only, 'invocation_device': args.device}
     if args.background_only:
         report['method'] = 'SAM ViT-H AMG 32x32; no actor labels generated'
     def save():
@@ -180,6 +181,7 @@ def main():
                     raise OSError(path)
                 temporary.replace(path)
             row.update(status='generated', region_count=len(segments), dynamic_pixels=int((dynamic[...,0]!=255).sum()))
+            row['device'] = args.device
         if args.projection_only or frame in (0,20,40,60):
             overlay = image.copy()
             if not args.projection_only:

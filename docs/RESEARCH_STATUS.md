@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-09-26 02:26（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
+更新：2026-09-26 03:19（Asia/Singapore）。工作分支：`research/worldsim-v7.6-ego-view-densification`。本文件只放当前快照；V7.5 完成证据见 [r9 收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md)，逐项任务见 [EXPERIMENTS](EXPERIMENTS.md)，失败边界见 [RESEARCH_FAILURES](RESEARCH_FAILURES.md)。
 
 ## 当前方向
 
@@ -8,11 +8,11 @@ V7.6 正在研究 ego-view densification：以 **VAD-GS 全新训练**连接原�
 
 用户指定的两个优先诊断均已完成：COLMAP 138,944 点在 `<0.6 px` 后剩 33,930 点（24.42%），最终 15,756 点进入背景初始化；16k 官方时间 test 的 75 视图为 PSNR 22.7010 / SSIM 0.7486 / LPIPS 0.2313，基础重建已起来。此前相机 0 的61帧对照混合训练和留出，不能替代官方 test。
 
-发现 [V76-F01](research_failures/entries/V76-F01.md)：COLMAP image ID 被错误当作有序相机/帧编号，300/305 图像错配，15,754/15,756 个 COLMAP 初始化点的 visibility 与真实 track 不一致，法线来源也受影响。已修复为按名字连接实际视图表，3 项回归和305图像核验通过；尚未重新初始化或重新训练。旧 P0 于约17,725迭代主动停止，GPU 上已无该训练进程；4k/8k/16k权重、原始输入、日志与评估完整保留。它不是训练崩溃，不恢复旧 P0 checkpoint，也不再以该run的30k收敛作为方法判决。修复不证明画质已改善，稀疏匹配的独立影响仍未测量。
+发现 [V76-F01](research_failures/entries/V76-F01.md)：旧COLMAP image ID被当作有序相机/帧编号，300/305图像错配，15,754/15,756个初始化点的visibility与真实track不一致，法线来源也受影响。按名字映射修复已通过回归，且已核验P0R1实际新初始化：15,475个COLMAP点、55,557条保存可见性边全部正确，错误行数0。旧P0约17,725迭代主动停止，4k/8k/16k权重及原始输入/日志/评估保留；不恢复旧权重。源代码和新输入正确不等于画质已改善，仍待新run测试。
 
-最新自主执行run为 **VADGS-P0R1-000**，01:52启动官方 exhaustive matching（COLMAP3.7 CPU，12线程），02:26正常推进到匹配block[4/7,1/7]，尚无新checkpoint。旧SIFT和输入位姿复用，匹配表清空于新副本，新几何/初始化/模型均独立。有限控制器PID22094，匹配子进程PID22095；状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`，按它与实时进程核实，勿重复启动。队列会自动进入三角化、全新30k训练和基础评估。控制条件与架构见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。
+最新run **VADGS-P0R1-000** 已完成68.258分钟穷举和新三角化，46,360对全部尝试，有效几何对13,997。03:01全新训练启动，03:19约844/30,000迭代、尚无4k checkpoint；控制器PID22094、训练PID27160，GPU仅该训练。状态入口 `/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/pipeline_state.json`，按它与实时进程核实，勿重复启动。新145,690点经过error<0.6px剩34,822（23.90%），最终15,475点进入背景；旧run相应33,930（24.42%）和15,756，穷举未带来保留点数大幅增长。数量不代表空间覆盖或画质；控制条件与architecture见 [P0R1执行记录](v76/P0R1_EXECUTION.md)。
 
-scene-0230/0255已各有366张深度与366张DSINE法线，固定官方六视图的法线轴/符号核验通过。SAM固定12视图测试发现 [V76-F02](research_failures/entries/V76-F02.md)：框提示将前景车/路牌误绑定给被遮挡行人；数值ID合法不等于可见身份正确。各6张动态mask已完整移到证据目录，训练入口有阻断标记，尚未启动同场景训练。后台只补背景SAM区域（02:26约27/366与6/366），进入P0R1 GPU阶段时自动退出让资源。数据合同、反例及唯一预注册的可见二维检测关联fallback见[先验报告](v76/MATCHED_SCENE_PRIORS.md)。此问题来自本适配器，不影响P0R1官方样例输入。
+scene-0230/0255各有366张深度与366张DSINE法线。背景SAM在主训练启动时已自动让出GPU，完成366/366与268/366；scene-0255剩余98张由CPU两线程nice10进程PID28434续做（日志 `scene_0255/sam_background_cpu.log`）。[V76-F02](research_failures/entries/V76-F02.md) 的旧框提示动态标签仍隔离保存。唯一预注册控制已在CPU完成：可见检测同类一对一关联保留6/6固定可见正例、排除4/4遮挡反例，重新SAM后十例局部图通过；17个提示共关联10个，其他3个未匹配提示及跨帧召回尚未核验。新mask只在隔离sidecar，保护标记不解除，未启动同场景训练。详见[先验与身份控制报告](v76/MATCHED_SCENE_PRIORS.md)。
 
 ## V7.5 截至收尾的已确认状态
 
@@ -26,8 +26,8 @@ V7.5 之前的自然状态、对象移除、速度干预及接近任务控制仍
 
 ## 下一门禁
 
-继续P0R1：三角化后核对过滤与正确track映射，4k优先完成工程渲染和几何门禁，30k检查官方test与Camera5外推、横移和actor时间戳，再按证据推进同场景；同场景必须先过V76-F02可见身份门禁，不把空mask或裁切遮挡物当修复。帧20的+3.5m进入近物遮挡，需选可通行方向/帧位。V7.5 HUGSIM输出只作历史数据对照，不用其checkpoint初始化V7.6。
+继续P0R1：初始化已核验，4k可用后优先完成工程渲染和几何门禁，30k检查官方test与Camera5外推、横移和actor时间戳。按证据推进同场景：V76-F02局部控制已通过，仍需完整动态标签及跨帧/远处目标检查；不把局部门禁通过当作数据齐全。帧20的+3.5m进入近物遮挡，需选可通行方向/帧位。V7.5 HUGSIM输出只作历史数据对照，不用其checkpoint初始化V7.6。
 
 ## 当前电源授权
 
-用户最新明确要求睡觉期间自主持续推进，工作完成到足以交付后自行收口并关闭AutoDL。仅对 `wm-3090-0811` 生效。收口前保存资产、取回报告和小型证据并push v76，确认无训练/评价/渲染/数据任务及后续启动控制器，将heartbeat暂停后调用 `/usr/bin/shutdown` 并验证。当前仍有全量匹配、后续训练队列与先验准备，**尚未满足关机条件，尚未关机**。这段授权不写入AGENTS或scaling law规则文档。
+用户最新明确要求睡觉期间自主持续推进，工作完成到足以交付后自行收口并关闭AutoDL。仅对 `wm-3090-0811` 生效。收口前保存资产、取回报告和小型证据并push v76，确认无训练/评价/渲染/数据任务及后续启动控制器，将heartbeat暂停后调用 `/usr/bin/shutdown` 并验证。当前仍有全新训练、后续评价队列与CPU背景先验，**尚未满足关机条件，尚未关机**。这段授权不写入AGENTS或scaling law规则文档。

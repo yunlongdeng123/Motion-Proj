@@ -1,0 +1,73 @@
+{
+  "task_id": "VADGS-VISIBLE-DETECTION-GATE-20260926",
+  "frozen_utc": "2026-09-25T19:10:55.949172+00:00",
+  "model": "torchvision 0.16.2 FasterRCNN ResNet50 FPN v2 COCO_V1",
+  "weights": "/root/autodl-tmp/models/worldsim_v75/evaluators/fasterrcnn_resnet50_fpn_v2_coco-dd69338a.pth",
+  "device": "cpu",
+  "cpu_threads": 2,
+  "seed": 0,
+  "score_threshold": 0.25,
+  "iou_threshold": 0.3,
+  "threshold_provenance": "existing V75 evaluate_localization.py; unchanged before inference",
+  "association": "same COCO class, maximum IoU one-to-one assignment, unmatched allowed",
+  "positive_controls": [
+    [
+      "scene_0230",
+      "020_0",
+      37
+    ],
+    [
+      "scene_0230",
+      "020_1",
+      34
+    ],
+    [
+      "scene_0230",
+      "020_3",
+      34
+    ],
+    [
+      "scene_0230",
+      "020_5",
+      29
+    ],
+    [
+      "scene_0230",
+      "020_5",
+      8
+    ],
+    [
+      "scene_0255",
+      "020_5",
+      3
+    ]
+  ],
+  "negative_controls": [
+    [
+      "scene_0230",
+      "020_3",
+      6
+    ],
+    [
+      "scene_0230",
+      "020_3",
+      21
+    ],
+    [
+      "scene_0255",
+      "020_2",
+      14
+    ],
+    [
+      "scene_0255",
+      "020_2",
+      23
+    ]
+  ],
+  "gate": "all six visible controls associated; all four foreground-confusion controls unmatched",
+  "limits": "development controls chosen from previous gate images, not an independent test; remaining prompts diagnostic only",
+  "failure_ledger_refs": [
+    "V76-F02"
+  ],
+  "failure_ledger_delta": "none"
+}

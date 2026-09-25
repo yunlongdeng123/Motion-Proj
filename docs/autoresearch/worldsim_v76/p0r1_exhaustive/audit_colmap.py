@@ -34,6 +34,7 @@ def main():
     saved = keep & (dists == 0)
     n_saved = int(saved.sum())
     suffix_matches = n_saved > 0 and np.array_equal(bkgd[-n_saved:], xyz[saved].astype(np.float32))
+    assert suffix_matches, "cannot verify saved tracks without exact COLMAP suffix correspondence"
     visibility = np.load(run / "input_ply/points3D_bkgd.npy", mmap_mode="r")
     assert visibility.shape[0] == len(bkgd)
     n_frames = visibility.shape[1] // 5
@@ -115,12 +116,13 @@ def main():
             "colmap_visibility_edges_shared": edges_shared,
             "colmap_track_edges_wrong_camera": wrong_camera_edges,
             "colmap_track_edges_wrong_frame": wrong_frame_edges,
+            "old_arithmetic_edge_counts_note": "wrong_camera/wrong_frame counts describe the rejected image-ID arithmetic, not the corrected saved visibility",
             "other_background_points": len(bkgd)-n_saved,
             "fraction_colmap": n_saved/len(bkgd)},
         "image_id_mapping_error_count": len(mapping_errors),
         "fix_validation": {"mapped_images": len(fixed_mapping), "view_table_matches_dataset_filename_order": True,
             "mismatches_against_image_names": fixed_mapping_errors,
-            "scope": "修复后的映射函数通过当前305图像验证；旧 input_ply 与训练checkpoint未被修复或重新生成。"},
+            "scope": "映射函数与本次run实际保存的初始化分别核验；正确性看name_mapping差异数，旧ID算术仅为反例对照。"},
         "image_id_mapping_errors": mapping_errors, "per_camera": per_camera,
         "per_image": sorted(image_rows, key=lambda r: (r["camera"], r["frame"])),
         "interpretation_limit": "保留率不能独立衡量几何覆盖或证明 sparse matching 的因果影响；需同输入 exhaustive 对照。",

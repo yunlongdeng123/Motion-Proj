@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| VADGS-P0R1-000-INITIALIZATION-CONTROL；VISIBLE-DETECTION-GATE-20260926 | 穷举完成并开始全新训练；15,475个COLMAP点的55,557条保存可见性边全部正确；同场景可见检测→SAM固定6正/4遮挡控制通过，未准入完整场景训练 | [初始化核验](v76/P0R1_EXECUTION.md)、[可见身份控制](v76/MATCHED_SCENE_PRIORS.md) |
 | VADGS-MATCHED-PRIORS-20260926；SAM-OCCLUSION-20260926 | 两场景各366深度/法线，官方六视图验证编码；SAM固定12视图发现V76-F02遮挡身份错误，动态标签保留并退出训练入口 | [数据合同与architecture](v76/MATCHED_SCENE_PRIORS.md)、[生成代码与门禁证据](autoresearch/worldsim_v76/matched-scene-priors/)、[V76-F02](research_failures/entries/V76-F02.md) |
 | VADGS-P0R1-000 / 20260926 | 修复track映射，独立exhaustive匹配/新初始化/从零30k；官方test与Camera5外推分开，有限自动队列和最终收口关机授权 | [执行记录与architecture](v76/P0R1_EXECUTION.md)、[配置与控制器](autoresearch/worldsim_v76/p0r1_exhaustive/) |
 | VADGS-P0-000-COLMAP-AUDIT；TEST-16000 / 20260926 | 两项复现诊断：COLMAP <0.6px剩33,930/138,944点；官方时间test75视图22.7010/0.7486/0.2313；发现并修复V76-F01图像ID错绑，旧run停止并保留 | [复现审计与architecture](v76/P0_REPRODUCTION_AUDIT.md)、[证据与修复](autoresearch/worldsim_v76/reproduction-audit/)、[V76-F01](research_failures/entries/V76-F01.md) |
