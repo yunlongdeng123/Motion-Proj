@@ -4,6 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V76-CLOSEOUT-20260926 | 用户关闭V7.6：当前HUGSIM/VAD-GS对象资产不足以支撑高保真编辑；保留baseline，后续重建基座使用VGGT系列 | [收口与architecture](v76/CLOSEOUT.md)、[V76-F03](research_failures/entries/V76-F03.md) |
+| VADGS-P0R1-000-TEST-30000 / 20260926 | 30k官方75视图25.2378/0.8028/0.1717；Camera5共61视图单列；横移actor变换断言失败，未完成且不再续跑 | [最终记录](v76/CLOSEOUT.md)、[原始指标与状态副本](autoresearch/worldsim_v76/closeout_20260926/) |
 | VADGS-P0R1-000-TEST-16000 / 20260926 | 同一75官方test：22.8532 / 0.7496 / 0.2303；保存张量与75张原始RGB/depth/acc均有限，继续30k | [执行报告](v76/P0R1_EXECUTION.md)、[指标/图像/有限值审核](autoresearch/worldsim_v76/p0r1_exhaustive/official_test_16k/) |
 | VADGS-BACKGROUND-COMPLETE-20260926 | 两场景各366背景SAM完成，732张逐一解码/编码与文件名核验，CPU进程退出；动态身份仍未准入 | [输入报告](v76/MATCHED_SCENE_PRIORS.md)、[文件清单/日志](autoresearch/worldsim_v76/matched-scene-priors/background-completion/) |
 | VADGS-P0R1-000-TEST-8000 / 20260926 | 同一75官方test：22.7086/0.7520/0.2348，较4k三项改善；固定五相机图和9k日志风险留证，继续30k | [报告与architecture](v76/P0R1_EXECUTION.md)、[指标/图像/审核](autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/) |

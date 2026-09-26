@@ -1,0 +1,39 @@
+{
+  "run_id": "VADGS-P0R1-000",
+  "controller_pid": 22094,
+  "completed_stages": [
+    "exhaustive_matching",
+    "triangulation",
+    "train_30000",
+    "official_test_30000",
+    "camera5_extrapolation_30000"
+  ],
+  "shutdown_when_pipeline_exits": false,
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "stage": "lateral_sweep_30000",
+  "status": "failed",
+  "command": [
+    "/root/autodl-tmp/envs/vadgs-v76/bin/python",
+    "script/v76/render_counterfactual.py",
+    "--config",
+    "/root/autodl-tmp/external/worldsim_v75/VAD-GS/configs/v76/nuscenes_000_repro_exhaustive.yaml",
+    "--iteration",
+    "30000",
+    "--intervention",
+    "sweep",
+    "--camera",
+    "0",
+    "--frame",
+    "20",
+    "--offsets",
+    "0,0.5,1,2,3.5",
+    "--output-dir",
+    "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/counterfactual_30k"
+  ],
+  "log": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/render_sweep_30k.log",
+  "updated_at": "2026-09-26T05:46:52.062236+00:00",
+  "child_pid": 51577,
+  "returncode": 1
+}

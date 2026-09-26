@@ -41,3 +41,4 @@
 | [V75-F02](entries/V75-F02.md) | DriveEditor 原生对象编辑与 10 秒全 case 评价的能力边界 |
 | [V76-F01](entries/V76-F01.md) | COLMAP 无序 image ID 导致 VAD-GS 初始化 track 绑定错误 |
 | [V76-F02](entries/V76-F02.md) | 同场景 SAM 框提示把遮挡物绑定为隐藏行人 |
+| [V76-F03](entries/V76-F03.md) | 当前 HUGSIM / VAD-GS 资产的对象级质量不足以支撑高保真反事实编辑 |
