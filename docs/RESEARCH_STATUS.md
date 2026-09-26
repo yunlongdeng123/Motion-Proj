@@ -1,17 +1,19 @@
 # 当前研究状态
 
-更新：2026-09-26（Asia/Singapore）。远端分支 **`v77`**，工作区 `/root/autodl-tmp/motion_proj_v77`。阶段：**两场景显式资产 POC 已执行并交人眼复核；代理观察未达高保真停止规则，关闭这条单图 Hunyuan3D-2.1 + ProPainter 拼接入口，不进入训练。** 完整输入、架构、结果及工程修正见 [EXPLICIT_POC](v77/EXPLICIT_POC.md)，按run查 [EXPERIMENTS](EXPERIMENTS.md)。人工 `human_verdict` 保持 `null`。
+更新：2026-09-26（Asia/Singapore）。远端分支 **v77**，工作区 `/root/autodl-tmp/motion_proj_v77`。阶段：**显式资产 POC 的目标/指令/放置审计已完成；撤回前轮“GLB 失败、关闭此路线”的过早归因。** 当前两条旧 MOVE 均未准入，新合法 MOVE 尚未执行，不进入训练。详见 [ACTOR_COMMAND_AUDIT](v77/ACTOR_COMMAND_AUDIT.md) 与 [EXPERIMENTS](EXPERIMENTS.md)。
 
-## 本轮结果与边界
+## 当前证据与范围
 
-`WS-V77-EXPLICIT-POC-20260926/r1` 固定 `scene_0230/22` 与 `scene_0255/25`。SAM2.1 large 以 GT 框提示并传播完整活跃相机序列；ProPainter 生成去车视频；对两场景各10个时间点六视图重跑冻结Ω，按GT相机及框外LiDAR尺度转成逐时刻背景点云；官方 Hunyuan3D-2.1 单张crop生成两个shape/PBR资产，轴向规范后导出两个有效GLB；GT位姿/尺寸放置和固定侧向2m MOVE。零训练。最终六相机原视频、视频DELETE、原位GLB、MOVE、Ω背景DELETE/MOVE分别编码，离线页与GLB已保存。
+`WS-V77-ACTOR-COMMAND-AUDIT-20260926/r1` 复用原两份 GLB，零训练、零新增模型前向。scene_0230 的目标为棕色 actor 22：旧 MOVE 在 50/50 帧与后方 actor 2 的 GT 框相交；纯前移/后移 2 m 分别与 actor 14/2 相交。该资产原位合成还把车头放反 180°。scene_0255 的目标为银白 actor 25：100 帧没有 GT 框相交，但最小扫掠间距仅 8.4 cm；参考相机实现偏移约 6 px，逐轴放置相对保比例缩放额外拉高 15.6%。
 
-无资产 DELETE 已有深色涂抹或车形残影，GLB 与原车车型/外观不一致；因此解析变换和有效GLB不足以让画面高保真通过。Ω远景深灰点空洞有点渲染影响，不单独归咎于模型。选8张crop，但2.1实际只消费1张；未验证2mv。SAM2和编辑依赖GT，这轮不是自动端到端系统。新 [V77-F02](research_failures/entries/V77-F02.md) 记录这条拼接入口的限定失败，不对VGGT系列或多视图生成路线作普遍否定。
+上述工程与任务定义问题污染了旧资产评价，不能据旧合成否定 GLB。用户在本地 Blender 认为 GLB 看起来没有太大问题；该反馈作为形状复核意见保留，`human_verdict: null`。现有无 GLB 的 ProPainter DELETE 暗斑/残影仍是独立观测；遮挡、阴影、材质与照度匹配仍未完备。没有反向宣称高保真通过。更新同一 [V77-F02](research_failures/entries/V77-F02.md)，不新增失败 ID。
 
-前轮 `WS-V77-P0-24ACTOR-20260926/r1` 的24对象直接Ω框内点适配与三个完整连续视频仍保留，见 [P0_RESULTS](v77/P0_RESULTS.md)、[VIDEO_REVIEW](v77/VIDEO_REVIEW.md)、[V77-F01](research_failures/entries/V77-F01.md)。两批资产失败来源不同，不能互相替代证据。
+## 下一步与产物
 
-## 下一步与资源
+审核页增加目标轮廓和原车裁剪、GT track/尺寸、旧指令俯视扫掠图、同 GLB 朝向/缩放控制及两场景各 10 时刻三栏视频（原始/修正原位/DELETE）。scene_0230 的相机切换明确标注。旧 MOVE 从主审核对比撤下，历史页与完整源运行保留；渲染器默认只运行修正原位，旧命令必须显式请求诊断且命名为未验证。
 
-优先请用户在离线页核对 `scene_0230/CAM2/f005–010` 和 `scene_0255/CAM3/f020–040`，尤其 DELETE 原位置、GLB 多视角同车程度、MOVE 新位置和六相机时间变化；人工字段由用户或指定评审填写。当前不扩展分母、不训练Ω、不做language/RL，也不自行设计3D生成网络。若要验证2mv，应另建单独协议，先明确4–8张多视图是否真的进入模型。v77基座仍为VGGT系列；V7.6 HUGSIM/VAD-GS 主线按 [V76-F03](research_failures/entries/V76-F03.md) 保持关闭。
+后续先选清晰目标与可用空间，再查邻车、静态环境、可行驶区和必要的运动学约束；只有指令准入后才做 MOVE 质量验收。几何扫描中的“无框碰撞候选”不代表已合法。当前不扩大分母、不训练、不增加第二套生成/补景网络。
 
-远端GPU RTX3090 24GiB，当前有限推理已完成；PBR顺序运行峰值约13.5GiB，冻结Ω六视图约5.26GiB。本轮完整运行留在 `/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPLICIT-POC-20260926/r1/`，本地交付 `C:\Users\dengyunlong\Documents\Codex\2026-09-26\xia\outputs\v77-explicit-poc\index.html`。`failure_ledger_refs: [V76-F03, V77-F01, V77-F02]`；`failure_ledger_delta: V77-F02`；`human_verdict: null`。
+新审计运行：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-ACTOR-COMMAND-AUDIT-20260926/r1`。原 POC：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPLICIT-POC-20260926/r1`。本地交付：`C:\Users\dengyunlong\Documents\Codex\2026-09-26\xia\outputs\v77-actor-audit\index.html`。本轮只有 CPU 几何/Blender 渲染与视频编码，无新 GPU 工作。
+
+VGGT 系列仍为 v77 重建基座；V7.6 HUGSIM/VAD-GS 主线按 [V76-F03](research_failures/entries/V76-F03.md) 保持关闭。`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`；`human_verdict: null`。

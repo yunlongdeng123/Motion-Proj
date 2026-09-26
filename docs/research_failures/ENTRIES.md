@@ -43,4 +43,4 @@
 | [V76-F02](entries/V76-F02.md) | 同场景 SAM 框提示把遮挡物绑定为隐藏行人 |
 | [V76-F03](entries/V76-F03.md) | 当前 HUGSIM / VAD-GS 资产的对象级质量不足以支撑高保真反事实编辑 |
 | [V77-F01](entries/V77-F01.md) | 冻结 Ω 的框内点集尚不能直接当作完整可编辑对象 |
-| [V77-F02](entries/V77-F02.md) | ProPainter补景与单图Hunyuan资产拼接未达两场景高保真编辑 |
+| [V77-F02](entries/V77-F02.md) | 未准入MOVE与放置错误污染资产评价；补景残影独立保留 |

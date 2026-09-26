@@ -1,4 +1,4 @@
-"""Render fixed explicit actor meshes at GT poses for factual and +2 m MOVE."""
+"""修正车头与相机的原位渲染；未准入的旧 MOVE 仅可显式诊断运行。"""
 import argparse
 import json
 import math
@@ -22,8 +22,12 @@ p.add_argument('--camera', type=int)
 p.add_argument('--asset', choices=['pbr','shape'], default='pbr')
 p.add_argument('--root', type=pathlib.Path, default=DEFAULT_ROOT)
 p.add_argument('--moves-only', action='store_true')
+p.add_argument('--diagnostic-unvalidated-move', action='store_true',
+               help='仅复现旧未准入命令；scene_0230 已知与邻车框相交，禁止作为有效编辑评价')
 a = p.parse_args(argv)
-ROOT = a.root
+if a.moves_only and not a.diagnostic_unvalidated_move:
+    p.error('--moves-only requires --diagnostic-unvalidated-move; no legal MOVE was admitted')
+ROOT = a.root.resolve()
 
 spec = next(s for s in json.loads((ROOT/'registration.json').read_text())['scenes'] if s['name']==a.scene)
 actor_root = ROOT/a.scene/'actor'
@@ -110,14 +114,15 @@ scene.render.film_transparent=True
 scene.render.image_settings.file_format='PNG'
 scene.render.image_settings.color_mode='RGBA'
 scene.view_settings.view_transform='Standard'
-try:scene.view_settings.look='Medium High Contrast'
+try:scene.view_settings.look='None'
 except TypeError:scene.view_settings.look='None'
 scene.view_settings.exposure=0
 scene.view_settings.gamma=1
 scene.world.color=(0.6,0.6,0.6)
 scene.world.use_nodes=True
-scene.world.node_tree.nodes['Background'].inputs['Color'].default_value=(0.65,0.68,0.72,1)
-scene.world.node_tree.nodes['Background'].inputs['Strength'].default_value=0.8
+world_bg=next(n for n in scene.world.node_tree.nodes if n.type=='BACKGROUND')
+world_bg.inputs['Color'].default_value=(0.65,0.68,0.72,1)
+world_bg.inputs['Strength'].default_value=0.8
 scene.render.film_transparent=True
 
 sun_data=bpy.data.lights.new('Sun','SUN')
@@ -131,8 +136,11 @@ ref_source=ROOT/'source'/a.scene if (ROOT/'source'/a.scene).exists() else pathli
 ref_c2w=Matrix([[float(x) for x in line.split()] for line in (ref_source/'extrinsics'/f'{ref_frame:03d}_{ref_cam}.txt').read_text().splitlines()])
 delta=Vector((ref_c2w[0][0],ref_c2w[1][0],0))
 delta.normalize();delta*=2
-(actor_root/'placement.json').write_text(json.dumps({'move_delta_world_m':list(delta),
+(actor_root/'placement_audit.json').write_text(json.dumps({'move_delta_world_m':list(delta),
   'reference_frame':ref_frame,'reference_cam':ref_cam,
+  'command_admitted':False,'diagnostic_move_requested':a.diagnostic_unvalidated_move,
+  'yaw_correction_deg':180 if a.scene=='scene_0230' else 0,
+  'audit_run':'WS-V77-ACTOR-COMMAND-AUDIT-20260926/r1',
   'rule':'horizontal projection of GT reference-camera screen-right vector, fixed 2m for all frames'},indent=2)+'\n')
 print('MOVE_DELTA',a.scene,tuple(delta),flush=True)
 
@@ -153,20 +161,36 @@ for frame in ([a.frame] if a.frame is not None else FRAMES[a.scene]):
         view=spec['spec']['views'][cam]
         fx=view['intrinsics'][0][0]*W/view['original_wh'][0]
         fy=view['intrinsics'][1][1]*H/view['original_wh'][1]
-        cx=view['intrinsics'][0][2]*W/view['original_wh'][0]
-        cy=view['intrinsics'][1][2]*H/view['original_wh'][1]
+        cx=view['intrinsics'][0][2]*W/view['original_wh'][0]+(W/view['original_wh'][0]-1)/2
+        cy=view['intrinsics'][1][2]*H/view['original_wh'][1]+(H/view['original_wh'][1]-1)/2
         # Blender horizontal fit with pixel aspect correction for fx != fy.
         scene.render.pixel_aspect_x=1
         scene.render.pixel_aspect_y=fx/fy
         camdata.lens=fx*36/W
-        camdata.shift_x=(W/2-cx)/W
-        camdata.shift_y=(cy-H/2)/H
         camera.data=camdata
-        edits=[('move',delta)] if a.moves_only else [('factual',Vector((0,0,0))),('move',delta)]
+        def project_camera_ray(cp):
+            bpy.context.view_layer.update()
+            q=world_to_camera_view(scene,camera,c2w@Vector(cp))
+            return q.x*W,(1-q.y)*H
+        camdata.shift_x=0;camdata.shift_y=0
+        u0,v0=project_camera_ray((0,0,10))
+        camdata.shift_x=.01;u1,_=project_camera_ray((0,0,10))
+        camdata.shift_x=0;camdata.shift_y=.01;_,v1=project_camera_ray((0,0,10))
+        camdata.shift_x=.01*(cx-u0)/(u1-u0)
+        camdata.shift_y=.01*(cy-v0)/(v1-v0)
+        error=max(math.hypot(project_camera_ray((x,y,10))[0]-(fx*x/10+cx),
+                             project_camera_ray((x,y,10))[1]-(fy*y/10+cy))
+                  for x in [-2,0,2] for y in [-1,0,1])
+        if error>.02:raise RuntimeError(f'camera convention mismatch: {error:.6f} px')
+        edits=[] if a.moves_only else [('factual',Vector((0,0,0)))]
+        if a.diagnostic_unvalidated_move:edits.append(('move_unvalidated',delta))
         for kind,offset in edits:
             loc=pose.copy()
             loc.translation=pose.translation-origin+offset
-            root.matrix_world=loc @ scale
+            # This yaw is evidence for these two fixed assets, not a general
+            # Hunyuan convention. New assets must establish their own heading.
+            yaw=math.pi if a.scene=='scene_0230' else 0
+            root.matrix_world=loc @ Matrix.Rotation(yaw,4,'Z') @ scale
             bpy.context.view_layer.update()
             # Diagnose intrinsics/coordinate conventions against direct K projection.
             if kind=='factual' and frame==FRAMES[a.scene][0]:
@@ -176,7 +200,7 @@ for frame in ([a.frame] if a.frame is not None else FRAMES[a.scene]):
                 q=world_to_camera_view(scene,camera,mesh_center)
                 print('MESH_PROJECT',tuple(mesh_center),q.x*W,(1-q.y)*H,q.z,
                       'dimensions',dimensions,'size',size,'scale',tuple(root.scale),flush=True)
-            out=ROOT/a.scene/'actor_render'/f'{frame:03d}'
+            out=ROOT/a.scene/'actor_render_audited'/f'{frame:03d}'
             out.mkdir(parents=True,exist_ok=True)
             scene.render.filepath=str(out/f'{kind}_cam{cam}.png')
             bpy.ops.render.render(write_still=True)
