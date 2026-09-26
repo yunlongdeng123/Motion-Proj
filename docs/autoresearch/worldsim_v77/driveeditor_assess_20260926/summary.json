@@ -1,0 +1,1521 @@
+{
+  "registration": {
+    "task_id": "WS-V77-DRIVEEDITOR-ASSESS-20260926",
+    "run_id": "r1",
+    "input_roles": "原GT相机/轨迹、SAM2 mask；仅mask输入预检，无背景真值或模型成绩",
+    "seed": 42,
+    "upstream_commit": "e67d73a6ffc0a90996331db1e1415ab92b341293",
+    "model_forward_count": 0,
+    "training_steps": 0,
+    "resource": "CPU 4 threads; no checkpoint loading",
+    "checkpoint_exists": false,
+    "demo_data_exists": false,
+    "torch_version": "2.1.1+cu118",
+    "failure_ledger_refs": [
+      "V77-F02",
+      "V75-F02"
+    ],
+    "failure_ledger_delta": "none; preflight is not generated quality evidence",
+    "human_verdict": null
+  },
+  "scenes": [
+    {
+      "scene": "scene_0230",
+      "actor_id": "22",
+      "camera": 2,
+      "frame_range": [
+        0,
+        9
+      ],
+      "frames": [
+        {
+          "frame": 0,
+          "mask_fraction_image": 0.4087795681423611,
+          "sam_fraction_image": 0.0986446804470486,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 4.143959575821116,
+          "bbox_original_xyxy": [
+            0,
+            407,
+            1192,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "2",
+              "intersection_pixels": 150906,
+              "fraction_of_projected_box": 0.6279351367545908,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 1,
+          "mask_fraction_image": 0.2851935492621528,
+          "sam_fraction_image": 0.13680013020833334,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 2.084746182827682,
+          "bbox_original_xyxy": [
+            0,
+            428,
+            871,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "2",
+              "intersection_pixels": 40350,
+              "fraction_of_projected_box": 0.20503152963175625,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "14",
+              "intersection_pixels": 3534,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 2,
+          "mask_fraction_image": 0.3607635498046875,
+          "sam_fraction_image": 0.1673312717013889,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 2.1559840317743375,
+          "bbox_original_xyxy": [
+            0,
+            380,
+            998,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "2",
+              "intersection_pixels": 31114,
+              "fraction_of_projected_box": 0.19583210075465285,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "14",
+              "intersection_pixels": 7356,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 3,
+          "mask_fraction_image": 0.3738861083984375,
+          "sam_fraction_image": 0.2049628363715278,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 1.8241653707441352,
+          "bbox_original_xyxy": [
+            0,
+            398,
+            1073,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "14",
+              "intersection_pixels": 12186,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 4,
+          "mask_fraction_image": 0.6259697808159722,
+          "sam_fraction_image": 0.22583177354600695,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 2.7718410522443526,
+          "bbox_original_xyxy": [
+            0,
+            302,
+            1507,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "2",
+              "intersection_pixels": 64872,
+              "fraction_of_projected_box": 0.762034535416422,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "14",
+              "intersection_pixels": 14883,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 5,
+          "mask_fraction_image": 0.609375,
+          "sam_fraction_image": 0.2655147976345486,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 2.2950698244650622,
+          "bbox_original_xyxy": [
+            0,
+            351,
+            1600,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "14",
+              "intersection_pixels": 21332,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 6,
+          "mask_fraction_image": 0.6321851942274306,
+          "sam_fraction_image": 0.3373701307508681,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 1.873862374302097,
+          "bbox_original_xyxy": [
+            42,
+            316,
+            1600,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "14",
+              "intersection_pixels": 29242,
+              "fraction_of_projected_box": 0.8493667944696177,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 7,
+          "mask_fraction_image": 0.7013075086805556,
+          "sam_fraction_image": 0.3778601752387153,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 1.8559974155453154,
+          "bbox_original_xyxy": [
+            31,
+            257,
+            1600,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "14",
+              "intersection_pixels": 42072,
+              "fraction_of_projected_box": 0.9146683479357349,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 8,
+          "mask_fraction_image": 0.6186167399088541,
+          "sam_fraction_image": 0.3513387044270833,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 1.760741791649777,
+          "bbox_original_xyxy": [
+            233,
+            249,
+            1600,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "14",
+              "intersection_pixels": 28102,
+              "fraction_of_projected_box": 0.475475018188586,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 9,
+          "mask_fraction_image": 0.7326388888888888,
+          "sam_fraction_image": 0.3287268744574653,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 2.2287161343228927,
+          "bbox_original_xyxy": [
+            0,
+            241,
+            1600,
+            900
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "14",
+              "intersection_pixels": 66287,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        }
+      ],
+      "reference_frame": 5,
+      "frames_with_neighbor_projected_box_overlap": 10,
+      "mask_fraction_image_range": [
+        0.2851935492621528,
+        0.7326388888888888
+      ],
+      "sam_coverage_range": [
+        1.0,
+        1.0
+      ],
+      "seed_note": "isolated official mask function seeded42; actual full inference RNG order may differ; save/reuse masks for matched controls",
+      "human_verdict": null
+    },
+    {
+      "scene": "scene_0255",
+      "actor_id": "25",
+      "camera": 3,
+      "frame_range": [
+        15,
+        24
+      ],
+      "frames": [
+        {
+          "frame": 15,
+          "mask_fraction_image": 0.15850830078125,
+          "sam_fraction_image": 0.0246429443359375,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.432198142414861,
+          "bbox_original_xyxy": [
+            795,
+            451,
+            1541,
+            758
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "9",
+              "intersection_pixels": 1611,
+              "fraction_of_projected_box": 0.4238358326756117,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 392,
+              "fraction_of_projected_box": 0.0963855421686747,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2711,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 652,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1476,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2146,
+              "fraction_of_projected_box": 0.8122634367903103,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5531,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 1763,
+              "fraction_of_projected_box": 0.5926050420168067,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 11048,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8238,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1409,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 918,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 553,
+              "fraction_of_projected_box": 0.1333172613307618,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7951,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 16,
+          "mask_fraction_image": 0.15736897786458334,
+          "sam_fraction_image": 0.024731106228298612,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.363200109686708,
+          "bbox_original_xyxy": [
+            605,
+            455,
+            1348,
+            760
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "0",
+              "intersection_pixels": 315,
+              "fraction_of_projected_box": 0.06910925844668714,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "5",
+              "intersection_pixels": 5232,
+              "fraction_of_projected_box": 0.9208025343189018,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 3783,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 4001,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2670,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "19",
+              "intersection_pixels": 3540,
+              "fraction_of_projected_box": 0.5431947214976216,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 646,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "21",
+              "intersection_pixels": 2228,
+              "fraction_of_projected_box": 0.2919287211740042,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1464,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2642,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5470,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2974,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10953,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8227,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1433,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 703,
+              "fraction_of_projected_box": 0.7502668089647813,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 4148,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 767,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7997,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "45",
+              "intersection_pixels": 730,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 17,
+          "mask_fraction_image": 0.15590413411458334,
+          "sam_fraction_image": 0.025139702690972224,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.20151065551659,
+          "bbox_original_xyxy": [
+            595,
+            401,
+            1336,
+            704
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "0",
+              "intersection_pixels": 444,
+              "fraction_of_projected_box": 0.09743252139565503,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "5",
+              "intersection_pixels": 5303,
+              "fraction_of_projected_box": 0.9400815458252083,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 3766,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 4077,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2735,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "19",
+              "intersection_pixels": 3630,
+              "fraction_of_projected_box": 0.559408229311142,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 654,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "21",
+              "intersection_pixels": 2324,
+              "fraction_of_projected_box": 0.3028802293757331,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1418,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2573,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5482,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2992,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10966,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8200,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1399,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 551,
+              "fraction_of_projected_box": 0.6170212765957447,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 4131,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 750,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7875,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "45",
+              "intersection_pixels": 746,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 18,
+          "mask_fraction_image": 0.1547732883029514,
+          "sam_fraction_image": 0.025265163845486112,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.125956247483559,
+          "bbox_original_xyxy": [
+            542,
+            428,
+            1282,
+            730
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "0",
+              "intersection_pixels": 1893,
+              "fraction_of_projected_box": 0.41522263654310154,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "5",
+              "intersection_pixels": 5618,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 3746,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 4058,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2735,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "19",
+              "intersection_pixels": 5245,
+              "fraction_of_projected_box": 0.8128002479466915,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 642,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "21",
+              "intersection_pixels": 4088,
+              "fraction_of_projected_box": 0.5346586450431599,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1419,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2563,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5507,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2974,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10923,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8091,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "38",
+              "intersection_pixels": 612,
+              "fraction_of_projected_box": 0.13896457765667575,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1395,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 4121,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 770,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7840,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "45",
+              "intersection_pixels": 738,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 19,
+          "mask_fraction_image": 0.1544460720486111,
+          "sam_fraction_image": 0.024934556749131944,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.194057251648875,
+          "bbox_original_xyxy": [
+            768,
+            333,
+            1506,
+            634
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "9",
+              "intersection_pixels": 1780,
+              "fraction_of_projected_box": 0.4777241009125067,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 544,
+              "fraction_of_projected_box": 0.13596600849787552,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2708,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 664,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1475,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2346,
+              "fraction_of_projected_box": 0.8937142857142857,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5463,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 1936,
+              "fraction_of_projected_box": 0.6587274583191561,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10852,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8068,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1419,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 919,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 733,
+              "fraction_of_projected_box": 0.17756782945736435,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7822,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 20,
+          "mask_fraction_image": 0.1533203125,
+          "sam_fraction_image": 0.024768405490451388,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.1901567526867,
+          "bbox_original_xyxy": [
+            748,
+            399,
+            1484,
+            699
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "5",
+              "intersection_pixels": 310,
+              "fraction_of_projected_box": 0.05559540889526542,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 2163,
+              "fraction_of_projected_box": 0.5689110994213572,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 840,
+              "fraction_of_projected_box": 0.20973782771535582,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2721,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 658,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1419,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2558,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5381,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2244,
+              "fraction_of_projected_box": 0.758364312267658,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10844,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8044,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1399,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 893,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 1084,
+              "fraction_of_projected_box": 0.26419692907628567,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7621,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "46",
+              "intersection_pixels": 2074,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 21,
+          "mask_fraction_image": 0.15299479166666666,
+          "sam_fraction_image": 0.024176703559027776,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.328190743338008,
+          "bbox_original_xyxy": [
+            717,
+            396,
+            1451,
+            695
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "5",
+              "intersection_pixels": 1117,
+              "fraction_of_projected_box": 0.20061063218390804,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 2799,
+              "fraction_of_projected_box": 0.7469975980784628,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 1516,
+              "fraction_of_projected_box": 0.376458902408741,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2654,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 653,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1473,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2611,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5379,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2784,
+              "fraction_of_projected_box": 0.9472609731201089,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10771,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8046,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1406,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 919,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 1815,
+              "fraction_of_projected_box": 0.4404270808056297,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 110,
+              "fraction_of_projected_box": 0.14322916666666666,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7660,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "46",
+              "intersection_pixels": 2053,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 22,
+          "mask_fraction_image": 0.1518741183810764,
+          "sam_fraction_image": 0.024693806966145832,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.150291795399931,
+          "bbox_original_xyxy": [
+            663,
+            378,
+            1395,
+            676
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "5",
+              "intersection_pixels": 2559,
+              "fraction_of_projected_box": 0.46141363144608727,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 3725,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 2688,
+              "fraction_of_projected_box": 0.6775901184774389,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2735,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "19",
+              "intersection_pixels": 564,
+              "fraction_of_projected_box": 0.08809746954076851,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 654,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1445,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2542,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5295,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2947,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10783,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 7964,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1419,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 918,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 3067,
+              "fraction_of_projected_box": 0.7543039842597147,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 767,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7679,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "45",
+              "intersection_pixels": 420,
+              "fraction_of_projected_box": 0.5753424657534246,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "46",
+              "intersection_pixels": 2025,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 23,
+          "mask_fraction_image": 0.15155029296875,
+          "sam_fraction_image": 0.024247911241319444,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.250034960145435,
+          "bbox_original_xyxy": [
+            709,
+            397,
+            1441,
+            695
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "5",
+              "intersection_pixels": 1117,
+              "fraction_of_projected_box": 0.20220854453294715,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 2817,
+              "fraction_of_projected_box": 0.7558357928628924,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 1514,
+              "fraction_of_projected_box": 0.381456286218191,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2719,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 640,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1419,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2559,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 5357,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2823,
+              "fraction_of_projected_box": 0.9628240109140518,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10651,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 8033,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1419,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "40",
+              "intersection_pixels": 919,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 1808,
+              "fraction_of_projected_box": 0.44466305951795376,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 170,
+              "fraction_of_projected_box": 0.2185089974293059,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7544,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "46",
+              "intersection_pixels": 2059,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        },
+        {
+          "frame": 24,
+          "mask_fraction_image": 0.1496429443359375,
+          "sam_fraction_image": 0.024105495876736112,
+          "sam_coverage": 1.0,
+          "mask_to_sam_area_ratio": 6.207835138556759,
+          "bbox_original_xyxy": [
+            483,
+            403,
+            1212,
+            699
+          ],
+          "neighbor_projected_box_overlaps": [
+            {
+              "actor_id": "0",
+              "intersection_pixels": 2698,
+              "fraction_of_projected_box": 0.6104072398190046,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "5",
+              "intersection_pixels": 5463,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "9",
+              "intersection_pixels": 3707,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "10",
+              "intersection_pixels": 3985,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "11",
+              "intersection_pixels": 571,
+              "fraction_of_projected_box": 0.2367330016583748,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "15",
+              "intersection_pixels": 2719,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "19",
+              "intersection_pixels": 6021,
+              "fraction_of_projected_box": 0.9424010017217092,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "20",
+              "intersection_pixels": 658,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "21",
+              "intersection_pixels": 4836,
+              "fraction_of_projected_box": 0.6463512429831596,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "27",
+              "intersection_pixels": 1445,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "28",
+              "intersection_pixels": 2543,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "31",
+              "intersection_pixels": 4967,
+              "fraction_of_projected_box": 0.9348767174854131,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "33",
+              "intersection_pixels": 2888,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "34",
+              "intersection_pixels": 10625,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "35",
+              "intersection_pixels": 7846,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "38",
+              "intersection_pixels": 1389,
+              "fraction_of_projected_box": 0.3246085534003272,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "39",
+              "intersection_pixels": 1403,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "42",
+              "intersection_pixels": 4023,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "43",
+              "intersection_pixels": 778,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "44",
+              "intersection_pixels": 7579,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "45",
+              "intersection_pixels": 749,
+              "fraction_of_projected_box": 1.0,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            },
+            {
+              "actor_id": "46",
+              "intersection_pixels": 1769,
+              "fraction_of_projected_box": 0.8591549295774648,
+              "note": "3D框投影包络相交，不等于可见实例mask损伤"
+            }
+          ]
+        }
+      ],
+      "reference_frame": 20,
+      "frames_with_neighbor_projected_box_overlap": 10,
+      "mask_fraction_image_range": [
+        0.1496429443359375,
+        0.15850830078125
+      ],
+      "sam_coverage_range": [
+        1.0,
+        1.0
+      ],
+      "seed_note": "isolated official mask function seeded42; actual full inference RNG order may differ; save/reuse masks for matched controls",
+      "human_verdict": null
+    }
+  ]
+}
