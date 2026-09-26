@@ -4,6 +4,8 @@ from v77_driveeditor_compare import ROOT, dump, SCENES
 
 p=argparse.ArgumentParser();p.add_argument('stage',choices=['paint','drive']);a=p.parse_args()
 ROOT.mkdir(parents=True,exist_ok=True)
+if a.stage=='drive' and (ROOT/'hold_inference_for_shutdown.json').exists():
+    raise SystemExit('用户要求下载后关机；本次推理已挂起，重新授权继续前不启动')
 lock=(ROOT/'gpu_controller.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 statefile=ROOT/f'{a.stage}_state.json'
 if statefile.exists():raise RuntimeError('控制器状态已存在；先检查，不能重复启动或覆盖')

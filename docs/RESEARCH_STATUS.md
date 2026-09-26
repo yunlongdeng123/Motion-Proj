@@ -1,25 +1,29 @@
 # 当前研究状态
 
-更新：2026-09-27（Asia/Singapore）。远端分支 **v77**，工作区 `/root/autodl-tmp/motion_proj_v77`。**按用户最新纠正：删除任务 `v77-pipeline` 的定时自动化，直接继续 DriveEditor 补景。禁止恢复定时任务，不追加 ProPainter 实验。**
+更新：2026-09-27（Asia/Singapore）。远端分支 **v77**，工作区 `/root/autodl-tmp/motion_proj_v77`。**用户最新指令：DriveEditor权重下载完成后关闭远端AutoDL，用户休息。只完成下载、校验、保存推送和关机，不接着运行推理。**
 
-## 当前执行
+## 当前执行与关机授权
 
-`WS-V77-DRIVEEDITOR-COMPARE-20260927/r1` 已固定 scene_0230/actor22/CAM2/f0–9 和 scene_0255/actor25/CAM3/f15–24，各10帧、1024×576、10Hz。接下来只执行 C=官方训练后 DriveEditor deletion，seed42、25步、单帧解码、既有单3090串行CFG适配，零训练。冻结mask直接来自前轮官方函数预检；两scene共20帧的12项条件返回值与官方删除分支逐张量一致。不是另做补景网络。
+关机作业 `WS-V77-DOWNLOAD-POWEROFF-20260927/r1`，原话：“你下好之后帮我把远端autodl关机，我先睡了”。这是本次下载结束后的单次操作，不创建Codex定时任务、cron或循环研究任务；先前`v77-pipeline`自动化保持已删除。
 
-**尚无这两个scene的DriveEditor生成结果。** 约12.06GB官方checkpoint恢复中，已启动一次性“断点下载→结构检查→两scene串行推理”命令；下载未完成时GPU空闲是预期状态。禁止重复启动。下载状态 `/root/autodl-tmp/work/v77_driveeditor_restore/state.json`，推理状态在run根目录 `drive_state.json`；实际进程以 `pgrep -af 'v77_restore_driveeditor|v77_driveeditor_controller|v77_driveeditor_compare'` 核实。已有下载分片保留。该命令是当前实验的一次性作业，不是定时任务。
+权重状态：正在断点续传；校验完成后关机；本次不启动推理。
 
-用户纠正前已完成A/B共4个ProPainter短窗对照，原始证据保留，不继续扩大这条支线；不得拿其结果代替DriveEditor结论。官方大mask在0230覆盖28.5%–73.3%画面、0255约15%–16%，有邻车范围风险；DriveEditor实际生成尚未运行，不能据此预判其补景质量。结果必须保留原生整帧与原图mask外合成两版，不把合成保护当成模型原生保持。
+01:10左右实例重启为无GPU模式，原下载及其后接推理的shell已退出；已保留约7.75GB分片，恢复同一官方12,059,467,678字节文件。CPU模式仅0.5核/2GiB，下载及检查限制CPU线程为1。下载器使用本轮LocalTUN重新确认的代理；断点续传，不丢弃分片。下载依赖本地代理保持联网。
 
-## 执行后的工作
+新作业依次：恢复下载→safetensors结构与完整字节数检查→同步落盘→更新本状态并提交推送→检查其他实际作业→调用AutoDL平台关机流程。下载失败、存在未提交的其他改动、推送失败或其他作业仍运行时，不提前关机，明确记录失败状态。没有新的模型训练、生成或MOVE。
 
-直接检查DriveEditor生成日志和20张原生输出：目标是否消失、邻车/围栏是否改写、局部结构与时序是否稳定；制作原RGB／原生生成／局部合成的视频审核页。若出现资源或工程错误，定位该错误；不据此否定方法。人工verdict保持null。只有视频达到继续检验的质量，再接冻结Ω检查重建与跨视角一致性；当前不造数据、不训练。
+下载状态：`/root/autodl-tmp/work/v77_driveeditor_restore/state.json`。关机状态与日志：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-DOWNLOAD-POWEROFF-20260927/r1/`；`state.json`只有写成`shutdown_requested`才说明已准备发送平台关机信号，不应把正在下载的记录当已关机。脚本为 `scripts/worldsim_v77/v77_download_then_shutdown.py`，持有单作业锁。
 
-原位factual的用户反馈为“问题不大”，当前主要问题为DELETE背景糊；原Hunyuan GLB、放置修正和全部旧证据保留。0230车头180°校正；旧MOVE碰撞限制、0255静态占据拒绝均保留，没有新的MOVE准入。R3两例联合背景参考候选为0，不复制伪观测地面。见 [V77-F02](research_failures/entries/V77-F02.md)、[R3](v77/PIPELINE_R3.md)、[DriveEditor评估](v77/DRIVEEDITOR_ASSESSMENT.md)。
+## 下次继续前
 
-## 资源与交付
+DriveEditor两scene尚未生成。`WS-V77-DRIVEEDITOR-COMPARE-20260927/r1`下已写入`hold_inference_for_shutdown.json`，controller会拒绝自动接回推理。下次用户要求继续且恢复GPU后，再显式解除此hold并执行；不恢复定时任务、不追加ProPainter实验。
 
-一张RTX3090 24GiB；DriveEditor源码 `/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEditor`，环境 `/root/autodl-tmp/envs/driveeditor/bin/python`。保留此前单卡适配源码，不覆盖。没有Ω/Hunyuan前向、没有训练、没有新MOVE。
+已准备 scene_0230/actor22/CAM2/f0–9、scene_0255/actor25/CAM3/f15–24，各10帧、1024×576、10Hz。官方训练后DriveEditor deletion，seed42、25步、单帧解码、单3090串行CFG；20帧条件与官方删除分支一致。推理与视频导出代码已保存到v77；[执行说明](v77/DRIVEEDITOR_RUN.md)是前一轮登记，当前授权以本快照为准。
 
-本次登记与执行说明见 [DRIVEEDITOR_RUN](v77/DRIVEEDITOR_RUN.md)，run `/root/autodl-tmp/runs/worldsim_v77/WS-V77-DRIVEEDITOR-COMPARE-20260927/r1`。下载完成后需要核对实际完成状态，不能把本快照里的计划当结果。现有本地审核页 `outputs/v77-pipeline-r3/index.html` 仍是旧结果；暂不以它冒充DriveEditor输出。
+只复用DriveEditor的删除/背景补全能力。官方deletion的valid_mask为0，跳过SV3D去噪主干；完整checkpoint下载属于现有加载方式，不代表替代VGGT/Hunyuan/显式编辑器。模型索引中SV3D主干约3.05GB，可否裁剪需以后独立验证，本次不展开。
 
-VGGT系列仍为重建基座；V7.6按 [V76-F03](research_failures/entries/V76-F03.md) 关闭。`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02（执行范围纠正）`；`human_verdict: null`。
+## 保留的研究边界
+
+原位factual用户反馈“问题不大”，主要视觉问题是DELETE背景糊。保留原Hunyuan GLB、0230车头180°修正、已修复的相机投影和全部旧证据；旧MOVE碰撞/静态占据拒绝保持，没有新MOVE准入。R3联合背景参考候选为0，不复制伪观测地面。见 [V77-F02](research_failures/entries/V77-F02.md)、[DriveEditor评估](v77/DRIVEEDITOR_ASSESSMENT.md)。ProPainter短窗结果仅作为已完成历史保留，不据此预判DriveEditor质量。
+
+VGGT系列仍为重建基座；V7.6按 [V76-F03](research_failures/entries/V76-F03.md) 关闭。当前没有新的科学否定，不改失败卡；`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: none`；`human_verdict: null`。
