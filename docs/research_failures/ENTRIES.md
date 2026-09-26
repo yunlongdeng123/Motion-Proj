@@ -42,3 +42,4 @@
 | [V76-F01](entries/V76-F01.md) | COLMAP 无序 image ID 导致 VAD-GS 初始化 track 绑定错误 |
 | [V76-F02](entries/V76-F02.md) | 同场景 SAM 框提示把遮挡物绑定为隐藏行人 |
 | [V76-F03](entries/V76-F03.md) | 当前 HUGSIM / VAD-GS 资产的对象级质量不足以支撑高保真反事实编辑 |
+| [V77-F01](entries/V77-F01.md) | 冻结 Ω 的框内点集尚不能直接当作完整可编辑对象 |

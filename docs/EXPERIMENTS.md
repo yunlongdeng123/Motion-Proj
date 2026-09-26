@@ -4,6 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-P0-24ACTOR-20260926 / r1 | 3场景24固定对象，冻结Ω六相机；预测相机与GT标定/背景尺度两读出，解析编辑672次检查、630次非空；完整评价采用纠错后的evaluation_v2 | [结果与architecture](v77/P0_RESULTS.md)、[登记/指标/来源](autoresearch/worldsim_v77/p0_20260926/)、[V77-F01](research_failures/entries/V77-F01.md) |
+| WS-V77-P0-TEMPORAL-20260926 / r1 | 原24对象的0/20/40帧GT规范坐标并集，新增6次冻结前向，336次非空编辑；召回随并集不下降，缺面/重影仍在；后验开发控制 | [三时刻控制与边界](v77/P0_RESULTS.md)、[完整逐对象指标](autoresearch/worldsim_v77/p0_20260926/metrics_temporal.json) |
 | WS-V77-BOOTSTRAP-20260926 | 从V7.6收口建立v77；VGGT系列重建基座、冻结Ω零训练结构化编辑协议及权重准备，P0实验未运行 | [P0协议与architecture](v77/P0_PROTOCOL.md)、[checkpoint来源与检查](v77/checkpoint_manifest.json) |
 | WS-V76-CLOSEOUT-20260926 | 用户关闭V7.6：当前HUGSIM/VAD-GS对象资产不足以支撑高保真编辑；保留baseline，后续重建基座使用VGGT系列 | [收口与architecture](v76/CLOSEOUT.md)、[V76-F03](research_failures/entries/V76-F03.md) |
 | VADGS-P0R1-000-TEST-30000 / 20260926 | 30k官方75视图25.2378/0.8028/0.1717；Camera5共61视图单列；横移actor变换断言失败，未完成且不再续跑 | [最终记录](v76/CLOSEOUT.md)、[原始指标与状态副本](autoresearch/worldsim_v76/closeout_20260926/) |

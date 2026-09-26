@@ -1,25 +1,27 @@
 # 当前研究状态
 
-更新：2026-09-26（Asia/Singapore）。当前分支 **`v77`**，远端工作区 **`/root/autodl-tmp/motion_proj_v77`**。阶段：V7.7 / VGGT-Ω Structured Edit P0准备完成，实验尚未运行。唯一协议见[P0问题、范围与architecture](v77/P0_PROTOCOL.md)，实验入口见[EXPERIMENTS](EXPERIMENTS.md)。
+更新：2026-09-26（Asia/Singapore）。分支 **`v77`**，远端工作区 **`/root/autodl-tmp/motion_proj_v77`**。阶段：**冻结VGGT-Ω的24对象P0与三时刻控制已完成，V77继续；尚未取得高保真对象资产资格。** 结果与architecture见 [P0_RESULTS](v77/P0_RESULTS.md)，协议见 [P0_PROTOCOL](v77/P0_PROTOCOL.md)，实验按run查 [EXPERIMENTS](EXPERIMENTS.md)。
 
-## 已关闭的前序路线
+## 已完成与当前判断
 
-V7.6在commit `6350b258`关闭，failure为[V76-F03](research_failures/entries/V76-F03.md)：**当前HUGSIM和VAD-GS两批资产的对象级质量，尚不足以直接支撑我们想要的高保真反事实编辑。** 不再继续“逐场景Gaussian资产 → editor”及对象级修补。已有模型、输入、日志、正反结果保留为baseline/failure evidence，见[V7.6收口](v76/CLOSEOUT.md)。
+三个现有nuScenes开发导出固定24对象：六相机单时刻Ω、GT标定/背景尺度控制，以及0/20/40帧按GT轨迹的规范坐标并集。九次冻结前向、54张RGB、零训练。MOVE/DELETE/clone-INSERT解析点集操作通过，非目标点不变。观测LiDAR20cm召回宏平均分别6.93%、27.71%、55.02%，但并集指标必不下降；缺面、重影、提取不完整仍在，不能声明高保真编辑通过。
 
-## V7.7范围与准备状态
+新增 [V77-F01](research_failures/entries/V77-F01.md)。已验证算子数值实现，尚未分清局部米制深度、可见实例绑定与未见表面缺失。GT框不保证无遮挡，原始camera timestamp缺失，额外GT/LiDAR与开发集曝光均披露；人工verdict保持null。
 
-后续重建基座统一使用 **VGGT系列**。首阶段为 **冻结VGGT-Ω + GT实例选择 + 解析MOVE / DELETE / clone-INSERT**，零训练；暂不引入自然语言、闭环、扩散视频精修或新学习模块。先检验对象分离、米制编辑遵循、背景保持和多视角完整性，再由实际failure决定后续方法。
+## 下一项工作与停止边界
 
-已准备权重 `/root/autodl-tmp/models/worldsim_v77/vggt_omega_1b_512.pt`，这是指向远端已有完整512权重的符号链接，文件大小4,576,706,117字节。以官方实现commit `b2c61f6631d9f344a2d914bfba5d9529d6fc1d35`完成CPU `weights_only`严格state_dict加载：1411项、missing/unexpected均为0。实际来源与检查见[manifest](v77/checkpoint_manifest.json)。这是参数兼容性检查，不是GPU前向或画质验证。
+继续VGGT系列。下一项先建立**可见对象的局部几何/实例绑定强控制**：明确可被相机观察到的目标表面，以投影和保留LiDAR诊断局部深度、框内污染和框外漏选；先保留原24对象完整分母，不能换成功样例后冒称确认实验。若只能用对象真值修复，需要单列上限控制。
 
-用户提供的Drive地址已登记并确认文件名和大小。重复下载因速度慢，在确认已有完整可用权重后停止；已下载的75,497,472字节与已有文件前缀一致，partial保留。不宣称已完整下载该Drive镜像或已证明不同来源全文件一致。
+可见表面支持与绑定可靠后，再把剩余未见面/disocclusion交给补全设计。当前不加学习head、不扫阈值、不做自然语言或扩散精修。clone仍是源点复制；持久化新实例ID与图像层存在性尚未实施，不称产品级editor完成。此后另取未曝光样例才能做确认评价。
 
-## 下一项工作与资源边界
+## 运行与恢复
 
-下一步按P0协议固定开发集scene/actor/相机及命令，首先验证同步多视角重建、数据集米制坐标对齐和单对象解析编辑，再扩展规划的20–30actor。GT标定、box/ID或mask均披露为额外输入；未见表面及disocclusion缺口如实保留。此时尚无VGGT-Ω优于HUGSIM/VAD-GS的结论。
+GPU已可用：RTX3090 24GiB，冻结六视图前向峰值约5.26GiB。推理环境`/root/autodl-tmp/envs/worldsim-v77/bin/python`（torch2.12.1+cu130、numpy1.26.4）；共享包与未用scipy依赖冲突见报告。三个几何测试通过。核心实现已以`90528aa8`推送；预测、点资产、日志、离线审核页均保留在`/root/autodl-tmp/runs/worldsim_v77/`，详见 [execution_manifest](autoresearch/worldsim_v77/p0_20260926/execution_manifest.json)。
 
-当前远端 `nvidia-smi` 返回Permission denied，未启动GPU推理或训练；P0前仍需检查可用GPU及推理依赖。现有CPU环境torch2.4.1能完成权重加载，官方requirements要求torch>=2.6，尚未将其宣称为完整合格的P0运行环境。
+权重`/root/autodl-tmp/models/worldsim_v77/vggt_omega_1b_512.pt`复用已有完整512文件；实际来源和用户Drive重复下载边界见 [checkpoint_manifest](v77/checkpoint_manifest.json)，未宣称完整下载Drive新副本。有限试验均已结束，无续跑控制器，未执行关机。
 
-旧路线没有存活训练/渲染/评价或启动控制器，V7.6关闭标记已保存；本次未创建自动续跑、未执行关机。后续工作使用本v77工作区，不在另有用户改动的V7.5共享工作区切分支。
+## 前序路线约束
 
-`failure_ledger_refs: [V76-F03]`；本次V7.7准备的 `failure_ledger_delta: none`。
+V7.6按用户要求在`6350b258`关闭：[V76-F03](research_failures/entries/V76-F03.md)——当前HUGSIM和VAD-GS两批资产的对象级质量，尚不足以直接支撑想要的高保真反事实编辑。保留baseline/failure证据，不继续“逐场景Gaussian资产→editor”及对象级修补，后续基座统一VGGT系列。未修改另有用户工作的V7.5共享目录。
+
+`failure_ledger_refs: [V76-F03, V77-F01]`；`failure_ledger_delta: V77-F01`。

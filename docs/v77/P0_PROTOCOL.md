@@ -55,4 +55,4 @@ P0不以CLIP或全图PSNR替代对象质量。移动/删除暴露的原位置以
 
 用户提供[Drive权重](https://drive.google.com/file/d/1778LS0SYy30L0CfLDmzlRsEy6xFUqBdR/view?usp=drive_link)，页面文件名为 `vggt_omega_1b_512.pt`。远端已有完整同名512文件，来源、实际复用路径、Drive重复下载状态及检查结果统一见[权重manifest](checkpoint_manifest.json)。不能仅凭同名/同大小宣称不同镜像全文件一致，也不把已准备权重写成已完成推理。
 
-本次仅关闭旧阶段、创建分支和准备权重/协议，未运行P0实验、未训练或做新GPU推理。`failure_ledger_refs: [V76-F03]`；`failure_ledger_delta: none`。
+本页记录BOOTSTRAP时的启动协议；该次只准备分支、权重与协议，`failure_ledger_refs: [V76-F03]`、`failure_ledger_delta: none`。后续实跑及与协议的差异见 [24对象与三时刻控制结果](P0_RESULTS.md)，包括额外GT/LiDAR、processed时间限制、实例ID/图像存在性尚未实现的边界。

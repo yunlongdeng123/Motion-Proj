@@ -1,0 +1,37 @@
+{
+  "reviewer": "Codex agent; not user or designated human reviewer",
+  "human_verdict": null,
+  "reviewed_scope": "All 24 calibrated single-time and all 24 temporal canonical/edit contact sheets; official_000 native-vs-calibrated full-scene comparison. No exhaustive visual verdict on all 24 native objects.",
+  "findings": [
+    {
+      "scene": "scene_0230",
+      "actor_id": "22",
+      "observation": "Temporal adds rear/side support; ghost layers and incomplete surfaces remain. Higher observed-surface recall does not prove a complete clean object."
+    },
+    {
+      "scene": "scene_0230",
+      "actor_id": "5",
+      "observation": "High LiDAR recall in both controls coexists with thin/incomplete surfaces in canonical directions."
+    },
+    {
+      "scene": "scene_0255",
+      "actor_id": "25",
+      "observation": "Sparse selected points; deleting those points does not visually remove the complete apparent car. Depth localization and instance binding remain unresolved."
+    },
+    {
+      "scene": "scene_0255",
+      "actor_id": "24",
+      "observation": "Canonical views contain sign/trailer fragments and ground-like stripes. No pixel instance GT to quantify contamination."
+    },
+    {
+      "scene": "official_000",
+      "actor_id": "12",
+      "observation": "Mostly one-sided observed geometry; movement/deletion exposes unfilled regions."
+    }
+  ],
+  "limits": [
+    "3x3 point splat itself introduces sampling holes; sky/depth>80m is intentionally absent.",
+    "GT projected box selection does not certify visible pixels; occluded examples cannot define a visible-object failure rate.",
+    "LiDAR recall for a union cannot decline; no significance or held-out claim."
+  ]
+}

@@ -3,7 +3,7 @@ import argparse,html,json,pathlib,shutil
 from PIL import Image,ImageDraw
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--run-dir',required=True);p.add_argument('--output-dir',required=True);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--run-dir',required=True);p.add_argument('--output-dir',required=True);p.add_argument('--temporal-run');a=p.parse_args()
  run=pathlib.Path(a.run_dir);ev=run/'evaluation_v2';out=pathlib.Path(a.output_dir);out.mkdir(parents=True,exist_ok=True)
  summary=json.loads((ev/'summary.json').read_text());reg=json.loads((run/'registration.json').read_text());body=[];all_rows=[]
  for scene in reg['scenes']:
@@ -27,10 +27,27 @@ def main():
     for tile in group:sheet.paste(tile,(0,y));y+=tile.height+8
     sheet.save(out/f'{name}_{variant}_review_{start//4+1}.jpg',quality=91)
  metrics=''.join(f'<tr><td>{k}</td><td>{v["empty_actors"]}/24</td><td>{v["macro_visible_lidar_recall_0p2m"]:.1%}</td><td>{v["valid_object_commands"]}/{v["commands"]}</td><td>{v["max_background_change_m"]}</td></tr>' for k,v in summary['by_variant'].items())
- intro=f'<header><p>WORLD SIMULATION · V7.7 · P0</p><h1>冻结 VGGT-Ω：24 个对象的结构化编辑</h1><p>三场景、同一 processed 时刻、每场景六相机；零训练。开发集结果，不是高保真编辑已通过的声明。</p></header><section><h2>数值结果与阅读边界</h2><table><tr><th>读出</th><th>空对象</th><th>可见 LiDAR 20cm 召回（宏平均）</th><th>非空对象操作</th><th>背景点变化/m</th></tr>{metrics}</table><p>calibrated_control额外使用GT相机内外参与同帧背景LiDAR尺度；不归为纯RGB结果。LiDAR指标仅反映观察到的表面，不等于完整性或纯净度。空对象上的算子检查不计有效编辑。</p><p>MOVE / DELETE / INSERT数值通过，只说明解析操作按指令执行。未见面、背景暴露缺口及GT框内混入物仍需检查。人工判定保留为空。</p></section>'
+ if a.temporal_run:
+  temporal=pathlib.Path(a.temporal_run)/'evaluation';ts=json.loads((temporal/'summary.json').read_text());tr=json.loads((temporal/'all_actor_metrics.json').read_text());tiles=[]
+  metrics+=f'<tr><td>GT + 三时刻规范坐标累积</td><td>0/24</td><td>{ts["macro_temporal_recall"]:.1%}</td><td>336/336</td><td>0</td></tr>'
+  body.append('<section><h2>固定三时刻控制：0 / 20 / 40 帧</h2><p>各时刻独立运行冻结Ω，用GT轨迹变换到对象规范坐标再直接取并集。3个对象缺一个时刻的GT；20个对象三个时刻均有非空点。最近距离召回随并集机械地不下降，不能单独作为形状质量改善的证据。</p></section>')
+  for r in tr:
+   relative=f'temporal/{r["scene"]}/actor_{r["actor_id"]}';dest=out/relative;dest.mkdir(parents=True,exist_ok=True);src=temporal/r['scene']/('actor_'+r['actor_id'])
+   for f in ['edit_crop.jpg','canonical.jpg','metrics.json']:shutil.copy2(src/f,dest/f)
+   single=f'{r["scene"]}/calibrated_control/actor_{r["actor_id"]}/canonical.jpg'
+   title=f'{r["scene"]} / actor {r["actor_id"]} / single {r["single_time_recall"]:.1%} -> 3-time {r["temporal_recall"]:.1%}'
+   body.append(f'<article data-variant="temporal_control"><h3>{title}</h3><p>上排为单时刻对象；中排为三时刻并集；下排为三时刻资产的原图/重建/MOVE/DELETE/INSERT。</p><img loading="lazy" src="{single}"><img loading="lazy" src="{relative}/canonical.jpg"><img loading="lazy" src="{relative}/edit_crop.jpg"></article>')
+   top=Image.open(out/single).resize((1250,277));middle=Image.open(dest/'canonical.jpg').resize((1250,277));bottom=Image.open(dest/'edit_crop.jpg')
+   tile=Image.new('RGB',(1250,45+554+bottom.height),'#edf2f8');ImageDraw.Draw(tile).text((8,13),title+' | single / temporal / edited',fill='#13273b');tile.paste(top,(0,45));tile.paste(middle,(0,322));tile.paste(bottom,(0,599));tiles.append(tile)
+  for start in range(0,len(tiles),3):
+   group=tiles[start:start+3];sheet=Image.new('RGB',(1250,sum(t.height for t in group)+8*(len(group)-1)),'#d5deea');y=0
+   for tile in group:sheet.paste(tile,(0,y));y+=tile.height+8
+   sheet.save(out/f'temporal_review_{start//3+1}.jpg',quality=91)
+  shutil.copy2(temporal/'summary.json',out/'temporal_summary.json');shutil.copy2(temporal/'all_actor_metrics.json',out/'temporal_actor_metrics.json')
+ intro=f'<header><p>WORLD SIMULATION · V7.7 · P0</p><h1>冻结 VGGT-Ω：24 个对象的结构化编辑</h1><p>三场景、同一 processed 时刻、每场景六相机；零训练。开发集结果，不是高保真编辑已通过的声明。</p></header><section><h2>数值结果与阅读边界</h2><table><tr><th>读出</th><th>空对象</th><th>观测 LiDAR 20cm 召回（宏平均）</th><th>非空对象操作</th><th>非目标点变化/m</th></tr>{metrics}</table><p>native使用GT相机中心拟合Sim3；calibrated_control使用GT相机内外参与同帧背景LiDAR尺度。两者均有GT辅助，不归为纯RGB米制结果。LiDAR指标只检查GT框内观测回波，不等于完整性、纯净度或经核验的相机可见表面；GT投影框也不保证对象未被遮挡。空对象上的算子检查不计有效编辑。</p><p>MOVE / DELETE / INSERT数值通过，只说明解析操作按指令执行，不能证明完整实例已删除或复制。非目标指选中点以外的全部点；对象漏选部分也可能包含其中。未见面、背景暴露缺口及GT框内混入物仍需检查。3×3点渲染也会产生采样孔洞；深度80米以外和天空未保留。人工判定保留为空。</p></section>'
  architecture='<section><h2>Architecture components</h2><div class="architecture"><span>多视角 RGB</span> → <span>冻结 VGGT-Ω</span> → <span>深度 / 相机</span> → <span>米制对齐</span> → <span>GT 框选择</span> → <span>解析编辑</span> → <span>渲染 / 对象审核</span></div></section>'
  css='body{margin:0;background:#eef2f6;color:#172a40;font:16px/1.65 system-ui,sans-serif}main{max-width:1300px;margin:auto;padding:36px 22px}header{padding:28px 0}header p:first-child{letter-spacing:2px;color:#187e81;font-size:13px}h1{font-size:34px}h2{font-size:23px}h3{font-size:17px}section,article{background:white;padding:24px;border-radius:12px;margin:22px 0;box-shadow:0 2px 6px #19314b0a}img{display:block;max-width:100%;height:auto;margin:14px 0}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:12px;border-bottom:1px solid #dfe6ee}th{background:#f3f6fa}a{color:#086e8e}.architecture{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.architecture span{padding:10px;background:#e8f2f4;border:1px solid #b3d7dc;border-radius:6px}nav{position:sticky;top:0;background:#edf2f5ef;padding:12px;z-index:1}button{padding:9px 16px;margin-right:8px;cursor:pointer;border:1px solid #abc2d2;border-radius:6px;background:white}'
- nav='<nav><button onclick="filter(\'all\')">全部对象</button><button onclick="filter(\'native\')">预测相机 + Sim3</button><button onclick="filter(\'calibrated_control\')">GT 标定辅助</button></nav>'
+ nav='<nav><button onclick="filter(\'all\')">全部对象</button><button onclick="filter(\'native\')">预测相机 + Sim3</button><button onclick="filter(\'calibrated_control\')">GT 标定辅助</button><button onclick="filter(\'temporal_control\')">三时刻控制</button></nav>'
  script='<script>function filter(v){document.querySelectorAll("article[data-variant]").forEach(x=>x.hidden=v!=="all"&&x.dataset.variant!==v)}</script>'
  (out/'index.html').write_text('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>V7.7 P0 对象编辑审核</title><style>'+css+'</style><main>'+intro+architecture+nav+''.join(body)+'</main>'+script+'</html>')
  (out/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')

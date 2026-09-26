@@ -31,4 +31,5 @@
 | V74-H2 | 0 | 22 | [V74-H2](ids/V74-H2.md) | [1](versions/V74-H2-1.md) |
 | V75 | 0 | 2 | [V75](ids/V75.md) | [1](versions/V75-1.md) |
 | V76 | 0 | 3 | [V76](ids/V76.md) | [1](versions/V76-1.md) |
+| V77 | 0 | 1 | [V77](ids/V77.md) | [1](versions/V77-1.md) |
 | misc | 100 | 0 | 按阶段/关键词查阅 | [1](versions/misc-1.md) / [2](versions/misc-2.md) |
