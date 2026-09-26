@@ -1,0 +1,5240 @@
+{
+  "task_id": "VADGS-BACKGROUND-COMPLETE-20260926",
+  "recorded_at": "2026-09-26T08:14:09.052069+08:00",
+  "failure_ledger_refs": [
+    "V76-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "matched_scene_training_admitted": false,
+  "scenes": {
+    "scene_0230": {
+      "expected_views": 366,
+      "counts": {
+        "depth_v2": 366,
+        "normal_img": 366,
+        "sam_bkgd_masks": 366
+      },
+      "background_files_decoded_and_validated": 366,
+      "background_shape": [
+        900,
+        1600
+      ],
+      "background_dtype": "uint8",
+      "report_status": "complete",
+      "report_mtime": "2026-09-26T02:47:07.275680+08:00",
+      "report_sha256": "679d21c4ec109c296a93de5633ec13907d88bae80b207108fe659c116505ea2e",
+      "invocation_device": null,
+      "invocation_seconds": 1331.27223447524,
+      "reused_existing_views": 6,
+      "new_view_devices": {
+        "unspecified": 360
+      },
+      "dynamic_identity_blocked": {
+        "failure_id": "V76-F02",
+        "time": "2026-09-25T18:24:46.549169+00:00",
+        "reason": "Projected hidden pedestrian boxes lead SAM to label foreground car/sign as pedestrian; uint8 ID and shape checks alone miss this.",
+        "evidence": "/root/autodl-tmp/data/v76_vadgs/sam_occlusion_audit",
+        "preserved_dynamic_masks": "/root/autodl-tmp/data/v76_vadgs/scene_0230/sam_prior_evidence/rejected_box_only_sam_masks_20260926",
+        "decision": "Do not bulk-generate box-only actor labels or launch matched-scene training until visible identity gate passes.",
+        "pre_registered_fallback": "Associate class-compatible visible 2D detections to projected 3D tracks, then prompt SAM; validate on the same fixed positives and occlusions before expansion.",
+        "background_sam_may_continue": true,
+        "human_verdict": null
+      },
+      "files": [
+        {
+          "name": "000_0",
+          "bytes": 52089,
+          "sha256": "a96475a63066783eec21bfcff3aa4d1698155d48640ab87dbc6fd9ef934f7c04",
+          "region_labels": 146,
+          "unassigned_fraction": 0.03483888888888889
+        },
+        {
+          "name": "000_1",
+          "bytes": 52207,
+          "sha256": "495dcab1deeebc890a28bd38d6d61719567584f23657bef3b1abbb11204c49d5",
+          "region_labels": 176,
+          "unassigned_fraction": 0.13573402777777777
+        },
+        {
+          "name": "000_2",
+          "bytes": 45654,
+          "sha256": "f84541416dadd1d6525e3888aa5e3e7a5b00dd8ef5fe3c7ceb660cd0e50145b4",
+          "region_labels": 147,
+          "unassigned_fraction": 0.019752083333333333
+        },
+        {
+          "name": "000_3",
+          "bytes": 32400,
+          "sha256": "f695930f54ce0127476b22a1d05cbccd025fe001b8cebc972fad81dbb1afb178",
+          "region_labels": 89,
+          "unassigned_fraction": 0.044104166666666667
+        },
+        {
+          "name": "000_4",
+          "bytes": 48635,
+          "sha256": "8b6c36dbc1afde0e2408e99e99be578bd39a83e0f490bf9bc71888c4a28b43eb",
+          "region_labels": 96,
+          "unassigned_fraction": 0.06814444444444444
+        },
+        {
+          "name": "000_5",
+          "bytes": 37989,
+          "sha256": "1c974a2f3c93b3bc65487eada5b63da259eecc757dad62bca5f7109a172627d3",
+          "region_labels": 95,
+          "unassigned_fraction": 0.050818055555555554
+        },
+        {
+          "name": "001_0",
+          "bytes": 49863,
+          "sha256": "4dbb08cc8825706c8001404a195712c59e255077049b02e0743ffed623e63bef",
+          "region_labels": 140,
+          "unassigned_fraction": 0.03897152777777778
+        },
+        {
+          "name": "001_1",
+          "bytes": 52072,
+          "sha256": "1d03d85c1c66af941985f3dcdc275922b9fe1887c9396243c89d7dc7610641fa",
+          "region_labels": 171,
+          "unassigned_fraction": 0.03661388888888889
+        },
+        {
+          "name": "001_2",
+          "bytes": 48101,
+          "sha256": "04b1b1d5a3515903c64e132aeb3426fd0b86c707c90be452b8db0dc328ee0f74",
+          "region_labels": 157,
+          "unassigned_fraction": 0.0500375
+        },
+        {
+          "name": "001_3",
+          "bytes": 34208,
+          "sha256": "2847edc11e52f04cc4c9cfee7bfa43dbc14bcb30dea58d103fc789cc056c36af",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04410694444444444
+        },
+        {
+          "name": "001_4",
+          "bytes": 48831,
+          "sha256": "dba7d142fd16cbf6b0d16b59c3974c15398e916e4462e9089070d82e955240e5",
+          "region_labels": 94,
+          "unassigned_fraction": 0.047800694444444444
+        },
+        {
+          "name": "001_5",
+          "bytes": 39078,
+          "sha256": "4fe8ef6a50cab5999d13eb8166978027d0d37a2d90b72831fea3afdbd87a4bd7",
+          "region_labels": 95,
+          "unassigned_fraction": 0.05221805555555555
+        },
+        {
+          "name": "002_0",
+          "bytes": 50023,
+          "sha256": "b9c6b6eb55a2148058fce42d318f161e25fe5c74e0941bae22e2fbfd3fda7224",
+          "region_labels": 139,
+          "unassigned_fraction": 0.041841666666666666
+        },
+        {
+          "name": "002_1",
+          "bytes": 51795,
+          "sha256": "14b4b13091e910e73f2eaef5fd7308908c965ab46a3077228594cfcdaf9b5c2d",
+          "region_labels": 181,
+          "unassigned_fraction": 0.03619513888888889
+        },
+        {
+          "name": "002_2",
+          "bytes": 52179,
+          "sha256": "9cf95d809d87a24cf45580429c254374c7a0ee31de351c9907af318fb6a58de8",
+          "region_labels": 175,
+          "unassigned_fraction": 0.0427125
+        },
+        {
+          "name": "002_3",
+          "bytes": 31558,
+          "sha256": "636caf863684996ba1300ec15869b976f439d3c4fcb1f28ca76e0ca1cdf63e73",
+          "region_labels": 91,
+          "unassigned_fraction": 0.040959027777777775
+        },
+        {
+          "name": "002_4",
+          "bytes": 47742,
+          "sha256": "e5bfd291c3b20277324d514e9a1aee2e26f7a78c191d8f9c570a18d675c378ef",
+          "region_labels": 85,
+          "unassigned_fraction": 0.05288958333333333
+        },
+        {
+          "name": "002_5",
+          "bytes": 39246,
+          "sha256": "4bfa7689d19eae810c764878cb09a4f8a11d09307a109683e11af94347368073",
+          "region_labels": 100,
+          "unassigned_fraction": 0.0503375
+        },
+        {
+          "name": "003_0",
+          "bytes": 49924,
+          "sha256": "ec8635410f40f8705bfe9712d4f74640d166ff572d57aacfce87f1d58219b996",
+          "region_labels": 143,
+          "unassigned_fraction": 0.04587847222222222
+        },
+        {
+          "name": "003_1",
+          "bytes": 52482,
+          "sha256": "6ff2f8e9e879fde6509d970709ad3b516c1a8b8002248ccf1de22b45dd21a72a",
+          "region_labels": 185,
+          "unassigned_fraction": 0.03720625
+        },
+        {
+          "name": "003_2",
+          "bytes": 44177,
+          "sha256": "20cf831662a44b4bdf4220928aee03e3e4392351a96c8b89d2de05d23e724816",
+          "region_labels": 157,
+          "unassigned_fraction": 0.06048611111111111
+        },
+        {
+          "name": "003_3",
+          "bytes": 29918,
+          "sha256": "4bfd8332a3db0d26751c3965bd1f778239c10b61bfe7de592774d25d10c5822d",
+          "region_labels": 93,
+          "unassigned_fraction": 0.045553472222222224
+        },
+        {
+          "name": "003_4",
+          "bytes": 51349,
+          "sha256": "f5ac5ed02643bc4ac61f821b6a772b6fbef158410e14db19239abe04f7afeb43",
+          "region_labels": 95,
+          "unassigned_fraction": 0.045336805555555554
+        },
+        {
+          "name": "003_5",
+          "bytes": 37034,
+          "sha256": "75d84c224f82fe705c093ee24eaee6e3af3e5b7c03bde2216ae534bd5b74b4d3",
+          "region_labels": 88,
+          "unassigned_fraction": 0.051880555555555555
+        },
+        {
+          "name": "004_0",
+          "bytes": 51179,
+          "sha256": "f5da0f4aa9344286527139d06a7e1e35f6be5509353301443a099604baecba74",
+          "region_labels": 145,
+          "unassigned_fraction": 0.038386805555555556
+        },
+        {
+          "name": "004_1",
+          "bytes": 52312,
+          "sha256": "28383fd937328030022dc30ef7e79a3c9bd603a4a8c3684244ac669fd477ed12",
+          "region_labels": 176,
+          "unassigned_fraction": 0.13159652777777778
+        },
+        {
+          "name": "004_2",
+          "bytes": 48591,
+          "sha256": "6938eb4f250b4586f1aa89d1356a311ddbff27322981edbdc6971af9d4beba5c",
+          "region_labels": 161,
+          "unassigned_fraction": 0.06215486111111111
+        },
+        {
+          "name": "004_3",
+          "bytes": 29027,
+          "sha256": "eecc2e04fe874a60d2cc89ad4e05d16de5e73789aa8c74c8372785a6ed4b5730",
+          "region_labels": 90,
+          "unassigned_fraction": 0.04720972222222222
+        },
+        {
+          "name": "004_4",
+          "bytes": 50377,
+          "sha256": "65d962aac3dd5888f7b77367d563bf672daca7fdc6d14f0526e8fa5f63cb3b1b",
+          "region_labels": 96,
+          "unassigned_fraction": 0.05307152777777778
+        },
+        {
+          "name": "004_5",
+          "bytes": 38333,
+          "sha256": "153a28ee5bc4a5ec0b1072e6486614b8c39756809e338ab762965193a06d78ba",
+          "region_labels": 94,
+          "unassigned_fraction": 0.049527777777777775
+        },
+        {
+          "name": "005_0",
+          "bytes": 50513,
+          "sha256": "2022330a4e056afeda556b1c72a40bc9441ebccfd2dff1921ac33c05f9e97e0b",
+          "region_labels": 145,
+          "unassigned_fraction": 0.04175416666666667
+        },
+        {
+          "name": "005_1",
+          "bytes": 52646,
+          "sha256": "148ff68967175fe7afde53e763d22ee96e6d8904c251a4cf55a97e278143a8c6",
+          "region_labels": 175,
+          "unassigned_fraction": 0.03664375
+        },
+        {
+          "name": "005_2",
+          "bytes": 48408,
+          "sha256": "ab625d91ada92ace84af38ebc261ff071a4a1f27a34757007afc86e301f76a3e",
+          "region_labels": 149,
+          "unassigned_fraction": 0.05149722222222222
+        },
+        {
+          "name": "005_3",
+          "bytes": 31043,
+          "sha256": "cc1dc1b83091b94b1c380019d80596b72a5ee070afae5cc1dcade719a0b36d69",
+          "region_labels": 85,
+          "unassigned_fraction": 0.041259722222222225
+        },
+        {
+          "name": "005_4",
+          "bytes": 52744,
+          "sha256": "7aa9bb407a292357c56c825c8055414bfef90b31b074b6627b2bba2efe085f8c",
+          "region_labels": 105,
+          "unassigned_fraction": 0.04600208333333333
+        },
+        {
+          "name": "005_5",
+          "bytes": 36074,
+          "sha256": "59adfd1745d1d5ec24d562de5f40f055a1b15bf4a45d6d534fe842e48271f7a0",
+          "region_labels": 85,
+          "unassigned_fraction": 0.061990277777777776
+        },
+        {
+          "name": "006_0",
+          "bytes": 52093,
+          "sha256": "3f00371ceb7716f18db4906da58cc298c3461ff7765b121ac245f4d3c5adff1b",
+          "region_labels": 151,
+          "unassigned_fraction": 0.037359027777777776
+        },
+        {
+          "name": "006_1",
+          "bytes": 53001,
+          "sha256": "64693e329a8e2ae8ac48a4a3d39ca5101449f8df215f195b7d22b5d57ecc7251",
+          "region_labels": 176,
+          "unassigned_fraction": 0.03721597222222222
+        },
+        {
+          "name": "006_2",
+          "bytes": 48167,
+          "sha256": "f4b9e8c78d3e1a0ccc9fbcb5e9906cdc0179f89d38a971475ae5494575abe73c",
+          "region_labels": 168,
+          "unassigned_fraction": 0.05534791666666666
+        },
+        {
+          "name": "006_3",
+          "bytes": 31935,
+          "sha256": "91564681fe3f2e8276d6a739396501fca96a756cc0007eaa0f6189914175c4ee",
+          "region_labels": 92,
+          "unassigned_fraction": 0.04668888888888889
+        },
+        {
+          "name": "006_4",
+          "bytes": 51622,
+          "sha256": "713e4981b81f0c161809dae255d408eed55fce3afd00e6a4eb099d1e731e709c",
+          "region_labels": 94,
+          "unassigned_fraction": 0.05931111111111111
+        },
+        {
+          "name": "006_5",
+          "bytes": 38051,
+          "sha256": "669fab234555d133c76c9c52629d0ce34dbade121c8fa8de6e73c7e97016a901",
+          "region_labels": 98,
+          "unassigned_fraction": 0.053579166666666664
+        },
+        {
+          "name": "007_0",
+          "bytes": 51676,
+          "sha256": "18324fc782b6f3b918f2d5ad6ac1d739d6a8565d39f0f19fd360479c8cf00d0e",
+          "region_labels": 147,
+          "unassigned_fraction": 0.04755347222222222
+        },
+        {
+          "name": "007_1",
+          "bytes": 51142,
+          "sha256": "9466230fb543a758fae6e12a3df57ecebbc6beb0b388d68706f55e2cf5e14922",
+          "region_labels": 155,
+          "unassigned_fraction": 0.03985625
+        },
+        {
+          "name": "007_2",
+          "bytes": 47976,
+          "sha256": "775e041168f95dd94e620c0ba1bc1180208d09c02e8ff755692b6ad22da97528",
+          "region_labels": 153,
+          "unassigned_fraction": 0.039586805555555556
+        },
+        {
+          "name": "007_3",
+          "bytes": 32496,
+          "sha256": "5dda4b9d83e0348e5a10aff71494d6a7997a2ec5c0add32e2586a3701a9280c4",
+          "region_labels": 102,
+          "unassigned_fraction": 0.04289236111111111
+        },
+        {
+          "name": "007_4",
+          "bytes": 51644,
+          "sha256": "1cbe21935b6540f8e4b778bf269a5774e3e7338c0d6439931b8892b21b2fb8cf",
+          "region_labels": 98,
+          "unassigned_fraction": 0.07602847222222223
+        },
+        {
+          "name": "007_5",
+          "bytes": 39924,
+          "sha256": "af6ef8ba16e15f40094baab92bd03fd6060c005ad259844e59fa46514474d8b6",
+          "region_labels": 103,
+          "unassigned_fraction": 0.057475
+        },
+        {
+          "name": "008_0",
+          "bytes": 52791,
+          "sha256": "049b81a428dfc4483631462650f9dbf755c2c3d08c14474eccb9f6a7c074db58",
+          "region_labels": 141,
+          "unassigned_fraction": 0.04423611111111111
+        },
+        {
+          "name": "008_1",
+          "bytes": 50481,
+          "sha256": "2604870f4b9481b3465b4db74eb3c9a42538bc0fdead2dbe95928b0fc037f7a9",
+          "region_labels": 161,
+          "unassigned_fraction": 0.03477986111111111
+        },
+        {
+          "name": "008_2",
+          "bytes": 45336,
+          "sha256": "4e1bea0449064e8e10e4466cdd2a8b0b2d037673b8c59411cbd105b0f50a778f",
+          "region_labels": 136,
+          "unassigned_fraction": 0.04091527777777778
+        },
+        {
+          "name": "008_3",
+          "bytes": 31589,
+          "sha256": "2c9730dc65b0b1c095deae245f2383a045bb1d4a428e6c9345f250b97a05dc19",
+          "region_labels": 92,
+          "unassigned_fraction": 0.04285972222222222
+        },
+        {
+          "name": "008_4",
+          "bytes": 49262,
+          "sha256": "27cf91d58a82e21902ed74126832522d6cb1215a54479ff1256327565be52f4a",
+          "region_labels": 98,
+          "unassigned_fraction": 0.05169027777777778
+        },
+        {
+          "name": "008_5",
+          "bytes": 37857,
+          "sha256": "a21d3ed41e5d8dc0770282503e48411394044a9914725972ccf1f49cc6c7b719",
+          "region_labels": 90,
+          "unassigned_fraction": 0.056481944444444446
+        },
+        {
+          "name": "009_0",
+          "bytes": 52489,
+          "sha256": "bb236f048b03f266187ee50695d7694d0878d681178e429bb7005beee44693e7",
+          "region_labels": 132,
+          "unassigned_fraction": 0.04423958333333333
+        },
+        {
+          "name": "009_1",
+          "bytes": 48587,
+          "sha256": "388c14cbd04a0664da1cc70486617b5dfeabb8c2f39e13060f71ff924d9c5d78",
+          "region_labels": 150,
+          "unassigned_fraction": 0.03677430555555555
+        },
+        {
+          "name": "009_2",
+          "bytes": 48055,
+          "sha256": "b01198c6e7fa404e2e2b919b25325e69ab43c9df190ce2c70ab31a064c67b1c1",
+          "region_labels": 159,
+          "unassigned_fraction": 0.02723611111111111
+        },
+        {
+          "name": "009_3",
+          "bytes": 28720,
+          "sha256": "59299fa05e5d9e7df950ebbc454d14a8d02b7bf79d69ff60bc188c458cabbff8",
+          "region_labels": 87,
+          "unassigned_fraction": 0.037434027777777774
+        },
+        {
+          "name": "009_4",
+          "bytes": 48959,
+          "sha256": "4003cf341bafa0737bb28dfea3e8a26401bee06d9aa454ea81babb3ae4a4a5c3",
+          "region_labels": 96,
+          "unassigned_fraction": 0.05128263888888889
+        },
+        {
+          "name": "009_5",
+          "bytes": 38850,
+          "sha256": "cf080a17f21be32069ecf6d9bf541ed9cbaff573ab1e62789f9cf6113d2cc889",
+          "region_labels": 94,
+          "unassigned_fraction": 0.05046805555555556
+        },
+        {
+          "name": "010_0",
+          "bytes": 53488,
+          "sha256": "49590ddf90075ae2366241d3ba3fdff86c5914e5d7343a3aa4c9ce315e820132",
+          "region_labels": 145,
+          "unassigned_fraction": 0.053066666666666665
+        },
+        {
+          "name": "010_1",
+          "bytes": 48972,
+          "sha256": "98b2df6e94af36b97ad2d03e224c5a09e9c9fb3f7ef0438c4a51317ac7df1123",
+          "region_labels": 149,
+          "unassigned_fraction": 0.03308333333333333
+        },
+        {
+          "name": "010_2",
+          "bytes": 50924,
+          "sha256": "c269b3acb7d9cd0161fc2a269e159fb19d88bfb6de3bfc8595b8ce8fbe9a9efc",
+          "region_labels": 170,
+          "unassigned_fraction": 0.022846527777777778
+        },
+        {
+          "name": "010_3",
+          "bytes": 31819,
+          "sha256": "3a704cffe31dacc5fd77cc3e7e1018c34ef3d096f5f406db770343cf62fcc44d",
+          "region_labels": 97,
+          "unassigned_fraction": 0.03519861111111111
+        },
+        {
+          "name": "010_4",
+          "bytes": 47345,
+          "sha256": "f2e9217e8bce44f73353113082d18eccdad32b94de3862699d41724347979648",
+          "region_labels": 94,
+          "unassigned_fraction": 0.05858402777777778
+        },
+        {
+          "name": "010_5",
+          "bytes": 37737,
+          "sha256": "f677598220995aff47b32016f3ed905ccef9b5a08854b2b883cbc04ba5de8e5a",
+          "region_labels": 99,
+          "unassigned_fraction": 0.05810347222222222
+        },
+        {
+          "name": "011_0",
+          "bytes": 52554,
+          "sha256": "006aecca111816762a516aeda8e7e5d3a6ec33a15612c2a458d9faf658df805f",
+          "region_labels": 138,
+          "unassigned_fraction": 0.04440486111111111
+        },
+        {
+          "name": "011_1",
+          "bytes": 51671,
+          "sha256": "35eb01664a691144b13c91e09f198f55fb5f014b6624d1a7950b5f3754bb27be",
+          "region_labels": 170,
+          "unassigned_fraction": 0.028104166666666666
+        },
+        {
+          "name": "011_2",
+          "bytes": 47182,
+          "sha256": "b8d57fea7de842591034dd5b42d54d6c8a4138a128cc4f2745d470091e640676",
+          "region_labels": 151,
+          "unassigned_fraction": 0.07361319444444445
+        },
+        {
+          "name": "011_3",
+          "bytes": 30886,
+          "sha256": "95dfc16ec1b80463826974d67928ea006f7d66d8d02ac5ddf9427a29e1a79821",
+          "region_labels": 90,
+          "unassigned_fraction": 0.03915902777777778
+        },
+        {
+          "name": "011_4",
+          "bytes": 50723,
+          "sha256": "571dc78cf093bc56a753b07e744c03cba48abb7f647ff6b0473359baa43cc894",
+          "region_labels": 98,
+          "unassigned_fraction": 0.05901180555555555
+        },
+        {
+          "name": "011_5",
+          "bytes": 40175,
+          "sha256": "b40e5b5ecf5ec9ce24c5fbca8496cffc0f41679eef737581c7f279c64e20ef66",
+          "region_labels": 102,
+          "unassigned_fraction": 0.03372569444444445
+        },
+        {
+          "name": "012_0",
+          "bytes": 52802,
+          "sha256": "769c9bc42de47aa449a32b545bededffee14cc5583ed8c2627f14ddd1d79b022",
+          "region_labels": 138,
+          "unassigned_fraction": 0.04167152777777778
+        },
+        {
+          "name": "012_1",
+          "bytes": 55692,
+          "sha256": "ab3adf1f94a4e18c4008fb63a87bfce61b19e572b59dd81ddef1d8bacadf5918",
+          "region_labels": 174,
+          "unassigned_fraction": 0.029819444444444444
+        },
+        {
+          "name": "012_2",
+          "bytes": 49002,
+          "sha256": "68fe9e98d5659b09a876233ace6c296e7c5d69801eca1d60335a4adda6143946",
+          "region_labels": 158,
+          "unassigned_fraction": 0.08614097222222222
+        },
+        {
+          "name": "012_3",
+          "bytes": 33112,
+          "sha256": "4b702d721d49a0dce35a74ca9579793ff6348fde2148dae4c794b8a676d42e02",
+          "region_labels": 98,
+          "unassigned_fraction": 0.04584930555555555
+        },
+        {
+          "name": "012_4",
+          "bytes": 49201,
+          "sha256": "ef0d8b04d21869a43dd57ed54fb3c71539259f66ef1df0dd5ef3b7330b6c3054",
+          "region_labels": 101,
+          "unassigned_fraction": 0.06254166666666666
+        },
+        {
+          "name": "012_5",
+          "bytes": 38288,
+          "sha256": "9d761d701337d9d65298f1be420bd40dcaabdabdcb1c3b1d51ebc237f6f9970e",
+          "region_labels": 98,
+          "unassigned_fraction": 0.053316666666666665
+        },
+        {
+          "name": "013_0",
+          "bytes": 50163,
+          "sha256": "ebea1f89306cba44976c48bd7b4c296db517788747de41f36b05e4454d34eb8c",
+          "region_labels": 140,
+          "unassigned_fraction": 0.056168055555555554
+        },
+        {
+          "name": "013_1",
+          "bytes": 54010,
+          "sha256": "edd4375395352c86cab983e12d373e7bc48e80e7c93652353d0f8ca0fae04b54",
+          "region_labels": 178,
+          "unassigned_fraction": 0.0306
+        },
+        {
+          "name": "013_2",
+          "bytes": 53944,
+          "sha256": "ca6e65e2a0d9f5fa3e270492ae10894865f0b11eb5ea337f81bebe3a216b588f",
+          "region_labels": 181,
+          "unassigned_fraction": 0.053725
+        },
+        {
+          "name": "013_3",
+          "bytes": 36009,
+          "sha256": "0c10a8b77dc1d44c8cbe7e7646f293e842440baab2b5fd7545ef0cb64c9005fb",
+          "region_labels": 103,
+          "unassigned_fraction": 0.04645
+        },
+        {
+          "name": "013_4",
+          "bytes": 49251,
+          "sha256": "8b50c4fda4347f77ec4b22e1864ab3a1ae678888fe18ed256b618d81fc0aee00",
+          "region_labels": 111,
+          "unassigned_fraction": 0.05775555555555555
+        },
+        {
+          "name": "013_5",
+          "bytes": 39589,
+          "sha256": "b19bfb800c414b4cb7e472756c626b50652c2fc5d77b22f5fd58de787108b063",
+          "region_labels": 97,
+          "unassigned_fraction": 0.04971388888888889
+        },
+        {
+          "name": "014_0",
+          "bytes": 51244,
+          "sha256": "4523f0855ce8f78c372ede4dd4c6ca1a908d4a4c1230a0b042d11b84a1934b98",
+          "region_labels": 141,
+          "unassigned_fraction": 0.04583263888888889
+        },
+        {
+          "name": "014_1",
+          "bytes": 53256,
+          "sha256": "79b7c368f75cca50112cd1ee5946617715563dcc236ae8105d266a6f79e1a1fd",
+          "region_labels": 183,
+          "unassigned_fraction": 0.03504583333333333
+        },
+        {
+          "name": "014_2",
+          "bytes": 51471,
+          "sha256": "489f537bc2abd2f115d40de68bcfa7877efe3075ac9a26a05016ba614cecabcb",
+          "region_labels": 171,
+          "unassigned_fraction": 0.10867013888888889
+        },
+        {
+          "name": "014_3",
+          "bytes": 35555,
+          "sha256": "02dc07a627189713992078a46010f69c61dfe35cb371c24cca958ec0cd8f5cb2",
+          "region_labels": 101,
+          "unassigned_fraction": 0.045497222222222224
+        },
+        {
+          "name": "014_4",
+          "bytes": 50347,
+          "sha256": "f29fe42779784448441a18f8c47456b00a4f49f9bee78c411fa85dc9a8ef86bf",
+          "region_labels": 99,
+          "unassigned_fraction": 0.051445833333333336
+        },
+        {
+          "name": "014_5",
+          "bytes": 40060,
+          "sha256": "e362c77bdf1f7ad53b060b7c77b6fa3fe3e8a5280489e8fa40eeaa207c71f027",
+          "region_labels": 97,
+          "unassigned_fraction": 0.055807638888888886
+        },
+        {
+          "name": "015_0",
+          "bytes": 53241,
+          "sha256": "3273fe11ceffbd92a7d96eeaf999285dd5a4b258b4956d2ee81ffc6ad8ea8963",
+          "region_labels": 143,
+          "unassigned_fraction": 0.040854166666666664
+        },
+        {
+          "name": "015_1",
+          "bytes": 55911,
+          "sha256": "8022ade55a260183ffc1c6008c5b8798f7a9ff4ab7833d513073d61fa5169c9a",
+          "region_labels": 185,
+          "unassigned_fraction": 0.03284513888888889
+        },
+        {
+          "name": "015_2",
+          "bytes": 50236,
+          "sha256": "4271b218d884afa4abaf117870d2eb8d079e4f52482827358cb4466ca86040bf",
+          "region_labels": 160,
+          "unassigned_fraction": 0.07476180555555556
+        },
+        {
+          "name": "015_3",
+          "bytes": 32977,
+          "sha256": "0ead5cf96a17188f5ba46e8e67ba4ab14f0bcda6e17d4be807d4df584ff76c31",
+          "region_labels": 96,
+          "unassigned_fraction": 0.04954097222222222
+        },
+        {
+          "name": "015_4",
+          "bytes": 47850,
+          "sha256": "16c795ac318814a9d0cb31c68296d0bb104667da89429284dcd3a72005ec43e8",
+          "region_labels": 92,
+          "unassigned_fraction": 0.05065069444444444
+        },
+        {
+          "name": "015_5",
+          "bytes": 39530,
+          "sha256": "0d2975184532e38cc0944cf1778b5387a3826a7b021c2c5ea0a3dee0450467d1",
+          "region_labels": 96,
+          "unassigned_fraction": 0.05470208333333333
+        },
+        {
+          "name": "016_0",
+          "bytes": 51654,
+          "sha256": "1fdcb24fbd46dcffb9910d4ba6cc7605690d3d407c9cd0bc462508d26e1c6d6b",
+          "region_labels": 139,
+          "unassigned_fraction": 0.044283333333333334
+        },
+        {
+          "name": "016_1",
+          "bytes": 55485,
+          "sha256": "96838ad4a44b5f9d03480d456bf718aeaf852b240388d2242a84b2d8a8a21f9c",
+          "region_labels": 195,
+          "unassigned_fraction": 0.03153263888888889
+        },
+        {
+          "name": "016_2",
+          "bytes": 55903,
+          "sha256": "31fc0afe3f03ae761ed65e66b4cfdf695b6f5ab5cd79d222226eb134048a054f",
+          "region_labels": 174,
+          "unassigned_fraction": 0.05864930555555556
+        },
+        {
+          "name": "016_3",
+          "bytes": 33453,
+          "sha256": "2a290174da2c45a2bc35766c50368a192004d14e0053da5366c6fd23516a5202",
+          "region_labels": 98,
+          "unassigned_fraction": 0.04700763888888889
+        },
+        {
+          "name": "016_4",
+          "bytes": 45669,
+          "sha256": "2c243836844bcdbb768fafcf972024d2c5e2af800922b58ff57929acfc5d48f3",
+          "region_labels": 92,
+          "unassigned_fraction": 0.11674097222222223
+        },
+        {
+          "name": "016_5",
+          "bytes": 39120,
+          "sha256": "4ddf52eb974dc9b224fb143836593439e4e671ff477630d6de8ee9594df00ea5",
+          "region_labels": 96,
+          "unassigned_fraction": 0.037274305555555554
+        },
+        {
+          "name": "017_0",
+          "bytes": 52851,
+          "sha256": "5a2db802e15c8ff9fb629968685208496e87f30cb49046162d5338563be2ad01",
+          "region_labels": 133,
+          "unassigned_fraction": 0.04112916666666667
+        },
+        {
+          "name": "017_1",
+          "bytes": 52842,
+          "sha256": "f1865c84747b8115ce2a893349bc42ea7d143c0ffc2674c69acc74ca3a159558",
+          "region_labels": 178,
+          "unassigned_fraction": 0.034763888888888886
+        },
+        {
+          "name": "017_2",
+          "bytes": 50394,
+          "sha256": "a85b172540a3eab2b08c8386dba3cbf3aabd8ae465fe3b772ca70dc71551b829",
+          "region_labels": 152,
+          "unassigned_fraction": 0.053428472222222224
+        },
+        {
+          "name": "017_3",
+          "bytes": 35085,
+          "sha256": "dff3454e03652c502242771f762516d4e237667bfff62523f5f23cb55cc01ef8",
+          "region_labels": 103,
+          "unassigned_fraction": 0.047585416666666665
+        },
+        {
+          "name": "017_4",
+          "bytes": 44440,
+          "sha256": "006bf53689d1928943f439340cf1932869a5fb4061c000588b79fd47e9e96353",
+          "region_labels": 101,
+          "unassigned_fraction": 0.14831319444444444
+        },
+        {
+          "name": "017_5",
+          "bytes": 39461,
+          "sha256": "889ed198933873ee2cdba0f03f54d27febe08b8dba626f1a123192b4d838b278",
+          "region_labels": 103,
+          "unassigned_fraction": 0.050611805555555556
+        },
+        {
+          "name": "018_0",
+          "bytes": 53891,
+          "sha256": "c86486ae06522ff3e62031c88b02f42c7aec7eb556adbf9ca14c4aa28b34eec5",
+          "region_labels": 139,
+          "unassigned_fraction": 0.044526388888888886
+        },
+        {
+          "name": "018_1",
+          "bytes": 52090,
+          "sha256": "0f7abe30ccc5aa1bf9332f1e36c600c6ff916703364ddc047145ccac824f312d",
+          "region_labels": 184,
+          "unassigned_fraction": 0.034874305555555554
+        },
+        {
+          "name": "018_2",
+          "bytes": 51001,
+          "sha256": "b799ef837fdf3ad48d0bfd7889f183edf12f18c19437c76ae6de00362cc0be6a",
+          "region_labels": 154,
+          "unassigned_fraction": 0.05992569444444444
+        },
+        {
+          "name": "018_3",
+          "bytes": 35591,
+          "sha256": "3e8e1d193adf1cdc1885c15a27a29cbfdec95e6f37b7dfb2e92e5ca3c9ec1208",
+          "region_labels": 112,
+          "unassigned_fraction": 0.04758402777777778
+        },
+        {
+          "name": "018_4",
+          "bytes": 45697,
+          "sha256": "2cdefe2764a8dca11eedbcd4157893998ee6603f7388fb80781c1dedbc04a373",
+          "region_labels": 104,
+          "unassigned_fraction": 0.0738048611111111
+        },
+        {
+          "name": "018_5",
+          "bytes": 41390,
+          "sha256": "1b40ed408e29570592c1158b3428eff530b512c236591d03536f80e9a8e22d7e",
+          "region_labels": 102,
+          "unassigned_fraction": 0.04837916666666667
+        },
+        {
+          "name": "019_0",
+          "bytes": 53133,
+          "sha256": "34011f77a84b92df8b5fb039a9688f6ee1ad90ef8d77d5cb57a7d09221fab955",
+          "region_labels": 134,
+          "unassigned_fraction": 0.04137152777777778
+        },
+        {
+          "name": "019_1",
+          "bytes": 52872,
+          "sha256": "825caa2145266366070e817fcc5063665a56ff6838e9a813b2b03e1ad23440d2",
+          "region_labels": 185,
+          "unassigned_fraction": 0.03826597222222222
+        },
+        {
+          "name": "019_2",
+          "bytes": 53478,
+          "sha256": "480d54e984ca9d888eeeba1203515c3a0338edbf1752a8124f48f051bd1bd581",
+          "region_labels": 156,
+          "unassigned_fraction": 0.03390902777777778
+        },
+        {
+          "name": "019_3",
+          "bytes": 32979,
+          "sha256": "d820a04057b13e22ae831cf595cedc1c63f7bc38a57ec3f7eee08c6453f8ae92",
+          "region_labels": 103,
+          "unassigned_fraction": 0.04384305555555556
+        },
+        {
+          "name": "019_4",
+          "bytes": 44829,
+          "sha256": "2f7331ec8bb8bedcc9fa5cfc257ca888e9e781beef09486e4b1217fd5cbeff3d",
+          "region_labels": 92,
+          "unassigned_fraction": 0.07974236111111112
+        },
+        {
+          "name": "019_5",
+          "bytes": 41779,
+          "sha256": "d51a028575280519f2b7e50992950b811720d636cfbee70ab6a69a24aaf8d7a6",
+          "region_labels": 107,
+          "unassigned_fraction": 0.05132361111111111
+        },
+        {
+          "name": "020_0",
+          "bytes": 54188,
+          "sha256": "41b1e1d43d30e38911844c706bf9b62cac9d8e17655a654f156471d25c23acba",
+          "region_labels": 152,
+          "unassigned_fraction": 0.04325416666666667
+        },
+        {
+          "name": "020_1",
+          "bytes": 52354,
+          "sha256": "2f1cb6978304088ab5557fb980bab9eaeb3cb2e59f89aad6315c982a768a6dda",
+          "region_labels": 185,
+          "unassigned_fraction": 0.035402083333333334
+        },
+        {
+          "name": "020_2",
+          "bytes": 55267,
+          "sha256": "1c23f0907a30a0f8fb34b7ea1f20b975e89116c653172134c104054f4d0880ab",
+          "region_labels": 170,
+          "unassigned_fraction": 0.03741875
+        },
+        {
+          "name": "020_3",
+          "bytes": 33704,
+          "sha256": "641461165ad0b0e6bf928e2ebc7aca5942e5355dfb2525162b4755b9869762d6",
+          "region_labels": 101,
+          "unassigned_fraction": 0.04503888888888889
+        },
+        {
+          "name": "020_4",
+          "bytes": 43916,
+          "sha256": "2ad5b7233dcc434ed83d80b4edcce238925c74741adb2ec343f4d06d25aa27ba",
+          "region_labels": 89,
+          "unassigned_fraction": 0.08052083333333333
+        },
+        {
+          "name": "020_5",
+          "bytes": 42706,
+          "sha256": "505df70e6abe2727e9e5a659a21f6e97de2cc51c4077137537b6e362121333d5",
+          "region_labels": 108,
+          "unassigned_fraction": 0.04294861111111111
+        },
+        {
+          "name": "021_0",
+          "bytes": 54825,
+          "sha256": "fef38b70f639862922d72f1189d1fe831c85fa2d03ff35346934c961e98e2bc1",
+          "region_labels": 151,
+          "unassigned_fraction": 0.04041458333333333
+        },
+        {
+          "name": "021_1",
+          "bytes": 52428,
+          "sha256": "53e87eb456d16a86ece5bf052ffe2edbbf2f06402b358b4e5af6ec7318bfc020",
+          "region_labels": 168,
+          "unassigned_fraction": 0.032979166666666664
+        },
+        {
+          "name": "021_2",
+          "bytes": 52269,
+          "sha256": "babacce77e854b7639eac295790e4620286ca33250c7970015ad090fdc4fc56e",
+          "region_labels": 160,
+          "unassigned_fraction": 0.042549305555555555
+        },
+        {
+          "name": "021_3",
+          "bytes": 31918,
+          "sha256": "ecd03a38a631c1f281f2bfd8189743190c1026e0297e626df2bf196bee22e320",
+          "region_labels": 97,
+          "unassigned_fraction": 0.042813194444444445
+        },
+        {
+          "name": "021_4",
+          "bytes": 45213,
+          "sha256": "51a6231f4bd11dda497728afc70d03f37a0149485c085ba1b3a1ca551deada0d",
+          "region_labels": 96,
+          "unassigned_fraction": 0.1347423611111111
+        },
+        {
+          "name": "021_5",
+          "bytes": 41391,
+          "sha256": "760b31e8f22b2267a028a74f3e2814d321b8a2b7b9d0c398c886f543328668bf",
+          "region_labels": 107,
+          "unassigned_fraction": 0.04751180555555556
+        },
+        {
+          "name": "022_0",
+          "bytes": 53174,
+          "sha256": "def726c2db2a6b7e5bf2bad09049d8db741db4a7388139165b4a1c03fb64efce",
+          "region_labels": 150,
+          "unassigned_fraction": 0.039295138888888886
+        },
+        {
+          "name": "022_1",
+          "bytes": 51835,
+          "sha256": "0d99e033ad041fa80624a0b8aed06e198db0bac65a8b82f3b20694841124bc6f",
+          "region_labels": 180,
+          "unassigned_fraction": 0.030830555555555555
+        },
+        {
+          "name": "022_2",
+          "bytes": 51701,
+          "sha256": "a3d2afce740f36539ec7bcacb065b247ec145345b594f473c9561cd3f91fd2c8",
+          "region_labels": 163,
+          "unassigned_fraction": 0.05256875
+        },
+        {
+          "name": "022_3",
+          "bytes": 33378,
+          "sha256": "a6d850d68266aed7044a557ce08a057d2ab9ca0a904f1ad2617d8df603f6f0a2",
+          "region_labels": 100,
+          "unassigned_fraction": 0.039433333333333334
+        },
+        {
+          "name": "022_4",
+          "bytes": 44644,
+          "sha256": "38844cd498d27df791b770ae505b2edb66e98aec9bad65776fdc7ced19af1a3f",
+          "region_labels": 104,
+          "unassigned_fraction": 0.11723125
+        },
+        {
+          "name": "022_5",
+          "bytes": 39734,
+          "sha256": "64a692d49d19c26ecb70e279776e910e21e5139ecdbd2720ed260b94cc063e6d",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04096597222222222
+        },
+        {
+          "name": "023_0",
+          "bytes": 52561,
+          "sha256": "7983f28ab64215f77282227df375c74a7e54aaf3e6c66aa3a348c2db5643312b",
+          "region_labels": 143,
+          "unassigned_fraction": 0.040925
+        },
+        {
+          "name": "023_1",
+          "bytes": 52488,
+          "sha256": "c00e7fe154eaea764cde99a66d6ecf329e258f0a4cd5eca880114fcd2e4608ef",
+          "region_labels": 176,
+          "unassigned_fraction": 0.03665347222222222
+        },
+        {
+          "name": "023_2",
+          "bytes": 53674,
+          "sha256": "f92c3168c3036eb89cae1404aba35901cff9e56a2a638fb0f70afdc13b4e0caa",
+          "region_labels": 168,
+          "unassigned_fraction": 0.03442986111111111
+        },
+        {
+          "name": "023_3",
+          "bytes": 35933,
+          "sha256": "0e296543b4360a1fc1d39d154cbdb7760489ae7400715d8a3243882323c59504",
+          "region_labels": 104,
+          "unassigned_fraction": 0.04004097222222222
+        },
+        {
+          "name": "023_4",
+          "bytes": 48000,
+          "sha256": "45e25829e3f0e10b4b5e86468282029b3d87f2cb23d72f5ea1b37c6e625c500a",
+          "region_labels": 110,
+          "unassigned_fraction": 0.10140208333333334
+        },
+        {
+          "name": "023_5",
+          "bytes": 41601,
+          "sha256": "d1fbde98f1b6eb925e4a72de4466dcf0570b7bb0c0b1646eb8c29b6f5b3af6c8",
+          "region_labels": 107,
+          "unassigned_fraction": 0.044691666666666664
+        },
+        {
+          "name": "024_0",
+          "bytes": 54815,
+          "sha256": "08a39778e550291cd93b8f0f7599fde99fd961290ccbaec843e58071bf7e5b12",
+          "region_labels": 157,
+          "unassigned_fraction": 0.042029166666666666
+        },
+        {
+          "name": "024_1",
+          "bytes": 51687,
+          "sha256": "c5df0ff8b329fbb723d4cc25ed7693668833a230b6c30f4a723e8b5781af7323",
+          "region_labels": 179,
+          "unassigned_fraction": 0.03019375
+        },
+        {
+          "name": "024_2",
+          "bytes": 51993,
+          "sha256": "54dcc111e471bc37320fe38a501a378c3003cea13b624a2d00f4b2253323aa8b",
+          "region_labels": 155,
+          "unassigned_fraction": 0.034549305555555555
+        },
+        {
+          "name": "024_3",
+          "bytes": 36044,
+          "sha256": "314587677358525dc19ea484a197afe32300fb6cc8c8b0cd5d1b8d65461d6b43",
+          "region_labels": 105,
+          "unassigned_fraction": 0.040593055555555556
+        },
+        {
+          "name": "024_4",
+          "bytes": 45864,
+          "sha256": "4013e7f773152d5802d79b724825591211cf6de2986f062a642a52f07d1a3dbd",
+          "region_labels": 101,
+          "unassigned_fraction": 0.08618402777777778
+        },
+        {
+          "name": "024_5",
+          "bytes": 39619,
+          "sha256": "911164f237e8dafe799fed5a6e51234fb0474357b64586f798fba9af7fc14983",
+          "region_labels": 101,
+          "unassigned_fraction": 0.04304513888888889
+        },
+        {
+          "name": "025_0",
+          "bytes": 53266,
+          "sha256": "b684c1285f069f54d1e3a61ccfbafb3a1a77bc48c09da816c9fb85dfc0eb50fa",
+          "region_labels": 150,
+          "unassigned_fraction": 0.05184097222222222
+        },
+        {
+          "name": "025_1",
+          "bytes": 52592,
+          "sha256": "c2b667586c42bbf2ed8760435e6fb20a40f80ca5925714502ce053002d41d154",
+          "region_labels": 178,
+          "unassigned_fraction": 0.029886805555555555
+        },
+        {
+          "name": "025_2",
+          "bytes": 55075,
+          "sha256": "61f84ce3497ebfe6ea8593dacd6a764b5db9ca9250e23dbf82262af6b94c0808",
+          "region_labels": 175,
+          "unassigned_fraction": 0.04700694444444444
+        },
+        {
+          "name": "025_3",
+          "bytes": 32683,
+          "sha256": "83093ba43900bbdc391c8d3e972404661b81a219246e7caebbffd4ff34324bd0",
+          "region_labels": 99,
+          "unassigned_fraction": 0.042818055555555554
+        },
+        {
+          "name": "025_4",
+          "bytes": 46100,
+          "sha256": "6208800ed3a06d8474b8a25957aa3e399745750b56f7353e1e74b846c00a1a1e",
+          "region_labels": 100,
+          "unassigned_fraction": 0.08060763888888889
+        },
+        {
+          "name": "025_5",
+          "bytes": 39964,
+          "sha256": "14b105c115b3f5d3f8efcc279ff53719e2a545c21c8666fc9df74225afbf8af7",
+          "region_labels": 105,
+          "unassigned_fraction": 0.03936597222222222
+        },
+        {
+          "name": "026_0",
+          "bytes": 53217,
+          "sha256": "8a7ff06190464246f533e9e7c7f1aeb0f9fa0891d85a033e241b29affa9b8d2a",
+          "region_labels": 156,
+          "unassigned_fraction": 0.04172013888888889
+        },
+        {
+          "name": "026_1",
+          "bytes": 53161,
+          "sha256": "b21ac30ee37dc1918824542485830196b703c818f6c54ea9be1c450f18b18dc5",
+          "region_labels": 183,
+          "unassigned_fraction": 0.038914583333333336
+        },
+        {
+          "name": "026_2",
+          "bytes": 50287,
+          "sha256": "8f397bd2bb397a334c91ca42d3b4e7c9655329c23278450f1a63a0e386cac48a",
+          "region_labels": 143,
+          "unassigned_fraction": 0.049383333333333335
+        },
+        {
+          "name": "026_3",
+          "bytes": 34925,
+          "sha256": "30cd266b6dbe8fe931928ec504de90bf9de20162a58235326bbf8f0930f08a30",
+          "region_labels": 102,
+          "unassigned_fraction": 0.04341944444444444
+        },
+        {
+          "name": "026_4",
+          "bytes": 48743,
+          "sha256": "6dc8b5321624329fb0f061b76629498aae3742e390945c30b7b6819919831d55",
+          "region_labels": 103,
+          "unassigned_fraction": 0.0737625
+        },
+        {
+          "name": "026_5",
+          "bytes": 43861,
+          "sha256": "e34de55398d5e1826a1f35eaf8529b796772e64406c6ecfaf588741ebcb8e3ac",
+          "region_labels": 118,
+          "unassigned_fraction": 0.04108819444444444
+        },
+        {
+          "name": "027_0",
+          "bytes": 56144,
+          "sha256": "bc8e49c12fcf429dcd9170f1ceab188cfbc80676c971a01764975bff4b7c4624",
+          "region_labels": 162,
+          "unassigned_fraction": 0.052123611111111114
+        },
+        {
+          "name": "027_1",
+          "bytes": 53439,
+          "sha256": "0f38e1aaded1dfa689e776cc953d60bf920b0d0e938980eb4d8a272c9b2abda2",
+          "region_labels": 172,
+          "unassigned_fraction": 0.04507013888888889
+        },
+        {
+          "name": "027_2",
+          "bytes": 51169,
+          "sha256": "5e37f2a52f9a906c959439248bef7040496cd8687904dbdc905b5f9001f95e71",
+          "region_labels": 129,
+          "unassigned_fraction": 0.03732708333333333
+        },
+        {
+          "name": "027_3",
+          "bytes": 32472,
+          "sha256": "8e72539fc5a2f0d9ef7f51610fc3a9c3f641f981640e3b594d9be8bca3ba187c",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04626527777777778
+        },
+        {
+          "name": "027_4",
+          "bytes": 45240,
+          "sha256": "541f1f70262e1739ac2a52fdeff1cd50e96c5f4fd90cd796ec0b25a83204ae61",
+          "region_labels": 102,
+          "unassigned_fraction": 0.07272291666666666
+        },
+        {
+          "name": "027_5",
+          "bytes": 43158,
+          "sha256": "5357cdd4bcf4413e9a6cd5bb8c55f9672e2f7ef0635ae297167bf991a7ae18ab",
+          "region_labels": 108,
+          "unassigned_fraction": 0.04297083333333333
+        },
+        {
+          "name": "028_0",
+          "bytes": 54392,
+          "sha256": "376993ae0ab3f12a667a6827830ec69ecde8b9cad34d740c9bc3066d92f3dffe",
+          "region_labels": 153,
+          "unassigned_fraction": 0.05303402777777778
+        },
+        {
+          "name": "028_1",
+          "bytes": 56021,
+          "sha256": "bf8310299a7e0b34bee97d66f9cb500b0921b58607f3ce6257bc19a3146a2329",
+          "region_labels": 189,
+          "unassigned_fraction": 0.03487361111111111
+        },
+        {
+          "name": "028_2",
+          "bytes": 55650,
+          "sha256": "2ee8ef2a81d5c42663311ccedb47520eeed4f830a33c421e9ad07e10ede1ee95",
+          "region_labels": 149,
+          "unassigned_fraction": 0.026191666666666665
+        },
+        {
+          "name": "028_3",
+          "bytes": 32472,
+          "sha256": "8e72539fc5a2f0d9ef7f51610fc3a9c3f641f981640e3b594d9be8bca3ba187c",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04626527777777778
+        },
+        {
+          "name": "028_4",
+          "bytes": 45624,
+          "sha256": "3cd03d042d731193bdcc58b9f01dba1537bdd9f66078147270a5a3f33db2a4be",
+          "region_labels": 98,
+          "unassigned_fraction": 0.07968680555555556
+        },
+        {
+          "name": "028_5",
+          "bytes": 43158,
+          "sha256": "5357cdd4bcf4413e9a6cd5bb8c55f9672e2f7ef0635ae297167bf991a7ae18ab",
+          "region_labels": 108,
+          "unassigned_fraction": 0.04297083333333333
+        },
+        {
+          "name": "029_0",
+          "bytes": 52376,
+          "sha256": "182fce00828c83006d74710ee079a5e9bd88ccf3d45a428d6982980daaa5dbf8",
+          "region_labels": 139,
+          "unassigned_fraction": 0.053199305555555555
+        },
+        {
+          "name": "029_1",
+          "bytes": 55018,
+          "sha256": "93522395d49b107008e3615ea1858d1573cc495499ec7c859e66fc6145381b4e",
+          "region_labels": 186,
+          "unassigned_fraction": 0.03575902777777778
+        },
+        {
+          "name": "029_2",
+          "bytes": 53491,
+          "sha256": "2e8c5c32e76c5498c278f694d1f20f09f39fdfb81bd6d104d776bda6bba9e92b",
+          "region_labels": 148,
+          "unassigned_fraction": 0.029918055555555555
+        },
+        {
+          "name": "029_3",
+          "bytes": 35306,
+          "sha256": "432b5b58e8f5caa09bc06b25964f9b384cd127b0d9c1bdf22092b4af6e8f936f",
+          "region_labels": 102,
+          "unassigned_fraction": 0.041725
+        },
+        {
+          "name": "029_4",
+          "bytes": 47200,
+          "sha256": "ab6e0208f9e5572f1e6647d518411073e02d1ea2a695fdf3252852a5720a2e7c",
+          "region_labels": 97,
+          "unassigned_fraction": 0.06518402777777778
+        },
+        {
+          "name": "029_5",
+          "bytes": 41602,
+          "sha256": "04f9141036f1e711fd5e73fd0682c4fb2b425ce926b2bbbe4016fb5e36f4c917",
+          "region_labels": 98,
+          "unassigned_fraction": 0.04296180555555556
+        },
+        {
+          "name": "030_0",
+          "bytes": 55630,
+          "sha256": "2d79c3a4c26a277124b9b86d498c6119a7347b4c59f983c350eaf6b5f414b984",
+          "region_labels": 155,
+          "unassigned_fraction": 0.05471111111111111
+        },
+        {
+          "name": "030_1",
+          "bytes": 53595,
+          "sha256": "03bc0113683d411a70918c1c789a5747e5ab1952bdc0b63c44c61b7976fcb1ea",
+          "region_labels": 177,
+          "unassigned_fraction": 0.03501111111111111
+        },
+        {
+          "name": "030_2",
+          "bytes": 50690,
+          "sha256": "3b490ed656ff3c08b2153987ebaa1bf795f18921799cac3d33444846555965dd",
+          "region_labels": 133,
+          "unassigned_fraction": 0.029370833333333332
+        },
+        {
+          "name": "030_3",
+          "bytes": 33971,
+          "sha256": "c64acc829759f59b2e46b31d5e228d9c301651a65b66d54e268223b23620c5aa",
+          "region_labels": 97,
+          "unassigned_fraction": 0.044566666666666664
+        },
+        {
+          "name": "030_4",
+          "bytes": 46107,
+          "sha256": "b4052f8d0fb264783021d36cb45d2559a5bbadb0b1618bfa46b56d7d950d4fe7",
+          "region_labels": 93,
+          "unassigned_fraction": 0.10775555555555555
+        },
+        {
+          "name": "030_5",
+          "bytes": 41602,
+          "sha256": "04f9141036f1e711fd5e73fd0682c4fb2b425ce926b2bbbe4016fb5e36f4c917",
+          "region_labels": 98,
+          "unassigned_fraction": 0.04296180555555556
+        },
+        {
+          "name": "031_0",
+          "bytes": 55874,
+          "sha256": "3ea1c0aba52ac32c08fe379cef9f7fd45f50c11cc79852e64831c41aa143b63e",
+          "region_labels": 151,
+          "unassigned_fraction": 0.052208333333333336
+        },
+        {
+          "name": "031_1",
+          "bytes": 55791,
+          "sha256": "b86682804575f0fc2ebf4e109fb26e42fa2a9603a4709b99b6c24d0833a78813",
+          "region_labels": 185,
+          "unassigned_fraction": 0.03846875
+        },
+        {
+          "name": "031_2",
+          "bytes": 53558,
+          "sha256": "07ebe43a0cafd9d3acd03178341ea9ebab8feaa16a4a71cb6e587d301825ce44",
+          "region_labels": 148,
+          "unassigned_fraction": 0.04816875
+        },
+        {
+          "name": "031_3",
+          "bytes": 34968,
+          "sha256": "cca7f88bd4afbeefb2ca47092158926c05e20a77ce82586de8ce9a4fdc91415f",
+          "region_labels": 99,
+          "unassigned_fraction": 0.03992986111111111
+        },
+        {
+          "name": "031_4",
+          "bytes": 46640,
+          "sha256": "5307fbf75b62b201553d350c22502499a2a663a96cee4cbf25e4b2213e1f2a4f",
+          "region_labels": 105,
+          "unassigned_fraction": 0.09206805555555556
+        },
+        {
+          "name": "031_5",
+          "bytes": 40692,
+          "sha256": "38dd3127f94cf74e833bbfe9d83b9f77ec8e87717799ba0c297df07dc28f6afa",
+          "region_labels": 94,
+          "unassigned_fraction": 0.051159027777777775
+        },
+        {
+          "name": "032_0",
+          "bytes": 56512,
+          "sha256": "7a89e8ba30d04de432d740cd6cb7ec926008193bbbebb28926b40ee895f90fa4",
+          "region_labels": 165,
+          "unassigned_fraction": 0.05419652777777778
+        },
+        {
+          "name": "032_1",
+          "bytes": 55032,
+          "sha256": "cae226c0e2152fc114fa00f81e9730e7d25dba326425dd5364bbc2031feb4daa",
+          "region_labels": 171,
+          "unassigned_fraction": 0.037345138888888886
+        },
+        {
+          "name": "032_2",
+          "bytes": 42171,
+          "sha256": "982e875d2e21f2465b903f2136993bda10b6fba55009bf6acc89233cd5b37379",
+          "region_labels": 124,
+          "unassigned_fraction": 0.06853194444444445
+        },
+        {
+          "name": "032_3",
+          "bytes": 32934,
+          "sha256": "1cc11807b0daa2b057ddbcb9a28cf49754b64bb35c80c4dcb41ee5bc73c00579",
+          "region_labels": 92,
+          "unassigned_fraction": 0.053754861111111114
+        },
+        {
+          "name": "032_4",
+          "bytes": 51248,
+          "sha256": "41c0f1ddc42b0d0509a954e5cc8202d91c748f789e915fff0083d0d0e764d73c",
+          "region_labels": 115,
+          "unassigned_fraction": 0.05173680555555556
+        },
+        {
+          "name": "032_5",
+          "bytes": 41202,
+          "sha256": "9af00caa01cfd0ae4be88b628355efd2b9b6929a1dacf1955710b8c0cb64bd6b",
+          "region_labels": 97,
+          "unassigned_fraction": 0.056236805555555554
+        },
+        {
+          "name": "033_0",
+          "bytes": 57130,
+          "sha256": "508cf0935b32d91c1b19ee5980d3d1af4eb9f9570ee27dc0bb72bdadc23f9847",
+          "region_labels": 152,
+          "unassigned_fraction": 0.06384444444444444
+        },
+        {
+          "name": "033_1",
+          "bytes": 52652,
+          "sha256": "c2a3e6e257a5dc61e113fb2097c67e2d7c9393a1c477d6ff222bf0dedf9772a9",
+          "region_labels": 169,
+          "unassigned_fraction": 0.045283333333333335
+        },
+        {
+          "name": "033_2",
+          "bytes": 52161,
+          "sha256": "8c0c5a1d1cc3a978ffb7110f9d18578101467afc4b1ffbfa564406ce82b1bcce",
+          "region_labels": 143,
+          "unassigned_fraction": 0.03977569444444445
+        },
+        {
+          "name": "033_3",
+          "bytes": 34752,
+          "sha256": "8daf56d5f9a4972153af2a688c4a90ef70a0cbcd6cdf67c1babc079e4152606f",
+          "region_labels": 106,
+          "unassigned_fraction": 0.04306527777777778
+        },
+        {
+          "name": "033_4",
+          "bytes": 47957,
+          "sha256": "6eb8f8366bf40c64e18b872d5d48323ba69afe2754878f8523b93ca0074a3f84",
+          "region_labels": 111,
+          "unassigned_fraction": 0.08262638888888889
+        },
+        {
+          "name": "033_5",
+          "bytes": 40046,
+          "sha256": "12092241e7556eae89bc4b7bae12a0e5508c47dbe99ce786648eb9d6be56d797",
+          "region_labels": 91,
+          "unassigned_fraction": 0.046928472222222226
+        },
+        {
+          "name": "034_0",
+          "bytes": 58637,
+          "sha256": "b17dc01127601da1da80fcd16aa70e2d2ed463066ad6ecc3283a6561fc4c5386",
+          "region_labels": 160,
+          "unassigned_fraction": 0.05218472222222222
+        },
+        {
+          "name": "034_1",
+          "bytes": 51985,
+          "sha256": "a427a378fdcd3dacda4fd3a804e3b75e85402227149d5c8ac6a1ed4dc3057e2c",
+          "region_labels": 168,
+          "unassigned_fraction": 0.04069791666666667
+        },
+        {
+          "name": "034_2",
+          "bytes": 47418,
+          "sha256": "b52bad005d8335277d46d1706f93c2f486b165e41e646b57a3580b0292930cf6",
+          "region_labels": 133,
+          "unassigned_fraction": 0.05470763888888889
+        },
+        {
+          "name": "034_3",
+          "bytes": 35012,
+          "sha256": "3442e8974ec05149d0d3c14816594b03f8b2e2fc95316283fee66326d3ef6c29",
+          "region_labels": 103,
+          "unassigned_fraction": 0.04071180555555556
+        },
+        {
+          "name": "034_4",
+          "bytes": 51361,
+          "sha256": "ba8af32580c243e84a7d93a5a3ef5c75efe088d85f1a9c748710079ef1ab0695",
+          "region_labels": 118,
+          "unassigned_fraction": 0.07710902777777778
+        },
+        {
+          "name": "034_5",
+          "bytes": 38560,
+          "sha256": "060131ff38e84603897c52c65bed79872ab77c00940dee15d493f4f47cb67aba",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04448611111111111
+        },
+        {
+          "name": "035_0",
+          "bytes": 55972,
+          "sha256": "6134d45e4693b411bcffe022f592536edeab599b2675e05fbfc3b1d33cc9bb75",
+          "region_labels": 148,
+          "unassigned_fraction": 0.05791527777777778
+        },
+        {
+          "name": "035_1",
+          "bytes": 52933,
+          "sha256": "47427972bbefcb461c978862baf84c22c040b4e7002c84d42c093ce4401dbbcf",
+          "region_labels": 171,
+          "unassigned_fraction": 0.03273402777777778
+        },
+        {
+          "name": "035_2",
+          "bytes": 39148,
+          "sha256": "1808831d7663d40fb21cf27c0d24a72b714b070e27b4e064a4ddc824d5a765d5",
+          "region_labels": 129,
+          "unassigned_fraction": 0.08795277777777778
+        },
+        {
+          "name": "035_3",
+          "bytes": 35339,
+          "sha256": "a663f3e6930f7a7b4a46c903fb9064bb4e8e78ab2d54c783913cf6e1aae96f89",
+          "region_labels": 104,
+          "unassigned_fraction": 0.045226388888888885
+        },
+        {
+          "name": "035_4",
+          "bytes": 52229,
+          "sha256": "b824f95c6b5e7d963b41cef67fb86907b0c7dfbef409ccfdb9df935b1d06a34a",
+          "region_labels": 111,
+          "unassigned_fraction": 0.09270138888888889
+        },
+        {
+          "name": "035_5",
+          "bytes": 39462,
+          "sha256": "35c6026ef101c48fef3b033599789f1c6cd19ac1a891fe21236c0dbff113b598",
+          "region_labels": 94,
+          "unassigned_fraction": 0.06846805555555556
+        },
+        {
+          "name": "036_0",
+          "bytes": 56351,
+          "sha256": "b73f51413290d81161a710d0ce1961ae8b1cbb1b3687013986ee33267367db2c",
+          "region_labels": 144,
+          "unassigned_fraction": 0.07375277777777778
+        },
+        {
+          "name": "036_1",
+          "bytes": 53647,
+          "sha256": "225d0ccfaf6458241598967962d44bd614b0d90881854a0c444066b1f8ccccd1",
+          "region_labels": 165,
+          "unassigned_fraction": 0.03629375
+        },
+        {
+          "name": "036_2",
+          "bytes": 41662,
+          "sha256": "e915a8ec49948796198ee8d6c70c3c682215904bb80680d433115ef5d6153e5f",
+          "region_labels": 125,
+          "unassigned_fraction": 0.04297708333333333
+        },
+        {
+          "name": "036_3",
+          "bytes": 32020,
+          "sha256": "16c239caef089f806b3b33fc9cf71967ad183bcfdec12cf3239fa9b041c41962",
+          "region_labels": 98,
+          "unassigned_fraction": 0.04841666666666666
+        },
+        {
+          "name": "036_4",
+          "bytes": 53179,
+          "sha256": "48f78213b5c4412911c9380fcb7923027c4bff006eedc97ed2c591c95433b8be",
+          "region_labels": 105,
+          "unassigned_fraction": 0.11757777777777778
+        },
+        {
+          "name": "036_5",
+          "bytes": 40023,
+          "sha256": "33c5ea79dcc637568b78b3669d7b88c7eab203f81204c2114595497988d161a3",
+          "region_labels": 93,
+          "unassigned_fraction": 0.055725
+        },
+        {
+          "name": "037_0",
+          "bytes": 55776,
+          "sha256": "b7fbc9d3b54a654dd055628c088fe1aa6e0033a86d150467498d5779bb8f41a6",
+          "region_labels": 151,
+          "unassigned_fraction": 0.06948472222222223
+        },
+        {
+          "name": "037_1",
+          "bytes": 53639,
+          "sha256": "bd592ad09a444f2ea3f8e4fe1b20555b589f0bea49dc5f8b5b2a02078662bc05",
+          "region_labels": 170,
+          "unassigned_fraction": 0.03900555555555556
+        },
+        {
+          "name": "037_2",
+          "bytes": 41835,
+          "sha256": "7339e2d2e7e16dc42cfcf019e4ee15f3773982d0c87181bde6673eeebdc3dd9f",
+          "region_labels": 139,
+          "unassigned_fraction": 0.04320486111111111
+        },
+        {
+          "name": "037_3",
+          "bytes": 32999,
+          "sha256": "f4b42079c230381129c29362c9b8ebb16bc884b377470acf88ba419758da1d74",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04884652777777778
+        },
+        {
+          "name": "037_4",
+          "bytes": 52275,
+          "sha256": "da3cff3e74fbb0b1c028158c4df0986d5f9f1fec0c04e647fde1fd7c8b3ae630",
+          "region_labels": 107,
+          "unassigned_fraction": 0.07657013888888889
+        },
+        {
+          "name": "037_5",
+          "bytes": 40412,
+          "sha256": "43cc983e9ec019714cd5618c172b34642542732c630c9a6b3faaba8d36346406",
+          "region_labels": 93,
+          "unassigned_fraction": 0.05468958333333333
+        },
+        {
+          "name": "038_0",
+          "bytes": 57997,
+          "sha256": "4564fe7addad2d38ebc2b8cb57b74ea8702b9f7ba2993ea866eb33090f2534e8",
+          "region_labels": 152,
+          "unassigned_fraction": 0.06840833333333333
+        },
+        {
+          "name": "038_1",
+          "bytes": 52970,
+          "sha256": "21e0a07706d536df42b5b8484659081078dd02fe8d9b92eef9b60370a54aeb01",
+          "region_labels": 179,
+          "unassigned_fraction": 0.03283333333333333
+        },
+        {
+          "name": "038_2",
+          "bytes": 40640,
+          "sha256": "acff13b3d49350d48b2a967d57a99adfb5f2a38ee5eb2bd042f89ae7d5c87346",
+          "region_labels": 128,
+          "unassigned_fraction": 0.02940763888888889
+        },
+        {
+          "name": "038_3",
+          "bytes": 31614,
+          "sha256": "f0c101602c7728c97ce7b02a33502946b06e4eba6a4ba5b2475980d366c3cd77",
+          "region_labels": 91,
+          "unassigned_fraction": 0.04806944444444444
+        },
+        {
+          "name": "038_4",
+          "bytes": 50522,
+          "sha256": "6ad5f117fff51994bafd26c7b4749f4eee00c9901bac3900ef5e1a80ccceb698",
+          "region_labels": 114,
+          "unassigned_fraction": 0.1525534722222222
+        },
+        {
+          "name": "038_5",
+          "bytes": 38960,
+          "sha256": "e44581213cc515544025d0cb24b0865ca7024dc0d8e68e067fedbab88dbecdb3",
+          "region_labels": 90,
+          "unassigned_fraction": 0.06102361111111111
+        },
+        {
+          "name": "039_0",
+          "bytes": 59405,
+          "sha256": "d7e16f0b423df35b5ecafef718e8494df76f7e439f590dd4eb34bd8599f8920c",
+          "region_labels": 167,
+          "unassigned_fraction": 0.07298680555555556
+        },
+        {
+          "name": "039_1",
+          "bytes": 51470,
+          "sha256": "b6e1b816a53aa535cdcc955928d9965506b3e660c70261a0e28eecfa7cb1863e",
+          "region_labels": 164,
+          "unassigned_fraction": 0.03260416666666666
+        },
+        {
+          "name": "039_2",
+          "bytes": 42734,
+          "sha256": "01104aea1ed37032c2e619ae35f102ab71a977ad3af8bf53ce265a86533244e1",
+          "region_labels": 147,
+          "unassigned_fraction": 0.04644444444444444
+        },
+        {
+          "name": "039_3",
+          "bytes": 29563,
+          "sha256": "bf6e077ab96fad38bc8881b3fda4786482aa66cc42abe38e8d03807d1236c1cd",
+          "region_labels": 90,
+          "unassigned_fraction": 0.05617986111111111
+        },
+        {
+          "name": "039_4",
+          "bytes": 48757,
+          "sha256": "34ece0de877ed5c12a63b94dfde7698c44fc3ebba939439987f712f522a0d83e",
+          "region_labels": 120,
+          "unassigned_fraction": 0.14106180555555556
+        },
+        {
+          "name": "039_5",
+          "bytes": 39958,
+          "sha256": "dec637dd6c5f0d0e0c64a6c82b1f10a81c1b68f855b7aff12a154625b22fad71",
+          "region_labels": 91,
+          "unassigned_fraction": 0.06647222222222222
+        },
+        {
+          "name": "040_0",
+          "bytes": 58427,
+          "sha256": "d190169793492a3d63808144ad88fd50030bcd9497a2a421916dd4523fcbd340",
+          "region_labels": 165,
+          "unassigned_fraction": 0.07036597222222223
+        },
+        {
+          "name": "040_1",
+          "bytes": 48889,
+          "sha256": "660ea5d326f02888a8b5cfca56570123444e2aab50250e413495a16bf80344ea",
+          "region_labels": 155,
+          "unassigned_fraction": 0.040751388888888886
+        },
+        {
+          "name": "040_2",
+          "bytes": 41006,
+          "sha256": "55508f4be78a0299ce267287bb87798637f651e2c9c15656e60899d8497f1613",
+          "region_labels": 117,
+          "unassigned_fraction": 0.037927083333333333
+        },
+        {
+          "name": "040_3",
+          "bytes": 33119,
+          "sha256": "918af0b6d01dc8d8a294e54809b41426252b9c9c4dc8eca8ecdf1865ce618d12",
+          "region_labels": 99,
+          "unassigned_fraction": 0.049770833333333334
+        },
+        {
+          "name": "040_4",
+          "bytes": 50600,
+          "sha256": "356a05d6f6940b4275410e88a7022cc9f200987556db3f69c26a112f26e35d71",
+          "region_labels": 117,
+          "unassigned_fraction": 0.13527291666666666
+        },
+        {
+          "name": "040_5",
+          "bytes": 39853,
+          "sha256": "f9ec99fac0e4ea681a5544778ed1e2829058328fdb11594d216aa47fe0516ab0",
+          "region_labels": 104,
+          "unassigned_fraction": 0.06350277777777778
+        },
+        {
+          "name": "041_0",
+          "bytes": 62055,
+          "sha256": "974ae443c458143dfcef9b43751202c2d127beb9f38d941c7e01e59e7595d77b",
+          "region_labels": 182,
+          "unassigned_fraction": 0.07252222222222222
+        },
+        {
+          "name": "041_1",
+          "bytes": 51522,
+          "sha256": "a8528bfababf9c4218ac242d2bdd6112679e92986abf2e7f4d08a344edaa891e",
+          "region_labels": 151,
+          "unassigned_fraction": 0.03747361111111111
+        },
+        {
+          "name": "041_2",
+          "bytes": 46088,
+          "sha256": "27c34d9e65c775f4f0fb17e57e66b175dc0353d40960a71147241e96b7f03697",
+          "region_labels": 141,
+          "unassigned_fraction": 0.04265
+        },
+        {
+          "name": "041_3",
+          "bytes": 34665,
+          "sha256": "cee50d58f4d9dd7e8e4c9c3d4ff7fad379cc49235450e269adc7ee7b87ddb181",
+          "region_labels": 102,
+          "unassigned_fraction": 0.04219097222222222
+        },
+        {
+          "name": "041_4",
+          "bytes": 50526,
+          "sha256": "90dadfa6bada0ac25d02c7219f3fa907829b60403980803e70d8fa7b737dbfb7",
+          "region_labels": 117,
+          "unassigned_fraction": 0.07474861111111111
+        },
+        {
+          "name": "041_5",
+          "bytes": 38880,
+          "sha256": "e041028526b28a832d596bc4ad2956c3535d30dee992147a1956310aae9138d7",
+          "region_labels": 92,
+          "unassigned_fraction": 0.056050694444444445
+        },
+        {
+          "name": "042_0",
+          "bytes": 65772,
+          "sha256": "3f259af72cd3dac7f3d6a409157668c354396a6f106f090b04bddafe04e63d9f",
+          "region_labels": 192,
+          "unassigned_fraction": 0.07052430555555556
+        },
+        {
+          "name": "042_1",
+          "bytes": 53746,
+          "sha256": "cfdcc93247a800c34c215297a73e53267915dc8c4c0ed2523955fc57522373c6",
+          "region_labels": 175,
+          "unassigned_fraction": 0.041286111111111114
+        },
+        {
+          "name": "042_2",
+          "bytes": 43290,
+          "sha256": "9d24afe8112bbbf73a35322704a8b042210faf13ba8bf5fdb3b36645df7e824e",
+          "region_labels": 130,
+          "unassigned_fraction": 0.037490277777777775
+        },
+        {
+          "name": "042_3",
+          "bytes": 33179,
+          "sha256": "67b1ffa8219f61a27572762c32858f497a50f58fad712b9da5cddf879df5c874",
+          "region_labels": 92,
+          "unassigned_fraction": 0.04319861111111111
+        },
+        {
+          "name": "042_4",
+          "bytes": 46005,
+          "sha256": "78b4fe1158dd14e8b584ec56f6f5449c925e0b73620fc25b7b498c22e6ea9348",
+          "region_labels": 101,
+          "unassigned_fraction": 0.05954375
+        },
+        {
+          "name": "042_5",
+          "bytes": 41314,
+          "sha256": "4fc1a9d6d57546f5fdef8a67fa713707c25ee9414ca516d37b0a8cbbc78a08ca",
+          "region_labels": 101,
+          "unassigned_fraction": 0.035596527777777776
+        },
+        {
+          "name": "043_0",
+          "bytes": 66018,
+          "sha256": "249e9781b2d509f1c5f467a15f6fb92a0e99313b2c0bda728db1992c4169b1ee",
+          "region_labels": 195,
+          "unassigned_fraction": 0.04258194444444444
+        },
+        {
+          "name": "043_1",
+          "bytes": 55071,
+          "sha256": "1cdf06585522c1c95a59ced750cc8dc80d51dbf1c2e00501b201393afec76912",
+          "region_labels": 172,
+          "unassigned_fraction": 0.04332430555555555
+        },
+        {
+          "name": "043_2",
+          "bytes": 44484,
+          "sha256": "dfdc5cf2fb1f499d98bf3a6d551861c369045ffe7e3576eaed4e1b19049283fe",
+          "region_labels": 149,
+          "unassigned_fraction": 0.0437875
+        },
+        {
+          "name": "043_3",
+          "bytes": 33760,
+          "sha256": "62cf40ea155cd791aa334ebf7d3dace0c34ee042535642e16da18628ddc886f8",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04282222222222222
+        },
+        {
+          "name": "043_4",
+          "bytes": 48168,
+          "sha256": "062c9030c0f5e4bc90b506581d3ff6e24e3e76933c372a68eabb1971d1132d58",
+          "region_labels": 109,
+          "unassigned_fraction": 0.06715625
+        },
+        {
+          "name": "043_5",
+          "bytes": 42573,
+          "sha256": "4a3abbca6212a054be1ed2f977d1b2d0829fb5be0a531603387b3c43b462a84e",
+          "region_labels": 105,
+          "unassigned_fraction": 0.03704930555555556
+        },
+        {
+          "name": "044_0",
+          "bytes": 61052,
+          "sha256": "f5d949b76f063417d4d7a1c69cb684a030bf1caebdfc43a7dd87df6e4f723850",
+          "region_labels": 166,
+          "unassigned_fraction": 0.07391319444444444
+        },
+        {
+          "name": "044_1",
+          "bytes": 58680,
+          "sha256": "05463d8c3fc8428f7c7e3a3147424db0cf2ab2ff1a7b761969874aa55ece615f",
+          "region_labels": 188,
+          "unassigned_fraction": 0.03387361111111111
+        },
+        {
+          "name": "044_2",
+          "bytes": 48465,
+          "sha256": "9b09536ac8d71857e70260ed52b27913b66b8e6c3d59bc0bb0d9faedaa1cfb6c",
+          "region_labels": 157,
+          "unassigned_fraction": 0.033166666666666664
+        },
+        {
+          "name": "044_3",
+          "bytes": 36648,
+          "sha256": "2efedf608d6b140655d80f650c5ba2e64fe134ab9f0938882f6db32ed4bba275",
+          "region_labels": 104,
+          "unassigned_fraction": 0.033439583333333335
+        },
+        {
+          "name": "044_4",
+          "bytes": 47342,
+          "sha256": "79de9e1c6f6dd35594b87dc6cc52d048c0150537397091ea19351100f86c135b",
+          "region_labels": 107,
+          "unassigned_fraction": 0.07876597222222222
+        },
+        {
+          "name": "044_5",
+          "bytes": 39972,
+          "sha256": "0c13dfaaa0ea4abe53d59a3d5d538fe5a5989df2f09b4db8358e40324ea7ac5b",
+          "region_labels": 98,
+          "unassigned_fraction": 0.05577638888888889
+        },
+        {
+          "name": "045_0",
+          "bytes": 60116,
+          "sha256": "11d26bbdc69a6fec1d1ec9a4c67d1b0f4097717cde5f43b2fde68c9ab5fe66a6",
+          "region_labels": 168,
+          "unassigned_fraction": 0.08574236111111111
+        },
+        {
+          "name": "045_1",
+          "bytes": 55402,
+          "sha256": "92d9de841432205e70cde9009f0b4bda019c72191bf2ebecd017c8d8cb69f85a",
+          "region_labels": 186,
+          "unassigned_fraction": 0.04105138888888889
+        },
+        {
+          "name": "045_2",
+          "bytes": 50177,
+          "sha256": "a97600f5ba1a9887ea5c4dc03ac780a3e67da8706e00ffb89f661740e9670aee",
+          "region_labels": 156,
+          "unassigned_fraction": 0.04300902777777778
+        },
+        {
+          "name": "045_3",
+          "bytes": 35353,
+          "sha256": "9dc0e4a8f97a26c06170965e0f10ebaa110e3c0e1cdb1751929973d42b3c2c6d",
+          "region_labels": 107,
+          "unassigned_fraction": 0.07551111111111111
+        },
+        {
+          "name": "045_4",
+          "bytes": 47081,
+          "sha256": "32ac16123c26d4ab61a447ba2372c634287a222268b37bc72b1fa10cddf01825",
+          "region_labels": 99,
+          "unassigned_fraction": 0.09055902777777777
+        },
+        {
+          "name": "045_5",
+          "bytes": 41575,
+          "sha256": "56eea6f4258a91eb978a06100240ca77fcee6d68b4d0291b94fbb929703a71b5",
+          "region_labels": 100,
+          "unassigned_fraction": 0.03645138888888889
+        },
+        {
+          "name": "046_0",
+          "bytes": 62796,
+          "sha256": "bb00a710b2904401ebf559c1ecace0bd915a85681b0ad08f326aae9ecf3d636e",
+          "region_labels": 176,
+          "unassigned_fraction": 0.050125694444444445
+        },
+        {
+          "name": "046_1",
+          "bytes": 59498,
+          "sha256": "9f5754f633227b11db4d153f3aeed3dc2cf84ff17ad988798c459e04fac0485a",
+          "region_labels": 195,
+          "unassigned_fraction": 0.025225
+        },
+        {
+          "name": "046_2",
+          "bytes": 52000,
+          "sha256": "9e381552825bb050ec848038e2ae0f7cdffa2db14b544565e7b4945d3e261e0b",
+          "region_labels": 147,
+          "unassigned_fraction": 0.040265972222222224
+        },
+        {
+          "name": "046_3",
+          "bytes": 35772,
+          "sha256": "ce3758cc1988419cbc037b39013abd918259511989d6152b2923d1ca4104ff3f",
+          "region_labels": 101,
+          "unassigned_fraction": 0.04036666666666667
+        },
+        {
+          "name": "046_4",
+          "bytes": 46124,
+          "sha256": "54a5e14f266046cc994df143ccc6b513bf37ebb7451de0558c7629c9a2243b43",
+          "region_labels": 107,
+          "unassigned_fraction": 0.08276388888888889
+        },
+        {
+          "name": "046_5",
+          "bytes": 41966,
+          "sha256": "be9fc27a083e6a1714cd079ba688d999c9565fb54b6279e7aacc1892f8a9b5d6",
+          "region_labels": 105,
+          "unassigned_fraction": 0.040634027777777776
+        },
+        {
+          "name": "047_0",
+          "bytes": 58767,
+          "sha256": "8d0a5ba1b20b33866b4ea536e7e8ec9e7b35c2ebf02faf4a19b9a4f77999d69b",
+          "region_labels": 169,
+          "unassigned_fraction": 0.12828125
+        },
+        {
+          "name": "047_1",
+          "bytes": 57953,
+          "sha256": "9fdc0dcd9f625a70c55bdb1b30cb2f47611a313e2cf63e9a644b57028a1a09e1",
+          "region_labels": 176,
+          "unassigned_fraction": 0.02753125
+        },
+        {
+          "name": "047_2",
+          "bytes": 48093,
+          "sha256": "a1ed990796669a5c614d669c0e0a34938b448e6d5c81391b6f4bf03e804ffd14",
+          "region_labels": 140,
+          "unassigned_fraction": 0.062199305555555556
+        },
+        {
+          "name": "047_3",
+          "bytes": 33895,
+          "sha256": "66891fc7b0eaad5880f4aaf3e4942e505510ea4544a39068f165dd5ec32346e6",
+          "region_labels": 97,
+          "unassigned_fraction": 0.08530277777777778
+        },
+        {
+          "name": "047_4",
+          "bytes": 42680,
+          "sha256": "0d3bc164dc13f097aac149c5f29dea68ed2f7ed97e37d0910a737646af6a5038",
+          "region_labels": 99,
+          "unassigned_fraction": 0.0809
+        },
+        {
+          "name": "047_5",
+          "bytes": 39542,
+          "sha256": "4c709626e6e89befdfc70c7516fe69d8ae86ae637e1db288198868e5315a6640",
+          "region_labels": 100,
+          "unassigned_fraction": 0.04597986111111111
+        },
+        {
+          "name": "048_0",
+          "bytes": 58335,
+          "sha256": "c8bb98e96e0fafc8f769155018a6536bc59a8a4f0c904542f1bb32983659577b",
+          "region_labels": 161,
+          "unassigned_fraction": 0.08950416666666666
+        },
+        {
+          "name": "048_1",
+          "bytes": 55792,
+          "sha256": "ff42fccaa4256cf0af4e442810080e5ba45bf71f25cb5385d57367342c2b65b8",
+          "region_labels": 153,
+          "unassigned_fraction": 0.023664583333333333
+        },
+        {
+          "name": "048_2",
+          "bytes": 48205,
+          "sha256": "0f623805fac9db1e787df5ca1e18ff96f66c0f36e1a2607d57dfae04f5f3abdc",
+          "region_labels": 141,
+          "unassigned_fraction": 0.06336180555555555
+        },
+        {
+          "name": "048_3",
+          "bytes": 37565,
+          "sha256": "e6ee75590b00912a9d71321534064d5bcaaac31aaddf752e9cbd198417fc3c24",
+          "region_labels": 108,
+          "unassigned_fraction": 0.040369444444444444
+        },
+        {
+          "name": "048_4",
+          "bytes": 41356,
+          "sha256": "102be2041782af51bb3fcd2cbf1330fd6d4d0cf15f73dea2cd743b6d32a25f5c",
+          "region_labels": 87,
+          "unassigned_fraction": 0.08225347222222222
+        },
+        {
+          "name": "048_5",
+          "bytes": 43911,
+          "sha256": "e32566dce21a5ed65eff3beca56d54841f5fcb1b906d839be464d41df9c8eca8",
+          "region_labels": 112,
+          "unassigned_fraction": 0.04319791666666667
+        },
+        {
+          "name": "049_0",
+          "bytes": 58757,
+          "sha256": "7669ea73c7c2f3c1357737f9fa98ce18ac6f661134bce6619debdc3a32f908ae",
+          "region_labels": 158,
+          "unassigned_fraction": 0.0888875
+        },
+        {
+          "name": "049_1",
+          "bytes": 58793,
+          "sha256": "0781cef3d40a0ba2768e02a144bf7297618649fc7ac45f8aadf7533891b8f6e3",
+          "region_labels": 157,
+          "unassigned_fraction": 0.024445833333333333
+        },
+        {
+          "name": "049_2",
+          "bytes": 46016,
+          "sha256": "6b6c05ab4cd779b968a54153c84f15a9a817729981cab7e149b63cc4762fa569",
+          "region_labels": 133,
+          "unassigned_fraction": 0.06055555555555556
+        },
+        {
+          "name": "049_3",
+          "bytes": 38012,
+          "sha256": "92b49ca6316624f69f5086651d64a0947aef455964c2e81f8865333fd5f94cb5",
+          "region_labels": 110,
+          "unassigned_fraction": 0.042772222222222225
+        },
+        {
+          "name": "049_4",
+          "bytes": 39614,
+          "sha256": "b1d801814bc2822d6c49d12c3cbe8d029f7fcf0c51909de26341dd1723fdbaab",
+          "region_labels": 79,
+          "unassigned_fraction": 0.07321041666666667
+        },
+        {
+          "name": "049_5",
+          "bytes": 42221,
+          "sha256": "22cf799ba5632d11fd1e45bd6bdbcdfa993d1afde86781febfaa5b46961b046a",
+          "region_labels": 106,
+          "unassigned_fraction": 0.062370833333333334
+        },
+        {
+          "name": "050_0",
+          "bytes": 57376,
+          "sha256": "2cd59f7190f3265fb9c7abfa4c6a494de85c0e8e22f19db88f5805aecf0f3e9c",
+          "region_labels": 155,
+          "unassigned_fraction": 0.09147847222222222
+        },
+        {
+          "name": "050_1",
+          "bytes": 58603,
+          "sha256": "a7541652304d0754a5c9fa536b82f177f3480b53f574e42b0e2692dddfec4fff",
+          "region_labels": 168,
+          "unassigned_fraction": 0.0261625
+        },
+        {
+          "name": "050_2",
+          "bytes": 47512,
+          "sha256": "9bba236aa02faee9d33078f4a53d75490a3e6d6d73212c1c0a28e7c3706efa55",
+          "region_labels": 143,
+          "unassigned_fraction": 0.050366666666666664
+        },
+        {
+          "name": "050_3",
+          "bytes": 38151,
+          "sha256": "a93dff437b4bac508ddf7bae253540fd490b0ae0a8be1f209d367a07d025b196",
+          "region_labels": 109,
+          "unassigned_fraction": 0.043548611111111114
+        },
+        {
+          "name": "050_4",
+          "bytes": 39822,
+          "sha256": "080c67d0ea0c9a5e7338f9fb8c33179316e7814ac67aac23835d3b7a912a03a6",
+          "region_labels": 87,
+          "unassigned_fraction": 0.10591458333333334
+        },
+        {
+          "name": "050_5",
+          "bytes": 42283,
+          "sha256": "38c7bcff5bd1d5b4561a3b9a28123131ef769baf667284a51c90765be5c1cb41",
+          "region_labels": 108,
+          "unassigned_fraction": 0.06628472222222222
+        },
+        {
+          "name": "051_0",
+          "bytes": 59694,
+          "sha256": "973261c884e6b29b236e32d03151012c1f45a08305e87dc887446cd3e4cd09e0",
+          "region_labels": 159,
+          "unassigned_fraction": 0.08798680555555556
+        },
+        {
+          "name": "051_1",
+          "bytes": 56329,
+          "sha256": "2f8db1406407ace09f5394d41705e4a39cc86e242f90b02d99be35422bef5395",
+          "region_labels": 169,
+          "unassigned_fraction": 0.02452986111111111
+        },
+        {
+          "name": "051_2",
+          "bytes": 50436,
+          "sha256": "26add93ebe514c4d22401ab353051b753aa9cdfea0af904ca2a70ab2ae850c21",
+          "region_labels": 155,
+          "unassigned_fraction": 0.05016597222222222
+        },
+        {
+          "name": "051_3",
+          "bytes": 38087,
+          "sha256": "41ce2f232225dbf7472d3a6f6a62508bdbe34b7bf27486ea2b07a5e8c6954db3",
+          "region_labels": 113,
+          "unassigned_fraction": 0.034396527777777776
+        },
+        {
+          "name": "051_4",
+          "bytes": 41731,
+          "sha256": "5855ac752a1516c1a25f5ba0ef05b46cdad467815a0d1bc834a1bfeac09786c7",
+          "region_labels": 83,
+          "unassigned_fraction": 0.04936736111111111
+        },
+        {
+          "name": "051_5",
+          "bytes": 44751,
+          "sha256": "7839ff6a2d5d814d080a9567847f66516687061f0c9e90ba7df149c5185f9659",
+          "region_labels": 114,
+          "unassigned_fraction": 0.041522222222222224
+        },
+        {
+          "name": "052_0",
+          "bytes": 61421,
+          "sha256": "0a9c4d98007e111722365cb029efe01daf9f87ac0395862eabef96b24c537ad2",
+          "region_labels": 175,
+          "unassigned_fraction": 0.09051111111111111
+        },
+        {
+          "name": "052_1",
+          "bytes": 54753,
+          "sha256": "4ca468f20c95cdbadbc4d9c9a526602b39d03065e4f785a12e5e39705cd7789b",
+          "region_labels": 171,
+          "unassigned_fraction": 0.02797847222222222
+        },
+        {
+          "name": "052_2",
+          "bytes": 49208,
+          "sha256": "ae5b87f3a921116971924d1a0774a812afca4330e116fa5e46e42e330a2bc567",
+          "region_labels": 158,
+          "unassigned_fraction": 0.06453472222222222
+        },
+        {
+          "name": "052_3",
+          "bytes": 37813,
+          "sha256": "b1b885b350a4ff797030bd64c564c6cb34b72b806c70376e1176a1b5bab52cbd",
+          "region_labels": 112,
+          "unassigned_fraction": 0.03502291666666667
+        },
+        {
+          "name": "052_4",
+          "bytes": 41652,
+          "sha256": "82f7f6f9928b63d64661903817000b1c8ddc1af15b418e1e2aa2f01bc0481331",
+          "region_labels": 88,
+          "unassigned_fraction": 0.08617430555555555
+        },
+        {
+          "name": "052_5",
+          "bytes": 43430,
+          "sha256": "d500e1427721012d6e8fd95b1bcc66001dfbb353ec979d325d25d67eb47d6312",
+          "region_labels": 110,
+          "unassigned_fraction": 0.04748680555555555
+        },
+        {
+          "name": "053_0",
+          "bytes": 59152,
+          "sha256": "ace4f415019b3422e3cf18874f91a14bc3518bec8c54017a362a7f7f36074453",
+          "region_labels": 161,
+          "unassigned_fraction": 0.08878263888888889
+        },
+        {
+          "name": "053_1",
+          "bytes": 52979,
+          "sha256": "14cc4f6e5e7ef5327579b6536b5d763089e3b1d49fd1004ae6d31bb82ec9c95b",
+          "region_labels": 167,
+          "unassigned_fraction": 0.025883333333333335
+        },
+        {
+          "name": "053_2",
+          "bytes": 51162,
+          "sha256": "fff79a75403ecc4bc7475edecbbbfea0c92258a83d0ee777fb77fb605c5c1672",
+          "region_labels": 165,
+          "unassigned_fraction": 0.06558055555555556
+        },
+        {
+          "name": "053_3",
+          "bytes": 38976,
+          "sha256": "a9edd0254fd9cb1d9b598a9b00b66188e7a15599cae84fb9644dbd4957e58ee8",
+          "region_labels": 116,
+          "unassigned_fraction": 0.03943888888888889
+        },
+        {
+          "name": "053_4",
+          "bytes": 38655,
+          "sha256": "886cba3fb00a28c7f9a96dee7aa64d1db1e565ffb227e88b6b4bfeecba86ea76",
+          "region_labels": 85,
+          "unassigned_fraction": 0.07656805555555556
+        },
+        {
+          "name": "053_5",
+          "bytes": 41593,
+          "sha256": "148edbc683cc67030ff2363800b5b3b36975f3e4c0bb245a4b2a60a22230dabc",
+          "region_labels": 98,
+          "unassigned_fraction": 0.07671041666666667
+        },
+        {
+          "name": "054_0",
+          "bytes": 58932,
+          "sha256": "9870848ab482644785966c52f0b2a3960a4021071e419ee0796b6cf515297ed0",
+          "region_labels": 165,
+          "unassigned_fraction": 0.07456319444444444
+        },
+        {
+          "name": "054_1",
+          "bytes": 51971,
+          "sha256": "146640be5a6a4667592066755fb2f8007a3aca68995aea53971dfa7c0b3d564b",
+          "region_labels": 161,
+          "unassigned_fraction": 0.025404166666666665
+        },
+        {
+          "name": "054_2",
+          "bytes": 50258,
+          "sha256": "9fb024e21773a0f2cddb57c50b89049cce0cd0ee5bdb3d1b610e67a7cbaab77a",
+          "region_labels": 141,
+          "unassigned_fraction": 0.07637847222222222
+        },
+        {
+          "name": "054_3",
+          "bytes": 37899,
+          "sha256": "55d9982d36490e042e33ecb529591ad687910f87646e10995f01d42188a9b496",
+          "region_labels": 114,
+          "unassigned_fraction": 0.07538194444444445
+        },
+        {
+          "name": "054_4",
+          "bytes": 40050,
+          "sha256": "bd553223ec57fd74aeb9696c226424aeb88052fb69bd43d1d08ced6252f2b497",
+          "region_labels": 84,
+          "unassigned_fraction": 0.08831666666666667
+        },
+        {
+          "name": "054_5",
+          "bytes": 44342,
+          "sha256": "a356f4fa765e01f564d306cd938aeae4c60a6d75993a35e981f5248e22721ee4",
+          "region_labels": 107,
+          "unassigned_fraction": 0.04596527777777778
+        },
+        {
+          "name": "055_0",
+          "bytes": 60604,
+          "sha256": "d1a08a1a5254c708e2ab2f960eab77dc442b5a67b40b968f2470978d472f5809",
+          "region_labels": 164,
+          "unassigned_fraction": 0.09564166666666667
+        },
+        {
+          "name": "055_1",
+          "bytes": 53840,
+          "sha256": "3d7b1f79f5ad82bdff0198927d1077f5b02c5b62c270e9daaeabf35f22defe20",
+          "region_labels": 158,
+          "unassigned_fraction": 0.027177083333333334
+        },
+        {
+          "name": "055_2",
+          "bytes": 50064,
+          "sha256": "0501caf28843814f55c8e024408c64d44758a4ba423cc830f4ff4c7eb7698cda",
+          "region_labels": 151,
+          "unassigned_fraction": 0.06313333333333333
+        },
+        {
+          "name": "055_3",
+          "bytes": 37303,
+          "sha256": "0fdd8322534bf41a900cc0d66f0bff0064f741e0521a98b99e02af61efce7442",
+          "region_labels": 113,
+          "unassigned_fraction": 0.04560763888888889
+        },
+        {
+          "name": "055_4",
+          "bytes": 38194,
+          "sha256": "dd472652f906314caf1fe48d05e84b17577a2a074a090c171bbd2bcc31643371",
+          "region_labels": 77,
+          "unassigned_fraction": 0.08746736111111111
+        },
+        {
+          "name": "055_5",
+          "bytes": 43984,
+          "sha256": "557dce685406eeaefa5e3a002de3f237e160d538260327177ec893cc1d4288f1",
+          "region_labels": 112,
+          "unassigned_fraction": 0.06266111111111111
+        },
+        {
+          "name": "056_0",
+          "bytes": 60466,
+          "sha256": "9ed63a75b90be941a8e90f39752af88cd54d17d9eb2c047f116b005545480898",
+          "region_labels": 170,
+          "unassigned_fraction": 0.08933263888888889
+        },
+        {
+          "name": "056_1",
+          "bytes": 58653,
+          "sha256": "0ae52b3f96443193be510d7f506b2afea4c8397554c35e827312eb14f0946a90",
+          "region_labels": 185,
+          "unassigned_fraction": 0.025513888888888888
+        },
+        {
+          "name": "056_2",
+          "bytes": 50760,
+          "sha256": "09bff7cc584825976ebb9cd8bb3864ec162dab595bb53ea722eddafaab433ad9",
+          "region_labels": 151,
+          "unassigned_fraction": 0.07251875
+        },
+        {
+          "name": "056_3",
+          "bytes": 34576,
+          "sha256": "faea196c8772ad3ef37108990115fcf2874f598f5c4e003ccb1127853432f896",
+          "region_labels": 109,
+          "unassigned_fraction": 0.04058888888888889
+        },
+        {
+          "name": "056_4",
+          "bytes": 38756,
+          "sha256": "12b6da75dad0309001471664feed83b80e66ad89d21b850be13d2464b7a257c9",
+          "region_labels": 82,
+          "unassigned_fraction": 0.08503125
+        },
+        {
+          "name": "056_5",
+          "bytes": 45139,
+          "sha256": "7c275b63755403cec3da3c3d607e864d9819e13a377f1e4072ba3a661a2c1217",
+          "region_labels": 116,
+          "unassigned_fraction": 0.06189027777777778
+        },
+        {
+          "name": "057_0",
+          "bytes": 62197,
+          "sha256": "e3f550d83e60aefde19175e77acb472186c6fb9732ec4c6b830c431bcd42e989",
+          "region_labels": 172,
+          "unassigned_fraction": 0.08735625
+        },
+        {
+          "name": "057_1",
+          "bytes": 50742,
+          "sha256": "a64f106f6d0805d1d1bac563b2b4eaff5189d2ba7ad6a731a4ef64a0148092c3",
+          "region_labels": 160,
+          "unassigned_fraction": 0.03314930555555556
+        },
+        {
+          "name": "057_2",
+          "bytes": 49987,
+          "sha256": "caca792add319822badf180c284915c9c6b3d91d6784b15a4d85dc33a54dfe44",
+          "region_labels": 151,
+          "unassigned_fraction": 0.09326944444444445
+        },
+        {
+          "name": "057_3",
+          "bytes": 36828,
+          "sha256": "8a8746020351be8c526678c059875336b66d172844cf63099585858bdf12d675",
+          "region_labels": 117,
+          "unassigned_fraction": 0.04202638888888889
+        },
+        {
+          "name": "057_4",
+          "bytes": 40831,
+          "sha256": "0b630a6924b74da7073f0b687325757c6f58f7b89cbe828910a7d42adac726ed",
+          "region_labels": 88,
+          "unassigned_fraction": 0.06121388888888889
+        },
+        {
+          "name": "057_5",
+          "bytes": 44359,
+          "sha256": "3428d2cc0a04264f639dac9e24de133f6f850c7fac9db1400f12a543b81aa941",
+          "region_labels": 110,
+          "unassigned_fraction": 0.06206111111111111
+        },
+        {
+          "name": "058_0",
+          "bytes": 63246,
+          "sha256": "58b75bebb61b24e2ee9bec9164863cd2cd3cb3a449551b8802bc22d1e6fba401",
+          "region_labels": 166,
+          "unassigned_fraction": 0.05501944444444445
+        },
+        {
+          "name": "058_1",
+          "bytes": 50742,
+          "sha256": "a64f106f6d0805d1d1bac563b2b4eaff5189d2ba7ad6a731a4ef64a0148092c3",
+          "region_labels": 160,
+          "unassigned_fraction": 0.03314930555555556
+        },
+        {
+          "name": "058_2",
+          "bytes": 50207,
+          "sha256": "75fbb63ed175c35cd9c9ebb5521f3b331b84248437a66460f92ba7246859fd48",
+          "region_labels": 153,
+          "unassigned_fraction": 0.1323902777777778
+        },
+        {
+          "name": "058_3",
+          "bytes": 32965,
+          "sha256": "c21ca0e47526945f9fb8bd2405b4e31fbed0e30ef74681f343014cfc6f668ed8",
+          "region_labels": 100,
+          "unassigned_fraction": 0.04566805555555556
+        },
+        {
+          "name": "058_4",
+          "bytes": 38787,
+          "sha256": "fe21393a87b11be79ee2a4945818b872dae2019840723140febf7709aaad8fde",
+          "region_labels": 81,
+          "unassigned_fraction": 0.07412569444444445
+        },
+        {
+          "name": "058_5",
+          "bytes": 46128,
+          "sha256": "6728ec3ddbbb55b553b35f98f977af316e71681de133accff9248d2532bdf908",
+          "region_labels": 115,
+          "unassigned_fraction": 0.06304027777777778
+        },
+        {
+          "name": "059_0",
+          "bytes": 61715,
+          "sha256": "65fcca98bae6cbfad449f678ae15450badac88e1691dd67b81ca3dada2c30a47",
+          "region_labels": 162,
+          "unassigned_fraction": 0.107725
+        },
+        {
+          "name": "059_1",
+          "bytes": 50291,
+          "sha256": "fbb04dc44e38c129332402932f39d328121636624d525bd52449284048a83ff5",
+          "region_labels": 163,
+          "unassigned_fraction": 0.02894652777777778
+        },
+        {
+          "name": "059_2",
+          "bytes": 51278,
+          "sha256": "ac3a943354cc79becceac28f67f42d1c6203495b21a68455d9f50ac66e616867",
+          "region_labels": 150,
+          "unassigned_fraction": 0.12126041666666666
+        },
+        {
+          "name": "059_3",
+          "bytes": 33730,
+          "sha256": "4c33e561bb76a7a59bd8f8525c7b3e384532867473274fa1f87a20555d0d1edc",
+          "region_labels": 107,
+          "unassigned_fraction": 0.08078472222222222
+        },
+        {
+          "name": "059_4",
+          "bytes": 36905,
+          "sha256": "b7576106ba4b2077be1165381951d64185dad0130f7839fc85421c74b0af639b",
+          "region_labels": 76,
+          "unassigned_fraction": 0.08324305555555556
+        },
+        {
+          "name": "059_5",
+          "bytes": 44964,
+          "sha256": "6e7f7fb1139bc07d2ab45255b97692db836fc34e0c5699c104803742bb065495",
+          "region_labels": 110,
+          "unassigned_fraction": 0.041120833333333336
+        },
+        {
+          "name": "060_0",
+          "bytes": 64564,
+          "sha256": "5d4cb0655c3d478e2a976c4a470290182df3e21eb1125d6985aebd56de372e4e",
+          "region_labels": 164,
+          "unassigned_fraction": 0.07467708333333334
+        },
+        {
+          "name": "060_1",
+          "bytes": 55964,
+          "sha256": "a8c3152313314ccb6d0cdfbd38528e9a188e36617bf941d8169a3388744363d0",
+          "region_labels": 163,
+          "unassigned_fraction": 0.02846736111111111
+        },
+        {
+          "name": "060_2",
+          "bytes": 51045,
+          "sha256": "f99c58ffb362593ac38fd9cd3f7dbe3eaf1c4c56aee6a8fc015f61247112079f",
+          "region_labels": 149,
+          "unassigned_fraction": 0.12628055555555556
+        },
+        {
+          "name": "060_3",
+          "bytes": 32560,
+          "sha256": "b548a3998712dc0337c27d64a565d031975bac0c76abd53e666d85fb44db073d",
+          "region_labels": 99,
+          "unassigned_fraction": 0.04269722222222222
+        },
+        {
+          "name": "060_4",
+          "bytes": 39859,
+          "sha256": "73dbcb724c976a90b57540950df61d9c94a0129dd8d1cab7e44a9828abf5a798",
+          "region_labels": 87,
+          "unassigned_fraction": 0.05562569444444444
+        },
+        {
+          "name": "060_5",
+          "bytes": 43148,
+          "sha256": "7c464ada7e9d0f3589cca1444b8aa82bea3f9a76673bd6d5a243165636dbd847",
+          "region_labels": 108,
+          "unassigned_fraction": 0.048364583333333336
+        }
+      ]
+    },
+    "scene_0255": {
+      "expected_views": 366,
+      "counts": {
+        "depth_v2": 366,
+        "normal_img": 366,
+        "sam_bkgd_masks": 366
+      },
+      "background_files_decoded_and_validated": 366,
+      "background_shape": [
+        900,
+        1600
+      ],
+      "background_dtype": "uint8",
+      "report_status": "complete",
+      "report_mtime": "2026-09-26T07:48:13.317016+08:00",
+      "report_sha256": "f65fe5a8cbf084b34c428624e276adc3a327a009f2c9c8fd49ca65529342606b",
+      "invocation_device": "cpu",
+      "invocation_seconds": 16236.68046361208,
+      "reused_existing_views": 268,
+      "new_view_devices": {
+        "cpu": 98
+      },
+      "dynamic_identity_blocked": {
+        "failure_id": "V76-F02",
+        "time": "2026-09-25T18:24:46.549422+00:00",
+        "reason": "Projected hidden pedestrian boxes lead SAM to label foreground car/sign as pedestrian; uint8 ID and shape checks alone miss this.",
+        "evidence": "/root/autodl-tmp/data/v76_vadgs/sam_occlusion_audit",
+        "preserved_dynamic_masks": "/root/autodl-tmp/data/v76_vadgs/scene_0255/sam_prior_evidence/rejected_box_only_sam_masks_20260926",
+        "decision": "Do not bulk-generate box-only actor labels or launch matched-scene training until visible identity gate passes.",
+        "pre_registered_fallback": "Associate class-compatible visible 2D detections to projected 3D tracks, then prompt SAM; validate on the same fixed positives and occlusions before expansion.",
+        "background_sam_may_continue": true,
+        "human_verdict": null
+      },
+      "files": [
+        {
+          "name": "000_0",
+          "bytes": 39248,
+          "sha256": "5d9602455e84f3d3194f83e8367cbf9da00987996920340762521905186fb893",
+          "region_labels": 96,
+          "unassigned_fraction": 0.11367083333333333
+        },
+        {
+          "name": "000_1",
+          "bytes": 38597,
+          "sha256": "871a986dd190c6691dca4e4e103ff83e354e63eda1eac12c2eea101c9db1426e",
+          "region_labels": 79,
+          "unassigned_fraction": 0.15248055555555556
+        },
+        {
+          "name": "000_2",
+          "bytes": 42679,
+          "sha256": "d932e99c9a3b69a1ff67d2c26bea2a4293c94e21bbf216d460186fff620eb567",
+          "region_labels": 88,
+          "unassigned_fraction": 0.19525694444444444
+        },
+        {
+          "name": "000_3",
+          "bytes": 35045,
+          "sha256": "c5fb4439690a0b8cfbfcd94f77463dbb4cdd50220538ee7441290ff917dc0817",
+          "region_labels": 98,
+          "unassigned_fraction": 0.12245
+        },
+        {
+          "name": "000_4",
+          "bytes": 39231,
+          "sha256": "a2c3e3b32315af0f93e9305e9dc2584c8950748072ce56be786994d45df80c1e",
+          "region_labels": 100,
+          "unassigned_fraction": 0.10312638888888889
+        },
+        {
+          "name": "000_5",
+          "bytes": 34380,
+          "sha256": "cc2f31503e24ba50778ed29b9c465cf4e7f38b60f8c18bd9ed7f6204d1a31c45",
+          "region_labels": 65,
+          "unassigned_fraction": 0.08488333333333334
+        },
+        {
+          "name": "001_0",
+          "bytes": 39321,
+          "sha256": "503e1f6781cae6140bf645808cfc95cb7882de941a52d41f23f2e7a8ee35cdd9",
+          "region_labels": 95,
+          "unassigned_fraction": 0.11856736111111112
+        },
+        {
+          "name": "001_1",
+          "bytes": 41317,
+          "sha256": "0fe7ae7f4c51452961b8a14a068daa780d118a4119dd81e35a679b57e57ef36e",
+          "region_labels": 80,
+          "unassigned_fraction": 0.16787708333333334
+        },
+        {
+          "name": "001_2",
+          "bytes": 40061,
+          "sha256": "90e2087ef65c970f447ea69a59d9d5a3a8b61737117a774cd20a23b7b3b01a72",
+          "region_labels": 78,
+          "unassigned_fraction": 0.2742173611111111
+        },
+        {
+          "name": "001_3",
+          "bytes": 36874,
+          "sha256": "ebc3a47f402f8a830d08a472ab4d40488e2cd5ae554518dbb9ef23c0e6c4b6e2",
+          "region_labels": 98,
+          "unassigned_fraction": 0.23953194444444445
+        },
+        {
+          "name": "001_4",
+          "bytes": 38619,
+          "sha256": "7eb60f99804cdc38dda0985fcc0a3aed1666848c4b0a891a06861581506ad46f",
+          "region_labels": 95,
+          "unassigned_fraction": 0.10253819444444444
+        },
+        {
+          "name": "001_5",
+          "bytes": 32899,
+          "sha256": "8a6e0d176c58dfe30698032316f9065e6fe4f37cb6d0ac1ab6b9b049547af01e",
+          "region_labels": 63,
+          "unassigned_fraction": 0.07340972222222222
+        },
+        {
+          "name": "002_0",
+          "bytes": 38733,
+          "sha256": "b2fa9c7e1ac445594c2443e0192c8edab08652bea8b08208a2b129cb08202038",
+          "region_labels": 94,
+          "unassigned_fraction": 0.12333194444444444
+        },
+        {
+          "name": "002_1",
+          "bytes": 41299,
+          "sha256": "8e4d930e8c237a8ce4c6583321deb33fcd6b4eb5ecd7cd37ba33b954ac8f312b",
+          "region_labels": 83,
+          "unassigned_fraction": 0.1415375
+        },
+        {
+          "name": "002_2",
+          "bytes": 40917,
+          "sha256": "71cb9d1f34830ed7fd95083c3651f7aae41d73392526949885c5829455f07c9c",
+          "region_labels": 82,
+          "unassigned_fraction": 0.2809729166666667
+        },
+        {
+          "name": "002_3",
+          "bytes": 37080,
+          "sha256": "def1ef58f7f92127a1d4b098a4e615f151e0f7b5b63c22a7686b1a457a4b5d59",
+          "region_labels": 100,
+          "unassigned_fraction": 0.11501875
+        },
+        {
+          "name": "002_4",
+          "bytes": 38784,
+          "sha256": "a045e8b2ac8dd5c887a1e48b61a73ef3da3d4428d3addba2b0186676648b46f3",
+          "region_labels": 105,
+          "unassigned_fraction": 0.24162569444444446
+        },
+        {
+          "name": "002_5",
+          "bytes": 33987,
+          "sha256": "c18f400ed144ebe78d7b646d81ae59fcfeaca4ec8510ddfa4dd59f8fd9bd5b90",
+          "region_labels": 64,
+          "unassigned_fraction": 0.07245625
+        },
+        {
+          "name": "003_0",
+          "bytes": 39465,
+          "sha256": "1d1bbd05fc941bf5d808636e1618ee2c91bbc4127e3a7038da0f108e6037f14c",
+          "region_labels": 98,
+          "unassigned_fraction": 0.13383819444444445
+        },
+        {
+          "name": "003_1",
+          "bytes": 42035,
+          "sha256": "7bbc29633e1791f500a764eafb496c0ee5158d5198127f8f380186c2bd7bd782",
+          "region_labels": 89,
+          "unassigned_fraction": 0.14178958333333333
+        },
+        {
+          "name": "003_2",
+          "bytes": 47006,
+          "sha256": "bebfaeefa6ca5658188a5d89e22516395e199cba75b9170dfde9b9df369bff3c",
+          "region_labels": 86,
+          "unassigned_fraction": 0.20173958333333333
+        },
+        {
+          "name": "003_3",
+          "bytes": 38666,
+          "sha256": "88328c8a1eb79b6205f236c83b0da92b0330d52489e6614129ab021025b2527e",
+          "region_labels": 102,
+          "unassigned_fraction": 0.11386041666666667
+        },
+        {
+          "name": "003_4",
+          "bytes": 40617,
+          "sha256": "39356610bd2da8e0afb00a8260cfdfb77d37e8bd799639764d41a01ebee1f675",
+          "region_labels": 116,
+          "unassigned_fraction": 0.24149166666666666
+        },
+        {
+          "name": "003_5",
+          "bytes": 31879,
+          "sha256": "c92af69e44f2d5dece58a26552bcfad6d44639e578ea167a2b1d6455b255b7aa",
+          "region_labels": 68,
+          "unassigned_fraction": 0.29050625
+        },
+        {
+          "name": "004_0",
+          "bytes": 39836,
+          "sha256": "06f691264c20a992737019541437136c724548099e32c35cae09aae373468db6",
+          "region_labels": 96,
+          "unassigned_fraction": 0.12803125
+        },
+        {
+          "name": "004_1",
+          "bytes": 42806,
+          "sha256": "67f868b448aa208f92e783bf2e10f404180eba0fdf8a426425aa4473d0047e28",
+          "region_labels": 83,
+          "unassigned_fraction": 0.14281944444444444
+        },
+        {
+          "name": "004_2",
+          "bytes": 46204,
+          "sha256": "3ba9b5fd0f36a6af5cde8bbddf4222ffdf4140ee3dc69118cdf13964c15d06c3",
+          "region_labels": 84,
+          "unassigned_fraction": 0.19262291666666667
+        },
+        {
+          "name": "004_3",
+          "bytes": 36085,
+          "sha256": "575099a99644fb018829190132a04a14b0d443f26dbb66dfbe8abe42576eb1d8",
+          "region_labels": 102,
+          "unassigned_fraction": 0.12350138888888888
+        },
+        {
+          "name": "004_4",
+          "bytes": 42046,
+          "sha256": "c6c1009b55c6a2f6d49212bb868924f4ae45b5f2a4331d2be336093faee876b0",
+          "region_labels": 121,
+          "unassigned_fraction": 0.1242
+        },
+        {
+          "name": "004_5",
+          "bytes": 33216,
+          "sha256": "1dfcdad99fd8913fbe28afea565ecbc4319af90a893e383a0be3d6dbe2919e50",
+          "region_labels": 66,
+          "unassigned_fraction": 0.0761451388888889
+        },
+        {
+          "name": "005_0",
+          "bytes": 38513,
+          "sha256": "ce86a710e1325269e854dbb39a1497ff337ba20bbd7078705cdf6efdfed71151",
+          "region_labels": 93,
+          "unassigned_fraction": 0.1288138888888889
+        },
+        {
+          "name": "005_1",
+          "bytes": 43351,
+          "sha256": "70d54ccdafb90095c48bc1665230e8c0a68d1e3c0c8b65873b833485cd174070",
+          "region_labels": 78,
+          "unassigned_fraction": 0.13730069444444445
+        },
+        {
+          "name": "005_2",
+          "bytes": 44188,
+          "sha256": "dc7fbb4c1f4bf1e1da7efd7e6b8fa876904d8d770b5f6d812f35a318b654282e",
+          "region_labels": 92,
+          "unassigned_fraction": 0.2074673611111111
+        },
+        {
+          "name": "005_3",
+          "bytes": 37717,
+          "sha256": "81337161cc49d0b20ee62fd0426aa2d5c0ff80d577d46a958171b9deb0673e1d",
+          "region_labels": 94,
+          "unassigned_fraction": 0.12226597222222223
+        },
+        {
+          "name": "005_4",
+          "bytes": 40615,
+          "sha256": "917f824589314d1d9241fb457946b9b9f90037e686b85cda28094246b4041bd5",
+          "region_labels": 117,
+          "unassigned_fraction": 0.26719027777777776
+        },
+        {
+          "name": "005_5",
+          "bytes": 33977,
+          "sha256": "65cd8ff97f86a91f57e0482c77b3cb865ca19980ea4caef0a7687932d30b7518",
+          "region_labels": 69,
+          "unassigned_fraction": 0.2747104166666667
+        },
+        {
+          "name": "006_0",
+          "bytes": 37808,
+          "sha256": "e252009603c77b7772e415e21d5afa41142ddb68b7f072067fc6a52d151406ad",
+          "region_labels": 87,
+          "unassigned_fraction": 0.13537430555555555
+        },
+        {
+          "name": "006_1",
+          "bytes": 41806,
+          "sha256": "7d71b2b6960619f603d0a80a0e970da5d5ee7c0ed8e81970553a86fa2c56535b",
+          "region_labels": 81,
+          "unassigned_fraction": 0.14825902777777777
+        },
+        {
+          "name": "006_2",
+          "bytes": 44298,
+          "sha256": "24276fdf7a5ef0eab465506f7f99ea31c07d06dc77e8d00eae80338c3f38a3db",
+          "region_labels": 82,
+          "unassigned_fraction": 0.16508402777777778
+        },
+        {
+          "name": "006_3",
+          "bytes": 35660,
+          "sha256": "c9f8959ea28ddde16d4cce5520d71561dada4a6bad529dcd30ac49853487d8ad",
+          "region_labels": 102,
+          "unassigned_fraction": 0.1884736111111111
+        },
+        {
+          "name": "006_4",
+          "bytes": 39190,
+          "sha256": "a50c662e9bc2dbfe1dd66f21af87d4f03cc6d22a7d042800d5534738464ec980",
+          "region_labels": 109,
+          "unassigned_fraction": 0.20954652777777777
+        },
+        {
+          "name": "006_5",
+          "bytes": 32093,
+          "sha256": "a146e5732a0d065f98ef3b39c0c12ed431ddaa37dbf322bb6e18f43a4e22e28d",
+          "region_labels": 64,
+          "unassigned_fraction": 0.19076805555555557
+        },
+        {
+          "name": "007_0",
+          "bytes": 41952,
+          "sha256": "818f749b528cc26cf1d9d4e912d529a0cc09c0706cd54fbd2efc29662411be7e",
+          "region_labels": 100,
+          "unassigned_fraction": 0.1289125
+        },
+        {
+          "name": "007_1",
+          "bytes": 46476,
+          "sha256": "d07ac290064e5f3b9620c8fb78aeb4d689fac2d5eeeb5f96281ea8d0b00fe439",
+          "region_labels": 92,
+          "unassigned_fraction": 0.14994652777777778
+        },
+        {
+          "name": "007_2",
+          "bytes": 48822,
+          "sha256": "5f88e156b8b1752357db74e47882cc638a60152ccc425352051b6737cbf1d133",
+          "region_labels": 107,
+          "unassigned_fraction": 0.1627701388888889
+        },
+        {
+          "name": "007_3",
+          "bytes": 38828,
+          "sha256": "785246dc012d0303e77c8452e49e0207a2ea126ee62ea85aea47a20ad554d7cb",
+          "region_labels": 111,
+          "unassigned_fraction": 0.1592611111111111
+        },
+        {
+          "name": "007_4",
+          "bytes": 41334,
+          "sha256": "4811d1e13c922a09f59fb3797b087e02ccc3d6ef678bb3921aefc362e2f4e75d",
+          "region_labels": 116,
+          "unassigned_fraction": 0.09911944444444444
+        },
+        {
+          "name": "007_5",
+          "bytes": 31670,
+          "sha256": "7e5ee25d33028178e0aeb89bf6b4340040b4a126417878d953f817d805e8fc02",
+          "region_labels": 70,
+          "unassigned_fraction": 0.06389097222222222
+        },
+        {
+          "name": "008_0",
+          "bytes": 42201,
+          "sha256": "25bf1edb1d8caa131e908b958a45169c158a055e262494863f757040e905a925",
+          "region_labels": 103,
+          "unassigned_fraction": 0.1353361111111111
+        },
+        {
+          "name": "008_1",
+          "bytes": 46904,
+          "sha256": "6a3632efc2c1009e0f14f6b31a0e6626a08aac807d9a834c6e10f76b83c979b1",
+          "region_labels": 91,
+          "unassigned_fraction": 0.16091180555555556
+        },
+        {
+          "name": "008_2",
+          "bytes": 42810,
+          "sha256": "7e765de69cf809d84b9d8ac87868d0b56ab91064f1aa02dc682cfe8b4ae5a5ef",
+          "region_labels": 95,
+          "unassigned_fraction": 0.16761875
+        },
+        {
+          "name": "008_3",
+          "bytes": 37132,
+          "sha256": "9fbb2f2345c516b0e3a868bf978ef0131ed8895a831c170827585959db31ee50",
+          "region_labels": 96,
+          "unassigned_fraction": 0.17638680555555555
+        },
+        {
+          "name": "008_4",
+          "bytes": 42403,
+          "sha256": "d5e14e0715a3e32e9abb8cf9d55f69f6a10fe454b3537ef9f3f175226fd8e4d1",
+          "region_labels": 115,
+          "unassigned_fraction": 0.1143625
+        },
+        {
+          "name": "008_5",
+          "bytes": 31729,
+          "sha256": "1df502fcc8fe71524f8bc46bb12e73bf8d604863eccd73e8d9a0b1d491ff0276",
+          "region_labels": 72,
+          "unassigned_fraction": 0.3070340277777778
+        },
+        {
+          "name": "009_0",
+          "bytes": 41735,
+          "sha256": "ba9f01c9f90d955d4c2cf2a7a7ada530985031821ef72e0fe6bba91a46ceceac",
+          "region_labels": 103,
+          "unassigned_fraction": 0.1234375
+        },
+        {
+          "name": "009_1",
+          "bytes": 44303,
+          "sha256": "2034448e113de231982a550cf5d1970fa28932ec09d4a506f1a08d0c01f845e4",
+          "region_labels": 90,
+          "unassigned_fraction": 0.16480625
+        },
+        {
+          "name": "009_2",
+          "bytes": 41640,
+          "sha256": "7bf2f4131387d7243b9dc25b98b5481b9118537257be010e5d184c58d603576d",
+          "region_labels": 95,
+          "unassigned_fraction": 0.15368680555555556
+        },
+        {
+          "name": "009_3",
+          "bytes": 38955,
+          "sha256": "3f1e31a9dceaf0302ab7ecd40d66807d14898311307d2c86057e59e0170a368c",
+          "region_labels": 108,
+          "unassigned_fraction": 0.16090277777777778
+        },
+        {
+          "name": "009_4",
+          "bytes": 44246,
+          "sha256": "9e66aa16a21cc4ca24f1fc3616661922fec8b663a36c0d0e86e4b64fb1655ef7",
+          "region_labels": 112,
+          "unassigned_fraction": 0.08139861111111112
+        },
+        {
+          "name": "009_5",
+          "bytes": 34686,
+          "sha256": "44d3f6f1e299279d5abb9d6a91bd71a9d613f0edd7eb028c14a1d1c3cee5d1dd",
+          "region_labels": 77,
+          "unassigned_fraction": 0.05575694444444444
+        },
+        {
+          "name": "010_0",
+          "bytes": 41729,
+          "sha256": "b50485e515b6f3bf8d1cac1f273d721acb4a2e91cf2dc6b2d74b566bd3bca751",
+          "region_labels": 105,
+          "unassigned_fraction": 0.12440625
+        },
+        {
+          "name": "010_1",
+          "bytes": 43242,
+          "sha256": "32fd061b136023bd77a93abed7d6d0b1297d9d24f9f372f66002f8be88374a03",
+          "region_labels": 87,
+          "unassigned_fraction": 0.19063402777777777
+        },
+        {
+          "name": "010_2",
+          "bytes": 42254,
+          "sha256": "b6d1f9b159db7f596764c7292a556a18497dc24e36ebf116cfd7d2be813ee431",
+          "region_labels": 96,
+          "unassigned_fraction": 0.17691597222222222
+        },
+        {
+          "name": "010_3",
+          "bytes": 38247,
+          "sha256": "6d96a293b6f1ca5f4b2b307fd1702241869030d4c9d8a3e6a2b2311fd2ac6424",
+          "region_labels": 105,
+          "unassigned_fraction": 0.15485138888888889
+        },
+        {
+          "name": "010_4",
+          "bytes": 45145,
+          "sha256": "98d5ca838f4006f43caeeb981d5ff20d3f295e15a11092021b8f464e8f8735ef",
+          "region_labels": 114,
+          "unassigned_fraction": 0.09222569444444445
+        },
+        {
+          "name": "010_5",
+          "bytes": 33425,
+          "sha256": "1c910e45dd053b5f9948ef8756460367134dc7c47934c2798494084369bc5797",
+          "region_labels": 79,
+          "unassigned_fraction": 0.06585972222222222
+        },
+        {
+          "name": "011_0",
+          "bytes": 42583,
+          "sha256": "bfd1cc005f8a8b6dcf5fff964f839fed34919347a7972e1a1dcadbe01f46190b",
+          "region_labels": 103,
+          "unassigned_fraction": 0.12543680555555556
+        },
+        {
+          "name": "011_1",
+          "bytes": 45655,
+          "sha256": "6704b085168f872ede77ed84e3bbd740ee2aabda91aa489cdf49b145c5fffb23",
+          "region_labels": 93,
+          "unassigned_fraction": 0.1754388888888889
+        },
+        {
+          "name": "011_2",
+          "bytes": 44082,
+          "sha256": "87d6a3e865c95f1dcf8edcf6064cfa4c2e53d44c938331c600805d9bf3956365",
+          "region_labels": 97,
+          "unassigned_fraction": 0.16998611111111112
+        },
+        {
+          "name": "011_3",
+          "bytes": 36113,
+          "sha256": "abdbf43403eae8897d98caffdcf4652de2aeb5cca90857f69992b8fec76e1fdd",
+          "region_labels": 101,
+          "unassigned_fraction": 0.1699673611111111
+        },
+        {
+          "name": "011_4",
+          "bytes": 44356,
+          "sha256": "11061d14fdfe58a875ba45e3b510c51ff4b9bc0756b299d58c62ee372e5699c1",
+          "region_labels": 112,
+          "unassigned_fraction": 0.2102652777777778
+        },
+        {
+          "name": "011_5",
+          "bytes": 34103,
+          "sha256": "6f1c0bd2f8502540a602ecd4fc61885467743e095f42b6861520060fb0cb01dd",
+          "region_labels": 82,
+          "unassigned_fraction": 0.051097916666666666
+        },
+        {
+          "name": "012_0",
+          "bytes": 40589,
+          "sha256": "2af276a404305c25832ea539fb9e7b435dcef9c2e89590b8a9a58156b4e5c3a8",
+          "region_labels": 105,
+          "unassigned_fraction": 0.11466597222222222
+        },
+        {
+          "name": "012_1",
+          "bytes": 40918,
+          "sha256": "c9e090fd8d9b9b710e8d5198807809d2a9e5a747f59acd6c330df20ffcbb4b1b",
+          "region_labels": 76,
+          "unassigned_fraction": 0.1877076388888889
+        },
+        {
+          "name": "012_2",
+          "bytes": 45372,
+          "sha256": "c6d1b2553920130c930d1d1d80cc63cd277ca2ee0cc21226b133f75c789a0b8c",
+          "region_labels": 107,
+          "unassigned_fraction": 0.11410277777777778
+        },
+        {
+          "name": "012_3",
+          "bytes": 35419,
+          "sha256": "9835a0366a9911f0ca5424b10645cc5239d3987d259d839ede8cba4230a39328",
+          "region_labels": 99,
+          "unassigned_fraction": 0.15917430555555556
+        },
+        {
+          "name": "012_4",
+          "bytes": 44193,
+          "sha256": "fe9359e60d3a84003beefc557dc9cf75b940102f66d6d2c23645e49af0bf0541",
+          "region_labels": 111,
+          "unassigned_fraction": 0.19975625
+        },
+        {
+          "name": "012_5",
+          "bytes": 36861,
+          "sha256": "732428652644d9792e7b5513526f87ad84e6b1511c999032b33474315e10ca09",
+          "region_labels": 85,
+          "unassigned_fraction": 0.0693861111111111
+        },
+        {
+          "name": "013_0",
+          "bytes": 43620,
+          "sha256": "adf126f900ac503cc2856bd21f80f2ab2ee39dafd90e107ddcac9d83a187f4b0",
+          "region_labels": 109,
+          "unassigned_fraction": 0.11053055555555556
+        },
+        {
+          "name": "013_1",
+          "bytes": 41823,
+          "sha256": "e00f74c531927af51097405a515cb8a675eec536275db434e66d039fca0b4e26",
+          "region_labels": 81,
+          "unassigned_fraction": 0.18890138888888888
+        },
+        {
+          "name": "013_2",
+          "bytes": 44151,
+          "sha256": "83fe4e207211962b1e6842048f846124f0ac8b2ae22bd69e9255040a09fa2eb4",
+          "region_labels": 112,
+          "unassigned_fraction": 0.1381263888888889
+        },
+        {
+          "name": "013_3",
+          "bytes": 36891,
+          "sha256": "adbf111026d6fd319778c98b5c7b57b0ffc5e3c97c9f783b910c35ac3db39180",
+          "region_labels": 101,
+          "unassigned_fraction": 0.1478861111111111
+        },
+        {
+          "name": "013_4",
+          "bytes": 41308,
+          "sha256": "115fc465fd2bc0131385ecc7524aae5589cb1bca91d755529092e259913a4f74",
+          "region_labels": 111,
+          "unassigned_fraction": 0.2520840277777778
+        },
+        {
+          "name": "013_5",
+          "bytes": 33663,
+          "sha256": "dd9d32142ac6eb4bd74dec0013f8ebecc50067bda3f644b7eb41aa25f0de74c0",
+          "region_labels": 69,
+          "unassigned_fraction": 0.10605138888888889
+        },
+        {
+          "name": "014_0",
+          "bytes": 44294,
+          "sha256": "3f315151609dca765a7e065a73af9053ba7c2dfa1d2d695e795f9020b7ef4115",
+          "region_labels": 114,
+          "unassigned_fraction": 0.10891180555555556
+        },
+        {
+          "name": "014_1",
+          "bytes": 40406,
+          "sha256": "3009c21409c5672e235e304fef51dc9cfae22cc34771479bfec41449ee1b8884",
+          "region_labels": 81,
+          "unassigned_fraction": 0.18605208333333334
+        },
+        {
+          "name": "014_2",
+          "bytes": 43537,
+          "sha256": "8d7bd76f2402177ba6855b0a44648f2a99a0b86d97b37041bcf8e3279853dd89",
+          "region_labels": 103,
+          "unassigned_fraction": 0.12441875
+        },
+        {
+          "name": "014_3",
+          "bytes": 36782,
+          "sha256": "093c77bfdbd1b88f686aec5432955ca7d1ebf8a7a0dfe428ca4bfffe715e0399",
+          "region_labels": 105,
+          "unassigned_fraction": 0.1445423611111111
+        },
+        {
+          "name": "014_4",
+          "bytes": 42801,
+          "sha256": "6679d983dc84659eab317f94b8f96eb96b400483067b45c2b9b5444001cd267f",
+          "region_labels": 119,
+          "unassigned_fraction": 0.22462708333333334
+        },
+        {
+          "name": "014_5",
+          "bytes": 32284,
+          "sha256": "6166986aa73a8824d2219e7b9f54788ad278d7b31211d57cbcf2914861b50bb3",
+          "region_labels": 71,
+          "unassigned_fraction": 0.09324444444444445
+        },
+        {
+          "name": "015_0",
+          "bytes": 43977,
+          "sha256": "9899f0e44c51a9a2b578e512a9e965479395a7026fbc05a48406ded41b67f8e7",
+          "region_labels": 110,
+          "unassigned_fraction": 0.12311666666666667
+        },
+        {
+          "name": "015_1",
+          "bytes": 43268,
+          "sha256": "18f722e1e96721897296bcedb98351a05808b5ba4c619f055ad0535c0d551915",
+          "region_labels": 90,
+          "unassigned_fraction": 0.17870972222222223
+        },
+        {
+          "name": "015_2",
+          "bytes": 41242,
+          "sha256": "fa13fb0193e7d6db78f443277c7c63b9d93c648e8b2921ac34cdf94cd989ed13",
+          "region_labels": 106,
+          "unassigned_fraction": 0.1481486111111111
+        },
+        {
+          "name": "015_3",
+          "bytes": 36608,
+          "sha256": "5f2d3ca09eb1044c84324fde5831e036a6c3f91c3945950d6102c5105f69cbd6",
+          "region_labels": 104,
+          "unassigned_fraction": 0.14607638888888888
+        },
+        {
+          "name": "015_4",
+          "bytes": 43051,
+          "sha256": "3284ebadbd26c0e38acf7789f0bcc5d49b1fdf8ac08a07dbc17a1b7899ffb1c7",
+          "region_labels": 120,
+          "unassigned_fraction": 0.22043680555555556
+        },
+        {
+          "name": "015_5",
+          "bytes": 34001,
+          "sha256": "a6ccd1c35a7a71ba7d4b8bf6aefa3a0ed3cf6b23c1940a78ad99d2b6d8c4cb8c",
+          "region_labels": 69,
+          "unassigned_fraction": 0.10378819444444444
+        },
+        {
+          "name": "016_0",
+          "bytes": 44025,
+          "sha256": "08a3bdd9ac474888c1cfcb7c49e6e761cfbfa2d0a014848b23c0aadf1b77bb1a",
+          "region_labels": 110,
+          "unassigned_fraction": 0.13393541666666667
+        },
+        {
+          "name": "016_1",
+          "bytes": 42917,
+          "sha256": "b5625a6c89a308343dbe6223a5465e4e7ddb7124b7f9463698a1944e12863edd",
+          "region_labels": 86,
+          "unassigned_fraction": 0.18432847222222223
+        },
+        {
+          "name": "016_2",
+          "bytes": 41323,
+          "sha256": "4844db8b2b997aad0bae70dbc74b7eb0e5956906e897a452f06ad315ec4645d9",
+          "region_labels": 104,
+          "unassigned_fraction": 0.13906736111111112
+        },
+        {
+          "name": "016_3",
+          "bytes": 36118,
+          "sha256": "03d037de9855d6a62d363e8081744e9ceb7e72061e639fb1f0f3589ca59858c2",
+          "region_labels": 105,
+          "unassigned_fraction": 0.15447222222222223
+        },
+        {
+          "name": "016_4",
+          "bytes": 43109,
+          "sha256": "5287f997b661282ecb58a89ca0834d11ba3a5561a8ef0d6fb918d57cce214f9f",
+          "region_labels": 123,
+          "unassigned_fraction": 0.24635416666666668
+        },
+        {
+          "name": "016_5",
+          "bytes": 33198,
+          "sha256": "a013c6b7c24d76c09f157260ae9d7833fc9971b593f7d27477e1191a75062c8e",
+          "region_labels": 76,
+          "unassigned_fraction": 0.07951180555555555
+        },
+        {
+          "name": "017_0",
+          "bytes": 43455,
+          "sha256": "4268ca740f068f696f700b1b9cd8df0c243b7d72c91ee6dfdfbb9618c768655e",
+          "region_labels": 110,
+          "unassigned_fraction": 0.12085208333333333
+        },
+        {
+          "name": "017_1",
+          "bytes": 41288,
+          "sha256": "1770bb4ac336f80d0e7510bd96afe5547e55080d3aee9bb3159657c0e8e561c8",
+          "region_labels": 84,
+          "unassigned_fraction": 0.1789784722222222
+        },
+        {
+          "name": "017_2",
+          "bytes": 41531,
+          "sha256": "a373a3462f43a1a11a7c5a511576f7d0c00d43475dc27270894adb4d1115356b",
+          "region_labels": 100,
+          "unassigned_fraction": 0.20470763888888888
+        },
+        {
+          "name": "017_3",
+          "bytes": 35061,
+          "sha256": "efa294c9cc26961bee4169863b7bfc25abbb66542ac21820c801a6f05df1aca3",
+          "region_labels": 98,
+          "unassigned_fraction": 0.1499090277777778
+        },
+        {
+          "name": "017_4",
+          "bytes": 44678,
+          "sha256": "2e33980028b09af2b414ff23a408e91fe883a8710084e79bde7ae1e4c8f1f13e",
+          "region_labels": 129,
+          "unassigned_fraction": 0.21139791666666666
+        },
+        {
+          "name": "017_5",
+          "bytes": 34361,
+          "sha256": "c05cbeeb04b71d23dc9fb5f31e6351aa51981da14f39c8da33b33b6274e58687",
+          "region_labels": 69,
+          "unassigned_fraction": 0.08478263888888889
+        },
+        {
+          "name": "018_0",
+          "bytes": 44396,
+          "sha256": "13b3fe3de6a4215986624b6d299258b7cd08bdd543228ce77fa571e5c0d0f0d7",
+          "region_labels": 117,
+          "unassigned_fraction": 0.10689930555555556
+        },
+        {
+          "name": "018_1",
+          "bytes": 41663,
+          "sha256": "30a0cd504e888b1263c4479c65a894afbf08cf4aca038abf70669cff34204030",
+          "region_labels": 90,
+          "unassigned_fraction": 0.18537847222222223
+        },
+        {
+          "name": "018_2",
+          "bytes": 38987,
+          "sha256": "5e1bd7a702fbd6e9355d0e65a469f036892a99a79baaa94c795307bf7f02be5c",
+          "region_labels": 92,
+          "unassigned_fraction": 0.23081041666666666
+        },
+        {
+          "name": "018_3",
+          "bytes": 37880,
+          "sha256": "a8c08cbb96706f03e8c603c2756f707706937d3571a4b12c8e01e664a2b53863",
+          "region_labels": 97,
+          "unassigned_fraction": 0.1439527777777778
+        },
+        {
+          "name": "018_4",
+          "bytes": 40874,
+          "sha256": "7720930f725dd9d66b490bc1e23befeb825057a4ecd3287fad29c1b166eb55fc",
+          "region_labels": 111,
+          "unassigned_fraction": 0.26183194444444446
+        },
+        {
+          "name": "018_5",
+          "bytes": 32612,
+          "sha256": "bfa94440e16d23c6746a37d2b58cf5ef5a60d5a021aaedc3d0296147253ef2b7",
+          "region_labels": 65,
+          "unassigned_fraction": 0.08967916666666667
+        },
+        {
+          "name": "019_0",
+          "bytes": 41816,
+          "sha256": "a797de1ab61320e3cdfbd66f616b7c7e07181c23ec25cb0919ed32a0cbca368f",
+          "region_labels": 101,
+          "unassigned_fraction": 0.10017777777777778
+        },
+        {
+          "name": "019_1",
+          "bytes": 40383,
+          "sha256": "3370cf58e6d1cc27dd065783291a949e82f16d412d243d38e2cef713cad4401f",
+          "region_labels": 88,
+          "unassigned_fraction": 0.18724513888888888
+        },
+        {
+          "name": "019_2",
+          "bytes": 42548,
+          "sha256": "db355ba34b3f752216e484336e85d0ae23b4fa061fb4bbe75a3c440d6e4eb58c",
+          "region_labels": 99,
+          "unassigned_fraction": 0.20531388888888888
+        },
+        {
+          "name": "019_3",
+          "bytes": 37381,
+          "sha256": "7fe8455cdb9cc4a9cf2b610753fe7c845305477ed6243041959f9175d676c230",
+          "region_labels": 107,
+          "unassigned_fraction": 0.13457291666666665
+        },
+        {
+          "name": "019_4",
+          "bytes": 43319,
+          "sha256": "9696efa0db7de357a463c7ec8db63286389651aa9e5ee5e40c0149f4ea8e942d",
+          "region_labels": 114,
+          "unassigned_fraction": 0.18932916666666666
+        },
+        {
+          "name": "019_5",
+          "bytes": 36082,
+          "sha256": "96249cfec10fa6fd5ae1d7d43ab0bb3480b6789e56662e3be7992be3032b2fbd",
+          "region_labels": 76,
+          "unassigned_fraction": 0.06492777777777778
+        },
+        {
+          "name": "020_0",
+          "bytes": 42425,
+          "sha256": "5767d0f7791bfd0736bb4f59b397b4133f4a790aec22a84f6d86920dfd2b299d",
+          "region_labels": 105,
+          "unassigned_fraction": 0.09925555555555556
+        },
+        {
+          "name": "020_1",
+          "bytes": 41719,
+          "sha256": "894df9b863f35ccb999e4bf495a3e6f18ed04675d47ebba15704321b8bf0f6ab",
+          "region_labels": 89,
+          "unassigned_fraction": 0.18960972222222222
+        },
+        {
+          "name": "020_2",
+          "bytes": 39443,
+          "sha256": "12fbcc110864a87953e704dcbac53d509ae2114f63cbf0d2c89e3e153ef8dad0",
+          "region_labels": 92,
+          "unassigned_fraction": 0.21083888888888888
+        },
+        {
+          "name": "020_3",
+          "bytes": 34562,
+          "sha256": "ed2517c30b25c8c234e5baef4d2ca312088d49af98a4d9dbe1bfb5a3ff00072c",
+          "region_labels": 104,
+          "unassigned_fraction": 0.13125208333333332
+        },
+        {
+          "name": "020_4",
+          "bytes": 43214,
+          "sha256": "bc42d13205d8a84487cd40a15ba6d6f7fc73c43cb97927804bab6fafbc2418bb",
+          "region_labels": 119,
+          "unassigned_fraction": 0.19999097222222223
+        },
+        {
+          "name": "020_5",
+          "bytes": 35717,
+          "sha256": "220106ce64d4f27af065ad21c93e76c2a64f2e4927d6df3839b7b69ed8cd7b0d",
+          "region_labels": 72,
+          "unassigned_fraction": 0.06845486111111111
+        },
+        {
+          "name": "021_0",
+          "bytes": 41473,
+          "sha256": "2b19be342740bdda6314170d8d01c696e331f293f926e09ae289809f9ac14b4f",
+          "region_labels": 107,
+          "unassigned_fraction": 0.10248819444444444
+        },
+        {
+          "name": "021_1",
+          "bytes": 38805,
+          "sha256": "afd8be73325585f23cd3a9ea48437ec91ada54cb183a4807d1e8838e9cc681ef",
+          "region_labels": 89,
+          "unassigned_fraction": 0.2015875
+        },
+        {
+          "name": "021_2",
+          "bytes": 38791,
+          "sha256": "7eed06b6255e7af6e4eae974c437c5ba98df00dd3004ea066c3b5a6dfe09c85a",
+          "region_labels": 94,
+          "unassigned_fraction": 0.22301875
+        },
+        {
+          "name": "021_3",
+          "bytes": 34376,
+          "sha256": "03a2eb67c3e3f65e972eb5872cce323a10bd6fe48e3f830f859cffd1a4b91c41",
+          "region_labels": 103,
+          "unassigned_fraction": 0.14165694444444443
+        },
+        {
+          "name": "021_4",
+          "bytes": 44789,
+          "sha256": "a550ab1451d7117c95edb953f44b6d1a51cf2f31197e72112678243288cb371c",
+          "region_labels": 119,
+          "unassigned_fraction": 0.15456111111111112
+        },
+        {
+          "name": "021_5",
+          "bytes": 35892,
+          "sha256": "2ae8de255f7259f4c42deb1c76495cacf8f2e3e33276cc85cb96148d97b86c15",
+          "region_labels": 66,
+          "unassigned_fraction": 0.08832083333333333
+        },
+        {
+          "name": "022_0",
+          "bytes": 43309,
+          "sha256": "3353a29d6809e9b92296122bcdf01c53994da2db6029de8155f4b6c772badda5",
+          "region_labels": 109,
+          "unassigned_fraction": 0.05290555555555555
+        },
+        {
+          "name": "022_1",
+          "bytes": 36672,
+          "sha256": "faaebfcd23454563f2cba0c6b9a57c4ee661c1c1ed2283eb132bc56ed2c0b41a",
+          "region_labels": 70,
+          "unassigned_fraction": 0.20181597222222222
+        },
+        {
+          "name": "022_2",
+          "bytes": 35827,
+          "sha256": "cd21d0b9f87b200d1dbc697ec8464473ceec16ab65604ebc9396b53ebe7e1cc1",
+          "region_labels": 81,
+          "unassigned_fraction": 0.23314930555555555
+        },
+        {
+          "name": "022_3",
+          "bytes": 33417,
+          "sha256": "f1554aa95c77c1e5ea1ffec365d2915a8e966b74f94eed988c0b2238e531ee2e",
+          "region_labels": 94,
+          "unassigned_fraction": 0.1592340277777778
+        },
+        {
+          "name": "022_4",
+          "bytes": 44789,
+          "sha256": "a550ab1451d7117c95edb953f44b6d1a51cf2f31197e72112678243288cb371c",
+          "region_labels": 119,
+          "unassigned_fraction": 0.15456111111111112
+        },
+        {
+          "name": "022_5",
+          "bytes": 35082,
+          "sha256": "854360dd9faef3ebb1943ac6a6719c5f68acb10d85b337a29c03f77981dac811",
+          "region_labels": 71,
+          "unassigned_fraction": 0.08039375
+        },
+        {
+          "name": "023_0",
+          "bytes": 42733,
+          "sha256": "053e1fefb81abb6ba472141e523bc1225350b55be538dc3eb4449c483b986977",
+          "region_labels": 112,
+          "unassigned_fraction": 0.10035069444444444
+        },
+        {
+          "name": "023_1",
+          "bytes": 39888,
+          "sha256": "e566f160230ad59b5218a545d0a94bee41d82c7e0f837a6979c36b1dc3fd42f6",
+          "region_labels": 85,
+          "unassigned_fraction": 0.1927625
+        },
+        {
+          "name": "023_2",
+          "bytes": 37177,
+          "sha256": "2fa8b31ab7066e3a4b5b0f06c4fdaae7a429572cb2031b535792338066569bb7",
+          "region_labels": 88,
+          "unassigned_fraction": 0.23630694444444444
+        },
+        {
+          "name": "023_3",
+          "bytes": 33904,
+          "sha256": "6b007b221f3f074a54f2a0fe621642bda42bbbf81fcc89690a897dd1e4f888ee",
+          "region_labels": 90,
+          "unassigned_fraction": 0.16455
+        },
+        {
+          "name": "023_4",
+          "bytes": 45419,
+          "sha256": "a5934c4086817fe2c5e68285ff0bde664b9bea5aebf69be6bb28a599a6f947db",
+          "region_labels": 117,
+          "unassigned_fraction": 0.15377222222222223
+        },
+        {
+          "name": "023_5",
+          "bytes": 37484,
+          "sha256": "6b6eacc5ea3aebc7b160cb5e574761e89d290dc135495bf24aadee3a46f1a8a2",
+          "region_labels": 78,
+          "unassigned_fraction": 0.09667569444444445
+        },
+        {
+          "name": "024_0",
+          "bytes": 41703,
+          "sha256": "bf45be9ea1feae4be01f57fea58aa772b809de7e09d2b5cea29bf76893b99f89",
+          "region_labels": 105,
+          "unassigned_fraction": 0.10377569444444444
+        },
+        {
+          "name": "024_1",
+          "bytes": 39449,
+          "sha256": "7dad677fd69e51aefc85a7224faac1bfd9a80803fbe63684f38c94c29f294ff3",
+          "region_labels": 86,
+          "unassigned_fraction": 0.20433819444444445
+        },
+        {
+          "name": "024_2",
+          "bytes": 37543,
+          "sha256": "255104185022c249cbd2a9e30c0b31e453428970aef90b551c84408ab5385d2a",
+          "region_labels": 85,
+          "unassigned_fraction": 0.24274444444444446
+        },
+        {
+          "name": "024_3",
+          "bytes": 35225,
+          "sha256": "9f1c05d7eee774f55c928ba42b474f8b2cbe4d349c16d0b9ec98349c1459d398",
+          "region_labels": 97,
+          "unassigned_fraction": 0.1450840277777778
+        },
+        {
+          "name": "024_4",
+          "bytes": 42997,
+          "sha256": "f9cf0a2f47f9cdb9a81bb752026d6f253bb04e2b8369c663687236d800bc4c19",
+          "region_labels": 102,
+          "unassigned_fraction": 0.15995138888888888
+        },
+        {
+          "name": "024_5",
+          "bytes": 37078,
+          "sha256": "df183a6bc0590b1d4eb16a1a8710c2a134c9b12232dd79eca2f1ab5fe36be919",
+          "region_labels": 77,
+          "unassigned_fraction": 0.08315347222222222
+        },
+        {
+          "name": "025_0",
+          "bytes": 42569,
+          "sha256": "8c3797822b9dfb86eefc42457f73675cff5bff3cc28965f89df4bbd07e6d8bdc",
+          "region_labels": 108,
+          "unassigned_fraction": 0.053850694444444444
+        },
+        {
+          "name": "025_1",
+          "bytes": 40348,
+          "sha256": "45e343f0ea9d17ac4662e92cf48314f4b6c74551b4c2785e26e5a98f88fa9bc3",
+          "region_labels": 89,
+          "unassigned_fraction": 0.18899305555555557
+        },
+        {
+          "name": "025_2",
+          "bytes": 39366,
+          "sha256": "aa68f3e1c176c99ab00c592137a5606f5d6947cb32ed92dcd9f9cbc239808065",
+          "region_labels": 85,
+          "unassigned_fraction": 0.16679375
+        },
+        {
+          "name": "025_3",
+          "bytes": 36499,
+          "sha256": "ba91a6116b662b6f8d15684fcc1cb443b69832ed0f416b95abcb9d8a430126e6",
+          "region_labels": 100,
+          "unassigned_fraction": 0.13269166666666668
+        },
+        {
+          "name": "025_4",
+          "bytes": 43271,
+          "sha256": "fafa0346e44fcf27d2e7b1a437928591492b8f461c065df972511a2ec54018f1",
+          "region_labels": 102,
+          "unassigned_fraction": 0.15911041666666667
+        },
+        {
+          "name": "025_5",
+          "bytes": 37999,
+          "sha256": "2278883c2281a76fb4bae9d80a1b7092a201234522e498f7102422e2e9d42865",
+          "region_labels": 77,
+          "unassigned_fraction": 0.0777236111111111
+        },
+        {
+          "name": "026_0",
+          "bytes": 39997,
+          "sha256": "1954cf654553b9cc95612ec230b664b1dea250e91317efeb3c899645b5c5d70e",
+          "region_labels": 103,
+          "unassigned_fraction": 0.11302569444444445
+        },
+        {
+          "name": "026_1",
+          "bytes": 39214,
+          "sha256": "960b2c897f0957427bbe4079ccd9cfa35df7a124c756496287cf1c03dd06fa50",
+          "region_labels": 78,
+          "unassigned_fraction": 0.19869305555555555
+        },
+        {
+          "name": "026_2",
+          "bytes": 39203,
+          "sha256": "92e4fdd6590c466cf9aca676d4ba012ebcfd8de5fdbb263ce92d39dbcf07d8cf",
+          "region_labels": 85,
+          "unassigned_fraction": 0.1724423611111111
+        },
+        {
+          "name": "026_3",
+          "bytes": 36034,
+          "sha256": "866b6b63826aae25cd5414a05fd9a7b51d30e32ecade5e9e3f35914543bab9bf",
+          "region_labels": 98,
+          "unassigned_fraction": 0.14085972222222223
+        },
+        {
+          "name": "026_4",
+          "bytes": 35942,
+          "sha256": "e8a829c909dc813d046c1dfd7a0ae3e171e332cf6b3ad91ac9480cd37785f5f2",
+          "region_labels": 106,
+          "unassigned_fraction": 0.3862777777777778
+        },
+        {
+          "name": "026_5",
+          "bytes": 37168,
+          "sha256": "78c861464f566ce765bedd7bb4be6011c79293ed397bca179c77f619de40e94f",
+          "region_labels": 73,
+          "unassigned_fraction": 0.08589930555555556
+        },
+        {
+          "name": "027_0",
+          "bytes": 40285,
+          "sha256": "d7d559883e5bf3d433facd1a0da939db2d1b94a384fe089d158eb471145d2060",
+          "region_labels": 98,
+          "unassigned_fraction": 0.053052777777777775
+        },
+        {
+          "name": "027_1",
+          "bytes": 39115,
+          "sha256": "1e11a0f5436855644fe47e75282a2f67aa38d23e565b0d9819071259d95fec80",
+          "region_labels": 81,
+          "unassigned_fraction": 0.17388263888888889
+        },
+        {
+          "name": "027_2",
+          "bytes": 40074,
+          "sha256": "d70214fc268ee6312ed1c8e3e7ade0a4b7a17ac424ab767444ad2bec34c12f6a",
+          "region_labels": 83,
+          "unassigned_fraction": 0.19125277777777777
+        },
+        {
+          "name": "027_3",
+          "bytes": 36412,
+          "sha256": "7feb314f694b423bd3382a0a9fffccb8d1b29a996ebe3a4fa33a8f82acf6aa66",
+          "region_labels": 104,
+          "unassigned_fraction": 0.13646875
+        },
+        {
+          "name": "027_4",
+          "bytes": 40141,
+          "sha256": "77f889296187e6fef8fbcef4d42793c7a9a3102e1804b7a859d0257568f5ede1",
+          "region_labels": 105,
+          "unassigned_fraction": 0.2858847222222222
+        },
+        {
+          "name": "027_5",
+          "bytes": 34442,
+          "sha256": "854408458626437dfca82a9ca241cbae5e259946c13236c3bf8bacbc5423d898",
+          "region_labels": 71,
+          "unassigned_fraction": 0.2969763888888889
+        },
+        {
+          "name": "028_0",
+          "bytes": 41137,
+          "sha256": "635447eeb44433fbe91a2e24df2ef570d8ed3874228f7d275a46c9432f5d6bdc",
+          "region_labels": 98,
+          "unassigned_fraction": 0.05647152777777778
+        },
+        {
+          "name": "028_1",
+          "bytes": 39545,
+          "sha256": "3967f2e9b5800015403b50619a9c90800809912096f9c030bcd1334be9ec8232",
+          "region_labels": 80,
+          "unassigned_fraction": 0.1726798611111111
+        },
+        {
+          "name": "028_2",
+          "bytes": 39191,
+          "sha256": "031f42be6d68bb99ab36f1beb3e984196598c80c273883b165aabf83eee7819c",
+          "region_labels": 87,
+          "unassigned_fraction": 0.24734305555555555
+        },
+        {
+          "name": "028_3",
+          "bytes": 34868,
+          "sha256": "b496781f74dea0cf0226d5476c6034072aa5100da6394866539fa9dc5a8b2f2c",
+          "region_labels": 100,
+          "unassigned_fraction": 0.13762847222222221
+        },
+        {
+          "name": "028_4",
+          "bytes": 37149,
+          "sha256": "3d56669e70b285996646cc8563e56fc556a54a0fd2f5ab09b45096cc38bcc812",
+          "region_labels": 109,
+          "unassigned_fraction": 0.38125763888888886
+        },
+        {
+          "name": "028_5",
+          "bytes": 34090,
+          "sha256": "472033865f94436b11d7a9d65a1dbbd89929a5239400944450831dd70a039a37",
+          "region_labels": 75,
+          "unassigned_fraction": 0.11219583333333333
+        },
+        {
+          "name": "029_0",
+          "bytes": 41402,
+          "sha256": "71b4980cd4baff021ab2afa7f346e64f80f4e53014fe2d3af1b967dba960045e",
+          "region_labels": 100,
+          "unassigned_fraction": 0.10192361111111112
+        },
+        {
+          "name": "029_1",
+          "bytes": 39265,
+          "sha256": "5bef9b7b8a38e1b9a0aac4e1c3be0cb33ab4bf101d17d22fe705b749f9b24dcd",
+          "region_labels": 74,
+          "unassigned_fraction": 0.17722013888888888
+        },
+        {
+          "name": "029_2",
+          "bytes": 38234,
+          "sha256": "975d52fd35a6d9428c65a323003d106c7b36f4a732750b1e2190b4d99f9e4217",
+          "region_labels": 83,
+          "unassigned_fraction": 0.2606222222222222
+        },
+        {
+          "name": "029_3",
+          "bytes": 32992,
+          "sha256": "da401afa17670dfdb48966ea54fd77d0a78cb06bdd165ef9179ce4a6cb4182af",
+          "region_labels": 88,
+          "unassigned_fraction": 0.15199305555555556
+        },
+        {
+          "name": "029_4",
+          "bytes": 44625,
+          "sha256": "923fefc7c524b615999f9b1916e3cbc1e2246625b4b8e75fab69d67c3d568153",
+          "region_labels": 117,
+          "unassigned_fraction": 0.2261826388888889
+        },
+        {
+          "name": "029_5",
+          "bytes": 35505,
+          "sha256": "1bd35069ebd3e2968854dfa0b2542dfd5c2ccd249a072ebc8d09a079a3d2e8f3",
+          "region_labels": 75,
+          "unassigned_fraction": 0.07992152777777778
+        },
+        {
+          "name": "030_0",
+          "bytes": 41093,
+          "sha256": "614a7df8ca03d9778a878d19cd84c25c800d0c249927eed030f56c1dc0602d80",
+          "region_labels": 100,
+          "unassigned_fraction": 0.04769166666666667
+        },
+        {
+          "name": "030_1",
+          "bytes": 40082,
+          "sha256": "2d3e978cb9a8817293cb2d51c707e5f841ed9592277b6d48b023b5d65ca3c082",
+          "region_labels": 73,
+          "unassigned_fraction": 0.17565902777777778
+        },
+        {
+          "name": "030_2",
+          "bytes": 37642,
+          "sha256": "c9b9060ceaa51f1cbea504de6b4c49605cfe53f363bdb56f7c4e85c6bbee2377",
+          "region_labels": 84,
+          "unassigned_fraction": 0.25129097222222224
+        },
+        {
+          "name": "030_3",
+          "bytes": 35273,
+          "sha256": "72fe3a372c1d76808a6f2b760e05ed9fae7017001a40107ea870c42cd4415a0d",
+          "region_labels": 101,
+          "unassigned_fraction": 0.13229375
+        },
+        {
+          "name": "030_4",
+          "bytes": 39282,
+          "sha256": "7a1afb43fd7b2ea65774c39675b1a4543100a9d0c16a7a4e8b8da4dce7d8718a",
+          "region_labels": 109,
+          "unassigned_fraction": 0.3683986111111111
+        },
+        {
+          "name": "030_5",
+          "bytes": 34312,
+          "sha256": "c3e1812f1e5c1d7a377112518843461910d1672888c2371a58409ce462b3ed10",
+          "region_labels": 76,
+          "unassigned_fraction": 0.08393611111111111
+        },
+        {
+          "name": "031_0",
+          "bytes": 41899,
+          "sha256": "74aba3d00a333add05171a4b89950acc04013c8bc0229c1a8f5d1cace8e799a5",
+          "region_labels": 107,
+          "unassigned_fraction": 0.11263125
+        },
+        {
+          "name": "031_1",
+          "bytes": 41581,
+          "sha256": "0eed030d80026f6c11cbf6e79b59f81c65e6a8db36756da92752d9c6fa99f206",
+          "region_labels": 88,
+          "unassigned_fraction": 0.17586458333333332
+        },
+        {
+          "name": "031_2",
+          "bytes": 39680,
+          "sha256": "3af883b680b473e7ef68dfb792e25037d4d1b22eafc62aae7a45d0f1c4c0fc8f",
+          "region_labels": 85,
+          "unassigned_fraction": 0.22299444444444444
+        },
+        {
+          "name": "031_3",
+          "bytes": 32692,
+          "sha256": "05646fca85ac16319d21ca6dfbbbe8c051108f141a2f137a62e3c08103dbcc21",
+          "region_labels": 92,
+          "unassigned_fraction": 0.1532486111111111
+        },
+        {
+          "name": "031_4",
+          "bytes": 43705,
+          "sha256": "fe1a57818b7c05763b70f3231c25f5a1426ef682de21d3cbb29becd1f1948bc9",
+          "region_labels": 119,
+          "unassigned_fraction": 0.26842083333333333
+        },
+        {
+          "name": "031_5",
+          "bytes": 34448,
+          "sha256": "658c671ce30a8c88be7fe3089ecbbdb3fa03b49526b878cfe617fcc5c9491d56",
+          "region_labels": 74,
+          "unassigned_fraction": 0.09553263888888888
+        },
+        {
+          "name": "032_0",
+          "bytes": 42792,
+          "sha256": "31efd783a86f963c36e4a0dcb28a40f0337926004b0f9ea01e7f65560718327b",
+          "region_labels": 102,
+          "unassigned_fraction": 0.11278680555555555
+        },
+        {
+          "name": "032_1",
+          "bytes": 40275,
+          "sha256": "108bbbab1d2b75ae74057a25b80893b496974b8ffcc37ea9dc0ede4d452a75a3",
+          "region_labels": 85,
+          "unassigned_fraction": 0.19264652777777777
+        },
+        {
+          "name": "032_2",
+          "bytes": 40494,
+          "sha256": "11f8f637c72e1b16bb0dfae1c8c53fd0e71715c1a5df854374626281f191fa4f",
+          "region_labels": 86,
+          "unassigned_fraction": 0.2194326388888889
+        },
+        {
+          "name": "032_3",
+          "bytes": 34554,
+          "sha256": "f1f47d64c2a4bc26477c31dbb46f0b3fca5ceac8fb3c98c3739c7bd98842f7f8",
+          "region_labels": 99,
+          "unassigned_fraction": 0.13638958333333334
+        },
+        {
+          "name": "032_4",
+          "bytes": 45226,
+          "sha256": "c67f4201bda2963c4bd0cd74e944b74c6a7b574bb14423be66a52c801e360b36",
+          "region_labels": 123,
+          "unassigned_fraction": 0.2628548611111111
+        },
+        {
+          "name": "032_5",
+          "bytes": 34073,
+          "sha256": "16e7424a6171c7fc8a862fb2ef6274901bfea7c9de2eed7b63fb32dfa0f8d396",
+          "region_labels": 81,
+          "unassigned_fraction": 0.08582638888888888
+        },
+        {
+          "name": "033_0",
+          "bytes": 41006,
+          "sha256": "d0537f20e39a15865ee369d938e542ba787f62ed6d187a270e764203d374d18c",
+          "region_labels": 100,
+          "unassigned_fraction": 0.11287083333333334
+        },
+        {
+          "name": "033_1",
+          "bytes": 39397,
+          "sha256": "e30118c893de7a3df10d00d4afad98a34b482b77ddac9220a8b72fc7f00dff8d",
+          "region_labels": 74,
+          "unassigned_fraction": 0.1866423611111111
+        },
+        {
+          "name": "033_2",
+          "bytes": 41321,
+          "sha256": "c0167588c4735b1eb76e0616a4055242d5248d190c362bf20227b16cf8267587",
+          "region_labels": 93,
+          "unassigned_fraction": 0.23408680555555555
+        },
+        {
+          "name": "033_3",
+          "bytes": 36416,
+          "sha256": "162ac7df27c39c4b6af1805285160e153994cbdad711cd8603550921a507755c",
+          "region_labels": 108,
+          "unassigned_fraction": 0.13780277777777777
+        },
+        {
+          "name": "033_4",
+          "bytes": 40123,
+          "sha256": "f6d5408ed9a9e32efff7dac9395b01bc9d50ec680b90098fb1e89a891d1202ed",
+          "region_labels": 119,
+          "unassigned_fraction": 0.3673013888888889
+        },
+        {
+          "name": "033_5",
+          "bytes": 36730,
+          "sha256": "a4ada66223ef95cda80569a46a4a0b66f583c660810e056aba6ef6deba4f79d3",
+          "region_labels": 88,
+          "unassigned_fraction": 0.07661736111111112
+        },
+        {
+          "name": "034_0",
+          "bytes": 41650,
+          "sha256": "6161a1d836499a722a718e35a8be364835ab00391f27161504ee2e57a3b2798b",
+          "region_labels": 94,
+          "unassigned_fraction": 0.1036125
+        },
+        {
+          "name": "034_1",
+          "bytes": 40315,
+          "sha256": "9a6778a134ce7c99cbd598100521a67684719f168db05eccc359e9a8f360ae35",
+          "region_labels": 83,
+          "unassigned_fraction": 0.18893333333333334
+        },
+        {
+          "name": "034_2",
+          "bytes": 39708,
+          "sha256": "d3e90c5dbbeeac13da6e7ffad64207f2e28b69a342b4addedc4d37d4e47c885b",
+          "region_labels": 89,
+          "unassigned_fraction": 0.19664791666666667
+        },
+        {
+          "name": "034_3",
+          "bytes": 37026,
+          "sha256": "a770cf61c9f4489b1a30ee113a5e695ed53ad4deedc78968a4a1f98e3c60f560",
+          "region_labels": 108,
+          "unassigned_fraction": 0.1407923611111111
+        },
+        {
+          "name": "034_4",
+          "bytes": 41904,
+          "sha256": "fdaa49dfdeef53965bd8cbb4ae2028fb67206829681237d4df75c28543f536c5",
+          "region_labels": 118,
+          "unassigned_fraction": 0.3537
+        },
+        {
+          "name": "034_5",
+          "bytes": 35546,
+          "sha256": "2d15e5d3e1c6bf537040a970ec0c3d3dcd1618fcfa3800c485da39512de3476b",
+          "region_labels": 81,
+          "unassigned_fraction": 0.08125138888888889
+        },
+        {
+          "name": "035_0",
+          "bytes": 41051,
+          "sha256": "f384f25f2ce69035cec9aa836a45d06830e21910d72612bf8b5a11d4087c27e8",
+          "region_labels": 99,
+          "unassigned_fraction": 0.11309722222222222
+        },
+        {
+          "name": "035_1",
+          "bytes": 41992,
+          "sha256": "8245f0ba9f7807e2cf33bd7175adeff91141ae406686aeb472057d6015dfcf99",
+          "region_labels": 87,
+          "unassigned_fraction": 0.16920277777777779
+        },
+        {
+          "name": "035_2",
+          "bytes": 40640,
+          "sha256": "568dd053dfbc04218fa576f4777333173b8d923b32f94d0e986aea93a2543718",
+          "region_labels": 90,
+          "unassigned_fraction": 0.18571875
+        },
+        {
+          "name": "035_3",
+          "bytes": 39482,
+          "sha256": "ea23b8722f4c502a703c6e3b213beb35061387203b057b2dcd30a84197ae9857",
+          "region_labels": 112,
+          "unassigned_fraction": 0.12386944444444445
+        },
+        {
+          "name": "035_4",
+          "bytes": 41525,
+          "sha256": "4f1f1cbd9795c021adf309e955c3c0bb9f0dcba601bfc66b63b8ab737f4dc042",
+          "region_labels": 117,
+          "unassigned_fraction": 0.35369236111111113
+        },
+        {
+          "name": "035_5",
+          "bytes": 36404,
+          "sha256": "d49428dd01eb1880df2153394116471c28c6badbb930d676503719ad05fb1659",
+          "region_labels": 78,
+          "unassigned_fraction": 0.09369930555555556
+        },
+        {
+          "name": "036_0",
+          "bytes": 42068,
+          "sha256": "f33a6c6485047da5b7719f70fe4531733a854996c9bbaeb3f557e5605c4d01a5",
+          "region_labels": 102,
+          "unassigned_fraction": 0.10939305555555555
+        },
+        {
+          "name": "036_1",
+          "bytes": 42329,
+          "sha256": "6e131063c59d2ed3be6f5a915221a7116b87060faf8c3c609aead2a2932dc732",
+          "region_labels": 90,
+          "unassigned_fraction": 0.16738125
+        },
+        {
+          "name": "036_2",
+          "bytes": 40579,
+          "sha256": "e5cc0b68cd759f9692597fc361d4241704420a667f603262b54200ada94f4881",
+          "region_labels": 81,
+          "unassigned_fraction": 0.19485625
+        },
+        {
+          "name": "036_3",
+          "bytes": 38004,
+          "sha256": "39cae3ced08425715fcc2ca595a8606490d9474aefd1fbcb2f02686ec512dbc5",
+          "region_labels": 103,
+          "unassigned_fraction": 0.1225375
+        },
+        {
+          "name": "036_4",
+          "bytes": 41096,
+          "sha256": "db80f15c1d9d79ff2a85f3077f1a1fa330ca955b56cc35d305786db43ae0ad59",
+          "region_labels": 115,
+          "unassigned_fraction": 0.34534027777777776
+        },
+        {
+          "name": "036_5",
+          "bytes": 35332,
+          "sha256": "42b428ceb0659ac8f5d2ebecf78857b30814bbf81f915df3643a6af9785d4770",
+          "region_labels": 84,
+          "unassigned_fraction": 0.07555208333333334
+        },
+        {
+          "name": "037_0",
+          "bytes": 41616,
+          "sha256": "3633c06ae59ffa0b9444379eb5cc94b7813f327f395b84a38f4edc7828898b94",
+          "region_labels": 99,
+          "unassigned_fraction": 0.10871180555555555
+        },
+        {
+          "name": "037_1",
+          "bytes": 42146,
+          "sha256": "cbbd3bad50113c6f396df36ac5921972eb90309e927a09586c5d70a4b564b99b",
+          "region_labels": 89,
+          "unassigned_fraction": 0.18527291666666668
+        },
+        {
+          "name": "037_2",
+          "bytes": 39753,
+          "sha256": "4212856379ca83a7f4a0e15e365e6b03be38326d463e8c5c2fb5525cfa911c07",
+          "region_labels": 93,
+          "unassigned_fraction": 0.19826597222222223
+        },
+        {
+          "name": "037_3",
+          "bytes": 37131,
+          "sha256": "45decf48ff8816921809ede4ff69e1cc430f0e0d4e3be70296ca4471431f07b7",
+          "region_labels": 99,
+          "unassigned_fraction": 0.12045833333333333
+        },
+        {
+          "name": "037_4",
+          "bytes": 42559,
+          "sha256": "83170bb2058647c598cbb84c9bcd8a8824fdaabc7eec6c6c999826f19ceac36e",
+          "region_labels": 107,
+          "unassigned_fraction": 0.27691458333333335
+        },
+        {
+          "name": "037_5",
+          "bytes": 34151,
+          "sha256": "c0ae715e79469735610fcb62da20b5ace22573d276b3ab80251cdc5a9b56115d",
+          "region_labels": 78,
+          "unassigned_fraction": 0.07969166666666666
+        },
+        {
+          "name": "038_0",
+          "bytes": 40621,
+          "sha256": "5e4ea1831c488fcc0eeccfc3287bc4c8526ab5b3e22aff827bab78affbdb2d56",
+          "region_labels": 100,
+          "unassigned_fraction": 0.11739027777777777
+        },
+        {
+          "name": "038_1",
+          "bytes": 41379,
+          "sha256": "18ec3176c094a82f563b35e4e04761ec52eb925423131bddd57751297f404bd0",
+          "region_labels": 93,
+          "unassigned_fraction": 0.17916458333333332
+        },
+        {
+          "name": "038_2",
+          "bytes": 37658,
+          "sha256": "00e9fd37e8036cb6b852d9740835530b9e557cf6e75a0277f7af42bbc3ab256c",
+          "region_labels": 83,
+          "unassigned_fraction": 0.22750625
+        },
+        {
+          "name": "038_3",
+          "bytes": 36257,
+          "sha256": "b121b0e1ea9b6e49255cf69efb7da6890f605408f415ed616cb6c505c72f69fa",
+          "region_labels": 104,
+          "unassigned_fraction": 0.12411875
+        },
+        {
+          "name": "038_4",
+          "bytes": 43962,
+          "sha256": "61f769ab2271bf151dcafc5f34edde97965c9b384683868ec4bf6f4196d63593",
+          "region_labels": 106,
+          "unassigned_fraction": 0.2657090277777778
+        },
+        {
+          "name": "038_5",
+          "bytes": 35233,
+          "sha256": "71d31e9a9694e1e8816b16cf0c138f0d040c727df70831e0cf39785aee96ff4f",
+          "region_labels": 87,
+          "unassigned_fraction": 0.0758375
+        },
+        {
+          "name": "039_0",
+          "bytes": 41104,
+          "sha256": "8e889496cd234609a8b36f8b7434c629ca76e978a8b172cafefc6824a10ff1cb",
+          "region_labels": 102,
+          "unassigned_fraction": 0.11163055555555555
+        },
+        {
+          "name": "039_1",
+          "bytes": 41662,
+          "sha256": "3b5a0844d7cefc99e87dd06977f7fa29883dae8edc2df4b6348be9d6c060ee32",
+          "region_labels": 84,
+          "unassigned_fraction": 0.17001666666666668
+        },
+        {
+          "name": "039_2",
+          "bytes": 38176,
+          "sha256": "80ff262eb51a3b6181bbd7aca7904e244bd765d44cd49547dccf16ae3989d128",
+          "region_labels": 83,
+          "unassigned_fraction": 0.22508263888888888
+        },
+        {
+          "name": "039_3",
+          "bytes": 36137,
+          "sha256": "4a675a76eee88d789f897ef1eb99bd30e48e55d5e5935ca5604b5b1df55354d6",
+          "region_labels": 99,
+          "unassigned_fraction": 0.12203680555555556
+        },
+        {
+          "name": "039_4",
+          "bytes": 42461,
+          "sha256": "0871def48d83046cfad9a28743baa92c1c4384a77f30e5623185117304ce5f32",
+          "region_labels": 104,
+          "unassigned_fraction": 0.27771875
+        },
+        {
+          "name": "039_5",
+          "bytes": 34973,
+          "sha256": "a084bb7fd931afae0e04b995ecf12ce3ee0d726c0988599ccf710d8aa421f99c",
+          "region_labels": 83,
+          "unassigned_fraction": 0.07801875
+        },
+        {
+          "name": "040_0",
+          "bytes": 42473,
+          "sha256": "bb77b3d19557fccb13fb4ace34ef95fff69e378d21e75b70af8032d14c22bd1f",
+          "region_labels": 113,
+          "unassigned_fraction": 0.10097361111111111
+        },
+        {
+          "name": "040_1",
+          "bytes": 44292,
+          "sha256": "77d982225dd3294a4766fd6722ff15467000f16a13bf4a3832edfcad0081b36c",
+          "region_labels": 92,
+          "unassigned_fraction": 0.1752625
+        },
+        {
+          "name": "040_2",
+          "bytes": 38988,
+          "sha256": "1669430cca31b9999e7817aeda0d7fc066b815e94b50137e9d4743e6e4ffc54c",
+          "region_labels": 86,
+          "unassigned_fraction": 0.21416527777777777
+        },
+        {
+          "name": "040_3",
+          "bytes": 35678,
+          "sha256": "f7aa310d1445b637265ec96d650714a2e7aad3fe873c9ed5378166ca29b005db",
+          "region_labels": 104,
+          "unassigned_fraction": 0.16466666666666666
+        },
+        {
+          "name": "040_4",
+          "bytes": 44911,
+          "sha256": "c2fc3e1c7600bffbbbbcae84ee3d0ed7444222e4c0353a14b7a44c959ffc1d2e",
+          "region_labels": 108,
+          "unassigned_fraction": 0.23279930555555556
+        },
+        {
+          "name": "040_5",
+          "bytes": 35308,
+          "sha256": "a6985cee0f504a8aba8a37c4da3262d825b83aa0e9bb601b4084a5e0ce42224f",
+          "region_labels": 83,
+          "unassigned_fraction": 0.07839305555555555
+        },
+        {
+          "name": "041_0",
+          "bytes": 40366,
+          "sha256": "306987406d13d24a81a22c964d01113a1cfd4c4d7b1c25bd3f35c75721bdad57",
+          "region_labels": 105,
+          "unassigned_fraction": 0.10873055555555555
+        },
+        {
+          "name": "041_1",
+          "bytes": 44259,
+          "sha256": "764f56d808c4b5c3f2b150ce677de6c8ada026d6a3bde742f7590d710c43f142",
+          "region_labels": 88,
+          "unassigned_fraction": 0.1706888888888889
+        },
+        {
+          "name": "041_2",
+          "bytes": 38875,
+          "sha256": "949b3038efb1142fb99132f56c527eef7d896c1f93f6fc3a98f84d4f2a9d2150",
+          "region_labels": 87,
+          "unassigned_fraction": 0.22191666666666668
+        },
+        {
+          "name": "041_3",
+          "bytes": 37030,
+          "sha256": "4ffc407064aace81574870753ab4b108412ec0ca55e93f5f1d60fb1ee5478b5f",
+          "region_labels": 103,
+          "unassigned_fraction": 0.1211
+        },
+        {
+          "name": "041_4",
+          "bytes": 42874,
+          "sha256": "08d693389bebbf7f74c714e283b9a6476bfa673de32b20d900781c39baa050c1",
+          "region_labels": 108,
+          "unassigned_fraction": 0.24602291666666667
+        },
+        {
+          "name": "041_5",
+          "bytes": 35664,
+          "sha256": "be716b90c2d2ed617aba50bc915cabf12b672a3597edd228374e87ff14810ce4",
+          "region_labels": 84,
+          "unassigned_fraction": 0.07975486111111112
+        },
+        {
+          "name": "042_0",
+          "bytes": 40943,
+          "sha256": "76ad8ee506882ccb01ebfd3719613442e83d28fe7a396affb5c45fb1c003a088",
+          "region_labels": 106,
+          "unassigned_fraction": 0.050113194444444446
+        },
+        {
+          "name": "042_1",
+          "bytes": 41518,
+          "sha256": "97e1e19e5fc889af13ff4548f139329031de652249fa68e923491dcdfd12fa45",
+          "region_labels": 84,
+          "unassigned_fraction": 0.18546736111111112
+        },
+        {
+          "name": "042_2",
+          "bytes": 39177,
+          "sha256": "1fc68d3b21269daa8bc132044a180bd0c388a163b87bfa4dd9d9e5d1c0dc535b",
+          "region_labels": 84,
+          "unassigned_fraction": 0.22883333333333333
+        },
+        {
+          "name": "042_3",
+          "bytes": 35122,
+          "sha256": "1d81e4018345b12e3cafb38207ca598bec8e2921da45253b013136cb0b387b70",
+          "region_labels": 94,
+          "unassigned_fraction": 0.12608125
+        },
+        {
+          "name": "042_4",
+          "bytes": 42885,
+          "sha256": "b9c60beadbb6ca77c108f4f83875260068816d82d3008f79fc5a0aa79d0ddb4d",
+          "region_labels": 100,
+          "unassigned_fraction": 0.26332916666666667
+        },
+        {
+          "name": "042_5",
+          "bytes": 36222,
+          "sha256": "249601a6509f1fc07262b157778aafd02f9f9afffc1848337d06c5e2b1778137",
+          "region_labels": 88,
+          "unassigned_fraction": 0.0748763888888889
+        },
+        {
+          "name": "043_0",
+          "bytes": 41829,
+          "sha256": "b105f8a75677ff72a3d0ce79d0c25ed2550b50c32079540067161405d3e8a2e7",
+          "region_labels": 107,
+          "unassigned_fraction": 0.06072916666666667
+        },
+        {
+          "name": "043_1",
+          "bytes": 42663,
+          "sha256": "cb3762f3b5943bdc2862a85635b539f598ff223e1d78b8232092b7e3db6a24c0",
+          "region_labels": 93,
+          "unassigned_fraction": 0.1799486111111111
+        },
+        {
+          "name": "043_2",
+          "bytes": 40723,
+          "sha256": "3e18b116a81e628f8d483b192c840917100e2eede0496d7e11a04c011d1a68bd",
+          "region_labels": 92,
+          "unassigned_fraction": 0.22078958333333334
+        },
+        {
+          "name": "043_3",
+          "bytes": 34879,
+          "sha256": "4a6be9d920afa3b3de1c2dd4f67da3ddb3f822da83aa2e21a7e7fdeddd86aa34",
+          "region_labels": 101,
+          "unassigned_fraction": 0.12885555555555556
+        },
+        {
+          "name": "043_4",
+          "bytes": 40869,
+          "sha256": "a2caf12d02592d272e2a1d943498c68807297ad3fa3ee444b775e9b739793e5a",
+          "region_labels": 122,
+          "unassigned_fraction": 0.3045236111111111
+        },
+        {
+          "name": "043_5",
+          "bytes": 35746,
+          "sha256": "3728b7f90766981e590237e7736409c5ec44ba9718b3a7acdbbbc0a02e154b41",
+          "region_labels": 87,
+          "unassigned_fraction": 0.08072847222222222
+        },
+        {
+          "name": "044_0",
+          "bytes": 42372,
+          "sha256": "530a18568c0b4a9649539066788302077099249be2f143d1a22ee51589b42ae8",
+          "region_labels": 106,
+          "unassigned_fraction": 0.054044444444444444
+        },
+        {
+          "name": "044_1",
+          "bytes": 41758,
+          "sha256": "5130a5f2aefed0506f29fabd6721a8105723e671314e992740e141c1f7fed7aa",
+          "region_labels": 91,
+          "unassigned_fraction": 0.18467777777777777
+        },
+        {
+          "name": "044_2",
+          "bytes": 39620,
+          "sha256": "9970d483cc2cc64b2fc0ce663f734cf6b51ccafa074fc04000d75c9e1bc0ffdb",
+          "region_labels": 91,
+          "unassigned_fraction": 0.2310236111111111
+        },
+        {
+          "name": "044_3",
+          "bytes": 36146,
+          "sha256": "50175113f9563b81b7a5bb48f1ea2842bdcc6d4c8f4d69a05fa167d6f17a8a70",
+          "region_labels": 92,
+          "unassigned_fraction": 0.1252076388888889
+        },
+        {
+          "name": "044_4",
+          "bytes": 39656,
+          "sha256": "26a5c66322033121178c14e7b742e736731b20d437434eee1d06f075042bb091",
+          "region_labels": 117,
+          "unassigned_fraction": 0.3120597222222222
+        },
+        {
+          "name": "044_5",
+          "bytes": 35594,
+          "sha256": "72e1b0ab8ee22cf8147815ae874f5415d41fb8da217a57abb8a58ab8d2e4aa9b",
+          "region_labels": 81,
+          "unassigned_fraction": 0.07083402777777778
+        },
+        {
+          "name": "045_0",
+          "bytes": 42174,
+          "sha256": "0e7f054dab5ee0ddd5f882de54d7edc555c511b7b1e521de169463e2ba9f36b2",
+          "region_labels": 108,
+          "unassigned_fraction": 0.056376388888888886
+        },
+        {
+          "name": "045_1",
+          "bytes": 41860,
+          "sha256": "22eb6be6b1f6f308b1131a667c23f5f99b2b8d1705bc274c1537fa2d5cc7d653",
+          "region_labels": 87,
+          "unassigned_fraction": 0.18508611111111112
+        },
+        {
+          "name": "045_2",
+          "bytes": 40160,
+          "sha256": "8e06d35988b99d8de729a46c0dd58ad165605764567a60c76814eed38ff70ea1",
+          "region_labels": 89,
+          "unassigned_fraction": 0.22746319444444443
+        },
+        {
+          "name": "045_3",
+          "bytes": 35205,
+          "sha256": "72c8a5330d26902cc640941e868c4eece073f9e14406f4e315e1d9f16abdeee6",
+          "region_labels": 91,
+          "unassigned_fraction": 0.12978333333333333
+        },
+        {
+          "name": "045_4",
+          "bytes": 37759,
+          "sha256": "f5f9577319623b3d8dec6cf2d1f3e10252f46e921ae9b7ea900778672eaed945",
+          "region_labels": 117,
+          "unassigned_fraction": 0.346025
+        },
+        {
+          "name": "045_5",
+          "bytes": 36719,
+          "sha256": "58edb406a244d5f9248507e90204d77f401ea4bc16096d479d97d0a244800956",
+          "region_labels": 88,
+          "unassigned_fraction": 0.08050486111111112
+        },
+        {
+          "name": "046_0",
+          "bytes": 41559,
+          "sha256": "d27e82bffb281ae6389fa273455082bb292b2090a159de762003ffe7dac77bc5",
+          "region_labels": 107,
+          "unassigned_fraction": 0.062391666666666665
+        },
+        {
+          "name": "046_1",
+          "bytes": 40214,
+          "sha256": "e6e395695e060aff8a7e6639ace447e6e03f257349a8773af33057616dfedbed",
+          "region_labels": 89,
+          "unassigned_fraction": 0.18853680555555555
+        },
+        {
+          "name": "046_2",
+          "bytes": 36647,
+          "sha256": "be3bf51da58089a52202631cddf8f88a721df1bad2915bb691375ea5eecdbf0b",
+          "region_labels": 79,
+          "unassigned_fraction": 0.24362430555555556
+        },
+        {
+          "name": "046_3",
+          "bytes": 32800,
+          "sha256": "42c6d748f450e79219b179655a4ca9cca5da92054f533215a59a351c4fbc1b8a",
+          "region_labels": 79,
+          "unassigned_fraction": 0.13911944444444443
+        },
+        {
+          "name": "046_4",
+          "bytes": 37152,
+          "sha256": "f5a4beb3146b1c9d649bdd686f34b9680463cde2a36535d36c8333a19280411a",
+          "region_labels": 110,
+          "unassigned_fraction": 0.3071541666666667
+        },
+        {
+          "name": "046_5",
+          "bytes": 35628,
+          "sha256": "8c523ebb75de2668a79e81ac6b5b114376a19c19c354d57608c0c2a9c70e0775",
+          "region_labels": 82,
+          "unassigned_fraction": 0.07326388888888889
+        },
+        {
+          "name": "047_0",
+          "bytes": 40991,
+          "sha256": "60e637cb28d0efd0c9550264090ab944481c3f4f1273f594dde671c43ead618d",
+          "region_labels": 107,
+          "unassigned_fraction": 0.056140277777777775
+        },
+        {
+          "name": "047_1",
+          "bytes": 42769,
+          "sha256": "a806be84070a6afbd2a6cbe2201a7fbaf56c7bf669d8ecd7c3c51cbd68f2d50f",
+          "region_labels": 94,
+          "unassigned_fraction": 0.18243333333333334
+        },
+        {
+          "name": "047_2",
+          "bytes": 37529,
+          "sha256": "d4e419ee44b2fd7baa7a3caedff088fb82cff37b896ba79d6bc84e34bf72baf6",
+          "region_labels": 94,
+          "unassigned_fraction": 0.2620284722222222
+        },
+        {
+          "name": "047_3",
+          "bytes": 35464,
+          "sha256": "9bdf7d283e31e6d58413f86d25a83b994ee553c9b2a1c6f36e1b2f779657ef5b",
+          "region_labels": 87,
+          "unassigned_fraction": 0.12692083333333334
+        },
+        {
+          "name": "047_4",
+          "bytes": 41283,
+          "sha256": "32726a27e5ae30fc06527b26afa4650fd0f0fd9ae6c85e137499a5bf6a61afc7",
+          "region_labels": 112,
+          "unassigned_fraction": 0.2542979166666667
+        },
+        {
+          "name": "047_5",
+          "bytes": 35536,
+          "sha256": "6330dbb1e9736e5efe728c2156a22bc612cac0ebf0fb5365113ab11ac10b582a",
+          "region_labels": 84,
+          "unassigned_fraction": 0.08109236111111111
+        },
+        {
+          "name": "048_0",
+          "bytes": 42230,
+          "sha256": "a7a02355cf2ef81372345bdcf1525eeb79130f1b3cc532782cb22c52f138c5c4",
+          "region_labels": 107,
+          "unassigned_fraction": 0.05213611111111111
+        },
+        {
+          "name": "048_1",
+          "bytes": 43371,
+          "sha256": "aeba9b7b9e3119a3accfa2c35cb73d536cd46b64ce4a2d8b130b971413739521",
+          "region_labels": 93,
+          "unassigned_fraction": 0.1903111111111111
+        },
+        {
+          "name": "048_2",
+          "bytes": 36413,
+          "sha256": "dcfc2fdd69ebd7150b42992202a054842090aab182d758d3c539347e1bc753de",
+          "region_labels": 91,
+          "unassigned_fraction": 0.25214027777777775
+        },
+        {
+          "name": "048_3",
+          "bytes": 34325,
+          "sha256": "d18cd44e354828b695ae17da84fba8be182789e2778ae35cbd917fd306ad9a6d",
+          "region_labels": 88,
+          "unassigned_fraction": 0.14093958333333334
+        },
+        {
+          "name": "048_4",
+          "bytes": 43232,
+          "sha256": "0ae40a3f91a7edb45ffcb607eba74a331a2f1491db6aac06d3f06e8de915241a",
+          "region_labels": 126,
+          "unassigned_fraction": 0.21660069444444444
+        },
+        {
+          "name": "048_5",
+          "bytes": 37978,
+          "sha256": "f4b605243afcf4bb3de1af2143c936ec7a778da498cc7f6f1198fb51c2ca77fe",
+          "region_labels": 89,
+          "unassigned_fraction": 0.08444027777777778
+        },
+        {
+          "name": "049_0",
+          "bytes": 41456,
+          "sha256": "eeea89e927dbcc3f34fd1dbeb37a981d4cbbaa47b530d356401040de959ca6c1",
+          "region_labels": 105,
+          "unassigned_fraction": 0.05955763888888889
+        },
+        {
+          "name": "049_1",
+          "bytes": 43709,
+          "sha256": "e0ecdf888cb48025ec703b8b05c5dcc4858641254fb51d09c39f6d75c13f9ce5",
+          "region_labels": 93,
+          "unassigned_fraction": 0.17977916666666666
+        },
+        {
+          "name": "049_2",
+          "bytes": 37214,
+          "sha256": "a584f067446c38ff270fac40797f6249f61cdb80fd56a0f2a21c92949dc99c8c",
+          "region_labels": 90,
+          "unassigned_fraction": 0.23791458333333335
+        },
+        {
+          "name": "049_3",
+          "bytes": 33458,
+          "sha256": "dd6d6d1979e502b7aa66e508d66d719c510acff7041a067dc4d72c94a593f828",
+          "region_labels": 86,
+          "unassigned_fraction": 0.14353402777777777
+        },
+        {
+          "name": "049_4",
+          "bytes": 40447,
+          "sha256": "dfa630c9f9848bdaf234f591d9468bc6aae6e2b7021028e52c3bde40ff05cdd9",
+          "region_labels": 115,
+          "unassigned_fraction": 0.28933194444444443
+        },
+        {
+          "name": "049_5",
+          "bytes": 38387,
+          "sha256": "cbb559ec1f66c4ebce3a2c4b9dd2657ec50e190cbf0c6bd6fb8371bfb2e77875",
+          "region_labels": 83,
+          "unassigned_fraction": 0.07923541666666667
+        },
+        {
+          "name": "050_0",
+          "bytes": 39250,
+          "sha256": "b4f470f079dcea1ab82c90688abae8eac3655b2538ef02d716dc4f20de23e0e0",
+          "region_labels": 98,
+          "unassigned_fraction": 0.05590347222222222
+        },
+        {
+          "name": "050_1",
+          "bytes": 42976,
+          "sha256": "b452d4f1a85d9c29add6f8d948fa81fbd02f70401a024aae5a22a8cf22d5761b",
+          "region_labels": 93,
+          "unassigned_fraction": 0.18800208333333332
+        },
+        {
+          "name": "050_2",
+          "bytes": 37473,
+          "sha256": "11c8c4918d6fa572cb36ae364516ada7840bdee4389c0237497ac948a808b346",
+          "region_labels": 92,
+          "unassigned_fraction": 0.27024027777777776
+        },
+        {
+          "name": "050_3",
+          "bytes": 34635,
+          "sha256": "d37ff8da8e4ae34e2cbcfd10da5b36f1309c522cc3d42ac37f370707bfb7c023",
+          "region_labels": 92,
+          "unassigned_fraction": 0.13954097222222223
+        },
+        {
+          "name": "050_4",
+          "bytes": 39314,
+          "sha256": "1bc3f7f5018959f4131481b411fe5cef2c80b9ff374e0c338cfe77c5016b1cdc",
+          "region_labels": 112,
+          "unassigned_fraction": 0.3140618055555556
+        },
+        {
+          "name": "050_5",
+          "bytes": 37484,
+          "sha256": "ee78e890cc3cce0911de2b182bb5658e554009276c6d1310fe83153c8b7359f7",
+          "region_labels": 85,
+          "unassigned_fraction": 0.10434236111111111
+        },
+        {
+          "name": "051_0",
+          "bytes": 39620,
+          "sha256": "fc1bee46e1c1e876c2d1e2f45f6a51c0842c7ff853a8ce69ba634907db2262da",
+          "region_labels": 95,
+          "unassigned_fraction": 0.053171527777777776
+        },
+        {
+          "name": "051_1",
+          "bytes": 39744,
+          "sha256": "1f84640448a97a24adf8a46d70bc6006e64d2f6363ed2d7f089ab597cdc07676",
+          "region_labels": 85,
+          "unassigned_fraction": 0.19927638888888888
+        },
+        {
+          "name": "051_2",
+          "bytes": 36243,
+          "sha256": "2fcbec2040dbf9c0d9884ab62dcf628635ad22da44a3df04d7af666cc3255a9b",
+          "region_labels": 86,
+          "unassigned_fraction": 0.2645576388888889
+        },
+        {
+          "name": "051_3",
+          "bytes": 33498,
+          "sha256": "2bee5a5b09ce4529d24d3b2ec0a7da4bd8be308a47a39dfd81bb56e688415c51",
+          "region_labels": 89,
+          "unassigned_fraction": 0.13082291666666668
+        },
+        {
+          "name": "051_4",
+          "bytes": 43516,
+          "sha256": "006273eefdba594705679cbacb0d5adf145537bfaf5a84b024d05e1c0fa5c26a",
+          "region_labels": 119,
+          "unassigned_fraction": 0.2336659722222222
+        },
+        {
+          "name": "051_5",
+          "bytes": 40535,
+          "sha256": "e7c30bc55b2cfa126c44745cd4958a4f6da2727b4bd259455e8206961daac821",
+          "region_labels": 88,
+          "unassigned_fraction": 0.10916111111111111
+        },
+        {
+          "name": "052_0",
+          "bytes": 40789,
+          "sha256": "b727baae7fa0c191d0d2d2a85d248d9dda41b98dcb796e15c15bb6b4f16a07f7",
+          "region_labels": 99,
+          "unassigned_fraction": 0.07165694444444444
+        },
+        {
+          "name": "052_1",
+          "bytes": 40059,
+          "sha256": "2b3b79c97532fc9d27d904763841946b88569e3409e13f57e28226b589ee1397",
+          "region_labels": 86,
+          "unassigned_fraction": 0.19935902777777778
+        },
+        {
+          "name": "052_2",
+          "bytes": 35461,
+          "sha256": "d319ccaadbaa8d28cbf1ab08e2b2d7566ae512f6542b2f4d7141007a61ae36ec",
+          "region_labels": 85,
+          "unassigned_fraction": 0.2798069444444444
+        },
+        {
+          "name": "052_3",
+          "bytes": 33072,
+          "sha256": "c289aaac2ad033109115d7b5924a762bbd48c936a414a7270e5a49d18cc6e3c7",
+          "region_labels": 86,
+          "unassigned_fraction": 0.14924652777777778
+        },
+        {
+          "name": "052_4",
+          "bytes": 40119,
+          "sha256": "0348862db0c2453729260209c45515750b9136e086dde16e73066fd0ada9fe74",
+          "region_labels": 122,
+          "unassigned_fraction": 0.3222027777777778
+        },
+        {
+          "name": "052_5",
+          "bytes": 38637,
+          "sha256": "b42e3486724ad2c4c4b884642a34a5127d1d541dbb4333eace567234ed78413b",
+          "region_labels": 95,
+          "unassigned_fraction": 0.09503125
+        },
+        {
+          "name": "053_0",
+          "bytes": 40633,
+          "sha256": "2179a041245355a75654f1e3a39fef48cebdf741ae86f9b145882ad0e756b4f4",
+          "region_labels": 95,
+          "unassigned_fraction": 0.06301388888888888
+        },
+        {
+          "name": "053_1",
+          "bytes": 43058,
+          "sha256": "b75ffe5e9654304acad92803f465d7c0f10887bdb2d06979891b74498ad3bb4c",
+          "region_labels": 100,
+          "unassigned_fraction": 0.19998472222222222
+        },
+        {
+          "name": "053_2",
+          "bytes": 35677,
+          "sha256": "f0544db64572bfa8459496600e703b0eb25f2504fdb83e0b3b16d9cd411d4094",
+          "region_labels": 83,
+          "unassigned_fraction": 0.2295326388888889
+        },
+        {
+          "name": "053_3",
+          "bytes": 34635,
+          "sha256": "6757277791ce96deddc81818d3929e320a5fa42ec816a893caf051902a82c42f",
+          "region_labels": 82,
+          "unassigned_fraction": 0.12429375
+        },
+        {
+          "name": "053_4",
+          "bytes": 38799,
+          "sha256": "cf2e7e9e96f73cd961e52879751de41679bb7fec4d71260c2bb88f0d2db6661c",
+          "region_labels": 120,
+          "unassigned_fraction": 0.31891041666666664
+        },
+        {
+          "name": "053_5",
+          "bytes": 37937,
+          "sha256": "0d256143debe3cf0d1a6ba9fb8aba9aca4e22ba3e138504415914035d69fbeee",
+          "region_labels": 90,
+          "unassigned_fraction": 0.10325486111111111
+        },
+        {
+          "name": "054_0",
+          "bytes": 36966,
+          "sha256": "326564d3fb87f079e6d3e5d5c56a1bb462926fba01c715c22ff75f42c700cef2",
+          "region_labels": 80,
+          "unassigned_fraction": 0.05352361111111111
+        },
+        {
+          "name": "054_1",
+          "bytes": 42622,
+          "sha256": "95c673067ab83859039b4f90d333895c3e45209eaa0632821f70f79fd9341986",
+          "region_labels": 91,
+          "unassigned_fraction": 0.18605902777777777
+        },
+        {
+          "name": "054_2",
+          "bytes": 36639,
+          "sha256": "ad83184000dfff0fa1d46c4002d41f3396d4f3da4687506d442d90ad0d566ee6",
+          "region_labels": 77,
+          "unassigned_fraction": 0.26240416666666666
+        },
+        {
+          "name": "054_3",
+          "bytes": 31614,
+          "sha256": "90f85cde7b4314141c802075e41bb8ee41df6350760d1a776c49ff13c1b2251a",
+          "region_labels": 81,
+          "unassigned_fraction": 0.13583263888888888
+        },
+        {
+          "name": "054_4",
+          "bytes": 39259,
+          "sha256": "2456c72376583b16568e083d74de9f395b8d9356c3180a3392832c31d1713200",
+          "region_labels": 117,
+          "unassigned_fraction": 0.32270069444444444
+        },
+        {
+          "name": "054_5",
+          "bytes": 37009,
+          "sha256": "abd9457384d552510f28ddf12077931bdfbdd03a2957336466b8e1fc1342fe1a",
+          "region_labels": 83,
+          "unassigned_fraction": 0.12239930555555556
+        },
+        {
+          "name": "055_0",
+          "bytes": 37028,
+          "sha256": "993c2f694ba68a356f2e3798790ae5af23428021c0db628ccf8aaaa3912df920",
+          "region_labels": 88,
+          "unassigned_fraction": 0.05704027777777778
+        },
+        {
+          "name": "055_1",
+          "bytes": 43858,
+          "sha256": "ad43728cf97dc61c0654deeab6aab93db25efc72e8ed0f6d67b1a616eb2f4cae",
+          "region_labels": 95,
+          "unassigned_fraction": 0.17917847222222222
+        },
+        {
+          "name": "055_2",
+          "bytes": 38997,
+          "sha256": "52f6f944625a2bbc8815d027ff3be72ee974dc18a4531ffd18c3dbede5ad2552",
+          "region_labels": 93,
+          "unassigned_fraction": 0.26621180555555557
+        },
+        {
+          "name": "055_3",
+          "bytes": 33449,
+          "sha256": "e90ea84f9895186b033d77326be7bec170e64bb18142cea786a80987770bfe19",
+          "region_labels": 84,
+          "unassigned_fraction": 0.11975416666666666
+        },
+        {
+          "name": "055_4",
+          "bytes": 37141,
+          "sha256": "8c1ad3bc7885945fe54144a8798f44df2683a0852e4bcac4eb008b7241df786c",
+          "region_labels": 108,
+          "unassigned_fraction": 0.30999375
+        },
+        {
+          "name": "055_5",
+          "bytes": 37828,
+          "sha256": "7bbf7955be9844ff1d3b1c596e015423448608c58163ad560dce8b8e7c6c3d7a",
+          "region_labels": 87,
+          "unassigned_fraction": 0.09151944444444444
+        },
+        {
+          "name": "056_0",
+          "bytes": 38655,
+          "sha256": "8604634e8633acfc4c73841aff85cffc9ab62cf8b13c47a315a028d14c124acd",
+          "region_labels": 85,
+          "unassigned_fraction": 0.05715763888888889
+        },
+        {
+          "name": "056_1",
+          "bytes": 38770,
+          "sha256": "5a5b3362e006f8510fbc0086a907ac534467798f307af3d4c872b24ef21a1c11",
+          "region_labels": 72,
+          "unassigned_fraction": 0.2154326388888889
+        },
+        {
+          "name": "056_2",
+          "bytes": 37633,
+          "sha256": "32fa84c845d70f45cf8b2419ef388103a4d2754e4e41d8cba074926ee4a84e6b",
+          "region_labels": 87,
+          "unassigned_fraction": 0.27218194444444443
+        },
+        {
+          "name": "056_3",
+          "bytes": 35427,
+          "sha256": "f044e902cee329270a24be457052c373b39da1d1f1f4d6e245338950c7ee0d94",
+          "region_labels": 90,
+          "unassigned_fraction": 0.13172916666666667
+        },
+        {
+          "name": "056_4",
+          "bytes": 39096,
+          "sha256": "6548e9bc2c0f19ddf09861697825ca9e0bec62384d1a9fb715e1724b559eb11e",
+          "region_labels": 110,
+          "unassigned_fraction": 0.31025416666666666
+        },
+        {
+          "name": "056_5",
+          "bytes": 36720,
+          "sha256": "49d37569acc1ce8cb0586dac1dfdf90df8aa8ea2701be02893e76445b45e30a7",
+          "region_labels": 84,
+          "unassigned_fraction": 0.10917361111111111
+        },
+        {
+          "name": "057_0",
+          "bytes": 38967,
+          "sha256": "d93d630ffc59b05dfe5d29aba2eec42322e36bcf7b7075a3b460dd1aaff3ec86",
+          "region_labels": 93,
+          "unassigned_fraction": 0.049722916666666665
+        },
+        {
+          "name": "057_1",
+          "bytes": 40493,
+          "sha256": "faeaa98804cef322829241e20d08f118acc58c594349f869f946a53bcc1fe4b1",
+          "region_labels": 87,
+          "unassigned_fraction": 0.19318541666666667
+        },
+        {
+          "name": "057_2",
+          "bytes": 34407,
+          "sha256": "8f59d089285200d23b21848fe9f7a6369583225f9d2807014db7a4e82180d6d9",
+          "region_labels": 77,
+          "unassigned_fraction": 0.3077840277777778
+        },
+        {
+          "name": "057_3",
+          "bytes": 37877,
+          "sha256": "3e3f0661e6cf24430951a7e95eaa71edd6820e1c0f26a3331854838a2de2e90c",
+          "region_labels": 95,
+          "unassigned_fraction": 0.12813611111111112
+        },
+        {
+          "name": "057_4",
+          "bytes": 39701,
+          "sha256": "00a598a0b6fd1eb965dc6b19d9a5808b4b4931a398ae2dc9539e33564612b23e",
+          "region_labels": 115,
+          "unassigned_fraction": 0.29590625
+        },
+        {
+          "name": "057_5",
+          "bytes": 37158,
+          "sha256": "c6e50110ffc85b70b4a5f30315070f5642720306ea8fb2284d899b5ff7c630c8",
+          "region_labels": 79,
+          "unassigned_fraction": 0.11377083333333333
+        },
+        {
+          "name": "058_0",
+          "bytes": 35976,
+          "sha256": "293d85cfc6fdb8f42fde9f2a32ebbcd0f186fb1e2c157529fb486dc6f1084e83",
+          "region_labels": 88,
+          "unassigned_fraction": 0.05773194444444445
+        },
+        {
+          "name": "058_1",
+          "bytes": 41526,
+          "sha256": "90dd9d097d1a9b6110b0575c267d8ccdb34e6d42547de42cb25c9ea271616d3f",
+          "region_labels": 85,
+          "unassigned_fraction": 0.20977291666666667
+        },
+        {
+          "name": "058_2",
+          "bytes": 34518,
+          "sha256": "563b47164f9a9daf32d756af19f90baf7fa86b9e627d5f0c9d4b1c3efe75dfdf",
+          "region_labels": 80,
+          "unassigned_fraction": 0.30516458333333335
+        },
+        {
+          "name": "058_3",
+          "bytes": 33375,
+          "sha256": "cfa1e5e59a649ac6b7679937d1a0ad4aa705bd671a439faa44797a7ad8592f50",
+          "region_labels": 90,
+          "unassigned_fraction": 0.12614027777777778
+        },
+        {
+          "name": "058_4",
+          "bytes": 38261,
+          "sha256": "05c2ad3a42183fbee7363dddbd07c462c0cc90500cb9a6d76d45ed656c8a4b55",
+          "region_labels": 114,
+          "unassigned_fraction": 0.3119048611111111
+        },
+        {
+          "name": "058_5",
+          "bytes": 36392,
+          "sha256": "7fd6876a47b7ee37a83bbc0d7f1014f5437885399ede61a16851197625e898c1",
+          "region_labels": 82,
+          "unassigned_fraction": 0.14100555555555555
+        },
+        {
+          "name": "059_0",
+          "bytes": 37382,
+          "sha256": "d6d6db375c5be304609a9c6c38fdf6ebc1a243e42acc9fd841938a430d3ba57d",
+          "region_labels": 94,
+          "unassigned_fraction": 0.04784236111111111
+        },
+        {
+          "name": "059_1",
+          "bytes": 40098,
+          "sha256": "94a92670d59b63f6c70fdb3bfa0f51cd7a5db38994a74364c1e46fb9f0dc1e5b",
+          "region_labels": 90,
+          "unassigned_fraction": 0.20275069444444443
+        },
+        {
+          "name": "059_2",
+          "bytes": 34854,
+          "sha256": "67b0e01916f5c2ec80ed7e4b8f670589fb8425f8a661e9f658ff9750418feb42",
+          "region_labels": 83,
+          "unassigned_fraction": 0.29405763888888886
+        },
+        {
+          "name": "059_3",
+          "bytes": 35340,
+          "sha256": "8ab800160b8c487742733bdab1922edfa312708565baf0208e9dd0bd9c976c51",
+          "region_labels": 94,
+          "unassigned_fraction": 0.12369375
+        },
+        {
+          "name": "059_4",
+          "bytes": 37409,
+          "sha256": "b8e2c6b6a98101d09abda04b32608b50f586fdb36bd321e63fe8773e38a67a1f",
+          "region_labels": 111,
+          "unassigned_fraction": 0.30895416666666664
+        },
+        {
+          "name": "059_5",
+          "bytes": 35620,
+          "sha256": "e5e60c823194865e77ef1c7ab489e36064d60955a2b81b7bb4490daca8f5ec75",
+          "region_labels": 78,
+          "unassigned_fraction": 0.10970347222222222
+        },
+        {
+          "name": "060_0",
+          "bytes": 36779,
+          "sha256": "d24cc5bb2bbd59ada3452d3f2fa1bb3575900b3514d2dcee9906c0449cd453d7",
+          "region_labels": 84,
+          "unassigned_fraction": 0.055426388888888886
+        },
+        {
+          "name": "060_1",
+          "bytes": 40576,
+          "sha256": "652f30a05dddd924054ae61b4f07a42ed5761798f6c34646801ce31908a00ab0",
+          "region_labels": 93,
+          "unassigned_fraction": 0.19585972222222223
+        },
+        {
+          "name": "060_2",
+          "bytes": 37587,
+          "sha256": "e517fe10f733f7f4f431aadcf84039dba3daa410c974501a297f51980677e0b4",
+          "region_labels": 88,
+          "unassigned_fraction": 0.2717263888888889
+        },
+        {
+          "name": "060_3",
+          "bytes": 33938,
+          "sha256": "e1b4541d579ee56b809039efeb6263b02cad2b47d52121687ee16deaed2f0caf",
+          "region_labels": 88,
+          "unassigned_fraction": 0.1387736111111111
+        },
+        {
+          "name": "060_4",
+          "bytes": 39084,
+          "sha256": "c536722497b0f3ac185f757527e2cad70afccbedcd0cbd855e9bc8f4c96cf144",
+          "region_labels": 109,
+          "unassigned_fraction": 0.2871680555555556
+        },
+        {
+          "name": "060_5",
+          "bytes": 36532,
+          "sha256": "181e753440f577a6cc4b8b63ed43d6cf50ad035e5e09badea22883d295c154fd",
+          "region_labels": 87,
+          "unassigned_fraction": 0.08936180555555556
+        }
+      ]
+    }
+  },
+  "main_pipeline_state": {
+    "run_id": "VADGS-P0R1-000",
+    "controller_pid": 22094,
+    "completed_stages": [
+      "exhaustive_matching",
+      "triangulation"
+    ],
+    "shutdown_when_pipeline_exits": false,
+    "failure_ledger_refs": [
+      "V76-F01"
+    ],
+    "stage": "train_30000",
+    "status": "running",
+    "command": [
+      "/root/autodl-tmp/envs/vadgs-v76/bin/python",
+      "train.py",
+      "--config",
+      "/root/autodl-tmp/external/worldsim_v75/VAD-GS/configs/v76/nuscenes_000_repro_exhaustive.yaml"
+    ],
+    "log": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/train.log",
+    "updated_at": "2026-09-25T19:01:17.699609+00:00",
+    "child_pid": 27160
+  },
+  "last_training_iteration": 14828,
+  "training_error_lines": [],
+  "training_runtime_warnings": [
+    "/root/autodl-tmp/envs/adgs/lib/python3.9/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars",
+    "/root/autodl-tmp/envs/adgs/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.",
+    "/root/autodl-tmp/external/worldsim_v75/VAD-GS/lib/models/trellis.py:285: RuntimeWarning: invalid value encountered in double_scalars"
+  ],
+  "process_snapshot": "   PID STAT     ELAPSED %CPU   RSS COMMAND\n 22094 S       06:21:55  0.0 10840 /root/autodl-tmp/envs/vadgs-v76/bin/python script/v76/run_p0r1_pipeline.py\n 27160 Sl      05:13:00  112 20081652 /root/autodl-tmp/envs/vadgs-v76/bin/python train.py --config /root/autodl-tmp/external/worldsim_v75/VAD-GS/configs/v76/nuscenes_000_repro_exhaustive.yaml\n",
+  "shutdown_ready": false,
+  "scope_note": "Background encoding/completeness only, not semantic accuracy or dynamic identity approval. No new model inference. Continue existing P0R1 30k controller."
+}

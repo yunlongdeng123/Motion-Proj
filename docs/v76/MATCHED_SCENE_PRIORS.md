@@ -83,6 +83,14 @@ DSINE 使用官方 commit `ef0c2afa32b4dd19cb8ca4567c652802cd92591c` 的 `DSINE_
 
 按预先写入[协议](../autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/protocol.json)的停止条件，本轮停止这项fallback扩展；不事后改类别兼容、阈值或换检测器继续救结果。原四例遮挡错标的局部修复仍成立，但完整动态先验没有准入，保护标记保持，同场景训练和HUGSIM同场景画质比较尚未完成。全部[逐视图结果与图像](../autoresearch/worldsim_v76/matched-scene-priors/crossframe-gate/)保留。这是适配输入的跨帧召回边界，不是VAD-GS方法否定；P0R1继续使用官方先验。
 
+## 背景SAM完成与文件核验
+
+`VADGS-BACKGROUND-COMPLETE-20260926`：scene-0255的CPU续做于2026-09-26 07:48结束，最终生成报告为 `complete`，原PID28434已退出。它保留原有268张，由两线程CPU补完98张，当前调用耗时16,236.68秒；scene-0230已有366张。两场景深度、DSINE法线、背景SAM均各366张，动态身份mask仍被保护标记阻止进入训练。
+
+08:14对两场景的全部732张背景PNG逐一解码：文件名集合精确覆盖61帧×6相机，均为900×1600、uint8，区域ID只含0及2–254，每图至少一个非空区域，无不完整临时PNG。深度/法线文件名也各覆盖366个预期视图。本次核验保存每张背景图的大小、SHA-256、区域数及未分配比例；它验证完整性与编码，不替代语义/遮挡准确率评价。
+
+完整[核验与文件清单](../autoresearch/worldsim_v76/matched-scene-priors/background-completion/audit.json)、[生成报告与CPU日志](../autoresearch/worldsim_v76/matched-scene-priors/background-completion/)已归档。两场景的 `DYNAMIC_IDENTITY_BLOCKED.json` 及被拒的动态mask原件均保留；本次没有新增推理、同场景训练或方法结果，也不重开V76-F02的已停止fallback。P0R1官方先验训练继续，08:14为14828/30000；后续训练与评价尚未完成，不能关机。
+
 ## 资产与复现
 
 - 远端：`/root/autodl-tmp/data/v76_vadgs/scene_{0230,0255}`；法线报告在 `normal_img/generation_report.json`，SAM证据在 `sam_prior_evidence/`。
