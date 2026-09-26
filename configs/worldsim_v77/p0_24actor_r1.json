@@ -1,0 +1,24 @@
+{
+  "task_id": "WS-V77-P0-24ACTOR-20260926",
+  "run_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-P0-24ACTOR-20260926/r1",
+  "seed": 7701,
+  "frame": 20,
+  "actor_count": 24,
+  "omega_source": "/root/autodl-tmp/external/worldsim_v74_mainfig/vggt-omega",
+  "checkpoint": "/root/autodl-tmp/models/worldsim_v77/vggt_omega_1b_512.pt",
+  "scenes": [
+    {"name": "official_000", "root": "/root/autodl-tmp/data/v76_vadgs/official_000/000"},
+    {"name": "scene_0230", "root": "/root/autodl-tmp/data/v76_vadgs/scene_0230"},
+    {"name": "scene_0255", "root": "/root/autodl-tmp/data/v76_vadgs/scene_0255"}
+  ],
+  "readouts": {
+    "native": "预测相机/内参反投影，使用六个GT相机中心拟合一个Sim3；报告相机姿态误差",
+    "calibrated_control": "GT相机/内参反投影，使用同帧非GT框背景LiDAR拟合唯一全局深度比例；额外输入诊断，不是纯RGB结果"
+  },
+  "geometry": {"confidence_filter": null, "min_camera_depth_m": 0.5, "max_camera_depth_m": 80},
+  "edits": {"translation_m": [-3, -1, 1, 3], "translation_axes": ["x", "y"], "yaw_degrees": [-30, -15, 15, 30], "delete": true, "insert_clone_delta_world_m": [3, 0, 0]},
+  "visualization": {"point_splat_radius_px": 1, "view_names": ["six_observed_cameras", "canonical_front_back_left_right_top"], "hole_filling": false},
+  "metrics": "GT框内点量/空间范围与视角来源；每个解析命令的输出点误差/背景不变/对象计数；原始与编辑渲染，人工评分留空",
+  "stopping_rule": "先报告相机/尺度控制，再看对象几何；失败不扫阈值、不加学习模块、不恢复Gaussian修补；不将解析算子通过等同高保真编辑通过",
+  "selection_change": "旧六场景RGB及元数据已退役，输入预检后改用三个现存完整导出；选择在Ω预测前固定"
+}
