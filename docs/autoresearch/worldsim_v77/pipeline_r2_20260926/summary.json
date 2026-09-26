@@ -1,0 +1,280 @@
+{
+  "registration": {
+    "task_id": "WS-V77-PIPELINE-R2-20260926",
+    "run_id": "r1",
+    "created_at": "2026-09-26T13:23:39.676410+00:00",
+    "source_run": "WS-V77-EXPLICIT-POC-20260926/r1",
+    "source_commit": "e5bc729b",
+    "questions": [
+      "GT框无相交的候选是否碰到未标注静态障碍",
+      "恢复完整196帧上下文、放开40帧局部参考限制，能否改善原评价窗ProPainter残影"
+    ],
+    "training_steps": 0,
+    "seed": 7703,
+    "models": "原SAM2.1 large与原ProPainter官方权重；不换生成器，不重跑Ω或Hunyuan",
+    "control": "原50/100帧RGB和mask使用源run符号链接冻结；只新增后续RGB与必要tail mask；同原帧比较，无目标背景GT",
+    "evaluation_frames": {
+      "scene_0230": [
+        0,
+        5,
+        10
+      ],
+      "scene_0255": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90
+      ]
+    },
+    "streams": {
+      "scene_0230": {
+        "camera": 2,
+        "old_frames": 50,
+        "new_frames": 196
+      },
+      "scene_0255": {
+        "camera": 3,
+        "old_frames": 100,
+        "new_frames": 196
+      }
+    },
+    "resource": "RTX3090 24GiB，GPU步骤串行，每阶段最多1800秒；CPU线程4",
+    "failure_ledger_refs": [
+      "V77-F02"
+    ],
+    "failure_ledger_delta": "pending",
+    "human_verdict": null,
+    "seed_roles": {
+      "sam2": 7703,
+      "propainter": null,
+      "propainter_note": "official CLI without an additional seed override"
+    }
+  },
+  "controller": {
+    "pid": 16361,
+    "state": "complete",
+    "steps": [
+      {
+        "scene": "scene_0255",
+        "action": "masks",
+        "returncode": 0,
+        "elapsed_s": 26.46517464518547
+      },
+      {
+        "scene": "scene_0230",
+        "action": "paint",
+        "returncode": 0,
+        "elapsed_s": 64.50536498427391
+      },
+      {
+        "scene": "scene_0255",
+        "action": "paint",
+        "returncode": 0,
+        "elapsed_s": 64.85096613690257
+      }
+    ],
+    "human_verdict": null,
+    "current_step": {
+      "scene": "scene_0255",
+      "action": "paint"
+    }
+  },
+  "space_gate": [
+    {
+      "scene": "scene_0230",
+      "actor_id": "22",
+      "background_lidar_points": 747751,
+      "static_voxels": 56862,
+      "minimum_scan_support": 3,
+      "height_above_gt_bottom_m": 0.15,
+      "static_scope": "原时间窗GT框外累计LiDAR；正占据可用于拒绝，空白不能证明自由空间；低路缘、地图与行驶运动学未验证",
+      "human_verdict": null,
+      "candidate_commands": [
+        {
+          "command": "old_move",
+          "delta_world_m": [
+            1.9998608827590942,
+            0.023580066859722137,
+            0.0
+          ],
+          "frames_checked": 50,
+          "actor_swept_collision_frames": 50,
+          "actor_hit_ids": [
+            "2"
+          ],
+          "minimum_actor_clearance_m": 0.0,
+          "static_evidence_frames": 0,
+          "maximum_static_hit_voxels": 1,
+          "gate_status": "rejected_actor_box",
+          "full_legality_approved": false
+        },
+        {
+          "command": "forward_1m",
+          "delta_world_m": [
+            -0.8544406948884515,
+            0.5195489379438092,
+            0.0
+          ],
+          "frames_checked": 50,
+          "actor_swept_collision_frames": 0,
+          "actor_hit_ids": [],
+          "minimum_actor_clearance_m": 0.5355704818338589,
+          "static_evidence_frames": 0,
+          "maximum_static_hit_voxels": 0,
+          "gate_status": "unverified_sparse_static_and_map",
+          "full_legality_approved": false
+        }
+      ]
+    },
+    {
+      "scene": "scene_0255",
+      "actor_id": "25",
+      "background_lidar_points": 192731,
+      "static_voxels": 48266,
+      "minimum_scan_support": 3,
+      "height_above_gt_bottom_m": 0.15,
+      "static_scope": "原时间窗GT框外累计LiDAR；正占据可用于拒绝，空白不能证明自由空间；低路缘、地图与行驶运动学未验证",
+      "human_verdict": null,
+      "candidate_commands": [
+        {
+          "command": "old_move",
+          "delta_world_m": [
+            -0.6845704317092896,
+            1.8791922330856323,
+            0.0
+          ],
+          "frames_checked": 100,
+          "actor_swept_collision_frames": 0,
+          "actor_hit_ids": [],
+          "minimum_actor_clearance_m": 0.08391840590624347,
+          "static_evidence_frames": 100,
+          "maximum_static_hit_voxels": 129,
+          "gate_status": "static_obstacle_evidence",
+          "full_legality_approved": false
+        },
+        {
+          "command": "forward_2m",
+          "delta_world_m": [
+            -0.0593673796402358,
+            1.9991186843793574,
+            0.0
+          ],
+          "frames_checked": 100,
+          "actor_swept_collision_frames": 0,
+          "actor_hit_ids": [],
+          "minimum_actor_clearance_m": 0.7124058169487627,
+          "static_evidence_frames": 100,
+          "maximum_static_hit_voxels": 132,
+          "gate_status": "static_obstacle_evidence",
+          "full_legality_approved": false
+        }
+      ]
+    }
+  ],
+  "background_comparison": {
+    "task_id": "WS-V77-PIPELINE-R2-20260926",
+    "training_steps": 0,
+    "human_verdict": null,
+    "scenes": [
+      {
+        "name": "scene_0230",
+        "camera": 2,
+        "evaluation_video_frames": 50,
+        "comparison_frames": [
+          0,
+          5,
+          10
+        ],
+        "masked_old_new_mean_absolute_difference_0_255": 9.303387133615564,
+        "outside_removal_region_max_change_0_255": 0.0,
+        "quality_metric_warning": "旧新像素差仅度量变化量，不是无真值背景质量分数",
+        "human_verdict": null
+      },
+      {
+        "name": "scene_0255",
+        "camera": 3,
+        "evaluation_video_frames": 100,
+        "comparison_frames": [
+          0,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70,
+          80,
+          90
+        ],
+        "masked_old_new_mean_absolute_difference_0_255": 6.372067894781562,
+        "outside_removal_region_max_change_0_255": 0.0,
+        "quality_metric_warning": "旧新像素差仅度量变化量，不是无真值背景质量分数",
+        "human_verdict": null
+      }
+    ]
+  },
+  "validation": {
+    "videos": [
+      {
+        "file": "scene_0230\\raw.mp4",
+        "width": 688,
+        "height": 384,
+        "r_frame_rate": "10/1",
+        "nb_frames": "50",
+        "decode": true
+      },
+      {
+        "file": "scene_0230\\old_delete.mp4",
+        "width": 688,
+        "height": 384,
+        "r_frame_rate": "10/1",
+        "nb_frames": "50",
+        "decode": true
+      },
+      {
+        "file": "scene_0230\\new_delete.mp4",
+        "width": 688,
+        "height": 384,
+        "r_frame_rate": "10/1",
+        "nb_frames": "50",
+        "decode": true
+      },
+      {
+        "file": "scene_0255\\raw.mp4",
+        "width": 688,
+        "height": 384,
+        "r_frame_rate": "10/1",
+        "nb_frames": "100",
+        "decode": true
+      },
+      {
+        "file": "scene_0255\\old_delete.mp4",
+        "width": 688,
+        "height": 384,
+        "r_frame_rate": "10/1",
+        "nb_frames": "100",
+        "decode": true
+      },
+      {
+        "file": "scene_0255\\new_delete.mp4",
+        "width": 688,
+        "height": 384,
+        "r_frame_rate": "10/1",
+        "nb_frames": "100",
+        "decode": true
+      }
+    ],
+    "human_verdict": null
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02",
+  "human_verdict": null
+}
