@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-EXPLICIT-POC-20260926 / r1 | 两开发场景 SAM2/ProPainter/冻结Ω背景/官方 Hunyuan3D-2.1 单图GLB；各10时刻×6相机、20次新增Ω前向、零训练；背景残影和资产身份未过代理审核，人工null，限定关闭此拼接入口 | [报告与architecture](v77/EXPLICIT_POC.md)、[run轻量证据](autoresearch/worldsim_v77/explicit_poc_20260926/)、[V77-F02](research_failures/entries/V77-F02.md) |
 | WS-V77-VIDEO-REVIEW-20260926 / r1 | 用户要求人眼时序复核：三个完整连续场景191/196/196帧，六相机，原始/factual/固定2m平移九视频；新增574冻结前向、复用9时刻，零训练；人工判定空白 | [视频合同与architecture](v77/VIDEO_REVIEW.md)、[逐帧轻量证据](autoresearch/worldsim_v77/video_review_20260926/) |
 | WS-V77-P0-24ACTOR-20260926 / r1 | 3场景24固定对象，冻结Ω六相机；预测相机与GT标定/背景尺度两读出，解析编辑672次检查、630次非空；完整评价采用纠错后的evaluation_v2 | [结果与architecture](v77/P0_RESULTS.md)、[登记/指标/来源](autoresearch/worldsim_v77/p0_20260926/)、[V77-F01](research_failures/entries/V77-F01.md) |
 | WS-V77-P0-TEMPORAL-20260926 / r1 | 原24对象的0/20/40帧GT规范坐标并集，新增6次冻结前向，336次非空编辑；召回随并集不下降，缺面/重影仍在；后验开发控制 | [三时刻控制与边界](v77/P0_RESULTS.md)、[完整逐对象指标](autoresearch/worldsim_v77/p0_20260926/metrics_temporal.json) |

@@ -1,29 +1,17 @@
 # 当前研究状态
 
-更新：2026-09-26（Asia/Singapore）。分支 **`v77`**，远端工作区 **`/root/autodl-tmp/motion_proj_v77`**。阶段：**P0已完成，连续三路视频复核材料已补齐，等待用户人眼评价；V77继续，尚未取得高保真对象资产资格。** 视频合同与architecture见 [VIDEO_REVIEW](v77/VIDEO_REVIEW.md)，前轮结果见 [P0_RESULTS](v77/P0_RESULTS.md)，实验按run查 [EXPERIMENTS](EXPERIMENTS.md)。
+更新：2026-09-26（Asia/Singapore）。远端分支 **`v77`**，工作区 `/root/autodl-tmp/motion_proj_v77`。阶段：**两场景显式资产 POC 已执行并交人眼复核；代理观察未达高保真停止规则，关闭这条单图 Hunyuan3D-2.1 + ProPainter 拼接入口，不进入训练。** 完整输入、架构、结果及工程修正见 [EXPLICIT_POC](v77/EXPLICIT_POC.md)，按run查 [EXPERIMENTS](EXPERIMENTS.md)。人工 `human_verdict` 保持 `null`。
 
-## 已完成与当前判断
+## 本轮结果与边界
 
-三个现有nuScenes开发导出固定24对象：六相机单时刻Ω、GT标定/背景尺度控制，以及0/20/40帧按GT轨迹的规范坐标并集。九次冻结前向、54张RGB、零训练。MOVE/DELETE/clone-INSERT解析点集操作通过，非目标点不变。观测LiDAR20cm召回宏平均分别6.93%、27.71%、55.02%，但并集指标必不下降；缺面、重影、提取不完整仍在，不能声明高保真编辑通过。
+`WS-V77-EXPLICIT-POC-20260926/r1` 固定 `scene_0230/22` 与 `scene_0255/25`。SAM2.1 large 以 GT 框提示并传播完整活跃相机序列；ProPainter 生成去车视频；对两场景各10个时间点六视图重跑冻结Ω，按GT相机及框外LiDAR尺度转成逐时刻背景点云；官方 Hunyuan3D-2.1 单张crop生成两个shape/PBR资产，轴向规范后导出两个有效GLB；GT位姿/尺寸放置和固定侧向2m MOVE。零训练。最终六相机原视频、视频DELETE、原位GLB、MOVE、Ω背景DELETE/MOVE分别编码，离线页与GLB已保存。
 
-新增 [V77-F01](research_failures/entries/V77-F01.md)。已验证算子数值实现，尚未分清局部米制深度、可见实例绑定与未见表面缺失。GT框不保证无遮挡，原始camera timestamp缺失，额外GT/LiDAR与开发集曝光均披露；人工verdict保持null。
+无资产 DELETE 已有深色涂抹或车形残影，GLB 与原车车型/外观不一致；因此解析变换和有效GLB不足以让画面高保真通过。Ω远景深灰点空洞有点渲染影响，不单独归咎于模型。选8张crop，但2.1实际只消费1张；未验证2mv。SAM2和编辑依赖GT，这轮不是自动端到端系统。新 [V77-F02](research_failures/entries/V77-F02.md) 记录这条拼接入口的限定失败，不对VGGT系列或多视图生成路线作普遍否定。
 
-## 下一项工作与停止边界
+前轮 `WS-V77-P0-24ACTOR-20260926/r1` 的24对象直接Ω框内点适配与三个完整连续视频仍保留，见 [P0_RESULTS](v77/P0_RESULTS.md)、[VIDEO_REVIEW](v77/VIDEO_REVIEW.md)、[V77-F01](research_failures/entries/V77-F01.md)。两批资产失败来源不同，不能互相替代证据。
 
-用户要求直接看重建时序：已补齐三个场景完整连续序列的原始/factual/固定2m平移九段视频，六相机可同步切换。当前优先接收用户对具体相机、时间点的评价；页面人工字段均空，未代填。视频是逐时刻独立重建回放，并非持久4D资产或跨时刻融合结果，输入角色和播放方式详见视频报告。
+## 下一步与资源
 
-继续VGGT系列。下一项先建立**可见对象的局部几何/实例绑定强控制**：明确可被相机观察到的目标表面，以投影和保留LiDAR诊断局部深度、框内污染和框外漏选；先保留原24对象完整分母，不能换成功样例后冒称确认实验。若只能用对象真值修复，需要单列上限控制。
+优先请用户在离线页核对 `scene_0230/CAM2/f005–010` 和 `scene_0255/CAM3/f020–040`，尤其 DELETE 原位置、GLB 多视角同车程度、MOVE 新位置和六相机时间变化；人工字段由用户或指定评审填写。当前不扩展分母、不训练Ω、不做language/RL，也不自行设计3D生成网络。若要验证2mv，应另建单独协议，先明确4–8张多视图是否真的进入模型。v77基座仍为VGGT系列；V7.6 HUGSIM/VAD-GS 主线按 [V76-F03](research_failures/entries/V76-F03.md) 保持关闭。
 
-可见表面支持与绑定可靠后，再把剩余未见面/disocclusion交给补全设计。当前不加学习head、不扫阈值、不做自然语言或扩散精修。clone仍是源点复制；持久化新实例ID与图像层存在性尚未实施，不称产品级editor完成。此后另取未曝光样例才能做确认评价。
-
-## 运行与恢复
-
-GPU已可用：RTX3090 24GiB，冻结六视图前向峰值约5.26GiB。推理环境`/root/autodl-tmp/envs/worldsim-v77/bin/python`（torch2.12.1+cu130、numpy1.26.4）；共享包与未用scipy依赖冲突见报告。三个几何测试通过。核心实现已以`90528aa8`推送；预测、点资产、日志、离线审核页均保留在`/root/autodl-tmp/runs/worldsim_v77/`，详见 [execution_manifest](autoresearch/worldsim_v77/p0_20260926/execution_manifest.json)。
-
-权重`/root/autodl-tmp/models/worldsim_v77/vggt_omega_1b_512.pt`复用已有完整512文件；实际来源和用户Drive重复下载边界见 [checkpoint_manifest](v77/checkpoint_manifest.json)，未宣称完整下载Drive新副本。有限试验均已结束，无续跑控制器，未执行关机。
-
-## 前序路线约束
-
-V7.6按用户要求在`6350b258`关闭：[V76-F03](research_failures/entries/V76-F03.md)——当前HUGSIM和VAD-GS两批资产的对象级质量，尚不足以直接支撑想要的高保真反事实编辑。保留baseline/failure证据，不继续“逐场景Gaussian资产→editor”及对象级修补，后续基座统一VGGT系列。未修改另有用户工作的V7.5共享目录。
-
-`failure_ledger_refs: [V76-F03, V77-F01]`；本轮视频交付`failure_ledger_delta: none`。已有V77-F01保留，未从视频选点数新增科学否定。
+远端GPU RTX3090 24GiB，当前有限推理已完成；PBR顺序运行峰值约13.5GiB，冻结Ω六视图约5.26GiB。本轮完整运行留在 `/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPLICIT-POC-20260926/r1/`，本地交付 `C:\Users\dengyunlong\Documents\Codex\2026-09-26\xia\outputs\v77-explicit-poc\index.html`。`failure_ledger_refs: [V76-F03, V77-F01, V77-F02]`；`failure_ledger_delta: V77-F02`；`human_verdict: null`。
