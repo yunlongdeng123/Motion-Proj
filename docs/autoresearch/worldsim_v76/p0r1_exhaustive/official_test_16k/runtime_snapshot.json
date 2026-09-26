@@ -1,0 +1,139 @@
+{
+  "recorded_at": "2026-09-26T09:18:33.892791+08:00",
+  "task_id": "VADGS-P0R1-000-TEST-16000",
+  "evaluation_exit_code": 0,
+  "pipeline_state": {
+    "run_id": "VADGS-P0R1-000",
+    "controller_pid": 22094,
+    "completed_stages": [
+      "exhaustive_matching",
+      "triangulation"
+    ],
+    "shutdown_when_pipeline_exits": false,
+    "failure_ledger_refs": [
+      "V76-F01"
+    ],
+    "stage": "train_30000",
+    "status": "running",
+    "command": [
+      "/root/autodl-tmp/envs/vadgs-v76/bin/python",
+      "train.py",
+      "--config",
+      "/root/autodl-tmp/external/worldsim_v75/VAD-GS/configs/v76/nuscenes_000_repro_exhaustive.yaml"
+    ],
+    "log": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/train.log",
+    "updated_at": "2026-09-25T19:01:17.699609+00:00",
+    "child_pid": 27160
+  },
+  "last_training_iteration": 17950,
+  "recent_training_progress": [
+    " 60%|█████▉    | 17949/30000 [6:14:54<3:42:03,  1.11s/it, Exp=v76_ego_view-vadgs_official_000_repro_exhaustive, Loss=0.0964640,, PSNR=24.7272, SSIM=0.8353, GS=2168919]",
+    " 60%|█████▉    | 17949/30000 [6:14:55<3:42:03,  1.11s/it, Exp=v76_ego_view-vadgs_official_000_repro_exhaustive, Loss=0.0885525,, PSNR=25.4183, SSIM=0.8604, GS=2168919]",
+    " 60%|█████▉    | 17950/30000 [6:14:55<3:44:11,  1.12s/it, Exp=v76_ego_view-vadgs_official_000_repro_exhaustive, Loss=0.0885525,, PSNR=25.4183, SSIM=0.8604, GS=2168919]"
+  ],
+  "error_matches": [],
+  "runtime_warning_count": 3,
+  "unique_runtime_warnings": [
+    "/root/autodl-tmp/envs/adgs/lib/python3.9/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars",
+    "/root/autodl-tmp/envs/adgs/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.",
+    "/root/autodl-tmp/external/worldsim_v75/VAD-GS/lib/models/trellis.py:285: RuntimeWarning: invalid value encountered in double_scalars"
+  ],
+  "need_extension_count": 105,
+  "checkpoints": {
+    "iteration_16000.pth": {
+      "bytes": 856801103,
+      "mtime": "2026-09-26T08:38:53.703209+08:00",
+      "sha256": "01fd55a94f5072713389835056d6e083a334269a2091621bfc081eab9ea2c0c6"
+    },
+    "iteration_4000.pth": {
+      "bytes": 706692120,
+      "mtime": "2026-09-26T04:27:19.601129+08:00"
+    },
+    "iteration_8000.pth": {
+      "bytes": 824842456,
+      "mtime": "2026-09-26T05:51:14.837891+08:00"
+    }
+  },
+  "prior_png_counts": {
+    "scene_0230": {
+      "depth_v2": 366,
+      "normal_img": 366,
+      "sam_bkgd_masks": 366
+    },
+    "scene_0255": {
+      "depth_v2": 366,
+      "normal_img": 366,
+      "sam_bkgd_masks": 366
+    }
+  },
+  "processes": "   PID STAT     ELAPSED %CPU   RSS COMMAND\n 22094 S       07:26:11  0.0 10840 /root/autodl-tmp/envs/vadgs-v76/bin/python script/v76/run_p0r1_pipeline.py\n 27160 Rl      06:17:16  112 20131156 /root/autodl-tmp/envs/vadgs-v76/bin/python train.py --config /root/autodl-tmp/external/worldsim_v75/VAD-GS/configs/v76/nuscenes_000_repro_exhaustive.yaml\n",
+  "gpu_snapshot": "9572 MiB, 24576 MiB, 14 %\n",
+  "source_context": {
+    "train.py": {
+      "first_line": 238,
+      "last_line": 248,
+      "lines": [
+        "        flag_global_reconstruct = False ",
+        "        flag_local_reconstruct = False",
+        "        flag_actor_reconstruct = False",
+        "",
+        "        ###################### hard depth #######################",
+        "        # check_views = [5, 10, 20, 40, 60, 80, 100]",
+        "        # if view_stack_iter in check_views : # and iteration % optim_args.propagation_interval == 0:",
+        "        if view_stack_iter % optim_args.propagation_interval == 0 and iteration > optim_args.propagated_iteration_begin and iteration < optim_args.propagated_iteration_end:",
+        "            soft_render_pkg = gaussians_renderer.render(viewpoint_cam, gaussians)",
+        "            image = soft_render_pkg[\"rgb\"]",
+        "            _similarity = ssim(image, gt_image, mask=loss_mask)"
+      ]
+    },
+    "lib/models/trellis.py": {
+      "first_line": 252,
+      "last_line": 291,
+      "lines": [
+        "            ",
+        "            if max_idx[1] < img_W * img_border_ratio or min_idx[1] > img_W * (1 - img_border_ratio):",
+        "                continue",
+        "",
+        "            # dynamic mask missing !!! sky mask missing !!!",
+        "            vacancy_out_of_scope = np.logical_and(no_bkgd_mask, obj_mask)",
+        "            no_bkgd_ratio = vacancy_out_of_scope.sum() / obj_mask.sum()",
+        "            if no_bkgd_ratio > 0.5:",
+        "                semantic_mask[obj_mask] = 0",
+        "                continue",
+        "",
+        "            vacancy_in_obj_mask = np.logical_and(voxel_depth_value == 0, obj_mask)",
+        "            vacancy_ratio = vacancy_in_obj_mask.sum() / obj_mask.sum()",
+        "            if vacancy_ratio < vacancy_threshold:",
+        "                # print(\"no need to extend\")",
+        "                semantic_mask[obj_mask] = 0",
+        "            else:",
+        "                print(\"need extension\") ",
+        "                vacancy_colors.append(c)",
+        "        return len(vacancy_colors) > 0, vacancy_colors",
+        "    ",
+        "",
+        "",
+        "    def calculate_belief_view_pair(self, target_points, ref_mat, src_mat):",
+        "        src_R = src_mat[:3,:3]",
+        "        src_T = src_mat[:3, 3]",
+        "",
+        "        ref_R = ref_mat[:3,:3]",
+        "        ref_T = ref_mat[:3, 3]",
+        "",
+        "        # baseline_t = (src_T - ref_T) @ np.linalg.inv(ref_R).T",
+        "        baseline_t = (src_T - ref_T) @ np.linalg.inv(ref_R).T",
+        "",
+        "        B = np.sqrt(np.sum(baseline_t[:2] ** 2)) / np.abs(baseline_t[2])",
+        "        # B = np.sum((src_T - ref_T)**2)",
+        "        r = R.from_matrix(np.linalg.inv(ref_R) @ src_R)",
+        "",
+        "        # theta = 1-(r.as_quat(scalar_first=True)[0])**2",
+        "        theta = 2 * np.arccos(r.as_quat()[-1])",
+        "        return np.sqrt(B * theta) / (np.linalg.norm(target_points - src_T, axis=1).mean() * np.linalg.norm(target_points - ref_T, axis=1).mean())"
+      ]
+    }
+  },
+  "source_interpretation": "need extension is a semantic voxel vacancy branch. Propagation is enabled every fifth view-stack epoch before 24000, subject to SSIM and coverage checks. NumPy empty-slice/division warnings are retained; their effect on propagation has not been proven harmless. No algorithm change or training restart in this audit.",
+  "failure_ledger_delta": "none",
+  "shutdown_ready": false
+}

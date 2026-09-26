@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| VADGS-P0R1-000-TEST-16000 / 20260926 | 同一75官方test：22.8532 / 0.7496 / 0.2303；保存张量与75张原始RGB/depth/acc均有限，继续30k | [执行报告](v76/P0R1_EXECUTION.md)、[指标/图像/有限值审核](autoresearch/worldsim_v76/p0r1_exhaustive/official_test_16k/) |
 | VADGS-BACKGROUND-COMPLETE-20260926 | 两场景各366背景SAM完成，732张逐一解码/编码与文件名核验，CPU进程退出；动态身份仍未准入 | [输入报告](v76/MATCHED_SCENE_PRIORS.md)、[文件清单/日志](autoresearch/worldsim_v76/matched-scene-priors/background-completion/) |
 | VADGS-P0R1-000-TEST-8000 / 20260926 | 同一75官方test：22.7086/0.7520/0.2348，较4k三项改善；固定五相机图和9k日志风险留证，继续30k | [报告与architecture](v76/P0R1_EXECUTION.md)、[指标/图像/审核](autoresearch/worldsim_v76/p0r1_exhaustive/official_test_8k/) |
 | VADGS-P0R1-000-GATE-4000 / 20260926 | 4k新权重75官方test：21.7392/0.7300/0.2727；六横移×32actor世界变换零变化；近树遮挡方向对照，工程通过但非30k结论 | [报告与architecture](v76/P0R1_EXECUTION.md)、[指标/图像/几何](autoresearch/worldsim_v76/p0r1_exhaustive/engineering_4k/) |

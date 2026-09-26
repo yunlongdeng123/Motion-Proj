@@ -1,0 +1,65 @@
+{
+  "task_id": "VADGS-P0R1-000-TEST-16000",
+  "reviewer": "Codex visual and metric audit",
+  "human_verdict": null,
+  "recorded_at": "2026-09-26T09:18:33.892791+08:00",
+  "checkpoint_iteration": 16000,
+  "official_temporal_test": {
+    "view_count": 75,
+    "psnr": 22.853213857014975,
+    "ssim": 0.7495844419797262,
+    "lpips": 0.2302971339225769,
+    "float_psnr": 22.854404627482097,
+    "acc_mean": 0.9275521691640218,
+    "acc_lt_0_1_fraction": 0.05323019534621077,
+    "rgb_white_fraction": 0.0019185442181696999,
+    "white_and_low_acc_fraction": 2.3739712354048e-05
+  },
+  "delta_from_fresh_8k": {
+    "psnr": 0.1446610005696627,
+    "ssim": -0.002412641843159924,
+    "lpips": -0.0044819247722625855
+  },
+  "paired_views_improved_from_8k": {
+    "psnr": 43,
+    "ssim": 28,
+    "lpips": 43
+  },
+  "delta_from_invalidated_old_16k_diagnostic_only": {
+    "psnr": 0.152211125691732,
+    "ssim": 0.000999661286671949,
+    "lpips": -0.0009838308890660619
+  },
+  "checkpoint_finite": {
+    "recorded_at": "2026-09-26T09:14:03.532706+08:00",
+    "checkpoint": "/root/autodl-tmp/runs/v76_ego_view/VADGS-P0R1-000/trained_model/iteration_16000.pth",
+    "bytes": 856801103,
+    "sha256": "01fd55a94f5072713389835056d6e083a334269a2091621bfc081eab9ea2c0c6",
+    "device": "cpu",
+    "tensor_count": 1011,
+    "checked_float_tensors": 1011,
+    "checked_float_elements": 214122561,
+    "nonfinite_count": 0,
+    "scope": "Saved tensor finiteness, including recursively stored optimizer tensors; not proof that propagation candidate selection was unaffected by NumPy warnings."
+  },
+  "finite_raw_render_views": 75,
+  "reviewed_figures": [
+    "frame20.png"
+  ],
+  "visual_findings": [
+    "Fixed frame20 five-camera image inspected; base road/building reconstruction remains visible.",
+    "Truck, pedestrian and storefront details retain blur/deformation; sky artifacts remain."
+  ],
+  "metric_interpretation": "PSNR and LPIPS improve slightly from 8k while mean SSIM declines. Camera0 and camera4 LPIPS worsen; this is not uniform improvement across cameras or metrics.",
+  "decision": "Continue the existing fresh 30k pipeline without changing propagation or restarting training.",
+  "limits": [
+    "Finite saved tensors and render outputs do not prove candidate selection was unaffected by NumPy warnings.",
+    "Intermediate checkpoint; not final reproduction or method success.",
+    "Temporal test gradient holdout uses candidate-frame initialization priors.",
+    "Old run is invalidated; matcher and visibility/normal mapping changed jointly, preventing single-factor attribution."
+  ],
+  "failure_ledger_refs": [
+    "V76-F01"
+  ],
+  "failure_ledger_delta": "none"
+}
