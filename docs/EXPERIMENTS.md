@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-BOOTSTRAP-20260926 | 从V7.6收口建立v77；VGGT系列重建基座、冻结Ω零训练结构化编辑协议及权重准备，P0实验未运行 | [P0协议与architecture](v77/P0_PROTOCOL.md)、[checkpoint来源与检查](v77/checkpoint_manifest.json) |
 | WS-V76-CLOSEOUT-20260926 | 用户关闭V7.6：当前HUGSIM/VAD-GS对象资产不足以支撑高保真编辑；保留baseline，后续重建基座使用VGGT系列 | [收口与architecture](v76/CLOSEOUT.md)、[V76-F03](research_failures/entries/V76-F03.md) |
 | VADGS-P0R1-000-TEST-30000 / 20260926 | 30k官方75视图25.2378/0.8028/0.1717；Camera5共61视图单列；横移actor变换断言失败，未完成且不再续跑 | [最终记录](v76/CLOSEOUT.md)、[原始指标与状态副本](autoresearch/worldsim_v76/closeout_20260926/) |
 | VADGS-P0R1-000-TEST-16000 / 20260926 | 同一75官方test：22.8532 / 0.7496 / 0.2303；保存张量与75张原始RGB/depth/acc均有限，继续30k | [执行报告](v76/P0R1_EXECUTION.md)、[指标/图像/有限值审核](autoresearch/worldsim_v76/p0r1_exhaustive/official_test_16k/) |

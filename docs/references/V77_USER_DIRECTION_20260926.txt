@@ -1,0 +1,433 @@
+对。**现在就停掉 HUGSIM/VAD-GS 这条“逐场景 Gaussian 资产 → editor”的主线，不再继续给它做对象级修补。**保留结果作为 baseline/failure evidence 即可。
+
+我支持切回：
+
+$$
+\boxed{\text{VGGT-}\Omega + \text{Structured Editor}}
+$$
+
+而且第一阶段**不要自然语言、不要大规模训练、不要闭环**，先回答一个非常小的问题：
+
+> **最新的前馈几何基础模型，能不能被直接变成一个支持精确结构化 3D 编辑的世界表示？**
+
+VGGT-\(\Omega\) 很适合这个入口：CVPR 2026 Oral/Best Paper Finalist，官方现在已经放出了训练代码和可复现 checkpoint；512 模型是官方推荐的 in-the-wild 版本。它输出相机、depth 和 geometry-aware tokens/registers。([GitHub][1])
+
+---
+
+# 新路线先这样定义
+
+输入：
+
+$$
+x=\{I_1,\dots,I_N\}
+$$
+
+VGGT-\(\Omega\)：
+
+$$
+x\rightarrow(P,z_{\mathrm{feat}},C)
+$$
+
+然后不输入 text，而是输入一个**明确的结构化编辑命令**：
+
+$$
+e=
+(\text{target ID},\text{operation},\Delta T,\Delta R,\Delta s)
+$$
+
+第一版只支持三个：
+
+* `MOVE`: 平移 / yaw；
+* `DELETE`;
+* `INSERT`: clone 一个已有 actor 到目标 SE(3)。
+
+先不做：
+
+* 自然语言；
+* color/material；
+* non-rigid；
+* ego closed-loop；
+* diffusion video refinement。
+
+---
+
+# 最重要：P0 **完全不要训练**
+
+先做 **VGGT-Ω Structured Edit Zero-Shot Baseline**。
+
+流程非常简单：
+
+```text
+multi-view RGB
+    ↓
+VGGT-Ω frozen
+    ↓
+depth + camera + geometry
+    ↓
+unproject → world-space points
+    ↓
+GT box / instance mask 选择目标 actor
+    ↓
+structured SE(3) edit
+    ↓
+edited 3D scene
+    ↓
+multi-view render
+```
+
+Pilot 阶段直接使用 nuScenes / Waymo 的 GT 3D box / ID。
+
+**这不是作弊。**
+
+我们现在只问：
+
+> Omega 重建出来的 geometry 有没有成为 editable asset 的基本资格？
+
+不研究 detection。
+
+---
+
+# MOVE 第一版甚至不需要神经网络
+
+已知结构化目标：
+
+$$
+T_{\rm target}
+$$
+
+那目标 actor 的点直接：
+
+$$
+P'_i
+=
+T_{\rm target}T_{\rm source}^{-1}P_i
+$$
+
+即可。
+
+这一点非常重要：
+
+**不要训练一个网络重新学习“向右移动 3 米是什么意思”。**
+
+VGGT-Edit 用 residual head 是因为它需要从文本推断：
+
+> 改谁、怎么改。
+
+而我们已经直接给出了精确 state edit。
+
+---
+
+# 为什么仍然值得模仿 VGGT-Edit？
+
+因为它已经验证了一个成熟范式：
+
+$$
+\boxed{
+\text{frozen reconstruction prior}
++
+\text{localized 3D edit}
+}
+$$
+
+它冻结 reconstruction backbone，然后预测局部 residual field：
+
+$$
+P_{\rm edit}
+=
+P_{\rm base}
++
+\Delta P\odot M
+$$
+
+同时使用 edited-region、background preservation、normal、camera-space consistency 等约束。([ResearchGate][2])
+
+但注意一个非常有意思的事实：
+
+**VGGT-Edit 实验实现实际使用的是 frozen \(\pi^3\) backbone，不是最新 VGGT-\(\Omega\)。**它训练了 text injection + decoder/residual head；训练规模是 95k DeltaScene pairs、8×A100、10k iterations。([ResearchGate][3])
+
+所以我们不是在复刻：
+
+> “VGGT-Edit 换成 Omega。”
+
+我们真正要先测试的是：
+
+$$
+\boxed{
+\text{Omega 的 geometry prior + exact structured state control}
+}
+$$
+
+是否天然比：
+
+$$
+\text{text}\rightarrow\text{residual edit}
+$$
+
+更适合 driving/world simulation。
+
+---
+
+# 而且 VGGT-Edit 的评价恰好给我们留下了空间
+
+它主要报告：
+
+* CLIP Score；
+* C-FID；
+* C-KID；
+* inference time。
+
+也就是**语义遵循 + 多视角一致性 + 效率**。([ResearchGate][3])
+
+但 driving structured edit 真正需要的是：
+
+$$
+\boxed{
+\text{米制位置、yaw、对象存在性、数量、几何完整性}
+}
+$$
+
+这和 CLIP “看起来像执行了文本”不是一个评价问题。
+
+所以我们的 pilot 不需要 CLIP。
+
+---
+
+# P0 最小 benchmark
+
+直接从现有 driving logs 取 **20–30 个 actor**。
+
+每个 actor 做：
+
+### MOVE
+
+$$
+\Delta x=\pm1,\pm3m
+$$
+
+$$
+\Delta y=\pm1,\pm3m
+$$
+
+$$
+\Delta yaw=\pm15^\circ,\pm30^\circ
+$$
+
+### DELETE
+
+$$
+existence:1\rightarrow0
+$$
+
+### INSERT
+
+clone actor：
+
+$$
+T_{\rm donor}\rightarrow T_{\rm new}
+$$
+
+---
+
+# P0 不看“视频漂亮不漂亮”，只看四件事
+
+### 1. Object isolation
+
+被选中的 actor geometry 是否真的是一辆完整车？
+
+而不是：
+
+* 半辆车；
+* 带一片背景；
+* 轮胎在 background；
+* 路面混进 actor。
+
+这正是 HUGSIM/VAD-GS 暴露出的核心问题。
+
+### 2. Edit adherence
+
+这是 structured edit 最大优势。
+
+例如目标要求：
+
+$$
+\Delta x=3m
+$$
+
+直接检查输出：
+
+$$
+|\hat{\Delta x}-3|.
+$$
+
+yaw 同理。
+
+### 3. Background preservation
+
+MOVE/DELETE 之后：
+
+> 非目标世界点有没有变化？
+
+理论上应接近零。
+
+### 4. Multi-view object completeness
+
+编辑后的 actor 从多个 camera 看：
+
+* 是否仍是完整实体；
+* silhouette / depth 是否一致；
+* 是否突然缺一半；
+* 是否 ghost / duplicate。
+
+---
+
+# 这个 P0 的结果会直接决定后续方法
+
+## 情况 A：Omega geometry 本身已经能很好地 MOVE / DELETE
+
+非常好。
+
+那真正剩下的问题就是：
+
+> **移动以后产生的新表面、原位置 disocclusion、inserted object unseen sides 怎么补？**
+
+此时才进入 learned editor。
+
+---
+
+## 情况 B：actor 一抽出来本身就是残缺的
+
+也很好，因为问题立即变得具体：
+
+$$
+\boxed{
+\text{feed-forward reconstruction}
+\neq
+\text{editable object reconstruction}
+}
+$$
+
+这时候才研究 Omega feature 如何恢复一个 **edit-ready canonical actor asset**。
+
+这比继续修 3DGS 干净得多。
+
+---
+
+## 情况 C：结构化编辑已经很好，甚至简单 analytic transform 就够
+
+那更好。
+
+说明我们不要发明 editor network。
+
+直接继续往：
+
+$$
+\text{structured 3D state}\rightarrow\text{high-quality observation}
+$$
+
+推进。
+
+---
+
+# 只有 P0 通过以后，我才建议第二阶段加一个小 head
+
+形式也应该很克制：
+
+$$
+P'=
+P+
+\underbrace{\Delta P_{\rm analytic}}_{\text{结构化 SE(3)}}
++
+\underbrace{\Delta P_{\rm completion}}_{\text{learned}}
+$$
+
+也就是说：
+
+### 已知运动
+
+由 structured state **硬执行**。
+
+### 网络只学习
+
+* unseen surface completion；
+* disocclusion；
+* boundary refinement；
+* visibility / confidence。
+
+而不是让网络重新猜：
+
+> “用户到底想把车移去哪？”
+
+我认为这个 decomposition 比直接照抄 VGGT-Edit residual head 更合理。
+
+---
+
+# 数据先不要发明
+
+P0：
+
+$$
+\boxed{\text{nuScenes/Waymo + existing box/ID}}
+$$
+
+足够。
+
+VGGT-Edit 的 DeltaScene 虽然论文描述有约 100k pairs、500 manual-verified test cases，但我目前没有核验到官方公开数据仓库，所以**不要让它成为我们的依赖**。项目页确认了数据设计，但不是当前必要条件。([朱凯鑫][4])
+
+P1 真需要训练时，再决定：
+
+* synthetic structured edit pairs；
+* driving actor assets；
+* 或 DeltaScene 若正式开放。
+
+---
+
+# 算力也比 Gaussian 路线友好
+
+VGGT-\(\Omega\) 官方报告 512 模型：
+
+* 25 frames：约 7.8 GB；
+* 100 frames：约 13.4 GB；
+* 200 frames：约 20.8 GB；
+
+这是 A100 实测，3090 会有差异，但你常用的：
+
+$$
+3\text{ timestamps}\times7\text{ cameras}=21\text{ frames}
+$$
+
+完全是合理的第一档实验规模。([GitHub][1])
+
+---
+
+# 我建议现在直接立新阶段
+
+## **V7.7 — Structured Native 3D Editing with VGGT-Ω**
+
+第一阶段唯一问题：
+
+> **Can VGGT-Ω reconstruction support precise metric object edits without language grounding or per-scene optimization?**
+
+只做：
+
+$$
+\boxed{
+\text{Ω frozen}
++
+\text{GT instance selection}
++
+\text{analytic structured MOVE/DELETE/INSERT}
+}
+$$
+
+**先不要设计任何新模块。**
+
+如果连这个 zero-training baseline 都已经明显优于当前 HUGSIM/VAD-GS 的 editable asset 质量，我们就证明换路线是对的。
+
+如果它仍然在 actor completeness / boundary separation 上失败，**那个具体 failure 才是下一步真正值得设计一两个模块去解决的地方。**
+
+这次不再给差资产做后处理。先看最新 feed-forward geometry backbone 到底有没有把“可编辑世界”这件事变得更简单。
+
+[1]: https://github.com/facebookresearch/vggt-omega?utm_source=chatgpt.com "GitHub - facebookresearch/vggt-omega: [CVPR 2026 Oral] VGGT Omega · GitHub"
+[2]: https://www.researchgate.net/publication/404891453_VGGT-Edit_Feed-forward_Native_3D_Scene_Editing_with_Residual_Field_Prediction?_tp=eyJjb250ZXh0Ijp7InBhZ2UiOiJzY2llbnRpZmljQ29udHJpYnV0aW9ucyIsInByZXZpb3VzUGFnZSI6bnVsbCwic3ViUGFnZSI6bnVsbH19&utm_source=chatgpt.com "(PDF) VGGT-Edit: Feed-forward Native 3D Scene Editing with Residual Field Prediction"
+[3]: https://www.researchgate.net/publication/404891453_VGGT-Edit_Feed-forward_Native_3D_Scene_Editing_with_Residual_Field_Prediction?utm_source=chatgpt.com "(PDF) VGGT-Edit: Feed-forward Native 3D Scene Editing with Residual Field Prediction"
+[4]: https://chriszkxxx.github.io/VGGT-Edit/?utm_source=chatgpt.com "VGGT-Edit"
