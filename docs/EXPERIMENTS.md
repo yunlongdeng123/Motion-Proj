@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-PIPELINE-R3-20260926 / r1 | 131/181帧×6相机背景观测检查；0230悬浮GT框产生168个假可见核心查询，贴地后0；两例联合背景候选均0，停止伪观测复制；零模型前向、12测试、人工null | [报告与architecture](v77/PIPELINE_R3.md)、[run证据](autoresearch/worldsim_v77/pipeline_r3_20260926/)、[V77-F02](research_failures/entries/V77-F02.md) |
 | WS-V77-PIPELINE-R2-20260926 / r1 | 静态LiDAR补充命令拒绝：0255旧2m及前移2m均100/100帧有静态占据；两路原RGB/mask冻结，196帧ProPainter长上下文仍留主要残影；零训练，六段完整原时间窗视频，人工null | [报告与architecture](v77/PIPELINE_R2.md)、[run证据](autoresearch/worldsim_v77/pipeline_r2_20260926/)、[V77-F02](research_failures/entries/V77-F02.md) |
 | WS-V77-ACTOR-COMMAND-AUDIT-20260926 / r1 | 两目标完整50/100帧指令扫掠检查；0230碰邻车且车头反向，0255最小8.4cm、投影/缩放纠错；撤回资产失败/路线关闭归因，零新模型前向，人工null | [审计与architecture](v77/ACTOR_COMMAND_AUDIT.md)、[新run证据](autoresearch/worldsim_v77/actor_command_audit_20260926/)、[V77-F02更正](research_failures/entries/V77-F02.md) |
 | WS-V77-EXPLICIT-POC-20260926 / r1 | 两开发场景 SAM2/ProPainter/冻结Ω背景/官方 Hunyuan3D-2.1 单图GLB；各10时刻×6相机、20次新增Ω前向、零训练；背景残影独立保留；旧资产失败/关闭归因经后续指令与放置审计撤回，人工null | [报告与architecture](v77/EXPLICIT_POC.md)、[run轻量证据](autoresearch/worldsim_v77/explicit_poc_20260926/)、[V77-F02](research_failures/entries/V77-F02.md) |

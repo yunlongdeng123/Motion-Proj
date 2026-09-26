@@ -1,0 +1,57 @@
+{
+  "scene": "scene_0230",
+  "actor_id": "22",
+  "reference_frame": 5,
+  "target_track_frames": 131,
+  "frame_range": [
+    0,
+    130
+  ],
+  "omitted_missing_target_pose_frames": 65,
+  "plane": {
+    "candidate_points": 192320,
+    "sampled_points": 16000,
+    "inlier_points": 12753,
+    "median_inlier_error_m": 0.03622797783271359,
+    "plane_z_ax_by_c": [
+      -0.0024870804384325767,
+      0.012190037213304694,
+      -0.796849909791691
+    ],
+    "nominal_gt_bottom_local_z": -0.7795
+  },
+  "target_raw_box_bottom_world_z_range_m": [
+    -0.0044999999999999485,
+    0.5455000000000001
+  ],
+  "core_footprint_inset_m": 0.2,
+  "core": {
+    "queries": 168,
+    "ever_in_fov": 168,
+    "raw_box_ever_all_boxes_clear": 168,
+    "ever_target_box_clear": 0,
+    "ever_all_boxes_clear": 0,
+    "same_poc_camera_ever_all_boxes_clear": 0,
+    "lidar_ground_support_within_15cm": 13,
+    "both_box_clear_and_lidar_support": 0
+  },
+  "surround": {
+    "queries": 872,
+    "ever_in_fov": 872,
+    "raw_box_ever_all_boxes_clear": 799,
+    "ever_target_box_clear": 787,
+    "ever_all_boxes_clear": 682,
+    "same_poc_camera_ever_all_boxes_clear": 316,
+    "lidar_ground_support_within_15cm": 560,
+    "both_box_clear_and_lidar_support": 526
+  },
+  "unknown_policy": "贴地包络视线是保守且条件性的几何筛查，不包含静态薄物体或真实surface visibility；无候选或无LiDAR证据均不得补写成已观测。GT结束不当作目标消失。",
+  "human_verdict": null,
+  "elapsed_s": 4.03483316861093,
+  "core_reference_gate": {
+    "joint_candidate_queries": 0,
+    "copy_as_observed_background_admitted": false,
+    "status": "no_jointly_supported_core_reference",
+    "reason": "GT贴地框视线与近邻LiDAR不足以证明RGB射线未碰围栏等静态遮挡；无联合候选时停止参考复制，不生成伪观测。"
+  }
+}

@@ -1,25 +1,27 @@
 # 当前研究状态
 
-更新：2026-09-26（Asia/Singapore）。远端分支 **v77**，工作区 `/root/autodl-tmp/motion_proj_v77`。阶段：**按用户最新授权持续迭代两场景 background + 显式actor pipeline；R2静态障碍与196帧补景控制已完成，下一项查背景观测覆盖与参考图遮挡。** 仍不训练Ω，不增加多套生成/补景模型。完整结果见 [PIPELINE_R2](v77/PIPELINE_R2.md)，按run查 [EXPERIMENTS](EXPERIMENTS.md)。
+更新：2026-09-26（Asia/Singapore）。远端分支 **v77**，工作区 `/root/autodl-tmp/motion_proj_v77`。阶段：**两场景 background + 显式actor 持续迭代；R3背景参考检查已完成，下一项查0255生成参考的围栏遮挡污染。** 仍用 frozen VGGT-Ω + SAM2 + ProPainter + Hunyuan3D-2.1；不训练Ω、不叠加生成/补景模型。完整新证据见 [PIPELINE_R3](v77/PIPELINE_R3.md)，按run查 [EXPERIMENTS](EXPERIMENTS.md)。
 
-## 已确认结果与边界
+## 当前结论与边界
 
-`WS-V77-PIPELINE-R2-20260926/r1` 继续 actor22/25。scene_0255 的旧2m命令和车头前移2m候选虽无其他GT框相交，但100/100帧的新增扫掠区含重复静态LiDAR占据；参考视图投影位于原车前方围栏/草地边界附近，均未准入。scene_0230 前移1m未检测到高于车底15cm的重复静态点，仍不能将稀疏空白当自由空间；旧2m与邻车碰撞结论保留。
+`WS-V77-PIPELINE-R3-20260926/r1` 固定0230/actor22与0255/actor25，GT已知131/181帧×6相机。发现0230原GT框底高度漂移会放过车底射线；将框仅向下闭合到局部地面后，核心168点原本全部“可见”变为0。0255剩9/207视线候选，但无15cm内地面LiDAR支持。两例联合候选为0，背景参考状态为 `no_jointly_supported_core_reference`，停止据此复制所谓已观测背景。
 
-只对0230/CAM2、0255/CAM3做一次长上下文强控制：原评价窗口50/100帧RGB/mask冻结，输入补到196帧，原ProPainter权重、subvideo_length由40变200。两路均完成，主要暗斑和车形残影仍在，不再机械扫同一参数。新增0255尾段mask，零训练、无新Ω/Hunyuan推理；六段10Hz对照视频在删除区域外均保持源RGB不变。详见报告的分母与官方100帧图像传播分块边界。
+这只是保守地面检查，不是全场景不可见证明或残影唯一因果解释。阴影、mask、照度尚未分离；没有新模型前向、训练、重建或MOVE，画面未宣称改善。原GLB形状失败/关闭路线的过早归因仍撤回，用户本地Blender形状反馈保留，人工 `human_verdict: null`。
 
-前轮 [ACTOR_COMMAND_AUDIT](v77/ACTOR_COMMAND_AUDIT.md) 已纠正车头/相机与缩放归因。原“GLB失败、关闭路线”结论仍撤回；用户认为本地Blender资产形状可用，该反馈保留，`human_verdict: null`。R2只补充 [V77-F02](research_failures/entries/V77-F02.md)，没有新失败ID或模型家族否定。
+前轮放置修正保持：0230车头180°校正、0255方向不变，相机投影已修复。R2空间拒绝保持：0230旧2m碰邻车；0255旧2m/车头前移2m的100/100帧均有静态LiDAR占据。0230前移1m暂无正占据，也不能当已证实自由空间。R2的196帧ProPainter控制仍留主要残影，不再扫长度参数。证据见 [ACTOR_COMMAND_AUDIT](v77/ACTOR_COMMAND_AUDIT.md)、[PIPELINE_R2](v77/PIPELINE_R2.md)。
 
-## 持续执行与下一步
+## 下一次有界工作
 
-当前任务heartbeat `v77-pipeline` 已启用，每30分钟继续自主工作；状态不变不通知，只报告实质结果、失败、完成或需要用户行动。先读本状态和实际进程，避免重复运行；每轮是有界对照，按规则备份、验证、提交push，用户人工verdict保持空白。
+只检查scene_0255已有8张生成crop及实际消费单图参考的围栏/杆件污染：先核对输入与原图对应、目标可见性和多视角一致性，给出可复核的输入对照。有足够证据才用同一个Hunyuan材质流程做一次固定几何的对照，保留原纹理；没有更清晰输入时记录缺口，不凭换seed反复重跑，不增加另一套生成器。
 
-下一项优先做“背景哪些面真实可见”的覆盖盘点，区分可传播证据与未观测区域；同时把已发现的0255参考crop围栏污染列入输入准入检查。冻结现有GLB几何、校正朝向及模型权重，检查遮挡/贴图/照度原因。只有获得足够空间证据后才渲染新的MOVE，不把另一个相机方向或无邻车框碰撞当合法命令。若当前目标无法给出合理MOVE，记录该目标/动作的限制，再在用户两scene范围内选择有依据的控制，明确登记目标变更。
+当前未批准任何新的MOVE。只有取得足够空间证据再渲染；道路规则/ego/转向时序仍须区别于无框碰撞。若后续需在这两个scene内更换actor，先记录原目标限制与目标选择依据，不悄悄替换分母。
+
+任务heartbeat `v77-pipeline` 已启用，每30分钟检查并继续；先读状态和实际进程，避免重复启动。状态不变不通知，只报实质结果/失败/完成/所需用户行动。用户授权持续自主迭代，人工verdict只由用户填写。
 
 ## 资源与交付
 
-R2控制器PID16361已完成，SAM2和两路ProPainter阶段返回0；本轮GPU步骤已结束，无训练。控制器有互斥锁、GPU串行、单阶段1800秒上限；原结果不覆盖。
+R3为CPU诊断，主检查最终一次约10.1秒，12项针对性测试通过；本轮没有GPU作业或待完成控制器。R2控制器已退出。原模型、资产、全部前后控制保留；R3原框输出另存 `raw_box_control/`。
 
-完整run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-PIPELINE-R2-20260926/r1`。最新本地页：`C:\Users\dengyunlong\Documents\Codex\2026-09-26\xia\outputs\v77-pipeline-r2\index.html`；前轮目标/放置审核仍在 `outputs/v77-actor-audit/index.html`，旧POC入口已加最新链接。
+完整run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-PIPELINE-R3-20260926/r1`。最新本地页：`C:\Users\dengyunlong\Documents\Codex\2026-09-26\xia\outputs\v77-pipeline-r3\index.html`，含新证据图与明确标注来源的已有三栏视频；R2完整10Hz视频另有链接。未作浏览器交互验收。旧POC入口已加最新链接。
 
-VGGT系列仍为重建基座；V7.6 HUGSIM/VAD-GS 主线按 [V76-F03](research_failures/entries/V76-F03.md) 关闭。`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`；`human_verdict: null`。
+VGGT系列仍为重建基座；V7.6按 [V76-F03](research_failures/entries/V76-F03.md) 关闭。更新同一 [V77-F02](research_failures/entries/V77-F02.md)，不新增失败ID。`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`；`human_verdict: null`。
