@@ -7,7 +7,7 @@
 | 跨版本失败和证据边界 | [RESEARCH_FAILURES](RESEARCH_FAILURES.md) | ID 卡与生成目录 |
 | 协作规则 | [AGENTS](../AGENTS.md) | 规则变化时更新 |
 | 研究规划原则 | [Scaling law](../auto-research_scaling_law.md) | 遵循用户修订 |
-| V7.7 问题、协议与证据 | [P0协议](v77/P0_PROTOCOL.md)、[24对象与三时刻结果及architecture](v77/P0_RESULTS.md)、[权重记录](v77/checkpoint_manifest.json) | 方法与证据；当前状态见RESEARCH_STATUS |
+| V7.7 问题、协议与证据 | [P0协议](v77/P0_PROTOCOL.md)、[24对象与三时刻结果](v77/P0_RESULTS.md)、[连续视频人工复核](v77/VIDEO_REVIEW.md)、[权重记录](v77/checkpoint_manifest.json) | 方法与证据；当前状态见RESEARCH_STATUS |
 | V7.6 收口与失败证据 | [收口与architecture](v76/CLOSEOUT.md)、[P0工程记录](v76/P0_ENGINEERING.md) | 保留历史过程；现行阶段见RESEARCH_STATUS |
 | V7.5 问题、输入与收尾 | [问题协议](v75/PROBLEM.md)、[运行准备](v75/PREFLIGHT.md)、[r9收尾](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) | 协议与证据；已退役资产的恢复边界见收尾 |
 | V7.4 报告、计划和旧状态 | [V7.4 归档](archive/2026-09/v74-0920/README.md) | 冻结历史 |

@@ -125,10 +125,13 @@ def render_frames(root,limit=None):
    del points,colors,edited,edited_colors,original,factual,moved;done+=1
    if limit and done>=limit:return
 
-def encode(root):
+def encode(root,scene_name=None):
  import av
- reg=json.loads((root/'registration.json').read_text());delivery=root/'review';delivery.mkdir(exist_ok=True);scenes=[]
+ reg=json.loads((root/'registration.json').read_text());delivery=root/'review';delivery.mkdir(exist_ok=True)
+ previous=json.loads((delivery/'review_data.json').read_text()) if (delivery/'review_data.json').exists() else {'scenes':[]}
+ completed={s['name']:s for s in previous['scenes']}
  for spec in reg['scenes']:
+  if scene_name and spec['name']!=scene_name:continue
   out=root/spec['name'];dest=delivery/spec['name'];dest.mkdir(exist_ok=True)
   rows=[json.loads((out/'frames'/f'{f:03d}'/'metrics.json').read_text()) for f in spec['frames']]
   videos={}
@@ -157,15 +160,16 @@ def encode(root):
    'frame_count':len(rows),'fps':10,'videos':videos,'frames':rows,
    'gt_present_frames':sum(r['gt_present'] for r in rows),'nonempty_edit_frames':sum(r['target_point_count']>0 for r in rows),
    'scale_min':min(r['depth_scale'] for r in rows),'scale_max':max(r['depth_scale'] for r in rows)}
-  dump(dest/'sequence_metrics.json',specdata);scenes.append(specdata)
+  dump(dest/'sequence_metrics.json',specdata);completed[spec['name']]=specdata
+ scenes=[completed[s['name']] for s in reg['scenes'] if s['name'] in completed]
  summary={'task_id':reg['task_id'],'scenes':scenes,'total_scene_frames':sum(s['frame_count'] for s in scenes),
-  'model_forwards_reused':9,'model_forwards_new':sum(s['frame_count'] for s in scenes)-9,'training_steps':0,
+  'model_forwards_reused':3*len(scenes),'model_forwards_new':sum(s['frame_count'] for s in scenes)-3*len(scenes),'training_steps':0,
   'failure_ledger_refs':['V77-F01'],'failure_ledger_delta':'none','human_verdict':None}
  dump(delivery/'review_data.json',summary)
 
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('phase',choices=['prepare','render','encode']);p.add_argument('--run-dir',required=True);p.add_argument('--limit',type=int);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('phase',choices=['prepare','render','encode']);p.add_argument('--run-dir',required=True);p.add_argument('--limit',type=int);p.add_argument('--scene',choices=list(TARGETS));a=p.parse_args()
  root=pathlib.Path(a.run_dir)
  if a.phase=='prepare':prepare(root)
  elif a.phase=='render':render_frames(root,a.limit)
- else:encode(root)
+ else:encode(root,a.scene)

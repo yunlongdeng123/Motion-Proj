@@ -1,0 +1,176 @@
+{
+  "task_id": "WS-V77-VIDEO-REVIEW-20260926",
+  "total_scene_frames": 583,
+  "model_forwards_reused": 9,
+  "model_forwards_new": 574,
+  "training_steps": 0,
+  "failure_ledger_refs": [
+    "V77-F01"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null,
+  "scenes": [
+    {
+      "name": "official_000",
+      "actor_id": "14",
+      "track_id": "e91afa15647c4c4994f19aeb302c7179",
+      "category": "vehicle.truck",
+      "default_camera": 3,
+      "delta_world_m": [
+        1.8944988818965245,
+        -0.6409945292222229,
+        0.0
+      ],
+      "frame_count": 191,
+      "fps": 10,
+      "videos": {
+        "original": {
+          "path": "official_000/original.mp4",
+          "frames": 191,
+          "fps": 10,
+          "duration_s": 19.1,
+          "decoded_last_pts_s": 19.0,
+          "bytes": 35746421
+        },
+        "factual": {
+          "path": "official_000/factual.mp4",
+          "frames": 191,
+          "fps": 10,
+          "duration_s": 19.1,
+          "decoded_last_pts_s": 19.0,
+          "bytes": 47040672
+        },
+        "edited": {
+          "path": "official_000/edited.mp4",
+          "frames": 191,
+          "fps": 10,
+          "duration_s": 19.1,
+          "decoded_last_pts_s": 19.0,
+          "bytes": 46967709
+        }
+      },
+      "gt_present_frames": 146,
+      "nonempty_edit_frames": 104,
+      "scale_min": 10.505149639771878,
+      "scale_max": 17.852271602374003
+    },
+    {
+      "name": "scene_0230",
+      "actor_id": "22",
+      "track_id": "eded0c5fba8d4d808227d5c60ad2ef13",
+      "category": "vehicle.car",
+      "default_camera": 5,
+      "delta_world_m": [
+        -1.0390978758876184,
+        -1.708881389776903,
+        0.0
+      ],
+      "frame_count": 196,
+      "fps": 10,
+      "videos": {
+        "original": {
+          "path": "scene_0230/original.mp4",
+          "frames": 196,
+          "fps": 10,
+          "duration_s": 19.6,
+          "decoded_last_pts_s": 19.5,
+          "bytes": 31437660
+        },
+        "factual": {
+          "path": "scene_0230/factual.mp4",
+          "frames": 196,
+          "fps": 10,
+          "duration_s": 19.6,
+          "decoded_last_pts_s": 19.5,
+          "bytes": 40876610
+        },
+        "edited": {
+          "path": "scene_0230/edited.mp4",
+          "frames": 196,
+          "fps": 10,
+          "duration_s": 19.6,
+          "decoded_last_pts_s": 19.5,
+          "bytes": 41013823
+        }
+      },
+      "gt_present_frames": 131,
+      "nonempty_edit_frames": 130,
+      "scale_min": 15.703833127549307,
+      "scale_max": 39.73997540091506
+    },
+    {
+      "name": "scene_0255",
+      "actor_id": "25",
+      "track_id": "e53a03fcf9884cfc8aeff489e5e4b984",
+      "category": "vehicle.car",
+      "default_camera": 3,
+      "delta_world_m": [
+        -1.9991186843793574,
+        -0.059367379640235744,
+        0.0
+      ],
+      "frame_count": 196,
+      "fps": 10,
+      "videos": {
+        "original": {
+          "path": "scene_0255/original.mp4",
+          "frames": 196,
+          "fps": 10,
+          "duration_s": 19.6,
+          "decoded_last_pts_s": 19.5,
+          "bytes": 31657794
+        },
+        "factual": {
+          "path": "scene_0255/factual.mp4",
+          "frames": 196,
+          "fps": 10,
+          "duration_s": 19.6,
+          "decoded_last_pts_s": 19.5,
+          "bytes": 43517925
+        },
+        "edited": {
+          "path": "scene_0255/edited.mp4",
+          "frames": 196,
+          "fps": 10,
+          "duration_s": 19.6,
+          "decoded_last_pts_s": 19.5,
+          "bytes": 43546764
+        }
+      },
+      "gt_present_frames": 181,
+      "nonempty_edit_frames": 181,
+      "scale_min": 13.620762496855356,
+      "scale_max": 18.359054456707053
+    }
+  ],
+  "recorded_at": "2026-09-26T08:44:39.426526+00:00",
+  "renderer_core_commit": "82d0dc69",
+  "registration_base_commit_note": "Registration HEAD e5e1eabf preceded new renderer commit; first three-frame smoke used the same then-uncommitted renderer core.",
+  "videos": 9,
+  "decoded_video_frames": 1749,
+  "nonempty_edit_frames": 415,
+  "frames_without_target_gt": 125,
+  "max_point_adherence_error_m": 1.1101119967710237e-14,
+  "max_non_target_change_m": 0.0,
+  "peak_forward_gpu_gib": 5.260463714599609,
+  "browser_review": "See final delivery QA record; human verdict remains null",
+  "source_assets": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-VIDEO-REVIEW-20260926/r1",
+  "limitations": [
+    "GT cameras and per-frame background LiDAR scale",
+    "same-view re-render of observed RGB; not held-out novel views",
+    "each time reconstructed independently; no persistent 4D scene or temporal fusion",
+    "processed10Hz, exact original timestamps unavailable",
+    "GT box point selection is not certified instance segmentation"
+  ],
+  "validation": {
+    "all_videos_fully_decoded": true,
+    "video_size": [
+      2064,
+      768
+    ],
+    "frame_rate": 10,
+    "sequence_completeness": "191/196/196; no skipped or interpolated frames",
+    "edit_checks": "all non-target coordinates unchanged; nonempty selected points translated by fixed2m",
+    "human_verdict": null
+  }
+}
