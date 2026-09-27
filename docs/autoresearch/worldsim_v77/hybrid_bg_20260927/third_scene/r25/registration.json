@@ -1,0 +1,40 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r25",
+  "registered_utc": "2026-09-27T16:50:34.037334+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "camera": 0,
+  "question": "Do original camera poses and a measured local ground plane reliably transport visible road RGB before deletion-hole reuse?",
+  "roles": "f0 LiDAR/pose and GT camera/boxes are geometry input; f0 visible road polygon is assistant POC domain. Query RGB is evaluation only; never a donor at its own timestamp. No generated RGB or new model.",
+  "plane": "RANSAC 300 proposals seed42, normal within15deg of world-up,5cm inlier threshold,at least50 train inliers. Every third candidate point held out. Plane-only approximation restricted to inlier xy hull.",
+  "query_frames": [
+    0,
+    10,
+    20
+  ],
+  "source_offsets": [
+    5,
+    10,
+    20
+  ],
+  "source_policy": "Original CAM0 other timestamps, all GT actor projection envelopes excluded with3px dilation and0.5m ground extension; geometric support does not certify absence of unknown objects/shadows.",
+  "controls": "Nearest available source vs at least two other timestamps agreeing within20 RGB levels. Same frozen plane and camera. Compare on actual visible road outside all query actor boxes.",
+  "fixed": {
+    "seed": 42,
+    "cpu_threads": 4,
+    "size": [
+      1024,
+      576
+    ]
+  },
+  "stop_rule": "No actual hole fill unless both held-out geometry and visible-road image alignment are credible. Preserve gaps and reject wrong-source/structural alignment; no threshold sweep.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "resources": {
+    "gpu_forwards": 0
+  },
+  "human_verdict": null,
+  "background_input_dir": null
+}

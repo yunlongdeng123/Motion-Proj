@@ -1,0 +1,28 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "runs": [
+    "r25",
+    "r26",
+    "r27",
+    "r28",
+    "r29"
+  ],
+  "user_comparative_verdict": {
+    "scene": "scene_0255",
+    "preferred": "r18",
+    "comparison": "r15",
+    "scope": "用户比较评价：保留继续修；不是最终背景通过"
+  },
+  "assistant_review": {
+    "r25": "Partial visible-road alignment, sparse support; no hole conclusion",
+    "r26": "Actual target outside frozen measured road extent: zero support",
+    "r27": "Local source patch hypothesis under fixed first-frame plane fails; visible control zero at later queries; source ground drifts relative to this plane",
+    "r28": "All10frames inspected. Gray silhouette removed, road more continuous; bright seams and uncertain detail remain. Retained truck34 is real, generated hidden appearance not certified",
+    "r29": "All10frames inspected. Poisson creates worse dark gray patch; reject and keep r28"
+  },
+  "mask_boundary_audit": "Frames0,3,8,9 have zero internal holes; do not assert boundary artifact caused by internal holes.",
+  "next_action": "Freeze r28 and separate deletion/shadow extent from boundary color/structure mismatch before additional GPU sampling",
+  "goal_complete": false,
+  "human_verdict": null,
+  "background_input_dir": null
+}

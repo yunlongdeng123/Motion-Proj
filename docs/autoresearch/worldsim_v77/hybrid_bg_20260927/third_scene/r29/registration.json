@@ -1,0 +1,34 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r29",
+  "registered_utc": "2026-09-27T17:11:52.846123+00:00",
+  "scene": "official_000",
+  "actor": "12",
+  "frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "camera": 0,
+  "question": "Once r28 removes the gray target silhouette, does gradient-domain writeback improve its color seam without changing the generator or edit extent?",
+  "source": "Exact r28 native generation and original RGB; same precise write mask. No original hidden target pixels are copied inside the mask as a factual background.",
+  "intervention": "One OpenCV NORMAL_CLONE Poisson solve at the exact source-mask bounding center, then force all outside-write pixels back to original. Preserve native geometry/gradient as guidance; destination boundary gives observed colors.",
+  "relation_to_r9": "Prior0255 Poisson only softened color and could not repair wrong geometry. Here test only the observed third-scene r28 brightness boundary, not a remedy for generated identity/structure.",
+  "stop_rule": "One fixed solve per10frames; reject if it leaves dark car-shaped stain, destroys lane markings, or alters retained truck. No mixed-mode/parameter grid.",
+  "resources": {
+    "gpu_forwards": 0,
+    "cpu_threads": 4
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

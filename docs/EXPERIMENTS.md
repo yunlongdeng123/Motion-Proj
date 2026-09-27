@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-HYBRID-BG-20260927 / r25–r29 | 第三例矩形条件改善；路面支撑与Poisson写回反例；保留r18/r28 | [第三例报告](v77/HYBRID_THIRD_SCENE.md)、[实际证据](autoresearch/worldsim_v77/hybrid_bg_20260927/third_scene/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r23–r24 | 可见对象2倍尺度与实际DELETE逐帧外观条件；保留r18，明确第三例协议 | [外观控制报告](v77/HYBRID_APPEARANCE_CONTROLS.md)、[实际输入与结果](autoresearch/worldsim_v77/hybrid_bg_20260927/appearance_controls/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r19–r22 | 保留用户优选r18；真实围栏来源失败控制、局部alpha写回与后续两个时间窗 | [修复报告](v77/HYBRID_FENCE_WRITEBACK.md)、[用户评价/证据](autoresearch/worldsim_v77/hybrid_bg_20260927/fence_writeback/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r14–r18 | 邻车真实证据正控制、首帧条件拆解、SV3D中间图与对应视角锚点修复 | [条件报告](v77/HYBRID_NEIGHBOR_CONDITIONS.md)、[实际来源/重放验证](autoresearch/worldsim_v77/hybrid_bg_20260927/neighbor_conditions/evidence_validation.json) |

@@ -1,0 +1,77 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r27",
+  "registered_utc": "2026-09-27T16:59:23.079968+00:00",
+  "scene": "official_000",
+  "actor": "12",
+  "frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "camera": 0,
+  "question": "Can real measured source road patches cover the right-lane DELETE hole, beyond r25 center-lane support?",
+  "intervention": "Keep r25 plane, camera, source offsets and RGB rules. Replace f0 training convex hull with locally interpolated LiDAR ground patches measured at each source timestamp.",
+  "fixed": {
+    "plane_source": "r25 f0 held-out validated",
+    "source_offsets": [
+      5,
+      10,
+      20
+    ],
+    "depth_range_m": [
+      3,
+      50
+    ],
+    "ground_distance_m": 0.05,
+    "triangle_max_world_edge_m": 3,
+    "triangle_max_image_edge_px": 64,
+    "source_mask_erosion_px": 1,
+    "rgb_consensus_max_channel_error": 20,
+    "size": [
+      1024,
+      576
+    ],
+    "cpu_threads": 4
+  },
+  "source_roles": "Only original RGB and actual source LiDAR/GT camera/boxes. Every source differs from query timestamp. Query visible RGB is evaluation only. No generated RGB or mask-erased image as factual evidence.",
+  "source_support": "2D Delaunay over projected source ground LiDAR points, keep triangles below fixed spatial/image edge limits, erode1px, exclude all GT box ground-extended envelopes. This is POC interpolation, not exact semantic/visibility GT.",
+  "limits": "Local ground patches may still miss static occlusion, thin objects, target shadows or road non-planarity. No extrapolation to trees/buildings/other cars. RGB consensus is not proof of query visibility.",
+  "positive_control": "Queries0,10,20 same r25 visible evaluation masks, run before actual hole and compare observed query RGB. Target-hole RGB has no GT.",
+  "stop_rule": "One source-support control; preserve residual hole and fail visual structure errors. No threshold/seed sweep or downstream Omega until backgrounds reviewed.",
+  "resources": {
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

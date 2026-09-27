@@ -1,0 +1,48 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r28",
+  "registered_utc": "2026-09-27T17:02:30.315602+00:00",
+  "scene": "official_000",
+  "actor": "12",
+  "camera": 0,
+  "frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "question": "Does separating a rectangular model hole from precise output writeback reduce vehicle-shaped residual on the third scene?",
+  "baseline": "Saved DELETE-REPAIR/r1 official_000 precise/native frames0..9, same original RGB/checkpoint/seed42/25steps/1024x576, first independent10-frame window.",
+  "intervention": "Only input RGB hole/model mask changes from precise contour to its bounding rectangle padded8px left/right/top and24px bottom. Final writeback remains EXACT old precise mask. No reference/object conditions.",
+  "origin": "Rectangular model condition follows original DriveEditor deletion input structure; fixed modest margin reused from earlier0230 bounded control. No result-selected seeds or new model. Third scene was previously used for repair, not a held-out test.",
+  "evidence": "r25 visible road can be reprojected locally; r26/r27 actual-hole measured road support zero. No unsupported ground or generated RGB introduced as evidence.",
+  "fixed": {
+    "seed": 42,
+    "steps": 25,
+    "frames": 10,
+    "size": [
+      1024,
+      576
+    ],
+    "sequential_cfg": true,
+    "previous_segment_condition": false,
+    "decode_chunk": 1,
+    "cpu_threads": 4
+  },
+  "resources": {
+    "gpu": "RTX3090",
+    "timeout_s": 600
+  },
+  "stop_rule": "One10-frame control; inspect native and exact-writeback. Stop this mask recipe if target regeneration or structural damage persists; preserve original baseline. Do not infer scene0255 actor52 preservation from this road-background task.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}
