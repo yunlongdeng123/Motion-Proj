@@ -1,21 +1,19 @@
 # 当前研究状态
 
-更新：2026-09-27，v77。按用户最新方案执行 `WS-V77-DELETE-REPAIR-20260927/r1`：精确SAM2实例mask + 多视角/时序真实RGB证据优先 + DriveEditor residual补景 + 车辆再生guard。保留旧资产、旧两条非法MOVE与全部对照；零训练，无ProPainter、语言/RL、新生成器、定时任务。
+更新：2026-09-27，v77。`WS-V77-DELETE-REPAIR-20260927/r1`出现明确退化，已按用户“差则记录failure并回退”的要求停止，恢复上一轮DriveEditor完整DELETE方案作为默认。没有正在运行的生成任务；不自动重启该精确轮廓输入实验。
 
-## 当前范围
+## 当前默认
 
-scene_0230/actor22/CAM5 f18–47、scene_0255/actor25/CAM3 f65–94、第三scene official_000/actor12/CAM0 f0–29；各3秒10Hz，固定旧失败后段及第三目标，不按新生成结果选片。第三目标为右侧黑色MPV，避开被近裁面切断的truck14。三个已曝光开发scene，不称独立测试。
+`configs/worldsim_v77/delete_pipeline_current.json`指向`WS-V77-DELETE-FULL-20260927/r1`：scene_0230/actor22、scene_0255/actor25，原DriveEditor mask配置、冻结Ω背景、原GLB。旧BUILD/QUERY入口与1a2d5189相同，原资产未替换。回退保留旧版再生车辆、模糊与Ω错误遮挡的已知缺陷，不表示高保真通过。V7.6关闭状态不变。
 
-当前是三场景的背景入口强控制：旧矩形对照保留；A精确mask、B证据+残余洞，两组模型/seed/窗口相同。六相机整段原始Ω缓存搜索证据；GT相机、框及LiDAR辅助准入，不称RGB-only。GT框只prompt/限制SAM范围，删除mask不是框。只膨胀3px。
+## 本轮范围与结果入口
 
-## 执行与边界
+两旧scene A/B各30帧；新增official_000/actor12 A30帧、B10帧后停止，共17个完成窗口，0230零证据所以B复用A。三例新补景均出现白车或灰白车形，检测器能抓清晰车但漏检残影；全部阻断进入Ω。第三目标没有旧DriveEditor/GLB基线，保留为失败诊断，未纳入默认世界。零新Ω前向、零训练，旧资产与全部对照保留。
 
-登记和中间产物位于 `/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-REPAIR-20260927/r1`；一次有界运行，检查实际进程避免重复启动。旧完整工程已结束。源图通过冻结Ω深度/GT相机warp；来源须通过贴地对象包络遮挡排除、20cm LiDAR支持、两时刻深度/RGB一致性，不得复制旧生成背景。没有证据覆盖的像素留给生成模型，不伪称真实观测。
+审核页：`C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-delete-repair/index.html`。上方为恢复后的旧版原视频/factual/DELETE，下方为三案例失败对照、精确mask、真实证据、原生输出和guard。详情见[最终报告](v77/DELETE_REPAIR.md)；唯一run证据在`/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-REPAIR-20260927/r1`。
 
-先验证背景；检测或视觉发现再生车则阻断进入Ω，不用新几何渲染掩盖。guard须跑原图正控制和已知旧幻觉控制，零检出不等于通过。原GLB保持，Ω自身的碎裂/错误遮挡结论不因入口修复自动撤销。人工verdict保持null。
+## 下一步与边界
 
-## 下一步
+等待用户看报告；不继续相同失败配置、不扩训练集、不恢复ProPainter、MOVE、定时任务或历史关机安排。若继续，本轮只留下“生成条件范围与最终精确写回范围可单独控制”的未验证假设，不预填改善。GT/LiDAR辅助、开发scene、隐藏背景无GT、官方训练重叠未知等边界保持。
 
-完成两组推理、逐帧guard与可复核视频HTML，更新同一V77-F02后提交推送。有明确反例则停止该结果的后续Ω，不无限换seed/阈值。仅对有证据的准入结果推进下游。
-
-`failure_ledger_refs: [V77-F02]`；`human_verdict: null`。
+`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`；`human_verdict: null`。

@@ -1,0 +1,50 @@
+{
+  "active_version": "v77-delete-full",
+  "active_task": "WS-V77-DELETE-FULL-20260927",
+  "active_run": "r1",
+  "asset_root": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-FULL-20260927/r1",
+  "review_local": "outputs/v77-delete-full/index.html",
+  "source_commit": "1a2d5189",
+  "entrypoints": {
+    "build": "scripts/worldsim_v77/delete_full_drive.py + delete_full_omega.py",
+    "query": "scripts/worldsim_v77/delete_full_query.py"
+  },
+  "scenes": [
+    {
+      "name": "scene_0230",
+      "actor": "22",
+      "count": 50,
+      "yaw": 180
+    },
+    {
+      "name": "scene_0255",
+      "actor": "25",
+      "count": 100,
+      "yaw": 0
+    }
+  ],
+  "driveeditor": {
+    "steps": 25,
+    "seed_each_window": 42,
+    "frames": 10,
+    "stride": 9,
+    "overlap": 1,
+    "boundary_condition": "上一窗同一重叠时刻的composite图作为首帧条件，避免使用错位时间帧；重复首帧保留旧输出",
+    "previous_condition_reset_on_gap": true,
+    "mask_0230": "已验证SAM矩形8/8/8/24",
+    "mask_0255": "官方扩大mask，随机seed42物化；已验证15–24帧原mask复用；必要时最小扩展包含SAM",
+    "inactive_views": "逐像素原RGB，不调用模型",
+    "tail": "重复末帧仅供10帧模型输入；输出不重复尾帧"
+  },
+  "model_family": "DriveEditor trained deletion; frozen VGGT-Omega; existing GLB",
+  "experimental_precise_mask_route_enabled": false,
+  "experimental_run_retained": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-REPAIR-20260927/r1",
+  "rollback_reason": "用户要求：新效果更差则记录failure并回退。细轮廓直接作为DriveEditor输入产生白车/车形灰白残留，停止该默认路线。",
+  "known_limits_retained": [
+    "0230 CAM5原版仍可能再生车辆",
+    "0255原版后段模糊/变形",
+    "Ω碎裂和GLB错误遮挡尚未解决"
+  ],
+  "automatic_model_jobs": false,
+  "human_verdict": null
+}

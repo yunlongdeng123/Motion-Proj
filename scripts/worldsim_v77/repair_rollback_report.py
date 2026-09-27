@@ -1,6 +1,15 @@
-# v77 DELETE：三案例失败记录与方案回退
+"""用户要求回退后的最终报告；严格区分计划、已完成与已停止。"""
+import argparse,pathlib,json
+def load(p):return json.loads(p.read_text(encoding='utf8'))
+def main():
+ p=argparse.ArgumentParser();p.add_argument('--output',type=pathlib.Path,required=True);o=p.parse_args().output
+ ev=load(o/'evidence_summary.json');g={s['scene']:s for s in load(o/'guard_summary.json')['scenes']};s=load(o/'summary.json');st=load(o/'drive_state.json');obs=load(o/'observations.json');v=load(o/'validation.json');rows=[]
+ for e in ev['scenes']:
+  n=e['scene'];x=g[n];rows.append(f"|{n}|{e['evidence_pixels']}/{e['mask_pixels']} ({e['evidence_pixels']/e['mask_pixels']:.3%})|{x['source_target_detected_frames']}/{x['frames']}|{len(x['arms']['precise']['blocked_frames'])}/{x['frames']}|{len(x['arms']['evidence_first']['blocked_frames'])}/{x['frames']}|")
+ observations='\n\n'.join('### '+n+'\n\n'+'\n\n'.join(x['observations']) for n,x in obs.items())
+ text=f'''# v77 DELETE：三案例失败记录与方案回退
 
-**已按用户要求停止退化实验，默认方案指回 `WS-V77-DELETE-FULL-20260927/r1`。** 原DriveEditor配置、冻结Ω和原GLB不改；旧版的再生车、模糊与错误遮挡仍公开，回退不代表质量通过。[打开审核HTML](../autoresearch/worldsim_v77/delete_repair_20260927/review_link.md)、[当前配置](../autoresearch/worldsim_v77/delete_repair_20260927/rollback.json)、[回退验证](../autoresearch/worldsim_v77/delete_repair_20260927/rollback_validation.json)。
+**已按用户要求停止退化实验，默认方案指回 `WS-V77-DELETE-FULL-20260927/r1`。** 原DriveEditor配置、冻结Ω和原GLB不改；旧版的再生车、模糊与错误遮挡仍公开，回退不代表质量通过。[打开审核HTML](index.html)、[当前配置](rollback.json)、[回退验证](rollback_validation.json)。
 
 ```mermaid
 flowchart LR
@@ -21,7 +30,7 @@ flowchart LR
 
 两组同权重、seed42、25步、1024×576、10帧窗口、stride9与同时间重叠条件：A精确mask直接生成，B先填可信原RGB、只生成residual。0230没有可接受证据，B复用A，不重复推理。模型为官方训练后DriveEditor deletion，沿用已有3090串行CFG适配，未加其他补景模型。
 
-用户要求“差就回退”后，已停止DriveEditor。完成 **17个窗口**，下一窗口中断；两旧scene的A/B各30帧3秒完整保存。第三例A完成30帧3秒，B仅10帧1秒；共同时间对照只用这10帧，A完整3秒另外保留。没有补帧、重复尾帧伪装长度或补跑已失败配置。实际数量见[完成帧表](../autoresearch/worldsim_v77/delete_repair_20260927/comparison_plan.json)。
+用户要求“差就回退”后，已停止DriveEditor。完成 **{len(st['completed'])}个窗口**，下一窗口中断；两旧scene的A/B各30帧3秒完整保存。第三例A完成30帧3秒，B仅10帧1秒；共同时间对照只用这10帧，A完整3秒另外保留。没有补帧、重复尾帧伪装长度或补跑已失败配置。实际数量见[完成帧表](comparison_plan.json)。
 
 这是补景入口试验，不是新跑三scene完整六相机世界。第三个目标尚无旧DriveEditor/GLB基线，只保留为第三失败诊断案例；不能伪称回退至不存在的旧结果。当前默认工程仍是原来的两个scene。
 
@@ -35,41 +44,11 @@ SAM2.1-large视频实例mask保留原稿；第三例新跑视频传播。box只�
 
 |场景|真实证据/删除像素·帧|原图目标检测|A车辆拦截|B车辆拦截|
 |---|---:|---:|---:|---:|
-|scene_0230|0/544588 (0.000%)|30/30|29/30|29/30|
-|scene_0255|6095/360923 (1.689%)|30/30|0/30|3/30|
-|official_000|185/170227 (0.109%)|10/10|0/10|0/10|
+{chr(10).join(rows)}
 
 ## 视觉反例与退化
 
-### scene_0230
-
-目标是棕色跨界车actor22，精确mask没有大面积覆盖后方黑色SUV。
-
-新A在f25生成清晰的白色车辆；固定10个时刻的抽查也持续出现白车。这是补景失败，非GLB或DELETE开关错误。
-
-可接受真实证据为零，B与A完全相同。不能声称真实背景条件已经充足。
-
-与旧版相比没有得到更干净的无车背景；回退旧方案，但旧版CAM5再生车辆的缺陷继续公开。
-
-### scene_0255
-
-目标是围栏后的浅色SUV actor25。删除mask比旧矩形减少约83%，邻车不再被整块重画。
-
-A/B在目标位置均出现明显的白色车形补丁，后段有变形、残留轮廓；原生模型输出已存在该问题，不能归因于后续写回或Ω。
-
-真实证据只覆盖1.69%的删除区域，主要是围栏/车底附近零散像素，未补足隐藏背景。
-
-虽然编辑范围更准，最终DELETE的白色车形比旧版模糊背景更差；已回退，旧版后段模糊和车列形变仍保留。
-
-### official_000
-
-第三个案例是前视图右侧黑色MPV actor12；3秒GT平面位移约7.1米，目标身份连续。
-
-A的完整3秒出现随目标轮廓移动的灰白区域，后面混入类似路障的纹理；不是可信无车路面。
-
-B前1秒同样有灰白车形；用户要求效果差则回退后已停止，不补跑剩余20帧。A/B同时间比较只展示共同的10帧1秒；A的30帧3秒另保留。
-
-该目标没有上一轮DriveEditor或GLB基线，因此只作为第三个失败诊断案例保留，不伪称已回退到不存在的旧结果。
+{observations}
 
 旧/新的初始条件历史不同，旧全段与新短窗不是严格mask单变量控制；A/B才是本轮固定窗口比较。精确mask范围改善，不能被升级为无车背景成功。
 
@@ -81,7 +60,7 @@ GroundingDINO-tiny检测 `car. truck. bus. van.`，box/text阈值0.25，SAM2取�
 
 原图非目标实例mask中有少量像素变化（例如0255约1.32%，包含分割误差），因此不声称邻车逐实例完全保护。mask之外RGB严格不变是另一个像素合同，不能替代语义完整性。
 
-`repair_admission.approved_paths()`遇检测阳性、原图漏检或未通过助手视觉检查不给Ω返回背景路径。实际三例均无准入路径，[记录](../autoresearch/worldsim_v77/delete_repair_20260927/background_admission.json)保留。**本轮零新Ω前向、原GLB不改；不把补景失败归为资产网格失败。** 人工verdict始终null。
+`repair_admission.approved_paths()`遇检测阳性、原图漏检或未通过助手视觉检查不给Ω返回背景路径。实际三例均无准入路径，[记录](background_admission.json)保留。**本轮零新Ω前向、原GLB不改；不把补景失败归为资产网格失败。** 人工verdict始终null。
 
 ## 回退与复核
 
@@ -89,7 +68,7 @@ GroundingDINO-tiny检测 `car. truck. bus. van.`，box/text阈值0.25，SAM2取�
 
 本地HTML上方直接复用旧版5秒/10秒的原视频/factual/DELETE三栏；下方展示三案例退化、同相机旧/新补景、mask、来源、原生输出与guard。没有将失败的第三例加入默认工程。
 
-8项语义/准入测试通过。90帧证据准备来源验证，6280个候选复制像素可回查原RGB；已生成图检查mask外不变与证据锁定。34段本轮视频/820帧实解码通过。页面链接和JS语法检查通过，未冒称执行浏览器交互测试。首窗漏带已有串行CFG导致OOM，零输出；恢复原配置后运行，失败日志保留。最大已分配显存21.86GiB；已完成窗口计算合计1195.2秒，不包含中断窗口与模型加载。
+8项语义/准入测试通过。{v['frames']}帧证据准备来源验证，{v['evidence_copied_pixels']}个候选复制像素可回查原RGB；已生成图检查mask外不变与证据锁定。{s['total_videos']}段本轮视频/{s['total_decoded_frames']}帧实解码通过。页面链接和JS语法检查通过，未冒称执行浏览器交互测试。首窗漏带已有串行CFG导致OOM，零输出；恢复原配置后运行，失败日志保留。最大已分配显存{max(x['peak_gib'] for x in st['completed']):.2f}GiB；已完成窗口计算合计{sum(x['seconds'] for x in st['completed']):.1f}秒，不包含中断窗口与模型加载。
 
 ## 本轮留下的边界
 
@@ -98,3 +77,6 @@ GroundingDINO-tiny检测 `car. truck. bus. van.`，box/text阈值0.25，SAM2取�
 先恢复旧方案，不机械重复这条失败入口。若后续继续修复，可单独验证生成条件范围与最终精确写回范围是否需要分开；那是未执行的后续控制，不能写成已改善结果。当前不需要凭这些失败就自造大训练集，不拿生成图当真实背景GT，也不宣布整个显式资产路线失败。
 
 `failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`；`human_verdict: null`。
+'''
+ (o/'report.md').write_text(text,encoding='utf8')
+if __name__=='__main__':main()

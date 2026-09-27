@@ -15,7 +15,7 @@ def classify(m,core,edit,neighbors):
  return {'pixels':area,'target_core_overlap':hit,'target_core_fraction':hit/max(1,int(core.sum())),'edit_overlap':edited,'original_neighbor_iou':matched,'suspect_new_vehicle':bool(suspect)}
 
 def main():
- assert read(ROOT/'drive_state.json')['state']=='complete'
+ assert read(ROOT/'drive_state.json')['state'] in ['complete','stopped_regression']
  assert not (ROOT/'guard_summary.json').exists()
  torch.set_num_threads(4);cv2.setNumThreads(4)
  processor=AutoProcessor.from_pretrained(MODEL,local_files_only=True);model=AutoModelForZeroShotObjectDetection.from_pretrained(MODEL,local_files_only=True).eval().cuda()
@@ -34,13 +34,16 @@ def main():
  allrows=[];started=time.monotonic()
  for s in read(ROOT/'registration.json')['scenes']:
   out=ROOT/s['name'];dest=out/'guard';dest.mkdir(exist_ok=False);records=[]
-  for i,f in enumerate(s['source_frames']):
+  count=next(x['comparison_count'] for x in read(ROOT/'comparison_plan.json')['scenes'] if x['scene']==s['name']) if (ROOT/'comparison_plan.json').exists() else 30
+  for i,f in enumerate(s['source_frames'][:count]):
    core=cv2.imread(str(out/'sam'/f'core_{i:05}.png'),0)>0;edit=cv2.imread(str(out/'mask'/f'{i:05}.png'),0)>0
    orig=np.array(Image.open(out/'rgb'/f'{i:05}.png'));source=detect(orig)
    targets=[r for r in source if (r['mask']&core).sum()/max(1,core.sum())>.3]
    neighbors=[r['mask'] for r in source if (r['mask']&core).sum()/max(1,core.sum())<=.05]
    np.savez_compressed(dest/f'source_masks_{i:05}.npz',**{f'mask_{j}':r['mask'] for j,r in enumerate(source)})
-   row={'frame':f,'source_target_detected':bool(targets),'source_vehicles':len(source),'source_neighbor_instances':len(neighbors),'arms':{}}
+   road=np.zeros_like(core);road[470:500,800:900]=True
+   road_hits=sum(classify(r['mask'],road,road,[])['suspect_new_vehicle'] for r in source)
+   row={'frame':f,'source_target_detected':bool(targets),'source_vehicles':len(source),'source_neighbor_instances':len(neighbors),'empty_road_negative_control_hits':int(road_hits),'arms':{}}
    for arm in ['precise','evidence_first']:
     rgb=np.array(Image.open(out/arm/f'{i:05}.png'));found=detect(rgb);details=[];overlay=Image.fromarray(rgb);d=ImageDraw.Draw(overlay)
     np.savez_compressed(dest/f'{arm}_masks_{i:05}.npz',**{f'mask_{j}':r['mask'] for j,r in enumerate(found)})
@@ -58,7 +61,7 @@ def main():
   if s['name']=='scene_0230':
    f=25;i=s['source_frames'].index(f);rgb=np.array(Image.open(FULL/s['name']/'cam5/background'/f'{f:05}.png'));core=cv2.imread(str(out/'sam'/f'core_{i:05}.png'),0)>0;edit=cv2.imread(str(out/'mask'/f'{i:05}.png'),0)>0
    legacy=[{**{k:v for k,v in r.items() if k!='mask'},**classify(r['mask'],core,edit,[])} for r in detect(rgb)]
-  summary={'scene':s['name'],'source_target_detected_frames':sum(r['source_target_detected'] for r in records),'frames':30,'arms':{a:{'blocked_frames':[r['frame'] for r in records if r['arms'][a]['status']=='blocked_vehicle'],'source_miss_frames':[r['frame'] for r in records if r['arms'][a]['status']=='unknown_detector_source_miss']} for a in ['precise','evidence_first']},'legacy_f25_control':legacy,'human_verdict':None}
+  summary={'scene':s['name'],'source_target_detected_frames':sum(r['source_target_detected'] for r in records),'frames':count,'empty_road_control_rect_xyxy':[800,470,900,500],'empty_road_control_hit_frames':[r['frame'] for r in records if r['empty_road_negative_control_hits']>0],'arms':{a:{'blocked_frames':[r['frame'] for r in records if r['arms'][a]['status']=='blocked_vehicle'],'source_miss_frames':[r['frame'] for r in records if r['arms'][a]['status']=='unknown_detector_source_miss'],'source_neighbor_pixels':sum(r['arms'][a]['source_neighbor_pixels'] for r in records),'source_neighbor_changed_pixels':sum(r['arms'][a]['source_neighbor_changed_pixels'] for r in records)} for a in ['precise','evidence_first']},'legacy_f25_control':legacy,'human_verdict':None}
   dump(dest/'summary.json',summary);allrows.append(summary)
  dump(ROOT/'guard_summary.json',{'scenes':allrows,'elapsed_s':time.monotonic()-started,'model':'GroundingDINO-tiny + SAM2.1 large','thresholds':{'box':.25,'text':.25,'edit_overlap_pixels':32,'target_core_fraction':.05,'non_target_source_instance_iou':.5},'scope':'车辆再生拦截；未覆盖阴影/结构/时序质量；检测空白不能作为真实背景证明。','human_verdict':None})
 if __name__=='__main__':main()
