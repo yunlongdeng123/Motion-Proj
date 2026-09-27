@@ -1,0 +1,9 @@
+{
+  "reviewer": "assistant",
+  "reviewed": "All ten actual r18/r24 native and r24-final aligned frame crops, first and last full native frames",
+  "conclusion": "逐帧锚点使粗车身更稳定、接近给定的SV3D轮廓，但没有恢复可信车轮/前脸细节；持续亮边、暗侧模糊和平面贴图感仍在，部分更明显。仅稳定同一个低细节先验不等于高保真提升。本控制不替换用户优选r18；旧写回的黑碎块另属已定位问题。",
+  "fidelity_limit": "首帧条件虽未改，时序模型可受后九帧条件影响，所以没有声称首帧输出与r18相同。所有新增RGB都是原r17生成先验，不是真实背景；未计算无GT的隐藏表面真实误差。",
+  "next_step": "停止本次逐帧重复同一先验的扩展，保留r18/r21基线。下一步按既定第三scene协议，用official_000实际可见路面做真实RGB重投影正控制，检查共享证据模块，再决定删除区域补洞；不继续为0255增加相同条件强度或换seed。",
+  "human_verdict": null,
+  "background_input_dir": null
+}

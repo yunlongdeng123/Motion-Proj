@@ -1,0 +1,21 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "record_kind": "input_review_and_next_evaluation_protocol",
+  "date": "2026-09-28",
+  "user_preference": "Retain scene_0255 r18 over r15; add third scene when base repair is roughly stable",
+  "scene_roles": [
+    {"scene": "scene_0230", "delete_actor": "22", "camera": 5, "frames": [18, 47], "role": "Unsupported vehicle regeneration, larger disocclusion, difficult background"},
+    {"scene": "scene_0255", "delete_actor": "25", "keep_actor": "52", "camera": 3, "frames": [65, 94], "role": "Occluded real neighbor appearance and foreground fence writeback"},
+    {"scene": "official_000", "delete_actor": "12", "camera": 0, "frames": [0, 29], "role": "Moving black MPV on road, small-to-larger image footprint, lane and construction barrier preservation", "source": "/root/autodl-tmp/data/v76_vadgs/official_000/000", "selection_basis": "Previously fixed third development scene. Re-read existing original selection images at f0/15/29 and metadata; not selected using new generator output."}
+  ],
+  "third_scene_action_this_run": "Input/target review only; no new generation or quality verdict",
+  "shared_protocol": [
+    "Same mask-role separation, target identity checks, inference settings, source restrictions, and writeback audit across scenes",
+    "Do not require a KEEP-object reference when original geometry and visibility show no hidden non-target vehicle to preserve",
+    "Report native generation and protected final composition separately",
+    "Do not choose seeds, crop size, or a successful scene from generated quality; geometric input rule is fixed before inference",
+    "Keep scene-specific manual prompts visible in the input record; they cannot count as an automatic general method"
+  ],
+  "split_limit": "All three have been used in development. Multi-scene development checks do not prove independent generalization; training overlap is not audited.",
+  "human_verdict": null
+}

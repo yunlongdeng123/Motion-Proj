@@ -1,0 +1,57 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r23",
+  "registered_utc": "2026-09-27T16:25:34.012329+00:00",
+  "scene": "scene_0255",
+  "actor": "52",
+  "camera": 3,
+  "frames": [
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139
+  ],
+  "question": "Does enlarging the same visible actor in the video latent grid improve reconstruction detail before applying it to actual DELETE?",
+  "roles": "Oracle known-visible reconstruction only. First-frame RGB/SAM plus GT box condition; later masked pixels are evaluation only. Reuse exact r16 conditions, no extra hidden truth input.",
+  "baseline": "Saved r16 official zero-Repositioning with same-view first-frame paste; frozen trained DriveEditor checkpoint",
+  "intervention": "Crop same image/condition/depth/mask/position tensors to a fixed ROI containing all ten original masks, then resize to original 1024x576 inference size. Reference, CLIP, SV3D, angles, obj ratio, seed, steps unchanged.",
+  "crop_rule": "Smallest 16:9 crop in widths 384,512,640,768,896,1024 containing all ten masks, centered and clamped to image on 8px grid. No result-driven crop tuning.",
+  "roi_xywh": [
+    488,
+    216,
+    512,
+    288
+  ],
+  "linear_magnification": 2.0,
+  "confounds": "Crop reduces context and changes apparent scale together; no pure latent-resolution attribution. RGB comes from original r16 1024x576 conditions, so this adds no factual detail beyond r16.",
+  "fixed": {
+    "seed": 42,
+    "steps": 25,
+    "size": [
+      1024,
+      576
+    ],
+    "fps": 10,
+    "frames": 10,
+    "previous_segment_condition": false,
+    "sequential_cfg": true,
+    "decode_chunk": 1
+  },
+  "stop_rule": "One 10-frame crop control. Inspect original-scale outputs and real RGB; no DELETE extension if identity/detail is worse. Do not turn increased sharpness into fidelity claim.",
+  "resources": {
+    "gpu": "RTX3090",
+    "cpu_threads": 4,
+    "timeout_s": 600
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

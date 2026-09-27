@@ -1,0 +1,10 @@
+{
+  "reviewer": "assistant",
+  "reviewed": "All ten actual original/r16/r23 aligned object crops; first and last native full ROI images",
+  "r23": "r23前几帧前脸更接近原图，部分原r16软化和拉伸减轻；随后细节仍变形。f135以后叠加前景行人/杆件，最后一帧错误明显。没有取得稳定同一身份的十帧重建，不向实际DELETE扩大crop。",
+  "metric": "排除作为条件的f130后，同原图尺度、同GT框与模型mask交集的平均MAE：r16为29.169，r23为26.716；9帧中8帧下降，f139从29.828升到35.061。该集合含背景及前景遮挡，不能当纯车表面误差。",
+  "scope": "裁剪同时减少上下文并增加物体在latent中的面积，且仅放大旧1024x576条件；不能说明增加真实输入分辨率已验证，也不能把平均误差下降当高保真通过。",
+  "next": "保留r18基线；r24在实际同窗口仅增加后九帧的对应SV3D外观条件，不使用本次crop。用于检查首帧外观约束能否持续，生成先验仍不是真实证据。",
+  "human_verdict": null,
+  "background_input_dir": null
+}
