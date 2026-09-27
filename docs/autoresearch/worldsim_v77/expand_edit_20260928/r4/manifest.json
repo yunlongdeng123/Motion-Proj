@@ -1,0 +1,6508 @@
+{
+  "registration": {
+    "task_id": "WS-V77-EXPAND-EDIT-20260928",
+    "run_id": "r4",
+    "utc": "2026-09-27T19:10:38.381181+00:00",
+    "operation": "prepare_only",
+    "seed": 77,
+    "sources": {
+      "276": "train_candidate",
+      "296": "train_candidate",
+      "827": "validation_candidate"
+    },
+    "window_starts": [
+      0,
+      30,
+      60,
+      90,
+      120,
+      150
+    ],
+    "frames_per_clip": 30,
+    "fps": 10,
+    "supervision": "Original real RGB decoded and resized bilinear to1024x576; mask filled zero input; target identical original RGB. No generated image as GT.",
+    "masks": "Vehicle4.5x1.8x1.5m stationary world envelopes; camera-ray intersection with coarse local LiDAR road plane; project across30frames. Reject any GT hull overlap, near-plane, small/too-large masks.",
+    "acceptance": "Candidate only. Every clip requires visible-background review for unannotated vehicles/shadows/road suitability. No training and no claim200-500 independent source clips.",
+    "failure_ledger_refs": [
+      "V77-F02"
+    ],
+    "failure_ledger_delta": "none",
+    "human_verdict": null
+  },
+  "candidates": [
+    {
+      "id": "s276_f000_c5_u256_v390",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f000_c5_u256_v390",
+      "pose_world": [
+        [
+          0.38193870847574657,
+          -0.9241876557106131,
+          0.0,
+          319.038915073472
+        ],
+        [
+          0.9241876557106131,
+          0.38193870847574657,
+          0.0,
+          987.0196105917066
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7323726151045096
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        517,
+        13937
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:0:5",
+      "source_time_window_id": "276:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s276_f000_c5_u256_v440",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f000_c5_u256_v440",
+      "pose_world": [
+        [
+          0.38193870847574657,
+          -0.9241876557106131,
+          0.0,
+          319.59506362501736
+        ],
+        [
+          0.9241876557106131,
+          0.38193870847574657,
+          0.0,
+          981.2367101354
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.73860514116116
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        594,
+        52651
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:0:5",
+      "source_time_window_id": "276:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s276_f000_c5_u768_v390",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f000_c5_u768_v390",
+      "pose_world": [
+        [
+          0.38193870847574657,
+          -0.9241876557106131,
+          0.0,
+          328.82358704419875
+        ],
+        [
+          0.9241876557106131,
+          0.38193870847574657,
+          0.0,
+          981.2801728371643
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6787175511395958
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        533,
+        17800
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:0:5",
+      "source_time_window_id": "276:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s276_f030_c4_u256_v390",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 4,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f030_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.725052978219202,
+          -0.6886930947638906,
+          0.0,
+          280.3338534708696
+        ],
+        [
+          0.6886930947638906,
+          -0.725052978219202,
+          0.0,
+          952.4675417137846
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8452895374622382
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2292,
+        4825
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:30:4",
+      "source_time_window_id": "276:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s276_f060_c5_u512_v390",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f060_c5_u512_v390",
+      "pose_world": [
+        [
+          0.37123904205566083,
+          -0.9285373302423524,
+          0.0,
+          297.7944823517353
+        ],
+        [
+          0.9285373302423524,
+          0.37123904205566083,
+          0.0,
+          920.2759256589537
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7753432485588687
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        514,
+        9453
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:60:5",
+      "source_time_window_id": "276:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s276_f060_c5_u512_v440",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f060_c5_u512_v440",
+      "pose_world": [
+        [
+          0.37123904205566083,
+          -0.9285373302423524,
+          0.0,
+          296.2556517508624
+        ],
+        [
+          0.9285373302423524,
+          0.37123904205566083,
+          0.0,
+          915.980286086792
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7766347572694858
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        645,
+        39497
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:60:5",
+      "source_time_window_id": "276:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s276_f120_c3_u768_v390",
+      "scene": "276",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-02-17-28-51+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/276",
+      "camera": 3,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s276_f120_c3_u768_v390",
+      "pose_world": [
+        [
+          0.9837674508264507,
+          -0.17944805012712436,
+          0.0,
+          288.75090647076695
+        ],
+        [
+          0.17944805012712436,
+          0.9837674508264507,
+          0.0,
+          853.2786125545753
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7160081543794385
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        8404,
+        35314
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "276:120:3",
+      "source_time_window_id": "276:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c0_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 0,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c0_u256_v390",
+      "pose_world": [
+        [
+          -0.9946220608105214,
+          0.10357101983195612,
+          0.0,
+          770.4116765891904
+        ],
+        [
+          -0.10357101983195612,
+          -0.9946220608105214,
+          0.0,
+          1693.1226263474462
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.5545582821382229
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        21948,
+        94539
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:0",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c1_u768_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 1,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c1_u768_v390",
+      "pose_world": [
+        [
+          -0.4892416375372262,
+          0.8721482787346961,
+          0.0,
+          774.9051353514315
+        ],
+        [
+          -0.8721482787346961,
+          -0.4892416375372262,
+          0.0,
+          1690.0284367058828
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.5047358494337566
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        30323,
+        142375
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:1",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c5_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c5_u256_v390",
+      "pose_world": [
+        [
+          0.9952424122693542,
+          -0.09742967114938315,
+          0.0,
+          798.9401878864822
+        ],
+        [
+          0.09742967114938315,
+          0.9952424122693542,
+          0.0,
+          1708.4067299771211
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8723661796581355
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2635,
+        8751
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:5",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c5_u256_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c5_u256_v440",
+      "pose_world": [
+        [
+          0.9952424122693542,
+          -0.09742967114938315,
+          0.0,
+          792.3823801482633
+        ],
+        [
+          0.09742967114938315,
+          0.9952424122693542,
+          0.0,
+          1704.0480271591543
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7839646480118356
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        5444,
+        37430
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:5",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c5_u256_v490",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c5_u256_v490",
+      "pose_world": [
+        [
+          0.9952424122693542,
+          -0.09742967114938315,
+          0.0,
+          789.995716206179
+        ],
+        [
+          0.09742967114938315,
+          0.9952424122693542,
+          0.0,
+          1702.4617106239386
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7517915870701999
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        7853,
+        81114
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:5",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c5_u512_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c5_u512_v390",
+      "pose_world": [
+        [
+          0.9952424122693542,
+          -0.09742967114938315,
+          0.0,
+          796.7499555945577
+        ],
+        [
+          0.09742967114938315,
+          0.9952424122693542,
+          0.0,
+          1700.6691400696923
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.728795640156243
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        3949,
+        7918
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:5",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f000_c5_u512_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f000_c5_u512_v440",
+      "pose_world": [
+        [
+          0.9952424122693542,
+          -0.09742967114938315,
+          0.0,
+          791.8543442891942
+        ],
+        [
+          0.09742967114938315,
+          0.9952424122693542,
+          0.0,
+          1700.0056180474985
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7098290742697135
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        7384,
+        32753
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:0:5",
+      "source_time_window_id": "296:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f030_c5_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f030_c5_u256_v390",
+      "pose_world": [
+        [
+          0.6542548237042161,
+          -0.7562741736035716,
+          0.0,
+          778.9938191766032
+        ],
+        [
+          0.7562741736035716,
+          0.6542548237042161,
+          0.0,
+          1706.6838449629565
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0381541498438078
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1901,
+        17875
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:30:5",
+      "source_time_window_id": "296:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f060_c4_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f060_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.9438687292669296,
+          -0.3303207863759585,
+          0.0,
+          748.4627701799456
+        ],
+        [
+          0.3303207863759585,
+          -0.9438687292669296,
+          0.0,
+          1675.5264092675554
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8306628632039537
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        3312,
+        6811
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:60:4",
+      "source_time_window_id": "296:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f060_c4_u512_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f060_c4_u512_v390",
+      "pose_world": [
+        [
+          -0.9438687292669296,
+          -0.3303207863759585,
+          0.0,
+          752.705185439083
+        ],
+        [
+          0.3303207863759585,
+          -0.9438687292669296,
+          0.0,
+          1681.7107988375108
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8347444690198931
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1784,
+        6399
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:60:4",
+      "source_time_window_id": "296:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f090_c4_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f090_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.9319609783061387,
+          -0.3625585951465846,
+          0.0,
+          751.451705265046
+        ],
+        [
+          0.3625585951465846,
+          -0.9319609783061387,
+          0.0,
+          1654.4704118023667
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8456381442585872
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        4297,
+        8932
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:90:4",
+      "source_time_window_id": "296:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f090_c5_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f090_c5_u256_v390",
+      "pose_world": [
+        [
+          0.010907193490853785,
+          -0.9999405147958318,
+          0.0,
+          766.247783526557
+        ],
+        [
+          0.9999405147958318,
+          0.010907193490853785,
+          0.0,
+          1666.9612473643904
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.79586418484094
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1079,
+        12502
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:90:5",
+      "source_time_window_id": "296:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f090_c5_u256_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f090_c5_u256_v440",
+      "pose_world": [
+        [
+          0.010907193490853785,
+          -0.9999405147958318,
+          0.0,
+          769.117149708889
+        ],
+        [
+          0.9999405147958318,
+          0.010907193490853785,
+          0.0,
+          1661.4088787365285
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7729310466419692
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1444,
+        48777
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:90:5",
+      "source_time_window_id": "296:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c4_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.963482443465766,
+          -0.26777150918878045,
+          0.0,
+          746.9003303450987
+        ],
+        [
+          0.26777150918878045,
+          -0.963482443465766,
+          0.0,
+          1630.4542356676616
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.557055270702373
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2708,
+        5553
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:4",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c4_u512_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c4_u512_v390",
+      "pose_world": [
+        [
+          -0.963482443465766,
+          -0.26777150918878045,
+          0.0,
+          751.5267197198418
+        ],
+        [
+          0.26777150918878045,
+          -0.963482443465766,
+          0.0,
+          1637.5213393050205
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6079379301750358
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        709,
+        5416
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:4",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c5_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c5_u256_v390",
+      "pose_world": [
+        [
+          -0.08877446670375351,
+          -0.9960517527023705,
+          0.0,
+          765.7103321894948
+        ],
+        [
+          0.9960517527023705,
+          -0.08877446670375351,
+          0.0,
+          1645.0356462540335
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.732762705204757
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        877,
+        11562
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:5",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c5_u256_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c5_u256_v440",
+      "pose_world": [
+        [
+          -0.08877446670375351,
+          -0.9960517527023705,
+          0.0,
+          769.3491937383728
+        ],
+        [
+          0.9960517527023705,
+          -0.08877446670375351,
+          0.0,
+          1639.444502102241
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.74822557371401
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1080,
+        47368
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:5",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c5_u256_v490",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c5_u256_v490",
+      "pose_world": [
+        [
+          -0.08877446670375351,
+          -0.9960517527023705,
+          0.0,
+          770.7356829196791
+        ],
+        [
+          0.9960517527023705,
+          -0.08877446670375351,
+          0.0,
+          1637.3141487558833
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.754117279021306
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1193,
+        86691
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:5",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c5_u512_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c5_u512_v390",
+      "pose_world": [
+        [
+          -0.08877446670375351,
+          -0.9960517527023705,
+          0.0,
+          772.4174205263187
+        ],
+        [
+          0.9960517527023705,
+          -0.08877446670375351,
+          0.0,
+          1643.774626269475
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7811851465077593
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        712,
+        9065
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:5",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f120_c5_u512_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f120_c5_u512_v440",
+      "pose_world": [
+        [
+          -0.08877446670375351,
+          -0.9960517527023705,
+          0.0,
+          772.9976927097133
+        ],
+        [
+          0.9960517527023705,
+          -0.08877446670375351,
+          0.0,
+          1639.16536818325
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7754623419912188
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        989,
+        38030
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:120:5",
+      "source_time_window_id": "296:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c4_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.953384334831222,
+          -0.3017586951496649,
+          0.0,
+          749.6623677203389
+        ],
+        [
+          0.3017586951496649,
+          -0.953384334831222,
+          0.0,
+          1606.6252480538296
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.5425456855106783
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2915,
+        6066
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:4",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c4_u512_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 4,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c4_u512_v390",
+      "pose_world": [
+        [
+          -0.953384334831222,
+          -0.3017586951496649,
+          0.0,
+          753.9747544413726
+        ],
+        [
+          0.3017586951496649,
+          -0.953384334831222,
+          0.0,
+          1613.3558543562197
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.5872964075260811
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2364,
+        5755
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:4",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c5_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c5_u256_v390",
+      "pose_world": [
+        [
+          -0.053202350009044906,
+          -0.9985837520976972,
+          0.0,
+          767.8601410222241
+        ],
+        [
+          0.9985837520976972,
+          -0.053202350009044906,
+          0.0,
+          1620.5939258574883
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7177107218068177
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1060,
+        11461
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:5",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c5_u256_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c5_u256_v440",
+      "pose_world": [
+        [
+          -0.053202350009044906,
+          -0.9985837520976972,
+          0.0,
+          771.3327864002747
+        ],
+        [
+          0.9985837520976972,
+          -0.053202350009044906,
+          0.0,
+          1614.8167937054332
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7431365057633039
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1370,
+        47107
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:5",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c5_u256_v490",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c5_u256_v490",
+      "pose_world": [
+        [
+          -0.053202350009044906,
+          -0.9985837520976972,
+          0.0,
+          772.6481565419201
+        ],
+        [
+          0.9985837520976972,
+          -0.053202350009044906,
+          0.0,
+          1612.6285290512924
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7527672953785285
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1522,
+        86699
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:5",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c5_u768_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.053202350009044906,
+          -0.9985837520976972,
+          0.0,
+          779.6385176791463
+        ],
+        [
+          0.9985837520976972,
+          -0.053202350009044906,
+          0.0,
+          1618.0707252919576
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8201262966291598
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1174,
+        19363
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:5",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s296_f150_c5_u768_v440",
+      "scene": "296",
+      "split": "train_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-08-03-15-21-40+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/296",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s296_f150_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.053202350009044906,
+          -0.9985837520976972,
+          0.0,
+          778.0729372513208
+        ],
+        [
+          0.9985837520976972,
+          -0.053202350009044906,
+          0.0,
+          1614.1099858111575
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8024420876843261
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1430,
+        66090
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "296:150:5",
+      "source_time_window_id": "296:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c4_u256_v490",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c4_u256_v490",
+      "pose_world": [
+        [
+          0.3104612679951368,
+          0.9505860303385758,
+          0.0,
+          1856.0128886303828
+        ],
+        [
+          -0.9505860303385758,
+          0.3104612679951368,
+          0.0,
+          1239.4578950378336
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7176130064862978
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        74974,
+        113306
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:4",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c4_u512_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c4_u512_v440",
+      "pose_world": [
+        [
+          0.3104612679951368,
+          0.9505860303385758,
+          0.0,
+          1854.6130485983451
+        ],
+        [
+          -0.9505860303385758,
+          0.3104612679951368,
+          0.0,
+          1235.9657601967667
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7096597257444635
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        25527,
+        52072
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:4",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c4_u512_v490",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c4_u512_v490",
+      "pose_world": [
+        [
+          0.3104612679951368,
+          0.9505860303385758,
+          0.0,
+          1853.6358461071686
+        ],
+        [
+          -0.9505860303385758,
+          0.3104612679951368,
+          0.0,
+          1238.9028005009852
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7212192176402261
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        62269,
+        95445
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:4",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c4_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c4_u768_v390",
+      "pose_world": [
+        [
+          0.3104612679951368,
+          0.9505860303385758,
+          0.0,
+          1851.519086108238
+        ],
+        [
+          -0.9505860303385758,
+          0.3104612679951368,
+          0.0,
+          1228.2473538350548
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.692081179821104
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        5742,
+        17845
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:4",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c4_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c4_u768_v440",
+      "pose_world": [
+        [
+          0.3104612679951368,
+          0.9505860303385758,
+          0.0,
+          1851.4258844584954
+        ],
+        [
+          -0.9505860303385758,
+          0.3104612679951368,
+          0.0,
+          1235.3400463198177
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7148724335606242
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        32212,
+        43667
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:4",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c4_u768_v490",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c4_u768_v490",
+      "pose_world": [
+        [
+          0.3104612679951368,
+          0.9505860303385758,
+          0.0,
+          1851.3859720232538
+        ],
+        [
+          -0.9505860303385758,
+          0.3104612679951368,
+          0.0,
+          1238.3774027428967
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7246325015579986
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        53845,
+        91263
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:4",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c5_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.7816923352492885,
+          0.6236642470211949,
+          0.0,
+          1839.134199456763
+        ],
+        [
+          -0.6236642470211949,
+          -0.7816923352492885,
+          0.0,
+          1242.9304101898197
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7668234146223616
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2086,
+        18131
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:5",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f000_c5_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f000_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.7816923352492885,
+          0.6236642470211949,
+          0.0,
+          1843.4291698637319
+        ],
+        [
+          -0.6236642470211949,
+          -0.7816923352492885,
+          0.0,
+          1243.9981016397032
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7605135483677179
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        7730,
+        62390
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:0:5",
+      "source_time_window_id": "827:0",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c4_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.9072559977156318,
+          0.42057883281141645,
+          0.0,
+          1842.1490312246262
+        ],
+        [
+          -0.42057883281141645,
+          -0.9072559977156318,
+          0.0,
+          1227.7981278354903
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.4766141519976219
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        4342,
+        7176
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:4",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c4_u256_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c4_u256_v440",
+      "pose_world": [
+        [
+          -0.9072559977156318,
+          0.42057883281141645,
+          0.0,
+          1850.558620061717
+        ],
+        [
+          -0.42057883281141645,
+          -0.9072559977156318,
+          0.0,
+          1235.5792508794316
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6128845368677571
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        11018,
+        28242
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:4",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c4_u512_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c4_u512_v390",
+      "pose_world": [
+        [
+          -0.9072559977156318,
+          0.42057883281141645,
+          0.0,
+          1840.2534648472003
+        ],
+        [
+          -0.42057883281141645,
+          -0.9072559977156318,
+          0.0,
+          1234.9042496766056
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.5722073806087808
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        4887,
+        6454
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:4",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c4_u512_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c4_u512_v440",
+      "pose_world": [
+        [
+          -0.9072559977156318,
+          0.42057883281141645,
+          0.0,
+          1849.2919564473318
+        ],
+        [
+          -0.42057883281141645,
+          -0.9072559977156318,
+          0.0,
+          1239.155319863769
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6600482192244057
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        410,
+        23125
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:4",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c4_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c4_u768_v390",
+      "pose_world": [
+        [
+          -0.9072559977156318,
+          0.42057883281141645,
+          0.0,
+          1838.5577805604378
+        ],
+        [
+          -0.42057883281141645,
+          -0.9072559977156318,
+          0.0,
+          1241.2610511525645
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.6577205747692285
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        3263,
+        8525
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:4",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u256_v390",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1844.6464720550484
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1249.5410824637984
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7941094811738127
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1288,
+        10804
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u256_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u256_v440",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1851.3631621657698
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1247.5048821049063
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7853217887236834
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1643,
+        44931
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u256_v490",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u256_v490",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1853.86572074441
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1246.7462181510873
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7820475993886087
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2059,
+        86297
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u512_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u512_v390",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1850.6295768851464
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1253.1347403643904
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8633708772502826
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1274,
+        7997
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u512_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u512_v440",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1854.3223489913466
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1249.7229165522833
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8258596945062684
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1881,
+        34753
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1855.2736178034895
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1255.9241105677872
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9171310513696822
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1616,
+        17413
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f030_c5_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f030_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.709387058285439,
+          -0.7048191268241316,
+          0.0,
+          1856.8810050386533
+        ],
+        [
+          0.7048191268241316,
+          -0.709387058285439,
+          0.0,
+          1251.6407364083548
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8609107284184454
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2210,
+        61070
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:30:5",
+      "source_time_window_id": "827:30",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c4_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.9853693866308998,
+          0.17043230882272423,
+          0.0,
+          1854.7017676077771
+        ],
+        [
+          -0.17043230882272423,
+          -0.9853693866308998,
+          0.0,
+          1220.8947182660233
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7773344423733219
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1869,
+        15262
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:4",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c5_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c5_u256_v390",
+      "pose_world": [
+        [
+          -0.5072105419348055,
+          -0.8618221778013146,
+          0.0,
+          1857.9795670505364
+        ],
+        [
+          0.8618221778013146,
+          -0.5072105419348055,
+          0.0,
+          1236.3102071847006
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9978968814824793
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1048,
+        15579
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:5",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c5_u256_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c5_u256_v440",
+      "pose_world": [
+        [
+          -0.5072105419348055,
+          -0.8618221778013146,
+          0.0,
+          1862.6369638538233
+        ],
+        [
+          0.8618221778013146,
+          -0.5072105419348055,
+          0.0,
+          1233.4455510081536
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9216764198252849
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1299,
+        58815
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:5",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c5_u512_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c5_u512_v390",
+      "pose_world": [
+        [
+          -0.5072105419348055,
+          -0.8618221778013146,
+          0.0,
+          1862.9934932037118
+        ],
+        [
+          0.8618221778013146,
+          -0.5072105419348055,
+          0.0,
+          1238.959798896536
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0060323157421545
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        806,
+        9240
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:5",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c5_u512_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c5_u512_v440",
+      "pose_world": [
+        [
+          -0.5072105419348055,
+          -0.8618221778013146,
+          0.0,
+          1865.5005817881222
+        ],
+        [
+          0.8618221778013146,
+          -0.5072105419348055,
+          0.0,
+          1235.029185834745
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9274297155178095
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1113,
+        39804
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:5",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c5_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.5072105419348055,
+          -0.8618221778013146,
+          0.0,
+          1867.7853512499946
+        ],
+        [
+          0.8618221778013146,
+          -0.5072105419348055,
+          0.0,
+          1241.49203949519
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0138074294806247
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1045,
+        15961
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:5",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f060_c5_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f060_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.5072105419348055,
+          -0.8618221778013146,
+          0.0,
+          1868.2895171832547
+        ],
+        [
+          0.8618221778013146,
+          -0.5072105419348055,
+          0.0,
+          1236.5715198060282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9330329664974042
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1283,
+        59018
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:60:5",
+      "source_time_window_id": "827:60",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c3_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 3,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c3_u768_v390",
+      "pose_world": [
+        [
+          0.6523762718138907,
+          -0.7578952434038683,
+          0.0,
+          1892.892168385388
+        ],
+        [
+          0.7578952434038683,
+          0.6523762718138907,
+          0.0,
+          1216.4304107049663
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8188160760061465
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        2092,
+        23082
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:3",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c4_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.9852322676371454,
+          0.17122318419702484,
+          0.0,
+          1863.776851635583
+        ],
+        [
+          -0.17122318419702484,
+          -0.9852322676371454,
+          0.0,
+          1200.2802331624637
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7004548135328394
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        5509,
+        11197
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:4",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c4_u512_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c4_u512_v390",
+      "pose_world": [
+        [
+          -0.9852322676371454,
+          0.17122318419702484,
+          0.0,
+          1863.1260561295965
+        ],
+        [
+          -0.17122318419702484,
+          -0.9852322676371454,
+          0.0,
+          1205.95691362202
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8052455566507633
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1764,
+        9165
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:4",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c5_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c5_u256_v390",
+      "pose_world": [
+        [
+          -0.507531534744904,
+          -0.8616331825315703,
+          0.0,
+          1868.0993745890496
+        ],
+        [
+          0.8616331825315703,
+          -0.507531534744904,
+          0.0,
+          1217.6845327343476
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9850595838553522
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1339,
+        12233
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:5",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c5_u256_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c5_u256_v440",
+      "pose_world": [
+        [
+          -0.507531534744904,
+          -0.8616331825315703,
+          0.0,
+          1873.5289847301253
+        ],
+        [
+          0.8616331825315703,
+          -0.507531534744904,
+          0.0,
+          1214.349037343162
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8941866701238508
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1825,
+        48637
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:5",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c5_u512_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c5_u512_v390",
+      "pose_world": [
+        [
+          -0.507531534744904,
+          -0.8616331825315703,
+          0.0,
+          1873.9502312703314
+        ],
+        [
+          0.8616331825315703,
+          -0.507531534744904,
+          0.0,
+          1220.204560388539
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9959363742354537
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1015,
+        7897
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:5",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c5_u512_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c5_u512_v440",
+      "pose_world": [
+        [
+          -0.507531534744904,
+          -0.8616331825315703,
+          0.0,
+          1876.6903708945074
+        ],
+        [
+          0.8616331825315703,
+          -0.507531534744904,
+          0.0,
+          1215.9144806858276
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9036901963322244
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1510,
+        34427
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:5",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c5_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.507531534744904,
+          -0.8616331825315703,
+          0.0,
+          1879.111597806883
+        ],
+        [
+          0.8616331825315703,
+          -0.507531534744904,
+          0.0,
+          1222.4276171328854
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0055313968024127
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1404,
+        15027
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:5",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f090_c5_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f090_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.507531534744904,
+          -0.8616331825315703,
+          0.0,
+          1879.6325319629511
+        ],
+        [
+          0.8616331825315703,
+          -0.507531534744904,
+          0.0,
+          1217.3713689677895
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9125347042060918
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1824,
+        54921
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:90:5",
+      "source_time_window_id": "827:90",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f120_c3_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 3,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f120_c3_u768_v390",
+      "pose_world": [
+        [
+          0.665731228630548,
+          -0.7461916183032754,
+          0.0,
+          1902.2886977260378
+        ],
+        [
+          0.7461916183032754,
+          0.665731228630548,
+          0.0,
+          1200.5438324180313
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.877092773064253
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        5431,
+        22374
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:120:3",
+      "source_time_window_id": "827:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f120_c5_u512_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f120_c5_u512_v390",
+      "pose_world": [
+        [
+          -0.49260098668665825,
+          -0.8702552889326963,
+          0.0,
+          1883.4514398835647
+        ],
+        [
+          0.8702552889326963,
+          -0.49260098668665825,
+          0.0,
+          1204.233477639304
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0101848615544622
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1080,
+        8577
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:120:5",
+      "source_time_window_id": "827:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f120_c5_u512_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f120_c5_u512_v440",
+      "pose_world": [
+        [
+          -0.49260098668665825,
+          -0.8702552889326963,
+          0.0,
+          1886.0355173905396
+        ],
+        [
+          0.8702552889326963,
+          -0.49260098668665825,
+          0.0,
+          1200.02814720447
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9324600694820027
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1589,
+        37844
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:120:5",
+      "source_time_window_id": "827:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f120_c5_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f120_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.49260098668665825,
+          -0.8702552889326963,
+          0.0,
+          1888.4702333608866
+        ],
+        [
+          0.8702552889326963,
+          -0.49260098668665825,
+          0.0,
+          1206.5350095152742
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0275271373333477
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1466,
+        15374
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:120:5",
+      "source_time_window_id": "827:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f120_c5_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f120_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.49260098668665825,
+          -0.8702552889326963,
+          0.0,
+          1888.9034587768351
+        ],
+        [
+          0.8702552889326963,
+          -0.49260098668665825,
+          0.0,
+          1201.4706960466528
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9444175666637193
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1935,
+        58080
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:120:5",
+      "source_time_window_id": "827:120",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f150_c4_u256_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 4,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f150_c4_u256_v390",
+      "pose_world": [
+        [
+          -0.9851475072454129,
+          0.17171018888857212,
+          0.0,
+          1882.5062310725034
+        ],
+        [
+          -0.17171018888857212,
+          -0.9851475072454129,
+          0.0,
+          1169.1023705615703
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8017620326605026
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1220,
+        12211
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:150:4",
+      "source_time_window_id": "827:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f150_c5_u768_v390",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f150_c5_u768_v390",
+      "pose_world": [
+        [
+          -0.5081805992369757,
+          -0.8612505318193703,
+          0.0,
+          1897.3094795045174
+        ],
+        [
+          0.8612505318193703,
+          -0.5081805992369757,
+          0.0,
+          1189.605160264309
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0620458320561559
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        976,
+        19417
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:150:5",
+      "source_time_window_id": "827:150",
+      "human_review": null,
+      "training_admitted": false
+    },
+    {
+      "id": "s827_f150_c5_u768_v440",
+      "scene": "827",
+      "split": "validation_candidate",
+      "raw_log_prefixes": [
+        "n015-2018-11-21-19-38-26+0800"
+      ],
+      "source_root": "/root/autodl-tmp/data/worldsim_v5/drivestudio_processed_10Hz/trainval/827",
+      "camera": 5,
+      "source_frames": [
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "mask_dir": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-EXPAND-EDIT-20260928/r4/masks/s827_f150_c5_u768_v440",
+      "pose_world": [
+        [
+          -0.5081805992369757,
+          -0.8612505318193703,
+          0.0,
+          1897.7592850370906
+        ],
+        [
+          0.8612505318193703,
+          -0.5081805992369757,
+          0.0,
+          1185.2649901796588
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.9766389950202836
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size_lwh": [
+        4.5,
+        1.8,
+        1.5
+      ],
+      "area_range": [
+        1157,
+        69132
+      ],
+      "gt_overlap_pixels": 0,
+      "source_window_id": "827:150:5",
+      "source_time_window_id": "827:150",
+      "human_review": null,
+      "training_admitted": false
+    }
+  ]
+}

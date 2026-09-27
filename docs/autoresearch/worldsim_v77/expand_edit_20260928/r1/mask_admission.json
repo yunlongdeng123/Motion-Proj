@@ -1,0 +1,49 @@
+{
+  "review": "assistant source-image and mask review; not human verdict",
+  "human_verdict": null,
+  "admitted_primary_streams": [
+    [
+      "processed_350",
+      5
+    ],
+    [
+      "processed_663",
+      5
+    ],
+    [
+      "processed_191",
+      2
+    ],
+    [
+      "processed_425",
+      5
+    ],
+    [
+      "processed_382",
+      0
+    ]
+  ],
+  "unresolved_streams": [
+    {
+      "scene": "processed_756",
+      "camera": 2,
+      "reason": "Night target core absent in 22/30 frames; bus occlusion and propagation not separated. Mask input not admitted; heldout failure stays in denominator."
+    },
+    {
+      "scene": "processed_756",
+      "camera": 0,
+      "reason": "Only first two frame cores; edge/occlusion and tracking unresolved."
+    },
+    {
+      "scene": "processed_382",
+      "camera": 2,
+      "reason": "Only f29 core; target heavily occluded by other vehicles. No multi-view deletion claim."
+    },
+    {
+      "scene": "processed_191",
+      "camera": 4,
+      "reason": "Only f0 tiny image-edge core; no usable continuous cross-view."
+    }
+  ],
+  "limitation": "Primary 191 target behind fence/tree and 663 small distant car remain deliberate stress cases; no claim of perfect masks or road legality."
+}

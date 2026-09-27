@@ -1,0 +1,137 @@
+{
+  "task_id": "WS-V77-EXPAND-EDIT-20260928",
+  "run_id": "r7",
+  "utc": "2026-09-27T19:52:17.721530+00:00",
+  "operation": "FACTUAL_GROUND_CONTROL",
+  "delta_z_m": -0.1461036700027409,
+  "intervention": "Only fixed z translation from f0 measured local road plane. Same r5 GLB, GT XY/yaw/size, r2 B_t, lights, camera and shader. No new generation.",
+  "evidence": {
+    "rows": [
+      {
+        "frame": 0,
+        "gt_bottom": -0.07450000000000001,
+        "plane_ground": -0.22060367000274092,
+        "gt_bottom_minus_plane": 0.1461036700027409,
+        "nearest_plane_support_xy_m": 2.339582922319533,
+        "support_points": 659
+      },
+      {
+        "frame": 1,
+        "gt_bottom": -0.06950000000000012,
+        "plane_ground": -0.2155251030984642,
+        "gt_bottom_minus_plane": 0.1460251030984641,
+        "nearest_plane_support_xy_m": 2.158950584040592,
+        "support_points": 659
+      },
+      {
+        "frame": 2,
+        "gt_bottom": -0.0645,
+        "plane_ground": -0.22257398872282833,
+        "gt_bottom_minus_plane": 0.15807398872282832,
+        "nearest_plane_support_xy_m": 2.164339358265171,
+        "support_points": 667
+      },
+      {
+        "frame": 3,
+        "gt_bottom": -0.0595,
+        "plane_ground": -0.21936118725174925,
+        "gt_bottom_minus_plane": 0.15986118725174925,
+        "nearest_plane_support_xy_m": 3.823926269920802,
+        "support_points": 770
+      },
+      {
+        "frame": 4,
+        "gt_bottom": -0.054500000000000104,
+        "plane_ground": -0.19963949565694122,
+        "gt_bottom_minus_plane": 0.14513949565694112,
+        "nearest_plane_support_xy_m": 4.379989614873913,
+        "support_points": 767
+      },
+      {
+        "frame": 5,
+        "gt_bottom": -0.04949999999999999,
+        "plane_ground": -0.19114189470027684,
+        "gt_bottom_minus_plane": 0.14164189470027685,
+        "nearest_plane_support_xy_m": 5.531420916316301,
+        "support_points": 666
+      },
+      {
+        "frame": 6,
+        "gt_bottom": -0.044500000000000095,
+        "plane_ground": -0.18248972619601522,
+        "gt_bottom_minus_plane": 0.13798972619601513,
+        "nearest_plane_support_xy_m": 5.603640127395858,
+        "support_points": 663
+      },
+      {
+        "frame": 7,
+        "gt_bottom": -0.03949999999999998,
+        "plane_ground": -0.17676709590732814,
+        "gt_bottom_minus_plane": 0.13726709590732816,
+        "nearest_plane_support_xy_m": 5.206032205186885,
+        "support_points": 656
+      },
+      {
+        "frame": 8,
+        "gt_bottom": -0.034499999999999975,
+        "plane_ground": -0.16297506230997222,
+        "gt_bottom_minus_plane": 0.12847506230997224,
+        "nearest_plane_support_xy_m": 3.8572039978079253,
+        "support_points": 671
+      },
+      {
+        "frame": 9,
+        "gt_bottom": -0.02950000000000008,
+        "plane_ground": -0.17939189739701644,
+        "gt_bottom_minus_plane": 0.14989189739701636,
+        "nearest_plane_support_xy_m": 5.174186956825154,
+        "support_points": 675
+      },
+      {
+        "frame": 46,
+        "gt_bottom": 0.1855,
+        "plane_ground": 0.04173422771504728,
+        "gt_bottom_minus_plane": 0.14376577228495271,
+        "nearest_plane_support_xy_m": 6.843008932205371,
+        "support_points": 667
+      }
+    ],
+    "scope": "Existing road ROI LiDAR plane; diagnose GT grounding, not unqualified new placement. Plane extrapolation depends on source proximity, original RGB review remains necessary.",
+    "human_verdict": null
+  },
+  "limits": "First-frame plane source nearest2.34m from target, later/source46 up to6.84m. Planar-road diagnostic, not direct observed target tire contact or global correct road surface.",
+  "scenes": [
+    {
+      "name": "factual12_grounded",
+      "actor": "12",
+      "yaw": 0,
+      "streams": [
+        {
+          "camera": 0,
+          "active_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "camera": 2,
+          "active_frames": [
+            46
+          ]
+        }
+      ]
+    }
+  ],
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ]
+}

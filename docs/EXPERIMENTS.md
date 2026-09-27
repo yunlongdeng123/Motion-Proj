@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-EXPAND-EDIT-20260928 / r1–r7 | 固定新增六例，五例30帧生成/一例输入停止；r30回接Ω、INSERT、原位/接地控制，MOVE未放行；78监督候选、零训练 | [报告与组件图](v77/EXPANSION_EDIT_CHECKPOINT.md)、[登记/证据](autoresearch/worldsim_v77/expand_edit_20260928/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r36–r41 | 实测道路算子与后向证据控制；固定邻车修复车型、PBR失败停止，保留r18/r21 | [资产与证据报告](v77/HYBRID_RETAINED_ASSET.md)、[登记/观察](autoresearch/worldsim_v77/hybrid_bg_20260927/retained_asset/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r30–r35 | 首窗范围/羽化/邻车保护改善，长时序与来源几何反例；实际28帧 | [时序报告](v77/HYBRID_THIRD_TEMPORAL.md)、[证据](autoresearch/worldsim_v77/hybrid_bg_20260927/temporal_review/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r25–r29 | 第三例矩形条件改善；路面支撑与Poisson写回反例；保留r18/r28 | [第三例报告](v77/HYBRID_THIRD_SCENE.md)、[实际证据](autoresearch/worldsim_v77/hybrid_bg_20260927/third_scene/review_link.md) |

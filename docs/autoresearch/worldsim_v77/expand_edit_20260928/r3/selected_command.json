@@ -1,0 +1,99 @@
+{
+  "task_id": "WS-V77-EXPAND-EDIT-20260928",
+  "run_id": "r3",
+  "utc": "2026-09-27T19:08:04.665697+00:00",
+  "operation": "INSERT",
+  "selected": {
+    "proposal": 2,
+    "sample_camera": 5,
+    "pixel": [
+      220,
+      490
+    ],
+    "pose_world": [
+      [
+        -0.4073265001417903,
+        0.9132826081133048,
+        0.0,
+        410.3124472101252
+      ],
+      [
+        -0.9132826081133048,
+        -0.4073265001417903,
+        0.0,
+        1186.4503800020352
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        1.0681505957059003
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "size_lwh": [
+      4.974,
+      2.055,
+      1.925
+    ],
+    "min_gt_gap_m": 3.551212744679947,
+    "min_ego_gap_m": 1.2391641169531715,
+    "max_static_points": 0,
+    "local_road_support": 573,
+    "areas": [
+      0,
+      0,
+      0,
+      0,
+      74314.2928948381,
+      140871.76136165988
+    ]
+  },
+  "assistant_review": "Proposal2 ground footprint stays in empty rear road lane f0/f9, unlike proposal9 across curb. GT/ego/static-point screening covers30frames; render only10. Adjacent CAM4 catches only image edge. No traffic-response or full road-law certificate.",
+  "scenes": [
+    {
+      "name": "insert_official_000",
+      "actor": "inserted_0255",
+      "yaw": 0,
+      "streams": [
+        {
+          "camera": 5,
+          "active_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "camera": 4,
+          "active_frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        }
+      ]
+    }
+  ],
+  "asset_source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-FULL-20260927/r1/scene_0255/actor.glb",
+  "human_verdict": null
+}

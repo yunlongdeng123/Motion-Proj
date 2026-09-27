@@ -1,0 +1,30 @@
+{
+  "task_id": "WS-V77-EXPAND-EDIT-20260928",
+  "run_id": "r4",
+  "utc": "2026-09-27T19:10:38.381181+00:00",
+  "operation": "prepare_only",
+  "seed": 77,
+  "sources": {
+    "276": "train_candidate",
+    "296": "train_candidate",
+    "827": "validation_candidate"
+  },
+  "window_starts": [
+    0,
+    30,
+    60,
+    90,
+    120,
+    150
+  ],
+  "frames_per_clip": 30,
+  "fps": 10,
+  "supervision": "Original real RGB decoded and resized bilinear to1024x576; mask filled zero input; target identical original RGB. No generated image as GT.",
+  "masks": "Vehicle4.5x1.8x1.5m stationary world envelopes; camera-ray intersection with coarse local LiDAR road plane; project across30frames. Reject any GT hull overlap, near-plane, small/too-large masks.",
+  "acceptance": "Candidate only. Every clip requires visible-background review for unannotated vehicles/shadows/road suitability. No training and no claim200-500 independent source clips.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}

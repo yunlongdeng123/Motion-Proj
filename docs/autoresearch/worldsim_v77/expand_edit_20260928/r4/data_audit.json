@@ -1,0 +1,996 @@
+{
+  "actual_input_checks": 156,
+  "known_old_0230_0255_log_overlap": [],
+  "old_log_metadata": [
+    {
+      "scene": "scene_0230",
+      "raw_log_prefixes": [
+        "n008-2018-07-27-12-07-38-0400"
+      ]
+    },
+    {
+      "scene": "scene_0255",
+      "raw_log_prefixes": [
+        "n008-2018-08-06-15-06-32-0400"
+      ]
+    }
+  ],
+  "all_nine_eval_actor_track_overlap": [
+    {
+      "scene": "276",
+      "shared": 0
+    },
+    {
+      "scene": "296",
+      "shared": 0
+    },
+    {
+      "scene": "827",
+      "shared": 0
+    }
+  ],
+  "official000_raw_log": "unavailable; actor tracks disjoint is weaker than log isolation; must resolve before training",
+  "unknown_pretrained_overlap": true,
+  "admitted_training": 0,
+  "training_steps": 0,
+  "visual_notes": "18 start/end samples inspected. Includes tree/sidewalk/building and dark night background; candidate clean RGB not yet complete per-clip review. Daytime train vs nighttime validation is a domain-shift stress split, not balanced training validation.",
+  "examples": [
+    {
+      "candidate": "s276_f000_c5_u256_v390",
+      "scene": "276",
+      "split": "train_candidate",
+      "frames": 30
+    },
+    {
+      "candidate": "s296_f000_c0_u256_v390",
+      "scene": "296",
+      "split": "train_candidate",
+      "frames": 30
+    },
+    {
+      "candidate": "s827_f000_c4_u256_v490",
+      "scene": "827",
+      "split": "validation_candidate",
+      "frames": 30
+    }
+  ],
+  "checks": [
+    {
+      "candidate": "s276_f000_c5_u256_v390",
+      "frame": 0,
+      "mask_pixels": 13937,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f000_c5_u256_v390",
+      "frame": 29,
+      "mask_pixels": 517,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f000_c5_u256_v440",
+      "frame": 0,
+      "mask_pixels": 52651,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f000_c5_u256_v440",
+      "frame": 29,
+      "mask_pixels": 594,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f000_c5_u768_v390",
+      "frame": 0,
+      "mask_pixels": 17800,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f000_c5_u768_v390",
+      "frame": 29,
+      "mask_pixels": 533,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f030_c4_u256_v390",
+      "frame": 30,
+      "mask_pixels": 4825,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f030_c4_u256_v390",
+      "frame": 59,
+      "mask_pixels": 2715,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f060_c5_u512_v390",
+      "frame": 60,
+      "mask_pixels": 9453,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f060_c5_u512_v390",
+      "frame": 89,
+      "mask_pixels": 514,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f060_c5_u512_v440",
+      "frame": 60,
+      "mask_pixels": 39497,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f060_c5_u512_v440",
+      "frame": 89,
+      "mask_pixels": 645,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f120_c3_u768_v390",
+      "frame": 120,
+      "mask_pixels": 35314,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s276_f120_c3_u768_v390",
+      "frame": 149,
+      "mask_pixels": 8404,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c0_u256_v390",
+      "frame": 0,
+      "mask_pixels": 21948,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c0_u256_v390",
+      "frame": 29,
+      "mask_pixels": 47828,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c1_u768_v390",
+      "frame": 0,
+      "mask_pixels": 30323,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c1_u768_v390",
+      "frame": 29,
+      "mask_pixels": 142375,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u256_v390",
+      "frame": 0,
+      "mask_pixels": 8751,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u256_v390",
+      "frame": 29,
+      "mask_pixels": 2635,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u256_v440",
+      "frame": 0,
+      "mask_pixels": 37430,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u256_v440",
+      "frame": 29,
+      "mask_pixels": 5444,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u256_v490",
+      "frame": 0,
+      "mask_pixels": 78210,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u256_v490",
+      "frame": 29,
+      "mask_pixels": 7853,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u512_v390",
+      "frame": 0,
+      "mask_pixels": 7918,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u512_v390",
+      "frame": 29,
+      "mask_pixels": 4313,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u512_v440",
+      "frame": 0,
+      "mask_pixels": 32753,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f000_c5_u512_v440",
+      "frame": 29,
+      "mask_pixels": 7384,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f030_c5_u256_v390",
+      "frame": 30,
+      "mask_pixels": 17875,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f030_c5_u256_v390",
+      "frame": 59,
+      "mask_pixels": 1901,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f060_c4_u256_v390",
+      "frame": 60,
+      "mask_pixels": 6811,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f060_c4_u256_v390",
+      "frame": 89,
+      "mask_pixels": 4264,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f060_c4_u512_v390",
+      "frame": 60,
+      "mask_pixels": 5283,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f060_c4_u512_v390",
+      "frame": 89,
+      "mask_pixels": 1784,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f090_c4_u256_v390",
+      "frame": 90,
+      "mask_pixels": 8932,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f090_c4_u256_v390",
+      "frame": 119,
+      "mask_pixels": 4496,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f090_c5_u256_v390",
+      "frame": 90,
+      "mask_pixels": 12502,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f090_c5_u256_v390",
+      "frame": 119,
+      "mask_pixels": 1079,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f090_c5_u256_v440",
+      "frame": 90,
+      "mask_pixels": 48777,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f090_c5_u256_v440",
+      "frame": 119,
+      "mask_pixels": 1444,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c4_u256_v390",
+      "frame": 120,
+      "mask_pixels": 5553,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c4_u256_v390",
+      "frame": 149,
+      "mask_pixels": 3424,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c4_u512_v390",
+      "frame": 120,
+      "mask_pixels": 4383,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c4_u512_v390",
+      "frame": 149,
+      "mask_pixels": 709,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u256_v390",
+      "frame": 120,
+      "mask_pixels": 11562,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u256_v390",
+      "frame": 149,
+      "mask_pixels": 877,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u256_v440",
+      "frame": 120,
+      "mask_pixels": 47368,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u256_v440",
+      "frame": 149,
+      "mask_pixels": 1080,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u256_v490",
+      "frame": 120,
+      "mask_pixels": 86691,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u256_v490",
+      "frame": 149,
+      "mask_pixels": 1193,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u512_v390",
+      "frame": 120,
+      "mask_pixels": 9065,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u512_v390",
+      "frame": 149,
+      "mask_pixels": 712,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u512_v440",
+      "frame": 120,
+      "mask_pixels": 38030,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f120_c5_u512_v440",
+      "frame": 149,
+      "mask_pixels": 989,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c4_u256_v390",
+      "frame": 150,
+      "mask_pixels": 6066,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c4_u256_v390",
+      "frame": 179,
+      "mask_pixels": 3740,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c4_u512_v390",
+      "frame": 150,
+      "mask_pixels": 4719,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c4_u512_v390",
+      "frame": 179,
+      "mask_pixels": 2364,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u256_v390",
+      "frame": 150,
+      "mask_pixels": 11461,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u256_v390",
+      "frame": 179,
+      "mask_pixels": 1060,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u256_v440",
+      "frame": 150,
+      "mask_pixels": 47107,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u256_v440",
+      "frame": 179,
+      "mask_pixels": 1370,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u256_v490",
+      "frame": 150,
+      "mask_pixels": 86699,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u256_v490",
+      "frame": 179,
+      "mask_pixels": 1522,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u768_v390",
+      "frame": 150,
+      "mask_pixels": 19363,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u768_v390",
+      "frame": 179,
+      "mask_pixels": 1174,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u768_v440",
+      "frame": 150,
+      "mask_pixels": 66090,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s296_f150_c5_u768_v440",
+      "frame": 179,
+      "mask_pixels": 1430,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u256_v490",
+      "frame": 0,
+      "mask_pixels": 80779,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u256_v490",
+      "frame": 29,
+      "mask_pixels": 113306,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u512_v440",
+      "frame": 0,
+      "mask_pixels": 26378,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u512_v440",
+      "frame": 29,
+      "mask_pixels": 43233,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u512_v490",
+      "frame": 0,
+      "mask_pixels": 67233,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u512_v490",
+      "frame": 29,
+      "mask_pixels": 95445,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u768_v390",
+      "frame": 0,
+      "mask_pixels": 12541,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u768_v390",
+      "frame": 29,
+      "mask_pixels": 5742,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u768_v440",
+      "frame": 0,
+      "mask_pixels": 39703,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u768_v440",
+      "frame": 29,
+      "mask_pixels": 43667,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u768_v490",
+      "frame": 0,
+      "mask_pixels": 91263,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c4_u768_v490",
+      "frame": 29,
+      "mask_pixels": 53845,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c5_u768_v390",
+      "frame": 0,
+      "mask_pixels": 18131,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c5_u768_v390",
+      "frame": 29,
+      "mask_pixels": 2086,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c5_u768_v440",
+      "frame": 0,
+      "mask_pixels": 62390,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f000_c5_u768_v440",
+      "frame": 29,
+      "mask_pixels": 7730,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u256_v390",
+      "frame": 30,
+      "mask_pixels": 6896,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u256_v390",
+      "frame": 59,
+      "mask_pixels": 5302,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u256_v440",
+      "frame": 30,
+      "mask_pixels": 28242,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u256_v440",
+      "frame": 59,
+      "mask_pixels": 11018,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u512_v390",
+      "frame": 30,
+      "mask_pixels": 4999,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u512_v390",
+      "frame": 59,
+      "mask_pixels": 6365,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u512_v440",
+      "frame": 30,
+      "mask_pixels": 21168,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u512_v440",
+      "frame": 59,
+      "mask_pixels": 410,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u768_v390",
+      "frame": 30,
+      "mask_pixels": 8525,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c4_u768_v390",
+      "frame": 59,
+      "mask_pixels": 3263,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u256_v390",
+      "frame": 30,
+      "mask_pixels": 10804,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u256_v390",
+      "frame": 59,
+      "mask_pixels": 1288,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u256_v440",
+      "frame": 30,
+      "mask_pixels": 44931,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u256_v440",
+      "frame": 59,
+      "mask_pixels": 1643,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u256_v490",
+      "frame": 30,
+      "mask_pixels": 86297,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u256_v490",
+      "frame": 59,
+      "mask_pixels": 2059,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u512_v390",
+      "frame": 30,
+      "mask_pixels": 7997,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u512_v390",
+      "frame": 59,
+      "mask_pixels": 1274,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u512_v440",
+      "frame": 30,
+      "mask_pixels": 34753,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u512_v440",
+      "frame": 59,
+      "mask_pixels": 1881,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u768_v390",
+      "frame": 30,
+      "mask_pixels": 17413,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u768_v390",
+      "frame": 59,
+      "mask_pixels": 1616,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u768_v440",
+      "frame": 30,
+      "mask_pixels": 61070,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f030_c5_u768_v440",
+      "frame": 59,
+      "mask_pixels": 2210,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c4_u256_v390",
+      "frame": 60,
+      "mask_pixels": 15262,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c4_u256_v390",
+      "frame": 89,
+      "mask_pixels": 1869,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u256_v390",
+      "frame": 60,
+      "mask_pixels": 15579,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u256_v390",
+      "frame": 89,
+      "mask_pixels": 1048,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u256_v440",
+      "frame": 60,
+      "mask_pixels": 58815,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u256_v440",
+      "frame": 89,
+      "mask_pixels": 1299,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u512_v390",
+      "frame": 60,
+      "mask_pixels": 9240,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u512_v390",
+      "frame": 89,
+      "mask_pixels": 806,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u512_v440",
+      "frame": 60,
+      "mask_pixels": 39804,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u512_v440",
+      "frame": 89,
+      "mask_pixels": 1113,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u768_v390",
+      "frame": 60,
+      "mask_pixels": 15961,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u768_v390",
+      "frame": 89,
+      "mask_pixels": 1045,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u768_v440",
+      "frame": 60,
+      "mask_pixels": 59018,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f060_c5_u768_v440",
+      "frame": 89,
+      "mask_pixels": 1283,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c3_u768_v390",
+      "frame": 90,
+      "mask_pixels": 23082,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c3_u768_v390",
+      "frame": 119,
+      "mask_pixels": 2092,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c4_u256_v390",
+      "frame": 90,
+      "mask_pixels": 11197,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c4_u256_v390",
+      "frame": 119,
+      "mask_pixels": 6933,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c4_u512_v390",
+      "frame": 90,
+      "mask_pixels": 7640,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c4_u512_v390",
+      "frame": 119,
+      "mask_pixels": 1764,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u256_v390",
+      "frame": 90,
+      "mask_pixels": 12233,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u256_v390",
+      "frame": 119,
+      "mask_pixels": 1339,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u256_v440",
+      "frame": 90,
+      "mask_pixels": 48637,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u256_v440",
+      "frame": 119,
+      "mask_pixels": 1825,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u512_v390",
+      "frame": 90,
+      "mask_pixels": 7897,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u512_v390",
+      "frame": 119,
+      "mask_pixels": 1015,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u512_v440",
+      "frame": 90,
+      "mask_pixels": 34427,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u512_v440",
+      "frame": 119,
+      "mask_pixels": 1510,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u768_v390",
+      "frame": 90,
+      "mask_pixels": 15027,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u768_v390",
+      "frame": 119,
+      "mask_pixels": 1404,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u768_v440",
+      "frame": 90,
+      "mask_pixels": 54921,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f090_c5_u768_v440",
+      "frame": 119,
+      "mask_pixels": 1824,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c3_u768_v390",
+      "frame": 120,
+      "mask_pixels": 22374,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c3_u768_v390",
+      "frame": 149,
+      "mask_pixels": 5431,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u512_v390",
+      "frame": 120,
+      "mask_pixels": 8577,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u512_v390",
+      "frame": 149,
+      "mask_pixels": 1080,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u512_v440",
+      "frame": 120,
+      "mask_pixels": 37844,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u512_v440",
+      "frame": 149,
+      "mask_pixels": 1589,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u768_v390",
+      "frame": 120,
+      "mask_pixels": 15374,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u768_v390",
+      "frame": 149,
+      "mask_pixels": 1466,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u768_v440",
+      "frame": 120,
+      "mask_pixels": 58080,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f120_c5_u768_v440",
+      "frame": 149,
+      "mask_pixels": 1935,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f150_c4_u256_v390",
+      "frame": 150,
+      "mask_pixels": 12211,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f150_c4_u256_v390",
+      "frame": 179,
+      "mask_pixels": 1220,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f150_c5_u768_v390",
+      "frame": 150,
+      "mask_pixels": 19417,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f150_c5_u768_v390",
+      "frame": 179,
+      "mask_pixels": 976,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f150_c5_u768_v440",
+      "frame": 150,
+      "mask_pixels": 69132,
+      "outside_changed": 0
+    },
+    {
+      "candidate": "s827_f150_c5_u768_v440",
+      "frame": 179,
+      "mask_pixels": 1157,
+      "outside_changed": 0
+    }
+  ],
+  "human_verdict": null
+}
