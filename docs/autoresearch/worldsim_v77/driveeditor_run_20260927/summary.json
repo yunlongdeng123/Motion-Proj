@@ -1,0 +1,89 @@
+{
+  "task_id": "WS-V77-DRIVEEDITOR-COMPARE-20260927",
+  "runs": [
+    "r1",
+    "r2"
+  ],
+  "weights": {
+    "source": "DriveEditor official trained model.safetensors",
+    "bytes": 12059467678,
+    "tensor_count": 4077,
+    "frozen": true
+  },
+  "inference": {
+    "seed": 42,
+    "steps": 25,
+    "frames_per_clip": 10,
+    "fps": 10,
+    "size": [
+      1024,
+      576
+    ],
+    "sequential_cfg": true,
+    "decoding_t": 1,
+    "training_steps": 0,
+    "sv3d_denoiser_skipped_for_deletion": true
+  },
+  "results": [
+    {
+      "run": "r1",
+      "scene": "scene_0230",
+      "generated_frames": 10,
+      "mask_fraction_range": [
+        0.2851935492621528,
+        0.7326388888888888
+      ],
+      "native_outside_mask_rgb_mae": 4.848835278362368,
+      "png_composite_outside_mask_max": 0,
+      "elapsed_s": 103.80421970970929,
+      "gpu_peak_allocated_gib": 21.855584621429443,
+      "weights_missing_keys": 0,
+      "weights_unexpected_keys": 0,
+      "human_verdict": null
+    },
+    {
+      "run": "r1",
+      "scene": "scene_0255",
+      "generated_frames": 10,
+      "mask_fraction_range": [
+        0.1496429443359375,
+        0.15850830078125
+      ],
+      "native_outside_mask_rgb_mae": 3.042941272779773,
+      "png_composite_outside_mask_max": 0,
+      "elapsed_s": 103.76981100998819,
+      "gpu_peak_allocated_gib": 21.855584621429443,
+      "weights_missing_keys": 0,
+      "weights_unexpected_keys": 0,
+      "human_verdict": null
+    },
+    {
+      "run": "r2",
+      "scene": "scene_0230",
+      "generated_frames": 10,
+      "mask_fraction_range": [
+        0.147796630859375,
+        0.4512125651041667
+      ],
+      "native_outside_mask_rgb_mae": 4.259062790811081,
+      "png_composite_outside_mask_max": 0,
+      "elapsed_s": 110.11562660522759,
+      "gpu_peak_allocated_gib": 21.855584621429443,
+      "weights_missing_keys": 0,
+      "weights_unexpected_keys": 0,
+      "human_verdict": null
+    }
+  ],
+  "assistant_observations": {
+    "scene_0230_r1": "明显深色车形残影，未可靠去车；扩大mask包含非目标区域。",
+    "scene_0230_r2": "较紧矩形下10帧主要车形残影消失，路面/路缘连续可辨；栏杆局部弯曲/软化仍在。",
+    "scene_0255_r1": "10帧SUV不再可见，路面可辨，大块糊影改善；围栏细节和车列仍有软化/形变。"
+  },
+  "input_roles": "真实RGB+SAM2/GT框定义mask；隐藏背景无GT；同两个已曝光开发scene；官方训练重叠未核对，不作未见泛化结论。",
+  "command_review": "助手逐帧检查目标与mask；只DELETE；不把它升级为MOVE合法；旧MOVE拒绝保持。",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02: 现成DriveEditor正反例与mask范围控制",
+  "human_verdict": null
+}

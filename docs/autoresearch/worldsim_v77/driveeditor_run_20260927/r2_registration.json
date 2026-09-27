@@ -1,0 +1,161 @@
+{
+  "task_id": "WS-V77-DRIVEEDITOR-COMPARE-20260927",
+  "run_id": "r2",
+  "scene": "scene_0230",
+  "actor": 22,
+  "camera": 2,
+  "source_frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "question": "r1扩大矩形伴随0230车形残影；只缩小操作范围，判断是否足以改善。",
+  "trigger_evidence": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DRIVEEDITOR-COMPARE-20260927/r1/scene_0230/C/native",
+  "input_roles": "原RGB和SAM2目标mask；SAM外包矩形+固定8/8/8/24px边距，保留矩形形状；无隐藏背景GT。该两scene是开发例。",
+  "only_change": "deletion mask；范围与中心不再随机；不是单独区分面积和随机偏移的因果实验",
+  "seed": 42,
+  "steps": 25,
+  "decoding_t": 1,
+  "frames": 10,
+  "size": [
+    1024,
+    576
+  ],
+  "weights": "same official trained checkpoint frozen",
+  "training_steps": 0,
+  "resource": "one RTX3090;CPU4;timeout1800s",
+  "stop_rule": "只跑此一个范围控制；仍有残影则停止当前mask路线，不扫种子或边距。",
+  "mask_rows": [
+    {
+      "frame": 0,
+      "rect_xyxy": [
+        0,
+        282,
+        334,
+        543
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.147796630859375,
+      "old_fraction": 0.4087795681423611
+    },
+    {
+      "frame": 1,
+      "rect_xyxy": [
+        0,
+        280,
+        427,
+        564
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.2056003146701389,
+      "old_fraction": 0.2851935492621528
+    },
+    {
+      "frame": 2,
+      "rect_xyxy": [
+        0,
+        277,
+        497,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.2519446478949653,
+      "old_fraction": 0.3607635498046875
+    },
+    {
+      "frame": 3,
+      "rect_xyxy": [
+        0,
+        276,
+        577,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.2934773763020833,
+      "old_fraction": 0.3738861083984375
+    },
+    {
+      "frame": 4,
+      "rect_xyxy": [
+        0,
+        274,
+        622,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.3184746636284722,
+      "old_fraction": 0.6259697808159722
+    },
+    {
+      "frame": 5,
+      "rect_xyxy": [
+        25,
+        273,
+        726,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.3601125081380208,
+      "old_fraction": 0.609375
+    },
+    {
+      "frame": 6,
+      "rect_xyxy": [
+        107,
+        268,
+        928,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.4287177191840278,
+      "old_fraction": 0.6321851942274306
+    },
+    {
+      "frame": 7,
+      "rect_xyxy": [
+        171,
+        264,
+        1024,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.4512125651041667,
+      "old_fraction": 0.7013075086805556
+    },
+    {
+      "frame": 8,
+      "rect_xyxy": [
+        247,
+        259,
+        1024,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.4175974527994792,
+      "old_fraction": 0.6186167399088541
+    },
+    {
+      "frame": 9,
+      "rect_xyxy": [
+        289,
+        256,
+        1024,
+        576
+      ],
+      "target_coverage": 1.0,
+      "mask_fraction": 0.3987630208333333,
+      "old_fraction": 0.7326388888888888
+    }
+  ],
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}
