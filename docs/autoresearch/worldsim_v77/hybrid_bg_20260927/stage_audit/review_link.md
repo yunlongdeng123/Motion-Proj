@@ -1,0 +1,1 @@
+本地审核：`C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-hybrid-delete/stage-audit/index.html`。远端全部证据：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-HYBRID-BG-20260927/r3`至`r9`；审核包`stage_review`。

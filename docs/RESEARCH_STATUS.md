@@ -1,15 +1,7 @@
 # 当前研究状态
 
-更新：2026-09-27，v77。`WS-V77-HYBRID-BG-20260927/r2`两场景Hybrid DELETE已完成，按用户stop rule停止该候选：0230仍有灰块/再生车形，0255仍有SUV残影；两例不进入Ω。GPU生成与语义检查已收口，没有定时任务或下一轮自动生成。
+更新：2026-09-27，v77。用户要求持续迭代并递归拆开失败环节，目标仍是干净、时序稳定的补景，未完成。`WS-V77-HYBRID-BG-20260927/r3–r9`已保存分阶段中间检查点；固定两开发scene，不扩大场景。
 
-## 当前结果
+当前定位：遮车列条件可减少再生车辆，但结构漂移；0255扩散原生图比最终写回连贯。r7逐像素复现定位到旧栏杆保护mask会带回原车碎块；r8描线修正减少粗残块，细杆暗色污染仍在；r9边界融合未解决。下一步只继续拆前景边缘污染与背景几何错位，审计邻车实际显露和保护mask身份，避免将可见mask IoU变化误判为全新车辆，不机械换seed或模型。
 
-scene_0230/actor22/CAM5/f18–47、scene_0255/actor25/CAM3/f65–94，各30帧。三mask + 原RGB证据 + DiffuEraser官方2-Step，seed42，每例一次。删除区真实证据覆盖0.000426%/0.27238%；车辆再生guard拦截21/30与30/30。60帧像素/来源合同通过，24视频720帧实际解码通过，不能将工程通过当质量通过。
-
-0255围栏mask含助手14点图像提示、镂空候选选择和有界相似变换跟踪，未宣称全自动。内部prior已有残影，与最终车形关联但不证明唯一因果。保护mask不变也不保证所有邻车语义保真。
-
-## 验收与下一步
-
-本地审核入口：`C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-hybrid-delete/index.html`。主三栏原视频/旧DriveEditor/新DELETE，附mask、evidence、内部prior及详细注释。报告：[HYBRID_BACKGROUND_RESULTS.md](v77/HYBRID_BACKGROUND_RESULTS.md)。run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-HYBRID-BG-20260927/r2`，同一失败卡V77-F02已追加。
-
-默认仍保留旧DriveEditor FULL及已知缺陷，原Ω/GLB与所有失败输出未改。0训练、0新Ω前向、0新GLB、0新MOVE。不继续换seed/叠加成熟模型。若下一阶段进入数据路线，先验证真实背景监督可得性；本轮没有启动训练。人工verdict保持null，等待用户验收；历史关机安排不适用于本轮。
+所有当前候选未准入Ω，background_input_dir=null；旧DriveEditor FULL默认、Ω/GLB和全部失败保留。无定时任务、新MOVE或训练。GPU诊断已完成，当前没有后台生成进程；CPU/后续有界控制可继续，不是停工等待。审核`outputs/v77-hybrid-delete/stage-audit/index.html`，旧页保留入口；人工verdict始终null。细节只见[分阶段报告](v77/HYBRID_STAGE_AUDIT.md)和同一V77-F02。

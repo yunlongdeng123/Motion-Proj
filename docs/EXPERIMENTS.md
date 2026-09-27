@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-HYBRID-BG-20260927 / r3–r9 | 分段捕获与上下文/写回控制；再生车减少，结构与前景残留未通过；持续目标未完成 | [分阶段报告](v77/HYBRID_STAGE_AUDIT.md)、[证据](autoresearch/worldsim_v77/hybrid_bg_20260927/stage_audit/summary.json) |
 | WS-V77-HYBRID-BG-20260927 / r2 | 两scene三mask + factual evidence + DiffuEraser各30帧；再生车/残影失败，停止候选、不进入Ω；原默认保留 | [实测与architecture](v77/HYBRID_BACKGROUND_RESULTS.md)、[收口](autoresearch/worldsim_v77/hybrid_bg_20260927/r2/closeout.json) |
 | WS-V77-HYBRID-BG-20260927 / r1 | DiffuEraser最小权重、独立环境与三mask CPU合同准备；零模型前向，等待用户GPU；两开发scene | [方案与architecture](v77/HYBRID_BACKGROUND_PREP.md)、[登记](autoresearch/worldsim_v77/hybrid_bg_20260927/registration.json) |
 | WS-V77-DELETE-FULL-20260927 / r1 | 完整5s/10s六相机DELETE：24补景窗、150次Ω、181原GLB层；后向再生成车形、长序列漂移、错误遮挡独立留证；22视频，人工null | [协议与architecture](v77/DELETE_FULL.md)、[登记](autoresearch/worldsim_v77/delete_full_20260927/) |
