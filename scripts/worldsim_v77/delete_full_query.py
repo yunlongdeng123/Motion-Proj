@@ -31,10 +31,16 @@ class Writer:
     def close(self):self.p.stdin.close();assert self.p.wait()==0,str(self.path)
 
 def main():
-    reg=json.loads((ROOT/'registration.json').read_text());assert json.loads((ROOT/'omega_state.json').read_text())['state']=='complete'
+    p=argparse.ArgumentParser();p.add_argument('--scene',choices=['scene_0230','scene_0255']);a=p.parse_args()
+    reg=json.loads((ROOT/'registration.json').read_text())
+    if not a.scene:assert json.loads((ROOT/'omega_state.json').read_text())['state']=='complete'
     review=ROOT/'review';review.mkdir(exist_ok=True);all_summary=[]
+    if (review/'summary.json').exists():raise FileExistsError('已有完整QUERY产物；新对照应另存，不能覆盖')
     for s in reg['scenes']:
+        if a.scene and s['name']!=a.scene:continue
         name=s['name'];base=ROOT/name;dest=review/name;dest.mkdir(exist_ok=True);frames=json.loads((base/'camera_frames.json').read_text())
+        assert all((base/'background_world'/f'{f:03}'/'summary.json').exists() for f in range(s['count'])),'该scene的Ω须先全部完成'
+        if (dest/'summary.json').exists():continue
         manifest={'schema':'v77-explicit-delete/1','scene':name,'fps':10,'frame_count':s['count'],'coordinate_system':'per-frame local = GT world minus stored origin_world','background':[{'frame':fr['frame'],'asset':f'background_world/{fr["frame"]:03}/background_points.npz','origin_world':fr['origin_world']} for fr in frames],'actors':[{'actor_id':s['actor'],'asset':'actor.glb','visible':True,'yaw_correction_deg':s['yaw'],'poses':[{'frame':fr['frame'],**next(b for b in fr['all_boxes'] if b['actor_id']==s['actor'])} for fr in frames]}],'render':{'resolution':[W,H],'point_splat_radius':1,'depth_tolerance_m':.15,'camera_source':'GT','active_views':'registered SAM gating; other target observations can remain baked','lighting':'fixed world+sun, no fitted illumination/shadow catcher'},'other_objects':'baked into background, not independently editable','human_verdict':None}
         manifest['asset_root_remote']=str(base)
         deleted=apply_delete(manifest,s['actor']);dump(base/'scene_factual.json',manifest);dump(base/'scene_delete.json',deleted);dump(base/'command.json',{'operation':'DELETE','actor_id':s['actor'],'legality':'no new occupied volume; visual identity checked; no MOVE or traffic-rule validity claim'})
@@ -51,6 +57,8 @@ def main():
                 if (~m_full).any():checks['outside_mask_max']=max(checks['outside_mask_max'],int(np.abs(original_full.astype('int16')-bg_full.astype('int16'))[~m_full].max()))
                 original=load_rgb(stream/f'rgb/{f:05}.png');bg=load_rgb(stream/f'background/{f:05}.png');pure=load_rgb(out/f'geometry_cam{c}.png');hybrid=load_rgb(out/f'hybrid_cam{c}.png');z=np.load(out/f'z_cam{c}.npy')
                 layer=base/'actor_layers'/f'f{f:03}_cam{c}.png'
+                expected_layer=f in s['streams'][c]['active_frames']
+                assert layer.exists()==expected_layer,(name,f,c,'渲染层与登记不一致')
                 if layer.exists():
                     rgba=np.array(Image.open(layer).convert('RGBA'));az=np.load(layer.with_name(layer.stem+'_depth.npy'))
                     factual,vis=compose_actor(hybrid,rgba,az,z);pure_factual,_=compose_actor(pure,rgba,az,z)
@@ -87,6 +95,9 @@ def main():
         total=sum(x['count'] for x in cross);over=sum(x['over_10pct_count'] for x in cross)
         result={'scene':name,'actor_id':s['actor'],'frame_count':s['count'],'duration_s':s['count']/10,'views':6,'checks':checks,'selection':selection,'geometry_coverage_min_mean':[min(coverage),float(np.mean(coverage))],'deletion_mask_geometry_coverage_min_mean':[min(targetcov),float(np.mean(targetcov))],'asset_pixels':sum(r['asset_pixels'] for r in rows),'visible_asset_pixels':sum(r['visible_asset_pixels'] for r in rows),'cross_camera_mask_sample_pairs':total,'cross_camera_relative_depth_over_10pct_fraction':over/total if total else None,'cross_camera_note':'非真值准确率，包含真实遮挡/深度错配，不代表多视角一致性通过','rows':rows,'human_verdict':None}
         dump(dest/'summary.json',result);all_summary.append(result)
-    dump(review/'summary.json',{'task_id':reg['task_id'],'run':'r1','scenes':all_summary,'training_steps':0,'human_verdict':None});print('QUERY_COMPLETE',flush=True)
+    if all((review/s['name']/'summary.json').exists() for s in reg['scenes']):
+        all_summary=[json.loads((review/s['name']/'summary.json').read_text()) for s in reg['scenes']]
+        dump(review/'summary.json',{'task_id':reg['task_id'],'run':'r1','scenes':all_summary,'training_steps':0,'human_verdict':None});print('QUERY_COMPLETE',flush=True)
+    else:print('QUERY_SCENE_COMPLETE',a.scene,flush=True)
 
 if __name__=='__main__':main()
