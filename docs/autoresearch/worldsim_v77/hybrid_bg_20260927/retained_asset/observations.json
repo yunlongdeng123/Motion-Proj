@@ -1,0 +1,36 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "runs": [
+    "r36",
+    "r37",
+    "r38",
+    "r39",
+    "r40",
+    "r41"
+  ],
+  "human_preference": {
+    "scene": "scene_0255",
+    "comparison": "r18 > r15",
+    "source": "user message",
+    "scope": "relative preference, not final acceptance"
+  },
+  "assistant_decisions": {
+    "r36": "Original released road pixels have local LiDAR support; first-frame plane is an inadequate support reference. Nearest image association is not depth GT.",
+    "r37": "Source measured triangles validated as an operator, but shared visible RGB does not improve and hole consensus remains zero. No writeback.",
+    "r38": "Source f75 CAM5 fails predeclared geometry holdout q90. Stop this source; preserve partial f50.",
+    "r39": "Only qualified f50 CAM5 covers tiny bottom road strips. Worse shared visible RGB and no second source; do not write into baseline.",
+    "r40": "Single frontal input creates open pickup bed; closed SUV identity fails. No texture call.",
+    "r41_shape": "Saved generated side-front prior repairs closed body category; coarse wheels and body details remain. Retain only as diagnostic geometry candidate.",
+    "r41_pbr": "Front cues partially match; side/rear dark-green/brown patchy paint lacks observed support, wheels coarse. Reject this texture for DELETE. Raw pose overlays have no neighbor occlusion or fitted illumination; those omissions are not asset failures."
+  },
+  "new_background_video": false,
+  "new_omega_calls": 0,
+  "new_training": false,
+  "background_input_dir": null,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02",
+  "next_step": "Preserve r18/r21; before more texture generation, audit which real actor52 surfaces have usable observed RGB and separate them from inferred sides. Do not run another same frontal-only PBR call or integrate current texture."
+}

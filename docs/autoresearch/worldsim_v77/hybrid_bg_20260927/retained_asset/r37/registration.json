@@ -1,0 +1,42 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r37",
+  "registered_utc": "2026-09-27T18:01:00.470443+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "queries": [
+    0,
+    10
+  ],
+  "sources": {
+    "0": [
+      5,
+      10,
+      20
+    ],
+    "10": [
+      15,
+      20,
+      25
+    ]
+  },
+  "question": "Does source-local measured road geometry restore usable RGB support when a common first-frame plane rejects actual ground?",
+  "intervention": "Change geometric representation: fit each source local plane only for classifying measured ground LiDAR; project actual measured triangles into query with perspective-correct original RGB and z-buffer. No ray intersection with query/f0 plane and no camera z correction.",
+  "fixed": "Local RANSAC from r36; source3–50m,5cm inlier,triangle3m/64px,1px source erosion,existing SAM2+3px target exclusion,otherGT envelopes; no thresholds relaxed. Other query actors excluded from road fill.",
+  "roles": "All RGB, points and camera/GT from original processed data. Query visible RGB evaluation only. Triangle texture is interpolated original RGB, not exact hidden surface GT. GT/LiDAR-assisted POC.",
+  "primary_sources": [
+    "https://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html",
+    "https://docs.opencv.org/3.4.8/d9/dab/tutorial_homography.html"
+  ],
+  "migration": "Use known camera projection and local planar perspective texture; restrict interpolation to measured small triangles, not full-scene homography.",
+  "stop_rule": "Evaluate visible controls before interpreting actual hole. Reject structural mismatch or adverse shared-pixel errors; retain positive/negative artifacts without automatic compositor admission.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-HYBRID-BG-20260927 / r36–r41 | 实测道路算子与后向证据控制；固定邻车修复车型、PBR失败停止，保留r18/r21 | [资产与证据报告](v77/HYBRID_RETAINED_ASSET.md)、[登记/观察](autoresearch/worldsim_v77/hybrid_bg_20260927/retained_asset/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r30–r35 | 首窗范围/羽化/邻车保护改善，长时序与来源几何反例；实际28帧 | [时序报告](v77/HYBRID_THIRD_TEMPORAL.md)、[证据](autoresearch/worldsim_v77/hybrid_bg_20260927/temporal_review/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r25–r29 | 第三例矩形条件改善；路面支撑与Poisson写回反例；保留r18/r28 | [第三例报告](v77/HYBRID_THIRD_SCENE.md)、[实际证据](autoresearch/worldsim_v77/hybrid_bg_20260927/third_scene/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r23–r24 | 可见对象2倍尺度与实际DELETE逐帧外观条件；保留r18，明确第三例协议 | [外观控制报告](v77/HYBRID_APPEARANCE_CONTROLS.md)、[实际输入与结果](autoresearch/worldsim_v77/hybrid_bg_20260927/appearance_controls/review_link.md) |

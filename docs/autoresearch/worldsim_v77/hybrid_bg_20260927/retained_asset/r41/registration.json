@@ -1,0 +1,32 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r41",
+  "registered_utc": "2026-09-27T18:19:30.032607+00:00",
+  "scene": "scene_0255",
+  "delete_actor": "25",
+  "preserve_actor": "52",
+  "parent_failure": "r40 original-frontal-only shape creates open pickup bed instead of known closed SUV. Viewed8angles in Blender5.2.2 before any texture/placement; r40 paint not run.",
+  "question": "Does complete body-view information already present in the r18 SV3D prior prevent the wrong pickup body in fixed Hunyuan?",
+  "only_change": "Replace shape input original frontal f130 crop with saved r18 SV3D view12 at315deg. Same Hunyuan checkpoint,seed7740,50steps,guidance7.5,octree256 and12px mask-bbox padding.",
+  "source": {
+    "rgb": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-HYBRID-BG-20260927/r18/source_sv3d.png",
+    "mask": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-HYBRID-BG-20260927/r18/source_silhouette.png",
+    "crop_xyxy": [
+      64,
+      202,
+      482,
+      368
+    ]
+  },
+  "roles": "Generated SV3D prior, not real observed side evidence. No new SV3D call/model/seed. Real front f130 remains source identity reference; hidden surfaces still hallucinated. This is an explicit retained-actor POC, not a new accepted background.",
+  "stop_rule": "One shape-input control, no seed sweep. Inspect closed body and then observed-view geometry before any hidden edit integration; preserve user r18 and r21 unchanged.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu": "existing RTX3090"
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

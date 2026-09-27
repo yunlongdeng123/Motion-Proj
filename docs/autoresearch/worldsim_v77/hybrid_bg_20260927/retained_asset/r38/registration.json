@@ -1,0 +1,35 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r38",
+  "registered_utc": "2026-09-27T18:04:59.942312+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "queries": [
+    0,
+    10
+  ],
+  "sources": [
+    {
+      "frame": 50,
+      "camera": 5
+    },
+    {
+      "frame": 75,
+      "camera": 5
+    }
+  ],
+  "question": "Do later real rear-camera measurements cover the deleted actor area that nearby forward views cannot?",
+  "intervention": "Change original source views to rear50/75 selected from r36 original-image inventory. Same measured triangle projection and original camera poses; source visible ground plane fitted in predeclared rear-view ROI.",
+  "fixed": "RANSAC300 seed42,5cm inlier,normal15deg,heldout everythird median5cm/q90=12cm; geometry3–50m,triangles3m64px,source1pxerosion,allsourceGT envelopes,querynon-targetGT excluded; RGB pair maxchannel20.",
+  "roles": "Future original RGB/LiDAR/poses/GT allowed as offline reconstruction input; no query RGB used as source, no generated evidence. Rear ROI assistant-selected before computation, not automatic road semantics. Single source support does not certify hidden appearance.",
+  "stop_rule": "If visible source geometry or RGB alignment fails, reject direct writeback. Report partial coverage and uncompensated lighting honestly; no generation/geometry threshold grid.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

@@ -1,0 +1,29 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r39",
+  "registered_utc": "2026-09-27T18:06:27.691382+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "queries": [
+    0,
+    10
+  ],
+  "source": {
+    "frame": 50,
+    "camera": 5
+  },
+  "parent": "r38 source75 q90=0.1634m fails fixed0.12m check; no threshold relaxation. Source50 had already passed4.2mm median/26.2mm q90.",
+  "question": "Does the individually valid late rear source supply actual DELETE road RGB?",
+  "intervention": "Only remove invalid source75; no geometry or photometric modification. Diagnostic single-source coverage, not consensus evidence or a complete DELETE.",
+  "roles": "Original future RGB/LiDAR/poses/GT as offline source. Query visible RGB evaluation only. Same local-road ROI and mesh projection as r38.",
+  "stop_rule": "Inspect visible road and actual hole; reject misalignment/illumination, do not inject unreliable RGB into DriveEditor/Omega.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

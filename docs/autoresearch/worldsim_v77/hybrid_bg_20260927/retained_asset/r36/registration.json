@@ -1,0 +1,48 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r36",
+  "registered_utc": "2026-09-27T17:57:46.782952+00:00",
+  "previous_goal_turn": "progress: r30–r35 checkpoint fbb8889f, actual28frames and source-mask counterexample",
+  "question": "Do released source road pixels have real local LiDAR ground samples rejected only by the first-frame plane, and do later cameras show the area?",
+  "scene": "official_000",
+  "target": "12",
+  "query_sources": {
+    "0": [
+      5,
+      10,
+      20
+    ],
+    "15": [
+      20,
+      25
+    ]
+  },
+  "view_inventory": {
+    "frames": [
+      0,
+      25,
+      50,
+      75,
+      100
+    ],
+    "cameras": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "roles": "Original RGB, processed LiDAR/poses/GT. Per-source local plane is fitted only to observed road with all objects excluded. Image-nearest LiDAR is a diagnostic association, not true per-pixel depth.",
+  "intervention": "Read-only measurement/camera inventory; no correction, no generated input and no RGB compositing.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

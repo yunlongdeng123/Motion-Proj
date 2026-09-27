@@ -1,0 +1,45 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r40",
+  "registered_utc": "2026-09-27T18:10:32.411586+00:00",
+  "scene": "scene_0255",
+  "delete_actor": "25",
+  "preserve_actor": "52",
+  "question": "Can an explicit fixed asset preserve the real hidden neighbor better than asking video diffusion to re-create it each frame?",
+  "intervention": "Reuse existing official Hunyuan3D-2.1 shape/PBR frozen modules, one real reference for actor52. This is extending background+explicit actors to a retained neighbor, not replacing DriveEditor or adding a model family.",
+  "source": {
+    "frame": 130,
+    "camera": 3,
+    "image": "/root/autodl-tmp/data/v76_vadgs/scene_0255/images/130_3.jpg",
+    "mask": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-HYBRID-BG-20260927/r14/130_3/sam.png",
+    "crop_xyxy": [
+      1263,
+      483,
+      1455,
+      632
+    ],
+    "native_crop_size": [
+      192,
+      149
+    ]
+  },
+  "roles": "Original RGB+existing SAM2 only for generation; missing sides are inferred prior, never factual evidence. GT pose/size reserved for later placement. Human r18>r15 preserved; r18/r21 outputs never overwritten.",
+  "fixed": {
+    "model_root": "/root/autodl-tmp/models/worldsim_v77_poc_hunyuan3d21",
+    "source_repo": "/root/autodl-tmp/third_party/hunyuan3d-2.1-v61-me2",
+    "shape_steps": 50,
+    "seed": 7740,
+    "guidance_scale": 7.5,
+    "octree_resolution": 256,
+    "texture_views": 6,
+    "texture_resolution": 512,
+    "cpu_threads": 4
+  },
+  "positive_control": "Inspect mesh and render at observed source/other visible reference poses before hidden DELETE integration. Source f130 is generation input so its reconstruction is not heldout.",
+  "stop_rule": "One asset only, no seed sweep. Reject wrong body/placement/appearance at observed controls; do not declare background success from valid GLB or use wrong placement to reject the mesh.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}
