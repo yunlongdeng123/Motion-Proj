@@ -9,7 +9,7 @@ scenes=[dict(name='scene_0230',actor=22,cam=5,start=18,end=47,coverage='0.000426
 
 def video(s,key,title,caption,main=False):
     extra=f' data-full="{key}" data-zoom="{("original" if key=="target" else key)}_zoom"' if main else ''
-    return f'''<figure><figcaption><b>{title}</b><span>{caption}</span></figcaption><video controls muted playsinline preload="metadata" poster="{s}/{key}.png" src="{s}/{key}.mp4"{extra}></video><a class="download" href="{s}/{key}.mp4">单独打开视频 ↗</a></figure>'''
+    return f'''<figure><figcaption><b>{title}</b><span>{caption}</span></figcaption><video controls muted playsinline preload="metadata" poster="{s}/{key}_poster.jpg" src="{s}/{key}.mp4"{extra}></video><a class="download" href="{s}/{key}.mp4">单独打开视频 ↗</a></figure>'''
 
 sections=[]
 for s in scenes:

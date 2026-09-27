@@ -24,7 +24,7 @@ for s in read(ROOT/'registration.json')['scenes']:
  for key in streams:
   cmd=[imageio_ffmpeg.get_ffmpeg_exe(),'-v','error','-y','-framerate','10','-i',str(framesdir/key/'%05d.png'),'-c:v','libx264','-crf','18','-preset','fast','-threads','2','-pix_fmt','yuv420p','-movflags','+faststart',str(dest/f'{key}.mp4')]
   subprocess.run(cmd,check=True)
-  shutil.copy2(framesdir/key/'00007.png',dest/f'{key}.png')
+  Image.open(framesdir/key/'00000.png').save(dest/f'{key}_poster.jpg',quality=93)
   # 解码实际帧，不能只相信容器中的帧数声明。
   cap=cv2.VideoCapture(str(dest/f'{key}.mp4'));assert cap.isOpened();count=0
   assert abs(cap.get(cv2.CAP_PROP_FPS)-10)<.01
