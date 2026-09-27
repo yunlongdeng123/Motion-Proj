@@ -1,0 +1,126 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r1",
+  "phase": "download_and_cpu_preparation",
+  "input_role": "exposed_development_scenes",
+  "scenes": [
+    {
+      "name": "scene_0230",
+      "actor": "22",
+      "camera": 5,
+      "source_frames": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "data": "/root/autodl-tmp/data/v76_vadgs/scene_0230"
+    },
+    {
+      "name": "scene_0255",
+      "actor": "25",
+      "camera": 3,
+      "source_frames": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94
+      ],
+      "data": "/root/autodl-tmp/data/v76_vadgs/scene_0255"
+    }
+  ],
+  "baseline": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-FULL-20260927/r1",
+  "previous_failure": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-REPAIR-20260927/r1",
+  "candidate": "DiffuEraser official weights + three masks + factual evidence",
+  "frozen": [
+    "VGGT-Omega",
+    "GLB",
+    "structured editor"
+  ],
+  "planned_inference": {
+    "seed": 42,
+    "pcm": "2-Step",
+    "guidance_scale": 0,
+    "maximum_image_side": 960,
+    "official_aligned_hw": [
+      536,
+      960
+    ],
+    "fps": 10,
+    "frames_per_scene": 30,
+    "candidate_runs_per_scene": 1,
+    "training": false
+  },
+  "mask_dilation_px_provisional": 16,
+  "evidence_methods": [
+    "LK bidirectional + local RANSAC affine/homography on verified local background",
+    "frozen Omega depth + GT calibration with visibility/depth consistency"
+  ],
+  "required_before_gpu_forward": [
+    "multi-object SAM2 protect mask and visual identity review",
+    "implement exact mask reader and preserved prior adapter",
+    "evidence source provenance and accepted support",
+    "native/final lossless image separation"
+  ],
+  "executed_model_forwards": 0,
+  "auto_resume": false,
+  "inference_authorized_now": false,
+  "pause_reason": "User explicitly requests stopping when weights finish; user will enable GPU",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}
