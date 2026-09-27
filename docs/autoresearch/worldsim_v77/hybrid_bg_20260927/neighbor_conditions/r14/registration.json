@@ -1,0 +1,62 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r14",
+  "registered_utc": "2026-09-27T14:52:30.801914+00:00",
+  "scene": "scene_0255",
+  "actor": "52",
+  "target_actor": "25",
+  "role": "known-visible original RGB reconstruction control; query RGB only for evaluation, never as a donor to itself",
+  "hypothesis": "per-pixel LiDAR proximity may reject usable calibrated Omega surfaces; validate on visible original pixels before considering actual DELETE",
+  "sources": [
+    {
+      "frame": 125,
+      "camera": 3,
+      "scale": 1.0846599639444738
+    },
+    {
+      "frame": 130,
+      "camera": 1,
+      "scale": 1.0571419853154767
+    },
+    {
+      "frame": 130,
+      "camera": 3,
+      "scale": 1.0771376094317118
+    },
+    {
+      "frame": 135,
+      "camera": 3,
+      "scale": 1.0486234885162684
+    },
+    {
+      "frame": 145,
+      "camera": 3,
+      "scale": 1.0699617215701889
+    }
+  ],
+  "query_same_time_donors_excluded": true,
+  "source_mask": "SAM2.1-large official pretrained, original RGB GT actor52 box prompt, highest predicted score, retain alternatives",
+  "arms": [
+    "r13 strict LiDAR-distance-supported points",
+    "dense calibrated depth + source SAM + two-view agreement; diagnostic, not admitted automatically"
+  ],
+  "fixed": {
+    "depth_gradient_m": 0.3,
+    "box_size_padding_m": 0.1,
+    "depth_agreement_m": 0.25,
+    "rgb_max_error": 25,
+    "source_time_gap_frames": 5,
+    "splat": 3,
+    "erosion": 3
+  },
+  "resources": {
+    "cpu_threads": 4,
+    "expected_sam_image_forwards": 5,
+    "new_generative_forward": 0,
+    "new_omega_forward": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

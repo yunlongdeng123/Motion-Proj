@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-HYBRID-BG-20260927 / r14–r18 | 邻车真实证据正控制、首帧条件拆解、SV3D中间图与对应视角锚点修复 | [条件报告](v77/HYBRID_NEIGHBOR_CONDITIONS.md)、[实际来源/重放验证](autoresearch/worldsim_v77/hybrid_bg_20260927/neighbor_conditions/evidence_validation.json) |
 | WS-V77-HYBRID-BG-20260927 / r10–r13 | 纠正隐藏邻车判据；首帧matting失败；局部深度改善但真实支持不足 | [身份/证据报告](v77/HYBRID_IDENTITY_EVIDENCE.md)、[来源验证](autoresearch/worldsim_v77/hybrid_bg_20260927/identity_audit/evidence_validation.json) |
 | WS-V77-HYBRID-BG-20260927 / r3–r9 | 分段捕获与上下文/写回控制；再生车减少，结构与前景残留未通过；持续目标未完成 | [分阶段报告](v77/HYBRID_STAGE_AUDIT.md)、[证据](autoresearch/worldsim_v77/hybrid_bg_20260927/stage_audit/summary.json) |
 | WS-V77-HYBRID-BG-20260927 / r2 | 两scene三mask + factual evidence + DiffuEraser各30帧；再生车/残影失败，停止候选、不进入Ω；原默认保留 | [实测与architecture](v77/HYBRID_BACKGROUND_RESULTS.md)、[收口](autoresearch/worldsim_v77/hybrid_bg_20260927/r2/closeout.json) |

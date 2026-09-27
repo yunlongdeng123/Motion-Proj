@@ -1,0 +1,54 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r15",
+  "registered_utc": "2026-09-27T15:01:53.913865+00:00",
+  "scene": "scene_0255",
+  "target": "25",
+  "preserved_neighbor": "52",
+  "query_frames": [
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74
+  ],
+  "camera": 3,
+  "hypothesis": "unconditioned deletion does not specify the occluded non-target car; fixed reference and 3D support may complete the correct retained actor",
+  "model": "existing official trained DriveEditor checkpoint, frozen; no download or training",
+  "arms": {
+    "deletion": "same mask/context with official neutral object conditions",
+    "neighbor": "same mask/context + original actor52 SAM-matted reference + original GT 3D box/depth/SV3D view conditions"
+  },
+  "adaptation": "Use official condition interfaces and six-face depth; reference view angle from f130 CAM3 rather than query0; no different-view crop pasted into first frame. This is not untouched official deletion.",
+  "fixed": {
+    "frames": 10,
+    "fps": 10,
+    "size": [
+      1024,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "sequential_cfg": true,
+    "decoding_t": 1,
+    "previous_segment_condition": false,
+    "model_mask": "r3 target rectangle union neighbor52 projection x1.05",
+    "write_mask": "r3 write mask resized; preserve original protect/outside"
+  },
+  "inputs": "offline BUILD uses original later reference at f130; GT camera/box and manual development scene choice. No hidden ground truth.",
+  "stop_rule": "one 10-frame window per arm; inspect native before writeback; no seed grid or further model families",
+  "resources": {
+    "gpu": "one existing RTX3090",
+    "cpu_threads": 4,
+    "timeout_per_arm_s": 600
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

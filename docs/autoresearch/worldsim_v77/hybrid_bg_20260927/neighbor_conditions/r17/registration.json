@@ -1,0 +1,28 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r17",
+  "registered_utc": "2026-09-27T15:23:07.407024+00:00",
+  "source_run": "r15/neighbor",
+  "hypothesis": "Inspect whether identity changes already appear in decoded SV3D views or first emerge during 2D video integration; preserve full 21-view prior.",
+  "operation": "One exact-condition instrumentation replay, checkpoint/seed/mask/pose/reference unchanged. Save sampler 2D and 3D latents and decode the existing 3D output; compare all 10 2D outputs to preserved r15 PNG.",
+  "inputs": "Same r15 original actor52 reference and GT52 conditions; no new data, training, model family or download",
+  "fixed": {
+    "seed": 42,
+    "steps": 25,
+    "num_frames": 10,
+    "num_views": 21,
+    "sequential_cfg": true,
+    "decode_chunk": 1
+  },
+  "stop_rule": "One replay only. If 2D pixels fail reproduction, do not use intermediate output to causally explain old r15 without resolving discrepancy.",
+  "resources": {
+    "gpu": "one RTX3090",
+    "cpu_threads": 4,
+    "timeout_seconds": 600
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

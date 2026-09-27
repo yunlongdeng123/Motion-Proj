@@ -1,0 +1,52 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r16",
+  "registered_utc": "2026-09-27T15:13:45.508586+00:00",
+  "scene": "scene_0255",
+  "actor": "52",
+  "frames": [
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139
+  ],
+  "camera": 3,
+  "question": "Can the existing object branch reconstruct a known visible silver SUV with official same-view first-frame appearance, and what changes if only this keyframe paste is removed?",
+  "implementation": "Official get_editing Repositioning at zero offset; exact same precomputed conditions in both arms except first-frame object paste. Existing serial CFG and offscreen paste-boundary patch remain; actor is on-screen.",
+  "arms": {
+    "anchor": "official generated first-frame object paste",
+    "no_anchor": "same crop/CLIP/SV3D/depth/pose/masks and RGB except no first-frame paste"
+  },
+  "input_roles": "First-frame original actor52 RGB and SAM plus GT box are oracle conditioning. Later original RGB is evaluation only inside masked region. Not independent test, not DELETE result.",
+  "fixed": {
+    "seed": 42,
+    "steps": 25,
+    "size": [
+      1024,
+      576
+    ],
+    "fps": 10,
+    "num_frames": 10,
+    "sequential_cfg": true,
+    "decode_chunk": 1,
+    "previous_segment_condition": false,
+    "model_mask": "official 1.3x projected box with saved seeded random center"
+  },
+  "resources": {
+    "gpu": "one RTX3090",
+    "cpu_threads": 4,
+    "arm_timeout_seconds": 600
+  },
+  "stop_rule": "One 10-frame positive control per arm; inspect identity/shape against known original; do not extend failed configuration.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}
