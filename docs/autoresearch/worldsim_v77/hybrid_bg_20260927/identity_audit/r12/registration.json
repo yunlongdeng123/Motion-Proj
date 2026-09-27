@@ -1,0 +1,56 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r12",
+  "registered_utc": "2026-09-27T14:34:28.804610+00:00",
+  "hypothesis": "此前排除全部车辆丢弃了actor-specific DELETE可用的邻车证据；保留actor52检验真实支持量",
+  "role": "CPU evidence diagnostic, not a generated or admitted DELETE result",
+  "source_frames": [
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    95,
+    100,
+    105,
+    110,
+    115,
+    120,
+    125,
+    130,
+    135,
+    140,
+    145,
+    150,
+    155
+  ],
+  "query_indices": [
+    0,
+    7,
+    15,
+    29
+  ],
+  "actor": "52",
+  "target_actor": "25",
+  "inputs": "original RGB, cached frozen Omega depth, GT camera/boxes/poses, per-frame raw LiDAR",
+  "seed": null,
+  "config": {
+    "lidar_distance_m": 0.2,
+    "depth_gradient_max": 0.3,
+    "box_size_padding_m": 0.1,
+    "splat": 3,
+    "source_time_gap_frames": 5,
+    "depth_agreement_m": 0.25,
+    "rgb_max_error": 25,
+    "erosion": 3
+  },
+  "resources": {
+    "gpu_forward": 0,
+    "cpu_threads": 4
+  },
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ]
+}

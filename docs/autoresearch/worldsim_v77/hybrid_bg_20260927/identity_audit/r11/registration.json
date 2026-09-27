@@ -1,0 +1,24 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r11",
+  "registered_utc": "2026-09-27T14:21:05.012579+00:00",
+  "scene": "scene_0255",
+  "source_runs": [
+    "r6",
+    "r8",
+    "r10"
+  ],
+  "hypothesis": "binary copied fence pixels mix original vehicle color; use high-resolution trimap alpha and foreground color estimation",
+  "scope": "first-frame matte preparation then bounded 30-frame transfer only after image review",
+  "manual": true,
+  "pymatting": "1.1.16 isolated vendor, no new neural weights",
+  "fixed": [
+    "r6 native generation",
+    "original RGB",
+    "other protected objects"
+  ],
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}
