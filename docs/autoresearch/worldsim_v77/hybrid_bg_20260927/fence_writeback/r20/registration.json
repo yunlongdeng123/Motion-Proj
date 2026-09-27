@@ -1,0 +1,58 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r20",
+  "registered_utc": "2026-09-27T15:49:46.288758+00:00",
+  "scene": "scene_0255",
+  "scope": "Manual planar foreground alignment positive control before composition",
+  "inputs": "Only original f65 and f90 CAM3 RGB, assistant visible panel corner prompts; original r8 geometry as an independent rail overlay.",
+  "hypothesis": "If a checked same-panel homography aligns the actual thin rails, material/alpha can be recovered from original views without vehicle RGB fragments.",
+  "adaptation": "OpenCV getPerspectiveTransform from 4 manual points; no camera/3D truth claim, no neural forward. Four fitted points are not validation; rails away from panel must be visually checked.",
+  "corners": {
+    "f65": [
+      [
+        715.0,
+        530.0
+      ],
+      [
+        790.0,
+        536.0
+      ],
+      [
+        783.0,
+        616.0
+      ],
+      [
+        712.0,
+        609.0
+      ]
+    ],
+    "f90": [
+      [
+        669.0,
+        548.0
+      ],
+      [
+        720.0,
+        553.0
+      ],
+      [
+        716.0,
+        634.0
+      ],
+      [
+        664.0,
+        628.0
+      ]
+    ]
+  },
+  "stop_rule": "No composition unless visible non-panel rails align; preserve failed automatic r19.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

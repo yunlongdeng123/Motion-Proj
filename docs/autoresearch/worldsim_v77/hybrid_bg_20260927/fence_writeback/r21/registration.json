@@ -1,0 +1,21 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r21",
+  "registered_utc": "2026-09-27T15:53:49.825650+00:00",
+  "scene": "scene_0255",
+  "fixed": "r18 actual 10 native frames, original source RGB, outside-region protection",
+  "change": "Replace contaminated fence RGB copying with fitted analytic thin-stroke alpha/foreground plus opaque panel interior texture. No original mixed RGB is copied along thin bars.",
+  "inputs": "Assistant r8 traced geometry, original f65 RGB, previously fixed short-window LK similarity; no generated RGB fits material.",
+  "method": "Local RGB background interpolation, constrained Gaussian-blurred opaque line width and foreground fit via SciPy least_squares soft_l1; every third along-line sample held out. Separate panel texture extends eroded interior to edge.",
+  "assumptions": "Thin circular-bar appearance approximated by a 2D line model; local background approximately linear; existing geometry/LK may be inaccurate. This is a diagnostic foreground representation, not automatic photorealism.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "stop_rule": "One fixed fit and ten-frame composite; keep current native unchanged. Reject structural/temporal artifacts even if pixel residual falls.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

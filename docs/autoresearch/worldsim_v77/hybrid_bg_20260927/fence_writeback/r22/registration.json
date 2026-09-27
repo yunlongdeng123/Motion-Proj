@@ -1,0 +1,60 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r22",
+  "registered_utc": "2026-09-27T16:07:13.641755+00:00",
+  "scene": "scene_0255",
+  "target": "25",
+  "keep_actor": "52",
+  "camera": 3,
+  "frames": [
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
+  ],
+  "hypothesis": "The user-preferred r18 appearance anchor should retain SUV identity beyond its initial ten frames, under the same fixed rule.",
+  "user_evidence": "2026-09-28 user judges r18 > r15 and requests retaining/refining it before adding scene3.",
+  "inputs": "Original f75–94 RGB, existing r3 masks, GT52 camera/box, original f130 reference, frozen r17 generated SV3D view selected by existing azimuth rule; no generated prior claimed factual.",
+  "fixed": {
+    "seed": 42,
+    "steps": 25,
+    "frames_per_window": 10,
+    "fps": 10,
+    "size": [
+      1024,
+      576
+    ],
+    "previous_segment_condition": false,
+    "reference": "f130 CAM3 actor52",
+    "sv3d_anchor": "saved r17 view selected by unchanged azimuth index",
+    "writeback": "old r3 writeback kept; evaluate native separately"
+  },
+  "scope": "Two non-overlapping independent windows; compare joining boundary to saved r18 f65–74. No new scene-specific tuning, matting fit, seed sweep, model download, training, or new model family.",
+  "stop_rule": "Stop on structural or temporal failure; no downstream Omega. Independent windows are not assumed continuous. Detailed body/wheel limitations stay visible.",
+  "resources": {
+    "gpu": "single RTX3090",
+    "cpu_threads": 4,
+    "timeout_per_window_seconds": 600
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

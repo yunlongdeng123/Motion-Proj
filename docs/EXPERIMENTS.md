@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-HYBRID-BG-20260927 / r19–r22 | 保留用户优选r18；真实围栏来源失败控制、局部alpha写回与后续两个时间窗 | [修复报告](v77/HYBRID_FENCE_WRITEBACK.md)、[用户评价/证据](autoresearch/worldsim_v77/hybrid_bg_20260927/fence_writeback/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r14–r18 | 邻车真实证据正控制、首帧条件拆解、SV3D中间图与对应视角锚点修复 | [条件报告](v77/HYBRID_NEIGHBOR_CONDITIONS.md)、[实际来源/重放验证](autoresearch/worldsim_v77/hybrid_bg_20260927/neighbor_conditions/evidence_validation.json) |
 | WS-V77-HYBRID-BG-20260927 / r10–r13 | 纠正隐藏邻车判据；首帧matting失败；局部深度改善但真实支持不足 | [身份/证据报告](v77/HYBRID_IDENTITY_EVIDENCE.md)、[来源验证](autoresearch/worldsim_v77/hybrid_bg_20260927/identity_audit/evidence_validation.json) |
 | WS-V77-HYBRID-BG-20260927 / r3–r9 | 分段捕获与上下文/写回控制；再生车减少，结构与前景残留未通过；持续目标未完成 | [分阶段报告](v77/HYBRID_STAGE_AUDIT.md)、[证据](autoresearch/worldsim_v77/hybrid_bg_20260927/stage_audit/summary.json) |

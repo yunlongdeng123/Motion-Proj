@@ -1,0 +1,25 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r19",
+  "registered_utc": "2026-09-27T15:45:47.726549+00:00",
+  "scene": "scene_0255",
+  "scope": "Original foreground-fence alignment only, no new inpainting inference",
+  "hypothesis": "Different-time original views expose clean background behind the thin fence; a camera-constrained foreground plane can align its true material samples without carrying actor25 pixels.",
+  "input_roles": "GT camera poses/intrinsics and original RGB f65..110 CAM3; assistant-traced r8 fence geometry seeds support. No generated RGB in fitting.",
+  "controls": "Panel features fit the plane; non-panel rail features evaluate it. Query RGB is visible fence evidence, not hidden background truth.",
+  "method": "OpenCV corner detection and forward/backward LK; triangulation with GT cameras; robust panel plane then reprojection audit",
+  "source": "https://docs.opencv.org/4.13.0/d9/d0c/group__calib3d.html",
+  "fixed": {
+    "seed": 42,
+    "cpu_threads": 4,
+    "fb_limit_px": 0.7,
+    "min_tracked_timestamps": 20,
+    "plane_distance_m": 0.08
+  },
+  "stop_rule": "First audit only; do not reuse source RGB for compositing if projected rails/panel visibly misalign.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}
