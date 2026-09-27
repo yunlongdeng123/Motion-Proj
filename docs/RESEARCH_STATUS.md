@@ -1,21 +1,21 @@
 # 当前研究状态
 
-更新：2026-09-27（Asia/Singapore），分支 **v77**，工作区 `/root/autodl-tmp/motion_proj_v77`。用户授权的完整DELETE工程已跑完；仅使用DriveEditor deletion、冻结Ω及原GLB，不追加ProPainter、训练、新生成器、MOVE或定时任务。
+更新：2026-09-27，v77。按用户最新方案执行 `WS-V77-DELETE-REPAIR-20260927/r1`：精确SAM2实例mask + 多视角/时序真实RGB证据优先 + DriveEditor residual补景 + 车辆再生guard。保留旧资产、旧两条非法MOVE与全部对照；零训练，无ProPainter、语言/RL、新生成器、定时任务。
 
-## 当前结果
+## 当前范围
 
-`WS-V77-DELETE-FULL-20260927/r1`完成：0230/actor22的50帧5秒、0255/actor25的100帧10秒、六相机10Hz；24个DriveEditor窗口、150次六相机Ω、181个原位GLB RGBA/Z层、两条显式DELETE状态。BUILD保存逐时刻B_t，QUERY只关闭目标可见性。900视图mask覆盖与mask外像素检查通过，4项指令/遮挡测试通过，22视频共1650帧实解码通过。
+scene_0230/actor22/CAM5 f18–47、scene_0255/actor25/CAM3 f65–94、第三scene official_000/actor12/CAM0 f0–29；各3秒10Hz，固定旧失败后段及第三目标，不按新生成结果选片。第三目标为右侧黑色MPV，避开被近裁面切断的truck14。三个已曝光开发scene，不称独立测试。
 
-工程完成不等于高保真通过。0230侧面去车较好，但CAM5后向补景重新生成另一辆车；0255前段去掉SUV，后段补景发白、围栏和车列变形。Ω点融合另引入碎裂/重影和远景缺口。0255原位GLB在深度测试后出现明显不合理裁切；取消深度测试的同GLB控制保留，不能据此否定资产，也不能把不遮挡当正确答案。人工verdict保持null。
+当前是三场景的背景入口强控制：旧矩形对照保留；A精确mask、B证据+残余洞，两组模型/seed/窗口相同。六相机整段原始Ω缓存搜索证据；GT相机、框及LiDAR辅助准入，不称RGB-only。GT框只prompt/限制SAM范围，删除mask不是框。只膨胀3px。
 
-## 审核与证据
+## 执行与边界
 
-本地`outputs/v77-delete-full/index.html`：原视频（黄标目标）/原位factual/DELETE三栏、六相机总览、直接补景、mask、纯几何、同GLB无深度测试控制、10时刻静帧和18处同时间接缝。[完整报告与architecture](v77/DELETE_FULL.md)、[证据](autoresearch/worldsim_v77/delete_full_20260927/)、[V77-F02](research_failures/entries/V77-F02.md)。远端完整资产根`/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-FULL-20260927/r1`。全部本轮模型/渲染任务已结束，没有后台循环或关机动作。
+登记和中间产物位于 `/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-REPAIR-20260927/r1`；一次有界运行，检查实际进程避免重复启动。旧完整工程已结束。源图通过冻结Ω深度/GT相机warp；来源须通过贴地对象包络遮挡排除、20cm LiDAR支持、两时刻深度/RGB一致性，不得复制旧生成背景。没有证据覆盖的像素留给生成模型，不伪称真实观测。
 
-B_t为逐时刻GT/LiDAR适配点云，非持久静态/4D世界。沿用GT提示SAM门控，小目标/近裁面无mask可能留下目标观测；其他actor仍烘焙在背景。两个已曝光开发场景、隐藏背景无GT、官方训练重叠未核对。旧两条MOVE仍拒绝；不新增自动合法性模块。
+先验证背景；检测或视觉发现再生车则阻断进入Ω，不用新几何渲染掩盖。guard须跑原图正控制和已知旧幻觉控制，零检出不等于通过。原GLB保持，Ω自身的碎裂/错误遮挡结论不因入口修复自动撤销。人工verdict保持null。
 
 ## 下一步
 
-优先针对DriveEditor长时序背景漂移做一个固定后段窗口、有/无上一窗条件的强控制，区分累积条件与单窗模型缺口；本轮未执行。Ω错误遮挡独立保留，不扫容差或取消遮挡掩盖。没有证据要求现在自造数据集或训练网络；先由用户审核当前完整视频。
+完成两组推理、逐帧guard与可复核视频HTML，更新同一V77-F02后提交推送。有明确反例则停止该结果的后续Ω，不无限换seed/阈值。仅对有证据的准入结果推进下游。
 
-V7.6仍按[V76-F03](research_failures/entries/V76-F03.md)关闭。`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`；`human_verdict: null`。
+`failure_ledger_refs: [V77-F02]`；`human_verdict: null`。
