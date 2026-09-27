@@ -1,0 +1,44 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r30",
+  "registered_utc": "2026-09-27T17:21:47.390933+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "camera": 0,
+  "frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "question": "Does the car-shaped writeback boundary, rather than frozen native generation, cause the third-scene bright seam?",
+  "inputs": "Exact r28 native, original RGB, precise write mask and model rectangle. GT boxes only supply approximate visible non-target preservation envelope; no image regeneration or extra hidden truth.",
+  "arms": {
+    "rect_hard": "Change only final write extent from precise instance to whole existing model rectangle.",
+    "rect_feather": "Same rectangle, fixed8px smoothstep blend inside outer boundary; old precise target mask stays full native weight.",
+    "rect_feather_keep": "Same feather, zero weight on other GT actor envelopes outside original target write mask. Target-occluded part is not protected from original source."
+  },
+  "fixed": {
+    "feather_px": 8,
+    "cpu_threads": 4,
+    "size": [
+      1024,
+      576
+    ],
+    "gpu_forwards": 0
+  },
+  "limits": "GT envelope minus delete mask approximates visible preserved actors, not exact SAM or depth visibility. Rectangle can modify static barriers/road beyond target; inspect original/native/composites and preserve all controls. No all-neighbor preservation claim from box contract.",
+  "stop_rule": "One fixed extent/feather/protect decomposition. Reject structure or neighbor damage; no parameter grid, seed change or new generator. Retain r28 if all controls worsen.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "previous_goal_turn": "progress: r28 third-scene improvement and r29 counterexample committed at7aa8b52d",
+  "human_verdict": null,
+  "background_input_dir": null
+}

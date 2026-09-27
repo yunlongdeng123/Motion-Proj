@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-HYBRID-BG-20260927 / r30–r35 | 首窗范围/羽化/邻车保护改善，长时序与来源几何反例；实际28帧 | [时序报告](v77/HYBRID_THIRD_TEMPORAL.md)、[证据](autoresearch/worldsim_v77/hybrid_bg_20260927/temporal_review/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r25–r29 | 第三例矩形条件改善；路面支撑与Poisson写回反例；保留r18/r28 | [第三例报告](v77/HYBRID_THIRD_SCENE.md)、[实际证据](autoresearch/worldsim_v77/hybrid_bg_20260927/third_scene/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r23–r24 | 可见对象2倍尺度与实际DELETE逐帧外观条件；保留r18，明确第三例协议 | [外观控制报告](v77/HYBRID_APPEARANCE_CONTROLS.md)、[实际输入与结果](autoresearch/worldsim_v77/hybrid_bg_20260927/appearance_controls/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r19–r22 | 保留用户优选r18；真实围栏来源失败控制、局部alpha写回与后续两个时间窗 | [修复报告](v77/HYBRID_FENCE_WRITEBACK.md)、[用户评价/证据](autoresearch/worldsim_v77/hybrid_bg_20260927/fence_writeback/review_link.md) |

@@ -1,0 +1,25 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r34",
+  "registered_utc": "2026-09-27T17:43:59.920165+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "queries": [
+    0,
+    15
+  ],
+  "sources": "query+5,+10,+20 CAM0",
+  "question": "Which unchanged r27 check rejects actual DELETE road rays?",
+  "intervention": "Read-only attribution of existing geometric checks. No height correction, RGB writeback, threshold changes or inference.",
+  "roles": "Original processed camera/LiDAR and GT envelopes; plane is local f0 assumption, not hidden surface truth. RGB used only for visual review.",
+  "limits": "Envelope overlap is not exact instance occlusion. Unsupported sampled ground does not imply never observed. Audit does not authorize writing rejected source RGB.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

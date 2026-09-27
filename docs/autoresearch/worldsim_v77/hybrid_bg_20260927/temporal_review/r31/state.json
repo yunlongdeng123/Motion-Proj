@@ -1,0 +1,56 @@
+{
+  "state": "stopped_visual_degradation",
+  "frames": 28,
+  "frame_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "planned_frames": 30,
+  "completed_new_windows": [
+    9,
+    18
+  ],
+  "unrun_window_start": 27,
+  "reused_prefix_frames": 10,
+  "new_predicted_frames": 20,
+  "new_unique_retained_frames": 18,
+  "seconds": 144.53992366790771,
+  "peak_allocated_gib": 21.855584621429443,
+  "assistant_review": "First10-frame r30 benefit persists in removing black target, but later bright road patch, lane-line bending, barrier smearing and object-edge transition are conspicuous. Stop extending this configuration before planned final window; no claim of complete3s high-fidelity background.",
+  "semantics": "Truck34 is real and must remain. Pedestrian59 enters projected envelope late; visible-envelope protection is not a hidden identity/geometry guarantee. Gray pole/structure not assigned to an actor without correspondence.",
+  "overlap_same_timestamp_mae": {
+    "9": 4.951305866241455,
+    "18": 4.833665370941162
+  },
+  "human_verdict": null,
+  "background_input_dir": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ]
+}

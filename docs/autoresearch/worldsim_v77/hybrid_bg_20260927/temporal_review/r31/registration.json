@@ -1,0 +1,78 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r31",
+  "registered_utc": "2026-09-27T17:24:37.256504+00:00",
+  "scene": "official_000",
+  "actor": "12",
+  "camera": 0,
+  "frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "question": "Does the third-scene r28 generation plus r30 feather/protection retain its improvement over30frames with overlapping-window conditioning?",
+  "prefix": "Reuse exact r28 native frames0..9 and exact r30 rect_feather_keep composites, no repeated GPU first-window generation.",
+  "fixed": {
+    "model": "same frozen DriveEditor",
+    "seed": 42,
+    "steps": 25,
+    "size": [
+      1024,
+      576
+    ],
+    "window": 10,
+    "new_window_starts": [
+      9,
+      18,
+      27
+    ],
+    "stride": 9,
+    "last_window": "repeat f29 to pad10, retain only first3 chronological frames",
+    "previous": "At each boundary the same timestamp previous final composite conditions the first frame through the existing previous_segment_last_frame adapter",
+    "model_mask": "precise bounding rectangle padded8px left/right/top,24px bottom",
+    "writeback": "r30 smoothstep8px inside rectangle, precise target weight1, other GT envelopes outside target weight0",
+    "cpu_threads": 4,
+    "sequential_cfg": true,
+    "decode_chunk": 1
+  },
+  "roles": "Original RGB/SAM2 and GT non-target envelopes; previous generated frame is explicitly a temporal appearance condition, not factual background evidence. No new reference or model.",
+  "comparisons": "Old saved precise-mask repair and new30f output. Beyond first10f, generation masks, writeback and previous history differ; this is a deployment continuity check, not a single-variable attribution.",
+  "stop_rule": "Inspect every newly completed window before next. Stop if obvious target regeneration, neighbor damage or collapse; preserve completed prefix and all overlap predictions. Do not enlarge seeds or bypass failures with Omega.",
+  "resources": {
+    "gpu": "RTX3090",
+    "max_new_windows": 3,
+    "timeout_per_window_s": 600
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

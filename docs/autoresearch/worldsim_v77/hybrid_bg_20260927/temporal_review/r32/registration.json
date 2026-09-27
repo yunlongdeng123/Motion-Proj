@@ -1,0 +1,55 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r32",
+  "registered_utc": "2026-09-27T17:34:23.533280+00:00",
+  "scene": "official_000",
+  "actor": "12",
+  "camera": 0,
+  "question": "Does limited z-only registration of shared static road points improve actual RGB reprojection and recover valid DELETE evidence before assuming backgrounds unobserved?",
+  "source_note": "nuScenes official ego_pose schema says planar xy localization and translation.z=0. This is motivation, not proof that all processed-pose errors arise from omitted height.",
+  "primary_source": "https://github.com/nutonomy/nuscenes-devkit/blob/master/docs/schema_nuscenes.md#ego_pose",
+  "intervention": "Estimate scalar z shifts from nearest common ground XY, interpolate between anchor times. Apply same z shift to camera and LiDAR at each frame; GT image exclusion envelopes remain the original same-frame projections. Everything else uses r27 frozen source support/rendering rules.",
+  "height_fit": {
+    "anchors": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      49
+    ],
+    "local_ground": "same visible image ROI with allGT actors excluded; RANSAC300 seed42,5cm inlier,normalwithin15deg",
+    "max_xy_pair_distance_m": 0.2,
+    "fit": "median target minus source z after local-slope XY correction",
+    "heldout": "everythird correspondence excluded from median; requiremedian<5cm/q90<12cm",
+    "gauge": "f0 correction0",
+    "xy_and_rotation": "unchanged"
+  },
+  "limits": "LiDAR-assisted POC with local road-domain assumption. Scalar z cannot solve arbitrary pose/depth errors or prove hidden pixel truth. RGB query is evaluation only; no generated images in geometry.",
+  "fixed": {
+    "source_offsets": [
+      5,
+      10,
+      20
+    ],
+    "source_plane": "r25 f0",
+    "source_ground_distance_m": 0.05,
+    "triangle_max_edge_m": 3,
+    "triangle_max_edge_px": 64,
+    "source_erode_px": 1,
+    "rgb_consensus_max_error": 20,
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "stop_rule": "Reject if shared-road heldout or actual visible RGB alignment worsens. Target-hole support is diagnostic until visually verified; no automatic writing into candidate background or Omega.",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}

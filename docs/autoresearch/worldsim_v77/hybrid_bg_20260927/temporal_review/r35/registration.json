@@ -1,0 +1,32 @@
+{
+  "task_id": "WS-V77-HYBRID-BG-20260927",
+  "run_id": "r35",
+  "registered_utc": "2026-09-27T17:46:00.813730+00:00",
+  "scene": "official_000",
+  "target": "12",
+  "query_sources": {
+    "0": [
+      5,
+      10,
+      20
+    ],
+    "15": [
+      20,
+      25
+    ]
+  },
+  "question": "Does replacing the target source exclusion envelope with existing SAM2 recover usable measured road evidence?",
+  "intervention": "Only target12 source exclusion: existing SAM2 core resized nearest +3px dilation, versus GT envelope pad3/groundextend0.5m. All other actors retain old envelopes; fixed r27 pose/plane/LiDAR5cm/triangle3m64px/erosion unchanged.",
+  "selection": "r34 pairs with existing saved SAM2 source masks: f35 unavailable and omitted before running; no new propagation. Diagnostic source-pair comparison, not a full-window fill.",
+  "roles": "Original RGB and processed geometry. Existing SAM2 is prediction, not GT. Exposed pixels may include unmodeled shadow; no automatic compositor admission.",
+  "stop_rule": "If no actual ground support, stop this mask-only control. Do not relax road geometry or overwrite candidate backgrounds.",
+  "resources": {
+    "cpu_threads": 4,
+    "gpu_forwards": 0
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "background_input_dir": null
+}
