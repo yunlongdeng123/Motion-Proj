@@ -1,0 +1,81 @@
+{
+  "task_id": "WS-V77-DELETE-AUDIT-20260928",
+  "run_id": "r1",
+  "stage": "cpu_input_preflight_complete",
+  "official_val_scene_count": 150,
+  "audit_scene_count": 45,
+  "audit_clip_count": 70,
+  "final_quarantine_scene_count": 25,
+  "frame_positions": 1820,
+  "required_unique_rgb": 1802,
+  "extracted_and_decoded": 1802,
+  "missing_rgb": [],
+  "corrupt_rgb": [],
+  "duplicate_rgb": [],
+  "public_archive_root": "/root/autodl-pub/nuScenes/Fulldatasetv1.0/Trainval",
+  "required_shards": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "06",
+    "08",
+    "09",
+    "10"
+  ],
+  "archive_note": "Some tar invocations return exit 2 because log-prefix nomination requests the same name from adjacent shards; all 1802 unique required JPEGs were finally found exactly once and decoded at 1600x900.",
+  "timing_gaps_gt65ms": [
+    {
+      "clip_id": "A006",
+      "frame": 13,
+      "reason": "nearest_camera_gap_gt65ms",
+      "delta_ms": 85.444
+    },
+    {
+      "clip_id": "A008",
+      "frame": 4,
+      "reason": "nearest_camera_gap_gt65ms",
+      "delta_ms": 70.703
+    },
+    {
+      "clip_id": "A025",
+      "frame": 14,
+      "reason": "nearest_camera_gap_gt65ms",
+      "delta_ms": 71.053
+    },
+    {
+      "clip_id": "A055",
+      "frame": 22,
+      "reason": "nearest_camera_gap_gt65ms",
+      "delta_ms": 74.674
+    }
+  ],
+  "input_gallery": "outputs/v77-delete-audit-input/index.html",
+  "input_gallery_cards_verified": 70,
+  "preview_coordinate_fix": "The first CPU gallery mistakenly drew 1024x576 projected boxes directly on 1600x900 RGB. Gallery images were regenerated with x1.5625 scaling; model-space geometry and frozen selection were not changed. Backup retained on remote.",
+  "observed_anchor_caveat": "A012 target is not visually distinguishable from road/curb at the sampled anchor frame; retain this as an input qualification flag rather than silently replacing the frozen case.",
+  "data_disk_gib_total": 500,
+  "data_disk_gib_available_df_h": 54,
+  "public_disk_tib_available_df_h": 2.6,
+  "inference_started": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "prompt_policy_revision": "p2_uniform_instance_separability_before_GPU",
+  "prompt_frames_changed": 40,
+  "old_prompt_neighbor_overlap_ge10pct": 35,
+  "new_prompt_neighbor_overlap_ge10pct": 27,
+  "new_prompt_neighbor_overlap_ge20pct": 20,
+  "A025_prompt_correction": {
+    "old_frame": 2,
+    "new_frame": 12,
+    "old_other_gt_fraction_in_box": 0.14596,
+    "new_other_gt_fraction_in_box": 0.03344,
+    "old_edge_distance_px": 3.0,
+    "new_edge_distance_px": 142.41,
+    "single_GT_target_instance_remains_unchanged": true
+  },
+  "prompt_quality_boundary": "Lower GT-neighbor projection overlap is an input proxy, not a validated SAM2 single-instance mask."
+}
