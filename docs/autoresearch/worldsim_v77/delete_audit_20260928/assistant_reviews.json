@@ -1,0 +1,458 @@
+{
+  "task_id": "WS-V77-DELETE-AUDIT-20260928",
+  "run_id": "r1",
+  "scope": "one_frozen_prompt_frame_per_clip",
+  "human_verdict": null,
+  "reviews": [
+    {
+      "clip_id": "A001",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "雨天远处小车被灰红色平滑块替代，补区纹理较弱；框内后方车辆身份无法由此帧核实。"
+    },
+    {
+      "clip_id": "A002",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "车体轮廓基本消失，但原位置留下两条很亮的竖向光斑及路面反光，删除后的照明残留明显。"
+    },
+    {
+      "clip_id": "A003",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "门岗前目标车在本帧消失，路面与两侧路缘可接续；单帧未见明显邻车损伤。"
+    },
+    {
+      "clip_id": "A004",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "蓝车消失，远侧暗色背景和草地大致衔接；局部细节本来就模糊。"
+    },
+    {
+      "clip_id": "A005",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "右侧截边轿车消失，左侧白SUV保留，露出的人行道基本衔接；目标截边使输入较难。"
+    },
+    {
+      "clip_id": "A006",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "夜间目标几乎只见灯点，遮罩同时跨过细杆/暗背景；车辆边界不足以确认，暂不归为补景模型失败。"
+    },
+    {
+      "clip_id": "A007",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "删除区仍出现带车灯和车轮的完整黑色车状实例，形态与输入车不同；GT有后方车辆投影提示，不能仅凭此帧断言是无依据再生。"
+    },
+    {
+      "clip_id": "A008",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "小目标部分被绿色牌子/围栏挡住；补后为深色竖向结构，前景牌子仍在，但隐藏区域真实结构及实例边界难确认。"
+    },
+    {
+      "clip_id": "A009",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标车消失，路面、右侧路缘/白墙连续，远处车辆仍在；只对本帧成立。"
+    },
+    {
+      "clip_id": "A010",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "灰色轿车消失，砖墙、人行道及路侧停车大致保留；此帧未见明显大洞或完整再生车。"
+    },
+    {
+      "clip_id": "A011",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "左侧大货车消失，旁边红车和黄色厢式车保留，道路接续；单帧未见明显完整再生车。"
+    },
+    {
+      "clip_id": "A012",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "黄框内目标很小且低对比，细杆与车辆难分；补后较平滑，无法可靠判断目标是否删净或静态杆件是否受损。"
+    },
+    {
+      "clip_id": "A013",
+      "issue": "hidden actor structure artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "前景黑车消失，但后方真实白客车的被遮挡部分补成箱状平面，车身结构明显不自然；不能把这辆真实后车全部当幻觉。"
+    },
+    {
+      "clip_id": "A014",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标为摩托车及骑手，删除后弯道和草地衔接，本帧未见明显残体。"
+    },
+    {
+      "clip_id": "A015",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "远处小目标与路边树木/背景混在一起，选中实例的可见轮廓难辨；右侧近车保留，补区偏平滑。"
+    },
+    {
+      "clip_id": "A016",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "右边截边车辆消失，道路红线、路缘大致连续；截边使其他时刻输入仍需视频核对。"
+    },
+    {
+      "clip_id": "A017",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "大SUV消失后原位置留下显眼的深色扭曲团块，斑马线局部不连续；这帧不能算干净背景。"
+    },
+    {
+      "clip_id": "A018",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "密集雨天小车删除区出现棕灰色平滑块，邻近建筑/路侧结构涂抹；小目标与邻车重叠使归因仍有输入混杂。"
+    },
+    {
+      "clip_id": "A019",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "轿车原位置留下大块白灰涂抹和亮点，遮罩覆盖车体但生成背景未恢复为连贯路侧结构。"
+    },
+    {
+      "clip_id": "A020",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标白车被前方黑车遮挡，保护区保留了黑车；补后右侧仍有不规则接缝，单帧无法确认隐藏目标的完整删除。"
+    },
+    {
+      "clip_id": "A021",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "远处目标消失，但道路留下明显偏灰矩形及白线接缝；右侧近车被最终保护写回保留。"
+    },
+    {
+      "clip_id": "A022",
+      "issue": "actor regeneration (suspected)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "银色轿车的位置出现更小的黑色车状物，带轮廓和轮部；GT后方车辆代理为无，粗标疑似再生，仍需视频确认。"
+    },
+    {
+      "clip_id": "A023",
+      "issue": "mask failure",
+      "input_qualification": "review_frame_mask_failure",
+      "note": "橙色写回覆盖车前可见栏杆，实例mask未把前景遮挡物剔除；最终车位有白色残条，栏杆保真受输入混杂影响。"
+    },
+    {
+      "clip_id": "A024",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "夜间小目标删除区成为大块均匀灰色道路补丁，亮灯周围不自然；原目标仅少量灯点，实例边界也有不确定性。"
+    },
+    {
+      "clip_id": "A025",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "当前f12选中的是中央黑色皮卡；车体删除后背景车列和围栏处形成一条横向糊带。密集邻车/铁丝网重叠，不能仅凭GT框交叠定误删。"
+    },
+    {
+      "clip_id": "A026",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "远处浅色小车原位置变成黑色横条，缺少可辨道路或路侧结构。"
+    },
+    {
+      "clip_id": "A027",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "红色货箱车消失后留下层叠灰黑纹理，背后墙面/停放结构不清；两边白车大体保留。"
+    },
+    {
+      "clip_id": "A028",
+      "issue": "mask failure",
+      "input_qualification": "review_frame_mask_failure",
+      "note": "遮挡严重的大巴只覆盖中间一小片，右侧可见车头仍留在原位；当前输入不足以验证完整单车删除。"
+    },
+    {
+      "clip_id": "A029",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "大巴消失，原位建筑立面和道路明显涂抹；前景行人与删除区域贴近，边界归属需要额外审核。"
+    },
+    {
+      "clip_id": "A030",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "远处小车位置变成黑色块并保留亮点，未形成可信背景；停车列内小实例边界不清。"
+    },
+    {
+      "clip_id": "A031",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "右侧黑SUV消失，左边红车/灰车保留，停车场地面接续；后方围挡部分为生成内容。"
+    },
+    {
+      "clip_id": "A032",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "后方箱式车消失，前方黑色轿车保留；露出的建筑表面较平滑，但此帧未见明显车体残留或空洞，真实性不能据此认证。"
+    },
+    {
+      "clip_id": "A033",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "夜间目标灯点消失后留下竖向灰褐涂抹，路面反光结构不自然；暗处实例边界难确认。"
+    },
+    {
+      "clip_id": "A034",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "白色目标车消失，原区域露出黑色车及亮色地面残片；这里本有后方车列，需核对隐藏车辆身份，不能直接算无依据再生。"
+    },
+    {
+      "clip_id": "A035",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标位置仍有很强的车灯状亮块与反光，车辆删除不清楚；夜间过曝使车体/mask边界难辨。"
+    },
+    {
+      "clip_id": "A036",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "小货车消失，但原位留下一条悬空感的深色横向结构；左侧大车经写回保护保留。"
+    },
+    {
+      "clip_id": "A037",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "白SUV消失后路上留有明显深色块/阴影残留，后方停车列保留；当前不能称为完整actor-free背景。"
+    },
+    {
+      "clip_id": "A038",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标厢式货车消失，道路双黄线连续，左侧轿车和后方白色小车仍在；本帧较干净。"
+    },
+    {
+      "clip_id": "A039",
+      "issue": "hidden actor structure artifact",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标为前景摩托/骑手，后方白色车身被补成大片平面，边缘与蓝车连接不自然；夜间遮挡使实例边界存在混杂。"
+    },
+    {
+      "clip_id": "A040",
+      "issue": "mask failure",
+      "input_qualification": "review_frame_mask_failure",
+      "note": "遮罩覆盖蓝车前可见护栏，前景遮挡物未完整保护；补后仍有蓝色车状结构且护栏改变，不能把全部问题直接归为补景模型。"
+    },
+    {
+      "clip_id": "A041",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "浅色目标位置出现黑色车状结构，并与右侧原有黑车相接；需核对是邻车外观扩张还是再生，不能只按出现车辆计失败。"
+    },
+    {
+      "clip_id": "A042",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "蓝色目标消失，后方黑色车露出更多车身；原画面确有这辆黑车，单帧只能记录隐藏实体身份/几何待核实。"
+    },
+    {
+      "clip_id": "A043",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "左侧白色厢式车消失，道路边线、人行道和远处车辆保留，本帧较干净。"
+    },
+    {
+      "clip_id": "A044",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标很小，与路侧杆件/两轮物体混在一起；补区仍有竖向块，无法确认实例是否真正删净。"
+    },
+    {
+      "clip_id": "A045",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标货车位置生成显眼的米色/黑色几何块，既非连贯路面也非可信背后结构。"
+    },
+    {
+      "clip_id": "A046",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "黑车消失后出现白色篷状糊块及竖向亮条，背景结构不可靠；相邻白车大体保留。"
+    },
+    {
+      "clip_id": "A047",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "夜间红车删除后为暗色路面，右侧迎面车灯保留；局部偏平滑，但该帧未见明显完整残车。"
+    },
+    {
+      "clip_id": "A048",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标严重截边，删除后左边仍有暗色扭曲结构；GT有后方车辆提示，截边和遮挡使身份难判。"
+    },
+    {
+      "clip_id": "A049",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "白车消失，路缘、护栏/围网与道路大致连续，本帧未见明显车体残留。"
+    },
+    {
+      "clip_id": "A050",
+      "issue": "actor regeneration (suspected)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "黑色小车原位置出现完整银灰SUV样车辆，颜色和车型都变了；GT后方车辆代理为无，粗标疑似再生。"
+    },
+    {
+      "clip_id": "A051",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "夜间车体几乎不可见，橙色区域与暗背景/邻车边界难分；补后更暗且有块状过渡，不宜从此帧判车型或删净。"
+    },
+    {
+      "clip_id": "A052",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "要删的实例只在最左边露出窄条，中央大车是其他actor；严重截边导致本帧无法可靠审核目标删除。"
+    },
+    {
+      "clip_id": "A053",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "黑色轿车消失，路口标线、路缘及绿化带基本接续；此帧未见明显完整残车。"
+    },
+    {
+      "clip_id": "A054",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标是相互重叠的自行车之一；右侧自行车大部分消失，左侧另一辆自行车与树干保留，但残留轮架归属不明确。"
+    },
+    {
+      "clip_id": "A055",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标车位仍出现扭曲的红黑车身/尾部结构；前景SUV保留，后方有真实车列，需进一步核对隐藏实体身份。"
+    },
+    {
+      "clip_id": "A056",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "右侧截边黑车主体被去除，但靠右区域留下明显车状拖影/糊带；道路部分已补出。"
+    },
+    {
+      "clip_id": "A057",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标白车位置生成黑白大矩形和弯曲亮带，道路/背景明显不成立。"
+    },
+    {
+      "clip_id": "A058",
+      "issue": "actor regeneration (suspected)",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "近距离大巴几乎填满画面，删除后仍是带车窗和轮子的巴士侧面，局部纹理改变；上下文极少，输入难度应升为高。"
+    },
+    {
+      "clip_id": "A059",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "左侧出租车消失，露出人行道和建筑墙面；局部纹理平滑，但本帧无明显完整残车。"
+    },
+    {
+      "clip_id": "A060",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "黑色轿车消失，道路边缘和后方灰色建筑大致衔接；隐藏立面细节真实性未验证。"
+    },
+    {
+      "clip_id": "A061",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "正面朝向的奔驰目标位置变为反向的银色车状物；后方有车列投影，需核实身份/位置，不能把出现车体自动判为幻觉。"
+    },
+    {
+      "clip_id": "A062",
+      "issue": "uncertain",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标被近处黑车遮挡，补后黑车左侧/顶部仍有浅色块；可见实例边界与邻车接缝难分，先标输入/隐藏结构待核实。"
+    },
+    {
+      "clip_id": "A063",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "目标黑SUV的位置仍有灰色SUV样结构，部分被左侧近车遮挡；GT有后方车辆，单帧不能确定是否恢复了正确实体。"
+    },
+    {
+      "clip_id": "A064",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "小货车消失，仓库卷帘门、坡道与地面大致接续；补区细节平滑但未见明显完整残车。"
+    },
+    {
+      "clip_id": "A065",
+      "issue": "actor regeneration (suspected)",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "黄色广告货车删除后仍保留完整厢体/轮子，只是广告图案改变；GT后方车辆代理为无，明显不满足该帧单车删除目标。"
+    },
+    {
+      "clip_id": "A066",
+      "issue": "no obvious issue in review frame",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "迎面小车消失，弯道与标线大致接续，本帧无明显完整车体残留。"
+    },
+    {
+      "clip_id": "A067",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "目标货车消失，但路口保留并重组了白色车状结构；原来左下方已有邻车，需区分真实邻车恢复与再生/拖影。"
+    },
+    {
+      "clip_id": "A068",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "摩托/骑手主体消失，原位路面仍有深色小块和阴影样残留；近处轿车保留。"
+    },
+    {
+      "clip_id": "A069",
+      "issue": "background blur/artifact",
+      "input_qualification": "review_frame_no_obvious_mask_error",
+      "note": "夜间大车删除区留下边界规整的大块深色路面，亮暗与反光衔接突兀。"
+    },
+    {
+      "clip_id": "A070",
+      "issue": "vehicle-like instance (unresolved)",
+      "input_qualification": "review_frame_ambiguous",
+      "note": "橙色写回只覆盖黄框左侧，右侧车身仍在；密集车辆重叠，需确认是目标残体还是相邻实例，不能直接认证删净。"
+    }
+  ],
+  "difficulty_overrides": {
+    "A002": {
+      "value": "high",
+      "reason": "夜间车灯过曝与反光强"
+    },
+    "A023": {
+      "value": "high",
+      "reason": "可见前景栏杆遮挡目标"
+    },
+    "A025": {
+      "value": "high",
+      "reason": "密集车列与铁丝网重叠"
+    },
+    "A041": {
+      "value": "medium",
+      "reason": "远处目标与黑色邻车重叠且低清"
+    },
+    "A054": {
+      "value": "high",
+      "reason": "两辆自行车与树干相互遮挡"
+    },
+    "A056": {
+      "value": "high",
+      "reason": "运动模糊且大目标截边"
+    },
+    "A058": {
+      "value": "high",
+      "reason": "近景大巴几乎充满画面，可用背景上下文极少"
+    }
+  }
+}
