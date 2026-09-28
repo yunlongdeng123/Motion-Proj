@@ -1,0 +1,58 @@
+{
+  "task_id": "WS-V77-NINE-FULL-20260928",
+  "run_id": "r1",
+  "state": "complete_pending_user_visual_review",
+  "counts": {
+    "scenes": 9,
+    "source_rgb_viewtimes": 1620,
+    "sam_streams": 17,
+    "drive_window_records": 68,
+    "drive_generated_windows": 46,
+    "drive_empty_windows": 22,
+    "omega_forwards": 270,
+    "actor_layers": 340,
+    "orientation_controls": 18,
+    "hunyuan_shape_calls": 9,
+    "hunyuan_paint_calls": 9,
+    "video_files": 193,
+    "video_frames": 5790,
+    "training_steps": 0
+  },
+  "checks": {
+    "task_id": "WS-V77-NINE-FULL-20260928",
+    "run_id": "r1",
+    "existing_unit_tests": {
+      "status": "passed",
+      "passed": 15,
+      "seconds": 0.36,
+      "files": [
+        "tests/test_worldsim_v77_geometry.py",
+        "tests/test_v77_actor_command_audit.py",
+        "tests/test_v77_r2_space_gate.py",
+        "tests/test_v77_r3_visibility.py"
+      ],
+      "scope": "This turn, existing geometry / command / space / visibility behavior; not visual quality."
+    },
+    "browser_interaction_tested": false,
+    "human_verdict": null
+  },
+  "local_media_validation": {
+    "task_id": "WS-V77-NINE-FULL-20260928",
+    "run_id": "r1",
+    "default_columns": 27,
+    "scenes": 9,
+    "local_refs": 204,
+    "dynamic_paths_verified": 175,
+    "images_verified": 81,
+    "total_decoded_frames": 5790,
+    "js_syntax": "pass",
+    "browser_interaction_tested": false,
+    "human_verdict": null
+  },
+  "role": "all nine previously exposed development cases; not independent generalization",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02",
+  "human_verdict": null
+}

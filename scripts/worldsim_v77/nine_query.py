@@ -20,7 +20,19 @@ for s in reg['scenes']:
     dump(out/'command.json',dict(operation='DELETE',actor_id=s['actor'],same_asset_and_background=True,neural_calls_during_query=0,legality='No new occupied volume; target identity/mask quality remains subject to review',human_verdict=None))
     kinds=['original','factual','delete','hybrid_factual','hybrid_delete','completion','scope'];writers={k:Writer(out/f'{k}.mp4',(688,384)) for k in kinds}
     writers.update({f'six_{k}':Writer(out/f'six_{k}.mp4',(1032,384)) for k in ['original','factual','delete','hybrid_factual','hybrid_delete']})
-    rows=[];contacts=[];stages=[];main=display[s['name']]
+    rows=[];contacts=[];stages=[];main=display[s['name']];poster_frame=int(np.argmax(s['streams'][main]['projected_areas']))
+    # 同一GT轨迹外包范围用于三列共同放大；固定裁剪，避免逐帧跟随造成假稳定。
+    bbs=[]
+    for fr in frames:
+        ac=next(b for b in fr['all_boxes'] if b['actor_id']==s['actor']);ec,ik=camera(fr,main,(384,688));bb=project_bbox(ac['pose'],ac['size_lwh'],ec,ik,(384,688))
+        if bb:bbs.append(bb)
+    bbs=np.array(bbs);cx=(bbs[:,0].min()+bbs[:,2].max())/2;cy=(bbs[:,1].min()+bbs[:,3].max())/2
+    cw=max(160,(bbs[:,2].max()-bbs[:,0].min())*1.6,(bbs[:,3].max()-bbs[:,1].min())*1.6*688/384);cw=min(688,cw);ch=cw*384/688
+    x0=int(np.clip(cx-cw/2,0,688-cw));y0=int(np.clip(cy-ch/2,0,384-ch));zoom_box=(x0,y0,int(x0+cw),int(y0+ch))
+    writers.update({f'zoom_{k}':Writer(out/f'zoom_{k}.mp4',(688,384)) for k in ['original','factual','delete','hybrid_factual','hybrid_delete']})
+    extra_cameras=[v['camera'] for v in s['streams'] if v['active'] and v['camera']!=main]
+    for c in extra_cameras:
+        writers.update({f'cam{c}_{k}':Writer(out/f'cam{c}_{k}.mp4',(688,384)) for k in ['original','factual','delete','hybrid_factual','hybrid_delete']})
     def label(a,text):
         im=Image.fromarray(a);d=ImageDraw.Draw(im);d.rectangle((0,0,im.width,22),fill=(20,30,40));d.text((4,4),text,fill='white');return im
     for fr in frames:
@@ -46,6 +58,14 @@ for s in reg['scenes']:
             views.append(dict(original=np.array(marked),factual=factual,delete=deletion,hybrid_factual=hfact,hybrid_delete=hdelete,completion=bginput,scope=scope))
             rows.append(dict(frame=f,camera=c,gt_projected_area=s['streams'][c]['projected_areas'][f],write_pixels=core_count,geometry_coverage=float(np.isfinite(z).mean()),**vis))
         for k in kinds:writers[k].write(label(views[main][k],f"{s['name']} / actor{s['actor']} | CAM{main} f{f:02} {f/10:.1f}s | {k}"))
+        if f==poster_frame:
+            for k in ['original','factual','delete']:label(views[main][k],f"{s['name']} actor{s['actor']} | CAM{main} f{f:02} | {k}").save(out/f'poster_{k}.jpg',quality=94)
+        for c in extra_cameras:
+            for k in ['original','factual','delete','hybrid_factual','hybrid_delete']:
+                writers[f'cam{c}_{k}'].write(label(views[c][k],f"{s['name']} actor{s['actor']} | CAM{c} f{f:02} | {k}"))
+        for k in ['original','factual','delete','hybrid_factual','hybrid_delete']:
+            zoom=np.array(Image.fromarray(views[main][k]).crop(zoom_box).resize((688,384),Image.Resampling.LANCZOS))
+            writers[f'zoom_{k}'].write(label(zoom,f"{s['name']} actor{s['actor']} | CAM{main} f{f:02} | fixed ROI {k}"))
         for k in ['original','factual','delete','hybrid_factual','hybrid_delete']:
             mosaic=Image.new('RGB',(1032,384))
             for c in range(6):mosaic.paste(label(views[c][k],f'CAM{c} f{f:02}').resize((344,192)),((c%3)*344,(c//3)*192))
@@ -68,5 +88,5 @@ for s in reg['scenes']:
     summary=dict(scene=s['name'],actor_id=s['actor'],primary_camera=main,frames=30,fps=10,views=6,actual_layer_renders=len(read(base/'actor_layers/render_summary.json')['rows']),
         mask_missing_when_gt_visible=sum(r['write_pixels']==0 for r in visible_rows),gt_visible_view_times=len(visible_rows),rows=rows,video_frames={k:w.count for k,w in writers.items()},
         original_reconstruction='pure B_t point render + generated target GLB at original GT pose',edit='same exact B_t, actor visible=false',optional_hybrid='input RGB only at no-geometry pixels, not proof of complete reconstruction',
-        camera_GT=True,lidar_scale=True,temporal_world_consistent=False,strict_generalization=False,human_verdict=None)
+        camera_GT=True,lidar_scale=True,temporal_world_consistent=False,strict_generalization=False,poster_frame=poster_frame,zoom_box_xyxy=zoom_box,zoom_rule='GT trajectory union plus context; fixed across time and all three columns; display only',human_verdict=None)
     dump(out/'summary.json',summary);progress('query',scene=s['name'],state='complete',frames=30)

@@ -1,0 +1,96 @@
+{
+  "task_id": "WS-V77-NINE-FULL-20260928",
+  "run_id": "r1",
+  "scene": "processed_382",
+  "actor": "4",
+  "source": {
+    "frame": 29,
+    "camera": 0,
+    "core_pixels": 18902,
+    "projected_area": 43478.60231594601
+  },
+  "crop": [
+    1121,
+    463,
+    1489,
+    678
+  ],
+  "fixed": {
+    "frames": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "fps": 10,
+    "model_resolution": [
+      1024,
+      576
+    ],
+    "render_resolution": [
+      688,
+      384
+    ],
+    "sam": "SAM2.1-large, maxGTarea box prompt, bidirectional propagation",
+    "core": "largest(SAM & GT hull dilated3px)",
+    "write": "dilate3px, bounded by GT hull+3px",
+    "model_mask": "write bbox pad8 left/right/top and24 bottom",
+    "alpha": "rectangle smoothstep8px; write1; otherGT hull outsidewrite0",
+    "deletion_seed": 42,
+    "deletion_steps": 25,
+    "window_starts": [
+      0,
+      9,
+      18,
+      27
+    ],
+    "window_length": 10,
+    "same_time_overlap": true,
+    "omega_checkpoint": "/root/autodl-tmp/models/worldsim_v77/vggt_omega_1b_512.pt",
+    "omega_source": "/root/autodl-tmp/external/worldsim_v74_mainfig/vggt-omega",
+    "omega_frozen": true,
+    "omega_resolution": 512,
+    "asset": "existing official Hunyuan3D-2.1 single best observed crop within same30frames; one shape andPBR, no result-dependent search",
+    "shape_seed": 7740,
+    "shape_steps": 50,
+    "guidance": 7.5,
+    "octree": 256,
+    "pbr_views": 6,
+    "pbr_resolution": 512,
+    "pose": "GT center,size,yaw; native Blender longY->forwardX fixed -90deg; fixed yaw0 all9; no per-scene height/yaw fit",
+    "lighting": "fixed world+sun; no contactshadow fitting",
+    "background": "independent B_t; GT calibrated cameras/background LiDAR global scale; other actors baked",
+    "empty_masks": "no invented mask or box fallback; unchanged RGB where no mask, logged as unresolved input failure; full downstream output is diagnostic not admitted"
+  },
+  "source_rule": "max visible core pixels in30x6, before asset model",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ]
+}

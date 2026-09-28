@@ -1,0 +1,29 @@
+{
+  "scene": "processed_382",
+  "source": {
+    "frame": 29,
+    "camera": 0,
+    "core_pixels": 18902,
+    "projected_area": 43478.60231594601
+  },
+  "rule": "horizontal PCA then two front/rear candidates on same real source; score=maskIoU-0.25*RGB_MAE[0,1]; scoregap<.01 chooses0 and flags ambiguity",
+  "selected_yaw_deg": 0,
+  "score_gap": 0.15055743454631332,
+  "ambiguous": false,
+  "rows": [
+    {
+      "yaw_deg": 0,
+      "mask_iou": 0.7974282698397467,
+      "foreground_rgb_mae": 0.07154841721057892,
+      "score": 0.779541165537102
+    },
+    {
+      "yaw_deg": 180,
+      "mask_iou": 0.6475318675677988,
+      "foreground_rgb_mae": 0.07419254630804062,
+      "score": 0.6289837309907886
+    }
+  ],
+  "scope": "BUILD reference alignment, not heldout appearance validation; occlusion/texture quality may mislead score",
+  "human_verdict": null
+}
