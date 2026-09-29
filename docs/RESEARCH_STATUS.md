@@ -1,11 +1,11 @@
 # 当前研究状态
 
-更新：2026-09-29，v77。当前唯一任务`WS-V77-TARGET-PROTECTED-20260929/r1`，CPU准备约50例Target + Protected Actors数据。用户开启无卡实例，明确要求到批量推理前停止等GPU；本轮不启动SAM2、DriveEditor、Ω/GLB或正式训练，不恢复旧自动化和关机流程。
+2026-09-29，v77；唯一任务`WS-V77-TARGET-PROTECTED-20260929/r1`。CPU素材准备收口，按用户要求**等待用户开启GPU后再运行SAM2**。当前没有模型推理/训练，没有旧定时任务或关机授权在执行。
 
-上一阶段70例CSV已原样归档，human_score 0/1/2/未填=26/26/15/3。未填A043/A052/A060和两列评分差异保留。V77-F02更新用户视频证据，原单帧助手记录不覆盖。见[用户评审](v77/DELETE_AUDIT_USER_REVIEW.md)。旧9例与已曝光audit不作新训练素材，25个final scene保持隔离。
+70例用户CSV已原样归档并推送，human_score 0/1/2/未填=26/26/15/3；两列差异不补写。下一阶段聚焦well-observed Target + Protected Actors，真实nuScenes train视频作Y，只添加遮挡A构成X；原DriveEditor架构不变。旧DEV/audit不用于新训练，隔离final保持不动。
 
-新数据只来自nuScenes train：真实视频Y保持不变，在输入X增加一个真实donor track作为待删A，围绕纯背景、单个真实actor、密集车列三类。架构不变，protected metadata先用于数据检查/监督，不增加condition通道。制定逐帧硬门槛和subagent每例抽帧，再由用户在HTML逐帧全检；源素材通过不等于合成通过。见[质量协议与组件图](v77/TARGET_PROTECTED_QUALITY.md)。
+64个初选来源经时序、文件与几何检查，40段RGB可读且独立subagent全部抽帧。Receiver来源29通过，donor来源26通过，29段进入SAM2来源队列；拒绝与待定保留。2段RGB在索引指向的分片缺失并排除；3段标注间隔不合格。来源主要集中Boston少数日志，外观重复，不声称泛化。
 
-远端run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1`。当前正在CPU元数据筛选；无卡资源为0.5 CPU/2GiB内存，数据盘600GB、可用约150GB。按最多两个公共分片建立小规模试产素材池，选择依据是元数据可用性和质量，不是模型输出；不声称完整train分布代表性。后续检查RGB、几何和逐例素材，再停在GPU分割之前。尚无合格合成样本或微调结果。
+**尚无合格合成对，约50例是下一步目标。** 本地`outputs/v77-target-protected/index.html`是来源预审，不是最终合成审核。GPU分割后完成放置/遮挡/边缘/模糊/模型条件检查，独立subagent每例抽帧，仅合格例进入用户逐帧全检；人工verdict仍为空。次要actor尚未自动准入。
 
-failure_ledger_refs: [V77-F02]。failure_ledger_delta: updated V77-F02。
+远端run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1`。CPU配额0.5核/2GiB，磁盘可用约149GiB，本批无需扩容。4项CPU合同测试、页面资源和JS语法核验已完成，GPU调用尚未验证。见[CPU结果与组件图](v77/TARGET_PROTECTED_CPU.md)、[质量协议](v77/TARGET_PROTECTED_QUALITY.md)、[接口合同](v77/TARGET_PROTECTED_CONDITION.md)。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。
