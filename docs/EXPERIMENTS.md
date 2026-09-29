@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r1 | CPU来源40段独立抽帧，receiver 29/donor 26通过；29段待SAM2，合格合成对0，GPU前停止 | [CPU结果](v77/TARGET_PROTECTED_CPU.md) · [质量协议](v77/TARGET_PROTECTED_QUALITY.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r1 | 49合成case/11个receiver scene；独立{'reject': 7, 'pass': 28, 'uncertain': 14}，仅通过例人工逐帧全检；密集类缺额、零训练 | [GPU试产](v77/TARGET_PROTECTED_GPU.md) · [CPU来源](v77/TARGET_PROTECTED_CPU.md) · [质量协议v2](v77/TARGET_PROTECTED_QUALITY.md) |
 | WS-V77-DELETE-AUDIT-20260928 / r1 | 45 val scene/70单车DELETE，280视频已交付；用户CSV已归档，human_score 0/1/2/未填=26/26/15/3；原助手抽帧观察保留 | [用户视频评分](v77/DELETE_AUDIT_USER_REVIEW.md) · [最终工程结果](v77/DELETE_AUDIT_RESULTS.md) |
 | WS-V77-NINE-FULL-20260928 / r1 | 九例统一r30迁移配置完整DELETE完成，待用户视频审核；无训练/逐例修补 | [报告](v77/NINE_FULL_RESULTS.md) · [证据](autoresearch/worldsim_v77/nine_full_20260928/review_link.md) |
 | WS-V77-EXPAND-EDIT-20260928 / r1–r7 | 固定新增六例，五例30帧生成/一例输入停止；r30回接Ω、INSERT、原位/接地控制，MOVE未放行；78监督候选、零训练 | [报告与组件图](v77/EXPANSION_EDIT_CHECKPOINT.md)、[登记/证据](autoresearch/worldsim_v77/expand_edit_20260928/review_link.md) |

@@ -1,0 +1,204 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r1",
+  "recorded_at_utc": "2026-09-29T14:15:51.885218+00:00",
+  "status": "pilot_delivery_pending_human_full_frame_review; approximate_50_qualified_goal_not_met",
+  "source_RGB_reviewed": 66,
+  "receiver_source_quality": {
+    "pass": 47,
+    "uncertain": 2,
+    "reject": 17
+  },
+  "donor_source_quality": {
+    "pass": 42,
+    "reject": 19,
+    "uncertain": 5
+  },
+  "primary_SAM2_jobs": 47,
+  "primary_numeric_pass": 47,
+  "primary_independent_receiver_mask": {
+    "pass": 46,
+    "reject": 1
+  },
+  "primary_independent_donor_mask": {
+    "pass": 40,
+    "uncertain": 6,
+    "reject": 1
+  },
+  "secondary_SAM2_jobs": 8,
+  "secondary_independent_mask": {
+    "pass": 8
+  },
+  "SAM2_total_frames": 1650,
+  "rendered_cases": 49,
+  "rendered_receiver_scenes": 11,
+  "rendered_frames": 810,
+  "cohorts": [
+    {
+      "cohort": "P / 30帧初始固定世界位移",
+      "rendered": 5,
+      "receiver_scenes": 2,
+      "frames_per_case": [
+        30
+      ],
+      "frames": 150,
+      "types": {
+        "background": 4,
+        "single_actor": 1
+      },
+      "independent_quality": {
+        "reject": 2,
+        "pass": 2,
+        "uncertain": 1
+      },
+      "passed_types": {
+        "background": 1,
+        "single_actor": 1
+      }
+    },
+    {
+      "cohort": "D / 30帧相机相对轨迹",
+      "rendered": 11,
+      "receiver_scenes": 4,
+      "frames_per_case": [
+        30
+      ],
+      "frames": 330,
+      "types": {
+        "background": 5,
+        "single_actor": 6
+      },
+      "independent_quality": {
+        "pass": 5,
+        "uncertain": 2,
+        "reject": 4
+      },
+      "passed_types": {
+        "background": 1,
+        "single_actor": 4
+      }
+    },
+    {
+      "cohort": "W / 官方10帧固定窗口",
+      "rendered": 33,
+      "receiver_scenes": 10,
+      "frames_per_case": [
+        10
+      ],
+      "frames": 330,
+      "types": {
+        "background": 17,
+        "single_actor": 16
+      },
+      "independent_quality": {
+        "pass": 21,
+        "uncertain": 11,
+        "reject": 1
+      },
+      "passed_types": {
+        "background": 7,
+        "single_actor": 14
+      }
+    }
+  ],
+  "independent_synthetic": {
+    "reject": 7,
+    "pass": 28,
+    "uncertain": 14
+  },
+  "independent_pass_cases": 28,
+  "independent_pass_case_ids": [
+    "P002",
+    "P005",
+    "D001",
+    "D007",
+    "D008",
+    "D010",
+    "D011",
+    "W001",
+    "W003",
+    "W007",
+    "W008",
+    "W016",
+    "W017",
+    "W018",
+    "W019",
+    "W021",
+    "W023",
+    "W024",
+    "W025",
+    "W027",
+    "W028",
+    "W029",
+    "W032",
+    "W033",
+    "W034",
+    "W036",
+    "W037",
+    "W038"
+  ],
+  "independent_pass_receiver_scenes": 8,
+  "independent_pass_types": {
+    "background": 9,
+    "single_actor": 19
+  },
+  "human_review_received": 0,
+  "training_ready": 0,
+  "formal_training_runs": 0,
+  "DriveEditor_forward_runs": 0,
+  "GT_generated": false,
+  "architecture_changed": false,
+  "reviewer_model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "validation": {
+    "case_count": 49,
+    "video_count": 196,
+    "preview_frame_count": 3240
+  },
+  "native_window_ego_guard_rejected": [
+    {
+      "case_id": "W002",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 538.4874072533635
+    },
+    {
+      "case_id": "W020",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 540.7895563563951
+    },
+    {
+      "case_id": "W026",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 562.7437253657765
+    },
+    {
+      "case_id": "W030",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 540.7683333830959
+    },
+    {
+      "case_id": "W035",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 561.8140728400762
+    }
+  ],
+  "dense_strict_selected": 0,
+  "dense_unreviewed_diagnostic_selected": 0,
+  "run_root": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1",
+  "local_html": "C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-target-protected-synthetic/index.html",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02: mask contamination, synthesis lighting/foreground-order failures and dense-pair data gap; no model-family scientific rejection",
+  "known_limits": [
+    "Boston logs and repeated receiver/donor scenes; not generalization",
+    "10-frame fixed windows are short samples, not 3s or long-time validation",
+    "2.5D real cutouts, not relit 3D render",
+    "no qualified dense multi-actor family in this pool",
+    "single-camera visible evidence only; no new SV3D/multiview condition",
+    "sampling QA does not certify temporal image quality",
+    "current condition preview is data recipe, not full DriveEditor loader/forward"
+  ],
+  "resource_note": "GPU used for official frozen SAM2; CPU synthesis and QA. No power action or automation in this phase."
+}

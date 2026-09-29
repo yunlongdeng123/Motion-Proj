@@ -11,6 +11,7 @@
 
 ## 研究与沟通
 
+- 本项目subagent默认使用`gpt-6-sol`、`xhigh`；禁止启用fast模式。只有用户明确指定时才更换默认模型。
 - 遵循用户最新要求和 [auto-research_scaling_law.md](auto-research_scaling_law.md)。先确认问题真实且值得研究，再用简单强控制决定方法；不预设机制或指定失败结论。
 - 开始前渐进读取当前状态及相关 failure ID，不默认读完整历史。明确工程错误、数据缺口、资源限制与科学否定的区别。
 - 实验登记唯一 task/run ID、输入角色、配置、seed、证据路径、资源、结果与 `failure_ledger_refs`；收口记 `failure_ledger_delta`，没有新增写 `none`。

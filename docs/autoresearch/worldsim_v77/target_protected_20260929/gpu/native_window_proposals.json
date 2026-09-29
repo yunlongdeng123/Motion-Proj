@@ -1,0 +1,3807 @@
+{
+  "config": {
+    "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+    "run_id": "r1",
+    "offsets_m": [
+      [
+        -6.0,
+        -6.0
+      ],
+      [
+        -6.0,
+        -3.0
+      ],
+      [
+        -6.0,
+        -1.5
+      ],
+      [
+        -6.0,
+        0.0
+      ],
+      [
+        -6.0,
+        1.5
+      ],
+      [
+        -6.0,
+        3.0
+      ],
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        0.0,
+        -6.0
+      ],
+      [
+        0.0,
+        -3.0
+      ],
+      [
+        0.0,
+        -1.5
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.5
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        0.0,
+        6.0
+      ],
+      [
+        4.5,
+        -6.0
+      ],
+      [
+        4.5,
+        -3.0
+      ],
+      [
+        4.5,
+        -1.5
+      ],
+      [
+        4.5,
+        0.0
+      ],
+      [
+        4.5,
+        1.5
+      ],
+      [
+        4.5,
+        3.0
+      ],
+      [
+        4.5,
+        6.0
+      ],
+      [
+        6.0,
+        -6.0
+      ],
+      [
+        6.0,
+        -3.0
+      ],
+      [
+        6.0,
+        -1.5
+      ],
+      [
+        6.0,
+        0.0
+      ],
+      [
+        6.0,
+        1.5
+      ],
+      [
+        6.0,
+        3.0
+      ],
+      [
+        6.0,
+        6.0
+      ],
+      [
+        8.0,
+        -6.0
+      ],
+      [
+        8.0,
+        -3.0
+      ],
+      [
+        8.0,
+        -1.5
+      ],
+      [
+        8.0,
+        0.0
+      ],
+      [
+        8.0,
+        1.5
+      ],
+      [
+        8.0,
+        3.0
+      ],
+      [
+        8.0,
+        6.0
+      ]
+    ],
+    "placement_mode": "donor_camera_replay",
+    "target_counts": {
+      "background": 18,
+      "single_actor": 20,
+      "dense_actors": 12
+    },
+    "max_proposals_per_receiver_type": 4,
+    "different_donor_log": true,
+    "different_donor_scene": true,
+    "different_donor_track": true,
+    "model_inference_selection": false,
+    "model_hole_dilation_upper_bound_px": 6,
+    "proposal_revision": 4,
+    "proposal_change_reason": "explicit actual-size downsample contrast; source provenance and independent synthesis review required",
+    "max_ranked_donors_per_receiver": 18,
+    "frame_counts": [
+      10
+    ],
+    "actual_warped_actor_bbox_min_px": [
+      72,
+      40
+    ],
+    "actual_size_reason": "P004 was visually uncertain despite projected GT size pass; reject tiny actual visible cutouts prospectively",
+    "minimum_scale_ratio": 0,
+    "maximum_scale_ratio": 1.5,
+    "downsample_policy": "actual alpha size >=72x40 plus visual QA replaces old .65 lower proxy",
+    "ground_support_distance_max_m": 2.5,
+    "clearance_min_m": 0.3,
+    "seed": 42,
+    "GT_generated": false,
+    "image_bottom_guard_px": 64,
+    "reason": "D006/D009 actual ego-hood overwrite found by independent QA; preserve original candidates and reject risk before new synthesis"
+  },
+  "summary": [
+    {
+      "source_id": "S003w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 3
+      }
+    },
+    {
+      "source_id": "S003w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 3
+      }
+    },
+    {
+      "source_id": "S003w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "S004w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S004w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S004w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S005w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S005w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S005w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S008w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 4
+      }
+    },
+    {
+      "source_id": "S008w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 4
+      }
+    },
+    {
+      "source_id": "S008w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "S013w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S013w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S013w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S014w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S014w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S014w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S015w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S015w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S015w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S019w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S019w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S019w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S021w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S021w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S021w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S023w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 1
+      }
+    },
+    {
+      "source_id": "S023w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S023w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S024w0",
+      "ground_pass": true,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S024w1",
+      "ground_pass": true,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S024w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S027w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S027w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S027w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0,
+        "single_actor": 1
+      }
+    },
+    {
+      "source_id": "S030w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S030w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S030w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S033w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S033w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S033w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S034w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S034w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S034w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S035w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S035w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S035w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S036w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S036w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S036w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S042w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S042w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S042w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S044w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S044w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S044w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S045w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S045w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S045w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S051w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S051w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S051w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S052w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S052w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S052w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S056w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0,
+        "single_actor": 4
+      }
+    },
+    {
+      "source_id": "S056w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "single_actor": 3,
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S056w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 3
+      }
+    },
+    {
+      "source_id": "S057w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S057w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S057w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S058w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S058w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "single_actor": 3,
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S058w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S059w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S059w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S059w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S061w0",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S061w1",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S061w2",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S062w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S062w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S062w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0,
+        "single_actor": 2
+      }
+    },
+    {
+      "source_id": "S064w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S064w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S064w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T002w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T002w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T002w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T003w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T003w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T003w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T008w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T008w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T008w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T011w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T011w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T011w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T012w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "T012w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "T012w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "T013w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T013w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T013w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T015w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T015w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T015w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T016w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T016w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T016w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T017w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T017w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T017w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T018w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T018w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T018w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T020w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T020w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T020w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T021w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T021w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T021w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0,
+        "single_actor": 3
+      }
+    },
+    {
+      "source_id": "T022w0",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "T022w1",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "T022w2",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "T023w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T023w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 1
+      }
+    },
+    {
+      "source_id": "T023w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 1
+      }
+    },
+    {
+      "source_id": "T027w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T027w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T027w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T032w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T032w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 3
+      }
+    },
+    {
+      "source_id": "T032w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "T039w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T039w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T039w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    }
+  ],
+  "rejection_counts": {
+    "outside_drivable": 24387,
+    "collision_or_clearance": 4657,
+    "aspect_deformation_gt1p12": 8275,
+    "upscale_gt1p5": 5942,
+    "projected_size_border": 10931,
+    "unreviewed_actor_envelope_overlap": 877,
+    "ground_support_gap": 8301,
+    "actual_actor_too_small": 149,
+    "single_visibility_ratio": 37,
+    "behind_camera": 2861,
+    "depth_order_uncertain": 403,
+    "replay_behind_camera": 4032,
+    "view_angle": 709,
+    "contact_anchor_jitter": 16,
+    "replay_heading_mismatch": 6478
+  },
+  "candidate_count": 79,
+  "selected": [
+    {
+      "source_id": "S003w0",
+      "donor_source_id": "S059w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.5364819170977051,
+      "max_ground_support_distance_m": 1.1298280072921092,
+      "max_view_yaw_delta_deg": 8.216487298292435,
+      "max_view_pitch_delta_deg": 1.874296844944638,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0007331378299120235,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.02358260019550342,
+          0.01935003721161002,
+          0.01229765340695194,
+          0.009344598054275474,
+          0.002082519849017311,
+          0.0018552875695732839,
+          0.0,
+          0.0012536564981195152,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.17357980529027373,
+        0.6127607693933896,
+        0.46132897651455096,
+        0.7663783566777624,
+        0.48823904640642013,
+        0.18574599718385798,
+        0.08961154388219938,
+        0.07104596007980035,
+        0.061061384571928556,
+        0.31351829159928
+      ],
+      "contact_fractions": [
+        0.8269706320417894,
+        0.8273087644999608,
+        0.8306176852129039,
+        0.8306176852129039,
+        0.8276829911981626,
+        0.8276719286106613,
+        0.8276829911981626,
+        0.8276829911981626,
+        0.8277154760376092,
+        0.8278251066683793
+      ],
+      "minimum_actual_actor_size_px": [
+        217,
+        180
+      ],
+      "case_id": "W001",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w2",
+      "donor_source_id": "S059w0",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.152735449781688,
+      "max_ground_support_distance_m": 0.6484363963064191,
+      "max_view_yaw_delta_deg": 7.047682234257451,
+      "max_view_pitch_delta_deg": 2.5108856085533375,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.2698776405065928,
+        0.66465207995833,
+        0.3047776135582012,
+        0.7808747514453103,
+        0.6506212009145997,
+        0.18212948566178966,
+        0.5494597092106233,
+        0.2759973277466088,
+        0.24391652321821766,
+        0.475081322388462
+      ],
+      "contact_fractions": [
+        0.8269706320417894,
+        0.8273087644999608,
+        0.8306176852129039,
+        0.8306176852129039,
+        0.8276829911981626,
+        0.8276719286106613,
+        0.8276829911981626,
+        0.8276829911981626,
+        0.8277154760376092,
+        0.8278251066683793
+      ],
+      "minimum_actual_actor_size_px": [
+        165,
+        137
+      ],
+      "case_id": "W003",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w0",
+      "donor_source_id": "S064w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.2698504027050381,
+      "max_ground_support_distance_m": 1.7283092905109365,
+      "max_view_yaw_delta_deg": 10.958122545246539,
+      "max_view_pitch_delta_deg": 0.2623437221741085,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0010838933448948623,
+          0.00149508756941478,
+          0.00398406374501992,
+          0.005819995842860112,
+          0.0038461538461538464,
+          0.006869901245169601
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.02877388876959416,
+          0.03190810465858328,
+          0.03548525010688328,
+          0.0384200302180013,
+          0.04313895512681552,
+          0.04698846646732166,
+          0.05305095407842315,
+          0.05903138640615257,
+          0.05811965811965812,
+          0.06547874624302276
+        ]
+      },
+      "contact_errors_px": [
+        0.32074764563668623,
+        0.47186590560420427,
+        1.2218583355235637,
+        0.1422411472348699,
+        1.1780622148364728,
+        0.24630879326332433,
+        0.3555868210613653,
+        0.24588172604751435,
+        0.3120448037356027,
+        0.33640335104115593
+      ],
+      "contact_fractions": [
+        0.9320675359009795,
+        0.9320675359009795,
+        0.9272099654810145,
+        0.923448870164688,
+        0.9189303626485691,
+        0.9189303626485691,
+        0.9189303626485691,
+        0.9299897803973761,
+        0.9304329174561184,
+        0.9399157603719304
+      ],
+      "minimum_actual_actor_size_px": [
+        159,
+        117
+      ],
+      "case_id": "W004",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w1",
+      "donor_source_id": "S064w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.1505323740909819,
+      "max_ground_support_distance_m": 1.281389466267268,
+      "max_view_yaw_delta_deg": 11.669084626240362,
+      "max_view_pitch_delta_deg": 0.48077528269325853,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.0,
+          0.0,
+          0.00021021652301870928,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.03959983326385994,
+          0.04150943396226415,
+          0.0430943872188354,
+          0.03993987545630234,
+          0.0396457191058625,
+          0.03162911611785095,
+          0.02924731182795699,
+          0.025954842793838362,
+          0.013155057149018762,
+          0.005642361111111111
+        ]
+      },
+      "contact_errors_px": [
+        0.15376576027648525,
+        0.40270568462000256,
+        0.1550214807010093,
+        0.03844299758367242,
+        1.287047582626883,
+        0.503154612552521,
+        0.2351121924917834,
+        0.42243230078679517,
+        1.316833441145036,
+        0.3971027136824432
+      ],
+      "contact_fractions": [
+        0.9272333743081818,
+        0.9262973190995755,
+        0.9245379604949604,
+        0.9160407189288946,
+        0.9027052955828726,
+        0.9023659031603364,
+        0.8975515012948231,
+        0.8980487525749599,
+        0.8980487525749599,
+        0.8980487525749599
+      ],
+      "minimum_actual_actor_size_px": [
+        154,
+        113
+      ],
+      "case_id": "W005",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w2",
+      "donor_source_id": "S064w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.3470001192492553,
+      "max_ground_support_distance_m": 0.7589129753575848,
+      "max_view_yaw_delta_deg": 11.603114200584429,
+      "max_view_pitch_delta_deg": 0.8741973167966535,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.001347406242982259,
+          0.004168494953927161,
+          0.0015344147303814116,
+          0.0017933198834342075,
+          0.0009111617312072893,
+          0.0009203865623561896,
+          0.001608455882352941,
+          0.00046685340802987864,
+          0.0002310536044362292,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.02941836963844599,
+          0.03663887670030715,
+          0.029373081981587022,
+          0.031158932974669356,
+          0.028701594533029614,
+          0.02738150023009664,
+          0.03079044117647059,
+          0.027777777777777776,
+          0.025184842883548983,
+          0.016794961511546535
+        ]
+      },
+      "contact_errors_px": [
+        0.31774705707653084,
+        0.12721648506436622,
+        0.1588341446347954,
+        0.7237699176811248,
+        0.15446909618390237,
+        0.16156497024780947,
+        0.06656051736047175,
+        2.4494005017355676,
+        0.15438009155900545,
+        0.10379097118794789
+      ],
+      "contact_fractions": [
+        0.9027221319169396,
+        0.9060693641618498,
+        0.9071894753070557,
+        0.9086648116047807,
+        0.9159889293451754,
+        0.9269982480489636,
+        0.9318165003955223,
+        0.9378779112638828,
+        0.9378779112638828,
+        0.9378779112638828
+      ],
+      "minimum_actual_actor_size_px": [
+        189,
+        146
+      ],
+      "case_id": "W006",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S023w0",
+      "donor_source_id": "T022w2",
+      "offset_longitudinal_m": -6.0,
+      "offset_lateral_m": 3.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.4191457137103982,
+      "max_ground_support_distance_m": 2.0261274930544206,
+      "max_view_yaw_delta_deg": 7.488504826604185,
+      "max_view_pitch_delta_deg": 1.0473265361360404,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "e88c88e3798140b3affec642b26fee76": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e88c88e3798140b3affec642b26fee76": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.4929871917030937,
+        0.47063913564880977,
+        0.6563263270289781,
+        0.11081030339067865,
+        0.09162811719147612,
+        0.23951921701370793,
+        0.27693407222750466,
+        0.582342005185069,
+        0.26633798137442,
+        0.40656370755823446
+      ],
+      "contact_fractions": [
+        0.9125522601491117,
+        0.9141149119893724,
+        0.9186298856746538,
+        0.9219907302222018,
+        0.9219907302222018,
+        0.9234663524910474,
+        0.9245608679316174,
+        0.925534953466784,
+        0.925534953466784,
+        0.9279081607913494
+      ],
+      "minimum_actual_actor_size_px": [
+        72,
+        64
+      ],
+      "case_id": "W007",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S056w2",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 3.2938142800444608,
+      "max_ground_support_distance_m": 1.0981034941657946,
+      "max_view_yaw_delta_deg": 9.35308430105016,
+      "max_view_pitch_delta_deg": 1.2810967729313916,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.4073261050882593,
+        0.3837884015629811,
+        0.5683560260333138,
+        0.627900618163153,
+        0.23946403849737408,
+        0.540132120037299,
+        0.4281550747004985,
+        0.1991238611827839,
+        0.3512351487053138,
+        0.11067516464606797
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        128,
+        105
+      ],
+      "case_id": "W008",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T012w0",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": -6.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.415134902530121,
+      "max_ground_support_distance_m": 2.094739032337742,
+      "max_view_yaw_delta_deg": 3.9606421896818347,
+      "max_view_pitch_delta_deg": 0.5365586057934308,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "603a51b122334bf683df325d57884bed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "603a51b122334bf683df325d57884bed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.941497558701144,
+        0.39182353945847126,
+        0.40498534522163254,
+        0.14653296378617142,
+        0.5435190738841129,
+        0.35910301791250276,
+        0.584412197273366,
+        0.6283598425169998,
+        0.13912844571677851,
+        0.058628498674977436
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        72,
+        54
+      ],
+      "case_id": "W009",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T012w1",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": -6.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.43750155291515,
+      "max_ground_support_distance_m": 2.094179620275307,
+      "max_view_yaw_delta_deg": 3.970617971506101,
+      "max_view_pitch_delta_deg": 0.5369654892740243,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "603a51b122334bf683df325d57884bed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "603a51b122334bf683df325d57884bed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.9468371405084213,
+        0.05802694857726465,
+        0.05684927026226205,
+        0.13659144797151157,
+        0.3637245022001139,
+        0.5475457512379194,
+        0.6118893271734009,
+        0.28684996744703994,
+        0.1575533074679356,
+        0.006192104983142599
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        72,
+        54
+      ],
+      "case_id": "W010",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T012w2",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": -6.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 4.256148779401099,
+      "max_ground_support_distance_m": 2.0867917112972036,
+      "max_view_yaw_delta_deg": 3.9897995639624924,
+      "max_view_pitch_delta_deg": 0.5367745782613724,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "603a51b122334bf683df325d57884bed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "603a51b122334bf683df325d57884bed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.9554085087167437,
+        0.0015196956468912504,
+        0.011810529921149282,
+        0.10036000756355179,
+        0.30194527003607163,
+        0.4856669079725293,
+        0.609416808443143,
+        0.6635990240708338,
+        0.21198842575671506,
+        0.08265655462315635
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        72,
+        54
+      ],
+      "case_id": "W011",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T023w1",
+      "donor_source_id": "T013w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": -6.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.0726988963430326,
+      "max_ground_support_distance_m": 0.4795563144053718,
+      "max_view_yaw_delta_deg": 0.557776883744566,
+      "max_view_pitch_delta_deg": 1.28950020823072,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "7b836218bb5e4c268a55bfffe13d0737": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "7b836218bb5e4c268a55bfffe13d0737": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.3785592422952959,
+        0.06353542844522053,
+        0.2986538971789514,
+        0.00932669508915751,
+        1.199983792752164,
+        0.24460053124391834,
+        0.47503485845686555,
+        0.9614720416088289,
+        0.5908589367522268,
+        0.6164099076946172
+      ],
+      "contact_fractions": [
+        0.9472235064468074,
+        0.9472235064468074,
+        0.9490371502954669,
+        0.9513631360143635,
+        0.9513631360143635,
+        0.9513631360143635,
+        0.9513631360143635,
+        0.9482784755305328,
+        0.945923954874321,
+        0.9429681134834093
+      ],
+      "minimum_actual_actor_size_px": [
+        154,
+        115
+      ],
+      "case_id": "W012",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T023w2",
+      "donor_source_id": "S021w1",
+      "offset_longitudinal_m": 4.5,
+      "offset_lateral_m": -6.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.8957806922341833,
+      "max_ground_support_distance_m": 1.017428020494203,
+      "max_view_yaw_delta_deg": 6.349377439457868,
+      "max_view_pitch_delta_deg": 2.3274587136519926,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "7b836218bb5e4c268a55bfffe13d0737": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "7b836218bb5e4c268a55bfffe13d0737": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.3617746060683089,
+        1.4323540847173604,
+        0.564025777151528,
+        0.5571059736265056,
+        0.7050882975896116,
+        0.5962893341323365,
+        0.29618249213490344,
+        0.941179141833004,
+        0.3122574630678514,
+        0.09964656303532138
+      ],
+      "contact_fractions": [
+        0.9663165285514997,
+        0.9663165285514997,
+        0.9648126935641255,
+        0.9629977554243909,
+        0.9627056130933761,
+        0.9627056130933761,
+        0.9629977554243909,
+        0.9629977554243909,
+        0.9630718698678347,
+        0.9641763390806359
+      ],
+      "minimum_actual_actor_size_px": [
+        141,
+        110
+      ],
+      "case_id": "W013",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T032w1",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.2014177469998806,
+      "max_ground_support_distance_m": 1.1788037770327193,
+      "max_view_yaw_delta_deg": 6.252807675877932,
+      "max_view_pitch_delta_deg": 1.0702796151030327,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.014347590687601516,
+          0.013727560718057022,
+          0.005125438359859725,
+          0.004459601259181532,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.1281481424955473,
+        0.692331798987766,
+        0.3242842601784446,
+        0.43358422640591243,
+        0.23026114722074453,
+        0.06647634678142822,
+        0.11366774813967595,
+        0.34127747146186493,
+        0.15115088875859328,
+        0.1996773846437918
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        132,
+        94
+      ],
+      "case_id": "W014",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T032w2",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.9979088018869132,
+      "max_ground_support_distance_m": 1.569250327513019,
+      "max_view_yaw_delta_deg": 5.657841378948433,
+      "max_view_pitch_delta_deg": 1.2472425414798636,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.003160709944079747,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.050085096036955996,
+          0.03641660597232338,
+          0.033702455464612424,
+          0.024564750775101358,
+          0.02112676056338028,
+          0.007253158633598503,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.43976069296610376,
+        0.028203980427974784,
+        0.8863785958357653,
+        0.13454188109778897,
+        0.5006378074946269,
+        0.16976501120831244,
+        1.4775506716711675,
+        0.29044991385296726,
+        0.43660474387519344,
+        0.4116881346407695
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        135,
+        98
+      ],
+      "case_id": "W015",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w0",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.7116441149278202,
+      "max_ground_support_distance_m": 1.0346961694313392,
+      "max_view_yaw_delta_deg": 8.699195134995932,
+      "max_view_pitch_delta_deg": 0.08376112802412194,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0012218963831867058,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.24930601174344247,
+        0.01952240252944648,
+        0.18038883393376182,
+        0.6107460556372075,
+        0.1624213698719359,
+        0.45558187995249,
+        0.5881296107560274,
+        0.7594360463834846,
+        0.2550144707385016,
+        0.0024161174626442516
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        187,
+        159
+      ],
+      "case_id": "W016",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w1",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.36326209892046285,
+      "max_ground_support_distance_m": 1.0035335116300055,
+      "max_view_yaw_delta_deg": 6.668715711290162,
+      "max_view_pitch_delta_deg": 1.2018989007545429,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.006473953628425173,
+          0.005029721079103796,
+          0.0011244979919678715,
+          0.0008250825082508251,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.04893104486600421,
+          0.046944063404968754,
+          0.0393574297188755,
+          0.03745874587458746,
+          0.031044373207356167,
+          0.023231256599788808,
+          0.022195036700454387,
+          0.01861065045144647,
+          0.012822895372607323,
+          0.007925500297206262
+        ]
+      },
+      "contact_errors_px": [
+        0.26570906490331936,
+        0.6039366550258478,
+        0.04913684608305857,
+        0.012050377628611386,
+        0.4320600001908588,
+        0.6419307336170164,
+        0.7391581511448635,
+        0.04242629242679641,
+        0.048715868150225106,
+        0.07878378267935204
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        138,
+        119
+      ],
+      "case_id": "W017",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w2",
+      "donor_source_id": "S059w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.1526792621530317,
+      "max_ground_support_distance_m": 0.6487128503619098,
+      "max_view_yaw_delta_deg": 7.0412483371266035,
+      "max_view_pitch_delta_deg": 2.4975997807679278,
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.2695183011127824,
+        0.3341536450495255,
+        0.3019762178332144,
+        0.22461137802929443,
+        0.35132337848295947,
+        0.17801911790184022,
+        0.538973208167306,
+        0.26532157621903707,
+        0.23202222964022212,
+        0.45747280072743024
+      ],
+      "contact_fractions": [
+        0.8323180208731566,
+        0.8323180208731566,
+        0.8323362495354091,
+        0.8323467381590707,
+        0.8332731452844153,
+        0.8333017447619592,
+        0.833323795353096,
+        0.833323795353096,
+        0.833323795353096,
+        0.8301123756352443
+      ],
+      "minimum_actual_actor_size_px": [
+        166,
+        137
+      ],
+      "case_id": "W018",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w0",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.6529206459370958,
+      "max_ground_support_distance_m": 0.863914738005734,
+      "max_view_yaw_delta_deg": 5.0371139596152545,
+      "max_view_pitch_delta_deg": 0.09628562585143641,
+      "type": "single_actor",
+      "protected_instances": [
+        "e2933a9a898e4abbb621fbb836c5c776"
+      ],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.3592375366568915,
+          0.35983626891590176,
+          0.3617768854310453,
+          0.3676395289298515,
+          0.36431081608746585,
+          0.362708719851577,
+          0.356673373574782,
+          0.3610530714584204,
+          0.34324517512508934,
+          0.3500817600713542
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.46652003910068424,
+          0.4684941701810965,
+          0.47333416990839505,
+          0.4810547875064004,
+          0.47806846284003646,
+          0.4780015902464882,
+          0.47243460764587525,
+          0.47903607744811255,
+          0.45961401000714797,
+          0.4697487735989297
+        ]
+      },
+      "contact_errors_px": [
+        0.4048760903860966,
+        0.306191367840313,
+        0.09329795376908123,
+        0.4099521865806537,
+        0.5387202603220089,
+        0.39536643665059046,
+        0.029798657819355867,
+        0.3296330356050703,
+        0.473684988671323,
+        0.32010286612410255
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        186,
+        159
+      ],
+      "case_id": "W019",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w0",
+      "donor_source_id": "S064w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.8121611914749336,
+      "max_ground_support_distance_m": 1.4208797247114655,
+      "max_view_yaw_delta_deg": 2.969452625372952,
+      "max_view_pitch_delta_deg": 1.5613189743221199,
+      "type": "single_actor",
+      "protected_instances": [
+        "b2b8bb62a8c14dffb0518af9daa75fe5"
+      ],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.7101138071719991,
+          0.7085726441182727,
+          0.7094912355707568,
+          0.7187567450895748,
+          0.709299804899198,
+          0.7298163178129005,
+          0.7255189767246802,
+          0.7468301808355852,
+          0.7427350427350428,
+          0.7374409617861744
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.8097487652995491,
+          0.8121676239098065,
+          0.814878153056862,
+          0.81890783509605,
+          0.8109690006503361,
+          0.832123024348569,
+          0.8307821346194171,
+          0.8449386821866556,
+          0.838034188034188,
+          0.8355517389437527
+        ]
+      },
+      "contact_errors_px": [
+        0.4618101292751362,
+        0.5426993373506548,
+        0.20955232636543997,
+        0.32484812971591737,
+        0.24617492163105226,
+        0.30944865318252823,
+        0.004870021314275164,
+        2.311821820295279,
+        0.031143552825540155,
+        0.1490926588800221
+      ],
+      "contact_fractions": [
+        0.9027221319169396,
+        0.9060693641618498,
+        0.9071894753070557,
+        0.9086648116047807,
+        0.9159889293451754,
+        0.9269982480489636,
+        0.9318165003955223,
+        0.9378779112638828,
+        0.9378779112638828,
+        0.9378779112638828
+      ],
+      "minimum_actual_actor_size_px": [
+        210,
+        168
+      ],
+      "case_id": "W021",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w1",
+      "donor_source_id": "S036w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.8047816079447193,
+      "max_ground_support_distance_m": 1.201553309426717,
+      "max_view_yaw_delta_deg": 3.8378092060704603,
+      "max_view_pitch_delta_deg": 1.989220897615752,
+      "type": "single_actor",
+      "protected_instances": [
+        "b2b8bb62a8c14dffb0518af9daa75fe5"
+      ],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.47624010004168404,
+          0.48050314465408805,
+          0.47067479503889004,
+          0.4874382649774533,
+          0.5018979333614508,
+          0.5171143847487002,
+          0.5348387096774193,
+          0.5629879721460224,
+          0.5837826180720294,
+          0.6414930555555556
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.6110879533138808,
+          0.6138364779874214,
+          0.6029009880176582,
+          0.6225037577839811,
+          0.6349641501476171,
+          0.6516464471403813,
+          0.666236559139785,
+          0.6895969613842583,
+          0.7112357127453095,
+          0.7632378472222222
+        ]
+      },
+      "contact_errors_px": [
+        0.42596055043037495,
+        0.7505713953406143,
+        0.6125450603771583,
+        0.6842709882489544,
+        0.03276861414576615,
+        1.0591245941201919,
+        1.1674950183698911,
+        0.2955917607511651,
+        2.7945113423002113,
+        0.7321421783949518
+      ],
+      "contact_fractions": [
+        0.7947381876652516,
+        0.7947381876652516,
+        0.7949369566391274,
+        0.7949369566391274,
+        0.7955319633074882,
+        0.7955319633074882,
+        0.7955319633074882,
+        0.8045903729678038,
+        0.8056820600870351,
+        0.8159103522813577
+      ],
+      "minimum_actual_actor_size_px": [
+        124,
+        107
+      ],
+      "case_id": "W022",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S027w2",
+      "donor_source_id": "S015w0",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.8360895327428883,
+      "max_ground_support_distance_m": 2.10939586877902,
+      "max_view_yaw_delta_deg": 2.627822064988436,
+      "max_view_pitch_delta_deg": 3.7853969207046987,
+      "type": "single_actor",
+      "protected_instances": [
+        "9ff78688d0c8462bbddf37a38dc4944b"
+      ],
+      "occlusion_fraction": {
+        "9ff78688d0c8462bbddf37a38dc4944b": [
+          0.41828029790115095,
+          0.3995127892813642,
+          0.39399466816332257,
+          0.38609703113685734,
+          0.4038719285182427,
+          0.394543225015328,
+          0.3835835196422868,
+          0.37608659996719696,
+          0.388870376541153,
+          0.39347108873068243
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "9ff78688d0c8462bbddf37a38dc4944b": [
+          0.5187542315504401,
+          0.5014210312626878,
+          0.4957204995089098,
+          0.4868935553946416,
+          0.5063291139240507,
+          0.4960147148988351,
+          0.48754391568189076,
+          0.4792520911923897,
+          0.49133622125958015,
+          0.4953985066851884
+        ]
+      },
+      "contact_errors_px": [
+        0.22853306453703226,
+        0.4002325449945374,
+        1.1677312069641061,
+        0.37850197896329973,
+        0.5825482448531147,
+        0.01751971426762111,
+        0.5853351822986497,
+        0.06510714895108549,
+        0.15727819058275827,
+        0.4441958463032165
+      ],
+      "contact_fractions": [
+        0.8775156877638863,
+        0.8728338412155237,
+        0.8728338412155237,
+        0.8728338412155237,
+        0.8749330670487272,
+        0.875949145495525,
+        0.8765251233786894,
+        0.8787301073210946,
+        0.8869814126949722,
+        0.8913463668798179
+      ],
+      "minimum_actual_actor_size_px": [
+        182,
+        152
+      ],
+      "case_id": "W023",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S056w0",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.1665906696018362,
+      "max_ground_support_distance_m": 1.5316479853293323,
+      "max_view_yaw_delta_deg": 2.3505560234507072,
+      "max_view_pitch_delta_deg": 2.024568423337712,
+      "type": "single_actor",
+      "protected_instances": [
+        "713adb36fefd4b84a55ec7f1c7eda088"
+      ],
+      "occlusion_fraction": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.5397304832713755,
+          0.5378190255220417,
+          0.5292314945780292,
+          0.5173249333656409,
+          0.5163557063242065,
+          0.5065675340768278,
+          0.5161451814768461,
+          0.5136319376825705,
+          0.4736713201077639,
+          0.4521158129175947
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.7009758364312267,
+          0.7013921113689096,
+          0.6933050447901933,
+          0.6830627574509329,
+          0.6835473709716501,
+          0.6748451053283767,
+          0.6863579474342929,
+          0.680379746835443,
+          0.6375214303208425,
+          0.6169265033407573
+        ]
+      },
+      "contact_errors_px": [
+        0.13297446239107558,
+        0.08067919681582225,
+        0.5595098972846699,
+        0.7711748696039535,
+        0.440785494415195,
+        0.01722167076587766,
+        0.0055374712354137046,
+        0.31090936624048027,
+        0.11077203250232515,
+        0.18413851172624618
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        102,
+        89
+      ],
+      "case_id": "W024",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S056w1",
+      "donor_source_id": "S045w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 3.2218128773980665,
+      "max_ground_support_distance_m": 0.9977514527712311,
+      "max_view_yaw_delta_deg": 1.6916838794665523,
+      "max_view_pitch_delta_deg": 1.113794421874644,
+      "type": "single_actor",
+      "protected_instances": [
+        "713adb36fefd4b84a55ec7f1c7eda088"
+      ],
+      "occlusion_fraction": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.4636432733721814,
+          0.4803030303030303,
+          0.4740141028989292,
+          0.473967684021544,
+          0.44856180357605596,
+          0.42191635786130227,
+          0.42469646086282614,
+          0.4062664560294892,
+          0.3860776439089692,
+          0.37731792528890085
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.6055231821636686,
+          0.6227272727272727,
+          0.6194828937059285,
+          0.6175942549371634,
+          0.5934179839336615,
+          0.5696135521439916,
+          0.5724618961508654,
+          0.5529225908372828,
+          0.5376171352074967,
+          0.5302338081160978
+        ]
+      },
+      "contact_errors_px": [
+        0.25503354886518537,
+        0.45770774682591764,
+        0.24195650327396834,
+        0.37795119466096594,
+        0.5660819930938601,
+        0.1949977069510851,
+        0.4935667752611721,
+        0.66341492791679,
+        0.11030220345747921,
+        0.10306229772851339
+      ],
+      "contact_fractions": [
+        0.9316621748089119,
+        0.9307919702458891,
+        0.9290224114386697,
+        0.9281167034176395,
+        0.9281167034176395,
+        0.9281167034176395,
+        0.9300392843657863,
+        0.9338389783185963,
+        0.939506440699758,
+        0.9433579387690317
+      ],
+      "minimum_actual_actor_size_px": [
+        127,
+        112
+      ],
+      "case_id": "W025",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S062w2",
+      "donor_source_id": "S019w1",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": -1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.275072519155514,
+      "max_ground_support_distance_m": 0.8129709711824049,
+      "max_view_yaw_delta_deg": 0.6688844750703709,
+      "max_view_pitch_delta_deg": 0.649394689898287,
+      "type": "single_actor",
+      "protected_instances": [
+        "4422a07def044c8cb8244dfe2dbf7c30"
+      ],
+      "occlusion_fraction": {
+        "4422a07def044c8cb8244dfe2dbf7c30": [
+          0.49595536959553693,
+          0.4884626077286628,
+          0.49680998613037447,
+          0.5168507504956104,
+          0.4940820258739334,
+          0.48130968622100956,
+          0.4910277324632953,
+          0.49819694868238557,
+          0.4648936170212766,
+          0.46083198271204756
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "4422a07def044c8cb8244dfe2dbf7c30": [
+          0.6649930264993027,
+          0.6591604114539894,
+          0.6710124826629681,
+          0.6887567261399037,
+          0.6663914120561519,
+          0.6496589358799454,
+          0.6612289287656336,
+          0.6654646324549237,
+          0.6345744680851064,
+          0.6220961642355484
+        ]
+      },
+      "contact_errors_px": [
+        0.31495182212637474,
+        0.2892419339613639,
+        0.6058620985775178,
+        0.1427027554091751,
+        0.10743626716333665,
+        0.27856216790496546,
+        0.6391350294726408,
+        0.38962853029516964,
+        1.03751809390792,
+        0.10952356233724458
+      ],
+      "contact_fractions": [
+        0.8424993483875556,
+        0.8418823085182958,
+        0.8418823085182958,
+        0.8402624276912947,
+        0.8418823085182958,
+        0.8433221496262285,
+        0.846289131199437,
+        0.848286384976526,
+        0.8494410258819105,
+        0.862916720298623
+      ],
+      "minimum_actual_actor_size_px": [
+        107,
+        81
+      ],
+      "case_id": "W027",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T021w2",
+      "donor_source_id": "T027w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": -3.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.682193967559735,
+      "max_ground_support_distance_m": 1.7470434994580635,
+      "max_view_yaw_delta_deg": 3.3100349805326914,
+      "max_view_pitch_delta_deg": 0.9240711626201517,
+      "type": "single_actor",
+      "protected_instances": [
+        "bbd638842e8240f6aa10b9b73095c531"
+      ],
+      "occlusion_fraction": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.4722331626624655,
+          0.4536003080477474,
+          0.4365331217770726,
+          0.4400458978772232,
+          0.43040327076751533,
+          0.4380506091846298,
+          0.464850136239782,
+          0.4786579683131407,
+          0.4690611664295875,
+          0.4991913746630728
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.6736904293028751,
+          0.6443973815941471,
+          0.6253470844902816,
+          0.6232549244597437,
+          0.6073220590968221,
+          0.6181818181818182,
+          0.6455949137148047,
+          0.6641192917054985,
+          0.6498933143669986,
+          0.6918238993710691
+        ]
+      },
+      "contact_errors_px": [
+        0.36405108759782934,
+        0.23368169421326002,
+        0.5173098943411105,
+        0.42799809606032113,
+        0.2923418816307617,
+        0.4513963858105967,
+        0.6108356771532044,
+        0.5765756288737975,
+        0.39811771319779155,
+        0.5551721720264595
+      ],
+      "contact_fractions": [
+        0.9001481589873973,
+        0.8989391809235147,
+        0.8986464300047432,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9070194054277644
+      ],
+      "minimum_actual_actor_size_px": [
+        168,
+        52
+      ],
+      "case_id": "W028",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w0",
+      "donor_source_id": "S045w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.653204605978389,
+      "max_ground_support_distance_m": 0.8641902948746915,
+      "max_view_yaw_delta_deg": 5.041198679044157,
+      "max_view_pitch_delta_deg": 0.24820981944378673,
+      "type": "single_actor",
+      "protected_instances": [
+        "e2933a9a898e4abbb621fbb836c5c776"
+      ],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.3575268817204301,
+          0.35958819151575294,
+          0.36114945413477223,
+          0.3689196108550947,
+          0.36704412338930104,
+          0.36138351444473893,
+          0.360429242119383,
+          0.3655105167850676,
+          0.3546819156540386,
+          0.3526088895495763
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.4638318670576735,
+          0.4679980153807988,
+          0.47258125235286735,
+          0.4823348694316436,
+          0.4814525575946896,
+          0.47680890538033394,
+          0.47565392354124747,
+          0.4846078841064215,
+          0.47219442458899213,
+          0.47346514047866806
+        ]
+      },
+      "contact_errors_px": [
+        0.41706305901357155,
+        0.2939606251316036,
+        0.08530788925054367,
+        0.41606717960013384,
+        0.550891567519443,
+        0.6109623058708848,
+        0.02732503599378333,
+        0.3225531173415561,
+        0.451974337623426,
+        0.28908802082497687
+      ],
+      "contact_fractions": [
+        0.9316621748089119,
+        0.9307919702458891,
+        0.9290224114386697,
+        0.9281167034176395,
+        0.9281167034176395,
+        0.9281167034176395,
+        0.9300392843657863,
+        0.9338389783185963,
+        0.939506440699758,
+        0.9433579387690317
+      ],
+      "minimum_actual_actor_size_px": [
+        186,
+        159
+      ],
+      "case_id": "W029",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w0",
+      "donor_source_id": "S036w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.6830649892952312,
+      "max_ground_support_distance_m": 1.4928963319922672,
+      "max_view_yaw_delta_deg": 3.420432406534246,
+      "max_view_pitch_delta_deg": 1.874895877262361,
+      "type": "single_actor",
+      "protected_instances": [
+        "b2b8bb62a8c14dffb0518af9daa75fe5"
+      ],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.5237277217092549,
+          0.5275473303552436,
+          0.516460025651988,
+          0.5283833369307145,
+          0.5207023628874918,
+          0.5239214011106365,
+          0.5328161040050325,
+          0.5666181667013095,
+          0.5989316239316239,
+          0.6462000858737655
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.6538544127120464,
+          0.6560306317804723,
+          0.6464300983326208,
+          0.6583207424994604,
+          0.6522870149577281,
+          0.6546347714651858,
+          0.660935206542252,
+          0.6909166493452504,
+          0.7269230769230769,
+          0.7737226277372263
+        ]
+      },
+      "contact_errors_px": [
+        0.30303452424658417,
+        1.0210675791052495,
+        0.8581580331430132,
+        0.019630234571877736,
+        0.38430473564744716,
+        1.6981240442820535,
+        1.1128362078626992,
+        0.08151939464300995,
+        2.351699676317935,
+        1.243655692845266
+      ],
+      "contact_fractions": [
+        0.7947381876652516,
+        0.7947381876652516,
+        0.7949369566391274,
+        0.7949369566391274,
+        0.7955319633074882,
+        0.7955319633074882,
+        0.7955319633074882,
+        0.8045903729678038,
+        0.8056820600870351,
+        0.8159103522813577
+      ],
+      "minimum_actual_actor_size_px": [
+        128,
+        110
+      ],
+      "case_id": "W031",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S008w1",
+      "donor_source_id": "S045w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 1.3755383415522666,
+      "max_ground_support_distance_m": 0.9592800253731819,
+      "max_view_yaw_delta_deg": 1.542186152617802,
+      "max_view_pitch_delta_deg": 1.7746202469380705,
+      "type": "single_actor",
+      "protected_instances": [
+        "b2b8bb62a8c14dffb0518af9daa75fe5"
+      ],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.5493955814922884,
+          0.5509433962264151,
+          0.5461425268026067,
+          0.555293107150526,
+          0.5613665120202446,
+          0.5610918544194108,
+          0.5666666666666667,
+          0.5625659421818949,
+          0.5546689670045288,
+          0.5622829861111112
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.6804918716131722,
+          0.6836477987421383,
+          0.6771074206432626,
+          0.6912175220098776,
+          0.6948544917756221,
+          0.6969237435008665,
+          0.7051612903225807,
+          0.6993036505591897,
+          0.6959240888505499,
+          0.7037760416666666
+        ]
+      },
+      "contact_errors_px": [
+        0.48320329324968725,
+        0.19641120406896562,
+        0.38550502521832186,
+        0.8092999259728799,
+        0.6186315338751456,
+        0.5408491580361101,
+        0.5000960582810308,
+        0.0950630805949686,
+        0.20988700542062588,
+        0.6118431226533971
+      ],
+      "contact_fractions": [
+        0.9288475390156065,
+        0.9283363758647196,
+        0.9274102745955997,
+        0.9274102745955997,
+        0.9274102745955997,
+        0.9282239957585081,
+        0.9300547896783316,
+        0.9338239724899269,
+        0.939576687264458,
+        0.9433684785753317
+      ],
+      "minimum_actual_actor_size_px": [
+        117,
+        101
+      ],
+      "case_id": "W032",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S056w0",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.905150393420049,
+      "max_ground_support_distance_m": 1.3961324161464523,
+      "max_view_yaw_delta_deg": 2.9956130293075773,
+      "max_view_pitch_delta_deg": 0.7494339832897765,
+      "type": "single_actor",
+      "protected_instances": [
+        "713adb36fefd4b84a55ec7f1c7eda088"
+      ],
+      "occlusion_fraction": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.4375,
+          0.4283062645011601,
+          0.4231494578029231,
+          0.40247152895565785,
+          0.40901381148534044,
+          0.3992565055762082,
+          0.4002503128911139,
+          0.4057935735150925,
+          0.3666421748714181,
+          0.3437268002969562
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.5762081784386617,
+          0.5677494199535963,
+          0.5641206977840642,
+          0.5427671432032953,
+          0.5502786527744125,
+          0.5437422552664188,
+          0.5449311639549437,
+          0.5481986368062317,
+          0.5096742591231938,
+          0.49096758228161347
+        ]
+      },
+      "contact_errors_px": [
+        0.2630911397832847,
+        0.025527177721983207,
+        0.4766160058266564,
+        0.28274955719911077,
+        0.3696199524441113,
+        0.05241131388498843,
+        0.8500248766429195,
+        0.148637503987743,
+        0.13304539420698802,
+        0.24867278687503358
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        139,
+        123
+      ],
+      "case_id": "W033",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S056w1",
+      "donor_source_id": "S045w1",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 3.22115626939096,
+      "max_ground_support_distance_m": 0.99769933124402,
+      "max_view_yaw_delta_deg": 1.692332126246157,
+      "max_view_pitch_delta_deg": 1.0164866286719416,
+      "type": "single_actor",
+      "protected_instances": [
+        "713adb36fefd4b84a55ec7f1c7eda088"
+      ],
+      "occlusion_fraction": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.4633899163921966,
+          0.478030303030303,
+          0.4745364324889005,
+          0.47063349576814567,
+          0.4418243068152371,
+          0.42482795129698253,
+          0.4146215448204598,
+          0.40126382306477093,
+          0.3785809906291834,
+          0.3770491803278688
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "713adb36fefd4b84a55ec7f1c7eda088": [
+          0.6057765391436534,
+          0.6204545454545455,
+          0.6194828937059285,
+          0.6147730187227495,
+          0.5887535630992485,
+          0.5733192165166755,
+          0.5598036683027642,
+          0.5500263296471827,
+          0.5298527443105756,
+          0.5296963181940338
+        ]
+      },
+      "contact_errors_px": [
+        0.7299107058815935,
+        0.4444800648936962,
+        0.24531685863689745,
+        0.3786696693780982,
+        0.5653772630604408,
+        0.19570869874263508,
+        0.4939543801265813,
+        0.6677724607524169,
+        0.09830368979993409,
+        0.08504206984321172
+      ],
+      "contact_fractions": [
+        0.9415172724131556,
+        0.940079465516064,
+        0.9374620888015844,
+        0.9335202419636651,
+        0.9309966745385319,
+        0.9308171806344335,
+        0.928484785193278,
+        0.928484785193278,
+        0.928484785193278,
+        0.9330521749608386
+      ],
+      "minimum_actual_actor_size_px": [
+        127,
+        111
+      ],
+      "case_id": "W034",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S062w2",
+      "donor_source_id": "S019w0",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": -1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 2.318016009996724,
+      "max_ground_support_distance_m": 0.7961188891303767,
+      "max_view_yaw_delta_deg": 1.0768041252740375,
+      "max_view_pitch_delta_deg": 0.7333711479072349,
+      "type": "single_actor",
+      "protected_instances": [
+        "4422a07def044c8cb8244dfe2dbf7c30"
+      ],
+      "occlusion_fraction": {
+        "4422a07def044c8cb8244dfe2dbf7c30": [
+          0.48423988842398885,
+          0.48067834306366414,
+          0.4798890429958391,
+          0.5024072500708014,
+          0.49077897054775665,
+          0.488130968622101,
+          0.4874932028276237,
+          0.49902912621359224,
+          0.46622340425531916,
+          0.4584008643976229
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "4422a07def044c8cb8244dfe2dbf7c30": [
+          0.6580195258019526,
+          0.6505421184320267,
+          0.6529819694868239,
+          0.6777116964032852,
+          0.6608863198458574,
+          0.6540245566166439,
+          0.654431756389342,
+          0.6682385575589459,
+          0.6273936170212766,
+          0.6234467855213398
+        ]
+      },
+      "contact_errors_px": [
+        0.11034169653436265,
+        0.4305828925750461,
+        0.28675913237663053,
+        0.07008554580698956,
+        1.0512174358218545,
+        0.724439127950177,
+        0.2780817195921941,
+        0.2787397510050482,
+        0.21084897256048407,
+        0.2083085934671658
+      ],
+      "contact_fractions": [
+        0.8544669977339567,
+        0.8542063052431297,
+        0.8542063052431297,
+        0.8542063052431297,
+        0.8542063052431297,
+        0.8521824919389768,
+        0.8497633503848545,
+        0.8471124692625398,
+        0.8414227535783181,
+        0.835257680578135
+      ],
+      "minimum_actual_actor_size_px": [
+        104,
+        81
+      ],
+      "case_id": "W036",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "T021w2",
+      "donor_source_id": "T027w1",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": -3.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 4.670582341166873,
+      "max_ground_support_distance_m": 1.8870187419558255,
+      "max_view_yaw_delta_deg": 4.959127621652215,
+      "max_view_pitch_delta_deg": 0.7442680397367383,
+      "type": "single_actor",
+      "protected_instances": [
+        "bbd638842e8240f6aa10b9b73095c531"
+      ],
+      "occlusion_fraction": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.49507680189050807,
+          0.496726992683866,
+          0.48809996033320113,
+          0.4970357620960031,
+          0.4928451960602119,
+          0.49953139643861294,
+          0.5286103542234333,
+          0.5319664492078285,
+          0.5172475106685633,
+          0.5265049415992812
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.7178022843639228,
+          0.7144782441278398,
+          0.7072590241967474,
+          0.7129470262000382,
+          0.704144211113176,
+          0.711340206185567,
+          0.7413260672116257,
+          0.7481826654240448,
+          0.7265291607396871,
+          0.7390835579514825
+        ]
+      },
+      "contact_errors_px": [
+        0.18675672819455258,
+        0.3866954917502312,
+        0.3389350082571241,
+        0.5270707350676389,
+        0.2686291511019476,
+        0.5295236970423502,
+        0.5210883217667401,
+        0.4916669355504837,
+        0.3117221956276808,
+        0.43044506607469657
+      ],
+      "contact_fractions": [
+        0.9001481589873973,
+        0.8989391809235147,
+        0.8986464300047432,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9070194054277644
+      ],
+      "minimum_actual_actor_size_px": [
+        185,
+        58
+      ],
+      "case_id": "W037",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    },
+    {
+      "source_id": "S003w0",
+      "donor_source_id": "S045w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 0.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "min_GT_clearance_m": 0.6608745921451182,
+      "max_ground_support_distance_m": 0.8764026188849655,
+      "max_view_yaw_delta_deg": 5.036474645248006,
+      "max_view_pitch_delta_deg": 0.24677752187537294,
+      "type": "single_actor",
+      "protected_instances": [
+        "e2933a9a898e4abbb621fbb836c5c776"
+      ],
+      "occlusion_fraction": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.3521505376344086,
+          0.35549491441329695,
+          0.35914167398669844,
+          0.36789554531490015,
+          0.36587270597422883,
+          0.3624436787702094,
+          0.36016096579476864,
+          0.36718205878256027,
+          0.35482487491065046,
+          0.3532035082503345
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "e2933a9a898e4abbb621fbb836c5c776": [
+          0.4579667644183773,
+          0.46229223517737533,
+          0.47044798594553894,
+          0.4815668202764977,
+          0.4805414551607445,
+          0.4780015902464882,
+          0.47565392354124747,
+          0.485861540604541,
+          0.47219442458899213,
+          0.47376244982904714
+        ]
+      },
+      "contact_errors_px": [
+        0.04268825167480372,
+        0.2286582696659707,
+        0.22066402584613343,
+        0.5110576749738698,
+        0.5623919586580541,
+        0.6052596927168565,
+        0.0335508030493088,
+        0.31473310505788277,
+        0.4560156417123835,
+        0.28573080993629674
+      ],
+      "contact_fractions": [
+        0.9288475390156065,
+        0.9283363758647196,
+        0.9274102745955997,
+        0.9274102745955997,
+        0.9274102745955997,
+        0.9282239957585081,
+        0.9300547896783316,
+        0.9338239724899269,
+        0.939576687264458,
+        0.9433684785753317
+      ],
+      "minimum_actual_actor_size_px": [
+        186,
+        160
+      ],
+      "case_id": "W038",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null,
+      "ego_image_guard": "projected bottom + 6px hole support <512; conservative exclusion, not exact ego segmentation",
+      "frame_count": 10
+    }
+  ],
+  "selected_counts": {
+    "background": 17,
+    "single_actor": 16
+  },
+  "qualified_synthetic_count": 0,
+  "pre_render_ego_guard_rejected": [
+    {
+      "case_id": "W002",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 538.4874072533635
+    },
+    {
+      "case_id": "W020",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 540.7895563563951
+    },
+    {
+      "case_id": "W026",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 562.7437253657765
+    },
+    {
+      "case_id": "W030",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 540.7683333830959
+    },
+    {
+      "case_id": "W035",
+      "reason": "conservative_bottom_64px_ego_foreground_band",
+      "max_box_bottom_plus_hole_upper": 561.8140728400762
+    }
+  ],
+  "full_remote_evidence": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/native_window_factory/pair_candidates.json"
+}

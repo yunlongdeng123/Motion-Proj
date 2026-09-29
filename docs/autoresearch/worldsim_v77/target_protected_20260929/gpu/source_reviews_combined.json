@@ -1,0 +1,816 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r1",
+  "review_stage": "source_only_cpu",
+  "reviewer": "independent_subagent_data_quality_review",
+  "review_scope": "Assembly of independent source reviews. Original reviewer/stage metadata retained in assembly_sources.",
+  "clips": [
+    {
+      "source_id": "S003",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        4
+      ],
+      "note": "深色轿车首/中/末及f4正面轮廓完整，车顶、挡风玻璃、两侧灯组与保险杠均可区分；后方白车在车顶后方，没有穿过当前车体。末帧变小且细节偏软，后续不可超出既定放大限制；当前作为可辨真实Y和无遮挡可见车体来源通过，不认证合成或全窗mask。"
+    },
+    {
+      "source_id": "S004",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "note": "f0/f9/f15/f29深色轿车正面完整，车灯、格栅、镜子和车底边缘可辨，路边树与右侧路障均未盖住车体。背后白车不穿过当前可见外轮廓，作为可辨protected与donor来源通过。"
+    },
+    {
+      "source_id": "S005",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        19
+      ],
+      "note": "四帧深色轿车大小适中且外轮廓清楚，车顶、挡风玻璃、车头和两侧车身未被挡；右侧大卡车及后方车列与其轮廓可分。GT包络额外包含路面，后续不可直接用该矩形cutout。"
+    },
+    {
+      "source_id": "S006",
+      "receiver_status": "uncertain",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "note": "黑色SUV在首/中/末与f1均可辨，但车身前方有链条斜穿下半部，混凝土立柱紧贴车头/前轮边界；另查f0/f29原始crop仍见这些前景。它不是无遮挡完整cutout来源。若作为protected真实GT，需先分清前景链条/柱与车体的可见关系，当前不把它自动准入well-observed protected；未审核远离车辆的空背景区域。"
+    },
+    {
+      "source_id": "S008",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        5
+      ],
+      "note": "四帧深色轿车处于画面中央，虽自然细节较软，车顶、风挡、灯组和车身边界仍可辨且无截边；f15/f29左侧经过车辆没有遮住目标。作为当前来源通过；应保留实际清晰度，不把crop放大后的像素当额外细节。"
+    },
+    {
+      "source_id": "S010",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "note": "黑色皮卡本体可辨，但f0有两名行人穿过车身前方，f29又有行人遮挡车头/驾驶室下部；f15/f16相对清楚不能抵消全窗遮挡。当前窗口不是稳定完整可见protected或donor来源；框内前景行人不能当车体一起裁走。"
+    },
+    {
+      "source_id": "S011",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        2
+      ],
+      "note": "实际抽帧深色轿车清楚且无遮挡，视觉本身是良好来源；但必须保留geometry_reject：f10–15所依赖标注间隔超过600ms。本轮要求连续几何有证据，不能凭清楚图像覆盖该硬拒绝。"
+    },
+    {
+      "source_id": "S012",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "note": "保留硬拒绝：f5–10标注间隔超过600ms，不能认证连续几何。视觉上白色轿车较远，f0/f15/f23有穿行行人遮挡车身边缘或正面，f29较清楚不能修复整窗来源问题。不得以抽帧看起来可辨覆盖geometry_reject。"
+    },
+    {
+      "source_id": "S013",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "黄色0号深色轿车在三帧均清楚、完整，无前景挡住车头或车顶；右侧白色1号轿车分处另一车道，轮廓独立可辨，可提供邻车保持场景。当前donor通过针对0号；不将该结论自动扩展到未单独审核的1号mask或最终多actor遮挡合成。"
+    },
+    {
+      "source_id": "S014",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        14
+      ],
+      "note": "白色厢式货车的后门、顶边、两侧箱体和后保险杠在四帧完整可见，车牌/车门编号区域未出现遮挡造成的结构缺失；路口行人与右侧车辆均在目标轮廓外。可以作为真实Y和后视角donor来源。"
+    },
+    {
+      "source_id": "S015",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "note": "桥上深色轿车四帧始终可辨，风挡、格栅、车灯与车体完整；左右栏杆都在车身外，没有穿过目标。轻微软纹理属于真实来源外观，未见严重失焦或部件被前景遮掉。"
+    },
+    {
+      "source_id": "S018",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        27
+      ],
+      "note": "银色轿车在f0/f15有清楚完整轮廓、车轮与接地区域，但f27/f29有近处背包行人横穿并遮挡前轮、车门及车窗；另查f29原始crop确认不是只在框边缘。整段不能作为无遮挡donor，也不满足本轮稳定well-observed protected来源。"
+    },
+    {
+      "source_id": "S019",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "note": "黄色0号蓝色轿车在路口首/中/末与f24正面均可辨，另看f24原始crop确认车头、车顶与两侧轮廓完整；末帧右侧行人靠近但抽检帧没有盖住主车。左边白色货车是独立1号，不要并入donor。轻微软纹理保留真实来源，不代表已经具备高细节生成资产。"
+    },
+    {
+      "source_id": "S020",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "note": "黄色0号是右侧阴影中的黑色越野车；f0原始crop确认前景白色大货车挡住其右后部，f9仍临近遮挡，f15/f29车体处于深阴影且下部边界较弱。青框货车可辨不能代替0号通过，当前primary窗口不满足well-observed与完整donor要求。"
+    },
+    {
+      "source_id": "S021",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "白色轿车后视角三帧都完整，车顶、后窗、尾灯、后保险杠与两侧车身清楚；左侧红色卡车和黑色警车没有穿过主车轮廓。虽然邻车密集，当前primary可辨且无明显前景遮挡，来源通过。"
+    },
+    {
+      "source_id": "S023",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        3
+      ],
+      "note": "深色轿车后方轮廓在四帧均完整，长条尾灯、后窗与右侧车身可辨；两边停放车列与目标有明确图像间隙。末帧变小但仍能识别主要部件，无明显遮挡或严重失焦，作为来源通过。"
+    },
+    {
+      "source_id": "S024",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        28
+      ],
+      "note": "黄色0号灰色SUV从侧面到侧后视角均完整，前后轮、窗线、车尾和邻车边界可辨，青框白厢式车是另一个实例。f28/f29有自然运动软化，原始f28 crop仍能分辨完整车身和车轮，无前景穿过；source通过，未来仍须按真实模糊程度与视角匹配。"
+    },
+    {
+      "source_id": "S027",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "note": "银色皮卡从f0/f1的侧前视角转为f15/f29更正面的视角，车身与货厢、车头均可辨，行人在远侧且右侧邻车未盖住目标。来源通过；后续必须保留真实yaw变化，并按逐帧视角配对，不能把转弯序列当固定正面贴图。"
+    },
+    {
+      "source_id": "S030",
+      "receiver_status": "pass",
+      "donor_status": "uncertain",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        25
+      ],
+      "note": "黄色0号是左侧黑色轿车，不是中央青框银色皮卡；四帧0号身份及车头/右侧车身可辨，适合真实Y的邻车场景。另查f0/f25原始crop：0号左前角与更左侧深色车的边界贴合，前角完整性不够明确，暂不自动准入完整donor；不能裁走旁车像素。"
+    },
+    {
+      "source_id": "S032",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "远处白SUV在f0/f15前下部邻接并被低矮植被/花盆遮挡，f29原始crop中车轮、灯组与车头细节明显糊成块。该窗口同时有小目标、下部前景遮挡和末帧模糊，不符合第一阶段well-observed筛选。"
+    },
+    {
+      "source_id": "S033",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "黄色0号深色轿车后窗、尾灯与车底轮廓均可辨；另看f0原始crop，左侧近卡车处于边缘而未盖住0号可见车体。中末帧与右侧两辆厢式车分别可辨。后窗有阳光高光，仍保持完整车形；当前通过针对0号，不自动认证青框1号。"
+    },
+    {
+      "source_id": "S034",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "note": "黄色0号深色厢式van的后方及右侧车身、后窗/标志、尾灯与车轮在四帧均可辨；中央小货车和右侧大货车各自独立，没有盖住0号轮廓。可用于密集邻车真实Y，donor通过仍仅针对完整可见的0号。"
+    },
+    {
+      "source_id": "S035",
+      "receiver_status": "pass",
+      "donor_status": "uncertain",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        25
+      ],
+      "note": "黑色轿车在f0侧前、f15及f25/f29正面均可辨，没有明确前景挡住车体，真实Y来源可用。f25/f29低亮度车底/轮胎与路面边界较暗，细节偏软；原始f25 crop也难确认完整低部轮廓，因此完整donor暂不放行。"
+    },
+    {
+      "source_id": "S036",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "黑色SUV首/中/末均完整可辨，格栅、前灯、镜子和外轮廓清楚；画面偏暗但没有失焦到无法辨认车体。f0另看原始crop，ego引擎盖位于目标下方，没有明确挡住SUV可见保险杠，作为来源通过。"
+    },
+    {
+      "source_id": "S038",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "红棕轿车在f0被树干穿过驾驶室/前门，f15有竖杆穿过车体，f29又有较粗树干遮住车头一带；密集邻车虽可辨，但主车在整个抽检中没有稳定完整轮廓。不能作为完整donor或第一阶段清楚protected来源。"
+    },
+    {
+      "source_id": "S039",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "红色轿车在f0被较粗树干/立柱遮住车身中部，f15才较完整，f29又透过公交站棚玻璃与竖框观看且车体细节偏软。真实前景遮挡关系随视点显著变化，不能把该窗口当完整cutout或稳定清楚protected来源。"
+    },
+    {
+      "source_id": "S042",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "黄色0号银色SUV后方与右侧均完整，首帧尺寸较大、末帧较小但尾灯/后窗/车底仍可分；其右边白色车是另一辆，未遮挡主车。真实路面标线与车辆边界清楚，来源通过。"
+    },
+    {
+      "source_id": "S044",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "灰色轿车三帧车身正面完整，灯组、格栅、后视镜和底边可辨；f0原始crop确认车底在ego引擎盖之上。右上光束与挡风玻璃高光没有抹掉车体轮廓；来源通过，但光照/阴影必须在未来配对中匹配。"
+    },
+    {
+      "source_id": "S045",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        5
+      ],
+      "note": "同桥灰色轿车在四帧均完整且细节可辨，左右行人位于栏杆外未遮车，玻璃局部反光没有破坏轮廓。作为来源通过；其环境与车辆外观同S044高度相近，不能统计为新增独立车型覆盖。"
+    },
+    {
+      "source_id": "S046",
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        7
+      ],
+      "note": "保留硬拒绝：f15–20标注间隔超过600ms。黄色白色公交在f0/f7较远且细节软，f29变大后更清楚；四帧公交身份可辨，但视觉改善不能弥补连续几何依据缺失，本窗口不能进入配对或分割准入。"
+    },
+    {
+      "source_id": "S049",
+      "receiver_status": "uncertain",
+      "donor_status": "reject",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "白黄公交身份可辨，但三帧车头下半部持续出现明显软糊带，f29目标又较小，保险杠/车底细部混成一片；上部风挡较清楚不能代表下部也可观察。按首阶段排除明显模糊来源，不准入donor，receiver待定而不自动放行；未把右侧近处货车误认成目标。"
+    },
+    {
+      "source_id": "S051",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        8
+      ],
+      "note": "0号黄白公交在四帧车顶、前风挡、灯组、镜子和车头轮廓完整，左侧白色货车紧邻但未见盖住公交正面；目的地LED局部变化不等于目标身份变化。公交与邻车作为真实Y来源可辨，donor可见外轮廓通过，仍需后续精确mask分离相邻货车。"
+    },
+    {
+      "source_id": "S052",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "note": "停在右侧的白SUV后方完整，车顶、后窗、尾灯、保险杠与车轮可辨；另看f29原始crop，右侧立柱紧邻但没有明显穿过主车，左侧前方车列也未遮住其主要轮廓。四帧来源通过，后续mask需保持相邻柱体和车列独立。"
+    },
+    {
+      "source_id": "S056",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "note": "深色轿车在四帧正面外轮廓完整，车顶、风挡、灯组及底边可辨；f9原始crop偏软但没有严重糊到车体与背景不可分，左侧车辆未遮主车。当前来源通过；目标接近尺寸门槛，不应再缩小或放大冒充细节。"
+    },
+    {
+      "source_id": "S057",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "note": "中央深色轿车首/中/末均有完整前脸、挡风玻璃、镜子及车体边界；左右皮卡和灰色轿车靠近但没有覆盖主车。可作有真实邻车的Y和当前无遮挡可见车体donor；三帧不等于全部30帧mask已通过。"
+    },
+    {
+      "source_id": "S058",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        6
+      ],
+      "note": "深色轿车四帧完整，灯组、风挡、格栅及车体可辨；左边白色出租车经过时与目标保持独立轮廓。外观有真实视频的轻微软化，但未见严重失焦、截边或前景穿车，来源通过。"
+    },
+    {
+      "source_id": "S059",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        5
+      ],
+      "note": "深色轿车在四帧尺寸充足、前脸与车顶清楚，车轮/底边位于ego引擎盖上方；左右车辆虽然紧邻，未遮住主车可见轮廓。作为当前真实Y与donor来源通过。与其他多例Toyota跟车正面外观高度相似，应计入集中度而不夸大车型多样性。"
+    },
+    {
+      "source_id": "S061",
+      "receiver_status": "pass",
+      "donor_status": "uncertain",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        14
+      ],
+      "note": "黄色0号是右侧白色两厢车，中央青框深色轿车是1号；四帧0号完整可辨且无明确前景遮挡，作为真实Y中的protected素材可用。另看f14原始crop，白车前角/灯组和下部轮廓有较明显运动软化，完整精确cutout边界不够确定，donor不自动放行；不将1号清晰度替代0号判定。"
+    },
+    {
+      "source_id": "S062",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        20
+      ],
+      "note": "深色皮卡四帧前脸、货厢/驾驶室边界、灯组与底边可辨，车身没有被旁车或杆体截断；f20原始crop确认目标完整，远处其他车不穿过轮廓。末帧较小且纹理偏软，来源通过仍受既定尺度和模糊匹配限制。"
+    },
+    {
+      "source_id": "S064",
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "note": "深色轿车四帧尺寸适中，风挡、格栅、灯组、镜子和车底边缘清楚，左侧施工锥及右侧交通不遮主车。作为真实Y与当前完整可见车体donor通过；仍属于本批重复较多的同类Toyota正面视角。"
+    },
+    {
+      "source_id": "T002",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        20
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "深色厢车车尾、侧窗及车轮在四帧均完整可辨，与中间白色厢车和右侧大卡车分开；未见杆件或行人穿过主车。中间白车可作为第二车辆后续候选，但本次未认证其mask或合成资格。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T007",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        22
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "深色SUV虽能辨认，但前景混凝土桩靠近并遮住车体下缘；第22帧另一辆深色轿车从右前方跨入主车轮廓。全窗可见车体不完整，不能作稳定B或完整A裁取来源。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T008",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        12
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "深色皮卡的车顶、前脸、侧面和轮胎在四帧清楚，行人在第0帧从车前左侧经过但未穿过可见车体；右后方轿车也保持分离。后续实例mask仍需独立核查是否误带行人或邻车。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T009",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "白色轿车本体可辨，但第0帧行人直接穿过右前灯和保险杠区域，车体局部真实可见信息缺失；其余帧清楚不能抵消全窗前景遮挡。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T011",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        8
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "白色厢式货车后门、尾灯、下保险杠和两侧轮廓在四帧清楚；左右车流均未盖住货车，未见截边或前景杆件。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T012",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "receiver_status": "pass",
+      "donor_status": "uncertain",
+      "note": "右侧白色轿车在四帧均能识别车尾、灯组和车身边界，可作为真实B来源；但车体接近本轮尺寸下限，局部细节偏软，现有抽帧不足以确认放大贴入时仍为可靠完整A纹理，因此donor暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T013",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        4
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "深色轿车车尾、侧面、车轮和灯组在四帧可辨，经过的白车与路边车列均未穿过主车；车体完整且未截边。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T014",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        2
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "白色轿车车尾虽清楚，但右侧深色SUV贴近，末帧有人站在轿车右侧车门和后轮区域并与车体边界重叠；无法保证全窗无遮挡完整实例，保守拒绝B和donor A来源。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T015",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        26
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "银色轿车后窗、尾灯、后杠和两侧轮廓连续清楚；左侧经过的大货车与右后车辆未盖住主车，车体无截边。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T016",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        20
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "浅色箱货车尾门、标识、尾灯和下缘在四帧清晰，左右两侧大型车辆保持分离；未见邻车或行人进入主车可见车体。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T017",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "深色轿车后挡、竖向尾灯及侧面在四帧可辨，近处施工桶与前方灰车未穿过主车轮廓；末帧变小但仍可识别。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T018",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        10
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "灰色轿车车尾、左右灯组和车轮连续可见，与对向车和路边停车分离；未见明显前景遮挡或严重失焦。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T020",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "白色观光巴士后部车窗、车灯、下缘及两侧车身清楚；第0帧同时是最差清晰度帧，所以去重后抽查三帧。左右并行车辆未遮住巴士。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T021",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "白色皮卡侧面、驾驶室、车斗和前后轮在四帧均可辨；前景行人位于画面右侧，与主车保持距离，后方白色货车亦未混入主车轮廓。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T022",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        2
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "银色SUV车尾、侧面、车顶和轮胎在四帧完整；右侧近处重卡和路边树均未盖住主车，可作为真实B及后续donor候选。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T023",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        7
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "白色SUV后窗、尾灯、保险杠及侧面在四帧可见，路边树影改变亮度但无枝干穿过车体；旁车与主车仍可分离。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T039",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        7
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "银色皮卡正面、两侧灯组和下保险杠在四帧可辨；右侧大型集装箱车虽近，但未穿过皮卡可见车体，未见截边。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T003",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "深色SUV由斜前方驶近，三帧车顶、前脸、侧面及轮胎完整可辨；旁边白色货车和后方摩托车未穿过主车可见车体。白色货车可列为第二车辆后续候选，但本次不认证其来源或mask资格。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T027",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        5
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "深色轿车侧面、车顶和前后轮在四帧清楚，路口行人、其他车与右侧路柱未盖住主车；虽处远侧车道，主体有足够尺寸且未截边。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T028",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_status": "pass",
+      "donor_status": "pass",
+      "note": "白色皮卡横向通过路口，三帧驾驶室、车斗、车头和前后轮完整可辨；右侧行人、路柱及背景车辆未穿过可见车体，未截边。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T030",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "白色车辆虽有可辨侧面，但前景隔离墩横贯车身下半部并遮住轮胎；行人在车前及右侧经过，末帧与车体边界重叠。三帧都不是完整无遮挡实例，不能用作真实保护车或完整待删车贴图来源。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T031",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        2
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "红褐色SUV仅约百像素宽，路口灰色灯杆在四帧均穿过并遮住车身，附近骑车人与车体区域贴近；裁图无法得到完整清楚的可见车辆，不准入receiver或donor。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T032",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "receiver_status": "pass",
+      "donor_status": "uncertain",
+      "note": "白色轿车在四帧保持同一身份，车尾和两侧边界可辨；周围车辆及路口设施未遮住它，可作真实B来源。车辆在画面中较小，尾部与车轮细节偏软，现有抽帧不足以确认放大贴入后仍是可靠的完整A纹理，donor暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T033",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "深色SUV全程位于密集铁丝网后方，网纹横贯车窗、车门和车轮，下缘又被前景混凝土隔离墩遮挡；真实车体不可完整观察，几何框通过不能消除前景遮挡。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T034",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        8
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "深色SUV在四帧都隔着密集铁丝网，网线覆盖侧窗、车身与车轮；前景混凝土墩挡住车底。虽能识别车型，不能作为无遮挡的B或完整A来源。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T035",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        21
+      ],
+      "receiver_status": "reject",
+      "donor_status": "reject",
+      "note": "深色SUV与T033、T034处于同类围栏视角；四帧铁丝网纹持续穿过整车，前景混凝土墩又遮住下缘。车身可辨但可见像素不完整，保守拒绝receiver及donor。",
+      "human_verdict": null
+    }
+  ],
+  "assembly_sources": [
+    "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/subagent_source_reviews.json",
+    "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/source_extension/subagent_source_reviews.json"
+  ]
+}

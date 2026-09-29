@@ -1,0 +1,814 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r1",
+  "reviewer_model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "cohorts": [
+    {
+      "cohort": "P / 30帧初始固定世界位移",
+      "review_root": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/synthetic_review",
+      "reviewer": {
+        "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+        "run_id": "r1",
+        "reviewer_model": "gpt-6-sol",
+        "reasoning_effort": "xhigh",
+        "fast": false
+      }
+    },
+    {
+      "cohort": "D / 30帧相机相对轨迹",
+      "review_root": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/expanded_factory/synthetic_review",
+      "reviewer": {
+        "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+        "run_id": "r1",
+        "reviewer_model": "gpt-6-sol",
+        "reasoning_effort": "xhigh",
+        "fast": false,
+        "review_scope": "逐例实际查看manifest.contacts指定的首、中、末、最大遮挡及最差接地帧之GT、synthetic X、labels与masked-X condition；结论仅针对所抽帧视觉，不证明30帧时序通过。"
+      }
+    },
+    {
+      "cohort": "W / 官方10帧固定窗口",
+      "review_root": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/native_window_factory/synthetic_review",
+      "reviewer": {
+        "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+        "run_id": "r1",
+        "reviewer_model": "gpt-6-sol",
+        "reasoning_effort": "xhigh",
+        "fast": false
+      }
+    }
+  ],
+  "clips": [
+    {
+      "case_id": "P001",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        19
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "新增A的车身亮面与所在建筑阴影道路的受光明显不合",
+        "首帧及中段车底缺可信接触/投影影，呈贴入或轻微悬浮感",
+        "右下沿存在不规则暗色残边，删除洞也随之向下凸出"
+      ],
+      "note": "四个指定帧中A的正面朝向和近远尺寸大体合理，真实B仍可见且未见被改像素；但A的亮面在深阴影路面上反复显得突兀，车底缺少可信接地关系。第0、15、19帧的右下边界还带有不规则暗片，因此视觉合成拒绝。GT仍是真实Y，condition的中灰洞不是生成结果。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P002",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        28,
+        18
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "车底投影影较弱，合成阶段仍需关注全帧接地与边缘连续性"
+      ],
+      "note": "五个指定帧中A与深色道路的明暗、正面视角和尺寸较协调，下缘通过暗色车底与路面衔接，未见明显悬浮；左后真实B保持可见，邻车和车道线没有明显串入A。局部边缘略硬且接触影较弱，但当前抽帧不足以据此拒绝。此pass只针对指定帧的视觉抽查，不能证明30帧时序通过。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P003",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        10
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "新增A的车底与道路之间可见空隙，缺少接触影，首帧及中段明显悬浮",
+        "A相对受保护B及路面的成像较软，贴入感进一步增强"
+      ],
+      "note": "第0、10、15帧的放大输入图中，A下缘与道路之间留有可见空隙，车轮位置没有可信接地点或阴影；末帧虽更小，不能抵消前段缺陷。B未见被误盖或改动，GT为真实Y，但当前合成X视觉上不能准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P004",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        6
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "新增A在联系人图中较小，轮胎接地点及车底阴影无法可靠确认",
+        "放大视图中车底与路面分离的迹象尚不能排除"
+      ],
+      "note": "四帧A的视角、位置和尺度变化看起来连贯，真实B与A分开且保持可见；但A在画面中较小，放大图也未给出可靠接地/接触影证据，局部看似离地。现有图不足以明确判为悬浮或合格，因此保持uncertain，需更高分辨率的input及车底局部核查后再决定；不自动准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P005",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A车底影较弱，右下沿有轻微不规则边缘",
+        "labels显示原始B完整GT区域，不能把被A盖住的绿色线框误作input中的可见B"
+      ],
+      "note": "四帧均可见A在真实B前方，B上半部仍留有可辨身份与车顶/挡风玻璃证据，左侧白车保持原状。A的视角、尺寸和局部明暗与此处道路尚可协调，未见明显悬浮或前后顺序倒置；下沿小瑕疵与较弱接触影需在正式人工逐帧审核时关注。此pass只针对指定帧的视觉抽查，不能证明整段时序通过。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D001",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A车底独立投影影偏弱，后续全帧审核仍需关注轮胎接地点"
+      ],
+      "note": "四帧深色A的正面视角与街道透视相容，轮胎下缘落在路面且与自车机盖之间保留可见道路；真实B与A分离并保持原状。A的受光与街道大体协调，未见明确悬浮、邻车误盖或大块mask残留。condition的中灰区域仅是待删洞预览。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D002",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        12,
+        4
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "f15及f29的A位于右侧大片建筑阴影内，但车身反光相对周围道路偏亮",
+        "车底接触影较弱，联系人图难以确认暗区内接地点"
+      ],
+      "note": "五帧A与真实B保持分离，左侧经过的蓝色和银色车辆未被改动；视角、尺度和车道位置大体可行。中后段A进入道路深阴影后仍保持较亮的前脸和挡风玻璃反光，现有抽帧不足以断言该反光必然不合，但也不足以认证光照与接地真实，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D003",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "f15、f23及f29的A位于深色建筑投影内，挡风玻璃和机盖仍呈直接日照式高亮，光照与路面不相容",
+        "A车底缺少与投影路面的可信接触阴影"
+      ],
+      "note": "四帧真实B和左侧邻车均保留，A的正面尺度与位置没有明显投影错位；但中后段路面被大片阴影覆盖，A仍维持亮斑和较亮机盖，车下也无相应的暗区接触关系。视觉上是未重打光的贴入车，故拒绝。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D004",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        4
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "f15及f29的A落在建筑阴影路面，挡风玻璃持续保留强烈点状日照反光",
+        "车底阴影不足，较大的A在暗路面上呈明显贴入感"
+      ],
+      "note": "四帧B与邻车未见被误删，A的镜子和车体轮廓完整；但A进入右侧大面积路面阴影后，前挡和机盖仍出现醒目的明亮反光，车辆与暗路面光照分离。其接触影不足以消除该贴入感，按视觉门槛拒绝。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D005",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "f15、f16和f29的A位于阴影边界或暗路面，前脸与镀铬部分相对偏亮",
+        "车底接触影很弱，抽帧不足以可靠区分正常轮胎暗区与轻微悬浮"
+      ],
+      "note": "四帧A与B分开，附近真实车辆保持原样，A的主体形状和视角完整。A比D003、D004更暗，亮部也可能来自反射，因此不把光照疑点直接判为不合格；但缺乏可信的接触影证据，暂列uncertain，不自动准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D006",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        3,
+        17
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "近处A的前保险杠及下缘画在真实自车机盖之上，f15与f17尤其明显，前景遮挡顺序错误",
+        "轮胎接地被机盖覆盖区域替代，缺少可信道路支撑"
+      ],
+      "note": "五帧A均放得过近；放大f15输入图可见A的黑色下缘跨过灰白色自车机盖边界，真实近景机盖未正确遮住A。B仍可在A后方辨认，但该前景层次错误不能由几何接地指标弥补，拒绝。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D007",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        3,
+        28
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A下缘接触影偏弱",
+        "B被A遮挡较多，所抽帧仍保留车顶、挡风玻璃及两侧身份线索"
+      ],
+      "note": "五帧A位于真实B前方，B的上半部持续可辨，旁侧真实车流未被改动；A的正面、尺寸和所在路面明暗基本协调，放大下缘未见明确离地空隙。弱接触影与轻微硬边需要全帧关注，但当前抽帧未达到拒绝门槛。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D008",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A车底投影影偏弱，局部下缘略硬"
+      ],
+      "note": "四帧A在真实B前方，B的车顶和前脸上部仍可辨认，左侧车辆及远处路边车列保持原状。A的受光和视角与这段开阔道路尚可协调，车底虽缺强投影影但未见确定空隙或错误遮挡，因此抽帧通过。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D009",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        12,
+        24
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "f00、f12和f15近处A的下缘覆盖真实自车机盖，前景遮挡次序错误",
+        "A的轮胎下方没有可见道路接地点，近距贴入感明显"
+      ],
+      "note": "五帧B的上半部与左侧白车仍在，但A被放到自车机盖边界内：放大f15可见黑色轮胎和保险杠覆盖在灰白机盖上，而非由机盖遮住。该近景合成不符合真实遮挡和接地，拒绝。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D010",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23,
+        24
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影较弱，遮挡B的下半部"
+      ],
+      "note": "五帧A位于B前方且未侵入自车机盖，B上部车窗、车顶和部分前脸仍可识别；左侧驶过车辆原样保留。A的亮面可由左侧较亮路面及天空反射解释，未见明确光照错位、悬浮或邻车误盖，抽帧通过。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D011",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        12
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A车底投影影偏弱，B下半部被遮挡"
+      ],
+      "note": "四帧A的车体、前脸和树影反射与道路环境大体相容，车身下缘没有可辨的悬浮间隙；真实B在后方保持车顶、挡风玻璃和部分前脸，左侧并行车未被误改。抽帧视觉通过，仍需独立检查未抽帧时序。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W001",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A车底投影影偏弱"
+      ],
+      "note": "四帧A的视角、位置和受光与道路大体协调，下缘落在路面且与自车机盖间留有道路；真实B与A分离，邻车保持原状。弱接触影需后续全帧关注。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W003",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A下缘接触影偏弱"
+      ],
+      "note": "四帧A较小但车体、轮廓和道路透视一致，未见明显悬浮或污染；真实B和路边车辆保持完整。抽帧通过，不推断长时序。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W004",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        2
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A在后段跨入建筑阴影，前脸反光与暗路面是否匹配难确定",
+        "车底阴影偏弱"
+      ],
+      "note": "四帧B与左侧车辆未改，A位置和身份清楚；f05/f09位于明暗交界，A亮面和下缘支撑证据不足，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W005",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        2,
+        8
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A在建筑投影内仍保留较亮前脸和挡风反光",
+        "车底接触影弱"
+      ],
+      "note": "五帧B与旁车保留，A尺度和前脸一致；f05/f08/f09处于深色路面，不能确认A受光与接地充分相容，暂列uncertain。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W006",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        1,
+        7
+      ],
+      "synthetic_status": "reject",
+      "issues": [
+        "A放大后明显比真实B及同画面车辆更软，前挡和灯组糊成片",
+        "暗路面上的受光与弱接触影进一步增加贴入感"
+      ],
+      "note": "五帧均见A主体跟踪与邻车保留，但该大尺寸A的纹理失焦明显，f00/f05/f07尤甚，相对更远的B反而更糊；视觉合成不合格。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W007",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        2
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影略弱"
+      ],
+      "note": "四帧白色SUV的背面视角、尺度与阴天道路大体吻合，后轮下缘未见明确离地；真实B及两侧停放车辆保持完整。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W008",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A前保险杠下缘偏平且接触影较弱"
+      ],
+      "note": "四帧黑色迎面轿车沿车道稳定落在路面，亮暗和清晰度与该街景大致相容；左侧真实B及右侧车辆保留。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W009",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A后轮及车底接地证据不足",
+        "A下方缺少可辨的接触影"
+      ],
+      "note": "三帧A与真实B、两侧原车分离且受光近似，但A底部呈弧形悬空边，下缘与路面关系不清；抽帧无法确认可靠接地，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W010",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A后轮/车底与路面接触不清",
+        "车下接触影缺失"
+      ],
+      "note": "三帧灰轿车身份和放置基本一致，行驶过路口的原有车辆保持；A尾部下缘缺少明确支撑，无法排除轻微悬浮。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W011",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A底缘弧形空缺明显，轮胎落点难辨",
+        "车底阴影弱"
+      ],
+      "note": "三帧A未遮挡真实B或横向来车，但与道路的接触关系仍不能确认；同一donor在短窗尾段并未改善，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W012",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        4
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A车轮与路面接触影不清",
+        "较亮道路上黑车下缘显得孤立"
+      ],
+      "note": "四帧黑色轿车与右侧真实B及来车分离，身份稳定；树荫斑驳路面上缺少可辨的车底影，后轮落点不足以确认可靠接地，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W013",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        1
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A后轮下无明显接触影",
+        "车身跨压双黄线且接地视觉较弱"
+      ],
+      "note": "四帧银车清晰，右侧真实B和左侧来车保留；A压在道路中心黄线上，车底弧形空隙与弱阴影带来悬浮疑点，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W014",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        1
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "W014 灰色A后轮接地暗部较弱，难确认实际落点"
+      ],
+      "note": "四帧真实B和邻车保持完整；A车底呈拱形且缺少明确接触暗部，但未见可确认的轮胎与路面像素间隙。按阴影门槛不单凭弱影拒绝，接地证据不足列uncertain。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W015",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        6
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "W015 灰色A后轮接地暗部较弱，难确认实际落点"
+      ],
+      "note": "四帧真实B和邻车保持完整；A车底呈拱形且缺少明确接触暗部，但未见可确认的轮胎与路面像素间隙。按阴影门槛不单凭弱影拒绝，接地证据不足列uncertain。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W016",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        7
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影偏弱",
+        "A略贴近双黄线"
+      ],
+      "note": "四帧黑色A前脸、清晰度和路面亮度基本协调，下缘与道路相接；左侧真实B及行人完整，未见遮挡错误。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W017",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        6
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影偏弱"
+      ],
+      "note": "四帧A与B并行但轮廓分离，较小的A在车道中心附近，前保险杠下缘落地关系可接受；背景与行人保持。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W018",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        6
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A正面细节略软"
+      ],
+      "note": "四帧A深色前脸贴路面且没有明显边缘污染，阴天/背光受光与场景相容；左侧真实B和人行道车辆保留。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W019",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3,
+        4
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影偏弱"
+      ],
+      "note": "五帧近景A位于B前方，遮住B下部而B车顶仍可见，遮挡次序正确；A未触自车机盖，前脸亮度与B接近。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W021",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        7
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A下缘接触影偏弱"
+      ],
+      "note": "四帧A靠前覆盖B的下半部，B上缘保持可见，前后关系一致；A自身形状及受光大体与路面匹配，未见机盖穿插。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W022",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        8
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A显著深于同画面真实B，受光差异较大",
+        "A与B大幅重叠，车身边界难完全核对"
+      ],
+      "note": "四帧左侧蓝车保持且B上缘可见，近景A处于前方的遮挡次序基本合理；但黑色SUV在亮街景中偏暗，贴入感较强，暂不准入。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W023",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        2
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A下缘接触影略弱"
+      ],
+      "note": "四帧A较清楚地位于真实白色皮卡B前，B车顶和上部保留，右侧来车未改；阴天受光与道路大体一致。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W024",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A前脸细节略软"
+      ],
+      "note": "四帧A在真实B前方偏右，B车顶和左侧车身仍可见，邻车与路边行人保持；A底缘和受光未见明显失配。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W025",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        1,
+        7
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影较弱"
+      ],
+      "note": "五帧A灰色前脸稳定处在B前方，B上部保留，左侧车辆未受影响；道路上的亮暗和尺度基本协调。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W027",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3,
+        8
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "蓝色A较软，近于该场景运动模糊",
+        "接触影偏弱"
+      ],
+      "note": "五帧A从前方右侧经过，真实黑车B露出上部且左侧驶入车辆完整；A底部与路面相接，无明确悬空或污染。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W028",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        6
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A在明亮路面上的接触影偏弱"
+      ],
+      "note": "四帧侧向黑轿车A与真实白皮卡B形成合理前后遮挡，白皮卡上部和右侧其他车辆保持，轮胎下缘贴路面。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W029",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A下缘接触影偏弱"
+      ],
+      "note": "四帧A与后方B的遮挡次序一致，B车顶及右半部仍可见，A与自车机盖间有路面；未见明显受光或边界污染。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W031",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        8
+      ],
+      "synthetic_status": "uncertain",
+      "issues": [
+        "A黑色SUV显著深于同场真实B，亮路面上受光匹配存疑"
+      ],
+      "note": "四帧A在B前方且B顶部仍可见，左侧来车完整；但A车身过暗，细节几近丢失，无法确认亮场景下的贴入质量。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W032",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        6,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影较弱"
+      ],
+      "note": "五帧灰色A在B前方、遮住其下半部，B车顶及右侧车辆保持；A前脸亮度较W031更贴近实景，下缘未见明确离地。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W033",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        6
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A正面有轻微柔化"
+      ],
+      "note": "四帧A和后方真实B身份可分，B可见上部未被错误擦除，邻车完整；A的道路位置、尺度与环境亮度基本相容。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W034",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        1
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影较弱"
+      ],
+      "note": "四帧灰车A稳定在真实B前，B车顶与左邻车仍在，A下缘和道路相接且未见明显光照断裂。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W036",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3,
+        4
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "蓝色A轮廓略软",
+        "接触影偏弱"
+      ],
+      "note": "五帧A在右前方与B发生合理遮挡，B的黑色上部和左近车未被改动；A的模糊程度与运动场景尚可相容。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W037",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        7
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A接触影偏弱"
+      ],
+      "note": "四帧黑色侧向A位于白皮卡B前方，B主体上部与右侧车保持，A轮胎落点和亮暗关系可接受。",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W038",
+      "reviewed_frames": [
+        0,
+        5,
+        9,
+        3
+      ],
+      "synthetic_status": "pass",
+      "issues": [
+        "A下缘影较弱"
+      ],
+      "note": "四帧A与B前后关系清楚，B车顶及右侧前脸保持，A未穿插自车机盖；车辆边界和道路受光未见明显问题。",
+      "human_verdict": null
+    }
+  ]
+}

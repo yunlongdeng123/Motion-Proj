@@ -1,0 +1,680 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r1",
+  "review_stage": "independent_sam2_visual_sample",
+  "review_scope": "实际查看每例首帧、中帧、末帧和最弱归一化IoU帧的overlay及隔离像素图；数值门槛仅作参考。本结论不认证未抽帧的视觉细节、合成效果或人工逐帧合格。",
+  "clips": [
+    {
+      "source_id": "S003",
+      "instance_token": "e2933a9a898e4abbb621fbb836c5c776",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        12
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "四帧均跟随同一辆深色车，车顶、镜子、前脸和轮廓完整；未见邻车、路面或树影成块混入，边缘仅有轻微正常像素误差。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S004",
+      "instance_token": "96658f307c954dc397101cbc8a52bb66",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        13
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "四帧深色车主体及两侧边缘连续，路障与远处车辆均未进入实例；车底少量深色接触区未形成明显可见阴影尾巴。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S005",
+      "instance_token": "717a653b5f254d89a96c2e2339b6ddb3",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色车的车顶、车头、轮廓和下缘均保留，右侧大型车辆没有混入；隔离图未见大片路面或独立投影阴影，贴图边界需在合成阶段继续核查。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S008",
+      "instance_token": "b2b8bb62a8c14dffb0518af9daa75fe5",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        14
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "远处目标车虽小但四帧身份一致，车体外缘、前灯与底部均能分辨；左侧驶过的蓝车及后续路边车列未混入mask。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S013",
+      "instance_token": "b5ecefb86982449dad8fb57ed28bdf2a",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        26
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "主车深色车始终与右侧白车分开；隔离图保留完整可见前脸、车顶和车身两侧，未见白车、斑马线或路面阴影成块混入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S014",
+      "instance_token": "f212f246f53e4110b7f6a490cc70adaa",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        12
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "白色厢式货车后门、侧缘、保险杠和底部结构连续保留；放大末帧隔离图确认下方深色部分主要是车底/轮胎，并非大块道路或投影阴影。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S015",
+      "instance_token": "e13ac240993b4bd99b0aa366c07895f0",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色轿车四帧均为同一实例，车顶、两侧镜子、灯组及下缘完整；桥面和护栏没有进入隔离图。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S019",
+      "instance_token": "5fcbdbe3b0bf4406b790bfca7c91ea6c",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        14
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "主车深色轿车始终与左后的白色货车及右侧行人分离；隔离图仅显示主车可见轮廓，未见行人或斑马线混入。此结论不改变第二辆白货车的来源拒绝状态。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S021",
+      "instance_token": "6b679f56d3a9412499fe3a3542629cf6",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        3
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "浅色轿车车尾、尾灯、侧缘和轮胎在四帧均保留；左侧红色重卡及其阴影未混入mask，车底没有明显大片路面残留。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S023",
+      "instance_token": "e88c88e3798140b3affec642b26fee76",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        6
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色轿车尾部及右侧车身连续，路边停车没有串入；放大首帧隔离图核实底部横线是预览棋盘格边界，不是被选中的道路像素。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S024",
+      "instance_token": "b4ed7cfef1cd40c492b281136ccbe41e",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "灰色SUV的侧面、轮胎和车顶在首中末三帧完整，前后白色车辆没有串入；可见车体外缘与隔离图吻合。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S027",
+      "instance_token": "9ff78688d0c8462bbddf37a38dc4944b",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        13
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "银色皮卡从侧前方转向正面时保持同一实例，车厢、轮胎、车头轮廓随视角变化正常；斑马线与右侧黑车未被带入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S030",
+      "instance_token": "cb719f504a434629b75781df58cd1245",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        2
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "uncertain",
+      "note": "主车深色轿车的可见区域在四帧均可辨，右侧银色皮卡未串入，足以作为receiver实例区域。左前缘与旁车的分界及车底小片暗部在隔离图中仍不够确定；沿用来源阶段receiver-only结论，不升级为donor。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S033",
+      "instance_token": "89e0afc5f12948ab9102fa2d0dcd5446",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        20
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色车尾部、竖向尾灯及右侧车身清楚保留，与前方两辆白色货车分离；左侧大型车和路障没有混入mask。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S034",
+      "instance_token": "5d38c19ac8c3400d96308b50677c4de9",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        2
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色厢式车尾部、侧窗、车轮和下缘均在隔离图内；紧邻的白色货车与右侧大卡车未串入，未见可辨道路残片。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S035",
+      "instance_token": "8031aac9b4bf4a539f9336431ea9017d",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        20
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "uncertain",
+      "note": "深色车在四帧的可见车体均被跟住，右侧经过车辆未串入，可作receiver区域；侧前方暗车身与地面接触边缘在当前隔离图仍不够可靠，维持来源阶段receiver-only，不升级donor。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S036",
+      "instance_token": "c3b54614335942618b22e9beac1d79e0",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "黑色SUV前脸、镜子、轮胎及车底随距离变化保持完整；道路施工围挡与右侧停车均未进入mask。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S042",
+      "instance_token": "18571d5c431a48eea70624ab9ee09153",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "银色SUV车尾、侧面和轮胎在四帧保持同一身份，右车道白车与红色皮卡没有混入；未见明显路面或影子拖尾。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S044",
+      "instance_token": "0cfe685e273347c6baa7411adcfa0b6d",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        18
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "uncertain",
+      "note": "深色轿车主体与镜子、车头轮廓完整，足以定位receiver。放大f15隔离图见左下轮边有细小不规则暗片，难以判定为车体还是接触阴影；贴到新路面可能形成残边，donor暂不准入，需核原始mask或修正后复查。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S045",
+      "instance_token": "08fba8bd56fd456c8364c93c6110af46",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        19
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色轿车正面及两侧边缘稳定，f15放大隔离图未见S044那样的左下暗片；桥面、护栏和行人未进入实例。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S051",
+      "instance_token": "867452c5ea4c485eb2585d4970ff8e2c",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        8
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "公交车正面、前窗、雨刷、后视镜和下缘均在隔离图中，左侧白卡车始终与其分离；没有把道路施工架或车道线带入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S052",
+      "instance_token": "fb5287f6629c4ae89a4a6caba2fb763e",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "白色SUV的车尾、两侧及轮胎持续完整，路边红箱体、左侧卡车和地面停车线未混入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S056",
+      "instance_token": "713adb36fefd4b84a55ec7f1c7eda088",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        7
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "远处深色车虽小，四帧前脸、灯组和底部边界仍能辨识；左右车列、公交站及路面没有串入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S057",
+      "instance_token": "7ad08fcbc95b404689a95e6324b9705d",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        24
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色小型厢车前脸与两侧边缘稳定；左右并行车辆及斑马线均未进入隔离图。末帧较小但主体未见明显缺损。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S058",
+      "instance_token": "ad13948711c143bd88bb2938866a378a",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色车车顶、前灯、镜子和前保险杠在四帧均保留，左侧经过的白色出租车没有串入；隔离图未见道路条纹残片。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S059",
+      "instance_token": "8bee6d06efbb44c18751b517ce4c5569",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        18
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "近处深色小型厢车的车顶、前脸、灯组与底边完整；左侧银车、工程车和右后的黑车均没有进入隔离图。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S061",
+      "instance_token": "0033a1f8afb14b0d8e949ab0e67c4866",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        14
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "uncertain",
+      "note": "右侧浅色车可见车体与左侧深色车、施工障碍分开，适合作receiver区域；远距离小尺寸下车底与局部边缘仍较软，沿用来源阶段receiver-only，不升级donor。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S062",
+      "instance_token": "4422a07def044c8cb8244dfe2dbf7c30",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        18
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "黑色SUV从侧前方到正面的可见车体保持完整，镜子、车头和轮胎在隔离图内；其他车及斑马线未串入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S064",
+      "instance_token": "68e7ac7b2b3348c29a2043fcbe8a2fac",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        14
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色车在四帧中保持同一身份，车顶、镜子、前脸和底部边缘稳定；施工锥、护栏与车道线未进入mask。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T002",
+      "instance_token": "5d38c19ac8c3400d96308b50677c4de9",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        17
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色厢车四帧保持同一身份，后门、侧窗、车轮及车头侧缘均在隔离图内；中间白货车、右侧重卡和车道线没有混入，底边未见大块道路残留。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T008",
+      "instance_token": "e8ab13cc5ec547d4876a31e7ebc9a3ec",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色皮卡的驾驶室、车斗和轮胎连续保留；左侧行人及右后的轿车未进入隔离像素，斑马线和路面也未随车带入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T011",
+      "instance_token": "bba27d5c0b674d4e9906f93f26f76747",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "白色厢式货车后门、两侧边界和下保险杠在四帧完整，周围车流未串入；底部深色区域与车底结构相连，未见明显独立路面或阴影尾巴。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T012",
+      "instance_token": "603a51b122334bf683df325d57884bed",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "uncertain",
+      "note": "小尺寸白色轿车的车尾和侧缘在四帧均被定位，左侧驶过的车与斑马线未混入，可作receiver mask。隔离像素虽未见明显串入，但车体细节偏软；沿用来源阶段的donor uncertain，不因mask数值通过而升级。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T013",
+      "instance_token": "c3042a6faf314285bdea3851aed3ce94",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        21
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色轿车从近到远始终是同一实例，车顶、尾灯、侧面及车轮保留；左侧车流、路面标记和车体下方道路未见成块混入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T015",
+      "instance_token": "cb8ad1c0ef2541ab9faf8715dbdc026c",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "银色轿车后窗、尾灯、侧缘和下杠在首中末三帧连续完整；左侧大货车、右侧路缘和地面线未进入mask。最弱帧与末帧重合。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T016",
+      "instance_token": "ab1b0ac55da5451fad6c8c41b733040b",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        11
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "浅色箱式货车后门、顶角、尾灯及底部结构均保留；左侧白厢车和右侧大型货车保持分离，未见邻车或路面大块混入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T017",
+      "instance_token": "76ba6f961775460c8b63c74369a74b6d",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色轿车由斜后方向正后方变小，尾灯、车顶和两侧轮廓持续可见；施工桶、前车和斑马线均未进入隔离图。最弱帧与末帧重合。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T018",
+      "instance_token": "17ca4b7e1aa14f2c836d998f0e033824",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        19
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "灰色轿车尾窗、灯组、后杠和车轮在四帧完整，左侧迎面车辆及右侧停车均未串入；车下透明缺口与可见车体边界相符。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T020",
+      "instance_token": "a9def80d832b457f948ac6cd16d5a068",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        21
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "白色观光巴士的弧形车顶、后窗、灯和底部结构连续保留；左右并行车辆、双黄线和道路未混入，隔离图无明显独立阴影拖尾。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T021",
+      "instance_token": "bbd638842e8240f6aa10b9b73095c531",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        16
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "白色皮卡的驾驶室、车斗、前后轮和侧面在四帧均完整；右侧近处行人、后方白车及路面标线未进入mask。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T022",
+      "instance_token": "f054ed3a612c404c97968d19bf06286b",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "银色SUV车顶、后窗、尾灯、侧面及车轮在首中末帧连续，右侧重卡、路缘和车道线未串入。最弱帧与末帧重合。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T023",
+      "instance_token": "7b836218bb5e4c268a55bfffe13d0737",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        19
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "白色SUV虽位于路边阴影内，四帧隔离像素仍跟随同一车的车顶、尾灯、侧面和轮胎；树影随车体亮度保留，未见树枝、路面阴影块或旁车混入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T039",
+      "instance_token": "3d128bb992484b3caa9d21d5cea56bbb",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        13
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "银色皮卡正面、车灯、格栅、镜子及下缘在四帧完整；右侧集装箱车、左侧道路箭头与车底大块路面均未进入隔离图。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T003",
+      "instance_token": "3981fc76aa6249a68f7e2d7f9616a24e",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        9
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色SUV四帧为同一实例，车顶、前脸、侧面及车轮连续完整；放大隔离图核对其右侧边界，旁边白色小巴和后方摩托车未混入，车下未见成块路面残留。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T027",
+      "instance_token": "877c100aeea74087849846f1f7a23502",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        13
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "pass",
+      "note": "深色轿车侧面、车顶和前后轮均被保留；放大首帧隔离图确认车底边界随车轮闭合，未见行人、路柱、旁车或独立道路条纹带入。",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T028",
+      "instance_token": "97798532a40a41abbc021e5c261b6f7d",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "receiver_mask_status": "reject",
+      "donor_mask_status": "reject",
+      "note": "白色皮卡主体虽被跟踪，但f00叠加及隔离图放大后可见尾部mask连入路边独立白色矩形物，黑色路柱位于其间；该矩形物并非皮卡部件。mask不再只属于真实可见皮卡实例，用作保护区会误护背景，用作donor会带入异物，因此两项拒绝；数值门槛通过不改变视觉结论。",
+      "evidence_paths": [
+        "work/v77_target_protected/extension_masks/mask_review/evidence/T028_f00_overlay_zoom.png",
+        "work/v77_target_protected/extension_masks/mask_review/evidence/T028_f00_isolated_zoom.png"
+      ],
+      "human_verdict": null
+    },
+    {
+      "source_id": "T032",
+      "instance_token": "68e0a9bc77a14eac93535300a4d1289e",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        1
+      ],
+      "receiver_mask_status": "pass",
+      "donor_mask_status": "uncertain",
+      "note": "白色轿车在四帧保持同一身份，车尾、侧缘及车轮可见区域被定位，旁车和路面箭头未混入，满足receiver mask抽帧审核；车辆尺寸偏小、局部纹理软，沿用来源阶段donor uncertain，不因mask数值通过而升级。",
+      "human_verdict": null
+    }
+  ],
+  "counts": {
+    "reviewed": 29,
+    "receiver_mask_status": {
+      "pass": 29
+    },
+    "donor_mask_status": {
+      "pass": 25,
+      "uncertain": 4
+    }
+  },
+  "assembly_sources": [
+    "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/mask_review/independent_mask_reviews.json",
+    "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1/source_extension/mask_review/independent_mask_reviews.json"
+  ]
+}

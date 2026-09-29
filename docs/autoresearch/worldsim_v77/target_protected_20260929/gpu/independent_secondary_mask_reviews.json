@@ -1,0 +1,125 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r1",
+  "review_stage": "independent_secondary_sam2_visual_sample",
+  "review_scope": "实际查看每例mask_audit指定的首帧、中帧、末帧及最弱归一化IoU帧的原视频叠加图和隔离像素图。仅判断第二车辆真实可见实例mask，不认证合成或人工逐帧质量。",
+  "clips": [
+    {
+      "job_id": "S013__a1",
+      "source_id": "S013",
+      "instance_token": "1e735df831c7454e91be8d4e9aec60a8",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        23
+      ],
+      "protected_mask_status": "pass",
+      "note": "白色轿车在四帧均与左侧深色主车分开；车顶、前脸、车轮及可见侧面保留，后方车辆、斑马线与路面未进入隔离图。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "S024__a1",
+      "source_id": "S024",
+      "instance_token": "8a585832757e49a586a3bca06b489436",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "protected_mask_status": "pass",
+      "note": "白色厢车车顶支架、驾驶室、车身侧板、车轮和车尾均被跟住；灰色主SUV与后方另一辆白车未串入。放大第29帧确认隔离图右端的后门仍属于这辆厢车。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "S030__a1",
+      "source_id": "S030",
+      "instance_token": "95eba7c4b417464aa2276b2bab3b102e",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        10
+      ],
+      "protected_mask_status": "pass",
+      "note": "银色皮卡的挡风玻璃、格栅、灯组和下保险杠在四帧完整；左侧黑色主车、路边车辆及车道线均未混入。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "S033__a1",
+      "source_id": "S033",
+      "instance_token": "a466d1fcc20944d7a092c44575602a3a",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        3
+      ],
+      "protected_mask_status": "pass",
+      "note": "右侧白色厢式货车的后门、侧面、尾灯和下缘连续保留；左侧另一辆货车、深色主车、树影和路面未成块混入。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "S034__a1",
+      "source_id": "S034",
+      "instance_token": "22231b4951174a688c8325573dea1b70",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        10
+      ],
+      "protected_mask_status": "pass",
+      "note": "居中的白色厢式货车后板、两侧灯和底盘在四帧一致；左侧深色主车及右侧近距离大型货车均未进入隔离图，车底无明显路面拖尾。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "S061__a1",
+      "source_id": "S061",
+      "instance_token": "fb0b511e3e9c4f00a0de6fff2930eb81",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        3
+      ],
+      "protected_mask_status": "pass",
+      "note": "深色小型厢车四帧均保持同一身份，前挡风玻璃、车灯及车身下缘可见；左侧隔离墩、行人及右侧浅色主车未串入。末帧较小，但没有可辨的大块车体缺失。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "T002__a1",
+      "source_id": "T002",
+      "instance_token": "22231b4951174a688c8325573dea1b70",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        17
+      ],
+      "protected_mask_status": "pass",
+      "note": "四帧均锁定中间同一辆白色货车，后门、尾灯、箱体两侧和下部结构在隔离像素中完整；左侧深色厢车、右侧大卡车及车道线未串入。此结论仅为抽帧可见实例mask审核，不认证最终合成或未抽帧的逐帧视觉质量。",
+      "human_verdict": null
+    },
+    {
+      "job_id": "T003__a1",
+      "source_id": "T003",
+      "instance_token": "d1df1b80b3ba4c91867dc28e4677f9fa",
+      "reviewed_frames": [
+        0,
+        15,
+        29,
+        25
+      ],
+      "protected_mask_status": "pass",
+      "note": "四帧隔离像素均跟随同一辆白色小巴，车顶、前脸、侧窗、两侧边缘及底部车轮保持完整；右后银色轿车、左前深色SUV和道路标线未混入mask。此结论只认证所抽帧可见实例，不代替未抽帧逐帧检查或最终合成审核。",
+      "human_verdict": null
+    }
+  ],
+  "counts": {
+    "reviewed": 6,
+    "pass": 6,
+    "reject": 0,
+    "uncertain": 0
+  }
+}

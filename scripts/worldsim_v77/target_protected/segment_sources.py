@@ -1,4 +1,4 @@
-"""SAM2下一阶段入口。默认只检查队列；当前CPU回合禁止使用 --execute。"""
+"""SAM2入口。默认只检查队列；--execute用于用户已授权开启GPU的阶段。"""
 import argparse
 import json
 import os
@@ -12,7 +12,7 @@ def read(p):return json.loads(Path(p).read_text())
 def dump(p,d):
     p=Path(p);tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');tmp.replace(p)
 
-def reusable_result(root,job,row):
+def reusable_result(root,job,row,folder='segmented'):
     """续跑直接核对来源字段和全部PNG可解码；不用文件指纹。"""
     from PIL import Image
     if any(row.get(k)!=job[k] for k in ['source_id','instance_token','prompt_frame','frame_filenames']):return False
@@ -20,26 +20,32 @@ def reusable_result(root,job,row):
     if row.get('eligible_source_roles')!=job['eligible_source_roles']:return False
     try:
         for fid in range(30):
-            with Image.open(root/'segmented'/job['source_id']/'sam2_raw'/f'{fid:05}.png') as im:
+            with Image.open(root/folder/job.get('job_id',job['source_id'])/'sam2_raw'/f'{fid:05}.png') as im:
                 im.load()
                 if im.size!=(1024,576) or im.mode!='L':return False
     except (OSError,ValueError):return False
     return True
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--execute',action='store_true');a=p.parse_args()
-    queue=read(a.root/'segmentation_queue.json');assert queue['stage']=='awaiting_gpu'
+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--secondary',action='store_true');a=p.parse_args()
+    prefix='secondary_' if a.secondary else '';folder='segmented_secondary' if a.secondary else 'segmented'
+    queue=read(a.root/(prefix+'segmentation_queue.json'));assert queue['stage']=='awaiting_gpu'
     sources={c['source_id']:c for c in read(a.root/'source_manifest.json')['clips']}
     gates={c['source_id']:c for c in read(a.root/'source_geometry_validation.json')['clips']}
     review={c['source_id']:c for c in read(a.root/'subagent_source_reviews.json')['clips']}
+    secondary={(r['source_id'],r['instance_token']):r for r in read(a.root/'secondary_source_reviews.json')['clips']} if a.secondary else {}
     assert queue['jobs']
     for job in queue['jobs']:
         sid=job['source_id'];token=job['instance_token']
         assert gates[sid]['primary_geometry_pass']
         assert any(x['instance_token']==token and x['pass'] for x in gates[sid]['actors'])
         assert review[sid]['receiver_status']=='pass' or review[sid]['donor_status']=='pass'
-        assert job['role']=='primary_reviewed_actor', '未检查的次要actor不能混入已准入队列'
-        assert token==sources[sid]['actors'][0]['instance_token']
+        if a.secondary:
+            assert review[sid]['receiver_status']=='pass' and secondary[(sid,token)]['protected_status']=='pass'
+            assert job['role']=='secondary_reviewed_protected_actor'
+        else:
+            assert job['role']=='primary_reviewed_actor', '未检查的次要actor不能混入已准入队列'
+            assert token==sources[sid]['actors'][0]['instance_token']
         assert job['frame_filenames']==[f['filename'] for f in sources[sid]['frames']]
         assert all((a.root/'rgb'/f['filename']).is_file() for f in sources[sid]['frames'])
     print('QUEUE_VALID',len(queue['jobs']),'execute',a.execute,flush=True)
@@ -58,16 +64,17 @@ def main():
     from sam2.build_sam import build_sam2_video_predictor
     predictor=build_sam2_video_predictor(CONFIG,CHECKPOINT,device='cuda')
     extension_available=importlib.util.find_spec('sam2._C') is not None
-    stpath=a.root/'segmentation_state.json'
+    stpath=a.root/(prefix+'segmentation_state.json')
     state=read(stpath) if stpath.exists() else {'state':'running','completed':[],'mask_source':'SAM2.1_hiera_large','pid':os.getpid()}
-    old={r['source_id']:r for r in state['completed']}
+    old={r.get('job_id',r['source_id']):r for r in state['completed']}
     state.update(state='running',pid=os.getpid());state.pop('error',None);dump(stpath,state)
     try:
         with torch.inference_mode(),torch.autocast('cuda',dtype=torch.bfloat16):
             for job in queue['jobs']:
                 sid=job['source_id']
-                if sid in old and reusable_result(a.root,job,old[sid]):continue
-                c=sources[sid];start=time.monotonic();dest=a.root/'segmented'/sid;rgb=dest/'rgb';masks=dest/'sam2_raw'
+                jid=job.get('job_id',sid)
+                if jid in old and reusable_result(a.root,job,old[jid],folder):continue
+                c=sources[sid];start=time.monotonic();dest=a.root/folder/jid;rgb=dest/'rgb';masks=dest/'sam2_raw'
                 rgb.mkdir(parents=True,exist_ok=True);masks.mkdir(exist_ok=True)
                 for f in c['frames']:
                     path=rgb/f'{f["frame"]:05}.jpg'
@@ -87,6 +94,7 @@ def main():
                 assert set(raw)==set(range(30))
                 for fid,m in raw.items():Image.fromarray(m.astype(np.uint8)*255).save(masks/f'{fid:05}.png')
                 row={'source_id':sid,'instance_token':job['instance_token'],'mask_source':'SAM2.1_hiera_large',
+                     'job_id':jid,
                      'checkpoint':CHECKPOINT,'config':CONFIG,'frame_filenames':job['frame_filenames'],
                      'eligible_source_roles':job['eligible_source_roles'],
                      'prompt_frame':prompt,'frames':30,'raw_pixels':[int(raw[i].sum()) for i in range(30)],
@@ -96,10 +104,10 @@ def main():
                                                'hole_fill_execution':'official optional operation; inspect runtime warning if extension fails'},
                      'quality_status':'pending_mask_and_synthetic_QA','seconds':time.monotonic()-start}
                 dump(dest/'mask_manifest.json',row)
-                state['completed']=[r for r in state['completed'] if r['source_id']!=sid]+[row];dump(stpath,state)
+                state['completed']=[r for r in state['completed'] if r.get('job_id',r['source_id'])!=jid]+[row];dump(stpath,state)
                 predictor.reset_state(track);del track,raw;torch.cuda.empty_cache()
-        completed={r['source_id']:r for r in state['completed']}
-        assert all(reusable_result(a.root,j,completed.get(j['source_id'],{})) for j in queue['jobs'])
+        completed={r.get('job_id',r['source_id']):r for r in state['completed']}
+        assert all(reusable_result(a.root,j,completed.get(j.get('job_id',j['source_id']),{}),folder) for j in queue['jobs'])
         state['state']='complete_pending_quality_review';dump(stpath,state)
     except Exception as exc:
         state.update(state='failed',error=repr(exc));dump(stpath,state);raise
