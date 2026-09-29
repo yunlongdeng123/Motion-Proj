@@ -4,7 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-DELETE-AUDIT-20260928 / r1 | 官方nuScenes val冻结45 scene/70个单车DELETE clip，另隔离25个final scene；公共盘1802张RGB全部解码、缺失0；70/70完成、280视频7280帧解码、固定单帧粗分类与本地HTML已交付；人工null，按授权进入保存后关机 | [最终结果与组件图](v77/DELETE_AUDIT_RESULTS.md) · [GPU执行](v77/DELETE_AUDIT_GPU_RUN.md) · [CPU预检](v77/DELETE_AUDIT_CPU_PREFLIGHT.md) · [冻结清单](autoresearch/worldsim_v77/delete_audit_20260928/selection.json) · [核验摘要](autoresearch/worldsim_v77/delete_audit_20260928/preflight_summary.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r1 | CPU数据工厂试产：真实train视频作GT，三类遮挡，架构不变；质量规则与独立subagent审核，GPU前暂停 | [质量协议](v77/TARGET_PROTECTED_QUALITY.md) · [用户评审依据](v77/DELETE_AUDIT_USER_REVIEW.md) |
+| WS-V77-DELETE-AUDIT-20260928 / r1 | 45 val scene/70单车DELETE，280视频已交付；用户CSV已归档，human_score 0/1/2/未填=26/26/15/3；原助手抽帧观察保留 | [用户视频评分](v77/DELETE_AUDIT_USER_REVIEW.md) · [最终工程结果](v77/DELETE_AUDIT_RESULTS.md) |
 | WS-V77-NINE-FULL-20260928 / r1 | 九例统一r30迁移配置完整DELETE完成，待用户视频审核；无训练/逐例修补 | [报告](v77/NINE_FULL_RESULTS.md) · [证据](autoresearch/worldsim_v77/nine_full_20260928/review_link.md) |
 | WS-V77-EXPAND-EDIT-20260928 / r1–r7 | 固定新增六例，五例30帧生成/一例输入停止；r30回接Ω、INSERT、原位/接地控制，MOVE未放行；78监督候选、零训练 | [报告与组件图](v77/EXPANSION_EDIT_CHECKPOINT.md)、[登记/证据](autoresearch/worldsim_v77/expand_edit_20260928/review_link.md) |
 | WS-V77-HYBRID-BG-20260927 / r36–r41 | 实测道路算子与后向证据控制；固定邻车修复车型、PBR失败停止，保留r18/r21 | [资产与证据报告](v77/HYBRID_RETAINED_ASSET.md)、[登记/观察](autoresearch/worldsim_v77/hybrid_bg_20260927/retained_asset/review_link.md) |

@@ -1,13 +1,11 @@
 # 当前研究状态
 
-更新：2026-09-29，v77。唯一任务`WS-V77-DELETE-AUDIT-20260928/r1`的45个nuScenes val scene、70个单目标DELETE均已完成并同步本地。25个final scene仍隔离，九个旧例仍为DEV；没有新训练、Ω/GLB推理或逐场景调参。人工0/1/2 verdict全部为空，等待用户视频审核。
+更新：2026-09-29，v77。当前唯一任务`WS-V77-TARGET-PROTECTED-20260929/r1`，CPU准备约50例Target + Protected Actors数据。用户开启无卡实例，明确要求到批量推理前停止等GPU；本轮不启动SAM2、DriveEditor、Ω/GLB或正式训练，不恢复旧自动化和关机流程。
 
-同一冻结p2提示、SAM2、DriveEditor与写回规则完成210窗：198窗实际生成、12窗全空mask保留RGB。280段视频共7280帧已实际解码；本地70张卡片、280视频与700个资源引用均核对存在，MP4字节数匹配远端，JS语法通过。浏览器自动访问file URL被安全策略拦截，没有绕过，也没有声称浏览器交互验证通过。
+上一阶段70例CSV已原样归档，human_score 0/1/2/未填=26/26/15/3。未填A043/A052/A060和两列评分差异保留。V77-F02更新用户视频证据，原单帧助手记录不覆盖。见[用户评审](v77/DELETE_AUDIT_USER_REVIEW.md)。旧9例与已曝光audit不作新训练素材，25个final scene保持隔离。
 
-每例只在冻结prompt审核一帧。粗分类：背景模糊/伪影22，本帧未见明显问题19，无法确定11，车体身份待核实9，真实后车结构异常2，疑似车辆再生4，mask缺陷3。它们是抽帧观察计数，不是视频成功率或纯模型失败率。45例本帧未见明显mask错、22例输入边界/身份不清、3例有mask缺陷；另有21个clip其他帧含GT投影存在但core为空，两种口径不能混用。助手难度high/medium/low为37/28/5；冻结代理31/33/6保留。
+新数据只来自nuScenes train：真实视频Y保持不变，在输入X增加一个真实donor track作为待删A，围绕纯背景、单个真实actor、密集车列三类。架构不变，protected metadata先用于数据检查/监督，不增加condition通道。制定逐帧硬门槛和subagent每例抽帧，再由用户在HTML逐帧全检；源素材通过不等于合成通过。见[质量协议与组件图](v77/TARGET_PROTECTED_QUALITY.md)。
 
-本地审核：`C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-delete-audit/index.html`，提供原视频黄框／模型mask／原生deletion／最终DELETE四列及评分导出。远端完整run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1`。原始RGB、mask、原生和最终PNG、初版及修正预览均保留。factual reconstruction保持未运行/不可判。
+远端run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r1`。当前正在CPU元数据筛选；无卡资源为0.5 CPU/2GiB内存，数据盘600GB、可用约150GB。按最多两个公共分片建立小规模试产素材池，选择依据是元数据可用性和质量，不是模型输出；不声称完整train分布代表性。后续检查RGB、几何和逐例素材，再停在GPU分割之前。尚无合格合成样本或微调结果。
 
-本轮推理和编码控制器已退出，GPU空闲。用户已授权实验完成后关机：当前完成交付、保存及推送后，最后核对无其他作业/控制器，再执行AutoDL关机；尚未执行的动作不记已完成。执行凭据与SSH断连核验将保存本地`outputs/v77-delete-audit/shutdown_receipt.json`。半小时监控`v77-delete`将在关机完成后删除。后续等待用户审核，不自动启动训练。
-
-见[最终结果与组件图](v77/DELETE_AUDIT_RESULTS.md)、[执行记录](v77/DELETE_AUDIT_GPU_RUN.md)、[冻结协议](v77/DELETE_AUDIT_PROTOCOL.md)。本轮failure_ledger_delta为updated V77-F02（冻结审计观察及边界）。
+failure_ledger_refs: [V77-F02]。failure_ledger_delta: updated V77-F02。
