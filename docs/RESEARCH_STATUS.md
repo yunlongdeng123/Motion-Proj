@@ -1,9 +1,9 @@
 # 当前研究状态
 
-2026-09-30，v77；`WS-V77-TARGET-PROTECTED-20260929/r4`。用户要求只用CPU。新来源准备及几何预案完成，[本轮报告](v77/TARGET_PROTECTED_CPU_R4.md)。32窗口/31scene，26新来源scene；固定10帧唯一曝光匹配29例，通过实际曝光几何29例。旧30帧门槛与最近邻对照保留，未复制帧或放宽时间限制。
+2026-09-30，v77；`WS-V77-TARGET-PROTECTED-20260929/r5`。用户最新明确资源要求是CPU，本轮连续规划和精确准入入口完成。[本轮报告](v77/TARGET_PROTECTED_CPU_R5.md)。r4的4个空间预案保持原曝光、donor、位姿与门槛，扩成40帧/16视频，160视频帧实际解码；没有实际synthetic-X，训练准入0。
 
-真实LiDAR与旧r3物理规则得到4个CPU预案/4scene：{'single_actor': 4}。独立来源抽帧{'pass': 4}，待GPU精确SAM2共4个保护实例；队列disabled，未运行模型。包络交叠不能认证精确遮挡，本轮新合成0、训练0、人工null。
+四列为真实Y+B定位框、A洞规划上界、masked-Y条件规划、米制位姿。全帧隐藏像素条件探针和ego底部保守禁入通过；真实保护车SAM2 mask仍缺，不能认证精确遮挡或时序视觉通过。复用r4 Sol来源抽帧，未重复AI看图；人工verdict全部空白。
 
-本地`outputs/v77-target-protected-r4/index.html`展示预案；r3真实合成与人工逐帧页不覆盖。下一步必须用户开GPU后获取新保护mask，再检查完整五项合同；候选不因规划通过自动准入。真实Y不变、DriveEditor架构不变，旧27技术候选与r3的24例保持独立。CPU工作已收口，GPU不可自启，未设自动化或关机。subagent默认gpt-6-sol/xhigh，禁fast。
+`iteration5/admit_exact.py`已检查4例全部waiting_inputs。真实PNG来源字段、数值连续性与独立mask QA同时通过后才调用原精确几何/遮挡关卡。4项准入测试和本地静态文件/JS验证通过；浏览器交互未测。没有推理、训练、自动化或电源操作。下一步需用户确认解除CPU限制，再运行r4 SAM2保护mask、独立QA、精确关卡、实际合成与人工全检。远端当前已读到RTX3090可用，未自动加载模型。
 
-run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r4`。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。
+本地 `outputs/v77-target-protected-r5/index.html`；run `/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r5`。r4负对照/旧资产、r3实际合成和全帧人工页保持独立。failure_ledger_refs: [V77-F02]；failure_ledger_delta: none。
