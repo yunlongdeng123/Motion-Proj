@@ -21,7 +21,7 @@ def actor_contact(mask,db):
     rows=np.flatnonzero(mask.sum(1)>=max(3,int((db[2]-db[0])*.015)))
     return (float(rows[-1])-db[1])/(db[3]-db[1])
 
-def evaluate(geo,traj,dmasks,contacts,protected,diagnose_unreviewed=False):
+def evaluate(geo,traj,dmasks,contacts,protected,diagnose_unreviewed=False,ego_bottom_guard_px=0):
     sid=traj['source_id'];c=geo.sources[sid];d=geo.sources[traj['donor_source_id']]
     known=set(protected);overlaps={tok:[] for tok in known};hole_overlaps={tok:[] for tok in known};contact_errors=[];actual_sizes=[];unverified_hits=[]
     # 上界含1px插值支持、1px窄feather以及最多4px洞边。
@@ -31,6 +31,7 @@ def evaluate(geo,traj,dmasks,contacts,protected,diagnose_unreviewed=False):
         yy,xx=np.where(a);wh=[int(xx.max()-xx.min()+1),int(yy.max()-yy.min()+1)];actual_sizes.append(wh)
         if wh[0]<72 or wh[1]<40:return None,'actual_actor_too_small'
         H=cv2.dilate(a.astype(np.uint8),np.ones((13,13),np.uint8))>0
+        if ego_bottom_guard_px and H[576-ego_bottom_guard_px:].any():return None,'conservative_ego_image_band'
         bb=pose['box'];rows=np.flatnonzero(a.sum(1)>=3);err=abs(rows[-1]-bb[3]);contact_errors.append(float(err))
         if err>3:return None,'contact_anchor_jitter'
         for tok,masks in protected.items():
@@ -62,7 +63,7 @@ def evaluate(geo,traj,dmasks,contacts,protected,diagnose_unreviewed=False):
             'contact_errors_px':contact_errors,'contact_fractions':contacts.tolist(),'minimum_actual_actor_size_px':np.min(actual_sizes,axis=0).tolist(),
             'unverified_actor_envelope_hits':unverified_hits,'render_allowed':not unverified_hits},None
 
-def main(root,same_log=False,prefix='Q',mode='world_offset',allow_downsample=False,max_donors=None,dense_refine=False,diagnose_unreviewed=False):
+def main(root,same_log=False,prefix='Q',mode='world_offset',allow_downsample=False,max_donors=None,dense_refine=False,diagnose_unreviewed=False,ego_bottom_guard_px=0,run_id='r2'):
     cv2.setNumThreads(1);geo=Geometry(root)
     sq={r['source_id']:r for r in read(root/'subagent_source_reviews.json')['clips']}
     mq={r['source_id']:r for r in read(root/'mask_review/independent_mask_reviews.json')['clips']}
@@ -86,12 +87,12 @@ def main(root,same_log=False,prefix='Q',mode='world_offset',allow_downsample=Fal
     if dense_refine:
         receivers=[s for s in receivers if len(protected[s])>=2]
         offsets=[(z,x) for z in [1.,2.,3.,4.,5.,6.,7.] for x in [-4.5,-3.,-2.,-1.,0.,1.,2.,3.,4.5]]
-    config={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r2','donor_policy':load_policy()['version'],'offsets_m':offsets,'placement_mode':mode,
+    config={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':run_id,'donor_policy':load_policy()['version'],'offsets_m':offsets,'placement_mode':mode,
             'target_counts':{'background':18,'single_actor':20,'dense_actors':12},'max_proposals_per_receiver_type':4,
             'different_donor_log':not same_log,'different_donor_scene':True,'different_donor_track':True,'model_inference_selection':False,'model_hole_dilation_upper_bound_px':6,
             'proposal_revision':4 if allow_downsample else 3,'proposal_change_reason':'explicit actual-size downsample contrast; source provenance and independent synthesis review required',
             'max_ranked_donors_per_receiver':max_donors,'frame_counts':sorted({len(c['frames']) for c in geo.sources.values()}),
-            'dense_refine':dense_refine,'image_bottom_guard_px':64 if dense_refine else None,
+            'dense_refine':dense_refine,'image_bottom_guard_px':ego_bottom_guard_px or (64 if dense_refine else None),
             'diagnose_unreviewed_envelopes_only':diagnose_unreviewed,
             'actual_warped_actor_bbox_min_px':[72,40],'actual_size_reason':'P004 was visually uncertain despite projected GT size pass; reject tiny actual visible cutouts prospectively',
             'minimum_scale_ratio':0 if allow_downsample else .65,'maximum_scale_ratio':1.5,
@@ -119,7 +120,7 @@ def main(root,same_log=False,prefix='Q',mode='world_offset',allow_downsample=Fal
                 traj,why=geo.trajectory(sid,lo,la,donor,mode,0 if allow_downsample else .65)
                 if traj is None:rejections[why]+=1;continue
                 if dense_refine and max(f['box'][3] for f in traj['frames'])+6>=512:rejections['conservative_ego_image_band']+=1;continue
-                q,why=evaluate(geo,traj,masks[donor],contacts[donor],protected[sid],diagnose_unreviewed)
+                q,why=evaluate(geo,traj,masks[donor],contacts[donor],protected[sid],diagnose_unreviewed,ego_bottom_guard_px)
                 if q is None:rejections[why]+=1;continue
                 typ=q['type']
                 if dense_refine and typ!='dense_actors':rejections['not_dense_after_real_masks']+=1;continue

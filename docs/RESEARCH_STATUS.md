@@ -1,11 +1,11 @@
 # 当前研究状态
 
-2026-09-30，v77；`WS-V77-TARGET-PROTECTED-20260929/r2`。最新研究标准聚焦**训练真正看到的masked-X**：合理hole形状/尺度位置、时间连续、A→B正确遮挡和完整遮住synthetic影响；车身材质/受光/贴片感不单独否决。[当前报告](v77/TARGET_PROTECTED_CPU_R2.md)。
+2026-09-30，v77；`WS-V77-TARGET-PROTECTED-20260929/r3`。用户已开GPU继续造数，本轮冻结SAM2与新合成完成；原DriveEditor架构不变，训练0、模型补景前向0。[当前报告](v77/TARGET_PROTECTED_GPU_R3.md)。
 
-4份外部AI CSV49例810帧原样归档。用户最新明确授权重审原37个1分例，覆盖此前不重审/低分一律淘汰规则。一个Sol xhigh、非fast独立看首中末，630帧CPU全检查：{'train_usable_pending_human': 27, 'uncertain': 9, 'reject': 1}。技术可用仍待原定人工全检，训练准入0；D009用户明确空间失败保留0，D006也有已知ego覆盖。2分不自动准入。
+4张真实多视角静帧轮廓通过，但居中窗口仅1/4合格；保留控制后，按全段几何/曝光有界选窗得到3/4，V002仍退出。3段30帧SAM2，独立连续mask通过3段。使用原官方缺少可选_C孔洞后处理的实际输出，未隐藏该运行边界。
 
-官方get_blank及26字段CPU适配验证确认：完整synthetic-X不作为条件，先清零H再VAE/CLIP，真实Y仅作监督。630帧RGB泄漏0；latent nearest边界alias不等于RGB泄漏。未做VAE/UNet前向、微调或修改架构。
+新合成24例 / 5个receiver scene；类型{'background': 11, 'single_actor': 13}；独立{'pass': 24}，人工未填、训练准入0。五项训练输入标准生效；全类别洞/边缘扩张不得进入底部64px自车保守区，所有新增影响编码前被mask清除。旧37个1分重评中的27个技术候选继续单独保留，D006/D009不升级。
 
-新供体入口防止旧污染mask复用；旧训练条件按五项逐例评估，不因供体RGB假一票否决。完整track真实多视角预检已选2实例4图（T021/S024），RGB齐；只待冻结SAM2小样，需要用户开GPU后继续。当前没有新合成视频、未达约50例合格目标。后续先验证新mask，再扩连续/多相机样本，不新增外观生成器。
+新多视角供体在两种放置控制均无可行提案；实际新合成来自此前已审干净来源的几何配对，排除8个旧重复提案，不能把结果算作新多视角素材收益。本地`outputs/v77-target-protected-r3/index.html`与`data_review.html`提供本轮报告和新逐帧页，旧r2页面/原AI分数不覆盖。GPU与CPU本轮作业结束，未启动训练、自动化或关机；不继承旧审计电源授权。后续来源必须先验证与receiver的空间/视角可配对性，再补RGB/SAM2；补密集类型及场景缺额，技术通过仍需用户全帧确认。subagent默认gpt-6-sol/xhigh，禁fast。
 
-本地报告`outputs/v77-target-protected-r2/index.html`，新判据人工页`data_review.html`；旧数据/外部AI评分全部保留。CPU任务收口，未设自动化/未关机；不得继承旧审计电源授权。run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r2`。subagent默认gpt-6-sol/xhigh，禁fast。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。
+run：`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3`。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。

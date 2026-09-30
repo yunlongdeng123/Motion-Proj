@@ -19,7 +19,7 @@ def main(root,execute):
         if reasons:rejected.append({'view_id':r['view_id'],'reasons':reasons});continue
         with Image.open(p) as im:im.verify()
         jobs.append(r)
-    queue={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r2','state':'awaiting_gpu',
+    queue={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':root.name,'state':'awaiting_gpu',
         'checkpoint':CHECKPOINT,'config':CONFIG,'jobs':jobs,'pre_gpu_rejected':rejected,
         'purpose':'同一真实instance多角度的实例清洁度预检；单帧mask不是时序视频或合格训练样本。',
         'frozen_selection':'SAM2 image multimask; save all outputs, best official predicted score as primary; do not choose by downstream success',
@@ -27,7 +27,7 @@ def main(root,execute):
         'training_ready':0,'new_synthetic_cases':0}
     dump(root/'gpu_queue.json',queue);print('VALIDATED_GPU_QUEUE',len(jobs),'PRE_GATE_REJECTED',len(rejected),flush=True)
     if not execute:return
-    # 该分支本轮不执行。显式GPU可用性+进程锁，防止退到CPU推理或重复启动。
+    # 用户明确开GPU后执行；进程锁防止重复启动。
     import torch,fcntl
     assert torch.cuda.is_available(),'等待用户开GPU，不做CPU模型推理'
     lock=open(root/'multiview/segmentation.lock','a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

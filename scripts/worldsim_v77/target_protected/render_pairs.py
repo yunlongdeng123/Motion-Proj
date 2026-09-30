@@ -32,7 +32,8 @@ def render(root,out,candidates,limit=None,shard_index=0,shard_count=1):
     cv2.setNumThreads(1);out.mkdir(parents=True,exist_ok=True);(out/'contacts').mkdir(exist_ok=True)
     sources={c['source_id']:c for c in read(root/'source_manifest.json')['clips']}
     secondary=read(root/'mask_review_secondary/independent_secondary_mask_reviews.json')['clips']
-    selected=read(candidates)['selected'];selected=selected[:limit] if limit else selected
+    candidate_data=read(candidates);run_id=candidate_data.get('config',{}).get('run_id','r2')
+    selected=candidate_data['selected'];selected=selected[:limit] if limit else selected
     assert 0<=shard_index<shard_count
     selected=selected[shard_index::shard_count]
     manifest_name='synthetic_manifest.json' if shard_count==1 else f'synthetic_manifest.part{shard_index}.json'
@@ -73,6 +74,8 @@ def render(root,out,candidates,limit=None,shard_index=0,shard_count=1):
             influence=alpha>1/65535;alpha=np.where(influence,alpha,0)
             x=np.rint(y.astype(np.float32)*(1-alpha[...,None])+color*alpha[...,None]).clip(0,255).astype(np.uint8)
             radius=pair['mask_dilation_px'];hole=cv2.dilate(influence.astype(np.uint8),np.ones((2*radius+1,2*radius+1),np.uint8))>0
+            bottom_guard=candidate_data.get('config',{}).get('image_bottom_guard_px') or 0
+            if bottom_guard and hole[576-bottom_guard:].any():raise ValueError(f'{cid} f{i}: ego bottom exclusion')
             assert_pair_pixels(y,x,influence,hole)
             cond=masked_condition_from_x(x[None],hole[None])[0]
             assert np.array_equal(cond,masked_condition_from_x(y[None],hole[None])[0]),'A fully masked contract'
@@ -115,7 +118,7 @@ def render(root,out,candidates,limit=None,shard_index=0,shard_count=1):
                   'condition_scope':'actual masked X contract; no DriveEditor forward; no Y hidden-region condition',
                   'synthetic_method':'real donor 2.5D affine cutout, camera/metric trajectory/LiDAR ground gated; no generated GT or neural relighting',
                   'extra_blur_kind':'clip-constant 3x3 isotropic Gaussian, preserving donor real video blur; no synthetic directional motion blur claim'}
-        dump(dest/'pair_manifest.json',row);rows.append(row);dump(out/manifest_name,{'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r2','stage':'synthetic_pending_independent_QA','clips':rows})
+        dump(dest/'pair_manifest.json',row);rows.append(row);dump(out/manifest_name,{'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':run_id,'stage':'synthetic_pending_independent_QA','clips':rows})
         print('RENDER',cid,pair['type'],'frames',len(metrics),flush=True)
     print('RENDERED',len(rows),dict(Counter(r['type'] for r in rows)),flush=True)
 

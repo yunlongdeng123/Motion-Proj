@@ -1,0 +1,30 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r3",
+  "still_masks": 4,
+  "still_pass": 4,
+  "temporal_proposed": 4,
+  "temporal_geometry_pass": 3,
+  "temporal_segmented": 3,
+  "temporal_numeric_pass": 3,
+  "temporal_independent_pass": 3,
+  "new_cases": 24,
+  "new_case_status": {
+    "pass": 24
+  },
+  "new_case_types": {
+    "background": 11,
+    "single_actor": 13
+  },
+  "receiver_scenes": 5,
+  "training_ready": 0,
+  "model_training_steps": 0,
+  "human_verdict": null,
+  "new_video_count": 96,
+  "five_checks": "hole silhouette, placement/ego, continuity, A-before-B, full synthetic support masked",
+  "new_masks_only_SAM2": true,
+  "new_multiview_donor_cases": 0,
+  "duplicate_old_proposals_excluded": 8,
+  "quality_sampling": "one preset maximum-occlusion frame per single-actor case, middle frame for background; all-frame numerical and pixel validation, human full-frame review required",
+  "multiview_limit": "new source masks passed but no geometric placements; actual new synthetic cases reuse historically approved clean sources; no synchronized multicamera rendering or multiview neural conditioning"
+}

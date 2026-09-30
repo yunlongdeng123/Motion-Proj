@@ -1,0 +1,5268 @@
+{
+  "config": {
+    "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+    "run_id": "r3",
+    "donor_policy": "v77-target-protected-r2-cpu-20260930",
+    "offsets_m": [
+      [
+        -6.0,
+        -6.0
+      ],
+      [
+        -6.0,
+        -3.0
+      ],
+      [
+        -6.0,
+        -1.5
+      ],
+      [
+        -6.0,
+        0.0
+      ],
+      [
+        -6.0,
+        1.5
+      ],
+      [
+        -6.0,
+        3.0
+      ],
+      [
+        -6.0,
+        6.0
+      ],
+      [
+        0.0,
+        -6.0
+      ],
+      [
+        0.0,
+        -3.0
+      ],
+      [
+        0.0,
+        -1.5
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.5
+      ],
+      [
+        0.0,
+        3.0
+      ],
+      [
+        0.0,
+        6.0
+      ],
+      [
+        4.5,
+        -6.0
+      ],
+      [
+        4.5,
+        -3.0
+      ],
+      [
+        4.5,
+        -1.5
+      ],
+      [
+        4.5,
+        0.0
+      ],
+      [
+        4.5,
+        1.5
+      ],
+      [
+        4.5,
+        3.0
+      ],
+      [
+        4.5,
+        6.0
+      ],
+      [
+        6.0,
+        -6.0
+      ],
+      [
+        6.0,
+        -3.0
+      ],
+      [
+        6.0,
+        -1.5
+      ],
+      [
+        6.0,
+        0.0
+      ],
+      [
+        6.0,
+        1.5
+      ],
+      [
+        6.0,
+        3.0
+      ],
+      [
+        6.0,
+        6.0
+      ],
+      [
+        8.0,
+        -6.0
+      ],
+      [
+        8.0,
+        -3.0
+      ],
+      [
+        8.0,
+        -1.5
+      ],
+      [
+        8.0,
+        0.0
+      ],
+      [
+        8.0,
+        1.5
+      ],
+      [
+        8.0,
+        3.0
+      ],
+      [
+        8.0,
+        6.0
+      ]
+    ],
+    "placement_mode": "donor_camera_replay",
+    "target_counts": {
+      "background": 18,
+      "single_actor": 20,
+      "dense_actors": 12
+    },
+    "max_proposals_per_receiver_type": 4,
+    "different_donor_log": false,
+    "different_donor_scene": true,
+    "different_donor_track": true,
+    "model_inference_selection": false,
+    "model_hole_dilation_upper_bound_px": 6,
+    "proposal_revision": 4,
+    "proposal_change_reason": "explicit actual-size downsample contrast; source provenance and independent synthesis review required",
+    "max_ranked_donors_per_receiver": 6,
+    "frame_counts": [
+      10
+    ],
+    "dense_refine": false,
+    "image_bottom_guard_px": 64,
+    "diagnose_unreviewed_envelopes_only": false,
+    "actual_warped_actor_bbox_min_px": [
+      72,
+      40
+    ],
+    "actual_size_reason": "P004 was visually uncertain despite projected GT size pass; reject tiny actual visible cutouts prospectively",
+    "minimum_scale_ratio": 0,
+    "maximum_scale_ratio": 1.5,
+    "downsample_policy": "actual alpha size >=72x40 plus visual QA replaces old .65 lower proxy",
+    "ground_support_distance_max_m": 2.5,
+    "clearance_min_m": 0.3,
+    "seed": 42,
+    "GT_generated": false
+  },
+  "summary": [
+    {
+      "source_id": "S003w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S003w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S003w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S004w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S004w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S004w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S005w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S005w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S005w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S008w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 4
+      }
+    },
+    {
+      "source_id": "S008w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 4
+      }
+    },
+    {
+      "source_id": "S008w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 4,
+        "single_actor": 0
+      }
+    },
+    {
+      "source_id": "S013w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S013w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S013w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S014w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S014w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S014w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S015w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S015w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S015w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S019w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S019w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S019w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S021w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S021w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S021w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S023w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S023w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "single_actor": 2,
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S023w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "single_actor": 2,
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S024w0",
+      "ground_pass": true,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S024w1",
+      "ground_pass": true,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S024w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S027w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S027w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S027w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S030w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S030w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S030w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S033w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S033w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S033w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S034w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S034w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S034w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S035w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S035w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S035w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S036w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S036w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S036w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S042w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S042w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S042w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S044w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S044w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S044w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S045w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S045w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S045w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S051w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S051w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S051w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S052w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S052w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S052w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S056w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S056w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S056w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S057w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S057w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S057w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S058w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S058w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S058w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S059w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S059w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S059w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S061w0",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S061w1",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S061w2",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "S062w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S062w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S062w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S064w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S064w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "S064w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T002w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T002w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T002w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T003w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T003w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T003w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T008w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T008w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T008w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T011w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T011w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T011w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T012w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T012w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T012w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T013w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T013w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T013w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T015w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T015w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T015w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T016w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T016w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T016w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T017w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T017w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T017w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T018w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T018w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T018w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T020w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T020w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T020w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T021w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T021w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T021w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0,
+        "single_actor": 3
+      }
+    },
+    {
+      "source_id": "T022w0",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "T022w1",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "T022w2",
+      "ground_pass": false,
+      "candidate_counts": {}
+    },
+    {
+      "source_id": "T023w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 1
+      }
+    },
+    {
+      "source_id": "T023w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 1
+      }
+    },
+    {
+      "source_id": "T023w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T027w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T027w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T027w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T032w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T032w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 1
+      }
+    },
+    {
+      "source_id": "T032w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 2
+      }
+    },
+    {
+      "source_id": "T039w0",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T039w1",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    },
+    {
+      "source_id": "T039w2",
+      "ground_pass": true,
+      "candidate_counts": {
+        "background": 0
+      }
+    }
+  ],
+  "rejection_counts": {
+    "outside_drivable": 8356,
+    "collision_or_clearance": 1476,
+    "aspect_deformation_gt1p12": 2689,
+    "upscale_gt1p5": 2243,
+    "projected_size_border": 3690,
+    "conservative_ego_image_band": 17,
+    "view_angle": 245,
+    "unreviewed_actor_envelope_overlap": 343,
+    "single_visibility_ratio": 15,
+    "replay_heading_mismatch": 2433,
+    "behind_camera": 968,
+    "replay_behind_camera": 1344,
+    "ground_support_gap": 3005,
+    "depth_order_uncertain": 100,
+    "actual_actor_too_small": 21,
+    "contact_anchor_jitter": 1
+  },
+  "candidate_count": 32,
+  "selected_counts": {
+    "background": 11,
+    "single_actor": 13
+  },
+  "qualified_synthetic_count": 0,
+  "selected_before_duplicate_exclusion": 32,
+  "duplicates_preserved_not_rerendered": [
+    {
+      "source_id": "S008w0",
+      "donor_source_id": "S064w0",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1532708167637558,
+          "actor": {
+            "translation": [
+              1127.879769202024,
+              1174.7711945758558,
+              0.8736846814926147
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.3038670798038487,
+              0.004072955681841998,
+              0.01078510446290182,
+              0.9526446821166954
+            ]
+          },
+          "box": [
+            566.5715886994352,
+            292.6152301435633,
+            736.6234906798101,
+            429.3207476456367
+          ],
+          "scale_xy": [
+            0.9005984608723332,
+            0.8213994922914943
+          ],
+          "view_delta_deg": [
+            10.899123856633196,
+            0.2623437221741085
+          ],
+          "depth_interval": [
+            6.420416286837906,
+            10.952224164804818
+          ],
+          "center_depth": 8.686320225821419
+        },
+        {
+          "frame": 1,
+          "timestamp": 1532708167687560,
+          "actor": {
+            "translation": [
+              1127.5326657245623,
+              1175.0257256739558,
+              0.8740531789190933
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.3040693890078961,
+              0.00407066512446398,
+              0.010785969205705456,
+              0.9525801274549571
+            ]
+          },
+          "box": [
+            566.7483415988041,
+            292.33031284733875,
+            737.0910648137818,
+            429.4718659056042
+          ],
+          "scale_xy": [
+            0.9011126093176837,
+            0.8233021345235808
+          ],
+          "view_delta_deg": [
+            10.928869884393919,
+            0.213056921101753
+          ],
+          "depth_interval": [
+            6.40555541646242,
+            10.936229011348246
+          ],
+          "center_depth": 8.67089221390529
+        },
+        {
+          "frame": 2,
+          "timestamp": 1532708167787558,
+          "actor": {
+            "translation": [
+              1126.8623473553037,
+              1175.5199387810082,
+              0.8747165723854402
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.30365438377179554,
+              0.0040753634741569665,
+              0.010784194861715966,
+              0.9527125000596504
+            ]
+          },
+          "box": [
+            566.8612839533673,
+            292.4662273155099,
+            737.3009334320047,
+            429.77814166447644
+          ],
+          "scale_xy": [
+            0.9009009529073589,
+            0.8237265102279991
+          ],
+          "view_delta_deg": [
+            10.941176827470969,
+            0.18347768699001676
+          ],
+          "depth_interval": [
+            6.398396866530959,
+            10.927335154689587
+          ],
+          "center_depth": 8.662866010610287
+        },
+        {
+          "frame": 3,
+          "timestamp": 1532708167937558,
+          "actor": {
+            "translation": [
+              1125.87558791211,
+              1176.2617112238959,
+              0.8754354628866943
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.30270689944560547,
+              0.004086084774898157,
+              0.010780137173259863,
+              0.9530139692479676
+            ]
+          },
+          "box": [
+            566.9574423285337,
+            293.50412757178236,
+            737.4865015148843,
+            431.14224114723487
+          ],
+          "scale_xy": [
+            0.8993769207330418,
+            0.8236673782521814
+          ],
+          "view_delta_deg": [
+            10.95587754530709,
+            0.12791791464093194
+          ],
+          "depth_interval": [
+            6.3882607872726,
+            10.911791769717667
+          ],
+          "center_depth": 8.650026278495034
+        },
+        {
+          "frame": 4,
+          "timestamp": 1532708168037558,
+          "actor": {
+            "translation": [
+              1125.2113979096648,
+              1176.7588819597731,
+              0.8759576388605503
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.3022007966592327,
+              0.004091808561281073,
+              0.010777965900845142,
+              0.9531745753282886
+            ]
+          },
+          "box": [
+            566.9341132203288,
+            294.50511420944787,
+            737.1078302685315,
+            432.1780622148365
+          ],
+          "scale_xy": [
+            0.8957218572424287,
+            0.8216484420548744
+          ],
+          "view_delta_deg": [
+            10.951679585804982,
+            0.053253587539472846
+          ],
+          "depth_interval": [
+            6.386452065847777,
+            10.904436176012098
+          ],
+          "center_depth": 8.645444120929938
+        },
+        {
+          "frame": 5,
+          "timestamp": 1532708168137558,
+          "actor": {
+            "translation": [
+              1124.5699028934487,
+              1177.2452943274845,
+              0.8763493507486566
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.3013588279070257,
+              0.004101326145135021,
+              0.010774347781336263,
+              0.9534411095585514
+            ]
+          },
+          "box": [
+            566.792444329383,
+            293.6913611977878,
+            736.6625717609741,
+            431.2463087932633
+          ],
+          "scale_xy": [
+            0.8940909482061932,
+            0.820807038789125
+          ],
+          "view_delta_deg": [
+            10.94607221701952,
+            0.06504302493436853
+          ],
+          "depth_interval": [
+            6.388159900596349,
+            10.90781842872849
+          ],
+          "center_depth": 8.647989164662476
+        },
+        {
+          "frame": 6,
+          "timestamp": 1532708168187558,
+          "actor": {
+            "translation": [
+              1124.2361957970436,
+              1177.5019627067,
+              0.8764873945175062
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.30091449526283554,
+              0.004106346504836879,
+              0.01077243540914345,
+              0.9535814381029293
+            ]
+          },
+          "box": [
+            566.4383200228903,
+            293.10701383783686,
+            736.1721318246804,
+            430.64441317893863
+          ],
+          "scale_xy": [
+            0.892664004469216,
+            0.8202226781552202
+          ],
+          "view_delta_deg": [
+            10.953699451334757,
+            0.0878503415583225
+          ],
+          "depth_interval": [
+            6.380738089355333,
+            10.902259971116365
+          ],
+          "center_depth": 8.641499030235877
+        },
+        {
+          "frame": 7,
+          "timestamp": 1532708168287558,
+          "actor": {
+            "translation": [
+              1123.5789207654457,
+              1177.9827056482984,
+              0.8772075450842416
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.30010219778066305,
+              0.004115520158736589,
+              0.010768934027330028,
+              0.9538373883639464
+            ]
+          },
+          "box": [
+            566.2752892395055,
+            291.9479212448477,
+            735.8774538627123,
+            429.2458817260475
+          ],
+          "scale_xy": [
+            0.8911327362218073,
+            0.8180385876928935
+          ],
+          "view_delta_deg": [
+            10.95347649566483,
+            0.09568169547623029
+          ],
+          "depth_interval": [
+            6.373574274344691,
+            10.898770743414786
+          ],
+          "center_depth": 8.636172508879781
+        },
+        {
+          "frame": 8,
+          "timestamp": 1532708168437558,
+          "actor": {
+            "translation": [
+              1122.6026735206492,
+              1178.6966704651672,
+              0.8782786312248541
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29953850783976504,
+              0.004121882973046532,
+              0.010766500221449067,
+              0.9540145569512369
+            ]
+          },
+          "box": [
+            565.5896495704147,
+            290.9927190916353,
+            735.1201735641711,
+            428.3120448037356
+          ],
+          "scale_xy": [
+            0.8887436842081451,
+            0.8159005472959661
+          ],
+          "view_delta_deg": [
+            10.949789710061651,
+            0.11671052984024755
+          ],
+          "depth_interval": [
+            6.368668420316226,
+            10.898315408024217
+          ],
+          "center_depth": 8.63349191417035
+        },
+        {
+          "frame": 9,
+          "timestamp": 1532708168537558,
+          "actor": {
+            "translation": [
+              1121.9547913952447,
+              1179.196797377334,
+              0.8785138612429102
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29785063059248773,
+              0.004140919721412065,
+              0.010759192819295244,
+              0.9545428719598692
+            ]
+          },
+          "box": [
+            564.0360828011416,
+            290.78135377531004,
+            733.6684994233289,
+            428.33640335104116
+          ],
+          "scale_xy": [
+            0.8846356092816174,
+            0.8125937037419356
+          ],
+          "view_delta_deg": [
+            10.958122545246539,
+            0.15585119300632755
+          ],
+          "depth_interval": [
+            6.350382680048739,
+            10.88499211574856
+          ],
+          "center_depth": 8.617687397898521
+        }
+      ],
+      "min_GT_clearance_m": 1.2698504027050381,
+      "max_ground_support_distance_m": 1.7283092905109365,
+      "max_view_yaw_delta_deg": 10.958122545246539,
+      "max_view_pitch_delta_deg": 0.2623437221741085,
+      "ground": {
+        "source_id": "S008w0",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 1954,
+        "ransac_inlier_count": 1257,
+        "ransac_fraction": 0.6432958034800409,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          -0.01431844159366371,
+          -0.018078276001881728,
+          37.41827916749755
+        ],
+        "ground_points": 22138,
+        "fit_residual_p90": 0.0454525963549367,
+        "ground_parent_source": "S008"
+      },
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0010838933448948623,
+          0.00149508756941478,
+          0.00398406374501992,
+          0.005819995842860112,
+          0.0038461538461538464,
+          0.006869901245169601
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.02877388876959416,
+          0.03190810465858328,
+          0.03548525010688328,
+          0.0384200302180013,
+          0.04313895512681552,
+          0.04698846646732166,
+          0.05305095407842315,
+          0.05903138640615257,
+          0.05811965811965812,
+          0.06547874624302276
+        ]
+      },
+      "contact_errors_px": [
+        0.32074764563668623,
+        0.47186590560420427,
+        1.2218583355235637,
+        0.1422411472348699,
+        1.1780622148364728,
+        0.24630879326332433,
+        0.3555868210613653,
+        0.24588172604751435,
+        0.3120448037356027,
+        0.33640335104115593
+      ],
+      "contact_fractions": [
+        0.9320675359009795,
+        0.9320675359009795,
+        0.9272099654810145,
+        0.923448870164688,
+        0.9189303626485691,
+        0.9189303626485691,
+        0.9189303626485691,
+        0.9299897803973761,
+        0.9304329174561184,
+        0.9399157603719304
+      ],
+      "minimum_actual_actor_size_px": [
+        159,
+        117
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R001",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S008w1",
+      "donor_source_id": "S064w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1532708168637558,
+          "actor": {
+            "translation": [
+              1121.4353930958298,
+              1179.4525085153386,
+              0.8813280189273294
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2967855155949977,
+              0.004152920568887916,
+              0.010754566332979745,
+              0.9548745730653577
+            ]
+          },
+          "box": [
+            567.7299158514751,
+            292.0603657650649,
+            734.6695443425104,
+            424.8462342397235
+          ],
+          "scale_xy": [
+            0.8668360905108671,
+            0.7809876809293955
+          ],
+          "view_delta_deg": [
+            11.460807750867161,
+            0.05459973577939081
+          ],
+          "depth_interval": [
+            6.57303667338374,
+            11.108568311531997
+          ],
+          "center_depth": 8.840802492457783
+        },
+        {
+          "frame": 1,
+          "timestamp": 1532708168687558,
+          "actor": {
+            "translation": [
+              1121.1092106070985,
+              1179.7019386750906,
+              0.8814891765699167
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2963045287431931,
+              0.004158336879337296,
+              0.010752473234558508,
+              0.9550239362445385
+            ]
+          },
+          "box": [
+            566.9466759945724,
+            292.3863393460273,
+            733.9171267358352,
+            425.40270568462
+          ],
+          "scale_xy": [
+            0.8666631236602635,
+            0.7826655977746362
+          ],
+          "view_delta_deg": [
+            11.491503344644258,
+            0.14272744885323618
+          ],
+          "depth_interval": [
+            6.558401670056156,
+            11.094131640471545
+          ],
+          "center_depth": 8.826266655263908
+        },
+        {
+          "frame": 2,
+          "timestamp": 1532708168787558,
+          "actor": {
+            "translation": [
+              1120.4560959833384,
+              1180.1749944668964,
+              0.8822887269956419
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29583804203475356,
+              0.00416358809028382,
+              0.010750440943347414,
+              0.9551685429487202
+            ]
+          },
+          "box": [
+            566.5044218806879,
+            293.02609835508406,
+            733.4294268865807,
+            426.155021480701
+          ],
+          "scale_xy": [
+            0.8666026633054347,
+            0.7838905919744743
+          ],
+          "view_delta_deg": [
+            11.507308206533082,
+            0.19307966961940792
+          ],
+          "depth_interval": [
+            6.552718160495772,
+            11.086870720733373
+          ],
+          "center_depth": 8.8197944406146
+        },
+        {
+          "frame": 3,
+          "timestamp": 1532708168937558,
+          "actor": {
+            "translation": [
+              1119.4595902853562,
+              1180.907951299337,
+              0.8833065397156283
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2945752702887828,
+              0.004177794065749287,
+              0.010744928245741978,
+              0.9555587384813289
+            ]
+          },
+          "box": [
+            565.4550914083693,
+            292.5250682136252,
+            732.6254950099541,
+            425.9615570024163
+          ],
+          "scale_xy": [
+            0.86567898752303,
+            0.7842654299866645
+          ],
+          "view_delta_deg": [
+            11.54437318718422,
+            0.28797654897533675
+          ],
+          "depth_interval": [
+            6.528116947938599,
+            11.066014940935617
+          ],
+          "center_depth": 8.797065944437009
+        },
+        {
+          "frame": 4,
+          "timestamp": 1532708169037558,
+          "actor": {
+            "translation": [
+              1118.788237514773,
+              1181.4068474722571,
+              0.8839000824396259
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29334230696178637,
+              0.0041916520801631284,
+              0.010739529743001686,
+              0.9559379600685786
+            ]
+          },
+          "box": [
+            564.0813248406259,
+            292.3871059696879,
+            731.8883527637086,
+            426.2870475826269
+          ],
+          "scale_xy": [
+            0.8619545100373049,
+            0.7809762593200369
+          ],
+          "view_delta_deg": [
+            11.595266599656725,
+            0.42344055891885546
+          ],
+          "depth_interval": [
+            6.478717451925405,
+            11.020618072984831
+          ],
+          "center_depth": 8.749667762455147
+        },
+        {
+          "frame": 5,
+          "timestamp": 1532708169137558,
+          "actor": {
+            "translation": [
+              1118.1193660374568,
+              1181.891371863792,
+              0.8847179139414387
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29410975392123945,
+              0.004183027747954847,
+              0.010742891841668776,
+              0.9557021215850292
+            ]
+          },
+          "box": [
+            563.6711740777233,
+            292.30894547487543,
+            731.0465247311499,
+            426.5031546125525
+          ],
+          "scale_xy": [
+            0.8553567355384412,
+            0.7781629987687857
+          ],
+          "view_delta_deg": [
+            11.61368602223132,
+            0.4416080759811507
+          ],
+          "depth_interval": [
+            6.456889170409909,
+            10.995186349982703
+          ],
+          "center_depth": 8.726037760196391
+        },
+        {
+          "frame": 6,
+          "timestamp": 1532708169187558,
+          "actor": {
+            "translation": [
+              1117.7832189795865,
+              1182.148625681512,
+              0.8848803104371563
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29471561527257156,
+              0.00417621585404965,
+              0.01074554174540949,
+              0.955515462286324
+            ]
+          },
+          "box": [
+            563.0260241017094,
+            292.22920605208526,
+            729.7777216265073,
+            426.7648878075082
+          ],
+          "scale_xy": [
+            0.8496252389615975,
+            0.777523575286642
+          ],
+          "view_delta_deg": [
+            11.63242321634965,
+            0.44862902769335733
+          ],
+          "depth_interval": [
+            6.443497301444893,
+            10.978490473372744
+          ],
+          "center_depth": 8.71099388740879
+        },
+        {
+          "frame": 7,
+          "timestamp": 1532708169287558,
+          "actor": {
+            "translation": [
+              1117.1102394180662,
+              1182.6178726397336,
+              0.8860331529587406
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2953746076997088,
+              0.004168803171096254,
+              0.010748419715595942,
+              0.9553119562111536
+            ]
+          },
+          "box": [
+            562.7400261454579,
+            291.8262090624583,
+            729.1042446191785,
+            426.4224323007868
+          ],
+          "scale_xy": [
+            0.8467061871384979,
+            0.7769125991418424
+          ],
+          "view_delta_deg": [
+            11.639065862420864,
+            0.4583816043220281
+          ],
+          "depth_interval": [
+            6.437620901320059,
+            10.971797788604192
+          ],
+          "center_depth": 8.704709344962225
+        },
+        {
+          "frame": 8,
+          "timestamp": 1532708169437603,
+          "actor": {
+            "translation": [
+              1116.0772476030024,
+              1183.3297063895511,
+              0.8879552589328079
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29704873045582886,
+              0.004149955746377851,
+              0.010755710741976059,
+              0.9547927232066226
+            ]
+          },
+          "box": [
+            562.3760222380474,
+            291.5508531990731,
+            728.1510105013543,
+            426.31683344114504
+          ],
+          "scale_xy": [
+            0.8396476202847882,
+            0.7737167312095069
+          ],
+          "view_delta_deg": [
+            11.657787216791974,
+            0.47423637231946714
+          ],
+          "depth_interval": [
+            6.414462243845691,
+            10.944896064207654
+          ],
+          "center_depth": 8.679679154026758
+        },
+        {
+          "frame": 9,
+          "timestamp": 1532708169537558,
+          "actor": {
+            "translation": [
+              1115.4135534737538,
+              1183.805477123977,
+              0.8888572099079419
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29891777436969974,
+              0.0041288866526818305,
+              0.010763816296800106,
+              0.9542092311016506
+            ]
+          },
+          "box": [
+            561.4458316637221,
+            291.3294424679591,
+            725.9848206710095,
+            426.39710271368244
+          ],
+          "scale_xy": [
+            0.8313786955110499,
+            0.7728751444593921
+          ],
+          "view_delta_deg": [
+            11.669084626240362,
+            0.48077528269325853
+          ],
+          "depth_interval": [
+            6.407448982301105,
+            10.93310437640406
+          ],
+          "center_depth": 8.670276679352469
+        }
+      ],
+      "min_GT_clearance_m": 1.1505323740909819,
+      "max_ground_support_distance_m": 1.281389466267268,
+      "max_view_yaw_delta_deg": 11.669084626240362,
+      "max_view_pitch_delta_deg": 0.48077528269325853,
+      "ground": {
+        "source_id": "S008w1",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 1954,
+        "ransac_inlier_count": 1257,
+        "ransac_fraction": 0.6432958034800409,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          -0.01431844159366371,
+          -0.018078276001881728,
+          37.41827916749755
+        ],
+        "ground_points": 22138,
+        "fit_residual_p90": 0.0454525963549367,
+        "ground_parent_source": "S008"
+      },
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.0,
+          0.0,
+          0.00021021652301870928,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.03959983326385994,
+          0.04150943396226415,
+          0.0430943872188354,
+          0.03993987545630234,
+          0.0396457191058625,
+          0.03162911611785095,
+          0.02924731182795699,
+          0.025954842793838362,
+          0.013155057149018762,
+          0.005642361111111111
+        ]
+      },
+      "contact_errors_px": [
+        0.15376576027648525,
+        0.40270568462000256,
+        0.1550214807010093,
+        0.03844299758367242,
+        1.287047582626883,
+        0.503154612552521,
+        0.2351121924917834,
+        0.42243230078679517,
+        1.316833441145036,
+        0.3971027136824432
+      ],
+      "contact_fractions": [
+        0.9272333743081818,
+        0.9262973190995755,
+        0.9245379604949604,
+        0.9160407189288946,
+        0.9027052955828726,
+        0.9023659031603364,
+        0.8975515012948231,
+        0.8980487525749599,
+        0.8980487525749599,
+        0.8980487525749599
+      ],
+      "minimum_actual_actor_size_px": [
+        154,
+        113
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R002",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "S008w2",
+      "donor_source_id": "S064w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1532708169637558,
+          "actor": {
+            "translation": [
+              1113.7339983306993,
+              1185.2669113378333,
+              0.88648561105042
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2974851376054025,
+              0.004145038850084806,
+              0.010757606573640874,
+              0.9546568417277659
+            ]
+          },
+          "box": [
+            549.5496317580743,
+            287.4198193310102,
+            751.8355634990556,
+            460.31774705707653
+          ],
+          "scale_xy": [
+            1.021238655995746,
+            0.9895941283343616
+          ],
+          "view_delta_deg": [
+            11.471333047172976,
+            0.4561419506397897
+          ],
+          "depth_interval": [
+            4.988553655623491,
+            9.52473046308333
+          ],
+          "center_depth": 7.256642059353339
+        },
+        {
+          "frame": 1,
+          "timestamp": 1532708169687558,
+          "actor": {
+            "translation": [
+              1113.3951191079716,
+              1185.5079943778353,
+              0.8869794676718237
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2955396580739122,
+              0.00416694604211041,
+              0.010749139823450717,
+              0.9552609083696941
+            ]
+          },
+          "box": [
+            548.4095976459308,
+            287.8844845262659,
+            752.040484514991,
+            460.87278351493563
+          ],
+          "scale_xy": [
+            1.024702281926813,
+            0.9877651528779582
+          ],
+          "view_delta_deg": [
+            11.479085159548589,
+            0.5175358238339243
+          ],
+          "depth_interval": [
+            4.974962101383795,
+            9.518792285675318
+          ],
+          "center_depth": 7.246877193529485
+        },
+        {
+          "frame": 2,
+          "timestamp": 1532708169787558,
+          "actor": {
+            "translation": [
+              1112.706953726448,
+              1185.9713436839684,
+              0.8884563668523975
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29557675719198095,
+              0.004166528576053071,
+              0.010749301646473919,
+              0.9552494298148578
+            ]
+          },
+          "box": [
+            548.0340852006846,
+            288.06068722420895,
+            752.4288563003126,
+            461.1588341446348
+          ],
+          "scale_xy": [
+            1.026650247374933,
+            0.9870116031864444
+          ],
+          "view_delta_deg": [
+            11.488349360526286,
+            0.5404006085851165
+          ],
+          "depth_interval": [
+            4.965562804075375,
+            9.512329280228442
+          ],
+          "center_depth": 7.238946042151838
+        },
+        {
+          "frame": 3,
+          "timestamp": 1532708169937558,
+          "actor": {
+            "translation": [
+              1111.6843699890385,
+              1186.6800910580457,
+              0.8902852417269451
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29431244410294666,
+              0.004180749172204961,
+              0.010743778786863643,
+              0.9556397217570478
+            ]
+          },
+          "box": [
+            546.9884607390127,
+            287.13707819956767,
+            753.2375401944976,
+            460.7237699176811
+          ],
+          "scale_xy": [
+            1.0324378630092002,
+            0.987589844101961
+          ],
+          "view_delta_deg": [
+            11.521258441948277,
+            0.5941116185535691
+          ],
+          "depth_interval": [
+            4.942650634635299,
+            9.500517434638851
+          ],
+          "center_depth": 7.221584034637203
+        },
+        {
+          "frame": 4,
+          "timestamp": 1532708170037558,
+          "actor": {
+            "translation": [
+              1110.982552767485,
+              1187.1891921208473,
+              0.8911305010970048
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29169257913148655,
+              0.0042101748810496045,
+              0.010732281851169055,
+              0.956442644298841
+            ]
+          },
+          "box": [
+            544.8756853685437,
+            286.65118403022825,
+            752.9982313382646,
+            461.1544690961839
+          ],
+          "scale_xy": [
+            1.0370607966201808,
+            0.9896852636991167
+          ],
+          "view_delta_deg": [
+            11.552975398435223,
+            0.6846154088665628
+          ],
+          "depth_interval": [
+            4.915826444979075,
+            9.487787309086315
+          ],
+          "center_depth": 7.201806877032709
+        },
+        {
+          "frame": 5,
+          "timestamp": 1532708170137558,
+          "actor": {
+            "translation": [
+              1110.3012944766178,
+              1187.6656474529464,
+              0.8922715671487347
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2922187360504779,
+              0.00420426972031738,
+              0.010734596516906267,
+              0.9562820205644353
+            ]
+          },
+          "box": [
+            544.2159079777346,
+            286.39144630481877,
+            752.1273885818389,
+            460.8384350297522
+          ],
+          "scale_xy": [
+            1.0382699482846487,
+            0.992281112630733
+          ],
+          "view_delta_deg": [
+            11.562383755982609,
+            0.7319328546434463
+          ],
+          "depth_interval": [
+            4.9169557264404204,
+            9.49130859570127
+          ],
+          "center_depth": 7.204132161070788
+        },
+        {
+          "frame": 6,
+          "timestamp": 1532708170187558,
+          "actor": {
+            "translation": [
+              1109.9604831757617,
+              1187.9104729625826,
+              0.8927254307189991
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2922793441682168,
+              0.004203589358195191,
+              0.01073486295998332,
+              0.9562634979577204
+            ]
+          },
+          "box": [
+            543.7206767004129,
+            286.5640266378434,
+            751.6105837137286,
+            461.0665605173605
+          ],
+          "scale_xy": [
+            1.0383955635695554,
+            0.9930885109552124
+          ],
+          "view_delta_deg": [
+            11.568243552681707,
+            0.7830856383315847
+          ],
+          "depth_interval": [
+            4.91604130189512,
+            9.491137063100979
+          ],
+          "center_depth": 7.203589182498035
+        },
+        {
+          "frame": 7,
+          "timestamp": 1532708170287558,
+          "actor": {
+            "translation": [
+              1109.2613628007787,
+              1188.3989041205025,
+              0.8939057516943358
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29308190830964354,
+              0.0041945772632436045,
+              0.010738387581226218,
+              0.9560178280635333
+            ]
+          },
+          "box": [
+            543.3875430882264,
+            286.8948817000665,
+            751.1148757979529,
+            461.55059949826443
+          ],
+          "scale_xy": [
+            1.0374902368369274,
+            0.9941922504963566
+          ],
+          "view_delta_deg": [
+            11.570536097453555,
+            0.8031053750555088
+          ],
+          "depth_interval": [
+            4.913097065594911,
+            9.487945104901797
+          ],
+          "center_depth": 7.200521085248397
+        },
+        {
+          "frame": 8,
+          "timestamp": 1532708170437558,
+          "actor": {
+            "translation": [
+              1108.2349351470787,
+              1189.1341464056932,
+              0.8953106831440345
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.2937204476034422,
+              0.004187403255574681,
+              0.010741187096273684,
+              0.9558218407283713
+            ]
+          },
+          "box": [
+            542.6412631004852,
+            288.68943373040776,
+            750.4178309660206,
+            463.845619908441
+          ],
+          "scale_xy": [
+            1.0357600228587578,
+            0.9955110441728326
+          ],
+          "view_delta_deg": [
+            11.582882156281954,
+            0.8463105407804221
+          ],
+          "depth_interval": [
+            4.904924824987518,
+            9.475812758801936
+          ],
+          "center_depth": 7.190368791894684
+        },
+        {
+          "frame": 9,
+          "timestamp": 1532708170537558,
+          "actor": {
+            "translation": [
+              1107.548984437917,
+              1189.6318993580162,
+              0.8961339130564476
+            ],
+            "size": [
+              1.926,
+              4.509,
+              1.685
+            ],
+            "rotation": [
+              0.29412562019141175,
+              0.004182849396764781,
+              0.010742961285694845,
+              0.9556972387219476
+            ]
+          },
+          "box": [
+            541.9301716648403,
+            289.22844340175544,
+            750.0209575297064,
+            464.89620902881205
+          ],
+          "scale_xy": [
+            1.0348862413458897,
+            0.996425175708497
+          ],
+          "view_delta_deg": [
+            11.603114200584429,
+            0.8741973167966535
+          ],
+          "depth_interval": [
+            4.891898657846923,
+            9.464266529996166
+          ],
+          "center_depth": 7.178082593921431
+        }
+      ],
+      "min_GT_clearance_m": 2.3470001192492553,
+      "max_ground_support_distance_m": 0.7589129753575848,
+      "max_view_yaw_delta_deg": 11.603114200584429,
+      "max_view_pitch_delta_deg": 0.8741973167966535,
+      "ground": {
+        "source_id": "S008w2",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 1954,
+        "ransac_inlier_count": 1257,
+        "ransac_fraction": 0.6432958034800409,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          -0.01431844159366371,
+          -0.018078276001881728,
+          37.41827916749755
+        ],
+        "ground_points": 22138,
+        "fit_residual_p90": 0.0454525963549367,
+        "ground_parent_source": "S008"
+      },
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.001347406242982259,
+          0.004168494953927161,
+          0.0015344147303814116,
+          0.0017933198834342075,
+          0.0009111617312072893,
+          0.0009203865623561896,
+          0.001608455882352941,
+          0.00046685340802987864,
+          0.0002310536044362292,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "b2b8bb62a8c14dffb0518af9daa75fe5": [
+          0.02941836963844599,
+          0.03663887670030715,
+          0.029373081981587022,
+          0.031158932974669356,
+          0.028701594533029614,
+          0.02738150023009664,
+          0.03079044117647059,
+          0.027777777777777776,
+          0.025184842883548983,
+          0.016794961511546535
+        ]
+      },
+      "contact_errors_px": [
+        0.31774705707653084,
+        0.12721648506436622,
+        0.1588341446347954,
+        0.7237699176811248,
+        0.15446909618390237,
+        0.16156497024780947,
+        0.06656051736047175,
+        2.4494005017355676,
+        0.15438009155900545,
+        0.10379097118794789
+      ],
+      "contact_fractions": [
+        0.9027221319169396,
+        0.9060693641618498,
+        0.9071894753070557,
+        0.9086648116047807,
+        0.9159889293451754,
+        0.9269982480489636,
+        0.9318165003955223,
+        0.9378779112638828,
+        0.9378779112638828,
+        0.9378779112638828
+      ],
+      "minimum_actual_actor_size_px": [
+        189,
+        146
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R003",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T023w1",
+      "donor_source_id": "T013w2",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": -6.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1535729253262404,
+          "actor": {
+            "translation": [
+              421.39924559407723,
+              1653.958992882709,
+              0.6196110841286513
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7532473260964492,
+              -0.0007709235029489119,
+              0.006335793354627855,
+              0.6577064156050705
+            ]
+          },
+          "box": [
+            474.0846927469704,
+            308.02626957840744,
+            668.8436920618466,
+            444.6214407577047
+          ],
+          "scale_xy": [
+            1.3238194884065018,
+            1.4033510163794862
+          ],
+          "view_delta_deg": [
+            0.557776883744566,
+            1.2156312372991351
+          ],
+          "depth_interval": [
+            8.740335689195263,
+            13.321562382464208
+          ],
+          "center_depth": 11.03094903582982
+        },
+        {
+          "frame": 1,
+          "timestamp": 1535729253362404,
+          "actor": {
+            "translation": [
+              421.56885186437967,
+              1654.4059245318458,
+              0.6139198772710885
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7563652357881332,
+              -0.0008010321067663099,
+              0.0063320571731369435,
+              0.6541184093806578
+            ]
+          },
+          "box": [
+            470.2413994784979,
+            309.2982048108531,
+            660.7459609125577,
+            444.0635354284452
+          ],
+          "scale_xy": [
+            1.316839670376724,
+            1.3870168442147346
+          ],
+          "view_delta_deg": [
+            0.5315744129509028,
+            1.2477826953914928
+          ],
+          "depth_interval": [
+            8.848217972050861,
+            13.430309120363745
+          ],
+          "center_depth": 11.139263546207431
+        },
+        {
+          "frame": 2,
+          "timestamp": 1535729253412404,
+          "actor": {
+            "translation": [
+              421.6563735235615,
+              1654.6387666213,
+              0.6109620405968401
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7579103857381216,
+              -0.0008160078520838553,
+              0.006330144679648561,
+              0.6523274565659577
+            ]
+          },
+          "box": [
+            468.7600831820843,
+            309.9598841562688,
+            657.071174282384,
+            443.70134610282105
+          ],
+          "scale_xy": [
+            1.3122907016146548,
+            1.376535765933348
+          ],
+          "view_delta_deg": [
+            0.5153393899385321,
+            1.2686643069932302
+          ],
+          "depth_interval": [
+            8.908640060070638,
+            13.490551424811883
+          ],
+          "center_depth": 11.199595742441275
+        },
+        {
+          "frame": 3,
+          "timestamp": 1535729253512404,
+          "actor": {
+            "translation": [
+              421.8342516981727,
+              1655.1167624577947,
+              0.6049052660046337
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7606366275326961,
+              -0.0008425205135528435,
+              0.006326670503842297,
+              0.6491465044619793
+            ]
+          },
+          "box": [
+            464.20980682139736,
+            310.7944374913047,
+            648.5839541347235,
+            443.00932669508916
+          ],
+          "scale_xy": [
+            1.3073862599774946,
+            1.3659127361025714
+          ],
+          "view_delta_deg": [
+            0.4967939041710281,
+            1.28950020823072
+          ],
+          "depth_interval": [
+            9.017013878462649,
+            13.600849056449078
+          ],
+          "center_depth": 11.30893146745575
+        },
+        {
+          "frame": 4,
+          "timestamp": 1535729253662404,
+          "actor": {
+            "translation": [
+              422.0855233123425,
+              1655.8494523763536,
+              0.5958036747911402
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7638804384883667,
+              -0.0008742176597636296,
+              0.006322368540610624,
+              0.6453262268762524
+            ]
+          },
+          "box": [
+            458.1699366647156,
+            312.5535526634119,
+            637.0913331588113,
+            442.80001620724784
+          ],
+          "scale_xy": [
+            1.3079814352746924,
+            1.369674566412207
+          ],
+          "view_delta_deg": [
+            0.49242056701987735,
+            1.2737213084041912
+          ],
+          "depth_interval": [
+            9.180232728766896,
+            13.767528770149283
+          ],
+          "center_depth": 11.47388074945816
+        },
+        {
+          "frame": 5,
+          "timestamp": 1535729253762404,
+          "actor": {
+            "translation": [
+              422.2493519122775,
+              1656.3088353440987,
+              0.5900435177706826
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.76516942746164,
+              -0.000886859315968603,
+              0.006320607647499185,
+              0.643797336649932
+            ]
+          },
+          "box": [
+            454.4817031747066,
+            312.8555199416166,
+            630.6693406322606,
+            441.7553994687561
+          ],
+          "scale_xy": [
+            1.311183328924367,
+            1.3775622738577074
+          ],
+          "view_delta_deg": [
+            0.4981532810885483,
+            1.2539846304263733
+          ],
+          "depth_interval": [
+            9.290224599068097,
+            13.881320935229724
+          ],
+          "center_depth": 11.585772767148796
+        },
+        {
+          "frame": 6,
+          "timestamp": 1535729253862404,
+          "actor": {
+            "translation": [
+              422.3775676988476,
+              1656.7897223919979,
+              0.5843829794650988
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7650152241275542,
+              -0.000885345584242107,
+              0.006320819857930497,
+              0.6439805666730852
+            ]
+          },
+          "box": [
+            449.1057797304621,
+            312.754249828045,
+            623.1148501462394,
+            440.47503485845687
+          ],
+          "scale_xy": [
+            1.313236358266749,
+            1.3828582181724975
+          ],
+          "view_delta_deg": [
+            0.5007649859783498,
+            1.2458907341069505
+          ],
+          "depth_interval": [
+            9.38802286001578,
+            13.986472924685813
+          ],
+          "center_depth": 11.687247892350825
+        },
+        {
+          "frame": 7,
+          "timestamp": 1535729253912482,
+          "actor": {
+            "translation": [
+              422.42798878831013,
+              1657.049726588643,
+              0.5814837236230959
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7644664097612678,
+              -0.0008799612457140428,
+              0.006321571694285123,
+              0.6446319661219396
+            ]
+          },
+          "box": [
+            445.70728010002455,
+            312.86418010695485,
+            618.6241326101349,
+            440.03852795839117
+          ],
+          "scale_xy": [
+            1.3143173855318349,
+            1.3858849641628124
+          ],
+          "view_delta_deg": [
+            0.5022846415595552,
+            1.245605154606693
+          ],
+          "depth_interval": [
+            9.43497731781963,
+            14.038332667481654
+          ],
+          "center_depth": 11.736654992650728
+        },
+        {
+          "frame": 8,
+          "timestamp": 1535729254012404,
+          "actor": {
+            "translation": [
+              422.5372903257434,
+              1657.5849182942045,
+              0.575468855291559
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7635197665974598,
+              -0.0008706851288064182,
+              0.00632285599127648,
+              0.6457529166906492
+            ]
+          },
+          "box": [
+            439.68680846206837,
+            313.55372564744016,
+            610.1576084979017,
+            439.4091410632478
+          ],
+          "scale_xy": [
+            1.3123132234227086,
+            1.3838477273965604
+          ],
+          "view_delta_deg": [
+            0.4918307923934435,
+            1.2437574981464934
+          ],
+          "depth_interval": [
+            9.536608398766248,
+            14.149009379967538
+          ],
+          "center_depth": 11.842808889366822
+        },
+        {
+          "frame": 9,
+          "timestamp": 1535729254162404,
+          "actor": {
+            "translation": [
+              422.7523387553089,
+              1658.3627681212447,
+              0.5662474461269917
+            ],
+            "size": [
+              1.958,
+              4.366,
+              1.484
+            ],
+            "rotation": [
+              0.7632471547794143,
+              -0.0008680164527167236,
+              0.006323222905904755,
+              0.6460751071823219
+            ]
+          },
+          "box": [
+            432.6293857115916,
+            314.4556972338108,
+            599.7460127885674,
+            438.3835900923054
+          ],
+          "scale_xy": [
+            1.3109551297643955,
+            1.383139241046157
+          ],
+          "view_delta_deg": [
+            0.4807646671408463,
+            1.2411073845656517
+          ],
+          "depth_interval": [
+            9.695132818231514,
+            14.317983251484975
+          ],
+          "center_depth": 12.006558034858102
+        }
+      ],
+      "min_GT_clearance_m": 2.0726988963430326,
+      "max_ground_support_distance_m": 0.4795563144053718,
+      "max_view_yaw_delta_deg": 0.557776883744566,
+      "max_view_pitch_delta_deg": 1.28950020823072,
+      "ground": {
+        "source_id": "T023w1",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 911,
+        "ransac_inlier_count": 549,
+        "ransac_fraction": 0.6026344676180022,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          -0.00853145122312568,
+          -0.009496349707023842,
+          19.17927073282682
+        ],
+        "ground_points": 11536,
+        "fit_residual_p90": 0.06416328158979093,
+        "ground_parent_source": "T023"
+      },
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "7b836218bb5e4c268a55bfffe13d0737": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "7b836218bb5e4c268a55bfffe13d0737": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.3785592422952959,
+        0.06353542844522053,
+        0.2986538971789514,
+        0.00932669508915751,
+        1.199983792752164,
+        0.24460053124391834,
+        0.47503485845686555,
+        0.9614720416088289,
+        0.5908589367522268,
+        0.6164099076946172
+      ],
+      "contact_fractions": [
+        0.9472235064468074,
+        0.9472235064468074,
+        0.9490371502954669,
+        0.9513631360143635,
+        0.9513631360143635,
+        0.9513631360143635,
+        0.9513631360143635,
+        0.9482784755305328,
+        0.945923954874321,
+        0.9429681134834093
+      ],
+      "minimum_actual_actor_size_px": [
+        154,
+        115
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R005",
+      "edge_mode": "feather_05",
+      "extra_motion_blur_px": 0.4,
+      "mask_dilation_px": 3,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T032w1",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1535573950512404,
+          "actor": {
+            "translation": [
+              1411.286232319313,
+              1257.32552947475,
+              0.7060007801201404
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9655240998315838,
+              -0.0035105586194506696,
+              0.0008073197821948488,
+              -0.26028875668641244
+            ]
+          },
+          "box": [
+            582.1491858493708,
+            293.6526436244743,
+            742.1198225225838,
+            409.12814814249555
+          ],
+          "scale_xy": [
+            1.1500818625630898,
+            1.072116319289386
+          ],
+          "view_delta_deg": [
+            6.169968635139355,
+            1.0702796151030327
+          ],
+          "depth_interval": [
+            11.341517484684573,
+            16.10274050523094
+          ],
+          "center_depth": 13.722128994957757
+        },
+        {
+          "frame": 1,
+          "timestamp": 1535573950612404,
+          "actor": {
+            "translation": [
+              1411.9531899659244,
+              1256.9259728393151,
+              0.7062828360705709
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.965416709714685,
+              -0.0035108911511838254,
+              0.0008058724315061574,
+              -0.260686786808654
+            ]
+          },
+          "box": [
+            582.7693047430746,
+            291.71752345374557,
+            743.0854129171628,
+            407.30766820101223
+          ],
+          "scale_xy": [
+            1.1510925173873479,
+            1.0720062391933922
+          ],
+          "view_delta_deg": [
+            6.177153250642078,
+            1.0504041166212232
+          ],
+          "depth_interval": [
+            11.323576320684651,
+            16.088694500348538
+          ],
+          "center_depth": 13.706135410516481
+        },
+        {
+          "frame": 2,
+          "timestamp": 1535573950662404,
+          "actor": {
+            "translation": [
+              1412.28361225661,
+              1256.7095262848823,
+              0.7065402077260678
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9652471415159602,
+              -0.0035114139739400073,
+              0.0008035912860038841,
+              -0.2613139491267481
+            ]
+          },
+          "box": [
+            583.5338611228836,
+            291.71134234445935,
+            744.0344979662593,
+            407.32428426017844
+          ],
+          "scale_xy": [
+            1.1516980255695728,
+            1.0715716965800584
+          ],
+          "view_delta_deg": [
+            6.179182777761184,
+            1.0470805846747453
+          ],
+          "depth_interval": [
+            11.317570844640159,
+            16.083871222955395
+          ],
+          "center_depth": 13.700721033797663
+        },
+        {
+          "frame": 3,
+          "timestamp": 1535573950762404,
+          "actor": {
+            "translation": [
+              1412.9601977836985,
+              1256.2913749053423,
+              0.7069079011524675
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9650870347693508,
+              -0.0035119051198662103,
+              0.0008014421254089559,
+              -0.2619046382427208
+            ]
+          },
+          "box": [
+            584.765438385088,
+            291.7668959610598,
+            745.7707448576765,
+            407.5664157735941
+          ],
+          "scale_xy": [
+            1.1534405530070022,
+            1.0716025967734661
+          ],
+          "view_delta_deg": [
+            6.1841976074165075,
+            1.0390226460754377
+          ],
+          "depth_interval": [
+            11.301046238440335,
+            16.068655299169336
+          ],
+          "center_depth": 13.684850768804608
+        },
+        {
+          "frame": 4,
+          "timestamp": 1535573950912404,
+          "actor": {
+            "translation": [
+              1413.945850625541,
+              1255.6941684554897,
+              0.7073675159581754
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9649592642123332,
+              -0.0035122953366010143,
+              0.0007997302794150633,
+              -0.2623750038089395
+            ]
+          },
+          "box": [
+            584.8786215421779,
+            294.31702100557237,
+            746.9460506445799,
+            410.76973885277926
+          ],
+          "scale_xy": [
+            1.1581622117583301,
+            1.0760241889323803
+          ],
+          "view_delta_deg": [
+            6.195288505550508,
+            1.0476869287651027
+          ],
+          "depth_interval": [
+            11.258682115647616,
+            16.02173327494461
+          ],
+          "center_depth": 13.640207695295885
+        },
+        {
+          "frame": 5,
+          "timestamp": 1535573951012404,
+          "actor": {
+            "translation": [
+              1414.5855850027847,
+              1255.3032074082598,
+              0.7076871067466683
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9648099934554218,
+              -0.0035127492780455756,
+              0.0007977340163944468,
+              -0.2629233742775587
+            ]
+          },
+          "box": [
+            585.4543147924878,
+            296.2134032143974,
+            748.1530573833214,
+            412.9335236532186
+          ],
+          "scale_xy": [
+            1.1599548176699033,
+            1.0762772982334503
+          ],
+          "view_delta_deg": [
+            6.206911548122633,
+            1.0559108317985135
+          ],
+          "depth_interval": [
+            11.226723423376484,
+            15.993070576599735
+          ],
+          "center_depth": 13.609896999987768
+        },
+        {
+          "frame": 6,
+          "timestamp": 1535573951112404,
+          "actor": {
+            "translation": [
+              1415.2257851740915,
+              1254.9104355278744,
+              0.708016635084908
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9646558778427072,
+              -0.0035132157751901444,
+              0.0007956770502393798,
+              -0.26348825696122496
+            ]
+          },
+          "box": [
+            586.5392025640102,
+            298.00210239897746,
+            749.7701846370193,
+            414.8863322518603
+          ],
+          "scale_xy": [
+            1.16112521036427,
+            1.0755689584518817
+          ],
+          "view_delta_deg": [
+            6.217705005963495,
+            1.0600675174291894
+          ],
+          "depth_interval": [
+            11.198288720469805,
+            15.968916722309245
+          ],
+          "center_depth": 13.583602721389752
+        },
+        {
+          "frame": 7,
+          "timestamp": 1535573951162404,
+          "actor": {
+            "translation": [
+              1415.538051596486,
+              1254.7105184324853,
+              0.7082303830156462
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.964541244111231,
+              -0.003513561336837615,
+              0.0007941497236682773,
+              -0.2639075834857865
+            ]
+          },
+          "box": [
+            586.9724367442338,
+            298.6351115395603,
+            750.5572312196794,
+            415.65872252853814
+          ],
+          "scale_xy": [
+            1.1617743169711905,
+            1.0751597345624238
+          ],
+          "view_delta_deg": [
+            6.225661207814056,
+            1.059205385610511
+          ],
+          "depth_interval": [
+            11.179563353108847,
+            15.951547860739424
+          ],
+          "center_depth": 13.565555606924363
+        },
+        {
+          "frame": 8,
+          "timestamp": 1535573951262404,
+          "actor": {
+            "translation": [
+              1416.1759201990524,
+              1254.3439911595387,
+              0.7084009192390059
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9645988823411961,
+              -0.003513387738944397,
+              0.0007949173838567804,
+              -0.2636968342606035
+            ]
+          },
+          "box": [
+            587.3181518302565,
+            298.4773908340408,
+            751.5755891132284,
+            415.8488491112414
+          ],
+          "scale_xy": [
+            1.1631068401249927,
+            1.0750566353462783
+          ],
+          "view_delta_deg": [
+            6.239235457012995,
+            1.0464110409390344
+          ],
+          "depth_interval": [
+            11.148841171491767,
+            15.920371457329225
+          ],
+          "center_depth": 13.53460631441044
+        },
+        {
+          "frame": 9,
+          "timestamp": 1535573951412404,
+          "actor": {
+            "translation": [
+              1417.1349314283218,
+              1253.7265141000655,
+              0.7090796577762557
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9642528955847303,
+              -0.0035144252196281467,
+              0.00079031792777602,
+              -0.2649591998202966
+            ]
+          },
+          "box": [
+            588.0304246693678,
+            297.54066066195867,
+            753.0161467229095,
+            415.1996773846438
+          ],
+          "scale_xy": [
+            1.1650628980343454,
+            1.074914047476088
+          ],
+          "view_delta_deg": [
+            6.252807675877932,
+            1.0122038930663564
+          ],
+          "depth_interval": [
+            11.118260578268291,
+            15.888269282846409
+          ],
+          "center_depth": 13.503264930557407
+        }
+      ],
+      "min_GT_clearance_m": 1.2014177469998806,
+      "max_ground_support_distance_m": 1.1788037770327193,
+      "max_view_yaw_delta_deg": 6.252807675877932,
+      "max_view_pitch_delta_deg": 1.0702796151030327,
+      "ground": {
+        "source_id": "T032w1",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 1750,
+        "ransac_inlier_count": 1120,
+        "ransac_fraction": 0.64,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          -0.003386579175683422,
+          -0.006358950401963118,
+          12.690683524197787
+        ],
+        "ground_points": 14753,
+        "fit_residual_p90": 0.06418942669790076,
+        "ground_parent_source": "T032"
+      },
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.014347590687601516,
+          0.013727560718057022,
+          0.005125438359859725,
+          0.004459601259181532,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.1281481424955473,
+        0.692331798987766,
+        0.3242842601784446,
+        0.43358422640591243,
+        0.23026114722074453,
+        0.06647634678142822,
+        0.11366774813967595,
+        0.34127747146186493,
+        0.15115088875859328,
+        0.1996773846437918
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        132,
+        94
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R006",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T032w2",
+      "donor_source_id": "T018w2",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": 1.5,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1535573951512404,
+          "actor": {
+            "translation": [
+              1417.6802621917777,
+              1253.7486706117645,
+              0.707091959809901
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9643952005855742,
+              -0.003513999830032489,
+              0.000792207198814911,
+              -0.2644407708740445
+            ]
+          },
+          "box": [
+            572.9317957331178,
+            299.4958913442801,
+            736.6888137821186,
+            420.5602393070339
+          ],
+          "scale_xy": [
+            1.1773034116898573,
+            1.124005161759143
+          ],
+          "view_delta_deg": [
+            5.57708461231735,
+            1.2423896343104275
+          ],
+          "depth_interval": [
+            10.806764324997516,
+            15.575431257874243
+          ],
+          "center_depth": 13.191097791435823
+        },
+        {
+          "frame": 1,
+          "timestamp": 1535573951612404,
+          "actor": {
+            "translation": [
+              1418.337528754672,
+              1253.3329701857456,
+              0.7075094929462615
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9642158426156328,
+              -0.003514535678435901,
+              0.0007898265735739951,
+              -0.26509400797070887
+            ]
+          },
+          "box": [
+            573.6038455255107,
+            300.82093832989443,
+            737.7806801283095,
+            422.028203980428
+          ],
+          "scale_xy": [
+            1.178813083675937,
+            1.1241005476465191
+          ],
+          "view_delta_deg": [
+            5.582206030380604,
+            1.2472425414798636
+          ],
+          "depth_interval": [
+            10.789761377678587,
+            15.56117410044476
+          ],
+          "center_depth": 13.175467739061787
+        },
+        {
+          "frame": 2,
+          "timestamp": 1535573951662404,
+          "actor": {
+            "translation": [
+              1418.6731293686796,
+              1253.133847127856,
+              0.7076391685445227
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9641975867665175,
+              -0.003514590055148486,
+              0.0007895845715145992,
+              -0.26516040029871174
+            ]
+          },
+          "box": [
+            574.357960002717,
+            300.65295033120645,
+            738.7251062560047,
+            421.88637859583577
+          ],
+          "scale_xy": [
+            1.179442783103384,
+            1.1236658133174156
+          ],
+          "view_delta_deg": [
+            5.584209209596935,
+            1.2427720872019563
+          ],
+          "depth_interval": [
+            10.78406009701257,
+            15.556362451194559
+          ],
+          "center_depth": 13.170211274103622
+        },
+        {
+          "frame": 3,
+          "timestamp": 1535573951762404,
+          "actor": {
+            "translation": [
+              1419.316112030828,
+              1252.734341235159,
+              0.708002095007517
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.964039226905851,
+              -0.003515060476777118,
+              0.0007874877116005973,
+              -0.2657355700686639
+            ]
+          },
+          "box": [
+            575.5570987059666,
+            300.3659816925393,
+            740.4893343518883,
+            421.8654581189022
+          ],
+          "scale_xy": [
+            1.1815730379327702,
+            1.124349692087532
+          ],
+          "view_delta_deg": [
+            5.587898744895483,
+            1.2329868717630745
+          ],
+          "depth_interval": [
+            10.76796992969605,
+            15.54172630437904
+          ],
+          "center_depth": 13.154848117037545
+        },
+        {
+          "frame": 4,
+          "timestamp": 1535573951912404,
+          "actor": {
+            "translation": [
+              1420.2922688256247,
+              1252.1727417653915,
+              0.7082674459080778
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9641441705271905,
+              -0.003514748986520664,
+              0.0007888768047512205,
+              -0.2653545602611431
+            ]
+          },
+          "box": [
+            575.5761850551709,
+            300.229868269622,
+            741.6138744368235,
+            422.4993621925054
+          ],
+          "scale_xy": [
+            1.1865343865484157,
+            1.129771253618696
+          ],
+          "view_delta_deg": [
+            5.597099013028043,
+            1.2228521041841702
+          ],
+          "depth_interval": [
+            10.725211271242983,
+            15.49816511245092
+          ],
+          "center_depth": 13.111688191846952
+        },
+        {
+          "frame": 5,
+          "timestamp": 1535573952012404,
+          "actor": {
+            "translation": [
+              1420.9317759428827,
+              1251.769934106939,
+              0.7086631383437005
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9639363104734783,
+              -0.0035153649848136976,
+              0.00078612726378642,
+              -0.26610864992278443
+            ]
+          },
+          "box": [
+            576.0958284338268,
+            300.30816585867206,
+            742.7290086117742,
+            422.8302349887917
+          ],
+          "scale_xy": [
+            1.1880052485541268,
+            1.1297771201877367
+          ],
+          "view_delta_deg": [
+            5.608812806937863,
+            1.2174131580384824
+          ],
+          "depth_interval": [
+            10.695993520406432,
+            15.469153436258921
+          ],
+          "center_depth": 13.082573478332279
+        },
+        {
+          "frame": 6,
+          "timestamp": 1535573952112404,
+          "actor": {
+            "translation": [
+              1421.5769152762757,
+              1251.3801136773716,
+              0.708957171689109
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9638342578687141,
+              -0.003515665997174871,
+              0.0007847799995100249,
+              -0.2664780433199216
+            ]
+          },
+          "box": [
+            577.1269134737189,
+            299.9064157774477,
+            744.2108214982015,
+            422.52244932832883
+          ],
+          "scale_xy": [
+            1.1885325652616492,
+            1.1283130295833441
+          ],
+          "view_delta_deg": [
+            5.620734535114394,
+            1.2045299390827893
+          ],
+          "depth_interval": [
+            10.6708346376588,
+            15.444506674623426
+          ],
+          "center_depth": 13.057670656141227
+        },
+        {
+          "frame": 7,
+          "timestamp": 1535573952162404,
+          "actor": {
+            "translation": [
+              1421.8950802874074,
+              1251.1887965181777,
+              0.7090962570143375
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9637950012736848,
+              -0.0035157815392529634,
+              0.0007842622135297579,
+              -0.26661999124748054
+            ]
+          },
+          "box": [
+            577.5411373640869,
+            299.60264947235976,
+            744.9172643738449,
+            422.29044991385297
+          ],
+          "scale_xy": [
+            1.1887002472178594,
+            1.1271997321048965
+          ],
+          "view_delta_deg": [
+            5.629508535088007,
+            1.1960341126786602
+          ],
+          "depth_interval": [
+            10.653889975343304,
+            15.427222786506832
+          ],
+          "center_depth": 13.040556380925409
+        },
+        {
+          "frame": 8,
+          "timestamp": 1535573952262404,
+          "actor": {
+            "translation": [
+              1422.5718232878621,
+              1250.8318885468182,
+              0.7090739733496481
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9640644684975441,
+              -0.003514985646430964,
+              0.000787821652854777,
+              -0.2656439812860376
+            ]
+          },
+          "box": [
+            577.8484151116529,
+            297.6239241056602,
+            745.8021958634522,
+            420.5633952561248
+          ],
+          "scale_xy": [
+            1.18928064657881,
+            1.1260565059533112
+          ],
+          "view_delta_deg": [
+            5.6441990167482174,
+            1.1682895289861506
+          ],
+          "depth_interval": [
+            10.626467677829169,
+            15.39611992073958
+          ],
+          "center_depth": 13.01129379928443
+        },
+        {
+          "frame": 9,
+          "timestamp": 1535573952412404,
+          "actor": {
+            "translation": [
+              1423.5781403876622,
+              1250.2460075729948,
+              0.7093915888693285
+            ],
+            "size": [
+              2.051,
+              4.697,
+              1.58
+            ],
+            "rotation": [
+              0.9640580148530584,
+              -0.0035150047841550538,
+              0.0007877362621395642,
+              -0.2656674014826221
+            ]
+          },
+          "box": [
+            578.518794717237,
+            295.2157799757534,
+            747.1617924030684,
+            418.41168813464077
+          ],
+          "scale_xy": [
+            1.1908891095030139,
+            1.1254982062588492
+          ],
+          "view_delta_deg": [
+            5.657841378948433,
+            1.1224351273040725
+          ],
+          "depth_interval": [
+            10.598594166934618,
+            15.364195461947475
+          ],
+          "center_depth": 12.981394814441273
+        }
+      ],
+      "min_GT_clearance_m": 0.9979088018869132,
+      "max_ground_support_distance_m": 1.569250327513019,
+      "max_view_yaw_delta_deg": 5.657841378948433,
+      "max_view_pitch_delta_deg": 1.2472425414798636,
+      "ground": {
+        "source_id": "T032w2",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 1750,
+        "ransac_inlier_count": 1120,
+        "ransac_fraction": 0.64,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          -0.003386579175683422,
+          -0.006358950401963118,
+          12.690683524197787
+        ],
+        "ground_points": 14753,
+        "fit_residual_p90": 0.06418942669790076,
+        "ground_parent_source": "T032"
+      },
+      "type": "background",
+      "protected_instances": [],
+      "occlusion_fraction": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.003160709944079747,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "68e0a9bc77a14eac93535300a4d1289e": [
+          0.050085096036955996,
+          0.03641660597232338,
+          0.033702455464612424,
+          0.024564750775101358,
+          0.02112676056338028,
+          0.007253158633598503,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "contact_errors_px": [
+        0.43976069296610376,
+        0.028203980427974784,
+        0.8863785958357653,
+        0.13454188109778897,
+        0.5006378074946269,
+        0.16976501120831244,
+        1.4775506716711675,
+        0.29044991385296726,
+        0.43660474387519344,
+        0.4116881346407695
+      ],
+      "contact_fractions": [
+        0.9465035094886174,
+        0.9465035094886174,
+        0.9480737484465714,
+        0.950426606947863,
+        0.9530513839811545,
+        0.953988772819566,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9542852432288853,
+        0.9559561114207143
+      ],
+      "minimum_actual_actor_size_px": [
+        135,
+        98
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R007",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T021w2",
+      "donor_source_id": "T027w1",
+      "offset_longitudinal_m": 6.0,
+      "offset_lateral_m": -3.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1533583265762404,
+          "actor": {
+            "translation": [
+              1679.5590912406713,
+              1273.9915190448464,
+              0.7274377860833581
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.057370590147873574,
+              -0.003556202841479669,
+              0.002960709840056017,
+              0.9983422273973379
+            ]
+          },
+          "box": [
+            692.0702103054684,
+            309.0667074548262,
+            891.9876619766278,
+            370.36405108759783
+          ],
+          "scale_xy": [
+            1.1900556680228547,
+            1.1212039954047235
+          ],
+          "view_delta_deg": [
+            3.1768685324628905,
+            0.9240711626201517
+          ],
+          "depth_interval": [
+            19.826482385517693,
+            23.080792849721092
+          ],
+          "center_depth": 21.45363761761928
+        },
+        {
+          "frame": 1,
+          "timestamp": 1533583265862404,
+          "actor": {
+            "translation": [
+              1679.5425694944438,
+              1274.2241691087802,
+              0.7258557503676561
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.055208492485396575,
+              -0.0035497829283767453,
+              0.0029684040439531827,
+              0.998464125532852
+            ]
+          },
+          "box": [
+            687.894129814477,
+            308.4436147159619,
+            887.7294866094452,
+            369.76631830578674
+          ],
+          "scale_xy": [
+            1.189382896837017,
+            1.1196608225424018
+          ],
+          "view_delta_deg": [
+            3.19378695670855,
+            0.9187078471576058
+          ],
+          "depth_interval": [
+            19.787477563040056,
+            23.05973800882998
+          ],
+          "center_depth": 21.42360778593502
+        },
+        {
+          "frame": 2,
+          "timestamp": 1533583265912404,
+          "actor": {
+            "translation": [
+              1679.5511787839987,
+              1274.3389964936214,
+              0.7251882598757122
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.05447612062143029,
+              -0.0035476046979476305,
+              0.002971006952844859,
+              0.9985043514680506
+            ]
+          },
+          "box": [
+            685.8027026633524,
+            308.1179398831465,
+            885.6110003030318,
+            369.4826901056589
+          ],
+          "scale_xy": [
+            1.1891156848419604,
+            1.1194270170840308
+          ],
+          "view_delta_deg": [
+            3.201728936943624,
+            0.915598404054208
+          ],
+          "depth_interval": [
+            19.767888001960955,
+            23.049145441404107
+          ],
+          "center_depth": 21.408516721682417
+        },
+        {
+          "frame": 3,
+          "timestamp": 1533583266012404,
+          "actor": {
+            "translation": [
+              1679.6040555586478,
+              1274.5325850029274,
+              0.7243223064636299
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.054018124220184746,
+              -0.003546241593132626,
+              0.0029726338438981624,
+              0.9985292333599081
+            ]
+          },
+          "box": [
+            681.5993495862756,
+            308.29049974660967,
+            881.3062072228786,
+            369.5720019039397
+          ],
+          "scale_xy": [
+            1.1882998294464686,
+            1.1159540765074485
+          ],
+          "view_delta_deg": [
+            3.2186120349071814,
+            0.9072807736738184
+          ],
+          "depth_interval": [
+            19.72825879129391,
+            23.02831633846631
+          ],
+          "center_depth": 21.378287564879997
+        },
+        {
+          "frame": 4,
+          "timestamp": 1533583266162404,
+          "actor": {
+            "translation": [
+              1679.74626136026,
+              1274.7560611725269,
+              0.7238714359696323
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.0551946064558102,
+              -0.0035497416452978246,
+              0.0029684534118612814,
+              0.9984648932420115
+            ]
+          },
+          "box": [
+            675.2603473674517,
+            310.5241505602843,
+            874.7559300124142,
+            371.70765811836924
+          ],
+          "scale_xy": [
+            1.1866755256581134,
+            1.111215175410188
+          ],
+          "view_delta_deg": [
+            3.2435692840068953,
+            0.886797932982148
+          ],
+          "depth_interval": [
+            19.666864900287692,
+            22.99774132803236
+          ],
+          "center_depth": 21.33230311416014
+        },
+        {
+          "frame": 5,
+          "timestamp": 1533583266262404,
+          "actor": {
+            "translation": [
+              1679.8649822963348,
+              1274.8967212439431,
+              0.7237851707141685
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.056488333475698475,
+              -0.003553585075870755,
+              0.0029638512977714026,
+              0.9983925359294967
+            ]
+          },
+          "box": [
+            671.0048775252397,
+            311.07909613661525,
+            870.4900038796862,
+            372.4513963858106
+          ],
+          "scale_xy": [
+            1.186189973149355,
+            1.1125224372191667
+          ],
+          "view_delta_deg": [
+            3.2589575830941158,
+            0.8753498631120635
+          ],
+          "depth_interval": [
+            19.624327391933548,
+            22.974845362403812
+          ],
+          "center_depth": 21.29958637716868
+        },
+        {
+          "frame": 6,
+          "timestamp": 1533583266362404,
+          "actor": {
+            "translation": [
+              1680.0163556209995,
+              1275.0002211084723,
+              0.7241545238522322
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.05866715879191571,
+              -0.0035600451235734605,
+              0.002956088653080861,
+              0.9982668741863958
+            ]
+          },
+          "box": [
+            666.7897315938379,
+            310.90088565276676,
+            866.3030782987511,
+            372.3891643228468
+          ],
+          "scale_xy": [
+            1.185835983434552,
+            1.1123664212978281
+          ],
+          "view_delta_deg": [
+            3.272171954902774,
+            0.866594262369631
+          ],
+          "depth_interval": [
+            19.581340085851707,
+            22.950733547013442
+          ],
+          "center_depth": 21.266036816432575
+        },
+        {
+          "frame": 7,
+          "timestamp": 1533583266412404,
+          "actor": {
+            "translation": [
+              1680.0977770075713,
+              1275.0499309519296,
+              0.7243908671681685
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.0598775105385726,
+              -0.0035636267531723395,
+              0.002951769938668487,
+              0.9981950066746959
+            ]
+          },
+          "box": [
+            664.6722185547787,
+            310.89756048929866,
+            864.2332244928751,
+            372.4234243711262
+          ],
+          "scale_xy": [
+            1.1858302786776027,
+            1.1119199009962863
+          ],
+          "view_delta_deg": [
+            3.2771377712840035,
+            0.8613063153711096
+          ],
+          "depth_interval": [
+            19.559493694980574,
+            22.9385513586858
+          ],
+          "center_depth": 21.249022526833073
+        },
+        {
+          "frame": 8,
+          "timestamp": 1533583266512404,
+          "actor": {
+            "translation": [
+              1680.2451587757034,
+              1275.1644842743942,
+              0.7246633757022538
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.06185099707507768,
+              -0.0035694559456071785,
+              0.002944718264812808,
+              0.9980746674369668
+            ]
+          },
+          "box": [
+            660.4356028763677,
+            310.97808133115603,
+            860.1074331040538,
+            372.6018822868022
+          ],
+          "scale_xy": [
+            1.1859109712400433,
+            1.1115805215853047
+          ],
+          "view_delta_deg": [
+            3.287700593956515,
+            0.8504914172067686
+          ],
+          "depth_interval": [
+            19.516170112706504,
+            22.91431808201287
+          ],
+          "center_depth": 21.215244097359687
+        },
+        {
+          "frame": 9,
+          "timestamp": 1533583266662404,
+          "actor": {
+            "translation": [
+              1680.4692123923576,
+              1275.3255657286143,
+              0.72516022318068
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.06495859465111743,
+              -0.0035786081770236944,
+              0.0029335890854193854,
+              0.9978772312261389
+            ]
+          },
+          "box": [
+            654.0349334011413,
+            310.6068630850839,
+            853.7366555281882,
+            372.44482782797354
+          ],
+          "scale_xy": [
+            1.1851874925936619,
+            1.1121336032748168
+          ],
+          "view_delta_deg": [
+            3.3100349805326914,
+            0.838466781251924
+          ],
+          "depth_interval": [
+            19.452095617072246,
+            22.877798136554247
+          ],
+          "center_depth": 21.164946876813474
+        }
+      ],
+      "min_GT_clearance_m": 2.682193967559735,
+      "max_ground_support_distance_m": 1.7470434994580635,
+      "max_view_yaw_delta_deg": 3.3100349805326914,
+      "max_view_pitch_delta_deg": 0.9240711626201517,
+      "ground": {
+        "source_id": "T021w2",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 465,
+        "ransac_inlier_count": 455,
+        "ransac_fraction": 0.978494623655914,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          0.006761189136438954,
+          -0.0063199168731410404,
+          -3.3258904752912835
+        ],
+        "ground_points": 2115,
+        "fit_residual_p90": 0.04426893032761377,
+        "ground_parent_source": "T021"
+      },
+      "type": "single_actor",
+      "protected_instances": [
+        "bbd638842e8240f6aa10b9b73095c531"
+      ],
+      "occlusion_fraction": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.4722331626624655,
+          0.4536003080477474,
+          0.4365331217770726,
+          0.4400458978772232,
+          0.43040327076751533,
+          0.4380506091846298,
+          0.464850136239782,
+          0.4786579683131407,
+          0.4690611664295875,
+          0.4991913746630728
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.6736904293028751,
+          0.6443973815941471,
+          0.6253470844902816,
+          0.6232549244597437,
+          0.6073220590968221,
+          0.6181818181818182,
+          0.6455949137148047,
+          0.6641192917054985,
+          0.6498933143669986,
+          0.6918238993710691
+        ]
+      },
+      "contact_errors_px": [
+        0.36405108759782934,
+        0.23368169421326002,
+        0.5173098943411105,
+        0.42799809606032113,
+        0.2923418816307617,
+        0.4513963858105967,
+        0.6108356771532044,
+        0.5765756288737975,
+        0.39811771319779155,
+        0.5551721720264595
+      ],
+      "contact_fractions": [
+        0.9001481589873973,
+        0.8989391809235147,
+        0.8986464300047432,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9070194054277644
+      ],
+      "minimum_actual_actor_size_px": [
+        168,
+        52
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R022",
+      "edge_mode": "near_hard",
+      "extra_motion_blur_px": 0,
+      "mask_dilation_px": 2,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    },
+    {
+      "source_id": "T021w2",
+      "donor_source_id": "T027w1",
+      "offset_longitudinal_m": 8.0,
+      "offset_lateral_m": -3.0,
+      "placement_mode": "donor_camera_replay",
+      "offset_semantics": "midframe camera depth/lateral anchoring",
+      "frames": [
+        {
+          "frame": 0,
+          "timestamp": 1533583265762404,
+          "actor": {
+            "translation": [
+              1678.712780533586,
+              1272.162006711643,
+              0.7332780851887919
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.057370590147873574,
+              -0.003556202841479669,
+              0.002960709840056017,
+              0.9983422273973379
+            ]
+          },
+          "box": [
+            706.4351368124984,
+            308.96359272462365,
+            927.7060432935428,
+            377.18675672819455
+          ],
+          "scale_xy": [
+            1.3171671318593037,
+            1.2478857896063893
+          ],
+          "view_delta_deg": [
+            4.760648459027692,
+            0.7442680397367383
+          ],
+          "depth_interval": [
+            17.811639567136126,
+            21.06595003133907
+          ],
+          "center_depth": 19.438794799237485
+        },
+        {
+          "frame": 1,
+          "timestamp": 1533583265862404,
+          "actor": {
+            "translation": [
+              1678.7069674119484,
+              1272.3932540252506,
+              0.731777317774791
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.055208492485396575,
+              -0.0035497829283767453,
+              0.0029684040439531827,
+              0.998464125532852
+            ]
+          },
+          "box": [
+            702.2984733276928,
+            308.35662320458493,
+            923.4454850328817,
+            376.61330450824977
+          ],
+          "scale_xy": [
+            1.3162259053018102,
+            1.2462648816605164
+          ],
+          "view_delta_deg": [
+            4.784811438833145,
+            0.7384026985435241
+          ],
+          "depth_interval": [
+            17.775521349640485,
+            21.047781795429955
+          ],
+          "center_depth": 19.411651572535106
+        },
+        {
+          "frame": 2,
+          "timestamp": 1533583265912404,
+          "actor": {
+            "translation": [
+              1678.719666629428,
+              1272.5079510923506,
+              0.7311383036563903
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.05447612062143029,
+              -0.0035476046979476305,
+              0.002971006952844859,
+              0.9985043514680506
+            ]
+          },
+          "box": [
+            700.2267240981871,
+            308.03322455639784,
+            921.3273965711745,
+            376.3389350082571
+          ],
+          "scale_xy": [
+            1.315832628937443,
+            1.2460452853416635
+          ],
+          "view_delta_deg": [
+            4.796372873982733,
+            0.7350105287145823
+          ],
+          "depth_interval": [
+            17.757378303989753,
+            21.03863574343245
+          ],
+          "center_depth": 19.398007023711102
+        },
+        {
+          "frame": 3,
+          "timestamp": 1533583266012404,
+          "actor": {
+            "translation": [
+              1678.7769610875462,
+              1272.7028915028864,
+              0.7302936751343947
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.054018124220184746,
+              -0.003546241593132626,
+              0.0029726338438981624,
+              0.9985292333599081
+            ]
+          },
+          "box": [
+            696.0623593123729,
+            308.2517171753485,
+            917.0192968225451,
+            376.47292926493236
+          ],
+          "scale_xy": [
+            1.3147424893947566,
+            1.2423282239425986
+          ],
+          "view_delta_deg": [
+            4.820449955591414,
+            0.7259216998075431
+          ],
+          "depth_interval": [
+            17.720603178933743,
+            21.020660726106144
+          ],
+          "center_depth": 19.37063195251983
+        },
+        {
+          "frame": 4,
+          "timestamp": 1533583266162404,
+          "actor": {
+            "translation": [
+              1678.9188868474303,
+              1272.9312497145513,
+              0.7298100571252819
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.0551946064558102,
+              -0.0035497416452978246,
+              0.0029684534118612814,
+              0.9984648932420115
+            ]
+          },
+          "box": [
+            689.7803865700332,
+            310.6001370147191,
+            910.4616855088374,
+            378.73137084889805
+          ],
+          "scale_xy": [
+            1.3126962158714917,
+            1.2373998153683061
+          ],
+          "view_delta_deg": [
+            4.856043913212716,
+            0.7035098272139351
+          ],
+          "depth_interval": [
+            17.663399088362667,
+            20.994275516107336
+          ],
+          "center_depth": 19.328837302234888
+        },
+        {
+          "frame": 5,
+          "timestamp": 1533583266262404,
+          "actor": {
+            "translation": [
+              1679.035678284503,
+              1273.0761394257606,
+              0.7296840151902315
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.056488333475698475,
+              -0.003553585075870755,
+              0.0029638512977714026,
+              0.9983925359294967
+            ]
+          },
+          "box": [
+            685.5727274810575,
+            311.18034284307004,
+            906.1997712636369,
+            379.52952369704235
+          ],
+          "scale_xy": [
+            1.3119052629291226,
+            1.23899539298418
+          ],
+          "view_delta_deg": [
+            4.878658928905963,
+            0.6909573488495653
+          ],
+          "depth_interval": [
+            17.62388768019855,
+            20.97440565066904
+          ],
+          "center_depth": 19.299146665433796
+        },
+        {
+          "frame": 6,
+          "timestamp": 1533583266362404,
+          "actor": {
+            "translation": [
+              1679.1820490871853,
+              1273.1853662256356,
+              0.7299833515756906
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.05866715879191571,
+              -0.0035600451235734605,
+              0.002956088653080861,
+              0.9982668741863958
+            ]
+          },
+          "box": [
+            681.4011091310716,
+            310.9963949084945,
+            902.0279862195395,
+            379.47891167823326
+          ],
+          "scale_xy": [
+            1.3113272574754244,
+            1.2388971320755247
+          ],
+          "view_delta_deg": [
+            4.899251474724451,
+            0.6813068282417021
+          ],
+          "depth_interval": [
+            17.584051639003746,
+            20.95344510016548
+          ],
+          "center_depth": 19.268748369584387
+        },
+        {
+          "frame": 7,
+          "timestamp": 1533583266412404,
+          "actor": {
+            "translation": [
+              1679.2606038203035,
+              1273.2380983814564,
+              0.7301812121425342
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.0598775105385726,
+              -0.0035636267531723395,
+              0.002951769938668487,
+              0.9981950066746959
+            ]
+          },
+          "box": [
+            679.2936200469958,
+            310.9825634003237,
+            899.9708420870104,
+            379.5083330644495
+          ],
+          "scale_xy": [
+            1.3113069383438782,
+            1.238424984441938
+          ],
+          "view_delta_deg": [
+            4.907933184022085,
+            0.6754857879688814
+          ],
+          "depth_interval": [
+            17.563791921814754,
+            20.942849585519753
+          ],
+          "center_depth": 19.253320753667367
+        },
+        {
+          "frame": 8,
+          "timestamp": 1533583266512404,
+          "actor": {
+            "translation": [
+              1679.4038338275373,
+              1273.357903325904,
+              0.7303924600215548
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.06185099707507768,
+              -0.0035694559456071785,
+              0.002944718264812808,
+              0.9980746674369668
+            ]
+          },
+          "box": [
+            675.0978304774668,
+            311.0445449733985,
+            895.8671879925001,
+            379.6882778043723
+          ],
+          "scale_xy": [
+            1.3112155224507533,
+            1.2382072374720186
+          ],
+          "view_delta_deg": [
+            4.92582134859623,
+            0.6636096166643028
+          ],
+          "depth_interval": [
+            17.52361630295991,
+            20.921764272266046
+          ],
+          "center_depth": 19.222690287612863
+        },
+        {
+          "frame": 9,
+          "timestamp": 1533583266662404,
+          "actor": {
+            "translation": [
+              1679.6210040160358,
+              1273.5271205816514,
+              0.7307913497509664
+            ],
+            "size": [
+              1.936,
+              4.83,
+              1.498
+            ],
+            "rotation": [
+              0.06495859465111743,
+              -0.0035786081770236944,
+              0.0029335890854193854,
+              0.9978772312261389
+            ]
+          },
+          "box": [
+            668.7581792260257,
+            310.68485199717014,
+            889.5117019381526,
+            379.5695549339253
+          ],
+          "scale_xy": [
+            1.310125477525708,
+            1.2388666607333265
+          ],
+          "view_delta_deg": [
+            4.959127621652215,
+            0.6503723090307574
+          ],
+          "depth_interval": [
+            17.464283796948394,
+            20.889986316430395
+          ],
+          "center_depth": 19.177135056689394
+        }
+      ],
+      "min_GT_clearance_m": 4.670582341166873,
+      "max_ground_support_distance_m": 1.8870187419558255,
+      "max_view_yaw_delta_deg": 4.959127621652215,
+      "max_view_pitch_delta_deg": 0.7442680397367383,
+      "ground": {
+        "source_id": "T021w2",
+        "pass": true,
+        "lidar_keyframes": [
+          0,
+          3,
+          6
+        ],
+        "low_grid_points": 465,
+        "ransac_inlier_count": 455,
+        "ransac_fraction": 0.978494623655914,
+        "source": "real_LiDAR_after_GT_actor_removal_and_drivable_map_filter",
+        "ground_not_from_GT_box_bottom": true,
+        "plane": [
+          0.006761189136438954,
+          -0.0063199168731410404,
+          -3.3258904752912835
+        ],
+        "ground_points": 2115,
+        "fit_residual_p90": 0.04426893032761377,
+        "ground_parent_source": "T021"
+      },
+      "type": "single_actor",
+      "protected_instances": [
+        "bbd638842e8240f6aa10b9b73095c531"
+      ],
+      "occlusion_fraction": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.49507680189050807,
+          0.496726992683866,
+          0.48809996033320113,
+          0.4970357620960031,
+          0.4928451960602119,
+          0.49953139643861294,
+          0.5286103542234333,
+          0.5319664492078285,
+          0.5172475106685633,
+          0.5265049415992812
+        ]
+      },
+      "model_hole_occlusion_upper_bound": {
+        "bbd638842e8240f6aa10b9b73095c531": [
+          0.7178022843639228,
+          0.7144782441278398,
+          0.7072590241967474,
+          0.7129470262000382,
+          0.704144211113176,
+          0.711340206185567,
+          0.7413260672116257,
+          0.7481826654240448,
+          0.7265291607396871,
+          0.7390835579514825
+        ]
+      },
+      "contact_errors_px": [
+        0.18675672819455258,
+        0.3866954917502312,
+        0.3389350082571241,
+        0.5270707350676389,
+        0.2686291511019476,
+        0.5295236970423502,
+        0.5210883217667401,
+        0.4916669355504837,
+        0.3117221956276808,
+        0.43044506607469657
+      ],
+      "contact_fractions": [
+        0.9001481589873973,
+        0.8989391809235147,
+        0.8986464300047432,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.8974760534654187,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9087449042173235,
+        0.9070194054277644
+      ],
+      "minimum_actual_actor_size_px": [
+        185,
+        58
+      ],
+      "unverified_actor_envelope_hits": [],
+      "render_allowed": true,
+      "case_id": "R027",
+      "edge_mode": "feather_10",
+      "extra_motion_blur_px": 0.8,
+      "mask_dilation_px": 4,
+      "synthetic_quality": "pending_render_and_independent_review",
+      "human_verdict": null
+    }
+  ],
+  "source_pool_revision": "jointly pair approved sources before new segmentation; no independent-view quality claim"
+}
