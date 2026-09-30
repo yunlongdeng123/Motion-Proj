@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r4 | CPU固定10帧29/32；几何预案4例；SAM2队列4实例，未推理/训练 | [报告](v77/TARGET_PROTECTED_CPU_R4.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r4/summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r3 | 连续来源3段；新合成24例/5场景；独立{'pass': 24}；训练0 | [GPU造数报告](v77/TARGET_PROTECTED_GPU_R3.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r3/summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r2 | 37例训练输入重评{'train_usable_pending_human': 27, 'uncertain': 9, 'reject': 1}；630帧RGB泄漏0；2实例4视图待GPU；训练0 | [CPU合同与造数入口](v77/TARGET_PROTECTED_CPU_R2.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r2/summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r1 | 49合成case/11个receiver scene；独立{'reject': 7, 'pass': 28, 'uncertain': 14}，仅通过例人工逐帧全检；密集类缺额、零训练 | [GPU试产](v77/TARGET_PROTECTED_GPU.md) · [CPU来源](v77/TARGET_PROTECTED_CPU.md) · [质量协议v2](v77/TARGET_PROTECTED_QUALITY.md) |

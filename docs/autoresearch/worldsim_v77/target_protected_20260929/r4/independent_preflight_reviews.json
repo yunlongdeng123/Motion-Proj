@@ -1,0 +1,42 @@
+{
+  "reviewer": "gpt-6-sol/xhigh",
+  "scope": "CPU source preflight only",
+  "cases": [
+    {
+      "case_id": "C010",
+      "reviewed_frame": 5,
+      "source_status": "pass",
+      "note": "真实Y中迎面公交B完整可辨，车头与边界清楚，适合后续获取SAM2 mask。A的黄色车形洞位于前方道路，局部挡住更远公交的右下部，公交上部及左侧仍可见；未见压ego或侵害路边车辆。此处GT包络仅供定位。",
+      "temporal_visual_scope": "not_reviewed",
+      "human_verdict": null,
+      "training_ready": false
+    },
+    {
+      "case_id": "C012",
+      "reviewed_frame": 5,
+      "source_status": "pass",
+      "note": "真实Y中迎面公交B车头、车顶和下缘完整可见，可供后续分割。A的拟洞位于车道内、在公交前方，遮住其较大下部但留下公交顶部，尺度与近远关系可接受；未见压ego或明显波及施工围挡等额外物体。",
+      "temporal_visual_scope": "not_reviewed",
+      "human_verdict": null,
+      "training_ready": false
+    },
+    {
+      "case_id": "C014",
+      "reviewed_frame": 5,
+      "source_status": "pass",
+      "note": "真实Y中远处深色轿车B虽较小，前脸与车身仍完整可辨，具备后续SAM2尝试条件。A的拟洞在道路中部，位于B前方偏左，仅遮其左侧投影，B右侧仍可见；左侧近处白色SUV与ego未被触及。A/B平面间距较近，需在后续全帧和精确mask阶段确认。",
+      "temporal_visual_scope": "not_reviewed",
+      "human_verdict": null,
+      "training_ready": false
+    },
+    {
+      "case_id": "C018",
+      "reviewed_frame": 5,
+      "source_status": "pass",
+      "note": "真实Y中迎面深色轿车B的车头、车顶和两侧边界可辨，具备后续SAM2分割条件。A的拟车形洞位于道路内、在B前方偏左，尺寸随近远关系合理；黑洞未见明确压住左侧桥栏、行人或底部ego，B的右上可见部分仍保留。A/B平面间距较近且洞左缘靠近护栏，精确mask及全帧关系仍需后续检查。",
+      "temporal_visual_scope": "not_reviewed",
+      "human_verdict": null,
+      "training_ready": false
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r4",
+  "cpu_only": true,
+  "cpu_threads": 1,
+  "seed": 42,
+  "max_new_receiver_windows": 32,
+  "archive_scope": [
+    "03",
+    "07"
+  ],
+  "window": "fixed frames 10:20 of resolved 30-exposure sequence; selected before masks or synthesis",
+  "source_role": "train development data factory; not validation/test",
+  "planning_only_until_actual_masks_and_independent_QA": true,
+  "stop_rule": "one new receiver pool, original placement operator and geometry gates; no per-case threshold changes; stop before new SAM2 inference",
+  "no_repeat_old_receiver_windows": true,
+  "remaining_old_pool_total": 137,
+  "new_dense_metadata_windows": 9,
+  "selection_reason": "new unprocessed receiver windows, prioritize multiple well-observed protected actors and new scenes; 2 shards bound CPU extraction cost"
+}
