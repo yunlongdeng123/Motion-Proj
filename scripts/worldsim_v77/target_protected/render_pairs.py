@@ -9,6 +9,7 @@ from PIL import Image,ImageDraw,ImageFont
 from geometry_factory import read,dump,source_masks
 from build_pairs import warp_matrix
 from data_contract import assert_pair_pixels,masked_condition_from_x
+from iteration2.donor_gate import assert_donor
 
 def font(n=18):return ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',n)
 def rgb(root,f):
@@ -46,6 +47,8 @@ def render(root,out,candidates,limit=None,shard_index=0,shard_count=1):
         for role in ['Y','X','alpha','influence','model_hole','protected','condition_preview']:(dest/role).mkdir(exist_ok=True)
         for s in [sid,dsid]:
             if s not in maskcache:maskcache[s]=source_masks(root,s)
+        # 渲染入口再查，防止历史提案或人工选case绕过新供体规则。
+        assert_donor(d,maskcache[dsid])
         protected={c['actors'][0]['instance_token']:maskcache[sid]}
         for r in secondary:
             if r['source_id']==sid and r['protected_mask_status']=='pass':protected[r['instance_token']]=source_masks(root,sid,r['job_id'])
@@ -112,7 +115,7 @@ def render(root,out,candidates,limit=None,shard_index=0,shard_count=1):
                   'condition_scope':'actual masked X contract; no DriveEditor forward; no Y hidden-region condition',
                   'synthetic_method':'real donor 2.5D affine cutout, camera/metric trajectory/LiDAR ground gated; no generated GT or neural relighting',
                   'extra_blur_kind':'clip-constant 3x3 isotropic Gaussian, preserving donor real video blur; no synthetic directional motion blur claim'}
-        dump(dest/'pair_manifest.json',row);rows.append(row);dump(out/manifest_name,{'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r1','stage':'synthetic_pending_independent_QA','clips':rows})
+        dump(dest/'pair_manifest.json',row);rows.append(row);dump(out/manifest_name,{'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r2','stage':'synthetic_pending_independent_QA','clips':rows})
         print('RENDER',cid,pair['type'],'frames',len(metrics),flush=True)
     print('RENDERED',len(rows),dict(Counter(r['type'] for r in rows)),flush=True)
 

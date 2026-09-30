@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r2 | 37例训练输入重评{'train_usable_pending_human': 27, 'uncertain': 9, 'reject': 1}；630帧RGB泄漏0；2实例4视图待GPU；训练0 | [CPU合同与造数入口](v77/TARGET_PROTECTED_CPU_R2.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r2/summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r1 | 49合成case/11个receiver scene；独立{'reject': 7, 'pass': 28, 'uncertain': 14}，仅通过例人工逐帧全检；密集类缺额、零训练 | [GPU试产](v77/TARGET_PROTECTED_GPU.md) · [CPU来源](v77/TARGET_PROTECTED_CPU.md) · [质量协议v2](v77/TARGET_PROTECTED_QUALITY.md) |
 | WS-V77-DELETE-AUDIT-20260928 / r1 | 45 val scene/70单车DELETE，280视频已交付；用户CSV已归档，human_score 0/1/2/未填=26/26/15/3；原助手抽帧观察保留 | [用户视频评分](v77/DELETE_AUDIT_USER_REVIEW.md) · [最终工程结果](v77/DELETE_AUDIT_RESULTS.md) |
 | WS-V77-NINE-FULL-20260928 / r1 | 九例统一r30迁移配置完整DELETE完成，待用户视频审核；无训练/逐例修补 | [报告](v77/NINE_FULL_RESULTS.md) · [证据](autoresearch/worldsim_v77/nine_full_20260928/review_link.md) |

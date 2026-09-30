@@ -70,6 +70,10 @@ def main(root,same_log=False,prefix='Q',mode='world_offset',allow_downsample=Fal
     receivers=sorted(s for s in mq if numeric.get(s) and sq[s]['receiver_status']=='pass' and mq[s]['receiver_mask_status']=='pass')
     donors=sorted(s for s in mq if numeric.get(s) and sq[s]['donor_status']=='pass' and mq[s]['donor_mask_status']=='pass')
     masks={s:source_masks(root,s) for s in set(receivers)|set(donors)};contacts={}
+    from iteration2.donor_gate import check_masks,load_policy
+    donor_gate={s:check_masks(geo.sources[s]['actors'][0]['instance_token'],masks[s]) for s in donors}
+    donors=[s for s in donors if donor_gate[s]['eligible_for_pairing']]
+    dump(root/'donor_admission.json',{'policy':load_policy(),'sources':donor_gate})
     for s in donors:
         arr=[actor_contact(m,np.array(f['actors'][0]['projection']['box_xyxy'])) for m,f in zip(masks[s],geo.sources[s]['frames'])]
         contacts[s]=median_filter(np.array(arr),size=5,mode='nearest')
@@ -82,7 +86,7 @@ def main(root,same_log=False,prefix='Q',mode='world_offset',allow_downsample=Fal
     if dense_refine:
         receivers=[s for s in receivers if len(protected[s])>=2]
         offsets=[(z,x) for z in [1.,2.,3.,4.,5.,6.,7.] for x in [-4.5,-3.,-2.,-1.,0.,1.,2.,3.,4.5]]
-    config={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r1','offsets_m':offsets,'placement_mode':mode,
+    config={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r2','donor_policy':load_policy()['version'],'offsets_m':offsets,'placement_mode':mode,
             'target_counts':{'background':18,'single_actor':20,'dense_actors':12},'max_proposals_per_receiver_type':4,
             'different_donor_log':not same_log,'different_donor_scene':True,'different_donor_track':True,'model_inference_selection':False,'model_hole_dilation_upper_bound_px':6,
             'proposal_revision':4 if allow_downsample else 3,'proposal_change_reason':'explicit actual-size downsample contrast; source provenance and independent synthesis review required',

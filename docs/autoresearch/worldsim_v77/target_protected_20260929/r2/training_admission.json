@@ -1,0 +1,1944 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r2",
+  "policy_revision": "training_input_quality_five_checks_20260930",
+  "user_superseded_prior_no_re_review_and_low_score_reject_rule": true,
+  "reassessed_cases": 37,
+  "reassessed_counts": {
+    "train_usable_pending_human": 27,
+    "uncertain": 9,
+    "reject": 1
+  },
+  "all_49_counts": {
+    "train_usable_pending_human": 27,
+    "ai_2_unverified": 10,
+    "uncertain": 9,
+    "reject": 2,
+    "hold_user_reported_silhouette": 1
+  },
+  "human_full_frame_review_received": false,
+  "training_ready": 0,
+  "definition": "train_usable_pending_human = 五项训练输入检查下的技术可用候选，独立抽帧+全帧工程核验通过；不是人工全检完成，不启动训练。",
+  "D009": "用户明确空间错误，保持reject，不因masked-X合同复活",
+  "cases": [
+    {
+      "case_id": "D001",
+      "original_ai_score": 1,
+      "source_id": "S003",
+      "donor_source_id": "S045",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D001",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A位置与尺寸平稳，车形灰洞覆盖A；GT道路和左侧真实车保持，未见自车或B被洞侵入。",
+        "cosmetic_issues_ignored": [
+          "贴片硬边",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D001",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.6694264771302039,
+        "max_rotation_step_deg_per_100ms": 0.08684059319076853,
+        "max_scale_ratio_per_100ms": 1.0023047575332968,
+        "min_bbox_normalized_hole_IoU": 0.9842959527824621,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "新增灰车完整，灰洞也基本覆盖目标，原道路可作为明确答案；但车底像悬在路面上，缺少接触暗部，沿双黄线移动时贴片感明显。未见整帧跳换或明显目标漏出。",
+      "original_failure_type": "接地感弱；边缘偏硬"
+    },
+    {
+      "case_id": "D008",
+      "original_ai_score": 2,
+      "source_id": "S056",
+      "donor_source_id": "S045",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "A 在 B 前方，B 的可见车顶/部分前脸留在条件里，GT 中 B 完整可恢复；30 帧的对象、遮挡和灰洞连续。车底仍略硬，但相对可送人工全检。",
+      "original_failure_type": "轻微硬边；未见明显关系错误"
+    },
+    {
+      "case_id": "D011",
+      "original_ai_score": 2,
+      "source_id": "S056",
+      "donor_source_id": "S005",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "换成深蓝色轿车后，前后关系清楚，目标轮廓完整，后车未被不合理写到 A 前方；condition 与合成目标对应。细节仍有合成感，但没有必须整例拒绝的可见错误。",
+      "original_failure_type": "轻微贴片；未见明显关系错误"
+    },
+    {
+      "case_id": "P005",
+      "original_ai_score": 1,
+      "source_id": "S058",
+      "donor_source_id": "S045",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "P005",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "末帧A/H下缘与自车机盖可见边界过近",
+          "需确认ego像素重叠"
+        ],
+        "reason": "f0/f15/f29的B仍在A后方且露出车顶，出租车保留；f29原尺寸图灰洞几乎贴到白色机盖，尚无可靠ego像素标注可排除侵入。",
+        "cosmetic_issues_ignored": [
+          "车身反光不一致",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "P005",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.5873385136868159,
+        "max_rotation_step_deg_per_100ms": 0.09835492348299033,
+        "max_scale_ratio_per_100ms": 1.0180606647854873,
+        "min_bbox_normalized_hole_IoU": 0.9810659186535764,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "前段遮挡关系可辨，后车和旁边出租车大体保持；末段 A 的车轮/下缘靠近并少量盖过采集车可见车体边缘，灰洞也过近。车辆持续贴片感，而非突发生成变形。",
+      "original_failure_type": "近端接地/前景层序疑点"
+    },
+    {
+      "case_id": "D004",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S045",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D004",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A和灰洞在道路上连续，真实车与GT道路保持；明暗边界穿过A只影响外观，不见几何穿插。",
+        "cosmetic_issues_ignored": [
+          "跨阴影受光不匹配",
+          "硬切下缘"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D004",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8502356027459943,
+        "max_rotation_step_deg_per_100ms": 0.1705550915348364,
+        "max_scale_ratio_per_100ms": 1.0044920237625106,
+        "min_bbox_normalized_hole_IoU": 0.9798084929225646,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "道路的建筑阴影随帧扫过目标位置，但供体的亮反光基本不随场景明暗变化；目标完整、条件可用，整体却像一张亮车贴在路上。",
+      "original_failure_type": "受光不匹配；车底缺接触暗部"
+    },
+    {
+      "case_id": "D009",
+      "original_ai_score": 0,
+      "source_id": "S058",
+      "donor_source_id": "S045",
+      "training_admission": "reject",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": "reject_spatial_placement",
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "从首帧到末帧，目标车底和轮胎反复直接盖在图像下方采集车可见车体上；条件灰洞也进入该固定前景。画面是明显的大贴片，当前不作为合格合成删除输入。",
+      "original_failure_type": "合成车覆盖采集车可见车体；尺度/摆放不合格"
+    },
+    {
+      "case_id": "P003",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S057",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "P003",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧小型A沿空路面连续，洞包住可见车身，GT中的邻车保留；未见与自车或其他对象交叠错误。",
+        "cosmetic_issues_ignored": [
+          "供体偏糊",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "P003",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8292879200870106,
+        "max_rotation_step_deg_per_100ms": 0,
+        "max_scale_ratio_per_100ms": 1.0147839947417234,
+        "min_bbox_normalized_hole_IoU": 0.9604186823819157,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "供体比附近真实车辆更糊，轮胎/车底不清，背景阴影变化时车体亮度跟随不足。GT 和灰洞关系基本清楚，但不适合混称高真实性 X。",
+      "original_failure_type": "供体模糊；车底悬空感；受光不匹配"
+    },
+    {
+      "case_id": "D005",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S059",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D005",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A大小和轨迹平稳，洞与车形同位，左侧真实车及GT背景不被额外删去。",
+        "cosmetic_issues_ignored": [
+          "明暗不匹配",
+          "轮廓硬边"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D005",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8499420381297365,
+        "max_rotation_step_deg_per_100ms": 0.13255289792718875,
+        "max_scale_ratio_per_100ms": 1.003746532204544,
+        "min_bbox_normalized_hole_IoU": 0.9773204116295334,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "轮廓比 P003 清楚，邻车没有明显误伤，灰洞基本覆盖；但道路入阴影后车体外观仍偏亮，底部与道路缺少连接，完整视频保持贴片感。",
+      "original_failure_type": "硬切轮廓；明暗不匹配"
+    },
+    {
+      "case_id": "W003",
+      "original_ai_score": 1,
+      "source_id": "S003w2",
+      "donor_source_id": "S059w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W003",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "首中末A持续位于双黄线附近道路，洞形和车体对应，左侧真实车在GT与条件中一致。",
+        "cosmetic_issues_ignored": [
+          "供体轮廓偏软",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W003",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.6681615954508111,
+        "max_rotation_step_deg_per_100ms": 0.07212851418240741,
+        "max_scale_ratio_per_100ms": 1.0017972306070435,
+        "min_bbox_normalized_hole_IoU": 0.9818000994530085,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "目标清楚是同一辆车，位置与灰洞稳定；车底缺接触、轮廓略糊，整个对象像贴在双黄线附近的路面上。",
+      "original_failure_type": "轮廓软；车底悬空感"
+    },
+    {
+      "case_id": "W008",
+      "original_ai_score": 1,
+      "source_id": "S056w2",
+      "donor_source_id": "S045w1",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W008",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A在右侧车道并随场景连续，洞覆盖车体，邻近真实车辆保持且未见层序冲突。",
+        "cosmetic_issues_ignored": [
+          "孤立贴片感",
+          "底部阴影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W008",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8569089241585697,
+        "max_rotation_step_deg_per_100ms": 0.08641828651658602,
+        "max_scale_ratio_per_100ms": 1.0041832828454413,
+        "min_bbox_normalized_hole_IoU": 0.9813806932111143,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "未误遮左后真实车辆，灰洞内应恢复道路这一目标明确；新增车与路面没有明显接触暗部，独立车体显得悬浮。",
+      "original_failure_type": "孤立车体贴片感"
+    },
+    {
+      "case_id": "W017",
+      "original_ai_score": 1,
+      "source_id": "S003w1",
+      "donor_source_id": "S045w1",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W017",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A与左后方真实车相邻但车形可分，条件未明显吞掉B；尺寸、位置和洞随帧连续。",
+        "cosmetic_issues_ignored": [
+          "硬边",
+          "接触暗部不足"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W017",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.6263220688425262,
+        "max_rotation_step_deg_per_100ms": 0.08009289075871953,
+        "max_scale_ratio_per_100ms": 1.0021733187727984,
+        "min_bbox_normalized_hole_IoU": 0.9842383469485824,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "目标与左侧真实车分离，10 帧没有明显缺 mask；但轮胎下缘、双黄线附近的叠加显得生硬。",
+      "original_failure_type": "硬边；接地不足"
+    },
+    {
+      "case_id": "W019",
+      "original_ai_score": 2,
+      "source_id": "S003w0",
+      "donor_source_id": "S045w1",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "红色 A 与绿色 B 的重叠是有意制造的遮挡，不能据此判标错。输入里 B 的可见上部保留，GT 中 B 完整，10 帧条件没有明显串位。",
+      "original_failure_type": "轻微接地不足；关系基本明确"
+    },
+    {
+      "case_id": "W023",
+      "original_ai_score": 1,
+      "source_id": "S027w2",
+      "donor_source_id": "S015w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W023",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A在皮卡B前，B车顶与上部在条件中保留并与GT相符；A灰洞连续且其他侧车保留。",
+        "cosmetic_issues_ignored": [
+          "供体偏软",
+          "反光不合",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W023",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.581848731025526,
+        "max_rotation_step_deg_per_100ms": 0.18326271530209592,
+        "max_scale_ratio_per_100ms": 1.0246299816598752,
+        "min_bbox_normalized_hole_IoU": 0.9769617317356011,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "后方银车清晰并持续可见一部分，监督关系有价值；但 A 的车窗云状反光很强，车体偏糊、缺接地，与道路光照衔接较差。",
+      "original_failure_type": "供体过软/反光不匹配；接地弱"
+    },
+    {
+      "case_id": "W025",
+      "original_ai_score": 2,
+      "source_id": "S056w1",
+      "donor_source_id": "S045w2",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "A/B 的前后关系和灰洞连续，后车可见部分与 GT 对应，未见明显邻车恢复错位。抠图边缘可继续改善，但可先进入人工全检。",
+      "original_failure_type": "轻微贴片；同源重复"
+    },
+    {
+      "case_id": "W028",
+      "original_ai_score": 2,
+      "source_id": "T021w2",
+      "donor_source_id": "T027w1",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "侧面深色车遮住白皮卡下部，GT 中可明确恢复皮卡；A 的尺寸/轮廓与横向场景大致协调，行人和车列未被额外改写，10 帧相对稳定。",
+      "original_failure_type": "轻微软边；短窗基本一致"
+    },
+    {
+      "case_id": "W032",
+      "original_ai_score": 1,
+      "source_id": "S008w1",
+      "donor_source_id": "S045w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W032",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A遮住后方B的下部而B上部仍可见，三帧红绿层序和灰洞对应，旁车与道路保持。",
+        "cosmetic_issues_ignored": [
+          "受光差",
+          "车底硬边"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W032",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8177802384943793,
+        "max_rotation_step_deg_per_100ms": 0.09408406609042638,
+        "max_scale_ratio_per_100ms": 1.0038627105025397,
+        "min_bbox_normalized_hole_IoU": 0.970964104491637,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "B 的上部可见且 GT 明确，灰洞可用于恢复任务；A 的车底硬，接近路面阴影时仍显亮，视觉一致性不如主通过组。",
+      "original_failure_type": "受光差；车底硬边"
+    },
+    {
+      "case_id": "W034",
+      "original_ai_score": 2,
+      "source_id": "S056w1",
+      "donor_source_id": "S045w1",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "视觉关系与 W025 相近，后车身份与目标遮挡位置未见明显问题，灰洞基本匹配。属于可保留的同源变体，不提供新的场景覆盖。",
+      "original_failure_type": "轻微贴片；与 W025 高度同源"
+    },
+    {
+      "case_id": "W037",
+      "original_ai_score": 2,
+      "source_id": "T021w2",
+      "donor_source_id": "T027w1",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "同一白皮卡前新增侧向深色车，前后关系清楚，标签和条件覆盖基本一致；未见突然消失/换车。新车局部偏软，但适合作为初步有真值遮挡对。",
+      "original_failure_type": "轻微软边；与 W028 同源"
+    },
+    {
+      "case_id": "W004",
+      "original_ai_score": 1,
+      "source_id": "S008w0",
+      "donor_source_id": "S064w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W004",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A在空路面，车形洞完整覆盖A，左侧真实车保留；未见位置或遮挡跳变。",
+        "cosmetic_issues_ignored": [
+          "贴片硬边",
+          "接触影不足"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W004",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.860818724894633,
+        "max_rotation_step_deg_per_100ms": 0.20268337946284332,
+        "max_scale_ratio_per_100ms": 1.0063891118496753,
+        "min_bbox_normalized_hole_IoU": 0.9781356922306601,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "供体本身较完整，非目标真实车保留；车底和路面分离感持续，阴影边缘经过时衔接不自然。",
+      "original_failure_type": "贴片硬边；车底无接触感"
+    },
+    {
+      "case_id": "W009",
+      "original_ai_score": 1,
+      "source_id": "T012w0",
+      "donor_source_id": "T018w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W009",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "后视车的H下缘弧形缺口占比明显",
+          "轮胎落点与路面接触需核"
+        ],
+        "reason": "三帧洞随A连续且GT道路可恢复，但后车底部大弧形开口与道路之间的空间关系不够明确；需辨明有效底盘空隙还是不合理悬浮。",
+        "cosmetic_issues_ignored": [
+          "供体偏糊",
+          "车身受光"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W009",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.06065876862332675,
+        "max_rotation_step_deg_per_100ms": 0.06787426677329063,
+        "max_scale_ratio_per_100ms": 1.0028146094764914,
+        "min_bbox_normalized_hole_IoU": 0.9644853925505945,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "小车尾在路口中央像缩放后的贴纸，底部呈明显弧形空隙，细节偏糊；灰洞与 GT 路面仍构成清楚监督。",
+      "original_failure_type": "供体模糊；轮胎/下缘缺接地"
+    },
+    {
+      "case_id": "W011",
+      "original_ai_score": 1,
+      "source_id": "T012w2",
+      "donor_source_id": "T018w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W011",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "后视车的H下缘弧形缺口较大",
+          "接地几何待核"
+        ],
+        "reason": "三帧真实横穿白车和右侧车辆保留，A洞稳定；A两轮间的宽大弧形露路区域使车辆轮廓是否合理仍有疑问。",
+        "cosmetic_issues_ignored": [
+          "贴片质感",
+          "缺少接触暗部"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W011",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.06041239801188973,
+        "max_rotation_step_deg_per_100ms": 0.06892095040161017,
+        "max_scale_ratio_per_100ms": 1.0030614472244554,
+        "min_bbox_normalized_hole_IoU": 0.9684553116915631,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "与 W009 同类，小车尾在路面上缺乏实体接触，轮廓/运动有二维贴片感；condition 未见明显目标残留。",
+      "original_failure_type": "车尾贴片；近重复背景"
+    },
+    {
+      "case_id": "W013",
+      "original_ai_score": 1,
+      "source_id": "T023w2",
+      "donor_source_id": "S021w1",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W013",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A尾部及洞沿道路平稳变化，旁侧白色SUV与GT一致；虽贴近双黄线，未见逆向层序或真实车被洞覆盖。",
+        "cosmetic_issues_ignored": [
+          "后视车底阴影弱",
+          "车尾硬边"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W013",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.41677032414058407,
+        "max_rotation_step_deg_per_100ms": 0.4552516971508042,
+        "max_scale_ratio_per_100ms": 1.049036645921862,
+        "min_bbox_normalized_hole_IoU": 0.9570401543047519,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "车尾清晰，但跨双黄线且底下能直接看到明亮标线，目标与路面接触弱。不能仅以压线判交通违法，不过此合成摆放需要重看。",
+      "original_failure_type": "车底悬空感；道路朝向匹配待复核"
+    },
+    {
+      "case_id": "W015",
+      "original_ai_score": 1,
+      "source_id": "T032w2",
+      "donor_source_id": "T018w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W015",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "A/H车底大弧形开口",
+          "接地/洞轮廓需核"
+        ],
+        "reason": "三帧A相对GT前车和道路稳定，前车仍在；但灰洞下缘宽深的拱形缺口持续存在，无法仅凭抽帧确认是否合理车底轮廓。",
+        "cosmetic_issues_ignored": [
+          "供体模糊",
+          "受光与接触影不足"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W015",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.7804557159030825,
+        "max_rotation_step_deg_per_100ms": 0.11602764131526985,
+        "max_scale_ratio_per_100ms": 1.0044633381978767,
+        "min_bbox_normalized_hole_IoU": 0.9741481684479766,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "尾部比邻车更软，车底弧形凹口和缺少接触暗部造成强贴片感；灰洞覆盖完整，非目标白车大体保住。",
+      "original_failure_type": "供体较糊；车底弧形缺口/悬浮感"
+    },
+    {
+      "case_id": "W031",
+      "original_ai_score": 1,
+      "source_id": "S008w0",
+      "donor_source_id": "S036w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W031",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "黑SUV A在真实后车B前方，B上半部三帧保留；洞覆盖A，未见自车或旁车被侵入。",
+        "cosmetic_issues_ignored": [
+          "供体过暗",
+          "硬切轮胎",
+          "高光不合"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W031",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8285554685832753,
+        "max_rotation_step_deg_per_100ms": 0.2811440461272038,
+        "max_scale_ratio_per_100ms": 1.0249091513529092,
+        "min_bbox_normalized_hole_IoU": 0.9551297898640296,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "黑色 SUV 与较灰的现场亮度/材质观感不一致，车底像硬切贴片；但 B 的可见上部、GT 和灰洞关系清楚。",
+      "original_failure_type": "供体过暗/硬边；高光不协调"
+    },
+    {
+      "case_id": "D007",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S045",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D007",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A/B前后关系稳定，B露出的车顶与GT匹配，灰洞未覆盖B上部；车辆离自车前景仍有可见间隔。",
+        "cosmetic_issues_ignored": [
+          "车底硬边",
+          "接触影弱",
+          "受光不协调"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D007",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8464375855171655,
+        "max_rotation_step_deg_per_100ms": 0.1705550915348364,
+        "max_scale_ratio_per_100ms": 1.00320365450569,
+        "min_bbox_normalized_hole_IoU": 0.9771225216065074,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "新增车遮住真实后车的下半部，后车上部与GT对应，30帧目标和灰洞连续。但A车底缺少接触暗部，轮胎下缘像硬切贴片；后段阴影扫过路面时，A仍保持较亮高光。监督构型可留，合成真实性需改善。",
+      "original_failure_type": "车底硬边；接地感弱；受光不协调"
+    },
+    {
+      "case_id": "D010",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S045",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D010",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A在B前且两车层序三帧一致，B顶与右侧可见部分保留；灰洞完整覆盖A，末帧仍未压自车机盖。",
+        "cosmetic_issues_ignored": [
+          "下缘硬切",
+          "贴片感"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D010",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.846674439487605,
+        "max_rotation_step_deg_per_100ms": 0.1705550915348364,
+        "max_scale_ratio_per_100ms": 1.0030263436185796,
+        "min_bbox_normalized_hole_IoU": 0.9745745122457451,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "与D007共用背景和供体来源，但A更大、更靠近画面下方。后车车顶保留、遮挡关系连续；新增车与路面连接弱，车底和右侧轮胎硬切，明暗过渡不协调。不是突然换车或mask消失。",
+      "original_failure_type": "硬切下缘；贴片感；同源变体"
+    },
+    {
+      "case_id": "P002",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S059",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "P002",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "f0/f15近端A/H下缘疑似触及自车机盖",
+          "ego像素重叠待核"
+        ],
+        "reason": "A三帧轨迹与洞连续且左侧真实车未丢；f0原尺寸条件图灰洞进入机盖上缘附近，现有图像不足以判定是否覆盖真实自车像素。",
+        "cosmetic_issues_ignored": [
+          "供体偏软",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "P002",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8292879200870106,
+        "max_rotation_step_deg_per_100ms": 0,
+        "max_scale_ratio_per_100ms": 1.0237117848444455,
+        "min_bbox_normalized_hole_IoU": 0.9803839295080248,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A几乎紧贴画面下方采集车可见车体边缘，前半段轮胎/灰洞下缘的间距很小，接地关系不自然；后段A变小，间距增加。旁边真实车辆基本保留，GT仍是明确道路背景。未凭二维相邻直接判三维碰撞，保留1分复核。",
+      "original_failure_type": "近端摆放待核验；接地弱；供体偏软"
+    },
+    {
+      "case_id": "D003",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S045",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D003",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A在右侧空路面随帧缩小，H保持车形且GT左侧真实车不受损；未见深度或自车交叠。",
+        "cosmetic_issues_ignored": [
+          "供体偏软",
+          "受光差",
+          "底部暗影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D003",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8499986659902407,
+        "max_rotation_step_deg_per_100ms": 0.1705550915348364,
+        "max_scale_ratio_per_100ms": 1.0044045795284715,
+        "min_bbox_normalized_hole_IoU": 0.9780420860018298,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A放在真实后车旁的空路面，未明显误遮该后车，条件灰洞持续覆盖A。A比邻近真实车更软，车底没有可信接触，路面进入阴影后车辆高光仍突兀。配对清楚，但不是高真实性输入。",
+      "original_failure_type": "供体软化；车底悬浮感；受光不匹配"
+    },
+    {
+      "case_id": "D006",
+      "original_ai_score": 1,
+      "source_id": "S003",
+      "donor_source_id": "S059",
+      "training_admission": "reject",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D006",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "reject",
+        "issues": [
+          "A及H压到可见自车机盖"
+        ],
+        "reason": "三帧A都极靠近自车；f29原尺寸图中A车底和灰洞越过路面/白色机盖边界，直接改变本应保留的自车前景，违反几何与保留要求。",
+        "cosmetic_issues_ignored": [
+          "供体偏软",
+          "边缘生硬"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D006",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.6688578329655179,
+        "max_rotation_step_deg_per_100ms": 0.10333186912892921,
+        "max_scale_ratio_per_100ms": 1.00237878090673,
+        "min_bbox_normalized_hole_IoU": 0.9819736299958797,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [
+          "known_actual_ego_hood_overwrite"
+        ],
+        "engineering_pass": false,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "新增车遮住后车的一侧和下部，GT后车完整、可辨；灰洞基本覆盖A。但A及灰洞下缘长时间贴近采集车可见车体，车轮/地面连接较假。需要核对近端最小间距与前景层序，不能仅靠羽化通过。",
+      "original_failure_type": "近端接地/边界疑点；供体偏软"
+    },
+    {
+      "case_id": "P001",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S045",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "P001",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A/H在路面且与白色机盖仍有间隔，GT真实车及路面保持；A轮廓与洞连续。",
+        "cosmetic_issues_ignored": [
+          "阴影受光不匹配",
+          "下缘硬"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "P001",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8292879200870106,
+        "max_rotation_step_deg_per_100ms": 0,
+        "max_scale_ratio_per_100ms": 1.02341885731935,
+        "min_bbox_normalized_hole_IoU": 0.9772751294789135,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A在空车道，旁边原有车辆保留，目标轮廓与condition对应。道路建筑阴影逐渐扫过A下方，供体亮反光基本不随之变化；车底硬切、靠近采集车边缘，贴片感持续。",
+      "original_failure_type": "受光不匹配；下缘偏硬"
+    },
+    {
+      "case_id": "D002",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S064",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "D002",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A大小及位置平稳，灰洞对应车形，左侧真实车和GT路面保持；无明显层序冲突。",
+        "cosmetic_issues_ignored": [
+          "供体模糊",
+          "硬边",
+          "光照不协调"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "D002",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8713416004386985,
+        "max_rotation_step_deg_per_100ms": 0.4669006410364471,
+        "max_scale_ratio_per_100ms": 1.013345170695591,
+        "min_bbox_normalized_hole_IoU": 0.9782661388058496,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A没有明显遮坏左侧真实车，GT与灰洞对应清楚。但供体车窗和前脸偏糊，轮胎/下缘缺少接地暗部；跨过明暗边界时仍像单独一张贴图。",
+      "original_failure_type": "供体模糊；硬边；光照不协调"
+    },
+    {
+      "case_id": "P004",
+      "original_ai_score": 1,
+      "source_id": "S008",
+      "donor_source_id": "S062",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "P004",
+        "reviewed_frames": [
+          0,
+          15,
+          29
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "小型A及H在右侧远处连续，GT左侧真车及侧向邻车保留；未见A穿插邻车。",
+        "cosmetic_issues_ignored": [
+          "小目标细节弱",
+          "接触暗部不足"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "P004",
+        "frame_count": 30,
+        "max_translation_step_m_per_100ms": 0.8292879200870106,
+        "max_rotation_step_deg_per_100ms": 0,
+        "max_scale_ratio_per_100ms": 1.0079559910846962,
+        "min_bbox_normalized_hole_IoU": 0.9353123615418697,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 30,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "小SUV供体相对完整，原有车辆保留，30帧没有突然消失或灰洞脱离。轮胎下方缺少接触，随路面阴影变化仍显独立贴片；不因小目标本身扣分，主要是融合不自然。",
+      "original_failure_type": "小目标贴片感；接地弱；局部细节有限"
+    },
+    {
+      "case_id": "W001",
+      "original_ai_score": 1,
+      "source_id": "S003w0",
+      "donor_source_id": "S059w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W001",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A在右侧道路，B真实车于左后方保留；三帧洞与车体同步，近邻关系未见误删。",
+        "cosmetic_issues_ignored": [
+          "下缘硬切",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W001",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.5416337672765245,
+        "max_rotation_step_deg_per_100ms": 0.10333186912892921,
+        "max_scale_ratio_per_100ms": 1.0007946181349991,
+        "min_bbox_normalized_hole_IoU": 0.9803392027654748,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "新增车与左后真实车辆分离，10帧mask和目标持续对应。车体完整但轮胎下缘像被剪出，路面与车身缺少连接；压线本身不是拒绝依据。",
+      "original_failure_type": "下缘硬切；缺接触暗部"
+    },
+    {
+      "case_id": "W007",
+      "original_ai_score": 1,
+      "source_id": "S023w0",
+      "donor_source_id": "T022w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W007",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "白色后视A的下缘弧形缺口与轮胎落点待核"
+        ],
+        "reason": "三帧道路与左侧真实车稳定，H覆盖A；白色A下方露路开口较醒目，抽帧无法确认底盘轮廓与地面几何是否完全合理。",
+        "cosmetic_issues_ignored": [
+          "供体过亮",
+          "车身阴影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W007",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 1.2178160735281085,
+        "max_rotation_step_deg_per_100ms": 0.21693150200347572,
+        "max_scale_ratio_per_100ms": 1.0150695505503133,
+        "min_bbox_normalized_hole_IoU": 0.9567401856425104,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "浅色车尾在偏灰阴天街道上明显发亮，车底弧形缺口、缺少接触暗部造成悬浮感。其他车辆基本未改，灰洞可恢复原道路；不宜作为高真实性输入。",
+      "original_failure_type": "供体过亮；车底弧形空隙；悬浮感"
+    },
+    {
+      "case_id": "W016",
+      "original_ai_score": 1,
+      "source_id": "S003w0",
+      "donor_source_id": "S045w1",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W016",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A位于双黄线附近且三帧平稳，洞形紧随A；左侧真实车持续保留，未见自车侵入。",
+        "cosmetic_issues_ignored": [
+          "硬边",
+          "接触影不足"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W016",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.5423672431574419,
+        "max_rotation_step_deg_per_100ms": 0.10630499227247305,
+        "max_scale_ratio_per_100ms": 1.001639516240822,
+        "min_bbox_normalized_hole_IoU": 0.9813093980992609,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "Honda供体较清楚，灰洞完整，左后原车保持；但车轮下缘与双黄线附近路面叠加生硬，没有自然接触。10帧连续不等于合成自然。",
+      "original_failure_type": "硬边；接地不足；同源道路增强"
+    },
+    {
+      "case_id": "W018",
+      "original_ai_score": 1,
+      "source_id": "S003w2",
+      "donor_source_id": "S059w2",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W018",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A与洞三帧稳定并位于道路，左侧GT真实车保持；明显的软焦和弱影限于被H覆盖的外观。",
+        "cosmetic_issues_ignored": [
+          "供体偏糊",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W018",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.6677264701512889,
+        "max_rotation_step_deg_per_100ms": 0.07221698185815752,
+        "max_scale_ratio_per_100ms": 1.0018119345870014,
+        "min_bbox_normalized_hole_IoU": 0.9858365299498377,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A从头到尾保持同一车型和位置趋势，条件没有明显漏掉整车；车窗和轮胎偏软，车底独立于路面，原背景与供体锐度不太一致。",
+      "original_failure_type": "供体偏糊；接地弱"
+    },
+    {
+      "case_id": "W021",
+      "original_ai_score": 1,
+      "source_id": "S008w0",
+      "donor_source_id": "S064w2",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W021",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [
+          "B可见部分较少，需随全帧证据核验保留量"
+        ],
+        "reason": "三帧后车B顶仍在A上方且GT位置一致，A洞连续；现有抽帧未见B被错误写到前景或自车交叠。",
+        "cosmetic_issues_ignored": [
+          "供体偏糊",
+          "贴片质感"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W021",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8503090978531486,
+        "max_rotation_step_deg_per_100ms": 0.647517837406278,
+        "max_scale_ratio_per_100ms": 1.0051427489891849,
+        "min_bbox_normalized_hole_IoU": 0.9802069645203679,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A遮住B大部分车身，condition中B主要只剩车顶，GT中B可辨。红绿轮廓重叠是有意遮挡，不是标签冲突。A前脸/轮胎偏糊且接地弱；训练是否有B的其他参考，本包不能核验。",
+      "original_failure_type": "供体偏糊；强贴片；后车输入证据少"
+    },
+    {
+      "case_id": "W024",
+      "original_ai_score": 2,
+      "source_id": "S056w0",
+      "donor_source_id": "S045w1",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "A与真实B的前后关系清楚，B上部持续可见，GT可恢复同一B，condition与A对应。车底略有贴片感，但没有明显近端冲突、串位或突然缺mask，可送人工逐帧全检。",
+      "original_failure_type": "轻微软边；相对可用"
+    },
+    {
+      "case_id": "W027",
+      "original_ai_score": 1,
+      "source_id": "S062w2",
+      "donor_source_id": "S019w1",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W027",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧蓝色A在黑色B前方，B左上可见部分保留；洞随A连续且真实侧车未被删。",
+        "cosmetic_issues_ignored": [
+          "供体模糊",
+          "接地影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W027",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.9262152108516132,
+        "max_rotation_step_deg_per_100ms": 0.5976777185059567,
+        "max_scale_ratio_per_100ms": 1.0049350906019994,
+        "min_bbox_normalized_hole_IoU": 0.9393115942028986,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "蓝车A在SUV B前方，B可见部分和GT对应，10帧持续。A的灯、车牌与前脸偏糊，车底倾斜/硬边使其与斑马线关系不自然。保留遮挡配对，先改善供体尺度和局部融合。",
+      "original_failure_type": "供体偏糊；车底/朝向融合生硬"
+    },
+    {
+      "case_id": "W029",
+      "original_ai_score": 2,
+      "source_id": "S003w0",
+      "donor_source_id": "S045w2",
+      "training_admission": "hold_user_reported_silhouette",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": "贴纸右下方多了一块，不干净，需要重新造；新训练判据下尚未单独认证",
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "A前脸清楚，B的右侧/上部保留，GT恢复目标明确，condition没有明显串入另一实例。存在轻微缺少接触暗部，但短窗对象关系和遮挡连续，可送人工全检；与W038同源。",
+      "original_failure_type": "轻微硬边；相对可用"
+    },
+    {
+      "case_id": "W033",
+      "original_ai_score": 2,
+      "source_id": "S056w0",
+      "donor_source_id": "S045w1",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "比W024的A更大，但B上部仍可见，GT、红绿实例轮廓及灰洞对应清楚。没有明显目标突跳或邻车被额外涂掉，短窗可进入人工全检；不是新增场景。",
+      "original_failure_type": "轻微贴片；与W024同源"
+    },
+    {
+      "case_id": "W036",
+      "original_ai_score": 1,
+      "source_id": "S062w2",
+      "donor_source_id": "S019w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W036",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧蓝A和黑B的可见层序与GT一致，B露出的左上部保留，洞覆盖A且平稳。",
+        "cosmetic_issues_ignored": [
+          "供体偏糊",
+          "姿态融合生硬"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W036",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.923879906517966,
+        "max_rotation_step_deg_per_100ms": 0.6985012946760145,
+        "max_scale_ratio_per_100ms": 1.0039631360046093,
+        "min_bbox_normalized_hole_IoU": 0.9542680445927252,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "与W027相同背景和后车，换了供体时间窗。A/B关系可辨、condition持续，蓝车灯和轮胎仍软，缺少接地，摆放像一个倾斜贴片；尚没有解决上一变体的主要缺陷。",
+      "original_failure_type": "供体模糊；姿态与路面融合偏生硬"
+    },
+    {
+      "case_id": "W038",
+      "original_ai_score": 2,
+      "source_id": "S003w0",
+      "donor_source_id": "S045w0",
+      "training_admission": "ai_2_unverified",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": null,
+      "engineering_audit": null,
+      "original_reason": "与W029关系相近：A完整，B可见部分留在正确位置，GT可恢复明确，10帧没有明显条件脱离。可送人工全检，但应与W029和第一包同源变体放同一数据划分。",
+      "original_failure_type": "轻微硬边；与W029高度同源"
+    },
+    {
+      "case_id": "W006",
+      "original_ai_score": 1,
+      "source_id": "S008w2",
+      "donor_source_id": "S064w2",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W006",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A在阴影道路连续，车形洞对应，左侧真实车在GT和条件中一致；未见几何侵入。",
+        "cosmetic_issues_ignored": [
+          "供体偏软",
+          "亮度与路面不合"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W006",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8670248088020273,
+        "max_rotation_step_deg_per_100ms": 0.4669006410364471,
+        "max_scale_ratio_per_100ms": 1.0133417709616126,
+        "min_bbox_normalized_hole_IoU": 0.983180927498367,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "A旁边真实车辆未被明显改动，GT与删除洞明确；但供体车窗偏灰亮、车底硬，放在较暗道路上仍有贴片感。背景运动连续，不能因此认定融合合格。",
+      "original_failure_type": "供体偏软；亮度/路面衔接差"
+    },
+    {
+      "case_id": "W005",
+      "original_ai_score": 1,
+      "source_id": "S008w1",
+      "donor_source_id": "S064w1",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W005",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "三帧A及H沿明暗边界连续，旁侧真车保留；受光突兀但未见洞外车像素或层序错误。",
+        "cosmetic_issues_ignored": [
+          "光照不匹配",
+          "接触影不足"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W005",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8465799374397406,
+        "max_rotation_step_deg_per_100ms": 0.2244869471479652,
+        "max_scale_ratio_per_100ms": 1.007515287405566,
+        "min_bbox_normalized_hole_IoU": 0.9782661388058496,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "新增车持续跨在路面明暗交界附近，供体受光和车底没有相应变化。目标和灰洞对应，旁边真实车仍在；保留为待修输入，不算高真实性合格样本。",
+      "original_failure_type": "光照不匹配；车底悬浮感"
+    },
+    {
+      "case_id": "W010",
+      "original_ai_score": 1,
+      "source_id": "T012w1",
+      "donor_source_id": "T018w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W010",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "H下缘持续大弧形缺口",
+          "接地几何待核"
+        ],
+        "reason": "三帧A与道路、旁车相对位置平稳，H同步；车尾下方露出大块路面，仍需判定为有效底盘空隙还是不合理悬浮。",
+        "cosmetic_issues_ignored": [
+          "车尾贴片感",
+          "阴影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W010",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.06043250010347948,
+        "max_rotation_step_deg_per_100ms": 0.06728656644340804,
+        "max_scale_ratio_per_100ms": 1.002907916874032,
+        "min_bbox_normalized_hole_IoU": 0.9650265091619384,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "原路口结构清楚，小车尾在空路面上持续出现，但下缘呈不自然弧形，缺接地，明显像缩放贴片。灰洞和GT关系没有明显错误，左右真实车辆保留。",
+      "original_failure_type": "车尾贴片；下缘弧形缺口"
+    },
+    {
+      "case_id": "W012",
+      "original_ai_score": 1,
+      "source_id": "T023w1",
+      "donor_source_id": "T013w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W012",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "后视A两轮间开口与道路的空间关系待核"
+        ],
+        "reason": "三帧A、H轨迹连续且GT旁车保留；原尺寸图中车底露路显著、整车有离地视觉疑点，不能仅按阴影缺失归为外观问题。",
+        "cosmetic_issues_ignored": [
+          "供体模糊",
+          "受光差"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W012",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.5466984874669064,
+        "max_rotation_step_deg_per_100ms": 0.5447151980839876,
+        "max_scale_ratio_per_100ms": 1.023431920282113,
+        "min_bbox_normalized_hole_IoU": 0.9544800424146027,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "车尾与轮胎下方缺少可信接触，车体像吊在双黄线附近，尺寸变化时这种感觉持续。供体比环境偏软。GT/condition配对仍明确；需优先复核摆放与供体，而不是只磨边。",
+      "original_failure_type": "较强悬浮感；供体模糊；受光不一致"
+    },
+    {
+      "case_id": "W014",
+      "original_ai_score": 1,
+      "source_id": "T032w1",
+      "donor_source_id": "T018w2",
+      "training_admission": "uncertain",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W014",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "uncertain",
+        "issues": [
+          "H下缘大拱形缺口",
+          "车轮接地几何待核"
+        ],
+        "reason": "三帧GT中的前车和左右邻车保留，A/H连续；洞下缘过宽的露路拱形持续存在，需确认车辆轮廓与真实路面接触。",
+        "cosmetic_issues_ignored": [
+          "车身硬边",
+          "接触影弱"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W014",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.7953733003283617,
+        "max_rotation_step_deg_per_100ms": 0.14889698207222704,
+        "max_scale_ratio_per_100ms": 1.0043930571491466,
+        "min_bbox_normalized_hole_IoU": 0.9718051995606005,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "新增车底部呈明显弧形凹口，路面白线从下面直接露出，缺少实体接触；前后邻车基本保留，灰洞稳定。配对可留但输入合成感较强，与第一包W015为同类问题。",
+      "original_failure_type": "车底大弧形空隙；硬切边；接地不足"
+    },
+    {
+      "case_id": "W022",
+      "original_ai_score": 1,
+      "source_id": "S008w1",
+      "donor_source_id": "S036w0",
+      "training_admission": "train_usable_pending_human",
+      "training_ready": false,
+      "human_full_frame_approved": false,
+      "human_verdict": null,
+      "human_asset_feedback": null,
+      "visual_reassessment": {
+        "case_id": "W022",
+        "reviewed_frames": [
+          0,
+          5,
+          9
+        ],
+        "visual_status": "usable_candidate",
+        "issues": [],
+        "reason": "A黑SUV遮B下部但B顶和右侧仍保留；三帧A/H稳定，未见前后层序反转或旁车被洞侵入。",
+        "cosmetic_issues_ignored": [
+          "供体过暗",
+          "轮胎硬边",
+          "高光不合"
+        ],
+        "temporal_visual_scope": "sampled_only",
+        "human_verdict": null
+      },
+      "engineering_audit": {
+        "case_id": "W022",
+        "frame_count": 10,
+        "max_translation_step_m_per_100ms": 0.8037930897139508,
+        "max_rotation_step_deg_per_100ms": 0.41103725296280663,
+        "max_scale_ratio_per_100ms": 1.0242051902528866,
+        "min_bbox_normalized_hole_IoU": 0.947706762269749,
+        "RGB_leak_pixels": 0,
+        "full_resolution_coverage_pass": true,
+        "latent_nearest_hole_alias_frames": 10,
+        "latent_mask_alias_is_RGB_leak": false,
+        "engineering_flags": [],
+        "engineering_pass": true,
+        "spatial_limit": "GT/LiDAR/placement record supports placement; real silhouette ground-contact and ego visibility still require sampled visual check",
+        "human_verdict": null
+      },
+      "original_reason": "黑SUV的前脸可辨，但明显比原环境更暗且硬，轮胎/下缘像剪贴。B的可见上部与GT一致，condition持续覆盖A；保留关系，修供体色调和接地。",
+      "original_failure_type": "供体过暗；轮胎硬切；高光不协调"
+    }
+  ]
+}

@@ -1,0 +1,684 @@
+{
+  "reviewer_model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "scope": "仅重审旧AI评分1的37个V77 Target+Protected合成case；独立视觉抽帧，不代表全帧人工验收或train_usable。",
+  "new_contract": {
+    "task": "DriveEditor background/deletion条件；X归一化后洞H内清零，Y为真实GT。",
+    "necessary_conditions": [
+      "车辆silhouette/洞轮廓合理",
+      "尺寸、位置及接地几何合理且不压ego",
+      "mask与轨迹时间连续",
+      "camera→A→真实B的3D深度及遮挡顺序正确，B应保留部分不被删除",
+      "实际mask/resize/latent流程中RGB不得漏出"
+    ],
+    "cosmetic_policy": "若合成影响完全在H内，材质、受光、贴片硬边、假阴影单独不构成否决；真实空间悬浮不可豁免。",
+    "status_meaning": "usable_candidate仅为抽帧视觉候选，需与主线程全帧工程审计、latent/几何证据及人工全检合并。"
+  },
+  "reviews": [
+    {
+      "case_id": "D001",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A位置与尺寸平稳，车形灰洞覆盖A；GT道路和左侧真实车保持，未见自车或B被洞侵入。",
+      "cosmetic_issues_ignored": [
+        "贴片硬边",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P005",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "末帧A/H下缘与自车机盖可见边界过近",
+        "需确认ego像素重叠"
+      ],
+      "reason": "f0/f15/f29的B仍在A后方且露出车顶，出租车保留；f29原尺寸图灰洞几乎贴到白色机盖，尚无可靠ego像素标注可排除侵入。",
+      "cosmetic_issues_ignored": [
+        "车身反光不一致",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D004",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A和灰洞在道路上连续，真实车与GT道路保持；明暗边界穿过A只影响外观，不见几何穿插。",
+      "cosmetic_issues_ignored": [
+        "跨阴影受光不匹配",
+        "硬切下缘"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P003",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧小型A沿空路面连续，洞包住可见车身，GT中的邻车保留；未见与自车或其他对象交叠错误。",
+      "cosmetic_issues_ignored": [
+        "供体偏糊",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D005",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A大小和轨迹平稳，洞与车形同位，左侧真实车及GT背景不被额外删去。",
+      "cosmetic_issues_ignored": [
+        "明暗不匹配",
+        "轮廓硬边"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W003",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "首中末A持续位于双黄线附近道路，洞形和车体对应，左侧真实车在GT与条件中一致。",
+      "cosmetic_issues_ignored": [
+        "供体轮廓偏软",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W008",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A在右侧车道并随场景连续，洞覆盖车体，邻近真实车辆保持且未见层序冲突。",
+      "cosmetic_issues_ignored": [
+        "孤立贴片感",
+        "底部阴影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W017",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A与左后方真实车相邻但车形可分，条件未明显吞掉B；尺寸、位置和洞随帧连续。",
+      "cosmetic_issues_ignored": [
+        "硬边",
+        "接触暗部不足"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W023",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A在皮卡B前，B车顶与上部在条件中保留并与GT相符；A灰洞连续且其他侧车保留。",
+      "cosmetic_issues_ignored": [
+        "供体偏软",
+        "反光不合",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W032",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A遮住后方B的下部而B上部仍可见，三帧红绿层序和灰洞对应，旁车与道路保持。",
+      "cosmetic_issues_ignored": [
+        "受光差",
+        "车底硬边"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W004",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A在空路面，车形洞完整覆盖A，左侧真实车保留；未见位置或遮挡跳变。",
+      "cosmetic_issues_ignored": [
+        "贴片硬边",
+        "接触影不足"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W009",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "后视车的H下缘弧形缺口占比明显",
+        "轮胎落点与路面接触需核"
+      ],
+      "reason": "三帧洞随A连续且GT道路可恢复，但后车底部大弧形开口与道路之间的空间关系不够明确；需辨明有效底盘空隙还是不合理悬浮。",
+      "cosmetic_issues_ignored": [
+        "供体偏糊",
+        "车身受光"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W011",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "后视车的H下缘弧形缺口较大",
+        "接地几何待核"
+      ],
+      "reason": "三帧真实横穿白车和右侧车辆保留，A洞稳定；A两轮间的宽大弧形露路区域使车辆轮廓是否合理仍有疑问。",
+      "cosmetic_issues_ignored": [
+        "贴片质感",
+        "缺少接触暗部"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W013",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A尾部及洞沿道路平稳变化，旁侧白色SUV与GT一致；虽贴近双黄线，未见逆向层序或真实车被洞覆盖。",
+      "cosmetic_issues_ignored": [
+        "后视车底阴影弱",
+        "车尾硬边"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W015",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "A/H车底大弧形开口",
+        "接地/洞轮廓需核"
+      ],
+      "reason": "三帧A相对GT前车和道路稳定，前车仍在；但灰洞下缘宽深的拱形缺口持续存在，无法仅凭抽帧确认是否合理车底轮廓。",
+      "cosmetic_issues_ignored": [
+        "供体模糊",
+        "受光与接触影不足"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W031",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "黑SUV A在真实后车B前方，B上半部三帧保留；洞覆盖A，未见自车或旁车被侵入。",
+      "cosmetic_issues_ignored": [
+        "供体过暗",
+        "硬切轮胎",
+        "高光不合"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D007",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A/B前后关系稳定，B露出的车顶与GT匹配，灰洞未覆盖B上部；车辆离自车前景仍有可见间隔。",
+      "cosmetic_issues_ignored": [
+        "车底硬边",
+        "接触影弱",
+        "受光不协调"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D010",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A在B前且两车层序三帧一致，B顶与右侧可见部分保留；灰洞完整覆盖A，末帧仍未压自车机盖。",
+      "cosmetic_issues_ignored": [
+        "下缘硬切",
+        "贴片感"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P002",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "f0/f15近端A/H下缘疑似触及自车机盖",
+        "ego像素重叠待核"
+      ],
+      "reason": "A三帧轨迹与洞连续且左侧真实车未丢；f0原尺寸条件图灰洞进入机盖上缘附近，现有图像不足以判定是否覆盖真实自车像素。",
+      "cosmetic_issues_ignored": [
+        "供体偏软",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D003",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A在右侧空路面随帧缩小，H保持车形且GT左侧真实车不受损；未见深度或自车交叠。",
+      "cosmetic_issues_ignored": [
+        "供体偏软",
+        "受光差",
+        "底部暗影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D006",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "reject",
+      "issues": [
+        "A及H压到可见自车机盖"
+      ],
+      "reason": "三帧A都极靠近自车；f29原尺寸图中A车底和灰洞越过路面/白色机盖边界，直接改变本应保留的自车前景，违反几何与保留要求。",
+      "cosmetic_issues_ignored": [
+        "供体偏软",
+        "边缘生硬"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P001",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A/H在路面且与白色机盖仍有间隔，GT真实车及路面保持；A轮廓与洞连续。",
+      "cosmetic_issues_ignored": [
+        "阴影受光不匹配",
+        "下缘硬"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "D002",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A大小及位置平稳，灰洞对应车形，左侧真实车和GT路面保持；无明显层序冲突。",
+      "cosmetic_issues_ignored": [
+        "供体模糊",
+        "硬边",
+        "光照不协调"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "P004",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "小型A及H在右侧远处连续，GT左侧真车及侧向邻车保留；未见A穿插邻车。",
+      "cosmetic_issues_ignored": [
+        "小目标细节弱",
+        "接触暗部不足"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W001",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A在右侧道路，B真实车于左后方保留；三帧洞与车体同步，近邻关系未见误删。",
+      "cosmetic_issues_ignored": [
+        "下缘硬切",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W007",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "白色后视A的下缘弧形缺口与轮胎落点待核"
+      ],
+      "reason": "三帧道路与左侧真实车稳定，H覆盖A；白色A下方露路开口较醒目，抽帧无法确认底盘轮廓与地面几何是否完全合理。",
+      "cosmetic_issues_ignored": [
+        "供体过亮",
+        "车身阴影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W016",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A位于双黄线附近且三帧平稳，洞形紧随A；左侧真实车持续保留，未见自车侵入。",
+      "cosmetic_issues_ignored": [
+        "硬边",
+        "接触影不足"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W018",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A与洞三帧稳定并位于道路，左侧GT真实车保持；明显的软焦和弱影限于被H覆盖的外观。",
+      "cosmetic_issues_ignored": [
+        "供体偏糊",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W021",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [
+        "B可见部分较少，需随全帧证据核验保留量"
+      ],
+      "reason": "三帧后车B顶仍在A上方且GT位置一致，A洞连续；现有抽帧未见B被错误写到前景或自车交叠。",
+      "cosmetic_issues_ignored": [
+        "供体偏糊",
+        "贴片质感"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W027",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧蓝色A在黑色B前方，B左上可见部分保留；洞随A连续且真实侧车未被删。",
+      "cosmetic_issues_ignored": [
+        "供体模糊",
+        "接地影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W036",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧蓝A和黑B的可见层序与GT一致，B露出的左上部保留，洞覆盖A且平稳。",
+      "cosmetic_issues_ignored": [
+        "供体偏糊",
+        "姿态融合生硬"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W006",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A在阴影道路连续，车形洞对应，左侧真实车在GT和条件中一致；未见几何侵入。",
+      "cosmetic_issues_ignored": [
+        "供体偏软",
+        "亮度与路面不合"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W005",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "三帧A及H沿明暗边界连续，旁侧真车保留；受光突兀但未见洞外车像素或层序错误。",
+      "cosmetic_issues_ignored": [
+        "光照不匹配",
+        "接触影不足"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W010",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "H下缘持续大弧形缺口",
+        "接地几何待核"
+      ],
+      "reason": "三帧A与道路、旁车相对位置平稳，H同步；车尾下方露出大块路面，仍需判定为有效底盘空隙还是不合理悬浮。",
+      "cosmetic_issues_ignored": [
+        "车尾贴片感",
+        "阴影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W012",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "后视A两轮间开口与道路的空间关系待核"
+      ],
+      "reason": "三帧A、H轨迹连续且GT旁车保留；原尺寸图中车底露路显著、整车有离地视觉疑点，不能仅按阴影缺失归为外观问题。",
+      "cosmetic_issues_ignored": [
+        "供体模糊",
+        "受光差"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W014",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "uncertain",
+      "issues": [
+        "H下缘大拱形缺口",
+        "车轮接地几何待核"
+      ],
+      "reason": "三帧GT中的前车和左右邻车保留，A/H连续；洞下缘过宽的露路拱形持续存在，需确认车辆轮廓与真实路面接触。",
+      "cosmetic_issues_ignored": [
+        "车身硬边",
+        "接触影弱"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    },
+    {
+      "case_id": "W022",
+      "reviewed_frames": [
+        0,
+        5,
+        9
+      ],
+      "visual_status": "usable_candidate",
+      "issues": [],
+      "reason": "A黑SUV遮B下部但B顶和右侧仍保留；三帧A/H稳定，未见前后层序反转或旁车被洞侵入。",
+      "cosmetic_issues_ignored": [
+        "供体过暗",
+        "轮胎硬边",
+        "高光不合"
+      ],
+      "temporal_visual_scope": "sampled_only",
+      "human_verdict": null
+    }
+  ]
+}

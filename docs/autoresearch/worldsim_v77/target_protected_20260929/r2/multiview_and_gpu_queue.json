@@ -1,0 +1,386 @@
+{
+  "selection": {
+    "min_bbox_px": [
+      128,
+      72
+    ],
+    "max_foreground_GT_box_overlap": 0.03,
+    "bottom_guard_plus_clearance": 72,
+    "rank": "maximize the weaker view area, minimum two actual cameras and >=15deg yaw span; not largest angle alone",
+    "candidate_views": 532,
+    "conservative_foreground_rejected": 137,
+    "retained_views": 395,
+    "selected_instances": 2,
+    "selected_views": 4,
+    "note": "包络交叠只作保守排除，不等价实际分割失败。新来源还须看真实RGB和实例mask。"
+  },
+  "jobs": [
+    {
+      "instance_token": "bbd638842e8240f6aa10b9b73095c531",
+      "source_ids": [
+        "T021"
+      ],
+      "scene_token": "d654cae175de44319ace178994ed0329",
+      "camera": "CAM_FRONT",
+      "filename": "samples/CAM_FRONT/n008-2018-08-06-15-06-32-0400__CAM_FRONT__1533583270662404.jpg",
+      "timestamp_us": 1533583270662404,
+      "box_xyxy": [
+        8.678235620087154,
+        302.198101200554,
+        322.0140952214149,
+        417.49898123479994
+      ],
+      "view_angles_deg": [
+        72.90299479761448,
+        2.135551190426521
+      ],
+      "available": false,
+      "sample_data_token": "0e59cde1153547f191e079e8b49f9824",
+      "camera_to_world": [
+        [
+          0.4252128397927722,
+          0.016980972548529337,
+          0.904934079061382,
+          1673.400299065637
+        ],
+        [
+          -0.9050753271240705,
+          0.014293735710539941,
+          0.42501098968225903,
+          1265.6080559477575
+        ],
+        [
+          -0.00571778861294651,
+          -0.9997536374981301,
+          0.02144693923697108,
+          1.5170353319472907
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "intrinsics_1024": [
+        [
+          801.8003853558595,
+          0.0,
+          529.0163934600947
+        ],
+        [
+          0.0,
+          801.8003853558595,
+          300.79018407837316
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "actor": {
+        "translation": [
+          1685.0168077147775,
+          1278.969832355328,
+          0.8568077147773517
+        ],
+        "rotation": [
+          0.2071105583428846,
+          0.0,
+          0.0,
+          0.9783175438593026
+        ],
+        "size": [
+          2.162,
+          5.356,
+          1.954
+        ],
+        "instance_token": "bbd638842e8240f6aa10b9b73095c531"
+      },
+      "area_px": 36127.900358320025,
+      "mask_status": "not_inferred",
+      "nearest_sample_token": "30b4978ab112472687d441869e4d7234",
+      "selection_revision": "well_observed_multicamera_v2",
+      "materialized": true,
+      "view_id": "MV01",
+      "crop": "crops/MV01.jpg"
+    },
+    {
+      "instance_token": "bbd638842e8240f6aa10b9b73095c531",
+      "source_ids": [
+        "T021"
+      ],
+      "scene_token": "d654cae175de44319ace178994ed0329",
+      "camera": "CAM_BACK_LEFT",
+      "filename": "samples/CAM_BACK_LEFT/n008-2018-08-06-15-06-32-0400__CAM_BACK_LEFT__1533583272697405.jpg",
+      "timestamp_us": 1533583272697405,
+      "box_xyxy": [
+        524.640962050908,
+        297.1446332933171,
+        868.1746961692663,
+        433.4885884740019
+      ],
+      "view_angles_deg": [
+        106.82537246978563,
+        2.913792173280017
+      ],
+      "available": false,
+      "sample_data_token": "3036a25dfadb4ab780f94bc0e1069143",
+      "camera_to_world": [
+        [
+          0.9988570504409436,
+          0.003247036182907533,
+          -0.04768699550657684,
+          1682.9203195556872
+        ],
+        [
+          0.04761715425012634,
+          0.018966353066619878,
+          0.9986855781838803,
+          1265.1162392278038
+        ],
+        [
+          0.0041472166011750425,
+          -0.9998148499634212,
+          0.018790060858968248,
+          1.5694311503497689
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "intrinsics_1024": [
+        [
+          803.1910762112108,
+          0.0,
+          530.9292373523834
+        ],
+        [
+          0.0,
+          803.1910762112108,
+          298.98755595929515
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "actor": {
+        "translation": [
+          1685.0299983613797,
+          1278.9929971324143,
+          0.855
+        ],
+        "rotation": [
+          0.22044068865052902,
+          0.0,
+          0.0,
+          0.9754003807602704
+        ],
+        "size": [
+          2.162,
+          5.356,
+          1.954
+        ],
+        "instance_token": "bbd638842e8240f6aa10b9b73095c531"
+      },
+      "area_px": 46838.74804768674,
+      "mask_status": "not_inferred",
+      "nearest_sample_token": "fc1250b6d3844bc9a1163246395c58d5",
+      "selection_revision": "well_observed_multicamera_v2",
+      "materialized": true,
+      "view_id": "MV02",
+      "crop": "crops/MV02.jpg"
+    },
+    {
+      "instance_token": "b4ed7cfef1cd40c492b281136ccbe41e",
+      "source_ids": [
+        "S024"
+      ],
+      "scene_token": "d1ac8e27ba8944a4a42a488cf2fedd74",
+      "camera": "CAM_BACK_LEFT",
+      "filename": "samples/CAM_BACK_LEFT/n008-2018-08-21-11-53-44-0400__CAM_BACK_LEFT__1534867236697405.jpg",
+      "timestamp_us": 1534867236697405,
+      "box_xyxy": [
+        637.0463332329919,
+        331.6242518784013,
+        933.3968855826159,
+        448.96136774924395
+      ],
+      "view_angles_deg": [
+        94.14478684555183,
+        3.3000640373383896
+      ],
+      "available": false,
+      "sample_data_token": "c762666ef9334c3e93456400c4d3a24d",
+      "camera_to_world": [
+        [
+          -0.9782166415867537,
+          -0.010632500737936,
+          -0.20731413856944375,
+          812.8919405557266
+        ],
+        [
+          0.20758046686735404,
+          -0.042417050763612636,
+          -0.9772978786325325,
+          1380.0724721056956
+        ],
+        [
+          0.001597466076028964,
+          -0.9990434143382231,
+          0.04370016441114425,
+          1.5691977492502616
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "intrinsics_1024": [
+        [
+          803.1910762112108,
+          0.0,
+          530.9292373523834
+        ],
+        [
+          0.0,
+          803.1910762112108,
+          298.98755595929515
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "actor": {
+        "translation": [
+          805.3009862740925,
+          1366.4500085786924,
+          0.6699965685230873
+        ],
+        "rotation": [
+          0.9581403836156627,
+          0.0,
+          0.0,
+          -0.28629880419734677
+        ],
+        "size": [
+          1.957,
+          4.891,
+          1.897
+        ],
+        "instance_token": "b4ed7cfef1cd40c492b281136ccbe41e"
+      },
+      "area_px": 34772.919099436054,
+      "mask_status": "not_inferred",
+      "nearest_sample_token": "636b8726acbe4dc383691d68e19e9d66",
+      "selection_revision": "well_observed_multicamera_v2",
+      "materialized": true,
+      "view_id": "MV03",
+      "crop": "crops/MV03.jpg"
+    },
+    {
+      "instance_token": "b4ed7cfef1cd40c492b281136ccbe41e",
+      "source_ids": [
+        "S024"
+      ],
+      "scene_token": "d1ac8e27ba8944a4a42a488cf2fedd74",
+      "camera": "CAM_FRONT_LEFT",
+      "filename": "samples/CAM_FRONT_LEFT/n008-2018-08-21-11-53-44-0400__CAM_FRONT_LEFT__1534867235254799.jpg",
+      "timestamp_us": 1534867235254799,
+      "box_xyxy": [
+        125.94126513990962,
+        311.4598802013464,
+        414.1888379598545,
+        432.8953884744936
+      ],
+      "view_angles_deg": [
+        76.0577564504607,
+        3.049624964847357
+      ],
+      "available": false,
+      "sample_data_token": "6f7ac1d8728a4aa3b7285b77abd1b83e",
+      "camera_to_world": [
+        [
+          -0.42472822316023107,
+          -0.016653891351259293,
+          -0.9051677106227405,
+          817.0606376361928
+        ],
+        [
+          0.9049720059677513,
+          -0.03556545437941644,
+          -0.42398203602215256,
+          1377.5176857426193
+        ],
+        [
+          -0.02513175015507527,
+          -0.9992285756310445,
+          0.030176957707773885,
+          1.502124311090314
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "intrinsics_1024": [
+        [
+          805.0320218960082,
+          0.0,
+          529.434280390124
+        ],
+        [
+          0.0,
+          805.0320218960082,
+          288.58591885169534
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "actor": {
+        "translation": [
+          805.1844004685247,
+          1366.5260371778893,
+          0.6399999999999999
+        ],
+        "rotation": [
+          0.9581403836156627,
+          0.0,
+          0.0,
+          -0.28629880419734677
+        ],
+        "size": [
+          1.957,
+          4.891,
+          1.897
+        ],
+        "instance_token": "b4ed7cfef1cd40c492b281136ccbe41e"
+      },
+      "area_px": 35003.49051389102,
+      "mask_status": "not_inferred",
+      "nearest_sample_token": "ba5ec5d6d6f04f3dbd764050c9e810a8",
+      "selection_revision": "well_observed_multicamera_v2",
+      "materialized": true,
+      "view_id": "MV04",
+      "crop": "crops/MV04.jpg"
+    }
+  ],
+  "pre_gpu_rejected": [],
+  "state": "awaiting_user_gpu",
+  "remote_root": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r2"
+}
