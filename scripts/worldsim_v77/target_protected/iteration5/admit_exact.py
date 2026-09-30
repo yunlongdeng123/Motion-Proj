@@ -8,7 +8,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from geometry_factory import Geometry,read,dump
 from build_pairs import evaluate
 from iteration4.segment_receivers import reusable
-from planning import inputs,silhouettes,normalized_masks
+from iteration5.planning import inputs,silhouettes,normalized_masks
 
 def review_blockers(job,review):
     if review is None:return ['missing_independent_receiver_mask_review']

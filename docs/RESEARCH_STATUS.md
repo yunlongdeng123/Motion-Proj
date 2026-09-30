@@ -1,9 +1,9 @@
 # 当前研究状态
 
-2026-09-30，v77；`WS-V77-TARGET-PROTECTED-20260929/r5`。用户最新明确资源要求是CPU，本轮连续规划和精确准入入口完成。[本轮报告](v77/TARGET_PROTECTED_CPU_R5.md)。r4的4个空间预案保持原曝光、donor、位姿与门槛，扩成40帧/16视频，160视频帧实际解码；没有实际synthetic-X，训练准入0。
+2026-10-01，v77；`WS-V77-TARGET-PROTECTED-20260929/r6`已完成有界数据准入与微调对照。用户授权GPU/CPU自主迭代及技术AI2分后训练，历史人工分保持null。52case/10个receiver scene，48train/4validation；29背景、23单保护车、密集0。新的4例精确mask仅C012通过，原阈值未放宽。
 
-四列为真实Y+B定位框、A洞规划上界、masked-Y条件规划、米制位姿。全帧隐藏像素条件探针和ego底部保守禁入通过；真实保护车SAM2 mask仍缺，不能认证精确遮挡或时序视觉通过。复用r4 Sol来源抽帧，未重复AI看图；人工verdict全部空白。
+原DriveEditor结构不变，160步更新既有80个空间attention张量。latent loss0.544→0.165，但4个共享一个场景的合成留出例保护车MAE均变差（均值+35.7%），视频变模糊；本轮权重不升为默认，原权重保留。A041空首窗不计删除成功，按输入非空规则补跑有效10–19帧，两权重相同条件，保留旧空窗。8个有效任务+1个空窗全部在本地r6报告，人工verdict留空；215视频/2750帧解码通过。
 
-`iteration5/admit_exact.py`已检查4例全部waiting_inputs。真实PNG来源字段、数值连续性与独立mask QA同时通过后才调用原精确几何/遮挡关卡。4项准入测试和本地静态文件/JS验证通过；浏览器交互未测。没有推理、训练、自动化或电源操作。下一步需用户确认解除CPU限制，再运行r4 SAM2保护mask、独立QA、精确关卡、实际合成与人工全检。远端当前已读到RTX3090可用，未自动加载模型。
+下一步优先原分辨率训练/推理一致性控制，同数据同更新范围，尚未执行；之后才判断保护区监督是否需要变化。密集类及来源场景多样性仍欠缺，不把这次单场景负结果否定整个路线。GPU当前允许；无本轮关机或自动化授权，作业结束不关机。
 
-本地 `outputs/v77-target-protected-r5/index.html`；run `/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r5`。r4负对照/旧资产、r3实际合成和全帧人工页保持独立。failure_ledger_refs: [V77-F02]；failure_ledger_delta: none。
+见[报告与组件图](v77/TARGET_PROTECTED_FINETUNE_R6.md)、[证据](autoresearch/worldsim_v77/target_protected_20260929/r6/pilot_summary.json)。run `/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r6`。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。

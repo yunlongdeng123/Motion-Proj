@@ -1,0 +1,423 @@
+{
+  "data": {
+    "case_count": 52,
+    "type_counts": {
+      "background": 29,
+      "single_actor": 23
+    },
+    "split_counts": {
+      "train": 48,
+      "validation": 4
+    },
+    "receiver_scene_count": 10,
+    "scene_component_case_sizes": [
+      43,
+      1,
+      2,
+      4,
+      1,
+      1
+    ],
+    "all_retained_assistant_scores": 2,
+    "human_verdicts_all_null": true,
+    "decoded_and_coverage_verified_frames": 720,
+    "classification": "technical AI2 admission per user 2026-10-01; preserves prior score histories; no claim final unseen evaluation",
+    "GPU_training_steps_at_catalog_freeze": 0
+  },
+  "training": {
+    "stage": "complete",
+    "steps": 160,
+    "size": [
+      320,
+      576
+    ],
+    "train_cases": 48,
+    "validation_cases": 4,
+    "training_window_count": 68,
+    "human_verdict": null,
+    "last_case": "r3/R008",
+    "last_window": 0,
+    "loss": 0.4179075360298157,
+    "grad_norm": 6.708996295928955,
+    "elapsed_seconds": 534.3602759838104,
+    "peak_allocated_GiB": 10.476374626159668,
+    "peak_reserved_GiB": 11.046875
+  },
+  "model_decision": "r6 finetune not promoted; original default retained",
+  "validation_loss_base": 0.5437905490398407,
+  "validation_loss_finetuned": 0.1654224470257759,
+  "validation_loss_change_percent": -69.57974953447447,
+  "protected_MAE_base": 0.08356418013572692,
+  "protected_MAE_finetuned": 0.11337512768805028,
+  "protected_MAE_change_percent": 35.67431344854184,
+  "protected_MAE_worse_cases": 4,
+  "evaluation": [
+    {
+      "eval_id": "synthetic_R014",
+      "kind": "synthetic",
+      "base_hole": {
+        "MAE": 0.05048222653567791,
+        "PSNR": 22.316535021704645
+      },
+      "finetuned_hole": {
+        "MAE": 0.056576937437057495,
+        "PSNR": 21.72688247708719
+      },
+      "base_protected_in_hole": {
+        "MAE": 0.0776323564350605,
+        "PSNR": 19.308966569461685
+      },
+      "finetuned_protected_in_hole": {
+        "MAE": 0.11112867593765259,
+        "PSNR": 17.89878973276037
+      },
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "synthetic_R015",
+      "kind": "synthetic",
+      "base_hole": {
+        "MAE": 0.033239921927452086,
+        "PSNR": 24.994959533983824
+      },
+      "finetuned_hole": {
+        "MAE": 0.05401093363761902,
+        "PSNR": 21.764797750535955
+      },
+      "base_protected_in_hole": {
+        "MAE": 0.07661992311477661,
+        "PSNR": 19.853168028155554
+      },
+      "finetuned_protected_in_hole": {
+        "MAE": 0.1261022999882698,
+        "PSNR": 16.855171977397013
+      },
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "synthetic_R018",
+      "kind": "synthetic",
+      "base_hole": {
+        "MAE": 0.06448355466127395,
+        "PSNR": 20.533819079575927
+      },
+      "finetuned_hole": {
+        "MAE": 0.050915250182151796,
+        "PSNR": 22.577377855202137
+      },
+      "base_protected_in_hole": {
+        "MAE": 0.10134996324777604,
+        "PSNR": 17.357145629718026
+      },
+      "finetuned_protected_in_hole": {
+        "MAE": 0.10566445663571358,
+        "PSNR": 18.131896676249976
+      },
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "synthetic_R019",
+      "kind": "synthetic",
+      "base_hole": {
+        "MAE": 0.03699977472424507,
+        "PSNR": 24.27182354812086
+      },
+      "finetuned_hole": {
+        "MAE": 0.04979419335722923,
+        "PSNR": 22.377330236887083
+      },
+      "base_protected_in_hole": {
+        "MAE": 0.07865447774529458,
+        "PSNR": 19.630853822190083
+      },
+      "finetuned_protected_in_hole": {
+        "MAE": 0.11060507819056511,
+        "PSNR": 17.758818764864717
+      },
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "A022",
+      "kind": "real_development",
+      "base_hole": null,
+      "finetuned_hole": null,
+      "base_protected_in_hole": null,
+      "finetuned_protected_in_hole": null,
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "A041",
+      "kind": "real_development",
+      "base_hole": null,
+      "finetuned_hole": null,
+      "base_protected_in_hole": null,
+      "finetuned_protected_in_hole": null,
+      "input_not_exercised": true,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "A013",
+      "kind": "real_development",
+      "base_hole": null,
+      "finetuned_hole": null,
+      "base_protected_in_hole": null,
+      "finetuned_protected_in_hole": null,
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "A048",
+      "kind": "real_development",
+      "base_hole": null,
+      "finetuned_hole": null,
+      "base_protected_in_hole": null,
+      "finetuned_protected_in_hole": null,
+      "input_not_exercised": false,
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "eval_id": "A041_w10",
+      "kind": "real_development",
+      "base_hole": null,
+      "finetuned_hole": null,
+      "base_protected_in_hole": null,
+      "finetuned_protected_in_hole": null,
+      "input_not_exercised": false,
+      "frames": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  ],
+  "assistant_review": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "xhigh",
+    "fast": false,
+    "scope": "frame5 only, full frame and same-frame crop; nine windows total, eight effective DELETE tasks plus one retained empty-mask A041 window; four synthetic cases share one receiver scene; no clean GT for real cases; no temporal certification",
+    "cases": [
+      {
+        "eval_id": "synthetic_R014",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 1,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "worse",
+        "failure_morphology": "原模型保留后车尾部，但在洞内留下大片灰色三角形路面和硬边；微调模型改为模糊团，进一步抹掉后车主体。",
+        "note": "后车在GT中清晰；原模型虽有明显几何补景痕迹，仍能辨认后车。微调后车尾及车道线被连续模糊覆盖。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "synthetic_R015",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 1,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "worse",
+        "failure_morphology": "原模型留下可辨后车及灰色楔形路面；微调模型以大块模糊遮住后车下半和道路。",
+        "note": "后车在GT中可见；原模型有硬边补景伪影，微调没有恢复结构，反而削弱真实后车。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "synthetic_R018",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 1,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "worse",
+        "failure_morphology": "原模型保留部分后车轮廓但路面呈大块灰色切片；微调模型把后车及车道线一起模糊。",
+        "note": "两者都未干净恢复道路；微调的软化以丢失真实后车细节为代价。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "synthetic_R019",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 1,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "worse",
+        "failure_morphology": "原模型的后车仍可辨但右侧路面有长三角形灰色补丁；微调模型把后车后半与路面混成模糊斑。",
+        "note": "GT后车清楚，原模型有几何接缝；微调后关键车体证据变弱，因此第5帧更差。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "A022",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 0,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "mixed",
+        "failure_morphology": "原模型在应删除的银色车区域再生一辆深色车；微调模型压掉清晰车形却留下覆盖路面和墙面的巨大模糊团。",
+        "note": "真实例没有干净GT；按输入和条件看，两种输出都未可靠清除目标并恢复背景，微调只改变了错误形态。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "A041",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 2,
+        "finetuned_assistant_score": 2,
+        "input_exercised": false,
+        "effective_base_score": null,
+        "effective_finetuned_score": null,
+        "relative_effect": "uncertain",
+        "failure_morphology": "首窗0–9帧mask全为空，DELETE输入未触发；第5帧输入、条件和两种输出几乎相同。",
+        "note": "原2/2仅保留为画面未变观察，不计入有效DELETE效果分；无法据此判断微调对再生车问题是否有效。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "A041_w10",
+        "reviewed_frames": [
+          5
+        ],
+        "source_frame": 15,
+        "input_exercised": true,
+        "base_assistant_score": 0,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "mixed",
+        "failure_morphology": "原模型在删除洞内留下深色车形及向路面延伸的黑色拖影；微调模型压掉清晰车形，却以大块棕灰模糊遮住墙面和路口。",
+        "note": "同一非空mask窗口第5帧（来源第15帧）中，两种输出均未干净恢复被车挡住的背景。输入本来有车，原模型的车形属于删除失败，不凭单帧称为全新幻觉；微调改变了伪影形态但未改善到可接受。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "A013",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 0,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "mixed",
+        "failure_morphology": "原模型在被遮区域形成黑白块状伪影并破坏后方白色巴士车头；微调模型变成大块模糊，仍遮损巴士。",
+        "note": "输入中确有前车及后方巴士，车辆存在本身不是幻觉；失败在于两模型都没保住真实巴士的可见结构。",
+        "human_verdict": null
+      },
+      {
+        "eval_id": "A048",
+        "reviewed_frames": [
+          5
+        ],
+        "base_assistant_score": 0,
+        "finetuned_assistant_score": 0,
+        "relative_effect": "mixed",
+        "failure_morphology": "原模型在删车区域留下或再生车辆形状；微调模型用大片模糊覆盖该处，并伤及后方真实深色车。",
+        "note": "真实例没有干净GT；按输入与条件，后方车辆应可见，两种输出均未清晰保留，微调只降低了可辨车形。",
+        "human_verdict": null
+      }
+    ]
+  },
+  "human_verdict": null,
+  "limits": [
+    "dense_actor training data zero",
+    "10 receiver scenes total; heldout4 cases share one receiver scene",
+    "160step partial self-attention pilot, not full-model training",
+    "train320x576 vs inference576x1024; resolution control not run, not proven causal",
+    "real deletion examples exposed development; unknown clean GT",
+    "sampled-frame QA cannot certify temporal quality"
+  ]
+}

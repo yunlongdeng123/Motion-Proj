@@ -1,0 +1,18 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r6",
+  "date": "2026-10-01",
+  "authorization": "用户允许自主CPU/GPU造数及infra迭代，固定标准AI自评2分后微调原DriveEditor并评估",
+  "quality_scale": {
+    "0": "空间/洞覆盖/身份/次序等硬失败",
+    "1": "质量有疑点或不充分，不能训练",
+    "2": "五项输入合同合格、独立QA通过，可作为技术训练候选"
+  },
+  "score_source": "assistant technical self-review; not human verdict",
+  "human_verdict": null,
+  "stop_rule": "工程bug可修；不按生成结果放宽数据标准或强改失败评分；明确无收益则保留反例并停止该控制",
+  "architecture_change": false,
+  "initial_GPU": "RTX3090 24GB",
+  "seed": 42,
+  "experiment_roles": "real nuScenes train Y supervised; past val audit cases only development evaluation; isolated final scenes untouched"
+}
