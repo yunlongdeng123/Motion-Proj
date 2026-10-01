@@ -4,7 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r13 | 同r7参数单一CFG1控制，固定8真实DEV＋2GT哨兵，不改架构/数据/seed | [预案](autoresearch/worldsim_v77/target_protected_20260929/r13/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r14 | 同r10数据、同80张量/49.57M/160步，只更新时序self attention；真实收益门槛不变 | [预案](autoresearch/worldsim_v77/target_protected_20260929/r14/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r13 | 同r7固定CFG1：10窗完成，P006额外生车/误差增加，真实无跨例收益；60视频交付，不推广 | [报告](v77/TARGET_PROTECTED_SAMPLING_R13.md) · [收口](autoresearch/worldsim_v77/target_protected_20260929/r13/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r12 | 同世界真实轨迹平移32来源0候选，raw地面修复未改善产量，训练0并停止该搜索 | [记录](autoresearch/worldsim_v77/target_protected_20260929/r12/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r11 | 新过程来源32世界，端点拟合0候选；保留拒绝、训练0，停止中点放置搜索 | [零产出](autoresearch/worldsim_v77/target_protected_20260929/r11/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r10 | 50train/25world，4扫过/3world，同80张量160步；19例四臂76窗与278视频交付；有限过程结果不推广 | [报告](v77/TARGET_PROTECTED_TEMPORAL_CONTROL_R10.md) · [结果](autoresearch/worldsim_v77/target_protected_20260929/r10/results_summary.json) · [审核](autoresearch/worldsim_v77/target_protected_20260929/r10/review_link.md) |

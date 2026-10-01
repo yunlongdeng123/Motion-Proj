@@ -1,0 +1,384 @@
+{
+  "task": "WS-V77-TARGET-PROTECTED-20260929",
+  "run": "r13",
+  "stage": "closed_negative_sampling_control_delivered",
+  "decision": {
+    "promote": false,
+    "real_cross_case_benefit_demonstrated": false,
+    "summary": "固定CFG1同权重控制没有解决目标再生或保护车涂抹，不推广；停止本采样策略，不追加CFG网格。",
+    "evidence": "10窗全部完成；每例固定f5检查，P006真实GT明确出现额外车辆。单帧不能认证时序。",
+    "next": "r14等数量时间self attention控制，默认CFG不变。",
+    "human_verdict": null
+  },
+  "results": {
+    "run": "r13",
+    "cases": 10,
+    "real_DEV": 8,
+    "known_GT_sentinels": 2,
+    "fresh_windows": 10,
+    "no_training": true,
+    "architecture_unchanged": true,
+    "same_weight_same_input_same_seed_steps": true,
+    "synthetic_cases": [
+      {
+        "eval_id": "temporal_P006",
+        "arms": {
+          "r7_default": {
+            "hole": 0.04720496311783791,
+            "protected_inside_hole": 0.10579911768436431
+          },
+          "r7_cfg1": {
+            "hole": 0.09647077396512031,
+            "protected_inside_hole": 0.1648419126868248
+          }
+        },
+        "relative_change": {
+          "hole": 1.0436574375516403,
+          "protected_inside_hole": 0.558065098223274
+        }
+      },
+      {
+        "eval_id": "temporal_P012",
+        "arms": {
+          "r7_default": {
+            "hole": 0.08488782420754433,
+            "protected_inside_hole": 0.10372013747692108
+          },
+          "r7_cfg1": {
+            "hole": 0.06968588829040527,
+            "protected_inside_hole": 0.08650331869721413
+          }
+        },
+        "relative_change": {
+          "hole": -0.1790826429944944,
+          "protected_inside_hole": -0.1659930192778416
+        }
+      }
+    ],
+    "human_verdict": null,
+    "scope": "two sentinels not broad GT benchmark; all 8 real are exposed DEV"
+  },
+  "delivery": {
+    "run": "r13",
+    "success": true,
+    "cases": 10,
+    "videos_checked": 60,
+    "actual_decoded_frames": 600,
+    "referenced_images_checked": 400,
+    "contacts_checked": 10,
+    "HTML_data_exact": true,
+    "JS_syntax": true,
+    "browser_playback_verified": false,
+    "human_verdict": null,
+    "videos": [
+      {
+        "path": "effects/A007/mask.mp4",
+        "frames": 10,
+        "bytes": 348449
+      },
+      {
+        "path": "effects/A007/original.mp4",
+        "frames": 10,
+        "bytes": 347365
+      },
+      {
+        "path": "effects/A007/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 345756
+      },
+      {
+        "path": "effects/A007/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 220110
+      },
+      {
+        "path": "effects/A007/r7_default.mp4",
+        "frames": 10,
+        "bytes": 345991
+      },
+      {
+        "path": "effects/A007/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 253869
+      },
+      {
+        "path": "effects/A013/mask.mp4",
+        "frames": 10,
+        "bytes": 461089
+      },
+      {
+        "path": "effects/A013/original.mp4",
+        "frames": 10,
+        "bytes": 464699
+      },
+      {
+        "path": "effects/A013/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 462572
+      },
+      {
+        "path": "effects/A013/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 444922
+      },
+      {
+        "path": "effects/A013/r7_default.mp4",
+        "frames": 10,
+        "bytes": 463483
+      },
+      {
+        "path": "effects/A013/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 455407
+      },
+      {
+        "path": "effects/A022/mask.mp4",
+        "frames": 10,
+        "bytes": 304756
+      },
+      {
+        "path": "effects/A022/original.mp4",
+        "frames": 10,
+        "bytes": 339269
+      },
+      {
+        "path": "effects/A022/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 282381
+      },
+      {
+        "path": "effects/A022/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 261459
+      },
+      {
+        "path": "effects/A022/r7_default.mp4",
+        "frames": 10,
+        "bytes": 282331
+      },
+      {
+        "path": "effects/A022/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 289258
+      },
+      {
+        "path": "effects/A034/mask.mp4",
+        "frames": 10,
+        "bytes": 392528
+      },
+      {
+        "path": "effects/A034/original.mp4",
+        "frames": 10,
+        "bytes": 393842
+      },
+      {
+        "path": "effects/A034/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 390551
+      },
+      {
+        "path": "effects/A034/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 298987
+      },
+      {
+        "path": "effects/A034/r7_default.mp4",
+        "frames": 10,
+        "bytes": 391586
+      },
+      {
+        "path": "effects/A034/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 324477
+      },
+      {
+        "path": "effects/A041_w10/mask.mp4",
+        "frames": 10,
+        "bytes": 364056
+      },
+      {
+        "path": "effects/A041_w10/original.mp4",
+        "frames": 10,
+        "bytes": 365265
+      },
+      {
+        "path": "effects/A041_w10/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 362224
+      },
+      {
+        "path": "effects/A041_w10/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 281683
+      },
+      {
+        "path": "effects/A041_w10/r7_default.mp4",
+        "frames": 10,
+        "bytes": 363181
+      },
+      {
+        "path": "effects/A041_w10/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 306793
+      },
+      {
+        "path": "effects/A042/mask.mp4",
+        "frames": 10,
+        "bytes": 457508
+      },
+      {
+        "path": "effects/A042/original.mp4",
+        "frames": 10,
+        "bytes": 458875
+      },
+      {
+        "path": "effects/A042/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 456514
+      },
+      {
+        "path": "effects/A042/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 327071
+      },
+      {
+        "path": "effects/A042/r7_default.mp4",
+        "frames": 10,
+        "bytes": 458147
+      },
+      {
+        "path": "effects/A042/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 357598
+      },
+      {
+        "path": "effects/A048/mask.mp4",
+        "frames": 10,
+        "bytes": 282878
+      },
+      {
+        "path": "effects/A048/original.mp4",
+        "frames": 10,
+        "bytes": 283101
+      },
+      {
+        "path": "effects/A048/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 281970
+      },
+      {
+        "path": "effects/A048/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 249389
+      },
+      {
+        "path": "effects/A048/r7_default.mp4",
+        "frames": 10,
+        "bytes": 283189
+      },
+      {
+        "path": "effects/A048/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 278558
+      },
+      {
+        "path": "effects/A061_w08/mask.mp4",
+        "frames": 10,
+        "bytes": 479508
+      },
+      {
+        "path": "effects/A061_w08/original.mp4",
+        "frames": 10,
+        "bytes": 489143
+      },
+      {
+        "path": "effects/A061_w08/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 470982
+      },
+      {
+        "path": "effects/A061_w08/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 365836
+      },
+      {
+        "path": "effects/A061_w08/r7_default.mp4",
+        "frames": 10,
+        "bytes": 473879
+      },
+      {
+        "path": "effects/A061_w08/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 398568
+      },
+      {
+        "path": "effects/temporal_P006/mask.mp4",
+        "frames": 10,
+        "bytes": 405865
+      },
+      {
+        "path": "effects/temporal_P006/original.mp4",
+        "frames": 10,
+        "bytes": 407263
+      },
+      {
+        "path": "effects/temporal_P006/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 409935
+      },
+      {
+        "path": "effects/temporal_P006/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 375266
+      },
+      {
+        "path": "effects/temporal_P006/r7_default.mp4",
+        "frames": 10,
+        "bytes": 410315
+      },
+      {
+        "path": "effects/temporal_P006/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 395291
+      },
+      {
+        "path": "effects/temporal_P012/mask.mp4",
+        "frames": 10,
+        "bytes": 452172
+      },
+      {
+        "path": "effects/temporal_P012/original.mp4",
+        "frames": 10,
+        "bytes": 459094
+      },
+      {
+        "path": "effects/temporal_P012/r7_cfg1.mp4",
+        "frames": 10,
+        "bytes": 455944
+      },
+      {
+        "path": "effects/temporal_P012/r7_cfg1_native.mp4",
+        "frames": 10,
+        "bytes": 415686
+      },
+      {
+        "path": "effects/temporal_P012/r7_default.mp4",
+        "frames": 10,
+        "bytes": 456443
+      },
+      {
+        "path": "effects/temporal_P012/r7_default_native.mp4",
+        "frames": 10,
+        "bytes": 442122
+      }
+    ]
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02; no new ID",
+  "human_verdict": null,
+  "final_used": false,
+  "power_operation": null,
+  "continued_control": "r14"
+}

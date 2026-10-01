@@ -1,21 +1,24 @@
 {
   "task_id": "WS-V77-TARGET-PROTECTED-20260929",
-  "run_id": "r13",
+  "run_id": "r14",
   "host": "wm-3090-1001",
-  "stage": "closed_negative_sampling_control_delivered",
-  "training_steps": 0,
-  "fresh_inference_windows": 10,
+  "stage": "training_then_fixed_evaluation_running",
+  "operator": "temporal_self_attention_only",
+  "module_tensor_count": 80,
+  "module_parameters": 49574080,
+  "training_steps": 160,
+  "dataset_exact_same_as": "r10",
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "updated V77-F02; no new ID",
+  "failure_ledger_delta": "pending",
   "power_authorization": {
     "source": "user latest request",
     "condition": "demonstrated cross-case real DELETE plus completion benefit, delivery saved and pushed, no other active or launching jobs",
     "satisfied": false
   },
+  "automatic_shutdown": false,
   "human_verdict": null,
   "final_used": false,
-  "automatic_shutdown": false,
-  "real_cross_case_benefit_demonstrated": false
+  "controller_pid": 19759
 }

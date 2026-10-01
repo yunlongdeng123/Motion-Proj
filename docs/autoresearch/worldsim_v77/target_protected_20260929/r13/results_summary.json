@@ -1,0 +1,48 @@
+{
+  "run": "r13",
+  "cases": 10,
+  "real_DEV": 8,
+  "known_GT_sentinels": 2,
+  "fresh_windows": 10,
+  "no_training": true,
+  "architecture_unchanged": true,
+  "same_weight_same_input_same_seed_steps": true,
+  "synthetic_cases": [
+    {
+      "eval_id": "temporal_P006",
+      "arms": {
+        "r7_default": {
+          "hole": 0.04720496311783791,
+          "protected_inside_hole": 0.10579911768436431
+        },
+        "r7_cfg1": {
+          "hole": 0.09647077396512031,
+          "protected_inside_hole": 0.1648419126868248
+        }
+      },
+      "relative_change": {
+        "hole": 1.0436574375516403,
+        "protected_inside_hole": 0.558065098223274
+      }
+    },
+    {
+      "eval_id": "temporal_P012",
+      "arms": {
+        "r7_default": {
+          "hole": 0.08488782420754433,
+          "protected_inside_hole": 0.10372013747692108
+        },
+        "r7_cfg1": {
+          "hole": 0.06968588829040527,
+          "protected_inside_hole": 0.08650331869721413
+        }
+      },
+      "relative_change": {
+        "hole": -0.1790826429944944,
+        "protected_inside_hole": -0.1659930192778416
+      }
+    }
+  ],
+  "human_verdict": null,
+  "scope": "two sentinels not broad GT benchmark; all 8 real are exposed DEV"
+}
