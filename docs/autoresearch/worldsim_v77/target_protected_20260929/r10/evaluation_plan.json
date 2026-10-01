@@ -1,0 +1,1790 @@
+{
+  "cases": [
+    {
+      "dataset_id": "r8/M003",
+      "case_id": "M003",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M003",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0229",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M003",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为完整正面车辆轮廓，放在斑马线前方的车道上；遮住真实黑车左侧，黑车右半仍清楚可见，绿线身份一致。",
+        "visual_checks": {
+          "silhouette": "可见车顶、车身两侧及底部车轮形状，轮廓完整",
+          "placement": "A在车道地面，大小接近后方真实车，未压到ego",
+          "protected_mask_identity": "绿色轮廓沿真实黑车可见车身，未明显侵入其他物体",
+          "occlusion": "红色A与真实黑车左侧交叠，黑车右侧留有充分证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N012",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M003",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "dataset_id": "r8/M006",
+      "case_id": "M006",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M006",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0239",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M006",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在左侧道路上呈完整侧面轿车形状，车底贴近路面；中间真实车辆及行人仍清晰，未见保护身份混淆。",
+        "visual_checks": {
+          "silhouette": "车顶、车头车尾及车轮缺口构成完整侧面车辆",
+          "placement": "在左侧车道内且未越过ego，尺度与道路透视大致一致",
+          "protected_mask_identity": "背景例无受保护B，图中绿色真实车轮廓留在中间车身上",
+          "occlusion": "A与中间真实车分离；不以A后方局部无车推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N150",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M006",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "dataset_id": "r8/M007",
+      "case_id": "M007",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M007",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0287",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M007",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A呈完整车尾，在右侧车道；左侧GT轿车仍可见。",
+        "visual_checks": {
+          "silhouette": "车顶、两侧及车轮完整",
+          "placement": "车道上接地，未压ego",
+          "protected_mask_identity": "无受保护B；绿线对应左侧轿车",
+          "occlusion": "A与左车分离，不据局部无车推断整景"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N127",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M007",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "dataset_id": "r8/M001",
+      "case_id": "M001",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M001",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0289",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M001",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为完整车尾轮廓，位于路面中央且与两辆真实B车均有可见遮挡；两车仍露出外侧车身，绿色轮廓各自对应GT车辆。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘及下部轮廓完整，非矩形残片",
+          "placement": "车底落在车道地面，尺度相对两辆B合理，未压到ego",
+          "protected_mask_identity": "绿色与蓝色轮廓分别包住左右两辆真实车，未见污染背景结构",
+          "occlusion": "红色A覆盖两辆B的内侧，B外侧保留明确可见证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N175",
+      "occluder_asset": "suv",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M001",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "dataset_id": "r8/M004",
+      "case_id": "M004",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M004",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0229",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M004",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A轮廓是完整车辆正面，位置和大小与路面透视相符；红线覆盖真实黑车左侧，绿线仍准确围出其右侧可见部分。",
+        "visual_checks": {
+          "silhouette": "车身、车顶和底缘连续，未见缺块或异常直角残片",
+          "placement": "A落在车道上、靠近斑马线，未与ego相压",
+          "protected_mask_identity": "绿线对应GT黑车，未见跨到道路或建筑",
+          "occlusion": "A和B交叠且B右侧仍可辨认"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N012",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M004",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "dataset_id": "r8/M009",
+      "case_id": "M009",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M009",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0239",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M009",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为左车道完整侧面车形，与中央GT车和行人分开。",
+        "visual_checks": {
+          "silhouette": "车顶及车头车尾连续",
+          "placement": "左车道落地，未压ego",
+          "protected_mask_identity": "无受保护B；绿线对应中央GT车",
+          "occlusion": "A未遮中央车；不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N150",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M009",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "dataset_id": "r8/M002",
+      "case_id": "M002",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M002",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0289",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M002",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A的车尾形状与道路尺度合理，确实挡住左右两辆真实B车的内侧；两辆B的外侧和车顶仍可辨认。",
+        "visual_checks": {
+          "silhouette": "完整车尾与下部轮廓，无明显断裂或矩形填充",
+          "placement": "A位于道路中央，底缘贴近路面，未见与ego重叠",
+          "protected_mask_identity": "左右两条保护轮廓各对应一辆GT车，未见蔓延到建筑或路面",
+          "occlusion": "A与两辆B均有图像交叠，B保留可辨认的外侧车身"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N175",
+      "occluder_asset": "suv",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "eval_id": "synthetic_M002",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "synthetic_validation",
+      "GT_available": true,
+      "suite": "r8_frozen_synthetic"
+    },
+    {
+      "scene": "scene-0770",
+      "scene_index": 598,
+      "scene_token": "aedcd3cf7c4a49d7a4a43ab7443a9eb1",
+      "instance_token": "086f97eaf43341cb836d1186bad9b1f9",
+      "category": "vehicle.car",
+      "camera": "CAM_BACK_LEFT",
+      "camera_index": 3,
+      "start_keyframe": 30,
+      "anchor_keyframe": 32,
+      "anchor_sample_token": "22f42bbe0dc14009b0a51a8fb9cf2618",
+      "area_fraction": 0.237871,
+      "anchor_box_xyxy": [
+        0.0,
+        510.26,
+        878.89,
+        900.0
+      ],
+      "visibility_6": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "clear",
+      "behind_vehicle_proxy": false,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 22,
+      "night_proxy": false,
+      "scene_description": "Stationary ego vehicle, parking lot, ped on road",
+      "clip_id": "A022",
+      "actor_ordinal_in_scene": 1,
+      "size_bucket": "large",
+      "camera_bucket": "side",
+      "input_difficulty_proxy": "medium",
+      "difficulty_factors": [
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A022",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A022",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [],
+      "role": "named_failure",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0920",
+      "scene_index": 705,
+      "scene_token": "955ff42a1990442d868cdfc0c01583d4",
+      "instance_token": "a36bab05f76a4825b0c36c185dec9acb",
+      "category": "vehicle.car",
+      "camera": "CAM_BACK",
+      "camera_index": 5,
+      "start_keyframe": 9,
+      "anchor_keyframe": 11,
+      "anchor_sample_token": "fb87cdcfffbf4792b5e7c4fd87d97a54",
+      "area_fraction": 0.005766,
+      "anchor_box_xyxy": [
+        1547.64,
+        564.29,
+        1600.0,
+        722.85
+      ],
+      "visibility_6": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "clear",
+      "behind_vehicle_proxy": false,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 5,
+      "night_proxy": false,
+      "scene_description": "Motorcycle, parked cars, peds, truck",
+      "clip_id": "A041",
+      "actor_ordinal_in_scene": 1,
+      "size_bucket": "medium",
+      "camera_bucket": "rear",
+      "input_difficulty_proxy": "low",
+      "difficulty_factors": [],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A041_w10",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A041",
+      "frames": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "role": "named_failure",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0345",
+      "scene_index": 262,
+      "scene_token": "fcc020250f884397965ba00c1d9ad9e6",
+      "instance_token": "322bdc244e58423aa6c3279501e15cbe",
+      "category": "vehicle.car",
+      "camera": "CAM_FRONT_RIGHT",
+      "camera_index": 2,
+      "start_keyframe": 9,
+      "anchor_keyframe": 11,
+      "anchor_sample_token": "d8866c75f88a4dbaa461260b81409544",
+      "area_fraction": 0.016124,
+      "anchor_box_xyxy": [
+        560.71,
+        488.47,
+        795.16,
+        587.51
+      ],
+      "visibility_6": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "occlusion_proxy": "partial",
+      "behind_vehicle_proxy": true,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 22,
+      "night_proxy": false,
+      "scene_description": "Cross the intersection, construction, scooter, turn right, parked buses, navigated through traffic cones",
+      "clip_id": "A013",
+      "actor_ordinal_in_scene": 1,
+      "size_bucket": "medium",
+      "camera_bucket": "side",
+      "input_difficulty_proxy": "high",
+      "difficulty_factors": [
+        "partial_visibility_GT",
+        "behind_vehicle_projection",
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A013",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A013",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [],
+      "role": "named_failure",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0003",
+      "scene_index": 2,
+      "scene_token": "e7ef871f77f44331aefdebc24ec034b7",
+      "instance_token": "a5f12393fdf042a4a1c25cbe29f3f4ea",
+      "category": "vehicle.car",
+      "camera": "CAM_BACK_LEFT",
+      "camera_index": 3,
+      "start_keyframe": 3,
+      "anchor_keyframe": 5,
+      "anchor_sample_token": "f286cdaef36648cba3b6a24d2178dc8a",
+      "area_fraction": 0.034122,
+      "anchor_box_xyxy": [
+        0.0,
+        442.96,
+        182.86,
+        711.66
+      ],
+      "visibility_6": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "clear",
+      "behind_vehicle_proxy": true,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 25,
+      "night_proxy": false,
+      "scene_description": "Parking lot, barrier, exit parking lot",
+      "clip_id": "A048",
+      "actor_ordinal_in_scene": 2,
+      "size_bucket": "large",
+      "camera_bucket": "side",
+      "input_difficulty_proxy": "medium",
+      "difficulty_factors": [
+        "behind_vehicle_projection",
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A048",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A048",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [],
+      "role": "named_failure",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0781",
+      "scene_index": 604,
+      "scene_token": "57dc3221a3d845b5ab17ff0f98ce336f",
+      "instance_token": "2d65f31c608544f392f9d1e04a135769",
+      "category": "vehicle.car",
+      "camera": "CAM_FRONT",
+      "camera_index": 0,
+      "start_keyframe": 6,
+      "anchor_keyframe": 8,
+      "anchor_sample_token": "6a85bfb241cc42a3a7f1e8d516f74ff5",
+      "area_fraction": 0.004649,
+      "anchor_box_xyxy": [
+        423.66,
+        472.82,
+        531.66,
+        534.8
+      ],
+      "visibility_6": [
+        3,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "partial",
+      "behind_vehicle_proxy": true,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 32,
+      "night_proxy": false,
+      "scene_description": "Stop at red light, bus, low traffic, peds, ped crossing crosswalk",
+      "clip_id": "A007",
+      "actor_ordinal_in_scene": 1,
+      "size_bucket": "medium",
+      "camera_bucket": "front",
+      "input_difficulty_proxy": "high",
+      "difficulty_factors": [
+        "partial_visibility_GT",
+        "behind_vehicle_projection",
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A007",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A007",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [],
+      "role": "exposed_protected_neighbor_control",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0911",
+      "scene_index": 697,
+      "scene_token": "85651af9c04945c3a394cf845cb480a6",
+      "instance_token": "d6f191274e09469caa9a462d9bc12f8d",
+      "category": "vehicle.car",
+      "camera": "CAM_FRONT",
+      "camera_index": 0,
+      "start_keyframe": 6,
+      "anchor_keyframe": 8,
+      "anchor_sample_token": "cc72799740754b58bc17183e88010df3",
+      "area_fraction": 0.058121,
+      "anchor_box_xyxy": [
+        1233.03,
+        477.5,
+        1600.0,
+        705.57
+      ],
+      "visibility_6": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "clear",
+      "behind_vehicle_proxy": true,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 41,
+      "night_proxy": false,
+      "scene_description": "Rain, parked cars, trucks, peds crossing crosswalk, peds, parked bicycles, bicycle rack",
+      "clip_id": "A034",
+      "actor_ordinal_in_scene": 1,
+      "size_bucket": "large",
+      "camera_bucket": "front",
+      "input_difficulty_proxy": "medium",
+      "difficulty_factors": [
+        "behind_vehicle_projection",
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A034",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A034",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [],
+      "role": "exposed_protected_neighbor_control",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0904",
+      "scene_index": 690,
+      "scene_token": "c164a8e8e8b8489f964f711f472789be",
+      "instance_token": "bae37b51af5943b98a31a812b7994b70",
+      "category": "vehicle.car",
+      "camera": "CAM_FRONT_LEFT",
+      "camera_index": 1,
+      "start_keyframe": 21,
+      "anchor_keyframe": 23,
+      "anchor_sample_token": "c3177f4c31224fcb9b95f0d18bcfc2ca",
+      "area_fraction": 0.036666,
+      "anchor_box_xyxy": [
+        1052.69,
+        483.77,
+        1385.74,
+        642.3
+      ],
+      "visibility_6": [
+        1,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "partial",
+      "behind_vehicle_proxy": true,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 22,
+      "night_proxy": false,
+      "scene_description": "Rain, parked cars, bus, peds, barriers, cross intersection, ped crossing crosswalk, construction site, cones, scooter, arrive at intersection",
+      "clip_id": "A042",
+      "actor_ordinal_in_scene": 1,
+      "size_bucket": "large",
+      "camera_bucket": "side",
+      "input_difficulty_proxy": "high",
+      "difficulty_factors": [
+        "partial_visibility_GT",
+        "behind_vehicle_projection",
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A042",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A042",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [],
+      "role": "exposed_protected_neighbor_control",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "scene": "scene-0931",
+      "scene_index": 716,
+      "scene_token": "e60ef590e3614187b7800db3e5284e1a",
+      "instance_token": "6279467bc40e4463804706a2fc6e5cfd",
+      "category": "vehicle.car",
+      "camera": "CAM_BACK",
+      "camera_index": 5,
+      "start_keyframe": 0,
+      "anchor_keyframe": 2,
+      "anchor_sample_token": "02a9f74734934e2d89d65737edc23280",
+      "area_fraction": 0.099419,
+      "anchor_box_xyxy": [
+        0.0,
+        417.5,
+        296.71,
+        900.0
+      ],
+      "visibility_6": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "occlusion_proxy": "clear",
+      "behind_vehicle_proxy": true,
+      "near_vehicle_proxy": false,
+      "vehicle_count": 26,
+      "night_proxy": false,
+      "scene_description": "Turn right, parked scooters, nature, parking lot, peds, bump, arrive at parking bay",
+      "clip_id": "A061",
+      "actor_ordinal_in_scene": 2,
+      "size_bucket": "large",
+      "camera_bucket": "rear",
+      "input_difficulty_proxy": "medium",
+      "difficulty_factors": [
+        "behind_vehicle_projection",
+        "dense_GT_scene"
+      ],
+      "classification_source": "official_GT_and_scene_description_only; one-frame visual review pending",
+      "task": "single_actor_DELETE",
+      "human_verdict": null,
+      "eval_id": "A061_w08",
+      "kind": "real_development",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1/clips/A061",
+      "frames": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "GT_available": false,
+      "seed": 42,
+      "steps": 25,
+      "input_window_rule": "earliest consecutive10 model masks nonempty; no new outputs used",
+      "input_valid": true,
+      "original_empty_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "role": "exposed_protected_neighbor_control",
+      "core_nonempty_in_selected_window": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "suite": "real_DEVELOPMENT"
+    },
+    {
+      "dataset_id": "r10_val/P006",
+      "case_id": "P006",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P006",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0289",
+      "source_id": "N175",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P006",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "红A从绿色受保护车大面积前遮移动到其左侧，车身露出增加；A随视角合理变大，灰洞覆盖且仍在道路内。",
+        "visible_process_change": true,
+        "evidence_boundary": "依据0/5/9帧确认可见横扫与露出，不认证中间帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "sweep_B",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 4.798844267325162,
+          "path_m": 4.798931607423535,
+          "diameter_m": 4.798844267325162
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.6000169804166715,
+          "path_m": 3.6000169804166715,
+          "diameter_m": 3.6000169804166715
+        },
+        "hole_centroid_path_px": 136.5671894368743,
+        "hole_centroid_diameter_px": 136.5308251487773,
+        "hole_area_min_max": [
+          7660,
+          28636
+        ],
+        "hole_centroids": [
+          [
+            409.93054830287207,
+            345.1369451697128
+          ],
+          [
+            401.8586259185816,
+            347.5114895602473
+          ],
+          [
+            397.2014547057527,
+            348.34857835574167
+          ],
+          [
+            386.5674855632769,
+            350.5966526377606
+          ],
+          [
+            369.2368930472657,
+            354.88167446362314
+          ],
+          [
+            355.50038448095074,
+            358.72408248864036
+          ],
+          [
+            339.6894963512382,
+            362.82001435578417
+          ],
+          [
+            331.1616234124793,
+            364.89613473219214
+          ],
+          [
+            313.42686789640396,
+            368.85862679336685
+          ],
+          [
+            277.34767425618105,
+            377.73215532895654
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "42c172a5102d484aa1f20ebe0b42ada4": {
+            "occlusion_fractions": [
+              0.746104245029554,
+              0.7155544278102005,
+              0.7012987012987013,
+              0.6468539586719294,
+              0.5643823657791357,
+              0.5023404255319149,
+              0.42389589905362773,
+              0.38349796629866356,
+              0.32041343669250644,
+              0.19660782277604708
+            ],
+            "occlusion_range": 0.5494964222535069,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.45147398028204616,
+                0.6140207393663442
+              ],
+              [
+                0.43213419186263546,
+                0.6202127659574472
+              ],
+              [
+                0.42947374079449585,
+                0.6172113963638867
+              ],
+              [
+                0.39406344561869033,
+                0.6182587042354628
+              ],
+              [
+                0.34704945070304444,
+                0.6221788652183082
+              ],
+              [
+                0.3161372299872937,
+                0.6158660319748147
+              ],
+              [
+                0.2740274841437634,
+                0.6490492476060188
+              ],
+              [
+                0.25346158211326775,
+                0.650065876152833
+              ],
+              [
+                0.2237562558842475,
+                0.6666044655026936
+              ],
+              [
+                0.16387910798122066,
+                0.7168347925390176
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.2875948723008255,
+              0.10281405317267345
+            ],
+            "sweep_over_B": true,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.7889809146561038,
+              0.774822695035461,
+              0.7613556953179594,
+              0.7426417803302225,
+              0.7053364269141531,
+              0.6641253706056756,
+              0.5953488372093023,
+              0.5671717171717172,
+              0.44873271889400923,
+              0.0
+            ],
+            "approx_other_frame_support_mean": 0.6048516156134605,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.10392302675206988,
+              "path_m": 0.10392304361778831,
+              "diameter_m": 0.1039230267520699
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": true,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null,
+      "eval_id": "temporal_P006",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": true,
+      "suite": "new_temporal_validation"
+    },
+    {
+      "dataset_id": "r10_val/P012",
+      "case_id": "P012",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P012",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0291",
+      "source_id": "N176",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P012",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "侧视红A落在车辆行列对应的路面，洞覆盖完整；绿色车和蓝色车均与A发生部分遮挡，三帧关系有变化。",
+        "visible_process_change": true,
+        "evidence_boundary": "只确认三关键帧的相对遮挡；不验证完整轨迹。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "visibility_transition",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 8.84242610008358,
+          "path_m": 8.842874500544456,
+          "diameter_m": 8.84242610008358
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.6000206636609535,
+          "path_m": 3.600020663660954,
+          "diameter_m": 3.6000206636609535
+        },
+        "hole_centroid_path_px": 171.8156973999622,
+        "hole_centroid_diameter_px": 168.4867934015237,
+        "hole_area_min_max": [
+          11964,
+          17371
+        ],
+        "hole_centroids": [
+          [
+            817.498161150117,
+            344.5007522567703
+          ],
+          [
+            809.2179266190593,
+            343.89460723959616
+          ],
+          [
+            792.2078598484849,
+            343.26641414141415
+          ],
+          [
+            765.1921850671016,
+            347.5930896418774
+          ],
+          [
+            748.4377706780263,
+            347.08661696840613
+          ],
+          [
+            728.7945382729501,
+            347.7638926722964
+          ],
+          [
+            719.6459834534294,
+            351.13103816386445
+          ],
+          [
+            700.0786595894353,
+            359.4099891283494
+          ],
+          [
+            670.6841283191158,
+            359.99483359365615
+          ],
+          [
+            649.2640032237638,
+            353.72396522940534
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "61b61ae7dfe24f289149dc15aa88e87b": {
+            "occlusion_fractions": [
+              0.5486140724946695,
+              0.530977130977131,
+              0.5021037868162693,
+              0.45983531564501373,
+              0.4088017878631597,
+              0.3830625307730182,
+              0.36063708759954494,
+              0.33489143546441497,
+              0.2740311681147428,
+              0.25
+            ],
+            "occlusion_range": 0.29861407249466954,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.687250680139915,
+                0.570750744915145
+              ],
+              [
+                0.6928627363239737,
+                0.5630628425998433
+              ],
+              [
+                0.7034102768739636,
+                0.5717868951251693
+              ],
+              [
+                0.7242369309221675,
+                0.5724769659310049
+              ],
+              [
+                0.740484583862713,
+                0.5669174220477836
+              ],
+              [
+                0.7563425228259905,
+                0.5584949754615567
+              ],
+              [
+                0.7626383598683847,
+                0.5759825431085601
+              ],
+              [
+                0.7820242309740946,
+                0.5823872772882227
+              ],
+              [
+                0.8019396012733074,
+                0.6079516859587314
+              ],
+              [
+                0.8165179079381538,
+                0.6023429033423354
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.12926722779823885,
+              0.049456710497174705
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.6840264282938204,
+              0.6699295223179327,
+              0.6316839584996009,
+              0.5706327099084759,
+              0.5403700588730025,
+              0.4884318766066838,
+              0.4601171698963497,
+              0.37820801440792434,
+              0.2551585304479114,
+              0.021511017838405037
+            ],
+            "approx_other_frame_support_mean": 0.4700069287090106,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.051652435062186336,
+              "path_m": 0.05165738357584589,
+              "diameter_m": 0.051652435062186336
+            }
+          },
+          "6988e7de809d40eeb1f2e042595e1809": {
+            "occlusion_fractions": [
+              0.7160028281876031,
+              0.7248908296943232,
+              0.7456983240223464,
+              0.7515202348500734,
+              0.7624057165541882,
+              0.763459335624284,
+              0.768753422157328,
+              0.7821466524973433,
+              0.7940840006537015,
+              0.799213217938631
+            ],
+            "occlusion_range": 0.0832103897510279,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.3927510105640084,
+                0.5571236559139786
+              ],
+              [
+                0.39004787862216606,
+                0.5611591101247093
+              ],
+              [
+                0.3994660418993652,
+                0.5461492358405758
+              ],
+              [
+                0.4070772634711784,
+                0.5505189732142856
+              ],
+              [
+                0.4092172399904762,
+                0.5597150181242861
+              ],
+              [
+                0.4130206105245322,
+                0.5543508518639099
+              ],
+              [
+                0.414133581472291,
+                0.5614602018923007
+              ],
+              [
+                0.42147601794340966,
+                0.558008756038647
+              ],
+              [
+                0.42280335771794875,
+                0.5488563196424892
+              ],
+              [
+                0.42457987329604036,
+                0.5540426178657903
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.0345319946738743,
+              0.015310966051724884
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.029953917050691243,
+              0.03551046290424857,
+              0.05783637998201978,
+              0.08035714285714286,
+              0.10361884925800573,
+              0.12028007001750438,
+              0.13200379867046533,
+              0.15942028985507245,
+              0.19942374974274543,
+              0.22602874581610552
+            ],
+            "approx_other_frame_support_mean": 0.11444334061540014,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.11791761311415376,
+              "path_m": 0.12439282172721657,
+              "diameter_m": 0.11791761311415377
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null,
+      "eval_id": "temporal_P012",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": true,
+      "suite": "new_temporal_validation"
+    },
+    {
+      "dataset_id": "r10_val/P016",
+      "case_id": "P016",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P016",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0229",
+      "source_id": "N012",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P016",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在右侧车道并随ego前行在画面中缩小，车形贴地且洞完整，无明显场景污染；此例为无受保护B的背景对照。",
+        "visible_process_change": true,
+        "evidence_boundary": "只核对0/5/9画面，不认证逐帧静止轨迹。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 6.930383102857689,
+          "path_m": 6.9304737257093105,
+          "diameter_m": 6.930383102857689
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 97.45878121018704,
+        "hole_centroid_diameter_px": 97.3852292469408,
+        "hole_area_min_max": [
+          3547,
+          12163
+        ],
+        "hole_centroids": [
+          [
+            779.2117898544767,
+            354.8372112143386
+          ],
+          [
+            770.2097649186256,
+            353.1405967450271
+          ],
+          [
+            754.1982610562474,
+            350.1862387290683
+          ],
+          [
+            734.9941440828,
+            345.33760043578917
+          ],
+          [
+            723.2872373784885,
+            342.14048291000313
+          ],
+          [
+            712.7919438949829,
+            340.05934184499193
+          ],
+          [
+            708.0540488922842,
+            338.70645530939646
+          ],
+          [
+            700.423275862069,
+            336.3991379310345
+          ],
+          [
+            690.2603158430973,
+            334.086347427407
+          ],
+          [
+            684.3050465181843,
+            333.00620242458416
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {},
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null,
+      "eval_id": "temporal_P016",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": true,
+      "suite": "new_temporal_validation"
+    },
+    {
+      "dataset_id": "r10_val/P019",
+      "case_id": "P019",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P019",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0289",
+      "source_id": "N175",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P019",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "静止A在道路上，随ego视角平滑变大，绿色车保持被部分遮挡；灰洞与红A相符，无明显背景污染。",
+        "visible_process_change": true,
+        "evidence_boundary": "三帧只支持可见尺度及遮挡变化，不认证中间帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 4.798844267325162,
+          "path_m": 4.798931607423535,
+          "diameter_m": 4.798844267325162
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 51.59385941257974,
+        "hole_centroid_diameter_px": 51.53157497828577,
+        "hole_area_min_max": [
+          5740,
+          10540
+        ],
+        "hole_centroids": [
+          [
+            396.55017421602787,
+            342.398606271777
+          ],
+          [
+            392.2785410533202,
+            343.5804710500491
+          ],
+          [
+            389.82237673830593,
+            343.81984829329963
+          ],
+          [
+            384.1646675551607,
+            344.7615874426181
+          ],
+          [
+            376.1972532651138,
+            346.4731385485391
+          ],
+          [
+            370.48772194937663,
+            347.99408134995593
+          ],
+          [
+            364.23439699671513,
+            349.46773815110276
+          ],
+          [
+            361.5067391550572,
+            350.18031487144634
+          ],
+          [
+            356.5873719776159,
+            350.7611656636047
+          ],
+          [
+            346.1175521821632,
+            352.984155597723
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {
+          "42c172a5102d484aa1f20ebe0b42ada4": {
+            "occlusion_fractions": [
+              0.4967759269210102,
+              0.49657447348388734,
+              0.5023278608184268,
+              0.4880427211516137,
+              0.47468354430379744,
+              0.4702127659574468,
+              0.45386435331230285,
+              0.44489637807476273,
+              0.44924326319675156,
+              0.43613707165109034
+            ],
+            "occlusion_range": 0.0661907891673365,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.3218832677999799,
+                0.6448744626046147
+              ],
+              [
+                0.3221633542210148,
+                0.6496252767841934
+              ],
+              [
+                0.33075672295184505,
+                0.6435665733706516
+              ],
+              [
+                0.31525129773934435,
+                0.640468898667935
+              ],
+              [
+                0.30514887134745894,
+                0.6363845350052245
+              ],
+              [
+                0.30548309821666236,
+                0.6247788208279866
+              ],
+              [
+                0.2966047310638968,
+                0.6473271324168245
+              ],
+              [
+                0.2918511199268221,
+                0.6390629239146209
+              ],
+              [
+                0.2932515174808491,
+                0.632929045100513
+              ],
+              [
+                0.28466848544973544,
+                0.6254450879450876
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.04608823750210961,
+              0.024846455956206714
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.23850730124391564,
+              0.21563617782319877,
+              0.20682926829268292,
+              0.1907706945765937,
+              0.16919540229885058,
+              0.1502262443438914,
+              0.12901824500434406,
+              0.12233347845015237,
+              0.10723089564502876,
+              0.05198412698412699
+            ],
+            "approx_other_frame_support_mean": 0.1581731834662785,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.10392302675206988,
+              "path_m": 0.10392304361778831,
+              "diameter_m": 0.1039230267520699
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null,
+      "eval_id": "temporal_P019",
+      "kind": "synthetic",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "GT_available": true,
+      "suite": "new_temporal_validation"
+    }
+  ],
+  "arms": [
+    "base",
+    "r7",
+    "r8",
+    "r10"
+  ],
+  "seed": 42,
+  "steps": 25,
+  "frames": 10,
+  "inference_resolution": [
+    576,
+    1024
+  ],
+  "same_input_for_every_arm": true,
+  "real_actor_free_GT": null,
+  "final_used": false,
+  "human_verdict": null,
+  "selection_before_new_model_outputs": true,
+  "sweep_validation_world_count": 1
+}

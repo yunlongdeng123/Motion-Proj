@@ -1,0 +1,328 @@
+{
+  "model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "review_scope": "独立查看每例contact sheet的真实Y、灰色synthetic A示意X、实例labels及实际condition列；只依据0/5/9三帧判断视觉与可见过程，不认证完整10帧视频、真实纹理或模型输出。",
+  "cases": [
+    {
+      "case_id": "P001",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "红A在道路上，大小与贴地关系合理，灰洞完整覆盖；0到9帧红A相对绿色受保护车由右缘扫向车身中部，遮挡明显增加。",
+      "visible_process_change": true,
+      "evidence_boundary": "三关键帧支持横扫方向与遮挡变化；不认证中间帧连续性。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P002",
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "车形、道路位置及洞覆盖基本合理，但红A和绿色B都很小；三帧只能看出轻微相对位移，难确认确实扫过车身，而非接近同处重叠。",
+      "visible_process_change": true,
+      "evidence_boundary": "仅三帧可见轻微位移；横扫证据不足，不能据manifest标签硬判通过。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P003",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "侧视轿车轮廓贴地且位于行车区域，灰洞完整；红A从绿色车左缘逐渐移到更靠车身中央，三帧可见横向扫过。",
+      "visible_process_change": true,
+      "evidence_boundary": "只确认0/5/9帧中的相对横移和遮挡；不推断每一中间帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P004",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "车形与路面接触合理，洞包住A；绿色车从被红A大面积遮住到右侧重新露出，红A相对车身明显向左扫离。",
+      "visible_process_change": true,
+      "evidence_boundary": "三关键帧足以确认可见的扫离过程；不认证全10帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P005",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "红A在路面且灰洞完整；实际活跃受保护车是旧图蓝色C。蓝车从红A右缘逐渐移入其遮挡范围，0/5/9帧能看出车身横扫与遮挡增长；远处旧图绿色B不是目标。",
+      "prior_score": 1,
+      "prior_reason": "红A在道路上且洞完整，逐渐遮住蓝色C的一部分；绿色B始终在右侧基本分离。manifest指定的受保护实例似乎是蓝色C，与题设的活跃绿色B不一致，不能确认目标遮挡任务成立。",
+      "label_identity_clarification": "以manifest protected_instances=7a5be16ed2654336b5f894753314456f为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+      "visible_process_change": true,
+      "evidence_boundary": "三关键帧可见活跃车相对A横扫；不认证其余7帧或真实纹理。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P006",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "红A从绿色受保护车大面积前遮移动到其左侧，车身露出增加；A随视角合理变大，灰洞覆盖且仍在道路内。",
+      "visible_process_change": true,
+      "evidence_boundary": "依据0/5/9帧确认可见横扫与露出，不认证中间帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P007",
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "A为静止车，洞从小到大且覆盖完整；绿色车始终贴在红A左侧，三帧主要是A变大，无法独立确认红A真的横扫过绿色车的车身。",
+      "visible_process_change": true,
+      "evidence_boundary": "只确认大小及少量相对位置变化；横扫仍不确定，不能把面积增长当作扫过。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P008",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "路口内车形与地面位置合理，A遮住右侧绿色车的左半部，三帧遮挡关系及灰洞稳定，视角变化可见。",
+      "visible_process_change": true,
+      "evidence_boundary": "三帧支持可见度变化，不认证中间帧或被遮区域真实纹理。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P009",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "红A处于车道，轮廓和灰洞一致；绿色车与A重叠，三帧可见其遮挡程度变化，无明显背景污染。",
+      "visible_process_change": true,
+      "evidence_boundary": "只据三帧确认可见过程，不认证完整视频。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P010",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A贴地、位于车道且灰洞完整；实际活跃受保护车是旧图蓝色C。蓝车被A挡住下部，但从0到9帧右上方逐步露出，可见遮挡过渡；旧图绿色货车不是目标。",
+      "prior_score": 1,
+      "prior_reason": "A贴地且洞完整，确实覆盖蓝色C的下部；绿色B货车始终在旁边未被A遮。manifest受保护实例似乎对应蓝C，需确认此例是否允许以C作为活跃目标。",
+      "label_identity_clarification": "以manifest protected_instances=a466d1fcc20944d7a092c44575602a3a为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+      "visible_process_change": true,
+      "evidence_boundary": "三关键帧可见活跃车的局部露出增加；不认证中间帧或全视频。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P011",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "红A位于道路且洞形合理，绿色受保护车从被较多遮挡到右侧更明显露出，可见过渡成立。",
+      "visible_process_change": true,
+      "evidence_boundary": "依据0/5/9帧确认可见过渡，不认证中间帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P012",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "侧视红A落在车辆行列对应的路面，洞覆盖完整；绿色车和蓝色车均与A发生部分遮挡，三帧关系有变化。",
+      "visible_process_change": true,
+      "evidence_boundary": "只确认三关键帧的相对遮挡；不验证完整轨迹。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P013",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A居于道路车道，车形和灰洞一致；绿色车露出区域随三帧变化，未见压路缘或明显背景污染。",
+      "visible_process_change": true,
+      "evidence_boundary": "三帧能观察到遮挡过渡，不能认证其间每帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P014",
+      "assistant_score": 0,
+      "decision": "reject",
+      "reason": "红A虽遮住绿色车，但车身与车轮明显跨上右侧路缘和树旁人行区域，灰洞也盖住该区域；视觉放置错误，稀疏GT/地图的零碰撞不能抵消。",
+      "visible_process_change": true,
+      "evidence_boundary": "0/5/9帧均见不合理道路位置；无需据此判断中间帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P015",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "静止A在右侧行车道上，大小随ego视角变化而缩小，贴地和洞覆盖合理；此例无受保护B，按背景对照例审查。",
+      "visible_process_change": true,
+      "evidence_boundary": "三帧只证明画面中的视角变化；不证明十帧世界静止精度。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P016",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在右侧车道并随ego前行在画面中缩小，车形贴地且洞完整，无明显场景污染；此例为无受保护B的背景对照。",
+      "visible_process_change": true,
+      "evidence_boundary": "只核对0/5/9画面，不认证逐帧静止轨迹。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P017",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "静止A位于道路车道，随ego运动合理变大；红A稳定遮住绿色受保护车的一部分，灰洞完整且未见压ego。",
+      "visible_process_change": true,
+      "evidence_boundary": "三帧支持视角导致的尺度变化，不认证完整视频。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P018",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "静止A在道路车道，随ego视角改变而略变大，灰洞覆盖完整；实际活跃受保护车是旧图蓝色C，三帧均被A稳定遮挡，附近货车不是目标。",
+      "prior_score": 1,
+      "prior_reason": "A与蓝色C持续重叠且洞合理，但绿色B货车没有被A遮；manifest的受保护实例似乎是蓝C，须确认此例活跃目标的定义。",
+      "label_identity_clarification": "以manifest protected_instances=a466d1fcc20944d7a092c44575602a3a为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+      "visible_process_change": true,
+      "evidence_boundary": "三关键帧支持静止A随ego视角变化且活跃车被遮；不认证十帧静止轨迹精度。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P019",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "静止A在道路上，随ego视角平滑变大，绿色车保持被部分遮挡；灰洞与红A相符，无明显背景污染。",
+      "visible_process_change": true,
+      "evidence_boundary": "三帧只支持可见尺度及遮挡变化，不认证中间帧。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P020",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在对侧路面车辆行列附近，侧视车身贴地，灰洞覆盖；随着ego变化，绿色车的可见部分发生清楚变化。",
+      "visible_process_change": true,
+      "evidence_boundary": "仅三帧验证可见变化和道路位置，不能认证全视频。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P021",
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "静止A位于双黄线左侧的对向车道，轮廓贴地且灰洞完整；实际活跃受保护车是旧图蓝色C，白车随视角变化从A右上方露出，右侧旧图绿色车不是目标。",
+      "prior_score": 1,
+      "prior_reason": "A在双黄线左侧的对向车道，轮廓及洞合理，并遮住蓝色C；绿色B位于道路右侧始终未被遮，manifest似乎把蓝C列为受保护实例，目标语义需确认。",
+      "label_identity_clarification": "以manifest protected_instances=67c7582a606e439b86b9e4dbd198aae8为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+      "visible_process_change": true,
+      "evidence_boundary": "三关键帧支持活跃车局部露出和视角变化；不认证完整视频。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "P022",
+      "assistant_score": 0,
+      "decision": "reject",
+      "reason": "静止A持续跨压双黄中心线，占据对向与本车道两侧，位置像停在道路分界线上；即使灰洞完整且随ego缩小，视觉道路放置仍不合理。",
+      "visible_process_change": true,
+      "evidence_boundary": "0/5/9帧均可见跨线位置；只据三帧作视觉拒绝。",
+      "review_frames": [
+        0,
+        5,
+        9
+      ],
+      "human_verdict": null
+    }
+  ]
+}

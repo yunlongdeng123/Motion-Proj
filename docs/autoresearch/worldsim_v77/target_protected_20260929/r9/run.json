@@ -1,0 +1,21 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r9",
+  "host": "wm-3090-1001",
+  "stage": "temporal_audit_and_bounded_data_factory",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "pending",
+  "architecture_unchanged": true,
+  "power_authorization": null,
+  "human_verdict": null,
+  "data_GT": "real nuScenes Y; synthetic occluder appearance fully erased",
+  "query_inputs": "masked X / H only; target Y never supplied as condition",
+  "seed_training": 6201,
+  "seed_inference": 42,
+  "finetune_steps": 160,
+  "modules": "same80 spatial attention tensors",
+  "resource_budget": "one reuse search plus one16-source expansion; no threshold/seed/module sweep",
+  "train_before_quality": false
+}

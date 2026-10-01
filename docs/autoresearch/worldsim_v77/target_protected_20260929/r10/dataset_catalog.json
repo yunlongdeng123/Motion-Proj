@@ -1,0 +1,4490 @@
+{
+  "cases": [
+    {
+      "dataset_id": "r10/P001",
+      "case_id": "P001",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P001",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0708",
+      "source_id": "N104",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P001",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "红A在道路上，大小与贴地关系合理，灰洞完整覆盖；0到9帧红A相对绿色受保护车由右缘扫向车身中部，遮挡明显增加。",
+        "visible_process_change": true,
+        "evidence_boundary": "三关键帧支持横扫方向与遮挡变化；不认证中间帧连续性。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "sweep_B",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 8.574521189007728,
+          "path_m": 8.57462915499456,
+          "diameter_m": 8.574521189007728
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.600000732748455,
+          "path_m": 3.6000007327484544,
+          "diameter_m": 3.600000732748455
+        },
+        "hole_centroid_path_px": 93.99890466468354,
+        "hole_centroid_diameter_px": 93.90401500616814,
+        "hole_area_min_max": [
+          6760,
+          23576
+        ],
+        "hole_centroids": [
+          [
+            780.3738971835766,
+            383.7705293518833
+          ],
+          [
+            770.9927301721308,
+            380.6266591623282
+          ],
+          [
+            755.1062461208599,
+            374.88969136150763
+          ],
+          [
+            736.6433290248456,
+            366.9728565273589
+          ],
+          [
+            726.5863870004974,
+            361.74929530757754
+          ],
+          [
+            718.4343976641236,
+            358.2102288782142
+          ],
+          [
+            714.6797070919852,
+            356.70879727154175
+          ],
+          [
+            707.541638379724,
+            354.0063362751754
+          ],
+          [
+            698.274836644886,
+            349.94545939458595
+          ],
+          [
+            693.4908284023669,
+            348.14334319526625
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "4422a07def044c8cb8244dfe2dbf7c30": {
+            "occlusion_fractions": [
+              0.23382956878850103,
+              0.26285861979839753,
+              0.33006102414433536,
+              0.4213225371120108,
+              0.47758761206193967,
+              0.5199442119944212,
+              0.5479377219338979,
+              0.5919714050041243,
+              0.6704608550805108,
+              0.7112225006961849
+            ],
+            "occlusion_range": 0.47739293190768384,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.8305484408667724,
+                0.6948600920523039
+              ],
+              [
+                0.8191002949852504,
+                0.6822094567786228
+              ],
+              [
+                0.7778094346534253,
+                0.6606138033991736
+              ],
+              [
+                0.7312866505691624,
+                0.6210190354168574
+              ],
+              [
+                0.7046541816166391,
+                0.6200744647843625
+              ],
+              [
+                0.6700506217673606,
+                0.6168037672865999
+              ],
+              [
+                0.6640271493212665,
+                0.6120434991322333
+              ],
+              [
+                0.6359760382054852,
+                0.6090022378921586
+              ],
+              [
+                0.6065123282514582,
+                0.5965033356337699
+              ],
+              [
+                0.5774949404550029,
+                0.6071830284046417
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.25305350041176944,
+              0.09835675641853403
+            ],
+            "sweep_over_B": true,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.018660812294182216,
+              0.22418879056047197,
+              0.3762057877813505,
+              0.49327354260089684,
+              0.5290102389078498,
+              0.5810085836909872,
+              0.5967098703888335,
+              0.6158848118903855,
+              0.6289855072463768,
+              0.6711041503523885
+            ],
+            "approx_other_frame_support_mean": 0.4735032095713724,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 7.227563538135117,
+              "path_m": 7.2291569999707415,
+              "diameter_m": 7.227563538135117
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": true,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P003",
+      "case_id": "P003",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P003",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0710",
+      "source_id": "N191",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P003",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "侧视轿车轮廓贴地且位于行车区域，灰洞完整；红A从绿色车左缘逐渐移到更靠车身中央，三帧可见横向扫过。",
+        "visible_process_change": true,
+        "evidence_boundary": "只确认0/5/9帧中的相对横移和遮挡；不推断每一中间帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "sweep_B",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 0.250780198491497,
+          "path_m": 0.25081205239046583,
+          "diameter_m": 0.250780198491497
+        },
+        "A_world_motion": {
+          "endpoint_m": 1.8000514182549396,
+          "path_m": 1.8000514182549399,
+          "diameter_m": 1.8000514182549396
+        },
+        "hole_centroid_path_px": 94.19446898028627,
+        "hole_centroid_diameter_px": 94.17733752599698,
+        "hole_area_min_max": [
+          27577,
+          29341
+        ],
+        "hole_centroids": [
+          [
+            339.11513217536356,
+            391.98404467491025
+          ],
+          [
+            348.22514788630787,
+            391.84432260857017
+          ],
+          [
+            352.67964061096137,
+            391.6523989218329
+          ],
+          [
+            361.8758352092043,
+            391.5769464394183
+          ],
+          [
+            376.3155212683134,
+            391.7332790714134
+          ],
+          [
+            386.95777074542895,
+            392.0074191279887
+          ],
+          [
+            397.7019214004254,
+            392.3106670851205
+          ],
+          [
+            403.1315643040968,
+            392.3959796897823
+          ],
+          [
+            414.85862972153296,
+            392.7874276261373
+          ],
+          [
+            433.2868341228997,
+            393.01431444054396
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "bbf4d6813ac849eaa01d211630891f99": {
+            "occlusion_fractions": [
+              0.23887694612728813,
+              0.278485977642675,
+              0.29810457516339867,
+              0.3405930202046707,
+              0.41095621441193797,
+              0.4676610348468849,
+              0.5218297927798775,
+              0.5495802728226653,
+              0.6126755962103888,
+              0.7146785386932042
+            ],
+            "occlusion_range": 0.47580159256591603,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.17224217861072186,
+                0.6449134789399312
+              ],
+              [
+                0.19261020669471365,
+                0.6326237729406743
+              ],
+              [
+                0.2039990473958373,
+                0.6314253528793593
+              ],
+              [
+                0.23044322166728648,
+                0.6211304104216275
+              ],
+              [
+                0.2678984231779263,
+                0.600821280169106
+              ],
+              [
+                0.2959881871820907,
+                0.5958162606531905
+              ],
+              [
+                0.3259994316028799,
+                0.5887043990492268
+              ],
+              [
+                0.3385559830466629,
+                0.5832016569280991
+              ],
+              [
+                0.3701876932920978,
+                0.5801024517068543
+              ],
+              [
+                0.41509187038685025,
+                0.5711599128980767
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.2428496917761284,
+              0.07375356604185457
+            ],
+            "sweep_over_B": true,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.01527133896918462,
+              0.2415492957746479,
+              0.2931374698531024,
+              0.3892526964560863,
+              0.48638318203535597,
+              0.539232289020604,
+              0.5840409590409591,
+              0.6004773269689737,
+              0.6397568518716007,
+              0.6903627702455112
+            ],
+            "approx_other_frame_support_mean": 0.4479464180236025,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.2444441116617481,
+              "path_m": 0.30297023964172026,
+              "diameter_m": 0.2474280756200504
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": true,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P004",
+      "case_id": "P004",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P004",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0710",
+      "source_id": "N191",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P004",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "车形与路面接触合理，洞包住A；绿色车从被红A大面积遮住到右侧重新露出，红A相对车身明显向左扫离。",
+        "visible_process_change": true,
+        "evidence_boundary": "三关键帧足以确认可见的扫离过程；不认证全10帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "sweep_B",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 0.250780198491497,
+          "path_m": 0.25081205239046583,
+          "diameter_m": 0.250780198491497
+        },
+        "A_world_motion": {
+          "endpoint_m": 1.8000514182549396,
+          "path_m": 1.8000514182549399,
+          "diameter_m": 1.8000514182549396
+        },
+        "hole_centroid_path_px": 126.42470054617462,
+        "hole_centroid_diameter_px": 126.415711451903,
+        "hole_area_min_max": [
+          24961,
+          27347
+        ],
+        "hole_centroids": [
+          [
+            462.9862873441328,
+            394.3760193074195
+          ],
+          [
+            447.0448445413879,
+            393.60885799844726
+          ],
+          [
+            439.1446692954393,
+            393.2461870396548
+          ],
+          [
+            423.6025366000527,
+            392.66994091302547
+          ],
+          [
+            401.3547819433818,
+            392.06847742922724
+          ],
+          [
+            387.49729311678266,
+            391.81453982985306
+          ],
+          [
+            373.8614568296204,
+            391.625375521829
+          ],
+          [
+            367.23939797758095,
+            391.51987144312926
+          ],
+          [
+            354.62255347752165,
+            391.34577517694044
+          ],
+          [
+            336.6182444613597,
+            390.9047313809543
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "bbf4d6813ac849eaa01d211630891f99": {
+            "occlusion_fractions": [
+              0.7979936160510716,
+              0.7267438059750277,
+              0.6890196078431372,
+              0.614208869063238,
+              0.5042869297728909,
+              0.4444297782470961,
+              0.38277075459403104,
+              0.35460388247639035,
+              0.3030382228030056,
+              0.23746235432761556
+            ],
+            "occlusion_range": 0.560531261723456,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.4592741027445461,
+                0.5715899814471244
+              ],
+              [
+                0.42526694618086186,
+                0.5721284764529347
+              ],
+              [
+                0.40631153546732607,
+                0.5777110496165313
+              ],
+              [
+                0.3725573331565553,
+                0.5823296243434022
+              ],
+              [
+                0.3174370945947845,
+                0.5882145596130021
+              ],
+              [
+                0.28500457071885643,
+                0.6041788283167592
+              ],
+              [
+                0.2550756988717081,
+                0.618339536394554
+              ],
+              [
+                0.23832611620951138,
+                0.624341796181621
+              ],
+              [
+                0.21009724762457072,
+                0.6376187714680822
+              ],
+              [
+                0.16764358699842577,
+                0.6492145435415737
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.2916305157461203,
+              0.07762456209444935
+            ],
+            "sweep_over_B": true,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.7230204081632653,
+              0.7108032742646397,
+              0.6974957313602732,
+              0.6679483071665064,
+              0.5919532770927969,
+              0.527027027027027,
+              0.45216207013959825,
+              0.40114666173478825,
+              0.29646399310047433,
+              0.0
+            ],
+            "approx_other_frame_support_mean": 0.5068020750049369,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.2444441116617481,
+              "path_m": 0.30297023964172026,
+              "diameter_m": 0.2474280756200504
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": true,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P005",
+      "case_id": "P005",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P005",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0714",
+      "source_id": "N131",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P005",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "红A在路面且灰洞完整；实际活跃受保护车是旧图蓝色C。蓝车从红A右缘逐渐移入其遮挡范围，0/5/9帧能看出车身横扫与遮挡增长；远处旧图绿色B不是目标。",
+        "prior_score": 1,
+        "prior_reason": "红A在道路上且洞完整，逐渐遮住蓝色C的一部分；绿色B始终在右侧基本分离。manifest指定的受保护实例似乎是蓝色C，与题设的活跃绿色B不一致，不能确认目标遮挡任务成立。",
+        "label_identity_clarification": "以manifest protected_instances=7a5be16ed2654336b5f894753314456f为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+        "visible_process_change": true,
+        "evidence_boundary": "三关键帧可见活跃车相对A横扫；不认证其余7帧或真实纹理。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "sweep_B",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 0.0002082143498009372,
+          "path_m": 0.0006898169173686155,
+          "diameter_m": 0.00033525095761814303
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 0.2897277667832512,
+        "hole_centroid_diameter_px": 0.14448269270696254,
+        "hole_area_min_max": [
+          9341,
+          9352
+        ],
+        "hole_centroids": [
+          [
+            543.244006849315,
+            343.03874143835617
+          ],
+          [
+            543.2563389322777,
+            343.04001283834384
+          ],
+          [
+            543.2794479512143,
+            343.0609821333048
+          ],
+          [
+            543.32,
+            343.06267379679144
+          ],
+          [
+            543.3422150882825,
+            343.08303905831997
+          ],
+          [
+            543.3202740312566,
+            343.1110040676515
+          ],
+          [
+            543.319558933733,
+            343.1193662348785
+          ],
+          [
+            543.3743847635352,
+            343.1010057778729
+          ],
+          [
+            543.3295174922436,
+            343.08901251738524
+          ],
+          [
+            543.3127673224978,
+            343.06757912745934
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "7a5be16ed2654336b5f894753314456f": {
+            "occlusion_fractions": [
+              0.1786723163841808,
+              0.22754911131898972,
+              0.24920751036332603,
+              0.3083980239943543,
+              0.3963078398465596,
+              0.461347253293562,
+              0.5338725985844287,
+              0.5662927078021418,
+              0.6380577427821522,
+              0.7473103448275862
+            ],
+            "occlusion_range": 0.5686380284434054,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.13916213458547555,
+                0.6768085301957907
+              ],
+              [
+                0.16582578093369427,
+                0.6421964469240932
+              ],
+              [
+                0.17716347231143872,
+                0.632932625104836
+              ],
+              [
+                0.20882025841237675,
+                0.6201000911610943
+              ],
+              [
+                0.2568844048758877,
+                0.5901907839405067
+              ],
+              [
+                0.2944956896551721,
+                0.5727239276703106
+              ],
+              [
+                0.33067334934713005,
+                0.5671886548410945
+              ],
+              [
+                0.3494106184631056,
+                0.5741086168821425
+              ],
+              [
+                0.39128000027653986,
+                0.5846635430566562
+              ],
+              [
+                0.45034414945919393,
+                0.573571383554367
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.3111820148737184,
+              0.1096198753546962
+            ],
+            "sweep_over_B": true,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.0,
+              0.32990750256937307,
+              0.4060665362035225,
+              0.5263157894736842,
+              0.6594071385359952,
+              0.7112068965517241,
+              0.7428977272727273,
+              0.7681224673570464,
+              0.7959687371452078,
+              0.8283499446290143
+            ],
+            "approx_other_frame_support_mean": 0.5768242739738294,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 3.321405585348077,
+              "path_m": 3.333564304117293,
+              "diameter_m": 3.321405585348077
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": true,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P008",
+      "case_id": "P008",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P008",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0240",
+      "source_id": "N052",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P008",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "路口内车形与地面位置合理，A遮住右侧绿色车的左半部，三帧遮挡关系及灰洞稳定，视角变化可见。",
+        "visible_process_change": true,
+        "evidence_boundary": "三帧支持可见度变化，不认证中间帧或被遮区域真实纹理。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "visibility_transition",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 0.3639905960545128,
+          "path_m": 0.36400276262096054,
+          "diameter_m": 0.36399059605451284
+        },
+        "A_world_motion": {
+          "endpoint_m": 1.8005521287079653,
+          "path_m": 1.8005521287079655,
+          "diameter_m": 1.8005521287079653
+        },
+        "hole_centroid_path_px": 15.287830834354892,
+        "hole_centroid_diameter_px": 15.030670271850123,
+        "hole_area_min_max": [
+          14641,
+          20116
+        ],
+        "hole_centroids": [
+          [
+            698.3540058739158,
+            414.7750836691483
+          ],
+          [
+            700.2598664639387,
+            415.48271302968203
+          ],
+          [
+            701.138456528818,
+            415.81751872354283
+          ],
+          [
+            702.4885977069422,
+            416.65654529419174
+          ],
+          [
+            704.6739520958084,
+            418.12502994011976
+          ],
+          [
+            706.1242052941857,
+            419.19223211189455
+          ],
+          [
+            707.444586839026,
+            420.2321836518638
+          ],
+          [
+            707.9105597546281,
+            420.72077993208455
+          ],
+          [
+            708.9121835443038,
+            421.80443037974686
+          ],
+          [
+            710.4023662756015,
+            423.76163253131836
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "5fcbdbe3b0bf4406b790bfca7c91ea6c": {
+            "occlusion_fractions": [
+              0.4829325058184639,
+              0.4861621830849623,
+              0.4847431440710699,
+              0.4801753337318191,
+              0.4624163715072806,
+              0.4563600782778865,
+              0.4594225516972298,
+              0.45463433711380524,
+              0.44123952445916975,
+              0.4176602086438152
+            ],
+            "occlusion_range": 0.06850197444114708,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.2872975046252424,
+                0.5018588640275384
+              ],
+              [
+                0.2946081033262557,
+                0.50769449499545
+              ],
+              [
+                0.2873306772908361,
+                0.5080990324416615
+              ],
+              [
+                0.2770199076880041,
+                0.4888737403675163
+              ],
+              [
+                0.2728185512789865,
+                0.4921845969433625
+              ],
+              [
+                0.27269354558945347,
+                0.49477456505758416
+              ],
+              [
+                0.2773484312337814,
+                0.4929936305732483
+              ],
+              [
+                0.270905615292712,
+                0.4966590943510524
+              ],
+              [
+                0.2666291305867272,
+                0.49445080376250417
+              ],
+              [
+                0.26089865415196095,
+                0.5088389390760258
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.03370944917429475,
+              0.019965198708509546
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.10602409638554217,
+              0.1301751592356688,
+              0.14103585657370518,
+              0.17178423236514523,
+              0.21550255536626917,
+              0.1895368782161235,
+              0.1711252653927813,
+              0.15827956989247313,
+              0.12809187279151943,
+              0.030330062444246207
+            ],
+            "approx_other_frame_support_mean": 0.1441885548663474,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.12430095376911444,
+              "path_m": 0.14984795927127464,
+              "diameter_m": 0.12430095376911444
+            }
+          },
+          "c50c8d3bebca4d91a90549681dc1e3c7": {
+            "occlusion_fractions": [
+              0.4826645890144137,
+              0.5087616822429907,
+              0.5169606512890095,
+              0.5419921875,
+              0.5614655012088525,
+              0.5853748388285135,
+              0.6107130060910068,
+              0.6226552540520852,
+              0.6399786969643174,
+              0.6605488239486814
+            ],
+            "occlusion_range": 0.1778842349342677,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.5916295282544363,
+                0.6742996909387983
+              ],
+              [
+                0.5786227234866383,
+                0.6741153519457123
+              ],
+              [
+                0.5747542426761867,
+                0.6727299331486005
+              ],
+              [
+                0.5625119236883938,
+                0.6643354465576687
+              ],
+              [
+                0.5567229767031024,
+                0.6587304793220173
+              ],
+              [
+                0.5397776379274183,
+                0.6518572717553663
+              ],
+              [
+                0.5279677633508824,
+                0.6554937850551518
+              ],
+              [
+                0.5268363069123522,
+                0.6481534323971495
+              ],
+              [
+                0.5126465767242463,
+                0.6408401985194591
+              ],
+              [
+                0.5157073840645465,
+                0.6295611363717619
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.07898295153018997,
+              0.04473855456703635
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.03970826580226904,
+              0.10619469026548672,
+              0.1165158371040724,
+              0.14099311344690105,
+              0.17867818000664232,
+              0.2070930968967701,
+              0.23943245639964528,
+              0.25139664804469275,
+              0.2596747055524397,
+              0.27484259512729264
+            ],
+            "approx_other_frame_support_mean": 0.1814529588646212,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.2033465194416839,
+              "path_m": 0.20334873035583662,
+              "diameter_m": 0.2033465194416839
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P009",
+      "case_id": "P009",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P009",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0249",
+      "source_id": "N059",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P009",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "红A处于车道，轮廓和灰洞一致；绿色车与A重叠，三帧可见其遮挡程度变化，无明显背景污染。",
+        "visible_process_change": true,
+        "evidence_boundary": "只据三帧确认可见过程，不认证完整视频。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "visibility_transition",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 5.351502814130381,
+          "path_m": 5.351525606880051,
+          "diameter_m": 5.351502814130381
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.6003024368970196,
+          "path_m": 3.6003024368970196,
+          "diameter_m": 3.60030243689702
+        },
+        "hole_centroid_path_px": 44.57322267414208,
+        "hole_centroid_diameter_px": 44.41366256057369,
+        "hole_area_min_max": [
+          16892,
+          27646
+        ],
+        "hole_centroids": [
+          [
+            495.3896042827172,
+            384.9186139043623
+          ],
+          [
+            498.19695276411863,
+            383.76713604529874
+          ],
+          [
+            503.9818976034001,
+            382.57034355200506
+          ],
+          [
+            511.93690542212363,
+            380.13834734013057
+          ],
+          [
+            516.8945170416274,
+            378.005972428039
+          ],
+          [
+            521.5483580106302,
+            376.56786256643886
+          ],
+          [
+            523.8959721677774,
+            375.31027048216384
+          ],
+          [
+            528.0884103732077,
+            373.3264661731974
+          ],
+          [
+            534.1362229102167,
+            371.6283141007599
+          ],
+          [
+            537.4934880416765,
+            370.78226379351173
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "9ff78688d0c8462bbddf37a38dc4944b": {
+            "occlusion_fractions": [
+              0.587813134732566,
+              0.5884422790634727,
+              0.6116177914971236,
+              0.6451846488052136,
+              0.6689501116902458,
+              0.688534641324341,
+              0.7013733631427659,
+              0.7137936690175496,
+              0.7357547484171942,
+              0.7579440875151936
+            ],
+            "occlusion_range": 0.17013095278262758,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.34145094036168944,
+                0.5584854969289738
+              ],
+              [
+                0.3414159695294436,
+                0.5591602841910422
+              ],
+              [
+                0.3513155804965858,
+                0.5619044421689918
+              ],
+              [
+                0.3744685579669078,
+                0.56815581287126
+              ],
+              [
+                0.38516773583877023,
+                0.572878533029913
+              ],
+              [
+                0.4032191488572276,
+                0.5692564559216386
+              ],
+              [
+                0.4098796651552145,
+                0.5720201502732237
+              ],
+              [
+                0.4236539373814044,
+                0.5717638914743115
+              ],
+              [
+                0.4400332457397678,
+                0.5698073439241915
+              ],
+              [
+                0.450591399925351,
+                0.5707174841195463
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.10917543039590744,
+              0.014393036100939227
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.08269983874683252,
+              0.12580496780128794,
+              0.18192245927965128,
+              0.25566778900112236,
+              0.2920747996438112,
+              0.34038290293855744,
+              0.37340619307832423,
+              0.4170496323529412,
+              0.4701086956521739,
+              0.5019473081328751
+            ],
+            "approx_other_frame_support_mean": 0.3041064586627577,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 4.458953726491561,
+              "path_m": 4.461257383221186,
+              "diameter_m": 4.458953726491561
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P010",
+      "case_id": "P010",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P010",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0256",
+      "source_id": "N171",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P010",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A贴地、位于车道且灰洞完整；实际活跃受保护车是旧图蓝色C。蓝车被A挡住下部，但从0到9帧右上方逐步露出，可见遮挡过渡；旧图绿色货车不是目标。",
+        "prior_score": 1,
+        "prior_reason": "A贴地且洞完整，确实覆盖蓝色C的下部；绿色B货车始终在旁边未被A遮。manifest受保护实例似乎对应蓝C，需确认此例是否允许以C作为活跃目标。",
+        "label_identity_clarification": "以manifest protected_instances=a466d1fcc20944d7a092c44575602a3a为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+        "visible_process_change": true,
+        "evidence_boundary": "三关键帧可见活跃车的局部露出增加；不认证中间帧或全视频。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "visibility_transition",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 5.9604111810738445,
+          "path_m": 5.960863793602208,
+          "diameter_m": 5.9604111810738445
+        },
+        "A_world_motion": {
+          "endpoint_m": 1.8000987442815455,
+          "path_m": 1.8000987442815455,
+          "diameter_m": 1.8000987442815455
+        },
+        "hole_centroid_path_px": 31.45019267232241,
+        "hole_centroid_diameter_px": 26.390056789170444,
+        "hole_area_min_max": [
+          5943,
+          9029
+        ],
+        "hole_centroids": [
+          [
+            466.7620730270907,
+            351.09910819451454
+          ],
+          [
+            465.1845831992276,
+            351.00885098165435
+          ],
+          [
+            464.4533438237608,
+            350.72950432730136
+          ],
+          [
+            461.482846825158,
+            351.887902497743
+          ],
+          [
+            458.55314077397645,
+            353.34113853056647
+          ],
+          [
+            455.8688546550569,
+            353.2100468854655
+          ],
+          [
+            452.76411238825034,
+            353.1026819923372
+          ],
+          [
+            451.51293854192585,
+            354.8922617566559
+          ],
+          [
+            448.94758160590897,
+            360.1082916368835
+          ],
+          [
+            447.15527743936207,
+            368.76287517997565
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "a466d1fcc20944d7a092c44575602a3a": {
+            "occlusion_fractions": [
+              0.49446386946386944,
+              0.4787264018033249,
+              0.47548209366391186,
+              0.46194298367008024,
+              0.4394506866416979,
+              0.42086956521739133,
+              0.4120304327151688,
+              0.4023014959723821,
+              0.3745863666446062,
+              0.342534504391468
+            ],
+            "occlusion_range": 0.15192936507240146,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.48571007660577514,
+                0.7475970130509961
+              ],
+              [
+                0.4748565332548562,
+                0.7533558639807099
+              ],
+              [
+                0.4746392078373534,
+                0.7490113851643396
+              ],
+              [
+                0.4601376255061099,
+                0.7475405400181684
+              ],
+              [
+                0.42961850649350675,
+                0.7567482517482518
+              ],
+              [
+                0.4159522953989356,
+                0.7553486458445138
+              ],
+              [
+                0.40615182406873157,
+                0.766327049116793
+              ],
+              [
+                0.3896899783705844,
+                0.7644114281868352
+              ],
+              [
+                0.36051701692393506,
+                0.7595466106758161
+              ],
+              [
+                0.3369102407563943,
+                0.7622916989114169
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.14879983584938083,
+              0.01878650909862456
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.4672952268709487,
+              0.4490876986462625,
+              0.4264194669756663,
+              0.40443379269023366,
+              0.3306818181818182,
+              0.30165289256198347,
+              0.26889786497403345,
+              0.2511441647597254,
+              0.20259128386336867,
+              0.07142857142857142
+            ],
+            "approx_other_frame_support_mean": 0.3173632780952612,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.9402909021943772,
+              "path_m": 0.9464917103189009,
+              "diameter_m": 0.9402909021943772
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P013",
+      "case_id": "P013",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P013",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0300",
+      "source_id": "N009",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P013",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A居于道路车道，车形和灰洞一致；绿色车露出区域随三帧变化，未见压路缘或明显背景污染。",
+        "visible_process_change": true,
+        "evidence_boundary": "三帧能观察到遮挡过渡，不能认证其间每帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "visibility_transition",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.899919,
+        "ego_camera_motion": {
+          "endpoint_m": 6.567058500295444,
+          "path_m": 6.567141360609077,
+          "diameter_m": 6.567058500295444
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.5996788181984924,
+          "path_m": 3.599678818198492,
+          "diameter_m": 3.5996788181984924
+        },
+        "hole_centroid_path_px": 30.189406099927535,
+        "hole_centroid_diameter_px": 30.1620085034517,
+        "hole_area_min_max": [
+          11892,
+          28649
+        ],
+        "hole_centroids": [
+          [
+            568.1341059024747,
+            387.51862194142905
+          ],
+          [
+            566.1993027770075,
+            381.9725468446698
+          ],
+          [
+            565.3548671451958,
+            379.91243756034083
+          ],
+          [
+            563.7581580177654,
+            375.84464703132306
+          ],
+          [
+            562.1619157466909,
+            370.42324380732686
+          ],
+          [
+            561.4978010723538,
+            367.95114163503825
+          ],
+          [
+            560.6982958689742,
+            365.44963861812874
+          ],
+          [
+            560.3817226600304,
+            364.28999032213466
+          ],
+          [
+            559.666267046306,
+            362.1268544882362
+          ],
+          [
+            558.3934577867474,
+            358.9727547931382
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "9e621ded51694f54bcf7ebfd172e35c0": {
+            "occlusion_fractions": [
+              0.5463137996219282,
+              0.5154227265462682,
+              0.5143388621919083,
+              0.5025133282559026,
+              0.47041153499549415,
+              0.44695121951219513,
+              0.42366989117291415,
+              0.42365247711753595,
+              0.41583005965371744,
+              0.39215116279069767
+            ],
+            "occlusion_range": 0.1541626368312305,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.5754942195756545,
+                0.6778349790418322
+              ],
+              [
+                0.596432240590268,
+                0.6754395916052184
+              ],
+              [
+                0.5839898013621275,
+                0.6854334818212559
+              ],
+              [
+                0.5992794751457247,
+                0.6826530127786078
+              ],
+              [
+                0.619528619528619,
+                0.6810420847777172
+              ],
+              [
+                0.6469103603242113,
+                0.680467057218522
+              ],
+              [
+                0.6594447125978471,
+                0.6845599103001884
+              ],
+              [
+                0.6522672714802347,
+                0.6791253126765108
+              ],
+              [
+                0.6584670666215868,
+                0.6854484831021282
+              ],
+              [
+                0.679499217527387,
+                0.6839881393624905
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.10400499795173246,
+              0.010008891496909866
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.3445925925925926,
+              0.3166407465007776,
+              0.2948479205462446,
+              0.2719797596457938,
+              0.2222222222222222,
+              0.1939477303988996,
+              0.16952177016416844,
+              0.15522703273495247,
+              0.1207764198418404,
+              0.029632408102025505
+            ],
+            "approx_other_frame_support_mean": 0.21193886027495168,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 7.41203924991776,
+              "path_m": 7.412042805285696,
+              "diameter_m": 7.41203924991776
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P015",
+      "case_id": "P015",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P015",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0228",
+      "source_id": "N039",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P015",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "静止A在右侧行车道上，大小随ego视角变化而缩小，贴地和洞覆盖合理；此例无受保护B，按背景对照例审查。",
+        "visible_process_change": true,
+        "evidence_boundary": "三帧只证明画面中的视角变化；不证明十帧世界静止精度。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 7.340595657978106,
+          "path_m": 7.340701756701991,
+          "diameter_m": 7.340595657978106
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 116.62532575968368,
+        "hole_centroid_diameter_px": 116.41654349273541,
+        "hole_area_min_max": [
+          4858,
+          19598
+        ],
+        "hole_centroids": [
+          [
+            789.3513623839167,
+            365.74492295132154
+          ],
+          [
+            777.2192488802114,
+            362.0135523142299
+          ],
+          [
+            756.6135927846034,
+            356.2067324763866
+          ],
+          [
+            733.2187733035048,
+            350.4345637583893
+          ],
+          [
+            720.5482629727353,
+            347.70162708883026
+          ],
+          [
+            710.1466632834306,
+            343.72951027657956
+          ],
+          [
+            705.3637355146558,
+            341.76741649625086
+          ],
+          [
+            696.3667235230268,
+            337.85315552798886
+          ],
+          [
+            684.4751943724547,
+            333.74879674194744
+          ],
+          [
+            677.9499794153973,
+            331.9433923425278
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {},
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P017",
+      "case_id": "P017",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P017",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0243",
+      "source_id": "N054",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P017",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "静止A位于道路车道，随ego运动合理变大；红A稳定遮住绿色受保护车的一部分，灰洞完整且未见压ego。",
+        "visible_process_change": true,
+        "evidence_boundary": "三帧支持视角导致的尺度变化，不认证完整视频。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.900005,
+        "ego_camera_motion": {
+          "endpoint_m": 2.5915962222990343,
+          "path_m": 2.5916337536910365,
+          "diameter_m": 2.5915962222990343
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 24.282425295222005,
+        "hole_centroid_diameter_px": 23.653072235293234,
+        "hole_area_min_max": [
+          16657,
+          29938
+        ],
+        "hole_centroids": [
+          [
+            576.9574953473015,
+            374.0319985591643
+          ],
+          [
+            578.1138064063596,
+            374.6201776946458
+          ],
+          [
+            579.9175195333994,
+            375.70942005062176
+          ],
+          [
+            582.6593061509321,
+            378.39652078556475
+          ],
+          [
+            584.0244992006019,
+            380.2567478604345
+          ],
+          [
+            584.8012460783881,
+            382.056559586408
+          ],
+          [
+            585.0988310308182,
+            383.3860148777896
+          ],
+          [
+            586.6745719620228,
+            386.3535931355023
+          ],
+          [
+            588.817707029154,
+            390.64199606510465
+          ],
+          [
+            590.461420268555,
+            393.4513661567239
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {
+          "6b679f56d3a9412499fe3a3542629cf6": {
+            "occlusion_fractions": [
+              0.6853323699421965,
+              0.6826600811430588,
+              0.6781609195402298,
+              0.6905605670103093,
+              0.6967251280459413,
+              0.7082899240958476,
+              0.7172393709959232,
+              0.7249012972363226,
+              0.7345921846315238,
+              0.7419924337957124
+            ],
+            "occlusion_range": 0.06383151425548261,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.6197060714720175,
+                0.518640928890492
+              ],
+              [
+                0.6242697449724751,
+                0.5181348367394879
+              ],
+              [
+                0.6262197845966707,
+                0.5074529568584719
+              ],
+              [
+                0.622514287380452,
+                0.5121996734313037
+              ],
+              [
+                0.6217352855802402,
+                0.5064506104084335
+              ],
+              [
+                0.6149827632479576,
+                0.5064989643682649
+              ],
+              [
+                0.6124282952046729,
+                0.5096378786999981
+              ],
+              [
+                0.6109630743140523,
+                0.497274532599304
+              ],
+              [
+                0.6112453162588799,
+                0.5066433254357211
+              ],
+              [
+                0.6008621222421363,
+                0.5042903542563636
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.025357662354534405,
+              0.021366396291187972
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.08592514496573538,
+              0.08914728682170543,
+              0.09385277004806476,
+              0.10473524609283881,
+              0.11338828246825573,
+              0.11536036982559361,
+              0.12078765732846122,
+              0.12701808986578486,
+              0.1376294180649768,
+              0.15057783820530252
+            ],
+            "approx_other_frame_support_mean": 0.1138422103686719,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.06496801985176202,
+              "path_m": 0.06497835688691828,
+              "diameter_m": 0.06496801985176204
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P018",
+      "case_id": "P018",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P018",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0256",
+      "source_id": "N171",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P018",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "静止A在道路车道，随ego视角改变而略变大，灰洞覆盖完整；实际活跃受保护车是旧图蓝色C，三帧均被A稳定遮挡，附近货车不是目标。",
+        "prior_score": 1,
+        "prior_reason": "A与蓝色C持续重叠且洞合理，但绿色B货车没有被A遮；manifest的受保护实例似乎是蓝C，须确认此例活跃目标的定义。",
+        "label_identity_clarification": "以manifest protected_instances=a466d1fcc20944d7a092c44575602a3a为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+        "visible_process_change": true,
+        "evidence_boundary": "三关键帧支持静止A随ego视角变化且活跃车被遮；不认证十帧静止轨迹精度。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 5.9604111810738445,
+          "path_m": 5.960863793602208,
+          "diameter_m": 5.9604111810738445
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 21.002736812942874,
+        "hole_centroid_diameter_px": 17.088965712066326,
+        "hole_area_min_max": [
+          5144,
+          8361
+        ],
+        "hole_centroids": [
+          [
+            478.17223950233284,
+            346.38005443234835
+          ],
+          [
+            479.24212671359766,
+            345.96424601704337
+          ],
+          [
+            479.71356147021544,
+            345.6376969038566
+          ],
+          [
+            479.30288461538464,
+            346.76802884615387
+          ],
+          [
+            480.5779220779221,
+            347.64697497624326
+          ],
+          [
+            481.0105073551486,
+            347.21540078054636
+          ],
+          [
+            480.93752662217804,
+            346.93695868237967
+          ],
+          [
+            481.0422185430464,
+            348.6456953642384
+          ],
+          [
+            481.7100785340314,
+            353.57212041884816
+          ],
+          [
+            485.0654227963162,
+            361.86700155483794
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {
+          "a466d1fcc20944d7a092c44575602a3a": {
+            "occlusion_fractions": [
+              0.5148601398601399,
+              0.5108481262327417,
+              0.509366391184573,
+              0.5109327428729588,
+              0.5238451935081149,
+              0.5167701863354037,
+              0.5328102710413695,
+              0.540391254315305,
+              0.5459960291197882,
+              0.5363864491844417
+            ],
+            "occlusion_range": 0.03662963793521512,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.5161555602716472,
+                0.7356174677836844
+              ],
+              [
+                0.5158749310535029,
+                0.7372649146842697
+              ],
+              [
+                0.5179048461904059,
+                0.7332921270184659
+              ],
+              [
+                0.5143389474375389,
+                0.7280519344353963
+              ],
+              [
+                0.512740024513142,
+                0.7302045904524457
+              ],
+              [
+                0.5113085284280938,
+                0.7264204545454549
+              ],
+              [
+                0.515896921017403,
+                0.7328684555801983
+              ],
+              [
+                0.5109390679330705,
+                0.7306969636236097
+              ],
+              [
+                0.5046251993620418,
+                0.721668862538428
+              ],
+              [
+                0.5081971310041488,
+                0.7226862147544137
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.013279646828364133,
+              0.015596052145841699
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.0588568194680249,
+              0.06012134583563155,
+              0.04975662520281233,
+              0.04550379198266522,
+              0.0328884652049571,
+              0.05384615384615385,
+              0.06961178045515395,
+              0.06601362862010221,
+              0.07595959595959596,
+              0.07953216374269007
+            ],
+            "approx_other_frame_support_mean": 0.05920903703177871,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.9402909021943772,
+              "path_m": 0.9464917103189009,
+              "diameter_m": 0.9402909021943772
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P020",
+      "case_id": "P020",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P020",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0292",
+      "source_id": "N177",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P020",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在对侧路面车辆行列附近，侧视车身贴地，灰洞覆盖；随着ego变化，绿色车的可见部分发生清楚变化。",
+        "visible_process_change": true,
+        "evidence_boundary": "仅三帧验证可见变化和道路位置，不能认证全视频。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 4.974330148956809,
+          "path_m": 4.974751231444912,
+          "diameter_m": 4.97433014895681
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 240.8927028007526,
+        "hole_centroid_diameter_px": 240.40039776226516,
+        "hole_area_min_max": [
+          14596,
+          22190
+        ],
+        "hole_centroids": [
+          [
+            540.9817758289943,
+            359.05165798849
+          ],
+          [
+            517.2112925437733,
+            360.81369270116073
+          ],
+          [
+            505.0577712233906,
+            362.98865093613745
+          ],
+          [
+            480.99355036855036,
+            366.19441031941034
+          ],
+          [
+            440.7051171852616,
+            372.45934330410864
+          ],
+          [
+            414.1076838939021,
+            375.5300519551545
+          ],
+          [
+            386.31599832915623,
+            377.0346700083542
+          ],
+          [
+            371.81618096596696,
+            376.82137762380273
+          ],
+          [
+            344.2652793309671,
+            375.9360140030145
+          ],
+          [
+            301.6125732311852,
+            381.2943217665615
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {
+          "fb7beabd9d054cc184ff3bce5246c960": {
+            "occlusion_fractions": [
+              0.6805670244976604,
+              0.6510574018126888,
+              0.6348211955103106,
+              0.6044142614601019,
+              0.5484639199809478,
+              0.51558106841612,
+              0.483072029084299,
+              0.45941468801766977,
+              0.43494817008673575,
+              0.40099765855644914
+            ],
+            "occlusion_range": 0.27956936594121123,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.38569882745285833,
+                0.557248376206063
+              ],
+              [
+                0.36967199800226447,
+                0.5596006468396258
+              ],
+              [
+                0.3611353824013157,
+                0.5732750485332181
+              ],
+              [
+                0.3501772065107702,
+                0.5692802576184233
+              ],
+              [
+                0.3250189392189652,
+                0.5955716728180631
+              ],
+              [
+                0.3111266578170034,
+                0.6099268072683205
+              ],
+              [
+                0.2978634675252884,
+                0.6171534251261438
+              ],
+              [
+                0.28782702069504107,
+                0.6224490528128586
+              ],
+              [
+                0.27307770486090954,
+                0.6344021801327537
+              ],
+              [
+                0.25724110872625733,
+                0.6382698470515944
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.128457718726601,
+              0.08102147084553135
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.34944388270980786,
+              0.3381143218730226,
+              0.3217516447368421,
+              0.30315471045808123,
+              0.25336517585757706,
+              0.22744830720290843,
+              0.19355597365945437,
+              0.17884615384615385,
+              0.13983463035019456,
+              0.0231023102310231
+            ],
+            "approx_other_frame_support_mean": 0.23286171109250656,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.07296948426711222,
+              "path_m": 0.12975956200552832,
+              "diameter_m": 0.09862465977475406
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10/P021",
+      "case_id": "P021",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P021",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0297",
+      "source_id": "N128",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P021",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "静止A位于双黄线左侧的对向车道，轮廓贴地且灰洞完整；实际活跃受保护车是旧图蓝色C，白车随视角变化从A右上方露出，右侧旧图绿色车不是目标。",
+        "prior_score": 1,
+        "prior_reason": "A在双黄线左侧的对向车道，轮廓及洞合理，并遮住蓝色C；绿色B位于道路右侧始终未被遮，manifest似乎把蓝C列为受保护实例，目标语义需确认。",
+        "label_identity_clarification": "以manifest protected_instances=67c7582a606e439b86b9e4dbd198aae8为活跃目标；旧contact标蓝色C，新UI将此同一真实实例标绿色B，Y/X/H/几何不变。",
+        "visible_process_change": true,
+        "evidence_boundary": "三关键帧支持活跃车局部露出和视角变化；不认证完整视频。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 3.048548471411439,
+          "path_m": 3.0493512689243847,
+          "diameter_m": 3.048548471411439
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 121.74502464850119,
+        "hole_centroid_diameter_px": 121.6955849848876,
+        "hole_area_min_max": [
+          8390,
+          12184
+        ],
+        "hole_centroids": [
+          [
+            504.3320619785459,
+            332.44135876042907
+          ],
+          [
+            490.4880101452617,
+            334.23887479824765
+          ],
+          [
+            483.72148450800137,
+            335.38066053796393
+          ],
+          [
+            469.79816112084063,
+            337.1913309982487
+          ],
+          [
+            449.9244210090984,
+            340.636476426799
+          ],
+          [
+            436.83970529669455,
+            342.25726802070886
+          ],
+          [
+            423.98805007587254,
+            343.25777693474964
+          ],
+          [
+            417.80172413793105,
+            343.78281423804225
+          ],
+          [
+            404.12781556399614,
+            345.2957335924388
+          ],
+          [
+            383.64560078791857,
+            348.0808437294813
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {
+          "67c7582a606e439b86b9e4dbd198aae8": {
+            "occlusion_fractions": [
+              0.5359565807327001,
+              0.5373578776394152,
+              0.5370268787712562,
+              0.545054945054945,
+              0.5895037672122629,
+              0.6214125280758672,
+              0.6530196788057001,
+              0.6539264828738512,
+              0.6770652801848642,
+              0.6965861781848459
+            ],
+            "occlusion_range": 0.16062959745214578,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.2895084662173277,
+                0.5727470575172103
+              ],
+              [
+                0.3023360132500603,
+                0.576435333970294
+              ],
+              [
+                0.3012631457796827,
+                0.5842080236694727
+              ],
+              [
+                0.30838620730550304,
+                0.6049326817933299
+              ],
+              [
+                0.35984403310317803,
+                0.6027737101750098
+              ],
+              [
+                0.3757408010420059,
+                0.5961345381526106
+              ],
+              [
+                0.3886863526151714,
+                0.6004582878154058
+              ],
+              [
+                0.3928989673160863,
+                0.6031547786458957
+              ],
+              [
+                0.40522759379414647,
+                0.5958104565464704
+              ],
+              [
+                0.4118186122165817,
+                0.5892179369201498
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.12231014599925405,
+              0.032185624276119595
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.013670886075949367,
+              0.18992443324937028,
+              0.2517875383043922,
+              0.3647478349465104,
+              0.48143236074270557,
+              0.548995983935743,
+              0.6096293730516107,
+              0.6333439795592463,
+              0.6751990898748578,
+              0.7293808271575425
+            ],
+            "approx_other_frame_support_mean": 0.44981123068979284,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 2.2555618355450506,
+              "path_m": 2.2590784527232666,
+              "diameter_m": 2.2555618355450506
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10_control/M039",
+      "case_id": "M039",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M039",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0222",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M039",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A是道路上的完整车尾，左侧真实轿车仍可见。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘和轮部完整",
+          "placement": "道路中央偏右接地",
+          "protected_mask_identity": "背景例无受保护B；绿线对应左侧GT轿车",
+          "occlusion": "A与左车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N030",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M018",
+      "case_id": "M018",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M018",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0290",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M018",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮挡蓝线白车左下，白车右侧和车顶仍清楚。",
+        "visual_checks": {
+          "silhouette": "车顶、两侧和底部完整",
+          "placement": "贴车道地面，未压ego",
+          "protected_mask_identity": "蓝线白车与GT相符，绿线左车是另一实例",
+          "occlusion": "白车右半仍可见"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N074",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M041",
+      "case_id": "M041",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M041",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0294",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M041",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在桥面右车道，外形完整；左侧真实车仍可见。",
+        "visual_checks": {
+          "silhouette": "轿车车尾与车轮完整",
+          "placement": "底边贴桥面",
+          "protected_mask_identity": "背景例无受保护B；绿线对应左车",
+          "occlusion": "A与GT车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N013",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M042",
+      "case_id": "M042",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M042",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0295",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M042",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在桥面右车道，轮廓及接地正常；近车绿线的细枝只属A/H外的非活跃诊断mask。",
+        "visual_checks": {
+          "silhouette": "完整侧面轿车",
+          "placement": "桥面右车道接地，未压ego",
+          "protected_mask_identity": "inactive_mask_diagnostic_issue：左侧近车绿线拖到车外路面，但无受保护B，且未碰A/H",
+          "occlusion": "A与近车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N077",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M044",
+      "case_id": "M044",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M044",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0298",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M044",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在公交右侧道路，形状与路面尺度合理。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘和轮部完整",
+          "placement": "靠中央线的车道上接地",
+          "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+          "occlusion": "A与公交分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N014",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M022",
+      "case_id": "M022",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M022",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0302",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M022",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮迎面公交右下，公交左侧车窗和车头可见。",
+        "visual_checks": {
+          "silhouette": "SUV车顶及下部完整",
+          "placement": "路口车道，尺寸相称",
+          "protected_mask_identity": "绿线沿GT公交，未串其他车",
+          "occlusion": "公交左侧及上部仍清晰"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N181",
+      "occluder_asset": "suv",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M023",
+      "case_id": "M023",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M023",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0303",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M023",
+        "reviewed_frame": 3,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A挡住公交车头下部，线路牌、挡风玻璃和两侧仍清楚。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘与底部完整",
+          "placement": "道路中心接地，未压ego",
+          "protected_mask_identity": "绿线对应GT公交，未污染建筑",
+          "occlusion": "公交上半保留充分证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N011",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M047",
+      "case_id": "M047",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M047",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0304",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M047",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在公交右侧路面，侧面车形完整，未压公交或左侧货车。",
+        "visual_checks": {
+          "silhouette": "侧面车顶、车头尾和车轮完整",
+          "placement": "施工边界内道路上接地",
+          "protected_mask_identity": "背景例无受保护B；公交绿线对应GT",
+          "occlusion": "A与公交分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N082",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M048",
+      "case_id": "M048",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M048",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0305",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M048",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在街道前方呈完整车尾，右侧停放车辆未被覆盖。",
+        "visual_checks": {
+          "silhouette": "车顶和两侧轮部完整",
+          "placement": "道路中部接地",
+          "protected_mask_identity": "背景例无受保护B；右侧绿线对应GT车",
+          "occlusion": "A与右侧车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N085",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M025",
+      "case_id": "M025",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M025",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0701",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M025",
+        "reviewed_frame": 7,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮黑车右半，黑车左灯、挡风玻璃和车身仍可见。",
+        "visual_checks": {
+          "silhouette": "正面车身及轮部完整",
+          "placement": "车道内接地，未压ego",
+          "protected_mask_identity": "绿线对应GT黑车，未污染其他车",
+          "occlusion": "黑车左侧保留清楚证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N088",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M026",
+      "case_id": "M026",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M026",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0703",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M026",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮棕色皮卡左部，皮卡右侧车头仍可见。",
+        "visual_checks": {
+          "silhouette": "侧面车顶、轮部完整",
+          "placement": "路面左侧接地",
+          "protected_mask_identity": "绿线对应GT棕色皮卡",
+          "occlusion": "A与皮卡交叠，皮卡右半保留"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N187",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M028",
+      "case_id": "M028",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M028",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0709",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M028",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为完整侧面轿车，压住白色GT轿车左半，右侧仍可见。",
+        "visual_checks": {
+          "silhouette": "侧面车顶、车头尾及轮部连续",
+          "placement": "对向车道路面上，未悬空",
+          "protected_mask_identity": "绿线对应GT白轿车",
+          "occlusion": "白车右半及车顶保留"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N190",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M052",
+      "case_id": "M052",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M052",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0719",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M052",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在桥面右侧车道，前方黑车和白货车仍可见。",
+        "visual_checks": {
+          "silhouette": "正面车身和轮部完整",
+          "placement": "靠右护栏但仍在道路上接地",
+          "protected_mask_identity": "背景例无受保护B；绿线黑车和蓝线货车对应GT",
+          "occlusion": "A与前方车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N109",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M054",
+      "case_id": "M054",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M054",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0735",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M054",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在右侧道路上呈完整侧面轿车，左侧两辆GT车仍清楚。",
+        "visual_checks": {
+          "silhouette": "车顶、车头尾和轮部完整",
+          "placement": "路面接地，未压ego",
+          "protected_mask_identity": "背景例无受保护B；蓝绿线对应GT两车",
+          "occlusion": "A与GT车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N018",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M055",
+      "case_id": "M055",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M055",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0222",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M055",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A是道路上的完整车尾，左侧真实轿车仍可见。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘和轮部完整",
+          "placement": "道路中央偏右接地",
+          "protected_mask_identity": "背景例无受保护B；绿线对应左侧GT轿车",
+          "occlusion": "A与左车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N030",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M013",
+      "case_id": "M013",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M013",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0228",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M013",
+        "reviewed_frame": 8,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮住正前黑车右侧，黑车左侧车头仍清晰。",
+        "visual_checks": {
+          "silhouette": "正面车顶及车轮底缘完整",
+          "placement": "前方车道，未压ego",
+          "protected_mask_identity": "绿线对应GT黑车，未越到停放车辆",
+          "occlusion": "黑车左灯与车身留存"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N041",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M010",
+      "case_id": "M010",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M010",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0240",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M010",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A压住白厢车右下和黑轿车左部，两辆真实车剩余部分清晰。",
+        "visual_checks": {
+          "silhouette": "完整正面车形",
+          "placement": "路口道路上，尺度合理",
+          "protected_mask_identity": "蓝线为白厢车、绿线为黑车，均合GT",
+          "occlusion": "与两车交叠，两车仍有可见证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N051",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M014",
+      "case_id": "M014",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M014",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0243",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M014",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮住银车右半，银车左灯及车尾仍可辨。",
+        "visual_checks": {
+          "silhouette": "车顶与下部车身连续",
+          "placement": "车道内接地，与左侧大卡车分开",
+          "protected_mask_identity": "绿线围GT银轿车，未串到卡车",
+          "occlusion": "银车左侧保留明确证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N054",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M015",
+      "case_id": "M015",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M015",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0249",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M015",
+        "reviewed_frame": 4,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A挡后方皮卡下部，皮卡车顶、挡风玻璃与部分车头仍可辨。",
+        "visual_checks": {
+          "silhouette": "车顶、车身和轮部完整",
+          "placement": "车道中贴地，前后尺度合理",
+          "protected_mask_identity": "绿线对应GT皮卡",
+          "occlusion": "皮卡上半仍清楚"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N059",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M036",
+      "case_id": "M036",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M036",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0290",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M036",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮挡蓝线白车左下，白车右侧和车顶仍清楚。",
+        "visual_checks": {
+          "silhouette": "车顶、两侧和底部完整",
+          "placement": "贴车道地面，未压ego",
+          "protected_mask_identity": "蓝线白车与GT相符，绿线左车是另一实例",
+          "occlusion": "白车右半仍可见"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N074",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M019",
+      "case_id": "M019",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M019",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0292",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M019",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为正常侧面轿车，覆盖白色GT轿车左半，白车右半仍可见。",
+        "visual_checks": {
+          "silhouette": "侧面车顶与车轮连续",
+          "placement": "沿道路横向摆放，底缘在路面",
+          "protected_mask_identity": "绿线对应GT白轿车，未串行人或栏杆",
+          "occlusion": "白车右部有清楚证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N177",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M056",
+      "case_id": "M056",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M056",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0294",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M056",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在桥面右车道，外形完整；左侧真实车仍可见。",
+        "visual_checks": {
+          "silhouette": "轿车车尾与车轮完整",
+          "placement": "底边贴桥面",
+          "protected_mask_identity": "背景例无受保护B；绿线对应左车",
+          "occlusion": "A与GT车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N013",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M057",
+      "case_id": "M057",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M057",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0295",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M057",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在桥面右车道，轮廓及接地正常；近车绿线的细枝只属A/H外的非活跃诊断mask。",
+        "visual_checks": {
+          "silhouette": "完整侧面轿车",
+          "placement": "桥面右车道接地，未压ego",
+          "protected_mask_identity": "inactive_mask_diagnostic_issue：左侧近车绿线拖到车外路面，但无受保护B，且未碰A/H",
+          "occlusion": "A与近车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N077",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M020",
+      "case_id": "M020",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M020",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0297",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M020",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A压住白SUV左半，SUV右侧前脸可见。",
+        "visual_checks": {
+          "silhouette": "车顶、车头尾和轮部完整",
+          "placement": "左侧车道上接地",
+          "protected_mask_identity": "蓝线与GT白SUV相符，旁边绿车另为实例",
+          "occlusion": "SUV右侧仍可辨"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N128",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M058",
+      "case_id": "M058",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M058",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0298",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M058",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在公交右侧道路，形状与路面尺度合理。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘和轮部完整",
+          "placement": "靠中央线的车道上接地",
+          "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+          "occlusion": "A与公交分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N014",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M021",
+      "case_id": "M021",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M021",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0300",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M021",
+        "reviewed_frame": 8,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮迎面公交右下，公交左侧和上部仍有车窗车灯证据。",
+        "visual_checks": {
+          "silhouette": "SUV正面外形完整",
+          "placement": "车道内接地，未压ego",
+          "protected_mask_identity": "绿线对应GT公交，未侵入建筑",
+          "occlusion": "公交左半和车顶留存"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N009",
+      "occluder_asset": "suv",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M045",
+      "case_id": "M045",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M045",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0302",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M045",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在公交右侧车道，车尾完整，施工桶未被覆盖。",
+        "visual_checks": {
+          "silhouette": "车顶和车轮完整",
+          "placement": "车道上贴地，未压ego",
+          "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+          "occlusion": "A与公交分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N029",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M046",
+      "case_id": "M046",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M046",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0303",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M046",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在公交右侧车道，保留完整车形；公交左侧可见。",
+        "visual_checks": {
+          "silhouette": "车顶及轮部连续",
+          "placement": "接地，靠中央线但未离路",
+          "protected_mask_identity": "背景例无受保护B；公交绿线未污染结构",
+          "occlusion": "A与公交分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N011",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M060",
+      "case_id": "M060",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M060",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0304",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M060",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在公交右侧路面，侧面车形完整，未压公交或左侧货车。",
+        "visual_checks": {
+          "silhouette": "侧面车顶、车头尾和车轮完整",
+          "placement": "施工边界内道路上接地",
+          "protected_mask_identity": "背景例无受保护B；公交绿线对应GT",
+          "occlusion": "A与公交分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N082",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M061",
+      "case_id": "M061",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M061",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0305",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M061",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在街道前方呈完整车尾，右侧停放车辆未被覆盖。",
+        "visual_checks": {
+          "silhouette": "车顶和两侧轮部完整",
+          "placement": "道路中部接地",
+          "protected_mask_identity": "背景例无受保护B；右侧绿线对应GT车",
+          "occlusion": "A与右侧车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N085",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M049",
+      "case_id": "M049",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M049",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0701",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M049",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在左侧车道，正面车形完整，中央黑车仍清楚。",
+        "visual_checks": {
+          "silhouette": "车顶、两侧及轮部完整",
+          "placement": "左车道接地，未压ego",
+          "protected_mask_identity": "背景例无受保护B；绿线对应中央黑车",
+          "occlusion": "A与黑车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N088",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M027",
+      "case_id": "M027",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M027",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0708",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M027",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮黑色SUV右半，SUV左前脸仍清楚。",
+        "visual_checks": {
+          "silhouette": "正面车身与车轮完整",
+          "placement": "斑马线后道路上，未压ego",
+          "protected_mask_identity": "绿线对应GT黑SUV",
+          "occlusion": "A与B交叠，B左侧可辨"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N105",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M030",
+      "case_id": "M030",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M030",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0714",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M030",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在路口遮蓝线SUV左下部，SUV右侧车顶和车尾仍可见。",
+        "visual_checks": {
+          "silhouette": "低矮侧面轿车轮廓完整",
+          "placement": "路口道路上，未压行人或ego",
+          "protected_mask_identity": "蓝线对应GT深色SUV，绿线车另为实例",
+          "occlusion": "与蓝线SUV交叠，右半仍可辨"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N131",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M063",
+      "case_id": "M063",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M063",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0719",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M063",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在桥面右侧车道，前方黑车和白货车仍可见。",
+        "visual_checks": {
+          "silhouette": "正面车身和轮部完整",
+          "placement": "靠右护栏但仍在道路上接地",
+          "protected_mask_identity": "背景例无受保护B；绿线黑车和蓝线货车对应GT",
+          "occlusion": "A与前方车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N109",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M065",
+      "case_id": "M065",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M065",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0735",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M065",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在右侧道路上呈完整侧面轿车，左侧两辆GT车仍清楚。",
+        "visual_checks": {
+          "silhouette": "车顶、车头尾和轮部完整",
+          "placement": "路面接地，未压ego",
+          "protected_mask_identity": "背景例无受保护B；蓝绿线对应GT两车",
+          "occlusion": "A与GT车分离，不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N018",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M031",
+      "case_id": "M031",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M031",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0228",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M031",
+        "reviewed_frame": 8,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A遮住正前黑车右侧，黑车左侧车头仍清晰。",
+        "visual_checks": {
+          "silhouette": "正面车顶及车轮底缘完整",
+          "placement": "前方车道，未压ego",
+          "protected_mask_identity": "绿线对应GT黑车，未越到停放车辆",
+          "occlusion": "黑车左灯与车身留存"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N041",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_control/M011",
+      "case_id": "M011",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M011",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0240",
+      "split": "train",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M011",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A处于路口车道，两辆真实车均被部分遮挡且仍可辨认。",
+        "visual_checks": {
+          "silhouette": "车顶、两侧和底缘连续",
+          "placement": "底部落地，未压ego",
+          "protected_mask_identity": "蓝线厢车与绿线黑车身份合理",
+          "occlusion": "白车上部和黑车右部仍可见"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N051",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_stable_control",
+      "admission_provenance": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/dataset_catalog.json"
+    },
+    {
+      "dataset_id": "r10_oldval/M003",
+      "case_id": "M003",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M003",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0229",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M003",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为完整正面车辆轮廓，放在斑马线前方的车道上；遮住真实黑车左侧，黑车右半仍清楚可见，绿线身份一致。",
+        "visual_checks": {
+          "silhouette": "可见车顶、车身两侧及底部车轮形状，轮廓完整",
+          "placement": "A在车道地面，大小接近后方真实车，未压到ego",
+          "protected_mask_identity": "绿色轮廓沿真实黑车可见车身，未明显侵入其他物体",
+          "occlusion": "红色A与真实黑车左侧交叠，黑车右侧留有充分证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N012",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_oldval/M006",
+      "case_id": "M006",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M006",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0239",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M006",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在左侧道路上呈完整侧面轿车形状，车底贴近路面；中间真实车辆及行人仍清晰，未见保护身份混淆。",
+        "visual_checks": {
+          "silhouette": "车顶、车头车尾及车轮缺口构成完整侧面车辆",
+          "placement": "在左侧车道内且未越过ego，尺度与道路透视大致一致",
+          "protected_mask_identity": "背景例无受保护B，图中绿色真实车轮廓留在中间车身上",
+          "occlusion": "A与中间真实车分离；不以A后方局部无车推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N150",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_oldval/M007",
+      "case_id": "M007",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M007",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0287",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M007",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A呈完整车尾，在右侧车道；左侧GT轿车仍可见。",
+        "visual_checks": {
+          "silhouette": "车顶、两侧及车轮完整",
+          "placement": "车道上接地，未压ego",
+          "protected_mask_identity": "无受保护B；绿线对应左侧轿车",
+          "occlusion": "A与左车分离，不据局部无车推断整景"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N127",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_oldval/M001",
+      "case_id": "M001",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M001",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0289",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M001",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为完整车尾轮廓，位于路面中央且与两辆真实B车均有可见遮挡；两车仍露出外侧车身，绿色轮廓各自对应GT车辆。",
+        "visual_checks": {
+          "silhouette": "车顶、侧缘及下部轮廓完整，非矩形残片",
+          "placement": "车底落在车道地面，尺度相对两辆B合理，未压到ego",
+          "protected_mask_identity": "绿色与蓝色轮廓分别包住左右两辆真实车，未见污染背景结构",
+          "occlusion": "红色A覆盖两辆B的内侧，B外侧保留明确可见证据"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N175",
+      "occluder_asset": "suv",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_oldval/M004",
+      "case_id": "M004",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M004",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0229",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M004",
+        "reviewed_frame": 0,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A轮廓是完整车辆正面，位置和大小与路面透视相符；红线覆盖真实黑车左侧，绿线仍准确围出其右侧可见部分。",
+        "visual_checks": {
+          "silhouette": "车身、车顶和底缘连续，未见缺块或异常直角残片",
+          "placement": "A落在车道上、靠近斑马线，未与ego相压",
+          "protected_mask_identity": "绿线对应GT黑车，未见跨到道路或建筑",
+          "occlusion": "A和B交叠且B右侧仍可辨认"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N012",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_oldval/M009",
+      "case_id": "M009",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M009",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0239",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M009",
+        "reviewed_frame": 5,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A为左车道完整侧面车形，与中央GT车和行人分开。",
+        "visual_checks": {
+          "silhouette": "车顶及车头车尾连续",
+          "placement": "左车道落地，未压ego",
+          "protected_mask_identity": "无受保护B；绿线对应中央GT车",
+          "occlusion": "A未遮中央车；不推断整景无车"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N150",
+      "occluder_asset": "sedan",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_oldval/M002",
+      "case_id": "M002",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M002",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0289",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "M002",
+        "reviewed_frame": 9,
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A的车尾形状与道路尺度合理，确实挡住左右两辆真实B车的内侧；两辆B的外侧和车顶仍可辨认。",
+        "visual_checks": {
+          "silhouette": "完整车尾与下部轮廓，无明显断裂或矩形填充",
+          "placement": "A位于道路中央，底缘贴近路面，未见与ego重叠",
+          "protected_mask_identity": "左右两条保护轮廓各对应一辆GT车，未见蔓延到建筑或路面",
+          "occlusion": "A与两辆B均有图像交叠，B保留可辨认的外侧车身"
+        },
+        "temporal_claim": false,
+        "human_verdict": null
+      },
+      "human_verdict": null,
+      "source_id": "N175",
+      "occluder_asset": "suv",
+      "occluder_template_scope": "two retained exposed DEV mesh shapes shared across splits; shape novelty not claimed",
+      "process_family": "r8_validation_control"
+    },
+    {
+      "dataset_id": "r10_val/P006",
+      "case_id": "P006",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P006",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0289",
+      "source_id": "N175",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P006",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "红A从绿色受保护车大面积前遮移动到其左侧，车身露出增加；A随视角合理变大，灰洞覆盖且仍在道路内。",
+        "visible_process_change": true,
+        "evidence_boundary": "依据0/5/9帧确认可见横扫与露出，不认证中间帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "sweep_B",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 4.798844267325162,
+          "path_m": 4.798931607423535,
+          "diameter_m": 4.798844267325162
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.6000169804166715,
+          "path_m": 3.6000169804166715,
+          "diameter_m": 3.6000169804166715
+        },
+        "hole_centroid_path_px": 136.5671894368743,
+        "hole_centroid_diameter_px": 136.5308251487773,
+        "hole_area_min_max": [
+          7660,
+          28636
+        ],
+        "hole_centroids": [
+          [
+            409.93054830287207,
+            345.1369451697128
+          ],
+          [
+            401.8586259185816,
+            347.5114895602473
+          ],
+          [
+            397.2014547057527,
+            348.34857835574167
+          ],
+          [
+            386.5674855632769,
+            350.5966526377606
+          ],
+          [
+            369.2368930472657,
+            354.88167446362314
+          ],
+          [
+            355.50038448095074,
+            358.72408248864036
+          ],
+          [
+            339.6894963512382,
+            362.82001435578417
+          ],
+          [
+            331.1616234124793,
+            364.89613473219214
+          ],
+          [
+            313.42686789640396,
+            368.85862679336685
+          ],
+          [
+            277.34767425618105,
+            377.73215532895654
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "42c172a5102d484aa1f20ebe0b42ada4": {
+            "occlusion_fractions": [
+              0.746104245029554,
+              0.7155544278102005,
+              0.7012987012987013,
+              0.6468539586719294,
+              0.5643823657791357,
+              0.5023404255319149,
+              0.42389589905362773,
+              0.38349796629866356,
+              0.32041343669250644,
+              0.19660782277604708
+            ],
+            "occlusion_range": 0.5494964222535069,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.45147398028204616,
+                0.6140207393663442
+              ],
+              [
+                0.43213419186263546,
+                0.6202127659574472
+              ],
+              [
+                0.42947374079449585,
+                0.6172113963638867
+              ],
+              [
+                0.39406344561869033,
+                0.6182587042354628
+              ],
+              [
+                0.34704945070304444,
+                0.6221788652183082
+              ],
+              [
+                0.3161372299872937,
+                0.6158660319748147
+              ],
+              [
+                0.2740274841437634,
+                0.6490492476060188
+              ],
+              [
+                0.25346158211326775,
+                0.650065876152833
+              ],
+              [
+                0.2237562558842475,
+                0.6666044655026936
+              ],
+              [
+                0.16387910798122066,
+                0.7168347925390176
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.2875948723008255,
+              0.10281405317267345
+            ],
+            "sweep_over_B": true,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.7889809146561038,
+              0.774822695035461,
+              0.7613556953179594,
+              0.7426417803302225,
+              0.7053364269141531,
+              0.6641253706056756,
+              0.5953488372093023,
+              0.5671717171717172,
+              0.44873271889400923,
+              0.0
+            ],
+            "approx_other_frame_support_mean": 0.6048516156134605,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.10392302675206988,
+              "path_m": 0.10392304361778831,
+              "diameter_m": 0.1039230267520699
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": true,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10_val/P012",
+      "case_id": "P012",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P012",
+      "frame_count": 10,
+      "type": "dense_actors",
+      "receiver_scene": "scene-0291",
+      "source_id": "N176",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P012",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "侧视红A落在车辆行列对应的路面，洞覆盖完整；绿色车和蓝色车均与A发生部分遮挡，三帧关系有变化。",
+        "visible_process_change": true,
+        "evidence_boundary": "只确认三关键帧的相对遮挡；不验证完整轨迹。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "visibility_transition",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 8.84242610008358,
+          "path_m": 8.842874500544456,
+          "diameter_m": 8.84242610008358
+        },
+        "A_world_motion": {
+          "endpoint_m": 3.6000206636609535,
+          "path_m": 3.600020663660954,
+          "diameter_m": 3.6000206636609535
+        },
+        "hole_centroid_path_px": 171.8156973999622,
+        "hole_centroid_diameter_px": 168.4867934015237,
+        "hole_area_min_max": [
+          11964,
+          17371
+        ],
+        "hole_centroids": [
+          [
+            817.498161150117,
+            344.5007522567703
+          ],
+          [
+            809.2179266190593,
+            343.89460723959616
+          ],
+          [
+            792.2078598484849,
+            343.26641414141415
+          ],
+          [
+            765.1921850671016,
+            347.5930896418774
+          ],
+          [
+            748.4377706780263,
+            347.08661696840613
+          ],
+          [
+            728.7945382729501,
+            347.7638926722964
+          ],
+          [
+            719.6459834534294,
+            351.13103816386445
+          ],
+          [
+            700.0786595894353,
+            359.4099891283494
+          ],
+          [
+            670.6841283191158,
+            359.99483359365615
+          ],
+          [
+            649.2640032237638,
+            353.72396522940534
+          ]
+        ],
+        "static_A_moving_ego": false,
+        "static_A_moving_ego_image_change": false,
+        "protected": {
+          "61b61ae7dfe24f289149dc15aa88e87b": {
+            "occlusion_fractions": [
+              0.5486140724946695,
+              0.530977130977131,
+              0.5021037868162693,
+              0.45983531564501373,
+              0.4088017878631597,
+              0.3830625307730182,
+              0.36063708759954494,
+              0.33489143546441497,
+              0.2740311681147428,
+              0.25
+            ],
+            "occlusion_range": 0.29861407249466954,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.687250680139915,
+                0.570750744915145
+              ],
+              [
+                0.6928627363239737,
+                0.5630628425998433
+              ],
+              [
+                0.7034102768739636,
+                0.5717868951251693
+              ],
+              [
+                0.7242369309221675,
+                0.5724769659310049
+              ],
+              [
+                0.740484583862713,
+                0.5669174220477836
+              ],
+              [
+                0.7563425228259905,
+                0.5584949754615567
+              ],
+              [
+                0.7626383598683847,
+                0.5759825431085601
+              ],
+              [
+                0.7820242309740946,
+                0.5823872772882227
+              ],
+              [
+                0.8019396012733074,
+                0.6079516859587314
+              ],
+              [
+                0.8165179079381538,
+                0.6023429033423354
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.12926722779823885,
+              0.049456710497174705
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": true,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.6840264282938204,
+              0.6699295223179327,
+              0.6316839584996009,
+              0.5706327099084759,
+              0.5403700588730025,
+              0.4884318766066838,
+              0.4601171698963497,
+              0.37820801440792434,
+              0.2551585304479114,
+              0.021511017838405037
+            ],
+            "approx_other_frame_support_mean": 0.4700069287090106,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.051652435062186336,
+              "path_m": 0.05165738357584589,
+              "diameter_m": 0.051652435062186336
+            }
+          },
+          "6988e7de809d40eeb1f2e042595e1809": {
+            "occlusion_fractions": [
+              0.7160028281876031,
+              0.7248908296943232,
+              0.7456983240223464,
+              0.7515202348500734,
+              0.7624057165541882,
+              0.763459335624284,
+              0.768753422157328,
+              0.7821466524973433,
+              0.7940840006537015,
+              0.799213217938631
+            ],
+            "occlusion_range": 0.0832103897510279,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.3927510105640084,
+                0.5571236559139786
+              ],
+              [
+                0.39004787862216606,
+                0.5611591101247093
+              ],
+              [
+                0.3994660418993652,
+                0.5461492358405758
+              ],
+              [
+                0.4070772634711784,
+                0.5505189732142856
+              ],
+              [
+                0.4092172399904762,
+                0.5597150181242861
+              ],
+              [
+                0.4130206105245322,
+                0.5543508518639099
+              ],
+              [
+                0.414133581472291,
+                0.5614602018923007
+              ],
+              [
+                0.42147601794340966,
+                0.558008756038647
+              ],
+              [
+                0.42280335771794875,
+                0.5488563196424892
+              ],
+              [
+                0.42457987329604036,
+                0.5540426178657903
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.0345319946738743,
+              0.015310966051724884
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.029953917050691243,
+              0.03551046290424857,
+              0.05783637998201978,
+              0.08035714285714286,
+              0.10361884925800573,
+              0.12028007001750438,
+              0.13200379867046533,
+              0.15942028985507245,
+              0.19942374974274543,
+              0.22602874581610552
+            ],
+            "approx_other_frame_support_mean": 0.11444334061540014,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.11791761311415376,
+              "path_m": 0.12439282172721657,
+              "diameter_m": 0.11791761311415377
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": true
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10_val/P016",
+      "case_id": "P016",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P016",
+      "frame_count": 10,
+      "type": "background",
+      "receiver_scene": "scene-0229",
+      "source_id": "N012",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P016",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "A在右侧车道并随ego前行在画面中缩小，车形贴地且洞完整，无明显场景污染；此例为无受保护B的背景对照。",
+        "visible_process_change": true,
+        "evidence_boundary": "只核对0/5/9画面，不认证逐帧静止轨迹。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 6.930383102857689,
+          "path_m": 6.9304737257093105,
+          "diameter_m": 6.930383102857689
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 97.45878121018704,
+        "hole_centroid_diameter_px": 97.3852292469408,
+        "hole_area_min_max": [
+          3547,
+          12163
+        ],
+        "hole_centroids": [
+          [
+            779.2117898544767,
+            354.8372112143386
+          ],
+          [
+            770.2097649186256,
+            353.1405967450271
+          ],
+          [
+            754.1982610562474,
+            350.1862387290683
+          ],
+          [
+            734.9941440828,
+            345.33760043578917
+          ],
+          [
+            723.2872373784885,
+            342.14048291000313
+          ],
+          [
+            712.7919438949829,
+            340.05934184499193
+          ],
+          [
+            708.0540488922842,
+            338.70645530939646
+          ],
+          [
+            700.423275862069,
+            336.3991379310345
+          ],
+          [
+            690.2603158430973,
+            334.086347427407
+          ],
+          [
+            684.3050465181843,
+            333.00620242458416
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {},
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null
+    },
+    {
+      "dataset_id": "r10_val/P019",
+      "case_id": "P019",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r9/synthetic/P019",
+      "frame_count": 10,
+      "type": "single_actor",
+      "receiver_scene": "scene-0289",
+      "source_id": "N175",
+      "split": "validation",
+      "assistant_score": 2,
+      "technical_pass": true,
+      "independent_QA": {
+        "case_id": "P019",
+        "assistant_score": 2,
+        "decision": "pass",
+        "reason": "静止A在道路上，随ego视角平滑变大，绿色车保持被部分遮挡；灰洞与红A相符，无明显背景污染。",
+        "visible_process_change": true,
+        "evidence_boundary": "三帧只支持可见尺度及遮挡变化，不认证中间帧。",
+        "review_frames": [
+          0,
+          5,
+          9
+        ],
+        "human_verdict": null
+      },
+      "process_family": "static_A_moving_ego",
+      "process": {
+        "frames": 10,
+        "duration_s": 0.9,
+        "ego_camera_motion": {
+          "endpoint_m": 4.798844267325162,
+          "path_m": 4.798931607423535,
+          "diameter_m": 4.798844267325162
+        },
+        "A_world_motion": {
+          "endpoint_m": 0.0,
+          "path_m": 0.0,
+          "diameter_m": 0.0
+        },
+        "hole_centroid_path_px": 51.59385941257974,
+        "hole_centroid_diameter_px": 51.53157497828577,
+        "hole_area_min_max": [
+          5740,
+          10540
+        ],
+        "hole_centroids": [
+          [
+            396.55017421602787,
+            342.398606271777
+          ],
+          [
+            392.2785410533202,
+            343.5804710500491
+          ],
+          [
+            389.82237673830593,
+            343.81984829329963
+          ],
+          [
+            384.1646675551607,
+            344.7615874426181
+          ],
+          [
+            376.1972532651138,
+            346.4731385485391
+          ],
+          [
+            370.48772194937663,
+            347.99408134995593
+          ],
+          [
+            364.23439699671513,
+            349.46773815110276
+          ],
+          [
+            361.5067391550572,
+            350.18031487144634
+          ],
+          [
+            356.5873719776159,
+            350.7611656636047
+          ],
+          [
+            346.1175521821632,
+            352.984155597723
+          ]
+        ],
+        "static_A_moving_ego": true,
+        "static_A_moving_ego_image_change": true,
+        "protected": {
+          "42c172a5102d484aa1f20ebe0b42ada4": {
+            "occlusion_fractions": [
+              0.4967759269210102,
+              0.49657447348388734,
+              0.5023278608184268,
+              0.4880427211516137,
+              0.47468354430379744,
+              0.4702127659574468,
+              0.45386435331230285,
+              0.44489637807476273,
+              0.44924326319675156,
+              0.43613707165109034
+            ],
+            "occlusion_range": 0.0661907891673365,
+            "occlusion_centres_in_B_bbox": [
+              [
+                0.3218832677999799,
+                0.6448744626046147
+              ],
+              [
+                0.3221633542210148,
+                0.6496252767841934
+              ],
+              [
+                0.33075672295184505,
+                0.6435665733706516
+              ],
+              [
+                0.31525129773934435,
+                0.640468898667935
+              ],
+              [
+                0.30514887134745894,
+                0.6363845350052245
+              ],
+              [
+                0.30548309821666236,
+                0.6247788208279866
+              ],
+              [
+                0.2966047310638968,
+                0.6473271324168245
+              ],
+              [
+                0.2918511199268221,
+                0.6390629239146209
+              ],
+              [
+                0.2932515174808491,
+                0.632929045100513
+              ],
+              [
+                0.28466848544973544,
+                0.6254450879450876
+              ]
+            ],
+            "occlusion_centre_span": [
+              0.04608823750210961,
+              0.024846455956206714
+            ],
+            "sweep_over_B": false,
+            "visibility_transition": false,
+            "hidden_pixels_with_other_frame_cuboid_cell_support": [
+              0.23850730124391564,
+              0.21563617782319877,
+              0.20682926829268292,
+              0.1907706945765937,
+              0.16919540229885058,
+              0.1502262443438914,
+              0.12901824500434406,
+              0.12233347845015237,
+              0.10723089564502876,
+              0.05198412698412699
+            ],
+            "approx_other_frame_support_mean": 0.1581731834662785,
+            "no_geometric_other_frame_support": false,
+            "B_world_motion": {
+              "endpoint_m": 0.10392302675206988,
+              "path_m": 0.10392304361778831,
+              "diameter_m": 0.1039230267520699
+            }
+          }
+        },
+        "evidence_semantics": "same B instance / GT cuboid surface16 grid with actual Y SAM2 pixels; approximate geometric correspondence, not verified texture evidence",
+        "sweep_over_any_B": false,
+        "visibility_transition_any_B": false
+      },
+      "human_verdict": null
+    }
+  ],
+  "summary": {
+    "training_cases": 50,
+    "training_scene_count": 25,
+    "max_training_cases_per_scene": 3,
+    "training_type_counts": {
+      "single_actor": 27,
+      "dense_actors": 3,
+      "background": 20
+    },
+    "training_process_counts": {
+      "sweep_B": 4,
+      "visibility_transition": 4,
+      "static_A_moving_ego": 5,
+      "r8_stable_control": 37
+    },
+    "sweep_training_worlds": 3,
+    "new_process_validation_cases": 4,
+    "new_sweep_validation_worlds": 1,
+    "new_sweep_validation_cases": 1,
+    "human_verdict": null,
+    "validation_cases": 11,
+    "validation_scene_count": 5,
+    "validation_type_counts": {
+      "single_actor": 4,
+      "background": 4,
+      "dense_actors": 3
+    }
+  },
+  "architecture_unchanged": true,
+  "GT": "true nuScenes Y, A fully erased before encoder",
+  "process_scope": "actual one-second10 exposures; GT cuboid geometric evidence proxy, not exact texture",
+  "human_verdict": null
+}
