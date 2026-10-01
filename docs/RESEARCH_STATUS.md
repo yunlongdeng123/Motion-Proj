@@ -6,4 +6,4 @@
 
 数据改为已有DEV sedan/SUV显式mesh在真实camera/metric SE3下投影，完整synthetic RGB擦除；Y永远真实。train/val共享两种形状模板，只隔离真实世界来源，不声称未见形状/跨域。Boston白天数据，真实DELETE无去车GT。原图、全部PNG/视频与旧规则保留。
 
-下一步同r7有效初始化、80空间attention、320×576/160步、原loss/seed6201、从原DriveEditor开始；不延续r7、不扩大模块/加权/加步数。真实原/r7对照已完成，等待本轮训练及合成/真实三臂完整采样和HTML。无电源/自动化操作。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02（数据准入，模型结论待定）。
+已完成160步，严格恢复0 missing/0 unexpected、80有限非零梯度、峰值10.48GiB；训练配方逐字段与r7一致。同r7有效初始化、80空间attention、320×576/160步、原loss/seed6201、从原DriveEditor开始；不延续r7、不扩大模块/加权/加步数。真实原/r7对照已完成，正在完成7合成+8真实的三臂采样和HTML；不以latent loss下降认证效果。无电源/自动化操作。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02（数据准入，模型结论待定）。

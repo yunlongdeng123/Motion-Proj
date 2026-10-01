@@ -6,6 +6,8 @@ from asset_factory import O,T,read,dump
 R=Path('/root/autodl-tmp/motion_proj_v77')
 
 def main():
+    if (O/'training/state.json').exists():
+        print('data checkpoint immutable after training started; current status is updated by later milestones');return
     evidence=R/'docs/autoresearch/worldsim_v77/target_protected_20260929/r8';evidence.mkdir(parents=True,exist_ok=True)
     for name in ['run_config.json','factory_amendment.json','pose_sampling_amendment.json','source_pool_summary.json','short_merge.json','asset_selected.json','evaluation_source_split.json','technical_checks.json','static_occupancy.json','independent_data_reviews.json','dataset_catalog.json','admission_result.json','evaluation_plan.json','real_evaluation_plan.json']:
         if (O/name).exists():shutil.copy2(O/name,evidence/name)

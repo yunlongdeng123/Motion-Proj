@@ -42,3 +42,10 @@ flowchart LR
 合成来源场景与所有r7/r8训练receiver/donor隔离，选窗和QA在新数据训练前冻结；真实A022/A041_w10/A013/A048/A007/A034/A042/A061_w08为曝光DEV，不计final。真实无去车GT，不报告恢复MAE；主要验收保住后车/邻车与正确去目标，不能用合成误差代替。旧r6三个真实原模型输出在RGB/H、窗口/seed/步数/previous条件逐项一致后复用原生图，重新以当前alpha写回，保留来源。
 
 下一步训练后完成两套三臂采样、量化和人工HTML。若真实无稳定收益，保留原权重默认，不机械增加训练步数或模块。failure_ledger_refs: [V77-F02]；human_verdict: null。
+
+
+## 同预算训练实际执行
+
+160步完成，80/80张量有限非零梯度；严格0缺失/0额外、官方106目标encoder恢复，峰值10.48GiB；实际清零在resize前，隐藏X/Y变动都不进入条件。配方所有冻结字段逐项等于r7。固定teacher-noised验证loss原0.06826→0.06246（−8.49%），并非采样图像质量。全部checkpoint/optimizer快照保留，不增加步数。
+
+实际1600训练帧按step计：r8洞占画面平均1.62%，被遮真实保护B平均0.294%（r7为0.187%）；真实DEV生成mask平均5.60%、矩形fill=1，48.75%帧触边。合成训练车辆轮廓fill≈0.817、无触边。这是输入差异而非已证因果，继续固定本轮对照。完整[输入盘点](../autoresearch/worldsim_v77/target_protected_20260929/r8/input_distribution.json)。
