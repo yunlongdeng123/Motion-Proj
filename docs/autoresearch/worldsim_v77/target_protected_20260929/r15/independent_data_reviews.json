@@ -1,0 +1,200 @@
+{
+  "model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "scope": "仅评审r15新12例。逐例实际查看contacts/Txxx_process.jpg的0/5/9帧四栏；另查看T007、T009、T010的0/5/9原分辨率labels。技术检查仅辅助确认120帧RGB_leak=0及ego_hole_pixels=0，视觉结论只覆盖三关键帧，不认证整段视频、真实车漆或灯光。活跃受保护实例按manifest protected_instances确认；speed delta仅作相对旧虚拟路径速度理解。",
+  "cases": [
+    {
+      "case_id": "T001",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在道路右侧车道，车形和洞完整；绿色活跃车由右缘附近逐渐被A更多遮住，三帧可见显露程度变化。",
+      "visual_checks": {
+        "silhouette": "pass：轿车轮廓与灰洞一致",
+        "placement": "pass：尺度、接地和道路位置合理，未压ego",
+        "protected_identity": "pass：绿色标注与manifest活跃实例对应",
+        "occlusion": "pass：A在绿色车前方产生实际像素遮挡",
+        "process_support": "pass：0/5/9帧可见遮挡逐渐增加"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T002",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A沿车道前进到路口标线附近，灰洞随尺度合理变大；绿色活跃车逐渐从A左侧露出，遮挡过渡可见。",
+      "visual_checks": {
+        "silhouette": "pass：轿车洞形连贯且覆盖A",
+        "placement": "pass：车辆仍在路面，未碰ego或行人",
+        "protected_identity": "pass：绿色车为活跃受保护实例",
+        "occlusion": "pass：A在绿色车前，露出部分随帧增加",
+        "process_support": "pass：三帧支持显露变化"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T003",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "较近的A位于道路右侧车道，车身与路面接触合理，洞覆盖完整；绿色车被遮部分从0到9帧增多。",
+      "visual_checks": {
+        "silhouette": "pass：侧后视车形与洞一致",
+        "placement": "pass：路面和尺度合理，未压ego、路缘或行人",
+        "protected_identity": "pass：绿色车为活跃实例",
+        "occlusion": "pass：可见A前遮绿色车",
+        "process_support": "pass：三帧有明确遮挡增长"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T004",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A随视角明显变大但仍在道路并离ego有间隔，洞和位姿连贯；绿色车从A左侧逐渐露出，显露过程可见。",
+      "visual_checks": {
+        "silhouette": "pass：车形完整，三帧洞形连续",
+        "placement": "pass：未压ego，贴地且不越路缘",
+        "protected_identity": "pass：绿色标注为活跃实例",
+        "occlusion": "pass：A前遮绿色车，后者逐渐露出",
+        "process_support": "pass：三帧支持显露过渡"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T005",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在双黄线左侧对向车道，未像旧边界例那样跨压中心线；洞完整且逐渐遮住绿色活跃车，视角和尺寸变化合理。",
+      "visual_checks": {
+        "silhouette": "pass：轿车轮廓和洞一致",
+        "placement": "pass：A处于对向路面，贴地且未压ego",
+        "protected_identity": "pass：绿色车为manifest活跃实例",
+        "occlusion": "pass：A遮绿色车右侧并逐渐加深",
+        "process_support": "pass：三帧可见遮挡增长"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T006",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A位于路口内车行区域，灰洞完整；绿色活跃车从A右缘向左移入遮挡范围，是真实相对车身横扫，不只是洞变大。",
+      "visual_checks": {
+        "silhouette": "pass：侧视轿车洞形合理",
+        "placement": "pass：路口路面位置与尺度可接受，未压ego或行人",
+        "protected_identity": "pass：绿色车为活跃实例",
+        "occlusion": "pass：A在绿色车前，遮挡增加",
+        "process_support": "pass：0/5/9帧可见绿色车横向进入A覆盖范围"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T007",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原分辨率三帧确认A在绿色车前方，逐渐覆盖其左下及车身中部；A在道路车道内，虽靠白色车道线，未见压路缘、ego或异常背景。",
+      "visual_checks": {
+        "silhouette": "pass：车形和灰洞连贯",
+        "placement": "pass：贴地、尺度合理，靠车道线但仍属道路",
+        "protected_identity": "pass：绿色车的实例ID与manifest对应",
+        "occlusion": "pass：绿色车实际可见区域缩小",
+        "process_support": "pass：原分辨率0/5/9帧确认显露过渡"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T008",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在对侧道路车辆行列前方，侧视轮廓贴地且灰洞覆盖；0到9帧A相对绿色车明显向左扫离，车身逐渐露出。",
+      "visual_checks": {
+        "silhouette": "pass：轿车洞形完整",
+        "placement": "pass：道路位置和近远尺度合理",
+        "protected_identity": "pass：绿色车为活跃受保护实例",
+        "occlusion": "pass：A遮住绿色车左部后向左离开",
+        "process_support": "pass：三帧显示实际相对横移和扫离"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T009",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原分辨率显示红A从绿色车右下方移动到左下方，遮挡面积虽近似不变，覆盖的车身区域确实横向迁移；A在道路上、洞形连贯。",
+      "visual_checks": {
+        "silhouette": "pass：小尺度轿车洞形仍可辨认",
+        "placement": "pass：贴地且位于道路，未压ego或路缘",
+        "protected_identity": "pass：绿色车ID为manifest活跃实例",
+        "occlusion": "pass：绿色车下部被前景A覆盖",
+        "process_support": "pass：原分辨率三帧支持遮挡位置由右向左扫过"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T010",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原分辨率确认SUV形A在路面，逐帧从绿色车中下部向左扫离，右侧车身重新露出；灰洞覆盖完整。",
+      "visual_checks": {
+        "silhouette": "pass：SUV前视洞形完整且三帧连贯",
+        "placement": "pass：尺寸、接地、路面位置合理",
+        "protected_identity": "pass：绿色车为活跃实例",
+        "occlusion": "pass：前景A覆盖绿色车下部后向左移开",
+        "process_support": "pass：原分辨率三帧可见相对横扫"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T011",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在车辆行列前侧的路面，灰洞形状完整；红A明显向左扫离绿色车，后者从大面积被遮到大部露出。",
+      "visual_checks": {
+        "silhouette": "pass：侧视轿车轮廓合理",
+        "placement": "pass：贴地、尺度合理且未压路缘或ego",
+        "protected_identity": "pass：绿色车与manifest活跃实例对应",
+        "occlusion": "pass：A确实位于绿色车前方",
+        "process_support": "pass：三帧明显显示向左扫离"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "T012",
+      "reviewed_frames": [0, 5, 9],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在道路上，车身及灰洞随三帧连贯变化；与T011相似但并非同一位姿，绿色车从A遮挡下逐渐露出，扫过车身可见。",
+      "visual_checks": {
+        "silhouette": "pass：轿车洞形完整",
+        "placement": "pass：道路、接地及尺度合理，未压ego",
+        "protected_identity": "pass：绿色车是活跃实例",
+        "occlusion": "pass：A前遮绿色车并逐渐离开",
+        "process_support": "pass：三帧可见相对横移与扫离"
+      },
+      "human_verdict": null,
+      "temporal_claim": false
+    }
+  ]
+}

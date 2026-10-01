@@ -4,7 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r14 | 同r10数据、同80张量/49.57M/160步，只更新时序self attention；真实收益门槛不变 | [预案](autoresearch/worldsim_v77/target_protected_20260929/r14/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r15 | 相对合法路径，12独立AI2；6train扫过/4world、val扫过0，训练0 | [报告](v77/TARGET_PROTECTED_PATH_PROCESS_R15.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r14 | 同80张量/160步时间更新；新GT改善，真实8DEV无稳定收益，228视频验收 | [报告](v77/TARGET_PROTECTED_TEMPORAL_SCOPE_R14.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r13 | 同r7固定CFG1：10窗完成，P006额外生车/误差增加，真实无跨例收益；60视频交付，不推广 | [报告](v77/TARGET_PROTECTED_SAMPLING_R13.md) · [收口](autoresearch/worldsim_v77/target_protected_20260929/r13/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r12 | 同世界真实轨迹平移32来源0候选，raw地面修复未改善产量，训练0并停止该搜索 | [记录](autoresearch/worldsim_v77/target_protected_20260929/r12/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r11 | 新过程来源32世界，端点拟合0候选；保留拒绝、训练0，停止中点放置搜索 | [零产出](autoresearch/worldsim_v77/target_protected_20260929/r11/closeout.json) |
