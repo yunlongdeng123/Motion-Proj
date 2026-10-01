@@ -45,7 +45,7 @@ receiver与donor scene入图，整连通分量分割48train / 4validation，双�
 
 完整synthetic-X不送条件；先在原尺寸清零H，再缩放清零后的浮点条件。Y只作为扩散恢复目标及标准含噪target latent，不作为干净条件。实际合同及4个新回归测试验证：改洞内X不改任何batch字段，改洞内Y只改jpg目标，可见上下文进入条件，洞外合成影响被拒绝。protected标签仅作准入/评价，不增加输入通道。
 
-原官方完整已训练`model.safetensors`初始化，CLIP也由此恢复，0 missing / 0 unexpected；沿用原StandardDiffusionLoss。AdamW 1e-5、weight_decay .01、梯度clip1、seed6201，batch1、10帧、68训练窗口、160步。仅更新主分支空间self-attention Q/K/V/out的80张量、49,574,080参数，其余权重冻结；不是官方8卡全参数训练或LoRA。冻结权重bf16、训练参数fp32，nonreentrant checkpoint只改计算重算API，架构/公式不变。
+原官方完整已训练`model.safetensors`初始化，CLIP由此恢复；**r7核对训练日志发现106个目标encoder权重缺失，0 missing只属于推理加载，旧训练不能用于数据/模块归因**。沿用原StandardDiffusionLoss。AdamW 1e-5、weight_decay .01、梯度clip1、seed6201，batch1、10帧、68训练窗口、160步。仅更新主分支空间self-attention Q/K/V/out的80张量、49,574,080参数，其余权重冻结；不是官方8卡全参数训练或LoRA。冻结权重bf16、训练参数fp32，nonreentrant checkpoint只改计算重算API，架构/公式不变。
 
 训练320×576，推理576×1024；这个差异明确保留，尚未做原分辨率控制，不能称为已证实失败原因。真实反向80张量有有限非零梯度，训练峰值10.48GiB，训练与验证阶段约534秒（不含提取/初始化），生成峰值约21.86GiB。权重合并4077键保持一致，只有80张量更新，完整权重约12.06GB；原权重不改写。
 

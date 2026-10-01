@@ -2,6 +2,10 @@
 
 2026-10-01；`WS-V77-TARGET-PROTECTED-20260929/r6`。完成有界160步微调；**此配方未获稳定DELETE收益，原DriveEditor仍为默认**。数据AI技术2分和模型效果评分分开，人工verdict全部null。
 
+## r7 排查纠正
+
+2026-10-01查原始日志：训练`logs/train_pilot.log:47`为106 missing / 0 unexpected，全部是`first_stage_model.encoder.*`；推理`evaluate_pilot.log:15`才是0 missing。推理权重不包含训练目标encoder，train.yaml新建的encoder随机初始化并被冻结，Y因此映射到错误latent空间。上一版将推理加载当成训练加载，表述错误，现纠正。160步及输出数值/视频仍是真实执行结果，但**不能用它们否定数据或更新模块**；loss下降也不是有效训练成功证据。r7只恢复官方SVD的106目标encoder权重，严格加载后先做同数据/同80张量/同320×576/160步控制；原证据保留。
+
 ```mermaid
 flowchart LR
     Y[真实 nuScenes train Y] --> Q[五项几何与mask质检]
@@ -27,7 +31,7 @@ receiver与donor scene入图，整连通分量分割48train / 4validation，双�
 
 完整synthetic-X不送条件；先在原尺寸清零H，再缩放清零后的浮点条件。Y只作为扩散恢复目标及标准含噪target latent，不作为干净条件。实际合同及4个新回归测试验证：改洞内X不改任何batch字段，改洞内Y只改jpg目标，可见上下文进入条件，洞外合成影响被拒绝。protected标签仅作准入/评价，不增加输入通道。
 
-原官方完整已训练`model.safetensors`初始化，CLIP也由此恢复，0 missing / 0 unexpected；沿用原StandardDiffusionLoss。AdamW 1e-5、weight_decay .01、梯度clip1、seed6201，batch1、10帧、68训练窗口、160步。仅更新主分支空间self-attention Q/K/V/out的80张量、49,574,080参数，其余权重冻结；不是官方8卡全参数训练或LoRA。冻结权重bf16、训练参数fp32，nonreentrant checkpoint只改计算重算API，架构/公式不变。
+原官方完整已训练`model.safetensors`初始化，CLIP由此恢复；**训练实际106个目标encoder权重缺失，原“0 missing”引用了推理日志，见r7纠正**；沿用原StandardDiffusionLoss。AdamW 1e-5、weight_decay .01、梯度clip1、seed6201，batch1、10帧、68训练窗口、160步。仅更新主分支空间self-attention Q/K/V/out的80张量、49,574,080参数，其余权重冻结；不是官方8卡全参数训练或LoRA。冻结权重bf16、训练参数fp32，nonreentrant checkpoint只改计算重算API，架构/公式不变。
 
 训练320×576，推理576×1024；这个差异明确保留，尚未做原分辨率控制，不能称为已证实失败原因。真实反向80张量有有限非零梯度，训练峰值10.48GiB，训练与验证阶段约534秒（不含提取/初始化），生成峰值约21.86GiB。权重合并4077键保持一致，只有80张量更新，完整权重约12.06GB；原权重不改写。
 

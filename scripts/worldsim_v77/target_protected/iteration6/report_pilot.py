@@ -42,6 +42,9 @@ def evaluation_report(root,out):
     delta=(after['mean']/before['mean']-1)*100
     body=DIAGRAM+f'<p>本轮实际完成 {state["steps"]} 步。训练48case / 68个十帧窗口，分辨率320×576；原架构、原官方损失不变，仅更新主分支空间self-attention的Q/K/V/out（80张量，{cfg["trainable_parameters"]:,}参数），其余冻结。未做LoRA或增加protected输入通道。使用单卡AdamW固定1e-5学习率；不是官方8卡完整训练配置。</p><p>固定验证去噪loss：{before["mean"]:.6f} → {after["mean"]:.6f}（{delta:+.1f}%）。这是4例×2个固定噪声的latent指标，不能替代视频效果。推理保持576×1024 / 10帧 / seed42 / 25步，原权重与微调使用同输入、同mask、同写回规则。</p><p><a href="data_review.html">52例数据准入 / 来源 / 合同</a> · <a href="summary.json">指标与边界</a> · <a href="assistant_effect_reviews.json">独立单帧粗评</a></p><p>真实A022/A041/A013/A048是已曝光nuScenes val开发失败例，不是final test；删除真值未知。合成留出有真实Y可核对，但4case共享一个receiver scene。每个视频仅1秒首窗，不从单帧粗评判定时序。完整synthetic-X不送条件；真实Y作为扩散目标，含噪Y latent按标准扩散训练进入UNet，干净Y不作条件。</p><button id="export">导出人工分数CSV</button>'
     body='<p><strong>本轮微调未取得稳定收益，保持原模型为默认。</strong>去噪loss下降，生成视频仍有模糊/残留；下方保留全部正反例。四个合成留出例的洞内真实保护车MAE均变差；不按此结果倒改数据分数，也不将单场景结论外推全数据集。</p>'+body
+    correction=root/'training_checkpoint_correction.json'
+    if correction.exists():
+        body='<aside id="r7-encoder-correction"><strong>r7纠正：r6训练缺失106个目标encoder权重，Y由随机冻结encoder监督。推理0missing不能认证训练。旧输出保留，不能归因数据或模块。</strong></aside>'+body
     rows=[]
     reviews=read(root/'assistant_effect_reviews.json') if (root/'assistant_effect_reviews.json').exists() else {'cases':[]}
     qa={c['eval_id']:c for c in reviews['cases']}
@@ -77,6 +80,7 @@ def evaluation_report(root,out):
     valid=[r for r in rows if r['kind']=='synthetic']
     mean_b=float(np.mean([r['base_protected_in_hole']['MAE'] for r in valid]));mean_f=float(np.mean([r['finetuned_protected_in_hole']['MAE'] for r in valid]))
     summary={'data':data,'training':state,'model_decision':'r6 finetune not promoted; original default retained','validation_loss_base':before['mean'],'validation_loss_finetuned':after['mean'],'validation_loss_change_percent':delta,'protected_MAE_base':mean_b,'protected_MAE_finetuned':mean_f,'protected_MAE_change_percent':(mean_f/mean_b-1)*100,'protected_MAE_worse_cases':sum(r['finetuned_protected_in_hole']['MAE']>r['base_protected_in_hole']['MAE'] for r in valid),'evaluation':rows,'assistant_review':reviews,'human_verdict':None,'limits':['dense_actor training data zero','10 receiver scenes total; heldout4 cases share one receiver scene','160step partial self-attention pilot, not full-model training','train320x576 vs inference576x1024; resolution control not run, not proven causal','real deletion examples exposed development; unknown clean GT','sampled-frame QA cannot certify temporal quality']}
+    if correction.exists():summary['r7_training_encoder_correction']=read(correction)
     dump(out/'summary.json',summary);dump(root/'pilot_summary.json',summary);(out/'index.html').write_text(doc('v77 r6 · 原权重 / 微调 DELETE 对照',body));dump(out/'assistant_effect_reviews.json',reviews)
 
 def contacts(root):

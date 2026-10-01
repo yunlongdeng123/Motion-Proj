@@ -1,0 +1,36 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r7",
+  "date": "2026-10-01",
+  "purpose": "区分r6无改善的工程/数据监督/更新范围，原架构不变",
+  "arms": [
+    {
+      "id": "native_spatial",
+      "size": [
+        576,
+        1024
+      ],
+      "steps": 160,
+      "modules": "same r6 spatial self attention 80 tensors"
+    },
+    {
+      "id": "native_contextual",
+      "size": [
+        576,
+        1024
+      ],
+      "steps": 160,
+      "modules": "existing main spatial+temporal self/cross attention and input/output conv/null embedding; only if memory feasible"
+    }
+  ],
+  "fixed": "r6 same catalog/split, case order/seed6201, AdamW lr1e-5, unchanged official loss, seed42/25step inference",
+  "evaluation": "four frozen synthetic holdouts + one train background/one train protected, chosen by dataset id before training",
+  "stop": "OOM ends that arm, preserve evidence; no sampling seed/threshold/loss grid; no promotion based on latent loss",
+  "data_change": false,
+  "new_architecture": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "limits": "holdout4cases one scene; controlled update range bundles existing modules; not individual module attribution; real-development comparison follows only if synthetic improvement"
+}

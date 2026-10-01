@@ -1,4 +1,4 @@
-"""原DriveEditor结构/损失的单卡有界微调；先清零X，再缩放，Y只作监督。"""
+"""r7同数据/损失控制：原尺寸训练；第二臂仅扩大既有参数更新范围。"""
 from pathlib import Path
 import argparse, json, sys, os, time, random, traceback, functools, fcntl
 import numpy as np
@@ -11,11 +11,17 @@ REPO=Path('/root/autodl-tmp/motion_proj_v77')
 OFFICIAL=Path('/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEditor')
 sys.path.insert(0,str(REPO/'scripts/worldsim_v77/target_protected'))
 from iteration2.driveeditor_contract import deletion_batch
+sys.path.insert(0,str(Path(__file__).parent))
+from audit import contextual,protected_mask
+from checkpoint_contract import complete_training_state
+MODULES='spatial'
+ENCODER=None
 
 def save_json(p,obj):
     tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n');tmp.replace(p)
 
 def selected(k):
+    if MODULES=='contextual':return contextual(k)
     return k.startswith('model.diffusion_model.') and '_3d' not in k and '.transformer_blocks.' in k and '.attn1.' in k and any(v in k for v in ('.to_q.','.to_k.','.to_v.','.to_out.'))
 
 def arrays(case,start=0):
@@ -51,10 +57,6 @@ def move(obj):
     return obj
 
 def model_init():
-    from safetensors import safe_open
-    with safe_open(str(OFFICIAL/'checkpoints/model.safetensors'),framework='pt') as checkpoint:
-        if len([k for k in checkpoint.keys() if k.startswith('first_stage_model.encoder.')])!=106:
-            raise RuntimeError('Inference checkpoint lacks pretrained target encoder: do not train random latents. Use iteration7/train_control.py with recovered official SVD encoder and strict restore.')
     os.chdir(OFFICIAL);sys.path.insert(0,str(OFFICIAL))
     from omegaconf import OmegaConf
     from sgm.util import instantiate_from_config
@@ -75,26 +77,58 @@ def model_init():
         config.model.params[key].params.emb_models[0].params.model_config.params.open_clip_embedding_config.params.version=None
     config.model.params.en_and_decode_n_samples_a_time=1
     config.model.params.conditioner_config.params.emb_models[3].params.en_and_decode_n_samples_a_time=1
-    model=instantiate_from_config(config.model).to(device='cuda',dtype=torch.bfloat16)
+    # DriveEditor推理checkpoint删去了目标encoder；训练不能默许随机初始化。
+    from sgm.models.diffusion import DiffusionEngine
+    from safetensors.torch import load_file
+    original_init=DiffusionEngine.init_from_ckpt
+    def strict_restore(instance):
+        encoder=load_file(str(ENCODER))
+        merged=complete_training_state(instance.state_dict(),instance.sd,encoder)
+        instance.load_state_dict(merged,strict=True)
+        instance.encoder_restore_evidence={'target_encoder_tensors':len(encoder),'missing_keys':0,'unexpected_keys':0,'source':str(ENCODER),'strict':True}
+        del instance.sd
+        print('STRICT_RESTORE: 0 missing / 0 unexpected; official SVD encoder106 restored',flush=True)
+    DiffusionEngine.init_from_ckpt=strict_restore
+    try:model=instantiate_from_config(config.model).to(device='cuda',dtype=torch.bfloat16)
+    finally:DiffusionEngine.init_from_ckpt=original_init
     model.requires_grad_(False)
     params=[];names=[]
     for k,p in model.named_parameters():
         if selected(k):p.data=p.data.float();p.requires_grad_(True);params.append(p);names.append(k)
-    assert len(names)==80
+    assert len(names)>0
+    if MODULES=='spatial':assert len(names)==80
     model.eval()
     return model,params,names
 
-def loss(model,prepared,seed):
+def loss(model,prepared,seed,protected=None):
     torch.manual_seed(seed);torch.cuda.manual_seed_all(seed)
     batch=move(default_collate([sample(*prepared,seed)]))
     with torch.autocast('cuda',dtype=torch.bfloat16):
         y=model.get_input(batch)
         latent=model.encode_first_stage(y)
         latent3d=model.encode_first_stage(batch['jpg_3d'])
-        value,_=model(latent,latent3d,batch)
+        captures={}
+        original=model.loss_fn.get_loss
+        def inspect_loss(output,target,weight,mask):
+            error=((output.detach().float()-target.detach().float())**2*weight.detach().float()).mean(1)
+            hole=F.adaptive_max_pool2d(prepared[2][:,None].float().cuda(),error.shape[-2:])[:,0]>0
+            if protected is not None:
+                hidden=protected & prepared[2]
+                pb=F.adaptive_max_pool2d(hidden[:,None].float().cuda(),error.shape[-2:])[:,0]>0
+            else:pb=torch.zeros_like(hole)
+            for name,region in [('hole',hole),('protected_inside_hole',pb),('outside_hole',~hole)]:
+                captures[name]={'latent_pixels':int(region.sum()),'weighted_MSE':float(error[region].mean()) if region.any() else None}
+            captures['loss_weights_uniform']=bool(torch.all(mask==0))
+            return original(output,target,weight,mask)
+        model.loss_fn.get_loss=inspect_loss
+        try:value,_=model(latent,latent3d,batch)
+        finally:model.loss_fn.get_loss=original
+        model.last_loss_regions=captures
     return value
 
 def main(a):
+    global MODULES,ENCODER
+    MODULES=a.modules;ENCODER=a.encoder
     root=a.root;out=root/'training';out.mkdir(exist_ok=True)
     lock=open(out/'train.lock','a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     previous=json.loads((out/'state.json').read_text()) if (out/'state.json').exists() else {}
@@ -107,10 +141,14 @@ def main(a):
     torch.set_num_threads(4);random.seed(6201);torch.manual_seed(6201)
     catalog=json.loads((root/'dataset_catalog.json').read_text())
     train=[c for c in catalog['cases'] if c['split']=='train'];val=[c for c in catalog['cases'] if c['split']=='validation']
-    prepared={};windows={}
+    prepared={};windows={};protection={}
     for c in catalog['cases']:
         starts=list(range(0,c['frame_count']-9,10));windows[c['dataset_id']]=starts
         for start in starts:prepared[(c['dataset_id'],start)]=resized(*arrays(c,start),a.size)
+        bp=Path(c['folder'])/'protected'
+        if bp.exists():
+            bb=torch.from_numpy(np.stack([protected_mask(Path(c['folder']),i,(576,1024),c['type']) for i in range(10)])[:,None].astype('float32'))
+            protection[c['dataset_id']]=F.interpolate(bb,size=a.size,mode='nearest')[:,0].bool()
     # 真实数据、真实缩放合同，隐藏X变化不影响条件；Y变化只影响监督。
     y,x,h=arrays(train[0]);p=resized(y,x,h,a.size);alt=x.copy();alt[h]=255-alt[h]
     q=resized(y,alt,h,a.size);assert torch.equal(p[1],q[1])
@@ -119,7 +157,7 @@ def main(a):
     save_json(out/'input_contract.json',{'hidden_X_change_reaches_condition':False,'hidden_Y_change_reaches_condition':False,'Y_is_target_only':True,'clear_before_resize':True,'size':a.size,'num_frames':10,'architecture_channels':9,'added_channels':0,'actual_case':train[0]['dataset_id']})
     state={'stage':'loading_model','steps':resume,'resume_from_step':resume,'size':a.size,'train_cases':len(train),'validation_cases':len(val),'training_window_count':sum(len(windows[c['dataset_id']]) for c in train),'human_verdict':None}
     save_json(out/'state.json',state);model,params,names=model_init()
-    save_json(out/'config.json',dict(state,base_checkpoint=str(OFFICIAL/'checkpoints/model.safetensors'),trainable_parameters=sum(p.numel() for p in params),trainable_tensors=names,lr=1e-5,weight_decay=.01,seed=6201,steps_requested=a.steps,optimizer='AdamW',loss='official StandardDiffusionLoss unchanged',checkpoint='torch nonreentrant recomputation only',dtype='bf16 frozen / fp32 trainables',validation_seeds=[911,912],training_resolution=list(a.size),main_self_attention_only=True))
+    save_json(out/'config.json',dict(state,base_checkpoint=str(OFFICIAL/'checkpoints/model.safetensors'),trainable_parameters=sum(p.numel() for p in params),trainable_tensors=names,lr=1e-5,weight_decay=.01,seed=6201,steps_requested=a.steps,optimizer='AdamW',loss='official StandardDiffusionLoss unchanged; region logging only',checkpoint='torch nonreentrant recomputation only',dtype='bf16 frozen / fp32 trainables',validation_seeds=[911,912],training_resolution=list(a.size),module_range=a.modules,encoder_restore=model.encoder_restore_evidence))
     optimizer=torch.optim.AdamW(params,lr=1e-5,weight_decay=.01)
     if resume:
         from safetensors.torch import load_file
@@ -134,9 +172,9 @@ def main(a):
         with torch.no_grad():
             for c in val:
                 for seed in (911,912):
-                    value=float(loss(model,prepared[(c['dataset_id'],0)],seed))
-                    rows.append({'dataset_id':c['dataset_id'],'seed':seed,'loss':value})
-        save_json(out/f'validation_{tag}.json',{'rows':rows,'mean':float(np.mean([v['loss'] for v in rows])),'scope':'4 scene-isolated cases, two fixed noise draws, official latent denoising loss; not rendered DELETE quality'})
+                    value=float(loss(model,prepared[(c['dataset_id'],0)],seed,protection.get(c['dataset_id'])))
+                    rows.append({'dataset_id':c['dataset_id'],'seed':seed,'loss':value,'regions':model.last_loss_regions})
+        save_json(out/f'validation_{tag}.json',{'rows':rows,'mean':float(np.mean([v['loss'] for v in rows])),'scope':'4 cases sharing one heldout scene; fixed teacher-noised latent loss; region maxpool labels conservative, not sampled image quality'})
     if not resume:evaluate('base')
     for step in range(resume,a.steps):
         if step%len(train)==0:random.shuffle(train)
@@ -147,7 +185,7 @@ def main(a):
         value.backward()
         if step==0:
             gradients=[k for k,p in zip(names,params) if p.grad is not None and torch.isfinite(p.grad).all() and p.grad.abs().max()>0]
-            assert len(gradients)==80,(len(gradients),'trainable gradient missing')
+            assert len(gradients)==len(names),(len(gradients),len(names),'trainable gradient missing')
             save_json(out/'backward_probe.json',{'forward_backward_pass':True,'nonzero_finite_gradient_tensors':len(gradients),'peak_allocated_GiB':torch.cuda.max_memory_allocated()/2**30,'peak_reserved_GiB':torch.cuda.max_memory_reserved()/2**30,'seconds_from_load':time.time()-start,'size':a.size})
         norm=float(torch.nn.utils.clip_grad_norm_(params,1.0));optimizer.step()
         state.update(stage='training',steps=step+1,last_case=c['dataset_id'],last_window=window,loss=float(value.detach()),grad_norm=norm,elapsed_seconds=time.time()-start,peak_allocated_GiB=torch.cuda.max_memory_allocated()/2**30,peak_reserved_GiB=torch.cuda.max_memory_reserved()/2**30)
@@ -162,7 +200,7 @@ def main(a):
     state.update(stage='complete');save_json(out/'state.json',state)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--steps',type=int,default=160);p.add_argument('--size',type=int,nargs=2,default=[320,576]);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--steps',type=int,default=160);p.add_argument('--size',type=int,nargs=2,default=[576,1024]);p.add_argument('--modules',choices=['spatial','contextual'],required=True);p.add_argument('--encoder',type=Path,required=True);a=p.parse_args()
     try:main(a)
     except Exception as e:
         save_json(a.root/'training/error.json',{'type':type(e).__name__,'message':str(e),'traceback':traceback.format_exc()});raise

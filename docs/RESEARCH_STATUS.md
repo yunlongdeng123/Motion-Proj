@@ -1,9 +1,9 @@
 # 当前研究状态
 
-2026-10-01，v77；`WS-V77-TARGET-PROTECTED-20260929/r6`已完成有界数据准入与微调对照。用户授权GPU/CPU自主迭代及技术AI2分后训练，历史人工分保持null。52case/10个receiver scene，48train/4validation；29背景、23单保护车、密集0。新的4例精确mask仅C012通过，原阈值未放宽。
+2026-10-01，v77；`WS-V77-TARGET-PROTECTED-20260929/r7`完成r6根因排查和同配方修复。确定工程错误：推理checkpoint缺106个训练目标encoder，r6随机冻结Y编码，原0missing误引推理日志已纠正；旧产物均保留。官方encoder136.65MB部分下载与严格恢复后，同数据/同80张量/320×576/160步实际重跑。
 
-原DriveEditor结构不变，160步更新既有80个空间attention张量。latent loss0.544→0.165，但4个共享一个场景的合成留出例保护车MAE均变差（均值+35.7%），视频变模糊；本轮权重不升为默认，原权重保留。A041空首窗不计删除成功，按输入非空规则补跑有效10–19帧，两权重相同条件，保留旧空窗。8个有效任务+1个空窗全部在本地r6报告，人工verdict留空；215视频/2750帧解码通过。
+四例单场景留出B-MAE原0.08356／错误r60.11338／修复0.07130；修复相对原-14.7%，0/4仍更差。两个固定训练诊断另列。codec随机0.2302→官方0.0196，说明旧latent空间无效。默认原权重保留，人工分空；不能从此否定数据或更新范围。训练数据B监督占画面0.188%、33/48同scene、密集0；更新范围偏窄均是剩余候选，未证明因果。
 
-下一步优先原分辨率训练/推理一致性控制，同数据同更新范围，尚未执行；之后才判断保护区监督是否需要变化。密集类及来源场景多样性仍欠缺，不把这次单场景负结果否定整个路线。GPU当前允许；无本轮关机或自动化授权，作业结束不关机。
+原native空间臂3步遇错误停止，扩大模块臂取消，修复native未执行；下一次从修复基线的残留选择单一控制，不引用旧loss下降。报告`outputs/v77-target-protected-r7/index.html`；60视频/600帧核验，无final/Ω/GLB/电源/自动化。本轮有界完成。
 
-见[报告与组件图](v77/TARGET_PROTECTED_FINETUNE_R6.md)、[证据](autoresearch/worldsim_v77/target_protected_20260929/r6/pilot_summary.json)。run `/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r6`。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。
+见[组件图与报告](v77/TARGET_PROTECTED_DIAGNOSIS_R7.md)、[证据](autoresearch/worldsim_v77/target_protected_20260929/r7/diagnosis_summary.json)。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。

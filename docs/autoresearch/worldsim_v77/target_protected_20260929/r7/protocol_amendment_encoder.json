@@ -1,0 +1,40 @@
+{
+  "trigger": "r6 training/logs 106 missing first_stage_model.encoder weights; inference 0missing cannot certify train initialization",
+  "confirmed_prior_unsafe_training": {
+    "r6_steps": 160,
+    "missing_encoder_tensors": 106,
+    "frozen_random_encoder": true
+  },
+  "interrupted_arm": {
+    "id": "native_spatial",
+    "steps": 3,
+    "state": "stopped_engineering_invalid",
+    "power_action": false
+  },
+  "cancelled_unrun_arm": "native_contextual; cannot infer data/module causality before fixing latent target",
+  "new_arms": [
+    {
+      "id": "encoder_fixed_lowres",
+      "size": [
+        320,
+        576
+      ],
+      "steps": 160,
+      "modules": "same80spatial",
+      "changed": "only restore106 official SVD target encoder weights"
+    },
+    {
+      "id": "encoder_fixed_native",
+      "size": [
+        576,
+        1024
+      ],
+      "steps": 160,
+      "modules": "same80spatial",
+      "changed": "only resolution vs encoder_fixed_lowres; execute if residual diagnosis needed"
+    }
+  ],
+  "fixed": "same r6 data, train/split, seeds, steps, optimizer, loss, original architecture; no regeneration/relabeling",
+  "baseline_report_correction": "r6 0missing claim belongs to evaluation, not training; loss drop invalid as training success evidence",
+  "stop": "finish bounded repaired comparison; no module/loss grid without evidence"
+}
