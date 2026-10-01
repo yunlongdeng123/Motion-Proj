@@ -2,11 +2,11 @@
   "task_id": "WS-V77-TARGET-PROTECTED-20260929",
   "run_id": "r9",
   "host": "wm-3090-1001",
-  "stage": "temporal_audit_and_bounded_data_factory",
+  "stage": "closed_bounded_factory_coverage_shortage",
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "pending",
+  "failure_ledger_delta": "updated V77-F02; no new ID",
   "architecture_unchanged": true,
   "power_authorization": null,
   "human_verdict": null,
@@ -17,5 +17,6 @@
   "finetune_steps": 160,
   "modules": "same80 spatial attention tensors",
   "resource_budget": "one reuse search plus one16-source expansion; no threshold/seed/module sweep",
-  "train_before_quality": false
+  "train_before_quality": false,
+  "actual_training_steps": 0
 }

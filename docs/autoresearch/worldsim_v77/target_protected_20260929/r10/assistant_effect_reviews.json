@@ -1,0 +1,244 @@
+{
+  "reviewer": "main assistant",
+  "scope": "fixed f5 rendered comparison; not temporal/video acceptance",
+  "human_verdict": null,
+  "cases": [
+    {
+      "eval_id": "synthetic_M003",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5真实Y、输入与四臂：真实黑车左车头/灯区域被遮。原模型灰色补片最明显；r7/r8/r10均改善道路，但左车头仍被浅灰块改写。r10没有明确修复此身份/结构错误，也未见相对r7/r8明显增益。只看固定帧，不判断视频时序。",
+      "failure_family": [
+        "protected_actor_structure_damage"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M006",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：洞遮道路/左路缘与建筑底部。原模型保留明显轮廓状补片；微调三臂恢复更多路缘和建筑，洞内路面仍有模糊/涂抹。r10与r8形态接近，没有明确进一步改善，不能把单帧路面清楚视作时序通过。",
+      "failure_family": [
+        "background_smear"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M007",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：原模型洞轮廓残留明显；r7/r8/r10都恢复道路虚线和路面。r10与r8/r7接近，未见清楚新增收益。洞处是道路，不据此证明隐藏车辆恢复或时序通过。",
+      "failure_family": [
+        "background_recovery_similar"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M001",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：灰A遮住两辆真实车的部分车尾及道路。微调三臂比原模型保留更多车尾/车灯，但车身边缘仍错补，洞下部有轮廓状浅灰残留。r10与r8相近，未见明确改善。已知Y可比身份/结构；固定帧不评时序。",
+      "failure_family": [
+        "protected_actor_structure_damage",
+        "hole_contour_residual"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M004",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：真实黑车左侧车头被遮；原模型浅灰块最大，微调三臂缩小但仍覆盖车头/左灯区域。r10没有修掉这块结构错误，未见相对r7/r8明确收益。",
+      "failure_family": [
+        "protected_actor_structure_damage"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M009",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：与M006相同来源画面，输入洞规则不同，不算独立场景。微调三臂恢复了更多左路缘/建筑底部，路面仍模糊，r10未见相对r8/r7明确收益。",
+      "failure_family": [
+        "background_smear"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M002",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：两辆真实车部分车尾被遮。微调三臂明显优于原模型整块灰补，但左车尾和右车尾边缘仍被改写；r10与r8相近，未见明确新增保护效果。不是独立于M001的世界。",
+      "failure_family": [
+        "protected_actor_structure_damage"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A022",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：黄框银色轿车是删除目标，蓝区覆盖其原位置。四臂都在该位置生成一辆深色车；r10车轮/车形依然明显，因此仍是actor regeneration，没有完成DELETE。不能因新车更连贯就算收益；真实无actor-free GT，未评价隐藏背景身份或视频时序。",
+      "failure_family": [
+        "actor_regeneration"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A041_w10",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：右边截边车辆被删除后，四臂仍有大块深色车形/涂抹，r10未见相对r7/r8明确改善。该目标较小且截边，隐藏区域没有真实去车GT；只标vehicle-like residual，不认证它是哪辆隐藏车或断言身份。",
+      "failure_family": [
+        "vehicle_like_residual",
+        "background_smear"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A013",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：黄框前景黑车去掉后，白客车前部/下部呈箱状块和断裂。r10与其他三臂类似，未见明确新增修复。白客车在输入确实存在，但被遮部分没有去车GT，不能用生成车头认证真实形状/身份。",
+      "failure_family": [
+        "protected_actor_structure_risk"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A048",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：左侧截边白车被删除，原处露出的停车车辆/地面有涂抹和不清楚的车形。r10与r7/r8接近，未见明确增益。背后车辆隐藏部分GT未知，不把所有生成车辆都叫目标再生。",
+      "failure_family": [
+        "hidden_actor_identity_unknown",
+        "background_smear"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A007",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：目标很小、原RGB模糊，删除处出现暗色纹理和亮点，四臂相近。无法由此确认隐藏实体身份或额外删除成功；不是强well-observed证据。r10没有可辨别新增收益，未评时序。",
+      "failure_family": [
+        "insufficient_visual_evidence",
+        "hidden_actor_identity_unknown"
+      ],
+      "r10_vs_r7_r8": "unknown",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A034",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：黄框白车去掉后露出深色车辆/墙面，各臂相近，r10未见明确新增收益。原视频后方确有车辆轮廓，不能把删除后仍有车直接判目标再生；被遮车身身份/纹理无GT。雨天画面，固定帧不判闪烁。",
+      "failure_family": [
+        "hidden_actor_identity_unknown"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A042",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：黄框目标去掉后原处出现大块车形/道路涂抹，各臂接近，r10没有可辨别新增改善。雨天、真实隐藏车身无GT；后方有车辆，不把车形存在单独判目标再生，也未判时序。",
+      "failure_family": [
+        "hidden_actor_identity_unknown",
+        "background_structure_risk"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A061_w08",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：左侧大面积截边银车删除后出现白车和路缘，四臂形态相近。输入远处已有白车线索，隐藏前脸/身份没有去车GT，无法认证它是否恢复正确；r10未见明确优于r7/r8。",
+      "failure_family": [
+        "hidden_actor_identity_unknown",
+        "background_structure_risk"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "temporal_P006",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5真实Y与四臂：本应恢复左侧道路及银SUV左车尾，r10却在道路上生成完整棕/金色车辆，真实Y没有这辆车，属于明确extra actor hallucination。原/r7/r8虽车尾灰块错补，但没有这辆额外车，r10此帧退化。输入AI2保持；不因模型失败撤掉冻结验证例。仅f5，未判断其全时段持续性。",
+      "failure_family": [
+        "hallucinated_extra_actor",
+        "protected_actor_structure_damage"
+      ],
+      "r10_vs_r7_r8": "worse_fixed_frame",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "temporal_P012",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：真实Y有左灰车与右SUV、间隔结构，遮洞后的四臂都生成跨越间隔的大黑色团块/合并车身。r10未明确恢复两辆真实车的独立结构，和r7/r8相近。真实Y已知，可确认错补；不能用纯背景洞MAE代表密集保护车身份成功。",
+      "failure_family": [
+        "protected_actor_merge",
+        "structure_damage"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "temporal_P016",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：纯背景道路/路缘被灰A遮住。r10减少了部分浅灰轮廓，但仍有暗色块和标线错补；这一帧局部变化混合，不能替代整窗MAE，亦未验证时序。",
+      "failure_family": [
+        "background_smear",
+        "road_marking_error"
+      ],
+      "r10_vs_r7_r8": "mixed_fixed_frame",
+      "human_verdict": null
+    },
+    {
+      "eval_id": "temporal_P019",
+      "reviewed_frames": [
+        5
+      ],
+      "observations": "已看f5：遮住道路与银SUV左车尾。微调三臂比原模型保留更多车尾，但都有明显车尾/车灯错补，r10与r8接近，没有明确新增收益；已知真实Y，不认证保护车身份成功。",
+      "failure_family": [
+        "protected_actor_structure_damage"
+      ],
+      "r10_vs_r7_r8": "no_clear_gain",
+      "human_verdict": null
+    }
+  ]
+}
