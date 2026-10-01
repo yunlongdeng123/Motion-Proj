@@ -1,0 +1,1028 @@
+{
+  "model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "scope": "68例每例固定单帧独立视觉+主agent全帧机器合同，非人工评分",
+  "cases": [
+    {
+      "case_id": "M001",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为完整车尾轮廓，位于路面中央且与两辆真实B车均有可见遮挡；两车仍露出外侧车身，绿色轮廓各自对应GT车辆。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘及下部轮廓完整，非矩形残片",
+        "placement": "车底落在车道地面，尺度相对两辆B合理，未压到ego",
+        "protected_mask_identity": "绿色与蓝色轮廓分别包住左右两辆真实车，未见污染背景结构",
+        "occlusion": "红色A覆盖两辆B的内侧，B外侧保留明确可见证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M002",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A的车尾形状与道路尺度合理，确实挡住左右两辆真实B车的内侧；两辆B的外侧和车顶仍可辨认。",
+      "visual_checks": {
+        "silhouette": "完整车尾与下部轮廓，无明显断裂或矩形填充",
+        "placement": "A位于道路中央，底缘贴近路面，未见与ego重叠",
+        "protected_mask_identity": "左右两条保护轮廓各对应一辆GT车，未见蔓延到建筑或路面",
+        "occlusion": "A与两辆B均有图像交叠，B保留可辨认的外侧车身"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M003",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为完整正面车辆轮廓，放在斑马线前方的车道上；遮住真实黑车左侧，黑车右半仍清楚可见，绿线身份一致。",
+      "visual_checks": {
+        "silhouette": "可见车顶、车身两侧及底部车轮形状，轮廓完整",
+        "placement": "A在车道地面，大小接近后方真实车，未压到ego",
+        "protected_mask_identity": "绿色轮廓沿真实黑车可见车身，未明显侵入其他物体",
+        "occlusion": "红色A与真实黑车左侧交叠，黑车右侧留有充分证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M004",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A轮廓是完整车辆正面，位置和大小与路面透视相符；红线覆盖真实黑车左侧，绿线仍准确围出其右侧可见部分。",
+      "visual_checks": {
+        "silhouette": "车身、车顶和底缘连续，未见缺块或异常直角残片",
+        "placement": "A落在车道上、靠近斑马线，未与ego相压",
+        "protected_mask_identity": "绿线对应GT黑车，未见跨到道路或建筑",
+        "occlusion": "A和B交叠且B右侧仍可辨认"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M005",
+      "reviewed_frame": 5,
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "A在路面中央且不遮挡两侧真实车辆，但近景轮廓呈较直的方框状；单帧难分辨是车辆正面投影还是过度方形化。",
+      "visual_checks": {
+        "silhouette": "顶部略圆、底部有车轮缺口，但整体侧缘过直且呈方框，存疑",
+        "placement": "位于车道中心，底缘与道路接合，未压到ego",
+        "protected_mask_identity": "背景例无受保护B；图中其他真实车辆仍可见且未被A覆盖",
+        "occlusion": "本例为背景类；A后方局部无真实车，不能据此声称整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M006",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在左侧道路上呈完整侧面轿车形状，车底贴近路面；中间真实车辆及行人仍清晰，未见保护身份混淆。",
+      "visual_checks": {
+        "silhouette": "车顶、车头车尾及车轮缺口构成完整侧面车辆",
+        "placement": "在左侧车道内且未越过ego，尺度与道路透视大致一致",
+        "protected_mask_identity": "背景例无受保护B，图中绿色真实车轮廓留在中间车身上",
+        "occlusion": "A与中间真实车分离；不以A后方局部无车推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M007",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A呈完整车尾，在右侧车道；左侧GT轿车仍可见。",
+      "visual_checks": {
+        "silhouette": "车顶、两侧及车轮完整",
+        "placement": "车道上接地，未压ego",
+        "protected_mask_identity": "无受保护B；绿线对应左侧轿车",
+        "occlusion": "A与左车分离，不据局部无车推断整景"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M008",
+      "reviewed_frame": 5,
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "A的正面近似直边方框；难判是正面投影还是过度方形化。",
+      "visual_checks": {
+        "silhouette": "顶部略圆且底部有轮，两侧过直",
+        "placement": "居车道中央、底边贴地",
+        "protected_mask_identity": "无受保护B；两侧GT车仍可见",
+        "occlusion": "局部A后方无车，不代表整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M009",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为左车道完整侧面车形，与中央GT车和行人分开。",
+      "visual_checks": {
+        "silhouette": "车顶及车头车尾连续",
+        "placement": "左车道落地，未压ego",
+        "protected_mask_identity": "无受保护B；绿线对应中央GT车",
+        "occlusion": "A未遮中央车；不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M010",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A压住白厢车右下和黑轿车左部，两辆真实车剩余部分清晰。",
+      "visual_checks": {
+        "silhouette": "完整正面车形",
+        "placement": "路口道路上，尺度合理",
+        "protected_mask_identity": "蓝线为白厢车、绿线为黑车，均合GT",
+        "occlusion": "与两车交叠，两车仍有可见证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M011",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A处于路口车道，两辆真实车均被部分遮挡且仍可辨认。",
+      "visual_checks": {
+        "silhouette": "车顶、两侧和底缘连续",
+        "placement": "底部落地，未压ego",
+        "protected_mask_identity": "蓝线厢车与绿线黑车身份合理",
+        "occlusion": "白车上部和黑车右部仍可见"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M012",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮住白厢车及黑车的内侧，二者外侧仍清楚。",
+      "visual_checks": {
+        "silhouette": "完整车身，无断裂矩形",
+        "placement": "贴地且尺寸合理",
+        "protected_mask_identity": "蓝线白厢车、绿线黑车未污染结构",
+        "occlusion": "与两辆B交叠，剩余部分可辨"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M013",
+      "reviewed_frame": 8,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮住正前黑车右侧，黑车左侧车头仍清晰。",
+      "visual_checks": {
+        "silhouette": "正面车顶及车轮底缘完整",
+        "placement": "前方车道，未压ego",
+        "protected_mask_identity": "绿线对应GT黑车，未越到停放车辆",
+        "occlusion": "黑车左灯与车身留存"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M014",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮住银车右半，银车左灯及车尾仍可辨。",
+      "visual_checks": {
+        "silhouette": "车顶与下部车身连续",
+        "placement": "车道内接地，与左侧大卡车分开",
+        "protected_mask_identity": "绿线围GT银轿车，未串到卡车",
+        "occlusion": "银车左侧保留明确证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M015",
+      "reviewed_frame": 4,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A挡后方皮卡下部，皮卡车顶、挡风玻璃与部分车头仍可辨。",
+      "visual_checks": {
+        "silhouette": "车顶、车身和轮部完整",
+        "placement": "车道中贴地，前后尺度合理",
+        "protected_mask_identity": "绿线对应GT皮卡",
+        "occlusion": "皮卡上半仍清楚"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M016",
+      "reviewed_frame": 9,
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "受保护车被A遮到仅剩上方及右缘窄区域，单帧身份依据偏弱。",
+      "visual_checks": {
+        "silhouette": "正面车形完整",
+        "placement": "桥面车道上，未压ego",
+        "protected_mask_identity": "绿线未串到结构，但B露出较少",
+        "occlusion": "A覆盖B大部，仅顶部和右侧留存"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M017",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为完整SUV车尾，压住蓝线厢车右下，厢车左侧及上部可辨。",
+      "visual_checks": {
+        "silhouette": "SUV侧后轮廓完整",
+        "placement": "右车道地面，避开左侧大货车",
+        "protected_mask_identity": "蓝线为GT小厢车，绿线大货车是另一实例",
+        "occlusion": "与蓝线厢车交叠，B仍留上部和左侧"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M018",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮挡蓝线白车左下，白车右侧和车顶仍清楚。",
+      "visual_checks": {
+        "silhouette": "车顶、两侧和底部完整",
+        "placement": "贴车道地面，未压ego",
+        "protected_mask_identity": "蓝线白车与GT相符，绿线左车是另一实例",
+        "occlusion": "白车右半仍可见"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M019",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为正常侧面轿车，覆盖白色GT轿车左半，白车右半仍可见。",
+      "visual_checks": {
+        "silhouette": "侧面车顶与车轮连续",
+        "placement": "沿道路横向摆放，底缘在路面",
+        "protected_mask_identity": "绿线对应GT白轿车，未串行人或栏杆",
+        "occlusion": "白车右部有清楚证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M020",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A压住白SUV左半，SUV右侧前脸可见。",
+      "visual_checks": {
+        "silhouette": "车顶、车头尾和轮部完整",
+        "placement": "左侧车道上接地",
+        "protected_mask_identity": "蓝线与GT白SUV相符，旁边绿车另为实例",
+        "occlusion": "SUV右侧仍可辨"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M021",
+      "reviewed_frame": 8,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮迎面公交右下，公交左侧和上部仍有车窗车灯证据。",
+      "visual_checks": {
+        "silhouette": "SUV正面外形完整",
+        "placement": "车道内接地，未压ego",
+        "protected_mask_identity": "绿线对应GT公交，未侵入建筑",
+        "occlusion": "公交左半和车顶留存"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M022",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮迎面公交右下，公交左侧车窗和车头可见。",
+      "visual_checks": {
+        "silhouette": "SUV车顶及下部完整",
+        "placement": "路口车道，尺寸相称",
+        "protected_mask_identity": "绿线沿GT公交，未串其他车",
+        "occlusion": "公交左侧及上部仍清晰"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M023",
+      "reviewed_frame": 3,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A挡住公交车头下部，线路牌、挡风玻璃和两侧仍清楚。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘与底部完整",
+        "placement": "道路中心接地，未压ego",
+        "protected_mask_identity": "绿线对应GT公交，未污染建筑",
+        "occlusion": "公交上半保留充分证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M024",
+      "reviewed_frame": 0,
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "A尺寸很大，蓝线公交只露上缘和左侧；单帧难确信B证据足够。",
+      "visual_checks": {
+        "silhouette": "近景SUV车尾连续",
+        "placement": "路口近侧接地，接近ego但未压车头",
+        "protected_mask_identity": "蓝线仍对应GT公交，露出部分偏少",
+        "occlusion": "A遮公交大部，仅上部左缘留存"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M025",
+      "reviewed_frame": 7,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮黑车右半，黑车左灯、挡风玻璃和车身仍可见。",
+      "visual_checks": {
+        "silhouette": "正面车身及轮部完整",
+        "placement": "车道内接地，未压ego",
+        "protected_mask_identity": "绿线对应GT黑车，未污染其他车",
+        "occlusion": "黑车左侧保留清楚证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M026",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮棕色皮卡左部，皮卡右侧车头仍可见。",
+      "visual_checks": {
+        "silhouette": "侧面车顶、轮部完整",
+        "placement": "路面左侧接地",
+        "protected_mask_identity": "绿线对应GT棕色皮卡",
+        "occlusion": "A与皮卡交叠，皮卡右半保留"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M027",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮黑色SUV右半，SUV左前脸仍清楚。",
+      "visual_checks": {
+        "silhouette": "正面车身与车轮完整",
+        "placement": "斑马线后道路上，未压ego",
+        "protected_mask_identity": "绿线对应GT黑SUV",
+        "occlusion": "A与B交叠，B左侧可辨"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M028",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为完整侧面轿车，压住白色GT轿车左半，右侧仍可见。",
+      "visual_checks": {
+        "silhouette": "侧面车顶、车头尾及轮部连续",
+        "placement": "对向车道路面上，未悬空",
+        "protected_mask_identity": "绿线对应GT白轿车",
+        "occlusion": "白车右半及车顶保留"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M029",
+      "reviewed_frame": 8,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A覆盖黑SUV左半，SUV右侧窗和车轮仍清楚。",
+      "visual_checks": {
+        "silhouette": "完整侧面轿车",
+        "placement": "道路接地",
+        "protected_mask_identity": "绿线对应GT黑SUV，蓝线为旁边货车",
+        "occlusion": "SUV右半保留明显证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M030",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在路口遮蓝线SUV左下部，SUV右侧车顶和车尾仍可见。",
+      "visual_checks": {
+        "silhouette": "低矮侧面轿车轮廓完整",
+        "placement": "路口道路上，未压行人或ego",
+        "protected_mask_identity": "蓝线对应GT深色SUV，绿线车另为实例",
+        "occlusion": "与蓝线SUV交叠，右半仍可辨"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M031",
+      "reviewed_frame": 8,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮住正前黑车右侧，黑车左侧车头仍清晰。",
+      "visual_checks": {
+        "silhouette": "正面车顶及车轮底缘完整",
+        "placement": "前方车道，未压ego",
+        "protected_mask_identity": "绿线对应GT黑车，未越到停放车辆",
+        "occlusion": "黑车左灯与车身留存"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M032",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮住银车右半，银车左灯及车尾仍可辨。",
+      "visual_checks": {
+        "silhouette": "车顶与下部车身连续",
+        "placement": "车道内接地，与左侧大卡车分开",
+        "protected_mask_identity": "绿线围GT银轿车，未串到卡车",
+        "occlusion": "银车左侧保留明确证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M033",
+      "reviewed_frame": 4,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A挡后方皮卡下部，皮卡车顶、挡风玻璃与部分车头仍可辨。",
+      "visual_checks": {
+        "silhouette": "车顶、车身和轮部完整",
+        "placement": "车道中贴地，前后尺度合理",
+        "protected_mask_identity": "绿线对应GT皮卡",
+        "occlusion": "皮卡上半仍清楚"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M034",
+      "reviewed_frame": 9,
+      "assistant_score": 1,
+      "decision": "uncertain",
+      "reason": "受保护车被A遮到仅剩上方及右缘窄区域，单帧身份依据偏弱。",
+      "visual_checks": {
+        "silhouette": "正面车形完整",
+        "placement": "桥面车道上，未压ego",
+        "protected_mask_identity": "绿线未串到结构，但B露出较少",
+        "occlusion": "A覆盖B大部，仅顶部和右侧留存"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M035",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为完整SUV车尾，压住蓝线厢车右下，厢车左侧及上部可辨。",
+      "visual_checks": {
+        "silhouette": "SUV侧后轮廓完整",
+        "placement": "右车道地面，避开左侧大货车",
+        "protected_mask_identity": "蓝线为GT小厢车，绿线大货车是另一实例",
+        "occlusion": "与蓝线厢车交叠，B仍留上部和左侧"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M036",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A遮挡蓝线白车左下，白车右侧和车顶仍清楚。",
+      "visual_checks": {
+        "silhouette": "车顶、两侧和底部完整",
+        "placement": "贴车道地面，未压ego",
+        "protected_mask_identity": "蓝线白车与GT相符，绿线左车是另一实例",
+        "occlusion": "白车右半仍可见"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M037",
+      "reviewed_frame": 0,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为正常侧面轿车，覆盖白色GT轿车左半，白车右半仍可见。",
+      "visual_checks": {
+        "silhouette": "侧面车顶与车轮连续",
+        "placement": "沿道路横向摆放，底缘在路面",
+        "protected_mask_identity": "绿线对应GT白轿车，未串行人或栏杆",
+        "occlusion": "白车右部有清楚证据"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M038",
+      "reviewed_frame": 9,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A压住白SUV左半，SUV右侧前脸可见。",
+      "visual_checks": {
+        "silhouette": "车顶、车头尾和轮部完整",
+        "placement": "左侧车道上接地",
+        "protected_mask_identity": "蓝线与GT白SUV相符，旁边绿车另为实例",
+        "occlusion": "SUV右侧仍可辨"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M039",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A是道路上的完整车尾，左侧真实轿车仍可见。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘和轮部完整",
+        "placement": "道路中央偏右接地",
+        "protected_mask_identity": "背景例无受保护B；绿线对应左侧GT轿车",
+        "occlusion": "A与左车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M040",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在右车道呈完整车尾，左侧GT车清楚。",
+      "visual_checks": {
+        "silhouette": "车顶弧线和轮部完整",
+        "placement": "右车道接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应GT黑车",
+        "occlusion": "A未遮黑车，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M041",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右车道，外形完整；左侧真实车仍可见。",
+      "visual_checks": {
+        "silhouette": "轿车车尾与车轮完整",
+        "placement": "底边贴桥面",
+        "protected_mask_identity": "背景例无受保护B；绿线对应左车",
+        "occlusion": "A与GT车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M042",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右车道，轮廓及接地正常；近车绿线的细枝只属A/H外的非活跃诊断mask。",
+      "visual_checks": {
+        "silhouette": "完整侧面轿车",
+        "placement": "桥面右车道接地，未压ego",
+        "protected_mask_identity": "inactive_mask_diagnostic_issue：左侧近车绿线拖到车外路面，但无受保护B，且未碰A/H",
+        "occlusion": "A与近车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M043",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在道路左车道中央线旁，右侧GT SUV仍可见。",
+      "visual_checks": {
+        "silhouette": "完整正面车身及轮部",
+        "placement": "车底贴地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应右侧GT SUV",
+        "occlusion": "A未遮SUV，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M044",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧道路，形状与路面尺度合理。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘和轮部完整",
+        "placement": "靠中央线的车道上接地",
+        "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M045",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧车道，车尾完整，施工桶未被覆盖。",
+      "visual_checks": {
+        "silhouette": "车顶和车轮完整",
+        "placement": "车道上贴地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M046",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧车道，保留完整车形；公交左侧可见。",
+      "visual_checks": {
+        "silhouette": "车顶及轮部连续",
+        "placement": "接地，靠中央线但未离路",
+        "protected_mask_identity": "背景例无受保护B；公交绿线未污染结构",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M047",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧路面，侧面车形完整，未压公交或左侧货车。",
+      "visual_checks": {
+        "silhouette": "侧面车顶、车头尾和车轮完整",
+        "placement": "施工边界内道路上接地",
+        "protected_mask_identity": "背景例无受保护B；公交绿线对应GT",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M048",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在街道前方呈完整车尾，右侧停放车辆未被覆盖。",
+      "visual_checks": {
+        "silhouette": "车顶和两侧轮部完整",
+        "placement": "道路中部接地",
+        "protected_mask_identity": "背景例无受保护B；右侧绿线对应GT车",
+        "occlusion": "A与右侧车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M049",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在左侧车道，正面车形完整，中央黑车仍清楚。",
+      "visual_checks": {
+        "silhouette": "车顶、两侧及轮部完整",
+        "placement": "左车道接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应中央黑车",
+        "occlusion": "A与黑车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M050",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为右侧路口内完整侧面轿车，未压中间GT黑车。",
+      "visual_checks": {
+        "silhouette": "低矮侧面车顶和轮部完整",
+        "placement": "右侧路面接地",
+        "protected_mask_identity": "背景例无受保护B；绿线对应中间GT车",
+        "occlusion": "A与绿线车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M051",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A为街边道路上的完整侧面轿车，黑SUV与厢车仍清楚。",
+      "visual_checks": {
+        "silhouette": "侧面车顶、车头尾和轮部连续",
+        "placement": "道路上接地，未占人行道",
+        "protected_mask_identity": "背景例无受保护B；绿线SUV和蓝线厢车对应GT",
+        "occlusion": "A与两车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M052",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右侧车道，前方黑车和白货车仍可见。",
+      "visual_checks": {
+        "silhouette": "正面车身和轮部完整",
+        "placement": "靠右护栏但仍在道路上接地",
+        "protected_mask_identity": "背景例无受保护B；绿线黑车和蓝线货车对应GT",
+        "occlusion": "A与前方车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M053",
+      "reviewed_frame": 5,
+      "assistant_score": 0,
+      "decision": "reject",
+      "reason": "A落在左侧树带/人行道，局部图车体与树干及路缘重叠，偏离行车道路。",
+      "visual_checks": {
+        "silhouette": "车形本身完整",
+        "placement": "车底处于树带/人行道，明显位置错误",
+        "protected_mask_identity": "背景例无受保护B；绿蓝线对应道路GT车",
+        "occlusion": "A不在可行车路面"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M054",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在右侧道路上呈完整侧面轿车，左侧两辆GT车仍清楚。",
+      "visual_checks": {
+        "silhouette": "车顶、车头尾和轮部完整",
+        "placement": "路面接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；蓝绿线对应GT两车",
+        "occlusion": "A与GT车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M055",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A是道路上的完整车尾，左侧真实轿车仍可见。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘和轮部完整",
+        "placement": "道路中央偏右接地",
+        "protected_mask_identity": "背景例无受保护B；绿线对应左侧GT轿车",
+        "occlusion": "A与左车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M056",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右车道，外形完整；左侧真实车仍可见。",
+      "visual_checks": {
+        "silhouette": "轿车车尾与车轮完整",
+        "placement": "底边贴桥面",
+        "protected_mask_identity": "背景例无受保护B；绿线对应左车",
+        "occlusion": "A与GT车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M057",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右车道，轮廓及接地正常；近车绿线的细枝只属A/H外的非活跃诊断mask。",
+      "visual_checks": {
+        "silhouette": "完整侧面轿车",
+        "placement": "桥面右车道接地，未压ego",
+        "protected_mask_identity": "inactive_mask_diagnostic_issue：左侧近车绿线拖到车外路面，但无受保护B，且未碰A/H",
+        "occlusion": "A与近车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M058",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧道路，形状与路面尺度合理。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘和轮部完整",
+        "placement": "靠中央线的车道上接地",
+        "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M059",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧车道，车尾完整，施工桶未被覆盖。",
+      "visual_checks": {
+        "silhouette": "车顶和车轮完整",
+        "placement": "车道上贴地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应公交",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M060",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在公交右侧路面，侧面车形完整，未压公交或左侧货车。",
+      "visual_checks": {
+        "silhouette": "侧面车顶、车头尾和车轮完整",
+        "placement": "施工边界内道路上接地",
+        "protected_mask_identity": "背景例无受保护B；公交绿线对应GT",
+        "occlusion": "A与公交分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M061",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在街道前方呈完整车尾，右侧停放车辆未被覆盖。",
+      "visual_checks": {
+        "silhouette": "车顶和两侧轮部完整",
+        "placement": "道路中部接地",
+        "protected_mask_identity": "背景例无受保护B；右侧绿线对应GT车",
+        "occlusion": "A与右侧车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M062",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在右侧路面呈完整侧面轿车，左侧GT黑车仍可见。",
+      "visual_checks": {
+        "silhouette": "低矮侧面车顶和轮部连续",
+        "placement": "右车道接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应GT黑车",
+        "occlusion": "A与黑车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M063",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右侧车道，前方黑车和白货车仍可见。",
+      "visual_checks": {
+        "silhouette": "正面车身和轮部完整",
+        "placement": "靠右护栏但仍在道路上接地",
+        "protected_mask_identity": "背景例无受保护B；绿线黑车和蓝线货车对应GT",
+        "occlusion": "A与前方车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M064",
+      "reviewed_frame": 5,
+      "assistant_score": 0,
+      "decision": "reject",
+      "reason": "A落在左侧树带/人行道，局部图车体与树干及路缘重叠，偏离行车道路。",
+      "visual_checks": {
+        "silhouette": "车形本身完整",
+        "placement": "车底处于树带/人行道，明显位置错误",
+        "protected_mask_identity": "背景例无受保护B；绿蓝线对应道路GT车",
+        "occlusion": "A不在可行车路面"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M065",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在右侧道路上呈完整侧面轿车，左侧两辆GT车仍清楚。",
+      "visual_checks": {
+        "silhouette": "车顶、车头尾和轮部完整",
+        "placement": "路面接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；蓝绿线对应GT两车",
+        "occlusion": "A与GT车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M066",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面右侧，轮廓及接地正常；近车绿线细枝只属A/H外的非活跃诊断mask。",
+      "visual_checks": {
+        "silhouette": "完整侧面轿车",
+        "placement": "桥面接地，未压ego",
+        "protected_mask_identity": "inactive_mask_diagnostic_issue：绿线伸到车外路面，但无受保护B且未碰A/H",
+        "occlusion": "A与近车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M067",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在道路右车道，左侧黑车及远处公交仍可见。",
+      "visual_checks": {
+        "silhouette": "车顶、侧缘及轮部完整",
+        "placement": "道路上接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线黑车与蓝线公交对应GT",
+        "occlusion": "A与其他车辆分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "case_id": "M068",
+      "reviewed_frame": 5,
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在街道中部呈完整车尾，右侧停放车辆和左侧货车仍可见。",
+      "visual_checks": {
+        "silhouette": "车顶、车身和车轮完整",
+        "placement": "路面中央接地，未压ego",
+        "protected_mask_identity": "背景例无受保护B；绿线对应右侧GT车",
+        "occlusion": "A与GT车分离，不推断整景无车"
+      },
+      "temporal_claim": false,
+      "human_verdict": null
+    }
+  ]
+}

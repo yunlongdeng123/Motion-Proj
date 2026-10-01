@@ -1,0 +1,49 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r8",
+  "date": "2026-10-01",
+  "purpose": "只改变技术合格训练数据覆盖，评估合成恢复和真实DELETE开发迁移",
+  "target_training_cases": 50,
+  "minimum_training_receiver_scenes": 20,
+  "max_cases_per_receiver_scene": 3,
+  "target_types": {
+    "background": 16,
+    "single_actor": 20,
+    "dense_actors": 14
+  },
+  "source_pool": "available official nuScenes train; first use already materialized continuous windows, no final val/test",
+  "data_method": "same metric placement, real LiDAR/map, exact SAM2 silhouette; no generated GT; full synthetic RGB erased before conditions",
+  "template_extension": "receiver track may supply a duplicate synthetic A silhouette; original B remains genuine Y. A moved to distinct noncolliding metric pose, same geometry/view gates. Template RGB fully erased. This changes data only, not model inputs/architecture.",
+  "quality": "all-frame five-check technical gates plus gpt-6-sol xhigh fixed-frame per-case independent QA; no human score assignment",
+  "evaluation": "freeze synthetic scene groups before training; exact same conditions original/r7/new; real A022/A041/A013/A048 and preselected additional well-observed development failures",
+  "training": {
+    "start": "original DriveEditor + official106 target encoder, NOT continue r7",
+    "modules": "same80 spatial self attention",
+    "steps": 160,
+    "size": [
+      320,
+      576
+    ],
+    "lr": 1e-05,
+    "seed": 6201,
+    "loss": "official unchanged",
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "clip": 1
+  },
+  "inference": {
+    "size": [
+      576,
+      1024
+    ],
+    "frames": 10,
+    "seed": 42,
+    "steps": 25
+  },
+  "stop": "no training before >=20 scenes and all three types qualified; retain shortages/rejects. One frozen new-data arm, no steps/loss/modules grids; report synthetic and real separately.",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "power_operations": false
+}

@@ -1,0 +1,22 @@
+{
+  "synthetic_validation_scenes": [
+    "scene-0237",
+    "scene-0239",
+    "scene-0287",
+    "scene-0289",
+    "scene-0229"
+  ],
+  "original_geometric_only_validation_scenes": [
+    "scene-0231",
+    "scene-0237",
+    "scene-0239",
+    "scene-0287",
+    "scene-0700"
+  ],
+  "rule": "retain original five if actual data available; fill only data-feasible receiver scenes absent from every r7 train scene, type coverage then lexicographic. Frozen before training or new model outputs.",
+  "train_scene_max_cases": 3,
+  "real_video_receiver_disjoint": true,
+  "shared_occluder_shapes": true,
+  "shape_generalization_not_claimed": true,
+  "no_model_outputs_used": true
+}

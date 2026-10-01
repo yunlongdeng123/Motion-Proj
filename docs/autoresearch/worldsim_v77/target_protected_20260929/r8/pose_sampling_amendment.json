@@ -1,0 +1,319 @@
+{
+  "reason": "coarse two-meter lateral proposals mostly background, very few valid partial protected occlusions; old affine exact stage14cases/6scenes retained",
+  "observed_data_only_states": [
+    {
+      "completed": 33,
+      "total": 39,
+      "candidate_count": 16,
+      "candidate_scene_count": 7,
+      "type_counts": {
+        "background": 16
+      },
+      "pid": 13517
+    },
+    {
+      "completed": 34,
+      "total": 39,
+      "candidate_count": 24,
+      "candidate_scene_count": 10,
+      "type_counts": {
+        "background": 23,
+        "single_actor": 1
+      },
+      "pid": 13518
+    },
+    {
+      "completed": 35,
+      "total": 39,
+      "candidate_count": 25,
+      "candidate_scene_count": 11,
+      "type_counts": {
+        "background": 19,
+        "single_actor": 6
+      },
+      "pid": 13519
+    },
+    {
+      "completed": 38,
+      "total": 38,
+      "candidate_count": 20,
+      "candidate_scene_count": 8,
+      "type_counts": {
+        "background": 16,
+        "single_actor": 4
+      },
+      "pid": 13520
+    }
+  ],
+  "model_inference_outcomes_used": false,
+  "new_global_proposals": [
+    [
+      4.5,
+      -3.0
+    ],
+    [
+      4.5,
+      -2.0
+    ],
+    [
+      4.5,
+      -1.5
+    ],
+    [
+      4.5,
+      -1.0
+    ],
+    [
+      4.5,
+      -0.5
+    ],
+    [
+      4.5,
+      0.0
+    ],
+    [
+      4.5,
+      0.5
+    ],
+    [
+      4.5,
+      1.0
+    ],
+    [
+      4.5,
+      1.5
+    ],
+    [
+      4.5,
+      2.0
+    ],
+    [
+      4.5,
+      3.0
+    ],
+    [
+      5.5,
+      -3.0
+    ],
+    [
+      5.5,
+      -2.0
+    ],
+    [
+      5.5,
+      -1.5
+    ],
+    [
+      5.5,
+      -1.0
+    ],
+    [
+      5.5,
+      -0.5
+    ],
+    [
+      5.5,
+      0.0
+    ],
+    [
+      5.5,
+      0.5
+    ],
+    [
+      5.5,
+      1.0
+    ],
+    [
+      5.5,
+      1.5
+    ],
+    [
+      5.5,
+      2.0
+    ],
+    [
+      5.5,
+      3.0
+    ],
+    [
+      7.0,
+      -3.0
+    ],
+    [
+      7.0,
+      -2.0
+    ],
+    [
+      7.0,
+      -1.5
+    ],
+    [
+      7.0,
+      -1.0
+    ],
+    [
+      7.0,
+      -0.5
+    ],
+    [
+      7.0,
+      0.0
+    ],
+    [
+      7.0,
+      0.5
+    ],
+    [
+      7.0,
+      1.0
+    ],
+    [
+      7.0,
+      1.5
+    ],
+    [
+      7.0,
+      2.0
+    ],
+    [
+      7.0,
+      3.0
+    ],
+    [
+      9.0,
+      -3.0
+    ],
+    [
+      9.0,
+      -2.0
+    ],
+    [
+      9.0,
+      -1.5
+    ],
+    [
+      9.0,
+      -1.0
+    ],
+    [
+      9.0,
+      -0.5
+    ],
+    [
+      9.0,
+      0.0
+    ],
+    [
+      9.0,
+      0.5
+    ],
+    [
+      9.0,
+      1.0
+    ],
+    [
+      9.0,
+      1.5
+    ],
+    [
+      9.0,
+      2.0
+    ],
+    [
+      9.0,
+      3.0
+    ],
+    [
+      12.0,
+      -3.0
+    ],
+    [
+      12.0,
+      -2.0
+    ],
+    [
+      12.0,
+      -1.5
+    ],
+    [
+      12.0,
+      -1.0
+    ],
+    [
+      12.0,
+      -0.5
+    ],
+    [
+      12.0,
+      0.0
+    ],
+    [
+      12.0,
+      0.5
+    ],
+    [
+      12.0,
+      1.0
+    ],
+    [
+      12.0,
+      1.5
+    ],
+    [
+      12.0,
+      2.0
+    ],
+    [
+      12.0,
+      3.0
+    ],
+    [
+      15.0,
+      -3.0
+    ],
+    [
+      15.0,
+      -2.0
+    ],
+    [
+      15.0,
+      -1.5
+    ],
+    [
+      15.0,
+      -1.0
+    ],
+    [
+      15.0,
+      -0.5
+    ],
+    [
+      15.0,
+      0.0
+    ],
+    [
+      15.0,
+      0.5
+    ],
+    [
+      15.0,
+      1.0
+    ],
+    [
+      15.0,
+      1.5
+    ],
+    [
+      15.0,
+      2.0
+    ],
+    [
+      15.0,
+      3.0
+    ]
+  ],
+  "budget": "one fixed66-pose supplement/source/two retained assets; no per-case thresholds/seed/weights changes; stop this candidate pool after it completes",
+  "rules_unchanged": "real LiDAR/map, .3m clearance,64px ego band, full 10-frame size/depth/order/normal-mask continuity, protected30-80/dense20-70%, all synthetic influence erased",
+  "data_only_control_boundary": "r8 dataset change includes broader scenes and explicit3D silhouette proposal method; cannot attribute any later benefit solely to scene count",
+  "first_shape_oracle": "silhouette_probe/results.json; optimized union equals original full-face raster at actual camera"
+}

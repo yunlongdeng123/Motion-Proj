@@ -1,9 +1,9 @@
 # 当前研究状态
 
-2026-10-01，v77；`WS-V77-TARGET-PROTECTED-20260929/r7`完成r6根因排查和同配方修复。确定工程错误：推理checkpoint缺106个训练目标encoder，r6随机冻结Y编码，原0missing误引推理日志已纠正；旧产物均保留。官方encoder136.65MB部分下载与严格恢复后，同数据/同80张量/320×576/160步实际重跑。
+2026-10-01，v77；`WS-V77-TARGET-PROTECTED-20260929/r8`已准入50train/25个receiver场景，单scene最多3例；24背景、23单保护、3密集（密集训练仅scene-0240）。7合成评测/4个隔离场景，8个已曝光真实DELETE开发窗口。固定原/r7/新数据三臂，final不用。
 
-四例单场景留出B-MAE原0.08356／错误r60.11338／修复0.07130；修复相对原-14.7%，0/4仍更差。两个固定训练诊断另列。codec随机0.2302→官方0.0196，说明旧latent空间无效。默认原权重保留，人工分空；不能从此否定数据或更新范围。训练数据B监督占画面0.188%、33/48同scene、密集0；更新范围偏窄均是剩余候选，未证明因果。
+68候选全10帧RGB/覆盖/metric放置/depth/连续性复核，gpt-6-sol xhigh独立固定帧61pass/5uncertain/2reject；50train和7val均技术通过且AI2，人工空。M053/M064视觉树带/人行道拒绝，即使三扫描静态占据无正证据也不放行。5待定、4合格备用完整保留。
 
-原native空间臂3步遇错误停止，扩大模块臂取消，修复native未执行；下一次从修复基线的残留选择单一控制，不引用旧loss下降。报告`outputs/v77-target-protected-r7/index.html`；60视频/600帧核验，无final/Ω/GLB/电源/自动化。本轮有界完成。
+数据改为已有DEV sedan/SUV显式mesh在真实camera/metric SE3下投影，完整synthetic RGB擦除；Y永远真实。train/val共享两种形状模板，只隔离真实世界来源，不声称未见形状/跨域。Boston白天数据，真实DELETE无去车GT。原图、全部PNG/视频与旧规则保留。
 
-见[组件图与报告](v77/TARGET_PROTECTED_DIAGNOSIS_R7.md)、[证据](autoresearch/worldsim_v77/target_protected_20260929/r7/diagnosis_summary.json)。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02。
+下一步同r7有效初始化、80空间attention、320×576/160步、原loss/seed6201、从原DriveEditor开始；不延续r7、不扩大模块/加权/加步数。真实原/r7对照已完成，等待本轮训练及合成/真实三臂完整采样和HTML。无电源/自动化操作。failure_ledger_refs: [V77-F02]；failure_ledger_delta: updated V77-F02（数据准入，模型结论待定）。

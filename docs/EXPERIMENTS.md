@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r8 | 数据控制：50train/25scene/max3，7val/4scene；同80张量160步，两套三臂评测待完成 | [报告](v77/TARGET_PROTECTED_DATA_CONTROL_R8.md) · [准入](autoresearch/worldsim_v77/target_protected_20260929/r8/admission_result.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r7 | 查r6训练缺106目标encoder；严格恢复，同80张量160步修复；数据/模块科学结论重新建立 | [报告](v77/TARGET_PROTECTED_DIAGNOSIS_R7.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r7/diagnosis_summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r6 | 52技术AI2例/48train+4val；原结构80张量160步；4留出保护车MAE均变差，原模型保留；8有效任务+1空窗 | [报告](v77/TARGET_PROTECTED_FINETUNE_R6.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r6/pilot_summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r5 | CPU连续规划4scene/40帧/16视频；精确准入4例waiting，推理/训练0 | [报告](v77/TARGET_PROTECTED_CPU_R5.md) · [证据](autoresearch/worldsim_v77/target_protected_20260929/r5/summary.json) |
