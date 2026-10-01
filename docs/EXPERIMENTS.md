@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r11 | 过程优先新来源32世界，端点拟合速度；准入后同80张量160步，真实收益前不关机 | [预案](autoresearch/worldsim_v77/target_protected_20260929/r11/plan.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r10 | 50train/25world，4扫过/3world，同80张量160步；19例四臂76窗与278视频交付；有限过程结果不推广 | [报告](v77/TARGET_PROTECTED_TEMPORAL_CONTROL_R10.md) · [结果](autoresearch/worldsim_v77/target_protected_20260929/r10/results_summary.json) · [审核](autoresearch/worldsim_v77/target_protected_20260929/r10/review_link.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r9 | 实测r7/r8扫过0；22候选18通过；覆盖缺额按预案训练0步，保留全部反例 | [计划与图](autoresearch/worldsim_v77/target_protected_20260929/r9/plan.md) · [独立QA](autoresearch/worldsim_v77/target_protected_20260929/r9/independent_data_reviews.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r8 | 50train/25scene/max3；同80张量160步，7合成+8真实三臂45窗完成；对r7洞MAE−1.05%、保护车+4.78%，真实固定帧未见明确迁移收益；不推广 | [报告](v77/TARGET_PROTECTED_DATA_CONTROL_R8.md) · [结果](autoresearch/worldsim_v77/target_protected_20260929/r8/results_summary.json) · [审核](autoresearch/worldsim_v77/target_protected_20260929/r8/review_link.md) |

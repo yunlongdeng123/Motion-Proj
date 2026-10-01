@@ -1,9 +1,9 @@
 # 当前研究状态
 
-2026-10-01，v77；默认wm-3090-1001。`WS-V77-TARGET-PROTECTED-20260929/r9`过程盘点/有界工厂收口（覆盖缺额、训练0）；`r10`有限过程同80张量/160步训练、四臂76窗、19例模型与22候选HTML交付完成。不重复启动，final未用，无电源/定时操作。
+2026-10-01，v77，默认wm-3090-1001。用户授权自主继续到真实DELETE＋补景有收益，再交付保存并关机；未达到时不关机。r10四臂已交付但不推广，不能用合成误差下降视作完成。
 
-r10未形成稳定收益，不替换原/r7/r8：旧GT保护车MAE对r8下降5.18%，但新过程GT洞内/保护车分别变差16.41%/11.90%；扫过验证P006在真实GT道路上补出额外车辆，真实DEV关键失败也仍在。
+当前唯一新run WS-V77-TARGET-PROTECTED-20260929/r11：按实际B投影变化、ego视差和近静止ego＋运动B优先选择未进入r9工厂的新窗口，固定32来源和相机端点速度拟合。原80张量/160步/原loss不改，尚未准入数据或训练，不重复旧进程。保持全部r7/r8/r10数据、权重、拒绝和人工评分；final未用。
 
-实际r7/r8均无达到阈值的B扫过；r8已有12个静止A＋运动ego。r10训练50/25world，实际11静止A＋ego、4扫过、12显露（可重叠）；新扫过val仅1world、dense train仅1world、一秒窗口。其他帧证据仅GT框表面几何代理，真实隐藏GT未知，不把统计等同因果或视频通过率。
+过程覆盖及物理、mask、独立AI2共同准入后才训练；覆盖不足就停本次具体无效搜索并改有证据的入口。真实任务验收看固定DEV跨例目标删净/保护车保留及视频连续性，合成GT误差只作辅助。人类verdict不代填，未知身份保持未知。
 
-下一有界控制：先更换过程来源与窗口抽取，达到原r9的8扫过train／3扫过val／2隔离val-world覆盖目标；同时匹配实际投影速度、尺度变化与合法截边过程。数据准入和冻结完成后才做同模块/同预算控制，不重复训练当前四个扫过例。 尚未启动；保留全部输入/拒绝/旧基线/新权重。参见[报告与组件图](v77/TARGET_PROTECTED_TEMPORAL_CONTROL_R10.md)、[指标](autoresearch/worldsim_v77/target_protected_20260929/r10/results_summary.json)、[审核](autoresearch/worldsim_v77/target_protected_20260929/r10/review_link.md)。failure_ledger_refs: [V77-F02]。
+参见[r11预案与组件图](autoresearch/worldsim_v77/target_protected_20260929/r11/plan.md)、[r10反例与结果](v77/TARGET_PROTECTED_TEMPORAL_CONTROL_R10.md)。failure_ledger_refs [V77-F02]。无新定时任务或自动电源控制。
