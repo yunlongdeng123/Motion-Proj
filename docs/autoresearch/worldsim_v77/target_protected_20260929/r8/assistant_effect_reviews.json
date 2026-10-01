@@ -1,0 +1,259 @@
+{
+  "task": "WS-V77-TARGET-PROTECTED-20260929",
+  "run": "r8",
+  "reviewer": "main assistant",
+  "scope": "15 cases, pre-existing fixed frame f5; five-column actual contact images inspected. Not independent data QA, not human verdict, not video temporal review.",
+  "all_three_arms_complete": true,
+  "human_verdict": null,
+  "cases": [
+    {
+      "eval_id": "synthetic_M001",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 0,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hole_boundary_artifact",
+        "protected_actor_damage"
+      ],
+      "observations": "GT左右两辆真实车被人工A部分遮住。原模型保留明显轮廓状浅灰块，未完整恢复；r7与r8改善了道路和车尾，但右侧车尾及下方洞边仍有浅灰块和接缝。本帧r8没有明确比r7更好。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M002",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 0,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hole_boundary_artifact",
+        "protected_actor_damage"
+      ],
+      "observations": "同scene-0289的另一冻结轮廓配置，并非独立世界。原模型洞形灰块明显；两版微调恢复更多标线和车尾，仍见车体边界错接与浅灰残块，r8与r7本帧接近。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M003",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "protected_actor_damage"
+      ],
+      "observations": "人工A挡住迎面真实车的左侧车头。三臂都补出道路，但GT黑色车头对应区域出现浅灰覆盖，车灯/车头结构不完整；两版微调未在本帧解决保护车恢复。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M004",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "protected_actor_damage"
+      ],
+      "observations": "同scene-0229的另一冻结轮廓配置。道路比保护车更易恢复，三臂仍将真实车左前部补成浅灰变形区域；r8没有明确优于r7。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M006",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 0,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hole_boundary_artifact",
+        "background_structure_damage"
+      ],
+      "observations": "GT是空道路、路缘与建筑，原模型生成明显车形轮廓状灰块。r7与r8明显减轻大块洞形，但底部仍有浅色条带，路缘/标线不完全闭合；r8与r7接近。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M007",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 2,
+      "new_data_assistant_score": 2,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "base_hole_boundary_artifact"
+      ],
+      "observations": "GT为空道路虚线；原模型残留较明显的轮廓边缘及色块。r7和r8本帧基本接回道路与虚线，可接受；这只是固定帧2分，不认证10帧稳定。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "synthetic_M009",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 0,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hole_boundary_artifact",
+        "background_structure_damage"
+      ],
+      "observations": "同scene-0239的另一冻结轮廓配置。原模型洞形灰块显著；r7和r8恢复较多真实道路，但下沿浅色残片与路缘模糊仍在。没有明确r8增益。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A022",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 0,
+      "r7_assistant_score": 0,
+      "new_data_assistant_score": 0,
+      "relative_to_r7": "persistent_failure",
+      "failure_family": [
+        "actor_regeneration"
+      ],
+      "observations": "删除黄框银色车后，三臂在原位置都生成一辆深色车。周边是可见墙面/路缘；三臂均未形成actor-free背景，r8没有修复该明确删除失败。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A041_w10",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 0,
+      "r7_assistant_score": 0,
+      "new_data_assistant_score": 0,
+      "relative_to_r7": "persistent_failure",
+      "failure_family": [
+        "vehicle_like_remainder",
+        "background_structure_damage"
+      ],
+      "observations": "有效非空窗口10–19帧，目标在右画面边缘，较小且截边。三臂补景区仍有深色车形/涂抹块，路缘未干净恢复；不能从单帧确认其隐藏身份，但本帧不满足干净去车。旧首窗空mask不计入本轮。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A013",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "persistent_failure",
+      "failure_family": [
+        "hidden_actor_structure_damage"
+      ],
+      "observations": "黄框是前方深色SUV，后面真实白色客车应保留。三臂虽去掉SUV，但把客车前部恢复成浅灰箱状/断开的结构；本帧r8没有明确改善后车身份与结构。该车本身较远，真实隐藏像素无GT。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A048",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "persistent_failure",
+      "failure_family": [
+        "hidden_actor_structure_damage",
+        "hole_boundary_artifact"
+      ],
+      "observations": "目标是左边缘截断的白色车，后方仍有真实停车车辆。三臂去目标后都出现后方车体/轮部局部错接、纹理涂抹；r8与r7接近，未看到清晰后车恢复收益。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A007",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": null,
+      "r7_assistant_score": null,
+      "new_data_assistant_score": null,
+      "relative_to_r7": "identity_not_assessable_at_fixed_frame",
+      "failure_family": [
+        "hidden_identity_unverified"
+      ],
+      "observations": "目标是远处左侧小车，生成区仍见暗色车状物。后方真实车辆可能性不能排除；没有actor-free GT，不能仅因车仍存在就判再生，也不能判删除成功。三臂本帧差异很小。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A034",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hidden_identity_unverified",
+        "hole_boundary_artifact"
+      ],
+      "observations": "去掉右侧白车后显示深色后车/车形；可能是真实隐藏实体，不能直接判再生。三臂在车顶与墙面衔接处仍见浅灰断边和模糊，r8没有明确优于r7。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A042",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hidden_identity_unverified",
+        "hole_boundary_artifact"
+      ],
+      "observations": "右侧目标后方可能有真实车辆，生成区仍见灰色车形，因此身份不能仅凭本帧裁定。三臂均有明显矩形上沿接缝及结构模糊；r8未稳定改善这项局部质量。",
+      "temporal_claim": false,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A061_w08",
+      "reviewed_frames": [
+        5
+      ],
+      "base_assistant_score": 1,
+      "r7_assistant_score": 1,
+      "new_data_assistant_score": 1,
+      "relative_to_r7": "no_clear_difference_at_fixed_frame",
+      "failure_family": [
+        "hidden_identity_unverified",
+        "hole_boundary_artifact"
+      ],
+      "observations": "有效非空窗口8–17帧。去左侧深色车后，三臂显示白色车形；既有后车可能性未排除，不能直接判幻觉。车身本身较糊，左上补景区有明显断边与色块，r8与r7近似。",
+      "temporal_claim": false,
+      "human_verdict": null
+    }
+  ]
+}

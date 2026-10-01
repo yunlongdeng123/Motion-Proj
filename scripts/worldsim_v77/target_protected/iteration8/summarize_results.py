@@ -35,5 +35,9 @@ def main():
         summary[key]=result
     catalog=read(O/'dataset_catalog.json');state=read(O/'training/state.json')
     result={'task':'WS-V77-TARGET-PROTECTED-20260929','run':'r8','data':catalog['summary'],'training':state,'synthetic_metrics':summary,'synthetic_cases':rows,'real_case_count':sum(c['kind']=='real_development' for c in plan['cases']),'real_actor_free_GT':None,'real_scientific_success':'requires preserved hidden/neighbor identities in independent development worlds; inspect video; no RGB-MAE claim without GT','technical_quality_not_output_quality':True,'same_modules_budget':read(O/'training/same_recipe_as_r7.json'),'human_verdict':None,'final_used':False}
+    done={(r['eval_id'],r['arm']) for r in read(O/'evaluation/state.json')['completed']}
+    result['all_inference_complete']={(c['eval_id'],a) for c in plan['cases'] for a in plan['arms']}<=done
+    result['synthetic_inference_complete']={(c['eval_id'],a) for c in plan['cases'] if c['kind']=='synthetic' for a in plan['arms']}<=done
+    assert result['synthetic_inference_complete']
     dump(O/'results_summary.json',result);print(summary,flush=True)
 if __name__=='__main__':main()

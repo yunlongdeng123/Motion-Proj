@@ -1,0 +1,215 @@
+{
+  "task": "WS-V77-TARGET-PROTECTED-20260929",
+  "run": "r8",
+  "stage": "complete_training_evaluation_review_delivery",
+  "training": {
+    "cases": 50,
+    "receiver_scenes": 25,
+    "max_cases_per_scene": 3,
+    "types": {
+      "background": 24,
+      "single_actor": 23,
+      "dense_actors": 3
+    },
+    "steps": 160,
+    "trainable_tensors": 80,
+    "same_recipe_as_valid_r7": true,
+    "from_original_not_r7": true
+  },
+  "quality": {
+    "candidates": 68,
+    "frames_reloaded": 680,
+    "independent_fixed_frame": {
+      "pass": 61,
+      "uncertain": 5,
+      "reject": 2
+    },
+    "reviewer_model": "gpt-6-sol",
+    "reasoning_effort": "xhigh",
+    "fast": false,
+    "admitted_train": 50,
+    "admitted_validation": 7,
+    "qualified_unused": 4,
+    "input_AI2_not_effect_AI2": true
+  },
+  "evaluation": {
+    "synthetic_cases": 7,
+    "synthetic_receiver_scenes": 4,
+    "protected_cases": 4,
+    "protected_receiver_scenes": 2,
+    "real_exposed_DEV_cases": 8,
+    "arms": [
+      "base",
+      "r7",
+      "new_data"
+    ],
+    "windows": 45,
+    "frames_per_window": 10,
+    "seed": 42,
+    "sampling_steps": 25,
+    "native_resolution": [
+      576,
+      1024
+    ],
+    "real_actor_free_GT": null
+  },
+  "synthetic_metrics": {
+    "hole": {
+      "cases": 7,
+      "scenes": 4,
+      "macro_case": {
+        "base": 0.0936870492462601,
+        "r7": 0.05977653153240681,
+        "new_data": 0.05987385208053248
+      },
+      "macro_scene": {
+        "base": 0.08702549659647048,
+        "r7": 0.05696822879835963,
+        "new_data": 0.056371398037299514
+      },
+      "types": {
+        "background": {
+          "cases": 3,
+          "scenes": 2,
+          "macro_case": {
+            "base": 0.09490109433730443,
+            "r7": 0.058271043871839845,
+            "new_data": 0.0543872132897377
+          }
+        },
+        "dense_actors": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.12089122869074345,
+            "r7": 0.0672533769160509,
+            "new_data": 0.0703532237559557
+          }
+        },
+        "single_actor": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.06466180216521025,
+            "r7": 0.05455791763961315,
+            "new_data": 0.05762443859130144
+          }
+        }
+      },
+      "new_data_vs_base": {
+        "better_cases": 7,
+        "total_cases": 7,
+        "macro_scene_relative_change": -0.35224273067134915
+      },
+      "new_data_vs_r7": {
+        "better_cases": 3,
+        "total_cases": 7,
+        "macro_scene_relative_change": -0.010476554627889434
+      }
+    },
+    "protected_inside_hole": {
+      "cases": 4,
+      "scenes": 2,
+      "macro_case": {
+        "base": 0.13924702387303114,
+        "r7": 0.09711907133460045,
+        "new_data": 0.1017635129392147
+      },
+      "macro_scene": {
+        "base": 0.13924702387303112,
+        "r7": 0.09711907133460045,
+        "new_data": 0.1017635129392147
+      },
+      "types": {
+        "dense_actors": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.1574818819761276,
+            "r7": 0.10373431071639061,
+            "new_data": 0.10548560731112958
+          }
+        },
+        "single_actor": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.12101216576993465,
+            "r7": 0.09050383195281028,
+            "new_data": 0.09804141856729984
+          }
+        }
+      },
+      "new_data_vs_base": {
+        "better_cases": 4,
+        "total_cases": 4,
+        "macro_scene_relative_change": -0.2691871602799555
+      },
+      "new_data_vs_r7": {
+        "better_cases": 1,
+        "total_cases": 4,
+        "macro_scene_relative_change": 0.047822137720128666
+      }
+    }
+  },
+  "real_observation": "All eight fixed-f5 comparisons show no clear improvement over valid r7; A022 regenerated vehicle, A013/A048 structural damage. Other hidden identities unverified. Not temporal/human pass rate.",
+  "decision": {
+    "stable_extra_benefit_over_r7": false,
+    "r8_promoted": false,
+    "module_failure_proven": false,
+    "default_original_preserved": true,
+    "valid_r7_preserved": true,
+    "stop_repeat_same_configuration": true,
+    "next_control": "Match training-hole geometry/area/border to real inference contract with physical source checks; keep modules,160steps,loss and frozen evaluations. Then isolated protected loss weighting; module expansion later.",
+    "next_control_executed": false
+  },
+  "limitations": [
+    "Boston daytime official-train sources; original pretraining overlap unknown",
+    "shared two exposed DEV mesh shapes across train/validation",
+    "dense train only3cases/1scene",
+    "protected evaluation only4cases/2scenes",
+    "GT/map/LiDAR-assisted synthesis, sparse static evidence not empty-space proof",
+    "one-second windows; fixed-frame review not temporal certification",
+    "real DEV contains small/truncated/rain cases, not sufficient well-observed-only audit",
+    "data sources and silhouette factory both changed, not causal scene-count-only experiment",
+    "training vs real mask distribution differs, causal hypothesis unproven"
+  ],
+  "local_delivery": "C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-target-protected-r8/index.html",
+  "local_data_review": "C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v77-target-protected-r8/data_review.html",
+  "delivery": {
+    "manifests": {
+      "data_manifest.json": {
+        "cases": 68,
+        "roles": 4
+      },
+      "effect_manifest.json": {
+        "cases": 15,
+        "roles": 5
+      }
+    },
+    "errors": [],
+    "browser_playback_tested": false,
+    "videos_checked": 392,
+    "decoded_video_frames": 3920,
+    "len_images_checked": 3470,
+    "static_HTML_and_JS_checked": true,
+    "success": true
+  },
+  "full_remote_run": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8",
+  "preserved": [
+    "all source RGB and failed/candidate proposals",
+    "real Y/X/H/B masks and geometric QA",
+    "original/r7/r8 native PNGs and composites",
+    "all160-step training checkpoints and optimizer snapshots",
+    "all old baselines and user scores"
+  ],
+  "lightweight_git_evidence_is_full_backup": false,
+  "human_verdict": null,
+  "final_used": false,
+  "power_operation": null,
+  "new_automation": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02: no stable data-control increment, protected damage, unproven input distribution gap; no new failure ID"
+}

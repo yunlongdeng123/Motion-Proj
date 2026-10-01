@@ -1,0 +1,663 @@
+{
+  "task": "WS-V77-TARGET-PROTECTED-20260929",
+  "run": "r8",
+  "data": {
+    "training_cases": 50,
+    "training_scene_count": 25,
+    "max_training_cases_per_scene": 3,
+    "training_type_counts": {
+      "background": 24,
+      "single_actor": 23,
+      "dense_actors": 3
+    },
+    "training_scene_counts": {
+      "scene-0222": 2,
+      "scene-0228": 3,
+      "scene-0240": 3,
+      "scene-0243": 2,
+      "scene-0249": 2,
+      "scene-0256": 2,
+      "scene-0290": 2,
+      "scene-0292": 2,
+      "scene-0294": 2,
+      "scene-0295": 3,
+      "scene-0297": 3,
+      "scene-0298": 2,
+      "scene-0300": 1,
+      "scene-0302": 2,
+      "scene-0303": 2,
+      "scene-0304": 2,
+      "scene-0305": 2,
+      "scene-0701": 2,
+      "scene-0703": 1,
+      "scene-0708": 2,
+      "scene-0709": 1,
+      "scene-0710": 2,
+      "scene-0714": 1,
+      "scene-0719": 2,
+      "scene-0735": 2
+    },
+    "validation_cases": 7,
+    "validation_scene_count": 4,
+    "validation_type_counts": {
+      "single_actor": 2,
+      "background": 3,
+      "dense_actors": 2
+    },
+    "validation_scenes": [
+      "scene-0229",
+      "scene-0239",
+      "scene-0287",
+      "scene-0289"
+    ],
+    "QA_total": 68,
+    "QA_rejected_or_uncertain": 7,
+    "qualified_unused": 4,
+    "human_verdict": null
+  },
+  "training": {
+    "stage": "complete",
+    "steps": 160,
+    "resume_from_step": 0,
+    "size": [
+      320,
+      576
+    ],
+    "train_cases": 50,
+    "validation_cases": 7,
+    "training_window_count": 50,
+    "human_verdict": null,
+    "last_case": "r8/M049",
+    "last_window": 0,
+    "loss": 0.26028773188591003,
+    "grad_norm": 0.7842039465904236,
+    "elapsed_seconds": 562.9537208080292,
+    "peak_allocated_GiB": 10.476374626159668,
+    "peak_reserved_GiB": 11.046875
+  },
+  "synthetic_metrics": {
+    "hole": {
+      "cases": 7,
+      "scenes": 4,
+      "macro_case": {
+        "base": 0.0936870492462601,
+        "r7": 0.05977653153240681,
+        "new_data": 0.05987385208053248
+      },
+      "macro_scene": {
+        "base": 0.08702549659647048,
+        "r7": 0.05696822879835963,
+        "new_data": 0.056371398037299514
+      },
+      "types": {
+        "background": {
+          "cases": 3,
+          "scenes": 2,
+          "macro_case": {
+            "base": 0.09490109433730443,
+            "r7": 0.058271043871839845,
+            "new_data": 0.0543872132897377
+          }
+        },
+        "dense_actors": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.12089122869074345,
+            "r7": 0.0672533769160509,
+            "new_data": 0.0703532237559557
+          }
+        },
+        "single_actor": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.06466180216521025,
+            "r7": 0.05455791763961315,
+            "new_data": 0.05762443859130144
+          }
+        }
+      },
+      "new_data_vs_base": {
+        "better_cases": 7,
+        "total_cases": 7,
+        "macro_scene_relative_change": -0.35224273067134915
+      },
+      "new_data_vs_r7": {
+        "better_cases": 3,
+        "total_cases": 7,
+        "macro_scene_relative_change": -0.010476554627889434
+      }
+    },
+    "protected_inside_hole": {
+      "cases": 4,
+      "scenes": 2,
+      "macro_case": {
+        "base": 0.13924702387303114,
+        "r7": 0.09711907133460045,
+        "new_data": 0.1017635129392147
+      },
+      "macro_scene": {
+        "base": 0.13924702387303112,
+        "r7": 0.09711907133460045,
+        "new_data": 0.1017635129392147
+      },
+      "types": {
+        "dense_actors": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.1574818819761276,
+            "r7": 0.10373431071639061,
+            "new_data": 0.10548560731112958
+          }
+        },
+        "single_actor": {
+          "cases": 2,
+          "scenes": 1,
+          "macro_case": {
+            "base": 0.12101216576993465,
+            "r7": 0.09050383195281028,
+            "new_data": 0.09804141856729984
+          }
+        }
+      },
+      "new_data_vs_base": {
+        "better_cases": 4,
+        "total_cases": 4,
+        "macro_scene_relative_change": -0.2691871602799555
+      },
+      "new_data_vs_r7": {
+        "better_cases": 1,
+        "total_cases": 4,
+        "macro_scene_relative_change": 0.047822137720128666
+      }
+    }
+  },
+  "synthetic_cases": [
+    {
+      "eval_id": "synthetic_M003",
+      "scene": "scene-0229",
+      "type": "single_actor",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.0682491447776556,
+            "PSNR": 19.74188124121226,
+            "frames": 10,
+            "pixels_per_frame": 6437.1
+          },
+          "protected_inside_hole": {
+            "MAE": 0.1277203619480133,
+            "PSNR": 15.684565587557874,
+            "frames": 10,
+            "pixels_per_frame": 1499.5
+          },
+          "native_outside_hole": {
+            "MAE": 0.011649778671562671,
+            "PSNR": 35.93453069866512,
+            "frames": 10,
+            "pixels_per_frame": 583386.9
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.05423847250640392,
+            "PSNR": 21.638775348608714,
+            "frames": 10,
+            "pixels_per_frame": 6437.1
+          },
+          "protected_inside_hole": {
+            "MAE": 0.09290919229388236,
+            "PSNR": 18.014973836778342,
+            "frames": 10,
+            "pixels_per_frame": 1499.5
+          },
+          "native_outside_hole": {
+            "MAE": 0.010490916948765517,
+            "PSNR": 36.50092132971851,
+            "frames": 10,
+            "pixels_per_frame": 583386.9
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.057675357535481454,
+            "PSNR": 21.14610697552202,
+            "frames": 10,
+            "pixels_per_frame": 6437.1
+          },
+          "protected_inside_hole": {
+            "MAE": 0.10341746434569359,
+            "PSNR": 17.21765509948626,
+            "frames": 10,
+            "pixels_per_frame": 1499.5
+          },
+          "native_outside_hole": {
+            "MAE": 0.010740793496370315,
+            "PSNR": 36.38347882336791,
+            "frames": 10,
+            "pixels_per_frame": 583386.9
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "synthetic_M006",
+      "scene": "scene-0239",
+      "type": "background",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.1221543274819851,
+            "PSNR": 16.389677347885446,
+            "frames": 10,
+            "pixels_per_frame": 11355.1
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.013056664913892745,
+            "PSNR": 34.92133320503321,
+            "frames": 10,
+            "pixels_per_frame": 578468.9
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.06875151097774505,
+            "PSNR": 19.90660629302581,
+            "frames": 10,
+            "pixels_per_frame": 11355.1
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.012024397123605013,
+            "PSNR": 35.24664740615831,
+            "frames": 10,
+            "pixels_per_frame": 578468.9
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.06565371006727219,
+            "PSNR": 20.41263466664008,
+            "frames": 10,
+            "pixels_per_frame": 11355.1
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.012199235055595637,
+            "PSNR": 35.15469162934901,
+            "frames": 10,
+            "pixels_per_frame": 578468.9
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "synthetic_M007",
+      "scene": "scene-0287",
+      "type": "background",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.04039462804794312,
+            "PSNR": 23.584028068558887,
+            "frames": 10,
+            "pixels_per_frame": 6679.7
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.017878361605107786,
+            "PSNR": 30.781147957054817,
+            "frames": 10,
+            "pixels_per_frame": 583144.3
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.037310109660029414,
+            "PSNR": 23.509634747347796,
+            "frames": 10,
+            "pixels_per_frame": 6679.7
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.01680605374276638,
+            "PSNR": 30.85288715150699,
+            "frames": 10,
+            "pixels_per_frame": 583144.3
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.03185421973466873,
+            "PSNR": 24.381213035489022,
+            "frames": 10,
+            "pixels_per_frame": 6679.7
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.017298677749931813,
+            "PSNR": 30.769425077558612,
+            "frames": 10,
+            "pixels_per_frame": 583144.3
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "synthetic_M001",
+      "scene": "scene-0289",
+      "type": "dense_actors",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.12705525010824203,
+            "PSNR": 15.495627195002749,
+            "frames": 10,
+            "pixels_per_frame": 11895.5
+          },
+          "protected_inside_hole": {
+            "MAE": 0.16111875027418138,
+            "PSNR": 13.573990050491329,
+            "frames": 10,
+            "pixels_per_frame": 3489.4
+          },
+          "native_outside_hole": {
+            "MAE": 0.014283326826989651,
+            "PSNR": 33.01290631209626,
+            "frames": 10,
+            "pixels_per_frame": 577928.5
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.06814836189150811,
+            "PSNR": 18.697244227666832,
+            "frames": 10,
+            "pixels_per_frame": 11895.5
+          },
+          "protected_inside_hole": {
+            "MAE": 0.10564049258828163,
+            "PSNR": 16.06800502647365,
+            "frames": 10,
+            "pixels_per_frame": 3489.4
+          },
+          "native_outside_hole": {
+            "MAE": 0.013309275172650814,
+            "PSNR": 33.13488551949357,
+            "frames": 10,
+            "pixels_per_frame": 577928.5
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.07283849269151688,
+            "PSNR": 18.475360321735035,
+            "frames": 10,
+            "pixels_per_frame": 11895.5
+          },
+          "protected_inside_hole": {
+            "MAE": 0.10923172235488891,
+            "PSNR": 15.952951481094118,
+            "frames": 10,
+            "pixels_per_frame": 3489.4
+          },
+          "native_outside_hole": {
+            "MAE": 0.013648501224815845,
+            "PSNR": 33.03195441902532,
+            "frames": 10,
+            "pixels_per_frame": 577928.5
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "synthetic_M004",
+      "scene": "scene-0229",
+      "type": "single_actor",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.061074459552764894,
+            "PSNR": 20.50252874383066,
+            "frames": 10,
+            "pixels_per_frame": 5361.5
+          },
+          "protected_inside_hole": {
+            "MAE": 0.114303969591856,
+            "PSNR": 16.37767800981755,
+            "frames": 10,
+            "pixels_per_frame": 1254.6
+          },
+          "native_outside_hole": {
+            "MAE": 0.011646263021975755,
+            "PSNR": 35.93146148703712,
+            "frames": 10,
+            "pixels_per_frame": 584462.5
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.05487736277282238,
+            "PSNR": 21.530313016342046,
+            "frames": 10,
+            "pixels_per_frame": 5361.5
+          },
+          "protected_inside_hole": {
+            "MAE": 0.0880984716117382,
+            "PSNR": 18.189774857206242,
+            "frames": 10,
+            "pixels_per_frame": 1254.6
+          },
+          "native_outside_hole": {
+            "MAE": 0.010494169779121876,
+            "PSNR": 36.48704528471022,
+            "frames": 10,
+            "pixels_per_frame": 584462.5
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.05757351964712143,
+            "PSNR": 21.186461822971722,
+            "frames": 10,
+            "pixels_per_frame": 5361.5
+          },
+          "protected_inside_hole": {
+            "MAE": 0.0926653727889061,
+            "PSNR": 17.76163341301786,
+            "frames": 10,
+            "pixels_per_frame": 1254.6
+          },
+          "native_outside_hole": {
+            "MAE": 0.010755779407918453,
+            "PSNR": 36.360220344540174,
+            "frames": 10,
+            "pixels_per_frame": 584462.5
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "synthetic_M009",
+      "scene": "scene-0239",
+      "type": "background",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.1221543274819851,
+            "PSNR": 16.389677347885446,
+            "frames": 10,
+            "pixels_per_frame": 11355.1
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.013056664913892745,
+            "PSNR": 34.92133320503321,
+            "frames": 10,
+            "pixels_per_frame": 578468.9
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.06875151097774505,
+            "PSNR": 19.90660629302581,
+            "frames": 10,
+            "pixels_per_frame": 11355.1
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.012024397123605013,
+            "PSNR": 35.24664740615831,
+            "frames": 10,
+            "pixels_per_frame": 578468.9
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.06565371006727219,
+            "PSNR": 20.41263466664008,
+            "frames": 10,
+            "pixels_per_frame": 11355.1
+          },
+          "protected_inside_hole": {
+            "MAE": null,
+            "PSNR": null,
+            "frames": 0,
+            "pixels_per_frame": null
+          },
+          "native_outside_hole": {
+            "MAE": 0.012199235055595637,
+            "PSNR": 35.15469162934901,
+            "frames": 10,
+            "pixels_per_frame": 578468.9
+          }
+        }
+      }
+    },
+    {
+      "eval_id": "synthetic_M002",
+      "scene": "scene-0289",
+      "type": "dense_actors",
+      "arms": {
+        "base": {
+          "hole": {
+            "MAE": 0.11472720727324486,
+            "PSNR": 16.031626934595298,
+            "frames": 10,
+            "pixels_per_frame": 12955.3
+          },
+          "protected_inside_hole": {
+            "MAE": 0.15384501367807388,
+            "PSNR": 13.965809251011901,
+            "frames": 10,
+            "pixels_per_frame": 3812.5
+          },
+          "native_outside_hole": {
+            "MAE": 0.014242138247936964,
+            "PSNR": 33.02989800437441,
+            "frames": 10,
+            "pixels_per_frame": 576868.7
+          }
+        },
+        "r7": {
+          "hole": {
+            "MAE": 0.06635839194059372,
+            "PSNR": 18.931853917879533,
+            "frames": 10,
+            "pixels_per_frame": 12955.3
+          },
+          "protected_inside_hole": {
+            "MAE": 0.10182812884449959,
+            "PSNR": 16.396062715612263,
+            "frames": 10,
+            "pixels_per_frame": 3812.5
+          },
+          "native_outside_hole": {
+            "MAE": 0.0132890610024333,
+            "PSNR": 33.1343337565496,
+            "frames": 10,
+            "pixels_per_frame": 576868.7
+          }
+        },
+        "new_data": {
+          "hole": {
+            "MAE": 0.06786795482039451,
+            "PSNR": 18.824270154363322,
+            "frames": 10,
+            "pixels_per_frame": 12955.3
+          },
+          "protected_inside_hole": {
+            "MAE": 0.10173949226737022,
+            "PSNR": 16.38783457872759,
+            "frames": 10,
+            "pixels_per_frame": 3812.5
+          },
+          "native_outside_hole": {
+            "MAE": 0.013651730492711067,
+            "PSNR": 33.025718184697865,
+            "frames": 10,
+            "pixels_per_frame": 576868.7
+          }
+        }
+      }
+    }
+  ],
+  "real_case_count": 8,
+  "real_actor_free_GT": null,
+  "real_scientific_success": "requires preserved hidden/neighbor identities in independent development worlds; inspect video; no RGB-MAE claim without GT",
+  "technical_quality_not_output_quality": true,
+  "same_modules_budget": {
+    "all_fixed_recipe_fields_equal": true,
+    "only_training_data_changed": true,
+    "base_not_r7_initialization": true,
+    "steps": 160,
+    "architecture_unchanged": true
+  },
+  "human_verdict": null,
+  "final_used": false,
+  "all_inference_complete": true,
+  "synthetic_inference_complete": true
+}
