@@ -1,9 +1,9 @@
 # 当前研究状态
 
-2026-10-01，v77，默认wm-3090-1001。用户授权自主继续到真实DELETE＋补景有收益，再交付保存并关机；未达到时不关机。r10四臂已交付但不推广，不能用合成误差下降视作完成。
+2026-10-01，v77，wm-3090-1001。r11新过程来源/端点拟合32来源0候选，r12真实轨迹时间平移32来源及raw地面支持恢复后仍0候选，均训练0，停止对应具体搜索，不放宽空间/质量条件。
 
-当前唯一新run WS-V77-TARGET-PROTECTED-20260929/r11：按实际B投影变化、ego视差和近静止ego＋运动B优先选择未进入r9工厂的新窗口，固定32来源和相机端点速度拟合。原80张量/160步/原loss不改，尚未准入数据或训练，不重复旧进程。保持全部r7/r8/r10数据、权重、拒绝和人工评分；final未用。
+当前r13单一采样强控制：有效r7权重与固定8真实DEV＋2GT哨兵不变，2D CFG原线性1.2到2.0对固定1.0；同seed42/25steps/previous=false，3D guider不改，不做参数网格。该诊断不预设机制成立。
 
-过程覆盖及物理、mask、独立AI2共同准入后才训练；覆盖不足就停本次具体无效搜索并改有证据的入口。真实任务验收看固定DEV跨例目标删净/保护车保留及视频连续性，合成GT误差只作辅助。人类verdict不代填，未知身份保持未知。
+用户授权真实DELETE＋补景有跨例收益，完成交付保存推送并确认无其它作业后才关机；目前条件未满足，不关机。全部旧模型、拒绝、分数保留，人工空，final未用，无新自动化。
 
-参见[r11预案与组件图](autoresearch/worldsim_v77/target_protected_20260929/r11/plan.md)、[r10反例与结果](v77/TARGET_PROTECTED_TEMPORAL_CONTROL_R10.md)。failure_ledger_refs [V77-F02]。无新定时任务或自动电源控制。
+参见[r13预案与图](autoresearch/worldsim_v77/target_protected_20260929/r13/plan.md)、[r12零产出](autoresearch/worldsim_v77/target_protected_20260929/r12/closeout.json)。failure_ledger_refs [V77-F02]。
