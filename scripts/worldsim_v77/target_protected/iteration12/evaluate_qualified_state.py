@@ -3,18 +3,19 @@ from pathlib import Path
 import json,sys
 import numpy as np
 import cv2
-from PIL import Image,ImageDraw
+from PIL import Image,ImageDraw,ImageOps
 sys.path.insert(0,str(Path(__file__).parent))
 from prepare_instance_audit import f
 O=f.T/'r29';R=f.T/'r28'
 
 
-def main():
-    assert f.read(O/'controller_state.json')['stage']=='complete_pending_condition_quality'
+def main(run_root=O,quality_root=R):
+    O=run_root
+    assert f.read(O/'controller_state.json')['stage'] in {'complete_pending_condition_quality','complete_pending_paired_evaluation'}
     summary=[]
     for cid in f.read(O/'run.json')['probe_cases']:
         c=next(v for v in f.read(R/'prepared.json')['cases'] if v['case_id']==cid)
-        q=next(v for v in f.read(R/'instance_quality.json')['cases'] if v['case_id']==cid)
+        q=next(v for v in f.read(quality_root/'instance_quality.json')['cases'] if v['case_id']==cid)
         tokens=q['quality']['protected_instances'];rows=[];strips=[]
         for i in range(30):
             state=dict(np.load(O/'state'/cid/f'{i:05}.npz'));loo=dict(np.load(O/'state'/cid/f'{i:05}_leave_self.npz'))
@@ -41,7 +42,9 @@ def main():
             condition=state['F'].copy();condition[state['U']]=48
             strip=Image.new('RGB',(540,206),(18,23,30));draw=ImageDraw.Draw(strip)
             for j,(name,im) in enumerate([('Y QA only',y),('legal X + visible SAM',overlay),('projected F / U gray',condition)]):
-                draw.text((j*180+3,3),f'f{i} '+name,fill='white');strip.paste(Image.fromarray(im[y0:y1,x0:x1]).resize((180,180)),(j*180,24))
+                draw.text((j*180+3,3),f'f{i} '+name,fill='white')
+                crop=ImageOps.contain(Image.fromarray(im[y0:y1,x0:x1]),(180,180))
+                strip.paste(crop,(j*180+(180-crop.width)//2,24+(180-crop.height)//2))
             strips.append(strip)
         for start in [0,15]:
             sheet=Image.new('RGB',(2700,618),(18,23,30))

@@ -146,7 +146,9 @@ def trajectory(g, c, q, speed, asset):
             'min_GT_clearance_m': min_gap, 'max_ground_support_distance_m': max_support}, None
 
 
-def exact(g, c, tr, alphas, pm):
+def exact(g, c, tr, alphas, pm, reveal_policy='all_affected'):
+    if reveal_policy not in {'all_affected','primary_plus_preserved'}:
+        raise ValueError('未知显露任务准入规则')
     holes = [prepare_masks(a)[0]['model_mask'] for a in alphas]
     ratios = {t: [] for t in pm}; affected = set(); static = set()
     for i, (a, h, p, obs) in enumerate(zip(alphas, holes, tr['frames'], g.obstacles[c['source_id']])):
@@ -174,18 +176,25 @@ def exact(g, c, tr, alphas, pm):
     active = sorted(affected)
     bactors = {t: [next(a for a in f['actors'] if a['instance_token'] == t) for f in c['frames']] for t in active}
     proc = process(c['frames'], [p['actor'] for p in tr['frames']], holes, {t: pm[t] for t in active}, bactors)
+    roles={}
     if active:
-        for t in active:
-            v = np.array(ratios[t]); d = proc['protected'][t]
-            if max(v) < .30 or sum(v > .05) < 3: return None, 'insufficient_actual_occlusion'
-            if not (d['visibility_transition'] or d['sweep_over_B']): return None, 'no_reveal_process'
-            if (d['approx_other_frame_support_mean'] or 0) < .5: return None, 'insufficient_other_frame_evidence'
+        if reveal_policy=='all_affected':
+            # 保留旧实验的精确行为，以便复现原拒绝及有界对照。
+            for t in active:
+                v = np.array(ratios[t]); d = proc['protected'][t]
+                if max(v) < .30 or sum(v > .05) < 3: return None, 'insufficient_actual_occlusion'
+                if not (d['visibility_transition'] or d['sweep_over_B']): return None, 'no_reveal_process'
+                if (d['approx_other_frame_support_mean'] or 0) < .5: return None, 'insufficient_other_frame_evidence'
+        else:
+            from reveal_roles import primary_and_preserved
+            roles,why=primary_and_preserved({t:ratios[t] for t in active},proc)
+            if roles is None:return None,why
         family = 'protected_reveal'; kind = 'single_actor' if len(active) == 1 else 'dense_actors'
     else:
         family = 'dense_known_background' if len(c['actors']) >= 2 else 'ordinary_background'; kind = 'background'
     return {'type': kind, 'data_family': family, 'protected_instances': active,
             'model_H_occlusion_fractions': ratios, 'temporal_process': proc, 'silhouette_stats': stats,
-            'static_background_annotations_behind_A': sorted(static)}, None
+            'static_background_annotations_behind_A': sorted(static), **roles}, None
 
 
 def main(shard, count):

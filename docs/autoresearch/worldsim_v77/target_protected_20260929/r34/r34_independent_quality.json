@@ -1,0 +1,13 @@
+{
+  "case_id": "Q046",
+  "condition_assistant_grade": 1,
+  "single_case_condition_usable": true,
+  "visible_blocker_for_later_training_candidate": false,
+  "human_verdict": null,
+  "review_scope": "仅审Q046修正后的slot1/2/3各30帧保持比例条带、f0/f15/f29全景定位图和指定评价/来源核验JSON；不评价模型收益。",
+  "review_pack_correction": "上一版宽union crop被强制拉成180×180，造成车辆朝向与场景观感失真；旧判断中的明确源错配不成立。来源核验显示30帧合法X在H外与对应Y完全一致，H内RGB为127；旧条带Y格与正确source裁剪的JPEG MAE为1.06–1.28。旧QA已备份为r34_initial_review_pack_quality.json。",
+  "main_B_slot2": "保持比例条带中，主B 7a5be16e…从f0侧面可见逐渐转为远处车尾，30帧始终同一辆深色车；遮后SAM随H增遮收缩，未见跳到行人、道路或邻车。F局部投影跟随该车并保留车形，主B洞内同实例精度95.30%（31367/32915）、隐藏B覆盖54.67%；不能把cuboid稀疏点图当完整纹理恢复。",
+  "incidental_edge_risk": "两辆邻车的可见SAM主体身份基本正确，但末段有真实的H边缘过投影。slot1仅f27–29向H投1270像素，其中337落在本车近似隐藏标签；f28为325/0，f29为899/337。slot3仅f24–29投1981像素，其中1144匹配本车，f29为676/480。修正条带显示这些错误集中在各自车头/车尾被矩形H切到的局部边缘和相邻路面，没有明显投到另一辆参考B或行人；slot1在行人经过车前时的可见轮廓分段也未把行人填成车。低精度并非纯分母假象，足以使条件低于干净2分。",
+  "unknown_semantics": "N为0，洞内U占94.1%；有车形的F只是稀疏可见RGB重投影，没有看到把整片未知路面或全部隐藏车身强制填满。",
+  "decision": "这一个case的主B条件和身份可作为后续训练候选准备，当前没有可见的跨身份或行人污染硬阻断；须把两邻车H边缘过投影作为明确质量风险留在候选记录中，不能凭联合O精度90.83%宣称所有actor均准确，也不能视为训练准入或DELETE收益。"
+}

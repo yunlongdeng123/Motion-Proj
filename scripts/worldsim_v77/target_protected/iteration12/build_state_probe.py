@@ -14,7 +14,7 @@ T=Path('/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929');O=
 def read(p):return json.loads(p.read_text())
 def dump(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
 
-def main(ground_patches=False,run_root=O,source_root=ROOT,geometry_factory=geometry):
+def main(ground_patches=False,run_root=O,source_root=ROOT,geometry_factory=geometry,actor_filter=None):
     # r22默认不变；新候选显式传入来源和run，避免暗用旧数据。
     O=run_root;ROOT=source_root;geometry=geometry_factory
     cv2.setNumThreads(2);g=geometry();summary=[]
@@ -35,6 +35,9 @@ def main(ground_patches=False,run_root=O,source_root=ROOT,geometry_factory=geome
             # 合成A从未存在于真实GT列表，故这里天然是删除A后的保留世界。
             d=cuboid_front_depth(ob,[a for a in obstacles if a['instance_token']!='ego_conservative_proxy'])
             front.append(d);excluded.append(np.isfinite(d))
+        actor_filter_stats=None
+        if actor_filter is not None:
+            samples,actor_filter_stats=actor_filter(observations,tracks,masks,samples,front)
         lidar=[];clouds={};sources=[];ta,tb=meta['window_start'],meta['window_end']
         in_window=[r['sensors']['LIDAR_TOP'] for r in g.context[sid]['frames'] if ta<=r['sensors']['LIDAR_TOP']['timestamp']<=tb]
         available=[d for d in in_window if (ROOT/'rgb'/d['filename']).is_file()]
@@ -97,6 +100,7 @@ def main(ground_patches=False,run_root=O,source_root=ROOT,geometry_factory=geome
         np.savez_compressed(dest/'background_samples.npz',**{k:v for k,v in background.items() if isinstance(v,np.ndarray)})
         row={'case_id':cid,'scene':meta['scene'],'source_id':sid,'frames':30,'window_s':(tb-ta)/1e6,'actors':list(tracks),'actor_samples':{t:len(s['local_xyz']) for t,s in samples.items()},'background_samples':len(background['world_xyz']),'lidar_provenance':sources,'missing_in_window_lidar_files':len(in_window)-len(available),'background_plane':plane_info,'geometry_proxy':'cuboid actor surfaces + observed near-ground LiDAR only','state_input':'masked RGB and masked-input SAM; no Y file read','metrics':metrics,'seconds':time.monotonic()-start,'method_quality':'pending_observed_identity_and_projection_review','human_verdict':None}
         row['background_patch_stats']=patch_stats
+        if actor_filter is not None:row['actor_filter_stats']=actor_filter_stats
         dump(dest/'result.json',row);summary.append(row);print('STATE',cid,row['actor_samples'],row['background_samples'],flush=True)
     dump(O/('state_patches_summary.json' if ground_patches else 'state_summary.json'),{'cases':summary,'stage':'complete_pending_QA','condition_is_sparse':True,'no_training':True,'human_verdict':None})
 

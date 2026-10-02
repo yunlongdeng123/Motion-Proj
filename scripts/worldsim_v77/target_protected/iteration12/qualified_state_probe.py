@@ -7,10 +7,11 @@ f=p.f;np=p.np;Image=p.Image
 O=f.T/'r29';R=f.T/'r28';S=Path(__file__).parent
 
 
-def prepare():
-    qa=f.read(R/'r28_independent_quality.json');assert qa['assistant_grade']==2 and qa['usable_for_next_legal_condition_build']
+def prepare(qa=None,quality_root=R):
+    qa=f.read(R/'r28_independent_quality.json') if qa is None else qa
+    assert qa['assistant_grade']==2 and qa['usable_for_next_legal_condition_build']
     case=next(c for c in f.read(R/'prepared.json')['cases'] if c['case_id']==qa['case_id'])
-    q=next(c for c in f.read(R/'instance_quality.json')['cases'] if c['case_id']==case['case_id']);assert q['technical_candidate']
+    q=next(c for c in f.read(quality_root/'instance_quality.json')['cases'] if c['case_id']==case['case_id']);assert q['technical_candidate']
     assert not (O/'run.json').exists(),'已登记，不能覆盖实验'
     O.mkdir(exist_ok=True);cid=case['case_id'];dest=O/'observed'/cid
     for name in ['rgb','H','sam_rgb']:(dest/name).mkdir(parents=True,exist_ok=True)
@@ -40,9 +41,10 @@ def prepare():
         'rgb_source':'r28 guard-erased PNG additionally erased by final H BEFORE SAM or appearance extraction',
         'geometry_source':'GT_camera_and_tracks_POC_auxiliary','gt_read_for_state':False})
     f.dump(O/'observed_queue.json',{'jobs':jobs,'input_boundary':'final_masked_fixed_window_only','frames':30,'human_verdict':None})
-    f.dump(O/'run.json',{'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':'r29','phase':'new_reveal_candidate_legal_condition',
+    f.dump(O/'run.json',{'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':O.name,'phase':'new_reveal_candidate_legal_condition',
         'probe_cases':[cid],'source_run':'r28','frozen_H':'r21 sam_full_v2','frames':30,'seed':42,'training_steps':0,'training_admission':0,
-        'Y_role':'only prior independent data QA; not opened here','surfel':False,'failure_ledger_refs':['V77-F02'],'human_verdict':None})
+        'Y_role':'only prior independent data QA; not opened here','input_quality_root':str(quality_root),
+        'surfel':False,'failure_ledger_refs':['V77-F02'],'human_verdict':None})
 
 
 def main():

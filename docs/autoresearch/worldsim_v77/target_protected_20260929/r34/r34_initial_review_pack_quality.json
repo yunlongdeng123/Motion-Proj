@@ -1,0 +1,10 @@
+{
+  "case_id": "Q046",
+  "condition_assistant_grade": 0,
+  "single_case_condition_usable": false,
+  "visible_blocker_for_later_training_candidate": true,
+  "human_verdict": null,
+  "blocking_finding": "本次全30帧身份复核材料发生明确错配：contact.jpg和远端r34/observed/Q046/rgb/00000.png都是有斑马线与横向车辆的宽阔路口；Q046_identity_00_14.jpg及Q046_identity_15_29.jpg却连续显示狭窄街道、纵向车辆，f0即不属于该Q046遮后输入场景。条带中的Y、合法X+绿SAM、投影F三列均与实际Q046不对应，故不能凭条带认证该例全30帧身份与投影。",
+  "bounded_observation": "contact.jpg的f0/f15/f29上，遮后SAM和F看起来落在路口车辆附近，未见这三个抽帧里明显投向行人或路面；但仅凭三帧无法排除后半段串车和两邻车边缘错投影。actor_identity_evaluation.json所报联合O精度90.8%、主B95.3%、邻车26.5%/57.7%以及U占洞94.1%是脚本结果；在条带场景错配解决前，不能把它们作为本次独立可视QA的通过证据。",
+  "decision": "当前证据包不得把Q046加入后续训练候选；需重新生成与r34/observed/Q046及state/Q046同源的30帧身份/投影条带并重新独立复核。此0分针对当前条件QA可核验性，不断言DELETE模型或r34条件算法本身失败。"
+}

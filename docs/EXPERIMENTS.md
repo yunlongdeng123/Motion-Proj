@@ -4,6 +4,12 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r36 | 合法轮廓反证数值改善，但Q046仍QA1且损失正确投影；不推广、不调网格；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r36/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r35 | 150投影拒绝中0例仅由水平截边导致；不放宽ego/尺度约束；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r35/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r34 | Q046主B身份可用、邻车边缘溢出，条件1；修复审核图纵横比；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r34/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r33 | 372固定静止A解只得同scene P001，独立QA0，停止同批位置搜索；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r33/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r32 | 同87轨迹技术1→3；Q046输入QA2，Q035因小而模糊QA0；旧Q060保留；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r32/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r31 | 同87候选拆分主显露B与轻触邻车，定位旧门槛语义错误；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r31/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r30 | 同87轨迹20帧质量控制，仅增1未准入候选，不全局推广 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r30/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r29 | Q060最终H遮后合法状态，30帧独立条件QA2；训练0步 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r29/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r28 | 固定87候选补实例标签，1条输入QA2；修复首因与位姿元数据 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r28/closeout.json) |

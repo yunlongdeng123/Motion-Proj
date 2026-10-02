@@ -1,0 +1,17 @@
+{
+  "task": "WS-V77-TARGET-PROTECTED-20260929",
+  "run": "r32",
+  "single_change": "require at least one main B to reveal; incidental B must retain geometry/identity/evidence checks, not be forced to >=30% occlusion",
+  "source": "r28 fixed 87 trajectories, 30 scenes, 30 actual exposures",
+  "mask_position_speed_identity_depth_ego_thresholds_changed": false,
+  "all_affected_B_other_frame_support_min": 0.5,
+  "main_B_max_occlusion_min": 0.3,
+  "Y_SAM_role": "offline labels only; method conditions must be rebuilt from final masked RGB",
+  "new_GPU_jobs": 0,
+  "training_steps": 0,
+  "stop_rule": "one paired audit; independently QA any newly eligible case",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

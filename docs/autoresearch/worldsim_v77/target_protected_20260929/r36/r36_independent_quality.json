@@ -1,0 +1,25 @@
+{
+  "review_scope": "仅独立复核r36的Q060、Q046：逐actor保持比例的全部30帧条带、f0/f15/f29全景定位图，以及paired_comparison、actor_identity_evaluation、condition_evaluation和来源核验JSON；没有运行模型、训练或改动条件。",
+  "grade_rule": "仅condition_assistant_grade=2可计入后续训练条件准入；本评价不代表DELETE模型收益。",
+  "cases": [
+    {
+      "case_id": "Q060",
+      "condition_assistant_grade": 2,
+      "single_case_condition_usable": true,
+      "eligible_for_later_training_condition_admission": true,
+      "human_verdict": null,
+      "reason": "30帧绿SAM始终贴合同一辆小箱车；灰色投影随该车位置、朝向变化，未见明显串到大车或路面。r36洞内同实例精度由95.30%升至96.44%，隐藏B覆盖由61.26%微降至61.00%（保留99.58%），条带中未见车体证据被明显削断。来源核验30帧H外X=Y、H内均为127；N不变、U占洞87.33%，未知没有被伪装成完整车或完整背景。可作为这一个case的合法条件候选。",
+      "limits": "精度/覆盖使用完整Y-SAM作独立近似评价，稀疏cuboid投影不是完整纹理或真实surfel；此分数不认证补洞结果、模型收益或其他case。"
+    },
+    {
+      "case_id": "Q046",
+      "condition_assistant_grade": 1,
+      "single_case_condition_usable": true,
+      "eligible_for_later_training_condition_admission": false,
+      "human_verdict": null,
+      "reason": "30帧主B(slot2)遮后SAM保持同一辆深色车，未见跳到行人、邻车或路面；邻车slot1/3的可见SAM也基本守住身份。跨帧反证确实削减了边缘溢出：联合洞内精度90.83%→93.78%，slot1为26.54%→76.46%，slot3为57.75%→66.39%。但末段仍有真实边缘过投影：slot1 f29洞内412点仅315点匹配本车；slot3 f24已有43点投影而近似隐藏B为0，f29为614/476。这些误投集中于邻车被H触及的边缘及邻近背景，尚不足干净2分。主B精度只微升95.30%→95.56%，覆盖54.67%→50.49%；相对r34，投影删去2600点，其中按独立近似标签2397点原本落在主B上，后段车身 visibly 更稀疏。未见主B身份失守，但不能称反证无代价。30帧来源核验H外X=Y、H内127；N仍为0、U占洞94.67%，未知如实保留。",
+      "limits": "Y-SAM是评价近似标签，不能将逐像素计数当人工GT；r34旧宽crop被拉成方形的显示缺陷已用保持比例逐actor条带纠正，不能据旧图推断源错配。此例可保留作有明确边缘风险的诊断候选，当前不计入2分训练条件准入，更不代表DELETE收益。"
+    }
+  ],
+  "human_verdict": null
+}

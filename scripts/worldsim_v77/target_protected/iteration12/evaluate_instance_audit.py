@@ -14,7 +14,7 @@ from PIL import Image,ImageDraw
 O=f.T/'r28'
 
 
-def main(ready_only=False,frame_start=0,frame_count=30,output_root=O,case_ids=None):
+def main(ready_only=False,frame_start=0,frame_count=30,output_root=O,case_ids=None,reveal_policy='all_affected'):
     plan=f.read(O/'prepared.json');label_state=f.read(O/'quality_labels/segmentation_state.json')
     if not ready_only:assert label_state['stage']=='complete_pending_identity_review'
     assert 0<=frame_start and frame_start+frame_count<=30 and frame_count in [20,30]
@@ -68,7 +68,7 @@ def main(ready_only=False,frame_start=0,frame_count=30,output_root=O,case_ids=No
         else:
             g.obstacles[sid]=obs
             tr=dict(case['trajectory']);tr['frames']=tr['frames'][window]
-            try:quality,why=f.exact(g,aug,tr,masks,pm)
+            try:quality,why=f.exact(g,aug,tr,masks,pm,reveal_policy=reveal_policy)
             finally:g.obstacles[sid]=original_obs
         outcome={'case_id':cid,'source_id':sid,'scene':case['scene'],'split':case['split'],
             'technical_candidate':quality is not None,'reason':why,'quality':quality,
@@ -95,7 +95,7 @@ def main(ready_only=False,frame_start=0,frame_count=30,output_root=O,case_ids=No
         'boundary':'SAM empty alone cannot certify object-free; positive candidates still need independent visual QA'}
     summary['complete']=not ready_only
     summary['pending_cases']=len(plan['cases'])-len(rows)
-    summary.update(frame_start=frame_start,frame_count=frame_count,Y_annotation_context_frames=30,
+    summary.update(frame_start=frame_start,frame_count=frame_count,reveal_policy=reveal_policy,Y_annotation_context_frames=30,
                    method_window_must_be_rebuilt=True,source_run='r28')
     f.dump(output_root/('instance_quality_ready.json' if ready_only else 'instance_quality.json'),summary)
     print('INSTANCE_AUDIT_READY' if ready_only else 'INSTANCE_AUDIT_DONE',summary['counts'],flush=True)

@@ -1,0 +1,34 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r36",
+  "phase": "observed_silhouette_consistency_control",
+  "probe_cases": [
+    "Q060",
+    "Q046"
+  ],
+  "reference_runs": {
+    "Q060": "r29",
+    "Q046": "r34"
+  },
+  "frames": 30,
+  "seed": 42,
+  "training_steps": 0,
+  "change": "remove cuboid samples contradicted in an unmasked, unoccluded legal input frame",
+  "frozen_parameters": {
+    "outside_same_SAM_halo_px": 2,
+    "hole_exclusion_halo_px": 2,
+    "front_depth_tolerance_m": 0.15,
+    "allowed_contradictions": 0
+  },
+  "method_input": "only saved final-H RGB, observed SAM, GT trajectory/camera, existing window LiDAR; Y QA separately",
+  "output_is_condition_not_generated_video": true,
+  "surfel": false,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "predeclared_promote_gate": "both cases precision does not drop; wrong-edge neighbor precision improves; each case retains >=90% previous hidden-B coverage; independent QA still required",
+  "stop": "single fixed control; if precision/coverage tradeoff fails, retain original and do not tune halo/vote grid",
+  "primary_reference": "https://homes.cs.washington.edu/~seitz/papers/kutu-ijcv00.pdf",
+  "reference_boundary": "borrows observed-view consistency; not a reimplementation or guarantee for dynamic noisy SAM"
+}
