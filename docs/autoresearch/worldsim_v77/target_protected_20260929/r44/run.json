@@ -1,0 +1,46 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r44",
+  "phase": "primary_relation_queue_engineering_regression",
+  "fixed_cases": [
+    {
+      "case_id": "G001",
+      "source_run": "r43",
+      "primary_instance_token": "d88750480dcd45e5bb31e6a6813c3e05"
+    },
+    {
+      "case_id": "G002",
+      "source_run": "r43",
+      "primary_instance_token": "d88750480dcd45e5bb31e6a6813c3e05"
+    },
+    {
+      "case_id": "G003",
+      "source_run": "r43",
+      "primary_instance_token": "c00e91e539f14a79ba7bc114cd15771b"
+    },
+    {
+      "case_id": "G004",
+      "source_run": "r43",
+      "primary_instance_token": "f3e0540ab540496d99d11c97eea4446f"
+    },
+    {
+      "case_id": "Q060",
+      "source_run": "r28",
+      "primary_instance_token": "a466d1fcc20944d7a092c44575602a3a"
+    }
+  ],
+  "change": "explicit primary B and necessary depth/contact screen before expensive instance labels",
+  "inputs": "GT camera/poses and existing final H; no source RGB, SAM mask or hidden Y",
+  "positive_control": "Q060 existing independently accepted input/condition; actual protected identity comes from its preserved contract",
+  "frozen_failure_scope": "r43 source-designated B; these are replayed failures, not unseen evaluation",
+  "no_search": true,
+  "no_new_gpu": true,
+  "resource_budget": "one CPU replay of five fixed30-frame cases; no RGB extraction",
+  "stop": "record necessary screen result; no rejection overrides, no threshold or pose changes",
+  "training_steps": 0,
+  "training_admission": 0,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

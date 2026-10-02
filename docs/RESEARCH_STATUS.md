@@ -1,13 +1,15 @@
 # 当前研究状态
 
-2026-10-02，wm-3090-1001，v77。Temporal reveal＋合法projected actor-state，先条件后surfel。
+2026-10-02，wm-3090-1001，v77。Temporal reveal＋合法projected actor-state，先验证条件，再考虑surfel。
 
-r37–r40已修曝光匹配、多地图/空LiDAR和SAM实际提示帧/JPEG溯源；15新来源尚无新增训练准入。S016独立QA0；r40提示帧改善身份疑点但未新增可用样本，控制关闭。旧Q060输入/条件2保留，Q046条件仍1，r36过滤未推广。
+r42取消每scene前三窗口截断，440→612窗口，但旧过程门仍0来源，控制关闭。r43整体取消16m距离代理后得到6scene、13次空间尝试、4候选。完整实例检查0合格；独立QA G001/G002/G003/G004为0/0/1/0。前两例主B深度顺序不成立，G004洞与来源B分离，G003缺乏同一B互补显露。空间无碰撞不代表遮挡任务正确。全部失败对照保留；此来源对照已结束。
 
-取消每scene前三截断后440→612窗口；原440及r41过滤逐条重现，但固定过程筛选仍0来源；停止将截断作为主因。r43用实际空间检查替代固定B距离预筛选：6scene来源已冻结，阶段为有界来源对照已完成；4候选独立QA为0/0/1/0，均未准入。控制器状态`CPU_complete_pending_geometry_result`；运行目录`/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43`。空间统计：{"sources": 6, "spatial_candidates": 4, "candidate_scenes": 3, "attempts": 13, "rejects": {"ground_support_gap": 5, "collision_clearance": 2, "ground_fit_unavailable": 2, "size_border_or_ego": 2}, "mask_QA_and_condition_not_done": true, "training_steps": 0, "training_admission": 0}。实例统计：{"protected_depth_order": 2, "insufficient_other_frame_evidence": 1, "instance_identity_or_visibility_uncertain": 1}。没有重复作业；按真实进程/状态断点续跑。
+r44补入显式主B与前置必要关系检查，固定四例的CPU回归提前拒绝3例，旧Q060正控制通过。4个语义测试通过。GT包络只排除不可能的既定任务，不证明实际分割、显露或道路合法；G003仍不能准入。已结束CPU/GPU作业，没有新控制器或定时任务。
 
-当前新训练准入0，50条完整配方未齐，正式A/B/C训练0步；身份分支与完整surfel未启动。GT camera/track/LiDAR明示POC辅助，完整Y仅监督/离线QA，条件仍必须从最终H遮后RGB构造。模型入口保留r21 sam_full_v2，r26裁洞失败不推广。人工verdict空。
+新数据准入0，50条完整配方未齐，正式A/B/C训练0步，身份分支及surfel未启动。旧Q060输入／条件QA2保留，Q046条件QA1，r36过滤未推广。GT相机／轨迹／LiDAR为明示POC辅助；条件只读最终H遮后RGB，Y仅监督／离线QA。人工verdict空。
 
-下一步先修生成入口中camera→A→指定B及显露关系的前置检查，不再扩本次六来源的位置／速度网格。四例独立QA为0/0/1/0，全部拒绝。报告：[r42–r43与组件图](v77/TARGET_PROTECTED_SPACE_FIRST_R42_R43.md)；当前审核页本地`outputs/v77-target-protected-r43/index.html`，旧r38页面保留。
+下一步从明确保护对象与可显露过程共同构造A；保持实际空间和遮后条件质量要求，不追加旧六来源的位置／速度网格，也不把静止B／慢ego这一过程当全部训练配方。先获得跨scene可用条件，再启动同预算模型对照。工程修复不计作真实DELETE增益。
 
-数据盘约44–45GiB可用，用户允许必要时清不重要旧物，本轮未删除。没有新增定时任务。真实DELETE保护车与无车背景两侧跨scene收益未达到，未满足关机条件。继续更新同一[V77-F02](research_failures/entries/V77-F02.md)。
+当前本地审核页`outputs/v77-target-protected-r43/index.html`：4例12视频、360帧全部解码，人工评分空，第三列是灰洞输入而非补景输出。报告及组件图：[r42–r44](v77/TARGET_PROTECTED_SPACE_FIRST_R42_R43.md)。旧r38等历史结果保留。
+
+数据盘约44GiB可用，本轮没有删除文件。真实DELETE保护车与无车背景两侧跨scene收益未达到，未满足关机条件。沿用[V77-F02](research_failures/entries/V77-F02.md)，当前唯一task为WS-V77-TARGET-PROTECTED-20260929。
