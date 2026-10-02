@@ -1,4 +1,4 @@
-"""r7同数据/损失控制：原尺寸训练；第二臂仅扩大既有参数更新范围。"""
+"""原训练核心的最小标签传递修正：每个训练step实际传B并记录宏监督。"""
 from pathlib import Path
 import argparse, json, sys, os, time, random, traceback, functools, fcntl
 import numpy as np
@@ -11,7 +11,7 @@ REPO=Path('/root/autodl-tmp/motion_proj_v77')
 OFFICIAL=Path('/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEditor')
 sys.path.insert(0,str(REPO/'scripts/worldsim_v77/target_protected'))
 from iteration2.driveeditor_contract import deletion_batch
-sys.path.insert(0,str(Path(__file__).parent))
+sys.path.insert(0,str(REPO/'scripts/worldsim_v77/target_protected/iteration7'))
 from audit import contextual,protected_mask
 from checkpoint_contract import complete_training_state
 MODULES='spatial'
@@ -180,7 +180,10 @@ def main(a):
         if step%len(train)==0:random.shuffle(train)
         c=train[step%len(train)];window=windows[c['dataset_id']][(step//len(train))%len(windows[c['dataset_id']])]
         optimizer.zero_grad(set_to_none=True)
-        value=loss(model,prepared[(c['dataset_id'],window)],6201+step)
+        value=loss(model,prepared[(c['dataset_id'],window)],6201+step,protection.get(c['dataset_id']))
+        if c['type'] in ['single_actor','dense_actors']:
+            assert model.last_loss_regions['protected_inside_hole']['latent_pixels']>0, '保护例训练必须实际传入被遮B标签'
+            assert model.last_loss_regions['macro_objective']['present_protected_frames']>0
         if not torch.isfinite(value):raise ValueError('nonfinite loss')
         value.backward()
         if step==0:
@@ -188,7 +191,7 @@ def main(a):
             assert len(gradients)==len(names),(len(gradients),len(names),'trainable gradient missing')
             save_json(out/'backward_probe.json',{'forward_backward_pass':True,'nonzero_finite_gradient_tensors':len(gradients),'peak_allocated_GiB':torch.cuda.max_memory_allocated()/2**30,'peak_reserved_GiB':torch.cuda.max_memory_reserved()/2**30,'seconds_from_load':time.time()-start,'size':a.size})
         norm=float(torch.nn.utils.clip_grad_norm_(params,1.0));optimizer.step()
-        state.update(stage='training',steps=step+1,last_case=c['dataset_id'],last_window=window,loss=float(value.detach()),grad_norm=norm,elapsed_seconds=time.time()-start,peak_allocated_GiB=torch.cuda.max_memory_allocated()/2**30,peak_reserved_GiB=torch.cuda.max_memory_reserved()/2**30)
+        state.update(stage='training',steps=step+1,last_case=c['dataset_id'],last_window=window,loss=float(value.detach()),grad_norm=norm,loss_regions=model.last_loss_regions,elapsed_seconds=time.time()-start,peak_allocated_GiB=torch.cuda.max_memory_allocated()/2**30,peak_reserved_GiB=torch.cuda.max_memory_reserved()/2**30)
         save_json(out/'state.json',state)
         with (out/'steps.jsonl').open('a') as f:f.write(json.dumps(state)+'\n')
         print(json.dumps(state),flush=True)

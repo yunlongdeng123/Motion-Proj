@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-02",
+  "confirmed_engineering_issues": [
+    {
+      "id": "real_target_mask_clipping",
+      "evidence": "mask_batch.py: core=largest(SAM & GT_hull_pad3), write_mask &= target；A022 f0有1314个原SAM像素在模型H外，图上可见车头边缘残留。",
+      "scope": "原SAM不是像素GT；A022车头有视觉支持，其它case的未覆盖SAM不能自动全称漏车。A041全部原SAM被遮仍失败。",
+      "fixed": false,
+      "next": "核准实例mask后保证H及write alpha完整覆盖；GT作提示/一致性证据，避免硬裁真实车身。旧70例冻结产物不改写。"
+    },
+    {
+      "id": "trainable_initialization_rounding",
+      "evidence": "r7/r14/r18的80个原FP32训练张量先转BF16再转回FP32，零步已经变化。",
+      "fixed": true,
+      "validation": "在两组真实80张量上逐值验证FP32原值恢复、冻结参数BF16、梯度可用；无新DriveEditor训练。",
+      "causal_scope": "r20两例四窗零训练对照未复现P019新增车，不能把全部失败归因此项。"
+    },
+    {
+      "id": "duplicate_model_visible_tasks",
+      "evidence": "50train只有46个不同Y/H/条件；11合成验证只有10个。M006/M009的X/Y/H和五臂输出十帧完全相同。",
+      "fixed": "已识别并另报去重统计；未静默删除旧数据或重训。",
+      "metric_scope": "旧验证按case均值/分母变化，按scene等权MAE在本例未变。"
+    }
+  ],
+  "confirmed_data_mismatch": {
+    "train_hole_mean_percent": 1.819742838541667,
+    "real_hole_mean_percent": 5.598292880588109,
+    "train_largest_hole_percent": 5.075751410590278,
+    "A022_hole_mean_percent": 21.57079060872396,
+    "train_edge_frames": 0,
+    "real_edge_frames": 39,
+    "real_frames": 80,
+    "train_shape": "车辆轮廓，bbox fill平均0.814",
+    "real_shape": "矩形，bbox fill=1",
+    "process_counts": {
+      "train": {
+        "cases": 50,
+        "unique_model_visible_tasks": 46,
+        "worlds": 25,
+        "sweep_cases": 4,
+        "sweep_worlds": 3,
+        "static_A_moving_ego_cases": 11,
+        "visibility_transition_cases": 12,
+        "protected_instance_cases": 33,
+        "B_other_frame_cuboid_support_mean": 0.24284537317241875,
+        "B_no_other_frame_proxy_support_cases": 0,
+        "duration_min_max_s": [
+          0.85,
+          0.900005
+        ]
+      },
+      "validation": {
+        "cases": 11,
+        "unique_model_visible_tasks": 10,
+        "worlds": 5,
+        "sweep_cases": 1,
+        "sweep_worlds": 1,
+        "static_A_moving_ego_cases": 4,
+        "visibility_transition_cases": 4,
+        "protected_instance_cases": 10,
+        "B_other_frame_cuboid_support_mean": 0.2376720802759129,
+        "B_no_other_frame_proxy_support_cases": 0,
+        "duration_min_max_s": [
+          0.9,
+          0.9
+        ]
+      }
+    },
+    "causal_scope": "差异是真实统计，不是充分因果；A061洞也超过训练最大值但人眼有收益。"
+  },
+  "passed_contracts": {
+    "actual_frames": 610,
+    "GT_equals_real_RGB": true,
+    "synthetic_RGB_leak_pixels": 0,
+    "masked_X_equals_masked_Y_after_resize": true,
+    "deletion_condition_fields_match": true,
+    "r7_r14_80_updated_finite_tensors": true,
+    "encoder_missing": 0,
+    "encoder_unexpected": 0
+  },
+  "not_established": [
+    "可训练模块选择错误是主因",
+    "补更多scene就会改善",
+    "合成MAE下降意味着不新增车辆",
+    "GT cuboid表面格支持等于真实纹理在其它帧可见"
+  ],
+  "next_priority": [
+    "修真实入口目标覆盖并检查write alpha，先保住完整DELETE定义",
+    "冻结目录时按真实Y/H/模型条件去重，合成与真实H的形状/尺度/截边/时序证据分别对齐",
+    "入口合格后保持模块范围做一次固定对照；新增车与保护车身份必须独立记失败，不用全洞MAE代替"
+  ],
+  "training_iteration_on_hold_by_user": true,
+  "r18_new_eval_windows": 0,
+  "new_training_steps_after_user_review": 0,
+  "shutdown_eligible": false,
+  "human_numeric_scores_inferred": false
+}

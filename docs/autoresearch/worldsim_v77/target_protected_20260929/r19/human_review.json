@@ -1,0 +1,129 @@
+{
+  "origin": "用户本轮消息人工review，原文排序不替换为AI评分",
+  "partial_review": true,
+  "cases": [
+    {
+      "eval_id": "temporal_P006",
+      "scene": "scene-0289",
+      "process": "遮挡扫过保护车",
+      "human_ranking_verbatim": "r14 时间 self attention > 有效 r7 > 原始 DriveEditor",
+      "type": "合成遮挡"
+    },
+    {
+      "eval_id": "temporal_P012",
+      "scene": "scene-0291",
+      "process": "遮挡比例 / 显露变化",
+      "human_ranking_verbatim": "都失败",
+      "type": "合成遮挡"
+    },
+    {
+      "eval_id": "temporal_P019",
+      "scene": "scene-0289",
+      "process": "世界静止A+运动ego",
+      "human_ranking_verbatim": "有效 r7 和 r14 时间 self attention 马路补得比 DriveEditor 好；但 r7 和 r14 无中生有补了一辆车出来，DriveEditor 没有幻觉车",
+      "type": "合成遮挡"
+    },
+    {
+      "eval_id": "synthetic_M007",
+      "scene": "scene-0287",
+      "process": "纯背景",
+      "human_ranking_verbatim": "r14 时间 self attention ≈ 有效 r7 > 原始 DriveEditor",
+      "type": "合成遮挡"
+    },
+    {
+      "eval_id": "synthetic_M006",
+      "scene": "scene-0239",
+      "process": "纯背景",
+      "human_ranking_verbatim": "r14 时间 self attention ≈ 有效 r8 > 原始 DriveEditor",
+      "type": "合成遮挡"
+    },
+    {
+      "eval_id": "synthetic_M009",
+      "scene": "scene-0239",
+      "process": "纯背景",
+      "human_ranking_verbatim": "r14 时间 self attention ≈ 有效 r9 > 原始 DriveEditor（重复 case）",
+      "type": "合成遮挡"
+    },
+    {
+      "eval_id": "A061_w08",
+      "scene": "scene-0931",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "有效 r7 > r14 时间 self attention > 原始 DriveEditor",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A013",
+      "scene": "scene-0345",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "没什么区别",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A048",
+      "scene": "scene-0003",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "没什么区别",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A042",
+      "scene": "scene-0904",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "没什么区别",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A007",
+      "scene": "scene-0781",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "没什么区别",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A034",
+      "scene": "scene-0911",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "没什么区别",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A022",
+      "scene": "scene-0770",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "都失败",
+      "type": "真实DELETE"
+    },
+    {
+      "eval_id": "A041_w10",
+      "scene": "scene-0920",
+      "process": "真实DELETE",
+      "human_ranking_verbatim": "都失败",
+      "type": "真实DELETE"
+    }
+  ],
+  "real_cases": 8,
+  "real_clear_improvement_cases": [
+    "A061_w08"
+  ],
+  "real_no_obvious_difference_cases": [
+    "A013",
+    "A048",
+    "A042",
+    "A007",
+    "A034"
+  ],
+  "real_all_failed_cases": [
+    "A022",
+    "A041_w10"
+  ],
+  "user_reported_hallucination": [
+    "temporal_P019:r7,r14"
+  ],
+  "ambiguous_model_name": {
+    "case": "synthetic_M009",
+    "verbatim": "有效r9",
+    "resolution": "原样保存；r14页面仅base/r7/r8/r10/r14，r9造数阶段无独立微调checkpoint，不自行映射"
+  },
+  "numerical_0_1_2_scores": null,
+  "statistical_significance": null
+}

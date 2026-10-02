@@ -4,7 +4,11 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r16 | 约3秒30真实曝光，来源冻结与过程质量先行；训练未登记、关机条件false | [预案](autoresearch/worldsim_v77/target_protected_20260929/r16/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r20 | 两例四窗零训练舍入对照；未复现P019新增车，停止该工程诊断 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r19 | 610帧合同；GT硬裁漏目标、初始化舍入、4train＋1val重复；CPU修复与人工记录 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r18 | 160步完成／100步保护项，用户要求0新评价窗时停止；权重保留、效果未知 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r17 | 训练未传B，87步工程中止；非有效三项损失对照，全部保留 | [纠正](autoresearch/worldsim_v77/target_protected_20260929/r17/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r16 | 40来源1200曝光；10独立AI2三秒候选、40视频交付；val扫过0、训练0 | [报告](v77/TARGET_PROTECTED_LONG_DATA_R16.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r15 | 相对合法路径，12独立AI2；6train扫过/4world、val扫过0，训练0 | [报告](v77/TARGET_PROTECTED_PATH_PROCESS_R15.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r14 | 同80张量/160步时间更新；新GT改善，真实8DEV无稳定收益，228视频验收 | [报告](v77/TARGET_PROTECTED_TEMPORAL_SCOPE_R14.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r13 | 同r7固定CFG1：10窗完成，P006额外生车/误差增加，真实无跨例收益；60视频交付，不推广 | [报告](v77/TARGET_PROTECTED_SAMPLING_R13.md) · [收口](autoresearch/worldsim_v77/target_protected_20260929/r13/closeout.json) |

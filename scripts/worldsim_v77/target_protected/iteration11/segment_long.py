@@ -2,11 +2,17 @@
 from pathlib import Path
 import sys,os,time,fcntl,importlib.util
 P=Path('/root/autodl-tmp/motion_proj_v77/scripts/worldsim_v77/target_protected');sys.path.insert(0,str(P));sys.path.insert(0,str(P/'iteration9'))
-from temporal_factory import T,read,dump
+import json,ast
+T=Path('/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929')
+def read(p):return json.loads(Path(p).read_text())
+def dump(p,d):
+ p=Path(p);tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');tmp.replace(p)
 from segment_sources import CHECKPOINT,CONFIG
-from iteration5.planning import normalized_masks
+
 import numpy as np,cv2,torch
 from PIL import Image
+# 只执行已有归一化检查函数原AST，避免给SAM2环境引入nuScenes依赖。
+tree=ast.parse((P/'iteration5/planning.py').read_text());fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='normalized_masks');exec(compile(ast.Module(body=[fn],type_ignores=[]),str(P/'iteration5/planning.py'),'exec'))
 O=T/'r16';ROOT=O/'factory'
 
 def main():

@@ -1,0 +1,46 @@
+{
+  "stage": "complete_bounded_engineering_diagnosis",
+  "new_windows": 4,
+  "reused_windows": 6,
+  "new_training_steps": 0,
+  "seed": 42,
+  "steps": 25,
+  "assistant_review": [
+    {
+      "eval_id": "temporal_P019",
+      "review_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "observation": "两个零步舍入臂仍有原模型的灰色轮廓/块状残留，未复现实际r7/r14在道路上新增的深色车辆；新增车不能仅由这次BF16舍入解释。",
+      "temporal_pass": null,
+      "human_verdict": null
+    },
+    {
+      "eval_id": "A061_w08",
+      "review_frames": [
+        5
+      ],
+      "observation": "零步舍入臂固定f5接近原模型；实际训练版有其它道路/边缘变化。用户原文r7>r14>base保留，不把像素差当质量分或将单帧升为时序通过。",
+      "temporal_pass": null,
+      "human_verdict": null
+    }
+  ],
+  "conclusion": "初始化精度偏差已确认并修复；此两例零训练控制不足以将微调后的幻觉/收益归于舍入。停止该精度诊断，不扩seed或继续训练。",
+  "rounding_is_sufficient_cause_of_P019_hallucination": false,
+  "general_image_quality_causality_proven": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02",
+  "automatic_shutdown": false
+}

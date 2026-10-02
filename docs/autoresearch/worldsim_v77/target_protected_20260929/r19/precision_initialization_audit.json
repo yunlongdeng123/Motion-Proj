@@ -1,0 +1,79 @@
+{
+  "scope": "CPU逐张量复现model_init: strict原权重->全模型bf16->训练参数float32",
+  "confirmed_full_precision_not_preserved": true,
+  "cases": {
+    "r7": {
+      "base_checkpoint_dtypes": {
+        "torch.float32": 80
+      },
+      "trainable_tensors_rounded_before_training": 80,
+      "l2_norms": {
+        "base": 514.2989612312066,
+        "quantization": 0.8545759397142607,
+        "learned_after_rounding": 0.9685550906230841,
+        "net_difference": 1.2917793432276212
+      },
+      "relative_to_base_l2": {
+        "quantization": 0.001661632638083592,
+        "learned_after_rounding": 0.001883253056363191,
+        "net_difference": 0.002511728470411771
+      },
+      "max_abs_change": {
+        "quantization": 0.015620708465576172,
+        "learned_after_rounding": 0.0010745339095592499,
+        "net_difference": 0.015845298767089844
+      },
+      "quantization_norm_over_net_update_norm": 0.6615494698800722
+    },
+    "r14": {
+      "base_checkpoint_dtypes": {
+        "torch.float32": 80
+      },
+      "trainable_tensors_rounded_before_training": 80,
+      "l2_norms": {
+        "base": 239.58216994723267,
+        "quantization": 0.3975631327588785,
+        "learned_after_rounding": 0.9407442684590385,
+        "net_difference": 1.0213171633398268
+      },
+      "relative_to_base_l2": {
+        "quantization": 0.001659402003272784,
+        "learned_after_rounding": 0.003926603839785886,
+        "net_difference": 0.004262909729738107
+      },
+      "max_abs_change": {
+        "quantization": 0.0019289255142211914,
+        "learned_after_rounding": 0.001050483901053667,
+        "net_difference": 0.002100646495819092
+      },
+      "quantization_norm_over_net_update_norm": 0.389265104934495
+    },
+    "r18": {
+      "base_checkpoint_dtypes": {
+        "torch.float32": 80
+      },
+      "trainable_tensors_rounded_before_training": 80,
+      "l2_norms": {
+        "base": 239.58216994723267,
+        "quantization": 0.3975631327588785,
+        "learned_after_rounding": 0.9634564938996777,
+        "net_difference": 1.0422073634798574
+      },
+      "relative_to_base_l2": {
+        "quantization": 0.001659402003272784,
+        "learned_after_rounding": 0.004021403154132365,
+        "net_difference": 0.004350104031987859
+      },
+      "max_abs_change": {
+        "quantization": 0.0019289255142211914,
+        "learned_after_rounding": 0.0009824857115745544,
+        "net_difference": 0.0019475817680358887
+      },
+      "quantization_norm_over_net_update_norm": 0.3814626020597696
+    }
+  },
+  "image_quality_causality_proven": false,
+  "new_GPU_forwards": 0,
+  "new_training_steps": 0,
+  "limits": "范数比不是效果损伤百分比；尚未用零步round-only采样判断幻觉因果"
+}

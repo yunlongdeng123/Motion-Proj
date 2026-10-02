@@ -1,0 +1,138 @@
+{
+  "model": "gpt-6-sol",
+  "reasoning_effort": "xhigh",
+  "fast": false,
+  "scope": "仅独立评审r16新10例；逐例实际查看contacts/Lxxx_process.jpg的0/15/29帧真实Y、灰色合成A示意X、实例labels和实际condition。对L001、L003、L009、L010另看三帧原尺寸labels；synthetic_manifest与technical_checks只作身份、位姿及RGB泄漏辅助。三帧视觉结论不认证完整30帧时序；未评模型输出或车漆材质。",
+  "cases": [
+    {
+      "case_id": "L001",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原尺寸可见A轿车始终在道路右侧，尺寸虽先缩后略增但轮廓、接地和灰洞连续；绿色活跃车在A后方被部分遮挡，三帧有可见度变化。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L002",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在路面且离ego有间隔，洞完整覆盖车形；末帧A向画面右侧并变大，绿色受保护车左侧更明显露出，符合显露过程。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L003",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原尺寸确认SUV形A始终贴在道路上，较大尺度对应更近视点，灰洞包住整车；绿色活跃车在后，三帧遮挡范围先增加后略回落，过程可见。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L004",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "SUV形A的大小与位置随三帧连贯变化，仍在路面且不压ego；绿色车从A左缘逐渐显露，前后深度遮挡与洞形合理。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L005",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "无活跃受保护车的静止A对照例；A在桥面右侧车道而非护栏上，三帧随ego视角向左移并略变大，车形与洞完整。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L006",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "静止A位于桥面右车道，轮廓贴地且灰洞覆盖；随ego接近逐渐变大、向左移，未压护栏、ego或其他实车。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L007",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "A在桥面车行区域，三帧车形与洞稳定，随ego视角合理变大并左移；此例无受保护实例，未见不当遮挡或压ego。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L008",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "SUV形A始终落在桥面右车道，灰洞完整且不碰护栏；三帧视角位移与轻微尺度增长可见，无受保护车的背景对照语义成立。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L009",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原尺寸确认红A在绿色活跃车前、位于道路，灰洞完整；A覆盖区域从绿色车右下方逐渐扫到左下方，虽面积变化较小，横扫车身可见。",
+      "human_verdict": null,
+      "temporal_claim": false
+    },
+    {
+      "case_id": "L010",
+      "reviewed_frames": [
+        0,
+        15,
+        29
+      ],
+      "assistant_score": 2,
+      "decision": "pass",
+      "reason": "原尺寸可见SUV形A从绿色活跃车中下部向左扫离，绿色车右侧露出增多；A在道路且洞与轮廓一致，未见深度或尺度冲突。",
+      "human_verdict": null,
+      "temporal_claim": false
+    }
+  ]
+}
