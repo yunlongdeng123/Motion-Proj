@@ -11,6 +11,7 @@ import cv2
 import numpy as np
 import torch
 from PIL import Image, ImageDraw
+from mask_contract import prepare_masks
 
 
 def read(path):
@@ -43,6 +44,7 @@ def main():
     p.add_argument("--root", type=Path, required=True)
     p.add_argument("--ready-only", action="store_true")
     p.add_argument("--clip-id")
+    p.add_argument("--mask-policy", choices=["sam_full_v2", "legacy_gt_clip"], default="sam_full_v2")
     args = p.parse_args()
     root = args.root
     if not args.ready_only:
@@ -89,6 +91,9 @@ def main():
         "state": "running", "pid": os.getpid(), "prompt_policy_revision": "p2_uniform_instance_separability_before_GPU",
         "completed": [], "human_verdict": None}
     assert state["prompt_policy_revision"] == "p2_uniform_instance_separability_before_GPU"
+    if state_file.exists() and state.get("mask_policy_revision", "legacy_gt_clip") != args.mask_policy:
+        raise RuntimeError("旧run的mask规则不同；新规则必须另建输出目录，不能覆盖旧70例")
+    state["mask_policy_revision"] = args.mask_policy
     done = {x["clip_id"] for x in state["completed"]}
     write(state_file, state)
     with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
@@ -141,6 +146,10 @@ def main():
                 alpha = fade * fade * (3 - 2 * fade)
                 alpha[write_mask] = 1
                 alpha[protect] = 0
+                coverage = {}
+                if args.mask_policy == "sam_full_v2":
+                    fixed, coverage = prepare_masks(raw[i], target, neighbor_union)
+                    core, write_mask, model, protect, alpha = [fixed[k] for k in ["core", "write_mask", "model_mask", "protect", "alpha"]]
                 arrays = {"sam": raw[i] * 255, "core": core * 255, "write_mask": write_mask * 255,
                           "model_mask": model * 255, "protect": protect * 255, "alpha": np.rint(alpha * 255)}
                 for folder, values in arrays.items():
@@ -151,7 +160,7 @@ def main():
                               "sam_other_GT_pixels": int((raw[i] & neighbor_union).sum()),
                               "write_other_GT_pixels": int((write_mask & neighbor_union).sum()),
                               "gt_target_visible": fr["target"] is not None,
-                              "sam_outside_gt_pixels": int((raw[i] & ~target).sum())})
+                              "sam_outside_gt_pixels": int((raw[i] & ~target).sum()), "coverage_contract": coverage})
             write(dest / "mask_stats.json", stats)
             review = Image.open(rgb_dir / f"{prompt:05d}.jpg").convert("RGB")
             draw = ImageDraw.Draw(review)

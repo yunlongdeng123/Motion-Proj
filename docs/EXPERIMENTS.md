@@ -4,6 +4,9 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r23 | 最多80个隔离scene长窗来源；50条Temporal reveal pilot的来源准备，训练0 | [预案](autoresearch/worldsim_v77/target_protected_20260929/r23/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r22 | 遮后输入的actor-state合法性／可用性探针；不训练、不启surfel | [预案](autoresearch/worldsim_v77/target_protected_20260929/r22/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r21 | 入口修复、去重与单次20/30帧工程探针；简单actor-state先于surfel | [预案](autoresearch/worldsim_v77/target_protected_20260929/r21/plan.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r20 | 两例四窗零训练舍入对照；未复现P019新增车，停止该工程诊断 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r19 | 610帧合同；GT硬裁漏目标、初始化舍入、4train＋1val重复；CPU修复与人工记录 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r18 | 160步完成／100步保护项，用户要求0新评价窗时停止；权重保留、效果未知 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |

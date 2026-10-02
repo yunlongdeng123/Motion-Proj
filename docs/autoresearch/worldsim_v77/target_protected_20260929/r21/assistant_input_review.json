@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "case": "A022",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "已检查固定首/中/尾/提示帧。选中前景大车；旧GT边界裁掉车头，新H覆盖原SAM。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A041_w10",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "首窗原目标未入画；有效10–19窗口选中从右侧进入的同一车。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A013",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "固定帧选中前景深色小车，后方白色巴士为保留对象；未发现把巴士整体选中。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A048",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "固定帧选中左侧截边白车；保留后方车辆，覆盖扩大主要补齐原SAM下部。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A007",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "选中较小目标并受立柱影响；固定帧可辨同一车，细小边缘仍需视频人工判定。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A034",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "固定帧为同一停放车辆；空目标末帧零写回。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A042",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "uncertain_at_f0",
+      "notes": "f0目标被立柱遮挡，碎片是否全部属于目标仍不确定；后续固定帧同车较清楚。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    },
+    {
+      "case": "A061_w08",
+      "reviewer": "primary_agent",
+      "basis": "saved_input_contact_fixed_frames_only",
+      "frames": "0,12,25,and_existing_prompt",
+      "identity_observation": "consistent_in_reviewed_frames",
+      "notes": "有效8–17窗口选中左侧进入的车，与后方白车分开。",
+      "human_verdict": null,
+      "all_frame_mask_correctness_claim": false
+    }
+  ],
+  "not_human_or_full_video_verdict": true
+}

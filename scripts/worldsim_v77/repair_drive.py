@@ -11,17 +11,23 @@ DE=pathlib.Path('/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEd
 os.chdir(DE);sys.path.insert(0,str(DE))
 from interactive_gui import GradioShow,load_model,set_seed
 class Engine(GradioShow):
- def __init__(self):
-  self.out_size=(576,1024);self.out_size_3d=(576,576);self.num_frames=10;self.num_frames_3d=21;self.device='cuda'
+ def __init__(self,num_frames=10,out_size=(576,1024),num_steps=25):
+  if num_frames<1 or any(s%8 for s in out_size):raise ValueError('帧数必须为正，尺寸须为8倍数')
+  self.out_size=tuple(out_size);self.out_size_3d=(576,576);self.num_frames=num_frames;self.num_frames_3d=21;self.device='cuda'
   self.to_tensor=transforms.ToTensor();self.transform_img=transforms.Compose([self.to_tensor,transforms.Lambda(lambda x:x*2-1)])
-  self.transform_mask=transforms.Compose([transforms.Resize([72,128],interpolation=InterpolationMode.NEAREST),transforms.Lambda(lambda x:x*2-1)])
-  self.previous_segment_last_frame=None;self.im_result=[];self.model=load_model('configs/sample.yaml','cuda',num_steps=25,num_frames=10,verbose=True)
+  self.transform_mask=transforms.Compose([transforms.Resize([s//8 for s in self.out_size],interpolation=InterpolationMode.NEAREST),transforms.Lambda(lambda x:x*2-1)])
+  self.previous_segment_last_frame=None;self.masked_condition=None;self.im_result=[];self.model=load_model('configs/sample.yaml','cuda',num_steps=num_steps,num_frames=num_frames,verbose=True)
  def get_deletion(self):
+  if len(self.im)!=self.num_frames or len(self.masks)!=self.num_frames:raise ValueError('整段输入帧数必须与单次模型窗口一致')
   cond=[]
   for im,m in zip(self.im,self.masks):
+   if im.shape[:2]!=self.out_size or m.shape!=self.out_size:raise ValueError('先擦除再resize后传入同尺寸条件，禁止隐式缩放原始X')
    c=self.to_tensor(im.copy())*2-1;c[:,m]=0;cond.append(c)
+  if self.masked_condition is not None:
+   if tuple(self.masked_condition.shape)!=(self.num_frames,3,*self.out_size):raise ValueError('显式遮后条件shape不一致')
+   cond=list(self.masked_condition.detach().cpu())
   mask=self.transform_mask(torch.from_numpy(np.stack(self.masks).astype('float32'))[:,None])
-  return (torch.stack(cond),torch.ones(1,3,576,576),mask,torch.zeros_like(mask),torch.zeros(21,1),torch.zeros(21,1),torch.zeros(21,1),[{} for _ in cond],torch.ones(3,224,224),torch.ones(10,6,576,1024)*-1,torch.zeros(10),torch.zeros(10))
+  return (torch.stack(cond),torch.ones(1,3,576,576),mask,torch.zeros_like(mask),torch.zeros(21,1),torch.zeros(21,1),torch.zeros(21,1),[{} for _ in cond],torch.ones(3,224,224),torch.full((self.num_frames,6,*self.out_size),-1.),torch.zeros(self.num_frames),torch.zeros(self.num_frames))
 def main():
  lock=open(ROOT/'drive.lock','a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
  assert (ROOT/'evidence_summary.json').exists();assert not (ROOT/'drive_state.json').exists()
