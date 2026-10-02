@@ -27,7 +27,9 @@ def main():
     for run,names in files.items():
         (E/run).mkdir(exist_ok=True,parents=True)
         for name in names:
-            if (T/run/name).exists():shutil.copy2(T/run/name,E/run/name)
+            if (T/run/name).exists():
+                if name.endswith('.json'):(E/run/name).write_text((T/run/name).read_text())
+                else:shutil.copy2(T/run/name,E/run/name)
         close={'task_id':'WS-V77-TARGET-PROTECTED-20260929','run_id':run,'stage':'in_progress' if run=='r40' and not paired else 'bounded_control_complete',
             'new_knowledge':knowledge[run],'raw_evidence':str(T/run),'host':'wm-3090-1001','training_steps':0,
             'failure_ledger_refs':['V77-F02'],'failure_ledger_delta':'updated V77-F02: '+knowledge[run],

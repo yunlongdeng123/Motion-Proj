@@ -1,0 +1,41 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r43",
+  "phase": "replace_distance_proxy_with_actual_space_check",
+  "policy": {
+    "B_world_max_displacement_m": 0.5,
+    "all8_visibility": "4",
+    "min_B_box_wh": [
+      100,
+      60
+    ],
+    "max_front_box_overlap": 0.1,
+    "max_ego_camera_travel_m": [
+      1.0,
+      8.0
+    ],
+    "min_B_depth_m": null,
+    "new_scene_only": true,
+    "max_sources": 6,
+    "max_per_scene": 1,
+    "frames": 30,
+    "split_seed": 4301,
+    "sampling_error_ms": 55,
+    "max_exposure_gap_ms": 180,
+    "class": "vehicle.car",
+    "RGB_or_generation_outputs_used": false,
+    "depth_proxy_replacement": "actual all-frame map/LiDAR/ego/collision/size checks before SAM; no geometric gate weakened"
+  },
+  "input_role": "official train metadata, GT poses and LiDAR POC; real Y remains QA/supervision only",
+  "change": "remove heuristic B minimum16m from source prefilter; retain clear/static-B, ego motion and all actual A-space gates",
+  "bounded_factory": "max6 new scenes, fixed max24 lane centers, only world-static A; no speed/offset grids",
+  "infrastructure_change": "world/map/ground/collision feasibility before expensive Y-SAM; full instance QA still mandatory",
+  "resource_budget": "CPU source extraction and spatial preflight only; selected files only, require30GiB free; GPU separate stage",
+  "stop": "once fixed six-source cohort evaluated, record all denominators; no threshold tuning or admission from map checks alone",
+  "training_steps": 0,
+  "training_admission": 0,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

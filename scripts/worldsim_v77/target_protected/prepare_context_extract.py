@@ -51,7 +51,9 @@ def context(root,meta):
     dump(root/'required_files.json',sorted(files))
     print('CONTEXT',len(result),'FILES',len(files),flush=True)
 
-def extract(root,pub):
+def extract(root,pub,allowed_shards=None,max_workers=1):
+    from concurrent.futures import ThreadPoolExecutor,as_completed
+    assert isinstance(max_workers,int) and 1<=max_workers<=2
     from prepare_source_pool import sharding
     names=read(root/'required_files.json');maps=sharding()
     groups=defaultdict(list)
@@ -59,24 +61,39 @@ def extract(root,pub):
         assert not Path(n).is_absolute() and '..' not in Path(n).parts and n.startswith(('samples/','sweeps/'))
         shards=maps.get(Path(n).name.split('__')[0],set());assert shards,n
         for sh in shards:groups[sh].append(n)
-    assert len(groups)<=2, list(groups)
+    if allowed_shards is None:
+        assert len(groups)<=2, list(groups)
+    else:
+        allowed=set(allowed_shards)
+        assert allowed and allowed <= {f'{i:02}' for i in range(1,11)},sorted(allowed)
+        assert set(groups)<=allowed,{'requested':sorted(groups),'frozen_allowed':sorted(allowed)}
     stpath=root/'extract_state.json'
     state=read(stpath) if stpath.exists() else {'state':'running','pid':os.getpid(),'started_unix':time.time(),'shards':[]}
+    state.update(pid=os.getpid(),max_archive_readers=max_workers)
+    state.pop('current_shard',None);state.pop('requested_count',None)
     (root/'member_lists').mkdir(exist_ok=True)
     (root/'rgb').mkdir(exist_ok=True)
     complete={r['shard'] for r in state['shards']}
-    for sh,files in sorted(groups.items()):
-        if sh in complete:continue
+    pending=[(sh,files) for sh,files in sorted(groups.items()) if sh not in complete]
+    def extract_one(sh,files):
         request=root/'member_lists'/f'{sh}.txt';request.write_text('\n'.join(files)+'\n')
-        state.update(state='extracting',current_shard=sh,requested_count=len(files),updated_unix=time.time())
-        dump(stpath,state);print('EXTRACT_START',sh,len(files),flush=True)
+        print('EXTRACT_START',sh,len(files),flush=True)
         start=time.monotonic()
         dest=root/'by_shard'/sh;dest.mkdir(parents=True,exist_ok=True)
         log=root/f'extract_{sh}.stderr.log'
         with log.open('w') as err:
             proc=subprocess.run(['tar','-xzf',str(pub/f'v1.0-trainval{sh}_blobs.tgz'),'-C',str(dest),'--no-same-owner','--skip-old-files','-T',str(request)],stderr=err,stdout=subprocess.DEVNULL)
         row={'shard':sh,'seconds':round(time.monotonic()-start,2),'returncode':proc.returncode,'requested':len(files),'stderr':str(log)}
-        state['shards'].append(row);dump(stpath,state);print('EXTRACT_END',row,flush=True)
+        print('EXTRACT_END',row,flush=True)
+        return row
+    if pending:
+        state.update(state='extracting',pending_shards=[sh for sh,_ in pending],updated_unix=time.time())
+        dump(stpath,state)
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures=[pool.submit(extract_one,sh,files) for sh,files in pending]
+            for future in as_completed(futures):
+                row=future.result();state['shards'].append(row);state['shards'].sort(key=lambda r:r['shard'])
+                state['pending_shards'].remove(row['shard']);state.update(updated_unix=time.time());dump(stpath,state)
     from PIL import Image
     found=[];missing=[];bad=[]
     for n in names:

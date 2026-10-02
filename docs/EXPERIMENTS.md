@@ -4,6 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r43 | 取消固定16m距离代理后6个新scene满足元数据过程；保留全部实际空间门槛并前置到SAM之前；有界来源对照已完成；4候选独立QA为0/0/1/0，均未准入；新训练0 | [记录](autoresearch/worldsim_v77/target_protected_20260929/r43/progress.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r42 | 取消每scene前三截断后440→612窗口；原440及r41过滤逐条重现，但固定过程筛选仍0来源；停止将截断作为主因；新训练0 | [记录](autoresearch/worldsim_v77/target_protected_20260929/r42/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r41 | 旧440候选池中静止清楚B的7条可解析窗口，相机三秒行程均不足1m；固定视差过程筛选0来源，不提RGB/不放宽阈值；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r41/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r40 | 完成固定23例提示帧对照：{"nonvehicle_or_incomplete_protection": 8, "instance_identity_or_visibility_uncertain": 6, "insufficient_actual_occlusion": 1, "insufficient_other_frame_evidence": 2, "static_foreground": 1, "ordinary_background": 3, "actual_size": 2}；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r40/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r39 | 真实过去2秒位姿作A的20次候选尝试，2条空间可行，分别缺完整几何/其他帧证据，0准入；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r39/closeout.json) |

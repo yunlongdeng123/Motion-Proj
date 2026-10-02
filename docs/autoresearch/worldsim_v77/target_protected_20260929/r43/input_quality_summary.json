@@ -1,0 +1,88 @@
+{
+  "counts": {
+    "protected_depth_order": 2,
+    "insufficient_other_frame_evidence": 1,
+    "instance_identity_or_visibility_uncertain": 1
+  },
+  "cases": [
+    {
+      "case_id": "G001",
+      "source_id": "W015",
+      "scene": "scene-0349",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "protected_depth_order",
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "G002",
+      "source_id": "W015",
+      "scene": "scene-0349",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "protected_depth_order",
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "G003",
+      "source_id": "W047",
+      "scene": "scene-0533",
+      "split": "validation",
+      "technical_candidate": false,
+      "reason": "insufficient_other_frame_evidence",
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "G004",
+      "source_id": "W087",
+      "scene": "scene-0991",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "4608a6377aa144008db3e2e0311a0d1d",
+            "640598fb92f8408e89d8399f898ebafa"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.8258208124652198
+        },
+        {
+          "instances": [
+            "47805e823de24ea5a6b6d13014058573",
+            "5af1f9f4a0cc4f018b9435c9c607468a"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.8723404255319149
+        },
+        {
+          "instances": [
+            "7b7f21d8f45d42f198731026f07f486a",
+            "d7418eb4796844018c9998be86258011"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.6376440460947503
+        }
+      ],
+      "scope_flags": [
+        {
+          "instance": "47805e823de24ea5a6b6d13014058573",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        },
+        {
+          "instance": "5af1f9f4a0cc4f018b9435c9c607468a",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    }
+  ],
+  "full_evidence": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/instance_quality.json",
+  "training_admission": 0,
+  "human_verdict": null
+}

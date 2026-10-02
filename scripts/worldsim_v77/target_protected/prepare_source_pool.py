@@ -87,7 +87,9 @@ def sharding():
                 by_log[Path(n).name.split('__')[0]].add(shard)
     return by_log
 
-def make_index(meta, root):
+def make_index(meta, root, max_per_scene=3):
+    if max_per_scene is not None and max_per_scene < 1:
+        raise ValueError('max_per_scene必须为正整数或None')
     scenes = [s for s in read(meta/'scene.json') if s['name'] in train and s['name'] not in EXPOSED
               and not any(k in s['description'].lower() for k in ['night', 'rain', 'dark'])]
     sc = {s['token']: s for s in scenes}
@@ -173,7 +175,7 @@ def make_index(meta, root):
                     'anchor_rgb':datum['filename'],'anchor_sample_data_token':datum['token']})
         # 每scene最多3个预案，优先完整可辨和有多个protected候选的相机。
         by_scene.sort(key=lambda c:(-len(c['actors']),c['actors'][0]['max_front_box_overlap'],abs(c['actors'][0]['anchor_projection']['area_frac']-.028),c['start_keyframe'],c['camera']))
-        candidates.extend(by_scene[:3])
+        candidates.extend(by_scene if max_per_scene is None else by_scene[:max_per_scene])
         if si%60==0:print('SCENES_SCAN',si,'CANDIDATES',len(candidates),flush=True)
     result={'task_id':TASK,'run_id':'r1','scene_count':len(scenes),'candidate_count':len(candidates), 'candidates':candidates}
     dump(root/'candidate_pool.json',result)

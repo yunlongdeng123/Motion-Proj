@@ -1,0 +1,44 @@
+{
+  "review_scope": "仅审r43 G001–G004。逐例查看全部30帧三列联系表，并从真实Y、plan、input视频抽原生f0/f15/f29核对；Y仅作离线质检，灰洞不是模型输出。未运行模型、训练或更改生成器。",
+  "cases": [
+    {
+      "case_id": "G001",
+      "assistant_grade": 0,
+      "usable_for_next_legal_condition_build": false,
+      "reason": "绿色B是近处白色SUV，紫洞实质擦掉其右半部；但黄色A的车体更小、接地点更高，视觉上在白车之后，却被画在白车前面，camera→A→B顺序不成立。f0、f15、f29均如此，30帧平顺不改变深度错误；右侧驶来的深色车并非可替代的同一B。",
+      "reviewed_frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+      "native_resolution_frames": [0, 15, 29],
+      "human_verdict": null
+    },
+    {
+      "case_id": "G002",
+      "assistant_grade": 0,
+      "usable_for_next_legal_condition_build": false,
+      "reason": "黄色A和实际灰洞一直位于绿色白色SUV的右侧，白车基本未被遮住；早期洞反而压到向相机驶来的右侧深色轿车的边缘，随后该车离开，洞仍留在车道中间。无法建立A挡住指定绿色B的目标关系，也不能用右侧移动邻车或远处小车替换B身份。洞覆盖A、位置连续，但不是所需保护车恢复样本。",
+      "reviewed_frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+      "native_resolution_frames": [0, 15, 29],
+      "human_verdict": null
+    },
+    {
+      "case_id": "G003",
+      "assistant_grade": 1,
+      "usable_for_next_legal_condition_build": false,
+      "reason": "黄色A在交叉口斜纹区域前景，紫洞覆盖它及后方绿色深色轿车的大部，空间投影和30帧尺度变化尚可理解，未见明确串到行人。但绿色B是路边同一辆静止轿车，随着小幅ego变化始终落在相近洞位；三段联系表和原生f0/f15/f29看不到被遮车身在其他帧充分露出的互补视角。蓝色邻车提供不了同一B的真实表面依据。且A停在斜纹禁停区域，落点仍有疑虑。仅凭其可见轮廓和几何平滑不能将洞内未知当成已观测车体，故暂不进入合法条件构建。",
+      "reviewed_frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+      "native_resolution_frames": [0, 15, 29],
+      "human_verdict": null
+    },
+    {
+      "case_id": "G004",
+      "assistant_grade": 0,
+      "usable_for_next_legal_condition_build": false,
+      "reason": "绿色来源B是随ego接近而逐渐放大的左侧银色轿车；黄色A和灰洞却固定在更远的中间车道，f0/f15/f29及全段均与该B分离，未真正遮住要恢复的车。洞主要抹掉车道箭头/路面，并接近多辆蓝框远车，无法确认其中哪辆才是同一受挡B；A的尺度、深度也不足以位于近处银车之前。身份和目标遮挡关系不成立。",
+      "reviewed_frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+      "native_resolution_frames": [0, 15, 29],
+      "human_verdict": null
+    }
+  ],
+  "technical_rejections_unresolved": true,
+  "training_admission": 0,
+  "human_verdict": null
+}
