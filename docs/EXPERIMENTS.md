@@ -4,7 +4,9 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r28 | 原30scene/73条未核验实例候选补标签；同位置/速度/阈值，Y与遮后X隔离，未训练 | [登记](autoresearch/worldsim_v77/target_protected_20260929/r28/run.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r30 | 同87轨迹20帧质量控制，仅增1未准入候选，不全局推广 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r30/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r29 | Q060最终H遮后合法状态，30帧独立条件QA2；训练0步 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r29/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r28 | 固定87候选补实例标签，1条输入QA2；修复首因与位姿元数据 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r28/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r27 | 43条车道长度拒绝的拓扑/观测地面对照；实际轮廓仍遇未核验实例，训练0 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r26 | 8真实DEV×2臂；可见洞裁减导致A048/A034/A061退化，不推广，48视频验证 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) · [固定帧观察](autoresearch/worldsim_v77/target_protected_20260929/r26/assistant_output_review.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r25 | 3例输入90帧合同与独立AI2；不等于下游通过，12视频验证 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) |

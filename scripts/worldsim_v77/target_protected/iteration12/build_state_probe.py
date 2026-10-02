@@ -14,7 +14,9 @@ T=Path('/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929');O=
 def read(p):return json.loads(p.read_text())
 def dump(p,d):p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
 
-def main(ground_patches=False):
+def main(ground_patches=False,run_root=O,source_root=ROOT,geometry_factory=geometry):
+    # r22默认不变；新候选显式传入来源和run，避免暗用旧数据。
+    O=run_root;ROOT=source_root;geometry=geometry_factory
     cv2.setNumThreads(2);g=geometry();summary=[]
     assert read(O/'segmentation_state.json')['stage']=='complete_pending_identity_review'
     jobs=read(O/'observed_queue.json')['jobs']

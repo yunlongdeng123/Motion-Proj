@@ -82,7 +82,8 @@ def prepare():
                     for i,objects in enumerate(g.obstacles[sid]):
                         ob=next((v for v in objects if v['instance_token']==tok),None)
                         if ob is None or ob['_projection'] is None:
-                            annotation.append(None);boxes.append(None);quality_areas.append(0);visible_areas.append(0);continue
+                            # 无二维投影不等于无三维位姿；保留已知轨迹及其不确定标记。
+                            annotation.append(clean(ob) if ob is not None else None);boxes.append(None);quality_areas.append(0);visible_areas.append(0);continue
                         pr=ob['_projection'];bb=pr['box'];boxes.append(bb.tolist());annotation.append(clean(ob))
                         x0,y0,x1,y1=roi(bb)
                         quality_areas.append(max(0,x1-x0)*max(0,y1-y0))

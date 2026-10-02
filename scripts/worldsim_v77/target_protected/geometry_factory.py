@@ -66,7 +66,8 @@ class Geometry:
         for f in c['frames']:
             t=f['timestamp'];i=bisect.bisect_right(stamps,t);lo,hi=bytime[i-1:i+1];frac=(t-stamps[i-1])/(stamps[i]-stamps[i-1])
             obs=[]
-            for tok in lo.keys()|hi.keys():
+            # 顺序固定，避免不同进程给同一候选记录不同的首个拒绝原因。
+            for tok in sorted(lo.keys()|hi.keys()):
                 if tok in lo and tok in hi:
                     a,b=lo[tok],hi[tok];obj={'instance_token':tok,'category':a['category'],
                         'translation':((1-frac)*np.array(a['translation'])+frac*np.array(b['translation'])).tolist(),

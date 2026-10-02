@@ -1,0 +1,18 @@
+{
+  "case_id": "Q060",
+  "source_id": "N171",
+  "scene": "scene-0256",
+  "condition_assistant_grade": 2,
+  "single_case_condition_usable": true,
+  "visible_blocker_for_later_training_candidate": false,
+  "human_verdict": null,
+  "review_scope": "仅复核Q060_identity_00_14.jpg、Q060_identity_15_29.jpg和Q060_state.jpg所示30帧；Y列只作独立评价参照。",
+  "findings": {
+    "identity_and_visible_SAM": "f0–f29绿轮廓持续落在右侧同一辆灰色小箱车，随最终H增遮由较完整后箱逐渐只剩上沿和左缘；没有看到明显跳到左侧大货车、道路或树木，也没有在遮后X中画出完整被挡车身。",
+    "projection_identity_and_shape": "投影F一直位于该小箱车位置，尺度与位置变化连续，呈稀疏的箱车局部面/轮廓；未见明显错身份、整片道路贴上车身或车色跨车混合。局部颗粒和代理面形状不能当成真实完整纹理。",
+    "unknown_and_background": "状态图中O主要集中在B附近、N只是稀疏近地线状落点，大片孔洞仍为U；没有看到把未知宣称为完整车辆或连续已知路面。F的小车形投影是局部正证据，不能按整车已恢复解读。",
+    "metric_context": "评价脚本相对近似Y-SAM给出遮后SAM precision 99.52%、recall 97.97%，H内O precision 95.30%、隐藏B覆盖61.26%，N占H 4.85%、N压B为0、U占H 87.21%。这些数值与可视检查相符，但Y-SAM不是人工像素GT，cuboid局部面代理也不是surfel。"
+  },
+  "decision": "这一个样本的身份跟踪与稀疏条件可用于后续训练候选准备；在所给30帧条带中没有发现阻止单例进入候选的可见问题。",
+  "boundary": "2分只针对Q060合法条件的单例可用性，不是训练准入、完整B纹理恢复、DELETE模型增益或50条数据配方完成的结论；大量U必须继续保持未知。"
+}

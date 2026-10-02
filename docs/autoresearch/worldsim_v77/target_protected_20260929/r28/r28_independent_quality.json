@@ -1,0 +1,18 @@
+{
+  "case_id": "Q060",
+  "source_id": "N171",
+  "scene": "scene-0256",
+  "assistant_grade": 2,
+  "human_verdict": null,
+  "usable_for_next_legal_condition_build": true,
+  "training_admission": false,
+  "basis": {
+    "A_shape_position_scale_grounding": "f0/f15/f29黄A均呈车形，位于右侧可行驶道路，底边接近路面；随视角推进由小变大并逐步靠近B，未见明显浮空、尺度突变或压到ego。",
+    "B_identity_and_Y_SAM": "绿轮廓在三帧持续围住左侧大货车右方同一辆较小的灰色箱车/货车可见部分，未见明显串到大货车、树或路面。仅凭三个抽帧不能证明全30帧Y-SAM从未串物体。",
+    "occlusion_and_other_frame_evidence": "最终H由f0轻遮B发展为f29遮其大部，画面仍保留同一B的可见上部/侧缘；质量记录的H框面遮挡比例约11.7%至65.0%，其他帧cuboid格支持均值81.4%。这是几何代理而非真实纹理已被观测的证明；早期f0隐藏格支持仅约7.4%，不应强行补成已知。",
+    "mask_scope": "r21矩形H完整容纳A并额外遮住B的部分原本可见边缘及周围路面，尤其后段条件会更稀疏；三帧未见明显遮到左侧大货车、行人或路侧围挡等另一主体。保留此矩形入口应在后续条件中把额外遮挡当未知。",
+    "sampled_temporal_consistency": "三张抽帧的A大小、位置和B遮挡变化方向一致，未见明显跳变；不能据此认证中间27帧的SAM身份、孔洞轨迹或视觉稳定性。"
+  },
+  "decision": "可作为下一步合法条件构建的候选；2分仅针对这次样本内容与输入几何，不等于已准入训练或DELETE收益。",
+  "still_missing": "在训练前还需核对全30帧B实例身份与实际可见RGB局部面能否对应晚期被遮面，并检查条件产物将无证据区域保留为未知；自动cuboid支持率不能替代这两项。"
+}
