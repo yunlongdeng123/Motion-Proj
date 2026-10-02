@@ -16,11 +16,7 @@ from build_pairs import runlen
 
 class ParkingGeometry(Geometry):
     def __init__(self,root):
-        super().__init__(root)
-        raw=read(self.root/'maps/expansion/boston-seaport.json');nodes={n['token']:(n['x'],n['y']) for n in raw['node']}
-        polys={p['token']:Polygon([nodes[t] for t in p['exterior_node_tokens']],[[nodes[t] for t in h['node_tokens']] for h in p['holes']]) for p in raw['polygon']}
-        tokens={t for r in raw['drivable_area'] for t in r['polygon_tokens']}|{r['polygon_token'] for r in raw.get('carpark_area',[])}
-        self.road=prep(unary_union([polys[t] for t in tokens]).buffer(.02))
+        super().__init__(root,include_parking=True)
         self.cache=O/'asset_geometry';self.cache.mkdir(exist_ok=True)
         rgb=self.cache/'rgb'
         if not rgb.exists():rgb.symlink_to((root/'rgb').resolve(),target_is_directory=True)

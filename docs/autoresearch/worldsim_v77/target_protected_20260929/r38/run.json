@@ -1,0 +1,67 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r38",
+  "phase": "fresh_source_fixed_lane_reveal",
+  "source_run": "r37",
+  "sources": [
+    "F001",
+    "F004",
+    "F005",
+    "F006",
+    "F007",
+    "F008",
+    "F009",
+    "F010",
+    "F011",
+    "F012",
+    "F013",
+    "F014",
+    "F016",
+    "F017",
+    "F018"
+  ],
+  "source_split_unchanged": true,
+  "single_change_vs_existing_factory": "new physical-space source cohort, proper location map; r32 role fix retained",
+  "trajectory_policy": {
+    "id": "lane_reveal_v1",
+    "max_midpoint_positions": 24,
+    "separation_m": 3.0,
+    "speeds_mps": [
+      0.0,
+      3.0,
+      6.0
+    ],
+    "lane_sample_m": 1.0,
+    "map_radius_m": 40.0,
+    "max_candidates_per_family_per_source": 2,
+    "visible_box_fraction_min": 0.6,
+    "GT_clearance_m": 0.3,
+    "support_distance_m": 2.5,
+    "revealed_surface_support_min": 0.5,
+    "minimum_occlusion_range": 0.15,
+    "model_mask": "sam_full_v2 rectangle around silhouette; write silhouette separate",
+    "split_shape": {
+      "train": "sedan",
+      "validation": "suv"
+    },
+    "quality_only": true,
+    "condition_builder_can_read_Y": false,
+    "upstream": "https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/map_expansion/map_api.py"
+  },
+  "max_proposals_per_source": 72,
+  "quality_reveal_policy": "primary_plus_preserved",
+  "selection": "all spatially valid trajectories, semantic keys frozen before extra Y-SAM; no first-rejection selector",
+  "instance_labels": "all GT envelopes touched by final H; missing/empty/overlapping labels quarantine rather than assume background",
+  "Y_role": "offline QA and supervision only; prospective method conditions must reread final-H-erased RGB",
+  "review_selection": "at most two per scene, prefer a protected reveal and one background; deterministic lane order; include rejected candidates in counts",
+  "quality_gate": "independent sampled-frame input QA2 then condition QA2; human verdict stays null",
+  "GT_camera_track_LiDAR": "declared POC auxiliaries",
+  "frames": 30,
+  "training_steps": 0,
+  "surfel": false,
+  "stop": "one fixed max24 positions x 0/3/6mps per source; no additional offset/speed grids on this cohort",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

@@ -49,7 +49,7 @@ def main(ground_patches=False,run_root=O,source_root=ROOT,geometry_factory=geome
             pts=pts[np.linalg.norm(pts[:,:2]-cam[:2],axis=1)<40]
             clouds[datum['token']]=pts
         full=np.concatenate(list(clouds.values())) if clouds else np.empty((0,3))
-        road=full[[g.road.covers(Point(p[:2])) for p in full]] if len(full) else full
+        road=full[[g.road_for(sid).covers(Point(p[:2])) for p in full]] if len(full) else full
         plane=None;plane_info={'input_scans':len(available),'window_only':True,'pass':False}
         if len(road)>=50:
             bins=np.floor(road[:,:2]/.5).astype(int);order=np.lexsort((road[:,2],bins[:,1],bins[:,0]));b=bins[order];keep=np.r_[True,np.any(b[1:]!=b[:-1],axis=1)];low=road[order[keep]]

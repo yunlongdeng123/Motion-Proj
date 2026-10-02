@@ -1,13 +1,15 @@
 # 当前研究状态
 
-2026-10-02，wm-3090-1001，v77。推进Temporal reveal＋合法projected actor-state，surfel后置。用户允许清可恢复旧缓存；盘余约46GB，未删除文件。
+2026-10-02，wm-3090-1001，v77。Temporal reveal＋合法projected actor-state；surfel后置。数据盘余约44–45GB，用户允许必要时清可恢复旧物，当前未删除。
 
-r31–r36已完成有界工程/条件控制：修复主显露B与轻触邻车混淆，原87轨迹不变技术1→3；Q035主车小模糊QA0，Q046输入QA2。Q046最终H遮后条件主B身份稳定，但两邻车边缘误投，条件QA1；保比例审核图修复并证明无源错配，旧图/初始QA保留。旧Q060输入与条件QA2仍保留。
+r37新增固定15scene/450连续曝光；修复有序抽样、多地图分派/显式null道路及空LiDAR处理，Boston旧几何不变。r38的21轨迹完整实例检查仅3条同scene普通背景技术候选，冻结代表S016独立QA0（安全岛落点疑点）；其余未独立QA，不准入。r39唯一过去2秒真实位姿对照两条可行，但均缺几何或显露证据，关闭该尝试。
 
-r33围绕清楚B求解372个静止A位置，唯一P001仍缺真实显露证据，QA0；r35证明150投影拒绝中0例仅水平截边，不放宽ego/尺度，不再追加同批位置或速度网格。r36只用可见SAM作一致性反证，两例O精度提高且总覆盖保留≥90%，但Q046仍QA1并损失正确主B投影，故不推广过滤器，不做阈值网格。
+r40只在固定23例上比较SAM提示帧。6条复用标签的实际提示帧/JPEG溯源已修复，180旧mask帧逐像素不变。原分母：{"nonvehicle_or_incomplete_protection": 8, "instance_identity_or_visibility_uncertain": 7, "insufficient_actual_occlusion": 1, "static_foreground": 1, "ordinary_background": 3, "actual_size": 2, "insufficient_other_frame_evidence": 1}；新分母：{"nonvehicle_or_incomplete_protection": 8, "instance_identity_or_visibility_uncertain": 6, "insufficient_actual_occlusion": 1, "insufficient_other_frame_evidence": 2, "static_foreground": 1, "ordinary_background": 3, "actual_size": 2}。身份疑点7→6，但该例仍缺显露依据；无新增技术候选或训练准入，关闭提示帧对照，不推广为全局策略。
 
-50条配方仍不足，A/B/C正式训练0步，尚未验证模型利用条件的收益。下一步补有物理空间、保护车真实可见的来源窗口，先联合检查空间与显露；保持原scene split、输入隔离、30帧同一次调用和逐例独立QA，不能用proxy或单例结果替代跨scene收益。
+r41固定来源过程筛选完成。在旧440候选池中排除旧scene后203个actor窗口，固定静止B、清楚尺寸、至少16m深度等要求筛至9条，7条有合法30曝光，2条抽样失败。7条相机三秒累计行程仅0.002–0.375m，均不满足预定1–8m运动要求，最终0来源。没有提新RGB、运行SAM或降低阈值；这是既有候选池的缺口，不能推断整个nuScenes不存在该过程。
 
-当前模型入口仍r21 sam_full_v2；r26邻车洞裁减不推广；r24稀疏状态重采样修复保留。GT相机/轨迹/LiDAR明示POC辅助，Y只监督和评价，人工verdict空。真实DELETE保护车与无车背景两侧跨scene收益未证实，关机条件未满足；没有新增定时任务。
+旧Q060输入/条件QA2保留，Q046条件仍1；r36可见一致性过滤未推广。新数据准入0，50条配方未齐，正式A/B/C新增训练0步。不能将来源增加、地图通过或条件指标当成真实DELETE收益；下一步检查来源池每scene只保留3条旧方案是否提前丢掉了所需过程，保留全部质量要求做一次无截断元数据对照。
 
-交付：[本轮报告与组件图](v77/TARGET_PROTECTED_ROLES_CONSISTENCY_R31_R36.md)，本地outputs/v77-target-protected-r34/index.html（12视频360帧）与r36/index.html（8视频240帧），链接/JS/实际解码通过。failure更新同一[V77-F02](research_failures/entries/V77-F02.md)。
+模型入口仍r21 sam_full_v2，r26裁洞失败不推广。GT相机/轨迹/LiDAR明示POC辅助，Y只监督/质检，human verdict空。没有新增定时任务；真实DELETE保护车和无车背景两侧跨scene收益未达到，关机条件未满足。
+
+报告及组件图：[r37–r41](v77/TARGET_PROTECTED_FRESH_SOURCES_R37_R40.md)；本地`outputs/v77-target-protected-r38/index.html`。继续更新同一[V77-F02](research_failures/entries/V77-F02.md)。

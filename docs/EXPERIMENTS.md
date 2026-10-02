@@ -4,6 +4,11 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r41 | 旧440候选池中静止清楚B的7条可解析窗口，相机三秒行程均不足1m；固定视差过程筛选0来源，不提RGB/不放宽阈值；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r41/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r40 | 完成固定23例提示帧对照：{"nonvehicle_or_incomplete_protection": 8, "instance_identity_or_visibility_uncertain": 6, "insufficient_actual_occlusion": 1, "insufficient_other_frame_evidence": 2, "static_foreground": 1, "ordinary_background": 3, "actual_size": 2}；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r40/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r39 | 真实过去2秒位姿作A的20次候选尝试，2条空间可行，分别缺完整几何/其他帧证据，0准入；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r39/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r38 | 21空间轨迹/6scene，补齐39实例评价标签后仅3条同scene普通背景技术候选；冻结代表S016独立QA0，未准入；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r38/closeout.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r37 | 新18scene预登记后15scene/450帧可用；有序抽样与多地图分派修复，17条SAM轨迹15条技术通过；新增训练0 | [收口/状态](autoresearch/worldsim_v77/target_protected_20260929/r37/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r36 | 合法轮廓反证数值改善，但Q046仍QA1且损失正确投影；不推广、不调网格；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r36/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r35 | 150投影拒绝中0例仅由水平截边导致；不放宽ego/尺度约束；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r35/closeout.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r34 | Q046主B身份可用、邻车边缘溢出，条件1；修复审核图纵横比；训练0 | [收口](autoresearch/worldsim_v77/target_protected_20260929/r34/closeout.json) |

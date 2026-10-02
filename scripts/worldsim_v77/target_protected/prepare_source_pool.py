@@ -213,7 +213,7 @@ def select(pool, root, limit):
     print('SELECTED',len(selected),'SHARDS',shards,'MULTI',result['multi_actor_candidates'],flush=True)
     return result
 
-def resolve(meta, root, selection):
+def resolve(meta, root, selection, exposure_matcher=None):
     samples={r['token']:r for r in read(meta/'sample.json')}
     wanted={c['scene_token'] for c in selection['clips']}
     channels={r['token']:r['channel'] for r in read(meta/'sensor.json')}
@@ -235,11 +235,18 @@ def resolve(meta, root, selection):
         first_ix=bisect.bisect_left(times,c['start_timestamp_us']+50000)
         # 以真实相机曝光对齐10Hz网格，避免LiDAR相位落在两曝光的中点。
         first_exposure=times[first_ix]
+        targets=[first_exposure+100000*f for f in range(30)]
+        indices=exposure_matcher(rows,targets) if exposure_matcher is not None else None
+        if exposure_matcher is not None and indices is None:
+            rejected.append({'source_id':c['source_id'],'reason':'no_ordered_unique_30_exposures'})
+            continue
         frames=[]
-        for f in range(30):
-            t=first_exposure+100000*f
-            j=bisect.bisect_left(times,t)
-            r=min([rows[k] for k in [j-1,j] if 0<=k<len(rows)],key=lambda r:abs(r['timestamp']-t))
+        for f,t in enumerate(targets):
+            if indices is None:
+                # 保留旧实验默认入口；新工厂显式传入有序唯一曝光匹配器。
+                j=bisect.bisect_left(times,t)
+                r=min([rows[k] for k in [j-1,j] if 0<=k<len(rows)],key=lambda r:abs(r['timestamp']-t))
+            else:r=rows[indices[f]]
             frames.append(r|{'frame':f,'requested_timestamp_us':t,'delta_ms':abs(r['timestamp']-t)/1000})
         stamps=[r['timestamp'] for r in frames]
         gaps=np.diff(stamps)/1000

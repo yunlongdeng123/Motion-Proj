@@ -96,7 +96,7 @@ def main(ready_only=False,frame_start=0,frame_count=30,output_root=O,case_ids=No
     summary['complete']=not ready_only
     summary['pending_cases']=len(plan['cases'])-len(rows)
     summary.update(frame_start=frame_start,frame_count=frame_count,reveal_policy=reveal_policy,Y_annotation_context_frames=30,
-                   method_window_must_be_rebuilt=True,source_run='r28')
+                   method_window_must_be_rebuilt=True,source_run=O.name)
     f.dump(output_root/('instance_quality_ready.json' if ready_only else 'instance_quality.json'),summary)
     print('INSTANCE_AUDIT_READY' if ready_only else 'INSTANCE_AUDIT_DONE',summary['counts'],flush=True)
 

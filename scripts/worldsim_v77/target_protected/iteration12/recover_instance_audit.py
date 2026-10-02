@@ -90,7 +90,7 @@ def select(g):
     f.dump(path,result);return result
 
 
-def prepare(g,roster):
+def prepare(g,roster,recovery=True):
     assert not (O/'prepared.json').exists(),'已有队列不能覆盖'
     quality_jobs={};method_jobs=[];quality_completed=[];cases=[];started=time.time()
     assets={a:dict(np.load(f.T/'r8/assets'/f'{a}.npz')) for a in ['sedan','suv']}
@@ -142,7 +142,14 @@ def prepare(g,roster):
                 elif tok in pm:
                     out.mkdir(parents=True,exist_ok=True)
                     for i,m in enumerate(pm[tok]):Image.fromarray(m.astype('uint8')*255).save(out/f'{i:05}.png')
-                    rec=job|{'reused_from':'r23 technically passed Y-SAM','quality':'pending_case_identity_review','human_verdict':None}
+                    actor_index=next(j for j,a in enumerate(c['actors']) if a['instance_token']==tok)
+                    original_dir=f.ROOT/('segmented' if actor_index==0 else 'segmented_secondary')/(sid if actor_index==0 else sid+'_'+tok[:8])
+                    actual=f.read(original_dir/'mask_manifest.json');pf=actual['prompt_frame']
+                    actual_box=next(a for a in c['frames'][pf]['actors'] if a['instance_token']==tok)['projection']['box_xyxy']
+                    rec=job|{'reused_from':f'{f.O.name} technically passed Y-SAM','quality':'pending_case_identity_review','human_verdict':None,
+                        'requested_prompt_frame':job['prompt_frame'],'prompt_frame':pf,'prompt_box':actual_box,
+                        'actual_SAM_rgb_folder':str(f.ROOT/'SAM2_rgb'/sid),'actual_mask_manifest':str(original_dir/'mask_manifest.json'),
+                        'checkpoint':actual['checkpoint'],'config':actual['config']}
                     f.dump(out/'result.json',rec);quality_completed.append(rec)
             if visible_areas[mprompt]>=100:
                 method_jobs.append({'case_id':cid,'job_id':cid+'_'+tok[:8],'instance_token':tok,'category':hit['category'],
@@ -166,7 +173,7 @@ def prepare(g,roster):
     f.dump(O/'method_masks/observed_queue.json',{'jobs':method_jobs,'role':'target_guard_erased_X_only'})
     f.dump(O/'prepared.json',{'cases':cases,'method_jobs':len(method_jobs),'quality_jobs':len(quality_jobs),
         'reused_quality_jobs':len(quality_completed),'selector':roster['selection_id'],'training_admission':0,'training_steps':0})
-    f.dump(O/'selection_amendment.json',{'original_registration_preserved':'run.json','selector':roster['selection_id'],
+    if recovery:f.dump(O/'selection_amendment.json',{'original_registration_preserved':'run.json','selector':roster['selection_id'],
         'original_count_was_first_failure_counter':73,'saved_pixel_reuse':roster['saved_pixel_reuse'],'actual_frozen_count':roster['count'],
         'sources_unchanged':True,'geometry_and_thresholds_unchanged':True,'Y_SAM_not_started_before_freeze':True,
         'training_steps':0,'failure_ledger_refs':['V77-F02']})

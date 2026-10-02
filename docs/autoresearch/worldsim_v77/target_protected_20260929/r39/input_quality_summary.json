@@ -1,0 +1,47 @@
+{
+  "counts": {
+    "nonvehicle_or_incomplete_protection": 1,
+    "insufficient_other_frame_evidence": 1
+  },
+  "input_rule_unchanged": true,
+  "training_admission": 0,
+  "new_training_steps": 0,
+  "boundary": "SAM empty alone cannot certify object-free; positive candidates still need independent visual QA",
+  "complete": true,
+  "pending_cases": 0,
+  "frame_start": 0,
+  "frame_count": 30,
+  "reveal_policy": "primary_plus_preserved",
+  "Y_annotation_context_frames": 30,
+  "method_window_must_be_rebuilt": true,
+  "source_run": "r39",
+  "cases": [
+    {
+      "case_id": "T001",
+      "source_id": "F006",
+      "scene": "scene-0161",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "eed3a92ceec1407f8fe3cd2a218a8f88",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "T002",
+      "source_id": "F006",
+      "scene": "scene-0161",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "insufficient_other_frame_evidence",
+      "identity_flags": [],
+      "scope_flags": []
+    }
+  ],
+  "full_metrics": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r39/instance_quality.json"
+}

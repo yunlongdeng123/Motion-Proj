@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "case_id": "S016",
+      "assistant_grade": 0,
+      "usable_for_next_legal_condition_build": false,
+      "reason": "scene-0369 的真实Y显示这里没有待保留车辆，属普通背景；但黄色A连续30帧放在抬高的行人安全岛／草地边缘，而非可行驶车道，车体与信号杆所在区域重叠，接地和道路位置不合理。紫色model H及实际灰洞完整罩住A且大小随视角平顺变化，却同时遮掉杆体、路缘及部分岛面等未标注的固定场景结构；左侧摩托车、轿车和巴士基本未被洞触及。A的轮廓与尺度本身无突变，ego运动下位置也连续，但不能抵消场景放置错误。灰贴片颜色和合成RGB观感不作为拒绝依据；smooth几何代理也不是可恢复内容的真实证据。拒绝进入下一步合法条件构建，不评价模型补景效果。",
+      "reviewed_files": [
+        "outputs/v77-target-protected-r38/manifest.json",
+        "outputs/v77-target-protected-r38/S016/input_contract.json",
+        "outputs/v77-target-protected-r38/S016/full_00_14.jpg",
+        "outputs/v77-target-protected-r38/S016/full_15_29.jpg",
+        "outputs/v77-target-protected-r38/S016/Y.mp4",
+        "outputs/v77-target-protected-r38/S016/plan.mp4",
+        "outputs/v77-target-protected-r38/S016/input.mp4"
+      ],
+      "reviewed_frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+      "full_resolution_frames": [0, 15, 29],
+      "human_verdict": null
+    }
+  ],
+  "model_inference": false,
+  "training_admission": 0
+}

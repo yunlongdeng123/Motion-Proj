@@ -1,0 +1,32 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r40",
+  "phase": "SAM_prompt_visibility_control",
+  "question": "separate GT-box max-area prompting from ambiguous instance labels before blaming data generation",
+  "base_runs": [
+    "r38",
+    "r39"
+  ],
+  "fixed_inputs": "all23 saved trajectories, RGB, final H, frame count and quality gates unchanged",
+  "only_change": "SAM2 prompt frame selected by GT-cuboid first-return visible projected pixels, not raw box area or fixed midpoint",
+  "ranking_resolution": [
+    256,
+    144
+  ],
+  "score": "visible pixel count, then fraction, then nearest middle, then earlier frame",
+  "visibility_depth_tolerance_m": 0.05,
+  "valid_pose_only": true,
+  "max_geometry_gap_s": 0.65,
+  "same_seed_checkpoint_box_only_prompt": true,
+  "no_new_points_or_postprocess": true,
+  "GT_proxy_role": "offline Y-quality prompt ranking only, not proof of pixel identity and not a method condition",
+  "Y_RGB_role": "isolated quality labels; raw images neither changed nor used to rank frames",
+  "no_new_proposals_speeds_offsets_or_quality_thresholds": true,
+  "training_steps": 0,
+  "training_admission": 0,
+  "stop": "one paired prompt rule, no anchor or point grid; independent QA remains necessary",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

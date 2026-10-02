@@ -48,18 +48,44 @@ def source_masks(root,sid,secondary=None):
     return [cv2.imread(str(p),0)>0 for p in paths]
 
 class Geometry:
-    def __init__(self,root):
+    def __init__(self,root,include_parking=False):
         self.root=Path(root);self.sources={c['source_id']:c for c in read(self.root/'source_manifest.json')['clips']}
         self.context={c['source_id']:c for c in read(self.root/'source_context.json')['clips']}
         for c in self.sources.values():
             for f in c['frames']:f['_w2c']=np.linalg.inv(f['camera_to_world'])
-        raw=read(self.root/'maps/expansion/boston-seaport.json');nodes={n['token']:(n['x'],n['y']) for n in raw['node']}
-        polygons={p['token']:Polygon([nodes[t] for t in p['exterior_node_tokens']],[[nodes[t] for t in hole['node_tokens']] for hole in p['holes']]) for p in raw['polygon']}
-        road=unary_union([polygons[t] for row in raw['drivable_area'] for t in row['polygon_tokens']])
-        self.road=prep(road.buffer(.02));self.obstacles={};self.ground={}
+        self.locations={sid:c['location'] for sid,c in self.sources.items()}
+        self.roads={};self.map_notes={}
+        for location in sorted(set(self.locations.values())):
+            if location not in {'boston-seaport','singapore-hollandvillage','singapore-onenorth','singapore-queenstown'}:
+                raise ValueError(f'未知nuScenes地图: {location}')
+            raw=read(self.root/'maps/expansion'/f'{location}.json');nodes={n['token']:(n['x'],n['y']) for n in raw['node']}
+            polygons={p['token']:Polygon([nodes[t] for t in p['exterior_node_tokens']],[[nodes[t] for t in hole['node_tokens']] for hole in p['holes']]) for p in raw['polygon']}
+            tokens=set();missing=[]
+            for layer in ['drivable_area']+(['carpark_area'] if include_parking else []):
+                for row in raw.get(layer,[]):
+                    refs=row['polygon_tokens'] if layer=='drivable_area' else [row['polygon_token']]
+                    for token in refs:
+                        # 官方v1.3 Holland有两条[null]道路记录：无几何不能提供道路支持。
+                        # 仅忽略显式null并记账；非null的悬空引用是输入损坏，必须报错。
+                        if token is None:missing.append({'layer':layer,'record':row['token']});continue
+                        if token not in polygons:raise ValueError(f'地图polygon引用缺失: {location}/{layer}/{token}')
+                        tokens.add(token)
+            if not tokens:raise ValueError(f'地图没有可用道路polygon: {location}')
+            self.map_notes[location]={'explicit_null_polygon_records':missing,'usable_polygon_count':len(tokens)}
+            self.roads[location]=prep(unary_union([polygons[t] for t in sorted(tokens)]).buffer(.02))
+        self.obstacles={};self.ground={}
+
+    def road_for(self,sid):
+        return self.roads[self.locations[sid]]
+
+    @property
+    def road(self):
+        # 旧单地图实验兼容；混合城市调用必须明确source，不能套Boston地图。
+        if len(self.roads)!=1:raise ValueError('多地图数据必须使用 road_for(source_id)')
+        return next(iter(self.roads.values()))
 
     def prepare(self,sid):
-        c=self.sources[sid];ctx=self.context[sid];stamps=c['keyframe_timestamps'];frames=ctx['frames']
+        c=self.sources[sid];ctx=self.context[sid];stamps=c['keyframe_timestamps'];frames=ctx['frames'];road=self.road_for(sid)
         bytime=[{a['instance_token']:a for a in f['annotations']} for f in frames]
         cal=frames[0]['sensors'][c['camera']]['calibrated_sensor'];e2cam=np.linalg.inv(transform(cal['translation'],cal['rotation']))
         obstacles=[]
@@ -84,6 +110,8 @@ class Geometry:
         cache=self.root/'geometry'/f'{sid}.json';cloudfile=self.root/'geometry'/f'{sid}_ground.npz'
         if cache.exists():
             meta=read(cache)
+            if meta.get('map_location','boston-seaport')!=self.locations[sid]:
+                raise ValueError(f'缓存地图与source不一致: {sid}')
             if meta['pass']:
                 points=np.load(cloudfile)['points'];meta['_tree']=cKDTree(points[:,:2])
             self.ground[sid]=meta;return meta
@@ -101,12 +129,13 @@ class Geometry:
                 local=(points-np.array(a['translation']))@Quaternion(a['rotation']).rotation_matrix
                 w,l,h=a['size'];inside=np.all(abs(local)<np.array([l/2+.2,w/2+.2,h/2+.2]),axis=1);points=points[~inside]
             # 地图只约束平面区域；高度仍由真实LiDAR拟合。
-            points=points[[self.road.covers(Point(p[:2])) for p in points]]
+            points=points[[road.covers(Point(p[:2])) for p in points]]
             clouds.append(points)
         points=np.concatenate(clouds);rng=np.random.default_rng(42)
         # 半米格保留低点，避免把树冠/车顶主平面当路面。
         bins=np.floor(points[:,:2]/.5).astype(int);order=np.lexsort((points[:,2],bins[:,1],bins[:,0]));b=bins[order]
-        keep=np.r_[True,np.any(b[1:]!=b[:-1],axis=1)];low=points[order[keep]]
+        keep=np.r_[True,np.any(b[1:]!=b[:-1],axis=1)] if len(order) else np.empty(0,bool)
+        low=points[order[keep]]
         if len(low)>8000:low=low[rng.choice(len(low),8000,replace=False)]
         best=None;best_count=0
         if len(low)>=50:
@@ -119,7 +148,7 @@ class Geometry:
                 ins=np.abs(A@coef-low[:,2])<.08;n=int(ins.sum())
                 if n>best_count:best=ins;best_count=n
         passed=best is not None and best_count>=50 and best_count/max(1,len(low))>=.55
-        meta={'source_id':sid,'pass':bool(passed),'lidar_keyframes':[0,3,6],'low_grid_points':len(low),
+        meta={'source_id':sid,'map_location':self.locations[sid],'pass':bool(passed),'lidar_keyframes':[0,3,6],'low_grid_points':len(low),
               'ransac_inlier_count':best_count,'ransac_fraction':best_count/max(1,len(low)),
               'source':'real_LiDAR_after_GT_actor_removal_and_drivable_map_filter','ground_not_from_GT_box_bottom':True}
         if passed:
@@ -129,7 +158,7 @@ class Geometry:
         dump(cache,{k:v for k,v in meta.items() if not k.startswith('_')});self.ground[sid]=meta;return meta
 
     def trajectory(self,sid,longitudinal,lateral,donor_sid,mode='world_offset',min_ratio=.65):
-        c=self.sources[sid];d=self.sources[donor_sid];g=self.ground[sid]
+        c=self.sources[sid];d=self.sources[donor_sid];g=self.ground[sid];road=self.road_for(sid)
         if not g['pass']:return None,'ground_fit'
         assert len(c['frames'])==len(d['frames'])
         mid=len(c['frames'])//2
@@ -157,7 +186,7 @@ class Geometry:
             else:yaw=base_yaw;xy=np.array(base['translation'])[:2]+offset
             R=ground_orientation(yaw,plane);bottom=np.r_[xy,np.dot(np.r_[xy,1],plane)];center=bottom+R[:,2]*(h/2)
             a={'translation':center.tolist(),'size':size,'rotation':Quaternion(matrix=R).elements.tolist()};foot=footprint(a)
-            if not self.road.covers(foot):return None,'outside_drivable'
+            if not road.covers(foot):return None,'outside_drivable'
             support=g['_tree'].query(np.array(foot.exterior.coords)[:4])[0].max();max_support=max(max_support,float(support))
             if support>2.5:return None,'ground_support_gap'
             p=projection(a,f)

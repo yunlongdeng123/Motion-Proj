@@ -1,0 +1,388 @@
+{
+  "counts": {
+    "nonvehicle_or_incomplete_protection": 7,
+    "instance_identity_or_visibility_uncertain": 7,
+    "insufficient_actual_occlusion": 1,
+    "static_foreground": 1,
+    "ordinary_background": 3,
+    "actual_size": 2
+  },
+  "input_rule_unchanged": true,
+  "training_admission": 0,
+  "new_training_steps": 0,
+  "boundary": "SAM empty alone cannot certify object-free; positive candidates still need independent visual QA",
+  "complete": true,
+  "pending_cases": 0,
+  "frame_start": 0,
+  "frame_count": 30,
+  "reveal_policy": "primary_plus_preserved",
+  "Y_annotation_context_frames": 30,
+  "method_window_must_be_rebuilt": true,
+  "source_run": "r38",
+  "cases": [
+    {
+      "case_id": "S001",
+      "source_id": "F006",
+      "scene": "scene-0161",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "eed3a92ceec1407f8fe3cd2a218a8f88",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S002",
+      "source_id": "F006",
+      "scene": "scene-0161",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "eed3a92ceec1407f8fe3cd2a218a8f88",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S003",
+      "source_id": "F006",
+      "scene": "scene-0161",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "eed3a92ceec1407f8fe3cd2a218a8f88",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S004",
+      "source_id": "F006",
+      "scene": "scene-0161",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instance": "9559fc42d5db4cfbaabe38562d5a9fe6",
+          "issue": "all_empty_SAM_not_evidence_of_absence"
+        }
+      ],
+      "scope_flags": [
+        {
+          "instance": "680ffce2c2524bc6b7543804816606c9",
+          "category": "human.pedestrian.adult",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        },
+        {
+          "instance": "7f66426f8f484b818390fe64817f97c2",
+          "category": "human.pedestrian.adult",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        },
+        {
+          "instance": "eed3a92ceec1407f8fe3cd2a218a8f88",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S005",
+      "source_id": "F007",
+      "scene": "scene-0162",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "26760b4d0a9d44aa89741c2cafe4a931",
+            "52534df4cae14ffa9f605373e9ebd77a"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.6491449397252593
+        },
+        {
+          "instances": [
+            "774ddd10e397458193c8c2e6191f62ce",
+            "9347b3f979c248fd9e7c93556212b6b1"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.6161678494291886
+        }
+      ],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S006",
+      "source_id": "F007",
+      "scene": "scene-0162",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "26760b4d0a9d44aa89741c2cafe4a931",
+            "52534df4cae14ffa9f605373e9ebd77a"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.6491449397252593
+        },
+        {
+          "instances": [
+            "774ddd10e397458193c8c2e6191f62ce",
+            "9347b3f979c248fd9e7c93556212b6b1"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.6161678494291886
+        }
+      ],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S007",
+      "source_id": "F007",
+      "scene": "scene-0162",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "8724fb8ce59a4a55940748e921718474",
+            "876a5a4110cb4f03a281c82c0a851973"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.8921281910680559
+        }
+      ],
+      "scope_flags": [
+        {
+          "instance": "d95f7f63b5004b5896f941ab99278da9",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S008",
+      "source_id": "F007",
+      "scene": "scene-0162",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "26760b4d0a9d44aa89741c2cafe4a931",
+            "52534df4cae14ffa9f605373e9ebd77a"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.6491449397252593
+        },
+        {
+          "instances": [
+            "8724fb8ce59a4a55940748e921718474",
+            "876a5a4110cb4f03a281c82c0a851973"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.8921281910680559
+        }
+      ],
+      "scope_flags": [
+        {
+          "instance": "943c87c7427e46d3bd5987f3bfe31d45",
+          "category": "movable_object.debris",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S009",
+      "source_id": "F012",
+      "scene": "scene-0362",
+      "split": "validation",
+      "technical_candidate": false,
+      "reason": "insufficient_actual_occlusion",
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S010",
+      "source_id": "F013",
+      "scene": "scene-0368",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "32c28601826847c69f84769d488f6062",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S011",
+      "source_id": "F013",
+      "scene": "scene-0368",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "32c28601826847c69f84769d488f6062",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S012",
+      "source_id": "F013",
+      "scene": "scene-0368",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "4fc57300079a4fb49dc9258ac4a9cbbf",
+            "d461838a142d4c82be239ca468d8f76a"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.4793621013133208
+        }
+      ],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S013",
+      "source_id": "F013",
+      "scene": "scene-0368",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "32c28601826847c69f84769d488f6062",
+          "category": "vehicle.car",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S014",
+      "source_id": "F014",
+      "scene": "scene-0369",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "instance_identity_or_visibility_uncertain",
+      "identity_flags": [
+        {
+          "instances": [
+            "03869855e3a0460a801f6ac0a7ee1f11",
+            "b5c71d40d9f44faa9612042a1555e563"
+          ],
+          "issue": "large_SAM_instance_overlap",
+          "max_iou": 0.5338840446688083
+        }
+      ],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S015",
+      "source_id": "F014",
+      "scene": "scene-0369",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "static_foreground",
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S016",
+      "source_id": "F014",
+      "scene": "scene-0369",
+      "split": "train",
+      "technical_candidate": true,
+      "reason": null,
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S017",
+      "source_id": "F014",
+      "scene": "scene-0369",
+      "split": "train",
+      "technical_candidate": true,
+      "reason": null,
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S018",
+      "source_id": "F014",
+      "scene": "scene-0369",
+      "split": "train",
+      "technical_candidate": true,
+      "reason": null,
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S019",
+      "source_id": "F014",
+      "scene": "scene-0369",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "actual_size",
+      "identity_flags": [],
+      "scope_flags": []
+    },
+    {
+      "case_id": "S020",
+      "source_id": "F017",
+      "scene": "scene-0384",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "nonvehicle_or_incomplete_protection",
+      "identity_flags": [],
+      "scope_flags": [
+        {
+          "instance": "049455a7ef92443da5aadd6cbcf625e1",
+          "category": "vehicle.truck",
+          "issue": "H touches nonvehicle or incomplete geometry; outside first-stage scope"
+        }
+      ]
+    },
+    {
+      "case_id": "S021",
+      "source_id": "F017",
+      "scene": "scene-0384",
+      "split": "train",
+      "technical_candidate": false,
+      "reason": "actual_size",
+      "identity_flags": [],
+      "scope_flags": []
+    }
+  ],
+  "full_metrics": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r38/instance_quality.json"
+}

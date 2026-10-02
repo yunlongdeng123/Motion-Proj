@@ -64,7 +64,7 @@ def trajectory(g,c,anchor,delta,static=False):
  sid=c['source_id'];mid=anchor['frames'][15]['timestamp'];plane=np.array(g.ground[sid]['plane']);rows=[];prev=None;min_gap=1e9;max_support=0
  for p,f,obs in zip(anchor['frames'],c['frames'],g.obstacles[sid]):
   a=copy.deepcopy(anchor['frames'][15]['actor']) if static else pose(p,mid,delta);R=Quaternion(a['rotation']).rotation_matrix;xy=np.asarray(a['translation'])[:2];a['translation']=(np.r_[xy,np.dot(np.r_[xy,1],plane)]+R[:,2]*a['size'][2]/2).tolist();foot=footprint(a)
-  if not g.road.covers(foot):return None,'outside_mapped_drivable_or_parking'
+  if not g.road_for(sid).covers(foot):return None,'outside_mapped_drivable_or_parking'
   sup=float(g.ground[sid]['_tree'].query(np.array(foot.exterior.coords)[:4])[0].max());max_support=max(max_support,sup)
   if sup>2.5:return None,'ground_support_gap'
   pr=projection(a,f)

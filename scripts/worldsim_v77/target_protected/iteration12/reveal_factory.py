@@ -88,7 +88,7 @@ def centers(g, map_api, c, size):
             pr = projection(a, f)
             if not valid_projection(pr): continue
             foot = footprint(a)
-            if not g.road.covers(foot): continue
+            if not g.road_for(c['source_id']).covers(foot): continue
             if any(foot.distance(o['_foot']) < .3 for o in g.obstacles[c['source_id']][15]): continue
             ab = pr['box']; score = 0.
             for b in f['actors']:
@@ -121,7 +121,7 @@ def trajectory(g, c, q, speed, asset):
         a = actor_on_lane(q['path'], q['distances'], q['s']+speed*dt, size, plane)
         if a is None: return None, 'lane_window_exhausted'
         foot = footprint(a)
-        if not g.road.covers(foot): return None, 'outside_mapped_area'
+        if not g.road_for(sid).covers(foot): return None, 'outside_mapped_area'
         support = float(g.ground[sid]['_tree'].query(np.array(foot.exterior.coords)[:4])[0].max())
         max_support = max(max_support, support)
         if support > 2.5: return None, 'ground_support_gap'
@@ -201,7 +201,7 @@ def main(shard, count):
     cv2.setNumThreads(1); register()
     assert read(O/'segmentation_state.json')['stage'] == 'complete_quarantined_pending_synthetic_QA'
     legacy.O = O; legacy.ROOT = ROOT
-    g = legacy.geometry(); map_api = NuScenesMap(dataroot=str(ROOT), map_name='boston-seaport')
+    g = legacy.geometry(); maps = {}
     assets = {n: dict(np.load(T/'r8/assets'/f'{n}.npz')) for n in ['sedan', 'suv']}
     out = O/'lane_candidates'; out.mkdir(exist_ok=True)
     state = {'pid': os.getpid(), 'shard': shard, 'stage': 'running', 'completed': [], 'training_admission': 0}
@@ -211,6 +211,9 @@ def main(shard, count):
         start = time.time(); c = g.sources[sid]; ground = g.prepare(sid); reject = Counter(); chosen = defaultdict(list)
         pm = legacy.protections(g, sid); attempts = 0; midpoint_count = 0
         if ground['pass'] and pm:
+            location=c['location']
+            if location not in maps:maps[location]=NuScenesMap(dataroot=str(ROOT),map_name=location)
+            map_api=maps[location]
             legacy.support(g, sid)
             asset = POLICY['split_shape'][c['source_split']]
             size = [1.85, 4.5, 1.5] if asset == 'sedan' else [1.90, 4.6, 1.7]
