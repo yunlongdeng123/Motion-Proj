@@ -12,4 +12,4 @@ r44补入显式主B与前置必要关系检查，固定四例的CPU回归提前�
 
 当前本地审核页`outputs/v77-target-protected-r43/index.html`：4例12视频、360帧全部解码，人工评分空，第三列是灰洞输入而非补景输出。报告及组件图：[r42–r44](v77/TARGET_PROTECTED_SPACE_FIRST_R42_R43.md)。旧r38等历史结果保留。
 
-数据盘约44GiB可用，本轮没有删除文件。真实DELETE保护车与无车背景两侧跨scene收益未达到，未满足关机条件。沿用[V77-F02](research_failures/entries/V77-F02.md)，当前唯一task为WS-V77-TARGET-PROTECTED-20260929。
+数据盘约44GiB可用，本轮没有删除文件。真实DELETE保护车与无车背景两侧跨scene收益未达到。用户于2026-10-02最新明确要求立即关闭AutoDL，覆盖此前等待收益再关机的条件；本次按新指令保存状态后关机，研究尚未完成。沿用[V77-F02](research_failures/entries/V77-F02.md)，当前唯一task为WS-V77-TARGET-PROTECTED-20260929。
