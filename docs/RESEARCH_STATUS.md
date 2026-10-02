@@ -1,6 +1,6 @@
 # 当前研究状态
 
-2026-10-02，wm-3090-1001，v77。Temporal reveal＋合法projected actor-state，先验证条件，再考虑surfel。
+更新：2026-10-03。分支：`research/worldsim-v7.7-target-protected-editing`。工作主机：wm-3090-1001。Temporal reveal＋合法projected actor-state，先验证条件，再考虑surfel。
 
 r42取消每scene前三窗口截断，440→612窗口，但旧过程门仍0来源，控制关闭。r43整体取消16m距离代理后得到6scene、13次空间尝试、4候选。完整实例检查0合格；独立QA G001/G002/G003/G004为0/0/1/0。前两例主B深度顺序不成立，G004洞与来源B分离，G003缺乏同一B互补显露。空间无碰撞不代表遮挡任务正确。全部失败对照保留；此来源对照已结束。
 
