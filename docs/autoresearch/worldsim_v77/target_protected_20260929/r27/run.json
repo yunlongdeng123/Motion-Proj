@@ -1,0 +1,21 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r27",
+  "purpose": "bounded_source_engineering_probe",
+  "sources": [
+    "N114",
+    "N117",
+    "D_T015w2"
+  ],
+  "selection": "top3 r23 lane_window_exhausted counts; before new outputs",
+  "same_midpoints_speeds_thresholds": true,
+  "max_connection_hops_each_direction": 5,
+  "branches": "minimum tangent difference then gap then token; no branch search",
+  "support_control": "same old fitted plane, same .08m band/2.5m distance; full in-window observed points",
+  "training_steps": 0,
+  "training_admission": 0,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

@@ -1,0 +1,37 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r26",
+  "role": "engineering_input_control_not_new_model",
+  "source_cases": [
+    "A022",
+    "A041_w10",
+    "A013",
+    "A048",
+    "A007",
+    "A034",
+    "A042",
+    "A061_w08"
+  ],
+  "arms": [
+    "base",
+    "r7"
+  ],
+  "frames": 10,
+  "resolution": [
+    576,
+    1024
+  ],
+  "seed": 42,
+  "steps": 25,
+  "previous_condition": false,
+  "max_new_windows": 16,
+  "new_rule": "H_v2 minus visible retained masks inferred from target-write-mask-erased RGB",
+  "target_guard": "r21 full SAM plus 7px ellipse write mask; never GT-clipped",
+  "sampling_rule": "all existing8 realDEV fixed windows; no generation-based selection",
+  "init_or_backbone_change": false,
+  "Y_or_hidden_GT": false,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null
+}

@@ -1,0 +1,67 @@
+{
+  "reviewer": "root_assistant",
+  "independent": false,
+  "scope": "fixed0,5,9 input contacts for all8; extra A041 frame19 box detail",
+  "approved_for_bounded_inference": true,
+  "approval_scope": "fixed8 realDEV same base/r7 weights,16 windows; not train admission or scientific pass",
+  "training_admission": false,
+  "human_verdict": null,
+  "cases": [
+    {
+      "case": "A022",
+      "comment": "没有可见邻车命中，保持r21输入原样，作为零变化控制。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A041_w10",
+      "comment": "目标为左侧银色车，右侧暗色车是不同实例。二者GT框重叠不等于实例重叠；后5帧保留右车可见部分。画面模糊/截边，边界身份仍有不确定性。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A013",
+      "comment": "黄框目标前景车，修复后白色大巴可见车顶和侧边保留；被目标遮住的部分仍未知。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A048",
+      "comment": "保留后方停放车的可见车顶，目标保护边缘完整遮挡；不能从完整框推断后车真形状。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A007",
+      "comment": "小远目标，保留旧固定DEV窗口，不把它当well-observed训练准入例。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A034",
+      "comment": "多辆停放车可见部分保留；mask用并集只用于避免误擦，不用于混合身份特征。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A042",
+      "comment": "立柱遮挡/原SAM身份边界疑点仍存在，记录为受限DEV，不作为可靠新训练样本。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    },
+    {
+      "case": "A061_w08",
+      "comment": "目标前景车保持遮挡；白色保护车可见部分恢复输入，阴影处可见分割可能不精确。",
+      "target_guard_leak": 0,
+      "target_guard_alpha_not_one": 0,
+      "human_verdict": null
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "reviewer": "root_assistant",
+  "scope": "one preregistered f5 per8 realDEV cases; same crop6 arms",
+  "temporal_quality_reviewed": false,
+  "human_verdict": null,
+  "cases": [
+    {
+      "case": "A022",
+      "assistant_category": "unchanged_control",
+      "comment": "r21与r26输入相同；固定f5均为道路/墙面，没有新车形。A022先前收益来自r21完整目标覆盖。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A041_w10",
+      "assistant_category": "unresolved",
+      "comment": "目标位置仍有深色车形或涂抹，新入口没有解决。边界模糊且邻车截边，不能把深色块全部确认成新增同一实体。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A013",
+      "assistant_category": "failure_changed",
+      "comment": "原位目标车已移除，但白色大巴前部仍错误。旧结果箱状拼接，新结果变成圆拱车身状结构；保留更多大巴可见顶部没有恢复隐藏前部。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A048",
+      "assistant_category": "clear_regression",
+      "comment": "新原模型和新r7都出现大块近处车身/车轮，旧结果主要是远处后车结构涂抹；这是不可推广的退化。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A007",
+      "assistant_category": "no_clear_gain",
+      "comment": "小远目标原位未见完整新增车，但道路细节/接缝变化；固定帧不足以支持新规则更好，仍属小目标旧DEV。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A034",
+      "assistant_category": "clear_regression",
+      "comment": "新两臂在被删白车位置形成突出的深色车尾样鼓包，旧结果的远处车列更连贯。隐藏实体结构变差。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A042",
+      "assistant_category": "unresolved",
+      "comment": "新旧均保留灰色车形/涂抹，右侧可见邻车保留未解决目标区恢复；立柱与SAM实例疑点仍记录。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    },
+    {
+      "case": "A061_w08",
+      "assistant_category": "clear_regression",
+      "comment": "旧r21保留的白色后车虽模糊但紧凑；新两臂把它延展成横向长车身/融合车，保护车结构明显退化。",
+      "fixed_frame": 5,
+      "human_verdict": null
+    }
+  ],
+  "decision": "do_not_promote_visible_protection_v1; retain r21 sam_full_v2 default for both baseline arms",
+  "no_same_rule_seed_or_mask_grid": true,
+  "evidence_boundary": "single-frame counterexamples justify stopping this candidate; not all-video human pass rates or new model failure",
+  "zero_change_control": [
+    {
+      "arm": "base",
+      "frame": 0,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 1,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 2,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 3,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 4,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 5,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 6,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 7,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 8,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "base",
+      "frame": 9,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 0,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 1,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 2,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 3,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 4,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 5,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 6,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 7,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 8,
+      "max_pixel_difference": 0
+    },
+    {
+      "arm": "r7",
+      "frame": 9,
+      "max_pixel_difference": 0
+    }
+  ],
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02; visible input retention failed frozen deletion control"
+}

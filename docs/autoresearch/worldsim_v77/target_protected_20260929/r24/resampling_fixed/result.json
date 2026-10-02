@@ -1,0 +1,75 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r24",
+  "phase": "adapter_engineering_only",
+  "case": "existing_DEV_L009",
+  "condition_source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r22/state/L009",
+  "geometry_only": [
+    "D",
+    "V",
+    "O",
+    "N",
+    "U",
+    "Q"
+  ],
+  "RGB_identity_condition": false,
+  "backbone_input_channels": 9,
+  "extra_input_channels": 0,
+  "architecture_extension": true,
+  "adapter_hooks": [
+    2,
+    5,
+    8,
+    11
+  ],
+  "width": 32,
+  "seed": 6201,
+  "frames": 30,
+  "resolution": [
+    320,
+    576
+  ],
+  "optimizer_steps": 0,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "quality_claim": false,
+  "human_verdict": null,
+  "subtrial": "resampling_fixed",
+  "condition_resize": "area_fraction_and_known_normalized_depth_confidence",
+  "stage": "passed",
+  "pid": 25172,
+  "CPU_contracts": {
+    "zero_init_exact": true,
+    "zero_head_receives_gradient": true,
+    "disabled_exact": true,
+    "missing_condition_exact": true,
+    "outside_hole_no_direct_residual": true,
+    "ON_conflict_rejected": true,
+    "sparse_background_survives": true,
+    "unknown_fraction_preserved": true,
+    "known_depth_not_diluted": true,
+    "scale_cache_resets_per_condition": true,
+    "hidden_RGB_interface": false,
+    "quality_claim": false
+  },
+  "adapter_parameters": 160192,
+  "zero_init_network_exact": true,
+  "zero_init_loss_exact": true,
+  "max_output_delta": 0.0,
+  "zero_head_gradients": {
+    "zero_heads.0.weight": true,
+    "zero_heads.0.bias": true,
+    "zero_heads.1.weight": true,
+    "zero_heads.1.bias": true,
+    "zero_heads.2.weight": true,
+    "zero_heads.2.bias": true,
+    "zero_heads.3.weight": true,
+    "zero_heads.3.bias": true
+  },
+  "initial_feature_branch_zero_grad_expected": true,
+  "peak_allocated_GiB": 14.628535747528076,
+  "peak_reserved_GiB": 15.9609375,
+  "seconds": 62.02886343002319,
+  "failure_ledger_delta": "none; engineering interface passed, no quality inference"
+}

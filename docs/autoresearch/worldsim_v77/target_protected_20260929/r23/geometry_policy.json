@@ -1,0 +1,26 @@
+{
+  "id": "lane_reveal_v1",
+  "max_midpoint_positions": 24,
+  "separation_m": 3.0,
+  "speeds_mps": [
+    0.0,
+    3.0,
+    6.0
+  ],
+  "lane_sample_m": 1.0,
+  "map_radius_m": 40.0,
+  "max_candidates_per_family_per_source": 2,
+  "visible_box_fraction_min": 0.6,
+  "GT_clearance_m": 0.3,
+  "support_distance_m": 2.5,
+  "revealed_surface_support_min": 0.5,
+  "minimum_occlusion_range": 0.15,
+  "model_mask": "sam_full_v2 rectangle around silhouette; write silhouette separate",
+  "split_shape": {
+    "train": "sedan",
+    "validation": "suv"
+  },
+  "quality_only": true,
+  "condition_builder_can_read_Y": false,
+  "upstream": "https://github.com/nutonomy/nuscenes-devkit/blob/master/python-sdk/nuscenes/map_expansion/map_api.py"
+}

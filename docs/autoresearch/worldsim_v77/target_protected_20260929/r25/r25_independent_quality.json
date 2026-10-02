@@ -1,0 +1,37 @@
+{
+  "scope": "仅检查r25的R001、L001、L009新遮后输入接触图f0/f15/f29，并参考evaluation.json；不评价DELETE推理或新训练集。",
+  "evaluation_reference": "完整视频Y-SAM仅是评价用近似标签，不是条件构建输入；评价显示三例30帧target_leak和hidden_B_revealed_to_condition均为0。",
+  "cases": [
+    {
+      "case_id": "R001",
+      "role": "新普通背景候选",
+      "assistant_grade": 2,
+      "human_verdict": null,
+      "visible_B_edge": "改善明确：旧proposal遮掉前景B右肩/镜区，新protected在矩形左缘留出可见B；评价抽帧旧/新误遮B像素为228/3、349/9、397/0。",
+      "hidden_body_reveal": "未见放回本该隐藏的车身；此例评价中actually_hidden_B_pixels为0，只能证明可见B边缘保护，不能证明隐藏B恢复能力。",
+      "hole_shape": "孔洞仍近矩形但在B边缘形成必要凹口，完整覆盖黄A影响区；A在右侧远处车道，尺度与路面接触位置未见明显异常。",
+      "sampled_continuity": "f0/f15/f29孔洞与A均大体固定，无明显抽帧跳变；三帧不能确认世界轨迹或中间帧视觉连续。"
+    },
+    {
+      "case_id": "L001",
+      "role": "旧DEV合同检查",
+      "assistant_grade": 2,
+      "human_verdict": null,
+      "visible_B_edge": "改善明确：三帧洞左上缘可见B的轮廓和局部车面保留下来；评价抽帧旧/新误遮B像素为1677/5、1259/48、1319/16。",
+      "hidden_body_reveal": "未见把黄A后方本应隐藏的B车身放回；评价30帧hidden_B_revealed_to_condition为0，但该指标依赖近似Y-SAM标签。",
+      "hole_shape": "新孔洞随黄A由近到远缩小并跟随其道路位置，外扩区域全盖目标影响；矩形剩余部分遮去一定路面背景，未见明显尺度失配或ego误遮。",
+      "sampled_continuity": "f0/f15/f29大小与位置变化方向一致，三张接触图未见突跳；不能据此声明30帧视频连续或补景成功。"
+    },
+    {
+      "case_id": "L009",
+      "role": "旧DEV合同检查",
+      "assistant_grade": 2,
+      "human_verdict": null,
+      "visible_B_edge": "改善明确：小白车B上缘从旧矩形遮挡中露出，保留范围与绿SAM可见部分相符；评价抽帧旧/新误遮B像素为1936/22、1595/25、1212/27。",
+      "hidden_body_reveal": "三帧未见明显放回原本被A挡住的B下部；评价30帧hidden_B_revealed_to_condition为0，属于近似标签支持而非绝对像素证明。",
+      "hole_shape": "新孔洞在小白车可见上缘形成凹口并覆盖黄A，仍额外遮去周围路面但与远处车辆尺度大体相称；没有明显漂浮或覆盖右侧大货车。",
+      "sampled_continuity": "f0/f15/f29孔洞随车距变化逐渐缩小、平移，未见抽帧级闪跳；不能推断所有中间帧已通过。"
+    }
+  ],
+  "overall_limit": "2分只表示这三例的新输入通过当前可见性与覆盖合同的独立抽查；R001未准入训练，L001/L009不代表新训练集或全视频通过；没有模型推理或训练效果证据。"
+}

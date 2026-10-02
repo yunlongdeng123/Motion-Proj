@@ -4,7 +4,12 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r23 | 最多80个隔离scene长窗来源；50条Temporal reveal pilot的来源准备，训练0 | [预案](autoresearch/worldsim_v77/target_protected_20260929/r23/plan.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r28 | 原30scene/73条未核验实例候选补标签；同位置/速度/阈值，Y与遮后X隔离，未训练 | [登记](autoresearch/worldsim_v77/target_protected_20260929/r28/run.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r27 | 43条车道长度拒绝的拓扑/观测地面对照；实际轮廓仍遇未核验实例，训练0 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r26 | 8真实DEV×2臂；可见洞裁减导致A048/A034/A061退化，不推广，48视频验证 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) · [固定帧观察](autoresearch/worldsim_v77/target_protected_20260929/r26/assistant_output_review.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r25 | 3例输入90帧合同与独立AI2；不等于下游通过，12视频验证 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r24 | 空间Adapter30帧零等价/梯度；稀疏证据缩放丢失修复，训练0 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) · [探针](autoresearch/worldsim_v77/target_protected_20260929/r24/resampling_fixed/result.json) |
+| WS-V77-TARGET-PROTECTED-20260929 / r23 | 固定61scene/1830帧只1普通背景候选，reveal0；50条配方未形成，训练0 | [报告](v77/TARGET_PROTECTED_VISIBLE_INPUT_R23_R27.md) · [分母](autoresearch/worldsim_v77/target_protected_20260929/r23/factory_summary.json) |
 | WS-V77-TARGET-PROTECTED-20260929 / r22 | 遮后输入的actor-state合法性／可用性探针；不训练、不启surfel | [预案](autoresearch/worldsim_v77/target_protected_20260929/r22/plan.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r21 | 入口修复、去重与单次20/30帧工程探针；简单actor-state先于surfel | [预案](autoresearch/worldsim_v77/target_protected_20260929/r21/plan.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r20 | 两例四窗零训练舍入对照；未复现P019新增车，停止该工程诊断 | [诊断与证据](v77/TARGET_PROTECTED_ENGINEERING_AUDIT_R19.md) |
