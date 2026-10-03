@@ -45,7 +45,7 @@ def main():
     page+=f'<p>固定样本：{counts["train"]} 训练 / {counts["validation"]} 合成评测 / {counts["real_DEV"]} 真实评测。两条密集车列训练例共享同一场景和位置，H 不同；不把它们计作独立场景。</p>'
     page+='<nav>'+''.join(f'<a href="#{c["case_id"]}">{c["case_id"]}</a>' for c in plan['cases'])+'</nav>'
     page+=''.join(cards)+'<small>WS-V77-TARGET-PROTECTED-20260929 / r45 · human verdict 未填写</small></html>'
-    (out/'index.html').write_text(page)
+    (out/'index.html').write_text(page.replace('r45',plan['run_id']))
     dump(out/'condition_inventory.json',{'cases':rows,'model_quality_claim':False})
     dump(O/'condition_inventory.json',{'cases':rows,'model_quality_claim':False})
     print('REVIEW_READY',len(cards),len(cards)*3)

@@ -7,7 +7,7 @@ REPO = Path('/root/autodl-tmp/motion_proj_v77')
 S = REPO/'scripts/worldsim_v77/target_protected'
 T = Path('/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929')
 A = Path('/root/autodl-tmp/runs/worldsim_v77/WS-V77-DELETE-AUDIT-20260928/r1')
-O = T/'r45'
+O = T/os.environ.get('V77_ONUQ_RUN_ID', 'r45')
 sys.path[:0] = [str(S), str(S/'iteration7'), str(S/'iteration12'), str(S.parent)]
 
 def read(p):

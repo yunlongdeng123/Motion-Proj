@@ -1,0 +1,36 @@
+{
+  "trainable_parameters": 157888,
+  "backbone_frozen": true,
+  "base": "original DriveEditor",
+  "channels": [
+    "O",
+    "N",
+    "U",
+    "Q"
+  ],
+  "steps": 160,
+  "lr": 0.0001,
+  "loss": "unchanged official diffusion loss",
+  "data": [
+    "M039",
+    "M041",
+    "M042",
+    "M044",
+    "M013",
+    "M014",
+    "M015",
+    "M017",
+    "M018",
+    "M019",
+    "M010",
+    "M011"
+  ],
+  "input_contract": "erase X before resizing; Y only loss",
+  "encoder_restore": {
+    "target_encoder_tensors": 106,
+    "missing_keys": 0,
+    "unexpected_keys": 0,
+    "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r7/encoder_recovery/official_svd_encoder.safetensors",
+    "strict": true
+  }
+}

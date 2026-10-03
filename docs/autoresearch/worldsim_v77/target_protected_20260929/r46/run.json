@@ -1,6 +1,6 @@
 {
   "task_id": "WS-V77-TARGET-PROTECTED-20260929",
-  "run_id": "r45",
+  "run_id": "r46",
   "steps": 160,
   "lr": 0.0001,
   "seed": 6201,
@@ -33,8 +33,11 @@
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "V77-F02: keyframe annotations discarded/interpolated by camera timestamp; correct in r46; no complete-condition scientific verdict",
+  "failure_ledger_delta": "updated V77-F02: keyframe time semantics and downstream corrected experiment",
   "human_verdict": null,
+  "parent_run": "r45",
+  "geometry_time_policy": "official NuScenes.get_boxes for every actual camera sample_data",
+  "phase": "SDK_time_fix_retraining",
   "cases": [
     {
       "case_id": "M039",
@@ -181,8 +184,21 @@
       "type": "real_DELETE"
     }
   ],
-  "phase": "interrupted_condition_time_bug",
-  "training_steps": 160,
-  "new_inference_windows": 32,
-  "corrected_run": "r46"
+  "changed_train_cases": [
+    "M039",
+    "M041",
+    "M042",
+    "M044",
+    "M013",
+    "M014",
+    "M015",
+    "M017",
+    "M019",
+    "M010",
+    "M011"
+  ],
+  "new_inference_windows": 0,
+  "reused_original_windows": 11,
+  "comparison_windows": 0,
+  "result": null
 }

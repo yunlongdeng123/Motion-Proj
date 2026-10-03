@@ -22,7 +22,7 @@ def build(c):
         world=raw@m[:3,:3].T+m[:3,3]
         i=min(range(len(obs)),key=lambda i:abs(obs[i].timestamp-scan['timestamp']))
         # 避免把不同时间的道路返回当成当前已经看见。
-        if abs(obs[i].timestamp-scan['timestamp'])>100000 or not c['frames'][i]['actors']:continue
+        if abs(obs[i].timestamp-scan['timestamp'])>100000 or not c['frames'][i].get('geometry_available',bool(c['frames'][i]['actors'])):continue
         # 条件只描述背景/车辆，不预测路面高度；墙、护栏等实测静态返回也是背景。
         # 没有实测返回仍为U，绝不把GT框外整片刷成N。
         pts=world[np.linalg.norm(world-obs[i].camera_to_world[:3,3],axis=1)<40]
@@ -50,7 +50,7 @@ def build(c):
             occupied|=inner
         n=np.zeros_like(occupied);confidence=np.zeros_like(depth);confidence[occupied]=.5
         for pts,stamp in background:
-            if not c['frames'][i]['actors']:continue # annotation边界外不能当空世界
+            if not c['frames'][i].get('geometry_available',bool(c['frames'][i]['actors'])):continue
             uv,z,good=project_world(pts,ob);ids=np.flatnonzero(good);u,v=uv[ids].T
             # 所有保留实体包络均阻止N，包含非车辆。没有返回的区域仍为U。
             blocked=cv2.dilate(np.isfinite(depth).astype('uint8'),np.ones((5,5),'uint8'))>0
