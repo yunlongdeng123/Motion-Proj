@@ -1,0 +1,106 @@
+{
+  "run": "WS-V77-TARGET-PROTECTED-20260929/r46",
+  "cases": [
+    {
+      "case_id": "M003",
+      "frame": 5,
+      "observation": "三组在被遮住的保护车车头左侧均留下灰白车形涂抹，未恢复原视频中的完整车头；实际条件相对全未知未出现明确的结构修复。",
+      "scope": "固定f5原生输出与真实Y对照",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M006",
+      "frame": 5,
+      "observation": "纯背景洞内仍有明显的车辆轮廓状模糊补丁，路缘和后方建筑结构没有完整接回。三组主要残留相同，实际条件没有明显额外修复。",
+      "scope": "固定f5原生输出与真实Y对照",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M007",
+      "frame": 5,
+      "observation": "纯路面洞内仍出现两块偏蓝灰的涂抹，局部道路纹理未恢复；三组残留位置和形状近似，未见实际条件带来清晰结构增量。",
+      "scope": "固定f5原生输出与真实Y对照",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M001",
+      "frame": 5,
+      "observation": "洞内仍有大块灰色拱形边缘和黑色残块，未恢复原视频的连续车道与周围车辆边界；三组都保留这一主要错误，实际条件没有明显额外修复。",
+      "scope": "固定f5原生输出与真实Y对照",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A022",
+      "frame": 5,
+      "observation": "固定f5中三组均已移除银色目标车，墙面与路面大体接回，未见该帧重新生成一辆车。原模型已具备这一表现；条件版与全未知、原模型视觉差异很小，不能记为条件分支新增收益。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A041_w10",
+      "frame": 5,
+      "observation": "三组洞内右侧仍有深色车形块，地面带模糊拖影，未形成干净的无车背景；实际条件没有明显消除这些残留。单帧不能区分残留与重新生成的完整时序过程。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A013",
+      "frame": 5,
+      "observation": "三组均移除前景深色目标车，但被它遮住的大巴前部仍被补成灰白方块/平板状车身，车头结构不完整；修复标注后实际条件未明显改善这一固定帧。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A048",
+      "frame": 5,
+      "observation": "前景白色目标车消失，但左侧被遮区域与停车列仍有车形拖影/延展，后方车辆边缘融合；三组这一结构问题近似，实际条件未明显更完整地保住保护车。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A007",
+      "frame": 5,
+      "observation": "目标原位的洞内仍有低矮深色车形/树影样块，背景路口结构不清楚；三组形状近似，实际条件未显示明确的去车背景改善。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A034",
+      "frame": 5,
+      "observation": "三组都去掉了前景白车，但邻接保留车的车尾仍有鼓包/延展，洞内路缘和车道边界模糊；实际条件与全未知、原模型近似，未见明确的保护车结构提升。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A042",
+      "frame": 5,
+      "observation": "洞内停车列仍有明显的灰白车形涂抹，三组主要结构近似，实际条件没有清晰改善。该例沿用旧目标/保护实例输入疑点，未在本轮逐例修改 mask，不能作为干净的模型否定证据。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT，输入疑点保留",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A061_w08",
+      "frame": 5,
+      "observation": "前景灰车被移除，但后方白色保护车的补全部分仍显得扩大、扭曲，左侧带明显模糊拖影；三组结构近似，实际条件没有明显修好保护车身份与车身。",
+      "scope": "固定f5原生输出；真实DELETE无去车GT",
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "conclusion": "时间语义 bug 已修复并完成同预算重训、固定三臂评测。4个合成DEV的洞内MAE：原模型0.089463，全未知0.086808，实际条件0.086914；实际条件比原模型小幅降低约2.85%，但没有超过同一分支接全未知。8个真实DELETE DEV的固定f5对照未观察到明确的条件增量，保护车结构损伤、车形块和涂抹仍在；这不是整段视频人工通过率或统计显著性结论。",
+  "review_scope": "助手逐例实际查看12例既定f5原生输出，与同帧原RGB/合成真实Y及遮洞输入对照；不由单帧推断视频时序，人工0/1/2 verdict与temporal verdict均留空。A042原有输入疑点仍保留。页面提供全部10帧同步视频及原生输出供用户审核。",
+  "new_knowledge": "没有全灰训练帧不能证明条件时间正确：SDK统一重建后11/12训练条件也改变，必须重训。修复后当前157888参数、160步的小分支未建立实际条件的新增任务收益。实测N在真实case洞内仅0–0.738%，且O是保守包络内核；这个结果只约束本次粗稀疏条件与预算，不能否定更充分、准确的保护车/背景证据。旧r45含时间工程错误，不作完整条件的科学负结果。"
+}

@@ -85,13 +85,16 @@ CPU条件排他覆盖、Q未知为0、隐藏X/Y不进入图像条件等240帧合
         report+='\n## 修复后的结果\n\n'+qa['conclusion']+'\n\n'
         report+='| 合成case | 原模型洞MAE | 全未知洞MAE | 实际条件洞MAE |\n|---|---:|---:|---:|\n'
         report+='\n'.join(f"| {c['case_id']} | {c['metrics']['adapter_off']['hole_MAE']:.6f} | {c['metrics']['all_unknown']['hole_MAE']:.6f} | {c['metrics']['conditioned']['hole_MAE']:.6f} |" for c in result['cases'] if c['kind']=='synthetic')
-        report+='\n\ncase等权均值：`'+str(result['synthetic_case_equal_MAE'])+'`；保护区域case等权均值：`'+str(result['synthetic_protected_case_equal_MAE'])+'`。合成GT指标不能替代真实DELETE人工通过率。\n\n'
+        protected_cases=[c['case_id'] for c in result['cases'] if c['kind']=='synthetic' and c['metrics']['adapter_off']['protected_hole_MAE'] is not None]
+        report+='\n\n4个合成case等权均值：`'+str(result['synthetic_case_equal_MAE'])+'`；保护区域仅计'+str(len(protected_cases))+'例（'+', '.join(protected_cases)+'），case等权均值：`'+str(result['synthetic_protected_case_equal_MAE'])+'`。合成GT指标不能替代真实DELETE人工通过率。\n\n'
+        changes=[c['output_change_checks']['conditioned_vs_all_unknown']['hole_rgb_MAE'] for c in result['cases']]
+        report+=f'实际条件与全未知的原生输出在{sum(v>0 for v in changes)}/{len(changes)}例不完全相同，洞内RGB差异MAE范围{min(changes):.6f}–{max(changes):.6f}（0–1）。实际网络零初始化等价、分支梯度与主干冻结检查通过；这些只排除条件通路完全未接或输出完全不变，不能证明模型已充分利用条件。此处差异不是对真实GT的恢复误差。\n\n'
         report+=qa['review_scope']+'\n\n| case | 助手观察（非人工verdict） |\n|---|---|\n'
         report+='\n'.join(f"| {c['case_id']} | {c['observation']} |" for c in qa['cases'])
         report+='\n\n新知识：'+qa['new_knowledge']+'\n\n96视频960帧实际解码，保留原生和写回输出。GPU进程退出，按最新要求停下通知；没有追加一轮或自动关机。\n'
     else:
         report+='\n当前修复与CPU回归完成；修复后的训练/推理尚未完成，模型收益待验证。\n'
-    report+='\n代码 `scripts/worldsim_v77/target_protected/iteration13/`；通过 `V77_ONUQ_RUN_ID=r46` 选择本轮路径。旧r45不被覆盖。\n本地结果入口 `outputs/v77-onuq-r46/index.html`（实际结果完成后交付）。failure_ledger_delta: updated V77-F02。\n'
+    report+='\n代码 `scripts/worldsim_v77/target_protected/iteration13/`；通过 `V77_ONUQ_RUN_ID=r46` 选择本轮路径。旧r45不被覆盖。\n本地结果入口 `outputs/v77-onuq-r46/index.html`。failure_ledger_delta: updated V77-F02。\n'
     (REPO/'docs/v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md').write_text(report)
     status='''# 当前研究状态
 

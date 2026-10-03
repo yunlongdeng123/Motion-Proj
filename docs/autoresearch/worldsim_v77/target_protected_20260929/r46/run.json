@@ -37,7 +37,7 @@
   "human_verdict": null,
   "parent_run": "r45",
   "geometry_time_policy": "official NuScenes.get_boxes for every actual camera sample_data",
-  "phase": "SDK_time_fix_retraining",
+  "phase": "GPU_complete_stopped",
   "cases": [
     {
       "case_id": "M039",
@@ -197,8 +197,8 @@
     "M010",
     "M011"
   ],
-  "new_inference_windows": 0,
+  "new_inference_windows": 25,
   "reused_original_windows": 11,
-  "comparison_windows": 0,
-  "result": null
+  "comparison_windows": 36,
+  "result": "时间语义 bug 已修复并完成同预算重训、固定三臂评测。4个合成DEV的洞内MAE：原模型0.089463，全未知0.086808，实际条件0.086914；实际条件比原模型小幅降低约2.85%，但没有超过同一分支接全未知。8个真实DELETE DEV的固定f5对照未观察到明确的条件增量，保护车结构损伤、车形块和涂抹仍在；这不是整段视频人工通过率或统计显著性结论。"
 }

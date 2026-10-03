@@ -14,7 +14,11 @@ LABELS = {'original': '原视频 / 合成任务真实 Y', 'input': '实际遮洞
 def encode(frames, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     h, w = frames[0].shape[:2]
-    p = subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24',
+    ffmpeg = shutil.which('ffmpeg')
+    if ffmpeg is None:
+        import imageio_ffmpeg
+        ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    p = subprocess.run([ffmpeg, '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24',
         '-s', f'{w}x{h}', '-r', '10', '-i', '-', '-an', '-c:v', 'libx264', '-threads', '2',
         '-preset', 'fast', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(path)],
         input=np.stack(frames).astype('uint8').tobytes(), capture_output=True)
@@ -106,11 +110,15 @@ def main():
     page+=architecture
     reused=sum('reused_from' in v for r in rows for v in r['metrics'].values())
     page+=f'<p>对照总计36窗：{36-reused}窗本轮新增推理，{reused}窗复用已核对输入相同且不依赖条件的原模型结果。复用来源记录在逐例JSON中。</p>'
+    if (O/'time_fix_audit.json').exists():
+        page+='<p class="note">本轮先修复关键帧时间边界：关键帧直接取关联 sample 标注，中间帧按官方 SDK 插值。A013、A007 原首帧全灰是标注被漏掉；修复后已恢复。A022 首帧洞内没有可靠背景返回，仍保持未知。实际比较发现训练条件也改变，因此按相同预算重新训练 160 步；旧 r45 结果保留，不能作为完整条件的负结果。</p>'
     if observations.get('conclusion'):
         page+='<p class="note"><strong>本轮结果：</strong>'+html.escape(observations['conclusion'])+'</p>'
     page+='<p>4个合成DEV的case等权洞内MAE（0–1，越低越好）：'+' / '.join(f'{LABELS[a]} {summary["synthetic_case_equal_MAE"][a]:.6f}' for a in ARMS)+'</p>'
-    page+='''<p class="note">先比较右侧「实际条件」与中间「全未知」，判断几何提示本身的增量；再与左侧原模型比较。全未知是同一训练分支的输入消融，不是另训的等容量模型。原生输出不是 factual 原位重建。真实 DELETE 没有去车 GT，不能用合成误差代替真实任务收益。</p>
-    <p>O：GT 车辆包络保守内核；N：实测 LiDAR 背景返回；U：未知；Q：启发式置信度。GT 相机与车辆框是本轮 POC 的辅助输入。N 仅占真实洞的 0–0.157%，本轮对背景约束很弱，不能据此否定充分背景条件。全部评测属于已曝光 DEV。</p>
+    page+='''<p class="note">先比较右侧「实际条件」与中间「全未知」，判断几何提示本身的增量；再与左侧原模型比较。全未知是同一训练分支的输入消融，不是另训的等容量模型。原生输出不是 factual 原位重建。真实 DELETE 没有去车 GT，不能用合成误差代替真实任务收益。</p>'''
+    n_fractions=[inventory[c['case_id']]['hole_condition_fraction']['N'] for c in cases if c['kind']=='real']
+    page+=f'<p>O：GT 车辆包络保守内核；N：实测 LiDAR 背景返回；U：未知；Q：启发式置信度。GT 相机与车辆框是本轮 POC 的辅助输入。N 占各真实 case 删除洞的 {min(n_fractions):.3%}–{max(n_fractions):.3%}，本轮对背景约束很弱，不能据此否定充分背景条件。全部评测属于已曝光 DEV。</p>'
+    page+='''
     <p><a href="conditions.html">保留 CPU 条件图和全部24例输入说明</a> · <a href="results_summary.json">逐例原始指标</a> · <button onclick="exportScores()">导出人工评分 JSON</button></p>'''
     page+='<nav>'+''.join(f'<a href="#{c["case_id"]}">{c["case_id"]}</a>' for c in cases)+'</nav>'+''.join(cards)
     page+='''<script>
