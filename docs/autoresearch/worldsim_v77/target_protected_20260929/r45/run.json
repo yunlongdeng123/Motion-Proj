@@ -1,0 +1,187 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r45",
+  "steps": 160,
+  "lr": 0.0001,
+  "seed": 6201,
+  "eval_seed": 42,
+  "eval_steps": 25,
+  "train_size": [
+    320,
+    576
+  ],
+  "eval_size": [
+    576,
+    1024
+  ],
+  "channels": [
+    "O",
+    "N",
+    "U",
+    "Q"
+  ],
+  "base": "original DriveEditor, frozen including original attention",
+  "data_scope": "12 existing train cases / 4 existing held-scene synthetic DEV / 8 fixed real DEV; two dense train cases share one scene and pose but differ in H",
+  "geometry_auxiliary": "GT camera and retained vehicle boxes; coarse geometry POC, not estimated semantic silhouettes",
+  "N": "positive observed non-actor LiDAR returns only, never complement of O; outside H and dilated full actor envelopes",
+  "arms": [
+    "adapter_off",
+    "all_unknown",
+    "conditioned"
+  ],
+  "checkpoint_selection": "fixed final step160, no real-case checkpoint selection",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "V77-F02: solid cuboid projection labels adjacent road; conservative core replaces it before training; no scientific result",
+  "human_verdict": null,
+  "cases": [
+    {
+      "case_id": "M039",
+      "split": "train",
+      "scene": "scene-0222",
+      "type": "background"
+    },
+    {
+      "case_id": "M041",
+      "split": "train",
+      "scene": "scene-0294",
+      "type": "background"
+    },
+    {
+      "case_id": "M042",
+      "split": "train",
+      "scene": "scene-0295",
+      "type": "background"
+    },
+    {
+      "case_id": "M044",
+      "split": "train",
+      "scene": "scene-0298",
+      "type": "background"
+    },
+    {
+      "case_id": "M013",
+      "split": "train",
+      "scene": "scene-0228",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M014",
+      "split": "train",
+      "scene": "scene-0243",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M015",
+      "split": "train",
+      "scene": "scene-0249",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M017",
+      "split": "train",
+      "scene": "scene-0256",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M018",
+      "split": "train",
+      "scene": "scene-0290",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M019",
+      "split": "train",
+      "scene": "scene-0292",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M010",
+      "split": "train",
+      "scene": "scene-0240",
+      "type": "dense_actors"
+    },
+    {
+      "case_id": "M011",
+      "split": "train",
+      "scene": "scene-0240",
+      "type": "dense_actors"
+    },
+    {
+      "case_id": "M003",
+      "split": "validation",
+      "scene": "scene-0229",
+      "type": "single_actor"
+    },
+    {
+      "case_id": "M006",
+      "split": "validation",
+      "scene": "scene-0239",
+      "type": "background"
+    },
+    {
+      "case_id": "M007",
+      "split": "validation",
+      "scene": "scene-0287",
+      "type": "background"
+    },
+    {
+      "case_id": "M001",
+      "split": "validation",
+      "scene": "scene-0289",
+      "type": "dense_actors"
+    },
+    {
+      "case_id": "A022",
+      "split": "real_DEV",
+      "scene": "scene-0770",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A041_w10",
+      "split": "real_DEV",
+      "scene": "scene-0920",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A013",
+      "split": "real_DEV",
+      "scene": "scene-0345",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A048",
+      "split": "real_DEV",
+      "scene": "scene-0003",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A007",
+      "split": "real_DEV",
+      "scene": "scene-0781",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A034",
+      "split": "real_DEV",
+      "scene": "scene-0911",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A042",
+      "split": "real_DEV",
+      "scene": "scene-0904",
+      "type": "real_DELETE"
+    },
+    {
+      "case_id": "A061_w08",
+      "split": "real_DEV",
+      "scene": "scene-0931",
+      "type": "real_DELETE"
+    }
+  ],
+  "phase": "CPU_ready_waiting_user_GPU",
+  "training_steps": 0,
+  "new_inference_windows": 0
+}
