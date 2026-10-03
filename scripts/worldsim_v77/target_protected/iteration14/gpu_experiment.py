@@ -106,11 +106,13 @@ def evaluate():
                 engine.get_deletion(req,arm=arm,reference_latents=cond['reference_latents'])
                 set_seed(plan['eval_seed']);started=time.monotonic()
                 with torch.inference_mode():engine.predict(1,False,'Deletion')
+                assert engine.prior_cfg_calls=={'unconditional':plan['eval_steps'],'conditional':plan['eval_steps']},'实际CFG先验路由未覆盖完整采样'
                 raw=np.stack(engine.im_result);assert len(raw)==10;comp=req.compose(raw)
                 (out/'native').mkdir(exist_ok=True)
                 for i in range(10):
                     Image.fromarray(raw[i]).save(out/'native'/f'{i:05}.png');Image.fromarray(comp[i]).save(out/f'{i:05}.png')
                 result={'case_id':c['case_id'],'arm':arm,'seconds':time.monotonic()-started,'GPU_new_window':True,
+                        'CFG_prior_calls':engine.prior_cfg_calls.copy(),'UC_priors_all_unknown':True,
                         'human_verdict':None,'temporal_verdict':None}
             dump(out/'result.json',result);completed.append(result)
             dump(dest/'state.json',{'stage':'running','completed':completed,'total':60});print('EVAL',c['case_id'],arm,flush=True)

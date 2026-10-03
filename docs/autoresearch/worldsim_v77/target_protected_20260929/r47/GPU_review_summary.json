@@ -1,0 +1,362 @@
+{
+  "cases": [
+    {
+      "case_id": "M003",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": 0.06832492567848368
+        },
+        "null_priors": {
+          "hole_MAE": 0.06353348131130783
+        },
+        "RGB_only": {
+          "hole_MAE": 0.057647909691805964
+        },
+        "geometry_only": {
+          "hole_MAE": 0.05857492966375575
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": 0.057669922608554997
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "M003",
+        "frame": 5,
+        "reviewed": true,
+        "family": "protected_recovery_partial_gain",
+        "observation": "RGB/完整条件的保护车前部更接近真实GT，基线前脸的大块灰斑缩小；仍有局部纹理模糊。单帧不足以认证身份与时序。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M006",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": 0.12215422709199282
+        },
+        "null_priors": {
+          "hole_MAE": 0.08632709623495313
+        },
+        "RGB_only": {
+          "hole_MAE": 0.07641968829991626
+        },
+        "geometry_only": {
+          "hole_MAE": 0.07231853378715608
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": 0.07425044046028553
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "M006",
+        "frame": 5,
+        "reviewed": true,
+        "family": "background_recovery_partial_gain",
+        "observation": "道路、护栏和人行道结构比基线更接近GT，基线洞内的浅色车形块减少；边缘接缝与模糊仍可见。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M007",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": 0.040393246888607286
+        },
+        "null_priors": {
+          "hole_MAE": 0.039309385445571554
+        },
+        "RGB_only": {
+          "hole_MAE": 0.03994596446300423
+        },
+        "geometry_only": {
+          "hole_MAE": 0.038771495843273454
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": 0.0393111858473547
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "M007",
+        "frame": 5,
+        "reviewed": true,
+        "family": "no_clear_condition_increment",
+        "observation": "基线已经恢复出较合理的道路；完整条件与全未知的视觉差异很小，没有明显条件增量。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M001",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": 0.12710833970005134
+        },
+        "null_priors": {
+          "hole_MAE": 0.09916409868838741
+        },
+        "RGB_only": {
+          "hole_MAE": 0.07700833758468012
+        },
+        "geometry_only": {
+          "hole_MAE": 0.08156147365002915
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": 0.07867463474818702
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "M001",
+        "frame": 5,
+        "reviewed": true,
+        "family": "protected_recovery_partial_gain",
+        "observation": "条件组明显减少基线的大块灰洞，车列和标线更接近GT；靠近车尾及道路下方仍有小块模糊残留。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A022",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A022",
+        "frame": 5,
+        "reviewed": true,
+        "family": "positive_control_no_vehicle_at_fixed_frame",
+        "observation": "五组在该帧均未重新生成目标车；墙、人行道和道路结构基本保持，新组路面仍有模糊色带。当前r46是用户2分正例，不能沿用历史生车失败标签；未据此判断整段是否退化。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A041_w10",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A041_w10",
+        "frame": 5,
+        "reviewed": true,
+        "family": "vehicle_shape_smear",
+        "observation": "删除灰色目标后，右侧黑色车辆附近仍是明显变形的车形块与拖影；完整条件没有稳定恢复清楚车身，较基线未见清楚收益。不能单凭此帧把所有黑色结构判成新生车。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A013",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A013",
+        "frame": 5,
+        "reviewed": true,
+        "family": "protected_structure_incorrect",
+        "observation": "目标黑车消失，但被挡大巴前部仍被补成灰黑块，前脸和车身连接不自然；条件组略改形状，没有恢复可靠结构。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A048",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A048",
+        "frame": 5,
+        "reviewed": true,
+        "family": "protected_smear_and_weak_anchor",
+        "observation": "删除前景白车后，后方深色车辆仍有模糊/变形；完整条件的道路暗带较明显，未见稳定优势。参考slot3实际主要为墙面且有效token为0；这只能证明该slot无有效外观输入，不能归因为全例没有RGB证据。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A007",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A007",
+        "frame": 5,
+        "reviewed": true,
+        "family": "dark_residual_no_clear_increment",
+        "observation": "目标位置留下深色涂抹，五组差异很小；远处小车细节不足，不能据此认证保护身份或判明新生车。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A034",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A034",
+        "frame": 5,
+        "reviewed": true,
+        "family": "protected_shape_partial_gain",
+        "observation": "条件组的后方黑色车轮廓较基线的方块状车尾更完整，可能有保护车结构增量；RGB、几何和完整条件均类似，不能声称组合优于单路。纹理与接地仍模糊，需用户整段审核。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A042",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A042",
+        "frame": 5,
+        "reviewed": true,
+        "family": "vehicle_shaped_patch_identity_uncertain",
+        "observation": "条件组比基线的大块矩形模糊略有车身轮廓，但洞内仍有明显车形涂抹；不能确认它恢复了原后车身份，暂不记为真实DELETE成功。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A061_w08",
+      "metrics": {
+        "baseline": {
+          "hole_MAE": null
+        },
+        "null_priors": {
+          "hole_MAE": null
+        },
+        "RGB_only": {
+          "hole_MAE": null
+        },
+        "geometry_only": {
+          "hole_MAE": null
+        },
+        "RGB_and_geometry": {
+          "hole_MAE": null
+        }
+      },
+      "assistant_f05_review": {
+        "case_id": "A061_w08",
+        "frame": 5,
+        "reviewed": true,
+        "family": "protected_front_partial_gain",
+        "observation": "条件组的后方白车前脸、格栅和轮廓明显比基线/全未知清楚，符合本例存在白色保护车的输入证据；三个有条件组表现接近。道路仍有接缝，单帧不能认证完整身份或整段稳定性。"
+      },
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "synthetic_case_macro_hole_MAE": {
+    "baseline": 0.08949518483978378,
+    "null_priors": 0.07208351542005498,
+    "RGB_only": 0.06275547500985164,
+    "geometry_only": 0.06280660823605361,
+    "RGB_and_geometry": 0.06247654591609557
+  },
+  "videos": 144,
+  "decoded_frames": 1440,
+  "human_verdict": null
+}

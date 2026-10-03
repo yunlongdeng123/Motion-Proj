@@ -57,7 +57,8 @@ def main():
                     label='B'+str(summary[cid]['protected_instances'].index(actor['instance_token'])+1)
                     cv2.putText(geometry,label,tuple(start),cv2.FONT_HERSHEY_SIMPLEX,.6,(255,235,75),2)
             Image.fromarray(geometry).save(dest/f'geometry_axes_{f:02}.png')
-        row=summary[cid];refs=read(folder/'references.json')['references'];score=scores.get(cid)
+        row=summary[cid].copy();refs=read(folder/'references.json')['references'];score=scores.get(cid)
+        row['source_mask_GPU_checks']=sum(r['GPU_source_mask_validation_pending'] and not r['padding'] for r in refs)
         detail=f'<p>{html.escape(c["scene"])} · {html.escape(c["split"])} · 目标A：<code>{c["target_token"] or "synthetic occluder"}</code></p>'
         if score:
             detail+=f'<p>已有 r46 人工分：<strong>{score["human_score"]}</strong>；RGB足够：{score["RGB_prior_sufficient"] or "未填"}；OCC足够：{score["OCC_prior_sufficient"] or "未填"}。{html.escape(score["note"] or "")}</p>'
@@ -97,11 +98,17 @@ def main():
 <h2>下一步GPU小实验</h2><p>先验证已选额外相机参考的A剔除，不重选参考、不改查询SAM；失败参考slot停用。再做真实官方模型零初始化等价、前后向和显存探针；通过后从原权重冻结主干训练新支路320步。12训练/4合成DEV/8真实DEV保持不变，最终固定step320。训练时RGB与几何各独立以25%概率替换为未知码，避免只训练完整条件再拿从没见过的空条件对比。比较原基线、训练分支全未知、RGB-only、几何-only、RGB+几何；这是同一训练分支的输入消融，不是各臂独立训练。</p>
 <p>真实收益依用户完整视频审核：是否删净、幻觉车是否减少、后车/邻车是否保住；单帧误差或CPU梯度通过均不能替代。若只有合成误差改善而真实任务无稳定增量，本轮不推广。当前12训练例的RGB参考仅来自原相机，真实DEV的多相机输入迁移还需验证；本轮不顺手扩大为完整world encoder/2DGS/surfel。</p>
 <nav>'''+''.join(f'<a href="#{c["case_id"]}">{c["case_id"]}</a>' for c in plan['cases'] if c['kind']=='real')+'</nav>'+''.join(realcards)+'<h2>训练与合成DEV输入（16例，逐例展开）</h2>'+''.join(syntheticcards)+'</main>'
+    eval_state=O/'evaluation/state.json'
+    gpu_done=eval_state.exists() and read(eval_state)['stage']=='complete_pending_review'
+    if gpu_done:
+        page=page.replace('当前已完成输入与新接口的CPU检查，尚未运行r47训练/补景。','本页展示本轮实际输入；固定320步训练与48个新窗口评测已完成。')
+        page=page.replace('r47：CPU合同与输入准备；完整官方模型接入、训练和生成仍待 GPU','r47：官方模型接入、固定训练和推理已完成；下方核对输入先验')
+        page=page.replace('<h2>下一步GPU小实验</h2>','<p class="note"><a href="results.html">打开完整GPU视频对照与人工评分页</a> · 12例5臂，12个基线窗口复用，48个新窗口。</p><h2>GPU小实验的预定配方</h2>')
     (out/'index.html').write_text(page)
     shutil.copy2(O/'preflight.json',out/'preflight.json')
-    dump(out/'delivery.json',{'cases':24,'real_cases':8,'existing_baseline_videos':24,'new_GPU_windows':0,
+    dump(out/'delivery.json',{'cases':24,'real_cases':8,'existing_baseline_videos':24,'new_GPU_windows':48 if gpu_done else 0,
         'user_baseline_scores_imported':8,'all_new_output_scores':None,'architecture_parameters':389856})
-    print('CPU_HTML_READY',out,flush=True)
+    print('INPUT_HTML_READY',out,flush=True)
 
 
 if __name__=='__main__':main()

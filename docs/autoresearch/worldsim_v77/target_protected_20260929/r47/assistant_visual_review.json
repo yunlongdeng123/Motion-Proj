@@ -1,0 +1,20 @@
+{
+  "reviewer": "primary assistant",
+  "protocol": "每例只查看固定f05的原图、原模型、全未知、RGB、几何、完整条件对照。合成GT可见，真实DELETE无隐藏区域GT；不从单帧推断时序，不填人工分。",
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "cases": [
+    {"case_id":"M003","frame":5,"reviewed":true,"family":"protected_recovery_partial_gain","observation":"RGB/完整条件的保护车前部更接近真实GT，基线前脸的大块灰斑缩小；仍有局部纹理模糊。单帧不足以认证身份与时序。"},
+    {"case_id":"M006","frame":5,"reviewed":true,"family":"background_recovery_partial_gain","observation":"道路、护栏和人行道结构比基线更接近GT，基线洞内的浅色车形块减少；边缘接缝与模糊仍可见。"},
+    {"case_id":"M007","frame":5,"reviewed":true,"family":"no_clear_condition_increment","observation":"基线已经恢复出较合理的道路；完整条件与全未知的视觉差异很小，没有明显条件增量。"},
+    {"case_id":"M001","frame":5,"reviewed":true,"family":"protected_recovery_partial_gain","observation":"条件组明显减少基线的大块灰洞，车列和标线更接近GT；靠近车尾及道路下方仍有小块模糊残留。"},
+    {"case_id":"A022","frame":5,"reviewed":true,"family":"positive_control_no_vehicle_at_fixed_frame","observation":"五组在该帧均未重新生成目标车；墙、人行道和道路结构基本保持，新组路面仍有模糊色带。当前r46是用户2分正例，不能沿用历史生车失败标签；未据此判断整段是否退化。"},
+    {"case_id":"A041_w10","frame":5,"reviewed":true,"family":"vehicle_shape_smear","observation":"删除灰色目标后，右侧黑色车辆附近仍是明显变形的车形块与拖影；完整条件没有稳定恢复清楚车身，较基线未见清楚收益。不能单凭此帧把所有黑色结构判成新生车。"},
+    {"case_id":"A013","frame":5,"reviewed":true,"family":"protected_structure_incorrect","observation":"目标黑车消失，但被挡大巴前部仍被补成灰黑块，前脸和车身连接不自然；条件组略改形状，没有恢复可靠结构。"},
+    {"case_id":"A048","frame":5,"reviewed":true,"family":"protected_smear_and_weak_anchor","observation":"删除前景白车后，后方深色车辆仍有模糊/变形；完整条件的道路暗带较明显，未见稳定优势。参考slot3实际主要为墙面且有效token为0；这只能证明该slot无有效外观输入，不能归因为全例没有RGB证据。"},
+    {"case_id":"A007","frame":5,"reviewed":true,"family":"dark_residual_no_clear_increment","observation":"目标位置留下深色涂抹，五组差异很小；远处小车细节不足，不能据此认证保护身份或判明新生车。"},
+    {"case_id":"A034","frame":5,"reviewed":true,"family":"protected_shape_partial_gain","observation":"条件组的后方黑色车轮廓较基线的方块状车尾更完整，可能有保护车结构增量；RGB、几何和完整条件均类似，不能声称组合优于单路。纹理与接地仍模糊，需用户整段审核。"},
+    {"case_id":"A042","frame":5,"reviewed":true,"family":"vehicle_shaped_patch_identity_uncertain","observation":"条件组比基线的大块矩形模糊略有车身轮廓，但洞内仍有明显车形涂抹；不能确认它恢复了原后车身份，暂不记为真实DELETE成功。"},
+    {"case_id":"A061_w08","frame":5,"reviewed":true,"family":"protected_front_partial_gain","observation":"条件组的后方白车前脸、格栅和轮廓明显比基线/全未知清楚，符合本例存在白色保护车的输入证据；三个有条件组表现接近。道路仍有接缝，单帧不能认证完整身份或整段稳定性。"}
+  ]
+}

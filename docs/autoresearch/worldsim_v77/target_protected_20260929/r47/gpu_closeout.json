@@ -1,0 +1,48 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r47",
+  "stage": "GPU_complete_pending_human_review",
+  "fixed_checkpoint": 320,
+  "main_and_3D_frozen": true,
+  "new_parameters": 389856,
+  "new_windows": 48,
+  "reused_baseline_windows": 12,
+  "source_mask_checks": 5,
+  "source_mask_checks_passed": 5,
+  "source_mask_pass_is_not_appearance_quality": true,
+  "zero_init": {
+    "official_model_loss_exact": true
+  },
+  "backward": {
+    "actual_branch_gradients": {
+      "bev_encoder.0.weight": true,
+      "reference_encoder.0.weight": true
+    },
+    "main_frozen": true,
+    "peak_GiB": 10.429547786712646,
+    "seconds": 11.964089691638947
+  },
+  "training_seconds": 1024.2296807989478,
+  "evaluation_new_seconds": 3102.2426904141903,
+  "CFG_route": "official crossattn zero identifies UC; new RGB/BEV/2D priors all unknown in UC and selected arm in C; 25/25 calls on all48 windows",
+  "synthetic_case_macro_hole_MAE": {
+    "baseline": 0.08949518483978378,
+    "null_priors": 0.07208351542005498,
+    "RGB_only": 0.06275547500985164,
+    "geometry_only": 0.06280660823605361,
+    "RGB_and_geometry": 0.06247654591609557
+  },
+  "videos": 144,
+  "decoded_frames": 1440,
+  "outside_H_original_exact_all_60_final_sequences": true,
+  "real_hidden_GT_metrics": null,
+  "assistant_review": "fixed f05 only; not human/temporal verdict",
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "GPU_applications_at_closeout": [],
+  "power_action": "none",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02"
+}

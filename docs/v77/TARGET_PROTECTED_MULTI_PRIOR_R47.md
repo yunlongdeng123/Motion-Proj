@@ -1,6 +1,6 @@
 # r47：多时刻RGB与BEV先验进入DriveEditor的条件接口
 
-task `WS-V77-TARGET-PROTECTED-20260929/r47`，parent r46，failure refs `V77-F02`。2026-10-04，wm-3090-1001。当前只完成CPU准备，GPU训练/生成均0。
+task `WS-V77-TARGET-PROTECTED-20260929/r47`，parent r46，failure refs `V77-F02`。2026-10-04，wm-3090-1001。下文CPU登记是当时阶段；本轮GPU完成结果见文末。
 
 ```mermaid
 flowchart LR
@@ -76,3 +76,51 @@ flowchart LR
 GPU顺序：`envs/worldsim-v77-sam2/bin/python iteration14/validate_source_masks.py` → `envs/driveeditor/bin/python iteration14/gpu_experiment.py train` → `evaluate` → `envs/motionproj/bin/python iteration14/results.py`。当前按用户要求停在GPU边界，训练0步、推理0新窗，无自动GPU控制器、无电源操作。
 
 新知识：当前缺口需要更丰富的真实观测与有明确空间关系的生成条件入口；把参考列表/BEV画出来不等于模型已经利用先验。本轮完成了可训练的入口和CPU合同，条件收益尚无证据。failure_ledger_delta: updated V77-F02（人工结果与输入工程证据）；无新失败ID。
+
+
+## GPU固定小实验：320步与五臂对照（2026-10-04）
+
+用户本轮开GPU后，唯一r47顺序完成5个额外源A mask检查、实际模型探针、320步训练、48新窗口与12旧基线对照。GPU为RTX3090，CPU配额14核，数据盘扩至600GB约93GB可用；未清理旧资产、未新增定时任务或执行电源操作。
+
+### 工程接入与验证
+
+官方checkpoint strict恢复0missing/0unexpected；沿用官方SVD RGB encoder恢复文件，不加载r7微调权重。实际官方模型分支关闭/零初始化loss完全相同，RGB与BEV梯度非零有限，主干和原3D分支无梯度。固定320步训练循环1024.23秒（约17.1分钟），训练峰值10.43GiB。不是扩大原UNet可训练范围；新分支389856参数，最终step320固定，不按真实结果选checkpoint。
+
+推理前修复新接口CFG路由：初始接入会把同一额外先验交给UC/C两路，尚未产生新推理结果。官方UC主crossattn为零，现以此区分两路，将新增RGB/BEV/2D先验在UC替换未知、C采用对应arm；query H/time保留。48个新窗均核对25次UC+25次C，所有原权重、查询SAM、seed42和25steps不变。这是本轮新增条件的CFG协议；不声称官方既有所有条件都在UC删除。
+
+5个源检查均通过一致性门，没有禁用slot。原源mask与更新前NPZ均备份，查询SAM未改。这个门确认A排除的一致性，不认证保护车身份/可见性/纹理充分；A048 slot3实际主要是墙面，网络有效token为0。
+
+### 量化结果（合成DEV，仅4例）
+
+同一分支输入消融，原基线12窗明确复用r46：
+
+| arm | 4例洞内MAE均值 |
+|---|---:|
+| 官方原模型+r21 SAM | 0.089495 |
+| 训练分支，全未知先验 | 0.072084 |
+| RGB-only | 0.062755 |
+| BEV/2D-only | 0.062807 |
+| RGB+BEV/2D | 0.062477 |
+
+每例10帧洞内像素合并，再对case等权；这是本报告统一重算的口径，不混用旧r46逐帧等权数值。完整条件比原模型误差低约30.2%，比同一训练分支全未知低约13.3%。完整条件超过全未知3/4例，M007几乎相同。单路在个别case比完整条件更好，不按case择优、不声称组合协同。合成像素误差不能替代真实DELETE成功或身份/时序质量。
+
+### 真实DELETE固定f05检查（不是人工通过率）
+
+8例均只查看同一f05的5臂对照；实时序与人工0/1/2均null。A034后车轮廓和A061_w08白车前脸在有条件组较基线/全未知更完整，是值得继续审核的局部条件增量；三个有条件组相近，不能声称完整条件超过单路。A041仍有明显变形车形块，A048仍有后车/道路涂抹，A013的大巴前部仍不正确，A007差异很小，A042仍不能确认洞内车辆身份。A022是用户r46的2分正控制；本轮f05均无明显再生车，路面仍有色带，不能仅凭单帧宣布整段无退化。
+
+所以本轮完成真实模型接入、建立了合成任务条件增量与两个真实固定帧局部增量，但尚未建立跨case稳定真实DELETE收益。r47不替换默认r46官方原权重+r21完整SAM；所有臂、原生输出和反例保留，不能择优隐藏负结果。详见[固定帧粗查](../autoresearch/worldsim_v77/target_protected_20260929/r47/assistant_visual_review.json)。
+
+### 按用户四项不足检查
+
+1. **appearance anchor不充分**：实际有效保护车token合计A041/A013=12、A048=40、A007=26、A042=34；A034=161、A061=94。A022没有B、保护token为0属于任务角色，不是漏车。token只代表可接收范围，不等于完整同一车身证据。
+2. **reference有效信息不足**：A048 slot3墙面/细条背景，0token；A041参考是部分车身与大量灰padding。固定selection按GT可见代理选，未用生成结果挑输入。下一步应检查真实车身可见信息，而非仅候选数量/源mask通过。实际输入图、slot和token统计完整保存。
+3. **OCC仍proxy**：绿区是GT cuboid包络，没有生成精准silhouette。真实8例的H内未知约31.8%–89.6%；A022实测N约21.0%但U约79.0%。这些是10帧控制格均值，不是认证几何可见率；正返回不等于稠密道路，不能把O外全当背景。详见[input_information_audit](../autoresearch/worldsim_v77/target_protected_20260929/r47/input_information_audit.json)。
+4. **硬约束边界**：当前只有洞外RGB严格写回。洞内target absence和protected preservation仍是软生成目标，没有通过可靠silhouette/实际表面像素强制维持。未来优先完善可靠观测与约束，不能用抹掉所有vehicle来冒充保护B，也不做seed/步数网格。
+
+额外限制：12个训练case参考仍单相机，而真实DEV部分跨相机；小预算和粗条件的负结果不构成对更强多视角条件接口的全面否定。本轮没有进行数据扩量、完整语言/state encoder、surfel或Ω/GLB重建。
+
+### 交付与资源
+
+审核页 `outputs/v77-priors-r47/results.html`：12例三主栏（原RGB/原模型DELETE/完整条件DELETE）、条件消融与原生输出展开、f05洞区六图、先验token和几何覆盖、原输入页链接、人工评分导出。原生DELETE不是factual重建。144视频在远端和本地均实际解码1440帧；本地449图片与全部链接通过，页内JS语法通过；60组最终PNG洞外原像素相同。CPU `audit_inputs.py` 可直接重算24例参考有效token和O/N/U覆盖，已逐例重现本轮统计，后续不必再次人工拼审计数据。组件图沿用本报告顶部，GPU页也直接绘出同一架构。
+
+GPU训练/推理已经结束，nvidia-smi无计算作业。停止新GPU作业，等用户完整视频评审；没有关机操作。failure_ledger_delta: updated V77-F02，无新failure ID。
