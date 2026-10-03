@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r47 | 更新人工评分归档；RGB参考交叉注意力＋BEV条件接口，24例CPU准备完成，GPU未运行 | [报告](v77/TARGET_PROTECTED_MULTI_PRIOR_R47.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r46 | SDK时间修复；160步、25新窗＋11复用，GPU已停 | [报告](v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r45 | 160步、32窗；时间语义bug中止，保留旧结果 | [报告](v77/TARGET_PROTECTED_ONUQ_ADAPTER_R45.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r44 | 显式主B必要关系前置；4固定失败候选提前拦3，Q060保留；4测试通过，新数据／模型收益0 | [记录](autoresearch/worldsim_v77/target_protected_20260929/r44/closeout.json) |

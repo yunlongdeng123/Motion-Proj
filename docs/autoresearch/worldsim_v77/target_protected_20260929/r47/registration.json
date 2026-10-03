@@ -1,0 +1,29 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r47",
+  "parent": "r46",
+  "stage": "CPU_ready_waiting_user_GPU",
+  "input_roles": "queryRGB and independentSAM; observed masked references; GTpose/tracks+measuredLiDAR; Y only loss/evaluation",
+  "resources": {
+    "CPU_quota_cores": 0.5,
+    "extra_input_bytes": 41203561,
+    "GPU_training_steps": 0,
+    "GPU_new_inference_windows": 0
+  },
+  "planned_GPU": {
+    "seed_train": 6201,
+    "steps": 320,
+    "lr": 0.0001,
+    "seed_eval": 42,
+    "eval_steps": 25,
+    "reused_base_windows": 12,
+    "new_windows": 48
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02",
+  "human_verdict": null,
+  "review_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-09-26\\xia\\outputs\\v77-priors-r47\\index.html",
+  "raw_review_remote": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r47/user_review"
+}

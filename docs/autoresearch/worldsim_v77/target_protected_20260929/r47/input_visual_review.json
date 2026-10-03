@@ -1,0 +1,23 @@
+{
+  "run_id": "r47",
+  "reviewer": "primary assistant",
+  "scope": "8 real DEV cases: f09 masked query, geometry/BEV and first three displayed reference slots; input review only",
+  "human_verdict": null,
+  "GPU_source_masks_verified": false,
+  "video_temporal_review": false,
+  "common_limits": [
+    "Green GT projections are cuboid support envelopes, not precise occupied silhouettes.",
+    "Blue controls are projected measured LiDAR returns, not dense observed background surfaces.",
+    "A candidate bank expansion does not guarantee selected references have sufficient identity or surface coverage."
+  ],
+  "cases": [
+    {"case_id": "A022", "observation": "Real wall/road context is present in nearby references. Invalid padding slots are gray. No retained vehicle is required in the current projected target region."},
+    {"case_id": "A013", "observation": "Selected bus references show visible fragments; substantial areas remain erased. Full hidden bus appearance is not established by these crops."},
+    {"case_id": "A048", "observation": "Parking-scene vehicle references remain partly erased. Source identity and completeness require the pending source-mask check."},
+    {"case_id": "A034", "observation": "Selected references include a clearly visible retained car in different views; final target exclusion still needs validation."},
+    {"case_id": "A007", "observation": "The car relevant to the hole is small in the inspected references. Large nearby projected vehicle envelopes are mostly outside the hole. Sufficient RGB coverage cannot be claimed."},
+    {"case_id": "A042", "observation": "Selected parking-scene crops are partly erased. Neither the candidate count nor GT envelopes establish exact surface identity."},
+    {"case_id": "A041_w10", "observation": "Selected references include visible dark-car surfaces outside the erased region; hidden geometry and source exclusion remain unverified."},
+    {"case_id": "A061_w08", "observation": "A retained white vehicle is visible in more than one reference; one crop is substantially erased. This is potential appearance evidence, not an output-quality verdict."}
+  ]
+}

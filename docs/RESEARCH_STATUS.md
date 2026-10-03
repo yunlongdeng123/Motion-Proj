@@ -1,14 +1,13 @@
 # 当前研究状态
 
-更新：2026-10-03。分支 `research/worldsim-v7.7-target-protected-editing`，主机 wm-3090-1001。
+更新：2026-10-04。分支 `research/worldsim-v7.7-target-protected-editing`，主机 wm-3090-1001。
 
-用户要求先修关键帧时间边界bug，再做小条件分支实验。当前唯一run `WS-V77-TARGET-PROTECTED-20260929/r46`。
-统一直接使用官方NuScenes.get_boxes：关键帧取关联sample，非关键帧前后sample插值。旧r45保留160步权重、全部条件及32窗结果，因条件工程错误中止，不能作为完整条件的负结果。
+用户更新评分：当前真实DELETE明确的是r21完整SAM修复有收益，微调/r46 Adapter未建立明确收益。当前基线固定为r46官方原始权重+r21完整SAM；8个真实例7个1分，A022=2分，原表与5张内嵌GPT静态例已归档。
 
-24例240帧重建与CPU合同通过；11/12训练条件、10/12评测条件实际变化，因此同预算重训160步、主干冻结。复用11个不依赖条件的原模型窗口，其余25窗重跑，总比较36窗。没有扩数据/结构/训练步数，人工verdict空，全部是DEV。
+当前唯一run `WS-V77-TARGET-PROTECTED-20260929/r47`，研发扩大为DriveEditor条件接口重构。新增独立DeletionRequest、参考RGB交叉注意力、BEV CNN与投影2D控制，官方主干冻结、原9通道保留。不是把旧四通道Adapter换名，也不是仅外部后处理。
 
-时间语义 bug 已修复并完成同预算重训、固定三臂评测。4个合成DEV的洞内MAE：原模型0.089463，全未知0.086808，实际条件0.086914；实际条件比原模型小幅降低约2.85%，但没有超过同一分支接全未知。8个真实DELETE DEV的固定f5对照未观察到明确的条件增量，保护车结构损伤、车形块和涂抹仍在；这不是整段视频人工通过率或统计显著性结论。
+CPU阶段完成：12训练/4合成DEV/8真实DEV的240帧输入合同，真实bank46–50候选/例；191个额外RGB/LiDAR提取解码约41MB；389856参数支路CPU零初始化/梯度/路径检查通过。公开审核 `outputs/v77-priors-r47/index.html`，旧r46视频明确标注，人工新实验verdict空。约42GB数据盘空闲，不需要扩盘。
 
-GPU训练/推理已结束，无后续自动实验；按最新要求停止并通知，未自动关机。本地审核 `outputs/v77-onuq-r46/index.html`；修复后的CPU先验页 `outputs/v77-onuq-r46/conditions.html`，24例×f00/f05/f09。
+按用户要求停在GPU边界，无训练/新推理/自动GPU任务或关机操作。下一步先GPU验证额外参考的A剔除与实际官方模型前后向/显存，通过后固定320步只训新支路，并作12例5臂对照（12基线复用+48新窗）。输入消融训练有25%先验dropout，不逐例改查询SAM/seed，不根据真实结果选checkpoint。
 
-细节与组件图见 [r46报告](v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md)，沿用 [V77-F02](research_failures/entries/V77-F02.md)。A022只读诊断已完成：f00全U来自两份稀疏LiDAR的现有取样规则；f07-f09 RGB真实显露未被背景条件利用，属于覆盖不足。审核 `outputs/v77-onuq-r46/a022_condition_audit/index.html`。未追加训练或推理，原r46结果保留。
+当前训练参考仍单相机，GT框是包络，LiDAR稀疏返回不是稠密背景，完整自然语言/state encoder/surfel均未实现；CPU通过不代表真实补景收益。细节与组件图见 [r47报告](v77/TARGET_PROTECTED_MULTI_PRIOR_R47.md)，沿用 [V77-F02](research_failures/entries/V77-F02.md)。旧r46及A022覆盖诊断全部保留。

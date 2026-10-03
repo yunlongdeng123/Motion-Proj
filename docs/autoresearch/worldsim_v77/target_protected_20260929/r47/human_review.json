@@ -1,0 +1,719 @@
+{
+  "source_path": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+  "reviewer": "human user",
+  "supplied_conclusion": "当前真实DELETE：修复mask有收益；微调和新Adapter未建立明确收益。",
+  "baseline": "r46 official original weights + r21 full repaired SAM; adapter disabled",
+  "cases": [
+    {
+      "case_id": "temporal_P006",
+      "label": "temporal_P006 · scene-0289 · 遮挡扫过保护车",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "合成遮挡",
+      "note": null,
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 2,
+        "range": "A2:H2"
+      }
+    },
+    {
+      "case_id": "temporal_P012",
+      "label": "temporal_P012 · scene-0291 · 遮挡比例／显露变化",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "合成遮挡",
+      "note": null,
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 3,
+        "range": "A3:H3"
+      }
+    },
+    {
+      "case_id": "temporal_P019",
+      "label": "temporal_P019 · scene-0289 · 世界静止A＋运动ego",
+      "human_score": 1,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "合成遮挡",
+      "note": "洞内仍有大块灰色拱形边缘和黑色残块，未恢复原视频的连续车道与周围车辆边界",
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 4,
+        "range": "A4:H4"
+      }
+    },
+    {
+      "case_id": "synthetic_M007",
+      "label": "synthetic_M007 · scene-0287 · 纯背景",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "合成遮挡",
+      "note": null,
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 5,
+        "range": "A5:H5"
+      }
+    },
+    {
+      "case_id": "synthetic_M006",
+      "label": "synthetic_M006 · scene-0239 · 纯背景",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "合成遮挡",
+      "note": null,
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 6,
+        "range": "A6:H6"
+      }
+    },
+    {
+      "case_id": "synthetic_M009",
+      "label": "synthetic_M009 · scene-0239 · 纯背景",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "合成遮挡",
+      "note": null,
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 7,
+        "range": "A7:H7"
+      }
+    },
+    {
+      "case_id": "A061_w08",
+      "label": "A061_w08 · scene-0931 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "真实DELETE",
+      "note": "前景灰车被移除，但后方白色保护车的补全部分仍显得扩大、扭曲，左侧带明显模糊拖影",
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 8,
+        "range": "A8:H8"
+      }
+    },
+    {
+      "case_id": "A013",
+      "label": "A013 · scene-0345 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "kind": "真实DELETE",
+      "note": "能移除前景深色目标车，但被它遮住的大巴前部仍被补成灰白方块/平板状车身，车头结构不完整",
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 9,
+        "range": "A9:H9"
+      }
+    },
+    {
+      "case_id": "A048",
+      "label": "A048 · scene-0003 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "否",
+      "OCC_prior_sufficient": "是",
+      "kind": "真实DELETE",
+      "note": "前景白色目标车消失，但左侧被遮区域与停车列仍有车形拖影/延展，后方车辆边缘融合",
+      "user_GPT_example": {
+        "path": "embedded/image4.png",
+        "description": "ChatGPT 图像 2026年10月3日 19_12_12"
+      },
+      "user_GPT_success_note": "是，银色反光的是车门",
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 10,
+        "range": "A10:H10"
+      }
+    },
+    {
+      "case_id": "A042",
+      "label": "A042 · scene-0904 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "否",
+      "OCC_prior_sufficient": "是",
+      "kind": "真实DELETE",
+      "note": "洞内停车列仍有明显的灰白车形涂抹",
+      "user_GPT_example": {
+        "path": "embedded/image5.png",
+        "description": "ChatGPT 图像 2026年10月3日 21_41_40"
+      },
+      "user_GPT_success_note": "否",
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 11,
+        "range": "A11:H11"
+      }
+    },
+    {
+      "case_id": "A007",
+      "label": "A007 · scene-0781 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "否",
+      "kind": "真实DELETE",
+      "note": "目标原位的洞内仍有低矮深色车形/树影样块，背景路口结构不清楚",
+      "user_GPT_example": {
+        "path": "embedded/image3.png",
+        "description": "汽车遮洞修复与分割结果对比"
+      },
+      "user_GPT_success_note": "否",
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 12,
+        "range": "A12:H12"
+      }
+    },
+    {
+      "case_id": "A034",
+      "label": "A034 · scene-0911 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "kind": "真实DELETE",
+      "note": "能去掉前景白车，但邻接保留车的车尾仍有鼓包/延展，洞内路缘和车道边界模糊",
+      "user_GPT_example": {
+        "path": "embedded/image2.png",
+        "description": "ChatGPT 图像 2026年10月3日 17_48_05"
+      },
+      "user_GPT_success_note": "是",
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 13,
+        "range": "A13:H13"
+      }
+    },
+    {
+      "case_id": "A022",
+      "label": "A022 · scene-0770 · 真实DELETE",
+      "human_score": 2,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "kind": "真实DELETE",
+      "note": "能删除目标",
+      "user_GPT_example": null,
+      "user_GPT_success_note": null,
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 14,
+        "range": "A14:H14"
+      }
+    },
+    {
+      "case_id": "A041_w10",
+      "label": "A041_w10 · scene-0920 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "kind": "真实DELETE",
+      "note": "洞内右侧仍有深色车形块，地面带模糊拖影，未形成干净的无车背景",
+      "user_GPT_example": {
+        "path": "embedded/image1.png",
+        "description": "现代办公楼入口与弯曲车道"
+      },
+      "user_GPT_success_note": "是",
+      "source": {
+        "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+        "row": 15,
+        "range": "A15:H15"
+      }
+    }
+  ],
+  "all_sheets": [
+    {
+      "sheet": "v77-nine-full",
+      "rows": [
+        {
+          "row": 1,
+          "cells": [
+            "任务",
+            "原视频的原位重建",
+            "重建视频编辑",
+            "备注"
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            "scene_0230 · 删除 actor 22",
+            1,
+            2,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            "scene_0255 · 删除 actor 25",
+            1,
+            0,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            "official_000 · 删除 actor 12",
+            2,
+            2,
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            "processed_350 · 删除 actor 7",
+            2,
+            2,
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "cells": [
+            "processed_663 · 删除 actor 6",
+            0,
+            0,
+            "原视频 actor 6本身就比较模糊，并且只有一半车身。任务难度过大。这个场景可以暂时不做。"
+          ]
+        },
+        {
+          "row": 7,
+          "cells": [
+            "processed_191 · 删除 actor 12",
+            0,
+            0,
+            "原视频 actor 12 是小目标+有树干遮挡，难度过大。这个场景可以暂时不做。"
+          ]
+        },
+        {
+          "row": 8,
+          "cells": [
+            "processed_425 · 删除 actor 1",
+            0,
+            0,
+            "原视频 actor 1 是小目标+无遮挡，难度一般。这个badcase后续需要解决。"
+          ]
+        },
+        {
+          "row": 9,
+          "cells": [
+            "processed_382 · 删除 actor 4",
+            1,
+            1,
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "cells": [
+            "processed_756 · 删除 actor 3",
+            1,
+            1,
+            "原视频 actor 3 是小目标+黑夜，难度一般。"
+          ]
+        }
+      ]
+    },
+    {
+      "sheet": "v77-delete-audit",
+      "rows": [
+        {
+          "row": 1,
+          "cells": [
+            "任务",
+            "场景",
+            "原视频的原位重建",
+            "重建视频编辑",
+            "备注"
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            "A001",
+            "scene-0637",
+            null,
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "sheet": "之前失败的版本",
+      "rows": [
+        {
+          "row": 1,
+          "cells": [
+            "case",
+            "人工排序",
+            "类型"
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            "temporal_P006 · scene-0289 · 遮挡扫过保护车",
+            "r14 时间 self attention>有效 r7>原始 DriveEditor",
+            "合成遮挡"
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            "temporal_P012 · scene-0291 · 遮挡比例／显露变化",
+            "都失败",
+            "合成遮挡"
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            "temporal_P019 · scene-0289 · 世界静止A＋运动ego",
+            "有效 r7和r14 时间 self attention马路补得比DriveEditor好；但r7和r14无中生有补了一辆车出来，DriveEditor没有幻觉车",
+            "合成遮挡"
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            "synthetic_M007 · scene-0287 · 纯背景",
+            "r14 时间 self attention≈有效 r7>原始 DriveEditor",
+            "合成遮挡"
+          ]
+        },
+        {
+          "row": 6,
+          "cells": [
+            "synthetic_M006 · scene-0239 · 纯背景",
+            "r14 时间 self attention≈有效 r8>原始 DriveEditor",
+            "合成遮挡"
+          ]
+        },
+        {
+          "row": 7,
+          "cells": [
+            "synthetic_M009 · scene-0239 · 纯背景",
+            "r14 时间 self attention≈有效 r9>原始 DriveEditor（重复case）",
+            "合成遮挡"
+          ]
+        },
+        {
+          "row": 8,
+          "cells": [
+            "A061_w08 · scene-0931 · 真实DELETE",
+            "有效r7＞r14时间self attention>原始DriveEditor",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 9,
+          "cells": [
+            "A013 · scene-0345 · 真实DELETE",
+            "没什么区别",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 10,
+          "cells": [
+            "A048 · scene-0003 · 真实DELETE",
+            "没什么区别",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 11,
+          "cells": [
+            "A042 · scene-0904 · 真实DELETE",
+            "没什么区别",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 12,
+          "cells": [
+            "A007 · scene-0781 · 真实DELETE",
+            "没什么区别",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 13,
+          "cells": [
+            "A034 · scene-0911 · 真实DELETE",
+            "没什么区别",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 14,
+          "cells": [
+            "A022 · scene-0770 · 真实DELETE",
+            "都失败",
+            "真实DELETE"
+          ]
+        },
+        {
+          "row": 15,
+          "cells": [
+            "A041_w10 · scene-0920 · 真实DELETE",
+            "都失败",
+            "真实DELETE"
+          ]
+        }
+      ]
+    },
+    {
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "rows": [
+        {
+          "row": 1,
+          "cells": [
+            "case",
+            "人工打分",
+            "RGB prior信息是否足够",
+            "OCC prior信息是否足够",
+            "类型",
+            "备注",
+            "用gpt-image2补景效果",
+            "gpt-image2是否补景成功"
+          ]
+        },
+        {
+          "row": 2,
+          "cells": [
+            "temporal_P006 · scene-0289 · 遮挡扫过保护车",
+            null,
+            null,
+            null,
+            "合成遮挡",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "cells": [
+            "temporal_P012 · scene-0291 · 遮挡比例／显露变化",
+            null,
+            null,
+            null,
+            "合成遮挡",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "cells": [
+            "temporal_P019 · scene-0289 · 世界静止A＋运动ego",
+            1,
+            null,
+            null,
+            "合成遮挡",
+            "洞内仍有大块灰色拱形边缘和黑色残块，未恢复原视频的连续车道与周围车辆边界",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "cells": [
+            "synthetic_M007 · scene-0287 · 纯背景",
+            null,
+            null,
+            null,
+            "合成遮挡",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "cells": [
+            "synthetic_M006 · scene-0239 · 纯背景",
+            null,
+            null,
+            null,
+            "合成遮挡",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 7,
+          "cells": [
+            "synthetic_M009 · scene-0239 · 纯背景",
+            null,
+            null,
+            null,
+            "合成遮挡",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 8,
+          "cells": [
+            "A061_w08 · scene-0931 · 真实DELETE",
+            1,
+            null,
+            null,
+            "真实DELETE",
+            "前景灰车被移除，但后方白色保护车的补全部分仍显得扩大、扭曲，左侧带明显模糊拖影",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 9,
+          "cells": [
+            "A013 · scene-0345 · 真实DELETE",
+            1,
+            null,
+            null,
+            "真实DELETE",
+            "能移除前景深色目标车，但被它遮住的大巴前部仍被补成灰白方块/平板状车身，车头结构不完整",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "cells": [
+            "A048 · scene-0003 · 真实DELETE",
+            1,
+            "否",
+            "是",
+            "真实DELETE",
+            "前景白色目标车消失，但左侧被遮区域与停车列仍有车形拖影/延展，后方车辆边缘融合",
+            "=_xlfn.DISPIMG(\"ID_65E6EB2E0BAE49D695A5DCC59144AD40\",1)",
+            "是，银色反光的是车门"
+          ]
+        },
+        {
+          "row": 11,
+          "cells": [
+            "A042 · scene-0904 · 真实DELETE",
+            1,
+            "否",
+            "是",
+            "真实DELETE",
+            "洞内停车列仍有明显的灰白车形涂抹",
+            "=_xlfn.DISPIMG(\"ID_7CDE1EFF3737468AA4993938BBFD4D20\",1)",
+            "否"
+          ]
+        },
+        {
+          "row": 12,
+          "cells": [
+            "A007 · scene-0781 · 真实DELETE",
+            1,
+            "是",
+            "否",
+            "真实DELETE",
+            "目标原位的洞内仍有低矮深色车形/树影样块，背景路口结构不清楚",
+            "=_xlfn.DISPIMG(\"ID_03C8A70F78A4490385FAE3B1EDD8C61D\",1)",
+            "否"
+          ]
+        },
+        {
+          "row": 13,
+          "cells": [
+            "A034 · scene-0911 · 真实DELETE",
+            1,
+            "是",
+            "是",
+            "真实DELETE",
+            "能去掉前景白车，但邻接保留车的车尾仍有鼓包/延展，洞内路缘和车道边界模糊",
+            "=_xlfn.DISPIMG(\"ID_62D049ADACF74C269B62901F32683CBB\",1)",
+            "是"
+          ]
+        },
+        {
+          "row": 14,
+          "cells": [
+            "A022 · scene-0770 · 真实DELETE",
+            2,
+            "是",
+            "是",
+            "真实DELETE",
+            "能删除目标",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 15,
+          "cells": [
+            "A041_w10 · scene-0920 · 真实DELETE",
+            1,
+            "是",
+            "是",
+            "真实DELETE",
+            "洞内右侧仍有深色车形块，地面带模糊拖影，未形成干净的无车背景",
+            "=_xlfn.DISPIMG(\"ID_21173B1E0FDE4ABB8CC584AE3AC3AF1F\",1)",
+            "是"
+          ]
+        }
+      ]
+    }
+  ],
+  "embedded_images": {
+    "ID_21173B1E0FDE4ABB8CC584AE3AC3AF1F": {
+      "path": "embedded/image1.png",
+      "description": "现代办公楼入口与弯曲车道"
+    },
+    "ID_62D049ADACF74C269B62901F32683CBB": {
+      "path": "embedded/image2.png",
+      "description": "ChatGPT 图像 2026年10月3日 17_48_05"
+    },
+    "ID_03C8A70F78A4490385FAE3B1EDD8C61D": {
+      "path": "embedded/image3.png",
+      "description": "汽车遮洞修复与分割结果对比"
+    },
+    "ID_65E6EB2E0BAE49D695A5DCC59144AD40": {
+      "path": "embedded/image4.png",
+      "description": "ChatGPT 图像 2026年10月3日 19_12_12"
+    },
+    "ID_7CDE1EFF3737468AA4993938BBFD4D20": {
+      "path": "embedded/image5.png",
+      "description": "ChatGPT 图像 2026年10月3日 21_41_40"
+    }
+  },
+  "blank_cells_remain_null": true,
+  "edited_source_workbook": false,
+  "GPT_examples_scope": "用户提供的静态结果，不是本轮模型生成或视频通过率"
+}
