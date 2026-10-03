@@ -107,6 +107,7 @@ def main():
     page='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>v77 r45 · 条件分支三组对照</title>
     <style>body{font:16px/1.65 system-ui;background:#121922;color:#e4ecf5;margin:auto;padding:24px;max-width:1700px}h1,h2{line-height:1.3}a{color:#8bc5ff}article{padding:20px;background:#1c2633;margin:24px 0;border-radius:10px}video,img{width:100%;display:block}figure{margin:0}figcaption{min-height:2em}.inputs,.outputs{display:grid;gap:10px}.inputs{grid-template-columns:repeat(2,1fr);max-width:1120px;margin:auto}.outputs{grid-template-columns:repeat(3,1fr)}.note{background:#293649;padding:12px}.controls,.scores,nav{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:14px 0}button,select,input{font:inherit}button,select{padding:5px}svg{width:100%;height:auto}summary{cursor:pointer}details{margin:14px 0}small{color:#b9c6d5}@media(max-width:800px){.inputs,.outputs{grid-template-columns:1fr}}</style>
     <h1>r45：小条件分支能否帮助真实 DELETE？</h1><p>160 步训练完成，只训练 157,888 个 Adapter 参数，DriveEditor 主干冻结。固定 4 个合成开发例 + 8 个真实 DELETE 开发例，三组共 36 窗。最终160步 checkpoint；seed42、25步、10帧，同输入、mask 和写回规则。</p>'''
+    page+='<p class="note"><a href="conditions.html">CPU先验入口：修复后的 O/N/U/Q 准备页</a> · <a href="conditions.html#A013">A013</a> · <a href="conditions.html#A007">A007</a> · <a href="conditions.html#A022">A022</a></p>'
     page+=architecture
     reused=sum('reused_from' in v for r in rows for v in r['metrics'].values())
     page+=f'<p>对照总计36窗：{36-reused}窗本轮新增推理，{reused}窗复用已核对输入相同且不依赖条件的原模型结果。复用来源记录在逐例JSON中。</p>'
@@ -119,7 +120,7 @@ def main():
     n_fractions=[inventory[c['case_id']]['hole_condition_fraction']['N'] for c in cases if c['kind']=='real']
     page+=f'<p>O：GT 车辆包络保守内核；N：实测 LiDAR 背景返回；U：未知；Q：启发式置信度。GT 相机与车辆框是本轮 POC 的辅助输入。N 占各真实 case 删除洞的 {min(n_fractions):.3%}–{max(n_fractions):.3%}，本轮对背景约束很弱，不能据此否定充分背景条件。全部评测属于已曝光 DEV。</p>'
     page+='''
-    <p><a href="conditions.html">保留 CPU 条件图和全部24例输入说明</a> · <a href="results_summary.json">逐例原始指标</a> · <button onclick="exportScores()">导出人工评分 JSON</button></p>'''
+    <p><a href="conditions.html">修复后的 CPU 准备页 · O/N/U/Q 先验（全部24例）</a> · <a href="results_summary.json">逐例原始指标</a> · <button onclick="exportScores()">导出人工评分 JSON</button></p>'''
     page+='<nav>'+''.join(f'<a href="#{c["case_id"]}">{c["case_id"]}</a>' for c in cases)+'</nav>'+''.join(cards)
     page+='''<script>
     const storageKey='v77-r45-human-review-v1';let saved={};try{saved=JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(e){}
