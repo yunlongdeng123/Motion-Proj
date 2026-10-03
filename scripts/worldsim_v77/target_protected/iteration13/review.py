@@ -31,7 +31,10 @@ def main(conditions_only=False):
             s=stats[f];denom=max(1,s['H'])
             caption=f"f{f:02} · 当帧洞内 O {s['O_H']/denom:.2%} / N {s['N_H']/denom:.3%} / U {s['U_H']/denom:.2%}"
             figures.append(f'<figure><figcaption>{caption} · 点击看原尺寸</figcaption><a href="assets/{cid}/{f:02}.jpg" target="_blank" rel="noopener"><img loading="lazy" src="assets/{cid}/{f:02}.jpg"></a></figure>')
-        cards.append(f'''<article id="{cid}"><h2>{cid} · {html.escape(c['scene'])} · {c['split']}</h2>
+        diagnostic=''
+        if cid=='A022' and (out/'a022_condition_audit/index.html').is_file():
+            diagnostic='<p class="note"><a href="a022_condition_audit/index.html">A022 unknown 逐层诊断与真实显露对照</a>：首帧洞内全 U 来自当前两份稀疏 LiDAR 的取样规则，后续 RGB 已有真实背景显露，却未进入 N 构建。不能解释为整段视频没有证据。</p>'
+        cards.append(f'''<article id="{cid}"><h2>{cid} · {html.escape(c['scene'])} · {c['split']}</h2>{diagnostic}
         <p>{html.escape(c['type'])}｜10帧累计洞内 O {known['O']:.1%} / N {known['N']:.2%} / U {known['U']:.1%}。
         O 是 GT 车辆框的保守内核先验（Q=0.5），不是精确分割；N 是排除实体后确实有观测支持的背景返回（道路、护栏等）；没有依据的区域保持灰色 U。</p>
         <p>左：实际遮洞输入；右：绿 O / 蓝 N / 灰 U，黄线为洞边界。此处不是 DriveEditor 的生成结果。</p>
@@ -54,7 +57,7 @@ def main(conditions_only=False):
     绿 O：需要保留的车辆 GT 包络保守内核，已排除待删目标，不能当完整车体分割；蓝 N：有实测 LiDAR 观测依据的背景点，点间没有依据的路面仍是 U；灰 U：未知，不代表空地或确定背景。
     黄线是修复洞 H，H 内也可能存在需要恢复的保护车 B，因此可以有绿色。Q 是置信度通道，本页颜色主要展示 O/N/U。</p>'''
     if (O/'time_fix_audit.json').exists():
-        page+='<h2>r46 时间边界修复检查</h2><p>关键帧直接取关联 sample 标注，非关键帧用官方 SDK 插值。A013、A007 原首帧整张灰色是漏标，已恢复；A022 首帧洞内仍缺可靠返回，保持 U 正确。下表为当前 f00 洞内像素数，不是模型输出。</p><nav><a href="#A013">先看 A013</a><a href="#A007">先看 A007</a><a href="#A022">先看 A022</a></nav><table><tr><th>case</th><th>H 像素</th><th>O</th><th>N</th><th>U</th></tr>'
+        page+='<h2>r46 时间边界修复检查</h2><p>关键帧直接取关联 sample 标注，非关键帧用官方 SDK 插值。A013、A007 原首帧整张灰色是漏标，已恢复；A022 首帧洞内全 U 是当前稀疏条件规则的结果，不代表其他帧没有背景显露。下表为当前 f00 洞内像素数，不是模型输出。</p><nav><a href="#A013">先看 A013</a><a href="#A007">先看 A007</a><a href="#A022">先看 A022</a></nav><table><tr><th>case</th><th>H 像素</th><th>O</th><th>N</th><th>U</th></tr>'
         for cid in ['A013','A007','A022']:
             s=byid[cid]['statistics'][0]
             page+=f'<tr><td><a href="#{cid}">{cid}</a></td><td>{s["H"]}</td><td>{s["O_H"]}</td><td>{s["N_H"]}</td><td>{s["U_H"]}</td></tr>'

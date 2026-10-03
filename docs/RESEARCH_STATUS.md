@@ -11,4 +11,4 @@
 
 GPU训练/推理已结束，无后续自动实验；按最新要求停止并通知，未自动关机。本地审核 `outputs/v77-onuq-r46/index.html`；修复后的CPU先验页 `outputs/v77-onuq-r46/conditions.html`，24例×f00/f05/f09。
 
-细节与组件图见 [r46报告](v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md)，沿用 [V77-F02](research_failures/entries/V77-F02.md)。N仍稀疏，A022首帧洞内无背景返回仍应U。
+细节与组件图见 [r46报告](v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md)，沿用 [V77-F02](research_failures/entries/V77-F02.md)。A022只读诊断已完成：f00全U来自两份稀疏LiDAR的现有取样规则；f07-f09 RGB真实显露未被背景条件利用，属于覆盖不足。审核 `outputs/v77-onuq-r46/a022_condition_audit/index.html`。未追加训练或推理，原r46结果保留。
