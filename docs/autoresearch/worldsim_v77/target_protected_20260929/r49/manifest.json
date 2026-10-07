@@ -1,0 +1,134 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "eval_seed": 42,
+  "eval_steps": 25,
+  "train_seed": 6201,
+  "train_size": [
+    320,
+    576
+  ],
+  "eval_size": [
+    576,
+    1024
+  ],
+  "lr": 0.0001,
+  "weight_decay": 0.01,
+  "prior_dropout": {
+    "RGB": 0.25,
+    "geometry": 0.25
+  },
+  "run_id": "r49",
+  "parent_run": "r47",
+  "cases": [
+    {
+      "case_id": "M010",
+      "scene": "scene-0240",
+      "split": "train",
+      "kind": "synthetic"
+    },
+    {
+      "case_id": "M013",
+      "scene": "scene-0228",
+      "split": "train",
+      "kind": "synthetic"
+    },
+    {
+      "case_id": "M018",
+      "scene": "scene-0290",
+      "split": "train",
+      "kind": "synthetic"
+    },
+    {
+      "case_id": "M042",
+      "scene": "scene-0295",
+      "split": "train",
+      "kind": "synthetic"
+    },
+    {
+      "case_id": "A034",
+      "scene": "scene-0911",
+      "split": "real_DEV",
+      "kind": "real"
+    },
+    {
+      "case_id": "A061_w08",
+      "scene": "scene-0931",
+      "split": "real_DEV",
+      "kind": "real"
+    },
+    {
+      "case_id": "A022",
+      "scene": "scene-0770",
+      "split": "real_DEV",
+      "kind": "real"
+    },
+    {
+      "case_id": "M003",
+      "scene": "scene-0229",
+      "split": "validation",
+      "kind": "synthetic"
+    },
+    {
+      "case_id": "M006",
+      "scene": "scene-0239",
+      "split": "validation",
+      "kind": "synthetic"
+    }
+  ],
+  "train_ids": [
+    "M010",
+    "M013",
+    "M018",
+    "M042"
+  ],
+  "eval_ids": [
+    "A034",
+    "A061_w08",
+    "A022",
+    "M003",
+    "M006"
+  ],
+  "diagnostic_ids": [
+    "A034",
+    "A061_w08"
+  ],
+  "train_steps": 64,
+  "initial_checkpoint": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r47/training/branch_0320.safetensors",
+  "primary_hypothesis": "参考的身份与局部位置软绑定能减少半透明车形，且保住后车",
+  "architecture_change": "仅原RGB cross-attention logits增加无参数soft spatial bias；原state_dict与389856参数范围不变",
+  "routing": {
+    "source_patch_purity": 0.95,
+    "actor_confidence": 0.5,
+    "background_confidence": 0.8,
+    "formula": "min(Qquery,Qref) * log(0.1 + 0.9 * similarity)",
+    "sigma": "max(one query cell, projected source patch radius)",
+    "unknown": "bias=0; original generation remains available",
+    "off": "exact original r47 attention path"
+  },
+  "fixed_controls": [
+    "r46 official weights + r21 full SAM",
+    "r47 step320",
+    "r48 step64 same data/budget"
+  ],
+  "GPU_plan": {
+    "zero_shot_windows": 9,
+    "after_64_windows": 11,
+    "max_total_windows": 20,
+    "first": "冻结r47权重：5correct+两个真实例各wrong/noRGB",
+    "gate": "先直接review零训练输出；若未达标且无输入/工程反证，才一次64步",
+    "after": "5correct+两个真实例各wrong/noRGB+两个真实例同权重routing_off",
+    "no_auto_training_from_CPU": true,
+    "no_128_or_grid": true
+  },
+  "role_contract": {
+    "BUILD": "只有M010/M013/M018/M042；Y仅训练监督，不进入参考或空间对应",
+    "QUERY": "A034/A061_w08/A022/M003/M006；GT合成仅度量；真实DEV不训练",
+    "geometry": "合法GT pose/tracks与已有LiDAR辅助；框面proxy不是真实silhouette"
+  },
+  "scope": "4旧train+3真实DEV+2合成DEV；不是未曝光泛化评测",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "GPU_jobs": 0,
+  "human_verdict": null
+}
