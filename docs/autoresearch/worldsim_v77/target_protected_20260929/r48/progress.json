@@ -2,14 +2,28 @@
   "task_id": "WS-V77-TARGET-PROTECTED-20260929",
   "run_id": "r48",
   "parent_run": "r47",
-  "stage": "GPU_running",
-  "phase": "diagnose",
-  "controller_pid": 1414,
-  "GPU_jobs": 1,
-  "max_steps": 128,
-  "human_verdict": null,
+  "stage": "complete_pending_human_review",
+  "GPU_jobs": 0,
+  "training_steps": 128,
+  "new_inference_windows": 20,
+  "unique_query_cases": 7,
+  "real_query_cases": 5,
+  "synthetic_query_cases": 2,
+  "train_cases": [
+    "M010",
+    "M013",
+    "M018",
+    "M042"
+  ],
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "updated V77-F02"
+  "failure_ledger_delta": "updated V77-F02",
+  "assistant_review_model": "gpt-5.6-sol",
+  "assistant_review_reasoning": "xhigh",
+  "fast_enabled": false,
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "inputs_preserved": true,
+  "no_auto_extra_training": true
 }

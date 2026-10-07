@@ -1,0 +1,1749 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r48",
+  "diagnostic": [
+    {
+      "case_id": "A034",
+      "correct_wrong_none_same_instruction": true,
+      "encoding": {
+        "case_id": "A034",
+        "slots": [
+          {
+            "slot": 0,
+            "valid_pixels": 47486,
+            "RGB_MAE_on_valid": 0.013159186374573697,
+            "latent_rms": 4.279276371002197
+          },
+          {
+            "slot": 1,
+            "valid_pixels": 62208,
+            "RGB_MAE_on_valid": 0.01083226586244923,
+            "latent_rms": 4.966693878173828
+          },
+          {
+            "slot": 2,
+            "valid_pixels": 54528,
+            "RGB_MAE_on_valid": 0.009439247138605052,
+            "latent_rms": 4.877260684967041
+          },
+          {
+            "slot": 3,
+            "valid_pixels": 47872,
+            "RGB_MAE_on_valid": 0.009896816346859601,
+            "latent_rms": 4.805100917816162
+          },
+          {
+            "slot": 4,
+            "valid_pixels": 36058,
+            "RGB_MAE_on_valid": 0.02316366116028751,
+            "latent_rms": 4.1496195793151855
+          },
+          {
+            "slot": 5,
+            "valid_pixels": 36864,
+            "RGB_MAE_on_valid": 0.02119388843500364,
+            "latent_rms": 4.201779365539551
+          }
+        ],
+        "encoder": "official frozen cond_frames VAE",
+        "scope": "重构误差/图片仅检查编码损失，不代表同一保护车已被生成器正确使用"
+      },
+      "conditions": [
+        {
+          "condition": "RGB_and_geometry",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.0,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.45933258533477783,
+              "gated_delta_rms": 0.009106559678912163,
+              "delta_to_activation": 0.019825633908108174,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2039859294891357,
+              "gated_delta_rms": 0.009827621281147003,
+              "delta_to_activation": 0.008162571538786146,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.140693187713623,
+              "gated_delta_rms": 0.010690867900848389,
+              "delta_to_activation": 0.004994114972761145,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.571188449859619,
+              "gated_delta_rms": 0.012193643487989902,
+              "delta_to_activation": 0.002667499627665617,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7408481240272522,
+              "gated_delta_rms": 0.025174083188176155,
+              "delta_to_activation": 0.033980086298025264,
+              "rgb_head_rms": 0.061192501336336136,
+              "geometry_head_rms": 0.061419326812028885
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4701039791107178,
+              "gated_delta_rms": 0.03292185440659523,
+              "delta_to_activation": 0.022394235288384176,
+              "rgb_head_rms": 0.08831920474767685,
+              "geometry_head_rms": 0.06286648660898209
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 3.020908832550049,
+              "gated_delta_rms": 0.025827957317233086,
+              "delta_to_activation": 0.008549730809132315,
+              "rgb_head_rms": 0.050927575677633286,
+              "geometry_head_rms": 0.0602407343685627
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.6859331130981445,
+              "gated_delta_rms": 0.02956247888505459,
+              "delta_to_activation": 0.004421593573399637,
+              "rgb_head_rms": 0.045632001012563705,
+              "geometry_head_rms": 0.0560106560587883
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6920862197875977,
+              "gated_delta_rms": 0.009106075391173363,
+              "delta_to_activation": 0.01315742913356667,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.4102805852890015,
+              "gated_delta_rms": 0.00982714630663395,
+              "delta_to_activation": 0.006968220657040474,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.5080580711364746,
+              "gated_delta_rms": 0.010690328665077686,
+              "delta_to_activation": 0.004262392800272597,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.634784698486328,
+              "gated_delta_rms": 0.012193944305181503,
+              "delta_to_activation": 0.002164047955276297,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7195008397102356,
+              "gated_delta_rms": 0.02450932189822197,
+              "delta_to_activation": 0.03406434092292735,
+              "rgb_head_rms": 0.0592363141477108,
+              "geometry_head_rms": 0.061419326812028885
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.4234594106674194,
+              "gated_delta_rms": 0.029159070923924446,
+              "delta_to_activation": 0.020484652182848395,
+              "rgb_head_rms": 0.06957084685564041,
+              "geometry_head_rms": 0.06286648660898209
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.423577070236206,
+              "gated_delta_rms": 0.025435173884034157,
+              "delta_to_activation": 0.0104948896391214,
+              "rgb_head_rms": 0.049107763916254044,
+              "geometry_head_rms": 0.0602407343685627
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.402583122253418,
+              "gated_delta_rms": 0.02957203797996044,
+              "delta_to_activation": 0.00547368495972829,
+              "rgb_head_rms": 0.04671734943985939,
+              "geometry_head_rms": 0.0560106560587883
+            }
+          ]
+        },
+        {
+          "condition": "mismatched_RGB",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.00040162731027455095,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.45933258533477783,
+              "gated_delta_rms": 0.009106559678912163,
+              "delta_to_activation": 0.019825633908108174,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2039859294891357,
+              "gated_delta_rms": 0.009827621281147003,
+              "delta_to_activation": 0.008162571538786146,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.140693187713623,
+              "gated_delta_rms": 0.010690867900848389,
+              "delta_to_activation": 0.004994114972761145,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.571188449859619,
+              "gated_delta_rms": 0.012193643487989902,
+              "delta_to_activation": 0.002667499627665617,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7408481240272522,
+              "gated_delta_rms": 0.025431839749217033,
+              "delta_to_activation": 0.034328007218226445,
+              "rgb_head_rms": 0.06141547113656998,
+              "geometry_head_rms": 0.061419326812028885
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4701368808746338,
+              "gated_delta_rms": 0.03227684646844864,
+              "delta_to_activation": 0.021954994047388335,
+              "rgb_head_rms": 0.08645714074373245,
+              "geometry_head_rms": 0.06286648660898209
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 3.0208938121795654,
+              "gated_delta_rms": 0.026681765913963318,
+              "delta_to_activation": 0.0088324077484579,
+              "rgb_head_rms": 0.05458486080169678,
+              "geometry_head_rms": 0.0602407343685627
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.685886383056641,
+              "gated_delta_rms": 0.02880164422094822,
+              "delta_to_activation": 0.004307827350153196,
+              "rgb_head_rms": 0.04222099110484123,
+              "geometry_head_rms": 0.0560106560587883
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6920815110206604,
+              "gated_delta_rms": 0.009106067940592766,
+              "delta_to_activation": 0.013157507888288214,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.4102779626846313,
+              "gated_delta_rms": 0.009827174246311188,
+              "delta_to_activation": 0.006968253426866287,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.5080549716949463,
+              "gated_delta_rms": 0.010690310038626194,
+              "delta_to_activation": 0.004262390641063848,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.63480806350708,
+              "gated_delta_rms": 0.01219439972192049,
+              "delta_to_activation": 0.002164119803990404,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7195024490356445,
+              "gated_delta_rms": 0.024453209713101387,
+              "delta_to_activation": 0.03398627724738983,
+              "rgb_head_rms": 0.059325214475393295,
+              "geometry_head_rms": 0.061419326812028885
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.423506259918213,
+              "gated_delta_rms": 0.028120236471295357,
+              "delta_to_activation": 0.01975420640082819,
+              "rgb_head_rms": 0.06517691910266876,
+              "geometry_head_rms": 0.06286648660898209
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4235944747924805,
+              "gated_delta_rms": 0.025952234864234924,
+              "delta_to_activation": 0.01070815894909856,
+              "rgb_head_rms": 0.05071818828582764,
+              "geometry_head_rms": 0.0602407343685627
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.402577877044678,
+              "gated_delta_rms": 0.02909707836806774,
+              "delta_to_activation": 0.005385776758850619,
+              "rgb_head_rms": 0.044835031032562256,
+              "geometry_head_rms": 0.0560106560587883
+            }
+          ]
+        },
+        {
+          "condition": "geometry_only",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.006600209755708598,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.45933258533477783,
+              "gated_delta_rms": 0.009106559678912163,
+              "delta_to_activation": 0.019825633908108174,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2039859294891357,
+              "gated_delta_rms": 0.009827621281147003,
+              "delta_to_activation": 0.008162571538786146,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.140693187713623,
+              "gated_delta_rms": 0.010690867900848389,
+              "delta_to_activation": 0.004994114972761145,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.571188449859619,
+              "gated_delta_rms": 0.012193643487989902,
+              "delta_to_activation": 0.002667499627665617,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7408481240272522,
+              "gated_delta_rms": 0.022321665659546852,
+              "delta_to_activation": 0.030129880788799496,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.061419326812028885
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4700648784637451,
+              "gated_delta_rms": 0.02409379743039608,
+              "delta_to_activation": 0.016389615032211848,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.06286648660898209
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 3.020301103591919,
+              "gated_delta_rms": 0.024682462215423584,
+              "delta_to_activation": 0.00817218594068974,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.0602407343685627
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.6847991943359375,
+              "gated_delta_rms": 0.02642294019460678,
+              "delta_to_activation": 0.003952690189556489,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.0560106560587883
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6920180320739746,
+              "gated_delta_rms": 0.009106092154979706,
+              "delta_to_activation": 0.013158749819984883,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.4102416038513184,
+              "gated_delta_rms": 0.00982719287276268,
+              "delta_to_activation": 0.006968446290284569,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.508140802383423,
+              "gated_delta_rms": 0.010690080001950264,
+              "delta_to_activation": 0.004262153062456362,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.634964942932129,
+              "gated_delta_rms": 0.012193696573376656,
+              "delta_to_activation": 0.002163934770999963,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.719409704208374,
+              "gated_delta_rms": 0.02232166938483715,
+              "delta_to_activation": 0.031027756859909928,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.061419326812028885
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.4232598543167114,
+              "gated_delta_rms": 0.02409394644200802,
+              "delta_to_activation": 0.016928705161556888,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.06286648660898209
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4235126972198486,
+              "gated_delta_rms": 0.024682248011231422,
+              "delta_to_activation": 0.010184492963270154,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.0602407343685627
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.402040481567383,
+              "gated_delta_rms": 0.026424527168273926,
+              "delta_to_activation": 0.004891582589660073,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.0560106560587883
+            }
+          ]
+        },
+        {
+          "condition": "null_priors",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.0029666398046424313,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.45933258533477783,
+              "gated_delta_rms": 0.009106559678912163,
+              "delta_to_activation": 0.019825633908108174,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2039859294891357,
+              "gated_delta_rms": 0.009827621281147003,
+              "delta_to_activation": 0.008162571538786146,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.140693187713623,
+              "gated_delta_rms": 0.010690867900848389,
+              "delta_to_activation": 0.004994114972761145,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.571188449859619,
+              "gated_delta_rms": 0.012193643487989902,
+              "delta_to_activation": 0.002667499627665617,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7408481240272522,
+              "gated_delta_rms": 0.024798918515443802,
+              "delta_to_activation": 0.033473687401186655,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.07395380735397339
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4701642990112305,
+              "gated_delta_rms": 0.026853084564208984,
+              "delta_to_activation": 0.01826536298172199,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.07585018873214722
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 3.020446538925171,
+              "gated_delta_rms": 0.0275010634213686,
+              "delta_to_activation": 0.009104966125689111,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.07259538769721985
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.684985160827637,
+              "gated_delta_rms": 0.02967514842748642,
+              "delta_to_activation": 0.004439074689555852,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.06720216572284698
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6920822262763977,
+              "gated_delta_rms": 0.009106077253818512,
+              "delta_to_activation": 0.013157507747037282,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.410268783569336,
+              "gated_delta_rms": 0.009827138856053352,
+              "delta_to_activation": 0.006968273686935935,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.5081992149353027,
+              "gated_delta_rms": 0.010690251365303993,
+              "delta_to_activation": 0.004262122123971616,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.634915828704834,
+              "gated_delta_rms": 0.012193838134407997,
+              "delta_to_activation": 0.002163978754090939,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7194873094558716,
+              "gated_delta_rms": 0.024799194186925888,
+              "delta_to_activation": 0.034467868801856746,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.07395380735397339
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.4236818552017212,
+              "gated_delta_rms": 0.026853302493691444,
+              "delta_to_activation": 0.018861870294671,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.07585018873214722
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4239442348480225,
+              "gated_delta_rms": 0.027500983327627182,
+              "delta_to_activation": 0.011345551160896014,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.07259538769721985
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.402722358703613,
+              "gated_delta_rms": 0.029669201001524925,
+              "delta_to_activation": 0.00549152798009855,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.06720216572284698
+            }
+          ]
+        }
+      ],
+      "scope": "像素差是敏感性，不是成功率；全图RMS受mask面积影响，不据小幅响应断言忽略RGB"
+    },
+    {
+      "case_id": "A061_w08",
+      "correct_wrong_none_same_instruction": true,
+      "encoding": {
+        "case_id": "A061_w08",
+        "slots": [
+          {
+            "slot": 0,
+            "valid_pixels": 25955,
+            "RGB_MAE_on_valid": 0.035829634749937986,
+            "latent_rms": 4.177319049835205
+          },
+          {
+            "slot": 1,
+            "valid_pixels": 43008,
+            "RGB_MAE_on_valid": 0.012229340520930594,
+            "latent_rms": 4.203772068023682
+          },
+          {
+            "slot": 2,
+            "valid_pixels": 43776,
+            "RGB_MAE_on_valid": 0.008688946460650536,
+            "latent_rms": 4.108738899230957
+          },
+          {
+            "slot": 3,
+            "valid_pixels": 22460,
+            "RGB_MAE_on_valid": 0.009667964544084182,
+            "latent_rms": 4.335052013397217
+          },
+          {
+            "slot": 4,
+            "valid_pixels": 36864,
+            "RGB_MAE_on_valid": 0.022965459331880902,
+            "latent_rms": 3.9734115600585938
+          },
+          {
+            "slot": 5,
+            "valid_pixels": 35810,
+            "RGB_MAE_on_valid": 0.026499042696292892,
+            "latent_rms": 4.107716083526611
+          }
+        ],
+        "encoder": "official frozen cond_frames VAE",
+        "scope": "重构误差/图片仅检查编码损失，不代表同一保护车已被生成器正确使用"
+      },
+      "conditions": [
+        {
+          "condition": "RGB_and_geometry",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.0,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.46180519461631775,
+              "gated_delta_rms": 0.013964331708848476,
+              "delta_to_activation": 0.030238576507244534,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2214194536209106,
+              "gated_delta_rms": 0.01452705543488264,
+              "delta_to_activation": 0.011893584461764577,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.132268190383911,
+              "gated_delta_rms": 0.015497399494051933,
+              "delta_to_activation": 0.007268034839117332,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.530752658843994,
+              "gated_delta_rms": 0.015828704461455345,
+              "delta_to_activation": 0.003493614781764314,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7191916704177856,
+              "gated_delta_rms": 0.03846098855137825,
+              "delta_to_activation": 0.053478078422454306,
+              "rgb_head_rms": 0.06171279400587082,
+              "geometry_head_rms": 0.05915389582514763
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4060231447219849,
+              "gated_delta_rms": 0.04529324546456337,
+              "delta_to_activation": 0.032213726804276234,
+              "rgb_head_rms": 0.08633334189653397,
+              "geometry_head_rms": 0.06053648889064789
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.9265756607055664,
+              "gated_delta_rms": 0.03708798810839653,
+              "delta_to_activation": 0.012672827361468252,
+              "rgb_head_rms": 0.05480223521590233,
+              "geometry_head_rms": 0.05801357328891754
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.421266555786133,
+              "gated_delta_rms": 0.037605784833431244,
+              "delta_to_activation": 0.005856443507947055,
+              "rgb_head_rms": 0.045544762164354324,
+              "geometry_head_rms": 0.05403466895222664
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.680608868598938,
+              "gated_delta_rms": 0.013963993638753891,
+              "delta_to_activation": 0.020516914020675868,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3795491456985474,
+              "gated_delta_rms": 0.014526129700243473,
+              "delta_to_activation": 0.010529621032738225,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4308040142059326,
+              "gated_delta_rms": 0.015497157350182533,
+              "delta_to_activation": 0.0063753216053680775,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.4037861824035645,
+              "gated_delta_rms": 0.01583244651556015,
+              "delta_to_activation": 0.002929880269340708,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7089423537254333,
+              "gated_delta_rms": 0.03704473376274109,
+              "delta_to_activation": 0.052253520428105445,
+              "rgb_head_rms": 0.05946502834558487,
+              "geometry_head_rms": 0.05915389582514763
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3796354532241821,
+              "gated_delta_rms": 0.04091121256351471,
+              "delta_to_activation": 0.029653639639301798,
+              "rgb_head_rms": 0.06674961745738983,
+              "geometry_head_rms": 0.06053648889064789
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.409939765930176,
+              "gated_delta_rms": 0.03692856431007385,
+              "delta_to_activation": 0.015323438715000564,
+              "rgb_head_rms": 0.0519455224275589,
+              "geometry_head_rms": 0.05801357328891754
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.358550548553467,
+              "gated_delta_rms": 0.03771885484457016,
+              "delta_to_activation": 0.00703900327202331,
+              "rgb_head_rms": 0.047645047307014465,
+              "geometry_head_rms": 0.05403466895222664
+            }
+          ]
+        },
+        {
+          "condition": "mismatched_RGB",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.0011433668580566024,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.46180519461631775,
+              "gated_delta_rms": 0.013964331708848476,
+              "delta_to_activation": 0.030238576507244534,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2214194536209106,
+              "gated_delta_rms": 0.01452705543488264,
+              "delta_to_activation": 0.011893584461764577,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.132268190383911,
+              "gated_delta_rms": 0.015497399494051933,
+              "delta_to_activation": 0.007268034839117332,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.530752658843994,
+              "gated_delta_rms": 0.015828704461455345,
+              "delta_to_activation": 0.003493614781764314,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7191916704177856,
+              "gated_delta_rms": 0.03797546401619911,
+              "delta_to_activation": 0.05280298087175952,
+              "rgb_head_rms": 0.06115216389298439,
+              "geometry_head_rms": 0.05915389582514763
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4059714078903198,
+              "gated_delta_rms": 0.045059073716402054,
+              "delta_to_activation": 0.03204835707435462,
+              "rgb_head_rms": 0.08529157191514969,
+              "geometry_head_rms": 0.06053648889064789
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.9265716075897217,
+              "gated_delta_rms": 0.03628820925951004,
+              "delta_to_activation": 0.012399563081047055,
+              "rgb_head_rms": 0.05131751671433449,
+              "geometry_head_rms": 0.05801357328891754
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.421121120452881,
+              "gated_delta_rms": 0.03727392852306366,
+              "delta_to_activation": 0.00580489416471788,
+              "rgb_head_rms": 0.04654429852962494,
+              "geometry_head_rms": 0.05403466895222664
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6805987358093262,
+              "gated_delta_rms": 0.013963980600237846,
+              "delta_to_activation": 0.020517200320145673,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3795546293258667,
+              "gated_delta_rms": 0.014526087790727615,
+              "delta_to_activation": 0.010529548799257,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.430943250656128,
+              "gated_delta_rms": 0.015497134998440742,
+              "delta_to_activation": 0.006374947253193986,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.403941631317139,
+              "gated_delta_rms": 0.01583229750394821,
+              "delta_to_activation": 0.0029297684142619617,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7089225649833679,
+              "gated_delta_rms": 0.036953285336494446,
+              "delta_to_activation": 0.05212598266971712,
+              "rgb_head_rms": 0.05910557135939598,
+              "geometry_head_rms": 0.05915389582514763
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3796136379241943,
+              "gated_delta_rms": 0.04108811914920807,
+              "delta_to_activation": 0.02978233761956022,
+              "rgb_head_rms": 0.06720492243766785,
+              "geometry_head_rms": 0.06053648889064789
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4100303649902344,
+              "gated_delta_rms": 0.03619147464632988,
+              "delta_to_activation": 0.01501702018865498,
+              "rgb_head_rms": 0.049853868782520294,
+              "geometry_head_rms": 0.05801357328891754
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.358640193939209,
+              "gated_delta_rms": 0.037734873592853546,
+              "delta_to_activation": 0.007041874846445723,
+              "rgb_head_rms": 0.04749608784914017,
+              "geometry_head_rms": 0.05403466895222664
+            }
+          ]
+        },
+        {
+          "condition": "geometry_only",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.010693685067662946,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.46180519461631775,
+              "gated_delta_rms": 0.013964331708848476,
+              "delta_to_activation": 0.030238576507244534,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2214194536209106,
+              "gated_delta_rms": 0.01452705543488264,
+              "delta_to_activation": 0.011893584461764577,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.132268190383911,
+              "gated_delta_rms": 0.015497399494051933,
+              "delta_to_activation": 0.007268034839117332,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.530752658843994,
+              "gated_delta_rms": 0.015828704461455345,
+              "delta_to_activation": 0.003493614781764314,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7191916704177856,
+              "gated_delta_rms": 0.03370102494955063,
+              "delta_to_activation": 0.04685958741704192,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.05915389582514763
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4059890508651733,
+              "gated_delta_rms": 0.03508862480521202,
+              "delta_to_activation": 0.024956542004093335,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.06053648889064789
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.926290273666382,
+              "gated_delta_rms": 0.035267528146505356,
+              "delta_to_activation": 0.012051958229802772,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.05801357328891754
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.420305252075195,
+              "gated_delta_rms": 0.03387817367911339,
+              "delta_to_activation": 0.005276723200686316,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.05403466895222664
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6803954243659973,
+              "gated_delta_rms": 0.013963962905108929,
+              "delta_to_activation": 0.020523305132630426,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3794593811035156,
+              "gated_delta_rms": 0.014526056125760078,
+              "delta_to_activation": 0.010530252883662133,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4306516647338867,
+              "gated_delta_rms": 0.015497439540922642,
+              "delta_to_activation": 0.006375837297369114,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.402919292449951,
+              "gated_delta_rms": 0.015832165256142616,
+              "delta_to_activation": 0.0029302983071145465,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7086531519889832,
+              "gated_delta_rms": 0.03370102867484093,
+              "delta_to_activation": 0.04755645068430437,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.05915389582514763
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3790452480316162,
+              "gated_delta_rms": 0.035088587552309036,
+              "delta_to_activation": 0.025444116211844985,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.06053648889064789
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4079461097717285,
+              "gated_delta_rms": 0.03526822850108147,
+              "delta_to_activation": 0.01464660208048629,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.05801357328891754
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.354450702667236,
+              "gated_delta_rms": 0.0338762104511261,
+              "delta_to_activation": 0.006326738695017061,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.05403466895222664
+            }
+          ]
+        },
+        {
+          "condition": "null_priors",
+          "C_parameters": [
+            1.0,
+            1.0,
+            1.7000000476837158,
+            1.0
+          ],
+          "native_difference_to_correct_H": 0.007133079034316212,
+          "module_response": [
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.46180519461631775,
+              "gated_delta_rms": 0.013964331708848476,
+              "delta_to_activation": 0.030238576507244534,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.2214194536209106,
+              "gated_delta_rms": 0.01452705543488264,
+              "delta_to_activation": 0.011893584461764577,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.132268190383911,
+              "gated_delta_rms": 0.015497399494051933,
+              "delta_to_activation": 0.007268034839117332,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 4.530752658843994,
+              "gated_delta_rms": 0.015828704461455345,
+              "delta_to_activation": 0.003493614781764314,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 2,
+              "activation_rms": 0.7191916704177856,
+              "gated_delta_rms": 0.038121938705444336,
+              "delta_to_activation": 0.05300664659158096,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.07395380735397339
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 5,
+              "activation_rms": 1.4061684608459473,
+              "gated_delta_rms": 0.03979742154479027,
+              "delta_to_activation": 0.028302029701937875,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.07585018873214722
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 8,
+              "activation_rms": 2.9264872074127197,
+              "gated_delta_rms": 0.03996151685714722,
+              "delta_to_activation": 0.01365511414364829,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.07259538769721985
+            },
+            {
+              "CFG": "C",
+              "sample_call": 1,
+              "block": 11,
+              "activation_rms": 6.421195030212402,
+              "gated_delta_rms": 0.03868478536605835,
+              "delta_to_activation": 0.0060245460827840205,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.06720216572284698
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.6806663274765015,
+              "gated_delta_rms": 0.013963996432721615,
+              "delta_to_activation": 0.020515186177185608,
+              "rgb_head_rms": 0.010439095087349415,
+              "geometry_head_rms": 0.03457837924361229
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3797049522399902,
+              "gated_delta_rms": 0.014526120387017727,
+              "delta_to_activation": 0.010528425199484975,
+              "rgb_head_rms": 0.009927922859787941,
+              "geometry_head_rms": 0.03556152805685997
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.431246519088745,
+              "gated_delta_rms": 0.015497512184083462,
+              "delta_to_activation": 0.006374307196907404,
+              "rgb_head_rms": 0.012320244684815407,
+              "geometry_head_rms": 0.03416280075907707
+            },
+            {
+              "CFG": "UC",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.404075622558594,
+              "gated_delta_rms": 0.01583283208310604,
+              "delta_to_activation": 0.0029297946936593547,
+              "rgb_head_rms": 0.011697842739522457,
+              "geometry_head_rms": 0.030966589227318764
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 2,
+              "activation_rms": 0.7089807391166687,
+              "gated_delta_rms": 0.038122233003377914,
+              "delta_to_activation": 0.0537704776731665,
+              "rgb_head_rms": 0.04868880659341812,
+              "geometry_head_rms": 0.07395380735397339
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 5,
+              "activation_rms": 1.3804600238800049,
+              "gated_delta_rms": 0.039797343313694,
+              "delta_to_activation": 0.02882904439480773,
+              "rgb_head_rms": 0.048492755740880966,
+              "geometry_head_rms": 0.07585018873214722
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 8,
+              "activation_rms": 2.4112870693206787,
+              "gated_delta_rms": 0.039962250739336014,
+              "delta_to_activation": 0.016572995910683667,
+              "rgb_head_rms": 0.04689839482307434,
+              "geometry_head_rms": 0.07259538769721985
+            },
+            {
+              "CFG": "C",
+              "sample_call": 25,
+              "block": 11,
+              "activation_rms": 5.35963249206543,
+              "gated_delta_rms": 0.03867772966623306,
+              "delta_to_activation": 0.00721648913866628,
+              "rgb_head_rms": 0.03696536272764206,
+              "geometry_head_rms": 0.06720216572284698
+            }
+          ]
+        }
+      ],
+      "scope": "像素差是敏感性，不是成功率；全图RMS受mask面积影响，不据小幅响应断言忽略RGB"
+    }
+  ],
+  "evaluation": [
+    {
+      "case_id": "A034",
+      "kind": "real",
+      "scene": "scene-0911",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.04607621976841756,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_64",
+          "native_difference_to_r47_H": 0.005337330000864318,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.009108162863484613,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A061_w08",
+      "kind": "real",
+      "scene": "scene-0931",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.059036093740648346,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_64",
+          "native_difference_to_r47_H": 0.022526814921002628,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.041971535829570486,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A022",
+      "kind": "real",
+      "scene": "scene-0770",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.02929077278374177,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_64",
+          "native_difference_to_r47_H": 0.003786651353411012,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.2823800793517557,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M003",
+      "kind": "synthetic",
+      "scene": "scene-0229",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.054357425394437865,
+          "GT_H_MAE": 0.06832492567848368,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": 0.057669922608554997,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_64",
+          "native_difference_to_r47_H": 0.009343508418265319,
+          "GT_H_MAE": 0.05728741771936232,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.014761792927700667,
+          "GT_H_MAE": 0.05951707843919079,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M006",
+      "kind": "synthetic",
+      "scene": "scene-0239",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.13692149385755834,
+          "GT_H_MAE": 0.12215422709199282,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": 0.07425044046028553,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_64",
+          "native_difference_to_r47_H": 0.006171123591178948,
+          "GT_H_MAE": 0.07530774084812775,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.013332651827922417,
+          "GT_H_MAE": 0.08070707107335892,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A048",
+      "kind": "real",
+      "scene": "scene-0003",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.0437799683415695,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.010149634839633444,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A041_w10",
+      "kind": "real",
+      "scene": "scene-0920",
+      "versions": [
+        {
+          "version": "r46",
+          "native_difference_to_r47_H": 0.08817724456106646,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r47",
+          "native_difference_to_r47_H": 0.0,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        },
+        {
+          "version": "r48_128",
+          "native_difference_to_r47_H": 0.028131696416187582,
+          "GT_H_MAE": null,
+          "outside_H_exact": true,
+          "native_final_composition_exact": true
+        }
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "training": {
+    "stage": "checkpoint_ready",
+    "steps": 128,
+    "case": "M010",
+    "loss": 0.06634867191314697,
+    "grad_norm": 0.08128684759140015,
+    "drop_RGB": false,
+    "drop_geometry": false,
+    "instruction_preserved": true,
+    "until": 128,
+    "resume_step": 64,
+    "attempt": "1791378639078461611",
+    "elapsed_seconds": 206.12306667864323,
+    "peak_GiB": 10.422718524932861,
+    "main_frozen": true
+  },
+  "scope": "固定真实DEV；无隐藏GT；两个合成GT对照不代表真实删除通过率",
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "no_auto_extra_steps": true
+}

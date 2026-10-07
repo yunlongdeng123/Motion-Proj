@@ -1,0 +1,33 @@
+{
+  "train_ids": [
+    "M010",
+    "M013",
+    "M018",
+    "M042"
+  ],
+  "scene_count": 4,
+  "lr": 0.0001,
+  "seed": 6201,
+  "resolution": [
+    320,
+    576
+  ],
+  "max_steps": 128,
+  "initial_checkpoint": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r47/training/branch_0320.safetensors",
+  "new_branch_parameters": 389856,
+  "main_and_3D_frozen": true,
+  "loss": "unchanged official diffusion loss",
+  "C_task_instruction": "same even when both priors dropped",
+  "prior_dropout": {
+    "RGB": 0.25,
+    "geometry": 0.25
+  },
+  "source_encoder_restore": {
+    "target_encoder_tensors": 106,
+    "missing_keys": 0,
+    "unexpected_keys": 0,
+    "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r7/encoder_recovery/official_svd_encoder.safetensors",
+    "strict": true
+  },
+  "selection": "fixed 64/128 checkpoints, no real DEV training or best-case selection"
+}
