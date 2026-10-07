@@ -1,13 +1,11 @@
 # 当前研究状态
 
-更新：2026-10-07。分支 `research/worldsim-v7.7-target-protected-editing`，主机 wm-3090-1001。
+更新：2026-10-08。分支 `research/worldsim-v7.7-target-protected-editing`，主机 wm-3090-1001。
 
-唯一run `WS-V77-TARGET-PROTECTED-20260929/r49` CPU准备完成，停在等待用户开启GPU。训练0步、新模型采样0窗，无后台等卡控制器或定时任务；数据盘约余92GB，无需清理。
+唯一run `WS-V77-TARGET-PROTECTED-20260929/r49` 已完成64步、20新窗口及两阶段五例三帧独立助手review。GPU和控制器已空，没有自动追加训练或定时任务；已通知用户可切CPU。本次没有电源操作。
 
-r49仅给原RGB cross-attention加实例/局部位置软偏置，389856参数/state_dict兼容，关闭绑定与全U严格重现r47路径。复用4train+3真实DEV+2合成DEV，原RGB、H、α、参考和几何不变，Y不进条件。9例90帧和受控激活验证通过；CPU审核HTML已准备。
+没有观察到相对r47/r48_64稳定的真实DELETE视觉升级：A034/A061薄膜与额外轮廓仍在，correct/wrong/no_RGB与同权重routing_off目视近同；A022仍逊于r46，两个合成例保住旧收益。工程检查、偏置生效、主干冻结和同预算输入顺序通过，不等于视觉收益；人工verdict与整段时序未判。
 
-对应覆盖有限：A034/A061 f05的主B绑定粗query为3/30与8/72；低尺度/混合格仍U，N没有纯背景patch。M013无可绑定参考patch，不能称4例都有有效路由监督；不用扩框/降门槛伪造覆盖。这是输入与接口准备，尚未证明薄膜减少或身份绑定收益。
+默认仍r46官方原权重+r21完整SAM，不推广r49。空间对应稀疏，f05洞内无N；更正来源概括：A061有2、M003有1个N源patch，非全程全无N。下一项先检验已知B查询更明确选择对应B来源、未知保持原路径；不追加步数，不与主干去噪控制同时修改。完整组件图与结果见[r49报告](v77/TARGET_PROTECTED_SPATIAL_BINDING_R49.md)，同一失败卡[V77-F02](research_failures/entries/V77-F02.md)。
 
-GPU阶段先冻结r47采样9窗并直接review；若未达标且输入/工程有效，最多一次64步与11窗。同数据/预算r48_64保留控制；A034/A061需要保护结构与清残影同时收益，A022和M003/M006检查回退。零训练与64步间有review节点，不自动增加训练。
-
-r48_128明显回退、r48_64大多持平的旧结论保留；默认仍r46官方原权重+r21完整SAM，不推广新权重。人工verdict只由用户填写。完整范围、组件图、CPU证据与GPU入口见[r49报告](v77/TARGET_PROTECTED_SPATIAL_BINDING_R49.md)，同一失败卡[V77-F02](research_failures/entries/V77-F02.md)。
+本地审核`outputs/v77-priors-r49/index.html`含9卡、75视频并实际解码；原生/写回、参考/路由控制、三帧图板均保留。数据盘约余90.8GiB，原权重/输入/断点均在，无清理需求。

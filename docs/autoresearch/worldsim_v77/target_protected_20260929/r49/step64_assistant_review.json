@@ -1,0 +1,206 @@
+{
+  "review_scope": {
+    "stage": "r49_step64_correct",
+    "basis": "直接查看 step64 目录内五例 full、focus、controls 图板；只比较 f00、f05、f09。M003/M006 的 Real GT 仅用于合成遮挡的外观判断，不做 GT 像素误差排名。",
+    "comparisons": [
+      "r49 step64 对 r49 zero",
+      "r49 step64 对 r47、r48 same-budget 64 steps",
+      "两个真实例的 correct、wrong、no_RGB、同权重 routing_off",
+      "NATIVE 对 fixed COMPOSE",
+      "A022 对既有可用正控制 r46"
+    ],
+    "execution_checks_not_treated_as_visual_evidence": "主干冻结、数据顺序/dropout 与 r48_64 相同、20 窗 PNG/CFG/写回通过，只说明执行可比和产物有效，不等于视觉收益。",
+    "prohibitions_observed": [
+      "未运行 GPU",
+      "未改模型或输入",
+      "未触碰图板和 manifest 之外的实验文件",
+      "未把真实 DELETE 隐藏区当作真实 GT",
+      "未由三个离散帧推断整段时序"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "A034",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "protected_structure": "r49 step64 ≈ r49 zero ≈ r48 ≈ r47 > r46",
+        "artifact_cleanliness": "没有稳定胜者；r49 step64 仍有与 zero/r47/r48 同类的车下暗膜和矩形暗块",
+        "overall": "r49 step64 未显示相对 zero、r47 或 r48 的稳定视觉改善"
+      },
+      "protected_structure": "step64 在三帧仍能保住后方深色车的大体车顶、车尾和所在车位；f05 的尾灯/上轮廓局部对比略有变化，但没有跨三帧一致变好。f05/f09 的下沿和路面接触区仍被暗块吞并，f09 的后保险杠下方仍像黑色空洞。",
+      "film": "未改善到可验收。车周围灰黑薄膜、车下矩形暗块和悬浮感在 step64 NATIVE 中仍清楚；相对 zero/r47/r48 没有稳定缩小或变淡。",
+      "reference_specificity": {
+        "verdict": "not_demonstrated",
+        "evidence": "step64 correct、wrong、no_RGB 的 NATIVE 在 f00/f05/f09 目视近同；correct 没有显示比 wrong 更准确的深色车尺寸、尾部结构或位置恢复。fixed COMPOSE 下也没有出现可归因于 correct 的独有细节。"
+      },
+      "routing_specificity": {
+        "verdict": "not_demonstrated",
+        "evidence": "同一 step64 权重的 routing_off 与 correct 在三帧的车身、暗膜和黑色下沿几乎相同，没有显示 routing 的独立视觉价值。"
+      },
+      "native_vs_compose": "NATIVE 已有暗膜和车下黑块；fixed COMPOSE 只改变覆盖边缘/强度，未消除问题。伪影不能只归因于写回。",
+      "limitations": [
+        "真实 DELETE 隐藏区域没有真实 GT，只能依据可见后车片段、结构连续性和额外伪影判断。",
+        "只看 f00/f05/f09，不能给整段时序稳定性结论。",
+        "近同结果只说明当前 64 步有限软绑定和 routing 在这些图板上没有可见特异性，不否定更完整的绑定假设。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A061_w08",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "protected_structure": "r49 step64 ≈ r49 zero ≈ r48 ≈ r47 > r46",
+        "artifact_cleanliness": "r49 step64 ≈ zero ≈ r48 ≈ r47 ≈ r46；各版本仍有前景车残片或左侧车形拖影",
+        "overall": "step64 没有相对 zero/r47/r48 的稳定增益；仅后方白车清晰度仍高于 r46"
+      },
+      "protected_structure": "step64 的后方白车在 f05/f09 仍有可辨车头、挡风玻璃和车宽，整体优于 r46 的小而模糊白车；但与 zero/r47/r48 基本同档。f00 仍同时出现巨大前景白色车残片和后方白车，f05/f09 左侧仍有被删除深色车的粉灰拖影。",
+      "film": "未同时改善。f00 的额外白色车体、f05/f09 的半透明粉灰车形和左侧拖尾在 step64 中仍明显，形态与 zero/r47/r48 同类。",
+      "reference_specificity": {
+        "verdict": "not_demonstrated",
+        "evidence": "correct、wrong、no_RGB 的 NATIVE 在白车外观、位置、车头细节和左侧残影上目视近同；correct 没有比 wrong 更准确恢复对应白车。"
+      },
+      "routing_specificity": {
+        "verdict": "not_demonstrated",
+        "evidence": "同权重 routing_off 与 correct 的白车轮廓和残留车形几乎相同，未见 routing 带来的独立结构或去膜收益。"
+      },
+      "native_vs_compose": "NATIVE 已有额外车形和粉灰薄膜；fixed COMPOSE 在 f00 进一步显露较硬的三角形前景残片，但没有改变 correct/wrong/no_RGB/routing_off 近同的结论。核心残留不是 COMPOSE 单独造成。",
+      "limitations": [
+        "真实 DELETE 隐藏区域没有真实 GT，不能对完全被遮挡的白车细节作真值判断。",
+        "只看三帧，不能推断整段时序。",
+        "当前结果仅约束这组权重、输入和有限 binding/routing 设计，不否定完整参考绑定假设。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A022",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "overall": "r46 > r49 step64 ≈ r49 zero ≈ r48 ≈ r47",
+        "reason": "step64 仍在 f05/f09 留下比 r46 更明显的宽暗路面补丁，未解除正控制回退"
+      },
+      "protected_structure": "step64 删除了 Prius，没有再生完整车辆；墙、窗、路缘和道路大体结构连续。但原车位置的路面亮度和纹理仍由宽暗块替代，f05/f09 尤其明显，局部背景恢复不如 r46 干净。",
+      "film": "仍有宽矩形/椭圆状暗影补丁。step64 相对 zero 最多是轻微强度变化，没有跨 f05/f09 的可靠消失；r46 的对应路面明显更均匀。",
+      "reference_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "A022 controls 仅包含 step64 correct 的 NATIVE 与 fixed COMPOSE，没有 wrong/no_RGB 对照。"
+      },
+      "routing_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "A022 图板没有同权重 routing_off 行。"
+      },
+      "native_vs_compose": "暗补丁在 NATIVE 已存在，fixed COMPOSE 仍保留；写回不是唯一原因。两者都未追平 r46。",
+      "limitations": [
+        "真实删除区没有隐藏 GT，排序依据是可见补丁、再生车和背景结构连续性，不是像素误差。",
+        "只看三帧，不能给整段时序结论。",
+        "缺少 reference 与 routing 的消融板，不能评价 A022 的绑定特异性。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M003",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "qualitative_against_visible_GT": "r49 step64 ≈ r49 zero ≈ r48 ≈ r47 > r46",
+        "overall": "step64 保持近期方法相对 r46 的结构优势，但没有相对 zero/r47/r48 的稳定可见改善"
+      },
+      "protected_structure": "对照 Real GT，step64 在三帧保住了深色车的总体宽度、车顶、挡风玻璃和右前灯，明显优于 r46 的白色半车和竖向拼接；但左前脸、左灯和下沿仍被暗色涂抹压平，左右不对称，与 zero/r47/r48 的缺陷基本一致。",
+      "film": "车左侧仍有向路面延伸的深色楔形/矩形拖影，左半车身带半透明暗膜；step64 没有稳定减轻。",
+      "reference_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "M003 controls 只有 correct 的 NATIVE/COMPOSE，没有 wrong/no_RGB，不能把恢复归因于参考身份。"
+      },
+      "routing_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "M003 图板没有 routing_off 行。"
+      },
+      "native_vs_compose": "NATIVE 和 fixed COMPOSE 都保住主体车形，也都保留左侧暗膜；COMPOSE 没有提供额外修复。",
+      "limitations": [
+        "Real GT 仅用于直接外观判断；没有做 GT 像素误差排名。",
+        "只评三帧，不能给整段时序结论。",
+        "缺少 wrong/no_RGB 和 routing_off，不能检验 reference/routing 特异性。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M006",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "qualitative_against_visible_GT": "r49 step64 ≈ r49 zero ≈ r48 ≈ r47 > r46",
+        "overall": "step64 继续避免 r46 的巨大浅色车壳，但未清除近期方法共有的透明车形"
+      },
+      "protected_structure": "对照 Real GT，step64 恢复了无车街道的大体布局，比 r46 明显更接近空背景；但建筑门窗、路缘、箭头和车道线仍透过一层棕灰车形被扭曲，和 zero/r47/r48 基本同档。",
+      "film": "明显存在。三帧的遮挡轮廓内仍有半透明棕灰车形/暗膜，边界和内部纹理与 GT 不连续；step64 没有跨帧稳定变淡或缩小。",
+      "reference_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "M006 controls 只有 correct 的 NATIVE/COMPOSE，没有 wrong/no_RGB。"
+      },
+      "routing_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "M006 图板没有 routing_off 行。"
+      },
+      "native_vs_compose": "NATIVE 已有透明车形和背景扭曲；fixed COMPOSE 仍保留并使局部轮廓更显眼，不能把核心伪影只归因于写回。",
+      "limitations": [
+        "Real GT 仅用于直接外观判断；没有做 GT 像素误差排名。",
+        "只评三帧，不能给整段时序结论。",
+        "缺少 wrong/no_RGB 和 routing_off，不能检验 reference/routing 特异性。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "bounded_acceptance": {
+    "criterion": "64 步需相对 zero/r47/r48 有稳定视觉改善；两个真实例结构与薄膜同时改善；同权重 routing OFF 显示绑定独立价值；correct 比 wrong 更正确；A022 无正控制回退。",
+    "stable_gain_over_zero_r47_r48": {
+      "met": false,
+      "evidence": "五例中 step64 与 zero/r47/r48 大体同档，局部对比变化没有跨 f00/f05/f09 稳定成立。"
+    },
+    "two_real_cases_structure_and_film_both_improved": {
+      "met": false,
+      "evidence": "A034 的后车结构仍伴随车下黑块/灰膜；A061_w08 的白车仍伴随额外前景车体和粉灰拖影。两例都没有相对 zero/r47/r48 同时实现结构与薄膜的稳定改善。"
+    },
+    "routing_has_independent_value": {
+      "met": false,
+      "evidence": "A034/A061_w08 的同权重 correct 与 routing_off 在三帧目视近同，未显示独立 routing 收益。"
+    },
+    "correct_beats_wrong_reference": {
+      "met": false,
+      "evidence": "两个真实 controls 中 correct、wrong、no_RGB 的 NATIVE 近同，correct 没有更准确恢复对应车身或更少薄膜。"
+    },
+    "positive_control_no_regression": {
+      "met": false,
+      "evidence": "A022 的 step64 在 f05/f09 仍留下比 r46 更明显的宽暗路面补丁，正控制回退未解除。"
+    },
+    "synthetic_sanity": {
+      "met": "partial",
+      "evidence": "M003/M006 的 step64 仍明显优于 r46 的白色半车/浅色车壳，但只保持了 zero/r47/r48 的水平，暗楔膜和透明车形仍在。"
+    },
+    "gate_met": false,
+    "conclusion": "r49 64 步当前未达到这组有界视觉验收条件。结论只针对五例、三个离散帧和当前有限软绑定/routing 配置：未观察到稳定视觉收益或参考/路由特异性；这不否定完整绑定机制在其他训练量、数据或设计下的假设。"
+  },
+  "human_verdict": null,
+  "temporal_verdict": null
+}

@@ -1,0 +1,165 @@
+{
+  "review_scope": {
+    "stage": "r49_zero_correct",
+    "basis": "直接查看 full、focus、controls 图板；只评 f00、f05、f09。M003/M006 的 Real GT 只用于判断合成遮挡恢复外观，不做像素误差排名。",
+    "prohibitions_observed": [
+      "未运行 GPU",
+      "未改模型或输入",
+      "未把真实 DELETE 隐藏区当作真实 GT",
+      "未由三帧外推整段时序"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "A034",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "protected_structure": "r49 ≈ r48 ≈ r47 > r46",
+        "artifact_cleanliness": "没有可靠的 r49 胜出；四者都存在局部薄膜/暗块，r49 与 r47/r48 基本同档",
+        "overall": "r49 ≈ r48 ≈ r47；r46 的后车更小、更糊，但 r49 没有相对 r48 的独立可见收益"
+      },
+      "protected_structure": "r49 在三帧都保住了后方深色车的大体位置和车身轮廓，车尾与车顶可辨；但 f05/f09 的下沿、后保险杠和路面接触区被暗色块吞并，出现悬浮/塌陷感。相对 r46，后车更完整；相对 r47/r48，未见稳定改善。",
+      "film": "未消除。f05/f09 的车身周边和下方仍有半透明暗膜、矩形暗块，f09 最明显；这些问题在 r49 NATIVE 中已经存在。",
+      "reference_specificity": {
+        "verdict": "not_demonstrated",
+        "evidence": "controls 中 correct、wrong、no_RGB 的 NATIVE 在三帧目视几乎不可分；固定 alpha COMPOSE 也没有显示 correct 对应车身被更准确恢复。可见差异更像相同底图/写回边缘，而不是参考实例或位置绑定。"
+      },
+      "native_vs_compose": "NATIVE 已有车下暗块和薄膜；fixed COMPOSE 只改变边缘/覆盖强度，没有根治，也没有产生可归因于 correct 参考的车身细节。因此问题不能只归咎于写回。",
+      "limitations": [
+        "真实 DELETE 遮挡区没有真实 GT，不能断言被遮住的精确车身真值。",
+        "只看 f00/f05/f09，不能给整段时序稳定性结论。",
+        "correct/wrong/no_RGB 的目视近同只否定当前有限软绑定配置的可见参考特异性，不否定完整软绑定假设。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A061_w08",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "protected_structure": "r49 ≈ r48 ≈ r47 > r46",
+        "artifact_cleanliness": "r49 ≈ r48 ≈ r47 ≈ r46；各版本都残留额外车形/拖影",
+        "overall": "r49 ≈ r48 ≈ r47 > r46，仅限后方白车清晰度；删除完整性仍不合格"
+      },
+      "protected_structure": "r49 的后方白车在 f05/f09 中比 r46 更清楚，挡风玻璃、白色车头和车宽可辨；但 f00 同时出现前景巨大白色车残片和后方白车，f05/f09 左侧仍有被删除车辆的粉灰拖影。r49 与 r47/r48 基本相同。",
+      "film": "未消除。白车左侧持续存在半透明粉灰车形/拖尾，f00 还有明显额外车辆实体，f09 左侧鬼影清楚；这不是单纯的像素变化，而是删除对象残留。",
+      "reference_specificity": {
+        "verdict": "not_demonstrated",
+        "evidence": "correct、wrong、no_RGB 的 NATIVE 在三帧目视几乎一致，白车外观、位置和左侧残影都没有随参考条件产生可辨的对应变化；correct 没有比 wrong 更准确地恢复目标白车。"
+      },
+      "native_vs_compose": "NATIVE 已有额外车形和左侧薄膜；fixed COMPOSE 在 f00 暴露更硬的三角形前景残片，f05/f09 也保留拖影。COMPOSE 不优于 NATIVE，但核心问题在 NATIVE 已成立。",
+      "limitations": [
+        "真实 DELETE 隐藏区没有真实 GT，只能根据可见的白车片段、几何连续性和额外车形判断。",
+        "只看三帧，不能把局部一致性当作整段时序结论。",
+        "该结果只说明当前零训练有限软绑定没有显示参考特异性，不否定加入完整绑定机制后的假设。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "A022",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "overall": "r46 > r49 ≈ r48 ≈ r47",
+        "reason": "r46 的空路面更干净；r49 虽未再生整车，但 f05/f09 留下明显宽矩形暗影/补丁"
+      },
+      "protected_structure": "r49 删除了原 Prius，墙、窗、路缘和大体道路结构仍连续，没有明显再生新车；但车原位置的路面纹理和亮度被宽暗块替换，局部结构/光照连续性弱于 r46。",
+      "film": "有。f05/f09 可见横向宽矩形暗色补丁，f09 最重，形状与自然阴影不吻合；r46 对应区域更均匀，因此这是对既有正控制的可见回退。",
+      "reference_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "该 controls 图板只给出 correct 的 NATIVE 与 fixed COMPOSE，没有 wrong/no_RGB 对照，不能据此判断参考实例特异性。"
+      },
+      "native_vs_compose": "暗色补丁在 r49 NATIVE 已经存在，fixed COMPOSE 仍保留；写回不是唯一原因。两者都未达到 r46 的干净背景。",
+      "limitations": [
+        "真实删除区没有隐藏 GT，不能对背景做真值级判断。",
+        "排序依据是可见补丁、再生车和结构连续性，不是 GT 像素误差。",
+        "只看三帧，不能给整段时序结论。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M003",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "qualitative_against_visible_GT": "r49 ≈ r48 ≈ r47 > r46",
+        "overall": "r49 恢复明显优于 r46，但没有相对 r48/r47 的清晰增益"
+      },
+      "protected_structure": "对照真实 GT，r49 在三帧都保住了深色车的总体宽度、车顶、挡风玻璃和右侧前灯，明显优于 r46 的白色半车/竖向拼接；但左前脸、左灯和车身下缘仍被暗色涂抹压平，左右不对称，未达到 GT 的完整结构。",
+      "film": "仍有。车左侧向路面延伸出深色楔形/矩形拖影，车身左半部也有半透明暗膜；r49 NATIVE 已可见，fixed COMPOSE 没有清除。",
+      "reference_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "该图板只有 correct 的 NATIVE/COMPOSE，没有 wrong/no_RGB，不能把结构恢复归因于参考特异性。"
+      },
+      "native_vs_compose": "NATIVE 和 fixed COMPOSE 都保住主体车形，也都保留左侧暗膜；COMPOSE 没有提供可见修复，至多使局部边界略更硬。",
+      "limitations": [
+        "Real GT 仅用于合成遮挡的直接外观判断；没有做像素误差排名。",
+        "只评三帧，不能给整段时序结论。",
+        "缺少 wrong/no_RGB 参考控制，不能检验实例/位置软绑定。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "M006",
+      "frames_reviewed": [
+        "f00",
+        "f05",
+        "f09"
+      ],
+      "ranking": {
+        "qualitative_against_visible_GT": "r49 ≈ r48 ≈ r47 > r46",
+        "overall": "r49 避免了 r46 的巨大浅色车壳，但仍有明显透明车形；与 r48/r47 同档"
+      },
+      "protected_structure": "对照真实 GT，r49 恢复了无车街道的大体布局，比 r46 的浅色车形覆盖明显更好；但建筑门窗、路缘、箭头和车道线仍透过一层棕灰车形被扭曲，说明被保护的背景结构只得到粗略恢复。",
+      "film": "明显存在。遮挡轮廓内仍有半透明棕灰车形/暗膜，边界和内部纹理都与 GT 不连续；r49 与 r48/r47 基本相同，没有同时实现去膜和结构恢复。",
+      "reference_specificity": {
+        "verdict": "not_testable_from_board",
+        "evidence": "只有 correct 的 NATIVE/COMPOSE，没有 wrong/no_RGB 对照；本例不能证明参考身份或位置绑定。"
+      },
+      "native_vs_compose": "NATIVE 已包含透明车形和背景扭曲；fixed COMPOSE 仍在，且局部轮廓更显眼。核心伪影不是 COMPOSE 单独引入。",
+      "limitations": [
+        "Real GT 仅用于合成遮挡的直接外观判断；没有做像素误差排名。",
+        "只评三帧，不能给整段时序结论。",
+        "缺少 wrong/no_RGB 控制，不能检验参考特异性。"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "zero_training_acceptance": {
+    "criterion": "两个真实例结构与薄膜同时改善、正控制无回退、参考特异性",
+    "two_real_cases_structure_and_film_both_improved": {
+      "met": false,
+      "evidence": "A034/A061_w08 的主体结构相对 r46 部分更清楚，但 r49 与 r47/r48 基本同档；A034 暗膜/矩形暗块仍在，A061_w08 仍有额外车形和粉灰拖影，未实现结构与薄膜同时改善。"
+    },
+    "positive_control_no_regression": {
+      "met": false,
+      "evidence": "A022 的 r49 在 f05/f09 留下比 r46 更明显的宽矩形暗路面补丁，因此对既有可用正控制有可见回退。"
+    },
+    "reference_specificity": {
+      "met": false,
+      "evidence": "两个真实 controls 中，correct/wrong/no_RGB 的 NATIVE 目视几乎不可分；correct 没有显示更准确的对应车身恢复。其余三例没有 wrong/no_RGB 板，不能补足该证据。"
+    },
+    "gate_met": false,
+    "conclusion": "r49 零训练当前未达到验收标准。结论只针对本轮五例、三帧和当前有限软绑定配置：它没有显示可见收益或参考特异性；这不否定完整软绑定假设。"
+  },
+  "human_verdict": null,
+  "temporal_verdict": null
+}

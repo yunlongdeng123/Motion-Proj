@@ -90,6 +90,10 @@ def main():
     torch.set_num_threads(1);out=O/'review';out.mkdir(exist_ok=True)
     byid=cases();checks={x['case_id']:x for x in read(O/'input_checks.json')['cases']}
     state=read(O/'controller_state.json');cards=[];new_video_count=0
+    assistant={}
+    for stage in ('zero','step64'):
+        p=O/f'{stage}_assistant_review.json'
+        if p.exists():assistant[stage]={r['case_id']:r for r in read(p)['cases']}
     for cid in EVAL_IDS+TRAIN_IDS:
         c=byid[cid];req=request(c);dest=out/'assets'/cid;dest.mkdir(parents=True,exist_ok=True)
         meta=read(O/'inputs'/cid/'routing.json');check=checks[cid]
@@ -111,10 +115,10 @@ def main():
             label+=f'；主声明patch {row.get("declared_actor_patches",0)} / 64；已知背景 {row["known_background_patches"]}。'
             body+=f'<figure><figcaption>{html.escape(label)}</figcaption><div class="pair"><img loading="lazy" src="assets/{cid}/reference_{slot:02}.png"><img loading="lazy" src="assets/{cid}/reference_{slot:02}_patches.png"></div></figure>'
         body+='</div></details>'
-        body+='<details><summary>各注入尺度的实际绑定覆盖</summary><table><tr><th>query尺度</th><th>f00 主B/H</th><th>f05 主B/H</th><th>f09 主B/H</th></tr>'
+        body+='<details><summary>CPU／训练代表尺度的绑定覆盖</summary><table><tr><th>query尺度</th><th>f00 主B/H</th><th>f05 主B/H</th><th>f09 主B/H</th></tr>'
         for scale in check['attention_scales']:
             body+='<tr><td>'+str(scale['size'])+'</td>'+''.join(f'<td>{scale["frames"][f]["main_B_queries_H"]}/{scale["frames"][f]["H_queries"]}</td>' for f in (0,5,9))+'</tr>'
-        body+='</table><p>低分辨率格中身份/背景混合时为U。空间覆盖稀疏是本实验边界，不能当成所有后车部位已绑定。</p></details>'
+        body+='</table><p>低分辨率格中身份/背景混合时为U。GPU推理的实际四处尺寸为18×32、18×32、18×32、9×16，详见顶部实际尺度记录。空间覆盖稀疏是本实验边界，不能当成所有后车部位已绑定。</p></details>'
         if not any(x['known_actor_patches'] or x['known_background_patches'] for x in meta['source_slots']):
             body+='<p class="warn">本例参考没有能可靠标记的纯patch；当前路由不施加偏置。它仍参与原任务，但不提供空间绑定的训练信号。</p>'
         if cid in EVAL_IDS:
@@ -136,31 +140,55 @@ def main():
                         name=stage+'_'+arm+('_native' if native else '')
                         if not (dest/f'{name}.mp4').exists():encode(folder,dest/f'{name}.mp4',native)
                         new_video_count+=1
-            body+='<h3>历史视频对照 · r49未跑时仅作背景</h3><div class="three">'+video(cid,'original','原视频 · H边界')+video(cid,'baseline','r46官方原权重 + r21完整SAM')+video(cid,'RGB_and_geometry','r47已有条件分支')+'</div>'
+            body+='<h3>历史同输入视频对照</h3><div class="three">'+video(cid,'original','原视频 · H边界')+video(cid,'baseline','r46官方原权重 + r21完整SAM')+video(cid,'RGB_and_geometry','r47已有条件分支')+'</div>'
             body+='<p><button onclick="play(this)">同步从头播放</button> <button onclick="pause(this)">暂停</button></p>'
             if not available:body+='<p class="pending">r49还未进行GPU推理，训练0步；本页的新增图片全部是CPU条件审核图。</p>'
             for stage in ('zero','step64'):
                 if (stage,'correct') not in available:continue
                 body+=f'<h3>r49 {stage} · 固定同权重、同输入对照</h3><div class="three">'+video(cid,'baseline','r46')+video(cid,'RGB_and_geometry','r47')+video(cid,stage+'_correct','r49 '+stage+' 空间绑定')+'</div>'
                 body+='<details open><summary>原生/写回与参考控制</summary><div class="three">'+video(cid,stage+'_correct_native','r49原生')+video(cid,stage+'_correct','r49固定α写回')+'</div>'
-                body+='<div class="three">'+''.join(video(cid,stage+'_'+arm,arm) for arm in ('wrong','no_RGB','routing_off') if (stage,arm) in available)+'</div></details>'
+                body+='<div class="three">'+''.join(video(cid,stage+'_'+arm+'_native',arm+' 原生') for arm in ('wrong','no_RGB','routing_off') if (stage,arm) in available)+'</div>'
+                body+='<div class="three">'+''.join(video(cid,stage+'_'+arm,arm+' 固定α写回') for arm in ('wrong','no_RGB','routing_off') if (stage,arm) in available)+'</div></details>'
+                if cid in assistant.get(stage,{}):
+                    a=assistant[stage][cid]
+                    body+='<p><b>独立助手图像review · GPT-5.6 Sol / xhigh：</b>仅固定f00/f05/f09，不代填人工分，不判断整段时序。</p>'
+                    for field,label in [('ranking','比较'),('protected_structure','保护车结构'),('film','额外轮廓/薄膜'),('reference_specificity','参考特异性'),('routing_specificity','路由特异性'),('native_vs_compose','原生/写回'),('limitations','局限')]:
+                        if field in a:
+                            value=a[field] if isinstance(a[field],str) else json.dumps(a[field],ensure_ascii=False)
+                            body+=f'<p><b>{label}：</b>{html.escape(value)}</p>'
+                image_root=out/'direct_review'/stage
+                if (image_root/f'{cid}_focus.png').exists():
+                    body+='<details open><summary>直接看固定三帧 · 每列f00/f05/f09；行标签区分版本</summary>'
+                    p=f'direct_review/{stage}/{cid}_focus.png'
+                    body+=f'<a href="{p}" target="_blank"><img loading="lazy" src="{p}"></a><p>'
+                    for kind,label in [('full','全图比较'),('controls','同权重参考/原生控制')]:
+                        body+=f'<a href="direct_review/{stage}/{cid}_{kind}.png" target="_blank">{label}</a> · '
+                    body+='真实DELETE没有隐藏区真实GT；合成任务的真实GT只在审核板展示，不进入条件。</p></details>'
             body+='<details><summary>历史原生、r48同64步预算控制</summary><div class="three">'+video(cid,'baseline_native','r46原生')+video(cid,'RGB_and_geometry_native','r47原生')+video(cid,'r48_64','r48同64步预算控制')+'</div>'+video(cid,'r48_64_native','r48_64原生')+'</details>'
             body+=f'<p>本轮人工分 <select data-score="{cid}"><option value="">未评</option><option>0</option><option>1</option><option>2</option></select> <input data-note="{cid}" placeholder="后车轮廓 / 薄膜 / 幻觉 / 时序"></p>'
         body+=f'<p><a href="assets/{cid}/input_check.json">完整逐帧覆盖</a> · <a href="assets/{cid}/routing.json">身份与参考元数据</a></p>'
         cards.append(f'<article id="{cid}" data-frames="{html.escape(json.dumps(summaries,ensure_ascii=False),quote=True)}">{body}</article>')
     for name in ('preflight.json','input_checks.json','controller_state.json'):
         shutil.copy2(O/name,out/name)
+    extra_links=[]
+    for name,label in [('zero_assistant_review.json','零训练独立图像review'),('step64_assistant_review.json','64步独立图像review'),('zero_execution_check.json','实际零训练工程检查'),('gpu_execution_check.json','GPU执行检查'),('actual_eval_coverage.json','实际推理尺度与来源覆盖'),('zero_shot_gate.json','唯一64步准入记录'),('gpu_closeout.json','本轮结论与资源')]:
+        if (O/name).exists():
+            shutil.copy2(O/name,out/name);extra_links.append(f'<a href="{name}">{label}</a>')
     # Git仅保存轻量配置，页面另放删掉case大元数据的可读配置。
     compact=read(O/'manifest.json');compact['cases']=[{k:c[k] for k in ('case_id','scene','split','kind')} for c in compact['cases']]
     dump(out/'manifest.json',compact)
     nav=' · '.join(f'<a href="#{cid}">{cid}</a>' for cid in EVAL_IDS+TRAIN_IDS)
-    page='''<!doctype html><html lang="zh-CN"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>r49 · 参考空间绑定准备与审核</title>
+    page='''<!doctype html><html lang="zh-CN"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>r49 · 参考空间绑定结果与审核</title>
 <style>body{font:15px/1.6 Arial,"Microsoft YaHei",sans-serif;background:#0a1622;color:#e5edf4;margin:0;padding:22px}main{max-width:1650px;margin:auto}a{color:#8bd5ff}article,header{background:#112333;padding:20px;margin:18px 0;border-radius:10px}h1,h2,h3{margin:4px 0 14px}p{margin:10px 0}code{overflow-wrap:anywhere;color:#b4e2ff}.three,.four,.refs{display:grid;gap:12px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.refs{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0}img,video,svg{width:100%;height:auto;background:#14283c}figcaption{font-size:13px;min-height:42px}.pair{display:flex;gap:4px}.pair img{width:calc(50% - 2px)}summary{cursor:pointer;color:#bce2ff;margin:10px 0}input,select,button{background:#1d3d55;color:white;padding:6px;border:1px solid #6385a0;border-radius:4px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #45617a;padding:6px;text-align:left}.warn,.pending{background:#493d19;padding:10px}.legend{color:#b2c4d3}@media(max-width:900px){.three,.four,.refs{grid-template-columns:1fr 1fr}}@media(max-width:550px){.three,.four,.refs{grid-template-columns:1fr}}</style><main>'''
     page+='<header><h1>r49 · 参考 → 对应恢复位置</h1><p><b>当前阶段：</b>'+html.escape(state['stage'])+'。新增GPU窗口 '+str(state.get('new_inference_windows',0))+'；训练 '+str(state['training_steps'])+' 步。</p>'
+    if (O/'gpu_closeout.json').exists():
+        result=read(O/'gpu_closeout.json')
+        page+='<p class="warn"><b>本轮结论：</b>'+html.escape(result['outcome'])+' 默认仍为r46。GPU已用完，未追加训练；以下助手看图结论只覆盖固定三帧，人工分与视频时序仍待审核。</p>'
     page+='<p>先验证“正确车身信息到正确位置”。新增逻辑仅是RGB交叉注意力的无参数软偏置；基线权重从r47 step320加载。r46继续保留为默认。输入、mask、几何和固定α沿用原版。</p>'+ARCH
     page+='<p class="legend">黄：删除mask的包络。绿：主保护车B。橙：其他保留车。蓝：实际LiDAR支持背景N。灰：未知U。身份与位置来自3D框面proxy，不代表真实silhouette；未知区域不作无车判断。</p>'
-    page+='<p>CPU页面包含9例的f00/f05/f09、6张真实输入参考、对应坐标、逐帧覆盖。先跑9个零训练窗口；直接看图后至多一次64步。A034/A061需同时保住后车并减少薄膜；A022与M003/M006检查回退。正确/错配只换互为有效的主B外观patch。</p>'
+    page+='<p>页面保留9例的f00/f05/f09、6张真实输入参考、对应坐标、逐帧覆盖。实验顺序：9个零训练窗口 → 直接看图 → 至多一次64步与11个验证窗口。A034/A061需同时保住后车并减少薄膜；A022与M003/M006检查回退。正确/错配只换互为有效的主B外观patch。</p>'
     page+='<p>'+nav+'</p><p><a href="preflight.json">CPU检查</a> · <a href="manifest.json">冻结配置</a> · <a href="input_checks.json">逐帧/逐尺度记录</a> · <button onclick="exportScores()">导出人工记录</button></p></header>'
+    if extra_links:page+='<header><h2>本轮执行与图像证据</h2><p>'+' · '.join(extra_links)+'</p><p>默认仍为r46。CPU preflight中的GPU_started=false只描述准备时刻；实际GPU执行以本轮controller与执行检查为准。</p></header>'
     page+=''.join(cards)+'<script>'+JS+'</script></main></html>'
     (out/'index.html').write_text(page,encoding='utf-8')
     links=re.findall(r'(?:src|href)="([^"#]+)"',page)

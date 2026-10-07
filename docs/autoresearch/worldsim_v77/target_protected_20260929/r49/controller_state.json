@@ -1,8 +1,13 @@
 {
-  "stage": "CPU_ready_waiting_user_GPU",
+  "stage": "bounded_complete_pending_human_review",
+  "phases_complete": [
+    "zero",
+    "train64",
+    "evaluate64"
+  ],
   "GPU_jobs": 0,
-  "training_steps": 0,
-  "new_inference_windows": 0,
+  "training_steps": 64,
+  "new_inference_windows": 20,
   "human_verdict": null,
-  "no_background_GPU_waiter": true
+  "no_auto_extra_training": true
 }

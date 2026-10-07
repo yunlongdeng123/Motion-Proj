@@ -1,0 +1,45 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r49",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02; no new ID",
+  "training_steps": 64,
+  "new_inference_windows": 20,
+  "new_result_videos": 40,
+  "GPU_jobs": 0,
+  "last_GPU_window_UTC": "2026-10-07T17:55:30.186958+00:00",
+  "GPU_compute_seconds": 1500.2524232417345,
+  "training_peak_allocated_GiB": 10.436649799346924,
+  "outcome": "本轮未观察到相对r47/r48_64稳定的真实DELETE视觉升级；薄膜仍在，参考与路由特异性未成立。",
+  "default": "r46 official original weights + r21 complete SAM",
+  "promote_to_default": false,
+  "assistant_reviewer": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "scope": "five cases, f00/f05/f09, direct image review"
+  },
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "automatic_extra_training": false,
+  "power_action": "none; user notified GPU work finished; historical shutdown authorization not reused",
+  "local_delivery": {
+    "case_cards": 9,
+    "links_exist": 353,
+    "dynamic_full_frame_images_verified": 108,
+    "reference_images_verified": 108,
+    "inline_JS_syntax": true,
+    "new_GPU_windows": 20,
+    "new_GPU_videos": 40,
+    "historical_videos": 35,
+    "actual_videos_decoded": 75,
+    "video_dimensions": [
+      1024,
+      576
+    ],
+    "scope": "审核链接/图片/JS；GPU结果存在时实际解码全部视频，不以历史视频冒充本轮输出",
+    "human_verdict": null
+  }
+}

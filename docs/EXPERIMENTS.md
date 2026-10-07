@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r49 | RGB参考身份/局部空间软绑定；9例90帧CPU准备；0训练/0采样，等待GPU | [报告](v77/TARGET_PROTECTED_SPATIAL_BINDING_R49.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r49 | 实例/位置软绑定；64步/20新窗；两阶段5.6 Sol直接看图未见稳定升级；保留r46，GPU已空 | [报告](v77/TARGET_PROTECTED_SPATIAL_BINDING_R49.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r48 | 同指令消融；128步/20新窗；指定5.6 Sol独立图像review，保留r46；人工待评 | [报告](v77/TARGET_PROTECTED_SHORT_CYCLE_R48.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r47 | RGB/BEV条件接口；320步、48新窗＋12基线；合成条件增量，真实固定帧局部改善但仍失败；待人工 | [报告](v77/TARGET_PROTECTED_MULTI_PRIOR_R47.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r46 | SDK时间修复；160步、25新窗＋11复用，GPU已停 | [报告](v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md) |
