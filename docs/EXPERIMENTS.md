@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V77-TARGET-PROTECTED-20260929 / r48 | 同指令消融修正；11例110帧CPU检查；r47续64/128步固定短循环已启动，尚未收口 | [报告](v77/TARGET_PROTECTED_SHORT_CYCLE_R48.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r47 | RGB/BEV条件接口；320步、48新窗＋12基线；合成条件增量，真实固定帧局部改善但仍失败；待人工 | [报告](v77/TARGET_PROTECTED_MULTI_PRIOR_R47.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r46 | SDK时间修复；160步、25新窗＋11复用，GPU已停 | [报告](v77/TARGET_PROTECTED_ONUQ_TIME_FIX_R46.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r45 | 160步、32窗；时间语义bug中止，保留旧结果 | [报告](v77/TARGET_PROTECTED_ONUQ_ADAPTER_R45.md) |

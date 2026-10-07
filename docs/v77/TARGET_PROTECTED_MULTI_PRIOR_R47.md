@@ -124,3 +124,8 @@ GPU顺序：`envs/worldsim-v77-sam2/bin/python iteration14/validate_source_masks
 审核页 `outputs/v77-priors-r47/results.html`：12例三主栏（原RGB/原模型DELETE/完整条件DELETE）、条件消融与原生输出展开、f05洞区六图、先验token和几何覆盖、原输入页链接、人工评分导出。原生DELETE不是factual重建。144视频在远端和本地均实际解码1440帧；本地449图片与全部链接通过，页内JS语法通过；60组最终PNG洞外原像素相同。CPU `audit_inputs.py` 可直接重算24例参考有效token和O/N/U覆盖，已逐例重现本轮统计，后续不必再次人工拼审计数据。组件图沿用本报告顶部，GPU页也直接绘出同一架构。
 
 GPU训练/推理已经结束，nvidia-smi无计算作业。停止新GPU作业，等用户完整视频评审；没有关机操作。failure_ledger_delta: updated V77-F02，无新failure ID。
+
+
+### r48 消融口径更正
+
+2026-10-07 CPU核对发现旧全未知C同时清空任务参数，完整条件C保留。因此上述13.3%差值包含任务指令变化，不能认定为纯先验增量。历史结果不覆盖；r48统一C指令、UC单独清空，并归档最新人工评分，详见[r48报告](TARGET_PROTECTED_SHORT_CYCLE_R48.md)。

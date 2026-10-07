@@ -1,0 +1,651 @@
+{
+  "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+  "archived_original": "work\\v77_target_protected\\iteration15\\user_review\\打分记录.xlsx",
+  "source_modified": false,
+  "sheets": [
+    {
+      "sheet": "v77-nine-full",
+      "rows": [
+        [
+          "任务",
+          "原视频的原位重建",
+          "重建视频编辑",
+          "备注"
+        ],
+        [
+          "scene_0230 · 删除 actor 22",
+          1,
+          2,
+          null
+        ],
+        [
+          "scene_0255 · 删除 actor 25",
+          1,
+          0,
+          null
+        ],
+        [
+          "official_000 · 删除 actor 12",
+          2,
+          2,
+          null
+        ],
+        [
+          "processed_350 · 删除 actor 7",
+          2,
+          2,
+          null
+        ],
+        [
+          "processed_663 · 删除 actor 6",
+          0,
+          0,
+          "原视频 actor 6本身就比较模糊，并且只有一半车身。任务难度过大。这个场景可以暂时不做。"
+        ],
+        [
+          "processed_191 · 删除 actor 12",
+          0,
+          0,
+          "原视频 actor 12 是小目标+有树干遮挡，难度过大。这个场景可以暂时不做。"
+        ],
+        [
+          "processed_425 · 删除 actor 1",
+          0,
+          0,
+          "原视频 actor 1 是小目标+无遮挡，难度一般。这个badcase后续需要解决。"
+        ],
+        [
+          "processed_382 · 删除 actor 4",
+          1,
+          1,
+          null
+        ],
+        [
+          "processed_756 · 删除 actor 3",
+          1,
+          1,
+          "原视频 actor 3 是小目标+黑夜，难度一般。"
+        ]
+      ]
+    },
+    {
+      "sheet": "v77-delete-audit",
+      "rows": [
+        [
+          "任务",
+          "场景",
+          "原视频的原位重建",
+          "重建视频编辑",
+          "备注"
+        ],
+        [
+          "A001",
+          "scene-0637",
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "sheet": "之前失败的版本",
+      "rows": [
+        [
+          "case",
+          "人工排序",
+          "类型"
+        ],
+        [
+          "temporal_P006 · scene-0289 · 遮挡扫过保护车",
+          "r14 时间 self attention>有效 r7>原始 DriveEditor",
+          "合成遮挡"
+        ],
+        [
+          "temporal_P012 · scene-0291 · 遮挡比例／显露变化",
+          "都失败",
+          "合成遮挡"
+        ],
+        [
+          "temporal_P019 · scene-0289 · 世界静止A＋运动ego",
+          "有效 r7和r14 时间 self attention马路补得比DriveEditor好；但r7和r14无中生有补了一辆车出来，DriveEditor没有幻觉车",
+          "合成遮挡"
+        ],
+        [
+          "synthetic_M007 · scene-0287 · 纯背景",
+          "r14 时间 self attention≈有效 r7>原始 DriveEditor",
+          "合成遮挡"
+        ],
+        [
+          "synthetic_M006 · scene-0239 · 纯背景",
+          "r14 时间 self attention≈有效 r8>原始 DriveEditor",
+          "合成遮挡"
+        ],
+        [
+          "synthetic_M009 · scene-0239 · 纯背景",
+          "r14 时间 self attention≈有效 r9>原始 DriveEditor（重复case）",
+          "合成遮挡"
+        ],
+        [
+          "A061_w08 · scene-0931 · 真实DELETE",
+          "有效r7＞r14时间self attention>原始DriveEditor",
+          "真实DELETE"
+        ],
+        [
+          "A013 · scene-0345 · 真实DELETE",
+          "没什么区别",
+          "真实DELETE"
+        ],
+        [
+          "A048 · scene-0003 · 真实DELETE",
+          "没什么区别",
+          "真实DELETE"
+        ],
+        [
+          "A042 · scene-0904 · 真实DELETE",
+          "没什么区别",
+          "真实DELETE"
+        ],
+        [
+          "A007 · scene-0781 · 真实DELETE",
+          "没什么区别",
+          "真实DELETE"
+        ],
+        [
+          "A034 · scene-0911 · 真实DELETE",
+          "没什么区别",
+          "真实DELETE"
+        ],
+        [
+          "A022 · scene-0770 · 真实DELETE",
+          "都失败",
+          "真实DELETE"
+        ],
+        [
+          "A041_w10 · scene-0920 · 真实DELETE",
+          "都失败",
+          "真实DELETE"
+        ]
+      ]
+    },
+    {
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "rows": [
+        [
+          "case",
+          "人工打分",
+          "RGB prior信息是否足够",
+          "OCC prior信息是否足够",
+          "类型",
+          "备注",
+          "用gpt-image2补景效果",
+          "gpt-image2是否补景成功"
+        ],
+        [
+          "temporal_P006 · scene-0289 · 遮挡扫过保护车",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null,
+          null,
+          null
+        ],
+        [
+          "temporal_P012 · scene-0291 · 遮挡比例／显露变化",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null,
+          null,
+          null
+        ],
+        [
+          "temporal_P019 · scene-0289 · 世界静止A＋运动ego",
+          1,
+          null,
+          null,
+          "合成遮挡",
+          "洞内仍有大块灰色拱形边缘和黑色残块，未恢复原视频的连续车道与周围车辆边界",
+          null,
+          null
+        ],
+        [
+          "synthetic_M007 · scene-0287 · 纯背景",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null,
+          null,
+          null
+        ],
+        [
+          "synthetic_M006 · scene-0239 · 纯背景",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null,
+          null,
+          null
+        ],
+        [
+          "synthetic_M009 · scene-0239 · 纯背景",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null,
+          null,
+          null
+        ],
+        [
+          "A061_w08 · scene-0931 · 真实DELETE",
+          1,
+          null,
+          null,
+          "真实DELETE",
+          "前景灰车被移除，但后方白色保护车的补全部分仍显得扩大、扭曲，左侧带明显模糊拖影",
+          null,
+          null
+        ],
+        [
+          "A013 · scene-0345 · 真实DELETE",
+          1,
+          null,
+          null,
+          "真实DELETE",
+          "能移除前景深色目标车，但被它遮住的大巴前部仍被补成灰白方块/平板状车身，车头结构不完整",
+          null,
+          null
+        ],
+        [
+          "A048 · scene-0003 · 真实DELETE",
+          1,
+          "否",
+          "是",
+          "真实DELETE",
+          "前景白色目标车消失，但左侧被遮区域与停车列仍有车形拖影/延展，后方车辆边缘融合",
+          "=_xlfn.DISPIMG(\"ID_65E6EB2E0BAE49D695A5DCC59144AD40\",1)",
+          "是，银色反光的是车门"
+        ],
+        [
+          "A042 · scene-0904 · 真实DELETE",
+          1,
+          "否",
+          "是",
+          "真实DELETE",
+          "洞内停车列仍有明显的灰白车形涂抹",
+          "=_xlfn.DISPIMG(\"ID_7CDE1EFF3737468AA4993938BBFD4D20\",1)",
+          "否"
+        ],
+        [
+          "A007 · scene-0781 · 真实DELETE",
+          1,
+          "是",
+          "否",
+          "真实DELETE",
+          "目标原位的洞内仍有低矮深色车形/树影样块，背景路口结构不清楚",
+          "=_xlfn.DISPIMG(\"ID_03C8A70F78A4490385FAE3B1EDD8C61D\",1)",
+          "否"
+        ],
+        [
+          "A034 · scene-0911 · 真实DELETE",
+          1,
+          "是",
+          "是",
+          "真实DELETE",
+          "能去掉前景白车，但邻接保留车的车尾仍有鼓包/延展，洞内路缘和车道边界模糊",
+          "=_xlfn.DISPIMG(\"ID_62D049ADACF74C269B62901F32683CBB\",1)",
+          "是"
+        ],
+        [
+          "A022 · scene-0770 · 真实DELETE",
+          2,
+          "是",
+          "是",
+          "真实DELETE",
+          "能删除目标",
+          null,
+          null
+        ],
+        [
+          "A041_w10 · scene-0920 · 真实DELETE",
+          1,
+          "是",
+          "是",
+          "真实DELETE",
+          "洞内右侧仍有深色车形块，地面带模糊拖影，未形成干净的无车背景",
+          "=_xlfn.DISPIMG(\"ID_21173B1E0FDE4ABB8CC584AE3AC3AF1F\",1)",
+          "是"
+        ]
+      ]
+    },
+    {
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "rows": [
+        [
+          "case",
+          "人工打分",
+          "RGB prior信息是否足够",
+          "OCC prior信息是否足够",
+          "类型",
+          "备注"
+        ],
+        [
+          "temporal_P006 · scene-0289 · 遮挡扫过保护车",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null
+        ],
+        [
+          "temporal_P012 · scene-0291 · 遮挡比例／显露变化",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null
+        ],
+        [
+          "temporal_P019 · scene-0289 · 世界静止A＋运动ego",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null
+        ],
+        [
+          "synthetic_M007 · scene-0287 · 纯背景",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null
+        ],
+        [
+          "synthetic_M006 · scene-0239 · 纯背景",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null
+        ],
+        [
+          "synthetic_M009 · scene-0239 · 纯背景",
+          null,
+          null,
+          null,
+          "合成遮挡",
+          null
+        ],
+        [
+          "A061_w08 · scene-0931 · 真实DELETE",
+          1,
+          "是",
+          "是",
+          "真实DELETE",
+          "条件组的后方白车前脸、格栅和轮廓明显比基线/全未知清楚，但仍有删除actor的半透明薄膜"
+        ],
+        [
+          "A013 · scene-0345 · 真实DELETE",
+          null,
+          null,
+          null,
+          "真实DELETE",
+          null
+        ],
+        [
+          "A048 · scene-0003 · 真实DELETE",
+          1,
+          "否",
+          "是",
+          "真实DELETE",
+          "删除前景白车后，后方深色车辆仍有模糊/变形，跟r46差不多"
+        ],
+        [
+          "A042 · scene-0904 · 真实DELETE",
+          1,
+          "否",
+          "是",
+          "真实DELETE",
+          null
+        ],
+        [
+          "A007 · scene-0781 · 真实DELETE",
+          null,
+          null,
+          null,
+          "真实DELETE",
+          null
+        ],
+        [
+          "A034 · scene-0911 · 真实DELETE",
+          1,
+          "是",
+          "是",
+          "真实DELETE",
+          "条件组的后方黑色车轮廓较基线的方块状车尾更完整，但仍有删除actor的半透明薄膜"
+        ],
+        [
+          "A022 · scene-0770 · 真实DELETE",
+          null,
+          null,
+          null,
+          "真实DELETE",
+          null
+        ],
+        [
+          "A041_w10 · scene-0920 · 真实DELETE",
+          1,
+          "是",
+          "是",
+          "真实DELETE",
+          "删除灰色目标后，右侧黑色车辆附近仍是明显变形的车形块与拖影（条件组涂抹更严重）"
+        ]
+      ]
+    }
+  ],
+  "records": [
+    {
+      "version": "r46",
+      "case_id": "A061_w08",
+      "label": "A061_w08 · scene-0931 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "note": "前景灰车被移除，但后方白色保护车的补全部分仍显得扩大、扭曲，左侧带明显模糊拖影",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A8:F8"
+    },
+    {
+      "version": "r46",
+      "case_id": "A013",
+      "label": "A013 · scene-0345 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "note": "能移除前景深色目标车，但被它遮住的大巴前部仍被补成灰白方块/平板状车身，车头结构不完整",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A9:F9"
+    },
+    {
+      "version": "r46",
+      "case_id": "A048",
+      "label": "A048 · scene-0003 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "否",
+      "OCC_prior_sufficient": "是",
+      "note": "前景白色目标车消失，但左侧被遮区域与停车列仍有车形拖影/延展，后方车辆边缘融合",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A10:F10"
+    },
+    {
+      "version": "r46",
+      "case_id": "A042",
+      "label": "A042 · scene-0904 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "否",
+      "OCC_prior_sufficient": "是",
+      "note": "洞内停车列仍有明显的灰白车形涂抹",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A11:F11"
+    },
+    {
+      "version": "r46",
+      "case_id": "A007",
+      "label": "A007 · scene-0781 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "否",
+      "note": "目标原位的洞内仍有低矮深色车形/树影样块，背景路口结构不清楚",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A12:F12"
+    },
+    {
+      "version": "r46",
+      "case_id": "A034",
+      "label": "A034 · scene-0911 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "note": "能去掉前景白车，但邻接保留车的车尾仍有鼓包/延展，洞内路缘和车道边界模糊",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A13:F13"
+    },
+    {
+      "version": "r46",
+      "case_id": "A022",
+      "label": "A022 · scene-0770 · 真实DELETE",
+      "human_score": 2,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "note": "能删除目标",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A14:F14"
+    },
+    {
+      "version": "r46",
+      "case_id": "A041_w10",
+      "label": "A041_w10 · scene-0920 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "note": "洞内右侧仍有深色车形块，地面带模糊拖影，未形成干净的无车背景",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r46 基线（官方原始权重+r21修复后的完整SAM）",
+      "range": "A15:F15"
+    },
+    {
+      "version": "r47",
+      "case_id": "A061_w08",
+      "label": "A061_w08 · scene-0931 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "note": "条件组的后方白车前脸、格栅和轮廓明显比基线/全未知清楚，但仍有删除actor的半透明薄膜",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A8:F8"
+    },
+    {
+      "version": "r47",
+      "case_id": "A013",
+      "label": "A013 · scene-0345 · 真实DELETE",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "note": null,
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A9:F9"
+    },
+    {
+      "version": "r47",
+      "case_id": "A048",
+      "label": "A048 · scene-0003 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "否",
+      "OCC_prior_sufficient": "是",
+      "note": "删除前景白车后，后方深色车辆仍有模糊/变形，跟r46差不多",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A10:F10"
+    },
+    {
+      "version": "r47",
+      "case_id": "A042",
+      "label": "A042 · scene-0904 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "否",
+      "OCC_prior_sufficient": "是",
+      "note": null,
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A11:F11"
+    },
+    {
+      "version": "r47",
+      "case_id": "A007",
+      "label": "A007 · scene-0781 · 真实DELETE",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "note": null,
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A12:F12"
+    },
+    {
+      "version": "r47",
+      "case_id": "A034",
+      "label": "A034 · scene-0911 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "note": "条件组的后方黑色车轮廓较基线的方块状车尾更完整，但仍有删除actor的半透明薄膜",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A13:F13"
+    },
+    {
+      "version": "r47",
+      "case_id": "A022",
+      "label": "A022 · scene-0770 · 真实DELETE",
+      "human_score": null,
+      "RGB_prior_sufficient": null,
+      "OCC_prior_sufficient": null,
+      "note": null,
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A14:F14"
+    },
+    {
+      "version": "r47",
+      "case_id": "A041_w10",
+      "label": "A041_w10 · scene-0920 · 真实DELETE",
+      "human_score": 1,
+      "RGB_prior_sufficient": "是",
+      "OCC_prior_sufficient": "是",
+      "note": "删除灰色目标后，右侧黑色车辆附近仍是明显变形的车形块与拖影（条件组涂抹更严重）",
+      "source": "C:\\Users\\dengyunlong\\Downloads\\打分记录.xlsx",
+      "sheet": "r47（RGB + BEV + 2D几何）",
+      "range": "A15:F15"
+    }
+  ],
+  "r47_unfilled": [
+    "A013",
+    "A007",
+    "A022"
+  ],
+  "scope": "用户人工记录；空白不补分，旧r46与新r47分开；不代填时序通过率"
+}

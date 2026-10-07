@@ -1,0 +1,306 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r48",
+  "parent_run": "r47",
+  "baseline": "original DriveEditor checkpoint + r21 full SAM; no r7/r8/r14/r46 adapter weights",
+  "architecture_change": "none; r47 branch unchanged, response scalar logging only",
+  "training_backbone": "original main/3D UNet and pretrained RGB VAE frozen; new branch only",
+  "eval_seed": 42,
+  "eval_steps": 25,
+  "train_seed": 6201,
+  "scope": "四既有train / 两合成DEV / 五真实DEV；两个可靠参考的模块探针；不是最终泛化评测",
+  "reference_policy": "main observed target crop + up to6 legal masked references, selected by retained-actor visibility; real raw bank includes26 primary frames and6 cameras at4 key times",
+  "geometry_auxiliary": "official GT poses/tracks + measured LiDAR; boxes are envelopes, not silhouettes/free space",
+  "text_policy": "short deterministic role/pose description for audit; numeric parameters condition branch; no new free-language encoder",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "human_verdict": null,
+  "initial_checkpoint": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r47/training/branch_0320.safetensors",
+  "train_ids": [
+    "M010",
+    "M013",
+    "M018",
+    "M042"
+  ],
+  "eval_64": [
+    "A034",
+    "A061_w08",
+    "A022",
+    "M003",
+    "M006"
+  ],
+  "eval_128": [
+    "A034",
+    "A061_w08",
+    "A022",
+    "M003",
+    "M006",
+    "A048",
+    "A041_w10"
+  ],
+  "diagnostic_ids": [
+    "A034",
+    "A061_w08"
+  ],
+  "max_steps": 128,
+  "checkpoint_steps": [
+    64,
+    128
+  ],
+  "train_steps": "64 → 固定验证 → 最多128",
+  "lr": 0.0001,
+  "weight_decay": 0.01,
+  "train_size": [
+    320,
+    576
+  ],
+  "eval_size": [
+    576,
+    1024
+  ],
+  "prior_dropout": {
+    "RGB": 0.25,
+    "geometry": 0.25
+  },
+  "instruction_policy": "所有C组与训练dropout保留同一参数指令；UC另行清空新指令/先验",
+  "diagnostics": [
+    "RGB_and_geometry",
+    "mismatched_RGB",
+    "geometry_only",
+    "null_priors"
+  ],
+  "input_source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r47/inputs",
+  "data_new_cases": 0,
+  "GPU_jobs": 0,
+  "role_contract": {
+    "BUILD": "M010/M013/M018/M042，Y仅监督，不进入参考",
+    "QUERY": "五真实DEV与两合成DEV；真实无隐藏GT；M003/M006的Y仅度量",
+    "evidence": "原RGB参考先剔除A；GT pose/tracks与LiDAR辅助几何；不使用生成结果选参考"
+  },
+  "stop_policy": "工程/数值错误即停；128步后收口，不自动增加步数/数据/网格；等待用户开GPU",
+  "cases": [
+    {
+      "case_id": "M010",
+      "scene": "scene-0240",
+      "split": "train",
+      "kind": "synthetic",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M010",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": null
+    },
+    {
+      "case_id": "M013",
+      "scene": "scene-0228",
+      "split": "train",
+      "kind": "synthetic",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M013",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": null
+    },
+    {
+      "case_id": "M018",
+      "scene": "scene-0290",
+      "split": "train",
+      "kind": "synthetic",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M018",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": null
+    },
+    {
+      "case_id": "M042",
+      "scene": "scene-0295",
+      "split": "train",
+      "kind": "synthetic",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M042",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": null
+    },
+    {
+      "case_id": "A034",
+      "scene": "scene-0911",
+      "split": "real_DEV",
+      "kind": "real",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r21/real_inputs/A034",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": "d6f191274e09469caa9a462d9bc12f8d"
+    },
+    {
+      "case_id": "A061_w08",
+      "scene": "scene-0931",
+      "split": "real_DEV",
+      "kind": "real",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r21/real_inputs/A061",
+      "frame_indices": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "target_token": "6279467bc40e4463804706a2fc6e5cfd"
+    },
+    {
+      "case_id": "A022",
+      "scene": "scene-0770",
+      "split": "real_DEV",
+      "kind": "real",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r21/real_inputs/A022",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": "086f97eaf43341cb836d1186bad9b1f9"
+    },
+    {
+      "case_id": "M003",
+      "scene": "scene-0229",
+      "split": "validation",
+      "kind": "synthetic",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M003",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": null
+    },
+    {
+      "case_id": "M006",
+      "scene": "scene-0239",
+      "split": "validation",
+      "kind": "synthetic",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/synthetic/M006",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": null
+    },
+    {
+      "case_id": "A048",
+      "scene": "scene-0003",
+      "split": "real_DEV",
+      "kind": "real",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r21/real_inputs/A048",
+      "frame_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "target_token": "a5f12393fdf042a4a1c25cbe29f3f4ea"
+    },
+    {
+      "case_id": "A041_w10",
+      "scene": "scene-0920",
+      "split": "real_DEV",
+      "kind": "real",
+      "folder": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r21/real_inputs/A041",
+      "frame_indices": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "target_token": "a36bab05f76a4825b0c36c185dec9acb"
+    }
+  ],
+  "full_runtime_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r48/manifest.json",
+  "input_index_is_not_full_backup": true
+}
