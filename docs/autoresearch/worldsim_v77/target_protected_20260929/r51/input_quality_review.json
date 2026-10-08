@@ -1,0 +1,750 @@
+{
+  "reviewer": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": "独立目视复核 R088–R127 共40例；逐例仅依据 inputs_f00_f05_f09.jpg 中 f00/f05/f09 原图与真实A裁剪判断A的可辨性、清晰度、尺寸、遮挡/截断及混车，另对实际存在的 protected_reference.jpg 单独评估B证据充分性；不判断视频时序，不把几何代理当作目视证据。",
+  "cases": [
+    {
+      "case_id": "R088",
+      "scene": "scene-0225",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "深色MPV正面大且清楚，三帧外轮廓完整、身份唯一。",
+      "frame_observations": [
+        "f00：A正面占比大，车头、前灯和两侧轮廓完整。",
+        "f05：清晰度与尺寸稳定，无新增遮挡或混车。",
+        "f09：同一车辆仍完整可辨，暗部细节足够。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考裁剪只见A的前挡风玻璃和机盖反光，未见可分离的B轮廓。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R088/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R088/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R089",
+      "scene": "scene-0735",
+      "score": 2.3,
+      "status": "pass",
+      "concise_reason": "黑色轿车尺寸充足且轮廓完整，末帧眩光仅轻度降质。",
+      "frame_observations": [
+        "f00：前侧视角完整，车头、车侧和车轮可辨。",
+        "f05：A仍唯一且清楚，未被邻车遮住。",
+        "f09：阳光光柱和暗化降低细节，但整车结构仍可判断。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "白色厢式车虽小但整车形态、车头和车身边界可独立辨认。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R089/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R089/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R090",
+      "scene": "scene-0736",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "白色轿车侧面完整清晰，三帧大小稳定且没有目标混淆。",
+      "frame_observations": [
+        "f00：完整侧面、前后轮及车顶线均清楚。",
+        "f05：A位置略移但尺寸稳定，外轮廓无截断。",
+        "f09：同一白车保持完整，背景自行车未与A混淆。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "深灰轿车参考较大，侧后轮廓、车窗与两轮均清楚可辨。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R090/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R090/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R091",
+      "scene": "scene-0991",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "灰色轿车后视尺寸大、细节清楚，三帧轮廓完整一致。",
+      "frame_observations": [
+        "f00：后车身、尾灯、车顶和两侧边界完整。",
+        "f05：车辆略变大但仍清晰，无明显运动模糊。",
+        "f09：近距后视细节充分，邻近白车未侵入A主体。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "白色车辆虽被灌木、立柱和A局部遮挡，独立侧面车身仍有足够面积可辨。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R091/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R091/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R092",
+      "scene": "scene-0224",
+      "score": 2.4,
+      "status": "pass",
+      "concise_reason": "深色MPV正面中等大小，三帧完整且可稳定识别。",
+      "frame_observations": [
+        "f00：车头及左右轮廓完整，清晰度可用。",
+        "f05：尺寸与亮度稳定，A保持唯一。",
+        "f09：同一MPV完整可辨，背景车未进入A主体。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考图主要是A的前挡和右侧后视镜，没有独立B车身轮廓。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R092/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R092/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R093",
+      "scene": "scene-0250",
+      "score": 2.2,
+      "status": "pass",
+      "concise_reason": "深色SUV略暗偏软，但三帧整车轮廓和主要结构足以检查。",
+      "frame_observations": [
+        "f00：前侧车身完整，暗色表面细节稍弱。",
+        "f05：A仍为裁剪主体，后方车辆只占边缘。",
+        "f09：尺寸略增，车头、车顶及车轮继续可辨。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考同时包含A和其后车辆，B只露出前部且边界相互粘连，证据不充分。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R093/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R093/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R094",
+      "scene": "scene-0727",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "黑色越野车较暗且稍软，但完整侧前轮廓在三帧均可辨。",
+      "frame_observations": [
+        "f00：整车未截断，格栅、车顶和两轮可见。",
+        "f05：暗部仍保留车身边界，A身份不变。",
+        "f09：清晰度未进一步恶化，轮廓足够排查大结构错误。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "灰色轿车虽小且被A轻度挡住，独立车头、车顶和侧身仍可确认。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R094/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R094/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R095",
+      "scene": "scene-0716",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "灰色MPV略暗偏软，行人和背景车靠近但A仍唯一且主体完整。",
+      "frame_observations": [
+        "f00：车头和右侧车身完整，左后方有背景车但不混为A。",
+        "f05：行人靠近提示区，未遮住A主要轮廓。",
+        "f09：A变大且仍完整，主要车身结构可辨。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考中的远处车辆很小，并被行人和前景车边缘遮挡，缺少完整边界。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R095/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R095/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R096",
+      "scene": "scene-0305",
+      "score": 2.2,
+      "status": "pass",
+      "concise_reason": "白色SUV后视主体完整，尺寸与亮度足够，邻车只在边缘出现。",
+      "frame_observations": [
+        "f00：后车身、尾灯和车顶完整，左缘邻车不遮挡主体。",
+        "f05：A尺寸稳定，后视轮廓清楚。",
+        "f09：同一SUV仍完整可辨，未发生截断。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考以A白车为主，后方多车局部重叠，无法充分分离出单一B。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R096/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R096/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R097",
+      "scene": "scene-0129",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "白色轿车清晰可辨，前两帧有窄柱遮挡但末帧轮廓充分。",
+      "frame_observations": [
+        "f00：下部被窄柱遮住一小段，车顶和侧身主体完整。",
+        "f05：柱体仍在前景，A身份和尺寸仍明确。",
+        "f09：遮挡明显减轻，完整侧后轮廓与两轮可见。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "白色车辆参考过小且模糊，只能确认有车，无法提供充分形态细节。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R097/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R097/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R098",
+      "scene": "scene-0701",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "灰色MPV偏暗且有数根窄柱遮挡，但三帧整车形态仍可追认。",
+      "frame_observations": [
+        "f00：侧面主体完整，细窄立柱遮住局部车身。",
+        "f05：A尺寸稳定，车顶线、前后端与车轮仍可辨。",
+        "f09：遮挡位置轻微变化，未造成身份混淆或大面积缺失。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "深灰车辆被窄柱局部遮挡，但车顶、车窗、前后端和车轮构成独立可辨车体。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R098/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R098/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R099",
+      "scene": "scene-0295",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "黑色轿车近距正面完整清楚，三帧一致且无混车。",
+      "frame_observations": [
+        "f00：车头大且完整，灯组、格栅和两侧边界清楚。",
+        "f05：尺寸、角度与清晰度稳定。",
+        "f09：同一车辆保持完整，眩光未掩盖结构。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，不能据此推断遮挡后全为背景。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R099/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R100",
+      "scene": "scene-0296",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "黑色轿车近距正面完整，亮度和尺寸均足以审查结构。",
+      "frame_observations": [
+        "f00：正面主体大，外轮廓无截断。",
+        "f05：车头细节和左右边界保持清楚。",
+        "f09：车辆身份唯一，三帧没有明显模糊变化。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R100/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R101",
+      "scene": "scene-0232",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "深色MPV正面近距清楚，三帧主体完整且无遮挡。",
+      "frame_observations": [
+        "f00：前灯、格栅、车顶与两侧边界均完整。",
+        "f05：A稳定居中，清晰度良好。",
+        "f09：同一车保持大尺寸，无邻车侵入裁剪。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R101/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R102",
+      "scene": "scene-0257",
+      "score": 2.5,
+      "status": "pass",
+      "concise_reason": "棕色厢式车后侧视完整清楚，与两侧卡车明确分离。",
+      "frame_observations": [
+        "f00：厢式车整车轮廓、尾灯和侧面清楚。",
+        "f05：A仍完整，旁边白色货车未进入目标裁剪。",
+        "f09：同一车辆尺寸稳定，暗色车身边界可辨。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R102/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R103",
+      "scene": "scene-0256",
+      "score": 2.6,
+      "status": "pass",
+      "concise_reason": "深色轿车后视大且完整，三帧清晰稳定。",
+      "frame_observations": [
+        "f00：尾部、尾灯、车顶和两侧轮廓完整。",
+        "f05：A保持同一角度与大小，无明显遮挡。",
+        "f09：近距后视仍清楚，后方小车不与A混淆。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R103/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R104",
+      "scene": "scene-0408",
+      "score": 2.7,
+      "status": "pass",
+      "concise_reason": "黑色轿车后视尺寸大、外轮廓完整，三帧没有混车。",
+      "frame_observations": [
+        "f00：完整尾部和两侧边界清楚。",
+        "f05：车身细节稳定，路边背景未遮挡A。",
+        "f09：同一车辆仍完整，清晰度足以排查结构。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R104/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R105",
+      "scene": "scene-0546",
+      "score": 2.7,
+      "status": "pass",
+      "concise_reason": "灰色跨界车完整侧视清楚，虽处多车场景但A裁剪唯一明确。",
+      "frame_observations": [
+        "f00：整车侧面、两轮及车顶线完整。",
+        "f05：A仍为裁剪唯一主体，背景车辆相互分离。",
+        "f09：同一车辆保持完整清晰，未被前景车截断。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R105/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R106",
+      "scene": "scene-0427",
+      "score": 2.7,
+      "status": "pass",
+      "concise_reason": "银色MPV后视近距完整，三帧细节和尺寸均充足。",
+      "frame_observations": [
+        "f00：尾部、尾灯、车顶和下沿均完整。",
+        "f05：A略变大，清晰度稳定。",
+        "f09：同一MPV保持完整，背景公交不构成混车。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R106/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R107",
+      "scene": "scene-0349",
+      "score": 2.5,
+      "status": "pass",
+      "concise_reason": "白色MPV后视完整清楚，三帧主体稳定且无遮挡。",
+      "frame_observations": [
+        "f00：后车身和左右外轮廓完整。",
+        "f05：车尾细节稳定，路旁深色车与A分离。",
+        "f09：同一白车保持足够尺寸，无截断或混车。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R107/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R108",
+      "scene": "scene-0237",
+      "score": 2.5,
+      "status": "pass",
+      "concise_reason": "白色SUV由中距变近，三帧完整且清晰度随尺寸提升。",
+      "frame_observations": [
+        "f00：A较小但整车前侧轮廓可辨。",
+        "f05：尺寸明显增大，车头、侧面和车轮清楚。",
+        "f09：近距完整视图细节充分，没有遮挡。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R108/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R109",
+      "scene": "scene-0734",
+      "score": 1.4,
+      "status": "reject",
+      "concise_reason": "铁丝网密集覆盖整辆黑车，车身表面与边界均受持续干扰。",
+      "frame_observations": [
+        "f00：整车隔着密集网格，车门和窗线细节被切碎。",
+        "f05：网格仍覆盖全部A，没有无遮挡结构视图。",
+        "f09：遮挡形态不变，无法可靠检查车体补景结构。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R109/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R110",
+      "scene": "scene-0733",
+      "score": 1.4,
+      "status": "reject",
+      "concise_reason": "黑色轿车全身被近景铁丝网覆盖，三帧都缺少干净外观证据。",
+      "frame_observations": [
+        "f00：网格覆盖车头至车尾，车身细节严重受扰。",
+        "f05：A仍隔在同一密网后，轮廓被网线反复穿过。",
+        "f09：没有出现可用无遮挡帧，结构审查可靠性不足。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R110/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R111",
+      "scene": "scene-0731",
+      "score": 1.2,
+      "status": "reject",
+      "concise_reason": "除整车被铁丝网覆盖外，中后帧还有粗立柱切过车身，遮挡过重。",
+      "frame_observations": [
+        "f00：密集网格覆盖A全部表面。",
+        "f05：网格叠加粗立柱，车身中部被明显切断。",
+        "f09：粗柱仍压过A，三帧均无干净完整轮廓。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R111/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R112",
+      "scene": "scene-0247",
+      "score": 2.1,
+      "status": "pass",
+      "concise_reason": "黑色工程车由大变小，末帧偏小但三帧身份与整体轮廓仍明确。",
+      "frame_observations": [
+        "f00：车头和箱体大且完整，结构清楚。",
+        "f05：距离增加但完整正侧轮廓仍可辨。",
+        "f09：A较小且略软，仍能确认同一车辆及主要边界。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R112/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R113",
+      "scene": "scene-0288",
+      "score": 2.2,
+      "status": "pass",
+      "concise_reason": "黑色轿车正面逐帧变大，初帧稍小但整体完整且无实质遮挡。",
+      "frame_observations": [
+        "f00：A较小，左后有另一车但与目标轮廓分离。",
+        "f05：尺寸增大，车头和两侧边界清楚。",
+        "f09：近距正面完整，足以核查主要结构。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R113/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R114",
+      "scene": "scene-0715",
+      "score": 2.3,
+      "status": "pass",
+      "concise_reason": "深色SUV完整侧视，大小和清晰度在三帧均可接受。",
+      "frame_observations": [
+        "f00：整车侧面、两轮和车顶线完整。",
+        "f05：A保持独立，附近白车未侵入目标裁剪。",
+        "f09：同一SUV略增大，轮廓仍清楚。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R114/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R115",
+      "scene": "scene-0249",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "黑色SUV主体清楚，银车在后两帧遮住右下局部但未形成严重混车。",
+      "frame_observations": [
+        "f00：A后侧轮廓大且基本完整。",
+        "f05：银色轿车遮住A右下小部分，车顶和大部车身仍清楚。",
+        "f09：遮挡略增但A身份、尾部和主要外轮廓仍可判断。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R115/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R116",
+      "scene": "scene-0711",
+      "score": 2.2,
+      "status": "pass",
+      "concise_reason": "灰色MPV正面由小变大，三帧轮廓完整且目标唯一。",
+      "frame_observations": [
+        "f00：A中等偏小，车头与两侧边界可辨。",
+        "f05：尺寸增大，格栅和前灯更清楚。",
+        "f09：近距正面完整，旁侧红车与A分离。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R116/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R117",
+      "scene": "scene-0718",
+      "score": 1.5,
+      "status": "reject",
+      "concise_reason": "白色厢式车下半部持续被混凝土护栏遮住，且有人体叠入，外轮廓证据不足。",
+      "frame_observations": [
+        "f00：护栏遮住车辆下沿和车轮，行人又覆盖左侧。",
+        "f05：下半车体仍不可见，前景行人贴近车身。",
+        "f09：虽少一名行人，护栏仍持续截断完整车体。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R117/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R118",
+      "scene": "scene-0170",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "红色车辆偏小偏软且有树干局部遮挡，但三帧主体与大轮廓仍足够明确。",
+      "frame_observations": [
+        "f00：树干遮住前侧窄条，车顶、后部和大部侧身可见。",
+        "f05：A大小稳定，局部遮挡未扩大。",
+        "f09：同一红车完整性与身份可确认，背景车辆不混入A。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R118/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R119",
+      "scene": "scene-0368",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "红色跨界车较小且稍软，但完整侧后轮廓在三帧均清楚可认。",
+      "frame_observations": [
+        "f00：整车未截断，后侧和两轮可辨。",
+        "f05：A尺寸稳定，背景道路与白车分离。",
+        "f09：同一红车保持完整，轻微模糊不妨碍大结构判断。"
+      ],
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R119/inputs_f00_f05_f09.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R120",
+      "scene": "scene-0240",
+      "score": 2.4,
+      "status": "pass",
+      "concise_reason": "银色轿车后视完整，尺寸和清晰度稳定，周围车辆不造成A混淆。",
+      "frame_observations": [
+        "f00：车尾、车顶和两侧边界完整。",
+        "f05：A保持同一大小与角度，细节可用。",
+        "f09：同一银车仍清楚，后方深色车未侵入A主体。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考以A车尾为主，B深色车只露出部分车身且与A重叠，完整边界不足。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R120/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R120/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R121",
+      "scene": "scene-0706",
+      "score": 2.4,
+      "status": "pass",
+      "concise_reason": "黑色SUV正前视大小充足，三帧清楚且外轮廓完整。",
+      "frame_observations": [
+        "f00：车头完整，邻车位于左后方且可分离。",
+        "f05：A略变大，前灯、格栅和车顶清楚。",
+        "f09：同一SUV继续完整，无遮挡或截断。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "白色SUV虽分辨率一般，但独立后侧车身、车顶和两轮均可识别。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R121/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R121/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R122",
+      "scene": "scene-0298",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "黑色SUV由大变小且有树干局部遮挡，三帧仍能辨认完整主体与身份。",
+      "frame_observations": [
+        "f00：A较大，树干遮住一条窄区域，主要轮廓完整。",
+        "f05：车辆变小，车头、车顶和侧边仍可辨。",
+        "f09：A偏小但未截断，后方车辆只在边缘出现。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考中两辆深色车前后粘连，难以确认单一B的完整范围和轮廓。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R122/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R122/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R123",
+      "scene": "scene-0369",
+      "score": 1.3,
+      "status": "reject",
+      "concise_reason": "黑车过小且正面严重虚软，强烈高光覆盖车头，结构细节不足。",
+      "frame_observations": [
+        "f00：A尺寸小，前脸模糊并被大面积高光压住。",
+        "f05：尺寸与模糊程度没有改善，机盖中央仍过曝。",
+        "f09：同一小车仍缺乏可用于结构审查的清晰边界和细节。"
+      ],
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只见被强高光覆盖的A车头，B没有可分离的独立轮廓。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R123/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R123/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R124",
+      "scene": "scene-0127",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "银色轿车偏小且略软，但三帧侧后轮廓完整、身份唯一。",
+      "frame_observations": [
+        "f00：A中等偏小，侧后车身和两轮仍可辨。",
+        "f05：车辆位置变化小，外轮廓保持完整。",
+        "f09：A略小但未被截断，背景多车与目标分离。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "深色车辆侧面独立可见，车顶、车窗、前后端与两轮足以确认B。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R124/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R124/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R125",
+      "scene": "scene-0233",
+      "score": 2.0,
+      "status": "pass",
+      "concise_reason": "白色轿车尺寸处于下限且略软，但完整侧前轮廓在三帧一致可辨。",
+      "frame_observations": [
+        "f00：A较小，车头、车顶、侧身和两轮仍完整。",
+        "f05：尺寸稳定，未被行人或邻车遮挡。",
+        "f09：同一白车保持完整，主要外轮廓足以检查。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "灰色SUV虽与白车相邻，完整车头、车顶和大部车身可独立辨认。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R125/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R125/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R126",
+      "scene": "scene-0254",
+      "score": 1.3,
+      "status": "reject",
+      "concise_reason": "白色SUV提示裁剪持续混入并被深色车辆大幅覆盖，A边界无法可靠分离。",
+      "frame_observations": [
+        "f00：深色车占据A左前大块区域，两车轮廓相互粘连。",
+        "f05：混车关系持续，白车前部仍缺少独立边界。",
+        "f09：两车依旧重叠，三帧均无干净A结构视图。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "深色B虽与白色A重叠，车头、车顶、前轮和独立深色车身面积仍足以确认其存在。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R126/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R126/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R127",
+      "scene": "scene-0728",
+      "score": 1.0,
+      "status": "reject",
+      "concise_reason": "红车很小，粗灯杆贯穿主体且白色邻车占据同一提示区域，严重遮挡混车。",
+      "frame_observations": [
+        "f00：粗灯杆切过A中央，白色SUV紧邻并混入裁剪。",
+        "f05：红车仍小且被杆体遮住，两车边界难分。",
+        "f09：遮挡与混车持续，A完整外轮廓始终不可得。"
+      ],
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "白色SUV后部虽被杆体和红车遮住一侧，独立白色车尾、车窗和右侧轮廓仍可辨。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R127/inputs_f00_f05_f09.jpg",
+        "outputs/v77-real-delete-r51/R127/protected_reference.jpg"
+      ],
+      "human_verdict": null
+    }
+  ]
+}

@@ -1,0 +1,1224 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r51",
+  "case_count": 33,
+  "scene_count": 33,
+  "role": "nuScenes train real DELETE development discovery; no current fine-tuning",
+  "input_candidate_count": 40,
+  "rejected": [
+    "R109",
+    "R110",
+    "R111",
+    "R117",
+    "R123",
+    "R126",
+    "R127"
+  ],
+  "uncertain": [],
+  "new_vs_r50_all_38_input_reviewed_scenes": true,
+  "reserve_scenes": [
+    "scene-0474",
+    "scene-1098",
+    "scene-0886",
+    "scene-0454",
+    "scene-1010"
+  ],
+  "base": "r46 official DriveEditor checkpoint + r21 sam_full_v2",
+  "seed": 42,
+  "sampling_steps": 25,
+  "frames": 10,
+  "resolution": [
+    576,
+    1024
+  ],
+  "B_evidence": {
+    "weak": 8,
+    "sufficient": 8,
+    "absent": 17
+  },
+  "cameras": {
+    "CAM_BACK": 14,
+    "CAM_BACK_LEFT": 4,
+    "CAM_FRONT": 12,
+    "CAM_FRONT_RIGHT": 1,
+    "CAM_FRONT_LEFT": 2
+  },
+  "cases": [
+    {
+      "case_id": "R088",
+      "scene": "scene-0225",
+      "camera": "CAM_BACK",
+      "instance_token": "717a653b5f254d89a96c2e2339b6ddb3",
+      "source_id": "S0075",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 1,
+      "median_width": 332.0400000000001,
+      "median_height": 310.35499999999996,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R088",
+        "scene": "scene-0225",
+        "score": 2.8,
+        "status": "pass",
+        "concise_reason": "深色MPV正面大且清楚，三帧外轮廓完整、身份唯一。",
+        "frame_observations": [
+          "f00：A正面占比大，车头、前灯和两侧轮廓完整。",
+          "f05：清晰度与尺寸稳定，无新增遮挡或混车。",
+          "f09：同一车辆仍完整可辨，暗部细节足够。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考裁剪只见A的前挡风玻璃和机盖反光，未见可分离的B轮廓。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R088/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R088/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R089",
+      "scene": "scene-0735",
+      "camera": "CAM_BACK",
+      "instance_token": "24f306a9fb2948ae9301139418dcc3fc",
+      "source_id": "S0015",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r16/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 7,
+      "median_width": 317.82,
+      "median_height": 176.60999999999999,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R089",
+        "scene": "scene-0735",
+        "score": 2.3,
+        "status": "pass",
+        "concise_reason": "黑色轿车尺寸充足且轮廓完整，末帧眩光仅轻度降质。",
+        "frame_observations": [
+          "f00：前侧视角完整，车头、车侧和车轮可辨。",
+          "f05：A仍唯一且清楚，未被邻车遮住。",
+          "f09：阳光光柱和暗化降低细节，但整车结构仍可判断。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "白色厢式车虽小但整车形态、车头和车身边界可独立辨认。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R089/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R089/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R090",
+      "scene": "scene-0736",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "1c45f37789654724b381ec9f1cd0f05d",
+      "source_id": "S0067",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 3,
+      "median_width": 391.875,
+      "median_height": 134.545,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R090",
+        "scene": "scene-0736",
+        "score": 2.8,
+        "status": "pass",
+        "concise_reason": "白色轿车侧面完整清晰，三帧大小稳定且没有目标混淆。",
+        "frame_observations": [
+          "f00：完整侧面、前后轮及车顶线均清楚。",
+          "f05：A位置略移但尺寸稳定，外轮廓无截断。",
+          "f09：同一白车保持完整，背景自行车未与A混淆。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "深灰轿车参考较大，侧后轮廓、车窗与两轮均清楚可辨。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R090/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R090/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R091",
+      "scene": "scene-0991",
+      "camera": "CAM_FRONT",
+      "instance_token": "f3e0540ab540496d99d11c97eea4446f",
+      "source_id": "S0208",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 259.135,
+      "median_height": 185.24999999999997,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R091",
+        "scene": "scene-0991",
+        "score": 2.8,
+        "status": "pass",
+        "concise_reason": "灰色轿车后视尺寸大、细节清楚，三帧轮廓完整一致。",
+        "frame_observations": [
+          "f00：后车身、尾灯、车顶和两侧边界完整。",
+          "f05：车辆略变大但仍清晰，无明显运动模糊。",
+          "f09：近距后视细节充分，邻近白车未侵入A主体。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "白色车辆虽被灌木、立柱和A局部遮挡，独立侧面车身仍有足够面积可辨。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R091/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R091/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R092",
+      "scene": "scene-0224",
+      "camera": "CAM_BACK",
+      "instance_token": "96658f307c954dc397101cbc8a52bb66",
+      "source_id": "S0074",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 9,
+      "median_width": 221.83499999999995,
+      "median_height": 185.14999999999998,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R092",
+        "scene": "scene-0224",
+        "score": 2.4,
+        "status": "pass",
+        "concise_reason": "深色MPV正面中等大小，三帧完整且可稳定识别。",
+        "frame_observations": [
+          "f00：车头及左右轮廓完整，清晰度可用。",
+          "f05：尺寸与亮度稳定，A保持唯一。",
+          "f09：同一MPV完整可辨，背景车未进入A主体。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考图主要是A的前挡和右侧后视镜，没有独立B车身轮廓。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R092/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R092/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R093",
+      "scene": "scene-0250",
+      "camera": "CAM_FRONT",
+      "instance_token": "b2dc043a8884485d939f690a8f1770ca",
+      "source_id": "S0031",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 221.18499999999997,
+      "median_height": 131.07500000000002,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R093",
+        "scene": "scene-0250",
+        "score": 2.2,
+        "status": "pass",
+        "concise_reason": "深色SUV略暗偏软，但三帧整车轮廓和主要结构足以检查。",
+        "frame_observations": [
+          "f00：前侧车身完整，暗色表面细节稍弱。",
+          "f05：A仍为裁剪主体，后方车辆只占边缘。",
+          "f09：尺寸略增，车头、车顶及车轮继续可辨。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考同时包含A和其后车辆，B只露出前部且边界相互粘连，证据不充分。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R093/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R093/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R094",
+      "scene": "scene-0727",
+      "camera": "CAM_BACK",
+      "instance_token": "bdc9388c91764ea28fd029d48920413b",
+      "source_id": "S0201",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r4/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 235.925,
+      "median_height": 119.42000000000002,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R094",
+        "scene": "scene-0727",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "黑色越野车较暗且稍软，但完整侧前轮廓在三帧均可辨。",
+        "frame_observations": [
+          "f00：整车未截断，格栅、车顶和两轮可见。",
+          "f05：暗部仍保留车身边界，A身份不变。",
+          "f09：清晰度未进一步恶化，轮廓足够排查大结构错误。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "灰色轿车虽小且被A轻度挡住，独立车头、车顶和侧身仍可确认。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R094/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R094/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R095",
+      "scene": "scene-0716",
+      "camera": "CAM_BACK",
+      "instance_token": "d03417ad130d428ab566b1c6d523d3e8",
+      "source_id": "S0049",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 173.67499999999998,
+      "median_height": 110.41,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R095",
+        "scene": "scene-0716",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "灰色MPV略暗偏软，行人和背景车靠近但A仍唯一且主体完整。",
+        "frame_observations": [
+          "f00：车头和右侧车身完整，左后方有背景车但不混为A。",
+          "f05：行人靠近提示区，未遮住A主要轮廓。",
+          "f09：A变大且仍完整，主要车身结构可辨。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考中的远处车辆很小，并被行人和前景车边缘遮挡，缺少完整边界。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R095/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R095/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R096",
+      "scene": "scene-0305",
+      "camera": "CAM_FRONT",
+      "instance_token": "fb5287f6629c4ae89a4a6caba2fb763e",
+      "source_id": "S0122",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 9,
+      "median_width": 148.21,
+      "median_height": 118.76999999999998,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R096",
+        "scene": "scene-0305",
+        "score": 2.2,
+        "status": "pass",
+        "concise_reason": "白色SUV后视主体完整，尺寸与亮度足够，邻车只在边缘出现。",
+        "frame_observations": [
+          "f00：后车身、尾灯和车顶完整，左缘邻车不遮挡主体。",
+          "f05：A尺寸稳定，后视轮廓清楚。",
+          "f09：同一SUV仍完整可辨，未发生截断。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考以A白车为主，后方多车局部重叠，无法充分分离出单一B。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R096/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R096/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R097",
+      "scene": "scene-0129",
+      "camera": "CAM_FRONT_RIGHT",
+      "instance_token": "bf23d516cb3d49cab74ee66faa831833",
+      "source_id": "S0186",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r37/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 193.24,
+      "median_height": 77.50999999999999,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R097",
+        "scene": "scene-0129",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "白色轿车清晰可辨，前两帧有窄柱遮挡但末帧轮廓充分。",
+        "frame_observations": [
+          "f00：下部被窄柱遮住一小段，车顶和侧身主体完整。",
+          "f05：柱体仍在前景，A身份和尺寸仍明确。",
+          "f09：遮挡明显减轻，完整侧后轮廓与两轮可见。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "白色车辆参考过小且模糊，只能确认有车，无法提供充分形态细节。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R097/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R097/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R098",
+      "scene": "scene-0701",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "651adde15ac8467a92c604285e37a2af",
+      "source_id": "S0044",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 186.8400000000001,
+      "median_height": 67.715,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R098",
+        "scene": "scene-0701",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "灰色MPV偏暗且有数根窄柱遮挡，但三帧整车形态仍可追认。",
+        "frame_observations": [
+          "f00：侧面主体完整，细窄立柱遮住局部车身。",
+          "f05：A尺寸稳定，车顶线、前后端与车轮仍可辨。",
+          "f09：遮挡位置轻微变化，未造成身份混淆或大面积缺失。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "深灰车辆被窄柱局部遮挡，但车顶、车窗、前后端和车轮构成独立可辨车体。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R098/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R098/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R099",
+      "scene": "scene-0295",
+      "camera": "CAM_BACK",
+      "instance_token": "0cfe685e273347c6baa7411adcfa0b6d",
+      "source_id": "S0115",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 9,
+      "median_width": 329.03000000000003,
+      "median_height": 252.71500000000006,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R099",
+        "scene": "scene-0295",
+        "score": 2.8,
+        "status": "pass",
+        "concise_reason": "黑色轿车近距正面完整清楚，三帧一致且无混车。",
+        "frame_observations": [
+          "f00：车头大且完整，灯组、格栅和两侧边界清楚。",
+          "f05：尺寸、角度与清晰度稳定。",
+          "f09：同一车辆保持完整，眩光未掩盖结构。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，不能据此推断遮挡后全为背景。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R099/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R100",
+      "scene": "scene-0296",
+      "camera": "CAM_BACK",
+      "instance_token": "08fba8bd56fd456c8364c93c6110af46",
+      "source_id": "S0116",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 5,
+      "median_width": 311.80499999999995,
+      "median_height": 248.985,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R100",
+        "scene": "scene-0296",
+        "score": 2.8,
+        "status": "pass",
+        "concise_reason": "黑色轿车近距正面完整，亮度和尺寸均足以审查结构。",
+        "frame_observations": [
+          "f00：正面主体大，外轮廓无截断。",
+          "f05：车头细节和左右边界保持清楚。",
+          "f09：车辆身份唯一，三帧没有明显模糊变化。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R100/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R101",
+      "scene": "scene-0232",
+      "camera": "CAM_BACK",
+      "instance_token": "1cd9a0cae0ac4c4f863cb6bd39658c9b",
+      "source_id": "S0222",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 1,
+      "median_width": 271.1499999999999,
+      "median_height": 249.54000000000002,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R101",
+        "scene": "scene-0232",
+        "score": 2.8,
+        "status": "pass",
+        "concise_reason": "深色MPV正面近距清楚，三帧主体完整且无遮挡。",
+        "frame_observations": [
+          "f00：前灯、格栅、车顶与两侧边界均完整。",
+          "f05：A稳定居中，清晰度良好。",
+          "f09：同一车保持大尺寸，无邻车侵入裁剪。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R101/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R102",
+      "scene": "scene-0257",
+      "camera": "CAM_FRONT",
+      "instance_token": "5d38c19ac8c3400d96308b50677c4de9",
+      "source_id": "S0104",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 8,
+      "median_width": 254.755,
+      "median_height": 201.18,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R102",
+        "scene": "scene-0257",
+        "score": 2.5,
+        "status": "pass",
+        "concise_reason": "棕色厢式车后侧视完整清楚，与两侧卡车明确分离。",
+        "frame_observations": [
+          "f00：厢式车整车轮廓、尾灯和侧面清楚。",
+          "f05：A仍完整，旁边白色货车未进入目标裁剪。",
+          "f09：同一车辆尺寸稳定，暗色车身边界可辨。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R102/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R103",
+      "scene": "scene-0256",
+      "camera": "CAM_FRONT",
+      "instance_token": "89e0afc5f12948ab9102fa2d0dcd5446",
+      "source_id": "S0214",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 253.465,
+      "median_height": 163.795,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R103",
+        "scene": "scene-0256",
+        "score": 2.6,
+        "status": "pass",
+        "concise_reason": "深色轿车后视大且完整，三帧清晰稳定。",
+        "frame_observations": [
+          "f00：尾部、尾灯、车顶和两侧轮廓完整。",
+          "f05：A保持同一角度与大小，无明显遮挡。",
+          "f09：近距后视仍清楚，后方小车不与A混淆。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R103/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R104",
+      "scene": "scene-0408",
+      "camera": "CAM_FRONT",
+      "instance_token": "016f8f81c56d41a8a8982f00ba0aa117",
+      "source_id": "S0204",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 8,
+      "median_width": 238.93,
+      "median_height": 165.315,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R104",
+        "scene": "scene-0408",
+        "score": 2.7,
+        "status": "pass",
+        "concise_reason": "黑色轿车后视尺寸大、外轮廓完整，三帧没有混车。",
+        "frame_observations": [
+          "f00：完整尾部和两侧边界清楚。",
+          "f05：车身细节稳定，路边背景未遮挡A。",
+          "f09：同一车辆仍完整，清晰度足以排查结构。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R104/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R105",
+      "scene": "scene-0546",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "57be2057694d4aae8cdeb54d1126d30b",
+      "source_id": "S0207",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 0,
+      "median_width": 288.985,
+      "median_height": 123.43,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R105",
+        "scene": "scene-0546",
+        "score": 2.7,
+        "status": "pass",
+        "concise_reason": "灰色跨界车完整侧视清楚，虽处多车场景但A裁剪唯一明确。",
+        "frame_observations": [
+          "f00：整车侧面、两轮及车顶线完整。",
+          "f05：A仍为裁剪唯一主体，背景车辆相互分离。",
+          "f09：同一车辆保持完整清晰，未被前景车截断。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R105/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R106",
+      "scene": "scene-0427",
+      "camera": "CAM_FRONT",
+      "instance_token": "994690b4a9d8466ca3ad0fbabb95dab4",
+      "source_id": "S0206",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 192.57499999999996,
+      "median_height": 182.33,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R106",
+        "scene": "scene-0427",
+        "score": 2.7,
+        "status": "pass",
+        "concise_reason": "银色MPV后视近距完整，三帧细节和尺寸均充足。",
+        "frame_observations": [
+          "f00：尾部、尾灯、车顶和下沿均完整。",
+          "f05：A略变大，清晰度稳定。",
+          "f09：同一MPV保持完整，背景公交不构成混车。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R106/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R107",
+      "scene": "scene-0349",
+      "camera": "CAM_FRONT",
+      "instance_token": "d88750480dcd45e5bb31e6a6813c3e05",
+      "source_id": "S0205",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 171.155,
+      "median_height": 175.69,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R107",
+        "scene": "scene-0349",
+        "score": 2.5,
+        "status": "pass",
+        "concise_reason": "白色MPV后视完整清楚，三帧主体稳定且无遮挡。",
+        "frame_observations": [
+          "f00：后车身和左右外轮廓完整。",
+          "f05：车尾细节稳定，路旁深色车与A分离。",
+          "f09：同一白车保持足够尺寸，无截断或混车。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R107/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R108",
+      "scene": "scene-0237",
+      "camera": "CAM_FRONT",
+      "instance_token": "4cd25a1d77bf4afbbf04a68d1f5eb3d4",
+      "source_id": "S0004",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r16/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 189.0,
+      "median_height": 123.745,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R108",
+        "scene": "scene-0237",
+        "score": 2.5,
+        "status": "pass",
+        "concise_reason": "白色SUV由中距变近，三帧完整且清晰度随尺寸提升。",
+        "frame_observations": [
+          "f00：A较小但整车前侧轮廓可辨。",
+          "f05：尺寸明显增大，车头、侧面和车轮清楚。",
+          "f09：近距完整视图细节充分，没有遮挡。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R108/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R112",
+      "scene": "scene-0247",
+      "camera": "CAM_BACK",
+      "instance_token": "6d1ca46e1c614f02862a4085bcc5caff",
+      "source_id": "S0235",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 150.825,
+      "median_height": 112.0,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R112",
+        "scene": "scene-0247",
+        "score": 2.1,
+        "status": "pass",
+        "concise_reason": "黑色工程车由大变小，末帧偏小但三帧身份与整体轮廓仍明确。",
+        "frame_observations": [
+          "f00：车头和箱体大且完整，结构清楚。",
+          "f05：距离增加但完整正侧轮廓仍可辨。",
+          "f09：A较小且略软，仍能确认同一车辆及主要边界。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R112/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R113",
+      "scene": "scene-0288",
+      "camera": "CAM_BACK",
+      "instance_token": "244416807619487aacdef850be92a8d0",
+      "source_id": "S0068",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 141.965,
+      "median_height": 118.46000000000004,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R113",
+        "scene": "scene-0288",
+        "score": 2.2,
+        "status": "pass",
+        "concise_reason": "黑色轿车正面逐帧变大，初帧稍小但整体完整且无实质遮挡。",
+        "frame_observations": [
+          "f00：A较小，左后有另一车但与目标轮廓分离。",
+          "f05：尺寸增大，车头和两侧边界清楚。",
+          "f09：近距正面完整，足以核查主要结构。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R113/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R114",
+      "scene": "scene-0715",
+      "camera": "CAM_FRONT",
+      "instance_token": "57125e45168a41cf95d0e965a618ad12",
+      "source_id": "S0174",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 200.55,
+      "median_height": 81.19,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R114",
+        "scene": "scene-0715",
+        "score": 2.3,
+        "status": "pass",
+        "concise_reason": "深色SUV完整侧视，大小和清晰度在三帧均可接受。",
+        "frame_observations": [
+          "f00：整车侧面、两轮和车顶线完整。",
+          "f05：A保持独立，附近白车未侵入目标裁剪。",
+          "f09：同一SUV略增大，轮廓仍清楚。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R114/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R115",
+      "scene": "scene-0249",
+      "camera": "CAM_BACK",
+      "instance_token": "cf71a81db0b448ac90599a5d7b054c68",
+      "source_id": "S0097",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 157.685,
+      "median_height": 92.41499999999999,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R115",
+        "scene": "scene-0249",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "黑色SUV主体清楚，银车在后两帧遮住右下局部但未形成严重混车。",
+        "frame_observations": [
+          "f00：A后侧轮廓大且基本完整。",
+          "f05：银色轿车遮住A右下小部分，车顶和大部车身仍清楚。",
+          "f09：遮挡略增但A身份、尾部和主要外轮廓仍可判断。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R115/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R116",
+      "scene": "scene-0711",
+      "camera": "CAM_BACK",
+      "instance_token": "7df368d07e64441188ad08251cb7dcad",
+      "source_id": "S0200",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r4/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 140.28000000000003,
+      "median_height": 101.53999999999999,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R116",
+        "scene": "scene-0711",
+        "score": 2.2,
+        "status": "pass",
+        "concise_reason": "灰色MPV正面由小变大，三帧轮廓完整且目标唯一。",
+        "frame_observations": [
+          "f00：A中等偏小，车头与两侧边界可辨。",
+          "f05：尺寸增大，格栅和前灯更清楚。",
+          "f09：近距正面完整，旁侧红车与A分离。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R116/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R118",
+      "scene": "scene-0170",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "030ba09f161743539ff4f6861ba283cc",
+      "source_id": "S0189",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r37/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 161.51,
+      "median_height": 82.405,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R118",
+        "scene": "scene-0170",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "红色车辆偏小偏软且有树干局部遮挡，但三帧主体与大轮廓仍足够明确。",
+        "frame_observations": [
+          "f00：树干遮住前侧窄条，车顶、后部和大部侧身可见。",
+          "f05：A大小稳定，局部遮挡未扩大。",
+          "f09：同一红车完整性与身份可确认，背景车辆不混入A。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R118/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R119",
+      "scene": "scene-0368",
+      "camera": "CAM_FRONT_LEFT",
+      "instance_token": "c32faea0e80541a28a8a513d1ea95764",
+      "source_id": "S0194",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r37/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 0,
+      "median_width": 171.17000000000002,
+      "median_height": 73.89500000000001,
+      "behind_vehicle_proxy": false,
+      "input_quality_review": {
+        "case_id": "R119",
+        "scene": "scene-0368",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "红色跨界车较小且稍软，但完整侧后轮廓在三帧均清楚可认。",
+        "frame_observations": [
+          "f00：整车未截断，后侧和两轮可辨。",
+          "f05：A尺寸稳定，背景道路与白车分离。",
+          "f09：同一红车保持完整，轻微模糊不妨碍大结构判断。"
+        ],
+        "protected_reference_quality": "absent",
+        "protected_reference_reason": "该例没有 protected_reference.jpg，B证据缺失。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R119/inputs_f00_f05_f09.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R120",
+      "scene": "scene-0240",
+      "camera": "CAM_FRONT",
+      "instance_token": "cb8ad1c0ef2541ab9faf8715dbdc026c",
+      "source_id": "S0153",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 6,
+      "median_width": 136.24,
+      "median_height": 122.95000000000002,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R120",
+        "scene": "scene-0240",
+        "score": 2.4,
+        "status": "pass",
+        "concise_reason": "银色轿车后视完整，尺寸和清晰度稳定，周围车辆不造成A混淆。",
+        "frame_observations": [
+          "f00：车尾、车顶和两侧边界完整。",
+          "f05：A保持同一大小与角度，细节可用。",
+          "f09：同一银车仍清楚，后方深色车未侵入A主体。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考以A车尾为主，B深色车只露出部分车身且与A重叠，完整边界不足。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R120/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R120/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R121",
+      "scene": "scene-0706",
+      "camera": "CAM_BACK",
+      "instance_token": "8d9acdd247d2497c8f7b9e4080dee740",
+      "source_id": "S0048",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 0,
+      "median_width": 135.90999999999997,
+      "median_height": 106.92500000000001,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R121",
+        "scene": "scene-0706",
+        "score": 2.4,
+        "status": "pass",
+        "concise_reason": "黑色SUV正前视大小充足，三帧清楚且外轮廓完整。",
+        "frame_observations": [
+          "f00：车头完整，邻车位于左后方且可分离。",
+          "f05：A略变大，前灯、格栅和车顶清楚。",
+          "f09：同一SUV继续完整，无遮挡或截断。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "白色SUV虽分辨率一般，但独立后侧车身、车顶和两轮均可识别。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R121/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R121/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R122",
+      "scene": "scene-0298",
+      "camera": "CAM_BACK",
+      "instance_token": "f0730f8e320e421a957c4133e4356fa5",
+      "source_id": "S0244",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "prompt_frame": 0,
+      "median_width": 139.07,
+      "median_height": 87.36999999999998,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R122",
+        "scene": "scene-0298",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "黑色SUV由大变小且有树干局部遮挡，三帧仍能辨认完整主体与身份。",
+        "frame_observations": [
+          "f00：A较大，树干遮住一条窄区域，主要轮廓完整。",
+          "f05：车辆变小，车头、车顶和侧边仍可辨。",
+          "f09：A偏小但未截断，后方车辆只在边缘出现。"
+        ],
+        "protected_reference_quality": "weak",
+        "protected_reference_reason": "参考中两辆深色车前后粘连，难以确认单一B的完整范围和轮廓。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R122/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R122/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R124",
+      "scene": "scene-0127",
+      "camera": "CAM_FRONT",
+      "instance_token": "7a232694b346405a98cc3e3ccdffb375",
+      "source_id": "S0185",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r37/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 107.82999999999998,
+      "median_height": 54.19999999999999,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R124",
+        "scene": "scene-0127",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "银色轿车偏小且略软，但三帧侧后轮廓完整、身份唯一。",
+        "frame_observations": [
+          "f00：A中等偏小，侧后车身和两轮仍可辨。",
+          "f05：车辆位置变化小，外轮廓保持完整。",
+          "f09：A略小但未被截断，背景多车与目标分离。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "深色车辆侧面独立可见，车顶、车窗、前后端与两轮足以确认B。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R124/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R124/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R125",
+      "scene": "scene-0233",
+      "camera": "CAM_FRONT_LEFT",
+      "instance_token": "59970341e3234f08ad99bc5a268ff24c",
+      "source_id": "S0065",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "prompt_frame": 9,
+      "median_width": 105.63999999999999,
+      "median_height": 52.72,
+      "behind_vehicle_proxy": true,
+      "input_quality_review": {
+        "case_id": "R125",
+        "scene": "scene-0233",
+        "score": 2.0,
+        "status": "pass",
+        "concise_reason": "白色轿车尺寸处于下限且略软，但完整侧前轮廓在三帧一致可辨。",
+        "frame_observations": [
+          "f00：A较小，车头、车顶、侧身和两轮仍完整。",
+          "f05：尺寸稳定，未被行人或邻车遮挡。",
+          "f09：同一白车保持完整，主要外轮廓足以检查。"
+        ],
+        "protected_reference_quality": "sufficient",
+        "protected_reference_reason": "灰色SUV虽与白车相邻，完整车头、车顶和大部车身可独立辨认。",
+        "images_viewed": [
+          "outputs/v77-real-delete-r51/R125/inputs_f00_f05_f09.jpg",
+          "outputs/v77-real-delete-r51/R125/protected_reference.jpg"
+        ],
+        "human_verdict": null
+      },
+      "B_evidence_status": "sufficient"
+    }
+  ],
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated user triage boundary; no new generated result",
+  "human_verdict": null
+}

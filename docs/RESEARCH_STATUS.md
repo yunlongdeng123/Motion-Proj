@@ -2,12 +2,10 @@
 
 更新：2026-10-08。分支 `research/worldsim-v7.7-target-protected-editing`，主机 `wm-vgpu-1008`。
 
-唯一run `WS-V77-TARGET-PROTECTED-20260929/r50` 已完成固定真实DELETE扩大排查。独立输入检查87例，36个0/1分剔除，20个官方train开发场景42个输入2分目标。42例SAM无空mask；独立实例检查40例通过，R013/R066因吞入邻车拒绝，不算补景模型失败。40个DELETE全部完成、20景仍在，其中两景各1例，其余2–3例。
+当前唯一run `WS-V77-TARGET-PROTECTED-20260929/r51`：按用户要求再筛20–40个真实DELETE输入，先区分原生生成失败与最终写回损伤。40个新scene候选经独立5.6-sol/xhigh图像复核，33景/33个清晰单车目标准入，7例低质量、0例不能确定退队列。与r50全部38个审核过的scene分离，旧5景train隔离和val隔离不动；来源仍是既有RGB缓存，用于开发而非最终泛化评测。
 
-固定r46官方DriveEditor原权重+r21完整SAM，seed42/25steps/10帧/1024×576；无Adapter、训练、参数扫描或时间模块修改。400帧写回验证通过，原生与最终视频均保留。独立subagent每例只抽f05粗分类，标签可重叠：{'film_or_ghost': 14, 'car_body_extends_onto_road': 4, 'none_visible': 21, 'actor_regeneration': 4, 'protected_actor_deformation': 1}。它不是人工0/1/2、隐藏区域真值或视频通过率。后车可见证据充分9例、薄弱8例、无候选21例、不确定2例，不能当完整隐藏车身已知。
+固定r46官方原权重+r21完整SAM，seed42/25steps/10帧/1024×576；无Adapter、训练或时间模块修改。每车独立原视频。B实际可见证据另记{'weak': 8, 'sufficient': 8, 'absent': 17}，没有隐藏区GT。用户指定r50原生失败11例与仅写回损伤8例已分别归档，R009混合待核；旧分数/全部对照保留，写回损伤不拿去训练diffusion。
 
-同一页面 `outputs/v77-real-delete-r50/index.html` 展示40例四列原视频/mask/原生DELETE/固定写回；两例mask拒绝及全部旧低质量输入另存归档。主干没有更新，因此本轮是问题排查，不能宣称模型收益。后续按有真实证据的结构失败匹配遮挡数据，Y必须是真实视频，再单独验证内部空间层；不自动训练、不改时间层。5个隔离train景与旧val隔离不动，本轮缓存来源不是总体/最终评测。
+CPU准备和330帧原视频解码完成，当前无GPU任务、SAM/DriveEditor各0窗、训练0步。已停在等待用户开启GPU；开卡后先SAM身份检查，再一次固定DELETE，保留四列原图/mask/原生/最终，按原生失败优先匹配造数。失败生成只能定位布局，未来Y必须真实视频，不自动微调。
 
-GPU计算已结束、进程退出，用户可切CPU；本轮无自动关机或定时任务。GPU报告32GB RTX 4080 SUPER，CPU16核，推理累计36.5分钟、PyTorch峰值已分配显存21.86GiB；数据盘余量见run资源记录，无清理。[报告与组件图](v77/REAL_DELETE_STRUCTURE_R50.md)，[同一失败卡V77-F02](research_failures/entries/V77-F02.md)。
-
-用户要求的评分表已增加r50工作表：独立5.6-sol/xhigh重新审核40例f05，原图、SAM/实际洞、原生DELETE、最终写回四列小数评分。2.0可接受，可有2.x；AI与人工分数分开，未判视频时序，未新增GPU任务。详见同一r50报告的四列评分段及run内xlsx。
+本地 `outputs/v77-real-delete-r51/index.html` 当前是输入页，生成列留空。数据盘约余39.1GiB，本批预计新增≤3GiB，无需扩盘/清理；没有定时任务或电源操作。[本轮组件图、清单和入口](v77/REAL_DELETE_NATIVE_R51.md)，[V77-F02](research_failures/entries/V77-F02.md)。r50已完成的40个原生/写回结果及原有Excel评分保持归档。

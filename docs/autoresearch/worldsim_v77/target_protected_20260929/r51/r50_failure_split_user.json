@@ -1,0 +1,34 @@
+{
+  "source": "user review of r50 native DELETE versus final writeback, 2026-10-08",
+  "role": "development triage supplied by user; not new model inference or hidden-region GT",
+  "native_generation_error": [
+    "R001",
+    "R004",
+    "R008",
+    "R028",
+    "R030",
+    "R044",
+    "R041",
+    "R062",
+    "R081"
+  ],
+  "milder_native_generation_error": [
+    "R037",
+    "R055"
+  ],
+  "writeback_damage_only_do_not_train_diffusion": [
+    "R002",
+    "R023",
+    "R027",
+    "R029",
+    "R038",
+    "R050",
+    "R051",
+    "R060"
+  ],
+  "mixed_or_writeback_amplified_needs_separate_check": [
+    "R009"
+  ],
+  "next_batch": "r51 new real DELETE inputs; no current fine-tuning or synthetic labels",
+  "training_candidate_policy": "Only input- and instance-approved native generation failures can supply layouts/occlusion processes. Final-only writeback damage is an engineering queue, never diffusion training evidence. Training Y remains real RGB."
+}
