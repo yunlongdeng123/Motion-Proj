@@ -1,0 +1,618 @@
+{
+  "reviewer": {
+    "role": "independent_subagent",
+    "requested_model": "gpt-6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": "每例仅f05输出、原图与真实B证据；多标签可重叠；不判视频或隐藏GT",
+  "cases": [
+    {
+      "case_id": "R001",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost",
+        "car_body_extends_onto_road"
+      ],
+      "note": "银色目标SUV所在处在原生DELETE里变成悬浮的灰色扁盒，车尾样的弧面悬在横道线上方，下缘又连出直立灰片和深色阴影，明显不是正常路面。固定写回保留同样的畸形结构；原图仅有很小的后车片段，不能据此确定盒状物属于后车。",
+      "visible_pixel_evidence": "生成区内有横向弯曲灰色车身片、竖直灰片及落在路面上的硬阴影。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实参考只见银SUV后方极小的局部车身，不能确认完整后车形态。",
+      "native_writeback_difference": "原生与固定写回都保留同一灰色悬浮残片；写回周边真实车道更清晰。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R002",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "中央白SUV被移除后，横道线和后方道路基本连续，左侧银SUV保留正常外形。该帧未见明显薄膜、车身拖尾或新车；此处没有可靠的后车参考，结论仅限可见结构。",
+      "visible_pixel_evidence": "目标旧位置呈路面与白色横道线，未见成形的车体或异常外轮廓。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "该例无可用的独立后车真实参考。",
+      "native_writeback_difference": "两者删除区大体一致；写回保留周边真实像素，未产生显著新结构。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R003",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "原生DELETE露出右侧原本就可见的白色厢车，不能把这辆车判为再生；但固定写回在其左上方至车顶前缘出现突兀的深灰薄片状弧线，横跨原目标边界。白厢车主体仍可辨，当前证据更直接指向多余轮廓而非确定的整车变形。",
+      "visible_pixel_evidence": "写回图中白厢车左上方有一片半透明深灰弧形残边，原生图较淡。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实参考清楚显示目标右后方的白色厢车侧身和车顶，可确认生成画面中该车并非凭空出现。",
+      "native_writeback_difference": "白厢车在两者均可见；深灰残边在固定写回的原图边界处更明显。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R004",
+      "frame": 5,
+      "labels": [
+        "actor_regeneration"
+      ],
+      "note": "原生DELETE和固定写回中，原目标正前方位置仍有一辆与被删深灰Toyota前脸、灯形和车宽极相近的完整MPV，几乎占据原黄框足迹。虽有真实后车的深色小片段，但其可见信息不足以解释这辆与A前脸高度一致的完整车；这是单帧的再生迹象，不推断时序。",
+      "visible_pixel_evidence": "生成图保留目标大小的深灰Toyota式车头、灯组、牌照区和整车轮廓。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实B参考仅是A后方很小的深色车身片段，无法确认B整车身份或前脸。",
+      "native_writeback_difference": "原生与写回均出现同一辆完整深灰MPV，差异主要在周边像素写回。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R007",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "灰色目标SUV删除后，店面门窗、人行道和路边连续；其左边真实可见的白色SUV仍保持可辨车身。该帧未见明显残车轮廓或保护车变形。",
+      "visible_pixel_evidence": "旧车位填成门面、路缘和道路，白SUV仍有完整车尾、车侧。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实图清楚显示左侧白SUV的车身和车尾，可作保护车可见参考。",
+      "native_writeback_difference": "原生与写回删除区相近；写回仅令周边原像素更清晰。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R008",
+      "frame": 5,
+      "labels": [
+        "actor_regeneration"
+      ],
+      "note": "深灰目标SUV原位置在原生DELETE中又出现一辆尺寸接近、轮廓完整的浅白SUV，固定写回亦然；它与右侧原本已有的白SUV是两辆分开的车。真实B参考是目标左后方的黑车，不能解释删除区新出现的白车，因此记为该帧的再生迹象。",
+      "visible_pixel_evidence": "删除区内新见白色SUV的车顶、车窗、车轮和尾部，右侧既有白SUV仍在。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实B参考足以识别左侧黑色轿车；生成的白SUV位置和外观与之不同。",
+      "native_writeback_difference": "原生和固定写回均有同一辆浅白SUV，写回没有消除它。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R009",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "目标黑车删除后，左侧原本可见的深色保护车与路边车列仍在，不能把残存车形本身称为再生。固定写回在近处深车车顶形成一条异常亮白三角形薄片，原生图该处较淡；薄片有可见像素依据，但后车主体是否变形不能单帧确认。",
+      "visible_pixel_evidence": "近处深色车顶上出现突兀的浅白三角形线片，和原始深车的顶线不连贯。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实参考只见左邻深车前部及与A重叠的一段，足以证明有邻车，却不足以恢复完整后车形态。",
+      "native_writeback_difference": "固定写回的浅白车顶薄片比原生图更清楚；其余停放车列位置相近。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R014",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "白色横穿轿车删除后，路面标线、对街店面和行人仍可见且没有车身残影。原生与写回在该ROI结构相近；此例没有足够的后车真实参考，不能推出被完全遮挡区域的真值。",
+      "visible_pixel_evidence": "目标旧位置显示连续路面、车道线和对街橱窗，无车形轮廓。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有可用的独立后车真实参考。",
+      "native_writeback_difference": "两图目标区近似一致，写回保留目标区外原图行人与路面。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R023",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "前景白轿车被删后，真实参考已能辨认的白色Jeep保护车露出正面，车头和挡风玻璃仍成形，旁边卡车与道路未见明显拉伸。不能把这辆可见的Jeep当作再生；该帧没有突出的薄膜或车身外溢。",
+      "visible_pixel_evidence": "目标原位置让出道路，后方白Jeep有完整前脸和车顶。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实B参考清楚显示白Jeep的前脸、挡风玻璃和车身一侧。",
+      "native_writeback_difference": "两者均显示白Jeep；写回使旁边真实卡车和道路边界更清楚。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R024",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "近处路边黑SUV删除后，可见路缘、远处深色车辆和垃圾箱，当前帧未见确定的多余车身、道路拖尾或保护车失形。真实B仅露出小片深色车身，无法判断被A遮挡的部分具体应如何填补，因此只记录可见层面未见明显结构问题。",
+      "visible_pixel_evidence": "目标旧位置主要为道路和路缘；远处车、人和垃圾箱仍可辨。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实参考仅有很小的深色车顶/前部片段，难以评估整车形状。",
+      "native_writeback_difference": "原生与写回在目标区的道路、路边车列基本一致。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R027",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost",
+        "car_body_extends_onto_road"
+      ],
+      "note": "白色目标轿车删除后，原生图露出后方一辆较小深车，但固定写回从该车右侧拉出尖长深色片，跨到护栏前的道路上。真实参考只显示后车局部，因此可以确认多余片状轮廓，不能据此重建后车被遮挡的全貌。",
+      "visible_pixel_evidence": "写回近景中，深车右上缘接出一条向右伸入路面和护栏方向的黑色尖片；原生图没有同样清楚的尖片。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实B只露出较小的深色车头/侧前部，能证明后方有车，但不足以判断其完整外形。",
+      "native_writeback_difference": "原生DELETE中后车较正常；固定写回在其右侧出现明显黑色延伸片。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R028",
+      "frame": 5,
+      "labels": [
+        "actor_regeneration"
+      ],
+      "note": "迎面深色目标车的原位置在两种输出中出现一辆较完整的浅灰后视轿车，车尾和车顶占据与原黄框相近的大小，且朝向由迎面变为背向。真实B参考仅是被遮挡的深色小片，无法断言这辆灰车凭空生成；这里只记单帧再生迹象。",
+      "visible_pixel_evidence": "旧目标位置可见一辆浅灰车的尾门、后窗与左右灯，位于原本深色车的前视足迹内。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "参考片段很小且与A高度重叠，不能确认隐藏B的身份、颜色和方向。",
+      "native_writeback_difference": "浅灰后视车同时存在于原生和固定写回，写回仅改变周围原像素边界。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R029",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "黑色近车删除后，左后方原本可见的浅灰SUV露出，不能把这辆车当作再生。固定写回在其右侧车顶到路边墙面之间留下尖细的浅白/灰色三角片，原生图此处较平顺；可见问题是多余薄片而非确定的整车变形。",
+      "visible_pixel_evidence": "近景写回图里，浅灰SUV右上方有不连续的尖角薄片，指向右侧墙面。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实参考能辨认浅灰SUV的部分车顶和侧面，但完整右缘被A挡住。",
+      "native_writeback_difference": "两者都露出浅灰SUV；固定写回在SUV右上缘出现更明显的浅色尖片。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R030",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost",
+        "car_body_extends_onto_road"
+      ],
+      "note": "深色目标MPV移除后，在原目标道路区域出现一块高而平直的黑色柱状残影，底部还连着白色细线和路面碎形，显然不符合车道纹理。右后方真实可见的灰车仍在；异常柱体不能由其已见车身解释。",
+      "visible_pixel_evidence": "删除区中央有垂直黑色块，从远处车辆附近延伸到横道线前，道路上伴随白色弯曲线条。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实图可见右后方灰色车较完整的车身片段，足以核对其位置，但不提供被A挡住区域的全部真值。",
+      "native_writeback_difference": "黑柱及路面白色碎线在原生和写回均可见，写回使周边原横道线更锐利。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R037",
+      "frame": 5,
+      "labels": [
+        "protected_actor_deformation"
+      ],
+      "note": "目标黑轿车删除后，原图已能看到的横向浅灰轿车在原生DELETE里变成几乎无窗、无清楚车轮的深色低矮团块。固定写回恢复了部分浅灰车身，却留下明显的暗色前部与亮色后部接缝；这是该帧可见的后车形态异常，不把后车存在本身称为再生。",
+      "visible_pixel_evidence": "原生图的横向后车呈纯深色扁块，写回图同位置为灰车但前后车身色形突变。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实参考可辨横向浅灰轿车的车顶、窗、两轮和侧身，足以对照可见轮廓。",
+      "native_writeback_difference": "原生后车是暗色团块；写回有较完整灰车侧身，但车头附近仍有突兀暗块。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R038",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost",
+        "car_body_extends_onto_road"
+      ],
+      "note": "红色目标轿车移除后，原生图在路边仅见较远的深色车；固定写回却从该车附近拉出黑色拱形车身片，越过旧目标位置伸到道路中央并向下落成薄脚。真实B可见片段有限，故只对这条异常延伸轮廓分类，不断言被遮挡的完整车体应为何形。",
+      "visible_pixel_evidence": "写回近景有一条从左侧深车向右悬伸的黑色弧片，末端下折至路面；原生图该片不明显。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实参考仅能看见红车旁深色车的局部侧身，不能给出完整隐藏车体。",
+      "native_writeback_difference": "原生目标区基本露出路面；黑色拱形延伸主要在固定写回出现。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R041",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "车流间深色SUV移除后，中间道路露出，左右原有轿车保持独立，没有清楚的残车外轮廓。原生与写回只有道路接缝和周边锐度差异，当前帧未见足够明确的结构异常。",
+      "visible_pixel_evidence": "旧SUV位置可见道路、车道线和远处建筑，左灰车与右深车没有被连成一体。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；左右车是原本可见邻车。",
+      "native_writeback_difference": "两图目标区结构接近，写回保留邻车和道路的原图细节。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R043",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "白色SUV删除后，左侧真实保护黑SUV在原生图中仍有清楚车顶、侧身和车尾，右侧灰车及白厢车也分离。固定写回保留黑SUV原像素，门窗、路缘与路面连续；该帧未见明确后车变形或薄膜。",
+      "visible_pixel_evidence": "目标旧位置为店面墙、路缘和空车位，左黑SUV轮廓仍完整。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实参考清楚显示左侧黑SUV的侧后车身及两轮，可核对其可见部分。",
+      "native_writeback_difference": "原生和写回都保留黑SUV；写回使其车尾及路面边界更接近原图。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R044",
+      "frame": 5,
+      "labels": [
+        "actor_regeneration"
+      ],
+      "note": "白色Ford皮卡所在的中央车道在原生DELETE和固定写回里被一辆完整深色SUV占据，车头、挡风玻璃及保险杠都成形，位置与原目标重合。原图此处没有可辨的独立后车参考，不能证明隐藏真值，但这辆新车占据本应删除的目标足迹，构成强烈单帧再生迹象。",
+      "visible_pixel_evidence": "目标旧位置出现一辆深色SUV的完整正面，尺寸与原皮卡接近。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有足够的独立后车真实可见证据。",
+      "native_writeback_difference": "原生与写回均保留这辆深色SUV，仅周边真实像素融合略有差异。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R050",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "前景深色MPV删除后，车道线与远处道路连续，左侧真实可见的银色带红侧板MPV仍有正常前脸、窗和轮廓。固定写回保留其原图像素，当前帧未见显著残车薄膜或保护车变形。",
+      "visible_pixel_evidence": "目标旧位置成为连续道路；左侧银红MPV形态与真实参考一致。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实参考清楚显示左侧银红MPV的车头、窗和侧身，足以核对其可见部分。",
+      "native_writeback_difference": "原生和写回均清除前景目标，写回将银红MPV的原有红侧板及周边像素保留下来。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R051",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "左侧银色目标MPV已消失，原生图大体填出道路；但固定写回在目标右边、未删除深色车的车头左侧留下一块孤立的黑灰楔形斑，和路面纹理不连续。该斑较小，归入可见残片而不称后车变形；此例无可靠后车真实参考。",
+      "visible_pixel_evidence": "写回近景右侧车头左下方出现黑灰尖角残片，落在本应平滑的道路区域。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立B参考；右边深色车虽可见，但不是已核实的被A遮挡后车。",
+      "native_writeback_difference": "原生路面较连续；写回在右侧接缝显出小楔形暗片。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R052",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "蓝白广告厢车删除后，店面门窗、路缘和前方黑SUV可见且边界自然，目标位置没有明显残留车形。原生与写回结构相近；该帧只可说未见明显问题，不能为被遮挡背景提供真值。",
+      "visible_pixel_evidence": "旧广告车位置呈连续店面、人行道和道路，左黑SUV仍完整。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "此例无可用的独立后车真实参考。",
+      "native_writeback_difference": "两图目标区基本一致，写回保留周边真实黑SUV和路面。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R053",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "黑SUV删后，店门、人行道和道路连贯，右边广告厢车仍有完整车身；门前小块深色杂物不足以认作车身残影。原生与写回的目标区基本相同。",
+      "visible_pixel_evidence": "目标旧位置显示连续店面立面、路缘和沥青，没有车形外轮廓。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "此例没有独立后车真实参考；右侧广告厢车是可见邻车。",
+      "native_writeback_difference": "两图删除区结构近似，写回保留邻车和道路原像素。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R054",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "正面黑SUV移除后，车道向远处贯通，右侧停放车仍可见，未见明显残车轮廓或向路面延伸的车身。真实后车只露出小块白车片段，无法核对被A遮住的完整形状。",
+      "visible_pixel_evidence": "目标原位置为连续暗色路面及道路尽头，右侧车辆与路边分开。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "参考图仅有远处白车后部/侧部小片段，完整B形态不明。",
+      "native_writeback_difference": "原生与写回均显示贯通道路；写回保留右侧原有车列细节。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R055",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "白色商业厢车消失后，其原位在橙色路障前留下宽而浅灰的半透明雾片，边缘模糊并悬在地面上方，不像正常建筑或路面纹理。原生与固定写回都有这片残留，左侧白皮卡仍正常。",
+      "visible_pixel_evidence": "原车位至橙色路障之间可见横向灰雾/薄片，遮淡后方深色墙面与地面。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立后车真实参考；左侧白皮卡为清楚可见的邻车。",
+      "native_writeback_difference": "灰色雾片在原生和写回均存在，写回外部建筑与白皮卡更接近原图。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R056",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "左侧黑轿车删除后，停车位、人行道和后方行人/骑行者可辨，中间灰轿车及右边蓝SUV保持正常车形。旧车位有轻微路面色差，但没有可确认的车身薄膜或拖尾。",
+      "visible_pixel_evidence": "目标旧位置显示路缘与空车位，背景人体和树干分离，没有成形残车。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立后车真实参考；邻近两辆车原本就完整可见。",
+      "native_writeback_difference": "原生与写回空车位相近，写回周边原车和前景道路更清晰。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R057",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "中间深色轿车移除后，空停车位、草坪和标牌杆连续，左右两辆车保持分离。该帧原生和固定写回均未见明显结构残影。",
+      "visible_pixel_evidence": "旧车位变为空沥青与路缘，右侧蓝SUV车尾未被拉长。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立后车真实参考；左右车辆是已可见邻车。",
+      "native_writeback_difference": "两者目标区基本一致，写回让右侧蓝SUV保留原像素边界。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R058",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "左侧黑轿车删后，树干、楼面、行人和路边连贯；中间灰车与右侧蓝SUV仍在各自车位。旧车位未见可确认的薄膜或向路面延伸的车身。",
+      "visible_pixel_evidence": "目标位置显示人行道、树干和空车位，车辆轮廓只在右边两个停车位。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立后车真实参考；右侧两车属于清楚可见的邻车。",
+      "native_writeback_difference": "原生与写回的删除区近似，写回保持右侧车辆原始细节。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R059",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "中间灰轿车消失后，原生图在旧车位路面留下边缘笔直、颜色较浅的横向矩形贴片，与周围沥青不连续。固定写回基本抹平这块贴片；右侧蓝SUV保持独立，不能据此称为后车问题。",
+      "visible_pixel_evidence": "原生近景的路面上有浅灰矩形带和直线边界，恰落在原车下方。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立后车真实参考；右侧蓝SUV是原本可见邻车。",
+      "native_writeback_difference": "矩形路面贴片主要见于原生DELETE，固定写回的沥青更连续。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R060",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "深色SUV删除后，原生图的路口和后方建筑大体连贯；固定写回却在原车右后方的矮墙/白车附近出现一片锐角黑色竖片，和真实路边结构不吻合。真实B只见远处小段车身，故不把它判成确定的后车畸形。",
+      "visible_pixel_evidence": "写回近景中，浅色矮墙前有直立黑色多边形片，与左边小黄车和道路分离。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "真实参考仅含后车的一小段深色车身和邻近白车局部，无法确定完整B轮廓。",
+      "native_writeback_difference": "黑色竖片在固定写回明显，原生相同区域较平顺。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R061",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "左车道白SUV移除后，路面、中心双黄线和后方建筑入口连续，右侧停车列未被牵连。原生与固定写回未出现清楚的多余车体或道路拖尾。",
+      "visible_pixel_evidence": "目标旧位置为道路与建筑立面，前景双黄线保持连续。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考，只有远处可见车辆。",
+      "native_writeback_difference": "两者删除区结构近似，写回保留外部道路和停放车原像素。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R062",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "白色DUGGAN厢车移除后，旧车位偏下出现一辆小车样的灰色扁影，车顶、车尾和贴地边界混成模糊色块，前下缘还有深灰拖片。隐藏区域没有独立B证据，不能断言它是凭空再生车；可确认的是两种输出都有畸形的车形残影。",
+      "visible_pixel_evidence": "生成区左下有低矮灰车样轮廓，窗和轮不清，车头/尾下方黑灰色块拖在道路上。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "没有独立后车真实参考，无法确认被白厢车遮住的车辆身份或位置。",
+      "native_writeback_difference": "原生与固定写回都出现同一模糊小车样残影，周围原车道线在写回更清晰。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R063",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "左侧红轿车删除后，墙面、路缘和路面延续，中央深车与后方白货车仍清楚分离。原生及写回没有可确认的红车残片或新车形。",
+      "visible_pixel_evidence": "旧目标位是墙脚与沥青，中央深车保持完整外形。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；中央深车和白货车原本可见。",
+      "native_writeback_difference": "两图目标区结构基本一致，写回保留旁车原像素。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R067",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "深蓝目标轿车删后，左侧真实保护黑车仍保有前脸、车顶和车侧，未见明确被拉长；但目标旧位靠墙出现一条宽而模糊的横向灰片，立在细竖影上，不像连续砖墙或车身。原生与写回都有此灰片；因原图遮挡了它的背景，只把可见形态记为薄片迹象，不断言其真实物体身份。",
+      "visible_pixel_evidence": "旧车头位置的砖墙前有横向灰色扁片和细窄竖影，边缘发虚；左黑车本体仍成形。",
+      "protected_B_evidence_sufficient": true,
+      "protected_B_evidence": "真实参考清楚显示左侧黑车的侧前车身、车顶及轮，可对照其可见轮廓；不提供A背后墙面的完整真值。",
+      "native_writeback_difference": "两图都有横向灰片，写回使左黑车和横道线保留原图边界。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R076",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "红轿车删除后，桥栏与对面建筑在车后连贯，前后深色车辆各自保持形状。原生与写回未见残留红车薄片或车身拖到路面。",
+      "visible_pixel_evidence": "目标旧位成为栏杆和道路，左黑车与右灰车分离。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；前后车原本可见。",
+      "native_writeback_difference": "两者目标区近似，写回仅保留周围真实车辆和道路细节。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R077",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "深灰轿车移除后，红车、右侧灰车及后方栏杆保持分离，删除区没有成形残车。原生和写回结构接近，未见可确认的薄膜或道路延伸。",
+      "visible_pixel_evidence": "原目标车位为道路与栏杆，左红车完整。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；左右车辆原本可见。",
+      "native_writeback_difference": "两图删除区基本一致，写回保留相邻红车和右车原图像素。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R080",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "路口左侧深色目标车消失后，街口路面与对街车列连贯，右侧横行轿车仍独立。该帧原生及写回未见明显新车、残影或邻车形变。",
+      "visible_pixel_evidence": "旧目标位置显示空路口和远处停放车，右侧车保持单独轮廓。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；对街车列为远处可见背景。",
+      "native_writeback_difference": "两图目标区相近，写回仅恢复周边路面与人行横道原像素。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R081",
+      "frame": 5,
+      "labels": [
+        "film_or_ghost"
+      ],
+      "note": "右侧横行深车删后，原生图在对街路缘与树下留下片状深灰雾团，向旧车位的道路方向漫出，边缘不构成正常路缘或清楚车体。固定写回仍见这团暗片，但周围原路面与人行横道更清晰；没有后车证据可确认其物体身份。",
+      "visible_pixel_evidence": "旧车位后方树下出现低矮模糊深灰片，和路面/路缘交界处不自然地融合。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考。",
+      "native_writeback_difference": "暗灰雾片两图可见，固定写回的道路纹理更接近原图。",
+      "confidence": "medium",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R086",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "前方浅灰轿车删除后，停止线、远处路口与左车道黑车继续可辨，右侧橙桶和白路障未被改形。原生与写回未见明显目标车残影。",
+      "visible_pixel_evidence": "目标旧位为空道路和横向停止线，邻车、路障均保有轮廓。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；左黑车和右路障原本可见。",
+      "native_writeback_difference": "两者目标区近似，写回保留周围原图车道线和路障。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R087",
+      "frame": 5,
+      "labels": [
+        "none_visible"
+      ],
+      "note": "左车道深色目标轿车删后，中央银轿车仍完整，背景树篱、路口标线与路面连贯。原生和固定写回没有清楚的残车薄膜或重生车形。",
+      "visible_pixel_evidence": "旧车位显示树篱后方和空车道，中央银车边界正常。",
+      "protected_B_evidence_sufficient": false,
+      "protected_B_evidence": "无独立后车真实参考；中央银车原本可见。",
+      "native_writeback_difference": "两者目标区结构接近，写回保留银车与路口原像素。",
+      "confidence": "high",
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "human_verdict": null,
+  "temporal_verdict": null
+}

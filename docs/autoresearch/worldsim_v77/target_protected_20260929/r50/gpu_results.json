@@ -1,0 +1,373 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r50",
+  "host_alias": "wm-vgpu-1008",
+  "runtime": {
+    "host_alias": "wm-vgpu-1008",
+    "hostname": "autodl-container-bc35429957-0f40dd7c",
+    "finished_UTC": "2026-10-08T06:06:55.729677+00:00",
+    "GPU_processes_idle": true,
+    "nvidia_compute_processes": "",
+    "DELETE_process": "",
+    "nvidia_GPU_name_total_used_utilization": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 1 MiB, 0 %",
+    "cpu_cgroup_quota": "1600000 100000",
+    "disk_total_gib": 550.0,
+    "disk_free_gib": 39.40713882446289,
+    "CUDA_jobs_after_batch": 0,
+    "training_steps": 0,
+    "power_action": null
+  },
+  "input_cases": 42,
+  "input_scenes": 20,
+  "input_quality_candidate_count": 87,
+  "input_low_quality_rejected": 36,
+  "SAM_cases": 42,
+  "SAM_empty_cases": 0,
+  "mask_approved": 40,
+  "mask_rejected": [
+    "R013",
+    "R066"
+  ],
+  "DELETE_windows": 40,
+  "DELETE_scenes": 20,
+  "generated_targets_by_scene": {
+    "scene-0290": 2,
+    "scene-0703": 3,
+    "scene-0246": 3,
+    "scene-0252": 2,
+    "scene-0239": 1,
+    "scene-0236": 2,
+    "scene-0234": 2,
+    "scene-0238": 2,
+    "scene-0259": 2,
+    "scene-0705": 2,
+    "scene-0710": 2,
+    "scene-0262": 2,
+    "scene-0697": 2,
+    "scene-0696": 2,
+    "scene-0297": 2,
+    "scene-0241": 2,
+    "scene-0533": 1,
+    "scene-0291": 2,
+    "scene-0714": 2,
+    "scene-0244": 2
+  },
+  "SAM_seconds_sum": 74.68551570177078,
+  "DELETE_seconds_sum": 2190.6994211552665,
+  "DELETE_seconds_median": 54.44798665307462,
+  "peak_gib": 21.859660625457764,
+  "checkpoint": "/root/autodl-tmp/external/worldsim_v75_downstream_bench/DriveEditor/checkpoints/model.safetensors",
+  "peak_memory_metric": "torch.cuda.max_memory_allocated；不包含reserved/driver",
+  "seed": 42,
+  "steps": 25,
+  "mask_policy": "sam_full_v2",
+  "adapter": false,
+  "training_steps": 0,
+  "writeback_frames_checked": 400,
+  "outside_H_exact": true,
+  "full_SAM_native_exact": true,
+  "B_input_evidence": {
+    "weak": 8,
+    "absent": 21,
+    "sufficient": 9,
+    "uncertain": 2
+  },
+  "single_frame_labels": {
+    "film_or_ghost": 14,
+    "car_body_extends_onto_road": 4,
+    "none_visible": 21,
+    "actor_regeneration": 4,
+    "protected_actor_deformation": 1
+  },
+  "labels_can_overlap": true,
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "hidden_GT": null,
+  "engineering_issue": "首次gate使用approved_case_ids而入口要求approved，加载模型前停止；已对齐字段，原日志保留。没有改mask、seed或采样。",
+  "cases": [
+    {
+      "case_id": "R001",
+      "seconds": 56.03169899061322,
+      "peak_gib": 21.854966640472412,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R002",
+      "seconds": 54.368412993848324,
+      "peak_gib": 21.85225248336792,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R003",
+      "seconds": 61.01099068578333,
+      "peak_gib": 21.852023601531982,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R004",
+      "seconds": 59.59718284197152,
+      "peak_gib": 21.849156856536865,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R007",
+      "seconds": 55.19291878212243,
+      "peak_gib": 21.853742122650146,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R008",
+      "seconds": 54.142022447660565,
+      "peak_gib": 21.84827184677124,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R009",
+      "seconds": 52.98245320096612,
+      "peak_gib": 21.850627422332764,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R044",
+      "seconds": 54.30857817362994,
+      "peak_gib": 21.852115154266357,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R014",
+      "seconds": 54.79708512220532,
+      "peak_gib": 21.851069927215576,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R023",
+      "seconds": 54.606441067531705,
+      "peak_gib": 21.852283000946045,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R024",
+      "seconds": 54.732673895545304,
+      "peak_gib": 21.8550066947937,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R027",
+      "seconds": 54.32811232749373,
+      "peak_gib": 21.85255765914917,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R028",
+      "seconds": 54.09545911010355,
+      "peak_gib": 21.85780668258667,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R029",
+      "seconds": 53.512132823467255,
+      "peak_gib": 21.849490642547607,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R030",
+      "seconds": 54.746143855154514,
+      "peak_gib": 21.851001262664795,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R037",
+      "seconds": 54.69667279999703,
+      "peak_gib": 21.850955486297607,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R038",
+      "seconds": 54.27903286833316,
+      "peak_gib": 21.85547971725464,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R050",
+      "seconds": 54.81887871585786,
+      "peak_gib": 21.853854656219482,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R051",
+      "seconds": 53.762416071258485,
+      "peak_gib": 21.852817058563232,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R052",
+      "seconds": 53.977180252783,
+      "peak_gib": 21.855014324188232,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R053",
+      "seconds": 54.042129047214985,
+      "peak_gib": 21.85286855697632,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R054",
+      "seconds": 54.35161089524627,
+      "peak_gib": 21.855584621429443,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R055",
+      "seconds": 54.10433352831751,
+      "peak_gib": 21.85514211654663,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R056",
+      "seconds": 54.613836330361664,
+      "peak_gib": 21.853951930999756,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R057",
+      "seconds": 53.31535642594099,
+      "peak_gib": 21.859660625457764,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R058",
+      "seconds": 54.7202760130167,
+      "peak_gib": 21.85694456100464,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R059",
+      "seconds": 55.739393243566155,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R060",
+      "seconds": 53.15441529266536,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R061",
+      "seconds": 55.49090616777539,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R062",
+      "seconds": 55.66172491479665,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R063",
+      "seconds": 55.18603756278753,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R067",
+      "seconds": 55.5391826685518,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R076",
+      "seconds": 55.533186791464686,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R077",
+      "seconds": 53.92797703575343,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R080",
+      "seconds": 54.20155975688249,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R081",
+      "seconds": 54.20009134244174,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R086",
+      "seconds": 53.11625143326819,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R087",
+      "seconds": 52.99679204635322,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R041",
+      "seconds": 54.52756031230092,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R043",
+      "seconds": 56.29031332023442,
+      "peak_gib": 21.855062007904053,
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ],
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02"
+}

@@ -32,6 +32,8 @@ def masks():
         '/root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt',device='cuda')
     state={'stage':'SAM_running','pid':os.getpid(),'completed':[]}
     dump(O/'mask_state.json',state)
+    dump(O/'controller_state.json',{'stage':state['stage'],'pid':os.getpid(),
+        'host_alias':os.environ.get('V77_HOST_ALIAS','unknown'),'GPU_jobs':1,'training_steps':0})
     with torch.inference_mode(),torch.autocast('cuda',dtype=torch.bfloat16):
         for c in m['cases']:
             if c.get('structural_audit_eligible') is False:continue
@@ -71,8 +73,12 @@ def delete():
     import signal
     def timeout(*_):raise TimeoutError('单车10帧DELETE超过240秒，停止，不换seed补救')
     signal.signal(signal.SIGALRM,timeout)
+    dump(O/'controller_state.json',{'stage':'DELETE_loading','pid':os.getpid(),
+        'host_alias':os.environ.get('V77_HOST_ALIAS','unknown'),'GPU_jobs':1,'training_steps':0})
     engine=Engine();state={'stage':'DELETE_running','pid':os.getpid(),'completed':[],'rejected_inputs':gate['rejected']}
     dump(O/'drive_state.json',state)
+    dump(O/'controller_state.json',{'stage':state['stage'],'pid':os.getpid(),
+        'host_alias':os.environ.get('V77_HOST_ALIAS','unknown'),'GPU_jobs':1,'training_steps':0})
     for c in m['cases']:
         cid=c['case_id'];p=Path(c['folder'])
         if cid not in gate['approved']:continue

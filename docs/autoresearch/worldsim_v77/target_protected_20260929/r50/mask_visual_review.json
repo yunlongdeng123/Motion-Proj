@@ -1,0 +1,625 @@
+{
+  "reviewer": {
+    "role": "independent_subagent",
+    "requested_model": "gpt-6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": "r50真实DELETE输入的SAM实例mask入口，逐例目视mask_review.jpg的f00/f05/f09；仅判目标主车身覆盖和邻车/人/杆误并入。",
+  "interpretation": "薄黄色SAM轮廓为实例；蓝色model hole含固定r21边缘膨胀；黄色目标框与绿色保护框仅GT投影代理，不作为分割边界。",
+  "score_rule": {
+    "2": "同一目标主要车身覆盖正确且未明显吞邻车",
+    "1": "明确漏主要车身或吞邻车/人/杆等入口问题",
+    "0": "选错车或严重失效",
+    "null": "仅无法由图判断时，按拒绝处理"
+  },
+  "cases": [
+    {
+      "case_id": "R001",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左车道银色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车顶、尾门和两侧轮廓包住目标，中央白车未入轮廓。",
+        "f05": "银车后部与右侧边界完整，白车独立。",
+        "f09": "银车缩小后仍单独成形，白车未被连入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R002",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "中央白色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "白车尾部与两侧车身均在轮廓内，左侧银车分开。",
+        "f05": "轮廓跟随白车后视外缘，左车未并入。",
+        "f09": "白车尾部保持完整，黄线不延伸到左车。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R003",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "右侧深灰轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线沿车顶、车头和可见侧身闭合，邻车留在外面。",
+        "f05": "深灰车主要外缘完整，绿框交叠处只是代理框。",
+        "f09": "轮廓继续落在本车前脸与侧身，未覆盖右侧车辆。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R004",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "中央深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "前脸、车顶和两侧轮廓覆盖本车，旁边灰车分离。",
+        "f05": "车身正面闭合，右侧灰轿车未入。",
+        "f09": "本车前部完整，右侧邻车保持独立。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R007",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路边灰色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓沿灰SUV车顶、前后端及轮拱，前方白车在外。",
+        "f05": "灰SUV整车被覆盖，白车没有被吞。",
+        "f09": "轮廓仍跟随灰SUV外缘，与白车可区分。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R008",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路边深灰SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车顶、侧身和两轮处连续，左后黑车未入。",
+        "f05": "深灰SUV主要车身闭合，左边邻车仍在轮廓外。",
+        "f09": "整车轮廓清楚，贴邻处只有膨胀蓝区触及左车。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R009",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左侧黑色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线包住靠中的黑车，左侧另一黑车未并入。",
+        "f05": "前脸和右侧车身齐全，邻车仍在黄线外。",
+        "f09": "同一黑车被选中，左邻车未进入实例轮廓。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R044",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "迎面白色皮卡的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车顶、车头与保险杠形成单车轮廓，左侧皮卡车尾分离。",
+        "f05": "白色目标皮卡正面完整，左侧车辆在外。",
+        "f09": "轮廓仍沿白皮卡前视边界闭合。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R013",
+      "score": 1,
+      "status": "rejected",
+      "concise_reason": "SAM把目标浅灰轿车与右侧黑SUV连为一体，f09还连入行人；实例入口错误。",
+      "frame_observations": {
+        "f00": "轮廓从灰车延伸到其右侧黑SUV车身，已非单车。",
+        "f05": "灰车与右邻黑SUV继续被同一外轮廓包围。",
+        "f09": "除黑SUV外，右下方行人腿部也形成连入突起。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R014",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "横穿路口白色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓沿白车车头、侧身和尾部闭合，路人留在外。",
+        "f05": "白车主体完整，左侧行人与背景未并入。",
+        "f09": "车身边界仍贴合白车，前景行人独立。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R023",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左侧白色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓覆盖白车前脸、车顶和侧身，后方车独立。",
+        "f05": "白车扩大后主体依然完整，右后车辆未吞入。",
+        "f09": "轮廓贴合白车可见车身，与后车分开。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R024",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "右路边深色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "后视车体被轮廓包围，左后白车在外。",
+        "f05": "SUV尾门、两侧和轮下缘均在轮廓内。",
+        "f09": "目标变大后黄线仍沿深色SUV外缘，白车未入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R027",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "右车道白色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "白车车顶、侧身、前脸构成完整轮廓，左车独立。",
+        "f05": "轮廓贴合白车主车身，左侧深车未入。",
+        "f09": "白车主要外缘完整，邻车未并入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R028",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "迎面深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓覆盖车头和两侧车身，右侧白车分开。",
+        "f05": "深车前视完整，右邻白车未入。",
+        "f09": "目标缩小仍为同一深车，轮廓不跨入白车。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R029",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "前方黑色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "后视车身和轮拱在黄线内，周围车辆在外。",
+        "f05": "黑车尾部边界完整，左侧车流未并入。",
+        "f09": "轮廓仍贴合本车尾门和两侧。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R030",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "迎面深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓沿本车前脸和两侧闭合，左大货车未入。",
+        "f05": "目标前部完整，右后绿框车辆未被吞。",
+        "f09": "深车仍单独闭合，周围车辆分开。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R037",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左前深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车顶到前保险杠闭合，远处绿框车未入。",
+        "f05": "本车侧前方主体完整，周围道路在外。",
+        "f09": "轮廓仍围住同一深色轿车，邻车分离。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R038",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "右侧红色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "红车尾部与两侧车身成形，车前绿框交叠未见吞车。",
+        "f05": "目标红车主体完整，左侧电车和白厢车未入。",
+        "f09": "红车后视轮廓闭合，近旁车辆保持独立。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R050",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "迎面深色厢式车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓沿车头、车顶和两侧，左后银车在外。",
+        "f05": "目标前视完整，蓝色膨胀区虽靠近银车而黄线未吞。",
+        "f09": "车身继续单独闭合，左侧银车分离。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R051",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左侧银色MPV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车头、顶线、车侧和车尾完整，右侧深车不在黄线内。",
+        "f05": "银色MPV整车轮廓贴合，旁车分离。",
+        "f09": "同一银车主体完整，右侧深车未并入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R052",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "蓝白广告厢式车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线沿车头、广告厢体和轮拱闭合，左黑SUV分开。",
+        "f05": "厢车轮廓完整，广告车身未漏主要部分。",
+        "f09": "同一广告车主体完整，左侧黑SUV在外。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R053",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "黑色路边SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓沿黑SUV顶线、侧身和两轮，右侧广告车在外。",
+        "f05": "黑SUV主体闭合，广告厢车未吞入。",
+        "f09": "车身轮廓仍独立于右侧广告车。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R054",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "迎面黑色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "前脸、车顶和两侧闭合，右侧远车未入。",
+        "f05": "黑SUV主要车身完整，底部少量贴地边缘不影响入口。",
+        "f09": "轮廓仍跟随本车外形，右边车辆保持独立。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R055",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "白色商业厢车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线覆盖车头、厢体和两轮，左侧白皮卡分离。",
+        "f05": "厢车主体完整，白皮卡未被并入。",
+        "f09": "同一厢车仍有完整独立轮廓。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R056",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左侧黑色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "侧后车身和两轮闭合，中间黑车在外。",
+        "f05": "目标黑轿车轮廓贴合，右边车辆独立。",
+        "f09": "侧身保持完整，中间车辆未并入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R057",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "中间深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线包住尾门、侧身和轮拱，左右停放车辆分离。",
+        "f05": "目标尾部和车侧完整，左右邻车在外。",
+        "f09": "轮廓仍为中间单车，蓝区边缘触邻不算吞车。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R058",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左侧黑色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车尾、侧身和前端形成完整轮廓，中间车独立。",
+        "f05": "同一黑轿车主体完整，右邻灰车未入。",
+        "f09": "黄线仍贴合左车可见外缘。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R059",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "中间灰色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "后视车身及右侧车头单独成形，右侧蓝SUV未入。",
+        "f05": "灰车主体完整，与右边SUV有清楚分界。",
+        "f09": "轮廓沿灰车尾部和车侧闭合，不吞右邻SUV。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R060",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路口深色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓包住车头、车侧和车顶，前景行人在外。",
+        "f05": "同一SUV主体完整，过街行人未被连入。",
+        "f09": "SUV轮廓仍独立，远处绿框车未吞。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R061",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "迎面白色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车顶、前脸和可见侧身闭合，右侧停放车辆未入。",
+        "f05": "白车变大后主要轮廓仍完整。",
+        "f09": "轮廓沿白SUV两侧与轮拱闭合，周边车分离。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R062",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左车道白色DUGGAN厢车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "车顶、前脸和可见侧身闭合，中央货车未入。",
+        "f05": "目标厢车主体完整，旁边货车保持独立。",
+        "f09": "变大后黄线仍覆盖厢车外缘，中央货车未并入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R063",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左侧红色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线贴合红车前脸、车顶及侧身，中央深车独立。",
+        "f05": "红车主体完整，中央车不在轮廓内。",
+        "f09": "红车缩小后仍单独闭合，前景车辆未入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R066",
+      "score": 1,
+      "status": "rejected",
+      "concise_reason": "SAM在三帧均带入左邻车辆的明显车身，前两帧另有细长残片；不满足单车实例入口。",
+      "frame_observations": {
+        "f00": "主轮廓左缘吞入紧邻黑车车身，另有左侧细长车身残片。",
+        "f05": "灰车与左侧黑车交界处继续连带，且左侧另有细长分量。",
+        "f09": "主轮廓明显跨到左邻黑车，已非单一目标实例。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R067",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路边深蓝轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线沿目标后部、顶线和车头；绿框相交处未见明确吞邻车。",
+        "f05": "目标整车主要轮廓完整，左邻深车仍可区分。",
+        "f09": "深蓝车单独闭合，左侧代理框交叠不等于分割并车。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R076",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "红色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓沿红车侧身、车头和车尾，前后深车在外。",
+        "f05": "红车主体完整，与前后车分开。",
+        "f09": "同一红车单独成形，附近车流未并入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R077",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "红车右侧深灰轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "深灰车侧面闭合，左侧红车在轮廓外。",
+        "f05": "深灰车车顶与轮拱完整，红车分开。",
+        "f09": "目标深灰车单独成形，左右邻车未入。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R080",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路口左侧深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线围住横向车身，远处中央车未入。",
+        "f05": "同一深车主体完整，路口其他车辆分离。",
+        "f09": "目标继续向右移动，轮廓仍沿车身闭合。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R081",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路口右侧深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "轮廓围住右侧横向车身，左侧另一车在外。",
+        "f05": "目标主体完整，左侧通过车辆未并入。",
+        "f09": "黄线仍落在右侧目标车上，邻车保持分离。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R086",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "前方浅灰轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "后视尾门、车顶和两侧闭合，左车道黑车在外。",
+        "f05": "灰车变大后车尾与轮下缘完整，黑车独立。",
+        "f09": "同一灰车主体闭合，右侧路障未进入轮廓。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R087",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "左车道深色轿车的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线围住左前深车尾部，中央银车分离。",
+        "f05": "深车后部与两侧完整，银车未入。",
+        "f09": "同一深车轮廓独立，中央银车保持在外。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R041",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "车流间深色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "黄线围住目标SUV前脸及两侧，右边灰轿车仅贴边。",
+        "f05": "SUV前视主体完整，右侧灰车未明显吞入。",
+        "f09": "轮廓仍落在SUV外形上，邻车分离。"
+      },
+      "human_verdict": null
+    },
+    {
+      "case_id": "R043",
+      "score": 2,
+      "status": "approved",
+      "concise_reason": "路边白色SUV的三帧SAM轮廓覆盖主要车身，未见明确吞并邻车或关键车身缺漏。",
+      "frame_observations": {
+        "f00": "白SUV顶线、侧身和两轮完整，左黑车在外。",
+        "f05": "目标白SUV主体闭合，左右邻车未入。",
+        "f09": "轮廓沿白车外缘，左邻黑车仅代理框贴近。"
+      },
+      "human_verdict": null
+    }
+  ],
+  "approved_case_ids": [
+    "R001",
+    "R002",
+    "R003",
+    "R004",
+    "R007",
+    "R008",
+    "R009",
+    "R044",
+    "R014",
+    "R023",
+    "R024",
+    "R027",
+    "R028",
+    "R029",
+    "R030",
+    "R037",
+    "R038",
+    "R050",
+    "R051",
+    "R052",
+    "R053",
+    "R054",
+    "R055",
+    "R056",
+    "R057",
+    "R058",
+    "R059",
+    "R060",
+    "R061",
+    "R062",
+    "R063",
+    "R067",
+    "R076",
+    "R077",
+    "R080",
+    "R081",
+    "R086",
+    "R087",
+    "R041",
+    "R043"
+  ],
+  "rejected_case_ids": [
+    "R013",
+    "R066"
+  ],
+  "summary": {
+    "reviewed": 42,
+    "score_2": 40,
+    "score_1": 2,
+    "score_0": 0,
+    "uncertain": 0,
+    "approved": 40,
+    "rejected_including_uncertain": 2
+  },
+  "human_verdict": null,
+  "approved": [
+    "R001",
+    "R002",
+    "R003",
+    "R004",
+    "R007",
+    "R008",
+    "R009",
+    "R044",
+    "R014",
+    "R023",
+    "R024",
+    "R027",
+    "R028",
+    "R029",
+    "R030",
+    "R037",
+    "R038",
+    "R050",
+    "R051",
+    "R052",
+    "R053",
+    "R054",
+    "R055",
+    "R056",
+    "R057",
+    "R058",
+    "R059",
+    "R060",
+    "R061",
+    "R062",
+    "R063",
+    "R067",
+    "R076",
+    "R077",
+    "R080",
+    "R081",
+    "R086",
+    "R087",
+    "R041",
+    "R043"
+  ],
+  "rejected": [
+    "R013",
+    "R066"
+  ]
+}

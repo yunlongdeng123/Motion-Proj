@@ -1,6 +1,6 @@
 # r50：独立质检后扩大真实 DELETE 结构排查
 
-任务 `WS-V77-TARGET-PROTECTED-20260929/r50`，主机 `wm-3090-1001`，更新2026-10-08。按用户要求先用subagent剔除低质量输入，补齐 **20个官方nuScenes train开发场景、42个独立单车目标**，每景2–3辆，全部输入2分。当前只完成CPU准备；SAM、生成和训练均为0。
+任务 `WS-V77-TARGET-PROTECTED-20260929/r50`，主机 `wm-vgpu-1008`，更新2026-10-08。按用户要求先用subagent剔除低质量输入，补齐 **20个官方nuScenes train开发场景、42个独立单车目标**，每景2–3辆，全部输入2分。42例SAM已完成，40例实例准入后完成官方DELETE，仍覆盖20景；训练0步。
 
 ```mermaid
 flowchart LR
@@ -9,8 +9,10 @@ flowchart LR
  C --> M[固定完整SAM2\n检查实例身份]
  M --> D[官方DriveEditor DELETE]
  D --> V[原图 / mask / 原生 / 写回]
- V -. 未开始 .-> F[薄膜与后车结构失败]
- F -. 后续 .-> Y[真实视频Y + 匹配遮挡]
+ V --> F[薄膜与后车结构失败]
+ F -. 仅取布局与洞 .-> Y[匹配遮挡数据]
+ R[真实可见视频Y] --> Y
+ Y -. 后续 .-> S[内部空间层验证]
 ```
 
 ## 独立质检与补齐
@@ -44,20 +46,24 @@ B crop只供审核，**没有额外输入本轮r46模型**。A得2分而B参考�
 - 五个后续隔离train景继续不看RGB、不训练/选方法，旧val final quarantine不动。隔离只针对本工程，不保证官方预训练没见过。
 - 真实隐藏区没有GT。失败生成只用于定位；未来合成数据的Y必须来自真实视频。
 
-## 下一步与资源
+## GPU结果与单帧结构粗分类
 
-CPU已检查20景每景2–3个不同实例、所有准入分数为2、原视频实际解码420帧。GPU入口同样拒绝非2分清单。当前无GPU，停止等用户开卡，不在CPU加载模型或后台等待GPU。
+用户开启GPU并指定 `wm-vgpu-1008`。42例SAM无空mask；独立f00/f05/f09检查40例2分通过，R013吞邻黑SUV及行人、R066吞邻黑车，均1分拒绝。没有逐例改prompt、mask或seed补齐数字。20景仍覆盖，两景各剩1个生成目标，其余2–3个。输入2分与mask2分不表示补景合格。
 
-开卡后先统一SAM并逐例查目标、空mask和明确串邻车；GT包络交叠只提示疑点，不自动认定分割错误。入口通过后每车只运行一次官方DELETE，保留原生与最终写回。固定抽帧粗分薄膜、后车变形、车身向道路延伸、重新生车、mask错误、未见明显问题或不能确定；视频时序需另外看视频。
+40个固定DELETE全部完成，累计36.5分钟，中位54.4秒/窗，PyTorch峰值已分配显存21.86GiB，不含reserved/driver。官方checkpoint加载0 missing/0 unexpected；无Adapter、previous-window条件或训练。400帧洞外原像素、完整SAM内原生像素检查全部通过；800张原生/写回PNG保留在run。首次gate字段名不匹配在加载模型前停止，已对齐并保存旧日志；不是模型失败，也没有更换推理配置。
 
-先看真实结构失败，再按布局、洞和遮挡过程造数据，之后登记有界内部空间层微调与独立场景验证。不能从CPU输入统计直接启动训练，不换seed掩盖失败。
+独立subagent每例仅审f05四列和同ROI近景，必要时核对真实B crop，未逐输出帧审查。多标签统计：`{'film_or_ghost': 14, 'car_body_extends_onto_road': 4, 'none_visible': 21, 'actor_regeneration': 4, 'protected_actor_deformation': 1}`，标签可重叠，包含任一列的可见现象；不能当最终任务失败率。原生/写回差别在逐例说明中，`none_visible`只表示抽取帧未见明显结构错误。车辆再生标签是单帧迹象，隐藏身份未知时保留不确定性。人工与时序verdict均空，不能当整段视频通过率、隐藏区域GT或模型根因证据。完整逐例依据见下方JSON。
 
-GPU批次最大42个固定窗口，连SAM、加载与入口检查预留约1–2小时，开卡后用实测更新。CPU按0.5核配额限线程，数据盘约余91GiB，无清理或电源操作。追加候选复用既有准备函数；同名prepare导入路径冲突已在CPU修正，不涉及模型。
+40例B可见证据：充分9、薄弱8、无候选21、不能确定2。可见片段充分不等于全部隐藏车身已知；优先看有充分真实证据而仍有薄膜/变形的失败，再按布局与洞造遮挡，训练Y仍用真实视频。本轮没有训练或新方法收益，不自动恢复r49或开始参数扫描。
+
+GPU已空、用户可切CPU。实际设备32GB RTX 4080 SUPER，CPU cgroup16核；数据盘余量与结束时进程证据保存在gpu_results.json/runtime，无清理或电源操作。
 
 ## 交付与证据
 
-本地 `outputs/v77-real-delete-r50/index.html` 显示20景42个2分目标，原图黄框A、绿框B；尚未推理的列明确空缺。`input_quality_archive.html` 保留退队列原图与逐例理由，低质量输入无需用户重审。只有确实无法判定的输入才给人工确认，本轮无此目标。
+本地 `outputs/v77-real-delete-r50/index.html` 显示20景40个DELETE：原视频、SAM洞、官方原生DELETE、固定写回。两例mask拒绝在独立页保留原图与理由，不让用户重复审核低质入口。黄框A、绿框B。原生DELETE不是factual重建。`input_quality_archive.html` 保留退队列原图与逐例理由，低质量输入无需用户重审。只有确实无法判定的输入才给人工确认，本轮无此目标。
 
 [准入清单](../autoresearch/worldsim_v77/target_protected_20260929/r50/selection.json)、[完整独立质检](../autoresearch/worldsim_v77/target_protected_20260929/r50/input_quality_review.json)、[退队列记录](../autoresearch/worldsim_v77/target_protected_20260929/r50/quality_exclusions.json)、[CPU检查](../autoresearch/worldsim_v77/target_protected_20260929/r50/cpu_check.json)。远端run `/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50`；修改前备份 `/root/autodl-tmp/backups/v77_r50_quality_20261008T025348Z`。
 
-`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: none`（本次输入准入调整，尚无新生成或科学失败）；更新同卡，不新造失败ID。
+`failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`（新增真实结构现象，输入失败与生成失败分开）；更新同卡，不新造失败ID。
+
+[GPU结果与资源](../autoresearch/worldsim_v77/target_protected_20260929/r50/gpu_results.json)、[SAM独立准入](../autoresearch/worldsim_v77/target_protected_20260929/r50/mask_visual_review.json)、[逐例单帧粗分类](../autoresearch/worldsim_v77/target_protected_20260929/r50/assistant_structure_review.json)。
