@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V77-TARGET-PROTECTED-20260929 / r51 | 新40景输入复核后准入33景/33例；原生错误与写回损伤分队；CPU完成，GPU/训练0 | [报告](v77/REAL_DELETE_NATIVE_R51.md) |
+| WS-V77-TARGET-PROTECTED-20260929 / r51 | 52景72例官方/r46/r47对照；104新窗，AI六列抽帧评分，504视频解码；训练0 | [报告](v77/REAL_DELETE_NATIVE_R51.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r50 | 20景40个固定真实DELETE完成；2例SAM吞邻车拒绝；独立f05结构粗分类及5.6-sol四列小数评分，训练0 | [报告](v77/REAL_DELETE_STRUCTURE_R50.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r49 | 实例/位置软绑定；64步/20新窗；两阶段5.6 Sol直接看图未见稳定升级；保留r46，GPU已空 | [报告](v77/TARGET_PROTECTED_SPATIAL_BINDING_R49.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r48 | 同指令消融；128步/20新窗；指定5.6 Sol独立图像review，保留r46；人工待评 | [报告](v77/TARGET_PROTECTED_SHORT_CYCLE_R48.md) |

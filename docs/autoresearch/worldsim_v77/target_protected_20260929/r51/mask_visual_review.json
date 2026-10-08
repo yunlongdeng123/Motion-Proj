@@ -1,0 +1,411 @@
+{
+  "reviewer": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": "独立目视复核33例mask_review.jpg的f00/f05/f09三行；仅判断黄色SAM实例是否为同一辆目标A、是否吞并邻车或前景、是否严重漏车，并将蓝色实际模型洞的膨胀风险与SAM实例轮廓分开记录；不评价生成质量或时序。",
+  "approved": [
+    "R088",
+    "R089",
+    "R090",
+    "R091",
+    "R092",
+    "R094",
+    "R095",
+    "R096",
+    "R097",
+    "R098",
+    "R099",
+    "R100",
+    "R101",
+    "R102",
+    "R103",
+    "R104",
+    "R105",
+    "R106",
+    "R107",
+    "R108",
+    "R112",
+    "R113",
+    "R114",
+    "R115",
+    "R116",
+    "R118",
+    "R119",
+    "R120",
+    "R121",
+    "R122",
+    "R124",
+    "R125"
+  ],
+  "rejected": [
+    "R093"
+  ],
+  "cases": [
+    {
+      "case_id": "R088",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓均完整贴合正面深色MPV，车头、双侧后视镜和下沿连续，未把右侧卡车或后方车辆并入实例。",
+      "model_hole_risk": "蓝洞仅在目标外轮廓周围规则膨胀，未见覆盖右侧卡车；与SAM实例一致性高。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R088/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R089",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓只包住左前方黑色轿车，车身边缘和车轮区域稳定，没有延伸到道路中央车辆。",
+      "model_hole_risk": "蓝洞比SAM轮廓略宽但仍围绕目标，右上保护框交叠主要是几何提示，未显示蓝洞实际吞入完整邻车。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R089/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R090",
+      "score": 2.6,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均沿白色轿车侧面、车顶和两轮闭合，左侧灰车与竖杆未被SAM实例串入。",
+      "model_hole_risk": "蓝洞左缘有额外膨胀并轻触保护框及相邻灰车前缘，存在边界误删风险，但黄色SAM轮廓本身仍是单车。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R090/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R091",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓稳定覆盖目标轿车完整尾部、侧边和车轮，未连到左侧灌木或后方车辆。",
+      "model_hole_risk": "蓝洞在车体周围小幅膨胀；绿色保护框与目标上半部交叠不足以证明串车，画面中未见蓝洞覆盖独立邻车主体。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R091/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R092",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "黄色轮廓在三帧都紧贴正面深色MPV，包含后视镜且没有明显漏掉车身，也未吞入路边设施。",
+      "model_hole_risk": "蓝洞为目标周围的规则膨胀区域，右上保护框虽与车顶重叠，但没有可见独立邻车被覆盖。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R092/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R093",
+      "score": 0.8,
+      "status": "reject",
+      "concise_reason": "三帧黄色SAM外轮廓都从左侧目标SUV连续扩展到右侧相邻深色车辆，包住邻车车身和右侧车轮，属于稳定的双车串实例。",
+      "model_hole_risk": "蓝洞随合并后的SAM范围覆盖两辆车的大部区域，既有SAM实例错误，也有直接误删受保护邻车的高风险。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R093/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R094",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均对应左侧黑色Jeep的车身与车轮，右侧相邻灰车在轮廓之外，没有串车。",
+      "model_hole_risk": "蓝洞右缘略宽并靠近保护框，可能轻触邻车前缘，但与黄色SAM轮廓的单车判定应分开。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R094/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R095",
+      "score": 2.7,
+      "status": "pass",
+      "concise_reason": "黄色轮廓持续贴合深色轿车，左侧行人与车体边界可分，未见把公交车或行人主体并入SAM实例。",
+      "model_hole_risk": "蓝洞左缘靠近行人保护框，个别帧可能覆盖行人边缘或脚部附近背景；SAM轮廓本身仍排除了行人主体。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R095/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R096",
+      "score": 2.6,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓完整围住白色轿车尾部及两侧，不随左后方车辆扩展，未发现严重漏车。",
+      "model_hole_risk": "蓝洞左缘与绿色保护框有较大几何交叠，可能触到左后邻车的可见边缘，但黄色SAM边界仍清楚分离两车。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R096/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R097",
+      "score": 2.4,
+      "status": "pass",
+      "concise_reason": "f05与f09黄色轮廓完整贴合白色轿车；f00受竖向遮挡形成分离小块，但两块仍对应同一辆A的可见车体，没有独立邻车证据。",
+      "model_hole_risk": "f00蓝洞同时覆盖遮挡两侧的目标可见块并跨过其间遮挡区域，可能扩大到遮挡物；后两帧蓝洞仅围绕目标。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R097/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R098",
+      "score": 2.7,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均沿深色轿车侧面、车顶与两轮闭合，未延伸到右侧白车。",
+      "model_hole_risk": "蓝洞略超出车身上下缘，绿色保护框覆盖目标右半部主要提示框交叠，未见蓝洞吞入右侧白车主体。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R098/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R099",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "三帧正面轿车的黄色轮廓从车顶、后视镜到保险杠均完整一致，周围无邻车串入。",
+      "model_hole_risk": "蓝洞仅在车体外周小幅膨胀，主要多覆盖少量路面，没有邻车误删风险。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R099/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R100",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "黄色轮廓在三帧稳定覆盖正面轿车全部可见车身，双侧后视镜和下沿连续，无串入行人或道路设施。",
+      "model_hole_risk": "蓝洞比SAM轮廓略宽，额外区域主要是车辆四周路面，未接触独立前景目标。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R100/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R101",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓准确围住正面MPV，车身下沿只有轻微形状起伏，未吞入施工隔离物或背景车辆。",
+      "model_hole_risk": "蓝洞规则包围目标，左侧施工区域仍在洞外，风险低。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R101/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R102",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均覆盖左侧棕色厢式车的完整可见外形，与中央白色货车和右侧大卡车明确分离。",
+      "model_hole_risk": "蓝洞只在棕色厢式车周围膨胀，没有跨到中央或右侧货车。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R102/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R103",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓完整贴合左侧深色旅行车尾部和侧面，与中央白色货车保持明显间隔。",
+      "model_hole_risk": "蓝洞外扩主要落在车周路面，未覆盖中央货车；f00右上仅见极小孤立边缘噪声。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R103/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R104",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧都紧贴黑色轿车尾部、车顶和车轮下沿，没有明显漏车或背景粘连。",
+      "model_hole_risk": "蓝洞略扩大到车辆周边路面，但附近没有紧邻车辆，风险低。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R104/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R105",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "黄色轮廓稳定覆盖灰色SUV的完整侧面和两轮，前后停放车辆均未被并入。",
+      "model_hole_risk": "蓝洞只在目标上下缘小幅膨胀，与前后邻车之间仍有可见间隔。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R105/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R106",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓完整包住前方MPV尾部，从车顶到保险杠连续，没有把远处公交或路标串入。",
+      "model_hole_risk": "蓝洞仅覆盖目标周围少量道路，附近无紧贴邻车，风险低。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R106/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R107",
+      "score": 3.0,
+      "status": "pass",
+      "concise_reason": "黄色轮廓在三帧一致贴合白色小车尾部，右侧驶过的深色轿车始终完全在SAM实例之外。",
+      "model_hole_risk": "蓝洞保持在白车周围，没有跨到右侧经过车辆，风险低。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R107/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R108",
+      "score": 2.2,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓均为同一辆白色SUV，车身没有明显漏失或串入其他车辆；前保险杠下方随阴影带入一块较大的路面区域。",
+      "model_hole_risk": "蓝洞进一步扩大了车前和车底阴影路面，背景误删范围偏大，但附近没有受保护邻车被覆盖。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R108/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R112",
+      "score": 2.3,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均对应同一辆黑色SUV，主体完整且未连到右侧车辆；车底暗影被轮廓一并包含，边界偏宽。",
+      "model_hole_risk": "蓝洞在车底和车周明显外扩，主要风险是多删路面阴影，未见吞入邻车。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R112/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R113",
+      "score": 2.9,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓完整覆盖正面深色轿车，左右轮廓与后视镜清楚，邻近拖车和路边车辆均未串入。",
+      "model_hole_risk": "蓝洞只在目标周围小幅扩大并包含少量车底路面，未接触两侧大型车辆。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R113/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R114",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均沿横向行驶的深色SUV车顶、车头、车尾与两轮闭合，未把交叉口白色皮卡并入。",
+      "model_hole_risk": "蓝洞下缘稍宽并包含少量道路阴影，与远处白色皮卡保持明显分离。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R114/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R115",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓只覆盖转弯的黑色SUV，右前方灰色轿车虽然靠近但始终在SAM边界之外。",
+      "model_hole_risk": "蓝洞在SUV周边外扩，f00与f05靠近右侧灰车的行驶区域但未见明显覆盖其主体。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R115/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R116",
+      "score": 2.9,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧稳定贴合正面深色轿车，左侧红色货车和施工栏杆均与实例分离。",
+      "model_hole_risk": "蓝洞略大于车身但仍远离左侧红色货车，风险低。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R116/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R118",
+      "score": 2.3,
+      "status": "pass",
+      "concise_reason": "红色SUV受树干和围栏遮挡，f00黄色轮廓分成两块，f05与f09也有遮挡凹口，但各块均对应同一辆A的可见车体，未串入邻车。",
+      "model_hole_risk": "蓝洞跨过遮挡造成的分离区域，可能覆盖树干或围栏等遮挡物；没有邻车主体被蓝洞覆盖。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R118/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R119",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓完整贴合远处红色SUV侧面和两轮，未连到左侧近景车辆或右侧白色面包车。",
+      "model_hole_risk": "蓝洞在小目标周围外扩较明显，但与其他车辆仍有充分间隔。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R119/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R120",
+      "score": 2.8,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均完整围住前方轿车尾部，没有延伸到左侧货车或道路前景；绿色框与车体重叠本身不足以构成串车。",
+      "model_hole_risk": "蓝洞围绕目标略有外扩，虽与绿色保护框在上半部重合，但画面中未见独立邻车主体被覆盖。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R120/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R121",
+      "score": 2.7,
+      "status": "pass",
+      "concise_reason": "三帧黄色轮廓均贴合目标深色SUV，f00右侧相邻车辆保持在轮廓外，后两帧也未出现实例漂移。",
+      "model_hole_risk": "蓝洞右缘靠近保护框，f00可能轻触右侧邻车边缘；黄色SAM轮廓仍明确分车。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R121/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R122",
+      "score": 2.5,
+      "status": "pass",
+      "concise_reason": "目标深色SUV处于强阴影且逐渐变小，黄色轮廓三帧仍覆盖同一车辆主体，未看到与后方车辆连成一个实例。",
+      "model_hole_risk": "蓝洞相对小目标外扩较多，并与绿色保护框大幅交叠；可见内容仍主要是A，邻车误删风险需保留。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R122/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R124",
+      "score": 2.2,
+      "status": "pass",
+      "concise_reason": "三帧小尺寸轿车的黄色轮廓仍能围住完整可见车身，未明显连入右侧受保护车辆，但分辨率低且车底边界偏宽。",
+      "model_hole_risk": "蓝洞对小目标的相对膨胀较大，右缘与保护框及邻车方向相触，存在误删邻车边缘的实际风险。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R124/mask_review.jpg"
+      ],
+      "human_verdict": null
+    },
+    {
+      "case_id": "R125",
+      "score": 2.1,
+      "status": "pass",
+      "concise_reason": "黄色轮廓三帧均只包住右侧白色轿车，左侧灰色SUV虽紧邻并与框重叠，但其主体没有被SAM轮廓吞入。",
+      "model_hole_risk": "蓝洞左缘明显越过黄色SAM边界并覆盖到绿色保护框内，可能误删左侧邻车一部分；该风险来自膨胀洞，不等同于SAM串实例。",
+      "images_viewed": [
+        "outputs/v77-real-delete-r51/R125/mask_review.jpg"
+      ],
+      "human_verdict": null
+    }
+  ]
+}

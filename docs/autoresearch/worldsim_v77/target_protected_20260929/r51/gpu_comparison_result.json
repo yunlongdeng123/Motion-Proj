@@ -1,0 +1,155 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r51",
+  "host_alias": "wm-vgpu-1008",
+  "cases": 72,
+  "scenes": 52,
+  "new_baseline_windows": 32,
+  "r47_windows": 72,
+  "reused_r50_baseline_windows": 40,
+  "training_steps": 0,
+  "sam_rejected": [
+    "R093"
+  ],
+  "seed": 42,
+  "steps": 25,
+  "frames": 10,
+  "resolution": [
+    1024,
+    576
+  ],
+  "branch_checkpoint": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r47/training/branch_0320.safetensors",
+  "branch_and_backbone_frozen": true,
+  "reference_policy": "original r47 fixed top4 visible protected crops +2 contexts, 6 slots; raw bank is 10 existing SAM query frames plus six-camera keyframes at query-start-1s/start/end/end+1s; original r47 bank had26 SAM frames; additionally selected sample tokens include available same-scene query exposures (see reference_pool_audit)",
+  "source_reference_checks": 109,
+  "disabled_reference_slots": 2,
+  "baseline_seconds_sum": 1630.515107597923,
+  "r47_seconds_sum": 3750.5676701976918,
+  "r47_peak_allocated_GiB": 18.507925987243652,
+  "AI_native_comparison": {
+    "改善": 12,
+    "持平": 55,
+    "回退": 5
+  },
+  "AI_writeback_comparison": {
+    "改善": 12,
+    "持平": 55,
+    "回退": 5
+  },
+  "AI_f05_scores_ge_2": {
+    "official_native_score": 40,
+    "r46_writeback_score": 30,
+    "r47_native_score": 37,
+    "r47_writeback_score": 27
+  },
+  "AI_score_scope": "single f05 image, requested gpt-5.6-sol xhigh, no fast; not human or temporal verdict",
+  "training_overlap": {
+    "r47_branch_train_scenes": [
+      "scene-0222",
+      "scene-0228",
+      "scene-0240",
+      "scene-0243",
+      "scene-0249",
+      "scene-0256",
+      "scene-0290",
+      "scene-0292",
+      "scene-0294",
+      "scene-0295",
+      "scene-0298"
+    ],
+    "comparison_scenes_overlapping_r47_branch_train": [
+      "scene-0240",
+      "scene-0249",
+      "scene-0256",
+      "scene-0290",
+      "scene-0295",
+      "scene-0298"
+    ],
+    "overlapping_case_ids": [
+      "R001",
+      "R002",
+      "R099",
+      "R103",
+      "R115",
+      "R120",
+      "R122"
+    ],
+    "official_pretrain_overlap_not_audited": true,
+    "all_comparison_cases_are_DEV": true
+  },
+  "local_videos": 504,
+  "decoded_local_frames": 5040,
+  "GPU_jobs": 0,
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "updated V77-F02",
+  "reference_pool_audit": {
+    "extra_non_keyframe_candidates": 36,
+    "candidate_case_ids": [
+      "R003",
+      "R004",
+      "R009",
+      "R028",
+      "R037",
+      "R038",
+      "R051",
+      "R041"
+    ],
+    "selected_extra_slots": [
+      {
+        "case_id": "R003",
+        "slot": 2,
+        "timestamp": 1535573229037558,
+        "camera": "CAM_BACK",
+        "source_kind": "GT_target_envelope_source_exclusion",
+        "disabled": false,
+        "padding": false,
+        "SAM_check_passed": true
+      },
+      {
+        "case_id": "R009",
+        "slot": 0,
+        "timestamp": 1534867446937558,
+        "camera": "CAM_BACK",
+        "source_kind": "GT_target_envelope_source_exclusion",
+        "disabled": false,
+        "padding": false,
+        "SAM_check_passed": true
+      },
+      {
+        "case_id": "R009",
+        "slot": 1,
+        "timestamp": 1534867447037558,
+        "camera": "CAM_BACK",
+        "source_kind": "GT_target_envelope_source_exclusion",
+        "disabled": false,
+        "padding": false,
+        "SAM_check_passed": true
+      },
+      {
+        "case_id": "R051",
+        "slot": 2,
+        "timestamp": 1535573290937558,
+        "camera": "CAM_BACK",
+        "source_kind": "GT_target_envelope_source_exclusion",
+        "disabled": false,
+        "padding": false,
+        "SAM_check_passed": true
+      },
+      {
+        "case_id": "R051",
+        "slot": 3,
+        "timestamp": 1535573291037558,
+        "camera": "CAM_BACK",
+        "source_kind": "GT_target_envelope_source_exclusion",
+        "disabled": false,
+        "padding": false,
+        "SAM_check_passed": true
+      }
+    ],
+    "note": "Legal real RGB from other same-scene query windows attached to selected samples; mask exclusion validated. No inference rerun."
+  }
+}
