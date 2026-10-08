@@ -1,11 +1,11 @@
 # 当前研究状态
 
-更新：2026-10-08。分支 `research/worldsim-v7.7-target-protected-editing`，主机 `wm-vgpu-1008`。
+更新：2026-10-09。分支 `research/worldsim-v7.7-target-protected-editing`，CPU 主机 `wm-vgpu-1008`。
 
-唯一run `WS-V77-TARGET-PROTECTED-20260929/r51` 已完成：新32例官方基线、旧40例＋新32例的原r47 step320补跑，共52景72例对照；104新窗、40旧窗复用、训练0步。R093双车SAM拒绝，保留原图证据。
+`WS-V77-TARGET-PROTECTED-20260929/r52` 已关闭：矩形道路 proxy 与矩形硬拼接伪标签均退出训练，仅保留工程诊断及失败证据。训练入口检查退役标记并拒绝续训。已完成三次64步与官方/r47对照，best1单例未通过，不续128、不扩case；历史分数、候选、关键checkpoint与全部结果保留。[r52报告](v77/SINGLE_CASE_FINETUNE_R52.md)。
 
-独立5.6-sol/xhigh（未开fast）已按固定f05给72例六列小数分数；原生r47相对官方 {'改善': 12, '持平': 55, '回退': 5}，最终r47相对r46 {'改善': 12, '持平': 55, '回退': 5}。这是AI单帧开发观察，不代替人工/时序验收。7例与r47分支训练同场景，来源偏差明确；不宣称独立泛化或自动升级默认方法。
+新 run `r53` 只准备 SAM3 真轮廓入口：用户指定 ModelScope 的 sam3.pt 3,450,062,241字节已下载，CPU权重解析及官方模块导入通过；edit_mask、r47 hole、新二值alpha同步自测通过。发现旧wrapper将SAM轮廓改为外接矩形，旧接口留作复现，新入口绕开该转换。GPU推理0窗、训练0步、SAM3身份与覆盖尚未验证；真实轮廓本身不提供去车后的正确Y。[组件图与准备记录](v77/REAL_INSTANCE_MASK_R53.md)。
 
-本地 `outputs/v77-real-delete-r51/index.html` 已更新五列视频和实际OCC/BEV、RGB参考，504视频/5040帧完整解码。原 `打分记录.xlsx` 新增72行对照页，旧6页和图片保留。原生模型错误与写回工程损伤分别记录，未来Y仍真实视频，未启动新数据/训练。
+数据盘按用户授权实际释放203.687GiB（218.7GB）；SAM3安装下载后约可用208.4GiB。保留当前nuScenes、关键模型和全部runs；旧AV2 sensors/闲置权重/4个环境的删除清单及恢复入口见[清理记录](autoresearch/worldsim_v77/storage_cleanup_20261009/README.md)。
 
-GPU与顺序控制器已完成、无后续GPU作业，通知用户可切CPU；无本轮关机/自动化授权。下一步由本次图像对照和用户review选择具体原生失败，再定匹配数据；不自动修改mask或扫参数。[报告与组件图](v77/REAL_DELETE_NATIVE_R51.md)，[V77-F02](research_failures/entries/V77-F02.md)。
+CPU准备已完成，当前CUDA不可用，无训练/推理控制器。下一步按用户最新请求先讨论DELETE掩码与去噪机制，不启动新架构或训练；开GPU后才做R001十帧真实实例分割核验。本轮无关机或自动化动作。人工verdict仍留空；同一失败卡[V77-F02](research_failures/entries/V77-F02.md)已更新。

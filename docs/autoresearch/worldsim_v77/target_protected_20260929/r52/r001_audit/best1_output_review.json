@@ -1,0 +1,102 @@
+{
+  "case_id": "R001",
+  "source_frame_index": 4,
+  "review_scope": "独立视觉QA；比较单张f04矩形伪标签静态重复10次、训练64步前后的320x576容量控制与全尺寸f04 official/r47输出，只看膜/黑影、B结构、道路和边界，不使用MAE排序",
+  "review_independent": true,
+  "static_single_source": true,
+  "not_video_evaluation": true,
+  "training_supervision": {
+    "candidate_id": "R001_f04_imagegen",
+    "type": "single generated pseudo Y repeated statically for 10 frames",
+    "steps": 64,
+    "is_hidden_background_ground_truth": false,
+    "finding": "训练对Y本身含矩形硬写回边界、小黑残留和标线接缝，不能代表真实隐藏背景。"
+  },
+  "capacity_320": {
+    "before_finetune": {
+      "proxy_official": {
+        "native": {
+          "ai_score": 0.2,
+          "reason": "银车位置仍有大块半透明膜、宽黑影和塌陷道路，B/远车结构被灰膜与黑块污染。"
+        },
+        "compose": {
+          "ai_score": 0.3,
+          "reason": "写回后仍有宽黑岛、矩形灰膜和道路结构断裂，视觉上明显失败。"
+        }
+      }
+    },
+    "after_best1_0064": {
+      "proxy_official": {
+        "native": {
+          "ai_score": 0.7,
+          "reason": "原先最宽的黑影减弱，但生成区出现清楚矩形带、弯曲白线和远车/路面纹理熔合，未达到可用重建。"
+        },
+        "compose": {
+          "ai_score": 0.8,
+          "reason": "洞外恢复后仍能一眼看到矩形补丁，白色道路线错接并回卷，B附近车列结构不清楚。"
+        }
+      }
+    },
+    "capacity_finding": "64步对压低原大黑影有局部作用，但同时学习了伪标签的矩形接缝和错误道路线；容量控制未通过。"
+  },
+  "before_finetune": {
+    "R001_official": {
+      "native": {
+        "ai_score": 0.5,
+        "reason": "A主体虽被削弱，但保留大块半透明矩形膜、黑色楔形残影和蓝白边缘闪斑，道路线不连续，B/远车细节被污染。"
+      },
+      "compose": {
+        "ai_score": 0.6,
+        "reason": "硬写回略收住洞外污染，但矩形薄膜、黑楔和断线仍明显。"
+      }
+    },
+    "R001_r47": {
+      "native": {
+        "ai_score": 0.5,
+        "reason": "与official近似，仍有矩形膜、黑色残影和道路边缘闪斑，未形成清楚B与连续路面。"
+      },
+      "compose": {
+        "ai_score": 0.6,
+        "reason": "写回后主要失败仍是洞内矩形膜、黑楔和标线断裂，r47没有可见优势。"
+      }
+    }
+  },
+  "after_best1_0064": {
+    "R001_official": {
+      "native": {
+        "ai_score": 0.2,
+        "reason": "训练后出现更强的矩形复制块，横向导流线弯曲回卷，左侧建筑、车辆和路面纹理发生熔合；B结构更难辨，视觉退化。"
+      },
+      "compose": {
+        "ai_score": 0.3,
+        "reason": "洞外像素恢复仍无法掩盖洞内大块矩形接缝、错误白线和纹理熔合，未学会干净删除。"
+      }
+    },
+    "R001_r47": {
+      "native": {
+        "ai_score": 0.2,
+        "reason": "与official同样出现严重矩形补丁、回卷道路线和远车/建筑纹理熔合，B保护没有形成清楚结构。"
+      },
+      "compose": {
+        "ai_score": 0.3,
+        "reason": "硬写回后错误仍集中在洞内且清楚可见，r47未带来结构修复。"
+      }
+    }
+  },
+  "comparison": {
+    "film_and_shadow": "部分大黑影被压低，但被更强矩形补丁和结构性伪影取代",
+    "B_structure": "训练后远车与背景纹理熔合，B没有得到可靠保护",
+    "road_lines": "训练后明显恶化，出现回卷、错接和不应存在的白色分支",
+    "official_vs_r47": "两臂视觉上近似，均失败",
+    "single_case_passed": false,
+    "reached_score_2": false,
+    "best_after_full_resolution_score": 0.3
+  },
+  "decision": {
+    "stop_current_rectangular_pseudo_label_gate": true,
+    "admit_rectangular_pseudo_label_to_training": false,
+    "retain_as_failure_evidence_only": true,
+    "reason": "单张矩形拼接伪标签没有新增任务监督价值，64步把接缝和错误标线学入输出且全尺寸质量退化；当前关应停止，不应声称模型已学会。"
+  },
+  "human_verdict": null
+}

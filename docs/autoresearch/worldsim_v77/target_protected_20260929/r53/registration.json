@@ -1,0 +1,35 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r53",
+  "phase": "SAM3 CPU preparation",
+  "case_id": "R001",
+  "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001",
+  "source_role": "real train DEV; already exposed",
+  "checkpoint": {
+    "model": "facebook/sam3",
+    "format": "native SAM3.0 PyTorch checkpoint",
+    "source": "https://modelscope.cn/models/facebook/sam3/resolve/master/sam3.pt",
+    "mirror_page": "https://modelscope.cn/models/facebook/sam3",
+    "revision": "master",
+    "bytes": 3450062241,
+    "path": "/root/autodl-tmp/models/worldsim_v77_sam3/sam3.pt",
+    "completed_utc": "2026-10-08T18:28:35Z",
+    "code_commit": "0570b3a5be9c4e694f23d85232fb55f4a6f1f7fc",
+    "gpu_inference_executed": false,
+    "duplicate_safetensors_downloaded": false
+  },
+  "gt_box_role": "prompt only; not deletion region or Y",
+  "mask_policy": "exact instance silhouette; synchronize native mask, r47 hole and new alpha",
+  "gpu_inference_windows": 0,
+  "training_steps": 0,
+  "training_admission": false,
+  "identity_review": "pending actual SAM3 GPU result",
+  "human_verdict": null,
+  "seed": null,
+  "resources": "CPU only; GPU memory/driver compatibility untested",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "record contour-to-rectangle interface; no new model result",
+  "next": "Run one R001 SAM3 sequence, inspect identity/coverage/contour, then determine supervision; no auto training"
+}

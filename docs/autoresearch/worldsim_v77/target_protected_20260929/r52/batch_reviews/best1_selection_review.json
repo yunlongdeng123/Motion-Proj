@@ -1,0 +1,33 @@
+{
+  "case_id": "R001",
+  "selection_scope": "先在并列最高分的f04与f05 registered硬合成候选中选择一张，再按最新用户优先规则与R001_user_priority_f05比较；只选一张用于第一关单样本伪标签训练，依据B几何、残留和接缝",
+  "review_independent": true,
+  "candidate_scores_unchanged": {
+    "R001_f04_imagegen": 1.5,
+    "R001_f05_imagegen": 1.5
+  },
+  "user_priority_candidate_score": 1.2,
+  "latest_user_priority_rule_applied": true,
+  "selected_candidate_id": "R001_f04_imagegen",
+  "selected_source_frame_index": 4,
+  "selected_variant": "registered",
+  "selection_reason": "f04中的深色B与当帧投影包络在位置、宽度和远车尺度上贴合更紧，右侧浅色邻车关系自然；A膜和宽黑影已清除。f04虽然也有矩形接缝，但横向白线右端暗残留更小、补丁边界更轻。最新用户优先候选在硬写回后矩形整体明显偏暗偏平滑，四边接缝和横线断点重于f04，独立分1.2明显低于f04的1.5，因此不触发同分或更高分优先，最终仍选择f04。",
+  "not_selected": [
+    {
+      "candidate_id": "R001_f05_imagegen",
+      "source_frame_index": 5,
+      "variant": "registered",
+      "reason": "f05同样通过1.5分门槛，但深色B相对投影包络略偏宽，横向白线右端的小黑竖痕更醒目，矩形写回边缘也略重。它仍可作为有噪候选，但在只取一张时次于f04。"
+    },
+    {
+      "candidate_id": "R001_user_priority_f05",
+      "source_frame_index": 5,
+      "variant": "registered",
+      "reason": "候选原ROI删除内容可用，但在真实mask硬写回后出现更明显的矩形暗块、纹理/锐度跳变、横向白线断点和右侧小黑竖痕；独立分1.2，质量明显低于f04的1.5，故未按用户优先规则替换f04。"
+    }
+  ],
+  "training_selection_count": 1,
+  "unreviewed_candidates_counted_as_zero": false,
+  "supervision_boundary": "入选项仍是单帧generated pseudo Y，不是真实隐藏背景GT；静态重复只能作为单样本容量/迁移试验，不能当作视频监督或视频通过证据。",
+  "human_verdict": null
+}

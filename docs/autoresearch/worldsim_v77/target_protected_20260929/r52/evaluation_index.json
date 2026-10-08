@@ -1,0 +1,623 @@
+[
+  {
+    "label": "base_f05",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 9.560350847896188,
+    "peak_GiB": 17.88130474090576,
+    "weights": "official",
+    "r47_branch": "fixed step320",
+    "num_frames": 1,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "base_f05",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 9.928985423175618,
+    "peak_GiB": 17.88628578186035,
+    "weights": "official",
+    "r47_branch": "fixed step320",
+    "num_frames": 1,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "base_f05",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 9.69978676782921,
+    "peak_GiB": 17.886865615844727,
+    "weights": "official",
+    "r47_branch": "fixed step320",
+    "num_frames": 1,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "baseline_clip",
+    "name": "R001_official",
+    "reused_from": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001",
+    "num_frames": 10,
+    "new_GPU_window": false
+  },
+  {
+    "label": "baseline_clip",
+    "name": "R001_r47",
+    "reused_from": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r51/r47_comparison/evaluation/R001",
+    "num_frames": 10,
+    "new_GPU_window": false
+  },
+  {
+    "label": "baseline_clip",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 51.281923157861456,
+    "peak_GiB": 18.45625400543213,
+    "weights": "official",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "capacity_base",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 17.124470536829904,
+    "peak_GiB": 16.668738842010498,
+    "weights": "official",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      320,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "input_contract": "train.resized clear-before-resize",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null,
+    "known_Y_hole_MAE": 15.683363914489746,
+    "known_Y_hole_MAE_by_frame": [
+      14.439257621765137,
+      14.805549621582031,
+      14.834423065185547,
+      15.135444641113281,
+      15.88290786743164,
+      16.21576499938965,
+      16.05451202392578,
+      16.15529441833496,
+      16.01681900024414,
+      17.29366683959961
+    ]
+  },
+  {
+    "label": "capacity_best1_0064",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 16.58623397210613,
+    "peak_GiB": 16.666396617889404,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_best1/main_0064.safetensors",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      320,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 4,
+    "capacity_pair": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pseudo_best1_pairs/pairs/R001_f04_imagegen/pair.json",
+    "input_contract": "train.resized clear-before-resize",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null,
+    "known_Y_hole_MAE": 24.29241180419922,
+    "known_Y_hole_MAE_by_frame": [
+      24.268014907836914,
+      24.10635757446289,
+      24.132484436035156,
+      24.265033721923828,
+      24.305002212524414,
+      24.26042938232422,
+      24.330188751220703,
+      24.357580184936523,
+      24.34334945678711,
+      24.555673599243164
+    ]
+  },
+  {
+    "label": "capacity_best1_base",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 16.434968432877213,
+    "peak_GiB": 16.668738842010498,
+    "weights": "official",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      320,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 4,
+    "capacity_pair": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pseudo_best1_pairs/pairs/R001_f04_imagegen/pair.json",
+    "input_contract": "train.resized clear-before-resize",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null,
+    "known_Y_hole_MAE": 23.462923049926758,
+    "known_Y_hole_MAE_by_frame": [
+      23.473758697509766,
+      23.48633575439453,
+      23.448928833007812,
+      23.479238510131836,
+      23.46854019165039,
+      23.466562271118164,
+      23.42672348022461,
+      23.453304290771484,
+      23.44354820251465,
+      23.482284545898438
+    ]
+  },
+  {
+    "label": "capacity_pseudo_0064",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 17.101761248894036,
+    "peak_GiB": 16.666396617889404,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_scored/main_0064.safetensors",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      320,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 0,
+    "capacity_pair": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pseudo_scored_pairs/pairs/R001_f00_imagegen/pair.json",
+    "input_contract": "train.resized clear-before-resize",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null,
+    "known_Y_hole_MAE": 24.318208694458008,
+    "known_Y_hole_MAE_by_frame": [
+      24.25202178955078,
+      24.248441696166992,
+      24.26877784729004,
+      24.33447265625,
+      24.366552352905273,
+      24.324054718017578,
+      24.279115676879883,
+      24.346324920654297,
+      24.319732666015625,
+      24.442588806152344
+    ]
+  },
+  {
+    "label": "capacity_pseudo_base",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 16.648738962830976,
+    "peak_GiB": 16.668738842010498,
+    "weights": "official",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      320,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 0,
+    "capacity_pair": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pseudo_scored_pairs/pairs/R001_f00_imagegen/pair.json",
+    "input_contract": "train.resized clear-before-resize",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null,
+    "known_Y_hole_MAE": 25.92169952392578,
+    "known_Y_hole_MAE_by_frame": [
+      26.07547950744629,
+      26.014873504638672,
+      25.863039016723633,
+      25.895648956298828,
+      25.91895294189453,
+      25.755481719970703,
+      25.94440460205078,
+      25.85471534729004,
+      25.836633682250977,
+      26.057769775390625
+    ]
+  },
+  {
+    "label": "capacity_realRGB_0064",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 17.301238188054413,
+    "peak_GiB": 16.666396617889404,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_realRGB/main_0064.safetensors",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      320,
+      576
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "input_contract": "train.resized clear-before-resize",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null,
+    "known_Y_hole_MAE": 15.203527450561523,
+    "known_Y_hole_MAE_by_frame": [
+      15.405515670776367,
+      15.697412490844727,
+      15.773272514343262,
+      15.583452224731445,
+      14.904869079589844,
+      15.126114845275879,
+      14.835648536682129,
+      14.76898193359375,
+      14.673782348632812,
+      15.266223907470703
+    ]
+  },
+  {
+    "label": "pseudo_0064_clip",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 51.690810702042654,
+    "peak_GiB": 18.45570468902588,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_scored/main_0064.safetensors",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": false,
+    "source_frame_index": 5,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "pseudo_0064_clip",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 52.51068618497811,
+    "peak_GiB": 18.50722885131836,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_scored/main_0064.safetensors",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": false,
+    "source_frame_index": 5,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 25,
+      "conditional": 25
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "realRGB_0064_clip",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 51.45166639704257,
+    "peak_GiB": 18.45570468902588,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_realRGB/main_0064.safetensors",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "realRGB_0064_clip",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 51.58433833392337,
+    "peak_GiB": 18.50722885131836,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_realRGB/main_0064.safetensors",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "realRGB_0064_clip",
+    "name": "proxy_official",
+    "arm": "baseline",
+    "seconds": 51.107854327885434,
+    "peak_GiB": 18.506404876708984,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_realRGB/main_0064.safetensors",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f00_base",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 52.93061095010489,
+    "peak_GiB": 18.45625400543213,
+    "weights": "official",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 0,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f00_base",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 51.508416599128395,
+    "peak_GiB": 18.504741668701172,
+    "weights": "official",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 0,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 25,
+      "conditional": 25
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f00_pseudo64",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 51.03457415802404,
+    "peak_GiB": 18.45570468902588,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_scored/main_0064.safetensors",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 0,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f00_pseudo64",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 52.35344397695735,
+    "peak_GiB": 18.50722885131836,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_scored/main_0064.safetensors",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 0,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 25,
+      "conditional": 25
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f04_base",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 50.995874122017995,
+    "peak_GiB": 18.45625400543213,
+    "weights": "official",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 4,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f04_base",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 52.6432830740232,
+    "peak_GiB": 18.504741668701172,
+    "weights": "official",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 4,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 25,
+      "conditional": 25
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f04_best1_64",
+    "name": "R001_official",
+    "arm": "baseline",
+    "seconds": 52.2613390579354,
+    "peak_GiB": 18.45570468902588,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_best1/main_0064.safetensors",
+    "r47_branch": "disabled",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 4,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 0,
+      "conditional": 0
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  },
+  {
+    "label": "static_f04_best1_64",
+    "name": "R001_r47",
+    "arm": "RGB_and_geometry",
+    "seconds": 52.906019089045,
+    "peak_GiB": 18.50722885131836,
+    "weights": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/training_pseudo_best1/main_0064.safetensors",
+    "r47_branch": "fixed step320",
+    "num_frames": 10,
+    "resolution": [
+      576,
+      1024
+    ],
+    "seed": 42,
+    "steps": 25,
+    "query_frame": 5,
+    "static_repeat_capacity_only": true,
+    "source_frame_index": 4,
+    "capacity_pair": null,
+    "input_contract": "native full resolution",
+    "CFG_prior_calls": {
+      "unconditional": 25,
+      "conditional": 25
+    },
+    "human_verdict": null,
+    "temporal_verdict": null
+  }
+]

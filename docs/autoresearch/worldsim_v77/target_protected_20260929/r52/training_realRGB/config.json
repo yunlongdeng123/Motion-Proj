@@ -1,0 +1,155 @@
+{
+  "pair": {
+    "case_id": "R001_realRGB_clip_v2",
+    "source_case": "R001",
+    "scene": "scene-0290",
+    "frame_index": 5,
+    "num_frames": 10,
+    "supervision_kind": "real_rgb_synthetic_occlusion",
+    "target_is_real_RGB": true,
+    "x": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pairs/R001_realRGB_clip_v2/x",
+    "y": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pairs/R001_realRGB_clip_v2/y",
+    "hole": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pairs/R001_realRGB_clip_v2/hole",
+    "qa_pass": true,
+    "qa_record": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r52/pairs/R001_realRGB_clip_v2/quality_review.json",
+    "human_verdict": null,
+    "hole_translation_xy": [
+      -195,
+      38
+    ],
+    "mask_policy": "固定f05实际模型洞平移，所有10帧同一洞；仅容量诊断，不宣称3D actor轨迹",
+    "frames": [
+      {
+        "frame": 0,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00000.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 5891
+      },
+      {
+        "frame": 1,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00001.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 4556
+      },
+      {
+        "frame": 2,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00002.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 3990
+      },
+      {
+        "frame": 3,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00003.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 2730
+      },
+      {
+        "frame": 4,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00004.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 1000
+      },
+      {
+        "frame": 5,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00005.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 0
+      },
+      {
+        "frame": 6,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00006.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 0
+      },
+      {
+        "frame": 7,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00007.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 0
+      },
+      {
+        "frame": 8,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00008.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 0
+      },
+      {
+        "frame": 9,
+        "bbox": [
+          19,
+          316,
+          214,
+          476
+        ],
+        "source": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r50/inputs/R001/rgb/00009.jpg",
+        "hole_pixels": 31200,
+        "overlap_original_target_envelope_pixels": 0
+      }
+    ],
+    "limits": "仅同景真实RGB的合成遮挡恢复对；不是真实SUV删除后的hidden GT；真实10帧非重复静帧"
+  },
+  "frame_count": 10,
+  "resolution": [
+    320,
+    576
+  ],
+  "seed": 6201,
+  "native_parameter_count": 1809579626,
+  "optimizer": "bitsandbytes.AdamW8bit",
+  "loss": "official StandardDiffusionLoss / EDM unchanged",
+  "branch": "official only"
+}

@@ -1,0 +1,101 @@
+{
+  "case_id": "R001",
+  "frame_index": 5,
+  "review_scope": "仅f05独立视觉QA；比较微调前baseline_clip与realRGB_0064_clip在R001_official/R001_r47的native和compose输出，检查薄膜、黑影、标线连续性及后车B损伤；不以MAE代替视觉判断",
+  "review_independent": true,
+  "single_frame": true,
+  "score_scale": "0/1/2 with decimals; 2表示视觉上清楚可用，低于2表示仍有可见缺陷",
+  "source_query": "query_f05.jpg",
+  "training_supervision": {
+    "type": "10-frame real-RGB synthetic-hole proxy",
+    "steps": 64,
+    "is_real_R001_DELETE_ground_truth": false,
+    "boundary": "训练监督来自真实RGB合成孔，但权重随后实际用于真实R001 DELETE的f05输入；输出中灰膜和黑影的减少是目标任务上的迁移改善证据。它仍不能证明被删区域的隐藏背景正确，也不能据此判定整段视频通过。"
+  },
+  "before_finetune": {
+    "checkpoint": "official baseline",
+    "R001_official": {
+      "native": {
+        "ai_score": 0.2,
+        "pass": false,
+        "film_or_ghost": "severe",
+        "black_shadow": "severe",
+        "B_damage": "B所在远车区域可见，但与大块半透明车体/拖影邻接，局部关系被污染，不能作为清楚删除结果。",
+        "reason": "原银色SUV位置仍有大块半透明灰车体和下方黑影，删除失败非常明显。"
+      },
+      "compose": {
+        "ai_score": 0.7,
+        "pass": false,
+        "film_or_ghost": "large ghost mostly removed by hard writeback",
+        "black_shadow": "obvious dark island remains",
+        "B_damage": "未见B被整车擦除，但洞内黑影破坏其前方道路关系。",
+        "reason": "硬写回去掉了大部分灰色车影，但原车下方留下清楚的黑色孤岛，路面补全不成立。"
+      }
+    },
+    "R001_r47": {
+      "native": {
+        "ai_score": 0.6,
+        "pass": false,
+        "film_or_ghost": "less than official native",
+        "black_shadow": "severe twin-lobed dark patch",
+        "B_damage": "B大体保留，未见明显移位；主要失败是其前方的大块黑洞状阴影。",
+        "reason": "半透明车体较official native少，但原车脚下仍有宽而深的双瓣黑影，薄膜/黑影目标未解决。"
+      },
+      "compose": {
+        "ai_score": 0.8,
+        "pass": false,
+        "film_or_ghost": "not dominant",
+        "black_shadow": "obvious",
+        "B_damage": "B未见新增结构损伤。",
+        "reason": "洞外恢复后仍留明显黑色残影，且局部路面与横向标线不自然。"
+      }
+    }
+  },
+  "after_realRGB_0064": {
+    "checkpoint": "main_0064.safetensors",
+    "R001_official": {
+      "native": {
+        "ai_score": 1.6,
+        "pass": false,
+        "film_or_ghost": "major ghost removed",
+        "black_shadow": "small black nub remains",
+        "B_damage": "B保持在远处左侧预期区域，尺度与邻车关系未见新的明显损伤。",
+        "reason": "大块半透明车体和宽黑影已消失，容量改善显著；但原车右下附近仍有小黑残块，横向标线/路面有轻微弯折和过度平滑。"
+      },
+      "compose": {
+        "ai_score": 1.7,
+        "pass": false,
+        "film_or_ghost": "major ghost removed",
+        "black_shadow": "small localized residual remains",
+        "B_damage": "B未见新增擦除、错位或部件断裂。",
+        "reason": "写回后整体自然度较基线大幅提升，仍能看到小黑点/短黑痕及轻微线条不连续，尚未达到清洁删除。"
+      }
+    },
+    "R001_r47": {
+      "native": {
+        "ai_score": 1.6,
+        "pass": false,
+        "film_or_ghost": "major ghost removed",
+        "black_shadow": "small black nub remains",
+        "B_damage": "B与远车列保持，未见r47分支带来额外明显损伤。",
+        "reason": "与official微调输出几乎相同：主要薄膜/黑影已压掉，但小黑残块、局部标线弯折仍可见。"
+      },
+      "compose": {
+        "ai_score": 1.7,
+        "pass": false,
+        "film_or_ghost": "major ghost removed",
+        "black_shadow": "small localized residual remains",
+        "B_damage": "未见B新增损伤。",
+        "reason": "写回结果比微调前明显干净，但仍不是无黑影、无接缝的最终删除结果。"
+      }
+    }
+  },
+  "comparative_finding": {
+    "film_and_black_shadow_improvement": "clear_and_large",
+    "best_f05_score": 1.7,
+    "official_vs_r47_after_finetune": "视觉差异很小，f05没有证据表明r47几何分支带来额外收益或损伤。",
+    "capacity_diagnosis": "64步realRGB proxy训练不仅显示了合成孔容量；在真实R001 DELETE的f05推理上也观察到主要灰膜和宽黑影被压制，说明改善迁移到了目标输入，但尚未消除小黑残块和局部线条变形。",
+    "does_not_establish": "不建立真实R001 DELETE隐藏背景正确性，也不构成真实删除GT。"
+  },
+  "human_verdict": null
+}

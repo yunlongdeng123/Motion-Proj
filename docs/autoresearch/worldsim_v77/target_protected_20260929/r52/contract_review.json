@@ -1,0 +1,16 @@
+{
+  "scope": "R001 单候选伪标签静态10帧容量训练与评估合同",
+  "status": "pass_for_bounded_first_gate",
+  "selection": {
+    "candidate_id": "R001_f04_imagegen",
+    "source_frame_index": 4,
+    "score": 1.5,
+    "eligible_pool_reported": 11,
+    "selected_count_reported": 1,
+    "evidence": "prepare_scored_pairs.py 显式核对选择ID及源帧；train_scored.py 再核对 selection_review 的ID/源帧与 selected/manifest。只有所选pair被复制为10张静态帧，完整候选评分与QA保留。"
+  },
+  "training": "64步均读取唯一f04 pair；沿用train_one原生主U-Net范围、AdamW8bit、种子、损失及32/64步快照；config保存完整候选清单与逐步候选映射。",
+  "evaluation": "320x576 的所选capacity pair可作同尺度官方/64步对照；--static-source-frame 4 在576x1024重复f04原RGB、编辑mask、alpha及f04几何条件，新跑官方和固定r47，属于全尺寸转移检查。",
+  "verification": "本地只读代码复核；主代理报告 best1_cpu_check --prepare 通过，candidate_pool=11、selected=1、pair仅f04。此次复核未运行GPU。",
+  "limits": "f04 Y是已审核生成伪标签，不是真实隐藏背景GT；静态重复窗不构成真实10帧视频监督或视频通过证据。"
+}
