@@ -1,405 +1,682 @@
 {
+  "reviewer": {
+    "requested_model": "gpt-6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": "independent gpt-6-sol xhigh, no fast; actual RGB f00/f05/f09 and available B reference; not mask or output review",
   "cases": {
     "R001": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
+      "case_id": "R001",
+      "scene": "scene-0290",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色SUV后侧完整、尺寸和对比度足够，三帧可单独定位。",
+      "frame_observations": {
+        "f00": "左前方银色SUV全车可见",
+        "f05": "同一SUV后侧及车轮清楚",
+        "f09": "位置平移后仍为同一SUV"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考仅有被目标车遮住的一小段黑车，难检查完整车身。"
     },
     "R002": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
+      "case_id": "R002",
+      "scene": "scene-0290",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色SUV后视轮廓完整，车身足够大且三帧一致。",
+      "frame_observations": {
+        "f00": "右车道白色SUV后视清楚",
+        "f05": "仍为同一白色SUV",
+        "f09": "缩小后车尾仍可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考；画面无合格后车也不影响目标评分。"
     },
     "R003": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
+      "case_id": "R003",
+      "scene": "scene-0703",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "右侧深灰轿车前斜面完整，车灯、车顶和前轮可辨。",
+      "frame_observations": {
+        "f00": "右侧轿车可单独辨认",
+        "f05": "前斜视更清楚",
+        "f09": "同一车及外轮廓仍清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考白色厢式车侧后部完整，能辨认独立车辆。"
     },
     "R004": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R005": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R006": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
+      "case_id": "R004",
+      "scene": "scene-0703",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "中央深灰MPV正面完整，格栅、灯和车顶均清楚。",
+      "frame_observations": {
+        "f00": "正面完整",
+        "f05": "车身略变小但仍清晰",
+        "f09": "同一MPV正面完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只截到暗色车的局部车窗和车头，缺少完整轮廓。"
     },
     "R007": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
+      "case_id": "R007",
+      "scene": "scene-0246",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "路边灰色SUV侧面完整且大，三帧车顶、车轮轮廓一致。",
+      "frame_observations": {
+        "f00": "灰色SUV完整侧视",
+        "f05": "侧视清楚",
+        "f09": "同一车完整保留"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考白色SUV完整侧视，曝光与大小足够。"
     },
     "R008": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
+      "case_id": "R008",
+      "scene": "scene-0246",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰SUV侧面完整，虽偏暗仍可看清车窗、车轮和尾部。",
+      "frame_observations": {
+        "f00": "路边SUV全车可见",
+        "f05": "侧视仍完整",
+        "f09": "同一车位置和外形一致"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考深色轿车侧面基本完整，能独立辨认。"
     },
     "R009": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R010": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R011": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R012": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R013": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R014": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R015": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R016": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R017": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R018": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R019": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R020": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R021": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": false,
-      "note": "f05原目标被树枝/树干穿过，车身证据不完整；关联GT可见度不是本相机无遮挡证明。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R022": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": false,
-      "note": "f05远处目标位于阴影、过暗，缺少可靠车身结构细节。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R023": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R024": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R025": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": false,
-      "note": "f05强逆光，目标车身低对比，当前不作清楚输入的结构研究。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R026": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": false,
-      "note": "f05目标在阴影且远，细节不足；不把后续模糊算确定的模型结构失败。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R027": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R028": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R029": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R030": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R031": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R032": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": false,
-      "note": "f05目标车被树干与路旁隔离物遮挡，实例边界及车身结构不完整。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R033": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R034": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R035": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R036": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": false,
-      "note": "f05目标主要被树干/路旁物体遮住，只能辨部分车身，先排除。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R037": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R038": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
-    },
-    "R039": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R040": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
-    },
-    "R041": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R042": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
-    },
-    "R043": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked",
-      "human_verdict": null
+      "case_id": "R009",
+      "scene": "scene-0252",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车前斜视足以辨认整车，未见严重截断。",
+      "frame_observations": {
+        "f00": "左侧黑轿车完整",
+        "f05": "车头和侧面仍明确",
+        "f09": "同一车保持可见"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考框里混入相邻车辆，只能局部确认候选保护车。"
     },
     "R044": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
+      "case_id": "R044",
+      "scene": "scene-0252",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色皮卡正面大而清楚，三帧格栅、车灯及外轮廓完整。",
+      "frame_observations": {
+        "f00": "皮卡正面完整",
+        "f05": "同车位置稳定可见",
+        "f09": "前脸和车顶仍清晰"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
     },
-    "R045": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
+    "R013": {
+      "case_id": "R013",
+      "scene": "scene-0239",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色轿车后视大且完整，三帧车尾和车顶均清楚。",
+      "frame_observations": {
+        "f00": "银色轿车尾部明确",
+        "f05": "后视轮廓完整",
+        "f09": "同车尾部仍清楚"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "黑色保护车与银车紧邻，只见局部车身，参考不足以查完整轮廓。"
     },
-    "R046": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
+    "R014": {
+      "case_id": "R014",
+      "scene": "scene-0239",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车前侧轮廓大而清楚，三帧均无遮挡。",
+      "frame_observations": {
+        "f00": "白轿车全车侧前视",
+        "f05": "同车尺寸足够",
+        "f09": "轮廓与车轮继续完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考；此场景不要求后车存在。"
     },
-    "R047": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
+    "R023": {
+      "case_id": "R023",
+      "scene": "scene-0236",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车从远到近始终可唯一指认，车顶、车头与轮廓清楚。",
+      "frame_observations": {
+        "f00": "白轿车前斜视可见",
+        "f05": "尺寸增大，车头完整",
+        "f09": "近处全车更清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考白色Jeep前侧轮廓清晰且与目标分开。"
     },
-    "R048": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified",
-      "human_verdict": null
+    "R024": {
+      "case_id": "R024",
+      "scene": "scene-0236",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色SUV后视逐渐放大，车身、车轮和车顶可辨。",
+      "frame_observations": {
+        "f00": "黑SUV后视较小但完整",
+        "f05": "同车后部清楚",
+        "f09": "尺寸增大，侧后轮廓完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只见暗色车的车窗及上半车身，完整性不足。"
     },
-    "R049": {
-      "frame": 5,
-      "source": "main_agent_direct_image_review",
-      "structural_audit_eligible": true,
-      "note": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background",
-      "human_verdict": null
+    "R027": {
+      "case_id": "R027",
+      "scene": "scene-0234",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车前斜面大且完整，三帧车灯、车顶及侧边一致。",
+      "frame_observations": {
+        "f00": "白轿车车头和侧面完整",
+        "f05": "车身维持较大",
+        "f09": "同车清楚无遮挡"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考深色车较小且只有前半部，保护车外轮廓不完整。"
+    },
+    "R028": {
+      "case_id": "R028",
+      "scene": "scene-0234",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰MPV正面完整且大小足够，逆光但前脸轮廓仍清楚。",
+      "frame_observations": {
+        "f00": "MPV正面可见",
+        "f05": "车头和车顶完整",
+        "f09": "同车正面无遮挡"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考只截到与目标相似的深灰车前窗和机盖，不能确认独立保护车。"
+    },
+    "R029": {
+      "case_id": "R029",
+      "scene": "scene-0238",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车后斜视完整，三帧车尾和车轮清晰可追认。",
+      "frame_observations": {
+        "f00": "黑轿车后侧完整",
+        "f05": "同车后侧明显",
+        "f09": "车尾更近仍完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考混入邻近银色SUV和黑车局部，单辆保护车边界不清。"
+    },
+    "R030": {
+      "case_id": "R030",
+      "scene": "scene-0238",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "灰色MPV正面居中，车灯和格栅完整且三帧一致。",
+      "frame_observations": {
+        "f00": "灰MPV正面完整",
+        "f05": "同车维持可见",
+        "f09": "车头轮廓仍清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考灰色SUV后视可单独识别，大小基本足够。"
+    },
+    "R037": {
+      "case_id": "R037",
+      "scene": "scene-0259",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车虽处阴影，前斜视大而完整，三帧外轮廓可辨。",
+      "frame_observations": {
+        "f00": "黑轿车全车前斜视",
+        "f05": "同车车顶与车头清楚",
+        "f09": "前侧仍无遮挡"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考灰色轿车侧面完整且可单独识别。"
+    },
+    "R038": {
+      "case_id": "R038",
+      "scene": "scene-0259",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "红色轿车后视逐渐放大，车顶、尾部和车轮均可辨。",
+      "frame_observations": {
+        "f00": "红车后视稍小但完整",
+        "f05": "同车后部清楚",
+        "f09": "更近时外轮廓完整"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考看起来是红色目标车自身后部，无法核实独立保护车。"
+    },
+    "R050": {
+      "case_id": "R050",
+      "scene": "scene-0705",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰MPV正面大且完整，车灯、格栅、车顶三帧均清楚。",
+      "frame_observations": {
+        "f00": "正面MPV全车可见",
+        "f05": "同车轮廓清楚",
+        "f09": "位置一致且无遮挡"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考左侧银红双色MPV的车头和侧面完整，与深灰目标分开。"
+    },
+    "R051": {
+      "case_id": "R051",
+      "scene": "scene-0705",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银红双色MPV前斜视完整，侧门、前脸和车轮足够清楚。",
+      "frame_observations": {
+        "f00": "左侧双色MPV全车可见",
+        "f05": "同车前斜视完整",
+        "f09": "车身尺寸和位置一致"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考；单独目标质量足以评分。"
+    },
+    "R052": {
+      "case_id": "R052",
+      "scene": "scene-0710",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "蓝白厢式车侧面大而清楚，车身及车轮三帧完整。",
+      "frame_observations": {
+        "f00": "蓝白厢车完整侧面",
+        "f05": "同车车门和车轮清楚",
+        "f09": "车厢及前脸仍完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R053": {
+      "case_id": "R053",
+      "scene": "scene-0710",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "路边深灰SUV侧视完整，车顶、车窗和两轮边界清楚。",
+      "frame_observations": {
+        "f00": "深灰SUV全车侧视",
+        "f05": "同车位置不变",
+        "f09": "前后轮及尾部仍完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R054": {
+      "case_id": "R054",
+      "scene": "scene-0262",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色SUV正面较大，虽在阴影里仍可辨车顶、灯、格栅和车身边界。",
+      "frame_observations": {
+        "f00": "黑SUV正面完整",
+        "f05": "车头结构和两侧轮廓可见",
+        "f09": "同车正面仍无遮挡"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考灰白车辆位于远处，只有小幅模糊的后侧，结构信息不足。"
+    },
+    "R055": {
+      "case_id": "R055",
+      "scene": "scene-0262",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色商用厢车侧面完整，图案、车门与前后车轮清楚且三帧一致。",
+      "frame_observations": {
+        "f00": "白厢车完整侧视",
+        "f05": "同车无遮挡",
+        "f09": "侧面大小足够"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R056": {
+      "case_id": "R056",
+      "scene": "scene-0697",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车后斜视完整，树干紧邻车头但未切断主体轮廓。",
+      "frame_observations": {
+        "f00": "黑轿车全车后斜视",
+        "f05": "同车轮廓仍完整",
+        "f09": "车头邻近树干但可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R057": {
+      "case_id": "R057",
+      "scene": "scene-0697",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰轿车后斜视主体完整，车灯、车顶和车轮可辨。",
+      "frame_observations": {
+        "f00": "中间灰车后侧完整",
+        "f05": "同车位置一致",
+        "f09": "邻车靠近但目标边界清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R058": {
+      "case_id": "R058",
+      "scene": "scene-0696",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车侧后轮廓足够大，树干位于车头外侧而未严重遮挡。",
+      "frame_observations": {
+        "f00": "左侧黑轿车完整",
+        "f05": "同车侧后视清楚",
+        "f09": "车轮、车顶与尾部仍可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R059": {
+      "case_id": "R059",
+      "scene": "scene-0696",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "中央灰色轿车后斜视完整，尾灯、车顶、车轮和车尾清楚。",
+      "frame_observations": {
+        "f00": "中央灰车后部可见",
+        "f05": "同车轮廓完整",
+        "f09": "位置一致且无遮挡"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R060": {
+      "case_id": "R060",
+      "scene": "scene-0297",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰SUV前斜视较大，路过行人未挡住目标，三帧结构清楚。",
+      "frame_observations": {
+        "f00": "SUV前侧完整",
+        "f05": "同车车顶与车轮清楚",
+        "f09": "行人位于右侧画面，车仍无遮挡"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只有远处小型车辆局部且被立柱切过，不能用于完整保护车结构检查。"
+    },
+    "R061": {
+      "case_id": "R061",
+      "scene": "scene-0297",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色SUV由远到近保持唯一，前脸和侧面渐清楚且无严重遮挡。",
+      "frame_observations": {
+        "f00": "白SUV前斜视可辨",
+        "f05": "同车尺寸增加",
+        "f09": "车身较大且完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R062": {
+      "case_id": "R062",
+      "scene": "scene-0241",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色商用厢车持续接近，车顶设备、车门与前脸完整清晰。",
+      "frame_observations": {
+        "f00": "白厢车正侧面可见",
+        "f05": "同车扩大且完整",
+        "f09": "近处前脸和侧面清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R063": {
+      "case_id": "R063",
+      "scene": "scene-0241",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "红色轿车前斜视三帧一致，虽逐渐变小仍可看清车顶和车身边界。",
+      "frame_observations": {
+        "f00": "红车前侧完整",
+        "f05": "同车稍远仍清楚",
+        "f09": "车身缩小但外轮廓完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R066": {
+      "case_id": "R066",
+      "scene": "scene-0533",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色轿车前斜视完整，灯柱只贴近前侧边缘，三帧主体清楚。",
+      "frame_observations": {
+        "f00": "深色轿车车头与侧面可见",
+        "f05": "同车车顶和车轮可辨",
+        "f09": "主体完整，灯柱位于侧边"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考白色车仅见前侧一部分，又被黑色灯柱切开，保护车轮廓不足。"
+    },
+    "R067": {
+      "case_id": "R067",
+      "scene": "scene-0533",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "蓝黑轿车侧视完整，车轮、车窗与前后端三帧清楚。",
+      "frame_observations": {
+        "f00": "蓝黑轿车全车侧面",
+        "f05": "同车无遮挡",
+        "f09": "位置一致且轮廓完整"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考黑色SUV侧前轮廓基本完整，独立于蓝黑目标。"
+    },
+    "R076": {
+      "case_id": "R076",
+      "scene": "scene-0291",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "红色轿车侧视完整，虽然首帧较远，车顶、车轮与前后端三帧均明确。",
+      "frame_observations": {
+        "f00": "红轿车全侧面",
+        "f05": "同车尺寸增加",
+        "f09": "末帧轮廓更清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R077": {
+      "case_id": "R077",
+      "scene": "scene-0291",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "灰色轿车侧面可独立识别，后两帧放大后车顶、车轮和车身端部清楚。",
+      "frame_observations": {
+        "f00": "灰轿车侧视可辨",
+        "f05": "同车尺寸增大",
+        "f09": "末帧外轮廓完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R080": {
+      "case_id": "R080",
+      "scene": "scene-0714",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色轿车完整侧视，虽位于路口远侧，车顶、前后轮及车身端部三帧均可辨。",
+      "frame_observations": {
+        "f00": "左侧深色轿车全侧面",
+        "f05": "同车轮廓完整",
+        "f09": "车轮与前后端仍清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R081": {
+      "case_id": "R081",
+      "scene": "scene-0714",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "另一辆深色轿车侧视完整，在浅色路面前轮廓分离清楚，三帧均可唯一指认。",
+      "frame_observations": {
+        "f00": "右侧深色轿车全侧面",
+        "f05": "同车车窗和车轮可辨",
+        "f09": "前后端与路面边界清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R086": {
+      "case_id": "R086",
+      "scene": "scene-0244",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色轿车后视较大、曝光适中，尾灯、车顶和后保险杠三帧完整。",
+      "frame_observations": {
+        "f00": "银车后部清楚",
+        "f05": "同车车尾完整",
+        "f09": "车身稍近仍无遮挡"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R087": {
+      "case_id": "R087",
+      "scene": "scene-0244",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车后斜视可独立识别，车顶、竖向尾灯和车轮三帧完整。",
+      "frame_observations": {
+        "f00": "左侧黑车后部完整",
+        "f05": "同车车身仍清楚",
+        "f09": "车尾和侧面轮廓可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R041": {
+      "case_id": "R041",
+      "scene": "scene-0703",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "中央黑色SUV正面可辨，虽邻车靠近但目标车身仍能单独定位。",
+      "frame_observations": {
+        "f00": "黑SUV正面完整",
+        "f05": "同车格栅与车灯可辨",
+        "f09": "侧邻车靠近，目标仍明确"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    "R043": {
+      "case_id": "R043",
+      "scene": "scene-0246",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色SUV侧面完整、亮度适中，三帧车顶和四轮位置清楚。",
+      "frame_observations": {
+        "f00": "白SUV全车侧面",
+        "f05": "车身继续完整",
+        "f09": "同车无遮挡"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考深灰SUV侧后部完整，可辨认独立车辆。"
     }
   },
-  "scope": "one fixed f05 percase, original only; no model output, independent or human verdict",
-  "rejected_inputs": {
-    "R021": "f05原目标被树枝/树干穿过，车身证据不完整；关联GT可见度不是本相机无遮挡证明。",
-    "R022": "f05远处目标位于阴影、过暗，缺少可靠车身结构细节。",
-    "R025": "f05强逆光，目标车身低对比，当前不作清楚输入的结构研究。",
-    "R026": "f05目标在阴影且远，细节不足；不把后续模糊算确定的模型结构失败。",
-    "R032": "f05目标车被树干与路旁隔离物遮挡，实例边界及车身结构不完整。",
-    "R036": "f05目标主要被树干/路旁物体遮住，只能辨部分车身，先排除。"
-  }
+  "candidate_count": 87,
+  "rejected": [
+    "R005",
+    "R006",
+    "R010",
+    "R011",
+    "R012",
+    "R015",
+    "R016",
+    "R017",
+    "R018",
+    "R019",
+    "R020",
+    "R021",
+    "R022",
+    "R025",
+    "R026",
+    "R031",
+    "R032",
+    "R033",
+    "R036",
+    "R040",
+    "R046",
+    "R047",
+    "R048",
+    "R049",
+    "R065",
+    "R069",
+    "R070",
+    "R071",
+    "R072",
+    "R073",
+    "R075",
+    "R079",
+    "R082",
+    "R083",
+    "R084",
+    "R085"
+  ],
+  "uncertain": [],
+  "human_verdict": null
 }

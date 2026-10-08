@@ -1,4 +1,4 @@
-"""仅核对当前实际输入、49段视频和GPU前置；不创建模型或自动等卡。"""
+"""核对20景独立2分输入和GPU前置；不创建模型或自动等卡。"""
 from common import *
 from collections import Counter
 import subprocess
@@ -36,6 +36,11 @@ def main():
     assert len(set(m['reserve_scenes']))==5 and set(m['reserve_scenes']).issubset(train)
     assert not set(m['reserve_scenes'])&set(read(O/'sampling.json')['prior_source_scenes'])
     assert len({(c['scene'],c['instance_token']) for c in cs})==len(cs)
+    assert all(c.get('input_quality_score')==2 and c.get('structural_audit_eligible') for c in cs)
+    independent=read(O/'input_quality_review.json')
+    approved={c['case_id'] for c in independent['cases'] if c['score']==2 and c['status']=='pass'}
+    assert {c['case_id'] for c in cs}.issubset(approved)
+    assert not {c['case_id'] for c in cs}&set(m.get('input_excluded_cases',[])+m.get('quality_uncertain_cases',[]))
     assert m['training_steps']==0 and not m['adapter'] and not m['temporal_module_change']
     ck=Path(m['model_checkpoint']);sk=Path(m['SAM_checkpoint']);assert ck.is_file() and sk.is_file()
     gaps=[];videos=[];keyframes=0
@@ -64,6 +69,8 @@ def main():
     result={'task_id':TASK,'run_id':'r50','CPU_ready':True,'scene_count':20,'case_count':len(cs),
         'scene_targets':dict(counts),'reserve_scene_count':5,'scene_disjoint':True,
         'actual_RGB_decoded':10*len(cs),'original_videos_decoded':videos,'SDK_keyframes_direct':keyframes,
+        'independent_quality_score2_only':True,'eligible_cases':len(cs),'eligible_scenes':20,
+        'input_candidate_count':m['input_candidate_count'],
         'actual_exposure_gap_min_median_max_s':[min(gaps),float(np.median(gaps)),max(gaps)],
         'official_checkpoint_exists':True,'SAM_checkpoint_exists':True,'GPU_jobs':0,'training_steps':0,
         'mask_identity_review':'after SAM2 before DELETE, not approved by GT overlap',

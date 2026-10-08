@@ -10,6 +10,8 @@ def require_gpu():
     import torch
     if not torch.cuda.is_available():raise RuntimeError('当前无GPU；不在CPU加载模型，不后台等卡')
     if not read(O/'cpu_check.json')['CPU_ready']:raise RuntimeError('CPU输入尚未就绪')
+    m=read(O/'manifest.json')
+    assert all(c.get('input_quality_score')==2 and c.get('structural_audit_eligible') for c in m['cases']), '只允许独立2分输入运行GPU'
     torch.set_num_threads(1);cv2.setNumThreads(1)
     return torch
 

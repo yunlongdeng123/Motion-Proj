@@ -8,6 +8,33 @@ from PIL import Image, ImageDraw
 LABELS = {'film_or_ghost':'薄膜 / 多余轮廓','protected_actor_deformation':'后车变形',
           'car_body_extends_onto_road':'车身向道路延伸','actor_regeneration':'重新生车',
           'mask_failure':'mask身份 / 覆盖问题','none_visible':'该帧未见明显结构问题','uncertain':'不能确定'}
+REFERENCE_QUALITY={'sufficient':'当前可见车身证据足够','weak':'当前可见车身证据薄弱',
+                   'absent':'无达到门槛的后车候选','uncertain':'参考归属或信息无法确定'}
+
+
+def quality_archive(root):
+    """退队列保留证据；不把评分1的输入伪装成补景模型失败。"""
+    path=O/'quality_archive.json'
+    if not path.exists():return
+    record=read(path);cards=[]
+    for c in record['cases']:
+        r=c['input_quality_review'];cid=c['case_id']
+        score='不能确定' if r['score'] is None else str(r['score'])
+        role={'rejected':'0/1分：已剔除','uncertain':'不准入，仅此类可交人工确认',
+              'qualified_standby':'2分备用：所属场景未凑齐或超过本轮配额'}[c['quality_queue_role']]
+        cards.append(f'<article id="{cid}"><h2>{cid} · {c["scene"]} · 输入{score}分</h2>'
+            f'<p>{role}。{html.escape(r["concise_reason"])}</p>'
+            f'<p>保护车参考：{REFERENCE_QUALITY[r["protected_reference_quality"]]}；{html.escape(r["protected_reference_reason"])}</p>'
+            f'<p><a href="{cid}/original.mp4">真实原视频</a></p>'
+            f'<img loading="lazy" src="{cid}/inputs_f00_f05_f09.jpg"></article>')
+    body='<!doctype html><html lang="zh"><meta charset="utf-8"><title>r50 输入质检退队列记录</title>'
+    body+='<style>body{font:16px/1.6 system-ui;background:#101722;color:#e6edf7;max-width:1536px;margin:24px auto;padding:18px}a{color:#75c4ff}article{margin:20px 0;padding:16px;background:#192332}img{width:100%}</style>'
+    body+=f'<h1>r50 输入质检归档</h1><p><a href="index.html">返回20景合格队列</a>。0/1分输入不运行GPU。保留原始图片和独立理由，不产生人工verdict。</p>'
+    body+=''.join(cards)+'</html>'
+    (root/'input_quality_archive.html').write_text(body,encoding='utf-8')
+    dump(root/'quality_archive.json', {'policy':record['policy'],'rejected':record['rejected'],
+        'uncertain':record['uncertain'],'cases':[{k:c[k] for k in
+            ['case_id','scene','camera','instance_token','quality_queue_role','input_quality_review']} for c in record['cases']]})
 
 
 def encode(source, output, ext='png'):
@@ -97,29 +124,36 @@ def main():
         if ref:
             reftext=f"本窗口 B 最少 A 框重叠的参考：f{ref['frame']:02}，框重叠 {ref['target_bbox_overlap_fraction']:.1%}。这是几何近似，RGB 是否清楚须看图。"
         known=c.get('input_visual_review','pending');gpu=Path(c['folder'])/'result.json'
+        qr=c.get('input_quality_review')
+        quality_text=(f'独立 subagent 输入质检：{qr["score"]}分。{known}' if qr else f'输入质检：{known}')
+        protected_text=(f'保护车参考：{REFERENCE_QUALITY[qr["protected_reference_quality"]]}；{qr["protected_reference_reason"]}' if qr else reftext)
         tags=' / '.join(c['difficulty_factors']) or '未触发当前尺寸、可见度、亮度代理疑点'
         options=''.join(f'<option value="{k}">{v}</option>' for k,v in LABELS.items())
         note=html.escape(a.get('note','生成尚未运行；不填写模型失败标签。' if not gpu.exists() else '待单帧结构粗分类。'))
+        disabled='' if gpu.exists() else ' disabled'
         image_links=f'<a href="{cid}/inputs_f00_f05_f09.jpg">f00 / f05 / f09 输入与目标 crop</a>'
         if (root/cid/'structure_review.jpg').exists():image_links+=f' · <a href="{cid}/structure_review.jpg">原图 / 原生 / 写回结构对照</a>'
         if ref:image_links+=f' · <a href="{cid}/protected_reference.jpg">真实 B 参考</a>'
         cards.append(f'''<article id="{cid}" data-scene="{c['scene']}"><h2>{cid} · {c['scene']} · {c['camera']}</h2>
 <p>本次只删除 <code>{c['instance_token']}</code>；同场景其他目标在独立副本运行。尺寸中位数 {c['median_width']:.0f}×{c['median_height']:.0f}px；输入难度代理：{c['input_difficulty']}。</p>
-<p>{html.escape(tags)}；输入人工/助手图像检查：{html.escape(known)}。</p>
+<p>{html.escape(tags)}；{html.escape(quality_text)}。</p><p>{html.escape(protected_text)}。参考充分只指可见车身，不是隐藏区域GT。</p>
 <p>本轮结构排查：{'输入限制，暂不进GPU队列' if c.get('structural_audit_eligible') is False else '输入目标可辨；SAM身份尚待GPU检查'}。用户分数留空，不能把输入限制当模型失败。</p>
 <div class="columns">{''.join(columns)}</div><button onclick="playCase(this)">四列同步播放</button>
 <details><summary>查看实际目标及参考证据</summary><p>{reftext} 参考 crop 只用于本页排查；r46 模型输入仍是遮后视频，不新增外部 RGB 分支。</p><p>{image_links}</p><img loading="lazy" src="{cid}/inputs_f00_f05_f09.jpg"></details>
-<p>助手单帧结构观察：{note}</p><label>用户分数 <select class="human"><option value="">未评</option><option>0</option><option>1</option><option>2</option></select></label>
-<label>现象 <select class="family"><option value="">未评</option>{options}</select></label><input class="note" placeholder="人工备注；时序需观看视频" /></article>''')
+<p>助手单帧结构观察：{note}</p><label>生成结果用户分数 <select class="human"{disabled}><option value="">未评</option><option>0</option><option>1</option><option>2</option></select></label>
+<label>生成现象 <select class="family"{disabled}><option value="">未评</option>{options}</select></label><input class="note"{disabled} placeholder="GPU后可填生成结果备注；时序需看视频" /></article>''')
     generated=sum((Path(c['folder'])/'result.json').exists() for c in m['cases'])
     masked=sum((Path(c['folder'])/'mask_result.json').exists() for c in m['cases'])
     body='''<!doctype html><html lang="zh"><meta charset="utf-8"><title>v77 r50 · 真实 DELETE 结构开发排查</title>
 <style>body{background:#101722;color:#e6edf7;font:16px/1.6 system-ui;margin:24px auto;max-width:1750px;padding:0 18px}a{color:#75c4ff}article{background:#192332;border:1px solid #34445b;border-radius:12px;padding:16px;margin:20px 0}h1{font-size:26px}h2{font-size:20px}.columns{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}video,img{width:100%;height:auto}video{margin-top:8px;min-height:100px}.pending{padding:30px;color:#a3b4cc;background:#0c121c}input,select,button{background:#0e1725;color:#e6edf7;border:1px solid #58718b;padding:6px;margin:8px}.note{width:50%}svg{max-width:100%;height:auto}code{font-size:13px;overflow-wrap:anywhere}@media(max-width:1100px){.columns{grid-template-columns:repeat(2,1fr)}}.legend{color:#afc1d9}</style>
 <h1>r50：先扩大真实 DELETE 排查，再造匹配结构失败的数据</h1>'''
     quota=m.get('eligible_cases',m['case_count'])
-    body+=f'<p>20 个 nuScenes train 开发场景 / {m["case_count"]} 个独立单车目标。准入队列 SAM {masked}/{quota}；DELETE {generated}/{quota}；训练0步。官方原始权重 + r21 完整 SAM；seed42，25步，10帧，1024×576。同场景每次恢复原视频再删另一目标。</p>'
-    if 'eligible_cases' in m:
-        body+=f'<p>原图单帧检查后，{m["eligible_cases"]}例 / {m["eligible_scenes"]}景进入本轮候选队列；6例输入受限保留原图及理由，暂不推理、不计模型失败。20景49例是采样数，不能冒充全部合格。</p>'
+    body+=f'<p><strong>{m["scene_count"]} 个合格 nuScenes train 开发场景 / {m["case_count"]} 个独立单车目标，每景2–3辆。</strong>准入队列 SAM {masked}/{quota}；DELETE {generated}/{quota}；训练0步。官方原始权重 + r21 完整 SAM；seed42，25步，10帧，1024×576。同场景每次恢复原视频再删另一目标。</p>'
+    if 'input_quality_scope' in m:
+        rejected=len(m['input_excluded_cases']);uncertain=m['quality_uncertain_cases']
+        body+=f'<p>独立subagent（请求配置gpt-6-sol / xhigh，未启用fast）检查 {m["input_candidate_count"]} 例真实输入的 f00／f05／f09 和可用后车参考；本页仅保留2分，0/1分{rejected}例已剔除。输入2分不等于SAM正确或生成合格。<a href="input_quality_archive.html">剔除理由与原图归档</a> · <a href="input_quality_review.json">完整独立质检</a>。</p>'
+        body+=('<p>本轮没有待人工确认的删除目标；后车参考不足或归属不确定已单独标记。生成后的人工打分仍留空。</p>' if not uncertain else
+            '<p>以下输入确实无法判断，暂不准入；仅需时可人工确认：'+ ' · '.join(f'<a href="input_quality_archive.html#{cid}">{cid}</a>' for cid in uncertain)+'</p>')
     body+='''<p>当前只定位单帧结构：薄膜、多余车身轮廓、后车变形、车身延伸到道路。现有视频模型仍需10帧输入，本轮不改时间层。真实隐藏区没有 GT；原图或 B 证据模糊的案例单列，不能混成确定的结构失败。</p>
 <svg viewBox="0 0 1280 150" role="img" aria-label="真实 RGB，经固定 SAM、官方 DriveEditor、原生与写回对照，先定位结构失败，后用真实 Y 造遮挡再测试空间层">
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#9dcaff"/></marker></defs>
@@ -129,7 +163,12 @@ def main():
 <p class="legend">黄框：删除目标 A；绿框：投影后方候选 B，框交叠是代理，不是精确遮挡标签。蓝色区域（GPU后）：模型洞；黄色轮廓：完整 SAM。真实 B crop 未经生成或锐化；不声称隐藏部分真值。</p>
 <p>缓存来源集合受旧数据准备影响，本次不是700场景均匀总体评测；这20景只作开发/后续训练。另留5景本轮不看 RGB、不训练；原模型预训练是否见过它们尚未核实。</p>
 <p><a href="manifest.json">统一配置与目标明细</a> · <a href="sampling.json">采样与隔离场景记录</a> · <a href="cpu_check.json">CPU 交付核验</a></p>
-<button onclick="exportScores()">导出人工评分 CSV</button><p>用户评分默认空；助手单帧观察不代替用户判分或视频时序判断。</p>'''
+<p>用户生成评分默认空；助手输入质检不代替生成验收或视频时序判断。尚未生成时评分工具禁用，无需你重审输入。</p>'''
+    if generated:body+='<button onclick="exportScores()">导出生成结果人工评分 CSV</button>'
+    groups={}
+    for c in m['cases']:groups.setdefault(c['scene'],[]).append(c['case_id'])
+    body+='<details open><summary>20景准入目标导航</summary>'+''.join(
+        f'<p>{scene}：'+ ' · '.join(f'<a href="#{cid}">{cid}</a>' for cid in ids)+'</p>' for scene,ids in groups.items())+'</details>'
     body+=''.join(cards)
     body+='''<script>
 const key='v77-r50-real-structure-review';let saved=JSON.parse(localStorage.getItem(key)||'{}');
@@ -138,7 +177,8 @@ function playCase(button){let videos=button.closest('article').querySelectorAll(
 function exportScores(){const q=x=>'"'+String(x).replaceAll('"','""')+'"';let lines=['case_id,scene,human_score,failure_family,note'];for(const c of document.querySelectorAll('article')){let v=saved[c.id]||{};lines.push([c.id,c.dataset.scene,v.human||'',v.family||'',v.note||''].map(q).join(','))}let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\\ufeff'+lines.join('\\n')],{type:'text/csv;charset=utf-8'}));a.download='v77_r50_structure_review.csv';a.click();URL.revokeObjectURL(a.href)}
 </script></html>'''
     (root/'index.html').write_text(body,encoding='utf-8')
-    for name in ['manifest.json','sampling.json']:
+    quality_archive(root)
+    for name in ['manifest.json','sampling.json','input_quality_review.json']:
         dump(root/name,read(O/name))
     print('REVIEW',len(cards),generated,flush=True)
 

@@ -1,0 +1,1404 @@
+{
+  "reviewer": {
+    "requested_model": "gpt-6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": {
+    "run_id": "r50",
+    "input_kind": "real DELETE",
+    "reviewed_cases": 87,
+    "reviewed_frames": [
+      "f00",
+      "f05",
+      "f09"
+    ],
+    "basis": "original frames plus target crops; separate protected_reference.jpg where present",
+    "judgement": "input suitability for single-frame thin-film structure audit only"
+  },
+  "summary": {
+    "scores": {
+      "0": 2,
+      "1": 34,
+      "2": 51
+    },
+    "uncertain": 0,
+    "protected_reference_quality": {
+      "weak": 20,
+      "absent": 44,
+      "sufficient": 14,
+      "uncertain": 9
+    },
+    "scene_score2_counts": {
+      "scene-0162": 0,
+      "scene-0222": 0,
+      "scene-0226": 1,
+      "scene-0227": 0,
+      "scene-0231": 0,
+      "scene-0234": 2,
+      "scene-0235": 1,
+      "scene-0236": 2,
+      "scene-0238": 2,
+      "scene-0239": 2,
+      "scene-0241": 2,
+      "scene-0243": 1,
+      "scene-0244": 2,
+      "scene-0245": 1,
+      "scene-0246": 3,
+      "scene-0252": 2,
+      "scene-0253": 1,
+      "scene-0259": 2,
+      "scene-0262": 2,
+      "scene-0283": 0,
+      "scene-0286": 0,
+      "scene-0290": 2,
+      "scene-0291": 2,
+      "scene-0292": 1,
+      "scene-0297": 2,
+      "scene-0533": 2,
+      "scene-0696": 2,
+      "scene-0697": 2,
+      "scene-0700": 0,
+      "scene-0703": 3,
+      "scene-0704": 1,
+      "scene-0705": 2,
+      "scene-0707": 0,
+      "scene-0709": 1,
+      "scene-0710": 2,
+      "scene-0714": 2,
+      "scene-0719": 1,
+      "scene-0730": 0
+    },
+    "scenes_with_at_least_two_score2": [
+      "scene-0234",
+      "scene-0236",
+      "scene-0238",
+      "scene-0239",
+      "scene-0241",
+      "scene-0244",
+      "scene-0246",
+      "scene-0252",
+      "scene-0259",
+      "scene-0262",
+      "scene-0290",
+      "scene-0291",
+      "scene-0297",
+      "scene-0533",
+      "scene-0696",
+      "scene-0697",
+      "scene-0703",
+      "scene-0705",
+      "scene-0710",
+      "scene-0714"
+    ],
+    "scene_count_with_at_least_two_score2": 20
+  },
+  "cases": [
+    {
+      "case_id": "R001",
+      "scene": "scene-0290",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色SUV后侧完整、尺寸和对比度足够，三帧可单独定位。",
+      "frame_observations": {
+        "f00": "左前方银色SUV全车可见",
+        "f05": "同一SUV后侧及车轮清楚",
+        "f09": "位置平移后仍为同一SUV"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考仅有被目标车遮住的一小段黑车，难检查完整车身。"
+    },
+    {
+      "case_id": "R002",
+      "scene": "scene-0290",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色SUV后视轮廓完整，车身足够大且三帧一致。",
+      "frame_observations": {
+        "f00": "右车道白色SUV后视清楚",
+        "f05": "仍为同一白色SUV",
+        "f09": "缩小后车尾仍可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考；画面无合格后车也不影响目标评分。"
+    },
+    {
+      "case_id": "R003",
+      "scene": "scene-0703",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "右侧深灰轿车前斜面完整，车灯、车顶和前轮可辨。",
+      "frame_observations": {
+        "f00": "右侧轿车可单独辨认",
+        "f05": "前斜视更清楚",
+        "f09": "同一车及外轮廓仍清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考白色厢式车侧后部完整，能辨认独立车辆。"
+    },
+    {
+      "case_id": "R004",
+      "scene": "scene-0703",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "中央深灰MPV正面完整，格栅、灯和车顶均清楚。",
+      "frame_observations": {
+        "f00": "正面完整",
+        "f05": "车身略变小但仍清晰",
+        "f09": "同一MPV正面完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只截到暗色车的局部车窗和车头，缺少完整轮廓。"
+    },
+    {
+      "case_id": "R005",
+      "scene": "scene-0253",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "目标深色SUV虽可辨认，但远处车身偏小且三帧细节发糊。",
+      "frame_observations": {
+        "f00": "左车道深色SUV较小",
+        "f05": "车头可辨但边缘软",
+        "f09": "尺寸未改善且暗部失细节"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考深灰轿车侧前轮廓大部分可见。"
+    },
+    {
+      "case_id": "R006",
+      "scene": "scene-0253",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "银色皮卡可辨，但正面尺寸偏小、低对比且格栅边界发糊。",
+      "frame_observations": {
+        "f00": "正面小目标",
+        "f05": "同车正面但细节软",
+        "f09": "仍可定位，细节不足"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考白色车只见前部，旁车遮住一侧，难查完整结构。"
+    },
+    {
+      "case_id": "R007",
+      "scene": "scene-0246",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "路边灰色SUV侧面完整且大，三帧车顶、车轮轮廓一致。",
+      "frame_observations": {
+        "f00": "灰色SUV完整侧视",
+        "f05": "侧视清楚",
+        "f09": "同一车完整保留"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考白色SUV完整侧视，曝光与大小足够。"
+    },
+    {
+      "case_id": "R008",
+      "scene": "scene-0246",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰SUV侧面完整，虽偏暗仍可看清车窗、车轮和尾部。",
+      "frame_observations": {
+        "f00": "路边SUV全车可见",
+        "f05": "侧视仍完整",
+        "f09": "同一车位置和外形一致"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考深色轿车侧面基本完整，能独立辨认。"
+    },
+    {
+      "case_id": "R009",
+      "scene": "scene-0252",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车前斜视足以辨认整车，未见严重截断。",
+      "frame_observations": {
+        "f00": "左侧黑轿车完整",
+        "f05": "车头和侧面仍明确",
+        "f09": "同一车保持可见"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考框里混入相邻车辆，只能局部确认候选保护车。"
+    },
+    {
+      "case_id": "R010",
+      "scene": "scene-0252",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "黑色越野车可辨，但目标在远处较小且暗部细节不足。",
+      "frame_observations": {
+        "f00": "远处黑越野车较小",
+        "f05": "前斜视可辨但发暗",
+        "f09": "尺寸仍小，结构边缘软"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考主要是黑色越野车与白色房车叠在一起，难确认独立保护车身份。"
+    },
+    {
+      "case_id": "R011",
+      "scene": "scene-0286",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "目标深色SUV背光且接近画面右缘，三帧暗部轮廓不够清楚。",
+      "frame_observations": {
+        "f00": "右侧SUV偏暗",
+        "f05": "车身部分靠画面边缘",
+        "f09": "仍可辨车型但阴影重"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "保护车仅为极小的暗色局部，轮廓不充分。"
+    },
+    {
+      "case_id": "R012",
+      "scene": "scene-0286",
+      "camera": "CAM_FRONT_RIGHT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "红色轿车远小，树干和栅栏穿过车身，难检查连贯轮廓。",
+      "frame_observations": {
+        "f00": "远处红车被树干切开",
+        "f05": "同车仍被遮挡",
+        "f09": "红车位置一致，遮挡未消除"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考深色SUV前部可辨，但与红车重叠且局部被遮挡。"
+    },
+    {
+      "case_id": "R013",
+      "scene": "scene-0239",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色轿车后视大且完整，三帧车尾和车顶均清楚。",
+      "frame_observations": {
+        "f00": "银色轿车尾部明确",
+        "f05": "后视轮廓完整",
+        "f09": "同车尾部仍清楚"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "黑色保护车与银车紧邻，只见局部车身，参考不足以查完整轮廓。"
+    },
+    {
+      "case_id": "R014",
+      "scene": "scene-0239",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车前侧轮廓大而清楚，三帧均无遮挡。",
+      "frame_observations": {
+        "f00": "白轿车全车侧前视",
+        "f05": "同车尺寸足够",
+        "f09": "轮廓与车轮继续完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考；此场景不要求后车存在。"
+    },
+    {
+      "case_id": "R015",
+      "scene": "scene-0707",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "白色轿车位于远处，主体仅占小块且有明显模糊。",
+      "frame_observations": {
+        "f00": "白轿车远小",
+        "f05": "同车但前部细节软",
+        "f09": "仍小且曝光偏亮"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考黑色SUV侧视大部分完整，可独立识别。"
+    },
+    {
+      "case_id": "R016",
+      "scene": "scene-0707",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色轿车正面可辨，但尺寸小、背光与模糊使车身细节不足。",
+      "frame_observations": {
+        "f00": "道路中央深车小",
+        "f05": "仍为同车正面",
+        "f09": "正面轮廓存在但发暗"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R017",
+      "scene": "scene-0226",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "黑色轿车在首尾帧被路牌和灯柱切过，关键前侧轮廓不连续。",
+      "frame_observations": {
+        "f00": "前部被白色路牌挡住",
+        "f05": "中帧侧面较完整",
+        "f09": "灯柱遮住车身中央"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只有灰车尾部与路牌，独立车身不完整。"
+    },
+    {
+      "case_id": "R018",
+      "scene": "scene-0226",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色SUV在树影里低对比，前后均有杆件与其他车相贴。",
+      "frame_observations": {
+        "f00": "SUV侧面暗且有前景杆",
+        "f05": "仍可辨同一SUV",
+        "f09": "侧面暗部和边界不够清楚"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考似与目标为同一深色SUV的局部侧面，不能确认独立保护车。"
+    },
+    {
+      "case_id": "R019",
+      "scene": "scene-0231",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "黑色皮卡较小且暗，车头细节和下缘较模糊。",
+      "frame_observations": {
+        "f00": "路边皮卡可定位",
+        "f05": "同车侧前部暗",
+        "f09": "侧面仍可辨但细节不足"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考灰色轿车侧前轮廓基本完整。"
+    },
+    {
+      "case_id": "R020",
+      "scene": "scene-0231",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "灰色轿车可辨，但偏暗、偏小，首帧还被行人局部遮挡。",
+      "frame_observations": {
+        "f00": "行人越过车头局部",
+        "f05": "灰车侧前部可见",
+        "f09": "行人移开，车仍偏小发糊"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R021",
+      "scene": "scene-0162",
+      "camera": "CAM_BACK_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "黑色SUV虽大，但树干枝叶横穿车身和车轮，结构轮廓破碎。",
+      "frame_observations": {
+        "f00": "多根树干遮住前部",
+        "f05": "车门与车顶仍被树枝挡住",
+        "f09": "遮挡持续"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考为同位置黑SUV车身局部且有树干，不能确认是另一辆保护车。"
+    },
+    {
+      "case_id": "R022",
+      "scene": "scene-0162",
+      "camera": "CAM_BACK_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "暗处小灰车可辨，但与邻车挤在一起且曝光和分辨率不足。",
+      "frame_observations": {
+        "f00": "左侧灰车小且暗",
+        "f05": "同车仍与深色邻车相连",
+        "f09": "车身分离边界不清"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "保护车参考是暗色车辆局部，与前景灰车相叠，细节不足。"
+    },
+    {
+      "case_id": "R023",
+      "scene": "scene-0236",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车从远到近始终可唯一指认，车顶、车头与轮廓清楚。",
+      "frame_observations": {
+        "f00": "白轿车前斜视可见",
+        "f05": "尺寸增大，车头完整",
+        "f09": "近处全车更清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考白色Jeep前侧轮廓清晰且与目标分开。"
+    },
+    {
+      "case_id": "R024",
+      "scene": "scene-0236",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色SUV后视逐渐放大，车身、车轮和车顶可辨。",
+      "frame_observations": {
+        "f00": "黑SUV后视较小但完整",
+        "f05": "同车后部清楚",
+        "f09": "尺寸增大，侧后轮廓完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只见暗色车的车窗及上半车身，完整性不足。"
+    },
+    {
+      "case_id": "R025",
+      "scene": "scene-0700",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "远处白轿车侧面小且背光发灰，薄膜边缘难以可靠观察。",
+      "frame_observations": {
+        "f00": "白轿车远小",
+        "f05": "侧面可辨但低对比",
+        "f09": "尺寸和清晰度仍不足"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考像同一白轿车侧面，无法确定存在独立保护车。"
+    },
+    {
+      "case_id": "R026",
+      "scene": "scene-0700",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "暗色SUV虽在后两帧可识别，但首帧被近处白色SUV大幅遮挡，完整轮廓不足。",
+      "frame_observations": {
+        "f00": "近处白SUV挡住暗色目标大半",
+        "f05": "暗色SUV后视露出",
+        "f09": "同一暗色SUV继续可见"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R027",
+      "scene": "scene-0234",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车前斜面大且完整，三帧车灯、车顶及侧边一致。",
+      "frame_observations": {
+        "f00": "白轿车车头和侧面完整",
+        "f05": "车身维持较大",
+        "f09": "同车清楚无遮挡"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考深色车较小且只有前半部，保护车外轮廓不完整。"
+    },
+    {
+      "case_id": "R028",
+      "scene": "scene-0234",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰MPV正面完整且大小足够，逆光但前脸轮廓仍清楚。",
+      "frame_observations": {
+        "f00": "MPV正面可见",
+        "f05": "车头和车顶完整",
+        "f09": "同车正面无遮挡"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考只截到与目标相似的深灰车前窗和机盖，不能确认独立保护车。"
+    },
+    {
+      "case_id": "R029",
+      "scene": "scene-0238",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车后斜视完整，三帧车尾和车轮清晰可追认。",
+      "frame_observations": {
+        "f00": "黑轿车后侧完整",
+        "f05": "同车后侧明显",
+        "f09": "车尾更近仍完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考混入邻近银色SUV和黑车局部，单辆保护车边界不清。"
+    },
+    {
+      "case_id": "R030",
+      "scene": "scene-0238",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "灰色MPV正面居中，车灯和格栅完整且三帧一致。",
+      "frame_observations": {
+        "f00": "灰MPV正面完整",
+        "f05": "同车维持可见",
+        "f09": "车头轮廓仍清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考灰色SUV后视可单独识别，大小基本足够。"
+    },
+    {
+      "case_id": "R031",
+      "scene": "scene-0730",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "灰色SUV后视较小且发糊，暗部轮廓不足以做细节结构排查。",
+      "frame_observations": {
+        "f00": "远处灰SUV小",
+        "f05": "同车车尾仍偏软",
+        "f09": "尺寸略增但细节不足"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考里灰SUV仅有局部后侧，且与另一辆灰车相贴。"
+    },
+    {
+      "case_id": "R032",
+      "scene": "scene-0730",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "银灰轿车被混凝土隔离栏和立柱遮住下半部及侧面，关键轮廓缺失。",
+      "frame_observations": {
+        "f00": "隔离栏切去车下半部",
+        "f05": "车身仍被栏杆挡住",
+        "f09": "立柱继续穿过侧面"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R033",
+      "scene": "scene-0245",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "中央深色SUV可从相邻停车中识别，但在三帧中都远小发糊，边界挤在邻车之间。",
+      "frame_observations": {
+        "f00": "中央深色SUV与邻车紧贴",
+        "f05": "同车可定位但边界偏软",
+        "f09": "目标仍小，细节不足"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考虽有一辆深色车侧前部，但与相邻车挤在一起，独立轮廓不充分。"
+    },
+    {
+      "case_id": "R034",
+      "scene": "scene-0245",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色轿车后视单独可辨，车顶、尾灯和车轮轮廓完整。",
+      "frame_observations": {
+        "f00": "左车道黑轿车尾部完整",
+        "f05": "同车车尾明显",
+        "f09": "距离变化后仍完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R035",
+      "scene": "scene-0235",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色小厢车前斜视较大，主要车身与车轮三帧均可见。",
+      "frame_observations": {
+        "f00": "白色厢车正侧面完整",
+        "f05": "近处皮卡掠过但目标仍清楚",
+        "f09": "目标轮廓仍完整"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考黑色SUV车头及大部分车身可辨，虽被白车局部遮住。"
+    },
+    {
+      "case_id": "R036",
+      "scene": "scene-0235",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "白色厢车可识别，但车身远小且被树干、立柱、行人多处切断。",
+      "frame_observations": {
+        "f00": "白色厢车侧面被树干遮挡",
+        "f05": "同车仍被立柱切开",
+        "f09": "遮挡持续且像素少"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R037",
+      "scene": "scene-0259",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车虽处阴影，前斜视大而完整，三帧外轮廓可辨。",
+      "frame_observations": {
+        "f00": "黑轿车全车前斜视",
+        "f05": "同车车顶与车头清楚",
+        "f09": "前侧仍无遮挡"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考灰色轿车侧面完整且可单独识别。"
+    },
+    {
+      "case_id": "R038",
+      "scene": "scene-0259",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "红色轿车后视逐渐放大，车顶、尾部和车轮均可辨。",
+      "frame_observations": {
+        "f00": "红车后视稍小但完整",
+        "f05": "同车后部清楚",
+        "f09": "更近时外轮廓完整"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考看起来是红色目标车自身后部，无法核实独立保护车。"
+    },
+    {
+      "case_id": "R039",
+      "scene": "scene-0709",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车侧面完整，尽管逆光仍能看清上下轮廓及车轮。",
+      "frame_observations": {
+        "f00": "白轿车侧面完整",
+        "f05": "同车侧视位置一致",
+        "f09": "尾部和车轮仍清楚"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考深色MPV全车侧面可辨，独立于白色目标。"
+    },
+    {
+      "case_id": "R040",
+      "scene": "scene-0709",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "白色轿车较远且逆光，车顶和前部可辨但细部边缘发糊。",
+      "frame_observations": {
+        "f00": "白车侧面较小",
+        "f05": "同车仍远且亮暗反差大",
+        "f09": "车身稍大，细节仍不足"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考主要为白轿车，与删除目标外观相同，难确认另有独立保护车。"
+    },
+    {
+      "case_id": "R041",
+      "scene": "scene-0703",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "中央黑色SUV正面可辨，虽邻车靠近但目标车身仍能单独定位。",
+      "frame_observations": {
+        "f00": "黑SUV正面完整",
+        "f05": "同车格栅与车灯可辨",
+        "f09": "侧邻车靠近，目标仍明确"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R042",
+      "scene": "scene-0253",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "右侧深色轿车前斜视三帧一致，接近时车身轮廓清楚。",
+      "frame_observations": {
+        "f00": "黑轿车前斜视较小",
+        "f05": "同车轮廓清楚",
+        "f09": "车身增大且无遮挡"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R043",
+      "scene": "scene-0246",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色SUV侧面完整、亮度适中，三帧车顶和四轮位置清楚。",
+      "frame_observations": {
+        "f00": "白SUV全车侧面",
+        "f05": "车身继续完整",
+        "f09": "同车无遮挡"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考深灰SUV侧后部完整，可辨认独立车辆。"
+    },
+    {
+      "case_id": "R044",
+      "scene": "scene-0252",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色皮卡正面大而清楚，三帧格栅、车灯及外轮廓完整。",
+      "frame_observations": {
+        "f00": "皮卡正面完整",
+        "f05": "同车位置稳定可见",
+        "f09": "前脸和车顶仍清晰"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R045",
+      "scene": "scene-0226",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰MPV正面大且无遮挡，车灯、格栅及车顶一致可辨。",
+      "frame_observations": {
+        "f00": "MPV正面完整",
+        "f05": "同车仍清楚",
+        "f09": "前景货车近旁掠过，目标未被遮住"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R046",
+      "scene": "scene-0236",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "银色轿车远小且整体偏软，三帧虽同车但细部结构不足。",
+      "frame_observations": {
+        "f00": "路边银轿车较小",
+        "f05": "同车侧面可辨",
+        "f09": "仍偏远，边缘模糊"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R047",
+      "scene": "scene-0238",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色SUV远近变化大，前两帧小且与邻车重叠，难以贯穿检查外形。",
+      "frame_observations": {
+        "f00": "小黑SUV夹在邻车间",
+        "f05": "车头侧面仍与旁车紧贴",
+        "f09": "末帧较大但首帧缺清晰边界"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R048",
+      "scene": "scene-0259",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "黑色轿车后视在首帧被近处车辆贴遮，后两帧虽可辨但初始轮廓不足。",
+      "frame_observations": {
+        "f00": "目标车尾与右侧近车相叠",
+        "f05": "同车后视较清楚",
+        "f09": "车尾清楚但首帧不完整"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考画面是黑车局部与另一黑车重叠，难确认独立保护车。"
+    },
+    {
+      "case_id": "R049",
+      "scene": "scene-0709",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色SUV在逆光阴影下偏暗，侧面可识别但车身细节欠缺。",
+      "frame_observations": {
+        "f00": "深色SUV侧面低对比",
+        "f05": "同车轮廓较暗",
+        "f09": "车身略大仍有背光失细节"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R050",
+      "scene": "scene-0705",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰MPV正面大且完整，车灯、格栅、车顶三帧均清楚。",
+      "frame_observations": {
+        "f00": "正面MPV全车可见",
+        "f05": "同车轮廓清楚",
+        "f09": "位置一致且无遮挡"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考左侧银红双色MPV的车头和侧面完整，与深灰目标分开。"
+    },
+    {
+      "case_id": "R051",
+      "scene": "scene-0705",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银红双色MPV前斜视完整，侧门、前脸和车轮足够清楚。",
+      "frame_observations": {
+        "f00": "左侧双色MPV全车可见",
+        "f05": "同车前斜视完整",
+        "f09": "车身尺寸和位置一致"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考；单独目标质量足以评分。"
+    },
+    {
+      "case_id": "R052",
+      "scene": "scene-0710",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "蓝白厢式车侧面大而清楚，车身及车轮三帧完整。",
+      "frame_observations": {
+        "f00": "蓝白厢车完整侧面",
+        "f05": "同车车门和车轮清楚",
+        "f09": "车厢及前脸仍完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R053",
+      "scene": "scene-0710",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "路边深灰SUV侧视完整，车顶、车窗和两轮边界清楚。",
+      "frame_observations": {
+        "f00": "深灰SUV全车侧视",
+        "f05": "同车位置不变",
+        "f09": "前后轮及尾部仍完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R054",
+      "scene": "scene-0262",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色SUV正面较大，虽在阴影里仍可辨车顶、灯、格栅和车身边界。",
+      "frame_observations": {
+        "f00": "黑SUV正面完整",
+        "f05": "车头结构和两侧轮廓可见",
+        "f09": "同车正面仍无遮挡"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考灰白车辆位于远处，只有小幅模糊的后侧，结构信息不足。"
+    },
+    {
+      "case_id": "R055",
+      "scene": "scene-0262",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色商用厢车侧面完整，图案、车门与前后车轮清楚且三帧一致。",
+      "frame_observations": {
+        "f00": "白厢车完整侧视",
+        "f05": "同车无遮挡",
+        "f09": "侧面大小足够"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R056",
+      "scene": "scene-0697",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车后斜视完整，树干紧邻车头但未切断主体轮廓。",
+      "frame_observations": {
+        "f00": "黑轿车全车后斜视",
+        "f05": "同车轮廓仍完整",
+        "f09": "车头邻近树干但可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R057",
+      "scene": "scene-0697",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰轿车后斜视主体完整，车灯、车顶和车轮可辨。",
+      "frame_observations": {
+        "f00": "中间灰车后侧完整",
+        "f05": "同车位置一致",
+        "f09": "邻车靠近但目标边界清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R058",
+      "scene": "scene-0696",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车侧后轮廓足够大，树干位于车头外侧而未严重遮挡。",
+      "frame_observations": {
+        "f00": "左侧黑轿车完整",
+        "f05": "同车侧后视清楚",
+        "f09": "车轮、车顶与尾部仍可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R059",
+      "scene": "scene-0696",
+      "camera": "CAM_BACK_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "中央灰色轿车后斜视完整，尾灯、车顶、车轮和车尾清楚。",
+      "frame_observations": {
+        "f00": "中央灰车后部可见",
+        "f05": "同车轮廓完整",
+        "f09": "位置一致且无遮挡"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R060",
+      "scene": "scene-0297",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深灰SUV前斜视较大，路过行人未挡住目标，三帧结构清楚。",
+      "frame_observations": {
+        "f00": "SUV前侧完整",
+        "f05": "同车车顶与车轮清楚",
+        "f09": "行人位于右侧画面，车仍无遮挡"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只有远处小型车辆局部且被立柱切过，不能用于完整保护车结构检查。"
+    },
+    {
+      "case_id": "R061",
+      "scene": "scene-0297",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色SUV由远到近保持唯一，前脸和侧面渐清楚且无严重遮挡。",
+      "frame_observations": {
+        "f00": "白SUV前斜视可辨",
+        "f05": "同车尺寸增加",
+        "f09": "车身较大且完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R062",
+      "scene": "scene-0241",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色商用厢车持续接近，车顶设备、车门与前脸完整清晰。",
+      "frame_observations": {
+        "f00": "白厢车正侧面可见",
+        "f05": "同车扩大且完整",
+        "f09": "近处前脸和侧面清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R063",
+      "scene": "scene-0241",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "红色轿车前斜视三帧一致，虽逐渐变小仍可看清车顶和车身边界。",
+      "frame_observations": {
+        "f00": "红车前侧完整",
+        "f05": "同车稍远仍清楚",
+        "f09": "车身缩小但外轮廓完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R064",
+      "scene": "scene-0243",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色轿车后视完整，车顶、尾灯、后保险杠三帧均可辨。",
+      "frame_observations": {
+        "f00": "银车后部清楚",
+        "f05": "同车尾部位置一致",
+        "f09": "车身稍大且无遮挡"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R065",
+      "scene": "scene-0243",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "银色皮卡正面可辨，但距离远、像素少且车灯格栅边缘发糊。",
+      "frame_observations": {
+        "f00": "远处皮卡正面较小",
+        "f05": "同车未增大",
+        "f09": "车头细节仍偏软"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R066",
+      "scene": "scene-0533",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色轿车前斜视完整，灯柱只贴近前侧边缘，三帧主体清楚。",
+      "frame_observations": {
+        "f00": "深色轿车车头与侧面可见",
+        "f05": "同车车顶和车轮可辨",
+        "f09": "主体完整，灯柱位于侧边"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考白色车仅见前侧一部分，又被黑色灯柱切开，保护车轮廓不足。"
+    },
+    {
+      "case_id": "R067",
+      "scene": "scene-0533",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "蓝黑轿车侧视完整，车轮、车窗与前后端三帧清楚。",
+      "frame_observations": {
+        "f00": "蓝黑轿车全车侧面",
+        "f05": "同车无遮挡",
+        "f09": "位置一致且轮廓完整"
+      },
+      "protected_reference_quality": "sufficient",
+      "protected_reference_reason": "参考黑色SUV侧前轮廓基本完整，独立于蓝黑目标。"
+    },
+    {
+      "case_id": "R068",
+      "scene": "scene-0719",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色SUV前斜视较大且清楚，车顶、前灯和车轮完整。",
+      "frame_observations": {
+        "f00": "SUV前侧完整",
+        "f05": "同车仍无遮挡",
+        "f09": "车身略大，轮廓清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R069",
+      "scene": "scene-0719",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "白色小巴虽能识别，但在三帧原图里都远小，车头与边缘明显模糊。",
+      "frame_observations": {
+        "f00": "白色小巴远处小目标",
+        "f05": "同车正面仍像素少",
+        "f09": "尺寸未改善，轮廓偏软"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R070",
+      "scene": "scene-0222",
+      "camera": "CAM_BACK_LEFT",
+      "score": 0,
+      "status": "reject",
+      "concise_reason": "f00 目标被近处深色轿车完全压住，crop 主要是前景车；后两帧远处SUV又被杆件遮挡，三帧输入无有效同车轮廓。",
+      "frame_observations": {
+        "f00": "crop 几乎仅见近处轿车车顶和车窗",
+        "f05": "远处SUV出现但偏小，行人及杆件邻近",
+        "f09": "目标仍被标牌立柱切过"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考几乎只有近处车辆的车顶局部，无法核实独立保护车。"
+    },
+    {
+      "case_id": "R071",
+      "scene": "scene-0222",
+      "camera": "CAM_BACK_LEFT",
+      "score": 0,
+      "status": "reject",
+      "concise_reason": "f00 目标被前景轿车挡尽，crop 主要是前景车；f05/f09 远处车辆又混在车列及行人后，无法核对有效目标身份。",
+      "frame_observations": {
+        "f00": "crop 仅显近处深色轿车上部",
+        "f05": "远车与邻车、路柱挤在一起",
+        "f09": "行人穿过远车且轮廓不完整"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考只见拥挤车列的暗色局部，不能完整辨认一辆独立保护车。"
+    },
+    {
+      "case_id": "R072",
+      "scene": "scene-0227",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色轿车可辨，但强烈玻璃与机盖反光贯穿车头，结构边缘和细节失真。",
+      "frame_observations": {
+        "f00": "正面被强眩光覆盖",
+        "f05": "眩光仍压住前脸",
+        "f09": "同车可见但细节不足"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R073",
+      "scene": "scene-0227",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "灰色轿车正面可辨，但远处像素少、曝光发灰，三帧前脸细节发糊。",
+      "frame_observations": {
+        "f00": "中央灰轿车较小",
+        "f05": "同车正面仍偏软",
+        "f09": "尺寸未变，结构细节不足"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R074",
+      "scene": "scene-0704",
+      "camera": "CAM_BACK",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色出租车由远到近，车头、车顶和侧边轮廓三帧明确。",
+      "frame_observations": {
+        "f00": "白车前斜视可辨",
+        "f05": "同车更近且完整",
+        "f09": "车灯和车轮清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R075",
+      "scene": "scene-0704",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深灰轿车正面在三帧中都偏小且暗，格栅与车身下缘不够清楚。",
+      "frame_observations": {
+        "f00": "中央深灰车小",
+        "f05": "同车正面仍暗",
+        "f09": "无明显尺寸改善，前脸细节软"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R076",
+      "scene": "scene-0291",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "红色轿车侧视完整，虽然首帧较远，车顶、车轮与前后端三帧均明确。",
+      "frame_observations": {
+        "f00": "红轿车全侧面",
+        "f05": "同车尺寸增加",
+        "f09": "末帧轮廓更清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R077",
+      "scene": "scene-0291",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "灰色轿车侧面可独立识别，后两帧放大后车顶、车轮和车身端部清楚。",
+      "frame_observations": {
+        "f00": "灰轿车侧视可辨",
+        "f05": "同车尺寸增大",
+        "f09": "末帧外轮廓完整"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R078",
+      "scene": "scene-0292",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "白色轿车侧面完整，亮度和对比度足够，三帧车身边界清楚。",
+      "frame_observations": {
+        "f00": "白轿车全侧面",
+        "f05": "同车位置一致",
+        "f09": "车轮与尾部继续清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R079",
+      "scene": "scene-0292",
+      "camera": "CAM_FRONT_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色轿车虽可识别，但停在阴影里且尺寸偏小，车窗与车身背景混在一起。",
+      "frame_observations": {
+        "f00": "深色轿车侧视偏暗",
+        "f05": "同车仍低对比",
+        "f09": "车身略大但上缘及暗部细节不足"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R080",
+      "scene": "scene-0714",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "深色轿车完整侧视，虽位于路口远侧，车顶、前后轮及车身端部三帧均可辨。",
+      "frame_observations": {
+        "f00": "左侧深色轿车全侧面",
+        "f05": "同车轮廓完整",
+        "f09": "车轮与前后端仍清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R081",
+      "scene": "scene-0714",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "另一辆深色轿车侧视完整，在浅色路面前轮廓分离清楚，三帧均可唯一指认。",
+      "frame_observations": {
+        "f00": "右侧深色轿车全侧面",
+        "f05": "同车车窗和车轮可辨",
+        "f09": "前后端与路面边界清楚"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R082",
+      "scene": "scene-0283",
+      "camera": "CAM_BACK_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "棕红色轿车可定位，但粗树干和细杆持续切过车身，前后轮廓无法连贯检查。",
+      "frame_observations": {
+        "f00": "树干穿过车体中段",
+        "f05": "仍有树干及前景杆遮挡",
+        "f09": "车头与侧身继续被树干割开"
+      },
+      "protected_reference_quality": "uncertain",
+      "protected_reference_reason": "参考主要呈现棕红色车自身与树干，不能确认独立保护车。"
+    },
+    {
+      "case_id": "R083",
+      "scene": "scene-0283",
+      "camera": "CAM_BACK_LEFT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "白色轿车可辨，但树干遮住车头/前门，细杆又切过侧身，三帧均有关键遮挡。",
+      "frame_observations": {
+        "f00": "白车前半被树干遮住",
+        "f05": "同车前门和车头仍被挡",
+        "f09": "前景杆继续切过侧面"
+      },
+      "protected_reference_quality": "weak",
+      "protected_reference_reason": "参考混入白车与棕红车，且被立杆切开，独立保护车轮廓不足。"
+    },
+    {
+      "case_id": "R084",
+      "scene": "scene-0704",
+      "camera": "CAM_BACK",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "深色SUV虽可识别，但远处树干贯穿车身，隔离栏挡住下部轮廓。",
+      "frame_observations": {
+        "f00": "树干与栏板挡住侧面和车轮",
+        "f05": "遮挡持续",
+        "f09": "车身下部仍不可见"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R085",
+      "scene": "scene-0704",
+      "camera": "CAM_FRONT",
+      "score": 1,
+      "status": "reject",
+      "concise_reason": "白色轿车横穿路口时始终远小，裁剪后仍缺清楚车轮与上下边界。",
+      "frame_observations": {
+        "f00": "远处白车侧面小",
+        "f05": "同车移动但像素少",
+        "f09": "仍小且边缘发软"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R086",
+      "scene": "scene-0244",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "银色轿车后视较大、曝光适中，尾灯、车顶和后保险杠三帧完整。",
+      "frame_observations": {
+        "f00": "银车后部清楚",
+        "f05": "同车车尾完整",
+        "f09": "车身稍近仍无遮挡"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    },
+    {
+      "case_id": "R087",
+      "scene": "scene-0244",
+      "camera": "CAM_FRONT",
+      "score": 2,
+      "status": "pass",
+      "concise_reason": "黑色轿车后斜视可独立识别，车顶、竖向尾灯和车轮三帧完整。",
+      "frame_observations": {
+        "f00": "左侧黑车后部完整",
+        "f05": "同车车身仍清楚",
+        "f09": "车尾和侧面轮廓可辨"
+      },
+      "protected_reference_quality": "absent",
+      "protected_reference_reason": "未提供保护车参考。"
+    }
+  ]
+}

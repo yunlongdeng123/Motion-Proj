@@ -169,6 +169,44 @@ def select(pool, source_scenes):
     return selected,names,reserve[:5]
 
 
+def materialize_case(c, s, cid):
+    """追加候选沿用原始 RGB、SDK 几何和 prompt，不重选旧 ID。"""
+    dest=O/'inputs'/cid
+    (dest/'rgb').mkdir(parents=True,exist_ok=True);frames=[];crop_stats=[]
+    for f,path in zip(s['frames'],s['RGB_paths']):
+        a=next(a for a in f['actors'] if a['instance_token']==c['instance_token'])
+        im=Image.open(path).convert('RGB').resize((1024,576),Image.Resampling.BILINEAR)
+        im.save(dest/'rgb'/f"{f['frame']:05}.jpg",quality=96)
+        frames.append(dict(f,target=a,neighbors=[b for b in f['actors'] if b['instance_token']!=c['instance_token']]))
+        if f['frame'] in [0,5,9]:
+            x0,y0,x1,y1=np.rint(a['box_xyxy']).astype(int)
+            crop=np.asarray(im)[y0:y1,x0:x1];gray=cv2.cvtColor(crop,cv2.COLOR_RGB2GRAY)
+            crop_stats.append({'frame':f['frame'],'laplacian_variance':float(cv2.Laplacian(gray,cv2.CV_64F).var()),
+                               'mean_luma':float(gray.mean()),'width':int(x1-x0),'height':int(y1-y0)})
+    prompt,policy=choose_instance_prompt(frames)
+    main_b=max(c['behind'],key=lambda b:b['overlap_fraction']) if c['behind'] else None
+    refs=[]
+    if main_b:
+        for f in frames:
+            b=next((b for b in f['neighbors'] if b['instance_token']==main_b['instance_token']),None)
+            if b:
+                bb=b['box_xyxy'];ov=overlap(bb,f['target']['box_xyxy'])/max(1,(bb[2]-bb[0])*(bb[3]-bb[1]))
+                refs.append({'frame':f['frame'],'box_xyxy':bb,'target_bbox_overlap_fraction':ov,'visibility':b['visibility']})
+    best_b=min(refs,key=lambda b:(b['target_bbox_overlap_fraction'],-b['visibility'],abs(b['frame']-5))) if refs else None
+    flags=[]
+    if any(x['laplacian_variance']<20 for x in crop_stats):flags.append('low_target_texture_or_blur_proxy')
+    if any(x['mean_luma']<45 for x in crop_stats):flags.append('dark_target_proxy')
+    if c['behind_vehicle_proxy']:flags.append('behind_actor_geometry_proxy')
+    case=dict(c,case_id=cid,split='real_train_DEV',kind='real',folder=str(dest),frames=frames,
+        source_RGB_paths=s['RGB_paths'],source_manifest=s['manifest'],source_slice=s['source_slice'],
+        prompt_frame=prompt,prompt_policy=policy,crop_diagnostics=crop_stats,
+        protected_actor=main_b,protected_evidence=refs,best_protected_reference=best_b,
+        input_difficulty='medium' if flags else 'low',difficulty_factors=flags,
+        input_visual_review='pending',hidden_region_GT=None,human_verdict=None)
+    dump(dest/'case.json',case)
+    return case
+
+
 def main():
     if (O/'manifest.json').exists():print('ALREADY_PREPARED');return
     cv2.setNumThreads(1); O.mkdir(parents=True,exist_ok=True);started=time.monotonic()
@@ -188,39 +226,8 @@ def main():
     by_source={s['source_id']:s for s in sources}
     cases=[]
     for i,c in enumerate(chosen):
-        cid=f'R{ i+1:03}';s=by_source[c['source_id']];dest=O/'inputs'/cid
-        (dest/'rgb').mkdir(parents=True,exist_ok=True);frames=[];crop_stats=[]
-        for f,path in zip(s['frames'],s['RGB_paths']):
-            a=next(a for a in f['actors'] if a['instance_token']==c['instance_token'])
-            im=Image.open(path).convert('RGB').resize((1024,576),Image.Resampling.BILINEAR)
-            im.save(dest/'rgb'/f"{f['frame']:05}.jpg",quality=96)
-            frames.append(dict(f,target=a,neighbors=[b for b in f['actors'] if b['instance_token']!=c['instance_token']]))
-            if f['frame'] in [0,5,9]:
-                x0,y0,x1,y1=np.rint(a['box_xyxy']).astype(int)
-                crop=np.asarray(im)[y0:y1,x0:x1];gray=cv2.cvtColor(crop,cv2.COLOR_RGB2GRAY)
-                crop_stats.append({'frame':f['frame'],'laplacian_variance':float(cv2.Laplacian(gray,cv2.CV_64F).var()),
-                                   'mean_luma':float(gray.mean()),'width':int(x1-x0),'height':int(y1-y0)})
-        prompt,policy=choose_instance_prompt(frames)
-        main_b=max(c['behind'],key=lambda b:b['overlap_fraction']) if c['behind'] else None
-        refs=[]
-        if main_b:
-            for f in frames:
-                b=next((b for b in f['neighbors'] if b['instance_token']==main_b['instance_token']),None)
-                if b:
-                    bb=b['box_xyxy'];ov=overlap(bb,f['target']['box_xyxy'])/max(1,(bb[2]-bb[0])*(bb[3]-bb[1]))
-                    refs.append({'frame':f['frame'],'box_xyxy':bb,'target_bbox_overlap_fraction':ov,'visibility':b['visibility']})
-        best_b=min(refs,key=lambda b:(b['target_bbox_overlap_fraction'],-b['visibility'],abs(b['frame']-5))) if refs else None
-        flags=[]
-        if any(x['laplacian_variance']<20 for x in crop_stats):flags.append('low_target_texture_or_blur_proxy')
-        if any(x['mean_luma']<45 for x in crop_stats):flags.append('dark_target_proxy')
-        if c['behind_vehicle_proxy']:flags.append('behind_actor_geometry_proxy')
-        case=dict(c,case_id=cid,split='real_train_DEV',kind='real',folder=str(dest),frames=frames,
-            source_RGB_paths=s['RGB_paths'],source_manifest=s['manifest'],source_slice=s['source_slice'],
-            prompt_frame=prompt,prompt_policy=policy,crop_diagnostics=crop_stats,
-            protected_actor=main_b,protected_evidence=refs,best_protected_reference=best_b,
-            input_difficulty='medium' if flags else 'low',difficulty_factors=flags,
-            input_visual_review='pending',hidden_region_GT=None,human_verdict=None)
-        dump(dest/'case.json',case);cases.append(case)
+        cid=f'R{ i+1:03}';s=by_source[c['source_id']]
+        cases.append(materialize_case(c,s,cid))
         print('CPU_CASE',cid,c['scene'],c['camera'],flush=True)
     dump(O/'sampling.json',{'seed':SEED,'cached_scene_count':len(exposed),'sources':len(sources),
         'candidate_count':len(pool),'candidate_scene_count':len({c['scene'] for c in pool}),

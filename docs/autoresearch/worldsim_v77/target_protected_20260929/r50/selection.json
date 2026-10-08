@@ -2,7 +2,7 @@
   "task_id": "WS-V77-TARGET-PROTECTED-20260929",
   "run_id": "r50",
   "scene_count": 20,
-  "case_count": 49,
+  "case_count": 42,
   "case_role": "nuScenes train real DELETE development; no current training",
   "reserve_scenes": [
     "scene-0474",
@@ -14,16 +14,48 @@
   "base": "r46 official DriveEditor checkpoint + r21 sam_full_v2",
   "seed": 42,
   "steps": 25,
-  "eligible_cases": 43,
-  "eligible_scenes": 18,
-  "input_excluded_cases": {
-    "R021": "f05原目标被树枝/树干穿过，车身证据不完整；关联GT可见度不是本相机无遮挡证明。",
-    "R022": "f05远处目标位于阴影、过暗，缺少可靠车身结构细节。",
-    "R025": "f05强逆光，目标车身低对比，当前不作清楚输入的结构研究。",
-    "R026": "f05目标在阴影且远，细节不足；不把后续模糊算确定的模型结构失败。",
-    "R032": "f05目标车被树干与路旁隔离物遮挡，实例边界及车身结构不完整。",
-    "R036": "f05目标主要被树干/路旁物体遮住，只能辨部分车身，先排除。"
-  },
+  "eligible_cases": 42,
+  "eligible_scenes": 20,
+  "input_excluded_cases": [
+    "R005",
+    "R006",
+    "R010",
+    "R011",
+    "R012",
+    "R015",
+    "R016",
+    "R017",
+    "R018",
+    "R019",
+    "R020",
+    "R021",
+    "R022",
+    "R025",
+    "R026",
+    "R031",
+    "R032",
+    "R033",
+    "R036",
+    "R040",
+    "R046",
+    "R047",
+    "R048",
+    "R049",
+    "R065",
+    "R069",
+    "R070",
+    "R071",
+    "R072",
+    "R073",
+    "R075",
+    "R079",
+    "R082",
+    "R083",
+    "R084",
+    "R085"
+  ],
+  "reviewed_candidates": 87,
+  "quality_uncertain_cases": [],
   "cases": [
     {
       "case_id": "R001",
@@ -42,9 +74,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "银色SUV后侧完整、尺寸和对比度足够，三帧可单独定位。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "weak"
     },
     {
       "case_id": "R002",
@@ -61,9 +94,10 @@
       "behind_vehicle_proxy": false,
       "input_difficulty": "low",
       "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "白色SUV后视轮廓完整，车身足够大且三帧一致。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
+      "B_evidence_status": "absent"
     },
     {
       "case_id": "R003",
@@ -82,9 +116,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "右侧深灰轿车前斜面完整，车灯、车顶和前轮可辨。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "sufficient"
     },
     {
       "case_id": "R004",
@@ -103,51 +138,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "中央深灰MPV正面完整，格栅、灯和车顶均清楚。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R005",
-      "scene": "scene-0253",
-      "camera": "CAM_BACK",
-      "instance_token": "5314dddde7294660985a60bdb6427455",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 147.70499999999998,
-      "median_height": 92.76500000000001,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R006",
-      "scene": "scene-0253",
-      "camera": "CAM_BACK",
-      "instance_token": "27dde3f56aec45e1814170689bb1ef82",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 131.45499999999998,
-      "median_height": 126.63999999999999,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "weak"
     },
     {
       "case_id": "R007",
@@ -166,9 +160,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "路边灰色SUV侧面完整且大，三帧车顶、车轮轮廓一致。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "sufficient"
     },
     {
       "case_id": "R008",
@@ -187,9 +182,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "深灰SUV侧面完整，虽偏暗仍可看清车窗、车轮和尾部。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "sufficient"
     },
     {
       "case_id": "R009",
@@ -208,72 +204,30 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "黑色轿车前斜视足以辨认整车，未见严重截断。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "weak"
     },
     {
-      "case_id": "R010",
+      "case_id": "R044",
       "scene": "scene-0252",
       "camera": "CAM_BACK",
-      "instance_token": "1393da79ec6f461bbc407a228c096fc8",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 138.81,
-      "median_height": 69.29500000000002,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R011",
-      "scene": "scene-0286",
-      "camera": "CAM_BACK",
-      "instance_token": "598b6a7fd55d470ca1076ce2c924326e",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "instance_token": "95eba7c4b417464aa2276b2bab3b102e",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
       "source_slice": [
         0,
         10
       ],
-      "median_width": 115.90999999999997,
-      "median_height": 84.94,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "median_width": 262.65500000000003,
+      "median_height": 261.145,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "银色皮卡正面大而清楚，三帧格栅、车灯及外轮廓完整。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R012",
-      "scene": "scene-0286",
-      "camera": "CAM_FRONT_RIGHT",
-      "instance_token": "1c6bb847c04b49469186f1881505a748",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 109.27000000000004,
-      "median_height": 53.74499999999999,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "absent"
     },
     {
       "case_id": "R013",
@@ -292,9 +246,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "银色轿车后视大且完整，三帧车尾和车顶均清楚。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "weak"
     },
     {
       "case_id": "R014",
@@ -311,176 +266,10 @@
       "behind_vehicle_proxy": false,
       "input_difficulty": "low",
       "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "白色轿车前侧轮廓大而清楚，三帧均无遮挡。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R015",
-      "scene": "scene-0707",
-      "camera": "CAM_BACK",
-      "instance_token": "0033a1f8afb14b0d8e949ab0e67c4866",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 112.02000000000004,
-      "median_height": 61.08499999999998,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R016",
-      "scene": "scene-0707",
-      "camera": "CAM_BACK",
-      "instance_token": "fb0b511e3e9c4f00a0de6fff2930eb81",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 109.32999999999998,
-      "median_height": 87.07500000000002,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R017",
-      "scene": "scene-0226",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "bb20745300ac4ceb902b0298d72eadeb",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 206.97000000000006,
-      "median_height": 71.16499999999996,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R018",
-      "scene": "scene-0226",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "3b289decc8ef4cb690b80205ffa1798c",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 153.155,
-      "median_height": 60.20999999999998,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R019",
-      "scene": "scene-0231",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "e8ab13cc5ec547d4876a31e7ebc9a3ec",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 179.66000000000003,
-      "median_height": 84.0,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R020",
-      "scene": "scene-0231",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "c2f9ec2d03fa45d8bfaef63cedf7d0de",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r4/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 139.98999999999995,
-      "median_height": 62.94999999999999,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R021",
-      "scene": "scene-0162",
-      "camera": "CAM_BACK_LEFT",
-      "instance_token": "8724fb8ce59a4a55940748e921718474",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r37/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 411.30999999999995,
-      "median_height": 165.32000000000002,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "high",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy",
-        "visual_input_limited"
-      ],
-      "input_visual_review": "f05原目标被树枝/树干穿过，车身证据不完整；关联GT可见度不是本相机无遮挡证明。",
-      "structural_audit_eligible": false,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R022",
-      "scene": "scene-0162",
-      "camera": "CAM_BACK_LEFT",
-      "instance_token": "1a6a60f4a96849a9afbf95488c5bac86",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r37/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 139.01999999999998,
-      "median_height": 71.095,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "high",
-      "difficulty_factors": [
-        "dark_target_proxy",
-        "behind_actor_geometry_proxy",
-        "visual_input_limited"
-      ],
-      "input_visual_review": "f05远处目标位于阴影、过暗，缺少可靠车身结构细节。",
-      "structural_audit_eligible": false,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "absent"
     },
     {
       "case_id": "R023",
@@ -499,9 +288,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "白色轿车从远到近始终可唯一指认，车顶、车头与轮廓清楚。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "sufficient"
     },
     {
       "case_id": "R024",
@@ -520,53 +310,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "黑色SUV后视逐渐放大，车身、车轮和车顶可辨。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R025",
-      "scene": "scene-0700",
-      "camera": "CAM_FRONT",
-      "instance_token": "dd8f60d07db1407c90be49dd49dbbf20",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 168.71000000000004,
-      "median_height": 53.234999999999985,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "high",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy",
-        "visual_input_limited"
-      ],
-      "input_visual_review": "f05强逆光，目标车身低对比，当前不作清楚输入的结构研究。",
-      "structural_audit_eligible": false,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R026",
-      "scene": "scene-0700",
-      "camera": "CAM_FRONT",
-      "instance_token": "944bdab912604b3c8eb81fde0590ac50",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 115.225,
-      "median_height": 75.75499999999997,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "high",
-      "difficulty_factors": [
-        "dark_target_proxy",
-        "visual_input_limited"
-      ],
-      "input_visual_review": "f05目标在阴影且远，细节不足；不把后续模糊算确定的模型结构失败。",
-      "structural_audit_eligible": false,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
+      "B_evidence_status": "weak"
     },
     {
       "case_id": "R027",
@@ -585,9 +332,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "白色轿车前斜面大且完整，三帧车灯、车顶及侧边一致。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "weak"
     },
     {
       "case_id": "R028",
@@ -606,9 +354,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "深灰MPV正面完整且大小足够，逆光但前脸轮廓仍清楚。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "uncertain"
     },
     {
       "case_id": "R029",
@@ -627,9 +376,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "黑色轿车后斜视完整，三帧车尾和车轮清晰可追认。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "weak"
     },
     {
       "case_id": "R030",
@@ -648,133 +398,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "灰色MPV正面居中，车灯和格栅完整且三帧一致。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R031",
-      "scene": "scene-0730",
-      "camera": "CAM_FRONT",
-      "instance_token": "1eea697533bf4de1bcdd44767b84d614",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r16/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 108.65000000000003,
-      "median_height": 93.94,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R032",
-      "scene": "scene-0730",
-      "camera": "CAM_FRONT",
-      "instance_token": "1ef0cdc32fa140ebb40557c695c39dbd",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 160.775,
-      "median_height": 59.880000000000024,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "high",
-      "difficulty_factors": [
-        "visual_input_limited"
-      ],
-      "input_visual_review": "f05目标车被树干与路旁隔离物遮挡，实例边界及车身结构不完整。",
-      "structural_audit_eligible": false,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R033",
-      "scene": "scene-0245",
-      "camera": "CAM_FRONT",
-      "instance_token": "7a3a9e54321d40d2a108db6d07a47c0d",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 105.88999999999999,
-      "median_height": 52.76000000000002,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R034",
-      "scene": "scene-0245",
-      "camera": "CAM_FRONT",
-      "instance_token": "e88c88e3798140b3affec642b26fee76",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 146.855,
-      "median_height": 88.14499999999998,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R035",
-      "scene": "scene-0235",
-      "camera": "CAM_BACK",
-      "instance_token": "bafec0aa57c847369d42856b0ff47f17",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 234.47500000000002,
-      "median_height": 151.54000000000002,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R036",
-      "scene": "scene-0235",
-      "camera": "CAM_FRONT",
-      "instance_token": "20dbe85cff8f471eadd8920d6ac1dec6",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 136.21,
-      "median_height": 43.70999999999998,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "high",
-      "difficulty_factors": [
-        "visual_input_limited"
-      ],
-      "input_visual_review": "f05目标主要被树干/路旁物体遮住，只能辨部分车身，先排除。",
-      "structural_audit_eligible": false,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
+      "B_evidence_status": "sufficient"
     },
     {
       "case_id": "R037",
@@ -793,9 +420,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "黑色轿车虽处阴影，前斜视大而完整，三帧外轮廓可辨。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "sufficient"
     },
     {
       "case_id": "R038",
@@ -814,51 +442,460 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "红色轿车后视逐渐放大，车顶、尾部和车轮均可辨。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
+      "B_evidence_status": "uncertain"
     },
     {
-      "case_id": "R039",
-      "scene": "scene-0709",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "86b952922ecc4b09b10698e65f9857dd",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "case_id": "R050",
+      "scene": "scene-0705",
+      "camera": "CAM_BACK",
+      "instance_token": "8bee6d06efbb44c18751b517ce4c5569",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
       "source_slice": [
         0,
         10
       ],
-      "median_width": 191.23999999999998,
-      "median_height": 69.29999999999998,
+      "median_width": 320.80999999999995,
+      "median_height": 280.445,
       "behind_vehicle_proxy": true,
       "input_difficulty": "medium",
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "深灰MPV正面大且完整，车灯、格栅、车顶三帧均清楚。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "sufficient"
     },
     {
-      "case_id": "R040",
-      "scene": "scene-0709",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "e933bdda008846949cd093b885f95e8e",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "case_id": "R051",
+      "scene": "scene-0705",
+      "camera": "CAM_BACK",
+      "instance_token": "cc41c8c66c30436189e3e658db235907",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
       "source_slice": [
         0,
         10
       ],
-      "median_width": 129.04499999999996,
-      "median_height": 53.75999999999999,
+      "median_width": 281.30999999999995,
+      "median_height": 131.16999999999996,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "银红双色MPV前斜视完整，侧门、前脸和车轮足够清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R052",
+      "scene": "scene-0710",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "0f4a9275649b476c819ba0a20ea56ce3",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r16/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 306.185,
+      "median_height": 136.265,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "蓝白厢式车侧面大而清楚，车身及车轮三帧完整。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R053",
+      "scene": "scene-0710",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "bbf4d6813ac849eaa01d211630891f99",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r16/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 273.14000000000004,
+      "median_height": 101.45499999999998,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "路边深灰SUV侧视完整，车顶、车窗和两轮边界清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R054",
+      "scene": "scene-0262",
+      "camera": "CAM_BACK",
+      "instance_token": "c3b54614335942618b22e9beac1d79e0",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 341.98,
+      "median_height": 293.225,
       "behind_vehicle_proxy": true,
       "input_difficulty": "medium",
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "深色SUV正面较大，虽在阴影里仍可辨车顶、灯、格栅和车身边界。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R055",
+      "scene": "scene-0262",
+      "camera": "CAM_FRONT",
+      "instance_token": "e7a7c158ab9e4b6ab97b3050512f75a4",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 234.26999999999998,
+      "median_height": 100.815,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "白色商用厢车侧面完整，图案、车门与前后车轮清楚且三帧一致。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R056",
+      "scene": "scene-0697",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "b667be26540048c39328077a28c9e857",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 262.09000000000003,
+      "median_height": 107.99999999999997,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "黑色轿车后斜视完整，树干紧邻车头但未切断主体轮廓。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R057",
+      "scene": "scene-0697",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "58a56c9e02d847bcb7d060073dfd02e5",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 215.35,
+      "median_height": 114.54000000000002,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "深灰轿车后斜视主体完整，车灯、车顶和车轮可辨。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R058",
+      "scene": "scene-0696",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "d157b15514ab46ad9845cceeaedc7219",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 258.28499999999997,
+      "median_height": 112.405,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "黑色轿车侧后轮廓足够大，树干位于车头外侧而未严重遮挡。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R059",
+      "scene": "scene-0696",
+      "camera": "CAM_BACK_LEFT",
+      "instance_token": "5e6e0ba37e13422c9b10322ce84c6c03",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 207.83499999999995,
+      "median_height": 136.64499999999998,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "中央灰色轿车后斜视完整，尾灯、车顶、车轮和车尾清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R060",
+      "scene": "scene-0297",
+      "camera": "CAM_FRONT",
+      "instance_token": "a81f088bd25b4859bb0366d0aaf6b617",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 256.14,
+      "median_height": 122.69,
+      "behind_vehicle_proxy": true,
+      "input_difficulty": "medium",
+      "difficulty_factors": [
+        "behind_actor_geometry_proxy"
+      ],
+      "input_visual_review": "深灰SUV前斜视较大，路过行人未挡住目标，三帧结构清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R061",
+      "scene": "scene-0297",
+      "camera": "CAM_FRONT",
+      "instance_token": "67c7582a606e439b86b9e4dbd198aae8",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r16/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 188.81,
+      "median_height": 104.525,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "白色SUV由远到近保持唯一，前脸和侧面渐清楚且无严重遮挡。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R062",
+      "scene": "scene-0241",
+      "camera": "CAM_FRONT",
+      "instance_token": "4ef74824f96d4ccda734d9a6b5b358c9",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 195.59499999999997,
+      "median_height": 195.58499999999998,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "白色商用厢车持续接近，车顶设备、车门与前脸完整清晰。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R063",
+      "scene": "scene-0241",
+      "camera": "CAM_BACK",
+      "instance_token": "760f4df68639465a80985c648fa10500",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 184.42,
+      "median_height": 86.59,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "红色轿车前斜视三帧一致，虽逐渐变小仍可看清车顶和车身边界。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R066",
+      "scene": "scene-0533",
+      "camera": "CAM_FRONT_LEFT",
+      "instance_token": "7d37f4b4d8be47d8a31050634698a73c",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 177.525,
+      "median_height": 93.50999999999996,
+      "behind_vehicle_proxy": true,
+      "input_difficulty": "medium",
+      "difficulty_factors": [
+        "behind_actor_geometry_proxy"
+      ],
+      "input_visual_review": "深色轿车前斜视完整，灯柱只贴近前侧边缘，三帧主体清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "weak"
+    },
+    {
+      "case_id": "R067",
+      "scene": "scene-0533",
+      "camera": "CAM_FRONT_LEFT",
+      "instance_token": "c00e91e539f14a79ba7bc114cd15771b",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r43/factory/source_manifest.json",
+      "source_slice": [
+        10,
+        20
+      ],
+      "median_width": 192.885,
+      "median_height": 76.07499999999999,
+      "behind_vehicle_proxy": true,
+      "input_difficulty": "medium",
+      "difficulty_factors": [
+        "behind_actor_geometry_proxy"
+      ],
+      "input_visual_review": "蓝黑轿车侧视完整，车轮、车窗与前后端三帧清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "sufficient"
+    },
+    {
+      "case_id": "R076",
+      "scene": "scene-0291",
+      "camera": "CAM_FRONT_LEFT",
+      "instance_token": "daa41b85b053432e81137ce421475c1a",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 202.915,
+      "median_height": 76.555,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "红色轿车侧视完整，虽然首帧较远，车顶、车轮与前后端三帧均明确。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R077",
+      "scene": "scene-0291",
+      "camera": "CAM_FRONT_LEFT",
+      "instance_token": "61b61ae7dfe24f289149dc15aa88e87b",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 166.71499999999997,
+      "median_height": 67.75000000000003,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "灰色轿车侧面可独立识别，后两帧放大后车顶、车轮和车身端部清楚。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R080",
+      "scene": "scene-0714",
+      "camera": "CAM_FRONT",
+      "instance_token": "3ee49e75ddda4ece906e25d36dcb455c",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 197.08499999999998,
+      "median_height": 64.065,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "深色轿车完整侧视，虽位于路口远侧，车顶、前后轮及车身端部三帧均可辨。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R081",
+      "scene": "scene-0714",
+      "camera": "CAM_FRONT",
+      "instance_token": "877c100aeea74087849846f1f7a23502",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 169.97000000000003,
+      "median_height": 56.25,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "另一辆深色轿车侧视完整，在浅色路面前轮廓分离清楚，三帧均可唯一指认。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R086",
+      "scene": "scene-0244",
+      "camera": "CAM_FRONT",
+      "instance_token": "f5d1d8b8417e4fe487a4bb9c7e523691",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 184.655,
+      "median_height": 153.32,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "银色轿车后视较大、曝光适中，尾灯、车顶和后保险杠三帧完整。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
+    },
+    {
+      "case_id": "R087",
+      "scene": "scene-0244",
+      "camera": "CAM_FRONT",
+      "instance_token": "be8933e0180341a18cc7e7e501d1861d",
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
+      "source_slice": [
+        0,
+        10
+      ],
+      "median_width": 113.13499999999999,
+      "median_height": 68.695,
+      "behind_vehicle_proxy": false,
+      "input_difficulty": "low",
+      "difficulty_factors": [],
+      "input_visual_review": "黑色轿车后斜视可独立识别，车顶、竖向尾灯和车轮三帧完整。",
+      "input_quality_score": 2,
+      "structural_audit_eligible": true,
+      "B_evidence_status": "absent"
     },
     {
       "case_id": "R041",
@@ -875,28 +912,10 @@
       "behind_vehicle_proxy": false,
       "input_difficulty": "low",
       "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "中央黑色SUV正面可辨，虽邻车靠近但目标车身仍能单独定位。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R042",
-      "scene": "scene-0253",
-      "camera": "CAM_BACK",
-      "instance_token": "47ce853d089e4d1aa029bdedf0e75f13",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 136.66499999999996,
-      "median_height": 79.88999999999999,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
+      "B_evidence_status": "absent"
     },
     {
       "case_id": "R043",
@@ -915,125 +934,10 @@
       "difficulty_factors": [
         "behind_actor_geometry_proxy"
       ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
+      "input_visual_review": "白色SUV侧面完整、亮度适中，三帧车顶和四轮位置清楚。",
+      "input_quality_score": 2,
       "structural_audit_eligible": true,
-      "B_evidence_status": "lower_A_bbox_overlap_proxy; actual RGB must be checked"
-    },
-    {
-      "case_id": "R044",
-      "scene": "scene-0252",
-      "camera": "CAM_BACK",
-      "instance_token": "95eba7c4b417464aa2276b2bab3b102e",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r3/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 262.65500000000003,
-      "median_height": 261.145,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R045",
-      "scene": "scene-0226",
-      "camera": "CAM_BACK",
-      "instance_token": "d392c968c83241d389cbc11ea6720c1e",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 267.80999999999995,
-      "median_height": 246.25,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R046",
-      "scene": "scene-0236",
-      "camera": "CAM_FRONT",
-      "instance_token": "ccaae04299a64dabbd3ce6fbc5ae6bf7",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 177.55,
-      "median_height": 60.39500000000001,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R047",
-      "scene": "scene-0238",
-      "camera": "CAM_FRONT",
-      "instance_token": "3ae6711937e14ad5929500843339ec9b",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 115.98499999999999,
-      "median_height": 73.92500000000001,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
-    },
-    {
-      "case_id": "R048",
-      "scene": "scene-0259",
-      "camera": "CAM_FRONT",
-      "instance_token": "2678d014720a434faf46f12c6bb282b4",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r23/factory/source_manifest.json",
-      "source_slice": [
-        10,
-        20
-      ],
-      "median_width": 134.77999999999997,
-      "median_height": 108.83000000000001,
-      "behind_vehicle_proxy": true,
-      "input_difficulty": "medium",
-      "difficulty_factors": [
-        "behind_actor_geometry_proxy"
-      ],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "large_A_bbox_overlap_proxy; actual visible evidence not certified"
-    },
-    {
-      "case_id": "R049",
-      "scene": "scene-0709",
-      "camera": "CAM_FRONT_LEFT",
-      "instance_token": "e73c0d59e04e4446886acc5235008f95",
-      "source_manifest": "/root/autodl-tmp/runs/worldsim_v77/WS-V77-TARGET-PROTECTED-20260929/r8/factory/source_manifest.json",
-      "source_slice": [
-        0,
-        10
-      ],
-      "median_width": 144.85999999999996,
-      "median_height": 65.43499999999997,
-      "behind_vehicle_proxy": false,
-      "input_difficulty": "low",
-      "difficulty_factors": [],
-      "input_visual_review": "f05主agent直接看原图和目标crop：目标车辆可辨；不是整窗清晰度认证，SAM实例身份尚未检查。",
-      "structural_audit_eligible": true,
-      "B_evidence_status": "no qualifying behind-car projection, not proof of empty background"
+      "B_evidence_status": "sufficient"
     }
   ],
   "failure_ledger_refs": [
