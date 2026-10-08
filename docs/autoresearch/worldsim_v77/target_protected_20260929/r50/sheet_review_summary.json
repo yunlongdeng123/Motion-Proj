@@ -1,0 +1,62 @@
+{
+  "task_id": "WS-V77-TARGET-PROTECTED-20260929",
+  "run_id": "r50",
+  "scope": "本轮为用户要求的四列独立AI图像复审；不新增GPU推理或训练",
+  "reviewer": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "frame": 5,
+  "cases": 40,
+  "scenes": 20,
+  "score_format": "0.0",
+  "score_columns": [
+    "original_score",
+    "mask_score",
+    "native_score",
+    "writeback_score"
+  ],
+  "score_bins": {
+    "original_score": {
+      "0.x": 0,
+      "1.x": 0,
+      "2.0及以上": 40
+    },
+    "mask_score": {
+      "0.x": 0,
+      "1.x": 3,
+      "2.0及以上": 37
+    },
+    "native_score": {
+      "0.x": 6,
+      "1.x": 8,
+      "2.0及以上": 26
+    },
+    "writeback_score": {
+      "0.x": 10,
+      "1.x": 12,
+      "2.0及以上": 18
+    }
+  },
+  "scores_are_human_verdict": false,
+  "human_verdict": null,
+  "temporal_verdict": null,
+  "workbook_sheet": "r50真实DELETE（20景40例）",
+  "workbook_run_path": "review/r50_four_column_scores.xlsx",
+  "previous_review_reused": false,
+  "original_workbook_sheets_preserved": [
+    "v77-nine-full",
+    "v77-delete-audit",
+    "之前失败的版本",
+    "r46 基线（官方原始权重+r21修复后的完整SAM）",
+    "r47（RGB + BEV + 2D几何）"
+  ],
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "GPU_jobs": 0,
+  "training_steps": 0
+}

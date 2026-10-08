@@ -67,3 +67,19 @@ GPU已空、用户可切CPU。实际设备32GB RTX 4080 SUPER，CPU cgroup16核�
 `failure_ledger_refs: [V77-F02]`；`failure_ledger_delta: updated V77-F02`（新增真实结构现象，输入失败与生成失败分开）；更新同卡，不新造失败ID。
 
 [GPU结果与资源](../autoresearch/worldsim_v77/target_protected_20260929/r50/gpu_results.json)、[SAM独立准入](../autoresearch/worldsim_v77/target_protected_20260929/r50/mask_visual_review.json)、[逐例单帧粗分类](../autoresearch/worldsim_v77/target_protected_20260929/r50/assistant_structure_review.json)。
+
+
+## 四列小数图像评分
+
+按用户最新要求，重新调用5.6-sol/xhigh（未启用fast）逐例打开40张f05四列对照，并核对实际保护车参考。此前6-sol表格评分不使用；原GPU阶段的粗分类历史记录保留。每列独立打分，一位小数：0.x为失败或严重问题，1.x为效果较差，2.0及以上可接受，2.0不是满分。原图列评价输入质量；mask列评价实例和实际洞；两列生成分别评价原生和最终效果。这些是AI抽帧观察，人工和视频时序分数仍空。
+
+| 对象 | 0.x | 1.x | 2.0及以上 |
+|---|---:|---:|---:|
+| 原视频输入 | 0 | 0 | 40 |
+| SAM/模型洞 | 0 | 3 | 37 |
+| 原生DELETE | 6 | 8 | 26 |
+| 最终写回 | 10 | 12 | 18 |
+
+评分表新增 `r50真实DELETE（20景40例）`，沿用case、人工打分、RGB/OCC先验、类型、备注，增加四列AI分数及图像/视频链接。旧工作表、人工记录和WPS内嵌图片保留。RGB足够仅限实际可见且归属可辨的保护车片段，不能从绿框或无B候选推断隐藏区；OCC全部未提供/未核验。本次不改变已冻结准入清单、mask、模型、seed或视频，不新增训练/推理，也不将AI评分代替人工verdict。
+
+完整分数和逐列像素依据：[独立5.6-sol图像审核](../autoresearch/worldsim_v77/target_protected_20260929/r50/sheet_image_review_56sol.json)、[审核汇总](../autoresearch/worldsim_v77/target_protected_20260929/r50/sheet_review_summary.json)。完整xlsx归档于同一远端run的 `review/r50_four_column_scores.xlsx`。本次 `failure_ledger_delta: none`；仍引用V77-F02，无新模型结果或新失败ID。

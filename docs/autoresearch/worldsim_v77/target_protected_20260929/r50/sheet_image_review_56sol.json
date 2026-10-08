@@ -1,0 +1,1236 @@
+{
+  "reviewer": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_reasoning_effort": "xhigh",
+    "fast_requested": false,
+    "runtime_model_verified": false
+  },
+  "scope": {
+    "source": "outputs/v77-real-delete-r50/mask_visual_review.json approved/approved_case_ids",
+    "frame": 5,
+    "approved_case_count": 40,
+    "excluded_case_ids": [
+      "R013",
+      "R066"
+    ],
+    "review_basis": "Independent single-frame visual review of structure_keyframe.jpg; no prior assistant scores read or reused."
+  },
+  "score_rule": "Each column is scored independently on a one-decimal continuous 0/1/2-level scale: 0.x task failure or severe error; 1.x visibly poor or structurally flawed; 2.0+ acceptable, with higher 2.x denoting cleaner results. 2.0 is an acceptability threshold, not a ceiling.",
+  "cases": [
+    {
+      "case_id": "R001",
+      "scene": "scene-0290",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.4,
+      "native_score": 0.6,
+      "writeback_score": 0.6,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "protected_reference仅有极小且被遮挡的深色车身碎片，归属和外观均不足以支持清楚的B信息。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路口左前方的银灰SUV，原图清楚且目标独立可辨；黄线与蓝洞基本贴合整车，未明显侵入右侧白车。原生并未恢复空路面，而在目标位置生成一团带车尾与阴影轮廓的灰色车状物，最终写回几乎相同，属于明显删除失败；右侧白车仍保留。",
+      "column_notes": {
+        "original": "银灰SUV尺度充足、边界清楚，满足可观察删除输入。",
+        "mask": "蓝洞完整覆盖目标及少量外扩路面，未串入右侧白车。",
+        "native": "目标处仍有清晰车状灰块、尾部和投影，未形成可信空路面。",
+        "writeback": "与原生近似，车状残留没有被修正。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "vehicle_like_regeneration",
+        "delete_failure"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R001/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R001/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R002",
+      "scene": "scene-0290",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 1.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "该帧未见可独立核验的绿色B代理局部，无法由现有RGB确认被挡对象。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是画面中央前方的白色SUV，原图车体完整且与左侧银车分离；掩膜紧贴车身，模型洞外扩适中。原生已将SUV删除，车道横线、路面和远处建筑连续性较好。最终写回在原目标右后方出现尖锐的深浅三角形拼接块，破坏背景连续性，因此明显低于原生。",
+      "column_notes": {
+        "original": "白色SUV独立、清晰，研究输入充分。",
+        "mask": "覆盖整车，未触及左侧银车，外扩范围合理。",
+        "native": "目标消失，路面与车道线衔接自然，仅有轻微软化。",
+        "writeback": "右后背景出现可见三角形贴片/接缝，形成明确结构瑕疵。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "native_acceptable",
+        "writeback_polygon_seam"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R002/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R003",
+      "scene": "scene-0703",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 2.1,
+      "native_score": 1.4,
+      "writeback_score": 0.8,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框中能看到右后方白色厢车等原始RGB局部，但目标遮挡后的完整身份与形状不可由此证明。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是右侧车道靠近镜头的深色轿车，输入虽有运动模糊但车体仍可辨。蓝洞覆盖目标并向右后B区域有一定侵入风险。原生删除后路肩处留下大块褐灰车状拖影，白色厢车仍在但边缘发糊；最终又出现拱形硬接缝和更深的涂抹区，结构问题更重。",
+      "column_notes": {
+        "original": "深色轿车可独立辨认，轻微模糊不妨碍任务。",
+        "mask": "覆盖完整，但右上外扩接近绿色B代理可见区，存在邻车风险。",
+        "native": "删除位置形成褐灰长条和车状拖影，路肩结构不可信。",
+        "writeback": "拱形边界与深色补丁清晰可见，比原生更不连续。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "background_smear",
+        "vehicle_like_trace",
+        "writeback_seam"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R003/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R003/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R004",
+      "scene": "scene-0703",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 0.2,
+      "writeback_score": 0.2,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "绿色代理区域主要落在目标挡风玻璃范围，缺少可独立识别的真实B可见像素。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是中央车道正对镜头的深色MPV，原图尺度大、轮廓清楚，左右邻车也分离。黄线和蓝洞完整覆盖目标且未明显吞入两侧车辆。然而原生输出在同一位置保留或再生了几乎完整的深色车头，最终写回也无实质变化，未完成删除任务，虽邻车保持但不能抵消失败。",
+      "column_notes": {
+        "original": "中央MPV大且清楚，任务目标无歧义。",
+        "mask": "整车覆盖充分，左右红色皮卡和灰车未被串入。",
+        "native": "目标位置仍是完整车头与挡风玻璃，属于严重删除失败。",
+        "writeback": "与原生相同，完整车状结构仍在。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "complete_vehicle_regeneration",
+        "delete_failure"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R004/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R007",
+      "scene": "scene-0246",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "目标左侧白色SUV在原始RGB中有清楚可见部分，可用于判断其外露区域是否被保留，隐藏部分仍未知。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路边灰色SUV，原图清晰，左右白色SUV与白色厢式车均可区分。掩膜沿目标外形完整覆盖且未明显串入邻车。原生和最终均删除灰SUV，并恢复建筑门窗、路缘和路面；局部纹理略软但结构连续，左侧白SUV与右侧厢式车的真实可见部分保持良好。",
+      "column_notes": {
+        "original": "目标与两侧车辆分离，尺度和清晰度都充分。",
+        "mask": "贴合整车，外扩未触及左侧白SUV或右侧厢式车。",
+        "native": "目标删除完整，门窗、路缘和路面恢复连续，只有轻微软化。",
+        "writeback": "与原生一致，未见新增接缝或邻车损伤。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R007/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R007/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R008",
+      "scene": "scene-0246",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 2.0,
+      "native_score": 0.8,
+      "writeback_score": 0.8,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框覆盖目标左侧另一辆深色车的可见局部；只能核验已露出的车身片段。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路边偏左的深色SUV，右侧白色SUV与更右灰车可见。蓝洞覆盖目标，但左缘贴近绿色B代理车且下方矩形外扩较大。原生删除后在目标位置生成明显的白色车状团块，与右侧白SUV连成畸形双车结构；最终写回相同，邻车轮廓和路缘均被扭曲，任务效果严重不可信。",
+      "column_notes": {
+        "original": "深色SUV虽略模糊仍可辨，邻车关系清楚。",
+        "mask": "目标覆盖充分，但左侧接近B可见区且洞的矩形下扩较宽。",
+        "native": "出现白色车状再生块并与右侧白SUV粘连，邻车形体明显变形。",
+        "writeback": "保留原生的白色畸形车团，没有改善。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "vehicle_like_regeneration",
+        "neighbor_deformation",
+        "delete_failure"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R008/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R008/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R009",
+      "scene": "scene-0252",
+      "frame": 5,
+      "original_score": 2.3,
+      "mask_score": 1.9,
+      "native_score": 1.2,
+      "writeback_score": 0.8,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "protected_reference中B仅以左缘极小深色车身片段出现，并与目标车重叠，归属外观不足以清楚判断。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是左前方靠道路边缘的深色轿车，虽有透视模糊仍可独立识别。蓝洞覆盖整车但明显进入左侧绿色B代理重叠区，存在邻车损伤风险。原生将目标替成沿路边的褐灰车状涂抹，车身边界与停放车辆粘连；最终又增加拱形硬接缝和深色斑块，局部结构进一步恶化。",
+      "column_notes": {
+        "original": "目标车可辨，邻近停放车辆使场景偏拥挤。",
+        "mask": "覆盖目标，但左侧蓝洞侵入B代理重叠区域。",
+        "native": "删除区仍呈褐灰车辆轮廓与拖影，路边车辆关系含混。",
+        "writeback": "出现醒目的拱形接缝和暗块，质量低于原生。"
+      },
+      "labels": [
+        "mask_b_overlap",
+        "vehicle_like_trace",
+        "background_smear",
+        "writeback_seam"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R009/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R009/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R044",
+      "scene": "scene-0252",
+      "frame": 5,
+      "original_score": 2.7,
+      "mask_score": 2.5,
+      "native_score": 0.3,
+      "writeback_score": 0.3,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "该帧没有可独立核验的绿色B可见区域，无法用原始RGB确认目标后的对象。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是正前方占据大幅画面的银色Ford皮卡，原图非常清楚，左右车辆和车道线也可分辨。掩膜覆盖车头与车身主体，未明显波及左侧白车。原生却在同一位置生成完整的深色SUV/车头样结构，最终写回几乎完全一致；目标身份虽改变，删除任务仍严重失败。",
+      "column_notes": {
+        "original": "大尺度银色皮卡清晰可辨，输入条件优良。",
+        "mask": "蓝洞完整覆盖目标主体，轮廓与黄线匹配。",
+        "native": "原位置出现完整深色车头和挡风玻璃，是强烈车辆再生迹象。",
+        "writeback": "与原生一致，车状再生未被修复。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "complete_vehicle_regeneration",
+        "delete_failure"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R044/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R014",
+      "scene": "scene-0239",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未标出可独立核验的绿色B代理局部；背景行人和街景虽可见，但不足以证明隐藏对象。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是横穿路口的银色轿车，原图车体完整且与两侧行人分离。掩膜紧贴整车，蓝洞仅作适度外扩，没有明显吞入路边行人。原生和最终均成功移除轿车，恢复斑马线、双黄线、路缘和店面；删除区略柔化，但主要线性结构连续，行人也保持可辨。",
+      "column_notes": {
+        "original": "银色轿车清楚、独立，任务输入充分。",
+        "mask": "完整覆盖车身，未串入左右行人。",
+        "native": "车辆消失，斑马线与路缘基本连续，仅有轻微模糊。",
+        "writeback": "与原生相同，未见新增拼接损伤。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "pedestrians_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R014/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R023",
+      "scene": "scene-0236",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 2.1,
+      "native_score": 2.3,
+      "writeback_score": 1.2,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框中可见目标右后方白色SUV的车头与侧缘局部，可核验这些外露像素但不能确认隐藏完整车身。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是左前方驶来的银色轿车，后方白色SUV与左侧货车可见。蓝洞覆盖目标，但右缘接近绿色B代理车头，邻车保护余量较小。原生删除后双黄线、路面及白SUV外露部分总体合理；最终在白SUV左上方写入尖锐的白灰三角形贴片，形成明确拼接错误，故低于原生。",
+      "column_notes": {
+        "original": "银色轿车可辨，周围车辆关系清楚。",
+        "mask": "覆盖充分，但洞右缘贴近后方白SUV可见区。",
+        "native": "目标删除，双黄线连续，白SUV可见部分保留，局部略软。",
+        "writeback": "白SUV左上出现尖锐三角贴片，破坏车辆和背景轮廓。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "native_acceptable",
+        "writeback_polygon_artifact",
+        "neighbor_edge_damage"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R023/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R023/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R024",
+      "scene": "scene-0236",
+      "frame": 5,
+      "original_score": 2.3,
+      "mask_score": 2.1,
+      "native_score": 2.2,
+      "writeback_score": 2.2,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "绿色代理框主要落在目标后窗及其遮挡区域，缺少可独立辨认的B车身可见像素。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是道路右侧靠近垃圾箱的黑色SUV，输入略软但车尾和边界可辨。蓝洞完整覆盖目标，右缘接近垃圾箱与行人区域，保护余量一般。原生和最终都移除了SUV，恢复的路面、路缘与人行道连续；垃圾箱旁人物边缘略糊，但没有明显车状残留或硬拼接。",
+      "column_notes": {
+        "original": "黑色SUV可单独识别，分辨率足以开展删除评估。",
+        "mask": "整车覆盖充分，右侧外扩靠近垃圾箱和行人。",
+        "native": "目标已删除，路缘和路面基本自然，人物局部略模糊。",
+        "writeback": "与原生一致，未见新增明显接缝。"
+      },
+      "labels": [
+        "observable_input",
+        "mask_context_risk",
+        "acceptable_delete",
+        "slight_background_blur"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R024/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R027",
+      "scene": "scene-0234",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.1,
+      "native_score": 2.3,
+      "writeback_score": 1.2,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框内能看到目标左后方深色车辆的外露局部，只能据此核验其可见部分。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是桥面右侧近处的白色轿车，原图清楚且与左侧深色车可区分。蓝洞覆盖整车，但左上外扩进入绿色B代理附近。原生删除后车道线、桥栏和远处车辆基本合理；最终在左后深色车与桥栏之间出现大块斜向深色贴片及硬边，明显破坏邻车轮廓和背景连续性。",
+      "column_notes": {
+        "original": "白色轿车边界清楚，目标身份明确。",
+        "mask": "覆盖完整，但左上靠近B车可见区域。",
+        "native": "目标消失，桥面和车道结构连续，邻车可见部分大体保留。",
+        "writeback": "左后车辆旁出现斜向暗色贴片和硬接缝。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "native_acceptable",
+        "writeback_polygon_artifact",
+        "neighbor_edge_damage"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R027/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R027/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R028",
+      "scene": "scene-0234",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 2.4,
+      "native_score": 0.4,
+      "writeback_score": 0.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "绿色代理框位于目标挡风玻璃范围，未显示可与目标分离识别的真实B局部。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是斑马线上中央偏左的深色轿车，原图轮廓与右侧白车分开。黄线和蓝洞完整包住目标且未明显吞入行人或右侧车。原生在目标原位置生成一辆完整的浅灰SUV/车尾结构，最终写回保持不变；斑马线也被车体遮住，因此不是可信删除结果。",
+      "column_notes": {
+        "original": "目标车清楚可辨，周边行人与车辆分离。",
+        "mask": "覆盖整车，未串入右侧白车或左侧行人。",
+        "native": "原位置出现完整浅灰车体，删除任务严重失败。",
+        "writeback": "与原生相同，完整车状结构仍在。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "complete_vehicle_regeneration",
+        "delete_failure"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R028/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R029",
+      "scene": "scene-0238",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.1,
+      "native_score": 2.4,
+      "writeback_score": 1.5,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框中可见目标左后方银色SUV的车头和车顶局部，隐藏范围仍无法确认。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路口右侧的黑色轿车，原图清楚，左后银色SUV和路边车列可辨。蓝洞覆盖整车，但左上与绿色B代理区域相接。原生删除干净，银色SUV、井盖和路面透视均保持合理。最终在银色SUV右上方出现弧形硬边与暗色小块，虽目标仍被删掉，但局部拼接明显。",
+      "column_notes": {
+        "original": "黑色轿车完整、独立，输入质量良好。",
+        "mask": "目标覆盖充分，左上外扩接近B车可见区。",
+        "native": "删除干净，后车和路面结构自然。",
+        "writeback": "银色SUV旁有弧形接缝和暗色贴片。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "clean_native",
+        "writeback_seam",
+        "neighbor_edge_artifact"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R029/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R029/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R030",
+      "scene": "scene-0238",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.0,
+      "native_score": 1.0,
+      "writeback_score": 1.0,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "绿色代理区域主要与目标右上部重叠，未能提供独立清晰的B车身可见证据。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是货车右侧、斑马线后的深色MPV，原图目标和周围车辆均清楚。掩膜覆盖完整，但右上贴近绿色代理区且模型洞向下覆盖较多路面。原生及最终虽然移除了MPV，却在原位置留下巨大的黑色柱桶状块，并伴随白色卷曲路面纹理和断裂车道边线，结构明显不自然。",
+      "column_notes": {
+        "original": "深色MPV清晰，目标与左侧货车、右侧车辆可分。",
+        "mask": "覆盖整车，但外扩触及较多路面并接近代理区。",
+        "native": "删除处出现大型黑色柱桶状结构和扭曲白线。",
+        "writeback": "基本复制原生异常，未消除柱状块和路面扭曲。"
+      },
+      "labels": [
+        "mask_context_risk",
+        "large_dark_artifact",
+        "road_marking_distortion",
+        "poor_delete"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R030/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R037",
+      "scene": "scene-0259",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 2.1,
+      "native_score": 1.3,
+      "writeback_score": 1.5,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框内可见目标后方浅色车辆的一小段车身，只能核验该外露局部，不能证明隐藏身份。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路口左前方的深色轿车，虽处逆光仍能辨认。蓝洞完整覆盖，但右上进入绿色B代理所在区域。原生删除后在远侧车道留下低矮、近黑色的车状团块，边界发糊；最终把它改成浅灰小车状结构并带白色尾状拖影，像素结构稍清楚但仍有明显再生迹象，无法核验为真实隐藏B。",
+      "column_notes": {
+        "original": "逆光下目标仍可独立识别，输入可用。",
+        "mask": "覆盖充分，但与后方B代理可见区相接。",
+        "native": "目标处后方出现模糊深色车状团块，结构不够可信。",
+        "writeback": "车状团块变清楚但伴随白色拖尾，仍有明显再生迹象。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "vehicle_like_regeneration",
+        "blurred_structure",
+        "writeback_tail_artifact"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R037/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R037/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R038",
+      "scene": "scene-0259",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 1.9,
+      "native_score": 2.4,
+      "writeback_score": 0.8,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "protected_reference里后方深色B仅露出很窄的左侧片段，且被红色目标大幅遮挡，外观信息不足。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是电车右侧车道的红色小SUV，原图车体可辨，后方深色车部分外露。蓝洞覆盖目标但明显进入绿色B代理重叠区。原生删除后道路、路缘和后方深色车的外露结构总体合理；最终在其右侧生成大面积拱形暗补丁和锐利边缘，侵蚀邻车与路缘，形成严重写回错误。",
+      "column_notes": {
+        "original": "红色SUV可辨，电车和后车提供清晰场景参照。",
+        "mask": "蓝洞进入B代理重叠区，邻车风险较高。",
+        "native": "目标删除干净，路缘连续，后车外露部分基本保留。",
+        "writeback": "大块拱形暗贴片遮损后车和路缘，硬边醒目。"
+      },
+      "labels": [
+        "mask_b_overlap",
+        "clean_native",
+        "writeback_polygon_artifact",
+        "neighbor_damage"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R038/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R038/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R050",
+      "scene": "scene-0705",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.0,
+      "native_score": 2.5,
+      "writeback_score": 1.4,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "绿色B代理框内可见目标左侧银色厢车的大部分外露车身，可核验其可见像素但不能推断隐藏部分。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是画面中央近处的深色丰田MPV，原图清晰，左侧银色厢车与右侧建筑分离。蓝洞完整覆盖目标但左缘贴近B车。原生删除后道路中心线和远景自然，银色厢车保持完整。最终在银色厢车下侧写入一条红褐色车身样补丁，改变其可见外观，因此明显低于原生。",
+      "column_notes": {
+        "original": "近景MPV清楚且占比大，目标无歧义。",
+        "mask": "覆盖完整，但左缘与B车代理框重叠余量较小。",
+        "native": "目标删除干净，道路与远景连续，B车可见部分保持。",
+        "writeback": "银色B车下侧出现红褐色长条补丁，属于明确邻车外观损伤。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "clean_native",
+        "writeback_color_patch",
+        "neighbor_damage"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R050/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R050/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R051",
+      "scene": "scene-0705",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.2,
+      "writeback_score": 1.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "该帧未给出可独立核验的绿色B可见局部；右侧深色MPV是邻车，但不等同于隐藏B证据。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是左侧车道的银灰红饰条小型MPV，原图边界清楚，与右侧深色MPV分离。掩膜紧贴目标且未串入右车。原生完成删除，墙体和路面略有水平涂抹但总体可接受。最终在右侧深色MPV左前方加入黑色多边形缺口，并有褐色带状痕迹，破坏邻车边缘和道路连续性。",
+      "column_notes": {
+        "original": "目标车完整且与右侧近车分开，输入良好。",
+        "mask": "贴合整车，未触及右侧深色MPV。",
+        "native": "删除成功，背景墙与路面有轻度模糊涂抹。",
+        "writeback": "右车旁出现黑色多边形洞和褐色痕迹，接缝明显。"
+      },
+      "labels": [
+        "mask_good",
+        "native_acceptable",
+        "writeback_polygon_artifact",
+        "neighbor_edge_damage"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R051/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R052",
+      "scene": "scene-0710",
+      "frame": 5,
+      "original_score": 2.7,
+      "mask_score": 2.5,
+      "native_score": 2.5,
+      "writeback_score": 2.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未见绿色B代理或可归为目标后方B的独立可见局部，无法由本帧确认隐藏对象。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路边印有PREMIER广告的蓝白厢式车，原图文字、车轮和车身轮廓均清楚，左侧黑色SUV独立可见。掩膜完整覆盖厢车并与黑SUV保持间隔。原生和最终都干净移除目标，恢复门窗、墙面、路缘及路面；纹理稍软但线条连续，左侧黑SUV没有明显损伤。",
+      "column_notes": {
+        "original": "广告厢车尺度大、细节清楚，输入充分。",
+        "mask": "沿整车覆盖，未串入左侧黑SUV。",
+        "native": "目标删除完整，建筑立面和路缘恢复连续。",
+        "writeback": "与原生一致，未见新增瑕疵。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbor_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R052/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R053",
+      "scene": "scene-0710",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 2.5,
+      "writeback_score": 2.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未见可归属为隐藏B的独立清晰可见车身；右侧广告厢车属于场景邻车。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路边黑色SUV，原图轮廓、车轮和车窗清楚，右侧蓝白广告厢车与左侧白车均分离。掩膜沿整车完整覆盖，模型洞未明显串入邻车。原生与最终都将SUV干净删除，恢复建筑门窗、停车表、墙面、路缘和路面，细节略软但连续，广告厢车保持完好。",
+      "column_notes": {
+        "original": "黑色SUV清楚且与邻车分离，输入充分。",
+        "mask": "完整贴合车身，未触及左右车辆。",
+        "native": "目标删除完整，停车表、墙面与路缘结构连续。",
+        "writeback": "与原生一致，没有新增接缝或邻车损伤。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R053/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R054",
+      "scene": "scene-0262",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.1,
+      "native_score": 2.0,
+      "writeback_score": 2.3,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "protected_reference中目标右后方白色SUV的车尾与车身可归属、可辨，足以核验其外露部分，但隐藏范围未知。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是近景中央的黑色Infiniti SUV，原图清楚，右后白色SUV部分可见。蓝洞覆盖目标但右缘靠近B代理。原生成功移除目标并恢复道路，但右后车辆较暗且边缘发糊；最终写回使白色SUV外露轮廓更清楚，路面也保持连续，未见明显硬贴片，因此最终优于原生。",
+      "column_notes": {
+        "original": "近景黑色SUV清楚，目标身份无歧义。",
+        "mask": "覆盖完整，右缘接近B车可见区域。",
+        "native": "目标已删，路面连贯，但右后B车外露部分偏暗发糊。",
+        "writeback": "白色SUV轮廓较原生清楚，未引入明显接缝。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "acceptable_native",
+        "writeback_improves_neighbor",
+        "road_restored"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R054/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R054/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R055",
+      "scene": "scene-0262",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 1.6,
+      "writeback_score": 1.6,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未提供可独立归属的绿色B可见局部；左侧白色皮卡为邻车，不能证明目标后的隐藏内容。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是体育馆前方的白色工程厢车，原图侧面文字与车体完整可辨，左侧白色皮卡分离。掩膜贴合整车且未吞入皮卡。原生和最终都移除厢车，但删除区留下横向灰雾、竖直半透明带，并使馆墙与橙色护栏局部断裂、模糊；目标虽消失，背景结构仍明显偏差。",
+      "column_notes": {
+        "original": "白色厢车细节清楚，删除目标明确。",
+        "mask": "覆盖完整，与左侧皮卡保持间隔。",
+        "native": "目标消失，但墙面和橙色护栏出现灰雾、竖带及断裂。",
+        "writeback": "与原生近似，背景涂抹没有修复。"
+      },
+      "labels": [
+        "mask_good",
+        "background_haze",
+        "vertical_band_artifact",
+        "barrier_distortion"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R055/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R056",
+      "scene": "scene-0697",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未见能清楚归属为目标后方B的独立可见车身；右侧蓝色SUV是相邻车辆。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路边最左侧的黑色轿车，原图车身清楚，与中间黑车和右侧蓝SUV分离。掩膜覆盖目标且未侵入中间车辆。原生和最终删除后恢复树干、草地、路缘及路面，背景行人和自行车虽略软但结构可辨，中间黑车与蓝SUV均保持原有外观。",
+      "column_notes": {
+        "original": "左侧黑车清楚且与两辆邻车分开。",
+        "mask": "完整覆盖目标，邻车未被串入。",
+        "native": "目标删除，树干、草地和路缘连续，背景人物略软。",
+        "writeback": "与原生一致，无新增明显瑕疵。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R056/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R057",
+      "scene": "scene-0697",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.3,
+      "native_score": 1.3,
+      "writeback_score": 1.3,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "没有可独立核验的隐藏B可见车身；右侧蓝色SUV仅作为紧邻车辆出现。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是蓝SUV左侧的深灰轿车，原图清楚且两车边界可分。蓝洞完整覆盖目标，右缘距离蓝SUV较近但未明显吞入。原生和最终都删掉目标，却在蓝SUV左侧留下贯穿草地、路缘与路面的深色竖直拼接带，明暗和几何连续性突变，邻车虽在但边缘环境明显破坏。",
+      "column_notes": {
+        "original": "深灰轿车清楚，邻近蓝SUV仍可分割。",
+        "mask": "覆盖充分，右缘靠近但未明显覆盖蓝SUV。",
+        "native": "删除区右侧出现高而直的暗色竖带，跨越多种背景结构。",
+        "writeback": "竖直拼接带仍在，未见实质改善。"
+      },
+      "labels": [
+        "mask_neighbor_close",
+        "vertical_seam",
+        "background_discontinuity",
+        "poor_delete"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R057/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R058",
+      "scene": "scene-0696",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.5,
+      "writeback_score": 2.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未见可归属为隐藏B的独立清晰车辆局部；右侧两辆停放车为场景邻车。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是最左侧树前的黑色轿车，原图可辨，与中间黑车及右侧蓝SUV保持明显间隔。掩膜沿车身覆盖且未串入邻车。原生和最终均干净删除目标，恢复树干、建筑门窗、行人、路缘和路面阴影；局部纹理轻微软化，但背景线条连续，两辆邻车保持完整。",
+      "column_notes": {
+        "original": "目标车清楚且与右侧车辆分离。",
+        "mask": "贴合整车，外扩没有触及邻车。",
+        "native": "删除完整，树干、路缘和行人结构自然。",
+        "writeback": "与原生一致，无明显新增损伤。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R058/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R059",
+      "scene": "scene-0696",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.4,
+      "native_score": 2.2,
+      "writeback_score": 2.2,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "该帧没有清楚可归属的隐藏B可见区域；左右停放车辆只提供邻车参照。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是中间停车位的深灰SUV，原图轮廓清楚，左侧黑车和右侧蓝SUV分开可见。掩膜覆盖目标，右缘接近蓝SUV但没有明显串入。原生和最终都移除目标，恢复草地、栏杆、路缘与车位；删除区下方存在轻微水平色带和纹理变软，但两侧车辆未见实质损伤。",
+      "column_notes": {
+        "original": "中央SUV清楚，左右邻车关系明确。",
+        "mask": "覆盖完整，右侧外扩靠近蓝SUV。",
+        "native": "目标删除，背景结构总体连续，但路面有轻微水平色带。",
+        "writeback": "与原生一致，色带仍在但不妨碍整体可接受性。"
+      },
+      "labels": [
+        "mask_neighbor_close",
+        "acceptable_delete",
+        "slight_horizontal_band",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R059/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R060",
+      "scene": "scene-0297",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.0,
+      "native_score": 2.4,
+      "writeback_score": 0.9,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "protected_reference只显示被遮挡车辆的上部窄片与立杆遮挡，车身归属和外观信息不足。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是斑马线后方的深色MPV，前景两名行人与目标分离。蓝洞完整覆盖目标，但左上进入B代理区域且下缘覆盖部分斑马线。原生删除后道路、斑马线与远处车辆总体连续。最终却在左后背景生成大块黑色多边形和锐利斜边，遮断车辆与墙面，形成严重写回伪影。",
+      "column_notes": {
+        "original": "深色MPV清楚，前景行人不遮挡目标主体。",
+        "mask": "目标覆盖充分，但左上接近B代理且下扩到斑马线。",
+        "native": "车辆删除，斑马线和道路结构保持良好。",
+        "writeback": "背景出现大块黑色多边形，硬边遮损远车和墙面。"
+      },
+      "labels": [
+        "mask_b_risk",
+        "clean_native",
+        "writeback_black_polygon",
+        "background_damage"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R060/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R060/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R061",
+      "scene": "scene-0297",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.5,
+      "writeback_score": 2.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未提供可独立识别的隐藏B可见车辆局部，右侧停放车属于背景邻车。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是左侧车道中的白色SUV，原图车辆完整清楚，右侧停放车与道路标线可辨。掩膜沿整车覆盖，蓝洞没有串入邻车。原生和最终均完整删除SUV，恢复双黄线、路面、路边建筑与栏杆；光影和透视连续，右侧车辆保持原状，仅有很轻的局部柔化。",
+      "column_notes": {
+        "original": "白色SUV清楚、独立，输入质量良好。",
+        "mask": "覆盖完整，未触及右侧车辆。",
+        "native": "删除干净，双黄线与路面透视连续。",
+        "writeback": "与原生一致，背景和邻车保持稳定。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "road_markings_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R061/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R062",
+      "scene": "scene-0241",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 1.5,
+      "writeback_score": 1.5,
+      "rgb_prior_assessment": "无法确认",
+      "rgb_basis": "没有提供清楚的B可见参考，目标后的车辆关系未知；输出中的银色轿车不能反推为真实隐藏GT。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是左侧车道的白色DUGGAN工程厢车，原图清楚，周围货车与行人分离。掩膜完整覆盖目标且未明显串入路边行人。原生及最终在删除位置后方呈现一辆完整银色轿车，几何上可读但缺少真实B可见证据，无法确认其身份；该车边缘和路面接触也偏软，存在车辆再生迹象。",
+      "column_notes": {
+        "original": "白色工程车尺度大、文字和轮廓清楚。",
+        "mask": "覆盖整车，未明显触及行人或相邻货车。",
+        "native": "目标消失但出现完整银色车状结构，身份无可见证据且边缘偏软。",
+        "writeback": "与原生相同，银色车状再生迹象仍在。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "vehicle_like_regeneration",
+        "hidden_identity_unverified"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R062/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R063",
+      "scene": "scene-0241",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.5,
+      "writeback_score": 2.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未提供可归属为目标后方B的独立清晰可见区域；右侧白色货车属于邻车。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是道路左侧的红色轿车，原图车体可辨，与右侧白色货车和中央深色车分离。掩膜贴合整车，模型洞未明显侵入货车。原生与最终均干净删除红车，恢复建筑墙面、人行道、路缘及道路阴影；右侧白色货车保持完整，删除区只有轻微纹理柔化。",
+      "column_notes": {
+        "original": "红色轿车清楚且与周围车辆分离。",
+        "mask": "完整覆盖车身，未串入右侧货车。",
+        "native": "目标删除，墙面、路缘和阴影连续。",
+        "writeback": "与原生一致，未引入明显拼接瑕疵。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbor_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R063/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R067",
+      "scene": "scene-0533",
+      "frame": 5,
+      "original_score": 2.4,
+      "mask_score": 2.0,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "protected_reference中左侧黑色SUV的车身和前脸清楚、归属可辨，可核验外露部分但不能证明隐藏范围。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是停车列最右端的蓝灰轿车，原图虽略软仍可辨，左邻黑色SUV清楚。蓝洞覆盖目标，但左缘与绿色B代理重叠，存在邻车风险。原生和最终均删除目标，墙面、禁止停车牌、路缘和斑马线保持连续，黑色SUV的外露车身没有明显被改坏。",
+      "column_notes": {
+        "original": "蓝灰轿车可辨，和左侧黑SUV能分开。",
+        "mask": "整车覆盖充分，但蓝洞左缘进入B代理区域。",
+        "native": "目标删除，墙面、标牌与斑马线结构自然，B车外露部分保留。",
+        "writeback": "与原生一致，无新增明显损伤。"
+      },
+      "labels": [
+        "mask_b_overlap",
+        "clean_delete",
+        "b_visible_part_preserved",
+        "background_restored"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R067/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R067/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R076",
+      "scene": "scene-0291",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "没有清楚可归属为隐藏B的可见车身；左右黑色和灰色车辆只作为邻车参照。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是桥面中间的红色轿车，原图清楚，与左侧黑车及右侧灰车保持间隔。掩膜沿车身完整覆盖且未串入邻车。原生和最终均移除红车，恢复桥栏、远处建筑和路面车道线；背景中央细小竖状结构略糊，但整体几何连续，两侧车辆均保持原状。",
+      "column_notes": {
+        "original": "红色轿车清楚，邻车边界明确。",
+        "mask": "覆盖完整，与左右车辆均有间隔。",
+        "native": "目标删除，桥栏和路面连续，仅有轻微软化。",
+        "writeback": "与原生一致，邻车没有新增损伤。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R076/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R077",
+      "scene": "scene-0291",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.5,
+      "native_score": 2.5,
+      "writeback_score": 2.5,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未见可独立归属的隐藏B可见局部；左侧红车和右侧深色车属于相邻车辆。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是红车与右侧深色车之间的灰色轿车，原图车身完整、三车关系清楚。掩膜紧贴目标且没有覆盖两侧车辆。原生和最终均干净移除灰车，桥栏、建筑、路面和黄色车道线恢复自然；左侧红车与右车边缘保持清楚，没有可见接缝或色块。",
+      "column_notes": {
+        "original": "灰色目标车清楚，与两侧车辆可分。",
+        "mask": "贴合整车，未串入左右邻车。",
+        "native": "删除干净，桥栏与车道线连续。",
+        "writeback": "与原生一致，无明显伪影。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R077/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R080",
+      "scene": "scene-0714",
+      "frame": 5,
+      "original_score": 2.3,
+      "mask_score": 2.4,
+      "native_score": 2.3,
+      "writeback_score": 2.3,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未提供可归属为隐藏B的清晰局部；删除区后的停放车辆和行人属于一般背景证据。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是路口左侧横向行驶的深色轿车，原图略有运动模糊但车身仍可辨。掩膜覆盖完整，未明显吞入远处车列。原生和最终都移除目标，恢复交叉口路面与后方停放车辆、人行道和人群；背景略软且细节有限，但没有车状残留、明显硬边或邻车破坏。",
+      "column_notes": {
+        "original": "目标略模糊但可独立辨认，输入可用。",
+        "mask": "覆盖整车，外扩未触及明显邻车。",
+        "native": "目标删除，背景车列与路面总体合理，局部偏软。",
+        "writeback": "与原生一致，未见新增拼接问题。"
+      },
+      "labels": [
+        "motion_blur_input",
+        "mask_good",
+        "acceptable_delete",
+        "slight_background_blur"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R080/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R081",
+      "scene": "scene-0714",
+      "frame": 5,
+      "original_score": 2.3,
+      "mask_score": 2.4,
+      "native_score": 1.0,
+      "writeback_score": 1.0,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "没有清楚可归属为隐藏B的车辆可见局部，路口行人与设施不足以提供B外观信息。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是近侧横穿路口的深色轿车，原图虽软但轮廓完整。掩膜覆盖车身并与路边行人分离。原生和最终均移除汽车，却在原车后方的人行道与路缘处留下大块深灰黑雾团、拖影和模糊竖块，覆盖人物附近背景；车虽消失，恢复结构明显不自然。",
+      "column_notes": {
+        "original": "深色轿车可辨，目标框和背景关系明确。",
+        "mask": "覆盖完整，未直接串入行人。",
+        "native": "删除区留下大面积暗雾、拖影和模糊块，路缘结构被破坏。",
+        "writeback": "与原生相同，暗色雾团没有修复。"
+      },
+      "labels": [
+        "mask_good",
+        "dark_smear",
+        "background_occlusion",
+        "poor_delete"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R081/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R086",
+      "scene": "scene-0244",
+      "frame": 5,
+      "original_score": 2.6,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未见可清楚归属为目标后方B的独立车辆局部，远处车辆和行人仅是场景背景。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是中央车道正前方的白色轿车，原图尺度大、边界清楚，左侧黑车与右侧施工桶分离。掩膜完整贴合车体，没有吞入相邻对象。原生和最终都干净删除轿车，恢复停车线、斑马线、路面裂纹与远处行人；局部线条稍软但连续，黑车和施工设施保持原状。",
+      "column_notes": {
+        "original": "白色轿车大且清晰，输入充分。",
+        "mask": "整车覆盖完整，与邻车和施工桶分离。",
+        "native": "删除成功，路面标线和远景连续，仅轻微软化。",
+        "writeback": "与原生一致，无新增明显瑕疵。"
+      },
+      "labels": [
+        "clear_input",
+        "mask_good",
+        "clean_delete",
+        "road_markings_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R086/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R087",
+      "scene": "scene-0244",
+      "frame": 5,
+      "original_score": 2.3,
+      "mask_score": 2.5,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "否（可见B证据弱）",
+      "rgb_basis": "未提供目标后方B的清晰可见车身；右侧白色轿车与路边车辆均是邻车或背景。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是左侧远车道的深色轿车，原图尺寸较小但尾灯和车身仍可辨。掩膜贴合目标且未串入中央白车。原生和最终均删除深色车，恢复路口斑马线、路缘、灌木和人行道；背景略有柔化但结构连续，白车、施工桶和行人均未见明显损伤。",
+      "column_notes": {
+        "original": "目标较小但可独立辨认，输入仍可用。",
+        "mask": "覆盖整车，未触及中央白色轿车。",
+        "native": "删除完整，斑马线、路缘和灌木保持连续。",
+        "writeback": "与原生一致，无明显拼接伪影。"
+      },
+      "labels": [
+        "small_target",
+        "mask_good",
+        "clean_delete",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R087/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R041",
+      "scene": "scene-0703",
+      "frame": 5,
+      "original_score": 2.2,
+      "mask_score": 1.7,
+      "native_score": 0.9,
+      "writeback_score": 0.6,
+      "rgb_prior_assessment": "无法确认",
+      "rgb_basis": "该拥挤场景未给出可独立核验的B可见参考，目标后方身份无法由单帧推断。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是中央偏右、夹在深色MPV与右侧灰车之间的黑色SUV，尺寸较小但前脸可辨。黄线/蓝洞呈尖角并贴近两侧车，右缘有串入风险。原生删除后仍留下深灰车状团块和模糊车头，右侧灰车轮廓受扰；最终又出现拱形硬接缝和更明显灰块，车辆再生迹象突出且身份无法确认。",
+      "column_notes": {
+        "original": "黑色SUV较小且处拥挤车列中，但目标仍可辨。",
+        "mask": "轮廓尖角异常，洞紧贴两侧邻车并有右侧串入风险。",
+        "native": "目标区域仍有深灰车状团块和模糊车头，右邻车边缘变形。",
+        "writeback": "新增拱形硬边与灰色补块，比原生更差。"
+      },
+      "labels": [
+        "crowded_input",
+        "mask_neighbor_risk",
+        "vehicle_like_regeneration",
+        "writeback_seam"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R041/structure_keyframe.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    },
+    {
+      "case_id": "R043",
+      "scene": "scene-0246",
+      "frame": 5,
+      "original_score": 2.5,
+      "mask_score": 2.0,
+      "native_score": 2.4,
+      "writeback_score": 2.4,
+      "rgb_prior_assessment": "是（仅可见B）",
+      "rgb_basis": "protected_reference中目标左侧深色SUV的车尾和侧面清楚、归属可辨，可核验其外露部分，隐藏范围仍未知。",
+      "occ_prior_assessment": "未核验（本轮未提供OCC）",
+      "note": "目标是停车列中左侧的白色SUV，原图清楚，左边深色SUV、右边灰SUV和厢式车均可区分。蓝洞覆盖目标，但左缘与绿色B代理略有重叠。原生和最终都删除白车，恢复建筑窗台、墙面、路缘和路面；左右邻车可见部分保持完整，没有明显接缝或车状残留。",
+      "column_notes": {
+        "original": "白色SUV清楚，左右邻车关系明确。",
+        "mask": "覆盖完整，但左缘进入B车代理范围。",
+        "native": "目标删除，建筑立面与路缘连续，邻车外露部分保留。",
+        "writeback": "与原生一致，无新增明显伪影。"
+      },
+      "labels": [
+        "mask_b_overlap",
+        "clean_delete",
+        "b_visible_part_preserved",
+        "neighbors_preserved"
+      ],
+      "images_viewed": [
+        "outputs/v77-real-delete-r50/R043/structure_keyframe.jpg",
+        "outputs/v77-real-delete-r50/R043/protected_reference.jpg"
+      ],
+      "human_verdict": null,
+      "temporal_verdict": null
+    }
+  ]
+}
