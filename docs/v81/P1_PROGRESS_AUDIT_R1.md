@@ -299,4 +299,28 @@ flowchart LR
 
 独立全25帧审核：非法条件把近静止天空改成地面/绿篱横带和移动暗块，确有构图响应；仍无可辨滑板者/板，也没有正确恢复f04视角变化或f10–14起跳。它不是合法输入、更不是方法收益；不能唯一定位传播，也不能据其失败否定U-Net，存在分布外条件。原始meta、8条实际解码视频、图板及审核留同run `full_latent_oracle_step1000`。6窗新增24条视频也实际解码。
 
-质量hold后研究继续。下一项只做同1000权重、同x_t/sigma/CLIP/time的配对单步EDM x0，比较合法融合condition与非法GT condition，并导出c_skip*x_t基线，避免把输入自身保留的GT当模型恢复。该项尚在CPU准备；不追加训练、不开sigma网格、不加入P2/P3。正式指标未计算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none。
+质量hold后研究继续。下一项只做同1000权重、同x_t/sigma/CLIP/time的配对单步EDM x0，比较合法融合condition与非法GT condition，并导出c_skip*x_t基线，避免把输入自身保留的GT当模型恢复。该项随后完成，实测及下一项见下节；不开sigma网格、不加入P2/P3。正式指标未计算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none。
+
+## 配对单步teacher与下一有界学习点
+
+UTC2026-10-09 23:10。正式1000权重固定首个valid滑板窗00f88c4f0a/.33，两支同带噪GT x_t、ε、σ=exp(.7)、CLIP、time与timestep；只换UNet condition（可见传播/非法完整GT latent），无CFG、更新0。实际31.03秒、峰8.56GiB，9项输入配对逐值断言全部通过；全25帧GT-VAE与c_skip*x_t基线一同导出。
+
+```mermaid
+flowchart LR
+    G[GT latent + 同一噪声] --> X[同一带噪 x_t]
+    V[可见 RGB] --> P[VAE与传播条件]
+    O[完整 GT：非法条件] --> E[VAE mode]
+    X --> U[固定1000 SVD 单步，无CFG]
+    P --> U
+    E --> U
+    U --> Y[两支 x0]
+    X --> B[c_skip 基线]
+    Y --> A[全25帧独立审核]
+    B --> A
+```
+
+独立gpt-6-sol/xhigh/no-fast助手审完五张连续帧图板：两支x0都比c_skip的马赛克噪声恢复粗场景、人物位置和跳跃阶段，仍明显模糊；完整GT条件没有稳定额外部件/动作收益。x_t本身带GT，不把这些动作归功条件，不等同Gaussian QUERY通过。单σ无CFG、GT mode target与正式训练posterior/完整采样不同；不据此否定U-Net或唯一归因传播。助手建议的时序置换保留为定位候选，尚未执行；不机械重复既有后续帧控制。原始输入、150张PNG、五图板和完整QA留`r1/paired_teacher_step1000`。
+
+未发现确定工程接线错误，正式仍仅1%论文更新预算，因此选择同协议下一匹配学习点：正式1000恢复至总2000，只新增1000更新，保留Adam/scheduler/RNG、数据/mask/seed/模块和推理条件，不混任何诊断权重。父9741/子9744实际启动，23:10:13快照1001步；预计训练约100分钟后同三valid×两倍率六窗全帧审核。此项不是质量放行，不自动5000/100K；若曲线仍缺结构/条件利用进步，按新增证据选最小控制，不因hold停掉autoresearch。
+
+为了保存下一断点，只清理已完成的内层`valid_all_frames.zip`（5,883,017,839 B），保留可重构它的两个已验证7z卷和原RGB。`fuser`不存在，改用/proc数字PID的fd inode扫描，确认无打开句柄后才删；free3.20→9.08GB。记录`recoverable_inner_zip_cleanup.json`有恢复入口；关键100/500/1000断点、失败媒体不删。formal_metrics未算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none。

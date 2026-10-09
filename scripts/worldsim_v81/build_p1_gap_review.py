@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import math
 from pathlib import Path
 import re
 import sys
@@ -70,12 +71,43 @@ def main() -> None:
     if continuation and (continuation['source_step'] != 500 or continuation['training_budget'] != 1000):
         raise ValueError('正式续训预算与500→1000记录不一致')
     step1000_done = bool(continuation and continuation['new_1000_validation_available'])
+    bounded2000_path = output/'bounded2000_state.json'
+    bounded2000 = read(bounded2000_path) if bounded2000_path.is_file() else None
+    if bounded2000 and (bounded2000.get('source_step') != 1000
+                        or bounded2000.get('training_budget', bounded2000.get('target_step')) != 2000
+                        or bounded2000.get('propagation_protocol') != 'paper-bidirectional-m4'
+                        or Path(bounded2000.get('source_checkpoint', '')).name != 'p1-checkpoint-001000.pt'):
+        raise ValueError('正式1000→2000阶段快照的源断点、目标或协议不匹配')
     header = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1 条件与原始SVD对照</title>
     <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1400px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four,.five{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.five{grid-template-columns:repeat(5,minmax(0,1fr))}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four,.five{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>P1：固定权重条件诊断与原始SVD对照</h1><p><a href="index.html">返回完整进度、历史输出与数据页</a></p>
     <div class="panel warn"><b>P1正式指标尚未计算：正式训练与诊断分别报告。</b><p>旧条件隔离使用100步权重且更新0；正式500步验证质量hold，当前验证状态见下方。固定片段64步控制另列。原始SVD生成不是外扩任务或论文指标。完整GT条件只作BUILD诊断，不能用于正式QUERY；人工verdict留空。</p></div>'''
     sections = [header, condition_gap_panel(gap),
                 review_note(output/'condition_gap_teacher', 'condition_gap_teacher')]
+    bounded2000_summary = ''
+    bounded2000_panel = None
+    if bounded2000:
+        processes = bounded2000.get('processes', {})
+        process_rows = []
+        for key, label in (('controller_pid', '控制器'), ('child_pid', '训练子进程')):
+            entry = processes.get(key, bounded2000.get(key))
+            if isinstance(entry, dict):
+                pid, alive = entry.get('pid'), entry.get('alive')
+                command = entry.get('actual_command')
+            else:
+                pid, alive = entry, None
+                command = bounded2000.get('command') if key == 'child_pid' else None
+            if pid is not None or command:
+                shown = f'PID {html.escape(str(pid))}；存活={html.escape(str(alive))}'
+                if command:
+                    shown += f'；实际命令：<code>{html.escape(str(command))}</code>'
+                process_rows.append(f'<li>{label}：{shown}</li>')
+        observed = bounded2000.get('observed_train_step', bounded2000.get('training_step'))
+        observed_at = bounded2000.get('observed_at_utc', bounded2000.get('updated_at_utc', '未记录'))
+        status = html.escape(str(bounded2000.get('status', '未记录')))
+        bounded2000_summary = f'快照 {html.escape(str(observed_at))}：记录步数 {html.escape(str(observed))}，状态 {status}'
+        process_html = f'<ul>{"".join(process_rows)}</ul>' if process_rows else '<p>快照未记录可核对的PID或实际命令。</p>'
+        bounded2000_panel = f'''<div class="panel" id="bounded2000-snapshot"><h2>同协议有界阶段：正式1000 → 目标2000步</h2><p>本阶段最多新增1000次正式更新；从正式1000断点恢复模型、Adam与RNG，数据、模块、seed、mask和传播协议不改。teacher/oracle诊断权重不进入正式训练，不自动延伸到100K。正式1000六窗质量hold是继续有界研究的起点，不是2000步质量放行。</p><p>{bounded2000_summary}。<b>这是采集时快照，不代表实时步数或进程现状。</b></p>{process_html}<p><a href="bounded2000_state.json">实际状态、PID与命令原文</a></p></div>'''
     if continuation and not step1000_done:
         sections.insert(1,f'''<div class="panel"><h2>正式同协议学习曲线：500 → 总计1000步</h2><p>仅新增500次更新，恢复正式500步模型与Adam状态，传播协议 {html.escape(continuation['propagation_protocol'])}，推理模式 {html.escape(continuation['inference_mode'])}。截至快照 {html.escape(continuation['observed_at_utc'])} 记录到 {continuation['observed_train_step']} 步；这是快照，不代表实时步数。1000步结果尚未生成；到达后按固定三例×两倍率共六窗逐帧审核与质量门处理，不能以这三项64步单片段控制代替正式评价。</p><a href="bounded1000_state.json">正式续训实际命令与状态快照</a></div>''')
     state_path=output/'bounded500_state.json'
@@ -188,6 +220,36 @@ def main() -> None:
         sections.append('''</div><figure><img src="full_latent_oracle_step1000/gt_vae_reconstruction_contact.png" alt="完整GT经VAE mode重建的抽帧联系图"><figcaption>完整GT VAE mode重建，仅检查编码/解码；三帧不能判断时序。</figcaption></figure>''')
         sections.extend([f'<p>{oracle_status}</p>',
                          '<p><a href="full_latent_oracle_step1000/run.json">配对与非法输入说明</a> · <a href="full_latent_oracle_step1000/delivery_check.json">25帧重放及八视频解码核验</a> · <a href="full_latent_oracle_step1000/qa_boards/frames_00_04.jpg">连续帧图板入口</a></p></div>'])
+    teacher = output/'paired_teacher_step1000'
+    teacher_done = (teacher/'run.json').is_file()
+    if teacher_done:
+        teacher_run = read(teacher/'run.json')
+        paired = teacher_run['paired_exact']
+        if (not step1000_done or teacher_run.get('status') != 'complete'
+                or teacher_run.get('checkpoint_step') != 1000
+                or teacher_run.get('optimizer_updates') != 0
+                or teacher_run.get('cfg') is not False
+                or not math.isclose(teacher_run['sigma'], math.exp(.7), rel_tol=1e-6)
+                or not all(paired[key] for key in ('same_x_t_before_after', 'same_scaled_noisy_unet_input',
+                                                   'same_clip', 'same_time_ids', 'same_timestep', 'no_cfg_batch'))):
+            raise ValueError('1000步单步teacher的来源、配对或固定sigma记录不一致')
+        boards = [teacher/'qa_boards'/f'frames_{start:02d}_{start+4:02d}.jpg'
+                  for start in range(0, 25, 5)]
+        if not all(path.is_file() for path in boards):
+            raise FileNotFoundError('单步teacher五张连续帧图板未齐')
+        teacher_review = teacher/'assistant_review.json'
+        if teacher_review.is_file():
+            report = read(teacher_review)
+            verdict = report.get('assistant_verdict', report.get('verdict', '结论见审核原文'))
+            teacher_status = f'独立QA已归档：{html.escape(str(verdict))}；<a href="paired_teacher_step1000/assistant_review.json">完整审核</a>'
+        else:
+            teacher_status = '独立全帧QA待完成；此处不预填视觉结论'
+        sections.insert(3,f'''<div class="panel warn"><b>单步teacher诊断已完成，仍不是合法自由采样QUERY。</b><p>正式1000步六窗{'独立审核hold' if review_hold else '结论见审核'}；完整GT oracle仍为非法输入，仅作定位。单步teacher两支都以带噪GT latent为输入，固定σ=exp(0.7)、无CFG、更新0；{teacher_status}。<a href="#paired-teacher-step1000">查看五张连续帧图板</a></p></div>''')
+        sections.append('''<div class="panel warn" id="paired-teacher-step1000"><h2>固定σ带GT单步teacher：合法条件与非法完整GT条件</h2><p><b>两支均不是QUERY。</b>两支共享同一个带噪GT x_t、CLIP、时间条件和单步timestep；仅将条件从可见视频传播latent切换为读取隐藏像素的完整GT VAE mode latent。固定σ=exp(0.7)，无CFG、无dropout、零训练更新。完整GT条件非法，只用于定位。c_skip × x_t基线本身含GT；即使单步x0显示动作，也不能等同于从纯Gaussian生成25帧通过。</p><div class="diagram"><div class="box">GT latent + ε → 同一带噪x_t</div>→<div class="box">SVD单步去噪<br>无CFG</div>→<div class="box">合法/非法条件x0</div><div class="box">可见RGB → VAE/传播 → 合法条件</div><div class="box">完整GT → VAE mode → 非法条件</div><div class="box">x_t → c_skip基线</div></div><p>每张图板连续五帧，逐行依次为GT、visible、GT-VAE、合法条件x0、非法完整GT条件x0、c_skip × x_t；完整五板覆盖f00–f24。</p>''')
+        for board in boards:
+            relative = board.relative_to(output).as_posix()
+            sections.append(f'<figure><img loading="lazy" src="{relative}" alt="单步teacher连续五帧，六行GT/visible/GT-VAE/合法x0/非法x0/c_skip基线"><figcaption>{html.escape(board.stem)}：连续五帧六行对照</figcaption></figure>')
+        sections.append(f'<p>{teacher_status}</p><p><a href="paired_teacher_step1000/run.json">真实输入、配对、σ与限制</a></p></div>')
     capacity=output/'fixed_input_capacity_step500_64'
     capacity_path=capacity/'run.json'
     if capacity_path.is_file():
@@ -311,6 +373,8 @@ def main() -> None:
         <p>原始预训练SVD，未加载作者编辑权重或P1断点。完整首帧 → 标准Diffusers img2vid → 25帧原生输出。不是逐帧外扩；尺寸/精度/原始画幅同时变化的组不能作为单因素归因。</p>
         <div class="four"><figure><img src="{name}/input_full_first.png"><figcaption>唯一完整首帧条件</figcaption></figure><figure><video controls preload="metadata" src="{name}/pred.mp4"></video><figcaption>原始SVD原生生成，25帧</figcaption></figure></div>
         {review_note(folder,name)}<p><a href="{name}/diagnostic.json">实际调用配置与限制</a></p></div>''')
+    if bounded2000_panel:
+        sections.insert(1, bounded2000_panel)
     sections.append('</main><script>document.querySelectorAll(".four,.five").forEach(g=>{let vs=[...g.querySelectorAll("video")],busy=false;vs.forEach(v=>{v.addEventListener("play",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v){x.currentTime=v.currentTime;x.play().catch(()=>{})}});busy=false});v.addEventListener("pause",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v)x.pause()});busy=false});v.addEventListener("seeked",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v&&Math.abs(x.currentTime-v.currentTime)>.15)x.currentTime=v.currentTime});busy=false})})});</script></html>')
     (output/'condition_gap_review.html').write_text(''.join(sections),encoding='utf-8')
     index=output/'index.html'
@@ -346,9 +410,15 @@ def main() -> None:
         document=document.replace(old,new)
     if step1000_done:
         quality = '正式1000步六窗独立审核仍hold' if review_hold else '正式1000步六窗已完成生成'
+        if bounded2000:
+            quality += '；1000→2000有界阶段已有实际快照'
         oracle_notice = (f'非法完整GT latent oracle已完成零训练定位，{oracle_status}；即使oracle清楚也不算方法通过。'
                          '<a href="condition_gap_review.html#full-latent-oracle">查看非法输入边界和两支对照</a>。') if oracle_done else ''
-        notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>同协议从500仅追加500次更新；{review_detail}。{oracle_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">完成快照</a>为准。</p></div>'
+        teacher_notice = (f'带GT单步teacher诊断已完成，{teacher_status}；不代表自由采样通过。'
+                          '<a href="condition_gap_review.html#paired-teacher-step1000">查看五张连续帧图板</a>。') if teacher_done else ''
+        bounded_notice = (f'{bounded2000_summary}；这是快照，不代表实时训练进度或2000步质量通过。'
+                          '<a href="condition_gap_review.html#bounded2000-snapshot">查看实际PID与命令</a>。') if bounded2000 else ''
+        notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>{bounded_notice}同协议从500到正式1000已追加500次更新；{review_detail}。{oracle_notice}{teacher_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">1000步完成快照</a>为准。</p></div>'
     elif continuation:
         notice=f'<div class="panel" id="gap-result-link"><b>当前P1：正式500→1000步同协议续训，仅新增500步</b><p>截至 {html.escape(continuation["observed_at_utc"])} 快照记录 {continuation["observed_train_step"]} 步；1000步验证尚无结果。到达后核查固定三例×两倍率共六窗、原生视频与质量门。<a href="condition_gap_review.html">查看正式500步六窗及固定片段64步CLIP、噪声、可见flow控制</a>；人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">续训快照</a>为准。</p></div>'
     else:

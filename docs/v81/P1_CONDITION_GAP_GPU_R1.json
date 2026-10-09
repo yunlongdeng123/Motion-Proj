@@ -1,7 +1,7 @@
 {
   "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
   "run": "r1",
-  "observed_at_utc": "2026-10-09T22:58:53.137116+00:00",
+  "observed_at_utc": "2026-10-09T23:10:13.972037+00:00",
   "host": "wm-3090-1009",
   "gpu": "RTX3090 24GiB",
   "source_checkpoint_step": 100,
@@ -1262,31 +1262,32 @@
     "record_scope": "historical_prior_authorization; not_current_power_policy"
   },
   "current_execution": {
-    "status": "step1000_visual_hold_oracle_complete_autoresearch_active",
-    "observed_at_utc": "2026-10-09T22:58:53.137116+00:00",
-    "observed_step": 1000,
+    "status": "formal_1000_to_2000_training_after_paired_teacher_audit",
+    "observed_at_utc": "2026-10-09T23:10:13.972037+00:00",
+    "observed_step": 1001,
     "processes": {
       "controller_pid": {
-        "pid": null,
-        "alive": false,
-        "actual_command": null
+        "pid": 9741,
+        "alive": true,
+        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_2000.py --worker "
       },
       "child_pid": {
-        "pid": null,
-        "alive": false,
-        "actual_command": null
+        "pid": 9744,
+        "alive": true,
+        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train --max-steps 2000 --save-every 1000 --keep-checkpoints 2 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt "
       }
     },
     "power_policy": "用户最新要求：不随便关机；质量hold后主任务继续排查",
     "automatic_shutdown": false,
     "monitor_automation_id": "v8-1-p1",
     "monitor_behavior": "质量hold后继续有界autoresearch；正常训练静默",
-    "weekly_remaining_percent": 13,
+    "weekly_remaining_percent": 11,
     "available_reset_cards": 2,
     "reset_card_used": false,
     "full_reproduction_achieved": false,
     "formal_metrics_computed": false,
-    "next_control": "同1000权重、同x_t/sigma/CLIP/time，配对单步EDM x0与c_skip*x_t基线；CPU准备中，无长训自动放行"
+    "next_control": "正式2000后同三valid×两倍率六窗全25帧独立审核；根据匹配学习曲线选择有证据的下一项，不默认100K",
+    "next_control_gpu_started": true
   },
   "retained_storage_relocations": {
     "records": [
@@ -1340,5 +1341,96 @@
     "human_verdict": null,
     "evidence": "同run/full_latent_oracle_step1000",
     "interpretation": "完整逐帧GT latent明显改变构图，但未恢复可辨滑板者及视角/起跳；不能唯一定位传播或否定U-Net"
+  },
+  "paired_teacher_step1000": {
+    "status": "complete",
+    "kind": "paired_single_sigma_teacher_step1000",
+    "diagnostic_only": true,
+    "formal_metrics": false,
+    "optimizer_updates": 0,
+    "checkpoint_step": 1000,
+    "sequence_id": "00f88c4f0a",
+    "side_ratio_each": 0.33,
+    "sigma": 2.0137527074704766,
+    "cfg": false,
+    "paired_exact": {
+      "same_x_t_before_after": true,
+      "same_scaled_noisy_unet_input": true,
+      "legal_condition_exact": true,
+      "illegal_condition_exact": true,
+      "same_clip": true,
+      "same_time_ids": true,
+      "same_timestep": true,
+      "gt_mode_rng_unchanged": true,
+      "no_cfg_batch": true
+    },
+    "elapsed_seconds": 31.031064307986526,
+    "peak_cuda_allocated_gib": 8.558273315429688,
+    "limits": [
+      "Illegal full-GT condition reads hidden pixels and cannot be a valid QUERY result.",
+      "Full-GT condition may be out of the training condition distribution.",
+      "c_skip*x_t contains GT from the supervised noisy latent; x0 fidelity must be compared against this baseline.",
+      "A single training sigma without CFG does not predict a 25-step Gaussian rollout.",
+      "No parameter update or new training occurs."
+    ],
+    "all_25_frames_reviewed": true,
+    "assistant_verdict": "both_teacher_x0_outputs_restore_coarse_scene_and_time_varying_subject_beyond_c_skip_noisy_baseline;_full_GT_condition_shows_no_clear_consistent_structural_gain_over_legal_visible_condition;_free_sampling_failure_remains_unexplained",
+    "human_verdict": null,
+    "evidence": "same run/paired_teacher_step1000",
+    "interpretation": "单步带噪GT恢复粗结构，完整GT条件无稳定额外结构收益；不能解释纯Gaussian失败，不作QUERY能力证据"
+  },
+  "bounded2000_continuation": {
+    "observed_at_utc": "2026-10-09T23:10:13.972037+00:00",
+    "status": "train_to_002000",
+    "source_step": 1000,
+    "training_budget": 2000,
+    "observed_train_step": 1001,
+    "added_updates_observed": 1,
+    "last_event": "train_step",
+    "processes": {
+      "controller_pid": {
+        "pid": 9741,
+        "alive": true,
+        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_2000.py --worker "
+      },
+      "child_pid": {
+        "pid": 9744,
+        "alive": true,
+        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train --max-steps 2000 --save-every 1000 --keep-checkpoints 2 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt "
+      }
+    },
+    "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt",
+    "propagation_protocol": "paper-bidirectional-m4",
+    "inference_mode": "paper-feedforward",
+    "queued_gpu_jobs": [],
+    "power_policy": "用户要求持续autoresearch，不随便关机",
+    "new_2000_validation_available": false,
+    "complete_validation_windows": 0,
+    "free_data_bytes": 9079779328,
+    "free_system_bytes": 6498271232,
+    "human_verdict": null,
+    "formal_metrics_computed": false,
+    "planned_added_updates": 1000,
+    "automatic_5000_or_100k": false,
+    "rationale": "仅1%论文更新预算、无确定接线错误；同协议再一个匹配学习点，不自动追加100K，不混诊断权重",
+    "estimated_training_minutes": 100,
+    "assistant_verdict": null
+  },
+  "recoverable_inner_zip_cleanup": {
+    "observed_at_utc": "2026-10-09T23:08:05.221362+00:00",
+    "removed_path": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/downloads/valid_all_frames.zip",
+    "bytes": 5883017839,
+    "role": "recoverable inner zip; outer verified 7z and extracted original RGB preserved",
+    "recovery_sources": [
+      "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/downloads/valid_all_frames.7z.001",
+      "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/downloads/valid_all_frames.7z.002"
+    ],
+    "extraction_record": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/downloads/valid_all_frames.extract.json",
+    "free_bytes_before": 3196821504,
+    "open_handle_check": "/proc numeric pid fd inode scan; zero open handles",
+    "input_rgb_removed": false,
+    "checkpoints_removed": false,
+    "free_bytes_after": 9079840768,
+    "status": "complete"
   }
 }
