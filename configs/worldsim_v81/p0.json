@@ -1,0 +1,43 @@
+{
+  "task_id": "WS-V81-SEEN-TO-SCENE-20261009",
+  "run_id": "r0",
+  "phase": "P0_CPU_PREPARATION",
+  "source_revision": "2a9dfc9888e44c7fd00b08af41ef967ae46b6323",
+  "seed": 8101,
+  "data": {
+    "dataset": "youtube_vos",
+    "split": "train",
+    "frames": 25,
+    "height": 256,
+    "width": 256,
+    "mask_convention": "one_is_hole",
+    "train_left_fraction": 0.33,
+    "train_right_fraction": 0.33,
+    "normalization": "minus_one_to_one",
+    "hole_fill": 0.0
+  },
+  "initialization": {
+    "diffusion": "stabilityai/stable-video-diffusion-img2vid-xt-1-1",
+    "raft": "raft-things.pth",
+    "flow_completion": "recurrent_flow_completion.pth",
+    "seen_to_scene_finetuned_checkpoint": null
+  },
+  "training": {
+    "learning_rate": 0.00001,
+    "batch_per_device": 1,
+    "precision": "fp16",
+    "trainable": ["flow_completion", "latent_refinement", "svd_temporal_blocks"],
+    "frozen": ["raft", "vae", "clip", "svd_spatial_blocks"],
+    "loss_protocol": "pending_paper_code_resolution",
+    "smoke_steps": 2,
+    "paper_budget_steps": 100000
+  },
+  "inference": {"sampling_steps": 25, "reference_window": 4},
+  "acceptance": {
+    "real_training_completed": false,
+    "real_inference_completed": false,
+    "paper_metrics_reproduced": false
+  },
+  "failure_ledger_refs": ["V77-F02"],
+  "failure_ledger_delta": "none"
+}

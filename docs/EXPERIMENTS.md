@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V81-SEEN-TO-SCENE-20261009 / r0 | v7.7继承分支；Seen-to-Scene方法核对，CPU数据与传播原语准备；真实训练0步／推理0窗 | [报告](v81/SEEN_TO_SCENE_P0.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r53 | SAM3 ModelScope权重与真实轮廓CPU入口；旧矩形接口排查，推理0窗/训练0步 | [报告](v77/REAL_INSTANCE_MASK_R53.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r52 | R001原生主干3次64步；best1全尺寸回退，矩形proxy/伪标签全部退役，仅保留失败诊断 | [报告](v77/SINGLE_CASE_FINETUNE_R52.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r51 | 52景72例官方/r46/r47对照；104新窗，AI六列抽帧评分，504视频解码；训练0 | [报告](v77/REAL_DELETE_NATIVE_R51.md) |
