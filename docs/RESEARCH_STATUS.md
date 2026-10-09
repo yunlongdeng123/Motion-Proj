@@ -1,13 +1,15 @@
 # 当前研究状态
 
-更新：2026-10-09。当前分支 `research/worldsim-v8.1-seen-to-scene`，继承 v7.7 的 `000ad1f0`。已确认工作主机 `wm-3090-1009`；远端使用独立 `/root/autodl-tmp/motion_proj_v81` checkout，保留原 v7.7 checkout。
+更新：2026-10-09。分支 `research/worldsim-v8.1-seen-to-scene` 继承 v7.7 的 `000ad1f0`。主机 `wm-3090-1009`，独立 `/root/autodl-tmp/motion_proj_v81` checkout；原v7.7代码与资产保留。
 
-当前 task `WS-V81-SEEN-TO-SCENE-20261009`，准备 run `r0`。按用户最新要求放下 DriveEditor，沿 Seen-to-Scene 公开方法从原始 SVD + RAFT + ProPainter 建立自有训练、推理与评测基础设施。路线为 P0 真实训练闭环 → P1 YouTube-VOS / DAVIS 外扩复现 → P2 驾驶遮挡—显露 DELETE 基线 → 固定 P2 后开展 P3 编辑感知传输。[架构、协议与准入](v81/SEEN_TO_SCENE_P0.md)。
+task/run：`WS-V81-SEEN-TO-SCENE-20261009/r1`。路线为原始 SVD + RAFT + ProPainter 光流补全，自有数据/训练/推理闭环；P0→P1论文外扩复现→P2驾驶真实显露DELETE基线→固定P2后P3。当前用nuScenes推进方法适配，不能混报YouTube-VOS论文复现。[路线](v81/SEEN_TO_SCENE_P0.md) · [r1协议与components图](v81/NUSCENES_P0_R1.md)。
 
-已建立数据清单／真实 RGB 读取、显式外扩 mask、可微 flow resize／latent warp／合法参考融合、输入依赖预检与源码 ZIP 大小检查。CPU 13 项定向测试通过；这些只是基础接口验证。真实 SVD 训练 0 步、模型推理 0 窗，P0 尚未通过。官方源码与论文在传播参数、参考选择、损失及 mask 定义上有差异，已记录；尚不能称模型复现成功。
+CPU准备完成：6官方train+2官方val场景，共200张原始1600×900 CAM_FRONT RGB，保留sample_data.next链与sweeps；每段25帧约2秒，实际50/100ms混合、平均约12Hz。只提取缺失tgz成员，未整包解压；固定25帧、256²、左右各84像素外扩洞。20项CPU测试通过，真实官方传播组件小尺寸forward/backward通过；均不替代真实SVD优化验收。输入HTML在本地 `outputs/v81-nuscenes-p0/index.html`，16个输入视频解码通过。[输入证据](v81/P0_R1_INPUTS.json)。
 
-远端盘点：RTX 3090 一张；无本任务 GPU 作业。数据盘约 109 GiB 可用。原始 RAFT 与 ProPainter flow completion 权重存在；当前搜索未找到 YouTube-VOS / DAVIS RGB 和原始 SVD XT 1.1 组件目录。已恢复远端外网代理；现有 Hugging Face 凭据下载原始 SVD XT 1.1 返回 403 GatedRepo，需要访问授权或原始权重目录。官方 YouTube-VOS train.tar 的下载触发动态配额（小 Range 曾通过，大文件与后续范围返回 quota HTML），本次未得到可用25帧训练clip，有界尝试已停止；下载探针保留在仓库外，不把网页当RGB。下一步先补齐真实 RGB / 原始 SVD 并接入模型入口，确认输入与协议后才执行首个真实优化步；不用 DriveEditor 微调权重替代 SVD 初始化，也不提前加入 P3 创新。
+原始SVD XT 1.1访问权限已恢复，官方固定版本组件正在仓库外续传；网络助手和临时文件不提交。三份YouTube-VOS（train.tar/test.zip/valid.tar）各已挂一个续传worker，Google当前返回quota HTML，按退避重试，未获得完整压缩包。详情 `r1/downloads/`；下载HTML不能算数据。数据盘约109GiB起始可用，可容纳本轮组件与三包，不需清盘。
 
-GitHub 实际源码 ZIP 已验证为34,740,503 bytes（对应5faeaf75，远低于100,000,000上限），本地／远端13项CPU测试均通过。源码归档通过 `.gitattributes` 排除历史 `docs/autoresearch` 附件，完整材料仍保留在 Git/GitHub 与 v7.7 历史；新数据／权重／视频／第三方代码放仓库外。本轮不清盘、不重写历史、不关机、不新建自动化。人工 verdict 留空。
+真实训练/推理代码已接入；唯一 `run_p0.py` 控制器等待SVD完整组件后，冻结6+2输入清单，执行优化第1步→退出并恢复至第2步→独立val25步生成→视频审核页。到本次快照，真实优化0步、生成0窗，P0尚未通过。原生与可见区合成分列；遇工程错误停止留日志，不扩大预算。初始化不用DriveEditor/Seen-to-Scene编辑微调权重。
 
-v7.7 已退役矩形道路 proxy 与硬拼接伪标签；历史结果、候选、关键 checkpoint、SAM3 与 failure 资产保留。`failure_ledger_refs=[V77-F02]`，本轮 `failure_ledger_delta=none`，未新增模型失败结论。
+重要边界：采用公开train.py全帧传播，未复现论文m=4/SSIM参考链和DDIM inversion；条件RAFT只读可见RGB，完整RGB flow仅作teacher监督。3090采用bf16 UNet autocast/float32参数，记录真实梯度、冻结范围和峰值，不能用两步烟测宣称生成/时序/DELETE收益。
+
+GitHub源码ZIP仍按100,000,000 bytes上限检查，历史docs/autoresearch通过export-ignore排除附件但完整Git历史不改写。新模型、数据、第三方代码和视频均在仓库外。本轮不关机、不新建自动化；人工verdict留空。`failure_ledger_refs=[V77-F02]`，`failure_ledger_delta=none`。

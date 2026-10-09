@@ -1,0 +1,56 @@
+{
+  "task_id": "WS-V81-SEEN-TO-SCENE-20261009",
+  "run_id": "r1",
+  "protocol": "nuScenes method adaptation / P0 smoke",
+  "source_revision": "2a9dfc9888e44c7fd00b08af41ef967ae46b6323",
+  "svd_revision": "043843887ccd51926e3efed36270444a838e7861",
+  "seed": 8101,
+  "data": {
+    "dataset": "nuScenes v1.0-trainval",
+    "camera": "CAM_FRONT",
+    "train_scenes": 6,
+    "val_scenes": 2,
+    "split": "official scene split",
+    "sampling": "25 sample_data.next frames; no nearest-time resampling",
+    "selection": "availability of original RGB cache, engineering smoke only",
+    "original_size": [900, 1600],
+    "training_size": [256, 256],
+    "transform": "BICUBIC resize then center crop",
+    "hole": {"left_pixels": 84, "right_pixels": 84, "normalized_fill": 0.0}
+  },
+  "initialization": {
+    "diffusion": "original SVD XT 1.1 fp16 files loaded as float32",
+    "raft": "raft-things.pth",
+    "flow_completion": "recurrent_flow_completion.pth",
+    "propagation_refinement": "random initialization",
+    "seen_to_scene_checkpoint": null,
+    "driveeditor_checkpoint": null
+  },
+  "training": {
+    "optimizer": "Adam",
+    "learning_rate": 0.00001,
+    "batch_per_device": 1,
+    "max_steps": 2,
+    "resume_after_step": 1,
+    "precision": "bf16 autocast for SVD UNet; float32 parameters and flow/refinement",
+    "trainable": ["flow_completion", "propagation_refinement", "svd_temporal_transformer"],
+    "frozen": ["raft", "vae", "clip", "svd_spatial"],
+    "loss": ["SVD EDM diffusion", "bidirectional flow L1", "ternary warp"],
+    "condition_flow_rgb": "masked visible RGB only",
+    "teacher_flow_rgb": "full RGB, no_grad, supervision only",
+    "condition_dropout": "official CLIP/latent dropout",
+    "svd_fps_condition": 7
+  },
+  "inference": {
+    "sampling_steps": 25,
+    "scheduler": "EulerDiscreteScheduler",
+    "reference_protocol": "official train.py all-frame sequential propagation",
+    "cfg": "linear 1 to 3 over frames",
+    "vae_decode_chunk": 4,
+    "paper_reference_selection_m4": false,
+    "paper_ddim_inversion": false,
+    "full_rgb_gt_in_condition": false
+  },
+  "failure_ledger_refs": ["V77-F02"],
+  "failure_ledger_delta": "none"
+}

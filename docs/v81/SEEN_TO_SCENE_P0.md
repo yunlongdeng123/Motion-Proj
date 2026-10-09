@@ -66,7 +66,7 @@ flowchart LR
 4. `scripts/worldsim_v81/build_manifest.py`：从真实 RGB 建清单，少帧目录拒绝，结果写仓库外。
 5. `scripts/worldsim_v81/preflight.py`：列出模型文件、RGB、依赖与 GPU 的实际缺口；不把依赖检查当模型执行。
 
-这些基础算子不是完整 Seen-to-Scene 重实现。参考 SSIM 选择、ProPainter FCNet 与 refinement 接入、SVD 训练／推理入口尚待实现；不能用合成张量或玩具网络宣称 P0 完成。
+这些基础算子不是完整 Seen-to-Scene 重实现。后续 r1 已增加真实官方 FCNet／LatentPropagation／SVD 组件桥接、可恢复训练和短片推理入口，协议见 [nuScenes P0 r1](NUSCENES_P0_R1.md)。SSIM 参考选择与 inversion 尚未在此入口复现；不能用合成张量或玩具网络宣称 P0 完成。
 
 训练起步配置：[p0.json](../../configs/worldsim_v81/p0.json)。25 帧、256²、左右各 0.33 的训练 mask 来自公开代码的起步设置，边界定义显式。当前数据读取为每视频一个确定性 clip 的验收入口，正式随机 100K clip 采样未实施。
 
@@ -82,7 +82,7 @@ flowchart LR
 
 ## P1 协议
 
-下载入口：[YouTube-VOS 2019 train.tar](https://drive.google.com/file/d/1lU9jCX-H0ntwh87tt2cA0xEPeWOJzD6S/view?usp=sharing)、[DAVIS 2017 TrainVal 480p](https://data.vision.ee.ethz.ch/csergi/share/davis/DAVIS-2017-trainval-480p.zip)。原始 [SVD XT 1.1](https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1) 在远端现有凭据下返回 403，需要申请访问；不会拿 DriveEditor 合并 checkpoint 冒充原始权重。
+下载入口：[YouTube-VOS 2019 train.tar](https://drive.google.com/file/d/1lU9jCX-H0ntwh87tt2cA0xEPeWOJzD6S/view?usp=sharing)、[test.zip](https://drive.google.com/file/d/1qpp9Dh_lVrmKPboR4wM0PD9iSK6zfqy2/view)、[valid.tar](https://drive.google.com/file/d/1bw8KcpzfrT08HYbuROZmY0bp4TkYl4_g/view)、[DAVIS 2017 TrainVal 480p](https://data.vision.ee.ethz.ch/csergi/share/davis/DAVIS-2017-trainval-480p.zip)。原始 [SVD XT 1.1](https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1) 的权限在 r1 恢复，并使用原始组件初始化，不拿 DriveEditor 合并 checkpoint 替代。
 
 数据使用 [YouTube-VOS 官方数据](https://youtube-vos.org/dataset/vos/)与 [DAVIS 2017](https://davischallenge.org/davis2017/code.html)。外扩任务的训练 mask 是合成边界遮蔽，不把数据集实例分割标注误称原论文 mask。
 
@@ -116,6 +116,6 @@ P3 的消融保持相同来源、可见性过滤、数据、主干和预算；�
 
 `.gitattributes` 在源码归档中排除 `docs/autoresearch`；此目录仍保留在 Git/GitHub，继承历史不重写、不强推、不删原证据。ZIP 中的历史附件链接需在 GitHub 浏览完整材料。`scripts/check_source_archive.py` 可重复验证归档大小；交付还需检查实际 GitHub 下载 ZIP。
 
-当前输入缺口：原始SVD现有凭据403；官方YouTube-VOS下载受动态配额影响，未获得可用25帧片段。网络探针不提交到代码库；这些是输入／访问问题，不是训练或方法失败。
+输入与下载状态见 [RESEARCH_STATUS](../RESEARCH_STATUS.md)。SVD 访问授权已恢复；YouTube-VOS 若返回配额 HTML，下载器保留合法部分并退避重试，不能当作已下载数据。网络下载助手放仓库外；输入／访问问题不等价于训练或方法失败。
 
 本轮没有新增研究失败，`failure_ledger_delta=none`；历史边界继续引用 [V77-F02](../research_failures/entries/V77-F02.md)。当前进度和阻塞只写 [RESEARCH_STATUS](../RESEARCH_STATUS.md)。
