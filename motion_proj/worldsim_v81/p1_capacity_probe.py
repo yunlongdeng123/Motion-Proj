@@ -115,7 +115,7 @@ def build_teacher_condition(components, cache: dict, device: torch.device) -> to
     """每次评估重跑 FCNet 和传播；只缓存冻结的 GT RAFT/VAE/CLIP。"""
     plan = cache["plan"]
     mask = cache["mask"].to(device)
-    flow_gt = tuple(x.to(device) for x in cache["flow"])
+    flow_gt = tuple(x.to(device) for x in cache.get("flow_input", cache["flow"]))
     pair_masks = static_fcnet_pair_masks(mask, plan)
     predicted_flow, _ = components.fcnet.forward_bidirect_flow(flow_gt, pair_masks)
     flow = components.fcnet.combine_flow(flow_gt, predicted_flow, pair_masks)

@@ -24,7 +24,7 @@ from .reference_propagation import (build_reference_plan, propagate_reference_la
                                     static_fcnet_pair_masks)
 from .train import gradient_report
 from .train_p1 import (DEFAULT_DATA, FORMAT, _official_image_embedding, _official_util,
-                       paired_flow_loss, reference_indices_from_visible,
+                       paired_flow_loss, raft_flows_for_pairs, reference_indices_from_visible,
                        validate_resume_protocol)
 from .infer_p1 import _official_pipeline_class
 
@@ -32,6 +32,7 @@ from .infer_p1 import _official_pipeline_class
 PROBE_FORMAT = "worldsim_v81_fixed_input_capacity_probe_v1"
 VISIBLE_CLIP_PROBE_FORMAT = "worldsim_v81_fixed_input_capacity_visible_clip_probe_v1"
 RESAMPLED_NOISE_PROBE_FORMAT = "worldsim_v81_fixed_clip_resampled_diffusion_probe_v1"
+VISIBLE_FLOW_PROBE_FORMAT = "worldsim_v81_fixed_clip_visible_flow_probe_v1"
 SOURCE_STEPS = (100, 500)
 SHARED_CACHE_KEYS = ("plan", "flow", "target_latent", "cond_latent", "noise",
                      "time_ids", "mask", "sigma", "cond_sigma")
@@ -87,6 +88,7 @@ def validate_fixed_inputs(payload: dict, origin: dict, batch: dict,
             or origin.get("kind") != "fixed_input_training_clip_capacity_only"
             or origin.get("teacher_clip_source", "full-gt") != "full-gt"
             or origin.get("training_diffusion_noise", "fixed") != "fixed"
+            or origin.get("training_flow_source", "full-gt") != "full-gt"
             or origin.get("source_step") != source_step
             or Path(origin.get("source_checkpoint", "/missing")).resolve()
             != source_checkpoint.resolve()
@@ -108,6 +110,8 @@ def validate_fixed_inputs(payload: dict, origin: dict, batch: dict,
         raise ValueError("固定输入的mask与当前训练片段逐值不一致")
     if any(key not in cache for key in (*SHARED_CACHE_KEYS, "clip")):
         raise ValueError("固定输入缓存缺少GT flow/VAE/noise/CLIP/time条件")
+    if "flow_input" in cache:
+        raise ValueError("原teacher缓存不能夹带替换后的训练光流")
     expected_plan = build_reference_plan(
         25, reference_indices_from_visible(batch["visible_rgb"], batch["hole_mask"]))
     if cache["plan"] != expected_plan:
@@ -177,6 +181,38 @@ def training_cache_for_update(cache: dict, *, mode: str, util,
                                  dtype=cache["target_latent"].dtype)}
 
 
+@torch.no_grad()
+def select_training_flow(cache: dict, batch: dict, *, source: str,
+                         components) -> tuple[dict, dict]:
+    """只替换FCNet输入；完整flow仍是监督，teacher缓存与随机流不变。"""
+    if source not in {"full-gt", "visible"}:
+        raise ValueError("未知训练flow来源")
+    if source == "full-gt":
+        return cache, {"source": source, "input_equals_gt": True,
+                       "gt_retained_for_loss": True}
+    device = next(components.raft.parameters()).device
+    devices = [device.index if device.index is not None else torch.cuda.current_device()] if device.type == "cuda" else []
+    components.raft.eval()
+    # RAFT前处理如消耗RNG，不得改变与GT-flow分支配对的sigma/epsilon随机流。
+    with torch.random.fork_rng(devices=devices):
+        flow = raft_flows_for_pairs(
+            components.raft, batch["visible_rgb"].to(device), list(cache["plan"].pairs),
+            iters=20, pair_chunk=2)
+    flow = tuple(item.detach().cpu() for item in flow)
+    if (len(flow) != 2 or any(item.shape != truth.shape or not torch.isfinite(item).all()
+                              for item, truth in zip(flow, cache["flow"]))):
+        raise ValueError("可见flow非有限或形状与GT不一致")
+    delta = [float((item.float() - truth.float()).abs().mean())
+             for item, truth in zip(flow, cache["flow"])]
+    effective = {**cache, "flow_input": flow}
+    return effective, {"source": source, "input_equals_gt": _exact_equal(flow, cache["flow"]),
+                       "input_gt_mae_forward_backward": delta,
+                       "input_shapes": [list(item.shape) for item in flow],
+                       "gt_retained_for_loss": effective["flow"] is cache["flow"],
+                       "rng_preserved_by_fork": True, "raft_iters": 20, "pair_chunk": 2,
+                       "hole_rgb_normalized_value": 0, "pair_masks": "unchanged_static_train"}
+
+
 def fixed_train_step(components, batch: dict, cache: dict, optimizer, scaler,
                      *, amp: str) -> dict:
     """原P1损失与参数；仅把单片段随机输入冻结，不运行CFG dropout。"""
@@ -188,10 +224,11 @@ def fixed_train_step(components, batch: dict, cache: dict, optimizer, scaler,
     plan = cache["plan"]
     mask = cache["mask"].to(device)
     flow_gt = tuple(flow.to(device) for flow in cache["flow"])
+    flow_input = tuple(flow.to(device) for flow in cache.get("flow_input", cache["flow"]))
     pair_masks = static_fcnet_pair_masks(mask, plan)
     flow_pred, _ = checkpoint(components.fcnet.forward_bidirect_flow,
-                              flow_gt, pair_masks, use_reentrant=False)
-    completed = components.fcnet.combine_flow(flow_gt, flow_pred, pair_masks)
+                              flow_input, pair_masks, use_reentrant=False)
+    completed = components.fcnet.combine_flow(flow_input, flow_pred, pair_masks)
     _, _, condition = propagate_reference_latents(
         components.propagator, cache["cond_latent"].to(device),
         completed[0], completed[1], mask, plan)
@@ -252,19 +289,27 @@ def save_terminal_state(path: Path, components, optimizer, scheduler, scaler,
                         seed: int, input_frames: list[str], profile: dict,
                         teacher_clip_source: str = "full-gt",
                         fixed_inputs_source: Path | None = None,
-                        training_diffusion_noise: str = "fixed") -> None:
+                        training_diffusion_noise: str = "fixed",
+                        training_flow_source: str = "full-gt") -> None:
     if teacher_clip_source not in {"full-gt", "visible"}:
         raise ValueError("未知teacher CLIP来源")
     if training_diffusion_noise not in {"fixed", "resampled"}:
         raise ValueError("未知训练diffusion噪声模式")
     if training_diffusion_noise == "resampled" and teacher_clip_source != "full-gt":
         raise ValueError("本轮重采样控制不能同时改变CLIP来源")
-    state = {"format": (RESAMPLED_NOISE_PROBE_FORMAT if training_diffusion_noise == "resampled"
+    if training_flow_source not in {"full-gt", "visible"}:
+        raise ValueError("未知训练flow来源")
+    if training_flow_source == "visible" and (training_diffusion_noise != "resampled"
+                                               or teacher_clip_source != "full-gt"):
+        raise ValueError("visible-flow控制仅与已有重采样分支配对，不能同时改CLIP或噪声模式")
+    state = {"format": (VISIBLE_FLOW_PROBE_FORMAT if training_flow_source == "visible"
+                        else RESAMPLED_NOISE_PROBE_FORMAT if training_diffusion_noise == "resampled"
                         else VISIBLE_CLIP_PROBE_FORMAT if teacher_clip_source == "visible"
                         else PROBE_FORMAT),
              "condition_scope": f"fixed_gt_build_{teacher_clip_source}_first_clip",
              "teacher_clip_source": teacher_clip_source,
              "training_diffusion_noise": training_diffusion_noise,
+             "training_flow_source": training_flow_source,
              "fixed_inputs_source": (str(fixed_inputs_source.resolve())
                                      if fixed_inputs_source is not None else None),
              "source_checkpoint": str(source_checkpoint.resolve()),
@@ -297,6 +342,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--training-diffusion-noise", choices=("fixed", "resampled"),
                         default="fixed",
                         help="resampled仅改变diffusion sigma/epsilon；其余条件与teacher缓存固定")
+    parser.add_argument("--training-flow-source", choices=("full-gt", "visible"),
+                        default="full-gt", help="visible仅改变FCNet输入；完整GT flow监督不变")
     parser.add_argument("--svd", type=Path, default=DEFAULT_SVD)
     parser.add_argument("--raft-weight", type=Path, default=DEFAULT_RAFT)
     parser.add_argument("--fcnet-weight", type=Path, default=DEFAULT_FCNET)
@@ -315,6 +362,8 @@ def main() -> None:
             args.fixed_inputs is None or args.teacher_clip_source != "full-gt"
             or args.updates != 64 or args.query_steps != 25 or args.seed != 2026):
         raise ValueError("重采样控制须复用原缓存、full-gt CLIP、64更新、25采样步和seed2026")
+    if args.training_flow_source == "visible" and args.training_diffusion_noise != "resampled":
+        raise ValueError("visible-flow控制必须与重采样diffusion分支配对")
     if not torch.cuda.is_available():
         raise RuntimeError("只由主任务明确启动GPU容量探针")
     repo = Path(__file__).resolve().parents[2]
@@ -363,7 +412,8 @@ def main() -> None:
                 "visible_rgb": batch["visible_rgb"], "input_frames": input_frames},
                args.output_dir / "fixed_inputs.pt")
     report = {"status": "running", "kind": "fixed_input_training_clip_capacity_only",
-              "probe_format": (RESAMPLED_NOISE_PROBE_FORMAT if args.training_diffusion_noise == "resampled"
+              "probe_format": (VISIBLE_FLOW_PROBE_FORMAT if args.training_flow_source == "visible"
+                               else RESAMPLED_NOISE_PROBE_FORMAT if args.training_diffusion_noise == "resampled"
                                else VISIBLE_CLIP_PROBE_FORMAT if args.teacher_clip_source == "visible"
                                else PROBE_FORMAT),
               "source_checkpoint": str(args.checkpoint.resolve()), "source_step": source_step,
@@ -375,6 +425,7 @@ def main() -> None:
               "condition_scope": f"fixed_gt_build_{args.teacher_clip_source}_first_clip",
               "teacher_clip_source": args.teacher_clip_source,
               "training_diffusion_noise": args.training_diffusion_noise,
+              "training_flow_source": args.training_flow_source,
               "training_noise_scope": ("固定sigma与epsilon" if args.training_diffusion_noise == "fixed"
                                        else "每次更新按官方util重采样sigma~LogNormal(.7,1.6)与epsilon~N(0,I)；其余条件不变"),
               "fixed_inputs_source": (str(args.fixed_inputs.resolve())
@@ -397,6 +448,26 @@ def main() -> None:
     run_query(components, pipeline, batch, refs=cache["plan"].refs,
               seed=args.seed + 10, steps=args.query_steps, amp=amp,
               output_dir=args.output_dir / "query_before")
+    if args.training_flow_source == "visible":
+        # QUERY为24GB显存卸载了模块；RAFT和teacher不能在CPU权重上接CUDA输入。
+        for module in (components.raft, components.fcnet, components.propagator,
+                       components.unet):
+            module.to("cuda")
+    training_base, flow_comparison = select_training_flow(
+        cache, batch, source=args.training_flow_source, components=components)
+    if args.training_flow_source == "visible":
+        torch.save({"flow_input": training_base["flow_input"],
+                    "flow_gt": cache["flow"], "pairs": cache["plan"].pairs},
+                   args.output_dir / "training_flow_inputs.pt")
+        with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
+            report["visible_flow_teacher_before"], _ = measure_teacher(
+                components, training_base, amp=amp)
+    report.update(training_flow_comparison=flow_comparison,
+                  flow_supervision="full_gt_raft_unchanged",
+                  teacher_condition="full_gt_raft_cache_unchanged",
+                  remaining_flow_gap="QUERY使用膨胀3x3的mask，本控制保留训练原mask，未同时改动")
+    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                           encoding="utf-8")
     for module in (components.vae, components.image_encoder, components.raft):
         if any(parameter.requires_grad for parameter in module.parameters()):
             raise RuntimeError("固定输入探针中的观测编码器必须冻结")
@@ -423,7 +494,7 @@ def main() -> None:
         stream.write(json.dumps(rows[0]) + "\n")
         for update in range(1, args.updates + 1):
             training_cache = training_cache_for_update(
-                cache, mode=args.training_diffusion_noise, util=util,
+                training_base, mode=args.training_diffusion_noise, util=util,
                 device=next(components.unet.parameters()).device)
             train = fixed_train_step(components, batch, training_cache, optimizer, scaler, amp=amp)
             scheduler.step()
@@ -442,12 +513,17 @@ def main() -> None:
                         input_frames=input_frames, profile=dataset.profile(),
                         teacher_clip_source=args.teacher_clip_source,
                         fixed_inputs_source=args.fixed_inputs,
-                        training_diffusion_noise=args.training_diffusion_noise)
+                        training_diffusion_noise=args.training_diffusion_noise,
+                        training_flow_source=args.training_flow_source)
     training_elapsed = time.perf_counter() - training_started
     training_peak_bytes = torch.cuda.max_memory_allocated()
     training_peak_reserved_bytes = torch.cuda.max_memory_reserved()
     save_teacher_frames(pipeline, components, decoded, batch,
                         args.output_dir / "teacher_after")
+    if args.training_flow_source == "visible":
+        with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
+            report["visible_flow_teacher_after"], _ = measure_teacher(
+                components, training_base, amp=amp)
     run_query(components, pipeline, batch, refs=cache["plan"].refs,
               seed=args.seed + 10, steps=args.query_steps, amp=amp,
               output_dir=args.output_dir / "query_after")

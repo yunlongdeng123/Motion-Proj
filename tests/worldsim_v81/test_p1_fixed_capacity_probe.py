@@ -145,9 +145,11 @@ class _FCNet(torch.nn.Module):
         super().__init__()
         self.bias = torch.nn.Parameter(torch.tensor(.1))
         self.calls = 0
+        self.flow_inputs = []
 
     def forward_bidirect_flow(self, flow, mask):
         self.calls += 1
+        self.flow_inputs.append(tuple(x.detach().clone() for x in flow))
         return (flow[0] + self.bias, flow[1] + self.bias), None
 
     def combine_flow(self, flow, predicted, mask):
@@ -176,8 +178,9 @@ class _FlowLoss:
         return ((completed - truth).square() * mask).mean()
 
 
-@pytest.mark.parametrize("noise_mode", ("fixed", "resampled"))
-def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatch, noise_mode):
+@pytest.mark.parametrize("noise_mode,visible_flow", (("fixed", False), ("resampled", False),
+                                                     ("resampled", True)))
+def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatch, noise_mode, visible_flow):
     fcnet, propagator, unet = _FCNet(), torch.nn.Linear(1, 1, bias=False), _UNet()
     with torch.no_grad():
         propagator.weight.fill_(.3)
@@ -204,6 +207,16 @@ def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatc
              "clip": torch.full((1, 1, 2), .71),
              "time_ids": torch.tensor([[7., 127., .049787]]),
              "sigma": 2.0137527, "cond_sigma": .049787}
+    if visible_flow:
+        cache["flow_input"] = (flow + .4, flow + .5)
+    loss_targets = []
+    original_loss = probe.paired_flow_loss
+
+    def capture_loss(module, completed, truth, *args, **kwargs):
+        loss_targets.append(tuple(x.detach().clone() for x in truth))
+        return original_loss(module, completed, truth, *args, **kwargs)
+
+    monkeypatch.setattr(probe, "paired_flow_loss", capture_loss)
     snapshot = {key: value.clone() for key, value in cache.items()
                 if isinstance(value, torch.Tensor)}
     batch = {"target_rgb": torch.zeros(1, 2, 3, 2, 2)}
@@ -225,6 +238,11 @@ def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatc
                                                    device=torch.device("cpu"))
     second = probe.fixed_train_step(components, batch, second_cache, optimizer, scaler, amp="bf16")
     assert len(condition_calls) == 2 and fcnet.calls >= 2
+    for target in loss_targets:
+        assert all(torch.equal(x, y) for x, y in zip(target, cache["flow"]))
+    expected_input = cache.get("flow_input", cache["flow"])
+    for actual in fcnet.flow_inputs:
+        assert all(torch.equal(x, y) for x, y in zip(actual, expected_input))
     assert torch.equal(condition_calls[0][0], condition_calls[1][0])
     assert not torch.equal(condition_calls[0][1], condition_calls[1][1])
     assert not torch.equal(condition_calls[0][2], condition_calls[1][2])
@@ -293,6 +311,15 @@ def test_terminal_state_carries_distinct_format_and_restart_material(tmp_path):
     resampled = torch.load(resampled_path, map_location="cpu", weights_only=False)
     assert resampled["format"] == probe.RESAMPLED_NOISE_PROBE_FORMAT != FORMAT
     assert resampled["training_diffusion_noise"] == "resampled"
+    flow_path = tmp_path / "flow_state.pt"
+    probe.save_terminal_state(flow_path, components, optimizer, scheduler, scaler,
+                              source_checkpoint=tmp_path / "step500.pt", source_step=500,
+                              updates=64, update_attempts=64, seed=2026,
+                              input_frames=["frame0.jpg"], profile={"seed": 123},
+                              training_diffusion_noise="resampled", training_flow_source="visible")
+    flow_state = torch.load(flow_path, map_location="cpu", weights_only=False)
+    assert flow_state["format"] == probe.VISIBLE_FLOW_PROBE_FORMAT != resampled["format"]
+    assert flow_state["training_flow_source"] == "visible"
 
 
 def test_resampled_control_rejects_changed_clip_budget_seed_before_gpu(monkeypatch):
@@ -308,3 +335,29 @@ def test_resampled_control_rejects_changed_clip_budget_seed_before_gpu(monkeypat
     monkeypatch.setattr(sys, "argv", args + ["--fixed-inputs", "inputs.pt"])
     with pytest.raises(RuntimeError, match="GPU容量探针"):
         probe.main()
+
+
+def test_visible_flow_reads_only_visible_preserves_rng_gt_and_teacher_cache(monkeypatch):
+    components = SimpleNamespace(raft=torch.nn.Linear(1, 1))
+    plan = build_reference_plan(2, [0, 1])
+    gt = (torch.zeros(1, 1, 2, 2, 2), torch.ones(1, 1, 2, 2, 2))
+    cache = {"plan": plan, "flow": gt, "clip": torch.tensor([.1])}
+    batch = {"visible_rgb": torch.zeros(1, 2, 3, 2, 2),
+             "target_rgb": torch.ones(1, 2, 3, 2, 2)}
+    called = []
+
+    def flows(raft, pixels, pairs, *, iters, pair_chunk):
+        torch.randn(3)  # 确认即使前处理用随机数也不能改变后续σ/ε流。
+        called.append((pixels.clone(), pairs, iters, pair_chunk, torch.is_grad_enabled()))
+        return gt[0] + .2, gt[1] + .3
+
+    monkeypatch.setattr(probe, "raft_flows_for_pairs", flows)
+    rng = torch.get_rng_state().clone()
+    train, proof = probe.select_training_flow(cache, batch, source="visible", components=components)
+    assert torch.equal(rng, torch.get_rng_state())
+    assert called[0][1:] == (list(plan.pairs), 20, 2, False)
+    assert torch.equal(called[0][0], batch["visible_rgb"])
+    assert not torch.equal(called[0][0], batch["target_rgb"])
+    assert "flow_input" not in cache and train["flow"] is gt
+    assert proof["gt_retained_for_loss"] and not proof["input_equals_gt"]
+    assert probe.select_training_flow(cache, batch, source="full-gt", components=components)[0] is cache
