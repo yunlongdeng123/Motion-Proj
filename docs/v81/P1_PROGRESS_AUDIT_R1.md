@@ -21,6 +21,8 @@ train 包3471视频、94588张JPEG；1951视频严格>25帧，19313连续窗口�
 
 输入/视频输出在仓库外：`/root/autodl-tmp/reviews/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/progress-preview`；同步至本地 `outputs/v81-paper-p1`。审核脚本为 `scripts/worldsim_v81/build_p1_progress_review.py`。播放fps7仅为导出/模型条件，不据此宣称数据原始帧率。
 
+补充独立目视QA：三个输入联系图的五张抽帧均有合理姿态/镜头变化，未见明显重复、错序或损坏；可见带、mask和监督角色正确，但五帧不能证明整段时序通过。源JPEG文件名实际每5递增，所以包内连续25张不等于原视频逐帧；正式YouTube评测另用全帧包，作者实际训练帧采样率仍需核对。[数据集官方说明](https://youtube-vos.org/dataset/vos/)亦区分带标注训练帧和版本统计。完整CPU检查41 passed，审核10视频全部解码、23本地链接无缺失。
+
 ## 原文与公开代码的实质边界
 
 来源：[论文§4、§5.1、附录D.1](https://arxiv.org/html/2604.14648)、[固定公开代码](https://github.com/InSeokJeon/Seen_to_Scene/tree/2a9dfc9888e44c7fd00b08af41ef967ae46b6323)。

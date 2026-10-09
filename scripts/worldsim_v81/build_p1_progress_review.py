@@ -139,7 +139,7 @@ def main() -> None:
     <p>BUILD：真实完整 RGB 提供扩散目标、光流监督和公开训练中的首帧 CLIP。QUERY：只提供 masked RGB，隐藏 RGB 不进入条件。训练同时优化 diffusion、flow L1、ternary warp。</p>
     <p>这是通用视频外绘 P1，尚未进入驾驶 DELETE 的 P2，也未加入创新。输入检查与短训复现必须先过关。</p></div>
     <div class="panel"><h2>真实训练进度</h2><p>有效训练视频 {profile['videos']}；短视频排除 {profile['rejected_short']}；可用连续窗口 {profile['available_windows']}；已接触 {snapshot['unique_videos_seen']} 个不同视频。</p>
-    <img src="loss.png"><p>淡线是逐步损失，实线是 50 步均值。各步来自不同视频，曲线不能代替固定输入的生成质量对照。</p><p><a href="snapshot.json">运行快照</a> · <a href="data_profile.json">数据统计</a></p></div>
+    <img src="loss.png"><p>淡线是逐步损失，实线是 50 步均值。各步来自不同视频，曲线不能代替固定输入的生成质量对照。</p><p>展示三段的 JPEG 文件名每 5 递增；“连续25张”指包内相邻文件，并非原视频逐帧。正式 YouTube 评测另用全帧包。作者实际训练采样率尚未确认，需核对这一时序分布差距，不能凭相同尺寸/mask认定协议完全一致。</p><p><a href="snapshot.json">运行快照</a> · <a href="data_profile.json">数据统计</a></p></div>
     <div class="panel"><h2>论文 / 固定公开源码 / 当前实施</h2><p>来源：<a href="https://arxiv.org/html/2604.14648">论文 §4、§5.1、附录 D.1</a>；<a href="https://github.com/InSeokJeon/Seen_to_Scene/tree/2a9dfc9888e44c7fd00b08af41ef967ae46b6323">固定公开代码</a>。表中“差距”不等于已证明它造成失败。</p>
     <div class="scroll"><table><tr><th>项目</th><th>论文</th><th>公开代码</th><th>当前</th><th>结论</th></tr>'''+table+'''</table></div>
     <p>inversion 的 UNet 输出被当作 epsilon 使用，而 SVD scheduler 为 v_prediction；其 B1→B2 广播还会破坏标准 CFG 的同 latent 配对。这里先记录可证实的源码风险，尚未做同条件因果对照。feedforward 与 literal 的现成实现还存在洞区填值/RNG消费差异；两路径的画质差不能直接归因于反演。</p></div>
