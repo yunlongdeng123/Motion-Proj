@@ -31,6 +31,7 @@ from .infer_p1 import _official_pipeline_class
 
 PROBE_FORMAT = "worldsim_v81_fixed_input_capacity_probe_v1"
 VISIBLE_CLIP_PROBE_FORMAT = "worldsim_v81_fixed_input_capacity_visible_clip_probe_v1"
+RESAMPLED_NOISE_PROBE_FORMAT = "worldsim_v81_fixed_clip_resampled_diffusion_probe_v1"
 SOURCE_STEPS = (100, 500)
 SHARED_CACHE_KEYS = ("plan", "flow", "target_latent", "cond_latent", "noise",
                      "time_ids", "mask", "sigma", "cond_sigma")
@@ -85,6 +86,7 @@ def validate_fixed_inputs(payload: dict, origin: dict, batch: dict,
     if (origin.get("status") != "complete"
             or origin.get("kind") != "fixed_input_training_clip_capacity_only"
             or origin.get("teacher_clip_source", "full-gt") != "full-gt"
+            or origin.get("training_diffusion_noise", "fixed") != "fixed"
             or origin.get("source_step") != source_step
             or Path(origin.get("source_checkpoint", "/missing")).resolve()
             != source_checkpoint.resolve()
@@ -158,6 +160,21 @@ def select_teacher_clip(cache: dict, batch: dict, *, source: str, components,
     if source == "visible" and comparison["clip_exact"]:
         raise ValueError("可见首帧CLIP与完整首帧CLIP完全相同，未形成单因素控制")
     return effective, comparison
+
+
+def training_cache_for_update(cache: dict, *, mode: str, util,
+                              device: torch.device) -> dict:
+    """只重采样 diffusion σ/epsilon；teacher基准和全部观测条件保持不变。"""
+    if mode == "fixed":
+        return cache
+    if mode != "resampled":
+        raise ValueError(f"未知diffusion噪声模式: {mode}")
+    sigma = float(util.rand_log_normal([1], loc=0.7, scale=1.6).item())
+    if not math.isfinite(sigma) or sigma <= 0:
+        raise FloatingPointError("diffusion sigma必须是有限正数，不截断或重采样坏值")
+    return {**cache, "sigma": sigma,
+            "noise": torch.randn(cache["target_latent"].shape, device=device,
+                                 dtype=cache["target_latent"].dtype)}
 
 
 def fixed_train_step(components, batch: dict, cache: dict, optimizer, scaler,
@@ -234,13 +251,20 @@ def save_terminal_state(path: Path, components, optimizer, scheduler, scaler,
                         update_attempts: int,
                         seed: int, input_frames: list[str], profile: dict,
                         teacher_clip_source: str = "full-gt",
-                        fixed_inputs_source: Path | None = None) -> None:
+                        fixed_inputs_source: Path | None = None,
+                        training_diffusion_noise: str = "fixed") -> None:
     if teacher_clip_source not in {"full-gt", "visible"}:
         raise ValueError("未知teacher CLIP来源")
-    state = {"format": (VISIBLE_CLIP_PROBE_FORMAT if teacher_clip_source == "visible"
+    if training_diffusion_noise not in {"fixed", "resampled"}:
+        raise ValueError("未知训练diffusion噪声模式")
+    if training_diffusion_noise == "resampled" and teacher_clip_source != "full-gt":
+        raise ValueError("本轮重采样控制不能同时改变CLIP来源")
+    state = {"format": (RESAMPLED_NOISE_PROBE_FORMAT if training_diffusion_noise == "resampled"
+                        else VISIBLE_CLIP_PROBE_FORMAT if teacher_clip_source == "visible"
                         else PROBE_FORMAT),
              "condition_scope": f"fixed_gt_build_{teacher_clip_source}_first_clip",
              "teacher_clip_source": teacher_clip_source,
+             "training_diffusion_noise": training_diffusion_noise,
              "fixed_inputs_source": (str(fixed_inputs_source.resolve())
                                      if fixed_inputs_source is not None else None),
              "source_checkpoint": str(source_checkpoint.resolve()),
@@ -270,6 +294,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         help="已完成原固定输入探针的fixed_inputs.pt；visible CLIP控制必需")
     parser.add_argument("--teacher-clip-source", choices=("full-gt", "visible"),
                         default="full-gt")
+    parser.add_argument("--training-diffusion-noise", choices=("fixed", "resampled"),
+                        default="fixed",
+                        help="resampled仅改变diffusion sigma/epsilon；其余条件与teacher缓存固定")
     parser.add_argument("--svd", type=Path, default=DEFAULT_SVD)
     parser.add_argument("--raft-weight", type=Path, default=DEFAULT_RAFT)
     parser.add_argument("--fcnet-weight", type=Path, default=DEFAULT_FCNET)
@@ -284,6 +311,10 @@ def main() -> None:
         raise ValueError("query-steps须为正，固定输入探针更新限1..64")
     if args.teacher_clip_source == "visible" and args.fixed_inputs is None:
         raise ValueError("visible CLIP单因素控制必须指定原探针--fixed-inputs")
+    if args.training_diffusion_noise == "resampled" and (
+            args.fixed_inputs is None or args.teacher_clip_source != "full-gt"
+            or args.updates != 64 or args.query_steps != 25 or args.seed != 2026):
+        raise ValueError("重采样控制须复用原缓存、full-gt CLIP、64更新、25采样步和seed2026")
     if not torch.cuda.is_available():
         raise RuntimeError("只由主任务明确启动GPU容量探针")
     repo = Path(__file__).resolve().parents[2]
@@ -295,6 +326,8 @@ def main() -> None:
     batch = default_collate([dataset[0]])
     source_step, amp = validate_source(state, dataset.profile(), batch,
                                        data_root=args.data_root, updates=args.updates)
+    if args.training_diffusion_noise == "resampled" and source_step != 500:
+        raise ValueError("重采样diffusion控制必须从同一正式500开始")
     index, start = dataset.choice(0)
     input_frames = [str(path) for path in dataset.videos[index][1][start:start + 25]]
     args.output_dir.mkdir(parents=True)
@@ -330,7 +363,8 @@ def main() -> None:
                 "visible_rgb": batch["visible_rgb"], "input_frames": input_frames},
                args.output_dir / "fixed_inputs.pt")
     report = {"status": "running", "kind": "fixed_input_training_clip_capacity_only",
-              "probe_format": (VISIBLE_CLIP_PROBE_FORMAT if args.teacher_clip_source == "visible"
+              "probe_format": (RESAMPLED_NOISE_PROBE_FORMAT if args.training_diffusion_noise == "resampled"
+                               else VISIBLE_CLIP_PROBE_FORMAT if args.teacher_clip_source == "visible"
                                else PROBE_FORMAT),
               "source_checkpoint": str(args.checkpoint.resolve()), "source_step": source_step,
               "probe_updates": args.updates, "formal_training_updates": 0,
@@ -340,9 +374,13 @@ def main() -> None:
               "amp": amp,
               "condition_scope": f"fixed_gt_build_{args.teacher_clip_source}_first_clip",
               "teacher_clip_source": args.teacher_clip_source,
+              "training_diffusion_noise": args.training_diffusion_noise,
+              "training_noise_scope": ("固定sigma与epsilon" if args.training_diffusion_noise == "fixed"
+                                       else "每次更新按官方util重采样sigma~LogNormal(.7,1.6)与epsilon~N(0,I)；其余条件不变"),
               "fixed_inputs_source": (str(args.fixed_inputs.resolve())
                                       if args.fixed_inputs is not None else None),
               "cache_comparison": comparison,
+              "cache_comparison_scope": "固定teacher基准缓存；不表示逐更新训练sigma/epsilon相同",
               "teacher_sigma": cache["sigma"], "teacher_cond_sigma": cache["cond_sigma"],
               "teacher_role": ("fixed noisy-GT BUILD; GT RAFT; first CLIP="
                                f"{args.teacher_clip_source}; fps7; no CFG dropout"),
@@ -384,7 +422,10 @@ def main() -> None:
     with log.open("w", encoding="utf-8") as stream:
         stream.write(json.dumps(rows[0]) + "\n")
         for update in range(1, args.updates + 1):
-            train = fixed_train_step(components, batch, cache, optimizer, scaler, amp=amp)
+            training_cache = training_cache_for_update(
+                cache, mode=args.training_diffusion_noise, util=util,
+                device=next(components.unet.parameters()).device)
+            train = fixed_train_step(components, batch, training_cache, optimizer, scaler, amp=amp)
             scheduler.step()
             row = {"update": update, "train": train}
             if update in {16, 32, 64, args.updates}:
@@ -400,7 +441,8 @@ def main() -> None:
                         update_attempts=len(rows) - 1, seed=args.seed,
                         input_frames=input_frames, profile=dataset.profile(),
                         teacher_clip_source=args.teacher_clip_source,
-                        fixed_inputs_source=args.fixed_inputs)
+                        fixed_inputs_source=args.fixed_inputs,
+                        training_diffusion_noise=args.training_diffusion_noise)
     training_elapsed = time.perf_counter() - training_started
     training_peak_bytes = torch.cuda.max_memory_allocated()
     training_peak_reserved_bytes = torch.cuda.max_memory_reserved()

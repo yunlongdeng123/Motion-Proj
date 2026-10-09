@@ -52,6 +52,7 @@ def test_source_contract_requires_formal_checkpoint_and_fixed_clip(tmp_path):
 def test_clip_control_replaces_only_visible_first_frame_embedding(monkeypatch):
     defaults = probe.parse_args(["--checkpoint", "step500.pt", "--output-dir", "new-probe"])
     assert defaults.teacher_clip_source == "full-gt" and defaults.fixed_inputs is None
+    assert defaults.training_diffusion_noise == "fixed"
     clip = torch.full((1, 1, 3), .9)
     cache = {"clip": clip, **{key: torch.tensor([index], dtype=torch.float32)
                                for index, key in enumerate(probe.SHARED_CACHE_KEYS)}}
@@ -175,7 +176,8 @@ class _FlowLoss:
         return ((completed - truth).square() * mask).mean()
 
 
-def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatch):
+@pytest.mark.parametrize("noise_mode", ("fixed", "resampled"))
+def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatch, noise_mode):
     fcnet, propagator, unet = _FCNet(), torch.nn.Linear(1, 1, bias=False), _UNet()
     with torch.no_grad():
         propagator.weight.fill_(.3)
@@ -208,20 +210,41 @@ def test_fixed_inputs_stay_exact_while_fcnet_and_propagator_recompute(monkeypatc
     optimizer = torch.optim.SGD([*fcnet.parameters(), *propagator.parameters(),
                                  *unet.parameters()], lr=.1)
     scaler = torch.amp.GradScaler("cpu", enabled=False)
-    first = probe.fixed_train_step(components, batch, cache, optimizer, scaler, amp="bf16")
-    second = probe.fixed_train_step(components, batch, cache, optimizer, scaler, amp="bf16")
+    draws = []
+
+    def lognormal(shape, *, loc, scale):
+        draws.append((shape, loc, scale))
+        return torch.tensor([math.exp(.7 + len(draws) * .1)])
+
+    util = SimpleNamespace(rand_log_normal=lognormal)
+    torch.manual_seed(2026)
+    first_cache = probe.training_cache_for_update(cache, mode=noise_mode, util=util,
+                                                  device=torch.device("cpu"))
+    first = probe.fixed_train_step(components, batch, first_cache, optimizer, scaler, amp="bf16")
+    second_cache = probe.training_cache_for_update(cache, mode=noise_mode, util=util,
+                                                   device=torch.device("cpu"))
+    second = probe.fixed_train_step(components, batch, second_cache, optimizer, scaler, amp="bf16")
     assert len(condition_calls) == 2 and fcnet.calls >= 2
     assert torch.equal(condition_calls[0][0], condition_calls[1][0])
     assert not torch.equal(condition_calls[0][1], condition_calls[1][1])
     assert not torch.equal(condition_calls[0][2], condition_calls[1][2])
-    for index in (1, 2, 3):
+    for index in (2, 3):
         assert torch.equal(unet.inputs[0][index], unet.inputs[1][index])
-    assert torch.equal(unet.inputs[0][0][:, :, :4], unet.inputs[1][0][:, :, :4])
+    same_noisy_target = torch.equal(unet.inputs[0][0][:, :, :4], unet.inputs[1][0][:, :, :4])
+    if noise_mode == "fixed":
+        assert same_noisy_target and not draws
+        assert torch.equal(unet.inputs[0][1], unet.inputs[1][1])
+    else:
+        assert not same_noisy_target and draws == [([1], .7, 1.6)] * 2
+        assert not torch.equal(unet.inputs[0][1], unet.inputs[1][1])
+        assert not torch.equal(first_cache["noise"], second_cache["noise"])
+        assert first_cache["sigma"] != second_cache["sigma"]
+        assert all(first_cache[key] is cache[key] for key in cache if key not in {"sigma", "noise"})
     assert not torch.equal(unet.inputs[0][0][:, :, 4:], unet.inputs[1][0][:, :, 4:])
     for key, value in snapshot.items():
         assert torch.equal(cache[key], value)
-    for row in (first, second):
-        assert row["sigma"] == pytest.approx(cache["sigma"])
+    for row, actual_cache in ((first, first_cache), (second, second_cache)):
+        assert row["sigma"] == pytest.approx(actual_cache["sigma"])
         assert row["frozen_grad_tensors"] == 0
         assert row["optimizer_updated"] is True
         assert all(group["status"] == "ok" for group in row["gradients"].values())
@@ -261,3 +284,27 @@ def test_terminal_state_carries_distinct_format_and_restart_material(tmp_path):
     assert visible_state["format"] == probe.VISIBLE_CLIP_PROBE_FORMAT != state["format"]
     assert visible_state["teacher_clip_source"] == "visible"
     assert visible_state["fixed_inputs_source"] == str((tmp_path / "fixed_inputs.pt").resolve())
+    resampled_path = tmp_path / "resampled_state.pt"
+    probe.save_terminal_state(resampled_path, components, optimizer, scheduler, scaler,
+                              source_checkpoint=tmp_path / "step500.pt", source_step=500,
+                              updates=64, update_attempts=64, seed=2026,
+                              input_frames=["frame0.jpg"], profile={"seed": 123},
+                              training_diffusion_noise="resampled")
+    resampled = torch.load(resampled_path, map_location="cpu", weights_only=False)
+    assert resampled["format"] == probe.RESAMPLED_NOISE_PROBE_FORMAT != FORMAT
+    assert resampled["training_diffusion_noise"] == "resampled"
+
+
+def test_resampled_control_rejects_changed_clip_budget_seed_before_gpu(monkeypatch):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    args = ["probe", "--checkpoint", "step500.pt", "--output-dir", "new-probe",
+            "--training-diffusion-noise", "resampled"]
+    for extra in ([], ["--fixed-inputs", "inputs.pt", "--teacher-clip-source", "visible"],
+                  ["--fixed-inputs", "inputs.pt", "--updates", "32"],
+                  ["--fixed-inputs", "inputs.pt", "--seed", "999"]):
+        monkeypatch.setattr(sys, "argv", args + extra)
+        with pytest.raises(ValueError, match="重采样控制"):
+            probe.main()
+    monkeypatch.setattr(sys, "argv", args + ["--fixed-inputs", "inputs.pt"])
+    with pytest.raises(RuntimeError, match="GPU容量探针"):
+        probe.main()
