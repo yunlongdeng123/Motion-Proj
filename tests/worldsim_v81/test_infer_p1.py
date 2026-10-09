@@ -1,0 +1,66 @@
+"""P1 可见条件、参考帧与官方 pipeline 导入的 CPU 契约。"""
+
+from pathlib import Path
+
+import numpy as np
+from PIL import Image
+import pytest
+
+from motion_proj.worldsim_v81.infer_p1 import (
+    _official_pipeline_class, build_pairs_for_all_frames, compute_structure_term,
+    effective_amp, load_sequence, select_reference_frame_indices,
+)
+from motion_proj.worldsim_v81.model_bridge import DEFAULT_EXTERNAL
+
+
+def test_public_structure_term_and_reference_pair_tree():
+    gradient = np.arange(64, dtype=np.uint8).reshape(8, 8) * 4
+    inverse = 255 - gradient
+    assert compute_structure_term(gradient, gradient) == pytest.approx(1.0)
+    assert compute_structure_term(gradient, inverse) < 0
+    frames = [Image.fromarray(gradient if i % 2 == 0 else inverse) for i in range(25)]
+    refs = select_reference_frame_indices(frames, 4)
+    assert refs[0] == 0 and refs[-1] == 24
+    chain, to_frame = build_pairs_for_all_frames(25, refs)
+    assert len(chain) + len(to_frame) == 24
+    assert chain == [(refs[j], refs[j - 1]) for j in range(len(refs) - 1, 0, -1)]
+    assert {target for _, target in chain + to_frame} == set(range(24))
+
+
+def test_sequence_uses_first_25_frames_and_visible_center_only(tmp_path):
+    roots = [tmp_path / name for name in ("a", "b")]
+    for variant, root in enumerate(roots):
+        folder = root / "sequence"
+        folder.mkdir(parents=True)
+        for index in range(26):
+            array = np.full((256, 256, 3), 20 if index % 2 else 220, dtype=np.uint8)
+            array[:, :32] = 255 * variant
+            array[:, 224:] = 255 * variant
+            Image.fromarray(array).save(folder / f"{index:05d}.png")
+    a = load_sequence(roots[0], "sequence", 0.125)
+    b = load_sequence(roots[1], "sequence", 0.125)
+    assert len(a[0]) == len(a[1]) == len(a[2]) == 25
+    assert a[0][0].name == "00000.png" and a[0][-1].name == "00024.png"
+    assert a[3] == (32, 224)
+    assert a[4] == b[4] and a[5] == b[5]
+    assert np.array(a[1][0])[:, :32].mean() != np.array(b[1][0])[:, :32].mean()
+    assert np.array(a[2][0])[:, :32].sum() == 0
+
+
+def test_short_sequence_fails_instead_of_implicit_padding(tmp_path):
+    folder = tmp_path / "short"
+    folder.mkdir()
+    Image.new("RGB", (256, 256)).save(folder / "00000.jpg")
+    with pytest.raises(ValueError, match="25"):
+        load_sequence(tmp_path, "short", 0.33)
+
+
+def test_fixed_public_pipeline_imports_without_weights():
+    pipeline = _official_pipeline_class(DEFAULT_EXTERNAL)
+    assert pipeline.__name__ == "StableVideoDiffusionPipeline"
+
+
+def test_literal_public_uses_source_fp16_inside_bf16_requested_run():
+    assert effective_amp("literal-public", "bf16") == "fp16"
+    assert effective_amp("literal-public", "fp16") == "fp16"
+    assert effective_amp("paper-feedforward", "bf16") == "bf16"
