@@ -258,3 +258,5 @@ teacher加权latent MSE 0.191143→0.149839，0/16/32/64完整记录。这是ful
 下一步不能把单sigma 64步学习点当成全部噪声档位的容量证明；CPU先准备固定单片段、论文训练噪声覆盖的有界容量检查，再考虑需要的GPU预算。仍不自动扩正式长训，无P2/P3或架构创新；human_verdict=null，formal_metrics未算，failure_ledger_delta=none。
 
 保存两个诊断权重后盘仅3.6GB；按用户既有清理授权，仅删不再作为恢复源/审核点的400中间断点，100硬链接、500、两组probe终态及所有视频/数据/初始模型均保留。进程退出后实际df空闲约8.1GB；删除文件逻辑大小不冒充立即回收物理空间。清单留同run nonmilestone400_cleanup.json。
+
+本轮GPU收口：2026-10-09 20:47:45 UTC在e280bd56交付后，全部真实进程/控制器检查无作业或队列，执行AutoDL supervisor关机；SSH当场断连，随后复连也关闭。关键断点/两诊断终态和视频已保存。原始关机证据留run poweroff_after_step500_controls.json，本地同名记录补充复连结果；未检查计费面板。P1仍hold，完整复现goal保持active，下一步CPU准备，不自动重开GPU。
