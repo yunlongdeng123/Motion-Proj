@@ -194,3 +194,28 @@ flowchart LR
 解读按同sigma配对：若GT oracle显著更好而可见条件失败，优先做条件落差的短控制；若各组都没有结构，继续区分去噪训练不足与条件利用，不以100步否定容量。高sigma是训练lognormal(.7,1.6)远尾，低sigma已含几乎完整GT，二者单点好坏均不是多步QUERY的充分证据；不能把三档raw MSE随意平均。黑/灰RAFT的单步差还须共享初始latent的自由生成确认。不会因某个误差较小就自动放行100K。
 
 下一次开机先确认远端无用户改动、实际配置和单GPU进程，再部署同分支并执行该固定前向。独立助手看18组的f00/f12/f24；三帧只评结构，不给时序通过。根据结果只选一个短控制，再决定有界训练预算。原有视频、checkpoint及失败证据均保留，P2/P3仍未开始；failure_ledger_delta=none。
+
+## 条件隔离GPU实测与有界学习曲线
+
+2026-10-10，新加坡。实际Euler档位700/15.58997/.002与CPU准备一致。18次teacher前向完成、更新0、峰值9.544GiB，独立助手直接看18张f00/f12/f24。中档不同flow/CLIP均不能恢复鸟体；高档完整CLIP改变粗色彩，低档接近GT主要因输入真实latent。无稳定黑/灰RAFT画质排序。
+
+```mermaid
+flowchart LR
+    X[同一可见25帧] --> P[RAFT / FCNet / 双向参考传播]
+    P --> D[SVD去噪 + VAE解码]
+    C[完整GT或可见首帧CLIP] --> D
+    Z[完全相同初始Gaussian] --> D
+    D --> R[原生 / 可见中心硬写回]
+    S[原始完整16:9首帧] --> B[原始SVD标准sanity]
+    B --> Q[独立全25帧审核]
+    R --> Q
+    Q --> T[同协议100→500短学习曲线]
+```
+
+随后固定step100、可见黑洞flow/传播/VAE/时间、25步Euler和CFG1→3，两条完整采样仅切CLIP，共享Gaussian逐值核对相同；峰值8.559GiB。完整GT首帧oracle不可部署。独立全25帧审核：两组原生侧区均灰白板，后段中心黑绿条/过曝棕块；oracle有色调差，没有恢复鸟翼/树枝。合成清晰中心来自真实RGB写回。单例说明完整首帧CLIP不足以单独修复，不证明CLIP没影响或容量失败。
+
+原始SVD三次sanity无P1/作者权重，无训练更新，25帧/25步/seed2036。256²全管线bf16和全FP32均荧光形体/场景突变；标准1024×576用原始1280×720等比输入、fp16/CPU卸载、UNet分块、decode2，25帧有可辨鸟体/枝叶/草地，独立最低sanity通过，早段仍模糊。尺寸、画幅和精度同时变化，不是单因素控制；不同dtype同seed不保证同噪声。峰值分别14.530/10.544/7.533GiB。只证明原始组件在该条件下有结构，不是P1外扩成绩。来源：[官方Diffusers0.31 SVD示例](https://github.com/huggingface/diffusers/blob/v0.31.0/src/diffusers/pipelines/stable_video_diffusion/pipeline_stable_video_diffusion.py#L30-L47)。
+
+独立审核支持同协议100至总500的有界学习曲线。恢复模型、Adam和RNG，不改数据/mask/seed/网络/学习率/参数范围；关键100硬链接保留，每100保存。到500后原固定3valid×2倍率六窗、原生/写回全部25帧审核再决策，不自动1000/100K。启动快照记录112步，梯度/数值正常；实时状态见 `r1/paper_bidirectional_m4/controller_state.json`。首次控制器因审核字段层级错误在训练前退出，保留日志后修正嵌套字段，未改质量判据。
+
+完整结果/独立JSON/诊断源码保留同run，[GPU轻量实测](P1_CONDITION_GAP_GPU_R1.json)。HTML `condition_gap_review.html` 保留BUILD/QUERY和原生/写回；人工verdict=null。正式四指标未算、protocol_verified=false；failure_ledger_delta=none，未进入P2/P3。

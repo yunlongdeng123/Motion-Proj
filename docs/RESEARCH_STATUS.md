@@ -1,17 +1,17 @@
 # 当前研究状态
 
-更新：2026-10-09T18:51:53.577813+00:00（UTC）。分支 `research/worldsim-v8.1-seen-to-scene`；主机 `wm-3090-1009`，checkout `/root/autodl-tmp/motion_proj_v81`。唯一task/run `WS-V81-SEEN-TO-SCENE-P1-20261009/r1`。用户授权自主复现和subagent审核、无human in loop；GPU作业结束且无其他任务时关机。周额度最新实际剩22%，两张重置卡仍可用，本轮未触发低于3%的重置要求。
+更新：2026-10-10（新加坡）。分支 `research/worldsim-v8.1-seen-to-scene`；主机 `wm-3090-1009`，checkout `/root/autodl-tmp/motion_proj_v81`；唯一task/run `WS-V81-SEEN-TO-SCENE-P1-20261009/r1`。用户重新开启GPU，授权自主复现与subagent审核，无human in loop；计算完成、交付且无其他作业时关机。周额度实际剩21%，两张重置卡可用，未触发低于3%的重置要求。
 
-P0工程闭环完成；P1尚未通过，P2/P3未开始。旧AllFrames与reference_m4分别1000步hold，原产物/断点保留。新paper-bidirectional-m4修正论文双向pull/源mask，Adam/wd0；第二步OOM通过完整时轴激活重算及等价加权ternary分块修复。新正式阶段只到100步；25帧验证与36帧全视频均完成，独立全帧审核仍不合格。没有排队1000/100K。
+P0工程闭环完成；P1尚未通过，P2/P3未开始。旧AllFrames/reference_m4各1000步hold，原产物/断点保留。新paper-bidirectional-m4修正双向pull/源mask、Adam/wd0；OOM采用FCNet完整时轴激活重算及等价ternary分块修复。正式100步短/36帧全视频仍不合格。额外单片段32步属于诊断，末步权重未保存，不计入正式或泛化评测。
 
-已完成用户要求三项诊断：VAE/传播/原生中间解码、共享CLIP/时间/增强噪声/初始latent的正常后续帧对重复首帧、单训练片段32步teacher与纯Gaussian QUERY。后续帧确实进入融合条件并影响最终输出；可见中心在VAE与fused仍保留，最终native失真。不能断言“完全不看后续帧”，也不能把响应当质量。孤立past/future解码较弱，不足以诊断某模块故障。
+固定100权重18组CLIP×flow×实际sigma单步前向已完成，更新0；实际scheduler与CPU准备一致。独立助手看18张f00/f12/f24；完整CLIP改变粗色彩但未恢复结构，黑/灰RAFT没有稳定画质排序。低噪声输入含真实latent，不是自由生成成功。随后固定可见黑洞flow/传播/时间/采样器、完全相同Gaussian，只切CLIP的两条25帧QUERY也未恢复侧区；完整GT首帧不足以单独修复这一个样本。后续帧此前已证明到达融合并影响输出，不能称完全不看后续帧。
 
-固定训练片段32步不计入正式100步或泛化评测；teacher带噪真值、GT flow/完整首帧CLIP，QUERY仅visible。teacher误差轻微下降，结构结果以独立审核为准。原32步诊断未保存最终权重，保留日志/图像/seed与源100断点；新入口补保存供后续复核，不为此重复计算。[实测](v81/P1_CONDITION_DIAGNOSTICS_R1.json) · [协议](v81/YOUTUBE_VOS_P1_R1.md) · [审计与组件图](v81/P1_PROGRESS_AUDIT_R1.md)。
+原始SVD三个sanity完成：256²全管线bf16与全FP32均结构突变；1024×576原始16:9首帧、标准fp16/CPU卸载全25帧有自然鸟体/枝叶/草地，独立最低sanity通过。尺寸、画幅与精度同时变化，不作单因素归因，也不是P1外扩成绩。
 
-CPU隔离诊断已准备：固定step100、0fc958cde2/start2，2类CLIP×3类flow×3档实际Euler sigma，共18次单步前向、优化更新0。新查明公开RAFT洞区-1黑、本地前向路径0灰；VAE均清零。三档EDM公式对真实Diffusers0.31 Euler通过，定向12项CPU测试通过；没有新GPU输出。候选镜像schedule为700/15.59/.002，尚未核对关机远端实际配置，不能当远端实测。详见[CPU准备与来源](v81/P1_CONDITION_GAP_CPU_R1.json)及[组件图/协议审计](v81/P1_PROGRESS_AUDIT_R1.md)。
+当前同协议从正式100断点恢复模型/Adam/RNG，限定总500步（追加400），数据/mask/seed/网络/学习率/参数范围不变。控制器4097、trainer4100，以实时进程为准；快照已记录112步，数值/三组件梯度正常。到500后生成原固定3例×2倍率并退出，助手全帧审核后决策，不自动1000或100K。关键100断点另以硬链接保留。控制器首次因审核JSON字段层级错配在启动训练前退出，保留栈后修正嵌套字段，不绕过审核判据。
 
-下一步需重新开启同一GPU实例，先核对实际scheduler与用户工作、快进部署，再执行18次前向并由独立助手看f00/f12/f24；不自动追加长训。高噪声远尾/低噪声GT重建均不等于自由生成能力；按同sigma条件差决定下一项短控制。当前100+32不足以否定模型容量。外扩任务、数据/seed/正式ID不改，不加入P2/P3或作者编辑权重。
+数据6包完整，train1951有效视频/19313窗口；DAVIS90+附录YT60固定，valid排除正式60。正式四指标未算、protocol_verified=false。单3090/bf16、完整首帧CLIP/GT flow训练与可见QUERY差距继续明示；论文文字重建与逐行公开协议分开，无P2/P3创新。数据盘18GB空闲，当前短预算可容纳断点，长训前再核对空间。
 
-数据6包完整、train1951有效视频/19313窗口；DAVIS90+附录YT60固定、valid排除正式60。full-video入口已完成36帧预检，未证明所有长片显存足够。正式四指标未算，预处理/FVD口径仍有未知，protocol_verified=false。CPU全套84项通过只代表工程验证。媒体/数据/权重/外部源码不入Git，源码ZIP<100MB。
+本地 `outputs/v81-paper-p1/index.html` 保留历史，新 `condition_gap_review.html` 展示18前向、2条完整QUERY、3条SVD sanity与最新训练快照。GPU仍用于训练，旧关机提示已标历史；媒体/模型/数据/外部源码不入Git，源码ZIP<100MB。下一步评500相对100的结构/逐帧内容利用，再选择有证据的短控制；完整复现目标保持active。
 
-审核页同步本地outputs/v81-paper-p1，包含100步短/全视频、完整条件路径与固定片段前后原生/写回。GPU作业已完成，记录提交并推送后确认无其他作业或排队控制器，已按本次授权关闭AutoDL，SSH断连与重新连接关闭均已验证。GPU监控v8-1-p1已删除；完整复现仍未完成，未宣称论文指标达标。failure_ledger_refs=[V77-F02]，failure_ledger_delta=none；本轮不是方法科学否定。
+[本轮GPU实测](v81/P1_CONDITION_GAP_GPU_R1.json) · [协议与组件图](v81/P1_PROGRESS_AUDIT_R1.md) · [固定评测协议](v81/YOUTUBE_VOS_P1_R1.md)。failure_ledger_refs=[V77-F02]，failure_ledger_delta=none；尚无方法科学否定，人工verdict始终留空。

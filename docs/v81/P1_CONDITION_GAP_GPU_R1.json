@@ -1,0 +1,637 @@
+{
+  "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+  "run": "r1",
+  "observed_at_utc": "2026-10-09T19:26:59.818332+00:00",
+  "host": "wm-3090-1009",
+  "gpu": "RTX3090 24GiB",
+  "source_checkpoint_step": 100,
+  "formal_metrics_computed": false,
+  "protocol_verified": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "condition_gap": {
+    "status": "complete",
+    "levels": [
+      {
+        "level": "high",
+        "schedule_index": 0,
+        "sigma": 700.0,
+        "timestep": 1.6377700567245483
+      },
+      {
+        "level": "middle",
+        "schedule_index": 12,
+        "sigma": 15.589967727661133,
+        "timestep": 0.6866568922996521
+      },
+      {
+        "level": "low",
+        "schedule_index": 24,
+        "sigma": 0.0020000000949949026,
+        "timestep": -1.553652048110962
+      }
+    ],
+    "optimizer_updates": 0,
+    "remote_actual_scheduler_verified": true,
+    "shared_noise_exact": true,
+    "shared_x0_exact": true,
+    "peak_gpu_allocated_gib": 9.544199466705322,
+    "roles": "All outputs are single-step noisy-GT BUILD probes; GT CLIP/flow cells are oracle diagnostic only, never deployable QUERY",
+    "limitations": "No CFG, no free Gaussian generation, no causal proof of multi-step sampling quality. FPS/augmentation/VAE are fixed to QUERY. CLIP uses the same training helper for both pixel sources; this is not an exact public test.py CLIP path. Gray-hole flow is an extra control for the owned/public source difference. Compare metrics within the same sigma; low-noise GT input is not independent reconstruction."
+  },
+  "gap_rows": [
+    {
+      "level": "high",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "full_gt_oracle",
+      "metrics": {
+        "weighted_mse": 0.35212022066116333,
+        "hole_mse": 0.37794655561447144,
+        "known_mse": 0.3028132915496826
+      }
+    },
+    {
+      "level": "high",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "visible_black_hole_official",
+      "metrics": {
+        "weighted_mse": 0.35110244154930115,
+        "hole_mse": 0.37666162848472595,
+        "known_mse": 0.30230551958084106
+      }
+    },
+    {
+      "level": "high",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "visible_gray_hole_owned",
+      "metrics": {
+        "weighted_mse": 0.35192450881004333,
+        "hole_mse": 0.3778536021709442,
+        "known_mse": 0.302421510219574
+      }
+    },
+    {
+      "level": "high",
+      "clip_source": "visible_black_hole",
+      "flow_source": "full_gt_oracle",
+      "metrics": {
+        "weighted_mse": 0.3951036036014557,
+        "hole_mse": 0.43293115496635437,
+        "known_mse": 0.32288506627082825
+      }
+    },
+    {
+      "level": "high",
+      "clip_source": "visible_black_hole",
+      "flow_source": "visible_black_hole_official",
+      "metrics": {
+        "weighted_mse": 0.3942112922668457,
+        "hole_mse": 0.4318884015083313,
+        "known_mse": 0.32228004932403564
+      }
+    },
+    {
+      "level": "high",
+      "clip_source": "visible_black_hole",
+      "flow_source": "visible_gray_hole_owned",
+      "metrics": {
+        "weighted_mse": 0.395115464925766,
+        "hole_mse": 0.43317854404449463,
+        "known_mse": 0.3224472999572754
+      }
+    },
+    {
+      "level": "middle",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "full_gt_oracle",
+      "metrics": {
+        "weighted_mse": 0.3205409348011017,
+        "hole_mse": 0.32661667466163635,
+        "known_mse": 0.30512097477912903
+      }
+    },
+    {
+      "level": "middle",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "visible_black_hole_official",
+      "metrics": {
+        "weighted_mse": 0.3201640248298645,
+        "hole_mse": 0.32582730054855347,
+        "known_mse": 0.3055360019207001
+      }
+    },
+    {
+      "level": "middle",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "visible_gray_hole_owned",
+      "metrics": {
+        "weighted_mse": 0.3201761245727539,
+        "hole_mse": 0.326118528842926,
+        "known_mse": 0.30501502752304077
+      }
+    },
+    {
+      "level": "middle",
+      "clip_source": "visible_black_hole",
+      "flow_source": "full_gt_oracle",
+      "metrics": {
+        "weighted_mse": 0.3207298219203949,
+        "hole_mse": 0.3274533748626709,
+        "known_mse": 0.3040708303451538
+      }
+    },
+    {
+      "level": "middle",
+      "clip_source": "visible_black_hole",
+      "flow_source": "visible_black_hole_official",
+      "metrics": {
+        "weighted_mse": 0.32068318128585815,
+        "hole_mse": 0.3273218274116516,
+        "known_mse": 0.30418673157691956
+      }
+    },
+    {
+      "level": "middle",
+      "clip_source": "visible_black_hole",
+      "flow_source": "visible_gray_hole_owned",
+      "metrics": {
+        "weighted_mse": 0.32048431038856506,
+        "hole_mse": 0.3273772895336151,
+        "known_mse": 0.3035048544406891
+      }
+    },
+    {
+      "level": "low",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "full_gt_oracle",
+      "metrics": {
+        "weighted_mse": 0.9992038607597351,
+        "hole_mse": 3.983411716035334e-06,
+        "known_mse": 4.0223590076493565e-06
+      }
+    },
+    {
+      "level": "low",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "visible_black_hole_official",
+      "metrics": {
+        "weighted_mse": 0.9991824626922607,
+        "hole_mse": 3.983064289059257e-06,
+        "known_mse": 4.022774646728067e-06
+      }
+    },
+    {
+      "level": "low",
+      "clip_source": "full_gt_oracle",
+      "flow_source": "visible_gray_hole_owned",
+      "metrics": {
+        "weighted_mse": 0.999212384223938,
+        "hole_mse": 3.983530859841267e-06,
+        "known_mse": 4.0222307688964065e-06
+      }
+    },
+    {
+      "level": "low",
+      "clip_source": "visible_black_hole",
+      "flow_source": "full_gt_oracle",
+      "metrics": {
+        "weighted_mse": 0.9991549849510193,
+        "hole_mse": 3.983275746577419e-06,
+        "known_mse": 4.022049324703403e-06
+      }
+    },
+    {
+      "level": "low",
+      "clip_source": "visible_black_hole",
+      "flow_source": "visible_black_hole_official",
+      "metrics": {
+        "weighted_mse": 0.9991613626480103,
+        "hole_mse": 3.9831547837820835e-06,
+        "known_mse": 4.0223549149231985e-06
+      }
+    },
+    {
+      "level": "low",
+      "clip_source": "visible_black_hole",
+      "flow_source": "visible_gray_hole_owned",
+      "metrics": {
+        "weighted_mse": 0.9991567730903625,
+        "hole_mse": 3.9832630136515945e-06,
+        "known_mse": 4.022097073175246e-06
+      }
+    }
+  ],
+  "gap_review": {
+    "status": "complete",
+    "review_kind": "independent_visual_review_fixed_weight_condition_gap_teacher_only",
+    "source_diagnostic": "diagnostic.json",
+    "checkpoint_step": 100,
+    "contacts_reviewed": 18,
+    "frames_visible_per_contact": [
+      0,
+      12,
+      24
+    ],
+    "architecture_components_diagram": "完整GT或可见首帧 -> CLIP；完整GT/黑洞可见/灰洞可见视频 -> RAFT -> FCNet -> 潜变量传播；共同的可见视频 -> 条件VAE；带噪GT latent + 传播条件 + CLIP -> SVD时序去噪 -> 单步预测",
+    "assistant_verdict": "18张联系图显示：在sigma=700的同噪声比较中，首帧CLIP从完整GT换为可见黑洞会改变大块颜色与明暗布局，并使洞区误差明显增大；但两者都没有重建可辨认的鸟、翅膀或枝叶细节。在sigma=15.59，各组仍是树影、棕色地面和草带的模糊轮廓，CLIP与三种flow的视觉差距均很小。黑洞、灰洞与GT flow在同CLIP下没有稳定可见的结构排序。sigma=0.002的下排几乎复制上排GT，来自带噪GT输入，不能证明从纯高斯QUERY生成或模型已学会外扩。此审核只判定单步条件响应，不能判定完整25帧时序或正式生成质量。",
+    "human_verdict": null,
+    "image_evidence": [
+      {
+        "level": "high",
+        "sigma": 700.0,
+        "visual_observation": "全部6组下排只有深绿树影、棕橙色区域与亮绿草带等粗色块。f00侧边出现大片均匀灰褐区；f12/f24仍是模糊色面，没有GT中鸟的头、羽毛或展开翅膀的清晰形状。完整GT CLIP与可见黑洞CLIP的整体色块/暗区分布可见不同；三种flow在固定CLIP下几乎不可从联系图分辨。",
+        "same_sigma_metric_check": "固定官方黑洞flow时，完整GT CLIP的hole_mse=0.376662，可见黑洞CLIP=0.431888，差0.055226；固定完整GT CLIP时三种flow的hole_mse范围0.376662至0.377947。数值支持CLIP响应较大，但图像都不具语义结构。"
+      },
+      {
+        "level": "middle",
+        "sigma": 15.589967727661133,
+        "visual_observation": "全部6组出现相似的黑绿树影、棕色模糊主体与横向草带；f00/f12/f24的GT鸟姿态和羽毛未清晰恢复。换CLIP或flow只有轻微明暗与边缘变化，不能把任一flow判为有效结构修复。",
+        "same_sigma_metric_check": "固定官方黑洞flow时，完整GT CLIP的hole_mse=0.325827，可见黑洞CLIP=0.327322，差0.001495；固定可见CLIP时三种flow的hole_mse范围0.327322至0.327453。"
+      },
+      {
+        "level": "low",
+        "sigma": 0.0020000000949949026,
+        "visual_observation": "全部6组下排在三张抽帧上几乎逐像素复现上排GT，包含鸟体与背景细节；组间差异肉眼不可辨。这里的模型输入含几乎完整的GT latent，故不是未知区域生成证据。",
+        "same_sigma_metric_check": "各组hole_mse约3.983e-6；不与高/中sigma直接比较作为生成质量排名。"
+      }
+    ],
+    "condition_comparison": {
+      "clip": "同sigma且flow固定时，高sigma的完整GT oracle CLIP影响明显；中sigma仅轻微；低sigma被近乎完整GT输入淹没。这是单步响应，不证明多步QUERY中CLIP是唯一瓶颈。",
+      "flow": "同sigma且CLIP固定时，完整GT、公开黑洞、owned灰洞flow的三帧联系图没有可辨认的鸟体/边界质量排序；黑洞与灰洞的误差差异远小于高sigma的CLIP差异。不能据此认定flow无用。"
+    },
+    "next_minimal_control": "保持step100权重、25帧输入、官方黑洞可见flow、条件VAE增强噪声、初始纯高斯latent、采样器、CFG与seed完全一致，只切换首帧CLIP为完整GT oracle或可见黑洞各跑一条paper-feedforward QUERY；对比全部25帧native与硬合成。这是诊断条件差异，不允许把oracle当可部署结果；无需训练更新。",
+    "limitations": [
+      "18张图每张只抽f00/f12/f24；不能从3帧判断完整时序、闪烁或物体运动。",
+      "所有下排均为单步noisy-GT denoised；没有自由高斯QUERY、CFG链或最终采样结果。",
+      "完整GT CLIP和完整GT flow只用于oracle诊断；正式QUERY不得读取隐藏GT。",
+      "CLIP使用共同训练helper，并非固定公开test.py的精确PIL路径；本实验不能隔离该预处理差异。",
+      "单视频、单训练权重、共享x0和noise；不推出跨样本泛化或因果充分性。"
+    ],
+    "reviewed_contacts": [
+      "high__clip-full_gt_oracle__flow-full_gt_oracle/contact.jpg",
+      "high__clip-full_gt_oracle__flow-visible_black_hole_official/contact.jpg",
+      "high__clip-full_gt_oracle__flow-visible_gray_hole_owned/contact.jpg",
+      "high__clip-visible_black_hole__flow-full_gt_oracle/contact.jpg",
+      "high__clip-visible_black_hole__flow-visible_black_hole_official/contact.jpg",
+      "high__clip-visible_black_hole__flow-visible_gray_hole_owned/contact.jpg",
+      "middle__clip-full_gt_oracle__flow-full_gt_oracle/contact.jpg",
+      "middle__clip-full_gt_oracle__flow-visible_black_hole_official/contact.jpg",
+      "middle__clip-full_gt_oracle__flow-visible_gray_hole_owned/contact.jpg",
+      "middle__clip-visible_black_hole__flow-full_gt_oracle/contact.jpg",
+      "middle__clip-visible_black_hole__flow-visible_black_hole_official/contact.jpg",
+      "middle__clip-visible_black_hole__flow-visible_gray_hole_owned/contact.jpg",
+      "low__clip-full_gt_oracle__flow-full_gt_oracle/contact.jpg",
+      "low__clip-full_gt_oracle__flow-visible_black_hole_official/contact.jpg",
+      "low__clip-full_gt_oracle__flow-visible_gray_hole_owned/contact.jpg",
+      "low__clip-visible_black_hole__flow-full_gt_oracle/contact.jpg",
+      "low__clip-visible_black_hole__flow-visible_black_hole_official/contact.jpg",
+      "low__clip-visible_black_hole__flow-visible_gray_hole_owned/contact.jpg"
+    ]
+  },
+  "clip_query": {
+    "status": "complete",
+    "optimizer_updates": 0,
+    "same_initial_exact": true,
+    "peak_gpu_allocated_gib": 8.558655261993408,
+    "role": "full_gt_oracle is illegal for deployed QUERY; visible_black_hole is legal visible-only condition",
+    "preprocessing": "shared training CLIP helper, not exact public PIL replay"
+  },
+  "clip_query_review": {
+    "status": "complete",
+    "review_kind": "independent_full_frame_clip_query_visual_review",
+    "source_diagnostic": "diagnostic.json",
+    "source_checkpoint_step": 100,
+    "reviewed_boards": 10,
+    "reviewed_frame_indices": "0..24 in both branches, every frame represented by gt/visible/pred/comp",
+    "architecture_components_diagram": "可见视频 -> 可见RAFT/FCNet/双向传播 + 条件VAE -> SVD时序去噪 -> native预测 -> 与可见中心硬合成；完整GT首帧或可见首帧 -> CLIP -> 同一SVD去噪；两支共享初始高斯、采样器、CFG和其余条件",
+    "assistant_verdict": "完整GT首帧的oracle CLIP没有恢复缺失两侧的场景结构。两支的25帧native预测都以灰、白或蓝灰平滑侧块为主，没有与GT对应的猫头鹰展开翅膀、羽毛、树枝或草地延伸；可见中心在native中也变成过亮棕块或后段黑绿色矩形带。comp中的清晰猫头鹰主要是可见中心被硬贴回，不能归功于生成。oracle与可见CLIP分支有轻微亮度/色调差异，但相同的结构失败和时序突变保留。因此首帧CLIP训练-QUERY差异在这个固定step100/seed/视频上不是单独充分的修复；也不能由一个100步权重和单视频判定模型容量失败。下一步优先做原始SVD标准首帧条件的最小sanity，而不是直接追加训练更新。",
+    "human_verdict": null,
+    "branch_findings": {
+      "full_gt_oracle": {
+        "role": "只用于诊断，读取隐藏GT，不可部署QUERY",
+        "native": "f00-16侧区多为均匀灰或白色板，f07和f17附近突变为亮白；f08右侧转蓝灰。f19-24中心漂成黑绿条和过曝土色，侧区大面积白色，未形成GT鸟翼或背景树枝。",
+        "composite": "硬贴回的中心保留GT鸟头/身体，但两侧仍为灰白平板，接缝为明显垂直边界；不能把清晰中心算作生成恢复。"
+      },
+      "visible_black_hole": {
+        "role": "合法的可见输入QUERY",
+        "native": "同样呈现灰白平板、过曝棕色中心与后段黑绿矩形条；缺失区无可辨鸟翼或背景延续。与oracle分支仅见局部色调、亮度和晚段暗带变化，未见结构等级改善。",
+        "composite": "中心GT硬贴回后视觉上能看出猫头鹰运动，但两侧仍无场景补全，边界突兀。"
+      }
+    },
+    "temporal_evidence": [
+      "f00-06两支主要是稳定的大灰色侧板，鸟翼的真实伸展未进入生成侧区。",
+      "f07-09侧区在亮白与蓝灰之间快速跳变，GT中鸟翼姿态连续变化。",
+      "f10-16大灰块返回，中心native的鸟体仍是模糊棕块。",
+      "f17-24再转亮白；f19起native中心与可见输入显著偏离，出现深色矩形带，comp通过GT中心硬贴回掩盖此偏离。"
+    ],
+    "controlled_comparison": "diagnostic.json表明两支共享可见黑洞flow、传播、条件VAE、time IDs、25步scheduler、逐帧CFG1到3和完全相同的初始高斯；仅CLIP源不同。因此本次相近的结构失败可用于排除‘只换完整首帧CLIP便能修复这一次QUERY’。不证明CLIP无影响，也不把oracle视为正式质量结果。",
+    "next_minimal_control": "优先用同一原始SVD XT 1.1、当前环境/权重/调度器，在标准img2vid入口给完整真实首帧，生成25帧并看全帧native，作为预训练模型与采样链的sanity；不把它当outpainting成绩。若标准SVD也无法生成有结构的视频，先查权重、scheduler、预处理及数值接线；若标准SVD正常，再定位本地条件接线/短训状态，之后才决定是否给有界训练预算。此建议不包含本次启动作业。",
+    "limitations": [
+      "仅一个训练片段、一个step100权重和同一初始噪声；不能判定泛化或模型容量极限。",
+      "oracle CLIP读取完整GT，正式QUERY不可使用。",
+      "CLIP共用训练helper，不是固定公开test.py的精确PIL重放。",
+      "comp把GT可见中心贴回；判断生成能力须以native及洞区为主。"
+    ],
+    "board_paths": [
+      "full_gt_oracle/qa_boards/frames_00_04.jpg",
+      "full_gt_oracle/qa_boards/frames_05_09.jpg",
+      "full_gt_oracle/qa_boards/frames_10_14.jpg",
+      "full_gt_oracle/qa_boards/frames_15_19.jpg",
+      "full_gt_oracle/qa_boards/frames_20_24.jpg",
+      "visible_black_hole/qa_boards/frames_00_04.jpg",
+      "visible_black_hole/qa_boards/frames_05_09.jpg",
+      "visible_black_hole/qa_boards/frames_10_14.jpg",
+      "visible_black_hole/qa_boards/frames_15_19.jpg",
+      "visible_black_hole/qa_boards/frames_20_24.jpg"
+    ]
+  },
+  "original_svd_sanity": [
+    {
+      "path": "pretrained_svd_sanity",
+      "actual": {
+        "status": "complete",
+        "role": "original SVD full-first-frame generation sanity only; not outpainting/QUERY evaluation",
+        "source_frame": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages/0fc958cde2/00010.jpg",
+        "author_edit_weights_loaded": false,
+        "p1_checkpoint_loaded": false,
+        "optimizer_updates": 0,
+        "seed": 2036,
+        "frames": 25,
+        "steps": 25,
+        "size": [
+          256,
+          256
+        ],
+        "precision": "float32 params / bf16 autocast",
+        "human_verdict": null,
+        "peak_gpu_allocated_gib": 14.529875755310059,
+        "limitation": "different full repeated first-frame VAE conditioning; not a matched causal control of a single P1 module"
+      },
+      "review": {
+        "status": "complete",
+        "review_kind": "independent_pretrained_svd_standard_first_frame_visual_review",
+        "source_diagnostic": "diagnostic.json",
+        "precision_path": "float32 parameters with bf16 autocast, per diagnostic.json",
+        "reviewed_boards": 5,
+        "reviewed_frames": "all 25 frames, 0..24",
+        "architecture_components_diagram": "完整首帧 RGB -> 原始 SVD 的 CLIP/VAE 条件 -> 25步视频去噪 -> 25帧原生输出；未加载 P1/作者外扩权重，未执行外扩",
+        "assistant_verdict": "这条原始SVD标准完整首帧路径能在部分帧生成可辨的树枝、草地及猫头鹰/鸟形主体，因此不是只输出灰块，也不能据此断言原始SVD完全失效；但全25帧严重不稳定。f00较接近首帧；f01-08明显转为蓝紫/青/荧光块和异形主体；f09-12与f16-20短暂恢复鸟体和背景；f13-15与f21-24再次变为高饱和几何色块或模糊异物。既不能称结构稳定的视频生成，也不是P1外扩质量证据。需结合独立FP32路径审阅，且两路径初始噪声未保证一致，不可归因于单层或纯粹精度。",
+        "human_verdict": null,
+        "frame_ranges": [
+          {
+            "frames": "00-04",
+            "observation": "f00生成帧可辨鸟体、树枝与草地，虽有曝光差；f01起快速转蓝紫/青荧光大块，f02-04主体不再清楚对应首帧猫头鹰。"
+          },
+          {
+            "frames": "05-09",
+            "observation": "f05-08仍有夸张高饱和色带和尖状/鸟喙样不稳定结构；f09又出现较可辨的鸟与树、草地。"
+          },
+          {
+            "frames": "10-14",
+            "observation": "f10-12可辨猫头鹰或鸟体和背景，亮度与形体仍变化；f13暗化，f14突然近景荧光色异形，连续性断裂。"
+          },
+          {
+            "frames": "15-19",
+            "observation": "f15模糊异形；f16-19鸟体、树枝和草地再次可辨，后段亮度与背景边缘较明显变化。"
+          },
+          {
+            "frames": "20-24",
+            "observation": "f20尚保留可辨场景，f21-24再转为荧光色块和尖状异物，远离完整首帧主体。"
+          }
+        ],
+        "interpretation_limits": [
+          "上排五组均重复同一完整首帧条件，不是真实25帧GT；不能当作与真实后续帧的匹配评测。",
+          "这是原始SVD标准首帧条件sanity，未载入P1断点，不是outpainting或QUERY。",
+          "与待审FP32路径同seed不保证实际初始噪声一致，无法做单变量精度因果判断。",
+          "本诊断输出为256×256，而原始SVD常用1024×576；异常不能单独证明原始权重损坏或P1架构失败。",
+          "仅从联系图判视觉与时序，不推断某个模块的根因。"
+        ],
+        "board_paths": [
+          "qa_boards/frames_00_04.jpg",
+          "qa_boards/frames_05_09.jpg",
+          "qa_boards/frames_10_14.jpg",
+          "qa_boards/frames_15_19.jpg",
+          "qa_boards/frames_20_24.jpg"
+        ]
+      }
+    },
+    {
+      "path": "pretrained_svd_sanity_fp32",
+      "actual": {
+        "status": "complete",
+        "role": "original SVD full-first-frame generation sanity only; not outpainting/QUERY evaluation",
+        "source_frame": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages/0fc958cde2/00010.jpg",
+        "author_edit_weights_loaded": false,
+        "p1_checkpoint_loaded": false,
+        "optimizer_updates": 0,
+        "seed": 2036,
+        "frames": 25,
+        "steps": 25,
+        "size": [
+          256,
+          256
+        ],
+        "precision": "full float32",
+        "human_verdict": null,
+        "peak_gpu_allocated_gib": 10.543988704681396,
+        "limitation": "full repeated first-frame VAE conditioning; not matched causal control of a P1 module. Same seed across different latent dtypes does not guarantee identical initial noise."
+      },
+      "review": {
+        "status": "complete",
+        "review_kind": "independent_pretrained_svd_standard_first_frame_visual_review",
+        "source_diagnostic": "diagnostic.json",
+        "precision_path": "full float32, per diagnostic.json",
+        "reviewed_boards": 5,
+        "reviewed_frames": "all 25 frames, 0..24",
+        "architecture_components_diagram": "完整首帧 RGB -> 原始 SVD 的 CLIP/VAE 条件 -> 25步视频去噪 -> 25帧原生输出；未加载 P1/作者外扩权重，未执行外扩",
+        "assistant_verdict": "完整FP32的原始SVD标准首帧路径并非只输出灰块：f00、f09-12及f16-20可辨鸟/猫头鹰主体、树枝与草地，f12虽有鸟形但强烈风格化、颜色失真。整个25帧不稳定：f01-08、f13-15和f21-24为蓝紫、青绿或荧光高饱和形体，不能维持原始首帧场景。与bf16 autocast路径在这些板上的主要异常时段视觉相近，但同seed不保证相同初始噪声，且实验不匹配单一模块，故不可据此归因精度或证明权重损坏、P1架构失败。原始SVD常用1024×576，本诊断仅256×256，也不能凭此批准追加500步训练。",
+        "human_verdict": null,
+        "frame_ranges": [
+          {
+            "frames": "00-04",
+            "observation": "f00可辨主体与树草背景；f01立即变为紫蓝场景，f02-04呈蓝青尖状主体和荧光树叶，首帧语义连续性丢失。"
+          },
+          {
+            "frames": "05-09",
+            "observation": "f05-08维持高饱和色带及尖状异形，f09短暂回到较可辨鸟体/树草结构。"
+          },
+          {
+            "frames": "10-14",
+            "observation": "f10-12能识别鸟/猫头鹰的轮廓和背景，其中f12仍有明显强风格化和颜色偏移；f13明显暗化，f14成荧光近景异形。"
+          },
+          {
+            "frames": "15-19",
+            "observation": "f15为模糊主体，f16-19再次出现可辨鸟体、树与草地，但亮度及尺度与邻近异常帧无法连续衔接。"
+          },
+          {
+            "frames": "20-24",
+            "observation": "f20仍可辨场景，f21-24再次转青蓝/红白荧光形体，主体形状与原始首帧明显脱离。"
+          }
+        ],
+        "cross_precision_readout": "两个精度路径在所见五张板中都出现早、中、晚段相似的强风格化/荧光突变，且都短暂出现可辨鸟体。没有保证完全相同的初始噪声，因此只能说异常并未在完整FP32路径消失，不能量化或归因精度影响。",
+        "interpretation_limits": [
+          "上排重复同一完整首帧条件，不是真实25帧GT；不能当作与真实后续帧的匹配评测。",
+          "这是原始SVD标准首帧条件sanity，未载入P1断点，不是outpainting或QUERY。",
+          "与bf16 autocast路径同seed不保证相同初始噪声，不是单变量精度因果实验。",
+          "本诊断输出256×256，原始SVD常用1024×576；不能从此推断权重损坏或P1架构失败。",
+          "单片段与单seed，不足以决定继续500步训练。"
+        ],
+        "board_paths": [
+          "qa_boards/frames_00_04.jpg",
+          "qa_boards/frames_05_09.jpg",
+          "qa_boards/frames_10_14.jpg",
+          "qa_boards/frames_15_19.jpg",
+          "qa_boards/frames_20_24.jpg"
+        ]
+      }
+    },
+    {
+      "path": "pretrained_svd_sanity_native",
+      "actual": {
+        "status": "complete",
+        "role": "original SVD native-size generation sanity; not P1 outpainting",
+        "source_frame": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages/0fc958cde2/00010.jpg",
+        "source_size": [
+          1280,
+          720
+        ],
+        "size": [
+          1024,
+          576
+        ],
+        "precision": "fp16 pipeline / force_upcast VAE",
+        "cpu_offload": true,
+        "unet_forward_chunking": true,
+        "decode_chunk_size": 2,
+        "seed": 2036,
+        "steps": 25,
+        "frames": 25,
+        "fps_argument": 7,
+        "optimizer_updates": 0,
+        "p1_checkpoint_loaded": false,
+        "author_edit_weights_loaded": false,
+        "human_verdict": null,
+        "peak_gpu_allocated_gib": 7.533476829528809,
+        "limitation": "原始16:9全帧、推荐尺寸和fp16同时改变；不能由与256平方结果的差异归因某个单一因素。"
+      },
+      "review": {
+        "status": "complete",
+        "review_kind": "independent_pretrained_svd_native_size_first_frame_visual_review",
+        "source_diagnostic": "diagnostic.json",
+        "reviewed_boards": 5,
+        "reviewed_frames": "all 25 frames, 0..24",
+        "inspected_original_png_frames": [
+          0,
+          6,
+          12,
+          24
+        ],
+        "architecture_components_diagram": "完整16:9首帧 -> 原始SVD CLIP/VAE首帧条件 -> 原始SVD 25步视频采样 -> 1024×576原生25帧；未加载P1外扩权重",
+        "minimum_pretrained_sanity_pass": true,
+        "assistant_verdict": "最低预训练SVD sanity通过。原生1024×576的25帧始终保持可辨的猫头鹰/鸟体、草地、树枝和相似的背景布局，没有先前256×256测试中的大段蓝紫荧光形体、黑灰板或整体场景消失。f02-08鸟体低头、模糊和形变，眼与轮廓不完全稳定；f09后主体较清楚，f10-24环境与主体持续可辨。该结果证明本次原始16:9完整首帧条件下预训练视频生成链具备基本场景结构；不是P1外扩成功，也不能证明P1当前256×256生成问题只源于分辨率。综合step100的失败QUERY，支持同一论文重建协议100到500总步数的有界学习曲线诊断及固定质量门，不支持直接外推为100K长训或宣称500会修复结构。",
+        "human_verdict": null,
+        "visual_evidence": [
+          {
+            "frames": "00-04",
+            "observation": "f00能辨猫头鹰、翼、树枝与草坪；f01-04主体向下缩成较模糊的棕色鸟体，背景树和草保持空间位置，没有荧光板。"
+          },
+          {
+            "frames": "05-09",
+            "observation": "f05-08鸟头低下、羽毛结构较弱，但主体仍在原区域，树枝和草地连贯；f09头部/眼重新清楚。"
+          },
+          {
+            "frames": "10-14",
+            "observation": "猫头鹰眼、胸部和展翼可辨，背景枝叶与草地连续；f12原PNG1024×576仍能清楚辨认鸟体，虽有局部形变与风格化。"
+          },
+          {
+            "frames": "15-19",
+            "observation": "主体维持在中间偏左，头部与羽毛可辨，树枝/草地持续；没有显著整帧色相突变。"
+          },
+          {
+            "frames": "20-24",
+            "observation": "鸟体逐渐转向镜头、双眼可辨，草地和树背景保持；f24原PNG仍是可识别场景。"
+          }
+        ],
+        "bounded_learning_curve_assessment": {
+          "support_100_to_500_total_steps": true,
+          "scope": "仅支持从当前step100断点按原paper-bidirectional-m4协议补到总step500，作为有界学习曲线/质量门诊断；保持数据、seed、架构、优化器、推理模式及固定验证窗可比，观察native与硬合成全部25帧和定量指标。",
+          "not_supported": "不因原始SVD sanity通过就自动长训100K；也不把500步视为必然改善或论文指标复现。"
+        },
+        "limitations": [
+          "输入仅为完整首帧并在板上重复显示，输出是视频生成，不是给定真实后续帧的重建评测。",
+          "此路径未加载P1或作者编辑权重，未执行外扩/遮挡QUERY；不能直接证明P1条件传播或洞区生成有效。",
+          "与256×256两条测试相比，分辨率、16:9原始构图和fp16 helper设置同时改变，不是单因素因果对照。",
+          "只有一个首帧、seed和25帧；最低sanity通过不代表跨场景稳定。",
+          "assistant结论独立于人工审核；human_verdict保持null。"
+        ],
+        "board_paths": [
+          "qa_boards/frames_00_04.jpg",
+          "qa_boards/frames_05_09.jpg",
+          "qa_boards/frames_10_14.jpg",
+          "qa_boards/frames_15_19.jpg",
+          "qa_boards/frames_20_24.jpg"
+        ]
+      }
+    }
+  ],
+  "bounded500_snapshot": {
+    "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+    "run": "r1",
+    "controller_pid": 4097,
+    "status": "train_to_000500",
+    "training_budget": 500,
+    "human_in_loop": false,
+    "assistant_qa_required": true,
+    "propagation_protocol": "paper-bidirectional-m4",
+    "inference_mode": "paper-feedforward",
+    "active_inference_mode": null,
+    "updated_at_utc": "2026-10-09T19:22:33.666146+00:00",
+    "scope": "same_protocol_100_to_500_bounded_learning_curve",
+    "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt",
+    "source_step": 100,
+    "optimizer_updates_planned": 400,
+    "queued_gpu_jobs": [],
+    "automatic_1000_or_100k": false,
+    "diagnostic_updates": 32,
+    "command": [
+      "/root/autodl-tmp/envs/motionproj/bin/python",
+      "-m",
+      "motion_proj.worldsim_v81.train_p1",
+      "--output-dir",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train",
+      "--max-steps",
+      "500",
+      "--save-every",
+      "100",
+      "--keep-checkpoints",
+      "2",
+      "--amp",
+      "bf16",
+      "--propagation-protocol",
+      "paper-bidirectional-m4",
+      "--resume",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt"
+    ],
+    "log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/logs/train_to_000500.log",
+    "child_pid": 4100,
+    "observed_at_utc": "2026-10-09T19:24:02.250702+00:00",
+    "observed_train_step": 112,
+    "last_step_seconds": 6.190923834990826
+  },
+  "source100_preserved": "paper_bidirectional_m4/diagnostic_source_checkpoints/p1-checkpoint-000100.pt",
+  "formal_eval_roles": "This run is engineering/learning-curve diagnosis, not formal DAVIS/YT ability.",
+  "test_results": {
+    "local_targeted_cpu": 12,
+    "remote_new_probe": 7,
+    "note": "不同测试范围，不与历史84项简单累加"
+  },
+  "weekly_remaining_percent": 21,
+  "reset_cards_available": 2,
+  "reset_cards_consumed": 0,
+  "engineering_fix": "首次500控制器读取审核字段层级错误，训练未启动；保存失败日志后读取嵌套字段，不改变质量门。",
+  "evidence_root": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1",
+  "review_page": "outputs/v81-paper-p1/condition_gap_review.html"
+}
