@@ -116,4 +116,6 @@ P3 的消融保持相同来源、可见性过滤、数据、主干和预算；�
 
 `.gitattributes` 在源码归档中排除 `docs/autoresearch`；此目录仍保留在 Git/GitHub，继承历史不重写、不强推、不删原证据。ZIP 中的历史附件链接需在 GitHub 浏览完整材料。`scripts/check_source_archive.py` 可重复验证归档大小；交付还需检查实际 GitHub 下载 ZIP。
 
+当前输入缺口：原始SVD现有凭据403；官方YouTube-VOS下载受动态配额影响，未获得可用25帧片段。网络探针不提交到代码库；这些是输入／访问问题，不是训练或方法失败。
+
 本轮没有新增研究失败，`failure_ledger_delta=none`；历史边界继续引用 [V77-F02](../research_failures/entries/V77-F02.md)。当前进度和阻塞只写 [RESEARCH_STATUS](../RESEARCH_STATUS.md)。
