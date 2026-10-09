@@ -46,6 +46,27 @@ def main() -> None:
     if state_path.is_file():
         state=read(state_path)
         sections.insert(1,f'''<div class="panel"><h2>有界学习曲线：100 → 总计500步</h2><p>快照 {html.escape(state['observed_at_utc'])}；已记录 {state['observed_train_step']} 步，状态 {html.escape(state['status'])}。恢复模型、Adam状态和随机状态；数据、mask、网络、学习率与参数范围不变。500步后生成三个原固定验证样本×两倍率并退出，等待助手全帧审核，不自动追加1000或100K。</p><a href="bounded500_state.json">实际PID、命令与预算快照</a></div>''')
+    precision_path=output/'unet_precision_full_audit.json'
+    if precision_path.is_file():
+        precision=read(precision_path)
+        if precision.get('all_f32_values_equal') is True and precision.get('all_shapes_equal') is True:
+            sections.insert(2,f'''<div class="panel"><h2>UNet 初始化来源复核：数值相同</h2><p>官方训练默认读取完整精度文件，我们读取fp16文件再转FP32。独立下载并校验官方完整版后，CPU逐值比较全部 {precision['total_tensors']} 个张量、{precision['total_values']:,} 个值，实际FP32初始化完全相等。源文件variant差异没有改变本轮UNet初值，不为此另起训练。</p><p>此检查不覆盖AMP、优化器或训练轨迹。<a href="unet_precision_full_audit.json">完整比较记录</a> · <a href="unet_full_download_state.json">下载来源与校验</a> · <a href="unet_initialization_audit.json">实际可训练参数范围</a></p></div>''')
+    validation=output/'paper_bidirectional_m4/validation/step000500'
+    completed=sorted(path for path in validation.glob('*/side_*/run.json')
+                     if read(path).get('status')=='complete')
+    if completed:
+        sections.append('''<div class="panel"><h2>500步固定验证：原生与写回分开看</h2><p>原固定三例×两倍率，各25帧，seed2026/25步；同协议灰洞RAFT与可见首帧CLIP，不更改数据、mask或采样。可见中心由真实RGB硬写回，不能算作模型原生保持能力。以下只展示已完成窗口，不是正式DAVIS/YT指标。</p><div class="diagram"><div class="box">逐帧可见RGB</div>→<div class="box">光流补全 / 双向参考传播</div>→<div class="box">500步SVD去噪</div>→<div class="box">原生视频 / 可见中心硬写回</div></div>''')
+        for path in completed:
+            meta=read(path)
+            relative=path.parent.relative_to(output).as_posix()
+            sections.append(f'<article><h3>{html.escape(meta["sequence_id"])} · 每侧{meta["side_ratio_each"]:g} · 实际{meta["num_frames"]}帧</h3><div class="four">')
+            for name,title in (('gt','真实视频'),('visible','可见输入'),('pred','500步原生输出'),('comp','500步可见中心硬写回')):
+                sections.append(f'<figure><video controls preload="metadata" src="{relative}/{name}.mp4"></video><figcaption>{title}</figcaption></figure>')
+            sections.append(f'</div><a href="{relative}/run.json">输入角色、参考与运行配置</a></article>')
+        previous='paper_bidirectional_m4/validation/step000100/00f88c4f0a/side_0.33'
+        if (output/previous/'run.json').is_file():
+            sections.append(f'''<article><h3>同一00f88c4f0a/每侧.33的100步历史对照</h3><p>100步只有这一匹配短窗，不能声称其余五窗都完成100→500配对。</p><div class="four"><figure><video controls preload="metadata" src="{previous}/pred.mp4"></video><figcaption>100步原生</figcaption></figure><figure><video controls preload="metadata" src="{previous}/comp.mp4"></video><figcaption>100步硬写回</figcaption></figure></div></article>''')
+        sections.extend([review_note(validation,'paper_bidirectional_m4/validation/step000500'),'</div>'])
     query = output/'clip_query_control'
     if (query/'diagnostic.json').is_file():
         meta=read(query/'diagnostic.json')

@@ -219,3 +219,11 @@ flowchart LR
 独立审核支持同协议100至总500的有界学习曲线。恢复模型、Adam和RNG，不改数据/mask/seed/网络/学习率/参数范围；关键100硬链接保留，每100保存。到500后原固定3valid×2倍率六窗、原生/写回全部25帧审核再决策，不自动1000/100K。启动快照记录112步，梯度/数值正常；实时状态见 `r1/paper_bidirectional_m4/controller_state.json`。首次控制器因审核字段层级错误在训练前退出，保留日志后修正嵌套字段，未改质量判据。
 
 完整结果/独立JSON/诊断源码保留同run，[GPU轻量实测](P1_CONDITION_GAP_GPU_R1.json)。HTML `condition_gap_review.html` 保留BUILD/QUERY和原生/写回；人工verdict=null。正式四指标未算、protocol_verified=false；failure_ledger_delta=none，未进入P2/P3。
+
+## 初始化与指标口径复核
+
+固定官方源码的CLIP/VAE用fp16 variant，UNet未指定variant；owned UNet加载fp16文件后转FP32。先发现的是**来源文件差异**，尚不能认定初值有差异。官方完整文件独立下载、官方固定revision SHA-256核对通过；CPU随后逐一比较1428张量、1,524,623,082个值，两份文件转FP32后全部数值相等。独立subagent核对比较逻辑成立。因此不增加variant配置、不另起训练；这项不能解释灰块。它不覆盖AMP、优化器或训练轨迹。
+
+同官方类/config在meta设备列出实际参数，官方`temporal_transformer_block | noise_refiner`与owned temporal筛选均为416个张量，差集为空；当前UNet没有额外noise_refiner参数遗漏。证据位于同run `unet_initialization_audit.json`与`unet_precision_full_audit.json`；全比较源码归档`diagnostic_scripts/v81_compare_unet_all.py`。来源：[固定train.py初始化](https://github.com/InSeokJeon/Seen_to_Scene/blob/2a9dfc9888e44c7fd00b08af41ef967ae46b6323/train.py#L170-L173)。
+
+独立指标复核：当前PSNR/SSIM/LPIPS遵循FYC前16帧、224²预处理、Alex LPIPS与逐帧统计；FVD使用同I3D配置、同前16帧，未发现确定公式差错。FYC公开脚本只分别输出两倍率FVD，`mean_of_ratios`须标自定义汇总，不冒充论文确定口径。I3D及LPIPS缓存已在；实际300段正式生成、manifest和四指标尚未产生。附录60 ID使用2019 valid_all_frames，而论文称official test，这项来源对应仍需明示。正式ID/seed不改，不用正式结果选择预算。来源：[FYC demo.py](https://github.com/mayuelala/FollowYourCanvas/blob/0e6af915b93266b3a0297768c32edc579b3b1f6e/video_metrics/demo.py#L61-L96)、[FVD实现](https://github.com/mayuelala/FollowYourCanvas/blob/0e6af915b93266b3a0297768c32edc579b3b1f6e/video_metrics/fvd2.py#L83-L123)。

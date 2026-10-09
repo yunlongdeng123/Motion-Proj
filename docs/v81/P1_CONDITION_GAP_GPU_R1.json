@@ -633,5 +633,108 @@
   "reset_cards_consumed": 0,
   "engineering_fix": "首次500控制器读取审核字段层级错误，训练未启动；保存失败日志后读取嵌套字段，不改变质量门。",
   "evidence_root": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1",
-  "review_page": "outputs/v81-paper-p1/condition_gap_review.html"
+  "review_page": "outputs/v81-paper-p1/condition_gap_review.html",
+  "unet_initialization_audit": {
+    "complete_value_comparison": {
+      "observed_at_utc": "2026-10-09T19:44:51.314581+00:00",
+      "role": "CPU complete pretrained UNet value comparison",
+      "total_tensors": 1428,
+      "total_values": 1524623082,
+      "all_names_equal": true,
+      "all_shapes_equal": true,
+      "all_f32_values_equal": true,
+      "different_tensors": [],
+      "gpu_work": false,
+      "inflight_training_changed": false,
+      "interpretation": "只比较两个已校验的初始化文件，不包含训练/AMP/优化器协议。若全部相等，文件variant差异没有改变实际FP32初始化。"
+    },
+    "trainable_parameter_names": {
+      "observed_at_utc": "2026-10-09T19:35:35.346329+00:00",
+      "role": "CPU/meta source protocol audit",
+      "official_temporal_or_noise_refiner_tensors": 416,
+      "owned_temporal_tensors": 416,
+      "official_only_parameters": [],
+      "owned_only_parameters": [],
+      "official_revision": "043843887ccd51926e3efed36270444a838e7861",
+      "gpu_work": false,
+      "inflight_training_changed": false,
+      "official_api_status": null,
+      "metadata_error_type": "ConnectionError"
+    },
+    "full_weight_source": {
+      "updated_at_utc": "2026-10-09T19:42:07.995553+00:00",
+      "pid": 5423,
+      "file": "unet/diffusion_pytorch_model.safetensors",
+      "official_revision": "043843887ccd51926e3efed36270444a838e7861",
+      "expected_size": 6098682432,
+      "destination": "/root/worldsim-v81-model-precision/unet_full.safetensors",
+      "source": "shareAI/svd_1.1",
+      "gpu_work": false,
+      "inflight_training_changed": false,
+      "status": "complete",
+      "verified_sha256": "155ad9c3e327d4ff150f595e2e28b03f4244ab5554883dfa3cd11120278ad22a",
+      "dtypes": [
+        "F32"
+      ],
+      "tensors": 1428
+    },
+    "assistant_review": "6-sol/xhigh独立只读核对比较脚本，确认全部张量比较足以支持FP32初始化数值等价；不推定AMP或训练轨迹相同。",
+    "action": "不增加variant基础设施、不为来源文件差异重训；当前500实验不变。"
+  },
+  "formal_metric_protocol_audit": {
+    "reviewer": "gpt-6-sol/xhigh, no fast",
+    "definite_formula_error_found": false,
+    "fyc_alignment": "PSNR/SSIM/LPIPS前16帧、224²预处理、Alex；I3D FVD前16/224²。",
+    "remaining_ambiguity": [
+      "FVD mean_of_ratios不是公开脚本直接输出",
+      "附录YT60在2019 valid_all_frames，与论文official test名称对应未完全确认"
+    ],
+    "formal_metrics_computed": false,
+    "formal_generated_windows": 0,
+    "i3d_and_lpips_weights_available": true
+  },
+  "bounded500_latest_snapshot": {
+    "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+    "run": "r1",
+    "controller_pid": 4097,
+    "status": "train_to_000500",
+    "training_budget": 500,
+    "human_in_loop": false,
+    "assistant_qa_required": true,
+    "propagation_protocol": "paper-bidirectional-m4",
+    "inference_mode": "paper-feedforward",
+    "active_inference_mode": null,
+    "updated_at_utc": "2026-10-09T19:22:33.666146+00:00",
+    "scope": "same_protocol_100_to_500_bounded_learning_curve",
+    "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt",
+    "source_step": 100,
+    "optimizer_updates_planned": 400,
+    "queued_gpu_jobs": [],
+    "automatic_1000_or_100k": false,
+    "diagnostic_updates": 32,
+    "command": [
+      "/root/autodl-tmp/envs/motionproj/bin/python",
+      "-m",
+      "motion_proj.worldsim_v81.train_p1",
+      "--output-dir",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train",
+      "--max-steps",
+      "500",
+      "--save-every",
+      "100",
+      "--keep-checkpoints",
+      "2",
+      "--amp",
+      "bf16",
+      "--propagation-protocol",
+      "paper-bidirectional-m4",
+      "--resume",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt"
+    ],
+    "log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/logs/train_to_000500.log",
+    "child_pid": 4100,
+    "observed_at_utc": "2026-10-09T19:51:14.834393+00:00",
+    "observed_train_step": 382,
+    "last_step_seconds": 6.309416186995804
+  }
 }
