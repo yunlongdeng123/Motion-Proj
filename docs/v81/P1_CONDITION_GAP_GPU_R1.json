@@ -1,7 +1,7 @@
 {
   "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
   "run": "r1",
-  "observed_at_utc": "2026-10-09T20:41:56.866658+00:00",
+  "observed_at_utc": "2026-10-09T21:43:19.561877+00:00",
   "host": "wm-3090-1009",
   "gpu": "RTX3090 24GiB",
   "source_checkpoint_step": 100,
@@ -1082,6 +1082,150 @@
     },
     "formal_training_updates": 0
   },
+  "resampled_diffusion_noise_control": {
+    "status": "complete",
+    "probe_format": "worldsim_v81_fixed_clip_resampled_diffusion_probe_v1",
+    "source_checkpoint_step": 500,
+    "video_id": "0fc958cde2",
+    "clip_start": 2,
+    "training_diffusion_noise": "resampled",
+    "training_noise_scope": "每次更新联合重采样sigma~LogNormal(.7,1.6)与epsilon~N(0,I)，其余缓存条件固定",
+    "fixed_teacher_cache_source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fixed_input_capacity_step500_64/fixed_inputs.pt",
+    "cache_comparison_scope": "共享键含sigma/noise，指固定teacher基准缓存，不代表逐更新训练噪声未改变",
+    "cache_shared_keys_exact": [
+      "plan",
+      "flow",
+      "target_latent",
+      "cond_latent",
+      "noise",
+      "time_ids",
+      "mask",
+      "sigma",
+      "cond_sigma",
+      "clip"
+    ],
+    "actual_updates": 64,
+    "update_attempts": 64,
+    "formal_training_updates": 0,
+    "optimizer_verification": {
+      "adam_state_parameters": 514,
+      "adam_step_increment_min": 64,
+      "adam_step_increment_max": 64,
+      "all_trainable_updates_finite": true,
+      "frozen_grad_tensors_max": 0,
+      "diagnostic_format_distinct": true
+    },
+    "logged_training_sigmas": {
+      "count": 64,
+      "unique_count": 64,
+      "minimum": 0.055624816566705704,
+      "maximum": 216.2227020263672,
+      "scope": "updates.jsonl中实际64次训练抽样；不表示均匀覆盖所有噪声档位"
+    },
+    "teacher_fixed_anchor": {
+      "sigma": 2.0137527074704766,
+      "weighted_mse_before": 0.19114340841770172,
+      "weighted_mse_after": 0.18295516073703766,
+      "hole_mse_before": 0.15653058886528015,
+      "hole_mse_after": 0.15035025775432587,
+      "interpretation": "带噪GT的单步BUILD量；不用于判断Gaussian QUERY视频质量"
+    },
+    "query_control": {
+      "seed": 2036,
+      "denoising_steps": 25,
+      "query_before_board_hash_identical_to_fixed_noise": "5/5",
+      "comp_role": "真实可见中心硬写回，不算模型原生生成",
+      "paired_comparison": "fixed_input_capacity_step500_64/query_after vs fixed_clip_resampled_diffusion_step500_64/query_after，均为同训练鸟片段"
+    },
+    "assistant_review": {
+      "path": "outputs/v81-paper-p1/fixed_clip_resampled_diffusion_step500_64/assistant_review.json",
+      "reviewed_at_utc": "2026-10-09T21:26:23Z",
+      "assistant_verdict": "no_clear_native_structure_or_motion_gain_from_resampling_sigma_and_epsilon_in_this_64_update_fixed_clip_probe",
+      "human_verdict": null,
+      "formal_metrics": false,
+      "boards_read": 15,
+      "visual_result": "原生鸟仍模糊近静止，未跟随GT f07-f14展翼；相对固定σ/ε支无清楚结构、动作或接缝收益。合成图清晰中心来自GT硬写回。",
+      "limits": "单片段/单seed/64更新；σ与ε联合变化，不能分别归因；不证明充分容量或整套方法失败。"
+    },
+    "run_record": "outputs/v81-paper-p1/fixed_clip_resampled_diffusion_step500_64/run.json",
+    "updates_record": "outputs/v81-paper-p1/fixed_clip_resampled_diffusion_step500_64/updates.jsonl",
+    "training_elapsed_seconds": 132.3339672209986,
+    "total_elapsed_seconds": 196.35737005001283,
+    "next_control": "GT flow→可见flow的同预算单因素控制已完成；结果另见visible_flow_control。短64步阴性不停止整体autoresearch。"
+  },
+  "visible_flow_control": {
+    "status": "complete",
+    "probe_format": "worldsim_v81_fixed_clip_visible_flow_probe_v1",
+    "source_checkpoint_step": 500,
+    "video_id": "0fc958cde2",
+    "clip_start": 2,
+    "training_flow_source": "visible_rgb_only",
+    "flow_supervision": "full_gt_raft_unchanged",
+    "training_diffusion_noise": "resampled",
+    "paired_control": "fixed_clip_resampled_diffusion_step500_64；两支同正式500来源、片段、GT目标、完整GT首帧CLIP、VAE后验/条件噪声、64步预算及QUERY seed2036/25步，仅训练传播flow输入来源改变；64个训练sigma逐项一致，epsilon未逐项核验",
+    "actual_updates": 64,
+    "update_attempts": 64,
+    "formal_training_updates": 0,
+    "optimizer_verification": {
+      "adam_state_parameters": 514,
+      "adam_step_increment_min": 64,
+      "adam_step_increment_max": 64,
+      "all_trainable_updates_finite": true,
+      "frozen_grad_tensors_max": 0,
+      "diagnostic_format_distinct": true,
+      "training_sigma_sequence_exact_all64": true,
+      "gt_flow_supervision_retained_exact": true,
+      "epsilon_pairing": "代码RNG fork；旧分支未保存逐步epsilon，未做逐值比较"
+    },
+    "flow_input_gt_mae_forward_backward": [
+      1.6246793270111084,
+      1.6909655332565308
+    ],
+    "visible_flow_teacher_build": {
+      "weighted_mse_before": 0.19121064245700836,
+      "weighted_mse_after": 0.18272481858730316,
+      "role": "可见flow传播条件下固定带噪GT单步BUILD；不是QUERY质量"
+    },
+    "gt_flow_teacher_build": {
+      "weighted_mse_before": 0.19114340841770172,
+      "weighted_mse_after": 0.18259266018867493,
+      "role": "原GT-flow teacher缓存条件下固定带噪GT单步BUILD；与可见flow口径分开"
+    },
+    "paired_query_verification": {
+      "query_before_uint8_equal_all25": true,
+      "query_after_mean_abs_difference_uint8": 0.05750301106770833,
+      "limitation": "像素差仅证明响应，不衡量结构或运动质量"
+    },
+    "assistant_review": {
+      "path": "outputs/v81-paper-p1/fixed_clip_visible_flow_step500_64/assistant_review.json",
+      "reviewed_at_utc": "2026-10-09T21:40:47Z",
+      "assistant_verdict": "no_clear_native_bird_structure_or_motion_gain_from_visible_flow_training_in_this_64_update_probe; formal_P1_quality_not_established",
+      "human_verdict": null,
+      "formal_metrics": false,
+      "boards_read": 15,
+      "visual_result": "各25帧对照显示原生只有近静止模糊鸟块；GT f07–f14展翼未跟随，相较GT-flow重采样支无明确头翼结构、动作或边界收益。合成中心清晰鸟来自真实RGB硬写回。",
+      "limits": "单训练片段、单QUERY seed、仅64诊断更新；不判充分容量、泛化或论文方法失败。"
+    },
+    "run_record": "outputs/v81-paper-p1/fixed_clip_visible_flow_step500_64/run.json",
+    "paired_query_record": "outputs/v81-paper-p1/fixed_clip_visible_flow_step500_64/paired_query_verification.json",
+    "architecture_components_diagram": "可见RGB → 冻结RAFT可见flow → FCNet与双向传播 → SVD/64次Adam（GT仅监督） → 同seed25帧原生QUERY → 另列真实中心硬写回"
+  },
+  "bounded1000_continuation": {
+    "status": "train_to_001000",
+    "source_step": 500,
+    "target_total_step": 1000,
+    "maximum_new_updates": 500,
+    "propagation_protocol": "paper-bidirectional-m4",
+    "inference_mode": "paper-feedforward",
+    "observed_at_utc": "2026-10-09T21:43:19.561877+00:00",
+    "observed_train_step": 513,
+    "snapshot_record": "outputs/v81-paper-p1/bounded1000_state.json",
+    "validation_plan": "固定三例×两侧倍率，共六窗，1000步完成后逐帧原生审核与质量门",
+    "new_1000_validation_available": false,
+    "formal_metrics_computed": false,
+    "human_verdict": null,
+    "scope": "正式500断点同协议续训，不加载任何64步诊断权重；513为同步快照而非实时值"
+  },
   "resource_cleanup": {
     "checked_at_utc": "2026-10-09T20:39:41.926430+00:00",
     "authorization": "用户已授权数据盘不足时清理以前不重要文件；本次只处理一个非关键中间断点",
@@ -1108,6 +1252,45 @@
       "exit_code": 1,
       "output": "Connection closed by 1.27.207.179 port 45196\r\n"
     },
-    "billing_status_verified": false
+    "billing_status_verified": false,
+    "record_scope": "historical_prior_authorization; not_current_power_policy"
+  },
+  "current_execution": {
+    "status": "train_to_001000",
+    "observed_at_utc": "2026-10-09T21:43:19.561877+00:00",
+    "observed_step": 513,
+    "processes": {
+      "controller_pid": {
+        "pid": 3613,
+        "alive": true,
+        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_1000.py --worker "
+      },
+      "child_pid": {
+        "pid": 3616,
+        "alive": true,
+        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train --max-steps 1000 --save-every 500 --keep-checkpoints 2 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000500.pt "
+      }
+    },
+    "power_policy": "用户最新要求：不随便关机；质量hold后主任务继续排查",
+    "automatic_shutdown": false,
+    "monitor_automation_id": "v8-1-p1",
+    "monitor_behavior": "质量hold后继续有界autoresearch；正常训练静默",
+    "weekly_remaining_percent": 15,
+    "available_reset_cards": 2,
+    "reset_card_used": false,
+    "full_reproduction_achieved": false,
+    "formal_metrics_computed": false
+  },
+  "retained_storage_relocations": {
+    "records": [
+      "p0_checkpoint_storage_relocation.json",
+      "fixed_capacity_checkpoint_storage_relocation.json"
+    ],
+    "checkpoint_content_retained": true,
+    "original_path_symlinks_retained": true,
+    "formal_p1_source_moved": false,
+    "caveat": "系统盘和数据盘生命周期可能不同，不是外部耐久备份",
+    "observed_free_data_bytes": 8261242880,
+    "observed_free_system_bytes": 6498332672
   }
 }

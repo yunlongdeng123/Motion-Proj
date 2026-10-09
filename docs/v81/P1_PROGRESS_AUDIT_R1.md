@@ -260,3 +260,22 @@ teacher加权latent MSE 0.191143→0.149839，0/16/32/64完整记录。这是ful
 保存两个诊断权重后盘仅3.6GB；按用户既有清理授权，仅删不再作为恢复源/审核点的400中间断点，100硬链接、500、两组probe终态及所有视频/数据/初始模型均保留。进程退出后实际df空闲约8.1GB；删除文件逻辑大小不冒充立即回收物理空间。清单留同run nonmilestone400_cleanup.json。
 
 本轮GPU收口：2026-10-09 20:47:45 UTC在e280bd56交付后，全部真实进程/控制器检查无作业或队列，执行AutoDL supervisor关机；SSH当场断连，随后复连也关闭。关键断点/两诊断终态和视频已保存。原始关机证据留run poweroff_after_step500_controls.json，本地同名记录补充复连结果；未检查计费面板。P1仍hold，完整复现goal保持active，下一步CPU准备，不自动重开GPU。
+
+## 重开GPU后的持续排查与正式预算检查
+
+用户随后重新开GPU，并明确要求质量不通过后自行继续autoresearch、不随便关机；上面的关机与下一步是历史记录。当前状态以[RESEARCH_STATUS](../RESEARCH_STATUS.md)为准。
+
+固定片段重采样diffusion σ/ε64步、visible-flow64步均完成真实优化，独立全25帧审核仍未见明确鸟体结构/展翼收益；条件flow与GT监督已分离，不能把两项阴性当方法失败或继续混合改条件。协议/实测/限制分别见[噪声控制](P1_DIFFUSION_NOISE_CONTROL.md)与[光流控制](P1_VISIBLE_FLOW_CONTROL.md)，原始产物保留同task/run。
+
+```mermaid
+flowchart LR
+    W[正式500权重与Adam / RNG] --> T[原paper协议\n随机训练片段500新增更新]
+    T --> C[正式1000断点]
+    C --> V[相同三valid × 两倍率]
+    V --> A[原生全25帧独立审核]
+    A --> D[按证据继续有界排查]
+```
+
+当前从正式500续到总1000，只新增500步，不载入任何64步诊断权重、不给100K自动通行证。UTC21:43:19快照513步，父3613/子3616存活；恢复模型/优化器/scheduler/全部RNG，数据、mask、seed、模块范围与推理条件不改。1000后六窗与500构成匹配学习曲线；当前没有新1000结果或正式指标。质量hold只记录该阶段能力，主任务仍继续定位下一项，不默认等用户。
+
+如1000仍需定位，CPU只读审查确认尚未做“逐帧完整GT VAE latent直接替换融合condition”的同Gaussian自由生成；既有18次GT-flow/CLIP单步oracle与这项不同。先准备一组明确非法输入oracle作为传播链诊断，不能进入正式QUERY或充当方法收益。已有VAE/传播中间条件解码不重复建设；不加训练/新网络/P2/P3。
