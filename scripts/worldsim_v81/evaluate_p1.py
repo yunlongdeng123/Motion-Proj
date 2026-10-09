@@ -1,8 +1,10 @@
-"""Seen-to-Scene P1 diagnostic evaluation using fixed Follow-Your-Canvas metrics.
+"""Seen-to-Scene P1 evaluation using fixed Follow-Your-Canvas metrics.
 
 Input JSON: {"cases": [{"dataset": "davis2017"|"youtube_vos",
 "sequence_id": str, "source_id": str, "mask_total_ratio": 0.25|0.66,
-"gt": "/abs/gt.mp4", "pred": "/abs/pred.mp4", "comp": "/abs/comp.mp4"}]}.
+"gt": "/abs/gt.mp4", "pred": "/abs/pred.mp4", "comp": "/abs/comp.mp4",
+"source_dir": "/abs/original/JPEGImages/sequence"}]}.
+Formal full-video evaluation requires source_dir; short-window evaluation is diagnostic.
 The train source IDs file is a JSON string list or one ID per line.
 """
 
@@ -46,7 +48,6 @@ UNVERIFIED = [
     "DAVIS论文只给90条数量，未公布精确序列清单；采用官方2017 train+val ImageSets。",
     "论文称YouTube-VOS test，但附录E的60条ID均位于2019 valid split；需声明年份与全帧版本假设。",
     "论文称纯高斯前向推理与Adam；固定官方源码另跑DDIM inversion并使用AdamW。",
-    "本地仅生成每序列前25帧，再评分前16帧；论文长视频滑窗/定量视频长度未核对，不能称表1完整复现。",
 ]
 
 
@@ -154,7 +155,7 @@ def require_complete_benchmark(cases: list[dict[str, Any]]) -> None:
 
 
 def require_25_frame_videos(cases: list[dict[str, Any]]) -> None:
-    """Keep the saved native/composite 25-frame artifact contract explicit."""
+    """仅供明示的本地25帧诊断协议。"""
     from decord import VideoReader, cpu
 
     checked: set[Path] = set()
@@ -172,6 +173,42 @@ def require_25_frame_videos(cases: list[dict[str, Any]]) -> None:
                 raise ValueError(f"本地25帧协议要求GT/pred/comp恰好25帧：{case['dataset']}/{case['sequence_id']} {name}={count} {path}")
             if tuple(video[0].shape[:2]) != (256, 256):
                 raise ValueError(f"正式评测要求256x256帧：{case['dataset']}/{case['sequence_id']} {name} {path}")
+
+
+def require_full_video_lengths(cases: list[dict[str, Any]]) -> dict[str, int]:
+    """正式全视频协议：原始JPEG数量必须逐项等于GT/pred/comp帧数。"""
+    from decord import VideoReader, cpu
+
+    verified = {}
+    source_by_sequence = {}
+    for case in cases:
+        key = (case["dataset"], case["sequence_id"])
+        raw_source = case.get("source_dir")
+        if not isinstance(raw_source, str) or not raw_source:
+            raise ValueError(f"全视频评测需要原始source_dir：{key}")
+        source_dir = Path(raw_source)
+        if not source_dir.is_absolute() or not source_dir.is_dir():
+            raise ValueError(f"source_dir需要已存在的绝对目录：{key} {source_dir}")
+        resolved = source_dir.resolve()
+        if key in source_by_sequence and source_by_sequence[key] != resolved:
+            raise ValueError(f"同一序列两个倍率必须使用同一来源目录：{key}")
+        source_by_sequence[key] = resolved
+        source_count = sum(path.is_file() and path.suffix.lower() in {".jpg", ".jpeg", ".png"}
+                           for path in source_dir.iterdir())
+        if source_count < FRAMES:
+            raise ValueError(f"原始视频不足{FRAMES}帧：{key} {source_count}")
+        if Path(case["pred"]).resolve() == Path(case["comp"]).resolve():
+            raise ValueError(f"原生pred与硬合成comp必须分别保存：{key}")
+        counts = {}
+        for name in ("gt", "pred", "comp"):
+            video = VideoReader(str(case[name]), ctx=cpu(0))
+            counts[name] = len(video)
+            if counts[name] < FRAMES or tuple(video[0].shape[:2]) != (256, 256):
+                raise ValueError(f"全视频评测要求至少{FRAMES}帧且256x256：{key} {name}")
+        if any(count != source_count for count in counts.values()):
+            raise ValueError(f"原始来源、GT、pred、comp帧数不一致：{key} source={source_count} {counts}")
+        verified[f"{key[0]}/{key[1]}/{float(case['mask_total_ratio']):g}"] = source_count
+    return verified
 
 
 def read_first_16(path: Path, *, fvd: bool = False):
@@ -215,7 +252,8 @@ def average_rows(rows: list[dict[str, float]]) -> dict[str, float]:
     return {name: float(np.mean([row[name] for row in rows])) for name in ("psnr", "ssim", "lpips")}
 
 
-def evaluate(cases: list[dict[str, Any]], fyc_root: Path, i3d_path: Path | None, device: str):
+def evaluate(cases: list[dict[str, Any]], fyc_root: Path, i3d_path: Path | None,
+             device: str, *, generation_protocol: str = "local-first25"):
     import torch
 
     functions = official_metrics(fyc_root)
@@ -277,11 +315,16 @@ def evaluate(cases: list[dict[str, Any]], fyc_root: Path, i3d_path: Path | None,
     if detector and any(block[output]["mean_of_ratios"]["fvd"] is None
                         for block in grouped.values() for output in ("pred", "comp")):
         fvd_status = "insufficient_sequences_for_covariance"
-    return {"protocol_verified": False, "unverified_reasons": UNVERIFIED,
+    reason = ("本地仅生成每序列前25帧，再评分前16帧；此协议仅供诊断，不能称论文表1完整复现。"
+              if generation_protocol == "local-first25" else
+              "全视频生成采用25帧重叠窗口/stride16，指标取前16帧；论文定量视频长度与抽帧仍未公开。")
+    return {"protocol_verified": False, "unverified_reasons": [*UNVERIFIED, reason],
             "fvd_status": fvd_status, "fyc_revision": FYC_REVISION,
             "i3d_source": I3D_SOURCE if detector else None,
             "i3d_sha256": I3D_SHA256 if detector else None,
-            "generation_protocol": "local_first25_sorted_start0_not_verified_paper_full_video",
+            "generation_protocol": ("local_first25_sorted_start0_diagnostic"
+                                    if generation_protocol == "local-first25" else
+                                    "full_video_sliding_window_25_stride16"),
             "first_frames": FRAMES, "coverage": coverage(cases), "groups": grouped, "cases": case_rows}
 
 
@@ -292,6 +335,9 @@ def main() -> None:
     parser.add_argument("--fyc-root", type=Path, default=DEFAULT_FYC)
     parser.add_argument("--i3d", type=Path, default=DEFAULT_I3D)
     parser.add_argument("--allow-partial", action="store_true", help="仅调试；允许不足90/60条，结果不能充当完整基准")
+    parser.add_argument("--generation-protocol", choices=("local-first25", "full-video"),
+                        default="local-first25",
+                        help="正式评测须显式full-video；local-first25仅供诊断")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -299,6 +345,8 @@ def main() -> None:
     if args.output.resolve().is_relative_to(repo):
         parser.error("评测产物必须保存到仓库外")
     cases = load_manifest(args.manifest, train_source_ids(args.train_source_ids))
+    if not args.allow_partial and args.generation_protocol != "full-video":
+        parser.error("前25帧短窗仅供诊断；正式评测必须显式--generation-protocol full-video")
     if not args.allow_partial:
         try:
             require_complete_benchmark(cases)
@@ -306,9 +354,14 @@ def main() -> None:
             parser.error(str(exc))
     if not args.allow_partial and not args.i3d.is_file():
         parser.error(f"正式四指标评测必须有已冻结的I3D权重：{args.i3d}")
-    if not args.allow_partial:
+    frame_counts = (require_full_video_lengths(cases)
+                    if args.generation_protocol == "full-video" else None)
+    if args.generation_protocol == "local-first25":
         require_25_frame_videos(cases)
-    result = evaluate(cases, args.fyc_root, args.i3d, args.device)
+    result = evaluate(cases, args.fyc_root, args.i3d, args.device,
+                      generation_protocol=args.generation_protocol)
+    if frame_counts is not None:
+        result["validated_frame_counts"] = frame_counts
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"protocol_verified": False, "fvd_status": result["fvd_status"],

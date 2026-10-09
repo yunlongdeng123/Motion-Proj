@@ -14,6 +14,7 @@ import numpy as np
 from PIL import Image
 import torch
 from torch.utils.data import default_collate
+from torch.utils.checkpoint import checkpoint
 
 from .model_bridge import (DEFAULT_EXTERNAL, DEFAULT_FCNET, DEFAULT_RAFT, DEFAULT_SVD,
                            encode_video, load_components, load_trainable_state,
@@ -92,7 +93,8 @@ def raft_flows_for_pairs(raft, target: torch.Tensor, pairs: list[tuple[int, int]
 
 
 def paired_flow_loss(flow_loss, completed, ground_truth, masks: torch.Tensor,
-                     frames: torch.Tensor, pairs: list[tuple[int, int]]):
+                     frames: torch.Tensor, pairs: list[tuple[int, int]],
+                     *, warp_chunk: int | None = None):
     """沿用官方 L1/ternary 公式，但让每条 flow 对应真实的 (source,target)。"""
     source = [s for s, _ in pairs]
     target = [t for _, t in pairs]
@@ -109,11 +111,29 @@ def paired_flow_loss(flow_loss, completed, ground_truth, masks: torch.Tensor,
         losses.append(flow_loss.l1_criterion(predicted * mask, truth * mask) / mask.mean()
                       + flow_loss.l1_criterion(predicted * (1 - mask), truth * (1 - mask))
                       / (1 - mask).mean())
-        warps.append(flow_loss.ternary_loss(combined.reshape(-1, 2, height, width),
-                                           truth.reshape(-1, 2, height, width),
-                                           mask.reshape(-1, 1, height, width),
-                                           current.reshape(-1, 3, height, width),
-                                           shift.reshape(-1, 3, height, width)))
+        inputs = (combined.reshape(-1, 2, height, width),
+                  truth.reshape(-1, 2, height, width),
+                  mask.reshape(-1, 1, height, width),
+                  current.reshape(-1, 3, height, width),
+                  shift.reshape(-1, 3, height, width))
+        if warp_chunk is None:
+            warps.append(flow_loss.ternary_loss(*inputs))
+        else:
+            if warp_chunk < 1:
+                raise ValueError("warp_chunk 必须为正")
+            # 原公式除以整批mask均值；分块后按mask像素数加权，保持同一损失。
+            mass = inputs[2].sum()
+            if mass <= 0:
+                raise ValueError("光流损失至少需要一个洞区像素")
+            subtotal = combined.new_zeros(())
+            for start in range(0, len(inputs[0]), warp_chunk):
+                chunk = tuple(x[start:start + warp_chunk] for x in inputs)
+                weight = chunk[2].sum() / mass
+                if weight == 0:
+                    continue
+                value = checkpoint(flow_loss.ternary_loss, *chunk, use_reentrant=False)
+                subtotal = subtotal + value * weight
+            warps.append(subtotal)
     return sum(losses), sum(warps)
 
 
@@ -168,7 +188,12 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
         pair_masks = static_fcnet_pair_masks(mask, plan)
     else:
         pair_masks = mask
-    flow_pred, _ = components.fcnet.forward_bidirect_flow(gt_flow, pair_masks)
+    if refs is not None:
+        # 42对flow的保存激活超过3090容量；重算不改原FCNet时轴/参数/前向值。
+        flow_pred, _ = checkpoint(components.fcnet.forward_bidirect_flow,
+                                 gt_flow, pair_masks, use_reentrant=False)
+    else:
+        flow_pred, _ = components.fcnet.forward_bidirect_flow(gt_flow, pair_masks)
     flow = components.fcnet.combine_flow(gt_flow, flow_pred, pair_masks)
     target_latent = encode_video(components.vae, target, scaled=True, sample=True)
     batch_size = target_latent.shape[0]
@@ -216,7 +241,8 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
     weight = (1 + sigma.square()) / sigma.square()
     diffusion_loss = (weight * (denoised - target_latent).square()).flatten(1).mean(1).mean()
     flow_l1, ternary_warp = (paired_flow_loss(components.flow_loss, flow, gt_flow,
-                                             mask, target, pairs)
+                                             mask, target, pairs,
+                                             warp_chunk=8 if refs is not None else None)
                             if pairs is not None else
                             components.flow_loss(flow, gt_flow, mask, target))
     loss = diffusion_loss + flow_l1 + ternary_warp
@@ -279,6 +305,7 @@ def save_checkpoint(path: Path, components, optimizer, scheduler, scaler,
                     step: int, args: argparse.Namespace, data_profile: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     state = {"format": FORMAT, "propagation_protocol": args.propagation_protocol,
+             "optimizer_name": type(optimizer).__name__,
              "step": step, "models": trainable_state(components),
              "optimizer": optimizer.state_dict(), "scheduler": scheduler.state_dict(),
              "scaler": scaler.state_dict(), "torch_rng": torch.get_rng_state(),
@@ -321,8 +348,14 @@ def main() -> None:
     print(json.dumps({"event": "parameters", "counts": parameter_counts(components)}), flush=True)
     parameters = [p for module in (components.unet, components.propagator, components.fcnet)
                   for p in module.parameters() if p.requires_grad]
-    optimizer = torch.optim.AdamW(parameters, lr=args.lr, betas=(0.9, 0.999),
-                                  weight_decay=1e-2, eps=1e-8)
+    # 新的论文文字对齐阶段用Adam；旧公开协议保持AdamW，历史断点不混用。
+    optimizer_type = (torch.optim.Adam if args.propagation_protocol == "paper-bidirectional-m4"
+                      else torch.optim.AdamW)
+    decay = 0.0 if optimizer_type is torch.optim.Adam else 1e-2
+    optimizer = optimizer_type(parameters, lr=args.lr, betas=(0.9, 0.999),
+                               weight_decay=decay, eps=1e-8)
+    print(json.dumps({"event": "optimizer_config", "name": type(optimizer).__name__,
+                       "lr": args.lr, "weight_decay": decay}), flush=True)
     # 官方 config 选择 constant；其默认 warmup500 在此调度类型下不生效。
     scheduler = get_scheduler("constant", optimizer=optimizer,
                               num_warmup_steps=500, num_training_steps=100_000)
@@ -335,6 +368,8 @@ def main() -> None:
         if state.get("format") != FORMAT:
             raise ValueError("仅可恢复 P1 原始权重训练断点；不可载入 P0/微调成品")
         validate_resume_protocol(state, args.propagation_protocol)
+        if state.get("optimizer_name", "AdamW") != type(optimizer).__name__:
+            raise ValueError("恢复断点的优化器与当前协议不一致，不能静默加载")
         if state["args"]["data_root"] != str(args.data_root) or state["args"]["seed"] != args.seed:
             raise ValueError("恢复时 YouTube-VOS 数据根和 seed 必须一致")
         if state["data_profile"]["videos"] != profile["videos"] or \

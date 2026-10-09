@@ -2,7 +2,9 @@
 
 import importlib.util
 import json
+import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -61,6 +63,57 @@ def test_formal_benchmark_rejects_missing_whole_dataset(monkeypatch, missing):
     assert all(row["complete"] for row in eval_p1.coverage(incomplete).values())
     with pytest.raises(ValueError, match="基准序列不完整"):
         eval_p1.require_complete_benchmark(incomplete)
+
+
+def test_full_video_requires_source_and_equal_gt_pred_comp_lengths(tmp_path, monkeypatch):
+    source = tmp_path / "JPEGImages" / "sequence"
+    source.mkdir(parents=True)
+    for index in range(27):
+        (source / f"{index:05d}.jpg").write_bytes(b"jpeg")
+    cases, counts = [], {}
+    for ratio in eval_p1.RATIOS:
+        videos = {}
+        for name in ("gt", "pred", "comp"):
+            path = tmp_path / f"{ratio}_{name}.mp4"
+            path.write_bytes(b"video")
+            videos[name] = str(path)
+            counts[str(path)] = 27
+        cases.append({"dataset": "davis2017", "sequence_id": "sequence",
+                      "mask_total_ratio": ratio, "source_dir": str(source), **videos})
+
+    class FakeVideo:
+        def __init__(self, path, ctx):
+            self.path = path
+
+        def __len__(self):
+            return counts[self.path]
+
+        def __getitem__(self, index):
+            return SimpleNamespace(shape=(256, 256, 3))
+
+    monkeypatch.setitem(sys.modules, "decord", SimpleNamespace(
+        VideoReader=FakeVideo, cpu=lambda index: index))
+    verified = eval_p1.require_full_video_lengths(cases)
+    assert set(verified.values()) == {27} and len(verified) == 2
+    counts[cases[0]["pred"]] = 26
+    with pytest.raises(ValueError, match="帧数不一致"):
+        eval_p1.require_full_video_lengths(cases)
+    counts[cases[0]["pred"]] = 27
+    del cases[0]["source_dir"]
+    with pytest.raises(ValueError, match="source_dir"):
+        eval_p1.require_full_video_lengths(cases)
+
+
+def test_short_window_cannot_be_formal_protocol(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(eval_p1, "train_source_ids", lambda _: set())
+    monkeypatch.setattr(eval_p1, "load_manifest", lambda *_: [])
+    monkeypatch.setattr(sys, "argv", ["evaluate_p1", "--manifest", str(tmp_path / "m.json"),
+                     "--train-source-ids", str(tmp_path / "ids.txt"),
+                     "--output", str(tmp_path / "metrics.json")])
+    with pytest.raises(SystemExit) as failure:
+        eval_p1.main()
+    assert failure.value.code == 2
+    assert "前25帧短窗仅供诊断" in capsys.readouterr().err
 
 
 def test_davis_inventory_matches_official_2017_trainval(tmp_path):

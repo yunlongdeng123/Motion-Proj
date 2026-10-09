@@ -112,6 +112,7 @@ def main() -> None:
     results += sorted(run.glob('sampler_controlled/step*/*/run.json'))
     results += sorted(run.glob('reference_m4/validation*/step*/*/side_*/run.json'))
     results += sorted(run.glob('paper_bidirectional_m4/validation*/step*/*/side_*/run.json'))
+    results += sorted(run.glob('paper_bidirectional_m4/validation*/step*/*/full_video/side_*/run.json'))
     for result in results:
         meta = json.loads(result.read_text()); rel = result.parent.relative_to(run)
         dest = output/rel; dest.mkdir(parents=True, exist_ok=True)
@@ -121,7 +122,7 @@ def main() -> None:
         cells = ''.join(f'<figure><video controls muted loop src="{rel.as_posix()}/{name}.mp4"></video><figcaption>{label}</figcaption></figure>' for name,label in labels)
         phase_label = ('论文双向传播短预检' if rel.parts[0] == 'paper_bidirectional_m4' else
                        '公开参考父链训练' if rel.parts[0] == 'reference_m4' else '旧公开训练 / 诊断')
-        validation_cards.append(f'<article><h3>{phase_label} · step {meta["checkpoint_step"]} · {meta["sequence_id"]} · {meta["mode"]}</h3><div class="four">{cells}</div><p>每组均为完整25帧。原生与写回分开看；硬写回中央正确不代表生成侧边正确。sampler_controlled 目录仅诊断，不进入正式论文指标。<a href="{rel.as_posix()}/run.json">来源记录</a></p></article>')
+        validation_cards.append(f'<article><h3>{phase_label} · step {meta["checkpoint_step"]} · {meta["sequence_id"]} · {meta["mode"]}</h3><div class="four">{cells}</div><p>帧数与生成范围见来源记录。原生与写回分开看；硬写回中央正确不代表生成侧边正确。sampler_controlled 目录仅诊断，不进入正式论文指标。<a href="{rel.as_posix()}/run.json">来源记录</a></p></article>')
     gate_path = run/'quality_gates/step001000.json'
     if gate_path.exists():
         gate = json.loads(gate_path.read_text())
@@ -169,7 +170,7 @@ def main() -> None:
         phase_summary = {'controller':phase_state,'latest_train':phase_latest,
                          'legacy_allframes_steps_not_counted':1000}
         (output/'reference_m4_status.json').write_text(json.dumps(phase_summary,ensure_ascii=False,indent=2))
-        phase_note = f'''<div class="panel warn"><h2>当前活动阶段：论文 m=4 参考链</h2>
+        phase_note = f'''<div class="panel warn"><h2>保留的公开参考父链阶段</h2>
         <p>新训练完成 {phase_latest['step'] if phase_latest else 0} 步；当前状态 {html.escape(phase_state['status'])}。从原始权重新初始化，未恢复旧All Frames 1000断点；旧结果在下方供回溯。</p>
         <p>已修正选帧、成对RAFT及成对warp监督；传播仍调用固定公开模块。新的CPU反证显示其方向与过去参考覆盖有误。到1000步保留断点并暂停，双向传播修正先做短预检，不放行长训。主推理为Gaussian前向采样，公开literal路径保留为诊断。</p><a href="reference_m4_status.json">活动阶段快照</a></div>'''
     handoff = run/'bidirectional_handoff.json'
@@ -177,15 +178,41 @@ def main() -> None:
         status = json.loads(handoff.read_text())
         shutil.copy2(handoff, output/'bidirectional_handoff.json')
         phase_note += f'''<div class="panel"><h2>论文双向候选：限定两步预检</h2>
-        <p>状态：{html.escape(status['status'])}。待旧阶段完整保存、验证并hold后，串行测试新协议2步训练＋1个固定验证窗；没有放行1000或100K。原细化与融合参数结构保留，显存、梯度与生成效果需要实测。</p>
+        <p>状态：{html.escape(status['status'])}。串行测试新协议2步训练＋1个固定验证窗；没有放行1000或100K。原细化与融合参数结构保留，显存、梯度与生成效果需要实测。</p>
         <p><a href="bidirectional_handoff.json">队列与实际状态</a></p></div>'''
+    candidate = run/'paper_bidirectional_m4'
+    if (candidate/'controller_state.json').is_file():
+        steps = {}
+        for log in sorted((candidate/'logs').glob('train_to_*.log')):
+            for line in log.read_text().splitlines():
+                try:
+                    row = json.loads(line)
+                    if row.get('event') == 'train_step': steps[row['step']] = row
+                except (json.JSONDecodeError, TypeError): pass
+        summary = {'controller': json.loads((candidate/'controller_state.json').read_text()),
+                   'steps': [steps[k] for k in sorted(steps)], 'human_verdict': None,
+                   'optimizer': 'Adam', 'weight_decay': 0,
+                   'memory_adaptation': 'FCNet activation checkpoint + mask-weighted chunked ternary checkpoint'}
+        (output/'paper_bidirectional_status.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2))
+        phase_note += f'''<div class="panel"><h2>双向候选：实测与资源修复</h2>
+        <p>已记录 {len(steps)} 个更新；当前预算 {summary['controller']['training_budget']}，状态 {html.escape(summary['controller']['status'])}。首次第一步通过，第二步因光流损失峰值超过3090显存而停止；保留第一步断点与失败日志后续跑。FCNet完整时轴采用激活重算，ternary loss分块按mask像素数加权；固定官方公式的CPU数值与梯度对照通过，不改变flow对、损失或采样预算。</p>
+        <p>此阶段同时对齐论文Adam、零weight decay，旧AdamW断点不混用。因此它是论文配置修复预检，不能将画质差异单独归因传播方向。仍使用bf16和CPU卸载，未声称与两张A6000完全等价。两步画质也不能用来否定论文能力。</p>
+        <p><a href="paper_bidirectional_status.json">逐步损失、梯度、显存与实际状态</a></p></div>'''
+    independent_reports = sorted((run/'review').glob('assistant_p1_visual_review_*.json'))
+    if independent_reports:
+        source = independent_reports[-1]
+        qa = json.loads(source.read_text())
+        shutil.copy2(source, output/'independent_visual_review.json')
+        phase_note += f'''<div class="panel warn"><h2>最新独立全帧审核</h2>
+        <p>{html.escape(qa['assistant_verdict'])}。覆盖 {len(qa['windows'])} 窗，每窗四种输出、完整序列。逐窗帧数和结构/时序结论以审核记录为准；工程预检与画质收益分别判断。</p>
+        <p>人工verdict留空。<a href="independent_visual_review.json">逐窗备注、合成契约与证据路径</a></p></div>'''
     comparisons = [
         ('视频与尺寸','25 帧 / 256²','JPEG 连续窗口，缩放中心裁剪','相同；1951 个有效视频、19313 个窗口','基本对齐；100K 是重复采样的更新预算'),
         ('外绘 mask','水平总宽 .25 / .66（评测）','训练双侧各 .33','训练每侧 84px；推理两倍率','对齐公开 mask；当前没有驾驶 DELETE 造数'),
         ('传播路径','m=4，最近过去与未来参考','train走All Frames；test两个分支都沿未来父链','reference_m4修正选帧与成对监督，但继承公开传播缺陷','CPU平移已证方向错误与末帧失证据；先短预检，不放行长训'),
         ('训练条件','传播条件 + 扩散训练','完整 RGB 算 RAFT / 首帧 CLIP；masked RGB 编码','沿公开训练路径；QUERY 仅可见输入','训练／QUERY 条件分布有风险，非新增输入泄漏'),
         ('参数范围','冻结空间层，训练时序层','FCNet + propagation + temporal transformer','相同冻结范围；冻结梯度为 0','基本对齐；非全量 U-Net 微调'),
-        ('优化器','Adam / lr 1e−5 / 100K','AdamW / wd .01 / batch per GPU 1','AdamW / batch 1 / 100K 上限','论文／源码不同；双卡有效 batch 未确认'),
+        ('优化器','Adam / lr 1e−5 / 100K','AdamW / wd .01 / batch per GPU 1','双向候选Adam/wd0；旧协议AdamW；batch1','按论文文字对齐候选；双卡有效 batch 未确认'),
         ('硬件与精度','2×A6000','fp16 配置','单 3090，bf16；冻结编码器 CPU 卸载','资源适配；速度和精度不能宣称完全一致'),
         ('推理采样','Gaussian 初始化，前向去噪','额外 inversion + B1→B2','旧literal保留；新阶段主模式为Gaussian feedforward','同条件3模式未修好画质；公开inverse风险仍记录'),
         ('正式评测','DAVIS90 + 附录 YT60 / 四指标','未公开完整指标实现，默认可用全长滑窗','本地前25帧生成、前16帧评分；原生/合成分开','已修整套数据集漏检；长度/预处理等价未确认，protocol_verified=false'),

@@ -1,6 +1,8 @@
 """P1 参考链训练的 CPU 数据流与恢复协议契约。"""
 
 import sys
+import importlib.util
+from pathlib import Path
 
 import pytest
 import torch
@@ -115,3 +117,31 @@ def test_reference_protocol_is_default_and_literal_mode_is_explicit(monkeypatch,
     assert parse_args().propagation_protocol == "reference-m4"
     monkeypatch.setattr(sys, "argv", command + ["--propagation-protocol", "literal-allframes"])
     assert parse_args().propagation_protocol == "literal-allframes"
+
+
+def test_chunked_official_ternary_loss_preserves_values_and_flow_gradients():
+    from motion_proj.worldsim_v81.model_bridge import DEFAULT_EXTERNAL
+    source = Path(DEFAULT_EXTERNAL) / "utils/loss.py"
+    if not source.exists():
+        pytest.skip("固定官方FlowLoss未安装；远端CPU验证此项")
+    spec = importlib.util.spec_from_file_location("p1_fixed_official_loss", source)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    loss = module.FlowLoss()
+    torch.manual_seed(2026)
+    pairs = [(0, 1), (0, 2), (2, 4), (4, 6), (3, 5)]
+    frames = torch.rand(1, 7, 3, 9, 10)
+    mask = torch.zeros(1, 7, 1, 9, 10)
+    for i in range(7):
+        mask[:, i, :, :, :i + 1] = 1
+    truth = tuple(torch.randn(1, 5, 2, 9, 10) * .1 for _ in range(2))
+    full = tuple((x + torch.randn_like(x) * .03).requires_grad_() for x in truth)
+    chunks = tuple(x.detach().clone().requires_grad_() for x in full)
+    full_parts = paired_flow_loss(loss, full, truth, mask, frames, pairs)
+    chunk_parts = paired_flow_loss(loss, chunks, truth, mask, frames, pairs, warp_chunk=2)
+    for actual, expected in zip(chunk_parts, full_parts):
+        torch.testing.assert_close(actual, expected, rtol=2e-5, atol=2e-6)
+    sum(full_parts).backward()
+    sum(chunk_parts).backward()
+    for actual, expected in zip(chunks, full):
+        torch.testing.assert_close(actual.grad, expected.grad, rtol=5e-5, atol=2e-6)

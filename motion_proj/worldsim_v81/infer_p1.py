@@ -96,7 +96,8 @@ def _resize_center_crop(image: Image.Image) -> Image.Image:
     return image.crop((x, y, x + SIZE, y + SIZE))
 
 
-def load_sequence(data_root: Path, sequence_id: str, side_ratio: float):
+def load_sequence(data_root: Path, sequence_id: str, side_ratio: float,
+                  *, full_video: bool = False):
     if side_ratio not in (0.125, 0.33):
         raise ValueError("P1 side_ratio 仅支持 0.125 或 0.33")
     folder = data_root / sequence_id
@@ -104,9 +105,12 @@ def load_sequence(data_root: Path, sequence_id: str, side_ratio: float):
         raise FileNotFoundError(f"序列不存在: {folder}")
     paths = sorted(path for path in folder.iterdir()
                    if path.is_file() and path.suffix.lower() in {".jpg", ".jpeg", ".png"})
-    if len(paths) < FRAMES:
+    if full_video and len(paths) < 2:
+        raise ValueError(f"序列 {sequence_id} 仅有 {len(paths)} 帧，全视频参考传播至少需要2帧")
+    if not full_video and len(paths) < FRAMES:
         raise ValueError(f"序列 {sequence_id} 仅有 {len(paths)} 帧，P1 必须有连续 25 帧")
-    paths = paths[:FRAMES]
+    if not full_video:
+        paths = paths[:FRAMES]
     target = []
     for path in paths:
         with Image.open(path) as image:
@@ -122,7 +126,7 @@ def load_sequence(data_root: Path, sequence_id: str, side_ratio: float):
     # 只允许可见中心参与参考选择。隐藏两侧 RGB 不进入任何模型条件。
     centers = [image.crop((left, 0, right, SIZE)) for image in visible]
     refs = select_reference_frame_indices(centers, REFERENCE_WINDOW)
-    chain, to_frame = build_pairs_for_all_frames(FRAMES, refs)
+    chain, to_frame = build_pairs_for_all_frames(len(paths), refs)
     return paths, target, visible, (left, right), refs, chain + to_frame
 
 
@@ -161,29 +165,49 @@ def _unet_noise(components, latents, condition, image_embedding, time_ids,
 
 
 @torch.no_grad()
+def _encode_condition_full_video(vae, visible: torch.Tensor,
+                                 generator: torch.Generator, *, chunk: int = 4):
+    """按帧块抽增强噪声与VAE编码，避免额外完整T帧RGB条件驻留GPU。"""
+    parts = []
+    for start in range(0, visible.shape[1], chunk):
+        pixels = visible[:, start:start + chunk]
+        noise = torch.randn(pixels.shape, generator=generator, device=pixels.device,
+                            dtype=pixels.dtype)
+        latent = encode_video(vae, pixels + 0.02 * noise, scaled=False,
+                              sample=False, chunk=chunk)
+        parts.append(latent.cpu())
+    return torch.cat(parts, dim=1).to(visible.device)
+
+
+@torch.no_grad()
 def generate(components, pipeline, visible_images: list[Image.Image],
              visible: torch.Tensor, hole: torch.Tensor, pairs: list[tuple[int, int]],
              *, seed: int, steps: int, mode: str, amp: str,
-             propagation_protocol: str = "reference-m4", refs: list[int] | None = None):
+             propagation_protocol: str = "reference-m4", refs: list[int] | None = None,
+             full_video: bool = False):
     device = torch.device("cuda")
     generator = torch.Generator(device=device).manual_seed(seed)
     cast_dtype = {"bf16": torch.bfloat16, "fp16": torch.float16}[amp]
     for module in (components.vae, components.image_encoder, components.raft,
                    components.fcnet, components.propagator, components.unet):
         module.eval()
+    total_frames = len(visible_images)
+    if visible.shape[1] != total_frames or hole.shape[1] != total_frames:
+        raise ValueError("可见视频、mask与PIL帧数不一致")
     if mode == "literal-public":
         if propagation_protocol == "paper-bidirectional-m4":
             raise ValueError("公开test.py未实现论文双向参考传播；该协议只能使用paper-feedforward")
         # 直接运行固定公开 test.py。保留其中 B=1→2 的 inversion 广播、
         # 其后 B=2 去噪及仅解码第一个样本，绝不重解释为标准 CFG。
         mask = (hole[0, 0, 0].cpu().numpy() * 255).astype(np.uint8)
-        masks = [Image.fromarray(mask, mode="L") for _ in range(FRAMES)]
+        masks = [Image.fromarray(mask, mode="L") for _ in range(total_frames)]
         # test.py 的 inversion 内部固定 autocast(fp16)。外层也用 FP16，
         # 并禁用跨嵌套上下文的权重缓存，防止 BF16/Half F.linear 混型。
         with torch.autocast("cuda", dtype=torch.float16, cache_enabled=False):
             output = pipeline.__call_seen_to_scene__(
                 images=visible_images, masks=masks, refer_idx=pairs,
-                height=SIZE, width=SIZE, window_size=FRAMES, stride=5,
+                height=SIZE, width=SIZE, window_size=FRAMES,
+                stride=16 if full_video else 5,
                 num_inference_steps=steps, min_guidance_scale=1.0,
                 max_guidance_scale=3.0, fps=7, motion_bucket_id=127,
                 noise_aug_strength=0.02, decode_chunk_size=8,
@@ -199,7 +223,7 @@ def generate(components, pipeline, visible_images: list[Image.Image],
     dilated = F.max_pool2d(hole.flatten(0, 1), 3, 1, 1).reshape_as(hole)
     if propagation_protocol == "paper-bidirectional-m4":
         from .reference_propagation import build_reference_plan, static_fcnet_pair_masks
-        plan = build_reference_plan(FRAMES, refs)
+        plan = build_reference_plan(total_frames, refs)
         if tuple(pairs) != plan.pairs:
             raise ValueError("推理flow与双向参考图顺序不匹配")
         pair_masks = static_fcnet_pair_masks(dilated, plan)
@@ -207,11 +231,14 @@ def generate(components, pipeline, visible_images: list[Image.Image],
         pair_masks = dilated
     flow_pred, _ = components.fcnet.forward_bidirect_flow(flow_input, pair_masks)
     flows = components.fcnet.combine_flow(flow_input, flow_pred, pair_masks)
-    observation_noise = torch.randn(visible.shape, generator=generator, device=device,
-                                    dtype=visible.dtype)
-    condition_input = visible + 0.02 * observation_noise
-    condition_latent = encode_video(components.vae, condition_input, scaled=False,
-                                    sample=False)
+    if full_video:
+        condition_latent = _encode_condition_full_video(components.vae, visible, generator)
+    else:
+        observation_noise = torch.randn(visible.shape, generator=generator, device=device,
+                                        dtype=visible.dtype)
+        condition_input = visible + 0.02 * observation_noise
+        condition_latent = encode_video(components.vae, condition_input, scaled=False,
+                                        sample=False)
     if propagation_protocol == "paper-bidirectional-m4":
         from .reference_propagation import propagate_reference_latents
         _, _, condition = propagate_reference_latents(
@@ -226,6 +253,21 @@ def generate(components, pipeline, visible_images: list[Image.Image],
     torch.cuda.empty_cache()
 
     scheduler = components.scheduler
+    if full_video:
+        from .long_video_sampling import iter_decoded_frame_chunks, sample_global_latents
+        latents = sample_global_latents(
+            pipeline, scheduler, condition, image_embedding, time_ids,
+            num_channels_latents=components.unet.config.in_channels,
+            height=SIZE, width=SIZE, num_inference_steps=steps, generator=generator,
+            predict_noise=lambda z, c, e, ids, t, s: _unet_noise(
+                components, z, c, e, ids, t, s, cfg=True, amp_dtype=cast_dtype),
+            window_size=FRAMES, stride=16,
+        )
+        components.unet.to("cpu")
+        components.vae.to(device)
+        return torch.cat([frames for _, frames in iter_decoded_frame_chunks(
+            pipeline, latents, decode_chunk_size=8)], dim=0)
+
     scheduler.set_timesteps(steps, device=device)
     latents = pipeline.prepare_latents(1, FRAMES, components.unet.config.in_channels,
                                        SIZE, SIZE, image_embedding.dtype, device, generator)
@@ -251,6 +293,8 @@ def _save_video(images: list[Image.Image], path: Path):
 
 def save_outputs(output_dir: Path, target: list[Image.Image], visible: list[Image.Image],
                  prediction: torch.Tensor, edges: tuple[int, int]) -> dict:
+    if len(target) != len(visible) or prediction.shape[0] != len(target):
+        raise ValueError("GT、可见帧与预测帧数必须完全一致")
     left, right = edges
     prediction_images = [Image.fromarray((frame.permute(1, 2, 0).numpy() * 255).round().astype(np.uint8))
                          for frame in prediction]
@@ -285,6 +329,8 @@ def parse_args():
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--steps", type=int, default=25)
     parser.add_argument("--mode", choices=("literal-public", "paper-feedforward"), default="literal-public")
+    parser.add_argument("--full-video", action="store_true",
+                        help="推理全部原始帧；paper-feedforward使用D.2全局重叠窗口，literal-public仍调用固定test.py")
     parser.add_argument("--amp", choices=("bf16", "fp16"), default="bf16")
     parser.add_argument("--svd", type=Path, default=DEFAULT_SVD)
     parser.add_argument("--raft-weight", type=Path, default=DEFAULT_RAFT)
@@ -300,7 +346,7 @@ def main():
     if not torch.cuda.is_available():
         raise RuntimeError("P1 真实推理需要 CUDA")
     paths, target, visible_images, edges, refs, pairs = load_sequence(
-        args.data_root, args.sequence_id, args.side_ratio)
+        args.data_root, args.sequence_id, args.side_ratio, full_video=args.full_video)
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
     if checkpoint.get("format") != FORMAT:
         raise ValueError("仅接受本项目 P1 原始组件训练 checkpoint")
@@ -309,7 +355,7 @@ def main():
         if args.mode != "paper-feedforward":
             raise ValueError("论文双向参考断点不得用公开未来父链推理")
         from .reference_propagation import build_reference_plan
-        pairs = list(build_reference_plan(FRAMES, refs).pairs)
+        pairs = list(build_reference_plan(len(paths), refs).pairs)
     pipeline_class = _official_pipeline_class(args.external)
     components = load_components(args.svd, args.raft_weight, args.fcnet_weight,
                                   args.external, device="cuda")
@@ -322,21 +368,30 @@ def main():
     rgb = np.stack([np.asarray(image) for image in visible_images])
     visible = torch.from_numpy(rgb.copy()).permute(0, 3, 1, 2).unsqueeze(0).float().cuda() / 127.5 - 1
     # 洞区在 [-1,1] 约定下仍必须为 0，而不是黑像素的 -1。
-    hole = torch.zeros(1, FRAMES, 1, SIZE, SIZE, device="cuda")
+    hole = torch.zeros(1, len(paths), 1, SIZE, SIZE, device="cuda")
     hole[..., :edges[0]] = 1
     hole[..., edges[1]:] = 1
     visible *= 1 - hole
     started = time.monotonic()
     prediction = generate(components, pipeline, visible_images, visible, hole, pairs,
                           seed=args.seed, steps=args.steps, mode=args.mode, amp=args.amp,
-                          propagation_protocol=propagation_protocol, refs=refs)
-    output = args.output_dir / args.sequence_id / f"side_{args.side_ratio:g}"
+                          propagation_protocol=propagation_protocol, refs=refs,
+                          full_video=args.full_video)
+    output = args.output_dir / args.sequence_id
+    if args.full_video:
+        output /= "full_video"
+    output /= f"side_{args.side_ratio:g}"
     saved = save_outputs(output, target, visible_images, prediction, edges)
     provenance = {
         "status": "complete", "sequence_id": args.sequence_id,
         "checkpoint": str(args.checkpoint), "checkpoint_step": checkpoint["step"],
         "checkpoint_format": FORMAT, "data_root": str(args.data_root),
-        "source_frames": [str(path) for path in paths], "frame_selection": "first_25_sorted_start_0",
+        "source_frames": [str(path) for path in paths],
+        "frame_selection": "all_sorted" if args.full_video else "first_25_sorted_start_0",
+        "generation_protocol": ("full_video_sliding_window_25_stride16" if args.full_video
+                                else "local_first25_sorted_start0_diagnostic"),
+        "num_frames": len(paths), "window_size": FRAMES,
+        "window_stride": 16 if args.full_video else None,
         "preprocessing": "bicubic_resize_center_crop_256_square",
         "side_ratio_each": args.side_ratio, "mask_pixels_left": edges[0],
         "mask_pixels_right": SIZE - edges[1], "reference_window": REFERENCE_WINDOW,

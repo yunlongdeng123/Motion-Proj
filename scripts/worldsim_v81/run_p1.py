@@ -164,26 +164,34 @@ class Controller:
             raise ValueError('已有断点传播协议不符，禁止冒充新协议')
 
     def infer(self, checkpoint: Path, root: Path, sequence: str, side: float,
-              output: Path, name: str, mode: str | None = None) -> None:
+              output: Path, name: str, mode: str | None = None,
+              *, full_video: bool = False) -> None:
         if mode is None:
             mode = self.inference_mode
         if mode not in INFERENCE_MODES:
             raise ValueError(f'未知推理模式: {mode}')
         self.check_checkpoint_protocol(checkpoint)
-        result = output / sequence / f'side_{side:g}' / 'run.json'
+        result_root = output / sequence
+        if full_video:
+            result_root /= 'full_video'
+        result = result_root / f'side_{side:g}' / 'run.json'
         if result.exists():
             completed = json.loads(result.read_text())
             if (completed.get('status') == 'complete' and completed.get('mode') == mode
                     and completed.get('checkpoint') == str(checkpoint)
-                    and completed.get('propagation_protocol', 'literal-allframes') == self.propagation_protocol):
+                    and completed.get('propagation_protocol', 'literal-allframes') == self.propagation_protocol
+                    and (not full_video or completed.get('generation_protocol') == 'full_video_sliding_window_25_stride16')):
                 self.update(status=f'{name}_{mode}_skipped', active_inference_mode=mode)
                 return
         self.update(active_inference_mode=mode)
-        self.command(f'{name}_{mode}', [str(PYTHON), '-m', 'motion_proj.worldsim_v81.infer_p1',
+        command = [str(PYTHON), '-m', 'motion_proj.worldsim_v81.infer_p1',
                            '--data-root', str(root), '--sequence-id', sequence,
                            '--checkpoint', str(checkpoint), '--output-dir', str(output),
                            '--side-ratio', str(side), '--seed', '2026', '--steps', '25',
-                           '--mode', mode, '--amp', 'bf16'])
+                           '--mode', mode, '--amp', 'bf16']
+        if full_video:
+            command.append('--full-video')
+        self.command(f'{name}_{mode}', command)
 
     def wait_quality_gate(self, step: int) -> None:
         path = self.run / 'quality_gates' / f'step{step:06d}.json'
@@ -284,10 +292,11 @@ class Controller:
             for side, total in ((.125, .25), (.33, .66)):
                 output = self.run / 'benchmark' / item['dataset']
                 self.infer(checkpoint, root, sequence, side, output,
-                           f'benchmark_{index:03d}_{sequence}_{side}')
-                frames = output / sequence / f'side_{side:g}'
+                           f'benchmark_{index:03d}_{sequence}_{side}', full_video=True)
+                frames = output / sequence / 'full_video' / f'side_{side:g}'
                 cases.append({'dataset': item['dataset'], 'sequence_id': sequence,
                               'source_id': item['source_id'], 'mask_total_ratio': total,
+                              'source_dir': str((root / sequence).resolve()),
                               **{k: str(frames / f'{k}.mp4') for k in ('gt', 'pred', 'comp')}})
                 atomic_json(self.run / 'benchmark_progress.json',
                             {'completed': len(cases), 'expected': 300})
@@ -296,6 +305,7 @@ class Controller:
         self.command('formal_metrics', [str(PYTHON), str(REPO / 'scripts/worldsim_v81/evaluate_p1.py'),
                      '--manifest', str(manifest), '--train-source-ids',
                      str(self.run / 'train_source_ids.json'), '--device', 'cuda',
+                     '--generation-protocol', 'full-video',
                      '--output', str(self.run / 'metrics.json')])
         self.update(status='metrics_complete_assistant_review_pending',
                     metrics=str(self.run / 'metrics.json'), command=None)

@@ -1,0 +1,135 @@
+{
+  "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+  "run": "r1",
+  "phase": "paper_bidirectional_m4",
+  "scope": "two_step_engineering_preflight",
+  "optimizer": "Adam",
+  "weight_decay": 0,
+  "lr": 1e-05,
+  "amp": "bf16",
+  "memory_fix": "nonreentrant_full_FCNet_checkpoint_and_mask_mass_weighted_ternary_chunks_8",
+  "steps": [
+    {
+      "event": "train_step",
+      "step": 1,
+      "video_id": "0fc958cde2",
+      "clip_start": 2,
+      "lr": 1e-05,
+      "loss": 5.9310736656188965,
+      "diffusion": 0.29154565930366516,
+      "flow_l1": 2.5465190410614014,
+      "ternary_warp": 3.0930089950561523,
+      "gradients": {
+        "fcnet": {
+          "status": "ok",
+          "norm": 47.44170379638672,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 66,
+          "trainable_tensors": 74
+        },
+        "propagator": {
+          "status": "ok",
+          "norm": 0.02536752261221409,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 32,
+          "trainable_tensors": 32
+        },
+        "svd_temporal": {
+          "status": "ok",
+          "norm": 1.8709115982055664,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 416,
+          "trainable_tensors": 416
+        }
+      },
+      "frozen_grad_tensors": 0,
+      "frozen_observation_encoders_offloaded": true,
+      "train_conditioning": "official_full_rgb_flow_and_first_frame_clip",
+      "propagation_protocol": "paper-bidirectional-m4",
+      "reference_indices": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24
+      ],
+      "flow_pair_count": 42,
+      "gpu_peak_allocated_gb": 20.914305686950684,
+      "gpu_peak_reserved_gb": 22.259765625,
+      "wall_seconds": 6.809842788003152
+    },
+    {
+      "event": "train_step",
+      "step": 2,
+      "video_id": "4c397b6fd4",
+      "clip_start": 8,
+      "lr": 1e-05,
+      "loss": 4.496087551116943,
+      "diffusion": 0.8974179029464722,
+      "flow_l1": 1.9044318199157715,
+      "ternary_warp": 1.6942377090454102,
+      "gradients": {
+        "fcnet": {
+          "status": "ok",
+          "norm": 42.53246307373047,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 66,
+          "trainable_tensors": 74
+        },
+        "propagator": {
+          "status": "ok",
+          "norm": 0.002490454586222768,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 32,
+          "trainable_tensors": 32
+        },
+        "svd_temporal": {
+          "status": "ok",
+          "norm": 0.5997862815856934,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 416,
+          "trainable_tensors": 416
+        }
+      },
+      "frozen_grad_tensors": 0,
+      "frozen_observation_encoders_offloaded": true,
+      "train_conditioning": "official_full_rgb_flow_and_first_frame_clip",
+      "propagation_protocol": "paper-bidirectional-m4",
+      "reference_indices": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24
+      ],
+      "flow_pair_count": 42,
+      "gpu_peak_allocated_gb": 18.40230131149292,
+      "gpu_peak_reserved_gb": 22.525390625,
+      "wall_seconds": 8.26032365699939
+    }
+  ],
+  "cpu_tests_passed": 75,
+  "independent_visual_qa_windows": 9,
+  "assistant_verdict": "engineering_pass_quality_undetermined_after_two_steps",
+  "human_verdict": null,
+  "formal_metrics_computed": false,
+  "protocol_verified": false,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "evidence_root": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1",
+  "failed_attempt": "paper_bidirectional_m4/logs/train_to_000002.oom_original.log",
+  "next_scope": "same_protocol_100_steps_then_fixed_validation_and_full_36_frame_preflight",
+  "automatic_1000_or_100k": false
+}

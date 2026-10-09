@@ -111,3 +111,22 @@ owned候选 `paper-bidirectional-m4` 已接训练/推理：统一早→晚pair�
 已修 `evaluate_p1.py` 完整性入口：必须同时包含完整DAVIS90和附录YouTube60，不允许因 `coverage()`只列出现的数据集而漏掉整套基准。两个有意义的缺整套反例通过；局部调试仍显式 `--allow-partial`。
 
 论文25帧明确用于训练；附录D.2和公开test默认支持整段视频、25帧重叠去噪。当前仅生成排序前25帧再评分前16帧，不能从Follow-Your-Canvas的评分抽帧反推其生成也只使用25帧。本地协议保留、明确命名并继续 `protocol_verified=false`；正式完整复现尚须处理长视频窗口、预处理及FVD汇总边界，未计算四指标，更未声称论文表1已达标。
+
+
+## 双向GPU预检与第二步OOM修复
+
+2026-10-10 01:57新加坡：旧reference_m4完成1000、六个paper-feedforward验证及一个literal诊断，已进入工程hold并停止闲置控制器。新双向子阶段第一次第1步loss5.931074、K42、梯度有限、allocated20.914GiB；Adam状态建立后第2步在官方ternary_transform分配96MiB时OOM，日志显示GPU已用23.55GiB。原始栈和第一步checkpoint保留，不把资源错误记为方法失败。
+
+修复只改激活保存：原FCNet完整pair序列做非重入checkpoint，不切其时轴；ternary loss按8对分块checkpoint，以各块mask像素数占比加权，保持整批官方归一化。真实固定官方FlowLoss的值和flow梯度与整批对照通过。从原step1断点/RNG恢复step2：loss4.496088（diffusion.897418、flow1.904432、warp1.694238），FCNet/传播/SVD temporal梯度均有限且非零，冻结梯度0；峰值allocated18.402GiB，耗时8.26秒。
+
+新阶段按论文文字Adam/wd0，不混载旧AdamW；精度仍bf16/单3090/CPU卸载，未宣称两A6000等价。传播方向、来源mask及Adam均变化，画质变化不能单独归因方向。CPU完整75项通过。
+
+独立subagent报告 `r1/review/assistant_p1_visual_review_20261009T175643Z.json` 覆盖9窗×4模态×25帧，human_verdict=null。旧reference1000六窗仍hold：滑板倒挂建筑、海豚重复错位、白鲸运动滞后模糊；literal25帧近冻结。所有可见带/硬合成接线逐帧通过，不能把模型失败归咎写回。新双向两步输出仍抽象色块/强闪烁，只判工程预检完成，画质尚未定。
+
+第三次只读接线审计未找到cond标度/拼接/新pull方向确定错误，建议同协议100步短学习诊断。root已在同run阶段限定恢复至100后固定一窗推理并退出，controller52384、trainer52387（以实时PID为准）；不自动1000/100K。两步关键checkpoint硬链接在preflight_checkpoints以保留。正式150 ID不用于这次预算决策。
+
+## 全视频协议入口
+
+公开test默认整段输入，25帧窗口/stride16；即使FYC指标只评分前16，生成也不能静默截成前25。owned入口新增显式full-video：全T可见条件/参考、全局Gaussian latent、每个扩散步重叠窗口预测均值、单次Euler更新、分块VAE编解码。控制器正式300段调用full-video并记录原始source_dir；正式评测核对源/GT/pred/comp全帧数量。短窗默认保留历史诊断、缓存与路径分离。长视频上游RAFT/FCNet/传播资源尚待GPU检查；不能用CPU测试宣称正式推理已完成。
+
+独立文献/源码核对：FYC的前三指标明确两倍率平均，FVD脚本分别输出，因此FVD均值属于推定；MOTIA均匀16不同于FYC前16，不混用。DAVIS480p与固定AppendixYT60不变；256² GT裁剪预处理作者未完整公开，当前中心裁剪是假设。实际正式指标仍未算，protocol_verified=false。failure_ledger_delta=none。
