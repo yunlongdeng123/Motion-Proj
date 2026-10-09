@@ -136,15 +136,72 @@ class Controller:
         return latest
 
     def infer(self, checkpoint: Path, root: Path, sequence: str, side: float,
-              output: Path, name: str) -> None:
+              output: Path, name: str, mode: str = 'literal-public') -> None:
         result = output / sequence / f'side_{side:g}' / 'run.json'
-        if result.exists() and json.loads(result.read_text()).get('status') == 'complete':
-            return
-        self.command(name, [str(PYTHON), '-m', 'motion_proj.worldsim_v81.infer_p1',
+        if result.exists():
+            completed = json.loads(result.read_text())
+            if completed.get('status') == 'complete' and completed.get('mode') == mode:
+                self.update(status=f'{name}_{mode}_skipped', inference_mode=mode)
+                return
+        self.update(inference_mode=mode)
+        self.command(f'{name}_{mode}', [str(PYTHON), '-m', 'motion_proj.worldsim_v81.infer_p1',
                            '--data-root', str(root), '--sequence-id', sequence,
                            '--checkpoint', str(checkpoint), '--output-dir', str(output),
                            '--side-ratio', str(side), '--seed', '2026', '--steps', '25',
-                           '--mode', 'literal-public', '--amp', 'bf16'])
+                           '--mode', mode, '--amp', 'bf16'])
+
+    def wait_quality_gate(self, step: int) -> None:
+        path = self.run / 'quality_gates' / f'step{step:06d}.json'
+        while True:
+            if not path.is_file():
+                self.update(status='waiting_assistant_quality_gate', quality_gate_step=step,
+                            quality_gate_file=str(path), quality_gate_decision=None,
+                            quality_gate_error=None)
+            else:
+                try:
+                    gate = json.loads(path.read_text(encoding='utf-8'))
+                except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                    gate = None
+                    error = f'{type(exc).__name__}: {exc}'
+                else:
+                    error = None
+                if (isinstance(gate, dict) and type(gate.get('step')) is int
+                        and gate['step'] == step and gate.get('reviewer') == 'assistant'
+                        and gate.get('decision') in ('continue', 'hold')):
+                    if gate['decision'] == 'continue':
+                        self.update(status='assistant_quality_gate_continue', quality_gate_step=step,
+                                    quality_gate_file=str(path), quality_gate_decision='continue',
+                                    quality_gate_error=None)
+                        return
+                    error = 'assistant decision: hold'
+                    decision = 'hold'
+                elif error is None:
+                    error = 'quality gate 需要相同步数、reviewer=assistant、decision=continue|hold'
+                    decision = None
+                else:
+                    decision = None
+                self.update(status='engineering_hold', quality_gate_step=step,
+                            quality_gate_file=str(path), quality_gate_decision=decision,
+                            quality_gate_error=error)
+            time.sleep(30)
+
+    def validate_checkpoint(self, step: int, checkpoint: Path, valid_root: Path,
+                            chosen: list[str]) -> None:
+        output = self.run / f'validation/step{step:06d}'
+        if step in (1000, 5000, 10000, 50000, 100000):
+            for sequence in chosen:
+                for side in (.125, .33):
+                    self.infer(checkpoint, valid_root, sequence, side, output,
+                               f'validation_{step:06d}_{sequence}_{side}')
+        else:
+            self.infer(checkpoint, valid_root, chosen[0], .33, output,
+                       f'validation_{step:06d}')
+        if step == 1000:
+            self.infer(checkpoint, valid_root, chosen[0], .33,
+                       self.run / 'validation_feedforward/step001000',
+                       'validation_feedforward_001000', mode='paper-feedforward')
+        if step in (1000, 5000):
+            self.wait_quality_gate(step)
 
     def execute(self) -> None:
         self.wait_archive('train.tar')
@@ -163,8 +220,8 @@ class Controller:
         valid_ids = sorted(p.name for p in valid_root.iterdir()
                            if p.is_dir() and len(list(p.glob('*.jpg'))) >= 25)
         valid_ids = [item for item in valid_ids if item not in YOUTUBE_IDS]
-        if not valid_ids:
-            raise RuntimeError('无合法25帧验证序列')
+        if len(valid_ids) < 3:
+            raise RuntimeError('少于3条合法25帧验证序列')
         # 预先按名称冻结验证例；不观察测试内容、不按生成质量挑选。
         chosen = [valid_ids[i] for i in sorted({0, len(valid_ids)//2, len(valid_ids)-1})]
         atomic_json(self.run / 'validation_selection.json',
@@ -176,14 +233,7 @@ class Controller:
         # 与公开配置保持1000步保存/验证；每段恢复同一RNG，不重设训练seed。
         for step in range(1000, 100001, 1000):
             checkpoint = self.train_to(step, save_every=1000)
-            self.infer(checkpoint, valid_root, chosen[0], .33,
-                       self.run / f'validation/step{step:06d}', f'validation_{step:06d}')
-            if step in (10000, 50000, 100000):
-                for sequence in chosen:
-                    for side in (.125, .33):
-                        self.infer(checkpoint, valid_root, sequence, side,
-                                   self.run / f'validation/step{step:06d}',
-                                   f'validation_{step:06d}_{sequence}_{side}')
+            self.validate_checkpoint(step, checkpoint, valid_root, chosen)
         self.wait_archive('valid_all_frames')
         self.wait_archive('DAVIS-2017-trainval-480p.zip')
         inventory_path = self.prepare_inventory()

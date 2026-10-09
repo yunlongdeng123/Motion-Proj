@@ -44,6 +44,8 @@ P1 训练按公开 train.py 使用完整 RGB 的 RAFT flow 和首帧 CLIP 条件
 
 公开材料存在明确边界：[论文](https://arxiv.org/html/2604.14648)写 Adam、纯 Gaussian feed-forward；[公开源码](https://github.com/InSeokJeon/Seen_to_Scene)采用 AdamW，并在高斯初始噪声上额外执行反向 timestep U-Net 遍历，再去噪。主运行明确标作公开代码模式，不称为输入视频反演。论文没有公开自己的四指标脚本及 pred/comp、视频编码、FVD 倍率合并全部细节，因此 `protocol_verified=false`；接近或超过数字仍需连同这些边界报告，不能伪称逐项完全一致。
 
+用户最新要求下增加1000、5000步assistant质量门，未通过不自动继续长训；三固定valid×两倍率和1000同断点feedforward诊断均与正式测试分开。独立审计还确认当前训练走全帧顺序传播而非论文参考链；公开inverse的CFG批配对及输出参数化存在风险。[详细对照与部署证据](P1_PROGRESS_AUDIT_R1.md)。新增门槛不修改当前在途训练数据、seed或预算，不要求人工审核。
+
 完整证据：`/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1`。源码、配置、轻量结果与报告可提交；模型、数据、第三方源码、视频和完整断点不进入 Git。源码 ZIP 上限 100,000,000 bytes。当前失败台账 `failure_ledger_refs=[V77-F02]`、`failure_ledger_delta=none`；数据下载和复现工程错误进入本 run，不当作新方法失败。
 
 启动实测：六份下载全部完整校验/提取；固定基准150序列，训练池1951序列。两步loss4.22769/3.68054（三组件梯度有限且非零，冻结梯度0，峰值allocated21.26GiB），不同片段的loss不能解释为收敛。首次公开推理因嵌套FP16/BF16 autocast冲突退出，失败日志保留；统一公开模式外层FP16、关闭外层缓存后完成25帧，源算法不改。独立subagent检查全部25帧：原生色彩/结构强失真，尚非可用基线；可见带及洞内写回逐像素契约通过。已从第2步断点恢复正式训练，初测5.7–6秒/更新，100K约7天，另加验证/保存。CPU33项通过，首次源码ZIP检查34,218,524 bytes。最终四指标待100K与正式测试，不能用预检代替复现验收。
