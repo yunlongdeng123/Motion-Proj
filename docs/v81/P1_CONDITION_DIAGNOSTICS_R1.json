@@ -1,0 +1,244 @@
+{
+  "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+  "run": "r1",
+  "observed_at_utc": "2026-10-09T18:28:08.961841+00:00",
+  "formal_training_step": 100,
+  "additional_fixed_clip_diagnostic_updates": 32,
+  "gpu_jobs": "complete; no next GPU budget scheduled",
+  "capacity": {
+    "status": "complete",
+    "kind": "fixed_training_clip_capacity_only",
+    "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt",
+    "source_step": 100,
+    "protocol": "paper-bidirectional-m4",
+    "video_id": "0fc958cde2",
+    "clip_start": 2,
+    "updates": 32,
+    "seed": 2026,
+    "query_seed": 2036,
+    "query_steps": 25,
+    "amp": "bf16",
+    "optimizer": "Adam",
+    "lr": 1e-05,
+    "weight_decay": 0,
+    "teacher_sigma": 2.0137527074704766,
+    "teacher_cond_sigma": 0.049787068367863944,
+    "teacher_role": "fixed noisy GT x0; full GT RAFT flow and full GT first-frame CLIP; not QUERY",
+    "query_role": "same training clip, visible RGB only to CLIP/RAFT/VAE; pure Gaussian paper-feedforward; not held-out",
+    "formal_eval": false,
+    "generalization_claim": false,
+    "reference_indices": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24
+    ],
+    "flow_pairs": [
+      [
+        0,
+        4
+      ],
+      [
+        4,
+        8
+      ],
+      [
+        8,
+        12
+      ],
+      [
+        12,
+        16
+      ],
+      [
+        16,
+        20
+      ],
+      [
+        20,
+        24
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        8
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        4,
+        7
+      ],
+      [
+        7,
+        8
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        9,
+        12
+      ],
+      [
+        8,
+        10
+      ],
+      [
+        10,
+        12
+      ],
+      [
+        8,
+        11
+      ],
+      [
+        11,
+        12
+      ],
+      [
+        12,
+        13
+      ],
+      [
+        13,
+        16
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        14,
+        16
+      ],
+      [
+        12,
+        15
+      ],
+      [
+        15,
+        16
+      ],
+      [
+        16,
+        17
+      ],
+      [
+        17,
+        20
+      ],
+      [
+        16,
+        18
+      ],
+      [
+        18,
+        20
+      ],
+      [
+        16,
+        19
+      ],
+      [
+        19,
+        20
+      ],
+      [
+        20,
+        21
+      ],
+      [
+        21,
+        24
+      ],
+      [
+        20,
+        22
+      ],
+      [
+        22,
+        24
+      ],
+      [
+        20,
+        23
+      ],
+      [
+        23,
+        24
+      ]
+    ],
+    "teacher_before": {
+      "weighted_mse": 0.19759821891784668,
+      "hole_mse": 0.1605018526315689,
+      "known_mse": 0.15470770001411438
+    },
+    "teacher_after": {
+      "weighted_mse": 0.1928001344203949,
+      "hole_mse": 0.15748398005962372,
+      "known_mse": 0.1492721438407898
+    },
+    "updates_log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/capacity_fixed_clip_32/updates.jsonl",
+    "final_weights_saved": false,
+    "archival_note": "Original 32-update diagnostic retained outputs/logs/source checkpoint, not final weights. Save support was added for future runs only."
+  },
+  "condition_response": {
+    "same_clip": true,
+    "same_noise": true,
+    "same_initial": true,
+    "final_rgb_mae_0_1": 0.07811951208859683,
+    "causal_boundary": "later RGB, flow, reference selection jointly differ"
+  },
+  "assistant_verdicts": {
+    "assistant_p1_step100_full36_review_20261009T181537Z.json": "hold_visual_quality_at_step100; effective_future_frame_use_undetermined",
+    "assistant_p1_condition_review_20261009T182228Z.json": "condition_response_present; visible_content_preserved_through_fused; native_quality_failure; component_causality_undetermined",
+    "assistant_p1_capacity_review_20261009T182627Z.json": "weak_numeric_learning_signal_only; no_query_structural_gain; gated_capped_capacity_test_only"
+  },
+  "human_verdict": null,
+  "protocol_verified": false,
+  "formal_metrics": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "original_capacity_32_final_weights_saved": false,
+  "capacity_weight_limitation": "Original run retained images/logs/seed and source step100, not final weights; do not claim exact final-weight reload or rerun only to recreate them."
+}

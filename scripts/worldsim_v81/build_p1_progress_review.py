@@ -29,6 +29,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--condition-diagnostic', type=Path)
     args = parser.parse_args()
     run, output = args.run.resolve(), args.output.resolve()
     if output.is_relative_to(REPO):
@@ -198,14 +199,71 @@ def main() -> None:
         <p>已记录 {len(steps)} 个更新；当前预算 {summary['controller']['training_budget']}，状态 {html.escape(summary['controller']['status'])}。首次第一步通过，第二步因光流损失峰值超过3090显存而停止；保留第一步断点与失败日志后续跑。FCNet完整时轴采用激活重算，ternary loss分块按mask像素数加权；固定官方公式的CPU数值与梯度对照通过，不改变flow对、损失或采样预算。</p>
         <p>此阶段同时对齐论文Adam、零weight decay，旧AdamW断点不混用。因此它是论文配置修复预检，不能将画质差异单独归因传播方向。仍使用bf16和CPU卸载，未声称与两张A6000完全等价。两步画质也不能用来否定论文能力。</p>
         <p><a href="paper_bidirectional_status.json">逐步损失、梯度、显存与实际状态</a></p></div>'''
-    independent_reports = sorted((run/'review').glob('assistant_p1_visual_review_*.json'))
-    if independent_reports:
-        source = independent_reports[-1]
+    independent_reports = sorted((run/'review').glob('assistant_p1*review_*.json'),
+                                 key=lambda path: path.stat().st_mtime)
+    source = next((path for path in reversed(independent_reports)
+                   if 'windows' in json.loads(path.read_text())), None)
+    if source:
         qa = json.loads(source.read_text())
         shutil.copy2(source, output/'independent_visual_review.json')
         phase_note += f'''<div class="panel warn"><h2>最新独立全帧审核</h2>
         <p>{html.escape(qa['assistant_verdict'])}。覆盖 {len(qa['windows'])} 窗，每窗四种输出、完整序列。逐窗帧数和结构/时序结论以审核记录为准；工程预检与画质收益分别判断。</p>
         <p>人工verdict留空。<a href="independent_visual_review.json">逐窗备注、合成契约与证据路径</a></p></div>'''
+    condition_cards = []
+    diagnostic = args.condition_diagnostic
+    if diagnostic and (diagnostic/'diagnostic.json').is_file():
+        dest = output/'condition_diagnostic'; dest.mkdir(exist_ok=True)
+        shutil.copy2(diagnostic/'diagnostic.json', dest/'diagnostic.json')
+        condition_cards.append('''<div class="panel"><h2>逐帧条件诊断：编码、传播、去噪</h2>
+        <div class="diagram"><div class="box">逐帧可见 RGB<br>正常 / 重复首帧</div>→<div class="box">VAE 编码<br>中间解码</div>→<div class="box">双向传播<br>过去 / 未来 / 融合</div>→<div class="box">相同 CLIP 与噪声<br>SVD 原生输出</div></div>
+        <p>两组共享首帧 CLIP、时间条件、增强噪声和初始 Gaussian latent。后续 RGB、RAFT 光流与参考选择分别重算。这里检查是否响应后续帧；差值不能当作质量收益或单组件因果证据。中间 latent 解码已对齐 VAE scaling factor。</p>
+        <p>masked_visible 是黑色展示；model_visible 才是洞内归一化 0（中灰）的实际模型输入。独立审核看完整25帧，不以硬写回中心正确代替模型能力。<a href="condition_diagnostic/diagnostic.json">条件、噪声与逐帧响应记录</a></p></div>''')
+        stages = [('model_visible_rgb','实际可见输入'),
+                  ('vae_reconstruction_no_aug','可见输入 VAE 重建'),
+                  ('pre_propagation_augmented','增强后，传播前'),
+                  ('propagated_past','过去参考分支'),
+                  ('propagated_future','未来参考分支'),
+                  ('propagated_fused','传播融合条件'),
+                  ('native_final','最终原生输出')]
+        for stage, label in stages:
+            cells = []
+            for branch, title in [('normal_visible_25','正常后续帧'),
+                                  ('repeat_first_after_f0','后24帧重复首帧')]:
+                folder = dest/branch; folder.mkdir(exist_ok=True)
+                video(diagnostic/branch/stage, folder/f'{stage}.mp4')
+                shutil.copy2(diagnostic/branch/f'{stage}_contact.png',
+                             folder/f'{stage}_contact.png')
+                rel = f'condition_diagnostic/{branch}/{stage}'
+                cells.append(f'<figure><video controls muted loop src="{rel}.mp4"></video><figcaption>{title} · {label}</figcaption><details><summary>完整25帧联系图</summary><img src="{rel}_contact.png"></details></figure>')
+            condition_cards.append(f'<article><h3>条件路径 · {label}</h3><div class="pair">'+''.join(cells)+'</div></article>')
+    capacity = run/'capacity_fixed_clip_32'
+    if (capacity/'run.json').is_file():
+        meta = json.loads((capacity/'run.json').read_text())
+        dest = output/'capacity_fixed_clip_32'; dest.mkdir(exist_ok=True)
+        shutil.copy2(capacity/'run.json', dest/'run.json')
+        condition_cards.append(f'''<div class="panel warn"><h2>单训练片段容量诊断：额外32步</h2>
+        <p>状态 {html.escape(meta['status'])}；片段 {html.escape(meta['video_id'])}，start {meta['clip_start']}。这32步属于独立诊断，不计入正式训练进度，不是留出评测。Teacher使用带噪真实latent、GT光流和完整首帧CLIP；QUERY只用可见输入、纯Gaussian初始化。</p>
+        <p>Teacher改善不能证明纯噪声生成会恢复输入，更不能证明泛化。两种任务与前后权重分别展示。<a href="capacity_fixed_clip_32/run.json">固定sigma、来源与实测</a></p></div>''')
+        for name in ('teacher_before','teacher_after'):
+            if (capacity/name/'contact.jpg').is_file():
+                folder = dest/name; folder.mkdir(exist_ok=True)
+                shutil.copy2(capacity/name/'contact.jpg', folder/'contact.jpg')
+                condition_cards.append(f'<article><h3>{name} · 带噪真值去噪，仅容量诊断</h3><img src="capacity_fixed_clip_32/{name}/contact.jpg"></article>')
+        for name in ('query_before','query_after'):
+            if not (capacity/name/'comp.mp4').is_file(): continue
+            folder = dest/name; folder.mkdir(exist_ok=True)
+            cells = []
+            for key, label in [('gt','真实监督'),('visible','实际可见输入'),('pred','原生QUERY'),('comp','中央硬写回')]:
+                shutil.copy2(capacity/name/f'{key}.mp4', folder/f'{key}.mp4')
+                cells.append(f'<figure><video controls muted loop src="capacity_fixed_clip_32/{name}/{key}.mp4"></video><figcaption>{label}</figcaption></figure>')
+            condition_cards.append(f'<article><h3>固定训练片段 · {name} · 同seed与采样步数</h3><div class="four">'+''.join(cells)+'</div></article>')
+    for pattern, label in [('assistant_p1_condition_review_*.json','条件路径独立图像审核'),
+                           ('assistant_p1_capacity_review_*.json','固定片段独立图像审核')]:
+        reports = sorted((run/'review').glob(pattern))
+        if reports:
+            name = pattern.split('_*.')[0]+'.json'
+            shutil.copy2(reports[-1], output/name)
+            condition_cards.append(f'<p><a href="{name}">{label}</a> · human_verdict 留空。</p>')
     comparisons = [
         ('视频与尺寸','25 帧 / 256²','JPEG 连续窗口，缩放中心裁剪','相同；1951 个有效视频、19313 个窗口','基本对齐；100K 是重复采样的更新预算'),
         ('外绘 mask','水平总宽 .25 / .66（评测）','训练双侧各 .33','训练每侧 84px；推理两倍率','对齐公开 mask；当前没有驾驶 DELETE 造数'),
@@ -215,15 +273,17 @@ def main() -> None:
         ('优化器','Adam / lr 1e−5 / 100K','AdamW / wd .01 / batch per GPU 1','双向候选Adam/wd0；旧协议AdamW；batch1','按论文文字对齐候选；双卡有效 batch 未确认'),
         ('硬件与精度','2×A6000','fp16 配置','单 3090，bf16；冻结编码器 CPU 卸载','资源适配；速度和精度不能宣称完全一致'),
         ('推理采样','Gaussian 初始化，前向去噪','额外 inversion + B1→B2','旧literal保留；新阶段主模式为Gaussian feedforward','同条件3模式未修好画质；公开inverse风险仍记录'),
-        ('正式评测','DAVIS90 + 附录 YT60 / 四指标','未公开完整指标实现，默认可用全长滑窗','本地前25帧生成、前16帧评分；原生/合成分开','已修整套数据集漏检；长度/预处理等价未确认，protocol_verified=false'),
+        ('正式评测','DAVIS90 + 附录 YT60 / 四指标','未公开完整指标实现，默认可用全长滑窗','full-video入口已跑通36帧；历史前25帧仅诊断；指标入口前16帧','尚未跑正式整套；预处理/FVD口径未完全确认，protocol_verified=false'),
     ]
     table = ''.join('<tr>'+''.join(f'<td>{html.escape(y)}</td>' for y in x)+'</tr>' for x in comparisons)
     document = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>v8.1 P1 实时进度与论文对照</title>
     <style>body{font:16px/1.65 system-ui;background:#f2f5f8;color:#172536;margin:0}main{max-width:1400px;margin:auto;padding:26px}h1,h2,h3{line-height:1.3}article,.panel{background:white;border:1px solid #d6e0e9;border-radius:10px;padding:20px;margin:20px 0}.warn{background:#fff4dc;border-left:5px solid #c1780a}.diagram{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.box{background:#e9f0fa;border:1px solid #8ba4c5;border-radius:8px;padding:10px;text-align:center}.four,.two{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.two{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0}video,img{max-width:100%;width:100%;background:#111}figcaption{padding:8px 0}.contact{margin-top:20px}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d3dce5;padding:10px;vertical-align:top;text-align:left}th{background:#e8eef5}a{color:#145cad}.scroll{overflow:auto}@media(max-width:850px){.four,.two{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>v8.1 P1：当前进度、实际数据与原文对照</h1>'''
-    document += reference_audit_note + phase_note + f'''<div class="panel warn"><b>旧公开训练快照：{snapshot['observed_at_utc']}（UTC） · step {snapshot['latest_step']} / 100,000</b>
+    if (capacity/'run.json').is_file() and meta['status'] == 'complete':
+        document += '''<div class="panel warn"><h2>当前结论：P1仍未通过</h2><p>新双向候选正式训练100步，三项条件/容量诊断已完成。逐帧可见信息在VAE与融合条件仍保留，也会影响最终输出，但native仍丢失结构。固定训练片段额外32步只有弱数值改善，QUERY仍为灰块，不能算学会。没有排队1000或100K。</p><p>本次32步诊断保留了日志、图像、seed和源100断点，未保存末步权重；入口已补保存供后续运行，未为补档重复GPU。后续应隔离训练/QUERY的CLIP与flow条件差距，再决定有界预算；不凭32步否定模型容量。</p></div>'''
+    document += ''.join(condition_cards) + reference_audit_note + phase_note + f'''<div class="panel warn"><b>旧公开训练快照：{snapshot['observed_at_utc']}（UTC） · step {snapshot['latest_step']} / 100,000</b>
     <p>最近 100 步均值 {speed:.2f} 秒；按同速估算剩余纯训练 {snapshot['remaining_training_days_estimate']:.2f} 天，另加保存与验证。数值/梯度正常 ≠ 生成质量达标。这里展示的最新生成断点与训练步数分开标注。</p>
-    <p>已安排第 1,000 步和第 5,000 步助手质量门。先完整保存断点，再看固定 3 个 valid × 2 个 mask、短采样对照和独立审核；未通过不自动继续长训。不等到七天后才判断。</p></div>
+    <p>这是已停止的旧训练速度估算，并非正在运行七天训练。旧1000质量门hold；新双向候选限定到100后完成短窗及36帧检查，接着做逐帧条件与固定片段容量诊断。没有排队1000或100K，不以有限loss放行长训。</p></div>
     <div class="panel"><h2>实际组件与监督</h2><div class="diagram"><div class="box">25 帧真实 RGB<br>双侧洞 mask</div>→<div class="box">冻结 RAFT / VAE / CLIP<br>光流与条件编码</div>→<div class="box">可训练 FCNet<br>潜变量传播 / 对齐</div>→<div class="box">SVD 时序层<br>空间层冻结</div>→<div class="box">VAE 解码<br>外绘视频</div></div>
     <p>BUILD：真实完整 RGB 提供扩散目标、光流监督和公开训练中的首帧 CLIP。QUERY：只提供 masked RGB，隐藏 RGB 不进入条件。训练同时优化 diffusion、flow L1、ternary warp。</p>
     <p>这是通用视频外绘 P1，尚未进入驾驶 DELETE 的 P2，也未加入创新。输入检查与短训复现必须先过关。</p></div>
@@ -237,6 +297,7 @@ def main() -> None:
     <div class="panel"><h2>短周期决策</h2><ol><li>第 1,000 步：完成三固定验证例、两倍率的原生/写回输出；同断点做 feedforward 诊断，独立 subagent 看完整视频。</li><li>先确认采样、条件和传播协议；若仍是色块，保持断点并查明问题，不无条件堆训练步数。</li><li>只有工程链路可信且生成开始恢复场景结构，才放行到第 5,000 步再审核。正式测试 ID 不用于调参。</li></ol>
     <p>尚无正式 PSNR / SSIM / LPIPS / FVD。论文目标仍待实际计算；当前 assistant_verdict 不代替 human_verdict。</p></div></main>
     <script>document.querySelectorAll('article').forEach(a=>{const vs=[...a.querySelectorAll('video')];if(vs.length<2)return;const b=document.createElement('button');b.textContent='同步播放本组';b.onclick=()=>vs.forEach(v=>{v.currentTime=0;v.play()});a.insertBefore(b,a.children[1]);});</script></html>'''
+    document = document.replace('</style>', '.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}</style>')
     (output/'index.html').write_text(document, encoding='utf-8')
     print(json.dumps({'review':str(output/'index.html'),'snapshot':snapshot,'input_clips':len(samples),'validation_clips':len(validation_cards)}))
 

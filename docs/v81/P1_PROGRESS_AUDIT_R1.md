@@ -130,3 +130,29 @@ owned候选 `paper-bidirectional-m4` 已接训练/推理：统一早→晚pair�
 公开test默认整段输入，25帧窗口/stride16；即使FYC指标只评分前16，生成也不能静默截成前25。owned入口新增显式full-video：全T可见条件/参考、全局Gaussian latent、每个扩散步重叠窗口预测均值、单次Euler更新、分块VAE编解码。控制器正式300段调用full-video并记录原始source_dir；正式评测核对源/GT/pred/comp全帧数量。短窗默认保留历史诊断、缓存与路径分离。长视频上游RAFT/FCNet/传播资源尚待GPU检查；不能用CPU测试宣称正式推理已完成。
 
 独立文献/源码核对：FYC的前三指标明确两倍率平均，FVD脚本分别输出，因此FVD均值属于推定；MOTIA均匀16不同于FYC前16，不混用。DAVIS480p与固定AppendixYT60不变；256² GT裁剪预处理作者未完整公开，当前中心裁剪是假设。实际正式指标仍未算，protocol_verified=false。failure_ledger_delta=none。
+
+## 逐帧条件与固定片段容量诊断
+
+新双向候选正式100步完成，固定valid短25与完整36帧都经独立全帧审核。100步侧区从初始饱和块变灰蓝块，但仍未恢复建筑、树木和滑板运动；全36帧后11帧齐全，仍有假窗口、笔触及闪烁。质量hold不等于100步足以否定论文终点能力。固定full-video短检通过不等于所有长片显存可用。
+
+```mermaid
+flowchart LR
+    V[正常后续可见帧 / 重复首帧] --> E[VAE 可见编码]
+    E --> P[过去 / 未来参考传播]
+    P --> F[融合条件]
+    F --> D[SVD 去噪 + VAE 解码]
+    C[共享首帧CLIP / 时间 / 噪声] --> D
+    T[固定训练片段32步] --> H[带噪真值 teacher]
+    T --> Q[纯Gaussian QUERY]
+    D --> R[完整帧图像审核]
+    H --> R
+    Q --> R
+```
+
+第一、二项诊断使用step100、valid `00f88c4f0a`、前25帧、每侧.33、seed2026和25采样步。两支共享首帧CLIP、time IDs、增强噪声与初始Gaussian；后24帧正常或重复首帧，分别重算参考和flow。两组首帧传播前latent完全相同；VAE重建f00像素有小差是TemporalDecoder混合邻帧，不能认定共享噪声失败。未来条件本来就会使f00融合latent发生差异。
+
+独立助手看两支×9阶段×25帧：normal中心对可见RGB的VAE MAE10.82、fused11.44（0–255），native88.03；repeat为2.94/3.74/48.13。可见内容在VAE/传播融合仍随时间变化，明显失真首次出现在native。normal native与step100原短窗25帧逐像素相同。固定CLIP/噪声后normal/repeat最终全图MAE约0.0781（0–1），证明后续输入引发响应，不证明正确使用，更不隔离flow/参考/UNet单组件。past/future单独解码低对比且RMS较小，不等于模块故障：孤立条件latent不是完整预测。
+
+第三项独立训练片段 `0fc958cde2/start2` 从step100权重额外32更新，Adam1e-5/wd0、原参数范围/原数据/seed2026；不进入正式100步或泛化声明。teacher固定sigma2.01375、condition sigma0.049787、GT latent/noise、GT flow/完整首帧CLIP；每次重新计算可训练FCNet与传播，未缓存其旧输出。纯噪声QUERY只输入visible，前后共享seed2036/25采样步。teacher weighted MSE .197598→.192800，hole .160502→.157484，known .154708→.149272，只是有限下降；完整QUERY审核另存同run review。原32步诊断未保存最终weights，图像/日志/seed与源100断点保留；入口后续补保存复核状态，不为补档重复GPU。
+
+数据外扩构造不改；本轮没有充分证据支持“条件完全断路”，也没有证据证明当前条件融合已有效。下一次应固定同一noisy target与权重，分别切换训练/QUERY首帧CLIP和flow来源，定位差距后再考虑有界训练，不自动增加数万步。正式四指标未计算、protocol_verified=false、human_verdict=null。CPU84 passed不替代条件能力或生成质量。failure_ledger_delta=none。
