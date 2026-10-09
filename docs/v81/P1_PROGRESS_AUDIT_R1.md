@@ -79,3 +79,35 @@ train 包3471视频、94588张JPEG；1951视频严格>25帧，19313连续窗口�
 新控制器40743先验证新两步checkpoint，再恢复至新1000步重新独立审核；主模式使用Gaussian前向生成，公开literal保留为独立诊断。旧控制器35923只在child为空的hold时停止，旧checkpoint与产物不移动不覆盖。阶段交接为根run `reference_m4_handoff.json`，活动状态为 `reference_m4/controller_state.json`；相同task/run，不把旧All Frames步数混算。
 
 旧审核页50个视频全部逐帧解码、78本地链接无缺失；新两步参考链视频已独立标注补入，完整交付再次核对。修正后数值通过仅代表工程入口能反向传播，尚无新1000画质或正式四指标。
+
+## 参考传播的方向与双向覆盖反证
+
+2026-10-10 01:32（新加坡），`reference_m4`已到838步，约4.5秒/步；本轮两个6-sol/xhigh subagent继续审计，没有使用fast。更深审计证明：修正选帧和成对监督，还没有修正固定公开传播本身。论文§4.2 Eq.5–6分别使用目标到最近过去、未来参考的流，再沿参考链组合；§4.3明确说参考引导条件进入训练，但无法据此确认作者实际训练排序与公开代码完全一致。
+
+实际导入固定官方 `LatentPropagation`、从固定 `test.py` AST取pair builder做CPU反证：两帧点从f00的x4移到f01的x5，公开pair为(1,0)，RAFT方向应为fw=-1、bw=+1。拉取f01到f00需要目标→来源流：正确峰x4，公开forward分支峰x6。只有f00提供可见点时，末帧f01的两个分支最大值都为0。两分支沿同一未来父链，仅交换flow，不等于真实过去/未来路径。
+
+```mermaid
+flowchart LR
+    X[可见RGB与mask] --> R[m4过去/未来参考]
+    R --> F[直接目标到参考流 + 参考链组合]
+    X --> Z[VAE可见latent]
+    F --> P[来源mask + 一次拉取 + FB检查]
+    Z --> P
+    P --> A[原细化与融合网络]
+    A --> U[SVD时序层 + 扩散]
+    U --> Q[两步工程预检 / 固定视频审核]
+```
+
+owned候选 `paper-bidirectional-m4` 已接训练/推理：统一早→晚pair，用对应反方向拉取过去，正方向拉取未来；组合流一次采样来源latent，未知来源先mask掉，继承原FB一致性及 `_post_fuse` 参数结构。来源coverage只施加一次，避免半像素边界重复衰减。此处来源mask与固定公开未屏蔽源latent有明确差异，依据论文§4.2的source-mask语义，不能包装成公开代码逐像素复现。
+
+25帧、R个参考时K=2(25−R)+(R−1)=49−R；m4最稀R7时K42，旧未来父链恒K24。FCNet静态mask可扩为K+1，端点mask数值等价；稀疏pair列表并不保证原ProPainter连续时轴语义，端到端能否适配、3090显存是否足够均待实测，不能仅看形状合法放行。旧 `reference-m4` 和新协议禁止交叉恢复；不加载作者编辑权重。
+
+独立subagent接线复核未发现新方向、来源mask或FB检查错误，同时指出控制器返回既存断点/跳过旧结果未核对协议的缺口，已修复：检查断点内部协议，缓存结果须同checkpoint及协议。CPU最终全套59项通过。当前GPU仍完成旧阶段1000完整断点及7窗验证；该质量门已预置工程hold，不继续到5000。串行worker46090只在旧控制器无child且hold后交接，排队新子阶段 `paper_bidirectional_m4` 两步真实训练、一窗推理；不自动追加1000或100K，不同时启动GPU作业。实际状态为根run `bidirectional_handoff.json`，该候选尚无GPU结果。HTML87本地链接、54视频实际解码通过；源码ZIP约34.3MB，低于100MB。
+
+原始反证、图片、后续预检在同run仓库外保留；HTML已展示实际联系图。来源：固定官方 `models/bidirectional_flow_raft.py:70–91`、`models/latent_warping.py:10–27,271–363`、[论文§4.2](https://arxiv.org/html/2604.14648)。这是真实工程/协议差距，不构成论文方法科学否定，failure_ledger_delta=none。
+
+## 正式评测边界补充
+
+已修 `evaluate_p1.py` 完整性入口：必须同时包含完整DAVIS90和附录YouTube60，不允许因 `coverage()`只列出现的数据集而漏掉整套基准。两个有意义的缺整套反例通过；局部调试仍显式 `--allow-partial`。
+
+论文25帧明确用于训练；附录D.2和公开test默认支持整段视频、25帧重叠去噪。当前仅生成排序前25帧再评分前16帧，不能从Follow-Your-Canvas的评分抽帧反推其生成也只使用25帧。本地协议保留、明确命名并继续 `protocol_verified=false`；正式完整复现尚须处理长视频窗口、预处理及FVD汇总边界，未计算四指标，更未声称论文表1已达标。

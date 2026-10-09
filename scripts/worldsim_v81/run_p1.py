@@ -17,7 +17,7 @@ REPO = Path(__file__).resolve().parents[2]
 PYTHON = Path('/root/autodl-tmp/envs/motionproj/bin/python')
 DATA = Path('/root/autodl-tmp/data/worldsim_v81')
 DEFAULT_RUN = Path('/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1')
-PROPAGATION_PROTOCOLS = ('reference-m4', 'literal-allframes')
+PROPAGATION_PROTOCOLS = ('paper-bidirectional-m4', 'reference-m4', 'literal-allframes')
 INFERENCE_MODES = ('paper-feedforward', 'literal-public')
 
 
@@ -34,6 +34,8 @@ class Controller:
             raise ValueError(f'未知传播协议: {propagation_protocol}')
         if inference_mode not in INFERENCE_MODES:
             raise ValueError(f'未知推理模式: {inference_mode}')
+        if propagation_protocol == 'paper-bidirectional-m4' and inference_mode != 'paper-feedforward':
+            raise ValueError('论文双向参考协议只能用paper-feedforward，不能调用公开未来父链')
         self.propagation_protocol = propagation_protocol
         self.inference_mode = inference_mode
         self.run = run.resolve()
@@ -139,6 +141,7 @@ class Controller:
     def train_to(self, step: int, *, save_every: int) -> Path:
         latest = self.latest_checkpoint()
         if latest and int(latest.stem.rsplit('-', 1)[1]) >= step:
+            self.check_checkpoint_protocol(latest)
             return latest
         args = [str(PYTHON), '-m', 'motion_proj.worldsim_v81.train_p1',
                 '--output-dir', str(self.run / 'train'), '--max-steps', str(step),
@@ -153,16 +156,26 @@ class Controller:
         self.update(training_step=step, checkpoint=str(latest))
         return latest
 
+    def check_checkpoint_protocol(self, checkpoint: Path) -> None:
+        import torch
+        # mmap只读元数据，不为一次协议检查复制整份模型/优化器到内存。
+        state = torch.load(checkpoint, map_location='cpu', weights_only=False, mmap=True)
+        if state.get('propagation_protocol', 'literal-allframes') != self.propagation_protocol:
+            raise ValueError('已有断点传播协议不符，禁止冒充新协议')
+
     def infer(self, checkpoint: Path, root: Path, sequence: str, side: float,
               output: Path, name: str, mode: str | None = None) -> None:
         if mode is None:
             mode = self.inference_mode
         if mode not in INFERENCE_MODES:
             raise ValueError(f'未知推理模式: {mode}')
+        self.check_checkpoint_protocol(checkpoint)
         result = output / sequence / f'side_{side:g}' / 'run.json'
         if result.exists():
             completed = json.loads(result.read_text())
-            if completed.get('status') == 'complete' and completed.get('mode') == mode:
+            if (completed.get('status') == 'complete' and completed.get('mode') == mode
+                    and completed.get('checkpoint') == str(checkpoint)
+                    and completed.get('propagation_protocol', 'literal-allframes') == self.propagation_protocol):
                 self.update(status=f'{name}_{mode}_skipped', active_inference_mode=mode)
                 return
         self.update(active_inference_mode=mode)
@@ -218,7 +231,7 @@ class Controller:
         else:
             self.infer(checkpoint, valid_root, chosen[0], .33, output,
                        f'validation_{step:06d}')
-        if step == 1000:
+        if step == 1000 and self.propagation_protocol != 'paper-bidirectional-m4':
             diagnostic_mode = ('literal-public' if self.inference_mode == 'paper-feedforward'
                                else 'paper-feedforward')
             diagnostic_dir = ('validation_literal' if diagnostic_mode == 'literal-public'

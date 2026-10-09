@@ -46,6 +46,7 @@ UNVERIFIED = [
     "DAVIS论文只给90条数量，未公布精确序列清单；采用官方2017 train+val ImageSets。",
     "论文称YouTube-VOS test，但附录E的60条ID均位于2019 valid split；需声明年份与全帧版本假设。",
     "论文称纯高斯前向推理与Adam；固定官方源码另跑DDIM inversion并使用AdamW。",
+    "本地仅生成每序列前25帧，再评分前16帧；论文长视频滑窗/定量视频长度未核对，不能称表1完整复现。",
 ]
 
 
@@ -145,6 +146,13 @@ def coverage(cases: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return result
 
 
+def require_complete_benchmark(cases: list[dict[str, Any]]) -> None:
+    """正式清单必须同时包含两套完整基准，不能漏掉整个数据集。"""
+    inventory = coverage(cases)
+    if set(inventory) != set(DATASETS) or any(not row["complete"] for row in inventory.values()):
+        raise ValueError("基准序列不完整：DAVIS须官方train+val全部90条，YouTube-VOS须附录E全部60条；调试可显式--allow-partial")
+
+
 def require_25_frame_videos(cases: list[dict[str, Any]]) -> None:
     """Keep the saved native/composite 25-frame artifact contract explicit."""
     from decord import VideoReader, cpu
@@ -161,7 +169,7 @@ def require_25_frame_videos(cases: list[dict[str, Any]]) -> None:
             video = VideoReader(str(path), ctx=cpu(0))
             count = len(video)
             if count != 25:
-                raise ValueError(f"正式评测要求GT/pred/comp恰好25帧：{case['dataset']}/{case['sequence_id']} {name}={count} {path}")
+                raise ValueError(f"本地25帧协议要求GT/pred/comp恰好25帧：{case['dataset']}/{case['sequence_id']} {name}={count} {path}")
             if tuple(video[0].shape[:2]) != (256, 256):
                 raise ValueError(f"正式评测要求256x256帧：{case['dataset']}/{case['sequence_id']} {name} {path}")
 
@@ -273,6 +281,7 @@ def evaluate(cases: list[dict[str, Any]], fyc_root: Path, i3d_path: Path | None,
             "fvd_status": fvd_status, "fyc_revision": FYC_REVISION,
             "i3d_source": I3D_SOURCE if detector else None,
             "i3d_sha256": I3D_SHA256 if detector else None,
+            "generation_protocol": "local_first25_sorted_start0_not_verified_paper_full_video",
             "first_frames": FRAMES, "coverage": coverage(cases), "groups": grouped, "cases": case_rows}
 
 
@@ -290,8 +299,11 @@ def main() -> None:
     if args.output.resolve().is_relative_to(repo):
         parser.error("评测产物必须保存到仓库外")
     cases = load_manifest(args.manifest, train_source_ids(args.train_source_ids))
-    if not args.allow_partial and any(not c["complete"] for c in coverage(cases).values()):
-        parser.error("基准序列不完整：DAVIS须官方train+val全部90条，YouTube-VOS须附录E全部60条；调试可显式--allow-partial")
+    if not args.allow_partial:
+        try:
+            require_complete_benchmark(cases)
+        except ValueError as exc:
+            parser.error(str(exc))
     if not args.allow_partial and not args.i3d.is_file():
         parser.error(f"正式四指标评测必须有已冻结的I3D权重：{args.i3d}")
     if not args.allow_partial:

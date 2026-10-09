@@ -102,6 +102,11 @@ def test_resume_protocol_rejects_old_all_frames_checkpoint_in_reference_run():
         validate_resume_protocol(legacy, "reference-m4")
     assert validate_resume_protocol({"propagation_protocol": "reference-m4"},
                                     "reference-m4") == "reference-m4"
+    with pytest.raises(ValueError, match="禁止跨传播协议恢复"):
+        validate_resume_protocol({"propagation_protocol": "reference-m4"},
+                                 "paper-bidirectional-m4")
+    assert validate_resume_protocol({"propagation_protocol": "paper-bidirectional-m4"},
+                                    "paper-bidirectional-m4") == "paper-bidirectional-m4"
 
 
 def test_reference_protocol_is_default_and_literal_mode_is_explicit(monkeypatch, tmp_path):

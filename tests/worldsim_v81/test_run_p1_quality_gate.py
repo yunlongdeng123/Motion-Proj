@@ -26,6 +26,7 @@ def fake_controller(run_p1, tmp_path):
     controller.run = tmp_path
     controller.propagation_protocol = 'literal-allframes'
     controller.inference_mode = 'literal-public'
+    controller.check_checkpoint_protocol = lambda checkpoint: None
     states = []
     controller.update = lambda **changes: states.append(changes)
     return controller, states
@@ -79,7 +80,8 @@ def test_infer_records_mode_and_skips_only_matching_completed_result(run_p1, tmp
     assert commands[0][1][commands[0][1].index('--mode') + 1] == 'literal-public'
     result = output / 'first/side_0.33/run.json'
     result.parent.mkdir(parents=True)
-    result.write_text(json.dumps({'status': 'complete', 'mode': 'literal-public'}))
+    result.write_text(json.dumps({'status': 'complete', 'mode': 'literal-public',
+                                  'checkpoint': str(checkpoint), 'propagation_protocol': 'literal-allframes'}))
     controller.infer(checkpoint, tmp_path, 'first', .33, output, 'validation_001000')
     assert len(commands) == 1
     assert states[-1]['status'].endswith('literal-public_skipped')
@@ -89,6 +91,29 @@ def test_infer_records_mode_and_skips_only_matching_completed_result(run_p1, tmp
     assert len(commands) == 2
     assert commands[-1][1][commands[-1][1].index('--mode') + 1] == 'paper-feedforward'
     assert states[-1]['active_inference_mode'] == 'paper-feedforward'
+
+
+def test_cached_checkpoint_and_result_cannot_impersonate_new_protocol(run_p1, tmp_path):
+    import torch
+    controller, _ = fake_controller(run_p1, tmp_path)
+    controller.propagation_protocol = 'paper-bidirectional-m4'
+    controller.inference_mode = 'paper-feedforward'
+    controller.check_checkpoint_protocol = run_p1.Controller.check_checkpoint_protocol.__get__(controller)
+    checkpoint = tmp_path / 'train/p1-checkpoint-000002.pt'
+    checkpoint.parent.mkdir()
+    torch.save({'step': 2, 'propagation_protocol': 'reference-m4'}, checkpoint)
+    with pytest.raises(ValueError, match='已有断点传播协议不符'):
+        controller.train_to(2, save_every=1)
+    commands = []
+    controller.command = lambda name, argv: commands.append((name, argv))
+    output = tmp_path / 'validation'
+    result = output / 'first/side_0.33/run.json'
+    result.parent.mkdir(parents=True)
+    result.write_text(json.dumps({'status': 'complete', 'mode': 'paper-feedforward',
+                                  'checkpoint': str(checkpoint), 'propagation_protocol': 'reference-m4'}))
+    with pytest.raises(ValueError, match='已有断点传播协议不符'):
+        controller.infer(checkpoint, tmp_path, 'first', .33, output, 'validation_000002')
+    assert len(commands) == 0
 
 
 def test_reference_protocol_commands_and_opposite_sampler_diagnostic(run_p1, tmp_path):
@@ -145,6 +170,16 @@ def test_controller_records_protocols_and_rejects_reusing_other_run(run_p1, tmp_
         assert state['inference_mode'] == 'paper-feedforward'
         with pytest.raises(ValueError, match='独立 run'):
             run_p1.Controller(run, 'literal-allframes', 'literal-public')
+    finally:
+        controller.lock.close()
+
+
+def test_paper_bidirectional_controller_cannot_revert_to_public_parent_chain(run_p1, tmp_path):
+    with pytest.raises(ValueError, match='未来父链'):
+        run_p1.Controller(tmp_path / 'new', 'paper-bidirectional-m4', 'literal-public')
+    controller = run_p1.Controller(tmp_path / 'new', 'paper-bidirectional-m4', 'paper-feedforward')
+    try:
+        assert controller.state['propagation_protocol'] == 'paper-bidirectional-m4'
     finally:
         controller.lock.close()
 

@@ -24,7 +24,7 @@ from .train import classify_propagator_gradient, gradient_report, parameter_coun
 
 FORMAT = "worldsim_v81_seen_to_scene_p1_youtube_vos"
 DEFAULT_PROPAGATION_PROTOCOL = "reference-m4"
-PROPAGATION_PROTOCOLS = ("reference-m4", "literal-allframes")
+PROPAGATION_PROTOCOLS = ("paper-bidirectional-m4", "reference-m4", "literal-allframes")
 DEFAULT_DATA = Path("/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages")
 
 
@@ -47,8 +47,8 @@ def _official_image_embedding(components, target: torch.Tensor, util) -> torch.T
     return components.image_encoder(pixels).image_embeds.unsqueeze(1)
 
 
-def reference_pairs_from_visible(visible: torch.Tensor, mask: torch.Tensor) -> list[tuple[int, int]]:
-    """只用可见中心选 m=4 参考链；复用 QUERY 的固定官方构造。"""
+def reference_indices_from_visible(visible: torch.Tensor, mask: torch.Tensor) -> list[int]:
+    """只用可见中心选择 m=4 参考帧，不使用隐藏监督像素。"""
     if visible.shape[0] != 1 or visible.shape[1] != 25:
         raise ValueError("P1 参考链目前只支持 batch=1、25帧")
     if not torch.equal(mask, mask[:, :1].expand_as(mask)):
@@ -64,8 +64,14 @@ def reference_pairs_from_visible(visible: torch.Tensor, mask: torch.Tensor) -> l
         rgb = ((frame[:, :, left:right].permute(1, 2, 0).float() + 1) * 127.5)
         centers.append(Image.fromarray(rgb.round().clamp(0, 255).byte().cpu().numpy()))
     # infer_p1 顶层引用本模块的 FORMAT，故在函数中导入以免循环导入。
-    from .infer_p1 import build_pairs_for_all_frames, select_reference_frame_indices
-    refs = select_reference_frame_indices(centers, reference_window_size=4)
+    from .infer_p1 import select_reference_frame_indices
+    return select_reference_frame_indices(centers, reference_window_size=4)
+
+
+def reference_pairs_from_visible(visible: torch.Tensor, mask: torch.Tensor) -> list[tuple[int, int]]:
+    """保留公开实现的24条未来父边，用于历史协议诊断。"""
+    from .infer_p1 import build_pairs_for_all_frames
+    refs = reference_indices_from_visible(visible, mask)
     chain, to_frame = build_pairs_for_all_frames(25, refs)
     pairs = chain + to_frame
     if len(pairs) != 24 or len({target for _, target in pairs}) != 24:
@@ -129,8 +135,16 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
     validate_batch(batch)
     if propagation_protocol not in PROPAGATION_PROTOCOLS:
         raise ValueError(f"未知传播协议: {propagation_protocol}")
-    pairs = (reference_pairs_from_visible(batch["visible_rgb"], batch["hole_mask"])
-             if propagation_protocol == "reference-m4" else None)
+    refs = None
+    plan = None
+    if propagation_protocol == "paper-bidirectional-m4":
+        from .reference_propagation import build_reference_plan
+        refs = reference_indices_from_visible(batch["visible_rgb"], batch["hole_mask"])
+        plan = build_reference_plan(25, refs)
+        pairs = list(plan.pairs)
+    else:
+        pairs = (reference_pairs_from_visible(batch["visible_rgb"], batch["hole_mask"])
+                 if propagation_protocol == "reference-m4" else None)
     device = next(components.unet.parameters()).device
     target = batch["target_rgb"].to(device, non_blocking=True)
     visible = batch["visible_rgb"].to(device, non_blocking=True)
@@ -149,8 +163,13 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
                                     iters=raft_iters, pair_chunk=pair_chunk)
                if pairs is not None else
                raft_flows(components.raft, target, iters=raft_iters, pair_chunk=pair_chunk))
-    flow_pred, _ = components.fcnet.forward_bidirect_flow(gt_flow, mask)
-    flow = components.fcnet.combine_flow(gt_flow, flow_pred, mask)
+    if refs is not None:
+        from .reference_propagation import static_fcnet_pair_masks
+        pair_masks = static_fcnet_pair_masks(mask, plan)
+    else:
+        pair_masks = mask
+    flow_pred, _ = components.fcnet.forward_bidirect_flow(gt_flow, pair_masks)
+    flow = components.fcnet.combine_flow(gt_flow, flow_pred, pair_masks)
     target_latent = encode_video(components.vae, target, scaled=True, sample=True)
     batch_size = target_latent.shape[0]
     noise = torch.randn_like(target_latent)
@@ -159,8 +178,13 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
     conditional_pixels = torch.randn_like(visible) * cond_sigma[:, None, None, None, None] + visible
     conditional_latent = encode_video(components.vae, conditional_pixels, scaled=False, sample=True)
     # 固定官方 LatentPropagation 当前签名不接收 orig_lats；仅修调用，不把 GT latent 塞入条件。
-    _, _, condition = components.propagator(conditional_latent, flow[0], flow[1], mask,
-                                             flow_pairs_info=pairs)
+    if refs is not None:
+        from .reference_propagation import propagate_reference_latents
+        _, _, condition = propagate_reference_latents(
+            components.propagator, conditional_latent, flow[0], flow[1], mask, plan)
+    else:
+        _, _, condition = components.propagator(conditional_latent, flow[0], flow[1], mask,
+                                                 flow_pairs_info=pairs)
     sigma = util.rand_log_normal([batch_size], loc=0.7, scale=1.6).to(target_latent.device)
     sigma = sigma[:, None, None, None, None]
     noisy = noise * sigma + target_latent
@@ -221,7 +245,8 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
             "gradients": gradients, "frozen_grad_tensors": frozen_grad_tensors,
             "frozen_observation_encoders_offloaded": True,
             "train_conditioning": "official_full_rgb_flow_and_first_frame_clip",
-            "propagation_protocol": propagation_protocol}
+            "propagation_protocol": propagation_protocol,
+            "reference_indices": refs, "flow_pair_count": len(pairs) if pairs is not None else 24}
 
 
 def parse_args() -> argparse.Namespace:

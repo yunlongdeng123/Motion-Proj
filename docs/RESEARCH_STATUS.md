@@ -1,17 +1,13 @@
 # 当前研究状态
 
-更新：2026-10-10 00:30（新加坡）。分支 `research/worldsim-v8.1-seen-to-scene` 继承 v7.7 的 `000ad1f0`；主机 `wm-3090-1009`，checkout `/root/autodl-tmp/motion_proj_v81`。唯一 task/run：`WS-V81-SEEN-TO-SCENE-P1-20261009/r1`，活动子阶段 `reference_m4`。用户授权完整论文复现、subagent审核、无human in loop；最新要求先核对数据/训练与原文，不能七天后才发现基础问题。[协议](v81/YOUTUBE_VOS_P1_R1.md) · [审计与组件图](v81/P1_PROGRESS_AUDIT_R1.md)。
+更新：2026-10-10 01:32（新加坡）。分支 `research/worldsim-v8.1-seen-to-scene`；主机 `wm-3090-1009`，checkout `/root/autodl-tmp/motion_proj_v81`。唯一 task/run：`WS-V81-SEEN-TO-SCENE-P1-20261009/r1`。用户授权持续完整复现、subagent审核、无human in loop；先核对论文差距与短周期实测，不盲目长训。[协议](v81/YOUTUBE_VOS_P1_R1.md) · [审计与组件图](v81/P1_PROGRESS_AUDIT_R1.md)。
 
-P0工程闭环完成但仅两步，非论文能力或DELETE收益。P1旧公开All Frames路径已完成1000步、3条固定valid×两倍率及1条现成feedforward。两个独立6-sol/xhigh助手检查原生与硬合成全部25帧：相比step2已有天空、建筑或动物结构，但仍形变、重复、近乎冻结和边界断裂，画质未过。旧质量门hold，1000断点和全部原输出保留；不把可见中央硬写回当生成成功。
+P0工程闭环完成，非论文能力。旧All Frames完成1000步，固定验证7窗独立完整25帧QA未达可用画质。同条件3种采样诊断没有修复结构；旧阶段hold、断点/原输出保留。reference_m4从原始SVD XT1.1、RAFT、ProPainter重新初始化，目前到838步，约4.5秒/步，梯度有限、冻结梯度0；但传播仍继承固定公开模块，不能称论文双向参考传播已正确实现。
 
-同条件采样诊断已完成：一次缓存CLIP/RAFT/FCNet/传播latent与初始噪声，仅切公开路径、无反演+标准CFG、反演首支+标准CFG。公开重放25帧逐像素一致；另两模式相对公开RGB MAE为0.00721895/0.00128656，独立完整25帧审核未发现结构修复。该单窗未支持“修采样即可修好画质”，也不证明公开inverse参数化无害；结果和边界在run的sampler_controlled/step001000。
+新的CPU反证：两帧点从x4移到x5，公开参考分支一支将未来帧内容拉到x6而非x4；仅过去帧可见时，末帧两支都得不到证据。已确认方向错误与两个分支共用未来父链，证据在同run/reference_direction_audit。reference_m4/quality_gates/step001000.json预置工程hold；完成1000完整保存及固定验证后，不放行5000。
 
-已修正论文m=4参考链训练入口：仅可见中心选参考对、非相邻成对RAFT、同序flow_pairs_info传播、按实际source/destination的两方向warp监督。不能只改传播参数而仍用相邻RGB监督。P1静态双侧mask显式检查；日志/断点记录协议，旧无字段checkpoint视为All Frames，跨协议恢复报错。49项CPU测试通过。reference_m4从原始SVD XT1.1、RAFT、ProPainter光流权重新初始化，真实两步反向传播通过，损失6.4800/4.6685，三个可训练组件梯度有限非零、冻结梯度0，峰值分配21.318GiB；未载作者编辑权重。
+已接入独立paper-bidirectional-m4候选：目标到最近过去/未来的direct flow、参考链组合、来源mask屏蔽、原FB一致性与原细化/融合网络。25帧最稀m4为42条flow而非旧24，静态FCNet mask扩至K+1；稀疏flow序列分布和显存仍需实测。新旧协议不允许交叉恢复，控制器跳过既存断点/结果也核对协议。独立接线审核通过，CPU全套59项通过。排队worker46090只等旧阶段完成保存/验证并hold，再串行执行新协议两步训练及一窗推理；不同时启动两个GPU任务，不自动放行1000/100K。新子阶段paper_bidirectional_m4，状态在根bidirectional_handoff.json；尚无该候选GPU结果。
 
-旧闲置控制器35923已安全停止，旧state及handoff保留。新控制器40743：run根下reference_m4/controller_state.json，传播reference-m4、主推理paper-feedforward；先验证两步断点，再恢复至新1000步和5000步助手质量门，另保留公开literal诊断。旧1000不计入论文参考链训练。当前只到新1000检查点，不无条件放行100K；不等待人工审核、不加入P2/P3创新。
+数据6包完整、train1951有效视频/19313窗口。正式来源固定DAVIS90+附录YT60全帧，验证排除正式60ID；GT flow/首帧完整RGB CLIP沿公开训练，QUERY仅visible RGB。评测入口已修整套DAVIS或YT缺失仍被放行的漏洞。本地前25帧生成/前16帧评分只作为明确命名的本地协议，作者长视频/预处理/FVD汇总未确认；protocol_verified=false，四指标未实际计算，不能宣称论文表1已复现。
 
-数据6包完整校验提取，不重下。train3471视频/94588JPEG，1951严格>25帧、19313连续窗口。JPEG文件名每5递增，包内连续25张不等于原视频逐帧，作者实际训练采样率尚未确认。正式评测固定DAVIS90+附录YT60全帧，同一150ID/两倍率；验证排除正式60ID，不用test调参。单3090/bf16/CPU卸载、公开训练GT flow/首帧完整CLIP、AdamW与论文Adam、fps差异明示；protocol_verified=false。
-
-审核HTML同步本地outputs/v81-paper-p1，包含真实训练输入、源图/mask、旧1000的7窗及同条件3窗；50视频全部逐帧解码，78本地链接无缺失。新参考链结果按独立阶段标注补入。尚无正式PSNR/SSIM/LPIPS/FVD，不宣称论文指标或DELETE收益。
-
-数据、模型、外部源码、视频与完整断点不入Git，源码ZIP上限100,000,000 bytes。当前不关机。failure_ledger_refs=[V77-F02]，failure_ledger_delta=none；工程/协议差距记录到同run，不伪造方法失败。
+审核HTML本地outputs/v81-paper-p1保留12生成窗、54视频与数据/论文对照，新增CPU方向反证和工程hold；87本地链接无缺失，54视频全部解码通过。媒体、数据、模型、外部源码与完整断点不入Git；源码ZIP约34.3MB、上限100,000,000 bytes。当前不关机，不加入P2/P3、不加载作者编辑权重。failure_ledger_refs=[V77-F02]，failure_ledger_delta=none；这是复现工程/协议差距，非科学否定。

@@ -48,6 +48,21 @@ def test_paper_youtube_inventory_is_exact_and_no_extra_id(tmp_path):
         eval_p1.load_manifest(manifest, set())
 
 
+@pytest.mark.parametrize("missing", ["davis2017", "youtube_vos"])
+def test_formal_benchmark_rejects_missing_whole_dataset(monkeypatch, missing):
+    davis = {f"davis_{index:02d}" for index in range(90)}
+    monkeypatch.setattr(eval_p1, "davis_ids", lambda: davis)
+    cases = [{"dataset": dataset, "sequence_id": sequence, "mask_total_ratio": ratio}
+             for dataset, sequences in (("davis2017", davis), ("youtube_vos", eval_p1.YOUTUBE_IDS))
+             for sequence in sequences for ratio in eval_p1.RATIOS]
+    eval_p1.require_complete_benchmark(cases)
+    incomplete = [case for case in cases if case["dataset"] != missing]
+    # 留下的整套基准本身完整，旧any(coverage.values())会错误放行。
+    assert all(row["complete"] for row in eval_p1.coverage(incomplete).values())
+    with pytest.raises(ValueError, match="基准序列不完整"):
+        eval_p1.require_complete_benchmark(incomplete)
+
+
 def test_davis_inventory_matches_official_2017_trainval(tmp_path):
     expected = eval_p1.davis_ids()
     if expected is None:

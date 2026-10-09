@@ -163,7 +163,8 @@ def _unet_noise(components, latents, condition, image_embedding, time_ids,
 @torch.no_grad()
 def generate(components, pipeline, visible_images: list[Image.Image],
              visible: torch.Tensor, hole: torch.Tensor, pairs: list[tuple[int, int]],
-             *, seed: int, steps: int, mode: str, amp: str):
+             *, seed: int, steps: int, mode: str, amp: str,
+             propagation_protocol: str = "reference-m4", refs: list[int] | None = None):
     device = torch.device("cuda")
     generator = torch.Generator(device=device).manual_seed(seed)
     cast_dtype = {"bf16": torch.bfloat16, "fp16": torch.float16}[amp]
@@ -171,6 +172,8 @@ def generate(components, pipeline, visible_images: list[Image.Image],
                    components.fcnet, components.propagator, components.unet):
         module.eval()
     if mode == "literal-public":
+        if propagation_protocol == "paper-bidirectional-m4":
+            raise ValueError("公开test.py未实现论文双向参考传播；该协议只能使用paper-feedforward")
         # 直接运行固定公开 test.py。保留其中 B=1→2 的 inversion 广播、
         # 其后 B=2 去噪及仅解码第一个样本，绝不重解释为标准 CFG。
         mask = (hole[0, 0, 0].cpu().numpy() * 255).astype(np.uint8)
@@ -194,15 +197,28 @@ def generate(components, pipeline, visible_images: list[Image.Image],
     image_embedding = pipeline._encode_image(visible_images[0], device, 1, False)
     flow_input = _flows_for_pairs(components.raft, visible, pairs)
     dilated = F.max_pool2d(hole.flatten(0, 1), 3, 1, 1).reshape_as(hole)
-    flow_pred, _ = components.fcnet.forward_bidirect_flow(flow_input, dilated)
-    flows = components.fcnet.combine_flow(flow_input, flow_pred, dilated)
+    if propagation_protocol == "paper-bidirectional-m4":
+        from .reference_propagation import build_reference_plan, static_fcnet_pair_masks
+        plan = build_reference_plan(FRAMES, refs)
+        if tuple(pairs) != plan.pairs:
+            raise ValueError("推理flow与双向参考图顺序不匹配")
+        pair_masks = static_fcnet_pair_masks(dilated, plan)
+    else:
+        pair_masks = dilated
+    flow_pred, _ = components.fcnet.forward_bidirect_flow(flow_input, pair_masks)
+    flows = components.fcnet.combine_flow(flow_input, flow_pred, pair_masks)
     observation_noise = torch.randn(visible.shape, generator=generator, device=device,
                                     dtype=visible.dtype)
     condition_input = visible + 0.02 * observation_noise
     condition_latent = encode_video(components.vae, condition_input, scaled=False,
                                     sample=False)
-    _, _, condition = components.propagator(condition_latent, flows[0], flows[1], hole,
-                                            flow_pairs_info=pairs)
+    if propagation_protocol == "paper-bidirectional-m4":
+        from .reference_propagation import propagate_reference_latents
+        _, _, condition = propagate_reference_latents(
+            components.propagator, condition_latent, flows[0], flows[1], hole, plan)
+    else:
+        _, _, condition = components.propagator(condition_latent, flows[0], flows[1], hole,
+                                                flow_pairs_info=pairs)
     time_ids = torch.tensor([[6, 127, 0.02]], device=device, dtype=image_embedding.dtype)
     for module in (components.vae, components.image_encoder, components.raft,
                    components.fcnet, components.propagator):
@@ -288,6 +304,12 @@ def main():
     checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
     if checkpoint.get("format") != FORMAT:
         raise ValueError("仅接受本项目 P1 原始组件训练 checkpoint")
+    propagation_protocol = checkpoint.get("propagation_protocol", "literal-allframes")
+    if propagation_protocol == "paper-bidirectional-m4":
+        if args.mode != "paper-feedforward":
+            raise ValueError("论文双向参考断点不得用公开未来父链推理")
+        from .reference_propagation import build_reference_plan
+        pairs = list(build_reference_plan(FRAMES, refs).pairs)
     pipeline_class = _official_pipeline_class(args.external)
     components = load_components(args.svd, args.raft_weight, args.fcnet_weight,
                                   args.external, device="cuda")
@@ -306,7 +328,8 @@ def main():
     visible *= 1 - hole
     started = time.monotonic()
     prediction = generate(components, pipeline, visible_images, visible, hole, pairs,
-                          seed=args.seed, steps=args.steps, mode=args.mode, amp=args.amp)
+                          seed=args.seed, steps=args.steps, mode=args.mode, amp=args.amp,
+                          propagation_protocol=propagation_protocol, refs=refs)
     output = args.output_dir / args.sequence_id / f"side_{args.side_ratio:g}"
     saved = save_outputs(output, target, visible_images, prediction, edges)
     provenance = {
@@ -318,7 +341,8 @@ def main():
         "side_ratio_each": args.side_ratio, "mask_pixels_left": edges[0],
         "mask_pixels_right": SIZE - edges[1], "reference_window": REFERENCE_WINDOW,
         "reference_selection_input": "visible_center_only", "reference_indices": refs,
-        "flow_pairs": pairs, "mode": args.mode, "steps": args.steps,
+        "flow_pairs": pairs, "propagation_protocol": propagation_protocol,
+        "mode": args.mode, "steps": args.steps,
         "seed": args.seed, "amp": args.amp, "requested_amp": args.amp,
         "effective_amp": effective_amp(args.mode, args.amp), "fps": 7,
         "min_guidance": 1.0, "max_guidance": 3.0, "noise_aug_strength": 0.02,
