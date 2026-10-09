@@ -1,0 +1,98 @@
+{
+  "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+  "run": "r1",
+  "updated_at_utc": "2026-10-09T18:51:53.577813+00:00",
+  "status": "cpu_ready_gpu_not_run",
+  "host": "wm-3090-1009",
+  "remote_power": "off, latest SSH connection closed",
+  "formal_training_step": 100,
+  "new_optimizer_updates": 0,
+  "new_gpu_forwards": 0,
+  "planned_teacher_forwards": 18,
+  "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt",
+  "video_id": "0fc958cde2",
+  "clip_start": 2,
+  "seed": 2026,
+  "candidate_schedule_levels": [
+    {
+      "level": "high",
+      "schedule_index": 0,
+      "sigma": 700.0,
+      "timestep": 1.6377700567245483
+    },
+    {
+      "level": "middle",
+      "schedule_index": 12,
+      "sigma": 15.589967727661133,
+      "timestep": 0.6866568922996521
+    },
+    {
+      "level": "low",
+      "schedule_index": 24,
+      "sigma": 0.0020000000949949026,
+      "timestep": -1.553652048110962
+    }
+  ],
+  "schedule_source": {
+    "selected_url": "https://modelscope.cn/api/v1/models/shareAI/svd_1.1/repo?Revision=master&FilePath=scheduler%2Fscheduler_config.json",
+    "attempts": [
+      {
+        "source_url": "https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt-1-1/raw/043843887ccd51926e3efed36270444a838e7861/scheduler/scheduler_config.json",
+        "http_status": 401,
+        "error_type": "HTTPError"
+      },
+      {
+        "source_url": "https://modelscope.cn/api/v1/models/shareAI/svd_1.1/repo?Revision=master&FilePath=scheduler%2Fscheduler_config.json",
+        "http_status": 200
+      }
+    ],
+    "remote_actual_config_verified": false,
+    "purpose": "CPU diagnostic preparation, not evidence of remote checkpoint configuration"
+  },
+  "actual_remote_scheduler_verified_this_turn": false,
+  "local_tests": {
+    "passed": 12,
+    "new_probe_tests": 7,
+    "existing_capacity_tests": 5,
+    "torch": "2.12.0+cpu",
+    "diffusers": "0.31.0"
+  },
+  "owned_public_difference": "RAFT hole fill: owned normalized 0 gray, public normalized -1 black; VAE hole is 0 in both",
+  "probe_cells": {
+    "clip": [
+      "full_gt_oracle",
+      "visible_black_hole"
+    ],
+    "flow": [
+      "full_gt_oracle",
+      "visible_black_hole_official",
+      "visible_gray_hole_owned"
+    ]
+  },
+  "fixed": [
+    "source weights",
+    "target latent",
+    "diffusion noise",
+    "observation noise",
+    "VAE mode and .02 augmentation",
+    "fps6",
+    "dilated FCNet mask",
+    "same preprocessing"
+  ],
+  "role": "single-step noisy-GT BUILD oracle diagnostic; not deployed QUERY or formal evaluation",
+  "limits": [
+    "same-sigma condition comparisons only",
+    "high-sigma extreme training tail is not proof of bug",
+    "low-noise noisy-GT reconstruction is not independent generation",
+    "CLIP uses shared training helper for pixel-source isolation, not exact public PIL replay"
+  ],
+  "assistant_verdict": "CPU code/formula/source review only; no new image quality evidence",
+  "human_verdict": null,
+  "protocol_verified": false,
+  "formal_metrics": null,
+  "remote_deployment": "pending next boot; fast-forward local/GitHub commits, preserve remote work first",
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none"
+}

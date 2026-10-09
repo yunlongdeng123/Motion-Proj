@@ -25,11 +25,34 @@ def video(folder: Path, output: Path) -> None:
                     'yuv420p', '-crf', '20', str(output)], check=True)
 
 
+def condition_gap_panel(metadata: dict) -> str:
+    """CPU准备和实际GPU完成严格分开；不把候选镜像配置当远端实测。"""
+    status = metadata['status']
+    label = {'cpu_prepared_gpu_not_run': 'CPU准备完成，GPU未运行',
+             'gpu_running': 'GPU诊断未完成',
+             'complete': '固定权重单步诊断完成'}[status]
+    schedule_label = ('实际装载scheduler档位' if metadata['remote_actual_scheduler_verified']
+                      else '候选镜像配置的档位，需核对远端实际配置')
+    state_note = ('尚未运行GPU，因此没有新模型输出。' if status == 'cpu_prepared_gpu_not_run'
+                  else '本诊断没有更新模型权重；单步结果还须独立图像审核。')
+    levels = ''.join(f"<tr><td>{html.escape(row['level'])}</td><td>{row['schedule_index']}</td><td>{row['sigma']:.6g}</td></tr>"
+                     for row in metadata['levels'])
+    return f'''<div class="panel warn" id="condition-gap"><h2>下一项有界诊断：{label}</h2>
+    <p>固定双向step100、训练片段0fc958cde2/start2、seed2026，同一真实latent和同一噪声；2类CLIP × 3类flow × 3档sigma，共18次单步前向，优化更新0次。完整GT来源只作为BUILD oracle；这不是纯噪声QUERY，也不是论文指标。</p>
+    <div class="diagram"><div class="box">固定真实latent + 噪声</div>→<div class="box">完整 / 可见CLIP<br>GT / 黑洞 / 灰洞RAFT</div>→<div class="box">同权重光流补全 / 传播</div>→<div class="box">SVD单步去噪<br>高 / 中 / 低sigma</div>→<div class="box">原生解码<br>f00 / f12 / f24</div></div>
+    <p>源码已确认：公开RAFT读黑洞，我们的前向路径此前读灰洞；VAE两者都是灰洞。此对照不同时改训练数据、预算或网络。CLIP两组统一预处理以隔离像素来源，不是公开PIL路径的逐像素复演。</p>
+    <p>{schedule_label}。高sigma可能位于训练分布远尾；低sigma带噪GT误差天然小。应比较同档条件差，不能把低噪声重建当独立生成，也不能仅凭高噪声失败判定根因。</p>
+    <table><tr><th>噪声档</th><th>25步schedule索引</th><th>sigma</th></tr>{levels}</table>
+    <p><a href="condition_gap_teacher/diagnostic.json">输入、档位、角色与运行状态</a>。{state_note}P1仍未通过，正式指标未算。</p></div>'''
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--condition-diagnostic', type=Path)
+    parser.add_argument('--condition-gap', type=Path,
+                        help='显式CPU计划或GPU诊断JSON；不自动启动任务')
     args = parser.parse_args()
     run, output = args.run.resolve(), args.output.resolve()
     if output.is_relative_to(REPO):
@@ -281,6 +304,12 @@ def main() -> None:
     <h1>v8.1 P1：当前进度、实际数据与原文对照</h1>'''
     if (capacity/'run.json').is_file() and meta['status'] == 'complete':
         document += '''<div class="panel warn"><h2>当前结论：P1仍未通过</h2><p>新双向候选正式训练100步，三项条件/容量诊断已完成。逐帧可见信息在VAE与融合条件仍保留，也会影响最终输出，但native仍丢失结构。固定训练片段额外32步只有弱数值改善，QUERY仍为灰块，不能算学会。没有排队1000或100K。</p><p>本次32步诊断保留了日志、图像、seed和源100断点，未保存末步权重；入口已补保存供后续运行，未为补档重复GPU。后续应隔离训练/QUERY的CLIP与flow条件差距，再决定有界预算；不凭32步否定模型容量。</p></div>'''
+    gap_path = args.condition_gap or run/'condition_gap_teacher'/'diagnostic.json'
+    if gap_path.is_file():
+        gap_meta = json.loads(gap_path.read_text())
+        gap_folder = output/'condition_gap_teacher'; gap_folder.mkdir(exist_ok=True)
+        shutil.copy2(gap_path, gap_folder/'diagnostic.json')
+        document += condition_gap_panel(gap_meta)
     document += ''.join(condition_cards) + reference_audit_note + phase_note + f'''<div class="panel warn"><b>旧公开训练快照：{snapshot['observed_at_utc']}（UTC） · step {snapshot['latest_step']} / 100,000</b>
     <p>最近 100 步均值 {speed:.2f} 秒；按同速估算剩余纯训练 {snapshot['remaining_training_days_estimate']:.2f} 天，另加保存与验证。数值/梯度正常 ≠ 生成质量达标。这里展示的最新生成断点与训练步数分开标注。</p>
     <p>这是已停止的旧训练速度估算，并非正在运行七天训练。旧1000质量门hold；新双向候选限定到100后完成短窗及36帧检查，接着做逐帧条件与固定片段容量诊断。没有排队1000或100K，不以有限loss放行长训。</p></div>

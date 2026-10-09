@@ -156,3 +156,41 @@ flowchart LR
 第三项独立训练片段 `0fc958cde2/start2` 从step100权重额外32更新，Adam1e-5/wd0、原参数范围/原数据/seed2026；不进入正式100步或泛化声明。teacher固定sigma2.01375、condition sigma0.049787、GT latent/noise、GT flow/完整首帧CLIP；每次重新计算可训练FCNet与传播，未缓存其旧输出。纯噪声QUERY只输入visible，前后共享seed2036/25采样步。teacher weighted MSE .197598→.192800，hole .160502→.157484，known .154708→.149272，只是有限下降；完整QUERY审核另存同run review。原32步诊断未保存最终weights，图像/日志/seed与源100断点保留；入口后续补保存复核状态，不为补档重复GPU。
 
 数据外扩构造不改；本轮没有充分证据支持“条件完全断路”，也没有证据证明当前条件融合已有效。下一次应固定同一noisy target与权重，分别切换训练/QUERY首帧CLIP和flow来源，定位差距后再考虑有界训练，不自动增加数万步。正式四指标未计算、protocol_verified=false、human_verdict=null。CPU84 passed不替代条件能力或生成质量。failure_ledger_delta=none。
+
+
+## 条件来源与噪声档位：关机后的CPU准备
+
+2026-10-10新加坡。远端仍关闭；本地/GitHub代码准备，不声称已部署到关机的checkout。未新增GPU前向或训练，正式进度仍100步。三个6-sol/xhigh独立源码复核，无fast，未发现EDM去噪公式、目标/条件latent标度或8通道拼接的新确定错误。CPU隔离环境仅安装锁定Diffusers0.31.0，不改用户全局环境。[轻量准备记录](P1_CONDITION_GAP_CPU_R1.json)。
+
+```mermaid
+flowchart LR
+    X[固定真实latent + 同epsilon] --> D[SVD单步去噪]
+    C[完整GT / 可见首帧CLIP] --> D
+    F[GT / 黑洞 / 灰洞RAFT] --> P[同权重FCNet与参考传播]
+    V[共享可见VAE条件] --> P
+    P --> D
+    S[实际Euler高 / 中 / 低sigma] --> D
+    D --> R[原生解码f00 / f12 / f24 + 同档误差]
+```
+
+明确的新源码差异是RAFT洞区填值：固定公开test.py的RAFT读取黑底PIL，归一化后为-1；owned入口在传给generate前清洞为0。二者VAE都先乘可见mask再加增强噪声，都是灰洞0，不能把这项差距错误扩大为VAE接线错误。来源：[公开test.py 488–536](https://github.com/InSeokJeon/Seen_to_Scene/blob/2a9dfc9888e44c7fd00b08af41ef967ae46b6323/test.py#L488-L536)。本轮只准备单因素黑/灰RAFT条件对照，尚无画质因果结论。
+
+| 项目 | 固定公开训练 / QUERY | 本轮处理 |
+|---|---|---|
+| 首帧CLIP及flow | 完整GT / 可见输入 | 同一权重、噪声，分别替换来源；GT是BUILD oracle |
+| 条件VAE | sample + lognormal(-3,.5) / mode + .02 | 全组固定QUERY的mode/.02；不是完整训练条件复演 |
+| fps时间条件 | 7 / 6 | 全组固定6，不同时改另一因素 |
+| RAFT洞区 | 公开QUERY黑-1 / owned前向灰0 | 三组flow中增加黑洞公开控制，灰洞保留历史对照 |
+| 参考/优化/采样 | 论文m4/Adam/Gaussian；源码训练相邻帧/AdamW，test额外inversion | 继续明示论文重建与逐行公开复现的区别，不混合断点 |
+
+来源：[公开train.py 383–438](https://github.com/InSeokJeon/Seen_to_Scene/blob/2a9dfc9888e44c7fd00b08af41ef967ae46b6323/train.py#L383-L438)、[论文§4–5](https://arxiv.org/html/2604.14648v1)。这些训练/推理差异多数继承公开实现，并非均为本地bug；不能只凭公开写法认为条件有效，也不能为追数字静默修改协议。
+
+新入口 `python -m motion_proj.worldsim_v81.p1_condition_gap_probe` 只接受双向正式step100及原数据根/池/固定片段。2类CLIP×3类flow×3档sigma=18次单步前向；优化更新0，无CFG，无多步采样。所有组共用目标latent、epsilon、观测噪声、VAE条件、time IDs和FCNet膨胀mask。CLIP统一使用训练helper以隔离像素来源，不声称逐像素重放公开PIL路径；查询使用的各条件仍只能从visible导出。GT来源及带噪GT结果一律为BUILD-only。
+
+本地读取候选ModelScope shareAI/svd_1.1 scheduler小JSON：25步示例sigma700、15.58997、.002。官方固定revision文件在当前本地未授权环境返回401；候选镜像未证明与远端实际缓存配置相同，必须在下次开机先读实际文件再由schedule选档。未下载模型、未替换远端模型。来源：[候选镜像](https://modelscope.cn/models/shareAI/svd_1.1/files)、[Diffusers0.31 Euler实现](https://github.com/huggingface/diffusers/blob/v0.31.0/src/diffusers/schedulers/scheduling_euler_discrete.py)。
+
+使用真实Diffusers0.31 Euler的pred_original_sample作为独立数值对照，高/中/低档EDM重建及输入预条件一致；条件分支共享noisy GT/time、黑洞无隐藏RGB、洞/可见区误差分离的检查通过。新探针7项、既有容量5项，共12 passed；这是本地定向验证，不与历史远端84项简单相加，也不证明生成质量。
+
+解读按同sigma配对：若GT oracle显著更好而可见条件失败，优先做条件落差的短控制；若各组都没有结构，继续区分去噪训练不足与条件利用，不以100步否定容量。高sigma是训练lognormal(.7,1.6)远尾，低sigma已含几乎完整GT，二者单点好坏均不是多步QUERY的充分证据；不能把三档raw MSE随意平均。黑/灰RAFT的单步差还须共享初始latent的自由生成确认。不会因某个误差较小就自动放行100K。
+
+下一次开机先确认远端无用户改动、实际配置和单GPU进程，再部署同分支并执行该固定前向。独立助手看18组的f00/f12/f24；三帧只评结构，不给时序通过。根据结果只选一个短控制，再决定有界训练预算。原有视频、checkpoint及失败证据均保留，P2/P3仍未开始；failure_ledger_delta=none。
