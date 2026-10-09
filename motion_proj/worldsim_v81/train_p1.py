@@ -11,8 +11,8 @@ import random
 import time
 
 import numpy as np
+from PIL import Image
 import torch
-from diffusers.optimization import get_scheduler
 from torch.utils.data import default_collate
 
 from .model_bridge import (DEFAULT_EXTERNAL, DEFAULT_FCNET, DEFAULT_RAFT, DEFAULT_SVD,
@@ -23,6 +23,8 @@ from .train import classify_propagator_gradient, gradient_report, parameter_coun
 
 
 FORMAT = "worldsim_v81_seen_to_scene_p1_youtube_vos"
+DEFAULT_PROPAGATION_PROTOCOL = "reference-m4"
+PROPAGATION_PROTOCOLS = ("reference-m4", "literal-allframes")
 DEFAULT_DATA = Path("/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages")
 
 
@@ -45,11 +47,90 @@ def _official_image_embedding(components, target: torch.Tensor, util) -> torch.T
     return components.image_encoder(pixels).image_embeds.unsqueeze(1)
 
 
+def reference_pairs_from_visible(visible: torch.Tensor, mask: torch.Tensor) -> list[tuple[int, int]]:
+    """只用可见中心选 m=4 参考链；复用 QUERY 的固定官方构造。"""
+    if visible.shape[0] != 1 or visible.shape[1] != 25:
+        raise ValueError("P1 参考链目前只支持 batch=1、25帧")
+    if not torch.equal(mask, mask[:, :1].expand_as(mask)):
+        raise ValueError("P1 参考链训练要求全视频静态 mask")
+    known = torch.where(mask[0, 0, 0, 0] == 0)[0]
+    if len(known) == 0 or not torch.equal(
+        known, torch.arange(known[0], known[-1] + 1, device=known.device)
+    ):
+        raise ValueError("P1 可见区域必须是连续中央带")
+    left, right = int(known[0]), int(known[-1]) + 1
+    centers = []
+    for frame in visible[0]:
+        rgb = ((frame[:, :, left:right].permute(1, 2, 0).float() + 1) * 127.5)
+        centers.append(Image.fromarray(rgb.round().clamp(0, 255).byte().cpu().numpy()))
+    # infer_p1 顶层引用本模块的 FORMAT，故在函数中导入以免循环导入。
+    from .infer_p1 import build_pairs_for_all_frames, select_reference_frame_indices
+    refs = select_reference_frame_indices(centers, reference_window_size=4)
+    chain, to_frame = build_pairs_for_all_frames(25, refs)
+    pairs = chain + to_frame
+    if len(pairs) != 24 or len({target for _, target in pairs}) != 24:
+        raise ValueError("m=4 参考链必须为25帧构造24条唯一父边")
+    return pairs
+
+
+@torch.no_grad()
+def raft_flows_for_pairs(raft, target: torch.Tensor, pairs: list[tuple[int, int]],
+                         *, iters: int, pair_chunk: int) -> tuple[torch.Tensor, torch.Tensor]:
+    forward, backward = [], []
+    for start in range(0, len(pairs), pair_chunk):
+        fw, bw = raft.forward_pairs(target, pairs[start:start + pair_chunk],
+                                    iters=iters, bidirectional=True)
+        forward.append(fw)
+        backward.append(bw)
+    return torch.cat(forward, dim=1), torch.cat(backward, dim=1)
+
+
+def paired_flow_loss(flow_loss, completed, ground_truth, masks: torch.Tensor,
+                     frames: torch.Tensor, pairs: list[tuple[int, int]]):
+    """沿用官方 L1/ternary 公式，但让每条 flow 对应真实的 (source,target)。"""
+    source = [s for s, _ in pairs]
+    target = [t for _, t in pairs]
+    height, width = frames.shape[-2:]
+    losses = []
+    warps = []
+    for predicted, truth, mask, current, shift in (
+        (completed[0], ground_truth[0], masks[:, source], frames[:, source], frames[:, target]),
+        (completed[1], ground_truth[1], masks[:, target], frames[:, target], frames[:, source]),
+    ):
+        if predicted.shape != truth.shape or predicted.shape[1] != len(pairs):
+            raise ValueError("参考对与光流数量不匹配")
+        combined = predicted * mask + truth * (1 - mask)
+        losses.append(flow_loss.l1_criterion(predicted * mask, truth * mask) / mask.mean()
+                      + flow_loss.l1_criterion(predicted * (1 - mask), truth * (1 - mask))
+                      / (1 - mask).mean())
+        warps.append(flow_loss.ternary_loss(combined.reshape(-1, 2, height, width),
+                                           truth.reshape(-1, 2, height, width),
+                                           mask.reshape(-1, 1, height, width),
+                                           current.reshape(-1, 3, height, width),
+                                           shift.reshape(-1, 3, height, width)))
+    return sum(losses), sum(warps)
+
+
+def validate_resume_protocol(state: dict, requested: str) -> str:
+    """旧版 P1 断点未记录协议，但其训练路径确定为 All Frames。"""
+    previous = state.get("propagation_protocol", "literal-allframes")
+    if previous not in PROPAGATION_PROTOCOLS:
+        raise ValueError(f"断点传播协议未知: {previous}")
+    if previous != requested:
+        raise ValueError(f"禁止跨传播协议恢复: 断点={previous}, 本次={requested}; 应从原始权重新启训练")
+    return previous
+
+
 def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
                   scaler: torch.amp.GradScaler, *, amp: str, raft_iters: int,
-                  pair_chunk: int, util, dropout_generator: torch.Generator) -> dict:
-    """按官方训练路径：GT flow/首帧用于训练条件，masked RGB 用于 VAE 条件。"""
+                  pair_chunk: int, propagation_protocol: str, util,
+                  dropout_generator: torch.Generator) -> dict:
+    """保留公开训练条件；传播在论文 m=4 与公开 All Frames 间显式选择。"""
     validate_batch(batch)
+    if propagation_protocol not in PROPAGATION_PROTOCOLS:
+        raise ValueError(f"未知传播协议: {propagation_protocol}")
+    pairs = (reference_pairs_from_visible(batch["visible_rgb"], batch["hole_mask"])
+             if propagation_protocol == "reference-m4" else None)
     device = next(components.unet.parameters()).device
     target = batch["target_rgb"].to(device, non_blocking=True)
     visible = batch["visible_rgb"].to(device, non_blocking=True)
@@ -64,7 +145,10 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
 
     # 对齐官方 train.py 顺序：GT flow -> FCNet -> GT VAE -> noise -> cond sigma
     # -> masked VAE -> latent propagation -> diffusion sigma -> CLIP -> CFG dropout。
-    gt_flow = raft_flows(components.raft, target, iters=raft_iters, pair_chunk=pair_chunk)
+    gt_flow = (raft_flows_for_pairs(components.raft, target, pairs,
+                                    iters=raft_iters, pair_chunk=pair_chunk)
+               if pairs is not None else
+               raft_flows(components.raft, target, iters=raft_iters, pair_chunk=pair_chunk))
     flow_pred, _ = components.fcnet.forward_bidirect_flow(gt_flow, mask)
     flow = components.fcnet.combine_flow(gt_flow, flow_pred, mask)
     target_latent = encode_video(components.vae, target, scaled=True, sample=True)
@@ -75,7 +159,8 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
     conditional_pixels = torch.randn_like(visible) * cond_sigma[:, None, None, None, None] + visible
     conditional_latent = encode_video(components.vae, conditional_pixels, scaled=False, sample=True)
     # 固定官方 LatentPropagation 当前签名不接收 orig_lats；仅修调用，不把 GT latent 塞入条件。
-    _, _, condition = components.propagator(conditional_latent, flow[0], flow[1], mask)
+    _, _, condition = components.propagator(conditional_latent, flow[0], flow[1], mask,
+                                             flow_pairs_info=pairs)
     sigma = util.rand_log_normal([batch_size], loc=0.7, scale=1.6).to(target_latent.device)
     sigma = sigma[:, None, None, None, None]
     noisy = noise * sigma + target_latent
@@ -106,7 +191,10 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
     denoised = predicted.float() * (-sigma / (sigma.square() + 1).sqrt()) + noisy / (sigma.square() + 1)
     weight = (1 + sigma.square()) / sigma.square()
     diffusion_loss = (weight * (denoised - target_latent).square()).flatten(1).mean(1).mean()
-    flow_l1, ternary_warp = components.flow_loss(flow, gt_flow, mask, target)
+    flow_l1, ternary_warp = (paired_flow_loss(components.flow_loss, flow, gt_flow,
+                                             mask, target, pairs)
+                            if pairs is not None else
+                            components.flow_loss(flow, gt_flow, mask, target))
     loss = diffusion_loss + flow_l1 + ternary_warp
     if not torch.isfinite(loss):
         raise FloatingPointError(f"P1 训练损失非有限值: {float(loss)}")
@@ -132,7 +220,8 @@ def train_step_p1(components, batch: dict, optimizer: torch.optim.Optimizer,
             "flow_l1": float(flow_l1.detach()), "ternary_warp": float(ternary_warp.detach()),
             "gradients": gradients, "frozen_grad_tensors": frozen_grad_tensors,
             "frozen_observation_encoders_offloaded": True,
-            "train_conditioning": "official_full_rgb_flow_and_first_frame_clip"}
+            "train_conditioning": "official_full_rgb_flow_and_first_frame_clip",
+            "propagation_protocol": propagation_protocol}
 
 
 def parse_args() -> argparse.Namespace:
@@ -151,6 +240,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--lr", type=float, default=1e-5)
     parser.add_argument("--amp", choices=("fp16", "bf16", "none"), default="fp16")
+    parser.add_argument("--propagation-protocol", choices=PROPAGATION_PROTOCOLS,
+                        default=DEFAULT_PROPAGATION_PROTOCOL)
     parser.add_argument("--raft-iters", type=int, default=20)
     parser.add_argument("--raft-pair-chunk", type=int, default=2)
     parser.add_argument("--inspect-data-only", action="store_true",
@@ -162,7 +253,8 @@ def save_checkpoint(path: Path, components, optimizer, scheduler, scaler,
                     dropout_generator: torch.Generator,
                     step: int, args: argparse.Namespace, data_profile: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    state = {"format": FORMAT, "step": step, "models": trainable_state(components),
+    state = {"format": FORMAT, "propagation_protocol": args.propagation_protocol,
+             "step": step, "models": trainable_state(components),
              "optimizer": optimizer.state_dict(), "scheduler": scheduler.state_dict(),
              "scaler": scaler.state_dict(), "torch_rng": torch.get_rng_state(),
              "cuda_rng": torch.cuda.get_rng_state_all(), "numpy_rng": np.random.get_state(),
@@ -191,6 +283,8 @@ def main() -> None:
     print(json.dumps({"event": "p1_data", **profile}), flush=True)
     if args.inspect_data_only:
         return
+    from diffusers.optimization import get_scheduler
+
     if not torch.cuda.is_available():
         raise RuntimeError("真实 P1 训练需要 GPU")
     torch.manual_seed(args.seed)
@@ -215,6 +309,7 @@ def main() -> None:
         state = torch.load(args.resume, map_location="cpu", weights_only=False)
         if state.get("format") != FORMAT:
             raise ValueError("仅可恢复 P1 原始权重训练断点；不可载入 P0/微调成品")
+        validate_resume_protocol(state, args.propagation_protocol)
         if state["args"]["data_root"] != str(args.data_root) or state["args"]["seed"] != args.seed:
             raise ValueError("恢复时 YouTube-VOS 数据根和 seed 必须一致")
         if state["data_profile"]["videos"] != profile["videos"] or \
@@ -237,6 +332,7 @@ def main() -> None:
         torch.cuda.reset_peak_memory_stats()
         metrics = train_step_p1(components, batch, optimizer, scaler, amp=args.amp,
                                 raft_iters=args.raft_iters, pair_chunk=args.raft_pair_chunk,
+                                propagation_protocol=args.propagation_protocol,
                                 util=util, dropout_generator=dropout_generator)
         scheduler.step()
         step += 1

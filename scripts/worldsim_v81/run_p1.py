@@ -17,6 +17,8 @@ REPO = Path(__file__).resolve().parents[2]
 PYTHON = Path('/root/autodl-tmp/envs/motionproj/bin/python')
 DATA = Path('/root/autodl-tmp/data/worldsim_v81')
 DEFAULT_RUN = Path('/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1')
+PROPAGATION_PROTOCOLS = ('reference-m4', 'literal-allframes')
+INFERENCE_MODES = ('paper-feedforward', 'literal-public')
 
 
 def atomic_json(path: Path, value: dict) -> None:
@@ -26,7 +28,14 @@ def atomic_json(path: Path, value: dict) -> None:
 
 
 class Controller:
-    def __init__(self, run: Path):
+    def __init__(self, run: Path, propagation_protocol: str = 'literal-allframes',
+                 inference_mode: str = 'literal-public'):
+        if propagation_protocol not in PROPAGATION_PROTOCOLS:
+            raise ValueError(f'未知传播协议: {propagation_protocol}')
+        if inference_mode not in INFERENCE_MODES:
+            raise ValueError(f'未知推理模式: {inference_mode}')
+        self.propagation_protocol = propagation_protocol
+        self.inference_mode = inference_mode
         self.run = run.resolve()
         if self.run.is_relative_to(REPO):
             raise ValueError('run 必须在源码仓库外')
@@ -36,6 +45,12 @@ class Controller:
         self.state_path = self.run / 'controller_state.json'
         if self.state_path.is_file():
             previous = json.loads(self.state_path.read_text())
+            # 旧状态里的 inference_mode 是最近一次推理，可能是 feedforward 诊断。
+            previous_protocol = previous.get('propagation_protocol', 'literal-allframes')
+            previous_mode = (previous.get('inference_mode', 'literal-public')
+                             if 'propagation_protocol' in previous else 'literal-public')
+            if (previous_protocol != propagation_protocol or previous_mode != inference_mode):
+                raise ValueError('已有 run 的训练传播协议或推理模式不符；请使用独立 run 目录')
             child = previous.get('child_pid')
             if child:
                 command_path = Path(f'/proc/{int(child)}/cmdline')
@@ -46,7 +61,10 @@ class Controller:
         self.state = {'task': 'WS-V81-SEEN-TO-SCENE-P1-20261009', 'run': 'r1',
                       'controller_pid': os.getpid(), 'status': 'starting',
                       'training_budget': 100000, 'human_in_loop': False,
-                      'assistant_qa_required': True}
+                      'assistant_qa_required': True,
+                      'propagation_protocol': self.propagation_protocol,
+                      'inference_mode': self.inference_mode,
+                      'active_inference_mode': None}
         self.env = dict(os.environ, OMP_NUM_THREADS='4', MKL_NUM_THREADS='4',
                         PYTHONUNBUFFERED='1', PYTHONPATH=str(REPO))
         self.update()
@@ -125,7 +143,7 @@ class Controller:
         args = [str(PYTHON), '-m', 'motion_proj.worldsim_v81.train_p1',
                 '--output-dir', str(self.run / 'train'), '--max-steps', str(step),
                 '--save-every', str(save_every), '--keep-checkpoints', '2',
-                '--amp', 'bf16']
+                '--amp', 'bf16', '--propagation-protocol', self.propagation_protocol]
         if latest:
             args += ['--resume', str(latest)]
         self.command(f'train_to_{step:06d}', args)
@@ -136,14 +154,18 @@ class Controller:
         return latest
 
     def infer(self, checkpoint: Path, root: Path, sequence: str, side: float,
-              output: Path, name: str, mode: str = 'literal-public') -> None:
+              output: Path, name: str, mode: str | None = None) -> None:
+        if mode is None:
+            mode = self.inference_mode
+        if mode not in INFERENCE_MODES:
+            raise ValueError(f'未知推理模式: {mode}')
         result = output / sequence / f'side_{side:g}' / 'run.json'
         if result.exists():
             completed = json.loads(result.read_text())
             if completed.get('status') == 'complete' and completed.get('mode') == mode:
-                self.update(status=f'{name}_{mode}_skipped', inference_mode=mode)
+                self.update(status=f'{name}_{mode}_skipped', active_inference_mode=mode)
                 return
-        self.update(inference_mode=mode)
+        self.update(active_inference_mode=mode)
         self.command(f'{name}_{mode}', [str(PYTHON), '-m', 'motion_proj.worldsim_v81.infer_p1',
                            '--data-root', str(root), '--sequence-id', sequence,
                            '--checkpoint', str(checkpoint), '--output-dir', str(output),
@@ -197,9 +219,13 @@ class Controller:
             self.infer(checkpoint, valid_root, chosen[0], .33, output,
                        f'validation_{step:06d}')
         if step == 1000:
+            diagnostic_mode = ('literal-public' if self.inference_mode == 'paper-feedforward'
+                               else 'paper-feedforward')
+            diagnostic_dir = ('validation_literal' if diagnostic_mode == 'literal-public'
+                              else 'validation_feedforward')
             self.infer(checkpoint, valid_root, chosen[0], .33,
-                       self.run / 'validation_feedforward/step001000',
-                       'validation_feedforward_001000', mode='paper-feedforward')
+                       self.run / diagnostic_dir / 'step001000',
+                       f'validation_diagnostic_001000_{diagnostic_mode}', mode=diagnostic_mode)
         if step in (1000, 5000):
             self.wait_quality_gate(step)
 
@@ -208,7 +234,8 @@ class Controller:
         train_root = DATA / 'youtube_vos_2019/train/JPEGImages'
         self.command('inspect_train_data', [str(PYTHON), '-m',
                      'motion_proj.worldsim_v81.train_p1', '--inspect-data-only',
-                     '--output-dir', str(self.run / 'train')])
+                     '--output-dir', str(self.run / 'train'),
+                     '--propagation-protocol', self.propagation_protocol])
         train_ids = sorted('youtube_vos/' + p.name for p in train_root.iterdir()
                            if p.is_dir() and len(list(p.glob('*.jpg'))) > 25)
         (self.run / 'train_source_ids.json').write_text(json.dumps(train_ids), encoding='utf-8')
@@ -264,8 +291,12 @@ class Controller:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run', type=Path, default=DEFAULT_RUN)
+    parser.add_argument('--propagation-protocol', choices=PROPAGATION_PROTOCOLS,
+                        default='literal-allframes')
+    parser.add_argument('--inference-mode', choices=INFERENCE_MODES,
+                        default='literal-public')
     args = parser.parse_args()
-    controller = Controller(args.run)
+    controller = Controller(args.run, args.propagation_protocol, args.inference_mode)
     try:
         controller.execute()
     except Exception as exc:

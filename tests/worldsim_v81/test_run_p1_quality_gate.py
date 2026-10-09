@@ -12,7 +12,8 @@ import pytest
 @pytest.fixture
 def run_p1(monkeypatch):
     # fcntl 只在远端 Linux 初始化 controller 时使用，本地仅测试流程方法。
-    monkeypatch.setitem(sys.modules, 'fcntl', SimpleNamespace())
+    monkeypatch.setitem(sys.modules, 'fcntl', SimpleNamespace(
+        LOCK_EX=2, LOCK_NB=4, flock=lambda *_: None))
     path = Path(__file__).resolve().parents[2] / 'scripts/worldsim_v81/run_p1.py'
     spec = importlib.util.spec_from_file_location('run_p1_quality_gate_test', path)
     module = importlib.util.module_from_spec(spec)
@@ -23,6 +24,8 @@ def run_p1(monkeypatch):
 def fake_controller(run_p1, tmp_path):
     controller = object.__new__(run_p1.Controller)
     controller.run = tmp_path
+    controller.propagation_protocol = 'literal-allframes'
+    controller.inference_mode = 'literal-public'
     states = []
     controller.update = lambda **changes: states.append(changes)
     return controller, states
@@ -85,7 +88,65 @@ def test_infer_records_mode_and_skips_only_matching_completed_result(run_p1, tmp
                      mode='paper-feedforward')
     assert len(commands) == 2
     assert commands[-1][1][commands[-1][1].index('--mode') + 1] == 'paper-feedforward'
-    assert states[-1]['inference_mode'] == 'paper-feedforward'
+    assert states[-1]['active_inference_mode'] == 'paper-feedforward'
+
+
+def test_reference_protocol_commands_and_opposite_sampler_diagnostic(run_p1, tmp_path):
+    controller, _ = fake_controller(run_p1, tmp_path)
+    controller.propagation_protocol = 'reference-m4'
+    controller.inference_mode = 'paper-feedforward'
+    commands = []
+
+    def command(name, argv):
+        commands.append((name, argv))
+        if name == 'train_to_000002':
+            folder = tmp_path / 'train'
+            folder.mkdir()
+            (folder / 'p1-checkpoint-000002.pt').touch()
+
+    controller.command = command
+    checkpoint = controller.train_to(2, save_every=1)
+    assert checkpoint.name == 'p1-checkpoint-000002.pt'
+    assert commands[0][1][commands[0][1].index('--propagation-protocol') + 1] == 'reference-m4'
+
+    controller.infer(checkpoint, tmp_path, 'first', .33,
+                     tmp_path / 'validation/step000002', 'validation_000002')
+    assert commands[1][1][commands[1][1].index('--mode') + 1] == 'paper-feedforward'
+
+    events = []
+    controller.infer = lambda checkpoint, root, sequence, side, output, name, mode=None: (
+        events.append((output, mode)))
+    controller.wait_quality_gate = lambda step: events.append(('gate', step))
+    controller.validate_checkpoint(1000, checkpoint, tmp_path, ['first', 'middle', 'last'])
+    assert events[:6] == [(tmp_path / 'validation/step001000', None)] * 6
+    assert events[6] == (tmp_path / 'validation_literal/step001000', 'literal-public')
+    assert events[7] == ('gate', 1000)
+
+    # inspect 在读取本地数据之前就执行；截断其后续流程以免接触真实语料。
+    class StopAfterInspect(Exception):
+        pass
+
+    controller.wait_archive = lambda filename: None
+    controller.command = lambda name, argv: (
+        commands.append((name, argv)), (_ for _ in ()).throw(StopAfterInspect()))
+    with pytest.raises(StopAfterInspect):
+        controller.execute()
+    inspect_args = commands[-1][1]
+    assert '--inspect-data-only' in inspect_args
+    assert inspect_args[inspect_args.index('--propagation-protocol') + 1] == 'reference-m4'
+
+
+def test_controller_records_protocols_and_rejects_reusing_other_run(run_p1, tmp_path):
+    run = tmp_path / 'reference_m4'
+    controller = run_p1.Controller(run, 'reference-m4', 'paper-feedforward')
+    try:
+        state = json.loads((run / 'controller_state.json').read_text())
+        assert state['propagation_protocol'] == 'reference-m4'
+        assert state['inference_mode'] == 'paper-feedforward'
+        with pytest.raises(ValueError, match='独立 run'):
+            run_p1.Controller(run, 'literal-allframes', 'literal-public')
+    finally:
+        controller.lock.close()
 
 
 def test_missing_gate_waits_then_matching_assistant_continue_passes(run_p1, tmp_path, monkeypatch):

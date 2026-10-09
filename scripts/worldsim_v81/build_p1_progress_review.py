@@ -108,31 +108,71 @@ def main() -> None:
         <div class="two"><figure><img src="{base}/source.jpg"><figcaption>原始首帧，展示裁剪前视野</figcaption></figure><figure><video controls loop muted src="{base}/target_rgb.mp4"></video><figcaption>256² 真实监督视频</figcaption></figure><figure><video controls loop muted src="{base}/visible_rgb.mp4"></video><figcaption>模型可见视频：左右各 84px 为洞</figcaption></figure></div>
         <img class="contact" src="{base}/contact.jpg"><p><a href="{base}/input.json">实际采样清单</a></p></article>''')
     validation_cards = []
-    for step_folder in sorted((run/'validation').glob('step*')):
-        for result in sorted(step_folder.glob('*/side_*/run.json')):
-            meta = json.loads(result.read_text()); rel = Path('validation')/step_folder.name/result.parent.parent.name/result.parent.name
-            dest = output/rel; dest.mkdir(parents=True, exist_ok=True)
-            for name in ('gt.mp4','visible.mp4','pred.mp4','comp.mp4','run.json'):
-                shutil.copy2(result.parent/name, dest/name)
-            labels = [('gt','真实完整 RGB'),('visible','实际可见输入'),('pred','原生模型输出'),('comp','中央可见区硬写回')]
-            cells = ''.join(f'<figure><video controls muted loop src="{rel.as_posix()}/{name}.mp4"></video><figcaption>{label}</figcaption></figure>' for name,label in labels)
-            validation_cards.append(f'<article><h3>step {meta["checkpoint_step"]} · {meta["sequence_id"]} · {meta["mode"]}</h3><div class="four">{cells}</div><p>原生与写回分开看；硬写回中央正确不代表生成侧边正确。<a href="{rel.as_posix()}/run.json">来源记录</a></p></article>')
+    results = sorted(run.glob('validation*/step*/*/side_*/run.json'))
+    results += sorted(run.glob('sampler_controlled/step*/*/run.json'))
+    results += sorted(run.glob('reference_m4/validation*/step*/*/side_*/run.json'))
+    for result in results:
+        meta = json.loads(result.read_text()); rel = result.parent.relative_to(run)
+        dest = output/rel; dest.mkdir(parents=True, exist_ok=True)
+        for name in ('gt.mp4','visible.mp4','pred.mp4','comp.mp4','run.json'):
+            shutil.copy2(result.parent/name, dest/name)
+        labels = [('gt','真实完整 RGB'),('visible','实际可见输入'),('pred','原生模型输出'),('comp','中央可见区硬写回')]
+        cells = ''.join(f'<figure><video controls muted loop src="{rel.as_posix()}/{name}.mp4"></video><figcaption>{label}</figcaption></figure>' for name,label in labels)
+        phase_label = '参考链新训练' if rel.parts[0] == 'reference_m4' else '旧公开训练 / 诊断'
+        validation_cards.append(f'<article><h3>{phase_label} · step {meta["checkpoint_step"]} · {meta["sequence_id"]} · {meta["mode"]}</h3><div class="four">{cells}</div><p>每组均为完整25帧。原生与写回分开看；硬写回中央正确不代表生成侧边正确。sampler_controlled 目录仅诊断，不进入正式论文指标。<a href="{rel.as_posix()}/run.json">来源记录</a></p></article>')
+    gate_path = run/'quality_gates/step001000.json'
+    if gate_path.exists():
+        gate = json.loads(gate_path.read_text())
+        gate_summary = html.escape(gate.get('summary', '质量门决策见记录'))
+        (output/'quality_gate_1000.json').write_text(json.dumps(gate,ensure_ascii=False,indent=2))
+        gate_note = f'<div class="panel warn"><b>旧All Frames 1000 步决策：{html.escape(gate["decision"])}</b><p>{gate_summary}</p><a href="quality_gate_1000.json">助手决策与证据</a></div>'
+    else:
+        gate_note = '<div class="panel warn">1000 步质量门尚未放行；先独立审核固定视频和采样诊断。</div>'
+    diagnostic_note = ''
+    diagnostic_path = run/'sampler_controlled/step001000/sampler_diagnostic.json'
+    if diagnostic_path.exists():
+        diagnostic = json.loads(diagnostic_path.read_text())
+        shutil.copy2(diagnostic_path, output/'sampler_diagnostic.json')
+        delta = diagnostic['pixel_mae_vs_literal']
+        diagnostic_note = f'''<div class="panel"><h2>1000步：同条件采样诊断</h2>
+        <p>固定同一 CLIP、RAFT、补全光流、传播潜变量与初始噪声，只切换采样。公开原路径重放与此前断点视频的25帧逐像素一致。</p>
+        <p>无反演＋标准CFG相对公开路径的RGB平均差为 {delta['no-inverse-matched-cfg']:.5f}；保留反演首支＋标准CFG为 {delta['inverse-first-matched-cfg']:.5f}（RGB范围0–1）。差值不是恢复质量指标。</p>
+        <p>独立助手看三模式原生与写回的全部25帧：三组都缺少地面、树木、人物延展，并保留接缝；无反演模式仍有天空碎片闪烁。当前单窗没有“改采样即可修复画质”的证据。公开反演的参数化风险仍未由此排除。</p>
+        <p><a href="sampler_diagnostic.json">数值与实验边界</a> · <a href="sampler_controlled_assistant_review.json">独立目视审核</a> · <a href="smallmask_assistant_review.json">三段小mask审核</a> · <a href="inference_assistant_review.json">三段大mask及现成feedforward审核</a></p></div>'''
+    phase_note = ''
+    phase = run/'reference_m4'
+    if (phase/'controller_state.json').exists():
+        phase_state = json.loads((phase/'controller_state.json').read_text())
+        phase_rows = {}
+        for log in sorted((phase/'logs').glob('*.log')):
+            for line in log.read_text().splitlines():
+                try:
+                    row = json.loads(line)
+                    if row.get('event') == 'train_step': phase_rows[row['step']] = row
+                except (json.JSONDecodeError, TypeError): pass
+        phase_latest = phase_rows[max(phase_rows)] if phase_rows else None
+        phase_summary = {'controller':phase_state,'latest_train':phase_latest,
+                         'legacy_allframes_steps_not_counted':1000}
+        (output/'reference_m4_status.json').write_text(json.dumps(phase_summary,ensure_ascii=False,indent=2))
+        phase_note = f'''<div class="panel warn"><h2>当前活动阶段：论文 m=4 参考链</h2>
+        <p>新训练完成 {phase_latest['step'] if phase_latest else 0} 步；当前状态 {html.escape(phase_state['status'])}。从原始权重新初始化，未恢复旧All Frames 1000断点；旧结果在下方供回溯。</p>
+        <p>修正：m=4选择 → 成对RAFT → 同一参考链传播 → 按实际source/destination的warp监督。两步真实反向传播通过后，继续至新1000步助手质量门；没有直接放行七天预算。主推理为Gaussian前向采样，公开literal路径保留为诊断。</p><a href="reference_m4_status.json">活动阶段快照</a></div>'''
     comparisons = [
         ('视频与尺寸','25 帧 / 256²','JPEG 连续窗口，缩放中心裁剪','相同；1951 个有效视频、19313 个窗口','基本对齐；100K 是重复采样的更新预算'),
         ('外绘 mask','水平总宽 .25 / .66（评测）','训练双侧各 .33','训练每侧 84px；推理两倍率','对齐公开 mask；当前没有驾驶 DELETE 造数'),
-        ('传播路径','m=4 参考帧链','train 未传参考对；test 有参考链','训练实际打印 All Frames；推理 m=4','实质差距：训练未采用论文参考链'),
+        ('传播路径','m=4 参考帧链','train 未传参考对；test 有参考链','旧训练为All Frames；新阶段m=4成对RAFT/传播/监督','已修正入口；旧1000不计入新阶段，效果待新质量门'),
         ('训练条件','传播条件 + 扩散训练','完整 RGB 算 RAFT / 首帧 CLIP；masked RGB 编码','沿公开训练路径；QUERY 仅可见输入','训练／QUERY 条件分布有风险，非新增输入泄漏'),
         ('参数范围','冻结空间层，训练时序层','FCNet + propagation + temporal transformer','相同冻结范围；冻结梯度为 0','基本对齐；非全量 U-Net 微调'),
         ('优化器','Adam / lr 1e−5 / 100K','AdamW / wd .01 / batch per GPU 1','AdamW / batch 1 / 100K 上限','论文／源码不同；双卡有效 batch 未确认'),
         ('硬件与精度','2×A6000','fp16 配置','单 3090，bf16；冻结编码器 CPU 卸载','资源适配；速度和精度不能宣称完全一致'),
-        ('推理采样','Gaussian 初始化，前向去噪','额外 inversion + B1→B2','主路径忠实保留；另有 feedforward 诊断','高风险：CFG 批配对、v_prediction 参数化需验证'),
+        ('推理采样','Gaussian 初始化，前向去噪','额外 inversion + B1→B2','旧literal保留；新阶段主模式为Gaussian feedforward','同条件3模式未修好画质；公开inverse风险仍记录'),
         ('正式评测','DAVIS90 + 附录 YT60 / 四指标','未公开完整指标实现','冻结同 ID，FYC 指标；原生/合成分开','尚未计算；protocol_verified=false'),
     ]
     table = ''.join('<tr>'+''.join(f'<td>{html.escape(y)}</td>' for y in x)+'</tr>' for x in comparisons)
     document = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>v8.1 P1 实时进度与论文对照</title>
     <style>body{font:16px/1.65 system-ui;background:#f2f5f8;color:#172536;margin:0}main{max-width:1400px;margin:auto;padding:26px}h1,h2,h3{line-height:1.3}article,.panel{background:white;border:1px solid #d6e0e9;border-radius:10px;padding:20px;margin:20px 0}.warn{background:#fff4dc;border-left:5px solid #c1780a}.diagram{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.box{background:#e9f0fa;border:1px solid #8ba4c5;border-radius:8px;padding:10px;text-align:center}.four,.two{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.two{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0}video,img{max-width:100%;width:100%;background:#111}figcaption{padding:8px 0}.contact{margin-top:20px}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d3dce5;padding:10px;vertical-align:top;text-align:left}th{background:#e8eef5}a{color:#145cad}.scroll{overflow:auto}@media(max-width:850px){.four,.two{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>v8.1 P1：当前进度、实际数据与原文对照</h1>'''
-    document += f'''<div class="panel warn"><b>快照：{snapshot['observed_at_utc']}（UTC） · step {snapshot['latest_step']} / 100,000</b>
+    document += phase_note + f'''<div class="panel warn"><b>旧公开训练快照：{snapshot['observed_at_utc']}（UTC） · step {snapshot['latest_step']} / 100,000</b>
     <p>最近 100 步均值 {speed:.2f} 秒；按同速估算剩余纯训练 {snapshot['remaining_training_days_estimate']:.2f} 天，另加保存与验证。数值/梯度正常 ≠ 生成质量达标。这里展示的最新生成断点与训练步数分开标注。</p>
     <p>已安排第 1,000 步和第 5,000 步助手质量门。先完整保存断点，再看固定 3 个 valid × 2 个 mask、短采样对照和独立审核；未通过不自动继续长训。不等到七天后才判断。</p></div>
     <div class="panel"><h2>实际组件与监督</h2><div class="diagram"><div class="box">25 帧真实 RGB<br>双侧洞 mask</div>→<div class="box">冻结 RAFT / VAE / CLIP<br>光流与条件编码</div>→<div class="box">可训练 FCNet<br>潜变量传播 / 对齐</div>→<div class="box">SVD 时序层<br>空间层冻结</div>→<div class="box">VAE 解码<br>外绘视频</div></div>
@@ -142,9 +182,9 @@ def main() -> None:
     <img src="loss.png"><p>淡线是逐步损失，实线是 50 步均值。各步来自不同视频，曲线不能代替固定输入的生成质量对照。</p><p>展示三段的 JPEG 文件名每 5 递增；“连续25张”指包内相邻文件，并非原视频逐帧。正式 YouTube 评测另用全帧包。作者实际训练采样率尚未确认，需核对这一时序分布差距，不能凭相同尺寸/mask认定协议完全一致。</p><p><a href="snapshot.json">运行快照</a> · <a href="data_profile.json">数据统计</a></p></div>
     <div class="panel"><h2>论文 / 固定公开源码 / 当前实施</h2><p>来源：<a href="https://arxiv.org/html/2604.14648">论文 §4、§5.1、附录 D.1</a>；<a href="https://github.com/InSeokJeon/Seen_to_Scene/tree/2a9dfc9888e44c7fd00b08af41ef967ae46b6323">固定公开代码</a>。表中“差距”不等于已证明它造成失败。</p>
     <div class="scroll"><table><tr><th>项目</th><th>论文</th><th>公开代码</th><th>当前</th><th>结论</th></tr>'''+table+'''</table></div>
-    <p>inversion 的 UNet 输出被当作 epsilon 使用，而 SVD scheduler 为 v_prediction；其 B1→B2 广播还会破坏标准 CFG 的同 latent 配对。这里先记录可证实的源码风险，尚未做同条件因果对照。feedforward 与 literal 的现成实现还存在洞区填值/RNG消费差异；两路径的画质差不能直接归因于反演。</p></div>
+    <p>inversion 的 UNet 输出被当作 epsilon 使用，而 SVD scheduler 为 v_prediction；其 B1→B2 广播还会破坏标准 CFG 的同 latent 配对。现成feedforward与literal另有洞区填值/RNG差异，不可直接因果比较；下方sampler_controlled诊断复用完全相同的条件与初始噪声。</p></div>
     <h2>实际训练输入（按真实日志固定取 step 1、2、300）</h2>'''+''.join(cards)+'''<h2>已完成的生成验证</h2>
-    <div class="panel warn">第 2 步独立审核：原生为饱和色块、无可靠场景结构，视频不稳定。两步尚不足以判断长训失败；也不能以中央硬写回正常宣布可用。最新训练仍需保存下一断点后生成。</div>'''+''.join(validation_cards)+'''
+    <div class="panel warn">历史第 2 步审核：饱和色块、场景结构丢失。第1000步已能辨认天空、建筑或水下动物，但有形变、重复、近乎冻结和边界断裂，尚未达到可用质量。原生与写回全部25帧由独立助手审核，human verdict留空。</div>'''+gate_note+diagnostic_note+''.join(validation_cards)+'''
     <div class="panel"><h2>短周期决策</h2><ol><li>第 1,000 步：完成三固定验证例、两倍率的原生/写回输出；同断点做 feedforward 诊断，独立 subagent 看完整视频。</li><li>先确认采样、条件和传播协议；若仍是色块，保持断点并查明问题，不无条件堆训练步数。</li><li>只有工程链路可信且生成开始恢复场景结构，才放行到第 5,000 步再审核。正式测试 ID 不用于调参。</li></ol>
     <p>尚无正式 PSNR / SSIM / LPIPS / FVD。论文目标仍待实际计算；当前 assistant_verdict 不代替 human_verdict。</p></div></main>
     <script>document.querySelectorAll('article').forEach(a=>{const vs=[...a.querySelectorAll('video')];if(vs.length<2)return;const b=document.createElement('button');b.textContent='同步播放本组';b.onclick=()=>vs.forEach(v=>{v.currentTime=0;v.play()});a.insertBefore(b,a.children[1]);});</script></html>'''

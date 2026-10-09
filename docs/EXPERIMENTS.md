@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | YouTube-VOS训练与固定DAVIS90+YT60；实际输入/论文对照，传播及公开inverse风险，1000/5000助手质量门；正式四指标待评 | [协议](v81/YOUTUBE_VOS_P1_R1.md) · [审计及组件图](v81/P1_PROGRESS_AUDIT_R1.md) |
+| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | YouTube-VOS训练与固定DAVIS90+YT60；1000步7窗独立QA未过；同条件3模式采样未修好画质，All Frames hold，修m=4成对传播/监督；正式四指标待评 | [协议](v81/YOUTUBE_VOS_P1_R1.md) · [审计及组件图](v81/P1_PROGRESS_AUDIT_R1.md) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r1 | 原始nuScenes 6 train+2 val/200连续帧；两步真实优化+checkpoint恢复、独立val 25帧生成完成；显存/推理mask维度工程修复，18审核视频，非P1指标复现 | [协议与证据](v81/NUSCENES_P0_R1.md) · [实测](v81/P0_R1_RESULTS.json) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r0 | v7.7继承分支；Seen-to-Scene方法核对，CPU数据与传播原语准备；真实训练0步／推理0窗 | [报告](v81/SEEN_TO_SCENE_P0.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r53 | SAM3 ModelScope权重与真实轮廓CPU入口；旧矩形接口排查，推理0窗/训练0步 | [报告](v77/REAL_INSTANCE_MASK_R53.md) |
