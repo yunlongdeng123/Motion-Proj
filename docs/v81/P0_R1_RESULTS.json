@@ -1,0 +1,181 @@
+{
+  "task_id": "WS-V81-SEEN-TO-SCENE-20261009",
+  "run_id": "r1",
+  "engineering_status": "complete",
+  "optimization_steps": [
+    {
+      "step": 1,
+      "video_id": "nuscenes-scene-0241-cam-front-1532708708412404",
+      "loss": 8.251791000366211,
+      "diffusion": 0.8664273023605347,
+      "flow_l1": 2.756585121154785,
+      "ternary_warp": 4.62877893447876,
+      "gradients": {
+        "fcnet": {
+          "status": "ok",
+          "norm": 49.97767639160156,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 66,
+          "trainable_tensors": 74
+        },
+        "propagator": {
+          "status": "skipped_condition_dropout",
+          "norm": 0.0,
+          "finite": true,
+          "nonzero": false,
+          "tensors_with_grad": 32,
+          "trainable_tensors": 32
+        },
+        "svd_temporal": {
+          "status": "ok",
+          "norm": 8.393143653869629,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 416,
+          "trainable_tensors": 416
+        }
+      },
+      "frozen_grad_tensors": 0,
+      "gpu_peak_allocated_gb": 20.94811773300171,
+      "gpu_peak_reserved_gb": 21.974609375
+    },
+    {
+      "step": 2,
+      "video_id": "nuscenes-scene-0240-cam-front-1532708696662404",
+      "loss": 9.50294303894043,
+      "diffusion": 0.17089883983135223,
+      "flow_l1": 3.3245062828063965,
+      "ternary_warp": 6.007538318634033,
+      "gradients": {
+        "fcnet": {
+          "status": "ok",
+          "norm": 160.59329223632812,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 66,
+          "trainable_tensors": 74
+        },
+        "propagator": {
+          "status": "ok",
+          "norm": 0.004984362982213497,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 32,
+          "trainable_tensors": 32
+        },
+        "svd_temporal": {
+          "status": "ok",
+          "norm": 0.852367103099823,
+          "finite": true,
+          "nonzero": true,
+          "tensors_with_grad": 416,
+          "trainable_tensors": 416
+        }
+      },
+      "frozen_grad_tensors": 0,
+      "frozen_observation_encoders_offloaded": true,
+      "gpu_peak_allocated_gb": 21.16431188583374,
+      "gpu_peak_reserved_gb": 22.173828125
+    }
+  ],
+  "inference": [
+    {
+      "video_id": "nuscenes-scene-0562-cam-front-1535730507412414",
+      "frames": 25,
+      "steps": 25,
+      "seed": 8101,
+      "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-20261009/r1/train/checkpoint-000002.pt",
+      "image_rgb_decodes": 25
+    }
+  ],
+  "video_inventory": {
+    "clips": 8,
+    "videos": [
+      "nuscenes-scene-0259-cam-front-1533582897012404/original.mp4",
+      "nuscenes-scene-0259-cam-front-1533582897012404/condition.mp4",
+      "nuscenes-scene-0239-cam-front-1532708679762404/original.mp4",
+      "nuscenes-scene-0239-cam-front-1532708679762404/condition.mp4",
+      "nuscenes-scene-0240-cam-front-1532708696662404/original.mp4",
+      "nuscenes-scene-0240-cam-front-1532708696662404/condition.mp4",
+      "nuscenes-scene-0241-cam-front-1532708708412404/original.mp4",
+      "nuscenes-scene-0241-cam-front-1532708708412404/condition.mp4",
+      "nuscenes-scene-0262-cam-front-1533583264012404/original.mp4",
+      "nuscenes-scene-0262-cam-front-1533583264012404/condition.mp4",
+      "nuscenes-scene-0290-cam-front-1535729081512404/original.mp4",
+      "nuscenes-scene-0290-cam-front-1535729081512404/condition.mp4",
+      "nuscenes-scene-0562-cam-front-1535730507412414/original.mp4",
+      "nuscenes-scene-0562-cam-front-1535730507412414/condition.mp4",
+      "nuscenes-scene-0562-cam-front-1535730507412414/native.mp4",
+      "nuscenes-scene-0562-cam-front-1535730507412414/composite.mp4",
+      "nuscenes-scene-0564-cam-front-1535730645912404/original.mp4",
+      "nuscenes-scene-0564-cam-front-1535730645912404/condition.mp4"
+    ],
+    "decoded_videos": 18
+  },
+  "engineering_repairs": [
+    {
+      "at": 1791552038.1280077,
+      "controller_pid": 17607,
+      "engineering_error": "resume_step2_cuda_oom",
+      "repair": "frozen_observation_encoders_cpu_after_conditioning",
+      "resumed_checkpoint": "checkpoint-000001.pt",
+      "data_architecture_seed_steps_unchanged": true
+    },
+    {
+      "at": 1791552169.71996,
+      "controller_pid": 17862,
+      "engineering_error": "apply_hole_mask_received_5d_batch",
+      "repair": "apply_4d_mask_before_batch_dimension",
+      "target_rgb_not_exposed": true,
+      "new_regression_test_passed": true,
+      "training_checkpoints_preserved": true
+    }
+  ],
+  "svd_download": {
+    "pid": 16993,
+    "time": 1791551811.4198039,
+    "destination": "/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1",
+    "transport": "aria2_resume_modelscope_identical_weights",
+    "source": "shareAI/svd_1.1",
+    "official_revision": "043843887ccd51926e3efed36270444a838e7861",
+    "status": "complete"
+  },
+  "youtube_vos_downloads": {
+    "train.tar": {
+      "state": "quota_limited",
+      "bytes_downloaded": 0,
+      "expected_size": 9258444800,
+      "pid": 9637,
+      "retry_at_utc": "2026-10-09T15:15:29+00:00"
+    },
+    "test.zip": {
+      "state": "quota_limited",
+      "bytes_downloaded": 1049600,
+      "expected_size": 1295316019,
+      "pid": 9640,
+      "retry_at_utc": "2026-10-09T15:15:39+00:00"
+    },
+    "valid.tar": {
+      "state": "quota_limited",
+      "bytes_downloaded": 1049600,
+      "expected_size": 1296824320,
+      "pid": 9643,
+      "retry_at_utc": "2026-10-09T15:15:39+00:00"
+    }
+  },
+  "disk_free_gib": 94.91,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none",
+  "scope": "P0 two-step engineering loop only; not P1 paper metrics or DELETE validation",
+  "current_training_contract_tests_passed": 5,
+  "assistant_single_frame_observation": {
+    "video_id": "nuscenes-scene-0562-cam-front-1535730507412414",
+    "frame": "00000.png",
+    "finding": "颜色与结构明显失真，当前不是可用外绘基线；不能由此评价时序或区分训练不足与推理协议影响。",
+    "human_verdict": null
+  }
+}

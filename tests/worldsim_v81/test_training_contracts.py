@@ -1,10 +1,13 @@
 """P0 输入角色和训练范围的 CPU 契约。"""
 
 from types import SimpleNamespace
+import json
 
 import pytest
 import torch
+from PIL import Image
 
+from motion_proj.worldsim_v81.infer import load_visible_clip
 from motion_proj.worldsim_v81.model_bridge import configure_trainable, validate_batch
 from motion_proj.worldsim_v81.train import classify_propagator_gradient, gradient_report
 
@@ -14,6 +17,20 @@ class TinyUNet(torch.nn.Module):
         super().__init__()
         self.spatial = torch.nn.Linear(2, 2)
         self.temporal_transformer_block = torch.nn.Linear(2, 2)
+
+
+def test_real_inference_reader_applies_mask_before_adding_batch_dimension(tmp_path):
+    image = tmp_path / "frame.png"
+    Image.new("RGB", (256, 256), (255, 255, 255)).save(image)
+    manifest = tmp_path / "val.jsonl"
+    manifest.write_text(json.dumps({"video_id": "val-clip", "frames": [str(image)] * 25}))
+    video_id, batch = load_visible_clip(manifest)
+    assert video_id == "val-clip"
+    assert set(batch) == {"visible_rgb", "hole_mask"}
+    validate_batch(batch, require_target=False)
+    assert torch.all(batch["visible_rgb"][..., :84] == 0)
+    assert torch.all(batch["visible_rgb"][..., 84:172] == 1)
+    assert torch.all(batch["visible_rgb"][..., 172:] == 0)
 
 
 def test_training_scope_only_enables_official_temporal_and_propagation_components():

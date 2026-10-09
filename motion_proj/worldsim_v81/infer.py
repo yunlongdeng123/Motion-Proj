@@ -52,11 +52,11 @@ def load_visible_clip(manifest: Path, video_id: str | None = None) -> tuple[str,
             x, y = (width - 256) // 2, (height - 256) // 2
             image = image.crop((x, y, x + 256, y + 256))
             frames.append(torch.from_numpy(np.asarray(image).copy()).permute(2, 0, 1).float() / 127.5 - 1)
-    target = torch.stack(frames).unsqueeze(0)
-    mask = make_border_outpaint_mask(256, 256).expand(1, 25, 1, 256, 256)
-    visible = apply_hole_mask(target, mask)
+    target = torch.stack(frames)
+    mask = make_border_outpaint_mask(256, 256).expand(25, 1, 256, 256)
+    visible = apply_hole_mask(target, mask).unsqueeze(0)
     # 不返回完整 RGB，后续推理路径没有真值引用。
-    batch = {"visible_rgb": visible, "hole_mask": mask}
+    batch = {"visible_rgb": visible, "hole_mask": mask.unsqueeze(0)}
     validate_batch(batch, require_target=False)
     return row["video_id"], batch
 

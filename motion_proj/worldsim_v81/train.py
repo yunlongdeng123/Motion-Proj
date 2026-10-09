@@ -91,6 +91,10 @@ def train_step(components, batch: dict, optimizer: torch.optim.Optimizer,
     components.vae.eval()
     components.image_encoder.eval()
     components.raft.eval()
+    # 冻结编码器只服务观测阶段；恢复 Adam 状态后不让它们占用去噪显存。
+    observation_encoders = (components.vae, components.image_encoder, components.raft)
+    for module in observation_encoders:
+        module.to(device)
     optimizer.zero_grad(set_to_none=True)
 
     # teacher 仅用于监督；conditioned flow 仅从已遮蔽视频取得。
@@ -101,6 +105,10 @@ def train_step(components, batch: dict, optimizer: torch.optim.Optimizer,
     flow = completed_flows(components, visible, mask, raft_iters=raft_iters,
                            pair_chunk=pair_chunk)
     condition = conditioning(components, visible, mask, flow, noise_strength, sample=True)
+    for module in observation_encoders:
+        if any(p.requires_grad for p in module.parameters()):
+            raise RuntimeError("观测编码器必须冻结，才能在反向传播前卸载")
+        module.to("cpu")
     batch_size = target_latent.shape[0]
     # 官方 SVD 训练的条件丢弃，供推理时的 classifier-free guidance 使用。
     dropout = torch.rand(batch_size, device=device)
@@ -149,7 +157,8 @@ def train_step(components, batch: dict, optimizer: torch.optim.Optimizer,
     scaler.update()
     return {"loss": float(loss.detach()), "diffusion": float(diffusion_loss.detach()),
             "flow_l1": float(flow_l1.detach()), "ternary_warp": float(ternary_warp.detach()),
-            "gradients": gradients, "frozen_grad_tensors": frozen_grad_tensors}
+            "gradients": gradients, "frozen_grad_tensors": frozen_grad_tensors,
+            "frozen_observation_encoders_offloaded": True}
 
 
 def save_checkpoint(path: Path, components, optimizer, scaler, step: int, args) -> None:

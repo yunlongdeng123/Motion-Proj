@@ -51,6 +51,29 @@ checkpoint只保存实际可训练模块及恢复状态，未将整个原始SVD�
 
 远端 `pytest -q tests/worldsim_v81` 为20 passed。官方LatentPropagation另做3帧小尺寸CPU forward/backward，32个参数张量有梯度且输出有限；只是组件工程探针，不算SVD真实训练。8段原RGB/可见输入共16个视频完整解码通过，输入审核页位于本地 `outputs/v81-nuscenes-p0/index.html`；模型生成结果须以实际队列日志为准。
 
+## 真实闭环实测
+
+[轻量结果](P0_R1_RESULTS.json)记录实际优化、恢复、生成与视频清单。第1步在scene-0241，第2步在scene-0240，分别保留checkpoint与Adam/随机状态；不同输入的loss不是收敛曲线。可训练参数约4.027亿，原始SVD空间层及观测编码器冻结。
+
+| 项目 | 第1步 | 恢复后的第2步 |
+|---|---:|---:|
+| 总loss | 8.2518 | 9.5029 |
+| Diffusion loss | 0.8664 | 0.1709 |
+| FCNet梯度norm | 49.9777 | 160.5933 |
+| 传播/细化梯度norm | 0，合法条件dropout | 0.004984 |
+| SVD时序梯度norm | 8.3931 | 0.8524 |
+| 冻结组件梯度张量 | 0 | 0 |
+| GPU峰值allocated GiB | 20.95 | 21.16 |
+
+两次中断属于工程错误，原日志保留：
+
+1. 恢复Adam状态后，第2步UNet forward显存不足。观测特征计算完成后将冻结VAE/CLIP/RAFT移回CPU，第2步续跑成功；未改变优化模块、模型数值类型、数据、随机状态或预算。
+2. 推理读入把5维批次传给4维遮蔽函数。改为先应用逐帧mask再添加批次维度；新增真实读入回归测试，输入/训练契约共5项通过。推理仍不返回完整RGB真值。
+
+独立val scene-0562完成25步Euler、25帧256²生成；所有帧可解码为RGB。审核页共有18个视频，完整FFmpeg解码通过：8例各原图/可见输入，仅scene-0562额外有原生生成/可见区合成，其他7例只是输入预览。人工verdict留空，不据此评价外绘、时序或DELETE质量，也不追加训练步数。
+
+助手查看scene-0562原生f00：色彩与结构明显失真，目前不能作为可用外绘基线。该单帧观察不代表整段时序评分，也不能区分两步训练不足与尚未复现的推理协议影响；P0的“完成”仅指真实计算闭环。
+
 ## 公开实现与论文的边界
 
 依据：[Seen-to-Scene 论文](https://arxiv.org/html/2604.14648)、[固定官方源码](https://github.com/InSeokJeon/Seen_to_Scene/tree/2a9dfc9888e44c7fd00b08af41ef967ae46b6323)。
@@ -71,6 +94,6 @@ checkpoint只保存实际可训练模块及恢复状态，未将整个原始SVD�
 
 YouTube-VOS三文件各一个续传worker，状态在 `r1/downloads/{train.tar,test.zip,valid.tar}.json`，数据在 `/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/downloads`。配额HTML明确拒绝，遇配额退避到上限2小时。只挂下载，不读取test RGB选择参数或构造训练样本。
 
-SVD原始组件固定版本 `043843887ccd51926e3efed36270444a838e7861`，目录 `/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1`。fp16 safetensors通过完整传输后才移到最终路径，避免把预分配或未下载完的文件作为训练输入。下载状态 `r1/downloads/svd_state.json`。
+SVD原始组件固定版本 `043843887ccd51926e3efed36270444a838e7861`，目录 `/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1`。因原路线约0.3MB/s，切换到[ModelScope同权重镜像](https://www.modelscope.cn/models/shareAI/svd_1.1)，保留aria2已完成块。三个fp16文件大小和SHA-256与官方revision一致，成品完成后再次校验才移到最终路径；30秒实测约35.25MB/s，现已完整。下载状态及逐组件凭据在 `r1/downloads/`，均留在仓库外。
 
 报告证据以实际日志和metadata为准；人工verdict留空。未观察到新的研究失败时 `failure_ledger_delta=none`，历史边界引用 `V77-F02`，不把Google配额或输入缺失写成新模型失败。
