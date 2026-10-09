@@ -37,13 +37,20 @@ def condition_gap_panel(metadata: dict) -> str:
                   else '本诊断没有更新模型权重；单步结果还须独立图像审核。')
     levels = ''.join(f"<tr><td>{html.escape(row['level'])}</td><td>{row['schedule_index']}</td><td>{row['sigma']:.6g}</td></tr>"
                      for row in metadata['levels'])
+    cards = []
+    for row in metadata.get('rows', []):
+        name = Path(row['images']).name
+        scores = row['metrics']
+        cards.append(f'''<article><h3>{html.escape(row['level'])} · CLIP {html.escape(row['clip_source'])} · flow {html.escape(row['flow_source'])}</h3>
+        <p>同档single-step：weighted MSE {scores['weighted_mse']:.6g}；hole {scores['hole_mse']:.6g}；known {scores['known_mse']:.6g}。上排真实RGB，下排带噪GT单步解码；三帧不代表视频时序通过。</p>
+        <img src="condition_gap_teacher/{name}/contact.jpg"></article>''')
     return f'''<div class="panel warn" id="condition-gap"><h2>下一项有界诊断：{label}</h2>
     <p>固定双向step100、训练片段0fc958cde2/start2、seed2026，同一真实latent和同一噪声；2类CLIP × 3类flow × 3档sigma，共18次单步前向，优化更新0次。完整GT来源只作为BUILD oracle；这不是纯噪声QUERY，也不是论文指标。</p>
     <div class="diagram"><div class="box">固定真实latent + 噪声</div>→<div class="box">完整 / 可见CLIP<br>GT / 黑洞 / 灰洞RAFT</div>→<div class="box">同权重光流补全 / 传播</div>→<div class="box">SVD单步去噪<br>高 / 中 / 低sigma</div>→<div class="box">原生解码<br>f00 / f12 / f24</div></div>
     <p>源码已确认：公开RAFT读黑洞，我们的前向路径此前读灰洞；VAE两者都是灰洞。此对照不同时改训练数据、预算或网络。CLIP两组统一预处理以隔离像素来源，不是公开PIL路径的逐像素复演。</p>
     <p>{schedule_label}。高sigma可能位于训练分布远尾；低sigma带噪GT误差天然小。应比较同档条件差，不能把低噪声重建当独立生成，也不能仅凭高噪声失败判定根因。</p>
     <table><tr><th>噪声档</th><th>25步schedule索引</th><th>sigma</th></tr>{levels}</table>
-    <p><a href="condition_gap_teacher/diagnostic.json">输入、档位、角色与运行状态</a>。{state_note}P1仍未通过，正式指标未算。</p></div>'''
+    <p><a href="condition_gap_teacher/diagnostic.json">输入、档位、角色与运行状态</a>。{state_note}P1仍未通过，正式指标未算。</p>{''.join(cards)}</div>'''
 
 
 def main() -> None:
@@ -309,6 +316,10 @@ def main() -> None:
         gap_meta = json.loads(gap_path.read_text())
         gap_folder = output/'condition_gap_teacher'; gap_folder.mkdir(exist_ok=True)
         shutil.copy2(gap_path, gap_folder/'diagnostic.json')
+        for row in gap_meta.get('rows', []):
+            image_folder = Path(row['images'])
+            contact_folder = gap_folder/image_folder.name; contact_folder.mkdir(exist_ok=True)
+            shutil.copy2(image_folder/'contact.jpg', contact_folder/'contact.jpg')
         document += condition_gap_panel(gap_meta)
     document += ''.join(condition_cards) + reference_audit_note + phase_note + f'''<div class="panel warn"><b>旧公开训练快照：{snapshot['observed_at_utc']}（UTC） · step {snapshot['latest_step']} / 100,000</b>
     <p>最近 100 步均值 {speed:.2f} 秒；按同速估算剩余纯训练 {snapshot['remaining_training_days_estimate']:.2f} 天，另加保存与验证。数值/梯度正常 ≠ 生成质量达标。这里展示的最新生成断点与训练步数分开标注。</p>
