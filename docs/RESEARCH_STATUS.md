@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-09T18:28:08.961841+00:00（UTC）。分支 `research/worldsim-v8.1-seen-to-scene`；主机 `wm-3090-1009`，checkout `/root/autodl-tmp/motion_proj_v81`。唯一task/run `WS-V81-SEEN-TO-SCENE-P1-20261009/r1`。用户授权自主复现和subagent审核、无human in loop；GPU作业结束且无其他任务时关机。周额度上次实际剩26%，未触发低于3%的重置要求。
+更新：2026-10-09T18:28:08.961841+00:00（UTC）。分支 `research/worldsim-v8.1-seen-to-scene`；主机 `wm-3090-1009`，checkout `/root/autodl-tmp/motion_proj_v81`。唯一task/run `WS-V81-SEEN-TO-SCENE-P1-20261009/r1`。用户授权自主复现和subagent审核、无human in loop；GPU作业结束且无其他任务时关机。周额度最新实际剩24%，未触发低于3%的重置要求。
 
 P0工程闭环完成；P1尚未通过，P2/P3未开始。旧AllFrames与reference_m4分别1000步hold，原产物/断点保留。新paper-bidirectional-m4修正论文双向pull/源mask，Adam/wd0；第二步OOM通过完整时轴激活重算及等价加权ternary分块修复。新正式阶段只到100步；25帧验证与36帧全视频均完成，独立全帧审核仍不合格。没有排队1000/100K。
 
@@ -12,4 +12,4 @@ P0工程闭环完成；P1尚未通过，P2/P3未开始。旧AllFrames与referenc
 
 数据6包完整、train1951有效视频/19313窗口；DAVIS90+附录YT60固定、valid排除正式60。full-video入口已完成36帧预检，未证明所有长片显存足够。正式四指标未算，预处理/FVD口径仍有未知，protocol_verified=false。CPU全套84项通过只代表工程验证。媒体/数据/权重/外部源码不入Git，源码ZIP<100MB。
 
-审核页同步本地outputs/v81-paper-p1，包含100步短/全视频、完整条件路径与固定片段前后原生/写回。GPU作业已完成；保存/推送和确认所有进程、队列为空后按本次授权关机，不停止无关工作。failure_ledger_refs=[V77-F02]，failure_ledger_delta=none；本轮不是方法科学否定。
+审核页同步本地outputs/v81-paper-p1，包含100步短/全视频、完整条件路径与固定片段前后原生/写回。GPU作业已完成，记录提交并推送后确认无其他作业或排队控制器，已按本次授权关闭AutoDL，SSH断连与重新连接关闭均已验证。GPU监控v8-1-p1已删除；完整复现仍未完成，未宣称论文指标达标。failure_ledger_refs=[V77-F02]，failure_ledger_delta=none；本轮不是方法科学否定。
