@@ -279,3 +279,24 @@ flowchart LR
 当前从正式500续到总1000，只新增500步，不载入任何64步诊断权重、不给100K自动通行证。UTC21:43:19快照513步，父3613/子3616存活；恢复模型/优化器/scheduler/全部RNG，数据、mask、seed、模块范围与推理条件不改。1000后六窗与500构成匹配学习曲线；当前没有新1000结果或正式指标。质量hold只记录该阶段能力，主任务仍继续定位下一项，不默认等用户。
 
 如1000仍需定位，CPU只读审查确认尚未做“逐帧完整GT VAE latent直接替换融合condition”的同Gaussian自由生成；既有18次GT-flow/CLIP单步oracle与这项不同。先准备一组明确非法输入oracle作为传播链诊断，不能进入正式QUERY或充当方法收益。已有VAE/传播中间条件解码不重复建设；不加训练/新网络/P2/P3。
+
+## 正式1000六窗与完整逐帧latent oracle实测
+
+正式500→1000实际追加500次更新，覆盖432个训练视频，平均5.95秒/步，峰值18.41GiB；全部记录梯度有限、冻结梯度0。六窗25帧原生与写回均生成，两个gpt-6-sol/xhigh/no-fast助手分别审核四窗与两窗，全部150帧都观察。六窗质量门仍hold：00f88c4f0a滑板两档没有跟随从天空转到地面及起跳；7e625db8c4海豚两档未跟随摆尾/主体位置；ff6eb95840白鲸局部轮廓更清楚，但尺度、位置和姿态变化仍失配。中心清晰来自GT硬写回，不算模型保持。固定25帧视觉诊断不是正式四指标，1%论文预算的阴性不否定完整方法。
+
+```mermaid
+flowchart LR
+    V[相同可见视频] --> P[相同RAFT / 传播]
+    P --> C[正常融合condition]
+    G[完整逐帧GT：非法输入] --> A[VAE mode未缩放latent]
+    C --> U[同1000权重 / Gaussian / CLIP / time]
+    A -. 只替换有条件支 .-> U
+    U --> Q[两支25帧原生 / 写回]
+    Q --> R[独立全帧审核：仅定位]
+```
+
+随后零训练运行同首个验证窗00f88c4f0a/.33的两支自由采样，58.26秒、峰9.47GiB。CFG无条件condition/CLIP均0；初始Gaussian、原传播condition、可见VAE输入、RAFT、CLIP/time逐值一致，普通支与正式1000原始25张PNG完全相同。非法支仅把condition换成完整逐帧GT的VAE mode latent（未乘scale）；VAE重建检查解码时正确乘scale，f00/f12/f24仍可辨人物姿态，不能据三帧断言完整时序。
+
+独立全25帧审核：非法条件把近静止天空改成地面/绿篱横带和移动暗块，确有构图响应；仍无可辨滑板者/板，也没有正确恢复f04视角变化或f10–14起跳。它不是合法输入、更不是方法收益；不能唯一定位传播，也不能据其失败否定U-Net，存在分布外条件。原始meta、8条实际解码视频、图板及审核留同run `full_latent_oracle_step1000`。6窗新增24条视频也实际解码。
+
+质量hold后研究继续。下一项只做同1000权重、同x_t/sigma/CLIP/time的配对单步EDM x0，比较合法融合condition与非法GT condition，并导出c_skip*x_t基线，避免把输入自身保留的GT当模型恢复。该项尚在CPU准备；不追加训练、不开sigma网格、不加入P2/P3。正式指标未计算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none。

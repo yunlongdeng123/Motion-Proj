@@ -25,6 +25,34 @@ def review_note(folder: Path, relative: str) -> str:
     return f'<p>{html.escape(str(verdict))}</p><p><a href="{relative}/assistant_review.json">完整独立审核与限制</a></p>'
 
 
+def step1000_reviews(folder: Path, relative: str) -> tuple[int, str, bool]:
+    links = []
+    verdicts = []
+    for name in ('assistant_review_skateboard.json', 'assistant_review_animals.json'):
+        path = folder/name
+        if not path.is_file():
+            continue
+        report = read(path)
+        scope = report.get('scope')
+        step = report.get('checkpoint_step', scope.get('checkpoint_step') if isinstance(scope, dict) else None)
+        if step != 1000:
+            raise ValueError(f'1000步审核文件断点不匹配: {path}')
+        cases = report.get('cases', [])
+        ids = sorted({case['sequence_id'] for case in cases if 'sequence_id' in case})
+        if not ids and report.get('sequence_id'):
+            ids = [report['sequence_id']]
+        label = f'{" / ".join(ids)} · {len(cases)}窗'
+        verdict = report.get('assistant_verdict', report.get('verdict'))
+        verdicts.append(str(verdict or ''))
+        suffix = f'：{html.escape(str(verdict))}' if verdict else '：结论见原文'
+        links.append(f'<a href="{relative}/{name}">{html.escape(label)}独立审核</a>{suffix}')
+    if not links:
+        return 0, '两份独立图像审核待完成（0/2）', False
+    pending = '；另一份待完成' if len(links) == 1 else ''
+    return len(links), f'{len(links)}/2份审核已归档：{" · ".join(links)}{pending}', (
+        len(links) == 2 and all('hold' in verdict.lower() for verdict in verdicts))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True,
@@ -37,20 +65,19 @@ def main() -> None:
     gap = read(output/'condition_gap_teacher/diagnostic.json')
     if gap['status'] != 'complete':
         raise ValueError('只导出实际完成的诊断，不把CPU计划当实测')
+    continuation_path = output/'bounded1000_state.json'
+    continuation = read(continuation_path) if continuation_path.is_file() else None
+    if continuation and (continuation['source_step'] != 500 or continuation['training_budget'] != 1000):
+        raise ValueError('正式续训预算与500→1000记录不一致')
+    step1000_done = bool(continuation and continuation['new_1000_validation_available'])
     header = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1 条件与原始SVD对照</title>
-    <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1400px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
+    <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1400px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four,.five{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.five{grid-template-columns:repeat(5,minmax(0,1fr))}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four,.five{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>P1：固定权重条件诊断与原始SVD对照</h1><p><a href="index.html">返回完整进度、历史输出与数据页</a></p>
-    <div class="panel warn"><b>P1尚未通过：正式训练与诊断分别报告。</b><p>旧条件隔离使用100步权重且更新0；正式500步验证质量hold，固定片段64步控制另列。原始SVD生成不是外扩任务或论文指标。完整GT条件只作BUILD诊断，不能用于正式QUERY；人工verdict留空。</p></div>'''
+    <div class="panel warn"><b>P1正式指标尚未计算：正式训练与诊断分别报告。</b><p>旧条件隔离使用100步权重且更新0；正式500步验证质量hold，当前验证状态见下方。固定片段64步控制另列。原始SVD生成不是外扩任务或论文指标。完整GT条件只作BUILD诊断，不能用于正式QUERY；人工verdict留空。</p></div>'''
     sections = [header, condition_gap_panel(gap),
                 review_note(output/'condition_gap_teacher', 'condition_gap_teacher')]
-    continuation_path=output/'bounded1000_state.json'
-    continuation=None
-    if continuation_path.is_file():
-        continuation=read(continuation_path)
-        if continuation['source_step'] != 500 or continuation['training_budget'] != 1000:
-            raise ValueError('正式续训预算与500→1000记录不一致')
-        if not continuation['new_1000_validation_available']:
-            sections.insert(1,f'''<div class="panel"><h2>正式同协议学习曲线：500 → 总计1000步</h2><p>仅新增500次更新，恢复正式500步模型与Adam状态，传播协议 {html.escape(continuation['propagation_protocol'])}，推理模式 {html.escape(continuation['inference_mode'])}。截至快照 {html.escape(continuation['observed_at_utc'])} 记录到 {continuation['observed_train_step']} 步；这是快照，不代表实时步数。1000步结果尚未生成；到达后按固定三例×两倍率共六窗逐帧审核与质量门处理，不能以这三项64步单片段控制代替正式评价。</p><a href="bounded1000_state.json">正式续训实际命令与状态快照</a></div>''')
+    if continuation and not step1000_done:
+        sections.insert(1,f'''<div class="panel"><h2>正式同协议学习曲线：500 → 总计1000步</h2><p>仅新增500次更新，恢复正式500步模型与Adam状态，传播协议 {html.escape(continuation['propagation_protocol'])}，推理模式 {html.escape(continuation['inference_mode'])}。截至快照 {html.escape(continuation['observed_at_utc'])} 记录到 {continuation['observed_train_step']} 步；这是快照，不代表实时步数。1000步结果尚未生成；到达后按固定三例×两倍率共六窗逐帧审核与质量门处理，不能以这三项64步单片段控制代替正式评价。</p><a href="bounded1000_state.json">正式续训实际命令与状态快照</a></div>''')
     state_path=output/'bounded500_state.json'
     if state_path.is_file():
         state=read(state_path)
@@ -80,6 +107,87 @@ def main() -> None:
         if (output/previous/'run.json').is_file():
             sections.append(f'''<article><h3>同一00f88c4f0a/每侧.33的100步历史对照</h3><p>100步只有这一匹配短窗，不能声称其余五窗都完成100→500配对。</p><div class="four"><figure><video controls preload="metadata" src="{previous}/pred.mp4"></video><figcaption>100步原生</figcaption></figure><figure><video controls preload="metadata" src="{previous}/comp.mp4"></video><figcaption>100步硬写回</figcaption></figure></div></article>''')
         sections.extend([review_note(validation,'paper_bidirectional_m4/validation/step000500'),'</div>'])
+    review_count, review_detail, review_hold = 0, '', False
+    step1000 = output/'paper_bidirectional_m4/validation/step001000'
+    if step1000_done:
+        curve = read(step1000/'learning_curve.json')
+        if (continuation['observed_train_step'] != 1000
+                or continuation.get('complete_validation_windows') != 6
+                or curve['source_step'] != 500 or curve['final_step'] != 1000
+                or curve['actual_added_updates'] != 500):
+            raise ValueError('1000步完成状态、训练过程与六窗数量不一致')
+        windows = sorted(step1000.glob('*/side_*/run.json'))
+        if len(windows) != 6 or {path.parent.relative_to(step1000) for path in windows} != {
+                path.parent.relative_to(validation) for path in completed}:
+            raise ValueError('1000步六窗与500步固定验证不匹配')
+        review_count, review_detail, review_hold = step1000_reviews(
+            step1000, 'paper_bidirectional_m4/validation/step001000')
+        quality = '两份独立审核均hold' if review_hold else '质量结论以独立审核为准'
+        sections.insert(1,f'''<div class="panel"><h2>正式同协议学习曲线：500 → 总计1000步</h2><p>已从正式500步断点追加{curve['actual_added_updates']}次更新，涉及{curve['unique_training_video_ids']}个训练视频，平均{curve['mean_seconds_per_step']:.2f}秒/步；记录峰值{curve['gpu_peak_allocated_gib']:.2f}GiB，梯度有限且冻结梯度为0。原固定三例×两倍率六窗已完成生成；{quality}，不能从损失或工程完成推定通过。</p><div class="diagram"><div class="box">真实25帧 / 可见RGB</div>→<div class="box">双向参考传播 + SVD<br>正式500 → 1000步</div>→<div class="box">固定六窗原生视频</div>→<div class="box">独立全帧审核 / 有界定位</div></div><p>{review_detail}</p><p><a href="#validation-step1000">查看同步五视频六窗</a> · <a href="paper_bidirectional_m4/validation/step001000/learning_curve.json">500次更新实测</a> · <a href="bounded1000_state.json">完成状态</a></p></div>''')
+        sections.append('''<div class="panel" id="validation-step1000"><h2>1000步六窗：匹配500步的原生学习曲线</h2><p>每窗同一GT/可见输入，并排同步播放500与1000步原生预测及1000步真实中心硬写回。只有原生两列可用于观察模型变化；合成中心不能算生成成功。以下为25帧短窗诊断，不是正式DAVIS/YT指标。</p>''')
+        for path in windows:
+            meta = read(path)
+            relative = path.parent.relative_to(output).as_posix()
+            previous_relative = (validation/path.parent.relative_to(step1000)).relative_to(output).as_posix()
+            if meta.get('status') != 'complete' or meta.get('checkpoint_step') != 1000 or meta.get('num_frames') != 25:
+                raise ValueError(f'1000步窗口未完成或元数据不匹配: {path}')
+            videos = ((f'{relative}/gt.mp4', '真实视频'),
+                      (f'{relative}/visible.mp4', '实际可见输入'),
+                      (f'{previous_relative}/pred.mp4', '500步原生输出'),
+                      (f'{relative}/pred.mp4', '1000步原生输出'),
+                      (f'{relative}/comp.mp4', '1000步可见中心硬写回'))
+            missing = [name for name, _ in videos if not (output/name).is_file()]
+            if missing:
+                raise FileNotFoundError(f'1000步同步视频缺失: {missing}')
+            sections.append(f'<article><h3>{html.escape(meta["sequence_id"])} · 每侧{meta["side_ratio_each"]:g} · 25帧</h3><div class="five">')
+            for name, label in videos:
+                sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
+            sections.append(f'</div><p><a href="{relative}/run.json">1000步窗口配置</a> · <a href="{previous_relative}/run.json">500步匹配配置</a></p></article>')
+        sections.extend([f'<p>{review_detail}</p>', '</div>'])
+    oracle = output/'full_latent_oracle_step1000'
+    oracle_done = (oracle/'run.json').is_file()
+    oracle_status = ''
+    if oracle_done:
+        diagnostic = read(oracle/'run.json')
+        delivered = read(oracle/'delivery_check.json')
+        shared = diagnostic['pairing_exact']
+        required = ('initial_latent', 'condition_vae_input', 'fused_condition', 'clip',
+                    'time_ids', 'raw_flow_forward', 'raw_flow_backward', 'unconditional_zero_both')
+        if (not step1000_done or diagnostic.get('status') != 'complete'
+                or diagnostic.get('checkpoint_step') != 1000
+                or diagnostic.get('optimizer_updates') != 0
+                or not diagnostic.get('diagnostic_only')
+                or not all(shared[key] for key in required)
+                or not delivered['normal_replay_all25_exact']
+                or delivered['new_videos_fully_decoded'] != 8):
+            raise ValueError('非法GT条件诊断的完成、配对或重放证据不一致')
+        review_path = oracle/'assistant_review.json'
+        if review_path.is_file():
+            review = read(review_path)
+            verdict = review.get('assistant_verdict', review.get('verdict', '结论见审核原文'))
+            oracle_status = f'独立QA已归档：{html.escape(str(verdict))}；<a href="full_latent_oracle_step1000/assistant_review.json">审核与限制</a>'
+        else:
+            oracle_status = '独立全帧QA待完成；当前仅确认诊断运行及文件完整'
+        sections.insert(2,f'''<div class="panel warn"><b>非法GT条件仅用于定位，不能算论文复现或方法收益。</b><p>正式1000步六窗独立审核{'仍hold' if review_hold else '结论见审核'}；额外的完整GT潜变量oracle已完成0次训练更新。普通支25帧与正式1000步原生逐像素一致；{oracle_status}。<a href="#full-latent-oracle">查看两支同步视频与输入边界</a></p></div>''')
+        videos = ((f'full_latent_oracle_step1000/{branch}/{kind}.mp4', label)
+                  for branch, kind, label in (
+                      ('normal', 'pred', '合法可见条件：原生'),
+                      ('normal', 'comp', '合法条件：真实中心硬写回'),
+                      ('illegal_oracle', 'pred', '非法完整GT条件：原生'),
+                      ('illegal_oracle', 'comp', '非法条件：真实中心硬写回'),
+                      ('normal', 'gt', '真实视频，仅作对照'),
+                      ('normal', 'visible', '合法可见输入')))
+        videos = tuple(videos)
+        missing = [name for name, _ in videos if not (output/name).is_file()]
+        reconstruction = oracle/'gt_vae_reconstruction_contact.png'
+        if missing or not reconstruction.is_file():
+            raise FileNotFoundError(f'非法GT条件诊断媒体缺失: {missing}, VAE图存在={reconstruction.is_file()}')
+        sections.append('''<div class="panel warn" id="full-latent-oracle"><h2>非法GT潜变量oracle：仅定位条件路径</h2><p><b>完整GT读取了被遮蔽的真值像素，绝不作合法QUERY、正式指标、论文复现或方法收益。</b>固定正式1000权重，更新0；两支共享实际可见视频、首帧CLIP、双向flow、time IDs与初始Gaussian。普通支的25帧原生PNG与正式1000验证逐像素相同。只把CFG条件支从可见latent传播结果替换成完整GT经VAE mode编码的未缩放latent；两支无条件分支均为零。</p><div class="diagram"><div class="box">正常可见RGB</div>→<div class="box">VAE / 双向传播</div>→<div class="box">条件latent</div>→<div class="box">同一SVD去噪<br>无条件支=0</div>→<div class="box">原生 / 硬写回</div><div class="box">完整GT → VAE mode、未缩放 → 仅非法诊断条件</div></div><p>下方六视频位于同一同步播放组；前四列分别比较两支原生与硬写回，GT及可见输入保留作参照。任何清晰中心均来自真实写回，须只看原生列。</p><div class="four">''')
+        for name, label in videos:
+            sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
+        sections.append('''</div><figure><img src="full_latent_oracle_step1000/gt_vae_reconstruction_contact.png" alt="完整GT经VAE mode重建的抽帧联系图"><figcaption>完整GT VAE mode重建，仅检查编码/解码；三帧不能判断时序。</figcaption></figure>''')
+        sections.extend([f'<p>{oracle_status}</p>',
+                         '<p><a href="full_latent_oracle_step1000/run.json">配对与非法输入说明</a> · <a href="full_latent_oracle_step1000/delivery_check.json">25帧重放及八视频解码核验</a> · <a href="full_latent_oracle_step1000/qa_boards/frames_00_04.jpg">连续帧图板入口</a></p></div>'])
     capacity=output/'fixed_input_capacity_step500_64'
     capacity_path=capacity/'run.json'
     if capacity_path.is_file():
@@ -203,7 +311,7 @@ def main() -> None:
         <p>原始预训练SVD，未加载作者编辑权重或P1断点。完整首帧 → 标准Diffusers img2vid → 25帧原生输出。不是逐帧外扩；尺寸/精度/原始画幅同时变化的组不能作为单因素归因。</p>
         <div class="four"><figure><img src="{name}/input_full_first.png"><figcaption>唯一完整首帧条件</figcaption></figure><figure><video controls preload="metadata" src="{name}/pred.mp4"></video><figcaption>原始SVD原生生成，25帧</figcaption></figure></div>
         {review_note(folder,name)}<p><a href="{name}/diagnostic.json">实际调用配置与限制</a></p></div>''')
-    sections.append('</main><script>document.querySelectorAll(".four").forEach(g=>{let vs=[...g.querySelectorAll("video")],busy=false;vs.forEach(v=>{v.addEventListener("play",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v){x.currentTime=v.currentTime;x.play().catch(()=>{})}});busy=false});v.addEventListener("pause",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v)x.pause()});busy=false});v.addEventListener("seeked",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v&&Math.abs(x.currentTime-v.currentTime)>.15)x.currentTime=v.currentTime});busy=false})})});</script></html>')
+    sections.append('</main><script>document.querySelectorAll(".four,.five").forEach(g=>{let vs=[...g.querySelectorAll("video")],busy=false;vs.forEach(v=>{v.addEventListener("play",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v){x.currentTime=v.currentTime;x.play().catch(()=>{})}});busy=false});v.addEventListener("pause",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v)x.pause()});busy=false});v.addEventListener("seeked",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v&&Math.abs(x.currentTime-v.currentTime)>.15)x.currentTime=v.currentTime});busy=false})})});</script></html>')
     (output/'condition_gap_review.html').write_text(''.join(sections),encoding='utf-8')
     index=output/'index.html'
     document=index.read_text(encoding='utf-8')
@@ -236,7 +344,12 @@ def main() -> None:
          '这是旧公开路径的历史速度估算；旧1000质量门hold。该时点双向候选完成100步和后续条件诊断，现时正式续训状态以页首快照为准。'),
     ):
         document=document.replace(old,new)
-    if continuation and not continuation['new_1000_validation_available']:
+    if step1000_done:
+        quality = '正式1000步六窗独立审核仍hold' if review_hold else '正式1000步六窗已完成生成'
+        oracle_notice = (f'非法完整GT latent oracle已完成零训练定位，{oracle_status}；即使oracle清楚也不算方法通过。'
+                         '<a href="condition_gap_review.html#full-latent-oracle">查看非法输入边界和两支对照</a>。') if oracle_done else ''
+        notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>同协议从500仅追加500次更新；{review_detail}。{oracle_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">完成快照</a>为准。</p></div>'
+    elif continuation:
         notice=f'<div class="panel" id="gap-result-link"><b>当前P1：正式500→1000步同协议续训，仅新增500步</b><p>截至 {html.escape(continuation["observed_at_utc"])} 快照记录 {continuation["observed_train_step"]} 步；1000步验证尚无结果。到达后核查固定三例×两倍率共六窗、原生视频与质量门。<a href="condition_gap_review.html">查看正式500步六窗及固定片段64步CLIP、噪声、可见flow控制</a>；人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">续训快照</a>为准。</p></div>'
     else:
         notice='<div class="panel" id="gap-result-link"><b>当前P1：正式500步质量hold</b><p><a href="condition_gap_review.html">查看六窗验证与固定片段64步控制</a>；正式指标未计算，人工verdict留空。</p></div>'

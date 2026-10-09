@@ -1,7 +1,7 @@
 {
   "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
   "run": "r1",
-  "observed_at_utc": "2026-10-09T21:43:19.561877+00:00",
+  "observed_at_utc": "2026-10-09T22:58:53.137116+00:00",
   "host": "wm-3090-1009",
   "gpu": "RTX3090 24GiB",
   "source_checkpoint_step": 100,
@@ -1211,20 +1211,26 @@
     "architecture_components_diagram": "可见RGB → 冻结RAFT可见flow → FCNet与双向传播 → SVD/64次Adam（GT仅监督） → 同seed25帧原生QUERY → 另列真实中心硬写回"
   },
   "bounded1000_continuation": {
-    "status": "train_to_001000",
+    "status": "bounded1000_complete_waiting_assistant_quality",
     "source_step": 500,
     "target_total_step": 1000,
     "maximum_new_updates": 500,
     "propagation_protocol": "paper-bidirectional-m4",
     "inference_mode": "paper-feedforward",
-    "observed_at_utc": "2026-10-09T21:43:19.561877+00:00",
-    "observed_train_step": 513,
+    "observed_at_utc": "2026-10-09T22:45:40.235340+00:00",
+    "observed_train_step": 1000,
     "snapshot_record": "outputs/v81-paper-p1/bounded1000_state.json",
     "validation_plan": "固定三例×两侧倍率，共六窗，1000步完成后逐帧原生审核与质量门",
-    "new_1000_validation_available": false,
+    "new_1000_validation_available": true,
     "formal_metrics_computed": false,
     "human_verdict": null,
-    "scope": "正式500断点同协议续训，不加载任何64步诊断权重；513为同步快照而非实时值"
+    "scope": "正式500同协议新增500至1000；固定六窗全帧审核hold，不停止整体autoresearch",
+    "actual_added_updates": 500,
+    "unique_training_video_ids": 432,
+    "mean_seconds_per_step": 5.94503728065826,
+    "gpu_peak_allocated_gib": 18.41066312789917,
+    "assistant_verdict": "hold",
+    "full25_windows_reviewed": 6
   },
   "resource_cleanup": {
     "checked_at_utc": "2026-10-09T20:39:41.926430+00:00",
@@ -1256,30 +1262,31 @@
     "record_scope": "historical_prior_authorization; not_current_power_policy"
   },
   "current_execution": {
-    "status": "train_to_001000",
-    "observed_at_utc": "2026-10-09T21:43:19.561877+00:00",
-    "observed_step": 513,
+    "status": "step1000_visual_hold_oracle_complete_autoresearch_active",
+    "observed_at_utc": "2026-10-09T22:58:53.137116+00:00",
+    "observed_step": 1000,
     "processes": {
       "controller_pid": {
-        "pid": 3613,
-        "alive": true,
-        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_1000.py --worker "
+        "pid": null,
+        "alive": false,
+        "actual_command": null
       },
       "child_pid": {
-        "pid": 3616,
-        "alive": true,
-        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train --max-steps 1000 --save-every 500 --keep-checkpoints 2 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000500.pt "
+        "pid": null,
+        "alive": false,
+        "actual_command": null
       }
     },
     "power_policy": "用户最新要求：不随便关机；质量hold后主任务继续排查",
     "automatic_shutdown": false,
     "monitor_automation_id": "v8-1-p1",
     "monitor_behavior": "质量hold后继续有界autoresearch；正常训练静默",
-    "weekly_remaining_percent": 15,
+    "weekly_remaining_percent": 13,
     "available_reset_cards": 2,
     "reset_card_used": false,
     "full_reproduction_achieved": false,
-    "formal_metrics_computed": false
+    "formal_metrics_computed": false,
+    "next_control": "同1000权重、同x_t/sigma/CLIP/time，配对单步EDM x0与c_skip*x_t基线；CPU准备中，无长训自动放行"
   },
   "retained_storage_relocations": {
     "records": [
@@ -1292,5 +1299,46 @@
     "caveat": "系统盘和数据盘生命周期可能不同，不是外部耐久备份",
     "observed_free_data_bytes": 8261242880,
     "observed_free_system_bytes": 6498332672
+  },
+  "full_latent_oracle_step1000": {
+    "status": "complete",
+    "kind": "illegal_full_video_gt_latent_condition_oracle",
+    "optimizer_updates": 0,
+    "formal_metrics": false,
+    "input_legality": "oracle_reads_hidden_gt_pixels",
+    "checkpoint_step": 1000,
+    "sequence_id": "00f88c4f0a",
+    "side_ratio_each": 0.33,
+    "seed": 2026,
+    "steps": 25,
+    "pairing_exact": {
+      "initial_latent": true,
+      "condition_vae_input": true,
+      "fused_condition": true,
+      "clip": true,
+      "time_ids": true,
+      "raw_flow_forward": true,
+      "raw_flow_backward": true,
+      "normal_selected_original": true,
+      "oracle_selected_gt_latent": true,
+      "unconditional_zero_both": true,
+      "unconditional_clip_zero_both": true
+    },
+    "gt_vae_check": {
+      "mode": true,
+      "condition_latent_scaled": false,
+      "condition_latent_dtype": "torch.float32",
+      "decode_multiplied_vae_scaling_factor": true,
+      "num_frames": 25,
+      "pixel_mae_all": 0.036515843123197556
+    },
+    "elapsed_seconds": 58.260172267997405,
+    "peak_cuda_allocated_gib": 9.465322971343994,
+    "limitations": "One fixed validation window; GT condition is forbidden at QUERY and may be out of training distribution. Success implicates the observable condition path, not one component; failure does not isolate UNet.",
+    "normal_replay_all25_exact": true,
+    "assistant_verdict": "oracle_changes_output_but_does_not_recover_subject_action",
+    "human_verdict": null,
+    "evidence": "同run/full_latent_oracle_step1000",
+    "interpretation": "完整逐帧GT latent明显改变构图，但未恢复可辨滑板者及视角/起跳；不能唯一定位传播或否定U-Net"
   }
 }
