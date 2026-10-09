@@ -227,3 +227,34 @@ flowchart LR
 同官方类/config在meta设备列出实际参数，官方`temporal_transformer_block | noise_refiner`与owned temporal筛选均为416个张量，差集为空；当前UNet没有额外noise_refiner参数遗漏。证据位于同run `unet_initialization_audit.json`与`unet_precision_full_audit.json`；全比较源码归档`diagnostic_scripts/v81_compare_unet_all.py`。来源：[固定train.py初始化](https://github.com/InSeokJeon/Seen_to_Scene/blob/2a9dfc9888e44c7fd00b08af41ef967ae46b6323/train.py#L170-L173)。
 
 独立指标复核：当前PSNR/SSIM/LPIPS遵循FYC前16帧、224²预处理、Alex LPIPS与逐帧统计；FVD使用同I3D配置、同前16帧，未发现确定公式差错。FYC公开脚本只分别输出两倍率FVD，`mean_of_ratios`须标自定义汇总，不冒充论文确定口径。I3D及LPIPS缓存已在；实际300段正式生成、manifest和四指标尚未产生。附录60 ID使用2019 valid_all_frames，而论文称official test，这项来源对应仍需明示。正式ID/seed不改，不用正式结果选择预算。来源：[FYC demo.py](https://github.com/mayuelala/FollowYourCanvas/blob/0e6af915b93266b3a0297768c32edc579b3b1f6e/video_metrics/demo.py#L61-L96)、[FVD实现](https://github.com/mayuelala/FollowYourCanvas/blob/0e6af915b93266b3a0297768c32edc579b3b1f6e/video_metrics/fvd2.py#L83-L123)。
+
+## 500步质量门与固定输入容量
+
+同协议100→500已完成追加400更新，涉及370个训练视频，平均6.01秒/步，峰值18.39GiB；损失/梯度有限。原固定三例×两倍率共6窗/150帧由两名6-sol/xhigh助手独立全帧审核，无fast：原生结构和运动均不足，hold，不直接扩大正式训练。滑板/.33的匹配100→500无结构进步；动物四窗与滑板/.125没有匹配100产物，不作进退趋势声明。合成中心正确来自真实RGB写回。证据同run `paper_bidirectional_m4/validation/step000500/assistant_review*.json`。
+
+```mermaid
+flowchart LR
+    X[同一真实训练片段] --> C[固定GT flow / VAE / CLIP / 噪声]
+    C --> F[可训练FCNet与参考传播]
+    F --> D[可训练SVD时间层]
+    D --> T[固定sigma单步x0拟合：BUILD]
+    V[仅可见RGB与同Gaussian] --> Q[完整25步QUERY]
+    D --> Q
+    Q --> R[原生 / 真实中心硬写回 / 独立审核]
+```
+
+随后使用正式500权重启动独立固定输入探针 `fixed_input_capacity_step500_64`，不是旧随机输入32步探针的续跑。固定片段0fc958cde2/start2、sigma2.01375、cond sigma.049787、posterior样本与噪声；每步重算可训练FCNet和传播。Adam1e-5/wd0、原损失、同参数范围；无CFG dropout，缓存仅冻结编码器。实际64/64更新，已有514份Adam状态step均增加64，冻结梯度0；源码独立只读复核未发现确定接线错误，最终weights/Adam/RNG以不同格式保存，不能直接冒充正式训练断点。
+
+teacher加权latent MSE 0.191143→0.149839，0/16/32/64完整记录。这是full-GT flow/CLIP、fps7的单sigma带噪GT拟合。前后QUERY只有visible、fps6、.02条件噪声、CFG1→3、seed2036/25步；GT只用于对照。两者不同输入，teacher下降不证明自由生成、更不证明泛化。独立图像结论见轻量结果和HTML，本轮仍未通过P1。实际GPU训练耗时132.5秒、峰值18.33GiB。
+
+完整媒体与输入/终态留同run，HTML `condition_gap_review.html` 保留原生与硬合成、teacher与QUERY四种角色。formal metrics未算，protocol_verified=false，human_verdict=null，failure_ledger_delta=none。500步质量hold不等于科学否定，不自动追加1000/100K。
+
+## 后续帧与teacher首帧CLIP控制
+
+正式500固定clip0fc958cde2/start2，正常后续visible vs后24帧重复已遮蔽首帧，两次调用同一generate，refs固定为正常视频选取，seed2036/25步；Gaussian/CLIP/time实际逐值相同，正常重放与容量前QUERY的25帧PNG完全相同。第一次UNet接收的融合条件平均绝对差.687231，原生差.058893；独立助手看全部50帧：repeat改变主体轮廓/占位和纹理，normal仍不跟振翅。不是完全断路，但没有正确时间利用证据；不能定位RAFT/传播/U-Net中的唯一模块。零更新，未用GT生成。
+
+从同一正式500起另训64，只换teacher首帧CLIP像素为visible，同traininghelper；复用原fixed_inputs.pt并验证frame/RGB/mask及全部非CLIP缓存逐值相同。GT flow、VAE posterior、sigma/noise、fps7、Adam/更新范围全部保留；没有同时修fps或VAE。实际CLIP特征MAE.309059，64/64有效更新、514个Adam状态都增加64。teacher .191211→.149171，QUERY前原生与另一支全25帧逐像素相同，QUERY后两支差.023802。这些差值衡量响应而不是画质；完整独立审核保存在可见CLIP控制目录assistant_review.json并进入实测记录。该诊断不改正式P1协议。
+
+下一步不能把单sigma 64步学习点当成全部噪声档位的容量证明；CPU先准备固定单片段、论文训练噪声覆盖的有界容量检查，再考虑需要的GPU预算。仍不自动扩正式长训，无P2/P3或架构创新；human_verdict=null，formal_metrics未算，failure_ledger_delta=none。
+
+保存两个诊断权重后盘仅3.6GB；按用户既有清理授权，仅删不再作为恢复源/审核点的400中间断点，100硬链接、500、两组probe终态及所有视频/数据/初始模型均保留。进程退出后实际df空闲约8.1GB；删除文件逻辑大小不冒充立即回收物理空间。清单留同run nonmilestone400_cleanup.json。

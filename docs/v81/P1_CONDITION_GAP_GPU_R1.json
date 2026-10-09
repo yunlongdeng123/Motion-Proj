@@ -1,7 +1,7 @@
 {
   "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
   "run": "r1",
-  "observed_at_utc": "2026-10-09T19:26:59.818332+00:00",
+  "observed_at_utc": "2026-10-09T20:41:56.866658+00:00",
   "host": "wm-3090-1009",
   "gpu": "RTX3090 24GiB",
   "source_checkpoint_step": 100,
@@ -696,15 +696,15 @@
   "bounded500_latest_snapshot": {
     "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
     "run": "r1",
-    "controller_pid": 4097,
-    "status": "train_to_000500",
+    "controller_pid": null,
+    "status": "bounded500_complete_quality_hold",
     "training_budget": 500,
     "human_in_loop": false,
     "assistant_qa_required": true,
     "propagation_protocol": "paper-bidirectional-m4",
     "inference_mode": "paper-feedforward",
-    "active_inference_mode": null,
-    "updated_at_utc": "2026-10-09T19:22:33.666146+00:00",
+    "active_inference_mode": "paper-feedforward",
+    "updated_at_utc": "2026-10-09T20:16:32.511906+00:00",
     "scope": "same_protocol_100_to_500_bounded_learning_curve",
     "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt",
     "source_step": 100,
@@ -712,29 +712,390 @@
     "queued_gpu_jobs": [],
     "automatic_1000_or_100k": false,
     "diagnostic_updates": 32,
-    "command": [
-      "/root/autodl-tmp/envs/motionproj/bin/python",
-      "-m",
-      "motion_proj.worldsim_v81.train_p1",
-      "--output-dir",
-      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train",
-      "--max-steps",
-      "500",
-      "--save-every",
-      "100",
-      "--keep-checkpoints",
-      "2",
-      "--amp",
-      "bf16",
-      "--propagation-protocol",
-      "paper-bidirectional-m4",
-      "--resume",
-      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000100.pt"
+    "command": null,
+    "log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/logs/bounded500_ff6eb95840_0.33_paper-feedforward.log",
+    "child_pid": null,
+    "return_code": 0,
+    "training_step": 500,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000500.pt",
+    "observed_at_utc": "2026-10-09T20:07:14.514505+00:00",
+    "observed_train_step": 500,
+    "last_step_seconds": 6.126011231011944,
+    "assistant_quality_gate": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/quality_gates/step000500.json"
+  },
+  "bounded500_results": {
+    "source_step": 100,
+    "terminal_step": 500,
+    "added_optimizer_updates": 400,
+    "finite_loss_and_gradients": true,
+    "unique_training_videos_in_added_updates": 370,
+    "mean_step_seconds": 6.009949636510319,
+    "peak_logged_gpu_allocated_gib": 18.38983392715454,
+    "limitation": "不同训练步采样不同片段与噪声。损失曲线只检查数值及优化过程，不证明外扩质量、泛化或论文指标。",
+    "windows": 6,
+    "frames_per_window": 25,
+    "assistant_verdict": "hold_budget_expansion",
+    "human_verdict": null,
+    "quality_gate": "paper_bidirectional_m4/quality_gates/step000500.json",
+    "comparison_limit": "只有滑板/.33有同协议100步视觉配对，未见结构改善。"
+  },
+  "fixed_input_capacity": {
+    "status": "complete",
+    "source_step": 500,
+    "video_id": "0fc958cde2",
+    "clip_start": 2,
+    "seed": 2026,
+    "query_seed": 2036,
+    "query_steps": 25,
+    "optimizer": "Adam",
+    "lr": 1e-05,
+    "amp": "bf16",
+    "teacher_sigma": 2.0137527074704766,
+    "teacher_cond_sigma": 0.049787068367863944,
+    "teacher_role": "fixed noisy-GT BUILD; full-GT RAFT/CLIP; fps7; no CFG dropout",
+    "query_role": "visible-only Gaussian QUERY; separate condition and fps6",
+    "actual_updates": 64,
+    "update_attempts": 64,
+    "training_elapsed_seconds": 132.49326385898166,
+    "total_elapsed_seconds": 200.0801111809851,
+    "training_peak_cuda_allocated_bytes": 19681154560,
+    "teacher_before": {
+      "weighted_mse": 0.19114340841770172,
+      "hole_mse": 0.15653058886528015,
+      "known_mse": 0.14722609519958496
+    },
+    "teacher_after": {
+      "weighted_mse": 0.14983879029750824,
+      "hole_mse": 0.12370454519987106,
+      "known_mse": 0.11350449919700623
+    },
+    "probe_state": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fixed_input_capacity_step500_64/probe_state_final.pt",
+    "fixed_inputs": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fixed_input_capacity_step500_64/fixed_inputs.pt",
+    "teacher_curve": [
+      {
+        "update": 0,
+        "weighted_mse": 0.19114340841770172,
+        "hole_mse": 0.15653058886528015,
+        "known_mse": 0.14722609519958496
+      },
+      {
+        "update": 16,
+        "weighted_mse": 0.17840909957885742,
+        "hole_mse": 0.14604736864566803,
+        "known_mse": 0.13752241432666779
+      },
+      {
+        "update": 32,
+        "weighted_mse": 0.16725990176200867,
+        "hole_mse": 0.1371786892414093,
+        "known_mse": 0.12843544781208038
+      },
+      {
+        "update": 64,
+        "weighted_mse": 0.14983879029750824,
+        "hole_mse": 0.12370454519987106,
+        "known_mse": 0.11350449919700623
+      }
     ],
-    "log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/logs/train_to_000500.log",
-    "child_pid": 4100,
-    "observed_at_utc": "2026-10-09T19:51:14.834393+00:00",
-    "observed_train_step": 382,
-    "last_step_seconds": 6.309416186995804
+    "optimizer_verification": {
+      "source_step": 500,
+      "actual_updates": 64,
+      "update_attempts": 64,
+      "adam_state_parameters": 514,
+      "adam_step_increment_min": 64,
+      "adam_step_increment_max": 64,
+      "all_trainable_updates_finite": true,
+      "frozen_grad_tensors_max": 0,
+      "diagnostic_format_distinct": true,
+      "formal_training_updates": 0,
+      "human_verdict": null
+    },
+    "assistant_review": {
+      "review_type": "independent_fixed_input_capacity_visual_review",
+      "reviewed_at_utc": "2026-10-09T20:22:46Z",
+      "human_verdict": null,
+      "formal_metrics": false,
+      "assistant_verdict": "limited_fixed_clip_appearance_response_but_query_motion_and_seams_fail; next_test_query_matched_condition_causality_before_formal_extension",
+      "architecture_components_diagram": "fixed clip + fixed noise + teacher full-GT RAFT/CLIP -> 64 optimizer updates -> visible-only CLIP/flow/VAE + Gaussian QUERY -> native 25-frame prediction -> true-center-pasted composite",
+      "probe_scope": {
+        "source_checkpoint_step": 500,
+        "actual_optimizer_updates": 64,
+        "formal_training_updates": 0,
+        "video_id": "0fc958cde2",
+        "clip_start": 2,
+        "source_frame_files": "00010.jpg through 00130.jpg in increments of five",
+        "query_frame_indices_reviewed": "f00-f24 inclusive, before and after",
+        "teacher_frame_indices_reviewed": [
+          0,
+          12,
+          24
+        ],
+        "verification": "run.json and optimizer_update_verification.json report 64 attempted and actual Adam updates, all finite, all 514 Adam step counters advanced by 64, and zero formal training updates.",
+        "teacher_query_difference": "Teacher is fixed noisy-GT BUILD with full-GT RAFT/CLIP, fps7, sigma 2.0137527 and no CFG dropout. QUERY is visible-only Gaussian sampling with a separately built condition, fps6, seed2036 and 25 denoise steps. They are not equivalent inference inputs."
+      },
+      "images_read": {
+        "teacher_before": [
+          "teacher_before/contact.jpg"
+        ],
+        "teacher_after": [
+          "teacher_after/contact.jpg"
+        ],
+        "query_before": [
+          "query_before/qa_boards/frames_00_04.jpg",
+          "query_before/qa_boards/frames_05_09.jpg",
+          "query_before/qa_boards/frames_10_14.jpg",
+          "query_before/qa_boards/frames_15_19.jpg",
+          "query_before/qa_boards/frames_20_24.jpg"
+        ],
+        "query_after": [
+          "query_after/qa_boards/frames_00_04.jpg",
+          "query_after/qa_boards/frames_05_09.jpg",
+          "query_after/qa_boards/frames_10_14.jpg",
+          "query_after/qa_boards/frames_15_19.jpg",
+          "query_after/qa_boards/frames_20_24.jpg"
+        ]
+      },
+      "visual_observations": {
+        "teacher_single_step": "At f00/f12/f24 both before and after denoised images show a blurry tan bird-like body against dark foliage and a green grass band. After updates, local foliage and tan/grass boundaries are slightly clearer, but the bird face and wing detail remain substantially smeared compared with GT. Three single-step teacher frames cannot establish 25-frame sampling or temporal fidelity.",
+        "query_before_native": "Across all 25 frames, the native result contains dark greenery, a horizontal bright grass band and a fuzzy tan bird-like patch near the left-center. It is not just a featureless gray block, but the bird is indistinct, shifted and much less structured than GT; broad textures persist almost unchanged while GT wings open, fold and shift.",
+        "query_after_native": "Across all 25 frames, native greenery and ground texture become somewhat more detailed and the tan patch is slightly more coherent. The improvement is local appearance on this one trained clip, not a clearly reconstructed bird face or wing geometry. The native subject stays largely in place while GT changes pose, especially f07-f14; later f20-f24 show only weak texture/shape drift instead of matching the bird's settling motion. The visible center is not faithfully preserved within native pred.",
+        "composite_and_boundaries": "The composite pastes the true time-varying central strip. Its clear bird head, wing motion and center grass are therefore not native model accomplishments. Before and after, the two vertical join lines remain apparent through foliage, bird/body and grass; the generated sides are differently detailed and do not move consistently with the pasted center. After-update detail does not remove these seams.",
+        "temporal_jumps": "No dominant single-frame global flash is evident in the 25-frame boards. The main temporal defect is a nearly frozen native subject/background and weak response to GT pose changes, not isolated catastrophic flicker."
+      },
+      "recorded_teacher_losses_not_formal_quality_metrics": {
+        "weighted_mse_before_after": [
+          0.19114340841770172,
+          0.14983879029750824
+        ],
+        "hole_mse_before_after": [
+          0.15653058886528015,
+          0.12370454519987106
+        ],
+        "known_mse_before_after": [
+          0.14722609519958496,
+          0.11350449919700623
+        ],
+        "interpretation": "The fixed teacher objective improved after real updates, consistent with trainability under its privileged noisy-GT and full-GT conditions. This does not show that visible-only pure-noise QUERY learned the motion or generalizes."
+      },
+      "next_control": {
+        "recommendation": "On this same clip and fixed query noise, compare correct time-aligned visible-only QUERY conditions with a temporally shuffled or zeroed propagation/conditioning input at the same checkpoint, and compare native side regions frame by frame. Then, only if a controlled optimization is needed, repeat a small fixed-input probe with teacher conditioning built from visible-only data and fps matched to QUERY, keeping GT only in the noisy training target; compare QUERY before/after under identical seed.",
+        "what_it_can_support": "The frozen ablation can test whether the current QUERY output depends detectably on the intended temporal conditions. The matched-condition probe can test whether the teacher-to-QUERY conditioning gap limits fixed-clip learning. Neither control by itself establishes validation-set generalization, formal P1 success, or a reason to add an unbounded training budget."
+      },
+      "limits": [
+        "One deliberately reused training clip with fixed noise and 64 diagnostic updates; capacity response here is not a held-out validation result.",
+        "Teacher uses privileged GT-derived inputs and a noisy-GT latent, while QUERY uses visible-only conditions and Gaussian initialization.",
+        "All 25 before/after QUERY frames were visually inspected in contact boards; no formal quantitative video metric was calculated by this review."
+      ]
+    },
+    "formal_training_updates": 0,
+    "generalization_claim": false
+  },
+  "later_frame_control": {
+    "status": "complete",
+    "source_step": 500,
+    "seed": 2036,
+    "query_steps": 25,
+    "amp": "bf16",
+    "training_updates": 0,
+    "video_id": "0fc958cde2",
+    "clip_start": 2,
+    "reference_indices": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      20,
+      24
+    ],
+    "exact_shared": {
+      "initial_gaussian": true,
+      "clip": true,
+      "time_ids": true
+    },
+    "normal_replay_matches_previous_uint8_all25": true,
+    "fused_condition_mean_abs_difference": 0.6872313618659973,
+    "native_output_mean_abs_difference": 0.05889338627457619,
+    "total_elapsed_seconds": 54.74308348100749,
+    "roles": "仅可见RGB；normal/repeat首帧完全相同；GT只用于对照。repeat固定normal的refs，不是自动选refs的标准视频。",
+    "limitations": "改变后续RGB同时影响RAFT、条件VAE与传播。非零差异只证明响应，不定位单一模块或证明正确时序。",
+    "formal_metrics": false,
+    "human_verdict": null,
+    "assistant_review": {
+      "review_type": "independent_visual_qa_later_frame_control",
+      "status": "complete",
+      "source_step": 500,
+      "video_id": "0fc958cde2",
+      "clip_start": 2,
+      "frames_reviewed": "normal 和 repeat_first 各自完整 f00–f24，逐个查看 GT/visible/pred/comp 四行",
+      "boards_viewed": [
+        "normal/qa_boards/frames_00_04.jpg",
+        "normal/qa_boards/frames_05_09.jpg",
+        "normal/qa_boards/frames_10_14.jpg",
+        "normal/qa_boards/frames_15_19.jpg",
+        "normal/qa_boards/frames_20_24.jpg",
+        "repeat_first/qa_boards/frames_00_04.jpg",
+        "repeat_first/qa_boards/frames_05_09.jpg",
+        "repeat_first/qa_boards/frames_10_14.jpg",
+        "repeat_first/qa_boards/frames_15_19.jpg",
+        "repeat_first/qa_boards/frames_20_24.jpg"
+      ],
+      "run_record": {
+        "seed": 2036,
+        "query_steps": 25,
+        "amp": "bf16",
+        "training_updates": 0,
+        "exact_shared_initial_gaussian_clip_time_ids": true,
+        "normal_replay_matches_previous_uint8_all25": true,
+        "fused_condition_mean_abs_difference": 0.6872313618659973,
+        "native_output_mean_abs_difference": 0.05889338627457619
+      },
+      "visual_evidence": [
+        "GT f00–f14 的猫头鹰翅膀明显抬起、折回、再展开，f15–f24 逐渐压低；背景大体固定，主体姿态是主要时序信号。normal 的 pred f00–f24 主要保持模糊的黄褐色主体及左侧暗翼，只有轻微形变/纹理漂移，未按 GT 的翅膀开合与落下同步变化。",
+        "repeat_first 的 pred 比 normal 更接近首帧的黄褐主体和横向暗翼，在主体形态、位置/边缘清晰度及树叶草地纹理上均有可见改变；但 f05–f24 仍近乎维持首帧姿态，没有恢复 GT 中后段翅膀运动。因此影响不只是纹理噪声，也不是正确的运动内容。",
+        "normal 的 comp 中央可见带随 GT 动，是输入硬写回；带外 pred 仍为模糊且近静止的主体，边界有明显接缝/重影。repeat_first 的 comp 中央由重复首帧写回，不能用它与 normal 的 comp 比较模型生成质量。"
+      ],
+      "verdict": "hold：当前控制确认后续可见帧改变会传至融合条件和原生输出，但 normal 原生预测未正确跟随 GT 主体运动；非零数值差异不足以支持放大正式训练预算。",
+      "next_control_assessment": {
+        "proposal": "从同一正式 step500 权重出发，在同一固定训练片段上做最多 64 更新的 teacher 首帧 CLIP 来源 fullGT→visible 单因素控制，保留 fps、flow、VAE、sigma、noise、其他输入与优化设置；用相同 fixed-noise teacher 与 Gaussian QUERY 前后对照。",
+        "assessment": "可作为有限的训练/QUERY 条件落差诊断，但本次 normal/repeat 共用首帧 CLIP，不能据此把 CLIP 判为当前静止输出的根因。只有 QUERY 中带外主体姿态及逐帧运动改善才算支持该假设；teacher 损失下降或单纯像素差异不足。单片段 64 更新不证明泛化或最终指标，亦不能单独否定更长训练。"
+      },
+      "limitations": "repeat_first 同时改变后续可见 RGB 驱动的 RAFT、条件 VAE 与传播，固定 normal refs，不是标准自动 refs 查询；此图像审查无正式质量或时序指标。",
+      "formal_metrics": false,
+      "human_verdict": null
+    }
+  },
+  "visible_teacher_clip_control": {
+    "status": "complete",
+    "source_step": 500,
+    "teacher_clip_source": "visible",
+    "fixed_inputs_source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fixed_input_capacity_step500_64/fixed_inputs.pt",
+    "cache_comparison": {
+      "shared_key_exact": {
+        "plan": true,
+        "flow": true,
+        "target_latent": true,
+        "cond_latent": true,
+        "noise": true,
+        "time_ids": true,
+        "mask": true,
+        "sigma": true,
+        "cond_sigma": true
+      },
+      "clip_exact": false,
+      "clip_mae": 0.30905866622924805,
+      "clip_max_abs": 1.822489619255066
+    },
+    "actual_updates": 64,
+    "update_attempts": 64,
+    "teacher_before": {
+      "weighted_mse": 0.1912105530500412,
+      "hole_mse": 0.15647897124290466,
+      "known_mse": 0.14748135209083557
+    },
+    "teacher_after": {
+      "weighted_mse": 0.1491708755493164,
+      "hole_mse": 0.12298592925071716,
+      "known_mse": 0.11331769078969955
+    },
+    "teacher_role": "fixed noisy-GT BUILD; GT RAFT; first CLIP=visible; fps7; no CFG dropout",
+    "query_role": "visible-only Gaussian QUERY; separate condition and fps6",
+    "training_elapsed_seconds": 132.29583675600588,
+    "total_elapsed_seconds": 197.96803315798752,
+    "optimizer_verification": {
+      "source_step": 500,
+      "actual_updates": 64,
+      "update_attempts": 64,
+      "adam_state_parameters": 514,
+      "adam_step_increment_min": 64,
+      "adam_step_increment_max": 64,
+      "all_trainable_updates_finite": true,
+      "frozen_grad_tensors_max": 0,
+      "diagnostic_format_distinct": true,
+      "formal_training_updates": 0,
+      "human_verdict": null
+    },
+    "paired_query_verification": {
+      "query_before_uint8_equal_all25": true,
+      "query_after_mean_abs_difference_uint8": 0.023801504895578023,
+      "pixels_from": "original PNG outputs, not MP4 decoded frames",
+      "formal_metric": false,
+      "limitation": "非零图像差只证明不同训练条件有响应，不衡量质量或正确运动。"
+    },
+    "assistant_review": {
+      "review_type": "independent_visible_first_frame_clip_single_factor_visual_review",
+      "reviewed_at_utc": "2026-10-09T20:39:56Z",
+      "assistant_verdict": "visible_first_frame_clip_does_not_show_clear_query_structure_or_motion_gain_over_full_gt_clip_after_64_fixed_input_updates",
+      "human_verdict": null,
+      "formal_metrics": false,
+      "architecture_components_diagram": "fixed training clip -> GT flow / fixed VAE and noise + [teacher CLIP: full GT first frame OR visible first frame] -> 64 Adam updates -> same visible-only Gaussian QUERY -> native 25-frame pred -> true-center-pasted comp",
+      "scope_and_checks": {
+        "source_checkpoint_step": 500,
+        "video_id": "0fc958cde2",
+        "source_frames": "00010.jpg through 00130.jpg every five source indices, displayed as f00-f24",
+        "comparison": "The prior fixed_input_capacity_step500_64 branch used full-GT first-frame CLIP in teacher BUILD. This branch used only the visible first-frame pixels for teacher CLIP. Both use the same visible-only QUERY, query seed 2036, 25 sampling steps and the same fixed training clip.",
+        "cache_comparison": "run.json reports plan, flow, target_latent, cond_latent, noise, time_ids, mask, sigma and cond_sigma as exact shared keys; CLIP embedding differs (MAE 0.3090586662). Teacher still uses GT RAFT, noisy-GT BUILD and fps7; QUERY remains visible-only Gaussian and fps6.",
+        "optimizer_verification": "64 attempted and actual Adam updates, 514 Adam state parameters each advanced by 64, all trainable updates finite, zero formal training updates. This verifies an optimization probe, not a sufficient capacity test."
+      },
+      "images_read": {
+        "visibleclip_teacher": [
+          "teacher_before/contact.jpg",
+          "teacher_after/contact.jpg"
+        ],
+        "visibleclip_query_before": [
+          "query_before/qa_boards/frames_00_04.jpg",
+          "query_before/qa_boards/frames_05_09.jpg",
+          "query_before/qa_boards/frames_10_14.jpg",
+          "query_before/qa_boards/frames_15_19.jpg",
+          "query_before/qa_boards/frames_20_24.jpg"
+        ],
+        "visibleclip_query_after": [
+          "query_after/qa_boards/frames_00_04.jpg",
+          "query_after/qa_boards/frames_05_09.jpg",
+          "query_after/qa_boards/frames_10_14.jpg",
+          "query_after/qa_boards/frames_15_19.jpg",
+          "query_after/qa_boards/frames_20_24.jpg"
+        ],
+        "prior_fullgtclip_query_after": [
+          "../fixed_input_capacity_step500_64/query_after/qa_boards/frames_00_04.jpg",
+          "../fixed_input_capacity_step500_64/query_after/qa_boards/frames_05_09.jpg",
+          "../fixed_input_capacity_step500_64/query_after/qa_boards/frames_10_14.jpg",
+          "../fixed_input_capacity_step500_64/query_after/qa_boards/frames_15_19.jpg",
+          "../fixed_input_capacity_step500_64/query_after/qa_boards/frames_20_24.jpg"
+        ]
+      },
+      "visual_findings": {
+        "teacher_contact_only": "At f00/f12/f24, both visible-CLIP teacher boards show a blurred tan bird/body, foliage and grass in a single noisy-GT denoising step. After updates the vegetation and body boundary look a little more defined, but face/wing detail remains substantially smeared. The recorded weighted teacher MSE falls from 0.1912105531 to 0.1491708755; this is not evidence of QUERY generation quality or temporal fidelity.",
+        "query_before": "The visible-CLIP branch starts from the same visually recognizable but poor QUERY baseline as the earlier branch: green grass and dark foliage with a fuzzy tan bird-like patch in native pred, much less articulated than GT.",
+        "query_after_native": "All f00-f24 frames show more developed grass/foliage texture than the before state and a blurry tan patch suggesting a bird. A face, wings and body outline are still not reliably reconstructed in native pred. GT wing extension and pose change around f07-f14, then settles through f24; the generated patch and background remain largely stationary, with only small local texture changes. There is no evident new motion-following capability from changing the teacher CLIP source.",
+        "paired_after_comparison": "Direct inspection of each of the five corresponding full-GT-CLIP and visible-CLIP QUERY-after boards shows near-identical scene layout, bird-like blob position, grass bands and weak motion. Small local foliage, brightness and texture differences are visible, but no consistent visible-CLIP advantage in bird structure, time-aligned wings, side-region continuity or overall native coherence. The board files are not byte-identical; this is a visual assessment, not a claim of equal pixels or equal metrics.",
+        "composite_boundaries": "In both branches comp has a crisp moving bird head and wing in its central vertical strip because GT visible pixels are pasted back. This is not native preservation. The two fixed vertical seams remain apparent in foliage, bird and grass; generated sides have a different structure/texture and do not follow the changing central pose.",
+        "temporal_artifacts": "No dominant one-frame global flash is apparent in either after sequence. The principal failure is a near-frozen, poorly articulated native bird compared with GT's pose sequence, plus stationary side content against a moving pasted center."
+      },
+      "interpretation": "Matching only the teacher CLIP pixel source to visible-only inference produces a small appearance perturbation but no clear independent QUERY structure or motion gain over the full-GT-CLIP 64-update branch. This does not establish that CLIP conditioning has no causal role, because GT flow, noisy-GT teacher input and fps differ from QUERY and this fixed-clip probe has only 64 updates.",
+      "next_control": "If isolating the remaining teacher-to-QUERY condition gap, compare a same-budget fixed-clip branch that changes only teacher flow/propagated conditioning from GT-derived to visible-only while retaining visible first-frame CLIP, then evaluate with the same QUERY seed and all 25 native frames. That comparison could test whether privileged GT flow is the dominant mismatch on this clip; it would not by itself demonstrate generalization or justify an open-ended formal run.",
+      "limits": [
+        "Only one reused training clip and 64 fixed-input updates per branch; not held-out validation and not a sufficient model-capacity bound.",
+        "Teacher images contain noisy-GT information and cover only f00/f12/f24, so they do not measure sampled temporal quality.",
+        "This review computes no formal metrics and credits no GT pixels pasted into comp as model generation."
+      ]
+    },
+    "formal_training_updates": 0
+  },
+  "resource_cleanup": {
+    "checked_at_utc": "2026-10-09T20:39:41.926430+00:00",
+    "authorization": "用户已授权数据盘不足时清理以前不重要文件；本次只处理一个非关键中间断点",
+    "removed_path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000400.pt",
+    "removed_logical_bytes": 4833164791,
+    "removed_links": 1,
+    "free_bytes_before": 3826229248,
+    "free_bytes_after": 5843632128,
+    "preserved_key_checkpoints": [
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/diagnostic_source_checkpoints/p1-checkpoint-000100.pt",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-000500.pt",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fixed_input_capacity_step500_64/probe_state_final.pt",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fixed_input_capacity_step500_visibleclip64/probe_state_final.pt"
+    ],
+    "scope": "400步未作审核/正式指标/恢复源；100和500及完整诊断终态均保留。未删数据、模型初始权重、视频或旧失败断点。"
   }
 }

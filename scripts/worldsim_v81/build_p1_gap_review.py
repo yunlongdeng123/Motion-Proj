@@ -20,7 +20,8 @@ def review_note(folder: Path, relative: str) -> str:
     path = folder/'assistant_review.json'
     if not path.is_file():
         return '<p>独立图像审核尚未完成。</p>'
-    verdict = read(path).get('assistant_verdict', '')
+    report=read(path)
+    verdict = report.get('assistant_verdict',report.get('verdict',''))
     return f'<p>{html.escape(str(verdict))}</p><p><a href="{relative}/assistant_review.json">完整独立审核与限制</a></p>'
 
 
@@ -39,7 +40,7 @@ def main() -> None:
     header = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1 条件与原始SVD对照</title>
     <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1400px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>P1：固定权重条件诊断与原始SVD对照</h1><p><a href="index.html">返回完整进度、历史输出与数据页</a></p>
-    <div class="panel warn"><b>本页条件诊断使用100步断点，P1尚未通过。</b><p>本页诊断均没有训练更新；原始SVD生成不是外扩任务，也不是论文指标。完整GT条件只作诊断，不能用于正式QUERY。人工verdict留空。</p></div>'''
+    <div class="panel warn"><b>P1尚未通过：正式训练与诊断分别报告。</b><p>旧条件隔离使用100步权重且更新0；新学习曲线至正式500步，固定输入64步另列诊断。原始SVD生成不是外扩任务或论文指标。完整GT条件只作BUILD诊断，不能用于正式QUERY；人工verdict留空。</p></div>'''
     sections = [header, condition_gap_panel(gap),
                 review_note(output/'condition_gap_teacher', 'condition_gap_teacher')]
     state_path=output/'bounded500_state.json'
@@ -56,6 +57,10 @@ def main() -> None:
                      if read(path).get('status')=='complete')
     if completed:
         sections.append('''<div class="panel"><h2>500步固定验证：原生与写回分开看</h2><p>原固定三例×两倍率，各25帧，seed2026/25步；同协议灰洞RAFT与可见首帧CLIP，不更改数据、mask或采样。可见中心由真实RGB硬写回，不能算作模型原生保持能力。以下只展示已完成窗口，不是正式DAVIS/YT指标。</p><div class="diagram"><div class="box">逐帧可见RGB</div>→<div class="box">光流补全 / 双向参考传播</div>→<div class="box">500步SVD去噪</div>→<div class="box">原生视频 / 可见中心硬写回</div></div>''')
+        summary_path=output/'bounded500_training_summary.json'
+        if summary_path.is_file():
+            summary=read(summary_path)
+            sections.append(f'''<p>同协议追加{summary['added_optimizer_updates']}步；涉及{summary['unique_training_videos_in_added_updates']}个训练视频，平均{summary['mean_step_seconds']:.2f}秒/步，记录峰值{summary['peak_logged_gpu_allocated_gib']:.2f}GiB。所有新增步损失和梯度有限；随机训练步的曲线不能替代生成质量审核。</p><img src="bounded500_loss.png" alt="500步短训练损失曲线"><p><a href="bounded500_training_summary.json">训练过程摘要</a></p>''')
         for path in completed:
             meta=read(path)
             relative=path.parent.relative_to(output).as_posix()
@@ -67,6 +72,53 @@ def main() -> None:
         if (output/previous/'run.json').is_file():
             sections.append(f'''<article><h3>同一00f88c4f0a/每侧.33的100步历史对照</h3><p>100步只有这一匹配短窗，不能声称其余五窗都完成100→500配对。</p><div class="four"><figure><video controls preload="metadata" src="{previous}/pred.mp4"></video><figcaption>100步原生</figcaption></figure><figure><video controls preload="metadata" src="{previous}/comp.mp4"></video><figcaption>100步硬写回</figcaption></figure></div></article>''')
         sections.extend([review_note(validation,'paper_bidirectional_m4/validation/step000500'),'</div>'])
+    capacity=output/'fixed_input_capacity_step500_64'
+    capacity_path=capacity/'run.json'
+    if capacity_path.is_file():
+        probe=read(capacity_path)
+        sections.append('''<div class="panel"><h2>固定输入容量：正式500权重 → 独立64步诊断</h2><p>同一训练片段0fc958cde2/start2。每次更新固定GT latent、噪声、σ、RAFT与CLIP；重算可训练FCNet和传播器。沿用Adam1e-5、原损失与参数范围，独立保存，不恢复到正式训练。</p><div class="diagram"><div class="box">固定片段 / GT flow / 固定噪声</div>→<div class="box">FCNet → 参考传播 → SVD</div>→<div class="box">固定σ单步拟合：BUILD</div><div class="box">仅可见视频 + 同Gaussian → 完整QUERY</div></div>''')
+        sections.append(f'<p>实际状态：{html.escape(probe["status"])}。<a href="fixed_input_capacity_step500_64/run.json">完整输入角色与资源记录</a>。固定σ拟合不能证明全部噪声档位、完整生成或泛化；本诊断不计入正式四指标。</p>')
+        if probe['status']=='complete':
+            before=probe['teacher_before'];after=probe['teacher_after']
+            sections.append(f'<p>实际优化更新{probe["actual_updates"]}/{probe["update_attempts"]}；teacher加权latent MSE：{before["weighted_mse"]:.6f} → {after["weighted_mse"]:.6f}。此数值只衡量带噪GT单步去噪。</p>')
+            sections.append('<div class="four">')
+            for stage,title in (('teacher_before','训练前：固定σ带噪GT去噪'),('teacher_after','训练后：固定σ带噪GT去噪')):
+                sections.append(f'<figure><img src="fixed_input_capacity_step500_64/{stage}/contact.jpg" alt="{title}"><figcaption>{title}，f00/f12/f24；不据三帧判断时序。</figcaption></figure>')
+            sections.append('</div>')
+            for stage,title in (('query_before','诊断前QUERY：正式500权重'),('query_after','诊断后QUERY：500 + 固定输入64步')):
+                sections.append(f'<article><h3>{title}</h3><p>只有可见RGB，seed2036/25步，fps6、CFG1→3；GT仅用于对照。</p><div class="four">')
+                for name,label in (('gt','真实视频'),('visible','可见输入'),('pred','原生纯噪声生成'),('comp','可见中心硬写回')):
+                    sections.append(f'<figure><video controls preload="metadata" src="fixed_input_capacity_step500_64/{stage}/{name}.mp4"></video><figcaption>{label}</figcaption></figure>')
+                sections.append('</div></article>')
+            sections.append(review_note(capacity,'fixed_input_capacity_step500_64'))
+        sections.append('</div>')
+    visibleclip=output/'fixed_input_capacity_step500_visibleclip64'
+    if (visibleclip/'run.json').is_file():
+        variant=read(visibleclip/'run.json')
+        if variant['status']=='complete':
+            sections.append('''<div class="panel"><h2>单因素训练控制：完整首帧CLIP → 可见首帧CLIP</h2><p>两支均从正式500权重起，分别64次更新；GT latent/噪声/flow、条件VAE、mask、fps7和Adam状态均固定，仅teacher首帧CLIP像素来源改变。使用相同训练helper，不声称完整匹配QUERY的PIL编码路径。新条件不替换正式论文训练协议。</p>''')
+            comparison=variant['cache_comparison']
+            sections.append(f'<p>共享缓存逐值相同：{all(comparison["shared_key_exact"].values())}；CLIP特征平均绝对差{comparison["clip_mae"]:.6f}。可见CLIP teacher单步加权MSE {variant["teacher_before"]["weighted_mse"]:.6f} → {variant["teacher_after"]["weighted_mse"]:.6f}，实际更新{variant["actual_updates"]}/{variant["update_attempts"]}。改变CLIP后的teacher原始误差不可直接与另一支绝对值比大小来认定QUERY改进。</p>')
+            sections.append('<article><h3>同输入与Gaussian：仅看原生生成的变化</h3><div class="four">')
+            for relative,label in (('fixed_input_capacity_step500_64/query_before/gt.mp4','真实视频，仅作对照'),('fixed_input_capacity_step500_64/query_before/pred.mp4','正式500：训练诊断前'),('fixed_input_capacity_step500_64/query_after/pred.mp4','完整GT CLIP训练64后的原生'),('fixed_input_capacity_step500_visibleclip64/query_after/pred.mp4','可见CLIP训练64后的原生')):
+                sections.append(f'<figure><video controls preload="metadata" src="{relative}"></video><figcaption>{label}</figcaption></figure>')
+            sections.append('</div></article><article><h3>可见CLIP训练后的原生与写回</h3><div class="four">')
+            for name,label in (('gt','真实视频'),('visible','实际可见输入'),('pred','原生输出'),('comp','可见中心硬写回')):
+                sections.append(f'<figure><video controls preload="metadata" src="fixed_input_capacity_step500_visibleclip64/query_after/{name}.mp4"></video><figcaption>{label}</figcaption></figure>')
+            sections.extend(['</div></article>',review_note(visibleclip,'fixed_input_capacity_step500_visibleclip64'),'<a href="fixed_input_capacity_step500_visibleclip64/run.json">实际共享条件与单因素记录</a></div>'])
+    temporal=output/'later_frame_control_step500'
+    if (temporal/'run.json').is_file():
+        control=read(temporal/'run.json')
+        if control['status']!='complete':
+            raise ValueError('后续帧控制尚未完成')
+        sections.append('''<div class="panel"><h2>500权重后续帧控制：正常视频 / 全部重复首帧</h2><p>从正式500重新加载；固定正常视频选出的refs、同首帧CLIP、mask、Gaussian、seed2036/25步与精度，只有后续可见RGB不同。零训练更新；repeat固定normal refs，是受控反事实，不能冒充重复视频自动选参考帧的标准推理。</p>''')
+        sections.append(f'<p>Gaussian/CLIP/时间条件逐值一致：{html.escape(str(control["exact_shared"]))}；正常支与容量诊断前QUERY的25帧uint8逐像素相同：{control["normal_replay_matches_previous_uint8_all25"]}。融合条件平均绝对差{control["fused_condition_mean_abs_difference"]:.6f}，原生图像差{control["native_output_mean_abs_difference"]:.6f}。非零响应不能证明正确使用时序，且变化同时经过RAFT、VAE与传播，不能定位单一模块。</p>')
+        for branch,title in (('normal','真实的逐帧可见输入'),('repeat_first','后24帧重复已遮蔽首帧')):
+            sections.append(f'<article><h3>{title}</h3><div class="four">')
+            for name,label in (('gt','真实视频，仅用于对照'),('visible','实际可见输入'),('pred','原生输出'),('comp','实际可见中心硬写回')):
+                sections.append(f'<figure><video controls preload="metadata" src="later_frame_control_step500/{branch}/{name}.mp4"></video><figcaption>{label}</figcaption></figure>')
+            sections.append('</div></article>')
+        sections.extend([review_note(temporal,'later_frame_control_step500'),'<a href="later_frame_control_step500/run.json">完整控制与限制</a></div>'])
     query = output/'clip_query_control'
     if (query/'diagnostic.json').is_file():
         meta=read(query/'diagnostic.json')
@@ -109,9 +161,11 @@ def main() -> None:
                 break
     document=document.replace('本轮 GPU 作业已结束，AutoDL 已关机','历史记录：上轮 GPU 作业结束后已关机')
     document=document.replace('正式进度100步，P1仍未通过；旧关机通知为历史记录。','诊断使用100步断点，最新训练状态见条件页；P1仍未通过。旧关机通知为历史记录。')
-    notice='<div class="panel" id="gap-result-link"><b>最新条件诊断已完成</b><p><a href="condition_gap_review.html">查看18组单步诊断、2组共享Gaussian完整采样与原始SVD对照</a>。诊断使用100步断点，最新训练状态见条件页；P1仍未通过。旧关机通知为历史记录。</p></div>'
+    notice='<div class="panel" id="gap-result-link"><b>最新训练与短控制</b><p><a href="condition_gap_review.html">查看500步六窗验证、固定输入64步前后与条件对照</a>。P1仍未通过；正式训练、诊断与原始SVD分别报告。旧关机通知为历史记录。</p></div>'
     if 'id="gap-result-link"' not in document:
         document=document.replace('</h1>','</h1>'+notice,1)
+    else:
+        document=re.sub(r'<div class="panel" id="gap-result-link">.*?</div>',lambda _:notice,document,count=1,flags=re.S)
     index.write_text(document,encoding='utf-8')
 
 
