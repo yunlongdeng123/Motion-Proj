@@ -2,6 +2,8 @@
 
 from pathlib import Path
 from types import SimpleNamespace
+import math
+import sys
 
 import pytest
 import torch
@@ -45,6 +47,96 @@ def test_source_contract_requires_formal_checkpoint_and_fixed_clip(tmp_path):
         probe.validate_source(state, state["data_profile"],
                               {**batch, "clip_start": torch.tensor([3])},
                               data_root=tmp_path, updates=16)
+
+
+def test_clip_control_replaces_only_visible_first_frame_embedding(monkeypatch):
+    defaults = probe.parse_args(["--checkpoint", "step500.pt", "--output-dir", "new-probe"])
+    assert defaults.teacher_clip_source == "full-gt" and defaults.fixed_inputs is None
+    clip = torch.full((1, 1, 3), .9)
+    cache = {"clip": clip, **{key: torch.tensor([index], dtype=torch.float32)
+                               for index, key in enumerate(probe.SHARED_CACHE_KEYS)}}
+    visible = torch.full((1, 25, 3, 4, 4), .2)
+    target = torch.full_like(visible, .8)
+    batch = {"visible_rgb": visible, "target_rgb": target}
+    components = SimpleNamespace(image_encoder=torch.nn.Linear(1, 1))
+    called = []
+
+    def embed(_components, pixels, _util):
+        called.append(pixels.detach().clone())
+        return torch.full_like(clip, .3)
+
+    monkeypatch.setattr(probe, "_official_image_embedding", embed)
+    unchanged, baseline = probe.select_teacher_clip(
+        cache, batch, source="full-gt", components=components, util=None)
+    assert not called and baseline["clip_exact"] is True
+    assert torch.equal(unchanged["clip"], clip)
+    altered, comparison = probe.select_teacher_clip(
+        cache, batch, source="visible", components=components, util=None)
+    assert len(called) == 1 and torch.equal(called[0], visible)
+    assert not torch.equal(called[0], target)
+    assert comparison["clip_exact"] is False
+    assert all(comparison["shared_key_exact"].values())
+    assert torch.equal(cache["clip"], clip) and torch.equal(altered["clip"], torch.full_like(clip, .3))
+
+
+def test_visible_clip_requires_existing_fixed_inputs_before_gpu(monkeypatch):
+    monkeypatch.setattr(sys, "argv", ["probe", "--checkpoint", "step500.pt",
+                                    "--output-dir", "new-probe",
+                                    "--teacher-clip-source", "visible"])
+    with pytest.raises(ValueError, match="--fixed-inputs"):
+        probe.main()
+
+
+def _fixed_input_fixture(monkeypatch, tmp_path):
+    refs = [0, 4, 8, 12, 16, 20, 24]
+    monkeypatch.setattr(probe, "reference_indices_from_visible", lambda visible, mask: refs)
+    plan = build_reference_plan(25, refs)
+    target = torch.full((1, 25, 3, 4, 4), .8)
+    visible = torch.full_like(target, .2)
+    mask = torch.zeros(1, 25, 1, 4, 4)
+    batch = {"target_rgb": target, "visible_rgb": visible, "hole_mask": mask}
+    frames = [str(tmp_path / f"frame{i:02d}.jpg") for i in range(25)]
+    latent = torch.zeros(1, 25, 4, 32, 32)
+    flow = torch.zeros(1, len(plan.pairs), 2, 256, 256)
+    cache = {"plan": plan, "flow": (flow, flow.clone()),
+             "target_latent": latent, "cond_latent": latent.clone(),
+             "noise": latent.clone(), "time_ids": torch.tensor([[7., 127., math.exp(-3)]]),
+             "mask": mask, "sigma": math.exp(.7), "cond_sigma": math.exp(-3),
+             "clip": torch.zeros(1, 1, 3)}
+    source = tmp_path / "step500.pt"
+    origin = {"status": "complete", "kind": "fixed_input_training_clip_capacity_only",
+              "source_step": 500, "source_checkpoint": str(source), "seed": 2026,
+              "query_seed": 2036, "query_steps": 25, "probe_updates": 64,
+              "actual_updates": 64, "input_frames": frames}
+    payload = {"teacher_cache": cache, "target_rgb": target.clone(),
+               "visible_rgb": visible.clone(), "input_frames": frames.copy()}
+    return payload, origin, batch, frames, source
+
+
+def test_fixed_inputs_rejects_changed_rgb_mask_frames_and_probe_scope(monkeypatch, tmp_path):
+    payload, origin, batch, frames, source = _fixed_input_fixture(monkeypatch, tmp_path)
+
+    def validate(p=payload, o=origin, b=batch, f=frames):
+        return probe.validate_fixed_inputs(p, o, b, f, source_checkpoint=source,
+                                           source_step=500, seed=2026,
+                                           query_steps=25, updates=64)
+
+    assert validate() is payload["teacher_cache"]
+    with pytest.raises(ValueError, match="25帧文件"):
+        validate(f=[*frames[:-1], "other.jpg"])
+    for label in ("target_rgb", "visible_rgb"):
+        changed = {**batch, label: batch[label] + .01}
+        with pytest.raises(ValueError, match=label):
+            validate(b=changed)
+    changed_mask = {**batch, "hole_mask": torch.ones_like(batch["hole_mask"])}
+    with pytest.raises(ValueError, match="mask"):
+        validate(b=changed_mask)
+    with pytest.raises(ValueError, match="正式源"):
+        validate(o={**origin, "teacher_clip_source": "visible"})
+    with pytest.raises(ValueError, match="正式源"):
+        validate(o={**origin, "source_step": 100})
+    with pytest.raises(ValueError, match="正式源"):
+        validate(o={**origin, "actual_updates": 63})
 
 
 class _FCNet(torch.nn.Module):
@@ -157,3 +249,15 @@ def test_terminal_state_carries_distinct_format_and_restart_material(tmp_path):
     assert {"models", "optimizer", "scheduler", "scaler", "torch_rng",
             "cuda_rng", "numpy_rng", "python_rng"} <= set(state)
     assert not path.with_suffix(".pt.tmp").exists()
+    assert state["teacher_clip_source"] == "full-gt"
+    visible_path = tmp_path / "visible_state.pt"
+    probe.save_terminal_state(visible_path, components, optimizer, scheduler, scaler,
+                              source_checkpoint=tmp_path / "step500.pt", source_step=500,
+                              updates=64, update_attempts=64, seed=2026,
+                              input_frames=["frame0.jpg"], profile={"seed": 123},
+                              teacher_clip_source="visible",
+                              fixed_inputs_source=tmp_path / "fixed_inputs.pt")
+    visible_state = torch.load(visible_path, map_location="cpu", weights_only=False)
+    assert visible_state["format"] == probe.VISIBLE_CLIP_PROBE_FORMAT != state["format"]
+    assert visible_state["teacher_clip_source"] == "visible"
+    assert visible_state["fixed_inputs_source"] == str((tmp_path / "fixed_inputs.pt").resolve())
