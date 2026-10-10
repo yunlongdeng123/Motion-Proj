@@ -324,3 +324,40 @@ flowchart LR
 未发现确定工程接线错误，正式仍仅1%论文更新预算，因此选择同协议下一匹配学习点：正式1000恢复至总2000，只新增1000更新，保留Adam/scheduler/RNG、数据/mask/seed/模块和推理条件，不混任何诊断权重。父9741/子9744实际启动，23:10:13快照1001步；预计训练约100分钟后同三valid×两倍率六窗全帧审核。此项不是质量放行，不自动5000/100K；若曲线仍缺结构/条件利用进步，按新增证据选最小控制，不因hold停掉autoresearch。
 
 为了保存下一断点，只清理已完成的内层`valid_all_frames.zip`（5,883,017,839 B），保留可重构它的两个已验证7z卷和原RGB。`fuser`不存在，改用/proc数字PID的fd inode扫描，确认无打开句柄后才删；free3.20→9.08GB。记录`recoverable_inner_zip_cleanup.json`有恢复入口；关键100/500/1000断点、失败媒体不删。formal_metrics未算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none。
+
+## 正式2000学习曲线与fps时间条件单因素
+
+原协议1000→2000完成新增1000次优化，覆盖758训练视频、平均6.009秒/步、峰18.402GiB；全部梯度有限、冻结梯度0。保存正式2000模型/Adam/RNG，原1000保留。六固定valid窗与500/1000的source frames、mask、seed、25步和参考图相同。新增24MP4全解码、30图板，两名6-sol/xhigh/no-fast助手全150帧独立审核hold：海豚.125原生轮廓/摆尾有局部进步，身份/形体/位置仍不稳；滑板缺视角转换/跳跃，白鲸缺尺度/姿态跟随，海豚.33仍拉长漂移。500历史PNG部分由MP4获得，趋势只作视觉，不作精确像素学习曲线；hardcomp中心为GT。正式2000只是论文100K预算的2%，不否定最终能力，也不自动继续数万步。
+
+```mermaid
+flowchart LR
+    X[同一visible 25帧] --> C[VAE / RAFT / 双向参考传播]
+    C --> U[同一2000 SVD与Gaussian]
+    T[仅fps ID 6 或7] --> U
+    U --> Y[原生与真实中心写回]
+    C --> D[实际观测 / 融合latent解码]
+    Y --> Q[独立全25帧审核]
+    D --> Q
+```
+
+论文冻结空间层、训练时间层和100K预算仍保持；来源为[论文4.3与5.1](https://arxiv.org/html/2604.14648v1)。已确认训练time ID为7，而QUERY为6，但它是继承公开接口的差异，不可直接断言根因。下一零训练配对只改fps标量，固定正式2000、滑板.33、seed2026/25步；正常支必须与正式2000全部原始PNG一致，实际Gaussian/CLIP/flow/VAE/融合condition和其余时间值逐值核对。保存实际visible VAE与融合condition的全25帧正确单位解码，不读隐藏RGB作条件。即使改7更好，也只能支持对齐候选，不等于论文明确规定；若无视觉收益，停止该具体控制，转单训练片段全噪声分布有限容量检查，不立即增加正式预算。
+
+第一次控制器在模型加载前因Windows默认GBK的assistant_gate无法UTF-8读取退出；原栈、控制器状态和日志保留同run，显式UTF-8修正后只重启相同诊断一次。formal_updates=0，模型/推理算法不因这项工程修复改变。实际状态和配对结果留同run `next_bounded_experiment.json` / `fps_alignment_step2000/run.json`。formal_metrics未算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none；保持AutoDL开机，autoresearch继续。
+
+### fps实测与单片段512更新诊断
+
+fps配对完成59.65秒、峰9.47GiB，正常支全25原始PNG重放一致；输入逐值相同，原生像素差0.00417。独立6-sol/xhigh/no-fast全25帧审核no_clear_gain：ID7未改善视角或跳跃，实际visible VAE与融合condition正确单位解码仍保留中心人物/板/动作。因此该控制停止；不能唯一把失败归给传播或U-Net，正式协议未改。
+
+继续同run独立容量检查而非正式长训：从正式2000模型与Adam出发，固定训练片段0fc958cde2/start2，原FCNet/传播/时间层、原损失与lr1e-5，最多512更新，每步重采样LogNormal(.7,1.6)的σ和Gaussian ε。固定观察条件，无CFG dropout，seed2026、前后QUERY2036/25步。BUILD的teacher含GT x_t，只作学习数值；QUERY重新计算可见条件、从纯Gaussian生成。前后完整25帧分别保存，后续独立审核，当前启动不预填收益。
+
+```mermaid
+flowchart LR
+    X[固定25帧训练片段] --> C[原FCNet / 双向传播 / 时间层]
+    S[每步重采样σ与ε] --> C
+    C --> U[最多512次原损失更新]
+    U --> Q[可见输入与纯Gaussian QUERY]
+    Q --> V[前后全25帧独立审核]
+    U --> T[带噪GT teacher仅容量值]
+```
+
+预启动审查修正诊断脚本的Adam契约：官方FCNet edgeDetector四层8个参数不参与既有loss，正式1999/2000为66/74梯度；按exact名称允许这8个无梯度/无Adam state，其余514个参数检查源step2000和逐次增步。不加入edge loss，不改正式参数范围。末态仅保存trainable模型约1.61GB，无Adam/RNG，不可续训或混正式P1。原正式2000完整Adam断点保留。真实PID/命令在同run `single_clip_capacity_step2000_512_state.json`；该诊断不是独立泛化评测，正式四指标未算、human_verdict=null。

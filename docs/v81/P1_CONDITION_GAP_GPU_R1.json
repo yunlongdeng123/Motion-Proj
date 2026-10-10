@@ -1262,32 +1262,48 @@
     "record_scope": "historical_prior_authorization; not_current_power_policy"
   },
   "current_execution": {
-    "status": "formal_1000_to_2000_training_after_paired_teacher_audit",
-    "observed_at_utc": "2026-10-09T23:10:13.972037+00:00",
-    "observed_step": 1001,
-    "processes": {
-      "controller_pid": {
-        "pid": 9741,
-        "alive": true,
-        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_2000.py --worker "
-      },
-      "child_pid": {
-        "pid": 9744,
-        "alive": true,
-        "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train --max-steps 2000 --save-every 1000 --keep-checkpoints 2 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt "
-      }
+    "formal_training_step": 2000,
+    "formal_validation": "six_windows_complete_assistant_hold",
+    "bounded_diagnostic": {
+      "status": "running",
+      "controller_pid": 16337,
+      "child_pid": 16344,
+      "started_at": "2026-10-10T01:21:32.622633+00:00",
+      "source_step": 2000,
+      "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+      "output_dir": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512",
+      "diagnostic_updates": 512,
+      "formal_training_updates": 0,
+      "command": [
+        "/root/autodl-tmp/envs/motionproj/bin/python",
+        "-u",
+        "/root/autodl-tmp/codex_tmp/v81_single_clip_capacity_step2000.py",
+        "--repo",
+        "/root/autodl-tmp/motion_proj_v81",
+        "--checkpoint",
+        "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+        "--output-dir",
+        "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512",
+        "--updates",
+        "512",
+        "--seed",
+        "2026",
+        "--query-steps",
+        "25"
+      ],
+      "free_bytes_before": 4046778368,
+      "queued_gpu_jobs": [],
+      "human_verdict": null,
+      "checkpoint_role": "trainable-models-only; no Adam; not resumable or formal P1",
+      "expected_followup": "independent all25 QUERY and teacher review; autoresearch continues if hold"
     },
-    "power_policy": "用户最新要求：不随便关机；质量hold后主任务继续排查",
-    "automatic_shutdown": false,
-    "monitor_automation_id": "v8-1-p1",
-    "monitor_behavior": "质量hold后继续有界autoresearch；正常训练静默",
-    "weekly_remaining_percent": 11,
-    "available_reset_cards": 2,
-    "reset_card_used": false,
-    "full_reproduction_achieved": false,
+    "power_policy": "持续autoresearch，保持AutoDL开机",
+    "human_verdict": null,
     "formal_metrics_computed": false,
-    "next_control": "正式2000后同三valid×两倍率六窗全25帧独立审核；根据匹配学习曲线选择有证据的下一项，不默认100K",
-    "next_control_gpu_started": true
+    "protocol_verified": false,
+    "weekly_remaining_percent_last_observed": 9,
+    "reset_cards_available_last_observed": 2,
+    "reset_card_used": false
   },
   "retained_storage_relocations": {
     "records": [
@@ -1432,5 +1448,432 @@
     "checkpoints_removed": false,
     "free_bytes_after": 9079840768,
     "status": "complete"
+  },
+  "formal2000_learning_curve": {
+    "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+    "run": "r1",
+    "kind": "formal_same_protocol_1000_to_2000_learning_curve",
+    "source_step": 1000,
+    "final_step": 2000,
+    "actual_added_updates": 1000,
+    "unique_training_video_ids": 758,
+    "mean_seconds_per_step": 6.009288559282082,
+    "all_recorded_gradients_finite": true,
+    "frozen_grad_tensors_max": 0,
+    "gpu_peak_allocated_gib": 18.401614665985107,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+    "checkpoint_bytes": 4833164791,
+    "validation_windows": [
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step002000/00f88c4f0a/side_0.125/run.json",
+        "sequence_id": "00f88c4f0a",
+        "side_ratio_each": 0.125,
+        "seed": 2026
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step002000/00f88c4f0a/side_0.33/run.json",
+        "sequence_id": "00f88c4f0a",
+        "side_ratio_each": 0.33,
+        "seed": 2026
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step002000/7e625db8c4/side_0.125/run.json",
+        "sequence_id": "7e625db8c4",
+        "side_ratio_each": 0.125,
+        "seed": 2026
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step002000/7e625db8c4/side_0.33/run.json",
+        "sequence_id": "7e625db8c4",
+        "side_ratio_each": 0.33,
+        "seed": 2026
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step002000/ff6eb95840/side_0.125/run.json",
+        "sequence_id": "ff6eb95840",
+        "side_ratio_each": 0.125,
+        "seed": 2026
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step002000/ff6eb95840/side_0.33/run.json",
+        "sequence_id": "ff6eb95840",
+        "side_ratio_each": 0.33,
+        "seed": 2026
+      }
+    ],
+    "human_verdict": null,
+    "formal_metrics_computed": false,
+    "protocol_verified": false,
+    "failure_ledger_refs": [
+      "V77-F02"
+    ],
+    "failure_ledger_delta": "none",
+    "assistant_verdict": "hold",
+    "visual_summary": "海豚窄遮挡窗的原生轮廓与摆尾较500/1000可见进步，仍有身份/形体/位置错误；滑板两窗未随视角与跳跃，白鲸未随尺度/姿态。六窗质量hold，2%预算不能否定方法，autoresearch继续。",
+    "assistant_gate": {
+      "reviewer": "assistant",
+      "checkpoint_step": 2000,
+      "decision": "hold",
+      "all_150_frames_reviewed": true,
+      "human_verdict": null,
+      "reviewed_at_utc": "2026-10-10T01:09:05.174952+00:00",
+      "summary": "海豚窄遮挡窗的原生轮廓与摆尾较500/1000可见进步，仍有身份/形体/位置错误；滑板两窗未随视角与跳跃，白鲸未随尺度/姿态。六窗质量hold，2%预算不能否定方法，autoresearch继续。",
+      "reports": [
+        "assistant_review_skater_dolphins.json",
+        "assistant_review_beluga.json"
+      ]
+    },
+    "delivery_check": {
+      "status": "complete",
+      "checkpoint_step": 2000,
+      "cases": [
+        {
+          "case": "00f88c4f0a/side_0.125",
+          "new_mp4_decoded_frames": {
+            "gt": 25,
+            "visible": 25,
+            "pred": 25,
+            "comp": 25
+          },
+          "visual_rows": [
+            "GT",
+            "visible",
+            "native500",
+            "native1000",
+            "native2000",
+            "hardcomp2000"
+          ]
+        },
+        {
+          "case": "00f88c4f0a/side_0.33",
+          "new_mp4_decoded_frames": {
+            "gt": 25,
+            "visible": 25,
+            "pred": 25,
+            "comp": 25
+          },
+          "visual_rows": [
+            "GT",
+            "visible",
+            "native500",
+            "native1000",
+            "native2000",
+            "hardcomp2000"
+          ]
+        },
+        {
+          "case": "7e625db8c4/side_0.125",
+          "new_mp4_decoded_frames": {
+            "gt": 25,
+            "visible": 25,
+            "pred": 25,
+            "comp": 25
+          },
+          "visual_rows": [
+            "GT",
+            "visible",
+            "native500",
+            "native1000",
+            "native2000",
+            "hardcomp2000"
+          ]
+        },
+        {
+          "case": "7e625db8c4/side_0.33",
+          "new_mp4_decoded_frames": {
+            "gt": 25,
+            "visible": 25,
+            "pred": 25,
+            "comp": 25
+          },
+          "visual_rows": [
+            "GT",
+            "visible",
+            "native500",
+            "native1000",
+            "native2000",
+            "hardcomp2000"
+          ]
+        },
+        {
+          "case": "ff6eb95840/side_0.125",
+          "new_mp4_decoded_frames": {
+            "gt": 25,
+            "visible": 25,
+            "pred": 25,
+            "comp": 25
+          },
+          "visual_rows": [
+            "GT",
+            "visible",
+            "native500",
+            "native1000",
+            "native2000",
+            "hardcomp2000"
+          ]
+        },
+        {
+          "case": "ff6eb95840/side_0.33",
+          "new_mp4_decoded_frames": {
+            "gt": 25,
+            "visible": 25,
+            "pred": 25,
+            "comp": 25
+          },
+          "visual_rows": [
+            "GT",
+            "visible",
+            "native500",
+            "native1000",
+            "native2000",
+            "hardcomp2000"
+          ]
+        }
+      ],
+      "new_videos_fully_decoded": 24,
+      "frames_per_new_video": 25,
+      "boards": 30,
+      "frames_visually_available": 150,
+      "human_verdict": null,
+      "comparison_limit": "500历史PNG可能来自MP4；500/1000/2000图板仅供视觉比较，不能作为精确逐像素学习曲线。",
+      "hardcomp_limit": "hardcomp2000中央为可见GT硬写回；主体保持必须看native2000。",
+      "old_media_handling": "只读取500/1000已有PNG，不重新编码或解码旧MP4。"
+    },
+    "observed_execution": {
+      "observed_at_utc": "2026-10-10T01:02:17.344367+00:00",
+      "status": "bounded2000_complete_waiting_assistant_quality",
+      "source_step": 1000,
+      "training_budget": 2000,
+      "observed_train_step": 2000,
+      "added_updates_observed": 1000,
+      "last_event": "train_step",
+      "processes": {
+        "controller_pid": {
+          "pid": null,
+          "alive": false,
+          "actual_command": null
+        },
+        "child_pid": {
+          "pid": null,
+          "alive": false,
+          "actual_command": null
+        }
+      },
+      "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt",
+      "propagation_protocol": "paper-bidirectional-m4",
+      "inference_mode": "paper-feedforward",
+      "queued_gpu_jobs": [],
+      "power_policy": "用户要求持续autoresearch，不随便关机",
+      "new_2000_validation_available": true,
+      "complete_validation_windows": 6,
+      "free_data_bytes": 4194422784,
+      "free_system_bytes": 6498308096,
+      "human_verdict": null,
+      "formal_metrics_computed": false
+    }
+  },
+  "next_bounded_experiment": {
+    "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+    "run": "r1",
+    "kind": "fps_id_6_vs_7_at_formal2000",
+    "status": "complete_waiting_assistant_quality",
+    "controller_pid": null,
+    "child_pid": null,
+    "command": [
+      "/root/autodl-tmp/envs/motionproj/bin/python",
+      "/root/autodl-tmp/codex_tmp/v81_fps_alignment_step2000.py",
+      "--output-dir",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fps_alignment_step2000"
+    ],
+    "formal_training_updates": 0,
+    "optimizer_updates": 0,
+    "queued_gpu_jobs": [],
+    "output": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fps_alignment_step2000",
+    "human_verdict": null,
+    "reason": "训练fps ID7，QUERY ID6；尚未隔离的时间条件差异，不修改正式协议",
+    "power_policy": "用户最新要求持续autoresearch、保持开机",
+    "observed_at_utc": "2026-10-10T01:11:27.253847+00:00",
+    "log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/logs/fps_alignment_step2000.log",
+    "return_code": 0
+  },
+  "fps_alignment_step2000": {
+    "status": "complete",
+    "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
+    "run": "r1",
+    "kind": "query_fps_id_alignment_step2000",
+    "checkpoint_step": 2000,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+    "sequence_id": "00f88c4f0a",
+    "side_ratio_each": 0.33,
+    "num_frames": 25,
+    "seed": 2026,
+    "steps": 25,
+    "optimizer_updates": 0,
+    "paired_exact": {
+      "initial_latent": true,
+      "vae_input": true,
+      "observation_latent": true,
+      "condition": true,
+      "clip": true,
+      "original_time_ids": true,
+      "raw_flow_fw": true,
+      "raw_flow_bw": true,
+      "other_time_ids": true
+    },
+    "normal_replay_matches_formal_2000_all25": true,
+    "changed_only": "added_time_ids[:,0], for both CFG branches, 6 -> 7",
+    "original_time_ids": [
+      [
+        6.0,
+        127.0,
+        0.019999999552965164
+      ]
+    ],
+    "aligned_time_ids": [
+      [
+        7.0,
+        127.0,
+        0.019999999552965164
+      ]
+    ],
+    "condition_inputs": "visible-only RGB; full RGB is display only, no hidden GT condition",
+    "condition_decode_units": "actual unscaled condition latent multiplied by VAE scale before decoder",
+    "native_response_mean_abs": 0.004171885550022125,
+    "limits": [
+      "This is a train/query alignment diagnostic, not a paper-confirmed inference protocol.",
+      "Decoded fused conditioning is not itself the generated QUERY output.",
+      "Nonzero pixel response is not improved structure or temporal tracking."
+    ],
+    "elapsed_seconds": 59.653258887003176,
+    "peak_cuda_allocated_gib": 9.467642307281494,
+    "human_verdict": null,
+    "formal_metrics_computed": false,
+    "assistant_review": {
+      "reviewed_at_utc": "2026-10-10T01:15:00Z",
+      "reviewer": "assistant",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "xhigh",
+      "fast": false,
+      "human_verdict": null,
+      "all_frames_reviewed": true,
+      "decision": "no_clear_gain",
+      "assistant_verdict": "Changing the two CFG branches' fps time ID from 6 to 7 produces a nonzero but visually negligible change in the native 25-frame result. It does not restore the skater, ground-level viewpoint, or jump. The correctly scaled visible-VAE and fused-condition decodes both preserve the real central skater/board/ground and their changing poses, so the visible center has not been erased by those displayed condition stages. This does not establish why the sampler fails to use the condition, nor does it measure the unseen side regions' recoverability.",
+      "scope": {
+        "source": "formal step2000 skater 00f88c4f0a, side_ratio_each=0.33",
+        "checkpoint_step": 2000,
+        "sequence_id": "00f88c4f0a",
+        "side_ratio_each": 0.33,
+        "frame_range": "00-24",
+        "num_frames": 25,
+        "boards_viewed": [
+          "qa_boards/frames_00_04.jpg",
+          "qa_boards/frames_05_09.jpg",
+          "qa_boards/frames_10_14.jpg",
+          "qa_boards/frames_15_19.jpg",
+          "qa_boards/frames_20_24.jpg"
+        ],
+        "board_row_order": [
+          "GT",
+          "visible",
+          "visible VAE correctly scaled decode",
+          "fused condition correctly scaled decode",
+          "native fps-ID6",
+          "native fps-ID7"
+        ],
+        "evidence_root": "C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v81-paper-p1/fps_alignment_step2000"
+      },
+      "architecture_components": "Visible RGB center -> VAE encode and bidirectional flow propagation -> fused condition latent -> SVD denoiser + CLIP + Gaussian initial latent + CFG time IDs (fps 6 or 7) -> native 25-frame video. The GT row is display-only; decoded condition rows are diagnostics, not native output.",
+      "paired_setup_from_run_json": {
+        "seed": 2026,
+        "sampling_steps": 25,
+        "optimizer_updates": 0,
+        "normal_fps6_exact_replay_of_formal_step2000_all_25": true,
+        "changed_only": "added_time_ids[:,0] in both CFG branches: 6 -> 7",
+        "paired_equal": [
+          "initial_latent",
+          "vae_input",
+          "observation_latent",
+          "condition",
+          "clip",
+          "raw_flow_fw",
+          "raw_flow_bw",
+          "other_time_ids"
+        ],
+        "mean_absolute_native_pixel_response_reported": 0.004171885550022125,
+        "formal_metrics_computed": false
+      },
+      "frame_evidence": [
+        {
+          "frames": "00-04",
+          "visible_and_condition": "At f00-f03 the decodes retain central sky/building and the camera rotation; at f04 they retain central building, tree, ground, and skater entry. Outside the observed strip they are gray, not GT reconstructions.",
+          "native_fps6_vs_fps7": "Both remain chiefly pale sky and a top-edge building fragment with dark diffuse smears. Neither produces the f04 ground-level viewpoint or coherent skater. Differences between IDs are too small to constitute a structural gain."
+        },
+        {
+          "frames": "05-09",
+          "visible_and_condition": "Both decodes retain the skater's changing crouch, white cap, red shoes, skateboard, pavement, and background within the observed center, with normal VAE softness. Fused condition is visually very close to visible-VAE in that strip.",
+          "native_fps6_vs_fps7": "Both retain an overhead building/sky scene. The dark center fragments move or fluctuate but do not form the crouching rider or pavement; fps7 does not visibly correct position, scale, or viewpoint."
+        },
+        {
+          "frames": "10-14",
+          "visible_and_condition": "The central skater's lifted knees, raised arms, board, and landing posture remain legible frame by frame in both decodes, including the jump interval.",
+          "native_fps6_vs_fps7": "Both show scattered dark marks under the top building and bright sky; there is no recognizable skater, board, or jump timed to GT. The two native rows are visually near-identical at the task level."
+        },
+        {
+          "frames": "15-19",
+          "visible_and_condition": "Both decodes keep the smaller skater moving across the center ground plane and retain the building/tree context in the observed strip.",
+          "native_fps6_vs_fps7": "The skater and pavement remain absent; top-edge building and isolated fading smudges dominate both. No fps7 motion-following benefit is apparent."
+        },
+        {
+          "frames": "20-24",
+          "visible_and_condition": "Both decodes retain the changing center skater position and bend, skateboard, and ground, while the masked sides stay gray.",
+          "native_fps6_vs_fps7": "Both show a drifting upper building slab over mostly sky, with fragments especially late in the range; neither tracks the rider or moves the view to the ground."
+        }
+      ],
+      "interpretation": {
+        "fps_change": "The reported 0.00417 mean absolute native response establishes numerical sensitivity to fps ID, not a meaningful image or video quality gain.",
+        "condition_path": "The visible-VAE and fused-condition decodes retain the observed center's person, board, ground, and temporal pose changes, so this displayed VAE/fusion decode is not already obliterating that observed information. The gray missing sides are expected and cannot be judged for hidden-GT preservation.",
+        "causal_limit": "A decoded condition is not the QUERY output; this pair does not isolate denoiser learning, conditioning strength, sampler behavior, CLIP, or any single component as the cause of failure.",
+        "next_step": "No visual reason to adopt fps-ID7 as a quality fix. A separately bounded training-capacity diagnostic can probe the remaining failure without altering this formal checkpoint or treating this zero-update test as a learning result."
+      },
+      "limitations": [
+        "Direct visual review of one fixed skater sequence and mask ratio only; not all six formal validation windows.",
+        "The diagnostic uses zero updates and preserves the same checkpoint and paired inputs; it cannot establish the effect of training longer.",
+        "Correctly scaled condition decoding shows what those latents display, not whether the SVD sampler uses them or can infer missing side content.",
+        "No human verdict or formal metrics are supplied."
+      ]
+    }
+  },
+  "single_clip_capacity_step2000_512_execution": {
+    "status": "running",
+    "controller_pid": 16337,
+    "child_pid": 16344,
+    "started_at": "2026-10-10T01:21:32.622633+00:00",
+    "source_step": 2000,
+    "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+    "output_dir": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512",
+    "diagnostic_updates": 512,
+    "formal_training_updates": 0,
+    "command": [
+      "/root/autodl-tmp/envs/motionproj/bin/python",
+      "-u",
+      "/root/autodl-tmp/codex_tmp/v81_single_clip_capacity_step2000.py",
+      "--repo",
+      "/root/autodl-tmp/motion_proj_v81",
+      "--checkpoint",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+      "--output-dir",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512",
+      "--updates",
+      "512",
+      "--seed",
+      "2026",
+      "--query-steps",
+      "25"
+    ],
+    "free_bytes_before": 4046778368,
+    "queued_gpu_jobs": [],
+    "human_verdict": null,
+    "checkpoint_role": "trainable-models-only; no Adam; not resumable or formal P1",
+    "expected_followup": "independent all25 QUERY and teacher review; autoresearch continues if hold"
   }
 }

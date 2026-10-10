@@ -79,7 +79,7 @@ def main() -> None:
                         or Path(bounded2000.get('source_checkpoint', '')).name != 'p1-checkpoint-001000.pt'):
         raise ValueError('正式1000→2000阶段快照的源断点、目标或协议不匹配')
     header = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1 条件与原始SVD对照</title>
-    <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1400px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four,.five{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.five{grid-template-columns:repeat(5,minmax(0,1fr))}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four,.five{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
+    <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1600px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four,.five,.six{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.five{grid-template-columns:repeat(5,minmax(0,1fr))}.six{grid-template-columns:repeat(6,minmax(0,1fr))}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four,.five,.six{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>P1：固定权重条件诊断与原始SVD对照</h1><p><a href="index.html">返回完整进度、历史输出与数据页</a></p>
     <div class="panel warn"><b>P1正式指标尚未计算：正式训练与诊断分别报告。</b><p>旧条件隔离使用100步权重且更新0；正式500步验证质量hold，当前验证状态见下方。固定片段64步控制另列。原始SVD生成不是外扩任务或论文指标。完整GT条件只作BUILD诊断，不能用于正式QUERY；人工verdict留空。</p></div>'''
     sections = [header, condition_gap_panel(gap),
@@ -176,6 +176,74 @@ def main() -> None:
                 sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
             sections.append(f'</div><p><a href="{relative}/run.json">1000步窗口配置</a> · <a href="{previous_relative}/run.json">500步匹配配置</a></p></article>')
         sections.extend([f'<p>{review_detail}</p>', '</div>'])
+    step2000_ready = False
+    step2000_review = ''
+    step2000_decision = None
+    step2000_gate_status = '助手质量门禁待完成；不预填结论'
+    step2000 = output/'paper_bidirectional_m4/validation/step002000'
+    if step1000_done and bounded2000:
+        later_windows = sorted(step2000.glob('*/side_*/run.json'))
+        expected = {path.parent.relative_to(step1000) for path in windows}
+        step2000_ready = (len(later_windows) == 6 and
+                          {path.parent.relative_to(step2000) for path in later_windows} == expected)
+        if step2000_ready:
+            for path in later_windows:
+                suffix = path.parent.relative_to(step2000)
+                current = read(path)
+                matched = (read(step1000/suffix/'run.json'), read(validation/suffix/'run.json'))
+                same = ('sequence_id', 'side_ratio_each', 'seed', 'mask_pixels_left',
+                        'mask_pixels_right', 'source_frames', 'num_frames', 'mode', 'steps')
+                if (current.get('status') != 'complete' or current.get('checkpoint_step') != 2000
+                        or current.get('num_frames') != 25
+                        or any(current.get(key) != earlier.get(key) for earlier in matched for key in same)):
+                    step2000_ready = False
+                    break
+                relatives = (f'paper_bidirectional_m4/validation/step002000/{path.parent.relative_to(step2000).as_posix()}/{kind}.mp4'
+                             for kind in ('gt', 'visible', 'pred', 'comp'))
+                if not all((output/relative).is_file() for relative in relatives):
+                    step2000_ready = False
+                    break
+        if step2000_ready:
+            gate_path = step2000/'assistant_gate.json'
+            if gate_path.is_file():
+                gate = read(gate_path)
+                if (gate.get('reviewer') != 'assistant' or gate.get('checkpoint_step') != 2000
+                        or gate.get('decision') not in {'hold', 'continue'}
+                        or gate.get('all_150_frames_reviewed') is not True
+                        or 'human_verdict' not in gate or gate['human_verdict'] is not None
+                        or not isinstance(gate.get('summary'), str) or not gate['summary']):
+                    raise ValueError('2000步助手门禁字段不完整或与六窗审核不一致')
+                step2000_decision = gate['decision']
+                step2000_gate_status = (f'助手质量门禁：{html.escape(step2000_decision)}；'
+                                        f'{html.escape(gate["summary"])}。'
+                                        '<a href="paper_bidirectional_m4/validation/step002000/assistant_gate.json">门禁原文</a>')
+            reviews = []
+            for review_path in sorted(step2000.glob('assistant_review*.json')):
+                report = read(review_path)
+                scope = report.get('scope')
+                reviewed_step = report.get('checkpoint_step', scope.get('checkpoint_step') if isinstance(scope, dict) else None)
+                if reviewed_step is not None and reviewed_step != 2000:
+                    raise ValueError(f'2000步审核文件断点不匹配: {review_path}')
+                reviews.append(f'<a href="paper_bidirectional_m4/validation/step002000/{review_path.name}">{html.escape(review_path.name)}</a>')
+            step2000_review = ' · '.join(reviews) if reviews else '独立图像审核待完成；不预填质量结论'
+            sections.append('''<div class="panel" id="validation-step2000"><h2>正式2000步六窗：500 / 1000 / 2000原生对照</h2><p>六窗均有真实完成的step002000运行记录及25帧媒体，和1000步窗口的seed、source frames、双侧mask一致。第三至第五列只比较模型原生生成；第六列的清晰中心是2000步真实可见输入硬写回，不能算原生结构或运动恢复。助手门禁衡量本阶段能力，hold后继续有界排查；此处不是正式DAVIS/YT指标。</p>''')
+            for path in later_windows:
+                meta = read(path)
+                suffix = path.parent.relative_to(step2000).as_posix()
+                base = 'paper_bidirectional_m4/validation'
+                videos = ((f'{base}/step002000/{suffix}/gt.mp4', '真实视频'),
+                          (f'{base}/step002000/{suffix}/visible.mp4', '实际可见输入'),
+                          (f'{base}/step000500/{suffix}/pred.mp4', '500步原生'),
+                          (f'{base}/step001000/{suffix}/pred.mp4', '1000步原生'),
+                          (f'{base}/step002000/{suffix}/pred.mp4', '2000步原生'),
+                          (f'{base}/step002000/{suffix}/comp.mp4', '2000步中心硬写回'))
+                if not all((output/name).is_file() for name, _ in videos):
+                    raise FileNotFoundError(f'2000步同步对照缺少匹配历史视频: {suffix}')
+                sections.append(f'<article><h3>{html.escape(meta["sequence_id"])} · 每侧{meta["side_ratio_each"]:g} · 25帧</h3><div class="six">')
+                for name, label in videos:
+                    sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
+                sections.append(f'</div><a href="{base}/step002000/{suffix}/run.json">2000步窗口运行记录</a></article>')
+            sections.append(f'<p>{step2000_gate_status}</p><p>{step2000_review}</p></div>')
     oracle = output/'full_latent_oracle_step1000'
     oracle_done = (oracle/'run.json').is_file()
     oracle_status = ''
@@ -220,6 +288,42 @@ def main() -> None:
         sections.append('''</div><figure><img src="full_latent_oracle_step1000/gt_vae_reconstruction_contact.png" alt="完整GT经VAE mode重建的抽帧联系图"><figcaption>完整GT VAE mode重建，仅检查编码/解码；三帧不能判断时序。</figcaption></figure>''')
         sections.extend([f'<p>{oracle_status}</p>',
                          '<p><a href="full_latent_oracle_step1000/run.json">配对与非法输入说明</a> · <a href="full_latent_oracle_step1000/delivery_check.json">25帧重放及八视频解码核验</a> · <a href="full_latent_oracle_step1000/qa_boards/frames_00_04.jpg">连续帧图板入口</a></p></div>'])
+    fps_folder = output/'fps_alignment_step2000'
+    if (fps_folder/'run.json').is_file():
+        fps = read(fps_folder/'run.json')
+        if (fps.get('status') != 'complete' or fps.get('checkpoint_step') != 2000
+                or fps.get('optimizer_updates') != 0
+                or fps.get('normal_replay_matches_formal_2000_all25') is not True
+                or not all(fps.get('paired_exact', {}).values())):
+            raise ValueError('fps时间条件对照的完成或配对记录不符')
+        sections.append('''<div class="panel" id="fps-alignment-step2000"><h2>2000步单因素：QUERY fps条件ID 6 → 训练常数7</h2><p>同一正式2000权重、滑板.33窗、seed2026和25步；只有两条CFG支路的fps条件ID从6改为7。可见RGB、Gaussian、CLIP、flow、VAE、融合condition和其他time IDs逐值相同；ID6支的25张原生PNG与正式2000完全相同。没有参数更新，未修改正式推理协议。即使ID7改善，也不等于论文明确要求ID7。</p><div class="diagram"><div class="box">相同逐帧可见RGB</div>→<div class="box">相同VAE / 双向参考传播</div>→<div class="box">固定SVD去噪<br>仅fps ID 6 / 7</div>→<div class="box">两支原生 / 独立全帧审核</div></div><div class="four">''')
+        for relative, label in (
+                ('fps6/gt.mp4', '真实视频，仅作对照'),
+                ('fps6/visible.mp4', '合法可见输入'),
+                ('fps6/pred.mp4', 'fps ID6：重放正式2000'),
+                ('fps7/pred.mp4', 'fps ID7：仅时间条件对齐')):
+            if not (fps_folder/relative).is_file():
+                raise FileNotFoundError(f'fps对照视频缺失: {relative}')
+            sections.append(f'<figure><video controls preload="metadata" src="fps_alignment_step2000/{relative}"></video><figcaption>{label}</figcaption></figure>')
+        sections.append('</div><p>图板按GT、visible、visible VAE重建、实际融合condition解码、native ID6、native ID7排列。条件latent按正确VAE单位解码，仅定位中间路径，不当最终生成结果。</p>')
+        for start in range(0, 25, 5):
+            board=f'fps_alignment_step2000/qa_boards/frames_{start:02d}_{start+4:02d}.jpg'
+            if not (output/board).is_file():
+                raise FileNotFoundError(board)
+            sections.append(f'<figure><img loading="lazy" src="{board}" alt="fps-ID单因素与VAE/传播中间条件连续五帧"><figcaption>f{start:02d}–f{start+4:02d}：六行连续帧</figcaption></figure>')
+        sections.extend([review_note(fps_folder, 'fps_alignment_step2000'),
+                         '<p><a href="fps_alignment_step2000/run.json">输入配对与解码单位</a></p></div>'])
+    capacity_path = output/'single_clip_capacity_step2000_512_state.json'
+    capacity_notice = ''
+    if capacity_path.is_file():
+        capacity = read(capacity_path)
+        if (capacity.get('source_step') != 2000 or capacity.get('diagnostic_updates') != 512
+                or capacity.get('formal_training_updates') != 0):
+            raise ValueError('单片段容量诊断源或预算不符')
+        capacity_notice = (f'单片段容量诊断快照：{html.escape(str(capacity["status"]))}，'
+                           f'正式2000权重起点，最多512次独立更新，不计正式训练。'
+                           '<a href="single_clip_capacity_step2000_512_state.json">实际启动状态与命令</a>。')
+        sections.insert(1, f'''<div class="panel" id="capacity-step2000-512"><h2>当前有界项：单训练片段完整噪声分布容量检查</h2><p>{capacity_notice}完整QUERY前后对照与独立审核尚不能由启动状态推断。原正式2000模型/Adam/RNG保留；诊断最终只保存可训练权重、不保存Adam，不能续训或进入正式恢复。</p><div class="diagram"><div class="box">固定真实训练片段<br>25帧可见输入</div>→<div class="box">原模块与原损失<br>每步重采样σ / ε</div>→<div class="box">最多512更新</div>→<div class="box">纯噪声QUERY前 / 后<br>独立全帧审核</div></div><p>teacher输入含带噪GT，只检查训练容量；不能作为合法QUERY质量。质量hold后继续依证据排查，不自动追加正式长训。</p></div>''')
     teacher = output/'paired_teacher_step1000'
     teacher_done = (teacher/'run.json').is_file()
     if teacher_done:
@@ -375,7 +479,9 @@ def main() -> None:
         {review_note(folder,name)}<p><a href="{name}/diagnostic.json">实际调用配置与限制</a></p></div>''')
     if bounded2000_panel:
         sections.insert(1, bounded2000_panel)
-    sections.append('</main><script>document.querySelectorAll(".four,.five").forEach(g=>{let vs=[...g.querySelectorAll("video")],busy=false;vs.forEach(v=>{v.addEventListener("play",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v){x.currentTime=v.currentTime;x.play().catch(()=>{})}});busy=false});v.addEventListener("pause",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v)x.pause()});busy=false});v.addEventListener("seeked",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v&&Math.abs(x.currentTime-v.currentTime)>.15)x.currentTime=v.currentTime});busy=false})})});</script></html>')
+    if step2000_ready:
+        sections.insert(1,f'''<div class="panel"><h2>正式2000步六窗已完成生成</h2><p>六窗的step002000运行记录与25帧媒体均已齐全；同seed、同mask、同源帧的500/1000/2000原生对照在下方。{step2000_gate_status}；{step2000_review}。2000步硬写回中心是可见真值，不替代原生质量判断。</p><p><a href="#validation-step2000">查看六列同步视频</a></p></div>''')
+    sections.append('</main><script>document.querySelectorAll(".four,.five,.six").forEach(g=>{let vs=[...g.querySelectorAll("video")],busy=false;vs.forEach(v=>{v.addEventListener("play",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v){x.currentTime=v.currentTime;x.play().catch(()=>{})}});busy=false});v.addEventListener("pause",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v)x.pause()});busy=false});v.addEventListener("seeked",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v&&Math.abs(x.currentTime-v.currentTime)>.15)x.currentTime=v.currentTime});busy=false})})});</script></html>')
     (output/'condition_gap_review.html').write_text(''.join(sections),encoding='utf-8')
     index=output/'index.html'
     document=index.read_text(encoding='utf-8')
@@ -410,7 +516,10 @@ def main() -> None:
         document=document.replace(old,new)
     if step1000_done:
         quality = '正式1000步六窗独立审核仍hold' if review_hold else '正式1000步六窗已完成生成'
-        if bounded2000:
+        if step2000_ready:
+            gate_label = f'助手门禁{step2000_decision}' if step2000_decision else '助手门禁待完成'
+            quality += f'；2000步六窗已完成生成，{gate_label}'
+        elif bounded2000:
             quality += '；1000→2000有界阶段已有实际快照'
         oracle_notice = (f'非法完整GT latent oracle已完成零训练定位，{oracle_status}；即使oracle清楚也不算方法通过。'
                          '<a href="condition_gap_review.html#full-latent-oracle">查看非法输入边界和两支对照</a>。') if oracle_done else ''
@@ -418,7 +527,11 @@ def main() -> None:
                           '<a href="condition_gap_review.html#paired-teacher-step1000">查看五张连续帧图板</a>。') if teacher_done else ''
         bounded_notice = (f'{bounded2000_summary}；这是快照，不代表实时训练进度或2000步质量通过。'
                           '<a href="condition_gap_review.html#bounded2000-snapshot">查看实际PID与命令</a>。') if bounded2000 else ''
-        notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>{bounded_notice}同协议从500到正式1000已追加500次更新；{review_detail}。{oracle_notice}{teacher_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">1000步完成快照</a>为准。</p></div>'
+        bounded_notice += capacity_notice
+        later_notice = (f'<a href="condition_gap_review.html#validation-step2000">查看2000步六列同步对照</a>；{step2000_gate_status}；{step2000_review}。') if step2000_ready else ''
+        latest_snapshot = ('<a href="bounded2000_state.json">最新实际2000阶段快照</a>' if bounded2000
+                           else '<a href="bounded1000_state.json">1000步完成快照</a>')
+        notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>{later_notice}{bounded_notice}同协议从500到正式1000已追加500次更新；{review_detail}。{oracle_notice}{teacher_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和{latest_snapshot}为准，快照不等于实时状态。</p></div>'
     elif continuation:
         notice=f'<div class="panel" id="gap-result-link"><b>当前P1：正式500→1000步同协议续训，仅新增500步</b><p>截至 {html.escape(continuation["observed_at_utc"])} 快照记录 {continuation["observed_train_step"]} 步；1000步验证尚无结果。到达后核查固定三例×两倍率共六窗、原生视频与质量门。<a href="condition_gap_review.html">查看正式500步六窗及固定片段64步CLIP、噪声、可见flow控制</a>；人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和<a href="bounded1000_state.json">续训快照</a>为准。</p></div>'
     else:
