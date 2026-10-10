@@ -372,5 +372,162 @@
       "data_free_bytes": 131195490304,
       "system_free_bytes": 6459707392
     }
+  },
+  "reference_refinement_result": {
+    "status": "complete_assistant_reviewed",
+    "gpu_executed": true,
+    "output_frames": 24,
+    "parameters": {
+      "seed_per_frame": 1234,
+      "timestep": 199,
+      "prompt": "remove degradation",
+      "width_height": [
+        518,
+        350
+      ],
+      "precision": "FP32",
+      "frames_per_condition": 8,
+      "max_output_frames": 24
+    },
+    "weight_checks": {
+      "mv_unet_keys": 686,
+      "checkpoint_unet_keys": 686,
+      "checkpoint_vae_keys": 90,
+      "all_author_keys_shapes_match": true,
+      "mv_and_single_unet_key_shapes_equal": true
+    },
+    "baseline_replay_verified": true,
+    "actual_primary_pairs": 8,
+    "all_primary_pairs_equal": true,
+    "model_load_seconds_single": 8.559047637012554,
+    "model_load_seconds_mv": 5.204454023012659,
+    "peak_cuda_allocated_single_bytes": 6320594944,
+    "peak_cuda_allocated_mv_bytes": 7438604800,
+    "self_vs_single_saved_png_comparison": {
+      "status": "actual_saved_pngs_compared",
+      "comparison": "public_single_vs_mv_self",
+      "rows": [
+        {
+          "branch": "noop",
+          "index": 0,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.008422504136789851
+        },
+        {
+          "branch": "noop",
+          "index": 1,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.008150395293252436
+        },
+        {
+          "branch": "noop",
+          "index": 2,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.007896672182386467
+        },
+        {
+          "branch": "noop",
+          "index": 3,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.007267880125022982
+        },
+        {
+          "branch": "delete",
+          "index": 0,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.008573267144695716
+        },
+        {
+          "branch": "delete",
+          "index": 1,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.008477661334804192
+        },
+        {
+          "branch": "delete",
+          "index": 2,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.008635778635778637
+        },
+        {
+          "branch": "delete",
+          "index": 3,
+          "max_abs_8bit_channel": 1,
+          "mean_abs_8bit_channel": 0.007784519213090642
+        }
+      ],
+      "interpretation": "near pixel equality does not prove scene-correct background",
+      "gpu_rerun": false
+    },
+    "delivery": {
+      "status": "complete_assistant_reviewed",
+      "png_rgb_decoded": 44,
+      "media_and_evidence_links": 98,
+      "missing_links": [],
+      "human_verdict": null,
+      "meaningful_gain": false,
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-09-26\\xia\\outputs\\v81-dggt-waymo\\reference_refinement_r1\\index.html",
+      "remote_audit": {
+        "status": "pass",
+        "links_checked": 98,
+        "unique_local_files": 46,
+        "missing_links": [],
+        "videos_encoded": 0,
+        "page_status": "completed",
+        "new_diagnostic_png_count": 24,
+        "decoded_rgb_images": 44,
+        "new_diagnostic_png_decoded": 24,
+        "paired_trace_files_verified": 8,
+        "source_run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/diagnostics/reference_refinement_r1/run.json",
+        "source_assistant_review_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/diagnostics/reference_refinement_r1/assistant_review.json"
+      },
+      "browser_visual_qa": false,
+      "gpu_rerun": false
+    },
+    "remote_evidence": "diagnostics/reference_refinement_r1/",
+    "human_verdict": null,
+    "adopted": false,
+    "training_updates": 0,
+    "failure_ledger_delta": "none",
+    "assistant_review_summary": {
+      "reviewer": "independent_visual_audit_actual_reference_refinement_r1",
+      "human_verdict": null,
+      "frames_reviewed_per_branch": 4,
+      "overall_decision": "Engineering comparison is matched and delivery validation passes, but all three actual outputs fail to restore the road after deletion. Public single-view and mv_self are near-identical; legal reference makes the residual dark mass more opaque and offers no meaningful gain. Do not claim successful target removal or road inpainting from this probe.",
+      "meaningful_gain": false,
+      "review_correction": "Revised after direct original-size inspection of all 12 named delete PNGs. The first attempt incorrectly described official_public_single/delete as restored or mostly continuous road based on the contact sheet. Those PNGs retain a broad gray car-shaped band and lower black smear in every frame. The first attempt is preserved at work/review_attempt_1.json.",
+      "limitations": [
+        "Assessment is qualitative from four native 518x350 output frames per branch; input RGB is downscaled only in the contact-sheet layout.",
+        "No hidden-road ground truth or human verdict is available, so scene-correct background recovery and vehicle identity cannot be proved.",
+        "The legal reference is original frame 000 and contains the target vehicle; the visual residue cannot by itself distinguish reference-induced reintroduction from incomplete removal of the raw Gaussian hole.",
+        "This is an inference intervention using the authors' checkpoint at timestep 199 in FP32 with matched primary latent, text embedding and timestep inputs for the paired two-view conditions. Whether these weights were trained for this reference variant is unknown.",
+        "The run records a byte-identical replay of the previous public single-view output and matching two-view primary inputs. Direct local pixel comparison of public single-view versus mv_self across all eight frames found maximum channel difference of one 8-bit level and mean absolute difference below 0.009 per channel; this establishes near pixel equality, not scene correctness. Masked RGB distances are diagnostics rather than identity verdicts.",
+        "No external Figure 5 pixel-equivalence claim is made."
+      ]
+    },
+    "assistant_review_path": "diagnostics/reference_refinement_r1/assistant_review.json"
+  },
+  "official_figure5_visual_review": {
+    "status": "all_ten_official_html_panels_viewed",
+    "source": "https://arxiv.org/html/2512.03004v1#S4.SS3",
+    "image_urls": [
+      "https://arxiv.org/html/2512.03004v1/images/3.1.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.2.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.3_.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.4.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.5_.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.6.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.7.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.8.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.9.png",
+      "https://arxiv.org/html/2512.03004v1/images/3.10_.png"
+    ],
+    "method": "Direct official HTML image display and screenshots in available in-app browser; no downloaded remote media",
+    "pdf_pages_viewed": false,
+    "observation": "Author deletion before diffusion already reveals most road at the near vehicle; after diffusion the distant highlighted patch still has blur/dark traces. Ours retains a whole-MPV-width gray/black area. Scene/object size/observation coverage differ; not a causal matched comparison.",
+    "cross_scene_insertion_not_reproduced": true,
+    "next_bounded_cpu_question": "estimated geometric background support over actual projected Gaussian footprints and depth layers within the saved alpha-loss hole",
+    "source_review_local": "work/dggt-edit-protocol-20261011/figure5_actual_primary_review.md",
+    "human_verdict": null
   }
 }
