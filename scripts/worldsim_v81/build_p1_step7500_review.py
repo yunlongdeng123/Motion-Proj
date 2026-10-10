@@ -207,7 +207,18 @@ def propagation_case(page: Path, root: Path | None, sequence: str, side: str,
                     != [sequence, side, f"frames_{stem}"]):
                 raise ValueError(f"条件展示元数据不符: {case_path}/{stem}")
             conditions.append(column(page, folder, stem, label, "仅条件展示 · 非生成"))
-    return {"status": "ready", "columns": columns,
+    review = None
+    review_path = case_dir / "assistant_review.json"
+    if review_path.is_file():
+        review = read_json(review_path)
+        if (review.get("human_verdict", "missing") is not None
+                or review.get("frames_reviewed") != 25
+                or review.get("sequence_id") != sequence
+                or review.get("side") != side):
+            raise ValueError(f"传播助手审核元数据不符: {review_path}")
+    measurement = case.get("measurement", {})
+    return {"status": "ready", "columns": columns, "review": review,
+            "measurement": measurement,
             "conditions": conditions,
             "conditions_note": ("三列条件可视化均已核对25帧。" if len(conditions) == 3
                                 else f"条件可视化已到 {len(conditions)}/3 列；其余待完成。"),
@@ -270,13 +281,14 @@ button,input{font:inherit}button{cursor:pointer;color:var(--text);background:var
 </style></head><body><main>
 <header><div><div class="eyebrow">Seen-to-Scene · P1 / fixed-window review</div><h1>7500 步人工审核</h1><p class="sub">同一组六个 25 帧短窗，逐帧比较 5000→7500 的原生生成、侧区和接缝。助手结论只在实际审核记录到齐后显示，人工 verdict 保持未填写。</p></div><div><span class="pill ok">7500 媒体已核对</span><span class="pill wait" id="overallReview">助手结论：待完成</span><span class="pill wait">人工 verdict：未填写</span></div></header>
 <section class="panel architecture" aria-label="architecture components：输入、关键组件、数据流与输出"><span class="box">中心可见视频</span><span class="arrow">→</span><span class="box">VAE + RAFT 光流</span><span class="arrow">→</span><span class="box">双向潜变量传播</span><span class="arrow">→</span><span class="box">SVD 去噪</span><span class="arrow">→</span><span class="box">原生 25 帧</span><span class="arrow">→</span><span class="box">可见区硬写回</span><span class="arch-note">GT 仅作目标与写回参考</span></section>
+<section class="panel"><strong>结果概览</strong><p id="resultSummary" class="muted">助手审核记录待完成。</p><p class="muted">7500 完整 checkpoint 已保存；训练停止，服务器保持开机。</p></section>
 <section class="panel"><strong>实验范围</strong><p class="muted">固定六窗、seed 2026、25 步、25 帧、paper-feedforward / paper-bidirectional-m4。这是局部诊断，不是正式 90+60 基准或论文四指标。传播区仅比较推理时跨帧条件，不代表重训。</p></section>
 <nav class="panel nav" id="nav" aria-label="选择验证窗"></nav>
 <section class="panel"><div class="head"><div><h2 id="title"></h2><p class="muted" id="windowId"></p></div><div class="scores"><span class="score" id="oldScore"></span><span class="score" id="newScore">7500 助手结论：待完成</span><span class="score">人工 verdict <strong>未填写</strong></span></div></div>
 <div class="controls"><button id="play">播放全部</button><button id="prev">上一帧</button><button id="next">下一帧</button><input id="slider" type="range" min="0" max="24" value="0" aria-label="逐帧查看"><span class="counter" id="counter">00 / 24</span><button id="videoMode" class="active">视频</button><button id="pngMode">逐帧 PNG</button></div>
 <div class="grid" id="grid"></div><div class="notice">硬写回列的中央可见区直接来自 GT。只从两侧生成区域和接缝判断该列；5000 旧评分仅供历史参照，不推定 7500 效果。</div>
 <div class="ablation"><h2>7500 助手审核证据</h2><div class="muted" id="reviewEvidence">待完成。</div></div>
-<div class="ablation"><h2>传播收益 · 推理消融</h2><p class="muted" id="propStatus"></p><div class="grid" id="propGrid"></div><h3>条件可视化 · VAE 解码，仅用于解释条件，不是 QUERY 生成帧</h3><p class="muted" id="conditionStatus"></p><div class="grid" id="conditionGrid"></div></div></section>
+<div class="ablation"><h2>传播收益 · 推理消融</h2><p class="muted" id="propStatus"></p><div class="notice" id="propEvidence"></div><div class="grid" id="propGrid"></div><h3>条件可视化 · VAE 解码，仅用于解释条件，不是 QUERY 生成帧</h3><p class="muted" id="conditionStatus"></p><div class="grid" id="conditionGrid"></div></div></section>
 <p class="foot">本页只链接已存在的本地 MP4 与每列 00000..00024 PNG；构建过程不重新编码，也不计算 FVD。</p>
 </main><script>
 const cases=__DATA__;const $=id=>document.getElementById(id);let active=0,frame=0,mode='video',timer=null;
@@ -290,6 +302,8 @@ function setMode(next){stop();mode=next;$('videoMode').classList.toggle('active'
 function addEvidence(parent,label,value){if(!value)return;let values=Array.isArray(value)?value:[value];values.forEach(item=>{let p=document.createElement('p');p.textContent=label+String(item);parent.append(p)})}
 function select(i){stop();active=i;frame=0;let c=cases[i];$('title').textContent=c.title;$('windowId').textContent=c.sequence+' / '+c.side+' · f00–f24';let old=c.old_native_score;$('oldScore').textContent=old==null?'5000 旧评分：未提供':'5000 旧评分：原生 '+Number(old).toFixed(2)+' / 写回 '+Number(c.old_comp_score).toFixed(2)+'（'+(c.old_decision||'无结论')+'）';let r=c.review;$('newScore').textContent=r?'7500 助手：'+r.decision+' · 原生 '+Number(r.native_score).toFixed(2)+' / 写回 '+Number(r.comp_score).toFixed(2):'7500 助手结论：待完成';$('reviewEvidence').replaceChildren();if(r){addEvidence($('reviewEvidence'),'相对 5000：',r.compared_5000);addEvidence($('reviewEvidence'),'证据：',r.evidence);addEvidence($('reviewEvidence'),'限制：',r.limitations)}else $('reviewEvidence').textContent='本窗助手审核记录尚未到；待完成。';document.querySelectorAll('#nav button').forEach((b,j)=>b.classList.toggle('active',i===j));$('grid').replaceChildren();c.columns.forEach((col,j)=>addTile($('grid'),col,j===3?'native':j===4?'comp':'',descriptions[j]));$('propGrid').replaceChildren();$('conditionGrid').replaceChildren();$('propStatus').textContent=c.propagation.reason;$('conditionStatus').textContent=c.propagation.status==='ready'?c.propagation.conditions_note:'条件可视化待完成。';if(c.propagation.status==='ready'){c.propagation.columns.forEach((col,j)=>addTile($('propGrid'),col,j>1?'comp':'native',j>1?'GT 中央硬写回；比较侧区与接缝':'相同权重与输入的原生输出'));c.propagation.conditions.forEach(col=>addTile($('conditionGrid'),col,'','仅展示条件；不代表最终生成质量'))}seek(0)}
 const reviewed=cases.filter(c=>c.review).length;$('overallReview').textContent=reviewed===6?'助手审核：6/6 窗已记录':'助手审核：'+reviewed+'/6 窗；其余待完成';
+if(reviewed===6){let usable=cases.filter(c=>Math.min(c.review.native_score,c.review.comp_score)>=2).length;let reviewedProp=cases.filter(c=>c.propagation.review).length;let clearProp=cases.filter(c=>c.propagation.review&&c.propagation.review.decision!=='no_clear_gain').length;$('resultSummary').textContent='5000→7500 的结构和动作变化见逐窗证据；'+usable+'/6 窗达到本次 2 分可用门槛，'+(usable===6?'六窗均达到门槛。':'整体仍未通过。')+(reviewedProp===6?(clearProp===0?'六窗传播开／关均未见明确视觉收益。':'传播开／关有 '+clearProp+' 窗需查看独立结论。'):'传播审核待完成。')}
+const selectBase=select;select=function(i){selectBase(i);let p=cases[i].propagation,r=p.review,m=p.measurement||{};$('propEvidence').replaceChildren();if(r){addEvidence($('propEvidence'),'全25帧助手结论：',r.decision);addEvidence($('propEvidence'),'视觉证据：',r.evidence);addEvidence($('propEvidence'),'条件观察：',r.condition_observation)}else addEvidence($('propEvidence'),'','传播全帧审核待完成。');let g=m.final_output_gain_positive_is_better;if(g)addEvidence($('propEvidence'),'洞区MAE改善（0–255，正值有利，仅像素代理）：',Number(g.hole_rgb_mae_0_255).toFixed(3));};
 cases.forEach((c,i)=>{let b=document.createElement('button');b.textContent=c.title;b.onclick=()=>select(i);$('nav').append(b)});$('play').onclick=()=>timer?stop():play();$('prev').onclick=()=>{stop();seek(frame-1)};$('next').onclick=()=>{stop();seek(frame+1)};$('slider').oninput=e=>{stop();seek(e.target.value)};$('videoMode').onclick=()=>setMode('video');$('pngMode').onclick=()=>setMode('png');select(0);
 </script></body></html>'''
 
