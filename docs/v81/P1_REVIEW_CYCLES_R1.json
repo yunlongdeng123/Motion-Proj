@@ -1,0 +1,54 @@
+{
+  "status": "preflight_pass",
+  "source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt",
+  "source_step": 7500,
+  "target_step": 10000,
+  "expected_checkpoint_steps": [
+    8000,
+    9000,
+    10000
+  ],
+  "data_free_bytes": 197455314944,
+  "required_bytes": 16499494373,
+  "valid_root": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/valid/JPEGImages",
+  "training_args": {
+    "data_root": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages",
+    "svd": "/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1",
+    "raft_weight": "/root/autodl-tmp/models/worldsim_v77_poc_propainter/raft-things.pth",
+    "fcnet_weight": "/root/autodl-tmp/models/worldsim_v77_poc_propainter/recurrent_flow_completion.pth",
+    "external": "/root/autodl-tmp/external/seen_to_scene_v81",
+    "seed": 123,
+    "lr": 1e-05,
+    "amp": "bf16",
+    "propagation_protocol": "paper-bidirectional-m4",
+    "raft_iters": 20,
+    "raft_pair_chunk": 2
+  },
+  "source_cpu_contract": {
+    "step": 7500,
+    "full_checkpoint_bytes": 4833164791,
+    "source_step": 7500,
+    "adam_states": 514,
+    "protocol_unchanged": true,
+    "scheduler_step": 7500,
+    "rng_keys_present": true
+  },
+  "cpu_checks": [
+    "absolute_1000_and_target_save",
+    "diagnostic_exclusion",
+    "source_full_metadata",
+    "all_six_same_valid_frames",
+    "gpu_idle"
+  ],
+  "assistant_static_review": {
+    "reviewer": "gpt-6-sol",
+    "reasoning_effort": "xhigh",
+    "fast": false,
+    "verdict": "no_first_cycle_launch_blocker",
+    "gpu_run_reviewed": false
+  },
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none"
+}

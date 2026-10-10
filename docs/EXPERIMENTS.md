@@ -5,7 +5,7 @@
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
 | WS-V81-STORAGE-20261010 / r1 | 授权清理释放105.95GB；旧优化器退役、推理权重保留；当前P1继续运行 | [清单与恢复边界](v81/STORAGE_CLEANUP_20261010.md) · [实测](v81/STORAGE_CLEANUP_20261010.json) |
-| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 7500保存并停止训练；有局部进步、仅白鲸小外扩达到2分，整体hold；零更新传播六窗no_clear_gain，v77/failure评估完成 | [7500评估](v81/P1_STEP7500_EVALUATION_R1.md)、[7500实测](v81/P1_STEP7500_EVALUATION_R1.json)、[协议](v81/YOUTUBE_VOS_P1_R1.md)、[早期实测](v81/P1_PROGRESS_AUDIT_R1.md) |
+| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 用户重新授权7500→10000；整千保存、2500收益复盘、5000倍数复盘后滚动清理、每小时检查；7500局部进步和传播六窗阴性证据保留 | [周期训练策略](v81/P1_REVIEW_CYCLES_R1.md)、[7500评估](v81/P1_STEP7500_EVALUATION_R1.md)、[7500实测](v81/P1_STEP7500_EVALUATION_R1.json)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r1 | 原始nuScenes 6 train+2 val/200连续帧；两步真实优化+checkpoint恢复、独立val 25帧生成完成；显存/推理mask维度工程修复，18审核视频，非P1指标复现 | [协议与证据](v81/NUSCENES_P0_R1.md) · [实测](v81/P0_R1_RESULTS.json) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r0 | v7.7继承分支；Seen-to-Scene方法核对，CPU数据与传播原语准备；真实训练0步／推理0窗 | [报告](v81/SEEN_TO_SCENE_P0.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r53 | SAM3 ModelScope权重与真实轮廓CPU入口；旧矩形接口排查，推理0窗/训练0步 | [报告](v77/REAL_INSTANCE_MASK_R53.md) |

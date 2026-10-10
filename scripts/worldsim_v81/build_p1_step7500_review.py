@@ -1,4 +1,4 @@
-"""构建 P1 step7500 人工审核页；只引用已有媒体，不启动推理或重编码。"""
+"""构建 P1 相邻复盘点人工审核页；只引用已有媒体，不启动推理或重编码。"""
 
 from __future__ import annotations
 
@@ -68,48 +68,36 @@ def validate_run(run: dict, step: int, sequence: str, side: str, path: Path) -> 
 def paired_runs(old: dict, new: dict, old_path: Path, new_path: Path) -> None:
     for key in PAIR_KEYS:
         if key not in old or key not in new or old[key] != new[key]:
-            raise ValueError(f"5000/7500 未配对 {key}: {old_path} <> {new_path}")
+            raise ValueError(f"相邻复盘点未配对 {key}: {old_path} <> {new_path}")
 
 
-def old_scores(media: Path) -> dict[tuple[str, str], dict]:
-    base = media / "paper_bidirectional_m4/validation/step005000"
-    paths = (base / "assistant_review_skater_dolphin.json",
-             base / "assistant_review_beluga_dolphin.json")
-    if not all(path.is_file() for path in paths):
-        return {}
-    first, second = (read_json(path) for path in paths)
-    if first.get("checkpoint_step") != 5000 or second.get("checkpoint_step") != 5000:
-        raise ValueError("5000 旧评分的 checkpoint_step 不符")
-    rows = first.get("windows", []) + second.get("reviews", [])
-    return {(row["sequence_id"], row["side"]): row for row in rows}
-
-
-def new_reviews(media: Path) -> dict[tuple[str, str], dict]:
-    """7500 审核文件可尚未到；若已到则严格读取，绝不补造结论。"""
-    folder = media / "paper_bidirectional_m4/validation/step007500"
+def assistant_reviews(media: Path, step: int) -> dict[tuple[str, str], dict]:
+    """审核文件可尚未到；若已到则严格读取，绝不补造结论。"""
+    folder = media / f"paper_bidirectional_m4/validation/step{step:06d}"
     found = {}
+    expected = {(seq, side) for seq, side, _ in CASES}
     for path in sorted(folder.glob("assistant_review_*.json")):
         document = read_json(path)
-        if document.get("checkpoint_step") != 7500 or document.get("human_verdict", "missing") is not None:
-            raise ValueError(f"7500 审核元数据或 human_verdict 不符: {path}")
+        if document.get("checkpoint_step") != step or document.get("human_verdict", "missing") is not None:
+            raise ValueError(f"{step} 审核元数据或 human_verdict 不符: {path}")
         rows = document.get("windows", document.get("reviews"))
         if not isinstance(rows, list):
-            raise ValueError(f"7500 审核必须含 windows 或 reviews 数组: {path}")
+            raise ValueError(f"{step} 审核必须含 windows 或 reviews 数组: {path}")
         for row in rows:
             key = (row.get("sequence_id"), row.get("side"))
-            if key not in {(seq, side) for seq, side, _ in CASES} or key in found:
-                raise ValueError(f"7500 审核窗口未知或重复: {path}: {key}")
+            if key not in expected or key in found:
+                raise ValueError(f"{step} 审核窗口未知或重复: {path}: {key}")
             if row.get("frames_reviewed") != 25:
-                raise ValueError(f"7500 审核须覆盖全部25帧: {path}: {key}")
+                raise ValueError(f"{step} 审核须覆盖全部25帧: {path}: {key}")
             for score_key in ("native_score", "comp_score"):
                 if not isinstance(row.get(score_key), (int, float)):
-                    raise ValueError(f"7500 审核评分缺失: {path}: {key}/{score_key}")
+                    raise ValueError(f"{step} 审核评分缺失: {path}: {key}/{score_key}")
             if row.get("decision") not in ("hold", "continue"):
-                raise ValueError(f"7500 审核 decision 缺失或未知: {path}: {key}")
+                raise ValueError(f"{step} 审核 decision 缺失或未知: {path}: {key}")
             found[key] = {"native_score": row["native_score"],
                           "comp_score": row["comp_score"],
                           "decision": row["decision"],
-                          "compared_5000": row.get("compared_5000", ""),
+                          "comparison": row.get(f"compared_{step-2500}", ""),
                           "evidence": row.get("evidence", []),
                           "limitations": row.get("limitations", "")}
     return found
@@ -226,33 +214,45 @@ def propagation_case(page: Path, root: Path | None, sequence: str, side: str,
 
 
 def build_data(page: Path, media: Path, propagation_root: Path | None,
+               before_step: int = 5000, after_step: int = 7500,
                *, check_only: bool = False) -> list[dict]:
     phase = media / "paper_bidirectional_m4/validation"
-    scores = old_scores(media)
-    reviews = new_reviews(media) if not check_only else {}
+    scores = assistant_reviews(media, before_step)
+    reviews = assistant_reviews(media, after_step) if not check_only else {}
     result = []
     for sequence, side, title in CASES:
-        old = phase / "step005000" / sequence / side
+        old = phase / f"step{before_step:06d}" / sequence / side
         old_path = old / "run.json"
         old_run = read_json(old_path)
-        validate_run(old_run, 5000, sequence, side, old_path)
-        # 静态检查在正式 7500 尚未同步时也能完成，但会核实已有 5000 媒体。
+        validate_run(old_run, before_step, sequence, side, old_path)
+        # 静态检查在下一复盘点尚未同步时也能完成，但会核实已有媒体。
         for stem in ("gt", "visible", "pred", "comp"):
             require_assets(old, stem)
         if check_only:
             continue
-        new = phase / "step007500" / sequence / side
+        new = phase / f"step{after_step:06d}" / sequence / side
         new_path = new / "run.json"
+        if not new_path.is_file():
+            raise FileNotFoundError(f"{after_step} 正式六窗媒体尚未同步：缺少 {new_path}")
         new_run = read_json(new_path)
-        validate_run(new_run, 7500, sequence, side, new_path)
+        validate_run(new_run, after_step, sequence, side, new_path)
         paired_runs(old_run, new_run, old_path, new_path)
         columns = [
             column(page, new, "gt", "真实目标 GT", "仅作对照"),
             column(page, new, "visible", "可见输入", "唯一合法输入"),
-            column(page, old, "pred", "5000 步 · 原生", "历史断点"),
-            column(page, new, "pred", "7500 步 · 原生", "当前断点"),
-            column(page, new, "comp", "7500 步 · 硬写回", "中央来自 GT"),
+            column(page, old, "pred", f"{before_step} 步 · 原生",
+                   "历史断点" if after_step == 7500 else "上一复盘点"),
+            column(page, new, "pred", f"{after_step} 步 · 原生",
+                   "当前断点" if after_step == 7500 else "当前复盘点"),
         ]
+        if after_step != 7500:
+            previous_comp = column(page, old, "comp", f"{before_step} 步 · 硬写回", "中央来自 GT")
+            previous_comp["description"] = "上一复盘点的GT中央写回；比较侧区与接缝"
+            columns.append(previous_comp)
+        current_comp = column(page, new, "comp", f"{after_step} 步 · 硬写回", "中央来自 GT")
+        if after_step != 7500:
+            current_comp["description"] = "当前复盘点的GT中央写回；比较侧区与接缝"
+        columns.append(current_comp)
         score = scores.get((sequence, side), {})
         result.append({"id": sequence + "_" + side, "title": title,
                        "sequence": sequence, "side": side,
@@ -261,8 +261,9 @@ def build_data(page: Path, media: Path, propagation_root: Path | None,
                        "old_decision": score.get("decision"),
                        "review": reviews.get((sequence, side)),
                        "columns": columns,
-                       "propagation": propagation_case(page, propagation_root, sequence, side,
-                                                       new, new_run)})
+                       "propagation": (propagation_case(page, propagation_root, sequence, side,
+                                                        new, new_run) if after_step == 7500
+                                       else {"status": "not_applicable", "reason": "传播推理消融仅有 7500 步诊断。"})})
     return result
 
 
@@ -300,38 +301,63 @@ function addTile(container,col,kind,description){let tile=document.createElement
 function play(){if(mode==='png')setMode('video');let vs=allVideos();Promise.all(vs.map(v=>v.play().catch(()=>null)));$('play').textContent='暂停全部';timer=setInterval(()=>{if(!vs.length)return;let t=vs[0].currentTime;vs.slice(1).forEach(v=>{if(Math.abs(v.currentTime-t)>.12){try{v.currentTime=t}catch(e){}}});frame=Math.max(0,Math.min(24,Math.floor(t*7)));$('slider').value=frame;$('counter').textContent=String(frame).padStart(2,'0')+' / 24';if(vs[0].ended)stop()},90)}
 function setMode(next){stop();mode=next;$('videoMode').classList.toggle('active',next==='video');$('pngMode').classList.toggle('active',next==='png');allVideos().forEach(v=>v.hidden=next!=='video');document.querySelectorAll('.frame').forEach(img=>img.hidden=next!=='png');seek(frame)}
 function addEvidence(parent,label,value){if(!value)return;let values=Array.isArray(value)?value:[value];values.forEach(item=>{let p=document.createElement('p');p.textContent=label+String(item);parent.append(p)})}
-function select(i){stop();active=i;frame=0;let c=cases[i];$('title').textContent=c.title;$('windowId').textContent=c.sequence+' / '+c.side+' · f00–f24';let old=c.old_native_score;$('oldScore').textContent=old==null?'5000 旧评分：未提供':'5000 旧评分：原生 '+Number(old).toFixed(2)+' / 写回 '+Number(c.old_comp_score).toFixed(2)+'（'+(c.old_decision||'无结论')+'）';let r=c.review;$('newScore').textContent=r?'7500 助手：'+r.decision+' · 原生 '+Number(r.native_score).toFixed(2)+' / 写回 '+Number(r.comp_score).toFixed(2):'7500 助手结论：待完成';$('reviewEvidence').replaceChildren();if(r){addEvidence($('reviewEvidence'),'相对 5000：',r.compared_5000);addEvidence($('reviewEvidence'),'证据：',r.evidence);addEvidence($('reviewEvidence'),'限制：',r.limitations)}else $('reviewEvidence').textContent='本窗助手审核记录尚未到；待完成。';document.querySelectorAll('#nav button').forEach((b,j)=>b.classList.toggle('active',i===j));$('grid').replaceChildren();c.columns.forEach((col,j)=>addTile($('grid'),col,j===3?'native':j===4?'comp':'',descriptions[j]));$('propGrid').replaceChildren();$('conditionGrid').replaceChildren();$('propStatus').textContent=c.propagation.reason;$('conditionStatus').textContent=c.propagation.status==='ready'?c.propagation.conditions_note:'条件可视化待完成。';if(c.propagation.status==='ready'){c.propagation.columns.forEach((col,j)=>addTile($('propGrid'),col,j>1?'comp':'native',j>1?'GT 中央硬写回；比较侧区与接缝':'相同权重与输入的原生输出'));c.propagation.conditions.forEach(col=>addTile($('conditionGrid'),col,'','仅展示条件；不代表最终生成质量'))}seek(0)}
+function select(i){stop();active=i;frame=0;let c=cases[i];$('title').textContent=c.title;$('windowId').textContent=c.sequence+' / '+c.side+' · f00–f24';let old=c.old_native_score;$('oldScore').textContent=old==null?'5000 旧评分：未提供':'5000 旧评分：原生 '+Number(old).toFixed(2)+' / 写回 '+Number(c.old_comp_score).toFixed(2)+'（'+(c.old_decision||'无结论')+'）';let r=c.review;$('newScore').textContent=r?'7500 助手：'+r.decision+' · 原生 '+Number(r.native_score).toFixed(2)+' / 写回 '+Number(r.comp_score).toFixed(2):'7500 助手结论：待完成';$('reviewEvidence').replaceChildren();if(r){addEvidence($('reviewEvidence'),'相对 5000：',r.comparison);addEvidence($('reviewEvidence'),'证据：',r.evidence);addEvidence($('reviewEvidence'),'限制：',r.limitations)}else $('reviewEvidence').textContent='本窗助手审核记录尚未到；待完成。';document.querySelectorAll('#nav button').forEach((b,j)=>b.classList.toggle('active',i===j));$('grid').replaceChildren();c.columns.forEach((col,j)=>addTile($('grid'),col,j===3?'native':j>=4?'comp':'',col.description||descriptions[j]||''));$('propGrid').replaceChildren();$('conditionGrid').replaceChildren();$('propStatus').textContent=c.propagation.reason;$('conditionStatus').textContent=c.propagation.status==='ready'?c.propagation.conditions_note:'条件可视化待完成。';if(c.propagation.status==='ready'){c.propagation.columns.forEach((col,j)=>addTile($('propGrid'),col,j>1?'comp':'native',j>1?'GT 中央硬写回；比较侧区与接缝':'相同权重与输入的原生输出'));c.propagation.conditions.forEach(col=>addTile($('conditionGrid'),col,'','仅展示条件；不代表最终生成质量'))}seek(0)}
 const reviewed=cases.filter(c=>c.review).length;$('overallReview').textContent=reviewed===6?'助手审核：6/6 窗已记录':'助手审核：'+reviewed+'/6 窗；其余待完成';
-if(reviewed===6){let usable=cases.filter(c=>Math.min(c.review.native_score,c.review.comp_score)>=2).length;let reviewedProp=cases.filter(c=>c.propagation.review).length;let clearProp=cases.filter(c=>c.propagation.review&&c.propagation.review.decision!=='no_clear_gain').length;$('resultSummary').textContent='5000→7500 的结构和动作变化见逐窗证据；'+usable+'/6 窗达到本次 2 分可用门槛，'+(usable===6?'六窗均达到门槛。':'整体仍未通过。')+(reviewedProp===6?(clearProp===0?'六窗传播开／关均未见明确视觉收益。':'传播开／关有 '+clearProp+' 窗需查看独立结论。'):'传播审核待完成。')}
+if(reviewed===6){let usable=cases.filter(c=>Math.min(c.review.native_score,c.review.comp_score)>=2).length;let reviewedProp=cases.filter(c=>c.propagation.review).length;let clearProp=cases.filter(c=>c.propagation.review&&c.propagation.review.decision!=='no_clear_gain').length;$('resultSummary').textContent='5000→7500 的结构和动作变化见逐窗证据；'+usable+'/6 窗达到本次 2 分可用门槛，'+(usable===6?'六窗均达到门槛。':'整体仍未通过。')+(__PROPAGATION_ENABLED__?(reviewedProp===6?(clearProp===0?'六窗传播开／关均未见明确视觉收益。':'传播开／关有 '+clearProp+' 窗需查看独立结论。'):'传播审核待完成。'):'传播推理消融仅有 7500 步诊断，本轮未重复。')}
 const selectBase=select;select=function(i){selectBase(i);let p=cases[i].propagation,r=p.review,m=p.measurement||{};$('propEvidence').replaceChildren();if(r){addEvidence($('propEvidence'),'全25帧助手结论：',r.decision);addEvidence($('propEvidence'),'视觉证据：',r.evidence);addEvidence($('propEvidence'),'条件观察：',r.condition_observation)}else addEvidence($('propEvidence'),'','传播全帧审核待完成。');let g=m.final_output_gain_positive_is_better;if(g)addEvidence($('propEvidence'),'洞区MAE改善（0–255，正值有利，仅像素代理）：',Number(g.hole_rgb_mae_0_255).toFixed(3));};
 cases.forEach((c,i)=>{let b=document.createElement('button');b.textContent=c.title;b.onclick=()=>select(i);$('nav').append(b)});$('play').onclick=()=>timer?stop():play();$('prev').onclick=()=>{stop();seek(frame-1)};$('next').onclick=()=>{stop();seek(frame+1)};$('slider').oninput=e=>{stop();seek(e.target.value)};$('videoMode').onclick=()=>setMode('video');$('pngMode').onclick=()=>setMode('png');select(0);
 </script></body></html>'''
+
+
+def render_html(cases: list[dict], before_step: int, after_step: int) -> str:
+    # 模板保留7500传播诊断；后续轮次只展示本轮正式六窗。
+    html = HTML.replace("5000", "__BEFORE_STEP__").replace("7500", str(after_step))
+    html = html.replace("__BEFORE_STEP__", str(before_step))
+    html = html.replace("__PROPAGATION_ENABLED__", "true" if after_step == 7500 else "false")
+    if after_step != 7500:
+        html = html.replace("grid-template-columns:repeat(5,minmax(0,1fr))",
+                            "grid-template-columns:repeat(6,minmax(0,1fr))")
+        html = html.replace('<div class="ablation"><h2>传播收益 · 推理消融</h2>',
+                            '<div class="ablation" style="display:none"><h2>传播收益 · 推理消融</h2>')
+        html = html.replace(f"传播推理消融仅有 {after_step} 步诊断，本轮未重复。",
+                            "传播推理消融仅有 7500 步诊断，本轮未重复。")
+        html = html.replace(f"{after_step} 完整 checkpoint 已保存；训练停止，服务器保持开机。",
+                            "本页只核对已有媒体；训练与服务器状态以控制器记录为准。")
+        html = html.replace("传播区仅比较推理时跨帧条件，不代表重训。",
+                            "传播推理消融仅有7500步诊断，本轮未重复。")
+    return html.replace("__DATA__", json.dumps(cases, ensure_ascii=False).replace("<", "\\u003c"))
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--media", type=Path, default=DEFAULT_MEDIA,
                         help="本地 outputs/v81-paper-p1 媒体根目录")
-    parser.add_argument("--output", type=Path, help="输出 HTML；默认 MEDIA/step7500_review.html")
+    parser.add_argument("--output", type=Path, help="输出 HTML；默认 MEDIA/step<after-step>_review.html")
+    parser.add_argument("--before-step", type=int, default=5000, help="上一复盘点，默认5000")
+    parser.add_argument("--after-step", type=int, default=7500, help="当前复盘点，默认7500")
     parser.add_argument("--propagation-root", type=Path,
                         help="可选 run root 或 propagation_ablation_step7500 目录；普通支复用正式7500媒体")
     parser.add_argument("--check-only", action="store_true",
-                        help="只验证脚本契约与现有 5000 六窗，不要求 7500 已到")
+                        help="只验证脚本契约与上一复盘点六窗，不要求当前媒体已到")
     args = parser.parse_args()
+    if args.before_step < 5000 or args.after_step != args.before_step + 2500:
+        parser.error("复盘点须从5000起，每轮相隔2500步")
     media = args.media.resolve()
-    page = (args.output or media / "step7500_review.html").resolve()
+    page = (args.output or media / f"step{args.after_step}_review.html").resolve()
     if "__DATA__" not in HTML or len(CASES) != 6:
         raise ValueError("页面模板或固定六窗契约损坏")
     cases = build_data(page, media, args.propagation_root.resolve() if args.propagation_root else None,
+                       args.before_step, args.after_step,
                        check_only=args.check_only)
     if args.check_only:
-        print(json.dumps({"status": "static_ok", "step5000_windows_checked": len(CASES),
-                          "step7500_required": False, "output_written": False}, ensure_ascii=False))
+        print(json.dumps({"status": "static_ok", "before_step": args.before_step,
+                          "before_windows_checked": len(CASES), "after_step": args.after_step,
+                          "after_required": False, "output_written": False}, ensure_ascii=False))
         return
     page.parent.mkdir(parents=True, exist_ok=True)
-    page.write_text(HTML.replace("__DATA__", json.dumps(cases, ensure_ascii=False).replace("<", "\\u003c")),
-                    encoding="utf-8")
-    print(json.dumps({"output": str(page), "windows": len(cases), "main_media_links": len(cases) * 5 * 26,
+    page.write_text(render_html(cases, args.before_step, args.after_step), encoding="utf-8")
+    print(json.dumps({"output": str(page), "windows": len(cases),
+                      "main_media_links": sum(len(c["columns"]) * 26 for c in cases),
                       "propagation_ready": sum(c["propagation"]["status"] == "ready" for c in cases),
                       "assistant_reviews_loaded": sum(c["review"] is not None for c in cases),
                       "human_verdict": None}, ensure_ascii=False))
