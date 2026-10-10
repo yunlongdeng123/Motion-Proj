@@ -2183,5 +2183,305 @@
       "optimizer_updates": 0,
       "human_verdict": null
     }
+  },
+  "bounded5000": {
+    "measurements": {
+      "status": "complete",
+      "checkpoint_step": 5000,
+      "source_step": 2000,
+      "added_updates": 3000,
+      "checkpoint_bytes": 4833164727,
+      "checkpoint_symlink": true,
+      "checkpoint_realpath": "/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt",
+      "optimizer_states": 514,
+      "optimizer_step_values": [
+        5000
+      ],
+      "logged_finite_gradients": true,
+      "frozen_gradients_zero": true,
+      "training_wall_seconds": 18112.99249459413,
+      "mean_seconds_per_update": 6.037664164864711,
+      "unique_training_videos": 1537,
+      "training_gpu_peak_gb": 18.398257732391357,
+      "validation_windows": [
+        {
+          "sequence_id": "00f88c4f0a",
+          "side_ratio_each": 0.125,
+          "elapsed_seconds": 25.81575658399379,
+          "gpu_peak_allocated_gb": 9.467642307281494
+        },
+        {
+          "sequence_id": "00f88c4f0a",
+          "side_ratio_each": 0.33,
+          "elapsed_seconds": 24.954566022002837,
+          "gpu_peak_allocated_gb": 9.467642307281494
+        },
+        {
+          "sequence_id": "7e625db8c4",
+          "side_ratio_each": 0.125,
+          "elapsed_seconds": 24.955744106991915,
+          "gpu_peak_allocated_gb": 9.467642307281494
+        },
+        {
+          "sequence_id": "7e625db8c4",
+          "side_ratio_each": 0.33,
+          "elapsed_seconds": 24.494368644984206,
+          "gpu_peak_allocated_gb": 9.467642307281494
+        },
+        {
+          "sequence_id": "ff6eb95840",
+          "side_ratio_each": 0.125,
+          "elapsed_seconds": 25.329248637979617,
+          "gpu_peak_allocated_gb": 9.493277072906494
+        },
+        {
+          "sequence_id": "ff6eb95840",
+          "side_ratio_each": 0.33,
+          "elapsed_seconds": 24.56949467898812,
+          "gpu_peak_allocated_gb": 9.467642307281494
+        }
+      ],
+      "decoded_videos": 24,
+      "decoded_frames": 600,
+      "free_data_bytes": 108066435072,
+      "free_root_bytes": 1661984768,
+      "human_verdict": null,
+      "formal_metrics_computed": false,
+      "assistant_quality_decision": "hold",
+      "assistant_gate": "assistant_gate.json",
+      "all_150_frames_reviewed": true
+    },
+    "quality_gate": {
+      "reviewer": "assistant",
+      "checkpoint_step": 5000,
+      "decision": "hold",
+      "all_150_frames_reviewed": true,
+      "human_verdict": null,
+      "summary": "独立助手审核全部150帧：六窗整体hold。海豚每侧0.125的躯体/尾鳍较2000连贯，可继续观察；其余五窗仍未可靠跟随动作、尺度或构图。白鲸/海豚宽洞有动态及局部结构进展，滑板仍持续天空而输入已转向地面。硬写回中心不计模型收益；这不是最终论文指标或唯一模块归因。",
+      "cases": [
+        {
+          "sequence_id": "00f88c4f0a",
+          "side": "side_0.125",
+          "native_score": 0.25,
+          "comp_score": 0.25,
+          "decision": "hold"
+        },
+        {
+          "sequence_id": "00f88c4f0a",
+          "side": "side_0.33",
+          "native_score": 0.25,
+          "comp_score": 0.0,
+          "decision": "hold"
+        },
+        {
+          "sequence_id": "7e625db8c4",
+          "side": "side_0.125",
+          "native_score": 1.25,
+          "comp_score": 1.5,
+          "decision": "continue"
+        },
+        {
+          "sequence_id": "ff6eb95840",
+          "side": "side_0.125",
+          "native_score": 0.9,
+          "comp_score": 1.1,
+          "decision": "hold"
+        },
+        {
+          "sequence_id": "ff6eb95840",
+          "side": "side_0.33",
+          "native_score": 0.6,
+          "comp_score": 0.7,
+          "decision": "hold"
+        },
+        {
+          "sequence_id": "7e625db8c4",
+          "side": "side_0.33",
+          "native_score": 0.8,
+          "comp_score": 0.7,
+          "decision": "hold"
+        }
+      ],
+      "review_files": [
+        "assistant_review_skater_dolphin.json",
+        "assistant_review_beluga_dolphin.json"
+      ],
+      "review_models": [
+        "gpt-6-sol/xhigh/no-fast"
+      ],
+      "formal_metrics_computed": false
+    },
+    "next_action": "same_protocol_5000_to_7500_bounded_learning_point",
+    "diagnostic_only": true,
+    "formal_protocol_changed": false
+  },
+  "fcnet_edge_order_step5000": {
+    "status": "recovered_from_saved_media_and_captures",
+    "source_checkpoint_step": 5000,
+    "optimizer_updates": 0,
+    "sequence_id": "00f88c4f0a",
+    "side_ratio_each": 0.125,
+    "seed": 2026,
+    "steps": 25,
+    "ordinary_replays_formal_all25_exact": true,
+    "cpu_capture_checks": {
+      "shared_initial_latent_exact": true,
+      "shared_vae_input_exact": true,
+      "shared_observation_latent_exact": true,
+      "shared_clip_exact": true,
+      "shared_time_ids_exact": true,
+      "static_masks_exact": true,
+      "raw_flow_fw_perm_exact": true,
+      "raw_flow_fw_inverse_exact": true,
+      "predicted_flow_fw_inverse_exact": true,
+      "baseline_output_fw_identity_exact": true,
+      "baseline_completed_fw_formula_exact": true,
+      "ordered_completed_fw_formula_exact": true,
+      "raw_flow_bw_perm_exact": true,
+      "raw_flow_bw_inverse_exact": true,
+      "predicted_flow_bw_inverse_exact": true,
+      "baseline_output_bw_identity_exact": true,
+      "baseline_completed_bw_formula_exact": true,
+      "ordered_completed_bw_formula_exact": true,
+      "captured_tensors_finite": true
+    },
+    "saved_png_response_mae_0to1": 0.00972042946410335,
+    "unrecoverable_metrics": {
+      "native_response_mean_abs_float": null,
+      "elapsed_seconds": null,
+      "peak_cuda_allocated_gib": null,
+      "gt_raft_flow_proxy_after_both_queries": null,
+      "reason": "原RAM report在末尾JSON序列化失败；现有媒体/capture不足以精确重建这些值，绝不重跑GPU或猜测。"
+    },
+    "original_failure": {
+      "stage": "final_run_json_serialization",
+      "error": "TypeError: Object of type int64 is not JSON serializable",
+      "log": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/logs/fcnet_edge_order_step5000.log",
+      "original_source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/fcnet_edge_order_step5000_00f88c4f0a_side0125/source_v81_fcnet_edge_order_step5000.py",
+      "original_source_sha256": "1b87e2525ebfb54303de4db1fd7e888225da3f28185f5db1b21907c41319a77b",
+      "recovery_did_not_modify_original_log_or_source": true
+    },
+    "assistant_review": {
+      "reviewer": "assistant",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "xhigh",
+      "no_fast": true,
+      "human_verdict": null,
+      "all_25_frames_reviewed": true,
+      "frame_ranges_reviewed": [
+        "00-04",
+        "05-09",
+        "10-14",
+        "15-19",
+        "20-24"
+      ],
+      "checkpoint_step": 5000,
+      "sequence_id": "00f88c4f0a",
+      "side": "side_0.125",
+      "experiment": "zero-update FCNet edge order; original versus target-sorted order with predictions restored to original pair order",
+      "score_scale": "Scores may use decimals or exceed 2; 2 means acceptable rather than maximum quality; hard-written GT center excluded from model credit",
+      "scores": {
+        "native_original_order": 0.25,
+        "native_sorted_target": 0.25,
+        "comp_original_order": 0.25,
+        "comp_sorted_target": 0.25
+      },
+      "decision": "no_clear_gain",
+      "evidence": [
+        "At f00-f02, both native columns reproduce some sky, tree and upper-building context. From f03-f06 GT tilts down to reveal the skater, plaza paving and upright buildings, but both native columns remain mostly sky with displaced building/tree fragments.",
+        "GT skater crouches at f07-f09, rises and jumps at f10-f13, lands at f14-f16, and rolls or pushes at f17-f24. In both native columns, a high-contrast dark vertical mass appears around f07-f16 and then shrinks into small marks by f17-f22. It does not become a coherent person or skateboard, follow the skater's left-side position or match the ground-level composition.",
+        "Across all five boards, original-order and sorted-target native frames look structurally the same. Any small local pixel changes do not create a visible action, scale, ground-plane or two-side continuity gain.",
+        "Both hard composites display the GT-written center, including the clear skater and pavement. Generated side strips continue to show sky/tree or dark fragments beside ground-level GT content, leaving obvious seams. The sorted composite shows no clear seam improvement."
+      ],
+      "limitations": [
+        "This is one 25-frame sequence and one mask width, not a formal validation metric or a multi-sequence result.",
+        "The sorted order is out of distribution for the unchanged weights; this review assesses this zero-update control only and does not predict the result of retraining with a different order.",
+        "GT in the hard-written composite center is not counted as model improvement; subtle pixel differences alone are not treated as evidence of structural gain."
+      ]
+    },
+    "delivery": {
+      "new_videos_fully_decoded": 8,
+      "decoded_frame_counts": {
+        "ordinary_original_order/gt": 25,
+        "ordinary_original_order/visible": 25,
+        "ordinary_original_order/pred": 25,
+        "ordinary_original_order/comp": 25,
+        "chronological_target_order/gt": 25,
+        "chronological_target_order/visible": 25,
+        "chronological_target_order/pred": 25,
+        "chronological_target_order/comp": 25
+      },
+      "qa_boards": 5,
+      "all_25_frames_available": true,
+      "ordinary_formal_png_exact": true,
+      "human_verdict": null
+    },
+    "limits": [
+      "仅一个固定valid窗；重排对按旧边序训练的权重是分布外输入。",
+      "8bit PNG响应仅是保存图像的离散像素差，不等于原浮点native_response，更不是画质收益。",
+      "CPU从落盘capture能核对FCNet输入、输出、逆置换及combine公式，不能恢复未保存的全部UNet/传播运行时trace。"
+    ],
+    "formal_protocol_changed": false,
+    "formal_metrics_computed": false,
+    "human_verdict": null
+  },
+  "bounded7500": {
+    "status": "running",
+    "actual_snapshot": {
+      "observed_at_utc": "2026-10-10T07:28:18.578967+00:00",
+      "status": "train_to_007500",
+      "source_step": 5000,
+      "training_budget": 7500,
+      "observed_train_step": 5007,
+      "added_updates_observed": 7,
+      "last_event": "train_step",
+      "processes": {
+        "controller_pid": {
+          "pid": 49266,
+          "alive": true,
+          "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_7500.py --worker "
+        },
+        "child_pid": {
+          "pid": 49271,
+          "alive": true,
+          "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500 --max-steps 7500 --save-every 7500 --keep-checkpoints 1 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt "
+        }
+      },
+      "source_checkpoint": "/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt",
+      "propagation_protocol": "paper-bidirectional-m4",
+      "inference_mode": "paper-feedforward",
+      "queued_gpu_jobs": [],
+      "power_policy": "keep_autodl_running_autoresearch",
+      "new_7500_validation_available": false,
+      "complete_validation_windows": 0,
+      "free_data_bytes": 107499106304,
+      "free_system_bytes": 1661984768,
+      "human_verdict": null,
+      "formal_metrics_computed": false
+    },
+    "launch_verification": {
+      "source_resume_step": 5000,
+      "first_new_step": 5001,
+      "observed_step": 5011,
+      "new_updates": 11,
+      "all_logged_gradients_finite": true,
+      "frozen_grad_tensors_max": 0,
+      "observed_seconds_per_update_mean": null,
+      "gpu_compute": "49271, 21306 MiB"
+    },
+    "max_added_updates": 2500,
+    "final_checkpoint_dir": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500",
+    "formal_protocol_changed": false,
+    "automatic_100k": false
+  },
+  "step5000_dark_review": {
+    "page": "outputs/v81-paper-p1/step5000_review.html",
+    "windows": 6,
+    "video_columns": 5,
+    "checked_local_media_links": 780,
+    "javascript_syntax_check": true,
+    "browser_visual_check": false,
+    "browser_check_limitation": "Browser tool security policy blocks file:// protocol; no workaround used.",
+    "human_verdict": null
   }
 }

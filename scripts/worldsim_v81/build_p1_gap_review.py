@@ -91,6 +91,14 @@ def main() -> None:
     <div class="panel warn"><b>P1正式指标尚未计算：正式训练与诊断分别报告。</b><p>旧条件隔离使用100步权重且更新0；正式500步验证质量hold，当前验证状态见下方。固定片段64步控制另列。原始SVD生成不是外扩任务或论文指标。完整GT条件只作BUILD诊断，不能用于正式QUERY；人工verdict留空。</p></div>'''
     sections = [header, condition_gap_panel(gap),
                 review_note(output/'condition_gap_teacher', 'condition_gap_teacher')]
+    if (output/'step5000_review.html').is_file():
+        sections.insert(1, '<div class="panel"><h2>5000步人工审核</h2><a href="step5000_review.html">打开独立深色页面：六窗、2000/5000对照、同步播放与逐帧PNG</a></div>')
+    bounded7500_path = output/'bounded7500_state.json'
+    bounded7500 = read(bounded7500_path) if bounded7500_path.is_file() else None
+    if bounded7500:
+        if bounded7500.get('source_step') != 5000 or bounded7500.get('training_budget') != 7500:
+            raise ValueError('5000→7500快照预算不符')
+        sections.insert(1, f'<div class="panel"><h2>当前有界学习点：正式5000 → 7500</h2><p>从完整5000模型/Adam/RNG恢复，最多新增2500更新。快照 {html.escape(bounded7500["observed_at_utc"])} 记录 {bounded7500["observed_train_step"]} 步；不是实时状态，不代表7500质量已通过。</p><a href="bounded7500_state.json">实际PID、命令与采集状态</a></div>')
     bounded2000_summary = ''
     bounded2000_panel = None
     bounded5000_summary = ''
@@ -260,6 +268,71 @@ def main() -> None:
                     sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
                 sections.append(f'</div><a href="{base}/step002000/{suffix}/run.json">2000步窗口运行记录</a></article>')
             sections.append(f'<p>{step2000_gate_status}</p><p>{step2000_review}</p></div>')
+    step5000 = output/'paper_bidirectional_m4/validation/step005000'
+    newest = sorted(step5000.glob('*/side_*/run.json'))
+    if newest:
+        if len(newest) != 6 or not step2000_ready:
+            raise ValueError('5000步必须同步六窗及匹配2000步对照')
+        gate_path = step5000/'assistant_gate.json'
+        gate = read(gate_path) if gate_path.is_file() else None
+        if gate and (gate.get('checkpoint_step') != 5000 or gate.get('reviewer') != 'assistant'
+                     or gate.get('all_150_frames_reviewed') is not True
+                     or gate.get('human_verdict') is not None):
+            raise ValueError('5000步审核来源或范围不符')
+        verdict = html.escape(gate['summary']) if gate else '独立全帧审核尚未完成'
+        sections.append(f'<div class="panel" id="validation-step5000"><h2>正式5000步六窗：2000 / 5000原生对照</h2><p>{verdict}</p><p>同seed、输入、mask与25步采样。中心硬写回来自真实输入，不能算原生恢复；本页不是正式论文指标。</p>')
+        for path in newest:
+            meta = read(path)
+            suffix = path.parent.relative_to(step5000).as_posix()
+            previous = read(step2000/suffix/'run.json')
+            same = ('sequence_id', 'side_ratio_each', 'seed', 'mask_pixels_left',
+                    'mask_pixels_right', 'source_frames', 'num_frames', 'mode', 'steps')
+            if (meta.get('status') != 'complete' or meta.get('checkpoint_step') != 5000
+                    or meta.get('num_frames') != 25
+                    or any(meta.get(key) != previous.get(key) for key in same)):
+                raise ValueError(f'5000步对照条件不匹配: {suffix}')
+            base = 'paper_bidirectional_m4/validation'
+            videos = ((f'{base}/step005000/{suffix}/gt.mp4', '真实视频'),
+                      (f'{base}/step005000/{suffix}/visible.mp4', '实际可见输入'),
+                      (f'{base}/step002000/{suffix}/pred.mp4', '2000步原生'),
+                      (f'{base}/step005000/{suffix}/pred.mp4', '5000步原生'),
+                      (f'{base}/step005000/{suffix}/comp.mp4', '5000步中心硬写回'))
+            if not all((output/name).is_file() for name, _ in videos):
+                raise FileNotFoundError(f'5000步媒体缺失: {suffix}')
+            sections.append(f'<article><h3>{html.escape(meta["sequence_id"])} · 每侧{meta["side_ratio_each"]:g}</h3><div class="five">')
+            for name, label in videos:
+                sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
+            sections.append(f'</div><a href="{base}/step005000/{suffix}/run.json">5000步运行记录</a></article>')
+        for report in sorted(step5000.glob('assistant_review*.json')):
+            sections.append(f'<a href="paper_bidirectional_m4/validation/step005000/{report.name}">{html.escape(report.name)}</a> ')
+        if gate:
+            sections.append('<p><a href="paper_bidirectional_m4/validation/step005000/assistant_gate.json">全150帧质量门</a></p>')
+        sections.append('</div>')
+    edge_name = 'fcnet_edge_order_step5000_00f88c4f0a_side0125'
+    edge_dir = output/edge_name
+    if (edge_dir/'run.json').is_file() and (edge_dir/'assistant_review.json').is_file():
+        edge = read(edge_dir/'run.json')
+        review = read(edge_dir/'assistant_review.json')
+        media = edge.get('cpu_verified_from_saved_media', {}).get('checks', {})
+        captured = edge.get('cpu_verified_from_saved_captures', {}).get('checks', {})
+        if (edge.get('checkpoint_step') != 5000 or edge.get('optimizer_updates') != 0
+                or media.get('ordinary_replays_formal_all25_exact') is not True
+                or not captured or not all(captured.values())
+                or review.get('reviewer') != 'assistant'
+                or review.get('all_25_frames_reviewed') is not True):
+            raise ValueError('FCNet边序对照的原生重放、模块配对或全帧审核不符')
+        sections.append('<div class="panel" id="fcnet-edge-order-step5000"><h2>零更新FCNet边序对照：没有明显结构收益</h2><p>普通支精确重放正式5000全部25张原生PNG，19项落盘模块配对检查通过。仅改变FCNet的边序，输出逆置回原pair；两支全部25帧独立审核均未跟随镜头与滑板动作。新排序对已有权重属分布外，不能推断重训结果，不改正式协议。</p><p>末尾JSON序列化失败后从已保存媒体与张量CPU恢复，未重跑GPU。丢失的耗时、显存峰值、浮点响应和GT光流代理值留空。硬写回中心来自真实输入，不计生成收益。</p><div class="six">')
+        base = 'ordinary_original_order'
+        changed = 'chronological_target_order'
+        items = ((base, 'gt', '真实视频，仅作对照'), (base, 'visible', '实际可见输入'),
+                 (base, 'pred', '原边序原生'), (changed, 'pred', '重排边序原生'),
+                 (base, 'comp', '原边序硬写回'), (changed, 'comp', '重排边序硬写回'))
+        for branch, kind, label in items:
+            name = f'{edge_name}/{branch}/{kind}.mp4'
+            if not (output/name).is_file():
+                raise FileNotFoundError(name)
+            sections.append(f'<figure><video controls preload="metadata" src="{name}"></video><figcaption>{label}</figcaption></figure>')
+        sections.append(f'</div><a href="{edge_name}/run.json">CPU恢复与配对记录</a> · <a href="{edge_name}/assistant_review.json">全25帧独立审核</a></div>')
     oracle = output/'full_latent_oracle_step1000'
     oracle_done = (oracle/'run.json').is_file()
     oracle_status = ''
@@ -624,12 +697,19 @@ def main() -> None:
         bounded_notice = (f'{bounded2000_summary}；这是历史快照，不代表实时训练进度或2000步质量通过。'
                           '<a href="condition_gap_review.html#bounded2000-snapshot">查看实际PID与命令</a>。') if bounded2000 else ''
         if bounded5000:
-            bounded_notice += (f'{bounded5000_summary}；这是当前正式训练的采集快照，'
+            bounded_notice += (f'{bounded5000_summary}；这是2000→5000阶段的采集快照，'
                                '尚不能据此宣称5000步质量。'
                                '<a href="condition_gap_review.html#bounded5000-snapshot">查看2000→5000有界状态</a>。')
+        if newest:
+            quality += '；正式5000六窗完成，独立150帧整体hold'
+            bounded_notice += '<a href="step5000_review.html">打开5000步深色人工审核页</a>；<a href="condition_gap_review.html#fcnet-edge-order-step5000">边序零更新对照无明确收益</a>。'
+        if bounded7500:
+            quality += '；已从5000续训至目标7500'
+            bounded_notice += f'最新阶段快照 {html.escape(bounded7500["observed_at_utc"])} 记录 {bounded7500["observed_train_step"]} 步，7500结果尚未生成。'
         bounded_notice += capacity_notice
         later_notice = (f'<a href="condition_gap_review.html#validation-step2000">查看2000步六列同步对照</a>；{step2000_gate_status}；{step2000_review}。') if step2000_ready else ''
-        latest_snapshot = ('<a href="bounded5000_state.json">最新实际5000目标阶段快照</a>' if bounded5000
+        latest_snapshot = ('<a href="bounded7500_state.json">最新7500目标阶段快照</a>' if bounded7500
+                           else '<a href="bounded5000_state.json">实际5000阶段快照</a>' if bounded5000
                            else '<a href="bounded2000_state.json">历史2000阶段快照</a>' if bounded2000
                            else '<a href="bounded1000_state.json">1000步完成快照</a>')
         notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>{later_notice}{bounded_notice}同协议从500到正式1000已追加500次更新；{review_detail}。{oracle_notice}{teacher_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和{latest_snapshot}为准，快照不等于实时状态。</p></div>'
