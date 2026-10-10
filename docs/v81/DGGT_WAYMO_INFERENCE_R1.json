@@ -142,7 +142,6 @@
     "V77-F02"
   ],
   "failure_ledger_delta": "none",
-  "snapshot_utc": "2026-10-10T17:29:30.622002+00:00",
   "remote_run": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1",
   "official_baseline_reconstruction_metrics": {
     "PSNR": 28.051070426792528,
@@ -371,14 +370,15 @@
       "gpu_actual": "87943, /root/autodl-tmp/envs/motionproj/bin/python, 21012 MiB",
       "data_free_bytes": 131195490304,
       "system_free_bytes": 6459707392
-    }
+    },
+    "historical_snapshot": true,
+    "snapshot_utc": "2026-10-10T18:23:08.396840+00:00"
   },
   "reference_refinement_result": {
     "status": "complete_assistant_reviewed",
     "gpu_executed": true,
     "output_frames": 24,
     "parameters": {
-      "seed_per_frame": 1234,
       "timestep": 199,
       "prompt": "remove degradation",
       "width_height": [
@@ -387,7 +387,9 @@
       ],
       "precision": "FP32",
       "frames_per_condition": 8,
-      "max_output_frames": 24
+      "max_output_frames": 24,
+      "seed_base": 1234,
+      "per_frame_rule": "seed_base + frame_index"
     },
     "weight_checks": {
       "mv_unet_keys": 686,
@@ -529,5 +531,146 @@
     "next_bounded_cpu_question": "estimated geometric background support over actual projected Gaussian footprints and depth layers within the saved alpha-loss hole",
     "source_review_local": "work/dggt-edit-protocol-20261011/figure5_actual_primary_review.md",
     "human_verdict": null
+  },
+  "baseline_snapshot_utc": "2026-10-10T17:29:30.622002+00:00",
+  "snapshot_utc": "2026-10-10T22:25:32.084426+00:00",
+  "support_footprint_result": {
+    "status": "completed_estimated_geometric_support",
+    "training_updates": 0,
+    "gpu_executed": false,
+    "remote_evidence": "diagnostics/support_footprint_r1/",
+    "frames": [
+      {
+        "frame": 0,
+        "hole_pixels_within_rgb_selection": 11198,
+        "classes": {
+          "front_or_same_depth": 697,
+          "static_behind": 5665,
+          "dynamic_behind": 1639,
+          "low_support": 3197
+        },
+        "class_fraction": {
+          "front_or_same_depth": 0.06224325772459368,
+          "static_behind": 0.5058939096267191,
+          "dynamic_behind": 0.14636542239685657,
+          "low_support": 0.2854974102518307
+        },
+        "loss_weighted_fraction": {
+          "front_or_same_depth": 0.036512043975419406,
+          "static_behind": 0.4089947364327015,
+          "dynamic_behind": 0.13829543392019086,
+          "low_support": 0.41619778567168825
+        },
+        "alpha_loss_pixels_outside_rgb_selection": 625
+      },
+      {
+        "frame": 1,
+        "hole_pixels_within_rgb_selection": 11285,
+        "classes": {
+          "front_or_same_depth": 518,
+          "static_behind": 6254,
+          "dynamic_behind": 527,
+          "low_support": 3986
+        },
+        "class_fraction": {
+          "front_or_same_depth": 0.04590163934426229,
+          "static_behind": 0.554186973859105,
+          "dynamic_behind": 0.04669915817456801,
+          "low_support": 0.3532122286220647
+        },
+        "loss_weighted_fraction": {
+          "front_or_same_depth": 0.02444739354192111,
+          "static_behind": 0.4633482016115663,
+          "dynamic_behind": 0.042373163932770734,
+          "low_support": 0.46983124091374173
+        },
+        "alpha_loss_pixels_outside_rgb_selection": 752
+      },
+      {
+        "frame": 2,
+        "hole_pixels_within_rgb_selection": 11362,
+        "classes": {
+          "front_or_same_depth": 474,
+          "static_behind": 6534,
+          "dynamic_behind": 463,
+          "low_support": 3891
+        },
+        "class_fraction": {
+          "front_or_same_depth": 0.0417180073930646,
+          "static_behind": 0.5750748107727512,
+          "dynamic_behind": 0.040749867980989264,
+          "low_support": 0.34245731385319483
+        },
+        "loss_weighted_fraction": {
+          "front_or_same_depth": 0.026352227435486462,
+          "static_behind": 0.4638831324517465,
+          "dynamic_behind": 0.03171814527350725,
+          "low_support": 0.47804649483925965
+        },
+        "alpha_loss_pixels_outside_rgb_selection": 867
+      },
+      {
+        "frame": 3,
+        "hole_pixels_within_rgb_selection": 11535,
+        "classes": {
+          "front_or_same_depth": 509,
+          "static_behind": 6609,
+          "dynamic_behind": 629,
+          "low_support": 3788
+        },
+        "class_fraction": {
+          "front_or_same_depth": 0.04412657130472475,
+          "static_behind": 0.5729518855656697,
+          "dynamic_behind": 0.05452969224100564,
+          "low_support": 0.3283918508885999
+        },
+        "loss_weighted_fraction": {
+          "front_or_same_depth": 0.029458585978169156,
+          "static_behind": 0.454759734093989,
+          "dynamic_behind": 0.05267805547617233,
+          "low_support": 0.4631036244516695
+        },
+        "alpha_loss_pixels_outside_rgb_selection": 800
+      }
+    ],
+    "contract": {
+      "source": "saved DGGT activated Gaussian state and predicted cameras",
+      "projection": "gsplat 1.5.3 pinhole Jacobian covariance approximation; quats wxyz; eps2d=0.3; radius=ceil(3.33*sqrt(diagonal covariance))",
+      "single_fragment_cutoff": "effective alpha >= 1/255; no threshold sweep",
+      "hole_domain": "saved RGB selected mask intersect saved 8-bit alpha-loss > 0 and valid predicted target depth",
+      "depth_order": "Gaussian camera z <= original target point-map camera z is front/same, > is behind",
+      "class_priority": [
+        "unselected front/same",
+        "unselected static behind",
+        "unselected dynamic behind",
+        "no qualifying local footprint"
+      ]
+    },
+    "resource": {
+      "cpu_threads": 1,
+      "cuda_visible_devices": "",
+      "nice": 10,
+      "before": {
+        "rss_peak_kb": 438604,
+        "memory.current": "89549447168",
+        "memory.max": "96636764160"
+      },
+      "after": {
+        "rss_peak_kb": 629876,
+        "memory.current": "89652248576",
+        "memory.max": "96636764160"
+      },
+      "elapsed_seconds": 1.584855469991453
+    },
+    "limits": [
+      "Estimated geometric support only: this does not sort and alpha-compose splats, model transmittance, sky, or match gsplat pixels.",
+      "Original target depth is predicted by DGGT, not GT; chosen RGB instance mask is manual control.",
+      "Unselected front/behind points may be road, other vehicles, or geometry error; no object identity inference.",
+      "The alpha-loss PNG is 8-bit quantized; this audit is a fixed four-frame case study, not a quality metric or root-cause proof."
+    ],
+    "failure_ledger_delta": "none",
+    "adopted_algorithm_change": false,
+    "human_verdict": null,
+    "next_question": "Whether estimated support survives actual depth sorting/transmittance and contains usable background texture; not answered by this CPU audit."
   }
 }

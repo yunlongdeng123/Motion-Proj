@@ -251,14 +251,60 @@ def review_note(run: dict | None, review: dict | None) -> str:
             + attachment)
 
 
-def page(run: dict | None, review: dict | None) -> str:
+def support_section(run_dir: Path, output: Path) -> tuple[str, int]:
+    """Display completed CPU geometry evidence separately from edited RGB."""
+    from PIL import Image
+
+    source = run_dir / 'diagnostics/support_footprint_r1'
+    evidence = source / 'support_estimate.json'
+    if not evidence.is_file():
+        return '', 0
+    report = load_json(evidence)
+    if report.get('status') != 'completed_estimated_geometric_support':
+        return '', 0
+    frames = report.get('frames', [])
+    if [row.get('frame') for row in frames] != list(range(4)):
+        raise ValueError('CPU 支持审计缺少四帧真实记录')
+    destination = output / 'support_footprint_r1'
+    destination.mkdir(parents=True, exist_ok=True)
+    rows, cells = [], []
+    keys = ('front_or_same_depth', 'static_behind', 'dynamic_behind', 'low_support')
+    for row in frames:
+        if sum(row['classes'][key] for key in keys) != row['hole_pixels_within_rgb_selection']:
+            raise ValueError('CPU 支持审计分类计数不一致')
+        name = f"estimated_support_{row['frame']:03d}.png"
+        path = require_file(source / name)
+        with Image.open(path) as picture:
+            picture.load()
+            if picture.size != (518, 350) or not {'R', 'G', 'B'}.issubset(picture.getbands()):
+                raise ValueError('CPU 支持分类图尺寸或通道不符')
+        shutil.copy2(path, destination / name)
+        link = f'support_footprint_r1/{name}'
+        cells.append(f'<td><a href="{link}"><img src="{link}" alt="第{row["frame"]}帧几何支持分类"></a></td>')
+        percentages = ''.join(f'<td>{100 * row["class_fraction"][key]:.1f}%</td>' for key in keys)
+        rows.append(f'<tr><td>{row["frame"]}</td><td>{row["hole_pixels_within_rgb_selection"]}</td>{percentages}</tr>')
+    shutil.copy2(evidence, destination / 'support_estimate.json')
+    content = ('<section><h2>删除洞的几何支持估计</h2>'
+               '<p class="notice">下图是 CPU 诊断分类，不是编辑输出或实际 gsplat 渲染贡献。'
+               '有足迹不等于有正确道路纹理；低支持也不能单独证明失败根因。</p>'
+               '<p>红：未删除高斯在目标预测深度前方或同深度；绿：静态后层；橙：动态后层；'
+               '黑：无符合固定 alpha 截止的足迹；灰：审计域外。深度和相机均由模型预测。</p>'
+               '<div class="matrix-wrap"><table class="matrix"><tbody><tr>' + ''.join(cells)
+               + '</tr></tbody></table></div><div class="data"><table><thead><tr>'
+               '<th>帧</th><th>洞内审计像素</th><th>前方/同深度</th><th>静态后层</th><th>动态后层</th><th>低支持</th>'
+               '</tr></thead><tbody>' + ''.join(rows) + '</tbody></table></div>'
+               '<p><a href="support_footprint_r1/support_estimate.json">查看 CPU 原始统计和限制</a></p></section>')
+    return content, 4
+
+
+def page(run: dict | None, review: dict | None, support: str = '') -> str:
     complete = run is not None and run.get('status') == 'completed'
     status = '已生成真实诊断对照' if complete else '待诊断完成 · pending'
     badge = 'badge' if complete else 'badge pending'
     source_status = run.get('status', 'run.json 尚未生成') if run else 'run.json 尚未生成'
     if complete:
         content = (metrics(run) + ''.join(matrix(branch) for branch in BRANCHES)
-                   + review_note(run, review))
+                   + support + review_note(run, review))
     else:
         evidence_link = '<a href="run.json">查看当前 run.json</a>' if run is not None else '尚无 run.json'
         content = ('<h2>尚无完整结果</h2><p class="notice">本页仅记录待运行状态；不会把已有高斯编辑或旧 Difix 当作本次参考诊断输出。</p>'
@@ -320,13 +366,15 @@ def build(run_dir: Path, output: Path) -> dict:
         sources = source_media(run_dir, diagnostic)
     copy_evidence(run_path if run is not None else None,
                   review_path if review is not None else None, sources, output)
-    (output / 'index.html').write_text(page(run, review), encoding='utf-8')
+    support, support_decoded = support_section(run_dir, output) if complete else ('', 0)
+    (output / 'index.html').write_text(page(run, review, support), encoding='utf-8')
     audit = check_links(output)
     audit.update(page_status='completed' if complete else 'pending',
                  new_diagnostic_png_count=sum(key.startswith('assets/official_') for key in sources),
                  decoded_rgb_images=sum(key.startswith('assets/') for key in sources),
                  new_diagnostic_png_decoded=sum(key.startswith('assets/official_') for key in sources),
                  paired_trace_files_verified=8 if complete else 0,
+                 cpu_support_png_decoded=support_decoded,
                  source_run_json=str(run_path) if run is not None else None,
                  source_assistant_review_json=str(review_path) if review is not None else None)
     (output / 'delivery_validation.json').write_text(

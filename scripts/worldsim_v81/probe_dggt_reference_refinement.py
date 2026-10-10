@@ -452,6 +452,18 @@ def _prior_case(report: dict, section: str, branch: str, index: int) -> dict | N
     return matches[0] if matches else None
 
 
+def _normalize_seed_metadata(parameters: dict) -> dict:
+    """Keep legacy partial-run recovery compatible with the actual seed rule."""
+    normalized = dict(parameters)
+    if "seed_per_frame" in normalized:
+        legacy = normalized.pop("seed_per_frame")
+        if "seed_base" in normalized and normalized["seed_base"] != legacy:
+            raise ValueError("conflicting legacy seed metadata")
+        normalized.setdefault("seed_base", legacy)
+        normalized.setdefault("per_frame_rule", "seed_base + frame_index")
+    return normalized
+
+
 def run_gpu(contract: dict, args: argparse.Namespace) -> dict:
     import numpy as np
     import torch
@@ -480,7 +492,8 @@ def run_gpu(contract: dict, args: argparse.Namespace) -> dict:
                    "prior": str(contract["prior"]), "edit_frames": contract["edit_manifest"]["frames"],
                    "raw_pngs": {branch: [str(path) for path in contract["paths"][branch]["raw"]] for branch in BRANCHES},
                    "prior_pngs": {branch: [str(path) for path in contract["paths"][branch]["prior"]] for branch in BRANCHES}},
-        "parameters": {"seed_per_frame": args.seed, "timestep": TIMESTEP, "prompt": PROMPT,
+        "parameters": {"seed_base": args.seed, "per_frame_rule": "seed_base + frame_index",
+                       "timestep": TIMESTEP, "prompt": PROMPT,
                        "width_height": contract["size_wh"], "precision": "FP32", "frames_per_condition": 8,
                        "max_output_frames": MAX_OUTPUT_FRAMES},
         "compatibility": {}, "weight_checks": {}, "baseline_replay": {}, "paired_checks": {},
@@ -497,11 +510,13 @@ def run_gpu(contract: dict, args: argparse.Namespace) -> dict:
         prior_report = json.loads((out / "run.json").read_text(encoding="utf-8"))
         if prior_report.get("status") == "completed":
             raise ValueError("completed diagnostic must not be resumed")
-        if prior_report.get("source") != report["source"] or prior_report.get("parameters") != report["parameters"]:
+        prior_parameters = _normalize_seed_metadata(prior_report.get("parameters", {}))
+        if prior_report.get("source") != report["source"] or prior_parameters != report["parameters"]:
             raise ValueError("resume source or parameters differ from existing run.json")
         if prior_report.get("conditions") != report["conditions"]:
             raise ValueError("resume condition definitions differ from existing run.json")
         report = prior_report
+        report["parameters"] = prior_parameters
         report.setdefault("attempt_history", []).append({
             "resumed_at_unix": time.time(), "previous_status": report.get("status"),
             "previous_error": report.get("error"),

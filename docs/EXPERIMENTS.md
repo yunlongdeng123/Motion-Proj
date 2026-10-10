@@ -174,3 +174,5 @@
 每个 run 的真实完成数量、配置、seed、数据角色、成本和失败边界以该报告及对应 manifest 为准。不同类型执行次数不合并为独立样本。更早版本的实验从[历史归档](archive/README.md)进入。
 
 - `WS-V77-DELETE-REPAIR-20260927/r1`：三场景入口试验失败并回退；实际数量与边界见[报告](v77/DELETE_REPAIR.md)、[登记](autoresearch/worldsim_v77/delete_repair_20260927/registration.json)、[收口](autoresearch/worldsim_v77/delete_repair_20260927/closeout.json)。
+
+- 同一 `WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1`：`diagnostics/support_footprint_r1` 四帧CPU几何支持审计完成；仅估计，非gsplat贡献，failure_delta=none；结果并入 [原报告](v81/DGGT_WAYMO_INFERENCE_R1.md)。没有新task/run或GPU重跑。
