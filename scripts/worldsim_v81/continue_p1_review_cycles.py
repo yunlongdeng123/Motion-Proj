@@ -180,6 +180,10 @@ def checkpoint_users(rows):
 
 
 def preflight(source, target):
+    campaign = CYCLES/'campaign_step020000_policy.json'
+    maximum = min(20000, read(campaign)['maximum_step']) if campaign.exists() else 20000
+    if target > maximum:
+        raise ValueError(f'当前用户授权训练上限为{maximum}；不得自动启动下一段')
     if not formal_path(source):
         raise ValueError('恢复路径不属于明确的正式断点目录')
     obj = load_checkpoint(source)

@@ -6,7 +6,7 @@
 |---|---|---|
 | WS-V81-DGGT-WAYMO-INFERENCE-20261011 / r1 | 官方Waymo基线、四支零训练高斯编辑及16帧Difix完成；float noop差0，删车洞/移动复制遮挡尚未修好，独立四帧审核与深色媒体页已交付 | [流程与组件图](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量结果](v81/DGGT_WAYMO_INFERENCE_R1.json) |
 | WS-V81-STORAGE-20261010 / r1 | 授权清理释放105.95GB；旧优化器退役、推理权重保留；当前P1继续运行 | [清单与恢复边界](v81/STORAGE_CLEANUP_20261010.md) · [实测](v81/STORAGE_CLEANUP_20261010.json) |
-| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 7500→10000、整千完整保存及六窗完成；全150帧复盘质量hold/训练收益continue，保留10000+7500并清理旧正式断点；当前未启动12500 | [周期训练与10000复盘](v81/P1_REVIEW_CYCLES_R1.md)、[7500传播评估](v81/P1_STEP7500_EVALUATION_R1.md)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
+| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 7500→10000、整千完整保存及六窗完成；全150帧复盘质量hold/训练收益continue，保留10000+7500并清理旧正式断点。新授权目标20000，10000→12500段已从正式10000原件启动；后续阶段未在本索引记为完成 | [周期训练与10000复盘及新周期](v81/P1_REVIEW_CYCLES_R1.md)、[7500传播评估](v81/P1_STEP7500_EVALUATION_R1.md)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r1 | 原始nuScenes 6 train+2 val/200连续帧；两步真实优化+checkpoint恢复、独立val 25帧生成完成；显存/推理mask维度工程修复，18审核视频，非P1指标复现 | [协议与证据](v81/NUSCENES_P0_R1.md) · [实测](v81/P0_R1_RESULTS.json) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r0 | v7.7继承分支；Seen-to-Scene方法核对，CPU数据与传播原语准备；真实训练0步／推理0窗 | [报告](v81/SEEN_TO_SCENE_P0.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r53 | SAM3 ModelScope权重与真实轮廓CPU入口；旧矩形接口排查，推理0窗/训练0步 | [报告](v77/REAL_INSTANCE_MASK_R53.md) |

@@ -1,7 +1,71 @@
 {
-  "status": "step10000_reviewed_cleaned_training_deferred",
+  "status": "step12500_training_from_verified_step10000",
   "task_run": "WS-V81-SEEN-TO-SCENE-P1-20261009/r1",
-  "snapshot_utc": "2026-10-10T17:29:30.626707+00:00",
+  "snapshot_utc": "2026-10-10T17:53:44.552046+00:00",
+  "overnight_campaign": {
+    "authorized_at_singapore": "2026-10-11",
+    "authorization_scope": "继续GPU Seen-to-Scene至累计20000；每小时看真实进度，睡眠期间自主推进，整千保存、每2500六窗助手复盘、每5000复盘后清理",
+    "supersedes_scheduling_only": "此前DGGT优先、不得启动12500、仅静默监控的旧范围；10000原始gate和历史清理证据不变",
+    "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-010000.pt",
+    "source_step": 10000,
+    "maximum_step": 20000,
+    "review_targets": [
+      12500,
+      15000,
+      17500,
+      20000
+    ],
+    "save_every": 1000,
+    "review_every": 2500,
+    "cleanup_every": 5000,
+    "current_segment_target": 12500,
+    "controller": "scripts/worldsim_v81/continue_p1_review_cycles.py",
+    "launched_at_utc": "2026-10-10T17:52:22.867219+00:00",
+    "controller_pid": 87877,
+    "trainer_pid": 87943,
+    "launch_verification": {
+      "snapshot_utc": "2026-10-10T17:53:44.552046+00:00",
+      "resume_event_step": 10000,
+      "observed_step": 10011,
+      "real_updates": 11,
+      "finite_loss": true,
+      "finite_module_gradients": [
+        "fcnet",
+        "propagator",
+        "svd_temporal"
+      ],
+      "frozen_grad_tensors": 0,
+      "single_gpu_pid": 87943,
+      "gpu_process_memory_mib": 22932,
+      "gpu_peak_allocated_gb": 18.378647327423096,
+      "seconds_per_step": 5.771293672994943,
+      "data_free_bytes": 131199459328,
+      "system_free_bytes": 6459744256,
+      "local_evidence": "work/v81-step20000-campaign/startup_snapshot.json",
+      "remote_campaign_policy": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/campaign_step020000_policy.json"
+    },
+    "diagnostic_checkpoint_excluded": true,
+    "human_verdict": null,
+    "next_reviews_pending": [
+      12500,
+      15000,
+      17500,
+      20000
+    ],
+    "quality_hold_is_not_research_stop": true,
+    "no_gain_action": "独立审核后自主排查有依据的工程问题，不盲改算法、ID或seed，不重复已完成阴性诊断",
+    "completion_action": "20000保存完整原件、六窗助手复盘与深色人工结果页；保持开机，等待用户醒来验收",
+    "training_time_estimate_hours_excluding_reviews": 16.6,
+    "startup_training_args_unchanged": true,
+    "maximum_step_enforced_by_controller": 20000,
+    "automation": {
+      "id": "v8-1-p1-2500",
+      "status": "ACTIVE",
+      "normal_interval_hours": 1,
+      "near_completion_interval_minutes": 10,
+      "near_completion_threshold_minutes": 45
+    }
+  },
   "initial_preflight_and_startup": {
     "status": "preflight_pass",
     "source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt",
@@ -247,7 +311,7 @@
     "data_free_delta": 14499500032,
     "root_free_delta": 4833169408
   },
-  "next_training_started": false,
+  "next_training_started": true,
   "human_verdict": null,
   "protocol_verified": false,
   "failure_ledger_refs": [
