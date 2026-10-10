@@ -1,0 +1,74 @@
+{
+  "task": "WS-V81-DGGT-WAYMO-INFERENCE-20261011",
+  "run": "r1",
+  "snapshot_utc": "2026-10-10T16:44:27Z",
+  "status": "waiting_p1_10000_and_cpu_preparation",
+  "remote_run": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1",
+  "official_repository": "https://github.com/xiaomi-research/dggt",
+  "official_revision": "a3276d2bbe4cbb03bcc117830b1836110a27adeb",
+  "model_revision": "735ac9a6486057b1eb886c33a8c6dc79e0b43214",
+  "model_file_bytes": 5411266466,
+  "scene": 128,
+  "scene_name": "segment-4612525129938501780_340_000_360_000_with_camera_labels",
+  "data_selection_role": "RGB visibility only before generation; no GT boxes",
+  "cpu_preprocessing": {
+    "status": "complete",
+    "frames": 199,
+    "cameras": 5,
+    "original_rgb_files": 995,
+    "downsized_rgb_files": 995,
+    "gt_dynamic_masks_retained_not_query": 995,
+    "tensorflow_visible_gpus": 0
+  },
+  "segformer": {
+    "official_rgb_model": "B5 Cityscapes",
+    "cpu_front_frames": 8,
+    "raw19_mapping_matches_sky_custom_masks": true,
+    "not_instance_segmentation": true
+  },
+  "gsplat": {
+    "cpu_compilation_complete": true,
+    "compilation_seconds": 461.85,
+    "torch_cuda": "12.1",
+    "nvcc": "11.8",
+    "gpu_render_verified": false
+  },
+  "queue": {
+    "initial_pid": 79455,
+    "script": "scripts/worldsim_v81/queue_dggt_waymo_inference.py",
+    "preparation_ready": true,
+    "gpu_inference_started": false,
+    "p1_step_at_snapshot": 9762,
+    "p1_gpu_pid_at_snapshot": 64820,
+    "p1_training_after_10000_allowed": false,
+    "stages": [
+      "official_baseline",
+      "gaussian_edits",
+      "difix_refinement"
+    ]
+  },
+  "planned_query": {
+    "mode": 2,
+    "front_frames": 4,
+    "precision": "official_fp32",
+    "branches": [
+      "noop",
+      "delete",
+      "move",
+      "insert_copy"
+    ],
+    "required_official_noop_max_abs": 0.0001,
+    "insert_copy_role": "same-scene Gaussian instance copy; not cross-scene transfer",
+    "difix_timestep": 199,
+    "difix_paired_seed": 1234,
+    "selector_role": "RGB semantic car13 plus manual ROI/anchor and two RGB negative polygons; four explicit masks; no added 3D neighbors",
+    "selector_risk": "manual RGB editing control, not verified automatic 3D instance association",
+    "gt_geometry_or_gt_boxes_as_input": false
+  },
+  "assistant_verdict": null,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V77-F02"
+  ],
+  "failure_ledger_delta": "none"
+}

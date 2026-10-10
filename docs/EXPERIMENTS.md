@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V81-DGGT-WAYMO-INFERENCE-20261011 / r1 | 复用官方DGGT Waymo权重；CPU199帧预处理、SegFormer8帧及渲染扩展编译完成，GPU队列等待P1 10000退出；新增零训练Gaussian删/移/复制插入与离线Difix入口，真实输出待执行 | [流程与组件图](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量状态](v81/DGGT_WAYMO_INFERENCE_R1.json) |
 | WS-V81-STORAGE-20261010 / r1 | 授权清理释放105.95GB；旧优化器退役、推理权重保留；当前P1继续运行 | [清单与恢复边界](v81/STORAGE_CLEANUP_20261010.md) · [实测](v81/STORAGE_CLEANUP_20261010.json) |
 | WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 用户重新授权7500→10000；整千保存、2500收益复盘、5000倍数复盘后滚动清理、每小时检查；7500局部进步和传播六窗阴性证据保留 | [周期训练策略](v81/P1_REVIEW_CYCLES_R1.md)、[7500评估](v81/P1_STEP7500_EVALUATION_R1.md)、[7500实测](v81/P1_STEP7500_EVALUATION_R1.json)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r1 | 原始nuScenes 6 train+2 val/200连续帧；两步真实优化+checkpoint恢复、独立val 25帧生成完成；显存/推理mask维度工程修复，18审核视频，非P1指标复现 | [协议与证据](v81/NUSCENES_P0_R1.md) · [实测](v81/P0_R1_RESULTS.json) |
