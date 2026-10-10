@@ -157,7 +157,7 @@
     "difix_model_load_seconds": 8.612894382997183
   },
   "diagnosis_20261011": {
-    "status": "cpu_preparation_for_reference_probe",
+    "status": "deployed_waiting_s2s_12500_and_six_windows",
     "gpu_probe_executed": false,
     "official_paper": "https://arxiv.org/html/2512.03004v1",
     "confirmed_protocol_gap": "Paper Eq11 rendered+input reference; existing released infer.py path uses mv_unet=False with no reference.",
@@ -333,6 +333,44 @@
       ],
       "production_state_accessed": false,
       "gpu_started": false
+    },
+    "deployment": {
+      "deployed_at_utc": "2026-10-10T18:22:48.197230+00:00",
+      "source_head": "61a5a11ce03fec990b4a9278946b458b28af08b8",
+      "source_backup": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/source/backups/reference_protocol_20261010T182242",
+      "queue_pid": 91174,
+      "actual_queue_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/motion_proj_v81/scripts/worldsim_v81/queue_dggt_edit_diagnostics.py --worker ",
+      "actual_queue_status": "waiting_s2s_12500_and_six_windows",
+      "trigger_step": 12500,
+      "s2s_preempted": false,
+      "gpu_started": false,
+      "canonical_probe_cpu_check_status": "cpu_check_only_passed",
+      "canonical_queue_cpu_check": {
+        "status": "cpu_queue_check",
+        "prepared": true,
+        "missing": [],
+        "trigger_step": 12500,
+        "ready_for_gpu": false,
+        "gpu_processes": [
+          87943
+        ],
+        "gpu_started": false
+      },
+      "production_evidence": "diagnostics/reference_queue_deployment_verified.json",
+      "local_evidence": "work/dggt-edit-protocol-20261011/deployment_verified.json"
+    },
+    "concurrent_s2s_snapshot": {
+      "snapshot_utc": "2026-10-10T18:23:08.396840+00:00",
+      "controller_pid": 87877,
+      "trainer_pid": 87943,
+      "observed_step": 10304,
+      "actual_updates": 304,
+      "finite_loss": true,
+      "frozen_grad_tensors": 0,
+      "seconds_per_step": 5.797466607997194,
+      "gpu_actual": "87943, /root/autodl-tmp/envs/motionproj/bin/python, 21012 MiB",
+      "data_free_bytes": 131195490304,
+      "system_free_bytes": 6459707392
     }
   }
 }
