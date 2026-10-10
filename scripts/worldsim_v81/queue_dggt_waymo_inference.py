@@ -151,7 +151,7 @@ def main():
     previous = read(state_path)
     if previous and previous.get('scene') != args.scene:
         raise RuntimeError('同一run不能复用另一scene的已完成标志')
-    if previous.get('status') == 'complete_assistant_review_pending':
+    if str(previous.get('status', '')).startswith('complete_'):
         raise RuntimeError('已经完成推理，不重复跑；继续同步和审核')
     if previous.get('status') == 'engineering_failure' and not args.resume_failed:
         raise RuntimeError('先读原错误栈并修复；显式 --resume-failed 只续缺失阶段')
@@ -159,6 +159,12 @@ def main():
         fcntl.flock(own, fcntl.LOCK_EX | fcntl.LOCK_NB)
         state = {**previous, 'scene': args.scene, 'controller_pid': os.getpid(), 'updated_at': now(),
                  'training_after_10000': False, 'human_verdict': None, 'commands': previous.get('commands', [])}
+        if args.resume_failed and state.get('error'):
+            # 保留修复前的错误；它不再表示本次恢复后的活动故障。
+            history = list(state.get('resolved_engineering_failures', []))
+            history.append({'error': state.pop('error'), 'traceback': state.pop('traceback', None),
+                            'preserved_at': now(), 'scope': 'previous_failed_attempt'})
+            state['resolved_engineering_failures'] = history
 
         def update(**fields):
             state.update(fields, updated_at=now())
@@ -258,6 +264,7 @@ def main():
                     validate_refined(refined)
                     update(difix_complete=True)
                 update(status='complete_assistant_review_pending', controller_pid=None,
+                       gpu_processes=gpu_processes(),
                        raw_edit_manifest=str(edited/'manifest.json'),
                        refined_manifest=str(RUN/'difix_refined/manifest.json'),
                        inference_only=True, official_weights_unchanged=True)

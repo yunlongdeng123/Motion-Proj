@@ -108,6 +108,9 @@ def _page(payload: dict, gaussian: dict, difix: dict, review: dict | None) -> st
     }, ensure_ascii=False, indent=2)
     review_text = (json.dumps(review, ensure_ascii=False, indent=2) if review is not None else "等待 assistant_review.json；尚无助手审查结论。")
     review_label = "已读取原始 assistant_review.json" if review is not None else "等待助手审查"
+    summary = html.escape(str((review or {}).get("summary_zh") or
+                             (review or {}).get("assistant_assessment", {}).get("summary") or
+                             "实际视频已保存，助手评审记录待完成。"))
     serialized = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -124,17 +127,18 @@ section{{margin:28px 0 36px}}.section-head{{margin-bottom:14px}}.section-head p{
 .note{{padding:14px 17px;border-left:3px solid var(--amber);background:#32281755;color:#eddbc0;border-radius:0 12px 12px 0;font-size:13px;margin:12px 0}}.two{{display:grid;grid-template-columns:1fr 1fr;gap:13px}}.record{{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px}}.record h3{{margin:0 0 8px;font-size:16px}}pre{{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;background:#09111e;border:1px solid #20344d;border-radius:9px;padding:13px;color:#cbdff5;font:12px/1.5 ui-monospace,Consolas,monospace}}.verdict{{border-color:#765a36}}.verdict strong{{color:var(--amber)}}
 @media(max-width:1120px){{.facts{{grid-template-columns:repeat(3,1fr)}}.grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}@media(max-width:680px){{main{{padding:20px 12px 50px}}.hero{{display:block}}.status{{display:inline-block;margin-top:13px}}.facts{{grid-template-columns:repeat(2,1fr)}}.grid,.two{{grid-template-columns:1fr}}.flow{{display:grid;grid-template-columns:1fr}}.arrow{{justify-content:center;transform:rotate(90deg)}}input[type=range]{{width:100%}}}}
 </style></head><body><main>
-<div class="hero"><div><div class="eyebrow">DGGT · Waymo · local evidence board</div><h1>Gaussian 车辆编辑复核</h1><p class="lead">四帧统一浏览。上方是原始 Gaussian 渲染，下方是逐帧 Difix 外观处理；所有画面来自已保存的运行媒体。</p></div><div class="status">人工 verdict：等待填写</div></div>
+<div class="hero"><div><div class="eyebrow">DGGT · Waymo · local evidence board</div><h1>Gaussian 车辆编辑复核</h1><p class="lead">四帧统一浏览。上方是原始 Gaussian 渲染，下方是逐帧 Difix 外观处理；所有画面来自已保存的运行媒体。</p></div><div class="status">人工记录未填写 · 不阻塞实验</div></div>
 <div class="facts">{facts}</div>
 <div class="flow" aria-label="architecture components 图"><div class="node"><b>输入 RGB + RGB 语义</b><small>人工 ROI / 锚点选车</small></div><div class="arrow">→</div><div class="node"><b>DGGT 预测</b><small>相机 · 深度 · Gaussian · 动态</small></div><div class="arrow">→</div><div class="node"><b>Gaussian 编辑</b><small>删 / 平移 / 同场景复制插入</small></div><div class="arrow">→</div><div class="node"><b>原始四支渲染</b><small>alpha + sky；洞区可见</small></div><div class="arrow">→</div><div class="node"><b>Difix 逐帧</b><small>外观细化，非补洞证据</small></div></div>
 <div class="toolbar"><button id="play-all" type="button">同步播放全部视频</button><button id="show-frames" type="button">查看逐帧 PNG</button><label for="frame-slider">共同帧</label><input id="frame-slider" type="range" min="0" max="3" value="0" step="1"><span id="frame-indicator">1 / 4</span><small>拖动滑条同时定位全部视图</small></div>
-<section><div class="section-head"><h2>输入与目标选择</h2><p>红色覆盖区是编辑控制，预测动态仅作诊断；alpha 缺口显示删除后尚未观测到的内容。</p></div><div class="grid">{diagnostics}</div></section>
+<section class="record"><h2>实测结论</h2><p>{summary}</p></section>
+<section><div class="section-head"><h2>输入与目标选择</h2><p>红色覆盖区是逐帧 RGB 轮廓控制，预测动态仅作诊断；alpha 缺口显示删车后的透明度损失。</p></div><div class="grid">{diagnostics}</div></section>
 <section><div class="section-head"><h2>原始 Gaussian 渲染</h2><p>四支共享 DGGT 预测、相机与渲染参数。复制插入仅复制本场景选中 Gaussian，不代表跨场景迁移。</p></div><div class="grid">{original}</div></section>
 <section><div class="section-head"><h2>Difix 后处理</h2><p>同一组原始 PNG 逐帧细化。它可能改变外观，不能当作物体删除或几何补洞的证明。</p></div><div class="grid">{refined}</div></section>
 <section><div class="section-head"><h2>alpha 与可见缺口</h2><p>对照透明度，检查删车后剩余 Gaussian 或 sky 是否显露空洞。</p></div><div class="grid">{alpha}</div></section>
-<div class="note">选车使用人工 RGB ROI 与锚点；ROI 可能裁到车边。删除后未观测区域没有凭空补全。请分别评判原始 Gaussian 编辑与 Difix 外观处理。</div>
+<div class="note">选车使用 RGB 语义与逐帧轮廓控制，已排除邻车误分；边界仍可能有误差。本例删除后背景未完整补全。原始 Gaussian 编辑与 Difix 外观处理分别保留。</div>
 <section class="two"><div class="record"><h3>选择与数量证据</h3><pre>{html.escape(selector_details)}</pre></div><div class="record"><h3>助手审查 · {html.escape(review_label)}</h3><pre>{html.escape(review_text)}</pre></div></section>
-<section class="record verdict"><h3>人工结论</h3><strong>human_verdict：等待用户或指定评审填写</strong><p class="lead">本页面不代填人工判断。</p></section>
+<section class="record verdict"><h3>人工记录</h3><strong>human_verdict：未填写</strong><p class="lead">本页面不代填人工判断；独立助手评审已单独记录，不需要人工放行。</p></section>
 </main><script id="review-data" type="application/json">{serialized}</script><script>
 "use strict";
 const data = JSON.parse(document.getElementById("review-data").textContent);

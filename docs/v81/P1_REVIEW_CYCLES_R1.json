@@ -1,79 +1,257 @@
 {
-  "status": "preflight_pass",
-  "source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt",
-  "source_step": 7500,
-  "target_step": 10000,
-  "expected_checkpoint_steps": [
-    8000,
-    9000,
-    10000
-  ],
-  "data_free_bytes": 197455314944,
-  "required_bytes": 16499494373,
-  "valid_root": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/valid/JPEGImages",
-  "training_args": {
-    "data_root": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages",
-    "svd": "/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1",
-    "raft_weight": "/root/autodl-tmp/models/worldsim_v77_poc_propainter/raft-things.pth",
-    "fcnet_weight": "/root/autodl-tmp/models/worldsim_v77_poc_propainter/recurrent_flow_completion.pth",
-    "external": "/root/autodl-tmp/external/seen_to_scene_v81",
-    "seed": 123,
-    "lr": 1e-05,
-    "amp": "bf16",
-    "propagation_protocol": "paper-bidirectional-m4",
-    "raft_iters": 20,
-    "raft_pair_chunk": 2
+  "status": "step10000_reviewed_cleaned_training_deferred",
+  "task_run": "WS-V81-SEEN-TO-SCENE-P1-20261009/r1",
+  "snapshot_utc": "2026-10-10T17:29:30.626707+00:00",
+  "initial_preflight_and_startup": {
+    "status": "preflight_pass",
+    "source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt",
+    "source_step": 7500,
+    "target_step": 10000,
+    "expected_checkpoint_steps": [
+      8000,
+      9000,
+      10000
+    ],
+    "data_free_bytes": 197455314944,
+    "required_bytes": 16499494373,
+    "valid_root": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/valid/JPEGImages",
+    "training_args": {
+      "data_root": "/root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages",
+      "svd": "/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1",
+      "raft_weight": "/root/autodl-tmp/models/worldsim_v77_poc_propainter/raft-things.pth",
+      "fcnet_weight": "/root/autodl-tmp/models/worldsim_v77_poc_propainter/recurrent_flow_completion.pth",
+      "external": "/root/autodl-tmp/external/seen_to_scene_v81",
+      "seed": 123,
+      "lr": 1e-05,
+      "amp": "bf16",
+      "propagation_protocol": "paper-bidirectional-m4",
+      "raft_iters": 20,
+      "raft_pair_chunk": 2
+    },
+    "source_cpu_contract": {
+      "step": 7500,
+      "full_checkpoint_bytes": 4833164791,
+      "source_step": 7500,
+      "adam_states": 514,
+      "protocol_unchanged": true,
+      "scheduler_step": 7500,
+      "rng_keys_present": true
+    },
+    "cpu_checks": [
+      "absolute_1000_and_target_save",
+      "diagnostic_exclusion",
+      "source_full_metadata",
+      "all_six_same_valid_frames",
+      "gpu_idle"
+    ],
+    "assistant_static_review": {
+      "reviewer": "gpt-6-sol",
+      "reasoning_effort": "xhigh",
+      "fast": false,
+      "verdict": "no_first_cycle_launch_blocker",
+      "gpu_run_reviewed": false
+    },
+    "failure_ledger_refs": [
+      "V77-F02"
+    ],
+    "failure_ledger_delta": "none",
+    "startup_snapshot": {
+      "status": "train_to_010000",
+      "controller_pid": 64754,
+      "trainer_pid": 64820,
+      "resume_verified": [
+        {
+          "event": "resume",
+          "step": 7500,
+          "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt"
+        }
+      ],
+      "observed_step": 7508,
+      "real_updates": 8,
+      "finite_loss": true,
+      "frozen_grad_tensors": 0,
+      "step_wall_seconds": 5.997568032995332,
+      "gpu_peak_allocated_gb": 18.390291690826416,
+      "single_gpu_pid": "64820"
+    },
+    "automation": {
+      "id": "v8-1-p1-2500",
+      "kind": "heartbeat",
+      "interval_hours": 1,
+      "status": "ACTIVE"
+    }
   },
-  "source_cpu_contract": {
-    "step": 7500,
-    "full_checkpoint_bytes": 4833164791,
+  "checkpoint_verified": {
+    "step": 10000,
+    "full_checkpoint_bytes": 4833164855,
     "source_step": 7500,
     "adam_states": 514,
     "protocol_unchanged": true,
-    "scheduler_step": 7500,
-    "rng_keys_present": true
+    "scheduler_step": 10000,
+    "rng_keys_present": true,
+    "updates": 2500,
+    "finite_loss": true,
+    "frozen_grad_tensors": 0,
+    "mean_seconds_per_step": 5.957321630043303
   },
-  "cpu_checks": [
-    "absolute_1000_and_target_save",
-    "diagnostic_exclusion",
-    "source_full_metadata",
-    "all_six_same_valid_frames",
-    "gpu_idle"
-  ],
-  "assistant_static_review": {
-    "reviewer": "gpt-6-sol",
-    "reasoning_effort": "xhigh",
-    "fast": false,
-    "verdict": "no_first_cycle_launch_blocker",
-    "gpu_run_reviewed": false
+  "gate": {
+    "step": 10000,
+    "comparison_step": 7500,
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-010000.pt",
+    "checkpoint_verified": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/checkpoint_step010000_verified.json",
+    "checkpoint_full_bytes": 4833164855,
+    "reviewer": "assistant",
+    "human_verdict": null,
+    "quality_decision": "hold",
+    "train_decision": "continue",
+    "next_training_execution": "deferred_for_DGGT",
+    "reason": "7500→10000固定六窗全150帧独立视觉复盘：滑板0.33从大片空白侧区恢复可辨的滑手与动作，白鲸0.33从弱基线恢复更连贯的头部和游动；滑板0.125及白鲸0.125有小幅持续进步。海豚两窗收益不明确或被新伪影抵消。所有宽侧区仍有结构错误、模糊和硬写回接缝，因此当前质量hold；训练收益支持将来有界再训练2500步，实际12500启动按2026-10-11调度延后至DGGT任务完成后，本文不启动训练。",
+    "cases": [
+      {
+        "sequence_id": "00f88c4f0a",
+        "side_ratio": 0.125,
+        "frames_reviewed": 25,
+        "native_reviewed": true,
+        "composite_reviewed": true,
+        "run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/00f88c4f0a/side_0.125/run.json",
+        "evidence": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/00f88c4f0a/side_0.125/assistant_review.json"
+      },
+      {
+        "sequence_id": "00f88c4f0a",
+        "side_ratio": 0.33,
+        "frames_reviewed": 25,
+        "native_reviewed": true,
+        "composite_reviewed": true,
+        "run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/00f88c4f0a/side_0.33/run.json",
+        "evidence": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/00f88c4f0a/side_0.33/assistant_review.json"
+      },
+      {
+        "sequence_id": "7e625db8c4",
+        "side_ratio": 0.125,
+        "frames_reviewed": 25,
+        "native_reviewed": true,
+        "composite_reviewed": true,
+        "run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/7e625db8c4/side_0.125/run.json",
+        "evidence": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/7e625db8c4/side_0.125/assistant_review.json"
+      },
+      {
+        "sequence_id": "7e625db8c4",
+        "side_ratio": 0.33,
+        "frames_reviewed": 25,
+        "native_reviewed": true,
+        "composite_reviewed": true,
+        "run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/7e625db8c4/side_0.33/run.json",
+        "evidence": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/7e625db8c4/side_0.33/assistant_review.json"
+      },
+      {
+        "sequence_id": "ff6eb95840",
+        "side_ratio": 0.125,
+        "frames_reviewed": 25,
+        "native_reviewed": true,
+        "composite_reviewed": true,
+        "run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/ff6eb95840/side_0.125/run.json",
+        "evidence": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/ff6eb95840/side_0.125/assistant_review.json"
+      },
+      {
+        "sequence_id": "ff6eb95840",
+        "side_ratio": 0.33,
+        "frames_reviewed": 25,
+        "native_reviewed": true,
+        "composite_reviewed": true,
+        "run_json": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/ff6eb95840/side_0.33/run.json",
+        "evidence": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/validation/step010000/ff6eb95840/side_0.33/assistant_review.json"
+      }
+    ]
   },
+  "cleanup": {
+    "status": "complete",
+    "step": 10000,
+    "kept": [
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt",
+      "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-010000.pt"
+    ],
+    "created_at_utc": "2026-10-10T17:26:33.989187+00:00",
+    "rows": [
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-005000.pt",
+        "realpath": "/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt",
+        "step": 5000,
+        "symlink": true,
+        "inode": 4859833344,
+        "device": 53,
+        "links": 1,
+        "bytes": 4833164727,
+        "deleted": true
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-008000.pt",
+        "realpath": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-008000.pt",
+        "step": 8000,
+        "symlink": false,
+        "inode": 2198834699,
+        "device": 66304,
+        "links": 1,
+        "bytes": 4833164855,
+        "deleted": true
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-009000.pt",
+        "realpath": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-009000.pt",
+        "step": 9000,
+        "symlink": false,
+        "inode": 2198835314,
+        "device": 66304,
+        "links": 1,
+        "bytes": 4833164855,
+        "deleted": true
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt",
+        "realpath": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt",
+        "step": 1000,
+        "symlink": false,
+        "inode": 397521292,
+        "device": 66304,
+        "links": 2,
+        "bytes": 4833164791,
+        "deleted": true
+      },
+      {
+        "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+        "realpath": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+        "step": 2000,
+        "symlink": false,
+        "inode": 765518912,
+        "device": 66304,
+        "links": 1,
+        "bytes": 4833164791,
+        "deleted": true
+      },
+      {
+        "path": "/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt",
+        "realpath": "/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt",
+        "step": 5000,
+        "symlink": false,
+        "inode": 4859833344,
+        "device": 53,
+        "links": 1,
+        "bytes": 4833164727,
+        "deleted": true
+      }
+    ],
+    "data_free_before": 116700454912,
+    "root_free_before": 1626574848,
+    "completed_at_utc": "2026-10-10T17:26:34.695697+00:00",
+    "data_free_after": 131199954944,
+    "root_free_after": 6459744256,
+    "data_free_delta": 14499500032,
+    "root_free_delta": 4833169408
+  },
+  "next_training_started": false,
+  "human_verdict": null,
+  "protocol_verified": false,
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "none",
-  "startup_snapshot": {
-    "status": "train_to_010000",
-    "controller_pid": 64754,
-    "trainer_pid": 64820,
-    "resume_verified": [
-      {
-        "event": "resume",
-        "step": 7500,
-        "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt"
-      }
-    ],
-    "observed_step": 7508,
-    "real_updates": 8,
-    "finite_loss": true,
-    "frozen_grad_tensors": 0,
-    "step_wall_seconds": 5.997568032995332,
-    "gpu_peak_allocated_gb": 18.390291690826416,
-    "single_gpu_pid": "64820"
-  },
-  "automation": {
-    "id": "v8-1-p1-2500",
-    "kind": "heartbeat",
-    "interval_hours": 1,
-    "status": "ACTIVE"
-  }
+  "failure_ledger_delta": "none"
 }

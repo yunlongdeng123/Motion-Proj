@@ -1,74 +1,159 @@
 {
-  "task": "WS-V81-DGGT-WAYMO-INFERENCE-20261011",
-  "run": "r1",
-  "snapshot_utc": "2026-10-10T16:44:27Z",
-  "status": "waiting_p1_10000_and_cpu_preparation",
-  "remote_run": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1",
-  "official_repository": "https://github.com/xiaomi-research/dggt",
-  "official_revision": "a3276d2bbe4cbb03bcc117830b1836110a27adeb",
-  "model_revision": "735ac9a6486057b1eb886c33a8c6dc79e0b43214",
-  "model_file_bytes": 5411266466,
-  "scene": 128,
-  "scene_name": "segment-4612525129938501780_340_000_360_000_with_camera_labels",
-  "data_selection_role": "RGB visibility only before generation; no GT boxes",
-  "cpu_preprocessing": {
-    "status": "complete",
-    "frames": 199,
-    "cameras": 5,
-    "original_rgb_files": 995,
-    "downsized_rgb_files": 995,
-    "gt_dynamic_masks_retained_not_query": 995,
-    "tensorflow_visible_gpus": 0
+  "status": "complete_assistant_reviewed",
+  "task_run": "WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1",
+  "scene": "128",
+  "official_mode": 2,
+  "input_views": 1,
+  "frames": 4,
+  "training": false,
+  "architecture_components": "Waymo RGB -> DGGT预测相机/深度/Gaussians -> RGB人工实例mask控制 -> noop/delete/move/insert_copy高斯渲染 -> 原生RGB与alpha洞 -> 逐帧Difix -> 独立外观结果",
+  "sources": {
+    "existing_report_to_preserve": "work/motion-proj-remote-review/docs/v81/DGGT_WAYMO_INFERENCE_R1.md",
+    "remote_run": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1",
+    "local_raw_manifest": "work/dggt-official-inspect/raw_manifest.json",
+    "local_difix_manifest": "work/dggt-official-inspect/difix_manifest.json",
+    "local_completion_snapshot": "work/dggt-official-inspect/completion_snapshot.json",
+    "local_cpu_audit": "work/dggt-official-inspect/audit.json",
+    "local_delivery_audit": "work/dggt-official-inspect/local_delivery_verified.json",
+    "local_review_page": "outputs/v81-dggt-waymo/index.html",
+    "remote_assistant_review": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/assistant_review.json",
+    "local_assistant_review": "work/dggt-official-inspect/assistant_review.json"
   },
-  "segformer": {
-    "official_rgb_model": "B5 Cityscapes",
-    "cpu_front_frames": 8,
-    "raw19_mapping_matches_sky_custom_masks": true,
-    "not_instance_segmentation": true
-  },
-  "gsplat": {
-    "cpu_compilation_complete": true,
-    "compilation_seconds": 461.85,
-    "torch_cuda": "12.1",
-    "nvcc": "11.8",
-    "gpu_render_verified": false
-  },
-  "queue": {
-    "initial_pid": 79455,
-    "script": "scripts/worldsim_v81/queue_dggt_waymo_inference.py",
-    "preparation_ready": true,
-    "gpu_inference_started": false,
-    "p1_step_at_snapshot": 9762,
-    "p1_gpu_pid_at_snapshot": 64820,
-    "p1_training_after_10000_allowed": false,
-    "stages": [
-      "official_baseline",
-      "gaussian_edits",
-      "difix_refinement"
-    ]
-  },
-  "planned_query": {
-    "mode": 2,
-    "front_frames": 4,
-    "precision": "official_fp32",
-    "branches": [
+  "completion": {
+    "official_baseline": true,
+    "raw_branches": [
       "noop",
       "delete",
       "move",
       "insert_copy"
     ],
-    "required_official_noop_max_abs": 0.0001,
-    "insert_copy_role": "same-scene Gaussian instance copy; not cross-scene transfer",
-    "difix_timestep": 199,
-    "difix_paired_seed": 1234,
-    "selector_role": "RGB semantic car13 plus manual ROI/anchor and two RGB negative polygons; four explicit masks; no added 3D neighbors",
-    "selector_risk": "manual RGB editing control, not verified automatic 3D instance association",
-    "gt_geometry_or_gt_boxes_as_input": false
+    "difix_branches": [
+      "noop",
+      "delete",
+      "move",
+      "insert_copy"
+    ],
+    "raw_frames_per_branch": 4,
+    "difix_frames_per_branch": 4,
+    "difix_model_loads": 1,
+    "official_weights_unchanged": true,
+    "s2s_environment_unchanged": true,
+    "difix_first_attempt_returncode": 1,
+    "difix_resume_returncode": 0,
+    "historical_error_preserved_separately": true
   },
-  "assistant_verdict": null,
-  "human_verdict": null,
+  "official_noop_comparison": {
+    "trace_float_max_abs": 0.0,
+    "trace_float_mean_abs": 0.0,
+    "manifest_same_8bit_quantization": true,
+    "independent_saved_png_max_abs_255": 1,
+    "independent_saved_png_mean_abs_255_approx": 0.5,
+    "interpretation": "同一trace的浮点重渲染逐值一致；保存的两套PNG有最多一灰阶差，不能说PNG文件逐像素相同。"
+  },
+  "selection": {
+    "source": "RGB-derived SegFormer car13 with manually excluded neighboring regions; four explicit RGB masks",
+    "used_gt_boxes_depth_camera_or_dynamic_masks": false,
+    "automatic_3d_instance_association_claim": false,
+    "static_total": 603830,
+    "static_selected": 218,
+    "dynamic_total_per_frame": [
+      180115,
+      180007,
+      179917,
+      179942
+    ],
+    "dynamic_selected_per_frame": [
+      11929,
+      12032,
+      11864,
+      11700
+    ],
+    "model_target_width": 0.018880548959665403,
+    "move_right_widths": 1,
+    "metric_meters_claim": false
+  },
+  "edits": {
+    "delete": {
+      "operation": "filter selected original static and per-frame dynamic Gaussians",
+      "visual_observation": "目标车主体从四帧消失，但留下明显黑灰未观测洞及原位阴影/残留；Difix也未重建可信道路纹理。"
+    },
+    "move": {
+      "operation": "translate selected Gaussian means along predicted camera-0 right by one predicted vehicle width",
+      "visual_observation": "目标车明显右移；旧位置留洞，边缘破碎或变软，与邻近白色作业车重叠，右侧部分裁切。"
+    },
+    "insert_copy": {
+      "operation": "append translated copies of same-scene selected Gaussians",
+      "added_per_frame": [
+        12147,
+        12250,
+        12082,
+        11918
+      ],
+      "visual_observation": "原车保留且新位置出现副本；副本与白色作业车重叠、右侧部分裁切，不代表跨场景迁移。"
+    }
+  },
+  "difix": {
+    "method": "official_difix_framewise_offline_reuse_one_model",
+    "timestep": 199,
+    "mv_unet": false,
+    "prompt": "remove degradation",
+    "raw_png_quantized_before_refine": true,
+    "visual_observation": "连noop也发生外观变化；局部平滑，但删除洞变为灰黑模糊/带状纹理，移动与复制的遮挡和裁切问题仍在。",
+    "inpainting_claim": false,
+    "compatibility_fix": {
+      "initial_issue": "diffusers 0.31.0 AutoencoderKL lacks add_adapter",
+      "isolated_venv": "/root/autodl-tmp/envs/dggt_inference",
+      "installed_version": "diffusers 0.32.2",
+      "official_model_or_formula_modified": false,
+      "upstream_difix_files_modified": false,
+      "shared_s2s_environment_modified": false
+    }
+  },
+  "delivery": {
+    "png_count": 64,
+    "mp4_count": 16,
+    "mp4_decoded_frames_total": 64,
+    "mp4_fps": 8,
+    "media_links": 80,
+    "missing_links": 0,
+    "js_syntax": "passed",
+    "browser_visual_qa": false,
+    "remote_html": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/review_final/index.html"
+  },
+  "quality": {
+    "independent_review_status": "assistant_review_complete",
+    "independent_review_conclusion": "工程执行完成；四帧局部编辑演示有明显伪影，不构成视觉质量通过。",
+    "independent_review_baseline_note": "官方重建相对输入RGB已有可见柔化，不能归因于编辑。",
+    "independent_review_temporal_note": "四帧同一目标和四分支效果持续，无明显身份切换或分支掉帧；不足以判断长期稳定性。",
+    "independent_review_hole_interpretation": "未观测遮挡背景与持续删除洞相容，但四帧不能证明其为唯一根因。",
+    "human_verdict": null,
+    "paper_edit_quality_pass_claim": false,
+    "long_sequence_quality_claim": false,
+    "cross_scene_transfer_claim": false,
+    "limitations": [
+      "只有四帧，无法判断长时序稳定性。",
+      "删除后黑灰洞并未由Difix完全补齐。",
+      "人工RGB mask是编辑控制，未证实自动3D实例关联。",
+      "平移幅度是预测模型尺度的一车宽，不是米。"
+    ],
+    "visual_quality_decision": "hold"
+  },
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "none"
+  "failure_ledger_delta": "none",
+  "snapshot_utc": "2026-10-10T17:29:30.622002+00:00",
+  "remote_run": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1",
+  "official_baseline_reconstruction_metrics": {
+    "PSNR": 28.051070426792528,
+    "SSIM": 0.86265206,
+    "LPIPS": 0.08236034214496613,
+    "average_inference_seconds": 1.6309597492218018,
+    "scope": "same-input four-frame reconstruction, not edited counterfactual quality"
+  },
+  "resource": {
+    "gaussian_edit_peak_cuda_allocated_bytes": 380165632,
+    "difix_peak_cuda_allocated_bytes": 6321043456,
+    "difix_model_load_seconds": 8.612894382997183
+  }
 }
