@@ -50,5 +50,30 @@
   "failure_ledger_refs": [
     "V77-F02"
   ],
-  "failure_ledger_delta": "none"
+  "failure_ledger_delta": "none",
+  "startup_snapshot": {
+    "status": "train_to_010000",
+    "controller_pid": 64754,
+    "trainer_pid": 64820,
+    "resume_verified": [
+      {
+        "event": "resume",
+        "step": 7500,
+        "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/checkpoint_retained_step007500/p1-checkpoint-007500.pt"
+      }
+    ],
+    "observed_step": 7508,
+    "real_updates": 8,
+    "finite_loss": true,
+    "frozen_grad_tensors": 0,
+    "step_wall_seconds": 5.997568032995332,
+    "gpu_peak_allocated_gb": 18.390291690826416,
+    "single_gpu_pid": "64820"
+  },
+  "automation": {
+    "id": "v8-1-p1-2500",
+    "kind": "heartbeat",
+    "interval_hours": 1,
+    "status": "ACTIVE"
+  }
 }
