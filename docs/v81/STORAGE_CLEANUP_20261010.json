@@ -1,0 +1,64 @@
+{
+  "task_id": "WS-V81-STORAGE-20261010",
+  "run": "r1",
+  "completed_at_utc": "2026-10-10T05:29:26.498300+00:00",
+  "before_free_data_bytes": 2208047104,
+  "after_free_data_bytes": 108159438848,
+  "released_data_bytes": 105951391744,
+  "system_free_bytes": 6495154176,
+  "deleted_archives": 6,
+  "deleted_old_environments": 5,
+  "deleted_v77_files": 26,
+  "compacted_inactive_p1_checkpoints": 9,
+  "by_category_allocated_bytes": {
+    "archives": 18525630464,
+    "old_environments": 31614455808,
+    "old_v77_optimizer_and_unused_step32": 26819248128,
+    "old_p1_optimizer_only": 28998991872
+  },
+  "protected_checkpoints": [
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/diagnostic_source_checkpoints/p1-checkpoint-000100.pt",
+      "bytes": 4833164791,
+      "symlink": false
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/diagnostic_source_checkpoints/p1-checkpoint-000500.pt",
+      "bytes": 4833164791,
+      "symlink": false
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-001000.pt",
+      "bytes": 4833164791,
+      "symlink": false
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/diagnostic_source_checkpoints/p1-checkpoint-001000.pt",
+      "bytes": 4833164791,
+      "symlink": false
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
+      "bytes": 4833164791,
+      "symlink": false
+    },
+    {
+      "path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512/probe_trainable_final.pt",
+      "bytes": 1611038242
+    }
+  ],
+  "active_training": {
+    "pid": 19021,
+    "latest_step": 4116,
+    "all_logged_gradients_finite": true,
+    "all_frozen_gradients_zero": true,
+    "gpu": "19021, 21892 MiB",
+    "parent_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_5000.py --worker "
+  },
+  "full_manifest_root": "/root/autodl-tmp/cleanup_manifests/WS-V81-STORAGE-20261010/r1",
+  "failure_ledger_delta": "none",
+  "limitations": [
+    "Retired optimizer states cannot be reconstructed; old arms retain inference weights but cannot exactly resume.",
+    "Removed environments require reinstall from saved package recipes; archives require re-download at saved source revisions if needed."
+  ]
+}
