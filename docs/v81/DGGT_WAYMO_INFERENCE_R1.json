@@ -533,7 +533,7 @@
     "human_verdict": null
   },
   "baseline_snapshot_utc": "2026-10-10T17:29:30.622002+00:00",
-  "snapshot_utc": "2026-10-10T22:25:32.084426+00:00",
+  "snapshot_utc": "2026-10-10T23:24:02.066352+00:00",
   "support_footprint_result": {
     "status": "completed_estimated_geometric_support",
     "training_updates": 0,
@@ -671,6 +671,42 @@
     "failure_ledger_delta": "none",
     "adopted_algorithm_change": false,
     "human_verdict": null,
-    "next_question": "Whether estimated support survives actual depth sorting/transmittance and contains usable background texture; not answered by this CPU audit."
+    "next_question": "A later CPU depth-sort attempt stopped at frame-0 alpha calibration; whether support survives true gsplat compositing or contains usable background texture remains unanswered."
+  },
+  "depth_order_cpu_result": {
+    "status": "contract_stop",
+    "attempted_utc": "2026-10-10T23:24:02.066352+00:00",
+    "returncode": 1,
+    "reason": "projected alpha does not match saved delete alpha within one gray level",
+    "frame_attempted": 0,
+    "frames_1_to_3_attempted": false,
+    "hole_pixels": 11198,
+    "fragments": 92196,
+    "bbox_pixel_visits": 875015,
+    "alpha_gate_u8_gray_levels": 1,
+    "alpha_max_abs_error_u8": 16,
+    "alpha_pixels_over_one_u8": 2606,
+    "elapsed_seconds": 3.5113933270040434,
+    "peak_rss_kb": 600564,
+    "sampled_process_tree_peak_rss_kb": 597464,
+    "gpu_executed": false,
+    "training_pid_continued": 99056,
+    "rgb_formula_changed": false,
+    "contribution_npz_or_result_written": false,
+    "remote_evidence": "diagnostics/depth_order_support_r1/; diagnostics/depth_order_support_cpu.py",
+    "local_evidence": [
+      "work/dggt-edit-protocol-20261011/depth_order_execution_receipt.json",
+      "work/dggt-edit-protocol-20261011/depth_order_contract_stop.json",
+      "work/dggt-edit-protocol-20261011/depth_order_depth_order_cpu_stderr.log"
+    ],
+    "pinned_primary_contract": [
+      "https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/rendering.py#L716-L725",
+      "https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/cuda/csrc/RasterizeToPixels3DGSFwd.cu#L126-L166"
+    ],
+    "interpretation": "CPU approximation failed the saved 8-bit alpha calibration; no actual gsplat contribution or deletion-cause inference",
+    "double_alpha_question": "unverified; no official bug conclusion",
+    "failure_ledger_delta": "none",
+    "human_verdict": null,
+    "rerun_planned": false
   }
 }

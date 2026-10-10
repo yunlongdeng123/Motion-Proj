@@ -119,7 +119,7 @@ UTC2026-10-10T22:03:00正式12500六窗及S2S控制器退出后，队列单独�
 
 初版视觉审核曾误读接触图，把单图暗团称为连续道路；直接打开12张命名delete原PNG后纠正，初版保留`review_attempt_1.json`，只把修正版`assistant_review.json`用于报告和页面。原始公共单图输出与旧结果逐像素一致，没有出现本次新补洞收益。
 
-`diagnostics/reference_refinement_r1/`保留真实run、8组paired_inputs、三支24PNG及审核。深色`outputs/v81-dggt-waymo/reference_refinement_r1/index.html`实际解码44张输入/旧/新RGB，98媒体与证据链接无缺失，不重编码视频，未做浏览器视觉QA。Seen-to-Scene随后已从12500正式原件启动至15000。下一步继续核对作者编辑演示的观测、选择与背景覆盖合同；先做有依据CPU来源检查，不重复此次参考对照或盲扫seed/阈值，不抢占S2S。仍无确定新科学根因，`failure_ledger_delta=none`。
+`diagnostics/reference_refinement_r1/`保留真实run、8组paired_inputs、三支24PNG及审核。深色`outputs/v81-dggt-waymo/reference_refinement_r1/index.html`实际解码44张输入/旧/新RGB及4张CPU分类图，107个媒体与证据链接无缺失，不重编码视频，未做浏览器视觉QA。Seen-to-Scene随后已从12500正式原件启动至15000。后续有依据的CPU来源检查及校准停止见下节；不重复参考对照或盲扫seed/阈值，不抢占S2S。仍无确定新科学根因，`failure_ledger_delta=none`。
 
 ### 官方Figure 5实际像素核对与下一CPU问题
 
@@ -153,4 +153,21 @@ flowchart LR
 
 固定使用安装的 gsplat 1.5.3 投影几何：eps2d=0.3、3.33σ 半径、有效片元 alpha≥1/255；没有扫阈值。保存 state 的 static opacity 不含时间权重，本次按原 renderer 施加一次；尺度与四元数均是已激活值。单线程、空 CUDA、nice10、外层180秒/脚本150秒与4GiB限额。实际耗时1.585秒、峰RSS629,876KiB；同时 S2S 父98990/子99056持续训练。证据在同一 DGGT run 的 `diagnostics/support_footprint_r1/support_estimate.json` 和四张分类图；本地轻量详稿 `work/dggt-edit-protocol-20261011/support_footprint_r1_review.md`。`failure_ledger_delta=none`。
 
-数据记录修正：实际每帧随机种子是 **1234+frame_index**，同帧两支重置相同 seed。此前 `seed_per_frame:1234` 是字段命名错误，已备份后改为 `seed_base:1234` 与显式规则；随机调用、权重和已完成输出未改，未重跑 GPU。JSON 的旧部署排队段显式标为18:23 UTC历史快照，当前完成结论以 `reference_refinement_result` 和 `support_footprint_result` 为准。
+数据记录修正：实际每帧随机种子是 **1234+frame_index**，同帧两支重置相同 seed。此前 `seed_per_frame:1234` 是字段命名错误，已备份后改为 `seed_base:1234` 与显式规则；随机调用、权重和已完成输出未改，未重跑 GPU。JSON 的旧部署排队段显式标为18:23 UTC历史快照；参考对照、几何支持和本次校准停止分别以 `reference_refinement_result`、`support_footprint_result`、`depth_order_cpu_result` 为准。
+
+## 深度顺序 CPU 贡献诊断：首帧校准停止
+
+为检验上一节的几何足迹能否进一步解释实际合成贡献，沿用已保存的高斯、预测相机、RGB选择和删除 alpha，做了一次有界、单线程、隐藏 GPU 的 CPU 投影与深度排序尝试。先要求重算的 alpha 与保存的 8-bit 删除 alpha 在洞内相差不超过固定的 1 灰阶，只有校准通过才允许解释贡献。本次 UTC 2026-10-10 23:24 在首帧触发 `contract_stop`，进程按合同返回码 1；没有继续帧 1–3，没有落盘贡献 NPZ 或结果，也没有修改 RGB 公式、重渲染或启用 GPU。正式 Seen-to-Scene GPU 仍仅由 PID 99056 使用。
+
+```mermaid
+flowchart LR
+  A[既有高斯与相机] --> B[CPU投影和深度排序]
+  B --> C[估计alpha累积]
+  D[保存的删除alpha] --> E{8-bit alpha误差≤1?}
+  C --> E
+  E -->|首帧未通过| F[合同停止：无贡献结论]
+```
+
+首帧洞内域 11,198 像素，处理 92,196 个片元、875,015 次包围框像素访问；重算 alpha 的最大绝对误差为 16 灰阶，2,606 像素超过 1 灰阶门限。执行用时 3.511 秒、脚本记录峰 RSS 600,564 KiB；外层 0.2 秒间隔进程树采样峰值 597,464 KiB。这个结果说明本次 CPU 近似**未通过与已保存渲染的校准**，不能把它当作真实 gsplat 贡献、车辆删除黑洞原因或新科学根因；此前四帧几何支持统计也继续只作估计，`failure_ledger_delta=none`。比较对象本身是量化后的 8-bit alpha，且 CPU 投影、排序及浮点累积可能与 CUDA 光栅化不同，单凭此次偏差无法定位哪一步造成差异。
+
+固定版本 [gsplat v1.5.3 `rendering.py` 716–725 行](https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/rendering.py#L716-L725)确认 `RGB+ED` 只对最后的累加深度通道除以渲染 alpha；[`RasterizeToPixels3DGSFwd.cu` 前向实现](https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/cuda/csrc/RasterizeToPixels3DGSFwd.cu#L126-L166)按透射率与片元 alpha 累加颜色/深度通道并输出 alpha。关于外层是否可能再次乘 alpha 的 `double-alpha` 疑问仍待独立证实；此次 CPU 校准停止不能判定官方实现有 bug。远端保留诊断脚本、输入和失败栈；本地轻量证据是 `work/dggt-edit-protocol-20261011/depth_order_execution_receipt.json`、`depth_order_contract_stop.json` 与 `depth_order_depth_order_cpu_stderr.log`。本次不重跑。

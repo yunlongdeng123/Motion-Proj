@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V81-DGGT-WAYMO-INFERENCE-20261011 / r1 | 官方基线、四支高斯与16帧Difix保留；新增24帧单/双图参考对照完成，8组配对通过、单图重放一致；独立审核三支均残影/黑斑，无参考收益，44图深色页98链接完整 | [流程与组件图](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量结果](v81/DGGT_WAYMO_INFERENCE_R1.json) |
+| WS-V81-DGGT-WAYMO-INFERENCE-20261011 / r1 | 官方基线、四支高斯与16帧Difix保留；24张单/双图参考对照及8组配对完成，三支仍有残影/黑斑、无参考收益；四帧CPU足迹仅几何估计，后续深度顺序CPU首帧alpha校准未过1灰阶门限即停止，无贡献结果；深色页44张RGB+4张分类图、107链接完整 | [流程、组件图与停止证据](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量结果](v81/DGGT_WAYMO_INFERENCE_R1.json) |
 | WS-V81-STORAGE-20261010 / r1 | 授权清理释放105.95GB；旧优化器退役、推理权重保留；当前P1继续运行 | [清单与恢复边界](v81/STORAGE_CLEANUP_20261010.md) · [实测](v81/STORAGE_CLEANUP_20261010.json) |
 | WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 正式12500、整千11000/12000完整状态与六窗150帧已审；宽侧区有局部身体/接缝收益，也有色斑/末帧形变，quality hold/train continue；正式12500已恢复至15000，20000目标不变，12500未清理 | [周期训练与12500复盘](v81/P1_REVIEW_CYCLES_R1.md)、[7500传播评估](v81/P1_STEP7500_EVALUATION_R1.md)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r1 | 原始nuScenes 6 train+2 val/200连续帧；两步真实优化+checkpoint恢复、独立val 25帧生成完成；显存/推理mask维度工程修复，18审核视频，非P1指标复现 | [协议与证据](v81/NUSCENES_P0_R1.md) · [实测](v81/P0_R1_RESULTS.json) |
@@ -174,5 +174,3 @@
 每个 run 的真实完成数量、配置、seed、数据角色、成本和失败边界以该报告及对应 manifest 为准。不同类型执行次数不合并为独立样本。更早版本的实验从[历史归档](archive/README.md)进入。
 
 - `WS-V77-DELETE-REPAIR-20260927/r1`：三场景入口试验失败并回退；实际数量与边界见[报告](v77/DELETE_REPAIR.md)、[登记](autoresearch/worldsim_v77/delete_repair_20260927/registration.json)、[收口](autoresearch/worldsim_v77/delete_repair_20260927/closeout.json)。
-
-- 同一 `WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1`：`diagnostics/support_footprint_r1` 四帧CPU几何支持审计完成；仅估计，非gsplat贡献，failure_delta=none；结果并入 [原报告](v81/DGGT_WAYMO_INFERENCE_R1.md)。没有新task/run或GPU重跑。
