@@ -78,6 +78,13 @@ def main() -> None:
                         or bounded2000.get('propagation_protocol') != 'paper-bidirectional-m4'
                         or Path(bounded2000.get('source_checkpoint', '')).name != 'p1-checkpoint-001000.pt'):
         raise ValueError('正式1000→2000阶段快照的源断点、目标或协议不匹配')
+    bounded5000_path = output/'bounded5000_state.json'
+    bounded5000 = read(bounded5000_path) if bounded5000_path.is_file() else None
+    if bounded5000 and (bounded5000.get('source_step') != 2000
+                        or bounded5000.get('training_budget', bounded5000.get('target_step')) != 5000
+                        or bounded5000.get('propagation_protocol') != 'paper-bidirectional-m4'
+                        or Path(bounded5000.get('source_checkpoint', '')).name != 'p1-checkpoint-002000.pt'):
+        raise ValueError('正式2000→5000阶段快照的源断点、目标或协议不匹配')
     header = '''<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>P1 条件与原始SVD对照</title>
     <style>body{font:16px/1.65 system-ui;background:#eef2f6;color:#182a3a}main{max-width:1600px;margin:auto;padding:24px}.panel,article{background:white;border:1px solid #ccd7e3;padding:20px;margin:20px 0;border-radius:10px}.warn{background:#fff5de}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.box{padding:12px;background:#e6effb;border:1px solid #96abc4}.four,.five,.six{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.five{grid-template-columns:repeat(5,minmax(0,1fr))}.six{grid-template-columns:repeat(6,minmax(0,1fr))}figure{margin:0}video,img{width:100%;max-width:100%}td,th{border:1px solid #ccd7e3;padding:8px}table{border-collapse:collapse}a{color:#145dad}@media(max-width:800px){.four,.five,.six{grid-template-columns:repeat(2,minmax(0,1fr))}}</style><main>
     <h1>P1：固定权重条件诊断与原始SVD对照</h1><p><a href="index.html">返回完整进度、历史输出与数据页</a></p>
@@ -86,6 +93,15 @@ def main() -> None:
                 review_note(output/'condition_gap_teacher', 'condition_gap_teacher')]
     bounded2000_summary = ''
     bounded2000_panel = None
+    bounded5000_summary = ''
+    bounded5000_panel = None
+    if bounded5000:
+        observed = bounded5000.get('observed_train_step', bounded5000.get('training_step', '未记录'))
+        observed_at = bounded5000.get('observed_at_utc', bounded5000.get('updated_at_utc', '未记录'))
+        status = html.escape(str(bounded5000.get('status', '未记录')))
+        bounded5000_summary = (f'快照 {html.escape(str(observed_at))}：记录步数 '
+                               f'{html.escape(str(observed))}，状态 {status}')
+        bounded5000_panel = f'''<div class="panel" id="bounded5000-snapshot"><h2>当前正式有界阶段：2000 → 目标5000步</h2><p>{bounded5000_summary}。这是实际采集快照，不代表实时进度；5000步质量须等验证媒体和独立审核，不能由目标步数或状态推断。</p><p><a href="bounded5000_state.json">训练状态、实际命令与进程记录</a></p></div>'''
     if bounded2000:
         processes = bounded2000.get('processes', {})
         process_rows = []
@@ -313,9 +329,51 @@ def main() -> None:
             sections.append(f'<figure><img loading="lazy" src="{board}" alt="fps-ID单因素与VAE/传播中间条件连续五帧"><figcaption>f{start:02d}–f{start+4:02d}：六行连续帧</figcaption></figure>')
         sections.extend([review_note(fps_folder, 'fps_alignment_step2000'),
                          '<p><a href="fps_alignment_step2000/run.json">输入配对与解码单位</a></p></div>'])
+    capacity_folder = output/'single_clip_capacity_step2000_512'
+    capacity_run_path = capacity_folder/'run.json'
     capacity_path = output/'single_clip_capacity_step2000_512_state.json'
     capacity_notice = ''
-    if capacity_path.is_file():
+    if capacity_run_path.is_file() and (capacity_folder/'assistant_review.json').is_file():
+        capacity = read(capacity_run_path)
+        capacity_review = read(capacity_folder/'assistant_review.json')
+        adam = read(capacity_folder/'adam_step_evidence.json')
+        delivery = read(capacity_folder/'delivery_check.json')
+        if (capacity.get('status') != 'complete' or capacity.get('source_step') != 2000
+                or capacity.get('actual_updates') != 512 or capacity.get('formal_training_updates') != 0
+                or adam.get('adam_state_parameter_tensors') != 514
+                or adam.get('all_parameters_with_source_adam_state_advanced_exactly') is not True
+                or adam.get('source_step') != 2000 or adam.get('diagnostic_updates') != 512
+                or delivery.get('new_videos_fully_decoded') != 8
+                or delivery.get('all25_frames_available') is not True
+                or delivery.get('qa_boards') != 5
+                or capacity_review.get('all_frames_reviewed') is not True):
+            raise ValueError('512步容量诊断完成、Adam、媒体或独立全帧审核记录不符')
+        before = capacity['teacher_before']['weighted_mse']
+        after = capacity['teacher_after']['weighted_mse']
+        reduction = (before - after) / before * 100
+        if capacity_review.get('decision') != 'hold':
+            raise ValueError('512步容量诊断页面的审核结论与已归档记录不符')
+        capacity_notice = ('单训练片段512次独立诊断更新已完成，514个有Adam状态的参数均从'
+                           'step 2000推进到2512；独立全25帧审核为hold。'
+                           '<a href="condition_gap_review.html#capacity-step2000-512">查看前后对照</a>。')
+        capacity_panel = [f'''<div class="panel warn" id="capacity-step2000-512"><h2>已完成：正式2000起点的单训练片段512次容量诊断</h2><p>同一训练片段反复更新512次，Adam从正式2000状态恢复；514个有历史状态的参数走到2512。正式训练新增更新为0，原正式2000权重不变；诊断末步只保存模型参数，不可用于正式续训。每次更新重采样训练σ和ε，纯Gaussian QUERY前后使用同一可见输入与seed。</p><div class="diagram"><div class="box">固定25帧训练片段<br>可见输入</div>→<div class="box">原模块 / 原损失<br>σ、ε每步重采样</div>→<div class="box">512次独立更新</div>→<div class="box">同seed纯噪声QUERY<br>原生前 / 后</div></div><p>固定带GT噪声的单步teacher加权MSE {before:.6f} → {after:.6f}，下降 {reduction:.2f}%；teacher的 x_t 含GT，不能当成合法QUERY。独立25帧审核为 <b>hold</b>：原生QUERY的场景纹理和主体粗位置有变化，但猫头鹰仍近乎静止的软块，未跟随真实双翼姿态变化。下方8条视频同组同步；硬写回中心来自真实可见输入，判断生成能力应看原生 pred。</p><div class="four">''']
+        for phase, phase_label in (('query_before', '更新前'), ('query_after', '更新后')):
+            for kind, label in (('gt', 'GT对照'), ('visible', '可见QUERY输入'),
+                                ('pred', '原生QUERY'), ('comp', '真实中心硬写回')):
+                relative = f'single_clip_capacity_step2000_512/{phase}/{kind}.mp4'
+                if not (output/relative).is_file():
+                    raise FileNotFoundError(relative)
+                capacity_panel.append(f'<figure><video controls preload="metadata" src="{relative}"></video><figcaption>{phase_label} · {label}</figcaption></figure>')
+        capacity_panel.append('</div>')
+        for start in range(0, 25, 5):
+            board = f'single_clip_capacity_step2000_512/qa_boards/frames_{start:02d}_{start+4:02d}.jpg'
+            if not (output/board).is_file():
+                raise FileNotFoundError(board)
+            capacity_panel.append(f'<figure><img loading="lazy" src="{board}" alt="容量诊断连续五帧前后及teacher图板"><figcaption>f{start:02d}–f{start+4:02d}：GT / visible / 原生前 / 原生后 / 含GT teacher前 / teacher后</figcaption></figure>')
+        capacity_panel.extend([review_note(capacity_folder, 'single_clip_capacity_step2000_512'),
+                               '<p><a href="single_clip_capacity_step2000_512/run.json">运行与输入角色</a> · <a href="single_clip_capacity_step2000_512/adam_step_evidence.json">514参数Adam步数证据</a> · <a href="single_clip_capacity_step2000_512/delivery_check.json">8视频/25帧核验</a></p></div>'])
+        sections.insert(1, ''.join(capacity_panel))
+    elif capacity_path.is_file():
         capacity = read(capacity_path)
         if (capacity.get('source_step') != 2000 or capacity.get('diagnostic_updates') != 512
                 or capacity.get('formal_training_updates') != 0):
@@ -324,6 +382,42 @@ def main() -> None:
                            f'正式2000权重起点，最多512次独立更新，不计正式训练。'
                            '<a href="single_clip_capacity_step2000_512_state.json">实际启动状态与命令</a>。')
         sections.insert(1, f'''<div class="panel" id="capacity-step2000-512"><h2>当前有界项：单训练片段完整噪声分布容量检查</h2><p>{capacity_notice}完整QUERY前后对照与独立审核尚不能由启动状态推断。原正式2000模型/Adam/RNG保留；诊断最终只保存可训练权重、不保存Adam，不能续训或进入正式恢复。</p><div class="diagram"><div class="box">固定真实训练片段<br>25帧可见输入</div>→<div class="box">原模块与原损失<br>每步重采样σ / ε</div>→<div class="box">最多512更新</div>→<div class="box">纯噪声QUERY前 / 后<br>独立全帧审核</div></div><p>teacher输入含带噪GT，只检查训练容量；不能作为合法QUERY质量。质量hold后继续依证据排查，不自动追加正式长训。</p></div>''')
+    cfg_folder = output/'capacity_cfg_alignment_step2000_512'
+    if (cfg_folder/'run.json').is_file():
+        cfg = read(cfg_folder/'run.json')
+        if cfg.get('status') == 'complete':
+            cfg_review_path = cfg_folder/'assistant_review.json'
+            if (cfg.get('source_step') != 2000 or cfg.get('diagnostic_training_updates') != 512
+                    or cfg.get('this_run_optimizer_updates') != 0
+                    or cfg.get('actual_unet_batch_both') != 2
+                    or cfg.get('ordinary_replays_capacity_query_after_all25_exact') is not True
+                    or not cfg.get('paired_exact') or not all(cfg['paired_exact'].values())):
+                raise ValueError('CFG配对诊断完成、B2或全25帧重放证据不符')
+            cfg_guidance = cfg.get('branch_guidance', {})
+            cfg_review = read(cfg_review_path) if cfg_review_path.is_file() else None
+            cfg_status = (f'独立审核：{html.escape(str(cfg_review.get("decision", "未记录")))}；'
+                          if cfg_review else '独立全帧审核待归档；')
+            cfg_panel = [f'''<div class="panel" id="capacity-cfg-alignment"><h2>同权重零更新：容量诊断末步的CFG配对</h2><p>两支使用同一可见输入、初始Gaussian、CLIP、flow、VAE与传播condition，均执行真实B=2 UNet；普通支全25帧逐像素重放容量诊断的更新后QUERY。只比较 {html.escape(str(cfg_guidance.get('ordinary_cfg_1_to_3', '普通CFG')))} 与 {html.escape(str(cfg_guidance.get('constant_cfg_1', '常数CFG=1')))} 的混合，新增参数更新0。{cfg_status}像素或视觉变化本身不是收益，也不改变原正式2000评估。</p><div class="diagram"><div class="box">同一可见输入 / 噪声</div>→<div class="box">同一B=2 UNet</div>→<div class="box">CFG 1→3 / 恒1</div>→<div class="box">两支原生QUERY</div></div><div class="four">''']
+            for phase, phase_label in (('ordinary_cfg_1_to_3', '普通CFG 1→3'),
+                                       ('constant_cfg_1', '恒定CFG 1')):
+                for kind, label in (('gt', 'GT对照'), ('visible', '可见输入'),
+                                    ('pred', '原生QUERY'), ('comp', '真实中心硬写回')):
+                    relative = f'capacity_cfg_alignment_step2000_512/{phase}/{kind}.mp4'
+                    if not (output/relative).is_file():
+                        raise FileNotFoundError(relative)
+                    cfg_panel.append(f'<figure><video controls preload="metadata" src="{relative}"></video><figcaption>{phase_label} · {label}</figcaption></figure>')
+            cfg_panel.append('</div>')
+            for start in range(0, 25, 5):
+                board = f'capacity_cfg_alignment_step2000_512/qa_boards/frames_{start:02d}_{start+4:02d}.jpg'
+                if not (output/board).is_file():
+                    raise FileNotFoundError(board)
+                cfg_panel.append(f'<figure><img loading="lazy" src="{board}" alt="普通和恒1 CFG同帧对照"><figcaption>f{start:02d}–f{start+4:02d}：四行同帧对照</figcaption></figure>')
+            if cfg_review:
+                cfg_panel.append(review_note(cfg_folder, 'capacity_cfg_alignment_step2000_512'))
+            cfg_panel.append('<p><a href="capacity_cfg_alignment_step2000_512/run.json">配对运行记录</a> · <a href="capacity_cfg_alignment_step2000_512/qa_boards/frames_00_04.jpg">连续帧图板入口</a></p></div>')
+            sections.insert(1, ''.join(cfg_panel))
+        else:
+            sections.insert(1, f'''<div class="panel" id="capacity-cfg-alignment"><h2>CFG配对诊断记录</h2><p>运行记录状态：{html.escape(str(cfg.get('status', '未记录')))}；尚无可确认的完整结果，不据此判断画质。</p><a href="capacity_cfg_alignment_step2000_512/run.json">实际运行记录</a></div>''')
     teacher = output/'paired_teacher_step1000'
     teacher_done = (teacher/'run.json').is_file()
     if teacher_done:
@@ -479,6 +573,8 @@ def main() -> None:
         {review_note(folder,name)}<p><a href="{name}/diagnostic.json">实际调用配置与限制</a></p></div>''')
     if bounded2000_panel:
         sections.insert(1, bounded2000_panel)
+    if bounded5000_panel:
+        sections.insert(1, bounded5000_panel)
     if step2000_ready:
         sections.insert(1,f'''<div class="panel"><h2>正式2000步六窗已完成生成</h2><p>六窗的step002000运行记录与25帧媒体均已齐全；同seed、同mask、同源帧的500/1000/2000原生对照在下方。{step2000_gate_status}；{step2000_review}。2000步硬写回中心是可见真值，不替代原生质量判断。</p><p><a href="#validation-step2000">查看六列同步视频</a></p></div>''')
     sections.append('</main><script>document.querySelectorAll(".four,.five,.six").forEach(g=>{let vs=[...g.querySelectorAll("video")],busy=false;vs.forEach(v=>{v.addEventListener("play",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v){x.currentTime=v.currentTime;x.play().catch(()=>{})}});busy=false});v.addEventListener("pause",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v)x.pause()});busy=false});v.addEventListener("seeked",()=>{if(busy)return;busy=true;vs.forEach(x=>{if(x!==v&&Math.abs(x.currentTime-v.currentTime)>.15)x.currentTime=v.currentTime});busy=false})})});</script></html>')
@@ -525,11 +621,16 @@ def main() -> None:
                          '<a href="condition_gap_review.html#full-latent-oracle">查看非法输入边界和两支对照</a>。') if oracle_done else ''
         teacher_notice = (f'带GT单步teacher诊断已完成，{teacher_status}；不代表自由采样通过。'
                           '<a href="condition_gap_review.html#paired-teacher-step1000">查看五张连续帧图板</a>。') if teacher_done else ''
-        bounded_notice = (f'{bounded2000_summary}；这是快照，不代表实时训练进度或2000步质量通过。'
+        bounded_notice = (f'{bounded2000_summary}；这是历史快照，不代表实时训练进度或2000步质量通过。'
                           '<a href="condition_gap_review.html#bounded2000-snapshot">查看实际PID与命令</a>。') if bounded2000 else ''
+        if bounded5000:
+            bounded_notice += (f'{bounded5000_summary}；这是当前正式训练的采集快照，'
+                               '尚不能据此宣称5000步质量。'
+                               '<a href="condition_gap_review.html#bounded5000-snapshot">查看2000→5000有界状态</a>。')
         bounded_notice += capacity_notice
         later_notice = (f'<a href="condition_gap_review.html#validation-step2000">查看2000步六列同步对照</a>；{step2000_gate_status}；{step2000_review}。') if step2000_ready else ''
-        latest_snapshot = ('<a href="bounded2000_state.json">最新实际2000阶段快照</a>' if bounded2000
+        latest_snapshot = ('<a href="bounded5000_state.json">最新实际5000目标阶段快照</a>' if bounded5000
+                           else '<a href="bounded2000_state.json">历史2000阶段快照</a>' if bounded2000
                            else '<a href="bounded1000_state.json">1000步完成快照</a>')
         notice=f'<div class="panel" id="gap-result-link"><b>当前P1：{quality}</b><p>{later_notice}{bounded_notice}同协议从500到正式1000已追加500次更新；{review_detail}。{oracle_notice}{teacher_notice}<a href="condition_gap_review.html#validation-step1000">查看六窗500/1000原生同步对照</a>；正式指标未计算，人工verdict留空。下方其余进度段落按产生时点保留为历史记录，当前状态以本段和{latest_snapshot}为准，快照不等于实时状态。</p></div>'
     elif continuation:

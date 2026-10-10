@@ -361,3 +361,42 @@ flowchart LR
 ```
 
 预启动审查修正诊断脚本的Adam契约：官方FCNet edgeDetector四层8个参数不参与既有loss，正式1999/2000为66/74梯度；按exact名称允许这8个无梯度/无Adam state，其余514个参数检查源step2000和逐次增步。不加入edge loss，不改正式参数范围。末态仅保存trainable模型约1.61GB，无Adam/RNG，不可续训或混正式P1。原正式2000完整Adam断点保留。真实PID/命令在同run `single_clip_capacity_step2000_512_state.json`；该诊断不是独立泛化评测，正式四指标未算、human_verdict=null。
+
+### 单片段512实测：数值学习不等于自由采样能力
+
+UTC2026-10-10 01:39完成全部512更新，训练1009.54秒、总1076.25秒、峰18.38GiB，514个有源Adam状态的参数逐个2000→2512，冻结参数无梯度、有限数值。既有edge分支8参数仍按精确名称无梯度/无Adam状态。固定GT-x_t teacher加权误差0.185410→0.155879（下降约15.9%），洞内0.153459→0.132344；这些量只描述带噪真值的单步去噪，不能判纯噪声生成通过。
+
+独立6-sol/xhigh/no-fast助手检查全部25帧before/after原生及teacher，decision=hold：草地、树枝纹理和棕色主体粗位置有变化，但原生仍像近静止软块，未恢复猫头鹰脸、双翼与f07–14翼姿。teacher-after更像展翼而且误差下降，但输入x_t含GT，不能把这项进步算作QUERY。单训练片段、512更新和训练/推理条件差异仍是局限，不作容量硬上界或方法否定。8条新视频均实际完整解码25帧，五张连续帧图板及QA保留同run `single_clip_capacity_step2000_512`；models-only末态1,611,038,242 B，没有Adam/RNG，不可恢复正式训练。
+
+下一项仅检验这次诊断的采样差异：训练无CFG dropout，QUERY却仍按帧CFG1→3。固定512末态、同seed2036/25步、相同真实B=2前向，把混合改为恒CFG1；普通支必须完整25PNG重现前一QUERY，实际噪声、CLIP、time、VAE、flow、传播条件逐值一致。零参数更新，不修改正式协议，也不把非零像素响应当画质收益。
+
+```mermaid
+flowchart LR
+    V[相同可见25帧] --> C[同VAE与双向传播条件]
+    C --> U[同512诊断末态 SVD]
+    Z[同一Gaussian] --> U
+    U --> G[仅混合CFG1到3或恒1]
+    G --> Y[两支原生与中心写回]
+    Y --> A[独立全25帧审核]
+```
+
+数据盘剩约2.3GB、系统盘约6.5GB；原2000完整断点和输入/关键历史媒体保留，无新清理。后续若需正式断点，必须先保证能保存，不默认删除资产。formal_metrics=false、protocol_verified=false、human_verdict=null、failure_ledger_delta=none；AutoDL保持开机。
+
+### CFG配对结论与正式2000→5000
+
+零训练两支完成59.10秒、峰9.49GiB，15项真实输入/首步UNet证据逐值一致，普通支全25原始PNG重放512诊断更新后QUERY。恒CFG1保留真实B=2前向，只令混合等于有条件预测；原生平均像素响应0.04858，不等于收益。独立6-sol/xhigh/no-fast助手逐帧审完25帧，decision=regression：f00–14仍无脸与完整双翼，f15–24棕色主体更宽软、向右漂移并糊入土壤/灌木，未恢复真实展翼。这只排除本权重、本片段上的恒1作为直接修复，不说明CFG1全局较差，也不否定扩散学习。两支8视频完整解码、五图板和QA归入同run `capacity_cfg_alignment_step2000_512`；正式推理不改、不扫引导参数。
+
+未发现新确定接线错误；正式2000海豚.125学习曲线有局部进步，而2000仅占论文100K预算2%。因此采用原协议下一个有界学习点，而非继续重复诊断：从正式2000原模型/Adam/scheduler/RNG续至总5000，新增最多3000更新；lr、数据、mask、seed、参数范围和损失均不变，512诊断权重不进入恢复。UTC01:55实际启动父18955/子19021；按已有6.01秒/步预计约5小时，随后同固定三valid×两倍率六窗，每窗25帧原生/写回独立审核。该启动不等于质量放行，不自动100K；若仍hold，再依据500/1000/2000/5000匹配曲线选择最小下一项。
+
+```mermaid
+flowchart LR
+    S[正式2000模型与Adam/RNG] --> T[同协议最多新增3000更新]
+    X[原1951训练视频池] --> T
+    T --> K[唯一5000完整断点]
+    K --> V[同三valid与两倍率六窗]
+    V --> Q[原生和写回全150帧独立审核]
+```
+
+仓库外wrapper只覆写控制器保存目录：数据盘不足再保存4.83GB，故5000唯一完整断点放系统盘 `/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/`；保存后在phase/train新建软链接入口。启动前系统free6,498,308,096 B，足够源大小加0.75GiB余量；数据free2,244,235,264 B，六窗上一阶段仅约43MiB。不保额外中途断点，不删原2000或输入，软链接不算外部备份，保存后必须再次核对剩余空间。原控制器JSON已备份；排队无其他GPU任务，禁止重复启动。真实命令与快照为同run `paper_bidirectional_m4/controller_state.json` / `bounded5000_state.json`，阶段wrapper/source在 `diagnostic_scripts`。
+
+正式指标未计算、protocol_verified=false、human_verdict=null、failure_ledger_delta=none。新增16视频与10全帧图板同步至本地原审核页；保持AutoDL开机，P1目标未完成，自动研究继续。

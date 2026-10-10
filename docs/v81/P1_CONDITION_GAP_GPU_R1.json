@@ -1,7 +1,7 @@
 {
   "task": "WS-V81-SEEN-TO-SCENE-P1-20261009",
   "run": "r1",
-  "observed_at_utc": "2026-10-09T23:10:13.972037+00:00",
+  "observed_at_utc": "2026-10-10T01:57:29.527801+00:00",
   "host": "wm-3090-1009",
   "gpu": "RTX3090 24GiB",
   "source_checkpoint_step": 100,
@@ -1262,46 +1262,48 @@
     "record_scope": "historical_prior_authorization; not_current_power_policy"
   },
   "current_execution": {
-    "formal_training_step": 2000,
+    "last_completed_formal_step": 2000,
     "formal_validation": "six_windows_complete_assistant_hold",
-    "bounded_diagnostic": {
-      "status": "running",
-      "controller_pid": 16337,
-      "child_pid": 16344,
-      "started_at": "2026-10-10T01:21:32.622633+00:00",
+    "bounded5000_actual_snapshot": {
+      "observed_at_utc": "2026-10-10T01:57:29.527801+00:00",
+      "status": "train_to_005000",
       "source_step": 2000,
+      "training_budget": 5000,
+      "observed_train_step": 2011,
+      "added_updates_observed": 11,
+      "last_event": "train_step",
+      "processes": {
+        "controller_pid": {
+          "pid": 18955,
+          "alive": true,
+          "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/codex_tmp/v81_run_bounded_5000.py --worker "
+        },
+        "child_pid": {
+          "pid": 19021,
+          "alive": true,
+          "actual_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/v81_checkpoint_retained/paper_bidirectional_m4_step005000 --max-steps 5000 --save-every 5000 --keep-checkpoints 1 --amp bf16 --propagation-protocol paper-bidirectional-m4 --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt "
+        }
+      },
       "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
-      "output_dir": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512",
-      "diagnostic_updates": 512,
-      "formal_training_updates": 0,
-      "command": [
-        "/root/autodl-tmp/envs/motionproj/bin/python",
-        "-u",
-        "/root/autodl-tmp/codex_tmp/v81_single_clip_capacity_step2000.py",
-        "--repo",
-        "/root/autodl-tmp/motion_proj_v81",
-        "--checkpoint",
-        "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
-        "--output-dir",
-        "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/single_clip_capacity_step2000_512",
-        "--updates",
-        "512",
-        "--seed",
-        "2026",
-        "--query-steps",
-        "25"
-      ],
-      "free_bytes_before": 4046778368,
+      "propagation_protocol": "paper-bidirectional-m4",
+      "inference_mode": "paper-feedforward",
       "queued_gpu_jobs": [],
+      "power_policy": "持续autoresearch，保持AutoDL开机，不依据旧记录关机",
+      "new_5000_validation_available": false,
+      "complete_validation_windows": 0,
+      "free_data_bytes": 2244075520,
+      "free_system_bytes": 6498308096,
       "human_verdict": null,
-      "checkpoint_role": "trainable-models-only; no Adam; not resumable or formal P1",
-      "expected_followup": "independent all25 QUERY and teacher review; autoresearch continues if hold"
+      "formal_metrics_computed": false
     },
-    "power_policy": "持续autoresearch，保持AutoDL开机",
-    "human_verdict": null,
+    "power_policy": "保持AutoDL开机，hold后自主有界排查",
+    "diagnostic_weights_not_used_for_formal_resume": true,
+    "next_checkpoint_storage": "/root/v81_checkpoint_retained/paper_bidirectional_m4_step005000/p1-checkpoint-005000.pt",
+    "storage_symlink_is_backup": false,
     "formal_metrics_computed": false,
     "protocol_verified": false,
-    "weekly_remaining_percent_last_observed": 9,
+    "human_verdict": null,
+    "weekly_remaining_percent_last_observed": 7,
     "reset_cards_available_last_observed": 2,
     "reset_card_used": false
   },
@@ -1844,9 +1846,9 @@
     }
   },
   "single_clip_capacity_step2000_512_execution": {
-    "status": "running",
-    "controller_pid": 16337,
-    "child_pid": 16344,
+    "status": "complete_waiting_assistant_quality",
+    "controller_pid": null,
+    "child_pid": null,
     "started_at": "2026-10-10T01:21:32.622633+00:00",
     "source_step": 2000,
     "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/train/p1-checkpoint-002000.pt",
@@ -1874,6 +1876,312 @@
     "queued_gpu_jobs": [],
     "human_verdict": null,
     "checkpoint_role": "trainable-models-only; no Adam; not resumable or formal P1",
-    "expected_followup": "independent all25 QUERY and teacher review; autoresearch continues if hold"
+    "expected_followup": "independent all25 QUERY and teacher review; autoresearch continues if hold",
+    "completed_at": "2026-10-10T01:39:32.634978+00:00",
+    "returncode": 0,
+    "free_bytes_after": 2316333056
+  },
+  "single_clip_capacity_step2000_512_result": {
+    "status": "complete",
+    "source_step": 2000,
+    "actual_updates": 512,
+    "formal_training_updates": 0,
+    "query_seed": 2036,
+    "query_steps": 25,
+    "teacher_before": {
+      "weighted_mse": 0.18540970981121063,
+      "hole_mse": 0.15345871448516846,
+      "known_mse": 0.13971033692359924
+    },
+    "teacher_after": {
+      "weighted_mse": 0.15587875247001648,
+      "hole_mse": 0.1323436051607132,
+      "known_mse": 0.1111067533493042
+    },
+    "training_seconds": 1009.540138123004,
+    "total_seconds": 1076.247020765004,
+    "peak_training_cuda_allocated_bytes": 19729716736,
+    "trainable_final_bytes": 1611038242,
+    "optimizer_saved": false,
+    "rng_state_saved": false,
+    "resumable": false,
+    "adam_state_parameter_tensors": 514,
+    "adam_source_step": 2000,
+    "adam_final_step": 2512,
+    "assistant_review": {
+      "reviewed_at_utc": "2026-10-10T01:44:23Z",
+      "reviewer": "assistant",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "xhigh",
+      "fast": false,
+      "human_verdict": null,
+      "all_frames_reviewed": true,
+      "decision": "hold",
+      "assistant_verdict": "The 512 diagnostic updates visibly change the native pure-Gaussian QUERY: foliage and ground texture redistribute and a tan central subject blob shifts toward the observed owl's location. Across all 25 frames, however, the after result remains a nearly fixed, soft round bird-like mass without a readable face, two extended wings, or the GT wing-position sequence. This is a limited scene/color/placement response, not clear recovery of the target subject and action. The teacher-after row has a broader wing-like shape than teacher-before and the logged single-step error falls, but both teachers receive GT in x_t; neither establishes native QUERY success. Hold the visual capacity-gain claim at this diagnostic point, without inferring the full method cannot improve or using this train-clip probe as formal P1 evaluation.",
+      "scope": {
+        "source_checkpoint_step": 2000,
+        "training_video_id": "0fc958cde2",
+        "clip_start": 2,
+        "frames": "00-24",
+        "num_frames": 25,
+        "boards_viewed": [
+          "qa_boards/frames_00_04.jpg",
+          "qa_boards/frames_05_09.jpg",
+          "qa_boards/frames_10_14.jpg",
+          "qa_boards/frames_15_19.jpg",
+          "qa_boards/frames_20_24.jpg"
+        ],
+        "row_order": [
+          "GT display only",
+          "visible QUERY input",
+          "native QUERY before 512",
+          "native QUERY after 512",
+          "teacher before with GT x_t",
+          "teacher after with GT x_t"
+        ],
+        "evidence_root": "C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v81-paper-p1/single_clip_capacity_step2000_512"
+      },
+      "architecture_components": "Visible center clip -> fixed observation/flow/VAE condition + CLIP -> SVD denoiser with pure Gaussian x_T -> native 25-frame QUERY; one-clip Adam updates alter denoiser. Separately, GT frame -> noisy GT x_t -> one-step teacher x0 diagnostic. GT and teacher rows do not constitute QUERY output.",
+      "setup_from_run_json": {
+        "actual_diagnostic_updates": 512,
+        "formal_training_updates": 0,
+        "optimizer": "Adam resumed from formal step2000",
+        "training_diffusion_noise": "sigma and epsilon resampled every update",
+        "fixed_observation": "cached GT RAFT flow, GT target posterior and first-frame CLIP; visible VAE condition, mask and conditioning sigma fixed",
+        "query": "visible-only 25-step pure Gaussian, seed 2036",
+        "teacher": "fixed single-sigma/noise GT-x_t one-step diagnostic",
+        "teacher_weighted_mse_before": 0.18540970981121063,
+        "teacher_weighted_mse_after": 0.15587875247001648,
+        "formal_evaluation": false,
+        "generalization_claim": false
+      },
+      "frame_evidence": [
+        {
+          "frames": "00-04",
+          "gt_visible": "GT owl is near the center at the grass/soil edge with its face and two broad wings visible. The center strip supplies the face and part of the wing; the missing sides require reconstruction.",
+          "native_query_before_after": "Before has a tan, partly bird-like lump left of GT center with a bright invented green bush to its right. After moves/expands the tan lump somewhat toward the center and changes the surrounding evergreens and soil. Neither native row reconstructs the GT face or complete bilateral wing span; both are nearly unchanged across these five frames.",
+          "teacher_separate": "Both GT-x_t rows recover a soft central body and side masses. After is slightly more spread/wing-like, but remains blurred and has GT information in the input."
+        },
+        {
+          "frames": "05-09",
+          "gt_visible": "The GT owl lifts and shifts the wings, with a clear change around f07-f09; its head/face stays identifiable in the center strip.",
+          "native_query_before_after": "The native-before bird-like patch stays essentially fixed. Native-after has a more centered tan patch and revised background texture, but no distinct head/eyes or separately moving wings that follow f07-f09.",
+          "teacher_separate": "Teacher-after resembles a broader feathered side shape as GT wing position changes, but remains a low-detail single-step reconstruction given GT-x_t."
+        },
+        {
+          "frames": "10-14",
+          "gt_visible": "GT wing orientation and width change repeatedly, spreading almost horizontally by f13-f14.",
+          "native_query_before_after": "Both native rows repeat a similar tan lump and bush/soil composition through the interval. After changes color and rough placement but does not form the f13-f14 two-wing pose or follow the changing span.",
+          "teacher_separate": "Teacher-after is broader and somewhat closer to the GT spread-wing layout than teacher-before; both lack a readable owl face and remain heavily smoothed."
+        },
+        {
+          "frames": "15-19",
+          "gt_visible": "GT owl holds and adjusts long wings while its centered face stays visible.",
+          "native_query_before_after": "The native-after subject is a persistent soft blob with a weak side smear; the motion is much smaller than the GT wing adjustment, and subject/background boundaries remain confused. Before is also nearly static.",
+          "teacher_separate": "The after teacher shows a broad horizontal wing-like band supplied by GT-x_t, still very blurred; this cannot be counted as free-sampling recovery."
+        },
+        {
+          "frames": "20-24",
+          "gt_visible": "GT face and two low, extended wings remain identifiable, with slight wing-tip changes across consecutive frames.",
+          "native_query_before_after": "After retains the reworked evergreen/ground layout and tan patch but still lacks recognizable eyes, feathered wings and wing-tip motion. The subject is not cleanly separated from soil/shrubbery; the five native-after frames are close to frozen.",
+          "teacher_separate": "After teacher continues to show a soft central disc and broad side band more GT-shaped than native QUERY, under the invalid-for-QUERY GT-x_t input."
+        }
+      ],
+      "cross_frame_assessment": {
+        "subject_structure": "A coarse tan bird-sized central mass persists after training, with slightly improved placement and surrounding scene texture; no convincing face, body-wing attachment, or two distinct extended wings emerge in native QUERY.",
+        "motion_following": "No meaningful tracking of the GT f07-f14 wing lift/spread or the late wing-tip changes. Native QUERY is largely static before and after.",
+        "boundary": "Native output has no hard-comp pasted center in these boards. Its subject-to-soil/foliage boundary is soft and partly merged. Any separate hardcomp would paste real center pixels and cannot prove native restoration.",
+        "teacher_vs_query": "Teacher after is more spread-wing-like and its error falls, but the GT-x_t input itself carries the owl's position/pose. The native QUERY does not show an equivalent gain.",
+        "decision_basis": "Hold a claim of clear subject/action capacity gain from 512 updates. Visible texture and rough placement changes show model response, not validated restoration or generalization."
+      },
+      "limitations": [
+        "This is one training clip repeatedly updated for 512 steps from the formal step2000 Adam state, not an independent validation example or formal P1 metric.",
+        "The cached observation includes GT flow, target posterior, and first-frame CLIP during training; the diagnostic isolates a narrow capacity question and is not the deployable visible-only training distribution.",
+        "Only the native QUERY rows are pure-Gaussian generation. GT is display only; teacher rows contain GT in x_t and cannot establish QUERY quality.",
+        "Visual review cannot prove a hard capacity limit or rule out gains from other bounded training or revised controls. Human verdict remains null."
+      ]
+    },
+    "delivery_check": {
+      "new_videos_fully_decoded": 8,
+      "new_mp4_frame_counts": {
+        "query_before/gt": 25,
+        "query_before/visible": 25,
+        "query_before/pred": 25,
+        "query_before/comp": 25,
+        "query_after/gt": 25,
+        "query_after/visible": 25,
+        "query_after/pred": 25,
+        "query_after/comp": 25
+      },
+      "all25_frames_available": true,
+      "qa_boards": 5,
+      "known_gt_and_visible_pair_exact_all25": true,
+      "actual_optimizer_updates": 512,
+      "adam_parameter_tensors_advanced_512": 514,
+      "teacher_gt_input_not_query": true,
+      "formal_metrics_computed": false,
+      "human_verdict": null
+    }
+  },
+  "capacity_cfg_alignment_step2000_512": {
+    "status": "complete",
+    "source_step": 2000,
+    "diagnostic_training_updates": 512,
+    "this_run_optimizer_updates": 0,
+    "seed": 2036,
+    "steps": 25,
+    "branch_guidance": {
+      "ordinary_cfg_1_to_3": "linear per-frame 1 to 3",
+      "constant_cfg_1": "all frames exactly 1"
+    },
+    "actual_unet_batch_both": 2,
+    "ordinary_replays_capacity_query_after_all25_exact": true,
+    "paired_exact": {
+      "initial_latent": true,
+      "vae_input": true,
+      "observation_latent": true,
+      "raw_flow_fw": true,
+      "raw_flow_bw": true,
+      "completed_flow_fw": true,
+      "completed_flow_bw": true,
+      "propagation_mask": true,
+      "condition": true,
+      "clip": true,
+      "time_ids": true,
+      "first_timestep": true,
+      "unet_first_input": true,
+      "unet_first_clip": true,
+      "unet_first_ids": true
+    },
+    "native_response_mean_abs": 0.04857664927840233,
+    "elapsed_seconds": 59.09761349900509,
+    "peak_cuda_allocated_gib": 9.493277072906494,
+    "limits": [
+      "Single training-overlap clip, no generalization claim.",
+      "Constant CFG=1 is a diagnostic departure from the paper/public CFG 1-to-3 schedule.",
+      "Nonzero pixel difference is not visual benefit; teacher x_t contains GT and is a separate role."
+    ],
+    "assistant_review": {
+      "reviewed_at_utc": "2026-10-10T01:53:47Z",
+      "reviewer": "assistant",
+      "model": "gpt-6-sol",
+      "reasoning_effort": "xhigh",
+      "fast": false,
+      "human_verdict": null,
+      "all_frames_reviewed": true,
+      "decision": "regression",
+      "assistant_verdict": "On this exact paired, frozen-model 25-frame clip, constant CFG1 changes the native output but does not restore the owl's face, two wings, or GT wing-motion sequence. Compared with ordinary per-frame CFG1-to-3, the constant-CFG1 branch progressively broadens and softens the tan bird-like mass, merges it with soil, and shifts it rightward, especially f15-f24. The ordinary branch is also inadequate, yet its coarse subject remains somewhat more localized and stable. This is a visual regression on this clip, not a claim that CFG1 is globally inferior or that the capacity probe has settled P1 quality.",
+      "scope": {
+        "source_step": 2000,
+        "diagnostic_training_updates_before_this_pair": 512,
+        "this_pair_optimizer_updates": 0,
+        "video_id": "0fc958cde2",
+        "clip_start": 2,
+        "frames": "00-24",
+        "num_frames": 25,
+        "boards_viewed": [
+          "qa_boards/frames_00_04.jpg",
+          "qa_boards/frames_05_09.jpg",
+          "qa_boards/frames_10_14.jpg",
+          "qa_boards/frames_15_19.jpg",
+          "qa_boards/frames_20_24.jpg"
+        ],
+        "row_order": [
+          "GT display only",
+          "visible input",
+          "native ordinary CFG1-to-3",
+          "native constant CFG1"
+        ],
+        "evidence_root": "C:/Users/dengyunlong/Documents/Codex/2026-09-26/xia/outputs/v81-paper-p1/capacity_cfg_alignment_step2000_512"
+      },
+      "architecture_components": "Visible center -> VAE/flow/propagation condition + CLIP -> frozen SVD UNet with identical Gaussian start and time IDs -> CFG mixing (per-frame 1-to-3 or constant 1) -> native video. GT is a display reference; no ground-truth center is pasted into either native branch.",
+      "paired_setup_from_run_json": {
+        "seed": 2036,
+        "sampling_steps": 25,
+        "ordinary_guidance": "linear per-frame 1 to 3",
+        "alternative_guidance": "all frames exactly 1",
+        "normal_branch_exact_replay_of_prior_capacity_query_after_all25": true,
+        "actual_unet_batch_both": 2,
+        "only_guidance_mixture_changed": true,
+        "paired_equal": [
+          "initial_latent",
+          "vae_input",
+          "observation_latent",
+          "raw_flow_fw",
+          "raw_flow_bw",
+          "completed_flow_fw",
+          "completed_flow_bw",
+          "propagation_mask",
+          "condition",
+          "clip",
+          "time_ids",
+          "first_timestep",
+          "unet_first_input",
+          "unet_first_clip",
+          "unet_first_ids"
+        ],
+        "reported_mean_absolute_native_pixel_response": 0.04857664927840233,
+        "formal_metrics": false
+      },
+      "frame_evidence": [
+        {
+          "frames": "00-04",
+          "gt_action": "GT owl is centered by the grass edge, with readable face and both spread wings; the visible strip exposes its face and central body.",
+          "ordinary_vs_constant_native": "Both native rows retain only a coarse tan patch left of the GT face and a surrounding evergreen/soil scene. Constant CFG1 makes the tan region a little broader and softer but does not add eyes, a clear head, or complete wings. Neither row tracks any distinct wing change in these frames."
+        },
+        {
+          "frames": "05-09",
+          "gt_action": "GT owl raises and rotates the wings, notably through f07-f09.",
+          "ordinary_vs_constant_native": "Ordinary CFG keeps a compact, soft bird-like patch. Constant CFG1 smears the tan patch more horizontally into dirt and adds no separately articulated wings. The visible shift does not follow the GT wing pose progression."
+        },
+        {
+          "frames": "10-14",
+          "gt_action": "GT wing span and angle change, spreading almost horizontally by f13-f14.",
+          "ordinary_vs_constant_native": "Both native branches are largely repetitive through the five frames. Constant CFG1 spreads the brown subject/soil into one low mass and loses rather than gains body-wing boundaries; no face or f13-f14 horizontal two-wing pose emerges."
+        },
+        {
+          "frames": "15-19",
+          "gt_action": "The centered owl holds long wings with smaller adjustments.",
+          "ordinary_vs_constant_native": "The ordinary row remains a small localized tan blob, already insufficient. The constant-CFG1 row becomes a wider soft brown smear and appears farther to the right, with still less separation from soil and foliage. Neither follows wing-tip adjustment."
+        },
+        {
+          "frames": "20-24",
+          "gt_action": "GT face and two low extended wings remain recognizable with small consecutive-frame changes.",
+          "ordinary_vs_constant_native": "Ordinary CFG continues its coarse, mostly stationary tan subject. Constant CFG1 drifts and diffuses the tan patch noticeably rightward by f23-f24; at f24 it is close to an indistinct bright soil/foliage blotch. This late temporal/placement regression is visible without relying on pixel metrics."
+        }
+      ],
+      "interpretation": {
+        "structural_gain": "None: constant CFG1 does not recover face, two wing boundaries, or bird-to-background separation.",
+        "motion_gain": "None: the wing-lift and later wing-tip sequence is not represented; constant CFG1 introduces stronger blob drift rather than target action.",
+        "texture_and_color": "The substantial visible change is mainly redistribution and softening of tan/green foliage and soil; the nonzero numerical response alone cannot be counted as quality gain.",
+        "boundary": "Both rows are native free samples without pasted center. Constant CFG1 worsens the already diffuse subject-to-soil boundary late in the clip.",
+        "scope_of_regression": "The paired change to guidance mixing causes this relative visual result under the one frozen diagnostic model and clip; it does not rank CFG schedules across other data or checkpoints."
+      },
+      "limitations": [
+        "One repeatedly trained clip from a diagnostic model, not held-out validation or a formal P1 metric.",
+        "The source model received 512 single-clip diagnostic updates before this zero-update comparison; neither branch tests generalization.",
+        "GT is displayed for comparison and the visible center is conditioning input. The native rows do not contain a hard-composited GT center.",
+        "The normal branch exactly replays the prior after-512 query; this review uses visual evidence from all 25 frames and does not infer quality from the reported pixel response."
+      ]
+    },
+    "delivery_check": {
+      "new_videos_fully_decoded": 8,
+      "new_mp4_frame_counts": {
+        "ordinary_cfg_1_to_3/gt": 25,
+        "ordinary_cfg_1_to_3/visible": 25,
+        "ordinary_cfg_1_to_3/pred": 25,
+        "ordinary_cfg_1_to_3/comp": 25,
+        "constant_cfg_1/gt": 25,
+        "constant_cfg_1/visible": 25,
+        "constant_cfg_1/pred": 25,
+        "constant_cfg_1/comp": 25
+      },
+      "qa_boards": 5,
+      "all25_native_frames_available": true,
+      "normal_all25_replay_exact": true,
+      "actual_inputs_pair_exact": true,
+      "optimizer_updates": 0,
+      "human_verdict": null
+    }
   }
 }
