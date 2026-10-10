@@ -69,4 +69,42 @@ RGB-derived、人工排除邻车的四帧mask在模型输入之外控制编辑�
 
 证据：run内`baseline_official/official_trace.pt`、`gaussian_edits/manifest.json`、`difix_refined/manifest.json`、`assistant_review.json`、`queue_state.json`、`source/edit_config.json`及准备阶段证据。已同步的本地审计为`work/dggt-official-inspect/audit.json`、`assistant_review.json`、`completion_snapshot.json`、`local_delivery_verified.json`。无新增科学根因，`failure_ledger_refs=[V77-F02]`、`failure_ledger_delta=none`；diffusers异常是隔离依赖兼容问题，已修复。
 
-有依据的下一项仅为增加合法且实际显露原车后方路面的帧或视角，再测删除背景覆盖与Difix；当前未执行，不通过调seed或更换场景隐藏本例失败。
+## 2026-10-11 论文协议排查与有界迭代
+
+用户新增要求对照官方 HTML 论文查编辑质量并自主迭代。沿用同一 task/run、scene128、四个目标 RGB、原高斯渲染和作者权重，不覆盖已完成基线。Seen-to-Scene 10000→12500 在途训练保持运行；DGGT 新 GPU 诊断只安排在正式12500完整保存、固定六窗完成及控制器退出后的短间隙，随后继续下一段 Seen-to-Scene。
+
+```mermaid
+flowchart LR
+  R[原四张合法RGB] --> A[来源覆盖CPU核查]
+  G[原高斯trace与RGB轮廓] --> P[静态高斯投影支持核查]
+  D[既有noop与delete渲染] --> S[公开单图Difix重放]
+  D --> M[官方双图注意力Difix]
+  D --> I[同渲染自参考]
+  R --> L[固定原000参考图]
+  I --> M
+  L --> M
+  S --> Q[四帧补洞与重新引车独立审核]
+  M --> Q
+```
+
+### 论文、公开路径和本次路径
+
+| 核对项 | 一手材料 | 当前判断与边界 |
+| --- | --- | --- |
+| 修复条件 | [论文§3.3 Eq.11](https://arxiv.org/html/2512.03004v1#S3.SS3)接收渲染图与输入序列参考图；[公开 infer.py](https://github.com/xiaomi-research/dggt/blob/a3276d2bbe4cbb03bcc117830b1836110a27adeb/third_party/difix/infer.py)用`mv_unet=False`且未传参考图 | 旧结果沿用公开单图路径，确有论文条件差距；尚未证明是黑洞的唯一原因 |
+| 参考图接口 | [公开 inference_difix.py](https://github.com/xiaomi-research/dggt/blob/a3276d2bbe4cbb03bcc117830b1836110a27adeb/third_party/difix/src/inference_difix.py)提供`ref_image`并启用`mv_unet=True`；[mv_unet.py](https://github.com/xiaomi-research/dggt/blob/a3276d2bbe4cbb03bcc117830b1836110a27adeb/third_party/difix/src/mv_unet.py)在自注意力中合并两图token | 普通UNet把参考图当独立batch不能构成参考内容对照；下一项走作者已有双图接口，不增算法 |
+| 背景覆盖 | 原四帧与11个时间点×五相机RGB接触图，另核对八个固定候选 | 后段目标车仍挡道路，侧视未证实删除洞已显露；延长时间范围不等于获得背景，当前不盲加帧重建 |
+| 高斯实例筛选 | 原官方trace、603830静态点、四张RGB轮廓及预测E/K/point_map | 218个已选静态点与来源轮廓完全对应；跨源投影有149个符合轮廓与固定深度容差的未选候选，不能凭候选数确认实例身份或残影来源 |
+| 论文展示可比性 | [论文§4.3/Fig.5](https://arxiv.org/html/2512.03004v1#S4.SS3)展示高斯编辑与扩散修复；附录A.2的0/5/10/15与三相机合同用于NVS评测 | 不把NVS三相机合同直接套成Fig.5编辑必需设置；当前单景四近帧、同景复制也不能充当跨景或长时序结论 |
+
+**已完成CPU证据。** 来源候选`015_0/025_0/040_0/060_0/085_0/120_0/198_0/198_2`均为合法原RGB；没有明确看到原目标车后的待填道路。核查限于上述抽样，不声称证明全部995图完全无微小覆盖。证据在run的`coverage_cpu_obs_20261011/`，本地`work/dggt-coverage-20261011/`。
+
+静态高斯按来源与目标建立4×4投影统计，以0.1预测车宽、即0.0018880549模型单位为单一深度容差。跨源未选候选149个，按官方生命周期加权的opacity和26.3919；其中源3→目标0为115个、24.4408。它们也可能是路面、邻车或预测几何误差；统计未计算高斯覆盖范围、遮挡及实际渲染贡献，因此不据此扩大删除mask。该审计在单CPU线程、隐藏GPU、nice10下约3秒完成，证据在`diagnostics/edit_support_cpu_20261011/support_stats.json`及同目录脚本。
+
+已直接检查本地原生/Difix四帧局部图：删除位仍为灰黑团块、车下黑影覆盖部分斑马线。官方图像接口只返回链接，当前Cua报告浏览器不可用；**官方Fig.5像素视觉核对未完成**，不声称已逐像素比较作者图。论文文字与源码合同已核对；独立核查记录为本地`work/dggt-edit-protocol-20261011/paper_figure5_visual_review.md`。
+
+**下一项固定参考修复对照，GPU结果尚未产生。** `probe_dggt_reference_refinement.py`在既有noop/delete各四帧上最多生成24张：公开单图重放8张，官方双图自参考8张、双图合法原000参考8张。双图两支同尺寸、batch、seed、timestep199与作者权重，落盘实际UNet入口的首图VAE latent、文本和timestep并逐值核对；参考图只从原官方四输入取，不用GT。原参考仍含被删车辆，需要同时审核背景连续性、接缝、邻车保持和重新引车，不能预设加参考一定更好。单图与双图之间的架构及随机消费差别另记，收益主要由相同双图路径的配对对照评估。发布权重是否正是论文参考条件训练后的版本尚未确立。
+
+`queue_dggt_edit_diagnostics.py`绑定正式12500保存校验与六窗合同，使用与S2S相同的controller/launch锁，单次子诊断上限30分钟；仅自身子作业可因超时停止，不能关机或打断S2S。队列完成后需gpt-6-sol/xhigh/no-fast独立审核全部四帧，human=null并同步深色结果页。本节不把准备/排队记成真实GPU完成，也不改旧质量hold；确定新科学根因仍无，`failure_ledger_delta=none`。
+
+**CPU预检已实际通过。** 公开双图类在diffusers0.32.2下需要旧`unet_2d_blocks`模块名alias；另一个已移除的`PositionNet`只在未启用的gated分支构造，检查本地sd-turbo为default注意力后安装本进程“构造即抛错”名称占位，未替换执行数学、未修改外部源码/权重或S2S环境。首次导入栈保留。标准与官方双图UNet在meta设备各686键，逐键形状与本地基座/作者UNet权重一致；VAE LoRA元数据90权重键、rank4/43目标，真实完整加载、首图latent配对和前向尚待GPU。预检单CPU线程、隐藏GPU，cgroup内存78.255→78.276GB。独立队列CPU隔离模拟覆盖未就绪、GPU忙、正式六窗完成且空闲、后继段拒绝、双锁冲突释放后重试五支；不把模拟当生产GPU互斥已实测。证据为run内`source/reference_refinement_r1/`及本地`work/dggt-edit-protocol-20261011/queue_cpu_validation.json`。

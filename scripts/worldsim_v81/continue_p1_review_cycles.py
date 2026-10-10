@@ -136,7 +136,7 @@ def gpu_pids():
 
 def active_controllers():
     tokens = ('v81_run_bounded_', 'queue_p1_step7500_evaluation.py --worker',
-              'continue_p1_review_cycles.py --worker')
+              'continue_p1_review_cycles.py --worker', 'probe_dggt_reference_refinement.py')
     found = []
     for folder in Path('/proc').iterdir():
         if not folder.name.isdigit() or int(folder.name) == os.getpid():
@@ -184,6 +184,19 @@ def preflight(source, target):
     maximum = min(20000, read(campaign)['maximum_step']) if campaign.exists() else 20000
     if target > maximum:
         raise ValueError(f'当前用户授权训练上限为{maximum}；不得自动启动下一段')
+    # 新授权的 DGGT 短诊断只占当前12500复盘间隙；不抢占在途训练。
+    diagnostic = Path('/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/diagnostics/reference_refinement_queue.json')
+    if diagnostic.is_file():
+        pending = read(diagnostic)
+        if pending.get('status') in ('waiting_s2s_12500_and_six_windows', 'running_reference_probe'):
+            command_file = Path(f"/proc/{pending.get('controller_pid')}/cmdline")
+            try:
+                command = command_file.read_bytes().replace(b'\0', b' ').decode(errors='replace')
+            except OSError:
+                command = ''
+            if ('queue_dggt_edit_diagnostics.py --worker' in command
+                    and target >= pending.get('trigger_step', 12500) + 2500):
+                raise RuntimeError('已授权DGGT参考诊断等待当前复盘间隙；先完成短诊断后续S2S，不抢占在途作业')
     if not formal_path(source):
         raise ValueError('恢复路径不属于明确的正式断点目录')
     obj = load_checkpoint(source)

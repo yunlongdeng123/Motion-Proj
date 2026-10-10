@@ -155,5 +155,184 @@
     "gaussian_edit_peak_cuda_allocated_bytes": 380165632,
     "difix_peak_cuda_allocated_bytes": 6321043456,
     "difix_model_load_seconds": 8.612894382997183
+  },
+  "diagnosis_20261011": {
+    "status": "cpu_preparation_for_reference_probe",
+    "gpu_probe_executed": false,
+    "official_paper": "https://arxiv.org/html/2512.03004v1",
+    "confirmed_protocol_gap": "Paper Eq11 rendered+input reference; existing released infer.py path uses mv_unet=False with no reference.",
+    "paper_figure5_pixels_reviewed": false,
+    "legal_observation_coverage": {
+      "sampled_times": 11,
+      "cameras": 5,
+      "candidate_count": 8,
+      "candidate_ids": [
+        "015_0",
+        "025_0",
+        "040_0",
+        "060_0",
+        "085_0",
+        "120_0",
+        "198_0",
+        "198_2"
+      ],
+      "original_occluded_road_observed": false,
+      "scope": "RGB sample does not establish exhaustive absence over all995 images",
+      "remote_evidence": "coverage_cpu_obs_20261011/candidates.json"
+    },
+    "static_projection_support": {
+      "static_points": 603830,
+      "source_mask_selected": 218,
+      "depth_tolerance_vehicle_widths": 0.1,
+      "depth_tolerance_model_units": 0.0018880548959665404,
+      "cross_source_unselected_depth_matched_candidates": 149,
+      "alpha_weighted_opacity_sum": 26.3919,
+      "target_identity_or_visible_residual_cause_established": false,
+      "remote_evidence": "diagnostics/edit_support_cpu_20261011/support_stats.json"
+    },
+    "next_probe": {
+      "script": "scripts/worldsim_v81/probe_dggt_reference_refinement.py",
+      "queue_script": "scripts/worldsim_v81/queue_dggt_edit_diagnostics.py",
+      "trigger_s2s_step": 12500,
+      "s2s_preempted": false,
+      "training_updates": 0,
+      "conditions": [
+        "official_public_single",
+        "official_mv_self",
+        "official_mv_legal_ref"
+      ],
+      "branches": [
+        "noop",
+        "delete"
+      ],
+      "frames_per_branch": 4,
+      "maximum_output_frames": 24,
+      "legal_reference": "original official input 000_0.jpg; contains original vehicle",
+      "parameters": {
+        "timestep": 199,
+        "seed_base": 1234,
+        "precision": "FP32"
+      },
+      "pairing": "same two-view batch, seed, actual view0 VAE latent/text/timestep equality; single vs MV architecture difference separately recorded",
+      "gpu_output": "diagnostics/reference_refinement_r1",
+      "quality_decision": "pending_actual_gpu_and_independent_full_frame_review"
+    },
+    "human_verdict": null,
+    "failure_ledger_delta": "none",
+    "local_cpu_support_json": "work/dggt-edit-protocol-20261011/support_stats.json",
+    "cpu_preflight": {
+      "status": "cpu_check_only_passed",
+      "gpu_executed": false,
+      "frames_planned": {
+        "official_public_single": 8,
+        "official_mv_self": 8,
+        "official_mv_legal_ref": 8
+      },
+      "maximum_output_frames": 24,
+      "inputs": {
+        "edit_size_wh": [
+          518,
+          350
+        ],
+        "legal_reference_rgb": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/processed/validation/128/images/000_0.jpg",
+        "legal_reference_size_wh": [
+          1920,
+          1280
+        ],
+        "checkpoint": "/root/autodl-tmp/dggt/pretrained/diffusion_model.pth",
+        "prior": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/difix_refined",
+        "output_dir": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/diagnostics/reference_refinement_r1"
+      },
+      "versions": {
+        "torch": "2.4.1+cu121",
+        "diffusers": "0.32.2"
+      },
+      "resources": {
+        "cpu_threads": 1,
+        "cuda_visible_devices": "",
+        "cgroup_before": {
+          "cpu_max": "1500000 100000",
+          "memory_max": "96636764160",
+          "memory_current": "78096740352"
+        },
+        "cgroup_after_memory_current": "78123958272",
+        "prior_single_peak_cuda_allocated_bytes": 6321043456,
+        "mv_expected_memory": "Above the 6.32 GB single-view allocated peak is plausible; two-view attention can grow superlinearly. Exact peak unknown until GPU run. No precision/resolution fallback."
+      },
+      "compatibility": {
+        "old_unet_2d_blocks_alias_applied": true,
+        "alias_target": "diffusers.models.unets.unet_2d_blocks",
+        "missing_position_net_sentinel_applied": true,
+        "position_net_config_attention_type": "default",
+        "position_net_official_source": "/root/autodl-tmp/dggt/third_party/difix/src/mv_unet.py:744-754",
+        "position_net_behavior": "import name only; construction raises RuntimeError",
+        "official_mv_path": "/root/autodl-tmp/dggt/third_party/difix/src/mv_unet.py"
+      },
+      "weights": {
+        "checkpoint_unet_key_count": 686,
+        "checkpoint_vae_key_count": 90,
+        "base_unet_key_count": 686,
+        "standard_meta_unet_key_count": 686,
+        "mv_meta_unet_key_count": 686,
+        "unet_checkpoint_base_shapes_match": true,
+        "mv_and_standard_meta_key_shapes_equal": true,
+        "vae_lora_rank": 4,
+        "vae_lora_target_count": 43,
+        "mv_unet_class_and_two_view_forward_imported": true,
+        "mv_unet_model_instantiated_on_meta_only": true,
+        "full_weight_materialization_and_strict_load_pending_gpu": true,
+        "checkpoint_mmap_cpu": true
+      },
+      "human_verdict": null,
+      "limits": [
+        "This checks checkpoint/base UNet metadata and constructs both UNets on meta; real weight loading, VAE key-shape checks, and forward remain for the GPU phase.",
+        "The legal reference contains the original vehicle; later outputs require explicit reintroduction review."
+      ]
+    },
+    "queue_cpu_validation": {
+      "status": "passed",
+      "cases": [
+        {
+          "case": "training_state_not_ready",
+          "passed": true,
+          "result": false,
+          "fixed_windows_called": false
+        },
+        {
+          "case": "six_windows_mocked_gpu_busy",
+          "passed": true,
+          "result": false,
+          "fixed_windows_called": true
+        },
+        {
+          "case": "formal_12500_six_windows_mocked_no_pid_ready",
+          "passed": true,
+          "result": true,
+          "fixed_windows_called": true
+        },
+        {
+          "case": "successor_15000_launch_rejected",
+          "passed": true,
+          "fixed_windows_called": false
+        },
+        {
+          "case": "launch_lock_conflict_retries_closes_fds_no_state_write",
+          "passed": true,
+          "retry_count": 1,
+          "controller_fd_released_during_conflict": true,
+          "both_locks_released_at_exit": true,
+          "production_queue_state_written": false
+        }
+      ],
+      "queue_copy": "/tmp/dggt_queue_cpu_validation_20261011/queue_dggt_edit_diagnostics.copy.py",
+      "cuda_visible_devices": "",
+      "mocked": [
+        "continue_p1_review_cycles.fixed_windows",
+        "continue_p1_review_cycles.active_controllers",
+        "gpu_processes"
+      ],
+      "production_state_accessed": false,
+      "gpu_started": false
+    }
   }
 }

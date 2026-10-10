@@ -4,6 +4,8 @@
 
 DGGT Waymo官方基线与车辆高斯删除、右移、同场景复制插入已实际完成，随后官方Difix处理四支共16帧；task/run为`WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1`，状态`complete_assistant_reviewed`。原始noop与官方float trace逐值差0，保存PNG因量化最多差1灰阶。独立gpt-6-sol/xhigh/no-fast助手全部四帧审核：操作已生效，但删除留明显黑灰洞，Difix未补完整道路；移动/复制有邻车重叠和右缘裁切，视觉质量hold。人工verdict=null，不能由单场景四帧宣称长时序或论文编辑质量通过。[流程、组件图与实测](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量结果](v81/DGGT_WAYMO_INFERENCE_R1.json)。
 
+用户新增授权继续排查DGGT编辑质量。已对照官方HTML论文与固定源码，确认论文修复Eq11含参考图，而旧公开路径/本轮单图Difix未用参考条件；作者已有双图注意力接口进入CPU准备。scene128的11时间点×五相机与八候选仍未明确显露原车后的待填道路，不盲加帧；静态投影149个未选候选不证明目标身份或残影根因，不扩大mask。下一项仅固定原noop/delete四帧做公开单图重放、双图自参考与双图原000参考，最多24输出，原图含车需检查重新引车。计划在正式12500完整保存、六窗和控制器退出后共享锁串行运行短诊断，不抢占在途S2S，随后继续15000。GPU结果尚未产生；官方Figure5像素核对因当前浏览器不可用未完成，不声称看过。细节及组件图更新在[原DGGT报告](v81/DGGT_WAYMO_INFERENCE_R1.md)。
+
 深色`outputs/v81-dggt-waymo/index.html`包含四支原生、Difix、输入、选择轮廓和alpha；64PNG、16MP4/64帧均解码，80媒体链接无缺失、JS语法通过。未声称浏览器视觉QA。首次Difix依赖错误在隔离推理venv内用diffusers0.32.2修复，只续缺失Difix，不重跑基线或编辑，不改S2S环境/权重。原始失败栈保留，服务器保持开机。
 
 Seen-to-Scene P1 task/run `WS-V81-SEEN-TO-SCENE-P1-20261009/r1` 已从7500完成新增2500更新，8000/9000/10000均实际保存，10000完整原件4,833,164,855B、scheduler10000、Adam514、RNG齐全，协议不变；均速5.957秒/步、loss和梯度有限、冻结梯度0。六固定valid窗各25帧推理完，两助手实际审核全部150帧：滑板与白鲸宽侧区有明确相对进步，窄侧区有小幅学习；海豚收益不明确且有新伪影。用户当前观察为小外扩看着不错、大外扩仍差；10000复盘质量hold、训练收益continue，不代表论文质量验收。[周期记录与复盘](v81/P1_REVIEW_CYCLES_R1.md) · [证据](v81/P1_REVIEW_CYCLES_R1.json)。10000页为`outputs/v81-paper-p1/step10000_review.html`；7500传播六窗`no_clear_gain`仍为既有推理诊断，本轮未重复。
