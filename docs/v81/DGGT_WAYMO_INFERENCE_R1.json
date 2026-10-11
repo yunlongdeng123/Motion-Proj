@@ -879,6 +879,173 @@
     "automation_id": "v8-1-p1-2500",
     "automation_status": "deleted",
     "seen_to_scene_resume_authorized": false,
-    "next_diagnostic": "fixed frame000 deleted layer decomposition; no Difix"
+    "next_diagnostic": null,
+    "status": "bounded_diagnostics_complete_pending_user_route_decision",
+    "new_gpu_queue": false,
+    "summary_page": "outputs/v81-dggt-waymo/diagnosis_review.html"
+  },
+  "deleted_layers_frame000_result": {
+    "status": "complete_assistant_reviewed",
+    "run": {
+      "status": "complete",
+      "task": "dggt_deleted_layers_frame000_r1",
+      "scene": "128",
+      "frame": 0,
+      "render_budget": 5,
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/gaussian_edits/manifest.json",
+      "source_state": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/gaussian_edits/gaussian_state.pt",
+      "source_trace": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/baseline_official/official_trace.pt",
+      "paired_components": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/diagnostics/alpha_compositing_pair_r1/components_float.pt",
+      "gpu_preflight": {
+        "compute_pids": [],
+        "memory_used_mib": 1
+      },
+      "environment": {
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "CUDA_HOME": "/usr/local/cuda",
+        "MAX_JOBS": "1",
+        "TORCH_CUDA_ARCH_LIST": "8.6",
+        "TMPDIR": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/tmp",
+        "TORCH_HOME": "/root/autodl-tmp/dggt/.cache/torch",
+        "HF_HUB_OFFLINE": "1",
+        "TRANSFORMERS_OFFLINE": "1",
+        "PYTHONPATH": "/root/autodl-tmp/dggt"
+      },
+      "external_hard_timeout_seconds_required": 600,
+      "training_updates": 0,
+      "model_forward_calls": 0,
+      "difix_calls": 0,
+      "failure_ledger_delta": "none",
+      "calibration": {
+        "paired_joint_G_max_abs": 0.0,
+        "paired_joint_A_max_abs": 0.0,
+        "float_tolerance": 1e-06,
+        "old_delete_rgb_mismatch_pixels": 0,
+        "old_delete_alpha_mismatch_pixels": 0
+      },
+      "render_calls": 5,
+      "render_mode": "RGB+ED",
+      "asset_files": [
+        "assets/static_before/black.png",
+        "assets/static_before/white.png",
+        "assets/static_before/alpha.png",
+        "assets/static_before/expected_depth.png",
+        "assets/static_before/depth_valid.png",
+        "assets/static_delete/black.png",
+        "assets/static_delete/white.png",
+        "assets/static_delete/alpha.png",
+        "assets/static_delete/expected_depth.png",
+        "assets/static_delete/depth_valid.png",
+        "assets/dynamic_before/black.png",
+        "assets/dynamic_before/white.png",
+        "assets/dynamic_before/alpha.png",
+        "assets/dynamic_before/expected_depth.png",
+        "assets/dynamic_before/depth_valid.png",
+        "assets/dynamic_delete/black.png",
+        "assets/dynamic_delete/white.png",
+        "assets/dynamic_delete/alpha.png",
+        "assets/dynamic_delete/expected_depth.png",
+        "assets/dynamic_delete/depth_valid.png",
+        "assets/joint_delete/black.png",
+        "assets/joint_delete/white.png",
+        "assets/joint_delete/alpha.png",
+        "assets/joint_delete/expected_depth.png",
+        "assets/joint_delete/depth_valid.png"
+      ],
+      "float_layers": "layers_float.pt",
+      "fixed_hole_source": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/diagnostics/alpha_compositing_pair_r1/components_float.pt:hole_mask[0]",
+      "depth_display": {
+        "method": "shared 2nd-98th percentile clipped grayscale over all five valid layers",
+        "valid_rule": "finite ED>0 and alpha>=1/255 (display only)",
+        "raw_valid_min": 0.4329109489917755,
+        "raw_valid_max": 4.030296802520752,
+        "display_low": 0.4427425539493561,
+        "display_high": 2.8829096078872665
+      },
+      "layer_statistics": {
+        "static_before": {
+          "gaussians": 603830,
+          "hole_pixels": 11198,
+          "hole_alpha_mean": 0.18109922111034393,
+          "hole_black_luma_mean": 0.04279054328799248,
+          "hole_white_luma_mean": 0.8616913557052612,
+          "hole_valid_depth_pixels": 6085,
+          "hole_valid_expected_depth_mean": 0.6594443917274475
+        },
+        "static_delete": {
+          "gaussians": 603612,
+          "hole_pixels": 11198,
+          "hole_alpha_mean": 0.18081261217594147,
+          "hole_black_luma_mean": 0.042711853981018066,
+          "hole_white_luma_mean": 0.8618992567062378,
+          "hole_valid_depth_pixels": 6085,
+          "hole_valid_expected_depth_mean": 0.6596554517745972
+        },
+        "dynamic_before": {
+          "gaussians": 180115,
+          "hole_pixels": 11198,
+          "hole_alpha_mean": 0.9847107529640198,
+          "hole_black_luma_mean": 0.23289068043231964,
+          "hole_white_luma_mean": 0.2481798678636551,
+          "hole_valid_depth_pixels": 11198,
+          "hole_valid_expected_depth_mean": 0.5158488750457764
+        },
+        "dynamic_delete": {
+          "gaussians": 168186,
+          "hole_pixels": 11198,
+          "hole_alpha_mean": 0.15712448954582214,
+          "hole_black_luma_mean": 0.009252787567675114,
+          "hole_white_luma_mean": 0.8521283268928528,
+          "hole_valid_depth_pixels": 5294,
+          "hole_valid_expected_depth_mean": 0.5472998023033142
+        },
+        "joint_delete": {
+          "gaussians": 771798,
+          "hole_pixels": 11198,
+          "hole_alpha_mean": 0.31334400177001953,
+          "hole_black_luma_mean": 0.04642318934202194,
+          "hole_white_luma_mean": 0.733079195022583,
+          "hole_valid_depth_pixels": 8001,
+          "hole_valid_expected_depth_mean": 0.6192592978477478
+        }
+      },
+      "render_seconds": {
+        "static_before": 0.491,
+        "static_delete": 0.004,
+        "dynamic_before": 0.003,
+        "dynamic_delete": 0.003,
+        "joint_delete": 0.003
+      },
+      "interpretation": [
+        "Standalone static/dynamic renders are not their actual contributions to the jointly occluded result.",
+        "Before layers are predictions from the current model, not ground truth.",
+        "Expected depth uses predicted coordinates, not ground truth; zero-alpha depths are not interpreted.",
+        "White means a pure white visualization background, not an inpainted road."
+      ],
+      "seconds": 5.187,
+      "peak_cuda_allocated_bytes": 206799360,
+      "peak_cpu_rss_kib": 1357084
+    },
+    "summary_zh": "仅第000帧、固定原选中高斯的五次真实 gsplat RGB+ED 分层渲染。动态删前清楚承载目标车，洞域 alpha 均值0.985；删后可辨车身消失，alpha 均值降至0.157，但上部车形缺口和下部残余覆盖仍在。静态删前后几乎不变，洞域 alpha 均值约0.181；它能提供部分像素/深度，却没有在目标车位给出可辨且连续的道路或斑马线。联合删除后 alpha 均值0.313，车宽低覆盖区及下方黑斑仍明显；白底亮区表明那里对背景颜色敏感，不是补出了道路。官方删除图使用接近黑色的下半天空，与低覆盖共同形成深色视觉结果，但本分层不能定量拆出静态、动态在联合深度排序后的各自可见贡献，也不能识别残留片元是否属目标车。该一帧证据不能唯一归因于漏删、背景缺失、深度遮挡或整个前馈表示能力；也不能推断所有场景的最佳编辑效果。",
+    "human_verdict": null,
+    "evidence": "diagnostics/deleted_layers_frame000_r1",
+    "local_page": "outputs/v81-dggt-waymo/deleted_layers_frame000_r1/index.html",
+    "failure_ledger_delta": "none"
+  },
+  "official_public_quality_review": {
+    "sources": [
+      "https://xiaomi-research.github.io/dggt/",
+      "https://xiaomi-research.github.io/dggt/resources/video/edit2_1.mp4",
+      "https://arxiv.org/html/2512.03004v1#S4.SS3"
+    ],
+    "project_video_viewed": "4-second deletion video end frame at currentTime 4; gray dome and black fragments visible; raw/refined unspecified",
+    "paper_edit_examples": "v1 Figure5 with/without diffusion; after-diffusion removal better but local blur/dark traces remain",
+    "edit_specific_quantitative_benchmark_found": false,
+    "nvs_scores_are_edit_scores": false,
+    "cvpr_final_pdf_read": false,
+    "remote_media_downloaded": false,
+    "recommendation": "Retain DGGT as reconstruction/geometry-initialization or speed baseline; do not prioritize as high-fidelity editing mainline; do not generalize failure to all feedforward approaches."
   }
 }
