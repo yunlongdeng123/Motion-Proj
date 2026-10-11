@@ -171,3 +171,37 @@ flowchart LR
 首帧洞内域 11,198 像素，处理 92,196 个片元、875,015 次包围框像素访问；重算 alpha 的最大绝对误差为 16 灰阶，2,606 像素超过 1 灰阶门限。执行用时 3.511 秒、脚本记录峰 RSS 600,564 KiB；外层 0.2 秒间隔进程树采样峰值 597,464 KiB。这个结果说明本次 CPU 近似**未通过与已保存渲染的校准**，不能把它当作真实 gsplat 贡献、车辆删除黑洞原因或新科学根因；此前四帧几何支持统计也继续只作估计，`failure_ledger_delta=none`。比较对象本身是量化后的 8-bit alpha，且 CPU 投影、排序及浮点累积可能与 CUDA 光栅化不同，单凭此次偏差无法定位哪一步造成差异。
 
 固定版本 [gsplat v1.5.3 `rendering.py` 716–725 行](https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/rendering.py#L716-L725)确认 `RGB+ED` 只对最后的累加深度通道除以渲染 alpha；[`RasterizeToPixels3DGSFwd.cu` 前向实现](https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/cuda/csrc/RasterizeToPixels3DGSFwd.cu#L126-L166)按透射率与片元 alpha 累加颜色/深度通道并输出 alpha。关于外层是否可能再次乘 alpha 的 `double-alpha` 疑问仍待独立证实；此次 CPU 校准停止不能判定官方实现有 bug。远端保留诊断脚本、输入和失败栈；本地轻量证据是 `work/dggt-edit-protocol-20261011/depth_order_execution_receipt.json`、`depth_order_contract_stop.json` 与 `depth_order_depth_order_cpu_stderr.log`。本次不重跑。
+
+
+## 透明度合成实测与用户转向（2026-10-11）
+
+用户要求暂停 Seen-to-Scene、保存最新完整断点并集中 DGGT；随后明确删除定时任务。当前训练已停止，14000 完整断点验证保留，最后日志14386后的386步未保存；`v8-1-p1-2500` 已通过应用工具删除，不再按旧20000计划唤醒。用户给出的静态背景、实例漏删、透明度合成三项是待分别验证的假设，不能先判定表示能力不足。
+
+固定官方已有四帧、同一份激活高斯/相机/时间权重/实例选择，只做8次gsplat RGB+ED渲染（noop/delete各4），没有DGGT前向、训练或Difix。四帧同一G/A/模型背景S比较两种合成：官方 `A*G+(1-A)*S`，与去掉外层A的诊断 `G+(1-A)*S`。gsplat已对G按alpha与透射率累加，因此外层A确实再次抑制部分透明颜色；本轮只量化其影响，不修改官方源码/旧编辑输出或宣称最终训练权重采用了错误合同。
+
+```mermaid
+flowchart LR
+  A[既有高斯与预测相机] --> B[同次gsplat渲染]
+  B --> C[累计颜色G与Alpha A]
+  D[模型背景S] --> E[官方 A乘G 加背景]
+  D --> F[诊断 G直接加背景]
+  C --> E
+  C --> F
+  E --> H[四帧逐像素配对与道路审核]
+  F --> H
+```
+
+新noop浮点对旧noop和官方trace均最大差0；8张RGB与8张Alpha保存PNG逐像素重放0差。第一次启动因PATH未含现有Ninja在首个CUDA扩展加载时停止，0个完成渲染、无组件trace或图片；保留原run和栈于`diagnostics/alpha_compositing_pair_r1_startup_failure`，仅恢复已用官方队列环境后完成一次8render。实测8.119秒、峰CUDA252,608,512B，模型/选择/公式预算不变。
+
+|帧|固定洞像素|删除Alpha均值|官方洞亮度|去掉二次衰减|增加的8-bit亮度|
+|---|---:|---:|---:|---:|---:|
+|000|11198|0.3133|0.1404|0.1541|3.51|
+|001|11285|0.2416|0.1346|0.1490|3.69|
+|002|11362|0.2783|0.1361|0.1509|3.79|
+|003|11535|0.2868|0.1351|0.1512|4.09|
+
+亮度按固定洞域RGB的Rec.709权重统计、范围0–1；洞域沿用原RGB选择、已存量化Alpha损失与预测正深度。这里的Alpha是实际gsplat输出，和此前CPU几何足迹估计不同。低平均Alpha说明当前删除区很大程度依赖背景混合，但不证明所有被遮道路都未被观测，也不判断剩余高斯的物体身份。
+
+独立助手实际查看全部28张命名原PNG（4帧各输入/sky/noop两支/delete两支/差图），四帧去掉重复衰减后仅稍亮；整车宽的灰黑横带、下方黑斑、接缝仍在，没有连续可辨道路或斑马线。**重复衰减的颜色影响已确认，但它没有解释主要结构失败；不能据此判DGGT表示不足。** 人工verdict仍null。深色页`outputs/v81-dggt-waymo/alpha_compositing_pair_r1/index.html`、执行与审核JSON、28PNG完整解码；浮点组件只留远端。页面尚未做浏览器视觉QA。
+
+下一项按用户方向固定frame000，关闭Difix，拆静态与动态删除前后、联合Alpha/预测深度和白底。只用于区分残留内容与低覆盖，单独层颜色不能当联合渲染真实贡献，白底变白不代表恢复道路。`failure_ledger_delta=none`；尚不新建科学根因卡。

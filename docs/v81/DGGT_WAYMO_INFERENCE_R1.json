@@ -704,9 +704,181 @@
       "https://github.com/nerfstudio-project/gsplat/blob/v1.5.3/gsplat/cuda/csrc/RasterizeToPixels3DGSFwd.cu#L126-L166"
     ],
     "interpretation": "CPU approximation failed the saved 8-bit alpha calibration; no actual gsplat contribution or deletion-cause inference",
-    "double_alpha_question": "unverified; no official bug conclusion",
+    "double_alpha_question": "paired at alpha_compositing_pair_r1: extra attenuation confirmed, small brightness increase only, no road recovery; not sole editing failure cause",
     "failure_ledger_delta": "none",
     "human_verdict": null,
     "rerun_planned": false
+  },
+  "alpha_compositing_pair_result": {
+    "status": "complete_assistant_reviewed",
+    "run": {
+      "status": "complete",
+      "task": "dggt_alpha_compositing_pair_r1",
+      "scene": "128",
+      "frames": 4,
+      "source_manifest": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/gaussian_edits/manifest.json",
+      "source_trace": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/baseline_official/official_trace.pt",
+      "source_state": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-DGGT-WAYMO-INFERENCE-20261011/r1/gaussian_edits/gaussian_state.pt",
+      "gpu_preflight": {
+        "compute_pids": [],
+        "memory_used_mib": 1
+      },
+      "max_seconds": 600,
+      "training_updates": 0,
+      "model_forward_calls": 0,
+      "difix_calls": 0,
+      "failure_ledger_delta": "none",
+      "calibration": {
+        "old_noop_float_max_abs": 0.0,
+        "official_trace_noop_max_abs": 0.0,
+        "threshold": 0.0001,
+        "old_png_mismatch_pixels": {
+          "noop_000": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "noop_001": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "noop_002": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "noop_003": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "delete_000": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "delete_001": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "delete_002": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          },
+          "delete_003": {
+            "rgb_pixels": 0,
+            "alpha_pixels": 0
+          }
+        }
+      },
+      "render_calls": 8,
+      "render_mode": "RGB+ED",
+      "formulas": {
+        "official": "A*G+(1-A)*sky",
+        "premult": "G+(1-A)*sky"
+      },
+      "fixed_hole_domain": "original RGB selector AND saved quantized delete_alpha_loss_hole>0 AND finite positive official-trace camera-z",
+      "hole_statistics": [
+        {
+          "frame": 0,
+          "hole_pixels": 11198,
+          "official_delete_hole_luma": 0.1403590738773346,
+          "premult_delete_hole_luma": 0.15412932634353638,
+          "official_noop_hole_luma": 0.23299866914749146,
+          "sky_hole_luma": 0.11732623726129532,
+          "G_delete_hole_luma": 0.04642318934202194,
+          "alpha_delete_hole_mean": 0.31334400177001953,
+          "premult_minus_official_hole_luma": 0.01377025619149208,
+          "premult_minus_official_hole_abs_mean": 0.014308305457234383,
+          "premult_minus_official_hole_abs_max": 0.20416933298110962
+        },
+        {
+          "frame": 1,
+          "hole_pixels": 11285,
+          "official_delete_hole_luma": 0.1345687210559845,
+          "premult_delete_hole_luma": 0.14904269576072693,
+          "official_noop_hole_luma": 0.2287871539592743,
+          "sky_hole_luma": 0.11564262956380844,
+          "G_delete_hole_luma": 0.04544031247496605,
+          "alpha_delete_hole_mean": 0.24164146184921265,
+          "premult_minus_official_hole_luma": 0.014473989605903625,
+          "premult_minus_official_hole_abs_mean": 0.015015091747045517,
+          "premult_minus_official_hole_abs_max": 0.21107450127601624
+        },
+        {
+          "frame": 2,
+          "hole_pixels": 11362,
+          "official_delete_hole_luma": 0.13607367873191833,
+          "premult_delete_hole_luma": 0.15094207227230072,
+          "official_noop_hole_luma": 0.23761767148971558,
+          "sky_hole_luma": 0.11387387663125992,
+          "G_delete_hole_luma": 0.04528171569108963,
+          "alpha_delete_hole_mean": 0.2782873809337616,
+          "premult_minus_official_hole_luma": 0.014868405647575855,
+          "premult_minus_official_hole_abs_mean": 0.015473667532205582,
+          "premult_minus_official_hole_abs_max": 0.18567098677158356
+        },
+        {
+          "frame": 3,
+          "hole_pixels": 11535,
+          "official_delete_hole_luma": 0.13512995839118958,
+          "premult_delete_hole_luma": 0.15117867290973663,
+          "official_noop_hole_luma": 0.23477642238140106,
+          "sky_hole_luma": 0.10745485872030258,
+          "G_delete_hole_luma": 0.04889252409338951,
+          "alpha_delete_hole_mean": 0.2867654860019684,
+          "premult_minus_official_hole_luma": 0.016048720106482506,
+          "premult_minus_official_hole_abs_mean": 0.016696913167834282,
+          "premult_minus_official_hole_abs_max": 0.18425944447517395
+        }
+      ],
+      "render_seconds": {
+        "noop": 0.689,
+        "delete": 0.022
+      },
+      "asset_files": [
+        "assets/official/noop/000.png",
+        "assets/official/noop/001.png",
+        "assets/official/noop/002.png",
+        "assets/official/noop/003.png",
+        "assets/official/delete/000.png",
+        "assets/official/delete/001.png",
+        "assets/official/delete/002.png",
+        "assets/official/delete/003.png",
+        "assets/premult/noop/000.png",
+        "assets/premult/noop/001.png",
+        "assets/premult/noop/002.png",
+        "assets/premult/noop/003.png",
+        "assets/premult/delete/000.png",
+        "assets/premult/delete/001.png",
+        "assets/premult/delete/002.png",
+        "assets/premult/delete/003.png",
+        "assets/delta/delete/000.png",
+        "assets/delta/delete/001.png",
+        "assets/delta/delete/002.png",
+        "assets/delta/delete/003.png",
+        "assets/input/000.png",
+        "assets/input/001.png",
+        "assets/input/002.png",
+        "assets/input/003.png",
+        "assets/sky/000.png",
+        "assets/sky/001.png",
+        "assets/sky/002.png",
+        "assets/sky/003.png"
+      ],
+      "float_components": "components_float.pt",
+      "seconds": 8.119,
+      "peak_cuda_allocated_bytes": 252608512,
+      "peak_cpu_rss_kib": 1360244
+    },
+    "summary_zh": "这次配对在完全相同的8次 gsplat 渲染上只改变外层颜色合成公式，且官方 noop float 与原 trace 完全一致、旧 noop/delete RGB 和 alpha PNG 均逐像素一致。因此 premult 相对官方的局部提亮可归因于移去外层额外的 A 乘法；固定洞域删除图平均亮度提高约0.0138–0.0160（0–1尺度）。但我实际查看的四帧删除图仍有宽大的灰黑车形带、黑色下斑和显著接缝，没有恢复可辨识且连贯的道路或斑马线。仅改变这一步合成不足以修复当前删除结果；这不证明剩余问题是表示不足，也不能单凭图像区分静态背景、动态残留、深度遮挡和天空合成各自贡献。天空图下半部接近黑色，进一步限制了把提亮或变暗解释为真实路面恢复。这里的 premult 只是诊断变体，不等同已验证的新官方输出。",
+    "human_verdict": null,
+    "algorithm_change_adopted": false,
+    "evidence": "diagnostics/alpha_compositing_pair_r1",
+    "local_page": "outputs/v81-dggt-waymo/alpha_compositing_pair_r1/index.html",
+    "failure_ledger_delta": "none"
+  },
+  "current_scope": {
+    "user_instruction": "S2S paused; DGGT focused; delete scheduled task; inspect static/dynamic/alpha/depth/white background before judging representation",
+    "automation_id": "v8-1-p1-2500",
+    "automation_status": "deleted",
+    "seen_to_scene_resume_authorized": false,
+    "next_diagnostic": "fixed frame000 deleted layer decomposition; no Difix"
   }
 }
