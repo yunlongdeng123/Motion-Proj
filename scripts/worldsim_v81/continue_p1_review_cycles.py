@@ -181,7 +181,10 @@ def checkpoint_users(rows):
 
 def preflight(source, target):
     campaign = CYCLES/'campaign_step020000_policy.json'
-    maximum = min(20000, read(campaign)['maximum_step']) if campaign.exists() else 20000
+    policy = read(campaign) if campaign.exists() else {}
+    if policy.get('training_resume_authorized') is False or policy.get('status') == 'paused_by_user':
+        raise ValueError('用户已暂停Seen-to-Scene并优先DGGT；重新明确授权前禁止启动训练')
+    maximum = min(20000, policy.get('maximum_step', 20000))
     if target > maximum:
         raise ValueError(f'当前用户授权训练上限为{maximum}；不得自动启动下一段')
     # 新授权的 DGGT 短诊断只占当前12500复盘间隙；不抢占在途训练。
@@ -360,6 +363,10 @@ def worker(source, target):
 
 def cleanup(target):
     """只删除明确清单的旧正式文件；软链与hardlink逐项记录，不递归删除。"""
+    campaign = CYCLES/'campaign_step020000_policy.json'
+    if campaign.exists() and (read(campaign).get('training_resume_authorized') is False
+                              or read(campaign).get('status') == 'paused_by_user'):
+        raise ValueError('用户暂停期间保留现有完整断点，不执行旧训练周期清理')
     if target % 5000:
         raise ValueError('只在全局5000倍数清理')
     checkpoint = TRAIN/f'p1-checkpoint-{target:06d}.pt'

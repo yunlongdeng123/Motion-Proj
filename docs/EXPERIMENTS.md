@@ -6,7 +6,7 @@
 |---|---|---|
 | WS-V81-DGGT-WAYMO-INFERENCE-20261011 / r1 | 官方基线、四支高斯与16帧Difix保留；24张单/双图参考对照及8组配对完成，三支仍有残影/黑斑、无参考收益；四帧CPU足迹仅几何估计，后续深度顺序CPU首帧alpha校准未过1灰阶门限即停止，无贡献结果；深色页44张RGB+4张分类图、107链接完整 | [流程、组件图与停止证据](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量结果](v81/DGGT_WAYMO_INFERENCE_R1.json) |
 | WS-V81-STORAGE-20261010 / r1 | 授权清理释放105.95GB；旧优化器退役、推理权重保留；当前P1继续运行 | [清单与恢复边界](v81/STORAGE_CLEANUP_20261010.md) · [实测](v81/STORAGE_CLEANUP_20261010.json) |
-| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 正式12500、整千11000/12000完整状态与六窗150帧已审；宽侧区有局部身体/接缝收益，也有色斑/末帧形变，quality hold/train continue；正式12500已恢复至15000，20000目标不变，12500未清理 | [周期训练与12500复盘](v81/P1_REVIEW_CYCLES_R1.md)、[7500传播评估](v81/P1_STEP7500_EVALUATION_R1.md)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
+| WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 用户暂停并转DGGT；最新完整14000已验证保留，最后日志14386，386尾部更新未落盘；父子退出、GPU释放，禁止自动续训/清理。最新已审结果仍12500六窗，旧20000计划停用 | [周期与暂停记录](v81/P1_REVIEW_CYCLES_R1.md)、[7500传播评估](v81/P1_STEP7500_EVALUATION_R1.md)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r1 | 原始nuScenes 6 train+2 val/200连续帧；两步真实优化+checkpoint恢复、独立val 25帧生成完成；显存/推理mask维度工程修复，18审核视频，非P1指标复现 | [协议与证据](v81/NUSCENES_P0_R1.md) · [实测](v81/P0_R1_RESULTS.json) |
 | WS-V81-SEEN-TO-SCENE-20261009 / r0 | v7.7继承分支；Seen-to-Scene方法核对，CPU数据与传播原语准备；真实训练0步／推理0窗 | [报告](v81/SEEN_TO_SCENE_P0.md) |
 | WS-V77-TARGET-PROTECTED-20260929 / r53 | SAM3 ModelScope权重与真实轮廓CPU入口；旧矩形接口排查，推理0窗/训练0步 | [报告](v77/REAL_INSTANCE_MASK_R53.md) |

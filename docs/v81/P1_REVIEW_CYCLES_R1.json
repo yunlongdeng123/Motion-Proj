@@ -1,10 +1,10 @@
 {
-  "status": "step15000_training_from_reviewed_step12500",
+  "status": "paused_by_user",
   "task_run": "WS-V81-SEEN-TO-SCENE-P1-20261009/r1",
-  "snapshot_utc": "2026-10-10T22:10:36.385088+00:00",
+  "snapshot_utc": "2026-10-11T01:19:02.180903+00:00",
   "overnight_campaign": {
     "authorized_at_singapore": "2026-10-11",
-    "authorization_scope": "继续GPU Seen-to-Scene至累计20000；每小时看真实进度，睡眠期间自主推进，整千保存、每2500六窗助手复盘、每5000复盘后清理",
+    "authorization_scope": "历史20000计划已于2026-10-11用户暂停指令覆盖，保留原参数仅供溯源",
     "supersedes_scheduling_only": "此前DGGT优先、不得启动12500、仅静默监控的旧范围；10000原始gate和历史清理证据不变",
     "source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-010000.pt",
     "source_step": 10000,
@@ -18,11 +18,11 @@
     "save_every": 1000,
     "review_every": 2500,
     "cleanup_every": 5000,
-    "current_segment_target": 15000,
+    "current_segment_target": null,
     "controller": "scripts/worldsim_v81/continue_p1_review_cycles.py",
     "launched_at_utc": "2026-10-10T17:52:22.867219+00:00",
-    "controller_pid": 98990,
-    "trainer_pid": 99056,
+    "controller_pid": null,
+    "trainer_pid": null,
     "launch_verification": {
       "snapshot_utc": "2026-10-10T17:53:44.552046+00:00",
       "resume_event_step": 10000,
@@ -46,14 +46,10 @@
     },
     "diagnostic_checkpoint_excluded": true,
     "human_verdict": null,
-    "next_reviews_pending": [
-      15000,
-      17500,
-      20000
-    ],
+    "next_reviews_pending": [],
     "quality_hold_is_not_research_stop": true,
     "no_gain_action": "独立审核后自主排查有依据的工程问题，不盲改算法、ID或seed，不重复已完成阴性诊断",
-    "completion_action": "20000保存完整原件、六窗助手复盘与深色人工结果页；保持开机，等待用户醒来验收",
+    "completion_action": "用户重新明确授权前不续训、不清理；保留最新14000完整断点，DGGT当前优先",
     "training_time_estimate_hours_excluding_reviews": 16.6,
     "startup_training_args_unchanged": true,
     "maximum_step_enforced_by_controller": 20000,
@@ -62,7 +58,8 @@
       "status": "ACTIVE",
       "normal_interval_hours": 1,
       "near_completion_interval_minutes": 10,
-      "near_completion_threshold_minutes": 45
+      "near_completion_threshold_minutes": 45,
+      "current_scope": "DGGT编辑质量排查及S2S暂停资产核对"
     },
     "current_segment_source_step": 12500,
     "current_segment_source_checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-012500.pt",
@@ -88,7 +85,9 @@
       "gpu_actual": "99056, /root/autodl-tmp/envs/motionproj/bin/python, 23422 MiB",
       "data_free_bytes": 116569849856,
       "system_free_bytes": 6459707392
-    }
+    },
+    "status": "superseded_by_user_pause",
+    "training_resume_authorized": false
   },
   "initial_preflight_and_startup": {
     "status": "preflight_pass",
@@ -542,5 +541,33 @@
       "checkpoint_verified_path": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/checkpoint_step012500_verified.json",
       "gate_path": "review_cycles/gates/step012500.json"
     }
+  },
+  "user_pause": {
+    "utc": "2026-10-11T01:18:33.021659+00:00",
+    "trainer_pid": 99056,
+    "controller_pid": 98990,
+    "trainer_command": "/root/autodl-tmp/envs/motionproj/bin/python -m motion_proj.worldsim_v81.train_p1 --output-dir /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-012500.pt --max-steps 15000 --save-every 1000 --keep-checkpoints 100000 --data-root /root/autodl-tmp/data/worldsim_v81/youtube_vos_2019/train/JPEGImages --svd /root/autodl-tmp/models/worldsim_v81/svd_xt_1_1 --raft-weight /root/autodl-tmp/models/worldsim_v77_poc_propainter/raft-things.pth --fcnet-weight /root/autodl-tmp/models/worldsim_v77_poc_propainter/recurrent_flow_completion.pth --external /root/autodl-tmp/external/seen_to_scene_v81 --seed 123 --lr 1e-05 --amp bf16 --propagation-protocol paper-bidirectional-m4 --raft-iters 20 --raft-pair-chunk 2 ",
+    "controller_command": "/root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/motion_proj_v81/scripts/worldsim_v81/continue_p1_review_cycles.py --worker --resume /root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-012500.pt --target 15000 ",
+    "checkpoint": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/train/p1-checkpoint-014000.pt",
+    "status": "paused_by_user",
+    "paused_at_utc": "2026-10-11T01:19:02.180903+00:00",
+    "latest_logged_step": 14386,
+    "retained_checkpoint_step": 14000,
+    "unsaved_logged_updates": 386,
+    "unsaved_updates_recoverable": false,
+    "checkpoint_verified": {
+      "step": 14000,
+      "bytes": 4833164855,
+      "full_keys_present": true,
+      "scheduler_epoch": 14000,
+      "optimizer_states": 514,
+      "checked_tensors": 2064,
+      "all_model_optimizer_finite": true,
+      "cuda_initialized": false
+    },
+    "training_resume_authorized": false,
+    "reason": "User requested stop Seen-to-Scene now, preserve latest checkpoints, prioritize DGGT. Existing process has no save-on-signal handler.",
+    "backup": "/root/autodl-tmp/runs/worldsim_v81/WS-V81-SEEN-TO-SCENE-P1-20261009/r1/paper_bidirectional_m4/review_cycles/user_pause/20261011T011833",
+    "gpu_after": ""
   }
 }
