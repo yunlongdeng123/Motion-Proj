@@ -21,7 +21,7 @@ flowchart LR
 
 四臂都完成后，使用同一30k节点、同49个 frame ID/timestamp、同RGB裁剪规则和同显示标尺制作深色 HTML。保留全部帧、GT/合成/静态/动态/alpha，以及固定相机改变49个模型时刻的控制；支持同步播放、逐帧、车体局部比较。报告给出完整显存峰、速度、点数、NPS梯度量级和SGCM统计。
 
-以 GN11 相对 C00 的完整30k结果作决定，G10/N01用于解释两个模块与交互。缺省工程判断为：全图或车体的49帧等权PSNR下降超过1dB，或者出现明显且持续的分层/静态时间视觉退化，则停止额外训练。1dB由agent作为可修改的缺省提出，用户尚未明确确认该数值。C00的参考均值分别为34.0624/32.7312dB，缺省数值边界分别为33.0624/31.7312dB；同时检查逐帧坏例，不把均值持平当作自动通过。单seed单scene不支持统计等价结论。
+以 GN11 相对 C00 的完整30k结果作决定，G10/N01用于解释两个模块与交互。用户已明确接受的判断为：全图或车体的49帧等权PSNR下降超过1dB，或者出现明显且持续的分层/静态时间视觉退化，则停止额外训练。用户通过本聊天异步回复“按这个判据执行”确认该规则。C00的参考均值分别为34.0624/32.7312dB，确认的数值边界分别为33.0624/31.7312dB；同时检查逐帧坏例，不把均值持平当作自动通过。单seed单scene不支持统计等价结论。
 
 先核对四臂完整10k/20k/30k节点、49帧资产、配置差异白名单、全30000步独立采样配对及finite诊断。资产/合同问题归工程诊断，不能写成模块的科学失败。检查点stat/header通过不等于模型、Adam和RNG实际恢复通过。
 
@@ -31,7 +31,7 @@ flowchart LR
 
 | 截图 | 身份与窗口 | 当前准备和边界 |
 |---|---|---|
-| 住宅路口横穿红车 | 原始Waymo segment及raw帧窗口未确认；[作者Urban1视频](https://github.com/user-attachments/assets/5aae487d-e05e-44ef-9566-e23da980f467) | 先复用已有缓存，再做独立、有预算上限的CPU搜索；不能用相似场景替代，也不能把首帧没匹配解释为排除整个片段 |
+| 住宅路口横穿红车 | Waymo training index29、segment10526338824408452410_5714_660_5734_660，作者21帧全部对应raw69–89；[作者Urban1视频](https://github.com/user-attachments/assets/5aae487d-e05e-44ef-9566-e23da980f467) | 本地49扩展raw69–117已提取真实RGB/pose/calib/LiDAR及600k混合静态种子，anchor0029079；实际sky/body/actor prior和GPU训练仍待准入 |
 | GMC pickup与Jeep迎面驶来 | Waymo training index8；[作者Urban3视频](https://github.com/user-attachments/assets/1e5fc249-94e9-456f-9db5-e32185455a42)对应raw23–51 | 已有原始TFRecord及49帧raw23–71扩展输入。29帧作者可见窗口确认，作者训练窗口没有公开确认 |
 
 scene0008 在独立目录 `/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/` 复制约359MiB输入与代码，原输入和当前四臂源码未改变。实际CPU `readWaymoInfo_add`、49视图/时间、canonical mask、scale4尺寸、相似变换与SGCM地面/区域输入通过。静态种子600000点，原读取器严格0.1m排除后594981点；动态真实LiDAR合计42654点（pickup8592、Jeep34062）。地面RMSE0.02891m、倾角2.4048°，区域面积合计141.74m²。固定相机锚点明确为 `0008033`，不复用scene17的 `0017010`。
@@ -40,7 +40,26 @@ scene0008 在独立目录 `/root/autodl-tmp/drivingeditor_repro/campaign/followu
 
 CPU准备没有初始化CUDA，也没有加载模型、训练或渲染。CPU几何检查临时关闭model guard；候选训练配置中的corrected SGCM guard仍开启，真实49 Camera/GaussianModel/谱系绑定须在通过GN11验收后的启动阶段核验。`training_ready=false` 表示这些运行阶段准入尚未执行，不能把CPU通过写成完整GPU合同通过。body-only、shadow缺失和M-detector未进入真实预处理的边界仍保留。[输入审计与实际CPU读取证据](../autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/)。
 
-后续入口使用独立训练源码、sceneSpec和显式gate receipt，默认只验证。原矩阵根目录、四臂controller及当前训练配置不变。新scene绑定真实49 frame IDs/timestamps、输入目录、actor角色和固定相机锚点；所有目标、权重、衰减、预算和SGCM/NPS公式继承已完成的GN11共同配置。若红车身份仍缺失，可以先跑已验证GMC场景，红车继续有界准备；预算耗尽仍未定位就如实记录缺口并收口，不能伪称两场景均完成。
+后续入口使用独立训练源码、sceneSpec和显式gate receipt，默认只验证。原矩阵根目录、四臂controller及当前训练配置不变。新scene绑定真实49 frame IDs/timestamps、输入目录、actor角色和固定相机锚点；所有目标、权重、衰减、预算和SGCM/NPS公式继承已完成的GN11共同配置。红车身份现已完成，不再继续候选搜索。可以在原GN11准入通过后先跑已prepared的GMC场景，红车真实GPU分割则共享锁串行接续；raw准备spec不能直接当训练sceneSpec。若真实输入最终无法齐全，记录缺口并暂停心跳等用户决定，不能伪称两个场景完成或提前适用两场景完成后的关机授权。
+
+
+红scene0029的完整raw为1,160,423,074B，镜像existing pinned LFS size/digest验证通过；199条record的CRC/context通过。全部21作者GT帧独立最佳映射69–89、stride1，mean RGB MAE0.01224435，最小次优间隔0.01935491；root和独立agent分别审查9/12帧，覆盖全部21。这里验证源身份，未填写GN11或新场景human质量评价。[身份与CPU raw证据](../autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0029_identity_review.json)。
+
+新CPU raw helper纯protobuf/NumPy翻译既有Waymo equations，未导入Torch/TF或使用CUDA。真实scene8/raw23对照178112点：点数/顺序/非XYZ、标定/pose/RGB精确；TOP XYZ maxL2差0.002013756m、全点RMS0.000600118m，非bitwise，浮点算术控制通过不代表最终质量影响已认证。600k真实LiDAR静态种子保持原seed0/有放回与零初始化颜色；sky目录空，body与actor PLY没有占位，GT track/box只审计。实际body/sky、mask关联actorLiDAR prior、actualCPU loader/SGCM检查与GPU绑定均是后续必需项。共享下载body账1,756,572,098B低于5GiB，找到精确身份后不继续435候选搜索。
+
+训练入口发布passed receipt时固定`max_psnr_drop_db=1.0`，allowed_scene_ids显式为`scene0008_023_071`和`scene0029_069_117`；实际--run带`--verify-paired-steps`。确认阈值后14项Python3.9 CPU检查通过，包括将receipt阈值改成2dB也无法掩盖严重退化。完整GPU恢复和新场景模型/SGCM绑定未认证。
+
+```mermaid
+flowchart LR
+    I[真实49 RGB LiDAR pose body sky] --> S[静态Gaussian SGCM NPS]
+    I --> D[动态Gaussian 完整mask opacity]
+    S --> R[分层renderer 共享EnvMap]
+    D --> R
+    R --> O[合成 静态 动态 RGB alpha]
+    O --> V[30k完整节点 固定相机时间控制]
+```
+
+图中红场景body/sky与actor prior仍是待完成的真实输入；已完成CPU raw与静态种子不等于这些模块已运行。
 
 ## 定时检查与关机
 

@@ -21,17 +21,17 @@
       "independent_test": false
     },
     "threshold": {
-      "psnr_drop_db_proposed": 1,
-      "source": "agent default proposed via optional asynchronous question; no human threshold answer received",
-      "human_threshold_confirmation_received": false,
+      "source": "User explicitly accepted the proposed criterion via asynchronous reply on2026-10-13",
+      "human_threshold_confirmation_received": true,
       "qualitative_threshold": "明显持续视觉或静态性退化",
       "numeric_rule": "delta=GN11-C00；full或actor全49等权PSNR任一delta < -1.0 dB即严重数值回退；按未四舍五入值判断",
-      "proposed_candidate_boundaries_db": {
+      "application": "用户已确认：full或actor全49帧等权PSNR下降超过1dB，或持续明显的分层/固定相机静态时间视觉退化，则停止新增训练，分析后关机；轻微波动继续。人工GN11质量评价仍留空。",
+      "statistical_boundary": "单seed单scene没有已知统计噪声分布。持平/波动只能描述本次工程验收，不能称统计等价、显著性或通用CUDA噪声上界。",
+      "max_psnr_drop_db": 1.0,
+      "candidate_boundaries_db": {
         "full_severe_if_below": 33.062387964584204,
         "actor_severe_if_below": 31.731230317593102
-      },
-      "application": "缺省采用 full 或 actor 全49帧等权 PSNR 下降超过1dB，或持续明显的分层/静态时间视觉退化。若用户另给规则，更新后执行。不能把此缺省写成人工阈值确认。",
-      "statistical_boundary": "单seed单scene没有已知统计噪声分布。持平/波动只能描述本次工程验收，不能称统计等价、显著性或通用CUDA噪声上界。"
+      }
     },
     "outcomes": {
       "waiting": "GN11或其他臂未终态；仅CPU准备，不提前启动两个新场景。",
@@ -241,22 +241,126 @@
     "seed_grid": false,
     "loss_grid": false,
     "execution": "两个scene顺序执行，同一GPU，seed0/fromscratch；每个独立30k horizon，10k/20k/30k全bundle及49-view/photo/static-time评价",
-    "scene_identity_status": "GMC scene0008 confirmed; red-crossing identity pending",
+    "scene_identity_status": "Both screenshot source scenes verified: GMC scene0008 and red crossing scene0029",
     "scene_specs": [
       {
         "slot": "structured_scene_A",
         "description": "棕榈树住宅路口横穿红色 sedan",
-        "scene_name": null,
-        "raw_source": null,
-        "source_frame_window": null,
-        "source_path": null,
-        "frame_ids": null,
-        "anchor_pose_frame": null,
-        "readiness_status": "raw_segment_and_window_not_identified",
+        "scene_name": "scene0029_069_117",
+        "raw_source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/raw_scene0029/segment-10526338824408452410_5714_660_5734_660_with_camera_labels.tfrecord",
+        "source_frame_window": [
+          69,
+          117
+        ],
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1",
+        "frame_ids": [
+          "0029069",
+          "0029070",
+          "0029071",
+          "0029072",
+          "0029073",
+          "0029074",
+          "0029075",
+          "0029076",
+          "0029077",
+          "0029078",
+          "0029079",
+          "0029080",
+          "0029081",
+          "0029082",
+          "0029083",
+          "0029084",
+          "0029085",
+          "0029086",
+          "0029087",
+          "0029088",
+          "0029089",
+          "0029090",
+          "0029091",
+          "0029092",
+          "0029093",
+          "0029094",
+          "0029095",
+          "0029096",
+          "0029097",
+          "0029098",
+          "0029099",
+          "0029100",
+          "0029101",
+          "0029102",
+          "0029103",
+          "0029104",
+          "0029105",
+          "0029106",
+          "0029107",
+          "0029108",
+          "0029109",
+          "0029110",
+          "0029111",
+          "0029112",
+          "0029113",
+          "0029114",
+          "0029115",
+          "0029116",
+          "0029117"
+        ],
+        "anchor_pose_frame": "0029079",
+        "readiness_status": "CPU_RAW_AND_REAL_STATIC_SEED_READY_SKY_BODY_PENDING",
         "training_allowed_now": false,
         "author_video": "https://github.com/user-attachments/assets/5aae487d-e05e-44ef-9566-e23da980f467",
         "identity_rule": "只接受结构、车型、连续帧与截图/作者视频匹配的真实 Waymo 输入，不以近似路口替代",
-        "search_now": "先复用全部已有预览，再在独立scratch有界CPU首record搜索；首帧未匹配不排除片段后续帧"
+        "search_now": "Exact identity found; stop remaining first-record/temporal candidate search, retain existing budget ledger.",
+        "candidate_training_index": 29,
+        "candidate_segment": "10526338824408452410_5714_660_5734_660",
+        "author_video_frame_count": 21,
+        "identity_fully_verified": true,
+        "author_video_verified_window": [
+          69,
+          89
+        ],
+        "author_training_window_publicly_confirmed": false,
+        "camera_directory": "image/image_0",
+        "training_ready": false,
+        "actor_DEVA_ids": null,
+        "actor_raw_track_ids": null,
+        "identity_review_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0029_identity_review.json",
+        "raw_preparation_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_preparation/scene0029_069_117/cpu_raw_readiness.json",
+        "author_video_to_raw_mapping": [
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89
+        ],
+        "training_gates_pending": [
+          "Real49 sky",
+          "Real49 DEVA/SAM",
+          "Reviewed physicalactor-to-instance mapping",
+          "Canonical fullbody union and exactdynamicRGB",
+          "Real actorLiDAR priors from selectedbody",
+          "ActualCPU loader/SGCM/readiness",
+          "GN11 gate and training runtime checks"
+        ],
+        "cpu_gpu_used": false,
+        "real_static_seed_points": 600000,
+        "raw_source_LiDAR_points": 9372984,
+        "CPU_equivalence_boundary": "Original equations ported to purePB/NumPy. Existing scene8/raw23 control matched pointcount/order/nonXYZ/pose/calib/RGB; XYZ nonbitwise maxL2 .002013756m. No scientific quality impact certification."
       },
       {
         "slot": "structured_scene_B",
@@ -338,20 +442,36 @@
         "cpu_gpu_used": false,
         "training_ready": false,
         "training_gates_pending": [
-          "Current silver-scene GN11 user gate",
-          "New scene-specific run_matrix/runtime config and fixed-pose adaptation",
-          "Actual training GaussianModel/view/SGCM guard and lineage binding",
-          "GPU ownership and complete checkpoint runtime validation"
+          "Final silver-scene GN11 gate",
+          "Actual GPU Scene/SGCM/lineage binding",
+          "GPU ownership and runtime complete save contract"
         ],
-        "readiness_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_cpu_readiness.json"
+        "readiness_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_cpu_readiness.json",
+        "training_source_prepared": true,
+        "prepared_source_status": "FOLLOWUP_CPU_SOURCE_PREPARED_GPU_BLOCKED",
+        "training_source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_source/scene0008_023_071",
+        "training_support": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_support/scene0008_023_071",
+        "training_config": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_configs/scene0008_023_071_GN11.json",
+        "actual_python39_cpu_checks": {
+          "status": "PASS_FOLLOWUP_CPU_CHECKS",
+          "python": "3.9.25 (main, Nov  3 2025, 22:33:05) \n[GCC 11.2.0]",
+          "tests_run": 14,
+          "failures": 0,
+          "errors": 0,
+          "GPU_used": false,
+          "checkpoint_loaded": false,
+          "fake_train_module_only": true,
+          "actual_GPU_model_and_guard_binding_verified": false,
+          "restoration_verified": false
+        }
       }
     ],
     "config_rule": "从本次通过gate的GN11 effective_config取完整配置，冻结目标、权重、SGCM/NPS公式和schedule/LR/seed/point cap/reset；允许按sceneSpec改来源/输出/camera IDs/49frame清单/真实timestamps/anchor/actor先验metadata等必要数据绑定。",
     "start_checkpoint": null,
     "other_scene_results_scope": "新scene只有GN11，不能声称该scene上已完成C00/GN11因果消融；报告本scene重建和分层质量及输入差异。",
-    "failures": "某scene工程/质量严重失败则不自动继续另一个scene或开启补训网格；保存与分析，依当前用户条件收口关机。",
-    "start_order": "准备好的 GMC scene0008 先跑，红车场景身份与输入完成后再跑；均须原四臂 GN11 gate 通过",
-    "missing_identity_policy": "GN11通过后可先跑已验证GMC场景；红车不可假替代。搜索预算耗尽仍未知时记录真实数据缺口，完成已有工作后收口，避免无限GPU闲置。不得宣称两场景均完成。"
+    "failures": "新场景工程异常先停止owned队列、保留资产并定位修复；不自动改loss/分辨率、追加seed或补训网格。真实数据无法完成时记录具体缺口并暂停心跳等用户决定，不能假称两场景完成或误套原场景C00/GN11回退判据提前关机。",
+    "start_order": "通过原四臂GN11 gate后先训已prepared的GMC scene0008；随后共享GPU锁完成红scene0029真实分割/prior和actualCPU readiness，再从零训red GN11。",
+    "missing_identity_policy": "GN11通过后可先跑已验证GMC场景；红车不可假替代。搜索预算耗尽仍未知时记录真实数据缺口，完成其余已授权工作后暂停心跳等用户决定，不把预算耗尽写成任务完成，也不据此提前适用两场景完成后的关机授权。"
   },
   "independent_runner_adaptation": {
     "current_code_findings": [
@@ -464,7 +584,7 @@
   "schema_version": 1,
   "task_id": "WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013",
   "run": "r1",
-  "updated_utc": "2026-10-12T19:13:02.456691+00:00",
+  "updated_utc": "2026-10-12T20:37:54.586188+00:00",
   "current_matrix_task": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
   "current_matrix_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
   "followup_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
@@ -484,7 +604,8 @@
     "subagent_default": {
       "model": "gpt-6.1-sol",
       "reasoning_effort": "max"
-    }
+    },
+    "severe_regression_rule_confirmed": true
   },
   "automation": {
     "id": "drivingeditor-30k",
@@ -504,5 +625,369 @@
   "human_verdict": {
     "C00": "用户确认符合预期",
     "GN11": null
+  },
+  "red_scene_search_receipt": {
+    "status": "EXACT_SOURCE_IDENTITY_VERIFIED_RAW_CPU_PREPARATION_COMPLETE_MASKS_PENDING",
+    "host": "wm-vgpu-1011",
+    "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_search_cpu",
+    "cache": {
+      "unique_images": 5577,
+      "comparisons": 16731,
+      "strong_review_signals": 0,
+      "root_visual_review": "RGB and feature top10 contact sheets inspected; no identity confirmed; index29 weak street-layout lead only"
+    },
+    "network_batch": {
+      "owner": "red_scene_cpu_20261013_v1",
+      "created_utc": "2026-10-12T19:19:43.137598+00:00",
+      "network_reserved_bytes": 1756572098,
+      "network_received_bytes": 1756572098,
+      "completed_new_segments": [
+        "17388121177218499911_2520_000_2540_000",
+        "17407069523496279950_4354_900_4374_900",
+        "17437352085580560526_2120_000_2140_000",
+        "17547795428359040137_5056_070_5076_070",
+        "17552108427312284959_3200_000_3220_000",
+        "17564868480517233150_3643_000_3663_000",
+        "175830748773502782_1580_000_1600_000",
+        "1758724094753801109_1251_037_1271_037",
+        "17597174721305220109_178_000_198_000",
+        "17601040886987343289_472_000_492_000",
+        "17642771458376274038_2080_000_2100_000",
+        "17647858901077503501_1500_000_1520_000",
+        "17674974223808194792_8787_692_8807_692",
+        "17677899007099302421_5911_000_5931_000",
+        "1773696223367475365_1060_000_1080_000",
+        "17750787536486427868_560_000_580_000",
+        "17752423643206316420_920_850_940_850",
+        "17759280403078053118_6060_580_6080_580",
+        "17761959194352517553_5448_420_5468_420",
+        "17778522338768131809_5920_000_5940_000",
+        "17782258508241656695_1354_000_1374_000",
+        "17790754307864212354_1520_000_1540_000",
+        "17792522237954398691_2698_000_2718_000",
+        "17818548625922145895_1372_430_1392_430",
+        "17850487901509155700_9065_000_9085_000",
+        "17874036087982478403_733_674_753_674",
+        "17885096890374683162_755_580_775_580",
+        "17902907331132202998_1564_000_1584_000",
+        "17912777897400903477_2047_500_2067_500",
+        "17941839888833418904_1240_000_1260_000",
+        "17958696356648515477_1660_000_1680_000",
+        "17959337482465423746_2840_000_2860_000",
+        "17987556068410436875_520_610_540_610",
+        "17993467596234560701_4940_000_4960_000",
+        "1800857743596232165_1500_000_1520_000",
+        "18025338595059503802_571_216_591_216",
+        "18068531698704694137_920_000_940_000",
+        "18096167044602516316_2360_000_2380_000",
+        "18111897798871103675_320_000_340_000",
+        "18136695827203527782_2860_000_2880_000",
+        "18141076662151909970_2755_710_2775_710",
+        "18233614482685846350_7060_000_7080_000",
+        "18286677872269962604_3520_000_3540_000",
+        "18295766828140813622_6775_000_6795_000",
+        "18311996733670569136_5880_000_5900_000",
+        "18331713844982117868_2920_900_2940_900",
+        "18380281348728758158_4820_000_4840_000",
+        "18403940760739364047_920_000_940_000",
+        "18418533015310829002_480_000_500_000",
+        "18441113814326864765_725_000_745_000",
+        "1857377326903987736_80_000_100_000",
+        "1887497421568128425_94_000_114_000",
+        "1891390218766838725_4980_000_5000_000",
+        "1907783283319966632_3221_000_3241_000",
+        "1918764220984209654_5680_000_5700_000",
+        "1921439581405198744_1354_000_1374_000",
+        "1926967104529174124_5214_780_5234_780",
+        "1939881723297238689_6848_040_6868_040",
+        "1940032764689855266_3690_210_3710_210",
+        "1972128316147758939_2500_000_2520_000",
+        "1988987616835805847_3500_000_3520_000",
+        "1994338527906508494_3438_100_3458_100",
+        "1999080374382764042_7094_100_7114_100",
+        "200287570390499785_2102_000_2122_000",
+        "2025831330434849594_1520_000_1540_000",
+        "2036908808378190283_4340_000_4360_000",
+        "204421859195625800_1080_000_1100_000",
+        "2064489349728221803_3060_000_3080_000",
+        "2075681641472425669_2635_000_2655_000",
+        "207754730878135627_1140_000_1160_000",
+        "2088865281951278665_4460_000_4480_000",
+        "2101027554826767753_2504_580_2524_580",
+        "2107164705125601090_3920_000_3940_000",
+        "2114574223307001959_1163_280_1183_280",
+        "2151482270865536784_900_000_920_000",
+        "2206505463279484253_476_189_496_189",
+        "2209007584159204953_2200_000_2220_000",
+        "2217043033232259972_2720_000_2740_000",
+        "2224716024428969146_1420_000_1440_000",
+        "2259324582958830057_3767_030_3787_030",
+        "2265177645248606981_2340_000_2360_000",
+        "2273990870973289942_4009_680_4029_680",
+        "2323851946122476774_7240_000_7260_000",
+        "2330686858362435307_603_210_623_210",
+        "2336233899565126347_1180_000_1200_000",
+        "2342300897175196823_1179_360_1199_360",
+        "2400780041057579262_660_000_680_000",
+        "2415873247906962761_5460_000_5480_000",
+        "2475623575993725245_400_000_420_000",
+        "2508530288521370100_3385_660_3405_660",
+        "2547899409721197155_1380_000_1400_000",
+        "2570264768774616538_860_000_880_000",
+        "2577669988012459365_1640_000_1660_000",
+        "2581599794006798586_2440_000_2460_000",
+        "2590213596097851051_460_000_480_000",
+        "2598465433001774398_740_670_760_670",
+        "2607999228439188545_2960_000_2980_000",
+        "2618605158242502527_1860_000_1880_000",
+        "2656110181316327570_940_000_960_000",
+        "2660301763960988190_3742_580_3762_580"
+      ],
+      "contract": {
+        "network_cap_bytes": 5368709120,
+        "disk_free_floor_bytes": 42949672960,
+        "max_output_bytes": 536870912,
+        "max_new_segments_total": 435,
+        "max_single_record_bytes": 16777216,
+        "request_timeout_seconds": 60,
+        "attempts_per_range": 2,
+        "workers": 1,
+        "wall_time_limit_seconds_per_invocation": 7200
+      },
+      "pid": 58770,
+      "mode": "identity_local_alignment",
+      "status": "scene29_alignment_computed_requires_visual_review",
+      "gpu_used": false,
+      "cuda_visible_devices": "-1",
+      "updated_utc": "2026-10-12T20:12:24.131193+00:00",
+      "cached_control_rgb_mae": 0.015231369564568598,
+      "cv2_version": "4.11.0",
+      "cached_pass_completed": true,
+      "output_bytes": 67915130,
+      "cached_images_ranked": 5577,
+      "cached_review_signal_comparisons": 0,
+      "new_control_rgb_mae": 0.015231369564568598,
+      "new_control_passed": true,
+      "new_segments_this_invocation": 100,
+      "last_completed_segment": "2660301763960988190_3742_580_3762_580",
+      "temporal_contract": {
+        "max_segments_total": 3,
+        "max_header_frames_per_segment": 200,
+        "sample_frames": [
+          0,
+          25,
+          50,
+          75,
+          100,
+          125,
+          150,
+          175
+        ],
+        "max_selected_bodies_per_segment": 8
+      },
+      "temporal_indices_started": [
+        29
+      ],
+      "temporal_selection_reasons": {
+        "29": "same_intersection_landmarks_at_raw50_actor_not_yet_crossing_seek_video_window"
+      },
+      "temporal_progress": {
+        "index": 29,
+        "headers_walked": 60,
+        "last_raw_frame": 59,
+        "selected_bodies": 3
+      },
+      "new_candidate_review_pending": true,
+      "temporal_candidate_review_pending": true,
+      "temporal_candidate": {
+        "index": 29,
+        "raw_frame": 75,
+        "segment": "10526338824408452410_5714_660_5734_660"
+      },
+      "temporal_review_command_acknowledgements": [
+        {
+          "index": 29,
+          "raw_frame": 50,
+          "segment": "10526338824408452410_5714_660_5734_660",
+          "acknowledged_utc": "2026-10-12T19:46:15.107153+00:00",
+          "semantics": "Root command acknowledges review; no identity verdict."
+        }
+      ],
+      "raw_download": {
+        "status": "complete",
+        "pid": 56518,
+        "global_training_index": 29,
+        "receipt_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/raw_scene0029/download_receipt.json",
+        "progress_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/raw_scene0029/download_status.json",
+        "candidate_reviewed": true,
+        "raw_frame_window_confirmed": false,
+        "completed_utc": "2026-10-12T20:06:31.644295+00:00"
+      },
+      "other_segment_search_paused_for_identity": true,
+      "identity_focus_index": 29,
+      "identity_cpu_progress": {
+        "raw_frames": 190,
+        "file_bytes_read": 1103362258,
+        "file_bytes_total": 1160423074,
+        "network_requests": 0
+      },
+      "identity_alignment_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_search_cpu/identity/index029/frame_match.json",
+      "identity_candidate_raw_range": [
+        69,
+        89
+      ],
+      "identity_numeric_temporal_consistency": true
+    },
+    "first_record_limitation": "No match at raw0 cannot exclude later frames. Temporal header walk is planned only for a few visually supported candidates; shared5GiBledger remains fixed.",
+    "original_inputs_and_legacy_ledger_modified": false,
+    "training_GPU_used": false,
+    "scene_identity_verified": true,
+    "candidate_segment": "10526338824408452410_5714_660_5734_660",
+    "root_visual_candidate_review": {
+      "identity_verified": true,
+      "full_video_alignment_verified": true,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_search_cpu/identity/index029/frame_match.json"
+    },
+    "full_raw_download": {
+      "owner": "red_raw_index029_cpu_20261013_v1",
+      "global_training_index": 29,
+      "segment": "10526338824408452410_5714_660_5734_660",
+      "public_repository": "AnnaZhang/waymo_open_dataset_v_1_4_3",
+      "pinned_revision": "8a6fccd2b022077308c167a4d3c6f646d6e5e65b",
+      "public_source_path": "individual_files/training/segment-10526338824408452410_5714_660_5734_660_with_camera_labels.tfrecord",
+      "local_raw_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/raw_scene0029/segment-10526338824408452410_5714_660_5734_660_with_camera_labels.tfrecord",
+      "raw_expected_size_bytes": 1160423074,
+      "raw_expected_full_sha256": "8b49fad64c8ee8084f759f4e76fa780cc9227657f0bc25d00dda3ad00cf95fd3",
+      "raw_frame_window_confirmed": false,
+      "gpu_used": false,
+      "status": "complete",
+      "candidate_reviewed": true,
+      "started_utc": "2026-10-12T20:03:21.883014+00:00",
+      "part_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/raw_scene0029/segment-10526338824408452410_5714_660_5734_660_with_camera_labels.tfrecord.part",
+      "shared_ledger_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_search_cpu/status.json",
+      "search_lock_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_search_cpu/search.lock",
+      "network_reserved_bytes_before": 596149024,
+      "network_received_bytes_before": 596149024,
+      "resumed_from_bytes": 0,
+      "raw_size_bytes": 1160423074,
+      "size_verified": true,
+      "full_sha256_verified": true,
+      "first_started_utc": "2026-10-12T20:03:21.883014+00:00",
+      "last_verified_range": "bytes 1157627904-1160423073/1160423074",
+      "updated_utc": "2026-10-12T20:06:29.778697+00:00",
+      "completed_utc": "2026-10-12T20:06:31.644295+00:00",
+      "raw_full_sha256": "8b49fad64c8ee8084f759f4e76fa780cc9227657f0bc25d00dda3ad00cf95fd3",
+      "network_reserved_bytes_after": 1756572098,
+      "network_received_bytes_after": 1756572098
+    },
+    "exact_author_visible_raw_range": [
+      69,
+      89
+    ],
+    "root_and_independent_all21_visual_review": {
+      "root": {
+        "contact_sheet_pages": [
+          0,
+          3,
+          6
+        ],
+        "frame_count": 9
+      },
+      "independent_agent": {
+        "name": "/root/identify_two_scenes",
+        "contact_sheet_pages": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "frame_count": 12
+      },
+      "coverage": "All21 author GT panes compared with original unwarped Waymo FRONT images; street landmarks, red sedan position/shape, nearby vehicles and sequence agree.",
+      "verdict": "Same source scene and exact visible raw69..89 sequence."
+    },
+    "identity_review_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0029_identity_review.json",
+    "raw_preparation_status": "CPU_RAW_AND_REAL_STATIC_SEED_READY_SKY_BODY_PENDING",
+    "remaining_candidate_search_allowed": false
+  },
+  "tooling": {
+    "remote_followup_entry": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup/run_scene_gn11.py",
+    "remote_comparison_export": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/comparison/export_four_arm_assets.py",
+    "remote_comparison_protocol": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/DRIVINGEDITOR_FOLLOWUP_20261013.json",
+    "remote_readonly_inspector": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/inspect_followup.py",
+    "comparison_check_only_result": {
+      "status": "BLOCKED_NO_FINAL_REPORT",
+      "reason": "N01 not complete30k",
+      "exit_code": 1,
+      "GPU_used": false,
+      "checkpoint_loaded": false
+    },
+    "comparison_actual_browser_QA": "pending real four-arm terminal export",
+    "default_entry_imports_torch_or_spawns": false,
+    "actual_GPU_training_started": false,
+    "remote_red_raw_preparation": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/prepare_red_scene_cpu.py",
+    "remote_red_GPU_next_steps": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/GPU_NEXT_STEPS.md",
+    "confirmed_threshold_CPU_checks": {
+      "status": "PASS_FOLLOWUP_CPU_CHECKS",
+      "python": "3.9.25 (main, Nov  3 2025, 22:33:05) \n[GCC 11.2.0]",
+      "tests_run": 14,
+      "failures": 0,
+      "errors": 0,
+      "GPU_used": false,
+      "checkpoint_loaded": false,
+      "fake_train_module_only": true,
+      "actual_GPU_model_and_guard_binding_verified": false,
+      "restoration_verified": false
+    },
+    "inspector_worker_identity": "status.pid matched against run_scene_gn11.py; final shutdown additionally checks allGPU/CPU/controller jobs"
+  },
+  "last_hourly_matrix_observation": {
+    "observed_utc": "2026-10-12T19:55:46.767569+00:00",
+    "matrix": {
+      "status": "running",
+      "current_arm": "N01",
+      "controller_pid": 2704,
+      "completed_arms": [
+        "C00",
+        "G10"
+      ],
+      "queued_arms": [
+        "GN11"
+      ]
+    },
+    "arms": {
+      "C00": {
+        "status": "complete",
+        "iteration": 30000,
+        "complete_checkpoint_nodes": [
+          10000,
+          20000,
+          30000
+        ],
+        "error": null
+      },
+      "G10": {
+        "status": "complete",
+        "iteration": 30000,
+        "complete_checkpoint_nodes": [
+          10000,
+          20000,
+          30000
+        ],
+        "error": null
+      },
+      "N01": {
+        "status": "training",
+        "iteration": 8200,
+        "complete_checkpoint_nodes": [],
+        "error": null
+      },
+      "GN11": {
+        "status": "not_started",
+        "iteration": 0,
+        "complete_checkpoint_nodes": [],
+        "error": null
+      }
+    }
   }
 }

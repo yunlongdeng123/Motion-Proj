@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CPU reader scene spec (readiness agent format)",
+  "type": "object",
+  "required": [
+    "scene_id",
+    "source_path",
+    "frame_ids",
+    "frame_count",
+    "camera",
+    "raw_frame_range",
+    "original_WH",
+    "render_WH",
+    "fixed_pose_anchor",
+    "fixed_pose_camera_index",
+    "model_timestamp_values",
+    "actor_PLY_paths"
+  ],
+  "properties": {
+    "scene_id": {
+      "type": "string",
+      "pattern": "^scene[0-9]{4}_[0-9]{3}_[0-9]{3}$"
+    },
+    "source_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "frame_count": {
+      "const": 49
+    },
+    "frame_ids": {
+      "type": "array",
+      "minItems": 49,
+      "maxItems": 49,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "camera": {
+      "const": "FRONT"
+    },
+    "camera_directory": {
+      "const": "image_0"
+    },
+    "raw_frame_range": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "resolution_scale": {
+      "const": 4
+    },
+    "original_WH": {
+      "const": [
+        1920,
+        1280
+      ]
+    },
+    "render_WH": {
+      "const": [
+        480,
+        320
+      ]
+    },
+    "fixed_pose_anchor": {
+      "type": "string"
+    },
+    "fixed_pose_camera_index": {
+      "const": 10
+    },
+    "model_timestamp_values": {
+      "type": "array",
+      "minItems": 49,
+      "maxItems": 49,
+      "items": {
+        "type": "number"
+      }
+    },
+    "actor_PLY_paths": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

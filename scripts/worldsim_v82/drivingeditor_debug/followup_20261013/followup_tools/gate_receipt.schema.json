@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GN11 followup gate receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "candidate_arm",
+    "reference_arm",
+    "candidate_checkpoint",
+    "reference_checkpoint",
+    "paired_contract_pass",
+    "visual_review_complete",
+    "severe_numeric_regression",
+    "severe_visual_or_static_regression",
+    "allowed_scene_ids",
+    "paired_steps_evidence",
+    "events"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "blocked",
+        "passed",
+        "severe_regression",
+        "contract_failed"
+      ]
+    },
+    "candidate_arm": {
+      "const": "GN11"
+    },
+    "reference_arm": {
+      "const": "C00"
+    },
+    "candidate_checkpoint": {
+      "const": 30000
+    },
+    "reference_checkpoint": {
+      "const": 30000
+    },
+    "paired_contract_pass": {
+      "type": "boolean"
+    },
+    "visual_review_complete": {
+      "type": "boolean"
+    },
+    "severe_numeric_regression": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "severe_visual_or_static_regression": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "max_psnr_drop_db": {
+      "type": "number",
+      "const": 1.0
+    },
+    "allowed_scene_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^scene[0-9]{4}_[0-9]{3}_[0-9]{3}$"
+      }
+    },
+    "paired_steps_evidence": {
+      "type": "object",
+      "required": [
+        "status",
+        "rows"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "required": [
+        "C00",
+        "GN11"
+      ],
+      "properties": {
+        "C00": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "GN11": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "paired_steps_files": {
+      "type": "object",
+      "properties": {
+        "C00": {
+          "type": "string"
+        },
+        "GN11": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "passed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "paired_contract_pass": {
+            "const": true
+          },
+          "visual_review_complete": {
+            "const": true
+          },
+          "severe_numeric_regression": {
+            "const": false
+          },
+          "severe_visual_or_static_regression": {
+            "const": false
+          },
+          "paired_steps_evidence": {
+            "properties": {
+              "status": {
+                "const": "passed"
+              },
+              "rows": {
+                "const": 30000
+              }
+            }
+          },
+          "events": {
+            "properties": {
+              "C00": {
+                "type": "string",
+                "minLength": 1
+              },
+              "GN11": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
