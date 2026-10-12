@@ -101,6 +101,6 @@ Git内 `docs/autoresearch/worldsim_v82/drivingeditor_debug_20261012/r1/evidence/
 
 相关历史边界为 [V76-F03](../research_failures/entries/V76-F03.md)：场景重建指标不等于对象资产可编辑资格。该卡的HUGSIM/VAD-GS分母与用户路线判定保持原义。 [V77-F02](../research_failures/entries/V77-F02.md)记录的是DriveEditor扩散补景与输入合法性，名称近似不能把它当作本次DrivingEditor实现的同一失败。
 
-原诊断receipt没有确立新的跨方法科学根因；本次整理保留 `failure_ledger_delta=none`，不为论文不完整或研究停止硬造科学失败ID。已确认工程行为和未决数据缺口在本报告中逐项留存，若后续维护单独工程卡，必须采用这些实际触发与证据，不能写成“Gaussian/EnvMap失败”。人工 `human_verdict=null`，用户停止研究不等于用户代填质量评分。
+原诊断receipt和首次交付r1的 `failure_ledger_delta=none` 保持历史原值，没有确立新的跨方法科学否定。后续用户于2026-10-12明确要求登记[工程卡V82-F01](../research_failures/entries/V82-F01.md)：论文适配替换opacity目标时丢失掩码外透明度监督，以及在正式长训前分层验收不足；并指定[后续默认双域监督](DRIVINGEDITOR_OPACITY_DEFAULTS.md)。这是新增工程知识，不改写既有实验receipt，也不将作者公式未交代监督域写成作者实际实现已遗漏。原r1人工 `human_verdict=null` 保持，新的用户工程指令在卡中单列，不代填质量评分。
 
 本轮增加的知识是：**同一已有观测和模型可以恢复静态道路，但静态收益、目标保真和整体重建仍有明确折中；reset瞬态不能解释全部分层失败。** 这支持保存分支级证据，并保留监督、初始化、预处理和时间语义的开放问题；没有足够证据认证完整论文复现或高保真反事实编辑。

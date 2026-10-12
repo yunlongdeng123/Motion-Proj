@@ -44,3 +44,4 @@
 | [V76-F03](entries/V76-F03.md) | 当前 HUGSIM / VAD-GS 资产的对象级质量不足以支撑高保真反事实编辑 |
 | [V77-F01](entries/V77-F01.md) | 冻结 Ω 的框内点集尚不能直接当作完整可编辑对象 |
 | [V77-F02](entries/V77-F02.md) | 未准入MOVE与放置错误污染资产评价；补景残影独立保留 |
+| [V82-F01](entries/V82-F01.md) | DrivingEditor 论文适配替换 opacity 损失时丢失掩码外透明度监督 |
