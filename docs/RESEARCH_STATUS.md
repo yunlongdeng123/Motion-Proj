@@ -1,13 +1,13 @@
 # 当前研究状态
 
-更新：2026-10-12（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`；继承v8.1 `c21547193d765e8f8123b27b73e31e033295a316`。当前范围仅是保存已有DrivingEditor调试证据并交付GitHub代码，task/run `WS-V82-DRIVINGEDITOR-DEBUG-HANDOFF-20261012/r1`；没有新增训练、推理或实验。用户已要求停止研究，`drivingeditor-50k`自动化PAUSED，其他场景队列保持暂停；不从历史ACTIVE、diagnosing、50k计划或旧prompt恢复任务。
+更新：2026-10-12（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。用户在新聊天明确要求继续 AutoDL DrivingEditor 复现，并将后续subagent默认改为 `gpt-6.1-sol / max`。当前 task/run `WS-V82-DRIVINGEDITOR-SV-20261012/r1`：独立S＋V联合候选已在远端完成CPU源码准备，7组实际候选检查通过，GPU恢复harness尚待接入，新增GPU训练0步。远端 `wm-vgpu-1011` SSH可达，但目前CPU模式，0.5核/2GiB、无GPU设备；用户自行切回GPU。本轮不启动旧场景队列、自动化或电源操作。
 
-银色车Waymo FRONT raw0–48共49帧的B1/B2/V/S均已从同一saved30k完成2000步至32000并保存、配对验证。B1/B2全图PSNR恢复36.43076/36.43047dB，静态道路仍差、动态层仍含背景。V/S车体外static PSNR为27.33124/31.76342dB，但composite降至35.90406/35.44799dB；V actor MSE全部49帧更高，S对B1/B2分别46/47帧更高，动态背景和边缘车形残片仍在。两项是诊断干预，不是作者公式认证、从零训练或完整50k成功；单次B2重复不是通用噪声界。**整个debug未完成，完整paper复现及编辑效果未通过。** [流程、组件图与交接](v82/DRIVINGEDITOR_DEBUG_HANDOFF.md) · [轻量结果](v82/DRIVINGEDITOR_DEBUG_HANDOFF.json)。
+下一步从同一saved30k恢复SV到32k，保留50k学习率horizon、seed0和已有B1的2,000步相机/time_shift/LR轨迹。S系数1，沿用历史V外域opacity项系数.05，加在真实未预mask动态alpha上，与原前景项组成双域监督；使用独立输出，保留原S/V冻结源码。CPU源码、数学和配置检查后，GPU恢复时另接独立SV harness并做首步真实backward核验；旧单变量guard/receipt不能直接复用。当前body-only mask缺shadow；双域监督不等于完整论文预处理。[组件图、固定协议与边界](v82/DRIVINGEDITOR_SV_RESUME.md)。
 
-已确认reset/保存顺序、稀疏深度重复像素顺序依赖、SGCM始终不可见重复clone及原目标分配歧义；它们不能合并为唯一彩噪根因。逆深度明确来自paper，harmonic融合/sky900只是未认证实现选择。固定pose时间控制确认static随时间变化；初始化有169行native目标点留在static的见证下界，但90.7967%身份未知，不能推全49帧污染率或彩噪因果。M-detector native core/adapter已在私有依赖下隔离编译成功、20个vendor文件未改，尚无native构造、扫描或标签；时间合同`author_equivalence=false`，scan-start与mid-pose等价性未验，shadow仍缺失。I/H/T是未执行设计。相关历史资产边界[V76-F03](research_failures/entries/V76-F03.md)保留，原r1 receipt的`failure_ledger_delta=none`和人工verdict=null不变。
+已有银色车Waymo FRONT raw0–48共49帧的B1/B2/V/S均从同一saved30k完成2,000步到32k。B1/B2全图PSNR为36.43076/36.43047dB，静态道路仍差、动态层仍含背景；V/S背景static PSNR为27.33124/31.76342dB，composite却降到35.90406/35.44799dB，并有车体代价。SV联合尚无真实GPU结果，不能将CPU检查判为修复完成。完整paper复现、从零/50k、多场景与编辑效果仍未通过。[既有交接](v82/DRIVINGEDITOR_DEBUG_HANDOFF.md)保留完整原证据及停止时快照；本次用户明确续接撤销DrivingEditor的研究暂停，不自动恢复其他任务。
 
-用户后续于2026-10-12要求登记[工程failure V82-F01](research_failures/entries/V82-F01.md)，并指定[后续默认完整动态mask不透明度监督](v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md)：mask内趋向1、外趋向0，允许完整MSE或分项，形式/权重显式记录并验证代价。当前只完成failure与长期规则维护，不部署新训练源码、改写历史S/V或恢复自动化；暂停状态继续。论文监督域表述不足不等于作者实际实现已缺约束。
+相关工程failure为[V82-F01](research_failures/entries/V82-F01.md)：替换opacity目标时丢失掩码外直接监督、长训前分层验收不足。[后续双域默认](v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md)仍有效。当前 `failure_ledger_refs=[V82-F01,V76-F03]`、`failure_ledger_delta=none`、`human_verdict=null`。reset/保存顺序、depth投影顺序、SGCM不可见clone、静态时间、初始化污染下界及M-detector/shadow预处理缺口仍按既有证据解释，不合并为唯一彩噪根因，不因新候选改写历史卡。
 
-代码按仓库第三方checkout外置规则交付：`compatibility/DrivingEditor-v82/`存兼容与V/S patch，`scripts/worldsim_v82/drivingeditor_debug/`存排错工具；轻量证据位于 `docs/autoresearch/worldsim_v82/drivingeditor_debug_20261012/r1/evidence/{debug,provenance}`。完整源码快照在 `drivingeditor_v82_remote_code_evidence.tar.gz`；大型数据、checkpoint、FP32、全量媒体及原深色HTML仍保留本地/远端，以资产目录为恢复入口，轻量Git不冒称完整备份。旧3090是原2024代码21帧30k，32.7914dB为reset前历史输出，不能与新49帧指标合并。没有新GPU队列或关机操作；旧“整个排错完成后关机”条件尚未满足。
+原数据、30k与32k检查点、FP32数组、媒体和冻结源仍在原本地/远端路径。四件30k恢复入口已stat存在，本次不在2GiB内存中加载约2.78GB模型文件；实际完整恢复待GPU阶段核验。当前可用数据盘约75GB，不需为本轮重新下载数据。轻量Git保存patch、工具、协议和已有证据索引，不冒称大型资产完整备份。
 
-v8.1 DGGT四帧编辑、Seen-to-Scene暂停与历史结果继续保留在[v8.1报告](v81/DGGT_WAYMO_INFERENCE_R1.md)、[P1周期记录](v81/P1_REVIEW_CYCLES_R1.md)及[实验索引](EXPERIMENTS.md)，不因v8.2整理恢复或重写其研究结论。后续研究、实验与电源操作等待新的用户指令；本次仅完成证据和代码交付。
+v8.1 DGGT与Seen-to-Scene等其他研究的暂停和历史结果继续保留，不因本次DrivingEditor续接恢复。当前只有SV一个候选，不开loss权重网格；是否进入从零训练和更多场景由固定49帧的分层、车体与整体质量共同决定。

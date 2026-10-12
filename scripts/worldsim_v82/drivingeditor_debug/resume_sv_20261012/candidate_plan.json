@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-SV-20261012",
+  "run_id": "r1",
+  "status": "source_preparation_only",
+  "candidate_root": "\\root\\autodl-tmp\\drivingeditor_repro\\campaign\\resume_sv_20261012",
+  "candidate_repository": "\\root\\autodl-tmp\\drivingeditor_repro\\campaign\\resume_sv_20261012\\frozen_repository",
+  "source_S": "\\root\\autodl-tmp\\drivingeditor_repro\\campaign\\vgpu_bugfix_20261012\\loss_audit\\next_diagnostics_cpu\\observed_static_rgb_S\\frozen_repository",
+  "historical_V_losses": "\\root\\autodl-tmp\\drivingeditor_repro\\campaign\\vgpu_bugfix_20261012\\loss_audit\\long_pair_30k_32000\\variant_frozen_repository\\utils\\paper_losses.py",
+  "algorithm_changes_from_S": [
+    "historical V outside-opacity term, coefficient 0.05"
+  ],
+  "supervision": {
+    "foreground": "original Eq13: -mean[Md*(1-clamp(alpha,1e-4,1-1e-4))*log(clamp(alpha,1e-4,1-1e-4))]",
+    "foreground_coefficient": 0.05,
+    "outside": "historical V: -mean[(1-Md)*a*log1p(-a/(1+1e-4))], a=clamp(raw_alpha,0,1)",
+    "outside_coefficient": 0.05,
+    "normalization": "full H*W for both domains",
+    "static_rgb": "unchanged S observed static RGB L1+SSIM on (1-Md), full image reduction",
+    "static_rgb_coefficient": 1.0,
+    "lambda_dssim": 0.2,
+    "alpha_input": "render_pkg dynamic_alpha, before premask",
+    "mask": "existing body-only binary dynamic appearance mask; shadow remains absent",
+    "author_formula_verified": false
+  },
+  "continuation": {
+    "parent_iteration": 30000,
+    "first_iteration": 30001,
+    "stop_iteration": 32000,
+    "steps": 2000,
+    "args_iterations": 50000,
+    "position_lr_max_steps": 50000,
+    "seed": 0,
+    "train_frames": 49,
+    "frame_range": "FRONT raw0-48",
+    "terminal_eval_frames": 49,
+    "checkpoint_files": [
+      "\\root\\autodl-tmp\\drivingeditor_repro\\runs\\scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline\\chkpnt30000.pth",
+      "\\root\\autodl-tmp\\drivingeditor_repro\\runs\\scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline\\dynamic_chkpnt30000.pth",
+      "\\root\\autodl-tmp\\drivingeditor_repro\\runs\\scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline\\env_light_chkpnt30000.pth",
+      "\\root\\autodl-tmp\\drivingeditor_repro\\runs\\scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline\\training_state30000.pth"
+    ],
+    "sampling_reference": "\\root\\autodl-tmp\\drivingeditor_repro\\campaign\\vgpu_bugfix_20261012\\continuation_diagnostic\\original30k_to32000",
+    "sampling_requirement": "reuse B1 all2000 camera/time_shift/LR trajectory; restore saved RNG/sampler without reseed",
+    "checkpoint_loading": "none during CPU source preparation"
+  },
+  "execution": {
+    "allow_training": false,
+    "gpu_harness_connected": false,
+    "new_runtime_binding": null,
+    "reuse_historical_binding_or_approval": false,
+    "gpu_launcher_written": false,
+    "training_started": false,
+    "cpu_only": true,
+    "CPU_threads": 1
+  },
+  "failure_ledger_refs": [
+    "V82-F01"
+  ],
+  "failure_ledger_delta": "none"
+}
