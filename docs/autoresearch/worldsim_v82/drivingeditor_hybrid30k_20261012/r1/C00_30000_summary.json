@@ -1,0 +1,81 @@
+{
+  "task_run": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
+  "arm": "C00",
+  "status": "complete",
+  "iteration": 30000,
+  "SGCM_enabled": false,
+  "NPS_enabled": false,
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_C00",
+  "checkpoint_contract": {
+    "event_status": "complete",
+    "components_exist_nonzero_and_bytes_match": true,
+    "component_bytes": {"static": 773083934, "dynamic": 806721950, "environment": 226494608, "training_state": 29144},
+    "frames": 49,
+    "unique_chronological_frame_ids_and_timestamps": true,
+    "four_channel_pngs": 196,
+    "width_height": [480, 320],
+    "raw_FP32_npz_headers_verified": 49,
+    "static_time_FP32_npz_headers_verified": 49,
+    "actual_model_Adam_RNG_restore_verified": false
+  },
+  "quality_49_frame_equal_means": {
+    "full_composite_psnr_db": 34.062387964584204,
+    "actor_composite_psnr_db": 32.7312303175931,
+    "non_sky_outside_actor_static_psnr_db": 34.015428609327465,
+    "non_sky_outside_actor_alpha_d_mean": 0.00017097519185900099,
+    "RGB_definition": "clamped [0,1] RGB, float64 error from saved float32 tensors",
+    "alpha_definition": "raw unmasked alpha",
+    "source_keys": "event.frames[].hybrid_metrics JSON -> regions.{full,actor,non_sky_outside_actor}",
+    "scope": "all-observed development reconstruction; not heldout/test or edited GT"
+  },
+  "static_time_control": {
+    "anchor_pose_frame": "0017010",
+    "anchor_timestamp_model": -0.28,
+    "timestamps": 49,
+    "clamped_static_RGB_MAE_from_anchor_49_time_mean": 0.02271234677458296,
+    "clamped_static_RGB_MAE_from_anchor_49_time_max": 0.039399392902851105,
+    "raw_static_alpha_MAE_from_anchor_49_time_mean": 0.0032108321415298445,
+    "raw_static_alpha_MAE_from_anchor_49_time_max": 0.005104334093630314,
+    "raw_static_velocity_norm_model_mean": 0.1627463698387146,
+    "raw_static_velocity_norm_model_max": 4.483396530151367,
+    "temporal_width_model_mean": 9.768499374389648,
+    "SHM_peak_to_peak_displacement_bound_model_max": 0.28542187809944153,
+    "scope": "fixed pose/rays, counterfactual model timestamps; no GT quality score or physical m/s claim"
+  },
+  "resource": {
+    "wall_seconds_including_initialization_checkpoints_evaluation": 4975.124022766016,
+    "wall_minutes": 82.91873371276694,
+    "torch_peak_allocated_GiB": 5.232999801635742,
+    "torch_peak_reserved_GiB": 6.287109375,
+    "nvidia_process_sample_peak_GiB": 6.533203125,
+    "nvidia_device_sample_peak_GiB": 6.58203125,
+    "sampling_errors": 0,
+    "sampled_peak_is_lower_bound": true,
+    "static_points": 986061,
+    "dynamic_points": 1028966,
+    "3090_fit_certified": false,
+    "3090_scope": "C00 full30k within preliminary24GiB minus2GiB budget; other arms and target3090 verification still required"
+  },
+  "viewer": {
+    "local_output": "outputs/drivingeditor_C00_30k/index.html",
+    "export": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/exports/C00_30000_view_20261013_0230",
+    "observed_frames": 49,
+    "static_time_frames": 49,
+    "png_images": 441,
+    "RGB_display": "fixed [0,1] clip and 8bit round; no per-image normalization or body premask",
+    "alpha_display": "fixed black0 white1; no per-image normalization",
+    "browser_checks": ["four_synchronized_RGB_cards_loaded", "frame48_navigation", "synchronized_actor_ROI", "fixed_pose_time48_and_MAE_values", "all441_local_asset_paths_exist", "component_diagram_and_scope_visible"],
+    "local_asset_links_verified": true,
+    "zip_bytes": 55301477,
+    "GPU_used_by_export": false,
+    "checkpoint_loaded_by_export": false
+  },
+  "visual_review_limits": [
+    "raw10 static branch has a dark residual under the vehicle footprint; separation and background filling are not fully certified",
+    "static branch changes under fixed pose and different timestamps; existing map regularizers do not imply hard static geometry",
+    "body-only mask omits shadows; current inspection is not full paper preprocessing or edit validation"
+  ],
+  "failure_ledger_refs": ["V82-F01", "V82-F02", "V76-F03"],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}
