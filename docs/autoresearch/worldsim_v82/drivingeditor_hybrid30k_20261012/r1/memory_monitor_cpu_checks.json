@@ -1,0 +1,28 @@
+{
+  "status": "PASS_CPU_MEMORY_MONITOR",
+  "date_singapore": "2026-10-13",
+  "local_command": "D:/anaconda3/python.exe -B scripts/worldsim_v82/drivingeditor_debug/hybrid30k_20261012/check_memory_monitor.py",
+  "remote_command": "/root/autodl-tmp/envs/drivingeditor/bin/python -B /root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools/check_memory_monitor.py",
+  "local_tests_passed": 6,
+  "local_platform_skips": 1,
+  "remote_tests_passed": 7,
+  "test_scope": [
+    "resets_nested_peaks_and_phase_wall",
+    "nvidia_pid_sum_and_missing_values",
+    "failed_context_flush_and_sampler_errors",
+    "sampler_thread_never_touches_torch_and_assessment",
+    "cross_phase_queries_are_overall_only",
+    "linux_spawn_unavailable_fails_without_launching",
+    "real_cpu_subprocess_uses_posix_spawn_and_never_fork"
+  ],
+  "GPU_used_by_tests": false,
+  "checkpoint_loaded": false,
+  "first_GPU_forward_backward_verified_by_these_tests": false,
+  "source_changed": "runner hooks and new monitor only; frozen training objective unchanged",
+  "remote_backup": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/before_memory_20261013_0045/run_matrix.py",
+  "initialization_attempt_archive": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/attempts/initialization_1",
+  "runtime_sampling_launch": "absolute nvidia-smi executable + close_fds=False; Linux posix_spawn prerequisite checks; no fork fallback",
+  "rtx3090_fit_certified": false,
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}

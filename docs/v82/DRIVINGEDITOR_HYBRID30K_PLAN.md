@@ -78,12 +78,35 @@ NPS在1/1000/10k/15k/20k/30k记录raw/weighted值，以及对同一原始特征�
 
 G10/C00、N01/C00及GN11的增量和交互分别解释，模块收益必须同时检查分层、车体/整体代价与资源；某项背景PSNR好不能判编辑成功。没有dense edited GT，MOVE/遮挡补景仍需后续真实编辑验证。任何恢复、采样配对、有限值、CUDA/GPU所有权或完整检查点失败立即停止当前臂和后续队列，保留日志，不自动改权重/分辨率或清旧资产。
 
-## 执行入口与CPU完成边界
+## 显存与3090迁移评估
+
+用户2026-10-13确认 `wm-vgpu-1011` 已切回GPU，并要求记录峰值评估24GB RTX3090。保持四臂全部科学配置，记录初始化、普通训练/增密、梯度诊断、检查点保存、49帧重建评价和固定pose时间控制的资源；评价嵌套阶段可同时计入父阶段，峰值不能相加。
+
+```mermaid
+flowchart LR
+  T[固定四臂训练] --> P[PyTorch allocated reserved峰值]
+  T --> N[nvidia-smi 每秒进程和设备采样]
+  P --> M[分阶段与每臂总体汇总]
+  N --> M
+  M --> C[24GB容量与余量判断]
+```
+
+`memory_samples.jsonl` 保存设备/worker进程的显存采样，`memory_phases.jsonl` 保存阶段窗口，`memory_summary.json` 持续汇总allocated/reserved峰值、采样峰值和各阶段耗时。所有字节量与GiB单位明确区分。PyTorch峰值统计在阶段边界reset之前累计保全，覆盖源码导入、模型/Adam初始化和评价；nvidia-smi采样能包含非PyTorch分配，但采样峰只是瞬时真实峰值的下界，不能和allocated互换。普通训练不额外逐步synchronize。
+
+Linux采样使用绝对nvidia-smi路径和明确的posix_spawn前提，不满足时记录错误而不回退fork；避免在CUDA worker后台反复fork。原0步初始化停滞尝试完整保留，新版CPU7项与真实GPU首步已通过；原生锁根因未确认，详见[V82-F02](../research_failures/entries/V82-F02.md)。进程/设备采样峰可能因驱动口径及先后查询而不同，两者分别保留。
+
+3090容量判断需要四臂覆盖增密增长、10k/20k/30k检查点、LPIPS和时间控制后的完整峰值；首步或早期低显存不能认证30k能跑完。优先使用进程/设备实测和reserved两种口径，至少预留2GiB作为初步筛选余量；未覆盖完整训练或采样缺失时保持待定。此余量只是保守筛选，仍需要目标3090实跑才能确认分配器/驱动环境差异。当前启动入口的30GiB设备门槛是既有运行保护，后续迁移前需依据完成证据显式调整，不能据此说方法需要30GiB。
+
+同时记录已有CUDA `iter_time` 和分阶段wall time，前者只覆盖前向/反向，不代表优化、增密、文件I/O和评价的全部耗时。显存足够与3090更快是两个需分别核验的问题；不自动改变分辨率、点数、目标或混合精度。
+
+## 执行入口与验证边界
 
 远端新目录：`/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/`；源码在`frozen_repository/`，四配置在`configs/`，工具在`tools/`。默认入口只检查，输出`PREPARED_WAITING_FOR_GPU`；只有GPU开好后调用`run_matrix.py --run`才串行启动。
 
 实际服务器CPU检查使用正式DrivingEditor环境Python3.9.25、Torch2.2.2+cu118、线程1、CUDA不可见。损失6组、SGCM18项与源码/四臂/采样/完整sidecar/原始指标/时间控制7组集成检查已通过。训练模块及实际rasterizer扩展已在CPU模式成功导入，VGG16和LPIPS缓存已确认可用；没有加载大型模型检查点，没有GPU forward、backward或训练。真实GPU光栅化梯度、显存和完整模型/Adam恢复仍待GPU阶段验证，不能把CPU PASS当质量验收。
 
+上述CPU边界为准备阶段记录。用户2026-10-13开GPU后，正式按相同配置启动，真实GPU前向/反向/优化、增密和1/1000梯度诊断已通过；新增显存监控远端CPU7项通过。启动观测与资源数字保存在[GPU快照](../autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/launch_gpu_snapshot_20261013.json)，不是最终质量或完整30k结果。完整GPUcheckpoint恢复、节点评价与四臂增量仍待运行后核验。`start_matrix.py --run`启动独立会话、`inspect_matrix.py`只读小型摘要。用户授权每小时心跳仅检查本四臂，状态不变保持安静；完成报告后暂停心跳，不恢复旧排错或其他研究。
+
 [矩阵与策略](../../scripts/worldsim_v82/drivingeditor_debug/hybrid30k_20261012/experiment_matrix.json) · [工具及实现](../../scripts/worldsim_v82/drivingeditor_debug/hybrid30k_20261012/) · [本轮CPU证据](../autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/)。当前状态只见[RESEARCH_STATUS](../RESEARCH_STATUS.md)。
 
-`failure_ledger_refs: [V82-F01,V76-F03]`；`failure_ledger_delta: none`；`human_verdict: null`。本轮只准备实验，不认证完整作者方法、不改写旧S/V结果、不复活其他自动化。
+`failure_ledger_refs: [V82-F01,V82-F02,V76-F03]`；`failure_ledger_delta: V82-F02`；`human_verdict: null`。只按固定矩阵执行，不认证完整作者方法、不改写旧S/V结果、不复活其他自动化。

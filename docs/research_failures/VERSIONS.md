@@ -33,5 +33,5 @@
 | V76 | 0 | 3 | [V76](ids/V76.md) | [1](versions/V76-1.md) |
 | V77 | 0 | 2 | [V77](ids/V77.md) | [1](versions/V77-1.md) |
 | V81 | 0 | 1 | 按阶段/关键词查阅 | [1](versions/V81-1.md) |
-| V82 | 0 | 1 | [V82](ids/V82.md) | [1](versions/V82-1.md) |
+| V82 | 0 | 2 | [V82](ids/V82.md) | [1](versions/V82-1.md) |
 | misc | 100 | 0 | 按阶段/关键词查阅 | [1](versions/misc-1.md) / [2](versions/misc-2.md) |
