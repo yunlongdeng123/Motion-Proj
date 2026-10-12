@@ -1,0 +1,39 @@
+{
+  "status": "OWNED_SCENE0008_GN11_DISPATCHED_RUNTIME_PENDING",
+  "created_utc": "2026-10-12T23:16:19.996798+00:00",
+  "pid": 96504,
+  "command": [
+    "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "-u",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup/run_scene_gn11.py",
+    "--run",
+    "--gate-file",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/GN11_gate_passed.json",
+    "--verify-paired-steps",
+    "--scene-spec",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_spec.json",
+    "--readiness-file",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_cpu_readiness.json",
+    "--reference-config",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_inherited_training_config_candidate.json",
+    "--source-repository",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/frozen_repository",
+    "--matrix-tools-dir",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools",
+    "--campaign-root",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013"
+  ],
+  "log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/scene0008_GN11_training.log",
+  "shared_gpu_slot_enforced_by_worker": true,
+  "iterations": 30000,
+  "checkpoint_nodes": [
+    10000,
+    20000,
+    30000
+  ],
+  "fromscratch": true,
+  "scene": "scene0008_023_071",
+  "arm": "GN11",
+  "human_verdict": null,
+  "actual_GPU_binding_verified": false
+}

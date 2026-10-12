@@ -1,0 +1,1235 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012",
+  "reviewed_utc": "2026-10-12T23:02:05.000453+00:00",
+  "review_kind": "agent_engineering_visual_inspection_of_actual_PNG_pixels",
+  "selection": "Post-endpoint adverse selection raw20-46, all27 frames inspected; most adverse actor-PSNR raw42 explicitly magnified",
+  "source_manifest": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\manifest.json",
+    "bytes": 3396671,
+    "mode": "real_four_arm_terminal",
+    "status": "PASS_READONLY_FOUR_ARM30K_CONTRACT",
+    "scene": "scene0017_000_048",
+    "checkpoint": 30000
+  },
+  "contact_index": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\contact_index.json",
+    "bytes": 110547,
+    "sheets": 27,
+    "all_contact_sheets_actually_seen": true
+  },
+  "detail_zoom_index": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_zoom_index.json",
+    "bytes": 5933,
+    "sheets": 3,
+    "all_detail_sheets_actually_seen": true
+  },
+  "images_actually_seen_total": 30,
+  "display_contract": {
+    "source_images": "Real exported PNG from savedFP32, 480x320, RGB clip[0,1] rounded8bit; no per-image intensity normalization",
+    "alpha": "Raw unmasked alpha_d, fixed0-1 grayscale; label shown as separate reference only",
+    "common_ROI": "C00 canonical body-context rectangle exactly shared withGN11, native pixel crop",
+    "detail_zoom": "Canonical label tightbbox+6px, identical crop inall branches, exact nearest pixel copies2x(raw24)/6x(raw42/46); no interpolation/color or contrast changes",
+    "no_premask": true,
+    "no_false_color": true,
+    "no_contrast_amplification": true
+  },
+  "engineering_assessment": {
+    "obvious_sustained_gross_whole_body_or_global_layer_regression": "not_established_by_the_inspected_original_scale_PNGs",
+    "局部现象": "轻度、可重复的车尾亮度/颜色和细节差异，以及后段薄边界支撑代价；不能把27帧指标负差直接称为27帧明显车体崩坏",
+    "外观": "raw20-28整车大部分可见时，GN11和C00主体姿态、颜色与轮廓接近。GN11在车尾高亮、后杠/尾灯细纹有局部平滑或偏亮，但很多原像素对照差别细小，不宜声称每帧都明显更差",
+    "分层": "两臂alpha_d均保持车体区域白色不透明支撑，未见持续大孔洞、动态车整体塌缩或道路纹理大面积回流到动态层。native动态图背景近黑，仍有少量低幅散点，未据8bit显示断言车外alpha严格为零",
+    "后段边界": "raw38-46车辆大部分已出画，比较对象成为图左侧窄车尾片段。raw46 GN11 alpha_d在后杠外缘出现更软的灰色小凸出，dynamic/combined上的边界也略扩散；这是实际局部边界差异，不是整片道路重新被动态层覆盖",
+    "raw42解释": "最差raw42仅249个body像素，tight原像素车尾约13x27；6x只是像素重复。GT/C00/GN11都有有限分辨率尾灯/后杠纹理，GN11差别落在细小光度/边缘，原标尺未显示与3.094dB读数相称的整车明显失真",
+    "spatial_frequency": "可见差异以局部低/中频银色亮度与高频尾灯/后杠细节、少量原像素级薄边缘为主；未进行频谱测量，不把描述当量化频带或边缘宽度结论",
+    "temporal_persistence": "27帧连续负差是真实数值现象，PNG显示局部差异延续；可见body支撑随出画从raw20的3306像素下降至raw42的249像素，严重程度和可见面积不是全段恒定",
+    "formal_gate_or_scientific_acceptance": null
+  },
+  "具体已看坏例": [
+    {
+      "raw_index": 24,
+      "frame_id": "image_0/0017024",
+      "observed": "完整车尾比较中，GN11后杠/尾灯附近略亮、细纹更平，主体整体仍接近C00/GT；代价轻度，不构成车体消失",
+      "detail_sheet": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_raw24_pixelcopies.png"
+    },
+    {
+      "raw_index": 42,
+      "frame_id": "image_0/0017042",
+      "body_pixels": 249,
+      "observed": "最坏分数来自小车尾碎片，差别为细光度/边界；没有看到动态alpha大孔洞或大幅形状崩坏",
+      "detail_sheet": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_raw42_pixelcopies.png"
+    },
+    {
+      "raw_index": 46,
+      "frame_id": "image_0/0017046",
+      "body_pixels": 355,
+      "observed": "GN11灰度alpha后杠外缘局部灰色小凸出/扩散，在原0-1标尺的6x像素重复图可见；背景并未出现大片动态道路纹理",
+      "detail_sheet": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_raw46_pixelcopies.png"
+    }
+  ],
+  "viewed_sheets": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\020_022_composite.png",
+      "bytes": 231451,
+      "dimensions": [
+        486,
+        460
+      ],
+      "raw_indices": [
+        20,
+        21,
+        22
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\020_022_dynamic.png",
+      "bytes": 152969,
+      "dimensions": [
+        486,
+        460
+      ],
+      "raw_indices": [
+        20,
+        21,
+        22
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\020_022_alpha_d.png",
+      "bytes": 124851,
+      "dimensions": [
+        644,
+        460
+      ],
+      "raw_indices": [
+        20,
+        21,
+        22
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\023_025_composite.png",
+      "bytes": 229073,
+      "dimensions": [
+        489,
+        460
+      ],
+      "raw_indices": [
+        23,
+        24,
+        25
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\023_025_dynamic.png",
+      "bytes": 150533,
+      "dimensions": [
+        489,
+        460
+      ],
+      "raw_indices": [
+        23,
+        24,
+        25
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\023_025_alpha_d.png",
+      "bytes": 123741,
+      "dimensions": [
+        648,
+        460
+      ],
+      "raw_indices": [
+        23,
+        24,
+        25
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\026_028_composite.png",
+      "bytes": 223219,
+      "dimensions": [
+        492,
+        460
+      ],
+      "raw_indices": [
+        26,
+        27,
+        28
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\026_028_dynamic.png",
+      "bytes": 144978,
+      "dimensions": [
+        492,
+        460
+      ],
+      "raw_indices": [
+        26,
+        27,
+        28
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\026_028_alpha_d.png",
+      "bytes": 117928,
+      "dimensions": [
+        652,
+        460
+      ],
+      "raw_indices": [
+        26,
+        27,
+        28
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\029_031_composite.png",
+      "bytes": 218937,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        29,
+        30,
+        31
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\029_031_dynamic.png",
+      "bytes": 132347,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        29,
+        30,
+        31
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\029_031_alpha_d.png",
+      "bytes": 111914,
+      "dimensions": [
+        620,
+        460
+      ],
+      "raw_indices": [
+        29,
+        30,
+        31
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\032_034_composite.png",
+      "bytes": 217225,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        32,
+        33,
+        34
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\032_034_dynamic.png",
+      "bytes": 119818,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        32,
+        33,
+        34
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\032_034_alpha_d.png",
+      "bytes": 109697,
+      "dimensions": [
+        620,
+        460
+      ],
+      "raw_indices": [
+        32,
+        33,
+        34
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\035_037_composite.png",
+      "bytes": 212898,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        35,
+        36,
+        37
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\035_037_dynamic.png",
+      "bytes": 107918,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        35,
+        36,
+        37
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\035_037_alpha_d.png",
+      "bytes": 105664,
+      "dimensions": [
+        620,
+        460
+      ],
+      "raw_indices": [
+        35,
+        36,
+        37
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\038_040_composite.png",
+      "bytes": 210197,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        38,
+        39,
+        40
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\038_040_dynamic.png",
+      "bytes": 105169,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        38,
+        39,
+        40
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\038_040_alpha_d.png",
+      "bytes": 104719,
+      "dimensions": [
+        620,
+        460
+      ],
+      "raw_indices": [
+        38,
+        39,
+        40
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\041_043_composite.png",
+      "bytes": 209614,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        41,
+        42,
+        43
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\041_043_dynamic.png",
+      "bytes": 96586,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        41,
+        42,
+        43
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\041_043_alpha_d.png",
+      "bytes": 99979,
+      "dimensions": [
+        620,
+        460
+      ],
+      "raw_indices": [
+        41,
+        42,
+        43
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\044_046_composite.png",
+      "bytes": 209414,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        44,
+        45,
+        46
+      ],
+      "branch": "composite",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\044_046_dynamic.png",
+      "bytes": 95514,
+      "dimensions": [
+        468,
+        460
+      ],
+      "raw_indices": [
+        44,
+        45,
+        46
+      ],
+      "branch": "dynamic",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\044_046_alpha_d.png",
+      "bytes": 99601,
+      "dimensions": [
+        620,
+        460
+      ],
+      "raw_indices": [
+        44,
+        45,
+        46
+      ],
+      "branch": "alpha_d",
+      "actually_seen": true
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_raw24_pixelcopies.png",
+      "bytes": 110655,
+      "dimensions": [
+        762,
+        504
+      ],
+      "raw_indices": [
+        24
+      ],
+      "branch": "GT/composite/dynamic/alpha_d",
+      "actually_seen": true,
+      "pixel_repeat_factor": 2
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_raw42_pixelcopies.png",
+      "bytes": 29277,
+      "dimensions": [
+        390,
+        882
+      ],
+      "raw_indices": [
+        42
+      ],
+      "branch": "GT/composite/dynamic/alpha_d",
+      "actually_seen": true,
+      "pixel_repeat_factor": 6
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_contacts\\detail_raw46_pixelcopies.png",
+      "bytes": 34888,
+      "dimensions": [
+        444,
+        954
+      ],
+      "raw_indices": [
+        46
+      ],
+      "branch": "GT/composite/dynamic/alpha_d",
+      "actually_seen": true,
+      "pixel_repeat_factor": 6
+    }
+  ],
+  "reviewed_frames": [
+    {
+      "raw_index": 20,
+      "frame_id": "image_0/0017020",
+      "body_pixel_count": 3306,
+      "original_common_bbox_xyxy": [
+        48,
+        140,
+        194,
+        234
+      ],
+      "native_common_roi_dimensions": [
+        146,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.4164357457787986
+    },
+    {
+      "raw_index": 21,
+      "frame_id": "image_0/0017021",
+      "body_pixel_count": 3288,
+      "original_common_bbox_xyxy": [
+        38,
+        139,
+        184,
+        233
+      ],
+      "native_common_roi_dimensions": [
+        146,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.28334113780883996
+    },
+    {
+      "raw_index": 22,
+      "frame_id": "image_0/0017022",
+      "body_pixel_count": 3279,
+      "original_common_bbox_xyxy": [
+        28,
+        138,
+        174,
+        232
+      ],
+      "native_common_roi_dimensions": [
+        146,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.0443612187451592
+    },
+    {
+      "raw_index": 23,
+      "frame_id": "image_0/0017023",
+      "body_pixel_count": 3229,
+      "original_common_bbox_xyxy": [
+        18,
+        138,
+        164,
+        232
+      ],
+      "native_common_roi_dimensions": [
+        146,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.2665925769294333
+    },
+    {
+      "raw_index": 24,
+      "frame_id": "image_0/0017024",
+      "body_pixel_count": 3246,
+      "original_common_bbox_xyxy": [
+        6,
+        138,
+        153,
+        232
+      ],
+      "native_common_roi_dimensions": [
+        147,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.1443173548706795
+    },
+    {
+      "raw_index": 25,
+      "frame_id": "image_0/0017025",
+      "body_pixel_count": 3236,
+      "original_common_bbox_xyxy": [
+        0,
+        137,
+        147,
+        231
+      ],
+      "native_common_roi_dimensions": [
+        147,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.925004616269149
+    },
+    {
+      "raw_index": 26,
+      "frame_id": "image_0/0017026",
+      "body_pixel_count": 3251,
+      "original_common_bbox_xyxy": [
+        0,
+        137,
+        148,
+        231
+      ],
+      "native_common_roi_dimensions": [
+        148,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.8543140176086936
+    },
+    {
+      "raw_index": 27,
+      "frame_id": "image_0/0017027",
+      "body_pixel_count": 3152,
+      "original_common_bbox_xyxy": [
+        0,
+        136,
+        140,
+        230
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.8787969568836118
+    },
+    {
+      "raw_index": 28,
+      "frame_id": "image_0/0017028",
+      "body_pixel_count": 2892,
+      "original_common_bbox_xyxy": [
+        0,
+        136,
+        140,
+        230
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.1171108963836787
+    },
+    {
+      "raw_index": 29,
+      "frame_id": "image_0/0017029",
+      "body_pixel_count": 2595,
+      "original_common_bbox_xyxy": [
+        0,
+        136,
+        140,
+        230
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.4079671516081547
+    },
+    {
+      "raw_index": 30,
+      "frame_id": "image_0/0017030",
+      "body_pixel_count": 2202,
+      "original_common_bbox_xyxy": [
+        0,
+        135,
+        140,
+        229
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.1348114920920693
+    },
+    {
+      "raw_index": 31,
+      "frame_id": "image_0/0017031",
+      "body_pixel_count": 1836,
+      "original_common_bbox_xyxy": [
+        0,
+        134,
+        140,
+        228
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.374227168390064
+    },
+    {
+      "raw_index": 32,
+      "frame_id": "image_0/0017032",
+      "body_pixel_count": 1462,
+      "original_common_bbox_xyxy": [
+        0,
+        132,
+        140,
+        226
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.4589319666346938
+    },
+    {
+      "raw_index": 33,
+      "frame_id": "image_0/0017033",
+      "body_pixel_count": 1154,
+      "original_common_bbox_xyxy": [
+        0,
+        133,
+        140,
+        227
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.807787938829648
+    },
+    {
+      "raw_index": 34,
+      "frame_id": "image_0/0017034",
+      "body_pixel_count": 890,
+      "original_common_bbox_xyxy": [
+        0,
+        134,
+        140,
+        228
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.461919327936684
+    },
+    {
+      "raw_index": 35,
+      "frame_id": "image_0/0017035",
+      "body_pixel_count": 664,
+      "original_common_bbox_xyxy": [
+        0,
+        136,
+        140,
+        230
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.0079761598046133
+    },
+    {
+      "raw_index": 36,
+      "frame_id": "image_0/0017036",
+      "body_pixel_count": 486,
+      "original_common_bbox_xyxy": [
+        0,
+        137,
+        140,
+        231
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -2.5599086738651096
+    },
+    {
+      "raw_index": 37,
+      "frame_id": "image_0/0017037",
+      "body_pixel_count": 360,
+      "original_common_bbox_xyxy": [
+        0,
+        138,
+        140,
+        232
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.4413604028418519
+    },
+    {
+      "raw_index": 38,
+      "frame_id": "image_0/0017038",
+      "body_pixel_count": 288,
+      "original_common_bbox_xyxy": [
+        0,
+        138,
+        140,
+        232
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.9428940359598812
+    },
+    {
+      "raw_index": 39,
+      "frame_id": "image_0/0017039",
+      "body_pixel_count": 252,
+      "original_common_bbox_xyxy": [
+        0,
+        138,
+        140,
+        232
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -2.0161870493389173
+    },
+    {
+      "raw_index": 40,
+      "frame_id": "image_0/0017040",
+      "body_pixel_count": 231,
+      "original_common_bbox_xyxy": [
+        0,
+        139,
+        140,
+        233
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.668963745336029
+    },
+    {
+      "raw_index": 41,
+      "frame_id": "image_0/0017041",
+      "body_pixel_count": 226,
+      "original_common_bbox_xyxy": [
+        0,
+        142,
+        140,
+        236
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -0.49384481297951055
+    },
+    {
+      "raw_index": 42,
+      "frame_id": "image_0/0017042",
+      "body_pixel_count": 249,
+      "original_common_bbox_xyxy": [
+        0,
+        145,
+        140,
+        239
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -3.0939781911264603
+    },
+    {
+      "raw_index": 43,
+      "frame_id": "image_0/0017043",
+      "body_pixel_count": 262,
+      "original_common_bbox_xyxy": [
+        0,
+        148,
+        140,
+        242
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -2.28141766830894
+    },
+    {
+      "raw_index": 44,
+      "frame_id": "image_0/0017044",
+      "body_pixel_count": 286,
+      "original_common_bbox_xyxy": [
+        0,
+        153,
+        140,
+        247
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -2.992795503717236
+    },
+    {
+      "raw_index": 45,
+      "frame_id": "image_0/0017045",
+      "body_pixel_count": 307,
+      "original_common_bbox_xyxy": [
+        0,
+        153,
+        140,
+        247
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.7149505775549123
+    },
+    {
+      "raw_index": 46,
+      "frame_id": "image_0/0017046",
+      "body_pixel_count": 355,
+      "original_common_bbox_xyxy": [
+        0,
+        147,
+        140,
+        241
+      ],
+      "native_common_roi_dimensions": [
+        140,
+        94
+      ],
+      "actually_seen_branches": [
+        "GT",
+        "C00/composite",
+        "GN11/composite",
+        "C00/dynamic",
+        "GN11/dynamic",
+        "C00/alpha_d",
+        "GN11/alpha_d",
+        "canonical_body_label"
+      ],
+      "actor_psnr_signed_delta_GN11_minus_C00": -1.494404712697829
+    }
+  ],
+  "limitations": [
+    "只审查不利selected27 observed帧；root另审全49，固定pose49times由独立agent审查",
+    "未使用editedGT、未验证移除正确性或独立test质量",
+    "8bit原0-1显示不能分辨极低alpha，不把黑色PNG当精确零支撑",
+    "原像素分辨率限制尾灯/轮辐/边缘评价；细节图仅复制像素、不恢复细节",
+    "agent工程现象判读不代填用户human verdict，也不以均值或3dB自动判pass/fail"
+  ],
+  "GPU_used": false,
+  "remote_written": false,
+  "training_or_rendering_started": false,
+  "human_verdict": null,
+  "scientific_verdict": null
+}

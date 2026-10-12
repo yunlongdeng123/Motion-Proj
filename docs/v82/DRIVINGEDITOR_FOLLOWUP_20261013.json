@@ -41,12 +41,23 @@
       "unresolved_quality": "均值满足但坏帧/静态性证据尚无法合理判读；先检查已有全帧资产与单模块证据，不把未知写成通过，也不因此自动新增训练。"
     },
     "result": {
-      "status": null,
-      "numeric_pass": null,
-      "visual_review_status": null,
-      "agent_engineering_verdict": null,
+      "status": "expected",
+      "numeric_pass": true,
+      "visual_review_status": "complete_all49_and_adverse_actor_and_static_time",
+      "agent_engineering_verdict": "expected_with_mild_local_actor_costs",
       "human_verdict": null,
-      "failure_ledger_delta": "none"
+      "failure_ledger_delta": "none",
+      "receipt_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/GN11_gate_passed.json",
+      "numeric_delta_GN11_minus_C00": {
+        "full_composite_psnr_db": 0.32540792103834804,
+        "actor_composite_psnr_db": -0.1286855892556389,
+        "static_bg_psnr_db": 0.3174780862974842,
+        "outside_alpha_d_mean": 2.89364292331478e-06,
+        "outside_dynamic_rgb_support": -0.00031043641548265943,
+        "outside_static_composite_difference": 6.748642741587957e-06
+      },
+      "severe_numeric_regression": false,
+      "severe_visual_or_static_regression": false
     }
   },
   "pairing_contract": {
@@ -431,7 +442,7 @@
         ],
         "anchor_pose_frame": "0008033",
         "readiness_status": "PASS_CPU_PREPARATION_TRAINING_GATED",
-        "training_allowed_now": false,
+        "training_allowed_now": true,
         "actor_DEVA_ids": [
           77,
           82
@@ -440,11 +451,9 @@
         "author_video": "https://github.com/user-attachments/assets/1e5fc249-94e9-456f-9db5-e32185455a42",
         "readiness_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_cpu_readiness.json",
         "cpu_gpu_used": false,
-        "training_ready": false,
+        "training_ready": true,
         "training_gates_pending": [
-          "Final silver-scene GN11 gate",
-          "Actual GPU Scene/SGCM/lineage binding",
-          "GPU ownership and runtime complete save contract"
+          "Complete10k/20k/30k checkpoint/evaluation contracts; actual restoration not yet tested"
         ],
         "readiness_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_cpu_readiness.json",
         "training_source_prepared": true,
@@ -463,6 +472,25 @@
           "fake_train_module_only": true,
           "actual_GPU_model_and_guard_binding_verified": false,
           "restoration_verified": false
+        },
+        "GPU_runtime_binding": {
+          "scene_status": "PASS_ACTUAL_GPU_SCENE_BINDING",
+          "SGCM_status": "PASS_ACTUAL_GPU_SGCM_LINEAGE_BINDING",
+          "views": 49,
+          "static_initial_points": 594981,
+          "guard_enabled": true,
+          "anchor_pose_frame": "0008033",
+          "restoration_verified": false,
+          "source_receipts": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_launch_20261013"
+        },
+        "execution": {
+          "status": "training",
+          "iteration_at_startup_confirmation": 5100,
+          "pid": 96504,
+          "log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/scene0008_GN11_training.log",
+          "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11",
+          "source_status_snapshot": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_launch_20261013/status.json",
+          "checkpoints_saved_at_confirmation": []
         }
       }
     ],
@@ -584,12 +612,12 @@
   "schema_version": 1,
   "task_id": "WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013",
   "run": "r1",
-  "updated_utc": "2026-10-12T20:37:54.586188+00:00",
+  "updated_utc": "2026-10-12T23:28:23.175009+00:00",
   "current_matrix_task": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
   "current_matrix_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
   "followup_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
   "ssh_alias": "wm-vgpu-1011",
-  "state": "cpu_preparation_matrix_gate_pending",
+  "state": "four_arms_complete_GN11_expected_scene0008_GN11_training",
   "gpu_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
   "user_authorization": {
     "date_local": "2026-10-13",
@@ -916,15 +944,13 @@
     "remote_comparison_protocol": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/DRIVINGEDITOR_FOLLOWUP_20261013.json",
     "remote_readonly_inspector": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/inspect_followup.py",
     "comparison_check_only_result": {
-      "status": "BLOCKED_NO_FINAL_REPORT",
-      "reason": "N01 not complete30k",
-      "exit_code": 1,
+      "status": "READY_FOUR_ARM_TERMINAL_CPU_EXPORT",
       "GPU_used": false,
       "checkpoint_loaded": false
     },
-    "comparison_actual_browser_QA": "pending real four-arm terminal export",
+    "comparison_actual_browser_QA": "PASS: real49 imagepair/GT/ROI, endpoint, play/pause, static49 alpha and G10/N01 selection; zero console errors.",
     "default_entry_imports_torch_or_spawns": false,
-    "actual_GPU_training_started": false,
+    "actual_GPU_training_started": true,
     "remote_red_raw_preparation": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/prepare_red_scene_cpu.py",
     "remote_red_GPU_next_steps": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/GPU_NEXT_STEPS.md",
     "confirmed_threshold_CPU_checks": {
@@ -939,21 +965,35 @@
       "actual_GPU_model_and_guard_binding_verified": false,
       "restoration_verified": false
     },
-    "inspector_worker_identity": "status.pid matched against run_scene_gn11.py; final shutdown additionally checks allGPU/CPU/controller jobs"
+    "inspector_worker_identity": "status.pid matched against run_scene_gn11.py; final shutdown additionally checks allGPU/CPU/controller jobs",
+    "comparison_previous_preflight_result": {
+      "status": "BLOCKED_NO_FINAL_REPORT",
+      "reason": "N01 not complete30k",
+      "exit_code": 1,
+      "GPU_used": false,
+      "checkpoint_loaded": false
+    },
+    "comparison_export_result": {
+      "status": "EXPORTED_REAL_FOUR_ARM_TERMINAL_CPU_ONLY",
+      "contract": "PASS_READONLY_FOUR_ARM30K_CONTRACT",
+      "PNG_count": 1764,
+      "frame_count_each": 49,
+      "static_times_each": 49,
+      "all30000_paired_steps_verified": true,
+      "all49_saved_FP32_inputs_and_six_metrics_recomputed": true,
+      "checkpoint_loaded": false,
+      "restoration_verified": false,
+      "remote_index": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/four_arm_30k/index.html",
+      "local_index": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\index.html",
+      "local_summary": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\summary.html"
+    },
+    "actual_GPU_model_and_guard_binding_verified_scene0008": true
   },
   "last_hourly_matrix_observation": {
-    "observed_utc": "2026-10-12T19:55:46.767569+00:00",
+    "observed_utc": "2026-10-12T22:48:03.928593+00:00",
     "matrix": {
-      "status": "running",
-      "current_arm": "N01",
-      "controller_pid": 2704,
-      "completed_arms": [
-        "C00",
-        "G10"
-      ],
-      "queued_arms": [
-        "GN11"
-      ]
+      "status": "all_four_arms_complete",
+      "iterations_total": 120000
     },
     "arms": {
       "C00": {
@@ -977,15 +1017,23 @@
         "error": null
       },
       "N01": {
-        "status": "training",
-        "iteration": 8200,
-        "complete_checkpoint_nodes": [],
+        "status": "complete",
+        "iteration": 30000,
+        "complete_checkpoint_nodes": [
+          10000,
+          20000,
+          30000
+        ],
         "error": null
       },
       "GN11": {
-        "status": "not_started",
-        "iteration": 0,
-        "complete_checkpoint_nodes": [],
+        "status": "complete",
+        "iteration": 30000,
+        "complete_checkpoint_nodes": [
+          10000,
+          20000,
+          30000
+        ],
         "error": null
       }
     }

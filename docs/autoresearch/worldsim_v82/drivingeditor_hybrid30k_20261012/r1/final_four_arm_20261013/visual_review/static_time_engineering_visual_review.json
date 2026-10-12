@@ -1,0 +1,2411 @@
+{
+  "review_id": "WS-V82-DRIVINGEDITOR-FOURARM30K-STATIC-TIME-ENGINEERING-20261013",
+  "created_utc": "2026-10-12T22:56:55.310036+00:00",
+  "status": "COMPLETE_ENGINEERING_VISUAL_REVIEW_ALL49_REAL_FIXED_POSE_TIMES",
+  "reviewer_type": "Codex AI engineering visual inspection; not the human reviewer",
+  "manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\manifest.json",
+  "contact_receipt": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\contact_receipt.json",
+  "real_manifest_mode": "real_four_arm_terminal",
+  "real_manifest_status": "PASS_READONLY_FOUR_ARM30K_CONTRACT",
+  "arms_reviewed": [
+    "C00",
+    "GN11"
+  ],
+  "checkpoint": 30000,
+  "scene": "scene0017_000_048",
+  "anchor_pose_frame": "0017010",
+  "anchor_timestamp_model": -0.28,
+  "coverage": {
+    "timestamps_per_arm": 49,
+    "all_raw_indices_reviewed": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    "RGB_images_reviewed": 98,
+    "alpha_images_reviewed": 98,
+    "contact_pages_reviewed": 13,
+    "excluded_bad_frames": [],
+    "review_completed": true
+  },
+  "display_contract": {
+    "source_png_dimensions": [
+      480,
+      320
+    ],
+    "contact_paste_dimensions": [
+      480,
+      320
+    ],
+    "RGB": "真实保存FP32 clip[0,1]转8bit，直接使用导出PNG；无逐图归一化或预mask",
+    "alpha": "真实raw alpha固定[0,1]灰度；L转RGB只复制灰度通道",
+    "review_image_transform": "仅原像素拼接和外围标签，无滤镜、resize、背景修补、坏帧删除",
+    "original_assets_modified": false,
+    "source_report_modified": false,
+    "GPU_used": false,
+    "checkpoint_loaded": false
+  },
+  "engineering_observations": [
+    "C00和GN11都存在可直接看见的固定pose路面残影时变：早段残影位于中景中央，随后连续向左移动并逐渐退出左边界。",
+    "C00残影较常呈现亮边、暗底的薄片样形态；GN11多为更软的暗斑。这是局部形态差异，不能等同于完整补景成功。",
+    "后半段两臂的近景路面都变得更粗糙斑驳，横道白条上方保留暗纹和少量色彩变化；相对锚点的纹理变化肉眼可见。",
+    "两臂静态alpha路面主体保持近白高alpha，主要可见变化在天空/枝叶和杆体边界；未观察到GN11相对C00新增的全局崩溃或大块路面alpha塌陷。",
+    "C00基线本身已有时变问题，因此没有把非零MAE单独作为GN11新增失败或准入否决。GN11平均RGB/alpha差异略低仍不能自动视觉pass。"
+  ],
+  "quantitative_context": {
+    "C00": {
+      "static_rgb_MAE_from_anchor": {
+        "equal_timestamp_mean": 0.02271234677458296,
+        "max": 0.039399392902851105,
+        "max_raw_index": 44,
+        "max_id": "0017044",
+        "source": "真实manifest中保存FP32的差异指标；没有用PNG重新计算"
+      },
+      "static_rgb_max_abs_from_anchor": {
+        "equal_timestamp_mean": 0.7334936693006632,
+        "max": 0.9410778880119324,
+        "max_raw_index": 27,
+        "max_id": "0017027",
+        "source": "真实manifest中保存FP32的差异指标；没有用PNG重新计算"
+      },
+      "static_alpha_MAE_from_anchor": {
+        "equal_timestamp_mean": 0.0032108321415298445,
+        "max": 0.005104334093630314,
+        "max_raw_index": 45,
+        "max_id": "0017045",
+        "source": "真实manifest中保存FP32的差异指标；没有用PNG重新计算"
+      }
+    },
+    "GN11": {
+      "static_rgb_MAE_from_anchor": {
+        "equal_timestamp_mean": 0.02153641463504458,
+        "max": 0.037378933280706406,
+        "max_raw_index": 44,
+        "max_id": "0017044",
+        "source": "真实manifest中保存FP32的差异指标；没有用PNG重新计算"
+      },
+      "static_rgb_max_abs_from_anchor": {
+        "equal_timestamp_mean": 0.7286960683306869,
+        "max": 0.9454684853553772,
+        "max_raw_index": 48,
+        "max_id": "0017048",
+        "source": "真实manifest中保存FP32的差异指标；没有用PNG重新计算"
+      },
+      "static_alpha_MAE_from_anchor": {
+        "equal_timestamp_mean": 0.0027451736089887514,
+        "max": 0.004735223483294249,
+        "max_raw_index": 46,
+        "max_id": "0017046",
+        "source": "真实manifest中保存FP32的差异指标；没有用PNG重新计算"
+      }
+    },
+    "GN11_minus_C00_means": {
+      "static_rgb_MAE_from_anchor": -0.001175932139538382,
+      "static_rgb_max_abs_from_anchor": -0.004797600969976279,
+      "static_alpha_MAE_from_anchor": -0.0004656585325410931
+    }
+  },
+  "engineering_assessment": {
+    "fixed_pose_time_invariance_supported": false,
+    "complete_static_background_inpainting_supported": false,
+    "new_global_image_or_road_alpha_collapse_in_GN11_vs_C00_observed": false,
+    "GN11_gate_decision": null,
+    "human_verdict": null
+  },
+  "scope_limits": [
+    "此组固定pose替换49个model time，无对应GT，不计算或认证重建PSNR。",
+    "图像来自原始FP32的8bit固定标尺可视化，微小数值差异不能仅凭PNG确认。",
+    "本复核仅覆盖C00/GN11静态时间控制，不替代全49observed分层/车体检查。",
+    "时间和位移是模型单位，不解释为物理秒或速度。",
+    "没有载入checkpoint、GPU重渲染、执行训练、评价任务或修改真实报告。"
+  ],
+  "page_observations": [
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_00_03.png",
+      "raw_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00路面中央偏右有带亮边、深色底部的薄片样残影，随时间开始向左改变位置和形状。",
+      "GN11_static_RGB_observation": "GN11同一区域是较软且较宽的暗斑，未消除随时间变化的残影。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_04_07.png",
+      "raw_indices": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00薄片样残影向路面中央偏左移动，亮边与暗底形状继续变化。",
+      "GN11_static_RGB_observation": "GN11暗斑同样向左移动；比C00少明显亮边，但依然可见。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_08_11.png",
+      "raw_indices": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00锚点附近仍有较平的薄片样道路残影；raw10的锚点MAE为零仅是比较定义。",
+      "GN11_static_RGB_observation": "GN11锚点附近也有暗斑残影；raw10的零MAE不代表静态背景正确。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_12_15.png",
+      "raw_indices": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00残影移向左侧中景路面，局部呈带亮边的狭长片状。",
+      "GN11_static_RGB_observation": "GN11暗斑移向左侧中景路面，仍随时间改变轮廓。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_16_19.png",
+      "raw_indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00残影进一步向左靠近远侧横道，背景道路的明暗与纹理已有变化。",
+      "GN11_static_RGB_observation": "GN11残影也向左靠近远侧横道，形态较软；并非相机固定后图像不变。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_20_23.png",
+      "raw_indices": [
+        20,
+        21,
+        22,
+        23
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00左侧远端横道前出现狭长薄片残影；近景道路与横道白条上方的暗纹增强。",
+      "GN11_static_RGB_observation": "GN11较弱暗斑继续向左移动；近景道路与横道白条附近也有暗纹变化。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_24_27.png",
+      "raw_indices": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00左侧横道前的薄片残影仍有较硬边缘；近景道路开始更明显呈斑驳纹理。",
+      "GN11_static_RGB_observation": "GN11左侧残影更柔和但仍可见；近景路面斑驳及白条上缘暗纹继续变化。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_28_31.png",
+      "raw_indices": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00薄片逐渐靠近左边界；道路由锚点附近的较平滑表面变得更粗糙、斑驳。",
+      "GN11_static_RGB_observation": "GN11左侧残影靠近边界且更弱；同时存在明显的近景道路纹理变化。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_32_35.png",
+      "raw_indices": [
+        32,
+        33,
+        34,
+        35
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00左边缘的薄片残留减弱，近景道路大面积斑驳与横道白条上的局部暗色块持续。",
+      "GN11_static_RGB_observation": "GN11中部悬浮片状轮廓较不明显，但道路纹理与白条附近暗色块仍明显偏离锚点。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_36_39.png",
+      "raw_indices": [
+        36,
+        37,
+        38,
+        39
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00中央薄片不再突出；前景道路呈较明显粗糙斑驳，横道白条局部暗色与色彩异常持续。",
+      "GN11_static_RGB_observation": "GN11同样出现前景道路粗糙斑驳与局部暗纹，未发生全图崩溃，但背景不是时间不变。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_40_43.png",
+      "raw_indices": [
+        40,
+        41,
+        42,
+        43
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00前景道路的斑驳和破碎纹理仍明显，右上树枝/路牌附近可见少量彩色边缘变化。",
+      "GN11_static_RGB_observation": "GN11仍有明显道路斑驳；上方枝叶边缘相对较少硬彩边，不能据此判完整静态性通过。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_44_47.png",
+      "raw_indices": [
+        44,
+        45,
+        46,
+        47
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00晚段道路依然粗糙斑驳，横道白条上的暗色及局部色彩变化持续。",
+      "GN11_static_RGB_observation": "GN11晚段也保留道路粗糙斑驳和白条附近异常，整体没有额外大块alpha塌陷。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_48_48.png",
+      "raw_indices": [
+        48
+      ],
+      "all_four_columns_visually_reviewed": true,
+      "C00_static_RGB_observation": "C00终点路面纹理仍显著不同于锚点，早段中央薄片已不突出。",
+      "GN11_static_RGB_observation": "GN11终点仍有路面纹理变化；图像完整可见，但没有证据支持完成补景或时间静态验收。",
+      "static_alpha_observation": "两臂路面主体为近白高alpha，主要可见灰度差异位于天空开口、树梢及右上杆体边界；本页没有明显大块路面alpha塌陷。",
+      "human_verdict": null
+    }
+  ],
+  "per_timestamp": [
+    {
+      "raw_index": 0,
+      "id": "0017000",
+      "timestamp_model": -0.48,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 0,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_00_03.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\000_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\000_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\000_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\000_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017000",
+          "timestamp_model": -0.48,
+          "static_rgb_MAE_from_anchor": 0.008132722228765488,
+          "static_rgb_max_abs_from_anchor": 0.42633336782455444,
+          "static_alpha_MAE_from_anchor": 0.0008527921745553613
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017000",
+          "timestamp_model": -0.48,
+          "static_rgb_MAE_from_anchor": 0.009144492447376251,
+          "static_rgb_max_abs_from_anchor": 0.45066386461257935,
+          "static_alpha_MAE_from_anchor": 0.0006414782837964594
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 1,
+      "id": "0017001",
+      "timestamp_model": -0.45999999999999996,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 0,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_00_03.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\001_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\001_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\001_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\001_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017001",
+          "timestamp_model": -0.45999999999999996,
+          "static_rgb_MAE_from_anchor": 0.009576589800417423,
+          "static_rgb_max_abs_from_anchor": 0.5154829621315002,
+          "static_alpha_MAE_from_anchor": 0.001306672114878893
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017001",
+          "timestamp_model": -0.45999999999999996,
+          "static_rgb_MAE_from_anchor": 0.010562882758677006,
+          "static_rgb_max_abs_from_anchor": 0.4865221381187439,
+          "static_alpha_MAE_from_anchor": 0.0012118456652387977
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 2,
+      "id": "0017002",
+      "timestamp_model": -0.44,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 0,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_00_03.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\002_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\002_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\002_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\002_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017002",
+          "timestamp_model": -0.44,
+          "static_rgb_MAE_from_anchor": 0.011690218932926655,
+          "static_rgb_max_abs_from_anchor": 0.5293365716934204,
+          "static_alpha_MAE_from_anchor": 0.0018147953087463975
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017002",
+          "timestamp_model": -0.44,
+          "static_rgb_MAE_from_anchor": 0.012581082060933113,
+          "static_rgb_max_abs_from_anchor": 0.5182372331619263,
+          "static_alpha_MAE_from_anchor": 0.001714862766675651
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 3,
+      "id": "0017003",
+      "timestamp_model": -0.42,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 0,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_00_03.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\003_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\003_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\003_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\003_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017003",
+          "timestamp_model": -0.42,
+          "static_rgb_MAE_from_anchor": 0.01299815159291029,
+          "static_rgb_max_abs_from_anchor": 0.6550719141960144,
+          "static_alpha_MAE_from_anchor": 0.002214405220001936
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017003",
+          "timestamp_model": -0.42,
+          "static_rgb_MAE_from_anchor": 0.013772757723927498,
+          "static_rgb_max_abs_from_anchor": 0.6140803098678589,
+          "static_alpha_MAE_from_anchor": 0.0020776649471372366
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 4,
+      "id": "0017004",
+      "timestamp_model": -0.39999999999999997,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 1,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_04_07.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\004_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\004_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\004_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\004_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017004",
+          "timestamp_model": -0.39999999999999997,
+          "static_rgb_MAE_from_anchor": 0.013510135933756828,
+          "static_rgb_max_abs_from_anchor": 0.6550719141960144,
+          "static_alpha_MAE_from_anchor": 0.0024246275424957275
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017004",
+          "timestamp_model": -0.39999999999999997,
+          "static_rgb_MAE_from_anchor": 0.014119095169007778,
+          "static_rgb_max_abs_from_anchor": 0.6140803098678589,
+          "static_alpha_MAE_from_anchor": 0.002310242736712098
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 5,
+      "id": "0017005",
+      "timestamp_model": -0.38,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 1,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_04_07.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\005_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\005_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\005_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\005_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017005",
+          "timestamp_model": -0.38,
+          "static_rgb_MAE_from_anchor": 0.012629460543394089,
+          "static_rgb_max_abs_from_anchor": 0.4857490062713623,
+          "static_alpha_MAE_from_anchor": 0.002383484970778227
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017005",
+          "timestamp_model": -0.38,
+          "static_rgb_MAE_from_anchor": 0.013015602715313435,
+          "static_rgb_max_abs_from_anchor": 0.5981079936027527,
+          "static_alpha_MAE_from_anchor": 0.002372727496549487
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 6,
+      "id": "0017006",
+      "timestamp_model": -0.36,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 1,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_04_07.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\006_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\006_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\006_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\006_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017006",
+          "timestamp_model": -0.36,
+          "static_rgb_MAE_from_anchor": 0.011779188178479671,
+          "static_rgb_max_abs_from_anchor": 0.6066455841064453,
+          "static_alpha_MAE_from_anchor": 0.0022964279633015394
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017006",
+          "timestamp_model": -0.36,
+          "static_rgb_MAE_from_anchor": 0.011951799504458904,
+          "static_rgb_max_abs_from_anchor": 0.54096919298172,
+          "static_alpha_MAE_from_anchor": 0.002318906132131815
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 7,
+      "id": "0017007",
+      "timestamp_model": -0.33999999999999997,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 1,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_04_07.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\007_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\007_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\007_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\007_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017007",
+          "timestamp_model": -0.33999999999999997,
+          "static_rgb_MAE_from_anchor": 0.010120004415512085,
+          "static_rgb_max_abs_from_anchor": 0.5280241370201111,
+          "static_alpha_MAE_from_anchor": 0.0020095529034733772
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017007",
+          "timestamp_model": -0.33999999999999997,
+          "static_rgb_MAE_from_anchor": 0.010110687464475632,
+          "static_rgb_max_abs_from_anchor": 0.42410293221473694,
+          "static_alpha_MAE_from_anchor": 0.00203691516071558
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 8,
+      "id": "0017008",
+      "timestamp_model": -0.31999999999999995,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 2,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_08_11.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\008_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\008_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\008_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\008_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017008",
+          "timestamp_model": -0.31999999999999995,
+          "static_rgb_MAE_from_anchor": 0.009771776385605335,
+          "static_rgb_max_abs_from_anchor": 0.5619220733642578,
+          "static_alpha_MAE_from_anchor": 0.00177069625351578
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017008",
+          "timestamp_model": -0.31999999999999995,
+          "static_rgb_MAE_from_anchor": 0.009603663347661495,
+          "static_rgb_max_abs_from_anchor": 0.601207971572876,
+          "static_alpha_MAE_from_anchor": 0.0017211600206792355
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 9,
+      "id": "0017009",
+      "timestamp_model": -0.29999999999999993,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 2,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_08_11.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\009_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\009_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\009_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\009_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017009",
+          "timestamp_model": -0.29999999999999993,
+          "static_rgb_MAE_from_anchor": 0.006483178585767746,
+          "static_rgb_max_abs_from_anchor": 0.38175469636917114,
+          "static_alpha_MAE_from_anchor": 0.0010591867612674832
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017009",
+          "timestamp_model": -0.29999999999999993,
+          "static_rgb_MAE_from_anchor": 0.006400763057172298,
+          "static_rgb_max_abs_from_anchor": 0.31133800745010376,
+          "static_alpha_MAE_from_anchor": 0.0010304026072844863
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 10,
+      "id": "0017010",
+      "timestamp_model": -0.28,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 2,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_08_11.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\010_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\010_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\010_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\010_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017010",
+          "timestamp_model": -0.28,
+          "static_rgb_MAE_from_anchor": 0.0,
+          "static_rgb_max_abs_from_anchor": 0.0,
+          "static_alpha_MAE_from_anchor": 0.0
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017010",
+          "timestamp_model": -0.28,
+          "static_rgb_MAE_from_anchor": 0.0,
+          "static_rgb_max_abs_from_anchor": 0.0,
+          "static_alpha_MAE_from_anchor": 0.0
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 11,
+      "id": "0017011",
+      "timestamp_model": -0.26,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 2,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_08_11.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\011_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\011_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\011_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\011_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017011",
+          "timestamp_model": -0.26,
+          "static_rgb_MAE_from_anchor": 0.0057942913845181465,
+          "static_rgb_max_abs_from_anchor": 0.3046032786369324,
+          "static_alpha_MAE_from_anchor": 0.000989423249848187
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017011",
+          "timestamp_model": -0.26,
+          "static_rgb_MAE_from_anchor": 0.005758644547313452,
+          "static_rgb_max_abs_from_anchor": 0.34842008352279663,
+          "static_alpha_MAE_from_anchor": 0.0009515826823189855
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 12,
+      "id": "0017012",
+      "timestamp_model": -0.24,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 3,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_12_15.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\012_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\012_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\012_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\012_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017012",
+          "timestamp_model": -0.24,
+          "static_rgb_MAE_from_anchor": 0.009341479279100895,
+          "static_rgb_max_abs_from_anchor": 0.48450180888175964,
+          "static_alpha_MAE_from_anchor": 0.0016714357770979404
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017012",
+          "timestamp_model": -0.24,
+          "static_rgb_MAE_from_anchor": 0.009184770286083221,
+          "static_rgb_max_abs_from_anchor": 0.5137054920196533,
+          "static_alpha_MAE_from_anchor": 0.0015746878925710917
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 13,
+      "id": "0017013",
+      "timestamp_model": -0.21999999999999997,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 3,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_12_15.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\013_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\013_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\013_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\013_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017013",
+          "timestamp_model": -0.21999999999999997,
+          "static_rgb_MAE_from_anchor": 0.011638517491519451,
+          "static_rgb_max_abs_from_anchor": 0.5850806832313538,
+          "static_alpha_MAE_from_anchor": 0.0021845081355422735
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017013",
+          "timestamp_model": -0.21999999999999997,
+          "static_rgb_MAE_from_anchor": 0.011488055810332298,
+          "static_rgb_max_abs_from_anchor": 0.6140803098678589,
+          "static_alpha_MAE_from_anchor": 0.0020282946061342955
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 14,
+      "id": "0017014",
+      "timestamp_model": -0.2,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 3,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_12_15.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\014_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\014_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\014_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\014_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017014",
+          "timestamp_model": -0.2,
+          "static_rgb_MAE_from_anchor": 0.013375629670917988,
+          "static_rgb_max_abs_from_anchor": 0.5646894574165344,
+          "static_alpha_MAE_from_anchor": 0.0025343664456158876
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017014",
+          "timestamp_model": -0.2,
+          "static_rgb_MAE_from_anchor": 0.013312860392034054,
+          "static_rgb_max_abs_from_anchor": 0.6140803098678589,
+          "static_alpha_MAE_from_anchor": 0.0023677321150898933
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 15,
+      "id": "0017015",
+      "timestamp_model": -0.18,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 3,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_12_15.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\015_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\015_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\015_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\015_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017015",
+          "timestamp_model": -0.18,
+          "static_rgb_MAE_from_anchor": 0.014109887182712555,
+          "static_rgb_max_abs_from_anchor": 0.5336774587631226,
+          "static_alpha_MAE_from_anchor": 0.00266887410543859
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017015",
+          "timestamp_model": -0.18,
+          "static_rgb_MAE_from_anchor": 0.014185596257448196,
+          "static_rgb_max_abs_from_anchor": 0.6000267267227173,
+          "static_alpha_MAE_from_anchor": 0.0025598793290555477
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 16,
+      "id": "0017016",
+      "timestamp_model": -0.15999999999999998,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 4,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_16_19.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\016_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\016_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\016_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\016_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017016",
+          "timestamp_model": -0.15999999999999998,
+          "static_rgb_MAE_from_anchor": 0.014692259021103382,
+          "static_rgb_max_abs_from_anchor": 0.6258606910705566,
+          "static_alpha_MAE_from_anchor": 0.002711944282054901
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017016",
+          "timestamp_model": -0.15999999999999998,
+          "static_rgb_MAE_from_anchor": 0.014803695492446423,
+          "static_rgb_max_abs_from_anchor": 0.6469423770904541,
+          "static_alpha_MAE_from_anchor": 0.0026147246826440096
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 17,
+      "id": "0017017",
+      "timestamp_model": -0.13999999999999996,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 4,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_16_19.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\017_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\017_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\017_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\017_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017017",
+          "timestamp_model": -0.13999999999999996,
+          "static_rgb_MAE_from_anchor": 0.01437943335622549,
+          "static_rgb_max_abs_from_anchor": 0.6418223977088928,
+          "static_alpha_MAE_from_anchor": 0.0025406719651073217
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017017",
+          "timestamp_model": -0.13999999999999996,
+          "static_rgb_MAE_from_anchor": 0.014352599158883095,
+          "static_rgb_max_abs_from_anchor": 0.6511995792388916,
+          "static_alpha_MAE_from_anchor": 0.002407330321148038
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 18,
+      "id": "0017018",
+      "timestamp_model": -0.11999999999999994,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 4,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_16_19.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\018_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\018_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\018_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\018_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017018",
+          "timestamp_model": -0.11999999999999994,
+          "static_rgb_MAE_from_anchor": 0.014850529842078686,
+          "static_rgb_max_abs_from_anchor": 0.6886647939682007,
+          "static_alpha_MAE_from_anchor": 0.0023962650448083878
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017018",
+          "timestamp_model": -0.11999999999999994,
+          "static_rgb_MAE_from_anchor": 0.014665651135146618,
+          "static_rgb_max_abs_from_anchor": 0.7128181457519531,
+          "static_alpha_MAE_from_anchor": 0.0021345731802284718
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 19,
+      "id": "0017019",
+      "timestamp_model": -0.10000000000000003,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 4,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_16_19.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\019_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\019_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\019_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\019_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017019",
+          "timestamp_model": -0.10000000000000003,
+          "static_rgb_MAE_from_anchor": 0.013479862362146378,
+          "static_rgb_max_abs_from_anchor": 0.7456724643707275,
+          "static_alpha_MAE_from_anchor": 0.0019305117893964052
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017019",
+          "timestamp_model": -0.10000000000000003,
+          "static_rgb_MAE_from_anchor": 0.013072277419269085,
+          "static_rgb_max_abs_from_anchor": 0.7621110677719116,
+          "static_alpha_MAE_from_anchor": 0.0015727891586720943
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 20,
+      "id": "0017020",
+      "timestamp_model": -0.08000000000000002,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 5,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_20_23.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\020_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\020_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\020_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\020_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017020",
+          "timestamp_model": -0.08000000000000002,
+          "static_rgb_MAE_from_anchor": 0.012405896559357643,
+          "static_rgb_max_abs_from_anchor": 0.7717517614364624,
+          "static_alpha_MAE_from_anchor": 0.0015198964392766356
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017020",
+          "timestamp_model": -0.08000000000000002,
+          "static_rgb_MAE_from_anchor": 0.011541460640728474,
+          "static_rgb_max_abs_from_anchor": 0.7227871417999268,
+          "static_alpha_MAE_from_anchor": 0.0010341164888814092
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 21,
+      "id": "0017021",
+      "timestamp_model": -0.06,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 5,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_20_23.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\021_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\021_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\021_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\021_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017021",
+          "timestamp_model": -0.06,
+          "static_rgb_MAE_from_anchor": 0.015349183231592178,
+          "static_rgb_max_abs_from_anchor": 0.7897417545318604,
+          "static_alpha_MAE_from_anchor": 0.002148268511518836
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017021",
+          "timestamp_model": -0.06,
+          "static_rgb_MAE_from_anchor": 0.014700769446790218,
+          "static_rgb_max_abs_from_anchor": 0.7740445137023926,
+          "static_alpha_MAE_from_anchor": 0.0016983191017061472
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 22,
+      "id": "0017022",
+      "timestamp_model": -0.040000000000000036,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 5,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_20_23.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\022_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\022_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\022_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\022_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017022",
+          "timestamp_model": -0.040000000000000036,
+          "static_rgb_MAE_from_anchor": 0.018349673599004745,
+          "static_rgb_max_abs_from_anchor": 0.8557645678520203,
+          "static_alpha_MAE_from_anchor": 0.0027695181779563427
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017022",
+          "timestamp_model": -0.040000000000000036,
+          "static_rgb_MAE_from_anchor": 0.01765020750463009,
+          "static_rgb_max_abs_from_anchor": 0.8102465867996216,
+          "static_alpha_MAE_from_anchor": 0.002281392924487591
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 23,
+      "id": "0017023",
+      "timestamp_model": -0.020000000000000018,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 5,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_20_23.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\023_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\023_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\023_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\023_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017023",
+          "timestamp_model": -0.020000000000000018,
+          "static_rgb_MAE_from_anchor": 0.02075381763279438,
+          "static_rgb_max_abs_from_anchor": 0.9134336113929749,
+          "static_alpha_MAE_from_anchor": 0.003284684382379055
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017023",
+          "timestamp_model": -0.020000000000000018,
+          "static_rgb_MAE_from_anchor": 0.02003702148795128,
+          "static_rgb_max_abs_from_anchor": 0.8561824560165405,
+          "static_alpha_MAE_from_anchor": 0.0027695074677467346
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 24,
+      "id": "0017024",
+      "timestamp_model": 0.0,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 6,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_24_27.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\024_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\024_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\024_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\024_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017024",
+          "timestamp_model": 0.0,
+          "static_rgb_MAE_from_anchor": 0.022720158100128174,
+          "static_rgb_max_abs_from_anchor": 0.8556206226348877,
+          "static_alpha_MAE_from_anchor": 0.00364036881364882
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017024",
+          "timestamp_model": 0.0,
+          "static_rgb_MAE_from_anchor": 0.021982597187161446,
+          "static_rgb_max_abs_from_anchor": 0.844904899597168,
+          "static_alpha_MAE_from_anchor": 0.0031819925643503666
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 25,
+      "id": "0017025",
+      "timestamp_model": 0.020000000000000018,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 6,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_24_27.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\025_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\025_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\025_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\025_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017025",
+          "timestamp_model": 0.020000000000000018,
+          "static_rgb_MAE_from_anchor": 0.023852454498410225,
+          "static_rgb_max_abs_from_anchor": 0.8368421792984009,
+          "static_alpha_MAE_from_anchor": 0.0037941450718790293
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017025",
+          "timestamp_model": 0.020000000000000018,
+          "static_rgb_MAE_from_anchor": 0.02307574450969696,
+          "static_rgb_max_abs_from_anchor": 0.8858438730239868,
+          "static_alpha_MAE_from_anchor": 0.003426729002967477
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 26,
+      "id": "0017026",
+      "timestamp_model": 0.040000000000000036,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 6,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_24_27.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\026_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\026_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\026_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\026_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017026",
+          "timestamp_model": 0.040000000000000036,
+          "static_rgb_MAE_from_anchor": 0.025042753666639328,
+          "static_rgb_max_abs_from_anchor": 0.9115878343582153,
+          "static_alpha_MAE_from_anchor": 0.0038894510362297297
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017026",
+          "timestamp_model": 0.040000000000000036,
+          "static_rgb_MAE_from_anchor": 0.023998023942112923,
+          "static_rgb_max_abs_from_anchor": 0.8536858558654785,
+          "static_alpha_MAE_from_anchor": 0.0035162274725735188
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 27,
+      "id": "0017027",
+      "timestamp_model": 0.05999999999999994,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 6,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_24_27.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\027_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\027_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\027_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\027_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017027",
+          "timestamp_model": 0.05999999999999994,
+          "static_rgb_MAE_from_anchor": 0.025502271950244904,
+          "static_rgb_max_abs_from_anchor": 0.9410778880119324,
+          "static_alpha_MAE_from_anchor": 0.0038267020136117935
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017027",
+          "timestamp_model": 0.05999999999999994,
+          "static_rgb_MAE_from_anchor": 0.023772960528731346,
+          "static_rgb_max_abs_from_anchor": 0.853363037109375,
+          "static_alpha_MAE_from_anchor": 0.0033038374967873096
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 28,
+      "id": "0017028",
+      "timestamp_model": 0.07999999999999996,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 7,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_28_31.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\028_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\028_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\028_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\028_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017028",
+          "timestamp_model": 0.07999999999999996,
+          "static_rgb_MAE_from_anchor": 0.02639782428741455,
+          "static_rgb_max_abs_from_anchor": 0.931279182434082,
+          "static_alpha_MAE_from_anchor": 0.003742508590221405
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017028",
+          "timestamp_model": 0.07999999999999996,
+          "static_rgb_MAE_from_anchor": 0.02438967674970627,
+          "static_rgb_max_abs_from_anchor": 0.790378212928772,
+          "static_alpha_MAE_from_anchor": 0.003020230680704117
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 29,
+      "id": "0017029",
+      "timestamp_model": 0.09999999999999998,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 7,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_28_31.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\029_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\029_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\029_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\029_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017029",
+          "timestamp_model": 0.09999999999999998,
+          "static_rgb_MAE_from_anchor": 0.026120860129594803,
+          "static_rgb_max_abs_from_anchor": 0.8166014552116394,
+          "static_alpha_MAE_from_anchor": 0.0034052804112434387
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017029",
+          "timestamp_model": 0.09999999999999998,
+          "static_rgb_MAE_from_anchor": 0.02387525700032711,
+          "static_rgb_max_abs_from_anchor": 0.7879227995872498,
+          "static_alpha_MAE_from_anchor": 0.0025771991349756718
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 30,
+      "id": "0017030",
+      "timestamp_model": 0.12,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 7,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_28_31.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\030_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\030_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\030_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\030_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017030",
+          "timestamp_model": 0.12,
+          "static_rgb_MAE_from_anchor": 0.026080796495079994,
+          "static_rgb_max_abs_from_anchor": 0.8468276858329773,
+          "static_alpha_MAE_from_anchor": 0.0030778246000409126
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017030",
+          "timestamp_model": 0.12,
+          "static_rgb_MAE_from_anchor": 0.023420527577400208,
+          "static_rgb_max_abs_from_anchor": 0.8120846152305603,
+          "static_alpha_MAE_from_anchor": 0.0021829719189554453
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 31,
+      "id": "0017031",
+      "timestamp_model": 0.14,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 7,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_28_31.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\031_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\031_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\031_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\031_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017031",
+          "timestamp_model": 0.14,
+          "static_rgb_MAE_from_anchor": 0.028431076556444168,
+          "static_rgb_max_abs_from_anchor": 0.8512303829193115,
+          "static_alpha_MAE_from_anchor": 0.0034942824859172106
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017031",
+          "timestamp_model": 0.14,
+          "static_rgb_MAE_from_anchor": 0.02591612935066223,
+          "static_rgb_max_abs_from_anchor": 0.8639625310897827,
+          "static_alpha_MAE_from_anchor": 0.0027058522682636976
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 32,
+      "id": "0017032",
+      "timestamp_model": 0.16000000000000003,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 8,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_32_35.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\032_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\032_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\032_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\032_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017032",
+          "timestamp_model": 0.16000000000000003,
+          "static_rgb_MAE_from_anchor": 0.030909467488527298,
+          "static_rgb_max_abs_from_anchor": 0.8964722752571106,
+          "static_alpha_MAE_from_anchor": 0.003957112319767475
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017032",
+          "timestamp_model": 0.16000000000000003,
+          "static_rgb_MAE_from_anchor": 0.028331365436315536,
+          "static_rgb_max_abs_from_anchor": 0.8555885553359985,
+          "static_alpha_MAE_from_anchor": 0.003137099090963602
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 33,
+      "id": "0017033",
+      "timestamp_model": 0.18000000000000005,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 8,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_32_35.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\033_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\033_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\033_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\033_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017033",
+          "timestamp_model": 0.18000000000000005,
+          "static_rgb_MAE_from_anchor": 0.03300236538052559,
+          "static_rgb_max_abs_from_anchor": 0.8379837870597839,
+          "static_alpha_MAE_from_anchor": 0.004353886935859919
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017033",
+          "timestamp_model": 0.18000000000000005,
+          "static_rgb_MAE_from_anchor": 0.030277376994490623,
+          "static_rgb_max_abs_from_anchor": 0.7916762828826904,
+          "static_alpha_MAE_from_anchor": 0.0035124882124364376
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 34,
+      "id": "0017034",
+      "timestamp_model": 0.20000000000000007,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 8,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_32_35.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\034_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\034_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\034_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\034_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017034",
+          "timestamp_model": 0.20000000000000007,
+          "static_rgb_MAE_from_anchor": 0.034574586898088455,
+          "static_rgb_max_abs_from_anchor": 0.8705053925514221,
+          "static_alpha_MAE_from_anchor": 0.004629720468074083
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017034",
+          "timestamp_model": 0.20000000000000007,
+          "static_rgb_MAE_from_anchor": 0.03183407336473465,
+          "static_rgb_max_abs_from_anchor": 0.9063180088996887,
+          "static_alpha_MAE_from_anchor": 0.00384999206289649
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 35,
+      "id": "0017035",
+      "timestamp_model": 0.22000000000000008,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 8,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_32_35.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\035_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\035_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\035_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\035_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017035",
+          "timestamp_model": 0.22000000000000008,
+          "static_rgb_MAE_from_anchor": 0.03551185503602028,
+          "static_rgb_max_abs_from_anchor": 0.8904844522476196,
+          "static_alpha_MAE_from_anchor": 0.004778012633323669
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017035",
+          "timestamp_model": 0.22000000000000008,
+          "static_rgb_MAE_from_anchor": 0.032770875841379166,
+          "static_rgb_max_abs_from_anchor": 0.9032498002052307,
+          "static_alpha_MAE_from_anchor": 0.0040688407607376575
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 36,
+      "id": "0017036",
+      "timestamp_model": 0.2400000000000001,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 9,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_36_39.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\036_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\036_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\036_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\036_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017036",
+          "timestamp_model": 0.2400000000000001,
+          "static_rgb_MAE_from_anchor": 0.03653735667467117,
+          "static_rgb_max_abs_from_anchor": 0.9370290637016296,
+          "static_alpha_MAE_from_anchor": 0.004856232553720474
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017036",
+          "timestamp_model": 0.2400000000000001,
+          "static_rgb_MAE_from_anchor": 0.03356887772679329,
+          "static_rgb_max_abs_from_anchor": 0.9084010124206543,
+          "static_alpha_MAE_from_anchor": 0.004129691049456596
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 37,
+      "id": "0017037",
+      "timestamp_model": 0.2599999999999999,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 9,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_36_39.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\037_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\037_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\037_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\037_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017037",
+          "timestamp_model": 0.2599999999999999,
+          "static_rgb_MAE_from_anchor": 0.03686365857720375,
+          "static_rgb_max_abs_from_anchor": 0.9160254597663879,
+          "static_alpha_MAE_from_anchor": 0.004825643263757229
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017037",
+          "timestamp_model": 0.2599999999999999,
+          "static_rgb_MAE_from_anchor": 0.033517006784677505,
+          "static_rgb_max_abs_from_anchor": 0.8788998126983643,
+          "static_alpha_MAE_from_anchor": 0.003981821704655886
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 38,
+      "id": "0017038",
+      "timestamp_model": 0.2799999999999999,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 9,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_36_39.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\038_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\038_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\038_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\038_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017038",
+          "timestamp_model": 0.2799999999999999,
+          "static_rgb_MAE_from_anchor": 0.037967365235090256,
+          "static_rgb_max_abs_from_anchor": 0.8989879488945007,
+          "static_alpha_MAE_from_anchor": 0.004932914394885302
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017038",
+          "timestamp_model": 0.2799999999999999,
+          "static_rgb_MAE_from_anchor": 0.03424477204680443,
+          "static_rgb_max_abs_from_anchor": 0.853935718536377,
+          "static_alpha_MAE_from_anchor": 0.0038020897191017866
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 39,
+      "id": "0017039",
+      "timestamp_model": 0.29999999999999993,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 9,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_36_39.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\039_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\039_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\039_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\039_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017039",
+          "timestamp_model": 0.29999999999999993,
+          "static_rgb_MAE_from_anchor": 0.03735649585723877,
+          "static_rgb_max_abs_from_anchor": 0.9069688320159912,
+          "static_alpha_MAE_from_anchor": 0.0048362682573497295
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017039",
+          "timestamp_model": 0.29999999999999993,
+          "static_rgb_MAE_from_anchor": 0.033599887043237686,
+          "static_rgb_max_abs_from_anchor": 0.8858692646026611,
+          "static_alpha_MAE_from_anchor": 0.003434066427871585
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 40,
+      "id": "0017040",
+      "timestamp_model": 0.31999999999999995,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 10,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_40_43.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\040_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\040_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\040_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\040_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017040",
+          "timestamp_model": 0.31999999999999995,
+          "static_rgb_MAE_from_anchor": 0.03652190789580345,
+          "static_rgb_max_abs_from_anchor": 0.9323035478591919,
+          "static_alpha_MAE_from_anchor": 0.004667837638407946
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017040",
+          "timestamp_model": 0.31999999999999995,
+          "static_rgb_MAE_from_anchor": 0.03256172686815262,
+          "static_rgb_max_abs_from_anchor": 0.9075808525085449,
+          "static_alpha_MAE_from_anchor": 0.0030557559803128242
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 41,
+      "id": "0017041",
+      "timestamp_model": 0.33999999999999997,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 10,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_40_43.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\041_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\041_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\041_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\041_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017041",
+          "timestamp_model": 0.33999999999999997,
+          "static_rgb_MAE_from_anchor": 0.037547364830970764,
+          "static_rgb_max_abs_from_anchor": 0.9168493151664734,
+          "static_alpha_MAE_from_anchor": 0.004750389140099287
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017041",
+          "timestamp_model": 0.33999999999999997,
+          "static_rgb_MAE_from_anchor": 0.034071505069732666,
+          "static_rgb_max_abs_from_anchor": 0.8674841523170471,
+          "static_alpha_MAE_from_anchor": 0.0034457314759492874
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 42,
+      "id": "0017042",
+      "timestamp_model": 0.36,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 10,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_40_43.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\042_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\042_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\042_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\042_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017042",
+          "timestamp_model": 0.36,
+          "static_rgb_MAE_from_anchor": 0.03845473751425743,
+          "static_rgb_max_abs_from_anchor": 0.8960323333740234,
+          "static_alpha_MAE_from_anchor": 0.004722133278846741
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017042",
+          "timestamp_model": 0.36,
+          "static_rgb_MAE_from_anchor": 0.03563389927148819,
+          "static_rgb_max_abs_from_anchor": 0.901662290096283,
+          "static_alpha_MAE_from_anchor": 0.0038407198153436184
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 43,
+      "id": "0017043",
+      "timestamp_model": 0.38,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 10,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_40_43.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\043_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\043_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\043_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\043_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017043",
+          "timestamp_model": 0.38,
+          "static_rgb_MAE_from_anchor": 0.039092767983675,
+          "static_rgb_max_abs_from_anchor": 0.8392788767814636,
+          "static_alpha_MAE_from_anchor": 0.004863417707383633
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017043",
+          "timestamp_model": 0.38,
+          "static_rgb_MAE_from_anchor": 0.03672575578093529,
+          "static_rgb_max_abs_from_anchor": 0.901662290096283,
+          "static_alpha_MAE_from_anchor": 0.004178148694336414
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 44,
+      "id": "0017044",
+      "timestamp_model": 0.3999999999999999,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 11,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_44_47.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\044_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\044_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\044_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\044_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017044",
+          "timestamp_model": 0.3999999999999999,
+          "static_rgb_MAE_from_anchor": 0.039399392902851105,
+          "static_rgb_max_abs_from_anchor": 0.854563295841217,
+          "static_alpha_MAE_from_anchor": 0.005038093775510788
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017044",
+          "timestamp_model": 0.3999999999999999,
+          "static_rgb_MAE_from_anchor": 0.037378933280706406,
+          "static_rgb_max_abs_from_anchor": 0.9218961596488953,
+          "static_alpha_MAE_from_anchor": 0.004488522652536631
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 45,
+      "id": "0017045",
+      "timestamp_model": 0.41999999999999993,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 11,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_44_47.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\045_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\045_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\045_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\045_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017045",
+          "timestamp_model": 0.41999999999999993,
+          "static_rgb_MAE_from_anchor": 0.03912107273936272,
+          "static_rgb_max_abs_from_anchor": 0.9055383801460266,
+          "static_alpha_MAE_from_anchor": 0.005104334093630314
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017045",
+          "timestamp_model": 0.41999999999999993,
+          "static_rgb_MAE_from_anchor": 0.03732261061668396,
+          "static_rgb_max_abs_from_anchor": 0.9451137185096741,
+          "static_alpha_MAE_from_anchor": 0.0046876221895217896
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 46,
+      "id": "0017046",
+      "timestamp_model": 0.43999999999999995,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 11,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_44_47.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\046_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\046_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\046_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\046_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017046",
+          "timestamp_model": 0.43999999999999995,
+          "static_rgb_MAE_from_anchor": 0.03843863680958748,
+          "static_rgb_max_abs_from_anchor": 0.9043785929679871,
+          "static_alpha_MAE_from_anchor": 0.005101039074361324
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017046",
+          "timestamp_model": 0.43999999999999995,
+          "static_rgb_MAE_from_anchor": 0.03690702095627785,
+          "static_rgb_max_abs_from_anchor": 0.9332193732261658,
+          "static_alpha_MAE_from_anchor": 0.004735223483294249
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 47,
+      "id": "0017047",
+      "timestamp_model": 0.45999999999999996,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 11,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_44_47.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\047_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\047_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\047_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\047_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017047",
+          "timestamp_model": 0.45999999999999996,
+          "static_rgb_MAE_from_anchor": 0.03661692142486572,
+          "static_rgb_max_abs_from_anchor": 0.8653592467308044,
+          "static_alpha_MAE_from_anchor": 0.004878917243331671
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017047",
+          "timestamp_model": 0.45999999999999996,
+          "static_rgb_MAE_from_anchor": 0.03543376550078392,
+          "static_rgb_max_abs_from_anchor": 0.9199810028076172,
+          "static_alpha_MAE_from_anchor": 0.004525036085397005
+        }
+      },
+      "human_verdict": null
+    },
+    {
+      "raw_index": 48,
+      "id": "0017048",
+      "timestamp_model": 0.48,
+      "visually_reviewed_arms": [
+        "C00",
+        "GN11"
+      ],
+      "visually_reviewed_channels": [
+        "static",
+        "alpha_s"
+      ],
+      "page_observation_index": 12,
+      "contact_page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_48_48.png",
+      "original_images": {
+        "C00": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\048_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\C00\\static_time\\048_alpha_s.png"
+        },
+        "GN11": {
+          "static": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\048_static.png",
+          "alpha_s": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\assets\\GN11\\static_time\\048_alpha_s.png"
+        }
+      },
+      "saved_FP32_metrics": {
+        "C00": {
+          "source_timestamp_frame": "0017048",
+          "timestamp_model": 0.48,
+          "static_rgb_MAE_from_anchor": 0.03562895581126213,
+          "static_rgb_max_abs_from_anchor": 0.8307048082351685,
+          "static_alpha_MAE_from_anchor": 0.004681249614804983
+        },
+        "GN11": {
+          "source_timestamp_frame": "0017048",
+          "timestamp_model": 0.48,
+          "static_rgb_MAE_from_anchor": 0.03465751186013222,
+          "static_rgb_max_abs_from_anchor": 0.9454684853553772,
+          "static_alpha_MAE_from_anchor": 0.004294481128454208
+        }
+      },
+      "human_verdict": null
+    }
+  ],
+  "human_verdict": null,
+  "gate_evaluation_performed": false
+}

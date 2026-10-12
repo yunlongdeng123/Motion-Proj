@@ -1,0 +1,123 @@
+{
+  "status": "PASS_CONFIG_SOURCE_AND_SAMPLER_REVIEW_QUALITY_GATE_PENDING",
+  "created_utc": "2026-10-12T22:47:40.992220+00:00",
+  "ssh_alias": "wm-vgpu-1011",
+  "python": "3.9.25",
+  "matrix_status": "all_four_arms_complete",
+  "event_paths": {
+    "C00": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_C00/checkpoint_events/iteration_030000.json",
+    "GN11": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/checkpoint_events/iteration_030000.json"
+  },
+  "paired_steps_files": {
+    "C00": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_C00/paired_steps.jsonl",
+    "GN11": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/paired_steps.jsonl"
+  },
+  "final_gn11_effective_equals_event": true,
+  "c00_gn11_common_config_equal": true,
+  "scene8_reference_equals_final_gn11_except_data": true,
+  "reference_final_differences": {
+    "end_frame": {
+      "final_GN11": 120,
+      "scene8_reference": 71,
+      "allowed": true
+    },
+    "model_path": {
+      "final_GN11": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11",
+      "scene8_reference": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11",
+      "allowed": true
+    },
+    "source_path": {
+      "final_GN11": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+      "scene8_reference": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1",
+      "allowed": true
+    },
+    "start_frame": {
+      "final_GN11": 65,
+      "scene8_reference": 23,
+      "allowed": true
+    }
+  },
+  "scene8_prepared_config_matches_build": true,
+  "scene8_prepared_frozen_sources_verified": true,
+  "prepared_changed_source_files": [
+    "utils/hybrid30k_static_time.py"
+  ],
+  "prepared_paths": {
+    "scene_spec": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_spec.json",
+    "readiness_file": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_cpu_readiness.json",
+    "reference_config": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_inherited_training_config_candidate.json",
+    "source_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/frozen_repository",
+    "matrix_tools_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools",
+    "campaign_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013"
+  },
+  "training_source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_source/scene0008_023_071",
+  "training_support": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_support/scene0008_023_071",
+  "scene8_spec": {
+    "scene_id": "scene0008_023_071",
+    "first_frame": "0008023",
+    "last_frame": "0008071",
+    "anchor": "0008033",
+    "anchor_timestamp": -0.28
+  },
+  "scene8_readiness": {
+    "status": "SCENE_CPU_PREPARED_ACTUAL_GPU_BINDING_PENDING",
+    "scene_id": "scene0008_023_071",
+    "ground_rmse_m": 0.028907574043671624,
+    "guard_runtime_verified": false,
+    "restoration_verified": false
+  },
+  "scene8_input_inventory": {
+    "status": "INPUT_FILESETS_AND_HEADERS_PASS",
+    "frames": 49,
+    "original_wh": [
+      1920,
+      1280
+    ],
+    "deep_pixels_revalidated": false,
+    "actual_cpu_mask_reader_evidence": "readiness_file"
+  },
+  "paired_event_frame_signatures_equal": true,
+  "event_signature_first": [
+    "image_0/0017000",
+    -0.48,
+    480,
+    320
+  ],
+  "event_signature_last": [
+    "image_0/0017048",
+    0.48,
+    480,
+    320
+  ],
+  "paired_steps_evidence": {
+    "status": "passed",
+    "rows": 30000,
+    "mismatch": null,
+    "keys": [
+      "iteration",
+      "frame_id",
+      "time_shift",
+      "learning_rates"
+    ]
+  },
+  "torch_imported": false,
+  "gpu_operations": 0,
+  "worker_started": false,
+  "checkpoint_loaded": false,
+  "visual_review_complete": false,
+  "human_verdict": null,
+  "gate_status": "blocked",
+  "final_to_followup_source_audit": {
+    "status": "PASS_FINAL_TO_FOLLOWUP_SOURCE_IDENTITY",
+    "matrix_source": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/frozen_repository",
+    "inherited_source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/frozen_repository",
+    "compared_code_files": 153,
+    "differences": [],
+    "comparison": "direct bytes; no new fingerprints",
+    "gpu_used": false,
+    "torch_imported": false,
+    "remote_files_written": 0
+  },
+  "scope_boundary": "Configuration, byte-equal inherited source and actual paired steps were independently read. Visual/numerical quality verdict, actual followup GPU Scene/SGCM binding and checkpoint restoration remain pending."
+}
+
