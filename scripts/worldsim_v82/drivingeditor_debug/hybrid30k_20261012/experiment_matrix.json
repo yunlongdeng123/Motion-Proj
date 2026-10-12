@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012",
+  "run_id": "r1",
+  "prepared_at_utc": "2026-10-12 15:38:10 UTC",
+  "state": "cpu_policy_prepared_waiting_for_user_gpu",
+  "execution_authorization": {
+    "this_turn": "CPU准备与只读核对",
+    "gpu_start": false,
+    "wait_for": "用户告知wm-vgpu-1011已切回GPU后继续本任务GPU阶段；本turn不自行轮询",
+    "automatic_polling": false,
+    "restore_old_automation": false,
+    "restore_old_sv_2000step_plan": false
+  },
+  "question": "在共同修复和固定输入下，corrected SGCM与原公式NPS分别及联合对几何、分层、车体和整体重建有什么收益与代价。",
+  "design": {
+    "type": "2x2固定配对模块消融",
+    "primary_scene": "scene0017_000_048",
+    "arms": 4,
+    "iterations_per_arm": 30000,
+    "total_training_iterations": 120000,
+    "budget_semantics": "每臂从step0训练30000；四臂各自独立，不共享30000总预算。",
+    "gpu_execution": "同一GPU串行C00→G10→N01→GN11",
+    "seed": 0,
+    "seed_grid": false,
+    "loss_weight_grid": false,
+    "multiple_scene_queue": false,
+    "author_paper_reproduction_claimed": false
+  },
+  "base": {
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "frames": {
+      "count": 49,
+      "camera": "FRONT/image_0",
+      "source_indices": [
+        0,
+        48
+      ],
+      "first": "0017000",
+      "last": "0017048",
+      "model_timestamp_range": [
+        -0.48,
+        0.48
+      ],
+      "frame_interval": 0.02,
+      "actual_physical_sampling": "约10Hz；model timestamp不冒称真实秒"
+    },
+    "start_checkpoint": null,
+    "forbidden_initialization": [
+      "旧10k/30k/32k/50k模型或optimizer/RNG恢复",
+      "saved30k+2000步SV续训",
+      "21帧旧3090run"
+    ],
+    "seed": 0,
+    "iterations": 30000,
+    "position_lr_max_steps": 30000,
+    "paper_method": true,
+    "hybrid_method": true,
+    "checkpoint_iterations": [
+      10000,
+      20000,
+      30000
+    ],
+    "save_iterations": [
+      10000,
+      20000,
+      30000
+    ],
+    "test_iterations": [
+      10000,
+      20000,
+      30000
+    ],
+    "paper_eval_train_each_checkpoint": true,
+    "eval": false,
+    "resolution": -1,
+    "resolution_scales": [
+      4
+    ],
+    "rendered_dimensions": {
+      "width": 480,
+      "height": 320,
+      "chw": [
+        3,
+        320,
+        480
+      ],
+      "source_width": 1920,
+      "source_height": 1280,
+      "fixed32": false
+    },
+    "initialization": {
+      "num_pts": 600000,
+      "static_sampling": "固定seed0有放回的真实LiDAR初始化；保持原.1m actor近邻剔除",
+      "actor_count": 1,
+      "actor_ply": "points3d_dynamic_0.ply",
+      "actor_points": 36406,
+      "random_init_point": 0,
+      "dynamic_random_init_point": 0,
+      "fix_radius": 0,
+      "equality_check": "四臂实际static/dynamic初始参数、点数、PCA变换与相机顺序一致；同seed不足以替代实际核验"
+    },
+    "learning_rates": {
+      "position_lr_init": 0.00016,
+      "position_lr_final": 0.0000016,
+      "position_lr_delay_mult": 0.01,
+      "t_lr_init": 0.0008,
+      "feature_lr": 0.0025,
+      "opacity_lr": 0.005,
+      "scaling_lr": 0.005,
+      "scaling_t_lr": 0.002,
+      "velocity_lr": 0.001,
+      "rotation_lr": 0.001,
+      "envmap_lr": 0.01,
+      "dynamic_xyz_multiplier_initial": 10
+    },
+    "density": {
+      "densify_from_iter": 500,
+      "densify_until_iter": 15000,
+      "dynamic_densify_until_iter": 15000,
+      "densification_interval": 100,
+      "densify_until_num_points": 3000000,
+      "dynamic_densify_until_num_points": 1000000,
+      "densify_grad_threshold": 0.00017,
+      "densify_grad_t_threshold": 0.002,
+      "opacity_reset_interval": 3000,
+      "reset_condition": "仅static且iteration < densify_until_iter；所有四臂共同工程修复",
+      "sh_increase_interval": 2000
+    },
+    "supervision": {
+      "mask": "显式DEVA/SAM body binary mask，最近邻缩放；49帧ID154",
+      "dynamic_alpha": "未乘body mask的真实rendered raw_dynamic_alpha",
+      "dynamic_opacity": "mean_HW((raw_dynamic_alpha-Md)^2)×100；mask内1、mask外0；不叠加Eq13",
+      "global_rgb_weight": 1,
+      "hybrid_lambda_dynamic_rgb": 5,
+      "hybrid_lambda_sky_rgb": 5,
+      "hybrid_lambda_static_rgb": 1,
+      "hybrid_lambda_dynamic_opacity": 100,
+      "lambda_dssim": 0.2,
+      "paper_lambda_sky": 0.05,
+      "paper_lambda_depth": 0.1,
+      "lidar_decay": 1,
+      "lidar_decay_formula": "exp(-iteration/8000*lidar_decay)",
+      "lambda_t_reg": 0.1,
+      "lambda_v_reg": 0.01,
+      "lambda_inv_depth": 0.1,
+      "lambda_v_smooth": 0.1,
+      "lambda_opacity_entropy": 0.05,
+      "hybrid_time_reg_eps": 1e-8,
+      "legacy_static_feature_normalization": "combined alpha，与活跃2024 t/v regularizers一致",
+      "nps_static_feature_normalization": "static alpha，仅NPS",
+      "static_lambda_opacity_entropy": "历史未调用字段；不因配置存在新增静态熵项"
+    },
+    "nps": {
+      "paper_lambda_nps": 0.01,
+      "formula": "保留Eq9：两checkerboard parity、4轴向一像素邻居、图像边缘略过、L2 vector discrepancy/最近static pixel中心距离，sum而非mean",
+      "normalization_change": false,
+      "record_gradient_scale": true
+    },
+    "sgcm": {
+      "sgcm_guard_enabled": true,
+      "sgcm_dr_m": 0.5,
+      "sgcm_interval": 100,
+      "sgcm_offset": 50,
+      "sgcm_start": 500,
+      "sgcm_end": 15000,
+      "sgcm_max_new_points": 10000,
+      "sgcm_split_radius_px": 20,
+      "region": "固定原Hd：time-aggregated actor LiDAR AABB，first-vehicle anchor，向ground延伸及.25m margin",
+      "guard": "实际49训练camera/stamp的center可见、正深度、temporal marginal>.05、effective alpha>=1/255；clone谱系只一次；子代继承spent；split两proposed children需支持",
+      "guard_boundary": "center支持是明示proxy，未认证精确光栅贡献；render_pkg.contrib是per-pixel last-contributor不可当per-Gaussian贡献"
+    },
+    "sampling": "固定同初始化/相机顺序/seed0；记录逐步camera、time_shift、LR，独立训练不声称CUDA逐位确定；checkpoint evaluation隔离并恢复RNG以免模块拓扑随机消耗污染采样配对"
+  },
+  "arms": [
+    {
+      "arm": "C00",
+      "paper_sgcm_enabled": false,
+      "hybrid_nps_enabled": false,
+      "run_name": "scene0017_000_048_hybrid_30000_seed0_C00",
+      "role": "共同hybrid base control，两个新增模块关闭"
+    },
+    {
+      "arm": "G10",
+      "paper_sgcm_enabled": true,
+      "hybrid_nps_enabled": false,
+      "run_name": "scene0017_000_048_hybrid_30000_seed0_G10",
+      "role": "仅corrected SGCM"
+    },
+    {
+      "arm": "N01",
+      "paper_sgcm_enabled": false,
+      "hybrid_nps_enabled": true,
+      "run_name": "scene0017_000_048_hybrid_30000_seed0_N01",
+      "role": "仅NPS原公式"
+    },
+    {
+      "arm": "GN11",
+      "paper_sgcm_enabled": true,
+      "hybrid_nps_enabled": true,
+      "run_name": "scene0017_000_048_hybrid_30000_seed0_GN11",
+      "role": "corrected SGCM与NPS联合"
+    }
+  ],
+  "comparisons": {
+    "sgcm_without_nps": [
+      "G10",
+      "C00"
+    ],
+    "nps_without_sgcm": [
+      "N01",
+      "C00"
+    ],
+    "sgcm_with_nps": [
+      "GN11",
+      "N01"
+    ],
+    "nps_with_sgcm": [
+      "GN11",
+      "G10"
+    ],
+    "interaction": "GN11-G10-N01+C00按同一指标报告；单seed单scene不作显著性或一般化主张",
+    "invalid_control": "禁止为本矩阵重新跑已确认不可见重复clone的坏SGCM实现；旧诊断只作历史工程证据"
+  },
+  "evaluation": {
+    "primary": "all_observed_reconstruction",
+    "training_views": 49,
+    "independent_heldout_views": 0,
+    "test_psnr_claim_allowed": false,
+    "holdout_policy": "若以后新建heldout合同，先固定train/heldout分离并排除heldout RGB/masks与其初始化/几何监督泄漏，重新从零配对；该协议不自动加入当前矩阵。",
+    "scheduled_nodes": [
+      10000,
+      20000,
+      30000
+    ],
+    "frame_order": "全部49帧时间序，等权per-frame mean与pixel-weighted/pooled分列",
+    "prespecified_preview_source_indices": [
+      0,
+      10,
+      17,
+      20,
+      24,
+      30,
+      40,
+      48
+    ],
+    "required_metrics": [
+      "composite RGB MSE/PSNR/SSIM",
+      "non-sky body外static RGB MSE/PSNR",
+      "mask内与mask外raw动态alpha均值/分位数",
+      "车外动态RGB泄漏与支撑",
+      "actor/core/inner-boundary composite质量",
+      "移除局部性，图像支撑与alpha分列",
+      "静态/动态点数、SGCM candidates/rejections/clones/splits/prunes/lineage",
+      "NPS unweighted/weighted loss及关键参数梯度量级",
+      "训练loss组件、time/velocity/static变化、资源峰值"
+    ],
+    "required_channels": [
+      "GT",
+      "composite",
+      "static",
+      "raw dynamic RGB",
+      "raw dynamic alpha",
+      "static alpha"
+    ],
+    "masks": "body-only且缺shadow；没有dense edited GT；移除检查仅量化已有观测域变化",
+    "checkpoint_state": "optimizer/reset/SGCM完成后的同参数评价与完整bundle；训练scalar若来自更新前forward应显式另列",
+    "acceptance": "CPU通过仅代表源码/输入准备；分层收益、actor代价、整体重建和资源共同判读，不以exit0或单个PSNR认证修复成功"
+  },
+  "checkpoint_contract": {
+    "nodes_per_arm": [
+      10000,
+      20000,
+      30000
+    ],
+    "total_complete_events": 12,
+    "component_files": [
+      "chkpnt{iteration}.pth",
+      "dynamic_chkpnt{iteration}.pth",
+      "env_light_chkpnt{iteration}.pth",
+      "training_state{iteration}.pth"
+    ],
+    "mandatory_state": [
+      "完整static/dynamic/env参数与Adam状态",
+      "python/numpy/torch CPU及CUDA RNG",
+      "viewpoint_stack与各resolution camera order",
+      "scale_index与runtime no_time_split",
+      "EMA",
+      "已启用SGCM配置/ground/region/lineage/spent状态",
+      "完整resolved config与独立run/provenance"
+    ],
+    "publication": "组件、完整RNG/sampler状态、全49帧评价及metrics均成功后原子发布complete event；PLY或仅参数文件不算完整checkpoint",
+    "recovery": "只允许该臂同协议中断恢复，不拿旧horizon50k或其他臂checkpoint作为初始化"
+  },
+  "common_deliberate_changes": [
+    "user24默认保留原活跃static RGB、time与velocity regularization及系数；不hard-freeze static参数。",
+    "canonical body mask替代2024按masked RGB第一通道>0构mask；源尺寸累计719个黑车像素受影响，四臂共同披露。",
+    "raw_dynamic_alpha完整mask MSE×100恢复；不沿用仅前景Eq13。",
+    "static reset限定densify窗口(<15000)，四臂共用；原24helper将reset放condition外，历史保存后低alpha瞬态已确认。此修复不声称解决分层。",
+    "共同保留当前paper Eq7 sky alpha与Eq16 inverse-depth/fullHW形式，作为显式改写；不宣称与24 sky/valid-pixel mean完全等价；恢复LiDAR指数decay。",
+    "paper_method=true仅保留完整checkpoint/metadata设施，hybrid_method=true选择新hybrid目标。"
+  ],
+  "next_scene": {
+    "candidate": "scene0008_023_071_fresh30k_v2_groundonly",
+    "phase": "scene17开发四臂质量与工程门槛通过后再确定单次确认协议",
+    "automatic_queue": false,
+    "automatic_four_arm_expansion": false,
+    "current_training_ready": false,
+    "required_before_use": [
+      "解决旧snapshot training_ready=false与最新actor PASS的关系并生成新协议只读/封存receipt",
+      "重新核验SGCM ground/actual loader PCA/双actor作用区",
+      "明确2actor mask union及GT track identity仅审计的角色",
+      "确认新的同输入对照范围与GPU资源"
+    ]
+  },
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V76-F03"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null,
+  "architecture_components_mermaid": "flowchart LR\nI[49帧 RGB LiDAR 位姿 body sky mask]-->B[共同24目标与工程修复]\nB-->S[静态高斯]\nB-->D[动态高斯 raw alpha]\nS-->G[可开关 corrected SGCM]\nS-->N[可开关 NPS]\nG-->R[共享环境与光栅合成]\nN-->R\nD-->R\nR-->O[每臂30k 全49帧分层评估]\nO-->C[10k 20k 30k 完整checkpoint]"
+}

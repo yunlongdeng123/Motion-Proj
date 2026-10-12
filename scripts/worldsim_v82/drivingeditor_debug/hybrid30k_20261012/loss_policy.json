@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012",
+  "scope": "CPU 准备的损失契约；不代表真实 GPU 训练或完整复现已通过",
+  "principle": "论文未明确替代的有效 24 版目标继续保留；不同公式的影响待同一次真实前向/梯度日志核验",
+  "source_evidence": {
+    "legacy_author": "work/drivingeditor_hybrid30k/legacy/train_author.py",
+    "legacy_compatible": "work/drivingeditor_hybrid30k/legacy/train_compatible.py",
+    "current_train": "work/drivingeditor_hybrid30k/source/train.py",
+    "unchanged_paper_functions": "work/drivingeditor_hybrid30k/source/utils/paper_losses.py",
+    "configuration": "work/drivingeditor_hybrid30k/configs/previous_50k.yaml",
+    "duration_definition": "source/scene/gaussian_model.py:139-140 get_scaling_t=exp(_scaling_t)；177-178 用作时间 Gaussian 的宽度；get_t=_t 是独立参数",
+    "legacy_regularizer_normalization": "train_author.py static_feature / combined alpha.clamp_min(EPS)，随后 static_t_map=feature[:1]，static_v_map=feature[1:]",
+    "legacy_photo_branch": "24 含动态且 gt_dynamic_image.mean()>0 时 global1/dynamic5/sky5/static1；其余分支 global1/sky5。Hybrid 的分支行为与 canonical mask 修正须在 runner/protocol 单独披露"
+  },
+  "photometric": {
+    "global": {"weight": 1.0},
+    "dynamic": {"weight": 5.0, "config_key": "hybrid_lambda_dynamic_rgb"},
+    "sky": {"weight": 5.0, "config_key": "hybrid_lambda_sky_rgb"},
+    "static": {
+      "weight": 1.0,
+      "config_key": "hybrid_lambda_static_rgb",
+      "formula": ".8*L1(render_s*(1-Md), GT*(1-Md)) + .2*(1-SSIM(render_s*(1-Md), GT*(1-Md)))",
+      "normalization": "乘完整 complement 后的整图平均；不按静态域面积重归一化，不裁剪；SSIM 使用原项目函数"
+    },
+    "lambda_dssim": 0.2,
+    "coefficient_reason": "24 的 5 倍动态/天空照片项实际活跃，未因论文目标式省略系数而删除；不宣称这些系数最优"
+  },
+  "dynamic_opacity": {
+    "formula": "mean_HW[(raw_dynamic_alpha-Md)^2]",
+    "weight": 100.0,
+    "config_key": "hybrid_lambda_dynamic_opacity",
+    "input": "render_pkg.dynamic_alpha，在任何 clamp、premask、detach 或可视化处理之前",
+    "domain": "完整 H*W：mask 内趋向 1，mask 外趋向 0",
+    "normalization": "MSE 在单通道 1xHxW 的所有像素平均，不分域归一化",
+    "replaces": "旧 paper 前景 Eq13 项，不与该项叠加；无历史 V 额外 outside 项",
+    "weight_interpretation": "100 是忠实历史强控制，不是最佳权重声明，不开额外权重网格",
+    "mask_requirement": "canonical 严格二值动态 body mask；现有数据缺 shadow，不称完整论文 Md"
+  },
+  "static_duration": {
+    "formula": "reciprocal(mean(abs(static_t_map)).clamp_min(1e-8))",
+    "weight": 0.1,
+    "config_key": "lambda_t_reg",
+    "guard_config_key": "hybrid_time_reg_eps",
+    "map_source": "render(exp(_scaling_t).clamp_max(2)) / combined_alpha.clamp_min(EPS)",
+    "meaning": "寿命/时间宽度，不是 _t、全局 timestamp 或相机时间",
+    "numerical_guard": "mean(abs(map)) >= 1e-8 时数值与梯度精确继承 24；更小均值仅使用分母下界避免 Inf，下界区间该项的 map 梯度为 0。日志记录 guard_active 与实际均值；不硬冻结参数"
+  },
+  "static_velocity": {
+    "formula": "mean(abs(static_v_map))",
+    "weight": 0.01,
+    "config_key": "lambda_v_reg",
+    "map_source": "render(get_inst_velocity) / combined_alpha.clamp_min(EPS)",
+    "mechanism": "保留软正则；不将 static velocity 硬置零、不冻结 _velocity/_t/_scaling_t"
+  },
+  "sky_opacity": {
+    "function": "未改动 paper_losses.sky_loss",
+    "formula": "-mean_HW[o_sky*log(1-o_sky)]，o_sky=clamp(static_alpha,0,1-1e-4)*Msky",
+    "weight": 0.05,
+    "config_key": "paper_lambda_sky",
+    "change": "明确以论文 Eq7 形式替换旧 combined-alpha -mean[Msky*log(1-alpha)]；与 sky RGB 项并存",
+    "evidence_boundary": "改写的真实训练影响待记录，不认定影响小"
+  },
+  "lidar_depth": {
+    "function": "未改动 paper_losses.sparse_inverse_depth_loss",
+    "formula": "sum_valid[abs(1/(LiDAR+1e-5)-1/(rendered_depth+1e-5))]/(H*W)",
+    "base_weight": 0.1,
+    "config_key": "paper_lambda_depth",
+    "iteration_decay": "exp(-iteration/8000*lidar_decay) if lidar_decay>0 else 1",
+    "lidar_decay": 1.0,
+    "effective_weights": {
+      "10000": 0.02865047968601901,
+      "20000": 0.00820849986238988,
+      "30000": 0.002351774585600911
+    },
+    "change": "保留当前论文 Eq16 全图面积分母而非旧 valid 点均值；继承旧 LiDAR 衰减",
+    "evidence_boundary": "稀疏有效像素比例会改变量级，不能据相同逆深度残差断言影响小"
+  },
+  "other_active_24_terms": {
+    "inverse_depth_smoothness": {
+      "formula": "原 kornia.losses.inverse_depth_smoothness_loss((1/(depth+1e-5))[None],GT[None])",
+      "weight": 0.1,
+      "config_key": "lambda_inv_depth"
+    },
+    "velocity_smoothness": {
+      "formula": "原 kornia.losses.inverse_depth_smoothness_loss(combined_v_map[None],GT[None])",
+      "weight": 0.1,
+      "config_key": "lambda_v_smooth",
+      "map": "combined feature / combined alpha，不是单独 static velocity 图"
+    },
+    "combined_opacity_entropy": {
+      "formula": "-mean_HW[o*log(o)]，o=clamp(combined_alpha,1e-6,1-1e-6)",
+      "weight": 0.05,
+      "config_key": "lambda_opacity_entropy",
+      "not_additional": "static_lambda_opacity_entropy 配置虽非零，24 train 无实际调用，不额外增加 static 熵"
+    }
+  },
+  "nps": {
+    "function": "直接调用当前未改动 paper_losses.nps_loss；不复制或重归一化公式",
+    "enabled_key": "hybrid_nps_enabled",
+    "weight": 0.01,
+    "config_key": "paper_lambda_nps",
+    "map_source": "render_pkg.static_feature[1:] / static_alpha.clamp_min(EPS)",
+    "formula_policy": "四轴向一像素邻域、两棋盘奇偶、向最近静态像素中心的 Euclidean 距离权重、sum 不 mean、忽略图像边缘无效邻居",
+    "flag_off": "不调用函数或新生成距离图，权重 0；与 SGCM flag 正交组成四臂",
+    "diagnostic": "记录 raw/weighted loss 和梯度 L2/mean abs/max abs/finite，之后判断真实量级；不根据未测猜测调整权重"
+  },
+  "inactive_not_restored": [
+    "calculate_weighted_loss(static_alpha/static_v_map) 的 loss += 被注释",
+    "TV/content/style/classifier/object/3D neighborhood 分类目标被注释",
+    "lambda_opa=0；无另加 opacity 项",
+    "静态 alpha 单独熵无活跃调用"
+  ],
+  "diagnostic_contract": {
+    "scalar_logs": "每项未加权/加权/数值权重，均为 detach 后 Python float；total finite 检查失败时停止",
+    "gradient_logs": "autograd.grad(retain_graph=True, create_graph=False)，不 stochastic 采样，不调用 backward 或 optimizer，不累积 leaf parameter.grad",
+    "retained_gradient_protection": "autograd.grad 会触发 retain_grad hooks；自动恢复 named_inputs 的 .grad 对象与值。调用方必须额外传 renderer viewspace_points 等其他 retained Tensor 至 preserve_grad_tensors",
+    "rewrite_comparison": "compare_objective_gradients 比较同一前向中的参考/候选加权标量、各命名输入梯度与梯度差 L2；短步日志是待 GPU 首步核验，不额外启动训练",
+    "rng": "组合与梯度诊断无随机操作；CPU 核验 Torch/Python/NumPy RNG 不变，实际 runner 负责评价和 checkpoint 的 RNG 隔离"
+  },
+  "validation_boundary": "独立 CPU 数值/梯度一致性通过不证明分层质量、完整 shadow 预处理、真实渲染 kernel 的梯度量级或 30k 训练结果",
+  "execution": {"cpu_preparation_only": true, "gpu_training_started": false, "checkpoint_loaded": false}
+}

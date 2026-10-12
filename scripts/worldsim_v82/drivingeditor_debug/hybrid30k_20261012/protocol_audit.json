@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012",
+  "run_id": "r1",
+  "checked_at_utc": "2026-10-12 15:38:10 UTC",
+  "state": "cpu_input_audit_passed_launch_not_executed",
+  "scope": {
+    "local_policy_only": true,
+    "remote_actions": "只读SSH，PIL/NumPy，CUDA_VISIBLE_DEVICES=，线程1",
+    "remote_files_modified": false,
+    "torch_renderer_imported": false,
+    "large_checkpoint_loaded": false,
+    "new_gpu_steps": 0,
+    "downloaded_assets": false,
+    "automation_restarted": false
+  },
+  "inspected_sources": {
+    "repository": "C:/Users/dengyunlong/Documents/Codex/2026-10-12/w/work/drivingeditor_resume/repo_active",
+    "staging": "C:/Users/dengyunlong/Documents/Codex/2026-10-12/w/work/drivingeditor_hybrid30k",
+    "files": [
+      "AGENTS.md",
+      "docs/v82/DRIVINGEDITOR_DEBUG_HANDOFF.md",
+      "docs/v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md",
+      "docs/v82/DRIVINGEDITOR_SV_RESUME.md",
+      "project_pipeline/run_paper50k_training.py",
+      "project_pipeline/finalize_paper49_data.py",
+      "project_pipeline/validate_paper_actor.py",
+      "configs/previous_50k.yaml",
+      "legacy/train_author.py",
+      "source/train.py",
+      "source/utils/paper_losses.py",
+      "source/utils/paper_checkpoint.py",
+      "source/scene/gaussian_model.py",
+      "source/scene/paper_sgcm.py"
+    ],
+    "current_session_overrides": "新hybrid30k协议替代旧SV2k计划；旧docs内容仅历史证据，不授权恢复。",
+    "remote_camera_helpers": [
+      "/root/autodl-tmp/drivingeditor_repro/DrivingEditor-paper/utils/camera_utils.py",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/camera_utils.py"
+    ]
+  },
+  "primary_scene": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "status": "all49_actual_inputs_checked",
+    "formal_training_ready": {
+      "status": "ready",
+      "contract": "历史Single-camera paper-method50k pilot from step0；只认证原输入封存，不能自动替代新hybrid30k源码/launcher验收"
+    },
+    "directories": {
+      "image/image_0": 49,
+      "sky/sky_0": 49,
+      "dynamic_masks/dynamic_mask_0": 49,
+      "dynamic_image/dynamic_image_0": 49,
+      "mask/mask_0/Annotations": 49,
+      "calib": 49,
+      "pose": 49,
+      "velodyne": 49
+    },
+    "frame_ids": {
+      "first": "0017000",
+      "last": "0017048",
+      "exact_matching_sets": true
+    },
+    "dimensions": {
+      "all49_source_rgb_sky_body_instance_dynamic_wh": [
+        1920,
+        1280
+      ],
+      "resolution": -1,
+      "resolution_scale": 4,
+      "actual_helper_formula": "global_down=1; scale=4; resolution=(int(orig_w/scale),int(orig_h/scale))",
+      "confirmed_output_wh": [
+        480,
+        320
+      ],
+      "confirmed_output_hw": [
+        320,
+        480
+      ],
+      "fixed32_used": false
+    },
+    "actual_image_checks": {
+      "status": "passed",
+      "binary_body_masks": true,
+      "binary_sky_masks": true,
+      "body_matches_deva_instance154": true,
+      "dynamic_rgb_exact_source_rgb_times_body": true,
+      "all49_actor_visible": true,
+      "body_area_pixels_min": 3673,
+      "body_area_pixels_max": 97870,
+      "legacy_red_channel_body_pixels_excluded_source_resolution": 719
+    },
+    "source_manifest_checks": {
+      "static_validation": "PASS",
+      "dynamic_actor_validation": "passed",
+      "actor_preparation": "ready",
+      "actor_selection": "visually_reviewed",
+      "sgcm_ground_support": "ground_support_passed",
+      "static_initialization_points": 600000,
+      "actor_count": 1,
+      "actor_real_lidar_points": 36406,
+      "actor_points_per_frame_min": 59,
+      "actor_points_per_frame_max": 1565,
+      "empty_body_frames": 0,
+      "visible_without_lidar_frames": 0,
+      "ground_inlier_cells": 2048,
+      "ground_rmse_m": 0.04930535709626185,
+      "normalization": "SGCM须读取实际当前Scene loader PCA/isotropic similarity，不能把旧transform或.1 scale硬编码为本次新launch验证"
+    },
+    "historical_input_boundaries": [
+      "银色轿车body-only；raw27..48车尾被图像边界截断但没有真实完全消失",
+      "GT/raw native标签仅审计，未建立真实M-detector motion输出",
+      "shadow labels不存在",
+      "选择和点投影存在adapter选择/少量static污染见证；不认证论文完整预处理"
+    ]
+  },
+  "input_roles": [
+    {
+      "asset": "FRONT RGB 与标定/pose/timestamp",
+      "role": "训练合法观测与同帧重建目标",
+      "provenance": "原Waymo49连续raw帧，已有官方转换CPU验证",
+      "restriction": "当前全部49用于训练；评价是all-observed"
+    },
+    {
+      "asset": "LiDAR velodyne与points3d.ply",
+      "role": "训练几何/初始化",
+      "provenance": "真实传感器点；600k seed0有放回采样；TOP按SDK pixel pose补偿",
+      "restriction": "binary第6列是range-image index而非逐点时间；不能二次去畸变或猜scan偏移"
+    },
+    {
+      "asset": "dynamic_masks/dynamic_mask_0",
+      "role": "训练body alpha及RGB/static mask",
+      "provenance": "DEVA/SAM categorical ID154，经视觉核对；49实际PNG identity通过",
+      "restriction": "body-only，不包含shadow；binary mask本身并非GT box或motion-detector输出"
+    },
+    {
+      "asset": "dynamic_image/dynamic_image_0",
+      "role": "masked observed RGB目标",
+      "provenance": "实际逐帧精确等于源RGB×body binary",
+      "restriction": "用canonical mask；不以红通道非零替代mask以免丢黑车像素"
+    },
+    {
+      "asset": "sky/sky_0",
+      "role": "训练sky观测mask",
+      "provenance": "已有真实图像sky分割；本次49 binary/尺寸核对通过",
+      "restriction": "不是编辑GT"
+    },
+    {
+      "asset": "points3d_dynamic_0.ply",
+      "role": "训练actor几何/SGCM Hd支持",
+      "provenance": "body mask投影的同帧真实LiDAR；2px/.3m zbuffer及.5m component属于adapter",
+      "restriction": "不得称M-detector分离；body/shadow外观mask不自动等于3D几何"
+    },
+    {
+      "asset": "Waymo GT/native point labels、3D boxes、raw track identity",
+      "role": "身份核对和初始化污染/actor geometry审计控制",
+      "provenance": "交接与scene8验证中的物理标签",
+      "restriction": "不成为方法在线QUERY输入；不拿GT框清洗训练点认证paper复现；GT辅助身份selection/拒绝的准备角色须披露"
+    },
+    {
+      "asset": "shadow",
+      "role": "当前缺失输入",
+      "provenance": "未产生Detect-AnyShadow/LSTN真实shadow标签；通用SAM body mask不等价",
+      "restriction": "不下载或伪造，四臂共享缺口并在质量解释中披露"
+    },
+    {
+      "asset": "M-detector motion labels",
+      "role": "当前缺失论文预处理输出",
+      "provenance": "已有native adapter/core编译不代表detector构造/处理扫描/标签完成",
+      "restriction": "本turn不启动detector，不把native GT CAR/ROAD标签冒称预测"
+    }
+  ],
+  "secondary_scene": {
+    "original": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0008_023_071",
+      "rgb_frames": 49,
+      "sky_masks": 0,
+      "body_masks": 0,
+      "dynamic_rgb": 0,
+      "formal_ready": false,
+      "status": "原目录不可训练"
+    },
+    "v1": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0008_023_071_fresh30k_v1",
+      "rgb_sky_body_dynamic_calib_pose_velodyne_counts": 49,
+      "actor_ply_points": [
+        8612,
+        34062
+      ],
+      "actor_preparation": "built_pending_validation",
+      "formal_ready": false,
+      "status": "不采用较旧准备版本"
+    },
+    "v2": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0008_023_071_fresh30k_v2_groundonly",
+      "rgb_sky_body_dynamic_calib_pose_velodyne_counts": 49,
+      "source_wh": [
+        1920,
+        1280
+      ],
+      "frame_ids": [
+        "0008023",
+        "0008071"
+      ],
+      "actor_count": 2,
+      "actor_descriptions": [
+        "blue_GMC_pickup",
+        "gray_Jeep_SUV"
+      ],
+      "actor_real_lidar_points": [
+        8592,
+        34062
+      ],
+      "actor_validation": "PASS",
+      "all_ply_vertices_exact_real_sensor_subset": true,
+      "all_temporal_properties_exact": true,
+      "binary_union_and_rgb_exact": true,
+      "gt_3d_boxes_used_to_filter_training_points": false,
+      "gt_label_role": "Diagnostics only; fail rather than silently filter unexpected geometry",
+      "m_detector_used": false,
+      "shadow_supervision": "absent",
+      "body_scope": "两被审阅actor body；保留stationary beige lead sedan",
+      "geometry_change": "全部某actor某frame点无above-ground return时，按已有static ground .15m tolerance记录visible_without_lidar；不是GT逐点筛选",
+      "formal_ready": false,
+      "cpu_input_validation": {
+        "status": "PASS",
+        "training_ready": false,
+        "reason": "原CPU报告是后续mask/actor准备前的旧snapshot，需新合同消歧"
+      },
+      "sgcm_ground_receipt_present": false,
+      "status": "可作后续确认候选；不自动训练或排队"
+    },
+    "new_scientific_audit_this_turn": false,
+    "usage": "scene17开发四臂先完成；scene8确认的臂范围与budget后续明确，不自动再生成120k队列"
+  },
+  "legacy_schedule_findings": {
+    "reset": {
+      "source": "legacy/train_author.py densification_and_optimization helper",
+      "observed": "static reset在densification condition外，15k后每3k仍执行",
+      "history": "saved30k opacity<=.01，更新前scalar与保存后约9.98/10.48dB分属不同状态",
+      "root_choice": "四臂共同限制iteration<densify_until_iter，不认证作者已使用此调度或已解决分层"
+    },
+    "static_time_velocity": {
+      "observed": "24实现仍学习_t/_scaling_t/_velocity，SHM运动和temporal opacity；lambda_t_reg=.1,lambda_v_reg=.01",
+      "choice": "保留活跃time/velocity与static RGB；不hard-freeze；NPS另加原公式"
+    },
+    "lidar": {
+      "author24": "有效稀疏像素inverse-depth L1 mean ×lambda_lidar ×exp(-iter/8000*lidar_decay)",
+      "hybrid": "当前Eq16 inverse-depth residual/fullHW ×paper_lambda_depth=.1，并恢复相同exp decay",
+      "boundary": "valid-count mean与fullHW不等价，稀疏比例改变梯度量级；共同显式改写，记录valid count和weighted scalar"
+    }
+  },
+  "launcher_requirements": [
+    "新独立hybrid30k入口；不能直接调用硬编码50k或start_paper50k_pipeline.py。",
+    "将previous_50k作为来源参考，不原样启动；start_checkpoint=null，iterations与position_lr_max_steps均30000，三个保存/评价列表精确[10000,20000,30000]。",
+    "paper_method=true保留full bundle，hybrid_method=true选hybrid目标；目标代码不再只由paper_method分支控制。",
+    "严格锁定四臂同base的resolved config；仅paper_sgcm_enabled/hybrid_nps_enabled两开关变化。",
+    "G10/GN11必须sgcm_guard_enabled=true；C00/N01不激活SGCM lineage，避免坏实现对照。",
+    "新run目录为空、不得覆写历史run；GPU启用前CPU preflight不导入renderer/分配CUDA。",
+    "所有臂保存static/dynamic/env完整模型与Adam、training_state/RNG/sampler/EMA/SGCM lineage；event complete须全49评价成功。",
+    "optimizer、SGCM、reset之后用同checkpoint参数评价；评价隔离并恢复RNG；旧更新前scalar另列。",
+    "检查实际camera dimensions W480H320、49train/0test、初始点数/变换与source-frame identities；cam_num配置不能冒称四摄像头实际存在。",
+    "首次GPU首步核验真实loss账目/backward/初始化配对、模块禁用不调用，确认完整10k/20k/30k events后逐臂串行。",
+    "记录SGCM准入/谱系/作用区统计及NPS梯度量级；NPS sum/.01不私改成mean或auto weight。",
+    "重查GPU、cgroup、可用磁盘/持久存储；旧五checkpoint18GiB门槛不适用于12 complete events。"
+  ],
+  "pending_validation": [
+    "最终hybrid源码整合、CPU loss/SGCM/checkpoint小模型检查由对应agent/root执行，本文件不代填通过。",
+    "实际GPU环境/renderer/backward与资源适配待用户开GPU，当前未执行。",
+    "新full checkpoint谱系与中断恢复一致性需实际run节点验证；不加载旧GB checkpoint。",
+    "scene8新输入封存与SGCM factory readiness尚未完成。"
+  ],
+  "resource_policy": {
+    "last_known_cpu_quota": "0.5核/2GiB（旧23:17 inventory）；只读检查线程1",
+    "gpu_for_this_turn": false,
+    "serial_one_arm": true,
+    "checkpoint_budget": "四臂×3完整节点；按实际point cap估算全部12模型/RNG bundle与媒体/原子写临时空间，现有~75GB空闲只作旧snapshot",
+    "checkpoint_retention": "保留三节点全状态，不以视频/PLY代替；不为腾空间删除旧关键资产"
+  },
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V76-F03"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}

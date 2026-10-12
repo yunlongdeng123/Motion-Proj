@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "cpu_validated_pending_gpu_projection_preflight",
+  "method_flag": "paper_sgcm_enabled",
+  "required_guard_flag_for_on_arms": "sgcm_guard_enabled",
+  "guard_default": true,
+  "on_arms": ["G10", "GN11"],
+  "off_arms": ["C00", "N01"],
+  "paper_logic": {
+    "reference": "DrivingEditor Eq8, printed1701/PDF6",
+    "distance_rule_m": {"prune": "d>0.5", "clone": "0.25<d<=0.5", "split": "d<=0.25 and current rendered radius>20px"},
+    "schedule": {"start": 500, "end_exclusive": 15000, "interval": 100, "offset": 50},
+    "region": "existing union of time-aggregated dynamic-LiDAR actor AABBs in first-vehicle frame, extended to fitted ground and margin0.25m",
+    "ground": "existing static LiDAR lower-envelope deterministic plane fit; no new flat-plane fallback",
+    "actual_meter_to_model_scale": 0.1,
+    "actual_dr_model": 0.05,
+    "resource_policy": {"max_net_additions_per_step": 10000, "max_static_points": 3000000}
+  },
+  "addition_eligibility": {
+    "input": "complete Scene.getTrainCameras() collection with actual timestamps, world_view_transform and full_proj_transform",
+    "static_geometry": "exact existing static SHM means at each training timestamp; static renderer time_shift=None",
+    "temporal_prefilter": "exp(-0.5*((t_center-t_view)/sigma_t)^2)>0.05",
+    "alpha_peak_bound": "opacity*marginal>=1/255",
+    "projection": "center row-vector projection has positive clip_w, view_depth>0.2model units and NDCxy in[-1,1]",
+    "split": "parent and both proposed moment-matching children must pass at least one actual training view",
+    "type": "conservative training-view support proxy",
+    "limitations": ["no occlusion test", "not exact per-Gaussian raster contribution", "center-only gate can reject useful border footprints", "a point not admitted is not evidence for RGB-noise causality"]
+  },
+  "contrib_semantics": {
+    "verified_source": "rasterize_points.cu out_contrib{1,H,W}; rasterizer_forward.cu n_contrib[pix_id]=last_contributor",
+    "meaning": "per-pixel last contributor sequence index",
+    "may_slice_by_gaussian": false,
+    "used_for_admission": false
+  },
+  "clone_policy": {
+    "limit": "one SGCM clone for each initial source lineage",
+    "same_step": "at most one eligible representative per lineage, stable descending current-radius priority",
+    "inheritance": "SGCM clone/split and generic clone/split all inherit source lineage and spent state",
+    "topology": "metadata appended and pruned by exact source-parent/current-row indices through optimizer-aware methods",
+    "optimizer": "old survivor moments and accumulated statistics retained; new children moments zero",
+    "resume": "guarded resume rejects missing/misaligned lineage metadata"
+  },
+  "checkpoint": {
+    "model_capture_tuple_length": 18,
+    "optimizer_optional_payload_key": "sgcm_lineage_v1",
+    "payload_fields": ["schema_version", "lineage_ids", "clone_blocked"],
+    "off_arm_capture": "original legacy capture semantics; no lineage payload"
+  },
+  "integration": {
+    "patches": ["patch_sgcm_source(text)", "patch_gaussian_source(text)"],
+    "helper_destination": "scene/hybrid_sgcm_helpers.py",
+    "factory_call": "create_sgcm_controller(args.source_path,args,training_views=scene.getTrainCameras(),gaussians=gaussians)",
+    "refine_call": "paper_sgcm.refine(gaussians,radii[:end_idx],iteration,visibility_filter=visibility_filter[:end_idx])",
+    "disabled_source_patch": "enabled=False returns exact original text, including original newline bytes",
+    "rng": "guard and clone selection introduce no RNG calls"
+  },
+  "verification": {
+    "cpu_only": true,
+    "cpu_regression_cases_passed": 18,
+    "eligible_clone_point_counts": [2, 3, 3, 3, 3],
+    "actual_geometry": {
+      "hd_extent_anchor_m": [16.487246349423003, 21.857182029202704, 2.672576548837386],
+      "hd_xy_area_m2": 360.36474461964633,
+      "ground_rmse_m": 0.04930535709626185,
+      "ground_inlier_cells": 2048
+    },
+    "actual_region_mask_measurement": {
+      "frames": ["0017000", "0017024", "0017048"],
+      "render_width_height": [480, 320],
+      "mask_coverage": [1.0, 1.0, 1.0],
+      "projected_hd_convex_envelope_to_mask_area_ratio": [7.448979591836735, 17.412507701786815, 138.79367469879517],
+      "maximum_camera_vs_calibration_projection_error_px": 0.00027854271615979087,
+      "scope": "near-clipped projection of time-aggregated Hd; no Gaussian checkpoint, occlusion or RGB contribution measured"
+    },
+    "actual_gpu_projection_preflight_required": true,
+    "scientific_boundary": "CPU eligibility/topology correctness does not establish image-quality improvement or RGB-noise causal explanation"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "status": "READY_WAITING_FOR_USER_GPU",
+  "task_id": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012",
+  "run_id": "r1",
+  "repository": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/frozen_repository",
+  "arms": [
+    "C00",
+    "G10",
+    "N01",
+    "GN11"
+  ],
+  "iterations_each": 30000,
+  "iterations_total": 120000,
+  "checkpoint_iterations": [
+    10000,
+    20000,
+    30000
+  ],
+  "old_SV_plan": "retained, superseded, not queued",
+  "GPU_started": false,
+  "checkpoint_loaded": false,
+  "changed_files": [
+    "train.py",
+    "utils/paper_checkpoint.py",
+    "scene/paper_sgcm.py",
+    "scene/gaussian_model.py"
+  ],
+  "added_files": [
+    "utils/hybrid30k_losses.py",
+    "utils/hybrid30k_runtime.py",
+    "utils/hybrid30k_metrics.py",
+    "scene/hybrid_sgcm_helpers.py",
+    "utils/hybrid30k_static_time.py"
+  ],
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V76-F03"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null,
+  "CPU_integration_checks": 7,
+  "SGCM_CPU_cases": 18,
+  "training_module_CPU_import": "PASS",
+  "GPU_first_forward_backward_verified": false
+}
