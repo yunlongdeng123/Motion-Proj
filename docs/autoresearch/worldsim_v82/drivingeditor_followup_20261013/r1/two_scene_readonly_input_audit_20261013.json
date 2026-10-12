@@ -1,0 +1,228 @@
+{
+  "created_utc": "2026-10-12T19:04:09.509599+00:00",
+  "host": "wm-vgpu-1011",
+  "gpu_used": false,
+  "remote_written": false,
+  "resources": {
+    "disk_total_bytes": 536870912000,
+    "disk_free_bytes": 70061006848,
+    "disk_free_GiB": 65.24939727783203,
+    "audit_threads": 1,
+    "cpu.max": "1600000 100000",
+    "memory.max": "66571993088",
+    "memory.current": "13497585664",
+    "cpuset.cpus.effective": "0-127",
+    "effective_cpu_quota": 16.0
+  },
+  "scene0008": {
+    "status": "PASS_READONLY_INPUT_CONSISTENCY",
+    "training_ready": false,
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0008_023_071_fresh30k_v2_groundonly",
+    "selection_path": "/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/candidate_v2/dual_actor_selection.reviewed.json",
+    "inventory": {
+      "file_count": 608,
+      "bytes": 375331673
+    },
+    "frame_ids": [
+      "0008023",
+      "0008024",
+      "0008025",
+      "0008026",
+      "0008027",
+      "0008028",
+      "0008029",
+      "0008030",
+      "0008031",
+      "0008032",
+      "0008033",
+      "0008034",
+      "0008035",
+      "0008036",
+      "0008037",
+      "0008038",
+      "0008039",
+      "0008040",
+      "0008041",
+      "0008042",
+      "0008043",
+      "0008044",
+      "0008045",
+      "0008046",
+      "0008047",
+      "0008048",
+      "0008049",
+      "0008050",
+      "0008051",
+      "0008052",
+      "0008053",
+      "0008054",
+      "0008055",
+      "0008056",
+      "0008057",
+      "0008058",
+      "0008059",
+      "0008060",
+      "0008061",
+      "0008062",
+      "0008063",
+      "0008064",
+      "0008065",
+      "0008066",
+      "0008067",
+      "0008068",
+      "0008069",
+      "0008070",
+      "0008071"
+    ],
+    "frame_count": 49,
+    "camera": "FRONT",
+    "raw_training_range": [
+      23,
+      71
+    ],
+    "author_video_verified_range": [
+      23,
+      51
+    ],
+    "author_training_window_publicly_confirmed": false,
+    "original_WH": [
+      1920,
+      1280
+    ],
+    "render_WH_scale4": [
+      480,
+      320
+    ],
+    "field_counts": {
+      "RGB": 49,
+      "sky": 49,
+      "body_union": 49,
+      "dynamic_RGB": 49,
+      "DEVA": 49,
+      "pose": 49,
+      "calibration": 49,
+      "LiDAR": 49,
+      "timestamp": 49,
+      "raw_metadata": 49
+    },
+    "model_time_range": [
+      -0.48,
+      0.48
+    ],
+    "model_interval": 0.02,
+    "physical_raw_interval_median_s": 0.09999,
+    "fixed_pose_anchor": "0008033",
+    "raw_cache": {
+      "path": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10094743350625019937_3420_000_3440_000_with_camera_labels.tfrecord",
+      "exists": true,
+      "bytes": 939266702
+    },
+    "static_PLY_vertices": 600000,
+    "static_PLY_role": "World-space real LiDAR seed mixture; actual loader removes only points within strict0.1m of selected actor priors.",
+    "actor_PLY_vertices": [
+      8592,
+      34062
+    ],
+    "actor_body_nonempty_frames": [
+      [
+        "0008023",
+        "0008024",
+        "0008025",
+        "0008026",
+        "0008027",
+        "0008028",
+        "0008029"
+      ],
+      [
+        "0008023",
+        "0008024",
+        "0008025",
+        "0008026",
+        "0008027",
+        "0008028",
+        "0008029",
+        "0008030",
+        "0008031",
+        "0008032",
+        "0008033",
+        "0008034",
+        "0008035",
+        "0008036",
+        "0008037",
+        "0008038",
+        "0008039",
+        "0008040",
+        "0008041",
+        "0008042",
+        "0008043",
+        "0008044",
+        "0008045",
+        "0008046",
+        "0008047",
+        "0008048",
+        "0008049",
+        "0008050",
+        "0008051",
+        "0008052",
+        "0008053",
+        "0008054",
+        "0008055",
+        "0008056",
+        "0008057",
+        "0008058",
+        "0008059",
+        "0008060",
+        "0008061"
+      ]
+    ],
+    "actor_instance_ids": [
+      77,
+      82
+    ],
+    "real_sensor_subset_and_temporal_properties_exact": true,
+    "union_and_dynamic_RGB_exact": true,
+    "canonical_full_mask_available": true,
+    "body_pixels_min_max": [
+      0,
+      249964
+    ],
+    "red_channel_zero_body_pixels": 809,
+    "sky_body_overlap_pixels": 0,
+    "calibration_pose_frames_checked": 49,
+    "preserved_actor": {
+      "raw_track_id": "vBOasuXpjI7h7d-X_VEQdA",
+      "DEVA_instance_id": 153,
+      "union_overlap_pixels": 0,
+      "pixels_min_max": [
+        236345,
+        237069
+      ]
+    },
+    "shadow_supervision": "absent",
+    "m_detector_used": false,
+    "preprocessing_caveat": "v2 removes pickup/raw29 ground-only20-point cluster; visible body mask remains. No GT label filtering is introduced.",
+    "present_readiness_markers": [],
+    "missing_readiness_markers": [
+      "transform_matrix.txt",
+      "sgcm_transform_matrix.txt",
+      "full_loader_validation.json",
+      "sgcm_input_validation.json",
+      "formal_training_ready.json"
+    ],
+    "scope": "Read-only file/CPU consistency audit. No actual dataset reader, GaussianModel, checkpoint, render, train, GPU or source mutation."
+  },
+  "red_candidate": {
+    "status": "IDENTITY_UNKNOWN_NO_FORMAL_INPUT",
+    "scene_key": "urban_red_crossing",
+    "clip": "20241214-005533",
+    "red_car_identity_verified": false,
+    "identity": "unknown",
+    "historical_search_status": "redcar_batch5_cpu_visual_review_complete_no_strong_first_record_candidate_budget_stopped",
+    "full_temporal_identity_verified": false,
+    "formal_source_path": null,
+    "raw_tfrecord_match": null,
+    "preview_only": true,
+    "limitation": "Existing search examines first-record thumbnails; it cannot exclude later windows or identify a whole segment.",
+    "next_step": "Use confirmed screenshot identity or existing local caches before creating49-frame inputs; no new batch/download is started by this audit."
+  }
+}

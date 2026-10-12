@@ -1,0 +1,508 @@
+{
+  "primary_gate": {
+    "baseline_arm": "C00",
+    "candidate_arm": "GN11",
+    "reference_scene": "scene0017_000_048",
+    "reference_checkpoint": 30000,
+    "candidate_checkpoint": 30000,
+    "secondary_arms": [
+      "G10",
+      "N01"
+    ],
+    "reason": "GN11与C00是最终通过条件；G10/N01用于定位单模块与联合效果，不拿某臂最优10k/20k替换30k。",
+    "baseline_reference": {
+      "source": "此前一次只读30k核验，来自event.frames[].hybrid_metrics",
+      "values": {
+        "full_composite_psnr_db": 34.062387964584204,
+        "actor_composite_psnr_db": 32.7312303175931,
+        "static_bg_psnr_db": 34.015428609327465,
+        "outside_alpha_d_mean": 0.00017097519185900099
+      },
+      "independent_test": false
+    },
+    "threshold": {
+      "psnr_drop_db_proposed": 1,
+      "source": "agent default proposed via optional asynchronous question; no human threshold answer received",
+      "human_threshold_confirmation_received": false,
+      "qualitative_threshold": "明显持续视觉或静态性退化",
+      "numeric_rule": "delta=GN11-C00；full或actor全49等权PSNR任一delta < -1.0 dB即严重数值回退；按未四舍五入值判断",
+      "proposed_candidate_boundaries_db": {
+        "full_severe_if_below": 33.062387964584204,
+        "actor_severe_if_below": 31.731230317593102
+      },
+      "application": "缺省采用 full 或 actor 全49帧等权 PSNR 下降超过1dB，或持续明显的分层/静态时间视觉退化。若用户另给规则，更新后执行。不能把此缺省写成人工阈值确认。",
+      "statistical_boundary": "单seed单scene没有已知统计噪声分布。持平/波动只能描述本次工程验收，不能称统计等价、显著性或通用CUDA噪声上界。"
+    },
+    "outcomes": {
+      "waiting": "GN11或其他臂未终态；仅CPU准备，不提前启动两个新场景。",
+      "contract_failed": "资产、配置、配对、有限性或保存合同失败。停止后续新增训练，先判定工程错误，不冒称方法科学失败。",
+      "severe_regression": "数值严重回退或明确持续视觉/静态性退化；禁止新scene训练，不自动重跑坏实现、改权重、加seed或追加loss网格；分析并交付后按授权关机。",
+      "expected": "协议完整，严重回退条件未触发，完整49帧与静态时间视觉复核无持续明显退化；可按已授权范围串行训练两scene的GN11。",
+      "unresolved_quality": "均值满足但坏帧/静态性证据尚无法合理判读；先检查已有全帧资产与单模块证据，不把未知写成通过，也不因此自动新增训练。"
+    },
+    "result": {
+      "status": null,
+      "numeric_pass": null,
+      "visual_review_status": null,
+      "agent_engineering_verdict": null,
+      "human_verdict": null,
+      "failure_ledger_delta": "none"
+    }
+  },
+  "pairing_contract": {
+    "required": [
+      "四臂30k终态和10k/20k/30k完整节点",
+      "C00/GN11相同scene/root input文件、49唯一FRONT identity及timestamp",
+      "相同seed0/初始化规则/静态和动态先验/当前loader PCA合同",
+      "共同resolved config除arm/output/两个module flag外相同",
+      "每步1..30000 frame_id/time_shift/各optimizer LR序列对应",
+      "评价preserve_rng，checkpoint带完整RNG与独立sampler状态",
+      "相同W480 H320 FP32前向；未为不同臂另改mask/裁剪/分辨率",
+      "optimizer/reset/SGCM后同参数评价与complete event"
+    ],
+    "config_allowlist_differences": [
+      "hybrid_arm",
+      "model_path",
+      "paper_sgcm_enabled",
+      "hybrid_nps_enabled"
+    ],
+    "forbidden": [
+      "旧50k horizon恢复",
+      "saved30k+2000步SV",
+      "坏SGCM implementation重跑作为对照",
+      "不同臂选不同checkpoint或好帧",
+      "把参数/视频/PLY存在等同于完整恢复通过"
+    ],
+    "checkpoint_files": [
+      "chkpnt{step}.pth",
+      "dynamic_chkpnt{step}.pth",
+      "env_light_chkpnt{step}.pth",
+      "training_state{step}.pth"
+    ],
+    "checkpoint_header_checks": "event.complete；4文件非零size等于event；49 PNG四通道及raw NPZ/header和固定pose static_time资产齐全",
+    "restoration_claim": "只读stat/header通过不认证完整恢复；完整恢复未实际执行则receipt中restoration_verified=false",
+    "initialization_evidence": "利用已有配置、先验、loader变换与首步/初始化receipt；缺直接保存参数比较时不补写CUDA逐位相同",
+    "sampler_source": "paired_steps.jsonl逐行iteration/frame_id/time_shift/learning_rates；独立CameraSampler不受拓扑RNG消耗影响"
+  },
+  "metrics": {
+    "outer_event_pointer": "frames[].hybrid_metrics",
+    "aggregation": "逐帧区域MSE/PSNR之后49帧等权；不是pooled MSE再变PSNR；pooled如需另列",
+    "scope": "all-observed training-view reconstruction，49全用于训练，无独立test或edited GT",
+    "key_paths": {
+      "full_composite_psnr_db": "regions.full.composite_psnr_db",
+      "actor_composite_psnr_db": "regions.actor.composite_psnr_db",
+      "static_bg_psnr_db": "regions.non_sky_outside_actor.static_psnr_db",
+      "outside_alpha_d_mean": "regions.non_sky_outside_actor.alpha_d_mean",
+      "outside_dynamic_rgb_support": "regions.non_sky_outside_actor.dynamic_RGB_support_8bit_gt2",
+      "outside_static_composite_difference": "regions.non_sky_outside_actor.composite_static_abs_mean"
+    },
+    "region_definition": {
+      "full": "全图153600像素",
+      "actor": "canonical body mask",
+      "static_bg": "~body_mask & ~sky_mask；body外可能有shadow，不能称真实完整static GT"
+    },
+    "numeric_semantics": {
+      "rgb": "stored FP32 RGB先clip[0,1]再用float64算MSE/PSNR",
+      "alpha": "raw unmasked动态alpha；不先乘body mask",
+      "raw_npz": "保存未clip RGB/alpha；hybrid_raw目录名不表示PSNR未clip",
+      "psnr_floor": "metrics.py使用max(MSE,1e-12)",
+      "paper_metrics": "paper_region_metrics的static ROI包括sky，与non_sky_outside_actor不同，不能互换"
+    },
+    "requested_outputs": [
+      "4主指标的C00/GN11值与signed delta",
+      "full/actor/static_bg每帧配对delta的median/p10/min及计数",
+      "完整49逐帧表，降幅>1dB帧ID列表",
+      "各指标最差帧及不利视觉案例，单列事后挑选",
+      "所有49源帧完整保留，不删坏帧"
+    ]
+  },
+  "visual_and_bad_frame_review": {
+    "full_frame_retention": 49,
+    "prespecified_local_indices": [
+      0,
+      10,
+      17,
+      20,
+      24,
+      30,
+      40,
+      48
+    ],
+    "synchronized_channels": [
+      "GT",
+      "composite",
+      "static",
+      "dynamic",
+      "raw alpha_d",
+      "raw alpha_s"
+    ],
+    "synchronized_view": "所有臂同帧/同ROI/同尺度，RGB同clip/显示范围，alpha使用同0..1色标；不按每图自动归一化制造改善",
+    "inspect": [
+      "actor/core/inner-boundary色彩、车身形状、轮胎与细节",
+      "静态道路/横道线/树木彩噪和车形残片",
+      "body外动态RGB支撑/alpha泄漏与移除局部性",
+      "跨相邻源帧的闪烁、持续崩坏和late-frame截断"
+    ],
+    "persistence_definition": "同类明显退化在多个相邻源帧或多个不同固定pose timestamp出现，30k仍在；记录真实frame IDs、区域、通道、时间节点，不能仅以压缩/单像素max或单帧瞬态判持续",
+    "aggregate_boundary": "均值好也必须审查最差帧/连续不利帧；单个不利帧是复核触发，不自动当统计科学否定",
+    "qualitative_judgment": "root进行有实际图像证据的工程判读，保存具体示例；human_verdict只由用户填写"
+  },
+  "static_time_gate": {
+    "source": "static_time_{step}/summary.json rows及49NPZ",
+    "current_anchor": {
+      "frame_id": "0017010",
+      "model_timestamp": -0.28
+    },
+    "required": "C00/GN11同pose/rays、同49真实model timestamp顺序，不使用各臂挑出的更好anchor",
+    "rgb_keys": [
+      "rows[].static_rgb_MAE_from_anchor",
+      "rows[].static_rgb_max_abs_from_anchor"
+    ],
+    "alpha_key": "rows[].static_alpha_MAE_from_anchor",
+    "raw_stats": [
+      "raw_static_velocity_norm_model_mean",
+      "raw_static_velocity_norm_model_max",
+      "temporal_width_model_mean",
+      "static_SHM_peak_to_peak_displacement_bound_model_max"
+    ],
+    "semantics": "RGB差clip[0,1]后计算，alpha raw；运动统计为raw velocity参数norm及T/pi displacement bound；model units/model time，不冒称物理m/s",
+    "comparison": "报告49时刻等权MAE、最大逐时刻MAE、max_abs及逐timestamp曲线，C00/GN11signed delta与视频同步；10k/20k是过程说明，30k是主gate",
+    "boundary": "fixed pose与其他timestamp是反事实组合，没有对应GT quality score；C00本来随时间变化，不能把非零本身作为GN11失败，也不能只凭raw速度参数大判视觉退化",
+    "baseline_30k": {
+      "rgb_mae_equal_timestamp_mean": 0.02271234677458296,
+      "rgb_mae_max": 0.039399392902851105,
+      "rgb_pixel_abs_max": 0.9410778880119324,
+      "alpha_mae_equal_timestamp_mean": 0.0032108321415298445,
+      "alpha_mae_max": 0.005104334093630314
+    }
+  },
+  "module_diagnostics": {
+    "nps": {
+      "files": [
+        "gradient_diagnostics.jsonl",
+        "paired_steps.jsonl"
+      ],
+      "nodes": [
+        1,
+        1000,
+        10000,
+        15000,
+        20000,
+        30000
+      ],
+      "keys": [
+        "diagnostic[grad_hybrid/nps/static_feature/raw_l2]",
+        "diagnostic[grad_hybrid/nps/static_feature/weighted_l2]",
+        "diagnostic[grad_hybrid/nps/static_feature/weighted_l2_over_static_rgb]",
+        "diagnostic[grad_hybrid/nps/static_feature/ratio_to_static_rgb_valid]",
+        "losses.loss_hybrid_nps_raw",
+        "losses.loss_hybrid_nps_weighted",
+        "losses.loss_hybrid_nps_weight"
+      ],
+      "check": "检查finite/connected、对应node的camera/time_shift及所有已记录输入的梯度量级。ratio_valid=false时不将数值0解释为有效零比率。",
+      "interpretation": "sum型NPS/.01固定，不私改mean或自适应系数；梯度比率仅用于机制分析，无未经证实的巨大/安全阈值。"
+    },
+    "sgcm": {
+      "source": "GN11_training.log的SGCM_STATS JSON（G10可辅助），event.sgcm metadata",
+      "expected_due_steps": {
+        "first": 550,
+        "last": 14950,
+        "count": 145,
+        "step": 100
+      },
+      "keys": [
+        "inside_region",
+        "pruned",
+        "cloned",
+        "split_parents",
+        "points_before",
+        "points_after",
+        "geometric_candidate_clone",
+        "geometric_candidate_split",
+        "excluded_clone_training_view_support",
+        "excluded_split_training_view_support",
+        "excluded_split_child_training_view_support",
+        "excluded_cloned_lineage",
+        "training_view_count"
+      ],
+      "check": "guard=true、完整49实际camera/stamp支持，source-lineage一clone预算/子代spent继承；points_after=points_before-pruned+cloned+split_parents；max_points与max_new_points遵守固定cap",
+      "interpretation": "当前center/temporal-alpha支持是proxy，不能冒称exact contribution；Hd仍原time-aggregated AABB，宽作用区不能直接归因RGB彩噪。",
+      "analysis_if_regression": "同节点G10/N01帮助区分几何增减、NPS梯度与联合代价；先利用已存证据，不重跑坏实现或增加实验网格。"
+    }
+  },
+  "followup": {
+    "trigger": "四臂终态、深色对照资产完整，GN11 gate outcome=expected；不是仅C00用户接受",
+    "arm": "GN11",
+    "new_scene_count": 2,
+    "iterations_each": 30000,
+    "new_total_training_iterations": 60000,
+    "total_authorized_training_if_passes": 180000,
+    "additional_four_arm_matrix": false,
+    "seed_grid": false,
+    "loss_grid": false,
+    "execution": "两个scene顺序执行，同一GPU，seed0/fromscratch；每个独立30k horizon，10k/20k/30k全bundle及49-view/photo/static-time评价",
+    "scene_identity_status": "GMC scene0008 confirmed; red-crossing identity pending",
+    "scene_specs": [
+      {
+        "slot": "structured_scene_A",
+        "description": "棕榈树住宅路口横穿红色 sedan",
+        "scene_name": null,
+        "raw_source": null,
+        "source_frame_window": null,
+        "source_path": null,
+        "frame_ids": null,
+        "anchor_pose_frame": null,
+        "readiness_status": "raw_segment_and_window_not_identified",
+        "training_allowed_now": false,
+        "author_video": "https://github.com/user-attachments/assets/5aae487d-e05e-44ef-9566-e23da980f467",
+        "identity_rule": "只接受结构、车型、连续帧与截图/作者视频匹配的真实 Waymo 输入，不以近似路口替代",
+        "search_now": "先复用全部已有预览，再在独立scratch有界CPU首record搜索；首帧未匹配不排除片段后续帧"
+      },
+      {
+        "slot": "structured_scene_B",
+        "description": "迎面 GMC pickup 与远处 Jeep；银色 Corolla 保留静态",
+        "scene_name": "scene0008_023_071",
+        "raw_source": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10094743350625019937_3420_000_3440_000_with_camera_labels.tfrecord",
+        "source_frame_window": [
+          23,
+          71
+        ],
+        "author_video_verified_window": [
+          23,
+          51
+        ],
+        "author_training_window_publicly_confirmed": false,
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1",
+        "camera_directory": "image/image_0",
+        "frame_ids": [
+          "0008023",
+          "0008024",
+          "0008025",
+          "0008026",
+          "0008027",
+          "0008028",
+          "0008029",
+          "0008030",
+          "0008031",
+          "0008032",
+          "0008033",
+          "0008034",
+          "0008035",
+          "0008036",
+          "0008037",
+          "0008038",
+          "0008039",
+          "0008040",
+          "0008041",
+          "0008042",
+          "0008043",
+          "0008044",
+          "0008045",
+          "0008046",
+          "0008047",
+          "0008048",
+          "0008049",
+          "0008050",
+          "0008051",
+          "0008052",
+          "0008053",
+          "0008054",
+          "0008055",
+          "0008056",
+          "0008057",
+          "0008058",
+          "0008059",
+          "0008060",
+          "0008061",
+          "0008062",
+          "0008063",
+          "0008064",
+          "0008065",
+          "0008066",
+          "0008067",
+          "0008068",
+          "0008069",
+          "0008070",
+          "0008071"
+        ],
+        "anchor_pose_frame": "0008033",
+        "readiness_status": "PASS_CPU_PREPARATION_TRAINING_GATED",
+        "training_allowed_now": false,
+        "actor_DEVA_ids": [
+          77,
+          82
+        ],
+        "preserved_DEVA_id": 153,
+        "author_video": "https://github.com/user-attachments/assets/1e5fc249-94e9-456f-9db5-e32185455a42",
+        "readiness_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_cpu_readiness.json",
+        "cpu_gpu_used": false,
+        "training_ready": false,
+        "training_gates_pending": [
+          "Current silver-scene GN11 user gate",
+          "New scene-specific run_matrix/runtime config and fixed-pose adaptation",
+          "Actual training GaussianModel/view/SGCM guard and lineage binding",
+          "GPU ownership and complete checkpoint runtime validation"
+        ],
+        "readiness_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_cpu_readiness.json"
+      }
+    ],
+    "config_rule": "从本次通过gate的GN11 effective_config取完整配置，冻结目标、权重、SGCM/NPS公式和schedule/LR/seed/point cap/reset；允许按sceneSpec改来源/输出/camera IDs/49frame清单/真实timestamps/anchor/actor先验metadata等必要数据绑定。",
+    "start_checkpoint": null,
+    "other_scene_results_scope": "新scene只有GN11，不能声称该scene上已完成C00/GN11因果消融；报告本scene重建和分层质量及输入差异。",
+    "failures": "某scene工程/质量严重失败则不自动继续另一个scene或开启补训网格；保存与分析，依当前用户条件收口关机。",
+    "start_order": "准备好的 GMC scene0008 先跑，红车场景身份与输入完成后再跑；均须原四臂 GN11 gate 通过",
+    "missing_identity_policy": "GN11通过后可先跑已验证GMC场景；红车不可假替代。搜索预算耗尽仍未知时记录真实数据缺口，完成已有工作后收口，避免无限GPU闲置。不得宣称两场景均完成。"
+  },
+  "independent_runner_adaptation": {
+    "current_code_findings": [
+      {
+        "file": "runtime.py CameraSampler.__init__",
+        "finding": "固定49个camera；只通过camera_id排序，无具体scene17 ID，可复用采样分布但sceneSpec必须提供合法49identity"
+      },
+      {
+        "file": "runtime.py validate_config",
+        "finding": "预算/flags/目标权重锁定可复用；scene-specific input和anchor检查应追加独立schema，不能放宽共同目标"
+      },
+      {
+        "file": "static_time.py:11",
+        "finding": "hardcoded0017010；必须独立版读sceneSpec.anchor_pose_frame与camera目录，拒绝不存在anchor"
+      },
+      {
+        "file": "run_matrix.py check_config/run_arm/main",
+        "finding": "固定四臂与campaign输出root，完成检查硬coded0017010；不能直接main用于两scene，否则自动再跑四臂"
+      },
+      {
+        "file": "prepare_cpu.py",
+        "finding": "source/frozen_repository/parent场景run路径固定；新准备器不能再次从旧50k parent推导目标，必须来自通过gate GN11 resolved config"
+      },
+      {
+        "file": "metrics.py:55",
+        "finding": "固定(3,320,480)，其余region formula可复用；新scene需核验res-1/scale4实际W480H320，不静默更改NPS sum分辨率"
+      },
+      {
+        "file": "build_c00_viewer.py/export_c00_viewer_assets.py",
+        "finding": "viewer anchor fallback0017010、frame索引与输出命名scene-specific；新viewer必须强制manifest指定camera/anchor/实际frame IDs，不以fallback掩盖缺失"
+      }
+    ],
+    "new_files_proposed": [
+      "prepare_followup_cpu.py",
+      "run_scene_gn11.py",
+      "followup_scene_spec.schema.json",
+      "static_time_scene.py",
+      "configs/structured_scene_A_GN11.json",
+      "configs/structured_scene_B_GN11.json"
+    ],
+    "campaign_isolation": "独立followup campaign/frozen checkout；不改当前在训hybrid30k_20261012/frozen_repository、matrix controller或既有events",
+    "runner_arguments": [
+      "--scene-spec <已核验的小JSON>",
+      "--preflight（默认CPU只读，不import renderer或CUDA）",
+      "--run（仅通过gate后由root执行）"
+    ],
+    "scene_spec_fields": [
+      "scene_name",
+      "source_path",
+      "model_path",
+      "camera_directory",
+      "frame_ids[49]",
+      "source_indices[49]",
+      "model_timestamps[49]",
+      "expected_source_wh",
+      "expected_render_wh",
+      "actor_indices/points3d paths/body union及可见性",
+      "anchor_pose_frame",
+      "anchor_timestamp_model",
+      "preview_local_indices",
+      "input_role_and_provenance"
+    ],
+    "anchor_rule": "默认在CPU封存时选择与当前控制同口径的local index10：anchor_pose_frame=实际frame_ids[10]；timestamp取实际camera manifest。若更换规则须预先明确，不能训练后挑好anchor。无scene17字面fallback。",
+    "scene_gate": "每个scene仅GN11模块均true；budget字段等30k；文件输入与sceneSpec frame集合匹配；source_path/source_frame不是只替换显示名称。",
+    "input_validation": [
+      "真实49 RGB/calib/pose/velodyne timestamp与原raw逐一对应",
+      "sky与body mask49套同尺寸/identity，dynamic RGB等于source RGB×canonical union body",
+      "真实各actor PLY与原LiDAR点/时间对应，native GT identity/boxes仅审计角色明示",
+      "actor不在图像时允许真实空mask/零dynamic RGB，缺LiDAR与不在场区分；不强套scene17全49 visible规则",
+      "实际loader PCA/isotropic scale及本scene ground fit/Hd/guard支持重新派生，不能借用scene17 plane/AABB/transform",
+      "sourceW1920H1280与scale4实际W480H320；若不同，不自行改变共同分辨率/权重，而是记录需要确定的数据协议",
+      "body-only与shadow/M-detector缺口继承明确，不能伪造预处理完成"
+    ],
+    "cpu_checks_before_gpu": [
+      "模块导入不初始化CUDA，CPU preflight不会spawn worker",
+      "两个scene真实ID/anchor与frame/stamp能解析且彼此不串scene",
+      "所有目标/LR/seed/density/reset共同字段严格等于通过gate GN11",
+      "小fixture static_time在success/error路径恢复anchor timestamp及preserve_rng",
+      "49真实PNG/mask尺寸/二值/动态RGBidentity与camera/NPZ schema合同",
+      "两actor或空actor帧的denominator/有效帧数明确，RGB/alpha不被premask掩盖",
+      "新runner只启动单GN11、独立输出非空拒绝、checkpoint10/20/30及shutdown路径不会落入旧matrixmain"
+    ],
+    "budget_for_empty_actor_regions": "全图/背景按49视图；actor ROI为0像素时记undefined/null并显式valid-frame denominator，不能把空域伪装PSNR满分或仍冒称49有效actor帧"
+  },
+  "delivery": {
+    "dark_comparison": "4arm×30k×完整49帧与fixed-pose49timestamps，同步同帧/ROI，可看逐帧指标和坏帧；10k/20k分列为过程，不替代最终节点",
+    "evidence_receipt": "结果值、精确JSON keys、aggregation/clamp/raw语义、config/sampler合同、坏帧/视觉解读、NPS/SGCM诊断、gate来源/阈值、GPU资源与未验证边界",
+    "architecture_required": true,
+    "preserve": "完整10/20/30k四文件bundle、rawFP32/PNG、实际输入和日志保持原路径；Git/HTML索引不冒称大型资产全备份",
+    "no_invented_failure": "没有新确立失败时failure_ledger_delta=none；严重退化需区分工程bug/数据问题/资源限制/科学效果再决定failure记录"
+  },
+  "shutdown_contract": {
+    "user_already_authorized": true,
+    "permission_question_needed": false,
+    "severe_path": "停止新增训练→保存原因分析/四臂报告和必要证据→push结果→结束本任务controller/worker→核验无活跃作业→关机",
+    "pass_path": "sceneA与sceneB完成并验收/交付→结果落盘和push→结束本任务controller/worker→核验无活跃作业→关机",
+    "before_power": [
+      "远端与用户交付结果落盘，完整node/index/日志可恢复，root仓库状态push成功",
+      "本任务GPU训练/评价/渲染/分割/数据job已完成或按严重回退条件停止，controller已停且不会再spawn",
+      "读GPU compute/process列表、pid/cmdline及相关CPU数据/报告worker，确认无活跃任务",
+      "检查其他进程和用户无关任务；若存在未完成任务不得误杀或带负载关机，记录具体阻塞",
+      "关机后heartbeat状态按root策略暂停/归档，不能反复尝试重启"
+    ],
+    "boundary": "这是操作状态核验，不是重新向用户申请关机许可；本agent不执行关机",
+    "inspected_vendor_script": "/usr/bin/shutdown",
+    "inspected_vendor_behavior": "先清理 /root/.local/share/Trash，再日志到/proc/1/fd/1，再TERM supervisord；本任务没有Trash清理授权",
+    "chosen_backend": "关机时重新核对 supervisord 的准确PID及cmdline，只执行原脚本的日志和TERM后端，省略Trash删除。当前没有执行任何电源操作。",
+    "verification": "SSH断开不是独立电源状态证据；检查平台停止状态或实例日志，如无法读取平台状态，明确只已发出关机请求。"
+  },
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013",
+  "run": "r1",
+  "updated_utc": "2026-10-12T19:13:02.456691+00:00",
+  "current_matrix_task": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
+  "current_matrix_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
+  "followup_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
+  "ssh_alias": "wm-vgpu-1011",
+  "state": "cpu_preparation_matrix_gate_pending",
+  "gpu_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+  "user_authorization": {
+    "date_local": "2026-10-13",
+    "C00_human_verdict": "符合预期",
+    "keep_hourly_current_four_arm_monitor": true,
+    "four_arm_dark_html_required": true,
+    "if_severe_GN11_regression": "停止额外训练，分析原因，保存和推送结果，再关机",
+    "if_GN11_expected": "逐场景训练两幅截图的其他结构化场景，再关机",
+    "CPU_preparation_now": true,
+    "shutdown_authorized": true,
+    "shutdown_permission_reconfirmation_required": false,
+    "subagent_default": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "max"
+    }
+  },
+  "automation": {
+    "id": "drivingeditor-30k",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "interval_minutes": 60,
+    "unchanged_state": "quiet",
+    "other_automations": "stay paused",
+    "pause_after": "authorized route closed and power operation verified, or a required user decision"
+  },
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F02",
+    "V76-F03"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": {
+    "C00": "用户确认符合预期",
+    "GN11": null
+  }
+}

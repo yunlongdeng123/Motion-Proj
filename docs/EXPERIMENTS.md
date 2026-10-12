@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013 / r1 | 用户接受C00；保留现四臂定时任务，GN11相对C00终态准入与深色报告；条件通过只训截图两场景GN11各30k；scene0008实际CPU reader/49mask/SGCM输入通过，红车身份待定；已授权收口关机、目前额外GPU/电源操作0 | [组件图与后续协议](v82/DRIVINGEDITOR_FOLLOWUP_20261013.md) · [执行规则](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json) · [CPU证据](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/) |
 | WS-V82-DRIVINGEDITOR-HYBRID30K-20261012 / r1 | 24活跃机制继承；C00/G10/N01/GN11从零各30k、每10k完整保存；四臂串行与显存记录，C00完整30k资源/49帧评价已保存并导出深色查看页；静态车位残影与时间变化仍保留，等待其他三臂比较；每小时检查，V82-F02资产保留 | [组件图和30k协议](v82/DRIVINGEDITOR_HYBRID30K_PLAN.md) · [C00终态](autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/C00_30000_summary.json) · [源码与工具](../scripts/worldsim_v82/drivingeditor_debug/hybrid30k_20261012/) |
 | WS-V82-DRIVINGEDITOR-SV-20261012 / r1 | 用户重新授权继续DrivingEditor；新SV联合臂CPU源码准备，真实GPU训练0步；同30k起点与已有B1/S/V对照，保留车体及整体代价 | [组件图和固定协议](v82/DRIVINGEDITOR_SV_RESUME.md) · [准备工具](../scripts/worldsim_v82/drivingeditor_debug/resume_sv_20261012/) |
 | WS-V82-DRIVINGEDITOR-OPACITY-FAILURE-20261012 / r1 | 工程failure与后续默认规则登记；依据既有B1/B2/V/S，新增GPU实验0，不修改历史receipt | [V82-F01](research_failures/entries/V82-F01.md) · [默认完整监督](v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md) |

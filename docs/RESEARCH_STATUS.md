@@ -1,12 +1,12 @@
 # 当前研究状态
 
-更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前task/run为 `WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1`。C00已完整完成30k及10k/20k/30k保存评价，controller2704已自动串行转入G10（02:30读取时8500步）；N01/GN11继续排队。本轮用户要求查看C00动静态效果，已从保存的FP32数组用CPU导出深色离线HTML，未占用训练GPU。完整GPU模型/Adam/RNG恢复与四臂质量增量仍待核验；子agent默认 `gpt-6.1-sol / max`。
+更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前task/run为 `WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1`。C00已完整完成30k及10k/20k/30k保存评价，controller2704已自动串行转入G10（02:30读取时8500步）；N01/GN11继续排队。用户已查看并确认C00动静态分支符合预期；CPU深色离线HTML及全部49帧已保留。最新授权：四臂完成后做深色对照报告，若GN11严重回退则停止额外训练并分析；若总体符合预期则逐场景训练截图对应的两个其他结构化场景，最后保存/推送并关机。当前额外GPU训练0步，四臂队列不改。完整GPU模型/Adam/RNG恢复与四臂质量增量仍待核验；子agent默认 `gpt-6.1-sol / max`。
 
 四臂C00/G10/N01/GN11分别关闭双模块/仅corrected SGCM/仅NPS/两者，固定scene0017_000_048的49 FRONT开发视图、seed0、scale4 W480×H320，从零30k，每10k完整保存，四臂总120k。共同恢复raw动态alpha完整MSE100、静态RGB1、24活跃RGB系数1/5/5、寿命/速度正则、两项平滑/总alpha熵及LiDAR深度衰减；Eq7 sky与Eq16逆深度为显式共同改写，记录旧/新目标梯度差异。NPS保留sum/L2公式与.01，只按臂flag开启。[组件图、继承规则、矩阵与停止条件](v82/DRIVINGEDITOR_HYBRID30K_PLAN.md)。
 
 SGCM保留Eq8、Hd与地面拟合，加入实际训练视图的SHM/时间alpha/中心投影支撑代理及一次性clone谱系，generic/SGCM append/prune/clone/split与18字段capture/Adam对齐；不冒称代理为遮挡后的真实贡献。实际contrib是每像素序号，不用作逐点贡献。Hd约360.36m²，三帧投影明显宽于body mask，保持定义做消融，不据此推断彩噪根因。共同修复canonical二值mask（避免719黑色body像素遗漏）、仅增密阶段reset、独立配对采样与RNG安全评价。静态时间/速度图正则不保证raw SHM不动，因此每节点另保存固定raw10位姿与全部49 timestamp静态变化控制。
 
-远端新源码、工具和四配置位于 `/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/`。正式DrivingEditor Python3.9/Torch2.2.2环境CPU损失6组、SGCM18项、集成7组检查通过，默认run_matrix入口只输出等待GPU，不导入renderer或开始训练。检查点必须包括模型、Adam、RNG、独立采样器、scale/EMA/SGCM谱系；GPU串行独占，异常中止队列，不自动调loss/分辨率或清资产。`eval=false`结果只标全观测重建；当前mask仍body-only缺shadow、M-detector仍未成为真实训练预处理。scene8仅后续候选、不排队。
+远端新源码、工具和四配置位于 `/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/`。正式DrivingEditor Python3.9/Torch2.2.2环境CPU损失6组、SGCM18项、集成7组检查通过，默认run_matrix入口只输出等待GPU，不导入renderer或开始训练。检查点必须包括模型、Adam、RNG、独立采样器、scale/EMA/SGCM谱系；GPU串行独占，异常中止队列，不自动调loss/分辨率或清资产。`eval=false`结果只标全观测重建；当前mask仍body-only缺shadow、M-detector仍未成为真实训练预处理。scene0008已在独立followup目录完成实际CPU输入准备，须等GN11最终准入通过后才排队；红车路口原始segment/窗口尚未确认。
 
 C00 10k/20k/30k节点合同核验通过：每节点四个模型/状态文件非零且大小匹配manifest，49个frame ID/timestamp一致，196张四通道PNG为W480×H320，49个raw NPZ的FP32 RGB/alpha/depth与boolean mask header尺寸正确。静态时间控制各49rows/49NPZ、固定pose0017010/anchor=-.28。核验仅查JSON/stat/header，未加载模型或sidecar；HTML另读取保存的数组导出PNG，但没有加载或恢复checkpoint。[10k/20k receipt](autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/C00_checkpoint_contract_10000_20000_20261013.json) · [C00终态](autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/C00_30000_summary.json)。
 
@@ -20,6 +20,10 @@ C00 30k全49帧等权：全图合成PSNR34.0624dB、车体合成32.7312dB、非�
 
 原S＋V 2k CPU方案被新矩阵取代并保留，未执行、不入队。已有B1/B2/V/S的49帧30k→32k原结果继续保留：V/S改善静态背景却损害整体/车体，未认证修复；完整paper、50k、多场景与编辑仍未通过。[旧交接](v82/DRIVINGEDITOR_DEBUG_HANDOFF.md)。新方案有30k horizon/从零状态，不和旧50k continuation混比较。
 
-用户要求安排后隔半小时到一小时检查，现已创建当前聊天的每小时心跳`drivingeditor-30k`：只检查本四臂，控制器自行运行；无可行动变化保持安静，新完整10k节点、显存接近容量、异常或完成才简报。全部完成后核验与汇总质量/静态性/梯度/资源报告，再暂停此心跳。旧`drivingeditor-50k`及v8.1 DGGT/Seen-to-Scene等其他自动化保持暂停。
+当前聊天每小时心跳`drivingeditor-30k`保持ACTIVE，已扩大为现有四臂→30k深色对照/验收→条件成立后的两个场景→收口关机。控制器自行运行，不持续轮询；无可行动变化保持安静，完整10k节点、显存接近容量、异常、完成或需用户决定才通知。只有路线收口并处理电源，或确需用户决定后，才暂停此心跳。旧`drivingeditor-50k`及v8.1 DGGT/Seen-to-Scene等其他自动化保持暂停。
 
-`failure_ledger_refs=[V82-F01,V82-F02,V76-F03]`、`failure_ledger_delta=V82-F02`、`human_verdict=null`；不改写历史failure或代填质量评分。当前只有明确固定的四臂，无关资产和旧检查点均保留，电源操作仍由用户负责。
+后续task/run为 `WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013/r1`。[后续协议与组件图](v82/DRIVINGEDITOR_FOLLOWUP_20261013.md) · [机器可读准入与电源授权](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json)。缺省严重回退规则为全图/车体49帧等权PSNR下降超过1dB，或持续明显分层/静态时间退化；数值为agent可修改缺省，尚未收到人工阈值确认。新增只训GN11、seed0从零每场景30k，10k/20k/30k保存，额外60k；不追加两组四臂。完整GPU恢复合同仍未实测，不凭stat/header代称通过。
+
+scene0008与作者Urban3视频raw23–51真实匹配；本地49视图为raw23–71扩展，作者训练窗口未公开确认。独立复制后实际reader/变换/canonical49mask/CPU视图/SGCM地面区域通过，静态594981、动态42654（8592+34062）点，Corolla153保留静态；固定相机锚点0008033。两个actor PLY拼同一动态Gaussian分支，不能宣称独立可编辑。`training_ready=false`：新入口、真实GPU模型/视图/guard谱系绑定与最终GN11 gate仍待执行；CPU未初始化CUDA。红车身份搜索复用旧缓存，追加搜索有预算上限，不用近似输入替代。
+
+`failure_ledger_refs=[V82-F01,V82-F02,V76-F03]`，本次后续登记 `failure_ledger_delta=none`；人工verdict仅C00=符合预期，GN11/其他场景留空。所有旧资产保留。用户已授权严重回退路线或新增场景完成后的AutoDL关机：保存、推送、确认无训练/评价/数据/渲染及会重启worker的controller后执行，无需重复询问。平台shutdown包装脚本含Trash清理，后续只执行核对后的关机后端，省略删除；当前电源操作0。
