@@ -1,0 +1,156 @@
+{
+  "status": "PASS_CHECKPOINT_FILE_AND_FRAME_CONTRACT",
+  "observed_singapore": "2026-10-13T05:44:50.434040+08:00",
+  "scheduled_check_label": "2026-10-13 05:43 SGT",
+  "task_run": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
+  "ssh_alias": "wm-vgpu-1011",
+  "audit_scope": "Only newly completed N01/30000 and GN11/10000 nodes: JSON/stat/PNG IHDR/NPY headers within NPZ; no arrays, models, checkpoint or training-state payload loading",
+  "nodes": {
+    "N01/30000": {
+      "step": 30000,
+      "failure_fields": [],
+      "event_path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/checkpoint_events/iteration_030000.json",
+      "event_status": "complete",
+      "checkpoints": {
+        "static": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/chkpnt30000.pth",
+          "stat_bytes": 802972510,
+          "event_bytes": 802972510,
+          "pass": true,
+          "content_loaded": false
+        },
+        "dynamic": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/dynamic_chkpnt30000.pth",
+          "stat_bytes": 798301278,
+          "event_bytes": 798301278,
+          "pass": true,
+          "content_loaded": false
+        },
+        "environment": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/env_light_chkpnt30000.pth",
+          "stat_bytes": 226494608,
+          "event_bytes": 226494608,
+          "pass": true,
+          "content_loaded": false
+        },
+        "training_state": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/training_state30000.pth",
+          "stat_bytes": 29144,
+          "event_bytes": 29144,
+          "pass": true,
+          "content_loaded": false
+        }
+      },
+      "component_bytes": {
+        "static": 802972510,
+        "dynamic": 798301278,
+        "environment": 226494608,
+        "training_state": 29144
+      },
+      "checkpoint_files_exist_nonzero_and_match_manifest_bytes": true,
+      "unique_chronological_frames": 49,
+      "frame_names": "0017000..0017048",
+      "timestamps_range": [
+        -0.48,
+        0.48
+      ],
+      "chronological_timestamps_match_49_training_times": true,
+      "four_channel_pngs_present_and_IHDR_pass": 196,
+      "png_width_height": [
+        480,
+        320
+      ],
+      "raw_npz_present_and_headers_pass": 49,
+      "raw_rgb_alpha_depth_fp32_shapes_pass": true,
+      "two_boolean_mask_shapes_pass": true,
+      "static_time_timestamps_match_training_views": true,
+      "static_time_anchor_pose_frame": "0017010",
+      "static_time_anchor_timestamp": -0.28,
+      "static_time_summary_rows": 49,
+      "static_time_npz_present_and_headers_pass": 49,
+      "static_time_RGB_alpha_fp32_shapes_pass": true,
+      "restoration_verified": false,
+      "status": "PASS_CHECKPOINT_FILE_AND_FRAME_CONTRACT",
+      "arm": "N01",
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01"
+    },
+    "GN11/10000": {
+      "step": 10000,
+      "failure_fields": [],
+      "event_path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/checkpoint_events/iteration_010000.json",
+      "event_status": "complete",
+      "checkpoints": {
+        "static": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/chkpnt10000.pth",
+          "stat_bytes": 796174168,
+          "event_bytes": 796174168,
+          "pass": true,
+          "content_loaded": false
+        },
+        "dynamic": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/dynamic_chkpnt10000.pth",
+          "stat_bytes": 824674910,
+          "event_bytes": 824674910,
+          "pass": true,
+          "content_loaded": false
+        },
+        "environment": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/env_light_chkpnt10000.pth",
+          "stat_bytes": 226494608,
+          "event_bytes": 226494608,
+          "pass": true,
+          "content_loaded": false
+        },
+        "training_state": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/training_state10000.pth",
+          "stat_bytes": 39064,
+          "event_bytes": 39064,
+          "pass": true,
+          "content_loaded": false
+        }
+      },
+      "component_bytes": {
+        "static": 796174168,
+        "dynamic": 824674910,
+        "environment": 226494608,
+        "training_state": 39064
+      },
+      "checkpoint_files_exist_nonzero_and_match_manifest_bytes": true,
+      "unique_chronological_frames": 49,
+      "frame_names": "0017000..0017048",
+      "timestamps_range": [
+        -0.48,
+        0.48
+      ],
+      "chronological_timestamps_match_49_training_times": true,
+      "four_channel_pngs_present_and_IHDR_pass": 196,
+      "png_width_height": [
+        480,
+        320
+      ],
+      "raw_npz_present_and_headers_pass": 49,
+      "raw_rgb_alpha_depth_fp32_shapes_pass": true,
+      "two_boolean_mask_shapes_pass": true,
+      "static_time_timestamps_match_training_views": true,
+      "static_time_anchor_pose_frame": "0017010",
+      "static_time_anchor_timestamp": -0.28,
+      "static_time_summary_rows": 49,
+      "static_time_npz_present_and_headers_pass": 49,
+      "static_time_RGB_alpha_fp32_shapes_pass": true,
+      "restoration_verified": false,
+      "status": "PASS_CHECKPOINT_FILE_AND_FRAME_CONTRACT",
+      "arm": "GN11",
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11"
+    }
+  },
+  "GPU_used_by_audit": false,
+  "training_worker_started_by_audit": false,
+  "large_checkpoint_or_sidecar_loaded": false,
+  "training_progress_read_by_audit": false,
+  "controller_changed_by_audit": false,
+  "remote_files_written_by_audit": false,
+  "restoration_verified": false,
+  "actual_model_Adam_RNG_restore_verified": false,
+  "evaluation_scope": "All 49 observed development reconstruction views; not heldout/test",
+  "human_verdict": null
+}

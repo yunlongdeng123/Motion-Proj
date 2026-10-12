@@ -1,0 +1,901 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012",
+  "audit_label_singapore": "2026-10-13 05:43 SGT",
+  "parsed_utc": "2026-10-12T21:47:13.916202+00:00",
+  "scope": "Read-only extraction of selected logged gradient nodes and their paired loss records; no new progress sampling",
+  "status_basis": "Parent observation at 05:43 SGT: N01 completed 30000; GN11 training near16500. GN11 receipt uses only nodes through15000",
+  "nps_formula_changed": false,
+  "nps_weight_changed": false,
+  "GPU_experiment_added": false,
+  "remote_written": false,
+  "checkpoint_loaded": false,
+  "human_verdict": null,
+  "scientific_benefit": "Pending fixed-paired full49-frame 30000 evaluation; gradient magnitudes are not a quality verdict",
+  "gradient_scope": "Gradients with respect to intermediate rendered static_feature/static_alpha tensors; not Gaussian parameter gradients",
+  "invalid_ratio_policy": "A disconnected static_feature-to-staticRGB path has logged ratio0 as invalid sentinel; interpretable ratio is null",
+  "numeric_check_tolerance": {
+    "relative": 2e-06,
+    "absolute": 1e-09
+  },
+  "arms": {
+    "N01": {
+      "coverage": "complete_selected_nodes_1_to30000",
+      "complete_30k_quality_claimed": false,
+      "sources": {
+        "config": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/configs/N01.json",
+        "gradient_diagnostics": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/gradient_diagnostics.jsonl",
+        "paired_steps": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_N01/paired_steps.jsonl"
+      },
+      "config_paper_lambda_nps": 0.01,
+      "requested_nodes": [
+        1,
+        1000,
+        10000,
+        15000,
+        20000,
+        30000
+      ],
+      "parsed_nodes": [
+        1,
+        1000,
+        10000,
+        15000,
+        20000,
+        30000
+      ],
+      "missing_gradient_nodes": [],
+      "missing_paired_loss_nodes": [],
+      "duplicate_gradient_nodes": [],
+      "duplicate_paired_loss_nodes": [],
+      "nodes": [
+        {
+          "iteration": 1,
+          "frame_id": "image_0/0017024",
+          "time_shift": null,
+          "nps_loss": {
+            "raw": 0.0,
+            "weighted": 0.0,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.3261420726776123,
+            "weighted": 0.3261420726776123,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 0.0
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 0.0
+              },
+              "static_rgb": {
+                "raw_l2": 0.004137147683650255,
+                "weighted_l2": 0.004137147683650255,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": 0.0,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 1000,
+          "frame_id": "image_0/0017029",
+          "time_shift": null,
+          "nps_loss": {
+            "raw": 0.03529668226838112,
+            "weighted": 0.0003529668028932065,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.10029463469982147,
+            "weighted": 0.10029463469982147,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 73.85345458984375,
+                "weighted_l2": 0.7385345697402954,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 3.228265768306987e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.003110046498477459,
+                "weighted_l2": 3.1100466003408656e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 3.2753017166942773e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.00342777231708169,
+                "weighted_l2": 0.00342777231708169,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.009073083952637418,
+              "interpretable_same_tensor_ratio": 0.009073083952637418,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 10000,
+          "frame_id": "image_0/0017021",
+          "time_shift": 0.025809074133016755,
+          "nps_loss": {
+            "raw": 0.009516848251223564,
+            "weighted": 9.516847785562277e-05,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.024444708600640297,
+            "weighted": 0.024444708600640297,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 88.71797180175781,
+                "weighted_l2": 0.8871797323226929,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 1.6124258105653618e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.001775174168869853,
+                "weighted_l2": 1.7751739505911246e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 1.2296186619691274e-07
+              },
+              "static_rgb": {
+                "raw_l2": 0.0028813520912081003,
+                "weighted_l2": 0.0028813520912081003,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.006160906041325985,
+              "interpretable_same_tensor_ratio": 0.006160906041325985,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 15000,
+          "frame_id": "image_0/0017033",
+          "time_shift": -0.0010801858263454122,
+          "nps_loss": {
+            "raw": 0.003916746936738491,
+            "weighted": 3.916746936738491e-05,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.022155236452817917,
+            "weighted": 0.022155236452817917,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 48.79655075073242,
+                "weighted_l2": 0.48796549439430237,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 2.6872845791966133e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.001205159118399024,
+                "weighted_l2": 1.2051591511408333e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 2.716803840235693e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0033470436464995146,
+                "weighted_l2": 0.0033470436464995146,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.0036006675694272515,
+              "interpretable_same_tensor_ratio": 0.0036006675694272515,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 20000,
+          "frame_id": "image_0/0017010",
+          "time_shift": -0.010383614502543713,
+          "nps_loss": {
+            "raw": 0.033079374581575394,
+            "weighted": 0.0003307937295176089,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.014288729056715965,
+            "weighted": 0.014288729056715965,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 72.3023452758789,
+                "weighted_l2": 0.7230234146118164,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 5.276035313408223e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.009469704702496529,
+                "weighted_l2": 9.469703945796937e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 7.990741172534308e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.00381638016551733,
+                "weighted_l2": 0.00381638016551733,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.024813314017717282,
+              "interpretable_same_tensor_ratio": 0.024813314017717282,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 30000,
+          "frame_id": "image_0/0017030",
+          "time_shift": 0.02701267455153593,
+          "nps_loss": {
+            "raw": 0.011538166552782059,
+            "weighted": 0.00011538166290847585,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.017357779666781425,
+            "weighted": 0.017357779666781425,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 47.96344757080078,
+                "weighted_l2": 0.47963443398475647,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 8.698968374257561e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.003129822202026844,
+                "weighted_l2": 3.1298222893383354e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 2.7896629845290944e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.007328867446631193,
+                "weighted_l2": 0.007328867446631193,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.004270540178451444,
+              "interpretable_same_tensor_ratio": 0.004270540178451444,
+              "ratio_consistent": true
+            }
+          }
+        }
+      ],
+      "summary": {
+        "static_feature": {
+          "NPS_raw_l2_range": [
+            0.0,
+            88.71797180175781
+          ],
+          "NPS_weighted_l2_range": [
+            0.0,
+            0.8871797323226929
+          ],
+          "static_RGB_weighted_l2_range": [
+            0.0,
+            0.0
+          ],
+          "valid_ratio_count": 0,
+          "valid_same_tensor_ratio_range": null,
+          "NPS_all_raw_and_weighted_connected": true,
+          "static_RGB_all_raw_and_weighted_connected": false,
+          "all_logged_finite_and_L2_finite": true,
+          "all_NPS_gradient_weights_match_0p01": true,
+          "all_ratio_flags_values_consistent": true
+        },
+        "static_alpha": {
+          "NPS_raw_l2_range": [
+            0.0,
+            0.009469704702496529
+          ],
+          "NPS_weighted_l2_range": [
+            0.0,
+            9.469703945796937e-05
+          ],
+          "static_RGB_weighted_l2_range": [
+            0.0028813520912081003,
+            0.007328867446631193
+          ],
+          "valid_ratio_count": 6,
+          "valid_same_tensor_ratio_range": [
+            0.0,
+            0.024813314017717282
+          ],
+          "NPS_all_raw_and_weighted_connected": true,
+          "static_RGB_all_raw_and_weighted_connected": true,
+          "all_logged_finite_and_L2_finite": true,
+          "all_NPS_gradient_weights_match_0p01": true,
+          "all_ratio_flags_values_consistent": true
+        }
+      },
+      "all_NPS_loss_weights_match_0p01": true,
+      "human_verdict": null
+    },
+    "GN11": {
+      "coverage": "partial_through15000",
+      "complete_30k_quality_claimed": false,
+      "sources": {
+        "config": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/configs/GN11.json",
+        "gradient_diagnostics": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/gradient_diagnostics.jsonl",
+        "paired_steps": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/paired_steps.jsonl"
+      },
+      "config_paper_lambda_nps": 0.01,
+      "requested_nodes": [
+        1,
+        1000,
+        10000,
+        15000
+      ],
+      "parsed_nodes": [
+        1,
+        1000,
+        10000,
+        15000
+      ],
+      "missing_gradient_nodes": [],
+      "missing_paired_loss_nodes": [],
+      "duplicate_gradient_nodes": [],
+      "duplicate_paired_loss_nodes": [],
+      "nodes": [
+        {
+          "iteration": 1,
+          "frame_id": "image_0/0017024",
+          "time_shift": null,
+          "nps_loss": {
+            "raw": 0.0,
+            "weighted": 0.0,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.3261420726776123,
+            "weighted": 0.3261420726776123,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 0.0
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 0.0
+              },
+              "static_rgb": {
+                "raw_l2": 0.004137147683650255,
+                "weighted_l2": 0.004137147683650255,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": 0.0,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 1000,
+          "frame_id": "image_0/0017029",
+          "time_shift": null,
+          "nps_loss": {
+            "raw": 0.05952627584338188,
+            "weighted": 0.0005952627398073673,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.10004071146249771,
+            "weighted": 0.10004071146249771,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 80.58181762695312,
+                "weighted_l2": 0.8058182001113892,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 2.958714339596387e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.006601113826036453,
+                "weighted_l2": 6.601113273063675e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 8.376961723251102e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0033190150279551744,
+                "weighted_l2": 0.0033190150279551744,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.01988877187196884,
+              "interpretable_same_tensor_ratio": 0.01988877187196884,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 10000,
+          "frame_id": "image_0/0017021",
+          "time_shift": 0.025809074133016755,
+          "nps_loss": {
+            "raw": 0.01351700909435749,
+            "weighted": 0.00013517009210772812,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.02414831332862377,
+            "weighted": 0.02414831332862377,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 85.7589340209961,
+                "weighted_l2": 0.8575893044471741,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 4.17015291191402e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.002437746385112405,
+                "weighted_l2": 2.4377464796998538e-05,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 3.880118517690179e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.002934935037046671,
+                "weighted_l2": 0.002934935037046671,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.008305964012589793,
+              "interpretable_same_tensor_ratio": 0.008305964012589793,
+              "ratio_consistent": true
+            }
+          }
+        },
+        {
+          "iteration": 15000,
+          "frame_id": "image_0/0017033",
+          "time_shift": -0.0010801858263454122,
+          "nps_loss": {
+            "raw": 0.0026335285510867834,
+            "weighted": 2.6335284928791225e-05,
+            "logged_weight": 0.01,
+            "finite": true,
+            "weight_0p01_confirmed": true,
+            "weighted_value_matches_0p01": true
+          },
+          "static_rgb_loss": {
+            "raw": 0.021055173128843307,
+            "weighted": 0.021055173128843307,
+            "logged_weight": 1.0
+          },
+          "inputs": {
+            "static_feature": {
+              "nps": {
+                "raw_l2": 52.57310104370117,
+                "weighted_l2": 0.5257310271263123,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 3.174494212024593e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0,
+                "weighted_l2": 0.0,
+                "raw_connected": false,
+                "weighted_connected": false,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": false,
+              "logged_weighted_l2_ratio": 0.0,
+              "interpretable_same_tensor_ratio": null,
+              "ratio_consistent": true
+            },
+            "static_alpha": {
+              "nps": {
+                "raw_l2": 0.0005244689527899027,
+                "weighted_l2": 5.2446898735070135e-06,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true,
+                "weighted_l2_matches_0p01": true,
+                "weight_scale_relative_error": 6.589674846024987e-08
+              },
+              "static_rgb": {
+                "raw_l2": 0.0034507072996348143,
+                "weighted_l2": 0.0034507072996348143,
+                "raw_connected": true,
+                "weighted_connected": true,
+                "raw_finite": true,
+                "weighted_finite": true,
+                "l2_finite_observed": true
+              },
+              "ratio_valid": true,
+              "logged_weighted_l2_ratio": 0.0015198883643541877,
+              "interpretable_same_tensor_ratio": 0.0015198883643541877,
+              "ratio_consistent": true
+            }
+          }
+        }
+      ],
+      "summary": {
+        "static_feature": {
+          "NPS_raw_l2_range": [
+            0.0,
+            85.7589340209961
+          ],
+          "NPS_weighted_l2_range": [
+            0.0,
+            0.8575893044471741
+          ],
+          "static_RGB_weighted_l2_range": [
+            0.0,
+            0.0
+          ],
+          "valid_ratio_count": 0,
+          "valid_same_tensor_ratio_range": null,
+          "NPS_all_raw_and_weighted_connected": true,
+          "static_RGB_all_raw_and_weighted_connected": false,
+          "all_logged_finite_and_L2_finite": true,
+          "all_NPS_gradient_weights_match_0p01": true,
+          "all_ratio_flags_values_consistent": true
+        },
+        "static_alpha": {
+          "NPS_raw_l2_range": [
+            0.0,
+            0.006601113826036453
+          ],
+          "NPS_weighted_l2_range": [
+            0.0,
+            6.601113273063675e-05
+          ],
+          "static_RGB_weighted_l2_range": [
+            0.002934935037046671,
+            0.004137147683650255
+          ],
+          "valid_ratio_count": 4,
+          "valid_same_tensor_ratio_range": [
+            0.0,
+            0.01988877187196884
+          ],
+          "NPS_all_raw_and_weighted_connected": true,
+          "static_RGB_all_raw_and_weighted_connected": true,
+          "all_logged_finite_and_L2_finite": true,
+          "all_NPS_gradient_weights_match_0p01": true,
+          "all_ratio_flags_values_consistent": true
+        }
+      },
+      "all_NPS_loss_weights_match_0p01": true,
+      "human_verdict": null
+    }
+  }
+}

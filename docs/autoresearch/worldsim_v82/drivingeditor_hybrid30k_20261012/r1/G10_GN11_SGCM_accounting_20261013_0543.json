@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "audit_request_time_sgt": "2026-10-13T05:43:00+08:00",
+  "collected_at_utc": "2026-10-12T21:47:30.728681+00:00",
+  "remote_host_alias": "wm-vgpu-1011",
+  "campaign_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
+  "status": "pass",
+  "scope": "read-only G10/GN11 SGCM_INIT and SGCM_STATS log JSON accounting; no checkpoints, model loads, GPU calls, training progress polling or remote writes",
+  "expected_calls_each_arm": 145,
+  "expected_iteration_schedule": {
+    "first": 550,
+    "last": 14950,
+    "step": 100,
+    "end_exclusive": 15000
+  },
+  "point_conservation_formula": "points_after=points_before-pruned+cloned+split_parents",
+  "arms": {
+    "G10": {
+      "training_log": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/G10_training.log",
+      "status": "pass",
+      "sgcm_calls": 145,
+      "iteration_first": 550,
+      "iteration_last": 14950,
+      "schedule_exact": true,
+      "all_call_point_conservation": true,
+      "actual_config": {
+        "start": 500,
+        "end": 15000,
+        "interval": 100,
+        "offset": 50,
+        "max_new_points": 10000,
+        "max_points": 3000000,
+        "dr_m": 0.5,
+        "split_radius_px": 20,
+        "guard_enabled": true
+      },
+      "meter_to_model_scale": 0.09999999999999999,
+      "dr_model": 0.049999999999999996,
+      "guard_enabled_all_calls": true,
+      "training_view_count_unique": [
+        49
+      ],
+      "init_training_view_count": 49,
+      "total_counts": {
+        "inside_region": 20460568,
+        "pruned": 7165,
+        "cloned": 1929,
+        "split_parents": 201823,
+        "candidate_clone": 2071,
+        "candidate_split": 201823,
+        "geometric_candidate_clone": 2439783,
+        "geometric_candidate_split": 233203,
+        "excluded_clone_training_view_support": 265023,
+        "excluded_split_training_view_support": 27944,
+        "excluded_split_child_training_view_support": 3436,
+        "excluded_cloned_lineage": 2172689,
+        "excluded_duplicate_lineage_in_step": 142
+      },
+      "range_counts": {
+        "inside_region": {
+          "min": 42019,
+          "max": 241943
+        },
+        "pruned": {
+          "min": 2,
+          "max": 1721
+        },
+        "cloned": {
+          "min": 0,
+          "max": 355
+        },
+        "split_parents": {
+          "min": 107,
+          "max": 8343
+        },
+        "candidate_clone": {
+          "min": 0,
+          "max": 355
+        },
+        "candidate_split": {
+          "min": 107,
+          "max": 8343
+        },
+        "geometric_candidate_clone": {
+          "min": 876,
+          "max": 30211
+        },
+        "geometric_candidate_split": {
+          "min": 143,
+          "max": 9153
+        },
+        "excluded_clone_training_view_support": {
+          "min": 521,
+          "max": 3153
+        },
+        "excluded_split_training_view_support": {
+          "min": 0,
+          "max": 846
+        },
+        "excluded_split_child_training_view_support": {
+          "min": 0,
+          "max": 140
+        },
+        "excluded_cloned_lineage": {
+          "min": 0,
+          "max": 27067
+        },
+        "excluded_duplicate_lineage_in_step": {
+          "min": 0,
+          "max": 15
+        }
+      },
+      "points_before_range": [
+        595894,
+        1156498
+      ],
+      "points_after_range": [
+        595964,
+        1156723
+      ],
+      "maximum_net_additions_per_call": 8345,
+      "minimum_points_below_cap": 1843277,
+      "duplicate_stat_present_calls": 121,
+      "duplicate_stat_missing_calls": 24,
+      "first_call": {
+        "iteration": 550,
+        "inside_region": 42019,
+        "pruned": 1721,
+        "cloned": 355,
+        "split_parents": 1436,
+        "candidate_clone": 355,
+        "candidate_split": 1436,
+        "points_before": 595894,
+        "points_after": 595964,
+        "dr_m": 0.5,
+        "dr_model": 0.049999999999999996,
+        "addition_guard_enabled": true,
+        "geometric_candidate_clone": 876,
+        "geometric_candidate_split": 1503,
+        "excluded_clone_training_view_support": 521,
+        "excluded_split_training_view_support": 60,
+        "excluded_split_child_training_view_support": 7,
+        "excluded_cloned_lineage": 0,
+        "training_view_count": 49,
+        "excluded_duplicate_lineage_in_step": 0
+      },
+      "last_call": {
+        "iteration": 14950,
+        "inside_region": 241943,
+        "pruned": 16,
+        "cloned": 0,
+        "split_parents": 241,
+        "candidate_clone": 0,
+        "candidate_split": 241,
+        "points_before": 1156498,
+        "points_after": 1156723,
+        "dr_m": 0.5,
+        "dr_model": 0.049999999999999996,
+        "addition_guard_enabled": true,
+        "geometric_candidate_clone": 30206,
+        "geometric_candidate_split": 494,
+        "excluded_clone_training_view_support": 3153,
+        "excluded_split_training_view_support": 155,
+        "excluded_split_child_training_view_support": 98,
+        "excluded_cloned_lineage": 27053,
+        "training_view_count": 49
+      },
+      "regions_anchor": [
+        [
+          [
+            12.608891797784963,
+            -2.680952211288968,
+            -0.22065876961878172
+          ],
+          [
+            29.096138147207967,
+            19.176229817913736,
+            2.451917779218604
+          ]
+        ]
+      ],
+      "ground_fit_summary": {
+        "inlier_cells": 2048,
+        "inlier_fraction": 0.8630425621576064,
+        "rmse_m": 0.04930535709626185
+      },
+      "violations": [],
+      "sgcm_net_topology_delta": 196587,
+      "all_cap_checks_pass": true,
+      "all_candidate_count_identities_pass": true,
+      "scope_counter_semantics": "action/exclusion/inside counts are per-call observations summed across 145 calls, not unique Gaussian/lineage counts"
+    },
+    "GN11": {
+      "training_log": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/GN11_training.log",
+      "status": "pass",
+      "sgcm_calls": 145,
+      "iteration_first": 550,
+      "iteration_last": 14950,
+      "schedule_exact": true,
+      "all_call_point_conservation": true,
+      "actual_config": {
+        "start": 500,
+        "end": 15000,
+        "interval": 100,
+        "offset": 50,
+        "max_new_points": 10000,
+        "max_points": 3000000,
+        "dr_m": 0.5,
+        "split_radius_px": 20,
+        "guard_enabled": true
+      },
+      "meter_to_model_scale": 0.09999999999999999,
+      "dr_model": 0.049999999999999996,
+      "guard_enabled_all_calls": true,
+      "training_view_count_unique": [
+        49
+      ],
+      "init_training_view_count": 49,
+      "total_counts": {
+        "inside_region": 14153994,
+        "pruned": 6938,
+        "cloned": 1834,
+        "split_parents": 109105,
+        "candidate_clone": 1974,
+        "candidate_split": 109105,
+        "geometric_candidate_clone": 1531327,
+        "geometric_candidate_split": 129725,
+        "excluded_clone_training_view_support": 219972,
+        "excluded_split_training_view_support": 19747,
+        "excluded_split_child_training_view_support": 873,
+        "excluded_cloned_lineage": 1309381,
+        "excluded_duplicate_lineage_in_step": 140
+      },
+      "range_counts": {
+        "inside_region": {
+          "min": 41871,
+          "max": 155075
+        },
+        "pruned": {
+          "min": 4,
+          "max": 1725
+        },
+        "cloned": {
+          "min": 0,
+          "max": 345
+        },
+        "split_parents": {
+          "min": 52,
+          "max": 5279
+        },
+        "candidate_clone": {
+          "min": 0,
+          "max": 345
+        },
+        "candidate_split": {
+          "min": 52,
+          "max": 5279
+        },
+        "geometric_candidate_clone": {
+          "min": 868,
+          "max": 19857
+        },
+        "geometric_candidate_split": {
+          "min": 55,
+          "max": 5795
+        },
+        "excluded_clone_training_view_support": {
+          "min": 523,
+          "max": 2546
+        },
+        "excluded_split_training_view_support": {
+          "min": 0,
+          "max": 636
+        },
+        "excluded_split_child_training_view_support": {
+          "min": 0,
+          "max": 38
+        },
+        "excluded_cloned_lineage": {
+          "min": 0,
+          "max": 17310
+        },
+        "excluded_duplicate_lineage_in_step": {
+          "min": 0,
+          "max": 18
+        }
+      },
+      "points_before_range": [
+        595894,
+        1089090
+      ],
+      "points_after_range": [
+        595731,
+        1089276
+      ],
+      "maximum_net_additions_per_call": 5284,
+      "minimum_points_below_cap": 1910724,
+      "duplicate_stat_present_calls": 127,
+      "duplicate_stat_missing_calls": 18,
+      "first_call": {
+        "iteration": 550,
+        "inside_region": 42009,
+        "pruned": 1725,
+        "cloned": 345,
+        "split_parents": 1217,
+        "candidate_clone": 345,
+        "candidate_split": 1217,
+        "points_before": 595894,
+        "points_after": 595731,
+        "dr_m": 0.5,
+        "dr_model": 0.049999999999999996,
+        "addition_guard_enabled": true,
+        "geometric_candidate_clone": 868,
+        "geometric_candidate_split": 1290,
+        "excluded_clone_training_view_support": 523,
+        "excluded_split_training_view_support": 63,
+        "excluded_split_child_training_view_support": 10,
+        "excluded_cloned_lineage": 0,
+        "training_view_count": 49,
+        "excluded_duplicate_lineage_in_step": 0
+      },
+      "last_call": {
+        "iteration": 14950,
+        "inside_region": 155075,
+        "pruned": 10,
+        "cloned": 1,
+        "split_parents": 195,
+        "candidate_clone": 1,
+        "candidate_split": 195,
+        "points_before": 1089090,
+        "points_after": 1089276,
+        "dr_m": 0.5,
+        "dr_model": 0.049999999999999996,
+        "addition_guard_enabled": true,
+        "geometric_candidate_clone": 19857,
+        "geometric_candidate_split": 301,
+        "excluded_clone_training_view_support": 2546,
+        "excluded_split_training_view_support": 98,
+        "excluded_split_child_training_view_support": 8,
+        "excluded_cloned_lineage": 17310,
+        "training_view_count": 49,
+        "excluded_duplicate_lineage_in_step": 0
+      },
+      "regions_anchor": [
+        [
+          [
+            12.608891797784963,
+            -2.680952211288968,
+            -0.22065876961878172
+          ],
+          [
+            29.096138147207967,
+            19.176229817913736,
+            2.451917779218604
+          ]
+        ]
+      ],
+      "ground_fit_summary": {
+        "inlier_cells": 2048,
+        "inlier_fraction": 0.8630425621576064,
+        "rmse_m": 0.04930535709626185
+      },
+      "violations": [],
+      "sgcm_net_topology_delta": 104001,
+      "all_cap_checks_pass": true,
+      "all_candidate_count_identities_pass": true,
+      "scope_counter_semantics": "action/exclusion/inside counts are per-call observations summed across 145 calls, not unique Gaussian/lineage counts"
+    }
+  },
+  "evidence_boundary": {
+    "support": "complete training-view temporal-alpha and center-frustum admission proxy; occlusion/exact per-Gaussian raster contribution unmeasured",
+    "lineage": "reported excluded_cloned_lineage and same-step duplicate counts; source lineage identities are not logged, so this receipt cannot independently prove one-clone-per-source histories",
+    "inside_region_totals": "sum of per-call Gaussian-in-Hd observations; repeated rows/sources across calls are counted repeatedly, not unique points or pixels",
+    "caps": "actual SGCM net-addition/point budgets from each arm SGCM_INIT; global generic-densification policy outside SGCM calls is not audited",
+    "scientific": "action/exclusion counts do not establish method benefit or RGB-noise causality",
+    "export": "four-arm asset export not executed"
+  }
+}
