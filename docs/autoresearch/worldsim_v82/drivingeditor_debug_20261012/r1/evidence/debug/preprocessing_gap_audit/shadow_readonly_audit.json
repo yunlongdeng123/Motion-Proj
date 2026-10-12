@@ -1,0 +1,22 @@
+{
+  "scope": "Read-only audit of DrivingEditor reference44; no weights download, GPU inference or mask mutation",
+  "official_repository": "https://github.com/harrytea/Detect-AnyShadow",
+  "paper": "https://arxiv.org/abs/2305.16698",
+  "revision": "8a295f0c5baefd7cd4d1f446953d4d327b250e1c",
+  "source_receipt": "shadow_source_receipt.json",
+  "confirmed": [
+    "The official demo uses a shadow-fine-tuned SAM ViT-B checkpoint, then an LSTN network for video propagation. The existing general SAM body masks are not this pipeline.",
+    "demo_app.py derives bounding-box prompts from a painted first-frame mask. This requires a deliberately selected shadow cue, not just the existing vehicle-body mask.",
+    "The README publishes fine-tuned SAM and LSTN model links on Baidu. The git tree contains checkpoint placeholder/log files, not these trained weights. Link download/accessibility was not tested.",
+    "These are the cited tool author's implementation and weights references; they do not establish DrivingEditor authors' exact shadow prompts, SAM checkpoint selection or masks."
+  ],
+  "future_isolated_validation": [
+    "Obtain and checksum the cited shadow-specific weights with provenance, separate from the current segmentation environment.",
+    "Choose and record an actual silver-car shadow prompt; do not label all road/tree shadows as belonging to the actor.",
+    "Keep the original body mask immutable; store body, actor-shadow and union masks separately and inspect all49 frames for coverage, spill and temporal consistency.",
+    "Mask-only causal trial must retain original LiDAR initialization, source, configuration and loss. Do not bundle it with M-detector, depth, static-time or extra-opacity changes."
+  ],
+  "missing_component_confirmed_but_causality_not_proven": true,
+  "training_ready": false,
+  "GPU_used": false
+}

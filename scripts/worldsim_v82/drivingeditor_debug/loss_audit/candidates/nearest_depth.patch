@@ -1,0 +1,52 @@
+--- a/utils/camera_utils.py
++++ b/utils/camera_utils.py
+@@ -13,6 +13,7 @@
+ import cv2
+ from scene.cameras import Camera
+ import numpy as np
++from utils.sparse_depth import nearest_positive_depth
+ from scene.scene_utils import CameraInfo
+ from tqdm import tqdm
+ from .graphics_utils import fov2focal
+@@ -130,7 +131,7 @@
+         uv = uv.astype(int)
+         # # TODO: may need to consider overlap
+         # if 0 <= int(uv[0]) < w and 0 <= int(uv[1]) < h:
+-        pts_depth[0, uv[:, 1], uv[:, 0]] = uvz[:, 2]
++        pts_depth = nearest_positive_depth(uv, uvz[:, 2], h, w)
+         # plt.imshow(cv2.cvtColor(pts_depth, cv2.COLOR_BGR2RGB))
+         # plt.title('Projected Points on Image')
+         # plt.show()
+--- /dev/null
++++ b/utils/sparse_depth.py
+@@ -0,0 +1,30 @@
++"""Permutation-invariant nearest visible sparse depth; NumPy only.
++
++This is an explicit geometric projection choice. The paper does not specify
++how multiple LiDAR points in a raster pixel are reduced.
++"""
++import numpy as np
++
++
++def nearest_positive_depth(uv, depth, height, width):
++    """Return1xHxW nearest finite positive depths; invalid/empty pixels are0.
++
++    uv may contain finite nonnegative float coordinates or integer pixels.
++    Coordinate quantization matches camera_utils' positive-coordinate truncation.
++    np.minimum.at resolves repeated indices without dependence on point order.
++    """
++    uv = np.asarray(uv)
++    depth = np.asarray(depth)
++    if uv.ndim != 2 or uv.shape[1] != 2 or depth.shape != (len(uv),):
++        raise ValueError("Expected Nx2 uv and N depth")
++    if height <= 0 or width <= 0:
++        raise ValueError("Raster dimensions must be positive")
++    valid = (np.isfinite(uv).all(axis=1) & np.isfinite(depth) & (depth > 0)
++             & (uv[:, 0] >= 0) & (uv[:, 0] < width)
++             & (uv[:, 1] >= 0) & (uv[:, 1] < height))
++    pixels = uv[valid].astype(np.int64)
++    indices = pixels[:, 1] * width + pixels[:, 0]
++    nearest = np.full(height * width, np.inf, dtype=np.float64)
++    np.minimum.at(nearest, indices, depth[valid])
++    nearest[~np.isfinite(nearest)] = 0.0
++    return nearest.reshape(1, height, width)

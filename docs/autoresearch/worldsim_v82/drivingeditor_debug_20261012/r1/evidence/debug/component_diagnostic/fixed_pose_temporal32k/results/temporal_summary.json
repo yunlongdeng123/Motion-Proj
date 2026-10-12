@@ -1,0 +1,1631 @@
+{
+  "status": "complete_readonly_fixed_pose_temporal_diagnostic",
+  "diagnostic_manifest_sha256": "69ebc14e8c6e87f48f3917e9a474800457df001f7cdb89ae6ff050ac322422a2",
+  "actual_exit_code": 0,
+  "actual_render_count": 98,
+  "counterfactual_render_count": 12,
+  "elapsed_seconds": 142.10164340771735,
+  "peak_allocated_GiB": 8.641707420349121,
+  "original_file_SHA_unchanged": true,
+  "normal_algorithm_success_claimed": false,
+  "arms": {
+    "B1": {
+      "native_raw10_parity": {
+        "static": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        },
+        "alpha_s": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        },
+        "static_depth_weighted_raw": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        },
+        "static_env_contribution": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        }
+      },
+      "native_png_parity": {
+        "static_png": true,
+        "alpha_png": true
+      },
+      "points": {
+        "point_count": 2234298,
+        "potentially_visible_candidate_count": 1374191,
+        "candidate_definition": "marginal>.05 and effective opacity>=1/255 at any observed time; not proof of frustum/pixel visibility.",
+        "all_points": {
+          "max_XYZ_displacement_from_anchor_m": {
+            "shape": [
+              2234298
+            ],
+            "dtype": "float32",
+            "numel": 2234298,
+            "finite_count": 2234298,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 2.844369888305664,
+            "p01": 0.0,
+            "p05": 0.0,
+            "p50": 0.032938599586486816,
+            "p95": 0.31156402826309204,
+            "p99": 0.49397709339857043,
+            "mean": 0.08271646350790542,
+            "std": 0.1162706791833354,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0006655334248162062
+          },
+          "effective_opacity_range_over49": {
+            "shape": [
+              2234298
+            ],
+            "dtype": "float32",
+            "numel": 2234298,
+            "finite_count": 2234298,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 0.8411949276924133,
+            "p01": 1.1207535862922668e-05,
+            "p05": 0.00022083893418312073,
+            "p50": 0.0038761859759688377,
+            "p95": 0.06099802963435641,
+            "p99": 0.1789067125320422,
+            "mean": 0.013159546459626638,
+            "std": 0.03360776501584832,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          },
+          "effective_opacity_max_over49": {
+            "shape": [
+              2234298
+            ],
+            "dtype": "float32",
+            "numel": 2234298,
+            "finite_count": 2234298,
+            "nonfinite_count": 0,
+            "min": 1.0677980201434512e-11,
+            "max": 0.8717496991157532,
+            "p01": 0.002399908369407058,
+            "p05": 0.0030211254488676786,
+            "p50": 0.008844947908073664,
+            "p95": 0.09356558397412296,
+            "p99": 0.20824805006384797,
+            "mean": 0.020392306624232713,
+            "std": 0.04065447806568591,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          }
+        },
+        "potentially_visible_candidate_points": {
+          "max_XYZ_displacement_from_anchor_m": {
+            "shape": [
+              1374191
+            ],
+            "dtype": "float32",
+            "numel": 1374191,
+            "finite_count": 1374191,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 2.844369888305664,
+            "p01": 0.0,
+            "p05": 0.0,
+            "p50": 0.04508889466524124,
+            "p95": 0.3650888204574585,
+            "p99": 0.564100956916811,
+            "mean": 0.10443757385419292,
+            "std": 0.1391902049587272,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0010660817892127077
+          },
+          "effective_opacity_range_over49": {
+            "shape": [
+              1374191
+            ],
+            "dtype": "float32",
+            "numel": 1374191,
+            "finite_count": 1374191,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 0.8411949276924133,
+            "p01": 5.841255187988281e-06,
+            "p05": 7.718894630670547e-05,
+            "p50": 0.009100347757339478,
+            "p95": 0.0902445912361145,
+            "p99": 0.22025434970855734,
+            "mean": 0.019993370673068157,
+            "std": 0.041405063368574115,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          },
+          "effective_opacity_max_over49": {
+            "shape": [
+              1374191
+            ],
+            "dtype": "float32",
+            "numel": 1374191,
+            "finite_count": 1374191,
+            "nonfinite_count": 0,
+            "min": 0.003921573981642723,
+            "max": 0.8717496991157532,
+            "p01": 0.0039600832387804985,
+            "p05": 0.003960083704441786,
+            "p50": 0.009999998845160007,
+            "p95": 0.12474552169442177,
+            "p99": 0.24561129212379507,
+            "mean": 0.030985872566060786,
+            "std": 0.04894482099367407,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          }
+        }
+      },
+      "per_time_selected": [
+        {
+          "raw_index": 0,
+          "timestamp": -0.48,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.31837106526882775,
+            "static_Gaussian_RGB": 0.06594213883463695,
+            "environment_transmission": 0.2524289264361543,
+            "static_alpha": 0.6153249659203852,
+            "static_depth_normalized_foreground": 3.5078743518326667
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 0.7442576289176941,
+              "mean_abs": 0.019978087156686704,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.34443891048431396,
+              "mean_abs": 0.003642151873665166,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.7405180633068085,
+              "mean_abs": 0.01838580084977089,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.3499780595302582,
+              "mean_abs": 0.01802301005132634,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.7079946398735046,
+              "mean_abs": 0.05016353565495291,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 6.24171257019043,
+              "mean_abs": 0.07384800430279907,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "raw_index": 10,
+          "timestamp": -0.28,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.30753053258511026,
+            "static_Gaussian_RGB": 0.06535639333465318,
+            "environment_transmission": 0.24217413925218084,
+            "static_alpha": 0.6277165629017861,
+            "static_depth_normalized_foreground": 3.4724732591563874
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "environment_transmission": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_alpha": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            }
+          }
+        },
+        {
+          "raw_index": 20,
+          "timestamp": -0.08000000000000002,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.29094175797815336,
+            "static_Gaussian_RGB": 0.06331203413899177,
+            "environment_transmission": 0.22762972384027821,
+            "static_alpha": 0.6454275119565543,
+            "static_depth_normalized_foreground": 3.422371696897003
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 1.4203886091709137,
+              "mean_abs": 0.030982783689651454,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.7006089240312576,
+              "mean_abs": 0.006076525547412519,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.4203886091709137,
+              "mean_abs": 0.02738997302837327,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.669406034052372,
+              "mean_abs": 0.02613199094379478,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 4.115543961524963,
+              "mean_abs": 0.07769609595632725,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.6115312576293945,
+              "mean_abs": 0.09602819517550372,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "raw_index": 30,
+          "timestamp": 0.12,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.27214878263230835,
+            "static_Gaussian_RGB": 0.06095040057273344,
+            "environment_transmission": 0.2111983820608786,
+            "static_alpha": 0.668793394101248,
+            "static_depth_normalized_foreground": 3.3513078537871697
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 1.3491224348545074,
+              "mean_abs": 0.061979938644085776,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.7809710502624512,
+              "mean_abs": 0.012303974613801508,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.3491224348545074,
+              "mean_abs": 0.055695059616730574,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.8013629987835884,
+              "mean_abs": 0.05499724316120616,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 6.312316387891769,
+              "mean_abs": 0.15638964614002027,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.80379056930542,
+              "mean_abs": 0.19735219488107208,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "raw_index": 48,
+          "timestamp": 0.48,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.27229456626452614,
+            "static_Gaussian_RGB": 0.06020649811789118,
+            "environment_transmission": 0.21208806814634132,
+            "static_alpha": 0.6765173554903715,
+            "static_depth_normalized_foreground": 3.342527050010888
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 3.0113061144948006,
+              "mean_abs": 0.09669646112649839,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.913423016667366,
+              "mean_abs": 0.020013720138132504,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 2.964349292218685,
+              "mean_abs": 0.08636138219217936,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7988290041685104,
+              "mean_abs": 0.089197483398094,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 6.1960481107234955,
+              "mean_abs": 0.2251642285787421,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.762211322784424,
+              "mean_abs": 0.3038685217807407,
+              "exact_equal": false
+            }
+          }
+        }
+      ],
+      "readonly_counterfactual_endpoints": [
+        {
+          "mode": "freeze_SHM_position",
+          "raw_index": 0,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.7442577481269836,
+              "mean_abs": 0.019978062735477333,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.3444387912750244,
+              "mean_abs": 0.003642152644040204,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.740518182516098,
+              "mean_abs": 0.01838579127975868,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.3499780744314194,
+              "mean_abs": 0.01802299752406512,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.707994818687439,
+              "mean_abs": 0.050163480010833594,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 6.24171257019043,
+              "mean_abs": 0.07384799226900757,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.002476215362548828,
+              "mean_abs": 2.0538263454943197e-07,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0007635653018951416,
+              "mean_abs": 4.031869587415942e-08,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.0017621517181396484,
+              "mean_abs": 1.791326065012726e-07,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.0016903281211853027,
+              "mean_abs": 1.7110397288207883e-07,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.005646228790283203,
+              "mean_abs": 5.236739125635331e-07,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0022125244140625,
+              "mean_abs": 6.540970363038391e-07,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_SHM_position",
+          "raw_index": 48,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 2.5063663721084595,
+              "mean_abs": 0.09241319755960341,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.8869006931781769,
+              "mean_abs": 0.019065100312361947,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 2.4669012427330017,
+              "mean_abs": 0.08265998365750794,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.8019608706235886,
+              "mean_abs": 0.08575004268722512,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 6.197049617767334,
+              "mean_abs": 0.21659647925111788,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.7401251792907715,
+              "mean_abs": 0.2901060600878741,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 2.3046330995857716,
+              "mean_abs": 0.027048181556827654,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.5168099403381348,
+              "mean_abs": 0.005921401480498056,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 2.280603416264057,
+              "mean_abs": 0.023139776002009723,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.6710855960845947,
+              "mean_abs": 0.022682235016772426,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.670052647590637,
+              "mean_abs": 0.06795005030227684,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.9393720626831055,
+              "mean_abs": 0.0934888245402054,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_temporal_opacity_and_support",
+          "raw_index": 0,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.007390379905700684,
+              "mean_abs": 2.2919225746482035e-07,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 9.50843095779419e-05,
+              "mean_abs": 3.140807454579177e-08,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.007349967956542969,
+              "mean_abs": 2.123013765890533e-07,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.002849489450454712,
+              "mean_abs": 1.7393481153109268e-07,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.013360977172851562,
+              "mean_abs": 5.377515599116629e-07,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.005849361419677734,
+              "mean_abs": 7.04150196342789e-07,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.7442577481269836,
+              "mean_abs": 0.019978151580506656,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.3444387912750244,
+              "mean_abs": 0.003642152477687879,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.740518182516098,
+              "mean_abs": 0.018385864199615305,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.3499780595302582,
+              "mean_abs": 0.018023042377339694,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.7079948782920837,
+              "mean_abs": 0.05016362850764153,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 6.24171257019043,
+              "mean_abs": 0.07384807425415359,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_temporal_opacity_and_support",
+          "raw_index": 48,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.688839316368103,
+              "mean_abs": 0.017568915446166095,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.4641917645931244,
+              "mean_abs": 0.003797018365297075,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.688839316368103,
+              "mean_abs": 0.015269067809927242,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.34241074323654175,
+              "mean_abs": 0.014595737638166725,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.062403678894043,
+              "mean_abs": 0.043598111728759506,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 5.9932074546813965,
+              "mean_abs": 0.06870579157866123,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 2.9024348678067327,
+              "mean_abs": 0.09355121690488111,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.7781583815813065,
+              "mean_abs": 0.019184098556659486,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 2.857792740687728,
+              "mean_abs": 0.0837177511070633,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.8169974982738495,
+              "mean_abs": 0.0868906859636267,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 6.15704533457756,
+              "mean_abs": 0.21834520731720422,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.762398719787598,
+              "mean_abs": 0.29292630917313023,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_both",
+          "raw_index": 0,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "environment_transmission": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_alpha": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.7442576289176941,
+              "mean_abs": 0.019978087156686704,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.34443891048431396,
+              "mean_abs": 0.003642151873665166,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.7405180633068085,
+              "mean_abs": 0.01838580084977089,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.3499780595302582,
+              "mean_abs": 0.01802301005132634,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.7079946398735046,
+              "mean_abs": 0.05016353565495291,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 6.24171257019043,
+              "mean_abs": 0.07384800430279907,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_both",
+          "raw_index": 48,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "environment_transmission": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_alpha": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 3.0113061144948006,
+              "mean_abs": 0.09669646112649839,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.913423016667366,
+              "mean_abs": 0.020013720138132504,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 2.964349292218685,
+              "mean_abs": 0.08636138219217936,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7988290041685104,
+              "mean_abs": 0.089197483398094,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 6.1960481107234955,
+              "mean_abs": 0.2251642285787421,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 7.762211322784424,
+              "mean_abs": 0.3038685217807407,
+              "exact_equal": false
+            }
+          }
+        }
+      ],
+      "all49_max_regional_mean_abs_change_from_anchor": {
+        "static_full": 0.10000425437370496,
+        "static_Gaussian_RGB": 0.020478302767366265,
+        "environment_transmission": 0.08982903686301617,
+        "static_alpha": 0.09286487815288041,
+        "static_depth_normalized_foreground": 0.31693421498493407
+      }
+    },
+    "V": {
+      "native_raw10_parity": {
+        "static": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        },
+        "alpha_s": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        },
+        "static_depth_weighted_raw": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        },
+        "static_env_contribution": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "exact_equal": true
+        }
+      },
+      "native_png_parity": {
+        "static_png": true,
+        "alpha_png": true
+      },
+      "points": {
+        "point_count": 2234298,
+        "potentially_visible_candidate_count": 1374168,
+        "candidate_definition": "marginal>.05 and effective opacity>=1/255 at any observed time; not proof of frustum/pixel visibility.",
+        "all_points": {
+          "max_XYZ_displacement_from_anchor_m": {
+            "shape": [
+              2234298
+            ],
+            "dtype": "float32",
+            "numel": 2234298,
+            "finite_count": 2234298,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 2.8658084869384766,
+            "p01": 0.0,
+            "p05": 0.0,
+            "p50": 0.032938599586486816,
+            "p95": 0.31139299273490906,
+            "p99": 0.4928413152694697,
+            "mean": 0.08259490216156942,
+            "std": 0.11615628428538873,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0006659809926876361
+          },
+          "effective_opacity_range_over49": {
+            "shape": [
+              2234298
+            ],
+            "dtype": "float32",
+            "numel": 2234298,
+            "finite_count": 2234298,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 0.845227062702179,
+            "p01": 1.1101365089416504e-05,
+            "p05": 0.00022871363908052447,
+            "p50": 0.0038761859759688377,
+            "p95": 0.06655459366738793,
+            "p99": 0.1866318851709364,
+            "mean": 0.013684463813770108,
+            "std": 0.03496047495446987,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          },
+          "effective_opacity_max_over49": {
+            "shape": [
+              2234298
+            ],
+            "dtype": "float32",
+            "numel": 2234298,
+            "finite_count": 2234298,
+            "nonfinite_count": 0,
+            "min": 1.0677980201434512e-11,
+            "max": 0.8850375413894653,
+            "p01": 0.002399908369407058,
+            "p05": 0.0030211254488676786,
+            "p50": 0.008787889964878559,
+            "p95": 0.1009841155260801,
+            "p99": 0.21384161695837964,
+            "mean": 0.02127559337990282,
+            "std": 0.04239181605332989,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          }
+        },
+        "potentially_visible_candidate_points": {
+          "max_XYZ_displacement_from_anchor_m": {
+            "shape": [
+              1374168
+            ],
+            "dtype": "float32",
+            "numel": 1374168,
+            "finite_count": 1374168,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 2.8658084869384766,
+            "p01": 0.0,
+            "p05": 0.0,
+            "p50": 0.04479439742863178,
+            "p95": 0.3650888204574585,
+            "p99": 0.5629142642021181,
+            "mean": 0.10424044214813151,
+            "std": 0.13906694219193327,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.001066827345710277
+          },
+          "effective_opacity_range_over49": {
+            "shape": [
+              1374168
+            ],
+            "dtype": "float32",
+            "numel": 1374168,
+            "finite_count": 1374168,
+            "nonfinite_count": 0,
+            "min": 0.0,
+            "max": 0.845227062702179,
+            "p01": 5.731992423534394e-06,
+            "p05": 7.84403644502163e-05,
+            "p50": 0.009100347757339478,
+            "p95": 0.09927923083305354,
+            "p99": 0.22510669067502023,
+            "mean": 0.020847153634719902,
+            "std": 0.04304957562441014,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          },
+          "effective_opacity_max_over49": {
+            "shape": [
+              1374168
+            ],
+            "dtype": "float32",
+            "numel": 1374168,
+            "finite_count": 1374168,
+            "nonfinite_count": 0,
+            "min": 0.003921573981642723,
+            "max": 0.8850375413894653,
+            "p01": 0.0039600832387804985,
+            "p05": 0.003960083704441786,
+            "p50": 0.009999998845160007,
+            "p95": 0.13296910822391508,
+            "p99": 0.25058053672313696,
+            "mean": 0.03242248793677744,
+            "std": 0.050980268901721894,
+            "fraction_lt0": 0.0,
+            "fraction_gt1": 0.0
+          }
+        }
+      },
+      "per_time_selected": [
+        {
+          "raw_index": 0,
+          "timestamp": -0.48,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.2582225976468732,
+            "static_Gaussian_RGB": 0.13819931300141727,
+            "environment_transmission": 0.12002328463762137,
+            "static_alpha": 0.8772863765208171,
+            "static_depth_normalized_foreground": 2.8762402761565316
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 0.5423038303852081,
+              "mean_abs": 0.01050369816042342,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.27346494793891907,
+              "mean_abs": 0.0038872686889514785,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.53276127576828,
+              "mean_abs": 0.0080869190923086,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.37122732400894165,
+              "mean_abs": 0.007968035549202118,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.3285470008850098,
+              "mean_abs": 0.03266661666950592,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 2.497957706451416,
+              "mean_abs": 0.021696944526433126,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "raw_index": 10,
+          "timestamp": -0.28,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.25210463310808534,
+            "static_Gaussian_RGB": 0.13780774013891886,
+            "environment_transmission": 0.11429689297511515,
+            "static_alpha": 0.8830411240527041,
+            "static_depth_normalized_foreground": 2.874818852427915
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "environment_transmission": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_alpha": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            }
+          }
+        },
+        {
+          "raw_index": 20,
+          "timestamp": -0.08000000000000002,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.24244490132845817,
+            "static_Gaussian_RGB": 0.1351297949942821,
+            "environment_transmission": 0.10731510633697097,
+            "static_alpha": 0.8902038814352752,
+            "static_depth_normalized_foreground": 2.8596430695891213
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 1.0329554677009583,
+              "mean_abs": 0.018659731597688703,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.5238187611103058,
+              "mean_abs": 0.006930345429585662,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.01747664809227,
+              "mean_abs": 0.013349167978430904,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.6180505231022835,
+              "mean_abs": 0.01279057150936803,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 3.808091402053833,
+              "mean_abs": 0.04748785166467556,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 3.4664480686187744,
+              "mean_abs": 0.03934074908743013,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "raw_index": 30,
+          "timestamp": 0.12,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.22985727351832996,
+            "static_Gaussian_RGB": 0.13050414338187566,
+            "environment_transmission": 0.099353130137283,
+            "static_alpha": 0.8989538833074727,
+            "static_depth_normalized_foreground": 2.8353426295072195
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 1.1737744212150574,
+              "mean_abs": 0.03915946630816642,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.6080255210399628,
+              "mean_abs": 0.015641765223839497,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.1394909024238586,
+              "mean_abs": 0.0273493336470672,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7549228519201279,
+              "mean_abs": 0.026620794949856773,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 5.911760479211807,
+              "mean_abs": 0.09637450489889034,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 4.09061074256897,
+              "mean_abs": 0.08166186228879131,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "raw_index": 48,
+          "timestamp": 0.48,
+          "region": "non_sky_outside_actor",
+          "pixel_count": 142486,
+          "regional_current_mean": {
+            "static_full": 0.24008591739422588,
+            "static_Gaussian_RGB": 0.1326458765884668,
+            "environment_transmission": 0.10744004080649423,
+            "static_alpha": 0.8926293247486047,
+            "static_depth_normalized_foreground": 2.8369833875096178
+          },
+          "regional_true_pixel_delta_from_anchor": {
+            "static_full": {
+              "max_abs": 1.6307271420955658,
+              "mean_abs": 0.05569556372484899,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.7452815994620323,
+              "mean_abs": 0.020674652953513954,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.5881235897541046,
+              "mean_abs": 0.03975932994481023,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7595622316002846,
+              "mean_abs": 0.03943866564670039,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 5.924083590507507,
+              "mean_abs": 0.1463576598701856,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 3.9779791831970215,
+              "mean_abs": 0.10814737049743808,
+              "exact_equal": false
+            }
+          }
+        }
+      ],
+      "readonly_counterfactual_endpoints": [
+        {
+          "mode": "freeze_SHM_position",
+          "raw_index": 0,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.5423119366168976,
+              "mean_abs": 0.010503768481517054,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.27346739172935486,
+              "mean_abs": 0.003887268316513847,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.5327692627906799,
+              "mean_abs": 0.008087014300653285,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.37122830748558044,
+              "mean_abs": 0.007968130900172893,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.328547179698944,
+              "mean_abs": 0.03266594211027613,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 2.497959613800049,
+              "mean_abs": 0.02169670733980438,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.00252687931060791,
+              "mean_abs": 3.620785675231912e-07,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0011437833309173584,
+              "mean_abs": 8.237216463782811e-08,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.001477360725402832,
+              "mean_abs": 2.984069570892615e-07,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.0012394189834594727,
+              "mean_abs": 3.127548088817308e-07,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.010342597961425781,
+              "mean_abs": 1.5218076763426423e-06,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.013991832733154297,
+              "mean_abs": 2.290184004584591e-06,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_SHM_position",
+          "raw_index": 48,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 1.4907850921154022,
+              "mean_abs": 0.053627554978262555,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.7206810787320137,
+              "mean_abs": 0.019869937756080144,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.4514396488666534,
+              "mean_abs": 0.0383174253562632,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7590302266180515,
+              "mean_abs": 0.0381477168816974,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 5.921496391296387,
+              "mean_abs": 0.1407655294130528,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 4.08118462562561,
+              "mean_abs": 0.10192607685612137,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.6793483793735504,
+              "mean_abs": 0.015982167117973917,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.44248247146606445,
+              "mean_abs": 0.006252863876899063,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.619878739118576,
+              "mean_abs": 0.010777628399228351,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.3848753869533539,
+              "mean_abs": 0.010418019690485567,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.5657787322998047,
+              "mean_abs": 0.04755558301222317,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 2.8053271770477295,
+              "mean_abs": 0.039849918094671984,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_temporal_opacity_and_support",
+          "raw_index": 0,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.004549793899059296,
+              "mean_abs": 3.678068141022644e-07,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.004812642931938171,
+              "mean_abs": 1.0272201637200318e-07,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.0012871623039245605,
+              "mean_abs": 2.8686319962534905e-07,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.00126570463180542,
+              "mean_abs": 3.051047945552008e-07,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.010463714599609375,
+              "mean_abs": 1.6291719409765981e-06,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.014065265655517578,
+              "mean_abs": 2.350000737248624e-06,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.5423064529895782,
+              "mean_abs": 0.010503735757923743,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.27346697449684143,
+              "mean_abs": 0.003887276053680753,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.5327638387680054,
+              "mean_abs": 0.008087001798773079,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.37122756242752075,
+              "mean_abs": 0.007968117782463776,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.328547239303589,
+              "mean_abs": 0.03266586543119678,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 2.497955799102783,
+              "mean_abs": 0.021696649632237663,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_temporal_opacity_and_support",
+          "raw_index": 48,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.5719621777534485,
+              "mean_abs": 0.009565662297294105,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.3700758218765259,
+              "mean_abs": 0.0038405357199122092,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.5039805173873901,
+              "mean_abs": 0.006699871447214775,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.2983822524547577,
+              "mean_abs": 0.0063289056585407585,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 1.5767197608947754,
+              "mean_abs": 0.02856041271163019,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 1.5217905044555664,
+              "mean_abs": 0.025766265922230365,
+              "exact_equal": false
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 1.5350452065467834,
+              "mean_abs": 0.0540098066042207,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.6471666172146797,
+              "mean_abs": 0.020008508677227376,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.4946209192276,
+              "mean_abs": 0.03854664600918295,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7415129393339157,
+              "mean_abs": 0.03833080264300653,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 5.785989463329315,
+              "mean_abs": 0.14091403571628897,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 3.960153102874756,
+              "mean_abs": 0.1028458559692802,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_both",
+          "raw_index": 0,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "environment_transmission": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_alpha": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 0.5423038303852081,
+              "mean_abs": 0.01050369816042342,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.27346494793891907,
+              "mean_abs": 0.0038872686889514785,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 0.53276127576828,
+              "mean_abs": 0.0080869190923086,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.37122732400894165,
+              "mean_abs": 0.007968035549202118,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 2.3285470008850098,
+              "mean_abs": 0.03266661666950592,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 2.497957706451416,
+              "mean_abs": 0.021696944526433126,
+              "exact_equal": false
+            }
+          }
+        },
+        {
+          "mode": "freeze_both",
+          "raw_index": 48,
+          "region": "non_sky_outside_actor",
+          "vs_anchor": {
+            "static_full": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "environment_transmission": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_alpha": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 0.0,
+              "mean_abs": 0.0,
+              "exact_equal": true
+            }
+          },
+          "vs_same_time_actual": {
+            "static_full": {
+              "max_abs": 1.6307271420955658,
+              "mean_abs": 0.05569556372484899,
+              "exact_equal": false
+            },
+            "static_Gaussian_RGB": {
+              "max_abs": 0.7452815994620323,
+              "mean_abs": 0.020674652953513954,
+              "exact_equal": false
+            },
+            "environment_transmission": {
+              "max_abs": 1.5881235897541046,
+              "mean_abs": 0.03975932994481023,
+              "exact_equal": false
+            },
+            "static_alpha": {
+              "max_abs": 0.7595622316002846,
+              "mean_abs": 0.03943866564670039,
+              "exact_equal": false
+            },
+            "static_depth_weighted_raw": {
+              "max_abs": 5.924083590507507,
+              "mean_abs": 0.1463576598701856,
+              "exact_equal": false
+            },
+            "static_depth_normalized_foreground": {
+              "max_abs": 3.9779791831970215,
+              "mean_abs": 0.10814737049743808,
+              "exact_equal": false
+            }
+          }
+        }
+      ],
+      "all49_max_regional_mean_abs_change_from_anchor": {
+        "static_full": 0.056647046381638304,
+        "static_Gaussian_RGB": 0.021457319187547987,
+        "environment_transmission": 0.040248411806529556,
+        "static_alpha": 0.03988008592737132,
+        "static_depth_normalized_foreground": 0.1149891675051524
+      }
+    }
+  },
+  "release": {
+    "apps": "",
+    "exclusive_lock_available": true
+  }
+}

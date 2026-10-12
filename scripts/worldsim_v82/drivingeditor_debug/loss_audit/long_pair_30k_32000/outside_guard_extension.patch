@@ -1,0 +1,9 @@
+--- approved300/outside_experiment_guard.py
++++ draft32000/outside_experiment_guard.py
+@@ -61,5 +61,5 @@
+         if set(binding["algorithm_changed_files"]) != ALGORITHM_FILES:
+             raise ValueError("Only train.py and paper_losses.py algorithm diff permitted")
+-        for key, value in (("parent_iteration", 30000), ("first_iteration", 30001), ("stop_iteration", 30300), ("horizon", 50000), ("seed", 0)):
++        for key, value in (("parent_iteration", 30000), ("first_iteration", 30001), ("stop_iteration", 32000), ("horizon", 50000), ("seed", 0)):
+             if type(binding[key]) is not type(value) or binding[key] != value:
+                 raise ValueError("Continuation invariant changed: " + key)

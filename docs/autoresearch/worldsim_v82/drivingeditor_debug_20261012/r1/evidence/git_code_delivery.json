@@ -1,0 +1,980 @@
+{
+  "author_commit": "560d57c3825ed2bdbc6a6602e0011ad51e8da60e",
+  "patches": [
+    {
+      "patch": "compatibility/DrivingEditor-v82/author2024_to_frozen_baseline.patch",
+      "changed_files": [
+        "Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py",
+        "configs/paper_waymo_reconstruction.yaml",
+        "scene/paper_sgcm.py",
+        "scene/scene_utils.py",
+        "scene/waymo_calibration.py",
+        "scene/waymo_loader2.py",
+        "tests/test_paper_checkpoint.py",
+        "tests/test_paper_configuration.py",
+        "tests/test_paper_losses.py",
+        "tests/test_paper_sgcm.py",
+        "train.py",
+        "utils/paper_checkpoint.py",
+        "utils/paper_losses.py",
+        "utils/paper_masks.py",
+        "utils/paper_metrics.py",
+        "utils/test_paper_masks.py",
+        "utils/test_paper_metrics.py"
+      ],
+      "apply_check": "PASS"
+    },
+    {
+      "patch": "compatibility/DrivingEditor-v82/author2024_to_legacy_compatibility.patch",
+      "changed_files": [
+        "Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py",
+        "scene/scene_utils.py",
+        "scene/waymo_loader2.py",
+        "train.py"
+      ],
+      "apply_check": "PASS"
+    },
+    {
+      "patch": "compatibility/DrivingEditor-v82/author2024_to_paper_working_copy.patch",
+      "changed_files": [
+        "Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py",
+        "configs/paper_waymo_reconstruction.yaml",
+        "scene/paper_sgcm.py",
+        "scene/scene_utils.py",
+        "scene/waymo_calibration.py",
+        "scene/waymo_loader2.py",
+        "tests/test_paper_checkpoint.py",
+        "tests/test_paper_configuration.py",
+        "tests/test_paper_losses.py",
+        "tests/test_paper_sgcm.py",
+        "train.py",
+        "utils/paper_checkpoint.py",
+        "utils/paper_losses.py",
+        "utils/paper_masks.py",
+        "utils/paper_metrics.py",
+        "utils/test_paper_masks.py",
+        "utils/test_paper_metrics.py"
+      ],
+      "apply_check": "PASS"
+    },
+    {
+      "patch": "compatibility/DrivingEditor-v82/frozen_baseline_to_V.patch",
+      "changed_files": [
+        "train.py",
+        "utils/paper_losses.py"
+      ],
+      "apply_check": "PASS"
+    },
+    {
+      "patch": "compatibility/DrivingEditor-v82/frozen_baseline_to_S.patch",
+      "changed_files": [
+        "train.py"
+      ],
+      "apply_check": "PASS"
+    }
+  ],
+  "scripts": [
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/record_long_b2_transition.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/record_long_b2_transition.py",
+      "sha256": "739f86ee5a38385b7192bae2af48777ef7c968c1a5777810209e1313f02376fd"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/record_long_v_transition.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/record_long_v_transition.py",
+      "sha256": "02274f38e93ee82905e4f890e15cb905396c95d0d8598fa4f220e20d63c031e1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/package_v82_remote.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/package_v82_remote.py",
+      "sha256": "73a28cd96465c807241a885022088bc6fcac6d14c820f95a5326d829716eb986"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/audit_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/audit_cpu.py",
+      "sha256": "52dcea693d51e1c12f11fa8176d729ff5a6199c758e0264ad30436194b01fe7f"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/audit_checkpoint_branches_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/audit_checkpoint_branches_cpu.py",
+      "sha256": "4f442ee5522717427ba58300bd2a66d163f999a21e19d9f40504d444f70d5446"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/audit_static_time_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/audit_static_time_cpu.py",
+      "sha256": "24352c3de28be14606861d01e216d17379c01fbcb9c80e5af6887284b28a4b08"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/test_visibility_guard_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/test_visibility_guard_cpu.py",
+      "sha256": "5369c988b88c9e2597cbcd151768707c8302881e4d41b27d5fcfa2426a19ec61"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/candidate/paper_sgcm_visibility_guard.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/candidate/paper_sgcm_visibility_guard.py",
+      "sha256": "7f65c712237b6f6803a432168566fbcf0220b4f42418156f11ec5b673bfc1e7d"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/candidate/paper_sgcm_visibility_guard.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/candidate/paper_sgcm_visibility_guard.patch",
+      "sha256": "83142680d93820604b9cca8502ead3d7cde88bcf8fdfce37e7ad8e3266eddd26"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/outside_opacity_review/review_guard_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/outside_opacity_review/review_guard_cpu.py",
+      "sha256": "7da232a9ee203cee3e9753d6c57371cbde3e3a423d0c82f26890fa7858369c37"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/outside_opacity_review/review_candidate_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/outside_opacity_review/review_candidate_cpu.py",
+      "sha256": "8f0591f5757164b87f1287302782063a35cffd2a928e0c54972167f13cf8a1a6"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/outside_opacity_review/review_input_manifest_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/outside_opacity_review/review_input_manifest_cpu.py",
+      "sha256": "5dded887a3c8b5ea4ac5d94c46373d5801cddc1a0ba54dfe0a0776114ca7cdb4"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/outside_opacity_review/make_final_review.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/outside_opacity_review/make_final_review.py",
+      "sha256": "3f61453dc5b1932cd22df0064375c6acf36a75f2b333c3b91d5b83449771339c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/outside_opacity_review/review_v2_delta.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/outside_opacity_review/review_v2_delta.py",
+      "sha256": "1bfcbb25c3ac0b7ca1954d8d9be1194f1ff177b1b7d81f17e5598e35016f66e2"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/outside_opacity_review/refs/continuation_variant_harness_v1.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/outside_opacity_review/refs/continuation_variant_harness_v1.py",
+      "sha256": "93bb8df2cca142b3ea0b08e42ab8c3fe5defa214641537b7f3935eb300444359"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/verify_remote_source_plan_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/long_pair_review/verify_remote_source_plan_cpu.py",
+      "sha256": "c71272489472776cf7ef0bd859581ffe6001608f6ddf83f78271bd6b364c7a8e"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/review_materialized_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/long_pair_review/review_materialized_cpu.py",
+      "sha256": "e71628639f978b7733efed43cba33b886e663289b21edb6fabab69c0050a6958"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/write_final_reviews_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/long_pair_review/write_final_reviews_cpu.py",
+      "sha256": "66c72fea0a3dd71126669f1fd5efd18e381c6a5152df998a003204af8f10888e"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/review_actual_long_variant_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/long_pair_review/review_actual_long_variant_cpu.py",
+      "sha256": "c6b40c8115bb87fc5917adf98b951233a0526c276f5566b16ec3bc54aedd4e45"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/verify_actual_three_arm_metrics_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/long_pair_review/verify_actual_three_arm_metrics_cpu.py",
+      "sha256": "8633315240e5aa76e2cb1c9bb2d6e76cc28df2fd14563e45083de129e9a3e91b"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/measure_actual_removal_locality_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/long_pair_review/measure_actual_removal_locality_cpu.py",
+      "sha256": "016f065dc90d67d7a7e34d21d75ed48852fe2418f1dbc4f94ef4dea31ee330d1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/observed_static_rgb_S_review/verify_actual_S_metrics_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/observed_static_rgb_S_review/verify_actual_S_metrics_cpu.py",
+      "sha256": "3127c7cfcb863f0b61949617f0195301d35ef1774b91f92732cf832f4914cc0f"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/sgcm_data_audit/observed_static_rgb_S_review/measure_actual_S_locality_core_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/sgcm_data_audit/observed_static_rgb_S_review/measure_actual_S_locality_core_cpu.py",
+      "sha256": "e2116bed22553bacbe8030edd53e021d73f86edad4bff19c2568fe3c07f41865"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/audit_events_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/audit_events_cpu.py",
+      "sha256": "eb8eb3028c8c040be3e73e1c4c0db68c52007d955bd04e8ff9e7099065686204"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/audit_losses_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/audit_losses_cpu.py",
+      "sha256": "642952af722ef51179ce7b6a254380380235ae93991c49af194073a0a728988f"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/audit_sparse_depth_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/audit_sparse_depth_cpu.py",
+      "sha256": "870ea3b2f0c20a49cabe9864e7fe6e2629d59f8c2e2a9b70d43fa1a17b4fc7ee"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/prepare_handoff.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/prepare_handoff.py",
+      "sha256": "c23b114466533431f4a70173e754516a2aed984704ee1ee9e999bee53e972ceb"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/prepare_candidates.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/prepare_candidates.py",
+      "sha256": "0757d006feb341911df088d05f70e5c19c261a37d41b6bdf53784604a3610797"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/outside_experiment_guard.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/outside_experiment_guard.py",
+      "sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/prepare_outside_experiment.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/prepare_outside_experiment.py",
+      "sha256": "4665658cf3127e24102166cc5938c97d2eabd9badfff24e61f7f7c2c5fb9a017"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/test_outside_experiment_guard_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/test_outside_experiment_guard_cpu.py",
+      "sha256": "a3d9c78b788c5e10076581c4dd0c4c034c06fa394f112b7c3a37d2c791478dc3"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/nearest_depth.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/nearest_depth.patch",
+      "sha256": "c6463757b4b7d0a807d1d4f17e523050bd82c4630dec0c44d02a85559695257f"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/opacity_outside.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/opacity_outside.patch",
+      "sha256": "29c74fb39b2fb4c2962ae29ff62d19c3e716741943d4e0d7529e2cf7727cda95"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/test_candidates_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/test_candidates_cpu.py",
+      "sha256": "a5e76fa25310d1967aac8c70122be64638900a22a6c67a9f3a1b6942b91f717e"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/nearest_depth/utils/camera_utils.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/nearest_depth/utils/camera_utils.py",
+      "sha256": "4d24dc8c7954edb903b63ddcb56a4240e159846651ebb38478373f5485173681"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/nearest_depth/utils/sparse_depth.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/nearest_depth/utils/sparse_depth.py",
+      "sha256": "bfc3ad342a6e2cf1d23af1ed75b602ade0b24937da3a2b54f361900256e4dc4d"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/opacity_outside/diagnostic_config_snippet.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/opacity_outside/diagnostic_config_snippet.yaml",
+      "sha256": "5a9bce69f32db231570a73999958c2c766cbdbe1d8d37b99adcbd6d3945737e5"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/opacity_outside/train.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/opacity_outside/train.py",
+      "sha256": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/candidates/opacity_outside/utils/paper_losses.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/candidates/opacity_outside/utils/paper_losses.py",
+      "sha256": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/controlled_opacity_outside/effective_config.yaml",
+      "sha256": "afceaa5acd0e5a565a1b0660bb17b124bc3743d48be6014ad3469a0b6cd14cc2"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/actual_algorithm_diff.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/controlled_opacity_outside/actual_algorithm_diff.patch",
+      "sha256": "21388ca6b00caf94a0e869a2f22c5c506b17d846859d3b8a31623672bf9a5b49"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/audit_official_refs_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/audit_official_refs_cpu.py",
+      "sha256": "97310d670e52811df549b39bfd06ac790cb7fe7a39dac4cf73d76966017ffc85"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/baseline_harness_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/baseline_harness_extension.patch",
+      "sha256": "c54c1cd94506ae2b98270c3bc488ee6022857a4fa73b84678d021b2df39611bd"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/baseline_launcher_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/baseline_launcher_extension.patch",
+      "sha256": "107433fda32cbf7d548ab48261327a91983a0c51e67a2fe7152ee04f086a9b1d"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/baseline_noise_harness_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/baseline_noise_harness_extension.patch",
+      "sha256": "dd87c2f86733fbad0a554774647a5d902d7e806ef27840561b6a9c4495e779e1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/baseline_noise_launcher_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/baseline_noise_launcher_extension.patch",
+      "sha256": "bf65ea7b52facd631173365a225ff0b7f5a858ffc3b868675d1508cf842e04b4"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/generate_long_pair_draft_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/generate_long_pair_draft_cpu.py",
+      "sha256": "802bd1cfbbeb0840c5c5dc78419e5c3fa660b8ad23f311f9aeefe9ec0461e210"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialize_long_pair_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialize_long_pair_cpu.py",
+      "sha256": "b4d8fa110682acf7d45ef38fbe3faec65b5624f956b9a9c18fbfdf8be60be543"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/outside_guard_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/outside_guard_extension.patch",
+      "sha256": "cf7a24a41c064622d4b080b31be588788a7c26bcabede04d9dce8f92ad77f67c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/variant_harness_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/variant_harness_extension.patch",
+      "sha256": "69f5f8276c2db70f2455d3187e76b764fbe916eb1789c80ce9d5ea8ed99a05c9"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/variant_launcher_extension.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/variant_launcher_extension.patch",
+      "sha256": "e46a38fda89a2e9e5ad18713e9032bb9a84043612a875b6871bc324734eb6620"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/write_actual_cpu_prepare_receipt.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/write_actual_cpu_prepare_receipt.py",
+      "sha256": "87955bb9eaf4dca5c086c1f840d30179ee0a706adfe83463e9acf9f2909cb5f7"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/baseline_effective_config.yaml",
+      "sha256": "b003cd21a0f3f7da1d853951b94795118b1faaed185bceb712674924ef5db86a"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/continuation_harness.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/continuation_harness.py",
+      "sha256": "88a2df38e5ac4df5905f1de030701189763d469f9eb3daf9e3339f1931aba829"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/continuation_variant_harness.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/continuation_variant_harness.py",
+      "sha256": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/launch_controlled_continuation.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/launch_controlled_continuation.py",
+      "sha256": "6337b0c660d1eedb95b822d87d0feaa6d5691ba22da4de8d8d54fb750a7e68b0"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/launch_opacity_outside_continuation.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/launch_opacity_outside_continuation.py",
+      "sha256": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/outside_effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/outside_effective_config.yaml",
+      "sha256": "97fa2db569466c9a903ad5d83ac788a1b2afeb5fff8804875ffd39c37851ad3c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/outside_experiment_guard.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/outside_experiment_guard.py",
+      "sha256": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/algorithm_overrides/train.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/algorithm_overrides/train.py",
+      "sha256": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/algorithm_overrides/utils/paper_losses.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/algorithm_overrides/utils/paper_losses.py",
+      "sha256": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference/continuation_harness.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference/continuation_harness.py",
+      "sha256": "ede8591eb6ffbc4cca970439d1e8dcd5b75a2b008b408fc03cab73c145e7dd3a"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference/effective_config.yaml",
+      "sha256": "8facadaeb73ece30bdeaf4ef9bcb4051863750ee9d487f4e5760d3bc40949fd1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference/launch_controlled_continuation.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference/launch_controlled_continuation.py",
+      "sha256": "8f684d62ef10c6e90e203f1a5d5eaab2855943f28a1a7fd6460097d346d1d80f"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/v_binding_cpu/prepare_long_variant_binding_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/v_binding_cpu/prepare_long_variant_binding_cpu.py",
+      "sha256": "ec2adbf6b83ed3372fcd09b6007fcb2c91404a6f9068a0827dc601d243c58832"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/v_binding_cpu/test_long_variant_binding_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/v_binding_cpu/test_long_variant_binding_cpu.py",
+      "sha256": "6635b1def254109ffac98e4b7dde03780eaa65827a646344874064ddfa595d9c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/v_binding_cpu/actual_algorithm_diff.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/long_pair_30k_32000/v_binding_cpu/actual_algorithm_diff.patch",
+      "sha256": "4ac897365605f30f91ac0a21d4440cbc79b86d60be20de274cfee50f5e6628de"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/depth_definition_followup/depth_definition_followup_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/depth_definition_followup/depth_definition_followup_cpu.py",
+      "sha256": "c255e321c8d10a2bf2d26dac1905a162f64bc54dae072e807e41126a34bf6ab7"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/prepare_nearest_depth_draft_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/prepare_nearest_depth_draft_cpu.py",
+      "sha256": "1f3cc40bdb4e91fa80331c0217d4e9b74a722396903c095c97e19e132cbae65c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/longV_domains_focus/localize_saved_actor_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/longV_domains_focus/localize_saved_actor_cpu.py",
+      "sha256": "22d18c0cc225ed1b0ec0effe14c85436eabddb333f7a2851b5698d40a9672069"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/observed_static_rgb.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/observed_static_rgb.patch",
+      "sha256": "79fe61a729a545d783d8ef807866b9754d3ec019c901908b0f1a6af82104099b"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/static_anchor_guard.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/static_anchor_guard.py",
+      "sha256": "0a879a7a2574c877eb6464a29f7c91948e40e09b29310e34a02a86a5c7c23764"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/prepare_S_binding_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/prepare_S_binding_cpu.py",
+      "sha256": "8d56ba2fd03313d38d7c9db37e350ed2d2641a83956864bf3ff373b6c9660599"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/check_S_delta_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/check_S_delta_cpu.py",
+      "sha256": "bc2d2ccd3810e47cbe5c6723af62ca35201ec9f33553bd99c0bbb1ad4d23e085"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/static_anchor_effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/static_anchor_effective_config.yaml",
+      "sha256": "b6c8a7e4a88b5712a8628fa86358d01d72b7ccad80d33fe9a05089ba194e0b49"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/continuation_static_anchor_harness.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/continuation_static_anchor_harness.py",
+      "sha256": "57f06969017b31220f2afbffcc41999108a10404b5ad3519cd7a142587584d65"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/launch_static_anchor_continuation.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/launch_static_anchor_continuation.py",
+      "sha256": "5dadc75cae9a515ae3cae09bc033ecde5db03385dd5b9243d5e6c093f531cc9b"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/monitor_static_anchor_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/monitor_static_anchor_cpu.py",
+      "sha256": "69c83e0a407c77d0797c9836e75fc18d0830ffb75733f63ff05cca80d88543a4"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/read_raw_labels_layout_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/read_raw_labels_layout_cpu.py",
+      "sha256": "12b2eadcadb8fa2111bbf2b6fa586fba37b66babb49900ef69b210d41ce96db6"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/replay_static_actor_lineage_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/replay_static_actor_lineage_cpu.py",
+      "sha256": "54f4f56b143d0b8ebbb791f585ef8fdd1bc4379472dedcd00c9e25c1734c5701"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/followup_front_visibility_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/followup_front_visibility_cpu.py",
+      "sha256": "cf158b5693b29b4dff13828ab54bafe309974fadabc1d8610564e9fd45af9db7"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/followup_dynamic_native_semantics_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/followup_dynamic_native_semantics_cpu.py",
+      "sha256": "e4e44c144cdbbbc6b9644b8aa872e696ad173e9ef45633bc4227ac98e69cbb84"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/audit_other_dynamic_domain_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/audit_other_dynamic_domain_cpu.py",
+      "sha256": "22ae86aab0159f803df3dee8e2d478d24d5f064913cce76fea60c3d9e0ed4b28"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/collect_clock_source_evidence_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/collect_clock_source_evidence_cpu.py",
+      "sha256": "074b1b12b4b8bc3d49789eecdddbf5dc3e68a3ed7f6f10d707f1b5436b2f9b60"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/sdk_range_image_utils.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/sdk_range_image_utils.py",
+      "sha256": "48abee3df4bc0c5d24e83909b7f149201ab95a08d6b383dfb11382bedab5f265"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/supervisor.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/supervisor.py",
+      "sha256": "16d11ed33da21eac1f7a41642f3d7a73e76f9729af8a6f378ca4570b4e4faa3a"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/component_diagnostic.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/component_diagnostic.py",
+      "sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/make_component_contact_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/make_component_contact_cpu.py",
+      "sha256": "1754cce2e12a348b32a6b1aa31073d4abadd423cf855fae32878378ed4406ea6"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/prepare_continuation_receipts_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/prepare_continuation_receipts_cpu.py",
+      "sha256": "d8b8a6f2461235a9f05dd6eee61724b81434b29ea593f2b1310c79faebd25bfe"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/prepare_variant_receipts_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/prepare_variant_receipts_cpu.py",
+      "sha256": "b3a91d8b1770e8a13c09fae4b5183ac78ab3f94419b09229f8540219d09b2310"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/record_variant_gpu_release_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/record_variant_gpu_release_cpu.py",
+      "sha256": "180a8f72f906de17bc061ad939543fa0f71fbb9f3ecc3fd52923504ede3175a6"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/record_long_B1_running_handoff_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/record_long_B1_running_handoff_cpu.py",
+      "sha256": "3a90b10d7335821828c93ceb0a92c21ca7ee35bd1688a88aef31d630082f5c1c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/prepare_long_original_receipts_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/prepare_long_original_receipts_cpu.py",
+      "sha256": "c82c4273c3032812f72298c2259bc744267f8ae1628c982b2528d965e2f49ea3"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/quantify_long_original_repeat_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/quantify_long_original_repeat_cpu.py",
+      "sha256": "d2a5d00ff35f352a186b2f6fa5bfcc7d3036b92eecd0cf7a889122f88e51a705"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/monitor_long_original_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/monitor_long_original_cpu.py",
+      "sha256": "c8e0a4d4587804a1d698e8787356677b6b8ad7de7bca1ce1e3102f157748f8e1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/verify_long_repeat_common_inputs_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/verify_long_repeat_common_inputs_cpu.py",
+      "sha256": "38361760284ebc04b49829e274d69fa3c6a6d21319c5f51db957a0b1a05f1ec8"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/monitor_long_variant_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/monitor_long_variant_cpu.py",
+      "sha256": "4ee37b44870dc8d9ec5fd4a12cb181e1c75f7db73bea8b3c1eb1cd54dd1971f6"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/prepare_long_variant_receipts_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/prepare_long_variant_receipts_cpu.py",
+      "sha256": "383776eb85a60a9e5c000b097e6fcc9947b4ec584d0d6cbe91480e263f354295"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/quantify_long_variant_pair_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/quantify_long_variant_pair_cpu.py",
+      "sha256": "8cbe514bc04c623ddd14248952cac635328232d101459a9faadad4f4b425cfd1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/prepare_long_static_anchor_receipts_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/prepare_long_static_anchor_receipts_cpu.py",
+      "sha256": "f5d339999e1f5dd645b7418ffed0565f2b93cf6c4d03c4e1017733c47e6f0515"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/quantify_long_static_anchor_pair_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/scripts/quantify_long_static_anchor_pair_cpu.py",
+      "sha256": "3844ec995c2cc9e9f2564291d9c2f689a019ff2ca66b721be6a2df5b94910a7c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/continuation_harness.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/continuation_harness.py",
+      "sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/runtime_safety_parameterized.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/runtime_safety_parameterized.py",
+      "sha256": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/launch_controlled_continuation.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/launch_controlled_continuation.py",
+      "sha256": "9e25b61f09f2c59c5d58bd3753792b501b9bfb12b8846ef2f1b6782cb19372b9"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/continuation_variant_harness.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/continuation_variant_harness.py",
+      "sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/launch_opacity_outside_continuation.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/launch_opacity_outside_continuation.py",
+      "sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/write_variant_preflight_receipt.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/write_variant_preflight_receipt.py",
+      "sha256": "0f2098b1bae670b6849b75236872c348b5bd421172ddf1023dcfd94bf0587c97"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/opacity_outside_harness_delta.patch",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/opacity_outside_harness_delta.patch",
+      "sha256": "b39b4865d0bae12af3394844523c105fada4bf97a05e779e0250ca8175c6eb5e"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/archive_failed_variant_attempt.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/continuation_plan/archive_failed_variant_attempt.py",
+      "sha256": "b7e0f6212ad29b0cd3ace5b58d746cfa3044b5be49345fd187a1052f21fe4f9c"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/fixed_pose_temporal32k/fixed_pose_temporal_diagnostic.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/fixed_pose_temporal32k/fixed_pose_temporal_diagnostic.py",
+      "sha256": "0ad7cd996a38dc7f5294b9656c03edd6703478d416d5f582b67800de5e6e4bc4"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/fixed_pose_temporal32k/launch_fixed_pose_temporal.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/fixed_pose_temporal32k/launch_fixed_pose_temporal.py",
+      "sha256": "cc15e2faf6ff9f6b6cd0724b9832ef2fcaa04a823e7a894ad6afbeb63d41b9f1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/component_diagnostic/fixed_pose_temporal32k/make_actual_contacts_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/component_diagnostic/fixed_pose_temporal32k/make_actual_contacts_cpu.py",
+      "sha256": "618e2752623e34055821b61d8672faa19d25410c55f5cf00e76f44b710eeff84"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to30300/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/continuation_diagnostic/original30k_to30300/effective_config.yaml",
+      "sha256": "be318cee7227e73f2e6836ed53ced3964dc3c542d29b2c4147661d17a2f41d88"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to30300/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/continuation_diagnostic/opacity_outside30k_to30300/effective_config.yaml",
+      "sha256": "afceaa5acd0e5a565a1b0660bb17b124bc3743d48be6014ad3469a0b6cd14cc2"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to32000/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/continuation_diagnostic/original30k_to32000/effective_config.yaml",
+      "sha256": "a42ede07b6fa5619e973603b6903f1b82b4b726404c3c2c6eaf8f566c5b850d6"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to32000_noise_reference/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/continuation_diagnostic/original30k_to32000_noise_reference/effective_config.yaml",
+      "sha256": "ca8656f75bc58b2e59d649f215268f2433936400425cf4da06a6987eb26432a4"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/continuation_diagnostic/opacity_outside30k_to32000/effective_config.yaml",
+      "sha256": "faa7364e497e658559555222347fab0d95e5741c6c4ca1bac961564b0c9ecc78"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/effective_config.yaml",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/continuation_diagnostic/observed_static_rgb30k_to32000/effective_config.yaml",
+      "sha256": "b6c8a7e4a88b5712a8628fa86358d01d72b7ccad80d33fe9a05089ba194e0b49"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/CMakeLists.txt",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/CMakeLists.txt",
+      "sha256": "adfc2f5ab4bd216fa64c2499a5031e3c4c063007a6e0b89e2a37b0970ff1b25b"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/contract.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/contract.py",
+      "sha256": "83185c8e4d460fe7385e28f18d8c75993b21f4577ca3b2c99dc6d38593aa937a"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/generate_build_inputs.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/generate_build_inputs.py",
+      "sha256": "c54dd7dfc435948bdd018726fe9dcfd579cfe60d150ce2e57d4670443f05ad41"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/test_contract.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/test_contract.py",
+      "sha256": "98da6cb4ef2c014f46a88e7cd82f16cce2caeef6b9d510836fae87f3d2233e01"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/verify_candidate.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/verify_candidate.py",
+      "sha256": "a9c1eaeae7253b32d155320d2fa34fef725cc5fe07885899a517b0c89fa1de8b"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/freeze_candidate.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/freeze_candidate.py",
+      "sha256": "5d781286d9757176dcfae9549920d3afa7cdd093a15d36bb0b49ab26e77dc3ee"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native/bridge.cpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/native/bridge.cpp",
+      "sha256": "6ad60d54a076e41300b19f6fcfaed6914c47524be5015f38b05fe336eedb6098"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native/bridge.hpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/native/bridge.hpp",
+      "sha256": "2b7e91d290f5d5cd58c6d5499c93d195d183bab03d73d7a140e5b029c263ed05"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native/compat.hpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/native/compat.hpp",
+      "sha256": "8cf686578e094193778b5e004a5652cc6e4193186da6081bab3e5ec7f8541c85"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native/compat_probe.cpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/native/compat_probe.cpp",
+      "sha256": "459671a2dd231223d808dfd4d6cdc31e4408c7c5c8b309d3ab1dd882b0dfc0bc"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native/prelude.hpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/native/prelude.hpp",
+      "sha256": "0b0b48da7a81049257a247d0661903e774db46bc4c395a96ae2113df8db4ae98"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/verification/unchanged_invalidpoint_syntax.cpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/verification/unchanged_invalidpoint_syntax.cpp",
+      "sha256": "0dbbadc9390b6881e6edb67b7f73f6511908c4919c14db0d47483be9882d54a5"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_transport/cmake_install.cmake",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_transport/cmake_install.cmake",
+      "sha256": "ca1a544f2f13dda155c66d47ea3dc475c305fac19d8f255ff4b961c36ce83781"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/prepare_prefix.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/prepare_prefix.py",
+      "sha256": "db4c018ead7516f82c8a61d99b1b390f48c08a37a5e4cca8e86301b2898e822e"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/CMakeLists.txt",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/CMakeLists.txt",
+      "sha256": "e4203898ebc95192ff114eb1246a67fe04b72d11017646203e97dd11ef18f7e5"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/run_build.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/run_build.py",
+      "sha256": "6dc9cd5258b67dd6c9af183369401b01c0b5333b6abc34204458d2f39d58d250"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/abi_layout.cpp",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/abi_layout.cpp",
+      "sha256": "a801d25ccc3bbafe5cab111f7c54b4a79d508d8e5926948786b7514648a40cae"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/ram_compile_audit.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/ram_compile_audit.py",
+      "sha256": "83519947d657f76e262ce91e5870c56917014e57920e09b5cff1950374c1efc1"
+    },
+    {
+      "source": "remote/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/clock_representation_audit.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/clock_representation_audit.py",
+      "sha256": "5171d1374ee1b52eec60ac55f98c9ca24681fc9f702d506e41a7bef47265bf98"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/approve_long_b1.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/approve_long_b1.py",
+      "sha256": "9d36fc53c4ec4106d07d66228e155e93603c9c4a55e07bc7f8a4ca0a3d3c37cf"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/approve_long_b2.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/approve_long_b2.py",
+      "sha256": "8e3314f668fab7516ecdfb22a6174b2e78ef1cf659f4aa4d92475bdeeaa04b38"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/approve_long_v.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/approve_long_v.py",
+      "sha256": "670940eff79426daddcb4d98500b826f06e74694284da1c744f5490ae0e29cc1"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/approve_outside300.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/approve_outside300.py",
+      "sha256": "0d46a525cd3a05105fc7ccf4f800f0525cb6ce7293ea6a51c5a797652e620ca6"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/approve_outside300_retry.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/approve_outside300_retry.py",
+      "sha256": "7313faca1e5b0aee7759dbfc932dd6084f34ad5979f3e4e3c1efed4e47753b37"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/approve_static_rgb_S.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/approve_static_rgb_S.py",
+      "sha256": "f341cc4c1683dafed7f454a5437353c3ca5628c923c75b7be5993c2e110cc00f"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/build_debug_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/build_debug_report.py",
+      "sha256": "a6e1f8a1100f073f44ca0f50e2e559c76cff9e82853a396a23de7e382e164d03"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/build_evidence_handoff.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/build_evidence_handoff.py",
+      "sha256": "405fd3088eeb7e1a9ebd73aa734cbea7f0b48accb5f778caf6de760061c4665a"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/encode_actual_long_variant_video_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/encode_actual_long_variant_video_cpu.py",
+      "sha256": "6041ab72f4cb36a712f156bc4fbb4ccbcd4672417fe8a36b5d7b0981ffff52e0"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/encode_actual_S_video_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/encode_actual_S_video_cpu.py",
+      "sha256": "e9ca4cc0159ab8dd50d3733878a466ef3ad2d03befc3543685247087b2dacdf1"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/encode_actual_three_arm_video_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/encode_actual_three_arm_video_cpu.py",
+      "sha256": "7ace19996074f7c3ab777309de442dda6b170f275755fbd5bde526d09c40ff8f"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/encode_diagnostic_videos.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/encode_diagnostic_videos.py",
+      "sha256": "4a58176411fb7ba16f99229d89d8051bc8b00aa00d4f0c97e50d95a5486145f2"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/encode_long_original_videos.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/encode_long_original_videos.py",
+      "sha256": "e5973900a724bbc8bd27a5feffb32d3a89ce0d2cb8f0982e82b7d8e12e44aef9"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/encode_paired_mosaic.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/encode_paired_mosaic.py",
+      "sha256": "142786c407ca668f78a7a27ff065685a2f0b1349eb3cd045b345e7ae795cc8a2"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/inspect_evidence_handoff.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/inspect_evidence_handoff.py",
+      "sha256": "826414484da2a10640c3f84c78da12d07fc6cc8d871ab5a43909f9286a5cd966"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/persist_debug_handoff.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/persist_debug_handoff.py",
+      "sha256": "7b51180ff89bab1d095eaa8581dc5bdfc96c88079877d5d7e022916e78e3aa54"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/prepare_reset_candidate.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/prepare_reset_candidate.py",
+      "sha256": "d2fb92b9a215872aae7984e6ba78ac4e6c7da53f1b186d825f8fad283a0017b9"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/prepare_task.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/prepare_task.py",
+      "sha256": "165fd09f3cc4fd1703d16e79eaa437dc5633d27b0d86f34f2b079311e8b2c47c"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_conditional_shutdown.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_conditional_shutdown.py",
+      "sha256": "05183a22a6d065af7354d35e66e760f9571de189f1f754e8a5b8874752e2172e"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_long_b1_started.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_long_b1_started.py",
+      "sha256": "1ef7decc27560c0ebf13514d6d581251fe03cb2ae2629e3740e06130014ee378"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_long_b2_transition.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_long_b2_transition.py",
+      "sha256": "739f86ee5a38385b7192bae2af48777ef7c968c1a5777810209e1313f02376fd"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_long_v_complete.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_long_v_complete.py",
+      "sha256": "45e3f9dd73f315138923d350d2a7ffe051de2db9b5afc38b2381efc9a773a219"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_long_v_transition.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_long_v_transition.py",
+      "sha256": "02274f38e93ee82905e4f890e15cb905396c95d0d8598fa4f220e20d63c031e1"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_outside_retry.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_outside_retry.py",
+      "sha256": "bc31fddfb78a37e3665c2ca67b96342daa4958e80eaf6643d596052ddece59a9"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_S_completion.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_S_completion.py",
+      "sha256": "d6cb9d8175fafb73b989721639086e3b77514d7f177ba02f43f34bd2b02f219b"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_S_review_delivery.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_S_review_delivery.py",
+      "sha256": "776efe3b818db97198505964c95fb5915678f4655d48f82f10752f3d051831e8"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_short_pair_complete.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_short_pair_complete.py",
+      "sha256": "f608679c2ed2aff3b33f5ef744063469615597689ff2f245aef7ef7d24de9b3a"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_static_rgb_S_started.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_static_rgb_S_started.py",
+      "sha256": "4adb7dab3714dcd5c81663a654e88b59328e91b3c8d2c6a037b7e7aae03438a7"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/record_temporal_complete.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/record_temporal_complete.py",
+      "sha256": "9eaa20461ae72f66d0a2204442362b4ebde77247c705a212c2c702d5da0f0fd6"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/render_actual_S_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/render_actual_S_report.py",
+      "sha256": "62d3a2fb29933678d242253f5fa93e8852062af4dd28480972d71f57654dcc38"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/render_actual_temporal_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/render_actual_temporal_report.py",
+      "sha256": "a847b11158945715a64a960097c7f965addc975025e81dd4116407117b230b6d"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/render_actual_three_arm_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/render_actual_three_arm_report.py",
+      "sha256": "86144fded5508739205d6913345e028a69329e50cd878ed167069d29ee081858"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/render_initialisation_gap_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/render_initialisation_gap_report.py",
+      "sha256": "dba3093b79a2fe6b8e77d43e867252084d526bbe00e987bf37addeb54811c187"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/render_long_original_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/render_long_original_report.py",
+      "sha256": "d83c1b7da0a504b5f4a5b57cdf448acd2e69f5a5ce7b7f184d935e2b302f1cdd"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/render_long_repeat_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/render_long_repeat_report.py",
+      "sha256": "06573902a915a2db770a1eecf0231191fea9dd15b608d4f372085b0c3aaf3703"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/summarize_actual_temporal_interpretation_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/summarize_actual_temporal_interpretation_cpu.py",
+      "sha256": "260dd5de41d63da78e704f802c25dad7ff141b3e1ac1a20fc617762ae27f643a"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/summarize_component_cases.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/summarize_component_cases.py",
+      "sha256": "24fc9ced692f4d8824fd5d8f6210b8de504c38cb6f082dd93f749c51645a34e1"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/summarize_continuation_pair.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/summarize_continuation_pair.py",
+      "sha256": "1a1d63599d3c3b2781c58ae72cb6300c0414647be424dd4ff80648c77b77a60d"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/summarize_long_original.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/summarize_long_original.py",
+      "sha256": "946ba3daab2a7874ffff58bf62c363a4ee1a0448d31043421c5554f7e819d31f"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/update_handoff_after_S.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/update_handoff_after_S.py",
+      "sha256": "3b0ef4ae3a78078c641e13a94479063f5a75d92c2f5e4f315755646b83760c31"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/update_scope.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/update_scope.py",
+      "sha256": "b45c28cb76e99ac1a790a53ac44d7039da226728364e5832d33e1eccd1789932"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/validate_debug_report.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/validate_debug_report.py",
+      "sha256": "94ab7e671402a5191f0f93374f09fa804938bedb56a59be983cc42a2dcaf5233"
+    },
+    {
+      "source": "work/vgpu_bugfix_20261012/verify_long_report_cpu.py",
+      "repository_path": "scripts/worldsim_v82/drivingeditor_debug/local_report/verify_long_report_cpu.py",
+      "sha256": "2103f27b9d22078a7a905143599b82448a17b5f7112cb4bfcc4acbffc1f97dbb"
+    }
+  ],
+  "warning": "Archival execution paths and root approvals refer to historical experiments. Do not rerun launchers without a new reviewed plan and explicit scope.",
+  "archival_bytes_policy": "Exact historical bytes; whitespace and line-ending normalization disabled for patches/scripts/receipts. New narrative docs use ordinary checks."
+}

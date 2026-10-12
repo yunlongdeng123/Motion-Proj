@@ -1,0 +1,138 @@
+{
+  "status": "CPU_COMPLETE_CHECKPOINT_INTEGRITY_PASS",
+  "iteration": 20000,
+  "run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "checkpoint_components": {
+    "static": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt20000.pth",
+      "bytes": 1751701598,
+      "sha256": "14a8e846d22706409f0b7889f66b6f61dc08ced6ff93fa4166bb2d3d5c401155",
+      "zip_crc_pass": true,
+      "zip_members": 44,
+      "iteration_matches": true,
+      "cpu_tensor_finiteness": {
+        "tensors": 40,
+        "float_tensors": 40,
+        "elements": 437922417,
+        "nonfinite": [],
+        "optimizers": [
+          {
+            "path": "root/0/14",
+            "groups": 9,
+            "state_count": 9,
+            "step_min": 19854.0,
+            "step_max": 19856.0
+          }
+        ]
+      }
+    },
+    "dynamic": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt20000.pth",
+      "bytes": 805090078,
+      "sha256": "389ee7be780b34048a646e9dd6a94ed15f07e810b0083d091872c112769936b2",
+      "zip_crc_pass": true,
+      "zip_members": 44,
+      "iteration_matches": true,
+      "cpu_tensor_finiteness": {
+        "tensors": 40,
+        "float_tensors": 40,
+        "elements": 201269469,
+        "nonfinite": [],
+        "optimizers": [
+          {
+            "path": "root/0/14",
+            "groups": 9,
+            "state_count": 9,
+            "step_min": 19939.0,
+            "step_max": 19939.0
+          }
+        ]
+      }
+    },
+    "environment": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt20000.pth",
+      "bytes": 226494608,
+      "sha256": "854558d9500fbadbfd5430aa408321e6107d8715ba943c2af536280e8dcc229c",
+      "zip_crc_pass": true,
+      "zip_members": 8,
+      "iteration_matches": true,
+      "cpu_tensor_finiteness": {
+        "tensors": 4,
+        "float_tensors": 4,
+        "elements": 56623105,
+        "nonfinite": [],
+        "optimizers": [
+          {
+            "path": "root/0/1",
+            "groups": 1,
+            "state_count": 1,
+            "step_min": 20000.0,
+            "step_max": 20000.0
+          }
+        ]
+      }
+    },
+    "training_state": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state20000.pth",
+      "bytes": 23704,
+      "sha256": "877fd5a71645a2cc4b69d029bf5d4556c8f86cf3d304cde4b62a68cd246d7489",
+      "zip_crc_pass": true,
+      "zip_members": 6,
+      "iteration_matches": true,
+      "cpu_tensor_finiteness": {
+        "tensors": 2,
+        "float_tensors": 0,
+        "elements": 5072,
+        "nonfinite": [],
+        "optimizers": []
+      }
+    }
+  },
+  "same_50k_config": true,
+  "config_changed_fields_vs_parent": [
+    "model_path",
+    "start_checkpoint"
+  ],
+  "sidecar_rng_sampler_ema_sgcm_schema_pass": true,
+  "camera_order_time_axis_equal_parent": true,
+  "frame_count": 49,
+  "metrics": {
+    "split": "train",
+    "iteration": 20000,
+    "psnr": 35.24852137662926,
+    "ssim": 0.9683691932230579,
+    "lpips": 0.04547271820507487
+  },
+  "metrics_finite": true,
+  "gpu_calls": false,
+  "checkpoint_restore_performed": false,
+  "elapsed_seconds": 8.651691436767578,
+  "event_sha256": "c8d16a5c3e3de3f2365a5dd39bb7f7769865a553ed7acf62da34f911052ddc1e",
+  "iteration_only_cpu_validation": true,
+  "limitations": "File integrity and saved-state validation; does not prove a future resume trajectory or full50k completion.",
+  "metrics_source": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/metrics.json",
+  "paper_metrics_summary": {
+    "dynamic_psnr_star": {
+      "valid_frames": 49,
+      "perfect_frames": 0,
+      "psnr_roi_mean": 30.538101648382945,
+      "psnr_zero_padded_mean": 49.97895824901835
+    },
+    "static_psnr_s": {
+      "valid_frames": 49,
+      "perfect_frames": 0,
+      "psnr_roi_mean": 35.38503577923277,
+      "psnr_zero_padded_mean": 35.46204055443036
+    },
+    "static_psnr_sr": {
+      "valid_frames": 49,
+      "perfect_frames": 0,
+      "psnr_roi_mean": 13.669739517361169,
+      "psnr_zero_padded_mean": 13.746744292558764
+    }
+  },
+  "paper_metrics_all_saved_numbers_finite": true,
+  "actual_metrics_json_checked": true,
+  "metrics_checked_from_remote_source": "eval/train_20000_render/metrics.json",
+  "paper_metrics_checked_from_remote_source": "eval/train_20000_render/paper_region_metrics.json"
+}

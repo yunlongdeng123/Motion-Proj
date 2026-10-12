@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "status": "CPU_PREREGISTERED_ENGINEERING_INTERPRETATION_BEFORE_LONG_RESULTS",
+  "window": [30001, 32000],
+  "primary_endpoint": 32000,
+  "purpose": "Causal direction and short continuation stability in one scene from the already degraded original 30k state; no paper reproduction or normal-algorithm acceptance.",
+  "context_disclosure": "The root reported the completed 300-step diagnostic aggregate before this document was written. This document adds no outcome-derived absolute margin and applies only prospectively to the 2000-step experiment. The original 300-step no-retrospective-threshold protocol remains unchanged.",
+  "algorithm_delta": "Only the previously frozen outside-actor dynamic-opacity complement with coefficient 0.05; unchanged original six paper components and all other training behavior.",
+  "arms": {
+    "B1": "Fresh exact original30k restore, original training mathematics, 30001..32000.",
+    "B2": "Independent invocation of original mathematics with the same exact original30k full state, initial RNG, sampler, learning rates and evaluation schedule, 30001..32000.",
+    "V": "Fresh same original30k full-state restore, only the frozen outside-opacity term, 30001..32000."
+  },
+  "pair_validity_required": [
+    "Identical pinned original static/dynamic/environment/training-state 30k files; actual restore observer passes parameters, Adam state/options/device placement, Python/NumPy/TorchCPU/allCUDA RNG, sampler/order/scale, EMA, model runtime and SGCM state before training.",
+    "No reuse of either 30300 terminal branch. iterations=position_lr_max_steps=50000, seed=0, same original data/kernel/resolution/masks and all protected original configuration fields.",
+    "All actual 2000 iteration/camera_id/time_shift/learning-rate records agree between B1/B2/V; extra evaluation preserves and verifies all RNG in finally.",
+    "First V original ten scalar components, including captured original pre-add total objective, match B1 exactly before invoking real backward. Later losses may differ.",
+    "No static opacity reset between 30001 and 32000; next reset is 33000. Densification and SGCM ended at 15000. Existing 32000 SH hook is retained and its saved degree/runtime state must be reported; no schedule or optimizer reset is disabled.",
+    "Every arm completes 2000 real backward/Adam steps, finite checks, terminal all49 evaluation, four hashed CPU-load-validated complete terminal files, exit0 and unchanged protected inputs/source."
+  ],
+  "fixed_observation_domains": {
+    "full": "All pixels of each of the original49 FRONT frames.",
+    "observed_non_sky_outside_actor": "Frozen helper non_sky_outside_actor = not sky and not actor body mask. These pixels have original observed RGB; do not relabel this as dense edited ground truth.",
+    "actor": "The same frozen actor body mask, not an added shadow mask or GT3D box.",
+    "other_domains": ["sky", "non_sky", "outside_actor"],
+    "invariants": "Same49 frame IDs, sizes, original GT float32 arrays, masks and per-region pixel counts. Empty domains are reported and excluded only by the preexisting count=0 rule. No frame/region deletion after viewing effects."
+  },
+  "primary_measurements": [
+    "Observed non-sky outside-actor static RGB MAE/MSE/PSNR against original GT, with unchanged static/environment/foreground decomposition.",
+    "Observed non-sky outside-actor dynamic alpha mean and fractions >0.1/>0.5/>0.9; RGB support is the frozen helper any-channel floor(clip(rgb,0,1)*255+0.5)>2 pixel fraction.",
+    "Full49 composite RGB MAE/MSE/PSNR against original GT and actor-domain composite errors; retain complete per-frame rows.",
+    "Actor-domain alpha/support and actual target appearance in composite images to detect a global dynamic-layer collapse.",
+    "Removal output is the existing static RGB channel. Non-sky outside-actor edit leakage = mean abs(clip(composite,0,1)-clip(static,0,1)); edited support uses the same fixed >2 uint8 difference convention. This is locality relative to observed original pixels, not removal accuracy inside the actor."
+  ],
+  "aggregation_and_noise": {
+    "primary_aggregation": "Equal-frame means over each domain's nonempty original49 frames, as in the loss-agent locked protocol. Also retain per-frame distributions/counts; MAE/MSE are the primary error summaries. Do not replace these with a pooled-pixel mean to obtain a better outcome.",
+    "candidate_effect": "For every metric report V-B1, V-B2 and V-(B1+B2)/2, including each paired frame and fixed-node trajectory.",
+    "observed_repeat_difference": "For every metric report abs(mean(B2)-mean(B1)) and all49 abs(q_B2-q_B1). This is one empirical repeat difference under the same initial state, not a confidence interval, a stochastic-seed generalization result or a bound on all CUDA nondeterminism.",
+    "predefined_noise_comparison": "A difference of the same scale as the observed B1/B2 difference is unresolved. Describing a difference as larger than this observed repeat is directional evidence only; do not call it statistically significant. No new absolute numerical tolerance is introduced."
+  },
+  "prospective_progression_rules": {
+    "invalid": "Any failed pairing, restore, source/config, finite, evaluation-domain/RNG or complete-snapshot condition invalidates the causal comparison; repair the protocol before interpreting quality.",
+    "unresolved": "Primary effects disagree between B1 and B2 comparisons, or are comparable to original-repeat differences, or depend on selected frames. Keep the result unresolved and report the full evidence.",
+    "allocation_direction_with_tradeoff": "Outside dynamic alpha/support decreases and observed static errors improve against both B1 and B2, with effects shown relative to original-repeat differences, but composite/actor reconstruction or locality worsens beyond the observed repeat. Report both gains and losses; this is not a repaired model.",
+    "directional_recovery_for_further_controlled_validation": "Joint outside dynamic occupancy/support decrease and observed static MAE/MSE improvement against both originals is larger than the observed original-repeat differences, composite and actor content do not show a material adverse effect beyond that repeat, and fixed-image/full49 inspection confirms target retention in composite and improved removal locality. This allows proposing further controlled validation; it does not establish a normal algorithm or authorize a formal-source change.",
+    "image_condition": "Preselect raw0/10/17/20/24/30/40/48 plus the complete49 sequence. Show source, composite, static removal, alpha_d, static foreground and static environment contributions on common scales; inspect car remnants, road texture, mask boundary, shadow and unrelated objects. Do not accept alpha decline alone or hide a dark/global collapse behind aggregate static PSNR.",
+    "no_outcome_retuning": "Do not change coefficient, mask, loss/depth/SGCM/reset/temporal fields, primary aggregation, support threshold, frame selection or this rule after long results. Any new hypothesis needs a separately stated protocol."
+  },
+  "what_this_can_support": [
+    "Within this scene and the original30k optimization basin, whether the sole outside-opacity addition drives a persistent branch allocation change over 2000 steps without a reset event.",
+    "Whether background reconstruction and target-removal locality improve along with, or at a cost to, useful composite/actor reconstruction.",
+    "The magnitude and frame distribution of the candidate effect relative to two same-window original trajectories, and whether an apparent gain mainly changes environment exposure rather than static foreground geometry."
+  ],
+  "what_this_cannot_prove": [
+    "The author's intended Eq13 or missing-domain formula, paper weights, full50k convergence, from-zero effectiveness, or a final paper reproduction PASS.",
+    "Repair of SGCM invisible-point cloning, static PVG time dependence, normals/ground geometry, LiDAR supervision, prediction-RGB masking, or missing M-detector/shadow handling; these variables remain unchanged.",
+    "Dense edited-region reconstruction accuracy, FID success, or shadow-free ground truth inside/around the removed car. Outside body-mask pixels can contain the original car's cast shadow.",
+    "Generalization to other actors, scenes, seeds, viewpoints or real deployment."
+  ],
+  "independent_road_evidence": "Existing CPU cross-frame coverage confirms unoccluded observed road for raw10 and raw17, with raw42/raw48 actual witness images. Preserve those fixed witnesses for qualitative comparison; ray-plane coverage is not dense edited GT. Raw48's selected hidden-road candidates were not independently confirmed, so do not assume all actor pixels/all49 frames have observed replacement texture.",
+  "source_baseline_noise_context": "The 20k road confetti was traced by root's component inference to static environment contribution. Retain static foreground/environment arrays in all arms. Original B1/B2 at32000 are the causal baselines; old3090 pre-reset videos and 20k composite PSNR are context only.",
+  "GPU_used": false,
+  "formal_or_current_candidate_changed": false
+}

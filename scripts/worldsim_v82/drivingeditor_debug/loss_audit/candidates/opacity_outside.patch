@@ -1,0 +1,61 @@
+--- a/utils/paper_losses.py
++++ b/utils/paper_losses.py
+@@ -93,3 +93,17 @@
+     """Eqs10,15-16: no legacy5x photometric multipliers or hidden PVG terms."""
+     return (global_rgb + lambda_dynamic_rgb * dynamic_rgb + lambda_sky * sky + lambda_nps * nps
+             + lambda_opacity * opacity + lambda_depth * depth)
++
++
++def diagnostic_dynamic_background_opacity_loss(dynamic_alpha, dynamic_mask, eps=1e-4):
++    """Experimental background-domain complement, NOT a verified author term.
++
++    Retains Eq13 on the foreground. Outside Md, use the Eq7-shaped soft
++    zero-opacity penalty -a*log((1-a+eps)/(1+eps)), normalized by full image area.
++    This stabilizes the logarithm without a high-alpha zero-gradient plateau.
++    Mask uncertainty and the extra coefficient require a controlled diagnosis.
++    No old100*MSE or old composite/static RGB objective is restored.
++    """
++    foreground = _mask_like(dynamic_mask, dynamic_alpha)
++    opacity = dynamic_alpha.clamp(0.0, 1.0)
++    return -((1.0 - foreground) * opacity * torch.log1p(-opacity / (1.0 + eps))).mean()
+--- a/train.py
++++ b/train.py
+@@ -215,7 +215,8 @@
+     if paper_method:
+         from utils.paper_masks import load_dynamic_mask
+         from utils.paper_losses import (sky_loss, dynamic_opacity_loss, boundary_distance,
+-                                       nps_loss, sparse_inverse_depth_loss, compose_paper_loss)
++                                       nps_loss, sparse_inverse_depth_loss, compose_paper_loss,
++                                       diagnostic_dynamic_background_opacity_loss)
+ 
+     gaussians = GaussianModel(args)
+     if args.including_dynamic:
+@@ -386,6 +387,8 @@
+             paper_dynamic_rgb = zero
+             paper_nps = zero
+             paper_opacity = zero
++            diagnostic_background_opacity = zero
++            diagnostic_lambda_background = float(args.get("diagnostic_lambda_dynamic_background_opacity", 0.0))
+             if dynamic_gaussians is not None:
+                 paper_dynamic_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(dynamic_image, gt_dynamic_image)
+                                      + args.lambda_dssim * (1.0 - ssim(dynamic_image, gt_dynamic_image)))
+@@ -393,6 +396,8 @@
+                     viewpoint_cam._paper_nps_distance = boundary_distance(dynamic_mask)
+                 paper_nps = nps_loss(static_v_map, dynamic_mask, viewpoint_cam._paper_nps_distance)
+                 paper_opacity = dynamic_opacity_loss(dynamic_alpha, dynamic_mask)
++                if diagnostic_lambda_background > 0.0:
++                    diagnostic_background_opacity = diagnostic_dynamic_background_opacity_loss(dynamic_alpha, dynamic_mask)
+             paper_sky = sky_loss(static_alpha if dynamic_gaussians is not None else alpha, sky_mask)
+             if viewpoint_cam.pts_depth is None:
+                 raise ValueError("The paper depth objective requires sparse LiDAR depth")
+@@ -404,6 +409,10 @@
+                                       lambda_opacity=args.paper_lambda_dynamic_opacity,
+                                       lambda_depth=args.paper_lambda_depth,
+                                       lambda_dynamic_rgb=args.get("paper_lambda_dynamic_rgb", 1.0))
++            # Isolated diagnostic only: explicitly add the unverified background-domain term.
++            log_dict["loss_original_objective_before_diagnostic"] = loss.item()
++            loss = loss + diagnostic_lambda_background * diagnostic_background_opacity
++            log_dict["loss_diagnostic_dynamic_background_opacity"] = diagnostic_background_opacity.item()
+             for name, value in (("global_rgb", paper_global_rgb), ("dynamic_rgb", paper_dynamic_rgb),
+                                 ("sky", paper_sky), ("nps", paper_nps),
+                                 ("dynamic_opacity", paper_opacity), ("depth", paper_depth)):

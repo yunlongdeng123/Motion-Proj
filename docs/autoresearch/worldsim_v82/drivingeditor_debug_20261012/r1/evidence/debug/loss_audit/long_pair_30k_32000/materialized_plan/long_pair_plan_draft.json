@@ -1,0 +1,844 @@
+{
+  "schema_version": 1,
+  "status": "DRAFT_NOT_LAUNCHABLE",
+  "allow_training": false,
+  "source_materialized": false,
+  "repository_clones_created": 0,
+  "GPU_used": false,
+  "scope": "Conditional longer paired causal diagnostic; root decides only after short300 results. No claim of final paper reproduction.",
+  "parent_iteration": 30000,
+  "first_iteration": 30001,
+  "stop_iteration": 32000,
+  "steps": 2000,
+  "lr_horizon": 50000,
+  "position_lr_max_steps": 50000,
+  "seed": 0,
+  "coefficient": 0.05,
+  "coefficient_provenance": "Unchanged prior preregistered value; no outcome tuning.",
+  "original30k_four_file_pins": {
+    "chkpnt30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+      "sha256": "2f13bc78d50c3c3af79c01130db27ac34996de2033c4ca1da01e7f11b98a380a"
+    },
+    "dynamic_chkpnt30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt30000.pth",
+      "sha256": "88101b4a46430a0dbbbcb59e6d1ca77e7a249d90222149cdbcd40dd48e7d548c"
+    },
+    "env_light_chkpnt30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt30000.pth",
+      "sha256": "779f8016a87c59235dd2895867cedcd87178218318b25b198cc017f2b7d17af6"
+    },
+    "training_state30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state30000.pth",
+      "sha256": "21d2a0a96c80634f8e5271681a3e2a8584cfb04a40660c303581aebb2d4edfb9"
+    }
+  },
+  "baseline_training_config_draft": {
+    "test_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "save_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "checkpoint_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "exhaust_test": false,
+    "test_interval": 5000,
+    "render_static": false,
+    "vis_step": 100,
+    "start_checkpoint": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+    "seed": 0,
+    "sh_degree": 3,
+    "scene_type": "Waymo",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "start_frame": 65,
+    "end_frame": 120,
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to32000",
+    "resolution_scales": [
+      4
+    ],
+    "resolution": -1,
+    "white_background": false,
+    "data_device": "cuda",
+    "eval": false,
+    "debug_cuda": false,
+    "cam_num": 4,
+    "t_init": 0.1,
+    "cycle": 0.2,
+    "velocity_decay": 1.0,
+    "random_init_point": 0,
+    "dynamic_random_init_point": 0,
+    "fix_radius": 0.0,
+    "time_duration": [
+      -0.5,
+      0.5
+    ],
+    "num_pts": 600000,
+    "frame_interval": 0.02,
+    "testhold": 4,
+    "env_map_res": 1024,
+    "separate_scaling_t": 0.2,
+    "neg_fov": true,
+    "convert_SHs_python": false,
+    "compute_cov3D_python": false,
+    "debug": false,
+    "depth_blend_mode": 0,
+    "env_optimize_until": 1000000000,
+    "env_optimize_from": 0,
+    "iterations": 50000,
+    "position_lr_init": 0.00016,
+    "position_lr_final": 1.6e-06,
+    "position_lr_delay_mult": 0.01,
+    "t_lr_init": 0.0008,
+    "position_lr_max_steps": 50000,
+    "feature_lr": 0.0025,
+    "opacity_lr": 0.005,
+    "scaling_lr": 0.005,
+    "scaling_t_lr": 0.002,
+    "velocity_lr": 0.001,
+    "rotation_lr": 0.001,
+    "envmap_lr": 0.01,
+    "time_split_frac": 0.5,
+    "percent_dense": 0.01,
+    "thresh_opa_prune": 0.005,
+    "densification_interval": 100,
+    "opacity_reset_interval": 3000,
+    "densify_from_iter": 500,
+    "densify_until_iter": 15000,
+    "densify_grad_threshold": 0.00017,
+    "densify_grad_t_threshold": 0.002,
+    "densify_until_num_points": 3000000,
+    "dynamic_densify_until_num_points": 1000000,
+    "sh_increase_interval": 2000,
+    "scale_increase_interval": 5000,
+    "prune_big_point": 1,
+    "size_threshold": 20,
+    "big_point_threshold": 0.1,
+    "t_grad": true,
+    "no_time_split": true,
+    "contract": true,
+    "lambda_dssim": 0.2,
+    "lambda_opa": 0.0,
+    "lambda_sky_opa": 0.05,
+    "lambda_opacity_entropy": 0.05,
+    "static_lambda_opacity_entropy": 0.05,
+    "lambda_inv_depth": 0.1,
+    "lambda_self_supervision": 0.5,
+    "lambda_t_reg": 0.1,
+    "lambda_v_reg": 0.01,
+    "lambda_lidar": 0.1,
+    "lidar_decay": 1.0,
+    "lambda_v_smooth": 0.1,
+    "fisheye_cam_num": 2,
+    "long_cam_num": 1,
+    "is_fisheye": false,
+    "long_focus": true,
+    "initialization": false,
+    "pos_shift": false,
+    "pos_rotation": false,
+    "reg3d_interval": 10,
+    "reg3d_k": 5,
+    "reg3d_lambda_val": 2,
+    "reg3d_max_points": 100000,
+    "reg3d_sample_size": 1000,
+    "is_training": true,
+    "require_boundingbox": false,
+    "nuscenes": false,
+    "paper_eval_train_each_checkpoint": true,
+    "including_dynamic": true,
+    "adding": false,
+    "dynamic_densify_until_iter": 15000,
+    "paper_method": true,
+    "paper_lambda_sky": 0.05,
+    "paper_lambda_nps": 0.01,
+    "paper_lambda_dynamic_opacity": 0.05,
+    "paper_lambda_depth": 0.1,
+    "paper_lambda_dynamic_rgb": 1.0,
+    "paper_weight_provenance": "Pilot values borrowed from released-code coefficient scales; all four numerical paper weights are undisclosed.",
+    "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+    "paper_opacity_domain": "Dynamic foreground mask, divided by full image area. Mask domain follows prose; Eq13 omits an explicit mask.",
+    "paper_sgcm_enabled": true,
+    "sgcm_dr_m": 0.5,
+    "sgcm_interval": 100,
+    "sgcm_offset": 50,
+    "sgcm_start": 500,
+    "sgcm_end": 15000,
+    "sgcm_max_new_points": 10000,
+    "sgcm_split_radius_px": 20,
+    "sgcm_ground_margin_m": 3.0,
+    "sgcm_ground_cell_m": 0.5,
+    "sgcm_plane_inlier_m": 0.15,
+    "sgcm_ground_min_cells": 30,
+    "sgcm_ground_min_fraction": 0.35,
+    "sgcm_ground_max_tilt_deg": 20,
+    "sgcm_ground_max_rmse_m": 0.1
+  },
+  "outside_training_config_draft": {
+    "test_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "save_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "checkpoint_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "exhaust_test": false,
+    "test_interval": 5000,
+    "render_static": false,
+    "vis_step": 100,
+    "start_checkpoint": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+    "seed": 0,
+    "sh_degree": 3,
+    "scene_type": "Waymo",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "start_frame": 65,
+    "end_frame": 120,
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000",
+    "resolution_scales": [
+      4
+    ],
+    "resolution": -1,
+    "white_background": false,
+    "data_device": "cuda",
+    "eval": false,
+    "debug_cuda": false,
+    "cam_num": 4,
+    "t_init": 0.1,
+    "cycle": 0.2,
+    "velocity_decay": 1.0,
+    "random_init_point": 0,
+    "dynamic_random_init_point": 0,
+    "fix_radius": 0.0,
+    "time_duration": [
+      -0.5,
+      0.5
+    ],
+    "num_pts": 600000,
+    "frame_interval": 0.02,
+    "testhold": 4,
+    "env_map_res": 1024,
+    "separate_scaling_t": 0.2,
+    "neg_fov": true,
+    "convert_SHs_python": false,
+    "compute_cov3D_python": false,
+    "debug": false,
+    "depth_blend_mode": 0,
+    "env_optimize_until": 1000000000,
+    "env_optimize_from": 0,
+    "iterations": 50000,
+    "position_lr_init": 0.00016,
+    "position_lr_final": 1.6e-06,
+    "position_lr_delay_mult": 0.01,
+    "t_lr_init": 0.0008,
+    "position_lr_max_steps": 50000,
+    "feature_lr": 0.0025,
+    "opacity_lr": 0.005,
+    "scaling_lr": 0.005,
+    "scaling_t_lr": 0.002,
+    "velocity_lr": 0.001,
+    "rotation_lr": 0.001,
+    "envmap_lr": 0.01,
+    "time_split_frac": 0.5,
+    "percent_dense": 0.01,
+    "thresh_opa_prune": 0.005,
+    "densification_interval": 100,
+    "opacity_reset_interval": 3000,
+    "densify_from_iter": 500,
+    "densify_until_iter": 15000,
+    "densify_grad_threshold": 0.00017,
+    "densify_grad_t_threshold": 0.002,
+    "densify_until_num_points": 3000000,
+    "dynamic_densify_until_num_points": 1000000,
+    "sh_increase_interval": 2000,
+    "scale_increase_interval": 5000,
+    "prune_big_point": 1,
+    "size_threshold": 20,
+    "big_point_threshold": 0.1,
+    "t_grad": true,
+    "no_time_split": true,
+    "contract": true,
+    "lambda_dssim": 0.2,
+    "lambda_opa": 0.0,
+    "lambda_sky_opa": 0.05,
+    "lambda_opacity_entropy": 0.05,
+    "static_lambda_opacity_entropy": 0.05,
+    "lambda_inv_depth": 0.1,
+    "lambda_self_supervision": 0.5,
+    "lambda_t_reg": 0.1,
+    "lambda_v_reg": 0.01,
+    "lambda_lidar": 0.1,
+    "lidar_decay": 1.0,
+    "lambda_v_smooth": 0.1,
+    "fisheye_cam_num": 2,
+    "long_cam_num": 1,
+    "is_fisheye": false,
+    "long_focus": true,
+    "initialization": false,
+    "pos_shift": false,
+    "pos_rotation": false,
+    "reg3d_interval": 10,
+    "reg3d_k": 5,
+    "reg3d_lambda_val": 2,
+    "reg3d_max_points": 100000,
+    "reg3d_sample_size": 1000,
+    "is_training": true,
+    "require_boundingbox": false,
+    "nuscenes": false,
+    "paper_eval_train_each_checkpoint": true,
+    "including_dynamic": true,
+    "adding": false,
+    "dynamic_densify_until_iter": 15000,
+    "paper_method": true,
+    "paper_lambda_sky": 0.05,
+    "paper_lambda_nps": 0.01,
+    "paper_lambda_dynamic_opacity": 0.05,
+    "paper_lambda_depth": 0.1,
+    "paper_lambda_dynamic_rgb": 1.0,
+    "paper_weight_provenance": "Pilot values borrowed from released-code coefficient scales; all four numerical paper weights are undisclosed.",
+    "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+    "paper_opacity_domain": "Dynamic foreground mask, divided by full image area. Mask domain follows prose; Eq13 omits an explicit mask.",
+    "paper_sgcm_enabled": true,
+    "sgcm_dr_m": 0.5,
+    "sgcm_interval": 100,
+    "sgcm_offset": 50,
+    "sgcm_start": 500,
+    "sgcm_end": 15000,
+    "sgcm_max_new_points": 10000,
+    "sgcm_split_radius_px": 20,
+    "sgcm_ground_margin_m": 3.0,
+    "sgcm_ground_cell_m": 0.5,
+    "sgcm_plane_inlier_m": 0.15,
+    "sgcm_ground_min_cells": 30,
+    "sgcm_ground_min_fraction": 0.35,
+    "sgcm_ground_max_tilt_deg": 20,
+    "sgcm_ground_max_rmse_m": 0.1,
+    "diagnostic_background_domain_complement": true,
+    "diagnostic_lambda_dynamic_background_opacity": 0.05
+  },
+  "baseline_noise_training_config_draft": {
+    "test_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "save_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "checkpoint_iterations": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "exhaust_test": false,
+    "test_interval": 5000,
+    "render_static": false,
+    "vis_step": 100,
+    "start_checkpoint": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+    "seed": 0,
+    "sh_degree": 3,
+    "scene_type": "Waymo",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "start_frame": 65,
+    "end_frame": 120,
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to32000_noise_reference",
+    "resolution_scales": [
+      4
+    ],
+    "resolution": -1,
+    "white_background": false,
+    "data_device": "cuda",
+    "eval": false,
+    "debug_cuda": false,
+    "cam_num": 4,
+    "t_init": 0.1,
+    "cycle": 0.2,
+    "velocity_decay": 1.0,
+    "random_init_point": 0,
+    "dynamic_random_init_point": 0,
+    "fix_radius": 0.0,
+    "time_duration": [
+      -0.5,
+      0.5
+    ],
+    "num_pts": 600000,
+    "frame_interval": 0.02,
+    "testhold": 4,
+    "env_map_res": 1024,
+    "separate_scaling_t": 0.2,
+    "neg_fov": true,
+    "convert_SHs_python": false,
+    "compute_cov3D_python": false,
+    "debug": false,
+    "depth_blend_mode": 0,
+    "env_optimize_until": 1000000000,
+    "env_optimize_from": 0,
+    "iterations": 50000,
+    "position_lr_init": 0.00016,
+    "position_lr_final": 1.6e-06,
+    "position_lr_delay_mult": 0.01,
+    "t_lr_init": 0.0008,
+    "position_lr_max_steps": 50000,
+    "feature_lr": 0.0025,
+    "opacity_lr": 0.005,
+    "scaling_lr": 0.005,
+    "scaling_t_lr": 0.002,
+    "velocity_lr": 0.001,
+    "rotation_lr": 0.001,
+    "envmap_lr": 0.01,
+    "time_split_frac": 0.5,
+    "percent_dense": 0.01,
+    "thresh_opa_prune": 0.005,
+    "densification_interval": 100,
+    "opacity_reset_interval": 3000,
+    "densify_from_iter": 500,
+    "densify_until_iter": 15000,
+    "densify_grad_threshold": 0.00017,
+    "densify_grad_t_threshold": 0.002,
+    "densify_until_num_points": 3000000,
+    "dynamic_densify_until_num_points": 1000000,
+    "sh_increase_interval": 2000,
+    "scale_increase_interval": 5000,
+    "prune_big_point": 1,
+    "size_threshold": 20,
+    "big_point_threshold": 0.1,
+    "t_grad": true,
+    "no_time_split": true,
+    "contract": true,
+    "lambda_dssim": 0.2,
+    "lambda_opa": 0.0,
+    "lambda_sky_opa": 0.05,
+    "lambda_opacity_entropy": 0.05,
+    "static_lambda_opacity_entropy": 0.05,
+    "lambda_inv_depth": 0.1,
+    "lambda_self_supervision": 0.5,
+    "lambda_t_reg": 0.1,
+    "lambda_v_reg": 0.01,
+    "lambda_lidar": 0.1,
+    "lidar_decay": 1.0,
+    "lambda_v_smooth": 0.1,
+    "fisheye_cam_num": 2,
+    "long_cam_num": 1,
+    "is_fisheye": false,
+    "long_focus": true,
+    "initialization": false,
+    "pos_shift": false,
+    "pos_rotation": false,
+    "reg3d_interval": 10,
+    "reg3d_k": 5,
+    "reg3d_lambda_val": 2,
+    "reg3d_max_points": 100000,
+    "reg3d_sample_size": 1000,
+    "is_training": true,
+    "require_boundingbox": false,
+    "nuscenes": false,
+    "paper_eval_train_each_checkpoint": true,
+    "including_dynamic": true,
+    "adding": false,
+    "dynamic_densify_until_iter": 15000,
+    "paper_method": true,
+    "paper_lambda_sky": 0.05,
+    "paper_lambda_nps": 0.01,
+    "paper_lambda_dynamic_opacity": 0.05,
+    "paper_lambda_depth": 0.1,
+    "paper_lambda_dynamic_rgb": 1.0,
+    "paper_weight_provenance": "Pilot values borrowed from released-code coefficient scales; all four numerical paper weights are undisclosed.",
+    "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+    "paper_opacity_domain": "Dynamic foreground mask, divided by full image area. Mask domain follows prose; Eq13 omits an explicit mask.",
+    "paper_sgcm_enabled": true,
+    "sgcm_dr_m": 0.5,
+    "sgcm_interval": 100,
+    "sgcm_offset": 50,
+    "sgcm_start": 500,
+    "sgcm_end": 15000,
+    "sgcm_max_new_points": 10000,
+    "sgcm_split_radius_px": 20,
+    "sgcm_ground_margin_m": 3.0,
+    "sgcm_ground_cell_m": 0.5,
+    "sgcm_plane_inlier_m": 0.15,
+    "sgcm_ground_min_cells": 30,
+    "sgcm_ground_min_fraction": 0.35,
+    "sgcm_ground_max_tilt_deg": 20,
+    "sgcm_ground_max_rmse_m": 0.1
+  },
+  "original_repeat_noise_reference": "Independent B2 original-math trajectory from original30k through32000, all2000 camera/time_shift/LR compared to B1 and terminal all49. One observed repeat difference is descriptive, not a statistical bound.",
+  "same_window_noise_reference_required_before_small_effect_claim": true,
+  "single_existing_short_trajectory_or_first_step_exact_is_not_noise_reference": true,
+  "reuse30300_terminal_selected": false,
+  "reuse30300_fairness_and_gate": "Selected approach is fresh original30k for all three. A30300 shortcut could only be fair after exact branch-specific full terminal Adam/RNG/sampler/EMA/runtime/config/source lineage validation plus equal30001..30300 histories, new30301 restore/first-step guards and RNG-safe eval proof; it is not implemented or authorized here.",
+  "evaluation_protocol_locked_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\long_pair_30k_32000\\evaluation_protocol_locked.json",
+  "evaluation_protocol_locked_sha256": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658",
+  "baseline_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository",
+  "outside_repository_proposed_not_created": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/variant_frozen_repository",
+  "outside_algorithm_source_pins_same_as_short": {
+    "train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+    "utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab"
+  },
+  "outside_algorithm_diff_sha256_same_as_short": "21388ca6b00caf94a0e869a2f22c5c506b17d846859d3b8a31623672bf9a5b49",
+  "added_training_fields": {
+    "diagnostic_background_domain_complement": true,
+    "diagnostic_lambda_dynamic_background_opacity": 0.05
+  },
+  "strict_original_config_for_outside": false,
+  "all_other_original_config_fields_unchanged": true,
+  "evaluation": {
+    "nodes": [
+      30001,
+      30300,
+      31000,
+      32000
+    ],
+    "early_fixed_camera_ids": [
+      "image_0/0017000",
+      "image_0/0017010",
+      "image_0/0017020",
+      "image_0/0017030",
+      "image_0/0017048"
+    ],
+    "terminal_eval_camera_count": 49,
+    "all_extra_eval_rng_preserved": true
+  },
+  "schedule": {
+    "next_static_reset": 33000,
+    "stop_before_next_static_reset": true,
+    "densify_and_SGCM_ended": 15000,
+    "original_SH_hook_at32000_retained": true,
+    "other_original_hooks_not_disabled": true
+  },
+  "restore": "Both restore original saved30k static/dynamic/environment/complete sidecar, all Adam/RNG/sampler/runtime/EMA/SGCM state; same exact observer expected_iteration30000; no seed after restore.",
+  "paired_checks": [
+    "First30001 original10 scalars exactly equal long baseline before real backward; pre-add loss capture, no subtraction.",
+    "All2000 iteration/camera/time_shift/LR records match actual long baseline exactly; later losses may differ.",
+    "Every extra eval restores all RNG exactly; common49 input/source/kernel/helper hashes preserved.",
+    "Terminal32000 all49 original frames and static/dynamic/environment/complete state four-file snapshot, hashed and CPU-load checked."
+  ],
+  "reference_not_yet_available": {
+    "long_baseline_2000_step_rows": null,
+    "long_baseline_terminal49": null,
+    "long_baseline_repeat_2000_step_rows": null,
+    "long_baseline_repeat_terminal49": null,
+    "full_window_noise_comparison_SHA": null,
+    "new_exact_baseline_plan_hash": null,
+    "new_exact_noise_baseline_plan_hash": null,
+    "new_exact_outside_binding_hash": null,
+    "new_exact_outside_plan_hash": null,
+    "new_independent_review_hashes": null,
+    "new_root_receipts": null
+  },
+  "short_protocol_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\opacity_pair_protocol.json",
+  "short_protocol_sha256": "3f7d11ba7aa5fb81bb959fd3c530f8b253f8b87a9c612d3d7d644474d4c79760",
+  "measurements_same_as_short": [
+    "Dynamic opacity and raw RGB support outside selected actor mask, especially non-sky.",
+    "Static RGB PSNR/MAE against observed non-sky pixels outside actor mask.",
+    "Composite RGB PSNR/MAE on full49 original frames.",
+    "Static Gaussian versus environment residual contribution and observed road images."
+  ],
+  "directional_hypothesis_same_as_short": "Candidate should lower outside-mask dynamic opacity and improve observed static background while preserving useful composite reconstruction. Measure actual magnitude and tradeoffs; no retrospective pass threshold.",
+  "interpretation": "2000-step continuation from an already degenerated30k model tests recovery/time-window adequacy. Success supports the background-domain hypothesis, not author formula; failure does not rule out from-zero training. Report direction, magnitude and reconstruction tradeoffs without new outcome thresholds.",
+  "forbidden_joint_changes": [
+    "depth policy",
+    "SGCM policy",
+    "late reset rule",
+    "static temporal parameterization",
+    "AMP",
+    "resolution",
+    "data masks",
+    "sampling",
+    "kernel",
+    "learning rate horizon"
+  ],
+  "source_manifest": {
+    "baseline_harness": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_harness.py",
+      "input_sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458",
+      "proposed_source_sha256": "88a2df38e5ac4df5905f1de030701189763d469f9eb3daf9e3339f1931aba829",
+      "patch_file": "baseline_harness_extension.patch",
+      "patch_sha256": "c54c1cd94506ae2b98270c3bc488ee6022857a4fa73b84678d021b2df39611bd",
+      "exact_text_replacements": [
+        {
+          "old": "30300",
+          "new": "32000",
+          "occurrences": 14
+        },
+        {
+          "old": "NODES = (30001, 30010, 30050, 30100, 30200, 32000)",
+          "new": "NODES = (30001, 30300, 31000, 32000)",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'",
+          "new": "COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'\nPLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN.parent / 'cpu_audit.json'",
+          "new": "COMPONENT_PLAN.parent / 'cpu_audit.json'",
+          "occurrences": 1
+        },
+        {
+          "old": "sha(PLAN / 'runtime_safety_parameterized.py')",
+          "new": "sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py')",
+          "occurrences": 1
+        },
+        {
+          "old": "sys.path.insert(0, str(PLAN))",
+          "new": "sys.path.insert(0, str(COMPONENT_PLAN))",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN.parent / 'scripts'",
+          "new": "COMPONENT_PLAN.parent / 'scripts'",
+          "occurrences": 1
+        }
+      ],
+      "source_materialized": false
+    },
+    "variant_harness": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_variant_harness.py",
+      "input_sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154",
+      "proposed_source_sha256": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+      "patch_file": "variant_harness_extension.patch",
+      "patch_sha256": "69f5f8276c2db70f2455d3187e76b764fbe916eb1789c80ce9d5ea8ed99a05c9",
+      "exact_text_replacements": [
+        {
+          "old": "30300",
+          "new": "32000",
+          "occurrences": 14
+        },
+        {
+          "old": "NODES = (30001, 30010, 30050, 30100, 30200, 32000)",
+          "new": "NODES = (30001, 30300, 31000, 32000)",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'",
+          "new": "COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'\nPLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN.parent / 'cpu_audit.json'",
+          "new": "COMPONENT_PLAN.parent / 'cpu_audit.json'",
+          "occurrences": 1
+        },
+        {
+          "old": "sha(PLAN / 'runtime_safety_parameterized.py')",
+          "new": "sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py')",
+          "occurrences": 1
+        },
+        {
+          "old": "sys.path.insert(0, str(PLAN))",
+          "new": "sys.path.insert(0, str(COMPONENT_PLAN))",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN.parent / 'scripts'",
+          "new": "COMPONENT_PLAN.parent / 'scripts'",
+          "occurrences": 1
+        },
+        {
+          "old": "all300",
+          "new": "all2000",
+          "occurrences": 2
+        },
+        {
+          "old": "every one of300",
+          "new": "every one of2000",
+          "occurrences": 1
+        }
+      ],
+      "source_materialized": false
+    },
+    "baseline_launcher": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_controlled_continuation.py",
+      "input_sha256": "9e25b61f09f2c59c5d58bd3753792b501b9bfb12b8846ef2f1b6782cb19372b9",
+      "proposed_source_sha256": "6337b0c660d1eedb95b822d87d0feaa6d5691ba22da4de8d8d54fb750a7e68b0",
+      "patch_file": "baseline_launcher_extension.patch",
+      "patch_sha256": "107433fda32cbf7d548ab48261327a91983a0c51e67a2fe7152ee04f086a9b1d",
+      "exact_text_replacements": [
+        {
+          "old": "30300",
+          "new": "32000",
+          "occurrences": 2
+        },
+        {
+          "old": "campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan",
+          "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+          "occurrences": 1
+        }
+      ],
+      "source_materialized": false
+    },
+    "variant_launcher": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_opacity_outside_continuation.py",
+      "input_sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc",
+      "proposed_source_sha256": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+      "patch_file": "variant_launcher_extension.patch",
+      "patch_sha256": "e46a38fda89a2e9e5ad18713e9032bb9a84043612a875b6871bc324734eb6620",
+      "exact_text_replacements": [
+        {
+          "old": "30300",
+          "new": "32000",
+          "occurrences": 3
+        },
+        {
+          "old": "campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan",
+          "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+          "occurrences": 1
+        },
+        {
+          "old": "campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/experiment_binding.json",
+          "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/experiment_binding.json",
+          "occurrences": 1
+        }
+      ],
+      "source_materialized": false
+    },
+    "baseline_noise_harness": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_harness.py",
+      "input_sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458",
+      "proposed_source_sha256": "ede8591eb6ffbc4cca970439d1e8dcd5b75a2b008b408fc03cab73c145e7dd3a",
+      "patch_file": "baseline_noise_harness_extension.patch",
+      "patch_sha256": "dd87c2f86733fbad0a554774647a5d902d7e806ef27840561b6a9c4495e779e1",
+      "exact_text_replacements": [
+        {
+          "old": "30300",
+          "new": "32000",
+          "occurrences": 14
+        },
+        {
+          "old": "NODES = (30001, 30010, 30050, 30100, 30200, 32000)",
+          "new": "NODES = (30001, 30300, 31000, 32000)",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'",
+          "new": "COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'\nPLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN.parent / 'cpu_audit.json'",
+          "new": "COMPONENT_PLAN.parent / 'cpu_audit.json'",
+          "occurrences": 1
+        },
+        {
+          "old": "sha(PLAN / 'runtime_safety_parameterized.py')",
+          "new": "sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py')",
+          "occurrences": 1
+        },
+        {
+          "old": "sys.path.insert(0, str(PLAN))",
+          "new": "sys.path.insert(0, str(COMPONENT_PLAN))",
+          "occurrences": 1
+        },
+        {
+          "old": "PLAN.parent / 'scripts'",
+          "new": "COMPONENT_PLAN.parent / 'scripts'",
+          "occurrences": 1
+        },
+        {
+          "old": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+          "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference",
+          "occurrences": 1
+        },
+        {
+          "old": "original30k_to32000",
+          "new": "original30k_to32000_noise_reference",
+          "occurrences": 1
+        }
+      ],
+      "source_materialized": false
+    },
+    "baseline_noise_launcher": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_controlled_continuation.py",
+      "input_sha256": "9e25b61f09f2c59c5d58bd3753792b501b9bfb12b8846ef2f1b6782cb19372b9",
+      "proposed_source_sha256": "8f684d62ef10c6e90e203f1a5d5eaab2855943f28a1a7fd6460097d346d1d80f",
+      "patch_file": "baseline_noise_launcher_extension.patch",
+      "patch_sha256": "bf65ea7b52facd631173365a225ff0b7f5a858ffc3b868675d1508cf842e04b4",
+      "exact_text_replacements": [
+        {
+          "old": "30300",
+          "new": "32000",
+          "occurrences": 2
+        },
+        {
+          "old": "campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan",
+          "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+          "occurrences": 1
+        },
+        {
+          "old": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+          "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference",
+          "occurrences": 1
+        },
+        {
+          "old": "original30k_to32000",
+          "new": "original30k_to32000_noise_reference",
+          "occurrences": 2
+        }
+      ],
+      "source_materialized": false
+    },
+    "outside_guard": {
+      "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\outside_experiment_guard.py",
+      "input_sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9",
+      "proposed_source_sha256": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+      "patch_file": "outside_guard_extension.patch",
+      "patch_sha256": "cf7a24a41c064622d4b080b31be588788a7c26bcabede04d9dce8f92ad77f67c",
+      "exact_text_replacements": [
+        {
+          "old": "(\"stop_iteration\", 30300)",
+          "new": "(\"stop_iteration\", 32000)",
+          "occurrences": 1
+        }
+      ],
+      "source_materialized": false
+    }
+  },
+  "shared_observer_sha256": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1",
+  "shared_metric_helper_sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa",
+  "new_materialized_plan_directory_proposed": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+  "new_approval_decisions_required": [
+    "APPROVED_CONTROLLED_30K_TO_32000",
+    "APPROVED_SINGLE_VARIABLE_OPACITY_OUTSIDE_30K_TO32000"
+  ],
+  "short_approval_never_authorizes_long_window": true,
+  "deferred_work": [
+    "Root assesses short300 outcome and may decline this longer window; no commitment to run32000.",
+    "After instruction, materialize reviewed small source previews into independent directories; create at most one isolated algorithm replica; regenerate full CPU B1/B2 plans and source/config/input pins with new independent reviews and exact separate root receipts.",
+    "Execute original-math B1 and independent B2, each fresh30k only with exclusive root-assigned GPU ownership; require each complete2000 records, all49 terminal eval, four-state snapshot and exit0. CPU-verify all2000 sampling/time_shift/LR equality and save complete empirical noise comparison.",
+    "Build new outside binding using actual completed B1 references and SHA-bound B2 full-window noise comparison, isolated32000 guard and same .05 algorithm; regenerate CPU preflight/independent review and exact separate root receipt before any candidate launch."
+  ]
+}

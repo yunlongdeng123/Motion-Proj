@@ -1,0 +1,247 @@
+{
+  "baseline_harness": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_harness.py",
+    "input_sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458",
+    "proposed_source_sha256": "88a2df38e5ac4df5905f1de030701189763d469f9eb3daf9e3339f1931aba829",
+    "patch_file": "baseline_harness_extension.patch",
+    "patch_sha256": "c54c1cd94506ae2b98270c3bc488ee6022857a4fa73b84678d021b2df39611bd",
+    "exact_text_replacements": [
+      {
+        "old": "30300",
+        "new": "32000",
+        "occurrences": 14
+      },
+      {
+        "old": "NODES = (30001, 30010, 30050, 30100, 30200, 32000)",
+        "new": "NODES = (30001, 30300, 31000, 32000)",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'",
+        "new": "COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'\nPLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN.parent / 'cpu_audit.json'",
+        "new": "COMPONENT_PLAN.parent / 'cpu_audit.json'",
+        "occurrences": 1
+      },
+      {
+        "old": "sha(PLAN / 'runtime_safety_parameterized.py')",
+        "new": "sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py')",
+        "occurrences": 1
+      },
+      {
+        "old": "sys.path.insert(0, str(PLAN))",
+        "new": "sys.path.insert(0, str(COMPONENT_PLAN))",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN.parent / 'scripts'",
+        "new": "COMPONENT_PLAN.parent / 'scripts'",
+        "occurrences": 1
+      }
+    ],
+    "source_materialized": false
+  },
+  "variant_harness": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_variant_harness.py",
+    "input_sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154",
+    "proposed_source_sha256": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+    "patch_file": "variant_harness_extension.patch",
+    "patch_sha256": "69f5f8276c2db70f2455d3187e76b764fbe916eb1789c80ce9d5ea8ed99a05c9",
+    "exact_text_replacements": [
+      {
+        "old": "30300",
+        "new": "32000",
+        "occurrences": 14
+      },
+      {
+        "old": "NODES = (30001, 30010, 30050, 30100, 30200, 32000)",
+        "new": "NODES = (30001, 30300, 31000, 32000)",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'",
+        "new": "COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'\nPLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN.parent / 'cpu_audit.json'",
+        "new": "COMPONENT_PLAN.parent / 'cpu_audit.json'",
+        "occurrences": 1
+      },
+      {
+        "old": "sha(PLAN / 'runtime_safety_parameterized.py')",
+        "new": "sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py')",
+        "occurrences": 1
+      },
+      {
+        "old": "sys.path.insert(0, str(PLAN))",
+        "new": "sys.path.insert(0, str(COMPONENT_PLAN))",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN.parent / 'scripts'",
+        "new": "COMPONENT_PLAN.parent / 'scripts'",
+        "occurrences": 1
+      },
+      {
+        "old": "all300",
+        "new": "all2000",
+        "occurrences": 2
+      },
+      {
+        "old": "every one of300",
+        "new": "every one of2000",
+        "occurrences": 1
+      }
+    ],
+    "source_materialized": false
+  },
+  "baseline_launcher": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_controlled_continuation.py",
+    "input_sha256": "9e25b61f09f2c59c5d58bd3753792b501b9bfb12b8846ef2f1b6782cb19372b9",
+    "proposed_source_sha256": "6337b0c660d1eedb95b822d87d0feaa6d5691ba22da4de8d8d54fb750a7e68b0",
+    "patch_file": "baseline_launcher_extension.patch",
+    "patch_sha256": "107433fda32cbf7d548ab48261327a91983a0c51e67a2fe7152ee04f086a9b1d",
+    "exact_text_replacements": [
+      {
+        "old": "30300",
+        "new": "32000",
+        "occurrences": 2
+      },
+      {
+        "old": "campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan",
+        "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+        "occurrences": 1
+      }
+    ],
+    "source_materialized": false
+  },
+  "variant_launcher": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_opacity_outside_continuation.py",
+    "input_sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc",
+    "proposed_source_sha256": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+    "patch_file": "variant_launcher_extension.patch",
+    "patch_sha256": "e46a38fda89a2e9e5ad18713e9032bb9a84043612a875b6871bc324734eb6620",
+    "exact_text_replacements": [
+      {
+        "old": "30300",
+        "new": "32000",
+        "occurrences": 3
+      },
+      {
+        "old": "campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan",
+        "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+        "occurrences": 1
+      },
+      {
+        "old": "campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/experiment_binding.json",
+        "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/experiment_binding.json",
+        "occurrences": 1
+      }
+    ],
+    "source_materialized": false
+  },
+  "baseline_noise_harness": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_harness.py",
+    "input_sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458",
+    "proposed_source_sha256": "ede8591eb6ffbc4cca970439d1e8dcd5b75a2b008b408fc03cab73c145e7dd3a",
+    "patch_file": "baseline_noise_harness_extension.patch",
+    "patch_sha256": "dd87c2f86733fbad0a554774647a5d902d7e806ef27840561b6a9c4495e779e1",
+    "exact_text_replacements": [
+      {
+        "old": "30300",
+        "new": "32000",
+        "occurrences": 14
+      },
+      {
+        "old": "NODES = (30001, 30010, 30050, 30100, 30200, 32000)",
+        "new": "NODES = (30001, 30300, 31000, 32000)",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'",
+        "new": "COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'\nPLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN.parent / 'cpu_audit.json'",
+        "new": "COMPONENT_PLAN.parent / 'cpu_audit.json'",
+        "occurrences": 1
+      },
+      {
+        "old": "sha(PLAN / 'runtime_safety_parameterized.py')",
+        "new": "sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py')",
+        "occurrences": 1
+      },
+      {
+        "old": "sys.path.insert(0, str(PLAN))",
+        "new": "sys.path.insert(0, str(COMPONENT_PLAN))",
+        "occurrences": 1
+      },
+      {
+        "old": "PLAN.parent / 'scripts'",
+        "new": "COMPONENT_PLAN.parent / 'scripts'",
+        "occurrences": 1
+      },
+      {
+        "old": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+        "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference",
+        "occurrences": 1
+      },
+      {
+        "old": "original30k_to32000",
+        "new": "original30k_to32000_noise_reference",
+        "occurrences": 1
+      }
+    ],
+    "source_materialized": false
+  },
+  "baseline_noise_launcher": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_controlled_continuation.py",
+    "input_sha256": "9e25b61f09f2c59c5d58bd3753792b501b9bfb12b8846ef2f1b6782cb19372b9",
+    "proposed_source_sha256": "8f684d62ef10c6e90e203f1a5d5eaab2855943f28a1a7fd6460097d346d1d80f",
+    "patch_file": "baseline_noise_launcher_extension.patch",
+    "patch_sha256": "bf65ea7b52facd631173365a225ff0b7f5a858ffc3b868675d1508cf842e04b4",
+    "exact_text_replacements": [
+      {
+        "old": "30300",
+        "new": "32000",
+        "occurrences": 2
+      },
+      {
+        "old": "campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan",
+        "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+        "occurrences": 1
+      },
+      {
+        "old": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan",
+        "new": "campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference",
+        "occurrences": 1
+      },
+      {
+        "old": "original30k_to32000",
+        "new": "original30k_to32000_noise_reference",
+        "occurrences": 2
+      }
+    ],
+    "source_materialized": false
+  },
+  "outside_guard": {
+    "input_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\outside_experiment_guard.py",
+    "input_sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9",
+    "proposed_source_sha256": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+    "patch_file": "outside_guard_extension.patch",
+    "patch_sha256": "cf7a24a41c064622d4b080b31be588788a7c26bcabede04d9dce8f92ad77f67c",
+    "exact_text_replacements": [
+      {
+        "old": "(\"stop_iteration\", 30300)",
+        "new": "(\"stop_iteration\", 32000)",
+        "occurrences": 1
+      }
+    ],
+    "source_materialized": false
+  }
+}

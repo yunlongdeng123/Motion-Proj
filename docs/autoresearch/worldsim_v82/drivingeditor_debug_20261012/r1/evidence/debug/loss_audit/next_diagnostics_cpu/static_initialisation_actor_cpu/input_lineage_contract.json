@@ -1,0 +1,74 @@
+{
+  "status": "EXACT_GEOMETRY_AND_RETURN_LINEAGE_CONTRACT_SCAN_END_UNRESOLVED",
+  "allow_training": false,
+  "author_equivalent_Mdetector_packet_certified": false,
+  "root_GPU_or_S_files_modified": false,
+  "data_source": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+  "source_raw": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10235335145367115211_5420_000_5440_000_with_camera_labels.tfrecord",
+  "raw_scope": [
+    0,
+    48
+  ],
+  "converted_bin_format": {
+    "dtype": "float32",
+    "columns": [
+      "vehicle_reference_x",
+      "vehicle_reference_y",
+      "vehicle_reference_z",
+      "intensity",
+      "elongation",
+      "TOP_flat_return_range_index_or_nonTOP_minus1"
+    ],
+    "last_column_is_timestamp": false
+  },
+  "raw_order": "return0 then return1; each laser_name1..5; row-major pixels satisfying range>0 and NLZ!=1",
+  "raw_sidecar_contract": {
+    "manifest": "raw49_labels_layout.json",
+    "manifest_sha256": "fa0448b99abc28c22f40fc7722ecb1d68dbcc68dbe88ae44b5aed0357b894806",
+    "folder": "raw_layout/",
+    "array_index": "converted .bin row",
+    "fields": [
+      "return_index",
+      "laser_name",
+      "range_row",
+      "range_col"
+    ],
+    "audit_only_fields_never_detector_input": [
+      "instance_label",
+      "semantic_label"
+    ],
+    "TOP_flat_index": "(return_index*H+range_row)*W+range_col"
+  },
+  "geometry": "Original SDK converter body/reference-frame XYZ; per-pixel TOP ego pose compensation then corresponding Frame.pose for world coordinates. Actual savedworld_float32=cast32([bodyXYZ,1]@Frame.pose.T). Existing PCA similarity is applied only for model coordinates. Do not rotate/scale/deskew again by guess.",
+  "physical_time": {
+    "Frame_timestamp_micros": "firstTOP scan / frame START",
+    "Frame_pose": "approximately middle frame; exact pose timestamp absent",
+    "scan_end_time": "not established from these inputs or released producer yet",
+    "model_time": "normalized0.02s/frame from[-.48,.48]; not physical detector clock",
+    "official_schema": "https://raw.githubusercontent.com/waymo-research/waymo-open-dataset/master/src/waymo_open_dataset/dataset.proto"
+  },
+  "sample_recipe": {
+    "method": "np.random.RandomState(seed0).choice(8667791,600000,replace=True), frame prefix sums, bin row, float64 ego pose then float32 world XYZ",
+    "draw_indices_originally_saved": false,
+    "lineage_status": "The declared deterministic recipe reproduces every PLY coordinate/time byte; recovered indices are a full replay-consistent original-return lineage.",
+    "sample_count": 600000,
+    "unique_sampled_original_returns": 579562
+  },
+  "canonical_audit_sha256": "df97e5d48ee2be553b54e127dbeff2be12dafa8561c93d6bc87bc630059b8ecd",
+  "constructor_input_rows": {
+    "original_static": 595894,
+    "original_actor_PLY": 36406,
+    "all_common_rows": 632300
+  },
+  "full600000_sample_lineage_map_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/all600000_initialisation_lineage.npz",
+  "full600000_sample_lineage_map_sha256": "8fef9fca4bb04ae982c21f7523ee2cae7d5f5e4793e948978dca79ebc6b88e0c",
+  "witnessed_initialization_gaps": {
+    "native_target_static_rows": 169,
+    "native_target_unique_returns": 160,
+    "dynamic_native_ROAD_rows": 24,
+    "static_direct_target_identity_unresolved_fraction": 0.9079668531651602
+  },
+  "proof_limits": "Replay consistent with full recorded recipe reproducesPLY bytes. No historical step0GPUparameter snapshot; sparse native instance-to-track link is derived and audit-only; nofull49contamination estimate.",
+  "frozen_converter_path": "/root/autodl-tmp/drivingeditor_repro/DrivingEditor-run/scripts/waymo_converter.py",
+  "frozen_converter_sha256": "2489c465873e7ffe4854d51ce05c20d40dbb066e3d636e976b90b2cd899f5a62"
+}

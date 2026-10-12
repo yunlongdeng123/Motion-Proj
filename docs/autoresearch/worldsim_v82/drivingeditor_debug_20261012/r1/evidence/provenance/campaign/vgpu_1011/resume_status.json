@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-11T17:22:53.184877+00:00",
+  "status": "user_paused_for_saved30k_edit_comparison",
+  "user_authorized_resume": true,
+  "ssh_alias": "wm-vgpu-1011",
+  "remote_base": "/root/autodl-tmp/drivingeditor_repro",
+  "observed_gpu": {
+    "name": "NVIDIA GeForce RTX 4080 SUPER",
+    "memory_total_mib": 32760,
+    "driver": "595.71.05"
+  },
+  "parent_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+  "parent_status": "failed_oom_preserved",
+  "latest_complete_iteration": 30000,
+  "target_iterations": 50000,
+  "planned_resume_iteration": 10001,
+  "training_started": true,
+  "child_run_created": true,
+  "precision": "original baseline renderer/kernel, FP32; no AMP or reduction in training configuration",
+  "compact_deployed": false,
+  "gpu_owner": "released from training; reserved next for isolated 30k editing",
+  "automation": {
+    "id": "drivingeditor-50k",
+    "name": "DrivingEditor 30k 编辑与官网场景队列",
+    "status": "ACTIVE",
+    "interval_minutes": 60,
+    "continue_after_first_report": true
+  },
+  "required_gates": [
+    "migration integrity",
+    "strict same-50k four-component resume preflight",
+    "real GPU restore/full-loss/backward/Adam diagnostic",
+    "49-frame baseline evaluation on migrated GPU",
+    "root review before formal child launch"
+  ],
+  "previous_hardware_and_failure": "RTX3090 24GB, fresh50k run failed about138xx; full10k retained, never use a30k checkpoint",
+  "limitation": "32GB visible memory and10k diagnostics do not establish that the entire50k will fit or that cross-GPU floats are bitwise identical.",
+  "child_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "resume_iteration": 10000,
+  "first_training_iteration": 10001,
+  "progress": {
+    "state": "failed",
+    "iteration": 35900,
+    "total_iterations": 50000,
+    "started_at": "2026-10-11T10:13:40.432685+00:00",
+    "pid": 8772,
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "parent_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+    "first_training_iteration": 10001,
+    "mode": "formal_resume",
+    "updated_at": "2026-10-11T17:22:46.906147+00:00",
+    "wall_seconds": 25745.463010810316,
+    "loss": 0.013123195618391037,
+    "psnr": 36.41051483154297,
+    "total_points": 2234298.0,
+    "cuda_peak_allocated_mib": 28639.37890625,
+    "last_evaluation_iteration": 30000,
+    "error": "KeyboardInterrupt()",
+    "traceback": "Traceback (most recent call last):\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_training.py\", line 259, in run\n    training.training(cfg)\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/train.py\", line 522, in training\n    loss.backward()\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/_tensor.py\", line 522, in backward\n    torch.autograd.backward(\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/autograd/__init__.py\", line 266, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\nKeyboardInterrupt\n",
+    "launcher_return_code": 130
+  },
+  "snapshot_pids": {
+    "training_python": 8772,
+    "training_launcher": 8765,
+    "report_consumer": 8766
+  },
+  "snapshot_gpu_memory": "NVIDIA GeForce RTX 4080 SUPER, 32760, 1, 32230, 0",
+  "snapshot_gpu_compute": "",
+  "disk_free_bytes": 109516742656,
+  "candidate_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011",
+  "report_output": "/root/autodl-tmp/drivingeditor_repro/reports/paper50k_vgpu1011_baseline",
+  "training_log": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_training.log",
+  "training_pid_file": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_training.pid",
+  "training_exit_file": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume.exit",
+  "launcher_exit_json": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/launcher_exit.json",
+  "report_log": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_report.log",
+  "report_pid_file": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_report.pid",
+  "passed_gates": {
+    "migration_integrity": true,
+    "strict_cpu_preflight": true,
+    "genuine_10001_loss_backward_adam_restore": true,
+    "full49_old_png_pixel_agreement": true,
+    "readonly_launcher_review": true,
+    "root_deployment_approval": true
+  },
+  "validation": {
+    "png_exact_count": 196,
+    "frame_count": 49,
+    "render_dimensions": [
+      480,
+      320
+    ],
+    "lpips_new_minus_old": -1.5205267600570949e-10,
+    "actual_10001_peak_allocated_mib": 9953.7734375,
+    "actual_10001_peak_reserved_mib": 10264,
+    "baseline_math_and_kernel_preserved": true,
+    "strict_checkpoint_helper_changed": true,
+    "amp": false,
+    "compact_deployed": false,
+    "later_densification_memory_proven": false,
+    "cross_gpu_bitwise_training_claimed": false
+  },
+  "deployment_approval": "vgpu_1011/root_deployment_approval.json",
+  "formal_start_review": "vgpu_1011/formal_start_review.json",
+  "comparison_sync_receipt": "vgpu_1011/comparison_sync_receipt.json",
+  "latest_heartbeat_snapshot": "work\\vgpu_1011\\heartbeat_checks\\20261011T172253.json",
+  "observed_milestones": {
+    "passed_old_138xx_failure": true,
+    "passed_densification_end_15000": true,
+    "whole50k_completed": false
+  },
+  "complete_checkpoint_steps": [
+    10000,
+    20000,
+    30000
+  ],
+  "ready_video_steps": [
+    10000,
+    20000,
+    30000
+  ],
+  "checkpoint_quality_observations": [
+    {
+      "iteration": 30000,
+      "title": "30k：静态透明度刚重置的真实快照。",
+      "explanation": "代码每3000步重置静态高斯透明度，30k保存和49帧评估恰好发生在重置之后；动态车辆分支未重置。全图PSNR为10.48（20k为35.25），原始指标和视频保留。后续单帧训练PSNR已回到约34，但完整49帧质量恢复仍需40k/50k评估确认。该曲线各节点处于不同重置阶段，不能解读为单调提升。",
+      "evidence": "node_030000_quality_audit.json",
+      "quality_pass_claimed": false,
+      "saved_model_integrity_pass": true,
+      "checkpoint_reset_phase_steps": 0,
+      "training_protocol_changed": false
+    }
+  ],
+  "latest_checkpoint_cpu_integrity": "checkpoint_030000_cpu_validation.json",
+  "actual_exit_code": 130,
+  "interruption_classification": "intentional user-requested SIGINT, not a new OOM",
+  "pause_ledger": "edit30k_compare_20261012/user_requested_training_pause.json",
+  "auto_resume_authorized": false
+}

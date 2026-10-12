@@ -1,0 +1,43 @@
+Preparation target: wm-vgpu-1011 only. No GPU was used by the preparation worker.
+Candidate: /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011
+Prepared formal child (not created): /root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline
+Parent: /root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0
+Architecture components: components.svg.
+
+SOURCE.tar.gz is the original provenance-bound code snapshot. baseline_repository exactly contains its 148 files.
+frozen_repository differs only in utils/paper_checkpoint.py. train.py, Gaussian restore/setup, EnvLight,
+original renderer, original installed rasterizer .so and kernel sources retain their original bytes.
+The envlight restore is already correct, so no new restoration bug change was made there.
+PATCH.diff records config/type and continuation-schema guard changes, including all validations before RNG/sampler mutation.
+All 128 resolved config fields remain the same except model_path/start_checkpoint. Horizon/LR horizon50000 and seed0 remain.
+Four complete original same-run 10k files are required; fresh host hashes and 467 original input hashes were rechecked.
+The complete parent event stays at its original path. No parent10k file is copied into the child as a newly generated checkpoint.
+Only future20k/30k/40k/50k event files belong to the fresh child. Failed parent suffix after10k is discarded.
+
+CPU checks completed: full preflight and 198 negative config/type/missing-field/approval checks; source and launcher syntax checks.
+Actual GPU10001 acceptance is separate. It calls original training.training(cfg), keeps cfg.iterations=50000, and stops
+with an observer exception after original complete_eval at10001, which follows full loss.backward and static/dynamic/env Adam.
+Observer validates actual CPU/CUDA RNG, camera order/sampler, EMA, model runtime, SGCM, all conditional Adam steps/moments/options
+and optimizer parameter bindings before the first step. It records real10001 loss, camera, global-step LR, time_shift, post-step EMA,
+SGCM stats, point counts, parameter/Adam finiteness and actual CUDA peaks. Loader np.savetxt is suppressed after validating the
+existing normalization matrix; no data is changed. It retains original initial PCD allocations and the three saved GPU capture
+references until training returns, making its memory measurement representative of the unchanged resume lifecycle.
+
+Root GPU owner short diagnostic command (explicit GPU invocation; preparation worker must not run it):
+bash /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/launch_acceptance.sh /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/acceptance/actual_train10001_v1 1
+
+After inspecting actual receipt/peak and original-baseline49 old-PNG measurement, root records explicit approval (CPU-only):
+env CUDA_VISIBLE_DEVICES=-1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/approve_resume.py --output /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/root_deployment_approval.json --migration-audit /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_1011/migration_audit.json --next-step-acceptance /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/acceptance/actual_train10001_v1/acceptance.json --baseline49-evaluation /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_1011/baseline_full49_validation.json --authorize-resume --root-reviewed --memory-gate passed --review-note 'Root inspected original math restore, real10001 state, baseline49 actual errors, and available memory headroom.'
+
+Formal training/report start (only after root approved, with one exclusive GPU campaign lock):
+env CUDA_VISIBLE_DEVICES=-1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/start_resume_pipeline.py --approval /root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/root_deployment_approval.json --start-training --start-report --report-output /root/autodl-tmp/drivingeditor_repro/reports/paper50k_vgpu1011_baseline
+
+Launcher stores actual started/pid/finished/exit controls. Python and launcher-exit recorder preserve failure state including
+initialization errors. Formal source/config/package/sidecar/input signatures are rechecked at startup, and both shared campaign
+GPU lock plus original paper job lock are held for runtime. External occupied GPU compute processes reject startup.
+Lineage report is a CPU consumer of complete event images, has parameterized run/parent/output paths, validates exact node/file
+ownership and records parent10k source attribution. It does not load checkpoints or run any GPU rendering.
+
+Limitations: one10001 step does not prove later densification/SGCM peak or50k completion; no cross-GPU bitwise training claim.
+No compact/cleanup/AMP/math/config changes are deployed. Any lifecycle correction after an observed OOM requires new frozen
+candidate review and evidence. Original migration handoff and old compact precision matrix remain unchanged.

@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "scope": "Actual variant default CPU preparation plus AST/same-source verification; no training or CUDA",
+  "training_started": false,
+  "CUDA_initialized": false,
+  "harness_sha256": "93bb8df2cca142b3ea0b08e42ab8c3fe5defa214641537b7f3935eb300444359",
+  "prepared_plan_sha256": "ef4b873994b8a8d21fcbc96efbce1c6d764249f5b8fdf43be19c60bedbc7153e",
+  "launcher_sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc",
+  "experiment_binding_sha256": "b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214",
+  "guard_sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9",
+  "approved_baseline_harness_bytes_unchanged": true,
+  "approved_restore_observer_bytes_unchanged": true,
+  "diagnostic_eval_entire_function_source_exactly_equal": true,
+  "diagnostic_eval_function_source_sha256": "339b51f7407ee4f11d9086dedcb72adf967cbf929e4837105db8bdf866f7dfb1",
+  "unchanged_metric_camera_helper_sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa",
+  "actual_source_config_guard_checks": {
+    "sources": {
+      "all_source_inventory_sha_pass": true,
+      "original_files": 148,
+      "replica_files": 148,
+      "changed_files": [
+        "train.py",
+        "utils/paper_losses.py"
+      ],
+      "formal_resume_helper_unchanged": true
+    },
+    "protected": {
+      "protected_original_file_count": 61,
+      "all_protected_original_sha_pass": true
+    },
+    "auxiliary": {
+      "auxiliary_file_count": 10,
+      "all_auxiliary_sha_pass": true
+    },
+    "configuration": {
+      "original_validator_called": true,
+      "all_original_fields_strictly_validated": true,
+      "saved_configuration_kind": "original_parent",
+      "added_fields": {
+        "diagnostic_background_domain_complement": true,
+        "diagnostic_lambda_dynamic_background_opacity": 0.05
+      },
+      "strict_original_config": false,
+      "future_iteration_launch_authorized": false
+    }
+  },
+  "all467_original_inputs_hash_verified": true,
+  "all300_reference_records": 300,
+  "first10_reference_scalars": 10,
+  "actual_variant_GPU_restore_not_yet_executed": true,
+  "GPU_launch_authorized_by_this_receipt": false
+}

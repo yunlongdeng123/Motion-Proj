@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "decision": "CPU_SOURCE_PLAN_REVIEW_PASS_RUNTIME_GATES_PENDING_ROOT_APPROVAL",
+  "created_utc": "2026-10-11T23:15:47.901667+00:00",
+  "script_sha256": "0ad7cd996a38dc7f5294b9656c03edd6703478d416d5f582b67800de5e6e4bc4",
+  "launcher_sha256": "cc15e2faf6ff9f6b6cd0724b9832ef2fcaa04a823e7a894ad6afbeb63d41b9f1",
+  "plan_sha256": "891907aa9630288765225579c7f374b8c175bc0adda90a46abf844558488deb4",
+  "cpu_preflight_sha256": "581727799067ec758e385a1223800b30e19499d849026a34efd5074ad8696a53",
+  "checks": {
+    "actual_four_local_pins_and_embedded_plan_preflight_exact": true,
+    "actual_same_environment_CPU_preflight_only": true,
+    "one_raw10_pose_observed49times_and110_render_plan": true,
+    "actual_B1_V_terminal_checkpoints_and_configs_exact": true,
+    "masks_pinned_and_six_native_region_counts_exact": true,
+    "actual_proxy_four_modes_CPU_delegate_only": true,
+    "no_optimizer_training_or_backward_execution": true,
+    "fixed_pose_rays_environment_no_jitter_gate": true,
+    "native_anchor_FP32_PNG_and_freeze_both_exact_runtime_gates": true,
+    "real_per_region_pixel_deltas_and_runtime_no_mutation_gate": true,
+    "exact_root_receipt_single_GPU_lock_and_no_duplicate_attempt": true,
+    "non_anchor_quality_and_author_hard_freeze_limits": true
+  },
+  "focused_proxy_CPU_cases": [
+    {
+      "mode": "actual",
+      "position_input_and_times": [
+        0.48,
+        2
+      ],
+      "marginal_input": 0.48,
+      "PASS": true
+    },
+    {
+      "mode": "freeze_SHM_position",
+      "position_input_and_times": [
+        -0.28,
+        2
+      ],
+      "marginal_input": 0.48,
+      "PASS": true
+    },
+    {
+      "mode": "freeze_temporal_opacity_and_support",
+      "position_input_and_times": [
+        0.48,
+        2
+      ],
+      "marginal_input": -0.28,
+      "PASS": true
+    },
+    {
+      "mode": "freeze_both",
+      "position_input_and_times": [
+        -0.28,
+        2
+      ],
+      "marginal_input": -0.28,
+      "PASS": true
+    }
+  ],
+  "protected_input_count": 48,
+  "actual_GPU_or_training_started_by_this_review": false,
+  "CPU_review_is_GPU_approval": false,
+  "runtime_requirements": "Actual anchor FP32 and PNG exact, fixed pose/rays and env, RNG unchanged, model hashes and source/input SHA unchanged, freeze_both exact, all110 finite saved outputs. No runtime PASS claimed here.",
+  "architecture_components": "B1/V32000 static+dynamic+env -> original raw10 pose/camera/rays -> observed49 timestamps + position/opacity counterfactual proxies -> unchanged FP32 renderer -> static/foreground/env/alpha/depth deltas -> limited temporal-sensitivity evidence",
+  "scientific_limits": [
+    "The49 timestamps are observed but their combination with fixed raw10 pose is a novel camera/time diagnostic. No non-anchor GT quality/PSNR claim.",
+    "Read-only freezes are counterfactual causal controls, not repairs or author-hard-freeze requirements.",
+    "Derived Gaussian RGB is official static minus official env contribution, preserving FP32 subtraction semantics."
+  ],
+  "review_scope_limit": "Checkpoint/source hashes in actual CPU preparation and existing immutable terminal manifests were cross-bound; large checkpoint files were not redundantly rehashed by this independent reviewer. No thresholds or new author-intent claim."
+}

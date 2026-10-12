@@ -1,0 +1,61 @@
+{
+  "status": "PASS_FOCUSED_S_SOURCE_MATH_CONFIG_CPU",
+  "GPU_or_training_started": false,
+  "actual_S_source_only9_lines_inverse_bytes_original": true,
+  "original_paper_losses_bytes_unchanged": true,
+  "fullHW_static_photo_value_and_prediction_gradient_exact_2024_term": true,
+  "actual_FP32_total_decomposition_exact": true,
+  "captured_original_objective_exact": true,
+  "disabled_S_same_original_loss_tensor": true,
+  "actor_pixel_direct_static_prediction_gradient_zero": true,
+  "added_term_has_no_direct_dynamic_alpha_graph": true,
+  "gradient_limit": "Static render includes shared ENV; the real renderer has indirect shared-environment/composite interactions. This CPU image-tensor test does not claim exclusive static-model updates.",
+  "guard_valid_original_saved_and_same_bound_S_saved_configs": true,
+  "guard_rejected_changes": [
+    {
+      "changed_field": "diagnostic_observed_static_rgb_enabled",
+      "value": 1,
+      "rejected": true
+    },
+    {
+      "changed_field": "diagnostic_lambda_observed_static_rgb",
+      "value": 1,
+      "rejected": true
+    },
+    {
+      "changed_field": "diagnostic_lambda_observed_static_rgb",
+      "value": 0.05,
+      "rejected": true
+    },
+    {
+      "changed_field": "iterations",
+      "value": 32000,
+      "rejected": true
+    },
+    {
+      "changed_field": "paper_lambda_dynamic_rgb",
+      "value": 5.0,
+      "rejected": true
+    },
+    {
+      "changed_field": "diagnostic_background_domain_complement",
+      "value": true,
+      "rejected": true
+    },
+    {
+      "changed_field": "model_path",
+      "value": "/tmp/unbound-S",
+      "rejected": true
+    }
+  ],
+  "formal_guard_bytes_unchanged_and_rejects_extra_S_fields": true,
+  "actual_cuda_restore_proved_here": false,
+  "pins": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/check_S_delta_cpu.py": "bc2d2ccd3810e47cbe5c6723af62ca35201ec9f33553bd99c0bbb1ad4d23e085",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/experiment_binding.json": "8b98f2f46a9a3a345b2dfac666b9cc32c6090288a55de6870645ddc6978ed5b6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/frozen_repository/train.py": "c4ca7ee8de35d748aac404394a52f65f4f12ff3a1b4d069e31d0c5bb2b8dd3b2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/frozen_repository/utils/paper_losses.py": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/static_anchor_guard.py": "0a879a7a2574c877eb6464a29f7c91948e40e09b29310e34a02a86a5c7c23764",
+    "/root/autodl-tmp/drivingeditor_repro/DrivingEditor-run/train.py": "df5060d7377f5b810d9f34c2bd2dc8bac8b7b28804d20bd1c6692f6b4320203f"
+  }
+}

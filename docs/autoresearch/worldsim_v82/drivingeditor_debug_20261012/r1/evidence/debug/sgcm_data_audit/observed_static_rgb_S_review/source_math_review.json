@@ -1,0 +1,19 @@
+{
+  "status": "PASS_SOURCE_MATH_ONLY_FINAL_BINDING_PENDING",
+  "candidate_train_sha256": "c4ca7ee8de35d748aac404394a52f65f4f12ff3a1b4d069e31d0c5bb2b8dd3b2",
+  "patch_sha256": "79fe61a729a545d783d8ef807866b9754d3ec019c901908b0f1a6af82104099b",
+  "guard_sha256": "0a879a7a2574c877eb6464a29f7c91948e40e09b29310e34a02a86a5c7c23764",
+  "added_lines": [
+    411,
+    419
+  ],
+  "original_train_restored_byte_sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+  "existing_original_lambda_dssim": 0.2,
+  "math": "L_original +1.0*[.8*mean_HW_channel_abs(static*(1-Md)-GT*(1-Md)) +.2*(1-SSIM(static*(1-Md),GT*(1-Md)))]. Md and SSIM implementation inherited. Full HW, no new visible-area normalization, includes sky.",
+  "mask_primitive_checked": "extract_object_pixels returns tensor*mask; source masking uses same multiplication.",
+  "shared_environment_note": "static rendering contains shared environment transmission, so added gradients can affect static Gaussian/time fields and environment; not a static-parameter-exclusive intervention.",
+  "source_scope": "Exactly one nine-line enabled block; deleting it recovers original bytes. Original paper losses unchanged, no outside-opacity V term. Extra diagnostic beyond Eq10, not certified author implementation.",
+  "guard_scope": "Only train.py and two exact explicit fields; complete parent/current configs are bound; unchanged original strict validator is called after stripping only the two extra fields; installation rejects original formal module path.",
+  "final_harness_config_plan_review_complete": false,
+  "GPU_or_training_started_by_this_review": false
+}

@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "checked_utc": "2026-10-11T23:35:04.486433+00:00",
+  "arm": "S_observed_static_RGB",
+  "host_alias": "wm-vgpu-1011",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000",
+  "actual_launcher_status": "running_root_approved_static_anchor30k_to32000",
+  "actual_worker_status": "controlled_training",
+  "launcher_pid": 47332,
+  "worker_pid": 47335,
+  "launcher_process_exists": true,
+  "worker_process_exists": true,
+  "GPU_compute_apps": [
+    "47335, /root/autodl-tmp/envs/drivingeditor/bin/python, 8522 MiB"
+  ],
+  "exclusive_lock_is_held": true,
+  "complete_step_rows": 142,
+  "last_actual_iteration": 30142,
+  "last_actual_losses": {
+    "loss_l1": 0.014312485232949257,
+    "loss_ssim": 0.05641812086105347,
+    "loss_paper_global_rgb": 0.02273361198604107,
+    "loss_paper_dynamic_rgb": 0.0001506638218415901,
+    "loss_paper_sky": 0.0052902474999427795,
+    "loss_paper_nps": 0.03144095093011856,
+    "loss_paper_dynamic_opacity": 1.2194988130431739e-06,
+    "loss_paper_depth": 0.006685024127364159,
+    "loss_original_objective_before_diagnostic": 0.024131760001182556,
+    "loss_diagnostic_observed_static_rgb": 0.03527817502617836,
+    "loss": 0.059409935027360916,
+    "psnr": 30.751415252685547,
+    "iter_time": 636.3612670898438,
+    "total_points": 2234298.0
+  },
+  "completed_logged_losses_all_finite": true,
+  "completed_prefix_pairing_to_both_originals": {
+    "B1": {
+      "completed_prefix_rows_checked": 142,
+      "camera_time_shift_LR_exact": true
+    },
+    "B2": {
+      "completed_prefix_rows_checked": 142,
+      "camera_time_shift_LR_exact": true
+    }
+  },
+  "first_original10_exact_before_diagnostic_term": true,
+  "first_FP32_total_decomposition_exact": true,
+  "first_original10_exact_before_backward": true,
+  "actual_full_restore": {
+    "status": "actual_restore_pass",
+    "restored_iteration": 30000,
+    "all_rng_restored_exactly": true,
+    "camera_sampler_scale_ema_restored_exactly": true,
+    "model_runtime_sgcm_restored_exactly": true,
+    "conditional_adam_restored_exactly": true,
+    "saved_optimizer_tensor_placement_preserved": true,
+    "optimizer_bound_to_saved_parameters": true,
+    "next_camera_index": 11,
+    "next_camera_id": "image_0/0017034",
+    "seed_after_restore": false
+  },
+  "saved_nodes_rng_preserved": [
+    {
+      "iteration": 30001,
+      "camera_count": 5,
+      "all_rng_unchanged": true
+    }
+  ],
+  "worker_exit_code": null,
+  "launcher_exit_code": null,
+  "worker_status_updates_only_at_eval_nodes": true,
+  "progress_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/step_losses.jsonl",
+  "CPU_only_observation": true,
+  "new_training_started": false,
+  "coefficient": 1.0,
+  "shutdown_authorized_now": false,
+  "whole_debug_task_complete": false,
+  "normal_algorithm_success_claimed": false
+}

@@ -1,0 +1,172 @@
+diff --git a/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py b/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py
+--- a/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py
++++ b/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py
+@@ -231,6 +231,9 @@
+             )
+             data.filter(keep_by_nms)
+ 
++        # Keep the original GPU downstream contract after NMS. Completed boolean
++        # masks are accumulated on CPU below to avoid quadratic GPU cat peaks.
++        data["masks"] = data["masks"].to(self.predictor.device)
+         # data.to_numpy()
+         return data
+ 
+@@ -264,6 +267,9 @@
+         for (points, ) in batch_iterator(self.points_per_batch, points_for_image):
+             batch_data = self._process_batch(points, negative_points, cropped_im_size, crop_box,
+                                              orig_size)
++            # Exact device transfer: boxes/scores and NMS stay on GPU; sampling,
++            # mask bits, thresholds and resolution are unchanged.
++            batch_data["masks"] = batch_data["masks"].cpu()
+             data.cat(batch_data)
+             del batch_data
+         self.predictor.reset_image()
+diff --git a/scene/scene_utils.py b/scene/scene_utils.py
+--- a/scene/scene_utils.py
++++ b/scene/scene_utils.py
+@@ -29,6 +29,7 @@
+     pointcloud_right: np.array = None
+     pointcloud_back: np.array = None
+     bbx_info_1: list = None
++    object_mask: np.array = None
+ 
+ 
+ 
+diff --git a/scene/waymo_loader2.py b/scene/waymo_loader2.py
+--- a/scene/waymo_loader2.py
++++ b/scene/waymo_loader2.py
+@@ -1,4 +1,5 @@
+ import os
++from glob import glob
+ import numpy as np
+ from tqdm import tqdm
+ from PIL import Image
+@@ -10,7 +11,7 @@
+ from scipy.spatial.transform import Rotation as R
+ import numpy as np
+ import matplotlib.pyplot as plt
+-from scipy.spatial import ConvexHull
++from scipy.spatial import ConvexHull, cKDTree
+ import sys
+ 
+ def pad_poses(p):
+@@ -289,47 +290,34 @@
+     else:
+         time_duration = args.time_duration
+     pcd = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d.ply"))
+-    # if args.require_boundingbox:
+-    dynamic_pcd_1 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_0.ply"))
+-    dynamic_pcd_2 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_1.ply"))
+-    dynamic_pcd_3 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_2.ply"))
+-    dynamic_pcd_4 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_3.ply"))
+     pointcloud1 = np.asarray(pcd.points)
+     pointcloud_time = np.asarray(pcd.normals)[:, 0].reshape(-1, 1)
+-    mask = np.ones(len(pointcloud1), dtype=bool)
+-    dynamic_pointcloud_1 = np.asarray(dynamic_pcd_1.points)
+-    pointcloud_dynamic_time_1 = np.asarray(dynamic_pcd_1.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud_2 = np.asarray(dynamic_pcd_2.points)
+-    pointcloud_dynamic_time_2 = np.asarray(dynamic_pcd_2.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud_3 = np.asarray(dynamic_pcd_3.points)
+-    pointcloud_dynamic_time_3 = np.asarray(dynamic_pcd_3.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud_4 = np.asarray(dynamic_pcd_4.points)
+-    pointcloud_dynamic_time_4 = np.asarray(dynamic_pcd_4.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud = np.vstack((dynamic_pointcloud_1, dynamic_pointcloud_2))
+-    dynamic_pointcloud = np.vstack((dynamic_pointcloud, dynamic_pointcloud_3))
+-    dynamic_pointcloud = np.vstack((dynamic_pointcloud, dynamic_pointcloud_4))
+-    pointcloud_dynamic_time = np.vstack((pointcloud_dynamic_time_1, pointcloud_dynamic_time_2))
+-    pointcloud_dynamic_time = np.vstack((pointcloud_dynamic_time, pointcloud_dynamic_time_3))
+-    pointcloud_dynamic_time = np.vstack((pointcloud_dynamic_time, pointcloud_dynamic_time_4))
+     if args.including_dynamic:
+-        for dynamic_point in dynamic_pointcloud:
+-            # 计算每个动态物体点与原始点云中点的距离，根据需要调整阈值
+-            distances = np.linalg.norm(pointcloud1 - dynamic_point, axis=1)
+-            # print(distances)
+-            mask[distances < 0.1] = False
+-        static_indices = np.where(mask)[0]
+-        # dynamic_indices = np.where(~mask)[0]
+-        static_pointcloud = pointcloud1[static_indices]
+-        # dynamic_pointcloud_1 = pointcloud1[dynamic_indices]
+-        # dynamic_pointcloud = np.vstack((dynamic_pointcloud, dynamic_pointcloud_1))
+-        static_time = pointcloud_time[static_indices]
+-        # dynamic_time_1 = pointcloud_time[dynamic_indices]
+-        # dynamic_time = np.vstack((pointcloud_dynamic_time, dynamic_time_1))
+-        dynamic_time = pointcloud_dynamic_time
++        dynamic_paths = sorted(glob(os.path.join(args.source_path, "points3d_dynamic_*.ply")))
++        dynamic_clouds = [o3d.io.read_point_cloud(path) for path in dynamic_paths]
++        if not dynamic_clouds or any(not len(p.points) for p in dynamic_clouds):
++            raise ValueError("including_dynamic=True requires nonempty real dynamic PLY files")
++        dynamic_pointcloud_1 = np.asarray(dynamic_clouds[0].points)
++        if args.require_boundingbox:
++            if len(dynamic_clouds) < 2:
++                raise ValueError("The optional legacy bounding-box branch requires two actors")
++            dynamic_pointcloud_2 = np.asarray(dynamic_clouds[1].points)
++        dynamic_pointcloud = np.concatenate([np.asarray(p.points) for p in dynamic_clouds])
++        dynamic_time = np.concatenate([np.asarray(p.normals)[:, :1] for p in dynamic_clouds])
++        if not len(dynamic_pointcloud):
++            raise ValueError("including_dynamic=True requires real dynamic PLY points")
++        # Exact nearest-neighbour query: retain precisely those points without
++        # any dynamic point at Euclidean distance < 0.1 (the original rule).
++        nearest, _ = cKDTree(dynamic_pointcloud).query(
++            pointcloud1, k=1, eps=0, distance_upper_bound=0.1, workers=4)
++        mask = nearest >= 0.1
++        static_pointcloud = pointcloud1[mask]
++        static_time = pointcloud_time[mask]
+     else:
+         static_pointcloud = pointcloud1
+         static_time = pointcloud_time
+-        dynamic_time = pointcloud_dynamic_time_1
++        dynamic_pointcloud = np.empty((0, 3), dtype=np.float32)
++        dynamic_time = np.empty((0, 1), dtype=np.float32)
+     pose_id = 0
+     last_bbox_translation_1 = None
+     last_bbox_translation_2 = None
+@@ -483,7 +471,7 @@
+         point = np.fromfile(os.path.join(args.source_path, "velodyne", car_id + ".bin"),
+                             dtype=np.float32, count=-1).reshape(-1, 6)
+         point_xyz, intensity, elongation, timestamp_pts = np.split(point, [3, 4, 5], axis=1)
+-        point_xyz_world = (np.pad(point_xyz, (0, 1), constant_values=1) @ ego_pose.T)[:, :3]
++        point_xyz_world = (np.pad(point_xyz, ((0, 0), (0, 1)), constant_values=1) @ ego_pose.T)[:, :3]
+         points.append(point_xyz_world)
+         point_time = np.full_like(point_xyz_world[:, :1], timestamp)
+         points_time.append(point_time)
+diff --git a/train.py b/train.py
+--- a/train.py
++++ b/train.py
+@@ -236,13 +236,21 @@
+     if args.start_checkpoint:
+         (model_params, first_iter) = torch.load(args.start_checkpoint)
+         gaussians.restore(model_params, args)
+-        dynamic_gaussians.restore(model_params, args)
++        if dynamic_gaussians is not None:
++            dynamic_checkpoint = os.path.join(os.path.dirname(args.start_checkpoint),
++                                             os.path.basename(args.start_checkpoint).replace("chkpnt", "dynamic_chkpnt", 1))
++            (dynamic_params, dynamic_iter) = torch.load(dynamic_checkpoint)
++            if dynamic_iter != first_iter:
++                raise ValueError("Static and dynamic checkpoint iterations differ")
++            dynamic_gaussians.restore(dynamic_params, args)
+ 
+         if env_map is not None:
+-            env_checkpoint = os.path.join(os.path.dirname(args.checkpoint),
+-                                        os.path.basename(args.checkpoint).replace("chkpnt", "env_light_chkpnt"))
+-            (light_params, _) = torch.load(env_checkpoint)
+-            env_map.restore(light_params)
++            env_checkpoint = os.path.join(os.path.dirname(args.start_checkpoint),
++                                        os.path.basename(args.start_checkpoint).replace("chkpnt", "env_light_chkpnt"))
++            (light_params, light_iter) = torch.load(env_checkpoint)
++            if light_iter != first_iter:
++                raise ValueError("Static and environment checkpoint iterations differ")
++            env_map.restore(light_params, args)
+ 
+     bg_color = [1, 1, 1] if args.white_background else [0, 0, 0]
+     background = torch.tensor(bg_color, dtype=torch.float32, device="cuda")
+@@ -318,6 +326,10 @@
+         feature = render_pkg['feature'] / alpha.clamp_min(EPS)
+         t_map = feature[0:1]
+         v_map = feature[1:]
++        if dynamic_gaussians is None:
++            # The only branch is the static branch; retain its regularizers.
++            static_t_map = t_map
++            static_v_map = v_map
+ 
+         sky_mask = viewpoint_cam.sky_mask.cuda() if viewpoint_cam.sky_mask is not None else torch.zeros_like(alpha, dtype=torch.bool)
+ 

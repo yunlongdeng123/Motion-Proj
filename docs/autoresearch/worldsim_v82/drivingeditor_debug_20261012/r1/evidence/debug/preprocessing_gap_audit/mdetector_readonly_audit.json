@@ -1,0 +1,34 @@
+{
+  "scope": "Read-only audit of a missing paper preprocessing component; no install, execution, dataset modification or training authorized by this artifact",
+  "component": "M-detector, DrivingEditor paper reference 41",
+  "source_revision": "0645dabe307a99f3b59a5a3d3007acfdcad1a39f",
+  "source_receipt": "mdetector_source_receipt.json",
+  "official_repository": "https://github.com/hku-mars/M-detector",
+  "paper_source": "https://www.nature.com/articles/s41467-023-44554-8",
+  "confirmed_source_facts": [
+    "The official repository has config/waymo/waymo0.yaml and waymo1.yaml, dataset=2, and detector_waymo.launch selects waymo1.yaml.",
+    "The node consumes local point clouds plus odometry; TimerCallback dequeues corresponding cloud/rotation/translation/time and calls DynObjFilter::filter.",
+    "The filter accepts undistorted local XYZ points, rotation, translation and scan_end_time. It computes world points as R*p_body+t and assigns scan_end_time to the points in this frame callback.",
+    "The node pairs FIFO queues rather than validating stamp equality; an adapter must ensure an exact one-cloud/one-pose pairing before use.",
+    "The public configuration is a Waymo implementation starting point, not evidence of DrivingEditor authors' exact configuration or input sensor choice."
+  ],
+  "host_readonly_probe_20261011": {
+    "host": "wm-vgpu-1011",
+    "roscore_found": false,
+    "opt_ros_exists": false,
+    "pcl_common_pkgconfig_found": false,
+    "eigen3_pkgconfig_found": false,
+    "tbb_pkgconfig_version": "2021.5.0",
+    "docker_found": false
+  },
+  "future_minimum_adapter_checks": [
+    "Bind the existing silver-car raw segment and original record order; do not substitute labelled boxes as detector output.",
+    "Define input LiDAR sensors/returns, native metric scale, sensor/body/world coordinate transforms and deskew status from actual Waymo calibration/poses.",
+    "Retain mapping from detector labels to each original point index and timestamp; prove no crop/resample/reorder silently breaks this mapping.",
+    "Run detector in an isolated dependency environment; do not replace current CUDA/PyTorch/compiler or edit shell profiles using README examples.",
+    "Keep body-mask and shadow changes separate. Compare initialization point assignments before a separately registered from-zero experiment."
+  ],
+  "current_paper_reproduction_gap": "M-detector initialization is still absent. This is a known component mismatch, not by itself proof that it caused the current separation failure.",
+  "algorithm_or_data_changed": false,
+  "GPU_used": false
+}

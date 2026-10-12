@@ -1,0 +1,610 @@
+{
+  "owner_pid": 38878,
+  "nonce": "7991586b577740cf966f286bd7c85d95",
+  "purpose": "Root-approved isolated30k->32000 unchanged original-math diagnostic",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to32000_noise_reference",
+  "started_utc": "2026-10-11T20:56:08.568732+00:00",
+  "status": "complete",
+  "parent_iteration": 30000,
+  "stop_iteration": 32000,
+  "gpu_lock_held": false,
+  "iteration": 32000,
+  "elapsed_seconds": 2206.8586520524696,
+  "last_loss": {
+    "loss_l1": 0.011518871411681175,
+    "loss_ssim": 0.03884303569793701,
+    "loss_paper_global_rgb": 0.016983704641461372,
+    "loss_paper_dynamic_rgb": 7.488634582841769e-05,
+    "loss_paper_sky": 0.0004472007567528635,
+    "loss_paper_nps": 0.0001806716318242252,
+    "loss_paper_dynamic_opacity": 1.3906143067288212e-05,
+    "loss_paper_depth": 0.004636512137949467,
+    "loss": 0.01754710264503956,
+    "psnr": 33.470462799072266,
+    "iter_time": 948.2308349609375,
+    "total_points": 2234298.0
+  },
+  "restore": {
+    "status": "actual_restore_pass",
+    "restored_iteration": 30000,
+    "all_rng_restored_exactly": true,
+    "camera_sampler_scale_ema_restored_exactly": true,
+    "model_runtime_sgcm_restored_exactly": true,
+    "conditional_adam_restored_exactly": true,
+    "saved_optimizer_tensor_placement_preserved": true,
+    "optimizer_bound_to_saved_parameters": true,
+    "optimizer_before_next_step": {
+      "static": [
+        {
+          "name": "xyz",
+          "step": 29856.0,
+          "lr": 1.0095317511683084e-05,
+          "parameter_shape": [
+            2234298,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 1.0095317511683084e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_dc",
+          "step": 29856.0,
+          "lr": 0.0025,
+          "parameter_shape": [
+            2234298,
+            1,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.0025,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_rest",
+          "step": 29856.0,
+          "lr": 0.000125,
+          "parameter_shape": [
+            2234298,
+            15,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.000125,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "opacity",
+          "step": 29850.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            2234298,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling",
+          "step": 29856.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            2234298,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "rotation",
+          "step": 29856.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            2234298,
+            4
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "t",
+          "step": 29856.0,
+          "lr": 5.047658755841547e-05,
+          "parameter_shape": [
+            2234298,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 5.047658755841547e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling_t",
+          "step": 29856.0,
+          "lr": 0.002,
+          "parameter_shape": [
+            2234298,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.002,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "velocity",
+          "step": 29856.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            2234298,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        }
+      ],
+      "dynamic": [
+        {
+          "name": "xyz",
+          "step": 29939.0,
+          "lr": 2.5358291079377788e-05,
+          "parameter_shape": [
+            1026885,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 2.5358291079377788e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_dc",
+          "step": 29939.0,
+          "lr": 0.0025,
+          "parameter_shape": [
+            1026885,
+            1,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.0025,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_rest",
+          "step": 29939.0,
+          "lr": 0.000125,
+          "parameter_shape": [
+            1026885,
+            15,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.000125,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "opacity",
+          "step": 29939.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            1026885,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling",
+          "step": 29939.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            1026885,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "rotation",
+          "step": 29939.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            1026885,
+            4
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "t",
+          "step": 29939.0,
+          "lr": 5.047658755841547e-05,
+          "parameter_shape": [
+            1026885,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 5.047658755841547e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling_t",
+          "step": 29939.0,
+          "lr": 0.002,
+          "parameter_shape": [
+            1026885,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.002,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "velocity",
+          "step": 29939.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            1026885,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        }
+      ],
+      "environment": [
+        {
+          "name": "base",
+          "step": 30000.0,
+          "lr": 0.01,
+          "parameter_shape": [
+            6,
+            1024,
+            1024,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.01,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        }
+      ]
+    },
+    "next_camera_index": 11,
+    "next_camera_id": "image_0/0017034",
+    "next_remaining_stack": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      15,
+      16,
+      18,
+      19,
+      21,
+      22,
+      24,
+      25,
+      26,
+      29,
+      32,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      45,
+      47
+    ],
+    "seed_after_restore": false
+  },
+  "cuda_peak_allocated_bytes": 27619500544,
+  "cuda_peak_reserved_bytes": 28231860224,
+  "no_modification_sha_pass": true,
+  "actual_exit_code": 0,
+  "finished_utc": "2026-10-11T21:33:11.046545+00:00"
+}

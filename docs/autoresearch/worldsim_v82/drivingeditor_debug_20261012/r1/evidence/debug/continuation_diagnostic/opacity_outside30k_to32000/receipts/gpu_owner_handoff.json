@@ -1,0 +1,731 @@
+{
+  "schema_version": 1,
+  "status": "V_long_running_full_restore_and_first10_before_backward_actual_PASS",
+  "checked_utc": "2026-10-11T22:02:14.376307+00:00",
+  "GPU_owner_agent": "/root/vgpu_component_diagnostic_solmax",
+  "host_alias": "wm-vgpu-1011",
+  "GPU_started_by_this_receipt_script": false,
+  "sole_authorized_active_arm": "V_single_outside_opacity_30k_to32000",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000",
+  "launcher_pid": 42188,
+  "worker_pid": 42191,
+  "actual_GPU_compute_apps": [
+    "42191, /root/autodl-tmp/envs/drivingeditor/bin/python, 12194 MiB"
+  ],
+  "exclusive_GPU_slot_lock_actually_held": true,
+  "actual_step_count_at_receipt": 136,
+  "last_actual_iteration_at_receipt": 30136,
+  "actual_restore": {
+    "status": "actual_restore_pass",
+    "restored_iteration": 30000,
+    "all_rng_restored_exactly": true,
+    "camera_sampler_scale_ema_restored_exactly": true,
+    "model_runtime_sgcm_restored_exactly": true,
+    "conditional_adam_restored_exactly": true,
+    "saved_optimizer_tensor_placement_preserved": true,
+    "optimizer_bound_to_saved_parameters": true,
+    "optimizer_before_next_step": {
+      "static": [
+        {
+          "name": "xyz",
+          "step": 29856.0,
+          "lr": 1.0095317511683084e-05,
+          "parameter_shape": [
+            2234298,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 1.0095317511683084e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_dc",
+          "step": 29856.0,
+          "lr": 0.0025,
+          "parameter_shape": [
+            2234298,
+            1,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.0025,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_rest",
+          "step": 29856.0,
+          "lr": 0.000125,
+          "parameter_shape": [
+            2234298,
+            15,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.000125,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "opacity",
+          "step": 29850.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            2234298,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling",
+          "step": 29856.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            2234298,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "rotation",
+          "step": 29856.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            2234298,
+            4
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "t",
+          "step": 29856.0,
+          "lr": 5.047658755841547e-05,
+          "parameter_shape": [
+            2234298,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 5.047658755841547e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling_t",
+          "step": 29856.0,
+          "lr": 0.002,
+          "parameter_shape": [
+            2234298,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.002,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "velocity",
+          "step": 29856.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            2234298,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        }
+      ],
+      "dynamic": [
+        {
+          "name": "xyz",
+          "step": 29939.0,
+          "lr": 2.5358291079377788e-05,
+          "parameter_shape": [
+            1026885,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 2.5358291079377788e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_dc",
+          "step": 29939.0,
+          "lr": 0.0025,
+          "parameter_shape": [
+            1026885,
+            1,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.0025,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "f_rest",
+          "step": 29939.0,
+          "lr": 0.000125,
+          "parameter_shape": [
+            1026885,
+            15,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.000125,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "opacity",
+          "step": 29939.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            1026885,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling",
+          "step": 29939.0,
+          "lr": 0.005,
+          "parameter_shape": [
+            1026885,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.005,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "rotation",
+          "step": 29939.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            1026885,
+            4
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "t",
+          "step": 29939.0,
+          "lr": 5.047658755841547e-05,
+          "parameter_shape": [
+            1026885,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 5.047658755841547e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "scaling_t",
+          "step": 29939.0,
+          "lr": 0.002,
+          "parameter_shape": [
+            1026885,
+            1
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.002,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        },
+        {
+          "name": "velocity",
+          "step": 29939.0,
+          "lr": 0.001,
+          "parameter_shape": [
+            1026885,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        }
+      ],
+      "environment": [
+        {
+          "name": "base",
+          "step": 30000.0,
+          "lr": 0.01,
+          "parameter_shape": [
+            6,
+            1024,
+            1024,
+            3
+          ],
+          "parameter_dtype": "torch.float32",
+          "parameter_device": "cuda:0",
+          "step_device": "cpu",
+          "runtime_options": {
+            "lr": 0.01,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-15,
+            "weight_decay": 0,
+            "amsgrad": false,
+            "maximize": false,
+            "foreach": null,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null
+          }
+        }
+      ]
+    },
+    "next_camera_index": 11,
+    "next_camera_id": "image_0/0017034",
+    "next_remaining_stack": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      13,
+      15,
+      16,
+      18,
+      19,
+      21,
+      22,
+      24,
+      25,
+      26,
+      29,
+      32,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      45,
+      47
+    ],
+    "seed_after_restore": false
+  },
+  "first_actual_Tensor_backward_original10_comparison": {
+    "iteration": 30001,
+    "phase": "before_actual_first_Tensor_backward",
+    "camera_id": "image_0/0017034",
+    "original_values": {
+      "loss_l1": 0.26495927572250366,
+      "loss_ssim": 0.42393267154693604,
+      "loss_paper_global_rgb": 0.2967539429664612,
+      "loss_paper_dynamic_rgb": 6.714523624395952e-05,
+      "loss_paper_sky": 5.828513621963793e-06,
+      "loss_paper_nps": 5.385900294641033e-05,
+      "loss_paper_dynamic_opacity": 2.8994143121963134e-06,
+      "loss_paper_depth": 0.012423455715179443,
+      "loss": 0.2980644106864929,
+      "psnr": 8.590572357177734
+    },
+    "comparisons": {
+      "loss_l1": {
+        "actual": 0.26495927572250366,
+        "reference": 0.26495927572250366,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_ssim": {
+        "actual": 0.42393267154693604,
+        "reference": 0.42393267154693604,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_global_rgb": {
+        "actual": 0.2967539429664612,
+        "reference": 0.2967539429664612,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_dynamic_rgb": {
+        "actual": 6.714523624395952e-05,
+        "reference": 6.714523624395952e-05,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_sky": {
+        "actual": 5.828513621963793e-06,
+        "reference": 5.828513621963793e-06,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_nps": {
+        "actual": 5.385900294641033e-05,
+        "reference": 5.385900294641033e-05,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_dynamic_opacity": {
+        "actual": 2.8994143121963134e-06,
+        "reference": 2.8994143121963134e-06,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_depth": {
+        "actual": 0.012423455715179443,
+        "reference": 0.012423455715179443,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss": {
+        "actual": 0.2980644106864929,
+        "reference": 0.2980644106864929,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "psnr": {
+        "actual": 8.590572357177734,
+        "reference": 8.590572357177734,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      }
+    },
+    "actual_new_total_loss": 0.43883374333381653,
+    "original_objective_loss": 0.2980644106864929,
+    "background_opacity_unweighted": 2.8153865337371826,
+    "added_weight": 0.05,
+    "tolerance_applied": false,
+    "original_backward_invoked": true,
+    "original_backward_returned": true
+  },
+  "completed_prefix_pairing_to_both_originals": {
+    "B1": {
+      "completed_prefix_rows_checked": 136,
+      "camera_time_shift_LR_exact": true
+    },
+    "B2": {
+      "completed_prefix_rows_checked": 136,
+      "camera_time_shift_LR_exact": true
+    }
+  },
+  "saved_node_RNG_evidence": [
+    {
+      "iteration": 30001,
+      "camera_count": 5,
+      "all_rng_unchanged": true
+    }
+  ],
+  "first_iteration": 30001,
+  "stop_iteration": 32000,
+  "horizon": 50000,
+  "hypothesis_weight": 0.05,
+  "formal50k_resumed": false,
+  "approved_launch_source_sha256": {
+    "opacity_outside_root_coordination_receipt.json": "752af1d9709399bb5d767f127f2bff16719dac826a9bfebaa06e425fe3dd6d53",
+    "continuation_variant_harness.py": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+    "opacity_outside_prepared_plan.json": "1afe9a9b5f05dfcff1d565e064f276ef8161250060eecc0bb2b31a35be031065",
+    "experiment_binding.json": "5701482a50b078e980a39a4aec9b6747cdc1628882b2b48a2dd985d588314260",
+    "outside_experiment_guard.py": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+    "launch_opacity_outside_continuation.py": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+    "evaluation_protocol_locked.json": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658"
+  },
+  "progress_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000/step_losses.jsonl",
+  "worker_status": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000/status.json",
+  "worker_exit": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000/actual_exit_code.txt",
+  "launcher_status": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/opacity_outside_launcher_status.json",
+  "launcher_exit": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/opacity_outside_launcher.exit",
+  "terminal49_evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000/extra_eval/32000/diagnostic_eval.json",
+  "terminal4_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000/terminal_32000/diagnostic_snapshot_manifest.json",
+  "completion_gates": [
+    "Actual worker/launcher exit0 and GPU process/lock release.",
+    "Exactly2000 finite genuine steps with both-original2000 camera/time_shift/LR pairing.",
+    "Four eval nodes RNG preserved and final49 GT/region domains paired to both originals.",
+    "Four terminal states complete hashed and CPU schema verified; all protected originals unchanged.",
+    "Locked11 primary metrics and all49/actor/composite/locality comparison to both originals with noise distribution and tradeoffs."
+  ],
+  "failure_policy": "Preserve actual failure and inform root; no automatic retry or mathematical/weight/window change.",
+  "shutdown_authorized_now": false,
+  "whole_debug_task_complete": false,
+  "normal_algorithm_success_claimed": false
+}

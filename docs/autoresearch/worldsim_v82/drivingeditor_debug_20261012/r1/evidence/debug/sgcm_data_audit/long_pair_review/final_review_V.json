@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "scope": "Independent CPU readiness review of actual long V source/config/binding/plan and pinned completed B1/B2 evidence; no GPU authorization or effect/normal/paper-reproduction acceptance",
+  "reviewed_utc": "2026-10-11T21:48:10.569419+00:00",
+  "arm": "V",
+  "harness_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/continuation_variant_harness.py",
+  "harness_sha256": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+  "prepared_plan_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/opacity_outside_prepared_plan.json",
+  "prepared_plan_sha256": "1afe9a9b5f05dfcff1d565e064f276ef8161250060eecc0bb2b31a35be031065",
+  "experiment_binding_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/experiment_binding.json",
+  "experiment_binding_sha256": "5701482a50b078e980a39a4aec9b6747cdc1628882b2b48a2dd985d588314260",
+  "guard_sha256": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+  "launcher_sha256": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+  "observer_sha256": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1",
+  "metric_helper_sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa",
+  "algorithm_changed_files": {
+    "train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+    "utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab"
+  },
+  "extra_config": {
+    "diagnostic_background_domain_complement": true,
+    "diagnostic_lambda_dynamic_background_opacity": 0.05
+  },
+  "first_iteration": 30001,
+  "stop_iteration": 32000,
+  "steps": 2000,
+  "horizon": 50000,
+  "seed": 0,
+  "independent_CPU_review_sha256": "9025538416c60d7b5e60ef882a1b2a8004e20b11d00d00f8ee1a6af88ef3ead1",
+  "independent_remote_source_plan_review_sha256": "713b59dc4d19e4f1c1bca184e09511be0b1390af9ddc1273b63b03d30f39ce27",
+  "locked_protocol_sha256": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658",
+  "interpretation_preregistered_sha256": "af9726931762fde14c00684ed1004ce2a6464a46299e832f969cdce3c916a75d",
+  "actual_B1_B2_pair_sha256": "d9555323b446f20ca425a0f7448793628ca30e3559ed24e551610eb7c0996afc",
+  "actual_original_repeat_noise_sha256": "e4ae32c07b63ed7be0171a727f8a12ec153f66e63d6ac89f4594fa4985145f08",
+  "actual_common49_inputs_after_B2_sha256": "dfd33893200805b4aebf147121b2be72270163a2ec61674e7704d2053de7f381",
+  "architecture": "Same saved30k4state + unchanged467 inputs -> unchanged restore observer -> B1 original / B2 original repeat / V original+.05 outside-opacity -> same2000 sample-time-LR + RNG-safe4 eval nodes -> full49 paired domains +4 terminal states -> pre-locked per-frame/joint interpretation",
+  "findings": [
+    "Actual original/replica148 inventories and frozen execution/source/config hashes match; exactly train.py and paper_losses.py differ, with only the already-reviewed .05 complement term and log-only original loss capture. Formal guard and SGCM bytes unchanged.",
+    "Same original30k complete initial state,50k horizon,2000 steps,4 fixed nodes and terminal49; no33000 reset. Actual B1/B2 initial restore, complete real execution and four validated states exist. All2000 camera/time_shift/LR match; first10 scalars match exactly. Later CUDA loss trajectories are not bitwise identical.",
+    "Actual long B1/B2 noise and common467/245/98-mask receipts are newly bound, not the short30300 run. Canonical equal-frame means were independently recomputed from saved49 statistics; pixel weighting remains separately labelled. One repeat is empirical variation only.",
+    "V readiness only. First original10 BEFORE actual backward, exact saved model/Adam/allRNG/sampler/SGCM restore,2000 paired inputs, RNG-preserved49 GT/domain checks and complete4-state terminal evidence remain mandatory runtime gates."
+  ],
+  "limitations": [
+    "No reviewer GPU execution or V model/optimizer/RNG restore occurred. Large saved checkpoint and NPZ/input rehashes were not repeated; their actual CPU receipts and unchanged source are pinned.",
+    "No independent runtime mask pixels or actualScene camera-pose snapshots were saved; original encoded/decoded inputs, common loader source, actual paired GT arrays and domain counts bound the comparison to the documented extent.",
+    "The .05 complementary domain is an unverified author-formula hypothesis; this is recovery from a degenerated30k state, not from-zero training or author paper acceptance. Preserve actor fidelity/composite costs/locality and real-image evidence in any effect conclusion.",
+    "Do not infer normal separation from composite PSNR. B1/B2 static road remains poor and dynamic support widespread; no thresholds, source fields or formula weights were tuned after long results."
+  ],
+  "root_action_required": "Root may separately approve only this exact V plan and give the existing GPU agent exclusive ownership; this CPU review launches nothing.",
+  "GPU_used_by_reviewer": false,
+  "formal_or_current_candidate_changed": false
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "decision": "PASS",
+  "allow_resume": true,
+  "root_reviewed": true,
+  "memory_gate": "passed",
+  "original_math_gate": "unchanged_and_restored",
+  "review_note": "Original baseline full49 PNG agreement and genuine 10001 loss backward Adam restore validated. Memory headroom established at 10k; later densification and 50k completion remain monitored.",
+  "reviewed_utc": "2026-10-11T10:13:26.990291+00:00",
+  "candidate_manifest_sha256": "6f0ee8294a16bb866e342a60134ea18b2f6ad885f56b163e1c0959c7a061dca1",
+  "cpu_preflight_sha256": "baf7bfb160435b270da0d4b0f981aff30b9aa16841944c89bc5bd49b05dd5bca",
+  "approved_variant": "baseline_original_math_strictguard",
+  "parent_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+  "resume_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "checkpoint_iteration": 10000,
+  "horizon": 50000,
+  "seed": 0,
+  "train_sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+  "renderer_sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+  "strict_guard_sha256": "38bb38dd81d5ae1df9f909b4e87ddb3582bc1d53da7a890949f5f311c8056bcc",
+  "original_rasterizer_pins": {
+    "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+    "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/auxiliary.h": "f3a1a046df7e68076ecb15f145aa682e51c7e69b0054d6cd59c3cadc217f918a",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.cu": "ab6bffce4fe0c9faae112db0de6600fc4b17ca0010e5af653ffe113f0f956fc1",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.h": "b192824f7aac7e6e6f4e1c4c959d9b310ef75154d02f32c1696d5e204963a6b0",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/config.h": "f2112ec23236cabbd32ff4e70765fccd7e66bb5ce9664acf40339b0189b4ab62",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.cu": "732e8cec40d00e93ce9959428c8e451148c791c0eaea351b8eeff9db759d7a8d",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.h": "8570b9b4002e465e8083d56e962f88c4831463c735a80dced7f6f072a1256597",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer.h": "81845413068d573df4cc40dc3ea8909d774b56576107dc8770309ed1da813fa4",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.cu": "fc8f0f9b7905765e2b24b0aa7c7b52db591ee2cc14d97c66384b5e8fd91fdaed",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.h": "58b97a9728e24d41602a2ac3e8eace025cfd3228de6e75033dc458d0303a46f4",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/diff_gaussian_rasterization/__init__.py": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/ext.cpp": "102d6ca2a07cf57717e5828c49a7100841cc0147f7373de768070f06bc4909ef",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.cu": "f965ec0d7e75a89dbeff7dbfc8382c15aa4d6feb7cf5adf05bdcb61ce5550874",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.h": "e8edad2d0e23a0b88d89f8148350974407de5f285dcb3b8c74b9a9b8df992fc8",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/setup.py": "3bc4065d0ba274aca98a68930c8897f56110bd56f17c5d04c4b66c20bdf36e71",
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/third_party/stbi_image_write.h": "24d110c51536eea49b99b3ef9eb717e3587338358d41b2596d5b1d1c0b0a18b8"
+  },
+  "migration_audit": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_1011/migration_audit.json",
+    "sha256": "98f25c1e8e68273e832f7dcd81a9076251c80fe8031db9f9934f5d84e6131b1b"
+  },
+  "next_step_acceptance": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/acceptance/actual_train10001_v1/acceptance.json",
+    "sha256": "0f867e820c8b735e81f83237c53809a78bb9ba8f97d1e611095a244cc9137fa9"
+  },
+  "baseline49_evaluation": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_1011/baseline_full49_validation.json",
+    "sha256": "8296b977bf1d900aeae58e6119f9b18b6183db29cdf093657aa1d4956676dc9a"
+  }
+}

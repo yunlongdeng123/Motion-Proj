@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "CPU_DESIGN_ONLY_NOT_IMPLEMENTED",
+  "allow_training": false,
+  "GPU_or_training_started": false,
+  "frozen_or_S_sources_modified": false,
+  "full_T_source_or_GPU_plan_generated": false,
+  "first_decision": "Check current initialization labels/point lineage before selecting a from-zero training intervention; M-detector absence alone does not prove actor contamination.",
+  "reuse_initial_evidence": "sgcm_data_audit/initial_geometry_and_time.json",
+  "initial_counts": {"all_PLY": 600000, "dynamic_PLY": 36406, "excluded_within_0_1m_of_dynamic_union": 4106, "static_remaining": 595894},
+  "initial_label_limit": "Geometric exclusion and matching49times are known; purity of all retained static points has not been proved.",
+  "priority_if_definite_contamination": "Only initialization I: baseline assignments versus verified per-original-point M-detector assignments, identical training math/time/masks. No S/V/T/depth/shadow combined.",
+  "T_semantics": {"xyz": "canonical _xyz, no SHM or time_shift position", "opacity": "sigmoid(base _opacity), no temporal multiplier", "temporal_marginal": 1.0, "temporal_support_mask": "all true before ordinary geometry and explicit external mask", "effective_velocity": "identically zero", "temporal_width_storage": "finite inert compatibility field, never a temporal support cutoff", "raw10_anchor_used": false, "dynamic_branch": "original4D", "SH_and_environment": "original view-dependent SH and shared ENV; fixedpose/rays required for image-time parity"},
+  "T_training_dependencies": ["static three temporal optimizer groups lr0 through scheduler", "no _t.grad.clone dereference for static", "static spatial-only clone/split, no temporal selection/jitter/position offset", "no no_time_split re-enable for static", "inert temporal fields survive init/restore/append/prune with matching shapes", "original SGCM geometry/clone resource policy unchanged"],
+  "paper_basis": "Eq4 printed1700 time-invariant Gs; Eq2/3 basic parameterization, exact author static enforcement unpublished.",
+  "NPS_boundary": "Effective static velocity zero makes current Eq11 NPS constantzero. Figure3 describes suppressing spurious velocity; hardT cannot be certified as the author's exact complete mechanism, and latent velocity must not be mislabeled as effective motion.",
+  "old2024_initialization_reused_now": {"t": "PLY acquisition modeltime", "velocity": 0.0, "base_opacity": 0.01, "sigma_t": "sqrt(duration*t_init); current sqrt(.96*.1) about.30984", "temporal_parameters_trainable": true},
+  "candidate_from_zero_comparator": "B0 original reconstruction versus T0 static semantics only; same explicit saved step0 fields/input/RNG, no S/V/depth/shadow added. A matching from-zero original repeat is needed for empirical noise context before normal/paper claims.",
+  "from_zero_validity": "Initialization and unchanged inputs/operators are exact; first original10 losses need not match because T intentionally changes forward. CUDA RNG paths can diverge after topology changes; record actual camera/time_shift/common-LR/jitter/topology provenance, do not silently reseed.",
+  "acceptance": "Time-invariant static field/render with fixedpose/rays plus initialization labels, all49 original domains, composite/actor costs, background dynamic support, genuine complete sequences and reset-window/fullstate evidence. No new numerical threshold and no one-metric paper certification.",
+  "scope_limit": "Same-scene from-zero is not cross-scene generalization. Preprocessing/shadow/M-detector and other unpublished details remain distinct evidence gaps.",
+  "handoff": "Root chooses the next single-variable causal lineage after S and initialization evidence. This draft does not authorize implementation or training."
+}

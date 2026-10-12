@@ -1,0 +1,3705 @@
+{
+  "collected_utc": "2026-10-11T15:51:46.993673+00:00",
+  "remote": "wm-vgpu-1011",
+  "run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011",
+  "safety": {
+    "torch_imported": false,
+    "gpu_calls": false,
+    "remote_files_written": false,
+    "checkpoint_tensor_loads": 0,
+    "stdlib_event_parser": true,
+    "cpu_image_libraries": [
+      "numpy",
+      "PIL"
+    ]
+  },
+  "source": {
+    "train.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/train.py",
+      "sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+      "excerpts": [
+        {
+          "start": 532,
+          "end": 555,
+          "lines": [
+            {
+              "line": 532,
+              "text": ""
+            },
+            {
+              "line": 533,
+              "text": "            if iteration % 10 == 0:"
+            },
+            {
+              "line": 534,
+              "text": "                postfix = {k[5:] if k.startswith(\"loss_\") else k:f\"{ema_dict_for_log[k]:.{5}f}\" for k, v in ema_dict_for_log.items()}"
+            },
+            {
+              "line": 535,
+              "text": "                postfix[\"scale\"] = scene.resolution_scales[scene.scale_index]"
+            },
+            {
+              "line": 536,
+              "text": "                progress_bar.set_postfix(postfix)"
+            },
+            {
+              "line": 537,
+              "text": "            if iteration % 1000 == 0:"
+            },
+            {
+              "line": 538,
+              "text": "                print(gaussians.get_xyz.shape[0])"
+            },
+            {
+              "line": 539,
+              "text": "                if dynamic_gaussians is not None:"
+            },
+            {
+              "line": 540,
+              "text": "                    print(dynamic_gaussians.get_xyz.shape[0])"
+            },
+            {
+              "line": 541,
+              "text": ""
+            },
+            {
+              "line": 542,
+              "text": "                # print(log_dict['loss_lidar'], log_dict['loss_v_reg'], log_dict['loss_inv_depth']"
+            },
+            {
+              "line": 543,
+              "text": "                #       , log_dict['loss_sky_opa'], log_dict['loss_opacity_entropy'])"
+            },
+            {
+              "line": 544,
+              "text": "                # print(log_dict['loss_t_reg'])"
+            },
+            {
+              "line": 545,
+              "text": "                # print(log_dict['loss_v_reg'])"
+            },
+            {
+              "line": 546,
+              "text": "                # print(log_dict['loss_inv_depth'])"
+            },
+            {
+              "line": 547,
+              "text": "                # print(log_dict['loss_v_smooth'])"
+            },
+            {
+              "line": 548,
+              "text": "                # print(log_dict['loss_sky_opa'])"
+            },
+            {
+              "line": 549,
+              "text": "                # print(log_dict['loss_opacity_entropy'])"
+            },
+            {
+              "line": 550,
+              "text": "            log_dict['iter_time'] = iter_start.elapsed_time(iter_end)"
+            },
+            {
+              "line": 551,
+              "text": "            log_dict['total_points'] = gaussians.get_xyz.shape[0]"
+            },
+            {
+              "line": 552,
+              "text": "            # Log and save"
+            },
+            {
+              "line": 553,
+              "text": "            if not paper_method:"
+            },
+            {
+              "line": 554,
+              "text": "                complete_eval(tb_writer, iteration, args.test_iterations, scene, render, (args, background),"
+            },
+            {
+              "line": 555,
+              "text": "                              log_dict, env_map=env_map, including_dynamic=args.including_dynamic)"
+            }
+          ]
+        },
+        {
+          "start": 561,
+          "end": 617,
+          "lines": [
+            {
+              "line": 561,
+              "text": "            end_idx = gaussians.get_xyz.shape[0]"
+            },
+            {
+              "line": 562,
+              "text": "            cur_viewspace_point_tensor = slice_with_grad(viewspace_point_tensor, 0, end_idx)"
+            },
+            {
+              "line": 563,
+              "text": "            densification_and_optimization(gaussians, args, iteration, cur_viewspace_point_tensor,"
+            },
+            {
+              "line": 564,
+              "text": "                                           visibility_filter[:end_idx], scene, radii[:end_idx], dynamic=False)"
+            },
+            {
+              "line": 565,
+              "text": "            if dynamic_gaussians is not None:"
+            },
+            {
+              "line": 566,
+              "text": "                start_idx = end_idx"
+            },
+            {
+              "line": 567,
+              "text": "                    # Optimize box gaussians"
+            },
+            {
+              "line": 568,
+              "text": "                idx_length = dynamic_gaussians.get_xyz.shape[0]"
+            },
+            {
+              "line": 569,
+              "text": "                cur_viewspace_point_tensor = slice_with_grad(viewspace_point_tensor, start_idx,"
+            },
+            {
+              "line": 570,
+              "text": "                                                             start_idx + idx_length)"
+            },
+            {
+              "line": 571,
+              "text": "                densification_and_optimization(dynamic_gaussians,"
+            },
+            {
+              "line": 572,
+              "text": "                                               args,"
+            },
+            {
+              "line": 573,
+              "text": "                                               iteration,"
+            },
+            {
+              "line": 574,
+              "text": "                                               cur_viewspace_point_tensor,"
+            },
+            {
+              "line": 575,
+              "text": "                                               visibility_filter[start_idx:start_idx + idx_length],"
+            },
+            {
+              "line": 576,
+              "text": "                                               scene,"
+            },
+            {
+              "line": 577,
+              "text": "                                               radii[start_idx:start_idx + idx_length],"
+            },
+            {
+              "line": 578,
+              "text": "                                               dynamic=True)"
+            },
+            {
+              "line": 579,
+              "text": "                start_idx += idx_length"
+            },
+            {
+              "line": 580,
+              "text": "                # Keep track of max radii in image-space for pruning"
+            },
+            {
+              "line": 581,
+              "text": "                # gaussians.max_radii2D[visibility_filter] = torch.max(gaussians.max_radii2D[visibility_filter], radii[visibility_filter])"
+            },
+            {
+              "line": 582,
+              "text": "                # gaussians.add_densification_stats(viewspace_point_tensor, visibility_filter)"
+            },
+            {
+              "line": 583,
+              "text": "                # if iteration > args.densify_from_iter and iteration % args.densification_interval == 0:"
+            },
+            {
+              "line": 584,
+              "text": "                #     size_threshold = args.size_threshold if (iteration > args.opacity_reset_interval and args.prune_big_point > 0) else None"
+            },
+            {
+              "line": 585,
+              "text": "                #"
+            },
+            {
+              "line": 586,
+              "text": "                #     if size_threshold is not None:"
+            },
+            {
+              "line": 587,
+              "text": "                #         size_threshold = size_threshold // scene.resolution_scales[0]"
+            },
+            {
+              "line": 588,
+              "text": "                #"
+            },
+            {
+              "line": 589,
+              "text": "                #     gaussians.densify_and_prune(args.densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)"
+            },
+            {
+              "line": 590,
+              "text": "                #     dynamic_gaussians.densify_and_prune(args.densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)"
+            },
+            {
+              "line": 591,
+              "text": "                #"
+            },
+            {
+              "line": 592,
+              "text": "                # if iteration % args.opacity_reset_interval == 0 or (args.white_background and iteration == args.densify_from_iter):"
+            },
+            {
+              "line": 593,
+              "text": "                #     gaussians.reset_opacity()"
+            },
+            {
+              "line": 594,
+              "text": "                #     dynamic_gaussians.reset_opacity()"
+            },
+            {
+              "line": 595,
+              "text": ""
+            },
+            {
+              "line": 596,
+              "text": ""
+            },
+            {
+              "line": 597,
+              "text": "            gaussians.optimizer.step()"
+            },
+            {
+              "line": 598,
+              "text": "            gaussians.optimizer.zero_grad(set_to_none=True)"
+            },
+            {
+              "line": 599,
+              "text": "            if dynamic_gaussians is not None:"
+            },
+            {
+              "line": 600,
+              "text": "                dynamic_gaussians.optimizer.step()"
+            },
+            {
+              "line": 601,
+              "text": "                dynamic_gaussians.optimizer.zero_grad(set_to_none=True)"
+            },
+            {
+              "line": 602,
+              "text": "            # cls_optimizer.step()"
+            },
+            {
+              "line": 603,
+              "text": "            # cls_optimizer.zero_grad()"
+            },
+            {
+              "line": 604,
+              "text": "            if env_map is not None and iteration < args.env_optimize_until:"
+            },
+            {
+              "line": 605,
+              "text": "                env_map.optimizer.step()"
+            },
+            {
+              "line": 606,
+              "text": "                env_map.optimizer.zero_grad(set_to_none=True)"
+            },
+            {
+              "line": 607,
+              "text": "            if paper_sgcm is not None:"
+            },
+            {
+              "line": 608,
+              "text": "                # Controller uses an offset schedule: no generic topology change"
+            },
+            {
+              "line": 609,
+              "text": "                # on these iterations, so rendered static radii still align."
+            },
+            {
+              "line": 610,
+              "text": "                sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration)"
+            },
+            {
+              "line": 611,
+              "text": "                if sgcm_statistics:"
+            },
+            {
+              "line": 612,
+              "text": "                    print(\"SGCM_STATS \" + json.dumps(sgcm_statistics), flush=True)"
+            },
+            {
+              "line": 613,
+              "text": "                    if tb_writer:"
+            },
+            {
+              "line": 614,
+              "text": "                        for name, value in sgcm_statistics.items():"
+            },
+            {
+              "line": 615,
+              "text": "                            if isinstance(value, (int, float)):"
+            },
+            {
+              "line": 616,
+              "text": "                                tb_writer.add_scalar(\"sgcm/\" + name, value, iteration)"
+            },
+            {
+              "line": 617,
+              "text": "            torch.cuda.empty_cache()"
+            }
+          ]
+        },
+        {
+          "start": 684,
+          "end": 709,
+          "lines": [
+            {
+              "line": 684,
+              "text": "            if iteration % args.scale_increase_interval == 0:"
+            },
+            {
+              "line": 685,
+              "text": "                scene.upScale()"
+            },
+            {
+              "line": 686,
+              "text": ""
+            },
+            {
+              "line": 687,
+              "text": "            if paper_method:"
+            },
+            {
+              "line": 688,
+              "text": "                from utils.paper_checkpoint import (save_components, capture_training_state,"
+            },
+            {
+              "line": 689,
+              "text": "                                                    publish_checkpoint_event)"
+            },
+            {
+              "line": 690,
+              "text": "                # In the paper path, either explicit save schedule requests a"
+            },
+            {
+              "line": 691,
+              "text": "                # full resumable bundle. PLY-only export is not a checkpoint."
+            },
+            {
+              "line": 692,
+              "text": "                checkpoint_due = iteration in set(args.checkpoint_iterations) | set(args.save_iterations)"
+            },
+            {
+              "line": 693,
+              "text": "                models_for_checkpoint = {\"static\": gaussians, \"dynamic\": dynamic_gaussians,"
+            },
+            {
+              "line": 694,
+              "text": "                                         \"environment\": env_map}"
+            },
+            {
+              "line": 695,
+              "text": "                components = save_components(scene.model_path, iteration, models_for_checkpoint) if checkpoint_due else None"
+            },
+            {
+              "line": 696,
+              "text": "                eval_iterations = set(args.test_iterations)"
+            },
+            {
+              "line": 697,
+              "text": "                if checkpoint_due and args.get(\"paper_eval_train_each_checkpoint\", False):"
+            },
+            {
+              "line": 698,
+              "text": "                    eval_iterations.add(iteration)"
+            },
+            {
+              "line": 699,
+              "text": "                # This is after optimizer/SGCM/scale changes. Eval and serialized"
+            },
+            {
+              "line": 700,
+              "text": "                # components therefore refer to exactly the same parameters."
+            },
+            {
+              "line": 701,
+              "text": "                evaluations = complete_eval(tb_writer, iteration, eval_iterations, scene, render,"
+            },
+            {
+              "line": 702,
+              "text": "                                            (args, background), log_dict, env_map=env_map,"
+            },
+            {
+              "line": 703,
+              "text": "                                            including_dynamic=args.including_dynamic)"
+            },
+            {
+              "line": 704,
+              "text": "                if checkpoint_due:"
+            },
+            {
+              "line": 705,
+              "text": "                    continuation = capture_training_state(iteration, scene, viewpoint_stack,"
+            },
+            {
+              "line": 706,
+              "text": "                                                          models_for_checkpoint, args,"
+            },
+            {
+              "line": 707,
+              "text": "                                                          sgcm=paper_sgcm, ema=ema_dict_for_log)"
+            },
+            {
+              "line": 708,
+              "text": "                    publish_checkpoint_event(scene.model_path, iteration, components,"
+            },
+            {
+              "line": 709,
+              "text": "                                             continuation, evaluations, args, scene)"
+            }
+          ]
+        },
+        {
+          "start": 738,
+          "end": 776,
+          "lines": [
+            {
+              "line": 738,
+              "text": "def densification_and_optimization(gaussians, args, iteration, viewspace_point_tensor, visibility_filter, scene,"
+            },
+            {
+              "line": 739,
+              "text": "                                   radii, dynamic):"
+            },
+            {
+              "line": 740,
+              "text": "    # Densification"
+            },
+            {
+              "line": 741,
+              "text": "        # Keep track of max radii in image-space for pruning"
+            },
+            {
+              "line": 742,
+              "text": "    if dynamic:"
+            },
+            {
+              "line": 743,
+              "text": "        condition = (iteration < args.dynamic_densify_until_iter and ("
+            },
+            {
+              "line": 744,
+              "text": "            args.densify_until_num_points < 0 or gaussians.get_xyz.shape[0] < args.dynamic_densify_until_num_points))"
+            },
+            {
+              "line": 745,
+              "text": "    else:"
+            },
+            {
+              "line": 746,
+              "text": "        condition = (iteration < args.densify_until_iter and ("
+            },
+            {
+              "line": 747,
+              "text": "            args.densify_until_num_points < 0 or gaussians.get_xyz.shape[0] < args.densify_until_num_points))"
+            },
+            {
+              "line": 748,
+              "text": "    if condition:"
+            },
+            {
+              "line": 749,
+              "text": "        gaussians.max_radii2D[visibility_filter] = torch.max(gaussians.max_radii2D[visibility_filter],"
+            },
+            {
+              "line": 750,
+              "text": "                                                             radii[visibility_filter])"
+            },
+            {
+              "line": 751,
+              "text": "        gaussians.add_densification_stats(viewspace_point_tensor, visibility_filter)"
+            },
+            {
+              "line": 752,
+              "text": ""
+            },
+            {
+              "line": 753,
+              "text": "        if iteration > args.densify_from_iter and iteration % args.densification_interval == 0:"
+            },
+            {
+              "line": 754,
+              "text": "            size_threshold = 20 if iteration > args.opacity_reset_interval else None"
+            },
+            {
+              "line": 755,
+              "text": "            densify_grad_threshold = args.densify_grad_threshold"
+            },
+            {
+              "line": 756,
+              "text": "            if dynamic:"
+            },
+            {
+              "line": 757,
+              "text": "                densify_grad_threshold *= 0.5"
+            },
+            {
+              "line": 758,
+              "text": "                if size_threshold is not None:"
+            },
+            {
+              "line": 759,
+              "text": "                    size_threshold *= 0.5"
+            },
+            {
+              "line": 760,
+              "text": "            # do_prune = (iteration < cfg_sd.start_guiding_from_iter) and cfg_sd.do_prune"
+            },
+            {
+              "line": 761,
+              "text": "            # gaussians.densify_and_prune(densify_grad_threshold, 0.005, scene.cameras_extent, size_threshold, prune=do_prune)"
+            },
+            {
+              "line": 762,
+              "text": "            gaussians.densify_and_prune(densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)"
+            },
+            {
+              "line": 763,
+              "text": ""
+            },
+            {
+              "line": 764,
+              "text": "    if (iteration % args.opacity_reset_interval == 0 or ("
+            },
+            {
+              "line": 765,
+              "text": "            args.white_background and iteration == args.densify_from_iter)) and not dynamic:"
+            },
+            {
+              "line": 766,
+              "text": "        gaussians.reset_opacity()"
+            },
+            {
+              "line": 767,
+              "text": ""
+            },
+            {
+              "line": 768,
+              "text": ""
+            },
+            {
+              "line": 769,
+              "text": "def complete_eval(tb_writer, iteration, test_iterations, scene : Scene, renderFunc, renderArgs, log_dict,"
+            },
+            {
+              "line": 770,
+              "text": "                  env_map=None, including_dynamic=False):"
+            },
+            {
+              "line": 771,
+              "text": "    from lpipsPyTorch import lpips"
+            },
+            {
+              "line": 772,
+              "text": "    args = renderArgs[0]"
+            },
+            {
+              "line": 773,
+              "text": "    evaluation_records = []"
+            },
+            {
+              "line": 774,
+              "text": "    if tb_writer:"
+            },
+            {
+              "line": 775,
+              "text": "        for key, value in log_dict.items():"
+            },
+            {
+              "line": 776,
+              "text": "            tb_writer.add_scalar(f'train/{key}', value, iteration)"
+            }
+          ]
+        },
+        {
+          "start": 778,
+          "end": 782,
+          "lines": [
+            {
+              "line": 778,
+              "text": "    if iteration in test_iterations:"
+            },
+            {
+              "line": 779,
+              "text": "        scale = scene.resolution_scales[scene.scale_index]"
+            },
+            {
+              "line": 780,
+              "text": "        if args.get(\"paper_method\", False) and args.get(\"paper_eval_train_each_checkpoint\", False):"
+            },
+            {
+              "line": 781,
+              "text": "            from utils.paper_checkpoint import paper_evaluation_configs"
+            },
+            {
+              "line": 782,
+              "text": "            validation_configs = paper_evaluation_configs(scene)"
+            }
+          ]
+        },
+        {
+          "start": 857,
+          "end": 898,
+          "lines": [
+            {
+              "line": 857,
+              "text": "                    if args.get(\"paper_method\", False):"
+            },
+            {
+              "line": 858,
+              "text": "                        from utils.paper_checkpoint import camera_record"
+            },
+            {
+              "line": 859,
+              "text": "                        record = camera_record(viewpoint)"
+            },
+            {
+              "line": 860,
+              "text": "                        # Separate channels avoid grid-padding/cropping ambiguity."
+            },
+            {
+              "line": 861,
+              "text": "                        channels = {\"gt\": gt_image, \"composite\": image,"
+            },
+            {
+              "line": 862,
+              "text": "                                    \"static\": render_pkg.get(\"render_s\", image),"
+            },
+            {
+              "line": 863,
+              "text": "                                    \"dynamic\": render_pkg.get(\"render_d\", torch.zeros_like(image))}"
+            },
+            {
+              "line": 864,
+              "text": "                        record[\"channels\"] = {}"
+            },
+            {
+              "line": 865,
+              "text": "                        filename = record[\"camera\"] + \"_\" + viewpoint.image_name + \".png\""
+            },
+            {
+              "line": 866,
+              "text": "                        for channel, channel_image in channels.items():"
+            },
+            {
+              "line": 867,
+              "text": "                            channel_dir = os.path.join(outdir, channel)"
+            },
+            {
+              "line": 868,
+              "text": "                            os.makedirs(channel_dir, exist_ok=True)"
+            },
+            {
+              "line": 869,
+              "text": "                            destination = os.path.abspath(os.path.join(channel_dir, filename))"
+            },
+            {
+              "line": 870,
+              "text": "                            save_image(channel_image.clamp(0, 1), destination)"
+            },
+            {
+              "line": 871,
+              "text": "                            record[\"channels\"][channel] = destination"
+            },
+            {
+              "line": 872,
+              "text": "                        frame_records.append(record)"
+            },
+            {
+              "line": 873,
+              "text": "                        from utils.paper_masks import load_dynamic_mask"
+            },
+            {
+              "line": 874,
+              "text": "                        from utils.paper_metrics import measure_frame"
+            },
+            {
+              "line": 875,
+              "text": "                        paper_rows.append(measure_frame(image, render_pkg.get('render_s'), gt_image,"
+            },
+            {
+              "line": 876,
+              "text": "                                                        load_dynamic_mask(args.source_path, viewpoint),"
+            },
+            {
+              "line": 877,
+              "text": "                                                        os.path.join(os.path.basename(os.path.dirname(viewpoint.image_path)),"
+            },
+            {
+              "line": 878,
+              "text": "                                                                     viewpoint.image_name)))"
+            },
+            {
+              "line": 879,
+              "text": "                    l1_test += F.l1_loss(image, gt_image).double()"
+            },
+            {
+              "line": 880,
+              "text": "                    psnr_test += psnr(image, gt_image).double()"
+            },
+            {
+              "line": 881,
+              "text": "                    ssim_test += ssim(image, gt_image).double()"
+            },
+            {
+              "line": 882,
+              "text": "                    lpips_test += lpips(image, gt_image, net_type='vgg').double()  # very slow"
+            },
+            {
+              "line": 883,
+              "text": ""
+            },
+            {
+              "line": 884,
+              "text": "                psnr_test /= len(config['cameras'])"
+            },
+            {
+              "line": 885,
+              "text": "                l1_test /= len(config['cameras'])"
+            },
+            {
+              "line": 886,
+              "text": "                ssim_test /= len(config['cameras'])"
+            },
+            {
+              "line": 887,
+              "text": "                lpips_test /= len(config['cameras'])"
+            },
+            {
+              "line": 888,
+              "text": ""
+            },
+            {
+              "line": 889,
+              "text": "                print(\"\\n[ITER {}] Evaluating {}: L1 {} PSNR {} SSIM {} LPIPS {}\".format(iteration, config['name'],"
+            },
+            {
+              "line": 890,
+              "text": "                                                                                         l1_test, psnr_test,"
+            },
+            {
+              "line": 891,
+              "text": "                                                                                         ssim_test, lpips_test))"
+            },
+            {
+              "line": 892,
+              "text": "                if tb_writer:"
+            },
+            {
+              "line": 893,
+              "text": "                    tb_writer.add_scalar(config['name'] + '/loss_viewpoint - l1_loss', l1_test, iteration)"
+            },
+            {
+              "line": 894,
+              "text": "                    tb_writer.add_scalar(config['name'] + '/loss_viewpoint - psnr', psnr_test, iteration)"
+            },
+            {
+              "line": 895,
+              "text": "                    tb_writer.add_scalar(config['name'] + '/loss_viewpoint - ssim', ssim_test, iteration)"
+            },
+            {
+              "line": 896,
+              "text": "                with open(os.path.join(outdir, \"metrics.json\"), \"w\") as f:"
+            },
+            {
+              "line": 897,
+              "text": "                    json.dump({\"split\": config['name'], \"iteration\": iteration, \"psnr\": psnr_test.item(),"
+            },
+            {
+              "line": 898,
+              "text": "                               \"ssim\": ssim_test.item(), \"lpips\": lpips_test.item()}, f)"
+            }
+          ]
+        }
+      ]
+    },
+    "scene/gaussian_model.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/gaussian_model.py",
+      "sha256": "41597167ad2eb2cb5e5a8d7f4144204b637732b5ccfce51ccd4c128cbefd1234",
+      "excerpts": [
+        {
+          "start": 409,
+          "end": 427,
+          "lines": [
+            {
+              "line": 409,
+              "text": "    def reset_opacity(self):"
+            },
+            {
+              "line": 410,
+              "text": "        opacities_new = inverse_sigmoid(torch.min(self.get_opacity, torch.ones_like(self.get_opacity) * 0.01))"
+            },
+            {
+              "line": 411,
+              "text": "        optimizable_tensors = self.replace_tensor_to_optimizer(opacities_new, \"opacity\")"
+            },
+            {
+              "line": 412,
+              "text": "        self._opacity = optimizable_tensors[\"opacity\"]"
+            },
+            {
+              "line": 413,
+              "text": ""
+            },
+            {
+              "line": 414,
+              "text": "    def replace_tensor_to_optimizer(self, tensor, name):"
+            },
+            {
+              "line": 415,
+              "text": "        optimizable_tensors = {}"
+            },
+            {
+              "line": 416,
+              "text": "        for group in self.optimizer.param_groups:"
+            },
+            {
+              "line": 417,
+              "text": "            if group[\"name\"] == name:"
+            },
+            {
+              "line": 418,
+              "text": "                stored_state = self.optimizer.state.get(group['params'][0], None)"
+            },
+            {
+              "line": 419,
+              "text": "                stored_state[\"exp_avg\"] = torch.zeros_like(tensor)"
+            },
+            {
+              "line": 420,
+              "text": "                stored_state[\"exp_avg_sq\"] = torch.zeros_like(tensor)"
+            },
+            {
+              "line": 421,
+              "text": ""
+            },
+            {
+              "line": 422,
+              "text": "                del self.optimizer.state[group['params'][0]]"
+            },
+            {
+              "line": 423,
+              "text": "                group[\"params\"][0] = nn.Parameter(tensor.requires_grad_(True))"
+            },
+            {
+              "line": 424,
+              "text": "                self.optimizer.state[group['params'][0]] = stored_state"
+            },
+            {
+              "line": 425,
+              "text": ""
+            },
+            {
+              "line": 426,
+              "text": "                optimizable_tensors[group[\"name\"]] = group[\"params\"][0]"
+            },
+            {
+              "line": 427,
+              "text": "        return optimizable_tensors"
+            }
+          ]
+        }
+      ]
+    },
+    "utils/paper_checkpoint.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_checkpoint.py",
+      "sha256": "38bb38dd81d5ae1df9f909b4e87ddb3582bc1d53da7a890949f5f311c8056bcc",
+      "excerpts": [
+        {
+          "start": 205,
+          "end": 280,
+          "lines": [
+            {
+              "line": 205,
+              "text": "        lookup = {camera_id(camera): camera for camera in current}"
+            },
+            {
+              "line": 206,
+              "text": "        if len(lookup) != len(current) or len(set(order[\"ids\"])) != len(order[\"ids\"]) or set(lookup) != set(order[\"ids\"]):"
+            },
+            {
+              "line": 207,
+              "text": "            raise ValueError(\"Training camera identities changed across checkpoint resume\")"
+            },
+            {
+              "line": 208,
+              "text": "        scene.train_cameras[order[\"scale\"]] = [lookup[key] for key in order[\"ids\"]]"
+            },
+            {
+              "line": 209,
+              "text": "    scene.scale_index = state[\"scale_index\"]"
+            },
+            {
+              "line": 210,
+              "text": "    stack = state[\"viewpoint_stack\"]"
+            },
+            {
+              "line": 211,
+              "text": "    if len(set(stack)) != len(stack) or any(index < 0 or index >= len(scene.getTrainCameras()) for index in stack):"
+            },
+            {
+              "line": 212,
+              "text": "        raise ValueError(\"Saved camera sampler indices are invalid\")"
+            },
+            {
+              "line": 213,
+              "text": "    for name, attributes in state[\"model_runtime\"].items():"
+            },
+            {
+              "line": 214,
+              "text": "        if models.get(name) is None:"
+            },
+            {
+              "line": 215,
+              "text": "            raise ValueError(\"A saved model branch is missing on resume: \" + name)"
+            },
+            {
+              "line": 216,
+              "text": "        for key, value in attributes.items():"
+            },
+            {
+              "line": 217,
+              "text": "            setattr(models[name], key, value)"
+            },
+            {
+              "line": 218,
+              "text": "    if (state[\"sgcm\"] is None) != (sgcm is None):"
+            },
+            {
+              "line": 219,
+              "text": "        raise ValueError(\"SGCM enablement changed across checkpoint resume\")"
+            },
+            {
+              "line": 220,
+              "text": "    if sgcm is not None:"
+            },
+            {
+              "line": 221,
+              "text": "        from dataclasses import asdict"
+            },
+            {
+              "line": 222,
+              "text": "        if state[\"sgcm\"][\"config\"] != asdict(sgcm.config):"
+            },
+            {
+              "line": 223,
+              "text": "            raise ValueError(\"SGCM configuration changed across checkpoint resume\")"
+            },
+            {
+              "line": 224,
+              "text": "        for key in (\"model_scale\", \"plane_model\", \"model_to_anchor\", \"regions_anchor\", \"metadata\"):"
+            },
+            {
+              "line": 225,
+              "text": "            setattr(sgcm, key, state[\"sgcm\"][key])"
+            },
+            {
+              "line": 226,
+              "text": "    random.setstate(state[\"python_rng\"])"
+            },
+            {
+              "line": 227,
+              "text": "    np.random.set_state(state[\"numpy_rng\"])"
+            },
+            {
+              "line": 228,
+              "text": "    torch.set_rng_state(state[\"torch_rng\"])"
+            },
+            {
+              "line": 229,
+              "text": "    if state[\"cuda_rng\"] is not None:"
+            },
+            {
+              "line": 230,
+              "text": "        if not torch.cuda.is_available() or len(state[\"cuda_rng\"]) != torch.cuda.device_count():"
+            },
+            {
+              "line": 231,
+              "text": "            raise ValueError(\"CUDA device count changed across checkpoint resume\")"
+            },
+            {
+              "line": 232,
+              "text": "        torch.cuda.set_rng_state_all(state[\"cuda_rng\"])"
+            },
+            {
+              "line": 233,
+              "text": "    return list(stack), state.get(\"ema\", {})"
+            },
+            {
+              "line": 234,
+              "text": ""
+            },
+            {
+              "line": 235,
+              "text": ""
+            },
+            {
+              "line": 236,
+              "text": "def save_components(model_path, iteration, models):"
+            },
+            {
+              "line": 237,
+              "text": "    \"\"\"Write each component atomically, but never advertise a partial bundle.\"\"\""
+            },
+            {
+              "line": 238,
+              "text": "    root = Path(model_path).resolve()"
+            },
+            {
+              "line": 239,
+              "text": "    event_path = root / \"checkpoint_events\" / f\"iteration_{iteration:06d}.json\""
+            },
+            {
+              "line": 240,
+              "text": "    if event_path.exists():"
+            },
+            {
+              "line": 241,
+              "text": "        raise FileExistsError(\"Refusing to overwrite a published checkpoint event: \" + str(event_path))"
+            },
+            {
+              "line": 242,
+              "text": "    names = {\"static\": f\"chkpnt{iteration}.pth\", \"dynamic\": f\"dynamic_chkpnt{iteration}.pth\","
+            },
+            {
+              "line": 243,
+              "text": "             \"environment\": f\"env_light_chkpnt{iteration}.pth\"}"
+            },
+            {
+              "line": 244,
+              "text": "    result = {}"
+            },
+            {
+              "line": 245,
+              "text": "    for branch, filename in names.items():"
+            },
+            {
+              "line": 246,
+              "text": "        model = models.get(branch)"
+            },
+            {
+              "line": 247,
+              "text": "        if model is not None:"
+            },
+            {
+              "line": 248,
+              "text": "            destination = root / filename"
+            },
+            {
+              "line": 249,
+              "text": "            _atomic_write(destination, lambda stream, model=model: torch.save((model.capture(), iteration), stream))"
+            },
+            {
+              "line": 250,
+              "text": "            result[branch] = {\"path\": str(destination), \"bytes\": destination.stat().st_size}"
+            },
+            {
+              "line": 251,
+              "text": "    if \"static\" not in result:"
+            },
+            {
+              "line": 252,
+              "text": "        raise ValueError(\"Static model is required for a checkpoint bundle\")"
+            },
+            {
+              "line": 253,
+              "text": "    return result"
+            },
+            {
+              "line": 254,
+              "text": ""
+            },
+            {
+              "line": 255,
+              "text": ""
+            },
+            {
+              "line": 256,
+              "text": "def publish_checkpoint_event(model_path, iteration, components, training_state, evaluations, args, scene):"
+            },
+            {
+              "line": 257,
+              "text": "    \"\"\"Continuation state is captured AFTER evaluation, including any RNG use.\"\"\""
+            },
+            {
+              "line": 258,
+              "text": "    root = Path(model_path).resolve()"
+            },
+            {
+              "line": 259,
+              "text": "    if training_state[\"iteration\"] != iteration:"
+            },
+            {
+              "line": 260,
+              "text": "        raise ValueError(\"Continuation-state iteration differs from checkpoint\")"
+            },
+            {
+              "line": 261,
+              "text": "    expected = {\"static\"}"
+            },
+            {
+              "line": 262,
+              "text": "    if args.including_dynamic:"
+            },
+            {
+              "line": 263,
+              "text": "        expected.add(\"dynamic\")"
+            },
+            {
+              "line": 264,
+              "text": "    if args.env_map_res > 0:"
+            },
+            {
+              "line": 265,
+              "text": "        expected.add(\"environment\")"
+            },
+            {
+              "line": 266,
+              "text": "    if set(components) != expected:"
+            },
+            {
+              "line": 267,
+              "text": "        raise ValueError(\"Checkpoint components do not match enabled model branches\")"
+            },
+            {
+              "line": 268,
+              "text": "    if args.get(\"paper_eval_train_each_checkpoint\", False):"
+            },
+            {
+              "line": 269,
+              "text": "        train_evaluations = [item for item in evaluations if item.get(\"split\") == \"train\"]"
+            },
+            {
+              "line": 270,
+              "text": "        expected_cameras = {camera_id(camera) for camera in scene.getTrainCameras()}"
+            },
+            {
+              "line": 271,
+              "text": "        if len(train_evaluations) != 1:"
+            },
+            {
+              "line": 272,
+              "text": "            raise ValueError(\"A full training-camera evaluation is required before checkpoint publication\")"
+            },
+            {
+              "line": 273,
+              "text": "        frames = train_evaluations[0][\"frames\"]"
+            },
+            {
+              "line": 274,
+              "text": "        actual_cameras = [frame[\"frame_id\"] for frame in frames]"
+            },
+            {
+              "line": 275,
+              "text": "        if len(actual_cameras) != len(expected_cameras) or set(actual_cameras) != expected_cameras:"
+            },
+            {
+              "line": 276,
+              "text": "            raise ValueError(\"Training evaluation is missing or duplicating camera frames\")"
+            },
+            {
+              "line": 277,
+              "text": "        if any(set(frame[\"channels\"]) != {\"gt\", \"composite\", \"static\", \"dynamic\"} for frame in frames):"
+            },
+            {
+              "line": 278,
+              "text": "            raise ValueError(\"Training evaluation must contain all four image channels\")"
+            },
+            {
+              "line": 279,
+              "text": "    for record in components.values():"
+            },
+            {
+              "line": 280,
+              "text": "        if not Path(record[\"path\"]).is_file() or Path(record[\"path\"]).stat().st_size != record[\"bytes\"] or record[\"bytes\"] == 0:"
+            }
+          ]
+        }
+      ]
+    },
+    "utils/paper_metrics.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_metrics.py",
+      "sha256": "7ac1b12d5dffba354d0c2ab55f1a8ac35ad1407a8aad515d51e828341b434c72",
+      "excerpts": [
+        {
+          "start": 1,
+          "end": 90,
+          "lines": [
+            {
+              "line": 1,
+              "text": "\"\"\"Foreground/static reconstruction metrics with explicit normalization."
+            },
+            {
+              "line": 2,
+              "text": ""
+            },
+            {
+              "line": 3,
+              "text": "The paper does not specify whether masked PSNR uses selected-pixel or full-image"
+            },
+            {
+              "line": 4,
+              "text": "normalization. Save both. These are reconstruction metrics on supplied masks,"
+            },
+            {
+              "line": 5,
+              "text": "not deletion-hole quality or FID against historical background ground truth."
+            },
+            {
+              "line": 6,
+              "text": "\"\"\""
+            },
+            {
+              "line": 7,
+              "text": "import json"
+            },
+            {
+              "line": 8,
+              "text": "import math"
+            },
+            {
+              "line": 9,
+              "text": "from pathlib import Path"
+            },
+            {
+              "line": 10,
+              "text": "import torch"
+            },
+            {
+              "line": 11,
+              "text": ""
+            },
+            {
+              "line": 12,
+              "text": ""
+            },
+            {
+              "line": 13,
+              "text": "def _region_metric(prediction, target, mask):"
+            },
+            {
+              "line": 14,
+              "text": "    if prediction.shape != target.shape or prediction.ndim != 3:"
+            },
+            {
+              "line": 15,
+              "text": "        raise ValueError(\"Prediction and target must be matching CHW tensors\")"
+            },
+            {
+              "line": 16,
+              "text": "    if mask.shape != (1, *target.shape[1:]):"
+            },
+            {
+              "line": 17,
+              "text": "        raise ValueError(\"Mask must be 1HW\")"
+            },
+            {
+              "line": 18,
+              "text": "    if not torch.isfinite(prediction).all() or not torch.isfinite(target).all():"
+            },
+            {
+              "line": 19,
+              "text": "        raise ValueError(\"Non-finite image values\")"
+            },
+            {
+              "line": 20,
+              "text": "    selected = mask.to(device=target.device, dtype=torch.bool)"
+            },
+            {
+              "line": 21,
+              "text": "    count = int(selected.sum().item())"
+            },
+            {
+              "line": 22,
+              "text": "    all_pixels = target.shape[-1] * target.shape[-2]"
+            },
+            {
+              "line": 23,
+              "text": "    if count == 0:"
+            },
+            {
+              "line": 24,
+              "text": "        return {\"pixels\": 0, \"fraction\": 0.0, \"sse\": 0.0,"
+            },
+            {
+              "line": 25,
+              "text": "                \"psnr_roi\": None, \"psnr_zero_padded\": None, \"perfect\": False}"
+            },
+            {
+              "line": 26,
+              "text": "    squared = (prediction.clamp(0, 1).double() - target.clamp(0, 1).double()).square()"
+            },
+            {
+              "line": 27,
+              "text": "    sse = float(squared.masked_select(selected.expand_as(squared)).sum().item())"
+            },
+            {
+              "line": 28,
+              "text": "    channels = target.shape[0]"
+            },
+            {
+              "line": 29,
+              "text": "    def decibels(denominator):"
+            },
+            {
+              "line": 30,
+              "text": "        return -10 * math.log10(sse / denominator) if sse > 0 else None"
+            },
+            {
+              "line": 31,
+              "text": "    return {\"pixels\": count, \"fraction\": count / all_pixels, \"sse\": sse,"
+            },
+            {
+              "line": 32,
+              "text": "            \"psnr_roi\": decibels(channels * count),"
+            },
+            {
+              "line": 33,
+              "text": "            \"psnr_zero_padded\": decibels(channels * all_pixels), \"perfect\": sse == 0}"
+            },
+            {
+              "line": 34,
+              "text": ""
+            },
+            {
+              "line": 35,
+              "text": ""
+            },
+            {
+              "line": 36,
+              "text": "@torch.no_grad()"
+            },
+            {
+              "line": 37,
+              "text": "def measure_frame(composite, static_only, target, dynamic_mask, frame_id):"
+            },
+            {
+              "line": 38,
+              "text": "    dynamic = dynamic_mask > 0.5"
+            },
+            {
+              "line": 39,
+              "text": "    row = {\"frame\": str(frame_id),"
+            },
+            {
+              "line": 40,
+              "text": "           \"dynamic_psnr_star\": _region_metric(composite, target, dynamic),"
+            },
+            {
+              "line": 41,
+              "text": "           \"static_psnr_s\": _region_metric(composite, target, ~dynamic)}"
+            },
+            {
+              "line": 42,
+              "text": "    if static_only is not None:"
+            },
+            {
+              "line": 43,
+              "text": "        row[\"static_psnr_sr\"] = _region_metric(static_only, target, ~dynamic)"
+            },
+            {
+              "line": 44,
+              "text": "    return row"
+            },
+            {
+              "line": 45,
+              "text": ""
+            },
+            {
+              "line": 46,
+              "text": ""
+            },
+            {
+              "line": 47,
+              "text": "def save_metrics(rows, directory, split, iteration):"
+            },
+            {
+              "line": 48,
+              "text": "    summary = {}"
+            },
+            {
+              "line": 49,
+              "text": "    for metric in (\"dynamic_psnr_star\", \"static_psnr_s\", \"static_psnr_sr\"):"
+            },
+            {
+              "line": 50,
+              "text": "        selected = [row[metric] for row in rows if metric in row and row[metric][\"pixels\"] > 0]"
+            },
+            {
+              "line": 51,
+              "text": "        summary[metric] = {\"valid_frames\": len(selected),"
+            },
+            {
+              "line": 52,
+              "text": "                           \"perfect_frames\": sum(row[\"perfect\"] for row in selected)}"
+            },
+            {
+              "line": 53,
+              "text": "        for convention in (\"psnr_roi\", \"psnr_zero_padded\"):"
+            },
+            {
+              "line": 54,
+              "text": "            values = [row[convention] for row in selected if row[convention] is not None]"
+            },
+            {
+              "line": 55,
+              "text": "            summary[metric][convention + \"_mean\"] = sum(values) / len(values) if values else None"
+            },
+            {
+              "line": 56,
+              "text": "    report = {"
+            },
+            {
+              "line": 57,
+              "text": "        \"split\": split, \"iteration\": iteration, \"frame_count\": len(rows),"
+            },
+            {
+              "line": 58,
+              "text": "        \"aggregation\": \"Arithmetic mean of per-frame PSNR, later macro-average scenes equally.\","
+            },
+            {
+              "line": 59,
+              "text": "        \"perfect_error_policy\": \"Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.\","
+            },
+            {
+              "line": 60,
+              "text": "        \"mask_protocol\": \"Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.\","
+            },
+            {
+              "line": 61,
+              "text": "        \"interpretation\": \"PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.\","
+            },
+            {
+              "line": 62,
+              "text": "        \"limitations\": [\"Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.\","
+            },
+            {
+              "line": 63,
+              "text": "                        \"No deletion-hole quality is measured: historical unobstructed GT is required for Table V.\","
+            },
+            {
+              "line": 64,
+              "text": "                        \"Inferred/prepared masks are not independent manually annotated ground truth.\"],"
+            },
+            {
+              "line": 65,
+              "text": "        \"summary\": summary, \"frames\": rows}"
+            },
+            {
+              "line": 66,
+              "text": "    path = Path(directory) / \"paper_region_metrics.json\""
+            },
+            {
+              "line": 67,
+              "text": "    path.write_text(json.dumps(report, indent=2, allow_nan=False) + \"\\n\")"
+            },
+            {
+              "line": 68,
+              "text": "    return report"
+            }
+          ]
+        }
+      ]
+    },
+    "train_baseline_sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93"
+  },
+  "configuration": {
+    "white_background": {
+      "value": "false",
+      "line": 34
+    },
+    "env_optimize_until": {
+      "value": "1000000000",
+      "line": 58
+    },
+    "iterations": {
+      "value": "50000",
+      "line": 60
+    },
+    "opacity_reset_interval": {
+      "value": "3000",
+      "line": 77
+    },
+    "densify_until_iter": {
+      "value": "15000",
+      "line": 79
+    },
+    "scale_increase_interval": {
+      "value": "5000",
+      "line": 85
+    },
+    "paper_eval_train_each_checkpoint": {
+      "value": "true",
+      "line": 119
+    },
+    "dynamic_densify_until_iter": {
+      "value": "15000",
+      "line": 122
+    },
+    "paper_method": {
+      "value": "true",
+      "line": 123
+    }
+  },
+  "events": {
+    "20000": {
+      "schema_version": 1,
+      "status": "complete",
+      "iteration": 20000,
+      "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+      "checkpoints": {
+        "static": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt20000.pth",
+          "bytes": 1751701598
+        },
+        "dynamic": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt20000.pth",
+          "bytes": 805090078
+        },
+        "environment": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt20000.pth",
+          "bytes": 226494608
+        },
+        "training_state": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state20000.pth",
+          "bytes": 23704
+        }
+      },
+      "checkpoint_paths": {
+        "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt20000.pth",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt20000.pth",
+        "env": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt20000.pth"
+      },
+      "config": {
+        "test_iterations": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000
+        ],
+        "save_iterations": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000
+        ],
+        "checkpoint_iterations": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000
+        ],
+        "exhaust_test": false,
+        "test_interval": 5000,
+        "render_static": false,
+        "vis_step": 100,
+        "start_checkpoint": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0/chkpnt10000.pth",
+        "seed": 0,
+        "sh_degree": 3,
+        "scene_type": "Waymo",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+        "start_frame": 65,
+        "end_frame": 120,
+        "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+        "resolution_scales": [
+          4
+        ],
+        "resolution": -1,
+        "white_background": false,
+        "data_device": "cuda",
+        "eval": false,
+        "debug_cuda": false,
+        "cam_num": 4,
+        "t_init": 0.1,
+        "cycle": 0.2,
+        "velocity_decay": 1.0,
+        "random_init_point": 0,
+        "dynamic_random_init_point": 0,
+        "fix_radius": 0.0,
+        "time_duration": [
+          -0.5,
+          0.5
+        ],
+        "num_pts": 600000,
+        "frame_interval": 0.02,
+        "testhold": 4,
+        "env_map_res": 1024,
+        "separate_scaling_t": 0.2,
+        "neg_fov": true,
+        "convert_SHs_python": false,
+        "compute_cov3D_python": false,
+        "debug": false,
+        "depth_blend_mode": 0,
+        "env_optimize_until": 1000000000,
+        "env_optimize_from": 0,
+        "iterations": 50000,
+        "position_lr_init": 0.00016,
+        "position_lr_final": 1.6e-06,
+        "position_lr_delay_mult": 0.01,
+        "t_lr_init": 0.0008,
+        "position_lr_max_steps": 50000,
+        "feature_lr": 0.0025,
+        "opacity_lr": 0.005,
+        "scaling_lr": 0.005,
+        "scaling_t_lr": 0.002,
+        "velocity_lr": 0.001,
+        "rotation_lr": 0.001,
+        "envmap_lr": 0.01,
+        "time_split_frac": 0.5,
+        "percent_dense": 0.01,
+        "thresh_opa_prune": 0.005,
+        "densification_interval": 100,
+        "opacity_reset_interval": 3000,
+        "densify_from_iter": 500,
+        "densify_until_iter": 15000,
+        "densify_grad_threshold": 0.00017,
+        "densify_grad_t_threshold": 0.002,
+        "densify_until_num_points": 3000000,
+        "dynamic_densify_until_num_points": 1000000,
+        "sh_increase_interval": 2000,
+        "scale_increase_interval": 5000,
+        "prune_big_point": 1,
+        "size_threshold": 20,
+        "big_point_threshold": 0.1,
+        "t_grad": true,
+        "no_time_split": true,
+        "contract": true,
+        "lambda_dssim": 0.2,
+        "lambda_opa": 0.0,
+        "lambda_sky_opa": 0.05,
+        "lambda_opacity_entropy": 0.05,
+        "static_lambda_opacity_entropy": 0.05,
+        "lambda_inv_depth": 0.1,
+        "lambda_self_supervision": 0.5,
+        "lambda_t_reg": 0.1,
+        "lambda_v_reg": 0.01,
+        "lambda_lidar": 0.1,
+        "lidar_decay": 1.0,
+        "lambda_v_smooth": 0.1,
+        "fisheye_cam_num": 2,
+        "long_cam_num": 1,
+        "is_fisheye": false,
+        "long_focus": true,
+        "initialization": false,
+        "pos_shift": false,
+        "pos_rotation": false,
+        "reg3d_interval": 10,
+        "reg3d_k": 5,
+        "reg3d_lambda_val": 2,
+        "reg3d_max_points": 100000,
+        "reg3d_sample_size": 1000,
+        "is_training": true,
+        "require_boundingbox": false,
+        "nuscenes": false,
+        "paper_eval_train_each_checkpoint": true,
+        "including_dynamic": true,
+        "adding": false,
+        "dynamic_densify_until_iter": 15000,
+        "paper_method": true,
+        "paper_lambda_sky": 0.05,
+        "paper_lambda_nps": 0.01,
+        "paper_lambda_dynamic_opacity": 0.05,
+        "paper_lambda_depth": 0.1,
+        "paper_lambda_dynamic_rgb": 1.0,
+        "paper_weight_provenance": "Pilot values borrowed from released-code coefficient scales; all four numerical paper weights are undisclosed.",
+        "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+        "paper_opacity_domain": "Dynamic foreground mask, divided by full image area. Mask domain follows prose; Eq13 omits an explicit mask.",
+        "paper_sgcm_enabled": true,
+        "sgcm_dr_m": 0.5,
+        "sgcm_interval": 100,
+        "sgcm_offset": 50,
+        "sgcm_start": 500,
+        "sgcm_end": 15000,
+        "sgcm_max_new_points": 10000,
+        "sgcm_split_radius_px": 20,
+        "sgcm_ground_margin_m": 3.0,
+        "sgcm_ground_cell_m": 0.5,
+        "sgcm_plane_inlier_m": 0.15,
+        "sgcm_ground_min_cells": 30,
+        "sgcm_ground_min_fraction": 0.35,
+        "sgcm_ground_max_tilt_deg": 20,
+        "sgcm_ground_max_rmse_m": 0.1
+      },
+      "config_sha256": "82d1d4384582618e0704f28c3efecb93bec811c916c2f7807017b18d8ef4b5cc",
+      "camera_manifest": {
+        "count": 49,
+        "first": {
+          "uid": 43,
+          "frame_id": "image_0/0017043",
+          "camera": "image_0",
+          "image_name": "0017043",
+          "timestamp": 0.38,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017043.png",
+          "width": 480,
+          "height": 320
+        },
+        "last": {
+          "uid": 24,
+          "frame_id": "image_0/0017024",
+          "camera": "image_0",
+          "image_name": "0017024",
+          "timestamp": 0.0,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017024.png",
+          "width": 480,
+          "height": 320
+        }
+      },
+      "evaluations": [
+        {
+          "split": "train",
+          "iteration": 20000,
+          "eval_dir": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render",
+          "metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/metrics.json",
+          "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/paper_region_metrics.json",
+          "frames": {
+            "count": 49,
+            "first": {
+              "uid": 0,
+              "frame_id": "image_0/0017000",
+              "camera": "image_0",
+              "image_name": "0017000",
+              "timestamp": -0.48,
+              "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png",
+              "width": 480,
+              "height": 320,
+              "channels": {
+                "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/gt/image_0_0017000.png",
+                "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/composite/image_0_0017000.png",
+                "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/static/image_0_0017000.png",
+                "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/dynamic/image_0_0017000.png"
+              }
+            },
+            "last": {
+              "uid": 48,
+              "frame_id": "image_0/0017048",
+              "camera": "image_0",
+              "image_name": "0017048",
+              "timestamp": 0.48,
+              "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png",
+              "width": 480,
+              "height": 320,
+              "channels": {
+                "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/gt/image_0_0017048.png",
+                "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/composite/image_0_0017048.png",
+                "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/static/image_0_0017048.png",
+                "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/dynamic/image_0_0017048.png"
+              }
+            }
+          }
+        }
+      ],
+      "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+      "resume_state": {
+        "rng": [
+          "python",
+          "numpy",
+          "torch",
+          "cuda_if_initialized"
+        ],
+        "camera_sampler": true,
+        "scale": true,
+        "optimizer": true,
+        "sgcm_geometry": true,
+        "bitwise_cuda_equivalence_claimed": false
+      },
+      "sgcm": {
+        "status": "validated",
+        "paper_reference": "Eq8,printed1701/PDF6",
+        "config": {
+          "dr_m": 0.5,
+          "interval": 100,
+          "offset": 50,
+          "start": 500,
+          "end": 15000,
+          "max_new_points": 10000,
+          "split_radius_px": 20,
+          "ground_margin_m": 3.0,
+          "ground_cell_m": 0.5,
+          "plane_inlier_m": 0.15,
+          "ground_min_cells": 30,
+          "ground_min_fraction": 0.35,
+          "ground_max_tilt_deg": 20,
+          "ground_max_rmse_m": 0.1,
+          "region_margin_m": 0.25,
+          "max_points": 3000000
+        },
+        "meter_to_model_scale": 0.09999999999999999,
+        "dr_model": 0.049999999999999996,
+        "transform_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/transform_matrix.txt",
+        "transform_validation": "finite_isotropic_similarity",
+        "world_to_model": [
+          [
+            0.011031374551287046,
+            -0.099253095285871,
+            0.005208824405086685,
+            1335.1470608075524
+          ],
+          [
+            -0.09931104218386516,
+            -0.010799060611194948,
+            0.004549416475801385,
+            -360.2641459791045
+          ],
+          [
+            -0.0039529325650422276,
+            -0.005674800973562714,
+            -0.09976056815218465,
+            15.616107146909892
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "anchor_pose": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017000.txt",
+        "plane_model": [
+          0.03605858402849938,
+          0.06177027392874886,
+          -0.9974388260823954,
+          0.23618470498962857
+        ],
+        "ground_fit": {
+          "candidate_points": 85911,
+          "lower_envelope_cells": 2373,
+          "inlier_cells": 2048,
+          "inlier_fraction": 0.8630425621576064,
+          "rmse_m": 0.04930535709626185,
+          "tilt_from_first_vehicle_up_deg": 2.693848585960266,
+          "inlier_xy_span_m": [
+            21.951247029177466,
+            27.33677981226174
+          ],
+          "plane_anchor": [
+            -0.04657755237988098,
+            0.0062814879844293155,
+            0.9988949266679658,
+            0.4375272548057056
+          ]
+        },
+        "regions_anchor": [
+          [
+            [
+              12.608891797784963,
+              -2.680952211288968,
+              -0.22065876961878172
+            ],
+            [
+              29.096138147207967,
+              19.176229817913736,
+              2.451917779218604
+            ]
+          ]
+        ],
+        "assumptions": [
+          "First vehicle up defines local vertical; low-tilt ground required.",
+          "Hd is the union of actor time-aggregated LiDAR AABBs in the first vehicle frame; extends vertically to fitted ground.",
+          "Ground support includes a3m XY margin around actor support;0.5m grid10th-percentile lower envelope; deterministic256trial RANSAC and least-squares.",
+          "SGCM executes after optimizer on an offset schedule avoiding generic densification;20px radius is the undeclared projected-footprint threshold choice.",
+          "Resource cap limits additions per step; large projected footprints prioritized.",
+          "Clone copies parameters; split uses symmetric two-child largest-axis moment-matched spatial subdivision and unchanged temporal fields."
+        ],
+        "unknown_author_details": [
+          "Region shape/update",
+          "Ground extraction/fit",
+          "Schedule",
+          "Footprint threshold",
+          "Clone/split policy/budget"
+        ]
+      },
+      "eval_dir": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render",
+      "metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/metrics.json",
+      "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/paper_region_metrics.json",
+      "frames": {
+        "count": 49,
+        "first": {
+          "uid": 0,
+          "frame_id": "image_0/0017000",
+          "camera": "image_0",
+          "image_name": "0017000",
+          "timestamp": -0.48,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/gt/image_0_0017000.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/composite/image_0_0017000.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/static/image_0_0017000.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/dynamic/image_0_0017000.png"
+          }
+        },
+        "last": {
+          "uid": 48,
+          "frame_id": "image_0/0017048",
+          "camera": "image_0",
+          "image_name": "0017048",
+          "timestamp": 0.48,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/gt/image_0_0017048.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/composite/image_0_0017048.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/static/image_0_0017048.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_20000_render/dynamic/image_0_0017048.png"
+          }
+        }
+      }
+    },
+    "30000": {
+      "schema_version": 1,
+      "status": "complete",
+      "iteration": 30000,
+      "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+      "checkpoints": {
+        "static": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+          "bytes": 1751701598
+        },
+        "dynamic": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt30000.pth",
+          "bytes": 805090078
+        },
+        "environment": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt30000.pth",
+          "bytes": 226494608
+        },
+        "training_state": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state30000.pth",
+          "bytes": 23640
+        }
+      },
+      "checkpoint_paths": {
+        "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt30000.pth",
+        "env": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt30000.pth"
+      },
+      "config": {
+        "test_iterations": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000
+        ],
+        "save_iterations": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000
+        ],
+        "checkpoint_iterations": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000
+        ],
+        "exhaust_test": false,
+        "test_interval": 5000,
+        "render_static": false,
+        "vis_step": 100,
+        "start_checkpoint": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0/chkpnt10000.pth",
+        "seed": 0,
+        "sh_degree": 3,
+        "scene_type": "Waymo",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+        "start_frame": 65,
+        "end_frame": 120,
+        "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+        "resolution_scales": [
+          4
+        ],
+        "resolution": -1,
+        "white_background": false,
+        "data_device": "cuda",
+        "eval": false,
+        "debug_cuda": false,
+        "cam_num": 4,
+        "t_init": 0.1,
+        "cycle": 0.2,
+        "velocity_decay": 1.0,
+        "random_init_point": 0,
+        "dynamic_random_init_point": 0,
+        "fix_radius": 0.0,
+        "time_duration": [
+          -0.5,
+          0.5
+        ],
+        "num_pts": 600000,
+        "frame_interval": 0.02,
+        "testhold": 4,
+        "env_map_res": 1024,
+        "separate_scaling_t": 0.2,
+        "neg_fov": true,
+        "convert_SHs_python": false,
+        "compute_cov3D_python": false,
+        "debug": false,
+        "depth_blend_mode": 0,
+        "env_optimize_until": 1000000000,
+        "env_optimize_from": 0,
+        "iterations": 50000,
+        "position_lr_init": 0.00016,
+        "position_lr_final": 1.6e-06,
+        "position_lr_delay_mult": 0.01,
+        "t_lr_init": 0.0008,
+        "position_lr_max_steps": 50000,
+        "feature_lr": 0.0025,
+        "opacity_lr": 0.005,
+        "scaling_lr": 0.005,
+        "scaling_t_lr": 0.002,
+        "velocity_lr": 0.001,
+        "rotation_lr": 0.001,
+        "envmap_lr": 0.01,
+        "time_split_frac": 0.5,
+        "percent_dense": 0.01,
+        "thresh_opa_prune": 0.005,
+        "densification_interval": 100,
+        "opacity_reset_interval": 3000,
+        "densify_from_iter": 500,
+        "densify_until_iter": 15000,
+        "densify_grad_threshold": 0.00017,
+        "densify_grad_t_threshold": 0.002,
+        "densify_until_num_points": 3000000,
+        "dynamic_densify_until_num_points": 1000000,
+        "sh_increase_interval": 2000,
+        "scale_increase_interval": 5000,
+        "prune_big_point": 1,
+        "size_threshold": 20,
+        "big_point_threshold": 0.1,
+        "t_grad": true,
+        "no_time_split": true,
+        "contract": true,
+        "lambda_dssim": 0.2,
+        "lambda_opa": 0.0,
+        "lambda_sky_opa": 0.05,
+        "lambda_opacity_entropy": 0.05,
+        "static_lambda_opacity_entropy": 0.05,
+        "lambda_inv_depth": 0.1,
+        "lambda_self_supervision": 0.5,
+        "lambda_t_reg": 0.1,
+        "lambda_v_reg": 0.01,
+        "lambda_lidar": 0.1,
+        "lidar_decay": 1.0,
+        "lambda_v_smooth": 0.1,
+        "fisheye_cam_num": 2,
+        "long_cam_num": 1,
+        "is_fisheye": false,
+        "long_focus": true,
+        "initialization": false,
+        "pos_shift": false,
+        "pos_rotation": false,
+        "reg3d_interval": 10,
+        "reg3d_k": 5,
+        "reg3d_lambda_val": 2,
+        "reg3d_max_points": 100000,
+        "reg3d_sample_size": 1000,
+        "is_training": true,
+        "require_boundingbox": false,
+        "nuscenes": false,
+        "paper_eval_train_each_checkpoint": true,
+        "including_dynamic": true,
+        "adding": false,
+        "dynamic_densify_until_iter": 15000,
+        "paper_method": true,
+        "paper_lambda_sky": 0.05,
+        "paper_lambda_nps": 0.01,
+        "paper_lambda_dynamic_opacity": 0.05,
+        "paper_lambda_depth": 0.1,
+        "paper_lambda_dynamic_rgb": 1.0,
+        "paper_weight_provenance": "Pilot values borrowed from released-code coefficient scales; all four numerical paper weights are undisclosed.",
+        "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+        "paper_opacity_domain": "Dynamic foreground mask, divided by full image area. Mask domain follows prose; Eq13 omits an explicit mask.",
+        "paper_sgcm_enabled": true,
+        "sgcm_dr_m": 0.5,
+        "sgcm_interval": 100,
+        "sgcm_offset": 50,
+        "sgcm_start": 500,
+        "sgcm_end": 15000,
+        "sgcm_max_new_points": 10000,
+        "sgcm_split_radius_px": 20,
+        "sgcm_ground_margin_m": 3.0,
+        "sgcm_ground_cell_m": 0.5,
+        "sgcm_plane_inlier_m": 0.15,
+        "sgcm_ground_min_cells": 30,
+        "sgcm_ground_min_fraction": 0.35,
+        "sgcm_ground_max_tilt_deg": 20,
+        "sgcm_ground_max_rmse_m": 0.1
+      },
+      "config_sha256": "82d1d4384582618e0704f28c3efecb93bec811c916c2f7807017b18d8ef4b5cc",
+      "camera_manifest": {
+        "count": 49,
+        "first": {
+          "uid": 43,
+          "frame_id": "image_0/0017043",
+          "camera": "image_0",
+          "image_name": "0017043",
+          "timestamp": 0.38,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017043.png",
+          "width": 480,
+          "height": 320
+        },
+        "last": {
+          "uid": 24,
+          "frame_id": "image_0/0017024",
+          "camera": "image_0",
+          "image_name": "0017024",
+          "timestamp": 0.0,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017024.png",
+          "width": 480,
+          "height": 320
+        }
+      },
+      "evaluations": [
+        {
+          "split": "train",
+          "iteration": 30000,
+          "eval_dir": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render",
+          "metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/metrics.json",
+          "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/paper_region_metrics.json",
+          "frames": {
+            "count": 49,
+            "first": {
+              "uid": 0,
+              "frame_id": "image_0/0017000",
+              "camera": "image_0",
+              "image_name": "0017000",
+              "timestamp": -0.48,
+              "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png",
+              "width": 480,
+              "height": 320,
+              "channels": {
+                "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/gt/image_0_0017000.png",
+                "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/composite/image_0_0017000.png",
+                "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/static/image_0_0017000.png",
+                "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/dynamic/image_0_0017000.png"
+              }
+            },
+            "last": {
+              "uid": 48,
+              "frame_id": "image_0/0017048",
+              "camera": "image_0",
+              "image_name": "0017048",
+              "timestamp": 0.48,
+              "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png",
+              "width": 480,
+              "height": 320,
+              "channels": {
+                "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/gt/image_0_0017048.png",
+                "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/composite/image_0_0017048.png",
+                "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/static/image_0_0017048.png",
+                "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/dynamic/image_0_0017048.png"
+              }
+            }
+          }
+        }
+      ],
+      "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+      "resume_state": {
+        "rng": [
+          "python",
+          "numpy",
+          "torch",
+          "cuda_if_initialized"
+        ],
+        "camera_sampler": true,
+        "scale": true,
+        "optimizer": true,
+        "sgcm_geometry": true,
+        "bitwise_cuda_equivalence_claimed": false
+      },
+      "sgcm": {
+        "status": "validated",
+        "paper_reference": "Eq8,printed1701/PDF6",
+        "config": {
+          "dr_m": 0.5,
+          "interval": 100,
+          "offset": 50,
+          "start": 500,
+          "end": 15000,
+          "max_new_points": 10000,
+          "split_radius_px": 20,
+          "ground_margin_m": 3.0,
+          "ground_cell_m": 0.5,
+          "plane_inlier_m": 0.15,
+          "ground_min_cells": 30,
+          "ground_min_fraction": 0.35,
+          "ground_max_tilt_deg": 20,
+          "ground_max_rmse_m": 0.1,
+          "region_margin_m": 0.25,
+          "max_points": 3000000
+        },
+        "meter_to_model_scale": 0.09999999999999999,
+        "dr_model": 0.049999999999999996,
+        "transform_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/transform_matrix.txt",
+        "transform_validation": "finite_isotropic_similarity",
+        "world_to_model": [
+          [
+            0.011031374551287046,
+            -0.099253095285871,
+            0.005208824405086685,
+            1335.1470608075524
+          ],
+          [
+            -0.09931104218386516,
+            -0.010799060611194948,
+            0.004549416475801385,
+            -360.2641459791045
+          ],
+          [
+            -0.0039529325650422276,
+            -0.005674800973562714,
+            -0.09976056815218465,
+            15.616107146909892
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "anchor_pose": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017000.txt",
+        "plane_model": [
+          0.03605858402849938,
+          0.06177027392874886,
+          -0.9974388260823954,
+          0.23618470498962857
+        ],
+        "ground_fit": {
+          "candidate_points": 85911,
+          "lower_envelope_cells": 2373,
+          "inlier_cells": 2048,
+          "inlier_fraction": 0.8630425621576064,
+          "rmse_m": 0.04930535709626185,
+          "tilt_from_first_vehicle_up_deg": 2.693848585960266,
+          "inlier_xy_span_m": [
+            21.951247029177466,
+            27.33677981226174
+          ],
+          "plane_anchor": [
+            -0.04657755237988098,
+            0.0062814879844293155,
+            0.9988949266679658,
+            0.4375272548057056
+          ]
+        },
+        "regions_anchor": [
+          [
+            [
+              12.608891797784963,
+              -2.680952211288968,
+              -0.22065876961878172
+            ],
+            [
+              29.096138147207967,
+              19.176229817913736,
+              2.451917779218604
+            ]
+          ]
+        ],
+        "assumptions": [
+          "First vehicle up defines local vertical; low-tilt ground required.",
+          "Hd is the union of actor time-aggregated LiDAR AABBs in the first vehicle frame; extends vertically to fitted ground.",
+          "Ground support includes a3m XY margin around actor support;0.5m grid10th-percentile lower envelope; deterministic256trial RANSAC and least-squares.",
+          "SGCM executes after optimizer on an offset schedule avoiding generic densification;20px radius is the undeclared projected-footprint threshold choice.",
+          "Resource cap limits additions per step; large projected footprints prioritized.",
+          "Clone copies parameters; split uses symmetric two-child largest-axis moment-matched spatial subdivision and unchanged temporal fields."
+        ],
+        "unknown_author_details": [
+          "Region shape/update",
+          "Ground extraction/fit",
+          "Schedule",
+          "Footprint threshold",
+          "Clone/split policy/budget"
+        ]
+      },
+      "eval_dir": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render",
+      "metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/metrics.json",
+      "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/paper_region_metrics.json",
+      "frames": {
+        "count": 49,
+        "first": {
+          "uid": 0,
+          "frame_id": "image_0/0017000",
+          "camera": "image_0",
+          "image_name": "0017000",
+          "timestamp": -0.48,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/gt/image_0_0017000.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/composite/image_0_0017000.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/static/image_0_0017000.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/dynamic/image_0_0017000.png"
+          }
+        },
+        "last": {
+          "uid": 48,
+          "frame_id": "image_0/0017048",
+          "camera": "image_0",
+          "image_name": "0017048",
+          "timestamp": 0.48,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/gt/image_0_0017048.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/composite/image_0_0017048.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/static/image_0_0017048.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/eval/train_30000_render/dynamic/image_0_0017048.png"
+          }
+        }
+      }
+    }
+  },
+  "metrics": {
+    "20000": {
+      "full": {
+        "split": "train",
+        "iteration": 20000,
+        "psnr": 35.24852137662926,
+        "ssim": 0.9683691932230579,
+        "lpips": 0.04547271820507487
+      },
+      "region": {
+        "split": "train",
+        "iteration": 20000,
+        "frame_count": 49,
+        "aggregation": "Arithmetic mean of per-frame PSNR, later macro-average scenes equally.",
+        "perfect_error_policy": "Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.",
+        "mask_protocol": "Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.",
+        "interpretation": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
+        "limitations": [
+          "Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.",
+          "No deletion-hole quality is measured: historical unobstructed GT is required for Table V.",
+          "Inferred/prepared masks are not independent manually annotated ground truth."
+        ],
+        "summary": {
+          "dynamic_psnr_star": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 30.538101648382945,
+            "psnr_zero_padded_mean": 49.97895824901835
+          },
+          "static_psnr_s": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 35.38503577923277,
+            "psnr_zero_padded_mean": 35.46204055443036
+          },
+          "static_psnr_sr": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 13.669739517361169,
+            "psnr_zero_padded_mean": 13.746744292558764
+          }
+        }
+      },
+      "region_list_keys": {
+        "limitations": 3,
+        "frames": 49
+      }
+    },
+    "30000": {
+      "full": {
+        "split": "train",
+        "iteration": 30000,
+        "psnr": 10.48350260209064,
+        "ssim": 0.6018059375334759,
+        "lpips": 0.3629990019360367
+      },
+      "region": {
+        "split": "train",
+        "iteration": 30000,
+        "frame_count": 49,
+        "aggregation": "Arithmetic mean of per-frame PSNR, later macro-average scenes equally.",
+        "perfect_error_policy": "Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.",
+        "mask_protocol": "Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.",
+        "interpretation": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
+        "limitations": [
+          "Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.",
+          "No deletion-hole quality is measured: historical unobstructed GT is required for Table V.",
+          "Inferred/prepared masks are not independent manually annotated ground truth."
+        ],
+        "summary": {
+          "dynamic_psnr_star": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 36.75880252468145,
+            "psnr_zero_padded_mean": 56.19965912531685
+          },
+          "static_psnr_s": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 10.406639366698025,
+            "psnr_zero_padded_mean": 10.483644141895631
+          },
+          "static_psnr_sr": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 5.393379377261491,
+            "psnr_zero_padded_mean": 5.470384152459097
+          }
+        }
+      },
+      "region_list_keys": {
+        "limitations": 3,
+        "frames": 49
+      }
+    }
+  },
+  "progress_status": {
+    "state": "training",
+    "iteration": 30700,
+    "total_iterations": 50000,
+    "started_at": "2026-10-11T10:13:40.432685+00:00",
+    "pid": 8772,
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+    "parent_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+    "first_training_iteration": 10001,
+    "mode": "formal_resume",
+    "updated_at": "2026-10-11T15:51:15.394038+00:00",
+    "wall_seconds": 20254.961431761272,
+    "loss": 0.01735582761466503,
+    "psnr": 33.587860107421875,
+    "total_points": 2234298.0,
+    "cuda_peak_allocated_mib": 28639.37890625,
+    "last_evaluation_iteration": 30000
+  },
+  "tensorboard": {
+    "parser": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/events.out.tfevents.1791713620.autodl-container-396445a2a1-1984c713.8772.0",
+        "bytes": 14672810,
+        "records": 249329,
+        "incomplete_active_tail": false,
+        "crc_verification": "not performed; framing and protobuf decoded"
+      }
+    ],
+    "tag_counts": {
+      "train/loss": 20731,
+      "train/loss_l1": 20731,
+      "train/loss_viewpoint - l1_loss": 2,
+      "train/loss_viewpoint - psnr": 2,
+      "train/loss_viewpoint - ssim": 2,
+      "train/psnr": 20731,
+      "train/total_points": 20731
+    },
+    "evaluation": [
+      {
+        "tag": "train/loss_viewpoint - l1_loss",
+        "step": 20000,
+        "wall_time": 1791722622.398295,
+        "value": 0.009390873834490776
+      },
+      {
+        "tag": "train/loss_viewpoint - psnr",
+        "step": 20000,
+        "wall_time": 1791722622.3984056,
+        "value": 35.24851989746094
+      },
+      {
+        "tag": "train/loss_viewpoint - ssim",
+        "step": 20000,
+        "wall_time": 1791722622.398925,
+        "value": 0.96836918592453
+      },
+      {
+        "tag": "train/loss_viewpoint - l1_loss",
+        "step": 30000,
+        "wall_time": 1791733144.4317782,
+        "value": 0.2165604680776596
+      },
+      {
+        "tag": "train/loss_viewpoint - psnr",
+        "step": 30000,
+        "wall_time": 1791733144.4318783,
+        "value": 10.483502388000488
+      },
+      {
+        "tag": "train/loss_viewpoint - ssim",
+        "step": 30000,
+        "wall_time": 1791733144.4319093,
+        "value": 0.6018059253692627
+      }
+    ],
+    "train_reset_curve": [
+      {
+        "tag": "train/loss",
+        "step": 26995,
+        "wall_time": 1791729917.6031852,
+        "value": 0.011638063006103039
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26995,
+        "wall_time": 1791729917.603276,
+        "value": 37.202232360839844
+      },
+      {
+        "tag": "train/loss",
+        "step": 26996,
+        "wall_time": 1791729918.9684856,
+        "value": 0.019009685143828392
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26996,
+        "wall_time": 1791729918.9687152,
+        "value": 33.324058532714844
+      },
+      {
+        "tag": "train/loss",
+        "step": 26997,
+        "wall_time": 1791729919.9319909,
+        "value": 0.013427563942968845
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26997,
+        "wall_time": 1791729919.9322002,
+        "value": 35.6154670715332
+      },
+      {
+        "tag": "train/loss",
+        "step": 26998,
+        "wall_time": 1791729921.1464155,
+        "value": 0.014620490372180939
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26998,
+        "wall_time": 1791729921.1465247,
+        "value": 35.75654602050781
+      },
+      {
+        "tag": "train/loss",
+        "step": 26999,
+        "wall_time": 1791729922.215626,
+        "value": 0.01367603987455368
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26999,
+        "wall_time": 1791729922.216064,
+        "value": 35.56718826293945
+      },
+      {
+        "tag": "train/loss",
+        "step": 27000,
+        "wall_time": 1791729923.9258113,
+        "value": 0.01261118520051241
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27000,
+        "wall_time": 1791729923.9259455,
+        "value": 36.45277404785156
+      },
+      {
+        "tag": "train/loss",
+        "step": 27001,
+        "wall_time": 1791729924.851813,
+        "value": 0.23760731518268585
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27001,
+        "wall_time": 1791729924.851938,
+        "value": 10.677297592163086
+      },
+      {
+        "tag": "train/loss",
+        "step": 27002,
+        "wall_time": 1791729926.1899583,
+        "value": 0.30468177795410156
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27002,
+        "wall_time": 1791729926.1908567,
+        "value": 8.420430183410645
+      },
+      {
+        "tag": "train/loss",
+        "step": 27003,
+        "wall_time": 1791729927.2114775,
+        "value": 0.24882809817790985
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27003,
+        "wall_time": 1791729927.2115686,
+        "value": 10.228157997131348
+      },
+      {
+        "tag": "train/loss",
+        "step": 27004,
+        "wall_time": 1791729928.706141,
+        "value": 0.2808082103729248
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27004,
+        "wall_time": 1791729928.7063644,
+        "value": 9.019073486328125
+      },
+      {
+        "tag": "train/loss",
+        "step": 27005,
+        "wall_time": 1791729929.75203,
+        "value": 0.24302321672439575
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27005,
+        "wall_time": 1791729929.7523913,
+        "value": 10.424478530883789
+      },
+      {
+        "tag": "train/loss",
+        "step": 27006,
+        "wall_time": 1791729930.1662292,
+        "value": 0.246169313788414
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27006,
+        "wall_time": 1791729930.1663678,
+        "value": 10.006962776184082
+      },
+      {
+        "tag": "train/loss",
+        "step": 27007,
+        "wall_time": 1791729931.6950877,
+        "value": 0.24112917482852936
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27007,
+        "wall_time": 1791729931.695187,
+        "value": 10.203426361083984
+      },
+      {
+        "tag": "train/loss",
+        "step": 27008,
+        "wall_time": 1791729932.7335174,
+        "value": 0.20266488194465637
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27008,
+        "wall_time": 1791729932.733607,
+        "value": 12.046316146850586
+      },
+      {
+        "tag": "train/loss",
+        "step": 27009,
+        "wall_time": 1791729934.0805402,
+        "value": 0.21556667983531952
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27009,
+        "wall_time": 1791729934.080668,
+        "value": 11.346707344055176
+      },
+      {
+        "tag": "train/loss",
+        "step": 27010,
+        "wall_time": 1791729934.4743123,
+        "value": 0.17474843561649323
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27010,
+        "wall_time": 1791729934.474624,
+        "value": 12.806483268737793
+      },
+      {
+        "tag": "train/loss",
+        "step": 27050,
+        "wall_time": 1791729975.7960908,
+        "value": 0.04174463078379631
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27050,
+        "wall_time": 1791729975.7962272,
+        "value": 27.40826416015625
+      },
+      {
+        "tag": "train/loss",
+        "step": 27100,
+        "wall_time": 1791730028.6230369,
+        "value": 0.048955947160720825
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27100,
+        "wall_time": 1791730028.6234288,
+        "value": 26.267187118530273
+      },
+      {
+        "tag": "train/loss",
+        "step": 27150,
+        "wall_time": 1791730081.8113084,
+        "value": 0.022621342912316322
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27150,
+        "wall_time": 1791730081.811527,
+        "value": 31.556575775146484
+      },
+      {
+        "tag": "train/loss",
+        "step": 27200,
+        "wall_time": 1791730135.2810557,
+        "value": 0.027427222579717636
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27200,
+        "wall_time": 1791730135.281496,
+        "value": 30.273073196411133
+      },
+      {
+        "tag": "train/loss",
+        "step": 29995,
+        "wall_time": 1791733045.547913,
+        "value": 0.013385824859142303
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29995,
+        "wall_time": 1791733045.5481992,
+        "value": 36.380104064941406
+      },
+      {
+        "tag": "train/loss",
+        "step": 29996,
+        "wall_time": 1791733046.4969702,
+        "value": 0.013668624684214592
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29996,
+        "wall_time": 1791733046.4974365,
+        "value": 36.1795654296875
+      },
+      {
+        "tag": "train/loss",
+        "step": 29997,
+        "wall_time": 1791733047.6544878,
+        "value": 0.013410585932433605
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29997,
+        "wall_time": 1791733047.6547856,
+        "value": 36.37251663208008
+      },
+      {
+        "tag": "train/loss",
+        "step": 29998,
+        "wall_time": 1791733048.6986747,
+        "value": 0.013105196878314018
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29998,
+        "wall_time": 1791733048.698973,
+        "value": 35.9481315612793
+      },
+      {
+        "tag": "train/loss",
+        "step": 29999,
+        "wall_time": 1791733049.8163443,
+        "value": 0.012714491225779057
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29999,
+        "wall_time": 1791733049.816969,
+        "value": 36.18342971801758
+      },
+      {
+        "tag": "train/loss",
+        "step": 30000,
+        "wall_time": 1791733059.4950013,
+        "value": 0.01588490419089794
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30000,
+        "wall_time": 1791733059.495669,
+        "value": 34.513126373291016
+      },
+      {
+        "tag": "train/loss",
+        "step": 30001,
+        "wall_time": 1791733146.017829,
+        "value": 0.2980644106864929
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30001,
+        "wall_time": 1791733146.018157,
+        "value": 8.590572357177734
+      },
+      {
+        "tag": "train/loss",
+        "step": 30002,
+        "wall_time": 1791733146.9351172,
+        "value": 0.22147797048091888
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30002,
+        "wall_time": 1791733146.9353974,
+        "value": 11.38932991027832
+      },
+      {
+        "tag": "train/loss",
+        "step": 30003,
+        "wall_time": 1791733147.9239888,
+        "value": 0.2504688501358032
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30003,
+        "wall_time": 1791733147.9242628,
+        "value": 10.231077194213867
+      },
+      {
+        "tag": "train/loss",
+        "step": 30004,
+        "wall_time": 1791733149.091553,
+        "value": 0.26245471835136414
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30004,
+        "wall_time": 1791733149.091839,
+        "value": 9.74116039276123
+      },
+      {
+        "tag": "train/loss",
+        "step": 30005,
+        "wall_time": 1791733150.1027656,
+        "value": 0.22736608982086182
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30005,
+        "wall_time": 1791733150.1030471,
+        "value": 10.958243370056152
+      },
+      {
+        "tag": "train/loss",
+        "step": 30006,
+        "wall_time": 1791733151.3919983,
+        "value": 0.24956795573234558
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30006,
+        "wall_time": 1791733151.3922157,
+        "value": 10.047859191894531
+      },
+      {
+        "tag": "train/loss",
+        "step": 30007,
+        "wall_time": 1791733152.287606,
+        "value": 0.17802490293979645
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30007,
+        "wall_time": 1791733152.2880278,
+        "value": 13.020528793334961
+      },
+      {
+        "tag": "train/loss",
+        "step": 30008,
+        "wall_time": 1791733153.1846075,
+        "value": 0.15743032097816467
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30008,
+        "wall_time": 1791733153.1849306,
+        "value": 14.008074760437012
+      },
+      {
+        "tag": "train/loss",
+        "step": 30009,
+        "wall_time": 1791733154.0869222,
+        "value": 0.13278163969516754
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30009,
+        "wall_time": 1791733154.0871677,
+        "value": 15.377588272094727
+      },
+      {
+        "tag": "train/loss",
+        "step": 30010,
+        "wall_time": 1791733154.9787118,
+        "value": 0.12668494880199432
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30010,
+        "wall_time": 1791733154.9793293,
+        "value": 15.79271125793457
+      },
+      {
+        "tag": "train/loss",
+        "step": 30011,
+        "wall_time": 1791733155.3370605,
+        "value": 0.20502690970897675
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30011,
+        "wall_time": 1791733155.3375082,
+        "value": 11.722535133361816
+      },
+      {
+        "tag": "train/loss",
+        "step": 30012,
+        "wall_time": 1791733155.677013,
+        "value": 0.17880530655384064
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30012,
+        "wall_time": 1791733155.6772282,
+        "value": 12.667046546936035
+      },
+      {
+        "tag": "train/loss",
+        "step": 30013,
+        "wall_time": 1791733156.7905347,
+        "value": 0.13987192511558533
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30013,
+        "wall_time": 1791733156.7907505,
+        "value": 15.71672534942627
+      },
+      {
+        "tag": "train/loss",
+        "step": 30014,
+        "wall_time": 1791733157.1397688,
+        "value": 0.1536581963300705
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30014,
+        "wall_time": 1791733157.140082,
+        "value": 14.04284954071045
+      },
+      {
+        "tag": "train/loss",
+        "step": 30015,
+        "wall_time": 1791733157.5257986,
+        "value": 0.15824176371097565
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30015,
+        "wall_time": 1791733157.5260084,
+        "value": 14.15916919708252
+      },
+      {
+        "tag": "train/loss",
+        "step": 30016,
+        "wall_time": 1791733158.9746845,
+        "value": 0.14130793511867523
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30016,
+        "wall_time": 1791733158.9750352,
+        "value": 15.435932159423828
+      },
+      {
+        "tag": "train/loss",
+        "step": 30017,
+        "wall_time": 1791733159.8906343,
+        "value": 0.07521040737628937
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30017,
+        "wall_time": 1791733159.8911624,
+        "value": 21.736385345458984
+      },
+      {
+        "tag": "train/loss",
+        "step": 30018,
+        "wall_time": 1791733160.7981107,
+        "value": 0.08571373671293259
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30018,
+        "wall_time": 1791733160.7983935,
+        "value": 20.978086471557617
+      },
+      {
+        "tag": "train/loss",
+        "step": 30019,
+        "wall_time": 1791733161.6965292,
+        "value": 0.07328393310308456
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30019,
+        "wall_time": 1791733161.6967387,
+        "value": 22.53952980041504
+      },
+      {
+        "tag": "train/loss",
+        "step": 30020,
+        "wall_time": 1791733163.0845923,
+        "value": 0.11390848457813263
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30020,
+        "wall_time": 1791733163.0849075,
+        "value": 18.666187286376953
+      },
+      {
+        "tag": "train/loss",
+        "step": 30021,
+        "wall_time": 1791733164.022342,
+        "value": 0.07728634029626846
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30021,
+        "wall_time": 1791733164.02254,
+        "value": 22.579526901245117
+      },
+      {
+        "tag": "train/loss",
+        "step": 30022,
+        "wall_time": 1791733164.9217298,
+        "value": 0.06870748102664948
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30022,
+        "wall_time": 1791733164.9220102,
+        "value": 23.631420135498047
+      },
+      {
+        "tag": "train/loss",
+        "step": 30023,
+        "wall_time": 1791733166.2394323,
+        "value": 0.10386258363723755
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30023,
+        "wall_time": 1791733166.239832,
+        "value": 20.57790756225586
+      },
+      {
+        "tag": "train/loss",
+        "step": 30024,
+        "wall_time": 1791733167.1278427,
+        "value": 0.06165098771452904
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30024,
+        "wall_time": 1791733167.1282105,
+        "value": 24.53107452392578
+      },
+      {
+        "tag": "train/loss",
+        "step": 30025,
+        "wall_time": 1791733168.4176047,
+        "value": 0.09849661588668823
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30025,
+        "wall_time": 1791733168.4179611,
+        "value": 21.162450790405273
+      },
+      {
+        "tag": "train/loss",
+        "step": 30050,
+        "wall_time": 1791733194.181395,
+        "value": 0.06405992060899734
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30050,
+        "wall_time": 1791733194.1816971,
+        "value": 24.4111270904541
+      },
+      {
+        "tag": "train/loss",
+        "step": 30075,
+        "wall_time": 1791733218.4362159,
+        "value": 0.024079252034425735
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30075,
+        "wall_time": 1791733218.436494,
+        "value": 31.043928146362305
+      },
+      {
+        "tag": "train/loss",
+        "step": 30100,
+        "wall_time": 1791733245.13884,
+        "value": 0.026479659602046013
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30100,
+        "wall_time": 1791733245.1389818,
+        "value": 30.37411117553711
+      },
+      {
+        "tag": "train/loss",
+        "step": 30125,
+        "wall_time": 1791733271.4271052,
+        "value": 0.022321373224258423
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30125,
+        "wall_time": 1791733271.4273984,
+        "value": 31.354564666748047
+      },
+      {
+        "tag": "train/loss",
+        "step": 30150,
+        "wall_time": 1791733296.7969139,
+        "value": 0.02451208047568798
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30150,
+        "wall_time": 1791733296.797213,
+        "value": 30.837284088134766
+      },
+      {
+        "tag": "train/loss",
+        "step": 30175,
+        "wall_time": 1791733323.574491,
+        "value": 0.03628318011760712
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30175,
+        "wall_time": 1791733323.574788,
+        "value": 28.110130310058594
+      },
+      {
+        "tag": "train/loss",
+        "step": 30200,
+        "wall_time": 1791733347.900236,
+        "value": 0.016677988693118095
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30200,
+        "wall_time": 1791733347.9005387,
+        "value": 34.19248962402344
+      },
+      {
+        "tag": "train/loss",
+        "step": 30225,
+        "wall_time": 1791733375.7812262,
+        "value": 0.032072171568870544
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30225,
+        "wall_time": 1791733375.781532,
+        "value": 29.145015716552734
+      },
+      {
+        "tag": "train/loss",
+        "step": 30250,
+        "wall_time": 1791733402.1804507,
+        "value": 0.014876346103847027
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30250,
+        "wall_time": 1791733402.1808844,
+        "value": 34.2315559387207
+      },
+      {
+        "tag": "train/loss",
+        "step": 30275,
+        "wall_time": 1791733427.465152,
+        "value": 0.023257508873939514
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30275,
+        "wall_time": 1791733427.4652972,
+        "value": 31.498825073242188
+      },
+      {
+        "tag": "train/loss",
+        "step": 30300,
+        "wall_time": 1791733451.6503024,
+        "value": 0.024060342460870743
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30300,
+        "wall_time": 1791733451.6506596,
+        "value": 31.0374813079834
+      },
+      {
+        "tag": "train/loss",
+        "step": 30325,
+        "wall_time": 1791733479.9306777,
+        "value": 0.01679225265979767
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30325,
+        "wall_time": 1791733479.9310546,
+        "value": 33.16851043701172
+      },
+      {
+        "tag": "train/loss",
+        "step": 30350,
+        "wall_time": 1791733506.901127,
+        "value": 0.015496142208576202
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30350,
+        "wall_time": 1791733506.9013426,
+        "value": 33.775299072265625
+      },
+      {
+        "tag": "train/loss",
+        "step": 30375,
+        "wall_time": 1791733533.6900358,
+        "value": 0.0182350967079401
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30375,
+        "wall_time": 1791733533.6905174,
+        "value": 33.01531982421875
+      },
+      {
+        "tag": "train/loss",
+        "step": 30400,
+        "wall_time": 1791733560.751292,
+        "value": 0.015521927736699581
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30400,
+        "wall_time": 1791733560.751436,
+        "value": 33.56965637207031
+      },
+      {
+        "tag": "train/loss",
+        "step": 30425,
+        "wall_time": 1791733586.1455133,
+        "value": 0.0240181777626276
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30425,
+        "wall_time": 1791733586.1458027,
+        "value": 30.893285751342773
+      },
+      {
+        "tag": "train/loss",
+        "step": 30450,
+        "wall_time": 1791733611.185222,
+        "value": 0.016814474016427994
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30450,
+        "wall_time": 1791733611.1855323,
+        "value": 33.81486511230469
+      },
+      {
+        "tag": "train/loss",
+        "step": 30475,
+        "wall_time": 1791733637.8354366,
+        "value": 0.013446246273815632
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30475,
+        "wall_time": 1791733637.8356855,
+        "value": 35.30304718017578
+      },
+      {
+        "tag": "train/loss",
+        "step": 30500,
+        "wall_time": 1791733665.6203287,
+        "value": 0.017930978909134865
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30500,
+        "wall_time": 1791733665.6206257,
+        "value": 33.113555908203125
+      },
+      {
+        "tag": "train/loss",
+        "step": 30525,
+        "wall_time": 1791733689.8038664,
+        "value": 0.01660885103046894
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30525,
+        "wall_time": 1791733689.8041723,
+        "value": 34.20967483520508
+      },
+      {
+        "tag": "train/loss",
+        "step": 30550,
+        "wall_time": 1791733715.5553713,
+        "value": 0.02058098278939724
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30550,
+        "wall_time": 1791733715.5556679,
+        "value": 31.94668960571289
+      },
+      {
+        "tag": "train/loss",
+        "step": 30575,
+        "wall_time": 1791733742.0055318,
+        "value": 0.013203897513449192
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30575,
+        "wall_time": 1791733742.005783,
+        "value": 35.292179107666016
+      },
+      {
+        "tag": "train/loss",
+        "step": 30600,
+        "wall_time": 1791733767.2074237,
+        "value": 0.020813267678022385
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30600,
+        "wall_time": 1791733767.2077112,
+        "value": 31.833646774291992
+      },
+      {
+        "tag": "train/loss",
+        "step": 30625,
+        "wall_time": 1791733794.2446244,
+        "value": 0.02171090804040432
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30625,
+        "wall_time": 1791733794.2453616,
+        "value": 31.928041458129883
+      },
+      {
+        "tag": "train/loss",
+        "step": 30650,
+        "wall_time": 1791733819.4232516,
+        "value": 0.011360532604157925
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30650,
+        "wall_time": 1791733819.4233909,
+        "value": 36.92487716674805
+      }
+    ],
+    "latest_train": {
+      "train/psnr": {
+        "tag": "train/psnr",
+        "step": 30731,
+        "wall_time": 1791733909.4640532,
+        "value": 33.847373962402344
+      },
+      "train/loss": {
+        "tag": "train/loss",
+        "step": 30731,
+        "wall_time": 1791733909.4639225,
+        "value": 0.016282429918646812
+      },
+      "train/total_points": {
+        "tag": "train/total_points",
+        "step": 30731,
+        "wall_time": 1791733909.4642997,
+        "value": 2234298.0
+      }
+    },
+    "windows": [
+      {
+        "start": 29800,
+        "end": 29999,
+        "train/psnr": {
+          "count": 200,
+          "min": 32.847015380859375,
+          "max": 38.71086883544922,
+          "mean": 35.867243480682376
+        },
+        "train/loss": {
+          "count": 200,
+          "min": 0.009815845638513565,
+          "max": 0.018523553386330605,
+          "mean": 0.013571383571252227
+        }
+      },
+      {
+        "start": 30001,
+        "end": 30010,
+        "train/psnr": {
+          "count": 10,
+          "min": 8.590572357177734,
+          "max": 15.79271125793457,
+          "mean": 11.915714550018311
+        },
+        "train/loss": {
+          "count": 10,
+          "min": 0.12668494880199432,
+          "max": 0.2980644106864929,
+          "mean": 0.21043218076229095
+        }
+      },
+      {
+        "start": 30011,
+        "end": 30050,
+        "train/psnr": {
+          "count": 40,
+          "min": 11.722535133361816,
+          "max": 27.958681106567383,
+          "mean": 22.392525553703308
+        },
+        "train/loss": {
+          "count": 40,
+          "min": 0.0375022366642952,
+          "max": 0.20502690970897675,
+          "mean": 0.08378965519368649
+        }
+      },
+      {
+        "start": 30051,
+        "end": 30100,
+        "train/psnr": {
+          "count": 50,
+          "min": 24.694660186767578,
+          "max": 32.88294219970703,
+          "mean": 28.532228698730467
+        },
+        "train/loss": {
+          "count": 50,
+          "min": 0.019533978775143623,
+          "max": 0.06162672117352486,
+          "mean": 0.03800202988088131
+        }
+      },
+      {
+        "start": 30101,
+        "end": 30200,
+        "train/psnr": {
+          "count": 100,
+          "min": 26.313297271728516,
+          "max": 34.81536102294922,
+          "mean": 30.56954553604126
+        },
+        "train/loss": {
+          "count": 100,
+          "min": 0.015213018283247948,
+          "max": 0.05045222491025925,
+          "mean": 0.02768059477210045
+        }
+      },
+      {
+        "start": 30201,
+        "end": 30400,
+        "train/psnr": {
+          "count": 200,
+          "min": 28.068540573120117,
+          "max": 36.54745864868164,
+          "mean": 32.561263160705565
+        },
+        "train/loss": {
+          "count": 200,
+          "min": 0.011851190589368343,
+          "max": 0.03440913185477257,
+          "mean": 0.02007770769763738
+        }
+      },
+      {
+        "start": 30401,
+        "end": 30650,
+        "train/psnr": {
+          "count": 250,
+          "min": 30.693056106567383,
+          "max": 37.497371673583984,
+          "mean": 33.91329014587402
+        },
+        "train/loss": {
+          "count": 250,
+          "min": 0.011179842054843903,
+          "max": 0.025135952979326248,
+          "mean": 0.016651667911559344
+        }
+      }
+    ]
+  },
+  "log": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_training.log",
+    "actual_iteration_offset": 10000,
+    "evidence": [
+      "[ITER 20000] Evaluating train: L1 0.009390873663431528 PSNR 35.24852137662926 SSIM 0.9683691932230579 LPIPS 0.04547271820507487",
+      "[ITER 30000] Evaluating train: L1 0.21656046868587026 PSNR 10.48350260209064 SSIM 0.6018059375334759 LPIPS 0.3629990019360367"
+    ],
+    "around_30k_progress": [
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2589     | 19999/40000 [5:23:35<6:06:56,  1.10s/it, loss=0.01202, l1=0.00803, psnr=36.66775, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2589     | 19999/40000 [5:23:36<6:06:56,  1.10s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]2234298",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20000/40000 [5:25:10<162:32:16, 29.26s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20001/40000 [5:25:11<115:50:57, 20.85s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20009/40000 [5:25:20<11:44:37,  2.11s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20009/40000 [5:25:20<11:44:37,  2.11s/it, loss=0.15108, l1=0.12319, psnr=14.63353, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20010/40000 [5:25:20<9:42:21,  1.75s/it, loss=0.15108, l1=0.12319, psnr=14.63353, scale=4] ",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20049/40000 [5:25:58<5:55:33,  1.07s/it, loss=0.05934, l1=0.03266, psnr=25.11575, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20049/40000 [5:25:59<5:55:33,  1.07s/it, loss=0.05593, l1=0.02968, psnr=25.44744, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20050/40000 [5:26:00<6:17:42,  1.14s/it, loss=0.05593, l1=0.02968, psnr=25.44744, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20099/40000 [5:26:49<5:23:14,  1.03it/s, loss=0.03464, l1=0.01844, psnr=28.99907, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20099/40000 [5:26:50<5:23:14,  1.03it/s, loss=0.03173, l1=0.01685, psnr=29.34814, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20100/40000 [5:26:51<6:38:30,  1.20s/it, loss=0.03173, l1=0.01685, psnr=29.34814, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20199/40000 [5:28:32<6:10:52,  1.12s/it, loss=0.02675, l1=0.01527, psnr=30.37938, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20199/40000 [5:28:32<6:10:52,  1.12s/it, loss=0.02156, l1=0.01243, psnr=32.65080, scale=4]",
+      "Training progress:  50%|\u2588\u2588\u2588\u2588\u2588     | 20200/40000 [5:28:33<7:16:48,  1.32s/it, loss=0.02156, l1=0.01243, psnr=32.65080, scale=4]",
+      "Training progress:  51%|\u2588\u2588\u2588\u2588\u2588     | 20399/40000 [5:32:04<5:24:37,  1.01it/s, loss=0.01919, l1=0.01152, psnr=32.73637, scale=4]",
+      "Training progress:  51%|\u2588\u2588\u2588\u2588\u2588     | 20399/40000 [5:32:05<5:24:37,  1.01it/s, loss=0.01817, l1=0.01147, psnr=32.79505, scale=4]",
+      "Training progress:  51%|\u2588\u2588\u2588\u2588\u2588     | 20400/40000 [5:32:06<6:37:10,  1.22s/it, loss=0.01817, l1=0.01147, psnr=32.79505, scale=4]"
+    ],
+    "latest_progress": "Training progress:  52%|\u2588\u2588\u2588\u2588\u2588\u258f    | 20731/40000 [5:37:55<6:45:51,  1.26s/it, loss=0.01581, l1=0.01004, psnr=34.57886, scale=4]"
+  },
+  "png_cpu": {
+    "20000": {
+      "count": 49,
+      "shapes": [
+        [
+          320,
+          480,
+          3
+        ]
+      ],
+      "mean_per_frame_composite_psnr": 35.20863038830409,
+      "min_per_frame_composite_psnr": 33.05206225360127,
+      "max_per_frame_composite_psnr": 37.151283872608005,
+      "mean_static_full_psnr": 13.595899471932306,
+      "mean_gt_intensity": 0.2848086988267529,
+      "mean_composite_intensity": 0.2842879884592726,
+      "mean_static_intensity": 0.33722933965252766,
+      "first_and_middle_frame": [
+        {
+          "frame": "image_0_0017000.png",
+          "gt_mean": 0.2881704367510892,
+          "composite_mean": 0.28814101647603485,
+          "static_mean": 0.35174697031590413,
+          "composite_psnr": 36.40039030744181,
+          "static_full_psnr": 12.846127808695417
+        },
+        {
+          "frame": "image_0_0017024.png",
+          "gt_mean": 0.27854308789488014,
+          "composite_mean": 0.27802445874183,
+          "static_mean": 0.3302701780364922,
+          "composite_psnr": 35.009046119738485,
+          "static_full_psnr": 13.614711029704978
+        }
+      ],
+      "quantized_png_metrics": true
+    },
+    "30000": {
+      "count": 49,
+      "shapes": [
+        [
+          320,
+          480,
+          3
+        ]
+      ],
+      "mean_per_frame_composite_psnr": 10.493672974710098,
+      "min_per_frame_composite_psnr": 9.398364844051645,
+      "max_per_frame_composite_psnr": 11.790738642630068,
+      "mean_static_full_psnr": 5.43489907460891,
+      "mean_gt_intensity": 0.2848086988267529,
+      "mean_composite_intensity": 0.5002567209175337,
+      "mean_static_intensity": 0.6671920320211417,
+      "first_and_middle_frame": [
+        {
+          "frame": "image_0_0017000.png",
+          "gt_mean": 0.2881704367510892,
+          "composite_mean": 0.46739305044934654,
+          "static_mean": 0.6534769454656864,
+          "composite_psnr": 11.790738642630068,
+          "static_full_psnr": 5.532294187097426
+        },
+        {
+          "frame": "image_0_0017024.png",
+          "gt_mean": 0.27854308789488014,
+          "composite_mean": 0.49940883714596956,
+          "static_mean": 0.6641053921568626,
+          "composite_psnr": 10.248806939397161,
+          "static_full_psnr": 5.412217522864462
+        }
+      ],
+      "quantized_png_metrics": true
+    }
+  }
+}

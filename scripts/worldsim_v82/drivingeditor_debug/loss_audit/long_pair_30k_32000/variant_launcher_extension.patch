@@ -1,0 +1,33 @@
+--- approved300/launch_opacity_outside_continuation.py
++++ draft32000/launch_opacity_outside_continuation.py
+@@ -12,5 +12,5 @@
+ 
+ BASE = Path('/root/autodl-tmp/drivingeditor_repro')
+-PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'
++PLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'
+ ENV = '/root/autodl-tmp/envs/drivingeditor/bin/python'
+ 
+@@ -27,7 +27,7 @@
+ 
+ def main():
+-    binding_path = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/experiment_binding.json'
++    binding_path = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/experiment_binding.json'
+     approval_path = PLAN / 'opacity_outside_root_coordination_receipt.json'
+-    status = {'status': 'checking_exclusive_gpu_idle', 'launcher_pid': os.getpid(), 'started_utc': now(), 'launcher_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'output': str(BASE / 'campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to30300')}
++    status = {'status': 'checking_exclusive_gpu_idle', 'launcher_pid': os.getpid(), 'started_utc': now(), 'launcher_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'output': str(BASE / 'campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000')}
+     write(PLAN / 'opacity_outside_launcher_status.json', status)
+     child = None
+@@ -36,5 +36,5 @@
+         approval = json.loads(approval_path.read_text())
+         binding = json.loads(binding_path.read_text())
+-        if approval.get('decision') != 'APPROVED_SINGLE_VARIABLE_OPACITY_OUTSIDE_30K_TO30300' or approval.get('launcher_sha256') != status['launcher_sha256'] or approval.get('experiment_binding_sha256') != hashlib.sha256(binding_path.read_bytes()).hexdigest() or binding['output'] != status['output']:
++        if approval.get('decision') != 'APPROVED_SINGLE_VARIABLE_OPACITY_OUTSIDE_30K_TO32000' or approval.get('launcher_sha256') != status['launcher_sha256'] or approval.get('experiment_binding_sha256') != hashlib.sha256(binding_path.read_bytes()).hexdigest() or binding['output'] != status['output']:
+             raise RuntimeError('Root receipt does not bind actual launcher/binding/output')
+         with (BASE / 'campaign/gpu_slot.lock').open('r+') as fd:
+@@ -56,5 +56,5 @@
+         with (PLAN / 'opacity_outside_training.log').open('w') as stream:
+             child = subprocess.Popen(command, stdout=stream, stderr=subprocess.STDOUT, env=environment)
+-            status.update(status='running_root_approved_opacity_outside30k_to30300', worker_pid=child.pid, command=command, environment_policy={'PYTHONDONTWRITEBYTECODE': '1', 'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True'})
++            status.update(status='running_root_approved_opacity_outside30k_to32000', worker_pid=child.pid, command=command, environment_policy={'PYTHONDONTWRITEBYTECODE': '1', 'PYTORCH_CUDA_ALLOC_CONF': 'expandable_segments:True'})
+             write(PLAN / 'opacity_outside_launcher_status.json', status)
+             (PLAN / 'opacity_outside_worker.pid').write_text(str(child.pid) + '\n')

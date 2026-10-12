@@ -1,0 +1,29 @@
+{
+  "scope": "Reviewable isolated copies/patches; formal source/config/data/checkpoints unchanged",
+  "baseline_root": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\source_frozen",
+  "source_pins": {
+    "utils/camera_utils.py": "3fb1bd6fe928cc2b08c29426558a2dd08677af5959d14e64a559645b3ba27e85",
+    "utils/paper_losses.py": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8",
+    "train.py": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93"
+  },
+  "candidates": [
+    {
+      "name": "nearest_depth",
+      "patch": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\candidates\\nearest_depth.patch",
+      "classification": "Inherited order-dependent sparse-depth projection bug; nearest visible policy explicit, not specified by paper",
+      "variables_changed": "Only duplicate sparse-depth target reduction; photometric losses/weights and opacity resets unchanged",
+      "paper_reference": "Eq16 PDF7-8/printed1702-1703",
+      "source_reference": "camera_utils.py133"
+    },
+    {
+      "name": "opacity_outside",
+      "patch": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\candidates\\opacity_outside.patch",
+      "classification": "Single new complementary background-domain diagnostic; unverified final-paper author objective",
+      "variables_changed": "Only lambda_background term, preserving foreground Eq13 and all original paper losses",
+      "default_lambda": 0.0,
+      "proposed_diagnostic_lambda": 0.05,
+      "formula": "L_background=-sum[(1-M_d)*alpha_d*log((1-alpha_d+eps)/(1+eps))]/(h*w),eps=1e-4",
+      "paper_reference": "Eq13 domain omitted; Eq7 shape used as an explicit experimental complement"
+    }
+  ]
+}

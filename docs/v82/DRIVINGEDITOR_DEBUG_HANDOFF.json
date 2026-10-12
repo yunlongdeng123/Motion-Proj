@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-DRIVINGEDITOR-DEBUG-HANDOFF-20261012",
+  "run_id": "r1",
+  "version": "v8.2",
+  "branch": "research/worldsim-v8.2-drivingeditor-debug",
+  "inherited_v81_commit": "c21547193d765e8f8123b27b73e31e033295a316",
+  "updated_date_local": "2026-10-12",
+  "timezone": "Asia/Singapore",
+  "current_status": "research_stopped_by_user_debug_incomplete_evidence_handoff",
+  "current_status_source": "Latest explicit user scope; remote task_manifest updated to paused_by_user_evidence_handoff after preserving before-handoff copy; historical experiment receipts unchanged",
+  "automation": {
+    "id": "drivingeditor-50k",
+    "status": "PAUSED",
+    "source": "Latest user request and root handoff",
+    "historical_ACTIVE_records_are_not_current_authorization": true
+  },
+  "whole_debug_task_complete": false,
+  "paper_reproduction_complete": false,
+  "normal_algorithm_success_claimed": false,
+  "edit_quality_accepted": false,
+  "human_verdict": null,
+  "historical_evidence_snapshot_status": "diagnosing",
+  "work_performed_in_this_handoff": {
+    "new_training_steps": 0,
+    "new_model_inference": 0,
+    "new_scientific_experiments": 0,
+    "new_test_runs": 0,
+    "shutdown_performed": false,
+    "source_or_data_changed_by_document_drafting": false,
+    "archival_patch_apply_checks": 5,
+    "python_syntax_checks": 144
+  },
+  "scope": {
+    "host": "wm-vgpu-1011",
+    "scene": "scene0017_000_048",
+    "target": "silver sedan",
+    "camera": "FRONT",
+    "raw_frames": [
+      0,
+      48
+    ],
+    "frame_count": 49,
+    "seed": 0,
+    "original_horizon": 50000,
+    "reference_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+    "frozen_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository",
+    "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012",
+    "other_scene_queue": "paused_by_user"
+  },
+  "architecture_components": "49 FRONT RGB/LiDAR/pose -> body+sky mask and transform -> static Gaussians(SGCM,NPS) + dynamic Gaussians(RGB,opacity) -> rasterizer + shared EnvMap -> composite/original losses -> fixed49 GT/composite/static/dynamic -> branch/road/actor audits",
+  "older_3090_reference": {
+    "run": "/root/autodl-tmp/drivingeditor_repro/runs/0017085_demo_000_020_dynamic_30000",
+    "code": "original2024",
+    "frame_count": 21,
+    "horizon": 30000,
+    "historical_PSNR_db": 32.7914,
+    "metric_state": "pre-reset historical evaluation",
+    "not_saved_post_reset_metric": true,
+    "saved_post_reset_PSNR_approx_db": 9.98,
+    "role": "diagnostic only; do not merge into49frame curves",
+    "evidence_source": "work/vgpu_bugfix_20261012/heartbeat_handoff_S_active.txt"
+  },
+  "completed_historical_arms": [
+    {
+      "arm": "B1",
+      "directory": "B1_original30k_to32000",
+      "steps": 2000,
+      "iterations": [
+        30001,
+        32000
+      ],
+      "objective": "original",
+      "exit_code": 0
+    },
+    {
+      "arm": "B2",
+      "directory": "B2_original30k_to32000_noise_reference",
+      "steps": 2000,
+      "iterations": [
+        30001,
+        32000
+      ],
+      "objective": "original repeat",
+      "exit_code": 0
+    },
+    {
+      "arm": "V",
+      "directory": "V_opacity_outside30k_to32000",
+      "steps": 2000,
+      "iterations": [
+        30001,
+        32000
+      ],
+      "objective": "original plus .05 outside-dynamic-opacity",
+      "exit_code": 0
+    },
+    {
+      "arm": "S",
+      "directory": "S_observed_static_rgb30k_to32000",
+      "steps": 2000,
+      "iterations": [
+        30001,
+        32000
+      ],
+      "objective": "original plus 1*(.8L1+.2DSSIM) observed-static RGB; no V term",
+      "exit_code": 0
+    }
+  ],
+  "retained_horizon": 50000,
+  "evaluation_contract": {
+    "parent_state": "same saved30k model/Adam/RNG/sampler",
+    "paired_camera_time_shift_LR": true,
+    "four_eval_nodes": [
+      30001,
+      30300,
+      31000,
+      32000
+    ],
+    "RNG_preserved": true,
+    "terminal_frame_count_per_arm": 49,
+    "terminal_png_count_per_arm": 294,
+    "preselected_fixed8": [
+      0,
+      10,
+      17,
+      20,
+      24,
+      30,
+      40,
+      48
+    ],
+    "post_endpoint_adverse_supplements": {
+      "V": [
+        45
+      ],
+      "S": [
+        44,
+        48
+      ]
+    },
+    "all49_adverse_frames_retained": true,
+    "mean_frame_PSNR_is_not_pooled_PSNR": true,
+    "one_original_repeat_is_not_CUDA_noise_bound_or_CI": true
+  },
+  "endpoint32k_primary_metrics": [
+    {
+      "region": "non_sky_outside_actor",
+      "array": "alpha_d",
+      "metric": "mean",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.6754787065848351,
+      "B2": 0.6754131961150904,
+      "V": 0.11353581984696089,
+      "S": 0.5163507447584406,
+      "observed_B1_B2_abs_difference_of_means": 6.551046974467845e-05
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "alpha_d",
+      "metric": "fraction_gt_0_1",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.9825513696669609,
+      "B2": 0.9825948373461876,
+      "V": 0.4473328181166133,
+      "S": 0.6909144688517652,
+      "observed_B1_B2_abs_difference_of_means": 4.3467679226694145e-05
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "alpha_d",
+      "metric": "fraction_gt_0_5",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.6418067665671315,
+      "B2": 0.6417306892840915,
+      "V": 0.00988148265175127,
+      "S": 0.4764851887467461,
+      "observed_B1_B2_abs_difference_of_means": 7.607728304004358e-05
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "alpha_d",
+      "metric": "fraction_gt_0_9",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.44318092191592173,
+      "B2": 0.44299472807764434,
+      "V": 0.0005363343570531868,
+      "S": 0.4093314262861876,
+      "observed_B1_B2_abs_difference_of_means": 0.0001861938382773931
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "dynamic",
+      "metric": "rgb_support_gt2_uint8_pixel_fraction",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.9986136495573221,
+      "B2": 0.9985966894228412,
+      "V": 0.7936880714527651,
+      "S": 0.790125533930574,
+      "observed_B1_B2_abs_difference_of_means": 1.6960134480936695e-05
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "static",
+      "metric": "clamped_rgb_mae_vs_gt",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.17185352046565242,
+      "B2": 0.17176810235872655,
+      "V": 0.02100389574983119,
+      "S": 0.011910619604772545,
+      "observed_B1_B2_abs_difference_of_means": 8.541810692586083e-05
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "static",
+      "metric": "clamped_rgb_mse_vs_gt",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.06398397418399179,
+      "B2": 0.06394976257990896,
+      "V": 0.0019282435710981614,
+      "S": 0.0006879108213852529,
+      "observed_B1_B2_abs_difference_of_means": 3.421160408283164e-05
+    },
+    {
+      "region": "non_sky_outside_actor",
+      "array": "static",
+      "metric": "clamped_rgb_psnr_db",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 11.960381004481548,
+      "B2": 11.962831689337348,
+      "V": 27.33124078903803,
+      "S": 31.7634247318007,
+      "observed_B1_B2_abs_difference_of_means": 0.0024506848558001337
+    },
+    {
+      "region": "full",
+      "array": "composite",
+      "metric": "clamped_rgb_mae_vs_gt",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.008119340867786607,
+      "B2": 0.008117350623448318,
+      "V": 0.0089987489636317,
+      "S": 0.009032484048085796,
+      "observed_B1_B2_abs_difference_of_means": 1.9902443382895096e-06
+    },
+    {
+      "region": "full",
+      "array": "composite",
+      "metric": "clamped_rgb_mse_vs_gt",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 0.00023624367596025803,
+      "B2": 0.0002361598235976765,
+      "V": 0.0002660715382269358,
+      "S": 0.00030004037921144985,
+      "observed_B1_B2_abs_difference_of_means": 8.385236258153634e-08
+    },
+    {
+      "region": "full",
+      "array": "composite",
+      "metric": "clamped_rgb_psnr_db",
+      "aggregation": "equal_frame_mean_all49",
+      "B1": 36.43075686122145,
+      "B2": 36.43047376919786,
+      "V": 35.90405933084622,
+      "S": 35.447988574370136,
+      "observed_B1_B2_abs_difference_of_means": 0.00028309202358656194
+    }
+  ],
+  "tradeoff": {
+    "static_MSE_V_and_S_vs_each_original": "improved49/49",
+    "full_composite_MSE_V_and_S_vs_each_original": "worse49/49",
+    "actor_MSE_V_vs_B1_and_B2": "worse49/49",
+    "actor_MSE_S_worse_vs_B1": 46,
+    "actor_MSE_S_worse_vs_B2": 47,
+    "actor_MSE_S_worse_vs_both": 44,
+    "S_pooled_actor_and_core_inner_boundary_error": "higher than B1/B2",
+    "S_vs_V": "descriptive only, added objectives differ",
+    "S_observed_outside_removal_change_support_equal_frame": 0.311951,
+    "S_observed_outside_removal_change_abs_mean": 0.00680946,
+    "interpretation": "allocation and static RGB recovery with composite/target cost; broad dynamic background and raw48 static car-shaped residual persist"
+  },
+  "confirmed_issues": [
+    {
+      "id": "static_reset_after_refinement_end",
+      "class": "engineering schedule and evaluation-state instability",
+      "facts": "Static reset each3000 after15k densification end; saved30k2234298 static base opacity<=.01",
+      "not_established": "sole cause of20k branch confetti"
+    },
+    {
+      "id": "sparse_depth_duplicate_pixel_order",
+      "class": "inherited projection bug",
+      "facts": "Last-write collision target depends on point order; actual3frames8.09-11.73percent farther than nearest",
+      "not_established": "branch collapse causality or verified render improvement"
+    },
+    {
+      "id": "invisible_SGCM_clone_expansion",
+      "class": "implementation contribution eligibility/resource degeneracy",
+      "exact_xyz_extra_copies_20k": 999266,
+      "largest_xyz_group_20k": 158570,
+      "always_under_cutoff_rows_20k": 773564,
+      "alpha_cutoff": 0.00392156862745098,
+      "not_established": "confetti caused by analytically dead subset; fromzero guard effectiveness"
+    },
+    {
+      "id": "implemented_objective_assignment_ambiguity",
+      "class": "per-pixel objective degeneracy",
+      "facts": "Proper split and staticempty/dynamicfull construction both approximately1.25e-10 original total",
+      "not_established": "finite3D realizability, optimizer trajectory, author intent"
+    },
+    {
+      "id": "dynamic_train_export_semantics",
+      "class": "diagnostic mismatch",
+      "facts": "Training dynamic uses shared environment residual; exported actor channel is raw actor",
+      "not_established": "global composite-eval defect"
+    }
+  ],
+  "paper_consistency_and_data_audits": {
+    "inverse_depth": "paper Eq16 explicitly defines inverse sparseLiDAR and rendered depth; not a bug",
+    "harmonic_environment_and_sky900": "inherited implementation choices; exact author convention unverified",
+    "static_time": {
+      "fixed_pose": "raw10",
+      "actual_timestamps_per_arm": 49,
+      "arms": [
+        "B1",
+        "V"
+      ],
+      "max_FP32_static_RGB_regional_MAE_vs_anchor": {
+        "B1": 0.10000425437370496,
+        "V": 0.056647046381638304
+      },
+      "endpoint_controls": [
+        "raw0",
+        "raw48"
+      ],
+      "finding": "opacity/support freeze changes static RGB more than position freeze at endpoints; no additive causal fractions",
+      "raw0_cycle_caveat": "-.48 versus-.28 equals one.2cycle; cannot infer position insignificance at all times",
+      "quality": "counterfactual pose/time combinations have no nonanchor GT quality acceptance"
+    },
+    "initialization": {
+      "sampled_static_rows": 600000,
+      "raw_converted_returns": 8667791,
+      "retained_static_rows": 595894,
+      "actor_PLY_rows": 36406,
+      "selected_actor_sampled_rows": 2568,
+      "selected_actor_rows_remaining_static": 0,
+      "native_target_static_rows": 169,
+      "native_target_unique_returns": 160,
+      "witness_lower_bound_percent": 0.02836,
+      "unresolved_identity_rows": 541052,
+      "unresolved_identity_percent": 90.7967,
+      "native_TOP_labeled_raw_frames": [
+        25,
+        30,
+        35,
+        40,
+        45
+      ],
+      "OBB_associated_rows": 884,
+      "OBB_unlabeled_rows": 717,
+      "OBB_ROAD_rows": 1,
+      "target_witness_rows_outside_OBB": 3,
+      "FRONT_projection_eligible_rows": 143,
+      "FRONT_projection_eligible_unique_returns": 137,
+      "limitation": "Sparse witnessed lower bound and pinhole-center eligibility; no full contamination rate, occlusion/covariance contribution or confetti causality"
+    },
+    "dynamic_actor_native_labels": {
+      "CAR": 1692,
+      "ROAD": 24,
+      "UNDEFINED": 4,
+      "without_labels": 34686,
+      "ROAD_role": "inside body mask but outside target box; not shadow/motion identity; not whole dynamicroad causal explanation"
+    },
+    "preprocessing": {
+      "M_detector_reproduced": false,
+      "shadow_pipeline_reproduced": false,
+      "M_detector_official_revision": "0645dabe307a99f3b59a5a3d3007acfdcad1a39f",
+      "genuine_detector_output_and_scan_time_pose_contract_verified": false,
+      "native_labels_are_audit_only": true,
+      "I_H_T": "unexecuted designs, readiness not established",
+      "M_detector_native_build": {
+        "status": "full_native_core_and_adapter_compilation_passed",
+        "vendor_files_verified": 20,
+        "vendor_source_config_mutations": 0,
+        "configure_exit_code": 0,
+        "compile_exit_code": 0,
+        "private_dependencies": "real private PCL headers/shared libraries; unused PCLConfig Boost imports bypassed",
+        "archive_bytes": 686864,
+        "detector_initialized": false,
+        "real_scans_processed": false,
+        "real_detector_labels_computed": false,
+        "receipt": "debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/native_build_receipt.json"
+      },
+      "time_contract": {
+        "author_equivalence": false,
+        "custom_clock": "WAYMO_FRAME_START_REFERENCE_CLOCK_SECONDS_V1",
+        "candidate_clock_approved_for_execution": false,
+        "Frame_timestamp": "scan/frame start",
+        "Frame_pose": "approximately midpoint, does not correspond to Frame.timestamp",
+        "original_column6": "TOP range-pixel index, not point timestamp",
+        "no_scan_start_mid_pose_author_equivalence_verified": true,
+        "I_readiness": false,
+        "allow_training": false,
+        "allow_detector_execution": false,
+        "receipt": "debug/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/time_contract_handoff_receipt.json"
+      }
+    }
+  },
+  "evidence_root": "docs/autoresearch/worldsim_v82/drivingeditor_debug_20261012/r1/evidence",
+  "evidence_layout": {
+    "debug": "Original outputs/drivingeditor_vgpu_debug/evidence structure",
+    "provenance": "source/archive paths and mapping"
+  },
+  "canonical_evidence_paths": [
+    "debug/task_manifest.json",
+    "debug/loss_audit_summary.json",
+    "debug/depth_definition_clarification_cpu.json",
+    "debug/sgcm_audit_findings.json",
+    "debug/B1_original30k_to32000/receipts/full49_summary.json",
+    "debug/B2_original30k_to32000_noise_reference/receipts/full49_summary.json",
+    "debug/V_opacity_outside30k_to32000/receipts/three_arm_locked_metrics.json",
+    "debug/V_opacity_outside30k_to32000/actual_three_arm_interpretation.json",
+    "debug/S_observed_static_rgb30k_to32000/receipts/S_vs_originals_locked_metrics.json",
+    "debug/S_observed_static_rgb30k_to32000/actual_S_interpretation.json",
+    "debug/fixed_pose_temporal32k/actual_temporal_interpretation_cpu.json",
+    "debug/initialisation_data_gap/HANDOFF.md",
+    "debug/preprocessing_gap_audit/mdetector_readonly_audit.json",
+    "debug/preprocessing_gap_audit/shadow_readonly_audit.json",
+    "debug/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/native_build_receipt.json",
+    "debug/loss_audit/next_diagnostics_cpu/mdet_time_contract_cpu/time_contract_handoff_receipt.json"
+  ],
+  "code_archive": {
+    "third_party_checkouts": "external per repository attributes",
+    "patches": "compatibility/DrivingEditor-v82",
+    "tools": "scripts/worldsim_v82/drivingeditor_debug",
+    "complete_source_snapshots": "remote_code_evidence.tar.gz; exact original path map preserved",
+    "candidate_presence_does_not_mean_executed": true
+  },
+  "dark_report": {
+    "local_path": "outputs/drivingeditor_vgpu_debug/index.html",
+    "sha256": "68a2bba9082da4f0e92abef0354808094eb2d2ae599e2011766e2d24fff54419",
+    "known_reference_count": 138,
+    "CPU_reference_and_decode_QA": "passed in existing receipts",
+    "root_viewed": "decoded raw10 and native raw48",
+    "browser_playback_verified": false,
+    "delivery": "local outputs and zip; no fictitious Git report links"
+  },
+  "large_assets": "Remain at original local/remote paths with catalogue; lightweight Git is not a complete backup",
+  "failure_ledger_refs": [
+    "V76-F03"
+  ],
+  "failure_ledger_delta": "none",
+  "failure_ledger_reason": "No new cross-method scientific cause established; preserve original receipts and do not overwrite V77-F02 diffusion DriveEditor with this DrivingEditor implementation",
+  "new_knowledge": "Existing observations and model can recover static road, while static gain, actor fidelity and whole reconstruction trade off; reset transient does not explain all branch failure",
+  "open_questions": [
+    "fromzero initialization and genuine preprocessing",
+    "static time contract",
+    "complete50k/multiscene acceptance",
+    "dense edited GT and MOVE validation",
+    "exact unpublished author settings"
+  ],
+  "resume_or_shutdown_policy": "Research stopped by user; no automatic restart or shutdown; old completion-only shutdown condition unmet"
+}

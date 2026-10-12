@@ -1,0 +1,29 @@
+{
+  "checked_utc": "2026-10-11T19:52:25.737940+00:00",
+  "manifest_experiment": "original30k_to32000",
+  "manifest_acceptance_not_met": true,
+  "shutdown_authorization_condition": "Power off only after the entire vGPU paper-version debugging task is genuinely complete and verified.",
+  "status": "controlled_training",
+  "node_iteration": 30300,
+  "last_step_iteration": 30363,
+  "exit": null,
+  "processes": {
+    "launcher_pid": {
+      "pid": 36252,
+      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python -u /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/launch_controlled_continuation.py "
+    },
+    "worker_pid": {
+      "pid": 36255,
+      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python -u /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/continuation_harness.py --root-approved-plan /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/root_coordination_receipt.json "
+    }
+  },
+  "GPU_lock": "held",
+  "GPU": "NVIDIA GeForce RTX 4080 SUPER, 19334 MiB, 32760 MiB, 100 %",
+  "GPU_apps": "36255, /root/autodl-tmp/envs/drivingeditor/bin/python, 19744 MiB",
+  "free_disk_GiB": 91.53252792358398,
+  "recent_error_evidence": false,
+  "node_directories": [
+    "30001",
+    "30300"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "status": "PASS_CPU_SOURCE_CONFIG_REVIEW_NO_GPU_AUTHORIZATION",
+  "reviewed_utc": "2026-10-11T19:42:39.586090+00:00",
+  "checks": [
+    {
+      "check": "All12 protected short-window source/config/helper bytes remain frozen",
+      "PASS": true
+    },
+    {
+      "check": "All17 actually materialized proposed files match receipt SHA/size",
+      "PASS": true
+    },
+    {
+      "check": "No new algorithm repository clone or GPU run asserted by materializer",
+      "PASS": true
+    },
+    {
+      "check": "All7 actual harness/launcher/guard sources equal only independently allowed expansion/routing edits",
+      "PASS": true
+    },
+    {
+      "check": "Exactly9 small source files, no hidden third algorithm override",
+      "PASS": true
+    },
+    {
+      "check": "Candidate two algorithm overrides exactly equal reviewed short-window bytes",
+      "PASS": true
+    },
+    {
+      "check": "Baseline and candidate evaluation functions retain exact short-window source",
+      "PASS": true
+    },
+    {
+      "check": "Candidate exact-before-real-backward gate retains identical function source",
+      "PASS": true
+    },
+    {
+      "check": "B1 complete original config values/types are unchanged except routing and the2 V fields",
+      "PASS": true
+    },
+    {
+      "check": "B2 complete original config values/types are unchanged except routing and the2 V fields",
+      "PASS": true
+    },
+    {
+      "check": "V complete original config values/types are unchanged except routing and the2 V fields",
+      "PASS": true
+    },
+    {
+      "check": "B2 config differs from B1 only in independent output path",
+      "PASS": true
+    },
+    {
+      "check": "All arms fresh30k, 2000steps, horizon50k; no reset/densify/SGCM before32000",
+      "PASS": true
+    },
+    {
+      "check": "Locked full49 three-trajectory protocol and four node schedule are unchanged",
+      "PASS": true
+    },
+    {
+      "check": "V draft explicitly leaves real long baseline/binding/pair references missing",
+      "PASS": true
+    },
+    {
+      "check": "B1 actual CPU prepared plan binds actual harness/config and all49 endpoint",
+      "PASS": true
+    },
+    {
+      "check": "B2 actual CPU prepared plan binds actual harness/config and all49 endpoint",
+      "PASS": true
+    }
+  ],
+  "source_materialization_receipt_sha256": "a3a72b7f0c3c6dc9cc9912265babdb5be440f346be1ff3f3947e92199b360697",
+  "long_pair_plan_draft_sha256": "6cf5404908024ef34e32da596fde1c278c8ac977c17d3e883f68d9ebf1702a94",
+  "loss_agent_locked_protocol_sha256": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658",
+  "independent_interpretation_sha256": "af9726931762fde14c00684ed1004ce2a6464a46299e832f969cdce3c916a75d",
+  "materialized_file_sha256": {
+    "continuation_harness.py": "88a2df38e5ac4df5905f1de030701189763d469f9eb3daf9e3339f1931aba829",
+    "continuation_variant_harness.py": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+    "launch_controlled_continuation.py": "6337b0c660d1eedb95b822d87d0feaa6d5691ba22da4de8d8d54fb750a7e68b0",
+    "launch_opacity_outside_continuation.py": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+    "outside_experiment_guard.py": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+    "baseline_noise_reference/continuation_harness.py": "ede8591eb6ffbc4cca970439d1e8dcd5b75a2b008b408fc03cab73c145e7dd3a",
+    "baseline_noise_reference/launch_controlled_continuation.py": "8f684d62ef10c6e90e203f1a5d5eaab2855943f28a1a7fd6460097d346d1d80f",
+    "algorithm_overrides/train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+    "algorithm_overrides/utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab",
+    "baseline_effective_config.yaml": "b003cd21a0f3f7da1d853951b94795118b1faaed185bceb712674924ef5db86a",
+    "baseline_cpu_plan_draft.json": "8c810dd9ff2299197b829f1b7283021a846d9e4c97366907990133069d1f4edc",
+    "baseline_noise_reference/effective_config.yaml": "8facadaeb73ece30bdeaf4ef9bcb4051863750ee9d487f4e5760d3bc40949fd1",
+    "baseline_noise_reference/cpu_plan_draft.json": "d32a1341dbf6807d1edf73caacf099805a52d82482b0dbc1436ef345601085cd",
+    "outside_effective_config.yaml": "97fa2db569466c9a903ad5d83ac788a1b2afeb5fff8804875ffd39c37851ad3c",
+    "outside_cpu_plan_draft.json": "899e1960a97f55fd2cda5a0506a9074b57777a91df83afa77471d68959a3145d",
+    "evaluation_protocol_locked.json": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658",
+    "long_pair_plan_draft.json": "6cf5404908024ef34e32da596fde1c278c8ac977c17d3e883f68d9ebf1702a94"
+  },
+  "actual_prepared_original_arms": {
+    "B1": {
+      "path": "work\\vgpu_bugfix_20261012\\loss_audit\\long_pair_30k_32000\\materialized_plan\\prepared_plan.json",
+      "sha256": "359b9d62ee9aec28951532cedbaed45401838dd6ea2b961d5704bec2d303a2d5",
+      "harness_sha256": "88a2df38e5ac4df5905f1de030701189763d469f9eb3daf9e3339f1931aba829",
+      "protected_input_count": 61
+    },
+    "B2": {
+      "path": "work\\vgpu_bugfix_20261012\\loss_audit\\long_pair_30k_32000\\materialized_plan\\baseline_noise_reference\\prepared_plan.json",
+      "sha256": "0b07086c6d425b7dc8526266b8520d5bd8d8d4736697833574029b2c22681329",
+      "harness_sha256": "ede8591eb6ffbc4cca970439d1e8dcd5b75a2b008b408fc03cab73c145e7dd3a",
+      "protected_input_count": 61
+    }
+  },
+  "runtime_model_Adam_CUDA_RNG_restore_checked": false,
+  "V_launchability": "Not launchable; actual long B1/B2 trajectories, common49 and independent B1/B2 noise receipt must exist and enter a new binding/CPU plan/review/root receipt.",
+  "B1_B2_run_authorization": "Only exact separate root receipts and exclusive GPU handoff can authorize a run; this reviewer uses CPU only.",
+  "GPU_used": false,
+  "current_short_candidate_source_changed": false,
+  "reviewer_source_sha256": "e71628639f978b7733efed43cba33b886e663289b21edb6fabab69c0050a6958"
+}

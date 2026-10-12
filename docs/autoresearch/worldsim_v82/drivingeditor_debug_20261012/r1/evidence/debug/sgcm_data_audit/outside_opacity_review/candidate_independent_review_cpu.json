@@ -1,0 +1,101 @@
+{
+  "review_role": "Independent candidate source reviewer; CPU only",
+  "candidate_only_status": "PASS",
+  "experiment_status": "PENDING_CONTROLLED_GUARD_HARNESS_PLAN_AND_RUNTIME_EVIDENCE",
+  "checks": [
+    {
+      "test": "all_original_paper_losses_exact_ast_preserved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "complete_train_ast_unchanged_except_authorized_additions",
+      "passed": true,
+      "details": {
+        "import": 1,
+        "diagnostic_background_opacity": 1,
+        "diagnostic_lambda_background": 1,
+        "background_evaluation_gate": 1,
+        "pre_add_original_objective_log": 1,
+        "loss_addition": 1,
+        "diagnostic_log": 1
+      }
+    },
+    {
+      "test": "new_term_has_exact_zero_value_and_gradient_on_foreground",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "finite_background_penalty_and_positive_high_alpha_gradient",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "normalization_by_full_image_area",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "foreground_eq13_value_and_gradient_exact_equal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "zero_complement_coefficient_preserves_value_and_gradient",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "approved_baseline_harness_and_plan_sha_match",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "no_cuda_initialized",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "pins": {
+    "loss_audit/source_frozen/utils/paper_losses.py": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8",
+    "loss_audit/source_frozen/train.py": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+    "loss_audit/candidates/opacity_outside/utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab",
+    "loss_audit/candidates/opacity_outside/train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+    "component_diagnostic/continuation_plan/continuation_harness.py": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458",
+    "component_diagnostic/continuation_plan/prepared_plan.json": "f12d6c0801997d0a09020617c7629f5f41abfab4083ebbf0400f1e715be6d205",
+    "component_diagnostic/continuation_plan/runtime_safety_parameterized.py": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1",
+    "component_diagnostic/scripts/component_diagnostic.py": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa"
+  },
+  "numeric_evidence": {
+    "sample_alpha": [
+      [
+        [
+          0.0,
+          0.001,
+          0.1,
+          0.8,
+          0.99,
+          1.0
+        ]
+      ]
+    ],
+    "outside_raw_loss": 2.5095955642494445,
+    "outside_gradient": [
+      [
+        [
+          0.0,
+          0.000333550175704518,
+          0.03607469542051987,
+          0.9345065053155057,
+          17.102520305055524,
+          1668.2017400608859
+        ]
+      ]
+    ]
+  },
+  "torch": "2.12.0+cpu",
+  "CUDA_initialized": false,
+  "formal_files_modified": false,
+  "limitations": "PASS covers only these exact candidate bytes and baseline references. No actual checkpoint restore, CUDA execution, finite3D realizability, quality improvement, or paper formula certification is asserted."
+}

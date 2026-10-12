@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "scope": "Actual variant default CPU preparation plus AST/same-source verification; no training or CUDA",
+  "training_started": false,
+  "CUDA_initialized": false,
+  "harness_sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154",
+  "prepared_plan_sha256": "be9e385b37805457d2d9986985c9b7bd65af3fcde66445d3f15d156db5c90a93",
+  "launcher_sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc",
+  "experiment_binding_sha256": "b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214",
+  "guard_sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9",
+  "approved_baseline_harness_bytes_unchanged": true,
+  "approved_restore_observer_bytes_unchanged": true,
+  "diagnostic_eval_entire_function_source_exactly_equal": true,
+  "diagnostic_eval_function_source_sha256": "339b51f7407ee4f11d9086dedcb72adf967cbf929e4837105db8bdf866f7dfb1",
+  "unchanged_metric_camera_helper_sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa",
+  "actual_source_config_guard_checks": {
+    "sources": {
+      "all_source_inventory_sha_pass": true,
+      "original_files": 148,
+      "replica_files": 148,
+      "changed_files": [
+        "train.py",
+        "utils/paper_losses.py"
+      ],
+      "formal_resume_helper_unchanged": true
+    },
+    "protected": {
+      "protected_original_file_count": 61,
+      "all_protected_original_sha_pass": true
+    },
+    "auxiliary": {
+      "auxiliary_file_count": 10,
+      "all_auxiliary_sha_pass": true
+    },
+    "configuration": {
+      "original_validator_called": true,
+      "all_original_fields_strictly_validated": true,
+      "saved_configuration_kind": "original_parent",
+      "added_fields": {
+        "diagnostic_background_domain_complement": true,
+        "diagnostic_lambda_dynamic_background_opacity": 0.05
+      },
+      "strict_original_config": false,
+      "future_iteration_launch_authorized": false
+    }
+  },
+  "all467_original_inputs_hash_verified": true,
+  "all300_reference_records": 300,
+  "first10_reference_scalars": 10,
+  "actual_variant_GPU_restore_not_yet_executed": true,
+  "GPU_launch_authorized_by_this_receipt": false,
+  "actual_runtime_dependency_paths_148_inventory_verified": {
+    "train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+    "gaussian_renderer/__init__.py": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+    "scene/gaussian_model.py": "41597167ad2eb2cb5e5a8d7f4144204b637732b5ccfce51ccd4c128cbefd1234",
+    "scene/cameras.py": "4917a2753f902995a438ecd6c1b5f794fe3f6114fed5ae9357bb7fbcad065cae",
+    "scene/envlight.py": "d677b60c46a219b84e6fb9c4a86794cf468fc1f043a6e8c689a3ff853650c44f",
+    "utils/paper_checkpoint.py": "38bb38dd81d5ae1df9f909b4e87ddb3582bc1d53da7a890949f5f311c8056bcc",
+    "scene/waymo_loader2.py": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0",
+    "utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab",
+    "utils/paper_masks.py": "a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483",
+    "utils/loss_utils.py": "c4b505fc8df2a4d6780968c320344dcedfdd4335164952137a7651b1d55870eb",
+    "utils/general_utils.py": "81bf915d817f2b6759f72c7e192d2fce5f634b2de755e97373b1df343dccbc11",
+    "utils/sh_utils.py": "ece62fef10e63f3bb1f0c89292ff82591a3a8842c25fe039102d853bc8dded93",
+    "scene/paper_sgcm.py": "a58e694f01f310e87e8523b763f1d23de00bf6400bc499428c5766044930b35b"
+  },
+  "actual_train_imports_PSNR_and_SSIM_from_loss_utils_AST_verified": true
+}

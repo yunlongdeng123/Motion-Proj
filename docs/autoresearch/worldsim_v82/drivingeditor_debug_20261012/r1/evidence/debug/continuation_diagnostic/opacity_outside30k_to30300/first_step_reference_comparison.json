@@ -1,0 +1,190 @@
+{
+  "iteration": 30001,
+  "camera_id": "image_0/0017034",
+  "reference_pin": {
+    "iteration": 30001,
+    "values": {
+      "loss": 0.2980644106864929,
+      "loss_l1": 0.26495927572250366,
+      "loss_paper_depth": 0.012423455715179443,
+      "loss_paper_dynamic_opacity": 2.8994143121963134e-06,
+      "loss_paper_dynamic_rgb": 6.714523624395952e-05,
+      "loss_paper_global_rgb": 0.2967539429664612,
+      "loss_paper_nps": 5.385900294641033e-05,
+      "loss_paper_sky": 5.828513621963793e-06,
+      "loss_ssim": 0.42393267154693604,
+      "psnr": 8.590572357177734
+    },
+    "original_objective_log_key": "loss_original_objective_before_diagnostic",
+    "comparison_phase": "Before actual first Tensor.backward; after rendering/original compose and explicit original-objective capture, before any optimizer update",
+    "policy": "All10 original loss/PSNR scalars must equal actual original baseline30001 exactly; compare original captured total, never recover via subtraction; later losses may differ",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to30300/step_losses.jsonl",
+    "source_sha256": "8f0aeeafde92cfd06399f0247c86ffb91fb06e78c09123dbaa61d89e470de6d1"
+  },
+  "actual_values": {
+    "loss_l1": 0.26495927572250366,
+    "loss_ssim": 0.42393267154693604,
+    "loss_original_objective_before_diagnostic": 0.2980644106864929,
+    "loss_diagnostic_dynamic_background_opacity": 2.8153865337371826,
+    "loss_paper_global_rgb": 0.2967539429664612,
+    "loss_paper_dynamic_rgb": 6.714523624395952e-05,
+    "loss_paper_sky": 5.828513621963793e-06,
+    "loss_paper_nps": 5.385900294641033e-05,
+    "loss_paper_dynamic_opacity": 2.8994143121963134e-06,
+    "loss_paper_depth": 0.012423455715179443,
+    "loss": 0.43883374333381653,
+    "psnr": 8.590572357177734,
+    "iter_time": 1017.5315551757812,
+    "total_points": 2234298.0
+  },
+  "comparisons_original_loss_before_added_term": {
+    "loss": {
+      "actual": 0.2980644106864929,
+      "reference": 0.2980644106864929,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_l1": {
+      "actual": 0.26495927572250366,
+      "reference": 0.26495927572250366,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_paper_depth": {
+      "actual": 0.012423455715179443,
+      "reference": 0.012423455715179443,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_paper_dynamic_opacity": {
+      "actual": 2.8994143121963134e-06,
+      "reference": 2.8994143121963134e-06,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_paper_dynamic_rgb": {
+      "actual": 6.714523624395952e-05,
+      "reference": 6.714523624395952e-05,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_paper_global_rgb": {
+      "actual": 0.2967539429664612,
+      "reference": 0.2967539429664612,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_paper_nps": {
+      "actual": 5.385900294641033e-05,
+      "reference": 5.385900294641033e-05,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_paper_sky": {
+      "actual": 5.828513621963793e-06,
+      "reference": 5.828513621963793e-06,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "loss_ssim": {
+      "actual": 0.42393267154693604,
+      "reference": 0.42393267154693604,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    },
+    "psnr": {
+      "actual": 8.590572357177734,
+      "reference": 8.590572357177734,
+      "exact_equal": true,
+      "abs_delta": 0.0
+    }
+  },
+  "first_backward_reference": {
+    "iteration": 30001,
+    "phase": "before_actual_first_Tensor_backward",
+    "camera_id": "image_0/0017034",
+    "original_values": {
+      "loss": 0.2980644106864929,
+      "loss_l1": 0.26495927572250366,
+      "loss_paper_depth": 0.012423455715179443,
+      "loss_paper_dynamic_opacity": 2.8994143121963134e-06,
+      "loss_paper_dynamic_rgb": 6.714523624395952e-05,
+      "loss_paper_global_rgb": 0.2967539429664612,
+      "loss_paper_nps": 5.385900294641033e-05,
+      "loss_paper_sky": 5.828513621963793e-06,
+      "loss_ssim": 0.42393267154693604,
+      "psnr": 8.590572357177734
+    },
+    "comparisons": {
+      "loss": {
+        "actual": 0.2980644106864929,
+        "reference": 0.2980644106864929,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_l1": {
+        "actual": 0.26495927572250366,
+        "reference": 0.26495927572250366,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_depth": {
+        "actual": 0.012423455715179443,
+        "reference": 0.012423455715179443,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_dynamic_opacity": {
+        "actual": 2.8994143121963134e-06,
+        "reference": 2.8994143121963134e-06,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_dynamic_rgb": {
+        "actual": 6.714523624395952e-05,
+        "reference": 6.714523624395952e-05,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_global_rgb": {
+        "actual": 0.2967539429664612,
+        "reference": 0.2967539429664612,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_nps": {
+        "actual": 5.385900294641033e-05,
+        "reference": 5.385900294641033e-05,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_paper_sky": {
+        "actual": 5.828513621963793e-06,
+        "reference": 5.828513621963793e-06,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "loss_ssim": {
+        "actual": 0.42393267154693604,
+        "reference": 0.42393267154693604,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      },
+      "psnr": {
+        "actual": 8.590572357177734,
+        "reference": 8.590572357177734,
+        "exact_equal": true,
+        "abs_delta": 0.0
+      }
+    },
+    "actual_new_total_loss": 0.43883374333381653,
+    "original_objective_loss": 0.2980644106864929,
+    "background_opacity_unweighted": 2.8153865337371826,
+    "added_weight": 0.05,
+    "tolerance_applied": false,
+    "original_backward_invoked": true,
+    "original_backward_returned": true
+  },
+  "tolerance_applied": false,
+  "comparison_does_not_claim_cuda_bitwise_determinism": true
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "started_utc": "2026-10-11T18:30:27.189950+00:00",
+  "host": "wm-vgpu-1011",
+  "formal_run_readonly": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "frozen_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic",
+  "GPU_lock_nonce": "d9d3765282074891b35ee3389ff05f5c",
+  "supervisor_pid": 29419,
+  "worker_pid": 30216,
+  "worker_pin": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/component_diagnostic.py",
+    "bytes": 43702,
+    "mtime_ns": 1791743415257434075,
+    "sha256": "e12dcfe36b719fb14eafc7ab7997ca3a4cf9a6c046a156930c9a8e5f0d49a7fc"
+  },
+  "FP32_no_AMP": true,
+  "no_training_no_backward_no_optimizer_step": true,
+  "numeric_modifications": [],
+  "author_algorithm_success_claimed": false,
+  "mixed_components_are_diagnostic_only": true,
+  "cases_requested": [
+    [
+      "baseline20",
+      20000,
+      20000,
+      20000
+    ],
+    [
+      "baseline30",
+      30000,
+      30000,
+      30000
+    ],
+    [
+      "s20_d20_e30_ENV_ONLY_DIAGNOSTIC",
+      20000,
+      20000,
+      30000
+    ],
+    [
+      "s30_d30_e20_ENV_ONLY_DIAGNOSTIC",
+      30000,
+      30000,
+      20000
+    ],
+    [
+      "s20_d30_e30_BRANCH_MIX_DIAGNOSTIC",
+      20000,
+      30000,
+      30000
+    ],
+    [
+      "s30_d20_e30_BRANCH_MIX_DIAGNOSTIC",
+      30000,
+      20000,
+      30000
+    ]
+  ],
+  "camera_ids_requested": [
+    "image_0/0017000",
+    "image_0/0017010",
+    "image_0/0017020",
+    "image_0/0017030",
+    "image_0/0017048"
+  ],
+  "actual_exit_code": 1,
+  "error": "RuntimeError(\"Can't call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead.\")",
+  "traceback": "Traceback (most recent call last):\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/component_diagnostic.py\", line 586, in main\n    audit, events, captures, states, frames = cpu_audit(manifest)\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/component_diagnostic.py\", line 264, in cpu_audit\n    branch_stats[branch], branch_captures[branch] = gaussian_stats(capture, model_to_world, singular[0])\n  File \"/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/component_diagnostic.py\", line 136, in gaussian_stats\n    xyz = capture[1].numpy()\nRuntimeError: Can't call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead.\n",
+  "finished_utc": "2026-10-11T18:30:34.878365+00:00",
+  "elapsed_seconds": 7.687663205899298
+}

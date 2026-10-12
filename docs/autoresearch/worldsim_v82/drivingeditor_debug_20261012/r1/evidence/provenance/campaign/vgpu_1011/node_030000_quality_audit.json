@@ -1,0 +1,1637 @@
+{
+  "schema_version": 1,
+  "status": "identified_periodic_static_opacity_reset_at_checkpoint",
+  "quality_pass": false,
+  "created_utc": "2026-10-11T15:55:52.8453999Z",
+  "evidence_collected_utc": "2026-10-11T15:51:46.9936730+00:00",
+  "remote": "wm-vgpu-1011",
+  "run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011",
+  "conclusion_zh": "30k质量跌落主要由冻结baseline每3000步执行的静态opacity reset与30k保存/评估重合引起。30k保存和评估的是真实reset后状态；动态分支未reset。TB已证明后续训练PSNR恢复，但尚未有reset后另一个完整49帧评估，不能宣称质量通过或替换30k真实指标。",
+  "proven": [
+    "Frozen and baseline train.py have identical SHA256; relevant schedule is inherited baseline behavior.",
+    "Static reset executes outside the densification condition, so densify_until_iter=15000 does not stop opacity resets at 30000.",
+    "30000 % opacity_reset_interval(3000) == 0; the dynamic branch is excluded from reset.",
+    "Reset caps static sigmoid opacity at 0.01, replaces its nn.Parameter and zeros Adam exp_avg and exp_avg_sq.",
+    "The new opacity parameter has no gradient from the already completed backward pass; the subsequent optimizer step does not undo the cap in that iteration.",
+    "Paper-path model components are saved after reset/optimizer/SGCM and evaluated from the same current model, with continuation state and complete checkpoint event published after evaluation.",
+    "TB shows a sharp reset-boundary discontinuity and subsequent recovery; an earlier reset at 27000 exhibits the same pattern.",
+    "All49 existing PNG composite images have low30k CPU PSNR consistent with original float metrics; this is not merely a bad JSON metric or video display.",
+    "Independent CPU checkpoint audit confirms100% of2234298 static opacity values<=0.01000001, max0.009999998845; static Adam first/second moments are entirely zero, while dynamic opacity is not capped and retains nonzero moments."
+  ],
+  "inference": [
+    "The static opacity reset explains the dominant full-frame drop and bright transparent backgrounds; preserved high dynamic-ROI PSNR is consistent with dynamic opacity not being reset.",
+    "Observed recovery supports a temporary scheduled reset disturbance rather than sustained optimizer divergence; this does not establish later full49 quality or rule out smaller unrelated quality limitations."
+  ],
+  "source_hashes": {
+    "frozen_train_sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+    "baseline_train_sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+    "gaussian_model_sha256": "41597167ad2eb2cb5e5a8d7f4144204b637732b5ccfce51ccd4c128cbefd1234"
+  },
+  "configuration": {
+    "white_background": {
+      "value": "false",
+      "line": 34
+    },
+    "env_optimize_until": {
+      "value": "1000000000",
+      "line": 58
+    },
+    "iterations": {
+      "value": "50000",
+      "line": 60
+    },
+    "opacity_reset_interval": {
+      "value": "3000",
+      "line": 77
+    },
+    "densify_until_iter": {
+      "value": "15000",
+      "line": 79
+    },
+    "scale_increase_interval": {
+      "value": "5000",
+      "line": 85
+    },
+    "paper_eval_train_each_checkpoint": {
+      "value": "true",
+      "line": 119
+    },
+    "dynamic_densify_until_iter": {
+      "value": "15000",
+      "line": 122
+    },
+    "paper_method": {
+      "value": "true",
+      "line": 123
+    }
+  },
+  "exact_iteration_order": [
+    {
+      "step": "forward_and_backward_then_cache_train_loss_psnr",
+      "source": "frozen_repository/train.py:522-531",
+      "meaning": "train/psnr at step30000 describes pre-reset forward, even though written later by complete_eval"
+    },
+    {
+      "step": "static_and_dynamic_densification_helper",
+      "source": "frozen_repository/train.py:563-578",
+      "meaning": "helper performs static reset at lines764-766; dynamic branch not reset"
+    },
+    {
+      "step": "reset_static_opacity",
+      "source": "frozen_repository/scene/gaussian_model.py:409-426",
+      "meaning": "cap sigmoid opacity<=0.01, replace parameter, clear Adam first/second moments"
+    },
+    {
+      "step": "optimizer_step_and_zero_grad",
+      "source": "frozen_repository/train.py:597-606",
+      "meaning": "static, dynamic and environment steps occur after reset; replacement static opacity has no current backward gradient"
+    },
+    {
+      "step": "sgcm_then_visualization_and_scale",
+      "source": "frozen_repository/train.py:607-685",
+      "meaning": "SGCM configured to end15000; resolution_scales=[4], so upScale=max(0,index-1) does not change scale here"
+    },
+    {
+      "step": "save_static_dynamic_environment_components",
+      "source": "frozen_repository/train.py:692-695",
+      "meaning": "the3 model .pth components contain reset-state parameters"
+    },
+    {
+      "step": "full49_evaluation",
+      "source": "frozen_repository/train.py:699-703",
+      "meaning": "rerenders current post-reset model; train log_dict remains cached pre-reset measurement"
+    },
+    {
+      "step": "capture_and_publish_continuation_event",
+      "source": "frozen_repository/train.py:704-709",
+      "meaning": "training_state and complete event refer to evaluation-complete continuation"
+    }
+  ],
+  "checkpoint_event": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/checkpoint_events/iteration_030000.json",
+    "status": "complete",
+    "iteration": 30000,
+    "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+    "checkpoints": {
+      "static": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+        "bytes": 1751701598
+      },
+      "dynamic": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt30000.pth",
+        "bytes": 805090078
+      },
+      "environment": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt30000.pth",
+        "bytes": 226494608
+      },
+      "training_state": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state30000.pth",
+        "bytes": 23640
+      }
+    },
+    "frames": 49,
+    "metric_semantics": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
+    "tensor_content_audit": "Inspected shared CPU audit JSON only, without reloading tensors: outputs/drivingeditor_campaign/vgpu_1011/checkpoint_030000_cpu_validation.json"
+  },
+  "metrics": {
+    "20000": {
+      "full": {
+        "split": "train",
+        "iteration": 20000,
+        "psnr": 35.24852137662926,
+        "ssim": 0.9683691932230579,
+        "lpips": 0.04547271820507487
+      },
+      "region": {
+        "split": "train",
+        "iteration": 20000,
+        "frame_count": 49,
+        "aggregation": "Arithmetic mean of per-frame PSNR, later macro-average scenes equally.",
+        "perfect_error_policy": "Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.",
+        "mask_protocol": "Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.",
+        "interpretation": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
+        "limitations": [
+          "Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.",
+          "No deletion-hole quality is measured: historical unobstructed GT is required for Table V.",
+          "Inferred/prepared masks are not independent manually annotated ground truth."
+        ],
+        "summary": {
+          "dynamic_psnr_star": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 30.538101648382945,
+            "psnr_zero_padded_mean": 49.97895824901835
+          },
+          "static_psnr_s": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 35.38503577923277,
+            "psnr_zero_padded_mean": 35.46204055443036
+          },
+          "static_psnr_sr": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 13.669739517361169,
+            "psnr_zero_padded_mean": 13.746744292558764
+          }
+        }
+      },
+      "region_list_keys": {
+        "limitations": 3,
+        "frames": 49
+      }
+    },
+    "30000": {
+      "full": {
+        "split": "train",
+        "iteration": 30000,
+        "psnr": 10.48350260209064,
+        "ssim": 0.6018059375334759,
+        "lpips": 0.3629990019360367
+      },
+      "region": {
+        "split": "train",
+        "iteration": 30000,
+        "frame_count": 49,
+        "aggregation": "Arithmetic mean of per-frame PSNR, later macro-average scenes equally.",
+        "perfect_error_policy": "Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.",
+        "mask_protocol": "Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.",
+        "interpretation": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
+        "limitations": [
+          "Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.",
+          "No deletion-hole quality is measured: historical unobstructed GT is required for Table V.",
+          "Inferred/prepared masks are not independent manually annotated ground truth."
+        ],
+        "summary": {
+          "dynamic_psnr_star": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 36.75880252468145,
+            "psnr_zero_padded_mean": 56.19965912531685
+          },
+          "static_psnr_s": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 10.406639366698025,
+            "psnr_zero_padded_mean": 10.483644141895631
+          },
+          "static_psnr_sr": {
+            "valid_frames": 49,
+            "perfect_frames": 0,
+            "psnr_roi_mean": 5.393379377261491,
+            "psnr_zero_padded_mean": 5.470384152459097
+          }
+        }
+      },
+      "region_list_keys": {
+        "limitations": 3,
+        "frames": 49
+      }
+    }
+  },
+  "png_cpu": {
+    "20000": {
+      "count": 49,
+      "shapes": [
+        [
+          320,
+          480,
+          3
+        ]
+      ],
+      "mean_per_frame_composite_psnr": 35.20863038830409,
+      "min_per_frame_composite_psnr": 33.05206225360127,
+      "max_per_frame_composite_psnr": 37.151283872608005,
+      "mean_static_full_psnr": 13.595899471932306,
+      "mean_gt_intensity": 0.2848086988267529,
+      "mean_composite_intensity": 0.2842879884592726,
+      "mean_static_intensity": 0.33722933965252766,
+      "first_and_middle_frame": [
+        {
+          "frame": "image_0_0017000.png",
+          "gt_mean": 0.2881704367510892,
+          "composite_mean": 0.28814101647603485,
+          "static_mean": 0.35174697031590413,
+          "composite_psnr": 36.40039030744181,
+          "static_full_psnr": 12.846127808695417
+        },
+        {
+          "frame": "image_0_0017024.png",
+          "gt_mean": 0.27854308789488014,
+          "composite_mean": 0.27802445874183,
+          "static_mean": 0.3302701780364922,
+          "composite_psnr": 35.009046119738485,
+          "static_full_psnr": 13.614711029704978
+        }
+      ],
+      "quantized_png_metrics": true
+    },
+    "30000": {
+      "count": 49,
+      "shapes": [
+        [
+          320,
+          480,
+          3
+        ]
+      ],
+      "mean_per_frame_composite_psnr": 10.493672974710098,
+      "min_per_frame_composite_psnr": 9.398364844051645,
+      "max_per_frame_composite_psnr": 11.790738642630068,
+      "mean_static_full_psnr": 5.43489907460891,
+      "mean_gt_intensity": 0.2848086988267529,
+      "mean_composite_intensity": 0.5002567209175337,
+      "mean_static_intensity": 0.6671920320211417,
+      "first_and_middle_frame": [
+        {
+          "frame": "image_0_0017000.png",
+          "gt_mean": 0.2881704367510892,
+          "composite_mean": 0.46739305044934654,
+          "static_mean": 0.6534769454656864,
+          "composite_psnr": 11.790738642630068,
+          "static_full_psnr": 5.532294187097426
+        },
+        {
+          "frame": "image_0_0017024.png",
+          "gt_mean": 0.27854308789488014,
+          "composite_mean": 0.49940883714596956,
+          "static_mean": 0.6641053921568626,
+          "composite_psnr": 10.248806939397161,
+          "static_full_psnr": 5.412217522864462
+        }
+      ],
+      "quantized_png_metrics": true
+    }
+  },
+  "tensorboard": {
+    "parser": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/events.out.tfevents.1791713620.autodl-container-396445a2a1-1984c713.8772.0",
+        "bytes": 14672810,
+        "records": 249329,
+        "incomplete_active_tail": false,
+        "crc_verification": "not performed; framing and protobuf decoded"
+      }
+    ],
+    "tag_counts": {
+      "train/loss": 20731,
+      "train/loss_l1": 20731,
+      "train/loss_viewpoint - l1_loss": 2,
+      "train/loss_viewpoint - psnr": 2,
+      "train/loss_viewpoint - ssim": 2,
+      "train/psnr": 20731,
+      "train/total_points": 20731
+    },
+    "evaluation": [
+      {
+        "tag": "train/loss_viewpoint - l1_loss",
+        "step": 20000,
+        "wall_time": 1791722622.398295,
+        "value": 0.009390873834490776
+      },
+      {
+        "tag": "train/loss_viewpoint - psnr",
+        "step": 20000,
+        "wall_time": 1791722622.3984056,
+        "value": 35.24851989746094
+      },
+      {
+        "tag": "train/loss_viewpoint - ssim",
+        "step": 20000,
+        "wall_time": 1791722622.398925,
+        "value": 0.96836918592453
+      },
+      {
+        "tag": "train/loss_viewpoint - l1_loss",
+        "step": 30000,
+        "wall_time": 1791733144.4317782,
+        "value": 0.2165604680776596
+      },
+      {
+        "tag": "train/loss_viewpoint - psnr",
+        "step": 30000,
+        "wall_time": 1791733144.4318783,
+        "value": 10.483502388000488
+      },
+      {
+        "tag": "train/loss_viewpoint - ssim",
+        "step": 30000,
+        "wall_time": 1791733144.4319093,
+        "value": 0.6018059253692627
+      }
+    ],
+    "train_reset_curve": [
+      {
+        "tag": "train/loss",
+        "step": 26995,
+        "wall_time": 1791729917.6031852,
+        "value": 0.011638063006103039
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26995,
+        "wall_time": 1791729917.603276,
+        "value": 37.202232360839844
+      },
+      {
+        "tag": "train/loss",
+        "step": 26996,
+        "wall_time": 1791729918.9684856,
+        "value": 0.019009685143828392
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26996,
+        "wall_time": 1791729918.9687152,
+        "value": 33.324058532714844
+      },
+      {
+        "tag": "train/loss",
+        "step": 26997,
+        "wall_time": 1791729919.9319909,
+        "value": 0.013427563942968845
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26997,
+        "wall_time": 1791729919.9322002,
+        "value": 35.6154670715332
+      },
+      {
+        "tag": "train/loss",
+        "step": 26998,
+        "wall_time": 1791729921.1464155,
+        "value": 0.014620490372180939
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26998,
+        "wall_time": 1791729921.1465247,
+        "value": 35.75654602050781
+      },
+      {
+        "tag": "train/loss",
+        "step": 26999,
+        "wall_time": 1791729922.215626,
+        "value": 0.01367603987455368
+      },
+      {
+        "tag": "train/psnr",
+        "step": 26999,
+        "wall_time": 1791729922.216064,
+        "value": 35.56718826293945
+      },
+      {
+        "tag": "train/loss",
+        "step": 27000,
+        "wall_time": 1791729923.9258113,
+        "value": 0.01261118520051241
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27000,
+        "wall_time": 1791729923.9259455,
+        "value": 36.45277404785156
+      },
+      {
+        "tag": "train/loss",
+        "step": 27001,
+        "wall_time": 1791729924.851813,
+        "value": 0.23760731518268585
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27001,
+        "wall_time": 1791729924.851938,
+        "value": 10.677297592163086
+      },
+      {
+        "tag": "train/loss",
+        "step": 27002,
+        "wall_time": 1791729926.1899583,
+        "value": 0.30468177795410156
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27002,
+        "wall_time": 1791729926.1908567,
+        "value": 8.420430183410645
+      },
+      {
+        "tag": "train/loss",
+        "step": 27003,
+        "wall_time": 1791729927.2114775,
+        "value": 0.24882809817790985
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27003,
+        "wall_time": 1791729927.2115686,
+        "value": 10.228157997131348
+      },
+      {
+        "tag": "train/loss",
+        "step": 27004,
+        "wall_time": 1791729928.706141,
+        "value": 0.2808082103729248
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27004,
+        "wall_time": 1791729928.7063644,
+        "value": 9.019073486328125
+      },
+      {
+        "tag": "train/loss",
+        "step": 27005,
+        "wall_time": 1791729929.75203,
+        "value": 0.24302321672439575
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27005,
+        "wall_time": 1791729929.7523913,
+        "value": 10.424478530883789
+      },
+      {
+        "tag": "train/loss",
+        "step": 27006,
+        "wall_time": 1791729930.1662292,
+        "value": 0.246169313788414
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27006,
+        "wall_time": 1791729930.1663678,
+        "value": 10.006962776184082
+      },
+      {
+        "tag": "train/loss",
+        "step": 27007,
+        "wall_time": 1791729931.6950877,
+        "value": 0.24112917482852936
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27007,
+        "wall_time": 1791729931.695187,
+        "value": 10.203426361083984
+      },
+      {
+        "tag": "train/loss",
+        "step": 27008,
+        "wall_time": 1791729932.7335174,
+        "value": 0.20266488194465637
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27008,
+        "wall_time": 1791729932.733607,
+        "value": 12.046316146850586
+      },
+      {
+        "tag": "train/loss",
+        "step": 27009,
+        "wall_time": 1791729934.0805402,
+        "value": 0.21556667983531952
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27009,
+        "wall_time": 1791729934.080668,
+        "value": 11.346707344055176
+      },
+      {
+        "tag": "train/loss",
+        "step": 27010,
+        "wall_time": 1791729934.4743123,
+        "value": 0.17474843561649323
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27010,
+        "wall_time": 1791729934.474624,
+        "value": 12.806483268737793
+      },
+      {
+        "tag": "train/loss",
+        "step": 27050,
+        "wall_time": 1791729975.7960908,
+        "value": 0.04174463078379631
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27050,
+        "wall_time": 1791729975.7962272,
+        "value": 27.40826416015625
+      },
+      {
+        "tag": "train/loss",
+        "step": 27100,
+        "wall_time": 1791730028.6230369,
+        "value": 0.048955947160720825
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27100,
+        "wall_time": 1791730028.6234288,
+        "value": 26.267187118530273
+      },
+      {
+        "tag": "train/loss",
+        "step": 27150,
+        "wall_time": 1791730081.8113084,
+        "value": 0.022621342912316322
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27150,
+        "wall_time": 1791730081.811527,
+        "value": 31.556575775146484
+      },
+      {
+        "tag": "train/loss",
+        "step": 27200,
+        "wall_time": 1791730135.2810557,
+        "value": 0.027427222579717636
+      },
+      {
+        "tag": "train/psnr",
+        "step": 27200,
+        "wall_time": 1791730135.281496,
+        "value": 30.273073196411133
+      },
+      {
+        "tag": "train/loss",
+        "step": 29995,
+        "wall_time": 1791733045.547913,
+        "value": 0.013385824859142303
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29995,
+        "wall_time": 1791733045.5481992,
+        "value": 36.380104064941406
+      },
+      {
+        "tag": "train/loss",
+        "step": 29996,
+        "wall_time": 1791733046.4969702,
+        "value": 0.013668624684214592
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29996,
+        "wall_time": 1791733046.4974365,
+        "value": 36.1795654296875
+      },
+      {
+        "tag": "train/loss",
+        "step": 29997,
+        "wall_time": 1791733047.6544878,
+        "value": 0.013410585932433605
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29997,
+        "wall_time": 1791733047.6547856,
+        "value": 36.37251663208008
+      },
+      {
+        "tag": "train/loss",
+        "step": 29998,
+        "wall_time": 1791733048.6986747,
+        "value": 0.013105196878314018
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29998,
+        "wall_time": 1791733048.698973,
+        "value": 35.9481315612793
+      },
+      {
+        "tag": "train/loss",
+        "step": 29999,
+        "wall_time": 1791733049.8163443,
+        "value": 0.012714491225779057
+      },
+      {
+        "tag": "train/psnr",
+        "step": 29999,
+        "wall_time": 1791733049.816969,
+        "value": 36.18342971801758
+      },
+      {
+        "tag": "train/loss",
+        "step": 30000,
+        "wall_time": 1791733059.4950013,
+        "value": 0.01588490419089794
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30000,
+        "wall_time": 1791733059.495669,
+        "value": 34.513126373291016
+      },
+      {
+        "tag": "train/loss",
+        "step": 30001,
+        "wall_time": 1791733146.017829,
+        "value": 0.2980644106864929
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30001,
+        "wall_time": 1791733146.018157,
+        "value": 8.590572357177734
+      },
+      {
+        "tag": "train/loss",
+        "step": 30002,
+        "wall_time": 1791733146.9351172,
+        "value": 0.22147797048091888
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30002,
+        "wall_time": 1791733146.9353974,
+        "value": 11.38932991027832
+      },
+      {
+        "tag": "train/loss",
+        "step": 30003,
+        "wall_time": 1791733147.9239888,
+        "value": 0.2504688501358032
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30003,
+        "wall_time": 1791733147.9242628,
+        "value": 10.231077194213867
+      },
+      {
+        "tag": "train/loss",
+        "step": 30004,
+        "wall_time": 1791733149.091553,
+        "value": 0.26245471835136414
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30004,
+        "wall_time": 1791733149.091839,
+        "value": 9.74116039276123
+      },
+      {
+        "tag": "train/loss",
+        "step": 30005,
+        "wall_time": 1791733150.1027656,
+        "value": 0.22736608982086182
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30005,
+        "wall_time": 1791733150.1030471,
+        "value": 10.958243370056152
+      },
+      {
+        "tag": "train/loss",
+        "step": 30006,
+        "wall_time": 1791733151.3919983,
+        "value": 0.24956795573234558
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30006,
+        "wall_time": 1791733151.3922157,
+        "value": 10.047859191894531
+      },
+      {
+        "tag": "train/loss",
+        "step": 30007,
+        "wall_time": 1791733152.287606,
+        "value": 0.17802490293979645
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30007,
+        "wall_time": 1791733152.2880278,
+        "value": 13.020528793334961
+      },
+      {
+        "tag": "train/loss",
+        "step": 30008,
+        "wall_time": 1791733153.1846075,
+        "value": 0.15743032097816467
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30008,
+        "wall_time": 1791733153.1849306,
+        "value": 14.008074760437012
+      },
+      {
+        "tag": "train/loss",
+        "step": 30009,
+        "wall_time": 1791733154.0869222,
+        "value": 0.13278163969516754
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30009,
+        "wall_time": 1791733154.0871677,
+        "value": 15.377588272094727
+      },
+      {
+        "tag": "train/loss",
+        "step": 30010,
+        "wall_time": 1791733154.9787118,
+        "value": 0.12668494880199432
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30010,
+        "wall_time": 1791733154.9793293,
+        "value": 15.79271125793457
+      },
+      {
+        "tag": "train/loss",
+        "step": 30011,
+        "wall_time": 1791733155.3370605,
+        "value": 0.20502690970897675
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30011,
+        "wall_time": 1791733155.3375082,
+        "value": 11.722535133361816
+      },
+      {
+        "tag": "train/loss",
+        "step": 30012,
+        "wall_time": 1791733155.677013,
+        "value": 0.17880530655384064
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30012,
+        "wall_time": 1791733155.6772282,
+        "value": 12.667046546936035
+      },
+      {
+        "tag": "train/loss",
+        "step": 30013,
+        "wall_time": 1791733156.7905347,
+        "value": 0.13987192511558533
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30013,
+        "wall_time": 1791733156.7907505,
+        "value": 15.71672534942627
+      },
+      {
+        "tag": "train/loss",
+        "step": 30014,
+        "wall_time": 1791733157.1397688,
+        "value": 0.1536581963300705
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30014,
+        "wall_time": 1791733157.140082,
+        "value": 14.04284954071045
+      },
+      {
+        "tag": "train/loss",
+        "step": 30015,
+        "wall_time": 1791733157.5257986,
+        "value": 0.15824176371097565
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30015,
+        "wall_time": 1791733157.5260084,
+        "value": 14.15916919708252
+      },
+      {
+        "tag": "train/loss",
+        "step": 30016,
+        "wall_time": 1791733158.9746845,
+        "value": 0.14130793511867523
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30016,
+        "wall_time": 1791733158.9750352,
+        "value": 15.435932159423828
+      },
+      {
+        "tag": "train/loss",
+        "step": 30017,
+        "wall_time": 1791733159.8906343,
+        "value": 0.07521040737628937
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30017,
+        "wall_time": 1791733159.8911624,
+        "value": 21.736385345458984
+      },
+      {
+        "tag": "train/loss",
+        "step": 30018,
+        "wall_time": 1791733160.7981107,
+        "value": 0.08571373671293259
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30018,
+        "wall_time": 1791733160.7983935,
+        "value": 20.978086471557617
+      },
+      {
+        "tag": "train/loss",
+        "step": 30019,
+        "wall_time": 1791733161.6965292,
+        "value": 0.07328393310308456
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30019,
+        "wall_time": 1791733161.6967387,
+        "value": 22.53952980041504
+      },
+      {
+        "tag": "train/loss",
+        "step": 30020,
+        "wall_time": 1791733163.0845923,
+        "value": 0.11390848457813263
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30020,
+        "wall_time": 1791733163.0849075,
+        "value": 18.666187286376953
+      },
+      {
+        "tag": "train/loss",
+        "step": 30021,
+        "wall_time": 1791733164.022342,
+        "value": 0.07728634029626846
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30021,
+        "wall_time": 1791733164.02254,
+        "value": 22.579526901245117
+      },
+      {
+        "tag": "train/loss",
+        "step": 30022,
+        "wall_time": 1791733164.9217298,
+        "value": 0.06870748102664948
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30022,
+        "wall_time": 1791733164.9220102,
+        "value": 23.631420135498047
+      },
+      {
+        "tag": "train/loss",
+        "step": 30023,
+        "wall_time": 1791733166.2394323,
+        "value": 0.10386258363723755
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30023,
+        "wall_time": 1791733166.239832,
+        "value": 20.57790756225586
+      },
+      {
+        "tag": "train/loss",
+        "step": 30024,
+        "wall_time": 1791733167.1278427,
+        "value": 0.06165098771452904
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30024,
+        "wall_time": 1791733167.1282105,
+        "value": 24.53107452392578
+      },
+      {
+        "tag": "train/loss",
+        "step": 30025,
+        "wall_time": 1791733168.4176047,
+        "value": 0.09849661588668823
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30025,
+        "wall_time": 1791733168.4179611,
+        "value": 21.162450790405273
+      },
+      {
+        "tag": "train/loss",
+        "step": 30050,
+        "wall_time": 1791733194.181395,
+        "value": 0.06405992060899734
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30050,
+        "wall_time": 1791733194.1816971,
+        "value": 24.4111270904541
+      },
+      {
+        "tag": "train/loss",
+        "step": 30075,
+        "wall_time": 1791733218.4362159,
+        "value": 0.024079252034425735
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30075,
+        "wall_time": 1791733218.436494,
+        "value": 31.043928146362305
+      },
+      {
+        "tag": "train/loss",
+        "step": 30100,
+        "wall_time": 1791733245.13884,
+        "value": 0.026479659602046013
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30100,
+        "wall_time": 1791733245.1389818,
+        "value": 30.37411117553711
+      },
+      {
+        "tag": "train/loss",
+        "step": 30125,
+        "wall_time": 1791733271.4271052,
+        "value": 0.022321373224258423
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30125,
+        "wall_time": 1791733271.4273984,
+        "value": 31.354564666748047
+      },
+      {
+        "tag": "train/loss",
+        "step": 30150,
+        "wall_time": 1791733296.7969139,
+        "value": 0.02451208047568798
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30150,
+        "wall_time": 1791733296.797213,
+        "value": 30.837284088134766
+      },
+      {
+        "tag": "train/loss",
+        "step": 30175,
+        "wall_time": 1791733323.574491,
+        "value": 0.03628318011760712
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30175,
+        "wall_time": 1791733323.574788,
+        "value": 28.110130310058594
+      },
+      {
+        "tag": "train/loss",
+        "step": 30200,
+        "wall_time": 1791733347.900236,
+        "value": 0.016677988693118095
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30200,
+        "wall_time": 1791733347.9005387,
+        "value": 34.19248962402344
+      },
+      {
+        "tag": "train/loss",
+        "step": 30225,
+        "wall_time": 1791733375.7812262,
+        "value": 0.032072171568870544
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30225,
+        "wall_time": 1791733375.781532,
+        "value": 29.145015716552734
+      },
+      {
+        "tag": "train/loss",
+        "step": 30250,
+        "wall_time": 1791733402.1804507,
+        "value": 0.014876346103847027
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30250,
+        "wall_time": 1791733402.1808844,
+        "value": 34.2315559387207
+      },
+      {
+        "tag": "train/loss",
+        "step": 30275,
+        "wall_time": 1791733427.465152,
+        "value": 0.023257508873939514
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30275,
+        "wall_time": 1791733427.4652972,
+        "value": 31.498825073242188
+      },
+      {
+        "tag": "train/loss",
+        "step": 30300,
+        "wall_time": 1791733451.6503024,
+        "value": 0.024060342460870743
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30300,
+        "wall_time": 1791733451.6506596,
+        "value": 31.0374813079834
+      },
+      {
+        "tag": "train/loss",
+        "step": 30325,
+        "wall_time": 1791733479.9306777,
+        "value": 0.01679225265979767
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30325,
+        "wall_time": 1791733479.9310546,
+        "value": 33.16851043701172
+      },
+      {
+        "tag": "train/loss",
+        "step": 30350,
+        "wall_time": 1791733506.901127,
+        "value": 0.015496142208576202
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30350,
+        "wall_time": 1791733506.9013426,
+        "value": 33.775299072265625
+      },
+      {
+        "tag": "train/loss",
+        "step": 30375,
+        "wall_time": 1791733533.6900358,
+        "value": 0.0182350967079401
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30375,
+        "wall_time": 1791733533.6905174,
+        "value": 33.01531982421875
+      },
+      {
+        "tag": "train/loss",
+        "step": 30400,
+        "wall_time": 1791733560.751292,
+        "value": 0.015521927736699581
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30400,
+        "wall_time": 1791733560.751436,
+        "value": 33.56965637207031
+      },
+      {
+        "tag": "train/loss",
+        "step": 30425,
+        "wall_time": 1791733586.1455133,
+        "value": 0.0240181777626276
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30425,
+        "wall_time": 1791733586.1458027,
+        "value": 30.893285751342773
+      },
+      {
+        "tag": "train/loss",
+        "step": 30450,
+        "wall_time": 1791733611.185222,
+        "value": 0.016814474016427994
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30450,
+        "wall_time": 1791733611.1855323,
+        "value": 33.81486511230469
+      },
+      {
+        "tag": "train/loss",
+        "step": 30475,
+        "wall_time": 1791733637.8354366,
+        "value": 0.013446246273815632
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30475,
+        "wall_time": 1791733637.8356855,
+        "value": 35.30304718017578
+      },
+      {
+        "tag": "train/loss",
+        "step": 30500,
+        "wall_time": 1791733665.6203287,
+        "value": 0.017930978909134865
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30500,
+        "wall_time": 1791733665.6206257,
+        "value": 33.113555908203125
+      },
+      {
+        "tag": "train/loss",
+        "step": 30525,
+        "wall_time": 1791733689.8038664,
+        "value": 0.01660885103046894
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30525,
+        "wall_time": 1791733689.8041723,
+        "value": 34.20967483520508
+      },
+      {
+        "tag": "train/loss",
+        "step": 30550,
+        "wall_time": 1791733715.5553713,
+        "value": 0.02058098278939724
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30550,
+        "wall_time": 1791733715.5556679,
+        "value": 31.94668960571289
+      },
+      {
+        "tag": "train/loss",
+        "step": 30575,
+        "wall_time": 1791733742.0055318,
+        "value": 0.013203897513449192
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30575,
+        "wall_time": 1791733742.005783,
+        "value": 35.292179107666016
+      },
+      {
+        "tag": "train/loss",
+        "step": 30600,
+        "wall_time": 1791733767.2074237,
+        "value": 0.020813267678022385
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30600,
+        "wall_time": 1791733767.2077112,
+        "value": 31.833646774291992
+      },
+      {
+        "tag": "train/loss",
+        "step": 30625,
+        "wall_time": 1791733794.2446244,
+        "value": 0.02171090804040432
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30625,
+        "wall_time": 1791733794.2453616,
+        "value": 31.928041458129883
+      },
+      {
+        "tag": "train/loss",
+        "step": 30650,
+        "wall_time": 1791733819.4232516,
+        "value": 0.011360532604157925
+      },
+      {
+        "tag": "train/psnr",
+        "step": 30650,
+        "wall_time": 1791733819.4233909,
+        "value": 36.92487716674805
+      }
+    ],
+    "latest_train": {
+      "train/psnr": {
+        "tag": "train/psnr",
+        "step": 30731,
+        "wall_time": 1791733909.4640532,
+        "value": 33.847373962402344
+      },
+      "train/loss": {
+        "tag": "train/loss",
+        "step": 30731,
+        "wall_time": 1791733909.4639225,
+        "value": 0.016282429918646812
+      },
+      "train/total_points": {
+        "tag": "train/total_points",
+        "step": 30731,
+        "wall_time": 1791733909.4642997,
+        "value": 2234298.0
+      }
+    },
+    "windows": [
+      {
+        "start": 29800,
+        "end": 29999,
+        "train/psnr": {
+          "count": 200,
+          "min": 32.847015380859375,
+          "max": 38.71086883544922,
+          "mean": 35.867243480682376
+        },
+        "train/loss": {
+          "count": 200,
+          "min": 0.009815845638513565,
+          "max": 0.018523553386330605,
+          "mean": 0.013571383571252227
+        }
+      },
+      {
+        "start": 30001,
+        "end": 30010,
+        "train/psnr": {
+          "count": 10,
+          "min": 8.590572357177734,
+          "max": 15.79271125793457,
+          "mean": 11.915714550018311
+        },
+        "train/loss": {
+          "count": 10,
+          "min": 0.12668494880199432,
+          "max": 0.2980644106864929,
+          "mean": 0.21043218076229095
+        }
+      },
+      {
+        "start": 30011,
+        "end": 30050,
+        "train/psnr": {
+          "count": 40,
+          "min": 11.722535133361816,
+          "max": 27.958681106567383,
+          "mean": 22.392525553703308
+        },
+        "train/loss": {
+          "count": 40,
+          "min": 0.0375022366642952,
+          "max": 0.20502690970897675,
+          "mean": 0.08378965519368649
+        }
+      },
+      {
+        "start": 30051,
+        "end": 30100,
+        "train/psnr": {
+          "count": 50,
+          "min": 24.694660186767578,
+          "max": 32.88294219970703,
+          "mean": 28.532228698730467
+        },
+        "train/loss": {
+          "count": 50,
+          "min": 0.019533978775143623,
+          "max": 0.06162672117352486,
+          "mean": 0.03800202988088131
+        }
+      },
+      {
+        "start": 30101,
+        "end": 30200,
+        "train/psnr": {
+          "count": 100,
+          "min": 26.313297271728516,
+          "max": 34.81536102294922,
+          "mean": 30.56954553604126
+        },
+        "train/loss": {
+          "count": 100,
+          "min": 0.015213018283247948,
+          "max": 0.05045222491025925,
+          "mean": 0.02768059477210045
+        }
+      },
+      {
+        "start": 30201,
+        "end": 30400,
+        "train/psnr": {
+          "count": 200,
+          "min": 28.068540573120117,
+          "max": 36.54745864868164,
+          "mean": 32.561263160705565
+        },
+        "train/loss": {
+          "count": 200,
+          "min": 0.011851190589368343,
+          "max": 0.03440913185477257,
+          "mean": 0.02007770769763738
+        }
+      },
+      {
+        "start": 30401,
+        "end": 30650,
+        "train/psnr": {
+          "count": 250,
+          "min": 30.693056106567383,
+          "max": 37.497371673583984,
+          "mean": 33.91329014587402
+        },
+        "train/loss": {
+          "count": 250,
+          "min": 0.011179842054843903,
+          "max": 0.025135952979326248,
+          "mean": 0.016651667911559344
+        }
+      }
+    ]
+  },
+  "log": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/resume_training.log",
+    "actual_iteration_offset": 10000,
+    "evidence": [
+      "[ITER 20000] Evaluating train: L1 0.009390873663431528 PSNR 35.24852137662926 SSIM 0.9683691932230579 LPIPS 0.04547271820507487",
+      "[ITER 30000] Evaluating train: L1 0.21656046868587026 PSNR 10.48350260209064 SSIM 0.6018059375334759 LPIPS 0.3629990019360367"
+    ],
+    "around_30k_progress": [
+      "Training progress:  50%|████▉     | 19999/40000 [5:23:35<6:06:56,  1.10s/it, loss=0.01202, l1=0.00803, psnr=36.66775, scale=4]",
+      "Training progress:  50%|████▉     | 19999/40000 [5:23:36<6:06:56,  1.10s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]2234298",
+      "Training progress:  50%|█████     | 20000/40000 [5:25:10<162:32:16, 29.26s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]",
+      "Training progress:  50%|█████     | 20001/40000 [5:25:11<115:50:57, 20.85s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]",
+      "Training progress:  50%|█████     | 20009/40000 [5:25:20<11:44:37,  2.11s/it, loss=0.01427, l1=0.00935, psnr=35.46769, scale=4]",
+      "Training progress:  50%|█████     | 20009/40000 [5:25:20<11:44:37,  2.11s/it, loss=0.15108, l1=0.12319, psnr=14.63353, scale=4]",
+      "Training progress:  50%|█████     | 20010/40000 [5:25:20<9:42:21,  1.75s/it, loss=0.15108, l1=0.12319, psnr=14.63353, scale=4] ",
+      "Training progress:  50%|█████     | 20049/40000 [5:25:58<5:55:33,  1.07s/it, loss=0.05934, l1=0.03266, psnr=25.11575, scale=4]",
+      "Training progress:  50%|█████     | 20049/40000 [5:25:59<5:55:33,  1.07s/it, loss=0.05593, l1=0.02968, psnr=25.44744, scale=4]",
+      "Training progress:  50%|█████     | 20050/40000 [5:26:00<6:17:42,  1.14s/it, loss=0.05593, l1=0.02968, psnr=25.44744, scale=4]",
+      "Training progress:  50%|█████     | 20099/40000 [5:26:49<5:23:14,  1.03it/s, loss=0.03464, l1=0.01844, psnr=28.99907, scale=4]",
+      "Training progress:  50%|█████     | 20099/40000 [5:26:50<5:23:14,  1.03it/s, loss=0.03173, l1=0.01685, psnr=29.34814, scale=4]",
+      "Training progress:  50%|█████     | 20100/40000 [5:26:51<6:38:30,  1.20s/it, loss=0.03173, l1=0.01685, psnr=29.34814, scale=4]",
+      "Training progress:  50%|█████     | 20199/40000 [5:28:32<6:10:52,  1.12s/it, loss=0.02675, l1=0.01527, psnr=30.37938, scale=4]",
+      "Training progress:  50%|█████     | 20199/40000 [5:28:32<6:10:52,  1.12s/it, loss=0.02156, l1=0.01243, psnr=32.65080, scale=4]",
+      "Training progress:  50%|█████     | 20200/40000 [5:28:33<7:16:48,  1.32s/it, loss=0.02156, l1=0.01243, psnr=32.65080, scale=4]",
+      "Training progress:  51%|█████     | 20399/40000 [5:32:04<5:24:37,  1.01it/s, loss=0.01919, l1=0.01152, psnr=32.73637, scale=4]",
+      "Training progress:  51%|█████     | 20399/40000 [5:32:05<5:24:37,  1.01it/s, loss=0.01817, l1=0.01147, psnr=32.79505, scale=4]",
+      "Training progress:  51%|█████     | 20400/40000 [5:32:06<6:37:10,  1.22s/it, loss=0.01817, l1=0.01147, psnr=32.79505, scale=4]"
+    ],
+    "latest_progress": "Training progress:  52%|█████▏    | 20731/40000 [5:37:55<6:45:51,  1.26s/it, loss=0.01581, l1=0.01004, psnr=34.57886, scale=4]"
+  },
+  "protocol_semantics": {
+    "snapshot": "The30k checkpoint is a genuine complete continuation snapshot at an opacity-reset boundary, not a representative recovered reconstruction snapshot.",
+    "comparison": "The10k/20k/30k/40k/50k schedule samples different reset phases; the30k node uniquely coincides with reset, so the curve cannot be interpreted as monotonic quality progress.",
+    "checkpoint_reset_phase": [
+      {
+        "iteration": 10000,
+        "steps_since_last_reset": 1000
+      },
+      {
+        "iteration": 20000,
+        "steps_since_last_reset": 2000
+      },
+      {
+        "iteration": 30000,
+        "steps_since_last_reset": 0
+      },
+      {
+        "iteration": 40000,
+        "steps_since_last_reset": 1000
+      },
+      {
+        "iteration": 50000,
+        "steps_since_last_reset": 2000
+      }
+    ],
+    "paper_claim": "This audit proves frozen code behavior, not that the paper authors intended the same late reset or evaluation phase."
+  },
+  "safe_followup": [
+    "Preserve the actual30k four-component checkpoint,49-frame videos and original metrics; annotate that the node was captured immediately after static opacity reset.",
+    "Continue read-only monitoring of existing train scalars and the next scheduled40k/50k full49 evaluations; do not treat one sampled-camera PSNR as full49 evaluation.",
+    "Use the separate CPU checkpoint audit to cross-check static capped opacity and zero Adam moments; no model restore or GPU rerender is needed for this diagnosis.",
+    "Any future phase-matched evaluation or schedule change would require a separately specified experimental protocol and must not be substituted into this frozen baseline lineage."
+  ],
+  "limitations": [
+    "Recovered30k+ measurements are per-training-camera float metrics, not a later complete49-frame reconstruction evaluation.",
+    "PNG PSNR is computed from uint8 quantized saved images and differs slightly from original float metrics.",
+    "Stdlib TFRecord/protobuf parser decoded framing and scalars but did not recompute CRC32C.",
+    "This audit does not certify novel-view quality, deletion-hole quality or complete paper reproduction."
+  ],
+  "architecture_components_mermaid": "flowchart LR\n A[Camera and GT] --> B[Forward and backward]\n B --> C[Static opacity reset at30k]\n C --> D[Optimizer and SGCM]\n D --> E[Save model components]\n E --> F[Full49 evaluation]\n F --> G[Complete checkpoint event]\n D --> H[Continued training]\n H --> I[PSNR recovery]\n",
+  "evidence": {
+    "path": "work/vgpu_1011/node030000_quality_evidence.json",
+    "sha256": "0a5313e8dbc990b3dbba3ce38a7cba156ca7c3c539ac8fc671fd19a31b3ed6ec"
+  },
+  "safety": {
+    "torch_imported": false,
+    "gpu_calls": false,
+    "remote_files_written": false,
+    "checkpoint_tensor_loads": 0,
+    "stdlib_event_parser": true,
+    "cpu_image_libraries": [
+      "numpy",
+      "PIL"
+    ]
+  },
+  "independent_checkpoint_evidence": {
+    "source": "outputs/drivingeditor_campaign/vgpu_1011/checkpoint_030000_cpu_validation.json",
+    "sha256": "f9378579be0e251cebade47738830358d4946b6690b2135cd255dca2c6f2db93",
+    "agent": "/root/checkpoint30k_cpu_solmax",
+    "static_saved_opacity_distribution": {
+      "raw_logit": {
+        "count": 2234298,
+        "min": -5.730467796325684,
+        "max": -4.595119953155518,
+        "mean": -4.669791368597868,
+        "sample_quantile_count": 8185,
+        "sample_stride": 273,
+        "sample_quantiles": {
+          "0.0": -5.547346591949463,
+          "0.01": -5.2667365074157715,
+          "0.05": -5.120612335205078,
+          "0.25": -4.595119953155518,
+          "0.5": -4.595119953155518,
+          "0.75": -4.595119953155518,
+          "0.95": -4.595119953155518,
+          "0.99": -4.595119953155518,
+          "1.0": -4.595119953155518
+        }
+      },
+      "sigmoid_opacity": {
+        "count": 2234298,
+        "min": 0.003235059091821313,
+        "max": 0.009999998845160007,
+        "mean": 0.009406108323044034,
+        "sample_quantile_count": 8185,
+        "sample_stride": 273,
+        "sample_quantiles": {
+          "0.0": 0.003882652148604393,
+          "0.01": 0.005133930593729019,
+          "0.05": 0.0059369074180722235,
+          "0.25": 0.009999998845160007,
+          "0.5": 0.009999998845160007,
+          "0.75": 0.009999998845160007,
+          "0.95": 0.009999998845160007,
+          "0.99": 0.009999998845160007,
+          "1.0": 0.009999998845160007
+        }
+      },
+      "near_0_01_count_absolute_tolerance_1e_7": 1694415,
+      "near_0_01_fraction_absolute_tolerance_1e_7": 0.7583657148688313,
+      "fraction_le_0_01000001": 1.0,
+      "fraction_le_0_001": 0.0,
+      "fraction_ge_0_5": 0.0,
+      "adam_step": 29850.0,
+      "adam_exp_avg": {
+        "elements": 2234298,
+        "nonzero_elements": 0,
+        "zero_fraction": 1.0,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "adam_exp_avg_sq": {
+        "elements": 2234298,
+        "nonzero_elements": 0,
+        "zero_fraction": 1.0,
+        "max_abs": 0.0,
+        "mean_abs": 0.0
+      },
+      "descriptive_distribution_only_no_quality_threshold": true
+    },
+    "dynamic_saved_opacity_distribution": {
+      "raw_logit": {
+        "count": 1026885,
+        "min": -5.694380760192871,
+        "max": 11.907190322875977,
+        "mean": -1.9062024793640306,
+        "sample_quantile_count": 8150,
+        "sample_stride": 126,
+        "sample_quantiles": {
+          "0.0": -5.666569232940674,
+          "0.01": -5.123237051963806,
+          "0.05": -4.016064834594727,
+          "0.25": -2.89101779460907,
+          "0.5": -2.0693172216415405,
+          "0.75": -1.0900318026542664,
+          "0.95": 0.8614330112934089,
+          "0.99": 2.282573130130769,
+          "1.0": 8.587685585021973
+        }
+      },
+      "sigmoid_opacity": {
+        "count": 1026885,
+        "min": 0.0033535363618284464,
+        "max": 0.9999932050704956,
+        "mean": 0.1959060594624386,
+        "sample_quantile_count": 8150,
+        "sample_stride": 126,
+        "sample_quantiles": {
+          "0.0": 0.003447785973548889,
+          "0.01": 0.005921525401063263,
+          "0.05": 0.017704648617655038,
+          "0.25": 0.05259938258677721,
+          "0.5": 0.11211498826742172,
+          "0.75": 0.2516122981905937,
+          "0.95": 0.702959835529327,
+          "0.99": 0.9074232441186906,
+          "1.0": 0.9998136162757874
+        }
+      },
+      "near_0_01_count_absolute_tolerance_1e_7": 0,
+      "near_0_01_fraction_absolute_tolerance_1e_7": 0.0,
+      "fraction_le_0_01000001": 0.020567054733490117,
+      "fraction_le_0_001": 0.0,
+      "fraction_ge_0_5": 0.10993441329847062,
+      "adam_step": 29939.0,
+      "adam_exp_avg": {
+        "elements": 1026885,
+        "nonzero_elements": 1018840,
+        "zero_fraction": 0.007834372884987117,
+        "max_abs": 2.6479629013920203e-05,
+        "mean_abs": 3.870317756306268e-09
+      },
+      "adam_exp_avg_sq": {
+        "elements": 1026885,
+        "nonzero_elements": 1018840,
+        "zero_fraction": 0.007834372884987117,
+        "max_abs": 1.0000879768767845e-07,
+        "mean_abs": 3.0268452022999617e-13
+      },
+      "descriptive_distribution_only_no_quality_threshold": true
+    },
+    "this_diagnostic_additional_checkpoint_tensor_loads": 0
+  },
+  "root_review": {
+    "checkpoint_integrity_receipt": "checkpoint_030000_cpu_validation.json",
+    "media_receipt": "node_030000_sync_receipt.json",
+    "actual_playback_limit_receipt": "node_030000_browser_validation.json",
+    "public_raw_evidence": "node_030000_quality_evidence.json",
+    "first_video_frame_visual_inspection": "GT and 20k show a clear background; 30k shows transparent/sky-blended background while the dynamic car is intact.",
+    "training_or_checkpoint_changed": false,
+    "original_30k_metrics_preserved": true,
+    "whole49_frame_recovery_claimed": false
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "status": "PASS_actual_ENV_CPU_prepare",
+  "actual_exit_code": 0,
+  "CUDA_initialized": false,
+  "training_or_GPU_started": false,
+  "harness_sha256": "57f06969017b31220f2afbffcc41999108a10404b5ad3519cd7a142587584d65",
+  "prepared_plan_sha256": "3e738e462f0ef1c68b9f5e23d2a6ad97a9503ce6e54c895b4d55e3e9382df273",
+  "launcher_sha256": "5dadc75cae9a515ae3cae09bc033ecde5db03385dd5b9243d5e6c093f531cc9b",
+  "experiment_binding_sha256": "8b98f2f46a9a3a345b2dfac666b9cc32c6090288a55de6870645ddc6978ed5b6",
+  "guard_sha256": "0a879a7a2574c877eb6464a29f7c91948e40e09b29310e34a02a86a5c7c23764",
+  "unchanged_helper_function_checks": {
+    "diagnostic_eval": "AST_exact_same_as_actual_longV",
+    "verify_paired_evaluation": "AST_exact_same_as_actual_longV",
+    "prepare_original": "AST_exact_same_as_actual_longV"
+  },
+  "runtime_dependency_paths_and_source_hash_count": 13,
+  "preparation_checks": {
+    "sources": {
+      "all_source_inventory_sha_pass": true,
+      "original_files": 148,
+      "replica_files": 148,
+      "changed_files": [
+        "train.py"
+      ],
+      "formal_resume_helper_unchanged": true
+    },
+    "protected": {
+      "protected_original_file_count": 61,
+      "all_protected_original_sha_pass": true
+    },
+    "auxiliary": {
+      "auxiliary_file_count": 36,
+      "all_auxiliary_sha_pass": true
+    },
+    "configuration": {
+      "original_validator_called": true,
+      "all_original_fields_strictly_validated": true,
+      "saved_configuration_kind": "original_parent",
+      "added_fields": {
+        "diagnostic_observed_static_rgb_enabled": true,
+        "diagnostic_lambda_observed_static_rgb": 1.0
+      },
+      "strict_original_config": false,
+      "future_iteration_launch_authorized": false
+    }
+  },
+  "all467_original_inputs_hash_verified": true,
+  "first_iteration": 30001,
+  "stop_iteration": 32000,
+  "horizon": 50000,
+  "evaluation_nodes": [
+    30001,
+    30300,
+    31000,
+    32000
+  ],
+  "note": "Only CPU guard/config/source/checkpoint hash validation and one small training_state read; no actual model/optimizer/runtime restore or first-step gate has happened."
+}

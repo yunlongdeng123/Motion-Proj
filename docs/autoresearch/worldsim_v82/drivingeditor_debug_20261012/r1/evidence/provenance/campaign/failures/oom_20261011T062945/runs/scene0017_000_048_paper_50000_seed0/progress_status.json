@@ -1,0 +1,19 @@
+{
+  "state": "failed",
+  "iteration": 13800,
+  "total_iterations": 50000,
+  "started_at": "2026-10-11T12:47:00+08:00",
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+  "model_path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+  "pid": 134470,
+  "scope": "Paper-method49-frame pilot with declared preprocessing differences; not a four-scene paper result.",
+  "updated_at": "2026-10-11T14:29:45+08:00",
+  "wall_seconds": 6164.914591069013,
+  "loss": 0.018230240792036057,
+  "psnr": 34.230899810791016,
+  "total_points": 2107155.0,
+  "cuda_peak_allocated_mib": 23402.27294921875,
+  "last_evaluation_iteration": 10000,
+  "error": "OutOfMemoryError('CUDA out of memory. Tried to allocate 34.00 MiB. GPU 0 has a total capacity of 23.56 GiB of which 19.06 MiB is free. Including non-PyTorch memory, this process has 23.53 GiB memory in use. Of the allocated memory 22.61 GiB is allocated by PyTorch, and 579.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)')",
+  "traceback": "Traceback (most recent call last):\n  File \"/root/autodl-tmp/drivingeditor_repro/scripts/run_paper50k_training.py\", line 163, in main\n    module.training(args)\n  File \"/root/autodl-tmp/drivingeditor_repro/DrivingEditor-paper/train.py\", line 522, in training\n    loss.backward()\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/_tensor.py\", line 522, in backward\n    torch.autograd.backward(\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/autograd/__init__.py\", line 266, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/autograd/function.py\", line 289, in apply\n    return user_fn(self, *args)\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py\", line 152, in backward\n    grad_means2D, grad_colors_precomp, grad_features, grad_opacities, grad_means3D, grad_cov3Ds_precomp, grad_sh, grad_scales, grad_rotations = _C.rasterize_gaussians_backward(*args)\ntorch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 34.00 MiB. GPU 0 has a total capacity of 23.56 GiB of which 19.06 MiB is free. Including non-PyTorch memory, this process has 23.53 GiB memory in use. Of the allocated memory 22.61 GiB is allocated by PyTorch, and 579.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)\n"
+}

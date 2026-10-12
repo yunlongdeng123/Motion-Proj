@@ -1,0 +1,63 @@
+{
+  "decision": "APPROVED_SINGLE_VARIABLE_OPACITY_OUTSIDE_30K_TO32000",
+  "arm": "V_long_outside_opacity",
+  "reviewed_utc": "2026-10-11T21:57:15.887140+00:00",
+  "prepared_plan_sha256": "1afe9a9b5f05dfcff1d565e064f276ef8161250060eecc0bb2b31a35be031065",
+  "harness_sha256": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+  "observer_sha256": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1",
+  "experiment_binding_sha256": "5701482a50b078e980a39a4aec9b6747cdc1628882b2b48a2dd985d588314260",
+  "guard_sha256": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+  "launcher_sha256": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+  "independent_review_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/sgcm_data_audit/long_pair_review/final_review_V.json",
+  "independent_review_sha256": "f9b25211ed63de56ff7a5cf7bf865648a8cfc59be0d3b4bb8c5c33e12a1b5a07",
+  "first_iteration": 30001,
+  "stop_iteration": 32000,
+  "lr_horizon": 50000,
+  "seed": 0,
+  "GPU_owner": "vgpu_component_diagnostic_solmax",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000",
+  "algorithm_changed_files": {
+    "train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+    "utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab"
+  },
+  "extra_config": {
+    "diagnostic_background_domain_complement": true,
+    "diagnostic_lambda_dynamic_background_opacity": 0.05
+  },
+  "B1_B2_pair_sha256": "d9555323b446f20ca425a0f7448793628ca30e3559ed24e551610eb7c0996afc",
+  "B1_B2_actual_noise_sha256": "e4ae32c07b63ed7be0171a727f8a12ec153f66e63d6ac89f4594fa4985145f08",
+  "common_input_receipt_sha256": "dfd33893200805b4aebf147121b2be72270163a2ec61674e7704d2053de7f381",
+  "B2_release_receipt_sha256": "3486faf0bfe3bcc85949094a0d538a829766504b1eddd63414c10008144df4eb",
+  "evaluation_protocol_sha256": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658",
+  "root_live_precheck": {
+    "checked_utc": "2026-10-11T21:57:15.585472+00:00",
+    "GPU_compute_apps": [],
+    "exclusive_lock_available": true,
+    "free_disk_GiB": 83.74110412597656,
+    "V_output_exists": false,
+    "remote_hashes": {
+      "continuation_variant_harness.py": "93df22a4b8db482af596657ba1d3e86e61a0ad0893dac3af35f85adf872ba1d4",
+      "opacity_outside_prepared_plan.json": "1afe9a9b5f05dfcff1d565e064f276ef8161250060eecc0bb2b31a35be031065",
+      "experiment_binding.json": "5701482a50b078e980a39a4aec9b6747cdc1628882b2b48a2dd985d588314260",
+      "outside_experiment_guard.py": "8356201320c757079a5dfaf4cb4968e22bc537fbf8f1dd7e0e6d1b6242f0d42c",
+      "launch_opacity_outside_continuation.py": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+      "evaluation_protocol_locked.json": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658"
+    },
+    "review_sha256": "f9b25211ed63de56ff7a5cf7bf865648a8cfc59be0d3b4bb8c5c33e12a1b5a07"
+  },
+  "scope": "Only exact V from original30k complete states to32000, original FP32/kernel/data/seed/50k schedule and loss terms, plus reviewed .05 outside opacity hypothesis. No joint depth/reset/SGCM/static-time changes; originals untouched. Recheck GPU/lock before launch.",
+  "required_runtime_evidence": [
+    "exact actual full restore",
+    "original10 scalars exact BEFORE first backward",
+    "all2000 camera/time_shift/LR paired",
+    "all4 eval RNG preserved",
+    "final49 GT/domain pairing and finite metrics",
+    "complete four terminal states",
+    "unchanged protected originals",
+    "actual worker and launcher exit0"
+  ],
+  "effect_interpretation": "Compare V separately to both B1/B2 using locked metrics, all49 per-frame errors, actor preservation and real static/dynamic/edit-locality images; one repeated original difference is not a universal CUDA noise bound. Report tradeoffs.",
+  "scientific_limitations": "Hypothesis, not author-certified Eq13. Recovery from degraded30k is not from-zero validation or complete paper reproduction.",
+  "paper_reproduction_complete": false,
+  "shutdown_authorized_by_this_receipt": false
+}

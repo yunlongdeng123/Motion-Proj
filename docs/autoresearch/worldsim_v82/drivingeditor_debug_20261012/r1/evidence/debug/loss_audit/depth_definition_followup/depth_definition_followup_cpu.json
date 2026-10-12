@@ -1,0 +1,131 @@
+{
+  "status": "CPU_SOURCE_AND_UNITS_FOLLOWUP_COMPLETE",
+  "training_or_GPU_started": false,
+  "source_config_checkpoint_modified": false,
+  "new_gradient_tests_run": false,
+  "paper": {
+    "equation": 16,
+    "equation_printed_page": 1702,
+    "equation_pdf_page_one_based": 7,
+    "cross_page_definition_printed_page": 1703,
+    "definition_pdf_page_one_based": 8,
+    "text_definition_lines": [
+      503,
+      504,
+      505,
+      506
+    ],
+    "definition": "D_LiDAR and D_image are explicitly the inverse of sparse LiDAR depth and rendered depth; h,w are spatial dimensions.",
+    "equation_normalizer": "1/(h*w)",
+    "depth_units_sparse_validity_eps_alpha_normalization_harmonic900": "Not specified by the cited equation/prose."
+  },
+  "claims_separated": {
+    "operator_value_and_gradient": "Previous CPU operator and grad checks only certify the implemented function; not complete fidelity to author pipeline.",
+    "inverse_vs_metric_depth": "Inverse representation itself is supported by the explicit cross-page definition; metric-depth difference is not a certified bug.",
+    "normalizer": "Full image H*W matches Eq16.",
+    "implementation_choices_not_author_certified": [
+      "Exclude LiDAR zero/nonfinite pixels from residuals",
+      "eps=1e-5 in scene-depth units",
+      "Normalize raw weighted depth by alpha.clamp_min(1e-5)",
+      "Shared-environment depth with harmonic blend to fixed sky_depth=900",
+      "Scene normalization scale and lambda_depth=.1"
+    ]
+  },
+  "actual_configuration": {
+    "data_normalization_scale": 0.1,
+    "source_matrix_column_norms": [
+      0.1,
+      0.1,
+      0.09999999999999999
+    ],
+    "matrix_SHA256": "9e642de32f923c6e997537e52c12e6d72e099e66823cff0977509851cade1968",
+    "matrix_remote_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/transform_matrix.txt",
+    "rendered_HW": [
+      320,
+      480
+    ],
+    "depth_blend_mode": 0,
+    "env_map_res": 1024,
+    "lambda_depth": 0.1,
+    "epsilon_in_scene_length_units": 1e-05,
+    "sky_depth_in_scene_length_units": 900
+  },
+  "units": {
+    "basis": "waymo_loader2.py535 normalizes poses; line559 scales original camera point cloud by same factor; camera_utils.py117-133 stores that scaled camera z as LiDAR depth.",
+    "physical_unit_assumption": "Waymo input point/camera distances are meters.",
+    "conversion": "z_scene=.1*z_m; inverse(z_scene)=10*inverse(z_m), ignoring epsilon; epsilon1e-5_scene is1e-4 meters.",
+    "unweighted_loss_dimension": "Inverse scene length; H*W normalization is dimensionless.",
+    "sky900_physical_equivalent_m": 9000.0,
+    "coefficient_status": "lambda=.1 is an explicit reproduction choice; paper does not publish these unit/weight conventions."
+  },
+  "actual_B1_first_step_scalar": {
+    "iteration": 30001,
+    "camera_id": "image_0/0017034",
+    "unweighted_inverse_depth_loss_per_full_HW_scene_units_inverse": 0.012423455715179443,
+    "weighted_depth_addition_to_original_loss": 0.0012423455715179445,
+    "inverse_metric_depth_equivalent_with_corresponding_epsilon_m_inverse": 0.0012423455715179445,
+    "source_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\continuation_diagnostic\\original30k_to32000\\step_losses.jsonl",
+    "source_SHA256": "caeefe61419dad4ad5a3f746a89b6e66ddb0724106e5735c3419998d92028bec"
+  },
+  "illustrative_values": [
+    {
+      "kind": "arithmetic_illustration_not_observed_pixel",
+      "lidar_physical_m": 10,
+      "foreground_physical_m": 20,
+      "alpha": 1.0,
+      "lidar_z_scene_units": 1.0,
+      "foreground_z_scene_units": 2.0,
+      "harmonic_rendered_depth_scene_units": 2.0,
+      "harmonic_rendered_physical_m": 20.0,
+      "single_valid_pixel_inverse_depth_residual_scene_units_inverse": 0.499992500087499,
+      "single_valid_pixel_loss_divided_by_HW": 3.2551595057779885e-06,
+      "single_valid_pixel_weighted_depth_contribution": 3.2551595057779886e-07
+    },
+    {
+      "kind": "arithmetic_illustration_not_observed_pixel",
+      "lidar_physical_m": 10,
+      "foreground_physical_m": 20,
+      "alpha": 0.5,
+      "lidar_z_scene_units": 1.0,
+      "foreground_z_scene_units": 2.0,
+      "harmonic_rendered_depth_scene_units": 3.9911308203991136,
+      "harmonic_rendered_physical_m": 39.91130820399113,
+      "single_valid_pixel_inverse_depth_residual_scene_units_inverse": 0.7494350723237346,
+      "single_valid_pixel_loss_divided_by_HW": 4.879134585440981e-06,
+      "single_valid_pixel_weighted_depth_contribution": 4.87913458544098e-07
+    }
+  ],
+  "source_SHA256": {
+    "scene/waymo_loader2.py": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0",
+    "utils/camera_utils.py": "3fb1bd6fe928cc2b08c29426558a2dd08677af5959d14e64a559645b3ba27e85",
+    "train.py": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+    "utils/paper_losses.py": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8",
+    "gaussian_renderer/__init__.py": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+  },
+  "code_locations": {
+    "waymo_loader2.py": [
+      535,
+      559
+    ],
+    "camera_utils.py": [
+      117,
+      133
+    ],
+    "train.py": [
+      359,
+      360,
+      370,
+      371,
+      399,
+      405
+    ],
+    "paper_losses.py": [
+      77,
+      81,
+      85,
+      86,
+      87
+    ]
+  },
+  "V_algorithm_unchanged": true
+}

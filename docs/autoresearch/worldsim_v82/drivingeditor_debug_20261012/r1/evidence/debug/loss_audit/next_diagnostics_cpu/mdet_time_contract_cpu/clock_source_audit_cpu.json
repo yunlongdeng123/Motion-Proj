@@ -1,0 +1,625 @@
+{
+  "status": "SOURCE_TIMING_MECHANISM_VERIFIED_AUTHOR_WAYMO_PACKET_MAPPING_UNRESOLVED",
+  "GPU_or_training_or_detector_construction_or_scan_started": false,
+  "author_equivalence": false,
+  "author_exact_scan_end_known": false,
+  "allow_training": false,
+  "allow_detector_execution": false,
+  "reference_clock_candidate": {
+    "name": "WAYMO_FRAME_START_REFERENCE_CLOCK_SECONDS_V1",
+    "formula": "float64(timestamp_micros - first_timestamp_micros) / 1000000",
+    "subtract_integer_microseconds_before_float_conversion": true,
+    "raw_timestamp_micros_kept_as_identity": true,
+    "api_scan_end_time_argument_means_documented_frame_reference_clock_here": true,
+    "claims_physical_scan_end_or_pose_at_frame_start": false,
+    "uniform_time_assigned_to_all_frame_points": true,
+    "model_normalized_time_or_column6_used": false,
+    "guessed_offset_or_point_timestamps_or_pose_interpolation": false,
+    "body_to_world": "unchanged original worldXYZ = Frame.pose @ homogeneous original .bin bodyXYZ",
+    "TOP_conversion": "official SDK uses per-pixel vehicle-to-world pose, then inverse Frame.pose; original converter stores the resulting Frame-reference body coordinates",
+    "other_lasers": "existing virtual-range-image fixed body/reference coordinates; preserve original conversion",
+    "constant_clock_translation_note": "Core time decisions use differences of frame/map times; a common translation cancels in real arithmetic. This is not a bitwise native execution or author-equivalence proof."
+  },
+  "currentsegment": {
+    "frames": 49,
+    "all_converted_rows": 8667791,
+    "max_rows_per_frame": 180332,
+    "min_rows_per_frame": 173967,
+    "first_timestamp_micros": 1553615217625165,
+    "last_timestamp_micros": 1553615222419561,
+    "frame_interval_microseconds_min_median_max": [
+      99536,
+      99983.5,
+      100031
+    ],
+    "relative_duration_seconds": 4.794396,
+    "all_frames_chronological": true,
+    "exact_Frame_pose_timestamp_provided": false,
+    "range_image_flow_present_frames": [],
+    "per_frame_clock_and_count": [
+      {
+        "source_index": 0,
+        "timestamp_micros": 1553615217625165,
+        "reference_clock_seconds": 0.0,
+        "rows": 177385
+      },
+      {
+        "source_index": 1,
+        "timestamp_micros": 1553615217725153,
+        "reference_clock_seconds": 0.099988,
+        "rows": 180029
+      },
+      {
+        "source_index": 2,
+        "timestamp_micros": 1553615217825177,
+        "reference_clock_seconds": 0.200012,
+        "rows": 179266
+      },
+      {
+        "source_index": 3,
+        "timestamp_micros": 1553615217925192,
+        "reference_clock_seconds": 0.300027,
+        "rows": 178174
+      },
+      {
+        "source_index": 4,
+        "timestamp_micros": 1553615218025179,
+        "reference_clock_seconds": 0.400014,
+        "rows": 178110
+      },
+      {
+        "source_index": 5,
+        "timestamp_micros": 1553615218125200,
+        "reference_clock_seconds": 0.500035,
+        "rows": 178651
+      },
+      {
+        "source_index": 6,
+        "timestamp_micros": 1553615218225183,
+        "reference_clock_seconds": 0.600018,
+        "rows": 179323
+      },
+      {
+        "source_index": 7,
+        "timestamp_micros": 1553615218325214,
+        "reference_clock_seconds": 0.700049,
+        "rows": 177971
+      },
+      {
+        "source_index": 8,
+        "timestamp_micros": 1553615218425194,
+        "reference_clock_seconds": 0.800029,
+        "rows": 179289
+      },
+      {
+        "source_index": 9,
+        "timestamp_micros": 1553615218525210,
+        "reference_clock_seconds": 0.900045,
+        "rows": 177110
+      },
+      {
+        "source_index": 10,
+        "timestamp_micros": 1553615218625237,
+        "reference_clock_seconds": 1.000072,
+        "rows": 177997
+      },
+      {
+        "source_index": 11,
+        "timestamp_micros": 1553615218725226,
+        "reference_clock_seconds": 1.100061,
+        "rows": 176959
+      },
+      {
+        "source_index": 12,
+        "timestamp_micros": 1553615218825249,
+        "reference_clock_seconds": 1.200084,
+        "rows": 178007
+      },
+      {
+        "source_index": 13,
+        "timestamp_micros": 1553615218925233,
+        "reference_clock_seconds": 1.300068,
+        "rows": 179446
+      },
+      {
+        "source_index": 14,
+        "timestamp_micros": 1553615219025259,
+        "reference_clock_seconds": 1.400094,
+        "rows": 177651
+      },
+      {
+        "source_index": 15,
+        "timestamp_micros": 1553615219125243,
+        "reference_clock_seconds": 1.500078,
+        "rows": 177832
+      },
+      {
+        "source_index": 16,
+        "timestamp_micros": 1553615219225269,
+        "reference_clock_seconds": 1.600104,
+        "rows": 180332
+      },
+      {
+        "source_index": 17,
+        "timestamp_micros": 1553615219325259,
+        "reference_clock_seconds": 1.700094,
+        "rows": 178091
+      },
+      {
+        "source_index": 18,
+        "timestamp_micros": 1553615219425252,
+        "reference_clock_seconds": 1.800087,
+        "rows": 176654
+      },
+      {
+        "source_index": 19,
+        "timestamp_micros": 1553615219525242,
+        "reference_clock_seconds": 1.900077,
+        "rows": 180192
+      },
+      {
+        "source_index": 20,
+        "timestamp_micros": 1553615219625267,
+        "reference_clock_seconds": 2.000102,
+        "rows": 179050
+      },
+      {
+        "source_index": 21,
+        "timestamp_micros": 1553615219725287,
+        "reference_clock_seconds": 2.100122,
+        "rows": 177641
+      },
+      {
+        "source_index": 22,
+        "timestamp_micros": 1553615219825273,
+        "reference_clock_seconds": 2.200108,
+        "rows": 176024
+      },
+      {
+        "source_index": 23,
+        "timestamp_micros": 1553615219925261,
+        "reference_clock_seconds": 2.300096,
+        "rows": 177618
+      },
+      {
+        "source_index": 24,
+        "timestamp_micros": 1553615220025245,
+        "reference_clock_seconds": 2.40008,
+        "rows": 180268
+      },
+      {
+        "source_index": 25,
+        "timestamp_micros": 1553615220125267,
+        "reference_clock_seconds": 2.500102,
+        "rows": 178787
+      },
+      {
+        "source_index": 26,
+        "timestamp_micros": 1553615220225248,
+        "reference_clock_seconds": 2.600083,
+        "rows": 176309
+      },
+      {
+        "source_index": 27,
+        "timestamp_micros": 1553615220325230,
+        "reference_clock_seconds": 2.700065,
+        "rows": 176572
+      },
+      {
+        "source_index": 28,
+        "timestamp_micros": 1553615220425214,
+        "reference_clock_seconds": 2.800049,
+        "rows": 177118
+      },
+      {
+        "source_index": 29,
+        "timestamp_micros": 1553615220525158,
+        "reference_clock_seconds": 2.899993,
+        "rows": 176275
+      },
+      {
+        "source_index": 30,
+        "timestamp_micros": 1553615220625111,
+        "reference_clock_seconds": 2.999946,
+        "rows": 175645
+      },
+      {
+        "source_index": 31,
+        "timestamp_micros": 1553615220725026,
+        "reference_clock_seconds": 3.099861,
+        "rows": 175101
+      },
+      {
+        "source_index": 32,
+        "timestamp_micros": 1553615220824891,
+        "reference_clock_seconds": 3.199726,
+        "rows": 175353
+      },
+      {
+        "source_index": 33,
+        "timestamp_micros": 1553615220924723,
+        "reference_clock_seconds": 3.299558,
+        "rows": 175348
+      },
+      {
+        "source_index": 34,
+        "timestamp_micros": 1553615221024522,
+        "reference_clock_seconds": 3.399357,
+        "rows": 174734
+      },
+      {
+        "source_index": 35,
+        "timestamp_micros": 1553615221124314,
+        "reference_clock_seconds": 3.499149,
+        "rows": 174403
+      },
+      {
+        "source_index": 36,
+        "timestamp_micros": 1553615221224063,
+        "reference_clock_seconds": 3.598898,
+        "rows": 174666
+      },
+      {
+        "source_index": 37,
+        "timestamp_micros": 1553615221323747,
+        "reference_clock_seconds": 3.698582,
+        "rows": 174903
+      },
+      {
+        "source_index": 38,
+        "timestamp_micros": 1553615221423464,
+        "reference_clock_seconds": 3.798299,
+        "rows": 174958
+      },
+      {
+        "source_index": 39,
+        "timestamp_micros": 1553615221523108,
+        "reference_clock_seconds": 3.897943,
+        "rows": 175001
+      },
+      {
+        "source_index": 40,
+        "timestamp_micros": 1553615221622795,
+        "reference_clock_seconds": 3.99763,
+        "rows": 174817
+      },
+      {
+        "source_index": 41,
+        "timestamp_micros": 1553615221722434,
+        "reference_clock_seconds": 4.097269,
+        "rows": 174406
+      },
+      {
+        "source_index": 42,
+        "timestamp_micros": 1553615221822041,
+        "reference_clock_seconds": 4.196876,
+        "rows": 174854
+      },
+      {
+        "source_index": 43,
+        "timestamp_micros": 1553615221921644,
+        "reference_clock_seconds": 4.296479,
+        "rows": 175282
+      },
+      {
+        "source_index": 44,
+        "timestamp_micros": 1553615222021253,
+        "reference_clock_seconds": 4.396088,
+        "rows": 176007
+      },
+      {
+        "source_index": 45,
+        "timestamp_micros": 1553615222120854,
+        "reference_clock_seconds": 4.495689,
+        "rows": 175507
+      },
+      {
+        "source_index": 46,
+        "timestamp_micros": 1553615222220459,
+        "reference_clock_seconds": 4.595294,
+        "rows": 174486
+      },
+      {
+        "source_index": 47,
+        "timestamp_micros": 1553615222320025,
+        "reference_clock_seconds": 4.69486,
+        "rows": 174222
+      },
+      {
+        "source_index": 48,
+        "timestamp_micros": 1553615222419561,
+        "reference_clock_seconds": 4.794396,
+        "rows": 173967
+      }
+    ]
+  },
+  "bounded_public_source_search": {
+    "mdetector_revision": "0645dabe307a99f3b59a5a3d3007acfdcad1a39f",
+    "full_git_tree_nontruncated": true,
+    "source_tree_pin": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_source_tree.json",
+      "bytes": 16595,
+      "sha256": "bd0c3bc18f5e51937360199f769866137fff58c775f6d07d174293b9d6d50b3a"
+    },
+    "standalone_raw_Waymo_to_ROS_bag_producer_found": false,
+    "release_metadata_url": "https://api.github.com/repos/hku-mars/M-detector/releases",
+    "all_release_tags": [
+      "FAST_LIO"
+    ],
+    "release_tag": "FAST_LIO",
+    "release_published_at": "2024-01-09T07:08:35Z",
+    "asset_url": "https://github.com/hku-mars/M-detector/releases/download/FAST_LIO/FAST_LIO.zip",
+    "asset_bytes": 238366,
+    "asset_sha256": "b8a81e567b0949447ff0ea73ae519fe5fd494340fd83c0f00e49dcb6f9f30954",
+    "archive_members": [
+      "FAST_LIO/",
+      "FAST_LIO/CMakeLists.txt",
+      "FAST_LIO/LICENSE",
+      "FAST_LIO/README.md",
+      "FAST_LIO/package.xml",
+      "FAST_LIO/Log/",
+      "FAST_LIO/Log/pos_log.txt",
+      "FAST_LIO/Log/mat_pre.txt",
+      "FAST_LIO/Log/mat_out.txt",
+      "FAST_LIO/Log/dbg.txt",
+      "FAST_LIO/config/",
+      "FAST_LIO/config/avia.yaml",
+      "FAST_LIO/config/kitti.yaml",
+      "FAST_LIO/config/nuscenes.yaml",
+      "FAST_LIO/config/waymo.yaml",
+      "FAST_LIO/cmake/",
+      "FAST_LIO/cmake/FindGlog.cmake",
+      "FAST_LIO/cmake/packages.cmake",
+      "FAST_LIO/include/",
+      "FAST_LIO/include/FOV_Checker/",
+      "FAST_LIO/include/FOV_Checker/FOV_Checker.cpp",
+      "FAST_LIO/include/FOV_Checker/FOV_Checker.h",
+      "FAST_LIO/include/IKFoM_toolkit/",
+      "FAST_LIO/include/IKFoM_toolkit/esekfom/",
+      "FAST_LIO/include/IKFoM_toolkit/esekfom/esekfom.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/esekfom/util.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/build_manifold.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/src/",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/src/SubManifold.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/src/mtkmath.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/src/vectview.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/startIdx.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/types/",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/types/S2.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/types/SOn.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/types/vect.hpp",
+      "FAST_LIO/include/IKFoM_toolkit/mtk/types/wrapped_cv_mat.hpp",
+      "FAST_LIO/include/common_lib.h",
+      "FAST_LIO/include/matplotlibcpp.h",
+      "FAST_LIO/include/so3_math.h",
+      "FAST_LIO/include/use-ikfom.hpp",
+      "FAST_LIO/include/Exp_mat.h",
+      "FAST_LIO/include/common_lib.cpp",
+      "FAST_LIO/include/ikfom_types.h",
+      "FAST_LIO/include/tinycolormap.hpp",
+      "FAST_LIO/include/types.h",
+      "FAST_LIO/include/ikd-Forest/",
+      "FAST_LIO/include/ikd-Forest/.git",
+      "FAST_LIO/include/ikd-Forest/.gitignore",
+      "FAST_LIO/include/ikd-Forest/ikd_Forest.cpp",
+      "FAST_LIO/include/ikd-Forest/ikd_Forest.h",
+      "FAST_LIO/include/ikd-Forest/ikd_Forest_Test.cpp",
+      "FAST_LIO/include/ikd-Forest/Makefile",
+      "FAST_LIO/include/ikd-Forest/README.md",
+      "FAST_LIO/include/ikd-Forest/.vscode/",
+      "FAST_LIO/include/ikd-Forest/.vscode/c_cpp_properties.json",
+      "FAST_LIO/include/ikd-Forest/.vscode/settings.json",
+      "FAST_LIO/include/ikd-Tree/",
+      "FAST_LIO/include/ikd-Tree/.git",
+      "FAST_LIO/include/ikd-Tree/ikd_Tree.cpp",
+      "FAST_LIO/include/ikd-Tree/ikd_Tree.h",
+      "FAST_LIO/include/ikd-Tree/README.md",
+      "FAST_LIO/launch/",
+      "FAST_LIO/launch/mapping_avia.launch",
+      "FAST_LIO/launch/mapping_nuscenes.launch",
+      "FAST_LIO/launch/mapping_kitti.launch",
+      "FAST_LIO/launch/mapping_waymo.launch",
+      "FAST_LIO/msg/",
+      "FAST_LIO/msg/Pose6D.msg",
+      "FAST_LIO/msg/States.msg",
+      "FAST_LIO/rviz_cfg/",
+      "FAST_LIO/rviz_cfg/.gitignore",
+      "FAST_LIO/rviz_cfg/loam_livox.rviz",
+      "FAST_LIO/src/",
+      "FAST_LIO/src/IMU_Processing.hpp",
+      "FAST_LIO/src/laserMapping.cpp",
+      "FAST_LIO/src/laserMapping.h",
+      "FAST_LIO/src/preprocess.cpp",
+      "FAST_LIO/src/preprocess.h",
+      "FAST_LIO/src/parallel_q.h",
+      "FAST_LIO/src/reorder_kitti.cpp",
+      "FAST_LIO/src/revise_kitti.cpp",
+      "FAST_LIO/test/",
+      "FAST_LIO/test/fov_test.cpp",
+      "FAST_LIO/test/ikd_Forest_Test.cpp",
+      "FAST_LIO/test/kd_tree_test.cpp"
+    ],
+    "selected_released_source_pins": [
+      {
+        "archive_member": "FAST_LIO/config/waymo.yaml",
+        "bytes": 1574,
+        "sha256": "be3f1d5098076c596f107ae102d1ceffd2919acb979c4632e614893025f75082"
+      },
+      {
+        "archive_member": "FAST_LIO/launch/mapping_waymo.launch",
+        "bytes": 738,
+        "sha256": "472f0b8c4871caf405bf3c1fdded652bd3e568dc16dcadff53337fdfdf5324a6"
+      },
+      {
+        "archive_member": "FAST_LIO/src/preprocess.cpp",
+        "bytes": 25046,
+        "sha256": "917e6ec514868cd12b90a3b05bb7ee663899e6e32b33e52baa14ceb207c81a22"
+      },
+      {
+        "archive_member": "FAST_LIO/src/laserMapping.cpp",
+        "bytes": 99259,
+        "sha256": "13ccf73e70cac0b9ac4b151281194d9705b47973eb40018523ccc1911ef2067b"
+      }
+    ],
+    "no_raw_TFRecord_to_ROS_bag_producer_found_in_examined_release": true,
+    "limit": "Only pinned public M-detector tree, sole released FAST_LIO source, and actual DrivingEditor converter examined. Private/unreleased producers and downloaded bags are not audited."
+  },
+  "source_facts": [
+    {
+      "source": "dataset.proto",
+      "lines": [
+        366,
+        375
+      ],
+      "fact": "Frame timestamp marks start; Frame pose roughly midpoint and explicitly does not correspond to that timestamp."
+    },
+    {
+      "source": "dataset.proto",
+      "lines": [
+        198,
+        213
+      ],
+      "fact": "TOP range-image poses encode per-pixel geometry, not an explicit point-time array; both returns share this pose."
+    },
+    {
+      "source": "dataset.proto",
+      "lines": [
+        298,
+        335
+      ],
+      "fact": "CameraImage.pose_timestamp belongs to CameraImage.pose; trigger/readout timing is separate."
+    },
+    {
+      "source": "DrivingEditor-run/scripts/waymo_converter.py",
+      "lines": [
+        372,
+        396
+      ],
+      "fact": "Converter saves original Frame.pose and Frame.timestamp independently, without a scan-end offset."
+    },
+    {
+      "source": "DrivingEditor-run/scripts/waymo_converter.py",
+      "lines": [
+        249,
+        253
+      ],
+      "fact": "Sixth .bin column is mask_indices; the old timestamp comment is not executable time data."
+    },
+    {
+      "source": "src/dynfilter_with_odom.cpp",
+      "lines": [
+        63,
+        113
+      ],
+      "fact": "Odom stamp becomes cur_time; cloud stamp ignored; FIFO association has no stamp identity check."
+    },
+    {
+      "source": "src/DynObjFilter.cpp",
+      "lines": [
+        263,
+        270
+      ],
+      "fact": "Original geometry transformed by supplied R/t; all frame points get the same supplied scan_end_time."
+    },
+    {
+      "source": "src/DynObjFilter.cpp",
+      "lines": [
+        582,
+        598
+      ],
+      "fact": "Buffer/map timing depends on physical time differences, buffer_delay and frame_dur."
+    },
+    {
+      "source": "FAST_LIO/config/waymo.yaml",
+      "lines": [
+        8,
+        28
+      ],
+      "fact": "Released Waymo config selects lidar_type4 and imu_en=false."
+    },
+    {
+      "source": "FAST_LIO/src/laserMapping.cpp",
+      "lines": [
+        511,
+        521
+      ],
+      "fact": "With imu_en=false the published lidar_end_time equals the input lidar_beg_time; no end offset is added."
+    },
+    {
+      "source": "FAST_LIO/src/laserMapping.cpp",
+      "lines": [
+        929,
+        1012
+      ],
+      "fact": "Published body cloud and odometry share lidar_end_time."
+    },
+    {
+      "source": "FAST_LIO/src/preprocess.cpp",
+      "lines": [
+        188,
+        209
+      ],
+      "fact": "L515-style path preserves XYZ/I, filters rows, and sets curvature0; it is not the raw Waymo producer."
+    }
+  ],
+  "input_reference_pins": {
+    "raw49_labels_layout.json": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\next_diagnostics_cpu\\static_initialisation_actor_cpu\\raw49_labels_layout.json",
+      "bytes": 4016319,
+      "sha256": "fa0448b99abc28c22f40fc7722ecb1d68dbcc68dbe88ae44b5aed0357b894806"
+    },
+    "raw_field_availability_followup_cpu.json": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\next_diagnostics_cpu\\static_initialisation_actor_cpu\\raw_field_availability_followup_cpu.json",
+      "bytes": 16881,
+      "sha256": "5eae46e7023aafc578517642c830c87543fdc256d75cfef4912e2301ef38da2b"
+    },
+    "input_lineage_contract.json": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\next_diagnostics_cpu\\static_initialisation_actor_cpu\\input_lineage_contract.json",
+      "bytes": 3958,
+      "sha256": "47dc9d6627b8a2630f65ece165d2a3b9d50e0a1b03f715f3b3048137a0be2f14"
+    }
+  },
+  "mdetector_examined_source_pins": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_source\\src\\dynfilter_with_odom.cpp",
+      "bytes": 4634,
+      "sha256": "aef51551c4a569f51f5adb16d0134cdaa4813afbf4424858b487b17b4db52114"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_source\\src\\DynObjFilter.cpp",
+      "bytes": 81507,
+      "sha256": "008844704399a4c04051747e72ccd90a25966b04b57c3c371225ff6954101a84"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_source\\include\\m-detector\\DynObjFilter.h",
+      "bytes": 19119,
+      "sha256": "c1452d594355b058e1cd34833aed3415db85e8af1e4c8fdb7e16752e61b81966"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_source\\config\\waymo\\waymo0.yaml",
+      "bytes": 2426,
+      "sha256": "e07992f0d468e9d159449ba82fa970b21ed7dafefcc4793fe312305eb2aab2ec"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_source\\config\\waymo\\waymo1.yaml",
+      "bytes": 2429,
+      "sha256": "d99ea928383d5aa05a626e26ebe999b58026f0b2c36baab6bd313d36cab5692f"
+    }
+  ],
+  "sdk_public_source": {
+    "revision": "62b97ad80bbff8b285dda3a9fb679888d34e6b17",
+    "url": "https://raw.githubusercontent.com/waymo-research/waymo-open-dataset/62b97ad80bbff8b285dda3a9fb679888d34e6b17/src/waymo_open_dataset/dataset.proto",
+    "bytes": 17734,
+    "sha256": "e2016198636fbc29e00e40f241c70803cd28aa417d5eb961f28ba41a7e52a0ec",
+    "installed_pb2_sha256": "22130996b7cb3029e892e7451ab60742a447d2684511988e026526c111d1c2ae"
+  },
+  "minimum_next_validation": [
+    "Root review explicit custom frame-clock receipt; author-equivalence remains false.",
+    "Packet-only read-only preflight all49 original .bin/pose/rawID/chronology hashes with no native construction/filter; report direct shape/type/count/geometry/RAM estimates.",
+    "Native ABI/type sizeof and allocation census before construction, reconcile configured capacity with actual max frame rows, review bounded RAM/cgroup limit and measured RSS gate.",
+    "Only after separate root execution authorization: fresh-process bounded original-core construction and chronological CPU scans, log RSS/exit/results keyed to rawIDs; no training-input rewrite.",
+    "Before I-only fromzero, resolve detector output domain versus singleactor/body-only Md; other movers/shadows are separate unresolved supervision inputs."
+  ],
+  "canonical_references_unchanged_after": true
+}

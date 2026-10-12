@@ -1,0 +1,267 @@
+{
+  "scope": {
+    "host": "wm-vgpu-1011",
+    "scene": "silver sedan FRONT raw0..48 only",
+    "gpu_used": false,
+    "formal_source_modified": false,
+    "formal_data_modified": false,
+    "training_executed": false,
+    "parent": "scene0017_000_048_paper_50000_seed0 fresh50k seed0, inherited10000",
+    "child": "scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline, examined20000/30000",
+    "50k_completed": false
+  },
+  "architecture_components": "[49 RGB + LiDAR + pose] -> [body/sky masks + calibration/PCA] -> {Static Gaussians -> SGCM + NPS; Dynamic Gaussians -> foreground RGB + opacity} -> [Composite + EnvMap] -> {reconstruction; static removal; losses -> optimizer}",
+  "confirmed_behavior": [
+    {
+      "id": "provably_invisible_clone_expansion",
+      "severity": "high",
+      "status": "Confirmed implementation degeneracy; confetti causality is excluded for analytically invisible subset",
+      "source": "source/scene/paper_sgcm.py:247-265",
+      "evidence": [
+        "branch_static_10000_cpu.json",
+        "branch_static_20000_cpu.json",
+        "visibility_guard_affected_rows.json",
+        "static20k_dead_clone_index_manifest.json",
+        "pinned_renderer_alpha_cutoff.json"
+      ],
+      "facts": {
+        "20k_exact_xyz_extra_copies": 999266,
+        "20k_largest_xyz_group": 158570,
+        "20k_clone_band_always_below_pixel_alpha_cutoff": 773564,
+        "continuous_time_interval": [
+          -0.48,
+          0.48
+        ],
+        "actual_renderer_alpha_cutoff": 0.00392156862745098
+      },
+      "interpretation": "SGCM geometric clone criterion ignores contribution/temporal opacity eligibility. Positive geometric radii do not prove any pixel contribution. Dead clones cannot produce road RGB confetti while they remain below the pinned renderer cutoff.",
+      "minimal_candidate": "candidate/paper_sgcm_visibility_guard.patch; explicitly enable sgcm_require_effective_visibility only in isolated experiment. Default disabled.",
+      "paper_status": "Guard is an unreported eligibility/scheduling choice. Paper gives dr and distance cases, but not clone repetition, contribution eligibility or resource policy."
+    },
+    {
+      "id": "static_reset_after_refinement_end",
+      "severity": "high",
+      "status": "Confirmed source/schedule defect for post-reset exported checkpoint behavior",
+      "source": "source/train.py:764; source/scene/gaussian_model.py:409",
+      "evidence": [
+        "tiny_cpu_checks.json",
+        "checkpoint_geometry.json"
+      ],
+      "facts": "Static opacity resets continue every3000 even after SGCM and generic densification end15000;30k all2234298 static base opacities<=.01. No SGCM call is due at30000.",
+      "limitation": "Does not explain pre-reset20k static road confetti by itself; root handles controlled reset/evaluation-order diagnosis."
+    },
+    {
+      "id": "observed_road_behind_selected_actor",
+      "severity": "high",
+      "status": "Confirmed visibility evidence for a validated near-road subset, not dense background GT",
+      "evidence": [
+        "road_observation_coverage.json",
+        "coverage_0017017.npz",
+        "coverage_evidence_0017017.jpg",
+        "coverage_evidence_0017010.jpg"
+      ],
+      "facts": "raw17 has2293/2293 nearby fitted-road ray samples through car mask independently observed outside actor mask/non-sky with no closer measured occluder and same-frame real ground LiDAR support; all>=3 independent frames. raw10 has3179/3198. Visual panels show real road and crosswalk after car moves.",
+      "limitation": "Subset limited to supported local ground plane; does not imply all masked pixels or raw48 road patch have observations. raw48 sampled patch has0confirmed here."
+    },
+    {
+      "id": "geometry_and_index_math_pass",
+      "severity": "info",
+      "status": "No deterministic unit/plane/SH-parent/rotation/optimizer indexing error found",
+      "evidence": [
+        "sgcm_runtime_geometry.json",
+        "metric_and_normal_invariants.json",
+        "tiny_cpu_checks.json",
+        "visibility_guard_cpu_regression.json"
+      ],
+      "facts": {
+        "meter_to_model_scale": 0.1,
+        "dr_m": 0.5,
+        "dr_model": 0.05,
+        "max_metric_plane_distance_error_m": 3.481659405224491e-13,
+        "initial_static_exclusion_count": 4106,
+        "initial_sgcm_prune_candidates": 1756,
+        "initial_inside_region_count": 41984,
+        "cpu_guard_regression_cases": 7
+      },
+      "limitation": "CPU tests validate arithmetic and state/index transforms, not authors unpublished topology policy or rendered improvement."
+    },
+    {
+      "id": "frame_mask_and_time_alignment_pass",
+      "severity": "info",
+      "status": "No49-frame index/clock/maskedRGB mismatch found",
+      "evidence": [
+        "mask_alignment_49frames.json",
+        "initial_geometry_and_time.json",
+        "metric_and_normal_invariants.json"
+      ],
+      "facts": "Every mask produces exactly supplied masked RGB. Sky overlap0. PLY49timestamps have per-frame counts identical to actor manifest; nx/ny/nz all store model time. Dynamic initial792/36406 points within.15m of ground, which alone cannot classify leakage because tires/lower body are legitimately near road."
+    }
+  ],
+  "high_risk_paper_consistency_gaps": [
+    {
+      "id": "static_time_variation",
+      "source": "source/scene/gaussian_model.py:149-150,177-178; source/gaussian_renderer/__init__.py:341-349",
+      "paper": "Eq4 printed1700 callsGs time-invariant; Figure3 nevertheless discusses suppression of static v. Precise author enforcement unavailable.",
+      "evidence": [
+        "static_time_20000_cpu.json",
+        "static_time_30000_cpu.json"
+      ],
+      "20k_facts": "612740 static centers move>.1m and279960>.25m over49observed times; p99 excursion.526m;1033069 temporal mask toggles;1449089 alpha relative range>50%.",
+      "30k_facts": "647182 static centers move>.1m and305714>.25m; p99.565m;1034453 mask toggles.",
+      "decision": "High-risk consistency gap, not authorization to zero/freeze all formal temporal fields or claim an exact paper fix."
+    },
+    {
+      "id": "shadow_and_lidar_motion_preprocessing_missing",
+      "paper": "III-B: point-stream moving-event detection[41], GroundedSAM+shadow[44]",
+      "data": "Actual DEVA/SAM visually reviewed one silver body, mask projection plus connected component. No M-detector and no shadow mask.",
+      "decision": "Known method/preprocessing gap, transparent reproduction choice. Do not repair by using GT3Dboxes or by reassigning near-ground points just to pass."
+    },
+    {
+      "id": "time_aggregated_actor_region_and_repeat_clone",
+      "source": "source/scene/paper_sgcm.py:350-376",
+      "data": "Actor time-aggregated AABB spans16.49m x21.86m and extends to fitted ground. Initial region has41984 static rows;20k contains1347325.",
+      "decision": "Region shape, ground selection,20px footprint,100-step offset schedule,clone budget and repeat policy are not numerically specified by paper. Do not call them verified author settings."
+    }
+  ],
+  "cross_agent_causal_update": {
+    "source": "root reported GPU component diagnostics during audit",
+    "reported_finding": "20k static_foreground is dark; static_env_contribution contains full road RGB confetti. Thus EnvMap exposure is the direct observed location of road noise.",
+    "use": "This audit does not attribute confetti to dead SH copies. Independent GPU evidence paths and numeric component metrics belong to root/GPU diagnostic handoff."
+  },
+  "candidate_validation": {
+    "tests_passed": 7,
+    "radii_zero_baseline": {
+      "counts": [
+        2,
+        3,
+        5,
+        9,
+        17,
+        33,
+        65,
+        129
+      ],
+      "last_stats": {
+        "iteration": 700,
+        "inside_region": 64,
+        "pruned": 0,
+        "cloned": 64,
+        "split_parents": 0,
+        "candidate_clone": 64,
+        "candidate_split": 0,
+        "points_before": 65,
+        "points_after": 129,
+        "dr_m": 0.5,
+        "dr_model": 0.5
+      }
+    },
+    "radii_zero_candidate": {
+      "counts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "last_stats": {
+        "iteration": 700,
+        "inside_region": 1,
+        "pruned": 0,
+        "cloned": 0,
+        "split_parents": 0,
+        "candidate_clone": 0,
+        "candidate_split": 0,
+        "geometric_candidate_clone": 1,
+        "geometric_candidate_split": 0,
+        "excluded_zero_radius": 1,
+        "excluded_globally_under_alpha": 0,
+        "effective_visibility_guard_enabled": true,
+        "points_before": 2,
+        "points_after": 2,
+        "dr_m": 0.5,
+        "dr_model": 0.5
+      }
+    },
+    "positive_radii_globally_under_alpha_baseline": {
+      "counts": [
+        2,
+        3,
+        5,
+        9,
+        17,
+        33,
+        65,
+        129
+      ],
+      "last_stats": {
+        "iteration": 700,
+        "inside_region": 64,
+        "pruned": 0,
+        "cloned": 64,
+        "split_parents": 0,
+        "candidate_clone": 64,
+        "candidate_split": 0,
+        "points_before": 65,
+        "points_after": 129,
+        "dr_m": 0.5,
+        "dr_model": 0.5
+      }
+    },
+    "positive_radii_globally_under_alpha_candidate": {
+      "counts": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "last_stats": {
+        "iteration": 700,
+        "inside_region": 1,
+        "pruned": 0,
+        "cloned": 0,
+        "split_parents": 0,
+        "candidate_clone": 0,
+        "candidate_split": 0,
+        "geometric_candidate_clone": 1,
+        "geometric_candidate_split": 0,
+        "excluded_zero_radius": 0,
+        "excluded_globally_under_alpha": 1,
+        "effective_visibility_guard_enabled": true,
+        "points_before": 2,
+        "points_after": 2,
+        "dr_m": 0.5,
+        "dr_model": 0.5
+      }
+    },
+    "default_disabled_matches_baseline": true,
+    "eligible_live_clone_math_exactly_unchanged": true,
+    "geometric_pruning_unchanged_even_for_dead_alpha": true,
+    "nontrivial_quaternion_split_axis_and_mixture_covariance_pass": true,
+    "guard_is_declared_unreported_eligibility_choice": true,
+    "no_ground_threshold_or_loss_change": true,
+    "gpu_used": false,
+    "cuda_initialized": false
+  },
+  "remaining_work": [
+    "Root/GPU agent: verify component-level EnvMap/noise and loss/branch support under a single-variable isolated experiment; retain unmodified reference20k.",
+    "If useful, remove773564 proven-dead clone rows only in disposable inference tensors. Expected RGB unchanged under pinned cutoff; save maximum pixel difference and formal checkpoint/source hashes. This verifies zero-contribution analytically identified waste, not a quality repair.",
+    "A guardedSGCM test requires a disposable checkpoint/initialization before15000; applying it to30k->30300 does nothing becauseSGCMdue=False. Preserve strict lineage and paper choices.",
+    "For static time-invariance, first diagnose reference-time frozen rendered static state as an explicit inference counterfactual; replacing marginal with1 can activate hundreds of thousands of previously dead clones and is a confounded alteration.",
+    "Whole-composite PSNR cannot accept removal quality. Evaluate static/removal on independently observed road subset plus leakage/opacity maps. No invented dense background GT."
+  ],
+  "reproduce_commands": [
+    "CUDA_VISIBLE_DEVICES='' OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/sgcm_data_audit/audit_cpu.py",
+    "CUDA_VISIBLE_DEVICES='' OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/sgcm_data_audit/audit_checkpoint_branches_cpu.py",
+    "CUDA_VISIBLE_DEVICES='' OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/sgcm_data_audit/audit_static_time_cpu.py",
+    "CUDA_VISIBLE_DEVICES='' OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/sgcm_data_audit/test_visibility_guard_cpu.py"
+  ],
+  "source_and_candidate_pins": "audit_source_and_candidate_pins.json",
+  "no_claim_of_algorithm_or_effects_fixed": true
+}

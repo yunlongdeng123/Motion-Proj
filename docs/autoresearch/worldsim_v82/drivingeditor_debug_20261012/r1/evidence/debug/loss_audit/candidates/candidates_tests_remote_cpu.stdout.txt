@@ -1,0 +1,144 @@
+{
+  "scope": "CPU invariance and exact candidate camera-function integration; no GPU/real model/train/checkpoint/source mutation",
+  "torch": "2.2.2+cu118",
+  "tests": [
+    {
+      "test": "collision_nearest",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "all24_input_permutations_exact_equal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "noncollision_identical_to_original",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "zero_nan_inf_behind_camera_and_invalid_uv_ignored",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "empty_returns_allzero",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "exact_candidate_loadCam_collision_integration",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "exact_candidate_loadCam_zero_nan_behind_integration",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "foreground_eq13_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "candidate_only_supplies_outside_gradient",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "complement_background_gradcheck",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "default_zero_coefficient_exact_baseline",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "background_term_finite_nonzero_gradient_at_full_opacity",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "actual_full_objective_layer_degeneracy",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "single_complement_eliminates_counterexample_objective_equality",
+      "passed": true,
+      "details": null
+    },
+    {
+      "test": "all_candidate_python_syntax_valid",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "all_passed": true,
+  "opacity_two_pixel_evidence": {
+    "alpha": [
+      0.8,
+      0.8
+    ],
+    "mask": [
+      1.0,
+      0.0
+    ],
+    "foreground_raw_loss": 0.022314355131420965,
+    "foreground_raw_gradient": [
+      -0.23657177565710483,
+      -0.0
+    ],
+    "background_raw_loss": 0.6436152129571133,
+    "background_raw_gradient": [
+      0.0,
+      2.803519515946517
+    ],
+    "lambda_0_05_foreground_gradient": [
+      -0.011828588782855242,
+      -0.0
+    ],
+    "lambda_0_05_background_gradient": [
+      0.0,
+      0.14017597579732585
+    ]
+  },
+  "full_objective_layer_degeneracy_counterexample": {
+    "cases": [
+      {
+        "allocation": "proper_split",
+        "components_raw": {
+          "global_rgb": 0.0,
+          "dynamic_rgb": 0.0,
+          "sky": -0.0,
+          "nps": 0.0,
+          "foreground_opacity": 2.5001250083334077e-09,
+          "sparse_inverse_depth": 0.0
+        },
+        "original_total": 1.250062504166704e-10,
+        "diagnostic_complement_raw": -0.0,
+        "total_plus_lambda_0_05_complement": 1.250062504166704e-10
+      },
+      {
+        "allocation": "dynamic_explains_whole_background",
+        "components_raw": {
+          "global_rgb": 0.0,
+          "dynamic_rgb": 0.0,
+          "sky": -0.0,
+          "nps": 0.0,
+          "foreground_opacity": 2.5001250083334077e-09,
+          "sparse_inverse_depth": 0.0
+        },
+        "original_total": 1.250062504166704e-10,
+        "diagnostic_complement_raw": 6.603401257578932,
+        "total_plus_lambda_0_05_complement": 0.33017006300395285
+      }
+    ],
+    "interpretation": "Conceptual per-pixel alpha/color/depth construction with actual frozen loss/SSIM/compose functions. Confirms an implemented-objective identifiability gap; does not prove realizability by a finite shared3D Gaussian set, the actual optimizer path, or author intent."
+  },
+  "limitations": "Nearest z per coarse pixel is an explicit geometric policy; experimental complementary opacity objective is not certified author formula. Neither CPU result proves the cause of the real branch contamination."
+}

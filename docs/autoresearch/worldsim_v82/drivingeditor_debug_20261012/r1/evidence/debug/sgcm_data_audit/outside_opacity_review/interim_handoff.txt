@@ -1,0 +1,50 @@
+独立 outside-opacity 实验准备审查（CPU；新 harness 尚待绑定）
+
+结论：候选 loss/source 及隔离配置守卫 PASS；launch 总评尚待新 harness/plan 实际 SHA。
+这不是实验效果 PASS，也不证明新增背景 opacity 项属于作者论文公式。
+
+同一 saved30k 四文件 + 原始467输入
+                 |
+                 v
+原 strict restore + 隔离两字段适配器
+                 |
+         +-------+-------+
+         v               v
+原 paper loss     原 paper loss + .05 Loutside
+         |               |
+         +-------+-------+
+                 v
+相同300步采样/相机/LR + 相同49帧与掩膜评估
+                 |
+                 v
+轨迹、区域指标与30300四文件快照
+
+已独立完成：
+1. train 授权新增之外的完整 AST 与原 freeze 相同；原 paper_losses 所有节点不变。
+   新项仅作用掩膜外，掩膜内值/梯度精确0，λ0值/梯度精确原目标。
+2. 128原字段增加2明确实验字段成为130。512配置边界检查通过：其余值、类型、
+   删除或新增拒绝；adapter 拒绝安装在正式 module；仍调用原严格 validator。
+3. wm-vgpu-1011 CPU 实际核验原/副本148+148文件，恰有 train.py 与
+   utils/paper_losses.py 两文件变化，paper_checkpoint.py 原字节未动。
+   61 protected 原源/kernel/data/30k四文件及6辅助pins全部匹配。
+4. parent完整输入manifest对应467文件的bytes/SHA全部匹配，包括49帧calib、pose、
+   RGB、sky、actor共245项，无新shadowmask。它不是实际Scene逐帧pose额外receipt。
+
+当前SHA：
+experiment_binding fe615d61dad338a3971211f7ef50f6a3d79d67d3312807c589608e5d7554dfce
+guard f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9
+candidate train db8148fbf8b9607c481a6cbae8ee0bbedc08571d58d07d9c6f64e1f22e98ee9d
+candidate paper_losses 3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab
+baseline harness ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458
+baseline plan f12d6c0801997d0a09020617c7629f5f41abfab4083ebbf0400f1e715be6d205
+baseline observer f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1
+shared helper 0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa
+full input manifest 2d15bf009565c1b5a469309c35865361a0e1e97f2e37861ac51a117dbc9e5a89
+common49 receipt 1b7161a2b30a08fb7fd8354a71b257cf99ad39bef16732a5f24a367174c24d50
+
+后续：新增纯观测 original objective before add log 时，candidate与patch/replica/binding
+须重pin；新独立harness不覆盖已完成baseline。将审最小差异、真实helper import路径/SHA、
+parent four hashes、restore observer/RNG保留、final49评估和4snapshot，及firststep原目标
+对baseline标量精确比较。actual restore/实验质量仅能由执行证据证明。
+
+本审查无GPU、无续训、无正式源/数据/checkpoint写入。

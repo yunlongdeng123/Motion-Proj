@@ -1,0 +1,33 @@
+独立最终审查 PASS：可按该精确计划运行隔离单变量300步实验。
+实验仅增加掩膜外dynamic opacity项，λ=.05；保留原paper loss、depth、SGCM、reset、50k horizon。
+真实执行路径、配置及CPU preflight已核对；正式源/guard未弱化。无需再修复。
+
+同一30k四文件 + 467原输入
+              |
+              v
+原完整restore + 隔离两字段guard
+              |
+       +------+------+
+       v             v
+ 原paper loss  原paper loss + .05 Loutside
+       |             |
+       +------+------+
+              v
+原300采样轨迹 + RNG-safe49相机/掩膜评估
+              |
+              v
+区域指标 + 30300四文件完整state
+
+硬检查：30001 backward前原10标量精确相等；每一步camera/time_shift/LR一致；
+49帧GT浮点数组、尺寸、掩膜区域像素数一致；相同eval函数源码；全部输入和源SHA一致；
+30300完成真实Adam后保存static/dynamic/env/完整sidecar，核SHA与CPU可加载schema。
+
+本PASS是CPU准备与执行协议可运行结论，未执行variant GPU，也不是效果或作者公式认证。
+baseline未独立记录每帧实际Scene pose；同原loader/cameras/normalization+全部真实输入
+及49GT/区域配对作为明确替代证据。原组件/RNG/optimizer的实际restore仍由GPU硬守卫验证。
+
+harness_sha256: 93bb8df2cca142b3ea0b08e42ab8c3fe5defa214641537b7f3935eb300444359
+prepared_plan_sha256: ef4b873994b8a8d21fcbc96efbce1c6d764249f5b8fdf43be19c60bedbc7153e
+launcher_sha256: 426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc
+experiment_binding_sha256: b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214
+guard_sha256: f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9

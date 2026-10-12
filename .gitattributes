@@ -4,3 +4,8 @@
 # 新实验的输入、权重、第三方 checkout 和结果必须位于仓库外。
 *.py text eol=lf
 *.sh text eol=lf
+
+# v8.2 是历史源码补丁与证据归档：保留原字节和 patch 上下文空行，不做换行/空白改写。
+/compatibility/DrivingEditor-v82/** -text -whitespace
+/docs/autoresearch/worldsim_v82/** -text -whitespace
+/scripts/worldsim_v82/drivingeditor_debug/** -text -whitespace

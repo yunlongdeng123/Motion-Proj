@@ -1,0 +1,84 @@
+{
+  "status": "CPU_TIME_GEOMETRY_DOMAIN_HANDOFF_ONLY_NOT_EXECUTION_BINDING",
+  "GPU_or_detector_constructed_or_scanned": false,
+  "allow_training": false,
+  "allow_detector_execution": false,
+  "author_equivalence": false,
+  "custom_clock_name": "WAYMO_FRAME_START_REFERENCE_CLOCK_SECONDS_V1",
+  "candidate_clock_approved_for_execution_here": false,
+  "relative_vs_epoch_native_label_equivalence_claimed": false,
+  "original_I_only_draft_unchanged_SHA256": "1dfa70667bed45bd0ecc9633532d180d5acb06909100797eb84c42045bb56f6f",
+  "I_readiness": false,
+  "I_domain_precondition": "Real predictions must expose other-moving/unknown/group scope against unchanged singlecar body Md. Do not materialize global prediction partition or silently expand masks until this is explicit. Native GT remains audit only.",
+  "other_object_context": {
+    "center_FRONT": {
+      "rows": 379,
+      "native_type_counts": {
+        "1": 1,
+        "3": 378
+      },
+      "max_annotated_speed_mps": 0.0415991492431751
+    },
+    "box_FRONT": {
+      "rows": 394,
+      "native_type_counts": {
+        "1": 4,
+        "3": 390
+      },
+      "max_annotated_speed_mps": 0.0415991492431751
+    },
+    "nearplane_unresolved": {
+      "rows": 98,
+      "native_type_counts": {
+        "1": 79,
+        "2": 16,
+        "3": 3
+      },
+      "max_annotated_speed_mps": 0.06011120916725725
+    }
+  },
+  "native_Label_Type_verified_from_actual_protobuf": {
+    "TYPE_UNKNOWN": 0,
+    "TYPE_VEHICLE": 1,
+    "TYPE_PEDESTRIAN": 2,
+    "TYPE_SIGN": 3,
+    "TYPE_CYCLIST": 4
+  },
+  "files": {
+    "HANDOFF.md": {
+      "bytes": 6360,
+      "sha256": "54e3e072890133c8644a21cdca99d25c74b09958163f0a7f1b42a8a8db30c8fd"
+    },
+    "clock_source_audit_cpu.json": {
+      "bytes": 22694,
+      "sha256": "a1e47e6f7cd3688d6076a5bede9eca0c96a11eb1f8cfeea1bb7c8cece976cc22"
+    },
+    "other_dynamic_domain_followup_cpu.json": {
+      "bytes": 3860355,
+      "sha256": "cfb561b55a6a8a85fe14f63ad6f6ea95ee39048de891d0bbe615a8a8c8f14840"
+    },
+    "collect_clock_source_evidence_cpu.py": {
+      "bytes": 11542,
+      "sha256": "074b1b12b4b8bc3d49789eecdddbf5dc3e68a3ed7f6f10d707f1b5436b2f9b60"
+    },
+    "audit_other_dynamic_domain_cpu.py": {
+      "bytes": 9418,
+      "sha256": "22ae86aab0159f803df3dee8e2d478d24d5f064913cce76fea60c3d9e0ed4b28"
+    },
+    "sdk_range_image_utils.py": {
+      "bytes": 26893,
+      "sha256": "48abee3df4bc0c5d24e83909b7f149201ab95a08d6b383dfb11382bedab5f265"
+    },
+    "dataset.proto": {
+      "bytes": 17734,
+      "sha256": "e2016198636fbc29e00e40f241c70803cd28aa417d5eb961f28ba41a7e52a0ec"
+    }
+  },
+  "ram_compile_only_reference": {
+    "path": "work\\vgpu_bugfix_20261012\\preprocessing_gap_audit\\mdetector_adapter_candidate\\build_attempt_01\\ram_compile_audit.json",
+    "sha256": "ded2906a4f4498d55d46ae27610954f066c6badbd80bb0b098ccd601a480d61c",
+    "not_a_peak_RSS_proof": true,
+    "12GiB_peak_plus8GiB_reserve_was_unapproved_agent_budget_not_author_or_user_requirement": true
+  },
+  "next_execution_stage": "Root/independent-review of separate RLIMIT_AS12GiB/120s construction-only proposal. Does not authorize filter, scan, training or data rewrite."
+}

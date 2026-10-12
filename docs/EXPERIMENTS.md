@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-DRIVINGEDITOR-DEBUG-HANDOFF-20261012 / r1 | 纯证据/代码交接，无新增实验。用户停止研究、自动化PAUSED、未关机；49帧B1/B2/V/S 30k→32k均完成，V/S静态道路改善但composite及actor有代价，完整debug与paper复现未完成；保留reset、depth、SGCM、temporal、初始化/M-detector/shadow审计 | [组件图、交接与边界](v82/DRIVINGEDITOR_DEBUG_HANDOFF.md) · [轻量结果](v82/DRIVINGEDITOR_DEBUG_HANDOFF.json) · [证据与恢复目录](autoresearch/worldsim_v82/drivingeditor_debug_20261012/r1/) |
 | WS-V81-DGGT-WAYMO-INFERENCE-20261011 / r1 | 定时任务已删除。四帧Alpha精确配对仅小幅提亮；首帧五层校准0差、25+3图独立审核，静态缺连续道路、动态目标主体删后消失、白底暴露低覆盖；官方公开编辑亦有伪影，建议作为重建/速度对照而非高保真编辑主线，不外推整个前馈方法 | [流程、组件图与证据](v81/DGGT_WAYMO_INFERENCE_R1.md) · [轻量结果](v81/DGGT_WAYMO_INFERENCE_R1.json) |
 | WS-V81-STORAGE-20261010 / r1 | 授权清理释放105.95GB；旧优化器退役、推理权重保留；当前P1继续运行 | [清单与恢复边界](v81/STORAGE_CLEANUP_20261010.md) · [实测](v81/STORAGE_CLEANUP_20261010.json) |
 | WS-V81-SEEN-TO-SCENE-P1-20261009 / r1 | 用户暂停并转DGGT；最新完整14000已验证保留，最后日志14386，386尾部更新未落盘；父子退出、GPU释放，禁止自动续训/清理。最新已审结果仍12500六窗，旧20000计划停用 | [周期与暂停记录](v81/P1_REVIEW_CYCLES_R1.md)、[7500传播评估](v81/P1_STEP7500_EVALUATION_R1.md)、[协议](v81/YOUTUBE_VOS_P1_R1.md) |

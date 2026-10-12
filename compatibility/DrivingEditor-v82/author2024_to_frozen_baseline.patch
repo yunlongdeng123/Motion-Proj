@@ -1,0 +1,2475 @@
+diff --git a/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py b/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py
+--- a/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py
++++ b/Tracking-Anything-with-DEVA/deva/ext/SAM/automatic_mask_generator.py
+@@ -231,6 +231,9 @@
+             )
+             data.filter(keep_by_nms)
+ 
++        # Keep the original GPU downstream contract after NMS. Completed boolean
++        # masks are accumulated on CPU below to avoid quadratic GPU cat peaks.
++        data["masks"] = data["masks"].to(self.predictor.device)
+         # data.to_numpy()
+         return data
+ 
+@@ -264,6 +267,9 @@
+         for (points, ) in batch_iterator(self.points_per_batch, points_for_image):
+             batch_data = self._process_batch(points, negative_points, cropped_im_size, crop_box,
+                                              orig_size)
++            # Exact device transfer: boxes/scores and NMS stay on GPU; sampling,
++            # mask bits, thresholds and resolution are unchanged.
++            batch_data["masks"] = batch_data["masks"].cpu()
+             data.cat(batch_data)
+             del batch_data
+         self.predictor.reset_image()
+diff --git a/configs/paper_waymo_reconstruction.yaml b/configs/paper_waymo_reconstruction.yaml
+new file mode 100644
+--- /dev/null
++++ b/configs/paper_waymo_reconstruction.yaml
+@@ -0,0 +1,80 @@
++# Final-paper method profile for an ISOLATED repository/run.
++# Explicit paper facts: 50k iterations, dynamic XYZ lr1.6e-3 ->1.6e-6,
++# LiDAR-only coordinates, photometric DSSIM weight0.2, SGCM dr0.5meters.
++# Other inherited values and the four loss coefficients below are reproduction
++# choices: the final PDF does not report their exact numerical settings.
++exhaust_test: false
++scene_type: "Waymo"
++resolution_scales: [4]  # inherited code value; paper image resolution undisclosed
++fisheye_cam_num: 2
++cam_num: 4
++long_cam_num: 1
++is_fisheye: false
++long_focus: true
++initialization: false
++eval: false  # reconstruction train views; not a claimed paper holdout protocol
++num_pts: 600000  # real LiDAR sampling count is not reported in the paper
++t_init: 0.1
++separate_scaling_t: 0.2
++pos_shift: false
++pos_rotation: false
++reg3d_interval: 10
++reg3d_k: 5
++reg3d_lambda_val: 2
++reg3d_max_points: 100000
++reg3d_sample_size: 1000
++lambda_dssim: 0.2
++is_training: true
++require_boundingbox: false
++nuscenes: false
++iterations: 50000
++position_lr_max_steps: 50000
++# User-requested matched checkpoints/evaluation at every 10,000 steps.
++checkpoint_iterations: [10000, 20000, 30000, 40000, 50000]
++save_iterations: [10000, 20000, 30000, 40000, 50000]
++test_iterations: [10000, 20000, 30000, 40000, 50000]
++paper_eval_train_each_checkpoint: true
++including_dynamic: true
++opacity_lr: 0.005
++adding: false
++densify_until_iter: 15000
++dynamic_densify_until_iter: 15000
++densify_grad_threshold: 0.00017
++sh_increase_interval: 2000
++fix_radius: 0.0
++lambda_v_reg: 0.01
++# Dynamic_GaussianModel already multiplies the base initial XYZ LR by10 and
++# leaves the final LR unchanged. Do NOT set the base initial rate to0.0016.
++position_lr_init: 0.00016
++position_lr_final: 0.0000016
++random_init_point: 0
++dynamic_random_init_point: 0
++
++paper_method: true
++# Code-derived pilot coefficients; NOT author-disclosed paper hyperparameters.
++paper_lambda_sky: 0.05  # legacy lambda_sky_opa scale
++paper_lambda_nps: 0.01  # pilot borrowed from legacy velocity penalty, now Eq9 sum
++paper_lambda_dynamic_opacity: 0.05  # legacy opacity coefficient scale, new Eq13
++paper_lambda_depth: 0.1  # legacy lambda_lidar scale, Eq16 normalization, no decay
++paper_lambda_dynamic_rgb: 1.0  # Eq15 coefficient1; set0 for the L_Id ablation
++paper_weight_provenance: "Pilot values borrowed from released-code coefficient scales; all four numerical paper weights are undisclosed."
++paper_nps_sampling: "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean."
++paper_opacity_domain: "Dynamic foreground mask, divided by full image area. Mask domain follows prose; Eq13 omits an explicit mask."
++
++paper_sgcm_enabled: true
++sgcm_dr_m: 0.5  # explicit paper distance tolerance, before scene normalization
++# Scheduling/footprint/budget details below are declared implementation choices.
++# Offset50 avoids modifying point topology on generic densification iterations.
++sgcm_interval: 100
++sgcm_offset: 50
++sgcm_start: 500
++sgcm_end: 15000
++sgcm_max_new_points: 10000
++sgcm_split_radius_px: 20
++sgcm_ground_margin_m: 3.0
++sgcm_ground_cell_m: 0.5
++sgcm_plane_inlier_m: 0.15
++sgcm_ground_min_cells: 30
++sgcm_ground_min_fraction: 0.35
++sgcm_ground_max_tilt_deg: 20
++sgcm_ground_max_rmse_m: 0.10
+diff --git a/scene/paper_sgcm.py b/scene/paper_sgcm.py
+new file mode 100644
+--- /dev/null
++++ b/scene/paper_sgcm.py
+@@ -0,0 +1,380 @@
++"""Paper Eq8 SGCM with explicit, bounded engineering choices.
++
++The published paper specifies distance-based prune/clone/split, dr=0.5m, and
++dynamic-LiDAR support, but omits region representation, ground extraction,
++fitting, schedule and split threshold. This module records those choices;
++it does not assert their equivalence to unpublished author implementation.
++Geometry/fitting are CPU NumPy. Torch is imported only by refine().
++"""
++from dataclasses import dataclass, asdict
++import json
++import math
++from pathlib import Path
++
++import numpy as np
++
++
++class SGCMGeometryError(ValueError):
++    """A trustworthy metric-space ground model cannot be established."""
++
++
++@dataclass
++class SGCMConfig:
++    dr_m: float = 0.5
++    interval: int = 100
++    offset: int = 50
++    start: int = 500
++    end: int = 15000
++    max_new_points: int = 10000
++    split_radius_px: float = 20.0
++    ground_margin_m: float = 3.0
++    ground_cell_m: float = 0.5
++    plane_inlier_m: float = 0.15
++    ground_min_cells: int = 30
++    ground_min_fraction: float = 0.35
++    ground_max_tilt_deg: float = 20.0
++    ground_max_rmse_m: float = 0.10
++    region_margin_m: float = 0.25
++    max_points: int = 3000000
++
++    @classmethod
++    def from_args(cls, args):
++        values = {}
++        for name in cls.__dataclass_fields__:
++            key = 'sgcm_' + name
++            value = getattr(args, key, None)
++            if value is not None:
++                values[name] = value
++        config = cls(**values)
++        if config.interval <= 0 or not 0 <= config.offset < config.interval:
++            raise ValueError('Invalid SGCM interval/offset')
++        if config.dr_m <= 0 or config.split_radius_px <= 0:
++            raise ValueError('SGCM distance and projected-radius thresholds must be positive')
++        if config.max_new_points < 0 or config.max_points < 1:
++            raise ValueError('SGCM point budgets must be finite and nonnegative')
++        if config.end <= config.start:
++            raise ValueError('SGCM end must exceed start')
++        if config.ground_cell_m <= 0 or config.plane_inlier_m <= 0:
++            raise ValueError('Ground grid and inlier distances must be positive')
++        # Refuse any schedule that can share an iteration with generic topology
++        # updates. Matching point counts alone cannot prove indices are current.
++        generic_interval = int(getattr(args,'densification_interval',100))
++        generic_start = int(getattr(args,'densify_from_iter',500))
++        generic_end = int(getattr(args,'densify_until_iter',15000))
++        common = math.gcd(config.interval,generic_interval)
++        if config.offset % common == 0:
++            modulus = config.interval // common
++            k = (config.offset//common * pow(generic_interval//common,-1,modulus)) % modulus if modulus>1 else 0
++            first = k*generic_interval
++            period = config.interval*generic_interval//common
++            lower = max(config.start,generic_start+1)
++            first += max(0,(lower-first+period-1)//period)*period
++            if first < min(config.end,generic_end):
++                raise ValueError('SGCM schedule overlaps generic densification at iteration%d' % first)
++        return config
++
++
++def validate_similarity(transform):
++    transform = np.asarray(transform, dtype=np.float64)
++    if transform.shape != (4, 4) or not np.isfinite(transform).all():
++        raise SGCMGeometryError('World-to-model transform must be finite4x4')
++    if not np.allclose(transform[3], [0, 0, 0, 1], atol=1e-9):
++        raise SGCMGeometryError('World-to-model transform is not affine')
++    singular = np.linalg.svd(transform[:3, :3], compute_uv=False)
++    scale = float(singular.mean())
++    if scale <= 0 or not np.allclose(singular, scale, rtol=1e-4, atol=1e-10):
++        raise SGCMGeometryError('SGCM requires an isotropic metric similarity transform')
++    return scale
++
++
++def transform_points(points, affine):
++    points = np.asarray(points, dtype=np.float64)
++    return points @ affine[:3, :3].T + affine[:3, 3]
++
++
++def transform_plane(plane, source_to_target):
++    result = np.linalg.solve(np.asarray(source_to_target).T,
++                             np.asarray(plane, dtype=np.float64))
++    norm = np.linalg.norm(result[:3])
++    if norm <= 0 or not np.isfinite(result).all():
++        raise SGCMGeometryError('Invalid transformed ground plane')
++    return result / norm
++
++
++def lower_grid_samples(points, cell_m):
++    """One lower-envelope representative per occupied XY cell, min3points.
++
++    Ten-percentile height avoids trusting the absolute minimum of noisy LiDAR.
++    Equal cell weighting avoids high-density surfaces dominating plane fitting.
++    These are reproducibility choices absent from the paper.
++    """
++    cells = np.floor(points[:, :2] / cell_m).astype(np.int64)
++    _, group = np.unique(cells, axis=0, return_inverse=True)
++    order = np.argsort(group, kind='stable')
++    cuts = np.flatnonzero(np.diff(group[order])) + 1
++    rows = []
++    for indices in np.split(order, cuts):
++        if len(indices) < 3:
++            continue
++        cell = points[indices]
++        z = np.quantile(cell[:, 2], 0.10)
++        row = cell[np.argmin(np.abs(cell[:, 2] - z))]
++        rows.append(row)
++    return np.asarray(rows, dtype=np.float64).reshape(-1, 3)
++
++
++def fit_ground_plane(points_anchor, actor_bounds, config):
++    """Fit z=a*x+b*y+c in the first vehicle's up-oriented frame.
++
++    Bounded deterministic RANSAC, then inlier least-squares. No flat-plane or
++    all-points fallback: failure is explicit. Ground selection is static LiDAR
++    near the actor XY footprint; this extends the paper's Hd support by a
++    declared margin to obtain unobscured nearby road evidence.
++    """
++    points = np.asarray(points_anchor, dtype=np.float64)
++    valid = np.isfinite(points).all(axis=1)
++    neighbourhood = np.zeros(len(points), dtype=bool)
++    for bounds in actor_bounds:
++        lower = bounds[0, :2] - config.ground_margin_m
++        upper = bounds[1, :2] + config.ground_margin_m
++        neighbourhood |= np.all((points[:, :2] >= lower) & (points[:, :2] <= upper), axis=1)
++    points = points[valid & neighbourhood]
++    seeds = lower_grid_samples(points, config.ground_cell_m)
++    if len(seeds) < config.ground_min_cells:
++        raise SGCMGeometryError('Insufficient occupied ground cells: %d' % len(seeds))
++    # Keep maximum computation bounded, independently of sequence length.
++    if len(seeds) > 10000:
++        indices = np.linspace(0, len(seeds)-1, 10000, dtype=int)
++        seeds = seeds[indices]
++    xy1 = np.column_stack((seeds[:, :2], np.ones(len(seeds))))
++    random = np.random.RandomState(0)
++    best = None
++    for _ in range(256):
++        indices = random.choice(len(seeds), 3, replace=False)
++        design = xy1[indices]
++        if abs(np.linalg.det(design)) < 0.1:
++            continue
++        coefficients = np.linalg.solve(design, seeds[indices, 2])
++        slope = np.linalg.norm(coefficients[:2])
++        if slope > np.tan(np.deg2rad(config.ground_max_tilt_deg)):
++            continue
++        distances = np.abs(xy1 @ coefficients - seeds[:, 2]) / np.sqrt(1+slope*slope)
++        inliers = distances <= config.plane_inlier_m
++        count = int(inliers.sum())
++        score = (count, -float(np.median(distances[inliers])) if count else -np.inf)
++        if best is None or score > best[0]:
++            best = (score, inliers)
++    if best is None:
++        raise SGCMGeometryError('No low-tilt ground plane has sufficient noncollinear support')
++    inliers = best[1]
++    for _ in range(3):
++        if inliers.sum() < config.ground_min_cells:
++            raise SGCMGeometryError('Ground plane has insufficient inlier cells')
++        coefficients, _, rank, _ = np.linalg.lstsq(xy1[inliers], seeds[inliers, 2], rcond=None)
++        if rank != 3:
++            raise SGCMGeometryError('Ground support is collinear')
++        slope = np.linalg.norm(coefficients[:2])
++        distances = np.abs(xy1 @ coefficients - seeds[:, 2]) / np.sqrt(1+slope*slope)
++        inliers = distances <= config.plane_inlier_m
++    count = int(inliers.sum())
++    fraction = float(inliers.mean())
++    rmse = float(np.sqrt(np.mean(distances[inliers]**2))) if count else np.inf
++    tilt = float(np.rad2deg(np.arctan(slope)))
++    span = np.ptp(seeds[inliers, :2], axis=0) if count else np.zeros(2)
++    if (count < config.ground_min_cells or fraction < config.ground_min_fraction or
++            rmse > config.ground_max_rmse_m or tilt > config.ground_max_tilt_deg or
++            np.any(span < 2.0)):
++        raise SGCMGeometryError('Ground validation failed: cells=%d fraction=%.3f rmse=%.3fm tilt=%.2fdeg span=%s' %
++                                (count, fraction, rmse, tilt, span.tolist()))
++    plane = np.array([-coefficients[0], -coefficients[1], 1.0, -coefficients[2]])
++    plane /= np.linalg.norm(plane[:3])
++    return plane, {'candidate_points':len(points), 'lower_envelope_cells':len(seeds),
++                   'inlier_cells':count, 'inlier_fraction':fraction,
++                   'rmse_m':rmse, 'tilt_from_first_vehicle_up_deg':tilt,
++                   'inlier_xy_span_m':span.tolist(), 'plane_anchor':plane.tolist()}
++
++
++class SGCMController:
++    def __init__(self, config, model_scale, plane_model, model_to_anchor, regions_anchor, metadata):
++        self.config = config
++        self.model_scale = model_scale
++        self.plane_model = plane_model
++        self.model_to_anchor = model_to_anchor
++        self.regions_anchor = regions_anchor
++        self.metadata = metadata
++
++    def due(self, iteration):
++        cfg = self.config
++        return cfg.start <= iteration < cfg.end and iteration % cfg.interval == cfg.offset
++
++    def classify_numpy(self, xyz, radii):
++        """Metric-invariant Eq8 classification for diagnostics and CPU tests."""
++        xyz = np.asarray(xyz, dtype=np.float64)
++        radii = np.asarray(radii)
++        if radii.shape != (len(xyz),) or not np.isfinite(xyz).all() or not np.isfinite(radii).all():
++            raise SGCMGeometryError('Invalid radii or Gaussian coordinates')
++        anchor = transform_points(xyz, self.model_to_anchor)
++        inside = np.zeros(len(xyz), dtype=bool)
++        for bounds in self.regions_anchor:
++            inside |= np.all((anchor >= bounds[0]) & (anchor <= bounds[1]), axis=1)
++        distance_m = np.abs(xyz @ self.plane_model[:3] + self.plane_model[3]) / self.model_scale
++        dr = self.config.dr_m
++        return {'prune':inside & (distance_m > dr),
++                'clone':inside & (distance_m > 0.5*dr) & (distance_m <= dr),
++                'split':inside & (distance_m <= 0.5*dr) & (radii > self.config.split_radius_px),
++                'inside':inside, 'distance_m':distance_m}
++
++    def refine(self, gaussians, radii, iteration):
++        if not self.due(iteration):
++            return {}
++        import torch
++        with torch.no_grad():
++            xyz = gaussians.get_xyz.detach()
++            if radii.ndim != 1 or len(radii) != len(xyz):
++                raise RuntimeError('SGCM radii must match current topology; schedule must avoid generic densification')
++            if not torch.isfinite(xyz).all() or not torch.isfinite(radii).all():
++                raise SGCMGeometryError('Nonfinite current Gaussian geometry or projected radius')
++            cfg = self.config
++            affine = torch.as_tensor(self.model_to_anchor, dtype=xyz.dtype, device=xyz.device)
++            anchor = xyz @ affine[:3, :3].T + affine[:3, 3]
++            inside = torch.zeros(len(xyz), dtype=torch.bool, device=xyz.device)
++            for region in self.regions_anchor:
++                bounds = torch.as_tensor(region, dtype=xyz.dtype, device=xyz.device)
++                inside |= ((anchor >= bounds[0]) & (anchor <= bounds[1])).all(dim=1)
++            plane = torch.as_tensor(self.plane_model, dtype=xyz.dtype, device=xyz.device)
++            distance_m = torch.abs(xyz @ plane[:3] + plane[3]) / self.model_scale
++            prune = inside & (distance_m > cfg.dr_m)
++            clone = inside & (distance_m > 0.5*cfg.dr_m) & (distance_m <= cfg.dr_m)
++            split = inside & (distance_m <= 0.5*cfg.dr_m) & (radii > cfg.split_radius_px)
++            # Exact geometry rules, bounded resource policy: split largest image
++            # footprints first, then clone largest visible footprints. Selection
++            # cap is an explicit approximation, not a paper-reported parameter.
++            prune_count = int(prune.sum().item())
++            after_prune = len(xyz)-prune_count
++            if after_prune == 0:
++                raise SGCMGeometryError('SGCM would remove every static Gaussian')
++            budget = min(cfg.max_new_points, max(0, cfg.max_points-after_prune))
++            split_ids = torch.nonzero(split, as_tuple=False).flatten()
++            if len(split_ids):
++                split_ids = split_ids[torch.argsort(radii[split_ids], descending=True, stable=True)[:budget]]
++            budget -= len(split_ids)
++            clone_ids = torch.nonzero(clone, as_tuple=False).flatten()
++            if len(clone_ids):
++                clone_ids = clone_ids[torch.argsort(radii[clone_ids], descending=True, stable=True)[:budget]]
++            remove = prune.clone()
++            remove[split_ids] = True
++            parents = torch.cat((clone_ids, split_ids, split_ids))
++            # Reuse GaussianModel's optimizer-aware append/prune methods. Clone
++            # copies parameters, as standard3DGS. Spatial split is a symmetric,
++            # deterministic two-component moment-matching mixture along the
++            # largest covariance axis; temporal fields are copied unchanged.
++            if len(parents):
++                fields = ['_xyz','_features_dc','_features_rest','_opacity','_scaling',
++                          '_rotation','_t','_scaling_t','_velocity']
++                children = [getattr(gaussians, name)[parents].detach().clone() for name in fields]
++                if len(split_ids):
++                    nclone, nsplit = len(clone_ids), len(split_ids)
++                    scales = gaussians.get_scaling[split_ids]
++                    largest = scales.argmax(dim=1)
++                    quaternion = gaussians._rotation[split_ids]
++                    quaternion = quaternion / quaternion.norm(dim=1, keepdim=True).clamp_min(1e-12)
++                    w,x,y,z = quaternion.unbind(dim=1)
++                    rotation = torch.stack((1-2*(y*y+z*z),2*(x*y-w*z),2*(x*z+w*y),
++                                            2*(x*y+w*z),1-2*(x*x+z*z),2*(y*z-w*x),
++                                            2*(x*z-w*y),2*(y*z+w*x),1-2*(x*x+y*y)), dim=1).reshape(-1,3,3)
++                    direction = rotation[torch.arange(nsplit,device=xyz.device),:,largest]
++                    width = scales.gather(1,largest[:,None]) / np.sqrt(2.0)
++                    offset = direction * width
++                    children[0][nclone:nclone+nsplit] -= offset
++                    children[0][nclone+nsplit:] += offset
++                    split_scales = scales.clone()
++                    split_scales.scatter_(1,largest[:,None],width)
++                    children[4][nclone:] = gaussians.scaling_inverse_activation(split_scales).repeat(2,1)
++                # Preserve accumulated statistics for all existing survivors;
++                # densification_postfix normally resets them globally.
++                statistics = {name:getattr(gaussians,name).detach().clone() for name in
++                              ['max_radii2D','xyz_gradient_accum','t_gradient_accum','denom']}
++                gaussians.densification_postfix(*children)
++                for name, old in statistics.items():
++                    getattr(gaussians,name)[:len(old)] = old
++                remove = torch.cat((remove,torch.zeros(len(parents),dtype=torch.bool,device=xyz.device)))
++            if remove.any():
++                gaussians.prune_points(remove)
++            return {'iteration':int(iteration),'inside_region':int(inside.sum().item()),
++                    'pruned':prune_count,'cloned':len(clone_ids),'split_parents':len(split_ids),
++                    'candidate_clone':int(clone.sum().item()),'candidate_split':int(split.sum().item()),
++                    'points_before':len(xyz),'points_after':len(gaussians.get_xyz),
++                    'dr_m':cfg.dr_m,'dr_model':cfg.dr_m*self.model_scale}
++
++
++def create_sgcm_controller(source_path, args):
++    """Initialize from unnormalized world LiDAR and the actual loader transform.
++
++    Requires Scene construction first so the current camera configuration's
++    transform exists. This factory never changes priors or the source dataset.
++    """
++    from plyfile import PlyData
++    from scipy.spatial import cKDTree
++    cfg = SGCMConfig.from_args(args)
++    root = Path(source_path)
++    precise = root/'sgcm_transform_matrix.txt'
++    transform_path = precise if precise.exists() else root/'transform_matrix.txt'
++    if not transform_path.is_file():
++        raise SGCMGeometryError('Current world-to-model loader transform is missing')
++    transform = np.loadtxt(transform_path)
++    scale = validate_similarity(transform)
++    poses = sorted((root/'pose').glob('*.txt'))
++    if not poses:
++        raise SGCMGeometryError('First vehicle pose is missing')
++    first_pose = np.loadtxt(poses[0])
++    pose_scale = validate_similarity(first_pose)
++    if not np.isclose(pose_scale,1.0,rtol=1e-4):
++        raise SGCMGeometryError('Vehicle pose must be rigid in meters')
++    def read_xyz(path):
++        vertices = PlyData.read(str(path))['vertex']
++        xyz = np.column_stack([vertices[key] for key in ['x','y','z']]).astype(np.float64)
++        if len(xyz)<3 or not np.isfinite(xyz).all():
++            raise SGCMGeometryError('Empty or invalid prior: '+str(path))
++        return xyz
++    static_world = read_xyz(root/'points3d.ply')
++    dynamic_paths = sorted(root.glob('points3d_dynamic_*.ply'))
++    if not dynamic_paths:
++        raise SGCMGeometryError('SGCM requires real dynamic LiDAR priors')
++    actors_world = [read_xyz(path) for path in dynamic_paths]
++    dynamic_world = np.concatenate(actors_world)
++    # Match the loader's strict0.1m removal rule before selecting static ground.
++    distance,_ = cKDTree(dynamic_world).query(static_world,k=1,eps=0,distance_upper_bound=0.1,workers=4)
++    static_world = static_world[distance>=0.1]
++    world_to_anchor = np.linalg.inv(first_pose)
++    static_anchor = transform_points(static_world,world_to_anchor)
++    actors_anchor = [transform_points(points,world_to_anchor) for points in actors_world]
++    bounds = [np.stack((points.min(axis=0),points.max(axis=0))) for points in actors_anchor]
++    plane_anchor,fit = fit_ground_plane(static_anchor,bounds,cfg)
++    anchor_to_model = transform @ first_pose
++    plane_model = transform_plane(plane_anchor,anchor_to_model)
++    regions = []
++    for box in bounds:
++        region = box.copy()
++        region[0,:2] -= cfg.region_margin_m
++        region[1,:2] += cfg.region_margin_m
++        corners = np.array([[x,y] for x in region[:,0] for y in region[:,1]])
++        ground_z = -(corners @ plane_anchor[:2]+plane_anchor[3])/plane_anchor[2]
++        region[0,2] = min(region[0,2],float(ground_z.min()))-cfg.region_margin_m
++        region[1,2] = max(region[1,2],float(ground_z.max()))+cfg.region_margin_m
++        regions.append(region)
++    metadata = {'status':'validated','paper_reference':'Eq8,printed1701/PDF6',
++                'config':asdict(cfg),'meter_to_model_scale':scale,'dr_model':cfg.dr_m*scale,
++                'transform_path':str(transform_path),'transform_validation':'finite_isotropic_similarity',
++                'world_to_model':transform.tolist(),'anchor_pose':str(poses[0]),
++                'plane_model':plane_model.tolist(),'ground_fit':fit,
++                'regions_anchor':[region.tolist() for region in regions],
++                'assumptions':['First vehicle up defines local vertical; low-tilt ground required.',
++                    'Hd is the union of actor time-aggregated LiDAR AABBs in the first vehicle frame; extends vertically to fitted ground.',
++                    'Ground support includes a3m XY margin around actor support;0.5m grid10th-percentile lower envelope; deterministic256trial RANSAC and least-squares.',
++                    'SGCM executes after optimizer on an offset schedule avoiding generic densification;20px radius is the undeclared projected-footprint threshold choice.',
++                    'Resource cap limits additions per step; large projected footprints prioritized.',
++                    'Clone copies parameters; split uses symmetric two-child largest-axis moment-matched spatial subdivision and unchanged temporal fields.'],
++                'unknown_author_details':['Region shape/update','Ground extraction/fit','Schedule','Footprint threshold','Clone/split policy/budget']}
++    controller = SGCMController(cfg,scale,plane_model,np.linalg.inv(anchor_to_model),regions,metadata)
++    print('SGCM_INIT '+json.dumps(metadata,sort_keys=True),flush=True)
++    return controller
+diff --git a/scene/scene_utils.py b/scene/scene_utils.py
+--- a/scene/scene_utils.py
++++ b/scene/scene_utils.py
+@@ -29,6 +29,7 @@
+     pointcloud_right: np.array = None
+     pointcloud_back: np.array = None
+     bbx_info_1: list = None
++    object_mask: np.array = None
+ 
+ 
+ 
+diff --git a/scene/waymo_calibration.py b/scene/waymo_calibration.py
+new file mode 100644
+--- /dev/null
++++ b/scene/waymo_calibration.py
+@@ -0,0 +1,51 @@
++"""Named Waymo calibration and camera selection without CUDA dependencies."""
++from pathlib import Path
++import numpy as np
++
++
++def selected_camera_indices(args):
++    if args.is_fisheye:
++        return [4,5][:args.fisheye_cam_num]
++    explicit = getattr(args, "camera_indices", None)
++    if explicit is not None:
++        indices = [int(i) for i in explicit]
++    elif args.long_focus:
++        indices = [0]
++    else:
++        indices = list(range(args.cam_num))
++    if not indices or len(set(indices)) != len(indices) or any(i < 0 or i > 4 for i in indices):
++        raise ValueError("Waymo camera_indices must be unique indices in 0..4")
++    return indices
++
++
++def read_named_camera_calibration(path, camera_indices):
++    values = {}
++    for line in Path(path).read_text().splitlines():
++        if not line.strip():
++            continue
++        name, separator, payload = line.partition(":")
++        if not separator or name in values:
++            raise ValueError(f"Malformed/duplicate calibration record: {line}")
++        values[name] = np.fromstring(payload, sep=" ")
++    intrinsics, lidar_to_camera = [], []
++    for index in camera_indices:
++        keyp, keyt = f"P{index}", f"Tr_velo_to_cam_{index}"
++        if keyp not in values or keyt not in values or len(values[keyp]) != 12 or len(values[keyt]) != 12:
++            raise ValueError(f"Missing/malformed named camera calibration {keyp}/{keyt}: {path}")
++        projection = values[keyp].reshape(3,4)
++        transform = np.eye(4)
++        transform[:3] = values[keyt].reshape(3,4)
++        if not np.isfinite(projection).all() or not np.isfinite(transform).all():
++            raise ValueError(f"Non-finite calibration: {path}")
++        if projection[0,0] <= 0 or projection[1,1] <= 0:
++            raise ValueError(f"Invalid focal length: {path}")
++        intrinsics.append(projection[:,:3])
++        lidar_to_camera.append(transform)
++    return np.stack(intrinsics), np.stack(lidar_to_camera)
++
++
++def camera_observation_identity(frame_index, frame_name, camera_indices, selected_index):
++    count=len(camera_indices)
++    uid=frame_index*count+selected_index
++    name=frame_name if count==1 else f"{frame_name}_cam{camera_indices[selected_index]}"
++    return uid,name
+diff --git a/scene/waymo_loader2.py b/scene/waymo_loader2.py
+--- a/scene/waymo_loader2.py
++++ b/scene/waymo_loader2.py
+@@ -1,4 +1,5 @@
+ import os
++from glob import glob
+ import numpy as np
+ from tqdm import tqdm
+ from PIL import Image
+@@ -10,8 +11,10 @@
+ from scipy.spatial.transform import Rotation as R
+ import numpy as np
+ import matplotlib.pyplot as plt
+-from scipy.spatial import ConvexHull
++from scipy.spatial import ConvexHull, cKDTree
+ import sys
++from scene.waymo_calibration import (selected_camera_indices, read_named_camera_calibration,
++                                     camera_observation_identity)
+ 
+ def pad_poses(p):
+     """Pad [..., 3, 4] pose matrices with a homogeneous bottom row [0,0,0,1]."""
+@@ -289,47 +292,35 @@
+     else:
+         time_duration = args.time_duration
+     pcd = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d.ply"))
+-    # if args.require_boundingbox:
+-    dynamic_pcd_1 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_0.ply"))
+-    dynamic_pcd_2 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_1.ply"))
+-    dynamic_pcd_3 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_2.ply"))
+-    dynamic_pcd_4 = o3d.io.read_point_cloud(os.path.join(args.source_path, "points3d_dynamic_3.ply"))
+     pointcloud1 = np.asarray(pcd.points)
+     pointcloud_time = np.asarray(pcd.normals)[:, 0].reshape(-1, 1)
+-    mask = np.ones(len(pointcloud1), dtype=bool)
+-    dynamic_pointcloud_1 = np.asarray(dynamic_pcd_1.points)
+-    pointcloud_dynamic_time_1 = np.asarray(dynamic_pcd_1.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud_2 = np.asarray(dynamic_pcd_2.points)
+-    pointcloud_dynamic_time_2 = np.asarray(dynamic_pcd_2.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud_3 = np.asarray(dynamic_pcd_3.points)
+-    pointcloud_dynamic_time_3 = np.asarray(dynamic_pcd_3.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud_4 = np.asarray(dynamic_pcd_4.points)
+-    pointcloud_dynamic_time_4 = np.asarray(dynamic_pcd_4.normals)[:, 0].reshape(-1, 1)
+-    dynamic_pointcloud = np.vstack((dynamic_pointcloud_1, dynamic_pointcloud_2))
+-    dynamic_pointcloud = np.vstack((dynamic_pointcloud, dynamic_pointcloud_3))
+-    dynamic_pointcloud = np.vstack((dynamic_pointcloud, dynamic_pointcloud_4))
+-    pointcloud_dynamic_time = np.vstack((pointcloud_dynamic_time_1, pointcloud_dynamic_time_2))
+-    pointcloud_dynamic_time = np.vstack((pointcloud_dynamic_time, pointcloud_dynamic_time_3))
+-    pointcloud_dynamic_time = np.vstack((pointcloud_dynamic_time, pointcloud_dynamic_time_4))
+     if args.including_dynamic:
+-        for dynamic_point in dynamic_pointcloud:
+-            # 计算每个动态物体点与原始点云中点的距离，根据需要调整阈值
+-            distances = np.linalg.norm(pointcloud1 - dynamic_point, axis=1)
+-            # print(distances)
+-            mask[distances < 0.1] = False
+-        static_indices = np.where(mask)[0]
+-        # dynamic_indices = np.where(~mask)[0]
+-        static_pointcloud = pointcloud1[static_indices]
+-        # dynamic_pointcloud_1 = pointcloud1[dynamic_indices]
+-        # dynamic_pointcloud = np.vstack((dynamic_pointcloud, dynamic_pointcloud_1))
+-        static_time = pointcloud_time[static_indices]
+-        # dynamic_time_1 = pointcloud_time[dynamic_indices]
+-        # dynamic_time = np.vstack((pointcloud_dynamic_time, dynamic_time_1))
+-        dynamic_time = pointcloud_dynamic_time
++        dynamic_paths = sorted(glob(os.path.join(args.source_path, "points3d_dynamic_*.ply")))
++        dynamic_clouds = [o3d.io.read_point_cloud(path) for path in dynamic_paths]
++        if not dynamic_clouds or any(not len(p.points) for p in dynamic_clouds):
++            raise ValueError("including_dynamic=True requires nonempty real dynamic PLY files")
++        dynamic_pointcloud_1 = np.asarray(dynamic_clouds[0].points)
++        if args.require_boundingbox:
++            if len(dynamic_clouds) < 2:
++                raise ValueError("The optional legacy bounding-box branch requires two actors")
++            dynamic_pointcloud_2 = np.asarray(dynamic_clouds[1].points)
++        dynamic_pointcloud = np.concatenate([np.asarray(p.points) for p in dynamic_clouds])
++        dynamic_time = np.concatenate([np.asarray(p.normals)[:, :1] for p in dynamic_clouds])
++        if not len(dynamic_pointcloud):
++            raise ValueError("including_dynamic=True requires real dynamic PLY points")
++        # Exact nearest-neighbour query: retain precisely those points without
++        # any dynamic point at Euclidean distance < 0.1 (the original rule).
++        nearest, _ = cKDTree(dynamic_pointcloud).query(
++            pointcloud1, k=1, eps=0, distance_upper_bound=0.1, workers=4)
++        mask = nearest >= 0.1
++        static_pointcloud = pointcloud1[mask]
++        static_time = pointcloud_time[mask]
+     else:
+         static_pointcloud = pointcloud1
+         static_time = pointcloud_time
+-        dynamic_time = pointcloud_dynamic_time_1
++        dynamic_pointcloud = np.empty((0, 3), dtype=np.float32)
++        dynamic_time = np.empty((0, 1), dtype=np.float32)
++    camera_indices = selected_camera_indices(args)
+     pose_id = 0
+     last_bbox_translation_1 = None
+     last_bbox_translation_2 = None
+@@ -385,105 +376,45 @@
+                 sky_data = np.array(Image.open(os.path.join(args.source_path, 'sky', subdir, car_id + '.png')))
+                 sky_mask = sky_data > 0
+                 sky_masks.append(sky_mask.astype(np.float32))
+-        elif args.long_focus:
+-            # CAMERA DIRECTION: RIGHT DOWN FORWARDS
+-            with open(os.path.join(args.source_path, 'calib', car_id + '.txt')) as f:
+-                calib_data = f.readlines()
+-                L = [list(map(float, line.split()[1:])) for line in calib_data]
+-            Ks = np.array(L[0]).reshape(-1, 3, 4)[:, :, :3]
+-            lidar2cam = np.array(L[-5]).reshape(-1, 3, 4)
+-            lidar2cam = pad_poses(lidar2cam)
+-            # lidar2cam = np.linalg.inv(lidar2cam)
+-
++        else:
++            # Explicit named records support the standard11-line Waymo converter
++            # format, independently of line order and the selected camera count.
++            Ks, lidar2cam = read_named_camera_calibration(
++                os.path.join(args.source_path, 'calib', car_id + '.txt'), camera_indices)
++            cam_num = len(camera_indices)
+             cam2lidar = np.linalg.inv(lidar2cam)
+             c2w = ego_pose @ cam2lidar
+             w2c = np.linalg.inv(c2w)
+-            images = []
+-            image_paths = []
+-            dynamic_images = []
+-            HWs = []
+-            masks_data = []
+-            cam_num = args.long_cam_num
+-            for subdir in ['image_0'][:cam_num]:
+-                image_path = os.path.join(args.source_path, 'image', subdir, car_id + '.png')
+-                im_data = Image.open(image_path)
++            images, image_paths, HWs, sky_masks = [], [], [], []
++            dynamic_images = [] if args.including_dynamic else None
++            masks_data = [] if args.including_dynamic else None
++            for camera_index in camera_indices:
++                image_path = os.path.join(args.source_path, 'image', f'image_{camera_index}', car_id + '.png')
++                im_data = Image.open(image_path).convert('RGB')
+                 W, H = im_data.size
+-                image = np.array(im_data) / 255.
++                images.append(np.array(im_data) / 255.)
++                image_paths.append(image_path)
+                 HWs.append((H, W))
+-                images.append(image)
+-                image_paths.append(image_path)
+-            if args.including_dynamic:
+-                for subdir in ['dynamic_image_0'][:cam_num]:
+-                    dynamic_image_path = os.path.join(args.source_path, 'dynamic_image', subdir, car_id + '.png')
+-                    dynamic_im_data = Image.open(dynamic_image_path)
+-                    dynamic_image = np.array(dynamic_im_data) / 255.
++                sky_data = np.array(Image.open(os.path.join(
++                    args.source_path, 'sky', f'sky_{camera_index}', car_id + '.png')))
++                if sky_data.shape != (H, W):
++                    raise ValueError(f'Sky/image dimensions differ: {image_path}')
++                sky_masks.append((sky_data > 0).astype(np.float32))
++                if args.including_dynamic:
++                    dynamic_image = np.array(Image.open(os.path.join(
++                        args.source_path, 'dynamic_image', f'dynamic_image_{camera_index}', car_id + '.png')).convert('RGB')) / 255.
++                    mask_data = np.array(Image.open(os.path.join(
++                        args.source_path, 'mask', f'mask_{camera_index}', 'Annotations', car_id + '.png')))
++                    if dynamic_image.shape != images[-1].shape or mask_data.shape != (H, W):
++                        raise ValueError(f'Dynamic mask/image dimensions differ: {image_path}')
+                     dynamic_images.append(dynamic_image)
+-                for subdir in ['mask_0'][:cam_num]:
+-                    mask_data = np.array(
+-                        Image.open(os.path.join(args.source_path, 'mask', subdir, 'Annotations', car_id + '.png')))
+                     masks_data.append(mask_data.astype(np.float32))
+-            else:
+-                dynamic_images = None
+-                masks_data = None
+-
+-            sky_masks = []
+-            for subdir in ['sky_0'][:cam_num]:
+-                sky_data = np.array(Image.open(os.path.join(args.source_path, 'sky', subdir, car_id + '.png')))
+-                sky_mask = sky_data > 0
+-                sky_masks.append(sky_mask.astype(np.float32))
+-        else:
+-            # CAMERA DIRECTION: RIGHT DOWN FORWARDS
+-            with open(os.path.join(args.source_path, 'calib', car_id + '.txt')) as f:
+-                calib_data = f.readlines()
+-                L = [list(map(float, line.split()[1:])) for line in calib_data]
+-            Ks = np.array(L[0:4]).reshape(-1, 3, 4)[:, :, :3]
+-            lidar2cam = np.array(L[-7:-3]).reshape(-1, 3, 4)
+-            lidar2cam = pad_poses(lidar2cam)
+-            # lidar2cam = np.linalg.inv(lidar2cam)
+-
+-            cam2lidar = np.linalg.inv(lidar2cam)
+-            c2w = ego_pose @ cam2lidar
+-            w2c = np.linalg.inv(c2w)
+-            images = []
+-            image_paths = []
+-            dynamic_images = []
+-            HWs = []
+-            masks_data = []
+-            cam_num = args.cam_num
+-
+-            for subdir in ['image_0', 'image_1', 'image_2', 'image_3'][:cam_num]:
+-                image_path = os.path.join(args.source_path, 'image', subdir, car_id + '.png')
+-                im_data = Image.open(image_path)
+-                W, H = im_data.size
+-                image = np.array(im_data) / 255.
+-                HWs.append((H, W))
+-                images.append(image)
+-                image_paths.append(image_path)
+-            if args.including_dynamic:
+-                for subdir in ['dynamic_image_0', 'dynamic_image_1', 'dynamic_image_2', 'dynamic_image_3'][:cam_num]:
+-                    dynamic_image_path = os.path.join(args.source_path, 'dynamic_image', subdir, car_id + '.png')
+-                    dynamic_im_data = Image.open(dynamic_image_path)
+-                    dynamic_image = np.array(dynamic_im_data) / 255.
+-                    dynamic_images.append(dynamic_image)
+-                for subdir in ['mask_0', 'mask_1', 'mask_2', 'mask_3'][:cam_num]:
+-                    mask_data = np.array(
+-                        Image.open(os.path.join(args.source_path, 'mask', subdir, 'Annotations', car_id + '.png')))
+-                    masks_data.append(mask_data.astype(np.float32))
+-            else:
+-                dynamic_images = None
+-                masks_data = None
+-
+-            sky_masks = []
+-            for subdir in ['sky_0', 'sky_1', 'sky_2', 'sky_3'][:cam_num]:
+-                sky_data = np.array(Image.open(os.path.join(args.source_path, 'sky', subdir, car_id + '.png')))
+-                sky_mask = sky_data > 0
+-                sky_masks.append(sky_mask.astype(np.float32))
+ 
+         timestamp = time_duration[0] + (time_duration[1] - time_duration[0]) * idx / (len(car_list) - 1)
+         point = np.fromfile(os.path.join(args.source_path, "velodyne", car_id + ".bin"),
+                             dtype=np.float32, count=-1).reshape(-1, 6)
+         point_xyz, intensity, elongation, timestamp_pts = np.split(point, [3, 4, 5], axis=1)
+-        point_xyz_world = (np.pad(point_xyz, (0, 1), constant_values=1) @ ego_pose.T)[:, :3]
++        point_xyz_world = (np.pad(point_xyz, ((0, 0), (0, 1)), constant_values=1) @ ego_pose.T)[:, :3]
+         points.append(point_xyz_world)
+         point_time = np.full_like(point_xyz_world[:, :1], timestamp)
+         points_time.append(point_time)
+@@ -564,9 +495,10 @@
+             cx = float(K[0, 2])
+             cy = float(K[1, 2])
+             FovX = FovY = -1.0
+-            cam_infos.append(CameraInfo(uid=idx + j, R=R, T=T, FovY=FovY, FovX=FovX,
++            camera_uid, observation_name = camera_observation_identity(idx, car_id, camera_indices, j)
++            cam_infos.append(CameraInfo(uid=camera_uid, R=R, T=T, FovY=FovY, FovX=FovX,
+                                         image=images[j],
+-                                        image_path=image_paths[j], image_name=car_id,
++                                        image_path=image_paths[j], image_name=observation_name,
+                                         width=HWs[j][1], height=HWs[j][0], timestamp=timestamp,
+                                         pointcloud_camera=point_camera,
+                                         fx=fx, fy=fy, cx=cx, cy=cy,
+@@ -602,7 +534,7 @@
+     c2ws = unpad_poses(np.linalg.inv(w2cs))
+     c2ws, transform, scale_factor = transform_poses_pca(c2ws, fix_radius=args.fix_radius)
+     print(scale_factor)
+-    np.savetxt(os.path.join(args.source_path, 'transform_matrix.txt'), transform, fmt='%.6f')
++    np.savetxt(os.path.join(args.source_path, 'transform_matrix.txt'), transform, fmt='%.17g')
+     # pos_shift = 0.5
+     c2ws = pad_poses(c2ws)
+     # ego_pose_world_to_car = np.linalg.inv(ego_pose)
+diff --git a/tests/test_paper_checkpoint.py b/tests/test_paper_checkpoint.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_paper_checkpoint.py
+@@ -0,0 +1,218 @@
++"""CPU tests: atomic bundles, sampler/RNG state, actual capture/restore + Adam."""
++import ast
++import copy
++import json
++from pathlib import Path
++import random
++import tempfile
++import types
++import unittest
++from unittest.mock import patch
++
++import numpy as np
++from omegaconf import OmegaConf
++import torch
++
++from utils import paper_checkpoint as checkpoint
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def args_for(root):
++    return OmegaConf.create({"model_path": str(root), "source_path": "/source/scene", "iterations": 50000,
++                            "including_dynamic": True, "env_map_res": 2})
++
++
++def camera(name, timestamp, uid):
++    return types.SimpleNamespace(image_path=f"/source/scene/image_0/{name}.png", image_name=name,
++                                 timestamp=timestamp, colmap_id=uid, image_width=4, image_height=3)
++
++
++class Scene:
++    def __init__(self):
++        self.resolution_scales = [1, 4]
++        self.scale_index = 1
++        self.train_cameras = {scale: [camera("0002", .2, 2), camera("0001", .1, 1), camera("0000", 0, 0)]
++                              for scale in self.resolution_scales}
++
++    def getTrainCameras(self):
++        return self.train_cameras[self.resolution_scales[self.scale_index]]
++
++    def getTestCameras(self, scale):
++        return []
++
++
++class TinyModel:
++    def __init__(self, number):
++        self.value = torch.nn.Parameter(torch.tensor([float(number)]))
++        self.optimizer = torch.optim.Adam([self.value], lr=.01)
++        self.value.square().sum().backward()
++        self.optimizer.step()
++        self.optimizer.zero_grad(set_to_none=True)
++        self.no_time_split = False
++
++    def capture(self):
++        return self.value, self.optimizer.state_dict()
++
++
++class BundleTests(unittest.TestCase):
++    def setUp(self):
++        self.temporary = tempfile.TemporaryDirectory()
++        self.addCleanup(self.temporary.cleanup)
++        self.root = Path(self.temporary.name)
++        self.args = args_for(self.root)
++        self.scene = Scene()
++        self.models = {"static": TinyModel(1), "dynamic": TinyModel(2), "environment": TinyModel(3)}
++
++    def test_complete_event_requires_all_components_then_preserves_each_payload(self):
++        components = checkpoint.save_components(self.root, 10000, self.models)
++        event_path = self.root / "checkpoint_events/iteration_010000.json"
++        self.assertFalse(event_path.exists())
++        state = checkpoint.capture_training_state(10000, self.scene, [2, 0], self.models, self.args)
++        event = checkpoint.publish_checkpoint_event(self.root, 10000, components, state, [], self.args, self.scene)
++        self.assertEqual(json.loads(event_path.read_text())["status"], "complete")
++        self.assertEqual(set(event["checkpoints"]), {"static", "dynamic", "environment", "training_state"})
++        for key, model in self.models.items():
++            (parameter, optimizer), iteration = torch.load(event["checkpoints"][key]["path"], weights_only=False)
++            self.assertEqual(iteration, 10000)
++            torch.testing.assert_close(parameter, model.value)
++            self.assertEqual(optimizer["state"][0]["step"].item(), 1)
++        with self.assertRaises(FileExistsError):
++            checkpoint.save_components(self.root, 10000, self.models)
++
++    def test_failed_component_write_never_publishes_event_or_leaves_tempfile(self):
++        original = torch.save
++        count = 0
++        def broken_save(*args, **kwargs):
++            nonlocal count
++            count += 1
++            if count == 2:
++                raise OSError("simulated interrupted write")
++            return original(*args, **kwargs)
++        with patch.object(torch, "save", broken_save), self.assertRaises(OSError):
++            checkpoint.save_components(self.root, 10000, self.models)
++        self.assertFalse(list(self.root.glob("checkpoint_events/*.json")))
++        self.assertFalse(list(self.root.glob(".*")))
++
++    def test_missing_evaluation_frame_blocks_complete_publication(self):
++        components = checkpoint.save_components(self.root, 10000, self.models)
++        state = checkpoint.capture_training_state(10000, self.scene, [], self.models, self.args)
++        with self.assertRaisesRegex(ValueError, "Evaluation frame missing"):
++            checkpoint.publish_checkpoint_event(self.root, 10000, components, state,
++                [{"frames": [{"channels": {"gt": str(self.root / "missing.png")}}]}], self.args, self.scene)
++        self.assertFalse(list(self.root.glob("checkpoint_events/*.json")))
++
++    def test_requested_full_train_evaluation_cannot_silently_publish_empty(self):
++        self.args.paper_eval_train_each_checkpoint = True
++        components = checkpoint.save_components(self.root, 10000, self.models)
++        state = checkpoint.capture_training_state(10000, self.scene, [], self.models, self.args)
++        with self.assertRaisesRegex(ValueError, "full training-camera evaluation"):
++            checkpoint.publish_checkpoint_event(self.root, 10000, components, state, [], self.args, self.scene)
++        with self.assertRaisesRegex(ValueError, "missing or duplicating"):
++            checkpoint.publish_checkpoint_event(self.root, 10000, components, state,
++                [{"split": "train", "frames": []}], self.args, self.scene)
++        self.assertFalse(list(self.root.glob("checkpoint_events/*.json")))
++
++    def test_rng_camera_order_scale_and_sampler_continue_exactly_on_cpu(self):
++        random.seed(8); np.random.seed(9); torch.manual_seed(10)
++        state = checkpoint.capture_training_state(10000, self.scene, [2, 0], self.models, self.args)
++        state_path = self.root / "training_state10000.pth"
++        torch.save(state, state_path)
++        expected = (random.random(), np.random.rand(5), torch.rand(5))
++        new_scene = Scene()
++        new_scene.scale_index = 0
++        for cameras in new_scene.train_cameras.values():
++            cameras.reverse()
++        self.models["static"].no_time_split = True
++        random.seed(98); np.random.seed(99); torch.manual_seed(100)
++        stack, _ = checkpoint.restore_training_state(state_path, 10000, new_scene, self.models, self.args)
++        self.assertEqual(stack, [2, 0])
++        self.assertEqual(new_scene.scale_index, 1)
++        self.assertEqual([c.image_name for c in new_scene.getTrainCameras()], ["0002", "0001", "0000"])
++        self.assertFalse(self.models["static"].no_time_split)
++        self.assertEqual(random.random(), expected[0])
++        np.testing.assert_array_equal(np.random.rand(5), expected[1])
++        torch.testing.assert_close(torch.rand(5), expected[2], rtol=0, atol=0)
++
++    def test_wrong_camera_set_rejected_and_legacy_sidecar_explicitly_warned(self):
++        state = checkpoint.capture_training_state(10000, self.scene, [], self.models, self.args)
++        path = self.root / "state.pth"
++        torch.save(state, path)
++        self.scene.train_cameras[4].pop()
++        with self.assertRaisesRegex(ValueError, "camera identities"):
++            checkpoint.restore_training_state(path, 10000, self.scene, self.models, self.args)
++        with self.assertWarnsRegex(UserWarning, "Legacy checkpoint"):
++            self.assertEqual(checkpoint.restore_training_state(self.root / "absent", 10000, self.scene, self.models, self.args), (None, {}))
++
++    def test_intermediate_train_eval_empty_test_is_full_fixed_order(self):
++        configurations = checkpoint.paper_evaluation_configs(self.scene)
++        self.assertEqual(configurations[0]["cameras"], [])
++        self.assertEqual([camera.image_name for camera in configurations[1]["cameras"]], ["0000", "0001", "0002"])
++
++
++def actual_class(filename, class_name, method_names, namespace):
++    tree = ast.parse((ROOT / filename).read_text(encoding="utf-8"))
++    definition = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == class_name)
++    definition.body = [node for node in definition.body if isinstance(node, ast.FunctionDef) and node.name in method_names]
++    exec(compile(ast.Module(body=[definition], type_ignores=[]), filename, "exec"), namespace)
++    return namespace[class_name]
++
++
++class ActualModelRestoreTests(unittest.TestCase):
++    def test_both_actual_gaussian_branches_restore_adam_and_next_lr_update(self):
++        args = OmegaConf.merge(OmegaConf.load(ROOT / "configs/base.yaml"),
++                               OmegaConf.load(ROOT / "configs/paper_waymo_reconstruction.yaml"))
++        utils_tree = ast.parse((ROOT / "utils/general_utils.py").read_text(encoding="utf-8"))
++        scheduler = next(node for node in utils_tree.body if isinstance(node, ast.FunctionDef) and node.name == "get_expon_lr_func")
++        namespace = {"torch": torch, "np": np}
++        exec(compile(ast.Module(body=[scheduler], type_ignores=[]), "actual-scheduler", "exec"), namespace)
++        original_zeros = torch.zeros
++        def zeros_on_cpu(*values, **kwargs):
++            kwargs["device"] = "cpu"
++            return original_zeros(*values, **kwargs)
++        with patch.object(torch, "zeros", zeros_on_cpu):
++            for name in ("GaussianModel", "Dynamic_GaussianModel"):
++                cls = actual_class("scene/gaussian_model.py", name,
++                                   {"capture", "restore", "training_setup", "update_learning_rate", "get_xyz"}, namespace)
++                model = cls()
++                model.setup_functions = lambda: None
++                for field in ("_xyz", "_features_dc", "_features_rest", "_scaling", "_rotation", "_opacity", "_t", "_scaling_t", "_velocity"):
++                    setattr(model, field, torch.nn.Parameter(torch.tensor([[.2, .3]])))
++                model.active_sh_degree = 2; model.max_radii2D = torch.tensor([7.])
++                model.spatial_lr_scale = .7; model.T = .2; model.velocity_decay = 1.
++                model.training_setup(args)
++                model.update_learning_rate(10000)
++                sum(group["params"][0].square().sum() for group in model.optimizer.param_groups).backward()
++                model.optimizer.step(); model.optimizer.zero_grad(set_to_none=True)
++                restored = cls(); restored.setup_functions = lambda: None
++                restored.restore(copy.deepcopy(model.capture()), args)
++                for current, previous in zip(restored.optimizer.param_groups, model.optimizer.param_groups):
++                    self.assertEqual(current["lr"], previous["lr"])
++                    self.assertEqual(restored.optimizer.state[current["params"][0]]["step"].item(), 1)
++                    torch.testing.assert_close(restored.optimizer.state[current["params"][0]]["exp_avg"],
++                                               model.optimizer.state[previous["params"][0]]["exp_avg"])
++                for branch in (model, restored):
++                    branch.update_learning_rate(10001)
++                    sum(group["params"][0].square().sum() for group in branch.optimizer.param_groups).backward()
++                    branch.optimizer.step()
++                for current, previous in zip(restored.optimizer.param_groups, model.optimizer.param_groups):
++                    self.assertEqual(current["lr"], previous["lr"])
++                    torch.testing.assert_close(current["params"][0], previous["params"][0], rtol=0, atol=0)
++
++    def test_actual_environment_restore_binds_optimizer_to_loaded_parameter(self):
++        namespace = {"torch": torch}
++        cls = actual_class("scene/envlight.py", "EnvLight", {"capture", "restore", "training_setup"}, namespace)
++        original = cls(); original.base = torch.nn.Parameter(torch.full((6, 2, 2, 3), .4))
++        args = types.SimpleNamespace(envmap_lr=.001)
++        original.training_setup(args)
++        original.base.square().sum().backward(); original.optimizer.step(); original.optimizer.zero_grad(set_to_none=True)
++        restored = cls(); restored.base = torch.nn.Parameter(torch.zeros_like(original.base))
++        restored.restore(copy.deepcopy(original.capture()), args)
++        self.assertIs(restored.optimizer.param_groups[0]["params"][0], restored.base)
++        for model in (original, restored):
++            model.base.square().sum().backward(); model.optimizer.step()
++        torch.testing.assert_close(original.base, restored.base, rtol=0, atol=0)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tests/test_paper_configuration.py b/tests/test_paper_configuration.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_paper_configuration.py
+@@ -0,0 +1,42 @@
++"""Verify the actual profile and existing dynamic LR construction on CPU."""
++import ast
++import math
++from pathlib import Path
++import unittest
++import numpy as np
++from omegaconf import OmegaConf
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++class PaperConfigurationTests(unittest.TestCase):
++    def test_explicit_paper_settings_and_actual_dynamic_schedule(self):
++        args = OmegaConf.merge(OmegaConf.load(ROOT / "configs/base.yaml"),
++                               OmegaConf.load(ROOT / "configs/paper_waymo_reconstruction.yaml"))
++        self.assertEqual(args.iterations, 50000)
++        self.assertEqual(args.random_init_point, 0)
++        self.assertEqual(args.dynamic_random_init_point, 0)
++        self.assertEqual(args.lambda_dssim, .2)
++        self.assertTrue(args.paper_method)
++        tree = ast.parse((ROOT / "scene/gaussian_model.py").read_text())
++        cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == "Dynamic_GaussianModel")
++        setup = next(n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == "training_setup")
++        assign = next(n for n in ast.walk(setup) if isinstance(n, ast.Assign)
++                      and any(isinstance(t, ast.Attribute) and t.attr == "xyz_scheduler_args" for t in n.targets))
++        # Evaluate the actual scheduler keyword expressions, not a duplicate
++        # implementation of the dynamic multiplier or schedule horizon.
++        kwargs = {kw.arg: eval(compile(ast.Expression(kw.value), "<actual-dynamic-lr>", "eval"),
++                               {"training_args": args}) for kw in assign.value.keywords}
++        utils_tree = ast.parse((ROOT / "utils/general_utils.py").read_text())
++        function = next(n for n in utils_tree.body if isinstance(n, ast.FunctionDef) and n.name == "get_expon_lr_func")
++        scope = {"np": np}
++        exec(compile(ast.Module(body=[function], type_ignores=[]), "<actual-lr-function>", "exec"), scope)
++        schedule = scope["get_expon_lr_func"](**kwargs)
++        self.assertAlmostEqual(schedule(0), .0016, places=12)
++        self.assertAlmostEqual(schedule(25000), math.sqrt(.0016 * .0000016), places=12)
++        self.assertAlmostEqual(schedule(50000), .0000016, places=12)
++        self.assertEqual(kwargs["max_steps"], 50000)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tests/test_paper_losses.py b/tests/test_paper_losses.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_paper_losses.py
+@@ -0,0 +1,112 @@
++"""Independent equation values, gradients and empty-mask cases; CPU-only."""
++import math
++import unittest
++import torch
++from utils.paper_losses import (sky_loss, dynamic_opacity_loss, boundary_distance,
++                               nps_loss, sparse_inverse_depth_loss, compose_paper_loss)
++
++
++class PaperLossTests(unittest.TestCase):
++    def test_sky_equation_and_gradient(self):
++        alpha = torch.tensor([[[0.5, 0.3]]], dtype=torch.double, requires_grad=True)
++        mask = torch.tensor([[[1., 0.]]], dtype=torch.double)
++        loss = sky_loss(alpha, mask)
++        self.assertAlmostEqual(loss.item(), -0.5 * math.log(0.5) / 2, places=12)
++        loss.backward()
++        self.assertAlmostEqual(alpha.grad[0, 0, 0].item(), (-math.log(0.5) + 1.) / 2, places=12)
++        self.assertEqual(alpha.grad[0, 0, 1].item(), 0.)
++
++    def test_dynamic_equation_mask_domain_and_gradient(self):
++        alpha = torch.tensor([[[0.5, 0.2]]], dtype=torch.double, requires_grad=True)
++        loss = dynamic_opacity_loss(alpha, torch.tensor([[[1., 0.]]], dtype=torch.double))
++        self.assertAlmostEqual(loss.item(), -0.5 * math.log(0.5) / 2, places=12)
++        loss.backward()
++        self.assertAlmostEqual(alpha.grad[0, 0, 0].item(), (math.log(0.5) - 1.) / 2, places=12)
++        self.assertEqual(alpha.grad[0, 0, 1].item(), 0.)
++
++    def test_opacity_clamp_extremes(self):
++        for fn in [sky_loss, dynamic_opacity_loss]:
++            alpha = torch.tensor([[[0., 1., -0.2, 1.2]]], requires_grad=True)
++            value = fn(alpha, torch.ones_like(alpha))
++            value.backward()
++            self.assertTrue(torch.isfinite(value).all())
++            self.assertTrue(torch.isfinite(alpha.grad).all())
++
++    def test_nps_hand_computed_center(self):
++        feature = torch.arange(9, dtype=torch.double).reshape(1, 3, 3).requires_grad_()
++        mask = torch.zeros(1, 3, 3, dtype=torch.double)
++        mask[0, 1, 1] = 1
++        # Center4 has four differences3,3,1,1 and nearest static distance1.
++        self.assertEqual(nps_loss(feature, mask).item(), 8.)
++        nps_loss(feature, mask).backward()
++        self.assertTrue(torch.isfinite(feature.grad).all())
++
++    def test_nps_against_exhaustive_pixel_reference(self):
++        torch.manual_seed(41)
++        feature = torch.randn(3, 5, 6, dtype=torch.double, requires_grad=True)
++        mask = torch.zeros(1, 5, 6, dtype=torch.double)
++        mask[:, 1:4, 1:5] = 1
++        mask[:, 0, 0] = 1  # an image-edge foreground source
++        static_pixels = [(y, x) for y in range(5) for x in range(6) if not mask[0, y, x]]
++        expected = 0.
++        for y in range(5):
++            for x in range(6):
++                if not mask[0, y, x]:
++                    continue
++                distance = min(math.hypot(y - sy, x - sx) for sy, sx in static_pixels)
++                for dy, dx in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
++                    ny, nx = y + dy, x + dx
++                    if 0 <= ny < 5 and 0 <= nx < 6:
++                        vector = feature.detach()[:, y, x] - feature.detach()[:, ny, nx]
++                        expected += math.sqrt(sum(float(v) ** 2 for v in vector)) / distance
++        actual = nps_loss(feature, mask)
++        self.assertAlmostEqual(actual.item(), expected, places=10)
++        distance = boundary_distance(mask)
++        self.assertEqual(distance[0, 2, 2].item(), 2.)
++        self.assertTrue(torch.autograd.gradcheck(lambda f: nps_loss(f, mask, distance), (feature,)))
++
++    def test_nps_empty_and_full_masks_have_finite_zero_gradient(self):
++        for fill in [0., 1.]:
++            feature = torch.ones(3, 3, 4, requires_grad=True)
++            value = nps_loss(feature, torch.full((1, 3, 4), fill))
++            value.backward()
++            self.assertEqual(value.item(), 0.)
++            self.assertTrue(torch.equal(feature.grad, torch.zeros_like(feature)))
++
++    def test_sparse_depth_uses_image_area_not_valid_count(self):
++        rendered = torch.tensor([[[2., 9.], [7., 3.]]], dtype=torch.double, requires_grad=True)
++        lidar = torch.tensor([[[1., 0.], [0., 0.]]], dtype=torch.double)
++        value = sparse_inverse_depth_loss(rendered, lidar, eps=0.)
++        self.assertEqual(value.item(), 0.125)  # |1-1/2| / four pixels
++        value.backward()
++        self.assertEqual(rendered.grad[0, 0, 0].item(), 0.0625)
++        self.assertEqual(torch.count_nonzero(rendered.grad).item(), 1)
++
++    def test_depth_all_invalid_returns_zero(self):
++        rendered = torch.zeros(1, 2, 2, requires_grad=True)
++        value = sparse_inverse_depth_loss(rendered, torch.zeros_like(rendered))
++        value.backward()
++        self.assertEqual(value.item(), 0.)
++        self.assertTrue(torch.isfinite(rendered.grad).all())
++
++    def test_total_composition_has_no_hidden_terms(self):
++        terms = [torch.tensor(float(i), requires_grad=True) for i in range(1, 7)]
++        value = compose_paper_loss(*terms, lambda_sky=.05, lambda_nps=.01,
++                                   lambda_opacity=.05, lambda_depth=.1)
++        self.assertAlmostEqual(value.item(), 1+2+.05*3+.01*4+.05*5+.1*6, places=6)
++        value.backward()
++        for term, expected in zip(terms, [1, 1, .05, .01, .05, .1]):
++            self.assertAlmostEqual(term.grad.item(), expected, places=6)
++
++    def test_dynamic_rgb_ablation_removes_its_gradient(self):
++        terms = [torch.tensor(float(i), requires_grad=True) for i in range(1, 7)]
++        value = compose_paper_loss(*terms, lambda_sky=.05, lambda_nps=.01,
++                                   lambda_opacity=.05, lambda_depth=.1,
++                                   lambda_dynamic_rgb=0.)
++        value.backward()
++        self.assertEqual(terms[1].grad.item(), 0.)
++        self.assertEqual(terms[0].grad.item(), 1.)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tests/test_paper_sgcm.py b/tests/test_paper_sgcm.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_paper_sgcm.py
+@@ -0,0 +1,164 @@
++"""CPU tests of metric geometry and actual GaussianModel optimizer resizing.
++
++Pass GAUSSIAN_MODEL_PATH for the implementation under test. The actual class is
++loaded from its AST, avoiding unrelated GPU-extension imports. Only its hard-
++coded torch.zeros(device='cuda') allocations are redirected to CPU in one test;
++append/prune/Adam operations themselves run unchanged from repository source.
++"""
++import ast
++import os
++from pathlib import Path
++import types
++import unittest
++from unittest.mock import patch
++
++import numpy as np
++import torch
++from torch import nn
++
++from paper_sgcm import (SGCMConfig, SGCMController, SGCMGeometryError,
++                        create_sgcm_controller, fit_ground_plane, transform_plane, transform_points,
++                        validate_similarity)
++
++
++def load_actual_gaussian_class():
++    fallback = Path(__file__).with_name('gaussian_model_under_test.py')
++    source = Path(os.environ.get('GAUSSIAN_MODEL_PATH',str(fallback)))
++    tree = ast.parse(source.read_text(encoding='utf-8'))
++    definition = next(node for node in tree.body if isinstance(node,ast.ClassDef) and node.name=='GaussianModel')
++    namespace = {'torch':torch,'nn':nn,'np':np,'BasicPointCloud':object}
++    exec(compile(ast.Module(body=[definition],type_ignores=[]),str(source),'exec'),namespace)
++    return namespace['GaussianModel']
++
++
++def controller(scale=1.0, transform=None, config=None):
++    transform = np.diag([scale,scale,scale,1.0]) if transform is None else transform
++    plane = transform_plane(np.array([0.,0.,1.,0.]),transform)
++    bounds = [np.array([[-1.,-1.,-1.],[1.,1.,2.]])]
++    return SGCMController(config or SGCMConfig(),validate_similarity(transform),plane,
++                          np.linalg.inv(transform),bounds,{})
++
++
++class GeometryTests(unittest.TestCase):
++    def test_exact_thresholds_and_outside_region(self):
++        xyz=np.array([[0,0,.25],[0,0,.25001],[0,0,.5],[0,0,.50001],[2,0,1.]])
++        masks=controller().classify_numpy(xyz,np.array([21.,21.,21.,21.,21.]))
++        np.testing.assert_array_equal(masks['split'],[True,False,False,False,False])
++        np.testing.assert_array_equal(masks['clone'],[False,True,True,False,False])
++        np.testing.assert_array_equal(masks['prune'],[False,False,False,True,False])
++
++    def test_metric_scale_rotation_translation_invariance(self):
++        angle=.6; rotation=np.array([[1,0,0],[0,np.cos(angle),-np.sin(angle)],[0,np.sin(angle),np.cos(angle)]])
++        world=np.array([[0,0,.1],[0,0,.4],[0,0,.8],[3,0,.8]])
++        for scale in [.01,.1,2.5]:
++            affine=np.eye(4);affine[:3,:3]=rotation*scale;affine[:3,3]=[4,-2,3]
++            masks=controller(transform=affine).classify_numpy(transform_points(world,affine),np.full(4,30.))
++            np.testing.assert_allclose(masks['distance_m'],world[:,2],atol=1e-12)
++            np.testing.assert_array_equal(masks['prune'],[False,False,True,False])
++            np.testing.assert_array_equal(masks['clone'],[False,True,False,False])
++            np.testing.assert_array_equal(masks['split'],[True,False,False,False])
++
++    def test_reject_anisotropic_transform(self):
++        with self.assertRaises(SGCMGeometryError):
++            validate_similarity(np.diag([.1,.2,.1,1.]))
++
++    def test_ground_fit_with_dynamic_height_outliers(self):
++        rng=np.random.RandomState(21)
++        xy=rng.uniform(-4,4,(12000,2)); z=.05*xy[:,0]-.03*xy[:,1]-1.7+rng.normal(0,.02,len(xy))
++        points=np.column_stack((xy,z)); object_points=points[:1200].copy();object_points[:,2]+=rng.uniform(.5,2.0,1200)
++        points=np.concatenate((points,object_points))
++        bounds=[np.array([[-1.,-1.,-1.],[1.,1.,1.]])]
++        plane,stats=fit_ground_plane(points,bounds,SGCMConfig())
++        predicted=-(plane[0]*xy[:,0]+plane[1]*xy[:,1]+plane[3])/plane[2]
++        self.assertLess(np.sqrt(np.mean((predicted-(.05*xy[:,0]-.03*xy[:,1]-1.7))**2)),.05)
++        self.assertGreater(stats['inlier_cells'],100)
++
++    def test_insufficient_ground_fails_no_fallback(self):
++        with self.assertRaises(SGCMGeometryError):
++            fit_ground_plane(np.zeros((2,3)),[np.array([[-1,-1,-1],[1,1,1]])],SGCMConfig())
++
++    def test_schedule_avoids_generic_interval(self):
++        c=controller()
++        self.assertFalse(c.due(500));self.assertTrue(c.due(550));self.assertFalse(c.due(600));self.assertFalse(c.due(15050))
++
++    def test_schedule_overlap_rejected_before_training(self):
++        with self.assertRaisesRegex(ValueError,'overlaps generic densification'):
++            SGCMConfig.from_args(types.SimpleNamespace(sgcm_offset=0))
++        with self.assertRaisesRegex(ValueError,'overlaps generic densification'):
++            SGCMConfig.from_args(types.SimpleNamespace(sgcm_interval=150,sgcm_offset=50))
++        SGCMConfig.from_args(types.SimpleNamespace())
++
++    @unittest.skipUnless(os.environ.get('PAPER_SGCM_FIT_SOURCE'),'Real scene is opt-in via environment')
++    def test_real_scene_ground_fit(self):
++        c=create_sgcm_controller(os.environ['PAPER_SGCM_FIT_SOURCE'],types.SimpleNamespace())
++        self.assertGreater(c.metadata['ground_fit']['inlier_cells'],30)
++        self.assertGreater(c.model_scale,0)
++
++
++class ActualOptimizerTopologyTests(unittest.TestCase):
++    def make_model(self):
++        model=load_actual_gaussian_class().__new__(load_actual_gaussian_class())
++        n=5
++        tensors={'xyz':torch.tensor([[0.,0,.75],[.1,0,.4],[.2,0,.1],[3,0,.75],[0,.2,.1]]),
++                 'f_dc':torch.full((n,1,3),.2),'f_rest':torch.full((n,15,3),.3),
++                 'opacity':torch.full((n,1),-.7),'scaling':torch.tensor([[.03,.04,.02]]).log().repeat(n,1),
++                 'rotation':torch.tensor([[1.,0,0,0]]).repeat(n,1),'t':torch.arange(n).float()[:,None]*.1,
++                 'scaling_t':torch.full((n,1),-.4),'velocity':torch.full((n,3),.2)}
++        mapping={'xyz':'_xyz','f_dc':'_features_dc','f_rest':'_features_rest','opacity':'_opacity',
++                 'scaling':'_scaling','rotation':'_rotation','t':'_t','scaling_t':'_scaling_t','velocity':'_velocity'}
++        groups=[]
++        for key,value in tensors.items():
++            parameter=nn.Parameter(value.clone());setattr(model,mapping[key],parameter)
++            groups.append({'name':key,'params':[parameter],'lr':.001})
++        model.optimizer=torch.optim.Adam(groups,lr=.001)
++        model.scaling_activation=torch.exp;model.scaling_inverse_activation=torch.log
++        sum(parameter.square().sum() for group in groups for parameter in group['params']).backward()
++        model.optimizer.step();model.optimizer.zero_grad(set_to_none=True)
++        with torch.no_grad():
++            model._xyz.copy_(tensors['xyz']);model._rotation.copy_(tensors['rotation']);model._scaling.copy_(tensors['scaling'])
++        model.max_radii2D=torch.arange(n).float()+1
++        model.xyz_gradient_accum=torch.arange(n).float()[:,None]+2
++        model.t_gradient_accum=torch.arange(n).float()[:,None]+3
++        model.denom=torch.arange(n).float()[:,None]+4
++        return model
++
++    def test_actual_clone_split_prune_adam_state_and_next_step(self):
++        model=self.make_model()
++        states={group['name']:model.optimizer.state[group['params'][0]]['exp_avg'].clone() for group in model.optimizer.param_groups}
++        old_time=model._t.detach().clone(); old_mean=model._xyz[2].detach().clone()
++        old_cov=torch.diag(model.get_scaling[2].square().detach())
++        original_zeros=torch.zeros
++        def cpu_zeros(*args,**kwargs):
++            if kwargs.get('device')=='cuda': kwargs['device']='cpu'
++            return original_zeros(*args,**kwargs)
++        with patch.object(torch,'zeros',cpu_zeros):
++            stats=controller().refine(model,torch.tensor([10.,10.,30.,10.,10.]),550)
++        self.assertEqual((stats['pruned'],stats['cloned'],stats['split_parents']),(1,1,1))
++        self.assertEqual(len(model.get_xyz),6)
++        for group in model.optimizer.param_groups:
++            parameter=group['params'][0];state=model.optimizer.state[parameter]
++            self.assertEqual(len(parameter),6)
++            torch.testing.assert_close(state['exp_avg'][:3],states[group['name']][[1,3,4]])
++            torch.testing.assert_close(state['exp_avg'][3:],torch.zeros_like(state['exp_avg'][3:]))
++            self.assertEqual(tuple(state['exp_avg_sq'].shape),tuple(parameter.shape))
++        self.assertEqual(len(model.optimizer.state),9)
++        torch.testing.assert_close(model.max_radii2D,torch.tensor([2.,4.,5.,0.,0.,0.]))
++        torch.testing.assert_close(model._t.detach()[3:],old_time[[1,2,2]])
++        means=model._xyz.detach()[4:]
++        torch.testing.assert_close(means.mean(0),old_mean)
++        covariance=sum(torch.diag(model.get_scaling[i].detach().square())+torch.outer(means[i-4]-old_mean,means[i-4]-old_mean) for i in [4,5])/2
++        torch.testing.assert_close(covariance,old_cov)
++        sum(group['params'][0].square().sum() for group in model.optimizer.param_groups).backward()
++        model.optimizer.step();model.optimizer.zero_grad(set_to_none=True)
++        self.assertTrue(all(torch.isfinite(group['params'][0]).all() for group in model.optimizer.param_groups))
++
++    def test_resource_cap_and_stale_radii(self):
++        model=self.make_model();c=controller(config=SGCMConfig(max_new_points=0))
++        stats=c.refine(model,torch.tensor([10.,10.,30.,10.,10.]),550)
++        self.assertEqual(len(model.get_xyz),4);self.assertEqual(stats['cloned'],0);self.assertEqual(stats['split_parents'],0)
++        with self.assertRaises(RuntimeError):
++            c.refine(model,torch.ones(5),650)
++
++
++if __name__=='__main__':
++    unittest.main(verbosity=2)
+diff --git a/train.py b/train.py
+--- a/train.py
++++ b/train.py
+@@ -211,6 +211,12 @@
+     vis_path = os.path.join(args.model_path, 'visualization')
+     os.makedirs(vis_path, exist_ok=True)
+ 
++    paper_method = bool(args.get("paper_method", False))
++    if paper_method:
++        from utils.paper_masks import load_dynamic_mask
++        from utils.paper_losses import (sky_loss, dynamic_opacity_loss, boundary_distance,
++                                       nps_loss, sparse_inverse_depth_loss, compose_paper_loss)
++
+     gaussians = GaussianModel(args)
+     if args.including_dynamic:
+         dynamic_gaussians = Dynamic_GaussianModel(args)
+@@ -236,13 +242,26 @@
+     if args.start_checkpoint:
+         (model_params, first_iter) = torch.load(args.start_checkpoint)
+         gaussians.restore(model_params, args)
+-        dynamic_gaussians.restore(model_params, args)
++        if dynamic_gaussians is not None:
++            dynamic_checkpoint = os.path.join(os.path.dirname(args.start_checkpoint),
++                                             os.path.basename(args.start_checkpoint).replace("chkpnt", "dynamic_chkpnt", 1))
++            (dynamic_params, dynamic_iter) = torch.load(dynamic_checkpoint)
++            if dynamic_iter != first_iter:
++                raise ValueError("Static and dynamic checkpoint iterations differ")
++            dynamic_gaussians.restore(dynamic_params, args)
+ 
+         if env_map is not None:
+-            env_checkpoint = os.path.join(os.path.dirname(args.checkpoint),
+-                                        os.path.basename(args.checkpoint).replace("chkpnt", "env_light_chkpnt"))
+-            (light_params, _) = torch.load(env_checkpoint)
+-            env_map.restore(light_params)
++            env_checkpoint = os.path.join(os.path.dirname(args.start_checkpoint),
++                                        os.path.basename(args.start_checkpoint).replace("chkpnt", "env_light_chkpnt"))
++            (light_params, light_iter) = torch.load(env_checkpoint)
++            if light_iter != first_iter:
++                raise ValueError("Static and environment checkpoint iterations differ")
++            env_map.restore(light_params, args)
++
++    paper_sgcm = None
++    if paper_method and args.get("paper_sgcm_enabled", False):
++        from scene.paper_sgcm import create_sgcm_controller
++        paper_sgcm = create_sgcm_controller(args.source_path, args)
+ 
+     bg_color = [1, 1, 1] if args.white_background else [0, 0, 0]
+     background = torch.tensor(bg_color, dtype=torch.float32, device="cuda")
+@@ -253,6 +272,14 @@
+     viewpoint_stack = None
+ 
+     ema_dict_for_log = defaultdict(int)
++    if paper_method and args.start_checkpoint:
++        from utils.paper_checkpoint import restore_training_state
++        state_path = os.path.join(os.path.dirname(args.start_checkpoint), f"training_state{first_iter}.pth")
++        viewpoint_stack, saved_ema = restore_training_state(
++            state_path, first_iter, scene,
++            {"static": gaussians, "dynamic": dynamic_gaussians, "environment": env_map},
++            args, sgcm=paper_sgcm)
++        ema_dict_for_log.update(saved_ema)
+     progress_bar = tqdm(range(first_iter + 1, args.iterations + 1), desc="Training progress")
+ 
+     for iteration in progress_bar:
+@@ -303,10 +330,14 @@
+             static_image = render_pkg["render_s"]
+             static_alpha = render_pkg["static_alpha"]
+             dynamic_alpha = render_pkg["dynamic_alpha"]
+-            static_feature = render_pkg['static_feature'] / alpha.clamp_min(EPS)
++            static_feature = render_pkg['static_feature'] / (static_alpha if paper_method else alpha).clamp_min(EPS)
+             static_t_map = static_feature[0:1]
+             static_v_map = static_feature[1:]
+-            dynamic_mask = convert_to_binary_mask(viewpoint_cam.dynamic_image.cuda())
++            if paper_method:
++                dynamic_mask = load_dynamic_mask(args.source_path, viewpoint_cam)
++                gt_dynamic_image = gt_image * dynamic_mask
++            else:
++                dynamic_mask = convert_to_binary_mask(viewpoint_cam.dynamic_image.cuda())
+             dynamic_image = extract_object_pixels(dynamic_image, dynamic_mask)
+             dynamic_image_1 = extract_object_pixels(image, dynamic_mask)
+             gt_dynamic_image = extract_object_pixels(gt_dynamic_image, dynamic_mask)
+@@ -318,6 +349,10 @@
+         feature = render_pkg['feature'] / alpha.clamp_min(EPS)
+         t_map = feature[0:1]
+         v_map = feature[1:]
++        if dynamic_gaussians is None:
++            # The only branch is the static branch; retain its regularizers.
++            static_t_map = t_map
++            static_v_map = v_map
+ 
+         sky_mask = viewpoint_cam.sky_mask.cuda() if viewpoint_cam.sky_mask is not None else torch.zeros_like(alpha, dtype=torch.bool)
+ 
+@@ -343,111 +378,145 @@
+         log_dict['loss_ssim'] = loss_ssim.item()
+         sky_mask_1 = convert_to_binary_mask(viewpoint_cam.sky_mask.long().cuda())
+         sky_truth = extract_object_pixels(gt_image, sky_mask_1)
+-        if dynamic_gaussians is not None:
+-            if gt_dynamic_image.mean().max() > 0:
+-                static_image_1 = extract_object_pixels(static_image, 1 - dynamic_mask)
+-                static_truth = extract_object_pixels(gt_image, 1 - dynamic_mask)
+-                sky_image = extract_object_pixels(static_image, sky_mask_1)
+-                loss_ssim_d = 1.0 - ssim(dynamic_image, gt_dynamic_image)
+-                loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
+-                loss_ssim_static = 1.0 - ssim(static_image_1, static_truth)
+-                loss_l1_d = F.l1_loss(dynamic_image, gt_dynamic_image)
+-                loss_l1_sky = F.l1_loss(sky_image, sky_truth)
+-                loss_l1_static = F.l1_loss(static_image_1, static_truth)
+-                loss_opacity = calculate_weighted_loss(static_alpha, gt_dynamic_image, 0.00001)
+-                loss_v = calculate_weighted_loss(static_v_map, gt_dynamic_image, 0.00001)
+-                # print(loss_dynamic)
+-                loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim
+-                        + 5 * ((1.0 - args.lambda_dssim) * loss_l1_d + args.lambda_dssim * loss_ssim_d)
+-                        + 5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky)
+-                        + ((1.0 - args.lambda_dssim) * loss_l1_static + args.lambda_dssim * loss_ssim_static))
+-                # loss += loss_opacity
+-                # loss += loss_v
++        if paper_method:
++            # Final-paper Eqs7-16. Unreported coefficients and NPS sampling
++            # choices are declared in configs/paper_waymo_reconstruction.yaml.
++            zero = image.sum() * 0.0
++            paper_global_rgb = (1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim
++            paper_dynamic_rgb = zero
++            paper_nps = zero
++            paper_opacity = zero
++            if dynamic_gaussians is not None:
++                paper_dynamic_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(dynamic_image, gt_dynamic_image)
++                                     + args.lambda_dssim * (1.0 - ssim(dynamic_image, gt_dynamic_image)))
++                if not hasattr(viewpoint_cam, "_paper_nps_distance"):
++                    viewpoint_cam._paper_nps_distance = boundary_distance(dynamic_mask)
++                paper_nps = nps_loss(static_v_map, dynamic_mask, viewpoint_cam._paper_nps_distance)
++                paper_opacity = dynamic_opacity_loss(dynamic_alpha, dynamic_mask)
++            paper_sky = sky_loss(static_alpha if dynamic_gaussians is not None else alpha, sky_mask)
++            if viewpoint_cam.pts_depth is None:
++                raise ValueError("The paper depth objective requires sparse LiDAR depth")
++            paper_depth = sparse_inverse_depth_loss(depth, viewpoint_cam.pts_depth.to(depth.device))
++            loss = compose_paper_loss(paper_global_rgb, paper_dynamic_rgb, paper_sky,
++                                      paper_nps, paper_opacity, paper_depth,
++                                      lambda_sky=args.paper_lambda_sky,
++                                      lambda_nps=args.paper_lambda_nps,
++                                      lambda_opacity=args.paper_lambda_dynamic_opacity,
++                                      lambda_depth=args.paper_lambda_depth,
++                                      lambda_dynamic_rgb=args.get("paper_lambda_dynamic_rgb", 1.0))
++            for name, value in (("global_rgb", paper_global_rgb), ("dynamic_rgb", paper_dynamic_rgb),
++                                ("sky", paper_sky), ("nps", paper_nps),
++                                ("dynamic_opacity", paper_opacity), ("depth", paper_depth)):
++                log_dict["loss_paper_" + name] = value.item()
++            # Keep the later diagnostic opacity panel consistent with actor support.
++            if dynamic_gaussians is not None:
++                dynamic_alpha = dynamic_alpha * dynamic_mask
++        else:
++            if dynamic_gaussians is not None:
++                if gt_dynamic_image.mean().max() > 0:
++                    static_image_1 = extract_object_pixels(static_image, 1 - dynamic_mask)
++                    static_truth = extract_object_pixels(gt_image, 1 - dynamic_mask)
++                    sky_image = extract_object_pixels(static_image, sky_mask_1)
++                    loss_ssim_d = 1.0 - ssim(dynamic_image, gt_dynamic_image)
++                    loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
++                    loss_ssim_static = 1.0 - ssim(static_image_1, static_truth)
++                    loss_l1_d = F.l1_loss(dynamic_image, gt_dynamic_image)
++                    loss_l1_sky = F.l1_loss(sky_image, sky_truth)
++                    loss_l1_static = F.l1_loss(static_image_1, static_truth)
++                    loss_opacity = calculate_weighted_loss(static_alpha, gt_dynamic_image, 0.00001)
++                    loss_v = calculate_weighted_loss(static_v_map, gt_dynamic_image, 0.00001)
++                    # print(loss_dynamic)
++                    loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim
++                            + 5 * ((1.0 - args.lambda_dssim) * loss_l1_d + args.lambda_dssim * loss_ssim_d)
++                            + 5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky)
++                            + ((1.0 - args.lambda_dssim) * loss_l1_static + args.lambda_dssim * loss_ssim_static))
++                    # loss += loss_opacity
++                    # loss += loss_v
++                else:
++                    sky_image = extract_object_pixels(image, sky_mask_1)
++                    loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
++                    loss_l1_sky = F.l1_loss(sky_image, sky_truth)
++                    loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim +
++                            5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky))
+             else:
+                 sky_image = extract_object_pixels(image, sky_mask_1)
+                 loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
+                 loss_l1_sky = F.l1_loss(sky_image, sky_truth)
+                 loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim +
+                         5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky))
+-        else:
+-            sky_image = extract_object_pixels(image, sky_mask_1)
+-            loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
+-            loss_l1_sky = F.l1_loss(sky_image, sky_truth)
+-            loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim +
+-                    5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky))
+-        # alpha_1 = alpha.clone().detach()
+-        # loss_opacity = F.mse_loss(static_alpha, alpha_1)
+-        # total_content_loss = tv_loss(static_image, dynamic_image, 10)
+-        # print(total_content_loss)
+-        # loss += total_content_loss
+-        # if iteration % args.reg3d_interval == 0:
+-        #     # regularize at certain intervals
+-        #     logits3d = classifier(gaussians._objects_dc.permute(2,0,1))
+-        #     prob_obj3d = torch.softmax(logits3d,dim=0).squeeze().permute(1,0)
+-        #     loss_obj_3d = loss_cls_3d(gaussians._xyz.squeeze().detach(), prob_obj3d, args.reg3d_k, args.reg3d_lambda_val, args.reg3d_max_points, args.reg3d_sample_size)
+-        #     loss += loss_obj + loss_obj_3d
+-        #     log_dict['loss_obj'] = (loss_obj + loss_obj_3d).item()
+-        # else:
+-        #     loss += loss_obj
+-        #     log_dict['loss_obj'] = loss_obj.item()
+-
+-        if args.lambda_lidar > 0:
+-            assert viewpoint_cam.pts_depth is not None
+-            pts_depth = viewpoint_cam.pts_depth.cuda()
+-
+-            mask = pts_depth > 0
+-            loss_lidar = torch.abs(1 / (pts_depth[mask] + 1e-5) - 1 / (depth[mask] + 1e-5)).mean()
+-            if args.lidar_decay > 0:
+-                iter_decay = np.exp(-iteration / 8000 * args.lidar_decay)
+-            else:
+-                iter_decay = 1
+-            log_dict['loss_lidar'] = loss_lidar.item()
+-            loss += iter_decay * args.lambda_lidar * loss_lidar
+-
+-        if args.lambda_t_reg > 0:
+-            loss_t_reg = 1/torch.abs(static_t_map).mean()
+-            log_dict['loss_t_reg'] = loss_t_reg.item()
+-            loss += args.lambda_t_reg * loss_t_reg
+-
+-        if args.lambda_v_reg > 0:
+-            loss_v_reg = torch.abs(static_v_map).mean()
+-            log_dict['loss_v_reg'] = loss_v_reg.item()
+-            loss += args.lambda_v_reg * loss_v_reg
+-
+-        if args.lambda_inv_depth > 0:
+-            inverse_depth = 1 / (depth + 1e-5)
+-            loss_inv_depth = kornia.losses.inverse_depth_smoothness_loss(inverse_depth[None], gt_image[None])
+-            log_dict['loss_inv_depth'] = loss_inv_depth.item()
+-            loss = loss + args.lambda_inv_depth * loss_inv_depth
+-
+-        if args.lambda_v_smooth > 0:
+-            loss_v_smooth = kornia.losses.inverse_depth_smoothness_loss(v_map[None], gt_image[None])
+-            log_dict['loss_v_smooth'] = loss_v_smooth.item()
+-            loss = loss + args.lambda_v_smooth * loss_v_smooth
+-
+-        if args.lambda_sky_opa > 0:
+-            o = alpha.clamp(1e-6, 1-1e-6)
+-            sky = sky_mask.float()
+-            loss_sky_opa = (-sky * torch.log(1 - o)).mean()
+-            log_dict['loss_sky_opa'] = loss_sky_opa.item()
+-            loss = loss + args.lambda_sky_opa * loss_sky_opa
+-
+-        if args.lambda_opacity_entropy > 0:
+-            o = alpha.clamp(1e-6, 1 - 1e-6)
+-            loss_opacity_entropy = -(o*torch.log(o)).mean()
+-            log_dict['loss_opacity_entropy'] = loss_opacity_entropy.item()
+-            loss = loss + args.lambda_opacity_entropy * loss_opacity_entropy
+-
+-        if args.lambda_opacity_entropy > 0 and args.including_dynamic:
+-            o = dynamic_alpha.clamp(1e-6, 1 - 1e-6)
+-            target = torch.ones_like(dynamic_alpha)  # 目标值为1
+-            target = target * dynamic_mask  # 目标值为1
+-            loss_convergence_to_one = nn.MSELoss()(dynamic_alpha, target)
+-            dynamic_alpha = dynamic_alpha * dynamic_mask
+-            # loss_convergence_to_one = -(dynamic_mask * (1-o) * torch.log(o)).sum() / dynamic_mask.sum()
+-            # loss_convergence_to_one += nn.MSELoss()(static_alpha_1, target_1)
+-            # log_dict['loss_dynamic_opacity_entropy'] = loss_dynamic_opacity_entropy.item()
+-            loss = loss + loss_convergence_to_one * 100
++            # alpha_1 = alpha.clone().detach()
++            # loss_opacity = F.mse_loss(static_alpha, alpha_1)
++            # total_content_loss = tv_loss(static_image, dynamic_image, 10)
++            # print(total_content_loss)
++            # loss += total_content_loss
++            # if iteration % args.reg3d_interval == 0:
++            #     # regularize at certain intervals
++            #     logits3d = classifier(gaussians._objects_dc.permute(2,0,1))
++            #     prob_obj3d = torch.softmax(logits3d,dim=0).squeeze().permute(1,0)
++            #     loss_obj_3d = loss_cls_3d(gaussians._xyz.squeeze().detach(), prob_obj3d, args.reg3d_k, args.reg3d_lambda_val, args.reg3d_max_points, args.reg3d_sample_size)
++            #     loss += loss_obj + loss_obj_3d
++            #     log_dict['loss_obj'] = (loss_obj + loss_obj_3d).item()
++            # else:
++            #     loss += loss_obj
++            #     log_dict['loss_obj'] = loss_obj.item()
++
++            if args.lambda_lidar > 0:
++                assert viewpoint_cam.pts_depth is not None
++                pts_depth = viewpoint_cam.pts_depth.cuda()
++
++                mask = pts_depth > 0
++                loss_lidar = torch.abs(1 / (pts_depth[mask] + 1e-5) - 1 / (depth[mask] + 1e-5)).mean()
++                if args.lidar_decay > 0:
++                    iter_decay = np.exp(-iteration / 8000 * args.lidar_decay)
++                else:
++                    iter_decay = 1
++                log_dict['loss_lidar'] = loss_lidar.item()
++                loss += iter_decay * args.lambda_lidar * loss_lidar
++
++            if args.lambda_t_reg > 0:
++                loss_t_reg = 1/torch.abs(static_t_map).mean()
++                log_dict['loss_t_reg'] = loss_t_reg.item()
++                loss += args.lambda_t_reg * loss_t_reg
++
++            if args.lambda_v_reg > 0:
++                loss_v_reg = torch.abs(static_v_map).mean()
++                log_dict['loss_v_reg'] = loss_v_reg.item()
++                loss += args.lambda_v_reg * loss_v_reg
++
++            if args.lambda_inv_depth > 0:
++                inverse_depth = 1 / (depth + 1e-5)
++                loss_inv_depth = kornia.losses.inverse_depth_smoothness_loss(inverse_depth[None], gt_image[None])
++                log_dict['loss_inv_depth'] = loss_inv_depth.item()
++                loss = loss + args.lambda_inv_depth * loss_inv_depth
++
++            if args.lambda_v_smooth > 0:
++                loss_v_smooth = kornia.losses.inverse_depth_smoothness_loss(v_map[None], gt_image[None])
++                log_dict['loss_v_smooth'] = loss_v_smooth.item()
++                loss = loss + args.lambda_v_smooth * loss_v_smooth
++
++            if args.lambda_sky_opa > 0:
++                o = alpha.clamp(1e-6, 1-1e-6)
++                sky = sky_mask.float()
++                loss_sky_opa = (-sky * torch.log(1 - o)).mean()
++                log_dict['loss_sky_opa'] = loss_sky_opa.item()
++                loss = loss + args.lambda_sky_opa * loss_sky_opa
++
++            if args.lambda_opacity_entropy > 0:
++                o = alpha.clamp(1e-6, 1 - 1e-6)
++                loss_opacity_entropy = -(o*torch.log(o)).mean()
++                log_dict['loss_opacity_entropy'] = loss_opacity_entropy.item()
++                loss = loss + args.lambda_opacity_entropy * loss_opacity_entropy
++
++            if args.lambda_opacity_entropy > 0 and args.including_dynamic:
++                o = dynamic_alpha.clamp(1e-6, 1 - 1e-6)
++                target = torch.ones_like(dynamic_alpha)  # 目标值为1
++                target = target * dynamic_mask  # 目标值为1
++                loss_convergence_to_one = nn.MSELoss()(dynamic_alpha, target)
++                dynamic_alpha = dynamic_alpha * dynamic_mask
++                # loss_convergence_to_one = -(dynamic_mask * (1-o) * torch.log(o)).sum() / dynamic_mask.sum()
++                # loss_convergence_to_one += nn.MSELoss()(static_alpha_1, target_1)
++                # log_dict['loss_dynamic_opacity_entropy'] = loss_dynamic_opacity_entropy.item()
++                loss = loss + loss_convergence_to_one * 100
+ 
+         # torch.autograd.set_detect_anomaly(True)
+         loss.backward()
+@@ -481,8 +550,9 @@
+             log_dict['iter_time'] = iter_start.elapsed_time(iter_end)
+             log_dict['total_points'] = gaussians.get_xyz.shape[0]
+             # Log and save
+-            complete_eval(tb_writer, iteration, args.test_iterations, scene, render, (args, background),
+-                          log_dict, env_map=env_map, including_dynamic=args.including_dynamic)
++            if not paper_method:
++                complete_eval(tb_writer, iteration, args.test_iterations, scene, render, (args, background),
++                              log_dict, env_map=env_map, including_dynamic=args.including_dynamic)
+ 
+             # Densification
+             if iteration > args.densify_until_iter * args.time_split_frac:
+@@ -534,6 +604,16 @@
+             if env_map is not None and iteration < args.env_optimize_until:
+                 env_map.optimizer.step()
+                 env_map.optimizer.zero_grad(set_to_none=True)
++            if paper_sgcm is not None:
++                # Controller uses an offset schedule: no generic topology change
++                # on these iterations, so rendered static radii still align.
++                sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration)
++                if sgcm_statistics:
++                    print("SGCM_STATS " + json.dumps(sgcm_statistics), flush=True)
++                    if tb_writer:
++                        for name, value in sgcm_statistics.items():
++                            if isinstance(value, (int, float)):
++                                tb_writer.add_scalar("sgcm/" + name, value, iteration)
+             torch.cuda.empty_cache()
+             if dynamic_gaussians is not None:
+                 if iteration % args.vis_step == 0 or iteration == 1:
+@@ -604,12 +684,36 @@
+             if iteration % args.scale_increase_interval == 0:
+                 scene.upScale()
+ 
+-            if iteration in args.checkpoint_iterations:
++            if paper_method:
++                from utils.paper_checkpoint import (save_components, capture_training_state,
++                                                    publish_checkpoint_event)
++                # In the paper path, either explicit save schedule requests a
++                # full resumable bundle. PLY-only export is not a checkpoint.
++                checkpoint_due = iteration in set(args.checkpoint_iterations) | set(args.save_iterations)
++                models_for_checkpoint = {"static": gaussians, "dynamic": dynamic_gaussians,
++                                         "environment": env_map}
++                components = save_components(scene.model_path, iteration, models_for_checkpoint) if checkpoint_due else None
++                eval_iterations = set(args.test_iterations)
++                if checkpoint_due and args.get("paper_eval_train_each_checkpoint", False):
++                    eval_iterations.add(iteration)
++                # This is after optimizer/SGCM/scale changes. Eval and serialized
++                # components therefore refer to exactly the same parameters.
++                evaluations = complete_eval(tb_writer, iteration, eval_iterations, scene, render,
++                                            (args, background), log_dict, env_map=env_map,
++                                            including_dynamic=args.including_dynamic)
++                if checkpoint_due:
++                    continuation = capture_training_state(iteration, scene, viewpoint_stack,
++                                                          models_for_checkpoint, args,
++                                                          sgcm=paper_sgcm, ema=ema_dict_for_log)
++                    publish_checkpoint_event(scene.model_path, iteration, components,
++                                             continuation, evaluations, args, scene)
++            elif iteration in args.checkpoint_iterations:
+                 print("\n[ITER {}] Saving Checkpoint".format(iteration))
+                 torch.save((gaussians.capture(), iteration), scene.model_path + "/chkpnt" + str(iteration) + ".pth")
+                 if dynamic_gaussians is not None:
+                     torch.save((dynamic_gaussians.capture(), iteration), scene.model_path + "/dynamic_chkpnt" + str(iteration) + ".pth")
+-                torch.save((env_map.capture(), iteration), scene.model_path + "/env_light_chkpnt" + str(iteration) + ".pth")
++                if env_map is not None:
++                    torch.save((env_map.capture(), iteration), scene.model_path + "/env_light_chkpnt" + str(iteration) + ".pth")
+                 print("\n[ITER {}] Saving Gaussians".format(iteration))
+                 # scene.save(iteration, viewpoint_cam.timestamp, time_shift)
+                 point_cloud_path = os.path.join(scene.model_path, "point_cloud/iteration_{}".format(iteration))
+@@ -666,13 +770,17 @@
+                   env_map=None, including_dynamic=False):
+     from lpipsPyTorch import lpips
+     args = renderArgs[0]
++    evaluation_records = []
+     if tb_writer:
+         for key, value in log_dict.items():
+             tb_writer.add_scalar(f'train/{key}', value, iteration)
+ 
+     if iteration in test_iterations:
+         scale = scene.resolution_scales[scene.scale_index]
+-        if iteration < args.iterations:
++        if args.get("paper_method", False) and args.get("paper_eval_train_each_checkpoint", False):
++            from utils.paper_checkpoint import paper_evaluation_configs
++            validation_configs = paper_evaluation_configs(scene)
++        elif iteration < args.iterations:
+             validation_configs = ({'name': 'test', 'cameras': scene.getTestCameras(scale=scale)},)
+         else:
+             if "kitti" in args.model_path:
+@@ -694,6 +802,8 @@
+                 psnr_test = 0.0
+                 ssim_test = 0.0
+                 lpips_test = 0.0
++                paper_rows = []
++                frame_records = []
+                 outdir = os.path.join(args.model_path, "eval", config['name'] + f"_{iteration}" + "_render")
+                 os.makedirs(outdir,exist_ok=True)
+                 for idx, viewpoint in enumerate(tqdm(config['cameras'])):
+@@ -744,6 +854,28 @@
+ 
+                         save_image(grid, os.path.join(outdir, f"{viewpoint.colmap_id:03d}.png"))
+ 
++                    if args.get("paper_method", False):
++                        from utils.paper_checkpoint import camera_record
++                        record = camera_record(viewpoint)
++                        # Separate channels avoid grid-padding/cropping ambiguity.
++                        channels = {"gt": gt_image, "composite": image,
++                                    "static": render_pkg.get("render_s", image),
++                                    "dynamic": render_pkg.get("render_d", torch.zeros_like(image))}
++                        record["channels"] = {}
++                        filename = record["camera"] + "_" + viewpoint.image_name + ".png"
++                        for channel, channel_image in channels.items():
++                            channel_dir = os.path.join(outdir, channel)
++                            os.makedirs(channel_dir, exist_ok=True)
++                            destination = os.path.abspath(os.path.join(channel_dir, filename))
++                            save_image(channel_image.clamp(0, 1), destination)
++                            record["channels"][channel] = destination
++                        frame_records.append(record)
++                        from utils.paper_masks import load_dynamic_mask
++                        from utils.paper_metrics import measure_frame
++                        paper_rows.append(measure_frame(image, render_pkg.get('render_s'), gt_image,
++                                                        load_dynamic_mask(args.source_path, viewpoint),
++                                                        os.path.join(os.path.basename(os.path.dirname(viewpoint.image_path)),
++                                                                     viewpoint.image_name)))
+                     l1_test += F.l1_loss(image, gt_image).double()
+                     psnr_test += psnr(image, gt_image).double()
+                     ssim_test += ssim(image, gt_image).double()
+@@ -764,7 +896,16 @@
+                 with open(os.path.join(outdir, "metrics.json"), "w") as f:
+                     json.dump({"split": config['name'], "iteration": iteration, "psnr": psnr_test.item(),
+                                "ssim": ssim_test.item(), "lpips": lpips_test.item()}, f)
++                if args.get("paper_method", False):
++                    from utils.paper_metrics import save_metrics
++                    save_metrics(paper_rows, outdir, config['name'], iteration)
++                    evaluation_records.append({"split": config['name'], "iteration": int(iteration),
++                                               "eval_dir": os.path.abspath(outdir),
++                                               "metrics": os.path.abspath(os.path.join(outdir, "metrics.json")),
++                                               "paper_metrics": os.path.abspath(os.path.join(outdir, "paper_region_metrics.json")),
++                                               "frames": frame_records})
+             torch.cuda.empty_cache()
++    return evaluation_records
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/utils/paper_checkpoint.py b/utils/paper_checkpoint.py
+new file mode 100644
+--- /dev/null
++++ b/utils/paper_checkpoint.py
+@@ -0,0 +1,317 @@
++"""Atomic paper checkpoint bundles and explicit continuation state.
++
++Component .pth files retain the upstream (capture, iteration) format. A complete
++event is published only after all components, continuation state, and evaluation
++files exist. This supports external CPU video/HTML consumers without training
++subprocesses. Exact RNG/sampler restoration is tested; CUDA bitwise determinism
++is not promised.
++"""
++import hashlib
++import json
++import math
++import os
++import random
++import tempfile
++import warnings
++from pathlib import Path
++
++import numpy as np
++import torch
++
++
++def _atomic_write(path, writer):
++    path = Path(path)
++    path.parent.mkdir(parents=True, exist_ok=True)
++    fd, temporary = tempfile.mkstemp(prefix="." + path.name + ".", dir=path.parent)
++    try:
++        with os.fdopen(fd, "wb") as stream:
++            writer(stream)
++            stream.flush()
++            os.fsync(stream.fileno())
++        os.replace(temporary, path)
++        if hasattr(os, "O_DIRECTORY"):
++            descriptor = os.open(path.parent, os.O_DIRECTORY)
++            try:
++                os.fsync(descriptor)
++            finally:
++                os.close(descriptor)
++    finally:
++        if os.path.exists(temporary):
++            os.unlink(temporary)
++
++
++def atomic_json(path, value):
++    payload = json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False).encode("utf-8")
++    _atomic_write(path, lambda stream: stream.write(payload))
++
++
++def camera_id(camera):
++    return os.path.basename(os.path.dirname(camera.image_path)) + "/" + camera.image_name
++
++
++def camera_record(camera):
++    return {"uid": int(camera.colmap_id), "frame_id": camera_id(camera),
++            "camera": os.path.basename(os.path.dirname(camera.image_path)),
++            "image_name": camera.image_name, "timestamp": float(camera.timestamp),
++            "source_image": os.path.abspath(camera.image_path),
++            "width": int(camera.image_width), "height": int(camera.image_height)}
++
++
++def paper_evaluation_configs(scene):
++    """A fixed, chronological per-camera set at every requested paper node."""
++    scale = scene.resolution_scales[scene.scale_index]
++    order = lambda camera: (camera_id(camera).split("/")[0], float(camera.timestamp), camera.image_name)
++    return ({"name": "test", "cameras": sorted(scene.getTestCameras(scale=scale), key=order)},
++            {"name": "train", "cameras": sorted(scene.getTrainCameras(), key=order)})
++
++
++def _config_dict(args):
++    from omegaconf import OmegaConf
++    return OmegaConf.to_container(args, resolve=True) if OmegaConf.is_config(args) else dict(args)
++
++
++def capture_training_state(iteration, scene, viewpoint_stack, models, args, sgcm=None, ema=None):
++    camera_orders = [{"scale": float(scale), "ids": [camera_id(c) for c in cameras]}
++                     for scale, cameras in scene.train_cameras.items()]
++    state = {"schema_version": 1, "iteration": int(iteration),
++             "config": _config_dict(args), "scale_index": int(scene.scale_index),
++             "camera_orders": camera_orders, "viewpoint_stack": list(viewpoint_stack or []),
++             "python_rng": random.getstate(), "numpy_rng": np.random.get_state(),
++             "torch_rng": torch.get_rng_state(),
++             "cuda_rng": torch.cuda.get_rng_state_all() if torch.cuda.is_initialized() else None,
++             "model_runtime": {name: {"no_time_split": bool(model.no_time_split)}
++                               for name, model in models.items() if model is not None and hasattr(model, "no_time_split")},
++             "ema": {key: float(value) for key, value in (ema or {}).items()},
++             "sgcm": None}
++    if sgcm is not None:
++        from dataclasses import asdict
++        state["sgcm"] = {"config": asdict(sgcm.config), "metadata": sgcm.metadata,
++                         "model_scale": sgcm.model_scale, "plane_model": sgcm.plane_model,
++                         "model_to_anchor": sgcm.model_to_anchor, "regions_anchor": sgcm.regions_anchor}
++    return state
++
++
++def _validate_resume_configuration(saved_config, args):
++    """Fail closed before restoring continuation state under a different protocol.
++
++    The resume checkpoint selector and output directory are bookkeeping only.
++    All other resolved fields must match, including evaluation cadence because
++    evaluation may initialize components that consume random numbers.
++    """
++    current = _config_dict(args)
++    if not isinstance(saved_config, dict) or not isinstance(current, dict):
++        raise ValueError("Strict resume requires complete resolved configuration dictionaries")
++    required = ("iterations", "position_lr_max_steps", "position_lr_init",
++                "position_lr_final", "position_lr_delay_mult", "t_lr_init",
++                "feature_lr", "opacity_lr", "scaling_lr", "scaling_t_lr",
++                "velocity_lr", "rotation_lr", "envmap_lr")
++    missing = [key for key in required if key not in saved_config or key not in current]
++    if missing:
++        raise ValueError("Strict resume requires saved and current schedule fields: " + ", ".join(missing))
++    permitted = {"model_path", "start_checkpoint"}
++    missing_value = object()
++    changed = [key for key in sorted(set(saved_config) | set(current))
++               if key not in permitted and not _same_config_value(saved_config.get(key, missing_value), current.get(key, missing_value))]
++    if changed:
++        details = "; ".join(f"{key}: {saved_config.get(key, '<missing>')!r} -> {current.get(key, '<missing>')!r}"
++                            for key in changed)
++        raise ValueError("Strict checkpoint resume rejected changed training configuration: " + details)
++
++
++def _same_config_value(saved, current):
++    """Types are part of the protocol: True/1 and 50000/50000.0 differ."""
++    if type(saved) is not type(current):
++        return False
++    if isinstance(saved, dict):
++        return set(saved) == set(current) and all(_same_config_value(saved[key], current[key]) for key in saved)
++    if isinstance(saved, (list, tuple)):
++        return len(saved) == len(current) and all(_same_config_value(a, b) for a, b in zip(saved, current))
++    return saved == current
++
++
++def _validate_continuation(state, iteration, scene, models, args, sgcm):
++    required = {"schema_version", "iteration", "config", "scale_index", "camera_orders", "viewpoint_stack",
++                "python_rng", "numpy_rng", "torch_rng", "cuda_rng", "model_runtime", "ema", "sgcm"}
++    if not isinstance(state, dict) or set(state) != required:
++        raise ValueError("Strict resume requires exactly the complete continuation schema")
++    if type(state["schema_version"]) is not int or state["schema_version"] != 1 or type(state["iteration"]) is not int or state["iteration"] != iteration:
++        raise ValueError("Training-state schema or iteration does not match component checkpoint")
++    _validate_resume_configuration(state["config"], args)
++    if type(state["scale_index"]) is not int or not 0 <= state["scale_index"] < len(scene.resolution_scales):
++        raise ValueError("Saved camera scale is unavailable")
++    orders = state["camera_orders"]
++    if not isinstance(orders, list) or len(orders) != len(scene.train_cameras) or any(not isinstance(order, dict) or set(order) != {"scale", "ids"} for order in orders):
++        raise ValueError("Complete camera order for every resolution scale is required")
++    if len({order["scale"] for order in orders}) != len(orders) or {order["scale"] for order in orders} != set(scene.train_cameras):
++        raise ValueError("Resolution scales changed across checkpoint resume")
++    for order in orders:
++        current = scene.train_cameras[order["scale"]]
++        ids = order["ids"]
++        if not isinstance(ids, list) or any(not isinstance(value, str) for value in ids) or len(set(ids)) != len(ids):
++            raise ValueError("Saved camera identities are malformed or duplicated")
++        actual = [camera_id(camera) for camera in current]
++        if len(set(actual)) != len(actual) or set(actual) != set(ids):
++            raise ValueError("Training camera identities changed across checkpoint resume")
++    stack = state["viewpoint_stack"]
++    active_count = len(next(order["ids"] for order in orders if order["scale"] == scene.resolution_scales[state["scale_index"]]))
++    if not isinstance(stack, list) or any(type(index) is not int or not 0 <= index < active_count for index in stack) or len(set(stack)) != len(stack):
++        raise ValueError("Saved camera sampler indices are invalid")
++    runtime = state["model_runtime"]
++    expected_runtime = {name for name, model in models.items() if model is not None and hasattr(model, "no_time_split")}
++    if not isinstance(runtime, dict) or set(runtime) != expected_runtime or any(not isinstance(value, dict) or set(value) != {"no_time_split"} or type(value["no_time_split"]) is not bool for value in runtime.values()):
++        raise ValueError("Complete static/dynamic runtime flags are required")
++    if not isinstance(state["ema"], dict) or not state["ema"] or any(type(value) not in (float, int) or not math.isfinite(value) for value in state["ema"].values()):
++        raise ValueError("Finite saved EMA diagnostics are required")
++    if (state["sgcm"] is None) != (sgcm is None):
++        raise ValueError("SGCM enablement changed across checkpoint resume")
++    if sgcm is not None:
++        from dataclasses import asdict
++        geometry = state["sgcm"]
++        if not isinstance(geometry, dict) or set(geometry) != {"config", "metadata", "model_scale", "plane_model", "model_to_anchor", "regions_anchor"}:
++            raise ValueError("Complete SGCM continuation geometry is required")
++        if not _same_config_value(geometry["config"], asdict(sgcm.config)):
++            raise ValueError("SGCM configuration changed across checkpoint resume")
++        if not math.isfinite(geometry["model_scale"]) or geometry["model_scale"] <= 0:
++            raise ValueError("Saved SGCM scale is invalid")
++        for name in ("plane_model", "model_to_anchor", "regions_anchor"):
++            if not np.isfinite(np.asarray(geometry[name], dtype=float)).all():
++                raise ValueError("Saved SGCM geometry is nonfinite: " + name)
++        if not isinstance(geometry["metadata"], dict) or not geometry["metadata"]:
++            raise ValueError("Saved SGCM metadata is missing")
++    random.Random().setstate(state["python_rng"])
++    np.random.RandomState().set_state(state["numpy_rng"])
++    if not isinstance(state["torch_rng"], torch.Tensor) or state["torch_rng"].dtype != torch.uint8 or state["torch_rng"].device.type != "cpu":
++        raise ValueError("Saved Torch CPU RNG state is invalid")
++    torch.Generator(device="cpu").set_state(state["torch_rng"])
++    if not isinstance(state["cuda_rng"], list) or not state["cuda_rng"] or any(not isinstance(value, torch.Tensor) or value.dtype != torch.uint8 or value.device.type != "cpu" or value.ndim != 1 for value in state["cuda_rng"]):
++        raise ValueError("Complete saved CUDA RNG state is required")
++    if not torch.cuda.is_available() or len(state["cuda_rng"]) != torch.cuda.device_count():
++        raise ValueError("CUDA device count changed across checkpoint resume")
++
++
++def restore_training_state(path, iteration, scene, models, args, sgcm=None):
++    """Call after all initialization, immediately before the training loop."""
++    path = Path(path)
++    if not path.exists():
++        raise FileNotFoundError("Strict resume requires a training-state sidecar with saved configuration, RNG, and camera sampler: " + str(path))
++    state = torch.load(path, map_location="cpu", weights_only=False)
++    _validate_continuation(state, iteration, scene, models, args, sgcm)
++    if not 0 <= state["scale_index"] < len(scene.resolution_scales):
++        raise ValueError("Saved camera scale is unavailable")
++    if set(item["scale"] for item in state["camera_orders"]) != set(scene.train_cameras):
++        raise ValueError("Resolution scales changed across checkpoint resume")
++    for order in state["camera_orders"]:
++        current = scene.train_cameras[order["scale"]]
++        lookup = {camera_id(camera): camera for camera in current}
++        if len(lookup) != len(current) or len(set(order["ids"])) != len(order["ids"]) or set(lookup) != set(order["ids"]):
++            raise ValueError("Training camera identities changed across checkpoint resume")
++        scene.train_cameras[order["scale"]] = [lookup[key] for key in order["ids"]]
++    scene.scale_index = state["scale_index"]
++    stack = state["viewpoint_stack"]
++    if len(set(stack)) != len(stack) or any(index < 0 or index >= len(scene.getTrainCameras()) for index in stack):
++        raise ValueError("Saved camera sampler indices are invalid")
++    for name, attributes in state["model_runtime"].items():
++        if models.get(name) is None:
++            raise ValueError("A saved model branch is missing on resume: " + name)
++        for key, value in attributes.items():
++            setattr(models[name], key, value)
++    if (state["sgcm"] is None) != (sgcm is None):
++        raise ValueError("SGCM enablement changed across checkpoint resume")
++    if sgcm is not None:
++        from dataclasses import asdict
++        if state["sgcm"]["config"] != asdict(sgcm.config):
++            raise ValueError("SGCM configuration changed across checkpoint resume")
++        for key in ("model_scale", "plane_model", "model_to_anchor", "regions_anchor", "metadata"):
++            setattr(sgcm, key, state["sgcm"][key])
++    random.setstate(state["python_rng"])
++    np.random.set_state(state["numpy_rng"])
++    torch.set_rng_state(state["torch_rng"])
++    if state["cuda_rng"] is not None:
++        if not torch.cuda.is_available() or len(state["cuda_rng"]) != torch.cuda.device_count():
++            raise ValueError("CUDA device count changed across checkpoint resume")
++        torch.cuda.set_rng_state_all(state["cuda_rng"])
++    return list(stack), state.get("ema", {})
++
++
++def save_components(model_path, iteration, models):
++    """Write each component atomically, but never advertise a partial bundle."""
++    root = Path(model_path).resolve()
++    event_path = root / "checkpoint_events" / f"iteration_{iteration:06d}.json"
++    if event_path.exists():
++        raise FileExistsError("Refusing to overwrite a published checkpoint event: " + str(event_path))
++    names = {"static": f"chkpnt{iteration}.pth", "dynamic": f"dynamic_chkpnt{iteration}.pth",
++             "environment": f"env_light_chkpnt{iteration}.pth"}
++    result = {}
++    for branch, filename in names.items():
++        model = models.get(branch)
++        if model is not None:
++            destination = root / filename
++            _atomic_write(destination, lambda stream, model=model: torch.save((model.capture(), iteration), stream))
++            result[branch] = {"path": str(destination), "bytes": destination.stat().st_size}
++    if "static" not in result:
++        raise ValueError("Static model is required for a checkpoint bundle")
++    return result
++
++
++def publish_checkpoint_event(model_path, iteration, components, training_state, evaluations, args, scene):
++    """Continuation state is captured AFTER evaluation, including any RNG use."""
++    root = Path(model_path).resolve()
++    if training_state["iteration"] != iteration:
++        raise ValueError("Continuation-state iteration differs from checkpoint")
++    expected = {"static"}
++    if args.including_dynamic:
++        expected.add("dynamic")
++    if args.env_map_res > 0:
++        expected.add("environment")
++    if set(components) != expected:
++        raise ValueError("Checkpoint components do not match enabled model branches")
++    if args.get("paper_eval_train_each_checkpoint", False):
++        train_evaluations = [item for item in evaluations if item.get("split") == "train"]
++        expected_cameras = {camera_id(camera) for camera in scene.getTrainCameras()}
++        if len(train_evaluations) != 1:
++            raise ValueError("A full training-camera evaluation is required before checkpoint publication")
++        frames = train_evaluations[0]["frames"]
++        actual_cameras = [frame["frame_id"] for frame in frames]
++        if len(actual_cameras) != len(expected_cameras) or set(actual_cameras) != expected_cameras:
++            raise ValueError("Training evaluation is missing or duplicating camera frames")
++        if any(set(frame["channels"]) != {"gt", "composite", "static", "dynamic"} for frame in frames):
++            raise ValueError("Training evaluation must contain all four image channels")
++    for record in components.values():
++        if not Path(record["path"]).is_file() or Path(record["path"]).stat().st_size != record["bytes"] or record["bytes"] == 0:
++            raise ValueError("Missing or truncated checkpoint component")
++    for evaluation in evaluations:
++        for key in ("metrics", "paper_metrics"):
++            if evaluation.get(key) and not Path(evaluation[key]).is_file():
++                raise ValueError("Evaluation metrics missing: " + evaluation[key])
++        for frame in evaluation["frames"]:
++            for path in frame["channels"].values():
++                if not Path(path).is_file():
++                    raise ValueError("Evaluation frame missing: " + path)
++    state_path = root / f"training_state{iteration}.pth"
++    _atomic_write(state_path, lambda stream: torch.save(training_state, stream))
++    components = dict(components, training_state={"path": str(state_path), "bytes": state_path.stat().st_size})
++    config = _config_dict(args)
++    config_hash = hashlib.sha256(json.dumps(config, sort_keys=True).encode("utf-8")).hexdigest()
++    event = {"schema_version": 1, "status": "complete", "iteration": int(iteration),
++             "model_path": str(root), "source_path": os.path.abspath(args.source_path),
++             "checkpoints": components, "checkpoint_paths": {
++                 "static": components["static"]["path"],
++                 "dynamic": components.get("dynamic", {}).get("path"),
++                 "env": components.get("environment", {}).get("path")},
++             "config": config, "config_sha256": config_hash,
++             "camera_manifest": [camera_record(camera) for camera in scene.getTrainCameras()],
++             "evaluations": evaluations, "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
++             "resume_state": {"rng": ["python", "numpy", "torch", "cuda_if_initialized"],
++                              "camera_sampler": True, "scale": True, "optimizer": True,
++                              "sgcm_geometry": training_state["sgcm"] is not None,
++                              "bitwise_cuda_equivalence_claimed": False},
++             "sgcm": training_state["sgcm"]["metadata"] if training_state["sgcm"] is not None else None}
++    train_eval = next((evaluation for evaluation in evaluations if evaluation["split"] == "train"), None)
++    event.update({key: train_eval[key] if train_eval else ( [] if key == "frames" else None)
++                  for key in ("eval_dir", "metrics", "paper_metrics", "frames")})
++    event_path = root / "checkpoint_events" / f"iteration_{iteration:06d}.json"
++    if event_path.exists():
++        raise FileExistsError("Checkpoint event already published")
++    atomic_json(event_path, event)
++    print("CHECKPOINT_EVENT " + str(event_path), flush=True)
++    return event
+diff --git a/utils/paper_losses.py b/utils/paper_losses.py
+new file mode 100644
+--- /dev/null
++++ b/utils/paper_losses.py
+@@ -0,0 +1,95 @@
++"""Final-paper losses, isolated from the released DrivingEditor objective.
++
++Paper: DrivingEditor, TIP35(2026), printed1700-1703, equations7-16.
++The paper does not report all scalar weights or exact NPS sampling offsets.
++The choices below are explicit and covered by independent numerical tests:
++* Eq13 is applied on the dynamic mask, normalized by full image area. This
++  follows the foreground prose; the displayed equation omits an explicit mask.
++* Eq9 visits both checkerboard parities with four axial one-pixel neighbors.
++  Invalid image-edge neighbors are omitted. Distance is the Euclidean distance
++  to the nearest static pixel center; no-static-reference masks contribute zero.
++* NPS uses the equation's sum, not a mean over foreground pixels or neighbors.
++"""
++
++import numpy as np
++import torch
++from scipy.ndimage import distance_transform_edt
++
++
++def _mask_like(mask, reference):
++    if mask.ndim == 2:
++        mask = mask.unsqueeze(0)
++    if mask.shape != (1, reference.shape[-2], reference.shape[-1]):
++        raise ValueError("A binary mask must have shape1xHxW matching the render")
++    return (mask > 0.5).to(device=reference.device, dtype=reference.dtype)
++
++
++def sky_loss(static_alpha, sky_mask, eps=1e-4):
++    """Eq7: -sum(o_sky*log(1-o_sky))/(H*W), o_sky=o_static*Msky."""
++    mask = _mask_like(sky_mask, static_alpha)
++    opacity = static_alpha.clamp(0.0, 1.0 - eps) * mask
++    return -(opacity * torch.log1p(-opacity)).mean()
++
++
++def dynamic_opacity_loss(dynamic_alpha, dynamic_mask, eps=1e-4):
++    """Eq13 on foreground pixels, with the printed full-image normalization."""
++    mask = _mask_like(dynamic_mask, dynamic_alpha)
++    opacity = dynamic_alpha.clamp(eps, 1.0 - eps)
++    return -(mask * (1.0 - opacity) * torch.log(opacity)).mean()
++
++
++def boundary_distance(dynamic_mask):
++    """Return detached1xHxW pixel distances; cache this immutable per-camera map."""
++    if dynamic_mask.ndim == 2:
++        dynamic_mask = dynamic_mask.unsqueeze(0)
++    if dynamic_mask.ndim != 3 or dynamic_mask.shape[0] != 1:
++        raise ValueError("Expected a1xHxW dynamic mask")
++    mask = dynamic_mask.detach().to(device="cpu").numpy()[0] > 0.5
++    if not mask.any() or mask.all():
++        distances = np.zeros(mask.shape, dtype=np.float64)
++    else:
++        distances = distance_transform_edt(mask)
++    return torch.as_tensor(distances[None], device=dynamic_mask.device,
++                           dtype=dynamic_mask.dtype)
++
++
++def nps_loss(static_features, dynamic_mask, distances=None):
++    """Eq9's sum of four-neighbor vector L2 discrepancies / boundary distance."""
++    if static_features.ndim != 3:
++        raise ValueError("ExpectedCxHxW opacity-normalized static features")
++    mask = _mask_like(dynamic_mask, static_features)
++    if distances is None:
++        distances = boundary_distance(mask)
++    if distances.shape != mask.shape:
++        raise ValueError("NPS distance map and mask dimensions differ")
++    distances = distances.to(device=static_features.device, dtype=static_features.dtype)
++    weights = mask[0] * (distances[0] > 0).to(static_features.dtype)
++    weights = weights / distances[0].clamp_min(1.0)
++    # Four axial neighbors are opposite-color neighbors in red/black sampling.
++    # Evaluating every source pixel visits both parities without an order effect.
++    horizontal = torch.linalg.vector_norm(static_features[:, :, 1:] - static_features[:, :, :-1], dim=0)
++    vertical = torch.linalg.vector_norm(static_features[:, 1:, :] - static_features[:, :-1, :], dim=0)
++    result = static_features.sum() * 0.0
++    result = result + (horizontal * weights[:, 1:]).sum() + (horizontal * weights[:, :-1]).sum()
++    result = result + (vertical * weights[1:, :]).sum() + (vertical * weights[:-1, :]).sum()
++    return result
++
++
++def sparse_inverse_depth_loss(rendered_depth, lidar_depth, eps=1e-5):
++    """Eq16: valid sparse inverse-depth residuals summed / full image area."""
++    if rendered_depth.shape != lidar_depth.shape or rendered_depth.shape[0] != 1:
++        raise ValueError("Depth maps must have matching1xHxW shapes")
++    valid = (lidar_depth > 0) & torch.isfinite(lidar_depth)
++    # Invalid zero depth never enters a reciprocal, keeping gradients finite.
++    safe_lidar = torch.where(valid, lidar_depth, torch.ones_like(lidar_depth))
++    safe_rendered = torch.where(valid, rendered_depth, torch.ones_like(rendered_depth))
++    residual = (safe_lidar.add(eps).reciprocal() - safe_rendered.add(eps).reciprocal()).abs()
++    return (residual * valid.to(residual.dtype)).sum() / rendered_depth.shape[-2] / rendered_depth.shape[-1]
++
++
++def compose_paper_loss(global_rgb, dynamic_rgb, sky, nps, opacity, depth,
++                       lambda_sky, lambda_nps, lambda_opacity, lambda_depth,
++                       lambda_dynamic_rgb=1.0):
++    """Eqs10,15-16: no legacy5x photometric multipliers or hidden PVG terms."""
++    return (global_rgb + lambda_dynamic_rgb * dynamic_rgb + lambda_sky * sky + lambda_nps * nps
++            + lambda_opacity * opacity + lambda_depth * depth)
+diff --git a/utils/paper_masks.py b/utils/paper_masks.py
+new file mode 100644
+--- /dev/null
++++ b/utils/paper_masks.py
+@@ -0,0 +1,42 @@
++"""Explicit foreground masks for the paper reproduction; RGB is not a mask."""
++from functools import lru_cache
++from pathlib import Path
++import re
++
++import numpy as np
++from PIL import Image
++import torch
++
++
++@lru_cache(maxsize=512)
++def _read_mask(filename, width, height):
++    path = Path(filename)
++    if not path.is_file():
++        raise FileNotFoundError(f"Paper profile requires an explicit binary foreground mask: {path}")
++    image = Image.open(path).convert("L")
++    values = np.unique(np.asarray(image))
++    if not set(values.tolist()).issubset({0, 1, 255}):
++        raise ValueError(f"Expected binary mask, got values {values[:12]} in {path}")
++    image = image.resize((width, height), Image.Resampling.NEAREST)
++    return torch.from_numpy((np.asarray(image).copy() > 0).astype(np.float32))[None]
++
++
++def load_dynamic_mask(source_path, camera):
++    """Load appearance mask, optionally unioned with a separately predicted shadow.
++
++    Camera indexing follows the converter (0=FRONT). Geometry initialization must
++    continue to use actor-only masks: a shadow is not an actor LiDAR surface.
++    Missing actor masks are errors; an explicitly saved all-zero mask is valid.
++    """
++    path = Path(camera.image_path)
++    match = re.fullmatch(r"image_(\d+)", path.parent.name)
++    if not match:
++        raise ValueError(f"Cannot infer Waymo camera index from {path}")
++    index = int(match.group(1))
++    root = Path(source_path) / "dynamic_masks"
++    filename = root / f"dynamic_mask_{index}" / f"{path.stem}.png"
++    mask = _read_mask(str(filename), camera.image_width, camera.image_height)
++    shadow = root / f"shadow_mask_{index}" / f"{path.stem}.png"
++    if shadow.exists():
++        mask = torch.maximum(mask, _read_mask(str(shadow), camera.image_width, camera.image_height))
++    return mask.to(device=camera.world_view_transform.device)
+diff --git a/utils/paper_metrics.py b/utils/paper_metrics.py
+new file mode 100644
+--- /dev/null
++++ b/utils/paper_metrics.py
+@@ -0,0 +1,68 @@
++"""Foreground/static reconstruction metrics with explicit normalization.
++
++The paper does not specify whether masked PSNR uses selected-pixel or full-image
++normalization. Save both. These are reconstruction metrics on supplied masks,
++not deletion-hole quality or FID against historical background ground truth.
++"""
++import json
++import math
++from pathlib import Path
++import torch
++
++
++def _region_metric(prediction, target, mask):
++    if prediction.shape != target.shape or prediction.ndim != 3:
++        raise ValueError("Prediction and target must be matching CHW tensors")
++    if mask.shape != (1, *target.shape[1:]):
++        raise ValueError("Mask must be 1HW")
++    if not torch.isfinite(prediction).all() or not torch.isfinite(target).all():
++        raise ValueError("Non-finite image values")
++    selected = mask.to(device=target.device, dtype=torch.bool)
++    count = int(selected.sum().item())
++    all_pixels = target.shape[-1] * target.shape[-2]
++    if count == 0:
++        return {"pixels": 0, "fraction": 0.0, "sse": 0.0,
++                "psnr_roi": None, "psnr_zero_padded": None, "perfect": False}
++    squared = (prediction.clamp(0, 1).double() - target.clamp(0, 1).double()).square()
++    sse = float(squared.masked_select(selected.expand_as(squared)).sum().item())
++    channels = target.shape[0]
++    def decibels(denominator):
++        return -10 * math.log10(sse / denominator) if sse > 0 else None
++    return {"pixels": count, "fraction": count / all_pixels, "sse": sse,
++            "psnr_roi": decibels(channels * count),
++            "psnr_zero_padded": decibels(channels * all_pixels), "perfect": sse == 0}
++
++
++@torch.no_grad()
++def measure_frame(composite, static_only, target, dynamic_mask, frame_id):
++    dynamic = dynamic_mask > 0.5
++    row = {"frame": str(frame_id),
++           "dynamic_psnr_star": _region_metric(composite, target, dynamic),
++           "static_psnr_s": _region_metric(composite, target, ~dynamic)}
++    if static_only is not None:
++        row["static_psnr_sr"] = _region_metric(static_only, target, ~dynamic)
++    return row
++
++
++def save_metrics(rows, directory, split, iteration):
++    summary = {}
++    for metric in ("dynamic_psnr_star", "static_psnr_s", "static_psnr_sr"):
++        selected = [row[metric] for row in rows if metric in row and row[metric]["pixels"] > 0]
++        summary[metric] = {"valid_frames": len(selected),
++                           "perfect_frames": sum(row["perfect"] for row in selected)}
++        for convention in ("psnr_roi", "psnr_zero_padded"):
++            values = [row[convention] for row in selected if row[convention] is not None]
++            summary[metric][convention + "_mean"] = sum(values) / len(values) if values else None
++    report = {
++        "split": split, "iteration": iteration, "frame_count": len(rows),
++        "aggregation": "Arithmetic mean of per-frame PSNR, later macro-average scenes equally.",
++        "perfect_error_policy": "Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.",
++        "mask_protocol": "Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.",
++        "interpretation": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
++        "limitations": ["Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.",
++                        "No deletion-hole quality is measured: historical unobstructed GT is required for Table V.",
++                        "Inferred/prepared masks are not independent manually annotated ground truth."],
++        "summary": summary, "frames": rows}
++    path = Path(directory) / "paper_region_metrics.json"
++    path.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
++    return report
+diff --git a/utils/test_paper_masks.py b/utils/test_paper_masks.py
+new file mode 100644
+--- /dev/null
++++ b/utils/test_paper_masks.py
+@@ -0,0 +1,40 @@
++import importlib.util
++from pathlib import Path
++import tempfile
++from types import SimpleNamespace
++import unittest
++
++import numpy as np
++from PIL import Image
++import torch
++
++spec = importlib.util.spec_from_file_location("paper_masks", Path(__file__).with_name("paper_masks.py"))
++masks = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(masks)
++
++
++class ExplicitMaskTests(unittest.TestCase):
++    def test_black_actor_pixels_and_shadow_union_survive(self):
++        with tempfile.TemporaryDirectory() as temporary:
++            root = Path(temporary)
++            for name, values in (("dynamic_mask_0", [[255, 0], [0, 0]]),
++                                 ("shadow_mask_0", [[0, 0], [255, 0]])):
++                folder = root / "dynamic_masks" / name
++                folder.mkdir(parents=True)
++                Image.fromarray(np.asarray(values, dtype=np.uint8)).save(folder / "0017000.png")
++            camera = SimpleNamespace(image_path=str(root / "image/image_0/0017000.png"),
++                                     original_image=torch.zeros(3, 2, 2), image_width=2,
++                                     image_height=2, world_view_transform=torch.eye(4))
++            actual = masks.load_dynamic_mask(root, camera)
++            self.assertTrue(torch.equal(actual, torch.tensor([[[1., 0.], [1., 0.]]])))
++
++    def test_missing_binary_mask_fails(self):
++        with tempfile.TemporaryDirectory() as root:
++            camera = SimpleNamespace(image_path=f"{root}/image/image_2/missing.png",
++                                     image_width=2, image_height=2, world_view_transform=torch.eye(4))
++            with self.assertRaises(FileNotFoundError):
++                masks.load_dynamic_mask(root, camera)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/utils/test_paper_metrics.py b/utils/test_paper_metrics.py
+new file mode 100644
+--- /dev/null
++++ b/utils/test_paper_metrics.py
+@@ -0,0 +1,42 @@
++import importlib.util
++import math
++from pathlib import Path
++import tempfile
++import unittest
++import torch
++
++spec = importlib.util.spec_from_file_location("paper_metrics", Path(__file__).with_name("paper_metrics.py"))
++metrics = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(metrics)
++
++
++class RegionMetricsTests(unittest.TestCase):
++    def test_known_roi_vs_zero_padding_and_removal(self):
++        target = torch.zeros(3, 2, 2)
++        prediction = torch.full_like(target, 0.5)
++        mask = torch.tensor([[[1, 0], [0, 0]]])
++        row = metrics.measure_frame(prediction, target, target, mask, "frame")
++        self.assertAlmostEqual(row["dynamic_psnr_star"]["psnr_roi"], 10 * math.log10(4))
++        self.assertAlmostEqual(row["dynamic_psnr_star"]["psnr_zero_padded"], 10 * math.log10(16))
++        self.assertEqual(row["static_psnr_s"]["pixels"], 3)
++        self.assertTrue(row["static_psnr_sr"]["perfect"])
++
++    def test_empty_mask_and_json_have_no_nan(self):
++        target = torch.zeros(3, 2, 2)
++        row = metrics.measure_frame(target, target, target, torch.zeros(1, 2, 2), 0)
++        self.assertIsNone(row["dynamic_psnr_star"]["psnr_roi"])
++        with tempfile.TemporaryDirectory() as output:
++            report = metrics.save_metrics([row], output, "train", 100)
++            self.assertEqual(report["summary"]["static_psnr_s"]["perfect_frames"], 1)
++            self.assertNotIn("NaN", (Path(output) / "paper_region_metrics.json").read_text())
++
++    def test_only_selected_pixels_contribute(self):
++        target = torch.zeros(3, 2, 2)
++        prediction = torch.ones_like(target)
++        prediction[:, 0, 0] = 0.25
++        row = metrics.measure_frame(prediction, None, target, torch.tensor([[[1, 0], [0, 0]]]), 1)
++        self.assertAlmostEqual(row["dynamic_psnr_star"]["psnr_roi"], 10 * math.log10(16))
++
++
++if __name__ == "__main__":
++    unittest.main()

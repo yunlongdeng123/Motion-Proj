@@ -1,0 +1,111 @@
+--- a/scene/paper_sgcm.py
++++ b/scene/paper_sgcm.py
+@@ -12,6 +12,12 @@
+ from pathlib import Path
+ 
+ import numpy as np
++
++
++# Original rasterizer alpha-skip threshold. This is a renderer constant, not a
++# new SGCM ground-distance or loss hyperparameter. Verify installed provenance
++# before enabling this candidate. The frozen baseline remains unmodified.
++RASTERIZER_ALPHA_CUTOFF = 1.0 / 255.0
+ 
+ 
+ class SGCMGeometryError(ValueError):
+@@ -36,6 +42,9 @@
+     ground_max_rmse_m: float = 0.10
+     region_margin_m: float = 0.25
+     max_points: int = 3000000
++    # Unreported scheduling/eligibility choice; disabled by default to preserve
++    # the frozen implementation. Pilot override must explicitly enable it.
++    require_effective_visibility: bool = False
+ 
+     @classmethod
+     def from_args(cls, args):
+@@ -56,6 +65,8 @@
+             raise ValueError('SGCM end must exceed start')
+         if config.ground_cell_m <= 0 or config.plane_inlier_m <= 0:
+             raise ValueError('Ground grid and inlier distances must be positive')
++        if not isinstance(config.require_effective_visibility, bool):
++            raise ValueError('SGCM effective-visibility guard must be a Boolean')
+         # Refuse any schedule that can share an iteration with generic topology
+         # updates. Matching point counts alone cannot prove indices are current.
+         generic_interval = int(getattr(args,'densification_interval',100))
+@@ -99,6 +110,29 @@
+     if norm <= 0 or not np.isfinite(result).all():
+         raise SGCMGeometryError('Invalid transformed ground plane')
+     return result / norm
++
++
++def max_effective_opacity_numpy(opacity, time_center, time_sigma, time_duration):
++    """Exact continuous-time opacity upper bound on an observed time interval.
++
++    The temporal Gaussian peaks at its center if inside the interval; otherwise
++    at its closest endpoint. Spatial Gaussian factors are <=1, so an upper bound
++    below the renderer cutoff proves it cannot contribute any pixel in any
++    observed timestamp. This is not a photometric or ground-geometry threshold.
++    """
++    opacity = np.asarray(opacity, dtype=np.float64).reshape(-1)
++    time_center = np.asarray(time_center, dtype=np.float64).reshape(-1)
++    time_sigma = np.asarray(time_sigma, dtype=np.float64).reshape(-1)
++    duration = np.asarray(time_duration, dtype=np.float64)
++    if (duration.shape != (2,) or not np.isfinite(duration).all() or duration[0] > duration[1]
++            or time_center.shape != opacity.shape or time_sigma.shape != opacity.shape
++            or not np.isfinite(opacity).all() or not np.isfinite(time_center).all()
++            or not np.isfinite(time_sigma).all() or np.any(time_sigma <= 0)
++            or np.any(opacity < 0) or np.any(opacity > 1)):
++        raise SGCMGeometryError('Invalid temporal-opacity visibility inputs')
++    nearest = np.clip(time_center, duration[0], duration[1])
++    distance = np.abs(time_center - nearest)
++    return opacity * np.exp(-0.5 * (distance / time_sigma) ** 2)
+ 
+ 
+ def lower_grid_samples(points, cell_m):
+@@ -246,6 +280,34 @@
+             prune = inside & (distance_m > cfg.dr_m)
+             clone = inside & (distance_m > 0.5*cfg.dr_m) & (distance_m <= cfg.dr_m)
+             split = inside & (distance_m <= 0.5*cfg.dr_m) & (radii > cfg.split_radius_px)
++            geometric_clone_count = int(clone.sum().item())
++            geometric_split_count = int(split.sum().item())
++            excluded_zero_radius = 0
++            excluded_globally_under_alpha = 0
++            if cfg.require_effective_visibility:
++                # Avoid expanding provably noncontributing copies. radii>0 is
++                # necessary but insufficient: frustum-visible Gaussians whose
++                # temporal opacity is globally below the per-pixel renderer
++                # cutoff still have a positive geometric footprint.
++                duration = np.asarray(gaussians.time_duration, dtype=np.float64)
++                if duration.shape != (2,) or not np.isfinite(duration).all() or duration[0] > duration[1]:
++                    raise SGCMGeometryError('Missing observed static time interval')
++                center = gaussians.get_t.detach()[:, 0]
++                sigma = gaussians.get_scaling_t.detach()[:, 0]
++                opacity = gaussians.get_opacity.detach()[:, 0]
++                if (not torch.isfinite(center).all() or not torch.isfinite(sigma).all()
++                        or not torch.isfinite(opacity).all() or (sigma <= 0).any()):
++                    raise SGCMGeometryError('Invalid temporal-opacity visibility inputs')
++                nearest = center.clamp(float(duration[0]), float(duration[1]))
++                alpha_upper = opacity * torch.exp(-0.5 * ((center - nearest) / sigma) ** 2)
++                footprint_visible = radii > 0
++                ever_alpha_visible = alpha_upper >= RASTERIZER_ALPHA_CUTOFF
++                additions = clone | split
++                excluded_zero_radius = int((additions & ~footprint_visible).sum().item())
++                excluded_globally_under_alpha = int((additions & ~ever_alpha_visible).sum().item())
++                eligible = footprint_visible & ever_alpha_visible
++                clone &= eligible
++                split &= eligible
+             # Exact geometry rules, bounded resource policy: split largest image
+             # footprints first, then clone largest visible footprints. Selection
+             # cap is an explicit approximation, not a paper-reported parameter.
+@@ -303,6 +365,11 @@
+             return {'iteration':int(iteration),'inside_region':int(inside.sum().item()),
+                     'pruned':prune_count,'cloned':len(clone_ids),'split_parents':len(split_ids),
+                     'candidate_clone':int(clone.sum().item()),'candidate_split':int(split.sum().item()),
++                    'geometric_candidate_clone':geometric_clone_count,
++                    'geometric_candidate_split':geometric_split_count,
++                    'excluded_zero_radius':excluded_zero_radius,
++                    'excluded_globally_under_alpha':excluded_globally_under_alpha,
++                    'effective_visibility_guard_enabled':cfg.require_effective_visibility,
+                     'points_before':len(xyz),'points_after':len(gaussians.get_xyz),
+                     'dr_m':cfg.dr_m,'dr_model':cfg.dr_m*self.model_scale}
+ 

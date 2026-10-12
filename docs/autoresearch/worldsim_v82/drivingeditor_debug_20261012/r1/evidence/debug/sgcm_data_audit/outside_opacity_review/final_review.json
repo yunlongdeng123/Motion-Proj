@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "decision": "CPU preparation can run as the exact controlled single-variable experiment with root coordination receipt and exclusive GPU ownership.",
+  "harness_sha256": "93bb8df2cca142b3ea0b08e42ab8c3fe5defa214641537b7f3935eb300444359",
+  "prepared_plan_sha256": "ef4b873994b8a8d21fcbc96efbce1c6d764249f5b8fdf43be19c60bedbc7153e",
+  "launcher_sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc",
+  "experiment_binding_sha256": "b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214",
+  "guard_sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9",
+  "review_scope": "Independent final source/config/actual execution-path and CPU-preflight review; this reviewer did not launch GPU or train.",
+  "harness_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/continuation_variant_harness.py",
+  "prepared_plan_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/opacity_outside_prepared_plan.json",
+  "experiment_binding_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/experiment_binding.json",
+  "remote_actual_SHA_verified": true,
+  "blocking_findings": [],
+  "allowed_algorithm_delta": {
+    "formula": "-mean((1-Md)*alpha_d*log1p(-alpha_d/(1+1e-4)))",
+    "coefficient": 0.05,
+    "changed_source_files": [
+      "train.py",
+      "utils/paper_losses.py"
+    ],
+    "additional_train_delta": "Pure pre-add original objective loss.item() observation only.",
+    "added_config": {
+      "diagnostic_background_domain_complement": true,
+      "diagnostic_lambda_dynamic_background_opacity": 0.05
+    },
+    "bookkeeping_config_changes": [
+      "model_path",
+      "start_checkpoint"
+    ]
+  },
+  "reviewed_execution": {
+    "actual_replica_repository_used": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/frozen_repository",
+    "actual_training_loss_mask_and_metric_module_import_paths_SHA_checked": true,
+    "actual_SSIM_and_PSNR_function_binding_checked": true,
+    "exact_same_original30k_four_files": true,
+    "unchanged_full_restore_observer": true,
+    "strict_original_config_validator_bytes_preserved": true,
+    "isolated_adapter_only_two_explicit_config_fields": true,
+    "all_original_loss_functions_and_train_math_preserved": true,
+    "first30001_original10_scalars_exact_BEFORE_backward": "Hard runtime gate; original captured loss, no subtractive recovery or tolerance.",
+    "all300_camera_time_shift_LR_exact": "Hard per-step runtime gate against actual completed original baseline.",
+    "extra_eval_rng_restoration": "Unchanged entire original diagnostic_eval function; capture, finally restore, hash verify.",
+    "all49_original_GT_dimensions_region_counts_pairing": "Hard per-node runtime gate; terminal all49.",
+    "terminal_state": "30300 after full backward/Adam and RNG-safe49eval; static/dynamic/env/complete sidecar hashed and CPU-load checked; no formal event.",
+    "full467_original_inputs_SHA_checked": true,
+    "new_shadow_masks_rejected": true,
+    "all_source_original_and_replica_inventories_verified": true,
+    "original_and_isolated_validator_hooks_restored_in_finally": true,
+    "Tensor_backward_hook_restored_in_finally": true,
+    "iterations_and_position_lr_max_steps": 50000
+  },
+  "evidence_sha256": {
+    "candidate_independent_review_cpu.json": "43de38bb39af35a18202d13845be96257dd91a806bf0f1b526e11137ec823484",
+    "guard_bound_independent_review_cpu.json": "a5c52cee1d6859ddd4e38d9778d688c1880b04c57446df8abeef2e37b3d629a6",
+    "common49_input_manifest_review_cpu.json": "1b7161a2b30a08fb7fd8354a71b257cf99ad39bef16732a5f24a367174c24d50",
+    "opacity_outside_cpu_preflight_receipt.json": "b4b85a4eaca56736472b3d3b5e4ebeb2ff505465169548ab5d113b6e4bcc778a",
+    "opacity_outside_cpu_preflight.log": "f24ec50e1fd070d86c7eab4dd8faac6313f65886f7fd5690e906b7fd831a19c7",
+    "opacity_outside_harness_delta.patch": "5a5a6068f939a4bfb38ccab7e9a374a144dd71d369775b327a6013f65268bd60"
+  },
+  "actual_variant_GPU_restore_executed_by_this_reviewer": false,
+  "effectiveness_or_final_paper_formula_certified": false,
+  "specific_limitation": "No independent all49 actualScene pose receipt was stored for baseline; same pinned loader/camera/normalization, all467 real inputs and exact49GT/mask-domain pairing are used and this limitation remains explicit."
+}

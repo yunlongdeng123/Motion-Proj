@@ -1,0 +1,104 @@
+{
+  "status": "PASS",
+  "decision": "The exact v2 import correction can run under a fresh root receipt and exclusive GPU handoff.",
+  "harness_sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154",
+  "prepared_plan_sha256": "be9e385b37805457d2d9986985c9b7bd65af3fcde66445d3f15d156db5c90a93",
+  "launcher_sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc",
+  "experiment_binding_sha256": "b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214",
+  "guard_sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9",
+  "review_scope": "Targeted independent v2 AST delta, real13 import-file inventory/SHA, actual training import and revised CPU-preflight review only. Earlier valid algorithm/config/restore/evaluation evidence remains unchanged; v1 nonexistent import claim is superseded.",
+  "harness_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/continuation_variant_harness.py",
+  "prepared_plan_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan/opacity_outside_prepared_plan.json",
+  "experiment_binding_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/experiment_binding.json",
+  "remote_actual_SHA_verified": true,
+  "blocking_findings": [],
+  "allowed_algorithm_delta": {
+    "formula": "-mean((1-Md)*alpha_d*log1p(-alpha_d/(1+1e-4)))",
+    "coefficient": 0.05,
+    "changed_source_files": [
+      "train.py",
+      "utils/paper_losses.py"
+    ],
+    "additional_train_delta": "Pure pre-add original objective loss.item() observation only.",
+    "added_config": {
+      "diagnostic_background_domain_complement": true,
+      "diagnostic_lambda_dynamic_background_opacity": 0.05
+    },
+    "bookkeeping_config_changes": [
+      "model_path",
+      "start_checkpoint"
+    ]
+  },
+  "reviewed_execution": {
+    "actual_replica_repository_used": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/controlled_opacity_outside/frozen_repository",
+    "actual_training_loss_mask_and_metric_module_import_paths_SHA_checked": true,
+    "actual_SSIM_and_PSNR_function_binding_checked": true,
+    "exact_same_original30k_four_files": true,
+    "unchanged_full_restore_observer": true,
+    "strict_original_config_validator_bytes_preserved": true,
+    "isolated_adapter_only_two_explicit_config_fields": true,
+    "all_original_loss_functions_and_train_math_preserved": true,
+    "first30001_original10_scalars_exact_BEFORE_backward": "Hard runtime gate; original captured loss, no subtractive recovery or tolerance.",
+    "all300_camera_time_shift_LR_exact": "Hard per-step runtime gate against actual completed original baseline.",
+    "extra_eval_rng_restoration": "Unchanged entire original diagnostic_eval function; capture, finally restore, hash verify.",
+    "all49_original_GT_dimensions_region_counts_pairing": "Hard per-node runtime gate; terminal all49.",
+    "terminal_state": "30300 after full backward/Adam and RNG-safe49eval; static/dynamic/env/complete sidecar hashed and CPU-load checked; no formal event.",
+    "full467_original_inputs_SHA_checked": true,
+    "new_shadow_masks_rejected": true,
+    "all_source_original_and_replica_inventories_verified": true,
+    "original_and_isolated_validator_hooks_restored_in_finally": true,
+    "Tensor_backward_hook_restored_in_finally": true,
+    "iterations_and_position_lr_max_steps": 50000
+  },
+  "evidence_sha256": {
+    "candidate_independent_review_cpu.json": "43de38bb39af35a18202d13845be96257dd91a806bf0f1b526e11137ec823484",
+    "guard_bound_independent_review_cpu.json": "a5c52cee1d6859ddd4e38d9778d688c1880b04c57446df8abeef2e37b3d629a6",
+    "common49_input_manifest_review_cpu.json": "1b7161a2b30a08fb7fd8354a71b257cf99ad39bef16732a5f24a367174c24d50",
+    "opacity_outside_cpu_preflight_receipt.json": "b4b85a4eaca56736472b3d3b5e4ebeb2ff505465169548ab5d113b6e4bcc778a",
+    "opacity_outside_cpu_preflight.log": "f24ec50e1fd070d86c7eab4dd8faac6313f65886f7fd5690e906b7fd831a19c7",
+    "opacity_outside_harness_delta.patch": "5a5a6068f939a4bfb38ccab7e9a374a144dd71d369775b327a6013f65268bd60",
+    "final_review_v1.json": "3c35972dbfaad03c5d212ae848b2be4ea7168f549731a92790edd15bacc98f05"
+  },
+  "actual_variant_GPU_restore_executed_by_this_reviewer": false,
+  "effectiveness_or_final_paper_formula_certified": false,
+  "specific_limitation": "No independent all49 actualScene pose receipt was stored for baseline; same pinned loader/camera/normalization, all467 real inputs and exact49GT/mask-domain pairing are used and this limitation remains explicit.",
+  "review_version": 2,
+  "previous_review_sha256": "3c35972dbfaad03c5d212ae848b2be4ea7168f549731a92790edd15bacc98f05",
+  "previous_preparation_import_failure": "Attempt1 failed on nonexistent utils.image_utils before training/state restoration/optimizer; v1 review missed this inventory membership check.",
+  "reviewed_revision": {
+    "only_harness_AST_changes": {
+      "remove_import": 1,
+      "remove_pin_tuple": 1,
+      "correct_PSNR_identity": 1
+    },
+    "plan_changed_fields": [
+      "harness_sha256"
+    ],
+    "all13_runtime_dependency_paths_exist_in_actual148_inventory": true,
+    "actual13_runtime_dependency_file_sha256": {
+      "train.py": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a",
+      "gaussian_renderer/__init__.py": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+      "scene/gaussian_model.py": "41597167ad2eb2cb5e5a8d7f4144204b637732b5ccfce51ccd4c128cbefd1234",
+      "scene/cameras.py": "4917a2753f902995a438ecd6c1b5f794fe3f6114fed5ae9357bb7fbcad065cae",
+      "scene/envlight.py": "d677b60c46a219b84e6fb9c4a86794cf468fc1f043a6e8c689a3ff853650c44f",
+      "utils/paper_checkpoint.py": "38bb38dd81d5ae1df9f909b4e87ddb3582bc1d53da7a890949f5f311c8056bcc",
+      "scene/waymo_loader2.py": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0",
+      "utils/paper_losses.py": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab",
+      "utils/paper_masks.py": "a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483",
+      "utils/loss_utils.py": "c4b505fc8df2a4d6780968c320344dcedfdd4335164952137a7651b1d55870eb",
+      "utils/general_utils.py": "81bf915d817f2b6759f72c7e192d2fce5f634b2de755e97373b1df343dccbc11",
+      "utils/sh_utils.py": "ece62fef10e63f3bb1f0c89292ff82591a3a8842c25fe039102d853bc8dded93",
+      "scene/paper_sgcm.py": "a58e694f01f310e87e8523b763f1d23de00bf6400bc499428c5766044930b35b"
+    },
+    "actual_training_AST_import": "from utils.loss_utils import psnr, ssim",
+    "actual_loss_utils_defines_both_functions": true,
+    "runtime_identity_gate": "training.psnr is loss_utils.psnr; training.ssim is loss_utils.ssim",
+    "binding_guard_candidate_loss_source_config_restore_eval_and_sampler_unchanged": true,
+    "old_51_512_CPU_cases_rerun": false,
+    "CPU_only": true,
+    "new_variant_GPU_restore_or_training_executed_by_this_reviewer": false
+  },
+  "v2_cpu_preflight_receipt_sha256": "90d2067e6a843b5e2dc9adbc23f33166167f26dcdbdbf2bdbefbea77a678bed0",
+  "v2_cpu_preflight_log_sha256": "6acb5c355830b76c932ab14813e7b887cf12e545f6f77ef42a85637800df6998",
+  "source_physical_SHA_rechecked_for_this_revision": true
+}

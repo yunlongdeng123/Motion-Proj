@@ -1,0 +1,77 @@
+{
+  "status": "S_single_approved_GPU_worker_active_handoff",
+  "checked_utc": "2026-10-11T23:35:04.486433+00:00",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000",
+  "launcher_pid": 47332,
+  "worker_pid": 47335,
+  "last_actual_iteration": 30142,
+  "GPU_compute_apps": [
+    "47335, /root/autodl-tmp/envs/drivingeditor/bin/python, 8522 MiB"
+  ],
+  "exclusive_lock_is_held": true,
+  "actual_full_restore_status": "actual_restore_pass",
+  "original10_exact_before_S": true,
+  "original10_exact_before_backward": true,
+  "first_total_FP32_decomposition_exact": true,
+  "real_first_backward_invoked_and_returned": true,
+  "first5_camera_eval_all_RNG_preserved": true,
+  "completed_prefix_pairing_to_B1_B2": {
+    "B1": {
+      "completed_prefix_rows_checked": 142,
+      "camera_time_shift_LR_exact": true
+    },
+    "B2": {
+      "completed_prefix_rows_checked": 142,
+      "camera_time_shift_LR_exact": true
+    }
+  },
+  "runtime_source_config_math_unchanged_since_approval": true,
+  "worker_has_finished": false,
+  "worker_exit_code": null,
+  "approved_stop_iteration": 32000,
+  "horizon": 50000,
+  "coefficient": 1.0,
+  "additional_GPU_jobs_authorized": false,
+  "normal_algorithm_success_claimed": false,
+  "whole_debug_task_complete": false,
+  "shutdown_authorized_now": false,
+  "next_monitor_command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/monitor_static_anchor_cpu.py",
+  "future_completion_requirements": [
+    "Actual2000 logged steps and exact sampling/LR pairing",
+    "RNG-safe terminal all49 and unchanged input domains",
+    "4 genuine terminal checkpoints and hash/schema verification",
+    "Actual worker/launcherexit0 and releasedGPU",
+    "Protected original hash/source/guard verification",
+    "Locked11+all49 comparison separately against B1/B2 including actor/composite tradeoff and actual PNG inspection"
+  ],
+  "files": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/first_original_compose_reference_comparison.json": {
+      "bytes": 2313,
+      "sha256": "09ca5d565f9b31f1ae5439c98e1957ed18074d08167e53ea0192f7857aa4109d"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/first_backward_reference_comparison.json": {
+      "bytes": 5046,
+      "sha256": "dea3c3b14b74fc80f5f06f84e6e9c91c11472503aa18f8f83a77aa298dec8073"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/first_step_reference_comparison.json": {
+      "bytes": 8998,
+      "sha256": "02d2006788819db374be52a53d60caf35fae19a04a09a8fedee22c62bcb21695"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/runtime_import_pins.json": {
+      "bytes": 4155,
+      "sha256": "fbcaa8956c8539a7786f4b892c0be4ea16b45712e5bb7e08f2a41b0af269910e"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/receipts/initial_active_health_snapshot.json": {
+      "bytes": 2963,
+      "sha256": "902bc1de8e55d236ffb1d928c10c5b146957f5dffb8fd8044934cdfd74ee7292"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000/extra_eval/30001/diagnostic_eval.json": {
+      "bytes": 426248,
+      "sha256": "925b3255eac18b56b3eef4b5a520496981857be7689d167930af600bbc565310"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/static_anchor_root_coordination_receipt.json": {
+      "bytes": 2304,
+      "sha256": "f2d9782276703a2085362b0889dfc132df80043991efa3c5376f50408136d335"
+    }
+  }
+}

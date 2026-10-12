@@ -1,0 +1,226 @@
+{
+  "status": "PASS_DRAFT_ONLY",
+  "checked_utc": "2026-10-11T19:30:20.835529+00:00",
+  "checks": [
+    {
+      "check": "baseline_harness syntax",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness syntax",
+      "PASS": true
+    },
+    {
+      "check": "baseline_launcher syntax",
+      "PASS": true
+    },
+    {
+      "check": "variant_launcher syntax",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness syntax",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_launcher syntax",
+      "PASS": true
+    },
+    {
+      "check": "outside_guard syntax",
+      "PASS": true
+    },
+    {
+      "check": "baseline_harness exact 2000 step bound",
+      "PASS": true
+    },
+    {
+      "check": "baseline_harness preregistered four nodes",
+      "PASS": true
+    },
+    {
+      "check": "baseline_harness original diagnostic_eval exact bytes",
+      "PASS": true
+    },
+    {
+      "check": "baseline_harness original30k restore remains",
+      "PASS": true
+    },
+    {
+      "check": "baseline_harness new approval cannot accept short receipt",
+      "PASS": true
+    },
+    {
+      "check": "baseline_harness shared observation helper directory retained",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness exact 2000 step bound",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness preregistered four nodes",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness original diagnostic_eval exact bytes",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness original30k restore remains",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness new approval cannot accept short receipt",
+      "PASS": true
+    },
+    {
+      "check": "variant_harness shared observation helper directory retained",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness exact 2000 step bound",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness preregistered four nodes",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness original diagnostic_eval exact bytes",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness original30k restore remains",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness new approval cannot accept short receipt",
+      "PASS": true
+    },
+    {
+      "check": "baseline_noise_harness shared observation helper directory retained",
+      "PASS": true
+    },
+    {
+      "check": "new isolated guard only stop constant differs",
+      "PASS": true
+    },
+    {
+      "check": "variant original10 before-backward gate retained",
+      "PASS": true
+    },
+    {
+      "check": "lambda remains exact .05 and original mask/render/loss untouched",
+      "PASS": true
+    },
+    {
+      "check": "changed source rejected using memory-only negative check",
+      "PASS": true
+    },
+    {
+      "check": "actual short-v2 receipt binds read-only source/config/guard",
+      "PASS": true
+    },
+    {
+      "check": "long evaluation protocol locked with full-window original repeat",
+      "PASS": true
+    },
+    {
+      "check": "noise arm only output routing differs from original-math baseline",
+      "PASS": true
+    },
+    {
+      "check": "both groups use original four30k files, never30300 state",
+      "PASS": true
+    },
+    {
+      "check": "source window has no later reset",
+      "PASS": true
+    },
+    {
+      "check": "densification and SGCM end precede window",
+      "PASS": true
+    },
+    {
+      "check": "all14 protected short inputs byte-identical after generation",
+      "PASS": true
+    },
+    {
+      "check": "no executable source/model copies created",
+      "PASS": true
+    }
+  ],
+  "check_count": 37,
+  "input_file_pins": {
+    "baseline_harness": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_harness.py",
+      "sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458"
+    },
+    "variant_harness": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\continuation_variant_harness.py",
+      "sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154"
+    },
+    "baseline_launcher": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_controlled_continuation.py",
+      "sha256": "9e25b61f09f2c59c5d58bd3753792b501b9bfb12b8846ef2f1b6782cb19372b9"
+    },
+    "variant_launcher": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\launch_opacity_outside_continuation.py",
+      "sha256": "426f99b3b1a9c75ffcf8e225933065c5fa1ca898dfa566aa7b5e42b6715a94dc"
+    },
+    "outside_guard": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\outside_experiment_guard.py",
+      "sha256": "f3a86b6fb128b83c6a189b95787ed001da2ac84a4444ecc68bba283fae5477f9"
+    },
+    "observer": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\runtime_safety_parameterized.py",
+      "sha256": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1"
+    },
+    "metric_helper": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\scripts\\component_diagnostic.py",
+      "sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa"
+    },
+    "short_binding": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\controlled_opacity_outside\\experiment_binding.json",
+      "sha256": "b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214"
+    },
+    "short_variant_plan_v2": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\opacity_outside_prepared_plan.json",
+      "sha256": "be9e385b37805457d2d9986985c9b7bd65af3fcde66445d3f15d156db5c90a93"
+    },
+    "short_baseline_plan": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\component_diagnostic\\continuation_plan\\prepared_plan.json",
+      "sha256": "f12d6c0801997d0a09020617c7629f5f41abfab4083ebbf0400f1e715be6d205"
+    },
+    "paired_protocol": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\opacity_pair_protocol.json",
+      "sha256": "3f7d11ba7aa5fb81bb959fd3c530f8b253f8b87a9c612d3d7d644474d4c79760"
+    },
+    "candidate_train": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\candidates\\opacity_outside\\train.py",
+      "sha256": "ff82c0d86b385bcdf28feff550163cd3ec9c7bec92e939306330ba4af335e99a"
+    },
+    "candidate_paper_losses": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\candidates\\opacity_outside\\utils\\paper_losses.py",
+      "sha256": "3832a7ced1387e1ff33f5e3aee0b56bc533303f80f5be840269236139fc866ab"
+    },
+    "algorithm_diff": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\controlled_opacity_outside\\actual_algorithm_diff.patch",
+      "sha256": "21388ca6b00caf94a0e869a2f22c5c506b17d846859d3b8a31623672bf9a5b49"
+    }
+  },
+  "short_current_receipt_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\loss_audit\\long_pair_30k_32000\\short_v2_receipt_readonly.json",
+  "short_current_receipt_sha256": "5dddf4cddb06fd560c1128f9654828f28000dc0285c0e50c8733a7a69fe526f4",
+  "short_current_receipt_matches_v2_source": true,
+  "short_receipt_not_reused_for_long": true,
+  "training_imported": false,
+  "torch_imported": false,
+  "actual_model_optimizer_CUDA_restore_performed": false,
+  "allow_training": false,
+  "GPU_used": false,
+  "source_copies_created": 0,
+  "repository_clones_created": 0,
+  "only_diffs_and_draft_plan_emitted": true,
+  "generator_sha256": "802bd1cfbbeb0840c5c5dc78419e5c3fa660b8ad23f311f9aeefe9ec0461e210"
+}

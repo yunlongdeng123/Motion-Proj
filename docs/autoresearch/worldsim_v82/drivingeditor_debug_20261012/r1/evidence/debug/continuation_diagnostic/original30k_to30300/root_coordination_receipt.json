@@ -1,0 +1,24 @@
+{
+  "decision": "APPROVED_CONTROLLED_30K_TO_30300",
+  "prepared_plan_sha256": "f12d6c0801997d0a09020617c7629f5f41abfab4083ebbf0400f1e715be6d205",
+  "harness_sha256": "ac9745d5c0cbab7701ae8be5beec9587d57ea79288a3167259d0af1d0e164458",
+  "observer_sha256": "f60faca00ec0d5b10b80d14d3e8ca07125ada5bff06d1f0fb8c43c5fec6d42d1",
+  "first_iteration": 30001,
+  "stop_iteration": 30300,
+  "horizon": 50000,
+  "seed": 0,
+  "reviewer": "/root",
+  "authorized_by": "User explicitly authorized controlled experiments to debug only the vGPU paper implementation.",
+  "scope": "One isolated original-math 300-step diagnostic; not a restart of formal50k or another scene.",
+  "gpu_owner": "vgpu_component_diagnostic_solmax",
+  "root_review": [
+    "Actual frozen train/render/kernel paths and SHA are verified at import.",
+    "Exact same30k four-component restore, all optimizer/runtime/RNG/sampler state, only bookkeeping config fields change.",
+    "Stopping observer leaves original50000 LR horizon intact; extra eval restores all RNG.",
+    "Intermediate5 cameras and final49 cameras; full terminal four-component diagnostic bundle retained separately.",
+    "Compare first30001 actual loss and PSNR against historical TensorBoard values without invented tolerance.",
+    "Single GPU lock and idle-process gate; preserve all existing checkpoints and formal frozen source."
+  ],
+  "algorithm_changes": [],
+  "full_reproduction_or_quality_success_claimed": false
+}

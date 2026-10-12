@@ -1,0 +1,116 @@
+{
+  "scope": "CPU read-only three existing front-camera frames; no CUDA, model or checkpoint",
+  "source_root": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository",
+  "scene": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+  "world_meter_to_model_scale": 0.1,
+  "normalization": "Exact frozen transform_poses_pca AST function,49 front camera poses,fix_radius0",
+  "reference": "Eq16 PDF7-8/printed1702-1703; frozen camera_utils.py117-133 last-write depth projection",
+  "caveat": "The paper does not describe a z-buffer. Order dependence is confirmed; selecting nearest in each coarse pixel is a conventional visibility choice and must be marked explicitly. Cause of observed collapse not established.",
+  "records": [
+    {
+      "frame": "0017000",
+      "camera": 0,
+      "render_shape": [
+        320,
+        480
+      ],
+      "point_file_sha256": "b70a5d640123ed89d8145af4f9feb502492d2bb74e0f2397f769073fd9b54b20",
+      "projected_point_count": 24316,
+      "populated_depth_pixels": 21712,
+      "populated_fraction_full_image": 0.14135416666666667,
+      "duplicate_pixels": 2586,
+      "duplicate_fraction_of_depth_pixels": 0.11910464259395726,
+      "last_write_not_nearest_pixels": 2502,
+      "last_write_not_nearest_fraction_depth_pixels": 0.1152358142962417,
+      "target_changes_after_point_order_reversal_pixels": 2586,
+      "depth_pixels_with_collision_span_gt_0_5m": 2488,
+      "depth_pixels_with_collision_span_gt_2m": 2401,
+      "collision_span_m_quantiles": {
+        "0.5": 5.10275616964636,
+        "0.9": 25.2223619838312,
+        "0.99": 30.0756465593876,
+        "1.0": 37.596914755852936
+      },
+      "last_write_minus_nearest_m_quantiles": {
+        "0.5": 0.0,
+        "0.9": 2.6204259287788894,
+        "0.99": 25.45371919581491,
+        "1.0": 37.596914755852936
+      },
+      "inverse_depth_target_difference_sum_divided_full_image": 0.0013854901543660177,
+      "weighted_eq16_difference_scale_lambda_0_1": 0.00013854901543660178,
+      "collision_last_farther_inside_dynamic_mask_pixels": 29,
+      "collision_last_farther_outside_dynamic_mask_pixels": 2473
+    },
+    {
+      "frame": "0017010",
+      "camera": 0,
+      "render_shape": [
+        320,
+        480
+      ],
+      "point_file_sha256": "f7ffefa600e4b87883b4e1202d2d60a8e280e7e1fde6886bc42ce463c86a508b",
+      "projected_point_count": 24081,
+      "populated_depth_pixels": 21475,
+      "populated_fraction_full_image": 0.13981119791666666,
+      "duplicate_pixels": 2593,
+      "duplicate_fraction_of_depth_pixels": 0.12074505238649592,
+      "last_write_not_nearest_pixels": 2518,
+      "last_write_not_nearest_fraction_depth_pixels": 0.11725261932479628,
+      "target_changes_after_point_order_reversal_pixels": 2593,
+      "depth_pixels_with_collision_span_gt_0_5m": 2510,
+      "depth_pixels_with_collision_span_gt_2m": 2423,
+      "collision_span_m_quantiles": {
+        "0.5": 5.642961223983325,
+        "0.9": 25.34098876617249,
+        "0.99": 31.80150648781207,
+        "1.0": 55.88795274444732
+      },
+      "last_write_minus_nearest_m_quantiles": {
+        "0.5": 0.0,
+        "0.9": 2.680267046221437,
+        "0.99": 25.474160838740566,
+        "1.0": 54.08010351374838
+      },
+      "inverse_depth_target_difference_sum_divided_full_image": 0.0013663953122197137,
+      "weighted_eq16_difference_scale_lambda_0_1": 0.0001366395312219714,
+      "collision_last_farther_inside_dynamic_mask_pixels": 21,
+      "collision_last_farther_outside_dynamic_mask_pixels": 2497
+    },
+    {
+      "frame": "0017048",
+      "camera": 0,
+      "render_shape": [
+        320,
+        480
+      ],
+      "point_file_sha256": "351dbb34919c9b8ed0c5679624e2ab9c86e86198925b30a4e00bed54aba65bd5",
+      "projected_point_count": 20396,
+      "populated_depth_pixels": 18844,
+      "populated_fraction_full_image": 0.12268229166666667,
+      "duplicate_pixels": 1552,
+      "duplicate_fraction_of_depth_pixels": 0.08236043302908087,
+      "last_write_not_nearest_pixels": 1524,
+      "last_write_not_nearest_fraction_depth_pixels": 0.08087454892804076,
+      "target_changes_after_point_order_reversal_pixels": 1552,
+      "depth_pixels_with_collision_span_gt_0_5m": 1500,
+      "depth_pixels_with_collision_span_gt_2m": 1440,
+      "collision_span_m_quantiles": {
+        "0.5": 4.665813564493426,
+        "0.9": 11.835823712927807,
+        "0.99": 25.861666375631668,
+        "1.0": 42.20902148592488
+      },
+      "last_write_minus_nearest_m_quantiles": {
+        "0.5": 0.0,
+        "0.9": 0.0,
+        "0.99": 10.829266383978316,
+        "1.0": 42.129318487795
+      },
+      "inverse_depth_target_difference_sum_divided_full_image": 0.0003755620143096017,
+      "weighted_eq16_difference_scale_lambda_0_1": 3.755620143096018e-05,
+      "collision_last_farther_inside_dynamic_mask_pixels": 2,
+      "collision_last_farther_outside_dynamic_mask_pixels": 1522
+    }
+  ]
+}

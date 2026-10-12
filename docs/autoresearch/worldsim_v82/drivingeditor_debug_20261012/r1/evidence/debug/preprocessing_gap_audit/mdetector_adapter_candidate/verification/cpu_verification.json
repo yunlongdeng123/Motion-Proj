@@ -1,0 +1,64 @@
+{
+  "scope": "Adapter validation and unchanged author function syntax only",
+  "python_contract_tests": {
+    "tests_run": 8,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "vendor_files_verified": 20,
+  "source_revision": "0645dabe307a99f3b59a5a3d3007acfdcad1a39f",
+  "core_source_mutations": 0,
+  "config_mutations": 0,
+  "invalidpoint_exact_body_sha256": "8fc40e521b1de963a94d2c0ffb480a6cd52b49eefda2b0f8b88b68171a71b0b4",
+  "pinned_source_syntax_probe": {
+    "command": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-fsyntax-only",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/verification/unchanged_invalidpoint_syntax.cpp"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "transport_facade_compile": {
+    "command": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O0",
+      "-I",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native",
+      "-I",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/generated",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/native/compat_probe.cpp",
+      "-o",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/verification/compat_probe"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "transport_facade_run": {
+    "command": [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/verification/compat_probe"
+    ],
+    "exit_code": 0,
+    "stdout": "transport parameter/time facade only: dataset=2 actual author horizontal=0.01 vertical=0.005\n",
+    "stderr": ""
+  },
+  "author_init_grid": {
+    "edge_xy": 667,
+    "edge_z": 134,
+    "elements_per_array": 59615126,
+    "arrays": 3,
+    "illustrative_40byte_element_gib": 6.662509515881538,
+    "actual_point_cloud_size_not_measured": true
+  },
+  "gpu_used": false,
+  "full_detector_built": false,
+  "detector_initialized": false,
+  "detector_labels_computed": false,
+  "scene_data_read_or_written": false,
+  "claim": "These checks establish transport/lineage guards, not algorithm or training equivalence."
+}

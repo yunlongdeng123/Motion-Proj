@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "defined_after_long_V_before_any_S_training",
+  "allow_training": false,
+  "hypothesis": "The observed static branch lacks a direct RGB anchor; adding the released2024 observed-static photometric term can test this independently of dynamic background-opacity pressure.",
+  "math": "L_S = L_paper_original + 1.0 * ((1-lambda_dssim)*L1((1-Md)*render_s,(1-Md)*GT) + lambda_dssim*(1-SSIM((1-Md)*render_s,(1-Md)*GT))); lambda_dssim remains original0.2, full-image reduction. render_s includes the shared environment.",
+  "paper_status": "Extra diagnostic absent from displayed paper Eq10, not author-certified Eq13/Eq14 reconstruction or a claim that the paper omitted a mandatory static RGB loss.",
+  "initial_state": "Identical original post-reset30000 four-state bundle; do not initialize from V32000.",
+  "window": [30001, 32000],
+  "horizon": 50000,
+  "coefficient": 1.0,
+  "coefficient_origin": "Released2024 static photo term coefficient1; fixed before S, not tuned from S outcomes.",
+  "primary_comparators": ["B1_original30k_to32000", "B2_original30k_to32000_noise_reference"],
+  "secondary_context": "Previously completed V tests a different single added term. S-versus-V is descriptive comparison of two interventions, not attribution to only one changed variable between them.",
+  "primary_endpoints": "Reuse exactly the existing c725cd locked long protocol11 primary metrics, all49 frame values and six original domains; preserve equal-frame and pixel-weighted labels. Interpret against both B1 and B2 and their observed repeat variation; the two repeats are not a CUDA noise bound or confidence interval.",
+  "supplementary_context": "Actor pooled MSE/pixel counts plus the already-defined SSIM-window-derived5px interior/boundary localization are descriptive. They do not replace or erase any adverse all49 endpoint and do not change masks or optimization.",
+  "interpretation": {
+    "static_improves_actor_preserved": "Supports a missing observed-static RGB anchor as a recoverability mechanism without V's direct background-opacity pressure. Dynamic background support and temporal invariance still require their own evidence.",
+    "static_improves_actor_cost_repeats": "Shows the tradeoff survives a different added term; inspect static occlusion/depth order, shared environment and temporal coupling rather than attributing it only to V's background-opacity penalty.",
+    "static_does_not_recover": "Weakens this coefficient1 anchor as a recovery mechanism in the original degenerated30k state; does not reject the paper algorithm or an identically initialized from-zero experiment."
+  },
+  "validity": [
+    "Verify all original10 scalars from actual compose BEFORE computing or adding S and again before real first backward; check FP32 original+coefficient*S total decomposition.",
+    "Verify exact original30k saved parameters/optimizers/RNG/sampler/runtime restore and every2000 camera/time_shift/LR entry against actual B1; preserve extra-eval RNG.",
+    "Use original all49 GT, masks, counts, loader and camera transforms; no new data, shadow masks, depth policy or time policy.",
+    "Keep 50000 horizon and stop32000 before33000 reset; SGCM/densification are already inactive in this window.",
+    "Terminal49 evaluation and four independently loadable saved state files with original source/config/checkpoint pins protected."
+  ],
+  "claim_limit": "A successful S recovery is not from-zero generalization, normal editing, complete branch identification, or reproduction of the author's unpublished2026 implementation.",
+  "acceptance_policy": "No new numerical margins and no posthoc coefficient tuning. Report directional improvements and every composite/actor tradeoff against both original repeats; visual improvement or one scalar alone cannot certify the paper.",
+  "launch_gate": "Independent final S source/config/guard/harness/plan review, root review of the read-only fixed-time scan, then root exact S receipt and component-only exclusive GPU handoff. This protocol itself authorizes no GPU run."
+}

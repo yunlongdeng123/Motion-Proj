@@ -1,0 +1,34 @@
+{
+  "experiment_type": "single_variable_mechanism_test_not_final_paper_reproduction",
+  "baseline": "original30k_to30300",
+  "candidate": "same saved30k plus outside-mask dynamic opacity complement only",
+  "parent_iteration": 30000,
+  "steps": [30001, 30300],
+  "lr_horizon": 50000,
+  "seed": 0,
+  "coefficient": 0.05,
+  "coefficient_provenance": "Reuse foreground opacity coefficient for a bounded first diagnostic; not author-disclosed or tuned after seeing outcome.",
+  "extra_term": "-mean((1-Md) * alpha_d * log1p(-alpha_d/(1+1e-4)))",
+  "forbidden_joint_changes": ["depth policy", "SGCM policy", "late reset rule", "static temporal parameterization", "AMP", "resolution", "data masks", "sampling", "kernel", "learning rate horizon"],
+  "baseline_gate": "Complete original300-step diagnostic with exact restore and all49 terminal evaluation; release GPU lock before candidate starts.",
+  "pair_validity": [
+    "Same original30k component hashes and full optimizer/RNG/sampler/runtime state.",
+    "Same300 iteration camera IDs, time shifts and learning rates; extra evaluation preserves RNG.",
+    "Only approved candidate source/config changes, listed and hash-pinned.",
+    "No reset/densification/SGCM topology event within this300-step interval.",
+    "Finite parameters, optimizer states and all losses; original checkpoints unchanged."
+  ],
+  "primary_measurements": [
+    "Dynamic opacity and raw RGB support outside selected actor mask, especially non-sky.",
+    "Static RGB PSNR/MAE against observed non-sky pixels outside actor mask.",
+    "Composite RGB PSNR/MAE on full49 original frames.",
+    "Static Gaussian versus environment residual contribution and observed road images."
+  ],
+  "directional_hypothesis": "Candidate should lower outside-mask dynamic opacity and improve observed static background while preserving useful composite reconstruction. Measure actual magnitude and tradeoffs; no retrospective pass threshold.",
+  "interpretation_limits": [
+    "300 steps diagnose direction from an already degenerated model; failure to repair fully does not rule out a from-zero effect.",
+    "An improvement supports a missing-domain-constraint hypothesis; it does not establish the author's intended formula.",
+    "No dense edited-region ground truth exists, so no removal-area accuracy or FID success claim.",
+    "Full reproduction requires independent longer/from-zero protocol verification and remaining paper gaps."
+  ]
+}

@@ -1,0 +1,18 @@
+v2独立审查 PASS：可在新的root receipt与GPU交接后重试该精确计划。
+v1漏查utils.image_utils不在实际inventory，attempt1在任何训练/restore/optimizer之前失败。
+修正仅3处：删除不存在的import与pin tuple；PSNR identity改为loss_utils.psnr。
+真实train.py从utils.loss_utils导入psnr/ssim，该文件同时定义两函数。
+
+同30k四文件 + 原输入 -> 原完整restore -> 原paper loss + .05 Loutside
+                                             |
+                                             v
+                              同300轨迹 / RNG-safe49评估 -> 四文件state
+
+v2新增runtime loop的13个源路径都存在真实148inventory，逐SHA通过；
+新plan只有harness_sha256改变。原binding/guard/算法源/config/restore/eval/采样和launcher全不变。
+旧51/512cases未重跑，旧final_review/common49记录未覆盖。未启动GPU。
+此PASS仅用于准备可运行，不是实际恢复或实验效果认证。
+
+harness_sha256: 3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154
+prepared_plan_sha256: be9e385b37805457d2d9986985c9b7bd65af3fcde66445d3f15d156db5c90a93
+experiment_binding_sha256: b96ec92c0694a251e39da85a3ae4abab131366a75ad52cd47098ec0df953b214

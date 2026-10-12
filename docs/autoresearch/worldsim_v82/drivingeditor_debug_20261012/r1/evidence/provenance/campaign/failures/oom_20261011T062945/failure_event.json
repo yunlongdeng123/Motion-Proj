@@ -1,0 +1,51 @@
+{
+  "status": "failed_evidence_preserved",
+  "recorded_at": "2026-10-11T06:33:33.668028+00:00",
+  "attempt": "fresh0 seed0 with expandable_segments:True",
+  "run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+  "exit_code": 1,
+  "progress_snapshot_iteration": 13800,
+  "last_logged_completed_iteration": 13813,
+  "failure_exact_iteration": null,
+  "failure_location": "combined loss.backward / rasterizer backward",
+  "error": "OutOfMemoryError('CUDA out of memory. Tried to allocate 34.00 MiB. GPU 0 has a total capacity of 23.56 GiB of which 19.06 MiB is free. Including non-PyTorch memory, this process has 23.53 GiB memory in use. Of the allocated memory 22.61 GiB is allocated by PyTorch, and 579.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)')",
+  "traceback": "Traceback (most recent call last):\n  File \"/root/autodl-tmp/drivingeditor_repro/scripts/run_paper50k_training.py\", line 163, in main\n    module.training(args)\n  File \"/root/autodl-tmp/drivingeditor_repro/DrivingEditor-paper/train.py\", line 522, in training\n    loss.backward()\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/_tensor.py\", line 522, in backward\n    torch.autograd.backward(\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/autograd/__init__.py\", line 266, in backward\n    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/autograd/function.py\", line 289, in apply\n    return user_fn(self, *args)\n  File \"/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py\", line 152, in backward\n    grad_means2D, grad_colors_precomp, grad_features, grad_opacities, grad_means3D, grad_cov3Ds_precomp, grad_sh, grad_scales, grad_rotations = _C.rasterize_gaussians_backward(*args)\ntorch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 34.00 MiB. GPU 0 has a total capacity of 23.56 GiB of which 19.06 MiB is free. Including non-PyTorch memory, this process has 23.53 GiB memory in use. Of the allocated memory 22.61 GiB is allocated by PyTorch, and 579.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)\n",
+  "diagnosis": "Physical VRAM capacity exhausted: 22.61GiB PyTorch allocated, 579.15MiB unallocated, 19.06MiB free, failed34MiB request. Allocator-only recovery is insufficient.",
+  "checkpoint_preserved": 10000,
+  "checkpoint_files_not_modified_or_moved": true,
+  "preserved_files": [
+    {
+      "path": "logs/paper50k.log",
+      "bytes": 1814946,
+      "sha256": "ac71d512cc6d0cfc2e2541b40b3330c0309e8c2c5505c4747e743b7a8487e024"
+    },
+    {
+      "path": "logs/paper50k.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "logs/paper50k.launcher.pid",
+      "bytes": 7,
+      "sha256": "07a6e26c35d1bd8917408c38bf2738e706761592c439d65033fbd0e29de2a1fd"
+    },
+    {
+      "path": "logs/paper50k.pid",
+      "bytes": 7,
+      "sha256": "07a6e26c35d1bd8917408c38bf2738e706761592c439d65033fbd0e29de2a1fd"
+    },
+    {
+      "path": "logs/paper50k_comparison.log",
+      "bytes": 42599,
+      "sha256": "2c42668d085bbe2b0121354134eb8eea17ac17b030e7ce8eab11e336230498ef"
+    },
+    {
+      "path": "runs/scene0017_000_048_paper_50000_seed0/progress_status.json",
+      "bytes": 3017,
+      "sha256": "7ebad99f59f209c9913f0e7bb9b1a4510730da8fc50e253def5c205d926cedef"
+    }
+  ],
+  "source_and_config_not_modified": true,
+  "next_action": "Isolated real-checkpoint GPU A/B; deploy only accepted precision-preserving infra, then strict same50k checkpoint recovery.",
+  "accuracy_acceptance_or_recovery_claimed": false
+}

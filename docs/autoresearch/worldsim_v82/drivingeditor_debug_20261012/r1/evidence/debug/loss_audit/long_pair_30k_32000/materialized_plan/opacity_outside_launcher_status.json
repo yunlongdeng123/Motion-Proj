@@ -1,0 +1,24 @@
+{
+  "status": "complete",
+  "launcher_pid": 42188,
+  "started_utc": "2026-10-11T21:58:25.641145+00:00",
+  "launcher_sha256": "633019f97b800ea3a942a1b44dd41d7972b2e332ee714caddb21a0e69e443898",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/opacity_outside30k_to32000",
+  "GPU_idle_and_lock_available_before_launch": true,
+  "worker_pid": 42191,
+  "command": [
+    "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "-u",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/continuation_variant_harness.py",
+    "--experiment-binding",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/experiment_binding.json",
+    "--root-approved-plan",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan/opacity_outside_root_coordination_receipt.json"
+  ],
+  "environment_policy": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "actual_exit_code": 0,
+  "finished_utc": "2026-10-11T22:36:04.309837+00:00"
+}

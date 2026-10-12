@@ -1,0 +1,99 @@
+SGCM / 数据 / 地面 / 观测覆盖 CPU 独立审计 handoff
+
+范围：wm-vgpu-1011，首个silver sedan FRONT raw0..48；冻结训练源和真实config。
+检查fresh50k seed0 parent的10k，以及strict-resume child的20k/30k。50k未完成。
+本审计未执行GPU/训练，未改正式源码、数据或checkpoint；candidate只在独立audit目录。
+
+Architecture components（详细图同目录 architecture.svg）：
+
+[49 RGB + LiDAR + pose]
+             |
+             v
+[body/sky masks + calibration + PCA model coordinates]
+             |                         |
+             v                         v
+[Static Gaussians]                [Dynamic Gaussians]
+             |                         |
+             v                         v
+[SGCM ground refinement + NPS]   [foreground RGB + opacity]
+             \_________________________/
+                           |
+                           v
+                  [Composite + EnvMap]
+                           |
+                           v
+          [reconstruction / static removal / loss -> optimizer]
+
+可执行结论：
+1. SGCM有确定的不可见点反复复制退化。20k共2,234,298静态点，只有1,235,032个
+   exact XYZ，extra copies=999,266；最大一簇158,570个，位于距地面0.26313m的clone带。
+   该簇tau约-4.916、sigma约2.992，连续[-.48,.48]最大alpha仅.003330534<1/255。
+   即使假设时间抖动扩展到[-.51,.51]，上界.003380262仍低于阈值。
+   原pinned forward.cu:346-348确实跳过alpha<1/255；因此这些点物理上不能形成当前
+   RGB彩噪。20k clone带的773,564点、30k的773,943点有同样的不可见上界。
+   正radii仅表示投影footprint，不能证明实际贡献。SGCM没有贡献/时间alpha资格检查。
+
+2. 隔离candidate是新增点资格guard：radii>0且连续观测区间alpha上界>=原renderer cutoff。
+   明确sgcm_require_effective_visibility默认False；候选profile才开启。保持dr=.5m、
+   .5dr、prune、clone/split数学、loss与预算。论文没有给此资格/调度规则，必须标为复现
+   选择。7项CPU regression通过：radii0单点baseline counts2,3,5,9,17,33,65,129，
+   guard始终2；正radii但alpha-dead也相同；default-off与baseline一致；有效点数学一致；
+   几何prune不变；非平凡四元数/最大轴split及混合协方差通过独立SciPy验证。
+   这只防止新不可见复制，不修已经存在的dead clones/EnvMap/branch leakage。
+   SGCM在15000结束，故将该guard加到30k->30300不会实际触发，不能当有效试验。
+
+3. 单位、平面、时间编号、SH继承与Adam索引检查通过。模型scale=.1，.5m=>.05model；
+   plane inverse-transpose正确，600k点的独立米制距离最大误差3.48e-13m。初始静态仅
+   4,106点因近动态.1m排除，SGCM初始prune候选1,756/region41,984；20k/30k仍有
+   2,234,298静态点。没有静态整片“被删光”的证据。49帧masked RGB逐像素完全等于
+   原RGB乘body-mask，sky overlap0；PLY按49时间戳分组点数和actor manifest完全相等。
+   nx/ny/nz是存储model时间的约定字段，非物理法线。动态初始36,406点中792在地面
+   .15m内；轮胎/下车体同样接近路面，这个数字不能直接判为道路泄漏。
+
+4. 车后道路有独立原始观测。raw17的局部受支持地面候选2,293/2,293样本在其它帧
+   actor-mask外、非sky、无更近LiDAR遮挡，且同帧真实近地LiDAR<=.35m支持；全都至少
+   3个独立观测帧，最多37帧。raw10为3,179/3,198(99.41%)；raw0为5,473/5,850。
+   已视觉查看原RGB标注图：支持点确实落在移开车后的道路/斑马线上。
+   这证明部分去车背景可以受原RGB监督，不是dense背景GT，也不表示整块车mask都可见；
+   raw48局部168样本本诊断为0确认观测。审计参数不是训练阈值。
+
+5. 静态时间不变性是高风险paper consistency gap。Eq4文字称Gs time-invariant，
+   冻结代码仍优化并渲染PVG的t/sigma/velocity；20k有612,740点跨49时间戳移动>.1m，
+   279,960点>.25m，p99=.526m；1,033,069点temporal mask启闭，1,449,089点alpha
+   相对变化>50%。30k为647,182点>.1m、305,714点>.25m，p99=.565m。
+   Figure3又讨论抑制static v，因此不能盲目zero全部正式字段或称这是已知作者解法。
+   先做声明清楚的推理counterfactual；直接把marginal设1会唤醒大量dead clones，因果
+   混杂很强。更稳的诊断是先固定一个观测参考时刻的rendered static状态。
+
+6. static opacity reset在densify/SGCM结束后仍每3000执行，30k全部static basealpha
+   <=.01。CPU源函数schedule证实30000 static reset=1、dynamic reset=0、SGCMdue=False。
+   它解释post-reset checkpoint异常的一部分，不能单独解释20k去车路面的彩噪。
+
+重要因果更新：root报告的GPU component结果把20k路面彩噪定位在static_env_contribution，
+static_foreground很暗。因此不可把上述不可见SH duplicates当彩噪来源。它们是独立的
+容量退化/无贡献增密问题；主视觉修复需继续查EnvMap暴露和动态branch对道路的占用。
+
+已知paper未补齐项：当前是DEVA/SAM人工复查silver body；无shadow mask/M-detector。
+时间聚合actor AABB长16.49m、宽21.86m并延到地面；ground fitting、20px、clone/split
+资格、预算/频率/repeat policy均未由论文明确。不得改地面阈值/loss或用GT3D box筛点
+来制造PASS；只能独立实验、明确选择、用静态去车效果与泄漏指标判断。
+
+文件：
+- audit_findings.json：完整分类/限制/复现命令。
+- audit_source_and_candidate_pins.json：冻结来源和candidate SHA。
+- candidate/paper_sgcm_visibility_guard.patch 与 profile_override.json：待root review。
+- visibility_guard_cpu_regression.json：7项PASS；visibility_guard_affected_rows.json：真实点数。
+- static20k_dead_clone_index_manifest.json + static20k_dead_clone_and_duplicate_indices.npz：
+  zero-based original checkpoint row indices；SHA957fd6f7f0b721821e11815dc72b0468c9aa19b187b6b7e904c70efef58b2ceb。
+- road_observation_coverage.json / coverage_*.npz / coverage_evidence_*.jpg：49帧覆盖证据。
+- static_time_*_cpu.json、checkpoint_geometry.json、branch_*_cpu.json：时间/几何/SH证据。
+- tiny_cpu_checks.json、metric_and_normal_invariants.json、mask_alignment_49frames.json。
+
+后续可证伪步骤：
+A. disposable推理tensor移除773,564个alpha-always-dead clone，预期RGB不变；保存pixel maxdiff
+   与source/checkpoint pins。这个检查是无贡献证实，不是质量修复。
+B. root/GPU继续单变量outside-opacity/branch-support实验，独立保留20k reference，检查
+   static foreground/EnvMap贡献、mask内外alpha和去车road覆盖效果；不是只看composite PSNR。
+C. guard需在SGCM仍活跃的isolated<=15k阶段测试；不能更改formal strict lineage后假称续训相同。
+
+未宣称算法/效果已修好。本agent完成CPU audit与隔离候选，等待独立review角色的新任务。

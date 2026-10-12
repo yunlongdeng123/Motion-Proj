@@ -1,0 +1,59 @@
+{
+  "scope": "Native core and adapter compilation only, no construction/execution",
+  "source_revision": "0645dabe307a99f3b59a5a3d3007acfdcad1a39f",
+  "vendor_files_verified": 20,
+  "vendor_source_config_mutations": 0,
+  "stock_candidate_configure": {
+    "exit_code": 1,
+    "diagnostic": "PCLConfig requires Boost system/filesystem/date_time/iostreams/serialization binaries; no core compiled in that probe",
+    "evidence": "stock_cmake_probe/CMakeCache.txt"
+  },
+  "build_portability_change": "Direct real private PCL headers and shared libraries, bypassing distribution PCLConfig's unused Boost binary import requirements",
+  "steps": [
+    {
+      "step": "native_configure",
+      "command": [
+        "cmake",
+        "-S",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01",
+        "-B",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/build",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_PREFIX_PATH=/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/deps/prefix/usr",
+        "-DBOOST_INCLUDEDIR=/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/deps/prefix/usr/include"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 1.1178216934204102,
+      "log": "native_configure.log",
+      "log_sha256": "b3a7e3ddd4bc3812e7fd594dba4b1264892622b581a5804dd55d3802df110bf4"
+    },
+    {
+      "step": "native_compile",
+      "command": [
+        "cmake",
+        "--build",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/build",
+        "--target",
+        "mdetector_candidate",
+        "-j1"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 27.67930793762207,
+      "log": "native_compile.log",
+      "log_sha256": "7b03f176ebd31eda0163a3d642ea859ec7a50d9b9f6d0937131653f751302a12"
+    }
+  ],
+  "gpu_used": false,
+  "detector_initialized": false,
+  "real_scans_processed": false,
+  "real_detector_labels_computed": false,
+  "full_native_core_and_adapter_compilation_passed": true,
+  "archive": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/build/libmdetector_candidate.a",
+    "bytes": 686864,
+    "sha256": "89aaa32c0b5dba6c2b7784e860e530136f2e14aac7ea05644b7d9eca7bb71aaa"
+  },
+  "vendor_files_reverified_after_build": 20,
+  "free_bytes_after": 80136916992,
+  "attempt_plus_prefix_bytes_after": 214080543
+}

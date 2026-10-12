@@ -1,0 +1,100 @@
+--- approved300/continuation_variant_harness.py
++++ draft32000/continuation_variant_harness.py
+@@ -1,3 +1,3 @@
+-"""Prepared single-variable outside-opacity30k->30300 hypothesis. Default CPU only.
++"""Prepared single-variable outside-opacity30k->32000 hypothesis. Default CPU only.
+ 
+ Run requires the root's exact prepared-plan receipt after GPU ownership handoff.
+@@ -24,10 +24,11 @@
+ PARENT = BASE / 'runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline'
+ REPO = BASE / 'campaign/resume_vgpu_baseline_20261011/frozen_repository'
+-PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'
++COMPONENT_PLAN = BASE / 'campaign/vgpu_bugfix_20261012/component_diagnostic/continuation_plan'
++PLAN = BASE / 'campaign/vgpu_bugfix_20261012/loss_audit/long_pair_30k_32000/materialized_plan'
+ VARIANT_PLAN = PLAN / 'opacity_outside_prepared_plan.json'
+-BASELINE = BASE / 'campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to30300'
++BASELINE = BASE / 'campaign/vgpu_bugfix_20261012/continuation_diagnostic/original30k_to32000'
+ FIRST = 30001
+-STOP = 30300
+-NODES = (30001, 30010, 30050, 30100, 30200, 30300)
++STOP = 32000
++NODES = (30001, 30300, 31000, 32000)
+ FRAME_IDS = ['image_0/0017' + str(i).zfill(3) for i in (0, 10, 20, 30, 48)]
+ 
+@@ -81,5 +82,5 @@
+             raise ValueError('Missing or truncated saved30k component')
+         pins[str(path)] = sha(path)
+-    audit = json.loads((PLAN.parent / 'cpu_audit.json').read_text())
++    audit = json.loads((COMPONENT_PLAN.parent / 'cpu_audit.json').read_text())
+     for path, row in audit['original_files'].items():
+         if Path(path).suffix in ('.pth',) and not path.endswith('30000.pth'):
+@@ -108,5 +109,5 @@
+         raise ValueError('First-step loss/PSNR/six paper-component TensorBoard reference is incomplete')
+     pins[str(reference_path)] = sha(reference_path)
+-    plan = {'schema_version': 1, 'status': 'prepared_not_started', 'parent': str(PARENT), 'parent_iteration': 30000, 'first_iteration': FIRST, 'stop_iteration': STOP, 'steps': STOP - FIRST + 1, 'horizon': 50000, 'position_lr_max_steps': 50000, 'seed': 0, 'output': str(output), 'repository': str(REPO), 'training_config_changed_fields': changed, 'training_config': current, 'original_file_sha256': pins, 'harness_sha256': sha(__file__), 'observer_sha256': sha(PLAN / 'runtime_safety_parameterized.py'), 'extra_eval_nodes': list(NODES), 'early_fixed_camera_ids': FRAME_IDS, 'terminal_eval_camera_count': 49, 'first_step_reference': {'source_path': str(reference_path), 'source_sha256': pins[str(reference_path)], 'iteration': FIRST, 'values': references, 'comparison_policy': 'Report actual values, exact equality and absolute deltas; no imposed or relaxed tolerance.'}, 'allocator_environment_original': runtime.get('pytorch_cuda_alloc_conf', ''), 'original_runtime': runtime, 'training_math': 'Import and call frozen original training.training(cfg): full original loss, backward, Adam, reset and SGCM rules. Observer stops only after30300 post-step complete_eval hook; args.iterations remains50000.', 'restore_policy': 'Exact four saved30k files; all saved parameters, conditional Adam steps/moments/options/device placement, all RNG, sampler/order, scale, model runtime, EMA and SGCM geometry/metadata. Parameterized copy of existing restore observer; no seed after restore.', 'extra_eval_rng_policy': 'Capture Python/NumPy/TorchCPU/allCUDA RNG before each extra diagnostic eval; restore in finally; hash-verify equality after. No sampling shuffle, no new seed, no Scene reload or camera reconstruction.', 'runtime_import_verification': 'Verify imported training/renderer/Gaussian/Camera/environment/guard module paths and actual rasterizer Python+binary paths/SHA against CPU pinned originals before training.training.', 'diagnostics': 'Every true loss/camera/time_shift/LR/EMA logged each step; full parameter/optimizer finite checks first,node,last; static/dynamic activated opacity percentiles and shared raw cubemap statistics at eval nodes; early fixed5 original cameras, terminal30300 all49 original cameras: PNGs gt/composite/static/dynamic plus raw alpha/environment/foreground/depth NPZ and mask region statistics.', 'stop_policy': 'Raise own DiagnosticComplete observer exception after true30300 full backward and Adam; no formal event published. Save isolated terminal30300 static/dynamic/environment + exact continuation state after RNG-safe final49 evaluation; hash and CPU-load validate all four, publish diagnostic_snapshot_manifest.json explicitly separate from formal events.', 'algorithm_changes': [], 'allow_training': False, 'GPU_ownership': 'Acquire same gpu_slot.lock nonblocking; require idle compute before restore; root must first release inference ownership and provide exact plan receipt.'}
++    plan = {'schema_version': 1, 'status': 'prepared_not_started', 'parent': str(PARENT), 'parent_iteration': 30000, 'first_iteration': FIRST, 'stop_iteration': STOP, 'steps': STOP - FIRST + 1, 'horizon': 50000, 'position_lr_max_steps': 50000, 'seed': 0, 'output': str(output), 'repository': str(REPO), 'training_config_changed_fields': changed, 'training_config': current, 'original_file_sha256': pins, 'harness_sha256': sha(__file__), 'observer_sha256': sha(COMPONENT_PLAN / 'runtime_safety_parameterized.py'), 'extra_eval_nodes': list(NODES), 'early_fixed_camera_ids': FRAME_IDS, 'terminal_eval_camera_count': 49, 'first_step_reference': {'source_path': str(reference_path), 'source_sha256': pins[str(reference_path)], 'iteration': FIRST, 'values': references, 'comparison_policy': 'Report actual values, exact equality and absolute deltas; no imposed or relaxed tolerance.'}, 'allocator_environment_original': runtime.get('pytorch_cuda_alloc_conf', ''), 'original_runtime': runtime, 'training_math': 'Import and call frozen original training.training(cfg): full original loss, backward, Adam, reset and SGCM rules. Observer stops only after32000 post-step complete_eval hook; args.iterations remains50000.', 'restore_policy': 'Exact four saved30k files; all saved parameters, conditional Adam steps/moments/options/device placement, all RNG, sampler/order, scale, model runtime, EMA and SGCM geometry/metadata. Parameterized copy of existing restore observer; no seed after restore.', 'extra_eval_rng_policy': 'Capture Python/NumPy/TorchCPU/allCUDA RNG before each extra diagnostic eval; restore in finally; hash-verify equality after. No sampling shuffle, no new seed, no Scene reload or camera reconstruction.', 'runtime_import_verification': 'Verify imported training/renderer/Gaussian/Camera/environment/guard module paths and actual rasterizer Python+binary paths/SHA against CPU pinned originals before training.training.', 'diagnostics': 'Every true loss/camera/time_shift/LR/EMA logged each step; full parameter/optimizer finite checks first,node,last; static/dynamic activated opacity percentiles and shared raw cubemap statistics at eval nodes; early fixed5 original cameras, terminal32000 all49 original cameras: PNGs gt/composite/static/dynamic plus raw alpha/environment/foreground/depth NPZ and mask region statistics.', 'stop_policy': 'Raise own DiagnosticComplete observer exception after true32000 full backward and Adam; no formal event published. Save isolated terminal32000 static/dynamic/environment + exact continuation state after RNG-safe final49 evaluation; hash and CPU-load validate all four, publish diagnostic_snapshot_manifest.json explicitly separate from formal events.', 'algorithm_changes': [], 'allow_training': False, 'GPU_ownership': 'Acquire same gpu_slot.lock nonblocking; require idle compute before restore; root must first release inference ownership and provide exact plan receipt.'}
+     return plan, cfg, state
+ 
+@@ -151,5 +152,5 @@
+     reference_rows = [{key: row[key] for key in ('iteration', 'camera_id', 'time_shift', 'learning_rates')} for row in baseline_rows]
+     if reference_rows != binding['all_iteration_pair_reference']['rows'] or [row['iteration'] for row in reference_rows] != list(range(FIRST, STOP + 1)):
+-        raise RuntimeError('Bound all300 sampling/LR reference differs from actual baseline')
++        raise RuntimeError('Bound all2000 sampling/LR reference differs from actual baseline')
+     if {key: baseline_rows[0]['losses'][key] for key in binding['first_step_pair_reference']['values']} != binding['first_step_pair_reference']['values']:
+         raise RuntimeError('Bound first10 scalar reference differs from actual original baseline')
+@@ -172,5 +173,5 @@
+             raise RuntimeError('Actual complete input inventory differs: ' + relative)
+         original_pins[str(path)] = expected
+-    final_eval_path = BASELINE / 'extra_eval/30300/diagnostic_eval.json'
++    final_eval_path = BASELINE / 'extra_eval/32000/diagnostic_eval.json'
+     baseline_final = json.loads(final_eval_path.read_text())
+     if len(baseline_final['frames']) != 49 or not baseline_final['all_rng_unchanged']:
+@@ -184,5 +185,5 @@
+     if torch.cuda.is_initialized():
+         raise RuntimeError('CPU variant preparation initialized CUDA')
+-    plan.update(status='single_variable_opacity_outside_prepared_not_started', repository=binding['repository'], training_config=current, training_config_changed_fields=['model_path', 'start_checkpoint'], training_config_added_fields=binding['added_training_fields'], original_file_sha256=original_pins, runtime_source_sha256=runtime_sources, experiment_binding_path=str(Path(binding_path).resolve()), experiment_binding_sha256=sha(binding_path), guard_path=binding['guard_path'], guard_sha256=binding['guard_sha256'], runtime_helper_import_contract=binding['runtime_helper_import_contract'], first_step_reference=binding['first_step_pair_reference'], all_iteration_pair_reference=binding['all_iteration_pair_reference'], baseline_terminal_evaluation=str(final_eval_path), preparation_checks=checks, all467_original_inputs_hash_verified=True, independent_actual_Scene_per_frame_pose_receipt_available=False, training_math='Full frozen original forward/loss/backward/Adam with only bound .05 outside-opacity hypothesis addition. All10 original first-step scalars checked exactly BEFORE first backward. Original paper terms/SGCM/reset/horizon/seed preserved.', algorithm_changes=binding['algorithm_changed_files'], scientific_status=binding['scientific_status'], allow_training=False, first_backward_policy='Intercept only real training.training first Tensor.backward; compare original10 scalars using pre-add original loss capture, require exact equality and actual restore pass before invoking original backward.', paired_trajectory_policy='Require exact iteration/camera/time_shift/LR equality for every one of300 post-step records; preserve every extra-eval RNG.', paired_evaluation_policy='At each node require exact baseline49 GT float32 arrays and matching frame IDs/dimensions/each region pixel count; evaluation math remains baseline code.', GPU_ownership='CPU preparation only by default. Root exact variant receipt plus independent final review and GPU handoff needed; same exclusive flock and idle check.', launcher_path=str(PLAN / 'launch_opacity_outside_continuation.py'), launcher_sha256=sha(PLAN / 'launch_opacity_outside_continuation.py'))
++    plan.update(status='single_variable_opacity_outside_prepared_not_started', repository=binding['repository'], training_config=current, training_config_changed_fields=['model_path', 'start_checkpoint'], training_config_added_fields=binding['added_training_fields'], original_file_sha256=original_pins, runtime_source_sha256=runtime_sources, experiment_binding_path=str(Path(binding_path).resolve()), experiment_binding_sha256=sha(binding_path), guard_path=binding['guard_path'], guard_sha256=binding['guard_sha256'], runtime_helper_import_contract=binding['runtime_helper_import_contract'], first_step_reference=binding['first_step_pair_reference'], all_iteration_pair_reference=binding['all_iteration_pair_reference'], baseline_terminal_evaluation=str(final_eval_path), preparation_checks=checks, all467_original_inputs_hash_verified=True, independent_actual_Scene_per_frame_pose_receipt_available=False, training_math='Full frozen original forward/loss/backward/Adam with only bound .05 outside-opacity hypothesis addition. All10 original first-step scalars checked exactly BEFORE first backward. Original paper terms/SGCM/reset/horizon/seed preserved.', algorithm_changes=binding['algorithm_changed_files'], scientific_status=binding['scientific_status'], allow_training=False, first_backward_policy='Intercept only real training.training first Tensor.backward; compare original10 scalars using pre-add original loss capture, require exact equality and actual restore pass before invoking original backward.', paired_trajectory_policy='Require exact iteration/camera/time_shift/LR equality for every one of2000 post-step records; preserve every extra-eval RNG.', paired_evaluation_policy='At each node require exact baseline49 GT float32 arrays and matching frame IDs/dimensions/each region pixel count; evaluation math remains baseline code.', GPU_ownership='CPU preparation only by default. Root exact variant receipt plus independent final review and GPU handoff needed; same exclusive flock and idle check.', launcher_path=str(PLAN / 'launch_opacity_outside_continuation.py'), launcher_sha256=sha(PLAN / 'launch_opacity_outside_continuation.py'))
+     return plan, cfg, state
+ 
+@@ -210,5 +211,5 @@
+ def run(plan, cfg, sidecar, approval_path):
+     approval = json.loads(approval_path.read_text())
+-    if approval.get('decision') != 'APPROVED_SINGLE_VARIABLE_OPACITY_OUTSIDE_30K_TO30300' or approval.get('prepared_plan_sha256') != sha(VARIANT_PLAN) or approval.get('harness_sha256') != plan['harness_sha256'] or approval.get('observer_sha256') != plan['observer_sha256'] or approval.get('experiment_binding_sha256') != plan['experiment_binding_sha256'] or approval.get('guard_sha256') != plan['guard_sha256'] or approval.get('first_iteration') != FIRST or approval.get('stop_iteration') != STOP:
++    if approval.get('decision') != 'APPROVED_SINGLE_VARIABLE_OPACITY_OUTSIDE_30K_TO32000' or approval.get('prepared_plan_sha256') != sha(VARIANT_PLAN) or approval.get('harness_sha256') != plan['harness_sha256'] or approval.get('observer_sha256') != plan['observer_sha256'] or approval.get('experiment_binding_sha256') != plan['experiment_binding_sha256'] or approval.get('guard_sha256') != plan['guard_sha256'] or approval.get('first_iteration') != FIRST or approval.get('stop_iteration') != STOP:
+         raise RuntimeError('Root receipt does not bind exact single-variable hypothesis plan')
+     review_path = Path(approval['independent_review_path'])
+@@ -228,5 +229,5 @@
+         raise RuntimeError('GPU compute must be idle before controlled continuation')
+     import uuid
+-    owner = {'owner_pid': os.getpid(), 'nonce': uuid.uuid4().hex, 'purpose': 'Root-approved isolated30k->30300 single outside-opacity hypothesis', 'output': cfg.model_path, 'started_utc': now()}
++    owner = {'owner_pid': os.getpid(), 'nonce': uuid.uuid4().hex, 'purpose': 'Root-approved isolated30k->32000 single outside-opacity hypothesis', 'output': cfg.model_path, 'started_utc': now()}
+     lock.seek(0)
+     lock.truncate()
+@@ -248,5 +249,5 @@
+         hypothesis_guard.verify_auxiliary_files()
+         os.chdir(REPO)
+-        sys.path.insert(0, str(PLAN))
++        sys.path.insert(0, str(COMPONENT_PLAN))
+         sys.path.insert(0, str(REPO))
+         import numpy as np
+@@ -295,5 +296,5 @@
+         from runtime_safety_parameterized import ReadOnlyLoaderNumpy, install_restore_observer, optimizer_receipt
+         # Diagnostic helper functions are observations only; do not import/run its main.
+-        sys.path.insert(0, str(PLAN.parent / 'scripts'))
++        sys.path.insert(0, str(COMPONENT_PLAN.parent / 'scripts'))
+         from component_diagnostic import stats, rgba_package, region_stats, rng_capture, rng_restore, rng_pins
+         import component_diagnostic as diagnostic_helper
+@@ -443,5 +444,5 @@
+                 write(output / 'status.json', status)
+             if iteration >= STOP:
+-                terminal = output / 'terminal_30300'
++                terminal = output / 'terminal_32000'
+                 terminal.mkdir(exist_ok=False)
+                 components = guard.save_components(terminal, iteration, models)
+@@ -476,5 +477,5 @@
+             if (output / 'checkpoint_events').exists():
+                 raise RuntimeError('Controlled diagnostic published an unexpected formal event')
+-            report = {'status': 'controlled_30k_to30300_single_variable_opacity_outside_hypothesis_complete', 'first_iteration': FIRST, 'stop_iteration': STOP, 'horizon': 50000, 'seed': 0, 'step_count': STOP - FIRST + 1, 'restore': restore, 'nodes': node_records, 'runtime_import_pins': runtime_import_pins, 'terminal_snapshot_manifest': str(output / 'terminal_30300/diagnostic_snapshot_manifest.json'), 'terminal_full49_evaluation': True, 'all_node_eval_rng_preserved': all(row['diagnostic_eval']['all_rng_unchanged'] for row in node_records), 'all300_camera_time_shift_LR_exactly_paired': True, 'all49_GT_float32_and_region_pixel_counts_exactly_paired': True, 'first10_original_scalars_exact_before_backward': first_backward_receipt, 'genuine_full_loss_backward_Adam': True, 'original_algorithm_changed': True, 'single_algorithm_change': plan['scientific_status'], 'formal_original_source_changed': False, 'formal50k_resumed': False, 'no_formal_checkpoint_event': True, 'cuda_peak_allocated_bytes': torch.cuda.max_memory_allocated(), 'cuda_peak_reserved_bytes': torch.cuda.max_memory_reserved(), 'elapsed_seconds': time.monotonic() - started}
++            report = {'status': 'controlled_30k_to32000_single_variable_opacity_outside_hypothesis_complete', 'first_iteration': FIRST, 'stop_iteration': STOP, 'horizon': 50000, 'seed': 0, 'step_count': STOP - FIRST + 1, 'restore': restore, 'nodes': node_records, 'runtime_import_pins': runtime_import_pins, 'terminal_snapshot_manifest': str(output / 'terminal_32000/diagnostic_snapshot_manifest.json'), 'terminal_full49_evaluation': True, 'all_node_eval_rng_preserved': all(row['diagnostic_eval']['all_rng_unchanged'] for row in node_records), 'all2000_camera_time_shift_LR_exactly_paired': True, 'all49_GT_float32_and_region_pixel_counts_exactly_paired': True, 'first10_original_scalars_exact_before_backward': first_backward_receipt, 'genuine_full_loss_backward_Adam': True, 'original_algorithm_changed': True, 'single_algorithm_change': plan['scientific_status'], 'formal_original_source_changed': False, 'formal50k_resumed': False, 'no_formal_checkpoint_event': True, 'cuda_peak_allocated_bytes': torch.cuda.max_memory_allocated(), 'cuda_peak_reserved_bytes': torch.cuda.max_memory_reserved(), 'elapsed_seconds': time.monotonic() - started}
+             write(output / 'continuation_diagnostic.json', report)
+             for path, expected in plan['original_file_sha256'].items():

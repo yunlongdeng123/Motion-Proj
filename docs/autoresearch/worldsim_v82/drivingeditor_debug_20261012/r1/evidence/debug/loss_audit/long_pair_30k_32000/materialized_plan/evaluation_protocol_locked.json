@@ -1,0 +1,50 @@
+{
+  "status": "CPU_DRAFT_PREREGISTERED_NOT_AUTHORIZED_TO_RUN",
+  "locked_utc": "2026-10-11T19:28:59+00:00",
+  "window": [30001, 32000],
+  "conditional_on_root_decision_after_short300": true,
+  "same_original30k_restore": true,
+  "coefficient": 0.05,
+  "coefficient_outcome_tuned": false,
+  "three_trajectories_if_window_is_authorized": {
+    "B1": "Original-math primary baseline, fresh original30k restore through32000.",
+    "B2": "Independent original-math repeat, fresh original30k restore through32000; same sampler/RNG/LR, evaluation and all49 endpoint.",
+    "V": "Fresh original30k restore through32000, only same outside-opacity addition, paired with B1 and verified against B2 sampling."
+  },
+  "one_existing_short_baseline_does_not_measure_long_CUDA_noise": true,
+  "single_step_exact_does_not_bound_trajectory_noise": true,
+  "reuse_30300_terminal": false,
+  "pair_validity_before_interpretation": [
+    "Same hashed original30k static/dynamic/environment/complete state; exact full restore observer PASS.",
+    "All2000 camera IDs, time_shift and learning_rates exactly match between B1/B2/V; finite losses, parameters and Adam states.",
+    "Only approved outside two-file math delta and two explicit config fields; same50k horizon and all other source/config/input/kernel/helper pins.",
+    "Every extra evaluation restores all RNG exactly; terminal all49 uses identical GT, dimensions, masks and region counts.",
+    "No33000 opacity reset, no densification/SGCM event; existing original hooks retained.",
+    "Each trajectory has complete32000 terminal all49 plus hashed, CPU-load-validated four-state snapshot and exit0."
+  ],
+  "nodes": [30001, 30300, 31000, 32000],
+  "early_frames": [0, 10, 20, 30, 48],
+  "primary_endpoint": "32000 all49 original frames; all nonempty frozen domains, no frame/region selection from outcomes.",
+  "primary_metrics": [
+    {"domain": "non_sky_outside_actor", "array": "alpha_d", "metrics": ["mean", "fraction_gt_0_1", "fraction_gt_0_5", "fraction_gt_0_9"], "desired_direction": "lower"},
+    {"domain": "non_sky_outside_actor", "array": "dynamic", "metrics": ["rgb_support_gt2_uint8_pixel_fraction"], "definition": "Same frozen helper: any channel floor(clip(rgb,0,1)*255+0.5)>2. Eval dynamic excludes environment.", "desired_direction": "lower"},
+    {"domain": "non_sky_outside_actor", "array": "static", "metrics": ["clamped_rgb_mae_vs_gt", "clamped_rgb_mse_vs_gt", "clamped_rgb_psnr_db"], "desired_direction": "MAE/MSE lower; PSNR higher"},
+    {"domain": "full", "array": "composite", "metrics": ["clamped_rgb_mae_vs_gt", "clamped_rgb_mse_vs_gt", "clamped_rgb_psnr_db"], "purpose": "Measure reconstruction preservation/tradeoff; no new tolerance chosen from results."}
+  ],
+  "aggregation": "Report every paired frame/domain metric and equal-frame mean over nonempty domains; report domain counts. Primary error summaries use MAE/MSE. ZeroMSE means infinite PSNR and is reported explicitly, never removed to improve means. Also report paired-frame difference distribution.",
+  "empirical_noise_reference": "For each endpoint metric q report N=abs(mean(q_B2)-mean(q_B1)) and all49 paired abs(q_B2-q_B1); report candidate against B1 and B2 separately and mean(q_V)-(mean(q_B1)+mean(q_B2))/2. This is one observed repeat difference, not a confidence interval or bound on all possible CUDA noise.",
+  "interpretation_rules_locked_before_long_results": [
+    "Invalid pairing/restore/finite/source/input/snapshot gates invalidate causal comparison.",
+    "Differences comparable to the measured original-repeat variation cannot exclude CUDA/original-math drift; first30001 exact is insufficient.",
+    "Directional support requires outside dynamic occupancy/support decrease and observed static background errors improve against both originals, with magnitude compared to observed original-repeat differences and all49 frame distribution reported. A single chosen good frame is insufficient.",
+    "If branch allocation improves but composite reconstruction worsens beyond observed repeat differences, report the tradeoff; do not call the result normal or a complete repair.",
+    "Exceeding this one repeat difference is descriptive directional evidence, not statistical significance, author-formula certification or from-zero evidence. No outcome-tuned thresholds or coefficient changes."
+  ],
+  "additional_context": [
+    "Same frozen full/sky/non_sky/actor/outside_actor/non_sky_outside_actor domains and static/env/foreground arrays are retained.",
+    "Compare static Gaussian versus environment contribution, road images and actor-removal boundary/context in common frames0/10/20/30/48; terminal all49 remains mandatory.",
+    "Observed non-actor GT quantifies real-image preservation/locality. Inside selected actor removal areas there is no dense edited GT, so inspect qualitatively and do not claim removal accuracy/FID.",
+    "Only recovery from an already degenerated30k model is tested. The experiment cannot establish from-zero performance or author's true Eq13/background-domain formula. Prediction RGB masking and other paper ambiguities remain unchanged."
+  ],
+  "authorization": "Root may decline this longer window after short300 results; materialization, CPU launchable plans, independent reviews, exact receipts and GPU handoffs remain separate future steps."
+}

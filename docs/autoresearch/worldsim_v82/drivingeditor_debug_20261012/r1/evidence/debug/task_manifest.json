@@ -1,0 +1,495 @@
+{
+  "schema_version": 1,
+  "objective": "Deliver all collected evidence and push scoped code to user Motion-Proj research/worldsim-v8.2-drivingeditor-debug; no further experiments",
+  "status": "paused_by_user_evidence_handoff",
+  "created_utc": "2026-10-11T18:21:39.143258+00:00",
+  "host": "wm-vgpu-1011",
+  "frozen_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository",
+  "reference_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "gpu_owner": null,
+  "other_scene_queue": "paused_by_user",
+  "hypotheses": [
+    "component mismatch",
+    "train-export mismatch",
+    "optimization or algorithm implementation",
+    "unobserved region"
+  ],
+  "first_experiment": "20k/30k checkpoint/scene/env/opacity statistics and fixed-camera component diagnostics",
+  "loss_audit": "CPU paper_loss_bug_audit_solmax",
+  "sgcm_data_audit": "CPU sgcm_data_bug_audit_solmax",
+  "acceptance_not_yet_met": true,
+  "paper_complete_reproduction_claimed": false,
+  "updated_utc": "2026-10-12T05:26:12.453403+00:00",
+  "gpu_owner_scope": "S completed and reviewed. No subsequent GPU task approved.",
+  "gpu_status_path": "continuation_diagnostic/observed_static_rgb30k_to32000/status.json",
+  "known_findings": {
+    "30k_reset": "Original controlled continuation completed: composite recovers by30300 but static branch remains poor on observed background.",
+    "branch_separation": "20k static road already noisy; dynamic branch reconstructs road.",
+    "road_coverage": "Most audited car-footprint ground samples have other-frame observations supported by real LiDAR; not a dense counterfactual GT.",
+    "depth_projection": "Confirmed last-writer order-dependent sparse targets; nearest positive-depth candidate CPU passed, causal GPU test not done",
+    "thirty_k_recovery": "Original 300-step continuation from exact saved30k completed: full49 composite mean33.2016dB, observed non-sky outside-actor static mean10.3367dB; branch separation still bad"
+  },
+  "current_experiment": "observed_static_rgb30k_to32000",
+  "next_experiment": null,
+  "component_inference": {
+    "status": "complete",
+    "exit_code": 0,
+    "case_count": 6,
+    "camera_count": 5,
+    "baseline40_png_parity": "exact",
+    "protected64_files": "unchanged"
+  },
+  "cpu_audits": {
+    "loss": "loss_audit/handoff_summary.json",
+    "SGCM": "sgcm_data_audit/audit_findings.json"
+  },
+  "component_interpretation": "20k static environment contribution directly contains road confetti; 30k static reset exposes it. Environment-only swap does not restore30k; static20k swap does.",
+  "current_experiment_status": "complete_reviewed_tradeoffs_not_repaired_report_delivered",
+  "controlled_original_300": {
+    "status": "complete",
+    "exit_code": 0,
+    "output": "continuation_diagnostic/original30k_to30300",
+    "all49": true,
+    "first_step_10scalars_exact": true,
+    "terminal_four_components_validated": true,
+    "all_eval_RNG_preserved": true,
+    "original_files_unchanged": true
+  },
+  "root_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan/static_anchor_root_coordination_receipt.json",
+  "outside_retry": {
+    "attempt1": "Observer import failed before training; archived unchanged under continuation_diagnostic/attempts/opacity_outside_01_runtime_image_utils_import/",
+    "v2_fix": "Only3 observer import/binding changes; independent review PASS",
+    "historical_launcher_pid": 34845,
+    "historical_worker_pid": 34848,
+    "read_live_pid_before_any_operation": true,
+    "first_actual_backward_original10_scalars_exact": true,
+    "actual_first_step": 30001,
+    "actual_first_camera": "image_0/0017034",
+    "original_loss": 0.2980644106864929,
+    "original_psnr": 8.590572357177734,
+    "additional_opacity_loss_unweighted": 2.8153865337371826,
+    "coefficient": 0.05,
+    "first5_GT_mask_domains_exact": true,
+    "root_receipt_sha256": "5dddf4cddb06fd560c1128f9654828f28000dc0285c0e50c8733a7a69fe526f4",
+    "harness_sha256": "3a2f9add3cab0763c4b0ef612fd5b735afd7f2d337b151306da1a4ceffcb6154",
+    "plan_sha256": "be9e385b37805457d2d9986985c9b7bd65af3fcde66445d3f15d156db5c90a93",
+    "final_effect_pending": false
+  },
+  "controlled_short_pair": {
+    "status": "both_complete_exit0",
+    "full49_mean_per_frame_metrics": {
+      "original30k_to30300": {
+        "composite_psnr_full": 33.20160842030265,
+        "static_psnr_observed_non_sky_outside_actor": 10.336711763228331,
+        "alpha_dynamic_observed_non_sky_outside_actor": 0.7301594170548615,
+        "alpha_static_observed_non_sky_outside_actor": 0.490820046802455,
+        "static_environment_contribution_mean_observed_non_sky_outside_actor": 0.3302289147475783,
+        "dynamic_rgb_support_observed_non_sky_outside_actor": 0.9988000071344166
+      },
+      "opacity_outside30k_to30300": {
+        "composite_psnr_full": 32.775251019135005,
+        "static_psnr_observed_non_sky_outside_actor": 22.122497186290126,
+        "alpha_dynamic_observed_non_sky_outside_actor": 0.27620900393403464,
+        "alpha_static_observed_non_sky_outside_actor": 0.8057383009425961,
+        "static_environment_contribution_mean_observed_non_sky_outside_actor": 0.17060824297661786,
+        "dynamic_rgb_support_observed_non_sky_outside_actor": 0.884528703783185
+      }
+    },
+    "variant_receipt_sha256": "f434cdf82a17caff5452f28b081b1edf25c4f55b6f2b0ff4bac31925248ccb76",
+    "all300_inputs_paired": true,
+    "all6_eval_rng_preserved": true,
+    "original_files_unchanged": true,
+    "interpretation": "Static observed region improves markedly with a small composite cost; dynamic background leakage persists. Not repaired or full paper reproduction.",
+    "visual_review": "Actual raw10 composite/static/dynamic reviewed. Road restored in static but still blurred/ghosted; dynamic retains background highlights/textures."
+  },
+  "long_three_arm": {
+    "B1": "complete_exit0_all49_fourstate_verified",
+    "B2": "complete_exit0_all49_fourstate_noise_verified",
+    "V": "complete_exit0_all49_fourstate_paired_verified",
+    "historical_launcher_pid": 42188,
+    "historical_worker_pid": 42191,
+    "started_utc": "2026-10-11T21:58:25.641145+00:00",
+    "iteration_at_verification": 30271,
+    "progress_read_policy": "Read last complete step_losses.jsonl row; status.json updates only at30001/30300/31000/32000 nodes.",
+    "first_actual_restore": "actual_restore_pass",
+    "first_actual_scalar_comparisons": "all10 exact_equal true, abs_delta0",
+    "first_camera": "image_0/0017034",
+    "first_loss": 0.2980644106864929,
+    "first_psnr": 8.590572357177734,
+    "fresh_restore_iteration": 30000,
+    "stop_iteration": 32000,
+    "lr_horizon": 50000,
+    "seed": 0,
+    "evaluation_protocol_sha256": "c725cd2153d1104ddaf81078ac753f4e7f474e0be325ca9fbb5b1fccb342f658",
+    "B1_prepared_plan_sha256": "359b9d62ee9aec28951532cedbaed45401838dd6ea2b961d5704bec2d303a2d5",
+    "B1_root_receipt_sha256": "f9a8b649da27f3626daa6ce2e27a3a2bec50a173ea026daf06742a90995b8214",
+    "B1_plan_directory": "loss_audit/long_pair_30k_32000/materialized_plan",
+    "B2_plan_directory": "loss_audit/long_pair_30k_32000/materialized_plan/baseline_noise_reference",
+    "source_review_directory": "sgcm_data_audit/long_pair_review",
+    "acceptance": "Three long trajectories are a recovery/mechanism test; not author-formula certification or from-zero validation.",
+    "B1_completion_receipt_sha256": "36879999ab39e208b0cb031e7557c83a3dabc11f32e361687796b8e641eced31",
+    "B1_terminal_manifest_sha256": "6d30f1583186570d0850c60ff9195a9048110cd538a05289edc0b6a4d499e340",
+    "B2_root_receipt_sha256": "d4d4bc3d38d973644a72509b1774c9017e89e3ca9e1e6f322a7a7695976791a6",
+    "B2_first_actual_restore": "actual_restore_pass; parameter/conditionalAdam/placement/RNG/sampler/scale/EMA/SGCM exact",
+    "B2_first10_scalars": "exact; absdelta0; no tolerance",
+    "V_CPU_handoff": "paper_loss_bug_audit_solmax prepares real B1/B2 binder; sgcm_data_bug_audit_solmax independently reviews actual final V after real references. Neither authorized GPU.",
+    "B2_completion_receipt_sha256": "2ded7dda0952e0bf8605154a642576049ce45b41e8c1df1ddda3bec62085c92e",
+    "B2_terminal_manifest_sha256": "cce918f4349ea6d2dc0cc996f73bde75d4841d45cb15f286a10a06b90eecd90e",
+    "B1_B2_noise_sha256": "e4ae32c07b63ed7be0171a727f8a12ec153f66e63d6ac89f4594fa4985145f08",
+    "V_root_receipt_sha256": "752af1d9709399bb5d767f127f2bff16719dac826a9bfebaa06e425fe3dd6d53",
+    "V_binding_sha256": "5701482a50b078e980a39a4aec9b6747cdc1628882b2b48a2dd985d588314260",
+    "V_prepared_plan_sha256": "1afe9a9b5f05dfcff1d565e064f276ef8161250060eecc0bb2b31a35be031065",
+    "V_final_review_sha256": "f9b25211ed63de56ff7a5cf7bf865648a8cfc59be0d3b4bb8c5c33e12a1b5a07",
+    "V_first_actual_restore": "actual_restore_pass: complete parameters/conditionalAdam/placement/RNG/sampler/scale/EMA/SGCM; seed_after_restore=false",
+    "V_first_original10_before_backward": "all exact, absdelta0, no tolerance; actual backward returned",
+    "V_followup_CPU": "component owns final runtime/paired receipts+export; sgcm independently interprets actual three-arm outcome and report. loss audit prepares conditional next-step/default-off depth draft. No next GPU experiment approved.",
+    "V_release_sha256": "52d4b7ccc7092f6add9973226e51c183bdffc0830894aab972afaad2a99df1c4",
+    "V_metrics_sha256": "922a3dea16a427539ec944765680b315e9b69b8e7a217af4c5d990b7f7679a9d"
+  },
+  "local_report": {
+    "path": "outputs/drivingeditor_vgpu_debug/index.html",
+    "short_paired_video": "49 actual frames,10fps,4.9s,one encoded mosaic for synchronization",
+    "local_references_validated": 77,
+    "browser_playback_checked": false,
+    "display_request_status": "queued",
+    "long_B1_video": "B1 actual49 at32000, 10fps, 4.9s; four-channel mosaic and four channel videos, all245 decoded frames verified",
+    "B1_visual_review": "Root inspected actual raw10 recovery sheet and actual decoded video frame; static confetti and dynamic road remain",
+    "B2_noise_report": "Actual B2 raw10, locked11 equal-frame metrics, signed and absolute mean difference plus all49 paired error distributions; 20 focused static QA PASS"
+  },
+  "completion_shutdown_policy": {
+    "recorded_utc": "2026-10-11T19:51:16.178897+00:00",
+    "user_authorized": true,
+    "host": "wm-vgpu-1011",
+    "scope": "Power off only after the entire vGPU paper-version debugging task is genuinely complete and verified.",
+    "completion_not_yet_met": true,
+    "shutdown_now": false,
+    "if_bugs_remain": "Continue debugging; keep hourly heartbeat ACTIVE.",
+    "before_shutdown": [
+      "Complete algorithm/effect acceptance and required reproducibility checks; do not treat a short improvement as success.",
+      "Validate final dark Chinese HTML, architecture diagram, actual comparison media and metrics.",
+      "Sync deliverables locally and preserve remote source/data/checkpoints.",
+      "All task GPU jobs, evaluators, encoders and transfers finished; no unrelated user work interrupted."
+    ],
+    "power_off_only_no_instance_release_or_data_deletion": true,
+    "confirm_shutdown_state_not_just_ssh_loss": true,
+    "after_verified_delivery_and_shutdown": "Pause drivingeditor-50k heartbeat.",
+    "additional_user_confirmation_required": false
+  },
+  "latest_runtime_check": {
+    "checked_utc": "2026-10-11T22:55:54.513566+00:00",
+    "experiment": "opacity_outside30k_to32000",
+    "status": "complete",
+    "last_completed_step": 32000,
+    "recorded_steps": 2000,
+    "actual_worker_exit": 0,
+    "actual_launcher_exit": 0,
+    "GPU_compute_apps": "",
+    "live_read_required_for_next_action": true
+  },
+  "long_B1_result": {
+    "composite_full49_mean_frame_psnr_db": 36.430756861221454,
+    "observed_region": {
+      "pixel_count_summed": 7058116,
+      "frame_count": 49,
+      "composite": {
+        "mean_frame_psnr_db": 36.49554575810067,
+        "pooled_mse": 0.00023344725831364816,
+        "pooled_psnr_db": 36.31811222209704
+      },
+      "static": {
+        "mean_frame_psnr_db": 11.96038100448155,
+        "pooled_mse": 0.06394398945391956,
+        "pooled_psnr_db": 11.942002716649922
+      },
+      "alpha_s": {
+        "mean": 0.6450973492856574,
+        "fraction_lt0": 0.0,
+        "fraction_gt1": 0.0
+      },
+      "alpha_d": {
+        "mean": 0.6750868126171372,
+        "fraction_lt0": 0.0,
+        "fraction_gt1": 0.0
+      },
+      "environment_sample": {
+        "mean": 0.7993031905905054,
+        "fraction_lt0": 0.1377076167823444,
+        "fraction_gt1": 0.36732932697620724
+      },
+      "static_foreground_contribution": {
+        "mean": 0.062379508183111394,
+        "fraction_lt0": 0.0,
+        "fraction_gt1": 3.145315265433439e-05
+      },
+      "static_env_contribution": {
+        "mean": 0.238535989069856,
+        "fraction_lt0": 0.1377076167823444,
+        "fraction_gt1": 0.053520986809133406
+      },
+      "dynamic": {
+        "mean": 0.19542843022013456,
+        "fraction_lt0": 0.0,
+        "fraction_gt1": 6.517319919366586e-06,
+        "rgb_support_gt2_uint8_pixel_fraction": 0.9986077021120083
+      }
+    },
+    "receipt": "continuation_diagnostic/original30k_to32000/receipts/full49_summary.json",
+    "interpretation": "Composite recovered by32000; static road confetti and dynamic background persist. Not only reset transient; not normal separation.",
+    "root_visual_check": "Viewed actual raw10 30001/30300/31000/32000 six-channel recovery sheet."
+  },
+  "long_B2_result": {
+    "composite_full49_mean_frame_psnr_db": 36.43047376919785,
+    "noise_receipt": "continuation_diagnostic/original30k_to32000_noise_reference/receipts/B1_B2_observed_noise.json",
+    "interpretation": "Replicates poor static/dynamic separation; mean differences and per-frame error distribution both required; one repeat is not a universal bound."
+  },
+  "long_V_result": {
+    "receipt": "continuation_diagnostic/opacity_outside30k_to32000/receipts/three_arm_locked_metrics.json",
+    "static_background_psnr_approx": 27.33124,
+    "composite_psnr_approx": 35.90406,
+    "dynamic_outside_alpha_approx": 0.113536,
+    "dynamic_outside_rgb_support_approx": 0.793688,
+    "all49_static_MSE_vs_each_original": "improved",
+    "all49_composite_and_actor_MSE_vs_each_original": "worse",
+    "interpretation": "Strong branch-allocation recovery, with persistent background leakage and actor/composite reconstruction cost. Not normal separation or author-certified formula.",
+    "root_visual_review": "Actual paired raw10 B1/B2/V six-channel image inspected: road static recovery but residual dynamic road texture/colored highlights."
+  },
+  "fixed_pose_temporal": {
+    "status": "complete_exit0",
+    "actual_render_count": 98,
+    "counterfactual_render_count": 12,
+    "training_or_backward": false,
+    "original_files_unchanged": true,
+    "manifest_sha256": "69ebc14e8c6e87f48f3917e9a474800457df001f7cdb89ae6ff050ac322422a2",
+    "root_receipt_sha256": "5ea86f142ad0062225d54b56119b7db51305c37c5cb707913f1b66bf580a1878",
+    "interpretation": "At fixed raw10 pose, static output changes over49 times. Endpoint temporal-opacity/support control reduces output changes much more than position-only control; freezing both exactly reproduces the anchor. Raw0 is one SHM cycle from raw10, a special case. No novel-time GT-quality or training-repair claim.",
+    "GPU_finished_utc": "2026-10-11T23:19:37.037969+00:00",
+    "unit_verification": "XYZ displacement computed in model coordinates then divided by pinned scene scale0.1 to original Waymo metric length; no extra Scene geometry scale. Pixel changes are unit-independent."
+  },
+  "observed_static_rgb_S": {
+    "status": "complete_exit0_full49_fourstate_paired_verified",
+    "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/continuation_diagnostic/observed_static_rgb30k_to32000",
+    "plan_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/observed_static_rgb_S/materialized_plan",
+    "historical_worker_pid": 47335,
+    "historical_launcher_pid": 47332,
+    "started_utc": "2026-10-11T23:31:53.894396+00:00",
+    "checked_utc": "2026-10-12T00:11:08.961062+00:00",
+    "last_complete_iteration_at_check": 32000,
+    "root_receipt_sha256": "f2d9782276703a2085362b0889dfc132df80043991efa3c5376f50408136d335",
+    "prepared_plan_sha256": "3e738e462f0ef1c68b9f5e23d2a6ad97a9503ce6e54c895b4d55e3e9382df273",
+    "independent_review_sha256": "ef4423f2a82adb830ef8366e0982607d662947330c98f871d8ffc93e743eeb89",
+    "original30k_full_restore": "actual_restore_pass",
+    "original10_exact_before_computing_S": true,
+    "first_backward_returned": true,
+    "total_FP32_decomposition_exact": true,
+    "first_original_loss": 0.2980644106864929,
+    "first_S_unweighted": 0.7122706770896912,
+    "first_total_loss": 1.010335087776184,
+    "coefficient": 1.0,
+    "first_iteration": 30001,
+    "stop_iteration": 32000,
+    "horizon": 50000,
+    "scientific_status": "Single restored2024 observed-static RGB term added to paper objective, absent from displayed paper Eq10. No V term. Recovery diagnostic, not from-zero success or author-certified paper formula.",
+    "progress_policy": "Read last complete step_losses.jsonl row, current /proc PID/cmd/apps/lock and actual launcher exit; node status updates only at30001/30300/31000/32000. Never relaunch from an old PID or stale node status.",
+    "elapsed_seconds": 2211.317913099192,
+    "completion_receipt_sha256": "79f1cf9be8ecb2fe43ea377dee11c799bb8581bca65e41241c614f09c090db55",
+    "locked_metric_receipt_sha256": "55825df3b3f1cf3e3707d1994e3a9e0b3ba53ce6ff05a2b53f130a0cf4ae69d6",
+    "GPU_release_receipt_sha256": "e810d969cd9314bc58f0c0e3704c069d52aa9a47878f827b0df0efc2b2fd74cd",
+    "terminal_manifest_sha256": "d892516788a93ed0da391568747cdbb8cd5281e23551e22a0c84cee543798c88",
+    "actual_exit_code": 0,
+    "whole_debug_task_complete": false,
+    "metrics": [
+      {
+        "region": "non_sky_outside_actor",
+        "array": "alpha_d",
+        "metric": "mean",
+        "equal_frame_mean_B1": 0.6754787065848351,
+        "equal_frame_mean_B2": 0.6754131961150904,
+        "equal_frame_mean_S": 0.5163507447584406
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "alpha_d",
+        "metric": "fraction_gt_0_1",
+        "equal_frame_mean_B1": 0.9825513696669609,
+        "equal_frame_mean_B2": 0.9825948373461876,
+        "equal_frame_mean_S": 0.6909144688517652
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "alpha_d",
+        "metric": "fraction_gt_0_5",
+        "equal_frame_mean_B1": 0.6418067665671315,
+        "equal_frame_mean_B2": 0.6417306892840915,
+        "equal_frame_mean_S": 0.4764851887467461
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "alpha_d",
+        "metric": "fraction_gt_0_9",
+        "equal_frame_mean_B1": 0.44318092191592173,
+        "equal_frame_mean_B2": 0.44299472807764434,
+        "equal_frame_mean_S": 0.4093314262861876
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "dynamic",
+        "metric": "rgb_support_gt2_uint8_pixel_fraction",
+        "equal_frame_mean_B1": 0.9986136495573221,
+        "equal_frame_mean_B2": 0.9985966894228412,
+        "equal_frame_mean_S": 0.790125533930574
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "static",
+        "metric": "clamped_rgb_mae_vs_gt",
+        "equal_frame_mean_B1": 0.17185352046565242,
+        "equal_frame_mean_B2": 0.17176810235872655,
+        "equal_frame_mean_S": 0.011910619604772545
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "static",
+        "metric": "clamped_rgb_mse_vs_gt",
+        "equal_frame_mean_B1": 0.06398397418399179,
+        "equal_frame_mean_B2": 0.06394976257990896,
+        "equal_frame_mean_S": 0.0006879108213852529
+      },
+      {
+        "region": "non_sky_outside_actor",
+        "array": "static",
+        "metric": "clamped_rgb_psnr_db",
+        "equal_frame_mean_B1": 11.960381004481548,
+        "equal_frame_mean_B2": 11.962831689337348,
+        "equal_frame_mean_S": 31.7634247318007
+      },
+      {
+        "region": "full",
+        "array": "composite",
+        "metric": "clamped_rgb_mae_vs_gt",
+        "equal_frame_mean_B1": 0.008119340867786607,
+        "equal_frame_mean_B2": 0.008117350623448318,
+        "equal_frame_mean_S": 0.009032484048085796
+      },
+      {
+        "region": "full",
+        "array": "composite",
+        "metric": "clamped_rgb_mse_vs_gt",
+        "equal_frame_mean_B1": 0.00023624367596025803,
+        "equal_frame_mean_B2": 0.0002361598235976765,
+        "equal_frame_mean_S": 0.00030004037921144985
+      },
+      {
+        "region": "full",
+        "array": "composite",
+        "metric": "clamped_rgb_psnr_db",
+        "equal_frame_mean_B1": 36.43075686122145,
+        "equal_frame_mean_B2": 36.43047376919786,
+        "equal_frame_mean_S": 35.447988574370136
+      }
+    ],
+    "effect_review_complete": true,
+    "interpretation": "Static observed reconstruction improves, but composite and actor errors rise and dynamic background remains. S is an extra diagnostic objective, not a certified paper repair.",
+    "local_delivery": {
+      "reviewed_utc": "2026-10-12T00:33:14.804405+00:00",
+      "whole_task_complete": false,
+      "report_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\outputs\\drivingeditor_vgpu_debug\\index.html",
+      "report_sha256": "68a2bba9082da4f0e92abef0354808094eb2d2ae599e2011766e2d24fff54419",
+      "report_manifest_sha256": "6eecbd1305250f305ef25c0c3d65786ed23550097b71b933fc00bff7757151e2",
+      "local_validation_pass": true,
+      "local_reference_count": 138,
+      "S_focused_static_QA_passed": 15,
+      "S_focused_QA_sha256": "0dd85738ec5aa2d368f520ec9525a1a98da567db3bbc8790eb3abdf6edb96584",
+      "actual_S_all294_png_verified": true,
+      "local_sync_receipt_sha256": "5cdc4d71213b5fdd24f4f610156e0b8f438d5898eeccb41f364d3bfbd97353cf",
+      "S_synchronous_video_all49_decoded": true,
+      "S_video_sha256": "ddcf3a4952e72963ee32d51d5625762fbf46e74f8bd63b56c6525c7f105c32ac",
+      "S_video_frames": 49,
+      "S_video_fps": 10,
+      "root_viewed": [
+        "actual decoded B1/B2/S video raw10",
+        "native S static raw48"
+      ],
+      "root_visual_findings": "S observed static road recovers, dynamic road remains, static raw48 has colored vehicle-shaped fragments at left edge. Neither normal separation nor correct removal is accepted.",
+      "browser_playback_verified": false,
+      "open_in_codex_status": "queued",
+      "new_GPU_task_approved": false,
+      "shutdown_authorized_now": false,
+      "S_public_handoff_sha256": "83faad6e61af6e0143f948ecd9028172301077cf94b95dbb3d7808e97aa1c3bd"
+    }
+  },
+  "report_latest": {
+    "html": "outputs/drivingeditor_vgpu_debug/index.html",
+    "html_sha256": "d1838287a7be47143aedb208e1b461dc1a635253638c3caa6a452466d86578b8",
+    "local_references_pass": 120,
+    "three_arm_checks_pass": 31,
+    "temporal_checks_pass": 11,
+    "browser_playback_validated": false
+  },
+  "parallel_CPU_followup": {
+    "owner": "paper_loss_bug_audit_solmax",
+    "scope": "Trace actual static initialization to original LiDAR points/frames and target actor attribution; read-only CPU, no GPU/download/data change. Inconclusive attribution must be disclosed; do not equate mask/AABB projection with actor identity.",
+    "design": "loss_audit/next_diagnostics_cpu/from_zero_static_invariant_cpu/PLAN.md",
+    "no_next_GPU_authorized": true
+  },
+  "static_initialization_audit": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/static_initialisation_actor_audit.json",
+    "sha256": "df97e5d48ee2be553b54e127dbeff2be12dafa8561c93d6bc87bc630059b8ecd",
+    "counts": {
+      "static_retained_rows": 595894,
+      "static_unique_raw_returns": 575612,
+      "selected_actor_sampled_rows": 2568,
+      "selected_actor_rows_remaining_static": 0,
+      "target_GT_box_retained_static_rows": 884,
+      "target_GT_box_retained_unique_raw_returns": 843,
+      "associated_rows_in_current_front_actor_mask": 16,
+      "associated_rows_outside_front_frustum": 813,
+      "associated_rows_in_front_frustum_outside_actor_mask": 55,
+      "associated_rows_visible_actor_mask": 16,
+      "native_semantically_labeled_retained_rows": 54842,
+      "native_linked_target_retained_rows": 169,
+      "native_linked_target_retained_unique_raw_returns": 160,
+      "direct_target_identity_unresolved_rows": 541052
+    },
+    "interpretation": "Selected actor returns are excluded exactly, but native point-instance witnesses identify additional moving-target returns retained in static. Sparse annotation coverage does not establish the full contamination rate or the cause of confetti.",
+    "source_inputs_unchanged": true
+  },
+  "parallel_CPU_work": {
+    "M_detector": "preprocessing_gap_audit/mdetector_adapter_candidate; isolated contract/source checks, no native inference or changed training inputs",
+    "static_initialization": "loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu; original return lineage and independent native labels",
+    "shadow_weights": "preprocessing_gap_audit/shadow_weight_access_20261012.json; bounded public search, no weights downloaded"
+  },
+  "static_initialization_visibility": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/front_visibility_followup_cpu.json",
+    "sha256": "01fb4c66661435e69851697c22bbcd09a2a5cf56d3e75e82e6f9cdab7d603f34",
+    "audit_only": true,
+    "training_inputs_modified": false
+  },
+  "dynamic_initialization_native_road": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/loss_audit/next_diagnostics_cpu/static_initialisation_actor_cpu/dynamic_actor_native_semantics_followup_cpu.json",
+    "sha256": "9cc9bf4cc0caeecd1659127410b9c116d3a6c1155e8f1cfe05bf96d0be9175da",
+    "audit_only": true,
+    "training_inputs_modified": false
+  },
+  "mdetector_native_build": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/preprocessing_gap_audit/mdetector_adapter_candidate/build_attempt_01/native_build_receipt.json",
+    "sha256": "866ac25da19d57e175bc4d2a23a4afac2a86697d8cad8c4db2b446f2715dfb1a",
+    "status": "isolated_compile_pass_only",
+    "vendor_mutations": 0,
+    "initialization_or_inference_approved_by_this_record": false
+  },
+  "latest_root_review": {
+    "at": "2026-10-12T00:33:17.773951+00:00",
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/root_review/S_report_delivery_20261012.json",
+    "sha256": "c4d8be231b5fa3d42868776c46b9305c7a6a32d4cceb55425310f7199c81c2f4",
+    "gpu_apps_at_review": []
+  },
+  "user_handoff": {
+    "automation": "PAUSED",
+    "whole_debug_task_complete": false,
+    "new_experiments": false,
+    "shutdown_requested": false,
+    "repository": "https://github.com/yunlongdeng123/Motion-Proj",
+    "branch": "research/worldsim-v8.2-drivingeditor-debug",
+    "at": "2026-10-12T05:26:12.453403+00:00"
+  }
+}

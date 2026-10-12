@@ -1,0 +1,601 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "started_utc": "2026-10-11T18:31:40.876610+00:00",
+  "host": "wm-vgpu-1011",
+  "formal_run_readonly": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "frozen_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic",
+  "GPU_lock_nonce": "614ee05860e546488b6bae124d742e31",
+  "supervisor_pid": 30634,
+  "worker_pid": 30637,
+  "worker_pin": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/scripts/component_diagnostic.py",
+    "bytes": 43745,
+    "mtime_ns": 1791743497611539435,
+    "sha256": "0170283337ce3e2a1ea7a016e6f8a8e2b534101eebfe7b3ba4ecdcbcc1903baa"
+  },
+  "FP32_no_AMP": true,
+  "no_training_no_backward_no_optimizer_step": true,
+  "numeric_modifications": [],
+  "author_algorithm_success_claimed": false,
+  "mixed_components_are_diagnostic_only": true,
+  "cases_requested": [
+    [
+      "baseline20",
+      20000,
+      20000,
+      20000
+    ],
+    [
+      "baseline30",
+      30000,
+      30000,
+      30000
+    ],
+    [
+      "s20_d20_e30_ENV_ONLY_DIAGNOSTIC",
+      20000,
+      20000,
+      30000
+    ],
+    [
+      "s30_d30_e20_ENV_ONLY_DIAGNOSTIC",
+      30000,
+      30000,
+      20000
+    ],
+    [
+      "s20_d30_e30_BRANCH_MIX_DIAGNOSTIC",
+      20000,
+      30000,
+      30000
+    ],
+    [
+      "s30_d20_e30_BRANCH_MIX_DIAGNOSTIC",
+      30000,
+      20000,
+      30000
+    ]
+  ],
+  "camera_ids_requested": [
+    "image_0/0017000",
+    "image_0/0017010",
+    "image_0/0017020",
+    "image_0/0017030",
+    "image_0/0017048"
+  ],
+  "cpu_audit_pin": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cpu_audit.json",
+    "bytes": 295024,
+    "mtime_ns": 1791743526991863769,
+    "sha256": "9ca7314534b5c313c6d1f12c1a24f50342f38827bf0ee9d1d6f5a36ffb9631cd"
+  },
+  "originals_before": {
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/run_provenance.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/run_provenance.json",
+      "bytes": 5878,
+      "mtime_ns": 1791713613970175003,
+      "sha256": "82a889b1966c0bf571eb3c2cfcabcedecba60d1d75b275c1a727f1e859d18f74"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/effective_config.yaml": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/effective_config.yaml",
+      "bytes": 3508,
+      "mtime_ns": 1791713613786543866,
+      "sha256": "c74d0aec8385b0e0592044c1a2eb82e30f3d9d223f0785435f628ca37b5077b8"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/cameras.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/cameras.json",
+      "bytes": 22016,
+      "mtime_ns": 1791713631245345925,
+      "sha256": "b21bfefa3a14d8342de0fe07cf9eb0a542cc7417a0d54934f8fe1a961446e970"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/code_snapshot.tar.gz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/code_snapshot.tar.gz",
+      "bytes": 211839,
+      "mtime_ns": 1791713613966183022,
+      "sha256": "141d39bf702d06f1f4c46f52cbf66252d9728339809327e06dbce71fb0de7b2a"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/resume_candidate_manifest.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/resume_candidate_manifest.json",
+      "bytes": 45843,
+      "mtime_ns": 1791713613790535846,
+      "sha256": "6f0ee8294a16bb866e342a60134ea18b2f6ad885f56b163e1c0959c7a061dca1"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/input_files_before_training.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/input_files_before_training.json",
+      "bytes": 70978,
+      "mtime_ns": 1791713613790535846,
+      "sha256": "2d15bf009565c1b5a469309c35865361a0e1e97f2e37861ac51a117dbc9e5a89"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/train.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/train.py",
+      "bytes": 50664,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/gaussian_renderer/__init__.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/gaussian_renderer/__init__.py",
+      "bytes": 20011,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/__init__.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/__init__.py",
+      "bytes": 4926,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "e39d4482e0a128c10be88a1be2f8795de3c566a3853543d5c88d42db517cb72c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/gaussian_model.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/gaussian_model.py",
+      "bytes": 44372,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "41597167ad2eb2cb5e5a8d7f4144204b637732b5ccfce51ccd4c128cbefd1234"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/cameras.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/cameras.py",
+      "bytes": 4815,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "4917a2753f902995a438ecd6c1b5f794fe3f6114fed5ae9357bb7fbcad065cae"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/envlight.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/envlight.py",
+      "bytes": 1375,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "d677b60c46a219b84e6fb9c4a86794cf468fc1f043a6e8c689a3ff853650c44f"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/waymo_loader2.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/waymo_loader2.py",
+      "bytes": 29310,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/camera_utils.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/camera_utils.py",
+      "bytes": 7044,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "3fb1bd6fe928cc2b08c29426558a2dd08677af5959d14e64a559645b3ba27e85"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/graphics_utils.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/graphics_utils.py",
+      "bytes": 2348,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "7740c51487eb8d180ab51c17608e7650fe0c204cc35d53cf62b664ec93158bfa"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/general_utils.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/general_utils.py",
+      "bytes": 4782,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "81bf915d817f2b6759f72c7e192d2fce5f634b2de755e97373b1df343dccbc11"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/sh_utils.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/sh_utils.py",
+      "bytes": 4488,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "ece62fef10e63f3bb1f0c89292ff82591a3a8842c25fe039102d853bc8dded93"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_checkpoint.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_checkpoint.py",
+      "bytes": 19221,
+      "mtime_ns": 1791712908147692482,
+      "sha256": "38bb38dd81d5ae1df9f909b4e87ddb3582bc1d53da7a890949f5f311c8056bcc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_losses.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_losses.py",
+      "bytes": 4991,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_masks.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/utils/paper_masks.py",
+      "bytes": 1840,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/paper_sgcm.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/resume_vgpu_baseline_20261011/frozen_repository/scene/paper_sgcm.py",
+      "bytes": 20866,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "a58e694f01f310e87e8523b763f1d23de00bf6400bc499428c5766044930b35b"
+    },
+    "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py": {
+      "path": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py",
+      "sha256": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+      "bytes": 7983,
+      "mtime_ns": 1791684626363579650
+    },
+    "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so": {
+      "path": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so",
+      "sha256": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e",
+      "bytes": 1691360,
+      "mtime_ns": 1791684626363579650
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/auxiliary.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/auxiliary.h",
+      "sha256": "f3a1a046df7e68076ecb15f145aa682e51c7e69b0054d6cd59c3cadc217f918a",
+      "bytes": 5499,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.cu": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.cu",
+      "sha256": "ab6bffce4fe0c9faae112db0de6600fc4b17ca0010e5af653ffe113f0f956fc1",
+      "bytes": 25222,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.h",
+      "sha256": "b192824f7aac7e6e6f4e1c4c959d9b310ef75154d02f32c1696d5e204963a6b0",
+      "bytes": 1592,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/config.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/config.h",
+      "sha256": "f2112ec23236cabbd32ff4e70765fccd7e66bb5ce9664acf40339b0189b4ab62",
+      "bytes": 510,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.cu": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.cu",
+      "sha256": "732e8cec40d00e93ce9959428c8e451148c791c0eaea351b8eeff9db759d7a8d",
+      "bytes": 14309,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.h",
+      "sha256": "8570b9b4002e465e8083d56e962f88c4831463c735a80dced7f6f072a1256597",
+      "bytes": 1647,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer.h",
+      "sha256": "81845413068d573df4cc40dc3ea8909d774b56576107dc8770309ed1da813fa4",
+      "bytes": 2261,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.cu": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.cu",
+      "sha256": "fc8f0f9b7905765e2b24b0aa7c7b52db591ee2cc14d97c66384b5e8fd91fdaed",
+      "bytes": 12640,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.h",
+      "sha256": "58b97a9728e24d41602a2ac3e8eace025cfd3228de6e75033dc458d0303a46f4",
+      "bytes": 1596,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/diff_gaussian_rasterization/__init__.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/diff_gaussian_rasterization/__init__.py",
+      "sha256": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+      "bytes": 7983,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/ext.cpp": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/ext.cpp",
+      "sha256": "102d6ca2a07cf57717e5828c49a7100841cc0147f7373de768070f06bc4909ef",
+      "bytes": 571,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.cu": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.cu",
+      "sha256": "f965ec0d7e75a89dbeff7dbfc8382c15aa4d6feb7cf5adf05bdcb61ce5550874",
+      "bytes": 7892,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.h",
+      "sha256": "e8edad2d0e23a0b88d89f8148350974407de5f285dcb3b8c74b9a9b8df992fc8",
+      "bytes": 2181,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/setup.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/setup.py",
+      "sha256": "3bc4065d0ba274aca98a68930c8897f56110bd56f17c5d04c4b66c20bdf36e71",
+      "bytes": 1036,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/third_party/stbi_image_write.h": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/third_party/stbi_image_write.h",
+      "sha256": "24d110c51536eea49b99b3ef9eb717e3587338358d41b2596d5b1d1c0b0a18b8",
+      "bytes": 71220,
+      "mtime_ns": 1791684415935211975
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt20000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt20000.pth",
+      "bytes": 1751701598,
+      "mtime_ns": 1791722529819316993,
+      "sha256": "14a8e846d22706409f0b7889f66b6f61dc08ced6ff93fa4166bb2d3d5c401155"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt20000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt20000.pth",
+      "bytes": 805090078,
+      "mtime_ns": 1791722533359601312,
+      "sha256": "389ee7be780b34048a646e9dd6a94ed15f07e810b0083d091872c112769936b2"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt20000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt20000.pth",
+      "bytes": 226494608,
+      "mtime_ns": 1791722534663706197,
+      "sha256": "854558d9500fbadbfd5430aa408321e6107d8715ba943c2af536280e8dcc229c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/checkpoint_events/iteration_020000.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/checkpoint_events/iteration_020000.json",
+      "bytes": 133942,
+      "mtime_ns": 1791722622662962110,
+      "sha256": "c8d16a5c3e3de3f2365a5dd39bb7f7769865a553ed7acf62da34f911052ddc1e"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state20000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state20000.pth",
+      "bytes": 23704,
+      "mtime_ns": 1791722622658961774,
+      "sha256": "877fd5a71645a2cc4b69d029bf5d4556c8f86cf3d304cde4b62a68cd246d7489"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/chkpnt30000.pth",
+      "bytes": 1751701598,
+      "mtime_ns": 1791733054262429876,
+      "sha256": "2f13bc78d50c3c3af79c01130db27ac34996de2033c4ca1da01e7f11b98a380a"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/dynamic_chkpnt30000.pth",
+      "bytes": 805090078,
+      "mtime_ns": 1791733057762351024,
+      "sha256": "88101b4a46430a0dbbbcb59e6d1ca77e7a249d90222149cdbcd40dd48e7d548c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/env_light_chkpnt30000.pth",
+      "bytes": 226494608,
+      "mtime_ns": 1791733059178319270,
+      "sha256": "779f8016a87c59235dd2895867cedcd87178218318b25b198cc017f2b7d17af6"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/checkpoint_events/iteration_030000.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/checkpoint_events/iteration_030000.json",
+      "bytes": 133942,
+      "mtime_ns": 1791733144766128176,
+      "sha256": "55b7f15195bce7a15ecb332328513748f591bb7c31be493701d913093fea5037"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state30000.pth": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline/training_state30000.pth",
+      "bytes": 23640,
+      "mtime_ns": 1791733144702056452,
+      "sha256": "21d2a0a96c80634f8e5271681a3e2a8584cfb04a40660c303581aebb2d4edfb9"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png",
+      "bytes": 2927846,
+      "mtime_ns": 1791688459868033468,
+      "sha256": "202bc2971201e1875f3f7e3a37678666749c7694da029e95ee402ce2eaa68c47"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017000.png",
+      "bytes": 9418,
+      "mtime_ns": 1791684128278296968,
+      "sha256": "bf19c878ac4da4090d23eedb1fbb8e4165b70f734fa3f150d9e8f57792bd1e55"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017000.png",
+      "bytes": 4110,
+      "mtime_ns": 1791691172460450935,
+      "sha256": "eda7ab88841ef32fd7feb97aa3bef9f1b5067d0b71f6b548ddf244527cae48cf"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017010.png",
+      "bytes": 2921718,
+      "mtime_ns": 1791688489138817976,
+      "sha256": "7edd71d602e1334705ac10da47278471abff3aefe103306cf22a0f62824961ff"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017010.png",
+      "bytes": 9612,
+      "mtime_ns": 1791684132140590083,
+      "sha256": "9a44d47e773f5b43d9d0d9abbfaad95e69754dfbc928004579c63fb486e64ca4"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017010.png",
+      "bytes": 3726,
+      "mtime_ns": 1791691175651929215,
+      "sha256": "109c8616a44c8aa2ce72f97f1659f8819a735314ec1b13709127426f8ed4ce71"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017020.png",
+      "bytes": 2925154,
+      "mtime_ns": 1791688517749539448,
+      "sha256": "36736df3fe9110c803d60a6159b6cc801a6ab8a74e297b67a6f87f42683b4f86"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017020.png",
+      "bytes": 9780,
+      "mtime_ns": 1791684135994884724,
+      "sha256": "0e6ff15059907b86d3eed8bc9e5a787d9a1f803e8a97c8b33043d5df532d242b"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017020.png",
+      "bytes": 3543,
+      "mtime_ns": 1791691178737211952,
+      "sha256": "3f7785bf9f3e5b78049334f5ec699597b35be25aea523564e9e09821c6a3f6d7"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017030.png",
+      "bytes": 2939604,
+      "mtime_ns": 1791688546554593365,
+      "sha256": "88566d0d880c6ed78cd2e94b11d6074ed5a99f06d020f3c2af6b2106fcb2566c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017030.png",
+      "bytes": 9180,
+      "mtime_ns": 1791689347255011041,
+      "sha256": "e0de043a4e2006e8ccb46a78a0b4fa27c2a5c7ae83d4ac049f4499bb47601956"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017030.png",
+      "bytes": 3267,
+      "mtime_ns": 1791691181725118504,
+      "sha256": "f55352b715022a544d2f4bac27f4e82b5f2b71dd566d1a33f5d3c215a6c94f6a"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png",
+      "bytes": 3012906,
+      "mtime_ns": 1791688596386976079,
+      "sha256": "bd8d1bb527176aea84d0891efd893af35971be5003cc9785c05716e5c062cd69"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017048.png",
+      "bytes": 8635,
+      "mtime_ns": 1791689359234070743,
+      "sha256": "6c7cfa7ca91f292d3cccbf64e4e5220eb391beae04567e582197a0bd02ce75c5"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017048.png",
+      "bytes": 3163,
+      "mtime_ns": 1791691187118344137,
+      "sha256": "34a3f48c2a15bf9cfafafd080e4691279e41c7fce2b603dbe5ae6740e50550a9"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/transform_matrix.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/transform_matrix.txt",
+      "bytes": 264,
+      "mtime_ns": 1791694031148598195,
+      "sha256": "9e642de32f923c6e997537e52c12e6d72e099e66823cff0977509851cade1968"
+    }
+  },
+  "gpu_runtime": {
+    "torch_version": "2.2.2+cu118",
+    "cuda_version": "11.8",
+    "device": "NVIDIA GeForce RTX 4080 SUPER",
+    "device_total_memory_bytes": 33796456448,
+    "FP32": true,
+    "autocast": false,
+    "autograd": false,
+    "kernel_python": {
+      "path": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py",
+      "bytes": 7983,
+      "mtime_ns": 1791684626363579650,
+      "sha256": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f"
+    },
+    "kernel_binary": {
+      "path": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so",
+      "bytes": 1691360,
+      "mtime_ns": 1791684626363579650,
+      "sha256": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e"
+    },
+    "cudnn_allow_tf32": true,
+    "matmul_allow_tf32": false,
+    "optimizer_restored": false,
+    "source_modified": false
+  },
+  "cases": [
+    {
+      "case_id": "baseline20",
+      "manifest_pin": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cases/baseline20/case_manifest.json",
+        "bytes": 457739,
+        "mtime_ns": 1791743543021538200,
+        "sha256": "26c5990c6de30f7dab10b4f5924b3d3f301848ffbf49f3cda4846324f26490a4"
+      },
+      "status": "complete"
+    },
+    {
+      "case_id": "baseline30",
+      "manifest_pin": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cases/baseline30/case_manifest.json",
+        "bytes": 456878,
+        "mtime_ns": 1791743554467996120,
+        "sha256": "95b094f47213cc1379636ad9f0cf654db30a8d31542dfb08a11826bff7476ce7"
+      },
+      "status": "complete"
+    },
+    {
+      "case_id": "s20_d20_e30_ENV_ONLY_DIAGNOSTIC",
+      "manifest_pin": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cases/s20_d20_e30_ENV_ONLY_DIAGNOSTIC/case_manifest.json",
+        "bytes": 441960,
+        "mtime_ns": 1791743565778077311,
+        "sha256": "fb1db462c846f4a91cc317fc7e317bbfe3a6e1123acae726d9eafccaa88f66e0"
+      },
+      "status": "complete"
+    },
+    {
+      "case_id": "s30_d30_e20_ENV_ONLY_DIAGNOSTIC",
+      "manifest_pin": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cases/s30_d30_e20_ENV_ONLY_DIAGNOSTIC/case_manifest.json",
+        "bytes": 441371,
+        "mtime_ns": 1791743576851789355,
+        "sha256": "cbe94c06f29feb660321586dbe7d7e972a99e95cad01737acae3ef291487dd5d"
+      },
+      "status": "complete"
+    },
+    {
+      "case_id": "s20_d30_e30_BRANCH_MIX_DIAGNOSTIC",
+      "manifest_pin": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cases/s20_d30_e30_BRANCH_MIX_DIAGNOSTIC/case_manifest.json",
+        "bytes": 442181,
+        "mtime_ns": 1791743588169419836,
+        "sha256": "96bb4fdab34e4192bc895e8dd49ba8caf8265831275e8db3d94abaae4d85878b"
+      },
+      "status": "complete"
+    },
+    {
+      "case_id": "s30_d20_e30_BRANCH_MIX_DIAGNOSTIC",
+      "manifest_pin": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/cases/s30_d20_e30_BRANCH_MIX_DIAGNOSTIC/case_manifest.json",
+        "bytes": 441165,
+        "mtime_ns": 1791743599286779505,
+        "sha256": "69ecfe0e2d19ad4adb786dc773a9c28253a0558b2c1da7d23c74181ccb38c7e3"
+      },
+      "status": "complete"
+    }
+  ],
+  "gpu_elapsed_seconds": 117.9967418788001,
+  "gpu_case_count": 6,
+  "selected_camera_count": 5,
+  "train_eval_semantic_records": 10,
+  "baseline_all_four_channel_pngs_exact_equal": true,
+  "cuda_current_allocated_bytes": 1870829056,
+  "cuda_current_reserved_bytes": 31832670208,
+  "contact_sheets": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/contact_sheets/0017000.png",
+      "bytes": 6301390,
+      "mtime_ns": 1791743640571489292,
+      "sha256": "aa773722228365c456bc10949b6f2f927dac5a5c39395d639137fc185e0c557a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/contact_sheets/0017010.png",
+      "bytes": 6278935,
+      "mtime_ns": 1791743641736560077,
+      "sha256": "def76af34bd53dc571dbb7d149ad4c48c976bb4272b1e028e0b624a17fc54386"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/contact_sheets/0017020.png",
+      "bytes": 6177913,
+      "mtime_ns": 1791743642866041540,
+      "sha256": "2c307b481467e06ecf87e764a35f1f2f949cc05e21b195f7f5f53c749ec7cece"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/contact_sheets/0017030.png",
+      "bytes": 6057062,
+      "mtime_ns": 1791743643959864697,
+      "sha256": "d2a27cd155a03dd2f04c307b81bd14ce9373069a29404946c330b0005db35467"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/contact_sheets/0017048.png",
+      "bytes": 6101281,
+      "mtime_ns": 1791743644990022368,
+      "sha256": "0c30cec51e4cdb313dbaba2c67412e78b1720ea6b846d4d25304597ff38ce3e7"
+    }
+  ],
+  "semantics_pin": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/train_eval_semantics.json",
+    "bytes": 1755835,
+    "mtime_ns": 1791743639406804999,
+    "sha256": "82a7ad90f3cee6e02357a12126cf65cdffc651c46464e859b9ee1cad47e9c68b"
+  },
+  "no_modification_pin": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vgpu_bugfix_20261012/component_diagnostic/no_modification_sha.json",
+    "bytes": 26697,
+    "mtime_ns": 1791743649939208407,
+    "sha256": "6c5aa26ccd9f8b95245ab2a979f68250e66366528828d76e0b72a0e90b242022"
+  },
+  "actual_exit_code": 0,
+  "finished_utc": "2026-10-11T18:34:09.942524+00:00",
+  "elapsed_seconds": 149.06521388608962
+}

@@ -1,0 +1,3057 @@
+{
+  "schema_version": 2,
+  "status": "CPU_STRICT_PREFLIGHT_PASS",
+  "created_utc": "2026-10-11T10:05:50.645447+00:00",
+  "allow_resume": false,
+  "candidate_variant": "baseline_original_math_strictguard",
+  "candidate_manifest_sha256": "6f0ee8294a16bb866e342a60134ea18b2f6ad885f56b163e1c0959c7a061dca1",
+  "parent_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0",
+  "resume_run": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0_resume_vgpu1011_baseline",
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048",
+  "source_frames": 49,
+  "parent_checkpoint_iteration": 10000,
+  "first_training_iteration": 10001,
+  "horizon": 50000,
+  "seed": 0,
+  "configuration": {
+    "resolved_fields_compared": 128,
+    "changed_fields": [
+      "model_path",
+      "start_checkpoint"
+    ],
+    "all_training_fields_equal": true,
+    "config_sha256": "c74d0aec8385b0e0592044c1a2eb82e30f3d9d223f0785435f628ca37b5077b8",
+    "saved_sidecar_config_equals_event_and_effective_config": true
+  },
+  "component_cpu_restore": {
+    "static": {
+      "iteration": 10000,
+      "points": 1709273,
+      "spatial_lr_scale": 1.0,
+      "saved_rates_at_10000": {
+        "xyz": 6.369714728855948e-05,
+        "f_dc": 0.0025,
+        "f_rest": 0.000125,
+        "opacity": 0.005,
+        "scaling": 0.005,
+        "rotation": 0.001,
+        "t": 0.00031848573644279767,
+        "scaling_t": 0.002,
+        "velocity": 0.001
+      },
+      "rates_at_10001": {
+        "xyz": 6.36912808346514e-05,
+        "f_dc": 0.0025,
+        "f_rest": 0.000125,
+        "opacity": 0.005,
+        "scaling": 0.005,
+        "rotation": 0.001,
+        "t": 0.00031845640417325677,
+        "scaling_t": 0.002,
+        "velocity": 0.001
+      },
+      "densification_accumulators_restored": true,
+      "optimizer_bound_to_loaded_parameters": true,
+      "adam_steps": [
+        9905.0,
+        9905.0,
+        9905.0,
+        9905.0,
+        9905.0,
+        9905.0,
+        9905.0,
+        9905.0,
+        9905.0
+      ],
+      "adam_steps_and_moments_exactly_preserved": true,
+      "adam_conditional_steps_preserved_without_replacement_by_global_iteration": true,
+      "genuine_restore_source_executed_on_cpu": true,
+      "cpu_allocation_adapter": "Gaussian training_setup zeros device cuda -> cpu; no tensor/optimizer mathematical changes"
+    },
+    "dynamic": {
+      "iteration": 10000,
+      "points": 1026885,
+      "spatial_lr_scale": 1.0,
+      "saved_rates_at_10000": {
+        "xyz": 0.00040190182904153277,
+        "f_dc": 0.0025,
+        "f_rest": 0.000125,
+        "opacity": 0.005,
+        "scaling": 0.005,
+        "rotation": 0.001,
+        "t": 0.00031848573644279767,
+        "scaling_t": 0.002,
+        "velocity": 0.001
+      },
+      "rates_at_10001": {
+        "xyz": 0.00040184630808724883,
+        "f_dc": 0.0025,
+        "f_rest": 0.000125,
+        "opacity": 0.005,
+        "scaling": 0.005,
+        "rotation": 0.001,
+        "t": 0.00031845640417325677,
+        "scaling_t": 0.002,
+        "velocity": 0.001
+      },
+      "densification_accumulators_restored": true,
+      "optimizer_bound_to_loaded_parameters": true,
+      "adam_steps": [
+        9939.0,
+        9939.0,
+        9939.0,
+        9939.0,
+        9939.0,
+        9939.0,
+        9939.0,
+        9939.0,
+        9939.0
+      ],
+      "adam_steps_and_moments_exactly_preserved": true,
+      "adam_conditional_steps_preserved_without_replacement_by_global_iteration": true,
+      "genuine_restore_source_executed_on_cpu": true,
+      "cpu_allocation_adapter": "Gaussian training_setup zeros device cuda -> cpu; no tensor/optimizer mathematical changes"
+    },
+    "environment": {
+      "iteration": 10000,
+      "tensor_shape": [
+        6,
+        1024,
+        1024,
+        3
+      ],
+      "optimizer_bound_to_loaded_base": true,
+      "adam_steps": [
+        10000.0
+      ],
+      "adam_steps_and_moments_exactly_preserved": true,
+      "adam_conditional_steps_preserved_without_replacement_by_global_iteration": true,
+      "genuine_restore_source_executed_on_cpu": true,
+      "cpu_allocation_adapter": "Gaussian training_setup zeros device cuda -> cpu; no tensor/optimizer mathematical changes"
+    }
+  },
+  "continuation_tests": {
+    "all_training_config_fields_reject_mutation": 126,
+    "old_horizon_30000_rejected": true,
+    "all_rng_sampler_runtime_sgcm_ema_fields_present": true,
+    "saved_scale_index": 0,
+    "saved_stack_size": 45,
+    "next_camera_index_at_10001": 18,
+    "next_camera_id_at_10001": "image_0/0017040",
+    "python_numpy_torch_cpu_rng_and_sampler_exactly_restored": true,
+    "cuda_rng": {
+      "device_count": 1,
+      "state_bytes": [
+        16
+      ],
+      "saved_payload_routing_checked_with_cpu_stub": true,
+      "actual_cuda_restore_tested": false
+    },
+    "sgcm_geometry_runtime_and_ema_restored": true,
+    "bitwise_cuda_equivalence_claimed": false
+  },
+  "training_source_audit": {
+    "first_training_iteration": 10001,
+    "horizon": 50000,
+    "seed_after_restore": false,
+    "train_source_unchanged": true,
+    "model_restore_before_rng_sampler": true,
+    "one_combined_backward": true
+  },
+  "checkpoint_file_signatures": {
+    "static": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0/chkpnt10000.pth",
+      "bytes": 1340082206,
+      "mtime_ns": 1791696414825364662,
+      "inode": 12980531137
+    },
+    "dynamic": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0/dynamic_chkpnt10000.pth",
+      "bytes": 805090078,
+      "mtime_ns": 1791696416409608669,
+      "inode": 12980531139
+    },
+    "environment": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0/env_light_chkpnt10000.pth",
+      "bytes": 226494608,
+      "mtime_ns": 1791696417141721434,
+      "inode": 12980531141
+    },
+    "training_state": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/runs/scene0017_000_048_paper_50000_seed0/training_state10000.pth",
+      "bytes": 23256,
+      "mtime_ns": 1791696501030657856,
+      "inode": 12980531153
+    }
+  },
+  "checkpoint_file_sha256": {
+    "static": "93601087267fb8f7295509e9ca1a2015ddb568a3ccee1791d00d7b7a6a9c442e",
+    "dynamic": "ec6e72accb0e81bd6963ea6a7962dcfc8bff8d64a91fb3279962b8ec230bfec8",
+    "environment": "e92050f65088b120507779def16785eed0f71caa882a25df80ac6d81c25c7439",
+    "training_state": "5814f823b70e67482b8f194a34da8dd57a47c887fbb8f89718704f051a580b70"
+  },
+  "input_file_signatures": {
+    "calib/0017000.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017000.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688459872033849,
+      "inode": 32329767665
+    },
+    "calib/0017001.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017001.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688462880320037,
+      "inode": 32329767666
+    },
+    "calib/0017002.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017002.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688465752593282,
+      "inode": 32329767667
+    },
+    "calib/0017003.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017003.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688468628866907,
+      "inode": 32329767668
+    },
+    "calib/0017004.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017004.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688471529142811,
+      "inode": 32329767745
+    },
+    "calib/0017005.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017005.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688474445420236,
+      "inode": 32329767746
+    },
+    "calib/0017006.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017006.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688477341695756,
+      "inode": 32329767747
+    },
+    "calib/0017007.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017007.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688480333980405,
+      "inode": 32329767748
+    },
+    "calib/0017008.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017008.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688483242257061,
+      "inode": 32329767750
+    },
+    "calib/0017009.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017009.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688486246542847,
+      "inode": 32329767752
+    },
+    "calib/0017010.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017010.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688489142818357,
+      "inode": 32329767753
+    },
+    "calib/0017011.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017011.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688491947085111,
+      "inode": 32329767754
+    },
+    "calib/0017012.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017012.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688494759352625,
+      "inode": 32329767755
+    },
+    "calib/0017013.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017013.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688497567619755,
+      "inode": 32329767756
+    },
+    "calib/0017014.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017014.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688500439892971,
+      "inode": 32329767757
+    },
+    "calib/0017015.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017015.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688503260161238,
+      "inode": 32329767758
+    },
+    "calib/0017016.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017016.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688506140435212,
+      "inode": 32329767759
+    },
+    "calib/0017017.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017017.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688509068713748,
+      "inode": 32329767760
+    },
+    "calib/0017018.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017018.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688511972989998,
+      "inode": 32329767761
+    },
+    "calib/0017019.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017019.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688514837262441,
+      "inode": 32329767762
+    },
+    "calib/0017020.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017020.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688517749539448,
+      "inode": 32329767763
+    },
+    "calib/0017021.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017021.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688520753825205,
+      "inode": 32329767764
+    },
+    "calib/0017022.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017022.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688523574093457,
+      "inode": 32329767765
+    },
+    "calib/0017023.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017023.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688526438365891,
+      "inode": 32329767766
+    },
+    "calib/0017024.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017024.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688529258634139,
+      "inode": 32329767767
+    },
+    "calib/0017025.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017025.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688532042898959,
+      "inode": 32329767768
+    },
+    "calib/0017026.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017026.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688534863167202,
+      "inode": 32329767769
+    },
+    "calib/0017027.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017027.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688537739440770,
+      "inode": 32329767770
+    },
+    "calib/0017028.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017028.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688540643716998,
+      "inode": 32329767771
+    },
+    "calib/0017029.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017029.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688543559994366,
+      "inode": 32329767772
+    },
+    "calib/0017030.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017030.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688546554593365,
+      "inode": 32329767773
+    },
+    "calib/0017031.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017031.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688549142457814,
+      "inode": 32329767774
+    },
+    "calib/0017032.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017032.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688552050724291,
+      "inode": 32329767775
+    },
+    "calib/0017033.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017033.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688554762630700,
+      "inode": 32329767777
+    },
+    "calib/0017034.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017034.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688557534554661,
+      "inode": 32329767778
+    },
+    "calib/0017035.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017035.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688560138178785,
+      "inode": 32329767780
+    },
+    "calib/0017036.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017036.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688563038145434,
+      "inode": 32329767782
+    },
+    "calib/0017037.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017037.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688565926023608,
+      "inode": 32329767784
+    },
+    "calib/0017038.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017038.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688568813831859,
+      "inode": 32329769330
+    },
+    "calib/0017039.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017039.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688571609453604,
+      "inode": 32329769369
+    },
+    "calib/0017040.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017040.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688574521159687,
+      "inode": 32329769372
+    },
+    "calib/0017041.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017041.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688577328670586,
+      "inode": 32329769373
+    },
+    "calib/0017042.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017042.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688579935877533,
+      "inode": 32329769374
+    },
+    "calib/0017043.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017043.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688582458931263,
+      "inode": 32329769375
+    },
+    "calib/0017044.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017044.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688585025991827,
+      "inode": 32329769376
+    },
+    "calib/0017045.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017045.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688587689115253,
+      "inode": 32329769377
+    },
+    "calib/0017046.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017046.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688590592464240,
+      "inode": 32329769378
+    },
+    "calib/0017047.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017047.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688593511773173,
+      "inode": 32329769379
+    },
+    "calib/0017048.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/calib/0017048.txt",
+      "bytes": 2606,
+      "mtime_ns": 1791688596386976079,
+      "inode": 32329769380
+    },
+    "data_quality_overview.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/data_quality_overview.png",
+      "bytes": 1310560,
+      "mtime_ns": 1791689660214857540,
+      "inode": 20454879722
+    },
+    "dynamic_actor_contact_sheet.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_actor_contact_sheet.jpg",
+      "bytes": 333660,
+      "mtime_ns": 1791691187454614315,
+      "inode": 20454879723
+    },
+    "dynamic_actor_preparation.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_actor_preparation.json",
+      "bytes": 60938,
+      "mtime_ns": 1791691187146366652,
+      "inode": 20454879724
+    },
+    "dynamic_actor_validation.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_actor_validation.json",
+      "bytes": 63230,
+      "mtime_ns": 1791691260382628789,
+      "inode": 20454879725
+    },
+    "dynamic_image/dynamic_image_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017000.png",
+      "bytes": 151377,
+      "mtime_ns": 1791691172448417890,
+      "inode": 7591753068
+    },
+    "dynamic_image/dynamic_image_0/0017001.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017001.png",
+      "bytes": 147712,
+      "mtime_ns": 1791691172841497346,
+      "inode": 7591753069
+    },
+    "dynamic_image/dynamic_image_0/0017002.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017002.png",
+      "bytes": 141228,
+      "mtime_ns": 1791691173158324350,
+      "inode": 7591753070
+    },
+    "dynamic_image/dynamic_image_0/0017003.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017003.png",
+      "bytes": 134597,
+      "mtime_ns": 1791691173543273598,
+      "inode": 7591753071
+    },
+    "dynamic_image/dynamic_image_0/0017004.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017004.png",
+      "bytes": 130022,
+      "mtime_ns": 1791691173848025086,
+      "inode": 7591753072
+    },
+    "dynamic_image/dynamic_image_0/0017005.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017005.png",
+      "bytes": 126096,
+      "mtime_ns": 1791691174140712478,
+      "inode": 7591753073
+    },
+    "dynamic_image/dynamic_image_0/0017006.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017006.png",
+      "bytes": 122136,
+      "mtime_ns": 1791691174437371227,
+      "inode": 7591753074
+    },
+    "dynamic_image/dynamic_image_0/0017007.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017007.png",
+      "bytes": 119044,
+      "mtime_ns": 1791691174746056680,
+      "inode": 7591753075
+    },
+    "dynamic_image/dynamic_image_0/0017008.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017008.png",
+      "bytes": 112359,
+      "mtime_ns": 1791691175046715289,
+      "inode": 7591753076
+    },
+    "dynamic_image/dynamic_image_0/0017009.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017009.png",
+      "bytes": 108426,
+      "mtime_ns": 1791691175343310193,
+      "inode": 7591753081
+    },
+    "dynamic_image/dynamic_image_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017010.png",
+      "bytes": 104882,
+      "mtime_ns": 1791691175635897058,
+      "inode": 7591753082
+    },
+    "dynamic_image/dynamic_image_0/0017011.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017011.png",
+      "bytes": 101424,
+      "mtime_ns": 1791691175936500001,
+      "inode": 7591753083
+    },
+    "dynamic_image/dynamic_image_0/0017012.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017012.png",
+      "bytes": 100987,
+      "mtime_ns": 1791691176233051138,
+      "inode": 7591753084
+    },
+    "dynamic_image/dynamic_image_0/0017013.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017013.png",
+      "bytes": 98994,
+      "mtime_ns": 1791691176621757719,
+      "inode": 7591753085
+    },
+    "dynamic_image/dynamic_image_0/0017014.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017014.png",
+      "bytes": 97301,
+      "mtime_ns": 1791691176922304045,
+      "inode": 7591753086
+    },
+    "dynamic_image/dynamic_image_0/0017015.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017015.png",
+      "bytes": 94494,
+      "mtime_ns": 1791691177222814414,
+      "inode": 7591753087
+    },
+    "dynamic_image/dynamic_image_0/0017016.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017016.png",
+      "bytes": 93694,
+      "mtime_ns": 1791691177519304576,
+      "inode": 7591753088
+    },
+    "dynamic_image/dynamic_image_0/0017017.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017017.png",
+      "bytes": 91991,
+      "mtime_ns": 1791691177823807985,
+      "inode": 7591753089
+    },
+    "dynamic_image/dynamic_image_0/0017018.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017018.png",
+      "bytes": 91192,
+      "mtime_ns": 1791691178124286941,
+      "inode": 7591753090
+    },
+    "dynamic_image/dynamic_image_0/0017019.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017019.png",
+      "bytes": 90295,
+      "mtime_ns": 1791691178424740377,
+      "inode": 7591753091
+    },
+    "dynamic_image/dynamic_image_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017020.png",
+      "bytes": 89130,
+      "mtime_ns": 1791691178721187768,
+      "inode": 7591753092
+    },
+    "dynamic_image/dynamic_image_0/0017021.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017021.png",
+      "bytes": 89284,
+      "mtime_ns": 1791691179017633528,
+      "inode": 7591753093
+    },
+    "dynamic_image/dynamic_image_0/0017022.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017022.png",
+      "bytes": 87863,
+      "mtime_ns": 1791691179318049036,
+      "inode": 7591753094
+    },
+    "dynamic_image/dynamic_image_0/0017023.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017023.png",
+      "bytes": 86797,
+      "mtime_ns": 1791691179622470083,
+      "inode": 7591753095
+    },
+    "dynamic_image/dynamic_image_0/0017024.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017024.png",
+      "bytes": 86482,
+      "mtime_ns": 1791691179918880050,
+      "inode": 7591753096
+    },
+    "dynamic_image/dynamic_image_0/0017025.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017025.png",
+      "bytes": 86211,
+      "mtime_ns": 1791691180235292242,
+      "inode": 7591753097
+    },
+    "dynamic_image/dynamic_image_0/0017026.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017026.png",
+      "bytes": 86949,
+      "mtime_ns": 1791691180523659269,
+      "inode": 7591753098
+    },
+    "dynamic_image/dynamic_image_0/0017027.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017027.png",
+      "bytes": 82868,
+      "mtime_ns": 1791691180820036490,
+      "inode": 7591756963
+    },
+    "dynamic_image/dynamic_image_0/0017028.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017028.png",
+      "bytes": 76530,
+      "mtime_ns": 1791691181116402525,
+      "inode": 7591756964
+    },
+    "dynamic_image/dynamic_image_0/0017029.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017029.png",
+      "bytes": 72326,
+      "mtime_ns": 1791691181412751095,
+      "inode": 7591756973
+    },
+    "dynamic_image/dynamic_image_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017030.png",
+      "bytes": 65520,
+      "mtime_ns": 1791691181709099662,
+      "inode": 7591756974
+    },
+    "dynamic_image/dynamic_image_0/0017031.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017031.png",
+      "bytes": 58129,
+      "mtime_ns": 1791691182009452541,
+      "inode": 7591756975
+    },
+    "dynamic_image/dynamic_image_0/0017032.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017032.png",
+      "bytes": 47342,
+      "mtime_ns": 1791691182309780410,
+      "inode": 7591756976
+    },
+    "dynamic_image/dynamic_image_0/0017033.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017033.png",
+      "bytes": 41887,
+      "mtime_ns": 1791691182606103908,
+      "inode": 7591777856
+    },
+    "dynamic_image/dynamic_image_0/0017034.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017034.png",
+      "bytes": 35628,
+      "mtime_ns": 1791691182898423034,
+      "inode": 7591777857
+    },
+    "dynamic_image/dynamic_image_0/0017035.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017035.png",
+      "bytes": 28188,
+      "mtime_ns": 1791691183190728387,
+      "inode": 7591777858
+    },
+    "dynamic_image/dynamic_image_0/0017036.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017036.png",
+      "bytes": 23290,
+      "mtime_ns": 1791691183487029947,
+      "inode": 7591777859
+    },
+    "dynamic_image/dynamic_image_0/0017037.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017037.png",
+      "bytes": 19926,
+      "mtime_ns": 1791691183787335583,
+      "inode": 7591777860
+    },
+    "dynamic_image/dynamic_image_0/0017038.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017038.png",
+      "bytes": 17503,
+      "mtime_ns": 1791691184103651109,
+      "inode": 7591777861
+    },
+    "dynamic_image/dynamic_image_0/0017039.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017039.png",
+      "bytes": 16547,
+      "mtime_ns": 1791691184399933474,
+      "inode": 7591777862
+    },
+    "dynamic_image/dynamic_image_0/0017040.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017040.png",
+      "bytes": 15720,
+      "mtime_ns": 1791691184704223471,
+      "inode": 7591777863
+    },
+    "dynamic_image/dynamic_image_0/0017041.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017041.png",
+      "bytes": 15780,
+      "mtime_ns": 1791691185004509438,
+      "inode": 7591777864
+    },
+    "dynamic_image/dynamic_image_0/0017042.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017042.png",
+      "bytes": 16569,
+      "mtime_ns": 1791691185300775008,
+      "inode": 7591777865
+    },
+    "dynamic_image/dynamic_image_0/0017043.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017043.png",
+      "bytes": 16925,
+      "mtime_ns": 1791691185605047754,
+      "inode": 7591777866
+    },
+    "dynamic_image/dynamic_image_0/0017044.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017044.png",
+      "bytes": 17694,
+      "mtime_ns": 1791691185901313325,
+      "inode": 7591777867
+    },
+    "dynamic_image/dynamic_image_0/0017045.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017045.png",
+      "bytes": 18045,
+      "mtime_ns": 1791691186197569327,
+      "inode": 7591777935
+    },
+    "dynamic_image/dynamic_image_0/0017046.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017046.png",
+      "bytes": 19998,
+      "mtime_ns": 1791691186501826981,
+      "inode": 7591834944
+    },
+    "dynamic_image/dynamic_image_0/0017047.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017047.png",
+      "bytes": 24051,
+      "mtime_ns": 1791691186802081244,
+      "inode": 7591834945
+    },
+    "dynamic_image/dynamic_image_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_image/dynamic_image_0/0017048.png",
+      "bytes": 29047,
+      "mtime_ns": 1791691187102331271,
+      "inode": 7591834946
+    },
+    "dynamic_masks/dynamic_mask_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017000.png",
+      "bytes": 4110,
+      "mtime_ns": 1791691172460450935,
+      "inode": 8669124812
+    },
+    "dynamic_masks/dynamic_mask_0/0017001.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017001.png",
+      "bytes": 4196,
+      "mtime_ns": 1791691172857541405,
+      "inode": 8669270849
+    },
+    "dynamic_masks/dynamic_mask_0/0017002.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017002.png",
+      "bytes": 4181,
+      "mtime_ns": 1791691173174363903,
+      "inode": 8669270850
+    },
+    "dynamic_masks/dynamic_mask_0/0017003.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017003.png",
+      "bytes": 4100,
+      "mtime_ns": 1791691173559313150,
+      "inode": 8669270851
+    },
+    "dynamic_masks/dynamic_mask_0/0017004.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017004.png",
+      "bytes": 4053,
+      "mtime_ns": 1791691173864064638,
+      "inode": 8669270852
+    },
+    "dynamic_masks/dynamic_mask_0/0017005.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017005.png",
+      "bytes": 3904,
+      "mtime_ns": 1791691174152739184,
+      "inode": 8669270853
+    },
+    "dynamic_masks/dynamic_mask_0/0017006.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017006.png",
+      "bytes": 4003,
+      "mtime_ns": 1791691174453406835,
+      "inode": 8669270854
+    },
+    "dynamic_masks/dynamic_mask_0/0017007.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017007.png",
+      "bytes": 3877,
+      "mtime_ns": 1791691174758083386,
+      "inode": 8669270855
+    },
+    "dynamic_masks/dynamic_mask_0/0017008.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017008.png",
+      "bytes": 3857,
+      "mtime_ns": 1791691175058739406,
+      "inode": 8669270856
+    },
+    "dynamic_masks/dynamic_mask_0/0017009.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017009.png",
+      "bytes": 3855,
+      "mtime_ns": 1791691175359342350,
+      "inode": 8669270861
+    },
+    "dynamic_masks/dynamic_mask_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017010.png",
+      "bytes": 3726,
+      "mtime_ns": 1791691175651929215,
+      "inode": 8669270862
+    },
+    "dynamic_masks/dynamic_mask_0/0017011.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017011.png",
+      "bytes": 3809,
+      "mtime_ns": 1791691175952532158,
+      "inode": 8669270863
+    },
+    "dynamic_masks/dynamic_mask_0/0017012.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017012.png",
+      "bytes": 3780,
+      "mtime_ns": 1791691176245072991,
+      "inode": 8669270864
+    },
+    "dynamic_masks/dynamic_mask_0/0017013.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017013.png",
+      "bytes": 3741,
+      "mtime_ns": 1791691176637786857,
+      "inode": 8669270865
+    },
+    "dynamic_masks/dynamic_mask_0/0017014.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017014.png",
+      "bytes": 3745,
+      "mtime_ns": 1791691176938333182,
+      "inode": 8669270866
+    },
+    "dynamic_masks/dynamic_mask_0/0017015.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017015.png",
+      "bytes": 3617,
+      "mtime_ns": 1791691177238840910,
+      "inode": 8669270867
+    },
+    "dynamic_masks/dynamic_mask_0/0017016.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017016.png",
+      "bytes": 3691,
+      "mtime_ns": 1791691177535331071,
+      "inode": 8669270872
+    },
+    "dynamic_masks/dynamic_mask_0/0017017.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017017.png",
+      "bytes": 3658,
+      "mtime_ns": 1791691177835827855,
+      "inode": 8669270875
+    },
+    "dynamic_masks/dynamic_mask_0/0017018.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017018.png",
+      "bytes": 3621,
+      "mtime_ns": 1791691178140311124,
+      "inode": 8669270877
+    },
+    "dynamic_masks/dynamic_mask_0/0017019.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017019.png",
+      "bytes": 3634,
+      "mtime_ns": 1791691178440764561,
+      "inode": 8669270878
+    },
+    "dynamic_masks/dynamic_mask_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017020.png",
+      "bytes": 3543,
+      "mtime_ns": 1791691178737211952,
+      "inode": 8669270879
+    },
+    "dynamic_masks/dynamic_mask_0/0017021.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017021.png",
+      "bytes": 3688,
+      "mtime_ns": 1791691179029650149,
+      "inode": 8669270880
+    },
+    "dynamic_masks/dynamic_mask_0/0017022.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017022.png",
+      "bytes": 3655,
+      "mtime_ns": 1791691179334071196,
+      "inode": 8669270881
+    },
+    "dynamic_masks/dynamic_mask_0/0017023.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017023.png",
+      "bytes": 3726,
+      "mtime_ns": 1791691179638492244,
+      "inode": 8669270884
+    },
+    "dynamic_masks/dynamic_mask_0/0017024.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017024.png",
+      "bytes": 3639,
+      "mtime_ns": 1791691179934902211,
+      "inode": 8669270885
+    },
+    "dynamic_masks/dynamic_mask_0/0017025.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017025.png",
+      "bytes": 3578,
+      "mtime_ns": 1791691180251312633,
+      "inode": 8669270886
+    },
+    "dynamic_masks/dynamic_mask_0/0017026.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017026.png",
+      "bytes": 3665,
+      "mtime_ns": 1791691180535674561,
+      "inode": 8669270887
+    },
+    "dynamic_masks/dynamic_mask_0/0017027.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017027.png",
+      "bytes": 3516,
+      "mtime_ns": 1791691180836056880,
+      "inode": 8669270888
+    },
+    "dynamic_masks/dynamic_mask_0/0017028.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017028.png",
+      "bytes": 3418,
+      "mtime_ns": 1791691181132421367,
+      "inode": 8669270889
+    },
+    "dynamic_masks/dynamic_mask_0/0017029.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017029.png",
+      "bytes": 3353,
+      "mtime_ns": 1791691181424765226,
+      "inode": 8669270890
+    },
+    "dynamic_masks/dynamic_mask_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017030.png",
+      "bytes": 3267,
+      "mtime_ns": 1791691181725118504,
+      "inode": 8669270891
+    },
+    "dynamic_masks/dynamic_mask_0/0017031.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017031.png",
+      "bytes": 3289,
+      "mtime_ns": 1791691182025470027,
+      "inode": 8669270892
+    },
+    "dynamic_masks/dynamic_mask_0/0017032.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017032.png",
+      "bytes": 3189,
+      "mtime_ns": 1791691182321793525,
+      "inode": 8669270893
+    },
+    "dynamic_masks/dynamic_mask_0/0017033.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017033.png",
+      "bytes": 3175,
+      "mtime_ns": 1791691182618117022,
+      "inode": 8669270894
+    },
+    "dynamic_masks/dynamic_mask_0/0017034.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017034.png",
+      "bytes": 3169,
+      "mtime_ns": 1791691182914440520,
+      "inode": 8669270902
+    },
+    "dynamic_masks/dynamic_mask_0/0017035.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017035.png",
+      "bytes": 3129,
+      "mtime_ns": 1791691183206744688,
+      "inode": 8669270906
+    },
+    "dynamic_masks/dynamic_mask_0/0017036.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017036.png",
+      "bytes": 3063,
+      "mtime_ns": 1791691183503046248,
+      "inode": 8669270908
+    },
+    "dynamic_masks/dynamic_mask_0/0017037.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017037.png",
+      "bytes": 2988,
+      "mtime_ns": 1791691183803351883,
+      "inode": 8669270909
+    },
+    "dynamic_masks/dynamic_mask_0/0017038.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017038.png",
+      "bytes": 2940,
+      "mtime_ns": 1791691184115662556,
+      "inode": 8669270910
+    },
+    "dynamic_masks/dynamic_mask_0/0017039.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017039.png",
+      "bytes": 2901,
+      "mtime_ns": 1791691184411944922,
+      "inode": 8669270911
+    },
+    "dynamic_masks/dynamic_mask_0/0017040.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017040.png",
+      "bytes": 2899,
+      "mtime_ns": 1791691184716234919,
+      "inode": 8669270912
+    },
+    "dynamic_masks/dynamic_mask_0/0017041.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017041.png",
+      "bytes": 2904,
+      "mtime_ns": 1791691185016520203,
+      "inode": 8669270914
+    },
+    "dynamic_masks/dynamic_mask_0/0017042.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017042.png",
+      "bytes": 2932,
+      "mtime_ns": 1791691185312785774,
+      "inode": 8669270915
+    },
+    "dynamic_masks/dynamic_mask_0/0017043.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017043.png",
+      "bytes": 2936,
+      "mtime_ns": 1791691185617058521,
+      "inode": 8669270926
+    },
+    "dynamic_masks/dynamic_mask_0/0017044.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017044.png",
+      "bytes": 2945,
+      "mtime_ns": 1791691185917327680,
+      "inode": 8669270927
+    },
+    "dynamic_masks/dynamic_mask_0/0017045.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017045.png",
+      "bytes": 2952,
+      "mtime_ns": 1791691186209579498,
+      "inode": 8669270928
+    },
+    "dynamic_masks/dynamic_mask_0/0017046.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017046.png",
+      "bytes": 2996,
+      "mtime_ns": 1791691186513837151,
+      "inode": 8669270929
+    },
+    "dynamic_masks/dynamic_mask_0/0017047.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017047.png",
+      "bytes": 3089,
+      "mtime_ns": 1791691186814091415,
+      "inode": 8669270934
+    },
+    "dynamic_masks/dynamic_mask_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/dynamic_masks/dynamic_mask_0/0017048.png",
+      "bytes": 3163,
+      "mtime_ns": 1791691187118344137,
+      "inode": 8669270938
+    },
+    "formal_training_ready.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/formal_training_ready.json",
+      "bytes": 6835,
+      "mtime_ns": 1791691390461816442,
+      "inode": 20454879726
+    },
+    "image/image_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017000.png",
+      "bytes": 2927846,
+      "mtime_ns": 1791688459868033468,
+      "inode": 9794089369
+    },
+    "image/image_0/0017001.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017001.png",
+      "bytes": 2926128,
+      "mtime_ns": 1791688462880320037,
+      "inode": 9794089370
+    },
+    "image/image_0/0017002.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017002.png",
+      "bytes": 2926044,
+      "mtime_ns": 1791688465748592902,
+      "inode": 9794089371
+    },
+    "image/image_0/0017003.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017003.png",
+      "bytes": 2929165,
+      "mtime_ns": 1791688468628866907,
+      "inode": 9794089372
+    },
+    "image/image_0/0017004.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017004.png",
+      "bytes": 2926985,
+      "mtime_ns": 1791688471529142811,
+      "inode": 9794089373
+    },
+    "image/image_0/0017005.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017005.png",
+      "bytes": 2924795,
+      "mtime_ns": 1791688474445420236,
+      "inode": 9794089374
+    },
+    "image/image_0/0017006.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017006.png",
+      "bytes": 2924644,
+      "mtime_ns": 1791688477341695756,
+      "inode": 9794089375
+    },
+    "image/image_0/0017007.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017007.png",
+      "bytes": 2923164,
+      "mtime_ns": 1791688480333980405,
+      "inode": 9794089376
+    },
+    "image/image_0/0017008.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017008.png",
+      "bytes": 2921743,
+      "mtime_ns": 1791688483238256681,
+      "inode": 9794089377
+    },
+    "image/image_0/0017009.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017009.png",
+      "bytes": 2924593,
+      "mtime_ns": 1791688486246542847,
+      "inode": 9794089378
+    },
+    "image/image_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017010.png",
+      "bytes": 2921718,
+      "mtime_ns": 1791688489138817976,
+      "inode": 9794089379
+    },
+    "image/image_0/0017011.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017011.png",
+      "bytes": 2920998,
+      "mtime_ns": 1791688491943084730,
+      "inode": 9794089380
+    },
+    "image/image_0/0017012.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017012.png",
+      "bytes": 2920847,
+      "mtime_ns": 1791688494755352244,
+      "inode": 9794089381
+    },
+    "image/image_0/0017013.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017013.png",
+      "bytes": 2921009,
+      "mtime_ns": 1791688497567619755,
+      "inode": 9794089382
+    },
+    "image/image_0/0017014.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017014.png",
+      "bytes": 2923143,
+      "mtime_ns": 1791688500439892971,
+      "inode": 9794089384
+    },
+    "image/image_0/0017015.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017015.png",
+      "bytes": 2926422,
+      "mtime_ns": 1791688503260161238,
+      "inode": 9794089388
+    },
+    "image/image_0/0017016.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017016.png",
+      "bytes": 2924630,
+      "mtime_ns": 1791688506140435212,
+      "inode": 9794089389
+    },
+    "image/image_0/0017017.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017017.png",
+      "bytes": 2924119,
+      "mtime_ns": 1791688509064713368,
+      "inode": 9794089390
+    },
+    "image/image_0/0017018.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017018.png",
+      "bytes": 2925038,
+      "mtime_ns": 1791688511972989998,
+      "inode": 9794089391
+    },
+    "image/image_0/0017019.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017019.png",
+      "bytes": 2925027,
+      "mtime_ns": 1791688514837262441,
+      "inode": 9794089392
+    },
+    "image/image_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017020.png",
+      "bytes": 2925154,
+      "mtime_ns": 1791688517749539448,
+      "inode": 9794089393
+    },
+    "image/image_0/0017021.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017021.png",
+      "bytes": 2925363,
+      "mtime_ns": 1791688520749824825,
+      "inode": 9794089394
+    },
+    "image/image_0/0017022.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017022.png",
+      "bytes": 2921343,
+      "mtime_ns": 1791688523574093457,
+      "inode": 9794089395
+    },
+    "image/image_0/0017023.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017023.png",
+      "bytes": 2923019,
+      "mtime_ns": 1791688526438365891,
+      "inode": 9794089396
+    },
+    "image/image_0/0017024.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017024.png",
+      "bytes": 2910729,
+      "mtime_ns": 1791688529258634139,
+      "inode": 9794089397
+    },
+    "image/image_0/0017025.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017025.png",
+      "bytes": 2915831,
+      "mtime_ns": 1791688532042898959,
+      "inode": 9794089398
+    },
+    "image/image_0/0017026.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017026.png",
+      "bytes": 2921086,
+      "mtime_ns": 1791688534863167202,
+      "inode": 9794089399
+    },
+    "image/image_0/0017027.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017027.png",
+      "bytes": 2922441,
+      "mtime_ns": 1791688537739440770,
+      "inode": 9794089400
+    },
+    "image/image_0/0017028.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017028.png",
+      "bytes": 2923976,
+      "mtime_ns": 1791688540643716998,
+      "inode": 9794089401
+    },
+    "image/image_0/0017029.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017029.png",
+      "bytes": 2933566,
+      "mtime_ns": 1791688543559994366,
+      "inode": 9794089402
+    },
+    "image/image_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017030.png",
+      "bytes": 2939604,
+      "mtime_ns": 1791688546554593365,
+      "inode": 9794089403
+    },
+    "image/image_0/0017031.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017031.png",
+      "bytes": 2935209,
+      "mtime_ns": 1791688549142457814,
+      "inode": 9794090694
+    },
+    "image/image_0/0017032.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017032.png",
+      "bytes": 2928136,
+      "mtime_ns": 1791688552050724291,
+      "inode": 9794090695
+    },
+    "image/image_0/0017033.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017033.png",
+      "bytes": 2926217,
+      "mtime_ns": 1791688554762630700,
+      "inode": 9794090696
+    },
+    "image/image_0/0017034.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017034.png",
+      "bytes": 2938088,
+      "mtime_ns": 1791688557534554661,
+      "inode": 9794090697
+    },
+    "image/image_0/0017035.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017035.png",
+      "bytes": 2938003,
+      "mtime_ns": 1791688560134173269,
+      "inode": 9794090698
+    },
+    "image/image_0/0017036.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017036.png",
+      "bytes": 2940147,
+      "mtime_ns": 1791688563034140023,
+      "inode": 9794090699
+    },
+    "image/image_0/0017037.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017037.png",
+      "bytes": 2944874,
+      "mtime_ns": 1791688565926023608,
+      "inode": 9794090700
+    },
+    "image/image_0/0017038.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017038.png",
+      "bytes": 2939661,
+      "mtime_ns": 1791688568809826613,
+      "inode": 9794090701
+    },
+    "image/image_0/0017039.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017039.png",
+      "bytes": 2957536,
+      "mtime_ns": 1791688571609453604,
+      "inode": 9794090702
+    },
+    "image/image_0/0017040.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017040.png",
+      "bytes": 2959867,
+      "mtime_ns": 1791688574521159687,
+      "inode": 9794090703
+    },
+    "image/image_0/0017041.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017041.png",
+      "bytes": 2971159,
+      "mtime_ns": 1791688577324665627,
+      "inode": 9794090704
+    },
+    "image/image_0/0017042.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017042.png",
+      "bytes": 2989344,
+      "mtime_ns": 1791688579935877533,
+      "inode": 9794090705
+    },
+    "image/image_0/0017043.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017043.png",
+      "bytes": 2992675,
+      "mtime_ns": 1791688582458931263,
+      "inode": 9794090706
+    },
+    "image/image_0/0017044.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017044.png",
+      "bytes": 3001821,
+      "mtime_ns": 1791688585021987104,
+      "inode": 9794090707
+    },
+    "image/image_0/0017045.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017045.png",
+      "bytes": 3006425,
+      "mtime_ns": 1791688587689115253,
+      "inode": 9794090708
+    },
+    "image/image_0/0017046.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017046.png",
+      "bytes": 3003341,
+      "mtime_ns": 1791688590592464240,
+      "inode": 9794090709
+    },
+    "image/image_0/0017047.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017047.png",
+      "bytes": 3010826,
+      "mtime_ns": 1791688593511773173,
+      "inode": 9794090710
+    },
+    "image/image_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/image/image_0/0017048.png",
+      "bytes": 3012906,
+      "mtime_ns": 1791688596386976079,
+      "inode": 9794090711
+    },
+    "mask/mask_0/Annotations/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017000.png",
+      "bytes": 28893,
+      "mtime_ns": 1791691003922161547,
+      "inode": 11914165230
+    },
+    "mask/mask_0/Annotations/0017001.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017001.png",
+      "bytes": 30191,
+      "mtime_ns": 1791691004174044408,
+      "inode": 11914165231
+    },
+    "mask/mask_0/Annotations/0017002.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017002.png",
+      "bytes": 30390,
+      "mtime_ns": 1791691004525886744,
+      "inode": 11914165232
+    },
+    "mask/mask_0/Annotations/0017003.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017003.png",
+      "bytes": 30836,
+      "mtime_ns": 1791691004833748788,
+      "inode": 11914165233
+    },
+    "mask/mask_0/Annotations/0017004.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017004.png",
+      "bytes": 30440,
+      "mtime_ns": 1791691005201593496,
+      "inode": 11914165234
+    },
+    "mask/mask_0/Annotations/0017005.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017005.png",
+      "bytes": 27243,
+      "mtime_ns": 1791691007904637882,
+      "inode": 11914165235
+    },
+    "mask/mask_0/Annotations/0017006.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017006.png",
+      "bytes": 30620,
+      "mtime_ns": 1791691008248540609,
+      "inode": 11914165236
+    },
+    "mask/mask_0/Annotations/0017007.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017007.png",
+      "bytes": 30472,
+      "mtime_ns": 1791691008560455861,
+      "inode": 11914165237
+    },
+    "mask/mask_0/Annotations/0017008.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017008.png",
+      "bytes": 30406,
+      "mtime_ns": 1791691009012333520,
+      "inode": 11914165238
+    },
+    "mask/mask_0/Annotations/0017009.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017009.png",
+      "bytes": 30306,
+      "mtime_ns": 1791691009372249202,
+      "inode": 11914165239
+    },
+    "mask/mask_0/Annotations/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017010.png",
+      "bytes": 26984,
+      "mtime_ns": 1791691011983739167,
+      "inode": 11914165240
+    },
+    "mask/mask_0/Annotations/0017011.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017011.png",
+      "bytes": 30660,
+      "mtime_ns": 1791691012247702761,
+      "inode": 11914165241
+    },
+    "mask/mask_0/Annotations/0017012.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017012.png",
+      "bytes": 30613,
+      "mtime_ns": 1791691012631650747,
+      "inode": 11914165242
+    },
+    "mask/mask_0/Annotations/0017013.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017013.png",
+      "bytes": 30419,
+      "mtime_ns": 1791691013003600327,
+      "inode": 11914165243
+    },
+    "mask/mask_0/Annotations/0017014.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017014.png",
+      "bytes": 30626,
+      "mtime_ns": 1791691013471550458,
+      "inode": 11914165244
+    },
+    "mask/mask_0/Annotations/0017015.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017015.png",
+      "bytes": 26905,
+      "mtime_ns": 1791691016027359409,
+      "inode": 11914165245
+    },
+    "mask/mask_0/Annotations/0017016.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017016.png",
+      "bytes": 30562,
+      "mtime_ns": 1791691016379348757,
+      "inode": 11914165246
+    },
+    "mask/mask_0/Annotations/0017017.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017017.png",
+      "bytes": 30998,
+      "mtime_ns": 1791691016723338347,
+      "inode": 11914165247
+    },
+    "mask/mask_0/Annotations/0017018.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017018.png",
+      "bytes": 30413,
+      "mtime_ns": 1791691017147328701,
+      "inode": 11914332480
+    },
+    "mask/mask_0/Annotations/0017019.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017019.png",
+      "bytes": 31001,
+      "mtime_ns": 1791691017523325715,
+      "inode": 11914332481
+    },
+    "mask/mask_0/Annotations/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017020.png",
+      "bytes": 27488,
+      "mtime_ns": 1791691020175376187,
+      "inode": 11914332482
+    },
+    "mask/mask_0/Annotations/0017021.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017021.png",
+      "bytes": 30830,
+      "mtime_ns": 1791691020507393117,
+      "inode": 11914332483
+    },
+    "mask/mask_0/Annotations/0017022.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017022.png",
+      "bytes": 30965,
+      "mtime_ns": 1791691020947415556,
+      "inode": 11914332484
+    },
+    "mask/mask_0/Annotations/0017023.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017023.png",
+      "bytes": 30870,
+      "mtime_ns": 1791691021291438042,
+      "inode": 11914332485
+    },
+    "mask/mask_0/Annotations/0017024.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017024.png",
+      "bytes": 30766,
+      "mtime_ns": 1791691021783471616,
+      "inode": 11914332486
+    },
+    "mask/mask_0/Annotations/0017025.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017025.png",
+      "bytes": 27026,
+      "mtime_ns": 1791691024459722418,
+      "inode": 11914332487
+    },
+    "mask/mask_0/Annotations/0017026.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017026.png",
+      "bytes": 30097,
+      "mtime_ns": 1791691024863768380,
+      "inode": 11914332488
+    },
+    "mask/mask_0/Annotations/0017027.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017027.png",
+      "bytes": 29111,
+      "mtime_ns": 1791691025159804120,
+      "inode": 11914332489
+    },
+    "mask/mask_0/Annotations/0017028.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017028.png",
+      "bytes": 29352,
+      "mtime_ns": 1791691025611861563,
+      "inode": 11914332490
+    },
+    "mask/mask_0/Annotations/0017029.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017029.png",
+      "bytes": 29292,
+      "mtime_ns": 1791691026015913046,
+      "inode": 11914332491
+    },
+    "mask/mask_0/Annotations/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017030.png",
+      "bytes": 25692,
+      "mtime_ns": 1791691028812333403,
+      "inode": 11914332492
+    },
+    "mask/mask_0/Annotations/0017031.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017031.png",
+      "bytes": 28830,
+      "mtime_ns": 1791691029116383918,
+      "inode": 11914332493
+    },
+    "mask/mask_0/Annotations/0017032.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017032.png",
+      "bytes": 28865,
+      "mtime_ns": 1791691029536456387,
+      "inode": 11914332494
+    },
+    "mask/mask_0/Annotations/0017033.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017033.png",
+      "bytes": 28729,
+      "mtime_ns": 1791691029904519883,
+      "inode": 11914332495
+    },
+    "mask/mask_0/Annotations/0017034.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017034.png",
+      "bytes": 28058,
+      "mtime_ns": 1791691030356601305,
+      "inode": 11914332496
+    },
+    "mask/mask_0/Annotations/0017035.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017035.png",
+      "bytes": 24886,
+      "mtime_ns": 1791691033081126093,
+      "inode": 11914332497
+    },
+    "mask/mask_0/Annotations/0017036.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017036.png",
+      "bytes": 28058,
+      "mtime_ns": 1791691033473207497,
+      "inode": 11914332498
+    },
+    "mask/mask_0/Annotations/0017037.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017037.png",
+      "bytes": 28022,
+      "mtime_ns": 1791691033813278100,
+      "inode": 11914332499
+    },
+    "mask/mask_0/Annotations/0017038.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017038.png",
+      "bytes": 27794,
+      "mtime_ns": 1791691034281377346,
+      "inode": 11914332500
+    },
+    "mask/mask_0/Annotations/0017039.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017039.png",
+      "bytes": 27694,
+      "mtime_ns": 1791691034661459088,
+      "inode": 11914332501
+    },
+    "mask/mask_0/Annotations/0017040.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017040.png",
+      "bytes": 26201,
+      "mtime_ns": 1791691040062719189,
+      "inode": 11914332502
+    },
+    "mask/mask_0/Annotations/0017041.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017041.png",
+      "bytes": 29549,
+      "mtime_ns": 1791691040434812559,
+      "inode": 11914332503
+    },
+    "mask/mask_0/Annotations/0017042.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017042.png",
+      "bytes": 30357,
+      "mtime_ns": 1791691040842914966,
+      "inode": 11914332504
+    },
+    "mask/mask_0/Annotations/0017043.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017043.png",
+      "bytes": 31559,
+      "mtime_ns": 1791691041255019563,
+      "inode": 11914332505
+    },
+    "mask/mask_0/Annotations/0017044.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017044.png",
+      "bytes": 30952,
+      "mtime_ns": 1791691041879179144,
+      "inode": 11914332506
+    },
+    "mask/mask_0/Annotations/0017045.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017045.png",
+      "bytes": 27942,
+      "mtime_ns": 1791691046024281092,
+      "inode": 11914332507
+    },
+    "mask/mask_0/Annotations/0017046.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017046.png",
+      "bytes": 30906,
+      "mtime_ns": 1791691046472404452,
+      "inode": 11914332508
+    },
+    "mask/mask_0/Annotations/0017047.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017047.png",
+      "bytes": 29301,
+      "mtime_ns": 1791691046824501379,
+      "inode": 11914332509
+    },
+    "mask/mask_0/Annotations/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/Annotations/0017048.png",
+      "bytes": 28823,
+      "mtime_ns": 1791691047328641216,
+      "inode": 11914332510
+    },
+    "mask/mask_0/inference_manifest.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/inference_manifest.json",
+      "bytes": 3739,
+      "mtime_ns": 1791691073219050570,
+      "inode": 10858528227
+    },
+    "mask/mask_0/inference_runtime.log": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/inference_runtime.log",
+      "bytes": 6398,
+      "mtime_ns": 1791691047376654587,
+      "inode": 10858528228
+    },
+    "mask/mask_0/instance_ids_0017000.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/instance_ids_0017000.jpg",
+      "bytes": 523221,
+      "mtime_ns": 1791691049173158918,
+      "inode": 10858528229
+    },
+    "mask/mask_0/instance_ids_0017012.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/instance_ids_0017012.jpg",
+      "bytes": 519838,
+      "mtime_ns": 1791691055783085644,
+      "inode": 10858528230
+    },
+    "mask/mask_0/instance_ids_0017024.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/instance_ids_0017024.jpg",
+      "bytes": 519068,
+      "mtime_ns": 1791691061934181981,
+      "inode": 10858528231
+    },
+    "mask/mask_0/instance_ids_0017036.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/instance_ids_0017036.jpg",
+      "bytes": 523887,
+      "mtime_ns": 1791691067563146374,
+      "inode": 10858528232
+    },
+    "mask/mask_0/instance_ids_0017048.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/instance_ids_0017048.jpg",
+      "bytes": 536165,
+      "mtime_ns": 1791691072849244383,
+      "inode": 10858528233
+    },
+    "mask/mask_0/mask_contact_sheet.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/mask_contact_sheet.jpg",
+      "bytes": 487261,
+      "mtime_ns": 1791691073191207339,
+      "inode": 10858528234
+    },
+    "mask/mask_0/mask_validation.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/mask_validation.json",
+      "bytes": 48604,
+      "mtime_ns": 1791691072857193766,
+      "inode": 10858528235
+    },
+    "mask/mask_0/pred.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/pred.json",
+      "bytes": 617995,
+      "mtime_ns": 1791691047376654587,
+      "inode": 10858528236
+    },
+    "mask/mask_0/track_inventory.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/mask/mask_0/track_inventory.json",
+      "bytes": 602245,
+      "mtime_ns": 1791691072881041910,
+      "inode": 10858528237
+    },
+    "paper49_actor_candidate.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/paper49_actor_candidate.json",
+      "bytes": 13889,
+      "mtime_ns": 1791691093676631975,
+      "inode": 20454906355
+    },
+    "paper49_actor_candidate_contact.jpg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/paper49_actor_candidate_contact.jpg",
+      "bytes": 828706,
+      "mtime_ns": 1791691093688786864,
+      "inode": 20456138591
+    },
+    "paper_actor_preparation_plan.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/paper_actor_preparation_plan.json",
+      "bytes": 912,
+      "mtime_ns": 1791689328246368916,
+      "inode": 20456138594
+    },
+    "points3d.ply": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/points3d.ply",
+      "bytes": 18600254,
+      "mtime_ns": 1791688598112872918,
+      "inode": 20456138596
+    },
+    "points3d_dynamic_0.ply": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/points3d_dynamic_0.ply",
+      "bytes": 1128839,
+      "mtime_ns": 1791691187142363435,
+      "inode": 20456138598
+    },
+    "pose/0017000.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017000.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688461544192927,
+      "inode": 3366877024
+    },
+    "pose/0017001.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017001.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688464460470360,
+      "inode": 3366877025
+    },
+    "pose/0017002.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017002.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688467328743224,
+      "inode": 3366877026
+    },
+    "pose/0017003.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017003.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688470233019511,
+      "inode": 3366877027
+    },
+    "pose/0017004.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017004.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688473089291228,
+      "inode": 3367575615
+    },
+    "pose/0017005.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017005.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688475993567510,
+      "inode": 3367723342
+    },
+    "pose/0017006.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017006.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688479001853683,
+      "inode": 3367723343
+    },
+    "pose/0017007.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017007.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688481950134146,
+      "inode": 3367723344
+    },
+    "pose/0017008.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017008.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688484890413844,
+      "inode": 3367723345
+    },
+    "pose/0017009.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017009.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688487802690876,
+      "inode": 3367854065
+    },
+    "pose/0017010.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017010.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688490654962198,
+      "inode": 3367854066
+    },
+    "pose/0017011.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017011.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688493403223624,
+      "inode": 3367855427
+    },
+    "pose/0017012.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017012.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688496271496464,
+      "inode": 3367873786
+    },
+    "pose/0017013.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017013.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688499103765876,
+      "inode": 3367873787
+    },
+    "pose/0017014.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017014.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688501964037950,
+      "inode": 3367873788
+    },
+    "pose/0017015.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017015.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688504828310402,
+      "inode": 3367873789
+    },
+    "pose/0017016.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017016.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688507776590842,
+      "inode": 3367873790
+    },
+    "pose/0017017.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017017.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688510656864809,
+      "inode": 3367873791
+    },
+    "pose/0017018.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017018.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688513529138015,
+      "inode": 3367874880
+    },
+    "pose/0017019.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017019.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688516437414643,
+      "inode": 3367874881
+    },
+    "pose/0017020.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017020.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688519393695835,
+      "inode": 3367874895
+    },
+    "pose/0017021.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017021.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688522261968653,
+      "inode": 3367874897
+    },
+    "pose/0017022.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017022.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688525110239568,
+      "inode": 3367988211
+    },
+    "pose/0017023.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017023.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688527946509337,
+      "inode": 3367988212
+    },
+    "pose/0017024.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017024.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688530722773398,
+      "inode": 3367988213
+    },
+    "pose/0017025.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017025.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688533511038598,
+      "inode": 3367988214
+    },
+    "pose/0017026.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017026.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688536411314449,
+      "inode": 3367988215
+    },
+    "pose/0017027.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017027.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688539291588396,
+      "inode": 3367988216
+    },
+    "pose/0017028.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017028.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688542259870711,
+      "inode": 3367988217
+    },
+    "pose/0017029.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017029.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688545224582711,
+      "inode": 3367988218
+    },
+    "pose/0017030.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017030.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688547792449984,
+      "inode": 3367988287
+    },
+    "pose/0017031.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017031.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688550700753138,
+      "inode": 3368011901
+    },
+    "pose/0017032.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017032.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688553468774767,
+      "inode": 3368011902
+    },
+    "pose/0017033.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017033.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688556232720573,
+      "inode": 3368012290
+    },
+    "pose/0017034.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017034.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688558820352077,
+      "inode": 3368012291
+    },
+    "pose/0017035.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017035.txt",
+      "bytes": 407,
+      "mtime_ns": 1791688561712340391,
+      "inode": 3368012292
+    },
+    "pose/0017036.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017036.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688564592240408,
+      "inode": 3368012293
+    },
+    "pose/0017037.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017037.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688567508117948,
+      "inode": 3368012294
+    },
+    "pose/0017038.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017038.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688570335811352,
+      "inode": 3368012295
+    },
+    "pose/0017039.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017039.txt",
+      "bytes": 407,
+      "mtime_ns": 1791688573239536934,
+      "inode": 3368012296
+    },
+    "pose/0017040.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017040.txt",
+      "bytes": 407,
+      "mtime_ns": 1791688576055086196,
+      "inode": 3368012297
+    },
+    "pose/0017041.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017041.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688578674331902,
+      "inode": 3368012298
+    },
+    "pose/0017042.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017042.txt",
+      "bytes": 407,
+      "mtime_ns": 1791688581181390947,
+      "inode": 3368012299
+    },
+    "pose/0017043.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017043.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688583772503177,
+      "inode": 3368012318
+    },
+    "pose/0017044.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017044.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688586431646312,
+      "inode": 3368012319
+    },
+    "pose/0017045.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017045.txt",
+      "bytes": 406,
+      "mtime_ns": 1791688589319002593,
+      "inode": 3368012320
+    },
+    "pose/0017046.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017046.txt",
+      "bytes": 407,
+      "mtime_ns": 1791688592202296401,
+      "inode": 3368012321
+    },
+    "pose/0017047.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017047.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688595117569232,
+      "inode": 3368012322
+    },
+    "pose/0017048.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/pose/0017048.txt",
+      "bytes": 408,
+      "mtime_ns": 1791688597884623206,
+      "inode": 3368012323
+    },
+    "preparation_manifest.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/preparation_manifest.json",
+      "bytes": 25438,
+      "mtime_ns": 1791689359238071936,
+      "inode": 20456138600
+    },
+    "selected_actor_0.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/selected_actor_0.json",
+      "bytes": 2888,
+      "mtime_ns": 1791691145183912810,
+      "inode": 20456138602
+    },
+    "sgcm_input_validation.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sgcm_input_validation.json",
+      "bytes": 1325,
+      "mtime_ns": 1791691320734742247,
+      "inode": 20456138604
+    },
+    "sky/sky_0/0017000.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017000.png",
+      "bytes": 9418,
+      "mtime_ns": 1791684128278296968,
+      "inode": 12980064839
+    },
+    "sky/sky_0/0017001.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017001.png",
+      "bytes": 9377,
+      "mtime_ns": 1791684128658129194,
+      "inode": 12980064851
+    },
+    "sky/sky_0/0017002.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017002.png",
+      "bytes": 9486,
+      "mtime_ns": 1791684129041959650,
+      "inode": 12980064852
+    },
+    "sky/sky_0/0017003.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017003.png",
+      "bytes": 9554,
+      "mtime_ns": 1791684129425790057,
+      "inode": 12980064853
+    },
+    "sky/sky_0/0017004.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017004.png",
+      "bytes": 9655,
+      "mtime_ns": 1791684129817616933,
+      "inode": 12980064854
+    },
+    "sky/sky_0/0017005.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017005.png",
+      "bytes": 9537,
+      "mtime_ns": 1791684130213442012,
+      "inode": 12980064855
+    },
+    "sky/sky_0/0017006.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017006.png",
+      "bytes": 9587,
+      "mtime_ns": 1791684130601270600,
+      "inode": 12980064856
+    },
+    "sky/sky_0/0017007.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017007.png",
+      "bytes": 9546,
+      "mtime_ns": 1791684130985100956,
+      "inode": 12980064858
+    },
+    "sky/sky_0/0017008.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017008.png",
+      "bytes": 9545,
+      "mtime_ns": 1791684131364933031,
+      "inode": 12980064859
+    },
+    "sky/sky_0/0017009.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017009.png",
+      "bytes": 9665,
+      "mtime_ns": 1791684131752761566,
+      "inode": 12980064860
+    },
+    "sky/sky_0/0017010.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017010.png",
+      "bytes": 9612,
+      "mtime_ns": 1791684132140590083,
+      "inode": 12980064861
+    },
+    "sky/sky_0/0017011.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017011.png",
+      "bytes": 9573,
+      "mtime_ns": 1791684132524420335,
+      "inode": 12980064862
+    },
+    "sky/sky_0/0017012.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017012.png",
+      "bytes": 9665,
+      "mtime_ns": 1791684132912248818,
+      "inode": 12980064863
+    },
+    "sky/sky_0/0017013.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017013.png",
+      "bytes": 9733,
+      "mtime_ns": 1791684133296079030,
+      "inode": 12980064864
+    },
+    "sky/sky_0/0017014.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017014.png",
+      "bytes": 9771,
+      "mtime_ns": 1791684133679909230,
+      "inode": 12980064865
+    },
+    "sky/sky_0/0017015.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017015.png",
+      "bytes": 9825,
+      "mtime_ns": 1791684134067737653,
+      "inode": 12980064866
+    },
+    "sky/sky_0/0017016.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017016.png",
+      "bytes": 9647,
+      "mtime_ns": 1791684134455566031,
+      "inode": 12980064867
+    },
+    "sky/sky_0/0017017.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017017.png",
+      "bytes": 9793,
+      "mtime_ns": 1791684134839396180,
+      "inode": 12980064868
+    },
+    "sky/sky_0/0017018.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017018.png",
+      "bytes": 9739,
+      "mtime_ns": 1791684135227224530,
+      "inode": 12980064869
+    },
+    "sky/sky_0/0017019.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017019.png",
+      "bytes": 9895,
+      "mtime_ns": 1791684135611054627,
+      "inode": 12980064870
+    },
+    "sky/sky_0/0017020.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017020.png",
+      "bytes": 9780,
+      "mtime_ns": 1791684135994884724,
+      "inode": 12980064871
+    },
+    "sky/sky_0/0017021.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017021.png",
+      "bytes": 9559,
+      "mtime_ns": 1791689341290033050,
+      "inode": 12980064872
+    },
+    "sky/sky_0/0017022.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017022.png",
+      "bytes": 9729,
+      "mtime_ns": 1791689341954115338,
+      "inode": 12980064873
+    },
+    "sky/sky_0/0017023.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017023.png",
+      "bytes": 9988,
+      "mtime_ns": 1791689342614206777,
+      "inode": 12980064874
+    },
+    "sky/sky_0/0017024.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017024.png",
+      "bytes": 9814,
+      "mtime_ns": 1791689343278303636,
+      "inode": 12980064875
+    },
+    "sky/sky_0/0017025.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017025.png",
+      "bytes": 9979,
+      "mtime_ns": 1791689343942406290,
+      "inode": 12980064878
+    },
+    "sky/sky_0/0017026.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017026.png",
+      "bytes": 9779,
+      "mtime_ns": 1791689344622520012,
+      "inode": 12980064879
+    },
+    "sky/sky_0/0017027.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017027.png",
+      "bytes": 9713,
+      "mtime_ns": 1791689345278634128,
+      "inode": 12980064880
+    },
+    "sky/sky_0/0017028.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017028.png",
+      "bytes": 9646,
+      "mtime_ns": 1791689345942754682,
+      "inode": 12980064881
+    },
+    "sky/sky_0/0017029.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017029.png",
+      "bytes": 9380,
+      "mtime_ns": 1791689346594880273,
+      "inode": 12980064882
+    },
+    "sky/sky_0/0017030.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017030.png",
+      "bytes": 9180,
+      "mtime_ns": 1791689347255011041,
+      "inode": 12980064883
+    },
+    "sky/sky_0/0017031.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017031.png",
+      "bytes": 8860,
+      "mtime_ns": 1791689347915146507,
+      "inode": 12980064884
+    },
+    "sky/sky_0/0017032.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017032.png",
+      "bytes": 8497,
+      "mtime_ns": 1791689348583289830,
+      "inode": 12980064885
+    },
+    "sky/sky_0/0017033.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017033.png",
+      "bytes": 8441,
+      "mtime_ns": 1791689349243434795,
+      "inode": 12980064886
+    },
+    "sky/sky_0/0017034.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017034.png",
+      "bytes": 8492,
+      "mtime_ns": 1791689349911585812,
+      "inode": 12980064887
+    },
+    "sky/sky_0/0017035.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017035.png",
+      "bytes": 7898,
+      "mtime_ns": 1791689350583743203,
+      "inode": 12980064888
+    },
+    "sky/sky_0/0017036.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017036.png",
+      "bytes": 7377,
+      "mtime_ns": 1791689351247901742,
+      "inode": 12980064889
+    },
+    "sky/sky_0/0017037.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017037.png",
+      "bytes": 7146,
+      "mtime_ns": 1791689351916064986,
+      "inode": 12980090753
+    },
+    "sky/sky_0/0017038.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017038.png",
+      "bytes": 7422,
+      "mtime_ns": 1791689352584233074,
+      "inode": 12980090754
+    },
+    "sky/sky_0/0017039.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017039.png",
+      "bytes": 7070,
+      "mtime_ns": 1791689353248402781,
+      "inode": 12980090755
+    },
+    "sky/sky_0/0017040.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017040.png",
+      "bytes": 7459,
+      "mtime_ns": 1791689353900572603,
+      "inode": 12980090756
+    },
+    "sky/sky_0/0017041.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017041.png",
+      "bytes": 8056,
+      "mtime_ns": 1791689354580753950,
+      "inode": 12980090757
+    },
+    "sky/sky_0/0017042.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017042.png",
+      "bytes": 8367,
+      "mtime_ns": 1791689355284944370,
+      "inode": 12980090758
+    },
+    "sky/sky_0/0017043.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017043.png",
+      "bytes": 8218,
+      "mtime_ns": 1791689355925120114,
+      "inode": 12980090762
+    },
+    "sky/sky_0/0017044.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017044.png",
+      "bytes": 8389,
+      "mtime_ns": 1791689356601309571,
+      "inode": 12980090763
+    },
+    "sky/sky_0/0017045.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017045.png",
+      "bytes": 8638,
+      "mtime_ns": 1791689357265497733,
+      "inode": 12980090764
+    },
+    "sky/sky_0/0017046.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017046.png",
+      "bytes": 8829,
+      "mtime_ns": 1791689357913683728,
+      "inode": 12980090766
+    },
+    "sky/sky_0/0017047.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017047.png",
+      "bytes": 8903,
+      "mtime_ns": 1791689358577877543,
+      "inode": 12980090767
+    },
+    "sky/sky_0/0017048.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/sky/sky_0/0017048.png",
+      "bytes": 8635,
+      "mtime_ns": 1791689359234070743,
+      "inode": 12980090768
+    },
+    "timestamp/0017000.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017000.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688461544192927,
+      "inode": 5419410315
+    },
+    "timestamp/0017001.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017001.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688464460470360,
+      "inode": 5419410316
+    },
+    "timestamp/0017002.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017002.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688467328743224,
+      "inode": 5419410317
+    },
+    "timestamp/0017003.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017003.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688470233019511,
+      "inode": 5419410318
+    },
+    "timestamp/0017004.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017004.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688473089291228,
+      "inode": 5419410319
+    },
+    "timestamp/0017005.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017005.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688475993567510,
+      "inode": 5419410320
+    },
+    "timestamp/0017006.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017006.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688479001853683,
+      "inode": 5419410321
+    },
+    "timestamp/0017007.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017007.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688481950134146,
+      "inode": 5419410322
+    },
+    "timestamp/0017008.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017008.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688484890413844,
+      "inode": 5419410323
+    },
+    "timestamp/0017009.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017009.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688487802690876,
+      "inode": 5419410342
+    },
+    "timestamp/0017010.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017010.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688490654962198,
+      "inode": 5419410343
+    },
+    "timestamp/0017011.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017011.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688493403223624,
+      "inode": 5419410344
+    },
+    "timestamp/0017012.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017012.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688496271496464,
+      "inode": 5419410345
+    },
+    "timestamp/0017013.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017013.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688499103765876,
+      "inode": 5419410346
+    },
+    "timestamp/0017014.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017014.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688501964037950,
+      "inode": 5419410347
+    },
+    "timestamp/0017015.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017015.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688504828310402,
+      "inode": 5419410348
+    },
+    "timestamp/0017016.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017016.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688507776590842,
+      "inode": 5419410349
+    },
+    "timestamp/0017017.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017017.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688510656864809,
+      "inode": 5419410350
+    },
+    "timestamp/0017018.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017018.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688513529138015,
+      "inode": 5419410351
+    },
+    "timestamp/0017019.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017019.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688516437414643,
+      "inode": 5419410352
+    },
+    "timestamp/0017020.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017020.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688519393695835,
+      "inode": 5419410353
+    },
+    "timestamp/0017021.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017021.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688522261968653,
+      "inode": 5419410354
+    },
+    "timestamp/0017022.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017022.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688525110239568,
+      "inode": 5419410355
+    },
+    "timestamp/0017023.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017023.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688527946509337,
+      "inode": 5419410356
+    },
+    "timestamp/0017024.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017024.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688530722773398,
+      "inode": 5419410357
+    },
+    "timestamp/0017025.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017025.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688533511038598,
+      "inode": 5419410358
+    },
+    "timestamp/0017026.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017026.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688536411314449,
+      "inode": 5419410359
+    },
+    "timestamp/0017027.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017027.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688539291588396,
+      "inode": 5419410360
+    },
+    "timestamp/0017028.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017028.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688542259870711,
+      "inode": 5419410361
+    },
+    "timestamp/0017029.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017029.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688545224582711,
+      "inode": 5419410362
+    },
+    "timestamp/0017030.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017030.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688547792449984,
+      "inode": 5419410363
+    },
+    "timestamp/0017031.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017031.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688550700753138,
+      "inode": 5419410364
+    },
+    "timestamp/0017032.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017032.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688553468774767,
+      "inode": 5419410365
+    },
+    "timestamp/0017033.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017033.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688556232720573,
+      "inode": 5419410366
+    },
+    "timestamp/0017034.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017034.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688558820352077,
+      "inode": 5419410367
+    },
+    "timestamp/0017035.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017035.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688561712340391,
+      "inode": 5419413952
+    },
+    "timestamp/0017036.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017036.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688564592240408,
+      "inode": 5419413953
+    },
+    "timestamp/0017037.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017037.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688567508117948,
+      "inode": 5419413954
+    },
+    "timestamp/0017038.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017038.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688570335811352,
+      "inode": 5419413955
+    },
+    "timestamp/0017039.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017039.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688573239536934,
+      "inode": 5419413956
+    },
+    "timestamp/0017040.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017040.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688576055086196,
+      "inode": 5419413957
+    },
+    "timestamp/0017041.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017041.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688578674331902,
+      "inode": 5419413958
+    },
+    "timestamp/0017042.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017042.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688581181390947,
+      "inode": 5419413960
+    },
+    "timestamp/0017043.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017043.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688583772503177,
+      "inode": 5419413965
+    },
+    "timestamp/0017044.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017044.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688586431646312,
+      "inode": 5419413966
+    },
+    "timestamp/0017045.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017045.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688589319002593,
+      "inode": 5419413967
+    },
+    "timestamp/0017046.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017046.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688592206300928,
+      "inode": 5419413970
+    },
+    "timestamp/0017047.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017047.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688595117569232,
+      "inode": 5419413971
+    },
+    "timestamp/0017048.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/timestamp/0017048.txt",
+      "bytes": 16,
+      "mtime_ns": 1791688597884623206,
+      "inode": 5419413972
+    },
+    "transform_matrix.txt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/transform_matrix.txt",
+      "bytes": 264,
+      "mtime_ns": 1791694031148598195,
+      "inode": 20456138606
+    },
+    "validation.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/validation.json",
+      "bytes": 7685,
+      "mtime_ns": 1791689665999436967,
+      "inode": 20456138607
+    },
+    "velodyne/0017000.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017000.bin",
+      "bytes": 4257240,
+      "mtime_ns": 1791688461544192927,
+      "inode": 6488118075
+    },
+    "velodyne/0017001.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017001.bin",
+      "bytes": 4320696,
+      "mtime_ns": 1791688464460470360,
+      "inode": 6488118076
+    },
+    "velodyne/0017002.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017002.bin",
+      "bytes": 4302384,
+      "mtime_ns": 1791688467328743224,
+      "inode": 6488118077
+    },
+    "velodyne/0017003.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017003.bin",
+      "bytes": 4276176,
+      "mtime_ns": 1791688470233019511,
+      "inode": 6488118078
+    },
+    "velodyne/0017004.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017004.bin",
+      "bytes": 4274640,
+      "mtime_ns": 1791688473089291228,
+      "inode": 6488118079
+    },
+    "velodyne/0017005.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017005.bin",
+      "bytes": 4287624,
+      "mtime_ns": 1791688475993567510,
+      "inode": 6488118081
+    },
+    "velodyne/0017006.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017006.bin",
+      "bytes": 4303752,
+      "mtime_ns": 1791688479001853683,
+      "inode": 6488118082
+    },
+    "velodyne/0017007.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017007.bin",
+      "bytes": 4271304,
+      "mtime_ns": 1791688481950134146,
+      "inode": 6488118083
+    },
+    "velodyne/0017008.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017008.bin",
+      "bytes": 4302936,
+      "mtime_ns": 1791688484886413464,
+      "inode": 6488118085
+    },
+    "velodyne/0017009.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017009.bin",
+      "bytes": 4250640,
+      "mtime_ns": 1791688487802690876,
+      "inode": 6488118086
+    },
+    "velodyne/0017010.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017010.bin",
+      "bytes": 4271928,
+      "mtime_ns": 1791688490650961818,
+      "inode": 6488118084
+    },
+    "velodyne/0017011.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017011.bin",
+      "bytes": 4247016,
+      "mtime_ns": 1791688493403223624,
+      "inode": 6488118087
+    },
+    "velodyne/0017012.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017012.bin",
+      "bytes": 4272168,
+      "mtime_ns": 1791688496267496083,
+      "inode": 6488118088
+    },
+    "velodyne/0017013.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017013.bin",
+      "bytes": 4306704,
+      "mtime_ns": 1791688499103765876,
+      "inode": 6488118089
+    },
+    "velodyne/0017014.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017014.bin",
+      "bytes": 4263624,
+      "mtime_ns": 1791688501964037950,
+      "inode": 6488118090
+    },
+    "velodyne/0017015.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017015.bin",
+      "bytes": 4267968,
+      "mtime_ns": 1791688504824310021,
+      "inode": 6488118091
+    },
+    "velodyne/0017016.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017016.bin",
+      "bytes": 4327968,
+      "mtime_ns": 1791688507772590462,
+      "inode": 6488118092
+    },
+    "velodyne/0017017.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017017.bin",
+      "bytes": 4274184,
+      "mtime_ns": 1791688510656864809,
+      "inode": 6488118093
+    },
+    "velodyne/0017018.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017018.bin",
+      "bytes": 4239696,
+      "mtime_ns": 1791688513525137634,
+      "inode": 6488118094
+    },
+    "velodyne/0017019.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017019.bin",
+      "bytes": 4324608,
+      "mtime_ns": 1791688516433414263,
+      "inode": 6488118095
+    },
+    "velodyne/0017020.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017020.bin",
+      "bytes": 4297200,
+      "mtime_ns": 1791688519389695454,
+      "inode": 6488118096
+    },
+    "velodyne/0017021.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017021.bin",
+      "bytes": 4263384,
+      "mtime_ns": 1791688522257968273,
+      "inode": 6488118097
+    },
+    "velodyne/0017022.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017022.bin",
+      "bytes": 4224576,
+      "mtime_ns": 1791688525110239568,
+      "inode": 6488118098
+    },
+    "velodyne/0017023.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017023.bin",
+      "bytes": 4262832,
+      "mtime_ns": 1791688527942508957,
+      "inode": 6488118099
+    },
+    "velodyne/0017024.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017024.bin",
+      "bytes": 4326432,
+      "mtime_ns": 1791688530722773398,
+      "inode": 6488118100
+    },
+    "velodyne/0017025.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017025.bin",
+      "bytes": 4290888,
+      "mtime_ns": 1791688533507038218,
+      "inode": 6488118118
+    },
+    "velodyne/0017026.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017026.bin",
+      "bytes": 4231416,
+      "mtime_ns": 1791688536411314449,
+      "inode": 6488118119
+    },
+    "velodyne/0017027.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017027.bin",
+      "bytes": 4237728,
+      "mtime_ns": 1791688539287588015,
+      "inode": 6488118120
+    },
+    "velodyne/0017028.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017028.bin",
+      "bytes": 4250832,
+      "mtime_ns": 1791688542259870711,
+      "inode": 6488118121
+    },
+    "velodyne/0017029.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017029.bin",
+      "bytes": 4230600,
+      "mtime_ns": 1791688545224582711,
+      "inode": 6488118122
+    },
+    "velodyne/0017030.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017030.bin",
+      "bytes": 4215480,
+      "mtime_ns": 1791688547788443990,
+      "inode": 6488118123
+    },
+    "velodyne/0017031.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017031.bin",
+      "bytes": 4202424,
+      "mtime_ns": 1791688550696747259,
+      "inode": 6488118124
+    },
+    "velodyne/0017032.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017032.bin",
+      "bytes": 4208472,
+      "mtime_ns": 1791688553468774767,
+      "inode": 6488118125
+    },
+    "velodyne/0017033.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017033.bin",
+      "bytes": 4208352,
+      "mtime_ns": 1791688556228714916,
+      "inode": 6488118126
+    },
+    "velodyne/0017034.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017034.bin",
+      "bytes": 4193616,
+      "mtime_ns": 1791688558816346490,
+      "inode": 6488118127
+    },
+    "velodyne/0017035.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017035.bin",
+      "bytes": 4185672,
+      "mtime_ns": 1791688561708334910,
+      "inode": 6488118128
+    },
+    "velodyne/0017036.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017036.bin",
+      "bytes": 4191984,
+      "mtime_ns": 1791688564592240408,
+      "inode": 6488118129
+    },
+    "velodyne/0017037.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017037.bin",
+      "bytes": 4197672,
+      "mtime_ns": 1791688567504112671,
+      "inode": 6488118130
+    },
+    "velodyne/0017038.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017038.bin",
+      "bytes": 4198992,
+      "mtime_ns": 1791688570331806172,
+      "inode": 6488118131
+    },
+    "velodyne/0017039.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017039.bin",
+      "bytes": 4200024,
+      "mtime_ns": 1791688573235531850,
+      "inode": 6488118132
+    },
+    "velodyne/0017040.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017040.bin",
+      "bytes": 4195608,
+      "mtime_ns": 1791688576055086196,
+      "inode": 6488118133
+    },
+    "velodyne/0017041.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017041.bin",
+      "bytes": 4185744,
+      "mtime_ns": 1791688578670326972,
+      "inode": 6488118134
+    },
+    "velodyne/0017042.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017042.bin",
+      "bytes": 4196496,
+      "mtime_ns": 1791688581181390947,
+      "inode": 6488118135
+    },
+    "velodyne/0017043.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017043.bin",
+      "bytes": 4206768,
+      "mtime_ns": 1791688583768498397,
+      "inode": 6488118136
+    },
+    "velodyne/0017044.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017044.bin",
+      "bytes": 4224168,
+      "mtime_ns": 1791688586427641618,
+      "inode": 6488118137
+    },
+    "velodyne/0017045.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017045.bin",
+      "bytes": 4212168,
+      "mtime_ns": 1791688589314997983,
+      "inode": 6488118138
+    },
+    "velodyne/0017046.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017046.bin",
+      "bytes": 4187664,
+      "mtime_ns": 1791688592202296401,
+      "inode": 6488118139
+    },
+    "velodyne/0017047.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017047.bin",
+      "bytes": 4181328,
+      "mtime_ns": 1791688595113564787,
+      "inode": 6488118140
+    },
+    "velodyne/0017048.bin": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0017_000_048/velodyne/0017048.bin",
+      "bytes": 4175208,
+      "mtime_ns": 1791688597880618812,
+      "inode": 6488118141
+    }
+  },
+  "input_integrity_evidence": {
+    "original_inventory_sha256": "2d15bf009565c1b5a469309c35865361a0e1e97f2e37861ac51a117dbc9e5a89",
+    "inventory_files": 467,
+    "current_sizes_checked": true,
+    "checkpoint_large_file_hashes_repeated": true,
+    "source_full_hashes_repeated": true,
+    "note": "New-host CPU audit: all source/input hashes and all four checkpoint hashes are freshly checked; prior-host inodes are not reused."
+  },
+  "source_pins": {
+    "parent_snapshot_sha256": "e7ad85a0946e8878480f6c6338d1f999f64186a1a669415b96d79da913dc84a3",
+    "parent_git_commit": "560d57c3825ed2bdbc6a6602e0011ad51e8da60e",
+    "unchanged_train_sha256": "42b04bff87603ab9b2e2dcc22a92f76f57907122d746ae1cbb58872597017f93",
+    "infra_only_changes": {
+      "utils/paper_checkpoint.py": {
+        "parent_sha256": "b11f98545744b78287ac31edcb60987cdda6ce1fdb8c01b2f5296ea8615bd4d9",
+        "candidate_sha256": "38bb38dd81d5ae1df9f909b4e87ddb3582bc1d53da7a890949f5f311c8056bcc",
+        "reason": "Fail closed on any resolved config/type change and incomplete continuation before RNG/sampler restore"
+      }
+    },
+    "original_rasterizer": {
+      "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+      "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/auxiliary.h": "f3a1a046df7e68076ecb15f145aa682e51c7e69b0054d6cd59c3cadc217f918a",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.cu": "ab6bffce4fe0c9faae112db0de6600fc4b17ca0010e5af653ffe113f0f956fc1",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/backward.h": "b192824f7aac7e6e6f4e1c4c959d9b310ef75154d02f32c1696d5e204963a6b0",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/config.h": "f2112ec23236cabbd32ff4e70765fccd7e66bb5ce9664acf40339b0189b4ab62",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.cu": "732e8cec40d00e93ce9959428c8e451148c791c0eaea351b8eeff9db759d7a8d",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.h": "8570b9b4002e465e8083d56e962f88c4831463c735a80dced7f6f072a1256597",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer.h": "81845413068d573df4cc40dc3ea8909d774b56576107dc8770309ed1da813fa4",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.cu": "fc8f0f9b7905765e2b24b0aa7c7b52db591ee2cc14d97c66384b5e8fd91fdaed",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/rasterizer_impl.h": "58b97a9728e24d41602a2ac3e8eace025cfd3228de6e75033dc458d0303a46f4",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/diff_gaussian_rasterization/__init__.py": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/ext.cpp": "102d6ca2a07cf57717e5828c49a7100841cc0147f7373de768070f06bc4909ef",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.cu": "f965ec0d7e75a89dbeff7dbfc8382c15aa4d6feb7cf5adf05bdcb61ce5550874",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/rasterize_points.h": "e8edad2d0e23a0b88d89f8148350974407de5f285dcb3b8c74b9a9b8df992fc8",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/setup.py": "3bc4065d0ba274aca98a68930c8897f56110bd56f17c5d04c4b66c20bdf36e71",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/third_party/stbi_image_write.h": "24d110c51536eea49b99b3ef9eb717e3587338358d41b2596d5b1d1c0b0a18b8"
+    }
+  },
+  "checkpoint_loads": {
+    "static": 1,
+    "dynamic": 1,
+    "environment": 1,
+    "training_state": 1,
+    "map_location": "cpu"
+  },
+  "gpu_used": false,
+  "cuda_initialized": false,
+  "launched": false,
+  "child_output_created": false,
+  "pending_gates": [
+    "Root migration audit, actual genuine next-step acceptance, and baseline49 compatibility evidence bound to this candidate/binary.",
+    "Exclusive campaign/gpu_slot.lock at startup.",
+    "No conflicting process/GPU compute allocation at startup."
+  ],
+  "limitations": [
+    "CPU CUDA-RNG routing uses a stub; actual CUDA restore remains a runtime gate.",
+    "No uninterrupted versus resumed 50k numerical/bitwise equivalence claim.",
+    "Cross-GPU compatibility records actual old-PNG errors and does not claim bitwise training trajectory equivalence."
+  ]
+}
