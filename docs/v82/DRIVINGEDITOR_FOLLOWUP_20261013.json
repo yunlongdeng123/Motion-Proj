@@ -316,8 +316,8 @@
           "0029117"
         ],
         "anchor_pose_frame": "0029079",
-        "readiness_status": "PASS_ACTUAL_GPU_SCENE_AND_SGCM_BINDING_TRAINING",
-        "training_allowed_now": true,
+        "readiness_status": "REAL_TRAINING_COMPLETE_30000",
+        "training_allowed_now": false,
         "author_video": "https://github.com/user-attachments/assets/5aae487d-e05e-44ef-9566-e23da980f467",
         "identity_rule": "只接受结构、车型、连续帧与截图/作者视频匹配的真实 Waymo 输入，不以近似路口替代",
         "search_now": "Exact identity found; stop remaining first-record/temporal candidate search, retain existing budget ledger.",
@@ -361,9 +361,7 @@
           88,
           89
         ],
-        "training_gates_pending": [
-          "Full10k/20k/30k checkpoint/evaluation contracts; actual restoration not tested"
-        ],
+        "training_gates_pending": [],
         "cpu_gpu_used": false,
         "real_static_seed_points": 600000,
         "raw_source_LiDAR_points": 9372984,
@@ -415,16 +413,21 @@
           "source_receipts": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene0029_launch"
         },
         "execution": {
-          "status": "training",
+          "status": "complete",
           "iteration_at_confirmation": 1000,
           "pid": 124555,
           "started_utc": "2026-10-13T01:48:13.861401+00:00",
           "log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/scene0029_GN11_training.log",
           "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11",
-          "source_status_snapshot": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene0029_launch/status.json",
-          "checkpoints_saved_at_confirmation": [],
+          "source_status_snapshot": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/final_followup_20261013/red_report_metadata/terminal_evidence/status.json",
+          "checkpoints_saved_at_confirmation": [
+            10000,
+            20000,
+            30000
+          ],
           "restoration_verified": false,
-          "latest_resource_snapshot": {
+          "terminal_iteration": 30000,
+          "historical_1001_resource_snapshot": {
             "iteration": 7000,
             "status": "training",
             "pid": 124555,
@@ -442,7 +445,36 @@
             "resource_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_1001/memory_summary.json",
             "is_terminal_peak": false,
             "certified_3090_fit": false
+          },
+          "latest_confirmation": {
+            "iteration": 30000,
+            "status": "complete",
+            "PID_exited": true,
+            "all3node_contract_pass": true,
+            "wall_minutes": 82.61122567757654,
+            "allocated_peak_GiB": 5.629647731781006,
+            "reserved_peak_GiB": 6.513671875,
+            "process_sampled_peak_GiB": 6.740234375,
+            "device_sampled_peak_GiB": 6.76953125,
+            "final_static_points": 1030480,
+            "final_dynamic_points": 1084958,
+            "is_terminal_peak": true,
+            "certified_3090_fit": false,
+            "restoration_verified": false
           }
+        },
+        "terminal_iteration": 30000,
+        "terminal_run_complete": true,
+        "terminal_process_exited": true,
+        "restoration_verified": false,
+        "saved_HTML": "outputs/drivingeditor_red_GN11_30k/index.html",
+        "engineering_visual_review_status": "complete_all49_observed_and_all49_fixed_pose_times",
+        "terminal_results": {
+          "full_composite_psnr_db": 37.52385575626481,
+          "actor_composite_psnr_db": 31.15143637067688,
+          "actor_valid_frame_count": 32,
+          "empty_actor_frame_count": 17,
+          "static_psnr_db": 36.970135450818276
         }
       },
       {
@@ -513,8 +545,8 @@
           "0008071"
         ],
         "anchor_pose_frame": "0008033",
-        "readiness_status": "COMPLETE_30000_ALL3_NODE_CONTRACTS_AND_SAVED_FP32_EXPORT",
-        "training_allowed_now": true,
+        "readiness_status": "REAL_TRAINING_COMPLETE_30000",
+        "training_allowed_now": false,
         "actor_DEVA_ids": [
           77,
           82
@@ -570,7 +602,15 @@
             "status": "complete",
             "PID_exited": true,
             "all3node_contract_pass": true,
-            "complete_memory_summary": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene8_terminal/original_snapshot/memory_summary.json",
+            "wall_minutes": 84.44882881228502,
+            "allocated_peak_GiB": 4.99752950668335,
+            "reserved_peak_GiB": 5.7265625,
+            "process_sampled_peak_GiB": 5.82421875,
+            "device_sampled_peak_GiB": 5.775390625,
+            "final_static_points": 646337,
+            "final_dynamic_points": 1004003,
+            "is_terminal_peak": true,
+            "certified_3090_fit": false,
             "restoration_verified": false
           },
           "historical_0752_resource_snapshot": {
@@ -582,16 +622,24 @@
             ],
             "resource_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0750/scene0008_memory_summary_raw.json",
             "checkpoint_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0750/scene0008_10000_checkpoint_contract.json"
-          }
+          },
+          "terminal_iteration": 30000
         },
         "terminal_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene8_terminal/scene0008_terminal_summary.json",
         "restoration_verified": false,
         "human_verdict": null,
         "saved_HTML": "outputs/drivingeditor_GMC_GN11_30k/index.html",
-        "engineering_visual_review_status": "ENGINEERING_VISUAL_REVIEW_COMPLETE_WITH_LIMITATIONS",
+        "engineering_visual_review_status": "complete_all49_observed_and_all49_fixed_pose_times",
         "terminal_iteration": 30000,
         "terminal_run_complete": true,
-        "terminal_process_exited": true
+        "terminal_process_exited": true,
+        "terminal_results": {
+          "full_composite_psnr_db": 34.30823128791319,
+          "actor_composite_psnr_db": 29.698454069550206,
+          "actor_valid_frame_count": 39,
+          "empty_actor_frame_count": 10,
+          "static_psnr_db": 35.582228795662154
+        }
       }
     ],
     "config_rule": "从本次通过gate的GN11 effective_config取完整配置，冻结目标、权重、SGCM/NPS公式和schedule/LR/seed/point cap/reset；允许按sceneSpec改来源/输出/camera IDs/49frame清单/真实timestamps/anchor/actor先验metadata等必要数据绑定。",
@@ -599,7 +647,9 @@
     "other_scene_results_scope": "新scene只有GN11，不能声称该scene上已完成C00/GN11因果消融；报告本scene重建和分层质量及输入差异。",
     "failures": "新场景工程异常先停止owned队列、保留资产并定位修复；不自动改loss/分辨率、追加seed或补训网格。真实数据无法完成时记录具体缺口并暂停心跳等用户决定，不能假称两场景完成或误套原场景C00/GN11回退判据提前关机。",
     "start_order": "通过原四臂GN11 gate后先训已prepared的GMC scene0008；随后共享GPU锁完成红scene0029真实分割/prior和actualCPU readiness，再从零训red GN11。",
-    "missing_identity_policy": "GN11通过后可先跑已验证GMC场景；红车不可假替代。搜索预算耗尽仍未知时记录真实数据缺口，完成其余已授权工作后暂停心跳等用户决定，不把预算耗尽写成任务完成，也不据此提前适用两场景完成后的关机授权。"
+    "missing_identity_policy": "GN11通过后可先跑已验证GMC场景；红车不可假替代。搜索预算耗尽仍未知时记录真实数据缺口，完成其余已授权工作后暂停心跳等用户决定，不把预算耗尽写成任务完成，也不据此提前适用两场景完成后的关机授权。",
+    "status": "both_new_scenes_complete_30000_each",
+    "new_total_training_iterations_completed": 60000
   },
   "independent_runner_adaptation": {
     "current_code_findings": [
@@ -712,12 +762,12 @@
   "schema_version": 1,
   "task_id": "WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013",
   "run": "r1",
-  "updated_utc": "2026-10-13T02:04:33.059933+00:00",
+  "updated_utc": "2026-10-13T03:58:05.430970+00:00",
   "current_matrix_task": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
   "current_matrix_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
   "followup_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
   "ssh_alias": "wm-vgpu-1011",
-  "state": "GMC_complete30k_real_HTML_red_GN11_training_actual_GPU_bindings_verified",
+  "state": "six_30k_runs_complete_reports_reviewed_saved_power_pending",
   "gpu_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
   "user_authorization": {
     "date_local": "2026-10-13",
@@ -1112,7 +1162,7 @@
     }
   },
   "last_hourly_matrix_observation": {
-    "observed_utc": "2026-10-12T23:50:57.317796+00:00",
+    "observed_utc": "2026-10-13T03:41:20.721093+00:00",
     "root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
     "matrix": {
       "status": "all_four_arms_complete",
@@ -1159,14 +1209,14 @@
             "device_peak_used_bytes": 7067402240
           },
           "sampling": {
-            "interval_seconds": 1,
+            "interval_seconds": 1.0,
             "samples": 4975,
             "samples_with_errors": 0,
             "valid_device_samples": 4975,
             "valid_pid_present_samples": 4961,
             "phase_boundary_samples": 4,
             "sampled_peaks_are_lower_bounds": true,
-            "query_timeout_seconds": 2,
+            "query_timeout_seconds": 2.0,
             "nvidia_smi_executable": "/usr/bin/nvidia-smi",
             "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
           },
@@ -1262,7 +1312,7 @@
           },
           "error_count": 0,
           "extra": {
-            "static_points": 986061,
+            "static_points": 986061.0,
             "iter_forward_backward_ms": 137.46502685546875,
             "iteration": 30000,
             "render_static_points": 986061,
@@ -1314,14 +1364,14 @@
             "device_peak_used_bytes": 7400849408
           },
           "sampling": {
-            "interval_seconds": 1,
+            "interval_seconds": 1.0,
             "samples": 5170,
             "samples_with_errors": 0,
             "valid_device_samples": 5170,
             "valid_pid_present_samples": 5154,
             "phase_boundary_samples": 5,
             "sampled_peaks_are_lower_bounds": true,
-            "query_timeout_seconds": 2,
+            "query_timeout_seconds": 2.0,
             "nvidia_smi_executable": "/usr/bin/nvidia-smi",
             "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
           },
@@ -1417,7 +1467,7 @@
           },
           "error_count": 0,
           "extra": {
-            "static_points": 1156723,
+            "static_points": 1156723.0,
             "iter_forward_backward_ms": 138.85923767089844,
             "iteration": 30000,
             "render_static_points": 1156723,
@@ -1469,14 +1519,14 @@
             "device_peak_used_bytes": 7168065536
           },
           "sampling": {
-            "interval_seconds": 1,
+            "interval_seconds": 1.0,
             "samples": 4930,
             "samples_with_errors": 0,
             "valid_device_samples": 4930,
             "valid_pid_present_samples": 4915,
             "phase_boundary_samples": 3,
             "sampled_peaks_are_lower_bounds": true,
-            "query_timeout_seconds": 2,
+            "query_timeout_seconds": 2.0,
             "nvidia_smi_executable": "/usr/bin/nvidia-smi",
             "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
           },
@@ -1572,7 +1622,7 @@
           },
           "error_count": 0,
           "extra": {
-            "static_points": 1024184,
+            "static_points": 1024184.0,
             "iter_forward_backward_ms": 146.77980041503906,
             "iteration": 30000,
             "render_static_points": 1024184,
@@ -1624,14 +1674,14 @@
             "device_peak_used_bytes": 7354712064
           },
           "sampling": {
-            "interval_seconds": 1,
+            "interval_seconds": 1.0,
             "samples": 5093,
             "samples_with_errors": 0,
             "valid_device_samples": 5093,
             "valid_pid_present_samples": 5079,
             "phase_boundary_samples": 4,
             "sampled_peaks_are_lower_bounds": true,
-            "query_timeout_seconds": 2,
+            "query_timeout_seconds": 2.0,
             "nvidia_smi_executable": "/usr/bin/nvidia-smi",
             "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
           },
@@ -1727,7 +1777,7 @@
           },
           "error_count": 0,
           "extra": {
-            "static_points": 1089276,
+            "static_points": 1089276.0,
             "iter_forward_backward_ms": 151.849853515625,
             "iteration": 30000,
             "render_static_points": 1089276,
@@ -1742,11 +1792,11 @@
     }
   },
   "last_hourly_followup_observation": {
-    "created_utc": "2026-10-13T02:01:33.633425+00:00",
+    "created_utc": "2026-10-13T03:41:20.694800+00:00",
     "root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
     "read_only": true,
     "gpu_used": false,
-    "disk_free_GiB": 38.46668243408203,
+    "disk_free_GiB": 31.654342651367188,
     "scene0008_CPU": {
       "status": "PASS_CPU_PREPARATION_TRAINING_GATED",
       "train_cameras": 49,
@@ -1991,16 +2041,16 @@
       },
       {
         "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11",
-        "status": "training",
-        "iteration": 6600,
-        "wall_seconds": 785.5285758925602,
+        "status": "complete",
+        "iteration": 30000,
+        "wall_seconds": 4956.673540654592,
         "pid": 124555,
         "worker_pid": null,
         "error": null,
         "worker_process": {
           "pid": 124555,
-          "alive": true,
-          "matches_owned_job": true
+          "alive": false,
+          "matches_owned_job": false
         }
       }
     ]
@@ -2015,5 +2065,24 @@
     "evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847",
     "red_actual_GPU_binding_verified": true
   },
-  "last_updated_singapore": "2026-10-13T09:41:42.727835+08:00"
+  "last_updated_singapore": "2026-10-13T11:58:05.430970+08:00",
+  "closeout_failure_ledger_delta": "none",
+  "final_closeout": {
+    "status": "SIX_REAL_RUNS_COMPLETE_REPORTS_REVIEWED",
+    "training_steps": 180000,
+    "checkpoint_bundles_checked": 18,
+    "human_GN11_verdict": null,
+    "restoration_verified": false,
+    "3090_initial_screen_passed": true,
+    "target_3090_measured": false,
+    "observed_peak_with_preprocessing_GiB": 10.279296875,
+    "outputs": [
+      "outputs/DrivingEditor_final_report.html",
+      "outputs/DrivingEditor_final_reports.zip",
+      "outputs/drivingeditor_red_GN11_30k/index.html"
+    ],
+    "evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/final_followup_20261013",
+    "old_preparation_receipts_are_historical": true,
+    "power_signal_sent": false
+  }
 }

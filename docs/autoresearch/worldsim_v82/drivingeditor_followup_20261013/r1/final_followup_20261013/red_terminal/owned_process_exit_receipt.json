@@ -1,0 +1,107 @@
+{
+  "status": "PASS_ALL_OWNED_RED_TRAINING_AND_CPU_COLLECTOR_PROCESSES_EXITED",
+  "observed_utc": "2026-10-13T03:16:08.555727+00:00",
+  "processes": [
+    {
+      "pid": 124555,
+      "roles": [
+        "authorized_last_red_training"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 146207,
+      "roles": [
+        "red_terminal_20261013_1056:collector"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147156,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:collector"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147157,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:three_node_original_contract_audit"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147158,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:single_pass_training_extract"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147159,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:saved_spec_terminal_summary"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147160,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:real_saved_FP32_CPU_export"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147187,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:real_saved_viewer_red_labels"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    },
+    {
+      "pid": 147188,
+      "roles": [
+        "red_terminal_20261013_1056_attempt2:decode_and_embedded_report_verification"
+      ],
+      "alive": false,
+      "proc_state": "absent",
+      "command": ""
+    }
+  ],
+  "attempts": [
+    {
+      "metadata": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056",
+      "status": "engineering_stopped_actual_partial_assets_preserved",
+      "collector_pid": 146207,
+      "error": "AssertionError()",
+      "active_cpu_child_pid": null
+    },
+    {
+      "metadata": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2",
+      "status": "PASS_RED_30K_TERMINAL_AND_REAL_SAVED_CPU_REPORT",
+      "collector_pid": 147156,
+      "error": null,
+      "active_cpu_child_pid": null
+    }
+  ],
+  "no_training_progress_read": true,
+  "GPU_used": false,
+  "training_started": false,
+  "human_verdict": null
+}

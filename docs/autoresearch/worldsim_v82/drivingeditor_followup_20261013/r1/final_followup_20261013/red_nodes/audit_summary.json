@@ -1,0 +1,245 @@
+{
+  "audit_status": "TWO_NODE_STAT_HEADER_PASS",
+  "checked_nodes": [
+    10000,
+    20000
+  ],
+  "terminal_complete": false,
+  "observed": "2026-10-13T11:04:45.688751+08:00",
+  "errors": 0,
+  "recent_errors": [],
+  "training_status": "training",
+  "iteration": 28300,
+  "wall_seconds": 4578.8560367412865,
+  "speed_window": {
+    "first_iteration": 28201,
+    "last_iteration": 28300,
+    "wall_seconds": 16.147831918671727,
+    "wall_iterations_per_second": 6.19278182381686,
+    "includes_initialization": false,
+    "includes_evaluation": false
+  },
+  "overall_wall_iterations_per_second": 6.180583048018419,
+  "iter_forward_backward_ms": 75.93411254882812,
+  "points": {
+    "static_points": 1030480.0,
+    "iter_forward_backward_ms": 75.93411254882812,
+    "iteration": 28300,
+    "render_static_points": 1030480,
+    "render_dynamic_points": 1084958,
+    "render_width": 480,
+    "render_height": 320
+  },
+  "pytorch": {
+    "peak_allocated_bytes": 6044788224,
+    "peak_reserved_bytes": 6994001920,
+    "current_allocated_bytes": 2469654016,
+    "current_reserved_bytes": 3193962496
+  },
+  "sampled_NV": {
+    "device_uuid": "GPU-0fbfefde-19fa-668a-9ff6-28039b63459b",
+    "device_index": 0,
+    "device_name": "NVIDIA GeForce RTX 4080 SUPER",
+    "device_total_bytes": 34351349760,
+    "current_process_used_bytes": 5937037312,
+    "current_device_used_bytes": 5989466112,
+    "process_peak_used_bytes": 7237271552,
+    "device_peak_used_bytes": 7268728832
+  },
+  "sampling": {
+    "interval_seconds": 1.0,
+    "samples": 4579,
+    "samples_with_errors": 0,
+    "valid_device_samples": 4579,
+    "valid_pid_present_samples": 4564,
+    "phase_boundary_samples": 2,
+    "sampled_peaks_are_lower_bounds": true,
+    "query_timeout_seconds": 2.0,
+    "nvidia_smi_executable": "/usr/bin/nvidia-smi",
+    "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
+  },
+  "phases": [
+    {
+      "phase": "initialization",
+      "count": 1,
+      "active_count": null,
+      "failed_count": 0,
+      "sample_count": 16,
+      "wall_seconds": 16.093335962854326,
+      "wall_seconds_exclusive": 16.093335962854326,
+      "peak_allocated_bytes": 350989824,
+      "peak_reserved_bytes": 446693376,
+      "current_allocated_bytes": 337981440,
+      "current_reserved_bytes": 446693376,
+      "NV_process_sampled_peak_bytes_lower_bound": 411041792,
+      "NV_device_sampled_peak_bytes_lower_bound": 421527552,
+      "NV_sampled_peaks_are_lower_bounds": true,
+      "missing_NV_phase_values_mean": "not sampled/attributed; not zero"
+    },
+    {
+      "phase": "gradient_diagnostics",
+      "count": 15,
+      "active_count": null,
+      "failed_count": 0,
+      "sample_count": 0,
+      "wall_seconds": 0.39406730979681015,
+      "wall_seconds_exclusive": 0.39406730979681015,
+      "peak_allocated_bytes": 5354319360,
+      "peak_reserved_bytes": 6031409152,
+      "current_allocated_bytes": 4222263296,
+      "current_reserved_bytes": 5024776192,
+      "NV_process_sampled_peak_bytes_lower_bound": null,
+      "NV_device_sampled_peak_bytes_lower_bound": null,
+      "NV_sampled_peaks_are_lower_bounds": true,
+      "missing_NV_phase_values_mean": "not sampled/attributed; not zero"
+    },
+    {
+      "phase": "checkpoint",
+      "count": 6,
+      "active_count": null,
+      "failed_count": 0,
+      "sample_count": 13,
+      "wall_seconds": 13.200775652192533,
+      "wall_seconds_exclusive": 13.200775652192533,
+      "peak_allocated_bytes": 2710886400,
+      "peak_reserved_bytes": 4771020800,
+      "current_allocated_bytes": 2293379584,
+      "current_reserved_bytes": 4347396096,
+      "NV_process_sampled_peak_bytes_lower_bound": 4269801472,
+      "NV_device_sampled_peak_bytes_lower_bound": 4280287232,
+      "NV_sampled_peaks_are_lower_bounds": true,
+      "missing_NV_phase_values_mean": "not sampled/attributed; not zero"
+    },
+    {
+      "phase": "static_time_eval",
+      "count": 2,
+      "active_count": null,
+      "failed_count": 0,
+      "sample_count": 13,
+      "wall_seconds": 13.600710707716644,
+      "wall_seconds_exclusive": 13.600710707716644,
+      "peak_allocated_bytes": 4402380288,
+      "peak_reserved_bytes": 4771020800,
+      "current_allocated_bytes": 2357722624,
+      "current_reserved_bytes": 4347396096,
+      "NV_process_sampled_peak_bytes_lower_bound": 5140119552,
+      "NV_device_sampled_peak_bytes_lower_bound": 5150605312,
+      "NV_sampled_peaks_are_lower_bounds": true,
+      "missing_NV_phase_values_mean": "not sampled/attributed; not zero"
+    },
+    {
+      "phase": "photo_eval",
+      "count": 2,
+      "active_count": null,
+      "failed_count": 0,
+      "sample_count": 191,
+      "wall_seconds": 191.839455133304,
+      "wall_seconds_exclusive": 178.23874442558736,
+      "peak_allocated_bytes": 4402380288,
+      "peak_reserved_bytes": 4771020800,
+      "current_allocated_bytes": 2293379584,
+      "current_reserved_bytes": 4347396096,
+      "NV_process_sampled_peak_bytes_lower_bound": 5140119552,
+      "NV_device_sampled_peak_bytes_lower_bound": 5150605312,
+      "NV_sampled_peaks_are_lower_bounds": true,
+      "missing_NV_phase_values_mean": "not sampled/attributed; not zero"
+    },
+    {
+      "phase": "training",
+      "count": 0,
+      "active_count": 1,
+      "failed_count": 0,
+      "sample_count": 4561,
+      "wall_seconds": 4562.756278990768,
+      "wall_seconds_exclusive": 4357.321980895475,
+      "peak_allocated_bytes": 6044788224,
+      "peak_reserved_bytes": 6994001920,
+      "current_allocated_bytes": 2469654016,
+      "current_reserved_bytes": 3193962496,
+      "NV_process_sampled_peak_bytes_lower_bound": 7237271552,
+      "NV_device_sampled_peak_bytes_lower_bound": 7268728832,
+      "NV_sampled_peaks_are_lower_bounds": true,
+      "missing_NV_phase_values_mean": "not sampled/attributed; not zero"
+    }
+  ],
+  "nodes": [
+    {
+      "step": 10000,
+      "status": "PASS_COMPLETED_NODE_STAT_AND_HEADER_CONTRACT",
+      "component_stat_event_bytes": [
+        {
+          "component": "static",
+          "stat_bytes": 754680408,
+          "event_bytes": 754680408,
+          "header16_hex": "504b0304000008080000000000000000"
+        },
+        {
+          "component": "dynamic",
+          "stat_bytes": 850618974,
+          "event_bytes": 850618974,
+          "header16_hex": "504b0304000008080000000000000000"
+        },
+        {
+          "component": "environment",
+          "stat_bytes": 226494608,
+          "event_bytes": 226494608,
+          "header16_hex": "504b0304000008080000000000000000"
+        },
+        {
+          "component": "training_state",
+          "stat_bytes": 44056,
+          "event_bytes": 44056,
+          "header16_hex": "504b0304000008080000000000000000"
+        }
+      ],
+      "frames": 49,
+      "PNG_IHDR": 196,
+      "raw_NPZ": 49,
+      "fixed_NPZ": 49,
+      "anchor": "0029079",
+      "anchor_time": -0.28,
+      "SGCM_first_source_pose": "0029069",
+      "failure_count": 0
+    },
+    {
+      "step": 20000,
+      "status": "PASS_COMPLETED_NODE_STAT_AND_HEADER_CONTRACT",
+      "component_stat_event_bytes": [
+        {
+          "component": "static",
+          "stat_bytes": 817184088,
+          "event_bytes": 817184088,
+          "header16_hex": "504b0304000008080000000000000000"
+        },
+        {
+          "component": "dynamic",
+          "stat_bytes": 850618974,
+          "event_bytes": 850618974,
+          "header16_hex": "504b0304000008080000000000000000"
+        },
+        {
+          "component": "environment",
+          "stat_bytes": 226494608,
+          "event_bytes": 226494608,
+          "header16_hex": "504b0304000008080000000000000000"
+        },
+        {
+          "component": "training_state",
+          "stat_bytes": 44056,
+          "event_bytes": 44056,
+          "header16_hex": "504b0304000008080000000000000000"
+        }
+      ],
+      "frames": 49,
+      "PNG_IHDR": 196,
+      "raw_NPZ": 49,
+      "fixed_NPZ": 49,
+      "anchor": "0029079",
+      "anchor_time": -0.28,
+      "SGCM_first_source_pose": "0029069",
+      "failure_count": 0
+    }
+  ],
+  "restoration_verified": false,
+  "human_quality_verdict": null
+}

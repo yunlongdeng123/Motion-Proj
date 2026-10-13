@@ -1,0 +1,200 @@
+{
+  "status": "PASS_LOCAL_RED_REPORT_TRANSFER_ASSETS_MANIFEST_AND_JS_SYNTAX",
+  "observed_utc": "2026-10-13T03:16:08.987898+00:00",
+  "report": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_red_GN11_30k",
+  "archive_stat_bytes": 51221463,
+  "source_scene": "scene0029_069_117",
+  "raw_range": [
+    69,
+    117
+  ],
+  "anchor": "0029079",
+  "PNG_decode_count": 441,
+  "valid_actor_frames": 32,
+  "empty_actor_frames": 17,
+  "embedded_manifest_matches": true,
+  "architecture_svg_parses": true,
+  "JS_syntax_command": [
+    "node",
+    "--check",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_1056\\red_terminal\\local_viewer_runtime.js"
+  ],
+  "JS_syntax_returncode": 0,
+  "owned_training_and_collector_exit": {
+    "status": "PASS_ALL_OWNED_RED_TRAINING_AND_CPU_COLLECTOR_PROCESSES_EXITED",
+    "observed_utc": "2026-10-13T03:16:08.555727+00:00",
+    "processes": [
+      {
+        "pid": 124555,
+        "roles": [
+          "authorized_last_red_training"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 146207,
+        "roles": [
+          "red_terminal_20261013_1056:collector"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147156,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:collector"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147157,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:three_node_original_contract_audit"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147158,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:single_pass_training_extract"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147159,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:saved_spec_terminal_summary"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147160,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:real_saved_FP32_CPU_export"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147187,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:real_saved_viewer_red_labels"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      },
+      {
+        "pid": 147188,
+        "roles": [
+          "red_terminal_20261013_1056_attempt2:decode_and_embedded_report_verification"
+        ],
+        "alive": false,
+        "proc_state": "absent",
+        "command": ""
+      }
+    ],
+    "attempts": [
+      {
+        "metadata": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056",
+        "status": "engineering_stopped_actual_partial_assets_preserved",
+        "collector_pid": 146207,
+        "error": "AssertionError()",
+        "active_cpu_child_pid": null
+      },
+      {
+        "metadata": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2",
+        "status": "PASS_RED_30K_TERMINAL_AND_REAL_SAVED_CPU_REPORT",
+        "collector_pid": 147156,
+        "error": null,
+        "active_cpu_child_pid": null
+      }
+    ],
+    "no_training_progress_read": true,
+    "GPU_used": false,
+    "training_started": false,
+    "human_verdict": null
+  },
+  "browser_quality_checked_by_this_agent": false,
+  "FP32_metric_replay": {
+    "status": "PASS_SAVED_FP32_CPU_EXPORT",
+    "completion_contract_reused": true,
+    "completion_contract_observed_singapore": "2026-10-13T11:12:30.168883+08:00",
+    "original_completion_contract_actual_result": {
+      "status": "FOLLOWUP_COMPLETE_CONTRACT_PASS",
+      "scene_id": "scene0029_069_117",
+      "nodes": [
+        10000,
+        20000,
+        30000
+      ],
+      "frames_each": 49,
+      "restoration_verified": false
+    },
+    "observed_all_finite_FP32_frames": 49,
+    "static_time_all_finite_FP32_frames": 49,
+    "all_saved_arrays_finite_including_depth": true,
+    "regional_numeric_metrics_recomputed_and_matched": 2200,
+    "regional_max_abs_metric_replay_error": 0.0,
+    "static_time_metrics_recomputed_and_matched": 147,
+    "static_time_metric_protocol": "RGB differences from FP32 clip[0,1]; raw unmasked alpha differences",
+    "static_time_max_abs_metric_replay_error": 0.0,
+    "full_FP32_PSNR_abs_difference_vs_saved_photo_eval": 9.711795811995216e-07,
+    "raw_observed_array_extrema": {
+      "gt": {
+        "min": 0.003921568859368563,
+        "max": 1.0
+      },
+      "composite": {
+        "min": 0.00027791946195065975,
+        "max": 1.2250736951828003
+      },
+      "static": {
+        "min": 0.008334951475262642,
+        "max": 1.1080803871154785
+      },
+      "dynamic": {
+        "min": 0.0,
+        "max": 1.2018738985061646
+      },
+      "alpha_d": {
+        "min": 0.0,
+        "max": 0.9999009966850281
+      },
+      "alpha_s": {
+        "min": 0.0,
+        "max": 0.9999006986618042
+      },
+      "depth_accum_model": {
+        "min": 0.0,
+        "max": 8.886455535888672
+      }
+    },
+    "empty_regions_allowed_only_with_pixel_count_zero": true,
+    "PNG_images": 441,
+    "GPU_used": false,
+    "Torch_imported": false,
+    "checkpoint_loaded": false,
+    "rerender_started": false,
+    "training_started": false,
+    "restoration_verified": false,
+    "human_verdict": null
+  },
+  "restoration_verified": false,
+  "actual_model_Adam_RNG_restore_verified": false,
+  "human_verdict": null,
+  "GPU_used": false,
+  "new_hash_or_fingerprint_computed": false
+}

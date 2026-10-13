@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "collector_pid": 147156,
+  "owned_training_pid": 124555,
+  "run": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11",
+  "report": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013",
+  "metadata": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2",
+  "collector_log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2/collector.stdout.log",
+  "stages": [
+    {
+      "name": "three_node_original_contract_audit",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_terminal_20261013/audit_red_terminal_readonly.py"
+      ],
+      "started_utc": "2026-10-13T03:12:29.845851+00:00",
+      "pid": 147157,
+      "returncode": 0,
+      "completed_utc": "2026-10-13T03:12:30.176284+00:00"
+    },
+    {
+      "name": "single_pass_training_extract",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_terminal_20261013/extract_red_training_rows_readonly.py"
+      ],
+      "started_utc": "2026-10-13T03:12:30.180232+00:00",
+      "pid": 147158,
+      "returncode": 0,
+      "completed_utc": "2026-10-13T03:12:32.204324+00:00"
+    },
+    {
+      "name": "saved_spec_terminal_summary",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_terminal_20261013/summarize_red_terminal_cpu.py",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2"
+      ],
+      "started_utc": "2026-10-13T03:12:32.221592+00:00",
+      "pid": 147159,
+      "returncode": 0,
+      "completed_utc": "2026-10-13T03:12:32.328725+00:00"
+    },
+    {
+      "name": "real_saved_FP32_CPU_export",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/gmc_saved_cpu_20261013_0905/export_saved_followup_cpu.py",
+        "--source",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013",
+        "--verified-contract",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2/scene0029_10000_20000_30000_completion_contract.json",
+        "--scene-label",
+        "红车",
+        "--architecture",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_terminal_20261013/architecture-components.svg"
+      ],
+      "started_utc": "2026-10-13T03:12:32.329754+00:00",
+      "pid": 147160,
+      "returncode": 0,
+      "completed_utc": "2026-10-13T03:12:48.224421+00:00"
+    },
+    {
+      "name": "real_saved_viewer_red_labels",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_terminal_20261013/build_red_saved_viewer.py",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013"
+      ],
+      "started_utc": "2026-10-13T03:12:48.248680+00:00",
+      "pid": 147187,
+      "returncode": 0,
+      "completed_utc": "2026-10-13T03:12:48.390344+00:00"
+    },
+    {
+      "name": "decode_and_embedded_report_verification",
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_terminal_20261013/verify_red_saved_report.py",
+        "--report",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013",
+        "--js",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013/viewer_runtime.js",
+        "--receipt",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013/asset_verification.json"
+      ],
+      "started_utc": "2026-10-13T03:12:48.391468+00:00",
+      "pid": 147188,
+      "returncode": 0,
+      "completed_utc": "2026-10-13T03:12:50.331025+00:00"
+    }
+  ],
+  "GPU_used": false,
+  "Torch_imported": false,
+  "training_started": false,
+  "continuous_training_polling": false,
+  "restoration_verified": false,
+  "new_hash_or_fingerprint_computed": false,
+  "human_verdict": null,
+  "prior_tooling_attempt_preserved": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056",
+  "status": "PASS_RED_30K_TERMINAL_AND_REAL_SAVED_CPU_REPORT",
+  "updated_utc": "2026-10-13T03:12:53.208681+00:00",
+  "owned_training_exit_check": {
+    "method": "bounded_proc_exit_wait",
+    "pidfd_available": false,
+    "owner_already_exited": true
+  },
+  "active_cpu_child_pid": null,
+  "result_json": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_terminal_20261013_1056_attempt2/result.json",
+  "report_archive": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/red_gn11_30k_saved_cpu_20261013.tar.gz"
+}

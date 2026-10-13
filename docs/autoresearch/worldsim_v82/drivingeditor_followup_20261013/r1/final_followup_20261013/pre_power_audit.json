@@ -1,0 +1,281 @@
+{
+  "status": "READONLY_PRE_POWER_AUDIT",
+  "observed_utc": "2026-10-13T03:31:48.964051+00:00",
+  "host": "wm-vgpu-1011",
+  "audit_pid": 147754,
+  "owned_processes": [
+    {
+      "pid": 2705,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 24918,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 49050,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 56518,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 58770,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 72405,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 96504,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 108901,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 120796,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 120825,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 120901,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 122026,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 124555,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 146207,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147156,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147157,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147158,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147159,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147160,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147187,
+      "state": "absent",
+      "command": [],
+      "running": false
+    },
+    {
+      "pid": 147188,
+      "state": "absent",
+      "command": [],
+      "running": false
+    }
+  ],
+  "any_owned_process_running": false,
+  "all_processes": [
+    {
+      "pid": 1,
+      "command": [
+        "bash",
+        "/init/boot/boot.sh"
+      ],
+      "state": "S",
+      "ppid": 0
+    },
+    {
+      "pid": 857,
+      "command": [
+        "/bin/supervisord",
+        "-c",
+        "/init/supervisor/supervisor.ini"
+      ],
+      "state": "S",
+      "ppid": 1
+    },
+    {
+      "pid": 871,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "/root/miniconda3/bin/jupyter-lab",
+        "--allow-root",
+        "--config=/init/jupyter/jupyter_config.py"
+      ],
+      "state": "S",
+      "ppid": 857
+    },
+    {
+      "pid": 879,
+      "command": [
+        "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+      ],
+      "state": "S",
+      "ppid": 857
+    },
+    {
+      "pid": 880,
+      "command": [
+        "/root/miniconda3/bin/python",
+        "/root/miniconda3/bin/tensorboard",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "6007",
+        "--logdir",
+        "/root/tf-logs"
+      ],
+      "state": "S",
+      "ppid": 857
+    },
+    {
+      "pid": 881,
+      "command": [
+        "autopanel",
+        "serve",
+        "--work-dir=/root/autodl-tmp",
+        "--cache-dir=/root/autodl-tmp"
+      ],
+      "state": "S",
+      "ppid": 857
+    },
+    {
+      "pid": 882,
+      "command": [
+        "proxy",
+        "-c",
+        "/init/proxy/proxy-hot-backup.ini"
+      ],
+      "state": "S",
+      "ppid": 857
+    },
+    {
+      "pid": 883,
+      "command": [
+        "proxy",
+        "-c",
+        "/init/proxy/proxy.ini"
+      ],
+      "state": "S",
+      "ppid": 857
+    },
+    {
+      "pid": 993,
+      "command": [
+        "/root/miniconda3/lib/python3.10/site-packages/tensorboard_data_server/bin/server",
+        "--logdir=/root/tf-logs",
+        "--reload=5",
+        "--samples-per-plugin=",
+        "--port=0",
+        "--port-file=/tmp/tensorboard_data_server_4ysodhu4/port",
+        "--die-after-stdin",
+        "--error-file=/tmp/tensorboard_data_server_4ysodhu4/startup_error"
+      ],
+      "state": "S",
+      "ppid": 880
+    },
+    {
+      "pid": 147742,
+      "command": [
+        "sshd: root@notty"
+      ],
+      "state": "S",
+      "ppid": 879
+    },
+    {
+      "pid": 147753,
+      "command": [
+        "bash",
+        "-c",
+        "CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/audit_pre_power_20261013.py > /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/pre_power_audit_20261013.json"
+      ],
+      "state": "S",
+      "ppid": 147742
+    },
+    {
+      "pid": 147754,
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/audit_pre_power_20261013.py"
+      ],
+      "state": "R",
+      "ppid": 147753
+    }
+  ],
+  "supervisord_candidates": [
+    {
+      "pid": 857,
+      "command": [
+        "/bin/supervisord",
+        "-c",
+        "/init/supervisor/supervisor.ini"
+      ],
+      "state": "S",
+      "ppid": 1
+    }
+  ],
+  "GPU_compute_processes": "",
+  "shared_GPU_slot_free": true,
+  "shutdown_vendor_script": "rm -rf /root/.local/share/Trash \necho \"[$(date +\"%Y-%m-%d %H:%M:%S\")] user execute shutdown command in container!\" > /proc/1/fd/1 \nps -ef | grep supervisord | grep -v grep | awk '{print $2}' | xargs kill \n",
+  "signals_sent": false,
+  "deletion_performed": false,
+  "human_verdict": null
+}

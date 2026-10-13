@@ -1,0 +1,83 @@
+{
+  "status": "REAL_REQUIRED49_LAYERED_AND_FIXED49_ENGINEERING_REVIEW_COMPLETE",
+  "review_complete": true,
+  "human_verdict": null,
+  "recorded_utc": "2026-10-13T03:55:31.906365+00:00",
+  "scene": "scene0029_069_117",
+  "checkpoint": 30000,
+  "full_sequence_reviewer": "/root/scene8_terminal_audit",
+  "full_sequence_review_evidence_source": "Explicit actual-viewing reviewer progress messages during this task; coverage.json records the required channels and frame IDs.",
+  "root_direct_pixel_confirmation": [
+    "raw79 static/dynamic real browser",
+    "fixed_time_11_44_47.png: raw113-116 static RGB and raw alpha_s"
+  ],
+  "coverage_file": "engineering-visual-coverage.json",
+  "observations": [
+    {
+      "scope": "observed",
+      "frames": "raw69-100",
+      "channels": [
+        "GT",
+        "composite",
+        "dynamic"
+      ],
+      "finding": "Red sedan shape/color/crossing direction broadly follows GT; raw98-100 right-edge truncation remains; no established whole-body persistent collapse."
+    },
+    {
+      "scope": "observed",
+      "frames": "raw71-98",
+      "channels": [
+        "static"
+      ],
+      "finding": "Black underbody/wheel/shadow bars remain on the static road; dynamic branch does not capture a complete grounding shadow."
+    },
+    {
+      "scope": "fixed_pose0029079",
+      "frames": "raw71-100",
+      "channels": [
+        "static_RGB",
+        "raw_alpha_s"
+      ],
+      "finding": "Black bars move left-to-right with model time; tree shadows and road texture also vary; alpha remains opaque around road residuals."
+    },
+    {
+      "scope": "fixed_pose0029079",
+      "frames": "raw101-117",
+      "channels": [
+        "static_RGB"
+      ],
+      "finding": "Black residual blob remains near right curb."
+    },
+    {
+      "scope": "fixed_pose0029079",
+      "frames": "raw105-117",
+      "channels": [
+        "static_RGB"
+      ],
+      "finding": "Narrow green vertical line appears near right sky/STOP; not comparably prominent in the 49 observed composites."
+    },
+    {
+      "scope": "fixed_pose0029079",
+      "frames": "raw113-117",
+      "channels": [
+        "static_RGB"
+      ],
+      "finding": "Localized pale pink foreground-road patches; root directly confirmed raw113-116 contact sheet."
+    },
+    {
+      "scope": "observed",
+      "frames": "raw101-117",
+      "channels": [
+        "dynamic",
+        "raw_alpha_d"
+      ],
+      "finding": "Empty body tail shows no obvious car-sized residue in required pixel review; strict zero is not certified."
+    }
+  ],
+  "tail_low_threshold_pixel_counts": "unavailable in this required receipt; no zero substitution; see separate extra-review receipt if produced",
+  "engineering_quality_boundary": "Static time invariance, complete shadow separation, zero leakage and edited-background GT quality are not established.",
+  "relative_GN11_regression_test": "Not applicable: no same-scene C00; do not reinterpret absolute defects as module causal regression or gains.",
+  "counterfactual_GT_available": false,
+  "independent_test": false,
+  "restoration_verified": false
+}
