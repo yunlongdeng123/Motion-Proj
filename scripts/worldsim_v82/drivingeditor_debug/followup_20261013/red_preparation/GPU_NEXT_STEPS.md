@@ -16,6 +16,14 @@ flowchart LR
 
 GPU预处理只产生图中sky/body候选；actor关联、actual CPU loader/SGCM、独立GN11训练准入是随后阶段。完整body alpha MSE100、static RGB1、time/velocity、LiDAR decay等2024共同合同继续继承。
 
+## 已安排的串行入口
+
+`run_red_masks_after_scene8.py --queue` 只用stdlib父进程阻塞等待共享GPU锁，不轮询训练进度。获得锁后重新核验真实GN11 gate/原30000配对步、scene8完整30k与三个保存节点，并用pidfd等待已核对owned scene8进程退出，最后要求GPU compute apps为空。随后串行执行SegFormer、DEVA和CPU validator；真实掩码完成后停在`REAL_RED49_SKY_AND_DEVA_VALIDATED_ACTOR_SELECTION_PENDING`，不会选择actor或启动训练。已有sky/DEVA partial输出拒绝覆盖，异常保留资产；查看`metadata/red_masks_20261013/status.json`与各stage日志，勿重复队列。
+
+sky复用隔离的`extract_sky_no_fingerprint.py`：仅移除旧脚本配置hash元数据，实际模型、class10、输入、分辨率和0/255输出不变。DEVA复用现有CPU boolean masks适配、无AMP、ViT-H、chunk4、semionline480和原采样阈值。预处理各阶段的外部nvidia-smi进程/设备采样为5秒下界；不能外部读取子进程的PyTorch allocated/reserved，日志对此明确标为unavailable，不冒称完整训练资源监控。
+
+actor适配随后仅用逐49帧真实DEVA审查选择，缺selection或execution receipt拒绝；静态种子/原严格0.1m排除仍由真实loader核验，不改旧scene8工具。
+
 ## Heartbeat准入与串行顺序
 
 原 `campaign/hybrid30k_20261012/matrix_status.json` 必须为 `all_four_arms_complete`，四臂均实际30k，原49帧配对资产完整；canonical `tools/DRIVINGEDITOR_FOLLOWUP_20261013.json` 的 `primary_gate.result.status` 必须为 `expected`。另需真实 `metadata/GN11_gate_passed.json` 内容通过已部署 `tools/followup/contracts.py:gate_contract` 的重新读取：C00/GN11同30k、完整配对、30000行采样证据、49帧指标、视觉/静态时间复核完成、无严重回退，`allowed_scene_ids` 明确包含 `scene0029_069_117`。文件名、旧scene8 handoff、fixture均不授权本stage。
@@ -29,7 +37,7 @@ Root可先训scene8 GN11。红车sky和DEVA只能在共享 `/root/autodl-tmp/dri
 | 阶段 | 精确环境、overlay与源码 |
 |---|---|
 | sky | `/root/autodl-tmp/envs/dggt_inference/bin/python`；Torch2.4.1+cu121、mmseg0.11.0、mmcv1.2.7；`PYTHONPATH=/root/autodl-tmp/external/dggt_segformer:/root/autodl-tmp/envs/dggt_segformer/overlay` |
-| sky入口 | `/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/extract_sky.py`，参数 `--scene --config --checkpoint --device cuda:0`，无AMP上下文；输出 Cityscapes class10二值0/255 |
+| sky入口 | `/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/extract_sky_no_fingerprint.py`，参数 `--scene --config --checkpoint --device cuda:0`，无AMP上下文；输出 Cityscapes class10二值0/255 |
 | sky缓存 | config `/root/autodl-tmp/external/dggt_segformer/local_configs/segformer/B5/segformer.b5.1024x1024.city.160k.py`；checkpoint `/root/autodl-tmp/dggt/pretrained/segformer.b5.1024x1024.city.160k.pth`，1,016,455,151B |
 | DEVA | `/root/autodl-tmp/envs/drivingeditor/bin/python`，Python3.9、Torch2.2.2+cu118；隔离源码 `/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/segmentation_repository`，该目录作为cwd及PYTHONPATH |
 | DEVA缓存 | `/root/autodl-tmp/drivingeditor_repro/weights/DEVA-propagation.pth` 276,911,801B；同目录 `sam_vit_h_4b8939.pth` 2,564,550,879B；`TORCH_HOME=/root/autodl-tmp/drivingeditor_repro/cache/torch`，已有ResNet18/50 backbone缓存，不另下载 |
@@ -81,7 +89,7 @@ assert not list((red/'sky/sky_0').glob('*.png')) and not (red/'mask/mask_0').exi
 PY
 test -z "$(nvidia-smi --query-compute-apps=pid,process_name --format=csv,noheader)"
 PYTHONPATH=/root/autodl-tmp/external/dggt_segformer:/root/autodl-tmp/envs/dggt_segformer/overlay \
-  "$SKY_PY" "$OLD/extract_sky.py" --scene "$RED" \
+  "$SKY_PY" "$FOLLOWUP/tools/red_preparation/extract_sky_no_fingerprint.py" --scene "$RED" \
   --config /root/autodl-tmp/external/dggt_segformer/local_configs/segformer/B5/segformer.b5.1024x1024.city.160k.py \
   --checkpoint /root/autodl-tmp/dggt/pretrained/segformer.b5.1024x1024.city.160k.pth --device cuda:0
 cd "$SEG_REPO"
@@ -95,7 +103,7 @@ PYTHONPATH="$SEG_REPO" "$DEVA_PY" "$REPRO/scripts/validate_deva_masks.py" \
   --scene "$RED" --output "$RED/mask/mask_0"
 ```
 
-Heartbeat/root应在新followup metadata记录真实stage日志、执行返回码、command/env/source、49 IDs、验证结果与实际solver fallback。直接demo不会生成旧wrapper的 `inference_manifest.json`；仅在真实demo返回0且mask_validation通过后记录新的validated execution receipt，actor适配器据此读取。不要手写通过状态替代实际执行。`extract_sky.py` 会更新新input的preparation_manifest状态为static_inputs_prepared，但保留training_ready=false；该状态不是完整训练ready，metadata中的原CPU receipt也不因此变成final。再确认49 sky均1920×1280、0/255且与RGB同名，DEVA49 Annotations/pred.json齐全。
+Heartbeat/root应在新followup metadata记录真实stage日志、执行返回码、command/env/source、49 IDs、验证结果与实际solver fallback。直接demo不会生成旧wrapper的 `inference_manifest.json`；仅在真实demo返回0且mask_validation通过后记录新的validated execution receipt，actor适配器据此读取。不要手写通过状态替代实际执行。`extract_sky_no_fingerprint.py` 会更新新input的preparation_manifest状态为static_inputs_prepared，但保留training_ready=false；该状态不是完整训练ready，metadata中的原CPU receipt也不因此变成final。再确认49 sky均1920×1280、0/255且与RGB同名，DEVA49 Annotations/pred.json齐全。
 
 ## Actor关联的最小新scene适配点
 

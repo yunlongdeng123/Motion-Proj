@@ -80,6 +80,16 @@ def main():
             prepared.append({k: row.get(k) for k in
                             ("status", "scene_id", "anchor_pose_frame", "gpu_started", "gate_required_at_run")})
         result["prepared_training_sources"] = prepared
+        mask_queue = read_if(root / "metadata/red_masks_20261013/status.json")
+        if mask_queue:
+            result["red_GPU_mask_queue"] = {k: mask_queue.get(k) for k in
+                ("status", "pid", "updated_utc", "active_child_pid", "error", "sky_frames",
+                 "training_started", "actor_selection_complete", "training_ready", "human_verdict")}
+            result["red_GPU_mask_queue"]["controller_process"] = process_check(mask_queue.get("pid"), "run_red_masks_after_scene8.py")
+            result["red_GPU_mask_queue"]["stages"] = [{k: s.get(k) for k in
+                ("stage", "pid", "returncode", "wall_seconds", "memory_sampling")} for s in mask_queue.get("stages", [])]
+            launch = read_if(root / "metadata/red_masks_queue_launch_20261013.json")
+            result["red_GPU_mask_queue"]["launch_log"] = launch.get("log") if launch else None
         runs = []
         for path in sorted((root / "runs").glob("*/status.json")):
             row = read_if(path)

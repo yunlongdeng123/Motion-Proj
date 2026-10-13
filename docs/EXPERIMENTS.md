@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013 / r1 | 用户确认1dB规则；全49分层/连续不利车体/固定49时间工程审查通过，真实passed gate；scene8 GN11真实启动与GPU绑定通过；scene29 CPUraw/静态种子完成、真实GPU分割/prior待串行执行，额外仅2×30k | [协议与组件图](v82/DRIVINGEDITOR_FOLLOWUP_20261013.md) · [规则和结果](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json) · [启动/绑定](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_launch_20261013/) |
+| WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013 / r1 | 用户确认1dB规则；全49分层/连续不利车体/固定49时间工程审查通过，真实passed gate；scene8真实GPU绑定与10k保存合同通过；scene29真实mask controller持锁排队，参数化actor CPU入口真实一帧控制通过，红车实例审查/prior仍待执行；额外仅2×30k | [协议与组件图](v82/DRIVINGEDITOR_FOLLOWUP_20261013.md) · [规则和结果](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json) · [启动/绑定](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_launch_20261013/) |
 | WS-V82-DRIVINGEDITOR-HYBRID30K-20261012 / r1 | 固定四臂各30k全部完成；12节点、30000配对步、FP32六指标复算通过；全49真实深色HTML，GN11全图+0.3254/车体−0.1287dB，保留连续局部车体代价；完整观测显存峰6.902GiB仅3090容量初筛 | [结果与组件图](v82/DRIVINGEDITOR_FOUR_ARM_30K_RESULTS.md) · [终态证据](autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/final_four_arm_20261013/) · [协议](v82/DRIVINGEDITOR_HYBRID30K_PLAN.md) |
 | WS-V82-DRIVINGEDITOR-SV-20261012 / r1 | 用户重新授权继续DrivingEditor；新SV联合臂CPU源码准备，真实GPU训练0步；同30k起点与已有B1/S/V对照，保留车体及整体代价 | [组件图和固定协议](v82/DRIVINGEDITOR_SV_RESUME.md) · [准备工具](../scripts/worldsim_v82/drivingeditor_debug/resume_sv_20261012/) |
 | WS-V82-DRIVINGEDITOR-OPACITY-FAILURE-20261012 / r1 | 工程failure与后续默认规则登记；依据既有B1/B2/V/S，新增GPU实验0，不修改历史receipt | [V82-F01](research_failures/entries/V82-F01.md) · [默认完整监督](v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md) |

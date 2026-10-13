@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "status": "FINAL_MINIMAL_STATIC_REVIEW_PASS",
+  "observed_singapore": "2026-10-13T07:59:45.3706338+08:00",
+  "reviewed_local_controller": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0750\\run_red_masks_after_scene8.py",
+  "ssh_alias": "wm-vgpu-1011",
+  "scope": "Read-only source and cached-file stat review; no controller execution, GPU query/model import, training, mutation of controller or remote files, or new hashes.",
+  "findings": [],
+  "checks": [
+    {
+      "name": "shared_GPU_lock_and_inheritance",
+      "status": "PASS",
+      "lines": [
+        142,
+        143,
+        106,
+        107,
+        177
+      ],
+      "detail": "Blocks on the same /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock held by existing run_matrix worker. Parent holds LOCK_EX through all stages; pass_fds carries the same locked file descriptor to direct child. Child keeps lock while parent unwinds on interruption; no separate child flock reacquisition."
+    },
+    {
+      "name": "scene0008_completion_before_empty_compute",
+      "status": "PASS",
+      "lines": [
+        144,
+        145,
+        146,
+        148,
+        149,
+        170,
+        172,
+        181
+      ],
+      "detail": "After lock acquisition, inputs/gate are rechecked; status must be complete at iteration30000, then existing completion_contract validates 10k/20k/30k four-component bundles, 49 frame/timestamp/PNG/raw FP32 headers and static-time contracts. Only then requires empty compute-apps stdout before any model child starts."
+    },
+    {
+      "name": "true_gate_and_actual_30000_paired_steps",
+      "status": "PASS",
+      "lines": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "detail": "Calls existing gate_contract with verify_steps=True. Remote primary source rechecks original passed GN11/C00 30000 events, configured1.0dB threshold, four-arm completion, numeric regressions, allowed scene and all30000 actual frame/time-shift/LR paired steps."
+    },
+    {
+      "name": "partial_asset_preservation",
+      "status": "PASS",
+      "lines": [
+        61,
+        105,
+        137,
+        121
+      ],
+      "detail": "Refuses any existing sky PNG or mask output directory, creates metadata directory with exist_ok=False and opens new logs xb. Failure preserves outputs and logs, and cannot automatically rerun into a partial result."
+    },
+    {
+      "name": "no_training_actor_or_point_selection",
+      "status": "PASS",
+      "lines": [
+        26,
+        59,
+        197,
+        199,
+        201,
+        202,
+        203
+      ],
+      "detail": "Only sky, DEVA and CPU mask validation commands exist. Validator creates instance inventory with actor_selection_pending; controller preserves training_ready=False, never launches training or modifies actor/point selection."
+    },
+    {
+      "name": "sampler_posix_spawn",
+      "status": "PASS",
+      "lines": [
+        83,
+        84,
+        85,
+        86
+      ],
+      "detail": "Both nvidia-smi calls use absolute executable, close_fds=False, no cwd/pass_fds/preexec/session/user changes. Inspected remote drivingeditor Python3.9 subprocess._USE_POSIX_SPAWN=True and its exact _execute_child condition; calls meet posix_spawn fastpath. No sampling was executed by this reviewer."
+    },
+    {
+      "name": "owned_child_exception_exit",
+      "status": "PASS",
+      "lines": [
+        108,
+        114,
+        116,
+        117,
+        118,
+        119,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209
+      ],
+      "detail": "Interruptions raise through the child wait; sampler stop/join happens in finally. Failure cleanup terminates only the live Popen object assigned ACTIVE_CHILD, with no global PID, process-name or group kill. Other GPU processes only trigger a stop."
+    },
+    {
+      "name": "actual_primary_source_CLI",
+      "status": "PASS",
+      "lines": [
+        181,
+        182,
+        183,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198
+      ],
+      "detail": "Sky --scene/--config/--checkpoint/--device match deployed no-fingerprint source. All DEVA flags match demo_automatic plus eval_args/ext_eval_args. --scene/--output match validate_deva_masks. CPU validator CUDA_VISIBLE_DEVICES empty, raw mask identity/dimensions/uint8/pred area and49 count checked."
+    },
+    {
+      "name": "final_cached_paths",
+      "status": "PASS",
+      "lines": [
+        66,
+        67,
+        176
+      ],
+      "detail": "Corrected resnet18-5c106cde.pth and resnet50-19c8e357.pth match DEVA/model/resnet.py actual pretrained URLs and final readonly stat sizes46827520/102502400 bytes. TORCH_HOME maps to cache/torch. Other model/checkpoint/config paths existed; no-fingerprint sky source is deployed."
+    },
+    {
+      "name": "owned_scene8_PID_exit_wait",
+      "status": "PASS_RESOLVED_NORMAL_EXIT_RACE",
+      "lines": [
+        151,
+        153,
+        155,
+        156,
+        160,
+        162,
+        163,
+        165,
+        166,
+        167,
+        169
+      ],
+      "detail": "pidfd-first logic handles process-already-exited and cmdline disappearance/empty-exit transition, checks identity for a non-empty live cmdline, waits at most30seconds for the same pidfd and closes it in finally. No killing or training poll."
+    }
+  ],
+  "remote_primary_sources": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup/contracts.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup/run_scene_gn11.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools/run_matrix.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/extract_sky_no_fingerprint.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/segmentation_repository/demo/demo_automatic.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/segmentation_repository/deva/inference/eval_args.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/segmentation_repository/deva/ext/ext_eval_args.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/segmentation_repository/deva/ext/automatic_sam.py",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/next_scene30k_20261012/segmentation_repository/deva/model/resnet.py",
+    "/root/autodl-tmp/drivingeditor_repro/scripts/validate_deva_masks.py",
+    "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/subprocess.py"
+  ],
+  "deployed_prerequisites_resolved_during_review": [
+    "sky no-fingerprint script became deployed",
+    "resnet cached filename paths corrected to actual DEVA URLs"
+  ],
+  "root_reported_CPU_validation": "PASS_REAL_GATE_AND_RED49_CACHED_INPUTS_CPU_ONLY; reviewer did not re-execute controller",
+  "controller_started_by_review": false,
+  "GPU_used_by_review": false,
+  "remote_files_written_by_review": false,
+  "controller_modified_by_review": false,
+  "Torch_or_renderer_imported_by_review": false,
+  "new_hash_or_fingerprint_computed_by_review": false,
+  "runtime_success_certified": false,
+  "finding_history": [
+    {
+      "priority": 2,
+      "title": "Owned scene8 process can exit during cmdline check",
+      "controller_lines": [
+        153,
+        154,
+        155,
+        158,
+        159
+      ],
+      "detail": "After cmdline.exists() succeeds, the expected normal exit can remove /proc/PID/cmdline before read_bytes(), raising FileNotFoundError outside the ProcessLookupError handler; zombie/exit cmdline can also be empty and fail identity assertion before pidfd readiness is checked. This falsely stops the preprocessing controller although the process has exited and the later empty-compute check could pass.",
+      "change_requested": "Handle exited process across the cmdline read and pidfd readiness check; retain identity guard for a live process and never kill the previous scene8 PID.",
+      "resolved": true,
+      "resolved_singapore": "2026-10-13T07:59:45.3706338+08:00"
+    }
+  ],
+  "resolutions": [
+    {
+      "finding": "Owned scene8 process can exit during cmdline check",
+      "status": "RESOLVED_BY_SOURCE_REVIEW",
+      "observed_singapore": "2026-10-13T07:59:45.3706338+08:00",
+      "controller_lines": [
+        153,
+        155,
+        156,
+        158,
+        160,
+        162,
+        163,
+        165,
+        166,
+        167,
+        169,
+        170,
+        172
+      ],
+      "detail": "Latest source opens a pidfd first and treats ProcessLookupError as already exited. A readiness select(0) skips cmdline for an exited process. For a still-active process, FileNotFoundError and empty cmdline are treated as exit transition; non-empty cmdline must match both owned job identifiers. The same pidfd then must signal exit within30seconds and is always closed. Final empty-compute gate still precedes model launch. This covers both reviewed normal-exit races without killing any PID.",
+      "review_scope": "Only read latest local source for this fix; did not execute controller or perform GPU operations."
+    }
+  ]
+}
