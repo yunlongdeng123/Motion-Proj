@@ -1,0 +1,32 @@
+
+'use strict';(()=>{
+const D=JSON.parse(document.getElementById('scene-data').textContent),$=id=>document.getElementById(id);
+const labels={static:'静态背景 RGB',dynamic:'动态车辆 RGB',composite:'完整重建 RGB',alpha_d:'动态透明度',alpha_s:'静态透明度',all:'合成＋静态＋动态总览'};
+const method={C00:'C00 · 基线（SGCM关 / NPS关）',G10:'G10 · 仅SGCM',N01:'N01 · 仅NPS',GN11:'GN11 · SGCM＋NPS'};
+const s={scene:'silver',mode:'observed',i:10,branch:'static',crop:false,playing:false,timer:null};
+const params=new URLSearchParams(location.hash.slice(1));if(D[params.get('scene')])s.scene=params.get('scene');if(params.get('mode')==='fixed')s.mode='fixed';if(/^\d+$/.test(params.get('frame')||''))s.i=Math.max(0,Math.min(48,Number(params.get('frame'))));
+function elem(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
+function stop(){if(s.timer)clearInterval(s.timer);s.timer=null;s.playing=false;$('play').textContent='播放';}
+function f(arm){return D[s.scene].arms[arm][s.mode][s.i];}const num=(v,n=3)=>typeof v==='number'&&Number.isFinite(v)?v.toFixed(n):'空body / 无分数';
+function card(title,meta,src,arm,branch,bbox){const a=elem('article','card '+(arm==='GT'?'gt':arm==='C00'?'baseline':arm==='GN11'?'joint':'')),h=elem('header','heading');h.append(elem('strong','',title),elem('small','',meta));const surface=elem('div','surface'),img=elem('img');img.src=src;img.alt=title+' · '+f(Object.keys(D[s.scene].arms)[0]).id;img.dataset.arm=arm;img.dataset.branch=branch;
+if(s.crop&&bbox){const [x0,y0,x1,y1]=bbox,w=x1-x0,hg=y1-y0;if(w>0&&hg>0){surface.style.aspectRatio=w+'/'+hg;img.style.width=(480/w*100)+'%';img.style.left=(-x0/w*100)+'%';img.style.top=(-y0/hg*100)+'%';}}
+img.onerror=()=>{a.append(elem('p','','图片读取失败：'+src));};surface.append(img);a.append(h,surface,elem('footer','',(arm==='GT'?'GT原图（含车辆）':labels[branch])+' · '+(s.mode==='observed'?'该帧真实相机':'相机固定，模型时间变化')));return a;}
+function setup(){const opts=s.mode==='fixed'?['static','alpha_s']:['static','dynamic','composite','alpha_d','alpha_s','all'];if(!opts.includes(s.branch))s.branch='static';$('branch').replaceChildren(...opts.map(v=>{const e=elem('option','',labels[v]);e.value=v;return e;}));$('branch').value=s.branch;render();}
+function render(){const d=D[s.scene],arms=Object.keys(d.arms),base=f(arms[0]),bbox=s.mode==='fixed'?d.arms[arms[0]].observed[10].bbox:base.bbox;const valid=Array.isArray(bbox)&&bbox[2]>bbox[0]&&bbox[3]>bbox[1];if(!valid)s.crop=false;
+document.querySelectorAll('[data-scene]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.scene===s.scene));document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===s.mode));
+$('scheme').textContent=d.label+' / '+(s.scene==='silver'?'C00、G10、N01、GN11四臂，同帧比较':'仅GN11：SGCM＋NPS')+' / 各30k';
+$('notice').classList.toggle('fixed',s.mode==='fixed');$('notice').textContent=s.mode==='observed'?'真实逐帧重建：每一帧使用它自己的相机姿态和时间。下面直接显示这49个保存结果的分支；GT原图含车辆，不是删除车辆后的真值。':'固定相机诊断：相机锁在'+d.anchor+'，只改变49个模型时间。用于检查静态背景是否随时间变化；这些组合没有对应GT，不能当作逐帧重建质量。';
+$('frame-title').textContent=(s.mode==='observed'?'真实相机帧 ':'固定相机时间 ')+(s.i+1)+' / 49 · '+base.id;$('frame-detail').textContent=(s.mode==='observed'?'相机随源帧变化':'相机固定在 '+d.anchor)+' · 模型时间 '+base.t.toFixed(2);$('timeline').value=s.i;$('prev').disabled=s.i===0;$('next').disabled=s.i===48;
+$('crop').querySelector('[value=roi]').disabled=!valid;$('crop').value=s.crop?'roi':'full';$('crop-hint').textContent=(valid?'各方法使用同帧、同尺度、同一ROI。':'当前body为空，保留完整帧和空区域分数。')+' ← / →逐帧，空格播放。';
+const cards=[];if(s.mode==='observed')cards.push(card('GT · 真实原图','包含真实车辆',base.images.gt,'GT','composite',bbox));
+for(const arm of arms){const a=f(arm),branches=s.branch==='all'?['composite','static','dynamic']:[s.branch];for(const b of branches)cards.push(card(method[arm],labels[b],a.images[b],arm,b,bbox));}
+$('gallery').replaceChildren(...cards);$('metric-title').textContent=s.mode==='observed'?'本帧质量 · 训练观测重建':'相对固定锚点的变化 · 不是GT质量分数';
+const heads=s.mode==='observed'?['方法','全图合成 PSNR','车体合成 PSNR','非天空车体外静态 PSNR']:['方法','静态RGB MAE','静态RGB最大像素差','静态透明度 MAE'];const tr=elem('tr');heads.forEach(h=>tr.append(elem('th','',h)));$('metric-head').replaceChildren(tr);
+$('metric-body').replaceChildren(...arms.map(arm=>{const a=f(arm),r=elem('tr'),q=a.q,m=a.time_metrics;[arm,...(s.mode==='observed'?[num(q.full),num(q.actor),num(q.static)]:[num(m.static_rgb_MAE_from_anchor,6),num(m.static_rgb_max_abs_from_anchor,6),num(m.static_alpha_MAE_from_anchor,6)])].forEach(v=>r.append(elem('td','',v)));return r;}));
+const texts={silver:['银车没有达到干净补景和绝对静态。你看到的横道线黑块，在C00与GN11的同一固定相机时间都存在；GN11没有解决它。','49固定时间的RGB MAE：C00约0.02271，GN11约0.02154。略小只表示变化略减，不证明背景正确。NPS不是跨时间不变约束；静态位置/透明度仍可随时间变化。','body mask没有完整车影，可能使阴影被拟合到静态层；这是机制推断，具体残影的逐高斯归属尚未验证。'],black:['黑车场景使用GN11（SGCM＋NPS）。Corolla保留静态，GMC与Jeep合为一个动态分支。','保留接地阴影不足、静态道路黑残影和固定相机时间变化。末10帧body为空，分数留空；没有同场景C00，不能证明模块收益。'],red:['红车场景使用GN11（SGCM＋NPS）。真实DEVA130，末端3帧使用已审查的原SAM候选。','保留静态车底/轮胎残影；固定相机后段有移动黑块、细绿线与浅粉道路斑块。末17帧body为空，分数留空；没有同场景C00。']};$('scene-conclusion').replaceChildren(...texts[s.scene].map(t=>elem('p','',t)));
+}
+document.querySelectorAll('[data-scene]').forEach(b=>b.onclick=()=>{stop();s.scene=b.dataset.scene;s.i=10;s.mode='observed';s.branch='static';s.crop=false;setup();});document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{stop();s.mode=b.dataset.mode;s.branch='static';setup();});
+$('branch').onchange=e=>{s.branch=e.target.value;render();};$('crop').onchange=e=>{s.crop=e.target.value==='roi';render();};$('timeline').oninput=e=>{s.i=Number(e.target.value);render();};function step(delta){s.i=Math.max(0,Math.min(48,s.i+delta));render();}$('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+function play(){if(s.playing){stop();return;}if(s.i===48)s.i=0;s.playing=true;$('play').textContent='暂停';s.timer=setInterval(()=>{if(s.i===48){stop();return;}s.i++;render();},1000/6);}$('play').onclick=play;
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)||e.ctrlKey||e.altKey||e.metaKey)return;if(e.key==='ArrowLeft'){e.preventDefault();step(-1);}if(e.key==='ArrowRight'){e.preventDefault();step(1);}if(e.code==='Space'&&e.target.tagName!=='BUTTON'){e.preventDefault();play();}});document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});setup();
+})();

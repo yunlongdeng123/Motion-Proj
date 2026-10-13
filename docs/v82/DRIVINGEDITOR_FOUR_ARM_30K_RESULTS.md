@@ -66,6 +66,10 @@ GN11车体PSNR在28/49帧下降，其中19帧低于C00超过1 dB；中位差值�
 
 GN11−C00均值为RGB −0.00117593、alpha −0.00046566；RGB仍有9/49时刻更高，alpha有2/49更高。C00/GN11的全49固定时刻真实RGB与alpha已逐页审查：两臂路面残影均随时间移动，后半段道路/横道纹理继续变化；未观察到GN11新增大块路面alpha塌陷。**绝对时间不变性及完整静态补景均未通过**，模型时间/位移也不能解释为物理秒或速度。[固定时间审查](../autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/final_four_arm_20261013/visual_review/static_time_engineering_visual_review.json)。
 
+用户截图回看（2026-10-13）：固定pose0017010、local29/raw28/t=0.08，两臂中央道路残影均从anchor位置移到左侧远端横道，近景白条顶端均有黑块；C00硬亮边更明显，GN11较软。该时刻RGB MAE分别0.0263978243/0.0243896767，变化略减不等于补景正确；锚点MAE为0仅因为自比。已查看target两臂raw alpha_s，路面主体近白，未建立对应大块alpha孔洞。实际逐帧静态图也独立保存于`assets/{arm}/observed/{index}_static.png`，与固定相机`static_time`分开。
+
+源码机制核对：静态renderer仍使用`get_xyz_SHM(t)`以及时间marginal opacity，寿命和速度仅软正则，不是硬冻结；速度惩罚输入还有寿命衰减，位置变化仍来自raw velocity。NPS是当前渲染的局部静态速度特征L2 sum，没有比较t1/t2的RGB。body mask缺投影阴影，在mask外动态opacity强压0、静态RGB仍拟合含阴影GT的共同机制下，推断影子容易留入静态层；具体残影的逐高斯归属尚未验证。通过相对C00的工程门槛，不等于绝对静态与补景合格。[回看与统一入口修订证据](../autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/unified_viewer_20261013/)。
+
 ## NPS与SGCM：有效性及证据边界
 
 NPS保留原Eq9的sum、L2范数、checkerboard四邻域、既有距离图与权重0.01。真实GN11的1/1000/10k/15k/20k/30k六节点损失及梯度有限，weighted值按0.01缩放。`static_feature`连接NPS，却与static RGB目标断连；日志中的feature比例0为**无效哨兵值**（`ratio_valid=false`），不能解释为两目标梯度平衡。`static_alpha`对两目标均连接，同一张量上的weighted NPS/static-RGB梯度L2比例20k约0.03309、30k约0.006283，可比较该中间张量量级，不能推断所有Gaussian参数的梯度平衡。[梯度与数值摘要](../autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/final_four_arm_20261013/quality_and_gradient_summary.json)。

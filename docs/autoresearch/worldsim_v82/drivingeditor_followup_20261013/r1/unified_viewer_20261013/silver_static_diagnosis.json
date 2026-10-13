@@ -1,0 +1,29 @@
+{
+  "status": "READONLY_SILVER_STATIC_DIAGNOSIS_WITH_ACTUAL_PIXEL_CHECKS",
+  "reviewer": "/root/silver_static_explain",
+  "actual_reviewed_images": [
+    "assets/C00/static_time/010_static.png",
+    "assets/GN11/static_time/010_static.png",
+    "assets/C00/static_time/028_static.png",
+    "assets/GN11/static_time/028_static.png",
+    "assets/C00/static_time/028_alpha_s.png",
+    "assets/GN11/static_time/028_alpha_s.png",
+    "assets/GN11/observed/010_gt.png",
+    "assets/GN11/observed/010_body_mask.png"
+  ],
+  "root_additionally_viewed": "assets/GN11/observed/028_static.png",
+  "image_root": "outputs/drivingeditor_four_arm_30k/",
+  "fixed_pose": "0017010",
+  "target_frame": "0017028",
+  "target_model_time": 0.08,
+  "target_static_RGB_MAE": {
+    "C00": 0.02639782428741455,
+    "GN11": 0.02438967674970627
+  },
+  "observations": "Both arms have moving road/underbody residues. Road alpha remains near opaque in the reviewed target; cannot call GN11 a new whole-static collapse.",
+  "code_findings": "Static SHM position and temporal opacity remain time-dependent; lifetime/velocity penalties are soft. NPS compares local features within the current rendered image, not RGB across timestamps.",
+  "causal_inference_not_verified": "Body-only masks omit vehicle shadows; outside dynamic-opacity supervision and static-RGB fitting can direct shadows toward the static layer. No specific Gaussian attribution was established.",
+  "human_GN11_verdict": null,
+  "new_training_steps": 0,
+  "remote_connected": false
+}

@@ -8,7 +8,7 @@ GMC scene0008 raw23–71，Corolla153保留静态、DEVA77/82合一个动态Gaus
 
 红车scene0029 raw69–117，真实DEVA130、raw98/99/100选经审查的原SAM模型候选，无GT造mask或填洞；29,725真实prior点，原600k静态seed在strict0.1m排除后初始597,734点。GN11完整30k，82.611分钟，最终静态1,030,480/动态1,084,958点，全图37.524dB、车体31.151dB（32/49有效）、实际静态36.970dB；raw101–117十七个空body保留/null。全49分层及固定pose0029079的49时间实际复核：静态道路黑色车底/轮胎残影保留，固定时间中黑条块移动，后段局部绿线/浅粉道路斑块。不存在该scene的C00对照，不认证SGCM/NPS因果回退或收益。[红车结果与组件图](v82/DRIVINGEDITOR_RED_GN11_30K_RESULTS.md) · [最终证据](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/final_followup_20261013/)。
 
-本聊天`outputs/DrivingEditor_final_report.html`汇总并链接三个真实深色viewer；`outputs/DrivingEditor_final_reports.zip`离线保存三报告及2,646 PNG，另有原四臂和GMC单独包。所有49帧、共享ROI、raw alpha、固定相机时间控制与坏例保留；端点、空body、播放/暂停和图片加载真实浏览器QA通过。质量指标来自训练观测重建，无heldout或删除后GT。作者两scene展示身份逐帧确认，实际训练窗口未知，本地统一49扩展；不称完整论文效果复现。
+本聊天后续统一使用`outputs/DrivingEditor_final_report.html`，三场景在同一页切换，默认真实49帧相机/时间的静态背景，合成/动态/透明度可切换；固定相机时间诊断单独为次级模式。银车明确四臂，黑车/红车仅GN11；旧四臂入口也默认observed static，旧页与资产保留。`outputs/DrivingEditor_final_reports.zip`离线保存三报告及2,646 PNG，另有原四臂和GMC单独包。所有49帧、共享ROI、raw alpha、固定相机时间控制与坏例保留；原分场景viewer的端点、空body、播放/暂停和图片加载真实浏览器QA已通过；本轮统一页的2,646图像引用、逐帧/固定时间来源与脚本语法检查通过，本轮浏览器交互未实测。质量指标来自训练观测重建，无heldout或删除后GT。作者两scene展示身份逐帧确认，实际训练窗口未知，本地统一49扩展；不称完整论文效果复现。
 
 六组训练全程覆盖增密、10k/20k/30k检查点、LPIPS和静态时间控制，采样无错误；完整训练最大观测6.902GiB。包括真实sky/DEVA/SAM的最高观测10.279GiB，满足3090 24GiB减2GiB容量初筛。采样是下界；分割子进程外部Torch allocator不可读（SAM内部已有峰），梯度诊断无NV样本。不认证3090容量、速度或稳定性，目标机仍须实测。每臂与阶段allocated/reserved、PID/device采样、点数和速度见报告和原memory_summary。
 
