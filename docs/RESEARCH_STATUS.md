@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前任务 `WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013/r1` 的训练、评价和实际分层/固定时间复核已全部完成：原四臂各30k、两个追加scene各GN11 30k，共180,000步。六个训练worker、数据/分割/SAM及CPU收集controller均已退出；18个10k/20k/30k四文件bundle、49 FP32/PNG和固定49时间的stat/header合同通过。未实际恢复完整模型/Adam/RNG，`restoration_verified=false`。最后保存、推送与已授权关机收口中，当前尚未发出电源信号。
+更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前任务 `WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013/r1` 的训练、评价和实际分层/固定时间复核已全部完成：原四臂各30k、两个追加scene各GN11 30k，共180,000步。六个训练worker、数据/分割/SAM及CPU收集controller均已退出；18个10k/20k/30k四文件bundle、49 FP32/PNG和固定49时间的stat/header合同通过。未实际恢复完整模型/Adam/RNG，`restoration_verified=false`。真实报告与离线包已保存，结果已提交推送；2026-10-13 12:03:48 SGT已发出已授权AutoDL关机请求，定时任务PAUSED。远端SIGTERM acknowledgement已捕获，独立平台电源状态不可读，不能由SSH关闭认证断电。
 
 GN11−C00全49等权PSNR：全图+0.3254dB、车体−0.1287dB、非天空车外静态+0.3175dB。完整逐步配对、全49分层、连续raw20–46的27个不利车体帧及全部固定49时间实际复核，未触发用户确认的均值下降超过1dB或明显持续相对视觉回退规则。局部车体亮度/细节/边界代价及两臂静态道路时变残影保留。真实gate仍passed，human仅C00=用户符合预期；GN11/两个新scene仍null。[四臂结果与组件图](v82/DRIVINGEDITOR_FOUR_ARM_30K_RESULTS.md)。
 
@@ -16,6 +16,6 @@ GMC scene0008 raw23–71，Corolla153保留静态、DEVA77/82合一个动态Gaus
 
 SSH仅`wm-vgpu-1011`。原矩阵根`/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012`；后续根`/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013`；GPU解释器`/root/autodl-tmp/envs/drivingeditor/bin/python`。完整模型、原FP32、输入和失败资产保留AutoDL数据盘，HTML/Git离线包不是大检查点备份。源身份搜索已关闭，不重置5GiB预算，不追加arms/seeds/loss网格。[机器可读状态](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json)。
 
-用户已明确授权两个新scene训练/评价/报告收口、保存推送后AutoDL关机，无需重新询问。最后重新核对vendor `/usr/bin/shutdown`和supervisord精确PID/cmdline、零owned GPU/CPU/controllers及无关任务；省略vendor的Trash删除，仅执行日志/TERM后端。当前心跳待收口后暂停，其他旧自动化保持暂停。SSH断开不等于独立平台电源证明；平台不可读时仅报告“已发出关机请求”。
+用户已明确授权两个新scene训练/评价/报告收口、保存推送后AutoDL关机，无需重新询问。最后重新核对vendor `/usr/bin/shutdown`和supervisord精确PID/cmdline、零owned GPU/CPU/controllers及无关任务；省略vendor的Trash删除，仅执行日志/TERM后端。当前`drivingeditor-30k`心跳已PAUSED，其他旧自动化保持暂停，不自动开机或重启研究。SSH断开不等于独立平台电源证明；平台不可读时仅报告“已发出关机请求”。实际请求、fresh检查与自动化暂停凭据见最终证据目录及本聊天`outputs/DrivingEditor_shutdown_receipt.json`；远端canonical最后保存于关机前power_pending，本地/Git此终态为权威后续收口记录。
 
 本轮真实mask queue首次因Python3.9无os.pidfd_open在模型前停止，兼容修复后真实数据完整完成：[V82-F03](research_failures/entries/V82-F03.md)。最后CPU collector首轮路径断言失败，partial保留，第二轮使用事件真实metrics目录通过全部复算；不是科学否定。首次C00初始化停滞`attempts/initialization_1`及所有旧资产保留。`failure_ledger_refs=[V82-F01,V82-F02,V82-F03,V76-F03]`，任务累计delta=V82-F03，最终收口新增delta=none。子agent默认`gpt-6.1-sol/max`；无关dirty `scripts/run_worldsim_v72_e3_render_bridge.py`保留。

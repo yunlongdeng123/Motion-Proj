@@ -753,21 +753,51 @@
       "检查其他进程和用户无关任务；若存在未完成任务不得误杀或带负载关机，记录具体阻塞",
       "关机后heartbeat状态按root策略暂停/归档，不能反复尝试重启"
     ],
-    "boundary": "这是操作状态核验，不是重新向用户申请关机许可；本agent不执行关机",
+    "boundary": "User authorized final shutdown after both scenes and reports complete; root sent the verified backend request, skipped deletion, and does not claim independent platform power verification.",
     "inspected_vendor_script": "/usr/bin/shutdown",
     "inspected_vendor_behavior": "先清理 /root/.local/share/Trash，再日志到/proc/1/fd/1，再TERM supervisord；本任务没有Trash清理授权",
-    "chosen_backend": "关机时重新核对 supervisord 的准确PID及cmdline，只执行原脚本的日志和TERM后端，省略Trash删除。当前没有执行任何电源操作。",
-    "verification": "SSH断开不是独立电源状态证据；检查平台停止状态或实例日志，如无法读取平台状态，明确只已发出关机请求。"
+    "chosen_backend": "2026-10-13 12:03:48 SGT，fresh核对supervisord PID857/cmdline和零owned/GPU/无关任务后，实际日志+SIGTERM后端成功发送；跳过Trash删除，不执行wrapper。",
+    "verification": "远端os.kill成功返回并flush实际JSON acknowledgement到本地；SSH随后关闭。一次限时读取亦关闭，独立平台电源状态不可读；仅确认已发出关机请求。",
+    "request": {
+      "status": "AUTHORIZED_SHUTDOWN_REQUEST_SENT",
+      "host": "wm-vgpu-1011",
+      "observed_utc": "2026-10-13T04:03:48.855519+00:00",
+      "signal_sent_utc": "2026-10-13T04:03:48.857770+00:00",
+      "supervisord_pid": 857,
+      "supervisord_cmdline": [
+        "/bin/supervisord",
+        "-c",
+        "/init/supervisor/supervisor.ini"
+      ],
+      "signal": "SIGTERM",
+      "signal_sent": true,
+      "acknowledgement_source": "Remote Python os.kill returned successfully; actual JSON acknowledgement flushed to local SSH stdout before connection teardown",
+      "SSH_exit_code": 1,
+      "SSH_connection_closed_by_remote_host": true,
+      "no_owned_jobs": true,
+      "no_unrelated_work_detected": true,
+      "GPU_compute_empty": true,
+      "vendor_Trash_deletion_skipped": true,
+      "deletion_performed": false,
+      "wrapper_executed": false,
+      "independent_platform_power_verified": false,
+      "platform_status": "unavailable",
+      "heartbeat_status": "PAUSED",
+      "results_saved_and_pushed_before_signal": true,
+      "total_training_steps": 180000,
+      "original_models_and_assets_preserved": true,
+      "human_GN11_verdict": null
+    }
   },
   "schema_version": 1,
   "task_id": "WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013",
   "run": "r1",
-  "updated_utc": "2026-10-13T03:58:05.430970+00:00",
+  "updated_utc": "2026-10-13T04:06:26.096844+00:00",
   "current_matrix_task": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
   "current_matrix_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
   "followup_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
   "ssh_alias": "wm-vgpu-1011",
-  "state": "six_30k_runs_complete_reports_reviewed_saved_power_pending",
+  "state": "six_30k_runs_complete_reports_saved_pushed_shutdown_requested_heartbeat_paused",
   "gpu_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
   "user_authorization": {
     "date_local": "2026-10-13",
@@ -788,7 +818,7 @@
   "automation": {
     "id": "drivingeditor-30k",
     "kind": "heartbeat",
-    "status": "ACTIVE",
+    "status": "PAUSED",
     "interval_minutes": 60,
     "unchanged_state": "quiet",
     "other_automations": "stay paused",
@@ -2065,7 +2095,7 @@
     "evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847",
     "red_actual_GPU_binding_verified": true
   },
-  "last_updated_singapore": "2026-10-13T11:58:05.430970+08:00",
+  "last_updated_singapore": "2026-10-13T12:06:26.096844+08:00",
   "closeout_failure_ledger_delta": "none",
   "final_closeout": {
     "status": "SIX_REAL_RUNS_COMPLETE_REPORTS_REVIEWED",
@@ -2083,6 +2113,10 @@
     ],
     "evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/final_followup_20261013",
     "old_preparation_receipts_are_historical": true,
-    "power_signal_sent": false
+    "power_signal_sent": true,
+    "independent_platform_power_verified": false,
+    "shutdown_receipt": "outputs/DrivingEditor_shutdown_receipt.json",
+    "heartbeat_status": "PAUSED",
+    "original_remote_assets_preserved": true
   }
 }
