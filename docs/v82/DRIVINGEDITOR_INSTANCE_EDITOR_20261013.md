@@ -1,6 +1,6 @@
 # v82 DrivingEditor：GMC 双实例固定轨迹基线
 
-更新：2026-10-14T00:10:45.044812+08:00。仅 GMC scene0008 raw23–71；其他两场景没有新增实验。真实300步GPU短测完成，两车各删除、局部前移0.5m和局部yaw30度覆盖49观察帧，共294对。工程合同和实际恢复通过，已从step300续到总30000（新增29700），worker PID37747，当前快照step1100；10k/20k/30k完整保存。StreetCrafter及其他GPU任务优先，CPU最多4线程/nice10，竞争出现保存priority_yield后退出，无自动抢占续跑。
+更新：2026-10-14T01:11:51.332165+08:00。仅 GMC scene0008 raw23–71；其他两场景没有新增实验。真实300步GPU短测完成，两车各删除、局部前移0.5m和局部yaw30度覆盖49观察帧，共294对。工程合同和实际恢复通过，已从step300续到总30000（新增29700），worker PID37747，当前快照step23300；10k和20k已保存并通过CPU结构/finite/Adam/RNG/policy检查，30k待完成。10k/20k GPU实际恢复尚未认证。StreetCrafter及其他GPU任务优先，CPU最多4线程/nice10，竞争出现保存priority_yield后退出，无自动抢占续跑。
 
 ![组件图](../autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/gpu_smoke_edits_resume_20261013/DrivingEditor_instance_editor_components.png)
 
@@ -17,3 +17,5 @@
 300步总wall59.442秒，末300步训练吞吐约6.95步/秒；PyTorch allocated/reserved峰2.105/3.508GiB，进程/设备采样峰3.840/3.850GiB、60采样0errors。它只描述短测，不能认证新30k全程或3090容量/速度；采样峰是下界，仍须完整训练、编辑/评价及目标机验证。各编辑操作memory_summary原样保留远端。此新阶段不关机、不改其他任务、不改共享环境。
 
 主输出：`runs/gmc_two_actor_fixed30k_r1`；启动凭据：`queue_gmc30k_r1/launch.json`；先前短测：`queue_gmc_r1/gpu_smoke`；六组编辑：`edits_smoke_300_r1`。每半小时检查保持开启（drivingeditor-gmc；原drivingeditor-30k已暂停），无变化安静。最终真实收敛结果接入已有DrivingEditor_final_report.html，不新增HTML入口。旧六组180k、旧报告/离线包和所有失败资产保留。
+
+运行中节点检查：10k/20k各935,060,588B，点数298075实例/613405静态固定，两ID及策略不变；CPU单线程/nice10，无CUDA或优化。累计3888 NV采样、0错误，设备采样峰4.887GiB仅下界；活跃training阶段allocated/reserved峰须等monitor关闭才能完整读取。10k raw47单帧preview显示车辆比300步更成形，但静态道路灰白补片仍在，仅作预览而非49帧质量结论。
