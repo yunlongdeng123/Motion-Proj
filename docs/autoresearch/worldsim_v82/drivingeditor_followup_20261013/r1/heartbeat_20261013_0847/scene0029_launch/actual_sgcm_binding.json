@@ -1,0 +1,182 @@
+{
+  "status": "PASS_ACTUAL_GPU_SGCM_LINEAGE_BINDING",
+  "scene_id": "scene0029_069_117",
+  "training_views": 49,
+  "static_points": 597734,
+  "guard_enabled": true,
+  "metadata": {
+    "status": "validated",
+    "paper_reference": "Eq8,printed1701/PDF6",
+    "config": {
+      "dr_m": 0.5,
+      "interval": 100,
+      "offset": 50,
+      "start": 500,
+      "end": 15000,
+      "max_new_points": 10000,
+      "split_radius_px": 20,
+      "ground_margin_m": 3.0,
+      "ground_cell_m": 0.5,
+      "plane_inlier_m": 0.15,
+      "ground_min_cells": 30,
+      "ground_min_fraction": 0.35,
+      "ground_max_tilt_deg": 20,
+      "ground_max_rmse_m": 0.1,
+      "region_margin_m": 0.25,
+      "max_points": 3000000,
+      "guard_enabled": true
+    },
+    "meter_to_model_scale": 0.09999999999999999,
+    "dr_model": 0.049999999999999996,
+    "transform_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/transform_matrix.txt",
+    "transform_validation": "finite_isotropic_similarity",
+    "world_to_model": [
+      [
+        0.09247225035645017,
+        0.038061133221028026,
+        0.00048275453924256245,
+        -390.05899695443173
+      ],
+      [
+        0.015098031428842204,
+        -0.035511618693798465,
+        -0.09225494233221307,
+        2.230072950481235
+      ],
+      [
+        -0.03494184255284382,
+        0.08538310767170287,
+        -0.03858487480003878,
+        62.62566722130321
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "anchor_pose": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/pose/0029069.txt",
+    "plane_model": [
+      0.008524113331864421,
+      -0.9228043150781666,
+      -0.38517468188475396,
+      0.22783246306208726
+    ],
+    "ground_fit": {
+      "candidate_points": 17458,
+      "lower_envelope_cells": 860,
+      "inlier_cells": 855,
+      "inlier_fraction": 0.9941860465116279,
+      "rmse_m": 0.03855038993040433,
+      "tilt_from_first_vehicle_up_deg": 1.219376203372892,
+      "inlier_xy_span_m": [
+        8.026700415508913,
+        24.91725079860032
+      ],
+      "plane_anchor": [
+        -0.006187548747432909,
+        0.020361112495678742,
+        0.9997735440280645,
+        0.24401298653897688
+      ]
+    },
+    "regions_anchor": [
+      [
+        [
+          27.57915130270112,
+          -7.496389980284107,
+          -0.5669989900055169
+        ],
+        [
+          30.10785557019426,
+          11.962094915105354,
+          1.8436561543263679
+        ]
+      ]
+    ],
+    "assumptions": [
+      "First vehicle up defines local vertical; low-tilt ground required.",
+      "Hd is the union of actor time-aggregated LiDAR AABBs in the first vehicle frame; extends vertically to fitted ground.",
+      "Ground support includes a3m XY margin around actor support;0.5m grid10th-percentile lower envelope; deterministic256trial RANSAC and least-squares.",
+      "SGCM executes after optimizer on an offset schedule avoiding generic densification;20px radius is the undeclared projected-footprint threshold choice.",
+      "Resource cap limits additions per step; large projected footprints prioritized.",
+      "Clone copies parameters; split uses symmetric two-child largest-axis moment-matched spatial subdivision and unchanged temporal fields."
+    ],
+    "unknown_author_details": [
+      "Region shape/update",
+      "Ground extraction/fit",
+      "Schedule",
+      "Footprint threshold",
+      "Clone/split policy/budget"
+    ],
+    "addition_guard": {
+      "enabled": true,
+      "training_view_count": 49,
+      "training_time_range": [
+        -0.48,
+        0.48
+      ],
+      "training_view_ids": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029112.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029070.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029097.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029083.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029105.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029081.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029069.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029096.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029116.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029076.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029102.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029103.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029089.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029117.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029074.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029107.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029080.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029092.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029109.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029084.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029079.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029090.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029115.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029072.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029078.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029073.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029110.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029111.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029108.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029086.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029098.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029114.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029075.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029104.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029087.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029077.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029113.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029082.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029106.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029091.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029099.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029088.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029094.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029100.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029101.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029085.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029071.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029095.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1/image/image_0/0029093.png"
+      ],
+      "temporal_prefilter_strict_gt": 0.05,
+      "effective_alpha_min": 0.00392156862745098,
+      "view_depth_strict_gt_model": 0.2,
+      "projection": "Camera row-vector world_view/full_proj; center NDC x,y in [-1,1]",
+      "semantics": "training-view support proxy; no occlusion or exact per-Gaussian contribution",
+      "clone_limit": "one SGCM clone per initial source lineage; all descendants inherit spent state",
+      "split_children": "both proposed children need support in at least one training view",
+      "checkpoint": "legacy 18-field capture tuple; optional optimizer.sgcm_lineage_v1 payload"
+    }
+  },
+  "restoration_verified": false
+}

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-13T01:32:58.978806+00:00",
+  "status": "SOURCE_REVIEW_PASS_PLAN_OVERLAP_FINDING_RESOLVED",
+  "scope": "Independent read-only AST and source review of isolated SAM body override extension; no model, fixture, Git or runtime invocation",
+  "new_source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\red_actor_adapter_sam\\actor_cpu.py",
+  "baseline_source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\repo_active\\scripts\\worldsim_v82\\drivingeditor_debug\\followup_20261013\\red_actor_adapter\\actor_cpu.py",
+  "real_candidate_receipt": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\red_sam_candidates\\status.json",
+  "AST_evidence": {
+    "source_parsed": true,
+    "project_identical": true,
+    "actor_subset_identical_after_only_optional_body_argument_and_body_assignment_normalization": true,
+    "default_main_identical": true,
+    "unchanged_functions": [
+      "require",
+      "read",
+      "write_new",
+      "calibration",
+      "project",
+      "save_ply",
+      "frame_input",
+      "main"
+    ],
+    "changed_functions": [
+      "actor_subset",
+      "preflight",
+      "build",
+      "validate"
+    ],
+    "added_functions": [
+      "resolved_body"
+    ]
+  },
+  "admission_review": {
+    "default_stage": "check",
+    "missing_reviewed_selection_or_execution_receipt": "rejected",
+    "all49_reviewed_frames_and_known_nonoverlapping_DEVA_IDs": "required by unchanged preflight predicates",
+    "override_review": "requires visible/reviewed row, exact declared source, root_engineering_reviewed true, nonempty review_note",
+    "receipt_binding": "requires matching scene, completed returncode0, cached SAM vit_h, no GT boxes, no DEVA modification, amp false, existing recorded checkpoint/source/interpreter",
+    "candidate_binding": "requires exactly one matching frame, no GT prompt, exact candidate index/path match, uint8 expected-shape binary0/255 nonempty image with recorded candidate area",
+    "body_consistency": "preflight resolves each body, rejects pixel overlap against per-frame resolved_union and accumulates the union before returning; build and validate both use resolved_body; nooverride remains np.isin(original DEVA IDs)",
+    "geometry": "original projection, nearest2x2 visibility plus0.5m depth, connected component0.5m, dominant component minimum half, raw pose world transform and temporal PLY fields unchanged",
+    "static": "existing static PLY still required; no static regeneration or static exclusion algorithm changed in this adapter; actual original strict0.1m loader validation remains pending",
+    "training_ready": "all check/build/validate result literals retain false"
+  },
+  "receipt_observed": {
+    "status": "REAL_SAM_CANDIDATES_EXPORTED_REVIEW_PENDING",
+    "scene": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0029_069_117_red_cpu_v1",
+    "returncode": 0,
+    "frame_ids": [
+      "0029098",
+      "0029099",
+      "0029100"
+    ],
+    "candidate_counts": [
+      3,
+      3,
+      3
+    ],
+    "prompt_kinds": [
+      "real_DEVA130_bbox_fixed80px_padding",
+      "real_DEVA130_bbox_fixed80px_padding",
+      "real_DEVA130_bbox_fixed80px_padding"
+    ],
+    "original_DEVA_modified_flag": false,
+    "root_review_complete_flag": false,
+    "training_ready_flag": false
+  },
+  "parent_reported_visual_review": {
+    "provenance": "root task message, not independently repeated by this reviewer",
+    "accepted_candidate_indices": {
+      "0029098": 1,
+      "0029099": 1,
+      "0029100": 1
+    },
+    "rejected": "0029100 candidate0 has licence-plate hole",
+    "all49_actor_review": "pending"
+  },
+  "findings": [
+    {
+      "priority": 2,
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\red_actor_adapter_sam\\actor_cpu.py",
+      "function": "preflight",
+      "line": 143,
+      "title": "Default check does not reject overlapping resolved SAM actor bodies",
+      "trigger": "Multiple actors have disjoint original DEVA IDs but their admitted SAM overrides or a SAM and DEVA body overlap in pixels",
+      "actual": "preflight validates ID disjointness and calls resolved_body without accumulating the returned masks; check may return READY_ACTOR_CPU_PLAN. build rejects overlap only after creating output directories and possibly earlier-frame outputs",
+      "impact": "Incorrect plan admission and avoidable partial output; actual build/validate still fail before training readiness. Current single-actor red plan is unaffected",
+      "suggested_fix": "Within each preflight frame, accumulate resolved body union and require no union/body overlap before returning the plan",
+      "verification": "source path analysis only; no new mirrored test or fixture",
+      "blocking_current_single_actor_plan": false,
+      "status": "RESOLVED_BY_SOURCE_REVIEW",
+      "resolution": {
+        "change": "preflight initializes resolved_union per frame, requires not np.any(resolved_union & body), then accumulates resolved_union |= body",
+        "ordering": "build calls preflight before output root mkdir; default check calls the same preflight",
+        "verification": "current source and AST inspected only; no new fixture or runtime test"
+      }
+    }
+  ],
+  "boundaries": {
+    "runtime_verified_by_this_reviewer": false,
+    "GPU_used": false,
+    "Torch_imported": false,
+    "source_modified": false,
+    "original_source_control_certified": false,
+    "red_scene_ready_certified": false,
+    "GMC_or_GN11_runtime_certified": false,
+    "all49_actor_body_visual_review_certified": false
+  },
+  "updated_utc": "2026-10-13T01:34:01.558342+00:00"
+}

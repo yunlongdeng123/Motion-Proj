@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-13T00:53:01.154403+00:00",
+  "reviewer": "mask_queue_portability_review",
+  "status": "SOURCE_SAFETY_PASS_INSPECTOR_FINDING_RESOLVED",
+  "runtime_certified": false,
+  "remote_commands_run": false,
+  "Torch_imported": false,
+  "GPU_used": false,
+  "model_or_training_started": false,
+  "source_files": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\run_red_masks_after_scene8.py",
+      "syntax_compile": "passed"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\inspect_followup.py",
+      "syntax_compile": "passed",
+      "syntax_compile_scope": "Initial reviewed source; repaired observability branch verified by source inspection only"
+    }
+  ],
+  "reviewed_safety_checks": [
+    {
+      "check": "absent_os_pidfd_open",
+      "status": "SOURCE_PASS",
+      "evidence": "getattr(os, pidfd_open, None) plus callable predicate selects bounded /proc fallback; no unconditional attribute reference remains"
+    },
+    {
+      "check": "fallback_bounded_owned_exit",
+      "status": "SOURCE_PASS",
+      "evidence": "30-second monotonic deadline, 0.25-second polling; missing /proc or Z/X state returns success; nonempty cmdline must contain both run_scene_gn11.py and scene0008_spec.json; timeout/identity mismatch raises before model stages; no kill in helper"
+    },
+    {
+      "check": "attempt_argument_and_no_overwrite",
+      "status": "SOURCE_PASS",
+      "evidence": "--attempt int choices 1..9, default1 preserved, attempt2 uses distinct metadata/red_masks_20261013_attempt2, mkdir(exist_ok=False) forbids metadata reuse, stage logs use xb"
+    },
+    {
+      "check": "shared_gpu_slot_and_completion",
+      "status": "SOURCE_PASS",
+      "evidence": "flock LOCK_EX precedes second input validation, complete/iteration30000 checks, actual completion_contract, owned-exit helper, empty compute-apps check, and sky/DEVA launch; lock FD is inherited by each stage subprocess"
+    },
+    {
+      "check": "preserve_partial_segmentation",
+      "status": "SOURCE_PASS",
+      "evidence": "validate_inputs rejects any existing sky PNG or mask/mask_0 path both before queue startup and after acquiring lock; errors preserve existing assets/logs; no cleanup/deletion or forced resumption"
+    },
+    {
+      "check": "CPU_default_and_training_boundaries",
+      "status": "SOURCE_PASS",
+      "evidence": "default invocation only validates and prints proof, with no queue mkdir or GPU stage; contracts are stdlib; no actor selection or training launch is implemented"
+    },
+    {
+      "check": "inspector_registry_path",
+      "status": "SOURCE_PASS",
+      "evidence": "registry attempt must be exactly int (bool excluded), range1..9; suffix constructed from integer rather than using external path"
+    }
+  ],
+  "findings": [
+    {
+      "priority": 2,
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\inspect_followup.py",
+      "line": 89,
+      "title": "Historical attempts disappear until active status exists",
+      "trigger": "metadata/red_masks_active_queue.json selects attempt2 while attempt2/status.json has not been created or initialization failed before META creation; attempt1/status.json still exists",
+      "actual": "red_GPU_mask_attempts is assigned only within if mask_queue, so inspector exits normally while omitting old preserved attempt evidence",
+      "impact": "Launch/initialization failure and brief launch windows lose historical status visibility. This does not weaken GPU startup guards or modify assets.",
+      "fix": "Compute red_GPU_mask_attempts outside if mask_queue, so all existing attempt statuses remain visible independently of active status availability.",
+      "reproduced": true,
+      "reproduction_receipt": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\heartbeat_20261013_0847\\stage\\inspect_missing_active_status_repro.json",
+      "status": "RESOLVED_BY_SOURCE_REVIEW",
+      "resolution": {
+        "historical_attempts": "red_GPU_mask_attempts aggregation is now outside if mask_queue",
+        "active_status_missing": "elif active_queue emits dispatch_pending_runtime_status plus registry pid/log and owned controller process check",
+        "verification": "current source inspected only; no additional fixture or runtime invocation"
+      }
+    }
+  ],
+  "limitations": [
+    "No remote or live queue execution was performed by this reviewer. Parent has reported actual target CPU helper/default-validation PASS and completed sky-stage returncode0; these were not independently rerun by this reviewer.",
+    "Callable pidfd_open on a Python/kernel combination that raises OSError(ENOSYS/EPERM) still fails closed instead of falling back. This is outside the demonstrated missing-attribute environment and is not a deployed blocking finding.",
+    "Critical controller predicates use assert, so launcher must retain PYTHONOPTIMIZE=0 and avoid python -O; the earlier owned launcher already does so, and the new attempt2 launcher was not available in this review.",
+    "Sky/DEVA output validity, runtime memory, actor identity, training readiness, checkpoint loading, and restoration remain uncertified."
+  ],
+  "updated_utc": "2026-10-13T00:57:25.260140+00:00"
+}

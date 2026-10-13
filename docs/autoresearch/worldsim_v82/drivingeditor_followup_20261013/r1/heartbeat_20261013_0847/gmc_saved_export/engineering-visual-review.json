@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "completed_utc": "2026-10-13T01:14:48.982563+00:00",
+  "scene_id": "scene0008_023_071",
+  "arm": "GN11",
+  "checkpoint": 30000,
+  "status": "ENGINEERING_VISUAL_REVIEW_COMPLETE_WITH_LIMITATIONS",
+  "reviewer": "Codex assistant inspecting actual local image tool outputs; not the human user",
+  "review_scope": "49 all-observed development reconstruction frames and 49 fixed-pose model times; required seven channel families, 343 unique source PNGs. No novel-view quality, independent test or edit GT.",
+  "engineering_observations": [
+    {
+      "id": "two_targets",
+      "finding": "On-screen GMC pickup and oncoming Jeep are recognizable and located in the dynamic RGB/alpha support. Their departure at the left border broadly follows GT. This does not prove separately editable per-instance identity or exact occlusion support.",
+      "evidence_pages": [
+        "observed_00_00_02.png",
+        "observed_08_24_26.png",
+        "observed_12_36_38.png"
+      ],
+      "kind": "observed_support_with_scope_limit"
+    },
+    {
+      "id": "Corolla_static",
+      "finding": "Foreground silver Corolla is consistently retained in static and composite through all49 frames and fixed-pose times. It is not a large white dynamic-alpha target. Fine texture/light reproduction still differs slightly from GT.",
+      "evidence_scope": "all49 observed five-channel pages + all49 fixed-time two-channel pages",
+      "kind": "observed_support_with_scope_limit"
+    },
+    {
+      "id": "body_detail",
+      "finding": "GMC body/edge detail is softer with localized color fringe. Small Jeep views raw29-33 have visible grille/body blur and weak ground contact; larger Jeep contours remain recognizable. These are absolute reconstruction limitations, not relative GN11-C00 regressions.",
+      "evidence_pages": [
+        "details_small_body_raw29_30_33.png",
+        "details_static_shadow_raw23_55_56.png"
+      ],
+      "kind": "visual_limitation"
+    },
+    {
+      "id": "ground_contact",
+      "finding": "Jeep composite lacks much of the natural GT ground shadow, clearly at raw50/52/53 and visible earlier during approach. Wheels look detached from the road. The body remains in dynamic; absence of shadow supervision is a plausible protocol-related explanation, not a proven SGCM/NPS cause.",
+      "evidence_pages": [
+        "details_ground_raw50_52_53.png",
+        "observed_06_18_20.png",
+        "observed_09_27_29.png",
+        "observed_10_30_32.png"
+      ],
+      "kind": "visual_limitation_with_causal_inference_marked"
+    },
+    {
+      "id": "static_road_residual",
+      "finding": "Static branch removes the solid target bodies but leaves pronounced dark shadow-like road residuals at raw23-27 and raw54-58; thinner traces survive nearby. A deletion view should not be called clean road recovery.",
+      "evidence_pages": [
+        "details_static_shadow_raw23_55_56.png",
+        "observed_00_00_02.png",
+        "observed_11_33_35.png"
+      ],
+      "kind": "visual_limitation"
+    },
+    {
+      "id": "fixed_time_invariance",
+      "finding": "At fixed pose0008033, the left-road black patch appears, moves/deforms and disappears as model time changes. Clear anchor road and dark raw23/raw55/raw56-time road directly contradict strict static RGB invariance. Alpha remains broadly opaque there. Corolla/building geometry persists while minor background traffic/texture/alpha changes remain.",
+      "evidence_pages": [
+        "details_fixed_time_road_raw23_33_55_56.png",
+        "fixed_time_00_00_03.png",
+        "fixed_time_08_32_35.png"
+      ],
+      "kind": "visual_limitation",
+      "absolute_static_RGB_invariance_certified": false,
+      "counterfactual_GT_quality_scored": false
+    },
+    {
+      "id": "tail_empty_body",
+      "finding": "All ten body-empty raw62-71 frames remain in coverage. At unchanged 8bit scale, dynamic RGB/alpha show no vehicle-sized ghost. They are not strict zero: raw62 dynamic has116 pixels>2/255 and alpha303 pixels>2/255; raw63 dynamic3, later raw64-71 dynamic2 pixels>2/255 each. This is low-intensity sparse residual support, not perfect disappearance.",
+      "evidence_pages": [
+        "observed_13_39_41.png",
+        "observed_14_42_44.png",
+        "observed_15_45_47.png",
+        "observed_16_48_48.png"
+      ],
+      "pixel_count_evidence": [
+        {
+          "local_index": 39,
+          "source_frame": "image_0/0008062",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 23,
+          "dynamic_nonzero_pixels_8bit": 193,
+          "dynamic_pixels_gt2_8bit": 116,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 13,
+          "alpha_d_nonzero_pixels_8bit": 991,
+          "alpha_d_pixels_gt2_8bit": 303,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 5.825043990626e-05,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 0.0007552083333333333
+        },
+        {
+          "local_index": 40,
+          "source_frame": "image_0/0008063",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 23,
+          "dynamic_nonzero_pixels_8bit": 14,
+          "dynamic_pixels_gt2_8bit": 3,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 91,
+          "alpha_d_pixels_gt2_8bit": 10,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 3.6258688851376064e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.953125e-05
+        },
+        {
+          "local_index": 41,
+          "source_frame": "image_0/0008064",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 22,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 60,
+          "alpha_d_pixels_gt2_8bit": 8,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 2.5325657588837203e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 42,
+          "source_frame": "image_0/0008065",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 22,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 61,
+          "alpha_d_pixels_gt2_8bit": 6,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 2.4981500246212818e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 43,
+          "source_frame": "image_0/0008066",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 21,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 59,
+          "alpha_d_pixels_gt2_8bit": 5,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 2.3809891445125686e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 44,
+          "source_frame": "image_0/0008067",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 20,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 56,
+          "alpha_d_pixels_gt2_8bit": 3,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 2.2317160528473323e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 45,
+          "source_frame": "image_0/0008068",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 21,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 55,
+          "alpha_d_pixels_gt2_8bit": 2,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 2.1426358216558583e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 46,
+          "source_frame": "image_0/0008069",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 22,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 53,
+          "alpha_d_pixels_gt2_8bit": 4,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 2.032034444710007e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 47,
+          "source_frame": "image_0/0008070",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 22,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 51,
+          "alpha_d_pixels_gt2_8bit": 3,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 1.9310709831188433e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        },
+        {
+          "local_index": 48,
+          "source_frame": "image_0/0008071",
+          "body_pixel_count": 0,
+          "dynamic_max_8bit": 22,
+          "dynamic_nonzero_pixels_8bit": 2,
+          "dynamic_pixels_gt2_8bit": 2,
+          "dynamic_pixels_gt16_8bit": 1,
+          "alpha_d_max_8bit": 3,
+          "alpha_d_nonzero_pixels_8bit": 45,
+          "alpha_d_pixels_gt2_8bit": 4,
+          "alpha_d_pixels_gt16_8bit": 0,
+          "recorded_raw_FP32_full_alpha_d_mean": 1.7483639567217324e-06,
+          "recorded_raw_FP32_full_dynamic_RGB_support_8bit_gt2": 1.3020833333333334e-05
+        }
+      ],
+      "kind": "visual_limitation_with_pixel_counts",
+      "strict_zero_dynamic_tail": false
+    }
+  ],
+  "overall_engineering_conclusion": "Requested full pixel coverage is complete. Recognizable target body separation and static Corolla retention coexist with body-detail blur, missing/incorrect ground shadows, deletion-road residuals and fixed-time static RGB variation. No broad foreground/scene/layer collapse or vehicle-sized empty-tail ghost was seen at this display scale. These observations do not certify absolute edit/background quality.",
+  "absolute_clean_deletion_recovery_certified": false,
+  "absolute_static_RGB_invariance_certified": false,
+  "same_scene_C00_comparison_available": false,
+  "delta_1dB_gate_applicable_here": false,
+  "SGCM_or_NPS_scientific_benefit_established": false,
+  "comparison_and_causality_limit": "No scene0008 C00 run exists for paired GN11-C00 evaluation. Do not transfer the original silver-scene relative gate, infer module benefit from this GN11-only result, or assign a mechanism to its residuals from these images.",
+  "human_verdict": null,
+  "human_gate_passed": null,
+  "restoration_verified": false,
+  "safety_scope": {
+    "original_PNGs_modified": false,
+    "GPU_used": false,
+    "remote_or_browser_used": false,
+    "models_or_training_loaded": false,
+    "rerender_started": false,
+    "new_hash_or_fingerprint_computed": false,
+    "repository_modified": false
+  }
+}

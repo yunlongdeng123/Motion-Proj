@@ -1,0 +1,51 @@
+{
+  "status": "FOLLOWUP_CPU_VALIDATED_GPU_GATE_PENDING",
+  "scene_id": "scene0029_069_117",
+  "arm": "GN11",
+  "iterations": 30000,
+  "checkpoint_nodes": [
+    10000,
+    20000,
+    30000
+  ],
+  "anchor_pose_frame": "0029079",
+  "scene_cpu_status": {
+    "status": "SCENE_CPU_PREPARED_ACTUAL_GPU_BINDING_PENDING",
+    "scene_id": "scene0029_069_117",
+    "ground_rmse_m": 0.03855038993040433,
+    "guard_runtime_verified": false,
+    "restoration_verified": false
+  },
+  "input_inventory": {
+    "status": "INPUT_FILESETS_AND_HEADERS_PASS",
+    "frames": 49,
+    "original_wh": [
+      1920,
+      1280
+    ],
+    "deep_pixels_revalidated": false,
+    "actual_cpu_mask_reader_evidence": "readiness_file"
+  },
+  "actual_files_checked": true,
+  "gate_passed": false,
+  "gpu_started": false,
+  "gpu_start_blocked_reason": "gate file尚未提供",
+  "actual_model_sgcm_binding_verified": false,
+  "restoration_verified": false,
+  "disk_forecast": {
+    "required_free_bytes": 18226798397,
+    "forecast_bundle_bytes": 3706843977,
+    "remaining_nodes": 3,
+    "checkpoint_bytes": 11120531931,
+    "evaluation_and_viewer_bytes": 2709504000,
+    "logs_bytes": 122880000,
+    "atomic_component_temporary_bytes": 2616900793,
+    "forecast_headroom_bytes": 1656981673,
+    "point_counts_basis": "configured caps with10%generic-topology overshoot forecast; not strict maximum",
+    "static_points_forecast": 3300001,
+    "dynamic_points_forecast": 1100000,
+    "static_bytes_per_point": 793,
+    "dynamic_bytes_per_point": 784,
+    "boundary": "forecast only; recheck before start/save; no deletion or machine change"
+  }
+}

@@ -80,7 +80,14 @@ def main():
             prepared.append({k: row.get(k) for k in
                             ("status", "scene_id", "anchor_pose_frame", "gpu_started", "gate_required_at_run")})
         result["prepared_training_sources"] = prepared
-        mask_queue = read_if(root / "metadata/red_masks_20261013/status.json")
+        active_queue = read_if(root / "metadata/red_masks_active_queue.json")
+        attempt = active_queue.get("attempt", 1) if active_queue else 1
+        if type(attempt) is not int or not 1 <= attempt <= 9:
+            raise ValueError("Invalid owned mask queue attempt registry")
+        suffix = "" if attempt == 1 else "_attempt%d" % attempt
+        mask_queue = read_if(root / ("metadata/red_masks_20261013%s/status.json" % suffix))
+        result["red_GPU_mask_attempts"] = [{"directory": str(p.parent), **{k: read_if(p).get(k) for k in ("status", "pid", "error")}}
+                                         for p in sorted((root / "metadata").glob("red_masks_20261013*/status.json"))]
         if mask_queue:
             result["red_GPU_mask_queue"] = {k: mask_queue.get(k) for k in
                 ("status", "pid", "updated_utc", "active_child_pid", "error", "sky_frames",
@@ -88,8 +95,13 @@ def main():
             result["red_GPU_mask_queue"]["controller_process"] = process_check(mask_queue.get("pid"), "run_red_masks_after_scene8.py")
             result["red_GPU_mask_queue"]["stages"] = [{k: s.get(k) for k in
                 ("stage", "pid", "returncode", "wall_seconds", "memory_sampling")} for s in mask_queue.get("stages", [])]
-            launch = read_if(root / "metadata/red_masks_queue_launch_20261013.json")
+            result["red_GPU_mask_queue"]["attempt"] = attempt
+            launch = read_if(root / ("metadata/red_masks_queue_launch_20261013%s.json" % suffix))
             result["red_GPU_mask_queue"]["launch_log"] = launch.get("log") if launch else None
+        elif active_queue:
+            result["red_GPU_mask_queue"] = {"attempt": attempt, "status": "dispatch_pending_runtime_status",
+                "pid": active_queue.get("pid"), "launch_log": active_queue.get("log"),
+                "controller_process": process_check(active_queue.get("pid"), "run_red_masks_after_scene8.py")}
         runs = []
         for path in sorted((root / "runs").glob("*/status.json")):
             row = read_if(path)

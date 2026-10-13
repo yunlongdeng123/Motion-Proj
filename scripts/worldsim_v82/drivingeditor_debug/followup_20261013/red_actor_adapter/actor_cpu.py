@@ -55,9 +55,9 @@ def project(lidar, masks, calib):
     return xyz, homogeneous, source_indices, uv, depth, bins, nearest
 
 
-def actor_subset(masks, ids, visibility, projection, pose, name, i):
+def actor_subset(masks, ids, visibility, projection, pose, name, i, body_override=None):
     xyz, homogeneous, source_indices, uv, depth, bins, nearest = projection
-    body = np.isin(masks, ids)
+    body = np.isin(masks, ids) if body_override is None else body_override
     assert body.any() == (visibility == "visible")
     assert all(np.any(masks == instance) for instance in ids)
     mask_hit = body[uv[:, 1], uv[:, 0]]
@@ -107,6 +107,37 @@ def frame_input(scene, name):
     require(np.isfinite(pose).all() and calib["Tr_velo_to_cam_0"].size == 12 and calib["P0"].size == 12, "Pose/calibration invalid")
     require(all(np.isfinite(calib[k]).all() for k in ("P0", "Tr_velo_to_cam_0")), "Nonfinite calibration")
     return rgb, masks, lidar, pose, calib
+
+
+def resolved_body(scene, name, masks, row):
+    """原DEVA或已真实推理并逐帧审查的SAM候选；不填洞、不改DEVA、不用GT框。"""
+    override = row.get("body_override")
+    if override is None:
+        return np.isin(masks, row["instance_ids"])
+    require(row["visibility"] == "visible" and row.get("reviewed") is True,
+            "SAM override only for actually reviewed visible body")
+    require(override.get("source") == "cached_SAM_vit_h_real_inference" and
+            override.get("root_engineering_reviewed") is True and
+            str(override.get("review_note") or "").strip(), "SAM candidate review required")
+    receipt = read(override["execution_receipt"])
+    require(receipt.get("status") == "REAL_SAM_CANDIDATES_EXPORTED_REVIEW_PENDING" and
+            receipt.get("scene") == str(scene) and receipt.get("returncode") == 0 and
+            receipt.get("model") == "cached_SAM_vit_h" and receipt.get("GT_boxes_used") is False and
+            receipt.get("source_DEVA_modified") is False and receipt.get("amp") is False,
+            "Real cached SAM execution receipt required")
+    require(all(Path(receipt[k]).is_file() for k in ("checkpoint", "source_script", "interpreter")),
+            "Recorded SAM cache/source/interpreter missing")
+    frames = [r for r in receipt["frames"] if r["frame_id"] == name]
+    require(len(frames) == 1 and frames[0]["prompt"].get("GT_boxes_used") is False,
+            "SAM real frame/prompt receipt mismatch")
+    chosen = [r for r in frames[0]["model_output_candidates"]
+              if r["candidate_index"] == override["candidate_index"] and r["path"] == override["path"]]
+    require(len(chosen) == 1, "Body override must be exact recorded real model candidate")
+    actual = np.array(Image.open(override["path"]))
+    require(actual.dtype == np.uint8 and actual.shape == masks.shape and
+            set(np.unique(actual)).issubset({0, 255}) and np.any(actual) and
+            int((actual > 0).sum()) == chosen[0]["area"], "Exact binary SAM candidate invalid")
+    return actual > 0
 
 
 def preflight(scene, selection_path, receipt_path):
@@ -167,10 +198,14 @@ def preflight(scene, selection_path, receipt_path):
         declared = {int(x["id"]): int(x["area"]) for x in by_name[name]["segments_info"]}
         require(counts == declared, "Actual PNG IDs/areas must match pred.json: " + name)
         used = set()
+        resolved_union = np.zeros(masks.shape, dtype=bool)
         for actor in actors:
             selected = actor["frames"][frame_index]["instance_ids"]
             require(set(selected).issubset(counts) and not used.intersection(selected), "Unknown/overlapping selected IDs: " + name)
             used.update(selected)
+            body = resolved_body(scene, name, masks, actor["frames"][frame_index])
+            require(not np.any(resolved_union & body), "Actual resolved actor bodies overlap: " + name)
+            resolved_union |= body
     return prep, chosen
 
 
@@ -197,14 +232,15 @@ def build(scene, selection_path, receipt_path):
         for actor in chosen["actors"]:
             i = actor["actor_index"]
             selected = actor["frames"][frame_index]
-            body, retained, world, projected, before = actor_subset(masks, selected["instance_ids"], selected["visibility"], projection, pose, name, i)
+            body_input = resolved_body(scene, name, masks, selected)
+            body, retained, world, projected, before = actor_subset(masks, selected["instance_ids"], selected["visibility"], projection, pose, name, i, body_input)
             require(not np.any(union & body), "Actor categorical bodies overlap")
             union |= body
             clouds[i].append(world)
             pointtimes[i].append(np.full(len(world), row["model_time"], dtype=np.float32))
             indices[i][name] = retained
             Image.fromarray(body.astype(np.uint8) * 255).save(actorroot / f"actor_{i}/body_masks" / (name + ".png"))
-            reports[i]["frames"].append({"frame_id": name, "model_time": row["model_time"], "visibility": selected["visibility"], "instance_ids": selected["instance_ids"], "pixels": int(body.sum()), "projected_points": projected, "visible_before_component": before, "retained_real_points": len(world), "geometry_status": "real_lidar_points" if len(world) else ("visible_without_lidar" if body.any() else "not_visible")})
+            reports[i]["frames"].append({"frame_id": name, "model_time": row["model_time"], "visibility": selected["visibility"], "instance_ids": selected["instance_ids"], "body_override": selected.get("body_override"), "pixels": int(body.sum()), "projected_points": projected, "visible_before_component": before, "retained_real_points": len(world), "geometry_status": "real_lidar_points" if len(world) else ("visible_without_lidar" if body.any() else "not_visible")})
         dynamic_rgb = np.zeros_like(rgb)
         dynamic_rgb[union] = rgb[union]
         Image.fromarray(dynamic_rgb).save(rgbroot / (name + ".png"))
@@ -236,7 +272,7 @@ def validate(scene, selection_path, receipt_path, raw_audit):
         labeldata = read(Path(raw_audit) / (name + ".json"))
         for actor in chosen["actors"]:
             i = actor["actor_index"]
-            body = np.isin(masks, actor["frames"][frame_index]["instance_ids"])
+            body = resolved_body(scene, name, masks, actor["frames"][frame_index])
             actual = np.array(Image.open(scene / f"dynamic_actor_assets/actor_{i}/body_masks" / (name + ".png")))
             require(set(np.unique(actual)).issubset({0, 255}) and np.array_equal(actual > 0, body) and not np.any(union & body), "Exact full body union failed")
             union |= body

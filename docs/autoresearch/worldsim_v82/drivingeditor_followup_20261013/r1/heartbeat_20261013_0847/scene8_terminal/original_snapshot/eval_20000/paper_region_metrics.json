@@ -1,0 +1,1359 @@
+{
+  "split": "train",
+  "iteration": 20000,
+  "frame_count": 49,
+  "aggregation": "Arithmetic mean of per-frame PSNR, later macro-average scenes equally.",
+  "perfect_error_policy": "Zero-error frames have infinite mathematical PSNR; saved as null and counted separately, excluded from finite mean.",
+  "mask_protocol": "Explicit binary actor masks, union optional separately predicted shadows; nearest-neighbor resize.",
+  "interpretation": "PSNR* uses composite RGB on dynamic region. PSNR-S uses composite RGB on static region. PSNR-SR uses static-branch RGB on the same static region after deleting all dynamic Gaussians.",
+  "limitations": [
+    "Paper masked-PSNR normalization is unspecified; both ROI and full-image zero-padded conventions are reported.",
+    "No deletion-hole quality is measured: historical unobstructed GT is required for Table V.",
+    "Inferred/prepared masks are not independent manually annotated ground truth."
+  ],
+  "summary": {
+    "dynamic_psnr_star": {
+      "valid_frames": 39,
+      "perfect_frames": 0,
+      "psnr_roi_mean": 28.507771600624316,
+      "psnr_zero_padded_mean": 45.23072547710524
+    },
+    "static_psnr_s": {
+      "valid_frames": 49,
+      "perfect_frames": 0,
+      "psnr_roi_mean": 34.27232919416845,
+      "psnr_zero_padded_mean": 34.39675656397946
+    },
+    "static_psnr_sr": {
+      "valid_frames": 49,
+      "perfect_frames": 0,
+      "psnr_roi_mean": 34.23574683619817,
+      "psnr_zero_padded_mean": 34.36017420600916
+    }
+  },
+  "frames": [
+    {
+      "frame": "image_0/0008023",
+      "dynamic_psnr_star": {
+        "pixels": 12628,
+        "fraction": 0.08221354166666667,
+        "sse": 67.51905319466414,
+        "psnr_roi": 27.49029484298781,
+        "psnr_zero_padded": 38.34086126774095,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 140972,
+        "fraction": 0.9177864583333334,
+        "sse": 150.08037937506396,
+        "psnr_roi": 34.49930197083536,
+        "psnr_zero_padded": 34.871885515637445,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 140972,
+        "fraction": 0.9177864583333334,
+        "sse": 151.03758154618728,
+        "psnr_roi": 34.471690929637035,
+        "psnr_zero_padded": 34.84427447443912,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008024",
+      "dynamic_psnr_star": {
+        "pixels": 13085,
+        "fraction": 0.08518880208333333,
+        "sse": 79.600760668324,
+        "psnr_roi": 26.92977763801144,
+        "psnr_zero_padded": 37.625952525207374,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 140515,
+        "fraction": 0.9148111979166667,
+        "sse": 137.4167751792308,
+        "psnr_roi": 34.86804189902693,
+        "psnr_zero_padded": 35.2547271787304,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 140515,
+        "fraction": 0.9148111979166667,
+        "sse": 135.5961397227005,
+        "psnr_roi": 34.92596616637905,
+        "psnr_zero_padded": 35.312651446082526,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008025",
+      "dynamic_psnr_star": {
+        "pixels": 11930,
+        "fraction": 0.07766927083333333,
+        "sse": 63.23802597545558,
+        "psnr_roi": 27.527833937608797,
+        "psnr_zero_padded": 38.62534165786031,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 141670,
+        "fraction": 0.9223307291666667,
+        "sse": 131.89501642540262,
+        "psnr_roi": 35.081707623256115,
+        "psnr_zero_padded": 35.43284084116981,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 141670,
+        "fraction": 0.9223307291666667,
+        "sse": 131.47228427212127,
+        "psnr_roi": 35.095649399526145,
+        "psnr_zero_padded": 35.44678261743985,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008026",
+      "dynamic_psnr_star": {
+        "pixels": 9946,
+        "fraction": 0.06475260416666667,
+        "sse": 55.33771128105593,
+        "psnr_roi": 27.31748516476327,
+        "psnr_zero_padded": 39.204912772756146,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 143654,
+        "fraction": 0.9352473958333334,
+        "sse": 126.31712128324435,
+        "psnr_roi": 35.329767582927055,
+        "psnr_zero_padded": 35.62050250699969,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 143654,
+        "fraction": 0.9352473958333334,
+        "sse": 124.6906102223016,
+        "psnr_roi": 35.38605227674339,
+        "psnr_zero_padded": 35.67678720081603,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008027",
+      "dynamic_psnr_star": {
+        "pixels": 7558,
+        "fraction": 0.04920572916666666,
+        "sse": 51.48980320621487,
+        "psnr_roi": 26.438069103417142,
+        "psnr_zero_padded": 39.51791238456211,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 146042,
+        "fraction": 0.9507942708333333,
+        "sse": 145.8273562400138,
+        "psnr_roi": 34.77760024192025,
+        "psnr_zero_padded": 34.996734680405574,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 146042,
+        "fraction": 0.9507942708333333,
+        "sse": 144.5226161231717,
+        "psnr_roi": 34.816632120765746,
+        "psnr_zero_padded": 35.03576655925108,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008028",
+      "dynamic_psnr_star": {
+        "pixels": 4285,
+        "fraction": 0.027897135416666666,
+        "sse": 32.520650269856695,
+        "psnr_roi": 25.969128599920573,
+        "psnr_zero_padded": 41.51353249428333,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 149315,
+        "fraction": 0.9721028645833333,
+        "sse": 126.456560686922,
+        "psnr_roi": 35.49283327445465,
+        "psnr_zero_padded": 35.615711045384884,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 149315,
+        "fraction": 0.9721028645833333,
+        "sse": 125.43891449535069,
+        "psnr_roi": 35.52792406198598,
+        "psnr_zero_padded": 35.650801832916216,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008029",
+      "dynamic_psnr_star": {
+        "pixels": 865,
+        "fraction": 0.005631510416666667,
+        "sse": 15.6068972207852,
+        "psnr_roi": 22.20820791846702,
+        "psnr_zero_padded": 44.70195900077381,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152735,
+        "fraction": 0.9943684895833333,
+        "sse": 129.82405837300786,
+        "psnr_roi": 35.477046426673354,
+        "psnr_zero_padded": 35.50157289118327,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152735,
+        "fraction": 0.9943684895833333,
+        "sse": 127.5736887568849,
+        "psnr_roi": 35.552987107543366,
+        "psnr_zero_padded": 35.57751357205328,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008030",
+      "dynamic_psnr_star": {
+        "pixels": 638,
+        "fraction": 0.004153645833333333,
+        "sse": 7.600327837797169,
+        "psnr_roi": 24.01109607597467,
+        "psnr_zero_padded": 47.826801445717976,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152962,
+        "fraction": 0.9958463541666667,
+        "sse": 132.11456713441464,
+        "psnr_roi": 35.40754101987842,
+        "psnr_zero_padded": 35.42561764251799,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152962,
+        "fraction": 0.9958463541666667,
+        "sse": 132.82578609658606,
+        "psnr_roi": 35.38422413297267,
+        "psnr_zero_padded": 35.40230075561223,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008031",
+      "dynamic_psnr_star": {
+        "pixels": 673,
+        "fraction": 0.004381510416666666,
+        "sse": 8.176784972450267,
+        "psnr_roi": 23.925537418233283,
+        "psnr_zero_padded": 47.50929893294845,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152927,
+        "fraction": 0.9956184895833333,
+        "sse": 128.91411239044726,
+        "psnr_roi": 35.5130496096818,
+        "psnr_zero_padded": 35.532120076946896,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152927,
+        "fraction": 0.9956184895833333,
+        "sse": 130.17460522811797,
+        "psnr_roi": 35.47079154394958,
+        "psnr_zero_padded": 35.489862011214676,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008032",
+      "dynamic_psnr_star": {
+        "pixels": 732,
+        "fraction": 0.004765625,
+        "sse": 9.799343005214489,
+        "psnr_roi": 23.504353762870586,
+        "psnr_zero_padded": 46.7231551092416,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152868,
+        "fraction": 0.995234375,
+        "sse": 132.201617902774,
+        "psnr_roi": 35.402010682382,
+        "psnr_zero_padded": 35.42275700273496,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152868,
+        "fraction": 0.995234375,
+        "sse": 132.99398311879693,
+        "psnr_roi": 35.37605845212882,
+        "psnr_zero_padded": 35.39680477248179,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008033",
+      "dynamic_psnr_star": {
+        "pixels": 778,
+        "fraction": 0.0050651041666666665,
+        "sse": 9.513935204131275,
+        "psnr_roi": 23.89740662433337,
+        "psnr_zero_padded": 46.85152281139142,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152822,
+        "fraction": 0.9949348958333334,
+        "sse": 130.9689371362257,
+        "psnr_roi": 35.44138830708302,
+        "psnr_zero_padded": 35.463441673549255,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152822,
+        "fraction": 0.9949348958333334,
+        "sse": 132.1579673021366,
+        "psnr_roi": 35.40213783545966,
+        "psnr_zero_padded": 35.4241912019259,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008034",
+      "dynamic_psnr_star": {
+        "pixels": 833,
+        "fraction": 0.005423177083333334,
+        "sse": 9.315209906059165,
+        "psnr_roi": 24.28573610526383,
+        "psnr_zero_padded": 46.943198248150885,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152767,
+        "fraction": 0.9945768229166667,
+        "sse": 129.25769904827814,
+        "psnr_roi": 35.49694384203888,
+        "psnr_zero_padded": 35.520560497547756,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152767,
+        "fraction": 0.9945768229166667,
+        "sse": 130.3635175152646,
+        "psnr_roi": 35.45994734623327,
+        "psnr_zero_padded": 35.48356400174215,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008035",
+      "dynamic_psnr_star": {
+        "pixels": 901,
+        "fraction": 0.005865885416666667,
+        "sse": 8.787767664134206,
+        "psnr_roi": 24.879674794163776,
+        "psnr_zero_padded": 47.19633904132807,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152699,
+        "fraction": 0.9941341145833333,
+        "sse": 131.71537830589693,
+        "psnr_roi": 35.41320964095658,
+        "psnr_zero_padded": 35.4387598684674,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152699,
+        "fraction": 0.9941341145833333,
+        "sse": 133.28209843341838,
+        "psnr_roi": 35.36185625884674,
+        "psnr_zero_padded": 35.38740648635756,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008036",
+      "dynamic_psnr_star": {
+        "pixels": 988,
+        "fraction": 0.006432291666666667,
+        "sse": 8.214622701909885,
+        "psnr_roi": 25.57290578248508,
+        "psnr_zero_padded": 47.48924849356372,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152612,
+        "fraction": 0.9935677083333333,
+        "sse": 130.2794393982495,
+        "psnr_roi": 35.45834057496712,
+        "psnr_zero_padded": 35.48636589318533,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152612,
+        "fraction": 0.9935677083333333,
+        "sse": 131.80259286965318,
+        "psnr_roi": 35.40785984648648,
+        "psnr_zero_padded": 35.4358851647047,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008037",
+      "dynamic_psnr_star": {
+        "pixels": 1067,
+        "fraction": 0.006946614583333333,
+        "sse": 5.969906764561954,
+        "psnr_roi": 27.29318125586363,
+        "psnr_zero_padded": 48.87544921857386,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152533,
+        "fraction": 0.9930533854166667,
+        "sse": 137.86853031663242,
+        "psnr_roi": 35.21019920694122,
+        "psnr_zero_padded": 35.240473243954554,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152533,
+        "fraction": 0.9930533854166667,
+        "sse": 139.81737893191647,
+        "psnr_roi": 35.149239102888416,
+        "psnr_zero_padded": 35.17951313990175,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008038",
+      "dynamic_psnr_star": {
+        "pixels": 1167,
+        "fraction": 0.00759765625,
+        "sse": 5.4130242091037335,
+        "psnr_roi": 28.107521413394707,
+        "psnr_zero_padded": 49.30072500989594,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152433,
+        "fraction": 0.99240234375,
+        "sse": 143.53101544020086,
+        "psnr_roi": 35.032544943166435,
+        "psnr_zero_padded": 35.06566713044878,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152433,
+        "fraction": 0.99240234375,
+        "sse": 145.13992679189238,
+        "psnr_roi": 34.98413351998069,
+        "psnr_zero_padded": 35.01725570726303,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008039",
+      "dynamic_psnr_star": {
+        "pixels": 1301,
+        "fraction": 0.008470052083333334,
+        "sse": 4.470166299246849,
+        "psnr_roi": 29.410748712137828,
+        "psnr_zero_padded": 50.1318879034769,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152299,
+        "fraction": 0.9915299479166667,
+        "sse": 146.12271006637576,
+        "psnr_roi": 34.951005882121684,
+        "psnr_zero_padded": 34.98794752153417,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152299,
+        "fraction": 0.9915299479166667,
+        "sse": 147.83830321468037,
+        "psnr_roi": 34.90031337099568,
+        "psnr_zero_padded": 34.93725501040816,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008040",
+      "dynamic_psnr_star": {
+        "pixels": 1439,
+        "fraction": 0.009368489583333334,
+        "sse": 7.563013781825971,
+        "psnr_roi": 27.56487156859192,
+        "psnr_zero_padded": 47.8481757861808,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152161,
+        "fraction": 0.9906315104166666,
+        "sse": 156.14947417556812,
+        "psnr_roi": 34.65884082392917,
+        "psnr_zero_padded": 34.69971944308328,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152161,
+        "fraction": 0.9906315104166666,
+        "sse": 158.1980912018616,
+        "psnr_roi": 34.60223369448704,
+        "psnr_zero_padded": 34.643112313641154,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008041",
+      "dynamic_psnr_star": {
+        "pixels": 1535,
+        "fraction": 0.009993489583333333,
+        "sse": 4.64823911282093,
+        "psnr_roi": 29.95941173776314,
+        "psnr_zero_padded": 49.962240096586015,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 152065,
+        "fraction": 0.9900065104166667,
+        "sse": 162.14365053562585,
+        "psnr_roi": 34.49250574414365,
+        "psnr_zero_padded": 34.536125238281926,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 152065,
+        "fraction": 0.9900065104166667,
+        "sse": 164.33919221516882,
+        "psnr_roi": 34.43409373068341,
+        "psnr_zero_padded": 34.47771322482169,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008042",
+      "dynamic_psnr_star": {
+        "pixels": 1693,
+        "fraction": 0.011022135416666667,
+        "sse": 5.971790387275393,
+        "psnr_roi": 29.29673657453989,
+        "psnr_zero_padded": 48.87407915040547,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 151907,
+        "fraction": 0.9889778645833334,
+        "sse": 163.72462155131922,
+        "psnr_roi": 34.44585046459537,
+        "psnr_zero_padded": 34.49398475182777,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 151907,
+        "fraction": 0.9889778645833334,
+        "sse": 166.51174853565328,
+        "psnr_roi": 34.37254160340876,
+        "psnr_zero_padded": 34.42067589064117,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008043",
+      "dynamic_psnr_star": {
+        "pixels": 1866,
+        "fraction": 0.0121484375,
+        "sse": 4.634163258162999,
+        "psnr_roi": 30.820615645315197,
+        "psnr_zero_padded": 49.975411408165314,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 151734,
+        "fraction": 0.9878515625,
+        "sse": 167.5409426972157,
+        "psnr_roi": 34.340832067868085,
+        "psnr_zero_padded": 34.393915156711536,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 151734,
+        "fraction": 0.9878515625,
+        "sse": 170.38674376050835,
+        "psnr_roi": 34.26768358280941,
+        "psnr_zero_padded": 34.32076667165286,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008044",
+      "dynamic_psnr_star": {
+        "pixels": 2085,
+        "fraction": 0.01357421875,
+        "sse": 5.488564792884701,
+        "psnr_roi": 30.56768518580673,
+        "psnr_zero_padded": 49.2405367496639,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 151515,
+        "fraction": 0.98642578125,
+        "sse": 193.81929624807665,
+        "psnr_roi": 33.701798725559286,
+        "psnr_zero_padded": 33.7611545808799,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 151515,
+        "fraction": 0.98642578125,
+        "sse": 200.1706574914487,
+        "psnr_roi": 33.561764691998675,
+        "psnr_zero_padded": 33.62112054731929,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008045",
+      "dynamic_psnr_star": {
+        "pixels": 2299,
+        "fraction": 0.014967447916666666,
+        "sse": 4.8777414045701155,
+        "psnr_roi": 31.504414536982285,
+        "psnr_zero_padded": 49.752936981244424,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 151301,
+        "fraction": 0.9850325520833333,
+        "sse": 195.0164825679693,
+        "psnr_roi": 33.66891734170919,
+        "psnr_zero_padded": 33.73441151433135,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 151301,
+        "fraction": 0.9850325520833333,
+        "sse": 199.97528314615772,
+        "psnr_roi": 33.559867327719054,
+        "psnr_zero_padded": 33.625361500341214,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008046",
+      "dynamic_psnr_star": {
+        "pixels": 2689,
+        "fraction": 0.017506510416666666,
+        "sse": 7.430726637533952,
+        "psnr_roi": 30.356807722212725,
+        "psnr_zero_padded": 47.924811856934646,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 150911,
+        "fraction": 0.9824934895833334,
+        "sse": 211.36948978174928,
+        "psnr_roi": 33.30799852578561,
+        "psnr_zero_padded": 33.38470171340156,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 150911,
+        "fraction": 0.9824934895833334,
+        "sse": 215.67348344149184,
+        "psnr_roi": 33.22045398776063,
+        "psnr_zero_padded": 33.29715717537658,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008047",
+      "dynamic_psnr_star": {
+        "pixels": 3061,
+        "fraction": 0.019928385416666666,
+        "sse": 8.551219633559207,
+        "psnr_roi": 30.309565231151865,
+        "psnr_zero_padded": 47.31484409213345,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 150539,
+        "fraction": 0.9800716145833334,
+        "sse": 242.20729293978346,
+        "psnr_roi": 32.70583065746502,
+        "psnr_zero_padded": 32.7932525466419,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 150539,
+        "fraction": 0.9800716145833334,
+        "sse": 249.49774653765095,
+        "psnr_roi": 32.57703654065847,
+        "psnr_zero_padded": 32.66445842983535,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008048",
+      "dynamic_psnr_star": {
+        "pixels": 3488,
+        "fraction": 0.022708333333333334,
+        "sse": 6.864500712386546,
+        "psnr_roi": 31.830887765510507,
+        "psnr_zero_padded": 48.269035159860145,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 150112,
+        "fraction": 0.9772916666666667,
+        "sse": 263.4389216205788,
+        "psnr_roi": 32.32856726050832,
+        "psnr_zero_padded": 32.428325304792615,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 150112,
+        "fraction": 0.9772916666666667,
+        "sse": 269.40568831496597,
+        "psnr_roi": 32.231299046750365,
+        "psnr_zero_padded": 32.33105709103466,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008049",
+      "dynamic_psnr_star": {
+        "pixels": 4052,
+        "fraction": 0.026380208333333332,
+        "sse": 5.775152462135521,
+        "psnr_roi": 33.23227237460149,
+        "psnr_zero_padded": 49.01949016467399,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 149548,
+        "fraction": 0.9736197916666667,
+        "sse": 300.77736844120824,
+        "psnr_roi": 31.73656708743284,
+        "psnr_zero_padded": 31.852673151274207,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 149548,
+        "fraction": 0.9736197916666667,
+        "sse": 308.0055857293228,
+        "psnr_roi": 31.633432714610112,
+        "psnr_zero_padded": 31.74953877845148,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008050",
+      "dynamic_psnr_star": {
+        "pixels": 4816,
+        "fraction": 0.03135416666666667,
+        "sse": 11.456561714519996,
+        "psnr_roi": 31.007534340517463,
+        "psnr_zero_padded": 46.04458171497471,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 148784,
+        "fraction": 0.9686458333333333,
+        "sse": 341.14485942690334,
+        "psnr_roi": 31.16738653628923,
+        "psnr_zero_padded": 31.305736389567862,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 148784,
+        "fraction": 0.9686458333333333,
+        "sse": 349.9515339464666,
+        "psnr_roi": 31.056695835858335,
+        "psnr_zero_padded": 31.195045689136975,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008051",
+      "dynamic_psnr_star": {
+        "pixels": 5676,
+        "fraction": 0.036953125,
+        "sse": 11.467324330182109,
+        "psnr_roi": 31.717015456783546,
+        "psnr_zero_padded": 46.040503745884116,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 147924,
+        "fraction": 0.963046875,
+        "sse": 401.7208297648053,
+        "psnr_roi": 30.432355456808786,
+        "psnr_zero_padded": 30.59588119347213,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 147924,
+        "fraction": 0.963046875,
+        "sse": 412.31429614561716,
+        "psnr_roi": 30.319315034232925,
+        "psnr_zero_padded": 30.482840770896274,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008052",
+      "dynamic_psnr_star": {
+        "pixels": 6796,
+        "fraction": 0.044244791666666665,
+        "sse": 12.914240850520109,
+        "psnr_roi": 31.983057431816455,
+        "psnr_zero_padded": 45.52443588680131,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 146804,
+        "fraction": 0.9557552083333334,
+        "sse": 490.5274598911494,
+        "psnr_roi": 29.53195819428869,
+        "psnr_zero_padded": 29.7284914606842,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 146804,
+        "fraction": 0.9557552083333334,
+        "sse": 507.00369404243713,
+        "psnr_roi": 29.388480201495632,
+        "psnr_zero_padded": 29.585013467891137,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008053",
+      "dynamic_psnr_star": {
+        "pixels": 8580,
+        "fraction": 0.055859375,
+        "sse": 25.113111255903867,
+        "psnr_roi": 30.107080219077183,
+        "psnr_zero_padded": 42.63611949754506,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 145020,
+        "fraction": 0.944140625,
+        "sse": 520.1607090496807,
+        "psnr_roi": 29.224116113561482,
+        "psnr_zero_padded": 29.473749262603476,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 145020,
+        "fraction": 0.944140625,
+        "sse": 528.6469721206188,
+        "psnr_roi": 29.15383406426828,
+        "psnr_zero_padded": 29.40346721331027,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008054",
+      "dynamic_psnr_star": {
+        "pixels": 10609,
+        "fraction": 0.06906901041666667,
+        "sse": 41.38962527180989,
+        "psnr_roi": 28.85904209672274,
+        "psnr_zero_padded": 40.46620975957423,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 142991,
+        "fraction": 0.9309309895833333,
+        "sse": 438.07407212085315,
+        "psnr_roi": 29.908824083466875,
+        "psnr_zero_padded": 30.21964920656432,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 142991,
+        "fraction": 0.9309309895833333,
+        "sse": 441.0821211319284,
+        "psnr_roi": 29.879105037074424,
+        "psnr_zero_padded": 30.189930160171873,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008055",
+      "dynamic_psnr_star": {
+        "pixels": 12925,
+        "fraction": 0.08414713541666667,
+        "sse": 33.68906158642913,
+        "psnr_roi": 30.610628926702,
+        "psnr_zero_padded": 41.36023556599713,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 140675,
+        "fraction": 0.9158528645833334,
+        "sse": 271.2281774988137,
+        "psnr_roi": 31.920033727881034,
+        "psnr_zero_padded": 32.30177664657566,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 140675,
+        "fraction": 0.9158528645833334,
+        "sse": 277.1931318368573,
+        "psnr_roi": 31.82555713220306,
+        "psnr_zero_padded": 32.207300050897686,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008056",
+      "dynamic_psnr_star": {
+        "pixels": 14375,
+        "fraction": 0.09358723958333333,
+        "sse": 38.58488967789344,
+        "psnr_roi": 30.48311845230504,
+        "psnr_zero_padded": 40.770952075643294,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 139225,
+        "fraction": 0.9064127604166666,
+        "sse": 190.12219133426493,
+        "psnr_roi": 33.41805669983929,
+        "psnr_zero_padded": 33.844796591176255,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 139225,
+        "fraction": 0.9064127604166666,
+        "sse": 192.9779601178262,
+        "psnr_roi": 33.35330769920232,
+        "psnr_zero_padded": 33.78004759053928,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008057",
+      "dynamic_psnr_star": {
+        "pixels": 15622,
+        "fraction": 0.10170572916666666,
+        "sse": 39.029885906554085,
+        "psnr_roi": 30.794606064501156,
+        "psnr_zero_padded": 40.72115188675962,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 137978,
+        "fraction": 0.8982942708333334,
+        "sse": 194.01191304609426,
+        "psnr_roi": 33.2910270221948,
+        "psnr_zero_padded": 33.756840723852704,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 137978,
+        "fraction": 0.8982942708333334,
+        "sse": 194.7886985890233,
+        "psnr_roi": 33.273673442304045,
+        "psnr_zero_padded": 33.73948714396195,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008058",
+      "dynamic_psnr_star": {
+        "pixels": 13415,
+        "fraction": 0.08733723958333334,
+        "sse": 32.9067747924134,
+        "psnr_roi": 30.87426612742172,
+        "psnr_zero_padded": 41.46227151429707,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 140185,
+        "fraction": 0.9126627604166667,
+        "sse": 330.81437044360825,
+        "psnr_roi": 31.0423843382322,
+        "psnr_zero_padded": 31.439281035467197,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 140185,
+        "fraction": 0.9126627604166667,
+        "sse": 336.98360693821854,
+        "psnr_roi": 30.962140261984704,
+        "psnr_zero_padded": 31.3590369592197,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008059",
+      "dynamic_psnr_star": {
+        "pixels": 11135,
+        "fraction": 0.07249348958333333,
+        "sse": 19.893677310912285,
+        "psnr_roi": 32.25096406981184,
+        "psnr_zero_padded": 43.64797401306621,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 142465,
+        "fraction": 0.9275065104166667,
+        "sse": 279.6131557831895,
+        "psnr_roi": 31.842718360570444,
+        "psnr_zero_padded": 32.169548693299504,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 142465,
+        "fraction": 0.9275065104166667,
+        "sse": 282.97239482808186,
+        "psnr_roi": 31.790853668426777,
+        "psnr_zero_padded": 32.11768400115584,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008060",
+      "dynamic_psnr_star": {
+        "pixels": 8264,
+        "fraction": 0.053802083333333334,
+        "sse": 25.13443223826932,
+        "psnr_roi": 29.940424838350896,
+        "psnr_zero_padded": 42.63243391019018,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 145336,
+        "fraction": 0.9461979166666666,
+        "sse": 100.47761201775013,
+        "psnr_roi": 36.37425152963841,
+        "psnr_zero_padded": 36.614431654774265,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 145336,
+        "fraction": 0.9461979166666666,
+        "sse": 99.84038635741918,
+        "psnr_roi": 36.401882049485316,
+        "psnr_zero_padded": 36.64206217462118,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008061",
+      "dynamic_psnr_star": {
+        "pixels": 2948,
+        "fraction": 0.019192708333333332,
+        "sse": 11.228869720878823,
+        "psnr_roi": 28.963126907965794,
+        "psnr_zero_padded": 46.13176427305059,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 150652,
+        "fraction": 0.9808072916666667,
+        "sse": 105.22941991344146,
+        "psnr_roi": 36.329589799816134,
+        "psnr_zero_padded": 36.413752940972145,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 150652,
+        "fraction": 0.9808072916666667,
+        "sse": 103.57678316528639,
+        "psnr_roi": 36.39833737503947,
+        "psnr_zero_padded": 36.48250051619548,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008062",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 98.04656072171517,
+        "psnr_roi": 36.72080106330556,
+        "psnr_zero_padded": 36.72080106330556,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 98.00039308782846,
+        "psnr_roi": 36.72284652727432,
+        "psnr_zero_padded": 36.72284652727432,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008063",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 108.60985425778625,
+        "psnr_roi": 36.2764323949358,
+        "psnr_zero_padded": 36.2764323949358,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 108.66522309146568,
+        "psnr_roi": 36.27421894461741,
+        "psnr_zero_padded": 36.27421894461741,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008064",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 100.32074259615018,
+        "psnr_roi": 36.621217321735635,
+        "psnr_zero_padded": 36.621217321735635,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 100.3734148810145,
+        "psnr_roi": 36.61893770547988,
+        "psnr_zero_padded": 36.61893770547988,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008065",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 114.03528203421887,
+        "psnr_roi": 36.064732294109334,
+        "psnr_zero_padded": 36.064732294109334,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 114.07181146403798,
+        "psnr_roi": 36.063341322027775,
+        "psnr_zero_padded": 36.063341322027775,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008066",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 109.21229497736348,
+        "psnr_roi": 36.25240936989222,
+        "psnr_zero_padded": 36.25240936989222,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 109.23829181081297,
+        "psnr_roi": 36.25137570076517,
+        "psnr_zero_padded": 36.25137570076517,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008067",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 112.56324339190796,
+        "psnr_roi": 36.121158720677606,
+        "psnr_zero_padded": 36.121158720677606,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 112.58065898111256,
+        "psnr_roi": 36.1204868397849,
+        "psnr_zero_padded": 36.1204868397849,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008068",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 120.62865229502998,
+        "psnr_roi": 35.8206199465344,
+        "psnr_zero_padded": 35.8206199465344,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 120.63606129422563,
+        "psnr_roi": 35.820353211509605,
+        "psnr_zero_padded": 35.820353211509605,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008069",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 121.93078507734663,
+        "psnr_roi": 35.77399100307252,
+        "psnr_zero_padded": 35.77399100307252,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 121.9400518294006,
+        "psnr_roi": 35.77366095136685,
+        "psnr_zero_padded": 35.77366095136685,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008070",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 126.12694625607591,
+        "psnr_roi": 35.62704589550742,
+        "psnr_zero_padded": 35.62704589550742,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 126.13375194354774,
+        "psnr_roi": 35.62681156074689,
+        "psnr_zero_padded": 35.62681156074689,
+        "perfect": false
+      }
+    },
+    {
+      "frame": "image_0/0008071",
+      "dynamic_psnr_star": {
+        "pixels": 0,
+        "fraction": 0.0,
+        "sse": 0.0,
+        "psnr_roi": null,
+        "psnr_zero_padded": null,
+        "perfect": false
+      },
+      "static_psnr_s": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 134.65874077295393,
+        "psnr_roi": 35.3427792145889,
+        "psnr_zero_padded": 35.3427792145889,
+        "perfect": false
+      },
+      "static_psnr_sr": {
+        "pixels": 153600,
+        "fraction": 1.0,
+        "sse": 134.66708791575317,
+        "psnr_roi": 35.342510015152946,
+        "psnr_zero_padded": 35.342510015152946,
+        "perfect": false
+      }
+    }
+  ]
+}

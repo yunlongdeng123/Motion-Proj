@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "candidate_arm": "GN11",
+  "reference_arm": "C00",
+  "candidate_checkpoint": 30000,
+  "reference_checkpoint": 30000,
+  "paired_contract_pass": true,
+  "visual_review_complete": true,
+  "severe_numeric_regression": false,
+  "severe_visual_or_static_regression": false,
+  "max_psnr_drop_db": 1.0,
+  "threshold_source": "Human explicitly confirmed: execute the proposed >1.0 dB full-or-actor drop, or persistent obvious visual/static regression criterion on 2026-10-13.",
+  "human_threshold_confirmation_received": true,
+  "human_verdict": null,
+  "allowed_scene_ids": [
+    "scene0008_023_071",
+    "scene0029_069_117"
+  ],
+  "paired_steps_evidence": {
+    "status": "passed",
+    "rows": 30000,
+    "mismatch": null,
+    "keys": [
+      "iteration",
+      "frame_id",
+      "time_shift",
+      "learning_rates"
+    ]
+  },
+  "events": {
+    "C00": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_C00/checkpoint_events/iteration_030000.json",
+    "GN11": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/checkpoint_events/iteration_030000.json"
+  },
+  "paired_steps_files": {
+    "C00": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_C00/paired_steps.jsonl",
+    "GN11": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/runs/scene0017_000_048_hybrid_30000_seed0_GN11/paired_steps.jsonl"
+  },
+  "configuration_and_source_review": {
+    "status": "passed",
+    "audit_file": "final_gate_config_audit.json",
+    "final_gn11_effective_equals_event": true,
+    "scene8_reference_equals_final_gn11_except_data": true,
+    "inherited_source_files_compared": 153,
+    "inherited_source_differences": [],
+    "scene8_anchor": "0008033",
+    "scene29_expected_anchor": "0029079"
+  },
+  "paired_contract_boundary": "Fourarm all12 nodes/stat/headers, commonconfig, all30000 pairedrows, FP32 inputidentity/metrics and recordeddiagnostics passed; complete model/Adam/RNG restoration not executed.",
+  "evaluation_scope": "49 all-observed training views; no independent test. RGB PSNR is clamped by the recorded metrics implementation, alpha remains raw.",
+  "scene_preparation": {
+    "scene0008_023_071": "Actual CPU masks/priors/loader and isolated source prepared; real GPU Scene/SGCM lineage binding pending.",
+    "scene0029_069_117": "Identity and raw/static seed ready; real49 sky/body/dynamicRGB/actor priors, CPU readiness and isolated runner preparation pending."
+  },
+  "restoration_verified": false,
+  "note": "Actual passed rootengineering receipt under the user-confirmed relative criterion; humanquality verdict remainsnull. Both newscenes still require their own actual input/runtime checks.",
+  "agent_engineering_verdict": "expected_with_mild_local_actor_costs",
+  "created_utc": "2026-10-12T23:13:30.109500+00:00",
+  "full_four_arm_contract": "PASS_READONLY_FOUR_ARM30K_CONTRACT",
+  "FP32_metric_recomputation": "All4x49 savedFP32 GT/body/sky matched andsix metric values recomputed within rtol1e-7/atol1e-9 by real exporter.",
+  "numeric_delta_GN11_minus_C00": {
+    "full_composite_psnr_db": 0.32540792103834804,
+    "actor_composite_psnr_db": -0.1286855892556389,
+    "static_bg_psnr_db": 0.3174780862974842,
+    "outside_alpha_d_mean": 2.89364292331478e-06,
+    "outside_dynamic_rgb_support": -0.00031043641548265943,
+    "outside_static_composite_difference": 6.748642741587957e-06
+  },
+  "engineering_review": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\root_engineering_gate_review.json",
+  "visual_review_sources": [
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\body_adverse_visual_review.json",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_resume\\final_four_arm_20261013\\visual_review\\static_time_engineering_visual_review.json"
+  ],
+  "dark_report_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/reports/four_arm_30k/index.html",
+  "dark_report_local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_four_arm_30k\\index.html"
+}

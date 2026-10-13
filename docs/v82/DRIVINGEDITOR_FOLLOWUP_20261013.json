@@ -316,8 +316,8 @@
           "0029117"
         ],
         "anchor_pose_frame": "0029079",
-        "readiness_status": "CPU_RAW_AND_REAL_STATIC_SEED_READY_SKY_BODY_PENDING",
-        "training_allowed_now": false,
+        "readiness_status": "PASS_ACTUAL_GPU_SCENE_AND_SGCM_BINDING_TRAINING",
+        "training_allowed_now": true,
         "author_video": "https://github.com/user-attachments/assets/5aae487d-e05e-44ef-9566-e23da980f467",
         "identity_rule": "只接受结构、车型、连续帧与截图/作者视频匹配的真实 Waymo 输入，不以近似路口替代",
         "search_now": "Exact identity found; stop remaining first-record/temporal candidate search, retain existing budget ledger.",
@@ -331,8 +331,10 @@
         ],
         "author_training_window_publicly_confirmed": false,
         "camera_directory": "image/image_0",
-        "training_ready": false,
-        "actor_DEVA_ids": null,
+        "training_ready": true,
+        "actor_DEVA_ids": [
+          130
+        ],
         "actor_raw_track_ids": null,
         "identity_review_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0029_identity_review.json",
         "raw_preparation_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_preparation/scene0029_069_117/cpu_raw_readiness.json",
@@ -360,18 +362,69 @@
           89
         ],
         "training_gates_pending": [
-          "Real49 sky",
-          "Real49 DEVA/SAM",
-          "Reviewed physicalactor-to-instance mapping",
-          "Canonical fullbody union and exactdynamicRGB",
-          "Real actorLiDAR priors from selectedbody",
-          "ActualCPU loader/SGCM/readiness",
-          "GN11 gate and training runtime checks"
+          "Full10k/20k/30k checkpoint/evaluation contracts; actual restoration not tested"
         ],
         "cpu_gpu_used": false,
         "real_static_seed_points": 600000,
         "raw_source_LiDAR_points": 9372984,
-        "CPU_equivalence_boundary": "Original equations ported to purePB/NumPy. Existing scene8/raw23 control matched pointcount/order/nonXYZ/pose/calib/RGB; XYZ nonbitwise maxL2 .002013756m. No scientific quality impact certification."
+        "CPU_equivalence_boundary": "Original equations ported to purePB/NumPy. Existing scene8/raw23 control matched pointcount/order/nonXYZ/pose/calib/RGB; XYZ nonbitwise maxL2 .002013756m. No scientific quality impact certification.",
+        "mask_execution_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_masks_20261013_attempt2/status.json",
+        "SAM_candidate_execution_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_sam_candidates_20261013/status.json",
+        "observed_DEVA_defects": {
+          "physical_actor_DEVA_ID": 130,
+          "large_body_holes_frames": [
+            "0029099",
+            "0029100"
+          ],
+          "boundary_undersegmentation_frame": "0029098",
+          "source_DEVA_preserved": true,
+          "GT_used_to_generate_mask": false,
+          "SAM_candidates_are_real_model_outputs": true,
+          "root_selected_candidates_pending_persisted_selection": false,
+          "root_selected_real_candidates": {
+            "0029098": 0,
+            "0029099": 1,
+            "0029100": 1
+          }
+        },
+        "actor_count": 1,
+        "actor_prior_real_points": 29725,
+        "initial_static_after_loader": 597734,
+        "training_source_prepared": true,
+        "training_source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_source/scene0029_069_117",
+        "training_support": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_support/scene0029_069_117",
+        "training_config": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_configs/scene0029_069_117_GN11.json",
+        "readiness_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_readiness_adapter/scene0029_cpu_readiness.json",
+        "scene_spec": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_readiness_adapter/scene0029_spec.json",
+        "reviewed_selection": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_actor_selection.reviewed.json",
+        "human_verdict": null,
+        "GPU_runtime_binding": {
+          "scene_status": "PASS_ACTUAL_GPU_SCENE_BINDING",
+          "SGCM_status": "PASS_ACTUAL_GPU_SGCM_LINEAGE_BINDING",
+          "view_count": 49,
+          "render_WH": [
+            480,
+            320
+          ],
+          "fixed_pose_anchor": "0029079",
+          "SGCM_ground_anchor": "0029069",
+          "training_guard": true,
+          "initial_static_points": 597734,
+          "initial_dynamic_points": 29725,
+          "restoration_verified": false,
+          "source_receipts": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene0029_launch"
+        },
+        "execution": {
+          "status": "training",
+          "iteration_at_confirmation": 1000,
+          "pid": 124555,
+          "started_utc": "2026-10-13T01:48:13.861401+00:00",
+          "log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/scene0029_GN11_training.log",
+          "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11",
+          "source_status_snapshot": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene0029_launch/status.json",
+          "checkpoints_saved_at_confirmation": [],
+          "restoration_verified": false
+        }
       },
       {
         "slot": "structured_scene_B",
@@ -441,7 +494,7 @@
           "0008071"
         ],
         "anchor_pose_frame": "0008033",
-        "readiness_status": "PASS_CPU_PREPARATION_TRAINING_GATED",
+        "readiness_status": "COMPLETE_30000_ALL3_NODE_CONTRACTS_AND_SAVED_FP32_EXPORT",
         "training_allowed_now": true,
         "actor_DEVA_ids": [
           77,
@@ -452,9 +505,7 @@
         "readiness_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_cpu_readiness.json",
         "cpu_gpu_used": false,
         "training_ready": true,
-        "training_gates_pending": [
-          "Complete20k/30k checkpoint/evaluation contracts; actual restoration not yet tested"
-        ],
+        "training_gates_pending": [],
         "readiness_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_cpu_readiness.json",
         "training_source_prepared": true,
         "prepared_source_status": "FOLLOWUP_CPU_SOURCE_PREPARED_GPU_BLOCKED",
@@ -484,14 +535,26 @@
           "source_receipts": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_launch_20261013"
         },
         "execution": {
-          "status": "training",
+          "status": "complete",
           "iteration_at_startup_confirmation": 5100,
           "pid": 96504,
           "log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/scene0008_GN11_training.log",
           "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11",
-          "source_status_snapshot": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/scene0008_launch_20261013/status.json",
-          "checkpoints_saved_at_confirmation": [],
-          "latest_resource_snapshot": {
+          "source_status_snapshot": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene8_terminal/original_snapshot/status.json",
+          "checkpoints_saved_at_confirmation": [
+            10000,
+            20000,
+            30000
+          ],
+          "latest_confirmation": {
+            "iteration": 30000,
+            "status": "complete",
+            "PID_exited": true,
+            "all3node_contract_pass": true,
+            "complete_memory_summary": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene8_terminal/original_snapshot/memory_summary.json",
+            "restoration_verified": false
+          },
+          "historical_0752_resource_snapshot": {
             "iteration": 14000,
             "wall_seconds": 2124.903219083324,
             "sample_errors": 0,
@@ -501,7 +564,15 @@
             "resource_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0750/scene0008_memory_summary_raw.json",
             "checkpoint_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0750/scene0008_10000_checkpoint_contract.json"
           }
-        }
+        },
+        "terminal_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847/scene8_terminal/scene0008_terminal_summary.json",
+        "restoration_verified": false,
+        "human_verdict": null,
+        "saved_HTML": "outputs/drivingeditor_GMC_GN11_30k/index.html",
+        "engineering_visual_review_status": "ENGINEERING_VISUAL_REVIEW_COMPLETE_WITH_LIMITATIONS",
+        "terminal_iteration": 30000,
+        "terminal_run_complete": true,
+        "terminal_process_exited": true
       }
     ],
     "config_rule": "从本次通过gate的GN11 effective_config取完整配置，冻结目标、权重、SGCM/NPS公式和schedule/LR/seed/point cap/reset；允许按sceneSpec改来源/输出/camera IDs/49frame清单/真实timestamps/anchor/actor先验metadata等必要数据绑定。",
@@ -622,12 +693,12 @@
   "schema_version": 1,
   "task_id": "WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013",
   "run": "r1",
-  "updated_utc": "2026-10-13T00:06:01.346226+00:00",
+  "updated_utc": "2026-10-13T01:52:06.639991+00:00",
   "current_matrix_task": "WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1",
   "current_matrix_root": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012",
   "followup_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
   "ssh_alias": "wm-vgpu-1011",
-  "state": "scene0008_GN11_training_10k_verified_red_real_mask_queue_waiting_GPU_lock",
+  "state": "GMC_complete30k_real_HTML_red_GN11_training_actual_GPU_bindings_verified",
   "gpu_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
   "user_authorization": {
     "date_local": "2026-10-13",
@@ -657,15 +728,16 @@
   "failure_ledger_refs": [
     "V82-F01",
     "V82-F02",
-    "V76-F03"
+    "V76-F03",
+    "V82-F03"
   ],
-  "failure_ledger_delta": "none",
+  "failure_ledger_delta": "V82-F03",
   "human_verdict": {
     "C00": "用户确认符合预期",
     "GN11": null
   },
   "red_scene_search_receipt": {
-    "status": "EXACT_SOURCE_IDENTITY_VERIFIED_RAW_CPU_PREPARATION_COMPLETE_MASKS_PENDING",
+    "status": "EXACT_IDENTITY_VERIFIED_REAL49_PREPARED_GN11_TRAINING",
     "host": "wm-vgpu-1011",
     "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_search_cpu",
     "cache": {
@@ -945,7 +1017,7 @@
       "verdict": "Same source scene and exact visible raw69..89 sequence."
     },
     "identity_review_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0029_identity_review.json",
-    "raw_preparation_status": "CPU_RAW_AND_REAL_STATIC_SEED_READY_SKY_BODY_PENDING",
+    "raw_preparation_status": "HISTORICAL_CPU_RAW_ONLY_RECEIPT_SUPERSEDED_BY_REAL_ACTOR_AND_READINESS",
     "remaining_candidate_search_allowed": false
   },
   "tooling": {
@@ -999,21 +1071,14 @@
     },
     "actual_GPU_model_and_guard_binding_verified_scene0008": true,
     "red_GPU_mask_queue": {
-      "status": "waiting_shared_GPU_lock_scene0008_completion",
-      "pid": 108901,
-      "owned_cmdline_confirmed": true,
-      "kernel_wait_channel": "locks_lock_inode_wait",
-      "launched_utc": "2026-10-13T00:00:20.596594+00:00",
-      "script": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/run_red_masks_after_scene8.py",
-      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_masks_queue_20261013.log",
-      "runtime_status": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_masks_20261013/status.json",
-      "training_started": false,
-      "actor_selection_complete": false,
-      "guard": "Sharedflock -> truegate/all30000pairs -> scene8complete30k/all3node contracts -> ownedPID exit -> emptycompute -> sky -> DEVA -> CPUvalidator",
-      "no_automatic_red_training": true,
-      "no_training_progress_polling": true,
-      "mask_review_still_required": true,
-      "external_memory_sampling": "5second nvidia process/device lower bounds; child PyTorch allocated/reserved unavailable"
+      "status": "REAL_RED49_SKY_AND_DEVA_VALIDATED_ACTOR_SELECTION_PENDING",
+      "attempt": 2,
+      "pid": 120796,
+      "process_exited": true,
+      "runtime_status": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_masks_20261013_attempt2/status.json",
+      "historical_receipt_actor_pending": true,
+      "actual_selection": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_actor_selection.reviewed.json",
+      "training_run": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11"
     },
     "red_actor_CPU_adapter": {
       "status": "PARAMETERIZED_SOURCE_PREPARED_ONE_REAL_SCENE8_CPU_CONTROL_PASS_RED_NOT_PROCESSED",
@@ -1658,11 +1723,11 @@
     }
   },
   "last_hourly_followup_observation": {
-    "created_utc": "2026-10-12T23:50:57.290388+00:00",
+    "created_utc": "2026-10-13T01:49:33.039545+00:00",
     "root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
     "read_only": true,
     "gpu_used": false,
-    "disk_free_GiB": 42.614219665527344,
+    "disk_free_GiB": 38.569332122802734,
     "scene0008_CPU": {
       "status": "PASS_CPU_PREPARATION_TRAINING_GATED",
       "train_cameras": 49,
@@ -1801,23 +1866,135 @@
         "anchor_pose_frame": "0008033",
         "gpu_started": false,
         "gate_required_at_run": true
+      },
+      {
+        "status": "FOLLOWUP_CPU_SOURCE_PREPARED_GPU_BLOCKED",
+        "scene_id": "scene0029_069_117",
+        "anchor_pose_frame": "0029079",
+        "gpu_started": false,
+        "gate_required_at_run": true
       }
     ],
+    "red_GPU_mask_attempts": [
+      {
+        "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_masks_20261013",
+        "status": "engineering_stopped_assets_preserved",
+        "pid": 108901,
+        "error": "module 'os' has no attribute 'pidfd_open'"
+      },
+      {
+        "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/red_masks_20261013_attempt2",
+        "status": "REAL_RED49_SKY_AND_DEVA_VALIDATED_ACTOR_SELECTION_PENDING",
+        "pid": 120796,
+        "error": null
+      }
+    ],
+    "red_GPU_mask_queue": {
+      "status": "REAL_RED49_SKY_AND_DEVA_VALIDATED_ACTOR_SELECTION_PENDING",
+      "pid": 120796,
+      "updated_utc": "2026-10-13T01:01:09.843129+00:00",
+      "active_child_pid": null,
+      "error": null,
+      "sky_frames": 49,
+      "training_started": false,
+      "actor_selection_complete": false,
+      "training_ready": false,
+      "human_verdict": null,
+      "controller_process": {
+        "pid": 120796,
+        "alive": false,
+        "matches_owned_job": false
+      },
+      "stages": [
+        {
+          "stage": "sky",
+          "pid": 120825,
+          "returncode": 0,
+          "wall_seconds": 25.668232176452875,
+          "memory_sampling": {
+            "interval_seconds": 5,
+            "sampled_peaks_are_lower_bounds": true,
+            "process_peak_bytes": 3292528640,
+            "device_peak_bytes": 3303014400,
+            "samples": 5,
+            "errors": [],
+            "pytorch_allocated_reserved": "unavailable_external_child"
+          }
+        },
+        {
+          "stage": "deva",
+          "pid": 120901,
+          "returncode": 0,
+          "wall_seconds": 373.2827814342454,
+          "memory_sampling": {
+            "interval_seconds": 5,
+            "sampled_peaks_are_lower_bounds": true,
+            "process_peak_bytes": 11026825216,
+            "device_peak_bytes": 11037310976,
+            "samples": 73,
+            "errors": [],
+            "pytorch_allocated_reserved": "unavailable_external_child"
+          }
+        },
+        {
+          "stage": "mask_validation",
+          "pid": 122026,
+          "returncode": 0,
+          "wall_seconds": 21.401339925825596,
+          "memory_sampling": {
+            "interval_seconds": 5,
+            "sampled_peaks_are_lower_bounds": true,
+            "process_peak_bytes": 0,
+            "device_peak_bytes": 1048576,
+            "samples": 5,
+            "errors": [],
+            "pytorch_allocated_reserved": "unavailable_external_child"
+          }
+        }
+      ],
+      "attempt": 2,
+      "launch_log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_masks_queue_20261013_attempt2.log"
+    },
     "followup_runs": [
       {
         "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11",
-        "status": "training",
-        "iteration": 13600,
-        "wall_seconds": 2051.9751319428906,
+        "status": "complete",
+        "iteration": 30000,
+        "wall_seconds": 5066.929728737101,
         "pid": 96504,
         "worker_pid": null,
         "error": null,
         "worker_process": {
           "pid": 96504,
+          "alive": false,
+          "matches_owned_job": false
+        }
+      },
+      {
+        "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0029_069_117_hybrid_30000_seed0_GN11",
+        "status": "training",
+        "iteration": 500,
+        "wall_seconds": 65.05394568666816,
+        "pid": 124555,
+        "worker_pid": null,
+        "error": null,
+        "worker_process": {
+          "pid": 124555,
           "alive": true,
           "matches_owned_job": true
         }
       }
     ]
-  }
+  },
+  "milestone_20261013_0847": {
+    "GMC_complete": true,
+    "GMC_HTML_and_browser_QA_complete": true,
+    "red_masks_complete": true,
+    "red_ACTOR_CPU_readiness_complete": true,
+    "red_training_started": true,
+    "power_action_count": 0,
+    "evidence": "docs/autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/heartbeat_20261013_0847",
+    "red_actual_GPU_binding_verified": true
+  },
+  "last_updated_singapore": "2026-10-13T09:41:42.727835+08:00"
 }

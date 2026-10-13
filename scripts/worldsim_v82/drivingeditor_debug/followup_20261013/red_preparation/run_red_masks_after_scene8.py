@@ -126,10 +126,51 @@ def stop_owned(signum, frame):
     raise KeyboardInterrupt('Owned preprocessing controller stopped by signal%d' % signum)
 
 
+def wait_owned_exit(pid, timeout=30):
+    """只在训练终态后短暂等待owned进程退出；兼容无pidfd_open的conda Python。"""
+    proc = Path('/proc') / str(pid)
+    pidfd = getattr(os, 'pidfd_open', None)
+    if callable(pidfd):
+        import select
+        try:
+            fd = pidfd(pid)
+        except ProcessLookupError:
+            return {'method': 'pidfd', 'owner_already_exited': True}
+        try:
+            if not select.select([fd], [], [], 0)[0]:
+                try:
+                    command = (proc / 'cmdline').read_bytes().decode('utf-8', errors='replace')
+                except FileNotFoundError:
+                    command = ''
+                if command:
+                    assert 'run_scene_gn11.py' in command and 'scene0008_spec.json' in command
+                assert select.select([fd], [], [], timeout)[0], 'Owned scene8 PID has not exited; stop without models'
+            return {'method': 'pidfd', 'owner_exit_confirmed': True}
+        finally:
+            os.close(fd)
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            state = (proc / 'stat').read_text().rsplit(')', 1)[1].split()[0]
+            command = (proc / 'cmdline').read_bytes().decode('utf-8', errors='replace')
+        except FileNotFoundError:
+            return {'method': 'bounded_proc_exit_wait', 'pidfd_available': False, 'owner_already_exited': True}
+        if state in ('Z', 'X'):
+            return {'method': 'bounded_proc_exit_wait', 'pidfd_available': False, 'owner_exit_confirmed': True}
+        if command:
+            assert 'run_scene_gn11.py' in command and 'scene0008_spec.json' in command, 'PID identity changed; preserve unrelated task'
+        assert time.monotonic() < deadline, 'Owned scene8 PID has not exited; stop without models'
+        time.sleep(.25)
+
+
 def main():
+    global META
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--queue', action='store_true')
+    parser.add_argument('--attempt', type=int, choices=range(1, 10), default=1)
     args = parser.parse_args()
+    META = ROOT / ('metadata/red_masks_20261013' if args.attempt == 1 else 'metadata/red_masks_20261013_attempt%d' % args.attempt)
+    STATE['attempt'] = args.attempt
     proof = validate_inputs()
     if not args.queue:
         print(json.dumps(proof))
@@ -148,25 +189,7 @@ def main():
             complete = completion_contract(SCENE8, read(SCENE8 / 'effective_config.json'))
             assert complete['status'] == 'FOLLOWUP_COMPLETE_CONTRACT_PASS'
             # 原worker可能刚释放锁但仍在Python退出；只等待已核对owned PID，不碰无关进程。
-            owner_pid = status['pid']
-            owner_command = Path('/proc') / str(owner_pid) / 'cmdline'
-            import select
-            try:
-                owner_fd = os.pidfd_open(owner_pid)
-            except ProcessLookupError:
-                owner_fd = None
-            if owner_fd is not None:
-                try:
-                    if not select.select([owner_fd], [], [], 0)[0]:
-                        try:
-                            command = owner_command.read_bytes().decode('utf-8', errors='replace')
-                        except FileNotFoundError:
-                            command = ''
-                        if command:
-                            assert 'run_scene_gn11.py' in command and 'scene0008_spec.json' in command
-                        assert select.select([owner_fd], [], [], 30)[0], 'Owned scene8 PID has not exited; stop without models'
-                finally:
-                    os.close(owner_fd)
+            STATE['owned_scene8_exit_check'] = wait_owned_exit(status['pid'])
             apps = subprocess.run(['/usr/bin/nvidia-smi', '--query-compute-apps=pid,process_name', '--format=csv,noheader'],
                                   capture_output=True, text=True, check=True, timeout=10, close_fds=False)
             assert not apps.stdout.strip(), 'Unrelated/live GPU process present; stop without killing or starting models'

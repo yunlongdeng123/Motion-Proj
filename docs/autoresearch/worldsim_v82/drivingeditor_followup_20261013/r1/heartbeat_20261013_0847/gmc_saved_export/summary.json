@@ -1,0 +1,553 @@
+{
+  "scene": "scene0008_023_071",
+  "scene_label": "GMC",
+  "arm": "GN11",
+  "training_steps": 30000,
+  "retained_frame_count": 49,
+  "raw_source_frame_range": [
+    23,
+    71
+  ],
+  "anchor_pose_frame": "0008033",
+  "anchor_timestamp_model": -0.28,
+  "wall_seconds": 5066.929728737101,
+  "wall_minutes": 84.44882881228502,
+  "device_peak_GiB": 5.775390625,
+  "process_peak_GiB": 5.82421875,
+  "allocated_peak_GiB": 4.99752950668335,
+  "reserved_peak_GiB": 5.7265625,
+  "static_points": 646337,
+  "dynamic_points": 1004003,
+  "iter_forward_backward_ms": 150.36813354492188,
+  "full_composite_psnr_db": 34.30823128791319,
+  "actor_composite_psnr_db": 29.698454069550206,
+  "background_static_psnr_db": 35.582228795662154,
+  "outside_dynamic_alpha_mean": 0.0003436521167772674,
+  "saved_overall_photo_metrics": {
+    "split": "train",
+    "iteration": 30000,
+    "psnr": 34.308231781940066,
+    "ssim": 0.965337287406532,
+    "lpips": 0.03374905447114487
+  },
+  "valid_actor_frame_count": 39,
+  "empty_actor_frame_count": 10,
+  "region_aggregation": {
+    "full": {
+      "total_frame_count": 49,
+      "valid_frame_count": 49,
+      "empty_frame_count": 0,
+      "empty_frame_ids": [],
+      "pixel_count_sum": 7526400,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 0.027699742162226634,
+        "alpha_s_mean": 0.6766012907028198,
+        "composite_mse": 0.000410221377492227,
+        "composite_psnr_db": 34.30823128791319,
+        "composite_static_abs_mean": 0.006062984289383174,
+        "dynamic_RGB_support_8bit_gt2": 0.03140531994047619,
+        "static_mse": 0.002167310440786033,
+        "static_psnr_db": 28.844595387309372
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    },
+    "actor": {
+      "total_frame_count": 49,
+      "valid_frame_count": 39,
+      "empty_frame_count": 10,
+      "empty_frame_ids": [
+        "image_0/0008062",
+        "image_0/0008063",
+        "image_0/0008064",
+        "image_0/0008065",
+        "image_0/0008066",
+        "image_0/0008067",
+        "image_0/0008068",
+        "image_0/0008069",
+        "image_0/0008070",
+        "image_0/0008071"
+      ],
+      "pixel_count_sum": 208743,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 0.9880635402141473,
+        "alpha_s_mean": 0.9408952838335282,
+        "composite_mse": 0.001392466591440401,
+        "composite_psnr_db": 29.698454069550206,
+        "composite_static_abs_mean": 0.23112010399012,
+        "dynamic_RGB_support_8bit_gt2": 0.9991701401669806,
+        "static_mse": 0.07485311904171349,
+        "static_psnr_db": 11.36818459251244
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    },
+    "non_sky_outside_actor": {
+      "total_frame_count": 49,
+      "valid_frame_count": 49,
+      "empty_frame_count": 0,
+      "empty_frame_ids": [],
+      "pixel_count_sum": 5389656,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 0.0003436521167772674,
+        "alpha_s_mean": 0.9002175902833744,
+        "composite_mse": 0.0003661230951216031,
+        "composite_psnr_db": 35.61729950380692,
+        "composite_static_abs_mean": 0.00011848877768954656,
+        "dynamic_RGB_support_8bit_gt2": 0.005319237921543534,
+        "static_mse": 0.00037035078307104483,
+        "static_psnr_db": 35.582228795662154
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    },
+    "actor_core_5px": {
+      "total_frame_count": 49,
+      "valid_frame_count": 39,
+      "empty_frame_count": 10,
+      "empty_frame_ids": [
+        "image_0/0008062",
+        "image_0/0008063",
+        "image_0/0008064",
+        "image_0/0008065",
+        "image_0/0008066",
+        "image_0/0008067",
+        "image_0/0008068",
+        "image_0/0008069",
+        "image_0/0008070",
+        "image_0/0008071"
+      ],
+      "pixel_count_sum": 162106,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 0.998106987048418,
+        "alpha_s_mean": 0.9408100919845777,
+        "composite_mse": 0.0004893017451033828,
+        "composite_psnr_db": 34.52965958687133,
+        "composite_static_abs_mean": 0.22504331725152027,
+        "dynamic_RGB_support_8bit_gt2": 1.0,
+        "static_mse": 0.0719326851823823,
+        "static_psnr_db": 11.542831959627469
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    },
+    "actor_inner_boundary_5px": {
+      "total_frame_count": 49,
+      "valid_frame_count": 39,
+      "empty_frame_count": 10,
+      "empty_frame_ids": [
+        "image_0/0008062",
+        "image_0/0008063",
+        "image_0/0008064",
+        "image_0/0008065",
+        "image_0/0008066",
+        "image_0/0008067",
+        "image_0/0008068",
+        "image_0/0008069",
+        "image_0/0008070",
+        "image_0/0008071"
+      ],
+      "pixel_count_sum": 46637,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 0.96644965501932,
+        "alpha_s_mean": 0.9368561032490853,
+        "composite_mse": 0.002764937423144133,
+        "composite_psnr_db": 26.114429969857422,
+        "composite_static_abs_mean": 0.23981048836268756,
+        "dynamic_RGB_support_8bit_gt2": 0.9981235822492115,
+        "static_mse": 0.07972676159516649,
+        "static_psnr_db": 11.150770653328406
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    },
+    "outside_boundary_5px": {
+      "total_frame_count": 49,
+      "valid_frame_count": 39,
+      "empty_frame_count": 10,
+      "empty_frame_ids": [
+        "image_0/0008062",
+        "image_0/0008063",
+        "image_0/0008064",
+        "image_0/0008065",
+        "image_0/0008066",
+        "image_0/0008067",
+        "image_0/0008068",
+        "image_0/0008069",
+        "image_0/0008070",
+        "image_0/0008071"
+      ],
+      "pixel_count_sum": 52237,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 0.023582593561747134,
+        "alpha_s_mean": 0.9574705026088617,
+        "composite_mse": 0.011868104361128194,
+        "composite_psnr_db": 20.77275467784694,
+        "composite_static_abs_mean": 0.005838787125505995,
+        "dynamic_RGB_support_8bit_gt2": 0.23223395971227304,
+        "static_mse": 0.012336282424120899,
+        "static_psnr_db": 20.689239216213362
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    },
+    "outside_far_5px": {
+      "total_frame_count": 49,
+      "valid_frame_count": 49,
+      "empty_frame_count": 0,
+      "empty_frame_ids": [],
+      "pixel_count_sum": 5337419,
+      "equal_valid_frame_means": {
+        "alpha_d_mean": 9.087642549341312e-05,
+        "alpha_s_mean": 0.8995320091442186,
+        "composite_mse": 0.00025143286310488406,
+        "composite_psnr_db": 36.84558568023422,
+        "composite_static_abs_mean": 5.424967890864759e-05,
+        "dynamic_RGB_support_8bit_gt2": 0.0025982657313096853,
+        "static_mse": 0.00025176342831630105,
+        "static_psnr_db": 36.846659525991
+      },
+      "aggregation": "equal means over nonempty regions only; all 49 frames retained"
+    }
+  },
+  "static_time_difference_means": {
+    "static_rgb_MAE_from_anchor": 0.003363634212588777,
+    "static_rgb_max_abs_from_anchor": 0.6986997109286639,
+    "static_alpha_MAE_from_anchor": 0.0009289147642355564
+  },
+  "static_time_difference_maxima": {
+    "static_rgb_MAE_from_anchor": 0.02196574956178665,
+    "static_rgb_max_abs_from_anchor": 0.8940710425376892,
+    "static_alpha_MAE_from_anchor": 0.011254170909523964
+  },
+  "full_resource_record": {
+    "memory_summary": {
+      "schema_version": 1,
+      "started_utc": "2026-10-12T23:16:27.097092+00:00",
+      "monitor_status": "closed",
+      "run_status": "complete",
+      "error": null,
+      "pid": 96504,
+      "torch_device": "0",
+      "nvidia_device": "0",
+      "iteration": 30000,
+      "expected_iterations": 30000,
+      "wall_seconds": 5067.020877719857,
+      "phase_stack": [],
+      "pytorch": {
+        "peak_allocated_bytes": 5366056448,
+        "peak_reserved_bytes": 6148849664,
+        "current_allocated_bytes": 17039360,
+        "current_reserved_bytes": 4011851776
+      },
+      "nvidia_smi": {
+        "device_uuid": "GPU-0fbfefde-19fa-668a-9ff6-28039b63459b",
+        "device_index": 0,
+        "device_name": "NVIDIA GeForce RTX 4080 SUPER",
+        "device_total_bytes": 34351349760,
+        "current_process_used_bytes": 4380950528,
+        "current_device_used_bytes": 4391436288,
+        "process_peak_used_bytes": 6253707264,
+        "device_peak_used_bytes": 6201278464
+      },
+      "sampling": {
+        "interval_seconds": 1.0,
+        "samples": 5068,
+        "samples_with_errors": 0,
+        "valid_device_samples": 5068,
+        "valid_pid_present_samples": 5053,
+        "phase_boundary_samples": 3,
+        "sampled_peaks_are_lower_bounds": true,
+        "query_timeout_seconds": 2.0,
+        "nvidia_smi_executable": "/usr/bin/nvidia-smi",
+        "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
+      },
+      "phases": {
+        "initialization": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 16.35440499521792,
+          "wall_seconds_exclusive": 16.35440499521792,
+          "sample_count": 17,
+          "peak_allocated_bytes": 349690880,
+          "peak_reserved_bytes": 446693376,
+          "process_peak_used_bytes": 792723456,
+          "device_peak_used_bytes": 803209216,
+          "current_allocated_bytes": 341011456,
+          "current_reserved_bytes": 446693376
+        },
+        "gradient_diagnostics": {
+          "count": 18,
+          "failed_count": 0,
+          "wall_seconds": 0.3822693955153227,
+          "wall_seconds_exclusive": 0.3822693955153227,
+          "sample_count": 0,
+          "peak_allocated_bytes": 4689477120,
+          "peak_reserved_bytes": 5131730944,
+          "current_allocated_bytes": 3764289536,
+          "current_reserved_bytes": 4311744512
+        },
+        "checkpoint": {
+          "count": 9,
+          "failed_count": 0,
+          "wall_seconds": 14.18280606623739,
+          "wall_seconds_exclusive": 14.18280606623739,
+          "sample_count": 14,
+          "peak_allocated_bytes": 2198072320,
+          "peak_reserved_bytes": 4313841664,
+          "process_peak_used_bytes": 3663724544,
+          "device_peak_used_bytes": 3674210304,
+          "current_allocated_bytes": 1882038784,
+          "current_reserved_bytes": 4011851776
+        },
+        "static_time_eval": {
+          "count": 3,
+          "failed_count": 0,
+          "wall_seconds": 19.64343595225364,
+          "wall_seconds_exclusive": 19.64343595225364,
+          "sample_count": 19,
+          "peak_allocated_bytes": 3764054016,
+          "peak_reserved_bytes": 4313841664,
+          "process_peak_used_bytes": 4682940416,
+          "device_peak_used_bytes": 4693426176,
+          "current_allocated_bytes": 1938475520,
+          "current_reserved_bytes": 4011851776
+        },
+        "photo_eval": {
+          "count": 3,
+          "failed_count": 0,
+          "wall_seconds": 280.1883203210309,
+          "wall_seconds_exclusive": 260.5448843687773,
+          "sample_count": 278,
+          "peak_allocated_bytes": 3764054016,
+          "peak_reserved_bytes": 4313841664,
+          "process_peak_used_bytes": 4682940416,
+          "device_peak_used_bytes": 4693426176,
+          "current_allocated_bytes": 1882038784,
+          "current_reserved_bytes": 4011851776
+        },
+        "training": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 5050.664544523694,
+          "wall_seconds_exclusive": 4755.91114874091,
+          "sample_count": 5048,
+          "peak_allocated_bytes": 5366056448,
+          "peak_reserved_bytes": 6148849664,
+          "process_peak_used_bytes": 6253707264,
+          "device_peak_used_bytes": 6201278464,
+          "current_allocated_bytes": 17039360,
+          "current_reserved_bytes": 4011851776
+        }
+      },
+      "phase_attribution": {
+        "pytorch_peak_scope": "inclusive_of_children_and_live_entry_allocations",
+        "nvidia_boundary_samples": "overall_only_when_any_phase_boundary_crossed_during_queries",
+        "torch_peak_resets": 68,
+        "torch_reset_errors": 0,
+        "requires_exclusive_ownership_of_torch_peak_resets": true,
+        "wall_time_scope": "host_elapsed; parent_inclusive; exclusive_subtracts_child_wall"
+      },
+      "rtx3090_assessment": {
+        "status": "single_run_observed_within_budget_requires_four_arms_and_target_gpu_validation",
+        "certified_fit": false,
+        "reference_capacity_bytes": 25769803776,
+        "headroom_bytes": 2147483648,
+        "preliminary_budget_bytes": 23622320128,
+        "observed_lower_bound_bytes": 6253707264,
+        "device_samples_include_other_processes": true,
+        "four_arms_30000_iterations_all_phases_required": true,
+        "target_3090_validation_required": true,
+        "caveat": "Polling misses brief peaks; allocator peaks exclude non-PyTorch CUDA use. 30k densification, evaluation/LPIPS and checkpoints must be covered. A sampled or allocator peak below 24 GiB does not certify fit or speed."
+      },
+      "error_count": 0,
+      "recent_errors": [],
+      "extra": {
+        "static_points": 646337.0,
+        "iter_forward_backward_ms": 150.36813354492188,
+        "iteration": 30000,
+        "render_static_points": 646337,
+        "render_dynamic_points": 1004003,
+        "render_width": 480,
+        "render_height": 320,
+        "arm_complete": true
+      }
+    },
+    "status": {
+      "status": "complete",
+      "arm": "GN11",
+      "iterations": 30000,
+      "pid": 96504,
+      "started_singapore": "2026-10-13T07:16:27.091127+08:00",
+      "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+      "GPU_memory_bytes": 33796456448,
+      "checkpoint_scope": "model+Adam+RNG+paired sampler+SGCM lineage",
+      "evaluation_scope": "49 all-observed training views; not independent test",
+      "iteration": 30000,
+      "wall_seconds": 5066.929728737101,
+      "loss": 0.21526972949504852,
+      "psnr": 28.663307189941406,
+      "static_points": 646337.0,
+      "speed_window": {
+        "first_iteration": 29901,
+        "last_iteration": 30000,
+        "wall_seconds": 20.661753620952368,
+        "wall_iterations_per_second": 4.839860247805563,
+        "includes_initialization": false,
+        "includes_evaluation": false
+      },
+      "memory": {
+        "schema_version": 1,
+        "started_utc": "2026-10-12T23:16:27.097092+00:00",
+        "monitor_status": "running",
+        "run_status": "running",
+        "error": null,
+        "pid": 96504,
+        "torch_device": "0",
+        "nvidia_device": "0",
+        "iteration": 30000,
+        "expected_iterations": 30000,
+        "wall_seconds": 5066.924357434735,
+        "phase_stack": [
+          "training"
+        ],
+        "pytorch": {
+          "peak_allocated_bytes": 5366056448,
+          "peak_reserved_bytes": 6148849664,
+          "current_allocated_bytes": 17039360,
+          "current_reserved_bytes": 4011851776
+        },
+        "nvidia_smi": {
+          "device_uuid": "GPU-0fbfefde-19fa-668a-9ff6-28039b63459b",
+          "device_index": 0,
+          "device_name": "NVIDIA GeForce RTX 4080 SUPER",
+          "device_total_bytes": 34351349760,
+          "current_process_used_bytes": 4380950528,
+          "current_device_used_bytes": 4391436288,
+          "process_peak_used_bytes": 6253707264,
+          "device_peak_used_bytes": 6201278464
+        },
+        "sampling": {
+          "interval_seconds": 1.0,
+          "samples": 5067,
+          "samples_with_errors": 0,
+          "valid_device_samples": 5067,
+          "valid_pid_present_samples": 5052,
+          "phase_boundary_samples": 3,
+          "sampled_peaks_are_lower_bounds": true,
+          "query_timeout_seconds": 2.0,
+          "nvidia_smi_executable": "/usr/bin/nvidia-smi",
+          "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
+        },
+        "phases": {
+          "initialization": {
+            "count": 1,
+            "failed_count": 0,
+            "wall_seconds": 16.35440499521792,
+            "wall_seconds_exclusive": 16.35440499521792,
+            "sample_count": 17,
+            "peak_allocated_bytes": 349690880,
+            "peak_reserved_bytes": 446693376,
+            "process_peak_used_bytes": 792723456,
+            "device_peak_used_bytes": 803209216,
+            "current_allocated_bytes": 341011456,
+            "current_reserved_bytes": 446693376
+          },
+          "gradient_diagnostics": {
+            "count": 18,
+            "failed_count": 0,
+            "wall_seconds": 0.3822693955153227,
+            "wall_seconds_exclusive": 0.3822693955153227,
+            "sample_count": 0,
+            "peak_allocated_bytes": 4689477120,
+            "peak_reserved_bytes": 5131730944,
+            "current_allocated_bytes": 3764289536,
+            "current_reserved_bytes": 4311744512
+          },
+          "checkpoint": {
+            "count": 9,
+            "failed_count": 0,
+            "wall_seconds": 14.18280606623739,
+            "wall_seconds_exclusive": 14.18280606623739,
+            "sample_count": 14,
+            "peak_allocated_bytes": 2198072320,
+            "peak_reserved_bytes": 4313841664,
+            "process_peak_used_bytes": 3663724544,
+            "device_peak_used_bytes": 3674210304,
+            "current_allocated_bytes": 1882038784,
+            "current_reserved_bytes": 4011851776
+          },
+          "static_time_eval": {
+            "count": 3,
+            "failed_count": 0,
+            "wall_seconds": 19.64343595225364,
+            "wall_seconds_exclusive": 19.64343595225364,
+            "sample_count": 19,
+            "peak_allocated_bytes": 3764054016,
+            "peak_reserved_bytes": 4313841664,
+            "process_peak_used_bytes": 4682940416,
+            "device_peak_used_bytes": 4693426176,
+            "current_allocated_bytes": 1938475520,
+            "current_reserved_bytes": 4011851776
+          },
+          "photo_eval": {
+            "count": 3,
+            "failed_count": 0,
+            "wall_seconds": 280.1883203210309,
+            "wall_seconds_exclusive": 260.5448843687773,
+            "sample_count": 278,
+            "peak_allocated_bytes": 3764054016,
+            "peak_reserved_bytes": 4313841664,
+            "process_peak_used_bytes": 4682940416,
+            "device_peak_used_bytes": 4693426176,
+            "current_allocated_bytes": 1882038784,
+            "current_reserved_bytes": 4011851776
+          },
+          "training": {
+            "count": 0,
+            "failed_count": 0,
+            "wall_seconds": 5050.568276967853,
+            "wall_seconds_exclusive": 4755.81488118507,
+            "sample_count": 5047,
+            "active_count": 1,
+            "peak_allocated_bytes": 5366056448,
+            "peak_reserved_bytes": 6148849664,
+            "process_peak_used_bytes": 6253707264,
+            "device_peak_used_bytes": 6201278464,
+            "current_allocated_bytes": 17039360,
+            "current_reserved_bytes": 4011851776
+          }
+        },
+        "phase_attribution": {
+          "pytorch_peak_scope": "inclusive_of_children_and_live_entry_allocations",
+          "nvidia_boundary_samples": "overall_only_when_any_phase_boundary_crossed_during_queries",
+          "torch_peak_resets": 68,
+          "torch_reset_errors": 0,
+          "requires_exclusive_ownership_of_torch_peak_resets": true,
+          "wall_time_scope": "host_elapsed; parent_inclusive; exclusive_subtracts_child_wall"
+        },
+        "rtx3090_assessment": {
+          "status": "undetermined_before_full_30k_completion",
+          "certified_fit": false,
+          "reference_capacity_bytes": 25769803776,
+          "headroom_bytes": 2147483648,
+          "preliminary_budget_bytes": 23622320128,
+          "observed_lower_bound_bytes": 6253707264,
+          "device_samples_include_other_processes": true,
+          "four_arms_30000_iterations_all_phases_required": true,
+          "target_3090_validation_required": true,
+          "caveat": "Polling misses brief peaks; allocator peaks exclude non-PyTorch CUDA use. 30k densification, evaluation/LPIPS and checkpoints must be covered. A sampled or allocator peak below 24 GiB does not certify fit or speed."
+        },
+        "error_count": 0,
+        "recent_errors": [],
+        "extra": {
+          "static_points": 646337.0,
+          "iter_forward_backward_ms": 150.36813354492188,
+          "iteration": 30000,
+          "render_static_points": 646337,
+          "render_dynamic_points": 1004003,
+          "render_width": 480,
+          "render_height": 320,
+          "arm_complete": true
+        }
+      },
+      "iter_forward_backward_ms": 150.36813354492188
+    }
+  },
+  "restoration_verified": false,
+  "human_verdict": null
+}

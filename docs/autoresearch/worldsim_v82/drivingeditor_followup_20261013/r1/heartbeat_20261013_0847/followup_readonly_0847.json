@@ -1,0 +1,182 @@
+{
+  "created_utc": "2026-10-13T00:47:23.525762+00:00",
+  "root": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013",
+  "read_only": true,
+  "gpu_used": false,
+  "disk_free_GiB": 38.752323150634766,
+  "scene0008_CPU": {
+    "status": "PASS_CPU_PREPARATION_TRAINING_GATED",
+    "train_cameras": 49,
+    "dynamic_points": 42654,
+    "static_points_after_exact0p1m_exclusion": 594981,
+    "fixed_pose_anchor": "0008033",
+    "training_ready": false,
+    "training_gates_pending": [
+      "Current silver-scene GN11 user gate",
+      "New scene-specific run_matrix/runtime config and fixed-pose adaptation",
+      "Actual training GaussianModel/view/SGCM guard and lineage binding",
+      "GPU ownership and complete checkpoint runtime validation"
+    ]
+  },
+  "red_search": {
+    "status": "scene29_alignment_computed_requires_visual_review",
+    "mode": "identity_local_alignment",
+    "updated_utc": "2026-10-12T20:12:24.131193+00:00",
+    "network_reserved_bytes": 1756572098,
+    "network_received_bytes": 1756572098,
+    "new_control_passed": true,
+    "cached_pass_completed": true,
+    "cached_images_ranked": 5577,
+    "new_candidate_review_pending": true,
+    "new_segments_this_invocation": 100,
+    "error": null,
+    "temporal_progress": {
+      "index": 29,
+      "headers_walked": 60,
+      "last_raw_frame": 59,
+      "selected_bodies": 3
+    },
+    "temporal_indices_started": [
+      29
+    ],
+    "temporal_contract": {
+      "max_segments_total": 3,
+      "max_header_frames_per_segment": 200,
+      "sample_frames": [
+        0,
+        25,
+        50,
+        75,
+        100,
+        125,
+        150,
+        175
+      ],
+      "max_selected_bodies_per_segment": 8
+    },
+    "temporal_candidate_review_pending": true,
+    "temporal_candidate": {
+      "index": 29,
+      "raw_frame": 75,
+      "segment": "10526338824408452410_5714_660_5734_660"
+    },
+    "completed_new_segments_count": 100,
+    "contract": {
+      "network_cap_bytes": 5368709120,
+      "disk_free_floor_bytes": 42949672960,
+      "max_output_bytes": 536870912,
+      "max_new_segments_total": 435,
+      "max_single_record_bytes": 16777216,
+      "request_timeout_seconds": 60,
+      "attempts_per_range": 2,
+      "workers": 1,
+      "wall_time_limit_seconds_per_invocation": 7200
+    },
+    "process": {
+      "pid": 58770,
+      "alive": false,
+      "matches_owned_job": false
+    },
+    "candidate_search_resume_allowed": false
+  },
+  "red_raw_download": {
+    "run_status": "complete",
+    "updated_utc": "2026-10-12T20:06:31.645325+00:00",
+    "expected_bytes": 1160423074,
+    "received_offset": 1160423074,
+    "error": null,
+    "process": {
+      "pid": 56518,
+      "alive": false,
+      "matches_owned_job": false
+    }
+  },
+  "red_full_source": {
+    "status": "complete",
+    "raw_size_bytes": 1160423074,
+    "size_verified": true,
+    "full_sha256_verified": true
+  },
+  "scene0029_identity": {
+    "status": "SOURCE_IDENTITY_VERIFIED_CPU_PREPARATION_ALLOWED",
+    "identity_verified": true,
+    "author_video_verified_raw_range": [
+      69,
+      89
+    ],
+    "local_training_range": [
+      69,
+      117
+    ],
+    "anchor_pose_frame": "0029079",
+    "author_training_window_publicly_confirmed": false
+  },
+  "scene0029_CPU_raw": {
+    "status": "CPU_RAW_AND_REAL_STATIC_SEED_READY_SKY_BODY_PENDING",
+    "raw_training_range": [
+      69,
+      117
+    ],
+    "requested_frames": 49,
+    "num_points": 600000,
+    "fixed_pose_anchor_for_later_training": "0029079",
+    "training_ready": false,
+    "pending": [
+      "Real49 sky",
+      "Real49 DEVA/SAM",
+      "Reviewed physicalactor-to-instance mapping",
+      "Canonical fullbody union and exactdynamicRGB",
+      "Real actorLiDAR priors from selectedbody",
+      "ActualCPU loader/SGCM/readiness",
+      "GN11 gate and training runtime checks"
+    ],
+    "pending_after_CPU": null,
+    "GPU_used": false,
+    "Torch_imported": false,
+    "TF_imported": false
+  },
+  "prepared_training_sources": [
+    {
+      "status": "FOLLOWUP_CPU_SOURCE_PREPARED_GPU_BLOCKED",
+      "scene_id": "scene0008_023_071",
+      "anchor_pose_frame": "0008033",
+      "gpu_started": false,
+      "gate_required_at_run": true
+    }
+  ],
+  "red_GPU_mask_queue": {
+    "status": "engineering_stopped_assets_preserved",
+    "pid": 108901,
+    "updated_utc": "2026-10-13T00:40:56.574693+00:00",
+    "active_child_pid": null,
+    "error": "module 'os' has no attribute 'pidfd_open'",
+    "sky_frames": null,
+    "training_started": false,
+    "actor_selection_complete": false,
+    "training_ready": false,
+    "human_verdict": null,
+    "controller_process": {
+      "pid": 108901,
+      "alive": false,
+      "matches_owned_job": false
+    },
+    "stages": [],
+    "launch_log": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/red_masks_queue_20261013.log"
+  },
+  "followup_runs": [
+    {
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11",
+      "status": "complete",
+      "iteration": 30000,
+      "wall_seconds": 5066.929728737101,
+      "pid": 96504,
+      "worker_pid": null,
+      "error": null,
+      "worker_process": {
+        "pid": 96504,
+        "alive": false,
+        "matches_owned_job": false
+      }
+    }
+  ]
+}
