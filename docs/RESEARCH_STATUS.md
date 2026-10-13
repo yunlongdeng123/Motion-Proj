@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前执行 `WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013/r1`：四臂各30k/GN11准入和GMC追加30k已完成，三节点/49FP32/fixed49时间合同、真实441PNG深色HTML与全覆盖工程复核通过。红车真实49 body/prior、actualCPU loader/SGCM和独立prepare通过；09:48:13已从零seed0启动最后一组GN11，owned PID124555，启动确认1000/30000步、无错误、真实49 GPU Scene与SGCM谱系绑定PASS。每小时检查，不重复worker；红车完整训练/评价/报告收口后按既有授权保存推送并关机，当前不关机。
+更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前执行 `WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013/r1`：四臂各30k/GN11准入和GMC追加30k已完成，三节点/49FP32/fixed49时间合同、真实441PNG深色HTML与全覆盖工程复核通过。红车真实49 body/prior、actualCPU loader/SGCM和独立prepare通过；09:48:13已从零seed0启动最后一组GN11，owned PID124555，10:01只读进度6600步，资源快照7000/30000步、无错误、854采样无错误；仍无完整10k节点。真实49 GPU Scene与SGCM谱系绑定PASS，当前owned cmdline匹配。每小时检查，不重复worker；红车完整训练/评价/报告收口后按既有授权保存推送并关机，当前不关机。
 
 原矩阵 `WS-V82-DRIVINGEDITOR-HYBRID30K-20261012/r1` 总120k，固定scene0017_000_048、49 FRONT、seed0、scale4 W480×H320。06:45确认四臂complete、10k/20k/30k全部节点、采样无错误。终态只读导出核对12个四文件bundle/stat/header、49帧FP32/PNG和固定pose49times、配置白名单及四臂全部30,000步frame/time_shift/LR配对；跨臂GT/body/sky一致，六个区域指标复算匹配。未实际加载模型或执行完整Adam/RNG恢复，`restoration_verified=false`。[完整结果、组件图及边界](v82/DRIVINGEDITOR_FOUR_ARM_30K_RESULTS.md) · [终态证据](autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/final_four_arm_20261013/)。
 
