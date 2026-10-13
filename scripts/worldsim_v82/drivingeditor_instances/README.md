@@ -4,6 +4,8 @@
 
 完整协议、组件图和证据边界见 [实验报告](../../../docs/v82/DRIVINGEDITOR_INSTANCE_EDITOR_20261013.md)。准备、训练和编辑入口分别是 prepare_instances.py、train.py、render_edits.py；queue_gmc.py/start_queue.py只管理当前GMC300步短测，不能重复启动。
 
+恢复后评估入口 [evaluate_scene.py](evaluate_scene.py) 的参数与资产语义见 [评估契约](EVALUATE_SCENE.md)。它默认只做CPU预检，只有显式`--run`才申请共享GPU锁；导出49观测帧和固定真实相机的49时间诊断，保留两种alpha与逐ID全场景可见RGB的区别。
+
 ```mermaid
 flowchart LR
   P[真实3D框 track LiDAR] --> L[两车局部Gaussian]

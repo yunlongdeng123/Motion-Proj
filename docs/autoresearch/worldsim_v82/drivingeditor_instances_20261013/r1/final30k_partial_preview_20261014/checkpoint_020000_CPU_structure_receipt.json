@@ -1,0 +1,156 @@
+{
+  "schema": "drivingeditor_checkpoint_CPU_structure_audit_v1",
+  "checkpoint_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_020000.pt",
+  "scope": "CPU_map_location_structure_finite_binding_policy_only",
+  "expected_step": 20000,
+  "GPU_used": false,
+  "model_restore_executed": false,
+  "RNG_restore_executed": false,
+  "optimizer_updates_executed": 0,
+  "checkpoint_restoration_verified_by_this_check": false,
+  "prior_actual_GPU_restore_verified_step": 300,
+  "deterministic_next_step_parity_verified": false,
+  "training_assets_modified": false,
+  "checkpoint_written": false,
+  "threads": 1,
+  "requested_nice": 10,
+  "status": "CPU_STRUCTURE_FINITE_BINDING_POLICY_PASS",
+  "actual_step": 20000,
+  "file_size_bytes": 935060588,
+  "actual_nice": 10,
+  "torch_version": "2.2.2+cu118",
+  "torch_threads": 1,
+  "cuda_initialized": false,
+  "static_points": 613405,
+  "rigid_points": 298075,
+  "instance_ids": [
+    "NoQttdyd4C16Y_zkGhiFKg",
+    "fXVhuN-RuJDvZwnkQ-0YSQ"
+  ],
+  "points_per_instance": [
+    137174,
+    160901
+  ],
+  "instance_Adam_steps": {
+    "0": 20000.0,
+    "1": 20000.0,
+    "2": 20000.0,
+    "3": 20000.0,
+    "4": 20000.0,
+    "5": 20000.0
+  },
+  "instance_optimizer_groups": [
+    "xyz",
+    "f_dc",
+    "f_rest",
+    "scaling",
+    "rotation",
+    "opacity"
+  ],
+  "native_optimizer_structure": {
+    "background": {
+      "state_path": "background",
+      "group_count": 9,
+      "group_names": [
+        "xyz",
+        "f_dc",
+        "f_rest",
+        "opacity",
+        "scaling",
+        "rotation",
+        "t",
+        "scaling_t",
+        "velocity"
+      ],
+      "saved_step_counters": [
+        29856.0,
+        29856.0,
+        29856.0,
+        29856.0,
+        29856.0,
+        29856.0,
+        29856.0,
+        29856.0,
+        29856.0
+      ],
+      "moments_match_parameter_shapes": true
+    },
+    "environment": {
+      "state_path": "environment",
+      "group_count": 1,
+      "group_names": [
+        null
+      ],
+      "saved_step_counters": [
+        30000.0
+      ],
+      "moments_match_parameter_shapes": true
+    }
+  },
+  "static_capture_length": 18,
+  "environment_capture_length": 2,
+  "rigid_active_sh_degree": 3,
+  "policy_matches_current_effective_and_real_reference": true,
+  "fixed_poses": true,
+  "frozen_background": true,
+  "new_SGCM_clones": false,
+  "LR_horizon": 30000,
+  "total_training_budget": 30000,
+  "prior_reference_SGCM_flags": {
+    "paper_sgcm_enabled": true,
+    "sgcm_guard_enabled": true
+  },
+  "inherited_reference_flags_do_not_activate_new_SGCM_clones": true,
+  "finite_checks": {
+    "tensor_leaves": 91,
+    "numpy_leaves": 0,
+    "tensor_elements": 232926216,
+    "all_tensors_CPU": true,
+    "all_numeric_values_finite": true
+  },
+  "RNG_structure": {
+    "sampler": {
+      "version": 3,
+      "state_words": 624,
+      "cursor": 550,
+      "structure_valid": true
+    },
+    "python_rng": {
+      "version": 3,
+      "state_words": 624,
+      "cursor": 624,
+      "structure_valid": true
+    },
+    "numpy_rng": {
+      "engine": "MT19937",
+      "words": 624,
+      "cursor": 379,
+      "structure_valid": true
+    },
+    "torch_rng": {
+      "stream_count": 1,
+      "byte_counts": [
+        5056
+      ],
+      "structure_valid": true
+    },
+    "cuda_rng": {
+      "stream_count": 1,
+      "byte_counts": [
+        16
+      ],
+      "structure_valid": true
+    }
+  },
+  "saved_checkpoint_restoration_verified_claim": false,
+  "prior_300_runtime_restore_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/runtime_restore_contract.json",
+  "utc": "2026-10-13T17:15:55.590896+00:00",
+  "wall_seconds": 2.816697514615953,
+  "maximum_RSS_MiB": 1230.23046875,
+  "inspection_transport": {
+    "ssh_alias": "wm-vgpu-1011",
+    "stdin_script": true,
+    "remote_script_written": false,
+    "ssh_returncode": 0
+  }
+}

@@ -1,8 +1,8 @@
 {
   "task_id": "WS-V82-DRIVINGEDITOR-INSTANCES-20261013",
   "run_id": "r1",
-  "updated_sgt": "2026-10-14T01:11:51.332165+08:00",
-  "state": "GMC_FIXED_GT_INSTANCE_30000_CONTINUATION_RUNNING",
+  "updated_sgt": "2026-10-14T02:26:09.149475+08:00",
+  "state": "TRAINING_COMPLETE_PARTIAL30K_PREVIEW_AVAILABLE_FULL_EXPORT_WAITING_PRIORITY",
   "scope": "GMC scene0008 raw23..71 two moving actors only",
   "latest_user_scope_source": "2026-10-13: 3个场景中只有一个多实例，用该场景测，可GPU/多线程CPU但不能挤其他任务",
   "training_priors": [
@@ -11,7 +11,7 @@
     "genuine per-frame pose",
     "real reviewed DEVA77/82 masks"
   ],
-  "representation": "static GN11 background + local rigid G0/G1, fixed GT poses initially; no vehicle PVG",
+  "representation": "static GN11 background + local rigid G0/G1, fixed GT poses throughout 30k; no vehicle PVG",
   "input": {
     "frames": 49,
     "instances": 2,
@@ -38,8 +38,8 @@
     ]
   },
   "validation": {
-    "CPU_tests_passed": 114,
-    "CUDA_tests_pending": 1,
+    "CPU_tests_passed": 118,
+    "CUDA_tests_pending": 0,
     "local_real_GMC49_CPU_edit_contract": "PASS",
     "target_Python39_real_GMC49_CPU_edit_contract": "PASS",
     "GPU_training_started": true,
@@ -55,12 +55,29 @@
     "actual_FP32_edit_contract_passed": true,
     "checkpoint_CPU_structure_verified_steps": [
       10000,
-      20000
+      20000,
+      30000
     ],
     "actual_full_GPU_model_Adam_RNG_restore_verified_steps": [
-      300
+      300,
+      10000,
+      20000,
+      30000
     ],
-    "checkpoint_GPU_restore_verified_for_10k_20k": false
+    "checkpoint_GPU_restore_verified_for_10k_20k": true,
+    "training_complete": true,
+    "checkpoint_GPU_restore_verified_for_30k": true,
+    "six_edit_operations_actual_observed_frame_pairs_checkpoint_step": 300,
+    "actual_FP32_edit_contract_checkpoint_step": 300,
+    "post30k_observed_FP32_frames": 28,
+    "post30k_fixed_camera_frames": 0,
+    "post30k_edit_operations": 0,
+    "post30k_partial_CPU_exact_GT_real_masks_PNG_contract": "PASS",
+    "post30k_complete_scene_evaluation": false,
+    "post30k_end_model_Adam_readonly_verified": null,
+    "latest_full_suite_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/validation_summary.json",
+    "actual_unified_partial_preview_static_QA": "PASS",
+    "GUI_QA_performed": false
   },
   "queue": {
     "initial_smoke_queue_state": "GMC_GPU_SMOKE_COMPLETE_EDIT_VISUAL_REVIEW_PENDING",
@@ -121,22 +138,62 @@
       "automatic_retries": false
     },
     "latest_run_status": {
-      "step": 23300,
-      "frame": "0008050",
-      "loss": 0.20666494965553284,
-      "instance_mask_loss": 0.000290570838842541,
-      "known_instances": 2,
-      "box_boundary": 4.585100725762459e-07,
-      "pose_prior": 0.0,
-      "instance_points": 298075,
-      "background_points": 613405,
-      "instance_optimizer_gradients_finite": true,
-      "steps_per_second": 5.951984744301371,
-      "state": "running"
+      "state": "complete",
+      "step": 30000,
+      "training_reconstruction_only": true,
+      "edit_visual_acceptance": "pending",
+      "restoration_verified": false
     },
     "background_frozen": true,
     "pose_refinement_enabled": false,
-    "new_SGCM_clones": false
+    "new_SGCM_clones": false,
+    "continuation_worker_exited": true,
+    "edits_checkpoint_step": 300,
+    "postprocessing_controller_status": {
+      "post30k_r1": {
+        "state": "stopped_on_engineering_error_or_priority",
+        "current": "scene_evaluation",
+        "returncode": 1,
+        "completed": [
+          "restore_010000",
+          "restore_020000",
+          "restore_030000"
+        ],
+        "assets_preserved": true,
+        "automatic_retries": false,
+        "pid": 65212,
+        "utc": "2026-10-13T17:45:30.222451+00:00"
+      },
+      "post30k_r2": {
+        "state": "stopped_on_engineering_error_or_priority",
+        "current": "scene_evaluation",
+        "returncode": 1,
+        "completed": [],
+        "assets_preserved": true,
+        "automatic_retries": false,
+        "pid": 65834,
+        "utc": "2026-10-13T17:54:24.686275+00:00"
+      },
+      "owned_processes": [
+        {
+          "pid": 37747,
+          "present": false
+        },
+        {
+          "pid": 65212,
+          "present": false
+        },
+        {
+          "pid": 65834,
+          "present": false
+        },
+        {
+          "pid": 65835,
+          "present": false
+        }
+      ],
+      "snapshot_UTC": "2026-10-13T18:18:33.164429+00:00"
+    }
   },
   "budget": {
     "first_GPU_compatibility_steps": 300,
@@ -170,14 +227,21 @@
     "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013",
     "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/specs/scene0008_023_071.json",
     "source": "scripts/worldsim_v82/drivingeditor_instances",
-    "evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\cpu_ready_gpu_queued"
+    "evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\cpu_ready_gpu_queued",
+    "final_training": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1",
+    "final_GPU_restore_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r1",
+    "partial_evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation",
+    "partial_preview_manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_GMC_instances_30k\\preview_partial\\partial_preview_manifest.json",
+    "local_final_evidence": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_editor_final30k_r1",
+    "final_repository_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014"
   },
   "failure_ledger_refs": [
     "V82-F01",
     "V82-F02",
-    "V82-F03"
+    "V82-F03",
+    "V82-F04"
   ],
-  "failure_ledger_delta": "none",
+  "failure_ledger_delta": "V82-F04",
   "engineering_attempts": [
     {
       "phase": "CPU preparation before latest GMC-only scope",
@@ -197,6 +261,13 @@
       "issue": "restored Adam aliased checkpoint input tensors",
       "resolution": "deep-copy optimizer load and regression; real GPU golden state proof passed",
       "scientific_negative": false
+    },
+    {
+      "phase": "post30k_r1 scene evaluation",
+      "issue": "CPU GT and CUDA composite SSIM device mismatch after three exact checkpoint restores",
+      "resolution": "only GT.to(composite.device); original failure directory preserved; post30k_r2 exported actual observed prefix then yielded to StreetCrafter CPU preparation",
+      "scientific_negative": false,
+      "failure_ledger_ref": "V82-F04"
     }
   ],
   "limits": [
@@ -3112,7 +3183,7 @@
     "render_quality_or_edit_acceptance_verified": false,
     "checkpoint_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke/checkpoint_000300.pt"
   },
-  "new_evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\gpu_smoke_edits_resume_20261013",
+  "new_evidence": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014",
   "running_node_inspection": {
     "snapshot": {
       "inspected_utc": "2026-10-13T17:11:51.332165+00:00",
@@ -3719,5 +3790,1145 @@
     "evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\heartbeat_20261014_0055",
     "training_phase_pytorch_peak_externally_available": false,
     "full_run_memory_peak_final": false
-  }
+  },
+  "running_node_inspection_scope": "Historical step23300/10k/20k running snapshot retained unchanged; not current training status or final resource summary",
+  "training_completion": {
+    "run": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1",
+    "status": {
+      "state": "complete",
+      "step": 30000,
+      "training_reconstruction_only": true,
+      "edit_visual_acceptance": "pending",
+      "restoration_verified": false
+    },
+    "worker_pid": 37747,
+    "worker_exited": true,
+    "worker_exit_verified_snapshot_UTC": "2026-10-13T18:18:33.164429+00:00",
+    "resume_step": 300,
+    "first_update": 301,
+    "target_total_steps": 30000,
+    "new_updates": 29700,
+    "background_and_environment_frozen": true,
+    "trajectory_fixed": true,
+    "topology_fixed": true,
+    "pose_refinement_enabled": false,
+    "new_SGCM_clones": false,
+    "wall_seconds": 4969.279302568175,
+    "prior_300_smoke_wall_seconds": 59.44220425095409,
+    "memory": {
+      "monitor_status": "closed",
+      "run_status": "complete",
+      "pytorch": {
+        "peak_allocated_bytes": 2569314816,
+        "peak_reserved_bytes": 4880072704,
+        "current_allocated_bytes": 1418204672,
+        "current_reserved_bytes": 4880072704
+      },
+      "nvidia_smi": {
+        "device_uuid": "GPU-07caccc9-ee08-6cc5-d414-ec484ee3c1b0",
+        "device_index": 0,
+        "device_name": "NVIDIA GeForce RTX 4080 SUPER",
+        "device_total_bytes": 34351349760,
+        "current_process_used_bytes": 5236588544,
+        "current_device_used_bytes": 5247074304,
+        "process_peak_used_bytes": 5236588544,
+        "device_peak_used_bytes": 5247074304
+      },
+      "sampling": {
+        "interval_seconds": 1.0,
+        "samples": 4971,
+        "samples_with_errors": 0,
+        "valid_device_samples": 4971,
+        "valid_pid_present_samples": 4971,
+        "phase_boundary_samples": 2,
+        "sampled_peaks_are_lower_bounds": true,
+        "query_timeout_seconds": 2.0,
+        "nvidia_smi_executable": "/usr/bin/nvidia-smi",
+        "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
+      },
+      "phases": {
+        "initialization": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 11.463899971917272,
+          "wall_seconds_exclusive": 11.463899971917272,
+          "sample_count": 11,
+          "peak_allocated_bytes": 1317483008,
+          "peak_reserved_bytes": 1405091840,
+          "process_peak_used_bytes": 1749024768,
+          "device_peak_used_bytes": 1759510528,
+          "current_allocated_bytes": 1241985536,
+          "current_reserved_bytes": 1405091840
+        },
+        "runtime_restore_verification": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 0.6211053831502795,
+          "wall_seconds_exclusive": 0.6211053831502795,
+          "sample_count": 1,
+          "peak_allocated_bytes": 1242600960,
+          "peak_reserved_bytes": 1405091840,
+          "process_peak_used_bytes": 1751121920,
+          "device_peak_used_bytes": 1761607680,
+          "current_allocated_bytes": 1241985536,
+          "current_reserved_bytes": 1405091840
+        },
+        "checkpoint": {
+          "count": 3,
+          "failed_count": 0,
+          "wall_seconds": 4.8026788253337145,
+          "wall_seconds_exclusive": 4.8026788253337145,
+          "sample_count": 3,
+          "peak_allocated_bytes": 1418820096,
+          "peak_reserved_bytes": 4880072704,
+          "process_peak_used_bytes": 5236588544,
+          "device_peak_used_bytes": 5247074304,
+          "current_allocated_bytes": 1418204672,
+          "current_reserved_bytes": 4880072704
+        },
+        "preview": {
+          "count": 3,
+          "failed_count": 0,
+          "wall_seconds": 0.6545221507549286,
+          "wall_seconds_exclusive": 0.6545221507549286,
+          "sample_count": 2,
+          "peak_allocated_bytes": 1420662784,
+          "peak_reserved_bytes": 4880072704,
+          "current_allocated_bytes": 1418204672,
+          "current_reserved_bytes": 4880072704,
+          "process_peak_used_bytes": 5236588544,
+          "device_peak_used_bytes": 5247074304
+        },
+        "training": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 4955.560450124554,
+          "wall_seconds_exclusive": 4950.103249148466,
+          "sample_count": 4956,
+          "peak_allocated_bytes": 2569314816,
+          "peak_reserved_bytes": 4880072704,
+          "process_peak_used_bytes": 5236588544,
+          "device_peak_used_bytes": 5247074304,
+          "current_allocated_bytes": 1418204672,
+          "current_reserved_bytes": 4880072704
+        }
+      },
+      "error_count": 0,
+      "sampled_peaks_are_lower_bounds": true,
+      "target_RTX3090_fit_or_speed_certified": false
+    },
+    "remote_memory_summary": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/memory_summary.json",
+    "local_memory_summary": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_editor_final30k_r1\\training\\memory_summary.json",
+    "local_status": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_editor_final30k_r1\\training\\status.json",
+    "raw_status_restoration_verified_claim_unchanged": false,
+    "additional_training_authorized": false,
+    "repository_memory_summary": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/training/memory_summary.json",
+    "repository_status": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/training/status.json"
+  },
+  "final_checkpoint_validation": {
+    "CPU_structure_scope": "CPU_map_location_structure_finite_binding_policy_only; no model/RNG restore or optimizer updates",
+    "CPU_structure_verified_steps": [
+      10000,
+      20000,
+      30000
+    ],
+    "CPU_receipts": [
+      {
+        "schema": "drivingeditor_checkpoint_CPU_structure_audit_v1",
+        "checkpoint_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_010000.pt",
+        "scope": "CPU_map_location_structure_finite_binding_policy_only",
+        "expected_step": 10000,
+        "GPU_used": false,
+        "model_restore_executed": false,
+        "RNG_restore_executed": false,
+        "optimizer_updates_executed": 0,
+        "checkpoint_restoration_verified_by_this_check": false,
+        "prior_actual_GPU_restore_verified_step": 300,
+        "deterministic_next_step_parity_verified": false,
+        "training_assets_modified": false,
+        "checkpoint_written": false,
+        "threads": 1,
+        "requested_nice": 10,
+        "status": "CPU_STRUCTURE_FINITE_BINDING_POLICY_PASS",
+        "actual_step": 10000,
+        "file_size_bytes": 935060588,
+        "actual_nice": 10,
+        "torch_version": "2.2.2+cu118",
+        "torch_threads": 1,
+        "cuda_initialized": false,
+        "static_points": 613405,
+        "rigid_points": 298075,
+        "instance_ids": [
+          "NoQttdyd4C16Y_zkGhiFKg",
+          "fXVhuN-RuJDvZwnkQ-0YSQ"
+        ],
+        "points_per_instance": [
+          137174,
+          160901
+        ],
+        "instance_Adam_steps": {
+          "0": 10000.0,
+          "1": 10000.0,
+          "2": 10000.0,
+          "3": 10000.0,
+          "4": 10000.0,
+          "5": 10000.0
+        },
+        "instance_optimizer_groups": [
+          "xyz",
+          "f_dc",
+          "f_rest",
+          "scaling",
+          "rotation",
+          "opacity"
+        ],
+        "native_optimizer_structure": {
+          "background": {
+            "state_path": "background",
+            "group_count": 9,
+            "group_names": [
+              "xyz",
+              "f_dc",
+              "f_rest",
+              "opacity",
+              "scaling",
+              "rotation",
+              "t",
+              "scaling_t",
+              "velocity"
+            ],
+            "saved_step_counters": [
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0
+            ],
+            "moments_match_parameter_shapes": true
+          },
+          "environment": {
+            "state_path": "environment",
+            "group_count": 1,
+            "group_names": [
+              null
+            ],
+            "saved_step_counters": [
+              30000.0
+            ],
+            "moments_match_parameter_shapes": true
+          }
+        },
+        "static_capture_length": 18,
+        "environment_capture_length": 2,
+        "rigid_active_sh_degree": 3,
+        "policy_matches_current_effective_and_real_reference": true,
+        "fixed_poses": true,
+        "frozen_background": true,
+        "new_SGCM_clones": false,
+        "LR_horizon": 30000,
+        "total_training_budget": 30000,
+        "prior_reference_SGCM_flags": {
+          "paper_sgcm_enabled": true,
+          "sgcm_guard_enabled": true
+        },
+        "inherited_reference_flags_do_not_activate_new_SGCM_clones": true,
+        "finite_checks": {
+          "tensor_leaves": 91,
+          "numpy_leaves": 0,
+          "tensor_elements": 232926216,
+          "all_tensors_CPU": true,
+          "all_numeric_values_finite": true
+        },
+        "RNG_structure": {
+          "sampler": {
+            "version": 3,
+            "state_words": 624,
+            "cursor": 12,
+            "structure_valid": true
+          },
+          "python_rng": {
+            "version": 3,
+            "state_words": 624,
+            "cursor": 624,
+            "structure_valid": true
+          },
+          "numpy_rng": {
+            "engine": "MT19937",
+            "words": 624,
+            "cursor": 379,
+            "structure_valid": true
+          },
+          "torch_rng": {
+            "stream_count": 1,
+            "byte_counts": [
+              5056
+            ],
+            "structure_valid": true
+          },
+          "cuda_rng": {
+            "stream_count": 1,
+            "byte_counts": [
+              16
+            ],
+            "structure_valid": true
+          }
+        },
+        "saved_checkpoint_restoration_verified_claim": false,
+        "prior_300_runtime_restore_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/runtime_restore_contract.json",
+        "utc": "2026-10-13T17:11:02.363350+00:00",
+        "wall_seconds": 2.8523588739335537,
+        "maximum_RSS_MiB": 1229.33984375,
+        "inspection_transport": {
+          "ssh_alias": "wm-vgpu-1011",
+          "stdin_script": true,
+          "remote_script_written": false,
+          "ssh_returncode": 0
+        }
+      },
+      {
+        "schema": "drivingeditor_checkpoint_CPU_structure_audit_v1",
+        "checkpoint_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_020000.pt",
+        "scope": "CPU_map_location_structure_finite_binding_policy_only",
+        "expected_step": 20000,
+        "GPU_used": false,
+        "model_restore_executed": false,
+        "RNG_restore_executed": false,
+        "optimizer_updates_executed": 0,
+        "checkpoint_restoration_verified_by_this_check": false,
+        "prior_actual_GPU_restore_verified_step": 300,
+        "deterministic_next_step_parity_verified": false,
+        "training_assets_modified": false,
+        "checkpoint_written": false,
+        "threads": 1,
+        "requested_nice": 10,
+        "status": "CPU_STRUCTURE_FINITE_BINDING_POLICY_PASS",
+        "actual_step": 20000,
+        "file_size_bytes": 935060588,
+        "actual_nice": 10,
+        "torch_version": "2.2.2+cu118",
+        "torch_threads": 1,
+        "cuda_initialized": false,
+        "static_points": 613405,
+        "rigid_points": 298075,
+        "instance_ids": [
+          "NoQttdyd4C16Y_zkGhiFKg",
+          "fXVhuN-RuJDvZwnkQ-0YSQ"
+        ],
+        "points_per_instance": [
+          137174,
+          160901
+        ],
+        "instance_Adam_steps": {
+          "0": 20000.0,
+          "1": 20000.0,
+          "2": 20000.0,
+          "3": 20000.0,
+          "4": 20000.0,
+          "5": 20000.0
+        },
+        "instance_optimizer_groups": [
+          "xyz",
+          "f_dc",
+          "f_rest",
+          "scaling",
+          "rotation",
+          "opacity"
+        ],
+        "native_optimizer_structure": {
+          "background": {
+            "state_path": "background",
+            "group_count": 9,
+            "group_names": [
+              "xyz",
+              "f_dc",
+              "f_rest",
+              "opacity",
+              "scaling",
+              "rotation",
+              "t",
+              "scaling_t",
+              "velocity"
+            ],
+            "saved_step_counters": [
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0
+            ],
+            "moments_match_parameter_shapes": true
+          },
+          "environment": {
+            "state_path": "environment",
+            "group_count": 1,
+            "group_names": [
+              null
+            ],
+            "saved_step_counters": [
+              30000.0
+            ],
+            "moments_match_parameter_shapes": true
+          }
+        },
+        "static_capture_length": 18,
+        "environment_capture_length": 2,
+        "rigid_active_sh_degree": 3,
+        "policy_matches_current_effective_and_real_reference": true,
+        "fixed_poses": true,
+        "frozen_background": true,
+        "new_SGCM_clones": false,
+        "LR_horizon": 30000,
+        "total_training_budget": 30000,
+        "prior_reference_SGCM_flags": {
+          "paper_sgcm_enabled": true,
+          "sgcm_guard_enabled": true
+        },
+        "inherited_reference_flags_do_not_activate_new_SGCM_clones": true,
+        "finite_checks": {
+          "tensor_leaves": 91,
+          "numpy_leaves": 0,
+          "tensor_elements": 232926216,
+          "all_tensors_CPU": true,
+          "all_numeric_values_finite": true
+        },
+        "RNG_structure": {
+          "sampler": {
+            "version": 3,
+            "state_words": 624,
+            "cursor": 550,
+            "structure_valid": true
+          },
+          "python_rng": {
+            "version": 3,
+            "state_words": 624,
+            "cursor": 624,
+            "structure_valid": true
+          },
+          "numpy_rng": {
+            "engine": "MT19937",
+            "words": 624,
+            "cursor": 379,
+            "structure_valid": true
+          },
+          "torch_rng": {
+            "stream_count": 1,
+            "byte_counts": [
+              5056
+            ],
+            "structure_valid": true
+          },
+          "cuda_rng": {
+            "stream_count": 1,
+            "byte_counts": [
+              16
+            ],
+            "structure_valid": true
+          }
+        },
+        "saved_checkpoint_restoration_verified_claim": false,
+        "prior_300_runtime_restore_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/runtime_restore_contract.json",
+        "utc": "2026-10-13T17:15:55.590896+00:00",
+        "wall_seconds": 2.816697514615953,
+        "maximum_RSS_MiB": 1230.23046875,
+        "inspection_transport": {
+          "ssh_alias": "wm-vgpu-1011",
+          "stdin_script": true,
+          "remote_script_written": false,
+          "ssh_returncode": 0
+        }
+      },
+      {
+        "schema": "drivingeditor_checkpoint_CPU_structure_audit_v1",
+        "checkpoint_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_030000.pt",
+        "scope": "CPU_map_location_structure_finite_binding_policy_only",
+        "expected_step": 30000,
+        "GPU_used": false,
+        "model_restore_executed": false,
+        "RNG_restore_executed": false,
+        "optimizer_updates_executed": 0,
+        "checkpoint_restoration_verified_by_this_check": false,
+        "prior_actual_GPU_restore_verified_step": 300,
+        "deterministic_next_step_parity_verified": false,
+        "training_assets_modified": false,
+        "checkpoint_written": false,
+        "threads": 1,
+        "requested_nice": 10,
+        "status": "CPU_STRUCTURE_FINITE_BINDING_POLICY_PASS",
+        "actual_step": 30000,
+        "file_size_bytes": 935060524,
+        "actual_nice": 10,
+        "torch_version": "2.2.2+cu118",
+        "torch_threads": 1,
+        "cuda_initialized": false,
+        "static_points": 613405,
+        "rigid_points": 298075,
+        "instance_ids": [
+          "NoQttdyd4C16Y_zkGhiFKg",
+          "fXVhuN-RuJDvZwnkQ-0YSQ"
+        ],
+        "points_per_instance": [
+          137174,
+          160901
+        ],
+        "instance_Adam_steps": {
+          "0": 30000.0,
+          "1": 30000.0,
+          "2": 30000.0,
+          "3": 30000.0,
+          "4": 30000.0,
+          "5": 30000.0
+        },
+        "instance_optimizer_groups": [
+          "xyz",
+          "f_dc",
+          "f_rest",
+          "scaling",
+          "rotation",
+          "opacity"
+        ],
+        "native_optimizer_structure": {
+          "background": {
+            "state_path": "background",
+            "group_count": 9,
+            "group_names": [
+              "xyz",
+              "f_dc",
+              "f_rest",
+              "opacity",
+              "scaling",
+              "rotation",
+              "t",
+              "scaling_t",
+              "velocity"
+            ],
+            "saved_step_counters": [
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0,
+              29856.0
+            ],
+            "moments_match_parameter_shapes": true
+          },
+          "environment": {
+            "state_path": "environment",
+            "group_count": 1,
+            "group_names": [
+              null
+            ],
+            "saved_step_counters": [
+              30000.0
+            ],
+            "moments_match_parameter_shapes": true
+          }
+        },
+        "static_capture_length": 18,
+        "environment_capture_length": 2,
+        "rigid_active_sh_degree": 3,
+        "policy_matches_current_effective_and_real_reference": true,
+        "fixed_poses": true,
+        "frozen_background": true,
+        "new_SGCM_clones": false,
+        "LR_horizon": 30000,
+        "total_training_budget": 30000,
+        "prior_reference_SGCM_flags": {
+          "paper_sgcm_enabled": true,
+          "sgcm_guard_enabled": true
+        },
+        "inherited_reference_flags_do_not_activate_new_SGCM_clones": true,
+        "finite_checks": {
+          "tensor_leaves": 91,
+          "numpy_leaves": 0,
+          "tensor_elements": 232926216,
+          "all_tensors_CPU": true,
+          "all_numeric_values_finite": true
+        },
+        "RNG_structure": {
+          "sampler": {
+            "version": 3,
+            "state_words": 624,
+            "cursor": 548,
+            "structure_valid": true
+          },
+          "python_rng": {
+            "version": 3,
+            "state_words": 624,
+            "cursor": 624,
+            "structure_valid": true
+          },
+          "numpy_rng": {
+            "engine": "MT19937",
+            "words": 624,
+            "cursor": 379,
+            "structure_valid": true
+          },
+          "torch_rng": {
+            "stream_count": 1,
+            "byte_counts": [
+              5056
+            ],
+            "structure_valid": true
+          },
+          "cuda_rng": {
+            "stream_count": 1,
+            "byte_counts": [
+              16
+            ],
+            "structure_valid": true
+          }
+        },
+        "saved_checkpoint_restoration_verified_claim": false,
+        "prior_300_runtime_restore_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/runtime_restore_contract.json",
+        "utc": "2026-10-13T17:36:05.563185+00:00",
+        "wall_seconds": 2.9935809122398496,
+        "maximum_RSS_MiB": 1231.0703125,
+        "inspection_transport": {
+          "ssh_alias": "wm-vgpu-1011",
+          "stdin_script": true,
+          "remote_script_written": false,
+          "ssh_returncode": 0
+        }
+      }
+    ],
+    "actual_GPU_restore_scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+    "actual_GPU_restore_verified_steps": [
+      10000,
+      20000,
+      30000
+    ],
+    "actual_GPU_restore_receipts": [
+      {
+        "runtime_restoration_verified": true,
+        "scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+        "execution_device": "cuda:0",
+        "comparison": "exact_keys_types_dtype_shape_layout_requires_grad_and_values; tensor_device_transport_allowed",
+        "checked_fields": [
+          "background",
+          "instances",
+          "environment",
+          "sampler",
+          "python_rng",
+          "numpy_rng",
+          "torch_rng",
+          "cuda_rng"
+        ],
+        "comparison_counts": {
+          "background": {
+            "tensor_leaves": 42,
+            "numpy_leaves": 2,
+            "scalar_leaves": 120,
+            "mapping_nodes": 21,
+            "sequence_nodes": 20
+          },
+          "instances": {
+            "tensor_leaves": 45,
+            "numpy_leaves": 2,
+            "scalar_leaves": 167,
+            "mapping_nodes": 24,
+            "sequence_nodes": 27
+          },
+          "environment": {
+            "tensor_leaves": 4,
+            "numpy_leaves": 0,
+            "scalar_leaves": 12,
+            "mapping_nodes": 4,
+            "sequence_nodes": 4
+          },
+          "sampler": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 0,
+            "scalar_leaves": 627,
+            "mapping_nodes": 0,
+            "sequence_nodes": 2
+          },
+          "python_rng": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 0,
+            "scalar_leaves": 627,
+            "mapping_nodes": 0,
+            "sequence_nodes": 2
+          },
+          "numpy_rng": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 1,
+            "scalar_leaves": 4,
+            "mapping_nodes": 0,
+            "sequence_nodes": 1
+          },
+          "torch_rng": {
+            "tensor_leaves": 1,
+            "numpy_leaves": 0,
+            "scalar_leaves": 0,
+            "mapping_nodes": 0,
+            "sequence_nodes": 0
+          },
+          "cuda_rng": {
+            "tensor_leaves": 1,
+            "numpy_leaves": 0,
+            "scalar_leaves": 0,
+            "mapping_nodes": 0,
+            "sequence_nodes": 1
+          }
+        },
+        "checkpoint_restoration_verified_claim_unchanged": false,
+        "deterministic_next_step_parity_verified": false,
+        "render_quality_or_edit_acceptance_verified": false,
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_010000.pt",
+        "step": 10000,
+        "admission": {
+          "status": "GPU_ADMISSION_AVAILABLE",
+          "allowed": true,
+          "streetcrafter_processes": [],
+          "other_compute_processes": [],
+          "query_error": null,
+          "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+        },
+        "optimizer_updates": 0,
+        "peak_allocated_bytes": 1317483008,
+        "peak_reserved_bytes": 1405091840
+      },
+      {
+        "runtime_restoration_verified": true,
+        "scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+        "execution_device": "cuda:0",
+        "comparison": "exact_keys_types_dtype_shape_layout_requires_grad_and_values; tensor_device_transport_allowed",
+        "checked_fields": [
+          "background",
+          "instances",
+          "environment",
+          "sampler",
+          "python_rng",
+          "numpy_rng",
+          "torch_rng",
+          "cuda_rng"
+        ],
+        "comparison_counts": {
+          "background": {
+            "tensor_leaves": 42,
+            "numpy_leaves": 2,
+            "scalar_leaves": 120,
+            "mapping_nodes": 21,
+            "sequence_nodes": 20
+          },
+          "instances": {
+            "tensor_leaves": 45,
+            "numpy_leaves": 2,
+            "scalar_leaves": 167,
+            "mapping_nodes": 24,
+            "sequence_nodes": 27
+          },
+          "environment": {
+            "tensor_leaves": 4,
+            "numpy_leaves": 0,
+            "scalar_leaves": 12,
+            "mapping_nodes": 4,
+            "sequence_nodes": 4
+          },
+          "sampler": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 0,
+            "scalar_leaves": 627,
+            "mapping_nodes": 0,
+            "sequence_nodes": 2
+          },
+          "python_rng": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 0,
+            "scalar_leaves": 627,
+            "mapping_nodes": 0,
+            "sequence_nodes": 2
+          },
+          "numpy_rng": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 1,
+            "scalar_leaves": 4,
+            "mapping_nodes": 0,
+            "sequence_nodes": 1
+          },
+          "torch_rng": {
+            "tensor_leaves": 1,
+            "numpy_leaves": 0,
+            "scalar_leaves": 0,
+            "mapping_nodes": 0,
+            "sequence_nodes": 0
+          },
+          "cuda_rng": {
+            "tensor_leaves": 1,
+            "numpy_leaves": 0,
+            "scalar_leaves": 0,
+            "mapping_nodes": 0,
+            "sequence_nodes": 1
+          }
+        },
+        "checkpoint_restoration_verified_claim_unchanged": false,
+        "deterministic_next_step_parity_verified": false,
+        "render_quality_or_edit_acceptance_verified": false,
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_020000.pt",
+        "step": 20000,
+        "admission": {
+          "status": "GPU_ADMISSION_AVAILABLE",
+          "allowed": true,
+          "streetcrafter_processes": [],
+          "other_compute_processes": [],
+          "query_error": null,
+          "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+        },
+        "optimizer_updates": 0,
+        "peak_allocated_bytes": 1317483008,
+        "peak_reserved_bytes": 1405091840
+      },
+      {
+        "runtime_restoration_verified": true,
+        "scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+        "execution_device": "cuda:0",
+        "comparison": "exact_keys_types_dtype_shape_layout_requires_grad_and_values; tensor_device_transport_allowed",
+        "checked_fields": [
+          "background",
+          "instances",
+          "environment",
+          "sampler",
+          "python_rng",
+          "numpy_rng",
+          "torch_rng",
+          "cuda_rng"
+        ],
+        "comparison_counts": {
+          "background": {
+            "tensor_leaves": 42,
+            "numpy_leaves": 2,
+            "scalar_leaves": 120,
+            "mapping_nodes": 21,
+            "sequence_nodes": 20
+          },
+          "instances": {
+            "tensor_leaves": 45,
+            "numpy_leaves": 2,
+            "scalar_leaves": 167,
+            "mapping_nodes": 24,
+            "sequence_nodes": 27
+          },
+          "environment": {
+            "tensor_leaves": 4,
+            "numpy_leaves": 0,
+            "scalar_leaves": 12,
+            "mapping_nodes": 4,
+            "sequence_nodes": 4
+          },
+          "sampler": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 0,
+            "scalar_leaves": 627,
+            "mapping_nodes": 0,
+            "sequence_nodes": 2
+          },
+          "python_rng": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 0,
+            "scalar_leaves": 627,
+            "mapping_nodes": 0,
+            "sequence_nodes": 2
+          },
+          "numpy_rng": {
+            "tensor_leaves": 0,
+            "numpy_leaves": 1,
+            "scalar_leaves": 4,
+            "mapping_nodes": 0,
+            "sequence_nodes": 1
+          },
+          "torch_rng": {
+            "tensor_leaves": 1,
+            "numpy_leaves": 0,
+            "scalar_leaves": 0,
+            "mapping_nodes": 0,
+            "sequence_nodes": 0
+          },
+          "cuda_rng": {
+            "tensor_leaves": 1,
+            "numpy_leaves": 0,
+            "scalar_leaves": 0,
+            "mapping_nodes": 0,
+            "sequence_nodes": 1
+          }
+        },
+        "checkpoint_restoration_verified_claim_unchanged": false,
+        "deterministic_next_step_parity_verified": false,
+        "render_quality_or_edit_acceptance_verified": false,
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_030000.pt",
+        "step": 30000,
+        "admission": {
+          "status": "GPU_ADMISSION_AVAILABLE",
+          "allowed": true,
+          "streetcrafter_processes": [],
+          "other_compute_processes": [],
+          "query_error": null,
+          "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+        },
+        "optimizer_updates": 0,
+        "peak_allocated_bytes": 1317483008,
+        "peak_reserved_bytes": 1405091840
+      }
+    ],
+    "actual_GPU_receipt_sources": [
+      {
+        "step": 10000,
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r1/restore_010000/receipt.json",
+        "local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_editor_final30k_r1\\restore_010000\\receipt.json",
+        "repository_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/restore_010000/receipt.json"
+      },
+      {
+        "step": 20000,
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r1/restore_020000/receipt.json",
+        "local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_editor_final30k_r1\\restore_020000\\receipt.json",
+        "repository_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/restore_020000/receipt.json"
+      },
+      {
+        "step": 30000,
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r1/restore_030000/receipt.json",
+        "local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_editor_final30k_r1\\restore_030000\\receipt.json",
+        "repository_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/restore_030000/receipt.json"
+      }
+    ],
+    "actual_GPU_optimizer_updates": 0,
+    "deterministic_next_step_parity_verified": false,
+    "checkpoint_certification_flags_modified": false,
+    "render_quality_or_edit_acceptance_verified": false
+  },
+  "post_training_evaluation": {
+    "state": "PARTIAL_ACTUAL30K_OBSERVED_PREVIEW_PRIORITY_YIELD",
+    "post30k_r1": {
+      "state": "ENGINEERING_DEVICE_MISMATCH_ASSETS_PRESERVED",
+      "completed_actual_GPU_restore_steps": [
+        10000,
+        20000,
+        30000
+      ],
+      "failure": {
+        "error": "RuntimeError('Input type (torch.FloatTensor) and weight type (torch.cuda.FloatTensor) should be the same or input should be a MKLDNN tensor and weight is a dense tensor')",
+        "partial_assets_preserved": true,
+        "complete_evaluation": false,
+        "resume_requires_new_directory": true
+      },
+      "fix": "GT.to(composite.device) only for existing SSIM evaluation; no rendering, GT values, loss or training policy changes"
+    },
+    "post30k_r2": {
+      "state": "YIELDED_TO_PRIORITY_WORK",
+      "remote_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation",
+      "priority_yield": {
+        "status": "YIELDED_TO_PRIORITY_WORK",
+        "priority": {
+          "status": "DEFER_GPU_TO_STREETCRAFTER_OR_OTHER_WORK",
+          "allowed": false,
+          "streetcrafter_processes": [
+            {
+              "pid": 66421,
+              "cmdline": "bash -c PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=-1 TF_CPP_MIN_LOG_LEVEL=2 /root/autodl-tmp/envs/dggt_data_cpu/bin/python - <<'PY'\nimport tensorflow as tf\nimport numpy as np\nimport importlib.metadata\nprint('tensorflow_import',tf.__version__,'numpy',np.__version__)\nfor name in ['tensorflow-cpu','tensorflow','google-auth','pyarrow','absl-py','typing-extensions']:\n    try: print(name,importlib.metadata.version(name))\n    except Exception:pass\nprint('CPU_only_devices',tf.config.list_physical_devices())\nPY\nls -l /root/autodl-tmp/streetcrafter_work/data_prep 2>/dev/null",
+              "cwd": "/root"
+            }
+          ],
+          "other_compute_processes": [],
+          "query_error": null,
+          "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+        },
+        "completed_frames": {
+          "observed": 28,
+          "fixed_camera": 0
+        },
+        "partial_assets_preserved": true,
+        "resume_requires_new_directory": true
+      },
+      "failure": {
+        "error": "RuntimeError('评估让出StreetCrafter及其他GPU任务')",
+        "partial_assets_preserved": true,
+        "complete_evaluation": false,
+        "resume_requires_new_directory": true
+      }
+    },
+    "partial_preview": {
+      "schema": "drivingeditor_rigid_scene_partial_preview_v1",
+      "status": "PARTIAL_ACTUAL30K_OBSERVED_PREVIEW",
+      "checkpoint": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_030000.pt",
+        "step": 30000
+      },
+      "instance_ids": [
+        "NoQttdyd4C16Y_zkGhiFKg",
+        "fXVhuN-RuJDvZwnkQ-0YSQ"
+      ],
+      "planned_observed_frames": 49,
+      "observed_frames": 28,
+      "raw_frame_first": 23,
+      "raw_frame_last": 50,
+      "frame_ids": [
+        "0008023",
+        "0008024",
+        "0008025",
+        "0008026",
+        "0008027",
+        "0008028",
+        "0008029",
+        "0008030",
+        "0008031",
+        "0008032",
+        "0008033",
+        "0008034",
+        "0008035",
+        "0008036",
+        "0008037",
+        "0008038",
+        "0008039",
+        "0008040",
+        "0008041",
+        "0008042",
+        "0008043",
+        "0008044",
+        "0008045",
+        "0008046",
+        "0008047",
+        "0008048",
+        "0008049",
+        "0008050"
+      ],
+      "planned_fixed_camera_frames": 49,
+      "fixed_camera_frames": 0,
+      "planned_edit_operations": 6,
+      "edit_operations": 0,
+      "remote_FP32_NPZ_count": 28,
+      "local_PNG_count": 420,
+      "native_width": 480,
+      "native_height": 320,
+      "local_manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_GMC_instances_30k\\preview_partial\\partial_preview_manifest.json",
+      "manifest_generated_UTC": "2026-10-13T18:12:22.406991+00:00",
+      "contracts": {
+        "all_FP32_finite": true,
+        "identity_and_native_size_verified": true,
+        "GT_reference_PNG_verified": true,
+        "real_body_mask_PNG_verified": true,
+        "observed_frames_verified": 28,
+        "fixed_camera_frames": 0,
+        "edit_operations": 0,
+        "model_and_optimizer_unmodified_after_evaluation": null
+      },
+      "CPU_PNG_formula": "round(clip(FP32,0,1)*255)",
+      "CPU_exact_GT_reference_and_real_prepared_mask_pixels_verified": true,
+      "GPU_camera_matrices_independently_serialized": false,
+      "source_camera_JSON_scope": "source calibration provenance only",
+      "complete49_metric_aggregate": null,
+      "partial_SSIM_available": false,
+      "human_quality_verdict": null,
+      "end_of_evaluation_model_Adam_readonly_verified": null,
+      "evaluation_training_RNG_restore_certified": false,
+      "separate_actual_checkpoint_GPU_restore_verified_step": 30000,
+      "separate_GPU_restore_receipt_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r1/restore_030000/receipt.json",
+      "separate_GPU_restore_scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+      "separate_GPU_restore_checkpoint_path_matches_preview": true,
+      "Torch_imported_for_CPU_audit": false,
+      "limits": [
+        "Observed prefix only, not complete49 aggregate or quality verdict",
+        "Fixed camera and six edit operations not exported",
+        "End-of-evaluation readonly model/Adam verification not reached",
+        "No independently serialized GPU camera matrices in retained partial assets",
+        "Per-frame CPU metrics recomputed from actual FP32; SSIM unavailable in partial receipt"
+      ],
+      "existing_unified_HTML": "outputs/DrivingEditor_final_report.html",
+      "unified_HTML_merge_status": "BASELINE_PREVIEW_APPLIED_TO_EXISTING_UNIFIED_ENTRY",
+      "unified_HTML_partial_anchor": "#instances-preview",
+      "unified_HTML_applied_receipt": {
+        "schema": "drivingeditor_GMC_baseline_preview_merge_receipt_v1",
+        "checked_utc": "2026-10-13T18:19:57.207295+00:00",
+        "status": "BASELINE_PREVIEW_APPLIED_TO_EXISTING_UNIFIED_ENTRY",
+        "synthetic_fixture": false,
+        "target": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\DrivingEditor_final_report.html",
+        "evaluation_manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_GMC_instances_30k\\preview_partial\\partial_preview_manifest.viewer.reviewed.json",
+        "checkpoint_step": 30000,
+        "observed_frames": 28,
+        "planned_observed_frames": 49,
+        "fixed_camera_frames": 0,
+        "partial_actual_preview": true,
+        "GPU_camera_matrices_serialized": false,
+        "browser_PNGs_verified": 420,
+        "legacy_three_scene_data_script_and_evidence_exactly_preserved": true,
+        "formal_upgrade_removes_own_preview_exactly": true,
+        "after_assets_presented": false,
+        "editing_status": "not_exported_GPU_priority_yield",
+        "GUI_QA_performed": false,
+        "human_quality_verdict": null,
+        "photo_quality_admitted": false,
+        "GPU_used": false,
+        "new_production_HTML_entry_created": false,
+        "limitations": [
+          "仅验证并展示实际已保存的前N观察帧；fixed和after未导出",
+          "GPU相机矩阵未独立序列化，source camera JSON仅作provenance",
+          "完整评估后的model/optimizer readonly postproof尚未完成；不认作完整98帧评估"
+        ],
+        "backup": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\drivingeditor_instances\\viewer_merge_backups\\baseline_20261013T181957207295.original",
+        "script": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_GMC_instances_30k\\gmc_instance_baseline_preview.js"
+      },
+      "unified_HTML_static_QA": {
+        "status": "ACTUAL_UNIFIED_PREVIEW_STATIC_QA_PASS",
+        "actual_observed_frames": 28,
+        "PNG_paths_validated_by_actual_merger": 420,
+        "legacy_entry_exactly_restorable": true,
+        "script_matches_reviewed_source": true,
+        "partial_no_fixed_or_after": true,
+        "hash_navigation_source_present": true,
+        "GUI_QA_performed": false,
+        "GPU_used": false,
+        "human_quality_verdict": null
+      },
+      "unified_HTML_repository_receipt": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/partial_preview_actual_applied.json",
+      "GUI_QA_performed": false,
+      "per_frame_visual_review_status": "28-frame independent pixel/visual review pending; early Jeep transparency cause not localized; no loss change"
+    },
+    "next_export": {
+      "wait_for_StreetCrafter_and_other_work_idle": true,
+      "new_directory_required": true,
+      "observed_frames": 49,
+      "fixed_camera_frames": 49,
+      "edit_operations": 6,
+      "automatic_retry": false,
+      "additional_training": false,
+      "additional_silver_red_scene_runs": false
+    },
+    "latest_priority_snapshot": {
+      "UTC": "2026-10-13T18:18:33.164429+00:00",
+      "SGT": "2026-10-14T02:18:33.164429+08:00",
+      "GPU_process_pid": 71279,
+      "GPU_process": "/root/autodl-tmp/envs/streetcrafter/bin/python",
+      "GPU_reported_used_MiB": 1352,
+      "source": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/postprocessing_snapshot.json",
+      "new_export_started_by_status_update": false
+    },
+    "partial_engineering_visual_review": {
+      "observed_frames": 28,
+      "actual_contact_pages_reviewed": 4,
+      "partial_nonempty_body_denominators": [
+        7,
+        28
+      ],
+      "full49_nonempty_body_denominators": [
+        7,
+        39
+      ],
+      "static_gray_road_patch_retained": true,
+      "Jeep_early_transparency_retained": true,
+      "PNG_alpha_diagnostic_precision": "uint8/255 display values, not independently reread FP32",
+      "candidate_to_audit": "full-scene static occlusion or residual geometry; exact Gaussian/depth/cause unverified",
+      "human_quality_verdict": null,
+      "no_new_GPU_or_optimization": true,
+      "evidence": "docs/autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/partial28_engineering_visual_review.json"
+    }
+  },
+  "historical_smoke_evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\gpu_smoke_edits_resume_20261013"
 }

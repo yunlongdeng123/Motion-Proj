@@ -1,0 +1,21 @@
+每30分钟在当前聊天检查并继续GMC双实例30k后的评价与编辑导出。没有重要变化保持安静，仅异常、真实报告、完成或需要用户决定时通知。原drivingeditor-30k已暂停，不能恢复旧自动化或重复训练。任务WS-V82-DRIVINGEDITOR-INSTANCES-20261013/r1，只做GMC scene0008 raw23–71两个动态实例，银/红不新增实验。旧六组180k保留，旧关机路线已结束；现在绝不关机、清理、终止、暂停或修改其他任务。子agent默认gpt-6.1-sol/max。
+
+SSH仅wm-vgpu-1011。根/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013，解释器/root/autodl-tmp/envs/drivingeditor/bin/python，共享/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock。StreetCrafter准备/训练/推理及所有其他GPU任务优先，不能共跑；CPU最多4线程/nice10。只读核对真实status、launch、/proc命令、memory及短日志，不持续轮询。准备进程即使CUDA_VISIBLE_DEVICES=-1也遵守已有优先策略；不干预对方进程。
+
+训练已经完整30000：runs/gmc_two_actor_fixed30k_r1/status.json complete，owned worker37747已退出。由真实step300续29700更新，固定GT轨迹、静态/环境冻结、固定拓扑；不再训练、开放pose、joint background、新SGCM或seed/loss网格。10k/20k/30k checkpoint CPU结构/91tensor finite/三Adam/RNG/policy检查通过，post30k_r1/restore_010000、020000、030000/receipt.json分别真实GPU模型/Adam/sampler/Python/NumPy/TorchCPU/allCUDA RNG逐值恢复PASS；范围仅更新前状态，不认证下一步确定性，旧checkpoint认证False字段保留。实例298075，warmstarted static613405固定；DEVA77皮卡NoQttdyd4C16Y_zkGhiFKg137174点，DEVA82 Jeep fXVhuN-RuJDvZwnkQ-0YSQ160901点。真实49x2已知mask，FRONT非空7/39，各49轨迹有效，二者不能混用。prepared/scene0008_two_actor_v1、specs/scene0008_023_071.json、source/scene0008_023_071真实来源保留。Corolla等停车仍静态，原seed排两框579855不同于实际模型613405。
+
+局部静态车Gaussian+真实整体pose，没有车辆PVG重复运动。完整场景深度排序alpha*T是可见身份监督，不能使用孤立alpha。SGCM仅继承原GN11背景，无新的static到rigid克隆；NPS原公式保留。背景参数冻结不意味着legacy staticPVG时间完全不变。中心框内移除可能留高斯尾部/阴影和未见路面，不能认证补景或重照明。300步6项49帧真实编辑合同与坏例保留，不能拿300图代替30k。
+
+训练全程continuation wall4969.279302568175s，初300另59.442s；alloc/reserved峰2569314816/4880072704B，NV PID/device采样峰5236588544/5247074304B，4971samples0errors，末吞吐5.99549步/秒。旧monitor four-arm 3090分类不适用新实例表示。采样峰下界，3090预留2GiB初筛，最终评价/编辑全程和目标3090实测仍需，不宣称速度更快或容量已认证。
+
+post30k_r1 controller65212退出，3node恢复通过后evaluate因GT CPU/SSIM CUDA mismatch在第一帧前停止。只把GT移动到composite.device修复，旧脚本备份infra/evaluate_scene.py.before_GT_device_fix_20261014及失败目录保留。新post30k_r2 controller65834/child65835已退出；修复后的真实评价导出28observed raw23–50后检测到StreetCrafter CPU准备，主动priority yield。post30k_r2/evaluation/priority_yield.json与failure/memory_summary保留，固定0帧、六项编辑0，评价末尾model/Adam readonly比较未到达。没有完整scene_evaluation_manifest.json，不假称98完成。训练无损，yield不是方法否定。
+
+root已CPU独立核验28finite FP32/420PNG逐像素对应显示，真实prepared二值mask和旧真实GMC GT逐像素一致；preview_export_r1保留包。实际局部PNG在outputs/drivingeditor_GMC_instances_30k/preview_partial，partial_preview_manifest.viewer.reviewed.json采用独立drivingeditor_rigid_scene_partial_preview_v1，不放宽正式98 gate；原manifest与transport适配均保留。GPU相机矩阵未在partial独立序列化，source camera JSON仅provenance。用户请求先HTML，先用真实28帧接已有outputs/DrivingEditor_final_report.html的GMC实例预览③，不能新造HTML入口、假after/fixed或49均值。partial缺SSIM明确未保存，human verdict=null。正式完整导出后只精确移除自家BASELINE_PREVIEW块升级，旧三场景data/scripts/evidence保留。
+
+下一步在真正无优先任务且共享锁可用时，新独立post30k_r3（不能覆盖/重启r1/r2）用已修复infra/evaluate_scene.py、复用3真实restore receipt，完整49observed+fixed0008033的49times，然后两ID各删除、局部前移0.5m、局部yaw30度各49camera/time，六操作294配对；只评价/渲染、0优化更新。新controller一次性，child都必须准入与运行中priority检查，出现竞争yield退出，保留partial，不自动抢占或重试。可由work/drivingeditor_instances/queue_post30k_r2.py复制成fresh r3、严格新路径/核对旧controller退出，无关PID不误杀；修改前root审查。新参数expected_steps30000，旧300资产不覆盖。
+
+完整资产后使用infra/collect_edit_summary.py CPU复核294finite、真实GT配对、独立static前后逐位不变、删除目标贡献0，非编辑车辆参数不变但可见像素可因合法遮挡改变。完整manifest必须49observed+49fixed、六edits各49，确认7/39分母、空body null，fixed无GT/PSNR；GT仅训练观察重建，无编辑GT、heldout、非刚体或OmniRe公平对照，不套旧GN11–C00 1dB门槛。逐IDvisibleRGB来自完整场景同几何alpha*T颜色，不伪造编辑后可见RGB。
+
+正式统一HTML merger work/drivingeditor_instances/merge_instance_viewer.py及gmc_instance_viewer.js已CPU/模拟DOM检查；partial入口work/merge_instance_baseline_preview.py和work/gmc_instance_baseline_preview.js。合成fixture不是实验。先核对真实receipt和资产再--apply，无GUI浏览QA：本地file URL浏览曾被策略拒绝，不能用HTTP/其他浏览器绕过；允许静态HTML/JS/PNG和模拟DOM验证。报告必须简单architecture components图（现有outputs/DrivingEditor_instance_editor_components.png），保存所有坏例与实际全49视觉审查，human verdict不能代填，不新增hash/fingerprint。离线包按真实资产更新且保留旧包。
+
+更新本地work/drivingeditor_resume/repo_active的docs/RESEARCH_STATUS.md、docs/EXPERIMENTS.md、docs/v82/DRIVINGEDITOR_INSTANCE_EDITOR_20261013.json/md、相应docs/autoresearch证据及outputs状态/报告；Conventional小步提交push research/worldsim-v8.2-drivingeditor-debug，保留scripts/run_worldsim_v72_e3_render_bridge.py无关dirty、所有旧资产与其他自动化暂停。完成整个授权GMC评价/编辑报告或无法继续需用户决定后暂停本心跳，不无限重复。资源排队可以继续等，不把普通排队当需要用户决定。

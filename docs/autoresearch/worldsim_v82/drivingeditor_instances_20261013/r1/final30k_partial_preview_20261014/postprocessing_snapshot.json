@@ -1,0 +1,78 @@
+{
+  "UTC": "2026-10-13T18:18:33.164429+00:00",
+  "training_status": {
+    "state": "complete",
+    "step": 30000,
+    "training_reconstruction_only": true,
+    "edit_visual_acceptance": "pending",
+    "restoration_verified": false
+  },
+  "owned_processes": [
+    {
+      "pid": 37747,
+      "present": false
+    },
+    {
+      "pid": 65212,
+      "present": false
+    },
+    {
+      "pid": 65834,
+      "present": false
+    },
+    {
+      "pid": 65835,
+      "present": false
+    }
+  ],
+  "post30k_r1": {
+    "state": "stopped_on_engineering_error_or_priority",
+    "current": "scene_evaluation",
+    "returncode": 1,
+    "completed": [
+      "restore_010000",
+      "restore_020000",
+      "restore_030000"
+    ],
+    "assets_preserved": true,
+    "automatic_retries": false,
+    "pid": 65212,
+    "utc": "2026-10-13T17:45:30.222451+00:00"
+  },
+  "post30k_r2": {
+    "state": "stopped_on_engineering_error_or_priority",
+    "current": "scene_evaluation",
+    "returncode": 1,
+    "completed": [],
+    "assets_preserved": true,
+    "automatic_retries": false,
+    "pid": 65834,
+    "utc": "2026-10-13T17:54:24.686275+00:00"
+  },
+  "priority_yield": {
+    "status": "YIELDED_TO_PRIORITY_WORK",
+    "priority": {
+      "status": "DEFER_GPU_TO_STREETCRAFTER_OR_OTHER_WORK",
+      "allowed": false,
+      "streetcrafter_processes": [
+        {
+          "pid": 66421,
+          "cmdline": "bash -c PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=-1 TF_CPP_MIN_LOG_LEVEL=2 /root/autodl-tmp/envs/dggt_data_cpu/bin/python - <<'PY'\nimport tensorflow as tf\nimport numpy as np\nimport importlib.metadata\nprint('tensorflow_import',tf.__version__,'numpy',np.__version__)\nfor name in ['tensorflow-cpu','tensorflow','google-auth','pyarrow','absl-py','typing-extensions']:\n    try: print(name,importlib.metadata.version(name))\n    except Exception:pass\nprint('CPU_only_devices',tf.config.list_physical_devices())\nPY\nls -l /root/autodl-tmp/streetcrafter_work/data_prep 2>/dev/null",
+          "cwd": "/root"
+        }
+      ],
+      "other_compute_processes": [],
+      "query_error": null,
+      "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+    },
+    "completed_frames": {
+      "observed": 28,
+      "fixed_camera": 0
+    },
+    "partial_assets_preserved": true,
+    "resume_requires_new_directory": true
+  },
+  "partial_observed_FP32_count": 28,
+  "partial_fixed_FP32_count": 0,
+  "GPU_compute_snapshot": "71279, /root/autodl-tmp/envs/streetcrafter/bin/python, 1352\n"
+}

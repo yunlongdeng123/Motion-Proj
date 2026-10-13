@@ -1,0 +1,3728 @@
+{
+  "schema": "drivingeditor_rigid_scene_partial_preview_v1",
+  "status": "PARTIAL_ACTUAL30K_OBSERVED_PREVIEW",
+  "scene_id": "scene0008_023_071",
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1/checkpoint_030000.pt",
+    "step": 30000
+  },
+  "instance_ids": [
+    "NoQttdyd4C16Y_zkGhiFKg",
+    "fXVhuN-RuJDvZwnkQ-0YSQ"
+  ],
+  "streams": {
+    "observed": {
+      "GT_available": true,
+      "frames": [
+        {
+          "frame_index": 0,
+          "frame_id": "0008023",
+          "model_time": -0.48,
+          "camera_frame_id": "0008023",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 0,
+            "img_name": "0008023",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.1331854213713086e-05,
+              3.46601755154552e-06,
+              -1.7656091586104597e-06
+            ],
+            "rotation": [
+              [
+                -0.06329926768952404,
+                -0.9519389866289599,
+                -0.29967543850944256
+              ],
+              [
+                -0.9634617243012396,
+                -0.02001806370038932,
+                0.2670969541798314
+              ],
+              [
+                -0.2602589259111482,
+                0.3056328563187342,
+                -0.9158896487143088
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/000_0008023.npz",
+          "images": {
+            "composite": "observed/000_0008023_composite.png",
+            "static_rgb": "observed/000_0008023_static_rgb.png",
+            "static_raw_rgb": "observed/000_0008023_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/000_0008023_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/000_0008023_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/000_0008023_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/000_0008023_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/000_0008023_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/000_0008023_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/000_0008023_instance00_visible_rgb.png",
+                "visible_alpha": "observed/000_0008023_instance00_visible_alpha.png",
+                "body_mask": "observed/000_0008023_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 12220,
+                "joint_visible_alpha_body_mean": 0.9024600449175179,
+                "joint_visible_alpha_outside_mean": 0.0020597213912765594,
+                "joint_mask_MSE_full_HxW": 0.0026411628868456614,
+                "joint_mask_MSE_inside": 0.02468821511931858,
+                "joint_mask_MSE_outside": 0.0007355540434391049,
+                "composite_RGB_MSE_body_clipped": 0.0007930379664308003
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/000_0008023_instance01_visible_rgb.png",
+                "visible_alpha": "observed/000_0008023_instance01_visible_alpha.png",
+                "body_mask": "observed/000_0008023_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 408,
+                "joint_visible_alpha_body_mean": 0.3513564274591558,
+                "joint_visible_alpha_outside_mean": 0.0002445594948812657,
+                "joint_mask_MSE_full_HxW": 0.0011944526099406632,
+                "joint_mask_MSE_inside": 0.42683974717339507,
+                "joint_mask_MSE_outside": 6.082108752507108e-05,
+                "composite_RGB_MSE_body_clipped": 0.01072523333800518
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002687828728391622,
+            "RGB_MSE_clipped": 0.0026874588753197323,
+            "RGB_PSNR_clipped_db": 25.706581727910777,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 12220,
+                "joint_visible_alpha_body_mean": 0.9024600449175179,
+                "joint_visible_alpha_outside_mean": 0.0020597213912765594,
+                "joint_mask_MSE_full_HxW": 0.0026411628868456614,
+                "joint_mask_MSE_inside": 0.02468821511931858,
+                "joint_mask_MSE_outside": 0.0007355540434391049,
+                "composite_RGB_MSE_body_clipped": 0.0007930379664308003
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 408,
+                "joint_visible_alpha_body_mean": 0.3513564274591558,
+                "joint_visible_alpha_outside_mean": 0.0002445594948812657,
+                "joint_mask_MSE_full_HxW": 0.0011944526099406632,
+                "joint_mask_MSE_inside": 0.42683974717339507,
+                "joint_mask_MSE_outside": 6.082108752507108e-05,
+                "composite_RGB_MSE_body_clipped": 0.01072523333800518
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/000_0008023.npz"
+        },
+        {
+          "frame_index": 1,
+          "frame_id": "0008024",
+          "model_time": -0.45999999999999996,
+          "camera_frame_id": "0008024",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 1,
+            "img_name": "0008024",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.2582977135243712e-05,
+              3.6657044802268507e-06,
+              1.803332452254836e-06
+            ],
+            "rotation": [
+              [
+                -0.06329926768952404,
+                -0.9519389866289599,
+                -0.29967543850944256
+              ],
+              [
+                -0.9634617243012396,
+                -0.02001806370038932,
+                0.2670969541798314
+              ],
+              [
+                -0.2602589259111482,
+                0.3056328563187342,
+                -0.9158896487143088
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/001_0008024.npz",
+          "images": {
+            "composite": "observed/001_0008024_composite.png",
+            "static_rgb": "observed/001_0008024_static_rgb.png",
+            "static_raw_rgb": "observed/001_0008024_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/001_0008024_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/001_0008024_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/001_0008024_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/001_0008024_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/001_0008024_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/001_0008024_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/001_0008024_instance00_visible_rgb.png",
+                "visible_alpha": "observed/001_0008024_instance00_visible_alpha.png",
+                "body_mask": "observed/001_0008024_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 12652,
+                "joint_visible_alpha_body_mean": 0.8704705691018645,
+                "joint_visible_alpha_outside_mean": 0.0015529878231420973,
+                "joint_mask_MSE_full_HxW": 0.0037896284824229507,
+                "joint_mask_MSE_inside": 0.04193037603931316,
+                "joint_mask_MSE_outside": 0.0003659776460167938,
+                "composite_RGB_MSE_body_clipped": 0.0010417705163463403
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/001_0008024_instance01_visible_rgb.png",
+                "visible_alpha": "observed/001_0008024_instance01_visible_alpha.png",
+                "body_mask": "observed/001_0008024_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 433,
+                "joint_visible_alpha_body_mean": 0.36295587695085424,
+                "joint_visible_alpha_outside_mean": 0.00024293900361201998,
+                "joint_mask_MSE_full_HxW": 0.0012183139375090291,
+                "joint_mask_MSE_inside": 0.4116616779354041,
+                "joint_mask_MSE_outside": 5.7998878709884264e-05,
+                "composite_RGB_MSE_body_clipped": 0.011586236136402448
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.001682848805718614,
+            "RGB_MSE_clipped": 0.0016819487636742683,
+            "RGB_PSNR_clipped_db": 27.74187238022325,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 12652,
+                "joint_visible_alpha_body_mean": 0.8704705691018645,
+                "joint_visible_alpha_outside_mean": 0.0015529878231420973,
+                "joint_mask_MSE_full_HxW": 0.0037896284824229507,
+                "joint_mask_MSE_inside": 0.04193037603931316,
+                "joint_mask_MSE_outside": 0.0003659776460167938,
+                "composite_RGB_MSE_body_clipped": 0.0010417705163463403
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 433,
+                "joint_visible_alpha_body_mean": 0.36295587695085424,
+                "joint_visible_alpha_outside_mean": 0.00024293900361201998,
+                "joint_mask_MSE_full_HxW": 0.0012183139375090291,
+                "joint_mask_MSE_inside": 0.4116616779354041,
+                "joint_mask_MSE_outside": 5.7998878709884264e-05,
+                "composite_RGB_MSE_body_clipped": 0.011586236136402448
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/001_0008024.npz"
+        },
+        {
+          "frame_index": 2,
+          "frame_id": "0008025",
+          "model_time": -0.44,
+          "camera_frame_id": "0008025",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 2,
+            "img_name": "0008025",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              7.653072680113837e-06,
+              7.78328630985925e-06,
+              2.5701177946757524e-06
+            ],
+            "rotation": [
+              [
+                -0.0632981682153493,
+                -0.9519102876897497,
+                -0.2997668195298254
+              ],
+              [
+                -0.9634623152493393,
+                -0.020044095310664162,
+                0.2670928702484093
+              ],
+              [
+                -0.2602570056596683,
+                0.3057205234092516,
+                -0.9158609351705251
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/002_0008025.npz",
+          "images": {
+            "composite": "observed/002_0008025_composite.png",
+            "static_rgb": "observed/002_0008025_static_rgb.png",
+            "static_raw_rgb": "observed/002_0008025_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/002_0008025_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/002_0008025_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/002_0008025_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/002_0008025_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/002_0008025_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/002_0008025_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/002_0008025_instance00_visible_rgb.png",
+                "visible_alpha": "observed/002_0008025_instance00_visible_alpha.png",
+                "body_mask": "observed/002_0008025_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 11483,
+                "joint_visible_alpha_body_mean": 0.9600059046418702,
+                "joint_visible_alpha_outside_mean": 0.0013025814920091582,
+                "joint_mask_MSE_full_HxW": 0.0008099391886127754,
+                "joint_mask_MSE_inside": 0.007025100747049226,
+                "joint_mask_MSE_outside": 0.0003077564787643705,
+                "composite_RGB_MSE_body_clipped": 0.0005759112348896031
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/002_0008025_instance01_visible_rgb.png",
+                "visible_alpha": "observed/002_0008025_instance01_visible_alpha.png",
+                "body_mask": "observed/002_0008025_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 447,
+                "joint_visible_alpha_body_mean": 0.3686530499050281,
+                "joint_visible_alpha_outside_mean": 0.0002730559560964613,
+                "joint_mask_MSE_full_HxW": 0.0012446856507529371,
+                "joint_mask_MSE_inside": 0.4043330951033628,
+                "joint_mask_MSE_outside": 6.821167358424548e-05,
+                "composite_RGB_MSE_body_clipped": 0.012443191944460842
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0014842770755452495,
+            "RGB_MSE_clipped": 0.001483367616710782,
+            "RGB_PSNR_clipped_db": 28.287512062715926,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 11483,
+                "joint_visible_alpha_body_mean": 0.9600059046418702,
+                "joint_visible_alpha_outside_mean": 0.0013025814920091582,
+                "joint_mask_MSE_full_HxW": 0.0008099391886127754,
+                "joint_mask_MSE_inside": 0.007025100747049226,
+                "joint_mask_MSE_outside": 0.0003077564787643705,
+                "composite_RGB_MSE_body_clipped": 0.0005759112348896031
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 447,
+                "joint_visible_alpha_body_mean": 0.3686530499050281,
+                "joint_visible_alpha_outside_mean": 0.0002730559560964613,
+                "joint_mask_MSE_full_HxW": 0.0012446856507529371,
+                "joint_mask_MSE_inside": 0.4043330951033628,
+                "joint_mask_MSE_outside": 6.821167358424548e-05,
+                "composite_RGB_MSE_body_clipped": 0.012443191944460842
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/002_0008025.npz"
+        },
+        {
+          "frame_index": 3,
+          "frame_id": "0008026",
+          "model_time": -0.42,
+          "camera_frame_id": "0008026",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 3,
+            "img_name": "0008026",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              5.884786560272914e-06,
+              4.162526875006734e-06,
+              -3.0011749913683155e-06
+            ],
+            "rotation": [
+              [
+                -0.06326610844437153,
+                -0.9519111883836826,
+                -0.2997707273105521
+              ],
+              [
+                -0.9634878150319102,
+                -0.020046888555475463,
+                0.26700066019441576
+              ],
+              [
+                -0.2601703861074764,
+                0.3057175357895599,
+                -0.9158865423748939
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/003_0008026.npz",
+          "images": {
+            "composite": "observed/003_0008026_composite.png",
+            "static_rgb": "observed/003_0008026_static_rgb.png",
+            "static_raw_rgb": "observed/003_0008026_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/003_0008026_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/003_0008026_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/003_0008026_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/003_0008026_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/003_0008026_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/003_0008026_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/003_0008026_instance00_visible_rgb.png",
+                "visible_alpha": "observed/003_0008026_instance00_visible_alpha.png",
+                "body_mask": "observed/003_0008026_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 9463,
+                "joint_visible_alpha_body_mean": 0.9511241956334354,
+                "joint_visible_alpha_outside_mean": 0.0010116403148999638,
+                "joint_mask_MSE_full_HxW": 0.000859468214724676,
+                "joint_mask_MSE_inside": 0.011714683321385224,
+                "joint_mask_MSE_outside": 0.0001467927701522986,
+                "composite_RGB_MSE_body_clipped": 0.000668872931286894
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/003_0008026_instance01_visible_rgb.png",
+                "visible_alpha": "observed/003_0008026_instance01_visible_alpha.png",
+                "body_mask": "observed/003_0008026_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 483,
+                "joint_visible_alpha_body_mean": 0.3747761875437283,
+                "joint_visible_alpha_outside_mean": 0.00026578541812533144,
+                "joint_mask_MSE_full_HxW": 0.0013128824106198695,
+                "joint_mask_MSE_inside": 0.39653469470902175,
+                "joint_mask_MSE_outside": 6.617475999891869e-05,
+                "composite_RGB_MSE_body_clipped": 0.01179751713560486
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0014584785026191542,
+            "RGB_MSE_clipped": 0.0014576637255296104,
+            "RGB_PSNR_clipped_db": 28.363426536525665,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 9463,
+                "joint_visible_alpha_body_mean": 0.9511241956334354,
+                "joint_visible_alpha_outside_mean": 0.0010116403148999638,
+                "joint_mask_MSE_full_HxW": 0.000859468214724676,
+                "joint_mask_MSE_inside": 0.011714683321385224,
+                "joint_mask_MSE_outside": 0.0001467927701522986,
+                "composite_RGB_MSE_body_clipped": 0.000668872931286894
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 483,
+                "joint_visible_alpha_body_mean": 0.3747761875437283,
+                "joint_visible_alpha_outside_mean": 0.00026578541812533144,
+                "joint_mask_MSE_full_HxW": 0.0013128824106198695,
+                "joint_mask_MSE_inside": 0.39653469470902175,
+                "joint_mask_MSE_outside": 6.617475999891869e-05,
+                "composite_RGB_MSE_body_clipped": 0.01179751713560486
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/003_0008026.npz"
+        },
+        {
+          "frame_index": 4,
+          "frame_id": "0008027",
+          "model_time": -0.39999999999999997,
+          "camera_frame_id": "0008027",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 4,
+            "img_name": "0008027",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              4.026540636914433e-06,
+              -9.39566580200335e-06,
+              -8.240251554525458e-06
+            ],
+            "rotation": [
+              [
+                -0.06335723607529353,
+                -0.9519049875028117,
+                -0.29977117173637474
+              ],
+              [
+                -0.9634898500671002,
+                -0.019954635527571925,
+                0.2670002272257696
+              ],
+              [
+                -0.26014067243426026,
+                0.30574287773922937,
+                -0.9158865231332853
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/004_0008027.npz",
+          "images": {
+            "composite": "observed/004_0008027_composite.png",
+            "static_rgb": "observed/004_0008027_static_rgb.png",
+            "static_raw_rgb": "observed/004_0008027_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/004_0008027_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/004_0008027_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/004_0008027_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/004_0008027_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/004_0008027_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/004_0008027_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/004_0008027_instance00_visible_rgb.png",
+                "visible_alpha": "observed/004_0008027_instance00_visible_alpha.png",
+                "body_mask": "observed/004_0008027_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 7041,
+                "joint_visible_alpha_body_mean": 0.9385472035424104,
+                "joint_visible_alpha_outside_mean": 0.0009952993911930051,
+                "joint_mask_MSE_full_HxW": 0.0007803181144422827,
+                "joint_mask_MSE_inside": 0.01404256302700397,
+                "joint_mask_MSE_outside": 0.0001431722112268757,
+                "composite_RGB_MSE_body_clipped": 0.0007192373171923557
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/004_0008027_instance01_visible_rgb.png",
+                "visible_alpha": "observed/004_0008027_instance01_visible_alpha.png",
+                "body_mask": "observed/004_0008027_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 517,
+                "joint_visible_alpha_body_mean": 0.3841526976118235,
+                "joint_visible_alpha_outside_mean": 0.0002647683864547665,
+                "joint_mask_MSE_full_HxW": 0.001360061982422347,
+                "joint_mask_MSE_inside": 0.3846935806624717,
+                "joint_mask_MSE_outside": 6.544775904296767e-05,
+                "composite_RGB_MSE_body_clipped": 0.010648987918856857
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0016837838619684544,
+            "RGB_MSE_clipped": 0.0016829467243946042,
+            "RGB_PSNR_clipped_db": 27.739296318956306,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 7041,
+                "joint_visible_alpha_body_mean": 0.9385472035424104,
+                "joint_visible_alpha_outside_mean": 0.0009952993911930051,
+                "joint_mask_MSE_full_HxW": 0.0007803181144422827,
+                "joint_mask_MSE_inside": 0.01404256302700397,
+                "joint_mask_MSE_outside": 0.0001431722112268757,
+                "composite_RGB_MSE_body_clipped": 0.0007192373171923557
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 517,
+                "joint_visible_alpha_body_mean": 0.3841526976118235,
+                "joint_visible_alpha_outside_mean": 0.0002647683864547665,
+                "joint_mask_MSE_full_HxW": 0.001360061982422347,
+                "joint_mask_MSE_inside": 0.3846935806624717,
+                "joint_mask_MSE_outside": 6.544775904296767e-05,
+                "composite_RGB_MSE_body_clipped": 0.010648987918856857
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/004_0008027.npz"
+        },
+        {
+          "frame_index": 5,
+          "frame_id": "0008028",
+          "model_time": -0.38,
+          "camera_frame_id": "0008028",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 5,
+            "img_name": "0008028",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              7.509956139983842e-06,
+              -3.661504524643533e-06,
+              2.514053448976483e-06
+            ],
+            "rotation": [
+              [
+                -0.06335723607529353,
+                -0.9519049875028117,
+                -0.29977117173637474
+              ],
+              [
+                -0.9634898500671002,
+                -0.019954635527571925,
+                0.2670002272257696
+              ],
+              [
+                -0.26014067243426026,
+                0.30574287773922937,
+                -0.9158865231332853
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/005_0008028.npz",
+          "images": {
+            "composite": "observed/005_0008028_composite.png",
+            "static_rgb": "observed/005_0008028_static_rgb.png",
+            "static_raw_rgb": "observed/005_0008028_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/005_0008028_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/005_0008028_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/005_0008028_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/005_0008028_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/005_0008028_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/005_0008028_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/005_0008028_instance00_visible_rgb.png",
+                "visible_alpha": "observed/005_0008028_instance00_visible_alpha.png",
+                "body_mask": "observed/005_0008028_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 3744,
+                "joint_visible_alpha_body_mean": 0.9489793411941609,
+                "joint_visible_alpha_outside_mean": 0.0006069022919150263,
+                "joint_mask_MSE_full_HxW": 0.0004027505399936517,
+                "joint_mask_MSE_inside": 0.010401088288601708,
+                "joint_mask_MSE_outside": 0.000152952223404469,
+                "composite_RGB_MSE_body_clipped": 0.000680234820264583
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/005_0008028_instance01_visible_rgb.png",
+                "visible_alpha": "observed/005_0008028_instance01_visible_alpha.png",
+                "body_mask": "observed/005_0008028_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 541,
+                "joint_visible_alpha_body_mean": 0.3850497117062924,
+                "joint_visible_alpha_outside_mean": 0.00030665052363883444,
+                "joint_mask_MSE_full_HxW": 0.0014382587339071718,
+                "joint_mask_MSE_inside": 0.38467621716461536,
+                "joint_mask_MSE_outside": 8.367170857045121e-05,
+                "composite_RGB_MSE_body_clipped": 0.01223191175124624
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0019027212832982562,
+            "RGB_MSE_clipped": 0.0019018415664640684,
+            "RGB_PSNR_clipped_db": 27.208256649360973,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 3744,
+                "joint_visible_alpha_body_mean": 0.9489793411941609,
+                "joint_visible_alpha_outside_mean": 0.0006069022919150263,
+                "joint_mask_MSE_full_HxW": 0.0004027505399936517,
+                "joint_mask_MSE_inside": 0.010401088288601708,
+                "joint_mask_MSE_outside": 0.000152952223404469,
+                "composite_RGB_MSE_body_clipped": 0.000680234820264583
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 541,
+                "joint_visible_alpha_body_mean": 0.3850497117062924,
+                "joint_visible_alpha_outside_mean": 0.00030665052363883444,
+                "joint_mask_MSE_full_HxW": 0.0014382587339071718,
+                "joint_mask_MSE_inside": 0.38467621716461536,
+                "joint_mask_MSE_outside": 8.367170857045121e-05,
+                "composite_RGB_MSE_body_clipped": 0.01223191175124624
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/005_0008028.npz"
+        },
+        {
+          "frame_index": 6,
+          "frame_id": "0008029",
+          "model_time": -0.36,
+          "camera_frame_id": "0008029",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 6,
+            "img_name": "0008029",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              8.101152207018459e-06,
+              -1.2743269417114787e-05,
+              2.7517422495293445e-06
+            ],
+            "rotation": [
+              [
+                -0.06335723607529353,
+                -0.9519049875028117,
+                -0.29977117173637474
+              ],
+              [
+                -0.9634898500671002,
+                -0.019954635527571925,
+                0.2670002272257696
+              ],
+              [
+                -0.26014067243426026,
+                0.30574287773922937,
+                -0.9158865231332853
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/006_0008029.npz",
+          "images": {
+            "composite": "observed/006_0008029_composite.png",
+            "static_rgb": "observed/006_0008029_static_rgb.png",
+            "static_raw_rgb": "observed/006_0008029_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/006_0008029_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/006_0008029_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/006_0008029_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/006_0008029_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/006_0008029_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/006_0008029_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/006_0008029_instance00_visible_rgb.png",
+                "visible_alpha": "observed/006_0008029_instance00_visible_alpha.png",
+                "body_mask": "observed/006_0008029_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 275,
+                "joint_visible_alpha_body_mean": 0.9416232340986078,
+                "joint_visible_alpha_outside_mean": 8.500147532849664e-05,
+                "joint_mask_MSE_full_HxW": 3.648281960518706e-05,
+                "joint_mask_MSE_inside": 0.01272899017060182,
+                "joint_mask_MSE_outside": 1.3717846368441104e-05,
+                "composite_RGB_MSE_body_clipped": 0.0036796683704575575
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/006_0008029_instance01_visible_rgb.png",
+                "visible_alpha": "observed/006_0008029_instance01_visible_alpha.png",
+                "body_mask": "observed/006_0008029_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 590,
+                "joint_visible_alpha_body_mean": 0.3879192879897053,
+                "joint_visible_alpha_outside_mean": 0.000280160044053685,
+                "joint_mask_MSE_full_HxW": 0.0015378250492338664,
+                "joint_mask_MSE_inside": 0.3818436770329434,
+                "joint_mask_MSE_outside": 7.138198884311678e-05,
+                "composite_RGB_MSE_body_clipped": 0.012010429970473562
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.001959171013818544,
+            "RGB_MSE_clipped": 0.0019583022580678846,
+            "RGB_PSNR_clipped_db": 27.081202753112347,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 275,
+                "joint_visible_alpha_body_mean": 0.9416232340986078,
+                "joint_visible_alpha_outside_mean": 8.500147532849664e-05,
+                "joint_mask_MSE_full_HxW": 3.648281960518706e-05,
+                "joint_mask_MSE_inside": 0.01272899017060182,
+                "joint_mask_MSE_outside": 1.3717846368441104e-05,
+                "composite_RGB_MSE_body_clipped": 0.0036796683704575575
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 590,
+                "joint_visible_alpha_body_mean": 0.3879192879897053,
+                "joint_visible_alpha_outside_mean": 0.000280160044053685,
+                "joint_mask_MSE_full_HxW": 0.0015378250492338664,
+                "joint_mask_MSE_inside": 0.3818436770329434,
+                "joint_mask_MSE_outside": 7.138198884311678e-05,
+                "composite_RGB_MSE_body_clipped": 0.012010429970473562
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/006_0008029.npz"
+        },
+        {
+          "frame_index": 7,
+          "frame_id": "0008030",
+          "model_time": -0.33999999999999997,
+          "camera_frame_id": "0008030",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 7,
+            "img_name": "0008030",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              -1.1356211734891987e-05,
+              -8.316268576891165e-07,
+              -8.045846698223613e-06
+            ],
+            "rotation": [
+              [
+                -0.06335613360706527,
+                -0.951876279481339,
+                -0.29986255000442286
+              ],
+              [
+                -0.963490443278976,
+                -0.019980657861393022,
+                0.266996140461772
+              ],
+              [
+                -0.2601387438357055,
+                0.305830544374203,
+                -0.9158578012351873
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/007_0008030.npz",
+          "images": {
+            "composite": "observed/007_0008030_composite.png",
+            "static_rgb": "observed/007_0008030_static_rgb.png",
+            "static_raw_rgb": "observed/007_0008030_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/007_0008030_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/007_0008030_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/007_0008030_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/007_0008030_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/007_0008030_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/007_0008030_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/007_0008030_instance00_visible_rgb.png",
+                "visible_alpha": "observed/007_0008030_instance00_visible_alpha.png",
+                "body_mask": "observed/007_0008030_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/007_0008030_instance01_visible_rgb.png",
+                "visible_alpha": "observed/007_0008030_instance01_visible_alpha.png",
+                "body_mask": "observed/007_0008030_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 638,
+                "joint_visible_alpha_body_mean": 0.3908603436380718,
+                "joint_visible_alpha_outside_mean": 0.0002523803853851897,
+                "joint_mask_MSE_full_HxW": 0.001628016755600762,
+                "joint_mask_MSE_inside": 0.3781614292823447,
+                "joint_mask_MSE_outside": 5.7506974138290135e-05,
+                "composite_RGB_MSE_body_clipped": 0.013142553547214317
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0019704150652834506,
+            "RGB_MSE_clipped": 0.0019696666478686464,
+            "RGB_PSNR_clipped_db": 27.056072688847973,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 638,
+                "joint_visible_alpha_body_mean": 0.3908603436380718,
+                "joint_visible_alpha_outside_mean": 0.0002523803853851897,
+                "joint_mask_MSE_full_HxW": 0.001628016755600762,
+                "joint_mask_MSE_inside": 0.3781614292823447,
+                "joint_mask_MSE_outside": 5.7506974138290135e-05,
+                "composite_RGB_MSE_body_clipped": 0.013142553547214317
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/007_0008030.npz"
+        },
+        {
+          "frame_index": 8,
+          "frame_id": "0008031",
+          "model_time": -0.31999999999999995,
+          "camera_frame_id": "0008031",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 8,
+            "img_name": "0008031",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              7.63325197112863e-06,
+              1.7849312189355264e-05,
+              4.103329047211445e-06
+            ],
+            "rotation": [
+              [
+                -0.0632981682153493,
+                -0.9519102876897497,
+                -0.2997668195298254
+              ],
+              [
+                -0.9634623152493393,
+                -0.020044095310664162,
+                0.2670928702484093
+              ],
+              [
+                -0.2602570056596683,
+                0.3057205234092516,
+                -0.9158609351705251
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/008_0008031.npz",
+          "images": {
+            "composite": "observed/008_0008031_composite.png",
+            "static_rgb": "observed/008_0008031_static_rgb.png",
+            "static_raw_rgb": "observed/008_0008031_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/008_0008031_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/008_0008031_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/008_0008031_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/008_0008031_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/008_0008031_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/008_0008031_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/008_0008031_instance00_visible_rgb.png",
+                "visible_alpha": "observed/008_0008031_instance00_visible_alpha.png",
+                "body_mask": "observed/008_0008031_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/008_0008031_instance01_visible_rgb.png",
+                "visible_alpha": "observed/008_0008031_instance01_visible_alpha.png",
+                "body_mask": "observed/008_0008031_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 673,
+                "joint_visible_alpha_body_mean": 0.3839957706774149,
+                "joint_visible_alpha_outside_mean": 0.0003024765906214385,
+                "joint_mask_MSE_full_HxW": 0.0017812546081103378,
+                "joint_mask_MSE_inside": 0.3875655793252567,
+                "joint_mask_MSE_outside": 8.349783177496519e-05,
+                "composite_RGB_MSE_body_clipped": 0.01431761155038862
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.001974108703502613,
+            "RGB_MSE_clipped": 0.0019731322539823515,
+            "RGB_PSNR_clipped_db": 27.048438041295782,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 673,
+                "joint_visible_alpha_body_mean": 0.3839957706774149,
+                "joint_visible_alpha_outside_mean": 0.0003024765906214385,
+                "joint_mask_MSE_full_HxW": 0.0017812546081103378,
+                "joint_mask_MSE_inside": 0.3875655793252567,
+                "joint_mask_MSE_outside": 8.349783177496519e-05,
+                "composite_RGB_MSE_body_clipped": 0.01431761155038862
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/008_0008031.npz"
+        },
+        {
+          "frame_index": 9,
+          "frame_id": "0008032",
+          "model_time": -0.3,
+          "camera_frame_id": "0008032",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 9,
+            "img_name": "0008032",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              -8.46390121296281e-06,
+              -2.885717094613938e-06,
+              -2.3479815354221505e-06
+            ],
+            "rotation": [
+              [
+                -0.06326500876862322,
+                -0.9518824802966366,
+                -0.29986210559164744
+              ],
+              [
+                -0.963488405750816,
+                -0.02007291094783675,
+                0.266996573442066
+              ],
+              [
+                -0.2601684659009026,
+                0.3058052026215948,
+                -0.9158578205160058
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/009_0008032.npz",
+          "images": {
+            "composite": "observed/009_0008032_composite.png",
+            "static_rgb": "observed/009_0008032_static_rgb.png",
+            "static_raw_rgb": "observed/009_0008032_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/009_0008032_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/009_0008032_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/009_0008032_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/009_0008032_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/009_0008032_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/009_0008032_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/009_0008032_instance00_visible_rgb.png",
+                "visible_alpha": "observed/009_0008032_instance00_visible_alpha.png",
+                "body_mask": "observed/009_0008032_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/009_0008032_instance01_visible_rgb.png",
+                "visible_alpha": "observed/009_0008032_instance01_visible_alpha.png",
+                "body_mask": "observed/009_0008032_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 732,
+                "joint_visible_alpha_body_mean": 0.4718242441125906,
+                "joint_visible_alpha_outside_mean": 0.00029100411982275126,
+                "joint_mask_MSE_full_HxW": 0.001495070593795239,
+                "joint_mask_MSE_inside": 0.2966352051385144,
+                "joint_mask_MSE_outside": 8.180831204409148e-05,
+                "composite_RGB_MSE_body_clipped": 0.014923330438010978
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0019888185915105066,
+            "RGB_MSE_clipped": 0.001988081275302721,
+            "RGB_PSNR_clipped_db": 27.0156586506246,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 732,
+                "joint_visible_alpha_body_mean": 0.4718242441125906,
+                "joint_visible_alpha_outside_mean": 0.00029100411982275126,
+                "joint_mask_MSE_full_HxW": 0.001495070593795239,
+                "joint_mask_MSE_inside": 0.2966352051385144,
+                "joint_mask_MSE_outside": 8.180831204409148e-05,
+                "composite_RGB_MSE_body_clipped": 0.014923330438010978
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/009_0008032.npz"
+        },
+        {
+          "frame_index": 10,
+          "frame_id": "0008033",
+          "model_time": -0.27999999999999997,
+          "camera_frame_id": "0008033",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 10,
+            "img_name": "0008033",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              -9.387365071233943e-06,
+              1.9616790814325215e-05,
+              -1.4062174159334972e-06
+            ],
+            "rotation": [
+              [
+                -0.06329706854878148,
+                -0.9518815799916087,
+                -0.29985819779661993
+              ],
+              [
+                -0.9634629061766063,
+                -0.0200701265296526,
+                0.2670887838206344
+              ],
+              [
+                -0.2602550855119481,
+                0.3058081877481272,
+                -0.9158322132199586
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/010_0008033.npz",
+          "images": {
+            "composite": "observed/010_0008033_composite.png",
+            "static_rgb": "observed/010_0008033_static_rgb.png",
+            "static_raw_rgb": "observed/010_0008033_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/010_0008033_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/010_0008033_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/010_0008033_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/010_0008033_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/010_0008033_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/010_0008033_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/010_0008033_instance00_visible_rgb.png",
+                "visible_alpha": "observed/010_0008033_instance00_visible_alpha.png",
+                "body_mask": "observed/010_0008033_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/010_0008033_instance01_visible_rgb.png",
+                "visible_alpha": "observed/010_0008033_instance01_visible_alpha.png",
+                "body_mask": "observed/010_0008033_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 778,
+                "joint_visible_alpha_body_mean": 0.5118215592209355,
+                "joint_visible_alpha_outside_mean": 0.00034763260916445657,
+                "joint_mask_MSE_full_HxW": 0.0014562260845468967,
+                "joint_mask_MSE_inside": 0.2638045367625962,
+                "joint_mask_MSE_outside": 0.0001206396787445756,
+                "composite_RGB_MSE_body_clipped": 0.01764196926573208
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002019435784254053,
+            "RGB_MSE_clipped": 0.002018551940447636,
+            "RGB_PSNR_clipped_db": 26.94960071044564,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 778,
+                "joint_visible_alpha_body_mean": 0.5118215592209355,
+                "joint_visible_alpha_outside_mean": 0.00034763260916445657,
+                "joint_mask_MSE_full_HxW": 0.0014562260845468967,
+                "joint_mask_MSE_inside": 0.2638045367625962,
+                "joint_mask_MSE_outside": 0.0001206396787445756,
+                "composite_RGB_MSE_body_clipped": 0.01764196926573208
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/010_0008033.npz"
+        },
+        {
+          "frame_index": 11,
+          "frame_id": "0008034",
+          "model_time": -0.26,
+          "camera_frame_id": "0008034",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 11,
+            "img_name": "0008034",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              7.172731966420542e-06,
+              3.809912868746323e-06,
+              2.7401967599871566e-06
+            ],
+            "rotation": [
+              [
+                -0.06338929576149495,
+                -0.9519040837370157,
+                -0.2997672639693688
+              ],
+              [
+                -0.9634643500574588,
+                -0.0199518447677914,
+                0.2670924372922123
+              ],
+              [
+                -0.26022729171090575,
+                0.30574587365193595,
+                -0.9158609159657453
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/011_0008034.npz",
+          "images": {
+            "composite": "observed/011_0008034_composite.png",
+            "static_rgb": "observed/011_0008034_static_rgb.png",
+            "static_raw_rgb": "observed/011_0008034_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/011_0008034_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/011_0008034_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/011_0008034_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/011_0008034_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/011_0008034_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/011_0008034_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/011_0008034_instance00_visible_rgb.png",
+                "visible_alpha": "observed/011_0008034_instance00_visible_alpha.png",
+                "body_mask": "observed/011_0008034_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/011_0008034_instance01_visible_rgb.png",
+                "visible_alpha": "observed/011_0008034_instance01_visible_alpha.png",
+                "body_mask": "observed/011_0008034_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 833,
+                "joint_visible_alpha_body_mean": 0.5248597924556194,
+                "joint_visible_alpha_outside_mean": 0.00038762869523415095,
+                "joint_mask_MSE_full_HxW": 0.0015210567138239422,
+                "joint_mask_MSE_inside": 0.25306394364282525,
+                "joint_mask_MSE_outside": 0.000149456663997356,
+                "composite_RGB_MSE_body_clipped": 0.016413850093389415
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0020202415153701457,
+            "RGB_MSE_clipped": 0.0020192765652929916,
+            "RGB_PSNR_clipped_db": 26.948041948974122,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 833,
+                "joint_visible_alpha_body_mean": 0.5248597924556194,
+                "joint_visible_alpha_outside_mean": 0.00038762869523415095,
+                "joint_mask_MSE_full_HxW": 0.0015210567138239422,
+                "joint_mask_MSE_inside": 0.25306394364282525,
+                "joint_mask_MSE_outside": 0.000149456663997356,
+                "composite_RGB_MSE_body_clipped": 0.016413850093389415
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/011_0008034.npz"
+        },
+        {
+          "frame_index": 12,
+          "frame_id": "0008035",
+          "model_time": -0.24,
+          "camera_frame_id": "0008035",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 12,
+            "img_name": "0008035",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              6.172171788421111e-06,
+              -4.160501612204827e-06,
+              8.142240403685718e-07
+            ],
+            "rotation": [
+              [
+                -0.06348042448269844,
+                -0.9518978709269126,
+                -0.299767708454954
+              ],
+              [
+                -0.9634663760605761,
+                -0.019859592237788055,
+                0.26709200436707936
+              ],
+              [
+                -0.2601975747545898,
+                0.3057712215382454,
+                -0.9158608967364156
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/012_0008035.npz",
+          "images": {
+            "composite": "observed/012_0008035_composite.png",
+            "static_rgb": "observed/012_0008035_static_rgb.png",
+            "static_raw_rgb": "observed/012_0008035_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/012_0008035_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/012_0008035_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/012_0008035_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/012_0008035_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/012_0008035_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/012_0008035_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/012_0008035_instance00_visible_rgb.png",
+                "visible_alpha": "observed/012_0008035_instance00_visible_alpha.png",
+                "body_mask": "observed/012_0008035_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/012_0008035_instance01_visible_rgb.png",
+                "visible_alpha": "observed/012_0008035_instance01_visible_alpha.png",
+                "body_mask": "observed/012_0008035_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 901,
+                "joint_visible_alpha_body_mean": 0.5216891507180893,
+                "joint_visible_alpha_outside_mean": 0.0003816441544287003,
+                "joint_mask_MSE_full_HxW": 0.0016360162971261426,
+                "joint_mask_MSE_inside": 0.25694110084769833,
+                "joint_mask_MSE_outside": 0.0001295893972769912,
+                "composite_RGB_MSE_body_clipped": 0.0195343433684004
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0020543913411592745,
+            "RGB_MSE_clipped": 0.0020534205173218965,
+            "RGB_PSNR_clipped_db": 26.875221029182264,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 901,
+                "joint_visible_alpha_body_mean": 0.5216891507180893,
+                "joint_visible_alpha_outside_mean": 0.0003816441544287003,
+                "joint_mask_MSE_full_HxW": 0.0016360162971261426,
+                "joint_mask_MSE_inside": 0.25694110084769833,
+                "joint_mask_MSE_outside": 0.0001295893972769912,
+                "composite_RGB_MSE_body_clipped": 0.0195343433684004
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/012_0008035.npz"
+        },
+        {
+          "frame_index": 13,
+          "frame_id": "0008036",
+          "model_time": -0.21999999999999997,
+          "camera_frame_id": "0008036",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 13,
+            "img_name": "0008036",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.921020541180042e-06,
+              -1.1473198355815828e-06,
+              -1.0063718218589203e-05
+            ],
+            "rotation": [
+              [
+                -0.06335723607529353,
+                -0.9519049875028117,
+                -0.29977117173637474
+              ],
+              [
+                -0.9634898500671002,
+                -0.019954635527571925,
+                0.2670002272257696
+              ],
+              [
+                -0.26014067243426026,
+                0.30574287773922937,
+                -0.9158865231332853
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/013_0008036.npz",
+          "images": {
+            "composite": "observed/013_0008036_composite.png",
+            "static_rgb": "observed/013_0008036_static_rgb.png",
+            "static_raw_rgb": "observed/013_0008036_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/013_0008036_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/013_0008036_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/013_0008036_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/013_0008036_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/013_0008036_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/013_0008036_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/013_0008036_instance00_visible_rgb.png",
+                "visible_alpha": "observed/013_0008036_instance00_visible_alpha.png",
+                "body_mask": "observed/013_0008036_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/013_0008036_instance01_visible_rgb.png",
+                "visible_alpha": "observed/013_0008036_instance01_visible_alpha.png",
+                "body_mask": "observed/013_0008036_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 988,
+                "joint_visible_alpha_body_mean": 0.5179704200883626,
+                "joint_visible_alpha_outside_mean": 0.00035098873056244457,
+                "joint_mask_MSE_full_HxW": 0.0017824212776338104,
+                "joint_mask_MSE_inside": 0.258682351210834,
+                "joint_mask_MSE_outside": 0.00011926811291542785,
+                "composite_RGB_MSE_body_clipped": 0.017998767965865043
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0020560726903947474,
+            "RGB_MSE_clipped": 0.0020551684587098483,
+            "RGB_PSNR_clipped_db": 26.87152573938956,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 988,
+                "joint_visible_alpha_body_mean": 0.5179704200883626,
+                "joint_visible_alpha_outside_mean": 0.00035098873056244457,
+                "joint_mask_MSE_full_HxW": 0.0017824212776338104,
+                "joint_mask_MSE_inside": 0.258682351210834,
+                "joint_mask_MSE_outside": 0.00011926811291542785,
+                "composite_RGB_MSE_body_clipped": 0.017998767965865043
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/013_0008036.npz"
+        },
+        {
+          "frame_index": 14,
+          "frame_id": "0008037",
+          "model_time": -0.19999999999999996,
+          "camera_frame_id": "0008037",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 14,
+            "img_name": "0008037",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.187780278291029e-05,
+              -7.306937732209917e-06,
+              2.326480171177514e-07
+            ],
+            "rotation": [
+              [
+                -0.0633583383502904,
+                -0.9519336867653719,
+                -0.29967979071469686
+              ],
+              [
+                -0.963489256834356,
+                -0.019928612802434055,
+                0.26700431149426107
+              ],
+              [
+                -0.2601426011368431,
+                0.30565520835262944,
+                -0.9159152366243616
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/014_0008037.npz",
+          "images": {
+            "composite": "observed/014_0008037_composite.png",
+            "static_rgb": "observed/014_0008037_static_rgb.png",
+            "static_raw_rgb": "observed/014_0008037_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/014_0008037_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/014_0008037_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/014_0008037_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/014_0008037_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/014_0008037_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/014_0008037_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/014_0008037_instance00_visible_rgb.png",
+                "visible_alpha": "observed/014_0008037_instance00_visible_alpha.png",
+                "body_mask": "observed/014_0008037_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/014_0008037_instance01_visible_rgb.png",
+                "visible_alpha": "observed/014_0008037_instance01_visible_alpha.png",
+                "body_mask": "observed/014_0008037_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1067,
+                "joint_visible_alpha_body_mean": 0.511575391507361,
+                "joint_visible_alpha_outside_mean": 0.0003736707403109263,
+                "joint_mask_MSE_full_HxW": 0.0019624517554996408,
+                "joint_mask_MSE_inside": 0.26467358475170355,
+                "joint_mask_MSE_outside": 0.00012473284282533755,
+                "composite_RGB_MSE_body_clipped": 0.019609194487421676
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0021098508077496735,
+            "RGB_MSE_clipped": 0.002108849448990438,
+            "RGB_PSNR_clipped_db": 26.759544234878767,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1067,
+                "joint_visible_alpha_body_mean": 0.511575391507361,
+                "joint_visible_alpha_outside_mean": 0.0003736707403109263,
+                "joint_mask_MSE_full_HxW": 0.0019624517554996408,
+                "joint_mask_MSE_inside": 0.26467358475170355,
+                "joint_mask_MSE_outside": 0.00012473284282533755,
+                "composite_RGB_MSE_body_clipped": 0.019609194487421676
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/014_0008037.npz"
+        },
+        {
+          "frame_index": 15,
+          "frame_id": "0008038",
+          "model_time": -0.18,
+          "camera_frame_id": "0008038",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 15,
+            "img_name": "0008038",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.083929871332657e-05,
+              -1.434406931366539e-06,
+              -1.7764385120244701e-06
+            ],
+            "rotation": [
+              [
+                -0.0633583383502904,
+                -0.9519336867653719,
+                -0.29967979071469686
+              ],
+              [
+                -0.963489256834356,
+                -0.019928612802434055,
+                0.26700431149426107
+              ],
+              [
+                -0.2601426011368431,
+                0.30565520835262944,
+                -0.9159152366243616
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/015_0008038.npz",
+          "images": {
+            "composite": "observed/015_0008038_composite.png",
+            "static_rgb": "observed/015_0008038_static_rgb.png",
+            "static_raw_rgb": "observed/015_0008038_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/015_0008038_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/015_0008038_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/015_0008038_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/015_0008038_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/015_0008038_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/015_0008038_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/015_0008038_instance00_visible_rgb.png",
+                "visible_alpha": "observed/015_0008038_instance00_visible_alpha.png",
+                "body_mask": "observed/015_0008038_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/015_0008038_instance01_visible_rgb.png",
+                "visible_alpha": "observed/015_0008038_instance01_visible_alpha.png",
+                "body_mask": "observed/015_0008038_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1167,
+                "joint_visible_alpha_body_mean": 0.4989861617217538,
+                "joint_visible_alpha_outside_mean": 0.00037354545575617615,
+                "joint_mask_MSE_full_HxW": 0.0022420886861746958,
+                "joint_mask_MSE_inside": 0.27866449304692265,
+                "joint_mask_MSE_outside": 0.0001258478073033692,
+                "composite_RGB_MSE_body_clipped": 0.02249152705903026
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002163412882468349,
+            "RGB_MSE_clipped": 0.002162408910114922,
+            "RGB_PSNR_clipped_db": 26.650621778135065,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1167,
+                "joint_visible_alpha_body_mean": 0.4989861617217538,
+                "joint_visible_alpha_outside_mean": 0.00037354545575617615,
+                "joint_mask_MSE_full_HxW": 0.0022420886861746958,
+                "joint_mask_MSE_inside": 0.27866449304692265,
+                "joint_mask_MSE_outside": 0.0001258478073033692,
+                "composite_RGB_MSE_body_clipped": 0.02249152705903026
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/015_0008038.npz"
+        },
+        {
+          "frame_index": 16,
+          "frame_id": "0008039",
+          "model_time": -0.15999999999999998,
+          "camera_frame_id": "0008039",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 16,
+            "img_name": "0008039",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.158206061722012e-05,
+              -4.647693003789753e-06,
+              -1.836820956668806e-07
+            ],
+            "rotation": [
+              [
+                -0.0633583383502904,
+                -0.9519336867653719,
+                -0.29967979071469686
+              ],
+              [
+                -0.963489256834356,
+                -0.019928612802434055,
+                0.26700431149426107
+              ],
+              [
+                -0.2601426011368431,
+                0.30565520835262944,
+                -0.9159152366243616
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/016_0008039.npz",
+          "images": {
+            "composite": "observed/016_0008039_composite.png",
+            "static_rgb": "observed/016_0008039_static_rgb.png",
+            "static_raw_rgb": "observed/016_0008039_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/016_0008039_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/016_0008039_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/016_0008039_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/016_0008039_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/016_0008039_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/016_0008039_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/016_0008039_instance00_visible_rgb.png",
+                "visible_alpha": "observed/016_0008039_instance00_visible_alpha.png",
+                "body_mask": "observed/016_0008039_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/016_0008039_instance01_visible_rgb.png",
+                "visible_alpha": "observed/016_0008039_instance01_visible_alpha.png",
+                "body_mask": "observed/016_0008039_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1301,
+                "joint_visible_alpha_body_mean": 0.4817773619900063,
+                "joint_visible_alpha_outside_mean": 0.0003533905942119964,
+                "joint_mask_MSE_full_HxW": 0.0026588512109802748,
+                "joint_mask_MSE_inside": 0.29880217346000065,
+                "joint_mask_MSE_outside": 0.00012907450695742872,
+                "composite_RGB_MSE_body_clipped": 0.024297632175874828
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0022071593414626656,
+            "RGB_MSE_clipped": 0.0022062007138113383,
+            "RGB_PSNR_clipped_db": 26.56354979232457,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1301,
+                "joint_visible_alpha_body_mean": 0.4817773619900063,
+                "joint_visible_alpha_outside_mean": 0.0003533905942119964,
+                "joint_mask_MSE_full_HxW": 0.0026588512109802748,
+                "joint_mask_MSE_inside": 0.29880217346000065,
+                "joint_mask_MSE_outside": 0.00012907450695742872,
+                "composite_RGB_MSE_body_clipped": 0.024297632175874828
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/016_0008039.npz"
+        },
+        {
+          "frame_index": 17,
+          "frame_id": "0008040",
+          "model_time": -0.13999999999999996,
+          "camera_frame_id": "0008040",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 17,
+            "img_name": "0008040",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              3.1667803796153753e-06,
+              7.11655247869203e-06,
+              -8.064135909080506e-06
+            ],
+            "rotation": [
+              [
+                -0.06335723607529353,
+                -0.9519049875028117,
+                -0.29977117173637474
+              ],
+              [
+                -0.9634898500671002,
+                -0.019954635527571925,
+                0.2670002272257696
+              ],
+              [
+                -0.26014067243426026,
+                0.30574287773922937,
+                -0.9158865231332853
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/017_0008040.npz",
+          "images": {
+            "composite": "observed/017_0008040_composite.png",
+            "static_rgb": "observed/017_0008040_static_rgb.png",
+            "static_raw_rgb": "observed/017_0008040_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/017_0008040_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/017_0008040_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/017_0008040_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/017_0008040_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/017_0008040_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/017_0008040_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/017_0008040_instance00_visible_rgb.png",
+                "visible_alpha": "observed/017_0008040_instance00_visible_alpha.png",
+                "body_mask": "observed/017_0008040_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/017_0008040_instance01_visible_rgb.png",
+                "visible_alpha": "observed/017_0008040_instance01_visible_alpha.png",
+                "body_mask": "observed/017_0008040_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1439,
+                "joint_visible_alpha_body_mean": 0.49904751829425026,
+                "joint_visible_alpha_outside_mean": 0.00035694006947743626,
+                "joint_mask_MSE_full_HxW": 0.0028079310845691417,
+                "joint_mask_MSE_inside": 0.2847097764789535,
+                "joint_mask_MSE_outside": 0.00014196046448568367,
+                "composite_RGB_MSE_body_clipped": 0.02964572471572739
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002301639606797193,
+            "RGB_MSE_clipped": 0.0023008060883234036,
+            "RGB_PSNR_clipped_db": 26.381199820787835,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1439,
+                "joint_visible_alpha_body_mean": 0.49904751829425026,
+                "joint_visible_alpha_outside_mean": 0.00035694006947743626,
+                "joint_mask_MSE_full_HxW": 0.0028079310845691417,
+                "joint_mask_MSE_inside": 0.2847097764789535,
+                "joint_mask_MSE_outside": 0.00014196046448568367,
+                "composite_RGB_MSE_body_clipped": 0.02964572471572739
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/017_0008040.npz"
+        },
+        {
+          "frame_index": 18,
+          "frame_id": "0008041",
+          "model_time": -0.12,
+          "camera_frame_id": "0008041",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 18,
+            "img_name": "0008041",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              2.1664556106770755e-05,
+              -2.147554459952516e-06,
+              4.4429361878428693e-07
+            ],
+            "rotation": [
+              [
+                -0.0633583383502904,
+                -0.9519336867653719,
+                -0.29967979071469686
+              ],
+              [
+                -0.963489256834356,
+                -0.019928612802434055,
+                0.26700431149426107
+              ],
+              [
+                -0.2601426011368431,
+                0.30565520835262944,
+                -0.9159152366243616
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/018_0008041.npz",
+          "images": {
+            "composite": "observed/018_0008041_composite.png",
+            "static_rgb": "observed/018_0008041_static_rgb.png",
+            "static_raw_rgb": "observed/018_0008041_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/018_0008041_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/018_0008041_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/018_0008041_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/018_0008041_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/018_0008041_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/018_0008041_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/018_0008041_instance00_visible_rgb.png",
+                "visible_alpha": "observed/018_0008041_instance00_visible_alpha.png",
+                "body_mask": "observed/018_0008041_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/018_0008041_instance01_visible_rgb.png",
+                "visible_alpha": "observed/018_0008041_instance01_visible_alpha.png",
+                "body_mask": "observed/018_0008041_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1535,
+                "joint_visible_alpha_body_mean": 0.5735813623949497,
+                "joint_visible_alpha_outside_mean": 0.00047898321339917235,
+                "joint_mask_MSE_full_HxW": 0.002432968248111497,
+                "joint_mask_MSE_inside": 0.22324526625457236,
+                "joint_mask_MSE_outside": 0.00020400775463885382,
+                "composite_RGB_MSE_body_clipped": 0.038326290571541015
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0024357034083192625,
+            "RGB_MSE_clipped": 0.00243473441049127,
+            "RGB_PSNR_clipped_db": 26.13548406255891,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1535,
+                "joint_visible_alpha_body_mean": 0.5735813623949497,
+                "joint_visible_alpha_outside_mean": 0.00047898321339917235,
+                "joint_mask_MSE_full_HxW": 0.002432968248111497,
+                "joint_mask_MSE_inside": 0.22324526625457236,
+                "joint_mask_MSE_outside": 0.00020400775463885382,
+                "composite_RGB_MSE_body_clipped": 0.038326290571541015
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/018_0008041.npz"
+        },
+        {
+          "frame_index": 19,
+          "frame_id": "0008042",
+          "model_time": -0.09999999999999998,
+          "camera_frame_id": "0008042",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 19,
+            "img_name": "0008042",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              6.668559672107222e-06,
+              8.603864807810167e-06,
+              2.0715866412501783e-06
+            ],
+            "rotation": [
+              [
+                -0.06338929576149495,
+                -0.9519040837370157,
+                -0.2997672639693688
+              ],
+              [
+                -0.9634643500574588,
+                -0.0199518447677914,
+                0.2670924372922123
+              ],
+              [
+                -0.26022729171090575,
+                0.30574587365193595,
+                -0.9158609159657453
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/019_0008042.npz",
+          "images": {
+            "composite": "observed/019_0008042_composite.png",
+            "static_rgb": "observed/019_0008042_static_rgb.png",
+            "static_raw_rgb": "observed/019_0008042_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/019_0008042_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/019_0008042_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/019_0008042_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/019_0008042_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/019_0008042_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/019_0008042_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/019_0008042_instance00_visible_rgb.png",
+                "visible_alpha": "observed/019_0008042_instance00_visible_alpha.png",
+                "body_mask": "observed/019_0008042_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/019_0008042_instance01_visible_rgb.png",
+                "visible_alpha": "observed/019_0008042_instance01_visible_alpha.png",
+                "body_mask": "observed/019_0008042_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1693,
+                "joint_visible_alpha_body_mean": 0.570053136381758,
+                "joint_visible_alpha_outside_mean": 0.0004952475722648958,
+                "joint_mask_MSE_full_HxW": 0.0028394286426769682,
+                "joint_mask_MSE_inside": 0.23756334599838685,
+                "joint_mask_MSE_outside": 0.00022343601506127702,
+                "composite_RGB_MSE_body_clipped": 0.04332786209568915
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0025455212423334734,
+            "RGB_MSE_clipped": 0.002544623805206037,
+            "RGB_PSNR_clipped_db": 25.94376414270038,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1693,
+                "joint_visible_alpha_body_mean": 0.570053136381758,
+                "joint_visible_alpha_outside_mean": 0.0004952475722648958,
+                "joint_mask_MSE_full_HxW": 0.0028394286426769682,
+                "joint_mask_MSE_inside": 0.23756334599838685,
+                "joint_mask_MSE_outside": 0.00022343601506127702,
+                "composite_RGB_MSE_body_clipped": 0.04332786209568915
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/019_0008042.npz"
+        },
+        {
+          "frame_index": 20,
+          "frame_id": "0008043",
+          "model_time": -0.07999999999999996,
+          "camera_frame_id": "0008043",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 20,
+            "img_name": "0008043",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              6.684138725177034e-06,
+              -1.5915267431410027e-05,
+              4.058802005602058e-07
+            ],
+            "rotation": [
+              [
+                -0.0634483648815696,
+                -0.9518987777646224,
+                -0.29977161620824005
+              ],
+              [
+                -0.9634918762970538,
+                -0.019862380512467775,
+                0.26699979428818826
+              ],
+              [
+                -0.2601109557542913,
+                0.30576821733238924,
+                -0.91588650386713
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/020_0008043.npz",
+          "images": {
+            "composite": "observed/020_0008043_composite.png",
+            "static_rgb": "observed/020_0008043_static_rgb.png",
+            "static_raw_rgb": "observed/020_0008043_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/020_0008043_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/020_0008043_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/020_0008043_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/020_0008043_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/020_0008043_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/020_0008043_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/020_0008043_instance00_visible_rgb.png",
+                "visible_alpha": "observed/020_0008043_instance00_visible_alpha.png",
+                "body_mask": "observed/020_0008043_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/020_0008043_instance01_visible_rgb.png",
+                "visible_alpha": "observed/020_0008043_instance01_visible_alpha.png",
+                "body_mask": "observed/020_0008043_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1866,
+                "joint_visible_alpha_body_mean": 0.5445523321599124,
+                "joint_visible_alpha_outside_mean": 0.0005673176941617327,
+                "joint_mask_MSE_full_HxW": 0.0035135236706047767,
+                "joint_mask_MSE_inside": 0.26716894508066263,
+                "joint_mask_MSE_outside": 0.0002711322728220252,
+                "composite_RGB_MSE_body_clipped": 0.047785182690787804
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002665954937486167,
+            "RGB_MSE_clipped": 0.002665111167468824,
+            "RGB_PSNR_clipped_db": 25.742846709108257,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 1866,
+                "joint_visible_alpha_body_mean": 0.5445523321599124,
+                "joint_visible_alpha_outside_mean": 0.0005673176941617327,
+                "joint_mask_MSE_full_HxW": 0.0035135236706047767,
+                "joint_mask_MSE_inside": 0.26716894508066263,
+                "joint_mask_MSE_outside": 0.0002711322728220252,
+                "composite_RGB_MSE_body_clipped": 0.047785182690787804
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/020_0008043.npz"
+        },
+        {
+          "frame_index": 21,
+          "frame_id": "0008044",
+          "model_time": -0.06,
+          "camera_frame_id": "0008044",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 21,
+            "img_name": "0008044",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              5.9246596265438715e-06,
+              -1.911742765514646e-06,
+              4.6945042413426617e-07
+            ],
+            "rotation": [
+              [
+                -0.06348042448269844,
+                -0.9518978709269126,
+                -0.299767708454954
+              ],
+              [
+                -0.9634663760605761,
+                -0.019859592237788055,
+                0.26709200436707936
+              ],
+              [
+                -0.2601975747545898,
+                0.3057712215382454,
+                -0.9158608967364156
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/021_0008044.npz",
+          "images": {
+            "composite": "observed/021_0008044_composite.png",
+            "static_rgb": "observed/021_0008044_static_rgb.png",
+            "static_raw_rgb": "observed/021_0008044_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/021_0008044_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/021_0008044_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/021_0008044_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/021_0008044_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/021_0008044_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/021_0008044_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/021_0008044_instance00_visible_rgb.png",
+                "visible_alpha": "observed/021_0008044_instance00_visible_alpha.png",
+                "body_mask": "observed/021_0008044_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/021_0008044_instance01_visible_rgb.png",
+                "visible_alpha": "observed/021_0008044_instance01_visible_alpha.png",
+                "body_mask": "observed/021_0008044_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 2085,
+                "joint_visible_alpha_body_mean": 0.5210104702531898,
+                "joint_visible_alpha_outside_mean": 0.0004434072803002808,
+                "joint_mask_MSE_full_HxW": 0.004171255178043894,
+                "joint_mask_MSE_inside": 0.29643561265414664,
+                "joint_mask_MSE_outside": 0.0001494013329613996,
+                "composite_RGB_MSE_body_clipped": 0.05718082823675566
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002929018353202325,
+            "RGB_MSE_clipped": 0.0029282112687893116,
+            "RGB_PSNR_clipped_db": 25.333975923816247,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 2085,
+                "joint_visible_alpha_body_mean": 0.5210104702531898,
+                "joint_visible_alpha_outside_mean": 0.0004434072803002808,
+                "joint_mask_MSE_full_HxW": 0.004171255178043894,
+                "joint_mask_MSE_inside": 0.29643561265414664,
+                "joint_mask_MSE_outside": 0.0001494013329613996,
+                "composite_RGB_MSE_body_clipped": 0.05718082823675566
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/021_0008044.npz"
+        },
+        {
+          "frame_index": 22,
+          "frame_id": "0008045",
+          "model_time": -0.03999999999999998,
+          "camera_frame_id": "0008045",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 22,
+            "img_name": "0008045",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              5.787932195744361e-06,
+              9.425426105735825e-06,
+              1.8728118448052563e-06
+            ],
+            "rotation": [
+              [
+                -0.06348042448269844,
+                -0.9518978709269126,
+                -0.299767708454954
+              ],
+              [
+                -0.9634663760605761,
+                -0.019859592237788055,
+                0.26709200436707936
+              ],
+              [
+                -0.2601975747545898,
+                0.3057712215382454,
+                -0.9158608967364156
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/022_0008045.npz",
+          "images": {
+            "composite": "observed/022_0008045_composite.png",
+            "static_rgb": "observed/022_0008045_static_rgb.png",
+            "static_raw_rgb": "observed/022_0008045_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/022_0008045_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/022_0008045_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/022_0008045_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/022_0008045_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/022_0008045_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/022_0008045_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/022_0008045_instance00_visible_rgb.png",
+                "visible_alpha": "observed/022_0008045_instance00_visible_alpha.png",
+                "body_mask": "observed/022_0008045_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/022_0008045_instance01_visible_rgb.png",
+                "visible_alpha": "observed/022_0008045_instance01_visible_alpha.png",
+                "body_mask": "observed/022_0008045_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 2299,
+                "joint_visible_alpha_body_mean": 0.6991727668322094,
+                "joint_visible_alpha_outside_mean": 0.0005706815701693951,
+                "joint_mask_MSE_full_HxW": 0.002295663444435866,
+                "joint_mask_MSE_inside": 0.14032761751627715,
+                "joint_mask_MSE_outside": 0.000198284957769135,
+                "composite_RGB_MSE_body_clipped": 0.02203666548417887
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002488603378991712,
+            "RGB_MSE_clipped": 0.002487790871181415,
+            "RGB_PSNR_clipped_db": 26.041861301344408,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 2299,
+                "joint_visible_alpha_body_mean": 0.6991727668322094,
+                "joint_visible_alpha_outside_mean": 0.0005706815701693951,
+                "joint_mask_MSE_full_HxW": 0.002295663444435866,
+                "joint_mask_MSE_inside": 0.14032761751627715,
+                "joint_mask_MSE_outside": 0.000198284957769135,
+                "composite_RGB_MSE_body_clipped": 0.02203666548417887
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/022_0008045.npz"
+        },
+        {
+          "frame_index": 23,
+          "frame_id": "0008046",
+          "model_time": -0.019999999999999962,
+          "camera_frame_id": "0008046",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 23,
+            "img_name": "0008046",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              5.701970712834736e-06,
+              -7.035003727651202e-06,
+              -9.690529623185284e-07
+            ],
+            "rotation": [
+              [
+                -0.0634483648815696,
+                -0.9518987777646224,
+                -0.29977161620824005
+              ],
+              [
+                -0.9634918762970538,
+                -0.019862380512467775,
+                0.26699979428818826
+              ],
+              [
+                -0.2601109557542913,
+                0.30576821733238924,
+                -0.91588650386713
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/023_0008046.npz",
+          "images": {
+            "composite": "observed/023_0008046_composite.png",
+            "static_rgb": "observed/023_0008046_static_rgb.png",
+            "static_raw_rgb": "observed/023_0008046_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/023_0008046_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/023_0008046_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/023_0008046_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/023_0008046_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/023_0008046_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/023_0008046_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/023_0008046_instance00_visible_rgb.png",
+                "visible_alpha": "observed/023_0008046_instance00_visible_alpha.png",
+                "body_mask": "observed/023_0008046_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/023_0008046_instance01_visible_rgb.png",
+                "visible_alpha": "observed/023_0008046_instance01_visible_alpha.png",
+                "body_mask": "observed/023_0008046_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 2689,
+                "joint_visible_alpha_body_mean": 0.9199278550759351,
+                "joint_visible_alpha_outside_mean": 0.0004995578259015244,
+                "joint_mask_MSE_full_HxW": 0.0005313466526832028,
+                "joint_mask_MSE_inside": 0.023203596106483086,
+                "joint_mask_MSE_outside": 0.00012736232562110718,
+                "composite_RGB_MSE_body_clipped": 0.0050521985048312045
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0022518503366488855,
+            "RGB_MSE_clipped": 0.0022510059757124092,
+            "RGB_PSNR_clipped_db": 26.47623352082785,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 2689,
+                "joint_visible_alpha_body_mean": 0.9199278550759351,
+                "joint_visible_alpha_outside_mean": 0.0004995578259015244,
+                "joint_mask_MSE_full_HxW": 0.0005313466526832028,
+                "joint_mask_MSE_inside": 0.023203596106483086,
+                "joint_mask_MSE_outside": 0.00012736232562110718,
+                "composite_RGB_MSE_body_clipped": 0.0050521985048312045
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/023_0008046.npz"
+        },
+        {
+          "frame_index": 24,
+          "frame_id": "0008047",
+          "model_time": 0.0,
+          "camera_frame_id": "0008047",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 24,
+            "img_name": "0008047",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              -1.176559153464041e-05,
+              -3.6029260627401528e-06,
+              -7.47946378396591e-06
+            ],
+            "rotation": [
+              [
+                -0.06344725962081338,
+                -0.9518700698089925,
+                -0.29986299446323955
+              ],
+              [
+                -0.9634924720019424,
+                -0.019888402787508537,
+                0.2669957075125415
+              ],
+              [
+                -0.2601090187636111,
+                0.3058558837694931,
+                -0.9158577819298181
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/024_0008047.npz",
+          "images": {
+            "composite": "observed/024_0008047_composite.png",
+            "static_rgb": "observed/024_0008047_static_rgb.png",
+            "static_raw_rgb": "observed/024_0008047_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/024_0008047_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/024_0008047_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/024_0008047_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/024_0008047_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/024_0008047_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/024_0008047_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/024_0008047_instance00_visible_rgb.png",
+                "visible_alpha": "observed/024_0008047_instance00_visible_alpha.png",
+                "body_mask": "observed/024_0008047_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/024_0008047_instance01_visible_rgb.png",
+                "visible_alpha": "observed/024_0008047_instance01_visible_alpha.png",
+                "body_mask": "observed/024_0008047_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 3061,
+                "joint_visible_alpha_body_mean": 0.9539432948962102,
+                "joint_visible_alpha_outside_mean": 0.0006426135524417756,
+                "joint_mask_MSE_full_HxW": 0.0004545629938590337,
+                "joint_mask_MSE_inside": 0.013703674516350042,
+                "joint_mask_MSE_outside": 0.00018516084311839522,
+                "composite_RGB_MSE_body_clipped": 0.003244771716510108
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0023006548772917367,
+            "RGB_MSE_clipped": 0.0022999206601171623,
+            "RGB_PSNR_clipped_db": 26.382871454900723,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 3061,
+                "joint_visible_alpha_body_mean": 0.9539432948962102,
+                "joint_visible_alpha_outside_mean": 0.0006426135524417756,
+                "joint_mask_MSE_full_HxW": 0.0004545629938590337,
+                "joint_mask_MSE_inside": 0.013703674516350042,
+                "joint_mask_MSE_outside": 0.00018516084311839522,
+                "composite_RGB_MSE_body_clipped": 0.003244771716510108
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/024_0008047.npz"
+        },
+        {
+          "frame_index": 25,
+          "frame_id": "0008048",
+          "model_time": 0.020000000000000018,
+          "camera_frame_id": "0008048",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 25,
+            "img_name": "0008048",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              7.244319294841262e-06,
+              1.4414481483981947e-06,
+              4.73005620733602e-06
+            ],
+            "rotation": [
+              [
+                -0.06348042448269844,
+                -0.9518978709269126,
+                -0.299767708454954
+              ],
+              [
+                -0.9634663760605761,
+                -0.019859592237788055,
+                0.26709200436707936
+              ],
+              [
+                -0.2601975747545898,
+                0.3057712215382454,
+                -0.9158608967364156
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/025_0008048.npz",
+          "images": {
+            "composite": "observed/025_0008048_composite.png",
+            "static_rgb": "observed/025_0008048_static_rgb.png",
+            "static_raw_rgb": "observed/025_0008048_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/025_0008048_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/025_0008048_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/025_0008048_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/025_0008048_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/025_0008048_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/025_0008048_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/025_0008048_instance00_visible_rgb.png",
+                "visible_alpha": "observed/025_0008048_instance00_visible_alpha.png",
+                "body_mask": "observed/025_0008048_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/025_0008048_instance01_visible_rgb.png",
+                "visible_alpha": "observed/025_0008048_instance01_visible_alpha.png",
+                "body_mask": "observed/025_0008048_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 3488,
+                "joint_visible_alpha_body_mean": 0.9777113641398626,
+                "joint_visible_alpha_outside_mean": 0.0009703935384033488,
+                "joint_mask_MSE_full_HxW": 0.0003875444923950767,
+                "joint_mask_MSE_inside": 0.004134047672918206,
+                "joint_mask_MSE_outside": 0.00030049080519042507,
+                "composite_RGB_MSE_body_clipped": 0.0016290436914836062
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002385515075033504,
+            "RGB_MSE_clipped": 0.002384666285070982,
+            "RGB_PSNR_clipped_db": 26.225723884027616,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 3488,
+                "joint_visible_alpha_body_mean": 0.9777113641398626,
+                "joint_visible_alpha_outside_mean": 0.0009703935384033488,
+                "joint_mask_MSE_full_HxW": 0.0003875444923950767,
+                "joint_mask_MSE_inside": 0.004134047672918206,
+                "joint_mask_MSE_outside": 0.00030049080519042507,
+                "composite_RGB_MSE_body_clipped": 0.0016290436914836062
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/025_0008048.npz"
+        },
+        {
+          "frame_index": 26,
+          "frame_id": "0008049",
+          "model_time": 0.040000000000000036,
+          "camera_frame_id": "0008049",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 26,
+            "img_name": "0008049",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              4.287154615667533e-06,
+              1.321425479545724e-05,
+              -1.772283212631009e-06
+            ],
+            "rotation": [
+              [
+                -0.06348042448269844,
+                -0.9518978709269126,
+                -0.299767708454954
+              ],
+              [
+                -0.9634663760605761,
+                -0.019859592237788055,
+                0.26709200436707936
+              ],
+              [
+                -0.2601975747545898,
+                0.3057712215382454,
+                -0.9158608967364156
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/026_0008049.npz",
+          "images": {
+            "composite": "observed/026_0008049_composite.png",
+            "static_rgb": "observed/026_0008049_static_rgb.png",
+            "static_raw_rgb": "observed/026_0008049_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/026_0008049_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/026_0008049_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/026_0008049_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/026_0008049_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/026_0008049_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/026_0008049_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/026_0008049_instance00_visible_rgb.png",
+                "visible_alpha": "observed/026_0008049_instance00_visible_alpha.png",
+                "body_mask": "observed/026_0008049_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/026_0008049_instance01_visible_rgb.png",
+                "visible_alpha": "observed/026_0008049_instance01_visible_alpha.png",
+                "body_mask": "observed/026_0008049_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 4052,
+                "joint_visible_alpha_body_mean": 0.9794986691888558,
+                "joint_visible_alpha_outside_mean": 0.0012726734382740462,
+                "joint_mask_MSE_full_HxW": 0.0005460284459411558,
+                "joint_mask_MSE_inside": 0.0028605962649009297,
+                "joint_mask_MSE_outside": 0.00048331527824633553,
+                "composite_RGB_MSE_body_clipped": 0.001243591456656632
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.002565032718225583,
+            "RGB_MSE_clipped": 0.002564154242740133,
+            "RGB_PSNR_clipped_db": 25.910558540533252,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 4052,
+                "joint_visible_alpha_body_mean": 0.9794986691888558,
+                "joint_visible_alpha_outside_mean": 0.0012726734382740462,
+                "joint_mask_MSE_full_HxW": 0.0005460284459411558,
+                "joint_mask_MSE_inside": 0.0028605962649009297,
+                "joint_mask_MSE_outside": 0.00048331527824633553,
+                "composite_RGB_MSE_body_clipped": 0.001243591456656632
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/026_0008049.npz"
+        },
+        {
+          "frame_index": 27,
+          "frame_id": "0008050",
+          "model_time": 0.06000000000000005,
+          "camera_frame_id": "0008050",
+          "camera": {
+            "width": 480,
+            "height": 320
+          },
+          "source_camera_JSON": {
+            "id": 27,
+            "img_name": "0008050",
+            "width": 1920,
+            "height": 1280,
+            "position": [
+              6.822846762588598e-06,
+              -1.4363717400556196e-05,
+              1.0430250767967678e-06
+            ],
+            "rotation": [
+              [
+                -0.0634483648815696,
+                -0.9518987777646224,
+                -0.29977161620824005
+              ],
+              [
+                -0.9634918762970538,
+                -0.019862380512467775,
+                0.26699979428818826
+              ],
+              [
+                -0.2601109557542913,
+                0.30576821733238924,
+                -0.91588650386713
+              ]
+            ],
+            "fx": 2060.142593112,
+            "fy": 2060.142593112,
+            "cx": 975.5965057144,
+            "cy": 630.8533348445
+          },
+          "source_camera_JSON_scope": "source calibration provenance; GPU matrices not independently serialized",
+          "source_FP32_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/observed/027_0008050.npz",
+          "images": {
+            "composite": "observed/027_0008050_composite.png",
+            "static_rgb": "observed/027_0008050_static_rgb.png",
+            "static_raw_rgb": "observed/027_0008050_static_raw_rgb.png",
+            "all_vehicles_raw_rgb": "observed/027_0008050_all_vehicles_raw_rgb.png",
+            "scene_alpha": "observed/027_0008050_scene_alpha.png",
+            "dynamic_visible_alpha": "observed/027_0008050_dynamic_visible_alpha.png",
+            "static_visible_alpha": "observed/027_0008050_static_visible_alpha.png",
+            "all_vehicles_isolated_raw_alpha": "observed/027_0008050_all_vehicles_isolated_raw_alpha.png",
+            "gt": "observed/027_0008050_gt.png"
+          },
+          "instances": [
+            {
+              "index": 0,
+              "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+              "images": {
+                "visible_rgb": "observed/027_0008050_instance00_visible_rgb.png",
+                "visible_alpha": "observed/027_0008050_instance00_visible_alpha.png",
+                "body_mask": "observed/027_0008050_instance00_body_mask.png"
+              },
+              "metrics": {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              }
+            },
+            {
+              "index": 1,
+              "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+              "images": {
+                "visible_rgb": "observed/027_0008050_instance01_visible_rgb.png",
+                "visible_alpha": "observed/027_0008050_instance01_visible_alpha.png",
+                "body_mask": "observed/027_0008050_instance01_body_mask.png"
+              },
+              "metrics": {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 4816,
+                "joint_visible_alpha_body_mean": 0.9718073032443656,
+                "joint_visible_alpha_outside_mean": 0.001248551282478432,
+                "joint_mask_MSE_full_HxW": 0.0005320626664185321,
+                "joint_mask_MSE_inside": 0.005655990319696932,
+                "joint_mask_MSE_outside": 0.00036620588357771065,
+                "composite_RGB_MSE_body_clipped": 0.0011853906225492367
+              }
+            }
+          ],
+          "all_FP32_finite": true,
+          "metrics": {
+            "RGB_MSE_raw": 0.0028145713812308265,
+            "RGB_MSE_clipped": 0.0028137282980098648,
+            "RGB_PSNR_clipped_db": 25.507178416461226,
+            "RGB_PSNR_zero_error": false,
+            "instances": [
+              {
+                "index": 0,
+                "track_id": "NoQttdyd4C16Y_zkGhiFKg",
+                "body_pixels": 0,
+                "joint_visible_alpha_body_mean": null,
+                "joint_visible_alpha_outside_mean": 0.0,
+                "joint_mask_MSE_full_HxW": 0.0,
+                "joint_mask_MSE_inside": null,
+                "joint_mask_MSE_outside": 0.0,
+                "composite_RGB_MSE_body_clipped": null
+              },
+              {
+                "index": 1,
+                "track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+                "body_pixels": 4816,
+                "joint_visible_alpha_body_mean": 0.9718073032443656,
+                "joint_visible_alpha_outside_mean": 0.001248551282478432,
+                "joint_mask_MSE_full_HxW": 0.0005320626664185321,
+                "joint_mask_MSE_inside": 0.005655990319696932,
+                "joint_mask_MSE_outside": 0.00036620588357771065,
+                "composite_RGB_MSE_body_clipped": 0.0011853906225492367
+              }
+            ],
+            "RGB_SSIM_clipped": null,
+            "SSIM_available_from_retained_partial_assets": false
+          },
+          "npz": "observed/027_0008050.npz"
+        }
+      ]
+    },
+    "fixed_camera": {
+      "GT_available": false,
+      "frames": []
+    }
+  },
+  "contracts": {
+    "all_FP32_finite": true,
+    "identity_and_native_size_verified": true,
+    "GT_reference_PNG_verified": true,
+    "real_body_mask_PNG_verified": true,
+    "observed_frames_verified": 28,
+    "fixed_camera_frames": 0,
+    "edit_operations": 0,
+    "model_and_optimizer_unmodified_after_evaluation": null
+  },
+  "partial_reason": "Actual StreetCrafter preparation priority detected; evaluation yielded with assets preserved",
+  "priority_yield_source": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r2/evaluation/priority_yield.json",
+  "limits": [
+    "Observed prefix only, not complete49 aggregate or quality verdict",
+    "Fixed camera and six edit operations not exported",
+    "End-of-evaluation readonly model/Adam verification not reached",
+    "No independently serialized GPU camera matrices in retained partial assets",
+    "Per-frame CPU metrics recomputed from actual FP32; SSIM unavailable in partial receipt"
+  ],
+  "human_quality_verdict": null,
+  "Torch_imported_for_CPU_audit": false,
+  "generated_UTC": "2026-10-13T18:12:22.406991+00:00",
+  "verified_PNG_count": 420,
+  "local_transport_adaptation": "Added relative NPZ provenance pointers from verified original remote paths; local PNG assets only, FP32 retained remotely",
+  "separate_GPU_restore_proof": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/post30k_r1/restore_030000/receipt.json",
+    "scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+    "partial_evaluation_end_readonly_verified": false
+  },
+  "actual_priority_processes": [
+    {
+      "pid": 66421,
+      "cmdline": "bash -c PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=-1 TF_CPP_MIN_LOG_LEVEL=2 /root/autodl-tmp/envs/dggt_data_cpu/bin/python - <<'PY'\nimport tensorflow as tf\nimport numpy as np\nimport importlib.metadata\nprint('tensorflow_import',tf.__version__,'numpy',np.__version__)\nfor name in ['tensorflow-cpu','tensorflow','google-auth','pyarrow','absl-py','typing-extensions']:\n    try: print(name,importlib.metadata.version(name))\n    except Exception:pass\nprint('CPU_only_devices',tf.config.list_physical_devices())\nPY\nls -l /root/autodl-tmp/streetcrafter_work/data_prep 2>/dev/null",
+      "cwd": "/root"
+    }
+  ]
+}
