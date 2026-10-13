@@ -1,0 +1,19 @@
+diff --git a/train.py b/train.py
+--- a/train.py
++++ b/train.py
+@@ -408,6 +408,15 @@
+                                 ("sky", paper_sky), ("nps", paper_nps),
+                                 ("dynamic_opacity", paper_opacity), ("depth", paper_depth)):
+                 log_dict["loss_paper_" + name] = value.item()
++            if args.get("diagnostic_observed_static_rgb_enabled", False):
++                log_dict["loss_original_objective_before_diagnostic"] = loss.item()
++                observed_static_mask = 1.0 - dynamic_mask
++                observed_static_prediction = static_image * observed_static_mask
++                observed_static_truth = gt_image * observed_static_mask
++                observed_static_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(observed_static_prediction, observed_static_truth)
++                                       + args.lambda_dssim * (1.0 - ssim(observed_static_prediction, observed_static_truth)))
++                loss = loss + args.diagnostic_lambda_observed_static_rgb * observed_static_rgb
++                log_dict["loss_diagnostic_observed_static_rgb"] = observed_static_rgb.item()
+             # Keep the later diagnostic opacity panel consistent with actor support.
+             if dynamic_gaussians is not None:
+                 dynamic_alpha = dynamic_alpha * dynamic_mask

@@ -14,6 +14,8 @@ GMC scene0008 raw23–71，Corolla153保留静态、DEVA77/82合一个动态Gaus
 
 机制保持2024活跃代码：完整raw body opacity100、静态RGB1、寿命/速度约束与LiDAR深度衰减。SGCM修正支持/克隆谱系是中心投影及temporal-alpha代理，非准确遮挡贡献；NPS保留sum/L2/.01，六节点梯度finite，static-feature/RGB断连ratio占位0无效，不能认定绝对静态。body-only无完整shadow，M-detector未成为实际预处理；完整模型恢复、独立测试与人工质量通过未认证。
 
+用户2026-10-13回看旧S32k与新C00：同raw20的GT无几何错位、body mask相同；旧S静态较干净却保留动态道路/车影覆盖，新C00车外动态接近零、静态更贴近观察暗车影。静态RGB公式/系数未变，但有效opacity/RGB/其他正则与从零轨迹等共同改变；未建立单项因果归因。单帧重建PSNR改善不认证无影补景，body内部也缺静态RGB目标。仅分析已有资产，没有GPU/远端/配置/训练改动，原心跳仍暂停。[配置与像素证据](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/config_change_diagnosis_20261013/)；F01更新同卡知识，无新failure ID。
+
 SSH仅`wm-vgpu-1011`。原矩阵根`/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012`；后续根`/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013`；GPU解释器`/root/autodl-tmp/envs/drivingeditor/bin/python`。完整模型、原FP32、输入和失败资产保留AutoDL数据盘，HTML/Git离线包不是大检查点备份。源身份搜索已关闭，不重置5GiB预算，不追加arms/seeds/loss网格。[机器可读状态](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json)。
 
 用户已明确授权两个新scene训练/评价/报告收口、保存推送后AutoDL关机，无需重新询问。最后重新核对vendor `/usr/bin/shutdown`和supervisord精确PID/cmdline、零owned GPU/CPU/controllers及无关任务；省略vendor的Trash删除，仅执行日志/TERM后端。当前`drivingeditor-30k`心跳已PAUSED，其他旧自动化保持暂停，不自动开机或重启研究。SSH断开不等于独立平台电源证明；平台不可读时仅报告“已发出关机请求”。实际请求、fresh检查与自动化暂停凭据见最终证据目录及本聊天`outputs/DrivingEditor_shutdown_receipt.json`；远端canonical最后保存于关机前power_pending，本地/Git此终态为权威后续收口记录。

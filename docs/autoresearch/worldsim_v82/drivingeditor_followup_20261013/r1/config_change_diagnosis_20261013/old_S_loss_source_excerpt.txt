@@ -1,0 +1,103 @@
+Source: work/drivingeditor_resume/s_train.py, lines377-478
+        loss_ssim = 1.0 - ssim(image, gt_image)
+        log_dict['loss_ssim'] = loss_ssim.item()
+        sky_mask_1 = convert_to_binary_mask(viewpoint_cam.sky_mask.long().cuda())
+        sky_truth = extract_object_pixels(gt_image, sky_mask_1)
+        if paper_method:
+            # Final-paper Eqs7-16. Unreported coefficients and NPS sampling
+            # choices are declared in configs/paper_waymo_reconstruction.yaml.
+            zero = image.sum() * 0.0
+            paper_global_rgb = (1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim
+            paper_dynamic_rgb = zero
+            paper_nps = zero
+            paper_opacity = zero
+            if dynamic_gaussians is not None:
+                paper_dynamic_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(dynamic_image, gt_dynamic_image)
+                                     + args.lambda_dssim * (1.0 - ssim(dynamic_image, gt_dynamic_image)))
+                if not hasattr(viewpoint_cam, "_paper_nps_distance"):
+                    viewpoint_cam._paper_nps_distance = boundary_distance(dynamic_mask)
+                paper_nps = nps_loss(static_v_map, dynamic_mask, viewpoint_cam._paper_nps_distance)
+                paper_opacity = dynamic_opacity_loss(dynamic_alpha, dynamic_mask)
+            paper_sky = sky_loss(static_alpha if dynamic_gaussians is not None else alpha, sky_mask)
+            if viewpoint_cam.pts_depth is None:
+                raise ValueError("The paper depth objective requires sparse LiDAR depth")
+            paper_depth = sparse_inverse_depth_loss(depth, viewpoint_cam.pts_depth.to(depth.device))
+            loss = compose_paper_loss(paper_global_rgb, paper_dynamic_rgb, paper_sky,
+                                      paper_nps, paper_opacity, paper_depth,
+                                      lambda_sky=args.paper_lambda_sky,
+                                      lambda_nps=args.paper_lambda_nps,
+                                      lambda_opacity=args.paper_lambda_dynamic_opacity,
+                                      lambda_depth=args.paper_lambda_depth,
+                                      lambda_dynamic_rgb=args.get("paper_lambda_dynamic_rgb", 1.0))
+            for name, value in (("global_rgb", paper_global_rgb), ("dynamic_rgb", paper_dynamic_rgb),
+                                ("sky", paper_sky), ("nps", paper_nps),
+                                ("dynamic_opacity", paper_opacity), ("depth", paper_depth)):
+                log_dict["loss_paper_" + name] = value.item()
+            if args.get("diagnostic_observed_static_rgb_enabled", False):
+                log_dict["loss_original_objective_before_diagnostic"] = loss.item()
+                observed_static_mask = 1.0 - dynamic_mask
+                observed_static_prediction = static_image * observed_static_mask
+                observed_static_truth = gt_image * observed_static_mask
+                observed_static_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(observed_static_prediction, observed_static_truth)
+                                       + args.lambda_dssim * (1.0 - ssim(observed_static_prediction, observed_static_truth)))
+                loss = loss + args.diagnostic_lambda_observed_static_rgb * observed_static_rgb
+                log_dict["loss_diagnostic_observed_static_rgb"] = observed_static_rgb.item()
+            # Keep the later diagnostic opacity panel consistent with actor support.
+            if dynamic_gaussians is not None:
+                dynamic_alpha = dynamic_alpha * dynamic_mask
+        else:
+            if dynamic_gaussians is not None:
+                if gt_dynamic_image.mean().max() > 0:
+                    static_image_1 = extract_object_pixels(static_image, 1 - dynamic_mask)
+                    static_truth = extract_object_pixels(gt_image, 1 - dynamic_mask)
+                    sky_image = extract_object_pixels(static_image, sky_mask_1)
+                    loss_ssim_d = 1.0 - ssim(dynamic_image, gt_dynamic_image)
+                    loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
+                    loss_ssim_static = 1.0 - ssim(static_image_1, static_truth)
+                    loss_l1_d = F.l1_loss(dynamic_image, gt_dynamic_image)
+                    loss_l1_sky = F.l1_loss(sky_image, sky_truth)
+                    loss_l1_static = F.l1_loss(static_image_1, static_truth)
+                    loss_opacity = calculate_weighted_loss(static_alpha, gt_dynamic_image, 0.00001)
+                    loss_v = calculate_weighted_loss(static_v_map, gt_dynamic_image, 0.00001)
+                    # print(loss_dynamic)
+                    loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim
+                            + 5 * ((1.0 - args.lambda_dssim) * loss_l1_d + args.lambda_dssim * loss_ssim_d)
+                            + 5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky)
+                            + ((1.0 - args.lambda_dssim) * loss_l1_static + args.lambda_dssim * loss_ssim_static))
+                    # loss += loss_opacity
+                    # loss += loss_v
+                else:
+                    sky_image = extract_object_pixels(image, sky_mask_1)
+                    loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
+                    loss_l1_sky = F.l1_loss(sky_image, sky_truth)
+                    loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim +
+                            5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky))
+            else:
+                sky_image = extract_object_pixels(image, sky_mask_1)
+                loss_ssim_sky = 1.0 - ssim(sky_image, sky_truth)
+                loss_l1_sky = F.l1_loss(sky_image, sky_truth)
+                loss = ((1.0 - args.lambda_dssim) * loss_l1 + args.lambda_dssim * loss_ssim +
+                        5 * ((1.0 - args.lambda_dssim) * loss_l1_sky + args.lambda_dssim * loss_ssim_sky))
+            # alpha_1 = alpha.clone().detach()
+            # loss_opacity = F.mse_loss(static_alpha, alpha_1)
+            # total_content_loss = tv_loss(static_image, dynamic_image, 10)
+            # print(total_content_loss)
+            # loss += total_content_loss
+            # if iteration % args.reg3d_interval == 0:
+            #     # regularize at certain intervals
+            #     logits3d = classifier(gaussians._objects_dc.permute(2,0,1))
+            #     prob_obj3d = torch.softmax(logits3d,dim=0).squeeze().permute(1,0)
+            #     loss_obj_3d = loss_cls_3d(gaussians._xyz.squeeze().detach(), prob_obj3d, args.reg3d_k, args.reg3d_lambda_val, args.reg3d_max_points, args.reg3d_sample_size)
+            #     loss += loss_obj + loss_obj_3d
+            #     log_dict['loss_obj'] = (loss_obj + loss_obj_3d).item()
+            # else:
+            #     loss += loss_obj
+            #     log_dict['loss_obj'] = loss_obj.item()
+
+            if args.lambda_lidar > 0:
+                assert viewpoint_cam.pts_depth is not None
+                pts_depth = viewpoint_cam.pts_depth.cuda()
+
+                mask = pts_depth > 0
+                loss_lidar = torch.abs(1 / (pts_depth[mask] + 1e-5) - 1 / (depth[mask] + 1e-5)).mean()
+                if args.lidar_decay > 0:

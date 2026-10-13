@@ -1,0 +1,89 @@
+{
+  "status": "READONLY_OLD_S_VS_NEW_C00_CONFIG_AND_PIXEL_DIAGNOSIS",
+  "created_utc": "2026-10-13T05:18:26.748378+00:00",
+  "user_observation": "Old S static road lacks the conspicuous car shadow seen in the new configuration; dynamic still has background problems.",
+  "paired_observed_frame": "image_0/0017020",
+  "model_timestamp": -0.08000000000000002,
+  "GT_geometry_aligned": true,
+  "GT_export_max_byte_difference": 1,
+  "body_mask_exactly_equal": true,
+  "body_pixels": 3306,
+  "new_training_steps": 0,
+  "remote_connected": false,
+  "saved_FP32_region_metrics": {
+    "source_old": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-11\\z\\work\\vgpu_bugfix_20261012\\continuation_diagnostic\\observed_static_rgb30k_to32000\\extra_eval\\32000\\diagnostic_eval.json",
+    "source_new": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\outputs\\drivingeditor_C00_30k\\manifest.json",
+    "old_S": {
+      "static_psnr_db": 30.75413327420405,
+      "static_mse": 0.000840594748687177,
+      "dynamic_alpha_mean": 0.5308640358332395
+    },
+    "new_C00": {
+      "static_psnr_db": 33.54618894109211,
+      "static_mse": 0.0004419581081797989,
+      "dynamic_alpha_mean": 0.00021015804668422788
+    }
+  },
+  "configuration_changes": {
+    "start": {
+      "old_S": "same legacy30k model/Adam/RNG/sampler, then2000 updates to32000",
+      "new_C00": "from scratch30000"
+    },
+    "LR_horizon": {
+      "old_S": 50000,
+      "new_C00": 30000
+    },
+    "static_RGB": {
+      "both": "weight1, (1-Md) applied to prediction and GT, full-image .8L1+.2DSSIM"
+    },
+    "dynamic_opacity": {
+      "old_S": "foreground-only logarithmic term .05, no explicit outside-zero term",
+      "new_C00": "100*mean((raw_alpha_d-Md)^2), both domains"
+    },
+    "dynamic_RGB_weight": {
+      "old_S": 1,
+      "new_C00": 5
+    },
+    "sky_RGB_weight": {
+      "old_S": "not active",
+      "new_C00": 5
+    },
+    "absolute_static_duration_velocity": {
+      "old_S": "not called in active paper branch despite nonzero config keys",
+      "new_C00": "active .1/.01 soft regularizers"
+    },
+    "depth": {
+      "old_S": "Eq16 weight.1 without decay",
+      "new_C00": "same Eq16 times exp(-iteration/8000)"
+    },
+    "extra_smoothness_and_combined_alpha_entropy": {
+      "old_S": "not active",
+      "new_C00": "restored"
+    },
+    "SGCM_NPS": {
+      "old_S": "legacy SGCM topology inherited, NPS active; no SGCM calls during30001-32000",
+      "new_C00": "both off"
+    },
+    "terminal_static_dynamic_points": {
+      "old_S": [
+        2234298,
+        1026885
+      ],
+      "new_C00": [
+        986061,
+        1028966
+      ]
+    },
+    "static_opacity_reset": {
+      "old_S": "legacy every3000; recovered from30k reset then2k with no new reset",
+      "new_C00": "only before15000"
+    }
+  },
+  "observed_layer_allocation": "Old S dynamic covers roads/shadow regions; new C00 outside-body dynamic is near transparent while static matches the observed dark contact/shadow pixels.",
+  "mechanistic_interpretation": "An unchanged body-only mask omits shadow. Complete outside-alpha supervision plus changed RGB/regularization/trajectory constrains dynamic ownership, while static RGB still targets observed shadow outside Md. This explains the direction of layer reassignment; the individual changed term has not been isolated.",
+  "body_inside_boundary": "Static RGB excludes body pixels; the underlying static appearance there has no explicit static-RGB supervision. Do not call every dark contact pixel an outside-mask shadow or alpha hole.",
+  "causal_identification": false,
+  "edited_GT_available": false,
+  "human_GN11_verdict": null,
+  "next_training_started": false
+}

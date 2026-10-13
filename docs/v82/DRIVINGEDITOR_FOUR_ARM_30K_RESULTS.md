@@ -72,6 +72,10 @@ GN11−C00均值为RGB −0.00117593、alpha −0.00046566；RGB仍有9/49时刻
 
 ## NPS与SGCM：有效性及证据边界
 
+用户进一步提供旧S32k截图后，按同一真实raw20回看旧S与新C00：GT无几何错位，PNG最多1 byte舍入差，body mask完全相同。旧S普通道路动态alpha接近1、RGB覆盖100%，新C00该处alpha约0.0000153、RGB覆盖0.281%；普通道路静态MAE却近乎相同（0.00648/0.00642）。手工车底context中的821个body外暗像素，新静态更贴近观察GT中的暗接地/车影区；旧S静态较亮，动态在该处近不透明。479个body内像素被静态RGB目标排除，不能把它们当作车外shadow或移除GT。对应整帧非天空车外FP32静态PSNR为旧S30.754、新C0033.546 dB，动态alpha为0.530864/0.000210158；重建指标可提高，却不能证明删车后无车影。
+
+旧S与新C00的静态RGB同为系数1、相同mask补域公式，因此不能把新车影单独归因于“恢复静态RGB”。二者同时改变前景opacity .05→完整MSE100、dynamicRGB1→5、sky photo/寿命/速度等有效目标、depth decay、模块及训练轨迹（同30k起点续2k/50k horizon→从零30k/30k horizon）。旧S配置中的寿命/速度非零字段不在其实际paper分支调用内；新C00才重新激活。最有依据的机制解释是新监督限制了车外动态归属，但body-only标签漏掉车影，静态RGB仍要求拟合这些观察暗区；不把它升级为某一项的独立因果结论，也不认证旧S完全分离正确。[原配置、真实同帧像素与组件图](../autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/config_change_diagnosis_20261013/)。本次无新增训练或参数修改。
+
 NPS保留原Eq9的sum、L2范数、checkerboard四邻域、既有距离图与权重0.01。真实GN11的1/1000/10k/15k/20k/30k六节点损失及梯度有限，weighted值按0.01缩放。`static_feature`连接NPS，却与static RGB目标断连；日志中的feature比例0为**无效哨兵值**（`ratio_valid=false`），不能解释为两目标梯度平衡。`static_alpha`对两目标均连接，同一张量上的weighted NPS/static-RGB梯度L2比例20k约0.03309、30k约0.006283，可比较该中间张量量级，不能推断所有Gaussian参数的梯度平衡。[梯度与数值摘要](../autoresearch/worldsim_v82/drivingeditor_hybrid30k_20261012/r1/final_four_arm_20261013/quality_and_gradient_summary.json)。
 
 G10/GN11各记录145次SGCM，真实执行范围550–14950；地面距离0.5 m对应0.05模型单位。账目、每步新增额度、49视图guard及谱系同步检查通过。新增点准入使用static SHM中心投影、离散训练timestamp、temporal marginal>0.05、有效alpha≥1/255及view depth>0.2；两个split子点都检查。这是**几何/时间支撑代理**，无真实遮挡判断，不是逐Gaussian渲染贡献认证。每初始谱系至多一次SGCM clone，generic/SGCM后代继承spent状态；开启SGCM的恢复必须具备`sgcm_lineage_v1`。3M与每次净新增10k是SGCM预算，generic增密可能越过其旧阈值，不能宣称严格全局点数上限。

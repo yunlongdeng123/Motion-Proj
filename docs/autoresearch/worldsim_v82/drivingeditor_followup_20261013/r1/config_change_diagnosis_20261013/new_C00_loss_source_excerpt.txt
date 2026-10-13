@@ -1,0 +1,62 @@
+Source: hybrid30k_20261012/losses.py, lines130-190
+    是当前论文路径按 static alpha 归一化的静态速度图，二者不要混用。
+    """
+    reference = state["global_rgb"]
+    if not isinstance(reference, torch.Tensor) or reference.numel() != 1:
+        raise ValueError("global_rgb 必须是单元素损失 Tensor")
+    scalar_names = ("global_rgb", "dynamic_rgb", "sky_rgb", "static_rgb", "sky",
+                    "depth", "inverse_depth_smoothness", "velocity_smoothness")
+    raw = {name: _scalar(name, state, reference) for name in scalar_names}
+    time_eps = float(config.get("hybrid_time_reg_eps", 1e-8))
+    raw["dynamic_opacity"] = full_dynamic_opacity_mse(state["dynamic_alpha"], state["dynamic_mask"])
+    raw["static_duration"] = static_duration_loss(state["static_t_map"], time_eps)
+    raw["static_velocity"] = static_velocity_loss(state["static_v_map"])
+    raw["opacity_entropy"] = combined_opacity_entropy(state["alpha"])
+    nps_enabled = bool(config.get("hybrid_nps_enabled", False))
+    if nps_enabled:
+        if nps_fn is None:
+            raise ValueError("NPS 开启时必须传入原 paper_losses.nps_loss")
+        raw["nps"] = nps_fn(state["nps_features"], state["dynamic_mask"],
+                            state["nps_distances"])
+    else:
+        # 关闭 arm 完全不调用 NPS，也不创建距离图或消耗随机数。
+        raw["nps"] = reference.sum() * 0.0
+    decay = lidar_decay_factor(state["iteration"], config.get("lidar_decay", 1.0))
+    weights = {
+        "global_rgb": 1.0,
+        "dynamic_rgb": float(config.get("hybrid_lambda_dynamic_rgb", 5.0)),
+        "sky_rgb": float(config.get("hybrid_lambda_sky_rgb", 5.0)),
+        "static_rgb": float(config.get("hybrid_lambda_static_rgb", 1.0)),
+        "sky": float(config.get("paper_lambda_sky", 0.05)),
+        "depth": float(config.get("paper_lambda_depth", 0.1)) * decay,
+        "dynamic_opacity": float(config.get("hybrid_lambda_dynamic_opacity", 100.0)),
+        "static_duration": float(config.get("lambda_t_reg", 0.1)),
+        "static_velocity": float(config.get("lambda_v_reg", 0.01)),
+        "inverse_depth_smoothness": float(config.get("lambda_inv_depth", 0.1)),
+        "velocity_smoothness": float(config.get("lambda_v_smooth", 0.1)),
+        "opacity_entropy": float(config.get("lambda_opacity_entropy", 0.05)),
+        "nps": float(config.get("paper_lambda_nps", 0.01)) if nps_enabled else 0.0,
+    }
+    if any(not math.isfinite(weight) or weight < 0.0 for weight in weights.values()):
+        raise ValueError("全部损失权重必须为非负 finite 数")
+    weighted = {name: value * weights[name] for name, value in raw.items()}
+    total = sum(weighted.values(), reference.sum() * 0.0)
+    duration_mean = state["static_t_map"].detach().abs().mean().item()
+    result = HybridLossResult(total, raw, weighted, weights, {
+        "hybrid_depth_decay": decay,
+        "hybrid_nps_enabled": nps_enabled,
+        "hybrid_static_duration_mean_abs": float(duration_mean),
+        "hybrid_static_duration_guard_active": bool(duration_mean < time_eps),
+        "hybrid_time_reg_eps": time_eps,
+    })
+    if not bool(torch.isfinite(total).detach().item()):
+        raise FloatingPointError("Hybrid 总损失非 finite: " + str(result.log_values()))
+    return result
+
+
+def _gradient_metrics(gradient):
+    if gradient is None:
+        return {"connected": False, "finite": True, "l2": 0.0, "abs_mean": 0.0, "abs_max": 0.0}
+    gradient = gradient.detach()
+    finite = bool(torch.isfinite(gradient).all().item())
+    return {"connected": True, "finite": finite,
