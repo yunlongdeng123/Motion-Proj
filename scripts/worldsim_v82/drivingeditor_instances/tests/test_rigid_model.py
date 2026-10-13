@@ -1,5 +1,6 @@
 """CPU 合同测试：实例编辑、观测有效性、姿态梯度与完整优化状态恢复。"""
 
+import copy
 import math
 
 import numpy as np
@@ -287,6 +288,22 @@ def test_checkpoint_restores_every_parameter_adam_and_edit_then_continues_exactl
     restored.restore(captured)
     assert id(restored) == original_identity
     assert_tree_equal(captured, restored.capture())
+
+
+def test_restored_optimizer_update_cannot_modify_the_supplied_checkpoint():
+    original = model(refine_poses=True)
+    optimizer = original.make_optimizer()
+    training_loss(original).backward()
+    optimizer.step()
+    optimizer.zero_grad(set_to_none=True)
+    captured = original.capture()
+    immutable_reference = copy.deepcopy(captured)
+    # 同一个CPU checkpoint直接恢复，专门检查load_state_dict同设备tensor别名。
+    restored = RigidInstanceGaussianModel.from_capture(captured)
+    training_loss(restored).backward()
+    restored.optimizer.step()
+    assert_tree_equal(captured, immutable_reference)
+    assert not torch.equal(restored.local_xyz, captured['state_dict']['_xyz'])
 
 
 def test_densification_accumulates_duplicate_source_rows_and_prunes_low_opacity():

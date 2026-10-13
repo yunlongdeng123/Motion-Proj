@@ -1,0 +1,323 @@
+{
+  "task": "WS-V82-DRIVINGEDITOR-INSTANCES-20261013",
+  "spec": {
+    "schema": "drivingeditor_rigid_scene_spec_v1",
+    "scene_id": "scene0008_023_071",
+    "source_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/source/scene0008_023_071",
+    "source_scene": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1",
+    "prepared": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/prepared/scene0008_two_actor_v1",
+    "reference_config": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/training_configs/scene0008_023_071_GN11.json",
+    "background_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11/chkpnt30000.pth",
+    "environment_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/runs/scene0008_023_071_hybrid_30000_seed0_GN11/env_light_chkpnt30000.pth",
+    "matrix_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools",
+    "stage": "fixed_GT_trajectory_frozen_background_baseline",
+    "box_and_track_roles": "explicit_training_priors",
+    "test_views": "same49_training_reconstruction_no_heldout",
+    "nonrigid_targets": "unsupported_first_version",
+    "human_quality_verdict": null,
+    "StreetCrafter_priority": true,
+    "scope": "GMC reviewed two moving actors; parked vehicles retain original static branch"
+  },
+  "arguments": {
+    "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/specs/scene0008_023_071.json",
+    "output": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke",
+    "run": true,
+    "resume": null,
+    "geometry_only_smoke": false,
+    "iterations": 300,
+    "seed": 0,
+    "joint_background": false,
+    "refine_poses_after": 0,
+    "pose_translation_limit_m": 0.5,
+    "box_boundary_weight": 1.0,
+    "pose_prior_weight": 0.01,
+    "max_features": 10,
+    "gpu_lock": "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock"
+  },
+  "seed": 0,
+  "trajectory": "fixed_genuine_track_pose_until_explicit_refine_stage",
+  "vehicle_PVG_motion": false,
+  "stationary_vehicles_included": true,
+  "background": "GN11_30k_prior_pruned_by_all_vehicle_boxes",
+  "background_frozen": true,
+  "background_exclusion": {
+    "criterion": "any_valid_frame_Gaussian_SHM_center_in_exact_instance_box",
+    "removed_points": 32932,
+    "remaining_points": 613405,
+    "stationary_included": true,
+    "shadow_or_Gaussian_extent_cleanup_verified": false
+  },
+  "new_SGCM_clones": false,
+  "SGCM": "inherited_30k_background; rigid_clone_prune_is_separate",
+  "NPS": "original_formula_if_enabled_in_reference; not_absolute_static_guarantee",
+  "opacity": "100 * equal_known_instance_mean(full_HxW_MSE_of_joint_visible_contribution)",
+  "unknown_mask_targets": "excluded",
+  "pixel_masks": {
+    "selection": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_dual_actor_selection.inherited.json",
+    "source_scene": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0008_023_071_fresh30k_v2_groundonly",
+    "status": "real_reviewed_partial_mapping",
+    "known_pairs": 98,
+    "unknown_pairs": 0,
+    "categorical_label": "instance index + 1; zero=unassigned",
+    "zero_label_is_not_a_known_background_when_mapping_incomplete": true,
+    "mask_generation": "exact reviewed DEVA IDs / exact real reviewed SAM candidates; no GT-box masks",
+    "frames": [
+      {
+        "frame_id": "0008023",
+        "known_instances": 2,
+        "reviewed_body_pixels": 202117
+      },
+      {
+        "frame_id": "0008024",
+        "known_instances": 2,
+        "reviewed_body_pixels": 209388
+      },
+      {
+        "frame_id": "0008025",
+        "known_instances": 2,
+        "reviewed_body_pixels": 191223
+      },
+      {
+        "frame_id": "0008026",
+        "known_instances": 2,
+        "reviewed_body_pixels": 159415
+      },
+      {
+        "frame_id": "0008027",
+        "known_instances": 2,
+        "reviewed_body_pixels": 121141
+      },
+      {
+        "frame_id": "0008028",
+        "known_instances": 2,
+        "reviewed_body_pixels": 68609
+      },
+      {
+        "frame_id": "0008029",
+        "known_instances": 2,
+        "reviewed_body_pixels": 13853
+      },
+      {
+        "frame_id": "0008030",
+        "known_instances": 2,
+        "reviewed_body_pixels": 10117
+      },
+      {
+        "frame_id": "0008031",
+        "known_instances": 2,
+        "reviewed_body_pixels": 10703
+      },
+      {
+        "frame_id": "0008032",
+        "known_instances": 2,
+        "reviewed_body_pixels": 11814
+      },
+      {
+        "frame_id": "0008033",
+        "known_instances": 2,
+        "reviewed_body_pixels": 12453
+      },
+      {
+        "frame_id": "0008034",
+        "known_instances": 2,
+        "reviewed_body_pixels": 13300
+      },
+      {
+        "frame_id": "0008035",
+        "known_instances": 2,
+        "reviewed_body_pixels": 14340
+      },
+      {
+        "frame_id": "0008036",
+        "known_instances": 2,
+        "reviewed_body_pixels": 15785
+      },
+      {
+        "frame_id": "0008037",
+        "known_instances": 2,
+        "reviewed_body_pixels": 17096
+      },
+      {
+        "frame_id": "0008038",
+        "known_instances": 2,
+        "reviewed_body_pixels": 18566
+      },
+      {
+        "frame_id": "0008039",
+        "known_instances": 2,
+        "reviewed_body_pixels": 20860
+      },
+      {
+        "frame_id": "0008040",
+        "known_instances": 2,
+        "reviewed_body_pixels": 22962
+      },
+      {
+        "frame_id": "0008041",
+        "known_instances": 2,
+        "reviewed_body_pixels": 24426
+      },
+      {
+        "frame_id": "0008042",
+        "known_instances": 2,
+        "reviewed_body_pixels": 27069
+      },
+      {
+        "frame_id": "0008043",
+        "known_instances": 2,
+        "reviewed_body_pixels": 29899
+      },
+      {
+        "frame_id": "0008044",
+        "known_instances": 2,
+        "reviewed_body_pixels": 33229
+      },
+      {
+        "frame_id": "0008045",
+        "known_instances": 2,
+        "reviewed_body_pixels": 36773
+      },
+      {
+        "frame_id": "0008046",
+        "known_instances": 2,
+        "reviewed_body_pixels": 42946
+      },
+      {
+        "frame_id": "0008047",
+        "known_instances": 2,
+        "reviewed_body_pixels": 49003
+      },
+      {
+        "frame_id": "0008048",
+        "known_instances": 2,
+        "reviewed_body_pixels": 55960
+      },
+      {
+        "frame_id": "0008049",
+        "known_instances": 2,
+        "reviewed_body_pixels": 64787
+      },
+      {
+        "frame_id": "0008050",
+        "known_instances": 2,
+        "reviewed_body_pixels": 76923
+      },
+      {
+        "frame_id": "0008051",
+        "known_instances": 2,
+        "reviewed_body_pixels": 90662
+      },
+      {
+        "frame_id": "0008052",
+        "known_instances": 2,
+        "reviewed_body_pixels": 108966
+      },
+      {
+        "frame_id": "0008053",
+        "known_instances": 2,
+        "reviewed_body_pixels": 137365
+      },
+      {
+        "frame_id": "0008054",
+        "known_instances": 2,
+        "reviewed_body_pixels": 169862
+      },
+      {
+        "frame_id": "0008055",
+        "known_instances": 2,
+        "reviewed_body_pixels": 206979
+      },
+      {
+        "frame_id": "0008056",
+        "known_instances": 2,
+        "reviewed_body_pixels": 230278
+      },
+      {
+        "frame_id": "0008057",
+        "known_instances": 2,
+        "reviewed_body_pixels": 249964
+      },
+      {
+        "frame_id": "0008058",
+        "known_instances": 2,
+        "reviewed_body_pixels": 214661
+      },
+      {
+        "frame_id": "0008059",
+        "known_instances": 2,
+        "reviewed_body_pixels": 178431
+      },
+      {
+        "frame_id": "0008060",
+        "known_instances": 2,
+        "reviewed_body_pixels": 132451
+      },
+      {
+        "frame_id": "0008061",
+        "known_instances": 2,
+        "reviewed_body_pixels": 47366
+      },
+      {
+        "frame_id": "0008062",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008063",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008064",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008065",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008066",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008067",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008068",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008069",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008070",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008071",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      }
+    ]
+  },
+  "anisotropic_split": false,
+  "motion_model": "fixed_local_Gaussians_plus_track_rigid_transform",
+  "GPU_admission": {
+    "status": "GPU_ADMISSION_AVAILABLE",
+    "allowed": true,
+    "streetcrafter_processes": [],
+    "other_compute_processes": [],
+    "query_error": null,
+    "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+  },
+  "restoration_verified": false
+}

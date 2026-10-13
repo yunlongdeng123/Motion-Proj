@@ -721,7 +721,8 @@ class RigidInstanceGaussianModel(nn.Module):
             if optimizer_class is None:
                 raise ValueError("unsupported saved optimizer")
             model.optimizer = optimizer_class(groups)
-            model.optimizer.load_state_dict(saved_optimizer["state_dict"])
+            # 同设备/同dtype时PyTorch可能复用state tensor；恢复后的Adam不能改写输入checkpoint。
+            model.optimizer.load_state_dict(copy.deepcopy(saved_optimizer["state_dict"]))
         return model
 
     def restore(self, checkpoint: Mapping[str, Any], *, restore_optimizer: bool = True) -> torch.optim.Optimizer | None:

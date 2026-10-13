@@ -275,7 +275,10 @@ def test_training_failure_seeds_before_loading_and_closes_monitor_as_failed(tmp_
         raise RuntimeError("controlled_CPU_boundary_failure")
     monkeypatch.setattr(train, "load_models", fail_load)
     args = SimpleNamespace(output=str(tmp_path / "run"), iterations=1, resume=None, joint_background=False,
-                           seed=41, gpu_lock=str(tmp_path / "never-real-gpu.lock"))
+                           seed=41, gpu_lock=str(tmp_path / "never-real-gpu.lock"), refine_poses_after=0,
+                           pose_translation_limit_m=.5, box_boundary_weight=1., pose_prior_weight=.01,
+                           max_features=10, geometry_only_smoke=False)
+    Path(spec['reference_config']).write_text(json.dumps({'iterations': 30000}), encoding='utf-8')
     old_rng = (random.getstate(), np.random.get_state(), torch.get_rng_state())
     try:
         with pytest.raises(RuntimeError, match="controlled_CPU_boundary_failure"):

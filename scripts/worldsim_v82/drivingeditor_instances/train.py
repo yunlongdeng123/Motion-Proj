@@ -11,9 +11,13 @@ import time
 if __package__:
     from .runtime import validate_spec, load_models, masks_for_frame
     from .priority import inspect_priority, require_gpu_slot
+    from .training_policy import resolve_training_policy, validate_resume_checkpoint
+    from .restore_contract import verify_runtime_restore
 else:
     from runtime import validate_spec, load_models, masks_for_frame
     from priority import inspect_priority, require_gpu_slot
+    from training_policy import resolve_training_policy, validate_resume_checkpoint
+    from restore_contract import verify_runtime_restore
 
 
 def instance_mask_objective(package, masks, known, expected_instance_ids=None):
@@ -30,7 +34,7 @@ def instance_mask_objective(package, masks, known, expected_instance_ids=None):
     return visible_instance_loss(package['instance_visible_contribution'], masks, known)
 
 
-def save_checkpoint(output, step, static, instances, optimizer, environment, sampler, spec, exclusion, *, suffix=''):
+def save_checkpoint(output, step, static, instances, optimizer, environment, sampler, spec, exclusion, *, training_policy, suffix=''):
     import numpy as np
     import torch
     path = Path(output) / ('checkpoint_%06d%s.pt' % (step, suffix))
@@ -42,7 +46,7 @@ def save_checkpoint(output, step, static, instances, optimizer, environment, sam
                 'sampler': sampler.getstate(), 'python_rng': random.getstate(),
                 'numpy_rng': np.random.get_state(), 'torch_rng': torch.get_rng_state(),
                 'cuda_rng': torch.cuda.get_rng_state_all(),
-                'restoration_verified': False}
+                'training_policy': training_policy, 'restoration_verified': False}
     temporary = path.with_suffix('.pt.partial')
     torch.save(captured, temporary)
     os.replace(temporary, path)
@@ -77,6 +81,16 @@ def run(args, spec, readiness):
         restored = torch.load(args.resume, map_location='cuda', weights_only=False) if args.resume else None
         if restored is not None and (restored['schema'] != 'drivingeditor_rigid_scene_v1' or restored['spec'] != spec):
             raise ValueError('恢复场景、输入与checkpoint合同不符')
+        raw_reference = json.loads(Path(spec['reference_config']).read_text(encoding='utf-8-sig'))
+        training_policy = resolve_training_policy(vars(args), raw_reference)
+        resume_contract = None
+        if restored is not None:
+            resume_contract = validate_resume_checkpoint(restored, training_policy, args.iterations,
+                legacy_effective_config=Path(args.resume).parent / 'effective_config.json',
+                legacy_reference_config=spec['reference_config'],
+                legacy_reference_provenance={'role': 'actual existing scene0008 GN11 reference used by the 300-step run',
+                    'historical_raw_config_snapshot_was_not_saved_in_300_step_checkpoint': True})
+            (output / 'resume_policy_contract.json').write_text(json.dumps(resume_contract, ensure_ascii=False, indent=2), encoding='utf-8')
         with monitor.phase('initialization'):
             config, scene, static, instances, optimizer, environment, exclusion = load_models(spec, output, freeze_background=not args.joint_background, restore=restored)
         from utils.hybrid30k_losses import compose_hybrid_loss
@@ -102,15 +116,23 @@ def run(args, spec, readiness):
         sampler = random.Random(args.seed)
         first = 1
         if restored is not None:
-            first = restored['step'] + 1
+            first = resume_contract['first_step']
             sampler.setstate(restored['sampler'])
             random.setstate(restored['python_rng']); np.random.set_state(restored['numpy_rng'])
             torch.set_rng_state(restored['torch_rng'].cpu())
             torch.cuda.set_rng_state_all([state.cpu() for state in restored['cuda_rng']])
+            # Keep a fresh golden load: legacy restore can consume optimizer
+            # wrapper metadata in the original object passed to load_models.
+            golden = torch.load(args.resume, map_location='cpu', weights_only=False)
+            with monitor.phase('runtime_restore_verification', iteration=restored['step']):
+                restore_receipt = verify_runtime_restore(golden, static, instances, optimizer, environment, sampler)
+            restore_receipt['checkpoint_path'] = args.resume
+            (output / 'runtime_restore_contract.json').write_text(json.dumps(restore_receipt, ensure_ascii=False, indent=2), encoding='utf-8')
+            del golden
         effective = {'task': 'WS-V82-DRIVINGEDITOR-INSTANCES-20261013', 'spec': spec, 'arguments': vars(args),
                      'seed': args.seed, 'trajectory': 'fixed_genuine_track_pose_until_explicit_refine_stage',
                      'vehicle_PVG_motion': False, 'stationary_vehicles_included': True,
-                     'background': 'GN11_30k_prior_pruned_by_all_vehicle_boxes', 'background_frozen': not args.joint_background,
+                     'background': 'GN11_30k_prior_pruned_by_selected_instance_boxes', 'background_frozen': not args.joint_background,
                      'background_exclusion': exclusion,
                      'new_SGCM_clones': False, 'SGCM': 'inherited_30k_background; rigid_clone_prune_is_separate',
                      'NPS': 'original_formula_if_enabled_in_reference; not_absolute_static_guarantee',
@@ -118,6 +140,8 @@ def run(args, spec, readiness):
                      'unknown_mask_targets': 'excluded', 'pixel_masks': readiness['masks'],
                      'anisotropic_split': False, 'motion_model': 'fixed_local_Gaussians_plus_track_rigid_transform',
                      'GPU_admission': admission, 'restoration_verified': False}
+        effective['training_policy'] = training_policy
+        effective['resume_policy_contract'] = resume_contract
         (output / 'effective_config.json').write_text(json.dumps(effective, ensure_ascii=False, indent=2), encoding='utf-8')
         image_directory = output / 'preview'; image_directory.mkdir()
         started = time.monotonic()
@@ -126,7 +150,8 @@ def run(args, spec, readiness):
                 priority = inspect_priority()
                 if not priority['allowed']:
                     with monitor.phase('priority_yield_checkpoint', iteration=step-1):
-                        saved = save_checkpoint(output, step-1, static, instances, optimizer, environment, sampler, spec, exclusion, suffix='_priority_yield')
+                        saved = save_checkpoint(output, step-1, static, instances, optimizer, environment, sampler, spec, exclusion,
+                                                training_policy=training_policy, suffix='_priority_yield')
                     (output / 'status.json').write_text(json.dumps({'state': 'yielded_to_priority_work', 'step': step-1,
                         'resume_checkpoint': str(saved), 'priority': priority}, ensure_ascii=False, indent=2), encoding='utf-8')
                     final_status = 'yielded_to_priority_work'
@@ -181,6 +206,10 @@ def run(args, spec, readiness):
             loss = result.total + 100 * mask_loss + args.box_boundary_weight * boundary + args.pose_prior_weight * pose['total']
             if not torch.isfinite(loss): raise FloatingPointError('实例训练loss非finite')
             loss.backward()
+            gradient_checks = [torch.isfinite(parameter.grad).all() for group in optimizer.param_groups
+                               for parameter in group['params'] if parameter.grad is not None]
+            if not gradient_checks or not bool(torch.stack(gradient_checks).all()):
+                raise FloatingPointError('实例优化梯度缺失或非finite，停止并保留资产')
             optimizer.step(); optimizer.zero_grad(set_to_none=True)
             if args.joint_background:
                 static.optimizer.step(); static.optimizer.zero_grad(set_to_none=True)
@@ -193,13 +222,15 @@ def run(args, spec, readiness):
                           'instance_mask_loss': float(mask_loss.detach()), 'known_instances': int(mask_known.sum()),
                           'box_boundary': float(boundary.detach()), 'pose_prior': float(pose['total'].detach()),
                           'instance_points': instances.num_points, 'background_points': len(static.get_xyz),
+                          'instance_optimizer_gradients_finite': True,
                           'steps_per_second': (step-first+1) / (time.monotonic()-started)}
                 with (output / 'steps.jsonl').open('a', encoding='utf-8') as stream: stream.write(json.dumps(record) + '\n')
                 (output / 'status.json').write_text(json.dumps(dict(record, state='running')), encoding='utf-8')
                 print(json.dumps(record), flush=True)
             if step % 10000 == 0 or step == args.iterations:
                 with monitor.phase('checkpoint', iteration=step):
-                    save_checkpoint(output, step, static, instances, optimizer, environment, sampler, spec, exclusion)
+                    save_checkpoint(output, step, static, instances, optimizer, environment, sampler, spec, exclusion,
+                                    training_policy=training_policy)
                 with monitor.phase('preview', iteration=step):
                     for name in ('render', 'render_s', 'raw_render_d'):
                         pixels = (package[name].detach().clamp(0, 1).permute(1, 2, 0).cpu().numpy() * 255).round().astype(np.uint8)

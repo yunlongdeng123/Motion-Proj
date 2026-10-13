@@ -110,8 +110,17 @@ def main():
                 background = torch.zeros(3, device='cuda')
                 before = render(camera, static, instances, config, background, **options)
                 after = render(camera, static, instances, config, background, edits=edits, **options)
+                before_world = instances.evaluate(camera.timestamp)
+                after_world = instances.evaluate(camera.timestamp, edits=edits)
+                target_index = instances.instance_ids.index(args.track)
+                other_before = before_world.point_ids != target_index
+                other_after = after_world.point_ids != target_index
+                other_unchanged = torch.equal(before_world.row_ids[other_before], after_world.row_ids[other_after]) and all(
+                    torch.equal(getattr(before_world, key)[other_before], getattr(after_world, key)[other_after])
+                    for key in ('xyz', 'rotation', 'scaling', 'features', 'opacity'))
+                if not other_unchanged: raise AssertionError('单实例编辑修改了其他实例Gaussian')
                 data = {'gt': camera.original_image, 'before': before['render'], 'after': after['render'],
-                        'static': before['render_s'], 'before_vehicles': before['raw_render_d'], 'after_vehicles': after['raw_render_d'],
+                        'static': before['render_s'], 'after_static': after['render_s'], 'before_vehicles': before['raw_render_d'], 'after_vehicles': after['raw_render_d'],
                         'before_target_visible': before['instance_visible_contribution'], 'after_target_visible': after['instance_visible_contribution']}
                 prefix = '%03d_%s' % (frame, Path(camera.image_name).stem)
                 arrays = {key: value.detach().cpu().float().numpy() for key, value in data.items()}
@@ -126,6 +135,7 @@ def main():
                 if not unchanged: raise AssertionError('单实例编辑改变了独立静态渲染')
                 records.append({'frame': frame, 'frame_id': camera.image_name, 'timestamp': camera.timestamp,
                                 'target_track_valid': valid, 'static_render_bitwise_unchanged': unchanged,
+                                'other_instance_Gaussians_bitwise_unchanged': other_unchanged,
                                 'pixel_RGB_MAE': float((before['render']-after['render']).abs().mean()),
                                 'other_visible_pixels_may_change_due_to_occlusion': True,
                                 'paired_edited_GT_available': False})

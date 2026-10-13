@@ -1,8 +1,8 @@
 {
   "task_id": "WS-V82-DRIVINGEDITOR-INSTANCES-20261013",
   "run_id": "r1",
-  "updated_sgt": "2026-10-13T19:51:12.274453+08:00",
-  "state": "CPU_INFRA_VALIDATED_GMC_GPU_SMOKE_QUEUED",
+  "updated_sgt": "2026-10-14T00:10:45.044812+08:00",
+  "state": "GMC_FIXED_GT_INSTANCE_30000_CONTINUATION_RUNNING",
   "scope": "GMC scene0008 raw23..71 two moving actors only",
   "latest_user_scope_source": "2026-10-13: 3个场景中只有一个多实例，用该场景测，可GPU/多线程CPU但不能挤其他任务",
   "training_priors": [
@@ -19,7 +19,7 @@
     "known_mask_pairs": 98,
     "mask_pairs": 98,
     "retained_static_seed_points": 579855,
-    "actual_warmstarted_static_points_after_GPU_exclusion": null,
+    "actual_warmstarted_static_points_after_GPU_exclusion": 613405,
     "tracks": [
       {
         "raw_track": "NoQttdyd4C16Y_zkGhiFKg",
@@ -38,23 +38,94 @@
     ]
   },
   "validation": {
-    "CPU_tests_passed": 67,
+    "CPU_tests_passed": 114,
     "CUDA_tests_pending": 1,
     "local_real_GMC49_CPU_edit_contract": "PASS",
     "target_Python39_real_GMC49_CPU_edit_contract": "PASS",
-    "GPU_training_started": false,
+    "GPU_training_started": true,
     "core_CPU_state_restore_exact": true,
-    "full_scene_GPU_model_Adam_RNG_restore_verified": false,
+    "full_scene_GPU_model_Adam_RNG_restore_verified": true,
     "photoreal_edit_quality_verified": false,
-    "human_quality_verdict": null
+    "human_quality_verdict": null,
+    "CPU_suite_CUDA_skip": 1,
+    "actual_standalone_CUDA_joint_occlusion_gradient_contract": "PASS",
+    "runtime_restore_scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+    "deterministic_next_step_parity_verified": false,
+    "six_edit_operations_actual_observed_frame_pairs": 294,
+    "actual_FP32_edit_contract_passed": true
   },
   "queue": {
-    "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1",
-    "pid": 20065,
-    "state": "waiting_for_other_tasks",
-    "first_GPU_test_steps": 300,
-    "max_wait_hours": 24,
-    "poll_seconds": 300,
+    "initial_smoke_queue_state": "GMC_GPU_SMOKE_COMPLETE_EDIT_VISUAL_REVIEW_PENDING",
+    "initial_queue_pid": 20065,
+    "initial_queue_exited": true,
+    "smoke_worker_pid": 28170,
+    "smoke_worker_exited": true,
+    "edit_controller_pid": 31353,
+    "edit_controller_exited": true,
+    "edits_state": "SIX_REAL_EDIT_EXPORTS_COMPLETE_REVIEW_PENDING",
+    "continuation_launch": {
+      "pid": 37747,
+      "command": [
+        "nice",
+        "-n",
+        "10",
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-B",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/infra/train.py",
+        "--spec",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/specs/scene0008_023_071.json",
+        "--resume",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke/checkpoint_000300.pt",
+        "--iterations",
+        "30000",
+        "--seed",
+        "0",
+        "--output",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1",
+        "--run"
+      ],
+      "utc": "2026-10-13T16:07:01.796510+00:00",
+      "admission": {
+        "status": "GPU_ADMISSION_AVAILABLE",
+        "allowed": true,
+        "streetcrafter_processes": [],
+        "other_compute_processes": [],
+        "query_error": null,
+        "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+      },
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1",
+      "resume_step": 300,
+      "first_step": 301,
+      "target_total_steps": 30000,
+      "new_updates_budget": 29700,
+      "checkpoint_steps": [
+        10000,
+        20000,
+        30000
+      ],
+      "background_frozen": true,
+      "trajectory_fixed": true,
+      "new_SGCM_clones": false,
+      "CPU_max_threads": 4,
+      "nice": 10,
+      "other_tasks_modified": false,
+      "automatic_retries": false
+    },
+    "latest_run_status": {
+      "step": 1100,
+      "frame": "0008036",
+      "loss": 0.27125778794288635,
+      "instance_mask_loss": 0.0009199939668178558,
+      "known_instances": 2,
+      "box_boundary": 1.385061665359899e-07,
+      "pose_prior": 0.0,
+      "instance_points": 298075,
+      "background_points": 613405,
+      "instance_optimizer_gradients_finite": true,
+      "steps_per_second": 6.049495215548804,
+      "state": "running"
+    },
     "background_frozen": true,
     "pose_refinement_enabled": false,
     "new_SGCM_clones": false
@@ -103,6 +174,18 @@
       "resolution": "used existing DrivingEditor interpreter without environment install",
       "failed_partial_preserved": true,
       "scientific_negative": false
+    },
+    {
+      "phase": "optional CUDA test runner",
+      "issue": "shared Python39 environment lacks pytest; stopped before Torch/GPU",
+      "resolution": "standalone actual installed CUDA test; no environment install",
+      "scientific_negative": false
+    },
+    {
+      "phase": "CPU restore guard",
+      "issue": "restored Adam aliased checkpoint input tensors",
+      "resolution": "deep-copy optimizer load and regression; real GPU golden state proof passed",
+      "scientific_negative": false
     }
   ],
   "limits": [
@@ -113,5 +196,2910 @@
     "fixed topology first, clone/prune API supported but not anisotropic split",
     "background Gaussian-center box removal can retain cross-boundary extent/shadows",
     "shared GPU admission cannot replace real runtime validation"
-  ]
+  ],
+  "GPU_smoke": {
+    "steps": 300,
+    "wall_seconds": 59.44220425095409,
+    "memory": {
+      "schema_version": 1,
+      "started_utc": "2026-10-13T15:01:14.061842+00:00",
+      "monitor_status": "closed",
+      "run_status": "complete",
+      "error": null,
+      "pid": 28170,
+      "torch_device": "0",
+      "nvidia_device": "0",
+      "iteration": 300,
+      "expected_iterations": 300,
+      "wall_seconds": 59.44220425095409,
+      "phase_stack": [],
+      "pytorch": {
+        "peak_allocated_bytes": 2260377600,
+        "peak_reserved_bytes": 3766484992,
+        "current_allocated_bytes": 1182760960,
+        "current_reserved_bytes": 3766484992
+      },
+      "nvidia_smi": {
+        "device_uuid": "GPU-07caccc9-ee08-6cc5-d414-ec484ee3c1b0",
+        "device_index": 0,
+        "device_name": "NVIDIA GeForce RTX 4080 SUPER",
+        "device_total_bytes": 34351349760,
+        "current_process_used_bytes": 4123000832,
+        "current_device_used_bytes": 4133486592,
+        "process_peak_used_bytes": 4123000832,
+        "device_peak_used_bytes": 4133486592
+      },
+      "sampling": {
+        "interval_seconds": 1.0,
+        "samples": 60,
+        "samples_with_errors": 0,
+        "valid_device_samples": 60,
+        "valid_pid_present_samples": 50,
+        "phase_boundary_samples": 2,
+        "sampled_peaks_are_lower_bounds": true,
+        "query_timeout_seconds": 2.0,
+        "nvidia_smi_executable": "/usr/bin/nvidia-smi",
+        "linux_launch_policy": "posix_spawn_fastpath_required; no_fork_fallback"
+      },
+      "phases": {
+        "initialization": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 14.343345935456455,
+          "wall_seconds_exclusive": 14.343345935456455,
+          "sample_count": 13,
+          "peak_allocated_bytes": 1455966720,
+          "peak_reserved_bytes": 1501560832,
+          "process_peak_used_bytes": 1698693120,
+          "device_peak_used_bytes": 1709178880,
+          "current_allocated_bytes": 866878464,
+          "current_reserved_bytes": 1501560832
+        },
+        "checkpoint": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 1.5938556315377355,
+          "wall_seconds_exclusive": 1.5938556315377355,
+          "sample_count": 1,
+          "peak_allocated_bytes": 1183376384,
+          "peak_reserved_bytes": 3766484992,
+          "process_peak_used_bytes": 4123000832,
+          "device_peak_used_bytes": 4133486592,
+          "current_allocated_bytes": 1182760960,
+          "current_reserved_bytes": 3766484992
+        },
+        "preview": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 0.23178782779723406,
+          "wall_seconds_exclusive": 0.23178782779723406,
+          "sample_count": 0,
+          "peak_allocated_bytes": 1185219072,
+          "peak_reserved_bytes": 3766484992,
+          "current_allocated_bytes": 1182760960,
+          "current_reserved_bytes": 3766484992
+        },
+        "training": {
+          "count": 1,
+          "failed_count": 0,
+          "wall_seconds": 44.96720973029733,
+          "wall_seconds_exclusive": 43.14156627096236,
+          "sample_count": 45,
+          "peak_allocated_bytes": 2260377600,
+          "peak_reserved_bytes": 3766484992,
+          "process_peak_used_bytes": 4123000832,
+          "device_peak_used_bytes": 4133486592,
+          "current_allocated_bytes": 1182760960,
+          "current_reserved_bytes": 3766484992
+        }
+      },
+      "phase_attribution": {
+        "pytorch_peak_scope": "inclusive_of_children_and_live_entry_allocations",
+        "nvidia_boundary_samples": "overall_only_when_any_phase_boundary_crossed_during_queries",
+        "torch_peak_resets": 6,
+        "torch_reset_errors": 0,
+        "requires_exclusive_ownership_of_torch_peak_resets": true,
+        "wall_time_scope": "host_elapsed; parent_inclusive; exclusive_subtracts_child_wall"
+      },
+      "rtx3090_assessment": {
+        "status": "single_run_observed_within_budget_requires_four_arms_and_target_gpu_validation",
+        "certified_fit": false,
+        "reference_capacity_bytes": 25769803776,
+        "headroom_bytes": 2147483648,
+        "preliminary_budget_bytes": 23622320128,
+        "observed_lower_bound_bytes": 4133486592,
+        "device_samples_include_other_processes": true,
+        "four_arms_30000_iterations_all_phases_required": true,
+        "target_3090_validation_required": true,
+        "caveat": "Polling misses brief peaks; allocator peaks exclude non-PyTorch CUDA use. 30k densification, evaluation/LPIPS and checkpoints must be covered. A sampled or allocator peak below 24 GiB does not certify fit or speed."
+      },
+      "error_count": 0,
+      "recent_errors": [],
+      "extra": {}
+    },
+    "assessment": "300-step observation only; full new 30k/evaluation and target3090 validation pending"
+  },
+  "edit_smoke": {
+    "engineering_contract": {
+      "operation_count": 6,
+      "frames_per_operation": 49,
+      "verified_FP32_pairs": 294,
+      "native_width": 480,
+      "native_height": 320,
+      "all_FP32_finite": true,
+      "GT_before_static_vehicles_bitwise_paired_across_operations": true,
+      "static_before_after_bitwise_verified_from_saved_FP32": true,
+      "other_instance_world_tensors_invariance": "GPU execution receipt; independent CPU model restore not performed",
+      "GT_reference_PNG_verified": true,
+      "GT_reference_max_byte_delta": 0,
+      "all_delete_target_contributions_exact_zero": true,
+      "passed": true
+    },
+    "observed_body_mean_visible_contribution": {
+      "pickup": 0.6436620042447048,
+      "Jeep": 0.5882779549418532
+    },
+    "nonempty_mask_frames": [
+      7,
+      39
+    ],
+    "empty_mask_frames": [
+      42,
+      10
+    ],
+    "actual_contact_pages": 84,
+    "engineering_reviews": {
+      "actor0_engineering_visual_review.json": {
+        "status": "ACTUAL49_ACTOR0_ENGINEERING_VISUAL_REVIEW_COMPLETE_QUALITY_UNRESOLVED",
+        "recorded_utc": "2026-10-13T16:04:36.083652+00:00",
+        "scene": "GMC scene0008 raw23..71, two genuine dynamic instances",
+        "checkpoint_training_steps": 300,
+        "scope": "actor0皮卡删除、平移0.5m、旋转30°；全部49真实观测相机/时间",
+        "actor": {
+          "instance_index": 0,
+          "raw_track_id": "NoQttdyd4C16Y_zkGhiFKg",
+          "DEVA_instance_id": 77,
+          "original_FRONT_visible_raw_frames": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "laser_valid_frames": 49,
+          "reviewed_mask_known_frames": 49
+        },
+        "other_actor": {
+          "instance_index": 1,
+          "raw_track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+          "DEVA_instance_id": 82,
+          "original_FRONT_visible_raw_frames": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61
+          ]
+        },
+        "evidence": {
+          "local_root": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_edit_smoke_300_r1\\all_contacts",
+          "metadata": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_edit_smoke_300_r1\\all_contacts\\contacts.json",
+          "actual_image_files_visually_viewed": [
+            "actor0_delete_roi_00.png",
+            "actor0_delete_roi_01.png",
+            "actor0_delete_roi_02.png",
+            "actor0_delete_roi_03.png",
+            "actor0_delete_roi_04.png",
+            "actor0_delete_roi_05.png",
+            "actor0_delete_roi_06.png",
+            "actor0_translate_roi_00.png",
+            "actor0_translate_roi_01.png",
+            "actor0_translate_roi_02.png",
+            "actor0_translate_roi_03.png",
+            "actor0_translate_roi_04.png",
+            "actor0_translate_roi_05.png",
+            "actor0_translate_roi_06.png",
+            "actor0_rotate_roi_00.png",
+            "actor0_rotate_roi_01.png",
+            "actor0_rotate_roi_02.png",
+            "actor0_rotate_roi_03.png",
+            "actor0_rotate_roi_04.png",
+            "actor0_rotate_roi_05.png",
+            "actor0_rotate_roi_06.png",
+            "actor0_delete_full_00.png",
+            "actor0_translate_full_00.png",
+            "actor0_rotate_full_00.png"
+          ],
+          "ROI_pages_viewed": 21,
+          "full_pages_viewed": 3,
+          "frames_reviewed_per_operation": 49,
+          "total_operation_frame_pairs_reviewed": 147,
+          "coverage": "每操作ROI00覆盖raw23..29；ROI01..06覆盖raw30..71且因真实mask空而使用完整480x320视图；另看每操作full00核对7个可见帧全图足迹和保留车辆。",
+          "quality_inferred_from_receipt_only": false,
+          "fixture_images_used": false,
+          "source_summary_provenance": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/metadata/edit_smoke_300_summary_r1.json"
+        },
+        "engineering_response": {
+          "delete": {
+            "response_observed": true,
+            "findings": "raw23..29目标皮卡的可见贡献和黑色轮廓消失；raw30..71原不可见42帧未见目标重现或随删除消失的停车车辆。",
+            "pixel_exact_zero_independently_recomputed": false
+          },
+          "translate": {
+            "requested_meters": 0.5,
+            "response_observed": true,
+            "findings": "raw23..28皮卡轮廓及可见贡献位置响应编辑；raw29极窄原生边缘及full页显示其基本出界。raw30..71未见新增可辨认目标足迹。",
+            "metric_translation_independently_estimated_from_pixels": null
+          },
+          "rotate": {
+            "requested_degrees": 30,
+            "response_observed": true,
+            "findings": "raw23..27轮廓和覆盖形态响应旋转，raw28..29左边界截断明显/基本出界；raw30..71未见新增可辨认目标足迹。",
+            "angle_independently_estimated_from_pixels": null
+          },
+          "other_instance_and_static_visual_scope": "未见Jeep或前景停车Corolla随actor0删除/变换一起被移除；遮挡引起的可见贡献变化与参数不变应分别核对，本review不代替GPU状态/贡献合同。",
+          "compatibility_conclusion": "真实像素支持选择的actor0独立编辑路径已响应；未观察到阻止工程继续验证的整场景破坏或明显错对象。"
+        },
+        "unresolved_visual_issues": [
+          {
+            "id": "A0-V01",
+            "raw_frames": [
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29
+            ],
+            "category": "未收敛车体",
+            "finding": "before300皮卡半透明发黑，透出道路标线，车身/车轮纹理重复波纹或模糊；平移后仍保留。",
+            "evidence": [
+              "actor0_translate_roi_00.png",
+              "actor0_translate_full_00.png"
+            ]
+          },
+          {
+            "id": "A0-V02",
+            "raw_frames": [
+              23,
+              24,
+              25,
+              26,
+              27,
+              28
+            ],
+            "category": "背景patch与残影",
+            "finding": "删除后原车体/车底位置仍有大片浅灰模糊道路patch及局部暗椭圆痕迹，raw24..27明显；没有完整车辆删除后的真实GT，不能认定干净补景或去影成功。",
+            "evidence": [
+              "actor0_delete_roi_00.png",
+              "actor0_delete_full_00.png"
+            ]
+          },
+          {
+            "id": "A0-V03",
+            "raw_frames": [
+              23,
+              24,
+              25,
+              26,
+              27
+            ],
+            "category": "旋转外观和边界",
+            "finding": "旋转后目标变为模糊暗团/云状轮廓，较baseline明显改变覆盖，但轮廓、车轮和接地关系不足以支持高质量刚体外观；raw27..29左画面边界截断，不能从原mask范围认证完整编辑足迹。",
+            "evidence": [
+              "actor0_rotate_roi_00.png",
+              "actor0_rotate_full_00.png"
+            ]
+          },
+          {
+            "id": "A0-V04",
+            "raw_frames": [
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71
+            ],
+            "category": "共享重建背景与其他动态车体",
+            "finding": "原actor0不可见的42帧before/after均保留左车道路面的浅色模糊带；部分Jeep靠近帧仍是黑色模糊车体。这些已有问题不会因actor0编辑无变化而获得质量通过。",
+            "evidence": [
+              "actor0_delete_roi_01.png",
+              "actor0_delete_roi_03.png",
+              "actor0_delete_roi_04.png",
+              "actor0_delete_roi_05.png",
+              "actor0_delete_roi_06.png"
+            ]
+          }
+        ],
+        "comparison_policy": {
+          "baseline": "同一300步检查点的before与实际after编辑渲染",
+          "old_30k_hard_comparison_performed": false,
+          "counterfactual_edited_GT_available": false,
+          "300_step_result_is_converged": false,
+          "paper_effect_replication_certified": false
+        },
+        "human_quality_verdict": null,
+        "photoreal_quality_verdict": null,
+        "engineering_review_author": "instance_data agent actual pixel review; not a human quality verdict",
+        "training_decision_boundary": "300步仅兼容/编辑工程短测；上述未收敛问题必须保留并在后续实际检查点重测，不单凭此短测否定方法或宣称30k将自动修复。由root结合真实恢复、CUDA梯度、资源优先级和用户授权决定是否继续训练。",
+        "GPU_used_by_review": false,
+        "new_training_or_render_job_launched_by_reviewer": false,
+        "old_assets_modified": false,
+        "frames": [
+          {
+            "frame_index": 0,
+            "frame_id": "0008023",
+            "raw_frame": 23,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 1,
+            "frame_id": "0008024",
+            "raw_frame": 24,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 2,
+            "frame_id": "0008025",
+            "raw_frame": 25,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 3,
+            "frame_id": "0008026",
+            "raw_frame": 26,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 4,
+            "frame_id": "0008027",
+            "raw_frame": 27,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 5,
+            "frame_id": "0008028",
+            "raw_frame": 28,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 6,
+            "frame_id": "0008029",
+            "raw_frame": 29,
+            "original_FRONT_visible": true,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_00.png",
+                "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_00.png",
+                "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_00.png",
+                "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+              }
+            }
+          },
+          {
+            "frame_index": 7,
+            "frame_id": "0008030",
+            "raw_frame": 30,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 8,
+            "frame_id": "0008031",
+            "raw_frame": 31,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 9,
+            "frame_id": "0008032",
+            "raw_frame": 32,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 10,
+            "frame_id": "0008033",
+            "raw_frame": 33,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 11,
+            "frame_id": "0008034",
+            "raw_frame": 34,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 12,
+            "frame_id": "0008035",
+            "raw_frame": 35,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 13,
+            "frame_id": "0008036",
+            "raw_frame": 36,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_01.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 14,
+            "frame_id": "0008037",
+            "raw_frame": 37,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 15,
+            "frame_id": "0008038",
+            "raw_frame": 38,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 16,
+            "frame_id": "0008039",
+            "raw_frame": 39,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 17,
+            "frame_id": "0008040",
+            "raw_frame": 40,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 18,
+            "frame_id": "0008041",
+            "raw_frame": 41,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 19,
+            "frame_id": "0008042",
+            "raw_frame": 42,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 20,
+            "frame_id": "0008043",
+            "raw_frame": 43,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_02.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 21,
+            "frame_id": "0008044",
+            "raw_frame": 44,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 22,
+            "frame_id": "0008045",
+            "raw_frame": 45,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 23,
+            "frame_id": "0008046",
+            "raw_frame": 46,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 24,
+            "frame_id": "0008047",
+            "raw_frame": 47,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 25,
+            "frame_id": "0008048",
+            "raw_frame": 48,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 26,
+            "frame_id": "0008049",
+            "raw_frame": 49,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 27,
+            "frame_id": "0008050",
+            "raw_frame": 50,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_03.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 28,
+            "frame_id": "0008051",
+            "raw_frame": 51,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 29,
+            "frame_id": "0008052",
+            "raw_frame": 52,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 30,
+            "frame_id": "0008053",
+            "raw_frame": 53,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 31,
+            "frame_id": "0008054",
+            "raw_frame": 54,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 32,
+            "frame_id": "0008055",
+            "raw_frame": 55,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 33,
+            "frame_id": "0008056",
+            "raw_frame": 56,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 34,
+            "frame_id": "0008057",
+            "raw_frame": 57,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_04.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 35,
+            "frame_id": "0008058",
+            "raw_frame": 58,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 36,
+            "frame_id": "0008059",
+            "raw_frame": 59,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 37,
+            "frame_id": "0008060",
+            "raw_frame": 60,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 38,
+            "frame_id": "0008061",
+            "raw_frame": 61,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 39,
+            "frame_id": "0008062",
+            "raw_frame": 62,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 40,
+            "frame_id": "0008063",
+            "raw_frame": 63,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 41,
+            "frame_id": "0008064",
+            "raw_frame": 64,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_05.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 42,
+            "frame_id": "0008065",
+            "raw_frame": 65,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 43,
+            "frame_id": "0008066",
+            "raw_frame": 66,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 44,
+            "frame_id": "0008067",
+            "raw_frame": 67,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 45,
+            "frame_id": "0008068",
+            "raw_frame": 68,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 46,
+            "frame_id": "0008069",
+            "raw_frame": 69,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 47,
+            "frame_id": "0008070",
+            "raw_frame": 70,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          },
+          {
+            "frame_index": 48,
+            "frame_id": "0008071",
+            "raw_frame": 71,
+            "original_FRONT_visible": false,
+            "real_laser_annotation_valid": true,
+            "operations": {
+              "delete": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_delete_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "translate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_translate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              },
+              "rotate": {
+                "actual_pixels_reviewed": true,
+                "contact_page": "actor0_rotate_roi_06.png",
+                "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+              }
+            }
+          }
+        ]
+      },
+      "actor1_engineering_visual_review.json": {
+        "schema": "drivingeditor_GMC_actor1_engineering_visual_review_v1",
+        "completed_utc": "2026-10-13T16:02:24.960424+00:00",
+        "reviewer": "Codex instance_render sub-agent; model visual inspection, no human quality verdict",
+        "scene_id": "scene0008_023_071",
+        "actor_index": 1,
+        "target_track": "fXVhuN-RuJDvZwnkQ-0YSQ",
+        "observed_GT_identity": "White/silver Jeep SUV approaching camera and exiting the left border.",
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke/checkpoint_000300.pt",
+        "checkpoint_steps": 300,
+        "sources": {
+          "local_summary": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_edit_smoke_300_r1\\edit_smoke_300_summary_r1.json",
+          "local_contact_manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_edit_smoke_300_r1\\all_contacts\\contacts.json",
+          "raw_FP32_origin": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/edits_smoke_300_r1",
+          "pixel_provenance": "Actual FP32 render exports converted to PNG by CPU contact generator; native pixel scale 1, no resizing, contrast stretch, generated content, or invented fixture.",
+          "independent_review_limit": "This visual review reads local PNG pages and the actual remote CPU validation summary. It does not independently reopen the remote raw NPZ arrays or restore the GPU checkpoint."
+        },
+        "scope": {
+          "engineering_smoke_only": true,
+          "operations_reviewed": 3,
+          "frames_per_operation": 49,
+          "frame_operation_pairs_reviewed": 147,
+          "ROI_pages_reviewed": 21,
+          "native_image_size": [
+            480,
+            320
+          ],
+          "ROI_padding_pixels": 40,
+          "common_before_after_crop": true,
+          "empty_mask_fullview_fallback": true,
+          "GPU_used_by_review": false,
+          "Torch_imported_by_review": false,
+          "new_training_or_rerender": false,
+          "new_HTML_created": false,
+          "edited_GT_available": false
+        },
+        "architecture_components": {
+          "modules": [
+            "Actual FP32 exports and real original masks",
+            "CPU pairing, finiteness, contribution validation",
+            "Native GT / before / after / contribution ROI pages",
+            "Independent actor1 engineering visual review"
+          ],
+          "dataflow": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "diagram_present_in_reviewed_contact_headers": true
+        },
+        "coverage": [
+          {
+            "operation": "actor1_delete",
+            "frames_reviewed": 49,
+            "pages_reviewed": 7,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "pages": [
+              {
+                "relative_path": "actor1_delete_roi_00.png",
+                "frame_indices": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "frame_ids": [
+                  "0008023",
+                  "0008024",
+                  "0008025",
+                  "0008026",
+                  "0008027",
+                  "0008028",
+                  "0008029"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_delete_roi_01.png",
+                "frame_indices": [
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13
+                ],
+                "frame_ids": [
+                  "0008030",
+                  "0008031",
+                  "0008032",
+                  "0008033",
+                  "0008034",
+                  "0008035",
+                  "0008036"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_delete_roi_02.png",
+                "frame_indices": [
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20
+                ],
+                "frame_ids": [
+                  "0008037",
+                  "0008038",
+                  "0008039",
+                  "0008040",
+                  "0008041",
+                  "0008042",
+                  "0008043"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_delete_roi_03.png",
+                "frame_indices": [
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27
+                ],
+                "frame_ids": [
+                  "0008044",
+                  "0008045",
+                  "0008046",
+                  "0008047",
+                  "0008048",
+                  "0008049",
+                  "0008050"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_delete_roi_04.png",
+                "frame_indices": [
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34
+                ],
+                "frame_ids": [
+                  "0008051",
+                  "0008052",
+                  "0008053",
+                  "0008054",
+                  "0008055",
+                  "0008056",
+                  "0008057"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_delete_roi_05.png",
+                "frame_indices": [
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40,
+                  41
+                ],
+                "frame_ids": [
+                  "0008058",
+                  "0008059",
+                  "0008060",
+                  "0008061",
+                  "0008062",
+                  "0008063",
+                  "0008064"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_delete_roi_06.png",
+                "frame_indices": [
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47,
+                  48
+                ],
+                "frame_ids": [
+                  "0008065",
+                  "0008066",
+                  "0008067",
+                  "0008068",
+                  "0008069",
+                  "0008070",
+                  "0008071"
+                ],
+                "viewed_actual_pixels": true
+              }
+            ]
+          },
+          {
+            "operation": "actor1_translate",
+            "frames_reviewed": 49,
+            "pages_reviewed": 7,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "pages": [
+              {
+                "relative_path": "actor1_translate_roi_00.png",
+                "frame_indices": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "frame_ids": [
+                  "0008023",
+                  "0008024",
+                  "0008025",
+                  "0008026",
+                  "0008027",
+                  "0008028",
+                  "0008029"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_translate_roi_01.png",
+                "frame_indices": [
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13
+                ],
+                "frame_ids": [
+                  "0008030",
+                  "0008031",
+                  "0008032",
+                  "0008033",
+                  "0008034",
+                  "0008035",
+                  "0008036"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_translate_roi_02.png",
+                "frame_indices": [
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20
+                ],
+                "frame_ids": [
+                  "0008037",
+                  "0008038",
+                  "0008039",
+                  "0008040",
+                  "0008041",
+                  "0008042",
+                  "0008043"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_translate_roi_03.png",
+                "frame_indices": [
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27
+                ],
+                "frame_ids": [
+                  "0008044",
+                  "0008045",
+                  "0008046",
+                  "0008047",
+                  "0008048",
+                  "0008049",
+                  "0008050"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_translate_roi_04.png",
+                "frame_indices": [
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34
+                ],
+                "frame_ids": [
+                  "0008051",
+                  "0008052",
+                  "0008053",
+                  "0008054",
+                  "0008055",
+                  "0008056",
+                  "0008057"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_translate_roi_05.png",
+                "frame_indices": [
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40,
+                  41
+                ],
+                "frame_ids": [
+                  "0008058",
+                  "0008059",
+                  "0008060",
+                  "0008061",
+                  "0008062",
+                  "0008063",
+                  "0008064"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_translate_roi_06.png",
+                "frame_indices": [
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47,
+                  48
+                ],
+                "frame_ids": [
+                  "0008065",
+                  "0008066",
+                  "0008067",
+                  "0008068",
+                  "0008069",
+                  "0008070",
+                  "0008071"
+                ],
+                "viewed_actual_pixels": true
+              }
+            ]
+          },
+          {
+            "operation": "actor1_rotate",
+            "frames_reviewed": 49,
+            "pages_reviewed": 7,
+            "frame_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "pages": [
+              {
+                "relative_path": "actor1_rotate_roi_00.png",
+                "frame_indices": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "frame_ids": [
+                  "0008023",
+                  "0008024",
+                  "0008025",
+                  "0008026",
+                  "0008027",
+                  "0008028",
+                  "0008029"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_rotate_roi_01.png",
+                "frame_indices": [
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13
+                ],
+                "frame_ids": [
+                  "0008030",
+                  "0008031",
+                  "0008032",
+                  "0008033",
+                  "0008034",
+                  "0008035",
+                  "0008036"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_rotate_roi_02.png",
+                "frame_indices": [
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20
+                ],
+                "frame_ids": [
+                  "0008037",
+                  "0008038",
+                  "0008039",
+                  "0008040",
+                  "0008041",
+                  "0008042",
+                  "0008043"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_rotate_roi_03.png",
+                "frame_indices": [
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27
+                ],
+                "frame_ids": [
+                  "0008044",
+                  "0008045",
+                  "0008046",
+                  "0008047",
+                  "0008048",
+                  "0008049",
+                  "0008050"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_rotate_roi_04.png",
+                "frame_indices": [
+                  28,
+                  29,
+                  30,
+                  31,
+                  32,
+                  33,
+                  34
+                ],
+                "frame_ids": [
+                  "0008051",
+                  "0008052",
+                  "0008053",
+                  "0008054",
+                  "0008055",
+                  "0008056",
+                  "0008057"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_rotate_roi_05.png",
+                "frame_indices": [
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40,
+                  41
+                ],
+                "frame_ids": [
+                  "0008058",
+                  "0008059",
+                  "0008060",
+                  "0008061",
+                  "0008062",
+                  "0008063",
+                  "0008064"
+                ],
+                "viewed_actual_pixels": true
+              },
+              {
+                "relative_path": "actor1_rotate_roi_06.png",
+                "frame_indices": [
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47,
+                  48
+                ],
+                "frame_ids": [
+                  "0008065",
+                  "0008066",
+                  "0008067",
+                  "0008068",
+                  "0008069",
+                  "0008070",
+                  "0008071"
+                ],
+                "viewed_actual_pixels": true
+              }
+            ]
+          }
+        ],
+        "reported_CPU_contract": {
+          "operation_count": 6,
+          "frames_per_operation": 49,
+          "verified_FP32_pairs": 294,
+          "native_width": 480,
+          "native_height": 320,
+          "all_FP32_finite": true,
+          "GT_before_static_vehicles_bitwise_paired_across_operations": true,
+          "static_before_after_bitwise_verified_from_saved_FP32": true,
+          "other_instance_world_tensors_invariance": "GPU execution receipt; independent CPU model restore not performed",
+          "GT_reference_PNG_verified": true,
+          "GT_reference_max_byte_delta": 0,
+          "all_delete_target_contributions_exact_zero": true,
+          "passed": true
+        },
+        "reported_metrics": {
+          "actor1_delete": {
+            "before_mask_MSE_equal_49_full_HxW": 0.0024278914329453213,
+            "before_visible_body_mean_nonempty_frames": 0.5882779549418532,
+            "before_visible_outside_mean_equal_49": 0.0010437463012302906,
+            "edit_full_RGB_MAE_equal_49": 0.005432128123179702,
+            "nonempty_body_frames": 39,
+            "empty_body_frame_indices": [
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "empty_frame_max_after_target_contribution": 0.0,
+            "empty_frame_max_edit_full_RGB_MAE": 0.0,
+            "all_static_FP32_bitwise_unchanged_reported": true,
+            "all_other_instance_world_tensors_receipt_unchanged_reported": true,
+            "largest_before_mask_MSE_frames": [
+              {
+                "frame": 34,
+                "frame_id": "0008057",
+                "value": 0.009275536745569317
+              },
+              {
+                "frame": 33,
+                "frame_id": "0008056",
+                "value": 0.00899145407648888
+              },
+              {
+                "frame": 36,
+                "frame_id": "0008059",
+                "value": 0.007155717932504689
+              },
+              {
+                "frame": 35,
+                "frame_id": "0008058",
+                "value": 0.007028225889679091
+              },
+              {
+                "frame": 32,
+                "frame_id": "0008055",
+                "value": 0.006678659801182105
+              }
+            ],
+            "all49_after_target_contribution_exact_zero_reported": true
+          },
+          "actor1_translate": {
+            "before_mask_MSE_equal_49_full_HxW": 0.0024278914329453213,
+            "before_visible_body_mean_nonempty_frames": 0.5882779549418532,
+            "before_visible_outside_mean_equal_49": 0.0010437463012302906,
+            "edit_full_RGB_MAE_equal_49": 0.001558118781515444,
+            "nonempty_body_frames": 39,
+            "empty_body_frame_indices": [
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "empty_frame_max_after_target_contribution": 0.0,
+            "empty_frame_max_edit_full_RGB_MAE": 0.0,
+            "all_static_FP32_bitwise_unchanged_reported": true,
+            "all_other_instance_world_tensors_receipt_unchanged_reported": true,
+            "largest_before_mask_MSE_frames": [
+              {
+                "frame": 34,
+                "frame_id": "0008057",
+                "value": 0.009275536745569317
+              },
+              {
+                "frame": 33,
+                "frame_id": "0008056",
+                "value": 0.00899145407648888
+              },
+              {
+                "frame": 36,
+                "frame_id": "0008059",
+                "value": 0.007155717932504689
+              },
+              {
+                "frame": 35,
+                "frame_id": "0008058",
+                "value": 0.007028225889679091
+              },
+              {
+                "frame": 32,
+                "frame_id": "0008055",
+                "value": 0.006678659801182105
+              }
+            ]
+          },
+          "actor1_rotate": {
+            "before_mask_MSE_equal_49_full_HxW": 0.0024278914329453213,
+            "before_visible_body_mean_nonempty_frames": 0.5882779549418532,
+            "before_visible_outside_mean_equal_49": 0.0010437463012302906,
+            "edit_full_RGB_MAE_equal_49": 0.0032640450825774233,
+            "nonempty_body_frames": 39,
+            "empty_body_frame_indices": [
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "empty_frame_max_after_target_contribution": 0.0,
+            "empty_frame_max_edit_full_RGB_MAE": 0.0,
+            "all_static_FP32_bitwise_unchanged_reported": true,
+            "all_other_instance_world_tensors_receipt_unchanged_reported": true,
+            "largest_before_mask_MSE_frames": [
+              {
+                "frame": 34,
+                "frame_id": "0008057",
+                "value": 0.009275536745569317
+              },
+              {
+                "frame": 33,
+                "frame_id": "0008056",
+                "value": 0.00899145407648888
+              },
+              {
+                "frame": 36,
+                "frame_id": "0008059",
+                "value": 0.007155717932504689
+              },
+              {
+                "frame": 35,
+                "frame_id": "0008058",
+                "value": 0.007028225889679091
+              },
+              {
+                "frame": 32,
+                "frame_id": "0008055",
+                "value": 0.006678659801182105
+              }
+            ]
+          }
+        },
+        "observations": {
+          "common_before": [
+            {
+              "frame_indices": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ],
+              "frame_ids_range": [
+                "0008023",
+                "0008045"
+              ],
+              "observed": "Distant Jeep body is dark and partially transparent, with smeared/banded appearance and road lines visible through the rendered body. GT is much brighter and clearer."
+            },
+            {
+              "frame_indices": [
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38
+              ],
+              "frame_ids_range": [
+                "0008046",
+                "0008061"
+              ],
+              "observed": "Nearer body has higher coverage but remains dark, blurry, and striped, with soft wheel/bumper edges. Increasing contribution does not establish correct color or texture."
+            }
+          ],
+          "delete": {
+            "engineering_effect_observed": "Rendered target silhouette disappears and every displayed after-target-contribution panel is black. No recognizable complete Jeep copy remains in the deleted position on these 49 views.",
+            "residual_observed": "A broad light-gray blurred road patch remains near the removed body, especially frames 28-38. Lane-line and asphalt detail are not cleanly reconstructed.",
+            "badcase_frames": [
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38
+            ],
+            "primary_pages": [
+              "actor1_delete_roi_04.png",
+              "actor1_delete_roi_05.png"
+            ],
+            "clean_road_recovery_verified": false,
+            "background_duplicate_Jeep_observed": false,
+            "background_duplicate_absence_certified": false
+          },
+          "translate": {
+            "configured_effect": "Vehicle-local translation [0.5, 0.0, 0.0] meters; exact transform is supplied by execution/source contract, not recoverable from pixels alone.",
+            "engineering_effect_observed": "Far-frame shifts are small. Near-frame body and contribution move/change coverage coherently; during left-border exit the visible portion leaves earlier. No separate full old-pose Jeep duplicate is visible.",
+            "residual_observed": "The same dark, translucent/banded appearance and blurred road remain. No claim of a photoreal translated object follows from the edit effect.",
+            "badcase_frames": [
+              22,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38
+            ],
+            "primary_pages": [
+              "actor1_translate_roi_03.png",
+              "actor1_translate_roi_04.png",
+              "actor1_translate_roi_05.png"
+            ],
+            "exact_local_meters_verified_from_pixels": false
+          },
+          "rotate": {
+            "configured_effect": "30 degrees of vehicle-local yaw; exact axis is supplied by source/math contract, not established solely by visual inspection.",
+            "engineering_effect_observed": "Projected body shape and apparent heading change. After contribution is wider and asymmetric with a changed front/side outline, while the original target pose is not left as a separate complete body.",
+            "residual_observed": "Near frames 28-36 show stronger fuzzy edges, blur/tail around the body, and smeared banded texture. Road-like lines remain visible across the dark rendered body. No screen-spanning flyaway or unbounded streak is apparent within reviewed views, but mild tails are present.",
+            "badcase_frames": [
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36
+            ],
+            "strongest_visual_inspection_frame_ids": [
+              "0008051",
+              "0008054",
+              "0008055",
+              "0008057",
+              "0008058",
+              "0008059"
+            ],
+            "primary_pages": [
+              "actor1_rotate_roi_03.png",
+              "actor1_rotate_roi_04.png",
+              "actor1_rotate_roi_05.png"
+            ],
+            "texture_quality_passed": false,
+            "no_tail_certified": false
+          },
+          "empty_target": {
+            "frame_indices": [
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48
+            ],
+            "frame_ids_range": [
+              "0008062",
+              "0008071"
+            ],
+            "observed": "Original actor1 mask, before-target contribution, and after-target contribution panels are black. No edit introduces a target into these empty views; before/after full views look unchanged. Existing light blurred road patch is visible in both.",
+            "primary_pages": [
+              "actor1_delete_roi_05.png",
+              "actor1_delete_roi_06.png",
+              "actor1_translate_roi_05.png",
+              "actor1_translate_roi_06.png",
+              "actor1_rotate_roi_05.png",
+              "actor1_rotate_roi_06.png"
+            ]
+          }
+        },
+        "interpretation_limits": [
+          "Road-through-body and banding are observed pixel artifacts; this review does not assign them uniquely to static occlusion, local texture leakage, SH direction, or sparse geometry.",
+          "Static saved FP32 equality is a CPU validation result; nonedited world-tensor equality is a GPU execution receipt. Those are separate evidence, and full-scene RGB can change through correct occlusion.",
+          "300 steps are insufficient to certify convergence, pose-independent texture quality, clean deletion repair, or edit photorealism. No edited GT is available.",
+          "The review does not verify checkpoint restoration to the original scene, relighting, unseen viewpoints, or a human quality verdict."
+        ],
+        "decision": {
+          "new_engineering_blocker_observed": false,
+          "engineering_operation_review_complete": true,
+          "continue_original_fixed_trajectory_30k_is_reasonable_engineering_next_step": true,
+          "continuation_reason": "Actual edits change the intended target with finite paired exports and unchanged static arrays; current appearance artifacts need the originally budgeted convergence run before capacity can be assessed.",
+          "continued_training_guarantees_quality": false,
+          "converged_quality_passed": false,
+          "photoreal_baseline_passed": false,
+          "clean_deletion_recovery_passed": false,
+          "restoration_verified": false,
+          "relighting_verified": false,
+          "human_quality_verdict": null,
+          "quality_followup": "After 30k, compare all49 original reconstruction/body-opacity metrics and all native near-target ROI pairs, with special attention to actor1 dark/banded body, rotation tails, and deletion road patch."
+        }
+      },
+      "root_engineering_smoke_resume_decision_r1.json": {
+        "task": "WS-V82-DRIVINGEDITOR-INSTANCES-20261013/r1",
+        "scene_id": "scene0008_023_071",
+        "completed_utc": "2026-10-13T16:06:59.722546+00:00",
+        "reviewer": "Codex root engineering decision, not human verdict",
+        "checkpoint_steps": 300,
+        "continue_same_fixed_trajectory_to_total_30000": true,
+        "new_updates_budget": 29700,
+        "fixed_GT_trajectory": true,
+        "frozen_background_and_environment": true,
+        "fixed_topology": true,
+        "pose_refinement_enabled": false,
+        "new_SGCM_clones": false,
+        "new_silver_red_training": false,
+        "real_294_frame_operation_FP32_contract_passed": true,
+        "actual_CUDA_joint_visibility_gradient_passed": true,
+        "actual_full_GPU_model_Adam_RNG_restore_before_updates_passed": true,
+        "deterministic_next_step_parity_verified": false,
+        "independent_visual_review_files": [
+          "actor0_engineering_visual_review.json",
+          "actor1_engineering_visual_review.json"
+        ],
+        "independent_actual_ROI_frame_operation_pairs_reviewed": 294,
+        "root_pixel_review": {
+          "actor1_rotate_fullview_pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "all49_full_scene_frames_inspected": true,
+          "additional_ROI_pages": [
+            "actor0_delete_roi_00.png",
+            "actor0_translate_roi_00.png",
+            "actor1_delete_roi_02.png",
+            "actor1_translate_roi_01.png"
+          ]
+        },
+        "reason": "Actual rigid edit responses and identity/occlusion contracts work; no observed engineering blocker. Use originally authorized fixed-trajectory 30k budget to evaluate convergence.",
+        "retained_problems": [
+          "Dark translucent vehicles and incomplete texture at 300 steps",
+          "Gray blurred road patches and dark residual shadows after deletion",
+          "Near-view rotation soft edges and tails",
+          "Box-center background removal does not certify clean shadows or unobserved surfaces"
+        ],
+        "converged_quality_passed": false,
+        "photoreal_quality_verified": false,
+        "human_quality_verdict": null,
+        "edited_GT_available": false,
+        "old_four_arm_quality_gate_applied": false,
+        "resource_policy": "Shared GPU lock; StreetCrafter and any other GPU task priority; <=4CPU threads/nice10; save and exit on new priority work",
+        "shutdown_or_other_task_modification_authorized": false
+      }
+    },
+    "limits": [
+      "300-step vehicle reconstruction not converged",
+      "dark/translucent geometry and patchy revealed road retained",
+      "frozen background removal is Gaussian-center-only and does not certify shadows or hidden surfaces",
+      "edited targets may change occlusion of other pixels without changing their assets"
+    ]
+  },
+  "actual_CUDA_contract": {
+    "test": "actual_cuda_rasterizer_joint_occlusion_contract",
+    "status": "PASS",
+    "wall_seconds": 0.7527968352660537,
+    "CUDA_initialized": true,
+    "admission": {
+      "status": "GPU_ADMISSION_AVAILABLE",
+      "allowed": true,
+      "streetcrafter_processes": [],
+      "other_compute_processes": [],
+      "query_error": null,
+      "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+    },
+    "scope": "small analytic occlusion ABI/gradient test; not scene quality",
+    "visible_union": 0.3919999599456787,
+    "isolated_union": 0.9800000190734863,
+    "static_opacity_gradient": [
+      [
+        -0.9799999594688416
+      ]
+    ],
+    "instance_opacity_gradient": [
+      [
+        0.04000000283122063
+      ],
+      [
+        0.07999998331069946
+      ]
+    ],
+    "peak_allocated_bytes": 8564736,
+    "peak_reserved_bytes": 23068672
+  },
+  "actual_runtime_restore_preflight": {
+    "runtime_restoration_verified": true,
+    "scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+    "execution_device": "cuda:0",
+    "comparison": "exact_keys_types_dtype_shape_layout_requires_grad_and_values; tensor_device_transport_allowed",
+    "checked_fields": [
+      "background",
+      "instances",
+      "environment",
+      "sampler",
+      "python_rng",
+      "numpy_rng",
+      "torch_rng",
+      "cuda_rng"
+    ],
+    "comparison_counts": {
+      "background": {
+        "tensor_leaves": 42,
+        "numpy_leaves": 2,
+        "scalar_leaves": 120,
+        "mapping_nodes": 21,
+        "sequence_nodes": 20
+      },
+      "instances": {
+        "tensor_leaves": 45,
+        "numpy_leaves": 2,
+        "scalar_leaves": 167,
+        "mapping_nodes": 24,
+        "sequence_nodes": 27
+      },
+      "environment": {
+        "tensor_leaves": 4,
+        "numpy_leaves": 0,
+        "scalar_leaves": 12,
+        "mapping_nodes": 4,
+        "sequence_nodes": 4
+      },
+      "sampler": {
+        "tensor_leaves": 0,
+        "numpy_leaves": 0,
+        "scalar_leaves": 627,
+        "mapping_nodes": 0,
+        "sequence_nodes": 2
+      },
+      "python_rng": {
+        "tensor_leaves": 0,
+        "numpy_leaves": 0,
+        "scalar_leaves": 627,
+        "mapping_nodes": 0,
+        "sequence_nodes": 2
+      },
+      "numpy_rng": {
+        "tensor_leaves": 0,
+        "numpy_leaves": 1,
+        "scalar_leaves": 4,
+        "mapping_nodes": 0,
+        "sequence_nodes": 1
+      },
+      "torch_rng": {
+        "tensor_leaves": 1,
+        "numpy_leaves": 0,
+        "scalar_leaves": 0,
+        "mapping_nodes": 0,
+        "sequence_nodes": 0
+      },
+      "cuda_rng": {
+        "tensor_leaves": 1,
+        "numpy_leaves": 0,
+        "scalar_leaves": 0,
+        "mapping_nodes": 0,
+        "sequence_nodes": 1
+      }
+    },
+    "checkpoint_restoration_verified_claim_unchanged": false,
+    "deterministic_next_step_parity_verified": false,
+    "render_quality_or_edit_acceptance_verified": false,
+    "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke/checkpoint_000300.pt",
+    "step": 300,
+    "admission": {
+      "status": "GPU_ADMISSION_AVAILABLE",
+      "allowed": true,
+      "streetcrafter_processes": [],
+      "other_compute_processes": [],
+      "query_error": null,
+      "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+    },
+    "optimizer_updates": 0,
+    "peak_allocated_bytes": 1317483008,
+    "peak_reserved_bytes": 1405091840
+  },
+  "actual_continuation_runtime_restore": {
+    "runtime_restoration_verified": true,
+    "scope": "runtime_model_Adam_and_RNG_tensors_restored_before_first_update",
+    "execution_device": "cuda:0",
+    "comparison": "exact_keys_types_dtype_shape_layout_requires_grad_and_values; tensor_device_transport_allowed",
+    "checked_fields": [
+      "background",
+      "instances",
+      "environment",
+      "sampler",
+      "python_rng",
+      "numpy_rng",
+      "torch_rng",
+      "cuda_rng"
+    ],
+    "comparison_counts": {
+      "background": {
+        "tensor_leaves": 42,
+        "numpy_leaves": 2,
+        "scalar_leaves": 120,
+        "mapping_nodes": 21,
+        "sequence_nodes": 20
+      },
+      "instances": {
+        "tensor_leaves": 45,
+        "numpy_leaves": 2,
+        "scalar_leaves": 167,
+        "mapping_nodes": 24,
+        "sequence_nodes": 27
+      },
+      "environment": {
+        "tensor_leaves": 4,
+        "numpy_leaves": 0,
+        "scalar_leaves": 12,
+        "mapping_nodes": 4,
+        "sequence_nodes": 4
+      },
+      "sampler": {
+        "tensor_leaves": 0,
+        "numpy_leaves": 0,
+        "scalar_leaves": 627,
+        "mapping_nodes": 0,
+        "sequence_nodes": 2
+      },
+      "python_rng": {
+        "tensor_leaves": 0,
+        "numpy_leaves": 0,
+        "scalar_leaves": 627,
+        "mapping_nodes": 0,
+        "sequence_nodes": 2
+      },
+      "numpy_rng": {
+        "tensor_leaves": 0,
+        "numpy_leaves": 1,
+        "scalar_leaves": 4,
+        "mapping_nodes": 0,
+        "sequence_nodes": 1
+      },
+      "torch_rng": {
+        "tensor_leaves": 1,
+        "numpy_leaves": 0,
+        "scalar_leaves": 0,
+        "mapping_nodes": 0,
+        "sequence_nodes": 0
+      },
+      "cuda_rng": {
+        "tensor_leaves": 1,
+        "numpy_leaves": 0,
+        "scalar_leaves": 0,
+        "mapping_nodes": 0,
+        "sequence_nodes": 1
+      }
+    },
+    "checkpoint_restoration_verified_claim_unchanged": false,
+    "deterministic_next_step_parity_verified": false,
+    "render_quality_or_edit_acceptance_verified": false,
+    "checkpoint_path": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke/checkpoint_000300.pt"
+  },
+  "new_evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\gpu_smoke_edits_resume_20261013"
 }

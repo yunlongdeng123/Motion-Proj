@@ -1,0 +1,49 @@
+{
+  "pid": 37747,
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "-B",
+    "-u",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/infra/train.py",
+    "--spec",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/specs/scene0008_023_071.json",
+    "--resume",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1/gpu_smoke/checkpoint_000300.pt",
+    "--iterations",
+    "30000",
+    "--seed",
+    "0",
+    "--output",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1",
+    "--run"
+  ],
+  "utc": "2026-10-13T16:07:01.796510+00:00",
+  "admission": {
+    "status": "GPU_ADMISSION_AVAILABLE",
+    "allowed": true,
+    "streetcrafter_processes": [],
+    "other_compute_processes": [],
+    "query_error": null,
+    "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+  },
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/runs/gmc_two_actor_fixed30k_r1",
+  "resume_step": 300,
+  "first_step": 301,
+  "target_total_steps": 30000,
+  "new_updates_budget": 29700,
+  "checkpoint_steps": [
+    10000,
+    20000,
+    30000
+  ],
+  "background_frozen": true,
+  "trajectory_fixed": true,
+  "new_SGCM_clones": false,
+  "CPU_max_threads": 4,
+  "nice": 10,
+  "other_tasks_modified": false,
+  "automatic_retries": false
+}

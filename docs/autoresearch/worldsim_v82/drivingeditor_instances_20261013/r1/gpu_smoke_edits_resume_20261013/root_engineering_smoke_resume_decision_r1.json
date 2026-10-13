@@ -1,0 +1,56 @@
+{
+  "task": "WS-V82-DRIVINGEDITOR-INSTANCES-20261013/r1",
+  "scene_id": "scene0008_023_071",
+  "completed_utc": "2026-10-13T16:06:59.722546+00:00",
+  "reviewer": "Codex root engineering decision, not human verdict",
+  "checkpoint_steps": 300,
+  "continue_same_fixed_trajectory_to_total_30000": true,
+  "new_updates_budget": 29700,
+  "fixed_GT_trajectory": true,
+  "frozen_background_and_environment": true,
+  "fixed_topology": true,
+  "pose_refinement_enabled": false,
+  "new_SGCM_clones": false,
+  "new_silver_red_training": false,
+  "real_294_frame_operation_FP32_contract_passed": true,
+  "actual_CUDA_joint_visibility_gradient_passed": true,
+  "actual_full_GPU_model_Adam_RNG_restore_before_updates_passed": true,
+  "deterministic_next_step_parity_verified": false,
+  "independent_visual_review_files": [
+    "actor0_engineering_visual_review.json",
+    "actor1_engineering_visual_review.json"
+  ],
+  "independent_actual_ROI_frame_operation_pairs_reviewed": 294,
+  "root_pixel_review": {
+    "actor1_rotate_fullview_pages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "all49_full_scene_frames_inspected": true,
+    "additional_ROI_pages": [
+      "actor0_delete_roi_00.png",
+      "actor0_translate_roi_00.png",
+      "actor1_delete_roi_02.png",
+      "actor1_translate_roi_01.png"
+    ]
+  },
+  "reason": "Actual rigid edit responses and identity/occlusion contracts work; no observed engineering blocker. Use originally authorized fixed-trajectory 30k budget to evaluate convergence.",
+  "retained_problems": [
+    "Dark translucent vehicles and incomplete texture at 300 steps",
+    "Gray blurred road patches and dark residual shadows after deletion",
+    "Near-view rotation soft edges and tails",
+    "Box-center background removal does not certify clean shadows or unobserved surfaces"
+  ],
+  "converged_quality_passed": false,
+  "photoreal_quality_verified": false,
+  "human_quality_verdict": null,
+  "edited_GT_available": false,
+  "old_four_arm_quality_gate_applied": false,
+  "resource_policy": "Shared GPU lock; StreetCrafter and any other GPU task priority; <=4CPU threads/nice10; save and exit on new priority work",
+  "shutdown_or_other_task_modification_authorized": false
+}

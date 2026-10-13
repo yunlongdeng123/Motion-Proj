@@ -1,0 +1,1429 @@
+{
+  "status": "ACTUAL49_ACTOR0_ENGINEERING_VISUAL_REVIEW_COMPLETE_QUALITY_UNRESOLVED",
+  "recorded_utc": "2026-10-13T16:04:36.083652+00:00",
+  "scene": "GMC scene0008 raw23..71, two genuine dynamic instances",
+  "checkpoint_training_steps": 300,
+  "scope": "actor0皮卡删除、平移0.5m、旋转30°；全部49真实观测相机/时间",
+  "actor": {
+    "instance_index": 0,
+    "raw_track_id": "NoQttdyd4C16Y_zkGhiFKg",
+    "DEVA_instance_id": 77,
+    "original_FRONT_visible_raw_frames": [
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "laser_valid_frames": 49,
+    "reviewed_mask_known_frames": 49
+  },
+  "other_actor": {
+    "instance_index": 1,
+    "raw_track_id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+    "DEVA_instance_id": 82,
+    "original_FRONT_visible_raw_frames": [
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61
+    ]
+  },
+  "evidence": {
+    "local_root": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_edit_smoke_300_r1\\all_contacts",
+    "metadata": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-12\\w\\work\\instance_edit_smoke_300_r1\\all_contacts\\contacts.json",
+    "actual_image_files_visually_viewed": [
+      "actor0_delete_roi_00.png",
+      "actor0_delete_roi_01.png",
+      "actor0_delete_roi_02.png",
+      "actor0_delete_roi_03.png",
+      "actor0_delete_roi_04.png",
+      "actor0_delete_roi_05.png",
+      "actor0_delete_roi_06.png",
+      "actor0_translate_roi_00.png",
+      "actor0_translate_roi_01.png",
+      "actor0_translate_roi_02.png",
+      "actor0_translate_roi_03.png",
+      "actor0_translate_roi_04.png",
+      "actor0_translate_roi_05.png",
+      "actor0_translate_roi_06.png",
+      "actor0_rotate_roi_00.png",
+      "actor0_rotate_roi_01.png",
+      "actor0_rotate_roi_02.png",
+      "actor0_rotate_roi_03.png",
+      "actor0_rotate_roi_04.png",
+      "actor0_rotate_roi_05.png",
+      "actor0_rotate_roi_06.png",
+      "actor0_delete_full_00.png",
+      "actor0_translate_full_00.png",
+      "actor0_rotate_full_00.png"
+    ],
+    "ROI_pages_viewed": 21,
+    "full_pages_viewed": 3,
+    "frames_reviewed_per_operation": 49,
+    "total_operation_frame_pairs_reviewed": 147,
+    "coverage": "每操作ROI00覆盖raw23..29；ROI01..06覆盖raw30..71且因真实mask空而使用完整480x320视图；另看每操作full00核对7个可见帧全图足迹和保留车辆。",
+    "quality_inferred_from_receipt_only": false,
+    "fixture_images_used": false,
+    "source_summary_provenance": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/metadata/edit_smoke_300_summary_r1.json"
+  },
+  "engineering_response": {
+    "delete": {
+      "response_observed": true,
+      "findings": "raw23..29目标皮卡的可见贡献和黑色轮廓消失；raw30..71原不可见42帧未见目标重现或随删除消失的停车车辆。",
+      "pixel_exact_zero_independently_recomputed": false
+    },
+    "translate": {
+      "requested_meters": 0.5,
+      "response_observed": true,
+      "findings": "raw23..28皮卡轮廓及可见贡献位置响应编辑；raw29极窄原生边缘及full页显示其基本出界。raw30..71未见新增可辨认目标足迹。",
+      "metric_translation_independently_estimated_from_pixels": null
+    },
+    "rotate": {
+      "requested_degrees": 30,
+      "response_observed": true,
+      "findings": "raw23..27轮廓和覆盖形态响应旋转，raw28..29左边界截断明显/基本出界；raw30..71未见新增可辨认目标足迹。",
+      "angle_independently_estimated_from_pixels": null
+    },
+    "other_instance_and_static_visual_scope": "未见Jeep或前景停车Corolla随actor0删除/变换一起被移除；遮挡引起的可见贡献变化与参数不变应分别核对，本review不代替GPU状态/贡献合同。",
+    "compatibility_conclusion": "真实像素支持选择的actor0独立编辑路径已响应；未观察到阻止工程继续验证的整场景破坏或明显错对象。"
+  },
+  "unresolved_visual_issues": [
+    {
+      "id": "A0-V01",
+      "raw_frames": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "category": "未收敛车体",
+      "finding": "before300皮卡半透明发黑，透出道路标线，车身/车轮纹理重复波纹或模糊；平移后仍保留。",
+      "evidence": [
+        "actor0_translate_roi_00.png",
+        "actor0_translate_full_00.png"
+      ]
+    },
+    {
+      "id": "A0-V02",
+      "raw_frames": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "category": "背景patch与残影",
+      "finding": "删除后原车体/车底位置仍有大片浅灰模糊道路patch及局部暗椭圆痕迹，raw24..27明显；没有完整车辆删除后的真实GT，不能认定干净补景或去影成功。",
+      "evidence": [
+        "actor0_delete_roi_00.png",
+        "actor0_delete_full_00.png"
+      ]
+    },
+    {
+      "id": "A0-V03",
+      "raw_frames": [
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "category": "旋转外观和边界",
+      "finding": "旋转后目标变为模糊暗团/云状轮廓，较baseline明显改变覆盖，但轮廓、车轮和接地关系不足以支持高质量刚体外观；raw27..29左画面边界截断，不能从原mask范围认证完整编辑足迹。",
+      "evidence": [
+        "actor0_rotate_roi_00.png",
+        "actor0_rotate_full_00.png"
+      ]
+    },
+    {
+      "id": "A0-V04",
+      "raw_frames": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "category": "共享重建背景与其他动态车体",
+      "finding": "原actor0不可见的42帧before/after均保留左车道路面的浅色模糊带；部分Jeep靠近帧仍是黑色模糊车体。这些已有问题不会因actor0编辑无变化而获得质量通过。",
+      "evidence": [
+        "actor0_delete_roi_01.png",
+        "actor0_delete_roi_03.png",
+        "actor0_delete_roi_04.png",
+        "actor0_delete_roi_05.png",
+        "actor0_delete_roi_06.png"
+      ]
+    }
+  ],
+  "comparison_policy": {
+    "baseline": "同一300步检查点的before与实际after编辑渲染",
+    "old_30k_hard_comparison_performed": false,
+    "counterfactual_edited_GT_available": false,
+    "300_step_result_is_converged": false,
+    "paper_effect_replication_certified": false
+  },
+  "human_quality_verdict": null,
+  "photoreal_quality_verdict": null,
+  "engineering_review_author": "instance_data agent actual pixel review; not a human quality verdict",
+  "training_decision_boundary": "300步仅兼容/编辑工程短测；上述未收敛问题必须保留并在后续实际检查点重测，不单凭此短测否定方法或宣称30k将自动修复。由root结合真实恢复、CUDA梯度、资源优先级和用户授权决定是否继续训练。",
+  "GPU_used_by_review": false,
+  "new_training_or_render_job_launched_by_reviewer": false,
+  "old_assets_modified": false,
+  "frames": [
+    {
+      "frame_index": 0,
+      "frame_id": "0008023",
+      "raw_frame": 23,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 1,
+      "frame_id": "0008024",
+      "raw_frame": 24,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 2,
+      "frame_id": "0008025",
+      "raw_frame": 25,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 3,
+      "frame_id": "0008026",
+      "raw_frame": 26,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 4,
+      "frame_id": "0008027",
+      "raw_frame": 27,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 5,
+      "frame_id": "0008028",
+      "raw_frame": 28,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 6,
+      "frame_id": "0008029",
+      "raw_frame": 29,
+      "original_FRONT_visible": true,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_00.png",
+          "observation": "原可见皮卡轮廓及可见贡献消失；原占据的路面仍有浅灰模糊patch，部分车底暗椭圆残影。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_00.png",
+          "observation": "raw23..28轮廓及贡献足迹发生位移但车身仍半透明发黑、模糊；raw29仅极窄边缘，完整足迹由full页辅助查看。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_00.png",
+          "observation": "raw23..27轮廓/覆盖形态改变为模糊暗团，raw28..29基本移出左边界；尚无可信完整旋转后车体。"
+        }
+      }
+    },
+    {
+      "frame_index": 7,
+      "frame_id": "0008030",
+      "raw_frame": 30,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 8,
+      "frame_id": "0008031",
+      "raw_frame": 31,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 9,
+      "frame_id": "0008032",
+      "raw_frame": 32,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 10,
+      "frame_id": "0008033",
+      "raw_frame": 33,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 11,
+      "frame_id": "0008034",
+      "raw_frame": 34,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 12,
+      "frame_id": "0008035",
+      "raw_frame": 35,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 13,
+      "frame_id": "0008036",
+      "raw_frame": 36,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_01.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 14,
+      "frame_id": "0008037",
+      "raw_frame": 37,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 15,
+      "frame_id": "0008038",
+      "raw_frame": 38,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 16,
+      "frame_id": "0008039",
+      "raw_frame": 39,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 17,
+      "frame_id": "0008040",
+      "raw_frame": 40,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 18,
+      "frame_id": "0008041",
+      "raw_frame": 41,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 19,
+      "frame_id": "0008042",
+      "raw_frame": 42,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 20,
+      "frame_id": "0008043",
+      "raw_frame": 43,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_02.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 21,
+      "frame_id": "0008044",
+      "raw_frame": 44,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 22,
+      "frame_id": "0008045",
+      "raw_frame": 45,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 23,
+      "frame_id": "0008046",
+      "raw_frame": 46,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 24,
+      "frame_id": "0008047",
+      "raw_frame": 47,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 25,
+      "frame_id": "0008048",
+      "raw_frame": 48,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 26,
+      "frame_id": "0008049",
+      "raw_frame": 49,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 27,
+      "frame_id": "0008050",
+      "raw_frame": 50,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_03.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 28,
+      "frame_id": "0008051",
+      "raw_frame": 51,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 29,
+      "frame_id": "0008052",
+      "raw_frame": 52,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 30,
+      "frame_id": "0008053",
+      "raw_frame": 53,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 31,
+      "frame_id": "0008054",
+      "raw_frame": 54,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 32,
+      "frame_id": "0008055",
+      "raw_frame": 55,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 33,
+      "frame_id": "0008056",
+      "raw_frame": 56,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 34,
+      "frame_id": "0008057",
+      "raw_frame": 57,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_04.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 35,
+      "frame_id": "0008058",
+      "raw_frame": 58,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 36,
+      "frame_id": "0008059",
+      "raw_frame": 59,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 37,
+      "frame_id": "0008060",
+      "raw_frame": 60,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 38,
+      "frame_id": "0008061",
+      "raw_frame": 61,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 39,
+      "frame_id": "0008062",
+      "raw_frame": 62,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 40,
+      "frame_id": "0008063",
+      "raw_frame": 63,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 41,
+      "frame_id": "0008064",
+      "raw_frame": 64,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_05.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 42,
+      "frame_id": "0008065",
+      "raw_frame": 65,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 43,
+      "frame_id": "0008066",
+      "raw_frame": 66,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 44,
+      "frame_id": "0008067",
+      "raw_frame": 67,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 45,
+      "frame_id": "0008068",
+      "raw_frame": 68,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 46,
+      "frame_id": "0008069",
+      "raw_frame": 69,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 47,
+      "frame_id": "0008070",
+      "raw_frame": 70,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    },
+    {
+      "frame_index": 48,
+      "frame_id": "0008071",
+      "raw_frame": 71,
+      "original_FRONT_visible": false,
+      "real_laser_annotation_valid": true,
+      "operations": {
+        "delete": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_delete_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "translate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_translate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        },
+        "rotate": {
+          "actual_pixels_reviewed": true,
+          "contact_page": "actor0_rotate_roi_06.png",
+          "observation": "当前全图before/after未见可辨认皮卡新足迹；目标可见贡献列为黑。Jeep及停车车辆保留，已有路面patch/其他动态车体的黑色模糊问题保留。"
+        }
+      }
+    }
+  ]
+}
