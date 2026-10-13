@@ -16,4 +16,4 @@
 
 300步总wall59.442秒，末300步训练吞吐约6.95步/秒；PyTorch allocated/reserved峰2.105/3.508GiB，进程/设备采样峰3.840/3.850GiB、60采样0errors。它只描述短测，不能认证新30k全程或3090容量/速度；采样峰是下界，仍须完整训练、编辑/评价及目标机验证。各编辑操作memory_summary原样保留远端。此新阶段不关机、不改其他任务、不改共享环境。
 
-主输出：`runs/gmc_two_actor_fixed30k_r1`；启动凭据：`queue_gmc30k_r1/launch.json`；先前短测：`queue_gmc_r1/gpu_smoke`；六组编辑：`edits_smoke_300_r1`。每小时检查保持开启，无变化安静。最终真实收敛结果接入已有DrivingEditor_final_report.html，不新增HTML入口。旧六组180k、旧报告/离线包和所有失败资产保留。
+主输出：`runs/gmc_two_actor_fixed30k_r1`；启动凭据：`queue_gmc30k_r1/launch.json`；先前短测：`queue_gmc_r1/gpu_smoke`；六组编辑：`edits_smoke_300_r1`。每半小时检查保持开启（drivingeditor-gmc；原drivingeditor-30k已暂停），无变化安静。最终真实收敛结果接入已有DrivingEditor_final_report.html，不新增HTML入口。旧六组180k、旧报告/离线包和所有失败资产保留。

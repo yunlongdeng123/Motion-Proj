@@ -6,6 +6,6 @@
 
 真实300步车体偏黑透明、道路patch与残影均保留，工程支持继续原预算，不代表收敛质量。人工评价null；编辑后GT不存在。恢复证明仅首次更新前模型/Adam/RNG精确值，不认证下一步确定性或全部未来checkpoint；旧300配置没有raw快照的边界保留，今后policy锁定。GPU短测设备采样峰3.850GiB是下界，新30k和目标3090仍待验证。
 
-每小时心跳ACTIVE，StreetCrafter及其他GPU任务优先，不共跑；CPU≤4/nice10。新竞争任务出现保存priority_yield退出，无自动抢资源续训。仅SSH wm-vgpu-1011；新根/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013。默认CPUvalidate，禁止重复启动已退出的300队列或当前worker。
+每半小时心跳drivingeditor-gmc ACTIVE；原drivingeditor-30k PAUSED，StreetCrafter及其他GPU任务优先，不共跑；CPU≤4/nice10。新竞争任务出现保存priority_yield退出，无自动抢资源续训。仅SSH wm-vgpu-1011；新根/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013。默认CPUvalidate，禁止重复启动已退出的300队列或当前worker。
 
 银车/红车不新增实验。旧六组180k与统一报告全部保留，旧关机路线已结束，此新阶段绝不关机、清理、暂停或终止他人任务。保留scripts/run_worldsim_v72_e3_render_bridge.py无关dirty，子agent默认gpt-6.1-sol/max。
