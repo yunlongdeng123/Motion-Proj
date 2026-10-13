@@ -1,0 +1,945 @@
+{
+  "schema": "waymo_rigid_instances_v1",
+  "instance_count": 2,
+  "real_instance_points": 298075,
+  "vehicle_selection": "explicit genuine raw track IDs",
+  "motion_filter": "none",
+  "overlap_policy": "reject ambiguous point from all instances; exclude full box union from background",
+  "box_padding_m": 0.0,
+  "world_scale": 0.10000000000000002,
+  "units": {
+    "local_xyz": "normalized model length",
+    "poses": "rigid normalized world from scaled local; rotation unscaled",
+    "box_size": "normalized length in length,width,height order",
+    "timestamps": "centered loader model times",
+    "physical_timestamps": "Waymo raw microseconds / 1e6",
+    "raw_boxes": "vehicle-frame meters/radians"
+  },
+  "frame_valid_policy": "genuine laser annotation present; independent of FRONT visibility and mask completeness",
+  "invalid_pose_policy": "identity storage sentinel; valid=false prevents rendering, no extrapolated trajectory",
+  "scale_initializer": {
+    "method": "sqrt mean of up to three real local nearest-neighbor squared distances",
+    "singleton_prior_m": 0.02,
+    "min_neighbor_distance_m": 0.001
+  },
+  "zero_lidar_instances": [],
+  "mask_known_pairs": 98,
+  "mask_complete_frames": 49,
+  "mask_coverage_policy": "all selected track/frame 2D masks actually reviewed; absent laser annotations never imply known-empty FRONT mask",
+  "waymo_box_semantics_source": "https://github.com/waymo-research/waymo-open-dataset/blob/master/src/waymo_open_dataset/label.proto",
+  "frames": [
+    {
+      "frame_id": "0008023",
+      "real_lidar_points": 178112,
+      "vehicle_union_points": 3084,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 3084
+    },
+    {
+      "frame_id": "0008024",
+      "real_lidar_points": 176974,
+      "vehicle_union_points": 3928,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 3928
+    },
+    {
+      "frame_id": "0008025",
+      "real_lidar_points": 181705,
+      "vehicle_union_points": 4808,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 4808
+    },
+    {
+      "frame_id": "0008026",
+      "real_lidar_points": 179456,
+      "vehicle_union_points": 5664,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 5664
+    },
+    {
+      "frame_id": "0008027",
+      "real_lidar_points": 179395,
+      "vehicle_union_points": 6766,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 6766
+    },
+    {
+      "frame_id": "0008028",
+      "real_lidar_points": 180797,
+      "vehicle_union_points": 7788,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 7788
+    },
+    {
+      "frame_id": "0008029",
+      "real_lidar_points": 178928,
+      "vehicle_union_points": 8282,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8282
+    },
+    {
+      "frame_id": "0008030",
+      "real_lidar_points": 177468,
+      "vehicle_union_points": 8557,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8557
+    },
+    {
+      "frame_id": "0008031",
+      "real_lidar_points": 176003,
+      "vehicle_union_points": 8306,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8306
+    },
+    {
+      "frame_id": "0008032",
+      "real_lidar_points": 181330,
+      "vehicle_union_points": 8123,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8123
+    },
+    {
+      "frame_id": "0008033",
+      "real_lidar_points": 177892,
+      "vehicle_union_points": 7579,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 7579
+    },
+    {
+      "frame_id": "0008034",
+      "real_lidar_points": 180786,
+      "vehicle_union_points": 8097,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8097
+    },
+    {
+      "frame_id": "0008035",
+      "real_lidar_points": 179232,
+      "vehicle_union_points": 7780,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 7780
+    },
+    {
+      "frame_id": "0008036",
+      "real_lidar_points": 180200,
+      "vehicle_union_points": 7381,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 7381
+    },
+    {
+      "frame_id": "0008037",
+      "real_lidar_points": 179532,
+      "vehicle_union_points": 6265,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 6265
+    },
+    {
+      "frame_id": "0008038",
+      "real_lidar_points": 179140,
+      "vehicle_union_points": 5381,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 5381
+    },
+    {
+      "frame_id": "0008039",
+      "real_lidar_points": 183564,
+      "vehicle_union_points": 4923,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 4923
+    },
+    {
+      "frame_id": "0008040",
+      "real_lidar_points": 181121,
+      "vehicle_union_points": 4235,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 4235
+    },
+    {
+      "frame_id": "0008041",
+      "real_lidar_points": 179963,
+      "vehicle_union_points": 3361,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 3361
+    },
+    {
+      "frame_id": "0008042",
+      "real_lidar_points": 180402,
+      "vehicle_union_points": 3072,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 3072
+    },
+    {
+      "frame_id": "0008043",
+      "real_lidar_points": 179045,
+      "vehicle_union_points": 2876,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2876
+    },
+    {
+      "frame_id": "0008044",
+      "real_lidar_points": 181877,
+      "vehicle_union_points": 2739,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2739
+    },
+    {
+      "frame_id": "0008045",
+      "real_lidar_points": 178868,
+      "vehicle_union_points": 2553,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2553
+    },
+    {
+      "frame_id": "0008046",
+      "real_lidar_points": 180779,
+      "vehicle_union_points": 2365,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2365
+    },
+    {
+      "frame_id": "0008047",
+      "real_lidar_points": 181276,
+      "vehicle_union_points": 2386,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2386
+    },
+    {
+      "frame_id": "0008048",
+      "real_lidar_points": 179839,
+      "vehicle_union_points": 2347,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2347
+    },
+    {
+      "frame_id": "0008049",
+      "real_lidar_points": 180843,
+      "vehicle_union_points": 2380,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2380
+    },
+    {
+      "frame_id": "0008050",
+      "real_lidar_points": 180843,
+      "vehicle_union_points": 2382,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2382
+    },
+    {
+      "frame_id": "0008051",
+      "real_lidar_points": 179962,
+      "vehicle_union_points": 2486,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2486
+    },
+    {
+      "frame_id": "0008052",
+      "real_lidar_points": 180304,
+      "vehicle_union_points": 2675,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 2675
+    },
+    {
+      "frame_id": "0008053",
+      "real_lidar_points": 178971,
+      "vehicle_union_points": 3043,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 3043
+    },
+    {
+      "frame_id": "0008054",
+      "real_lidar_points": 182408,
+      "vehicle_union_points": 3510,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 3510
+    },
+    {
+      "frame_id": "0008055",
+      "real_lidar_points": 181286,
+      "vehicle_union_points": 4025,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 4025
+    },
+    {
+      "frame_id": "0008056",
+      "real_lidar_points": 178887,
+      "vehicle_union_points": 4861,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 4861
+    },
+    {
+      "frame_id": "0008057",
+      "real_lidar_points": 182062,
+      "vehicle_union_points": 5730,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 5730
+    },
+    {
+      "frame_id": "0008058",
+      "real_lidar_points": 178886,
+      "vehicle_union_points": 6548,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 6548
+    },
+    {
+      "frame_id": "0008059",
+      "real_lidar_points": 181435,
+      "vehicle_union_points": 7749,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 7749
+    },
+    {
+      "frame_id": "0008060",
+      "real_lidar_points": 178610,
+      "vehicle_union_points": 8677,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8677
+    },
+    {
+      "frame_id": "0008061",
+      "real_lidar_points": 182403,
+      "vehicle_union_points": 10258,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 10258
+    },
+    {
+      "frame_id": "0008062",
+      "real_lidar_points": 183063,
+      "vehicle_union_points": 11570,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 11570
+    },
+    {
+      "frame_id": "0008063",
+      "real_lidar_points": 178878,
+      "vehicle_union_points": 11624,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 11624
+    },
+    {
+      "frame_id": "0008064",
+      "real_lidar_points": 178156,
+      "vehicle_union_points": 10849,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 10849
+    },
+    {
+      "frame_id": "0008065",
+      "real_lidar_points": 176095,
+      "vehicle_union_points": 10322,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 10322
+    },
+    {
+      "frame_id": "0008066",
+      "real_lidar_points": 179745,
+      "vehicle_union_points": 10298,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 10298
+    },
+    {
+      "frame_id": "0008067",
+      "real_lidar_points": 178634,
+      "vehicle_union_points": 9868,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 9868
+    },
+    {
+      "frame_id": "0008068",
+      "real_lidar_points": 178202,
+      "vehicle_union_points": 9484,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 9484
+    },
+    {
+      "frame_id": "0008069",
+      "real_lidar_points": 181917,
+      "vehicle_union_points": 8314,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 8314
+    },
+    {
+      "frame_id": "0008070",
+      "real_lidar_points": 179446,
+      "vehicle_union_points": 6945,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 6945
+    },
+    {
+      "frame_id": "0008071",
+      "real_lidar_points": 178723,
+      "vehicle_union_points": 5831,
+      "ambiguous_overlap_points_rejected": 0,
+      "assigned_instance_points": 5831
+    }
+  ],
+  "source_scene": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/prepared/scene0008_two_actor_v1",
+  "annotation_source": {
+    "kind": "real_waymo_laser_labels_TFRecord",
+    "path": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10094743350625019937_3420_000_3440_000_with_camera_labels.tfrecord",
+    "context_name": "10094743350625019937_3420_000_3440_000",
+    "raw_read": true,
+    "LiDAR_reextracted": false,
+    "reader": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/waymo_numpy_cpu.py"
+  },
+  "source_raw_window": [
+    23,
+    71
+  ],
+  "original_normalization_path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1/transform_matrix.txt",
+  "masks": {
+    "selection": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_dual_actor_selection.inherited.json",
+    "source_scene": "/root/autodl-tmp/drivingeditor_repro/data/waymo_paper_scenes/scene0008_023_071_fresh30k_v2_groundonly",
+    "status": "real_reviewed_partial_mapping",
+    "known_pairs": 98,
+    "unknown_pairs": 0,
+    "categorical_label": "instance index + 1; zero=unassigned",
+    "zero_label_is_not_a_known_background_when_mapping_incomplete": true,
+    "mask_generation": "exact reviewed DEVA IDs / exact real reviewed SAM candidates; no GT-box masks",
+    "frames": [
+      {
+        "frame_id": "0008023",
+        "known_instances": 2,
+        "reviewed_body_pixels": 202117
+      },
+      {
+        "frame_id": "0008024",
+        "known_instances": 2,
+        "reviewed_body_pixels": 209388
+      },
+      {
+        "frame_id": "0008025",
+        "known_instances": 2,
+        "reviewed_body_pixels": 191223
+      },
+      {
+        "frame_id": "0008026",
+        "known_instances": 2,
+        "reviewed_body_pixels": 159415
+      },
+      {
+        "frame_id": "0008027",
+        "known_instances": 2,
+        "reviewed_body_pixels": 121141
+      },
+      {
+        "frame_id": "0008028",
+        "known_instances": 2,
+        "reviewed_body_pixels": 68609
+      },
+      {
+        "frame_id": "0008029",
+        "known_instances": 2,
+        "reviewed_body_pixels": 13853
+      },
+      {
+        "frame_id": "0008030",
+        "known_instances": 2,
+        "reviewed_body_pixels": 10117
+      },
+      {
+        "frame_id": "0008031",
+        "known_instances": 2,
+        "reviewed_body_pixels": 10703
+      },
+      {
+        "frame_id": "0008032",
+        "known_instances": 2,
+        "reviewed_body_pixels": 11814
+      },
+      {
+        "frame_id": "0008033",
+        "known_instances": 2,
+        "reviewed_body_pixels": 12453
+      },
+      {
+        "frame_id": "0008034",
+        "known_instances": 2,
+        "reviewed_body_pixels": 13300
+      },
+      {
+        "frame_id": "0008035",
+        "known_instances": 2,
+        "reviewed_body_pixels": 14340
+      },
+      {
+        "frame_id": "0008036",
+        "known_instances": 2,
+        "reviewed_body_pixels": 15785
+      },
+      {
+        "frame_id": "0008037",
+        "known_instances": 2,
+        "reviewed_body_pixels": 17096
+      },
+      {
+        "frame_id": "0008038",
+        "known_instances": 2,
+        "reviewed_body_pixels": 18566
+      },
+      {
+        "frame_id": "0008039",
+        "known_instances": 2,
+        "reviewed_body_pixels": 20860
+      },
+      {
+        "frame_id": "0008040",
+        "known_instances": 2,
+        "reviewed_body_pixels": 22962
+      },
+      {
+        "frame_id": "0008041",
+        "known_instances": 2,
+        "reviewed_body_pixels": 24426
+      },
+      {
+        "frame_id": "0008042",
+        "known_instances": 2,
+        "reviewed_body_pixels": 27069
+      },
+      {
+        "frame_id": "0008043",
+        "known_instances": 2,
+        "reviewed_body_pixels": 29899
+      },
+      {
+        "frame_id": "0008044",
+        "known_instances": 2,
+        "reviewed_body_pixels": 33229
+      },
+      {
+        "frame_id": "0008045",
+        "known_instances": 2,
+        "reviewed_body_pixels": 36773
+      },
+      {
+        "frame_id": "0008046",
+        "known_instances": 2,
+        "reviewed_body_pixels": 42946
+      },
+      {
+        "frame_id": "0008047",
+        "known_instances": 2,
+        "reviewed_body_pixels": 49003
+      },
+      {
+        "frame_id": "0008048",
+        "known_instances": 2,
+        "reviewed_body_pixels": 55960
+      },
+      {
+        "frame_id": "0008049",
+        "known_instances": 2,
+        "reviewed_body_pixels": 64787
+      },
+      {
+        "frame_id": "0008050",
+        "known_instances": 2,
+        "reviewed_body_pixels": 76923
+      },
+      {
+        "frame_id": "0008051",
+        "known_instances": 2,
+        "reviewed_body_pixels": 90662
+      },
+      {
+        "frame_id": "0008052",
+        "known_instances": 2,
+        "reviewed_body_pixels": 108966
+      },
+      {
+        "frame_id": "0008053",
+        "known_instances": 2,
+        "reviewed_body_pixels": 137365
+      },
+      {
+        "frame_id": "0008054",
+        "known_instances": 2,
+        "reviewed_body_pixels": 169862
+      },
+      {
+        "frame_id": "0008055",
+        "known_instances": 2,
+        "reviewed_body_pixels": 206979
+      },
+      {
+        "frame_id": "0008056",
+        "known_instances": 2,
+        "reviewed_body_pixels": 230278
+      },
+      {
+        "frame_id": "0008057",
+        "known_instances": 2,
+        "reviewed_body_pixels": 249964
+      },
+      {
+        "frame_id": "0008058",
+        "known_instances": 2,
+        "reviewed_body_pixels": 214661
+      },
+      {
+        "frame_id": "0008059",
+        "known_instances": 2,
+        "reviewed_body_pixels": 178431
+      },
+      {
+        "frame_id": "0008060",
+        "known_instances": 2,
+        "reviewed_body_pixels": 132451
+      },
+      {
+        "frame_id": "0008061",
+        "known_instances": 2,
+        "reviewed_body_pixels": 47366
+      },
+      {
+        "frame_id": "0008062",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008063",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008064",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008065",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008066",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008067",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008068",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008069",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008070",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      },
+      {
+        "frame_id": "0008071",
+        "known_instances": 2,
+        "reviewed_body_pixels": 0
+      }
+    ]
+  },
+  "background": {
+    "policy": "per-point source-time selected oriented-box union, including ambiguous overlaps",
+    "padding_m": 0.0,
+    "input_points": 600000,
+    "retained_points": 579855,
+    "excluded_points": 20145,
+    "sampling_and_order_reused": true,
+    "frames": [
+      {
+        "frame_id": "0008023",
+        "seed_points": 12020,
+        "excluded_vehicle_points": 174
+      },
+      {
+        "frame_id": "0008024",
+        "seed_points": 12120,
+        "excluded_vehicle_points": 248
+      },
+      {
+        "frame_id": "0008025",
+        "seed_points": 12379,
+        "excluded_vehicle_points": 345
+      },
+      {
+        "frame_id": "0008026",
+        "seed_points": 11983,
+        "excluded_vehicle_points": 402
+      },
+      {
+        "frame_id": "0008027",
+        "seed_points": 12297,
+        "excluded_vehicle_points": 463
+      },
+      {
+        "frame_id": "0008028",
+        "seed_points": 12088,
+        "excluded_vehicle_points": 570
+      },
+      {
+        "frame_id": "0008029",
+        "seed_points": 12346,
+        "excluded_vehicle_points": 536
+      },
+      {
+        "frame_id": "0008030",
+        "seed_points": 12092,
+        "excluded_vehicle_points": 593
+      },
+      {
+        "frame_id": "0008031",
+        "seed_points": 11934,
+        "excluded_vehicle_points": 553
+      },
+      {
+        "frame_id": "0008032",
+        "seed_points": 12399,
+        "excluded_vehicle_points": 564
+      },
+      {
+        "frame_id": "0008033",
+        "seed_points": 12047,
+        "excluded_vehicle_points": 510
+      },
+      {
+        "frame_id": "0008034",
+        "seed_points": 12404,
+        "excluded_vehicle_points": 569
+      },
+      {
+        "frame_id": "0008035",
+        "seed_points": 12308,
+        "excluded_vehicle_points": 519
+      },
+      {
+        "frame_id": "0008036",
+        "seed_points": 12182,
+        "excluded_vehicle_points": 476
+      },
+      {
+        "frame_id": "0008037",
+        "seed_points": 12272,
+        "excluded_vehicle_points": 411
+      },
+      {
+        "frame_id": "0008038",
+        "seed_points": 12220,
+        "excluded_vehicle_points": 367
+      },
+      {
+        "frame_id": "0008039",
+        "seed_points": 12576,
+        "excluded_vehicle_points": 340
+      },
+      {
+        "frame_id": "0008040",
+        "seed_points": 12546,
+        "excluded_vehicle_points": 284
+      },
+      {
+        "frame_id": "0008041",
+        "seed_points": 12220,
+        "excluded_vehicle_points": 221
+      },
+      {
+        "frame_id": "0008042",
+        "seed_points": 12278,
+        "excluded_vehicle_points": 206
+      },
+      {
+        "frame_id": "0008043",
+        "seed_points": 12253,
+        "excluded_vehicle_points": 194
+      },
+      {
+        "frame_id": "0008044",
+        "seed_points": 12305,
+        "excluded_vehicle_points": 190
+      },
+      {
+        "frame_id": "0008045",
+        "seed_points": 12134,
+        "excluded_vehicle_points": 179
+      },
+      {
+        "frame_id": "0008046",
+        "seed_points": 12441,
+        "excluded_vehicle_points": 173
+      },
+      {
+        "frame_id": "0008047",
+        "seed_points": 12460,
+        "excluded_vehicle_points": 168
+      },
+      {
+        "frame_id": "0008048",
+        "seed_points": 12148,
+        "excluded_vehicle_points": 167
+      },
+      {
+        "frame_id": "0008049",
+        "seed_points": 12204,
+        "excluded_vehicle_points": 155
+      },
+      {
+        "frame_id": "0008050",
+        "seed_points": 12262,
+        "excluded_vehicle_points": 168
+      },
+      {
+        "frame_id": "0008051",
+        "seed_points": 12256,
+        "excluded_vehicle_points": 166
+      },
+      {
+        "frame_id": "0008052",
+        "seed_points": 12090,
+        "excluded_vehicle_points": 163
+      },
+      {
+        "frame_id": "0008053",
+        "seed_points": 12155,
+        "excluded_vehicle_points": 192
+      },
+      {
+        "frame_id": "0008054",
+        "seed_points": 12396,
+        "excluded_vehicle_points": 225
+      },
+      {
+        "frame_id": "0008055",
+        "seed_points": 12223,
+        "excluded_vehicle_points": 299
+      },
+      {
+        "frame_id": "0008056",
+        "seed_points": 12266,
+        "excluded_vehicle_points": 317
+      },
+      {
+        "frame_id": "0008057",
+        "seed_points": 12373,
+        "excluded_vehicle_points": 390
+      },
+      {
+        "frame_id": "0008058",
+        "seed_points": 12280,
+        "excluded_vehicle_points": 406
+      },
+      {
+        "frame_id": "0008059",
+        "seed_points": 12585,
+        "excluded_vehicle_points": 504
+      },
+      {
+        "frame_id": "0008060",
+        "seed_points": 12122,
+        "excluded_vehicle_points": 569
+      },
+      {
+        "frame_id": "0008061",
+        "seed_points": 12358,
+        "excluded_vehicle_points": 714
+      },
+      {
+        "frame_id": "0008062",
+        "seed_points": 12327,
+        "excluded_vehicle_points": 788
+      },
+      {
+        "frame_id": "0008063",
+        "seed_points": 12021,
+        "excluded_vehicle_points": 750
+      },
+      {
+        "frame_id": "0008064",
+        "seed_points": 12000,
+        "excluded_vehicle_points": 732
+      },
+      {
+        "frame_id": "0008065",
+        "seed_points": 12036,
+        "excluded_vehicle_points": 716
+      },
+      {
+        "frame_id": "0008066",
+        "seed_points": 12161,
+        "excluded_vehicle_points": 680
+      },
+      {
+        "frame_id": "0008067",
+        "seed_points": 12112,
+        "excluded_vehicle_points": 633
+      },
+      {
+        "frame_id": "0008068",
+        "seed_points": 12105,
+        "excluded_vehicle_points": 629
+      },
+      {
+        "frame_id": "0008069",
+        "seed_points": 12395,
+        "excluded_vehicle_points": 604
+      },
+      {
+        "frame_id": "0008070",
+        "seed_points": 12260,
+        "excluded_vehicle_points": 508
+      },
+      {
+        "frame_id": "0008071",
+        "seed_points": 12561,
+        "excluded_vehicle_points": 415
+      }
+    ]
+  },
+  "model_interval": 0.02,
+  "actual_physical_interval_seconds_median": 0.09999,
+  "source_static_seed_modified": false,
+  "old_assets_modified": false,
+  "GPU_used": false,
+  "Torch_imported": false,
+  "TF_imported": false,
+  "geometry_ready": true,
+  "execution": {
+    "started_utc": "2026-10-13T11:25:42.810454+00:00",
+    "completed_utc": "2026-10-13T11:26:12.049454+00:00",
+    "wall_seconds": 29.239023581147194,
+    "interpreter": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "pid": 17249,
+    "command": [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/infra/prepare_instances.py",
+      "--scene",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1",
+      "--output",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/prepared/scene0008_two_actor_v1",
+      "--tfrecord",
+      "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10094743350625019937_3420_000_3440_000_with_camera_labels.tfrecord",
+      "--waymo-reader",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/red_preparation/waymo_numpy_cpu.py",
+      "--selection",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/metadata/scene0008_dual_actor_selection.inherited.json",
+      "--track-id",
+      "NoQttdyd4C16Y_zkGhiFKg",
+      "--track-id",
+      "fXVhuN-RuJDvZwnkQ-0YSQ"
+    ],
+    "CUDA_VISIBLE_DEVICES": "",
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1"
+    }
+  },
+  "full_mask_supervision_ready": true,
+  "rgb_depth_available_independent_of_mask_mapping": true,
+  "training_started": false,
+  "supervised_mask_guard": "Only reviewed mask_known=true pairs; categorical zero is unknown for incomplete mapping; retain full in/out opacity on known masks"
+}

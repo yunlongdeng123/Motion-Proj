@@ -1,23 +1,17 @@
 # 当前研究状态
 
-更新：2026-10-13（新加坡）。分支 `research/worldsim-v8.2-drivingeditor-debug`。当前任务 `WS-V82-DRIVINGEDITOR-GN11-GATE-OTHER-SCENES-20261013/r1` 的训练、评价和实际分层/固定时间复核已全部完成：原四臂各30k、两个追加scene各GN11 30k，共180,000步。六个训练worker、数据/分割/SAM及CPU收集controller均已退出；18个10k/20k/30k四文件bundle、49 FP32/PNG和固定49时间的stat/header合同通过。未实际恢复完整模型/Adam/RNG，`restoration_verified=false`。真实报告与离线包已保存，结果已提交推送；2026-10-13 12:03:48 SGT已发出已授权AutoDL关机请求，定时任务PAUSED。远端SIGTERM acknowledgement已捕获，独立平台电源状态不可读，不能由SSH关闭认证断电。
+更新：2026-10-13T19:51:12.274453+08:00（新加坡）。当前任务 `WS-V82-DRIVINGEDITOR-INSTANCES-20261013/r1`：用户要求v82实例编辑能力，随后收敛为只用GMC多实例场景测试。原银车/红车不新增实验；已经做好的全车辆CPU准备与旧结果保留。[协议与组件图](v82/DRIVINGEDITOR_INSTANCE_EDITOR_20261013.md) · [机器状态](v82/DRIVINGEDITOR_INSTANCE_EDITOR_20261013.json)。
 
-GN11−C00全49等权PSNR：全图+0.3254dB、车体−0.1287dB、非天空车外静态+0.3175dB。完整逐步配对、全49分层、连续raw20–46的27个不利车体帧及全部固定49时间实际复核，未触发用户确认的均值下降超过1dB或明显持续相对视觉回退规则。局部车体亮度/细节/边界代价及两臂静态道路时变残影保留。真实gate仍passed，human仅C00=用户符合预期；GN11/两个新scene仍null。[四臂结果与组件图](v82/DRIVINGEDITOR_FOUR_ARM_30K_RESULTS.md)。
+已实现真实框/track分配LiDAR、局部实例Gaussian、整体刚体pose、同步协方差/局部SH、命名删/移/转/场景内替换、全场景可见贡献监督与完整checkpoint入口。车辆没有PVG重复动态，首阶段固定轨迹及背景；原SGCM只继承背景训练结果，新static→rigid克隆未做。NPS及2024活跃监督保留。代码在scripts/worldsim_v82/drivingeditor_instances；不是识别网络或无3D框方案，也不是已证明论文创新。
 
-GMC scene0008 raw23–71，Corolla153保留静态、DEVA77/82合一个动态Gaussian；GN11完整30k，84.449分钟，全图34.308dB、车体29.698dB（39/49有效）、实际静态35.582dB。末raw62–71十个空body保留/null。实际复核保留局部接地阴影不足、静态道路黑残影和固定pose0008033时间变化。[GMC结果与组件图](v82/DRIVINGEDITOR_GMC_GN11_30K_RESULTS.md)。
+GMC真实输入：两个raw track分别绑定DEVA77/82，137174/160901点，共298075；49×2全部98已审查mask。laser注释有效均49，FRONT可见分别7/39。其他停车仍静态；600k数据seed仅过滤两车框后579855，实际GN11继承模型删点后的点数待GPU测。旧49窗口raw23–71和原作者窗口未知边界保留。
 
-红车scene0029 raw69–117，真实DEVA130、raw98/99/100选经审查的原SAM模型候选，无GT造mask或填洞；29,725真实prior点，原600k静态seed在strict0.1m排除后初始597,734点。GN11完整30k，82.611分钟，最终静态1,030,480/动态1,084,958点，全图37.524dB、车体31.151dB（32/49有效）、实际静态36.970dB；raw101–117十七个空body保留/null。全49分层及固定pose0029079的49时间实际复核：静态道路黑色车底/轮胎残影保留，固定时间中黑条块移动，后段局部绿线/浅粉道路斑块。不存在该scene的C00对照，不认证SGCM/NPS因果回退或收益。[红车结果与组件图](v82/DRIVINGEDITOR_RED_GN11_30K_RESULTS.md) · [最终证据](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/final_followup_20261013/)。
+本地67CPU检查通过/1CUDA实测待验；本地与远端真实Python3.9均通过GMC49时刻单实例删除/平移/旋转他车参数不变与core CPU状态恢复，CUDA未初始化。完整scene GPU模型/Adam/RNG恢复、照片重建和编辑质量未实测。框可能含道路，车影及Gaussian跨框尾部未解决；不能由身份标签或CPU数学合同认证成功补景。
 
-本聊天后续统一使用`outputs/DrivingEditor_final_report.html`，三场景在同一页切换，默认真实49帧相机/时间的静态背景，合成/动态/透明度可切换；固定相机时间诊断单独为次级模式。银车明确四臂，黑车/红车仅GN11；旧四臂入口也默认observed static，旧页与资产保留。`outputs/DrivingEditor_final_reports.zip`离线保存三报告及2,646 PNG，另有原四臂和GMC单独包。所有49帧、共享ROI、raw alpha、固定相机时间控制与坏例保留；原分场景viewer的端点、空body、播放/暂停和图片加载真实浏览器QA已通过；本轮统一页的2,646图像引用、逐帧/固定时间来源与脚本语法检查通过，本轮浏览器交互未实测。质量指标来自训练观测重建，无heldout或删除后GT。作者两scene展示身份逐帧确认，实际训练窗口未知，本地统一49扩展；不称完整论文效果复现。
+19:41 SGT真实启动等待controller PID20065，远端instance_editor_20261013/queue_gmc_r1。最新只读状态waiting_for_other_tasks，无GMC GPUworker。等待不导入Torch、不持共享gpu_slot.lock，5分钟稀疏检查/24小时超时。另一legacy49训练worker10164及其controller10161持共享锁是只读快照，属于其他任务；不修改、不暂停、不误杀。StreetCrafter优先；CPU最多4线程/nice10。已有每小时心跳drivingeditor-30k更新为本GMC实例任务，其他自动化不恢复；无变化安静。
 
-六组训练全程覆盖增密、10k/20k/30k检查点、LPIPS和静态时间控制，采样无错误；完整训练最大观测6.902GiB。包括真实sky/DEVA/SAM的最高观测10.279GiB，满足3090 24GiB减2GiB容量初筛。采样是下界；分割子进程外部Torch allocator不可读（SAM内部已有峰），梯度诊断无NV样本。不认证3090容量、速度或稳定性，目标机仍须实测。每臂与阶段allocated/reserved、PID/device采样、点数和速度见报告和原memory_summary。
+下步等待空闲执行仅GMC300步GPU兼容短测，再实际49帧分层/两车编辑核验。兼容通过后同一固定GT轨迹run续至总30k上限、10k/20k/30k完整保存，不追加scene/seed/loss网格或自动开放位姿。竞争出现则保存priority_yield退出，工程异常保留资产定位；最终新增结果接入已有outputs/DrivingEditor_final_report.html，不再增多HTML入口。新GPU显存和速度尚未测，旧3090初筛不能代替新实现实测。
 
-机制保持2024活跃代码：完整raw body opacity100、静态RGB1、寿命/速度约束与LiDAR深度衰减。SGCM修正支持/克隆谱系是中心投影及temporal-alpha代理，非准确遮挡贡献；NPS保留sum/L2/.01，六节点梯度finite，static-feature/RGB断连ratio占位0无效，不能认定绝对静态。body-only无完整shadow，M-detector未成为实际预处理；完整模型恢复、独立测试与人工质量通过未认证。
+原C00/G10/N01/GN11各30k和GMC/红车GN11各30k共180k已完成；原18节点及真实报告保留。GN11−C00全图+0.3254dB/车体−0.1287dB，旧模块gate passed，human GN11/新scene null，完整恢复未测；新实例表示不自动套旧模块gate。此前2026-10-13 12:03:48 SGT关机请求及原自动化暂停已收口；当前主机重新在线并有其他用户任务，此新阶段没有关机、清理、恢复他人队列的授权。
 
-用户2026-10-13回看旧S32k与新C00：同raw20的GT无几何错位、body mask相同；旧S静态较干净却保留动态道路/车影覆盖，新C00车外动态接近零、静态更贴近观察暗车影。静态RGB公式/系数未变，但有效opacity/RGB/其他正则与从零轨迹等共同改变；未建立单项因果归因。单帧重建PSNR改善不认证无影补景，body内部也缺静态RGB目标。仅分析已有资产，没有GPU/远端/配置/训练改动，原心跳仍暂停。[配置与像素证据](autoresearch/worldsim_v82/drivingeditor_followup_20261013/r1/config_change_diagnosis_20261013/)；F01更新同卡知识，无新failure ID。
-
-SSH仅`wm-vgpu-1011`。原矩阵根`/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012`；后续根`/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013`；GPU解释器`/root/autodl-tmp/envs/drivingeditor/bin/python`。完整模型、原FP32、输入和失败资产保留AutoDL数据盘，HTML/Git离线包不是大检查点备份。源身份搜索已关闭，不重置5GiB预算，不追加arms/seeds/loss网格。[机器可读状态](v82/DRIVINGEDITOR_FOLLOWUP_20261013.json)。
-
-用户已明确授权两个新scene训练/评价/报告收口、保存推送后AutoDL关机，无需重新询问。最后重新核对vendor `/usr/bin/shutdown`和supervisord精确PID/cmdline、零owned GPU/CPU/controllers及无关任务；省略vendor的Trash删除，仅执行日志/TERM后端。当前`drivingeditor-30k`心跳已PAUSED，其他旧自动化保持暂停，不自动开机或重启研究。SSH断开不等于独立平台电源证明；平台不可读时仅报告“已发出关机请求”。实际请求、fresh检查与自动化暂停凭据见最终证据目录及本聊天`outputs/DrivingEditor_shutdown_receipt.json`；远端canonical最后保存于关机前power_pending，本地/Git此终态为权威后续收口记录。
-
-本轮真实mask queue首次因Python3.9无os.pidfd_open在模型前停止，兼容修复后真实数据完整完成：[V82-F03](research_failures/entries/V82-F03.md)。最后CPU collector首轮路径断言失败，partial保留，第二轮使用事件真实metrics目录通过全部复算；不是科学否定。首次C00初始化停滞`attempts/initialization_1`及所有旧资产保留。`failure_ledger_refs=[V82-F01,V82-F02,V82-F03,V76-F03]`，任务累计delta=V82-F03，最终收口新增delta=none。子agent默认`gpt-6.1-sol/max`；无关dirty `scripts/run_worldsim_v72_e3_render_bridge.py`保留。
+SSH仅wm-vgpu-1011；新根/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013，Python /root/autodl-tmp/envs/drivingeditor/bin/python。原矩阵hybrid30k_20261012与followup_scene_prep_20261013、全部checkpoint/rawFP32/输入/失败尝试保留。原静态分配与车影诊断见[F01](research_failures/entries/V82-F01.md)，环境能力迁移教训参见[F03](research_failures/entries/V82-F03.md)；本轮首次CPU解释器缺SciPy的partial保留，改已有解释器成功，无共享环境安装。failure_ledger_refs=[V82-F01,V82-F02,V82-F03]，本轮delta=none。保留scripts/run_worldsim_v72_e3_render_bridge.py无关dirty，子agent默认gpt-6.1-sol/max。

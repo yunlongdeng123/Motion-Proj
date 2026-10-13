@@ -1,0 +1,117 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-INSTANCES-20261013",
+  "run_id": "r1",
+  "updated_sgt": "2026-10-13T19:51:12.274453+08:00",
+  "state": "CPU_INFRA_VALIDATED_GMC_GPU_SMOKE_QUEUED",
+  "scope": "GMC scene0008 raw23..71 two moving actors only",
+  "latest_user_scope_source": "2026-10-13: 3个场景中只有一个多实例，用该场景测，可GPU/多线程CPU但不能挤其他任务",
+  "training_priors": [
+    "genuine Waymo laser 3D boxes",
+    "raw track ID",
+    "genuine per-frame pose",
+    "real reviewed DEVA77/82 masks"
+  ],
+  "representation": "static GN11 background + local rigid G0/G1, fixed GT poses initially; no vehicle PVG",
+  "input": {
+    "frames": 49,
+    "instances": 2,
+    "points": 298075,
+    "known_mask_pairs": 98,
+    "mask_pairs": 98,
+    "retained_static_seed_points": 579855,
+    "actual_warmstarted_static_points_after_GPU_exclusion": null,
+    "tracks": [
+      {
+        "raw_track": "NoQttdyd4C16Y_zkGhiFKg",
+        "DEVA": 77,
+        "points": 137174,
+        "valid_frames": 49,
+        "FRONT_visible_frames": 7
+      },
+      {
+        "raw_track": "fXVhuN-RuJDvZwnkQ-0YSQ",
+        "DEVA": 82,
+        "points": 160901,
+        "valid_frames": 49,
+        "FRONT_visible_frames": 39
+      }
+    ]
+  },
+  "validation": {
+    "CPU_tests_passed": 67,
+    "CUDA_tests_pending": 1,
+    "local_real_GMC49_CPU_edit_contract": "PASS",
+    "target_Python39_real_GMC49_CPU_edit_contract": "PASS",
+    "GPU_training_started": false,
+    "core_CPU_state_restore_exact": true,
+    "full_scene_GPU_model_Adam_RNG_restore_verified": false,
+    "photoreal_edit_quality_verified": false,
+    "human_quality_verdict": null
+  },
+  "queue": {
+    "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/queue_gmc_r1",
+    "pid": 20065,
+    "state": "waiting_for_other_tasks",
+    "first_GPU_test_steps": 300,
+    "max_wait_hours": 24,
+    "poll_seconds": 300,
+    "background_frozen": true,
+    "pose_refinement_enabled": false,
+    "new_SGCM_clones": false
+  },
+  "budget": {
+    "first_GPU_compatibility_steps": 300,
+    "single_GMC_fixed_trajectory_total_step_limit": 30000,
+    "checkpoints": [
+      10000,
+      20000,
+      30000
+    ],
+    "no_silver_red_new_runs": true,
+    "no_loss_seed_grid": true
+  },
+  "resource_policy": {
+    "StreetCrafter_priority": true,
+    "other_GPU_tasks_exclusive": true,
+    "CPU_max_threads": 4,
+    "nice": 10,
+    "kill_pause_other_work": false,
+    "shutdown_authorized_in_new_task": false
+  },
+  "automation": {
+    "id": "drivingeditor-30k",
+    "status": "ACTIVE",
+    "interval_minutes": 60,
+    "other_automations_changed": false
+  },
+  "paths": {
+    "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013",
+    "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/specs/scene0008_023_071.json",
+    "source": "scripts/worldsim_v82/drivingeditor_instances",
+    "evidence": "docs\\autoresearch\\worldsim_v82\\drivingeditor_instances_20261013\\r1\\cpu_ready_gpu_queued"
+  },
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F02",
+    "V82-F03"
+  ],
+  "failure_ledger_delta": "none",
+  "engineering_attempts": [
+    {
+      "phase": "CPU preparation before latest GMC-only scope",
+      "issue": "initial selected CPU interpreter lacked scipy",
+      "resolution": "used existing DrivingEditor interpreter without environment install",
+      "failed_partial_preserved": true,
+      "scientific_negative": false
+    }
+  ],
+  "limits": [
+    "GT box prior is engineering baseline, not new research contribution",
+    "no fair same-scene OmniRe comparison",
+    "nonrigid objects unsupported",
+    "no true shadow mask or edited GT",
+    "fixed topology first, clone/prune API supported but not anisotropic split",
+    "background Gaussian-center box removal can retain cross-boundary extent/shadows",
+    "shared GPU admission cannot replace real runtime validation"
+  ]
+}
