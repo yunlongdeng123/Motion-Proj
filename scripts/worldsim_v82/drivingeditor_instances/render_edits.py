@@ -17,6 +17,18 @@ else:
     from priority import require_gpu_slot, inspect_priority
 
 
+def verify_checkpoint_binding(restored, spec, expected_step=None):
+    """读取实际保存步数；文件名不能替代场景与step内容验证。"""
+    if restored.get('schema') != 'drivingeditor_rigid_scene_v1' or restored.get('spec') != spec:
+        raise ValueError('编辑checkpoint场景绑定不符')
+    step = restored.get('step')
+    if isinstance(step, bool) or not isinstance(step, int) or step < 1:
+        raise ValueError('编辑checkpoint缺少真实有效保存步数')
+    if expected_step is not None and step != expected_step:
+        raise ValueError('编辑checkpoint真实step与显式expected-step不符')
+    return step
+
+
 def frame_edits(model, timestamp, track, operation, *, translation_m=None, angle_degrees=0, source=None, scale=1):
     import torch
     if __package__:
@@ -47,6 +59,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--spec', required=True)
     parser.add_argument('--checkpoint', required=True)
+    parser.add_argument('--expected-step', type=int, help='执行时检查实际checkpoint保存步数，不能只凭文件名')
     parser.add_argument('--track', required=True)
     parser.add_argument('--operation', required=True, choices=['delete', 'translate', 'rotate', 'replace'])
     parser.add_argument('--translate-local-m', nargs=3, type=float)
@@ -58,6 +71,7 @@ def main():
     parser.add_argument('--run', action='store_true')
     parser.add_argument('--gpu-lock', default='/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock')
     args = parser.parse_args()
+    if args.expected_step is not None and args.expected_step < 1: parser.error('expected-step必须为正')
     spec, report = validate_spec(args.spec)
     import numpy as np
     with np.load(Path(spec['prepared']) / 'instances.npz', allow_pickle=False) as bundle:
@@ -92,8 +106,7 @@ def main():
         monitor = MemoryMonitor(output, torch_module=torch, expected_iterations=49)
         monitor.start()
         restored = torch.load(args.checkpoint, map_location='cuda', weights_only=False)
-        if restored['schema'] != 'drivingeditor_rigid_scene_v1' or restored['spec'] != spec:
-            raise ValueError('编辑checkpoint场景绑定不符')
+        checkpoint_step = verify_checkpoint_binding(restored, spec, args.expected_step)
         with monitor.phase('initialization'):
             config, scene, static, instances, _, environment, exclusion = load_models(spec, output, restore=restored)
         records = []
@@ -140,6 +153,7 @@ def main():
                                 'other_visible_pixels_may_change_due_to_occlusion': True,
                                 'paired_edited_GT_available': False})
         receipt = {'status': 'EDIT_RENDER_EXPORTED_VISUAL_REVIEW_PENDING', 'spec': spec, 'arguments': vars(args),
+                   'actual_checkpoint_step': checkpoint_step,
                    'admission': admission, 'frames': records, 'background_exclusion': exclusion,
                    'no_model_parameters_mutated_by_edits': True, 'human_quality_verdict': None,
                    'deletion_background_holes_or_shadow_verified': False, 'relighting': False}

@@ -1,6 +1,6 @@
 # 恢复后场景评估契约
 
-`evaluate_scene.py`默认只读校验真实scene spec、49帧身份和全部49×K已知mask，不导入Torch、不查询GPU、不创建输出。CPU预检只确认checkpoint文件存在；内容、step和模型恢复在取得共享GPU锁后验证。实际GPU执行尚待30k完成后单独进行。
+`evaluate_scene.py`默认只读校验真实scene spec、49帧身份和全部49×K已知mask，不导入Torch、不查询GPU、不创建输出。CPU预检只确认checkpoint文件存在；内容、step和模型恢复在取得共享GPU锁后验证。实际执行与质量只由对应运行凭据认证。
 
 ```mermaid
 flowchart LR
