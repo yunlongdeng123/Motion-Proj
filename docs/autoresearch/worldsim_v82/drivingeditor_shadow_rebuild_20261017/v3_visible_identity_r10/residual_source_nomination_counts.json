@@ -1,0 +1,147 @@
+[
+  {
+    "file": "residual_source_mixtures_summary.json",
+    "summary": {
+      "global_step": 10000,
+      "parameters_updated": false,
+      "training_updates": 0,
+      "CPU_only": true,
+      "source": "actual source banks with raw LiDAR row/frame provenance",
+      "domain": "train46 only; R7 positive body and world-road measurement banks, current R10 3D covariance and exact R9 attribution",
+      "caveats": [
+        "nearest-point3sigma is a nomination, not an exact volume exclusion",
+        "R7 world-road bank is not guaranteed camera-visible; source diagnosis is3D, not a new pixel label",
+        "known body mask+LiDAR can still have boundary/visibility ambiguity",
+        "local separating plane is not proof that a retained child can safely be reanchored; require current multi-view/body volume review"
+      ],
+      "no_height_crop": true,
+      "invisible_or_unknown_is_not_background": true,
+      "actors": [
+        {
+          "actor": 5,
+          "body_and_road_nearest_points_inside3sigma": 98,
+          "both_classes_repeated3times": 28,
+          "locally_separable_nominations": 13,
+          "nominated_visible_road_mass": 0.00047682190779596567,
+          "nominated_low_visible_road_rows": 13
+        },
+        {
+          "actor": 6,
+          "reason": "missing positive source class; no nomination"
+        },
+        {
+          "actor": 12,
+          "body_and_road_nearest_points_inside3sigma": 27,
+          "both_classes_repeated3times": 0,
+          "locally_separable_nominations": 0,
+          "nominated_visible_road_mass": 0,
+          "nominated_low_visible_road_rows": 0
+        },
+        {
+          "actor": 18,
+          "body_and_road_nearest_points_inside3sigma": 7,
+          "both_classes_repeated3times": 0,
+          "locally_separable_nominations": 0,
+          "nominated_visible_road_mass": 0,
+          "nominated_low_visible_road_rows": 0
+        },
+        {
+          "actor": 25,
+          "body_and_road_nearest_points_inside3sigma": 8,
+          "both_classes_repeated3times": 3,
+          "locally_separable_nominations": 3,
+          "nominated_visible_road_mass": 0.02716762760758229,
+          "nominated_low_visible_road_rows": 2
+        },
+        {
+          "actor": 26,
+          "body_and_road_nearest_points_inside3sigma": 201,
+          "both_classes_repeated3times": 20,
+          "locally_separable_nominations": 9,
+          "nominated_visible_road_mass": 0.02940767706547831,
+          "nominated_low_visible_road_rows": 8
+        },
+        {
+          "actor": 37,
+          "body_and_road_nearest_points_inside3sigma": 84,
+          "both_classes_repeated3times": 0,
+          "locally_separable_nominations": 0,
+          "nominated_visible_road_mass": 0,
+          "nominated_low_visible_road_rows": 0
+        }
+      ],
+      "elapsed_seconds": 3.6372494967654347,
+      "full_nomination_provenance": "remote/local output retained; summary only in GitHub"
+    }
+  },
+  {
+    "file": "residual_exact_road_010000_r10.json",
+    "summary": {
+      "global_step": 10000,
+      "parameters_updated": false,
+      "training_updates": 0,
+      "actors": [
+        {
+          "actor": 5,
+          "exact_positive_road_source_candidates": 73,
+          "body_volume_protected": 26,
+          "RGB_body_protected": 21,
+          "accepted_nominations": 26,
+          "nominated_road_mass": 0.7104724858360214
+        },
+        {
+          "actor": 6,
+          "accepted_nominations": 0,
+          "reason": "no positive measured road bank"
+        },
+        {
+          "actor": 12,
+          "exact_positive_road_source_candidates": 122,
+          "body_volume_protected": 25,
+          "RGB_body_protected": 4,
+          "accepted_nominations": 93,
+          "nominated_road_mass": 0.01783721066749422
+        },
+        {
+          "actor": 18,
+          "exact_positive_road_source_candidates": 4,
+          "body_volume_protected": 2,
+          "RGB_body_protected": 0,
+          "accepted_nominations": 2,
+          "nominated_road_mass": 0.0
+        },
+        {
+          "actor": 25,
+          "exact_positive_road_source_candidates": 32,
+          "body_volume_protected": 3,
+          "RGB_body_protected": 1,
+          "accepted_nominations": 28,
+          "nominated_road_mass": 0.027102738304677132
+        },
+        {
+          "actor": 26,
+          "exact_positive_road_source_candidates": 135,
+          "body_volume_protected": 83,
+          "RGB_body_protected": 35,
+          "accepted_nominations": 17,
+          "nominated_road_mass": 0.14828997406112876
+        },
+        {
+          "actor": 37,
+          "exact_positive_road_source_candidates": 270,
+          "body_volume_protected": 82,
+          "RGB_body_protected": 1,
+          "accepted_nominations": 187,
+          "nominated_road_mass": 0.7614239226849122
+        }
+      ],
+      "source_checkpoint": "E6_visible_identity_s0/gate_010000.pt",
+      "source_audit": "commonR9_E6_010000",
+      "method": "exact original canonical seed match2e-5m to actual world-road measurement already repeated>=3 world times; current covariance inside3sigma road, exact4sigma body and repeated RGB body protection",
+      "caveat": "nominations only; no owner/geometry changes. Sparse body bank is incomplete, actual-source view/geometry must be reviewed before mutation; do not apply old row nominations to a later checkpoint",
+      "no_height_crop": true,
+      "invisible_is_not_background": true,
+      "full_nomination_provenance": "remote/local output retained; summary only in GitHub"
+    }
+  }
+]

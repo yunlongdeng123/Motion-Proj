@@ -1,0 +1,261 @@
+{
+  "train_only": true,
+  "parameters_updated": false,
+  "common_domain": "data_r5_ray_visible_road.road_certified",
+  "old_R5_domain_caveat": "includes potential camera-occluded road projections;96.6percent old unknown fraction is not a true visible-road leakage ratio",
+  "scope": "same actual R9 road certificate domain; sequential engineering trials, not matched causal ablations; no clean/edit ground truth",
+  "models": [
+    {
+      "run": "E3_source_ownership_s0",
+      "model_step": 8000,
+      "road_certificate_pixels": 245731,
+      "actors": [
+        {
+          "actor": 5,
+          "road_visible_alpha_mass": 63.440325140953064,
+          "road_visible_alpha_mean": 0.0002581698082087855,
+          "known_body_pixels": 115626,
+          "known_body_visible_alpha_mean": 0.9559847065807472,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 6,
+          "road_visible_alpha_mass": 14.37283428478986,
+          "road_visible_alpha_mean": 5.849011433148386e-05,
+          "known_body_pixels": 25140,
+          "known_body_visible_alpha_mean": 0.8648069553177985,
+          "unknown_mask_road_mass": 9.529109925031662
+        },
+        {
+          "actor": 12,
+          "road_visible_alpha_mass": 0.1422000815134652,
+          "road_visible_alpha_mean": 5.786818981466123e-07,
+          "known_body_pixels": 3627,
+          "known_body_visible_alpha_mean": 0.8371878877171216,
+          "unknown_mask_road_mass": 0.14219893380698068
+        },
+        {
+          "actor": 18,
+          "road_visible_alpha_mass": 2.233573609021448,
+          "road_visible_alpha_mean": 9.089506855144236e-06,
+          "known_body_pixels": 12411,
+          "known_body_visible_alpha_mean": 0.8423356183846369,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 25,
+          "road_visible_alpha_mass": 0.4057145025014961,
+          "road_visible_alpha_mean": 1.651051363081972e-06,
+          "known_body_pixels": 87973,
+          "known_body_visible_alpha_mean": 0.9044766016910462,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 26,
+          "road_visible_alpha_mass": 44.30255499017949,
+          "road_visible_alpha_mean": 0.00018028883205692194,
+          "known_body_pixels": 111621,
+          "known_body_visible_alpha_mean": 0.9090139174570085,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 37,
+          "road_visible_alpha_mass": 208.00302010774612,
+          "road_visible_alpha_mean": 0.0008464663396467931,
+          "known_body_pixels": 98517,
+          "known_body_visible_alpha_mean": 0.9532671917108849,
+          "unknown_mask_road_mass": 179.65296030044556
+        }
+      ]
+    },
+    {
+      "run": "E4_road_identity_s0",
+      "model_step": 9000,
+      "road_certificate_pixels": 245731,
+      "actors": [
+        {
+          "actor": 5,
+          "road_visible_alpha_mass": 19.862943202257156,
+          "road_visible_alpha_mean": 8.083206108410072e-05,
+          "known_body_pixels": 115626,
+          "known_body_visible_alpha_mean": 0.9459786471103493,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 6,
+          "road_visible_alpha_mass": 5.141913658007979,
+          "road_visible_alpha_mean": 2.0924969409671468e-05,
+          "known_body_pixels": 25140,
+          "known_body_visible_alpha_mean": 0.8666804918336224,
+          "unknown_mask_road_mass": 3.0775288343429565
+        },
+        {
+          "actor": 12,
+          "road_visible_alpha_mass": 0.08246967218678947,
+          "road_visible_alpha_mean": 3.3560955755191434e-07,
+          "known_body_pixels": 3627,
+          "known_body_visible_alpha_mean": 0.8239532882989127,
+          "unknown_mask_road_mass": 0.08246701693383329
+        },
+        {
+          "actor": 18,
+          "road_visible_alpha_mass": 0.5495240592736081,
+          "road_visible_alpha_mean": 2.2362830056997616e-06,
+          "known_body_pixels": 12411,
+          "known_body_visible_alpha_mean": 0.8016708812939536,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 25,
+          "road_visible_alpha_mass": 0.2541231159552808,
+          "road_visible_alpha_mean": 1.0341516371775673e-06,
+          "known_body_pixels": 87973,
+          "known_body_visible_alpha_mean": 0.8989597750839124,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 26,
+          "road_visible_alpha_mass": 20.144782219465924,
+          "road_visible_alpha_mean": 8.197900232150572e-05,
+          "known_body_pixels": 111621,
+          "known_body_visible_alpha_mean": 0.888737950350772,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 37,
+          "road_visible_alpha_mass": 22.283379957079887,
+          "road_visible_alpha_mean": 9.068200575865433e-05,
+          "known_body_pixels": 98517,
+          "known_body_visible_alpha_mean": 0.9006344013358735,
+          "unknown_mask_road_mass": 14.731632113456726
+        }
+      ]
+    },
+    {
+      "run": "E5_ray_visible_from8k",
+      "model_step": 9000,
+      "road_certificate_pixels": 245731,
+      "actors": [
+        {
+          "actor": 5,
+          "road_visible_alpha_mass": 20.76859024167061,
+          "road_visible_alpha_mean": 8.451758321770802e-05,
+          "known_body_pixels": 115626,
+          "known_body_visible_alpha_mean": 0.9533890026787268,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 6,
+          "road_visible_alpha_mass": 5.008912303484976,
+          "road_visible_alpha_mean": 2.038372164474558e-05,
+          "known_body_pixels": 25140,
+          "known_body_visible_alpha_mean": 0.8712925451941782,
+          "unknown_mask_road_mass": 2.908765271306038
+        },
+        {
+          "actor": 12,
+          "road_visible_alpha_mass": 0.08222070051982655,
+          "road_visible_alpha_mean": 3.345963696881002e-07,
+          "known_body_pixels": 3627,
+          "known_body_visible_alpha_mean": 0.8244366052888923,
+          "unknown_mask_road_mass": 0.08221742940486365
+        },
+        {
+          "actor": 18,
+          "road_visible_alpha_mass": 0.7342901766769501,
+          "road_visible_alpha_mean": 2.988186987709935e-06,
+          "known_body_pixels": 12411,
+          "known_body_visible_alpha_mean": 0.8149755774665423,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 25,
+          "road_visible_alpha_mass": 0.2546643054301967,
+          "road_visible_alpha_mean": 1.0363540026703863e-06,
+          "known_body_pixels": 87973,
+          "known_body_visible_alpha_mean": 0.9001260785002927,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 26,
+          "road_visible_alpha_mass": 21.026232669104047,
+          "road_visible_alpha_mean": 8.556605665994135e-05,
+          "known_body_pixels": 111621,
+          "known_body_visible_alpha_mean": 0.9041703993360309,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 37,
+          "road_visible_alpha_mass": 29.47148970887065,
+          "road_visible_alpha_mean": 0.00011993395098245907,
+          "known_body_pixels": 98517,
+          "known_body_visible_alpha_mean": 0.9484029356529203,
+          "unknown_mask_road_mass": 19.646003156900406
+        }
+      ]
+    },
+    {
+      "run": "E6_visible_identity_s0",
+      "model_step": 10000,
+      "road_certificate_pixels": 245731,
+      "actors": [
+        {
+          "actor": 5,
+          "road_visible_alpha_mass": 21.38210916519165,
+          "road_visible_alpha_mean": 8.701429272330984e-05,
+          "known_body_pixels": 115626,
+          "known_body_visible_alpha_mean": 0.972710175842736,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 6,
+          "road_visible_alpha_mass": 3.825136039638892,
+          "road_visible_alpha_mean": 1.556635524064482e-05,
+          "known_body_pixels": 25140,
+          "known_body_visible_alpha_mean": 0.9054727291814277,
+          "unknown_mask_road_mass": 2.234759636223316
+        },
+        {
+          "actor": 12,
+          "road_visible_alpha_mass": 0.36879630472748204,
+          "road_visible_alpha_mean": 1.5008131034646913e-06,
+          "known_body_pixels": 3627,
+          "known_body_visible_alpha_mean": 0.8060813716597093,
+          "unknown_mask_road_mass": 0.3687343002974899
+        },
+        {
+          "actor": 18,
+          "road_visible_alpha_mass": 0.9987412042482902,
+          "road_visible_alpha_mean": 4.064367964352443e-06,
+          "known_body_pixels": 12411,
+          "known_body_visible_alpha_mean": 0.91943298332467,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 25,
+          "road_visible_alpha_mass": 0.8620750300760847,
+          "road_visible_alpha_mean": 3.508206250233323e-06,
+          "known_body_pixels": 87973,
+          "known_body_visible_alpha_mean": 0.9725155936349523,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 26,
+          "road_visible_alpha_mass": 23.850695866107344,
+          "road_visible_alpha_mean": 9.706018315193177e-05,
+          "known_body_pixels": 111621,
+          "known_body_visible_alpha_mean": 0.9497454649546337,
+          "unknown_mask_road_mass": 0
+        },
+        {
+          "actor": 37,
+          "road_visible_alpha_mass": 22.273314339108765,
+          "road_visible_alpha_mean": 9.064104382071763e-05,
+          "known_body_pixels": 98517,
+          "known_body_visible_alpha_mean": 0.9605473389110509,
+          "unknown_mask_road_mass": 13.608559533953667
+        }
+      ]
+    }
+  ]
+}

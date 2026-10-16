@@ -1,0 +1,46 @@
+{
+  "source_step": 10000,
+  "next_gate": 20000,
+  "decision": "CONTINUE_GEOMETRY",
+  "reviewer": "root agent; no subagent",
+  "asset_cleanliness_accepted": false,
+  "material_authorized_by_this_gate": false,
+  "reviewed": [
+    "Same seven real camera evidence crops versus E5@9000: GT, canonical RGB, isolated Actor RGB and raw alpha",
+    "a37 isolated RGB all49 frames, especially early unknown-mask frames and late underbody loops",
+    "a5 isolated RGB all49 frames and source frame crop",
+    "All49 per-Actor body RGB metrics, train46/test3 denominators separated",
+    "All43 identity alpha*T attribution on the identical R9 measured-road certificate domain,245731 pixels"
+  ],
+  "results": {
+    "a18_known_body_visible_alpha_before": 0.814976,
+    "a18_known_body_visible_alpha_after": 0.91943298332467,
+    "a37_known_body_visible_alpha_before": 0.948403,
+    "a37_known_body_visible_alpha_after": 0.9605473389110509,
+    "a37_certified_road_mass_before": 29.471519846229232,
+    "a37_certified_road_mass_after": 22.273314339108765,
+    "a12_known_body_visible_alpha_before": 0.824437,
+    "a12_known_body_visible_alpha_after": 0.8060813716597093,
+    "body_MAE_train_improved_actors": [5, 6, 18, 25, 26, 37],
+    "a12_train_body_MAE_before": 0.008093415120647882,
+    "a12_train_body_MAE_after": 0.008457843716140001,
+    "H264_streams_all49_verified": 65,
+    "training_seconds_per_update_recent": 0.46
+  },
+  "findings": [
+    "No recurrence of R8 bumper mottling; visible ownership improves in6/7 admitted Actors",
+    "a18 white vehicle still has conspicuous hood zigzags; appearance quality not accepted",
+    "a12 remains partial/contaminated and slightly worsens; monitor its boundary in longer geometry interval",
+    "a5/a26 underbody strips and a37 late underbody loops persist in isolated assets; full-scene road suppression alone does not certify asset cleanliness",
+    "R9 road metric is sparse positive measurement evidence, not independent clean/edit ground truth; invisible/unknown points are not automatically background"
+  ],
+  "next": "Continue unchanged R10 geometry9000-lineage through20000; preserve10k checkpoint; review same7/full49/common-domain at20k before any material. During training, inspect actual-source body+road mixtures and whether remaining isolated underbody fragments require evidence-supported splits. Do not relabel by height or lack of visibility.",
+  "budget": {
+    "working_geometry_target": 29000,
+    "discarded_updates_charged": 1000,
+    "final_working_global_step": 44000,
+    "total_charged_updates": 45000
+  },
+  "human_verdict": null,
+  "problem_solved": null
+}
