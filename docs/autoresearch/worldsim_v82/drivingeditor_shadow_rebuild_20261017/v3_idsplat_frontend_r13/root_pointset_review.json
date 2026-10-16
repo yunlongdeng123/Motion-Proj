@@ -1,0 +1,40 @@
+{
+  "status": "ROOT_POINTSET_REVIEW_NOT_ACCEPTED_FOR_TRAINING",
+  "reviewer": "root agent, no subagents",
+  "human_verdict": null,
+  "problem_solved": false,
+  "numerical_gate": false,
+  "scene_training_updates": 0,
+  "reviewed_actors": [
+    5,
+    6,
+    12,
+    18,
+    25,
+    26,
+    37
+  ],
+  "reviewed_images": [
+    "a05_pointset.png",
+    "a06_pointset.png",
+    "a12_pointset.png",
+    "a18_pointset.png",
+    "a25_pointset.png",
+    "a26_pointset.png",
+    "a37_pointset.png"
+  ],
+  "positives": [
+    "a5/a26 flat road-base point layers greatly reduced while visible body surface stays represented",
+    "a37 large base reduced, finite low points remain",
+    "6 of7 meet predeclared body and lowerbody retention proxy"
+  ],
+  "limitations": [
+    "a12 visible mask is a partial sliver behind other parked vehicles; QUERY body proxy not exact manual ownership",
+    "a12 common-mask lift loses most coverage before DBSCAN; no positive road conflicts for that Actor",
+    "body coverage proxies cannot certify unobserved opposite surfaces or train-time split/owner correctness",
+    "DINOv3 gives47 transforms from56 planned pairs;9 have insufficient distinct feature correspondences; several GT disagreements are large",
+    "no new learned assets or edit videos; current result is initialization only"
+  ],
+  "decision": "Do not start training or①②④. Preserve finite useful front-end evidence and failed gate; obey prior stop/shutdown condition after push and live task/queue idle verification.",
+  "at": "2026-10-17T07:13:13.041743+08:00"
+}

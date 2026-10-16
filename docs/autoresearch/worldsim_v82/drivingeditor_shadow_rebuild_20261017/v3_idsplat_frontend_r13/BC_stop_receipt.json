@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-16T23:01:55.446169+00:00",
+  "reason": "USER_STOP_BC_REPLACE_WITH_IDSPLAT_FRONTEND_POINT_GATE",
+  "processes": [
+    {
+      "ppid": 1,
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/three_control_controller_r12.py ",
+      "pid": 26840
+    },
+    {
+      "ppid": 26840,
+      "cmd": "flock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/three_control_controller_r12.py --worker B_semantic_motion ",
+      "pid": 28944
+    },
+    {
+      "ppid": 28944,
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/three_control_controller_r12.py --worker B_semantic_motion ",
+      "pid": 28945
+    },
+    {
+      "ppid": 28945,
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/r12_geometry_review.py --arm B_semantic_motion ",
+      "pid": 29723
+    }
+  ],
+  "automatic_resume_forbidden": true,
+  "remaining_owned": [],
+  "arms": {
+    "A_box": {
+      "progress": {
+        "stage": "geometry",
+        "stage_step": 3000,
+        "stage_steps": 15000,
+        "global_step": 3000,
+        "total_steps": 25000,
+        "loss": 0.12496090680360794,
+        "terms": {
+          "depth": 0.0038364571519196033,
+          "mask_inside": 0.11295104771852493,
+          "mask_outside": 0.0034009097144007683,
+          "visible_instance": 0.19949676096439362,
+          "road_identity": 3.708415533765219e-05,
+          "clean_road": 1.9775468899752013e-05,
+          "geometry": 0.0010527315316721797,
+          "normal": 0.013858415186405182,
+          "view_residual": 0.012649176642298698,
+          "reconstruction": 0.0359564870595932,
+          "rgb": 0.0359564870595932,
+          "ssim": 0.11926526576280594,
+          "body_rgb": 0.026220053434371948,
+          "body_teacher": 0.0
+        },
+        "frame_id": "0008133",
+        "gaussians": 324924,
+        "elapsed_seconds": 551.7525975275785
+      },
+      "complete": true,
+      "checkpoints": [
+        {
+          "name": "latest.pt",
+          "bytes": 140826472,
+          "mtime": 1792190480.4423482
+        },
+        {
+          "name": "gate_001500.pt",
+          "bytes": 132712168,
+          "mtime": 1792189922.1351657
+        }
+      ]
+    },
+    "B_semantic_motion": {
+      "progress": {
+        "stage": "geometry",
+        "stage_step": 3000,
+        "stage_steps": 15000,
+        "global_step": 3000,
+        "total_steps": 25000,
+        "loss": 0.12419699132442474,
+        "terms": {
+          "depth": 0.00360076199285686,
+          "mask_inside": 0.11783473938703537,
+          "mask_outside": 0.0037285489961504936,
+          "visible_instance": 0.1911666989326477,
+          "road_identity": 2.6817106117960066e-05,
+          "clean_road": 2.079768637486268e-05,
+          "geometry": 0.0009952286491170526,
+          "normal": 0.013071729801595211,
+          "view_residual": 0.012242951430380344,
+          "reconstruction": 0.03595460206270218,
+          "rgb": 0.03595460206270218,
+          "ssim": 0.11935696750879288,
+          "body_rgb": 0.02591388113796711,
+          "body_teacher": 0.0
+        },
+        "frame_id": "0008133",
+        "gaussians": 289663,
+        "elapsed_seconds": 526.8207916505635
+      },
+      "complete": false,
+      "checkpoints": [
+        {
+          "name": "latest.pt",
+          "bytes": 125557672,
+          "mtime": 1792191637.9253
+        },
+        {
+          "name": "gate_001500.pt",
+          "bytes": 118324520,
+          "mtime": 1792191105.895655
+        }
+      ]
+    },
+    "C_correctable": {
+      "progress": null,
+      "complete": false,
+      "checkpoints": []
+    }
+  },
+  "GPU": ""
+}

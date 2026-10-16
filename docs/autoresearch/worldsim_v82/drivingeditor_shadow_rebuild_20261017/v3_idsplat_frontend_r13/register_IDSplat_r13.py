@@ -1,0 +1,28 @@
+from pathlib import Path
+import json,datetime
+W=Path(__file__).resolve().parent
+now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()
+receipt=json.loads((W/'USER_STOP_BC_receipt.json').read_text())
+protocol=dict(run='idsplat_frontend_r13',created_at=now,status='PREPARING_POINTSET_ONLY',latest_user_priority='B/C stopped, replace queue with one IDSplat front-end pointset comparison before any new training',
+ official_source_commit='e3e08fcd794d18ab61fa4550235a6bbf41643726',mask_bundle='ownership_controls_r12_sam3/shared_sam3_masks_r2 frozen unchanged; SAM3 or explicitly recorded DEVA/conflict fallback',
+ common=dict(raw_measurements='ownership_controls_r12_sam3/raw_measurements',BUILD='train46 rawrow%5!=0',QUERY='raw101/113/125 and rawrow%5==0; development query already inspected',GT_trajectory='data_r2/trajectory.npz unchanged byte hash',backend='implementation_r12 unchanged',training='none until root pointset gate passes'),
+ frontend=dict(mask_lifting='3D box is candidate range only; require same-frame known full instance mask and BUILD-only frontmost camera-depth check',
+ boundary='3pixel eroded mask as core confidence, not hard deletion; all full-mask measured points considered',
+ clustering='official DBSCAN eps0.5m min_samples10 on each frame/instance; retain every cluster with an eroded-core anchor, not largest only; noise/boundary can survive within15cm of supported cluster or >=2 independent frames within8cm canonical actual-mask measurements; sparse<10 frames retain direct body evidence absent positive road conflict',
+ conflicts='positive repeated actual world-road within6cm conflicts remain uncertain, never silently background; no height crop, random seeds or static-track removal',
+ aggregation='fixed GT local coordinates and same4cm voxel selection; no inferred pose replacement',
+ DINOv3='real ViT-B16 layer7 remove5prefix, bilinear native features; official cosine matching plus Umeyama/RANSAC, compare with GT without changing points/poses; no per-image PCA, no AnyUp',
+ uncertain_pool='preserve every withheld source return with reason, frame, rawrow, world/local coordinates and evidence'),
+ gate=dict(road_reduction_atleast=.5,body_coverage_fraction_of_A_atleast=.9,lowerbody_coverage_fraction_of_A_atleast=.9,coverage_radius_m=.08,
+ road_positive_proxy_min_A_count=30,require_all7_body=True,thresholds_fixed_before_QUERY=True,visual_root_review_required=True,
+ limits='masks and world-road support are predicted/geometric proxies, not manual ownership GT; lowerbody means bottom25percent visible mask bbox, not exact tire labels; QUERY is development not new blind test'),
+ conditional_training=dict(initial_geometry_updates=3000,only_after_pointset_gate=True,same_config_as_A=True,GT_poses_frozen=True,no_material_until_assets_accepted=True),
+ stop_policy='One finite final frontend attempt. If pointset not clearly better or 3k asset gate fails, preserve evidence, push existing branch, verify all own processes/queues and other GPU tasks idle, AutoDL shutdown; no more sweeps.',
+ no_subagents=True,human_verdict=None)
+(W/'idsplat_frontend_r13_protocol.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2),encoding='utf8')
+for filename in ['state.json','experiment_schedule.json']:
+    p=W/filename;v=json.loads(p.read_text(encoding='utf8'));v.update(updated_at=now,status='IDSPLAT_R13_POINTSET_PREPARATION_NO_TRAINING',active_campaign='idsplat_frontend_r13',training_controller='NONE; B/C controller and descendants stopped by user',next_action='One fixed-profile SAM3 mask-lift/DBSCAN frontend, DINOv3+RANSAC independent validation. Root pointset gate before any new scene SGD.',BC_user_stop=receipt,IDSplat_r13_protocol=protocol)
+    v['charged_training_updates_range']=[19500,19549];v['formal_budget_remaining_conservative']=25451
+    v['historical_monitor_status']='b-c-15 paused during replacement preparation'
+    p.write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf8')
+print(json.dumps({'status':protocol['status'],'B_completed_updates':3000,'C_updates':0,'training_processes_remaining':receipt['remaining_owned'],'new_training_updates':0},ensure_ascii=False))
