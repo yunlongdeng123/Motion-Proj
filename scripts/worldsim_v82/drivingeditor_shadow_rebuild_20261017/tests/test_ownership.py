@@ -1,7 +1,7 @@
 import unittest,tempfile
 from pathlib import Path
 import torch
-from shadow_rebuild.ownership import split_moments,classify_evidence,split_boundary
+from shadow_rebuild.ownership import split_moments,classify_evidence,split_boundary,split_plane
 from fixture import create
 from shadow_rebuild.data import Dataset
 from shadow_rebuild.model import SceneModel
@@ -26,6 +26,20 @@ class OwnershipMath(unittest.TestCase):
 
 
 class BoundaryTopology(unittest.TestCase):
+    def test_oblique_plane_split_preserves_3D_moments_and_both_children(self):
+        from shadow_rebuild.math3d import covariance
+        with tempfile.TemporaryDirectory() as temporary:
+            path=Path(temporary)/'data';config=create(path);d=Dataset(path,synthetic=True)
+            model=SceneModel(d.seed,config);field=model.field;opt=model.optimizer('geometry');n=len(field.xyz)
+            row=torch.tensor([1]);cut=torch.tensor([.35]);direction=torch.tensor([[.6,.8,0.]])
+            mu=field.xyz[row].detach().clone();sigma=covariance(field.quaternion[row],field.scales[row]).detach().clone()
+            mass,_,_=split_moments(cut);split_plane(field,row,direction,cut,opt)
+            rr=torch.tensor([1,n]);childmu=field.xyz[rr];childcov=covariance(field.quaternion[rr],field.scales[rr])
+            mean=(mass[0,:,None]*childmu).sum(0);delta=childmu-mu
+            second=(mass[0,:,None,None]*(childcov+delta[:,:,None]*delta[:,None,:])).sum(0)
+            torch.testing.assert_close(mean,mu[0],atol=1e-6,rtol=1e-5);torch.testing.assert_close(second,sigma[0],atol=1e-6,rtol=1e-4)
+            self.assertEqual(int(field.owner[1]),int(field.owner[n]))
+
     def test_split_preserves_identity_and_unaffected_adam(self):
         with tempfile.TemporaryDirectory() as temporary:
             path=Path(temporary)/'data';config=create(path);dataset=Dataset(path,synthetic=True)

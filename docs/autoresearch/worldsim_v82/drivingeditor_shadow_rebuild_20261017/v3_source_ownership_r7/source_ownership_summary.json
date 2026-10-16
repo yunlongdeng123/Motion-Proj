@@ -1,0 +1,172 @@
+{
+  "global_step": 7000,
+  "training_updates": 0,
+  "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E3_contour_split_s0/latest.pt",
+  "reanchored": 1431,
+  "actors": [
+    {
+      "actor": 5,
+      "positive_volume_candidates": 314,
+      "accepted": 34,
+      "actual_body_protected": 45,
+      "repeated_RGB_body_protected": 0,
+      "insufficient_temporal_source": 235
+    },
+    {
+      "actor": 6,
+      "accepted": 0,
+      "reason": "no positive measured road bank"
+    },
+    {
+      "actor": 12,
+      "positive_volume_candidates": 325,
+      "accepted": 140,
+      "actual_body_protected": 5,
+      "repeated_RGB_body_protected": 2,
+      "insufficient_temporal_source": 178
+    },
+    {
+      "actor": 18,
+      "positive_volume_candidates": 3,
+      "accepted": 0,
+      "actual_body_protected": 0,
+      "repeated_RGB_body_protected": 0,
+      "insufficient_temporal_source": 3
+    },
+    {
+      "actor": 25,
+      "positive_volume_candidates": 32,
+      "accepted": 19,
+      "actual_body_protected": 1,
+      "repeated_RGB_body_protected": 0,
+      "insufficient_temporal_source": 12
+    },
+    {
+      "actor": 26,
+      "positive_volume_candidates": 318,
+      "accepted": 28,
+      "actual_body_protected": 86,
+      "repeated_RGB_body_protected": 9,
+      "insufficient_temporal_source": 195
+    },
+    {
+      "actor": 37,
+      "positive_volume_candidates": 1501,
+      "accepted": 1210,
+      "actual_body_protected": 52,
+      "repeated_RGB_body_protected": 0,
+      "insufficient_temporal_source": 239
+    }
+  ],
+  "reference": {
+    "points": 27076,
+    "valid_reference_points": 5085,
+    "source": "reprojected train RGB + measured LiDAR depth; no test colors; no parent-color copying"
+  },
+  "no_height_crop": true,
+  "invisible_is_not_background": true,
+  "method": "actual positive repeated LiDAR-road source; exact4sigma body volume exclusion + repeated RGB-body protection; measured world anchor, not arbitrary pose freeze",
+  "unknown_without_road_positive": "retained unchanged",
+  "elapsed_seconds": 59.10220216400921,
+  "provenance_examples": [
+    {
+      "row": 112381,
+      "previous_owner": 5,
+      "new_owner": -1,
+      "actual_world_xyz": [
+        3.5138604640960693,
+        -10.821261405944824,
+        0.4243412911891937
+      ],
+      "actual_source": {
+        "frame_id": "0008107",
+        "frame_index": 18,
+        "lidar_row": 135143,
+        "atlas_row": 117177,
+        "world_support_frames": 38
+      },
+      "canonical_road_source_frames": [
+        17,
+        18,
+        19
+      ],
+      "canonical_distance_m": 0.022659593857651074,
+      "road_mahal_squared": 4.335376262664795,
+      "exact_body_4sigma_support": false,
+      "fullscene_evidence": [
+        0.04068723246564332,
+        0.0,
+        1.7084994851757074e-05,
+        0.04377137868323189
+      ],
+      "fullscene_body_frames": 1
+    },
+    {
+      "row": 121351,
+      "previous_owner": 5,
+      "new_owner": -1,
+      "actual_world_xyz": [
+        3.318448305130005,
+        -11.639447212219238,
+        0.4572957754135132
+      ],
+      "actual_source": {
+        "frame_id": "0008105",
+        "frame_index": 16,
+        "lidar_row": 159059,
+        "atlas_row": 106810,
+        "world_support_frames": 14
+      },
+      "canonical_road_source_frames": [
+        5,
+        16,
+        17
+      ],
+      "canonical_distance_m": 0.024250100325796276,
+      "road_mahal_squared": 4.9967780113220215,
+      "exact_body_4sigma_support": false,
+      "fullscene_evidence": [
+        0.00014787465306653758,
+        0.0,
+        0.007677277468246757,
+        0.019474917229899802
+      ],
+      "fullscene_body_frames": 0
+    },
+    {
+      "row": 121369,
+      "previous_owner": 5,
+      "new_owner": -1,
+      "actual_world_xyz": [
+        3.318448305130005,
+        -11.639447212219238,
+        0.4572957754135132
+      ],
+      "actual_source": {
+        "frame_id": "0008105",
+        "frame_index": 16,
+        "lidar_row": 159059,
+        "atlas_row": 106810,
+        "world_support_frames": 14
+      },
+      "canonical_road_source_frames": [
+        5,
+        16,
+        17
+      ],
+      "canonical_distance_m": 0.018514830957104367,
+      "road_mahal_squared": 5.741384029388428,
+      "exact_body_4sigma_support": false,
+      "fullscene_evidence": [
+        8.655814599478617e-05,
+        0.0,
+        0.006971037847506523,
+        0.022329974825652243
+      ],
+      "fullscene_body_frames": 0
+    }
+  ],
+  "full_evidence_rows": 1431,
+  "full_evidence_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E3_source_ownership_s0/source_ownership.json",
+  "full_evidence_delivery": "outputs/shadow_rebuild_v3/gpu_r5/source_ownership_r7.json"
+}

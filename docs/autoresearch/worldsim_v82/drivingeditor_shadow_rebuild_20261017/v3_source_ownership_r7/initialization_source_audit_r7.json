@@ -1,0 +1,96 @@
+{
+  "status": "COMPLETE_READ_ONLY",
+  "global_step": 7000,
+  "training_updates": 0,
+  "train_only": true,
+  "method": "actual known-body depth-matched LiDAR inside annotation OBB vs actual repeated-world-road LiDAR; retain source frame and raw LiDAR row; Gaussian3D Mahalanobis support",
+  "unknown_policy": "missing body evidence alone never background; road-only nominations require positive repeated actual road source",
+  "limitation": "nearest16 body/road points approximate volume intersection; nomination only, no relabel or deletion; exact source match is canonical tolerance2e-5m",
+  "actors": [
+    {
+      "actor": 5,
+      "actual_body_measurements": 21174,
+      "actual_road_measurements_inside_OBB": 2330,
+      "original_seed_points": 36884,
+      "original_seed_exact_road_source": 1457,
+      "original_seed_exact_body_source": 11045,
+      "trained_gaussians": 43167,
+      "positive_road_only_no_body_support": 77,
+      "both_body_road_volume": 85,
+      "no_body_within_4sigma": 15870
+    },
+    {
+      "actor": 6,
+      "actual_body_measurements": 6937,
+      "actual_road_measurements_inside_OBB": 0,
+      "original_seed_points": 6292,
+      "original_seed_exact_road_source": 0,
+      "original_seed_exact_body_source": 2009,
+      "trained_gaussians": 21065,
+      "positive_road_only_no_body_support": 0,
+      "both_body_road_volume": 0,
+      "no_body_within_4sigma": 9064
+    },
+    {
+      "actor": 12,
+      "actual_body_measurements": 1000,
+      "actual_road_measurements_inside_OBB": 712,
+      "original_seed_points": 8307,
+      "original_seed_exact_road_source": 454,
+      "original_seed_exact_body_source": 722,
+      "trained_gaussians": 11003,
+      "positive_road_only_no_body_support": 204,
+      "both_body_road_volume": 16,
+      "no_body_within_4sigma": 7188
+    },
+    {
+      "actor": 18,
+      "actual_body_measurements": 2600,
+      "actual_road_measurements_inside_OBB": 155,
+      "original_seed_points": 2695,
+      "original_seed_exact_road_source": 152,
+      "original_seed_exact_body_source": 2222,
+      "trained_gaussians": 9245,
+      "positive_road_only_no_body_support": 0,
+      "both_body_road_volume": 0,
+      "no_body_within_4sigma": 6037
+    },
+    {
+      "actor": 25,
+      "actual_body_measurements": 12334,
+      "actual_road_measurements_inside_OBB": 1050,
+      "original_seed_points": 7396,
+      "original_seed_exact_road_source": 570,
+      "original_seed_exact_body_source": 5621,
+      "trained_gaussians": 12346,
+      "positive_road_only_no_body_support": 29,
+      "both_body_road_volume": 2,
+      "no_body_within_4sigma": 4662
+    },
+    {
+      "actor": 26,
+      "actual_body_measurements": 15892,
+      "actual_road_measurements_inside_OBB": 1524,
+      "original_seed_points": 14828,
+      "original_seed_exact_road_source": 880,
+      "original_seed_exact_body_source": 9431,
+      "trained_gaussians": 35758,
+      "positive_road_only_no_body_support": 41,
+      "both_body_road_volume": 126,
+      "no_body_within_4sigma": 11317
+    },
+    {
+      "actor": 37,
+      "actual_body_measurements": 19098,
+      "actual_road_measurements_inside_OBB": 9403,
+      "original_seed_points": 17134,
+      "original_seed_exact_road_source": 2729,
+      "original_seed_exact_body_source": 1337,
+      "trained_gaussians": 51196,
+      "positive_road_only_no_body_support": 1993,
+      "both_body_road_volume": 45,
+      "no_body_within_4sigma": 31410
+    }
+  ],
+  "elapsed_seconds": 10.346015371382236
+}

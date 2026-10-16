@@ -1,7 +1,7 @@
 """证据驱动归属与跨边界分解。不可见/未知不是背景；无车底高度裁剪。"""
 import math
 import torch
-from .math3d import quaternion_matrix
+from .math3d import quaternion_matrix,covariance
 
 
 def classify_evidence(evidence, frames, owner, actors, min_frames=3):
@@ -109,3 +109,38 @@ def reanchor_road(field,indices,measured_xyz,measured_quaternion,optimizer):
     for name in field.point_parameters:
         for value in optimizer.state.get(getattr(field,name),{}).values():
             if torch.is_tensor(value) and value.ndim and len(value)==len(field.xyz):value[indices]=0
+
+
+@torch.no_grad()
+def split_plane(field,indices,whitened_direction,cuts,optimizer):
+    """General boundary plane, including a contour crossing a SHORT projected axis.
+
+    whitened_direction has unit norm in parent normal coordinates. Conditional
+    multivariate Gaussian moments preserve the original mixture mean/covariance;
+    no requirement that the image boundary align with a 3D principal axis.
+    """
+    if not len(indices):return dict(parents=0,children=0)
+    if whitened_direction.shape!=(len(indices),3) or not torch.allclose(whitened_direction.norm(dim=-1),torch.ones_like(cuts),atol=1e-4):
+        raise ValueError('unit whitened boundary directions required')
+    from scipy.spatial.transform import Rotation
+    n=len(field.xyz);m=len(indices);parent=field.xyz[indices].clone()
+    q=field.quaternion[indices].clone();s=field.scales[indices].clone();sigma=covariance(q,s)
+    v=(quaternion_matrix(q)@(s*whitened_direction)[...,None]).squeeze(-1)
+    alpha=field.opacity_logit[indices,0].sigmoid();tau=-torch.log1p(-alpha)
+    fraction,offset,var=split_moments(cuts)
+    receipt=split_boundary(field,indices,torch.zeros_like(indices),cuts,optimizer)
+    for side,rows in enumerate((indices,torch.arange(n,n+m,device=indices.device))):
+        child=sigma+(var[:,side]-1)[:,None,None]*(v[:,:,None]*v[:,None,:])
+        eigen,basis=torch.linalg.eigh(child);eigen=eigen.flip(-1);basis=basis.flip(-1)
+        # A proper local frame with the thinnest direction last.
+        basis[:,:,1]*=torch.linalg.det(basis)[:,None]
+        quat=Rotation.from_matrix(basis.cpu().numpy()).as_quat()[:,[3,0,1,2]]
+        field.xyz[rows]=parent+v*offset[:,side,None]
+        field.log_scales[rows]=eigen.clamp_min(1e-12).sqrt().log()
+        field.quaternion[rows]=torch.as_tensor(quat,dtype=q.dtype,device=q.device)
+        child_tau=tau*fraction[:,side]/var[:,side].sqrt()
+        field.opacity_logit[rows,0]=torch.logit((-torch.expm1(-child_tau)).clamp(1e-5,.999))
+        for key,value in [('seed_xyz',field.xyz),('anchor_xyz',field.xyz),('anchor_log_scales',field.log_scales),
+                          ('anchor_quaternion',field.quaternion),('anchor_opacity',field.opacity_logit)]:getattr(field,key)[rows]=value[rows]
+    receipt['method']='multivariate truncated Gaussian at measured projected contour plane'
+    return receipt

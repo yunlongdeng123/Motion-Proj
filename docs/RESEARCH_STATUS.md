@@ -1,13 +1,15 @@
 # 当前研究状态
 
-更新：2026-10-17（Asia/Singapore）。最高优先⑥动态资产混入道路（P1归属／边界），解决后①道路细节②车辆关联阴影④车身外观；禁止subagent。用户授权自主调研、实验、自检，完成全部工作并保存推送、确认GPU及相关任务退出后才关闭AutoDL。暂时空闲不能关机。
+更新：2026-10-17（Asia/Singapore）。用户禁止subagent，授权自主调研／实验／定时自检；优先⑥动态资产混入道路（归属／边界），完成后①道路细节②车辆关联阴影④车身外观。全部工作完成、保存推送并确认GPU及相关任务退出后才关闭AutoDL；临时空闲不关机。
 
-任务WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017。E0@5000和E1归一化短对照@6000均未通过资产干净度；后者车外残片变弱，但部分车身误差增加。原始测量初始化谱系不读取GN11或旧18k。已做全场景alpha*T的46训练帧逐点审计，补齐旧OBB guard空缺区域的真实LiDAR道路表面正证据。62跨边界父点拆为124保留子点；完整43身份复审后，426道路点锚定实际世界LiDAR测量，混合/未知保留，不做车底高度裁剪。详细[归属组件及证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_ownership_r6/)。
+任务WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017。E1@6000、E2@7000的两组完整49帧65流已交付，共130条H264各49帧逐帧解码验证；为canonical几何诊断，物理材质／阴影未训练。根代理已复查同7帧及旧三独立RGB全部49帧图带，仍有残片，资产干净度未验收。详细[源点归属／视频证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_source_ownership_r7/)。
 
-E2_ownership_s0使用implementation_r6、data_r3_ownership，保留原图/mask/轨迹，仅增加认证训练道路像素。完整外部域监督改为全场景可见贡献，以保护被遮挡真实车体；内域仍raw alpha，未知403对无mask梯度；数值权重与变更均显式登记。25CPU检查通过，未代表画质通过。当前只从global6000优化1000步至7000后停，控制器E2_geometry_controller.json，日志E2_geometry.log，active_experiment.json可读。到7000根代理检查同7帧、完整49帧65流动态/编辑与归属残留，再决定后续，不能直接进入材质。
+原始LiDAR追溯确认a37初始2729种子精确匹配实际道路源点。R7先21个任意轮廓平面父点→42保留子点，再依据实际重复道路源证据、精确4σ所有车体点排除、重复RGB自／他车保护，将1431点锚定实际道路世界测量；未知／遮挡且无正道路证据者不动。前一R6的426点和62父点分解保留，所有父检查点只读。零SGD同7帧车身MAE变化<3.7e-5，根代理未见明显轮胎／车身损失，允许短程优化。26CPU检查通过，不代表画质通过。
 
-delete准入仅7个索引5、6、12、18、25、26、37，须同时清楚RGB与同帧真实LiDAR；不能扩至43。旧三0/1/2对应5/26/18，连续同轴±1m平移及15/30度旋转；另四如无旧资产仅旧场景外观参考。动态独立RGB/rawalpha、全场景动态可见RGB/alpha、逐Actor及编辑动态视频必须交付。静态分支单独渲染仅诊断。
+当前E3_source_ownership_s0，implementation_r7，data_r3_ownership，E3_geometry_controller.json/E3_geometry.log；只global7000→8000，然后自动同7预览、E3_geometry49_008000完整49帧、ownership_008000_r7全场景43身份逐点审计并停止。由根代理复查再决定，不重复启动，不盲进入材质／阴影。45k总预算含已用步数；消融接口保留，不自动排七臂。b-c-15每10分钟，稳定后30/60，状态无变化安静。
 
-主预算45k包含已用6000；其余几何/材质/联合分阶段，消融接口保留但不自动排七臂。b-c-15先10分钟，稳定后30/60分钟，查PID/日志/数值与阶段，不重复启动，其他GPU任务优先。仍需正式完整视频、旧共同相机/GT只读配对渲染、阴影阶段和最终报告。相机协议r2已CPU核验：旧native-0.125像素、新RGB实际Lanczos与旧CV2均差2.4097/255；原生结果保留。
+delete严格仅7准入Actor5/6/12/18/25/26/37；旧0/1/2→5/26/18，其他4若无旧独立资产仅原场景外观参考。主三147完整mask内外监督；辅助403未知对无mask损失但保留RGB/LiDAR。外部域完整保留，R6显式改为全场景可见贡献保护遮挡；内域仍rawalpha，rawalpha完整交付。原GN11/v2/18k未加载进v3初始化。
 
-人工verdict=null，problem_solved=null；无独立无影或反事实编辑GT，不伪造。failure_ledger_refs=[V82-F01]、failure_ledger_delta=none。原dirty用户工作与所有历史失败证据保留。[实验索引](EXPERIMENTS.md)。
+仍需⑥资产归属与边界验收、后续几何／材质／联合、真实正式阴影与编辑视频、旧共同相机只读GPU对照及最终中文图文报告。49物理相机CPU一致；旧native-0.125像素，实际新Lanczos与旧CV2差2.4097/255，采用camera_pairing_audit_r2，共同投影GPU重渲染待做。无无影道路或反事实编辑GT，不伪造收益。
+
+人工verdict=null，problem_solved=null；failure_ledger_refs=[V82-F01]，failure_ledger_delta=none。原dirty用户工作保留。[实验索引](EXPERIMENTS.md)。
