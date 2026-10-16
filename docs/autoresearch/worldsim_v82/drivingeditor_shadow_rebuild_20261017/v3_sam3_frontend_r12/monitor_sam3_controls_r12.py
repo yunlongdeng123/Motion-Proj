@@ -7,7 +7,7 @@ for proc in Path('/proc').iterdir():
  try:cmd=(proc/'cmdline').read_bytes().replace(b'\0',b' ').decode();state=(proc/'stat').read_text().split()[2]
  except (OSError,UnicodeError):continue
  if state=='Z':continue
- if 'three_control_controller_r12.py' in cmd or (str(root) in cmd and any(q in cmd for q in ['run.py train','C_split_r12.py','C_finalize_owner_r12.py','r12_geometry_review.py','fullscene_ownership_audit_common_r9.py'])):
+ if any(q in cmd for q in ['three_control_controller_r12.py','C_split_r12.py','C_finalize_owner_r12.py','r12_geometry_review.py']) or ('ownership_controls_r12_sam3' in cmd and any(q in cmd for q in ['run.py train','fullscene_ownership_audit_common_r9.py'])):
   owned.append(dict(pid=int(proc.name),state=state,cmd=cmd));training|='run.py train' in cmd
 arms=[];speed=[];logged=0
 for name in ['A_box','B_semantic_motion','C_correctable']:
