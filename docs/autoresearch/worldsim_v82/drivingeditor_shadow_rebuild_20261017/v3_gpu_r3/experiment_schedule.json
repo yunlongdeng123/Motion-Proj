@@ -1,7 +1,7 @@
 {
   "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017",
   "run_id": "E0_full_s0",
-  "updated_at": "2026-10-17T02:14:41.564573+08:00",
+  "updated_at": "2026-10-17T02:21:56.240637+08:00",
   "no_subagents": true,
   "input": {
     "frames": 49,
@@ -45,8 +45,8 @@
     {
       "id": "E0",
       "name": "30k几何+10k材质+5k联合",
-      "status": "running_1000_step_visual_gate",
-      "global_step": 100
+      "status": "geometry_running_to5000_visual_gate",
+      "global_step": 1150
     },
     {
       "id": "V0",
@@ -201,8 +201,33 @@
     "automation": "b-c-15",
     "first_gate_updates": 1000,
     "require_root_visual_review": true,
-    "notify": "meaningful changes only"
+    "notify": "meaningful changes only",
+    "next_gate_updates": 5000,
+    "first_gate_reviewed": true
   },
   "comparison_limit": "old three have independent instance assets; additional four may only have old-scene appearance reference. Audit camera intrinsic before pixelwise cross-model claims.",
-  "human_verdict": null
+  "human_verdict": null,
+  "visual_gate_1000": {
+    "decision": "CONTINUE_GEOMETRY_TRAINING",
+    "reviewer": "root agent, no subagents",
+    "reviewed_at": "2026-10-16T18:20:42.609875+00:00",
+    "inspected": [
+      "all7 GT/canonical/isolatedRGB/rawalpha contact crops",
+      "raw107 all dynamic full frame",
+      "raw137 canonical full frame"
+    ],
+    "findings": [
+      "all7 identifiable in independent dynamic branch",
+      "no full-frame road/background layer in dynamic render",
+      "a18 white vehicle blurred, body linearRGB MAE0.1421",
+      "a12 isolated footprint partial and edge/occlusion artifacts; must review",
+      "a37 and other actors have silhouette spikes; geometry not converged",
+      "far background/sky and road texture not converged"
+    ],
+    "interpretation": "1000-step continuation gate, not quality acceptance; do not freeze geometry or start material yet",
+    "next_gate_global_step": 5000,
+    "require_same_evidence_frame_comparison": true,
+    "human_verdict": null,
+    "problem_solved": null
+  }
 }
