@@ -1,13 +1,11 @@
 # 当前研究状态
 
-更新：2026-10-14T02:26:09.149475+08:00。当前任务WS-V82-DRIVINGEDITOR-INSTANCES-20261013/r1，仅GMC两动态实例。固定背景/轨迹基线已从真实step300续到总30000（新增29700），worker37747退出。10k/20k/30k checkpoint全部通过CPU结构、finite、Adam/RNG结构和policy绑定检查；post30k_r1另在GPU实际逐值恢复完整模型/Adam与8组状态字段，三节点均PASS、优化更新0次。完整测试118通过、1项CUDA默认跳过，独立实际CUDA遮挡/梯度合同已通过。
+更新：2026-10-16（Asia/Singapore）。当前归档任务为 `WS-V82-DRIVINGEDITOR-SHADOW-SEQUENCE-20261016/r1`：黑车scene0008 raw89–137完整49帧诊断、分阶段道路/阴影联合微调与本地统一入口均已完成；本轮实际18,000更新，保留 `unselected_clean_v1`。此处仅更新本轮DrivingEditor范围，不代表其他项目完成。
 
-[协议与组件图](v82/DRIVINGEDITOR_INSTANCE_EDITOR_20261013.md) · [状态](v82/DRIVINGEDITOR_INSTANCE_EDITOR_20261013.json) · [30k与预览证据](autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/final30k_partial_preview_20261014/)。真实98mask/298075实例点，GN11继承静态删两框中心后613405；停车保持静态。背景/环境、GT轨迹和拓扑全程固定，车辆无PVG重复运动，pose/joint background未开启；旧SGCM仅继承背景，没有新克隆，NPS原公式保留。
+[实验记录与组件图](v82/DRIVINGEDITOR_SHADOW_SEQUENCE_20261016.md) · [源码和运行依赖](../scripts/worldsim_v82/drivingeditor_shadow_20261016/) · [轻量结果](autoresearch/worldsim_v82/drivingeditor_shadow_20261016/r1/results.json)。道路和阴影参考来自训练序列跨时刻观测，无独立无影/反事实GT；46帧梯度采样不构成未见帧验证。
 
-post30k_r1评价的CPU GT/CUDA SSIM设备不匹配已仅以GT.to(composite.device)修复，失败资产保留并登记[V82-F04](research_failures/entries/V82-F04.md)。post30k_r2在真实StreetCrafter CPU准备优先请求出现后主动yield，保留28个observed帧（raw23..50）的FP32与420张原生PNG；独立CPU核验finite、PNG对应round(clip(FP32)*255)、真实prepared masks和旧GMC GT逐像素一致。独立partial manifest已在outputs/drivingeditor_GMC_instances_30k/preview_partial，已接入现有统一HTML的#instances-preview，420 PNG/旧HTML可恢复/导航源码static QA通过，GUI QA未做；固定相机0帧、30k六项编辑0项、评价结束模型/Adam只读核验未到达，不能用28帧均值替代完整49帧质量。
+整体问题尚未完全解决：raw106–108左下边缘黑片在恢复范围外；±30°原车辆资产破面；完整车辆资产去影、任意新视角和完整重光照未认证。原位阴影样本加权误差没有改善。人工质量verdict保留null，不能把工程一致性检查替代人工质量结论。
 
-恢复证明只覆盖首次更新前保存的模型/Adam/RNG精确状态，不认证下一步CUDA数值确定性；旧checkpoint的认证False原样保留。人工质量评价null，编辑后GT不存在。28帧分层像素审查已完成：皮卡较清楚、Jeep前段透明、static道路补片保留；8-bit PNG支持检查静态遮挡或残留几何，但具体原因未认证，没有修改loss或增加训练。历史300步偏黑透明车体、道路patch和残影、旧300配置没有raw快照的边界及10k单帧预览全部保留。30k续训wall4969.2793s，另有300步短测59.442s；PyTorch allocated/reserved峰2569314816/4880072704B，NV进程/设备采样峰5236588544/5247074304B，4971采样0errors。采样峰为下界，目标3090容量/速度未认证。
+本轮作业均已退出，10分钟心跳 `b-c-15` PAUSED。用户随后明确要求关机，AutoDL关机操作已执行，SSH连接被远端关闭且复查仍关闭；没有查询平台控制台计费状态。本次代码推送从本地保存源码完成，不启动GPU、训练、评价或自动续跑。原checkpoint、数据、模型与失败证据沿用既有保存位置。
 
-每半小时心跳drivingeditor-gmc ACTIVE；原drivingeditor-30k PAUSED。StreetCrafter及其他工作优先，不共跑、不kill或暂停他人；CPU≤4/nice10，CPU审计单线程。仅SSH wm-vgpu-1011，新根/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013。02:18 SGT实际snapshot有StreetCrafter GPU进程71279、1352MiB，当前不启动新导出；等待资源空闲后只在新目录导出完整49 observed+49 fixed-camera及30k六项编辑，无自动抢资源重试，不再训练、不追加银车/红车实验。
-
-历史运行中证据：[step23300与10k/20k检查](autoresearch/worldsim_v82/drivingeditor_instances_20261013/r1/heartbeat_20261014_0055/)。旧六组180k、统一报告/离线包与全部失败资产保留，旧关机路线已结束，此阶段不关机、不清理其他资产。保留scripts/run_worldsim_v72_e3_render_bridge.py无关dirty，子agent默认gpt-6.1-sol/max。
+前一阶段GMC双实例、四臂与其他场景的历史记录仍由 [EXPERIMENTS](EXPERIMENTS.md) 定位；不从这些历史记录自动恢复任务。`failure_ledger_refs=[V82-F01]`，本次归档 `failure_ledger_delta=none`。保留其他工作目录既有dirty，不改写共享历史；本对话禁止subagent。

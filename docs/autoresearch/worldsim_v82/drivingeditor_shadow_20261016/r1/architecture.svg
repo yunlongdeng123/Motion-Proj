@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="540" viewBox="0 0 1120 540">
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="#526377"/></marker><style>text{font-family:'Microsoft YaHei','Noto Sans CJK SC',Arial,sans-serif;fill:#1c2e42;font-size:17px}.small{font-size:14px;fill:#526377}.box{stroke:#90a5b9;stroke-width:1.5;rx:12}.line{fill:none;stroke:#526377;stroke-width:2;marker-end:url(#arrow)}</style></defs>
+<rect width="1120" height="540" fill="#f5f8fc"/>
+<text x="26" y="35" style="font-size:23px;font-weight:bold">跨时刻道路恢复 + 几何驱动的 Actor 阴影</text>
+<rect class="box" x="25" y="82" width="225" height="84" fill="#e2eefc"/><text x="44" y="113">49 帧 RGB + LiDAR</text><text class="small" x="44" y="142">位姿、车辆标注与真实观测</text>
+<rect class="box" x="294" y="82" width="224" height="84" fill="#e4f3ea"/><text x="312" y="113">跨时刻干净道路参考</text><text class="small" x="312" y="142">一致性筛选 + 遮挡排除</text>
+<rect class="box" x="561" y="82" width="226" height="84" fill="#e4f3ea"/><text x="580" y="113">固定道路高斯表面</text><text class="small" x="580" y="142">优化颜色、透明度；无时间输入</text>
+<path class="line" d="M250 124H294"/><path class="line" d="M518 124H561"/>
+<path class="line" d="M137 166V201H674V239"/><text class="small" x="294" y="193">RGB 拟合光照与阴影参数</text><rect class="box" x="25" y="239" width="225" height="84" fill="#fff0d9"/><text x="44" y="270">编辑后的 Actor</text><text class="small" x="44" y="299">车辆几何、平移、旋转、删除</text>
+<rect class="box" x="294" y="239" width="224" height="84" fill="#fff0d9"/><text x="312" y="270">车辆分段遮挡代理</text><text class="small" x="312" y="299">由已有车身高斯几何构建</text>
+<rect class="box" x="561" y="239" width="226" height="84" fill="#fff0d9"/><text x="580" y="270">道路上的投射阴影</text><text class="small" x="580" y="299">共享光照、阴影柔度与强度</text>
+<path class="line" d="M250 281H294"/><path class="line" d="M518 281H561"/><path class="line" d="M674 166V239"/>
+<rect class="box" x="25" y="399" width="225" height="84" fill="#ebedf3"/><text x="44" y="430">原 checkpoint</text><text class="small" x="44" y="459">前景与车辆资产；原文件只读</text>
+<rect class="box" x="294" y="399" width="493" height="84" fill="#e8e8fa"/><text x="313" y="430">全场景深度排序与可见道路贡献</text><text class="small" x="313" y="459">贡献归属 + SAM前景保护；重建分支固定时间</text>
+<path class="line" d="M250 441H294"/><path class="line" d="M674 323V399"/><path class="line" d="M137 323V367H406V399"/>
+<rect class="box" x="843" y="348" width="250" height="135" fill="#dcebf9"/><text x="863" y="380">编辑后的场景视频</text><text class="small" x="863" y="410">道路去影 / 阴影独立开关</text><text class="small" x="863" y="437">49 帧逐帧指标 + 连续编辑</text><text class="small" x="863" y="462">保存恢复、遮挡与画面保护验证</text>
+<path class="line" d="M787 441H843"/>
+<text class="small" x="26" y="519">RGB 只用于训练监督；编辑时阴影由新的车辆状态、道路表面和光照重新计算。仅在观测支持区域内有恢复依据。</text>
+</svg>

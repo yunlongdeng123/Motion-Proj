@@ -1,0 +1,221 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-SEQUENCE-20261016",
+  "run_id": "r1",
+  "scene": "scene0008_089_137",
+  "frame_count": 49,
+  "gradient_sample_frames": 46,
+  "reference_frames": 49,
+  "actual_gradient_updates": 18000,
+  "phases": [
+    {
+      "training": "joint_v1",
+      "gradient_updates": 8000,
+      "restore_checks": [
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        }
+      ],
+      "actor_opacity_adapter_enabled": false
+    },
+    {
+      "training": "repair_union_v1",
+      "gradient_updates": 4000,
+      "restore_checks": [
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        }
+      ],
+      "actor_opacity_adapter_enabled": false
+    },
+    {
+      "training": "contribution_frozen_v1",
+      "gradient_updates": 4000,
+      "restore_checks": [
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        }
+      ],
+      "actor_opacity_adapter_enabled": false
+    },
+    {
+      "training": "unselected_clean_v1",
+      "gradient_updates": 2000,
+      "restore_checks": [
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        },
+        {
+          "actual_saved_addon_loaded": true,
+          "RGB_bitwise_equal": true,
+          "Adam_restored": true,
+          "sampler_present": true
+        }
+      ],
+      "actor_opacity_adapter_enabled": false
+    }
+  ],
+  "selected_training": "unselected_clean_v1",
+  "selected_evaluation": "final49_unselected_v1",
+  "metrics_mean_frames": {
+    "original": {
+      "surface_clean_MAE": 0.011354493119810917,
+      "surface_shadow_MAE": 0.012059670357848518,
+      "surface_observed_clean_MAE": 0.008856884793055301,
+      "observed_body_RGB_MAE": 0.028355936025630454,
+      "observed_body_visible_ID_L1": 0.07069765255615419,
+      "old_local_clean_MAE": 0.015741456437817946,
+      "old_local_visible_clean_MAE": 0.01461141809764109,
+      "old_local_shadow_MAE": 0.009626135756261646,
+      "diagnostic_footprint_visible_clean_MAE": 0.021332361640370622,
+      "deleted_target_shadow_area_clean_MAE": 0.10601470583961123
+    },
+    "deferred": {
+      "surface_clean_MAE": 0.010730275066987592,
+      "surface_shadow_MAE": 0.013384649337967857,
+      "surface_observed_clean_MAE": 0.008909779733845167,
+      "observed_body_RGB_MAE": 0.02835218783239929,
+      "observed_body_visible_ID_L1": 0.07194747053542916,
+      "old_local_clean_MAE": 0.010298125873490865,
+      "old_local_visible_clean_MAE": 0.00900251947685468,
+      "old_local_shadow_MAE": 0.010084328036755323,
+      "diagnostic_footprint_visible_clean_MAE": 0.013035624383055434,
+      "deleted_target_shadow_area_clean_MAE": 0.0908879107751307
+    },
+    "final": {
+      "surface_clean_MAE": 0.003448596960693902,
+      "surface_shadow_MAE": 0.007866023332462646,
+      "surface_observed_clean_MAE": 0.004803961071622919,
+      "observed_body_RGB_MAE": 0.02874753932107468,
+      "observed_body_visible_ID_L1": 0.08511146842216959,
+      "old_local_clean_MAE": 0.00827670656144619,
+      "old_local_visible_clean_MAE": 0.008552313383136476,
+      "old_local_shadow_MAE": 0.007500777002424002,
+      "diagnostic_footprint_visible_clean_MAE": 0.003484918284515033,
+      "deleted_target_shadow_area_clean_MAE": 0.002589713330269747
+    }
+  },
+  "metrics_pixel_weighted": {
+    "original": {
+      "surface_clean_MAE": 0.011277436715110799,
+      "surface_shadow_MAE": 0.006334607245906775,
+      "diagnostic_footprint_visible_clean_MAE": 0.0152555988477035
+    },
+    "deferred": {
+      "surface_clean_MAE": 0.010662440822236203,
+      "surface_shadow_MAE": 0.008211043523138594,
+      "diagnostic_footprint_visible_clean_MAE": 0.010826655407820816
+    },
+    "final": {
+      "surface_clean_MAE": 0.0034474586884775137,
+      "surface_shadow_MAE": 0.00852429541631791,
+      "diagnostic_footprint_visible_clean_MAE": 0.003406845825402574
+    }
+  },
+  "valid_metric_frames": {
+    "road": 49,
+    "observed_shadow": 40,
+    "deleted_target_shadow": 21
+  },
+  "mean_fixed_supported_road_time_MAE": 1.7883677151480297e-11,
+  "mean_fixed_full_image_time_MAE": 0.025025016941814398,
+  "shadow_parameters": {
+    "kind": "geometry_parts",
+    "world_receiver_to_light": [
+      -0.4016510844230652,
+      -0.15218225121498108,
+      -0.9030597805976868
+    ],
+    "softness_m": 0.10494169592857361,
+    "direct_fraction_rgb": [
+      0.9868971705436707,
+      0.9602678418159485,
+      0.9316819310188293
+    ],
+    "parts": 15,
+    "source": "trained Actor local Gaussian envelope, five longitudinal slices",
+    "max_size_change_fraction": 0.12,
+    "max_center_change_m": 0.08
+  },
+  "max_delete_identity": 0.0,
+  "failure_ledger_refs": [
+    "V82-F01"
+  ],
+  "failure_ledger_delta": "none; archive existing evidence only, no new failure card created",
+  "human_quality_verdict": null,
+  "inputs": "real RGB/LiDAR, body masks, known poses; pseudo clean/shadow labels",
+  "no_unseen_generalization_claim": true,
+  "no_paired_edit_GT": true,
+  "asset_geometry_and_SH_frozen": true,
+  "remaining": [
+    "raw106–108 outside-authority boundary shard",
+    "original asset severe defects at ±30 degree yaw",
+    "vehicle asset purity uncertified",
+    "pixel-weighted original-pose shadow error not improved"
+  ],
+  "seed": 0,
+  "resource": {
+    "GPU_observed": "NVIDIA GeForce RTX 4080 SUPER",
+    "reported_capacity_MiB": 32760,
+    "CPU_threads_training": 2,
+    "render_width_height": [
+      480,
+      320
+    ]
+  },
+  "road_grid_spacing_m": 0.08,
+  "new_road_gaussians": 26356
+}
