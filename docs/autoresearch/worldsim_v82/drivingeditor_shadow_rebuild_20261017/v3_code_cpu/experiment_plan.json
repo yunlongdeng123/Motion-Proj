@@ -1,0 +1,48 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017",
+  "run_id": "v3_code_cpu",
+  "status": "WAITING_FOR_USER_GPU_INPUT_AUDIT",
+  "updated_at": "2026-10-17T01:47:32.569601+08:00",
+  "no_subagents": true,
+  "GPU_started": false,
+  "SSH_attempted": false,
+  "real_scene_training_updates": 0,
+  "CUDA_ABI_checked": false,
+  "actual_remote_inputs_checked": false,
+  "remote_upload_performed": false,
+  "planned_updates": {
+    "geometry": 30000,
+    "material": 10000,
+    "joint": 5000
+  },
+  "estimated_duration_hours": null,
+  "remote_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1",
+  "scene": "scene0008_089_137",
+  "target_raw_track_id": "3S_GJHyCGGK4ypFPVKOOqA",
+  "first_steps_after_GPU": [
+    "resolve raw source/annotation/mask paths and review coverage",
+    "CPU prepare + strict input preflight",
+    "actual CUDA ABI + gradient probe",
+    "three-stage initial-seed throughput/memory pilot",
+    "estimate full run and observation intervals",
+    "full method training before ablations",
+    "all49 original/edited comparison + body/detail/edge review"
+  ],
+  "ablations": [
+    "full",
+    "no_shadow",
+    "no_clean_road",
+    "no_body_teacher",
+    "frozen_joint_geometry",
+    "hard_sun",
+    "opacity_stage2"
+  ],
+  "failure_ledger_refs": [
+    "V82-F01"
+  ],
+  "failure_ledger_delta": "none; implementation and synthetic CPU validation only",
+  "historical_monitor_status": "b-c-15 remains PAUSED",
+  "scheduled_or_background_controller_started": false,
+  "human_verdict": null,
+  "actual_problem_solved": null
+}

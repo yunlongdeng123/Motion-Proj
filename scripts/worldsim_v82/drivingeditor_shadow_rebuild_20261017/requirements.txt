@@ -1,0 +1,8 @@
+# 在已有 DrivingEditor 环境中使用；本次没有安装/替换远端或共享环境。
+numpy
+scipy
+Pillow
+torch>=2.1
+opencv-python
+# 正式主渲染额外需要已有 DrivingEditor 四输出 feature rasterizer 二进制。
+# 普通 Inria 三输出扩展不兼容；由 gpu_probe.py 拒绝不符 ABI。
