@@ -108,9 +108,12 @@ def seed_from_state(state):
     """只用于同一 v3 模型恢复（支持 Stage1 增密后点数）；随后严格 load_state_dict。"""
     s = lambda key: state["field."+key].cpu().numpy()
     n = len(s("xyz"))
-    return dict(xyz=s("xyz"), rgb=np.full((n, 3), .5, np.float32), observed_rgb=np.full((n, 3), .5, np.float32), scales=np.exp(s("log_scales")),
+    seed=dict(xyz=s("xyz"), rgb=np.full((n, 3), .5, np.float32), observed_rgb=np.full((n, 3), .5, np.float32), scales=np.exp(s("log_scales")),
                 quaternion=s("quaternion"), owner=s("owner"), road=s("road"), reference_rgb=s("reference_rgb"),
                 reference_confidence=s("reference_confidence"), neighbor=s("neighbor"))
+    for key in ("source_frame","source_raw_row","source_world","source_candidate_owner","identity_probability","identity_evidence_status"):
+        if 'field.'+key in state:seed[key]=s(key)
+    return seed
 
 
 def preflight(dataset, config):

@@ -1,0 +1,166 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017",
+  "campaign": "ownership_controls_r12_sam3",
+  "created_at": "2026-10-17T06:06:30.968250+08:00",
+  "priority": "⑥ finite SAM3 controls -> if failed one final IDSplat frontend+infra -> if failed save/push/idle-check/shutdown; only accepted⑥then①②④",
+  "arms": [
+    {
+      "id": "A_box",
+      "initialization": "rebuild raw measurement OBB ownership",
+      "correction": false
+    },
+    {
+      "id": "B_semantic_motion",
+      "initialization": "same raw measurements plus shared SAM/depth/independent3D-motion filtering",
+      "correction": false
+    },
+    {
+      "id": "C_correctable",
+      "initialization": "identical to B",
+      "correction": "probability evidence + uncertain pool, staged actual owner correction and supported mixed split at1500"
+    }
+  ],
+  "common": {
+    "seed": 0,
+    "updates_each": 3000,
+    "midpoint": 1500,
+    "train_frames": 46,
+    "query_raw_frames": [
+      101,
+      113,
+      125
+    ],
+    "sam_bundle": "shared_sam3_masks_r2: same49 saved native SAM3 predictions, iterative joint original-label fallback; explicit source counts in input_visual_review/summary.json; same frozen bundle A/B/C",
+    "eligible_delete_actors": [
+      5,
+      6,
+      12,
+      18,
+      25,
+      26,
+      37
+    ],
+    "mask_loss": "fixed R10 formula/weights, no further opacity-weight tuning",
+    "raw_measurements": "same split, seed/depth/track BUILD excludes raw LiDAR rows modulo5==0; heldout point measurement QUERY explicitly separate",
+    "trainable_parameters": "same geometry/appearance/opacity fields and updates, same densification/cap; variable admitted point count reported",
+    "other36actors": "identical raw baseline context, no broadened deletion claim",
+    "learned_checkpoint_initialization": false,
+    "feature_model": "DINOv3 ViT-B/16 LVD1689M; user correction, not DINOv2. SAM3 and DINOv3 resources checksummed complete, GPU inference pending.",
+    "input_GPU_inference_verified": true
+  },
+  "measurements": [
+    "positive real-road point contamination in admitted Actor seeds, report train-domain proxy and heldout domains separately",
+    "real body LiDAR coverage at8cm, with lowerbody2D ROI as a diagnostic, not a tire truth label",
+    "uncertain pool size and body evidence withheld from rendered assets",
+    "49frame isolated/visible RGB/rawalpha,7actor deletes,old3 continuous same-axis ±1m/15/30 edits",
+    "body RGB MAE and visible identity, heldout frames/counts, actual world/Actor residuals of independent RGB tracks lifted only with realLiDAR"
+  ],
+  "gate": {
+    "required": "clear geometry/ownership improvement AND body preservation AND visible edit improvement",
+    "numerical_screen": {
+      "positive_road_contamination_reduction_atleast": 0.5,
+      "body_query_coverage_per_actor_atleast_A_fraction": 0.9,
+      "lowerbody_query_coverage_atleast_A_fraction": 0.9,
+      "body_RGB_MAE_atmost_A_factor": 1.1
+    },
+    "visual": "at least2 of3 legacy actors have clearly reduced carried-road fragments over49frames, no severe body/tire loss for admitted7; invisible or unobserved regions never counted as success",
+    "evidence_limits": "SAM/DEVA and road-plane labels are predictions/proxies, not manual ownership ground truth. Heldout measurement coverage can have zero denominators; report unavailable, never zeroerror.",
+    "selection": "Prefer B if C has no reliable additional benefit. If finite SAM3 controls fail, one final IDSplat-front-end+infra adaptation is authorized; if this also fails save/push/stop/idle-check/AutoDLshutdown, no endless parameter sweeps."
+  },
+  "resource": {
+    "prior_saved_model_step": 11000,
+    "prior_discarded_E4_updates": 1000,
+    "prior_unlogged_updates_range": [
+      0,
+      49
+    ],
+    "prior_resource_upper_bound": 13549,
+    "three_controls_updates": 9000,
+    "conditional_selected_run": {
+      "geometry_total": 15000,
+      "material": 7500,
+      "joint": 2500,
+      "additional_after3000": 22000
+    },
+    "combined_resource_upper_bound_if_success": 44549,
+    "previous_total_resource_ceiling": 45000,
+    "no_automatic_additional_trials": true,
+    "obsolete_SAM2_A_updates": 1500,
+    "remaining_total_training_updates": 31451,
+    "conditional_final_IDSplat_frontend_run": {
+      "trial_geometry": 3000,
+      "geometry_total_if_trial_accepted": 13000,
+      "material_if_accepted": 7000,
+      "joint_if_accepted": 2400,
+      "total_if_accepted": 22400,
+      "combined_upper_after_failed_SAM3_controls": 44949
+    },
+    "reason": "Charge obsoleteSAM2_A1500 honestly; keep main successful route and conditional final fallback below previous45000 total ceiling"
+  },
+  "status": "RUNNING_FINITE_3x3000",
+  "human_verdict": null,
+  "problem_solved": null,
+  "fallback": {
+    "frontend": "official IDSplat source e3e08fcd794d18ab61fa4550235a6bbf41643726, adapted, not full original reproduction",
+    "backend": "existing infra Gaussian training/render/edit",
+    "interface": [
+      "vehicle-local measured pointcloud",
+      "stable instance ID",
+      "GT trajectory plus independent RANSAC comparison",
+      "confidence and unresolved evidence state",
+      "raw frame/return provenance"
+    ],
+    "required_changes": [
+      "SAM3 replaces GroundedSAM2",
+      "parked instances retained; no is_dynamic-only filter",
+      "no random box seeds",
+      "no erosion+largest-cluster-only loss of tires or undercarriage",
+      "same BUILD/QUERY isolation",
+      "DINOv3 dense feature coordinates/token layout and shared feature basis audited",
+      "camera depth vs LiDAR LOS/intensity/raydrop objectives explicitly different",
+      "GTSAM optional, cannot silently overwrite Waymo GT",
+      "timestamps, world/actor/camera frames, meters, pose quaternion conventions explicitly adapted"
+    ],
+    "status": "CONDITIONAL_NOT_STARTED"
+  },
+  "asset_record": {
+    "root": "/root/autodl-tmp/models/idsplat",
+    "download_check": "22 files/4472238163bytes, sizes and checksums verified in preparation receipt",
+    "runtime_issue": "existing Py3.12 SAM3 venv points to absent worldsim-v75 Torch; task-local pinned runtime installation launched25277, shared env not edited",
+    "GPU_inference_verified": true,
+    "runtime_status": "task-local CPU and actual GPU inference passed; psutil import repaired inside isolated env, initial failure retained",
+    "SAM3_probe": {
+      "actual_predictions": 18,
+      "seconds": 11.12992643751204,
+      "peak_allocated_bytes": 5335063040,
+      "native_text_prompt": "vehicle",
+      "checkpoint": "/root/autodl-tmp/models/idsplat/sam3/sam3.pt"
+    },
+    "DINOv3_probe": {
+      "model": "ViT-B/16 LVD1689M",
+      "actual_shape": [
+        1,
+        600,
+        768
+      ],
+      "RGB_tensor_shape": [
+        1,
+        3,
+        320,
+        480
+      ],
+      "selected_layer": 7,
+      "prefix_tokens_excluded": 5,
+      "all_values_finite": true,
+      "standard_deviation": 2.0797812938690186,
+      "seconds": 0.15956955403089523,
+      "peak_allocated_bytes": 581471744,
+      "model_directory": "/root/autodl-tmp/models/idsplat/dinov3-vitb16",
+      "correspondence_accuracy_not_yet_validated": true
+    }
+  },
+  "updated_at": "2026-10-17T06:21:55.889371+08:00",
+  "C_source_validation": "actualBUILDschema+coordinatechecks,4identityCPUchecks underremoteTorch2.2 passed; source ready, actual1500intervention and asset acceptance pending",
+  "shared_input_known_pairs": 1748,
+  "shared_input_unknown_pairs": 359
+}

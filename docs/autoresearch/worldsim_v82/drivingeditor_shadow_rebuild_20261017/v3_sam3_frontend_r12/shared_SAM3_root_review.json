@@ -1,0 +1,21 @@
+{
+  "status": "ACCEPTED_FOR_FINITE_INITIALIZATION_COMPARISON_ONLY",
+  "reviewer": "root agent; no subagents",
+  "human_verdict": null,
+  "quality_accepted": false,
+  "accepted_for_finite_init_gate": true,
+  "mask_bundle": "shared_sam3_masks_r2",
+  "reviewed": "8row RGB/originalDEVA/rawSAM3/shared input+actual BUILD LiDAR contact sheet, 7formal evidence frames plus a37raw89",
+  "findings": [
+    "native SAM3 masks localize the actual visible cars; no artificial box masks generated",
+    "a37 raw89 missing originalbody now has actual native SAM3 body, repeated track labels remain evidence not truth",
+    "a12 raw137 partially occluded; native overlaps other original labels, original fallback remains partial and must not be claimed complete body",
+    "a5/a25/a26 evidence frames use explicit original-label conflict fallback; all arms share same bundle",
+    "sparse candidate LiDAR projections include road points; OBBcandidate+mask projection alone not ownership truth",
+    "tires/undercarriage still require measured coverage and49frame isolated/edit review; no height crop"
+  ],
+  "unknown_masks_not_background": true,
+  "all49_original_overlap_checks_passed": true,
+  "CPU_assembly_repair": "same saved49 native predictions; iterative joint fallback, no newGPUinference",
+  "time": 1792189245.2303824
+}

@@ -29,6 +29,12 @@ class GaussianField(nn.Module):
         for key, dtype in (("owner", torch.long), ("road", torch.bool), ("reference_rgb", torch.float32),
                            ("reference_confidence", torch.float32), ("neighbor", torch.long)):
             self.register_buffer(key, torch.as_tensor(seed[key], dtype=dtype).clone())
+        # Optional R11 measurement/evidence provenance. It never scales RGB/opacity.
+        # Old checkpoints omit these buffers and retain strict historical replay.
+        for key,dtype in (("source_frame",torch.long),("source_raw_row",torch.long),
+                          ("source_world",torch.float32),("source_candidate_owner",torch.long),
+                          ("identity_probability",torch.float32),("identity_evidence_status",torch.long)):
+            if key in seed:self.register_buffer(key,torch.as_tensor(seed[key],dtype=dtype).clone())
         self.register_buffer("seed_xyz", xyz.clone())
         self.register_buffer("anchor_xyz", xyz.clone())
         self.register_buffer("anchor_log_scales", self.log_scales.detach().clone())

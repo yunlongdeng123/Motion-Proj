@@ -1,0 +1,94 @@
+{
+  "checked_epoch": 1792190201.3259826,
+  "status": {
+    "status": "RUNNING",
+    "updated_utc": "2026-10-16T22:32:02.140385+00:00",
+    "arm": "A_box",
+    "phase": "geometry_second1500"
+  },
+  "controller_launch": {
+    "pid": 26840,
+    "started_utc": "2026-10-16T22:23:29.645090+00:00",
+    "status": "FINITE_3x3000_CONTROLLER",
+    "max_updates_total": 9000,
+    "GPU_slot_per_arm": true
+  },
+  "owned_live_processes": [
+    {
+      "pid": 26840,
+      "state": "S",
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/three_control_controller_r12.py "
+    },
+    {
+      "pid": 26843,
+      "state": "S",
+      "cmd": "flock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/three_control_controller_r12.py --worker A_box "
+    },
+    {
+      "pid": 26844,
+      "state": "S",
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/three_control_controller_r12.py --worker A_box "
+    },
+    {
+      "pid": 27228,
+      "state": "R",
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r12/shadow_rebuild_v3/run.py train --data /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_controls_r12_sam3/data_A_box --config /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_controls_r12_sam3/common_config.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_controls_r12_sam3/A_box --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_controls_r12_sam3/A_box/latest.pt --execute --allow-partial-masks --max-updates 1500 "
+    }
+  ],
+  "arms": [
+    {
+      "arm": "A_box",
+      "logged_step": 2250,
+      "complete": false,
+      "progress": {
+        "stage": "geometry",
+        "stage_step": 2250,
+        "stage_steps": 15000,
+        "global_step": 2250,
+        "total_steps": 25000,
+        "loss": 0.13880042731761932,
+        "terms": {
+          "depth": 0.009004056453704834,
+          "mask_inside": 0.13097120821475983,
+          "mask_outside": 0.004501601681113243,
+          "visible_instance": 0.2606157958507538,
+          "road_identity": 7.173085805334267e-07,
+          "clean_road": 7.233709038700908e-05,
+          "geometry": 0.0008865209529176354,
+          "normal": 0.017765218392014503,
+          "view_residual": 0.011022614315152168,
+          "reconstruction": 0.040538396686315536,
+          "rgb": 0.040538396686315536,
+          "ssim": 0.11394894123077393,
+          "body_rgb": 0.026993414387106895,
+          "body_teacher": 0.0
+        },
+        "frame_id": "0008095",
+        "gaussians": 312307,
+        "elapsed_seconds": 270.8249795315787
+      }
+    },
+    {
+      "arm": "B_semantic_motion",
+      "logged_step": 0,
+      "complete": false,
+      "progress": null
+    },
+    {
+      "arm": "C_correctable",
+      "logged_step": 0,
+      "complete": false,
+      "progress": null
+    }
+  ],
+  "recent_seconds_per_update": 0.3585357492417097,
+  "training_only_remaining_minutes": 40.33527178969234,
+  "ETA_excludes": "full49x65 render/encoding, staged C evidence CPU checks, transfer/root visual review; no later material budget started",
+  "charged_completed_updates_range": [
+    15750,
+    15848
+  ],
+  "C_code_ready": true,
+  "GPU": "27228, /root/autodl-tmp/envs/drivingeditor/bin/python, 2364 MiB",
+  "disk_free_GiB": 166.6017074584961
+}
