@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="570" viewBox="0 0 1260 570"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#78c7e5"/></marker></defs><rect width="1260" height="570" fill="#101b2c"/>
+<text x="25" y="40" fill="#edf5ff" font-size="25" font-family="Microsoft YaHei,sans-serif">从零构建可分解场景 → 编辑时重新计算阴影</text>
+<path d="M245 125 L300 125" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M550 125 L610 125" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M860 125 L920 125" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M245 405 L300 405" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M550 405 L610 405" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M860 405 L920 405" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1070 180 L1070 285" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1070 285 L735 285" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M735 285 L735 350" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M425 180 L425 350" stroke="#78c7e5" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="25" y="70" width="220" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="40" y="110" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">跨帧真实测量</text><text x="40" y="150" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">RGB · LiDAR · mask · 轨迹</text>
+<rect x="300" y="70" width="250" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="315" y="110" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">Stage 1 表面几何</text><text x="315" y="150" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">静态道路 + 独立 Actor</text>
+<rect x="610" y="70" width="250" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="625" y="110" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">Stage 2 材质 / 光照</text><text x="625" y="150" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">几何固定 · 真实道路参考</text>
+<rect x="920" y="70" width="300" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="935" y="110" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">Stage 3 联合精修</text><text x="935" y="150" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">外观 + 阴影 + 受约束几何</text>
+<rect x="25" y="350" width="220" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="40" y="390" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">编辑后的 Actor</text><text x="40" y="430" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">删除 · 平移 · 旋转</text>
+<rect x="300" y="350" width="250" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="315" y="390" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">同一份车辆高斯</text><text x="315" y="430" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">主相机与遮挡共用几何</text>
+<rect x="610" y="350" width="250" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="625" y="390" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">可微高斯光线积分</text><text x="625" y="430" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">道路表面 + 太阳 / 环境光</text>
+<rect x="920" y="350" width="300" height="110" rx="14" fill="#1b3048" stroke="#3d7393" stroke-width="2"/><text x="935" y="390" fill="#eff9ff" font-size="21" font-family="Microsoft YaHei,sans-serif">场景合成</text><text x="935" y="430" fill="#b5d8e9" font-size="16" font-family="Microsoft YaHei,sans-serif">无车辆影道路 + 车辆 + 新阴影</text>
+<text x="25" y="535" fill="#b9c9dd" font-size="16" font-family="Microsoft YaHei,sans-serif">训练使用真实跨帧观测；编辑读取新状态。代码结构示意，真实GPU效果尚未验证。</text></svg>

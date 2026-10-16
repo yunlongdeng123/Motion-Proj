@@ -37,7 +37,11 @@ flowchart LR
 
 完整不透明度监督使用**未预乘GT mask**的逐Actor独立渲染alpha：mask内 `(alpha-1)^2`，mask外 `alpha^2`，分别按各域实际元素数归一化，默认权重各0.05。全场景alpha*T实例贡献另外监督可见身份，默认0.1。未知mask不参与两域；默认正式训练直接拒绝未齐全mask。已知不存在的Actor有明确零目标。`--allow-partial-masks`仅用于显式登记的数据缺口运行，不能冒充完整监督实验。
 
-RGB=1，SSIM=.2，LiDAR逆深度=.1，跨时刻道路=1，canonical重建=.3，车身RGB=1，Stage1教师=.1，几何/法线各.02，视角项=.01。权重集中于`config.py`，尚未调参。教师保留新分支Stage1的车身重建，不加载旧GN11。
+RGB=1，SSIM=.2，LiDAR逆深度=.1，跨时刻道路=1，canonical重建=.3，车身RGB=1，Stage1教师=.1，几何/法线各.02，视角项=.01。权重集中于`config.py`，下文单列分层修复配置，未声称最优。教师保留新分支Stage1的车身重建，不加载旧GN11。
+
+`configs/scene0008.json` 保留R3全局域均值定义，供历史重放。`configs/scene0008_balanced.json` 是显式登记的分层修复配置：逐实例先计算域内MSE；inside在有正标签的已知实例间取均值，权重.05；outside对各已知实例完整外部域均值求和，权重.5，避免34–37个空/远处实例稀释某辆车的车外梯度。没有缩小外部监督域或预乘GT alpha。可见身份项仍为原定义/权重.1。车身RGB和教师先逐车域内均值，再在可见实例间等权；材质阶段每辆最多128个RGB像素，避免小车被大车像素数淹没。
+
+修复通过 `--fork-supervision-from /path/to/parent/latest.pt` 写入新目录，原始模型、Adam、RNG与已使用global_step均保留；只允许几何阶段将该开关false→true和outside权重改为.5，其他配置/数据契约必须一致。后续仍用严格`--resume`。这是监督修复的持续训练，不能冒称同一步数的单因素因果消融；代码记录父checkpoint和变更，不能加载GN11或旧18k场景。是否改善分层须同时检查动态RGB/raw alpha、车身和背景。
 
 ## CPU准备与审计
 

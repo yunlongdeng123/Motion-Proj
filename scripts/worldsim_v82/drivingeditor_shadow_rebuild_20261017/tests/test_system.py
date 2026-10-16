@@ -14,7 +14,7 @@ import torch
 from shadow_rebuild.tracing import gaussian_ray_integral, geometry_transmittance
 from shadow_rebuild.model import SceneModel
 from shadow_rebuild.data import Dataset, clean_reference
-from shadow_rebuild.losses import mask_terms
+from shadow_rebuild.losses import mask_terms, instance_body_loss
 from shadow_rebuild.train import run, objective
 from fixture import create
 
@@ -84,6 +84,31 @@ class Integration(unittest.TestCase):
         terms = mask_terms(dict(raw_actor_alpha=raw, visible_labels=raw), frame)
         sum(terms).backward()
         self.assertEqual(float(raw.grad.abs().sum()), 0)
+
+    def test_balanced_outer_gradient_not_diluted_by_empty_instances(self):
+        from types import SimpleNamespace
+        mask=torch.zeros(4,5,1,dtype=torch.bool);mask[:2,:2]=True
+        first=torch.full((4,5,1),.4,requires_grad=True)
+        f=SimpleNamespace(masks=mask,mask_known=torch.tensor([True]))
+        a=mask_terms(dict(raw_actor_alpha=first,visible_labels=first),f,True)[1]
+        ga=torch.autograd.grad(a,first)[0]
+        masks=torch.cat((mask,torch.zeros(4,5,36,dtype=torch.bool)),-1)
+        extra=torch.cat((first.detach(),torch.zeros(4,5,36)),-1).requires_grad_()
+        f=SimpleNamespace(masks=masks,mask_known=torch.ones(37,dtype=torch.bool))
+        b=mask_terms(dict(raw_actor_alpha=extra,visible_labels=extra),f,True)[1]
+        gb=torch.autograd.grad(b,extra)[0]
+        torch.testing.assert_close(a,b)
+        torch.testing.assert_close(ga,gb[...,:1])
+        self.assertEqual(float(gb[...,1:].abs().sum()),0)
+        f.mask_known[:]=False
+        self.assertEqual(float(mask_terms(dict(raw_actor_alpha=extra,visible_labels=extra),f,True)[1].detach()),0)
+
+    def test_balanced_body_loss_gives_small_and_large_actors_equal_weight(self):
+        from types import SimpleNamespace
+        masks=torch.zeros(4,5,3,dtype=torch.bool);masks[0,0,0]=True;masks[1:,:,1]=True
+        f=SimpleNamespace(masks=masks,mask_known=torch.tensor([True,True,False]))
+        error=torch.zeros(4,5,3);error[0,0]=.8;error[1:]=.2
+        self.assertAlmostEqual(float(instance_body_loss(error,f)),.5,places=6)
 
     def test_geometry_and_shadow_share_edited_actor(self):
         model, frame = self.model(), self.dataset.frame(0)
@@ -166,6 +191,25 @@ class Integration(unittest.TestCase):
         for key, state in checkpoint["optimizer"]["state"].items():
             for name, value in state.items():
                 self.assertTrue(torch.equal(value, other["optimizer"]["state"][key][name]))
+
+    def test_declared_supervision_fork_preserves_resume_and_rejects_other_changes(self):
+        from shadow_rebuild.train import validate_supervision_fork
+        cfg=replace(self.config,instance_balanced_supervision=True,weights=replace(self.config.weights,mask_outside=.5))
+        with contextlib.redirect_stdout(io.StringIO()):
+            run(self.dataset,self.config,self.root/'fork_parent',max_updates=2)
+            parent=self.root/'fork_parent/latest.pt'
+            direct,_=run(self.dataset,cfg,self.root/'fork_direct',fork_supervision_from=parent)
+            run(self.dataset,cfg,self.root/'fork_split',fork_supervision_from=parent,max_updates=1)
+            split,done=run(self.dataset,cfg,self.root/'fork_split',resume=self.root/'fork_split/latest.pt')
+        self.assertEqual(done['global_step'],10)
+        for key,value in direct.state_dict().items():self.assertTrue(torch.equal(value,split.state_dict()[key]),key)
+        saved=torch.load(parent,weights_only=False)
+        self.assertEqual(saved['global_step'],2)
+        self.assertFalse(saved['config']['instance_balanced_supervision'])
+        fork=torch.load(self.root/'fork_split/latest.pt',weights_only=False)
+        self.assertEqual(fork['supervision_lineage']['parent_global_step'],2)
+        with self.assertRaisesRegex(ValueError,'监督fork'):
+            validate_supervision_fork(saved,replace(cfg,position_lr=.1))
 
     def test_no_cuda_initialized(self):
         self.assertFalse(torch.cuda.is_initialized())

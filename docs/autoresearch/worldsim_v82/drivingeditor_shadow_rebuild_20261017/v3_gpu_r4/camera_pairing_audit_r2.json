@@ -1,0 +1,1254 @@
+{
+  "scope": "CPU source/measurement pairing audit, not a rendered-quality result",
+  "frames": 49,
+  "world_scale": 0.10000000000000002,
+  "camera_center_max_error_normalized": 4.547473508864641e-13,
+  "camera_rotation_max_error": 4.440892098500626e-16,
+  "old_minus_new_pixel_delta_mean": [
+    -0.1250006954014797,
+    -0.1249999497736353
+  ],
+  "pixel_delta_standard_deviation": [
+    2.4166849141870386e-06,
+    1.3539438677786927e-06
+  ],
+  "RGB_sampler_MAE_8bit_mean": 2.409673651870416,
+  "legacy_raster_pixel_convention": "ndc2Pix=((ndc+1)*size-1)/2 with cx=raw_cx/4, cy=raw_cy/4",
+  "new_pixel_convention": "pixel-center resized K: cx=raw_cx/4-0.375; raster projection explicitly targets integer-center coordinates",
+  "GT_sampler_legacy": "cv2.INTER_LINEAR on raw floatRGB per copied loader",
+  "GT_sampler_new": "PIL Image.Resampling.LANCZOS resized uint8 images",
+  "required_policy": "For model-to-model metrics, evaluate against one explicitly chosen common observed RGB and correct the measured camera projection shift in a separate read-only rerender. Keep legacy-native views and metrics; no silent image translation.",
+  "normalized_pose_contract_matches": true,
+  "original_checkpoints_or_inputs_modified": false,
+  "records": [
+    {
+      "frame_id": "0008089",
+      "normalized_camera_center_max_error": 1.8189963424397604e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007771515698,
+          -0.12500004479389304
+        ],
+        [
+          -0.12500387883687836,
+          -0.12500194536485765
+        ],
+        [
+          -0.1249972268994668,
+          -0.1249981442413457
+        ],
+        [
+          -0.12500159816642054,
+          -0.12499966469385981
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.535874128341675,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 75.24999237060547
+    },
+    {
+      "frame_id": "0008090",
+      "normalized_camera_center_max_error": 1.8189963424397604e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.125000077789565,
+          -0.12500004480133953
+        ],
+        [
+          -0.1250038789219161,
+          -0.1250019453779032
+        ],
+        [
+          -0.12499722690310477,
+          -0.12499814423743771
+        ],
+        [
+          -0.12500159817557233,
+          -0.12499966469511037
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.5366640090942383,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 78.75
+    },
+    {
+      "frame_id": "0008091",
+      "normalized_camera_center_max_error": 1.8189269535007213e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007782301736,
+          -0.12500004479875315
+        ],
+        [
+          -0.12500387886001363,
+          -0.12500194535368792
+        ],
+        [
+          -0.12499722691288184,
+          -0.12499814424157307
+        ],
+        [
+          -0.1250015981653405,
+          -0.12499966469340507
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.5391736030578613,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.49998474121094
+    },
+    {
+      "frame_id": "0008092",
+      "normalized_camera_center_max_error": 2.8421704009393145e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000775690978,
+          -0.12500004478883397
+        ],
+        [
+          -0.12500387871546081,
+          -0.1250019453515847
+        ],
+        [
+          -0.124997226789759,
+          -0.12499814423267708
+        ],
+        [
+          -0.12500159814266,
+          -0.12499966469326296
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.538647413253784,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 84.5
+    },
+    {
+      "frame_id": "0008093",
+      "normalized_camera_center_max_error": 1.8189963424397604e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.125000077668318,
+          -0.12500004479281301
+        ],
+        [
+          -0.12500387879026675,
+          -0.1250019453564164
+        ],
+        [
+          -0.12499722686692394,
+          -0.12499814423134126
+        ],
+        [
+          -0.12500159815709821,
+          -0.12499966469363244
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.543262243270874,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 80.49998474121094
+    },
+    {
+      "frame_id": "0008094",
+      "normalized_camera_center_max_error": 4.547404119925602e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007769000376,
+          -0.12500004479878157
+        ],
+        [
+          -0.12500387886308317,
+          -0.12500194537150833
+        ],
+        [
+          -0.1249972268958004,
+          -0.12499814423745192
+        ],
+        [
+          -0.1250015981547108,
+          -0.12499966469380297
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.5392067432403564,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.0
+    },
+    {
+      "frame_id": "0008095",
+      "normalized_camera_center_max_error": 1.8189616479702408e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007766863064,
+          -0.12500004480219218
+        ],
+        [
+          -0.12500387881641473,
+          -0.12500194537415155
+        ],
+        [
+          -0.12499722686109749,
+          -0.12499814424178624
+        ],
+        [
+          -0.12500159816215728,
+          -0.12499966469485457
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.5484683513641357,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 82.74998474121094
+    },
+    {
+      "frame_id": "0008096",
+      "normalized_camera_center_max_error": 9.094808239851204e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007775309996,
+          -0.12500004479406357
+        ],
+        [
+          -0.1250038788697907,
+          -0.12500194536892195
+        ],
+        [
+          -0.12499722690165527,
+          -0.12499814423156863
+        ],
+        [
+          -0.12500159817091117,
+          -0.12499966469351875
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.415198564529419,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 76.25000762939453
+    },
+    {
+      "frame_id": "0008097",
+      "normalized_camera_center_max_error": 9.094947830880912e-14,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007767573607,
+          -0.1250000447931825
+        ],
+        [
+          -0.1250038787998733,
+          -0.12500194536326603
+        ],
+        [
+          -0.12499722684441394,
+          -0.12499814423298972
+        ],
+        [
+          -0.12500159815203915,
+          -0.12499966469334822
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.419208526611328,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 73.5
+    },
+    {
+      "frame_id": "0008098",
+      "normalized_camera_center_max_error": 2.27377144890184e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007777001088,
+          -0.12500004481069027
+        ],
+        [
+          -0.1250038788839447,
+          -0.12500194538537812
+        ],
+        [
+          -0.12499722688141901,
+          -0.12499814423398448
+        ],
+        [
+          -0.12500159815965617,
+          -0.12499966469539459
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.421741485595703,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 88.75
+    },
+    {
+      "frame_id": "0008099",
+      "normalized_camera_center_max_error": 2.27377144890184e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007776642974,
+          -0.12500004479133509
+        ],
+        [
+          -0.1250038788737129,
+          -0.12500194537588527
+        ],
+        [
+          -0.12499722688957604,
+          -0.12499814423492239
+        ],
+        [
+          -0.12500159816551104,
+          -0.12499966469269452
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.41867733001709,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 76.75
+    },
+    {
+      "frame_id": "0008100",
+      "normalized_camera_center_max_error": 3.18328696735648e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007772288768,
+          -0.12500004480526172
+        ],
+        [
+          -0.1250038788754182,
+          -0.1250019453862592
+        ],
+        [
+          -0.1249972268689703,
+          -0.12499814422972122
+        ],
+        [
+          -0.12500159815687084,
+          -0.12499966469445667
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4203364849090576,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 76.5
+    },
+    {
+      "frame_id": "0008101",
+      "normalized_camera_center_max_error": 4.5477510646207975e-14,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777280036,
+          -0.12500004479753102
+        ],
+        [
+          -0.1250038788347183,
+          -0.12500194535820697
+        ],
+        [
+          -0.1249972268633428,
+          -0.1249981442426531
+        ],
+        [
+          -0.12500159814953804,
+          -0.12499966469394508
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.420858383178711,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 84.5
+    },
+    {
+      "frame_id": "0008102",
+      "normalized_camera_center_max_error": 5.68434866234438e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777709488,
+          -0.125000044810605
+        ],
+        [
+          -0.12500387886655062,
+          -0.1250019453686093
+        ],
+        [
+          -0.1249972268891213,
+          -0.12499814423496503
+        ],
+        [
+          -0.12500159817176382,
+          -0.12499966469448509
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4209864139556885,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 80.75
+    },
+    {
+      "frame_id": "0008103",
+      "normalized_camera_center_max_error": 9.0951551845464e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007772939625,
+          -0.12500004480372695
+        ],
+        [
+          -0.12500387884091424,
+          -0.1250019453835307
+        ],
+        [
+          -0.1249972268477677,
+          -0.12499814423523503
+        ],
+        [
+          -0.1250015981540855,
+          -0.12499966469493984
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.42311692237854,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 80.5
+    },
+    {
+      "frame_id": "0008104",
+      "normalized_camera_center_max_error": 4.547404119925602e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777010314,
+          -0.1250000448111166
+        ],
+        [
+          -0.12500387881641473,
+          -0.12500194536599452
+        ],
+        [
+          -0.12499722687229564,
+          -0.12499814423838984
+        ],
+        [
+          -0.12500159814533163,
+          -0.12499966469414403
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4278433322906494,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.75
+    },
+    {
+      "frame_id": "0008105",
+      "normalized_camera_center_max_error": 1.364242377920044e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000776246054,
+          -0.1250000447930404
+        ],
+        [
+          -0.12500387877446428,
+          -0.12500194534996467
+        ],
+        [
+          -0.12499722684574976,
+          -0.12499814424194255
+        ],
+        [
+          -0.12500159813924938,
+          -0.12499966469255241
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4257004261016846,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 83.25000762939453
+    },
+    {
+      "frame_id": "0008106",
+      "normalized_camera_center_max_error": 4.547404119925602e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007772442245,
+          -0.12500004481239557
+        ],
+        [
+          -0.1250038788101051,
+          -0.12500194537298626
+        ],
+        [
+          -0.12499722686939663,
+          -0.12499814423824773
+        ],
+        [
+          -0.1250015981616457,
+          -0.12499966469650303
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4249050617218018,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 76.25000762939453
+    },
+    {
+      "frame_id": "0008107",
+      "normalized_camera_center_max_error": 2.728477166424881e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007769367016,
+          -0.125000044801169
+        ],
+        [
+          -0.1250038787911194,
+          -0.12500194535320475
+        ],
+        [
+          -0.12499722686774817,
+          -0.12499814424930378
+        ],
+        [
+          -0.12500159816005407,
+          -0.12499966469579249
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4166200160980225,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 73.5
+    },
+    {
+      "frame_id": "0008108",
+      "normalized_camera_center_max_error": 9.094808239851204e-14,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007769389754,
+          -0.12500004479116456
+        ],
+        [
+          -0.12500387880868402,
+          -0.1250019453565585
+        ],
+        [
+          -0.12499722687138615,
+          -0.12499814423877353
+        ],
+        [
+          -0.12500159815493816,
+          -0.12499966469314927
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.3989014625549316,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 76.5
+    },
+    {
+      "frame_id": "0008109",
+      "normalized_camera_center_max_error": 9.094949186133627e-14,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007767573607,
+          -0.12500004480190796
+        ],
+        [
+          -0.12500387879049413,
+          -0.12500194536730191
+        ],
+        [
+          -0.12499722686251857,
+          -0.12499814424049305
+        ],
+        [
+          -0.1250015981497654,
+          -0.12499966469428614
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.3845601081848145,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 83.5
+    },
+    {
+      "frame_id": "0008110",
+      "normalized_camera_center_max_error": 1.3642559304472002e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.125000077716237,
+          -0.12500004479400673
+        ],
+        [
+          -0.12500387888621844,
+          -0.12500194536025333
+        ],
+        [
+          -0.12499722688508541,
+          -0.12499814423762245
+        ],
+        [
+          -0.12500159815937195,
+          -0.12499966469232504
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.387181043624878,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 88.75
+    },
+    {
+      "frame_id": "0008111",
+      "normalized_camera_center_max_error": 1.364186541508161e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007775895483,
+          -0.12500004480097004
+        ],
+        [
+          -0.12500387879828168,
+          -0.12500194534771936
+        ],
+        [
+          -0.12499722688241377,
+          -0.12499814424404576
+        ],
+        [
+          -0.12500159815135703,
+          -0.1249996646943714
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.408085823059082,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 83.99999237060547
+    },
+    {
+      "frame_id": "0008112",
+      "normalized_camera_center_max_error": 1.8189616479702408e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000776944944,
+          -0.12500004479471727
+        ],
+        [
+          -0.12500387883369513,
+          -0.12500194537076936
+        ],
+        [
+          -0.12499722688286852,
+          -0.12499814423424027
+        ],
+        [
+          -0.1250015981722754,
+          -0.1249996646939735
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4029855728149414,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 80.25000762939453
+    },
+    {
+      "frame_id": "0008113",
+      "normalized_camera_center_max_error": 4.547473508864641e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007769784816,
+          -0.12500004479338145
+        ],
+        [
+          -0.12500387887308761,
+          -0.12500194538409914
+        ],
+        [
+          -0.12499722684404446,
+          -0.1249981442243211
+        ],
+        [
+          -0.12500159816784162,
+          -0.12499966469346191
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4236605167388916,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 85.24999237060547
+    },
+    {
+      "frame_id": "0008114",
+      "normalized_camera_center_max_error": 1.0231811058136753e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007779823363,
+          -0.12500004479966265
+        ],
+        [
+          -0.12500387889133435,
+          -0.125001945354569
+        ],
+        [
+          -0.12499722693021909,
+          -0.12499814424020883
+        ],
+        [
+          -0.12500159818176826,
+          -0.12499966469550827
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4267561435699463,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 86.49998474121094
+    },
+    {
+      "frame_id": "0008115",
+      "normalized_camera_center_max_error": 1.3642212359776806e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777971252,
+          -0.12500004481043447
+        ],
+        [
+          -0.12500387889281228,
+          -0.12500194537537368
+        ],
+        [
+          -0.12499722689574355,
+          -0.12499814423722455
+        ],
+        [
+          -0.12500159817432177,
+          -0.12499966469596302
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4143309593200684,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 74.5
+    },
+    {
+      "frame_id": "0008116",
+      "normalized_camera_center_max_error": 3.637992684879521e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007761022403,
+          -0.12500004479591098
+        ],
+        [
+          -0.12500387877634012,
+          -0.1250019453744926
+        ],
+        [
+          -0.12499722682363767,
+          -0.12499814422369582
+        ],
+        [
+          -0.1250015981511865,
+          -0.12499966469223978
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4159326553344727,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 87.0
+    },
+    {
+      "frame_id": "0008117",
+      "normalized_camera_center_max_error": 9.0951551845464e-14,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007774409028,
+          -0.12500004480781968
+        ],
+        [
+          -0.1250038788473944,
+          -0.1250019453773632
+        ],
+        [
+          -0.12499722689878467,
+          -0.12499814424123201
+        ],
+        [
+          -0.12500159816994483,
+          -0.12499966469732726
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4124653339385986,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 77.75
+    },
+    {
+      "frame_id": "0008118",
+      "normalized_camera_center_max_error": 4.092733096872081e-13,
+      "camera_rotation_max_error": 4.440892098500626e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007770552202,
+          -0.1250000448013111
+        ],
+        [
+          -0.12500387882425912,
+          -0.12500194537614107
+        ],
+        [
+          -0.12499722685370784,
+          -0.12499814422876909
+        ],
+        [
+          -0.1250015981594288,
+          -0.12499966469277979
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.417039394378662,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 72.49998474121094
+    },
+    {
+      "frame_id": "0008119",
+      "normalized_camera_center_max_error": 1.1368652601349144e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007776236544,
+          -0.1250000448043238
+        ],
+        [
+          -0.1250038788663801,
+          -0.12500194537062725
+        ],
+        [
+          -0.1249972269284001,
+          -0.12499814424397471
+        ],
+        [
+          -0.12500159817233225,
+          -0.12499966469323454
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4262585639953613,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 91.49998474121094
+    },
+    {
+      "frame_id": "0008120",
+      "normalized_camera_center_max_error": 2.2737345860279756e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777052378,
+          -0.12500004479758786
+        ],
+        [
+          -0.12500387877759067,
+          -0.12500194534447928
+        ],
+        [
+          -0.12499722686945347,
+          -0.1249981442357182
+        ],
+        [
+          -0.1250015981645447,
+          -0.1249996646933198
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4288079738616943,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.99999237060547
+    },
+    {
+      "frame_id": "0008121",
+      "normalized_camera_center_max_error": 2.7285118608944003e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007773689958,
+          -0.12500004479565519
+        ],
+        [
+          -0.12500387885455666,
+          -0.12500194536949039
+        ],
+        [
+          -0.12499722683944015,
+          -0.12499814422230315
+        ],
+        [
+          -0.12500159816516998,
+          -0.12499966469286505
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4394259452819824,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 88.75000762939453
+    },
+    {
+      "frame_id": "0008122",
+      "normalized_camera_center_max_error": 7.958079182614208e-14,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777446303,
+          -0.12500004481682936
+        ],
+        [
+          -0.1250038788200527,
+          -0.1250019453612765
+        ],
+        [
+          -0.12499722690401427,
+          -0.12499814424752742
+        ],
+        [
+          -0.12500159816733003,
+          -0.12499966469621882
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.439711809158325,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.75
+    },
+    {
+      "frame_id": "0008123",
+      "normalized_camera_center_max_error": 9.094949186133627e-14,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007769156696,
+          -0.12500004478187066
+        ],
+        [
+          -0.12500387877321373,
+          -0.12500194536212916
+        ],
+        [
+          -0.12499722683975278,
+          -0.12499814422515954
+        ],
+        [
+          -0.12500159815016332,
+          -0.1249996646926661
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4383702278137207,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.0
+    },
+    {
+      "frame_id": "0008124",
+      "normalized_camera_center_max_error": 2.7284945136596406e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007776355915,
+          -0.12500004479875315
+        ],
+        [
+          -0.12500387887808984,
+          -0.12500194536929143
+        ],
+        [
+          -0.1249972268865065,
+          -0.12499814423540556
+        ],
+        [
+          -0.12500159818119982,
+          -0.12499966469255241
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4328792095184326,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 78.99999237060547
+    },
+    {
+      "frame_id": "0008125",
+      "normalized_camera_center_max_error": 3.637984011262141e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007783225442,
+          -0.12500004478869187
+        ],
+        [
+          -0.1250038789603991,
+          -0.12500194536704612
+        ],
+        [
+          -0.12499722690577642,
+          -0.12499814421957467
+        ],
+        [
+          -0.12500159819194323,
+          -0.12499966469155765
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4143028259277344,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 88.24999237060547
+    },
+    {
+      "frame_id": "0008126",
+      "normalized_camera_center_max_error": 6.821209179094789e-14,
+      "camera_rotation_max_error": 4.440892098500626e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.1250000777585285,
+          -0.1250000447998616
+        ],
+        [
+          -0.1250038788467691,
+          -0.12500194537446419
+        ],
+        [
+          -0.12499722688448855,
+          -0.12499814424467104
+        ],
+        [
+          -0.12500159816647738,
+          -0.12499966469368928
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.4056906700134277,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 77.25000762939453
+    },
+    {
+      "frame_id": "0008127",
+      "normalized_camera_center_max_error": 4.547404119925602e-14,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007771120636,
+          -0.12500004478883397
+        ],
+        [
+          -0.1250038788205643,
+          -0.1250019453569564
+        ],
+        [
+          -0.12499722690949966,
+          -0.12499814423409816
+        ],
+        [
+          -0.12500159816511314,
+          -0.12499966469337664
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.3840255737304688,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 84.49998474121094
+    },
+    {
+      "frame_id": "0008128",
+      "normalized_camera_center_max_error": 9.0951551845464e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007770728416,
+          -0.12500004479852578
+        ],
+        [
+          -0.12500387889292597,
+          -0.12500194536900722
+        ],
+        [
+          -0.12499722686968084,
+          -0.12499814423583189
+        ],
+        [
+          -0.12500159816215728,
+          -0.12499966469417245
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.3744194507598877,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 88.49998474121094
+    },
+    {
+      "frame_id": "0008129",
+      "normalized_camera_center_max_error": 1.8189616479702408e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007773593325,
+          -0.12500004479207405
+        ],
+        [
+          -0.12500387884966813,
+          -0.1250019453523521
+        ],
+        [
+          -0.12499722688681913,
+          -0.12499814423225075
+        ],
+        [
+          -0.12500159817273016,
+          -0.12499966469195556
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.3380863666534424,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 92.99999237060547
+    },
+    {
+      "frame_id": "0008130",
+      "normalized_camera_center_max_error": 5.6843310440590766e-14,
+      "camera_rotation_max_error": 4.440892098500626e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.125000077722774,
+          -0.1250000447888624
+        ],
+        [
+          -0.1250038789410155,
+          -0.12500194537233256
+        ],
+        [
+          -0.12499722691450188,
+          -0.12499814423290445
+        ],
+        [
+          -0.12500159816710266,
+          -0.12499966469277979
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.305288076400757,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 86.99999237060547
+    },
+    {
+      "frame_id": "0008131",
+      "normalized_camera_center_max_error": 1.3642559304472002e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007767738452,
+          -0.12500004479065296
+        ],
+        [
+          -0.12500387878924357,
+          -0.12500194536931986
+        ],
+        [
+          -0.12499722683708114,
+          -0.12499814423041755
+        ],
+        [
+          -0.1250015981494812,
+          -0.1249996646929219
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.2944698333740234,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 67.24999237060547
+    },
+    {
+      "frame_id": "0008132",
+      "normalized_camera_center_max_error": 1.8189616479702408e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007765729038,
+          -0.1250000447981563
+        ],
+        [
+          -0.12500387883625308,
+          -0.12500194537417997
+        ],
+        [
+          -0.12499722686030168,
+          -0.1249981442347945
+        ],
+        [
+          -0.12500159815596135,
+          -0.12499966469312085
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.2881581783294678,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 75.99999237060547
+    },
+    {
+      "frame_id": "0008133",
+      "normalized_camera_center_max_error": 1.3643253193862392e-13,
+      "camera_rotation_max_error": 1.1102230246251565e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.125000077745284,
+          -0.12500004480907023
+        ],
+        [
+          -0.12500387886802855,
+          -0.12500194536025333
+        ],
+        [
+          -0.12499722692163573,
+          -0.1249981442548318
+        ],
+        [
+          -0.12500159816733003,
+          -0.12499966469746937
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.2816319465637207,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 90.24999237060547
+    },
+    {
+      "frame_id": "0008134",
+      "normalized_camera_center_max_error": 1.819100425848319e-13,
+      "camera_rotation_max_error": 3.3306690738754696e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007762270116,
+          -0.12500004479480253
+        ],
+        [
+          -0.12500387878009178,
+          -0.125001945362186
+        ],
+        [
+          -0.12499722680956893,
+          -0.12499814422862698
+        ],
+        [
+          -0.12500159814527478,
+          -0.12499966469380297
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.2862021923065186,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 90.24999237060547
+    },
+    {
+      "frame_id": "0008135",
+      "normalized_camera_center_max_error": 9.09494512037548e-14,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007783665978,
+          -0.12500004479571203
+        ],
+        [
+          -0.125003878896905,
+          -0.12500194536133336
+        ],
+        [
+          -0.12499722692894011,
+          -0.12499814423151179
+        ],
+        [
+          -0.1250015981752881,
+          -0.12499966469343349
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.266636371612549,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 79.0
+    },
+    {
+      "frame_id": "0008136",
+      "normalized_camera_center_max_error": 1.477929107221443e-13,
+      "camera_rotation_max_error": 4.440892098500626e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007780084843,
+          -0.12500004479534255
+        ],
+        [
+          -0.1250038789225414,
+          -0.12500194536133336
+        ],
+        [
+          -0.12499722690202475,
+          -0.12499814423435396
+        ],
+        [
+          -0.12500159817852818,
+          -0.12499966469468404
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.2485475540161133,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 82.49998474121094
+    },
+    {
+      "frame_id": "0008137",
+      "normalized_camera_center_max_error": 1.8196555373606316e-13,
+      "camera_rotation_max_error": 2.220446049250313e-16,
+      "old_minus_new_pixels": [
+        [
+          -0.12500007774835353,
+          -0.1250000447968489
+        ],
+        [
+          -0.12500387886973385,
+          -0.12500194535743958
+        ],
+        [
+          -0.12499722688789916,
+          -0.12499814424036515
+        ],
+        [
+          -0.12500159815755296,
+          -0.12499966469420087
+        ]
+      ],
+      "new_PIL_vs_legacy_cv2_RGB_MAE_8bit": 2.2527077198028564,
+      "new_PIL_vs_legacy_cv2_RGB_max_8bit": 74.24999237060547
+    }
+  ],
+  "human_verdict": null,
+  "supersedes": "camera_pairing_audit_r1.json",
+  "correction": "kernel label only: prior text incorrectly said bilinear; actual saved pixels and measured2.4096736519/255 difference unchanged",
+  "measured_pixels_or_camera_values_changed": false
+}

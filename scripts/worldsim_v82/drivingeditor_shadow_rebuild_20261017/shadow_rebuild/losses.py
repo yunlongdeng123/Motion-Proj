@@ -29,19 +29,41 @@ def ssim_loss(x, y, valid=None):
     return masked_mean(value, windows)
 
 
-def mask_terms(package, frame):
+def instance_domain_mean(value, mask, known, reduction='mean'):
+    """先各实例域内归一化；空域不稀释其他实例，未知标签无梯度。"""
+    if value.shape != mask.shape:
+        raise ValueError('实例值与域的HWK形状必须一致')
+    mass=mask.to(value.dtype).sum((0,1))
+    active=known & (mass>0)
+    per_actor=(value*mask.to(value.dtype)).sum((0,1))/mass.clamp_min(1)
+    if reduction=='sum':return (per_actor*active).sum()
+    if reduction!='mean':raise ValueError('invalid instance reduction')
+    return (per_actor*active).sum()/active.sum().clamp_min(1)
+
+
+def instance_body_loss(error,frame):
+    value=error.mean(-1)[...,None].expand_as(frame.masks)
+    return instance_domain_mean(value,frame.masks,frame.mask_known)
+
+
+def mask_terms(package, frame, balanced=False):
     raw, visible = package["raw_actor_alpha"], package["visible_labels"]
     target = frame.masks.to(raw.dtype)
     known = frame.mask_known[None, None].expand_as(raw)
-    inside = masked_mean((raw-1).square(), known & frame.masks)
-    outside = masked_mean(raw.square(), known & ~frame.masks)
+    if balanced:
+        inside=instance_domain_mean((raw-1).square(),frame.masks,frame.mask_known)
+        # 每个已知实例的完整车外域都在；求和避免大量空实例将约束稀释。
+        outside=instance_domain_mean(raw.square(),~frame.masks,frame.mask_known,'sum')
+    else:
+        inside = masked_mean((raw-1).square(), known & frame.masks)
+        outside = masked_mean(raw.square(), known & ~frame.masks)
     identity = masked_mean((visible-target).square(), known)
     return inside, outside, identity
 
 
 def geometry_and_reference_terms(model, package, frame, config, stage):
     geo, normal, residual = model.field.regularizers(stage)
-    inside, outside, identity = mask_terms(package, frame)
+    inside, outside, identity = mask_terms(package, frame,config.instance_balanced_supervision)
     observed = frame.depth > 0
     # 相机 Z，逆深度；不给无 LiDAR 的像素伪深度监督。
     pred = package["depth"].clamp_min(.1).reciprocal()

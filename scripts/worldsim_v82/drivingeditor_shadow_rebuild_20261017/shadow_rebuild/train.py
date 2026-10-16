@@ -13,7 +13,7 @@ from . import SCHEMA
 from .config import Config
 from .data import Dataset
 from .model import SceneModel
-from .losses import masked_mean, ssim_loss, geometry_and_reference_terms
+from .losses import masked_mean, ssim_loss, geometry_and_reference_terms, instance_body_loss
 
 
 def write(path, value):
@@ -45,7 +45,7 @@ def objective(model, frame, actor_count, backend, stage, generator, teacher=None
     if stage == "geometry":
         terms["rgb"] = terms["reconstruction"]
         terms["ssim"] = ssim_loss(package["canonical"], frame.rgb, canonical_domain)
-        terms["body_rgb"] = masked_mean((package["canonical"]-frame.rgb).abs(), body)
+        terms["body_rgb"] = instance_body_loss((package['canonical']-frame.rgb).abs(),frame) if config.instance_balanced_supervision else masked_mean((package["canonical"]-frame.rgb).abs(), body)
         terms["body_teacher"] = terms["rgb"]*0
     else:
         h, w = frame.rgb.shape[:2]
@@ -57,16 +57,31 @@ def objective(model, frame, actor_count, backend, stage, generator, teacher=None
         terms["rgb"] = (image[len(patch):]-target[len(patch):]).abs().mean()
         terms["ssim"] = ssim_loss(image[:len(patch)].reshape(side, side, 3), target[:len(patch)].reshape(side, side, 3))
         # 小车体不会因全图像素占比低而失去监督；额外对所有可见车身像素分层采样。
-        body_ids = body.flatten().nonzero().flatten()
-        if len(body_ids) > 512:
-            choice = torch.randperm(len(body_ids), generator=generator)[:512].to(body_ids.device)
-            body_ids = body_ids[choice]
+        body_lengths=[]
+        if config.instance_balanced_supervision:
+            groups=[]
+            for actor in range(actor_count):
+                if not bool(frame.mask_known[actor]):continue
+                ids=frame.masks[...,actor].flatten().nonzero().flatten()
+                if not len(ids):continue
+                if len(ids)>128:ids=ids[torch.randperm(len(ids),generator=generator)[:128].to(ids.device)]
+                groups.append(ids);body_lengths.append(len(ids))
+            body_ids=torch.cat(groups) if groups else body.flatten().nonzero().flatten()
+        else:
+            body_ids = body.flatten().nonzero().flatten()
+            if len(body_ids) > 512:
+                choice = torch.randperm(len(body_ids), generator=generator)[:512].to(body_ids.device)
+                body_ids = body_ids[choice]
         body_rgb, _ = model.shade_pixels(package, geometry, body_ids)
-        terms["body_rgb"] = (body_rgb-frame.rgb.reshape(-1, 3)[body_ids]).abs().mean() if len(body_ids) else image.sum()*0
+        body_error=(body_rgb-frame.rgb.reshape(-1,3)[body_ids]).abs()
+        if config.instance_balanced_supervision and body_lengths:
+            terms['body_rgb']=torch.stack([group.mean() for group in body_error.split(body_lengths)]).mean()
+        else:terms["body_rgb"] = body_error.mean() if len(body_ids) else image.sum()*0
         if teacher is not None and config.use_body_teacher:
             with torch.no_grad():
                 _, teacher_package = teacher.buffers(frame, actor_count, backend, isolated=False)
-            terms["body_teacher"] = masked_mean((package["canonical"]-teacher_package["canonical"]).abs(), body)
+            difference=(package['canonical']-teacher_package['canonical']).abs()
+            terms["body_teacher"] = instance_body_loss(difference,frame) if config.instance_balanced_supervision else masked_mean(difference, body)
         else:
             terms["body_teacher"] = image.sum()*0
     weights = asdict(config.weights)
@@ -80,7 +95,7 @@ def capture(model, optimizer, stage, stage_step, global_step, generator, teacher
                 global_step=global_step, generator=generator.get_state(), torch_rng=torch.get_rng_state(),
                 cuda_rng=torch.cuda.get_rng_state_all() if model.field.xyz.is_cuda else [],
                 numpy_rng=np.random.get_state(), python_rng=random.getstate(),
-                teacher=None if teacher is None else teacher.state_dict())
+                teacher=None if teacher is None else teacher.state_dict(),supervision_lineage=getattr(model,'supervision_lineage',None))
 
 
 def save(path, value):
@@ -119,7 +134,26 @@ def preflight(dataset, config):
                 reference_scope="train-frame reprojection pseudo-reference; not independent clean GT")
 
 
-def run(dataset, config, output, device="cpu", backend="reference", resume=None, max_updates=None):
+def checkpoint_config(raw):
+    from .config import LossWeights
+    value=raw.copy();value['weights']=LossWeights(**value['weights'])
+    return asdict(Config(**value).validate())
+
+
+def validate_supervision_fork(saved,config):
+    """只允许同数据/模型、几何阶段的已声明监督修复，不借机混配消融。"""
+    previous=checkpoint_config(saved['config']);current=asdict(config)
+    expected=copy.deepcopy(previous)
+    expected['instance_balanced_supervision']=True
+    expected['weights']['mask_outside']=.5
+    if previous['instance_balanced_supervision'] or saved['stage']!='geometry' or current!=expected:
+        raise ValueError('监督fork仅允许几何阶段false→true和mask_outside=.5；其他配置必须相同')
+    return dict(kind='declared_supervision_repair',parent_global_step=saved['global_step'],
+                changes={'instance_balanced_supervision':[False,True],'weights.mask_outside':[previous['weights']['mask_outside'],.5]},
+                model_optimizer_RNG_preserved=True,not_a_paired_causal_ablation=True)
+
+
+def run(dataset, config, output, device="cpu", backend="reference", resume=None, max_updates=None,fork_supervision_from=None):
     output = Path(output)
     if not resume:
         output.mkdir(parents=True, exist_ok=False)
@@ -130,14 +164,23 @@ def run(dataset, config, output, device="cpu", backend="reference", resume=None,
     random.seed(config.seed)
     np.random.seed(config.seed)
     generator = torch.Generator().manual_seed(config.seed)
-    saved = torch.load(resume, map_location="cpu", weights_only=False) if resume else None
-    if saved and (saved.get("schema") != SCHEMA or saved.get("initialization") != "raw_measurements_no_learned_checkpoint" or saved.get("config") != asdict(config)):
+    if resume and fork_supervision_from:raise ValueError('resume与监督fork互斥')
+    source=resume or fork_supervision_from
+    saved = torch.load(source, map_location="cpu", weights_only=False) if source else None
+    lineage=saved.get('supervision_lineage') if saved else None
+    if saved and (saved.get("schema") != SCHEMA or saved.get("initialization") != "raw_measurements_no_learned_checkpoint"):
         raise ValueError("只允许完全相同配置的 v3 中断恢复；拒绝 GN11 或混配消融 checkpoint")
+    if fork_supervision_from:
+        lineage=validate_supervision_fork(saved,config);lineage['parent_checkpoint']=str(Path(source).resolve())
+        write(output/'supervision_fork.json',lineage)
+    elif saved and checkpoint_config(saved['config'])!=asdict(config):
+        raise ValueError('中断恢复配置不一致；监督修复必须使用显式fork且写入新目录')
     if saved and saved.get("input_contract") != dataset.manifest:
         raise ValueError("恢复的数据集身份/帧/划分/参考来源与保存时不一致")
     model = SceneModel(seed_from_state(saved["state"]) if saved else dataset.seed, config).to(device)
     if saved:
         model.load_state_dict(saved["state"], strict=True)
+    model.supervision_lineage=lineage
     teacher = None
     if saved and saved["teacher"] is not None:
         teacher = SceneModel(seed_from_state(saved["teacher"]), config).to(device)
@@ -150,6 +193,7 @@ def run(dataset, config, output, device="cpu", backend="reference", resume=None,
                                         failure_ledger_delta="none; new implementation, no real GPU result yet",
                                         human_verdict=None, real_scene=not dataset.manifest.get("synthetic_fixture", False),
                                         backend=backend, allow_partial_masks=dataset.allow_partial_masks,
+                                        supervision_lineage=lineage,
                                         initialization="raw_measurements_no_learned_checkpoint"))
     stages = [("geometry", config.geometry_steps), ("material", config.material_steps), ("joint", config.joint_steps)]
     step = saved["global_step"] if saved else 0
@@ -235,7 +279,9 @@ def main():
     parser.add_argument("--config", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--ablation", default="full")
-    parser.add_argument("--resume")
+    restore=parser.add_mutually_exclusive_group()
+    restore.add_argument("--resume")
+    restore.add_argument('--fork-supervision-from',help='显式修复实例监督；新输出目录，保留同模型/Adam/RNG和已用步数')
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--max-updates", type=int)
     parser.add_argument("--allow-partial-masks", action="store_true", help="必须作为显式输入缺口登记；默认拒绝未知 masks")
@@ -254,7 +300,7 @@ def main():
     from .gpu_probe import probe
     probe(config)
     dataset.device = "cuda"
-    run(dataset, config, args.output, "cuda", "cuda", args.resume, args.max_updates)
+    run(dataset, config, args.output, "cuda", "cuda", args.resume, args.max_updates,args.fork_supervision_from)
 
 
 if __name__ == "__main__":
