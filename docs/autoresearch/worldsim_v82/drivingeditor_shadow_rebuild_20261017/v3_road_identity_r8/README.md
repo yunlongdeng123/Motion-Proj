@@ -1,5 +1,8 @@
 # 独立道路正证据补齐未知实例标签处的归属监督
 
+<!-- R8_SUSPECT_OCCLUSION -->
+后续检查发现部分道路投影可能被相机车体遮挡，R8在9k出现车尾新斑块，保留为失败对照；参见[相机遮挡修正与安全回退](../v3_camera_visibility_r9/)。本页保留原始执行证据，不代表通过验收。
+
 ![实际数据、逐高斯归属、道路正标签与资产检查组件图](architecture.svg)
 
 任务WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017。当前执行快照仅见[RESEARCH_STATUS](../../../../RESEARCH_STATUS.md)。保留[R7源点修复](../v3_source_ownership_r7/)及所有父checkpoint，本轮继续⑥，没有进入材质／阴影。

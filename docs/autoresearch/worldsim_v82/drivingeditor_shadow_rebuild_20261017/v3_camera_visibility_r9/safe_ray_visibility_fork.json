@@ -1,0 +1,100 @@
+{
+  "kind": "safe_parent_camera_visible_road_identity",
+  "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E3_source_ownership_s0/latest.pt",
+  "parent_global_step": 8000,
+  "previous": {
+    "kind": "actual_source_positive_road_repair",
+    "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E3_contour_split_s0/latest.pt",
+    "previous": {
+      "kind": "general_contour_plane_split",
+      "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E2_ownership_s0/latest.pt",
+      "previous": {
+        "kind": "positive_evidence_ownership_repair",
+        "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E2_split_s0/latest.pt",
+        "parent_global_step": 6000,
+        "previous": {
+          "kind": "boundary_split_repair",
+          "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E1_balanced_s0/latest.pt",
+          "parent_global_step": 6000,
+          "previous": {
+            "kind": "declared_supervision_repair",
+            "parent_global_step": 5000,
+            "changes": {
+              "instance_balanced_supervision": [
+                false,
+                true
+              ],
+              "weights.mask_outside": [
+                0.05,
+                0.5
+              ]
+            },
+            "model_optimizer_RNG_preserved": true,
+            "not_a_paired_causal_ablation": true,
+            "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/E0_full_s0/latest.pt"
+          },
+          "receipt": "boundary_split.json",
+          "both_children_retained": true
+        },
+        "road_receipt": "road_reanchor.json",
+        "supervision_change": "full image exterior uses full-scene visible alpha*T instead of isolated raw alpha; genuine occlusion does not imply background",
+        "data_change": "only certified train road pixels added, source provenance retained"
+      },
+      "receipt": "contour_split.json"
+    },
+    "receipt": "source_ownership.json"
+  },
+  "changes": {
+    "weights.road_identity": [
+      0.0,
+      0.5
+    ],
+    "geometry_steps": [
+      30000,
+      29000
+    ]
+  },
+  "learned_parameters_optimizer_RNG_preserved": true,
+  "render_unchanged_before_updates": true,
+  "reference_buffers_refreshed": {
+    "points": 27098,
+    "valid_reference_points": 4731,
+    "source": "reprojected train RGB + measured LiDAR depth; no test colors; no parent-color copying"
+  },
+  "discarded_control": {
+    "run": "E4_road_identity_s0",
+    "updates": 1000,
+    "charged_to_geometry": true,
+    "reason": "body/bumper contamination after road identity trial;6921road certificates potentially camera-occluded; retain all failed evidence, not a unique causal attribution"
+  },
+  "budget": {
+    "working_geometry_target": 29000,
+    "discarded_geometry_updates": 1000,
+    "material": 10000,
+    "joint": 5000,
+    "final_working_model_global_step": 44000,
+    "total_charged_updates": 45000
+  },
+  "preflight": {
+    "status": "CPU_INPUTS_CHECKED_GPU_NOT_STARTED",
+    "frames": 49,
+    "actors": 43,
+    "gaussians": 318083,
+    "road_gaussians": 25117,
+    "reference_points": 8263,
+    "train_frames": 46,
+    "test_frames": 3,
+    "mask_known_pairs": 1704,
+    "certified_road_pixels": 245731,
+    "mask_total_pairs": 2107,
+    "learned_checkpoint_used": false,
+    "estimated_GPU_hours": null,
+    "real_GPU_ABI_checked": false,
+    "planned_steps": {
+      "geometry": 29000,
+      "material": 10000,
+      "joint": 5000
+    },
+    "reference_scope": "train-frame reprojection pseudo-reference; not independent clean GT"
+  }
+}
