@@ -37,7 +37,7 @@
   ],
   "temporal_path": "sin(2*pi*i/48)",
   "fixed_camera_index": 12,
-  "camera_intrinsics": "actual raw P0 resized with pixel-center convention; check old/new projection contracts before pixelwise comparisons",
+  "camera_intrinsics": "CPU49 verified physical poses; legacy native raster is(-0.125,-0.125)pixel relative to v3",
   "old_baselines": {
     "original": "rigid_runs/scene0008_089_137/full30k/checkpoint_030000.pt",
     "previous": "shadow_sequence_20261016_v2/unselected_clean_v1/final.pt"
@@ -60,5 +60,19 @@
     37
   ],
   "actor_evidence": "actor_evidence_r2/actor_evidence.json",
-  "deletion_scope": "only clearly visible camera+LiDAR supported actors; not every LiDAR-seeded track"
+  "deletion_scope": "only clearly visible camera+LiDAR supported actors; not every LiDAR-seeded track",
+  "camera_pairing_audit": "camera_pairing_audit_r1.json",
+  "paired_legacy_camera_override": {
+    "cx_add": 0.125,
+    "cy_add": 0.125,
+    "width": 480,
+    "height": 320,
+    "implementation": "copy camera, update cx/cy and projection/full_proj matrices; keep pose, FoV, time and checkpoint"
+  },
+  "common_eval_RGB": "data_r2/manifest RGB: raw RGB resized by new branch PIL bilinear",
+  "common_eval_RGB_domain": "clipped display-linear RGB: clamp legacy sRGB render then srgb_to_linear; clamp v3 linear render for matched display metrics; retain native-domain metrics separately",
+  "old_depth_to_meters": "divide old normalized camera depth by world_scale0.1",
+  "pixelwise_pairing_status": "CPU contract verified; matched read-only GPU rerender not yet executed",
+  "legacy_native_views_preserved": true,
+  "legacy_GT_resize_MAE_8bit": 2.409673651870416
 }
