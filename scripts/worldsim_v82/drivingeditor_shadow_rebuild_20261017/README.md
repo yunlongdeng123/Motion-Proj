@@ -110,6 +110,10 @@ CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 python -m unittest discover -s tests -p 
 
 ## 外部依据
 
+`instance_balanced_visible_identity=false`保留原可见身份损失重放。R10显式设true时，已知车体内的`(visible_alpha-1)^2`先按每个有正像素的Actor域内均值、再平均Actor，防止小车体和大量空实例稀释；权重仍0.1。原身份外部项仍为`sum(visible_alpha^2 * known * ~body) / sum(known)`，完整known-HWK域与归一化逐式保持。raw内部0.05和完整可见外部0.5是另外两项，不变。未知mask不新增车体标签。显式fork必须保持模型、Adam、RNG、数据契约和已用步数，保存变更谱系；缺省配置可读取旧checkpoint。
+
+道路证据需区分LiDAR视角和相机视角。R9数据从R8证据中以实际训练车体LiDAR及轨迹投影进行相机深度遮挡拒绝，不用没有车体点来证明无遮挡，不生成新body mask。旧道路投影域包含潜在车体遮挡，跨版本收益须在相同认证道路域重新只读度量。证据筛选本身不算训练收益。
+
 R8另外支持 `Frame.road_certified`（默认全零）和 `weights.road_identity`（默认0，历史重放不变）。启用臂显式设0.5：在独立、真实训练LiDAR道路正证据像素上，对所有Actor的全场景可见alpha之和做域内均值MSE→0。它不使用未知实例mask的补集；非认证未知像素没有新增标签，原完整已知mask内外损失保持。证据须有多时刻世界道路支持、实际点邻域平面法线、车体3D接触保护和真实深度，不能与已有body标签重叠。缺正证据却启用会预检失败。数据新版本保留原RGB/masks/known/road/depth/seed/trajectory，只增加认证字段并显式记录谱系。道路静态覆盖先只读检查，再受界优化，逐帧核对轮胎／车身与孔洞。
 
 归属修复另提供 `shadow_rebuild.ownership` 与 `shadow_rebuild.boundary`：以全场景alpha*T特征反传累计逐高斯body/真实LiDAR道路正证据，遮挡与未知不自动判背景。跨边界主轴由实际多视角mask交点确定，至少3帧一致才分解；两侧用截断高斯矩保留，复审后才可将道路候选锚定到实际测量世界点。未认证混合点不整点转归属。此过程不是车底高度裁剪，也不是普通梯度增密。

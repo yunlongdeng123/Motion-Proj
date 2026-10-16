@@ -46,7 +46,7 @@ def instance_body_loss(error,frame):
     return instance_domain_mean(value,frame.masks,frame.mask_known)
 
 
-def mask_terms(package, frame, balanced=False, outside_fullscene_visibility=False):
+def mask_terms(package, frame, balanced=False, outside_fullscene_visibility=False, balanced_visible_identity=False):
     raw, visible = package["raw_actor_alpha"], package["visible_labels"]
     target = frame.masks.to(raw.dtype)
     known = frame.mask_known[None, None].expand_as(raw)
@@ -61,13 +61,21 @@ def mask_terms(package, frame, balanced=False, outside_fullscene_visibility=Fals
     else:
         inside = masked_mean((raw-1).square(), known & frame.masks)
         outside = masked_mean(outer.square(), known & ~frame.masks)
-    identity = masked_mean((visible-target).square(), known)
+    if balanced_visible_identity:
+        # A high isolated alpha can still be hidden by an incorrect static/other
+        # Gaussian. Preserve visible Actor ownership without dilution by empty
+        # instances or the large background domain; original domains stay intact.
+        # Keep the old identity exterior component EXACTLY on known-HWK normalization.
+        # The already-complete explicit mask_outside term is not strengthened here.
+        original_outer=(visible.square()*(known&~frame.masks)).sum()/known.sum().clamp_min(1)
+        identity=instance_domain_mean((visible-1).square(),frame.masks,frame.mask_known)+original_outer
+    else:identity = masked_mean((visible-target).square(), known)
     return inside, outside, identity
 
 
 def geometry_and_reference_terms(model, package, frame, config, stage):
     geo, normal, residual = model.field.regularizers(stage)
-    inside, outside, identity = mask_terms(package, frame,config.instance_balanced_supervision,config.outside_fullscene_visibility)
+    inside, outside, identity = mask_terms(package, frame,config.instance_balanced_supervision,config.outside_fullscene_visibility,config.instance_balanced_visible_identity)
     observed = frame.depth > 0
     # 相机 Z，逆深度；不给无 LiDAR 的像素伪深度监督。
     pred = package["depth"].clamp_min(.1).reciprocal()

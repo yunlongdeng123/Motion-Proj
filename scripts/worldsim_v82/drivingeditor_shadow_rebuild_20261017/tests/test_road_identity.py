@@ -9,6 +9,26 @@ from shadow_rebuild.train import preflight
 
 
 class RoadIdentity(unittest.TestCase):
+    def test_visible_identity_not_diluted_by_empty_actors_and_penalizes_false_static_occlusion(self):
+        from types import SimpleNamespace
+        from shadow_rebuild.losses import mask_terms
+        body=torch.zeros(2,2,1,dtype=torch.bool);body[0,0,0]=True
+        front=torch.tensor(.5,requires_grad=True);opacity=torch.tensor(.8,requires_grad=True)
+        visible=torch.zeros(2,2,1);visible[0,0,0]=opacity*(1-front)
+        f=SimpleNamespace(masks=body,mask_known=torch.tensor([True]))
+        loss=mask_terms(dict(raw_actor_alpha=torch.ones_like(visible),visible_labels=visible),f,True,True,True)[2]
+        gf,ga=torch.autograd.grad(loss,(front,opacity),retain_graph=True)
+        self.assertGreater(float(gf),0);self.assertLess(float(ga),0)
+        many=torch.cat((visible,torch.zeros(2,2,36)),-1);f.masks=torch.cat((body,torch.zeros(2,2,36,dtype=torch.bool)),-1);f.mask_known=torch.ones(37,dtype=torch.bool)
+        other=mask_terms(dict(raw_actor_alpha=torch.ones_like(many),visible_labels=many),f,True,True,True)[2]
+        torch.testing.assert_close(loss,other)
+        gff,gaa=torch.autograd.grad(other,(front,opacity))
+        torch.testing.assert_close(gf,gff);torch.testing.assert_close(ga,gaa)
+        check=visible.detach().clone();check[1,1,0]=.3
+        f=SimpleNamespace(masks=body,mask_known=torch.tensor([True]))
+        exact=mask_terms(dict(raw_actor_alpha=torch.ones_like(check),visible_labels=check),f,True,True,True)[2]
+        torch.testing.assert_close(exact,torch.tensor(.36+.09/4))
+
     def test_positive_road_is_independent_of_unknown_masks_and_does_not_label_other_unknown_pixels(self):
         with tempfile.TemporaryDirectory() as temporary:
             path=Path(temporary)/'data';cfg=create(path);d=Dataset(path,synthetic=True);f=d.frame(0);model=SceneModel(d.seed,cfg)
